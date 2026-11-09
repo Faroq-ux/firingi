@@ -52,3 +52,17 @@ export async function freshNif() {
   const { makePtNif } = await import("@/lib/tax-id");
   return makePtNif(String(52000000 + Date.now() % 900000 + ++seq).slice(0, 8));
 }
+
+/** Create an APPROVED company with an owner user directly (test fixture). */
+export async function makeApprovedCompany(type: "CUSTOMER" | "WHOLESALER" | "DISTRIBUTOR", countryCode = "PT") {
+  const country = await prisma.country.findUniqueOrThrow({ where: { code: countryCode } });
+  const role = await prisma.role.findFirstOrThrow({ where: { companyId: null, key: "COMPANY_ADMIN" } });
+  const tag = `${Date.now()}${Math.random().toString(36).slice(2, 6)}`;
+  const email = `fixture.${tag}@test.eu`;
+  const company = await prisma.company.create({
+    data: { type, status: "APPROVED", legalName: `Fixture ${type} ${tag}`, taxId: `T${tag}`, vatNumber: `${country.vatPrefix}${tag}`, countryId: country.id, email },
+  });
+  const user = await prisma.user.create({ data: { email, name: "Fixture" } });
+  await prisma.membership.create({ data: { userId: user.id, companyId: company.id, isOwner: true, roles: { create: { roleId: role.id } } } });
+  return { companyId: company.id, email };
+}

@@ -14,10 +14,10 @@ export const VENDOR_NAV: NavSection[] = [
   {
     key: "products", icon: "ShoppingBag", label: { en: "Products", pt: "Produtos", es: "Productos" },
     items: [
-      vp("catalogue", "My Products", "Os Meus Produtos", "P3", { es: "Mis productos" }),
-      vp("stock", "Stock", "Stock", "P3", { perm: ["vendor.stock.manage", "vendor.products.view"], es: "Stock" }),
-      vp("price-lists", "Price Lists", "Listas de Preços", "P3", { perm: "vendor.pricing.manage", es: "Listas de precios" }),
-      vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
+      vp("catalogue", "My Products", "Os Meus Produtos", "P3", { live: true, es: "Mis productos" }),
+      vp("stock", "Stock", "Stock", "P3", { live: true, perm: ["vendor.stock.manage", "vendor.products.view"], es: "Stock" }),
+      vp("price-lists", "Price Lists", "Listas de Preços", "P3", { live: true, perm: "vendor.pricing.manage", es: "Listas de precios" }),
+      vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
       vp("promotions", "Promotions", "Promoções", "P5", { perm: "vendor.promotions.manage", es: "Promociones" }),
     ],
   },
@@ -70,8 +70,8 @@ export const BUY_NAV: NavSection[] = [
   {
     key: "catalogue", icon: "ShoppingBag", label: { en: "Catalogue", pt: "Catálogo", es: "Catálogo" },
     items: [
-      bc("browse", "Browse Products", "Explorar Produtos", "P3", { es: "Explorar productos" }),
-      bc("suppliers", "Suppliers", "Fornecedores", "P3", { es: "Proveedores" }),
+      bc("browse", "Browse Products", "Explorar Produtos", "P3", { live: true, es: "Explorar productos" }),
+      bc("suppliers", "Suppliers", "Fornecedores", "P3", { live: true, es: "Proveedores" }),
     ],
   },
   {

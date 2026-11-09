@@ -13,3 +13,7 @@ export function formatDate(d: Date | string | null | undefined, locale = "en", w
     timeZone: "Europe/Lisbon",
   }).format(new Date(d));
 }
+
+export function formatMoney(value: string | number, locale = "pt-PT", currency = "EUR") {
+  return new Intl.NumberFormat(locale, { style: "currency", currency, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(value));
+}

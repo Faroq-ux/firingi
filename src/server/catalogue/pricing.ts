@@ -54,8 +54,7 @@ export function resolvePrice(candidates: PriceCandidate[], qty = 1): ResolvedPri
       best = cand;
   }
   if (!best) return null;
-  const { rank: _r, priority: _p, ...out } = best;
-  return out;
+  return { unitPriceNet: best.unitPriceNet, priceListId: best.priceListId, scope: best.scope, minQty: best.minQty, tiers: best.tiers };
 }
 
 /** Price incl. VAT for display, rounded to cents. */

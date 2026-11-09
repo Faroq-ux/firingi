@@ -47,6 +47,7 @@ pnpm dev                             # http://localhost:3000
 | `pnpm test` | Unit + integration tests (rebuilds the **test** DB from `TEST_DATABASE_URL`) |
 | `node tests/e2e/smoke.mjs http://localhost:3000 [screenshotDir]` | Browser end-to-end smoke test against a running server* |
 | `node tests/e2e/onboarding.mjs http://localhost:3000 [screenshotDir]` | Browser test of registration → documents → admin approval → tobacco access* |
+| `node tests/e2e/catalogue.mjs http://localhost:3000 [screenshotDir]` | Browser + API test of catalogue visibility, vendor pricing, product proposal and approval* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -120,6 +121,23 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 | `STORAGE_DRIVER` / `STORAGE_DIR` | `local` / `./storage` | Uploaded documents. They are never public; downloads go through `/api/files/:id`, which checks permissions. |
 | `MAIL_DRIVER` | `log` | `log` writes e-mails to `storage/mail-outbox/`. `smtp` sends through `SMTP_URL`, for example Mailpit from `docker compose`. |
 | `VIES_URL` | EU endpoint | VAT validation. When VIES can't be reached, admins can record an audited manual verification. |
+
+## Catalogue (Phase 3)
+
+- **Master catalogue:** FIRINGI owns products, and each product has variants and packaging units (e.g. *Case 24 × 33cl*).
+  - Vendors attach **offers** to a packaging unit. Each offer has the vendor's SKU, minimum quantity, order step, lead time, stock per warehouse and prices.
+  - Vendors can **propose** new products. A proposal stays invisible until FIRINGI approves it.
+- **Categories** go to any depth. Each category inherits its parent's tobacco/alcohol restriction and active flag. A product can add a restriction but never remove one it inherits.
+- **Prices** are set by vendors in price lists: base, customer group, or one customer / contract. Lists can have quantity tiers and validity dates. The most specific valid price wins (`src/server/catalogue/pricing.ts`).
+- **Visibility** is decided by one rule, `src/server/catalogue/visibility.ts`, which every buyer query, page and API goes through:
+  - customers only see approved wholesalers in their own country;
+  - wholesalers only see distributors (EU-wide);
+  - restricted products need a valid tobacco/alcohol approval;
+  - an offer must be active, its product approved, and have a price for that buyer.
+
+  Hidden items return 404 rather than "forbidden", so their existence isn't revealed.
+- **JSON API** for buyers: `GET /api/catalogue/offers?q=&category=&vendor=&page=` and `GET /api/catalogue/offers/:id`. The same rules apply.
+- **Setting** `catalogue.offerApprovalRequired` (default `false`): when `true`, new offers on existing products also need admin approval.
 
 ## Configuration notes
 
