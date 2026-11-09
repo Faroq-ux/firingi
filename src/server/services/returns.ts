@@ -16,7 +16,7 @@ import { creditInvoice } from "@/server/invoicing/service";
 import { applyOrderTransition, notifyOrderChange, restockShipped } from "./orders";
 import { storeUpload } from "./storage";
 import { writeAudit } from "./audit";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 export const RETURN_WINDOW_DAYS = 30;
 const OPEN: ReturnStatus[] = ["REQUESTED", "APPROVED", "RECEIVED", "CREDITED"]; // counts against what can still be returned
@@ -69,8 +69,7 @@ export async function requestReturn(ctx: Ctx, orderId: string, input: { lines: {
     return rr;
   });
   const admin = await prisma.company.findFirst({ where: { type: "ADMIN" }, select: { id: true } });
-  if (admin) await notifyCompany(admin.id, { type: "return.requested", title: `Return request — order ${order.number}`, body: reason, link: "/admin/delivery/returns" });
-  await notifyCompany(order.sellerCompanyId, { type: "return.requested", title: `Return request — order ${order.number}`, body: reason, link: "/vendor/orders/returns" });
+  await notify("return.requested", [...(admin ? [{ companyId: admin.id, link: "/admin/delivery/returns" }] : []), { companyId: order.sellerCompanyId, link: "/vendor/orders/returns" }], { number: order.number, reason }, { ref: { type: "ReturnRequest", id: created.id } });
   return created;
 }
 
@@ -114,10 +113,11 @@ export async function reviewReturn(ctx: Ctx, id: string, decision: "APPROVED" | 
     if (res.count !== 1) throw new AppError("CONFLICT", "This return was changed by someone else.", 409);
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `return.${decision.toLowerCase()}`, entityType: "ReturnRequest", entityId: id, after: { note } }, tx);
   });
-  const body = decision === "APPROVED" ? "Your return was approved. The goods will be collected." : `Your return was not approved: ${note}`;
-  await notifyCompany(r.order.buyerCompanyId, { type: `return.${decision.toLowerCase()}`, title: `Return — order ${r.order.number}`, body, link: `/buy/orders/${r.order.id}` });
-  if (decision === "APPROVED")
-    await notifyCompany(r.order.sellerCompanyId, { type: "return.approved", title: `Return approved — order ${r.order.number}`, body: "Confirm receipt when the goods are back.", link: "/vendor/orders/returns" });
+  await notify(
+    decision === "APPROVED" ? "return.approved" : "return.rejected",
+    [{ companyId: r.order.buyerCompanyId, link: `/buy/orders/${r.order.id}` }, ...(decision === "APPROVED" ? [{ companyId: r.order.sellerCompanyId, link: "/vendor/orders/returns" }] : [])],
+    { number: r.order.number, reason: note ?? "" }, { ref: { type: "ReturnRequest", id } },
+  );
 }
 
 /**
@@ -160,6 +160,6 @@ export async function receiveReturn(ctx: Ctx, id: string, input: { restock: bool
     }
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "return.received", entityType: "ReturnRequest", entityId: id, after: { restock: input.restock, creditNoteId: cn.id } }, tx);
   });
-  await notifyCompany(r.order.buyerCompanyId, { type: "return.credited", title: `Return — order ${r.order.number}`, body: "We received the goods. Your credit note is available under Invoices.", link: "/buy/finance/invoices" });
+  await notify("return.credited", [{ companyId: r.order.buyerCompanyId, link: "/buy/finance/invoices" }], { number: r.order.number }, { ref: { type: "ReturnRequest", id } });
   if (orderReturned) await notifyOrderChange(r.order, "RETURNED", "All goods returned and credited", "SYSTEM");
 }

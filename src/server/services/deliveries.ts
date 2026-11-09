@@ -20,7 +20,7 @@ import { applyOrderTransition, ensureDelivery, notifyOrderChange } from "./order
 import { storeUpload } from "./storage";
 import { writeAudit } from "./audit";
 import { assertDriverCapacity } from "./delivery-settings";
-import { notifyCompany, notifyUser } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 const isAdmin = (ctx: Ctx) => ctx.company.type === "ADMIN";
 
@@ -193,7 +193,8 @@ export async function assignDelivery(ctx: Ctx, id: string, input: { driverId: st
   });
   if (driver && driver.id !== d.driverId) {
     const target = await prisma.driver.findUniqueOrThrow({ where: { id: driver.id }, select: { userId: true } });
-    await notifyUser(target.userId, { type: "delivery.assigned", title: `Delivery ${d.order.number}`, body: `You have a new delivery for ${d.order.buyer.tradeName ?? d.order.buyer.legalName}.`, link: `/driver/deliveries/${id}` });
+    const a = d.order.deliveryAddress as { line1?: string; postalCode?: string; city?: string };
+    await notify("delivery.assigned", [{ userId: target.userId, link: `/driver/deliveries/${id}` }], { number: d.order.number, customer: d.order.buyer.tradeName ?? d.order.buyer.legalName, address: `${a.line1 ?? ""}, ${a.postalCode ?? ""} ${a.city ?? ""}` }, { ref: { type: "Delivery", id } });
   }
 }
 
@@ -250,7 +251,7 @@ async function moveAsDriver(ctx: Ctx, id: string, to: DeliveryStatus, effect?: (
   });
   if (orderTo && orderTo !== d.order.status) await notifyOrderChange(d.order, orderTo, reason, "SYSTEM");
   if (to === "FAILED" && d.executingCompanyId !== d.order.sellerCompanyId)
-    await notifyCompany(d.executingCompanyId, { type: "delivery.failed", title: `Delivery ${d.order.number} failed`, body: reason ?? "", link: `/admin/delivery/failed` });
+    await notify("delivery.failed", [{ companyId: d.executingCompanyId, link: "/admin/delivery/failed" }], { number: d.order.number, reason }, { ref: { type: "Delivery", id } });
   return d;
 }
 

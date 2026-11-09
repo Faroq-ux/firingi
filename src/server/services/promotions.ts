@@ -11,7 +11,7 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import type { PromoCandidate } from "@/server/catalogue/promotions";
 import { writeAudit } from "./audit";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 const activeWhere = (now = new Date()): Prisma.PromotionWhereInput => ({
   status: "ACTIVE", validFrom: { lte: now }, OR: [{ validTo: null }, { validTo: { gt: now } }],
@@ -132,7 +132,7 @@ async function savePromotion(ctx: Ctx, i: PromotionInput, fixed: { ownerType: "V
   });
   if (data.requiresVendorAcceptance)
     for (const v of i.targets.vendorIds ?? [])
-      await notifyCompany(v, { type: "promotion.acceptance", title: "FIRINGI promotion — your answer is needed", body: `FIRINGI proposes "${i.name.en}" and asks you to fund ${fixed.vendorFundPct}% of the discount.`, link: "/vendor/products/promotions" });
+      await notify("promotion.acceptance", [{ companyId: v, link: "/vendor/products/promotions" }], { promotion: i.name.en, share: fixed.vendorFundPct });
   return promo;
 }
 

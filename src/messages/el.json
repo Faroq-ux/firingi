@@ -845,5 +845,185 @@
     "date": "Ημερομηνία",
     "products": "Προϊόντα",
     "creditNote": "Πιστωτικό τιμολόγιο"
+  },
+  "notify": {
+    "company_under_review": {
+      "title": "Η αίτηση εξετάζεται",
+      "body": "Η αίτησή σας υποβλήθηκε και εξετάζεται από το FIRINGI."
+    },
+    "company_approved": {
+      "title": "Ο λογαριασμός εγκρίθηκε",
+      "body": "Καλά νέα — ο λογαριασμός σας στο FIRINGI εγκρίθηκε. Μπορείτε πλέον να συνδεθείτε και να ξεκινήσετε συναλλαγές."
+    },
+    "company_rejected": {
+      "title": "Η αίτηση δεν εγκρίθηκε",
+      "body": "Η αίτησή σας στο FIRINGI δεν εγκρίθηκε. Αιτία: {reason}"
+    },
+    "company_suspended": {
+      "title": "Ο λογαριασμός ανεστάλη",
+      "body": "Ο λογαριασμός σας στο FIRINGI ανεστάλη. Αιτία: {reason}"
+    },
+    "company_pending": {
+      "title": "Ζητούνται αλλαγές",
+      "body": "Το FIRINGI χρειάζεται περισσότερες πληροφορίες πριν εγκρίνει την αίτησή σας: {reason}"
+    },
+    "driver_approved": {
+      "title": "Ο λογαριασμός οδηγού εγκρίθηκε",
+      "body": "Ο λογαριασμός οδηγού σας εγκρίθηκε. Μπορείτε πλέον να συνδεθείτε στην εφαρμογή οδηγών του FIRINGI."
+    },
+    "driver_rejected": {
+      "title": "Η αίτηση οδηγού δεν εγκρίθηκε",
+      "body": "Η αίτηση οδηγού σας δεν εγκρίθηκε. Αιτία: {reason}"
+    },
+    "driver_suspended": {
+      "title": "Ο λογαριασμός οδηγού ανεστάλη",
+      "body": "Ο λογαριασμός οδηγού σας ανεστάλη. Αιτία: {reason}"
+    },
+    "document_rejected": {
+      "title": "Το έγγραφο απορρίφθηκε",
+      "body": "Το έγγραφό σας «{document}» απορρίφθηκε: {reason}. Ανεβάστε νέα έκδοση."
+    },
+    "restriction_approved": {
+      "title": "Η πρόσβαση εγκρίθηκε",
+      "body": "Η πρόσβασή σας σε προϊόντα τύπου {restriction} εγκρίθηκε έως {until}."
+    },
+    "restriction_rejected": {
+      "title": "Η πρόσβαση δεν εγκρίθηκε",
+      "body": "Η πρόσβασή σας σε προϊόντα τύπου {restriction} δεν εγκρίθηκε: {reason}"
+    },
+    "restriction_revoked": {
+      "title": "Η πρόσβαση ανακλήθηκε",
+      "body": "Η πρόσβασή σας σε προϊόντα τύπου {restriction} ανακλήθηκε: {reason}"
+    },
+    "product_approved": {
+      "title": "Το προϊόν εγκρίθηκε",
+      "body": "Το «{product}» εγκρίθηκε και η προσφορά σας είναι ενεργή."
+    },
+    "product_rejected": {
+      "title": "Το προϊόν δεν εγκρίθηκε",
+      "body": "Το «{product}» δεν εγκρίθηκε: {reason}"
+    },
+    "offer_rejected": {
+      "title": "Η προσφορά δεν εγκρίθηκε",
+      "body": "Η προσφορά σας για το «{product}» δεν εγκρίθηκε: {reason}"
+    },
+    "offer_suspended": {
+      "title": "Η προσφορά ανεστάλη",
+      "body": "Το FIRINGI ανέστειλε την προσφορά σας για το «{product}»: {reason}"
+    },
+    "order_new": {
+      "title": "Νέα παραγγελία {number}",
+      "body": "Λάβατε την παραγγελία {number} από {buyer} ({total}). Παρακαλούμε επιβεβαιώστε την."
+    },
+    "order_confirmed": {
+      "title": "Η παραγγελία {number} επιβεβαιώθηκε",
+      "body": "Ο {supplier} επιβεβαίωσε την παραγγελία σας {number}."
+    },
+    "order_ready_for_pickup": {
+      "title": "Η παραγγελία {number} είναι έτοιμη",
+      "body": "Η παραγγελία {number} είναι έτοιμη για παραλαβή."
+    },
+    "order_dispatched": {
+      "title": "Η παραγγελία {number} απεστάλη",
+      "body": "Η παραγγελία {number} έφυγε από την αποθήκη."
+    },
+    "order_out_for_delivery": {
+      "title": "Η παραγγελία {number} είναι καθ' οδόν",
+      "body": "Η παραγγελία {number} παραδίδεται σήμερα."
+    },
+    "order_delivered": {
+      "title": "Η παραγγελία {number} παραδόθηκε",
+      "body": "Η παραγγελία {number} παραδόθηκε. Το τιμολόγιο είναι διαθέσιμο στο FIRINGI."
+    },
+    "order_cancelled": {
+      "title": "Η παραγγελία {number} ακυρώθηκε",
+      "body": "Η παραγγελία {number} ακυρώθηκε. {reason}"
+    },
+    "order_exception": {
+      "title": "Η παραγγελία {number} σε αναμονή",
+      "body": "Η παραγγελία {number} χρειάζεται προσοχή: {reason}"
+    },
+    "order_returned": {
+      "title": "Η παραγγελία {number} επιστράφηκε",
+      "body": "Η παραγγελία {number} επιστράφηκε. {reason}"
+    },
+    "delivery_assigned": {
+      "title": "Νέα παράδοση {number}",
+      "body": "Νέα παράδοση {number} για {customer}, {address}."
+    },
+    "delivery_failed": {
+      "title": "Η παράδοση {number} απέτυχε",
+      "body": "Η παράδοση {number} απέτυχε: {reason}"
+    },
+    "return_requested": {
+      "title": "Αίτημα επιστροφής — παραγγελία {number}",
+      "body": "Ζητήθηκε επιστροφή για την παραγγελία {number}: {reason}"
+    },
+    "return_approved": {
+      "title": "Η επιστροφή εγκρίθηκε — παραγγελία {number}",
+      "body": "Η επιστροφή της παραγγελίας {number} εγκρίθηκε. Τα εμπορεύματα θα παραληφθούν."
+    },
+    "return_rejected": {
+      "title": "Η επιστροφή δεν εγκρίθηκε — παραγγελία {number}",
+      "body": "Η επιστροφή της παραγγελίας {number} δεν εγκρίθηκε: {reason}"
+    },
+    "return_credited": {
+      "title": "Η επιστροφή πιστώθηκε — παραγγελία {number}",
+      "body": "Λάβαμε τα επιστρεφόμενα εμπορεύματα της παραγγελίας {number}. Το πιστωτικό σας είναι διαθέσιμο στο FIRINGI."
+    },
+    "invoice_credit_note": {
+      "title": "Πιστωτικό τιμολόγιο {document}",
+      "body": "Το FIRINGI εξέδωσε το πιστωτικό τιμολόγιο {document}."
+    },
+    "vendor_invoice_approved": {
+      "title": "Το τιμολόγιο {document} εγκρίθηκε",
+      "body": "Το FIRINGI ενέκρινε το τιμολόγιό σας {document}. Θα πληρωθεί σύμφωνα με τους όρους σας."
+    },
+    "vendor_invoice_rejected": {
+      "title": "Το τιμολόγιο {document} απορρίφθηκε",
+      "body": "Το FIRINGI απέρριψε το τιμολόγιό σας {document}: {reason}"
+    },
+    "promotion_acceptance": {
+      "title": "Προώθηση FIRINGI — χρειαζόμαστε την απάντησή σας",
+      "body": "Το FIRINGI προτείνει «{promotion}» και σας ζητά να χρηματοδοτήσετε το {share}% της έκπτωσης."
+    }
+  },
+  "notifications": {
+    "title": "Ειδοποιήσεις",
+    "empty": "Δεν υπάρχουν ακόμη ειδοποιήσεις.",
+    "markAllRead": "Σήμανση όλων ως αναγνωσμένων",
+    "open": "Άνοιγμα",
+    "unread": "{count} μη αναγνωσμένες",
+    "viewAll": "Όλες οι ειδοποιήσεις",
+    "preferences": "Ρυθμίσεις ειδοποιήσεων",
+    "preferencesIntro": "Επιλέξτε πώς σας ενημερώνει το FIRINGI. Οι ειδοποιήσεις στην εφαρμογή είναι πάντα ενεργές· ορισμένα μηνύματα λογαριασμού και οικονομικών αποστέλλονται πάντα με e-mail.",
+    "category": "Θέμα",
+    "channels": {
+      "IN_APP": "Στην εφαρμογή",
+      "EMAIL": "E-mail",
+      "SMS": "SMS",
+      "WHATSAPP": "WhatsApp",
+      "PUSH": "Πρόγραμμα περιήγησης / κινητό"
+    },
+    "categories": {
+      "orders": "Παραγγελίες",
+      "deliveries": "Παραδόσεις",
+      "returns": "Επιστροφές",
+      "finance": "Τιμολόγια και πληρωμές",
+      "catalogue": "Προϊόντα",
+      "account": "Λογαριασμός και εγκρίσεις"
+    },
+    "phone": "Κινητό (με κωδικό χώρας, π.χ. +30 691 234 5678)",
+    "smsConsent": "Συμφωνώ να λαμβάνω SMS από το FIRINGI σε αυτόν τον αριθμό.",
+    "whatsappConsent": "Συμφωνώ να λαμβάνω μηνύματα WhatsApp από το FIRINGI σε αυτόν τον αριθμό.",
+    "save": "Αποθήκευση",
+    "saved": "Αποθηκεύτηκε.",
+    "alwaysOn": "Πάντα ενεργές",
+    "push": "Ειδοποιήσεις σε αυτή τη συσκευή",
+    "pushEnable": "Ενεργοποίηση σε αυτή τη συσκευή",
+    "pushOn": "Ενεργές σε αυτή τη συσκευή",
+    "pushUnsupported": "Αυτό το πρόγραμμα περιήγησης δεν υποστηρίζει ειδοποιήσεις.",
+    "pushDenied": "Οι ειδοποιήσεις είναι αποκλεισμένες στις ρυθμίσεις του προγράμματος περιήγησης.",
+    "needsPhone": "Προσθέστε το κινητό σας για SMS και WhatsApp."
   }
 }

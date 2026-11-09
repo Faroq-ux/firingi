@@ -27,7 +27,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
       "admin.dashboard.view", "admin.orders.view", "admin.orders.manage", "admin.vendors.view", "admin.vendors.approve",
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
       "admin.allocation.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
-      "admin.risk.view", "admin.international.view", "admin.notifications.view",
+      "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage",
     ],
   },
   {
@@ -50,7 +50,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "SUPPORT", name: "Support", description: "Read access to help customers and vendors", appliesTo: ["ADMIN"],
     permissions: [
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.catalogue.view",
-      "admin.delivery.view", "admin.notifications.view", "admin.crm.view",
+      "admin.delivery.view", "admin.notifications.view", "admin.messages.manage", "admin.crm.view",
     ],
   },
   {

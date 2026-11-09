@@ -51,6 +51,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/orders.mjs http://localhost:3000 [screenshotDir]` | Browser test of cart lock, minimums, checkout, vendor confirmation, FIRINGI delivery* |
 | `node tests/e2e/finance.mjs http://localhost:3000 [screenshotDir]` | Browser test of promotions, invoices + PDFs, vendor statements and invoices, payments, credit notes* |
 | `node tests/e2e/delivery.mjs http://localhost:3000 [screenshotDir]` | Browser test of vendor fleet + service areas, driver app with signature, returns, failed delivery, control tower, multi-order setting* |
+| `node tests/e2e/notifications.mjs http://localhost:3000 [screenshotDir]` | Browser test of the bell, notification settings, message log, WhatsApp test send, templates and per-event channels* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -210,6 +211,31 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 - **Admin pages** — control tower, live deliveries, failed deliveries, proof of delivery,
   returns, zones, all drivers / vehicles, FIRINGI drivers, vendor drivers, availability,
   assignments.
+
+## Notifications & WhatsApp (Phase 7)
+
+- **One entry point** — `notify(event, targets, vars)` (`src/server/notify/dispatch.ts`). The
+  event catalogue (`src/server/notify/events.ts`) lists 35 events with their topic, who in a
+  company receives them (by permission; owners always), default channels and placeholders.
+- **Channels** — in-app (bell + *My notifications*, always on), e-mail, SMS, WhatsApp and web push.
+  Super Admin switches channels on/off platform-wide and per event, and edits texts per event,
+  channel and language (*Notifications & Communications › Notification Templates*); default
+  texts ship in all 25 languages. Every recipient gets their own language.
+- **People decide** — per topic and channel (*bell › Notification settings*); critical account /
+  finance messages always arrive by e-mail. SMS and WhatsApp need a mobile number and explicit
+  consent (stored with the time); changing the number asks for consent again.
+- **Providers** — `log` by default (written to `storage/notify-outbox`, nothing leaves the server),
+  SMTP for e-mail, Twilio for SMS / WhatsApp, Meta WhatsApp Cloud API, VAPID web push — see
+  `.env.example`. Business-initiated WhatsApp messages must use Meta-approved templates: set
+  the template name + language on the WhatsApp text; the event's placeholders are its parameters.
+- **Log, retries, receipts** — every message is logged (*Notifications*), with status
+  queued / sent / delivered / read / failed / skipped (no number, no consent). Temporary
+  failures retry with back-off (`/api/cron/notifications`, or *Retry* in the back office).
+  Delivery receipts and incoming messages arrive on `/api/webhooks/twilio` and
+  `/api/webhooks/whatsapp` (signatures verified).
+- **Inboxes** — *Customer / Vendor / Driver Messages*: SMS / WhatsApp received, matched to the
+  account by phone; staff with `admin.messages.manage` (Operations, Support) reply. WhatsApp free
+  text only within 24 hours of the person's last message.
 
 ## Configuration notes
 

@@ -7,6 +7,7 @@ import { authClient } from "@/lib/auth-client";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
 import { ThemeToggle, type ThemeChoice } from "@/components/theme/theme";
+import { NotificationBell, type BellLabels } from "@/components/notifications/bell";
 
 export type TopbarProps = {
   userName: string;
@@ -19,6 +20,7 @@ export type TopbarProps = {
   locales: { code: string; native: string }[];
   labels: { signOut: string; language: string; company: string; menu: string };
   cart?: { count: number; label: string } | null;
+  bell?: { initialUnread: number; base: string; labels: BellLabels } | null;
   theme: { initial: ThemeChoice; labels: Record<ThemeChoice, string> };
   onMenu?: () => void;
 };
@@ -50,6 +52,7 @@ export function Topbar(p: TopbarProps) {
       )}
 
       <div className="ml-auto flex items-center gap-2">
+        {p.bell && <NotificationBell {...p.bell} />}
         {p.cart && (
           <Link href="/buy/orders/cart" className="relative rounded-md p-2 hover:bg-accent" aria-label={`${p.cart.label} (${p.cart.count})`}>
             <ShoppingCart className="size-5" />

@@ -12,7 +12,7 @@ import {
 } from "@/server/onboarding/rules";
 import { canDecideType, canViewType, requireAdmin, scopeWhere } from "./admin-access";
 import { writeAudit } from "./audit";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 import { checkVies } from "./vies";
 import { checkCompanyVat } from "@/lib/tax-id";
 
@@ -126,15 +126,8 @@ async function transition(companyId: string, from: AccountStatus, to: AccountSta
     await tx.companyStatusHistory.create({ data: { companyId, fromStatus: from, toStatus: to, reason, byUserId: ctx.user.id } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `company.status.${to.toLowerCase()}`, entityType: "Company", entityId: companyId, before: { status: from }, after: { status: to, reason } }, tx);
   });
-  const messages: Partial<Record<AccountStatus, [string, string]>> = {
-    UNDER_REVIEW: ["Application under review", "Your application has been submitted and is being reviewed by FIRINGI."],
-    APPROVED: ["Account approved", "Good news — your FIRINGI account has been approved. You can now sign in and start trading."],
-    REJECTED: ["Application not approved", `Your application was not approved.${reason ? ` Reason: ${reason}` : ""}`],
-    SUSPENDED: ["Account suspended", `Your account has been suspended.${reason ? ` Reason: ${reason}` : ""}`],
-    PENDING: ["Changes requested", `FIRINGI needs more information before approving your application.${reason ? ` ${reason}` : ""}`],
-  };
-  const msg = messages[to];
-  if (msg) await notifyCompany(companyId, { type: `company.${to.toLowerCase()}`, title: msg[0], body: msg[1], link: "/" });
+  const notified: AccountStatus[] = ["UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED", "PENDING"];
+  if (notified.includes(to)) await notify(`company.${to.toLowerCase()}`, [{ companyId, link: "/" }], { reason: reason ?? "" });
 }
 
 /** Run the EU VIES check for a company's VAT number and record the result. */

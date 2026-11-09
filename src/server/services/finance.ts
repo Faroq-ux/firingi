@@ -13,7 +13,7 @@ import { creditInvoice } from "@/server/invoicing/service";
 import { scopeWhere } from "./admin-access";
 import { storeUpload } from "./storage";
 import { writeAudit } from "./audit";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 const TOLERANCE = new Decimal("0.02"); // rounding differences accepted when matching
 const isAdmin = (ctx: Ctx, perm: Parameters<typeof can>[1]) => ctx.company.type === "ADMIN" && can(ctx, perm);
@@ -74,7 +74,7 @@ export async function issueCreditNote(ctx: Ctx, invoiceId: string, input: { line
       await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "invoice.credit_note_issued", entityType: "Invoice", entityId: doc.id, after: { original: invoiceId, reason: input.reason, number: doc.fullNumber } }, tx);
       return doc;
     });
-    await notifyCompany(cn.recipientCompanyId, { type: "invoice.credit_note", title: `Credit note ${cn.fullNumber}`, body: `FIRINGI issued credit note ${cn.fullNumber}.`, link: "/buy/finance/invoices" });
+    await notify("invoice.credit_note", [{ companyId: cn.recipientCompanyId, link: "/buy/finance/invoices" }], { document: cn.fullNumber }, { ref: { type: "Invoice", id: cn.id } });
     return cn;
   } catch (e) {
     const m = e instanceof Error ? e.message : "";
@@ -185,10 +185,7 @@ export async function reviewVendorInvoice(ctx: Ctx, id: string, decision: "APPRO
     if (decision === "REJECTED") await tx.vendorInvoiceAllocation.deleteMany({ where: { vendorInvoiceId: id } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `vendor_invoice.${decision.toLowerCase()}`, entityType: "VendorInvoice", entityId: id, after: { note } }, tx);
   });
-  await notifyCompany(vi.vendorCompanyId, {
-    type: `vendor_invoice.${decision.toLowerCase()}`, title: `Invoice ${vi.externalNumber} ${decision === "APPROVED" ? "approved" : "rejected"}`,
-    body: decision === "APPROVED" ? `FIRINGI approved your invoice ${vi.externalNumber}. It will be paid per your terms.` : `FIRINGI rejected your invoice ${vi.externalNumber}: ${note}`, link: "/vendor/finance/invoices",
-  });
+  await notify(`vendor_invoice.${decision.toLowerCase()}`, [{ companyId: vi.vendorCompanyId, link: "/vendor/finance/invoices" }], { document: vi.externalNumber, reason: note });
 }
 
 // ── Payments ledger ─────────────────────────────────────────────────────────

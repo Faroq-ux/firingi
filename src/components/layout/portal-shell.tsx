@@ -8,17 +8,19 @@ import { pagePortal, portalsFor, type Portal } from "@/server/rbac/guard";
 import { NAV_BY_PORTAL, resolveNav } from "@/config/nav/resolve";
 import { allowedLocales } from "@/server/data/geo";
 import { cartCount } from "@/server/services/cart";
+import { unreadCount } from "@/server/services/notifications";
 import { can } from "@/server/rbac/guard";
 import { AppShell } from "./app-shell";
 
 export async function PortalShell({ portal, children }: { portal: Portal; children: React.ReactNode }) {
   const ctx = await pagePortal(portal);
-  const [locale, t, tp, tc, locales] = await Promise.all([
+  const [locale, t, tp, tc, locales, tn] = await Promise.all([
     getLocale(),
     getTranslations("common"),
     getTranslations("portal"),
     getTranslations("companyType"),
     allowedLocales(ctx.company.countryId),
+    getTranslations("notifications"),
   ]);
   const messages = (await getMessages()) as { navLabels?: Record<string, string>; shell?: { cart?: string; soon?: string } };
   const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale, messages.navLabels);
@@ -44,6 +46,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
         locales,
         labels: { signOut: t("signOut"), language: t("language"), company: t("company"), menu: t("menu") },
         cart,
+        bell: { initialUnread: await unreadCount(ctx), base: `/${portal}`, labels: { title: tn("title"), empty: tn("empty"), markAllRead: tn("markAllRead"), viewAll: tn("viewAll"), preferences: tn("preferences") } },
         theme: {
           initial: (["light", "dark", "system"].includes((await cookies()).get("theme")?.value ?? "") ? (await cookies()).get("theme")!.value : "system") as "light" | "dark" | "system",
           labels: { light: t("themeLight"), dark: t("themeDark"), system: t("themeSystem") },

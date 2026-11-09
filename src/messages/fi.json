@@ -845,5 +845,185 @@
     "date": "Päivämäärä",
     "products": "Tuotteet",
     "creditNote": "Hyvityslasku"
+  },
+  "notify": {
+    "company_under_review": {
+      "title": "Hakemus käsittelyssä",
+      "body": "Hakemuksesi on lähetetty, ja FIRINGI käsittelee sitä."
+    },
+    "company_approved": {
+      "title": "Tili hyväksytty",
+      "body": "Hyviä uutisia — FIRINGI-tilisi on hyväksytty. Voit nyt kirjautua ja aloittaa kaupankäynnin."
+    },
+    "company_rejected": {
+      "title": "Hakemusta ei hyväksytty",
+      "body": "FIRINGI-hakemustasi ei hyväksytty. Syy: {reason}"
+    },
+    "company_suspended": {
+      "title": "Tili jäädytetty",
+      "body": "FIRINGI-tilisi on jäädytetty. Syy: {reason}"
+    },
+    "company_pending": {
+      "title": "Muutoksia pyydetään",
+      "body": "FIRINGI tarvitsee lisätietoja ennen hakemuksesi hyväksymistä: {reason}"
+    },
+    "driver_approved": {
+      "title": "Kuljettajatili hyväksytty",
+      "body": "Kuljettajatilisi on hyväksytty. Voit nyt kirjautua FIRINGIn kuljettajasovellukseen."
+    },
+    "driver_rejected": {
+      "title": "Kuljettajahakemusta ei hyväksytty",
+      "body": "Kuljettajahakemustasi ei hyväksytty. Syy: {reason}"
+    },
+    "driver_suspended": {
+      "title": "Kuljettajatili jäädytetty",
+      "body": "Kuljettajatilisi on jäädytetty. Syy: {reason}"
+    },
+    "document_rejected": {
+      "title": "Asiakirja hylätty",
+      "body": "Asiakirjasi ”{document}” hylättiin: {reason}. Lataa uusi versio."
+    },
+    "restriction_approved": {
+      "title": "Käyttöoikeus hyväksytty",
+      "body": "Käyttöoikeutesi tuotteisiin {restriction} on hyväksytty {until} asti."
+    },
+    "restriction_rejected": {
+      "title": "Käyttöoikeutta ei hyväksytty",
+      "body": "Käyttöoikeuttasi tuotteisiin {restriction} ei hyväksytty: {reason}"
+    },
+    "restriction_revoked": {
+      "title": "Käyttöoikeus peruttu",
+      "body": "Käyttöoikeutesi tuotteisiin {restriction} on peruttu: {reason}"
+    },
+    "product_approved": {
+      "title": "Tuote hyväksytty",
+      "body": "”{product}” on hyväksytty, ja tarjouksesi on nyt voimassa."
+    },
+    "product_rejected": {
+      "title": "Tuotetta ei hyväksytty",
+      "body": "”{product}” ei saanut hyväksyntää: {reason}"
+    },
+    "offer_rejected": {
+      "title": "Tarjousta ei hyväksytty",
+      "body": "Tarjoustasi tuotteelle ”{product}” ei hyväksytty: {reason}"
+    },
+    "offer_suspended": {
+      "title": "Tarjous keskeytetty",
+      "body": "FIRINGI keskeytti tarjouksesi tuotteelle ”{product}”: {reason}"
+    },
+    "order_new": {
+      "title": "Uusi tilaus {number}",
+      "body": "Sait tilauksen {number} asiakkaalta {buyer} ({total}). Vahvista se."
+    },
+    "order_confirmed": {
+      "title": "Tilaus {number} vahvistettu",
+      "body": "{supplier} vahvisti tilauksesi {number}."
+    },
+    "order_ready_for_pickup": {
+      "title": "Tilaus {number} valmis",
+      "body": "Tilaus {number} on valmis noudettavaksi."
+    },
+    "order_dispatched": {
+      "title": "Tilaus {number} lähetetty",
+      "body": "Tilaus {number} on lähtenyt varastosta."
+    },
+    "order_out_for_delivery": {
+      "title": "Tilaus {number} on matkalla",
+      "body": "Tilaus {number} toimitetaan tänään."
+    },
+    "order_delivered": {
+      "title": "Tilaus {number} toimitettu",
+      "body": "Tilaus {number} on toimitettu. Lasku on saatavilla FIRINGIssä."
+    },
+    "order_cancelled": {
+      "title": "Tilaus {number} peruttu",
+      "body": "Tilaus {number} on peruttu. {reason}"
+    },
+    "order_exception": {
+      "title": "Tilaus {number} pidossa",
+      "body": "Tilaus {number} vaatii huomiota: {reason}"
+    },
+    "order_returned": {
+      "title": "Tilaus {number} palautettu",
+      "body": "Tilaus {number} on palautettu. {reason}"
+    },
+    "delivery_assigned": {
+      "title": "Uusi toimitus {number}",
+      "body": "Uusi toimitus {number}: {customer}, {address}."
+    },
+    "delivery_failed": {
+      "title": "Toimitus {number} epäonnistui",
+      "body": "Toimitus {number} epäonnistui: {reason}"
+    },
+    "return_requested": {
+      "title": "Palautuspyyntö — tilaus {number}",
+      "body": "Tilaukselle {number} on pyydetty palautusta: {reason}"
+    },
+    "return_approved": {
+      "title": "Palautus hyväksytty — tilaus {number}",
+      "body": "Tilauksen {number} palautus on hyväksytty. Tavarat noudetaan."
+    },
+    "return_rejected": {
+      "title": "Palautusta ei hyväksytty — tilaus {number}",
+      "body": "Tilauksen {number} palautusta ei hyväksytty: {reason}"
+    },
+    "return_credited": {
+      "title": "Palautus hyvitetty — tilaus {number}",
+      "body": "Olemme vastaanottaneet tilauksen {number} palautetut tavarat. Hyvityslaskusi on saatavilla FIRINGIssä."
+    },
+    "invoice_credit_note": {
+      "title": "Hyvityslasku {document}",
+      "body": "FIRINGI on antanut hyvityslaskun {document}."
+    },
+    "vendor_invoice_approved": {
+      "title": "Lasku {document} hyväksytty",
+      "body": "FIRINGI hyväksyi laskusi {document}. Se maksetaan ehtojesi mukaisesti."
+    },
+    "vendor_invoice_rejected": {
+      "title": "Lasku {document} hylätty",
+      "body": "FIRINGI hylkäsi laskusi {document}: {reason}"
+    },
+    "promotion_acceptance": {
+      "title": "FIRINGI-kampanja — tarvitsemme vastauksesi",
+      "body": "FIRINGI ehdottaa kampanjaa ”{promotion}” ja pyytää sinua rahoittamaan {share} % alennuksesta."
+    }
+  },
+  "notifications": {
+    "title": "Ilmoitukset",
+    "empty": "Ei vielä ilmoituksia.",
+    "markAllRead": "Merkitse kaikki luetuiksi",
+    "open": "Avaa",
+    "unread": "{count} lukematonta",
+    "viewAll": "Näytä kaikki ilmoitukset",
+    "preferences": "Ilmoitusasetukset",
+    "preferencesIntro": "Valitse, miten FIRINGI pitää sinut ajan tasalla. Sovelluksen ilmoitukset ovat aina päällä; osa tili- ja talousviesteistä lähetetään aina sähköpostilla.",
+    "category": "Aihe",
+    "channels": {
+      "IN_APP": "Sovelluksessa",
+      "EMAIL": "Sähköposti",
+      "SMS": "Tekstiviesti",
+      "WHATSAPP": "WhatsApp",
+      "PUSH": "Selain / puhelin"
+    },
+    "categories": {
+      "orders": "Tilaukset",
+      "deliveries": "Toimitukset",
+      "returns": "Palautukset",
+      "finance": "Laskut ja maksut",
+      "catalogue": "Tuotteet",
+      "account": "Tili ja hyväksynnät"
+    },
+    "phone": "Matkapuhelinnumero (maatunnuksella, esim. +358 40 123 4567)",
+    "smsConsent": "Hyväksyn tekstiviestien vastaanottamisen FIRINGIltä tähän numeroon.",
+    "whatsappConsent": "Hyväksyn WhatsApp-viestien vastaanottamisen FIRINGIltä tähän numeroon.",
+    "save": "Tallenna",
+    "saved": "Tallennettu.",
+    "alwaysOn": "Aina päällä",
+    "push": "Ilmoitukset tällä laitteella",
+    "pushEnable": "Ota käyttöön tällä laitteella",
+    "pushOn": "Käytössä tällä laitteella",
+    "pushUnsupported": "Tämä selain ei tue ilmoituksia.",
+    "pushDenied": "Ilmoitukset on estetty tämän selaimen asetuksissa.",
+    "needsPhone": "Lisää matkapuhelinnumerosi saadaksesi tekstiviestejä ja WhatsApp-viestejä."
   }
 }

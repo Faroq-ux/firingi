@@ -9,7 +9,7 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "./audit";
 import { isValidGtin } from "@/lib/barcode";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 export type L10n = { en: string; pt?: string | null; es?: string | null };
 const cleanL10n = (l: L10n) => Object.fromEntries(Object.entries(l).filter(([, v]) => v && String(v).trim()).map(([k, v]) => [k, String(v).trim()]));
@@ -236,12 +236,7 @@ export async function reviewProduct(ctx: Ctx, productId: string, decision: "APPR
   });
   if (p.proposedByCompanyId) {
     const name = ((p.name as Record<string, string>).en ?? "product");
-    await notifyCompany(p.proposedByCompanyId, {
-      type: `product.${decision.toLowerCase()}`,
-      title: decision === "APPROVED" ? "Product approved" : "Product not approved",
-      body: decision === "APPROVED" ? `"${name}" is approved and your offer is now live.` : `"${name}" was not approved: ${note}`,
-      link: "/vendor/products/catalogue",
-    });
+    await notify(decision === "APPROVED" ? "product.approved" : "product.rejected", [{ companyId: p.proposedByCompanyId, link: "/vendor/products/catalogue" }], { product: name, reason: note });
   }
 }
 
@@ -257,5 +252,5 @@ export async function reviewOffer(ctx: Ctx, offerId: string, to: Extract<OfferSt
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `offer.admin_${to.toLowerCase()}`, entityType: "VendorOffer", entityId: offerId, before: { status: o.status }, after: { status: to, note } }, tx);
   });
   if (to !== "ACTIVE")
-    await notifyCompany(o.vendorCompanyId, { type: "offer.review", title: to === "REJECTED" ? "Offer not approved" : "Offer suspended by FIRINGI", body: `${(o.packaging.variant.product.name as Record<string, string>).en}: ${note}`, link: "/vendor/products/catalogue" });
+    await notify(to === "REJECTED" ? "offer.rejected" : "offer.suspended", [{ companyId: o.vendorCompanyId, link: "/vendor/products/catalogue" }], { product: (o.packaging.variant.product.name as Record<string, string>).en, reason: note });
 }

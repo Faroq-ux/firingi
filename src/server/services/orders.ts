@@ -18,7 +18,7 @@ import { vendorReaches } from "@/server/delivery/coverage";
 import { scopeWhere } from "./admin-access";
 import { deliveryRulesFor } from "./cart";
 import { writeAudit } from "./audit";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 import { invoiceDeliveredOrder } from "@/server/invoicing/service";
 
 // ── helpers ─────────────────────────────────────────────────────────────────
@@ -245,7 +245,8 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: order.id, after: { number, sellerId, grandTotal: totals.grandTotal.toFixed(2), deliveryMode: decision.mode } }, tx);
     return { id: order.id, number };
   }).then(async (r) => {
-    await notifyCompany(sellerId, { type: "order.new", title: `New order ${r.number}`, body: `You received order ${r.number}. Please confirm it.`, link: `/vendor/orders/${r.id}` });
+    const o = await prisma.order.findUniqueOrThrow({ where: { id: r.id }, select: { grandTotal: true, buyer: { select: { legalName: true, tradeName: true } } } });
+    await notify("order.new", [{ companyId: sellerId, link: `/vendor/orders/${r.id}` }], { number: r.number, buyer: o.buyer.tradeName ?? o.buyer.legalName, total: o.grandTotal.toNumber() }, { ref: { type: "Order", id: r.id } });
     return r;
   });
 }
@@ -348,9 +349,10 @@ async function loadForChange(ctx: Ctx, orderId: string) {
   return { order, role, actor };
 }
 
-const NOTIFY: Partial<Record<OrderStatus, string>> = {
-  SUPPLIER_PROCESSING: "confirmed by the supplier", READY_FOR_PICKUP: "ready for pickup", DISPATCHED: "dispatched",
-  OUT_FOR_DELIVERY: "out for delivery", DELIVERED: "delivered", CANCELLED: "cancelled", EXCEPTION: "on hold (exception)", RETURNED: "returned",
+/** Notification event for each order status (statuses not listed send nothing). */
+const ORDER_EVENT: Partial<Record<OrderStatus, string>> = {
+  SUPPLIER_PROCESSING: "order.confirmed", READY_FOR_PICKUP: "order.ready_for_pickup", DISPATCHED: "order.dispatched",
+  OUT_FOR_DELIVERY: "order.out_for_delivery", DELIVERED: "order.delivered", CANCELLED: "order.cancelled", EXCEPTION: "order.exception", RETURNED: "order.returned",
 };
 
 /** Generic status change following the state machine and the actor's rights. */
@@ -406,9 +408,13 @@ export async function applyOrderTransition(
 }
 
 export async function notifyOrderChange(order: Pick<OrderForChange, "id" | "number" | "buyerCompanyId" | "sellerCompanyId">, to: OrderStatus, reason: string | null | undefined, actor: Actor) {
-  const text = `Order ${order.number} is ${NOTIFY[to] ?? to.toLowerCase()}.${reason ? ` ${reason}` : ""}${to === "DELIVERED" ? " The invoice is available under Invoices." : ""}`;
-  if (actor !== "BUYER") await notifyCompany(order.buyerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/buy/orders/${order.id}` });
-  if (actor !== "VENDOR") await notifyCompany(order.sellerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/vendor/orders/${order.id}` });
+  const event = ORDER_EVENT[to];
+  if (!event) return;
+  const targets = [
+    ...(actor !== "BUYER" ? [{ companyId: order.buyerCompanyId, link: `/buy/orders/${order.id}` }] : []),
+    ...(actor !== "VENDOR" ? [{ companyId: order.sellerCompanyId, link: `/vendor/orders/${order.id}` }] : []),
+  ];
+  await notify(event, targets, { number: order.number, reason: reason ?? "" }, { ref: { type: "Order", id: order.id } });
 }
 
 /**
@@ -468,7 +474,8 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
     await tx.orderStatusHistory.create({ data: { orderId, fromStatus: order.status, toStatus: "SUPPLIER_PROCESSING", byUserId: ctx.user.id, reason: short ? `Confirmed with ${short} line(s) reduced` : "Confirmed" } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.confirmed", entityType: "Order", entityId: orderId, after: { quantities: Object.fromEntries(confirmed.map((c) => [c.line.id, c.qty])) } }, tx);
   });
-  await notifyCompany(order.buyerCompanyId, { type: "order.confirmed", title: `Order ${order.number} confirmed`, body: `Your order ${order.number} was confirmed by the supplier.`, link: `/buy/orders/${orderId}` });
+  const seller = await prisma.company.findUniqueOrThrow({ where: { id: order.sellerCompanyId }, select: { legalName: true, tradeName: true } });
+  await notify("order.confirmed", [{ companyId: order.buyerCompanyId, link: `/buy/orders/${orderId}` }], { number: order.number, supplier: seller.tradeName ?? seller.legalName }, { ref: { type: "Order", id: orderId } });
 }
 
 export async function resolveException(ctx: Ctx, exceptionId: string, note: string) {

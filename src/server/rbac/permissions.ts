@@ -56,6 +56,7 @@ const defs = {
   "admin.roles.manage": { audience: "ADMIN", module: "Users", description: "Manage roles and permissions" },
   "admin.notifications.view": { audience: "ADMIN", module: "Notifications", description: "View notifications" },
   "admin.notifications.manage": { audience: "ADMIN", module: "Notifications", description: "Manage templates and channels" },
+  "admin.messages.manage": { audience: "ADMIN", module: "Notifications", description: "Reply to customer, vendor and driver messages" },
   "admin.settings.view": { audience: "ADMIN", module: "Settings", description: "View settings" },
   "admin.settings.manage": { audience: "ADMIN", module: "Settings", description: "Change platform settings" },
 

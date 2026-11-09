@@ -845,5 +845,185 @@
     "date": "Dagsetning",
     "products": "Vörur",
     "creditNote": "Kreditreikningur"
+  },
+  "notify": {
+    "company_under_review": {
+      "title": "Umsókn í yfirferð",
+      "body": "Umsókn þín hefur verið send og FIRINGI fer yfir hana."
+    },
+    "company_approved": {
+      "title": "Aðgangur samþykktur",
+      "body": "Góðar fréttir — FIRINGI-aðgangurinn þinn hefur verið samþykktur. Nú geturðu skráð þig inn og hafið viðskipti."
+    },
+    "company_rejected": {
+      "title": "Umsókn ekki samþykkt",
+      "body": "FIRINGI-umsókn þín var ekki samþykkt. Ástæða: {reason}"
+    },
+    "company_suspended": {
+      "title": "Aðgangur í bið",
+      "body": "FIRINGI-aðgangurinn þinn hefur verið settur í bið. Ástæða: {reason}"
+    },
+    "company_pending": {
+      "title": "Breytinga óskað",
+      "body": "FIRINGI þarf frekari upplýsingar áður en umsóknin verður samþykkt: {reason}"
+    },
+    "driver_approved": {
+      "title": "Bílstjóraaðgangur samþykktur",
+      "body": "Bílstjóraaðgangurinn þinn er samþykktur. Nú geturðu skráð þig inn í bílstjóraapp FIRINGI."
+    },
+    "driver_rejected": {
+      "title": "Bílstjóraumsókn ekki samþykkt",
+      "body": "Bílstjóraumsókn þín var ekki samþykkt. Ástæða: {reason}"
+    },
+    "driver_suspended": {
+      "title": "Bílstjóraaðgangur í bið",
+      "body": "Bílstjóraaðgangurinn þinn hefur verið settur í bið. Ástæða: {reason}"
+    },
+    "document_rejected": {
+      "title": "Skjali hafnað",
+      "body": "Skjalinu þínu „{document}“ var hafnað: {reason}. Vinsamlegast hladdu upp nýrri útgáfu."
+    },
+    "restriction_approved": {
+      "title": "Aðgangur samþykktur",
+      "body": "Aðgangur þinn að vörum af tegundinni {restriction} er samþykktur til {until}."
+    },
+    "restriction_rejected": {
+      "title": "Aðgangur ekki samþykktur",
+      "body": "Aðgangur þinn að vörum af tegundinni {restriction} var ekki samþykktur: {reason}"
+    },
+    "restriction_revoked": {
+      "title": "Aðgangur afturkallaður",
+      "body": "Aðgangur þinn að vörum af tegundinni {restriction} var afturkallaður: {reason}"
+    },
+    "product_approved": {
+      "title": "Vara samþykkt",
+      "body": "„{product}“ er samþykkt og tilboðið þitt er nú virkt."
+    },
+    "product_rejected": {
+      "title": "Vara ekki samþykkt",
+      "body": "„{product}“ var ekki samþykkt: {reason}"
+    },
+    "offer_rejected": {
+      "title": "Tilboð ekki samþykkt",
+      "body": "Tilboðið þitt í „{product}“ var ekki samþykkt: {reason}"
+    },
+    "offer_suspended": {
+      "title": "Tilboð í bið",
+      "body": "FIRINGI setti tilboð þitt í „{product}“ í bið: {reason}"
+    },
+    "order_new": {
+      "title": "Ný pöntun {number}",
+      "body": "Þú fékkst pöntun {number} frá {buyer} ({total}). Vinsamlegast staðfestu hana."
+    },
+    "order_confirmed": {
+      "title": "Pöntun {number} staðfest",
+      "body": "{supplier} staðfesti pöntunina þína {number}."
+    },
+    "order_ready_for_pickup": {
+      "title": "Pöntun {number} tilbúin",
+      "body": "Pöntun {number} er tilbúin til afhendingar."
+    },
+    "order_dispatched": {
+      "title": "Pöntun {number} send",
+      "body": "Pöntun {number} er farin frá lagernum."
+    },
+    "order_out_for_delivery": {
+      "title": "Pöntun {number} er á leiðinni",
+      "body": "Pöntun {number} verður afhent í dag."
+    },
+    "order_delivered": {
+      "title": "Pöntun {number} afhent",
+      "body": "Pöntun {number} hefur verið afhent. Reikningurinn er í FIRINGI."
+    },
+    "order_cancelled": {
+      "title": "Pöntun {number} afpöntuð",
+      "body": "Pöntun {number} hefur verið afpöntuð. {reason}"
+    },
+    "order_exception": {
+      "title": "Pöntun {number} í bið",
+      "body": "Pöntun {number} þarfnast athygli: {reason}"
+    },
+    "order_returned": {
+      "title": "Pöntun {number} skilað",
+      "body": "Pöntun {number} hefur verið skilað. {reason}"
+    },
+    "delivery_assigned": {
+      "title": "Ný afhending {number}",
+      "body": "Ný afhending {number} til {customer}, {address}."
+    },
+    "delivery_failed": {
+      "title": "Afhending {number} mistókst",
+      "body": "Afhending {number} mistókst: {reason}"
+    },
+    "return_requested": {
+      "title": "Skilabeiðni — pöntun {number}",
+      "body": "Óskað hefur verið eftir skilum á pöntun {number}: {reason}"
+    },
+    "return_approved": {
+      "title": "Skil samþykkt — pöntun {number}",
+      "body": "Skil á pöntun {number} eru samþykkt. Vörurnar verða sóttar."
+    },
+    "return_rejected": {
+      "title": "Skil ekki samþykkt — pöntun {number}",
+      "body": "Skil á pöntun {number} voru ekki samþykkt: {reason}"
+    },
+    "return_credited": {
+      "title": "Skil kreditfærð — pöntun {number}",
+      "body": "Við höfum tekið við vörunum sem skilað var úr pöntun {number}. Kreditreikningurinn þinn er í FIRINGI."
+    },
+    "invoice_credit_note": {
+      "title": "Kreditreikningur {document}",
+      "body": "FIRINGI gaf út kreditreikning {document}."
+    },
+    "vendor_invoice_approved": {
+      "title": "Reikningur {document} samþykktur",
+      "body": "FIRINGI samþykkti reikninginn þinn {document}. Hann verður greiddur samkvæmt skilmálum þínum."
+    },
+    "vendor_invoice_rejected": {
+      "title": "Reikningi {document} hafnað",
+      "body": "FIRINGI hafnaði reikningnum þínum {document}: {reason}"
+    },
+    "promotion_acceptance": {
+      "title": "FIRINGI-tilboð — við þurfum svar frá þér",
+      "body": "FIRINGI leggur til „{promotion}“ og biður þig um að fjármagna {share}% af afslættinum."
+    }
+  },
+  "notifications": {
+    "title": "Tilkynningar",
+    "empty": "Engar tilkynningar ennþá.",
+    "markAllRead": "Merkja allt sem lesið",
+    "open": "Opna",
+    "unread": "{count} ólesnar",
+    "viewAll": "Sjá allar tilkynningar",
+    "preferences": "Tilkynningastillingar",
+    "preferencesIntro": "Veldu hvernig FIRINGI heldur þér upplýstum. Tilkynningar í appinu eru alltaf virkar; sum skilaboð um aðgang og fjármál fara alltaf með tölvupósti.",
+    "category": "Efni",
+    "channels": {
+      "IN_APP": "Í appinu",
+      "EMAIL": "Tölvupóstur",
+      "SMS": "SMS",
+      "WHATSAPP": "WhatsApp",
+      "PUSH": "Vafri / sími"
+    },
+    "categories": {
+      "orders": "Pantanir",
+      "deliveries": "Afhendingar",
+      "returns": "Skil",
+      "finance": "Reikningar og greiðslur",
+      "catalogue": "Vörur",
+      "account": "Aðgangur og samþykktir"
+    },
+    "phone": "Farsímanúmer (með landsnúmeri, t.d. +354 612 3456)",
+    "smsConsent": "Ég samþykki að fá SMS frá FIRINGI í þetta númer.",
+    "whatsappConsent": "Ég samþykki að fá WhatsApp-skilaboð frá FIRINGI í þetta númer.",
+    "save": "Vista",
+    "saved": "Vistað.",
+    "alwaysOn": "Alltaf virkt",
+    "push": "Tilkynningar í þessu tæki",
+    "pushEnable": "Virkja í þessu tæki",
+    "pushOn": "Virkt í þessu tæki",
+    "pushUnsupported": "Þessi vafri styður ekki tilkynningar.",
+    "pushDenied": "Tilkynningar eru lokaðar í stillingum þessa vafra.",
+    "needsPhone": "Bættu við farsímanúmerinu þínu til að fá SMS og WhatsApp."
   }
 }

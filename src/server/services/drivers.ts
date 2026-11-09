@@ -5,7 +5,7 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { REQUIRED_DRIVER_DOCUMENTS } from "@/server/onboarding/rules";
 import { writeAudit } from "./audit";
-import { notifyUser } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 export async function listDriverApplications(ctx: Ctx, opts: { pendingOnly?: boolean } = {}) {
   if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.fleet.view", "admin.fleet.manage"])) throw new ForbiddenError();
@@ -35,10 +35,5 @@ export async function reviewDriver(ctx: Ctx, driverId: string, to: "APPROVED" | 
     await tx.driver.update({ where: { id: driverId }, data: { status: to } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `driver.${to.toLowerCase()}`, entityType: "Driver", entityId: driverId, before: { status: d.status }, after: { status: to, reason } }, tx);
   });
-  await notifyUser(d.userId, {
-    type: `driver.${to.toLowerCase()}`,
-    title: to === "APPROVED" ? "Driver account approved" : to === "REJECTED" ? "Driver application not approved" : "Driver account suspended",
-    body: to === "APPROVED" ? "You can now sign in to the FIRINGI driver portal." : `Reason: ${reason}`,
-    link: "/",
-  });
+  await notify(`driver.${to.toLowerCase()}`, [{ userId: d.userId, link: "/" }], { reason });
 }

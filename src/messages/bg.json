@@ -845,5 +845,185 @@
     "date": "Дата",
     "products": "Продукти",
     "creditNote": "Кредитно известие"
+  },
+  "notify": {
+    "company_under_review": {
+      "title": "Заявката се разглежда",
+      "body": "Заявката ви е изпратена и FIRINGI я разглежда."
+    },
+    "company_approved": {
+      "title": "Профилът е одобрен",
+      "body": "Добра новина — профилът ви във FIRINGI е одобрен. Вече можете да влезете и да търгувате."
+    },
+    "company_rejected": {
+      "title": "Заявката не е одобрена",
+      "body": "Заявката ви във FIRINGI не е одобрена. Причина: {reason}"
+    },
+    "company_suspended": {
+      "title": "Профилът е спрян",
+      "body": "Профилът ви във FIRINGI е спрян. Причина: {reason}"
+    },
+    "company_pending": {
+      "title": "Поискани са промени",
+      "body": "FIRINGI се нуждае от още информация, преди да одобри заявката ви: {reason}"
+    },
+    "driver_approved": {
+      "title": "Профилът на шофьор е одобрен",
+      "body": "Профилът ви на шофьор е одобрен. Вече можете да влезете в приложението за шофьори на FIRINGI."
+    },
+    "driver_rejected": {
+      "title": "Заявката за шофьор не е одобрена",
+      "body": "Заявката ви за шофьор не е одобрена. Причина: {reason}"
+    },
+    "driver_suspended": {
+      "title": "Профилът на шофьор е спрян",
+      "body": "Профилът ви на шофьор е спрян. Причина: {reason}"
+    },
+    "document_rejected": {
+      "title": "Документът е отхвърлен",
+      "body": "Документът ви „{document}“ е отхвърлен: {reason}. Моля, качете нова версия."
+    },
+    "restriction_approved": {
+      "title": "Достъпът е одобрен",
+      "body": "Достъпът ви до продукти от вида {restriction} е одобрен до {until}."
+    },
+    "restriction_rejected": {
+      "title": "Достъпът не е одобрен",
+      "body": "Достъпът ви до продукти от вида {restriction} не е одобрен: {reason}"
+    },
+    "restriction_revoked": {
+      "title": "Достъпът е отнет",
+      "body": "Достъпът ви до продукти от вида {restriction} е отнет: {reason}"
+    },
+    "product_approved": {
+      "title": "Продуктът е одобрен",
+      "body": "„{product}“ е одобрен и офертата ви вече е активна."
+    },
+    "product_rejected": {
+      "title": "Продуктът не е одобрен",
+      "body": "„{product}“ не е одобрен: {reason}"
+    },
+    "offer_rejected": {
+      "title": "Офертата не е одобрена",
+      "body": "Офертата ви за „{product}“ не е одобрена: {reason}"
+    },
+    "offer_suspended": {
+      "title": "Офертата е спряна",
+      "body": "FIRINGI спря офертата ви за „{product}“: {reason}"
+    },
+    "order_new": {
+      "title": "Нова поръчка {number}",
+      "body": "Получихте поръчка {number} от {buyer} ({total}). Моля, потвърдете я."
+    },
+    "order_confirmed": {
+      "title": "Поръчка {number} е потвърдена",
+      "body": "{supplier} потвърди поръчката ви {number}."
+    },
+    "order_ready_for_pickup": {
+      "title": "Поръчка {number} е готова",
+      "body": "Поръчка {number} е готова за вземане."
+    },
+    "order_dispatched": {
+      "title": "Поръчка {number} е изпратена",
+      "body": "Поръчка {number} напусна склада."
+    },
+    "order_out_for_delivery": {
+      "title": "Поръчка {number} е на път",
+      "body": "Поръчка {number} се доставя днес."
+    },
+    "order_delivered": {
+      "title": "Поръчка {number} е доставена",
+      "body": "Поръчка {number} е доставена. Фактурата е налична във FIRINGI."
+    },
+    "order_cancelled": {
+      "title": "Поръчка {number} е отказана",
+      "body": "Поръчка {number} е отказана. {reason}"
+    },
+    "order_exception": {
+      "title": "Поръчка {number} е задържана",
+      "body": "Поръчка {number} изисква внимание: {reason}"
+    },
+    "order_returned": {
+      "title": "Поръчка {number} е върната",
+      "body": "Поръчка {number} е върната. {reason}"
+    },
+    "delivery_assigned": {
+      "title": "Нова доставка {number}",
+      "body": "Нова доставка {number} за {customer}, {address}."
+    },
+    "delivery_failed": {
+      "title": "Доставка {number} е неуспешна",
+      "body": "Доставка {number} е неуспешна: {reason}"
+    },
+    "return_requested": {
+      "title": "Заявка за връщане — поръчка {number}",
+      "body": "Поискано е връщане за поръчка {number}: {reason}"
+    },
+    "return_approved": {
+      "title": "Връщането е одобрено — поръчка {number}",
+      "body": "Връщането на поръчка {number} е одобрено. Стоката ще бъде взета."
+    },
+    "return_rejected": {
+      "title": "Връщането не е одобрено — поръчка {number}",
+      "body": "Връщането на поръчка {number} не е одобрено: {reason}"
+    },
+    "return_credited": {
+      "title": "Връщането е кредитирано — поръчка {number}",
+      "body": "Получихме върнатата стока от поръчка {number}. Кредитното ви известие е налично във FIRINGI."
+    },
+    "invoice_credit_note": {
+      "title": "Кредитно известие {document}",
+      "body": "FIRINGI издаде кредитно известие {document}."
+    },
+    "vendor_invoice_approved": {
+      "title": "Фактура {document} е одобрена",
+      "body": "FIRINGI одобри фактурата ви {document}. Ще бъде платена според условията ви."
+    },
+    "vendor_invoice_rejected": {
+      "title": "Фактура {document} е отхвърлена",
+      "body": "FIRINGI отхвърли фактурата ви {document}: {reason}"
+    },
+    "promotion_acceptance": {
+      "title": "Промоция на FIRINGI — очакваме отговора ви",
+      "body": "FIRINGI предлага „{promotion}“ и ви моли да поемете {share}% от отстъпката."
+    }
+  },
+  "notifications": {
+    "title": "Известия",
+    "empty": "Все още няма известия.",
+    "markAllRead": "Маркирай всички като прочетени",
+    "open": "Отвори",
+    "unread": "{count} непрочетени",
+    "viewAll": "Виж всички известия",
+    "preferences": "Настройки на известията",
+    "preferencesIntro": "Изберете как FIRINGI да ви информира. Известията в приложението са винаги включени; някои съобщения за профила и финансите винаги се изпращат по имейл.",
+    "category": "Тема",
+    "channels": {
+      "IN_APP": "В приложението",
+      "EMAIL": "Имейл",
+      "SMS": "SMS",
+      "WHATSAPP": "WhatsApp",
+      "PUSH": "Браузър / телефон"
+    },
+    "categories": {
+      "orders": "Поръчки",
+      "deliveries": "Доставки",
+      "returns": "Връщания",
+      "finance": "Фактури и плащания",
+      "catalogue": "Продукти",
+      "account": "Профил и одобрения"
+    },
+    "phone": "Мобилен номер (с код на държавата, напр. +359 88 123 4567)",
+    "smsConsent": "Съгласен съм да получавам SMS от FIRINGI на този номер.",
+    "whatsappConsent": "Съгласен съм да получавам съобщения в WhatsApp от FIRINGI на този номер.",
+    "save": "Запази",
+    "saved": "Запазено.",
+    "alwaysOn": "Винаги включени",
+    "push": "Известия на това устройство",
+    "pushEnable": "Включи на това устройство",
+    "pushOn": "Включени на това устройство",
+    "pushUnsupported": "Този браузър не поддържа известия.",
+    "pushDenied": "Известията са блокирани в настройките на този браузър.",
+    "needsPhone": "Добавете мобилния си номер, за да получавате SMS и WhatsApp."
   }
 }

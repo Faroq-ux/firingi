@@ -1,0 +1,122 @@
+// ───────────────────────── Notifications & communications ─────────────────────────
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+  SMS
+  WHATSAPP
+  PUSH
+}
+
+enum MessageStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  READ
+  FAILED
+  SKIPPED // channel off for this event / user, no phone, no consent …
+}
+
+/// FIRINGI's override of a default text (defaults live in src/messages/<locale>.json → notify.*).
+/// WhatsApp business-initiated messages must use a template approved by Meta: waTemplateName +
+/// waLanguage name it; the event's variables are sent as its body parameters, in catalogue order.
+model NotificationTemplate {
+  id             String              @id @default(cuid())
+  eventKey       String
+  channel        NotificationChannel
+  locale         String
+  subject        String?
+  body           String
+  waTemplateName String?
+  waLanguage     String?
+  isActive       Boolean             @default(true)
+  updatedById    String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@unique([eventKey, channel, locale])
+}
+
+/// Outbox + log of every message: one row per recipient and channel.
+model NotificationMessage {
+  id                String              @id @default(cuid())
+  eventKey          String
+  channel           NotificationChannel
+  userId            String?
+  companyId         String?
+  to                String
+  locale            String
+  subject           String?
+  body              String
+  link              String?
+  variables         Json?
+  status            MessageStatus       @default(QUEUED)
+  provider          String
+  providerMessageId String?
+  error             String?
+  attempts          Int                 @default(0)
+  nextAttemptAt     DateTime?
+  refType           String?
+  refId             String?
+  createdAt         DateTime            @default(now())
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  readAt            DateTime?
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([status, nextAttemptAt])
+  @@index([userId, createdAt])
+  @@index([eventKey, createdAt])
+  @@index([providerMessageId])
+}
+
+/// A user's choice per category (orders, deliveries, finance, account, catalogue) and channel.
+/// No row = the event's default.
+model NotificationPreference {
+  id        String              @id @default(cuid())
+  userId    String
+  category  String
+  channel   NotificationChannel
+  enabled   Boolean
+  updatedAt DateTime            @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category, channel])
+}
+
+model PushSubscription {
+  id         String    @id @default(cuid())
+  userId     String
+  endpoint   String    @unique
+  p256dh     String
+  auth       String
+  userAgent  String?
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Messages received by SMS / WhatsApp (customer, vendor and driver inboxes).
+model InboundMessage {
+  id                String              @id @default(cuid())
+  channel           NotificationChannel
+  from              String
+  body              String
+  mediaUrl          String?
+  userId            String?
+  companyId         String?
+  providerMessageId String?             @unique
+  receivedAt        DateTime            @default(now())
+  handledAt         DateTime?
+  handledById       String?
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([from, receivedAt])
+  @@index([handledAt])
+}

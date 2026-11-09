@@ -13,7 +13,7 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "./audit";
-import { notifyUser } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 const isVendor = (ctx: Ctx) => ctx.company.type === "DISTRIBUTOR" || ctx.company.type === "WHOLESALER";
 const isAdmin = (ctx: Ctx) => ctx.company.type === "ADMIN";
@@ -170,7 +170,7 @@ export async function setDriverActive(ctx: Ctx, driverId: string, active: boolea
     if (!active) await tx.delivery.updateMany({ where: { driverId, status: "ASSIGNED" }, data: { driverId: null, status: "UNASSIGNED" } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: active ? "driver.reactivated" : "driver.suspended", entityType: "Driver", entityId: driverId, before: { status: d.status }, after: { reason } }, tx);
   });
-  if (!active) await notifyUser(d.userId, { type: "driver.suspended", title: "Driver account suspended", body: `Reason: ${reason}`, link: "/" });
+  if (!active) await notify("driver.suspended", [{ userId: d.userId, link: "/" }], { reason });
 }
 
 /** Driver sets own availability; the fleet owner may set it for its drivers. */

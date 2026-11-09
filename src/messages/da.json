@@ -845,5 +845,185 @@
     "date": "Dato",
     "products": "Produkter",
     "creditNote": "Kreditnota"
+  },
+  "notify": {
+    "company_under_review": {
+      "title": "Ansøgning under behandling",
+      "body": "Din ansøgning er sendt og bliver gennemgået af FIRINGI."
+    },
+    "company_approved": {
+      "title": "Konto godkendt",
+      "body": "Gode nyheder — din FIRINGI-konto er godkendt. Du kan nu logge ind og begynde at handle."
+    },
+    "company_rejected": {
+      "title": "Ansøgning ikke godkendt",
+      "body": "Din FIRINGI-ansøgning blev ikke godkendt. Årsag: {reason}"
+    },
+    "company_suspended": {
+      "title": "Konto suspenderet",
+      "body": "Din FIRINGI-konto er suspenderet. Årsag: {reason}"
+    },
+    "company_pending": {
+      "title": "Ændringer ønskes",
+      "body": "FIRINGI har brug for flere oplysninger, før din ansøgning kan godkendes: {reason}"
+    },
+    "driver_approved": {
+      "title": "Chaufførkonto godkendt",
+      "body": "Din chaufførkonto er godkendt. Du kan nu logge ind i FIRINGI's chaufførapp."
+    },
+    "driver_rejected": {
+      "title": "Chaufføransøgning ikke godkendt",
+      "body": "Din chaufføransøgning blev ikke godkendt. Årsag: {reason}"
+    },
+    "driver_suspended": {
+      "title": "Chaufførkonto suspenderet",
+      "body": "Din chaufførkonto er suspenderet. Årsag: {reason}"
+    },
+    "document_rejected": {
+      "title": "Dokument afvist",
+      "body": "Dit dokument \"{document}\" blev afvist: {reason}. Upload venligst en ny version."
+    },
+    "restriction_approved": {
+      "title": "Adgang godkendt",
+      "body": "Din adgang til produkter af typen {restriction} er godkendt til {until}."
+    },
+    "restriction_rejected": {
+      "title": "Adgang ikke godkendt",
+      "body": "Din adgang til produkter af typen {restriction} blev ikke godkendt: {reason}"
+    },
+    "restriction_revoked": {
+      "title": "Adgang tilbagekaldt",
+      "body": "Din adgang til produkter af typen {restriction} er tilbagekaldt: {reason}"
+    },
+    "product_approved": {
+      "title": "Produkt godkendt",
+      "body": "\"{product}\" er godkendt, og dit tilbud er nu aktivt."
+    },
+    "product_rejected": {
+      "title": "Produkt ikke godkendt",
+      "body": "\"{product}\" blev ikke godkendt: {reason}"
+    },
+    "offer_rejected": {
+      "title": "Tilbud ikke godkendt",
+      "body": "Dit tilbud på \"{product}\" blev ikke godkendt: {reason}"
+    },
+    "offer_suspended": {
+      "title": "Tilbud suspenderet",
+      "body": "FIRINGI har suspenderet dit tilbud på \"{product}\": {reason}"
+    },
+    "order_new": {
+      "title": "Ny ordre {number}",
+      "body": "Du har modtaget ordre {number} fra {buyer} ({total}). Bekræft den venligst."
+    },
+    "order_confirmed": {
+      "title": "Ordre {number} bekræftet",
+      "body": "{supplier} har bekræftet din ordre {number}."
+    },
+    "order_ready_for_pickup": {
+      "title": "Ordre {number} klar",
+      "body": "Ordre {number} er klar til afhentning."
+    },
+    "order_dispatched": {
+      "title": "Ordre {number} afsendt",
+      "body": "Ordre {number} har forladt lageret."
+    },
+    "order_out_for_delivery": {
+      "title": "Ordre {number} er på vej",
+      "body": "Ordre {number} bliver leveret i dag."
+    },
+    "order_delivered": {
+      "title": "Ordre {number} leveret",
+      "body": "Ordre {number} er leveret. Fakturaen findes i FIRINGI."
+    },
+    "order_cancelled": {
+      "title": "Ordre {number} annulleret",
+      "body": "Ordre {number} er annulleret. {reason}"
+    },
+    "order_exception": {
+      "title": "Ordre {number} sat i bero",
+      "body": "Ordre {number} kræver opmærksomhed: {reason}"
+    },
+    "order_returned": {
+      "title": "Ordre {number} returneret",
+      "body": "Ordre {number} er returneret. {reason}"
+    },
+    "delivery_assigned": {
+      "title": "Ny levering {number}",
+      "body": "Ny levering {number} til {customer}, {address}."
+    },
+    "delivery_failed": {
+      "title": "Levering {number} mislykkedes",
+      "body": "Levering {number} mislykkedes: {reason}"
+    },
+    "return_requested": {
+      "title": "Returanmodning — ordre {number}",
+      "body": "Der er anmodet om retur af ordre {number}: {reason}"
+    },
+    "return_approved": {
+      "title": "Retur godkendt — ordre {number}",
+      "body": "Returneringen af ordre {number} er godkendt. Varerne bliver afhentet."
+    },
+    "return_rejected": {
+      "title": "Retur ikke godkendt — ordre {number}",
+      "body": "Returneringen af ordre {number} blev ikke godkendt: {reason}"
+    },
+    "return_credited": {
+      "title": "Retur krediteret — ordre {number}",
+      "body": "Vi har modtaget de returnerede varer fra ordre {number}. Din kreditnota findes i FIRINGI."
+    },
+    "invoice_credit_note": {
+      "title": "Kreditnota {document}",
+      "body": "FIRINGI har udstedt kreditnota {document}."
+    },
+    "vendor_invoice_approved": {
+      "title": "Faktura {document} godkendt",
+      "body": "FIRINGI har godkendt din faktura {document}. Den betales efter dine betingelser."
+    },
+    "vendor_invoice_rejected": {
+      "title": "Faktura {document} afvist",
+      "body": "FIRINGI har afvist din faktura {document}: {reason}"
+    },
+    "promotion_acceptance": {
+      "title": "FIRINGI-kampagne — vi mangler dit svar",
+      "body": "FIRINGI foreslår \"{promotion}\" og beder dig finansiere {share} % af rabatten."
+    }
+  },
+  "notifications": {
+    "title": "Notifikationer",
+    "empty": "Ingen notifikationer endnu.",
+    "markAllRead": "Markér alle som læst",
+    "open": "Åbn",
+    "unread": "{count} ulæste",
+    "viewAll": "Se alle notifikationer",
+    "preferences": "Notifikationsindstillinger",
+    "preferencesIntro": "Vælg, hvordan FIRINGI holder dig orienteret. Notifikationer i appen er altid slået til; nogle beskeder om konto og økonomi sendes altid på e-mail.",
+    "category": "Emne",
+    "channels": {
+      "IN_APP": "I appen",
+      "EMAIL": "E-mail",
+      "SMS": "SMS",
+      "WHATSAPP": "WhatsApp",
+      "PUSH": "Browser / telefon"
+    },
+    "categories": {
+      "orders": "Ordrer",
+      "deliveries": "Leveringer",
+      "returns": "Returneringer",
+      "finance": "Fakturaer og betalinger",
+      "catalogue": "Produkter",
+      "account": "Konto og godkendelser"
+    },
+    "phone": "Mobilnummer (med landekode, f.eks. +45 20 12 34 56)",
+    "smsConsent": "Jeg accepterer at modtage SMS fra FIRINGI på dette nummer.",
+    "whatsappConsent": "Jeg accepterer at modtage WhatsApp-beskeder fra FIRINGI på dette nummer.",
+    "save": "Gem",
+    "saved": "Gemt.",
+    "alwaysOn": "Altid slået til",
+    "push": "Notifikationer på denne enhed",
+    "pushEnable": "Slå til på denne enhed",
+    "pushOn": "Slået til på denne enhed",
+    "pushUnsupported": "Denne browser understøtter ikke notifikationer.",
+    "pushDenied": "Notifikationer er blokeret i denne browsers indstillinger.",
+    "needsPhone": "Tilføj dit mobilnummer for at modtage SMS og WhatsApp."
   }
 }

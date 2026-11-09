@@ -11,7 +11,7 @@ import { REQUIRED_DOCUMENTS, OPTIONAL_DOCUMENTS, REQUIRED_DRIVER_DOCUMENTS } fro
 import { canReviewDocsOf, canViewType, scopeWhere } from "./admin-access";
 import { writeAudit } from "./audit";
 import { readStored, storeUpload } from "./storage";
-import { notifyCompany, notifyUser } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 /** Document types a company may upload itself (licences go through the restricted-access flow). */
 export function uploadableCompanyDocTypes(type: Exclude<Ctx["company"]["type"], "ADMIN">): DocumentType[] {
@@ -107,11 +107,11 @@ export async function reviewDocument(ctx: Ctx, documentId: string, decision: Ext
   });
   await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `document.${decision.toLowerCase()}`, entityType: "Document", entityId: documentId, before: { status: d.status }, after: { status: decision, note } });
   if (decision === "REJECTED") {
-    const body = `Your document "${d.fileName}" (${d.type.replace(/_/g, " ").toLowerCase()}) was rejected: ${note}. Please upload a new version.`;
-    if (company) await notifyCompany(company.id, { type: "document.rejected", title: "Document rejected", body, link: "/" });
+    const vars = { document: d.fileName, reason: note };
+    if (company) await notify("document.rejected", [{ companyId: company.id, link: "/" }], vars);
     else if (d.driverId) {
       const drv = await prisma.driver.findUnique({ where: { id: d.driverId }, select: { userId: true } });
-      if (drv) await notifyUser(drv.userId, { type: "document.rejected", title: "Document rejected", body, link: "/" });
+      if (drv) await notify("document.rejected", [{ userId: drv.userId, link: "/" }], vars);
     }
   }
 }

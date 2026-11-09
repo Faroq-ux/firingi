@@ -11,7 +11,7 @@ import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/serv
 import { scopeWhere } from "./admin-access";
 import { writeAudit } from "./audit";
 import { storeUpload } from "./storage";
-import { notifyCompany } from "./notify";
+import { notify } from "@/server/notify/dispatch";
 
 const LICENCE_DOC = { TOBACCO: "TOBACCO_LICENCE", ALCOHOL: "ALCOHOL_LICENCE" } as const;
 
@@ -84,9 +84,5 @@ export async function reviewRestrictionAccess(
       await tx.document.updateMany({ where: { restrictionApprovalId: a.id, status: "PENDING" }, data: { status: decision, reviewedById: ctx.user.id, reviewedAt: new Date(), reviewNote: input.note ?? null } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `restriction.${decision.toLowerCase()}`, entityType: "RestrictionApproval", entityId: a.id, before: { status: from }, after: { status: decision, validUntil: input.validUntil, note: input.note } }, tx);
   });
-  const what = a.restriction === "TOBACCO" ? "tobacco" : "alcohol";
-  const body = decision === "APPROVED"
-    ? `Your access to ${what} products has been approved until ${input.validUntil!.toISOString().slice(0, 10)}.`
-    : `Your access to ${what} products was ${decision === "REVOKED" ? "revoked" : "not approved"}: ${input.note}`;
-  await notifyCompany(a.companyId, { type: `restriction.${decision.toLowerCase()}`, title: `${what[0].toUpperCase()}${what.slice(1)} access ${decision.toLowerCase()}`, body, link: "/" });
+  await notify(`restriction.${decision.toLowerCase()}`, [{ companyId: a.companyId, link: "/" }], { restriction: a.restriction, until: input.validUntil?.toISOString().slice(0, 10) ?? "", reason: input.note });
 }

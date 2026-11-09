@@ -39,26 +39,33 @@ enum PermissionAudience {
 // ---- better-auth core tables (field names required by better-auth) ----
 
 model User {
-  id            String     @id @default(cuid())
-  email         String     @unique
-  name          String
-  emailVerified Boolean    @default(false)
-  image         String?
-  phone         String?
-  locale        String? // preferred UI language (must be a country language or "en")
-  status        UserStatus @default(ACTIVE)
-  lastLoginAt   DateTime?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id                String     @id @default(cuid())
+  email             String     @unique
+  name              String
+  emailVerified     Boolean    @default(false)
+  image             String?
+  phone             String?
+  locale            String? // preferred UI language (must be a country language or "en")
+  /// Explicit consent (GDPR) to receive SMS / WhatsApp messages on `phone`.
+  smsConsentAt      DateTime?
+  whatsappConsentAt DateTime?
+  status            UserStatus @default(ACTIVE)
+  lastLoginAt       DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
 
-  sessions          Session[]
-  accounts          Account[]
-  memberships       Membership[]
-  driver            Driver?
-  notifications     Notification[]
-  carts             Cart[]
-  ordersPlaced      Order[]        @relation("OrderPlacedBy")
-  regionalManagerOf Company[]      @relation("RegionalManager")
+  sessions                Session[]
+  accounts                Account[]
+  memberships             Membership[]
+  driver                  Driver?
+  notifications           Notification[]
+  notificationMessages    NotificationMessage[]
+  notificationPreferences NotificationPreference[]
+  pushSubscriptions       PushSubscription[]
+  inboundMessages         InboundMessage[]
+  carts                   Cart[]
+  ordersPlaced            Order[]                  @relation("OrderPlacedBy")
+  regionalManagerOf       Company[]                @relation("RegionalManager")
 }
 
 model Session {
