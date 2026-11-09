@@ -3,6 +3,8 @@
  * customer can never receive a distributor's offer, a hidden restricted product or
  * another country's wholesaler — whichever page or API calls it.
  */
+import { orderingMode } from "@/server/allocation/mode";
+import { allocationRules } from "@/server/allocation/rules";
 import type { Prisma } from "@prisma/client";
 import Decimal from "decimal.js";
 import { cache } from "react";
@@ -93,6 +95,7 @@ function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1, promoFn
   const sale = promo ? promo.salePriceNet : null;
   return {
     offerId: o.id,
+    packagingUnitId: o.packagingUnitId,
     productId: product.id,
     name: product.name as Record<string, string>,
     description: (product.description ?? null) as Record<string, string> | null,
@@ -137,6 +140,27 @@ function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1, promoFn
 export type CatalogueItem = ReturnType<typeof present>;
 
 /**
+ * "Order from FIRINGI" countries: one offer per product packaging — the one FIRINGI would
+ * pick (nearest or cheapest wholesaler with stock, per the allocation rules) — sold as FIRINGI.
+ * Returns null when the buyer chooses suppliers itself.
+ */
+async function firingiPicks(ctx: Ctx, items: CatalogueItem[]): Promise<CatalogueItem[] | null> {
+  if ((await orderingMode(ctx)) !== "FIRINGI") return null;
+  const [rules, distances] = await Promise.all([allocationRules(), supplierDistances(ctx)]);
+  const best = new Map<string, CatalogueItem>();
+  const key = (i: CatalogueItem) => [i.available > 0 ? 0 : 1, rules.pickBy === "CHEAPEST" ? Number(i.price?.unitPriceNet ?? Infinity) : distances.get(i.vendor.id) ?? Infinity, Number(i.price?.unitPriceNet ?? Infinity)];
+  const better = (a: CatalogueItem, b: CatalogueItem) => { const x = key(a), y = key(b); for (let k = 0; k < x.length; k++) if (x[k] !== y[k]) return x[k] < y[k]; return false; };
+  for (const i of items) {
+    if (!i.price) continue;
+    const cur = best.get(i.packagingUnitId);
+    if (!cur || better(i, cur)) best.set(i.packagingUnitId, i);
+  }
+  return [...best.values()].map(asFiringi);
+}
+// Sold as FIRINGI: no supplier name, id or supplier SKU.
+const asFiringi = (i: CatalogueItem): CatalogueItem => ({ ...i, vendorSku: null, vendor: { ...i.vendor, id: "", name: "FIRINGI" } });
+
+/**
  * Search filter: a barcode (8–14 digits, typed or scanned) matches the packaging or
  * unit barcode exactly; anything else searches names, brand, SKU and barcodes.
  */
@@ -166,6 +190,9 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string) {
     take: 100,
   });
   const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
+  const presented = rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn));
+  const picked = await firingiPicks(ctx, presented);
+  if (picked) return { items: picked.map((i) => ({ ...i, distanceKm: null as number | null })), barcode: asBarcode(q) };
   const suppliers = new Map((await visibleSuppliers(ctx)).map((s) => [s.id, s]));
   const items = rows
     .map((r) => ({ ...present(r, vat, ctx.company.countryCode, 1, promoFn), distanceKm: suppliers.get(r.vendorCompanyId)?.distanceKm ?? null }))
@@ -186,6 +213,13 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
       f.vendorId ? { vendorCompanyId: f.vendorId } : {},
     ],
   };
+  if (!f.vendorId && (await orderingMode(ctx)) === "FIRINGI") {
+    // One FIRINGI offer per packaging: pick across all suppliers, then page.
+    const all = await prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }] });
+    const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(all.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
+    const picked = (await firingiPicks(ctx, all.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn))))!;
+    return { items: picked.slice((page - 1) * pageSize, page * pageSize), total: picked.length, page, pageCount: Math.max(1, Math.ceil(picked.length / pageSize)) };
+  }
   const [rows, total] = await Promise.all([
     prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }], skip: (page - 1) * pageSize, take: pageSize }),
     prisma.vendorOffer.count({ where }),
@@ -206,7 +240,11 @@ export async function catalogueItem(ctx: Ctx, offerId: string) {
     include: offerInclude(scope),
     take: 20,
   });
-  return { item: present(row, vat, ctx.company.countryCode, 1, promoFn), alternatives: alternatives.map((a) => present(a, vat, ctx.company.countryCode, 1, promoFn)) };
+  const item = present(row, vat, ctx.company.countryCode, 1, promoFn);
+  const alts = alternatives.map((a) => present(a, vat, ctx.company.countryCode, 1, promoFn));
+  const picked = await firingiPicks(ctx, alts.filter((a) => a.packagingUnitId !== item.packagingUnitId));
+  if (picked) return { item: asFiringi(item), alternatives: picked };
+  return { item, alternatives: alts };
 }
 
 /** Category tree the buyer may browse (restricted branches only with approval). */
@@ -240,6 +278,17 @@ export async function buyerLocation(ctx: Ctx): Promise<LatLng | null> {
  * from the buyer's delivery address to the supplier's closest warehouse / pickup point.
  */
 export async function visibleSuppliers(ctx: Ctx, opts: { categoryId?: string; q?: string } = {}) {
+  // Customers in "order from FIRINGI" countries don't pick suppliers.
+  if ((await orderingMode(ctx)) === "FIRINGI") return [];
+  return suppliersNearest(ctx, opts);
+}
+
+/** Distance (km) to each supplier the buyer may use. */
+async function supplierDistances(ctx: Ctx) {
+  return new Map((await suppliersNearest(ctx, {})).map((s) => [s.id, s.distanceKm ?? Infinity]));
+}
+
+async function suppliersNearest(ctx: Ctx, opts: { categoryId?: string; q?: string }) {
   const scope = await buyerScope(ctx);
   const categoryIds = opts.categoryId ? withDescendants(opts.categoryId, scope.info).filter((id) => scope.browsableCategoryIds.includes(id)) : undefined;
   const where: Prisma.VendorOfferWhereInput = {
@@ -279,7 +328,7 @@ export async function visibleSuppliers(ctx: Ctx, opts: { categoryId?: string; q?
     .sort(byDistance);
 }
 
-export type Supplier = Awaited<ReturnType<typeof visibleSuppliers>>[number];
+export type Supplier = Awaited<ReturnType<typeof suppliersNearest>>[number];
 
 /** Top-level categories (with the number of visible products in their branch). */
 export async function shopCategories(ctx: Ctx) {
@@ -316,7 +365,7 @@ export async function shopCategory(ctx: Ctx, categoryId: string) {
  */
 export async function supplierStore(ctx: Ctx, vendorId: string) {
   const scope = await buyerScope(ctx);
-  const supplier = (await visibleSuppliers(ctx)).find((s) => s.id === vendorId);
+  const supplier = (await visibleSuppliers(ctx)).find((s) => s.id === vendorId); // none in FIRINGI mode
   if (!supplier) throw new NotFoundError("Supplier");
   const offers = await prisma.vendorOffer.findMany({
     where: { AND: [visibleOfferWhere(scope), { vendorCompanyId: vendorId }] },

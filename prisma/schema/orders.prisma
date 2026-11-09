@@ -31,6 +31,9 @@ model Cart {
   buyerCompanyId  String
   userId          String
   sellerCompanyId String?
+  /// FIRINGI-routed cart (country in "order from FIRINGI" mode): items may come from several
+  /// suppliers; FIRINGI picks the supplier(s) at checkout.
+  routed          Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -74,6 +77,7 @@ model Order {
   requestedDeliveryDate DateTime?
   buyerNotes            String?
   parentOrderId         String? // admin split / re-allocation
+  routedByFiringi       Boolean       @default(false) // customer ordered from FIRINGI; FIRINGI picked the supplier
 
   // Totals (frozen at placement, recalculated on vendor confirmation)
   listNet          Decimal @default(0) @db.Decimal(18, 2)

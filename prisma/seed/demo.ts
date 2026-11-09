@@ -18,6 +18,8 @@ type CompanyDef = {
   vatNumber?: string;
   email: string;
   businessType?: string;
+  /** FIRINGI's own in-house warehouse (run as a wholesaler). */
+  isInHouse?: boolean;
   users: UserDef[];
 };
 
@@ -59,6 +61,11 @@ export const DEMO_COMPANIES: CompanyDef[] = [
     key: "whs-almada", type: "WHOLESALER", status: "APPROVED", country: "PT", legalName: "Cash & Carry Almada, Lda", tradeName: "C&C Almada",
     taxId: makePtNif("51077777"), vatNumber: `PT${makePtNif("51077777")}`, email: "geral@ccalmada.test",
     users: [{ email: "owner@ccalmada.test", name: "Alice Almada", roles: ["COMPANY_ADMIN"], owner: true }],
+  },
+  {
+    key: "whs-firingi", type: "WHOLESALER", status: "APPROVED", country: "PT", legalName: "FIRINGI Armazém Central, Lda", tradeName: "FIRINGI Armazém",
+    taxId: makePtNif("51099999"), vatNumber: `PT${makePtNif("51099999")}`, email: "armazem@firingi.test", isInHouse: true,
+    users: [{ email: "armazem@firingi.test", name: "Armando Armazém", roles: ["COMPANY_ADMIN"], owner: true, jobTitle: "In-house warehouse" }],
   },
   {
     key: "whs-porto", type: "WHOLESALER", status: "PENDING", country: "PT", legalName: "Grossista Porto Norte, Lda",
@@ -103,6 +110,7 @@ export async function seedDemo(
       vatNumber: def.vatNumber ?? null,
       email: def.email,
       businessType: def.businessType ?? null,
+      isInHouse: def.isInHouse ?? false,
       approvedAt: def.status === "APPROVED" ? new Date() : null,
     };
     const company = await db.company.upsert({

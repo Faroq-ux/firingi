@@ -459,6 +459,8 @@
     "barcodeResults": "Brūkšninis kodas {code}: {count} pasiūlymai, pirmiausia artimiausias tiekėjas",
     "noMatch": "Pagal „{q}“ produkto nerasta.",
     "stopScan": "Sustabdyti",
+    "firingiMode": "Užsakote iš FIRINGI: viena kaina už produktą. FIRINGI parenka artimiausią didmenininką su atsargomis — arba savo sandėlį — ir sąskaitą jums išrašo FIRINGI.",
+    "soldByFiringi": "Parduoda FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Jūsų krepšelyje jau yra produktų iš {current}. Perkate vienu metu iš vieno tiekėjo — užbaikite užsakymą arba išvalykite krepšelį prieš pridėdami produktų iš {next}.",
     "movedFrom": "Šis užsakymas pakeičia užsakymą {number}: pradinis tiekėjas negalėjo jo pristatyti, todėl FIRINGI perdavė jį ta pačia arba mažesne kaina.",
     "movedTo": "Tiekėjas negalėjo pristatyti viso užsakymo. FIRINGI perdavė šias prekes kitam tiekėjui:",
-    "passedOn": "FIRINGI perdavė jums šį užsakymą iš kito tiekėjo. Patvirtinkite jį kaip įprasta."
+    "passedOn": "FIRINGI perdavė jums šį užsakymą iš kito tiekėjo. Patvirtinkite jį kaip įprasta.",
+    "routedCart": "Iš FIRINGI — FIRINGI parinks didmenininką pateikus užsakymą.",
+    "notAvailableHere": "Kai kurių produktų šiuo metu negalima pristatyti jūsų adresu. Pašalinkite juos arba pasirinkite kitą adresą.",
+    "deliveryOrder": "Pristatymo užsakymas",
+    "deliveryOrderFromFiringi": "Pristatymo užsakymas iš FIRINGI",
+    "decision": {
+      "title": "{supplier} negali pristatyti šio užsakymo",
+      "titleShort": "{supplier} negali pristatyti viso šio užsakymo",
+      "body": "FIRINGI gali jį perduoti kitam didmenininkui ta pačia arba mažesne kaina — arba galite jį atšaukti. Mokate tik už tai, kas pristatyta.",
+      "deadline": "Nuspręskite iki {date}.",
+      "letFiringi": "Tegul FIRINGI suranda kitą didmenininką",
+      "cancelOrder": "Atšaukti užsakymą",
+      "cancelItems": "Atšaukti trūkstamas prekes",
+      "moved": "Atlikta — FIRINGI perdavė jį kitam didmenininkui:",
+      "none": "Šiuo metu jo negali priimti nė vienas didmenininkas. FIRINGI komanda ieškos sprendimo ir susisieks su jumis.",
+      "cancelled": "Atšaukta. Mokesčio nebus."
+    }
   },
   "finance": {
     "invoices": "Sąskaitos",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Užsakymui {number} reikia naujo tiekėjo",
       "body": "Užsakymui {number} automatiškai nerastas tiekėjas ({reason}). Nuspręskite paskirstymo valdymo centre."
+    },
+    "order_supplier_unavailable": {
+      "title": "Užsakymas {number}: {supplier} negali pristatyti",
+      "body": "{supplier} negali pristatyti viso užsakymo {number}. Atidarykite užsakymą, kad FIRINGI surastų kitą didmenininką ta pačia arba mažesne kaina, arba jį atšaukite."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Nuolaidos",
       "aov": "Vidutinis užsakymas"
     }
+  },
+  "deliveryOrder": {
+    "title": "Pristatymo užsakymas",
+    "print": "Spausdinti",
+    "requested": "Pageidaujamas pristatymas",
+    "notConfirmed": "Dar nepatvirtinta — pirmiausia patvirtinkite užsakymą.",
+    "supplier": "Tiekėjas",
+    "instructions": "FIRINGI užsako iš jūsų šias prekes. Pristatykite jas toliau nurodytam klientui (arba paruoškite FIRINGI vairuotojui) ir išrašykite sąskaitą FIRINGI savo kainomis. Klientui sąskaitą išrašo FIRINGI.",
+    "deliverTo": "Pristatyti",
+    "contact": "Kontaktas",
+    "invoiceTo": "Sąskaita",
+    "delivery": "Pristatymas",
+    "byYou": "Klientui pristatote jūs",
+    "byFiringi": "FIRINGI vairuotojas paims iš jūsų",
+    "byCarrier": "Siųskite savo vežėju",
+    "qty": "Kiekis",
+    "unitPrice": "Jūsų kaina (be PVM)",
+    "lineTotal": "Iš viso (be PVM)",
+    "total": "Sąskaitai FIRINGI (be PVM)",
+    "notes": "Kliento pastabos"
   }
 }

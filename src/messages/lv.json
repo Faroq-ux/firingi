@@ -459,6 +459,8 @@
     "barcodeResults": "Svītrkods {code}: {count} piedāvājumi, vispirms tuvākais piegādātājs",
     "noMatch": "Vaicājumam “{q}” produkts nav atrasts.",
     "stopScan": "Apturēt",
+    "firingiMode": "Jūs pasūtāt no FIRINGI: viena cena par produktu. FIRINGI izvēlas tuvāko vairumtirgotāju ar krājumiem — vai savu noliktavu — un rēķinu jums izraksta FIRINGI.",
+    "soldByFiringi": "Pārdod FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Jūsu grozā jau ir produkti no {current}. Jūs pērkat vienlaikus no viena piegādātāja — pabeidziet pasūtījumu vai iztukšojiet grozu, pirms pievienojat produktus no {next}.",
     "movedFrom": "Šis pasūtījums aizstāj pasūtījumu {number}: sākotnējais piegādātājs to nevarēja piegādāt, tāpēc FIRINGI to nodeva par tādu pašu vai zemāku cenu.",
     "movedTo": "Piegādātājs nevarēja piegādāt visu pasūtījumu. FIRINGI nodeva šīs preces citam piegādātājam:",
-    "passedOn": "FIRINGI jums nodeva šo pasūtījumu no cita piegādātāja. Lūdzu, apstipriniet to kā parasti."
+    "passedOn": "FIRINGI jums nodeva šo pasūtījumu no cita piegādātāja. Lūdzu, apstipriniet to kā parasti.",
+    "routedCart": "No FIRINGI — FIRINGI izvēlas vairumtirgotāju, kad veicat pasūtījumu.",
+    "notAvailableHere": "Dažus produktus pašlaik nevar piegādāt uz jūsu adresi. Noņemiet tos vai izvēlieties citu adresi.",
+    "deliveryOrder": "Piegādes rīkojums",
+    "deliveryOrderFromFiringi": "Piegādes rīkojums no FIRINGI",
+    "decision": {
+      "title": "{supplier} nevar piegādāt šo pasūtījumu",
+      "titleShort": "{supplier} nevar piegādāt visu šo pasūtījumu",
+      "body": "FIRINGI var to nodot citam vairumtirgotājam par tādu pašu vai zemāku cenu — vai varat to atcelt. Jūs maksājat tikai par piegādāto.",
+      "deadline": "Lūdzu, izlemiet līdz {date}.",
+      "letFiringi": "Lai FIRINGI atrod citu vairumtirgotāju",
+      "cancelOrder": "Atcelt pasūtījumu",
+      "cancelItems": "Atcelt trūkstošās preces",
+      "moved": "Gatavs — FIRINGI to nodeva citam vairumtirgotājam:",
+      "none": "Pašlaik neviens vairumtirgotājs to nevar pieņemt. FIRINGI komanda meklēs risinājumu un sazināsies ar jums.",
+      "cancelled": "Atcelts. Jums netiks iekasēta maksa."
+    }
   },
   "finance": {
     "invoices": "Rēķini",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Pasūtījumam {number} vajadzīgs jauns piegādātājs",
       "body": "Pasūtījumam {number} netika automātiski atrasts piegādātājs ({reason}). Lūdzu, izlemiet piešķiršanas vadības centrā."
+    },
+    "order_supplier_unavailable": {
+      "title": "Pasūtījums {number}: {supplier} nevar piegādāt",
+      "body": "{supplier} nevar piegādāt visu pasūtījumu {number}. Atveriet pasūtījumu, lai FIRINGI atrastu citu vairumtirgotāju par tādu pašu vai zemāku cenu, vai atceltu to."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Atlaides",
       "aov": "Vidējais pasūtījums"
     }
+  },
+  "deliveryOrder": {
+    "title": "Piegādes rīkojums",
+    "print": "Drukāt",
+    "requested": "Vēlamā piegāde",
+    "notConfirmed": "Vēl nav apstiprināts — vispirms apstipriniet pasūtījumu.",
+    "supplier": "Piegādātājs",
+    "instructions": "FIRINGI pasūta no jums šīs preces. Piegādājiet tās zemāk norādītajam klientam (vai sagatavojiet FIRINGI vadītājam) un izrakstiet rēķinu FIRINGI par savām cenām. Klientam rēķinu izraksta FIRINGI.",
+    "deliverTo": "Piegādāt uz",
+    "contact": "Kontakts",
+    "invoiceTo": "Rēķins uz",
+    "delivery": "Piegāde",
+    "byYou": "Jūs piegādājat klientam",
+    "byFiringi": "FIRINGI vadītājs paņem no jums",
+    "byCarrier": "Sūtīt ar savu pārvadātāju",
+    "qty": "Daudz.",
+    "unitPrice": "Jūsu cena (bez PVN)",
+    "lineTotal": "Kopā (bez PVN)",
+    "total": "Rēķinam FIRINGI (bez PVN)",
+    "notes": "Klienta piezīmes"
   }
 }

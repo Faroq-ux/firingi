@@ -459,6 +459,8 @@
     "barcodeResults": "Barcode {code}: {count} aanbod(en), dichtstbijzijnde leverancier eerst",
     "noMatch": "Geen product gevonden voor ‘{q}’.",
     "stopScan": "Stoppen",
+    "firingiMode": "U bestelt bij FIRINGI: één prijs per product. FIRINGI kiest de dichtstbijzijnde groothandel met voorraad — of het eigen magazijn — en FIRINGI factureert u.",
+    "soldByFiringi": "Verkocht door FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Uw winkelwagen bevat al producten van {current}. U koopt bij één leverancier tegelijk — rond uw bestelling af of leeg uw winkelwagen voordat u producten van {next} toevoegt.",
     "movedFrom": "Deze bestelling vervangt bestelling {number}: de oorspronkelijke leverancier kon niet leveren, dus FIRINGI heeft haar doorgegeven tegen dezelfde of een lagere prijs.",
     "movedTo": "De leverancier kon deze bestelling niet volledig leveren. FIRINGI heeft deze artikelen doorgegeven aan een andere leverancier:",
-    "passedOn": "FIRINGI heeft deze bestelling van een andere leverancier aan u doorgegeven. Bevestig haar zoals gewoonlijk."
+    "passedOn": "FIRINGI heeft deze bestelling van een andere leverancier aan u doorgegeven. Bevestig haar zoals gewoonlijk.",
+    "routedCart": "Van FIRINGI — FIRINGI kiest de groothandel wanneer u bestelt.",
+    "notAvailableHere": "Sommige producten kunnen momenteel niet op uw adres worden geleverd. Verwijder ze of kies een ander adres.",
+    "deliveryOrder": "Leveringsopdracht",
+    "deliveryOrderFromFiringi": "Leveringsopdracht van FIRINGI",
+    "decision": {
+      "title": "{supplier} kan deze bestelling niet leveren",
+      "titleShort": "{supplier} kan deze bestelling niet volledig leveren",
+      "body": "FIRINGI kan haar doorgeven aan een andere groothandel tegen dezelfde of een lagere prijs — of u annuleert. U betaalt alleen wat geleverd wordt.",
+      "deadline": "Beslis vóór {date}.",
+      "letFiringi": "FIRINGI een andere groothandel laten zoeken",
+      "cancelOrder": "Bestelling annuleren",
+      "cancelItems": "Ontbrekende artikelen annuleren",
+      "moved": "Klaar — FIRINGI heeft haar doorgegeven aan een andere groothandel:",
+      "none": "Geen enkele groothandel kan haar nu aannemen. Het FIRINGI-team zoekt een oplossing en neemt contact met u op.",
+      "cancelled": "Geannuleerd. U betaalt er niets voor."
+    }
   },
   "finance": {
     "invoices": "Facturen",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Bestelling {number} heeft een nieuwe leverancier nodig",
       "body": "Er is automatisch geen leverancier gevonden voor bestelling {number} ({reason}). Beslis in de toewijzingscontroletoren."
+    },
+    "order_supplier_unavailable": {
+      "title": "Bestelling {number}: {supplier} kan niet leveren",
+      "body": "{supplier} kan bestelling {number} niet volledig leveren. Open de bestelling om FIRINGI een andere groothandel te laten zoeken tegen dezelfde of een lagere prijs, of om te annuleren."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Kortingen",
       "aov": "Gemiddelde bestelling"
     }
+  },
+  "deliveryOrder": {
+    "title": "Leveringsopdracht",
+    "print": "Afdrukken",
+    "requested": "Gewenste levering",
+    "notConfirmed": "Nog niet bevestigd — bevestig eerst de bestelling.",
+    "supplier": "Leverancier",
+    "instructions": "FIRINGI bestelt deze goederen bij u. Lever ze aan de klant hieronder (of houd ze klaar voor de FIRINGI-chauffeur) en factureer FIRINGI tegen uw prijzen. FIRINGI factureert de klant.",
+    "deliverTo": "Leveren aan",
+    "contact": "Contact",
+    "invoiceTo": "Factureren aan",
+    "delivery": "Levering",
+    "byYou": "U levert aan de klant",
+    "byFiringi": "De FIRINGI-chauffeur haalt bij u op",
+    "byCarrier": "Verzenden met uw vervoerder",
+    "qty": "Aantal",
+    "unitPrice": "Uw prijs (excl. btw)",
+    "lineTotal": "Totaal (excl. btw)",
+    "total": "Te factureren aan FIRINGI (excl. btw)",
+    "notes": "Opmerkingen van de klant"
   }
 }

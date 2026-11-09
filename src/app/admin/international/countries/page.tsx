@@ -5,6 +5,8 @@ import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
+import { OrderModeSelect } from "@/components/allocation/forms";
+import { can } from "@/server/rbac/guard";
 
 export const metadata = { title: "Countries" };
 
@@ -24,7 +26,7 @@ export default async function CountriesPage() {
         <THead>
           <TR>
             <TH>Country</TH><TH>Area</TH><TH>VAT prefix</TH><TH>Currency</TH><TH>Languages</TH>
-            <TH>Customers</TH><TH>Wholesalers</TH><TH>Distributors</TH><TH className="text-right">Regions · Cities</TH>
+            <TH>Customers</TH><TH>Customers order</TH><TH>Wholesalers</TH><TH>Distributors</TH><TH className="text-right">Regions · Cities</TH>
           </TR>
         </THead>
         <TBody>
@@ -36,6 +38,7 @@ export default async function CountriesPage() {
               <TD>{c.defaultCurrencyCode}</TD>
               <TD className="text-xs">{c.languages.map((l) => l.language.native).join(", ")} + English</TD>
               <TD><On on={c.customerMarketEnabled} /></TD>
+              <TD>{c.customerMarketEnabled ? <OrderModeSelect countryId={c.id} mode={c.customerOrderMode} canEdit={can(ctx, ["admin.international.manage", "admin.allocation.manage"])} /> : "—"}</TD>
               <TD><On on={c.wholesalerMarketEnabled} /></TD>
               <TD><On on={c.distributorSourcingEnabled} /></TD>
               <TD className="text-right tabular-nums">{c._count.regions} · {c._count.cities}</TD>

@@ -459,6 +459,8 @@
     "barcodeResults": "Kod kreskowy {code}: {count} ofert, najbliższy dostawca najpierw",
     "noMatch": "Nie znaleziono produktu dla „{q}”.",
     "stopScan": "Zatrzymaj",
+    "firingiMode": "Zamawiasz w FIRINGI: jedna cena za produkt. FIRINGI wybiera najbliższą hurtownię z towarem — lub własny magazyn — i to FIRINGI wystawia Ci fakturę.",
+    "soldByFiringi": "Sprzedaje FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Twój koszyk zawiera już produkty od {current}. Kupujesz u jednego dostawcy naraz — złóż zamówienie lub opróżnij koszyk przed dodaniem produktów od {next}.",
     "movedFrom": "To zamówienie zastępuje zamówienie {number}: pierwotny dostawca nie mógł go zrealizować, więc FIRINGI przekazało je w tej samej lub niższej cenie.",
     "movedTo": "Dostawca nie mógł zrealizować całego zamówienia. FIRINGI przekazało te pozycje innemu dostawcy:",
-    "passedOn": "FIRINGI przekazało Ci to zamówienie od innego dostawcy. Potwierdź je jak zwykle."
+    "passedOn": "FIRINGI przekazało Ci to zamówienie od innego dostawcy. Potwierdź je jak zwykle.",
+    "routedCart": "Od FIRINGI — FIRINGI wybierze hurtownię przy składaniu zamówienia.",
+    "notAvailableHere": "Niektórych produktów nie można teraz dostarczyć pod Twój adres. Usuń je lub wybierz inny adres.",
+    "deliveryOrder": "Zlecenie dostawy",
+    "deliveryOrderFromFiringi": "Zlecenie dostawy od FIRINGI",
+    "decision": {
+      "title": "{supplier} nie może dostarczyć tego zamówienia",
+      "titleShort": "{supplier} nie może dostarczyć całego zamówienia",
+      "body": "FIRINGI może przekazać je innej hurtowni w tej samej lub niższej cenie — albo możesz je anulować. Płacisz tylko za to, co zostanie dostarczone.",
+      "deadline": "Zdecyduj do {date}.",
+      "letFiringi": "Niech FIRINGI znajdzie inną hurtownię",
+      "cancelOrder": "Anuluj zamówienie",
+      "cancelItems": "Anuluj brakujące pozycje",
+      "moved": "Gotowe — FIRINGI przekazało je innej hurtowni:",
+      "none": "Żadna hurtownia nie może go teraz przyjąć. Zespół FIRINGI poszuka rozwiązania i skontaktuje się z Tobą.",
+      "cancelled": "Anulowane. Nie zostaniesz obciążony."
+    }
   },
   "finance": {
     "invoices": "Faktury",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Zamówienie {number} potrzebuje nowego dostawcy",
       "body": "Nie znaleziono automatycznie dostawcy dla zamówienia {number} ({reason}). Zdecyduj w centrum kontroli przydziałów."
+    },
+    "order_supplier_unavailable": {
+      "title": "Zamówienie {number}: {supplier} nie może dostarczyć",
+      "body": "{supplier} nie może dostarczyć całego zamówienia {number}. Otwórz zamówienie, aby FIRINGI znalazło innego hurtownika w tej samej lub niższej cenie, albo aby je anulować."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Rabaty",
       "aov": "Średnie zamówienie"
     }
+  },
+  "deliveryOrder": {
+    "title": "Zlecenie dostawy",
+    "print": "Drukuj",
+    "requested": "Wnioskowana dostawa",
+    "notConfirmed": "Jeszcze niepotwierdzone — najpierw potwierdź zamówienie.",
+    "supplier": "Dostawca",
+    "instructions": "FIRINGI zamawia u Ciebie te towary. Dostarcz je klientowi poniżej (lub przygotuj dla kierowcy FIRINGI) i wystaw fakturę FIRINGI według swoich cen. FIRINGI fakturuje klienta.",
+    "deliverTo": "Dostarczyć do",
+    "contact": "Kontakt",
+    "invoiceTo": "Faktura na",
+    "delivery": "Dostawa",
+    "byYou": "Dostarczasz klientowi",
+    "byFiringi": "Kierowca FIRINGI odbiera od Ciebie",
+    "byCarrier": "Wyślij swoim przewoźnikiem",
+    "qty": "Ilość",
+    "unitPrice": "Twoja cena (netto)",
+    "lineTotal": "Razem (netto)",
+    "total": "Do zafakturowania FIRINGI (netto)",
+    "notes": "Uwagi klienta"
   }
 }

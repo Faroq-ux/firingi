@@ -459,6 +459,8 @@
     "barcodeResults": "Cod de bare {code}: {count} ofertă/oferte, cel mai apropiat furnizor primul",
     "noMatch": "Niciun produs găsit pentru „{q}”.",
     "stopScan": "Oprește",
+    "firingiMode": "Comandați de la FIRINGI: un preț pe produs. FIRINGI alege cel mai apropiat angrosist cu stoc — sau propriul depozit — iar FIRINGI vă facturează.",
+    "soldByFiringi": "Vândut de FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Coșul tău are deja produse de la {current}. Cumperi de la un singur furnizor odată — finalizează comanda sau golește coșul înainte de a adăuga produse de la {next}.",
     "movedFrom": "Această comandă înlocuiește comanda {number}: furnizorul inițial nu a putut-o livra, așa că FIRINGI a transmis-o la același preț sau mai mic.",
     "movedTo": "Furnizorul nu a putut livra toată această comandă. FIRINGI a transmis aceste articole altui furnizor:",
-    "passedOn": "FIRINGI v-a transmis această comandă de la alt furnizor. Confirmați-o ca de obicei."
+    "passedOn": "FIRINGI v-a transmis această comandă de la alt furnizor. Confirmați-o ca de obicei.",
+    "routedCart": "De la FIRINGI — FIRINGI alege angrosistul când plasați comanda.",
+    "notAvailableHere": "Unele produse nu pot fi livrate acum la adresa dvs. Eliminați-le sau alegeți altă adresă.",
+    "deliveryOrder": "Comandă de livrare",
+    "deliveryOrderFromFiringi": "Comandă de livrare de la FIRINGI",
+    "decision": {
+      "title": "{supplier} nu poate livra această comandă",
+      "titleShort": "{supplier} nu poate livra toată această comandă",
+      "body": "FIRINGI o poate transmite altui angrosist la același preț sau mai mic — sau o puteți anula. Plătiți doar ce se livrează.",
+      "deadline": "Vă rugăm să decideți până la {date}.",
+      "letFiringi": "Lăsați FIRINGI să găsească alt angrosist",
+      "cancelOrder": "Anulați comanda",
+      "cancelItems": "Anulați articolele lipsă",
+      "moved": "Gata — FIRINGI a transmis-o altui angrosist:",
+      "none": "Niciun angrosist nu o poate prelua acum. Echipa FIRINGI va căuta o soluție și vă va contacta.",
+      "cancelled": "Anulată. Nu vi se va factura."
+    }
   },
   "finance": {
     "invoices": "Facturi",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Comanda {number} are nevoie de un furnizor nou",
       "body": "Nu s-a găsit automat niciun furnizor pentru comanda {number} ({reason}). Decideți în turnul de control al alocării."
+    },
+    "order_supplier_unavailable": {
+      "title": "Comanda {number}: {supplier} nu poate livra",
+      "body": "{supplier} nu poate livra toată comanda {number}. Deschideți comanda pentru ca FIRINGI să găsească alt angrosist la același preț sau mai mic, sau pentru a o anula."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Reduceri",
       "aov": "Comandă medie"
     }
+  },
+  "deliveryOrder": {
+    "title": "Comandă de livrare",
+    "print": "Tipărire",
+    "requested": "Livrare solicitată",
+    "notConfirmed": "Încă neconfirmată — confirmați mai întâi comanda.",
+    "supplier": "Furnizor",
+    "instructions": "FIRINGI comandă de la dvs. aceste mărfuri. Livrați-le clientului de mai jos (sau pregătiți-le pentru șoferul FIRINGI) și facturați către FIRINGI la prețurile dvs. FIRINGI facturează clientul.",
+    "deliverTo": "Livrare la",
+    "contact": "Contact",
+    "invoiceTo": "Facturare către",
+    "delivery": "Livrare",
+    "byYou": "Livrați dvs. clientului",
+    "byFiringi": "Șoferul FIRINGI ridică de la dvs.",
+    "byCarrier": "Expediați cu transportatorul dvs.",
+    "qty": "Cant.",
+    "unitPrice": "Prețul dvs. (fără TVA)",
+    "lineTotal": "Total (fără TVA)",
+    "total": "De facturat către FIRINGI (fără TVA)",
+    "notes": "Note ale clientului"
   }
 }

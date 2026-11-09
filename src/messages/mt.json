@@ -459,6 +459,8 @@
     "barcodeResults": "Barcode {code}: {count} offerta/i, l-eqreb fornitur l-ewwel",
     "noMatch": "Ma nstab l-ebda prodott għal “{q}”.",
     "stopScan": "Waqqaf",
+    "firingiMode": "Tordna mingħand FIRINGI: prezz wieħed għal kull prodott. FIRINGI tagħżel l-eqreb grossista bil-ħażna — jew il-maħżen tagħha stess — u FIRINGI toħroġlok il-fattura.",
+    "soldByFiringi": "Mibjugħ minn FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Il-kartell tiegħek diġà fih prodotti minn {current}. Tixtri minn fornitur wieħed kull darba — lesti l-ordni jew battal il-kartell qabel iżżid prodotti minn {next}.",
     "movedFrom": "Din l-ordni tieħu post l-ordni {number}: il-fornitur oriġinali ma setax iwassalha, għalhekk FIRINGI għaddietha bl-istess prezz jew orħos.",
     "movedTo": "Il-fornitur ma setax iwassal din l-ordni kollha. FIRINGI għaddiet dawn l-oġġetti lil fornitur ieħor:",
-    "passedOn": "FIRINGI għaddietlek din l-ordni minn fornitur ieħor. Ikkonfermaha bħas-soltu."
+    "passedOn": "FIRINGI għaddietlek din l-ordni minn fornitur ieħor. Ikkonfermaha bħas-soltu.",
+    "routedCart": "Minn FIRINGI — FIRINGI tagħżel il-grossista meta tagħmel l-ordni.",
+    "notAvailableHere": "Xi prodotti ma jistgħux jitwasslu fl-indirizz tiegħek bħalissa. Neħħihom jew agħżel indirizz ieħor.",
+    "deliveryOrder": "Ordni ta' kunsinna",
+    "deliveryOrderFromFiringi": "Ordni ta' kunsinna minn FIRINGI",
+    "decision": {
+      "title": "{supplier} ma jistax iwassal din l-ordni",
+      "titleShort": "{supplier} ma jistax iwassal din l-ordni kollha",
+      "body": "FIRINGI tista' tgħaddiha lil grossista ieħor bl-istess prezz jew orħos — jew tista' tikkanċellaha. Tħallas biss għal dak li jitwassal.",
+      "deadline": "Jekk jogħġbok iddeċiedi sa {date}.",
+      "letFiringi": "Ħalli lil FIRINGI ssib grossista ieħor",
+      "cancelOrder": "Ikkanċella l-ordni",
+      "cancelItems": "Ikkanċella l-oġġetti nieqsa",
+      "moved": "Lest — FIRINGI għaddietha lil grossista ieħor:",
+      "none": "L-ebda grossista ma jista' jieħodha bħalissa. It-tim ta' FIRINGI se jfittex soluzzjoni u jikkuntattjak.",
+      "cancelled": "Ikkanċellata. Mhux se tiġi ċċarġjat."
+    }
   },
   "finance": {
     "invoices": "Fatturi",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "L-ordni {number} teħtieġ fornitur ġdid",
       "body": "Ma nstab l-ebda fornitur awtomatikament għall-ordni {number} ({reason}). Iddeċiedi fit-torri tal-kontroll tal-allokazzjoni."
+    },
+    "order_supplier_unavailable": {
+      "title": "Ordni {number}: {supplier} ma jistax iwassal",
+      "body": "{supplier} ma jistax iwassal l-ordni {number} kollha. Iftaħ l-ordni biex tħalli lil FIRINGI ssib grossista ieħor bl-istess prezz jew orħos, jew biex tikkanċellaha."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Skontijiet",
       "aov": "Ordni medja"
     }
+  },
+  "deliveryOrder": {
+    "title": "Ordni ta' kunsinna",
+    "print": "Ipprintja",
+    "requested": "Kunsinna mitluba",
+    "notConfirmed": "Għadha mhix ikkonfermata — l-ewwel ikkonferma l-ordni.",
+    "supplier": "Fornitur",
+    "instructions": "FIRINGI qed tordna dawn l-oġġetti mingħandek. Wassalhom lill-klijent hawn taħt (jew żommhom lesti għax-xufier ta' FIRINGI) u oħroġ fattura lil FIRINGI bil-prezzijiet tiegħek. FIRINGI toħroġ fattura lill-klijent.",
+    "deliverTo": "Wassal lil",
+    "contact": "Kuntatt",
+    "invoiceTo": "Fattura lil",
+    "delivery": "Kunsinna",
+    "byYou": "Int twassal lill-klijent",
+    "byFiringi": "Ix-xufier ta' FIRINGI jiġbor mingħandek",
+    "byCarrier": "Ibgħat bit-trasportatur tiegħek",
+    "qty": "Kwant.",
+    "unitPrice": "Il-prezz tiegħek (mingħajr VAT)",
+    "lineTotal": "Total (mingħajr VAT)",
+    "total": "Biex tiġi ffatturata lil FIRINGI (mingħajr VAT)",
+    "notes": "Noti tal-klijent"
   }
 }

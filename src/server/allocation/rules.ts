@@ -27,10 +27,16 @@ export type AllocationRules = {
   maxSplitOrders: number;
   /** How many times the same items may be moved (stops ping-pong). */
   maxMoves: number;
-  /** Which marketplaces use allocation. */
-  flows: { CUSTOMER_FROM_WHOLESALER: boolean; WHOLESALER_FROM_DISTRIBUTOR: boolean };
-  /** Distributors in another Schengen country may take moved wholesaler orders. */
-  crossBorderDistributors: boolean;
+  /** Which wholesaler FIRINGI picks first (orders "from FIRINGI" and moves). */
+  pickBy: "NEAREST" | "CHEAPEST";
+  /**
+   * FIRINGI's in-house warehouse: OFF = never used; SMALL_ORDERS = picked first when the goods
+   * are below the wholesaler's free-delivery minimum, otherwise only if no wholesaler can;
+   * FIRST = always picked first.
+   */
+  inHouse: "OFF" | "SMALL_ORDERS" | "FIRST";
+  /** Hours a buyer has to decide when the wholesaler they chose can't deliver. */
+  buyerDecisionHours: number;
   /** A supplier that already delivers within this distance today counts as "on the route". */
   routeMatchKm: number;
   weights: Weights;
@@ -45,8 +51,9 @@ export const DEFAULT_RULES: AllocationRules = {
   minMarginPercent: 0,
   maxSplitOrders: 2,
   maxMoves: 2,
-  flows: { CUSTOMER_FROM_WHOLESALER: true, WHOLESALER_FROM_DISTRIBUTOR: true },
-  crossBorderDistributors: true,
+  pickBy: "NEAREST",
+  inHouse: "SMALL_ORDERS",
+  buyerDecisionHours: 48,
   routeMatchKm: 5,
   weights: { distance: 30, price: 25, priority: 15, reliability: 20, route: 5, sameBuyer: 5 },
 };
@@ -57,7 +64,6 @@ export async function allocationRules(): Promise<AllocationRules> {
   return {
     ...DEFAULT_RULES, ...v,
     triggers: { ...DEFAULT_RULES.triggers, ...(v.triggers ?? {}) },
-    flows: { ...DEFAULT_RULES.flows, ...(v.flows ?? {}) },
     weights: { ...DEFAULT_RULES.weights, ...(v.weights ?? {}) },
     countryDistanceKm: { ...(v.countryDistanceKm ?? {}) },
   };
@@ -81,15 +87,18 @@ export function assertAllocationManager(ctx: Ctx) {
 export async function updateAllocationRules(ctx: Ctx, patch: Partial<AllocationRules>) {
   assertAllocationManager(ctx);
   const before = await allocationRules();
+  const { flows: _f, crossBorderDistributors: _c, ...clean } = { ...before, ...patch } as AllocationRules & { flows?: unknown; crossBorderDistributors?: unknown };
+  void _f; void _c;
   const next: AllocationRules = {
-    ...before, ...patch,
+    ...clean,
     triggers: { ...before.triggers, ...(patch.triggers ?? {}) },
-    flows: { ...before.flows, ...(patch.flows ?? {}) },
     weights: { ...before.weights, ...(patch.weights ?? {}) },
     countryDistanceKm: patch.countryDistanceKm ?? before.countryDistanceKm,
   };
   next.auto = !!next.auto;
-  next.crossBorderDistributors = !!next.crossBorderDistributors;
+  if (next.pickBy !== "NEAREST" && next.pickBy !== "CHEAPEST") throw new ValidationError("Choose nearest or cheapest.");
+  if (!["OFF", "SMALL_ORDERS", "FIRST"].includes(next.inHouse)) throw new ValidationError("Choose when the in-house warehouse is used.");
+  next.buyerDecisionHours = num(next.buyerDecisionHours, 1, 168, "Buyer decision time (hours)");
   next.responseHours = num(next.responseHours, 1, 72, "Response time (hours)");
   next.maxDistanceKm = num(next.maxDistanceKm, 1, 1000, "Maximum distance (km)");
   next.minMarginPercent = num(next.minMarginPercent, -50, 50, "Minimum margin (%)", false);
@@ -100,7 +109,6 @@ export async function updateAllocationRules(ctx: Ctx, patch: Partial<AllocationR
   for (const k of Object.keys(DEFAULT_RULES.weights) as (keyof Weights)[]) next.weights[k] = num(next.weights[k], 0, 100, `Weight "${k}"`);
   if (Object.values(next.weights).every((w) => w === 0)) throw new ValidationError("At least one weight must be above 0.");
   for (const k of Object.keys(next.triggers) as (keyof AllocationRules["triggers"])[]) next.triggers[k] = !!next.triggers[k];
-  for (const k of Object.keys(next.flows) as (keyof AllocationRules["flows"])[]) next.flows[k] = !!next.flows[k];
   await prisma.$transaction(async (tx) => {
     await tx.setting.upsert({
       where: { scope_scopeId_key: { scope: "GLOBAL", scopeId: "", key: KEY } },

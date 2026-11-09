@@ -459,7 +459,9 @@
     "searchResults": "Results for “{q}”",
     "barcodeResults": "Barcode {code}: {count} offer(s), nearest supplier first",
     "noMatch": "No product found for “{q}”.",
-    "stopScan": "Stop"
+    "stopScan": "Stop",
+    "firingiMode": "You order from FIRINGI: one price per product. FIRINGI picks the nearest wholesaler with stock — or its own warehouse — and FIRINGI invoices you.",
+    "soldByFiringi": "Sold by FIRINGI"
   },
   "orders": {
     "cart": "Cart",
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Your cart already has products from {current}. You can buy from one supplier at a time — check out or clear your cart before adding products from {next}.",
     "movedFrom": "This order replaces order {number}: the original supplier couldn't deliver it, so FIRINGI passed it on at the same price or lower.",
     "movedTo": "The supplier couldn't deliver all of this order. FIRINGI passed these items to another supplier:",
-    "passedOn": "FIRINGI passed this order on from another supplier. Please confirm it as usual."
+    "passedOn": "FIRINGI passed this order on from another supplier. Please confirm it as usual.",
+    "routedCart": "From FIRINGI — FIRINGI picks the wholesaler when you place the order.",
+    "notAvailableHere": "Some products can't be delivered to your address right now. Remove them or choose another address.",
+    "deliveryOrder": "Delivery order",
+    "deliveryOrderFromFiringi": "Delivery Order from FIRINGI",
+    "decision": {
+      "title": "{supplier} can't deliver this order",
+      "titleShort": "{supplier} can't deliver all of this order",
+      "body": "FIRINGI can pass it to another wholesaler at the same price or lower — or you can cancel. You are only charged for what is delivered.",
+      "deadline": "Please decide by {date}.",
+      "letFiringi": "Let FIRINGI find another wholesaler",
+      "cancelOrder": "Cancel the order",
+      "cancelItems": "Cancel the missing items",
+      "moved": "Done — FIRINGI passed it to another wholesaler:",
+      "none": "No wholesaler can take it right now. FIRINGI's team will look for a solution and contact you.",
+      "cancelled": "Cancelled. You won't be charged for it."
+    }
   },
   "finance": {
     "invoices": "Invoices",
@@ -955,6 +973,10 @@
     "promotion_acceptance": {
       "title": "FIRINGI promotion — your answer is needed",
       "body": "FIRINGI proposes \"{promotion}\" and asks you to fund {share}% of the discount."
+    },
+    "order_supplier_unavailable": {
+      "title": "Order {number}: {supplier} can't deliver",
+      "body": "{supplier} can't deliver all of order {number}. Open the order to let FIRINGI find another wholesaler at the same price or lower, or to cancel."
     }
   },
   "notifications": {
@@ -1077,5 +1099,25 @@
       "discount": "Discounts",
       "aov": "Average order"
     }
+  },
+  "deliveryOrder": {
+    "title": "Delivery Order",
+    "print": "Print",
+    "requested": "Requested delivery",
+    "notConfirmed": "Not confirmed yet — confirm the order first.",
+    "supplier": "Supplier",
+    "instructions": "FIRINGI orders these goods from you. Deliver them to the customer below (or have them ready for FIRINGI's driver) and invoice FIRINGI at your prices. FIRINGI invoices the customer.",
+    "deliverTo": "Deliver to",
+    "contact": "Contact",
+    "invoiceTo": "Invoice to",
+    "delivery": "Delivery",
+    "byYou": "You deliver to the customer",
+    "byFiringi": "FIRINGI's driver collects from you",
+    "byCarrier": "Ship with your carrier",
+    "qty": "Qty",
+    "unitPrice": "Your price (excl. VAT)",
+    "lineTotal": "Total (excl. VAT)",
+    "total": "To invoice FIRINGI (excl. VAT)",
+    "notes": "Customer notes"
   }
 }

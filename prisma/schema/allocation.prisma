@@ -15,6 +15,7 @@ enum AllocationStatus {
   PARTIAL // some items moved, others found no supplier
   NO_CANDIDATE // nobody can take it (needs a decision)
   PENDING // automatic moves are off: waiting for the back office
+  AWAITING_BUYER // buyer chose this supplier: the buyer decides (let FIRINGI find another, or cancel)
   DISMISSED // back office closed it without moving
   FAILED // error while moving (see note)
 }

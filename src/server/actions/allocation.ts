@@ -4,7 +4,9 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { defineAction } from "./_action";
 import { updateAllocationRules, type AllocationRules } from "@/server/allocation/rules";
-import { dismissEvent, manualMove, processOverdue, saveVendorProfile } from "@/server/allocation/engine";
+import { setCustomerOrderMode } from "@/server/allocation/mode";
+import { assignPickupRun } from "@/server/allocation/data";
+import { buyerDecision, dismissEvent, manualMove, processOverdue, saveVendorProfile } from "@/server/allocation/engine";
 
 const done = <T>(v: T) => { revalidatePath("/admin/allocation", "layout"); return v; };
 const P = "admin.allocation.manage" as const;
@@ -40,3 +42,23 @@ export const dismissAllocationAction = defineAction({
 });
 
 export const runOverdueAction = defineAction({ permission: P, schema: z.object({}), handler: async () => done(await processOverdue()) });
+
+/** The buyer decides when the wholesaler it chose can't deliver. */
+export const buyerDecisionAction = defineAction({
+  permission: "buyer.orders.place",
+  schema: z.object({ eventId: z.string().min(1), choice: z.enum(["FIRINGI", "CANCEL"]) }),
+  // No revalidation: the panel shows the result (with links); a refresh would remove it.
+  handler: async (ctx, i) => buyerDecision(ctx, i.eventId, i.choice),
+});
+
+export const setCustomerOrderModeAction = defineAction({
+  permission: ["admin.international.manage", "admin.allocation.manage"],
+  schema: z.object({ countryId: z.string().min(1), mode: z.enum(["CHOOSE_SUPPLIER", "FIRINGI"]) }),
+  handler: async (ctx, i) => { await setCustomerOrderMode(ctx, i.countryId, i.mode); revalidatePath("/", "layout"); },
+});
+
+export const assignPickupRunAction = defineAction({
+  permission: ["admin.delivery.manage"],
+  schema: z.object({ deliveryIds: z.array(z.string().min(1)).min(1).max(50), driverId: z.string().min(1) }),
+  handler: async (ctx, i) => done(await assignPickupRun(ctx, i.deliveryIds, i.driverId)),
+});

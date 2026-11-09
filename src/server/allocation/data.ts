@@ -192,3 +192,54 @@ export async function activeCountries(ctx: Ctx, locale: string) {
   const cs = await prisma.country.findMany({ where: { isActive: true }, orderBy: { code: "asc" }, select: { id: true, code: true, flag: true, name: true } });
   return cs.map((c) => ({ id: c.id, label: `${c.flag ?? ""} ${pickLocalized(c.name, locale) || c.code}`.trim() }));
 }
+
+/**
+ * Small orders FIRINGI's fleet delivers (below the wholesaler's free-delivery minimum, or from
+ * the in-house warehouse), not yet given to a driver — grouped by pickup point so one driver can
+ * collect them together, with their delivery regions.
+ */
+export async function smallOrderGroups(ctx: Ctx, locale: string) {
+  assertAllocationManager(ctx);
+  const deliveries = await prisma.delivery.findMany({
+    where: { mode: "FIRINGI_FLEET", status: "UNASSIGNED", order: { status: { in: ["SUPPLIER_PROCESSING", "READY_FOR_PICKUP"] } } },
+    select: {
+      id: true,
+      order: {
+        select: {
+          id: true, number: true, status: true, netTotal: true, deliveryAddress: true, sellerCompanyId: true,
+          seller: { select: { legalName: true, tradeName: true, isInHouse: true } },
+          buyer: { select: { legalName: true, tradeName: true } },
+          sourceAddress: { select: { label: true, cityName: true } },
+        },
+      },
+    },
+    orderBy: { createdAt: "asc" },
+  });
+  const regionIds = [...new Set(deliveries.map((d) => (d.order.deliveryAddress as { regionId?: string | null }).regionId).filter(Boolean) as string[])];
+  const regions = new Map((await prisma.region.findMany({ where: { id: { in: regionIds } }, select: { id: true, name: true } })).map((r) => [r.id, pickLocalized(r.name, locale)]));
+  const groups = new Map<string, { supplier: string; inHouse: boolean; pickup: string; orders: { deliveryId: string; orderId: string; number: string; status: string; buyer: string; city: string; region: string; net: number }[] }>();
+  for (const d of deliveries) {
+    const o = d.order;
+    const addr = o.deliveryAddress as { city?: string; regionId?: string | null };
+    const g = groups.get(o.sellerCompanyId) ?? { supplier: name(o.seller), inHouse: o.seller.isInHouse, pickup: o.sourceAddress ? `${o.sourceAddress.label} · ${o.sourceAddress.cityName}` : "—", orders: [] };
+    g.orders.push({ deliveryId: d.id, orderId: o.id, number: o.number, status: o.status, buyer: name(o.buyer), city: addr.city ?? "—", region: (addr.regionId && regions.get(addr.regionId)) || "—", net: Number(o.netTotal) });
+    groups.set(o.sellerCompanyId, g);
+  }
+  const drivers = await prisma.driver.findMany({
+    where: { status: "APPROVED", owner: { type: "ADMIN" } },
+    select: { id: true, user: { select: { name: true } } },
+  });
+  return { groups: [...groups.values()].sort((a, b) => b.orders.length - a.orders.length), drivers: drivers.map((d) => ({ id: d.id, name: d.user.name })) };
+}
+
+/** Give a group of small orders to one FIRINGI driver (needs multi-order delivery for FIRINGI's fleet). */
+export async function assignPickupRun(ctx: Ctx, deliveryIds: string[], driverId: string) {
+  assertAllocationManager(ctx);
+  const { assignDelivery } = await import("@/server/services/deliveries");
+  let n = 0;
+  for (const id of deliveryIds) {
+    await assignDelivery(ctx, id, { driverId });
+    n++;
+  }
+  return { assigned: n };
+}

@@ -459,6 +459,8 @@
     "barcodeResults": "Barcode {code}: {count} Angebot(e), nächstgelegener Lieferant zuerst",
     "noMatch": "Kein Produkt gefunden für „{q}“.",
     "stopScan": "Stopp",
+    "firingiMode": "Sie bestellen bei FIRINGI: ein Preis pro Produkt. FIRINGI wählt den nächstgelegenen Großhändler mit Bestand — oder das eigene Lager — und FIRINGI stellt Ihnen die Rechnung.",
+    "soldByFiringi": "Verkauft von FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Ihr Warenkorb enthält bereits Produkte von {current}. Sie kaufen jeweils bei einem Lieferanten — schließen Sie die Bestellung ab oder leeren Sie den Warenkorb, bevor Sie Produkte von {next} hinzufügen.",
     "movedFrom": "Diese Bestellung ersetzt Bestellung {number}: Der ursprüngliche Lieferant konnte nicht liefern, daher hat FIRINGI sie zum gleichen oder einem niedrigeren Preis weitergegeben.",
     "movedTo": "Der Lieferant konnte diese Bestellung nicht vollständig liefern. FIRINGI hat diese Artikel an einen anderen Lieferanten weitergegeben:",
-    "passedOn": "FIRINGI hat Ihnen diese Bestellung von einem anderen Lieferanten weitergegeben. Bitte bestätigen Sie sie wie gewohnt."
+    "passedOn": "FIRINGI hat Ihnen diese Bestellung von einem anderen Lieferanten weitergegeben. Bitte bestätigen Sie sie wie gewohnt.",
+    "routedCart": "Von FIRINGI — FIRINGI wählt den Großhändler, wenn Sie bestellen.",
+    "notAvailableHere": "Einige Produkte können derzeit nicht an Ihre Adresse geliefert werden. Entfernen Sie sie oder wählen Sie eine andere Adresse.",
+    "deliveryOrder": "Lieferauftrag",
+    "deliveryOrderFromFiringi": "Lieferauftrag von FIRINGI",
+    "decision": {
+      "title": "{supplier} kann diese Bestellung nicht liefern",
+      "titleShort": "{supplier} kann diese Bestellung nicht vollständig liefern",
+      "body": "FIRINGI kann sie an einen anderen Großhändler zum gleichen oder niedrigeren Preis weitergeben — oder Sie stornieren. Sie zahlen nur, was geliefert wird.",
+      "deadline": "Bitte entscheiden Sie bis {date}.",
+      "letFiringi": "FIRINGI einen anderen Großhändler suchen lassen",
+      "cancelOrder": "Bestellung stornieren",
+      "cancelItems": "Fehlende Artikel stornieren",
+      "moved": "Erledigt — FIRINGI hat sie an einen anderen Großhändler weitergegeben:",
+      "none": "Derzeit kann kein Großhändler sie übernehmen. Das FIRINGI-Team sucht eine Lösung und meldet sich bei Ihnen.",
+      "cancelled": "Storniert. Ihnen wird nichts berechnet."
+    }
   },
   "finance": {
     "invoices": "Rechnungen",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Bestellung {number} braucht einen neuen Lieferanten",
       "body": "Für Bestellung {number} wurde automatisch kein Lieferant gefunden ({reason}). Bitte im Zuteilungs-Kontrollzentrum entscheiden."
+    },
+    "order_supplier_unavailable": {
+      "title": "Bestellung {number}: {supplier} kann nicht liefern",
+      "body": "{supplier} kann die Bestellung {number} nicht vollständig liefern. Öffnen Sie die Bestellung, um FIRINGI einen anderen Großhändler zum gleichen oder niedrigeren Preis suchen zu lassen oder um zu stornieren."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Rabatte",
       "aov": "Durchschnittliche Bestellung"
     }
+  },
+  "deliveryOrder": {
+    "title": "Lieferauftrag",
+    "print": "Drucken",
+    "requested": "Gewünschte Lieferung",
+    "notConfirmed": "Noch nicht bestätigt — bestätigen Sie zuerst die Bestellung.",
+    "supplier": "Lieferant",
+    "instructions": "FIRINGI bestellt diese Waren bei Ihnen. Liefern Sie sie an den unten genannten Kunden (oder halten Sie sie für den FIRINGI-Fahrer bereit) und stellen Sie FIRINGI Ihre Preise in Rechnung. FIRINGI stellt dem Kunden die Rechnung.",
+    "deliverTo": "Liefern an",
+    "contact": "Kontakt",
+    "invoiceTo": "Rechnung an",
+    "delivery": "Lieferung",
+    "byYou": "Sie liefern an den Kunden",
+    "byFiringi": "Der FIRINGI-Fahrer holt bei Ihnen ab",
+    "byCarrier": "Mit Ihrem Spediteur versenden",
+    "qty": "Menge",
+    "unitPrice": "Ihr Preis (netto)",
+    "lineTotal": "Summe (netto)",
+    "total": "An FIRINGI zu berechnen (netto)",
+    "notes": "Hinweise des Kunden"
   }
 }

@@ -459,6 +459,8 @@
     "barcodeResults": "Črtna koda {code}: {count} ponudb, najbližji dobavitelj prvi",
     "noMatch": "Za »{q}« ni najden noben izdelek.",
     "stopScan": "Ustavi",
+    "firingiMode": "Naročate pri FIRINGI: ena cena na izdelek. FIRINGI izbere najbližjega veletrgovca z zalogo — ali svoje skladišče — in FIRINGI vam izstavi račun.",
+    "soldByFiringi": "Prodaja FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Vaša košarica že vsebuje izdelke dobavitelja {current}. Kupujete pri enem dobavitelju naenkrat — zaključite naročilo ali izpraznite košarico, preden dodate izdelke dobavitelja {next}.",
     "movedFrom": "To naročilo nadomešča naročilo {number}: prvotni dobavitelj ga ni mogel dobaviti, zato ga je FIRINGI posredoval po enaki ali nižji ceni.",
     "movedTo": "Dobavitelj ni mogel dobaviti celotnega naročila. FIRINGI je te izdelke posredoval drugemu dobavitelju:",
-    "passedOn": "FIRINGI vam je posredoval to naročilo od drugega dobavitelja. Potrdite ga kot običajno."
+    "passedOn": "FIRINGI vam je posredoval to naročilo od drugega dobavitelja. Potrdite ga kot običajno.",
+    "routedCart": "Od FIRINGI — FIRINGI izbere veletrgovca, ko oddate naročilo.",
+    "notAvailableHere": "Nekaterih izdelkov trenutno ni mogoče dostaviti na vaš naslov. Odstranite jih ali izberite drug naslov.",
+    "deliveryOrder": "Nalog za dostavo",
+    "deliveryOrderFromFiringi": "Nalog za dostavo od FIRINGI",
+    "decision": {
+      "title": "{supplier} ne more dobaviti tega naročila",
+      "titleShort": "{supplier} ne more dobaviti celotnega naročila",
+      "body": "FIRINGI ga lahko preda drugemu veletrgovcu po enaki ali nižji ceni — ali pa ga prekličete. Plačate le dobavljeno.",
+      "deadline": "Odločite se do {date}.",
+      "letFiringi": "Naj FIRINGI poišče drugega veletrgovca",
+      "cancelOrder": "Prekliči naročilo",
+      "cancelItems": "Prekliči manjkajoče izdelke",
+      "moved": "Opravljeno — FIRINGI ga je predal drugemu veletrgovcu:",
+      "none": "Trenutno ga ne more prevzeti noben veletrgovec. Ekipa FIRINGI bo poiskala rešitev in vas kontaktirala.",
+      "cancelled": "Preklicano. Ne bo vam zaračunano."
+    }
   },
   "finance": {
     "invoices": "Računi",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Naročilo {number} potrebuje novega dobavitelja",
       "body": "Za naročilo {number} samodejno ni bil najden noben dobavitelj ({reason}). Odločite v nadzornem centru dodeljevanja."
+    },
+    "order_supplier_unavailable": {
+      "title": "Naročilo {number}: {supplier} ne more dobaviti",
+      "body": "{supplier} ne more dobaviti celotnega naročila {number}. Odprite naročilo in pustite FIRINGI, da poišče drugega veletrgovca po enaki ali nižji ceni, ali ga prekličite."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Popusti",
       "aov": "Povprečno naročilo"
     }
+  },
+  "deliveryOrder": {
+    "title": "Nalog za dostavo",
+    "print": "Natisni",
+    "requested": "Želena dostava",
+    "notConfirmed": "Še ni potrjeno — najprej potrdite naročilo.",
+    "supplier": "Dobavitelj",
+    "instructions": "FIRINGI pri vas naroča to blago. Dostavite ga spodnji stranki (ali ga pripravite za voznika FIRINGI) in izstavite račun FIRINGI po svojih cenah. FIRINGI izstavi račun stranki.",
+    "deliverTo": "Dostava na",
+    "contact": "Kontakt",
+    "invoiceTo": "Račun za",
+    "delivery": "Dostava",
+    "byYou": "Stranki dostavite vi",
+    "byFiringi": "Voznik FIRINGI prevzame pri vas",
+    "byCarrier": "Pošljite s svojim prevoznikom",
+    "qty": "Kol.",
+    "unitPrice": "Vaša cena (brez DDV)",
+    "lineTotal": "Skupaj (brez DDV)",
+    "total": "Za račun FIRINGI (brez DDV)",
+    "notes": "Opombe stranke"
   }
 }

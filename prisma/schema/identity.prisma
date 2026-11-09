@@ -131,6 +131,8 @@ model Company {
   phone               String?
   website             String?
   businessType        String? // restaurant, kebab/pizza, mini-market … (customers)
+  /// FIRINGI's own in-house warehouse, run as a wholesaler (managed by FIRINGI staff).
+  isInHouse           Boolean       @default(false)
   defaultCurrencyCode String        @default("EUR")
   defaultLanguageCode String?
   creditLimit         Decimal?      @db.Decimal(18, 2)

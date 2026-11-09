@@ -30,6 +30,8 @@ pnpm dev                             # http://localhost:3000
 | `driver@firingi.test` | FIRINGI driver | ✅ | Driver app (deliveries, proof of delivery) |
 | `owner@atlantico.test` | Distributor 🇵🇹 | ✅ | Sell portal |
 | `owner@ibericas.test` | Distributor 🇪🇸 | ✅ | Cross-border distributor |
+| `armazem@firingi.test` | FIRINGI in-house warehouse (wholesaler) | ✅ | FIRINGI's own stock, small orders |
+| `owner@ccalmada.test` | Wholesaler 🇵🇹 | ✅ | Second wholesaler (allocation) |
 | `owner@lisboacentral.test` | Wholesaler 🇵🇹 | ✅ | **Sell + Buy** portals |
 | `warehouse@lisboacentral.test` | Wholesaler employee | ✅ | Limited permissions (blocked pages) |
 | `purchasing@lisboacentral.test` | Wholesaler employee | ✅ | Buy-only employee |
@@ -53,6 +55,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/delivery.mjs http://localhost:3000 [screenshotDir]` | Browser test of vendor fleet + service areas, driver app with signature, returns, failed delivery, control tower, multi-order setting* |
 | `node tests/e2e/notifications.mjs http://localhost:3000 [screenshotDir]` | Browser test of the bell, notification settings, message log, WhatsApp test send, templates and per-event channels* |
 | `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
+| `node tests/e2e/firingi-ordering.mjs http://localhost:3000 [screenshotDir]` | Browser test of ordering from FIRINGI, Delivery Orders, in-house small orders, the customer's decision* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
@@ -271,7 +274,7 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 
 ## Supplier Allocation (Phase 9)
 
-- **The buyer still chooses the supplier.** When that supplier **declines**, **confirms less**
+- **Moves** (see Phase 10 for who decides). When the supplier **declines**, **confirms less**
   than ordered, or **doesn't confirm in time** (default 4 h — `/api/cron/allocation`, every
   10–15 minutes with the cron secret), FIRINGI moves the order — or only the missing items — to
   other suppliers as new orders linked to the original (`parentOrderId`). Automatic; the buyer
@@ -295,6 +298,36 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   Existing Order Matching, Margin Rules, Stock Availability, Delivery Capacity, Vendor Priority,
   Allocation History and Overrides. When nobody can take an order, the case waits in the
   Control Tower and FIRINGI staff are notified (`allocation.needed`).
+
+## Ordering from FIRINGI, in-house warehouses & Delivery Orders (Phase 10)
+
+- **How customers order is set per country** (*International › Countries* or *Allocation ›
+  Distributor vs Wholesaler*): **customers choose the wholesaler** (one wholesaler per order,
+  as before) or **customers order from FIRINGI**. In FIRINGI mode the shop shows one FIRINGI
+  price per product (no supplier list, no supplier names or SKUs); at checkout FIRINGI picks the
+  wholesaler — **nearest or cheapest** (*Auto Allocation*) — among those that deliver to the
+  address with everything in stock, splitting the cart over at most N suppliers. The customer
+  never pays more than the price shown.
+- **FIRINGI's own warehouses ("in-house")** are run as an in-house wholesaler
+  (`Company.isInHouse`; demo: *FIRINGI Armazém*, `armazem@firingi.test`) — products, stock and
+  warehouses are managed in the normal supplier portal; more warehouses = more addresses with
+  stock, the nearest counts. Policy: **first for small orders** (below the wholesaler's
+  free-delivery minimum; otherwise only when no wholesaler can), **always first**, or **not used**.
+- **Delivery**: a wholesaler delivers itself when the goods reach its free-delivery minimum;
+  otherwise — and always for in-house stock — FIRINGI's fleet delivers at FIRINGI's flat fee
+  (charged once per checkout). The **Control Tower** groups these small orders by pickup point
+  (with delivery areas) so one FIRINGI driver can collect them together (*Assign all*; needs
+  multi-order delivery for FIRINGI's fleet).
+- **Delivery Order**: every supplier order has a printable *Delivery Order from FIRINGI*
+  (`/vendor/orders/<id>/delivery-order`): deliver to this customer, invoice FIRINGI at your own
+  prices. FIRINGI invoices the customer (it resells); orders FIRINGI picked are badged.
+- **When the supplier can't deliver** (declines, confirms less, doesn't answer in time):
+  - customer ordered **from FIRINGI** → moved automatically (or the Control Tower decides);
+  - customer **chose the wholesaler** → the customer is asked (`order.supplier_unavailable`):
+    *let FIRINGI find another wholesaler* (same price or lower) or *cancel*; undecided cases
+    close after the decision time (default 48 h);
+  - **wholesaler ← distributor** → a distributor's cancellation cancels the order; nothing moves.
+  - The customer is only invoiced for what is delivered.
 
 ## Configuration notes
 

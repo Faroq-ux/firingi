@@ -13,11 +13,12 @@
  * reliability, already delivering nearby, already has an open order for this buyer).
  * Every decision is an AllocationEvent; cases nobody can take wait in the Control Tower.
  */
-import { Prisma, type AllocationStatus, type AllocationTrigger, type CompanyType, type DeliveryMode, type Order, type OrderLine } from "@prisma/client";
+import { Prisma, type AllocationStatus, type AllocationTrigger, type CompanyType, type DeliveryMode, type Order, type OrderFlow, type OrderLine } from "@prisma/client";
 import Decimal from "decimal.js";
 import { prisma, type Tx } from "@/server/db";
 import { loadContext, type Ctx } from "@/server/context";
-import { AppError, NotFoundError, ValidationError } from "@/server/errors";
+import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
+import { can } from "@/server/rbac/guard";
 import { pricedOffers } from "@/server/data/catalogue-buyer";
 import { vendorReaches } from "@/server/delivery/coverage";
 import { checkQty, computeLine, computeTotals } from "@/server/orders/calc";
@@ -41,6 +42,11 @@ export type CoveredItem = {
 
 export type Candidate = {
   vendorId: string; name: string; country: string; eligible: boolean; reasons: string[];
+  /** FIRINGI's in-house warehouse. */ inHouse: boolean;
+  /** Goods reach this supplier's free-delivery minimum. */ freeDelivery: boolean;
+  /** The supplier's own free-delivery minimum (null = none; in-house = always FIRINGI's fleet). */ deliveryMinimum: number | null;
+  /** What the buyer would pay this supplier for the covered items (before FIRINGI's cap). */ buyerCost: number;
+  /** Position after ranking (0 = first choice). */ rank: number;
   score: number; parts: Record<string, number>; distanceKm: number | null; marginPct: number | null;
   goodsNet: number; marginNet: number; absorbedNet: number; covers: CoveredItem[];
 };
@@ -95,15 +101,38 @@ async function buyerCtx(order: Order): Promise<Ctx | null> {
 
 // ── candidates ──────────────────────────────────────────────────────────────
 
-export async function findCandidates(order: Order, items: MoveItem[], rules: AllocationRules, exclude: Set<string>): Promise<Candidate[]> {
-  const addressId = addressIdOf(order);
-  const sellerType = sellerTypeOf(order.flow);
+/** Who the goods are for: an existing order (moves) or a new checkout. */
+export type Target = { id: string | null; buyerCompanyId: string; countryId: string; flow: OrderFlow; addressId: string | null; buyer: Ctx | null };
+
+export async function targetOf(order: Order): Promise<Target> {
+  return { id: order.id, buyerCompanyId: order.buyerCompanyId, countryId: order.countryId, flow: order.flow, addressId: addressIdOf(order), buyer: await buyerCtx(order) };
+}
+
+/** Rank: eligible, most items covered, in-house policy, then nearest / cheapest, then score. */
+export function rankCandidates(cands: Candidate[], rules: AllocationRules): Candidate[] {
+  const base = [...cands].sort((a, b) => Number(b.eligible) - Number(a.eligible) || b.covers.length - a.covers.length);
+  const firstOutside = base.find((c) => c.eligible && !c.inHouse);
+  const small = !!firstOutside && !firstOutside.freeDelivery;
+  const inHouseFirst = rules.inHouse === "FIRST" || (rules.inHouse === "SMALL_ORDERS" && small);
+  const primary = (a: Candidate, b: Candidate) =>
+    rules.pickBy === "CHEAPEST" ? a.buyerCost - b.buyerCost : (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity);
+  const sorted = [...cands].sort((a, b) =>
+    Number(b.eligible) - Number(a.eligible) || b.covers.length - a.covers.length ||
+    // In-house first when the policy says so; otherwise only as a fallback after the wholesalers.
+    (inHouseFirst ? Number(b.inHouse) - Number(a.inHouse) : Number(a.inHouse) - Number(b.inHouse)) ||
+    primary(a, b) || b.score - a.score);
+  return sorted.map((c, i) => ({ ...c, rank: i }));
+}
+
+export async function findCandidates(target: Target, items: MoveItem[], rules: AllocationRules, exclude: Set<string>): Promise<Candidate[]> {
+  const addressId = target.addressId;
+  const sellerType = sellerTypeOf(target.flow);
   const vendors = await prisma.company.findMany({
     where: {
       type: sellerType, status: "APPROVED", id: { notIn: [...exclude] },
       vendorOffers: { some: { status: "ACTIVE", packagingUnitId: { in: items.map((i) => i.packagingUnitId) } } },
     },
-    select: { id: true, legalName: true, tradeName: true, countryId: true, country: { select: { code: true } }, allocationProfile: true },
+    select: { id: true, legalName: true, tradeName: true, countryId: true, isInHouse: true, country: { select: { code: true } }, allocationProfile: true },
   });
   if (!vendors.length || !addressId) return [];
   const ids = vendors.map((v) => v.id);
@@ -127,13 +156,13 @@ export async function findCandidates(order: Order, items: MoveItem[], rules: All
               postgis.ST_SetSRID(postgis.ST_MakePoint((o."deliveryAddress"->>'longitude')::float8, (o."deliveryAddress"->>'latitude')::float8), 4326)::postgis.geography,
               b.geo, ${rules.routeMatchKm * 1000})`
       : Promise.resolve([]),
-    prisma.order.findMany({ where: { sellerCompanyId: { in: ids }, buyerCompanyId: order.buyerCompanyId, status: OPEN, id: { not: order.id } }, select: { sellerCompanyId: true }, distinct: ["sellerCompanyId"] }),
+    prisma.order.findMany({ where: { sellerCompanyId: { in: ids }, buyerCompanyId: target.buyerCompanyId, status: OPEN, ...(target.id ? { id: { not: target.id } } : {}) }, select: { sellerCompanyId: true }, distinct: ["sellerCompanyId"] }),
     prisma.order.groupBy({ by: ["sellerCompanyId"], where: { sellerCompanyId: { in: ids }, placedAt: { gte: dayStart }, status: { not: "CANCELLED" } }, _count: true }),
     prisma.$queryRaw<{ id: string; n: number }[]>`
       SELECT o."sellerCompanyId" AS id, count(DISTINCT o.id)::int AS n FROM "Order" o JOIN "OrderStatusHistory" h ON h."orderId" = o.id
       WHERE h."toStatus" = 'SUPPLIER_PROCESSING' AND o."placedAt" >= ${since90} AND o."sellerCompanyId" IN (${Prisma.join(ids)}) GROUP BY 1`,
     prisma.allocationEvent.groupBy({ by: ["fromVendorId"], where: { fromVendorId: { in: ids }, trigger: { in: ["DECLINED", "NO_RESPONSE"] }, createdAt: { gte: since90 } }, _count: true }),
-    buyerCtx(order),
+    Promise.resolve(target.buyer),
   ]);
   const km = new Map(distances.map((d) => [d.id, Number(d.km)]));
   const onRoute = new Set(routes.map((r) => r.id));
@@ -149,7 +178,7 @@ export async function findCandidates(order: Order, items: MoveItem[], rules: All
   // Price every candidate offer as the buyer would see it (visibility, price lists, promotions, stock).
   const priced = buyer ? await pricedOffers(buyer, offers.map((o) => ({ offerId: o.id, qty: items.find((i) => i.packagingUnitId === o.packagingUnitId)!.qty }))) : { items: [], unavailable: offers.map((o) => o.id) };
   const pricedById = new Map(priced.items.map((p) => [p.offerId, p]));
-  const limitKm = distanceLimit(rules, order.countryId);
+  const limitKm = distanceLimit(rules, target.countryId);
   const w = rules.weights;
   const wSum = Object.values(w).reduce((a, b) => a + b, 0) || 1;
 
@@ -157,9 +186,10 @@ export async function findCandidates(order: Order, items: MoveItem[], rules: All
   for (const v of vendors) {
     const reasons: string[] = [];
     const profile = v.allocationProfile;
-    const crossBorder = v.countryId !== order.countryId;
+    const crossBorder = v.countryId !== target.countryId;
     if (profile?.excluded) reasons.push("Excluded by FIRINGI");
-    if (crossBorder && (sellerType === "WHOLESALER" || !rules.crossBorderDistributors)) reasons.push("Other country");
+    if (v.isInHouse && rules.inHouse === "OFF") reasons.push("In-house warehouse not used (rules)");
+    if (crossBorder && sellerType === "WHOLESALER") reasons.push("Other country");
     if (!(await vendorReaches(v.id, addressId))) reasons.push("Doesn't deliver to this address");
     const d = km.get(v.id) ?? null;
     if (!crossBorder && d !== null && d > limitKm) reasons.push(`Too far (${Math.round(d)} km > ${limitKm} km)`);
@@ -189,6 +219,9 @@ export async function findCandidates(order: Order, items: MoveItem[], rules: All
     if (!covers.length) reasons.push("No stock or price for these items");
 
     const goodsNet = covers.reduce((a, c) => a + Number(c.lineNet), 0);
+    const buyerCost = covers.reduce((a, c) => a + Number(c.candidateSaleUnitNet) * c.qty, 0);
+    const vendorMin = (await deliveryRulesFor(target.countryId, v.id)).vendor?.vendorDeliveryMinimum;
+    const freeDelivery = !v.isInHouse && !!vendorMin && goodsNet >= Number(vendorMin);
     const marginNet = covers.reduce((a, c) => a + Number(c.lineNet) - Number(c.vendorLineNet), 0);
     const absorbedNet = covers.reduce((a, c) => a + Math.max(0, Number(c.candidateSaleUnitNet) - Number(c.saleUnitNet)) * c.qty, 0);
     const marginPct = goodsNet > 0 ? (marginNet / goodsNet) * 100 : null;
@@ -206,11 +239,12 @@ export async function findCandidates(order: Order, items: MoveItem[], rules: All
     const score = (Object.keys(parts) as (keyof typeof parts)[]).reduce((a, k) => a + parts[k] * w[k], 0) / wSum * 100;
     out.push({
       vendorId: v.id, name: v.tradeName ?? v.legalName, country: v.country.code, eligible: reasons.length === 0, reasons,
+      inHouse: v.isInHouse, freeDelivery, deliveryMinimum: vendorMin ? Number(vendorMin) : null, buyerCost: round2(buyerCost), rank: 0,
       score: round2(score), parts: Object.fromEntries(Object.entries(parts).map(([k, x]) => [k, round2(x)])), distanceKm: d === null ? null : round2(d),
       marginPct: marginPct === null ? null : round2(marginPct), goodsNet: round2(goodsNet), marginNet: round2(marginNet), absorbedNet: round2(absorbedNet), covers,
     });
   }
-  return out.sort((a, b) => Number(b.eligible) - Number(a.eligible) || b.covers.length - a.covers.length || b.score - a.score);
+  return rankCandidates(out, rules);
 }
 
 /** Greedy split: the supplier covering most remaining items (then best score), up to maxSplit orders. */
@@ -223,7 +257,8 @@ export function planMoves(cands: Candidate[], itemCount: number, maxSplit: numbe
       if (!allowed(c) || picks.some((p) => p.candidate.vendorId === c.vendorId)) continue;
       const covers = c.covers.filter((x) => left.has(x.index));
       if (!covers.length) continue;
-      if (!best || covers.length > best.covers.length || (covers.length === best.covers.length && c.score > best.candidate.score)) best = { candidate: c, covers };
+      const better = (x: Candidate, y: Candidate) => (x.rank !== y.rank ? x.rank < y.rank : x.score > y.score);
+      if (!best || covers.length > best.covers.length || (covers.length === best.covers.length && better(c, best.candidate))) best = { candidate: c, covers };
     }
     if (!best) break;
     picks.push(best);
@@ -234,9 +269,19 @@ export function planMoves(cands: Candidate[], itemCount: number, maxSplit: numbe
 
 // ── creating the replacement order ──────────────────────────────────────────
 
-async function createReplacement(tx: Tx, original: Order, vendorId: string, items: MoveItem[], covers: CoveredItem[], feeNet: Decimal, why: string, byUserId: string | null) {
+/** What a new order copies: buyer, delivery address, notes — and its link to the original, if any. */
+export type OrderBase = Pick<Order, "flow" | "buyerCompanyId" | "countryId" | "placedByUserId" | "deliveryAddress" | "requestedDeliveryDate" | "buyerNotes" | "deliveryRuleId"> & {
+  parentOrderId: string | null; routedByFiringi: boolean;
+};
+
+/**
+ * Create an order for `vendorId` with the covered items at the prices worked out for them.
+ * Delivery: the supplier delivers when the goods reach its free-delivery minimum; otherwise
+ * (and always for the in-house warehouse) FIRINGI's fleet. `feeNet` is the fee charged.
+ */
+export async function createAllocatedOrder(tx: Tx, original: OrderBase, vendorId: string, items: MoveItem[], covers: CoveredItem[], feeNet: Decimal, why: string, byUserId: string | null) {
   const addr = original.deliveryAddress as { id: string; regionId?: string | null };
-  const vendor = await tx.company.findUniqueOrThrow({ where: { id: vendorId }, select: { countryId: true } });
+  const vendor = await tx.company.findUniqueOrThrow({ where: { id: vendorId }, select: { countryId: true, isInHouse: true } });
   const commission = await activeCommission(tx, vendorId);
   if (!commission) throw new AppError("SUPPLIER_UNAVAILABLE", "Supplier has no commission agreement.", 409);
   const lines = covers.map((c) => {
@@ -249,7 +294,7 @@ async function createReplacement(tx: Tx, original: Order, vendorId: string, item
   const rules = await deliveryRulesFor(original.countryId, vendorId);
   const crossBorder = vendor.countryId !== original.countryId;
   const vendorMin = rules.vendor?.vendorDeliveryMinimum;
-  const mode: DeliveryMode = vendorMin && goodsNet.gte(vendorMin.toString()) ? (crossBorder ? "CARRIER" : "VENDOR_FLEET") : crossBorder ? "CARRIER" : "FIRINGI_FLEET";
+  const mode: DeliveryMode = vendor.isInHouse ? "FIRINGI_FLEET" : vendorMin && goodsNet.gte(vendorMin.toString()) ? (crossBorder ? "CARRIER" : "VENDOR_FLEET") : crossBorder ? "CARRIER" : "FIRINGI_FLEET";
   const ruleId = mode === "FIRINGI_FLEET" ? rules.firingi?.id ?? null : rules.vendor?.id ?? null;
   let feeVat = new Decimal(0);
   const feeRule = feeNet.gt(0) ? await tx.deliveryRule.findFirst({ where: { id: { in: [original.deliveryRuleId ?? "", rules.firingi?.id ?? ""] }, feeTaxCategoryId: { not: null } } }) : null;
@@ -261,7 +306,7 @@ async function createReplacement(tx: Tx, original: Order, vendorId: string, item
     data: {
       number, flow: original.flow, buyerCompanyId: original.buyerCompanyId, sellerCompanyId: vendorId, placedByUserId: original.placedByUserId,
       countryId: original.countryId, status: "NEW", deliveryMode: mode, deliveryRuleId: ruleId, deliveryAddress: original.deliveryAddress as Prisma.InputJsonValue,
-      requestedDeliveryDate: original.requestedDeliveryDate, buyerNotes: original.buyerNotes, parentOrderId: original.id,
+      requestedDeliveryDate: original.requestedDeliveryDate, buyerNotes: original.buyerNotes, parentOrderId: original.parentOrderId, routedByFiringi: original.routedByFiringi,
       listNet: t.listNet.toFixed(2), discountTotal: t.discountTotal.toFixed(2), deliveryFeeNet: t.deliveryFeeNet.toFixed(2), netTotal: t.netTotal.toFixed(2),
       vatTotal: t.vatTotal.toFixed(2), grandTotal: t.grandTotal.toFixed(2), commissionTotal: t.commissionTotal.toFixed(2),
       vendorPayableNet: t.vendorPayableNet.toFixed(2), firingiMarginNet: t.firingiMarginNet.toFixed(2),
@@ -285,7 +330,7 @@ async function createReplacement(tx: Tx, original: Order, vendorId: string, item
   await tx.orderStatusHistory.create({ data: { orderId: order.id, toStatus: "NEW", byUserId, reason: why } });
   await tx.order.update({ where: { id: order.id }, data: { status: "PENDING_CONFIRMATION" } });
   await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: "NEW", toStatus: "PENDING_CONFIRMATION", reason: "Sent to supplier" } });
-  return { orderId: order.id, number, vendorId, goodsNet: Number(t.goodsNet.toFixed(2)), marginNet: Number(t.firingiMarginNet.toFixed(2)) };
+  return { orderId: order.id, number, vendorId, mode, goodsNet: Number(t.goodsNet.toFixed(2)), marginNet: Number(t.firingiMarginNet.toFixed(2)) };
 }
 
 // ── allocate ────────────────────────────────────────────────────────────────
@@ -296,6 +341,7 @@ const TRIGGER_TEXT: Record<AllocationTrigger, string> = {
 
 export type AllocateInput = {
   orderId: string; trigger: AllocationTrigger; automatic: boolean; byUserId?: string | null;
+  /** The buyer (who had chosen this supplier) asked FIRINGI to find another one. */ buyerApproved?: boolean;
   /** Manual: move to this supplier only. */ vendorId?: string; /** Manual: accept a margin below the floor. */ marginOverride?: boolean; note?: string | null;
 };
 
@@ -303,7 +349,11 @@ export async function allocate(input: AllocateInput) {
   const rules = await allocationRules();
   const order = await prisma.order.findUnique({ where: { id: input.orderId }, include: { lines: true } });
   if (!order) throw new NotFoundError("Order");
-  if (input.automatic && !rules.flows[order.flow]) return null;
+  // Wholesalers buying from distributors: a distributor's cancellation simply cancels the order.
+  if (order.flow === "WHOLESALER_FROM_DISTRIBUTOR") {
+    if (input.automatic) return null;
+    throw new ValidationError("Distributor orders aren't moved: when a distributor cancels, the order is cancelled.");
+  }
   if (input.automatic && input.trigger !== "MANUAL" && !rules.triggers[input.trigger === "DECLINED" ? "declined" : input.trigger === "SHORTFALL" ? "shortfall" : "noResponse"]) return null;
   const items = await itemsToMove(order, input.trigger);
   if (!items.length) {
@@ -316,17 +366,23 @@ export async function allocate(input: AllocateInput) {
   const record = async (status: AllocationStatus, extra: Partial<Prisma.AllocationEventUncheckedCreateInput> = {}) => {
     const resolved = status === "MOVED" || status === "DISMISSED";
     const ev = await prisma.allocationEvent.create({ data: { ...base, status, ...extra, ...(resolved ? { resolvedAt: new Date(), resolvedById: input.byUserId ?? null } : {}) } });
-    if (!resolved) await notify("allocation.needed", [{ companyId: (await prisma.company.findFirstOrThrow({ where: { type: "ADMIN" }, select: { id: true } })).id, link: `/admin/allocation/manual-allocation?order=${order.id}` }], { number: order.number, reason: TRIGGER_TEXT[input.trigger] }, { ref: { type: "Order", id: order.id } });
+    if (status === "AWAITING_BUYER") {
+      const seller = await prisma.company.findUniqueOrThrow({ where: { id: order.sellerCompanyId }, select: { legalName: true, tradeName: true } });
+      await notify("order.supplier_unavailable", [{ companyId: order.buyerCompanyId, link: `/buy/orders/${order.id}` }], { number: order.number, supplier: seller.tradeName ?? seller.legalName }, { ref: { type: "Order", id: order.id } });
+    } else if (!resolved) await notify("allocation.needed", [{ companyId: (await prisma.company.findFirstOrThrow({ where: { type: "ADMIN" }, select: { id: true } })).id, link: `/admin/allocation/manual-allocation?order=${order.id}` }], { number: order.number, reason: TRIGGER_TEXT[input.trigger] }, { ref: { type: "Order", id: order.id } });
     return ev;
   };
 
+  // The buyer chose this supplier: the buyer decides (let FIRINGI find another one, or cancel).
+  if (input.automatic && !order.routedByFiringi && !input.buyerApproved && input.trigger !== "MANUAL")
+    return record("AWAITING_BUYER", { note: `Waiting for the buyer — ${TRIGGER_TEXT[input.trigger]}` });
   if (input.automatic && chain.moves >= rules.maxMoves) return record("NO_CANDIDATE", { note: `Already moved ${chain.moves} time(s) — limit reached` });
   const exclude = new Set(chain.vendors);
   if (input.vendorId) exclude.delete(input.vendorId);
-  const cands = await findCandidates(order, items, rules, exclude);
+  const cands = await findCandidates(await targetOf(order), items, rules, exclude);
   const candJson = cands.map(({ covers, ...c }) => ({ ...c, covers: covers.map((x) => ({ index: x.index, qty: x.qty, saleUnitNet: x.saleUnitNet, candidateSaleUnitNet: x.candidateSaleUnitNet })) })) as unknown as Prisma.InputJsonValue;
 
-  if (input.automatic && !rules.auto) return record("PENDING", { candidates: candJson, note: "Automatic moves are off" });
+  if (input.automatic && !rules.auto && !input.buyerApproved) return record("PENDING", { candidates: candJson, note: "Automatic moves are off" });
 
   const marginOnly = (c: Candidate) => c.reasons.length > 0 && c.reasons.every((r) => r.startsWith("Margin "));
   const allowed = input.vendorId
@@ -345,7 +401,8 @@ export async function allocate(input: AllocateInput) {
   // Whole order moves → the original is cancelled (unless the supplier already cancelled it).
   const movesAll = leftover.length === 0 && input.trigger !== "SHORTFALL" && !(input.trigger === "MANUAL" && order.status !== "PENDING_CONFIRMATION" && order.status !== "CANCELLED");
   const why = `Moved from ${order.number} (${TRIGGER_TEXT[input.trigger]})`;
-  let created: Awaited<ReturnType<typeof createReplacement>>[] = [];
+  let created: Awaited<ReturnType<typeof createAllocatedOrder>>[] = [];
+  const orderBase: OrderBase = { ...order, parentOrderId: order.id, routedByFiringi: true };
   try {
     created = await prisma.$transaction(async (tx) => {
       if (movesAll && order.status === "PENDING_CONFIRMATION")
@@ -353,7 +410,7 @@ export async function allocate(input: AllocateInput) {
       // The agreed delivery fee follows the goods when the whole order moves (first new order only).
       const carryFee = movesAll && (order.status === "PENDING_CONFIRMATION" || order.status === "CANCELLED") ? new Decimal(order.deliveryFeeNet.toString()) : new Decimal(0);
       const out = [];
-      for (const [i, p] of picks.entries()) out.push(await createReplacement(tx, order, p.candidate.vendorId, items, p.covers, i === 0 ? carryFee : new Decimal(0), why, input.byUserId ?? null));
+      for (const [i, p] of picks.entries()) out.push(await createAllocatedOrder(tx, orderBase, p.candidate.vendorId, items, p.covers, i === 0 ? carryFee : new Decimal(0), why, input.byUserId ?? null));
       await writeAudit({ actorUserId: input.byUserId ?? null, actorCompanyId: null, action: "order.reallocated", entityType: "Order", entityId: order.id, after: { trigger: input.trigger, automatic: input.automatic, to: out.map((o) => o.number) } }, tx);
       return out;
     });
@@ -362,8 +419,8 @@ export async function allocate(input: AllocateInput) {
   }
   const absorbed = picks.reduce((a, p) => a + p.covers.reduce((s, c) => s + Math.max(0, Number(c.candidateSaleUnitNet) - Number(c.saleUnitNet)) * c.qty, 0), 0);
   const status: AllocationStatus = leftover.length ? "PARTIAL" : "MOVED";
-  // A manual move closes the open cases for this order.
-  if (!input.automatic) await prisma.allocationEvent.updateMany({ where: { orderId: order.id, resolvedAt: null }, data: { resolvedAt: new Date(), resolvedById: input.byUserId ?? null } });
+  // A manual move (or the buyer's go-ahead) closes the open cases for this order.
+  if (!input.automatic || input.buyerApproved) await prisma.allocationEvent.updateMany({ where: { orderId: order.id, resolvedAt: null }, data: { resolvedAt: new Date(), resolvedById: input.byUserId ?? null } });
   const ev = await record(status, {
     candidates: candJson, newOrders: created as unknown as Prisma.InputJsonValue, absorbedNet: absorbed.toFixed(2),
     marginOverride: !!input.marginOverride && picks.some((p) => !p.candidate.eligible), note: input.note ?? (leftover.length ? `${leftover.length} item(s) found no supplier` : null),
@@ -404,6 +461,11 @@ export async function processOverdue(now = new Date()) {
       AND (SELECT max(h.at) FROM "OrderStatusHistory" h WHERE h."orderId" = o.id AND h."toStatus" = 'PENDING_CONFIRMATION') < ${cutoff}
       AND NOT EXISTS (SELECT 1 FROM "AllocationEvent" e WHERE e."orderId" = o.id AND e.trigger = 'NO_RESPONSE')
     ORDER BY o."placedAt" LIMIT 100`;
+  // Buyers who didn't decide in time: the case closes (nothing was charged).
+  await prisma.allocationEvent.updateMany({
+    where: { status: "AWAITING_BUYER", resolvedAt: null, createdAt: { lt: new Date(now.getTime() - rules.buyerDecisionHours * 3600_000) } },
+    data: { status: "DISMISSED", resolvedAt: now, note: "The buyer didn't decide in time" },
+  });
   let moved = 0, waiting = 0;
   for (const { id } of overdue) {
     const ev = await allocate({ orderId: id, trigger: "NO_RESPONSE", automatic: true }).catch((e) => { console.error("allocation failed", id, e); return null; });
@@ -411,6 +473,42 @@ export async function processOverdue(now = new Date()) {
     else if (ev) waiting++;
   }
   return { checked: overdue.length, moved, waiting };
+}
+
+// ── buyer's decision ────────────────────────────────────────────────────────
+
+/** The open "supplier can't deliver" decision for this order, if the caller is its buyer. */
+export async function openBuyerDecision(ctx: Ctx, orderId: string) {
+  return prisma.allocationEvent.findFirst({
+    where: { orderId, status: "AWAITING_BUYER", resolvedAt: null, order: { buyerCompanyId: ctx.company.id } },
+    orderBy: { createdAt: "desc" }, select: { id: true, trigger: true, items: true, createdAt: true },
+  });
+}
+
+/**
+ * The buyer chose this supplier and it can't deliver: FIRINGI finds another (same price or
+ * lower; the Control Tower takes over if nobody can), or the buyer cancels.
+ */
+export async function buyerDecision(ctx: Ctx, eventId: string, choice: "FIRINGI" | "CANCEL") {
+  if (!can(ctx, "buyer.orders.place")) throw new ForbiddenError();
+  const ev = await prisma.allocationEvent.findUnique({ where: { id: eventId }, include: { order: { include: { lines: true } } } });
+  if (!ev || ev.order.buyerCompanyId !== ctx.company.id || ev.status !== "AWAITING_BUYER" || ev.resolvedAt) throw new NotFoundError("Decision");
+  const order = ev.order;
+  // Supplier answered meanwhile (late confirmation): nothing to decide any more.
+  if (ev.trigger === "NO_RESPONSE" && order.status !== "PENDING_CONFIRMATION") {
+    await prisma.allocationEvent.update({ where: { id: ev.id }, data: { status: "DISMISSED", resolvedAt: new Date(), resolvedById: ctx.user.id, note: "The supplier answered meanwhile" } });
+    throw new ValidationError("The supplier has answered meanwhile — nothing to decide.");
+  }
+  if (choice === "CANCEL") {
+    if (order.status === "PENDING_CONFIRMATION")
+      await prisma.$transaction((tx) => applyOrderTransition(tx, order, "CANCELLED", { reason: "Cancelled by the buyer (supplier didn't confirm)", userId: ctx.user.id, companyId: ctx.company.id }));
+    await prisma.allocationEvent.update({ where: { id: ev.id }, data: { status: "DISMISSED", resolvedAt: new Date(), resolvedById: ctx.user.id, note: "The buyer cancelled" } });
+    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "allocation.buyer_cancelled", entityType: "Order", entityId: order.id });
+    return { status: "CANCELLED" as const, newOrders: [] as { orderId: string; number: string }[] };
+  }
+  await prisma.allocationEvent.update({ where: { id: ev.id }, data: { resolvedAt: new Date(), resolvedById: ctx.user.id } });
+  const next = await allocate({ orderId: order.id, trigger: ev.trigger, automatic: true, buyerApproved: true, byUserId: ctx.user.id });
+  return { status: next?.status ?? "NO_CANDIDATE", newOrders: ((next?.newOrders ?? []) as { orderId: string; number: string }[]) };
 }
 
 // ── back office ─────────────────────────────────────────────────────────────
@@ -433,7 +531,7 @@ export async function previewCandidates(ctx: Ctx, orderId: string) {
   const items = await itemsToMove(order, "MANUAL");
   const rules = await allocationRules();
   const chain = await chainOf(order);
-  return { order, items, rules, candidates: items.length ? await findCandidates(order, items, rules, chain.vendors) : [] };
+  return { order, items, rules, candidates: items.length ? await findCandidates(await targetOf(order), items, rules, chain.vendors) : [] };
 }
 
 export async function dismissEvent(ctx: Ctx, eventId: string, note: string) {

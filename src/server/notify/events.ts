@@ -60,6 +60,7 @@ export const EVENTS: EventDef[] = [
   E("order.exception", "orders", [...ORDERS, "admin.orders.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("order.returned", "orders", ORDERS, ["EMAIL"], ["number", "reason"]),
   E("order.reallocated", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["number", "newNumber", "supplier"]),
+  E("order.supplier_unavailable", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["number", "supplier"]),
   E("allocation.needed", "orders", ["admin.allocation.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

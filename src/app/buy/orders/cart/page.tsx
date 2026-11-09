@@ -28,7 +28,7 @@ export default async function CartPage() {
   const d = cart.delivery;
   return (
     <>
-      <PageHeader title={t("cart")} description={<span>{t("supplier")}: <Link className="font-medium text-primary hover:underline" href={`/buy/catalogue/suppliers/${cart.seller!.id}`}>{cart.seller!.name}</Link></span>} actions={<ClearCartButton />} />
+      <PageHeader title={t("cart")} description={cart.routed ? <span data-testid="routed-cart">{t("routedCart")}</span> : <span>{t("supplier")}: <Link className="font-medium text-primary hover:underline" href={`/buy/catalogue/suppliers/${cart.seller!.id}`}>{cart.seller!.name}</Link></span>} actions={<ClearCartButton />} />
       {cart.unavailable.length > 0 && <p className="mb-4 rounded-md bg-warning/10 p-3 text-sm">{t("unavailable", { count: cart.unavailable.length })}</p>}
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
@@ -64,7 +64,7 @@ export default async function CartPage() {
               </p>
             ) : (
               <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">
-                {t(d.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(d.minimum, locale), missing: formatMoney(d.missing, locale), tax })}
+                {d.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : t(d.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(d.minimum, locale), missing: formatMoney(d.missing, locale), tax })}
               </p>
             ))}
             <CheckoutForm disabled={!d?.ok} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}` }))} />

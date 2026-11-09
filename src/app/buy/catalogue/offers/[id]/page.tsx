@@ -24,7 +24,9 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
 
   return (
     <>
-      <Link href={`/buy/catalogue/suppliers/${item.vendor.id}`} className="text-sm text-primary hover:underline">← {t("backToStore", { name: item.vendor.name })}</Link>
+      {item.vendor.id
+        ? <Link href={`/buy/catalogue/suppliers/${item.vendor.id}`} className="text-sm text-primary hover:underline">← {t("backToStore", { name: item.vendor.name })}</Link>
+        : <Link href="/buy/catalogue/browse" className="text-sm text-primary hover:underline">← {t("shop")}</Link>}
       <div className="mt-4 grid gap-6 md:grid-cols-[18rem_1fr]">
         <ProductThumb productId={item.productId} hasImage={images.has(item.productId)} className="h-64 w-full rounded-xl border" />
         <div className="space-y-4">
@@ -70,7 +72,9 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           </Card>
           <div className="text-sm">
             <span className="text-muted-foreground">{t("supplier")}:</span>{" "}
-            <Link href={`/buy/catalogue/suppliers/${item.vendor.id}`} className="font-medium text-primary hover:underline">{item.vendor.country.flag} {item.vendor.name}</Link>
+            {item.vendor.id
+              ? <Link href={`/buy/catalogue/suppliers/${item.vendor.id}`} className="font-medium text-primary hover:underline">{item.vendor.country.flag} {item.vendor.name}</Link>
+              : <span className="font-medium" data-testid="sold-by-firingi">{t("soldByFiringi")}</span>}
           </div>
           {item.description && <p className="whitespace-pre-line text-sm text-muted-foreground">{pickLocalized(item.description, locale)}</p>}
           {alternatives.length > 0 && (

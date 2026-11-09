@@ -459,6 +459,8 @@
     "barcodeResults": "Viivakoodi {code}: {count} tarjous(ta), lähin toimittaja ensin",
     "noMatch": "Haulle ”{q}” ei löytynyt tuotetta.",
     "stopScan": "Pysäytä",
+    "firingiMode": "Tilaat FIRINGIltä: yksi hinta tuotetta kohden. FIRINGI valitsee lähimmän tukkurin, jolla on varastoa — tai oman varastonsa — ja FIRINGI laskuttaa sinua.",
+    "soldByFiringi": "Myyjä FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Ostoskorissasi on jo tuotteita toimittajalta {current}. Ostat yhdeltä toimittajalta kerrallaan — viimeistele tilaus tai tyhjennä ostoskori ennen kuin lisäät tuotteita toimittajalta {next}.",
     "movedFrom": "Tämä tilaus korvaa tilauksen {number}: alkuperäinen toimittaja ei voinut toimittaa sitä, joten FIRINGI siirsi sen samaan tai edullisempaan hintaan.",
     "movedTo": "Toimittaja ei voinut toimittaa koko tilausta. FIRINGI siirsi nämä tuotteet toiselle toimittajalle:",
-    "passedOn": "FIRINGI siirsi tämän tilauksen sinulle toiselta toimittajalta. Vahvista se tavalliseen tapaan."
+    "passedOn": "FIRINGI siirsi tämän tilauksen sinulle toiselta toimittajalta. Vahvista se tavalliseen tapaan.",
+    "routedCart": "FIRINGIltä — FIRINGI valitsee tukkurin, kun teet tilauksen.",
+    "notAvailableHere": "Joitakin tuotteita ei voi toimittaa osoitteeseesi juuri nyt. Poista ne tai valitse toinen osoite.",
+    "deliveryOrder": "Toimitusmääräys",
+    "deliveryOrderFromFiringi": "Toimitusmääräys FIRINGIltä",
+    "decision": {
+      "title": "{supplier} ei voi toimittaa tätä tilausta",
+      "titleShort": "{supplier} ei voi toimittaa koko tilausta",
+      "body": "FIRINGI voi siirtää sen toiselle tukkurille samaan tai edullisempaan hintaan — tai voit peruuttaa. Maksat vain toimitetusta.",
+      "deadline": "Päätä viimeistään {date}.",
+      "letFiringi": "Anna FIRINGIn etsiä toinen tukkuri",
+      "cancelOrder": "Peruuta tilaus",
+      "cancelItems": "Peruuta puuttuvat tuotteet",
+      "moved": "Valmis — FIRINGI siirsi sen toiselle tukkurille:",
+      "none": "Mikään tukkuri ei voi ottaa sitä juuri nyt. FIRINGIn tiimi etsii ratkaisun ja ottaa sinuun yhteyttä.",
+      "cancelled": "Peruutettu. Sinua ei laskuteta."
+    }
   },
   "finance": {
     "invoices": "Laskut",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Tilaus {number} tarvitsee uuden toimittajan",
       "body": "Tilaukselle {number} ei löytynyt automaattisesti toimittajaa ({reason}). Päätä kohdistuksen ohjaustornissa."
+    },
+    "order_supplier_unavailable": {
+      "title": "Tilaus {number}: {supplier} ei voi toimittaa",
+      "body": "{supplier} ei voi toimittaa koko tilausta {number}. Avaa tilaus, jotta FIRINGI etsii toisen tukkurin samaan tai edullisempaan hintaan, tai peruuta se."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Alennukset",
       "aov": "Keskimääräinen tilaus"
     }
+  },
+  "deliveryOrder": {
+    "title": "Toimitusmääräys",
+    "print": "Tulosta",
+    "requested": "Toivottu toimitus",
+    "notConfirmed": "Ei vielä vahvistettu — vahvista tilaus ensin.",
+    "supplier": "Toimittaja",
+    "instructions": "FIRINGI tilaa nämä tavarat sinulta. Toimita ne alla olevalle asiakkaalle (tai pidä ne valmiina FIRINGIn kuljettajalle) ja laskuta FIRINGIä omilla hinnoillasi. FIRINGI laskuttaa asiakasta.",
+    "deliverTo": "Toimitusosoite",
+    "contact": "Yhteyshenkilö",
+    "invoiceTo": "Laskutetaan",
+    "delivery": "Toimitus",
+    "byYou": "Toimitat asiakkaalle itse",
+    "byFiringi": "FIRINGIn kuljettaja noutaa sinulta",
+    "byCarrier": "Lähetä omalla kuljetusliikkeelläsi",
+    "qty": "Määrä",
+    "unitPrice": "Hintasi (alv 0 %)",
+    "lineTotal": "Yhteensä (alv 0 %)",
+    "total": "Laskutettava FIRINGIltä (alv 0 %)",
+    "notes": "Asiakkaan huomautukset"
   }
 }

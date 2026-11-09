@@ -459,6 +459,8 @@
     "barcodeResults": "Čárový kód {code}: {count} nabídek, nejbližší dodavatel první",
     "noMatch": "Pro „{q}“ nebyl nalezen žádný produkt.",
     "stopScan": "Zastavit",
+    "firingiMode": "Objednáváte u FIRINGI: jedna cena za produkt. FIRINGI vybere nejbližší velkoobchod se zásobou — nebo vlastní sklad — a fakturu vám vystaví FIRINGI.",
+    "soldByFiringi": "Prodává FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Váš košík již obsahuje produkty od {current}. Nakupujete vždy u jednoho dodavatele — dokončete objednávku nebo vyprázdněte košík, než přidáte produkty od {next}.",
     "movedFrom": "Tato objednávka nahrazuje objednávku {number}: původní dodavatel ji nemohl dodat, proto ji FIRINGI předalo za stejnou nebo nižší cenu.",
     "movedTo": "Dodavatel nemohl dodat celou tuto objednávku. FIRINGI předalo tyto položky jinému dodavateli:",
-    "passedOn": "FIRINGI vám předalo tuto objednávku od jiného dodavatele. Potvrďte ji jako obvykle."
+    "passedOn": "FIRINGI vám předalo tuto objednávku od jiného dodavatele. Potvrďte ji jako obvykle.",
+    "routedCart": "Od FIRINGI — FIRINGI vybere velkoobchod, až objednávku odešlete.",
+    "notAvailableHere": "Některé produkty teď nelze doručit na vaši adresu. Odeberte je nebo zvolte jinou adresu.",
+    "deliveryOrder": "Dodací příkaz",
+    "deliveryOrderFromFiringi": "Dodací příkaz od FIRINGI",
+    "decision": {
+      "title": "{supplier} nemůže dodat tuto objednávku",
+      "titleShort": "{supplier} nemůže dodat celou tuto objednávku",
+      "body": "FIRINGI ji může předat jinému velkoobchodu za stejnou nebo nižší cenu — nebo ji můžete zrušit. Platíte jen za to, co bude dodáno.",
+      "deadline": "Rozhodněte prosím do {date}.",
+      "letFiringi": "Nechat FIRINGI najít jiný velkoobchod",
+      "cancelOrder": "Zrušit objednávku",
+      "cancelItems": "Zrušit chybějící položky",
+      "moved": "Hotovo — FIRINGI ji předalo jinému velkoobchodu:",
+      "none": "Teď ji nemůže převzít žádný velkoobchod. Tým FIRINGI najde řešení a ozve se vám.",
+      "cancelled": "Zrušeno. Nebude vám nic účtováno."
+    }
   },
   "finance": {
     "invoices": "Faktury",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Objednávka {number} potřebuje nového dodavatele",
       "body": "Pro objednávku {number} nebyl automaticky nalezen žádný dodavatel ({reason}). Rozhodněte v řídicím centru přidělování."
+    },
+    "order_supplier_unavailable": {
+      "title": "Objednávka {number}: {supplier} nemůže dodat",
+      "body": "{supplier} nemůže dodat celou objednávku {number}. Otevřete objednávku a nechte FIRINGI najít jiného velkoobchodníka za stejnou nebo nižší cenu, nebo ji zrušte."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Slevy",
       "aov": "Průměrná objednávka"
     }
+  },
+  "deliveryOrder": {
+    "title": "Dodací příkaz",
+    "print": "Tisk",
+    "requested": "Požadované doručení",
+    "notConfirmed": "Zatím nepotvrzeno — nejprve objednávku potvrďte.",
+    "supplier": "Dodavatel",
+    "instructions": "FIRINGI u vás objednává toto zboží. Doručte je zákazníkovi níže (nebo je připravte pro řidiče FIRINGI) a fakturujte FIRINGI za své ceny. FIRINGI fakturuje zákazníkovi.",
+    "deliverTo": "Doručit na",
+    "contact": "Kontakt",
+    "invoiceTo": "Fakturovat na",
+    "delivery": "Doprava",
+    "byYou": "Doručujete zákazníkovi vy",
+    "byFiringi": "Řidič FIRINGI si vyzvedne u vás",
+    "byCarrier": "Odeslat vlastním dopravcem",
+    "qty": "Množ.",
+    "unitPrice": "Vaše cena (bez DPH)",
+    "lineTotal": "Celkem (bez DPH)",
+    "total": "K fakturaci FIRINGI (bez DPH)",
+    "notes": "Poznámky zákazníka"
   }
 }

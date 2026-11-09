@@ -5,14 +5,16 @@ import type { Ctx } from "@/server/context";
 import { pickLocalized } from "@/i18n/config";
 import { allocationRules, type AllocationRules } from "@/server/allocation/rules";
 import { previewCandidates } from "@/server/allocation/engine";
-import { activeCountries, controlTower, listEvents, movableOrders, moveStats, openDeliveriesByRegion, openOrdersByBuyer, stockAcrossSuppliers, suppliers, type EventRow } from "@/server/allocation/data";
+import { countryOrderModes } from "@/server/allocation/mode";
+import { can } from "@/server/rbac/guard";
+import { activeCountries, smallOrderGroups, controlTower, listEvents, movableOrders, moveStats, openDeliveriesByRegion, openOrdersByBuyer, stockAcrossSuppliers, suppliers, type EventRow } from "@/server/allocation/data";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { OrderStatusBadge } from "@/components/orders/order-views";
 import { formatDate, formatMoney } from "@/lib/utils";
-import { CountryDistanceForm, DismissButton, MoveButton, RulesForm, RunNowButton, VendorProfileForm, type RuleField } from "./forms";
+import { CountryDistanceForm, DismissButton, MoveButton, OrderModeSelect, PickupRunForm, RulesForm, RunNowButton, VendorProfileForm, type RuleField } from "./forms";
 
 export type AllocationPage =
   | "control-tower" | "auto-allocation" | "manual-allocation" | "distributor-vs-wholesaler" | "distance-rules" | "route-matching"
@@ -25,7 +27,7 @@ const TITLES: Record<AllocationPage, [string, string]> = {
   "control-tower": ["Allocation Control Tower", "Orders a supplier declined, confirmed short or didn't answer — what FIRINGI moved, and what still needs a decision."],
   "auto-allocation": ["Auto Allocation", "When FIRINGI moves orders by itself, and how it ranks the other suppliers."],
   "manual-allocation": ["Manual Allocation", "Pick an order and move it — or its missing items — to another supplier."],
-  "distributor-vs-wholesaler": ["Distributor vs Wholesaler", "Which marketplaces use allocation. Customers only buy from wholesalers and wholesalers from distributors — a move never changes that."],
+  "distributor-vs-wholesaler": ["Distributor vs Wholesaler", "How each marketplace orders, and what happens when the supplier can't deliver."],
   "distance-rules": ["Distance Rules", "How far a replacement supplier's warehouse may be from the delivery address."],
   "route-matching": ["Route Matching", "Prefer suppliers that already deliver near this address today."],
   "existing-order-matching": ["Existing Order Matching", "Prefer suppliers that already have an open order for the same buyer, so goods can travel together."],
@@ -39,9 +41,9 @@ const TITLES: Record<AllocationPage, [string, string]> = {
 
 const TRIGGER: Record<string, string> = { DECLINED: "Supplier declined", SHORTFALL: "Confirmed less", NO_RESPONSE: "No answer in time", MANUAL: "Manual" };
 const STATUS_VARIANT: Record<string, "success" | "warning" | "destructive" | "secondary" | "default"> = {
-  MOVED: "success", PARTIAL: "warning", NO_CANDIDATE: "destructive", PENDING: "warning", DISMISSED: "secondary", FAILED: "destructive",
+  AWAITING_BUYER: "default", MOVED: "success", PARTIAL: "warning", NO_CANDIDATE: "destructive", PENDING: "warning", DISMISSED: "secondary", FAILED: "destructive",
 };
-const STATUS_LABEL: Record<string, string> = { MOVED: "Moved", PARTIAL: "Partly moved", NO_CANDIDATE: "No supplier", PENDING: "Waiting", DISMISSED: "Closed", FAILED: "Failed" };
+const STATUS_LABEL: Record<string, string> = { AWAITING_BUYER: "Buyer deciding", MOVED: "Moved", PARTIAL: "Partly moved", NO_CANDIDATE: "No supplier", PENDING: "Waiting", DISMISSED: "Closed", FAILED: "Failed" };
 const FLOW: Record<string, string> = { CUSTOMER_FROM_WHOLESALER: "Customers ← Wholesalers", WHOLESALER_FROM_DISTRIBUTOR: "Wholesalers ← Distributors" };
 const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
 
@@ -56,11 +58,11 @@ function Stat({ label, value, hint, testId }: { label: string; value: string; hi
 }
 
 function valuesOf(rules: AllocationRules, fields: RuleField[]) {
-  const out: Record<string, boolean | number> = {};
+  const out: Record<string, boolean | number | string> = {};
   for (const f of fields) {
     const [a, b] = f.path.split(".");
     const v = (rules as unknown as Record<string, unknown>)[a];
-    out[f.path] = (b ? (v as Record<string, boolean | number>)[b] : v) as boolean | number;
+    out[f.path] = (b ? (v as Record<string, boolean | number>)[b] : v) as boolean | number | string;
   }
   return out;
 }
@@ -153,7 +155,7 @@ export async function AllocationView({ ctx, page, searchParams }: { ctx: Ctx; pa
 
   switch (page) {
     case "control-tower": {
-      const t = await controlTower(ctx);
+      const [t, small] = await Promise.all([controlTower(ctx), smallOrderGroups(ctx, locale)]);
       return (
         <>
           {header}
@@ -209,6 +211,23 @@ export async function AllocationView({ ctx, page, searchParams }: { ctx: Ctx; pa
                 </Table>
               </CardContent>
             </Card>
+            <Card data-testid="small-orders">
+              <CardHeader><CardTitle>Small orders to collect</CardTitle><CardDescription>Orders below the wholesaler&apos;s free-delivery minimum (and in-house orders): FIRINGI&apos;s fleet collects them. Grouped by pickup point — give a group to one driver (multi-order delivery must be on for FIRINGI&apos;s fleet in Settings › Delivery).</CardDescription></CardHeader>
+              <CardContent className="space-y-4">
+                {small.groups.length === 0 && <p className="py-4 text-center text-sm text-muted-foreground">No small orders waiting for a driver.</p>}
+                {small.groups.map((g) => (
+                  <div key={g.supplier} className="rounded-md border p-3" data-testid="pickup-group">
+                    <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                      <div><span className="font-medium">{g.supplier}</span>{g.inHouse && <Badge className="ml-2">in-house</Badge>} <span className="text-sm text-muted-foreground">· {g.pickup} · {g.orders.length} order(s) · {money(g.orders.reduce((a, o) => a + o.net, 0))}</span></div>
+                      {can(ctx, "admin.delivery.manage") && <PickupRunForm deliveryIds={g.orders.map((o) => o.deliveryId)} drivers={small.drivers} />}
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {g.orders.map((o) => <Link key={o.orderId} href={`/admin/orders/${o.orderId}`} className="rounded-full border px-2 py-0.5 hover:border-primary">{o.number} · {o.buyer} · {o.city}{o.region !== "—" && ` (${o.region})`}</Link>)}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
             <div><h2 className="mb-2 text-sm font-semibold">Recent moves</h2><EventsTable rows={t.recent} locale={locale} /></div>
           </div>
         </>
@@ -228,6 +247,11 @@ export async function AllocationView({ ctx, page, searchParams }: { ctx: Ctx; pa
               { path: "responseHours", kind: "number", label: "Response time", min: 1, max: 72, suffix: "hours" },
               { path: "maxSplitOrders", kind: "number", label: "Suppliers one order may be split across", min: 1, max: 5 },
               { path: "maxMoves", kind: "number", label: "Times the same items may be moved", min: 1, max: 5 },
+            ]} />
+            <RulesCard rules={rules} title="Picking the wholesaler" description="For customers who order from FIRINGI, and when FIRINGI moves an order." fields={[
+              { path: "pickBy", kind: "select", label: "Pick first", options: [{ value: "NEAREST", label: "Nearest wholesaler" }, { value: "CHEAPEST", label: "Cheapest for the customer" }], help: "Among wholesalers that deliver to the address and have everything in stock." },
+              { path: "inHouse", kind: "select", label: "FIRINGI in-house warehouse", options: [{ value: "SMALL_ORDERS", label: "First for small orders (below free delivery)" }, { value: "FIRST", label: "Always first" }, { value: "OFF", label: "Not used" }] },
+              { path: "buyerDecisionHours", kind: "number", label: "Time a customer has to decide", help: "When the wholesaler the customer chose can't deliver", min: 1, max: 168, suffix: "hours" },
             ]} />
             <RulesCard rules={rules} title="How suppliers are ranked" description="Weights of each part of the score (0 = ignore). Suppliers covering more of the items always come first." fields={[
               { path: "weights.distance", kind: "number", label: "Distance", help: "Closer warehouse is better", min: 0, max: 100 },
@@ -272,16 +296,25 @@ export async function AllocationView({ ctx, page, searchParams }: { ctx: Ctx; pa
     }
 
     case "distributor-vs-wholesaler": {
-      const s = await moveStats(ctx);
+      const [s, modes] = await Promise.all([moveStats(ctx), countryOrderModes()]);
+      const canEdit = can(ctx, ["admin.international.manage", "admin.allocation.manage"]);
       return (
         <>
           {header}
           <div className="grid gap-4 lg:grid-cols-2">
-            <RulesCard rules={rules} title="Marketplaces" fields={[
-              { path: "flows.CUSTOMER_FROM_WHOLESALER", kind: "bool", label: "Customers ← Wholesalers", help: "Customer orders move to another wholesaler." },
-              { path: "flows.WHOLESALER_FROM_DISTRIBUTOR", kind: "bool", label: "Wholesalers ← Distributors", help: "Wholesaler orders move to another distributor." },
-              { path: "crossBorderDistributors", kind: "bool", label: "Distributors from other Schengen countries may take moved orders", help: "Delivered by carrier. Wholesalers always stay in the buyer's country." },
-            ]} />
+            <Card><CardHeader><CardTitle>Customers ← Wholesalers</CardTitle></CardHeader><CardContent className="space-y-2 text-sm">
+              <p><b>Customers order from FIRINGI</b> (per country, below): one FIRINGI price per product; FIRINGI picks the wholesaler ({rules.pickBy === "NEAREST" ? "nearest" : "cheapest"}) or its in-house warehouse. If that wholesaler can&apos;t deliver, FIRINGI moves the order automatically — or the Control Tower decides.</p>
+              <p><b>Customers choose the wholesaler:</b> if it can&apos;t deliver, the customer decides: let FIRINGI find another wholesaler (same price or lower) or cancel.</p>
+              <p className="text-muted-foreground">Either way FIRINGI invoices the customer for what is delivered; the wholesaler invoices FIRINGI at its own prices (Delivery Order).</p>
+            </CardContent></Card>
+            <Card><CardHeader><CardTitle>Wholesalers ← Distributors</CardTitle></CardHeader><CardContent className="space-y-2 text-sm">
+              <p>The wholesaler always chooses the distributor. <b>When a distributor cancels, the order is cancelled</b> — FIRINGI does not move it.</p>
+            </CardContent></Card>
+            <Card><CardHeader><CardTitle>How customers order, per country</CardTitle></CardHeader><CardContent>
+              <Table><THead><TR><TH>Country</TH><TH>Customers</TH></TR></THead>
+                <TBody>{modes.map((c) => <TR key={c.id}><TD>{c.flag} {pickLocalized(c.name, locale) || c.code}</TD><TD><OrderModeSelect countryId={c.id} mode={c.customerOrderMode} canEdit={canEdit} /></TD></TR>)}</TBody>
+              </Table>
+            </CardContent></Card>
             <Card><CardHeader><CardTitle>Last 30 days</CardTitle></CardHeader><CardContent>
               <Table><THead><TR><TH>Marketplace</TH><TH className="text-right">Moved</TH><TH className="text-right">No supplier / failed</TH></TR></THead>
                 <TBody>{Object.keys(FLOW).map((f) => { const r = s.byFlow.find((x) => x.flow === f); return <TR key={f}><TD>{FLOW[f]}</TD><TD className="text-right tabular-nums">{r?.moved ?? 0}</TD><TD className="text-right tabular-nums">{r?.failed ?? 0}</TD></TR>; })}</TBody>

@@ -438,7 +438,9 @@
     "restricted": {
       "TOBACCO": "Tabaco",
       "ALCOHOL": "Alcohol"
-    }
+    },
+    "firingiMode": "Usted pide a FIRINGI: un precio por producto. FIRINGI elige el mayorista más cercano con stock — o su propio almacén — y FIRINGI le factura.",
+    "soldByFiringi": "Vendido por FIRINGI"
   },
   "orders": {
     "cart": "Carrito",
@@ -525,7 +527,23 @@
     },
     "movedFrom": "Este pedido sustituye al pedido {number}: el proveedor original no pudo entregarlo, así que FIRINGI lo pasó a otro proveedor al mismo precio o inferior.",
     "movedTo": "El proveedor no pudo entregar todo este pedido. FIRINGI ha pasado estos artículos a otro proveedor:",
-    "passedOn": "FIRINGI le ha pasado este pedido de otro proveedor. Confírmelo como de costumbre."
+    "passedOn": "FIRINGI le ha pasado este pedido de otro proveedor. Confírmelo como de costumbre.",
+    "routedCart": "De FIRINGI — FIRINGI elige el mayorista al hacer el pedido.",
+    "notAvailableHere": "Algunos productos no se pueden entregar en su dirección en este momento. Elimínelos o elija otra dirección.",
+    "deliveryOrder": "Orden de entrega",
+    "deliveryOrderFromFiringi": "Orden de entrega de FIRINGI",
+    "decision": {
+      "title": "{supplier} no puede entregar este pedido",
+      "titleShort": "{supplier} no puede entregar todo este pedido",
+      "body": "FIRINGI puede pasarlo a otro mayorista al mismo precio o inferior, o puede cancelarlo. Solo paga lo que se entregue.",
+      "deadline": "Decida antes del {date}.",
+      "letFiringi": "Que FIRINGI busque otro mayorista",
+      "cancelOrder": "Cancelar el pedido",
+      "cancelItems": "Cancelar los artículos que faltan",
+      "moved": "Hecho: FIRINGI lo ha pasado a otro mayorista:",
+      "none": "Ningún mayorista puede aceptarlo ahora. El equipo de FIRINGI buscará una solución y se pondrá en contacto con usted.",
+      "cancelled": "Cancelado. No se le cobrará."
+    }
   },
   "finance": {
     "invoices": "Facturas",
@@ -955,6 +973,10 @@
     "allocation_needed": {
       "title": "El pedido {number} necesita un nuevo proveedor",
       "body": "No se ha encontrado automáticamente ningún proveedor para el pedido {number} ({reason}). Decida en la Torre de Control de Asignación."
+    },
+    "order_supplier_unavailable": {
+      "title": "Pedido {number}: {supplier} no puede entregar",
+      "body": "{supplier} no puede entregar todo el pedido {number}. Abra el pedido para que FIRINGI busque otro mayorista al mismo precio o inferior, o para cancelarlo."
     }
   },
   "notifications": {
@@ -1077,5 +1099,25 @@
       "discount": "Descuentos",
       "aov": "Pedido medio"
     }
+  },
+  "deliveryOrder": {
+    "title": "Orden de entrega",
+    "print": "Imprimir",
+    "requested": "Entrega solicitada",
+    "notConfirmed": "Aún no confirmado: confirme primero el pedido.",
+    "supplier": "Proveedor",
+    "instructions": "FIRINGI le pide estos artículos. Entréguelos al cliente indicado abajo (o téngalos listos para el conductor de FIRINGI) y facture a FIRINGI a sus precios. FIRINGI factura al cliente.",
+    "deliverTo": "Entregar a",
+    "contact": "Contacto",
+    "invoiceTo": "Facturar a",
+    "delivery": "Entrega",
+    "byYou": "Usted entrega al cliente",
+    "byFiringi": "El conductor de FIRINGI recoge en su almacén",
+    "byCarrier": "Enviar con su transportista",
+    "qty": "Cant.",
+    "unitPrice": "Su precio (sin IVA)",
+    "lineTotal": "Total (sin IVA)",
+    "total": "A facturar a FIRINGI (sin IVA)",
+    "notes": "Notas del cliente"
   }
 }

@@ -55,11 +55,13 @@ const OFFERS: Record<string, [string, number, number, [number, number][]?][]> = 
   "Cash & Carry Almada, Lda": [
     ["FIR-COLA33", 1, 13.5], ["FIR-LUSO15", 0, 2.45], ["FIR-MOZZ2", 0, 13.2], ["FIR-FARINHA25", 0, 19.5], ["FIR-ARROZ1", 0, 10.9],
   ],
+  // FIRINGI's in-house warehouse: a few fast movers, delivered by FIRINGI's fleet.
+  "FIRINGI Armazém Central, Lda": [["FIR-MOZZ2", 0, 12.9], ["FIR-PIZZABOX33", 0, 20.5], ["FIR-COLA33", 1, 13.3], ["FIR-ARROZ1", 0, 10.8]],
   // Pending wholesaler: its offers exist but must never be visible.
   "Grossista Porto Norte, Lda": [["FIR-COLA33", 1, 12.5], ["FIR-MOZZ2", 1, 70]],
 };
 
-const COMMISSION: Record<string, number> = { "Distribuidora Atlântico, Lda": 5, "Distribuciones Ibéricas S.L.": 6, "Grossista Lisboa Central, Lda": 8, "Cash & Carry Almada, Lda": 7 };
+const COMMISSION: Record<string, number> = { "Distribuidora Atlântico, Lda": 5, "Distribuciones Ibéricas S.L.": 6, "Grossista Lisboa Central, Lda": 8, "Cash & Carry Almada, Lda": 7, "FIRINGI Armazém Central, Lda": 0 };
 
 const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" | "DELIVERY"; label: string; line1: string; postal: string; city: string; country: string }[]> = {
   "Distribuidora Atlântico, Lda": [
@@ -75,6 +77,10 @@ const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" |
     { kind: "WAREHOUSE", label: "Armazém Lisboa", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", country: "PT" },
     { kind: "PICKUP", label: "Cash & carry Amadora", line1: "Estrada da Falagueira 20", postal: "2700-365", city: "Amadora", country: "PT" },
     { kind: "DELIVERY", label: "Receção armazém", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", country: "PT" },
+  ],
+  "FIRINGI Armazém Central, Lda": [
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua Castilho 39", postal: "1250-068", city: "Lisboa", country: "PT" },
+    { kind: "WAREHOUSE", label: "Armazém FIRINGI", line1: "Rua Cidade de Bolama 1", postal: "1800-079", city: "Lisboa", country: "PT" },
   ],
   "Cash & Carry Almada, Lda": [
     { kind: "HEAD_OFFICE", label: "Sede", line1: "Avenida D. Nuno Álvares Pereira 10", postal: "2800-180", city: "Almada", country: "PT" },

@@ -6,7 +6,7 @@ import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { ActionResult } from "@/server/actions/_action";
-import { dismissAllocationAction, manualMoveAction, runOverdueAction, saveVendorProfileAction, updateAllocationRulesAction } from "@/server/actions/allocation";
+import { assignPickupRunAction, dismissAllocationAction, manualMoveAction, runOverdueAction, saveVendorProfileAction, setCustomerOrderModeAction, updateAllocationRulesAction } from "@/server/actions/allocation";
 
 function useAct() {
   const router = useRouter();
@@ -22,10 +22,10 @@ function useAct() {
   return { pending, error, saved, run };
 }
 
-export type RuleField = { path: string; label: string; help?: string; kind: "bool" | "number"; min?: number; max?: number; step?: number; suffix?: string };
+export type RuleField = { path: string; label: string; help?: string; kind: "bool" | "number" | "select"; min?: number; max?: number; step?: number; suffix?: string; options?: { value: string; label: string }[] };
 
 /** Edits part of the allocation rules; `path` is "a" or "a.b" inside the rules object. */
-export function RulesForm({ fields, values, canEdit = true }: { fields: RuleField[]; values: Record<string, boolean | number>; canEdit?: boolean }) {
+export function RulesForm({ fields, values, canEdit = true }: { fields: RuleField[]; values: Record<string, boolean | number | string>; canEdit?: boolean }) {
   const { pending, error, saved, run } = useAct();
   const [v, setV] = useState(values);
   const changed = fields.some((f) => v[f.path] !== values[f.path]);
@@ -43,7 +43,14 @@ export function RulesForm({ fields, values, canEdit = true }: { fields: RuleFiel
       <fieldset disabled={!canEdit || pending} className="space-y-3">
         {fields.map((f) => (
           <div key={f.path} className="rounded-md border p-3">
-            {f.kind === "bool" ? (
+            {f.kind === "select" ? (
+              <label className="flex flex-wrap items-center justify-between gap-2">
+                <span><span className="font-medium">{f.label}</span>{f.help && <span className="block text-xs text-muted-foreground">{f.help}</span>}</span>
+                <select name={f.path} className="h-9 rounded-md border bg-card px-2 text-sm" value={String(v[f.path] ?? "")} onChange={(e) => setV({ ...v, [f.path]: e.target.value })}>
+                  {f.options!.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </label>
+            ) : f.kind === "bool" ? (
               <label className="flex items-start gap-2">
                 <input type="checkbox" className="mt-0.5 h-4 w-4" name={f.path} checked={!!v[f.path]} onChange={(e) => setV({ ...v, [f.path]: e.target.checked })} />
                 <span><span className="font-medium">{f.label}</span>{f.help && <span className="block text-xs text-muted-foreground">{f.help}</span>}</span>
@@ -166,5 +173,38 @@ export function RunNowButton() {
       {res && <span data-testid="run-result">{res.checked} overdue · {res.moved} moved · {res.waiting} waiting for a decision</span>}
       {error && <span className="text-destructive">{error}</span>}
     </div>
+  );
+}
+
+export function OrderModeSelect({ countryId, mode, canEdit }: { countryId: string; mode: "CHOOSE_SUPPLIER" | "FIRINGI"; canEdit: boolean }) {
+  const { pending, error, saved, run } = useAct();
+  const [m, setM] = useState(mode);
+  return (
+    <span className="inline-flex flex-wrap items-center gap-2">
+      <select name={`mode-${countryId}`} className="h-8 rounded-md border bg-card px-2 text-sm" disabled={!canEdit || pending} value={m}
+        onChange={(e) => { const next = e.target.value as typeof m; setM(next); run(() => setCustomerOrderModeAction({ countryId, mode: next })); }}>
+        <option value="CHOOSE_SUPPLIER">Customers choose the wholesaler</option>
+        <option value="FIRINGI">Customers order from FIRINGI</option>
+      </select>
+      {saved && <span className="text-xs text-success">Saved</span>}
+      {error && <span className="text-xs text-destructive">{error}</span>}
+    </span>
+  );
+}
+
+/** Small FIRINGI-fleet orders at one pickup point → one driver collects them all. */
+export function PickupRunForm({ deliveryIds, drivers }: { deliveryIds: string[]; drivers: { id: string; name: string }[] }) {
+  const { pending, error, saved, run } = useAct();
+  const [driverId, setDriverId] = useState(drivers[0]?.id ?? "");
+  if (!drivers.length) return <span className="text-xs text-muted-foreground">No FIRINGI driver available.</span>;
+  return (
+    <span className="inline-flex flex-wrap items-center gap-2">
+      <select name="driver" className="h-8 rounded-md border bg-card px-2 text-sm" value={driverId} onChange={(e) => setDriverId(e.target.value)}>
+        {drivers.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
+      </select>
+      <Button size="sm" disabled={pending || !driverId} onClick={() => run(() => assignPickupRunAction({ deliveryIds, driverId }))}>Assign all ({deliveryIds.length})</Button>
+      {saved && <span className="text-xs text-success">Assigned</span>}
+      {error && <span className="text-xs text-destructive" role="alert">{error}</span>}
+    </span>
   );
 }

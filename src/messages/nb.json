@@ -459,6 +459,8 @@
     "barcodeResults": "Strekkode {code}: {count} tilbud, nærmeste leverandør først",
     "noMatch": "Fant ingen produkter for «{q}».",
     "stopScan": "Stopp",
+    "firingiMode": "Du bestiller fra FIRINGI: én pris per produkt. FIRINGI velger nærmeste grossist med lager — eller sitt eget lager — og FIRINGI fakturerer deg.",
+    "soldByFiringi": "Selges av FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Handlekurven din inneholder allerede produkter fra {current}. Du kjøper fra én leverandør om gangen — fullfør bestillingen eller tøm handlekurven før du legger til produkter fra {next}.",
     "movedFrom": "Denne ordren erstatter ordre {number}: den opprinnelige leverandøren kunne ikke levere, så FIRINGI ga den videre til samme eller lavere pris.",
     "movedTo": "Leverandøren kunne ikke levere hele ordren. FIRINGI har gitt disse varene videre til en annen leverandør:",
-    "passedOn": "FIRINGI har gitt denne ordren videre til deg fra en annen leverandør. Bekreft den som vanlig."
+    "passedOn": "FIRINGI har gitt denne ordren videre til deg fra en annen leverandør. Bekreft den som vanlig.",
+    "routedCart": "Fra FIRINGI — FIRINGI velger grossist når du bestiller.",
+    "notAvailableHere": "Noen produkter kan ikke leveres til adressen din akkurat nå. Fjern dem eller velg en annen adresse.",
+    "deliveryOrder": "Leveringsordre",
+    "deliveryOrderFromFiringi": "Leveringsordre fra FIRINGI",
+    "decision": {
+      "title": "{supplier} kan ikke levere denne ordren",
+      "titleShort": "{supplier} kan ikke levere hele denne ordren",
+      "body": "FIRINGI kan gi den videre til en annen grossist til samme eller lavere pris — eller du kan kansellere. Du betaler bare for det som leveres.",
+      "deadline": "Bestem innen {date}.",
+      "letFiringi": "La FIRINGI finne en annen grossist",
+      "cancelOrder": "Kanseller ordren",
+      "cancelItems": "Kanseller varene som mangler",
+      "moved": "Ferdig — FIRINGI har gitt den videre til en annen grossist:",
+      "none": "Ingen grossist kan ta den akkurat nå. FIRINGIs team finner en løsning og kontakter deg.",
+      "cancelled": "Kansellert. Du blir ikke belastet."
+    }
   },
   "finance": {
     "invoices": "Fakturaer",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Ordre {number} trenger en ny leverandør",
       "body": "Fant ingen leverandør automatisk for ordre {number} ({reason}). Bestem i allokeringens kontrolltårn."
+    },
+    "order_supplier_unavailable": {
+      "title": "Ordre {number}: {supplier} kan ikke levere",
+      "body": "{supplier} kan ikke levere hele ordre {number}. Åpne ordren for å la FIRINGI finne en annen grossist til samme eller lavere pris, eller for å kansellere."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Rabatter",
       "aov": "Gjennomsnittlig ordre"
     }
+  },
+  "deliveryOrder": {
+    "title": "Leveringsordre",
+    "print": "Skriv ut",
+    "requested": "Ønsket levering",
+    "notConfirmed": "Ikke bekreftet ennå — bekreft ordren først.",
+    "supplier": "Leverandør",
+    "instructions": "FIRINGI bestiller disse varene fra deg. Lever dem til kunden nedenfor (eller ha dem klare for FIRINGIs sjåfør) og fakturer FIRINGI til dine priser. FIRINGI fakturerer kunden.",
+    "deliverTo": "Lever til",
+    "contact": "Kontakt",
+    "invoiceTo": "Fakturer til",
+    "delivery": "Levering",
+    "byYou": "Du leverer til kunden",
+    "byFiringi": "FIRINGIs sjåfør henter hos deg",
+    "byCarrier": "Send med din transportør",
+    "qty": "Antall",
+    "unitPrice": "Din pris (ekskl. mva.)",
+    "lineTotal": "Totalt (ekskl. mva.)",
+    "total": "Å fakturere FIRINGI (ekskl. mva.)",
+    "notes": "Kundens merknader"
   }
 }

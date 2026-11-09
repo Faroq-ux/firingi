@@ -459,7 +459,9 @@
     "searchResults": "Resultados para “{q}”",
     "barcodeResults": "Código {code}: {count} oferta(s), fornecedor mais próximo primeiro",
     "noMatch": "Nenhum produto encontrado para “{q}”.",
-    "stopScan": "Parar"
+    "stopScan": "Parar",
+    "firingiMode": "Encomenda à FIRINGI: um preço por produto. A FIRINGI escolhe o grossista mais próximo com stock — ou o seu próprio armazém — e é a FIRINGI que lhe fatura.",
+    "soldByFiringi": "Vendido pela FIRINGI"
   },
   "orders": {
     "cart": "Carrinho",
@@ -546,7 +548,23 @@
     "otherSupplierFull": "O seu carrinho já tem produtos de {current}. Só pode comprar a um fornecedor de cada vez — finalize a encomenda ou esvazie o carrinho antes de adicionar produtos de {next}.",
     "movedFrom": "Esta encomenda substitui a encomenda {number}: o fornecedor original não a conseguiu entregar, por isso a FIRINGI passou-a a outro fornecedor ao mesmo preço ou mais barato.",
     "movedTo": "O fornecedor não conseguiu entregar toda esta encomenda. A FIRINGI passou estes artigos para outro fornecedor:",
-    "passedOn": "A FIRINGI passou-lhe esta encomenda de outro fornecedor. Confirme-a como habitualmente."
+    "passedOn": "A FIRINGI passou-lhe esta encomenda de outro fornecedor. Confirme-a como habitualmente.",
+    "routedCart": "Da FIRINGI — a FIRINGI escolhe o grossista quando fizer a encomenda.",
+    "notAvailableHere": "Alguns produtos não podem ser entregues na sua morada neste momento. Remova-os ou escolha outra morada.",
+    "deliveryOrder": "Ordem de entrega",
+    "deliveryOrderFromFiringi": "Ordem de entrega da FIRINGI",
+    "decision": {
+      "title": "{supplier} não pode entregar esta encomenda",
+      "titleShort": "{supplier} não pode entregar toda esta encomenda",
+      "body": "A FIRINGI pode passá-la a outro grossista ao mesmo preço ou mais barato — ou pode cancelar. Só paga o que for entregue.",
+      "deadline": "Decida até {date}.",
+      "letFiringi": "Deixar a FIRINGI encontrar outro grossista",
+      "cancelOrder": "Cancelar a encomenda",
+      "cancelItems": "Cancelar os artigos em falta",
+      "moved": "Feito — a FIRINGI passou-a a outro grossista:",
+      "none": "Nenhum grossista a pode aceitar neste momento. A equipa da FIRINGI vai procurar uma solução e contactá-lo.",
+      "cancelled": "Cancelada. Não lhe será cobrada."
+    }
   },
   "finance": {
     "invoices": "Faturas",
@@ -955,6 +973,10 @@
     "allocation_needed": {
       "title": "A encomenda {number} precisa de um novo fornecedor",
       "body": "Não foi encontrado automaticamente nenhum fornecedor para a encomenda {number} ({reason}). Decida na Torre de Controlo de Alocação."
+    },
+    "order_supplier_unavailable": {
+      "title": "Encomenda {number}: {supplier} não pode entregar",
+      "body": "{supplier} não pode entregar toda a encomenda {number}. Abra a encomenda para deixar a FIRINGI encontrar outro grossista ao mesmo preço ou mais barato, ou para cancelar."
     }
   },
   "notifications": {
@@ -1077,5 +1099,25 @@
       "discount": "Descontos",
       "aov": "Encomenda média"
     }
+  },
+  "deliveryOrder": {
+    "title": "Ordem de entrega",
+    "print": "Imprimir",
+    "requested": "Entrega pedida",
+    "notConfirmed": "Ainda não confirmada — confirme primeiro a encomenda.",
+    "supplier": "Fornecedor",
+    "instructions": "A FIRINGI encomenda-lhe estes artigos. Entregue-os ao cliente abaixo (ou tenha-os prontos para o motorista da FIRINGI) e fature à FIRINGI aos seus preços. A FIRINGI fatura ao cliente.",
+    "deliverTo": "Entregar a",
+    "contact": "Contacto",
+    "invoiceTo": "Faturar a",
+    "delivery": "Entrega",
+    "byYou": "Entrega ao cliente",
+    "byFiringi": "O motorista da FIRINGI recolhe",
+    "byCarrier": "Enviar com a sua transportadora",
+    "qty": "Qtd.",
+    "unitPrice": "O seu preço (s/ IVA)",
+    "lineTotal": "Total (s/ IVA)",
+    "total": "A faturar à FIRINGI (s/ IVA)",
+    "notes": "Notas do cliente"
   }
 }

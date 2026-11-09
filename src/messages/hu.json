@@ -459,6 +459,8 @@
     "barcodeResults": "Vonalkód {code}: {count} ajánlat, a legközelebbi szállító elöl",
     "noMatch": "Nem található termék erre: „{q}”.",
     "stopScan": "Leállítás",
+    "firingiMode": "A FIRINGI-től rendel: termékenként egy ár. A FIRINGI kiválasztja a legközelebbi nagykereskedőt, akinek van készlete — vagy a saját raktárát —, és a FIRINGI számláz Önnek.",
+    "soldByFiringi": "A FIRINGI értékesíti",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "A kosarában már vannak termékek innen: {current}. Egyszerre egy szállítótól vásárolhat — fejezze be a rendelést vagy ürítse a kosarat, mielőtt innen adna hozzá termékeket: {next}.",
     "movedFrom": "Ez a rendelés a(z) {number} rendelést váltja fel: az eredeti beszállító nem tudta teljesíteni, ezért a FIRINGI azonos vagy alacsonyabb áron továbbadta.",
     "movedTo": "A beszállító nem tudta teljesíteni ezt a rendelést. A FIRINGI ezeket a tételeket másik beszállítónak adta tovább:",
-    "passedOn": "A FIRINGI egy másik beszállítótól adta át Önnek ezt a rendelést. Kérjük, igazolja vissza a szokásos módon."
+    "passedOn": "A FIRINGI egy másik beszállítótól adta át Önnek ezt a rendelést. Kérjük, igazolja vissza a szokásos módon.",
+    "routedCart": "A FIRINGI-től — a FIRINGI a rendeléskor választja ki a nagykereskedőt.",
+    "notAvailableHere": "Néhány termék jelenleg nem szállítható az Ön címére. Távolítsa el őket, vagy válasszon másik címet.",
+    "deliveryOrder": "Szállítási megbízás",
+    "deliveryOrderFromFiringi": "Szállítási megbízás a FIRINGI-től",
+    "decision": {
+      "title": "{supplier} nem tudja teljesíteni ezt a rendelést",
+      "titleShort": "{supplier} nem tudja teljesen teljesíteni ezt a rendelést",
+      "body": "A FIRINGI továbbadhatja egy másik nagykereskedőnek azonos vagy alacsonyabb áron — vagy lemondhatja. Csak a leszállított árut fizeti.",
+      "deadline": "Kérjük, döntsön eddig: {date}.",
+      "letFiringi": "A FIRINGI keressen másik nagykereskedőt",
+      "cancelOrder": "Rendelés lemondása",
+      "cancelItems": "Hiányzó tételek lemondása",
+      "moved": "Kész — a FIRINGI továbbadta egy másik nagykereskedőnek:",
+      "none": "Jelenleg egyik nagykereskedő sem tudja vállalni. A FIRINGI csapata megoldást keres, és felveszi Önnel a kapcsolatot.",
+      "cancelled": "Lemondva. Nem számlázzuk ki."
+    }
   },
   "finance": {
     "invoices": "Számlák",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "A(z) {number} rendeléshez új beszállító kell",
       "body": "A(z) {number} rendeléshez nem található automatikusan beszállító ({reason}). Kérjük, döntsön az elosztási irányítóközpontban."
+    },
+    "order_supplier_unavailable": {
+      "title": "{number} rendelés: {supplier} nem tud szállítani",
+      "body": "{supplier} nem tudja teljesíteni a(z) {number} rendelést. Nyissa meg a rendelést, hogy a FIRINGI másik nagykereskedőt keressen azonos vagy alacsonyabb áron, vagy hogy lemondja."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Kedvezmények",
       "aov": "Átlagos rendelés"
     }
+  },
+  "deliveryOrder": {
+    "title": "Szállítási megbízás",
+    "print": "Nyomtatás",
+    "requested": "Kért szállítás",
+    "notConfirmed": "Még nincs visszaigazolva — először igazolja vissza a rendelést.",
+    "supplier": "Beszállító",
+    "instructions": "A FIRINGI ezeket az árukat rendeli Öntől. Szállítsa ki őket az alábbi ügyfélnek (vagy készítse elő a FIRINGI sofőrjének), és számlázzon a FIRINGI-nek a saját árain. Az ügyfélnek a FIRINGI számláz.",
+    "deliverTo": "Szállítási cím",
+    "contact": "Kapcsolattartó",
+    "invoiceTo": "Számlázási cím",
+    "delivery": "Szállítás",
+    "byYou": "Ön szállít az ügyfélnek",
+    "byFiringi": "A FIRINGI sofőrje Öntől viszi el",
+    "byCarrier": "Küldés saját fuvarozóval",
+    "qty": "Menny.",
+    "unitPrice": "Az Ön ára (nettó)",
+    "lineTotal": "Összesen (nettó)",
+    "total": "A FIRINGI-nek számlázandó (nettó)",
+    "notes": "Az ügyfél megjegyzései"
   }
 }

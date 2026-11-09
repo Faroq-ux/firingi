@@ -2,7 +2,10 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight, ShoppingBasket } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
-import { shopCategories, visibleSuppliers } from "@/server/data/catalogue-buyer";
+import { browseCatalogue, shopCategories, visibleSuppliers } from "@/server/data/catalogue-buyer";
+import { productsWithImages } from "@/server/data/catalogue-admin";
+import { orderingMode } from "@/server/allocation/mode";
+import { ProductCard } from "@/components/catalogue/product-card";
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
 import { SupplierCard } from "@/components/catalogue/supplier-card";
@@ -15,12 +18,15 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
   const { q } = await searchParams;
-  const [categories, suppliers, t, locale] = await Promise.all([
-    shopCategories(ctx), visibleSuppliers(ctx, { q }), getTranslations("catalogue"), getLocale(),
+  const [categories, suppliers, t, locale, mode] = await Promise.all([
+    shopCategories(ctx), visibleSuppliers(ctx, { q }), getTranslations("catalogue"), getLocale(), orderingMode(ctx),
   ]);
+  const firingi = mode === "FIRINGI";
+  const products = firingi ? await browseCatalogue(ctx, { q }) : null;
+  const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
   return (
     <>
-      <PageHeader title={t("shop")} description={t("shopIntro")} />
+      <PageHeader title={t("shop")} description={firingi ? t("firingiMode") : t("shopIntro")} />
       <div className="mb-8 max-w-2xl"><BarcodeSearch action="/buy/catalogue/search" /></div>
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold">{t("categories")}</h2>
@@ -37,6 +43,14 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           ))}
         </div>
       </section>
+      {products ? (
+        <section data-testid="firingi-products">
+          <h2 className="mb-3 text-lg font-semibold">{t("allProducts")}</h2>
+          {products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} />)}</div>
+          )}
+        </section>
+      ) : (
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("nearestSuppliers")}</h2>
         {suppliers.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noSuppliers")}</p> : (
@@ -44,6 +58,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         )}
         {suppliers.length > 8 && <Link href="/buy/catalogue/suppliers" className="mt-3 inline-block text-sm text-primary hover:underline">{t("allSuppliersLink")} →</Link>}
       </section>
+      )}
     </>
   );
 }

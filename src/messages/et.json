@@ -459,6 +459,8 @@
     "barcodeResults": "Vöötkood {code}: {count} pakkumist, lähim tarnija esimesena",
     "noMatch": "Päringule „{q}” ei leitud toodet.",
     "stopScan": "Peata",
+    "firingiMode": "Tellite FIRINGI-lt: üks hind toote kohta. FIRINGI valib lähima laoseisuga hulgimüüja — või oma lao — ja arve esitab teile FIRINGI.",
+    "soldByFiringi": "Müüb FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Teie ostukorvis on juba tooted tarnijalt {current}. Ostate korraga ühelt tarnijalt — lõpetage tellimus või tühjendage ostukorv enne, kui lisate tooteid tarnijalt {next}.",
     "movedFrom": "See tellimus asendab tellimust {number}: algne tarnija ei saanud seda tarnida, seega andis FIRINGI selle edasi sama või madalama hinnaga.",
     "movedTo": "Tarnija ei saanud kogu tellimust tarnida. FIRINGI andis need tooted edasi teisele tarnijale:",
-    "passedOn": "FIRINGI andis selle tellimuse teile edasi teiselt tarnijalt. Kinnitage see nagu tavaliselt."
+    "passedOn": "FIRINGI andis selle tellimuse teile edasi teiselt tarnijalt. Kinnitage see nagu tavaliselt.",
+    "routedCart": "FIRINGI-lt — FIRINGI valib hulgimüüja tellimuse esitamisel.",
+    "notAvailableHere": "Mõnda toodet ei saa praegu teie aadressile tarnida. Eemaldage need või valige teine aadress.",
+    "deliveryOrder": "Tarnekorraldus",
+    "deliveryOrderFromFiringi": "Tarnekorraldus FIRINGI-lt",
+    "decision": {
+      "title": "{supplier} ei saa seda tellimust tarnida",
+      "titleShort": "{supplier} ei saa kogu tellimust tarnida",
+      "body": "FIRINGI saab selle anda teisele hulgimüüjale sama või madalama hinnaga — või võite selle tühistada. Maksate ainult tarnitu eest.",
+      "deadline": "Palun otsustage hiljemalt {date}.",
+      "letFiringi": "Las FIRINGI leiab teise hulgimüüja",
+      "cancelOrder": "Tühista tellimus",
+      "cancelItems": "Tühista puuduvad tooted",
+      "moved": "Valmis — FIRINGI andis selle teisele hulgimüüjale:",
+      "none": "Praegu ei saa ükski hulgimüüja seda võtta. FIRINGI meeskond otsib lahenduse ja võtab teiega ühendust.",
+      "cancelled": "Tühistatud. Teilt tasu ei võeta."
+    }
   },
   "finance": {
     "invoices": "Arved",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Tellimus {number} vajab uut tarnijat",
       "body": "Tellimusele {number} ei leitud automaatselt tarnijat ({reason}). Otsustage jaotuse juhtimiskeskuses."
+    },
+    "order_supplier_unavailable": {
+      "title": "Tellimus {number}: {supplier} ei saa tarnida",
+      "body": "{supplier} ei saa tarnida kogu tellimust {number}. Avage tellimus, et FIRINGI leiaks teise hulgimüüja sama või madalama hinnaga, või tühistage see."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Allahindlused",
       "aov": "Keskmine tellimus"
     }
+  },
+  "deliveryOrder": {
+    "title": "Tarnekorraldus",
+    "print": "Prindi",
+    "requested": "Soovitud tarne",
+    "notConfirmed": "Pole veel kinnitatud — kinnitage esmalt tellimus.",
+    "supplier": "Tarnija",
+    "instructions": "FIRINGI tellib teilt need kaubad. Tarnige need allolevale kliendile (või hoidke valmis FIRINGI juhile) ja esitage FIRINGI-le arve oma hindadega. Kliendile esitab arve FIRINGI.",
+    "deliverTo": "Tarneaadress",
+    "contact": "Kontakt",
+    "invoiceTo": "Arve saaja",
+    "delivery": "Tarne",
+    "byYou": "Tarnite kliendile ise",
+    "byFiringi": "FIRINGI juht tuleb teile järele",
+    "byCarrier": "Saatke oma vedajaga",
+    "qty": "Kogus",
+    "unitPrice": "Teie hind (km-ta)",
+    "lineTotal": "Kokku (km-ta)",
+    "total": "FIRINGI-le arveldada (km-ta)",
+    "notes": "Kliendi märkused"
   }
 }

@@ -47,6 +47,12 @@ await saveRules(sa);
 await go(sa, "/admin/allocation/margin-rules");
 check("margin floor saved", (await sa.inputValue('input[name="minMarginPercent"]')) === "-10");
 await shot(sa, "p9-01-margin-rules");
+// This test is about wholesalers: keep FIRINGI's in-house warehouse out of it.
+await go(sa, "/admin/allocation/auto-allocation");
+const inHouseForm = sa.locator('[data-testid="rules-form"]', { has: sa.locator('select[name="inHouse"]') });
+const inHouseBefore = await sa.inputValue('select[name="inHouse"]');
+await sa.selectOption('select[name="inHouse"]', "OFF");
+if (await inHouseForm.getByRole("button", { name: "Save" }).isEnabled()) { await inHouseForm.getByRole("button", { name: "Save" }).click(); await settle(sa); }
 await go(sa, "/admin/allocation/stock-availability?q=FIR-MOZZ2");
 check("stock across suppliers lists C&C Almada", (await main(sa)).includes("C&C Almada"));
 
@@ -71,9 +77,13 @@ async function decline(id) {
   await lx.fill("#reason", "Sem stock");
   await lx.getByRole("button", { name: /Cancelar encomenda|Cancel order/ }).click();
   await settle(lx);
+  // The customer chose Lisboa Central, so the customer decides: let FIRINGI find another.
+  await go(customer, `/buy/orders/${id}`);
+  await customer.getByTestId("decision-panel").getByRole("button", { name: "Deixar a FIRINGI encontrar outro grossista" }).click();
+  await customer.getByTestId("decision-done").waitFor();
 }
 
-// ── 1. Supplier declines → moved automatically ──
+// ── 1. Supplier declines → customer lets FIRINGI find another → moved ──
 const first = await placeMozzOrder(5);
 await decline(first.id);
 await go(customer, `/buy/orders/${first.id}`);
@@ -151,6 +161,9 @@ check("finance can't open allocation", fin.url().includes("/forbidden"), fin.url
 await go(sa, "/admin/allocation/margin-rules");
 await sa.fill('input[name="minMarginPercent"]', floorBefore || "0");
 await saveRules(sa);
+await go(sa, "/admin/allocation/auto-allocation");
+await sa.selectOption('select[name="inHouse"]', inHouseBefore || "SMALL_ORDERS");
+if (await inHouseForm.getByRole("button", { name: "Save" }).isEnabled()) { await inHouseForm.getByRole("button", { name: "Save" }).click(); await settle(sa); }
 for (const o of [first, second]) {
   await go(customer, `/buy/orders/${o.id}`);
   for (const href of await customer.getByTestId("moved-to").locator("a").evaluateAll((as) => as.map((a) => a.getAttribute("href")))) {

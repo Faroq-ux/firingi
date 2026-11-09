@@ -27,7 +27,10 @@ def flat(d, p=""):
 # their namespace's earlier block and appended at that point instead.
 LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("reports", ["Reports", "Sales Report", "Spending Report"]),
          ("notify.order_reallocated", []), ("notify.allocation_needed", []),
-         ("orders.movedFrom", []), ("orders.movedTo", []), ("orders.passedOn", [])]
+         ("orders.movedFrom", []), ("orders.movedTo", []), ("orders.passedOn", []),
+         ("notify.order_supplier_unavailable", []), ("catalogue.firingiMode", []), ("catalogue.soldByFiringi", []),
+         ("orders.routedCart", []), ("orders.notAvailableHere", []),
+         ("orders.deliveryOrder", []), ("orders.deliveryOrderFromFiringi", []), ("orders.decision", []), ("deliveryOrder", [])]
 
 def get(path):
     d = EN

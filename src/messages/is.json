@@ -459,6 +459,8 @@
     "barcodeResults": "Strikamerki {code}: {count} tilboð, næsti birgir fyrst",
     "noMatch": "Engin vara fannst fyrir „{q}“.",
     "stopScan": "Stöðva",
+    "firingiMode": "Þú pantar hjá FIRINGI: eitt verð á vöru. FIRINGI velur næsta heildsala með birgðir — eða eigið lager — og FIRINGI sendir þér reikninginn.",
+    "soldByFiringi": "Selt af FIRINGI",
     "cartPhase": ""
   },
   "orders": {
@@ -546,7 +548,23 @@
     "otherSupplierFull": "Karfan þín inniheldur þegar vörur frá {current}. Þú kaupir af einum birgi í einu — ljúktu pöntuninni eða tæmdu körfuna áður en þú bætir við vörum frá {next}.",
     "movedFrom": "Þessi pöntun kemur í stað pöntunar {number}: upprunalegi birgirinn gat ekki afhent hana, svo FIRINGI færði hana á sama eða lægra verði.",
     "movedTo": "Birgirinn gat ekki afhent alla þessa pöntun. FIRINGI færði þessar vörur til annars birgis:",
-    "passedOn": "FIRINGI færði þér þessa pöntun frá öðrum birgi. Staðfestu hana eins og venjulega."
+    "passedOn": "FIRINGI færði þér þessa pöntun frá öðrum birgi. Staðfestu hana eins og venjulega.",
+    "routedCart": "Frá FIRINGI — FIRINGI velur heildsalann þegar þú pantar.",
+    "notAvailableHere": "Ekki er hægt að afhenda sumar vörur á heimilisfangið þitt núna. Fjarlægðu þær eða veldu annað heimilisfang.",
+    "deliveryOrder": "Afhendingarbeiðni",
+    "deliveryOrderFromFiringi": "Afhendingarbeiðni frá FIRINGI",
+    "decision": {
+      "title": "{supplier} getur ekki afhent þessa pöntun",
+      "titleShort": "{supplier} getur ekki afhent alla þessa pöntun",
+      "body": "FIRINGI getur fært hana til annars heildsala á sama eða lægra verði — eða þú getur hætt við. Þú greiðir aðeins fyrir það sem er afhent.",
+      "deadline": "Vinsamlegast ákveddu fyrir {date}.",
+      "letFiringi": "Láta FIRINGI finna annan heildsala",
+      "cancelOrder": "Hætta við pöntunina",
+      "cancelItems": "Hætta við vörurnar sem vantar",
+      "moved": "Lokið — FIRINGI færði hana til annars heildsala:",
+      "none": "Enginn heildsali getur tekið hana núna. Teymi FIRINGI leitar lausnar og hefur samband við þig.",
+      "cancelled": "Hætt við. Þú verður ekki rukkaður."
+    }
   },
   "finance": {
     "invoices": "Reikningar",
@@ -1000,6 +1018,10 @@
     "allocation_needed": {
       "title": "Pöntun {number} þarf nýjan birgi",
       "body": "Enginn birgir fannst sjálfkrafa fyrir pöntun {number} ({reason}). Taktu ákvörðun í úthlutunarstjórnstöðinni."
+    },
+    "order_supplier_unavailable": {
+      "title": "Pöntun {number}: {supplier} getur ekki afhent",
+      "body": "{supplier} getur ekki afhent alla pöntun {number}. Opnaðu pöntunina til að láta FIRINGI finna annan heildsala á sama eða lægra verði, eða til að hætta við."
     }
   },
   "notifications": {
@@ -1122,5 +1144,25 @@
       "discount": "Afslættir",
       "aov": "Meðalpöntun"
     }
+  },
+  "deliveryOrder": {
+    "title": "Afhendingarbeiðni",
+    "print": "Prenta",
+    "requested": "Óskuð afhending",
+    "notConfirmed": "Ekki staðfest enn — staðfestu pöntunina fyrst.",
+    "supplier": "Birgir",
+    "instructions": "FIRINGI pantar þessar vörur hjá þér. Afhentu þær viðskiptavininum hér að neðan (eða hafðu þær tilbúnar fyrir bílstjóra FIRINGI) og sendu FIRINGI reikning á þínu verði. FIRINGI sendir viðskiptavininum reikning.",
+    "deliverTo": "Afhenda til",
+    "contact": "Tengiliður",
+    "invoiceTo": "Reikningur til",
+    "delivery": "Afhending",
+    "byYou": "Þú afhendir viðskiptavininum",
+    "byFiringi": "Bílstjóri FIRINGI sækir til þín",
+    "byCarrier": "Sendu með þínum flutningsaðila",
+    "qty": "Magn",
+    "unitPrice": "Þitt verð (án VSK)",
+    "lineTotal": "Samtals (án VSK)",
+    "total": "Til reiknings til FIRINGI (án VSK)",
+    "notes": "Athugasemdir viðskiptavinar"
   }
 }

@@ -147,6 +147,11 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.orders.place"))
     throw new ForbiddenError();
   const cart = await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
+  if (cart?.routed && cart.items.length) {
+    // "Order from FIRINGI": FIRINGI picks the supplier(s).
+    const { placeRoutedOrder } = await import("@/server/allocation/routed");
+    return placeRoutedOrder(ctx, cart, input);
+  }
   if (!cart || !cart.sellerCompanyId || cart.items.length === 0) throw new ValidationError("Your cart is empty.");
   const sellerId = cart.sellerCompanyId;
 
@@ -368,7 +373,7 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
     // Supplier declined: FIRINGI tries to move the order to another supplier (Phase 9).
     const { onSupplierEvent } = await import("@/server/allocation/engine");
     const ev = await onSupplierEvent(orderId, "DECLINED");
-    if (ev && (ev.status === "MOVED" || ev.status === "PARTIAL")) return; // buyer is told about the move instead
+    if (ev && (ev.status === "MOVED" || ev.status === "PARTIAL" || ev.status === "AWAITING_BUYER")) return; // buyer is told about the move / asked instead
   }
   await notifyOrderChange(order, to, reason, actor);
 }

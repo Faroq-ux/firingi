@@ -39,26 +39,33 @@ model Language {
   defaultForCountry Country[]         @relation("CountryDefaultLanguage")
 }
 
+enum CustomerOrderMode {
+  CHOOSE_SUPPLIER // customers pick a wholesaler's shop (one wholesaler per order)
+  FIRINGI // customers order from FIRINGI; FIRINGI picks the wholesaler (or its in-house warehouse)
+}
+
 model Country {
-  id                         String   @id @default(cuid())
-  code                       String   @unique // ISO 3166-1 alpha-2
+  id                         String            @id @default(cuid())
+  code                       String            @unique // ISO 3166-1 alpha-2
   name                       Json
   flag                       String?
-  isEU                       Boolean  @default(false)
+  isEU                       Boolean           @default(false)
   /// FIRINGI operates within the Schengen area only (EU members except CY/IE, plus NO, CH, IS, LI).
-  isSchengen                 Boolean  @default(false)
+  isSchengen                 Boolean           @default(false)
   vatPrefix                  String? // VIES prefix (GR uses "EL")
   defaultCurrencyCode        String
   defaultLanguageCode        String
   /// Market switches — wholesale customers & wholesalers are Portugal-only at launch,
   /// distributors may be in any EU Schengen country. Opening a market is configuration only.
   /// Non-EU Schengen countries (NO, CH, IS, LI) stay closed until customs/import handling exists.
-  customerMarketEnabled      Boolean  @default(false)
-  wholesalerMarketEnabled    Boolean  @default(false)
-  distributorSourcingEnabled Boolean  @default(false)
-  isActive                   Boolean  @default(true)
-  createdAt                  DateTime @default(now())
-  updatedAt                  DateTime @updatedAt
+  customerMarketEnabled      Boolean           @default(false)
+  wholesalerMarketEnabled    Boolean           @default(false)
+  /// How customers order in this country: choose a wholesaler, or order from FIRINGI (FIRINGI picks).
+  customerOrderMode          CustomerOrderMode @default(CHOOSE_SUPPLIER)
+  distributorSourcingEnabled Boolean           @default(false)
+  isActive                   Boolean           @default(true)
+  createdAt                  DateTime          @default(now())
+  updatedAt                  DateTime          @updatedAt
 
   defaultCurrency  Currency             @relation(fields: [defaultCurrencyCode], references: [code])
   defaultLanguage  Language             @relation("CountryDefaultLanguage", fields: [defaultLanguageCode], references: [code])

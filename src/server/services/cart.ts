@@ -11,19 +11,26 @@ import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/serv
 import { catalogueItem, pricedOffers } from "@/server/data/catalogue-buyer";
 import { checkQty, computeLine } from "@/server/orders/calc";
 import { decideDelivery } from "@/server/orders/delivery-rule";
+import { orderingMode, planRouted } from "@/server/allocation/routed";
 
 function requireBuyer(ctx: Ctx) {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.orders.place"))
     throw new ForbiddenError();
 }
 
+/** The user's cart; an empty cart follows the country's ordering mode (FIRINGI-routed or one supplier). */
 async function cartRow(ctx: Ctx) {
-  return prisma.cart.upsert({
+  const routed = (await orderingMode(ctx)) === "FIRINGI";
+  const include = { items: true, seller: { select: { id: true, legalName: true, tradeName: true } } } as const;
+  const cart = await prisma.cart.upsert({
     where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } },
     update: {},
-    create: { buyerCompanyId: ctx.company.id, userId: ctx.user.id },
-    include: { items: true, seller: { select: { id: true, legalName: true, tradeName: true } } },
+    create: { buyerCompanyId: ctx.company.id, userId: ctx.user.id, routed },
+    include,
   });
+  if (cart.routed !== routed && cart.items.length === 0)
+    return prisma.cart.update({ where: { id: cart.id }, data: { routed, sellerCompanyId: null }, include });
+  return cart;
 }
 
 const QTY_MESSAGES = {
@@ -36,7 +43,9 @@ export async function addToCart(ctx: Ctx, offerId: string, qty: number) {
   requireBuyer(ctx);
   const { item } = await catalogueItem(ctx, offerId); // 404 unless visible to this buyer
   const cart = await cartRow(ctx);
-  if (cart.sellerCompanyId && cart.sellerCompanyId !== item.vendor.id) {
+  if (cart.routed !== ((await orderingMode(ctx)) === "FIRINGI"))
+    throw new AppError("CART_MODE_CHANGED", "The way you order has changed. Please check out or clear your cart first.", 409);
+  if (!cart.routed && cart.sellerCompanyId && cart.sellerCompanyId !== item.vendor.id) {
     const name = cart.seller?.tradeName ?? cart.seller?.legalName ?? "another supplier";
     throw new AppError(
       "CART_OTHER_SUPPLIER",
@@ -109,6 +118,8 @@ export async function cartView(ctx: Ctx) {
   });
   const goodsNet = lines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
   const goodsVat = lines.reduce((a, l) => a.plus(l.lineVat), new Decimal(0));
+  const addresses = await prisma.address.findMany({ where: { companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, orderBy: [{ isDefault: "desc" }, { label: "asc" }] });
+  if (cart.routed) return routedCartView(ctx, cart, lines, unavailable, goodsNet, goodsVat, addresses);
   const seller = cart.seller;
   let delivery: ReturnType<typeof decideDelivery> | null = null;
   let feeVat = new Decimal(0);
@@ -129,8 +140,8 @@ export async function cartView(ctx: Ctx) {
     }
   }
   const feeNet = delivery?.ok ? delivery.feeNet : new Decimal(0);
-  const addresses = await prisma.address.findMany({ where: { companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, orderBy: [{ isDefault: "desc" }, { label: "asc" }] });
   return {
+    routed: false,
     seller: seller && { id: seller.id, name: seller.tradeName ?? seller.legalName },
     lines,
     unavailable,
@@ -139,7 +150,50 @@ export async function cartView(ctx: Ctx) {
     goodsVat: goodsVat.toFixed(2),
     delivery: delivery && (delivery.ok
       ? { ok: true as const, mode: delivery.mode, feeNet: feeNet.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: feeVatRate.toString() }
-      : { ok: false as const, reason: delivery.reason, minimum: delivery.minimum.toFixed(2), missing: delivery.missing.toFixed(2), vendorMinimum: delivery.vendorMinimum?.toFixed(2) ?? null }),
+      : { ok: false as const, reason: delivery.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: delivery.minimum.toFixed(2), missing: delivery.missing.toFixed(2), vendorMinimum: delivery.vendorMinimum?.toFixed(2) ?? null }),
+    totalNet: goodsNet.plus(feeNet).toFixed(2),
+    totalVat: goodsVat.plus(feeVat).toFixed(2),
+    totalGross: goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat).toFixed(2),
+    addresses,
+  };
+}
+
+/**
+ * FIRINGI cart: the customer sees FIRINGI as the seller. The delivery preview runs FIRINGI's
+ * supplier choice for the default delivery address (checkout runs it again for the chosen one).
+ */
+async function routedCartView(
+  ctx: Ctx, cart: { items: { offerId: string; qty: number }[] },
+  lines: (Awaited<ReturnType<typeof pricedOffers>>["items"][number] & { lineNet: string; lineVat: string; lineGross: string })[],
+  unavailable: string[], goodsNet: Decimal, goodsVat: Decimal, addresses: Awaited<ReturnType<typeof prisma.address.findMany>>,
+) {
+  type D = { ok: true; mode: "VENDOR_FLEET" | "FIRINGI_FLEET" | "CARRIER"; feeNet: string; feeVat: string; feeVatRate: string; suppliers: number }
+    | { ok: false; reason: "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE"; minimum: string; missing: string; vendorMinimum: string | null };
+  let delivery: D | null = null;
+  let feeNet = new Decimal(0), feeVat = new Decimal(0);
+  if (lines.length && addresses[0] && !unavailable.length) {
+    const plan = await planRouted(ctx, cart.items, addresses[0].id);
+    if (plan.leftover.length) delivery = { ok: false, reason: "NOT_AVAILABLE_HERE", minimum: "0", missing: "0", vendorMinimum: null };
+    else if (goodsNet.lt(plan.minimum)) delivery = { ok: false, reason: "BELOW_MINIMUM", minimum: plan.minimum.toFixed(2), missing: new Decimal(plan.minimum).minus(goodsNet).toFixed(2), vendorMinimum: null };
+    else {
+      feeNet = plan.feeNet;
+      let rate = new Decimal(0);
+      if (feeNet.gt(0) && plan.feeTaxCategoryId) {
+        const r = await prisma.taxRate.findFirst({ where: { countryId: ctx.company.countryId, regionId: null, taxCategoryId: plan.feeTaxCategoryId }, orderBy: { validFrom: "desc" } });
+        rate = new Decimal(r?.rate.toString() ?? 0);
+        feeVat = feeNet.mul(rate).div(100).toDecimalPlaces(2);
+      }
+      delivery = { ok: true, mode: plan.byFiringi ? "FIRINGI_FLEET" : "VENDOR_FLEET", feeNet: feeNet.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: rate.toString(), suppliers: plan.picks.length };
+    }
+  }
+  return {
+    routed: true,
+    seller: { id: "", name: "FIRINGI" },
+    lines, unavailable,
+    taxLabel: lines[0]?.taxLabel ?? "VAT",
+    goodsNet: goodsNet.toFixed(2),
+    goodsVat: goodsVat.toFixed(2),
+    delivery,
     totalNet: goodsNet.plus(feeNet).toFixed(2),
     totalVat: goodsVat.plus(feeVat).toFixed(2),
     totalGross: goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat).toFixed(2),

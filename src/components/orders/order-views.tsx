@@ -8,12 +8,15 @@ import { pickLocalized } from "@/i18n/config";
 import { taxLabel } from "@/lib/tax-label";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { ResolveException, StatusActions } from "./order-actions";
+import { DecisionPanel } from "./decision-panel";
+import { openBuyerDecision } from "@/server/allocation/engine";
+import { allocationRules } from "@/server/allocation/rules";
 import { DeliveryPanel, OrderReturnsPanel } from "@/components/delivery/delivery-views";
 
 const STATUS_VARIANT: Record<OrderStatus, "default" | "secondary" | "success" | "warning" | "destructive"> = {
@@ -68,6 +71,8 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
 export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; placed?: boolean }) {
   const { order: o, role, actors, allowed } = await getOrder(ctx, id);
   const [t, locale] = await Promise.all([getTranslations("orders"), getLocale()]);
+  const decision = role === "BUYER" ? await openBuyerDecision(ctx, o.id) : null;
+  const rules = decision ? await allocationRules() : null;
   const tax = taxLabel((o.deliveryAddress as { country?: string }).country ?? ctx.company.countryCode);
   const addr = o.deliveryAddress as { label?: string; line1?: string; line2?: string; postalCode?: string; city?: string; country?: string };
   const goodsNet = o.lines.reduce((a, l) => a + Number(l.lineNet), 0);
@@ -77,8 +82,13 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
       <Link href={BASE[role]} className="text-sm text-primary hover:underline">← {role === "BUYER" ? t("myOrders") : t("vendor.all")}</Link>
       <PageHeader
         title={`${t("order")} ${o.number}`}
-        description={<span className="flex flex-wrap items-center gap-2"><OrderStatusBadge status={o.status} /> {formatDate(o.placedAt, locale, true)} · {o.deliveryMode && t(`modes.${o.deliveryMode}`)}</span>}
+        description={<span className="flex flex-wrap items-center gap-2"><OrderStatusBadge status={o.status} /> {formatDate(o.placedAt, locale, true)} · {o.deliveryMode && t(`modes.${o.deliveryMode}`)}{role === "VENDOR" && o.routedByFiringi && <Badge data-testid="routed-badge">{t("deliveryOrderFromFiringi")}</Badge>}</span>}
+        actions={role === "VENDOR" ? <Link className={buttonVariants({ variant: "outline" })} href={`/vendor/orders/${o.id}/delivery-order`} data-testid="delivery-order-link">{t("deliveryOrder")}</Link> : undefined}
       />
+      {decision && rules && (
+        <DecisionPanel eventId={decision.id} shortfall={decision.trigger === "SHORTFALL"} supplier={o.seller.tradeName ?? o.seller.legalName}
+          deadline={formatDate(new Date(decision.createdAt.getTime() + rules.buyerDecisionHours * 3600_000), locale, true)} />
+      )}
       {placed && <p className="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">{t("orderPlaced", { number: o.number })}</p>}
       {o.parentOrder && (
         <p className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="moved-from">

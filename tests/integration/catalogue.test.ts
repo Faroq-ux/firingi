@@ -257,7 +257,7 @@ describe("barcodes and prices with IVA", () => {
     expect(can.items.length).toBeGreaterThan(0);
     expect(can.items.every((i) => i.unitGtin === "5449000000996")).toBe(true);
     const vendorsInOrder = [...new Set(can.items.map((i) => i.vendor.name))];
-    expect(vendorsInOrder.slice(0, 2)).toEqual(["Lisboa Central", "C&C Almada"]); // nearest first (Lisbon, then Almada)
+    expect(vendorsInOrder.slice(0, 3)).toEqual(["Lisboa Central", "FIRINGI Armazém", "C&C Almada"]); // nearest first (Lisbon — FIRINGI's in-house warehouse too — then Almada)
     expect(can.items.every((i, k) => k === 0 || (can.items[k - 1].distanceKm ?? 0) <= (i.distanceKm ?? Infinity))).toBe(true);
 
     // The case has its own barcode, which finds the case offer only.
