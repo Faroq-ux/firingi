@@ -1,0 +1,168 @@
+// ───────────────────────── Geography, currency, language, tax ─────────────────────────
+
+model Currency {
+  code      String  @id // ISO 4217, e.g. EUR
+  name      String
+  symbol    String
+  decimals  Int     @default(2)
+  isActive  Boolean @default(true)
+
+  countries     Country[]
+  ratesAsBase   ExchangeRate[] @relation("RateBase")
+  ratesAsQuote  ExchangeRate[] @relation("RateQuote")
+}
+
+model ExchangeRate {
+  id        String   @id @default(cuid())
+  baseCode  String
+  quoteCode String
+  rate      Decimal  @db.Decimal(18, 8)
+  date      DateTime @db.Date
+  source    String   @default("manual")
+  createdAt DateTime @default(now())
+
+  base  Currency @relation("RateBase", fields: [baseCode], references: [code])
+  quote Currency @relation("RateQuote", fields: [quoteCode], references: [code])
+
+  @@unique([baseCode, quoteCode, date])
+}
+
+model Language {
+  code     String  @id // BCP-47, e.g. pt-PT, es, en
+  name     String  // English name
+  native   String  // name in the language itself
+  isActive Boolean @default(true)
+  /// true when the UI has a translation file for it (otherwise English fallback)
+  uiAvailable Boolean @default(false)
+
+  countries         CountryLanguage[]
+  defaultForCountry Country[]         @relation("CountryDefaultLanguage")
+}
+
+model Country {
+  id                  String  @id @default(cuid())
+  code                String  @unique // ISO 3166-1 alpha-2
+  name                Json
+  flag                String?
+  isEU                Boolean @default(false)
+  vatPrefix           String? // VIES prefix (GR uses "EL")
+  defaultCurrencyCode String
+  defaultLanguageCode String
+  /// Market switches — wholesale customers & wholesalers are Portugal-only at launch,
+  /// distributors may be in any EU country. Opening a market is configuration only.
+  customerMarketEnabled      Boolean @default(false)
+  wholesalerMarketEnabled    Boolean @default(false)
+  distributorSourcingEnabled Boolean @default(false)
+  isActive                   Boolean @default(true)
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+
+  defaultCurrency Currency          @relation(fields: [defaultCurrencyCode], references: [code])
+  defaultLanguage Language          @relation("CountryDefaultLanguage", fields: [defaultLanguageCode], references: [code])
+  languages       CountryLanguage[]
+  regions         Region[]
+  cities          City[]
+  taxRates        TaxRate[]
+  exemptionReasons TaxExemptionReason[]
+  companies       Company[]
+  legalEntities   LegalEntity[]
+  addresses       Address[]
+  membershipScopes MembershipScope[]
+  vendorOffers    VendorOffer[]
+  priceLists      PriceList[]
+  orders          Order[]
+  promotions      Promotion[]
+  deliveryZones   DeliveryZone[]
+  deliveryRules   DeliveryRule[]
+  serviceAreas    VendorServiceArea[]
+  invoiceSeries   InvoiceSeries[]
+}
+
+model CountryLanguage {
+  countryId    String
+  languageCode String
+  sortOrder    Int @default(0)
+
+  country  Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  language Language @relation(fields: [languageCode], references: [code])
+
+  @@id([countryId, languageCode])
+}
+
+model Region {
+  id        String  @id @default(cuid())
+  countryId String
+  code      String  // e.g. PT-11 (Lisboa), PT-30 (Madeira)
+  name      Json
+  /// Regions with their own tax rates (Madeira, Azores, Canary Islands …)
+  taxRegionCode String?
+  isActive  Boolean @default(true)
+
+  country  Country           @relation(fields: [countryId], references: [id])
+  cities   City[]
+  taxRates TaxRate[]
+  membershipScopes MembershipScope[]
+  serviceAreas VendorServiceArea[]
+
+  @@unique([countryId, code])
+}
+
+model City {
+  id        String   @id @default(cuid())
+  countryId String
+  regionId  String
+  name      String
+  latitude  Decimal? @db.Decimal(9, 6)
+  longitude Decimal? @db.Decimal(9, 6)
+  isActive  Boolean  @default(true)
+
+  country   Country   @relation(fields: [countryId], references: [id])
+  region    Region    @relation(fields: [regionId], references: [id])
+  addresses Address[]
+  serviceAreas VendorServiceArea[]
+
+  @@unique([regionId, name])
+}
+
+model TaxCategory {
+  id   String @id @default(cuid())
+  code String @unique // STANDARD | INTERMEDIATE | REDUCED | SUPER_REDUCED | ZERO | EXEMPT
+  name Json
+
+  rates      TaxRate[]
+  categories Category[]
+  products   Product[]
+  deliveryRules DeliveryRule[]
+}
+
+model TaxRate {
+  id            String    @id @default(cuid())
+  countryId     String
+  regionId      String?   // null = whole country (mainland)
+  taxCategoryId String
+  taxType       String    @default("VAT") // VAT | IGIC (Canary Islands) …
+  rate          Decimal   @db.Decimal(6, 3) // percent, e.g. 23.000
+  saftCode      String?   // PT SAF-T: NOR | INT | RED | ISE | OUT
+  validFrom     DateTime  @db.Date
+  validTo       DateTime? @db.Date
+  createdAt     DateTime  @default(now())
+
+  country     Country     @relation(fields: [countryId], references: [id])
+  region      Region?     @relation(fields: [regionId], references: [id])
+  taxCategory TaxCategory @relation(fields: [taxCategoryId], references: [id])
+
+  @@index([countryId, taxCategoryId, validFrom])
+}
+
+model TaxExemptionReason {
+  id        String  @id @default(cuid())
+  countryId String
+  code      String  // PT: M01…M99
+  text      Json
+  isActive  Boolean @default(true)
+
+  country Country @relation(fields: [countryId], references: [id])
+  invoiceLines InvoiceLine[]
+
+  @@unique([countryId, code])
+}

@@ -1,0 +1,265 @@
+// ───────────────────────── Catalogue, pricing, stock ─────────────────────────
+
+enum ProductStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum OfferStatus {
+  PENDING_APPROVAL
+  ACTIVE
+  PAUSED
+  REJECTED
+  ARCHIVED
+}
+
+enum SellerType {
+  DISTRIBUTOR
+  WHOLESALER
+}
+
+enum PriceListScope {
+  BASE
+  CUSTOMER_GROUP
+  CUSTOMER
+  CONTRACT
+}
+
+enum StockMovementType {
+  RECEIPT
+  ADJUSTMENT
+  RESERVE
+  RELEASE
+  SHIPMENT
+  RETURN
+}
+
+/// Unlimited-depth tree. `path` is a materialized path of ids ("/rootId/childId/").
+/// `restriction` null = inherit from parent (root null = unrestricted).
+model Category {
+  id        String       @id @default(cuid())
+  parentId  String?
+  name      Json
+  slug      String       @unique
+  path      String
+  depth     Int          @default(0)
+  sortOrder Int          @default(0)
+  restriction Restriction?
+  defaultTaxCategoryId String?
+  imageKey  String?
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  defaultTaxCategory TaxCategory? @relation(fields: [defaultTaxCategoryId], references: [id])
+  products Product[]
+  commissionRules CommissionRule[]
+  promotionTargets PromotionTarget[]
+
+  @@index([parentId, sortOrder])
+  @@index([path])
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  logoKey   String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  products Product[]
+}
+
+/// Shared master catalogue. Vendors propose products → admin approves.
+model Product {
+  id            String        @id @default(cuid())
+  categoryId    String
+  brandId       String?
+  name          Json
+  description   Json?
+  images        String[]      // object-storage keys
+  taxCategoryId String
+  /// null = inherit from category; set = overrides (e.g. alcohol under Beverages)
+  restriction   Restriction?
+  hsCode        String?       // customs / Intrastat code
+  originCountryCode String?
+  status        ProductStatus @default(DRAFT)
+  proposedByCompanyId String?
+  approvedById  String?
+  approvedAt    DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  category    Category       @relation(fields: [categoryId], references: [id])
+  brand       Brand?         @relation(fields: [brandId], references: [id])
+  taxCategory TaxCategory    @relation(fields: [taxCategoryId], references: [id])
+  proposedBy  Company?       @relation(fields: [proposedByCompanyId], references: [id])
+  variants    ProductVariant[]
+  promotionTargets PromotionTarget[]
+
+  @@index([categoryId, status])
+}
+
+model ProductVariant {
+  id         String  @id @default(cuid())
+  productId  String
+  sku        String  @unique // FIRINGI internal SKU
+  gtin       String?
+  attributes Json?   // { "size": "330ml", "flavour": "lemon" }
+  isActive   Boolean @default(true)
+
+  product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  packagings PackagingUnit[]
+}
+
+model UnitOfMeasure {
+  code String @id // UN, KG, L, CX (case), PAL (pallet)
+  name Json
+
+  packagings PackagingUnit[]
+}
+
+model PackagingUnit {
+  id           String   @id @default(cuid())
+  variantId    String
+  uomCode      String
+  name         Json     // "Case 24 × 330ml"
+  unitsPerPack Int      @default(1)
+  gtin         String?
+  netWeightKg  Decimal? @db.Decimal(10, 3)
+  grossWeightKg Decimal? @db.Decimal(10, 3)
+  dimensionsCm Json?    // { l, w, h }
+  isActive     Boolean  @default(true)
+
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  uom     UnitOfMeasure  @relation(fields: [uomCode], references: [code])
+  offers  VendorOffer[]
+}
+
+/// What a vendor actually sells. `sellerType` mirrors the vendor company's type and is
+/// kept in sync by a DB trigger — the visibility layer filters on it.
+model VendorOffer {
+  id              String      @id @default(cuid())
+  vendorCompanyId String
+  sellerType      SellerType
+  packagingUnitId String
+  countryId       String      // country the offer is sold from
+  vendorSku       String?
+  status          OfferStatus @default(PENDING_APPROVAL)
+  minOrderQty     Int         @default(1)
+  qtyStep         Int         @default(1)
+  leadTimeDays    Int         @default(1)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  vendor     Company        @relation(fields: [vendorCompanyId], references: [id])
+  packaging  PackagingUnit  @relation(fields: [packagingUnitId], references: [id])
+  country    Country        @relation(fields: [countryId], references: [id])
+  prices     PriceListItem[]
+  stockLevels StockLevel[]
+  stockMovements StockMovement[]
+  cartItems  CartItem[]
+  orderLines OrderLine[]
+  promotionTargets PromotionTarget[]
+
+  @@unique([vendorCompanyId, packagingUnitId])
+  @@index([sellerType, status, countryId])
+}
+
+model CustomerGroup {
+  id             String   @id @default(cuid())
+  ownerCompanyId String?  // null = FIRINGI-owned group (promotions); set = vendor-owned (pricing)
+  name           String
+  description    String?
+  createdAt      DateTime @default(now())
+
+  owner      Company?              @relation("GroupOwner", fields: [ownerCompanyId], references: [id], onDelete: Cascade)
+  members    CustomerGroupMember[]
+  priceLists PriceList[]
+  promotionTargets PromotionTarget[]
+}
+
+model CustomerGroupMember {
+  groupId   String
+  companyId String
+  addedAt   DateTime @default(now())
+
+  group   CustomerGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, companyId])
+}
+
+/// Most specific active price wins: CUSTOMER/CONTRACT > CUSTOMER_GROUP > BASE.
+model PriceList {
+  id              String         @id @default(cuid())
+  vendorCompanyId String
+  name            String
+  scope           PriceListScope
+  targetGroupId   String?
+  targetCompanyId String?
+  currencyCode    String         @default("EUR")
+  countryId       String
+  priority        Int            @default(0)
+  validFrom       DateTime       @default(now())
+  validTo         DateTime?
+  isActive        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  vendor        Company        @relation("PriceListVendor", fields: [vendorCompanyId], references: [id])
+  targetGroup   CustomerGroup? @relation(fields: [targetGroupId], references: [id])
+  targetCompany Company?       @relation("PriceListTargetCompany", fields: [targetCompanyId], references: [id])
+  country       Country        @relation(fields: [countryId], references: [id])
+  items         PriceListItem[]
+}
+
+model PriceListItem {
+  id           String  @id @default(cuid())
+  priceListId  String
+  offerId      String
+  minQty       Int     @default(1) // tier pricing
+  unitPriceNet Decimal @db.Decimal(18, 4)
+
+  priceList PriceList   @relation(fields: [priceListId], references: [id], onDelete: Cascade)
+  offer     VendorOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([priceListId, offerId, minQty])
+}
+
+model StockLevel {
+  id        String   @id @default(cuid())
+  offerId   String
+  addressId String   // WAREHOUSE address
+  onHand    Int      @default(0)
+  reserved  Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  offer   VendorOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  address Address     @relation(fields: [addressId], references: [id])
+
+  @@unique([offerId, addressId])
+}
+
+model StockMovement {
+  id        String            @id @default(cuid())
+  offerId   String
+  addressId String
+  type      StockMovementType
+  qty       Int
+  orderId   String?
+  note      String?
+  byUserId  String?
+  at        DateTime          @default(now())
+
+  offer   VendorOffer @relation(fields: [offerId], references: [id])
+  address Address     @relation(fields: [addressId], references: [id])
+  order   Order?      @relation(fields: [orderId], references: [id])
+
+  @@index([offerId, at])
+}

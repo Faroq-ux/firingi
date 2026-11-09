@@ -1,0 +1,16 @@
+// FIRINGI — Prisma schema (multi-file). Each file covers one domain.
+// Conventions:
+//   * Money: Decimal(18,4) for unit prices / rates, Decimal(18,2) for totals. Never floats.
+//   * Localised text: Json `{ "en": "...", "pt": "...", ... }` with English fallback.
+//   * "*ById" fields without a relation are soft references to User (users are never
+//     deleted, only disabled), used for actor tracking.
+//   * Integrity rules Prisma can't express (triggers, CHECKs) live in raw SQL migrations.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

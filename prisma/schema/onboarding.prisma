@@ -1,0 +1,141 @@
+// ───────────────────────── Onboarding & compliance ─────────────────────────
+
+enum AddressKind {
+  HEAD_OFFICE
+  BILLING
+  WAREHOUSE // vendor distribution / warehouse address (stock location)
+  PICKUP    // vendor wholesale / pickup address
+  DELIVERY  // buyer delivery address
+}
+
+enum DocumentType {
+  BUSINESS_REGISTRATION
+  TAX_ID_CERTIFICATE
+  TRADE_LICENCE
+  TOBACCO_LICENCE
+  ALCOHOL_LICENCE
+  ID_DOCUMENT
+  DRIVING_LICENCE
+  VEHICLE_REGISTRATION
+  VEHICLE_INSURANCE
+  SELF_BILLING_AGREEMENT
+  CONTRACT
+  OTHER
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+  REVOKED
+}
+
+enum Restriction {
+  TOBACCO
+  ALCOHOL
+}
+
+enum VatValidationResult {
+  VALID
+  INVALID
+  ERROR
+}
+
+model Address {
+  id          String      @id @default(cuid())
+  companyId   String
+  kind        AddressKind
+  label       String
+  line1       String
+  line2       String?
+  postalCode  String
+  cityId      String?
+  cityName    String      // free text fallback / display
+  countryId   String
+  latitude    Decimal?    @db.Decimal(9, 6) // set by geocoding on save (Phase 2/6)
+  longitude   Decimal?    @db.Decimal(9, 6)
+  contactName String?
+  phone       String?
+  openingHours Json?
+  isDefault   Boolean     @default(false)
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  company Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  city    City?    @relation(fields: [cityId], references: [id])
+  country Country  @relation(fields: [countryId], references: [id])
+  stockLevels    StockLevel[]
+  stockMovements StockMovement[]
+  radiusAreas    VendorServiceArea[]
+  ordersFrom     Order[] @relation("OrderSourceAddress")
+
+  @@index([companyId, kind])
+}
+
+model Document {
+  id          String       @id @default(cuid())
+  companyId   String?
+  driverId    String?
+  vehicleId   String?
+  restrictionApprovalId String?
+  type        DocumentType
+  fileKey     String       // object-storage key
+  fileName    String
+  mimeType    String
+  sizeBytes   Int
+  status      ReviewStatus @default(PENDING)
+  expiresAt   DateTime?
+  reviewedById String?
+  reviewedAt  DateTime?
+  reviewNote  String?
+  uploadedById String?
+  createdAt   DateTime     @default(now())
+
+  company     Company?             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  driver      Driver?              @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  vehicle     Vehicle?             @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  restrictionApproval RestrictionApproval? @relation(fields: [restrictionApprovalId], references: [id])
+
+  @@index([companyId])
+  @@index([status])
+}
+
+/// A buyer must be approved per restriction (tobacco / alcohol) before it can see or buy
+/// restricted products.
+model RestrictionApproval {
+  id          String       @id @default(cuid())
+  companyId   String
+  restriction Restriction
+  status      ReviewStatus @default(PENDING)
+  extraInfo   Json?        // licence number, issuing authority …
+  validUntil  DateTime?
+  reviewedById String?
+  reviewedAt  DateTime?
+  reviewNote  String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  documents Document[]
+
+  @@unique([companyId, restriction])
+}
+
+/// History of EU VIES VAT-number checks (required before approving EU distributors).
+model VatValidation {
+  id              String              @id @default(cuid())
+  companyId       String
+  vatNumber       String
+  result          VatValidationResult
+  registeredName  String?
+  registeredAddress String?
+  consultationRef String?
+  checkedAt       DateTime            @default(now())
+  checkedById     String?
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, checkedAt])
+}

@@ -1,0 +1,113 @@
+// ───────────────────────── Commission & promotions ─────────────────────────
+
+enum CommissionType {
+  PERCENT
+  FIXED_PER_UNIT  // reserved — later phase
+  FIXED_PER_ORDER // reserved — later phase
+}
+
+enum PromotionOwner {
+  VENDOR
+  ADMIN
+}
+
+enum PromotionKind {
+  PERCENT
+  FIXED_AMOUNT
+}
+
+enum PromotionStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+enum AcceptanceStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+/// No default commission. Rows are never edited: a change closes the current rule
+/// (validTo) and inserts a new one → full history. Orders snapshot the active rule.
+model CommissionRule {
+  id              String         @id @default(cuid())
+  vendorCompanyId String
+  type            CommissionType @default(PERCENT)
+  categoryId      String?        // reserved for per-category commission
+  rate            Decimal        @db.Decimal(10, 4) // percent for PERCENT, money for FIXED_*
+  validFrom       DateTime       @default(now())
+  validTo         DateTime?
+  note            String?
+  createdById     String?
+  createdAt       DateTime       @default(now())
+
+  vendor     Company     @relation(fields: [vendorCompanyId], references: [id])
+  category   Category?   @relation(fields: [categoryId], references: [id])
+  orderLines OrderLine[]
+
+  @@index([vendorCompanyId, validFrom])
+}
+
+/// Vendor promotions are always 100 % vendor-funded and never reduce FIRINGI commission.
+/// Admin promotions declare the split (FIRINGI / vendor / e.g. 50-50). DB CHECKs enforce it.
+model Promotion {
+  id               String          @id @default(cuid())
+  ownerType        PromotionOwner
+  ownerCompanyId   String?         // vendor for VENDOR promotions
+  name             Json
+  kind             PromotionKind
+  value            Decimal         @db.Decimal(18, 4)
+  firingiFundPct   Decimal         @default(0) @db.Decimal(5, 2)
+  vendorFundPct    Decimal         @default(100) @db.Decimal(5, 2)
+  countryId        String?
+  minQty           Int?
+  minOrderValue    Decimal?        @db.Decimal(18, 2)
+  validFrom        DateTime
+  validTo          DateTime?
+  priority         Int             @default(0)
+  status           PromotionStatus @default(DRAFT)
+  requiresVendorAcceptance Boolean @default(false)
+  budget           Decimal?        @db.Decimal(18, 2)
+  createdById      String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  owner       Company?                    @relation(fields: [ownerCompanyId], references: [id])
+  country     Country?                    @relation(fields: [countryId], references: [id])
+  targets     PromotionTarget[]
+  acceptances PromotionVendorAcceptance[]
+  lineDiscounts OrderLineDiscount[]
+}
+
+/// Any combination; a line matches if it matches at least one target row.
+model PromotionTarget {
+  id              String  @id @default(cuid())
+  promotionId     String
+  offerId         String?
+  productId       String?
+  categoryId      String?
+  vendorCompanyId String?
+  customerGroupId String?
+
+  promotion     Promotion      @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  offer         VendorOffer?   @relation(fields: [offerId], references: [id])
+  product       Product?       @relation(fields: [productId], references: [id])
+  category      Category?      @relation(fields: [categoryId], references: [id])
+  vendor        Company?       @relation(fields: [vendorCompanyId], references: [id])
+  customerGroup CustomerGroup? @relation(fields: [customerGroupId], references: [id])
+}
+
+model PromotionVendorAcceptance {
+  promotionId     String
+  vendorCompanyId String
+  status          AcceptanceStatus @default(PENDING)
+  respondedById   String?
+  respondedAt     DateTime?
+
+  promotion Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  vendor    Company   @relation(fields: [vendorCompanyId], references: [id])
+
+  @@id([promotionId, vendorCompanyId])
+}

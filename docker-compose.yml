@@ -1,0 +1,23 @@
+# Local infrastructure for FIRINGI development.
+#   docker compose up -d
+services:
+  postgres:
+    image: postgis/postgis:16-3.4   # PostGIS needed from Phase 6 (radius / zone service areas)
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: firingi
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+  minio:            # S3-compatible file storage (documents, POD photos, invoice PDFs) — Phase 2+
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment: { MINIO_ROOT_USER: firingi, MINIO_ROOT_PASSWORD: firingi-secret }
+    ports: ["9000:9000", "9001:9001"]
+    volumes: [miniodata:/data]
+  mailpit:          # catches all outgoing e-mail in dev — http://localhost:8025
+    image: axllent/mailpit:latest
+    ports: ["1025:1025", "8025:8025"]
+volumes:
+  pgdata: {}
+  miniodata: {}
