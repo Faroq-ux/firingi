@@ -19,6 +19,7 @@ export default async function RegisterChoosePage() {
       <CardHeader>
         <CardTitle className="text-xl">{t("title")}</CardTitle>
         <CardDescription>{t("subtitle")}</CardDescription>
+        <p className="rounded-md bg-primary/10 p-2 text-sm font-medium text-primary">{t("b2bOnly")}</p>
       </CardHeader>
       <CardContent className="space-y-2">
         {TYPES.map(({ key, href, icon: Icon }) => (

@@ -35,6 +35,8 @@ const companySchema = z.object({
   cityId: z.string().optional().nullable(),
   cityName: z.string().trim().min(2).max(100),
   acceptTerms: z.literal(true, { errorMap: () => ({ message: "You must accept the terms" }) }),
+  /** FIRINGI is B2B only — the applicant must declare they act for a business, not as a consumer. */
+  businessDeclaration: z.literal(true, { errorMap: () => ({ message: "FIRINGI is for businesses only" }) }),
 });
 
 async function signInAfterRegistration(email: string, pw: string, locale: string) {

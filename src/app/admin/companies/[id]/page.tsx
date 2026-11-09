@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CommissionForm, CompanyStatusActions, DocumentReview, RestrictionReview, ViesPanel } from "@/components/admin/review-actions";
 import { formatDate } from "@/lib/utils";
+import { isIndividualPtNif } from "@/lib/tax-id";
 
 export const metadata = { title: "Company" };
 
@@ -38,6 +39,12 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
           <Card>
             <CardHeader><CardTitle>Decision</CardTitle><CardDescription>Current status: {c.status.replace("_", " ").toLowerCase()}{c.statusReason ? ` — ${c.statusReason}` : ""}</CardDescription></CardHeader>
             <CardContent className="space-y-4">
+              {c.country.code === "PT" && isIndividualPtNif(c.taxId) && (
+                <div className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
+                  <b>Sole trader (individual NIF).</b> FIRINGI is B2B only — confirm an open business activity
+                  (e.g. &quot;declaração de início de atividade&quot;) before approving.
+                </div>
+              )}
               {(c.status === "PENDING" || c.status === "UNDER_REVIEW") && (
                 readiness.length ? (
                   <div className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">

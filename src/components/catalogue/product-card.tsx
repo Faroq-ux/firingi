@@ -20,7 +20,7 @@ export function ProductThumb({ productId, hasImage, className = "" }: { productI
   );
 }
 
-export async function ProductCard({ item, hasImage }: { item: CatalogueItem; hasImage: boolean }) {
+export async function ProductCard({ item, hasImage, showVendor = true }: { item: CatalogueItem; hasImage: boolean; showVendor?: boolean }) {
   const [t, locale] = await Promise.all([getTranslations("catalogue"), getLocale()]);
   return (
     <Link href={`/buy/catalogue/offers/${item.offerId}`} className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-md">
@@ -38,7 +38,7 @@ export async function ProductCard({ item, hasImage }: { item: CatalogueItem; has
             </>
           )}
           <div className="mt-2 flex items-center justify-between gap-2 text-xs">
-            <span className="truncate text-muted-foreground">{item.vendor.country.flag} {item.vendor.name}</span>
+            <span className="truncate text-muted-foreground">{showVendor ? `${item.vendor.country.flag ?? ""} ${item.vendor.name}` : ""}</span>
             <StockBadge status={item.stockStatus} />
           </div>
         </div>

@@ -70,3 +70,14 @@ describe("visibility filter", () => {
     expect(w).not.toHaveProperty("countryId");
   });
 });
+
+describe("distance", () => {
+  it("Lisbon–Porto is ~275 km; unknown distances sort last", async () => {
+    const { haversineKm, byDistance } = await import("@/server/catalogue/distance");
+    const km = haversineKm({ lat: 38.7223, lng: -9.1393 }, { lat: 41.1579, lng: -8.6291 });
+    expect(km).toBeGreaterThan(270);
+    expect(km).toBeLessThan(280);
+    const list = [{ name: "b", distanceKm: null }, { name: "a", distanceKm: 5 }, { name: "c", distanceKm: 1 }].sort(byDistance);
+    expect(list.map((x) => x.name)).toEqual(["c", "a", "b"]);
+  });
+});

@@ -207,3 +207,38 @@ describe("category tree moves", () => {
     expect((await prisma.category.findUniqueOrThrow({ where: { id: beer.id } })).path).toBe(beer.path);
   });
 });
+
+describe("store-based shopping: categories and nearest suppliers", () => {
+  it("wholesaler sees distributors nearest first (Porto area before Madrid)", async () => {
+    const { visibleSuppliers } = await import("@/server/data/catalogue-buyer");
+    const list = await visibleSuppliers(await ctxFor(LX_BUYER));
+    expect(list.map((s) => s.name)).toEqual(["Atlântico", "Ibéricas"]);
+    expect(list[0].distanceKm!).toBeGreaterThan(250);
+    expect(list[0].distanceKm!).toBeLessThan(list[1].distanceKm!);
+  });
+
+  it("a category lists only suppliers that carry it", async () => {
+    const { visibleSuppliers } = await import("@/server/data/catalogue-buyer");
+    const ctx = await ctxFor(LX_BUYER);
+    const water = await prisma.category.findUniqueOrThrow({ where: { slug: "water" } });
+    expect((await visibleSuppliers(ctx, { categoryId: water.id })).map((s) => s.name)).toEqual(["Atlântico"]);
+    expect((await visibleSuppliers(ctx, { q: "azeite" })).map((s) => s.name).sort()).toEqual(["Atlântico", "Ibéricas"]);
+  });
+
+  it("a customer can't open a distributor's store; its own store shows its categories", async () => {
+    const { supplierStore, shopCategories, shopCategory } = await import("@/server/data/catalogue-buyer");
+    const kebab = await ctxFor(KEBAB);
+    const dist = await prisma.company.findFirstOrThrow({ where: { legalName: "Distribuidora Atlântico, Lda" } });
+    await expect(supplierStore(kebab, dist.id)).rejects.toThrow(/not found/);
+    const lx = await prisma.company.findFirstOrThrow({ where: { legalName: "Grossista Lisboa Central, Lda" } });
+    const store = await supplierStore(kebab, lx.id);
+    expect(store.supplier.distanceKm).toBeLessThan(10); // both in Lisbon
+    const names = store.categories.map((c) => (c.name as { en: string }).en);
+    expect(names).toContain("Groceries");
+    expect(names).not.toContain("Tobacco");
+    // Shop home never offers restricted categories without approval; opening one directly → not found.
+    expect((await shopCategories(kebab)).map((c) => (c.name as { en: string }).en)).not.toContain("Tobacco");
+    const tob = await prisma.category.findUniqueOrThrow({ where: { slug: "tobacco" } });
+    await expect(shopCategory(kebab, tob.id)).rejects.toThrow(/not found/);
+  });
+});

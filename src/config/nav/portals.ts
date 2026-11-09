@@ -70,7 +70,7 @@ export const BUY_NAV: NavSection[] = [
   {
     key: "catalogue", icon: "ShoppingBag", label: { en: "Catalogue", pt: "Catálogo", es: "Catálogo" },
     items: [
-      bc("browse", "Browse Products", "Explorar Produtos", "P3", { live: true, es: "Explorar productos" }),
+      bc("browse", "Shop", "Loja", "P3", { live: true, es: "Tienda" }),
       bc("suppliers", "Suppliers", "Fornecedores", "P3", { live: true, es: "Proveedores" }),
     ],
   },

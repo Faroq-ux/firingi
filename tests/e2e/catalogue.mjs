@@ -24,16 +24,29 @@ async function login(email) {
   return page;
 }
 
-// ── 1. Customer ──
+// ── 1. Customer: shop home → category → nearest wholesaler's store ──
 const customer = await login("owner@kebabhouse.test");
 await customer.goto(`${BASE}/buy/catalogue/browse`);
 await settle(customer);
-await shot(customer, "p3-01-customer-catalogue");
+await shot(customer, "p3-01-customer-shop");
+const home = await customer.textContent("main");
+check("shop home shows categories and the nearest wholesaler", /Mercearia|Groceries/.test(home) && home.includes("Lisboa Central") && /km/.test(home));
+check("customer never sees distributors", !/Atlântico|Ibéricas/.test(home));
+check("no tobacco / alcohol categories without licence", !/Tabaco|Tobacco/.test(home));
+await customer.getByRole("link", { name: /Produtos para Kebab e Pizza|Kebab & Pizza Supplies/ }).click();
+await settle(customer);
+check("category page lists wholesalers carrying it", (await customer.textContent("main")).includes("Lisboa Central"));
+await customer.getByRole("link", { name: /Lisboa Central/ }).first().click();
+await settle(customer);
+await shot(customer, "p3-01b-customer-store");
 const text = await customer.textContent("main");
-check("customer sees wholesaler products", text.includes("Lisboa Central"));
-check("customer never sees distributors", !/Atlântico|Ibéricas/.test(text));
-check("no tobacco / alcohol without licence", !/Cigarros|Cigarettes|Cerveja|Lager|Vinho|Douro|Bolo de rum|Rum cake/.test(text));
-check("contract / group price badge shown", /Preço de contrato|Contract price|Preço de grupo|Group price/.test(text));
+check("store opens filtered on that category", /Cone de kebab|Chicken kebab/.test(text) && !/Coca-Cola/.test(text));
+await customer.getByRole("link", { name: /Todos os produtos|All products/ }).click();
+await settle(customer);
+const all = await customer.textContent("main");
+check("store shows all the wholesaler's products", /Coca-Cola/.test(all) && /Mozzarella/.test(all));
+check("no restricted products in the store", !/Cigarros|Cigarettes|Cerveja|Lager|Vinho|Douro|Bolo de rum|Rum cake/.test(all));
+check("contract / group price badge shown", /Preço de contrato|Contract price|Preço de grupo|Group price/.test(all));
 
 const api = await customer.request.get(`${BASE}/api/catalogue/offers`);
 const json = await api.json();
@@ -57,7 +70,12 @@ await customer.goto(`${BASE}/buy/catalogue/offers/${distOfferId}`);
 check("customer gets 404 page for a distributor offer URL", /404|could not be found|não/i.test(await customer.textContent("body")));
 await wholesaler.goto(`${BASE}/buy/catalogue/browse`);
 await settle(wholesaler);
+const wHome = await wholesaler.textContent("main");
+check("wholesaler shop home: nearest distributor first", wHome.indexOf("Atlântico") > -1 && wHome.indexOf("Atlântico") < wHome.indexOf("Ibéricas"));
 await shot(wholesaler, "p3-03-wholesaler-buying");
+const distId = wApi.items.find((i) => i.vendor.name === "Atlântico").vendor.id;
+await customer.goto(`${BASE}/buy/catalogue/suppliers/${distId}`);
+check("customer gets 404 for a distributor's store", /404|could not be found/i.test(await customer.textContent("body")));
 
 // ── 2. Vendor ──
 const vendor = await login("owner@lisboacentral.test");

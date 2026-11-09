@@ -65,3 +65,11 @@ describe("company VAT number", () => {
     expect(checkCompanyVat("GR123456789", GR, "123456789").ok).toBe(false);
   });
 });
+
+describe("B2B only", () => {
+  it("flags Portuguese individual NIFs (sole traders) for review", async () => {
+    const { isIndividualPtNif } = await import("@/lib/tax-id");
+    expect(isIndividualPtNif("215444448")).toBe(true);
+    expect(isIndividualPtNif("515444448")).toBe(false);
+  });
+});

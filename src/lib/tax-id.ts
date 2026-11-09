@@ -44,3 +44,12 @@ export function checkCompanyVat(raw: string | null | undefined, country: { code:
   if (country.code === "PT" && vat !== `PT${taxId}`) return { ok: false, error: "For Portugal the VAT number is PT followed by the NIF." };
   return { ok: true, vat };
 }
+
+/**
+ * Portuguese NIFs starting with 1, 2 or 3 belong to individuals. A business using one
+ * is a sole trader (empresário em nome individual) — allowed, but flagged for reviewers
+ * so they confirm the business activity (FIRINGI is B2B only, no private consumers).
+ */
+export function isIndividualPtNif(nif: string) {
+  return /^[123]/.test(nif.replace(/\D/g, ""));
+}

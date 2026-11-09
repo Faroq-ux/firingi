@@ -28,6 +28,7 @@ export default async function RegisterTypePage({ params }: { params: Promise<{ t
       <CardHeader>
         <CardTitle className="text-xl">{t(`choose.${companyType}`)}</CardTitle>
         <p className="text-sm text-muted-foreground">{t(`choose.${companyType}_desc`)}</p>
+        <p className="rounded-md bg-primary/10 p-2 text-sm font-medium text-primary">{t("choose.b2bOnly")}</p>
       </CardHeader>
       <CardContent>
         {countries.length === 0 ? (

@@ -50,6 +50,7 @@ await applicant.fill("#ownerName", "Teresa Teste");
 await applicant.fill("#ownerEmail", email);
 await applicant.fill("#password", "Password123!");
 await applicant.check('input[name="acceptTerms"]');
+await applicant.check('input[name="businessDeclaration"]');
 await shot(applicant, "p2-02-register-form");
 await applicant.click('button[type="submit"]');
 await settle(applicant);

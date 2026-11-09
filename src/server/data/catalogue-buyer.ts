@@ -14,6 +14,7 @@ import { allowedRestrictions } from "@/server/services/restrictions";
 import { browsableCategoryIds, categoryInfo, withDescendants } from "@/server/catalogue/restrictions";
 import { applicablePriceListWhere, visibleOfferWhere, type BuyerScope } from "@/server/catalogue/visibility";
 import { resolvePrice } from "@/server/catalogue/pricing";
+import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance";
 
 async function loadCategoryInfo() {
   const cats = await prisma.category.findMany({ select: { id: true, parentId: true, restriction: true, isActive: true } });
@@ -139,17 +140,120 @@ export async function browsableCategories(ctx: Ctx) {
   });
 }
 
-/** Vendors the buyer can buy from (with at least one visible offer). */
-export async function visibleSuppliers(ctx: Ctx) {
+/** Where the buyer receives goods: default delivery address, else head office. */
+export async function buyerLocation(ctx: Ctx): Promise<LatLng | null> {
+  const a = await prisma.address.findFirst({
+    where: { companyId: ctx.company.id, isActive: true, kind: { in: ["DELIVERY", "HEAD_OFFICE"] }, latitude: { not: null } },
+    orderBy: [{ kind: "asc" }, { isDefault: "desc" }], // DELIVERY sorts before HEAD_OFFICE
+  });
+  return a ? { lat: Number(a.latitude), lng: Number(a.longitude) } : null;
+}
+
+/**
+ * Suppliers (wholesalers for customers, distributors for wholesalers) with at least one
+ * visible offer — optionally only those carrying a category — nearest first. Distance is
+ * from the buyer's delivery address to the supplier's closest warehouse / pickup point.
+ */
+export async function visibleSuppliers(ctx: Ctx, opts: { categoryId?: string; q?: string } = {}) {
   const scope = await buyerScope(ctx);
-  const grouped = await prisma.vendorOffer.groupBy({ by: ["vendorCompanyId"], where: visibleOfferWhere(scope), _count: { _all: true } });
+  const categoryIds = opts.categoryId ? withDescendants(opts.categoryId, scope.info).filter((id) => scope.browsableCategoryIds.includes(id)) : undefined;
+  const where: Prisma.VendorOfferWhereInput = {
+    AND: [
+      visibleOfferWhere(scope),
+      categoryIds ? { packaging: { variant: { product: { categoryId: { in: categoryIds } } } } } : {},
+      opts.q?.trim() ? { packaging: { variant: { product: { searchText: { contains: opts.q.trim().toLowerCase() } } } } } : {},
+    ],
+  };
+  const [grouped, from] = await Promise.all([
+    prisma.vendorOffer.groupBy({ by: ["vendorCompanyId"], where, _count: { _all: true } }),
+    buyerLocation(ctx),
+  ]);
   const vendors = await prisma.company.findMany({
     where: { id: { in: grouped.map((g) => g.vendorCompanyId) } },
-    select: { id: true, legalName: true, tradeName: true, country: { select: { code: true, flag: true } }, addresses: { where: { kind: "HEAD_OFFICE", isActive: true }, select: { cityName: true }, take: 1 } },
-    orderBy: { legalName: "asc" },
+    select: {
+      id: true, legalName: true, tradeName: true, country: { select: { code: true, flag: true } },
+      addresses: { where: { isActive: true, kind: { in: ["WAREHOUSE", "PICKUP", "HEAD_OFFICE"] } }, select: { kind: true, cityName: true, latitude: true, longitude: true } },
+    },
   });
   const counts = new Map(grouped.map((g) => [g.vendorCompanyId, g._count._all]));
-  return vendors.map((v) => ({ ...v, offers: counts.get(v.id) ?? 0 }));
+  return vendors
+    .map((v) => {
+      const depots = v.addresses.filter((a) => a.kind !== "HEAD_OFFICE" && a.latitude !== null);
+      const points = (depots.length ? depots : v.addresses.filter((a) => a.latitude !== null)).map((a) => ({ lat: Number(a.latitude), lng: Number(a.longitude) }));
+      const km = nearestKm(from, points);
+      return {
+        id: v.id,
+        name: v.tradeName ?? v.legalName,
+        legalName: v.legalName,
+        country: v.country,
+        city: (v.addresses.find((a) => a.kind === "HEAD_OFFICE") ?? v.addresses[0])?.cityName ?? null,
+        offers: counts.get(v.id) ?? 0,
+        distanceKm: km === null ? null : Math.round(km * 10) / 10,
+      };
+    })
+    .sort(byDistance);
+}
+
+export type Supplier = Awaited<ReturnType<typeof visibleSuppliers>>[number];
+
+/** Top-level categories (with the number of visible products in their branch). */
+export async function shopCategories(ctx: Ctx) {
+  const scope = await buyerScope(ctx);
+  const [cats, offers] = await Promise.all([
+    prisma.category.findMany({ where: { id: { in: scope.browsableCategoryIds }, parentId: null }, select: { id: true, name: true, restriction: true }, orderBy: { sortOrder: "asc" } }),
+    prisma.vendorOffer.findMany({ where: visibleOfferWhere(scope), select: { packaging: { select: { variant: { select: { product: { select: { categoryId: true } } } } } } } }),
+  ]);
+  const count = new Map<string, number>();
+  for (const o of offers) {
+    const catId = o.packaging.variant.product.categoryId;
+    const root = scope.info.get(catId)?.ancestors[0] ?? catId;
+    count.set(root, (count.get(root) ?? 0) + 1);
+  }
+  return cats.map((c) => ({ ...c, products: count.get(c.id) ?? 0 }));
+}
+
+/** A category with its sub-categories and breadcrumb, if the buyer may browse it. */
+export async function shopCategory(ctx: Ctx, categoryId: string) {
+  const scope = await buyerScope(ctx);
+  if (!scope.browsableCategoryIds.includes(categoryId)) throw new NotFoundError("Category");
+  const info = scope.info.get(categoryId)!;
+  const [category, children, crumbs] = await Promise.all([
+    prisma.category.findUniqueOrThrow({ where: { id: categoryId }, select: { id: true, name: true, restriction: true } }),
+    prisma.category.findMany({ where: { parentId: categoryId, id: { in: scope.browsableCategoryIds } }, select: { id: true, name: true }, orderBy: { sortOrder: "asc" } }),
+    prisma.category.findMany({ where: { id: { in: info.ancestors } }, select: { id: true, name: true } }),
+  ]);
+  return { category, children, breadcrumb: info.ancestors.map((id) => crumbs.find((c) => c.id === id)!).filter(Boolean) };
+}
+
+/**
+ * A supplier's store: the supplier and the categories of its visible products.
+ * 404 when the buyer may not buy from it (e.g. a customer opening a distributor).
+ */
+export async function supplierStore(ctx: Ctx, vendorId: string) {
+  const scope = await buyerScope(ctx);
+  const supplier = (await visibleSuppliers(ctx)).find((s) => s.id === vendorId);
+  if (!supplier) throw new NotFoundError("Supplier");
+  const offers = await prisma.vendorOffer.findMany({
+    where: { AND: [visibleOfferWhere(scope), { vendorCompanyId: vendorId }] },
+    select: { packaging: { select: { variant: { select: { product: { select: { categoryId: true } } } } } } },
+  });
+  // Count products per category, rolled up to every ancestor so parent filters work.
+  const count = new Map<string, number>();
+  for (const o of offers) {
+    const id = o.packaging.variant.product.categoryId;
+    for (const c of [...(scope.info.get(id)?.ancestors ?? []), id]) count.set(c, (count.get(c) ?? 0) + 1);
+  }
+  const cats = await prisma.category.findMany({
+    where: { id: { in: [...count.keys()] } },
+    select: { id: true, name: true, parentId: true, depth: true, sortOrder: true },
+  });
+  // Depth-first order for an indented filter list.
+  const byParent = new Map<string | null, typeof cats>();
+  for (const c of cats) byParent.set(c.parentId, [...(byParent.get(c.parentId) ?? []), c]);
+  const ordered: (typeof cats[number] & { products: number })[] = [];
+  const walk = (p: string | null) => { for (const c of (byParent.get(p) ?? []).sort((a, b) => a.sortOrder - b.sortOrder)) { ordered.push({ ...c, products: count.get(c.id)! }); walk(c.id); } };
+  walk(null);
+  return { supplier, categories: ordered };
 }
 
 /**

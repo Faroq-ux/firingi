@@ -45,7 +45,7 @@ export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTO
             vatNumber: s(fd, "vatNumber"), companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", businessType: s(fd, "businessType"),
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
-            cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on",
+            cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
           } as Parameters<typeof registerCompanyAction>[0]);
           if (r.ok) { router.push(r.data.redirectTo); router.refresh(); }
           else { setError(r.error); setFe(r.fieldErrors ?? {}); window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -104,6 +104,10 @@ export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTO
         </Field>
       </fieldset>
 
+      <label className="flex items-start gap-2 text-sm">
+        <input type="checkbox" name="businessDeclaration" required className="mt-1" /> <span>{t("form.businessDeclaration")}</span>
+      </label>
+      <FieldError messages={fe.businessDeclaration} />
       <label className="flex items-start gap-2 text-sm">
         <input type="checkbox" name="acceptTerms" required className="mt-1" /> <span>{t("form.acceptTerms")}</span>
       </label>

@@ -1,53 +1,55 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
+import { ChevronRight, ShoppingBasket } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
-import { browsableCategories, browseCatalogue, visibleSuppliers } from "@/server/data/catalogue-buyer";
-import { productsWithImages } from "@/server/data/catalogue-admin";
+import { shopCategories, visibleSuppliers } from "@/server/data/catalogue-buyer";
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
-import { ProductCard } from "@/components/catalogue/product-card";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input, Select } from "@/components/ui/input";
+import { SupplierCard } from "@/components/catalogue/supplier-card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-export const metadata = { title: "Catalogue" };
+export const metadata = { title: "Shop" };
 
-export default async function BrowsePage({ searchParams }: { searchParams: Promise<{ q?: string; category?: string; vendor?: string; page?: string }> }) {
+/** Shop home: categories + nearest suppliers (wholesalers for customers, distributors for wholesalers). */
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
-  const sp = await searchParams;
-  const [data, categories, suppliers, t, c, locale] = await Promise.all([
-    browseCatalogue(ctx, { q: sp.q, categoryId: sp.category || undefined, vendorId: sp.vendor || undefined, page: Number(sp.page) || 1 }),
-    browsableCategories(ctx), visibleSuppliers(ctx), getTranslations("catalogue"), getTranslations("common"), getLocale(),
+  const { q } = await searchParams;
+  const [categories, suppliers, t, c, locale] = await Promise.all([
+    shopCategories(ctx), visibleSuppliers(ctx, { q }), getTranslations("catalogue"), getTranslations("common"), getLocale(),
   ]);
-  const withImages = await productsWithImages(data.items.map((i) => i.productId));
-  const qs = (page: number) => `/buy/catalogue/browse?${new URLSearchParams({ ...(sp.q ? { q: sp.q } : {}), ...(sp.category ? { category: sp.category } : {}), ...(sp.vendor ? { vendor: sp.vendor } : {}), page: String(page) })}`;
   return (
     <>
-      <PageHeader title={t("browse")} description={t("results", { count: data.total })} />
-      <form className="mb-5 flex flex-wrap gap-2" action="/buy/catalogue/browse">
-        <Input name="q" defaultValue={sp.q} placeholder={t("search")} className="min-w-56 flex-1" />
-        <Select name="category" defaultValue={sp.category ?? ""} className="w-56">
-          <option value="">{t("allCategories")}</option>
-          {categories.map((cat) => <option key={cat.id} value={cat.id}>{"— ".repeat(cat.depth)}{pickLocalized(cat.name, locale)}</option>)}
-        </Select>
-        <Select name="vendor" defaultValue={sp.vendor ?? ""} className="w-48">
-          <option value="">{t("allSuppliers")}</option>
-          {suppliers.map((s) => <option key={s.id} value={s.id}>{s.tradeName ?? s.legalName}</option>)}
-        </Select>
-        <Button type="submit">{c("search")}</Button>
-      </form>
-      {data.items.length === 0 ? <p className="py-16 text-center text-muted-foreground">{t("noResults")}</p> : (
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
-          {data.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={withImages.has(i.productId)} />)}
+      <PageHeader title={t("shop")} description={t("shopIntro")} />
+      <section className="mb-8">
+        <h2 className="mb-3 text-lg font-semibold">{t("categories")}</h2>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {categories.filter((cat) => cat.products > 0).map((cat) => (
+            <Link key={cat.id} href={`/buy/catalogue/categories/${cat.id}`} className="group flex items-center gap-3 rounded-xl border bg-card p-3 transition-colors hover:border-primary">
+              <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary"><ShoppingBasket className="size-4" /></div>
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm font-medium group-hover:text-primary">{pickLocalized(cat.name, locale)}</div>
+                <div className="text-xs text-muted-foreground">{t("productsCount", { count: cat.products })}</div>
+              </div>
+              <ChevronRight className="size-4 text-muted-foreground" />
+            </Link>
+          ))}
         </div>
-      )}
-      <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">
-        <span>{c("pageOf", { page: data.page, count: data.pageCount })}</span>
-        <div className="flex gap-2">
-          {data.page > 1 && <Link className={buttonVariants({ variant: "outline", size: "sm" })} href={qs(data.page - 1)}>{c("previous")}</Link>}
-          {data.page < data.pageCount && <Link className={buttonVariants({ variant: "outline", size: "sm" })} href={qs(data.page + 1)}>{c("next")}</Link>}
+      </section>
+      <section>
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+          <h2 className="text-lg font-semibold">{t("nearestSuppliers")}</h2>
+          <form className="flex gap-2" action="/buy/catalogue/browse">
+            <Input name="q" defaultValue={q} placeholder={t("findSupplier")} className="w-64" />
+            <Button type="submit" variant="outline">{c("search")}</Button>
+          </form>
         </div>
-      </div>
+        {suppliers.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noSuppliers")}</p> : (
+          <div className="grid gap-3 md:grid-cols-2">{suppliers.slice(0, 8).map((s) => <SupplierCard key={s.id} s={s} />)}</div>
+        )}
+        {suppliers.length > 8 && <Link href="/buy/catalogue/suppliers" className="mt-3 inline-block text-sm text-primary hover:underline">{t("allSuppliersLink")} →</Link>}
+      </section>
     </>
   );
 }

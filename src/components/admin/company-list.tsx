@@ -11,6 +11,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
+import { isIndividualPtNif } from "@/lib/tax-id";
 
 const STATUSES: AccountStatus[] = ["PENDING", "UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED"];
 
@@ -60,7 +61,7 @@ export async function CompanyList({
             <TR key={r.id}>
               <TD>
                 <Link href={`/admin/companies/${r.id}`} className="font-medium text-primary hover:underline">{r.legalName}</Link>
-                <div className="text-xs text-muted-foreground">NIF {r.taxId}{r.tradeName ? ` · ${r.tradeName}` : ""}</div>
+                <div className="text-xs text-muted-foreground">NIF {r.taxId}{r.tradeName ? ` · ${r.tradeName}` : ""} {r.country.code === "PT" && isIndividualPtNif(r.taxId) && <Badge variant="warning">sole trader</Badge>}</div>
               </TD>
               {columns.includes("type") && <TD>{tc(r.type)}</TD>}
               <TD>{r.country.flag} {r.country.code} <span className="text-muted-foreground">{r.addresses[0]?.cityName}</span></TD>
