@@ -8,7 +8,7 @@ const base: ReadinessInput = {
   type: "CUSTOMER",
   documents: [{ type: "BUSINESS_REGISTRATION", status: "PENDING" }, { type: "TAX_ID_CERTIFICATE", status: "PENDING" }],
   addresses: [{ kind: "HEAD_OFFICE", isActive: true }, { kind: "DELIVERY", isActive: true }],
-  vatNumber: null, viesValid: false, hasCommission: false,
+  vatNumber: "PT515444448", viesValid: false, hasCommission: false,
 };
 
 describe("submission / approval readiness", () => {
@@ -40,6 +40,11 @@ describe("submission / approval readiness", () => {
     expect(addressMustBeDomestic("CUSTOMER", "DELIVERY")).toBe(true);
     expect(addressMustBeDomestic("DISTRIBUTOR", "WAREHOUSE")).toBe(false);
     expect(addressMustBeDomestic("DISTRIBUTOR", "HEAD_OFFICE")).toBe(true);
+  });
+  it("every business type needs a VAT number; only distributors need VIES", () => {
+    expect(missingForSubmission({ ...base, vatNumber: null }).map((m) => m.code)).toEqual(["VAT_NUMBER_MISSING"]);
+    const approvedDocs = base.documents.map((d) => ({ ...d, status: "APPROVED" as const }));
+    expect(missingForApproval({ ...base, documents: approvedDocs })).toEqual([]); // customer: no VIES needed
   });
   it("applicants can never be approved straight from PENDING", () => {
     expect(ADMIN_TRANSITIONS.PENDING).not.toContain("APPROVED");

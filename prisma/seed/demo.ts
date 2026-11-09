@@ -57,12 +57,12 @@ export const DEMO_COMPANIES: CompanyDef[] = [
   },
   {
     key: "whs-porto", type: "WHOLESALER", status: "PENDING", country: "PT", legalName: "Grossista Porto Norte, Lda",
-    taxId: makePtNif("51055555"), email: "geral@portonorte.test",
+    taxId: makePtNif("51055555"), vatNumber: `PT${makePtNif("51055555")}`, email: "geral@portonorte.test",
     users: [{ email: "owner@portonorte.test", name: "Pedro Norte", roles: ["COMPANY_ADMIN"], owner: true }],
   },
   {
     key: "cust-kebab", type: "CUSTOMER", status: "APPROVED", country: "PT", legalName: "Kebab House Lisboa, Lda", tradeName: "Kebab House",
-    taxId: makePtNif("51544444"), email: "geral@kebabhouse.test", businessType: "kebab_pizza",
+    taxId: makePtNif("51544444"), vatNumber: `PT${makePtNif("51544444")}`, email: "geral@kebabhouse.test", businessType: "kebab_pizza",
     users: [
       { email: "owner@kebabhouse.test", name: "Karim Kebab", roles: ["COMPANY_ADMIN"], owner: true },
       { email: "buyer@kebabhouse.test", name: "Bruno Compras", roles: ["BUYER_PURCHASER"], jobTitle: "Purchaser" },
@@ -70,12 +70,12 @@ export const DEMO_COMPANIES: CompanyDef[] = [
   },
   {
     key: "cust-minimercado", type: "CUSTOMER", status: "PENDING", country: "PT", legalName: "Mini-Mercado Sol, Unipessoal Lda",
-    taxId: makePtNif("51633333"), email: "geral@minimercadosol.test", businessType: "mini_market",
+    taxId: makePtNif("51633333"), vatNumber: `PT${makePtNif("51633333")}`, email: "geral@minimercadosol.test", businessType: "mini_market",
     users: [{ email: "owner@minimercadosol.test", name: "Sofia Sol", roles: ["COMPANY_ADMIN"], owner: true }],
   },
   {
     key: "cust-pizzaria", type: "CUSTOMER", status: "UNDER_REVIEW", country: "PT", legalName: "Pizzaria Bella Porto, Lda",
-    taxId: makePtNif("51722222"), email: "geral@pizzariabella.test", businessType: "kebab_pizza",
+    taxId: makePtNif("51722222"), vatNumber: `PT${makePtNif("51722222")}`, email: "geral@pizzariabella.test", businessType: "kebab_pizza",
     users: [{ email: "owner@pizzariabella.test", name: "Bianca Bella", roles: ["COMPANY_ADMIN"], owner: true }],
   },
 ];

@@ -6,7 +6,7 @@ import type { CompanyType } from "@prisma/client";
 import { hashPassword } from "better-auth/crypto";
 import { prisma } from "@/server/db";
 import { AppError, ValidationError } from "@/server/errors";
-import { isValidPtNif, looksLikeEuVat } from "@/lib/tax-id";
+import { checkCompanyVat, isValidPtNif } from "@/lib/tax-id";
 import { writeAudit } from "./audit";
 import { sendMail } from "./mailer";
 
@@ -52,10 +52,10 @@ export async function registerCompany(input: CompanyRegistration) {
   if (country.code === "PT" && !isValidPtNif(taxId)) throw new ValidationError("Invalid Portuguese NIF.", { taxId: ["Invalid NIF"] });
   if (taxId.length < 5) throw new ValidationError("Invalid tax ID.", { taxId: ["Invalid tax ID"] });
 
-  const vat = input.vatNumber ? input.vatNumber.replace(/[\s.-]/g, "").toUpperCase() : null;
-  if (input.type === "DISTRIBUTOR" && !vat) throw new ValidationError("Distributors must provide an EU VAT number.", { vatNumber: ["Required"] });
-  if (vat && (!looksLikeEuVat(vat) || !vat.startsWith(country.vatPrefix ?? country.code)))
-    throw new ValidationError(`VAT number must start with ${country.vatPrefix ?? country.code}.`, { vatNumber: ["Invalid VAT number"] });
+  // Every business (customer, wholesaler, distributor) gives its country-of-registration VAT number.
+  const vatCheck = checkCompanyVat(input.vatNumber, country, taxId);
+  if (!vatCheck.ok) throw new ValidationError(vatCheck.error, { vatNumber: [vatCheck.error] });
+  const vat = vatCheck.vat;
 
   if (input.headOffice.cityId) {
     const city = await prisma.city.findFirst({ where: { id: input.headOffice.cityId, countryId: country.id } });

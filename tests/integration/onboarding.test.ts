@@ -22,8 +22,9 @@ const porto = async () => (await prisma.city.findFirstOrThrow({ where: { name: "
 
 async function newCustomer(opts: { cityId?: string } = {}) {
   const email = `cust.${Date.now()}.${Math.random().toString(36).slice(2, 6)}@test.pt`;
+  const nif = await freshNif();
   const { companyId } = await registerCompany({
-    type: "CUSTOMER", countryCode: "PT", legalName: `Restaurante ${email}`, taxId: await freshNif(), companyEmail: email, phone: "+351910000000",
+    type: "CUSTOMER", countryCode: "PT", legalName: `Restaurante ${email}`, taxId: nif, vatNumber: `PT${nif}`, companyEmail: email, phone: "+351910000000",
     businessType: "restaurant", owner: { name: "Rui Teste", email, password: PW },
     headOffice: { line1: "Rua A 1", postalCode: "1000-001", cityId: opts.cityId ?? (await lisbon()), cityName: "Lisboa" },
   });
@@ -50,11 +51,17 @@ describe("registration", () => {
       owner: { name: "X", email: `dup.${Date.now()}@x.pt`, password: PW }, headOffice: { line1: "Rua", postalCode: "1000-001", cityName: "Lisboa" },
     };
     await expect(registerCompany({ ...base, taxId: "123456780" })).rejects.toThrow(/Invalid Portuguese NIF/);
+    // Every business needs its country's VAT number; in Portugal it is PT + NIF.
+    const nif = await freshNif();
+    await expect(registerCompany({ ...base, taxId: nif })).rejects.toThrow(/VAT number is required/);
+    await expect(registerCompany({ ...base, taxId: nif, vatNumber: "ESB12345678" })).rejects.toThrow(/must start with PT/);
+    await expect(registerCompany({ ...base, taxId: nif, vatNumber: "PT501964843" })).rejects.toThrow(/PT followed by the NIF/);
     const kebab = await prisma.company.findFirstOrThrow({ where: { legalName: "Kebab House Lisboa, Lda" } });
-    await expect(registerCompany({ ...base, taxId: kebab.taxId })).rejects.toThrow(/already registered/);
-    await expect(registerCompany({ ...base, taxId: await freshNif(), owner: { ...base.owner, email: "owner@kebabhouse.test" } })).rejects.toThrow(/already exists/);
+    await expect(registerCompany({ ...base, taxId: kebab.taxId, vatNumber: `PT${kebab.taxId}` })).rejects.toThrow(/already registered/);
+    const nif2 = await freshNif();
+    await expect(registerCompany({ ...base, taxId: nif2, vatNumber: `PT${nif2}`, owner: { ...base.owner, email: "owner@kebabhouse.test" } })).rejects.toThrow(/already exists/);
     // Customers are Portugal-only at launch.
-    await expect(registerCompany({ ...base, countryCode: "ES", taxId: "B87654321" })).rejects.toThrow(/not open/);
+    await expect(registerCompany({ ...base, countryCode: "ES", taxId: "B87654321", vatNumber: "ESB87654321" })).rejects.toThrow(/not open/);
   });
 
   it("distributors may register anywhere in the EU but need a matching VAT number", async () => {
@@ -64,7 +71,7 @@ describe("registration", () => {
         phone: "+49301234567", owner: { name: "Hans", email: `hans.${Date.now()}.${Math.random()}@gh.de`, password: PW },
         headOffice: { line1: "Hauptstr. 1", postalCode: "10115", cityName: "Berlin" },
       });
-    await expect(reg("DE", null)).rejects.toThrow(/VAT number/);
+    await expect(reg("DE", null)).rejects.toThrow(/VAT number is required/);
     await expect(reg("DE", "FR12345678901")).rejects.toThrow(/must start with DE/);
     const ok = await reg("DE", "DE123456789");
     expect((await prisma.company.findUniqueOrThrow({ where: { id: ok.companyId } })).type).toBe("DISTRIBUTOR");

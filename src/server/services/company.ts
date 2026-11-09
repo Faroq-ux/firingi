@@ -14,6 +14,7 @@ import { canDecideType, canViewType, requireAdmin, scopeWhere } from "./admin-ac
 import { writeAudit } from "./audit";
 import { notifyCompany } from "./notify";
 import { checkVies } from "./vies";
+import { checkCompanyVat } from "@/lib/tax-id";
 
 /** Collect everything the readiness rules need about one company. */
 export async function readinessInput(companyId: string): Promise<ReadinessInput & { status: AccountStatus }> {
@@ -62,6 +63,12 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
     ...(!locked && input.legalName ? { legalName: input.legalName.trim() } : {}),
     ...(!locked && input.vatNumber !== undefined ? { vatNumber: input.vatNumber?.replace(/[\s.-]/g, "").toUpperCase() || null } : {}),
   };
+  if (!locked && input.vatNumber !== undefined) {
+    const country = await prisma.country.findUniqueOrThrow({ where: { id: before.countryId } });
+    const v = checkCompanyVat(input.vatNumber, country, before.taxId);
+    if (!v.ok) throw new ValidationError(v.error);
+    data.vatNumber = v.vat;
+  }
   const after = await prisma.company.update({ where: { id: ctx.company.id }, data });
   await writeAudit({
     actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.profile_updated", entityType: "Company", entityId: ctx.company.id,

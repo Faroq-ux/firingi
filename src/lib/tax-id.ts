@@ -28,3 +28,19 @@ export function looksLikeEuVat(vat: string): boolean {
     vat.replace(/[\s.-]/g, "").toUpperCase(),
   );
 }
+
+/**
+ * Validate a company's VAT number against its country of registration.
+ * Returns the normalised VAT number or an error message.
+ *  - must carry the country's VAT prefix (GR uses "EL");
+ *  - Portugal: the VAT number is "PT" + NIF, so it must match the company's NIF.
+ */
+export function checkCompanyVat(raw: string | null | undefined, country: { code: string; vatPrefix: string | null }, taxId: string):
+  { ok: true; vat: string } | { ok: false; error: string } {
+  const prefix = country.vatPrefix ?? country.code;
+  const vat = (raw ?? "").replace(/[\s.-]/g, "").toUpperCase();
+  if (!vat) return { ok: false, error: "VAT number is required." };
+  if (!vat.startsWith(prefix) || !looksLikeEuVat(vat)) return { ok: false, error: `VAT number must start with ${prefix}.` };
+  if (country.code === "PT" && vat !== `PT${taxId}`) return { ok: false, error: "For Portugal the VAT number is PT followed by the NIF." };
+  return { ok: true, vat };
+}

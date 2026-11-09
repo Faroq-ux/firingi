@@ -3,7 +3,7 @@ import { ADMIN_NAV } from "@/config/nav/admin";
 import { BUY_NAV, VENDOR_NAV } from "@/config/nav/portals";
 import { allItems, findNavItem, resolveNav } from "@/config/nav/resolve";
 import { ALL_PERMISSION_CODES, type PermissionCode } from "@/server/rbac/permissions";
-import { isValidPtNif, makePtNif } from "@/lib/tax-id";
+import { checkCompanyVat, isValidPtNif, makePtNif } from "@/lib/tax-id";
 
 describe("admin sidebar", () => {
   it("has all 20 sections", () => {
@@ -50,5 +50,18 @@ describe("Portuguese NIF", () => {
     expect(isValidPtNif("501964846")).toBe(false);
     expect(isValidPtNif(makePtNif("51012345"))).toBe(true);
     expect(isValidPtNif("12345")).toBe(false);
+  });
+});
+
+describe("company VAT number", () => {
+  const PT = { code: "PT", vatPrefix: "PT" }, GR = { code: "GR", vatPrefix: "EL" };
+  it("Portugal: PT + NIF", () => {
+    expect(checkCompanyVat("pt 501 964 843", PT, "501964843")).toEqual({ ok: true, vat: "PT501964843" });
+    expect(checkCompanyVat("PT999999990", PT, "501964843").ok).toBe(false);
+    expect(checkCompanyVat("", PT, "501964843").ok).toBe(false);
+  });
+  it("uses the country's VAT prefix (Greece = EL)", () => {
+    expect(checkCompanyVat("EL123456789", GR, "123456789").ok).toBe(true);
+    expect(checkCompanyVat("GR123456789", GR, "123456789").ok).toBe(false);
   });
 });

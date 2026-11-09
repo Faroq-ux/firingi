@@ -92,6 +92,10 @@ model Product {
   proposedByCompanyId String?
   approvedById  String?
   approvedAt    DateTime?
+  reviewNote    String?       // shown to the proposing vendor when rejected
+  /// Lower-cased names (all languages) + brand + SKUs + GTINs, maintained by the
+  /// product service — used for fast case-insensitive search.
+  searchText    String        @default("")
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
@@ -103,6 +107,7 @@ model Product {
   promotionTargets PromotionTarget[]
 
   @@index([categoryId, status])
+  @@index([searchText])
 }
 
 model ProductVariant {
@@ -151,6 +156,9 @@ model VendorOffer {
   countryId       String      // country the offer is sold from
   vendorSku       String?
   status          OfferStatus @default(PENDING_APPROVAL)
+  reviewNote      String?
+  reviewedById    String?
+  reviewedAt      DateTime?
   minOrderQty     Int         @default(1)
   qtyStep         Int         @default(1)
   leadTimeDays    Int         @default(1)

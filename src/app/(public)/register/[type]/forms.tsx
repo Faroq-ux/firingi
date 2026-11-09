@@ -26,6 +26,7 @@ export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTO
   const [pending, start] = useTransition();
   const [country, setCountry] = useState(countries[0].code);
   const [cityId, setCityId] = useState(countries[0].cities.length ? "" : "__other");
+  const [vat, setVat] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [fe, setFe] = useState<Record<string, string[]>>({});
   const c = countries.find((x) => x.code === country)!;
@@ -55,15 +56,18 @@ export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTO
       <fieldset className="grid gap-4 sm:grid-cols-2">
         <legend className="mb-2 text-sm font-semibold">{t("form.company")}</legend>
         <Field id="country" label={t("form.country")} errors={fe.countryCode}>
-          <Select id="country" value={country} onChange={(e) => { setCountry(e.target.value); setCityId(countries.find((x) => x.code === e.target.value)?.cities.length ? "" : "__other"); }}>
+          <Select id="country" value={country} onChange={(e) => { setCountry(e.target.value); setVat(""); setCityId(countries.find((x) => x.code === e.target.value)?.cities.length ? "" : "__other"); }}>
             {countries.map((x) => <option key={x.code} value={x.code}>{x.label}</option>)}
           </Select>
         </Field>
         <Field id="legalName" label={t("form.legalName")} errors={fe.legalName}><Input id="legalName" name="legalName" required /></Field>
         <Field id="tradeName" label={t("form.tradeName")}><Input id="tradeName" name="tradeName" /></Field>
-        <Field id="taxId" label={t("form.taxId")} errors={fe.taxId}><Input id="taxId" name="taxId" required inputMode={country === "PT" ? "numeric" : undefined} /></Field>
-        <Field id="vatNumber" label={type === "DISTRIBUTOR" ? t("form.vatNumber") : t("form.vatOptional")} errors={fe.vatNumber} hint={t("form.vatHint")}>
-          <Input id="vatNumber" name="vatNumber" required={type === "DISTRIBUTOR"} placeholder={`${c.vatPrefix}…`} />
+        <Field id="taxId" label={t("form.taxId")} errors={fe.taxId}>
+          <Input id="taxId" name="taxId" required inputMode={country === "PT" ? "numeric" : undefined}
+            onChange={(e) => { if (country === "PT") setVat(e.target.value.replace(/\D/g, "") ? `PT${e.target.value.replace(/\D/g, "")}` : ""); }} />
+        </Field>
+        <Field id="vatNumber" label={t("form.vatNumber")} errors={fe.vatNumber} hint={t("form.vatHint")}>
+          <Input id="vatNumber" name="vatNumber" required value={vat} onChange={(e) => setVat(e.target.value)} readOnly={country === "PT"} placeholder={`${c.vatPrefix}…`} />
         </Field>
         <Field id="companyEmail" label={t("form.companyEmail")} errors={fe.companyEmail}><Input id="companyEmail" name="companyEmail" type="email" required /></Field>
         <Field id="phone" label={t("form.phone")} errors={fe.phone}><Input id="phone" name="phone" type="tel" required /></Field>

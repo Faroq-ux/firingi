@@ -70,7 +70,8 @@ export function missingForSubmission(i: ReadinessInput): Missing[] {
       out.push({ code: "DOCUMENT_MISSING", detail: t });
   for (const group of REQUIRED_ADDRESS_GROUPS[i.type])
     if (!i.addresses.some((a) => a.isActive && group.includes(a.kind))) out.push({ code: "ADDRESS_MISSING", detail: group.join("|") });
-  if (i.type === "DISTRIBUTOR" && !i.vatNumber) out.push({ code: "VAT_NUMBER_MISSING" });
+  // Every business account needs the VAT number of its country of registration.
+  if (!i.vatNumber) out.push({ code: "VAT_NUMBER_MISSING" });
   return out;
 }
 
@@ -93,7 +94,7 @@ export function describeMissing(m: Missing): string {
     case "DOCUMENT_MISSING": return `Upload: ${doc(m.detail)}`;
     case "DOCUMENT_NOT_APPROVED": return `Document not approved yet: ${doc(m.detail)}`;
     case "ADDRESS_MISSING": return `Add an address: ${(m.detail ?? "").split("|").map(doc).join(" or ")}`;
-    case "VAT_NUMBER_MISSING": return "EU VAT number is required for distributors";
+    case "VAT_NUMBER_MISSING": return "VAT number (country of registration) is required";
     case "VIES_NOT_VALID": return "VAT number not yet confirmed in EU VIES";
     case "COMMISSION_MISSING": return "Commission rate not set";
     default: return m.code;
