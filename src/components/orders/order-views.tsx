@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { ResolveException, StatusActions } from "./order-actions";
+import { DeliveryPanel, OrderReturnsPanel } from "@/components/delivery/delivery-views";
 
 const STATUS_VARIANT: Record<OrderStatus, "default" | "secondary" | "success" | "warning" | "destructive"> = {
   NEW: "secondary", PENDING_CONFIRMATION: "warning", SUPPLIER_PROCESSING: "default", READY_FOR_PICKUP: "default", DISPATCHED: "default",
@@ -110,6 +111,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
               </dl>
             </CardContent>
           </Card>
+          <OrderReturnsPanel ctx={ctx} orderId={o.id} role={role} />
           {o.exceptions.length > 0 && (
             <Card>
               <CardHeader><CardTitle>Exceptions</CardTitle></CardHeader>
@@ -138,6 +140,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
               </CardContent>
             </Card>
           )}
+          <DeliveryPanel ctx={ctx} orderId={o.id} />
           <Card>
             <CardContent className="space-y-3 pt-5 text-sm">
               <div><div className="text-muted-foreground">{t("supplier")}</div><div className="font-medium">{o.seller.tradeName ?? o.seller.legalName}</div></div>

@@ -194,3 +194,9 @@ export async function assignableFleet(companyId: string) {
   ]);
   return { drivers, vehicles };
 }
+
+/** The signed-in driver's own availability. */
+export async function myAvailability(ctx: Ctx): Promise<DriverAvailability> {
+  if (!ctx.driver) throw new ForbiddenError();
+  return (await prisma.driver.findUniqueOrThrow({ where: { id: ctx.driver.id }, select: { availability: true } })).availability;
+}

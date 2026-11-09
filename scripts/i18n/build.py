@@ -21,9 +21,18 @@ def flat(d, p=""):
         if isinstance(v, dict): yield from flat(v, p + k + ".")
         else: yield p + k, v
 
+# Namespaces / nav labels added after the first translation round are appended at the end,
+# in this order, so existing <lang>.txt files only grow at the bottom.
+LATER = [("delivery", ["Returns"])]
+
 def source():
-    items = [(k, v) for k, v in flat({k: v for k, v in EN.items() if k != "navLabels"}) if v != ""]
-    return items + [("navLabels." + n, n) for n in NAV]
+    later = {ns for ns, _ in LATER}
+    items = [(k, v) for k, v in flat({k: v for k, v in EN.items() if k != "navLabels" and k not in later}) if v != ""]
+    items += [("navLabels." + n, n) for n in NAV]
+    for ns, nav in LATER:
+        items += [(k, v) for k, v in flat({ns: EN[ns]}) if v != ""]
+        items += [("navLabels." + n, n) for n in nav]
+    return items
 
 def setp(d, key, v):
     parts = key.split(".", 1) if key.startswith("navLabels.") else key.split(".")

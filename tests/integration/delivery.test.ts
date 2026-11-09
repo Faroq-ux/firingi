@@ -10,6 +10,7 @@ import { browseCatalogue } from "@/server/data/catalogue-buyer";
 import { addServiceArea, createZone, removeServiceArea } from "@/server/services/service-areas";
 import { addDriver, addVehicle, ownFleet, setDriverActive } from "@/server/services/fleet";
 import { assignDelivery, completeDelivery, deliveryForViewer, failDelivery, pickUp, returnToSupplier, startDelivery } from "@/server/services/deliveries";
+import { DEFAULT_POLICY, ordersPerDriver, setMultiOrderPolicy, setVendorMultiOrder } from "@/server/services/delivery-settings";
 import { listReturns, receiveReturn, requestReturn, returnableLines, reviewReturn } from "@/server/services/returns";
 import { setStock } from "@/server/services/vendor-catalogue";
 import { excludedVendorIds, postalMatches } from "@/server/delivery/coverage";
@@ -265,6 +266,43 @@ describe("delivery lifecycle", () => {
     expect(d.status).toBe("UNASSIGNED");
     expect((await ctxFor(vendorDriverEmail)).permissions.has("driver.deliveries.view")).toBe(false);
     await setDriverActive(lx, vendorDriver, true);
+  });
+});
+
+describe("multi-order delivery (Super Admin + vendor switches)", () => {
+  it("off by default; vendor turns it on within FIRINGI's policy; Super Admin can switch vendors off", async () => {
+    const lx = await ctxFor(LX_OWNER);
+    const sa = await ctxFor("superadmin@firingi.test");
+    const ops = await ctxFor(OPS);
+    const email = `multi.${tag}@lisboacentral.test`;
+    const driverId = (await addDriver(lx, { name: "Multi Driver", email, password: "Driver!2026x", licenceNumber: "LX-445566" })).id;
+    const a = await orderFromLx("FIR-PIZZABOX33", 8);
+    const b = await orderFromLx("FIR-PIZZABOX33", 8);
+    const c = await orderFromLx("FIR-PIZZABOX33", 8);
+    await assignDelivery(lx, a.deliveryId, { driverId });
+    await expect(assignDelivery(lx, b.deliveryId, { driverId })).rejects.toThrow(/switched off/);
+
+    await expect(setVendorMultiOrder(lx, { enabled: true, max: 99 })).rejects.toThrow(/from 2 to 10/);
+    await setVendorMultiOrder(lx, { enabled: true, max: 2 });
+    await assignDelivery(lx, b.deliveryId, { driverId });
+    await expect(assignDelivery(lx, c.deliveryId, { driverId })).rejects.toThrow(/maximum 2/);
+
+    // Only Super Admin sets the policy (Operations can't).
+    await expect(setMultiOrderPolicy(ops, { ...DEFAULT_POLICY, vendorsMayUse: false })).rejects.toThrow();
+    await setMultiOrderPolicy(sa, { ...DEFAULT_POLICY, vendorsMayUse: false });
+    await assignDelivery(lx, b.deliveryId, { driverId: null }); // unassign
+    await expect(assignDelivery(lx, b.deliveryId, { driverId })).rejects.toThrow(/switched off/);
+    await expect(setVendorMultiOrder(lx, { enabled: true, max: 3 })).rejects.toThrow(/switched off multi-order/);
+    expect(await ordersPerDriver(lx.company.id, false)).toBe(1);
+
+    // FIRINGI's own fleet follows the Super Admin switch.
+    expect(await ordersPerDriver(ops.company.id, true)).toBe(1);
+    await setMultiOrderPolicy(sa, { ...DEFAULT_POLICY, firingiFleet: true, firingiMax: 6 });
+    expect(await ordersPerDriver(ops.company.id, true)).toBe(6);
+    expect(await ordersPerDriver(lx.company.id, false)).toBe(2); // vendors allowed again → its own setting
+    await setMultiOrderPolicy(sa, DEFAULT_POLICY);
+    await setVendorMultiOrder(lx, { enabled: false, max: 2 });
+    for (const x of [a, b]) await assignDelivery(lx, x.deliveryId, { driverId: null });
   });
 });
 

@@ -19,6 +19,7 @@ import { nextStatuses } from "@/server/orders/state";
 import { applyOrderTransition, ensureDelivery, notifyOrderChange } from "./orders";
 import { storeUpload } from "./storage";
 import { writeAudit } from "./audit";
+import { assertDriverCapacity } from "./delivery-settings";
 import { notifyCompany, notifyUser } from "./notify";
 
 const isAdmin = (ctx: Ctx) => ctx.company.type === "ADMIN";
@@ -173,6 +174,7 @@ export async function assignDelivery(ctx: Ctx, id: string, input: { driverId: st
   if (input.driverId && !driver) throw new ValidationError("Choose an active driver from your fleet.");
   const vehicle = input.vehicleId ? await prisma.vehicle.findFirst({ where: { id: input.vehicleId, ownerCompanyId: d.executingCompanyId, status: "ACTIVE" } }) : null;
   if (input.vehicleId && !vehicle) throw new ValidationError("Choose an active vehicle from your fleet.");
+  if (driver && driver.id !== d.driverId) await assertDriverCapacity(driver.id, d.executingCompanyId, d.executor.type === "ADMIN", d.id);
   const retry = d.status === "FAILED";
   const nextStatus: DeliveryStatus = retry ? "PICKED_UP" : d.status === "PICKED_UP" ? "PICKED_UP" : driver ? "ASSIGNED" : "UNASSIGNED";
   await prisma.$transaction(async (tx) => {

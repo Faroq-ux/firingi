@@ -26,6 +26,7 @@ export const VENDOR_NAV: NavSection[] = [
     items: [
       vo("incoming", "Incoming Orders", "Encomendas Recebidas", "P4", { live: true, es: "Pedidos recibidos" }),
       vo("history", "Order History", "Histórico", "P4", { live: true, es: "Historial" }),
+      vo("returns", "Returns", "Devoluções", "P6", { live: true, es: "Devoluciones" }),
     ],
   },
   {
@@ -40,9 +41,10 @@ export const VENDOR_NAV: NavSection[] = [
   {
     key: "fleet", icon: "Truck", label: { en: "Delivery & Fleet", pt: "Entregas e Frota", es: "Entregas y flota" },
     items: [
-      vfl("drivers", "Drivers", "Motoristas", "P6", { es: "Conductores" }),
-      vfl("vehicles", "Vehicles", "Veículos", "P6", { es: "Vehículos" }),
-      vfl("service-areas", "Service Areas", "Áreas de Serviço", "P6", { perm: "vendor.service_areas.manage", es: "Áreas de servicio" }),
+      vfl("deliveries", "Deliveries", "Entregas", "P6", { live: true, perm: ["vendor.orders.view", "vendor.fleet.view"], es: "Entregas" }),
+      vfl("drivers", "Drivers", "Motoristas", "P6", { live: true, perm: ["vendor.fleet.view", "vendor.drivers.manage"], es: "Conductores" }),
+      vfl("vehicles", "Vehicles", "Veículos", "P6", { live: true, perm: ["vendor.fleet.view", "vendor.vehicles.manage"], es: "Vehículos" }),
+      vfl("service-areas", "Service Areas", "Áreas de Serviço", "P6", { live: true, perm: ["vendor.service_areas.manage", "vendor.fleet.view"], es: "Áreas de servicio" }),
       vfl("delivery-rules", "Delivery Minimum", "Mínimo de Entrega", "P4", { live: true, perm: "vendor.service_areas.manage", es: "Mínimo de entrega" }),
     ],
   },
@@ -79,6 +81,7 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bo("cart", "Cart", "Carrinho", "P4", { live: true, perm: "buyer.orders.place", es: "Carrito" }),
       bo("history", "My Orders", "As Minhas Encomendas", "P4", { live: true, es: "Mis pedidos" }),
+      bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
     ],
   },
   {
@@ -107,8 +110,8 @@ export const DRIVER_NAV: NavSection[] = [
   {
     key: "deliveries", icon: "Truck", label: { en: "Deliveries", pt: "Entregas", es: "Entregas" },
     items: [
-      dr("today", "Today's Deliveries", "Entregas de Hoje", "P6", { es: "Entregas de hoy" }),
-      dr("history", "History", "Histórico", "P6", { es: "Historial" }),
+      dr("today", "Today's Deliveries", "Entregas de Hoje", "P6", { live: true, es: "Entregas de hoy" }),
+      dr("history", "History", "Histórico", "P6", { live: true, es: "Historial" }),
     ],
   },
 ];

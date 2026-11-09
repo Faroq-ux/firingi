@@ -10,7 +10,7 @@ PostgreSQL 16 · Prisma 6 · better-auth (email + password) · next-intl · Vite
 
 ## Quick start
 
-Requirements: Node 22+, pnpm 10+, and PostgreSQL 16 (local, or `docker compose up -d`).
+Requirements: Node 22+, pnpm 10+, and PostgreSQL 16 **with PostGIS 3** (local: `apt-get install postgresql-16-postgis-3`, or `docker compose up -d`). The migrations install PostGIS into its own `postgis` schema.
 
 ```bash
 pnpm install
@@ -27,7 +27,7 @@ pnpm dev                             # http://localhost:3000
 | `superadmin@firingi.test` | FIRINGI · Super Admin | ✅ | Full back office, all 20 sections |
 | `ops@` · `finance@` · `sales@` · `support@firingi.test` | FIRINGI staff | ✅ | Role-filtered sidebar |
 | `rm.lisboa@firingi.test` | FIRINGI · Regional Manager | ✅ | Scoped to Lisboa + Setúbal |
-| `driver@firingi.test` | FIRINGI driver | ✅ | Driver portal |
+| `driver@firingi.test` | FIRINGI driver | ✅ | Driver app (deliveries, proof of delivery) |
 | `owner@atlantico.test` | Distributor 🇵🇹 | ✅ | Sell portal |
 | `owner@ibericas.test` | Distributor 🇪🇸 | ✅ | Cross-border distributor |
 | `owner@lisboacentral.test` | Wholesaler 🇵🇹 | ✅ | **Sell + Buy** portals |
@@ -50,6 +50,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/catalogue.mjs http://localhost:3000 [screenshotDir]` | Browser + API test of catalogue visibility, vendor pricing, product proposal and approval* |
 | `node tests/e2e/orders.mjs http://localhost:3000 [screenshotDir]` | Browser test of cart lock, minimums, checkout, vendor confirmation, FIRINGI delivery* |
 | `node tests/e2e/finance.mjs http://localhost:3000 [screenshotDir]` | Browser test of promotions, invoices + PDFs, vendor statements and invoices, payments, credit notes* |
+| `node tests/e2e/delivery.mjs http://localhost:3000 [screenshotDir]` | Browser test of vendor fleet + service areas, driver app with signature, returns, failed delivery, control tower, multi-order setting* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -178,6 +179,37 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   - paid / open / overdue status (from each customer's payment terms);
   - accounts receivable and payable;
   - the finance overview, commissions report and monthly VAT report.
+
+## Delivery & Fleet (Phase 6)
+
+- **Service areas (PostGIS)** — a vendor narrows where it sells: whole country (distributors,
+  cross-border EU), region, city, FIRINGI delivery zone, or **km radius** around one of its
+  addresses. No areas = whole market. Buyers outside every area don't see the vendor, and
+  checkout to an address outside is refused. Wholesalers: own country only.
+- **Delivery zones** (FIRINGI) — postal-code patterns (`1100-*`) and/or a GeoJSON polygon,
+  validated and stored as PostGIS geography (`Address.geo` is kept by a trigger).
+- **Fleet** — vendors add their own drivers and vehicles for their free deliveries; they are
+  active at once and the vendor is responsible for them. FIRINGI manages its own fleet and can
+  take any driver or vehicle off the road. Independent driver applicants still need review.
+- **Multi-order delivery** — off by default (one open delivery per driver). Super Admin sets it
+  for FIRINGI's fleet and decides whether vendors may use it (and their maximum); each vendor
+  switches it on for its own fleet (*Delivery & Fleet › Drivers*, *Settings › Delivery Settings*).
+- **Deliveries** — one per order, created when the vendor confirms; executed by the vendor
+  (own fleet / carrier) or FIRINGI. The dispatcher assigns driver + vehicle (or carrier +
+  tracking) on the order page. The driver app (phone) moves the order: picked up → dispatched,
+  out for delivery, delivered with **proof** (recipient, signature, photos, GPS) → invoice.
+  Proof is append-only (DB trigger); a driver/vehicle must belong to the executing company
+  (DB trigger).
+- **Failed deliveries** — the driver records why (customer absent, closed, refused, …, photo);
+  the order goes to *Exception*. The dispatcher retries (assign again) or **returns the goods to
+  the supplier**: order cancelled, stock back on hand.
+- **Returns** — buyers request within 30 days of delivery (quantities, reason, photos); FIRINGI
+  approves/rejects; the supplier (or FIRINGI) confirms receipt → FIRINGI credit note to the
+  buyer, credit statement to the vendor, stock back (unless damaged); order *Returned* when
+  everything came back.
+- **Admin pages** — control tower, live deliveries, failed deliveries, proof of delivery,
+  returns, zones, all drivers / vehicles, FIRINGI drivers, vendor drivers, availability,
+  assignments.
 
 ## Configuration notes
 
