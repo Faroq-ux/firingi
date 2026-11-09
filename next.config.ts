@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   // Prisma + better-auth must run on the Node runtime, never bundled for the edge.
   serverExternalPackages: ["@prisma/client", ".prisma/client"],
   typedRoutes: false,
+  // Document uploads go through server actions (max file size is enforced again in the storage service).
+  experimental: { serverActions: { bodySizeLimit: "12mb" } },
 };
 
 export default withNextIntl(nextConfig);

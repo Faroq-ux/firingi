@@ -18,6 +18,8 @@ export type EffectiveInput = {
   userStatus: UserStatus;
   isOwner: boolean;
   roles: RoleInput[];
+  /** Status of the user's Driver profile (null = not a driver). Driver permissions need APPROVED. */
+  driverStatus?: AccountStatus | null;
 };
 
 /**
@@ -47,6 +49,9 @@ export function computeEffectivePermissions(input: EffectiveInput): Set<Permissi
     const codes = sys ? expandRolePermissions(sys) : role.permissionCodes.filter(isPermissionCode);
     for (const c of codes) if (grantable.has(c)) granted.add(c);
   }
+
+  // A driver can only work once FIRINGI has approved the driver profile itself.
+  if (input.driverStatus !== "APPROVED") for (const c of [...granted]) if (PERMISSIONS[c].audience === "DRIVER") granted.delete(c);
 
   if (input.companyStatus !== "APPROVED") {
     // SUSPENDED / REJECTED companies get nothing; PENDING / UNDER_REVIEW get onboarding only.

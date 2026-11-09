@@ -49,9 +49,9 @@ export const VENDOR_NAV: NavSection[] = [
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
     items: [
-      vc("profile", "Profile", "Perfil", "P2", { es: "Perfil" }),
-      vc("addresses", "Warehouse & Pickup Addresses", "Moradas de Armazém e Recolha", "P2", { perm: "company.addresses.manage", es: "Direcciones" }),
-      vc("documents", "Documents", "Documentos", "P2", { perm: "company.documents.manage", es: "Documentos" }),
+      vc("profile", "Profile", "Perfil", "P2", { live: true, es: "Perfil" }),
+      vc("addresses", "Warehouse & Pickup Addresses", "Moradas de Armazém e Recolha", "P2", { live: true, perm: "company.addresses.manage", es: "Direcciones" }),
+      vc("documents", "Documents", "Documentos", "P2", { live: true, perm: "company.documents.manage", es: "Documentos" }),
       vc("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       vc("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
     ],
@@ -91,10 +91,10 @@ export const BUY_NAV: NavSection[] = [
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
     items: [
-      bco("profile", "Profile", "Perfil", "P2", { es: "Perfil" }),
-      bco("addresses", "Delivery Addresses", "Moradas de Entrega", "P2", { perm: ["buyer.addresses.manage", "company.addresses.manage"], es: "Direcciones de entrega" }),
-      bco("documents", "Documents", "Documentos", "P2", { perm: "company.documents.manage", es: "Documentos" }),
-      bco("restricted-products", "Tobacco & Alcohol Access", "Acesso a Tabaco e Álcool", "P2", { perm: "buyer.compliance.manage", es: "Acceso a tabaco y alcohol" }),
+      bco("profile", "Profile", "Perfil", "P2", { live: true, es: "Perfil" }),
+      bco("addresses", "Delivery Addresses", "Moradas de Entrega", "P2", { live: true, perm: ["buyer.addresses.manage", "company.addresses.manage"], es: "Direcciones de entrega" }),
+      bco("documents", "Documents", "Documentos", "P2", { live: true, perm: "company.documents.manage", es: "Documentos" }),
+      bco("restricted-products", "Tobacco & Alcohol Access", "Acesso a Tabaco e Álcool", "P2", { live: true, perm: "buyer.compliance.manage", es: "Acceso a tabaco y alcohol" }),
       bco("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       bco("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
     ],

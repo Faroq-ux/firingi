@@ -41,3 +41,17 @@ export function defineAction<S extends z.ZodTypeAny, R>(opts: {
     }
   };
 }
+
+/** Same error handling for actions that take FormData (file uploads) and parse it themselves. */
+export async function runAction<R>(handler: (ctx: Ctx) => Promise<R>): Promise<ActionResult<R>> {
+  try {
+    const ctx = await getContext();
+    if (!ctx) return { ok: false, code: "UNAUTHENTICATED", error: "Please sign in." };
+    return { ok: true, data: await handler(ctx) };
+  } catch (e) {
+    const err = e instanceof AppError ? e : fromDbError(e);
+    if (err) return { ok: false, code: err.code, error: err.message, fieldErrors: (err as { fieldErrors?: Record<string, string[]> }).fieldErrors };
+    console.error(e);
+    return { ok: false, code: "INTERNAL", error: "Something went wrong. Please try again." };
+  }
+}

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
-import { SignOutButton } from "../application-status/sign-out";
+import { SignOutButton } from "@/components/layout/sign-out-button";
 
 export default async function NoAccessPage() {
   const [t, c] = await Promise.all([getTranslations("noAccess"), getTranslations("common")]);

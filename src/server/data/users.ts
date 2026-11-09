@@ -18,18 +18,23 @@ export async function listVendorUsers(ctx: Ctx) {
   });
 }
 
-/** Application status page — available to members of non-approved companies. */
+/** Onboarding hub data for the signed-in applicant (company and / or driver). */
 export async function myApplication(ctx: Ctx) {
-  return prisma.company.findUniqueOrThrow({
+  const { missingForSubmission } = await import("@/server/onboarding/rules");
+  const { readinessInput } = await import("@/server/services/company");
+  const company = await prisma.company.findUniqueOrThrow({
     where: { id: ctx.company.id },
     select: {
-      legalName: true,
-      type: true,
-      status: true,
-      statusReason: true,
-      createdAt: true,
+      id: true, legalName: true, tradeName: true, type: true, status: true, statusReason: true, createdAt: true, taxId: true, vatNumber: true,
+      email: true, phone: true, website: true, businessType: true, countryId: true,
+      country: { select: { code: true, flag: true } },
       statusHistory: { orderBy: { at: "desc" }, take: 10 },
-      documents: { select: { id: true, type: true, status: true, fileName: true, createdAt: true } },
     },
   });
+  const isApplicantCompany = company.type !== "ADMIN";
+  const missing = isApplicantCompany && company.status === "PENDING" ? missingForSubmission(await readinessInput(company.id)) : [];
+  const driver = ctx.driver
+    ? await prisma.driver.findUnique({ where: { id: ctx.driver.id }, include: { documents: { orderBy: { createdAt: "desc" } } } })
+    : null;
+  return { company, isApplicantCompany, missing, driver };
 }

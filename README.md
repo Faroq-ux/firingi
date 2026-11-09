@@ -46,6 +46,7 @@ pnpm dev                             # http://localhost:3000
 | `pnpm typecheck` · `pnpm lint` | Static checks (lint also blocks DB access outside `src/server`) |
 | `pnpm test` | Unit + integration tests (rebuilds the **test** DB from `TEST_DATABASE_URL`) |
 | `node tests/e2e/smoke.mjs http://localhost:3000 [screenshotDir]` | Browser end-to-end smoke test against a running server* |
+| `node tests/e2e/onboarding.mjs http://localhost:3000 [screenshotDir]` | Browser test of registration → documents → admin approval → tobacco access* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -99,6 +100,26 @@ tests/
 | Commission history never rewritten | DB trigger on `CommissionRule` (only `validTo` may change) |
 | Vendor promotions 100 % vendor-funded; admin splits sum to 100 | DB CHECK constraints on `Promotion` |
 | Audit log tamper-proof | DB trigger: `AuditLog` (and status histories) append-only |
+
+## Onboarding (Phase 2)
+
+1. **Register** at `/register` as distributor, wholesaler, customer or driver. Each new account starts as **Pending**.
+2. On the **application page** (`/application-status`), the applicant completes their profile, adds addresses and uploads documents, then submits the application (**Under review**).
+3. **FIRINGI reviews it** at Vendors / Customers › Applications. The company page has a decision panel, document approval, an EU VIES check and the commission setting. Approval is blocked until:
+   - all required documents are approved;
+   - the required addresses exist;
+   - for distributors: the VAT number is confirmed in VIES;
+   - for vendors: a commission rate is set.
+4. **Tobacco and alcohol:** approved buyers request access with a licence (Buy › Company). Admin approves it with an expiry date at Risk & Compliance › Compliance.
+5. **Drivers** upload their ID and driving licence. Admin approves both documents and the driver at Drivers & Fleet › Driver Applications.
+
+Requirements and transitions are defined in one place: `src/server/onboarding/rules.ts`.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `STORAGE_DRIVER` / `STORAGE_DIR` | `local` / `./storage` | Uploaded documents. They are never public; downloads go through `/api/files/:id`, which checks permissions. |
+| `MAIL_DRIVER` | `log` | `log` writes e-mails to `storage/mail-outbox/`. `smtp` sends through `SMTP_URL`, for example Mailpit from `docker compose`. |
+| `VIES_URL` | EU endpoint | VAT validation. When VIES can't be reached, admins can record an audited manual verification. |
 
 ## Configuration notes
 

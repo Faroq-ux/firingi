@@ -39,3 +39,16 @@ export async function makeOffers(vendorNames: string[]) {
   }
   return offers;
 }
+
+/** Small but real files (correct magic bytes) for upload tests. */
+export const pdfFile = (name = "doc.pdf") => new File([Buffer.from("%PDF-1.4\n% test document\n%%EOF")], name, { type: "application/pdf" });
+export const pngFile = (name = "img.png") =>
+  new File([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0])], name, { type: "image/png" });
+export const fakePdf = () => new File([Buffer.from("MZ this is really an exe")], "evil.pdf", { type: "application/pdf" });
+
+let seq = 0;
+/** Unique valid-looking PT NIF for each test registration. */
+export async function freshNif() {
+  const { makePtNif } = await import("@/lib/tax-id");
+  return makePtNif(String(52000000 + Date.now() % 900000 + ++seq).slice(0, 8));
+}

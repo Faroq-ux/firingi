@@ -28,6 +28,8 @@ export type Ctx = {
   permissions: Set<PermissionCode>;
   /** Region limits (Regional Managers). Empty = unrestricted. */
   scopes: { countryId: string | null; regionId: string | null }[];
+  /** The user's driver profile, if any (drivers need their own admin approval). */
+  driver: { id: string; status: AccountStatus; ownerCompanyId: string } | null;
   /** All active companies the user belongs to (for the company switcher). */
   memberships: { companyId: string; legalName: string; type: CompanyType; status: AccountStatus }[];
 };
@@ -37,6 +39,7 @@ export async function loadContext(userId: string, sessionId: string, preferredCo
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
+      driver: { select: { id: true, status: true, ownerCompanyId: true } },
       memberships: {
         where: { status: "ACTIVE" },
         include: {
@@ -61,6 +64,7 @@ export async function loadContext(userId: string, sessionId: string, preferredCo
     membershipStatus: m.status,
     userStatus: user.status,
     isOwner: m.isOwner,
+    driverStatus: user.driver && user.driver.ownerCompanyId === m.companyId ? user.driver.status : null,
     roles: m.roles.map((r) => ({
       key: r.role.key,
       isSystem: r.role.isSystem,
@@ -82,6 +86,7 @@ export async function loadContext(userId: string, sessionId: string, preferredCo
       countryCode: m.company.country.code,
     },
     permissions,
+    driver: user.driver,
     scopes: m.scopes.map((s) => ({ countryId: s.countryId, regionId: s.regionId })),
     memberships: user.memberships.map((x) => ({
       companyId: x.companyId,

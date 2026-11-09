@@ -61,6 +61,8 @@ export function portalsFor(ctx: Ctx): Portal[] {
 export function homeFor(ctx: Ctx): string {
   if (ctx.company.status !== "APPROVED") return "/application-status";
   const portals = portalsFor(ctx);
+  // An applicant driver with nothing else to do waits on the application page.
+  if (portals.length === 0 && ctx.driver && ctx.driver.status !== "APPROVED") return "/application-status";
   if (portals.length === 0) return "/forbidden";
   return `/${portals[0]}`;
 }
