@@ -52,6 +52,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/finance.mjs http://localhost:3000 [screenshotDir]` | Browser test of promotions, invoices + PDFs, vendor statements and invoices, payments, credit notes* |
 | `node tests/e2e/delivery.mjs http://localhost:3000 [screenshotDir]` | Browser test of vendor fleet + service areas, driver app with signature, returns, failed delivery, control tower, multi-order setting* |
 | `node tests/e2e/notifications.mjs http://localhost:3000 [screenshotDir]` | Browser test of the bell, notification settings, message log, WhatsApp test send, templates and per-event channels* |
+| `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -236,6 +237,36 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 - **Inboxes** — *Customer / Vendor / Driver Messages*: SMS / WhatsApp received, matched to the
   account by phone; staff with `admin.messages.manage` (Operations, Support) reply. WhatsApp free
   text only within 24 hours of the person's last message.
+
+## Analytics & Reports (Phase 8)
+
+- **One engine** — `src/server/analytics/engine.ts` turns filters + dimensions + figures into
+  whitelisted SQL over the frozen order totals (and order lines for product / category
+  breakdowns). Orders are counted by **date placed** (bookings, all but cancelled) or
+  **date delivered** (recognised sales: delivered or returned). Breakdowns always add up to
+  the total (integration-tested against the order book).
+- **Figures** — net / gross / VAT, commission, **goods margin** (goods sold − owed to vendors,
+  i.e. commission less FIRINGI-funded discounts), delivery fees, **FIRINGI revenue** (margin +
+  fees), payouts, units, buyers, average order; credit notes are shown per month next to
+  revenue. *Net Profit* and *Route Profitability* need cost data the platform doesn't record
+  yet and stay "later".
+- **Back office** (*Analytics & Reports*) — sales, revenue, gross margin, orders (status
+  funnel, delivery modes), customers (first-time vs returning), vendors / distributors /
+  wholesalers, products & categories, delivery (success, on-time, failure reasons, by company
+  and driver), country performance, and a **custom report builder** (two dimensions, any
+  figures). Filters: period presets or custom dates, count-by date, country, seller type.
+  Regional managers see only their regions' buyers.
+- **Vendors** (*Reports › Sales Report*, `vendor.reports.view`: owner, sales, accountant) see
+  their own sales, payout and commission, top products, customers, categories and regions.
+  **Buyers** (*Reports › Spending Report*, `buyer.reports.view`: owner, purchaser,
+  accountant) see their spending by supplier, product, category and delivery mode. Both are
+  translated into all 25 languages; FIRINGI's own margin and revenue are never shown to them.
+- **Charts** — dependency-free SVG (`src/components/analytics/charts.tsx`): one axis, at most
+  three series in a fixed colour-blind-checked order (`--series-1..3`, separate light / dark
+  values), hover crosshair + tooltip, legend, and a *Table* view on every chart.
+- **Export** — every report downloads as CSV (UTF-8, Excel-friendly) or Excel
+  (`/api/analytics/export`); the caller's scope is always applied and other audiences'
+  figures are refused.
 
 ## Configuration notes
 

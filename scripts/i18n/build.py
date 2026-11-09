@@ -23,7 +23,7 @@ def flat(d, p=""):
 
 # Namespaces / nav labels added after the first translation round are appended at the end,
 # in this order, so existing <lang>.txt files only grow at the bottom.
-LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", [])]
+LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("reports", ["Reports", "Sales Report", "Spending Report"])]
 
 def source():
     later = {ns for ns, _ in LATER}

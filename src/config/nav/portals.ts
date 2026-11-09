@@ -8,6 +8,7 @@ const vo = section(`${V}/orders`, "vendor.orders.view");
 const vf = section(`${V}/finance`, "vendor.invoices.view");
 const vfl = section(`${V}/fleet`, "vendor.fleet.view");
 const vc = section(`${V}/company`, "company.profile.manage");
+const vr = section(`${V}/reports`, "vendor.reports.view");
 
 export const VENDOR_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [vd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -48,6 +49,7 @@ export const VENDOR_NAV: NavSection[] = [
       vfl("delivery-rules", "Delivery Minimum", "Mínimo de Entrega", "P4", { live: true, perm: "vendor.service_areas.manage", es: "Mínimo de entrega" }),
     ],
   },
+  { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" })] },
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
     items: [
@@ -66,6 +68,7 @@ const bc = section(`${B}/catalogue`, "buyer.catalogue.view");
 const bo = section(`${B}/orders`, ["buyer.orders.view", "buyer.orders.place"]);
 const bf = section(`${B}/finance`, "buyer.invoices.view");
 const bco = section(`${B}/company`, "company.profile.manage");
+const br = section(`${B}/reports`, "buyer.reports.view");
 
 export const BUY_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [bd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -91,6 +94,7 @@ export const BUY_NAV: NavSection[] = [
       bf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "buyer.payments.view", es: "Pagos" }),
     ],
   },
+  { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
     items: [

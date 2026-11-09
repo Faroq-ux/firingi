@@ -72,7 +72,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "VENDOR_SALES", name: "Sales Manager", description: "Products, pricing, promotions and orders", appliesTo: VENDOR_TYPES,
     permissions: [
       "vendor.dashboard.view", "vendor.products.view", "vendor.products.manage", "vendor.pricing.manage",
-      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage",
+      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.reports.view",
     ],
   },
   {
@@ -85,15 +85,15 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "VENDOR_ACCOUNTANT", name: "Accountant (sales)", description: "Billing statements, invoices to FIRINGI, payments", appliesTo: VENDOR_TYPES,
-    permissions: ["vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view"],
+    permissions: ["vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view"],
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,
-    permissions: ["buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.addresses.manage"],
+    permissions: ["buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.addresses.manage", "buyer.reports.view"],
   },
   {
     key: "BUYER_ACCOUNTANT", name: "Accountant (purchases)", description: "Invoices and payments", appliesTo: BUYER_TYPES,
-    permissions: ["buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view"],
+    permissions: ["buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.reports.view"],
   },
   { key: "VENDOR_DRIVER", name: "Driver", description: "Driver in the company's own fleet", appliesTo: VENDOR_TYPES, permissions: ["driver.deliveries.view", "driver.deliveries.update", "driver.pod.capture"] },
 ];

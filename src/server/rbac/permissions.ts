@@ -76,6 +76,7 @@ const defs = {
   "vendor.drivers.manage": { audience: "VENDOR", module: "Fleet", description: "Register and manage own drivers" },
   "vendor.vehicles.manage": { audience: "VENDOR", module: "Fleet", description: "Register and manage own vehicles" },
   "vendor.service_areas.manage": { audience: "VENDOR", module: "Delivery", description: "Manage service areas and delivery rules" },
+  "vendor.reports.view": { audience: "VENDOR", module: "Reports", description: "View sales reports and export them" },
 
   // ── BUYER (buy portal) ───────────────────────────────────────────────────
   "buyer.dashboard.view": { audience: "BUYER", module: "Dashboard", description: "View the purchasing dashboard" },
@@ -86,6 +87,7 @@ const defs = {
   "buyer.payments.view": { audience: "BUYER", module: "Finance", description: "View payments and balance" },
   "buyer.addresses.manage": { audience: "BUYER", module: "Addresses", description: "Manage delivery addresses" },
   "buyer.compliance.manage": { audience: "BUYER", module: "Compliance", description: "Apply for tobacco / alcohol access" },
+  "buyer.reports.view": { audience: "BUYER", module: "Reports", description: "View purchase reports and export them" },
 
   // ── COMPANY (self-management) ────────────────────────────────────────────
   "company.profile.manage": { audience: "COMPANY", module: "Company", description: "Edit company profile" },
