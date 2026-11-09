@@ -3,7 +3,7 @@
  * country's language by default and can always switch to English. A language without a file
  * falls back to English.
  */
-export const UI_LOCALES = ["en", "pt-PT", "es", "fr", "de", "it", "nl", "pl", "ro", "cs", "sk", "hu", "hr"] as const;
+export const UI_LOCALES = ["en", "pt-PT", "es", "fr", "de", "it", "nl", "pl", "ro", "cs", "sk", "hu", "hr", "sl", "bg", "el", "da"] as const;
 
 /** Map a browser/base language tag to a UI locale, or null. */
 export function toUiLocale(tag: string): string | null {
