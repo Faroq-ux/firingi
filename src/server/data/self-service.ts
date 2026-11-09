@@ -23,3 +23,13 @@ export async function euCountryOptions() {
   });
   return rows.map((c) => ({ code: c.code, label: `${c.flag ?? ""} ${pickLocalized(c.name, "en")}`, cities: c.cities }));
 }
+
+/** The vendor's own current commission and delivered orders. */
+export async function ownCommission(ctx: Ctx) {
+  if (ctx.company.type !== "DISTRIBUTOR" && ctx.company.type !== "WHOLESALER") throw new ForbiddenError();
+  const [current, orders] = await Promise.all([
+    prisma.commissionRule.findFirst({ where: { vendorCompanyId: ctx.company.id, validTo: null }, orderBy: { validFrom: "desc" } }),
+    prisma.order.findMany({ where: { sellerCompanyId: ctx.company.id, status: "DELIVERED" }, orderBy: { placedAt: "desc" }, take: 100, select: { id: true, number: true, placedAt: true, netTotal: true, commissionTotal: true, vendorPayableNet: true } }),
+  ]);
+  return { current, orders };
+}

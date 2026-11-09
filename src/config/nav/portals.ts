@@ -18,7 +18,7 @@ export const VENDOR_NAV: NavSection[] = [
       vp("stock", "Stock", "Stock", "P3", { live: true, perm: ["vendor.stock.manage", "vendor.products.view"], es: "Stock" }),
       vp("price-lists", "Price Lists", "Listas de Preços", "P3", { live: true, perm: "vendor.pricing.manage", es: "Listas de precios" }),
       vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
-      vp("promotions", "Promotions", "Promoções", "P5", { perm: "vendor.promotions.manage", es: "Promociones" }),
+      vp("promotions", "Promotions", "Promoções", "P5", { live: true, perm: "vendor.promotions.manage", es: "Promociones" }),
     ],
   },
   {
@@ -31,10 +31,10 @@ export const VENDOR_NAV: NavSection[] = [
   {
     key: "finance", icon: "Receipt", label: { en: "Finance", pt: "Finanças", es: "Finanzas" },
     items: [
-      vf("statements", "Billing Statements", "Extratos de Faturação", "P5", { es: "Extractos de facturación" }),
-      vf("invoices", "My Invoices to FIRINGI", "As Minhas Faturas à FIRINGI", "P5", { perm: ["vendor.invoices.view", "vendor.invoices.submit"], es: "Mis facturas a FIRINGI" }),
-      vf("payments", "Payments", "Pagamentos", "P5", { perm: "vendor.payments.view", es: "Pagos" }),
-      vf("commission", "Commission", "Comissão", "P5", { es: "Comisión" }),
+      vf("statements", "Billing Statements", "Extratos de Faturação", "P5", { live: true, es: "Extractos de facturación" }),
+      vf("invoices", "My Invoices to FIRINGI", "As Minhas Faturas à FIRINGI", "P5", { live: true, perm: ["vendor.invoices.view", "vendor.invoices.submit"], es: "Mis facturas a FIRINGI" }),
+      vf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "vendor.payments.view", es: "Pagos" }),
+      vf("commission", "Commission", "Comissão", "P5", { live: true, perm: ["vendor.invoices.view", "vendor.payments.view"], es: "Comisión" }),
     ],
   },
   {
@@ -84,8 +84,8 @@ export const BUY_NAV: NavSection[] = [
   {
     key: "finance", icon: "Receipt", label: { en: "Invoices & Payments", pt: "Faturas e Pagamentos", es: "Facturas y pagos" },
     items: [
-      bf("invoices", "Invoices", "Faturas", "P5", { es: "Facturas" }),
-      bf("payments", "Payments", "Pagamentos", "P5", { perm: "buyer.payments.view", es: "Pagos" }),
+      bf("invoices", "Invoices", "Faturas", "P5", { live: true, es: "Facturas" }),
+      bf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "buyer.payments.view", es: "Pagos" }),
     ],
   },
   {

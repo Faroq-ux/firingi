@@ -49,6 +49,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/onboarding.mjs http://localhost:3000 [screenshotDir]` | Browser test of registration → documents → admin approval → tobacco access* |
 | `node tests/e2e/catalogue.mjs http://localhost:3000 [screenshotDir]` | Browser + API test of catalogue visibility, vendor pricing, product proposal and approval* |
 | `node tests/e2e/orders.mjs http://localhost:3000 [screenshotDir]` | Browser test of cart lock, minimums, checkout, vendor confirmation, FIRINGI delivery* |
+| `node tests/e2e/finance.mjs http://localhost:3000 [screenshotDir]` | Browser test of promotions, invoices + PDFs, vendor statements and invoices, payments, credit notes* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -157,6 +158,26 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   - **Vendors** confirm (they can confirm fewer units, which recalculates totals and releases the stock), prepare, and dispatch / deliver their own deliveries.
   - **FIRINGI** dispatches and delivers its own deliveries, and handles exceptions and returns.
   - Stock is reserved at checkout, released on cancellation, and leaves the warehouse at dispatch. Every change goes into the append-only history.
+
+## Commercial & Finance (Phase 5)
+
+- **Commission:** set per vendor (no default) and frozen on every order line. It is always calculated on the price before any discount.
+- **Promotions** (`src/server/catalogue/promotions.ts`):
+  - **Vendor promotions** are always 100% paid by the vendor.
+  - **FIRINGI promotions** are paid by FIRINGI, the vendor, or split (e.g. 50/50). A vendor-paid share only applies once that vendor accepts it.
+  - At most one vendor promotion and one FIRINGI promotion per line; the FIRINGI promotion applies to the price after the vendor's.
+  - Every discount is stored per order line with the FIRINGI and vendor amounts, which feeds the "Who paid the discounts" report.
+- **Invoicing** (`src/server/invoicing/`): when an order is delivered, two documents are created and linked to the order:
+  - FIRINGI issues the **sales invoice** to the buyer.
+  - A **billing statement** tells the vendor exactly what to invoice FIRINGI: domestic VAT, or 0% reverse charge for a vendor in another EU country.
+  - Vendors upload their own invoice. It is matched automatically (±0.02 €) and approved by finance before it can be paid.
+  - Corrections are made only with **credit notes**, full or partial. Each one also creates a vendor credit statement.
+  - **Numbering, ATCUD, hash chain and QR data** go through a provider adapter. The internal provider marks documents **"not a fiscal document"** until an AT-certified provider is connected.
+  - **PDFs:** `/api/invoices/:id/pdf` and `/api/statements/:id/pdf`.
+- **Payments ledger:** money in from buyers and money out to vendors, each allocated to specific invoices. It drives:
+  - paid / open / overdue status (from each customer's payment terms);
+  - accounts receivable and payable;
+  - the finance overview, commissions report and monthly VAT report.
 
 ## Configuration notes
 

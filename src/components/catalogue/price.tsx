@@ -8,9 +8,16 @@ export async function PriceBlock({ item, size = "md" }: { item: CatalogueItem; s
   const [t, locale] = await Promise.all([getTranslations("catalogue"), getLocale()]);
   const tax = item.taxLabel;
   const p = item.price;
+  const promo = p.promotions.length > 0;
   return (
     <div className="space-y-0.5">
-      <div className={size === "lg" ? "text-3xl font-semibold tabular-nums" : "text-lg font-semibold tabular-nums"}>
+      {promo && (
+        <div className="flex flex-wrap items-center gap-1.5 text-xs">
+          <span className="text-muted-foreground line-through tabular-nums">{formatMoney(p.listUnitGross, locale)}</span>
+          {p.promotions.map((x) => <span key={x.id} className="animate-pop rounded-full bg-destructive/15 px-2 py-0.5 font-medium text-destructive">{x.name || "Promo"}</span>)}
+        </div>
+      )}
+      <div className={(size === "lg" ? "text-3xl font-semibold tabular-nums" : "text-lg font-semibold tabular-nums") + (promo ? " text-destructive" : "")}>
         {formatMoney(p.unitPriceGross, locale)} <span className="text-xs font-normal text-muted-foreground">{t("incTax", { tax })}</span>
       </div>
       <div className="text-xs text-muted-foreground tabular-nums">

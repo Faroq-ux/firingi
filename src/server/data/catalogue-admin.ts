@@ -151,3 +151,22 @@ export async function adminBrands(ctx: Ctx) {
   requireView(ctx);
   return prisma.brand.findMany({ include: { _count: { select: { products: true } } }, orderBy: { name: "asc" } });
 }
+
+/** Options for the admin promotion form (vendors, categories). */
+export async function adminPromotionOptions(ctx: Ctx) {
+  if (ctx.company.type !== "ADMIN") throw new ForbiddenError();
+  const [vendors, categories] = await Promise.all([
+    prisma.company.findMany({ where: { type: { in: ["DISTRIBUTOR", "WHOLESALER"] }, status: "APPROVED" }, select: { id: true, legalName: true, type: true }, orderBy: { legalName: "asc" } }),
+    prisma.category.findMany({ where: { isActive: true }, select: { id: true, name: true, depth: true, path: true }, orderBy: { path: "asc" } }),
+  ]);
+  return {
+    vendors: vendors.map((v) => ({ id: v.id, label: `${v.legalName} (${v.type.toLowerCase()})` })),
+    categories: categories.map((c) => ({ id: c.id, label: `${"— ".repeat(c.depth)}${(c.name as { en: string }).en}` })),
+  };
+}
+
+export async function invoiceSettings(ctx: Ctx) {
+  if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.tax.manage", "admin.invoices.view", "admin.settings.view"])) throw new ForbiddenError();
+  const [series, entities] = await Promise.all([prisma.invoiceSeries.findMany({ orderBy: [{ year: "desc" }, { docType: "asc" }] }), prisma.legalEntity.findMany()]);
+  return { series, entities };
+}
