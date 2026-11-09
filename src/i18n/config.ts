@@ -3,7 +3,10 @@
  * country's language by default and can always switch to English. A language without a file
  * falls back to English.
  */
-export const UI_LOCALES = ["en", "pt-PT", "es", "fr", "de", "it", "nl", "pl", "ro", "cs", "sk", "hu", "hr", "sl", "bg", "el", "da", "sv", "fi", "et", "lv"] as const;
+export const UI_LOCALES = [
+  "en", "pt-PT", "es", "fr", "de", "it", "nl", "pl", "ro", "cs", "sk", "hu", "hr", "sl", "bg", "el",
+  "da", "sv", "fi", "et", "lv", "lt", "mt", "nb", "is",
+] as const;
 
 /** Map a browser/base language tag to a UI locale, or null. */
 export function toUiLocale(tag: string): string | null {
@@ -11,7 +14,8 @@ export function toUiLocale(tag: string): string | null {
   const list = UI_LOCALES as readonly string[];
   const exact = list.find((l) => l.toLowerCase() === t);
   if (exact) return exact;
-  const base = t.split("-")[0];
+  let base = t.split("-")[0];
+  if (base === "no" || base === "nn") base = "nb"; // Norwegian → Bokmål
   return list.find((l) => l.split("-")[0] === base) ?? null;
 }
 export const DEFAULT_LOCALE = "en";

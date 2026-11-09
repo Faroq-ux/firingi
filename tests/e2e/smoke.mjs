@@ -45,7 +45,8 @@ const shot = async (page, name) => SHOTS && page.screenshot({ path: `${SHOTS}/${
   check("admin users page lists staff", (await page.textContent("main")).includes("rm.lisboa@firingi.test"));
   await shot(page, "03-admin-users");
   await page.goto(`${BASE}/admin/international/countries`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
-  check("countries page lists 27 EU countries", (await page.locator("tbody tr").count()) === 27);
+  const rows = page.locator("tbody tr");
+  check("countries page lists the 29 Schengen countries (+ CY, IE inactive)", (await rows.count()) === 31 && (await rows.filter({ hasText: "Schengen" }).filter({ hasNotText: "Outside" }).count()) === 29);
   await shot(page, "04-countries");
   await page.goto(`${BASE}/admin/settings/audit-logs`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
   check("audit log shows logins", (await page.textContent("main")).includes("auth.login"));

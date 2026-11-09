@@ -82,7 +82,7 @@ src/
     actions/         Server actions (Zod-validated, permission-checked)
   config/nav/        Sidebar definitions (admin + portals) with permission & build phase per page
   components/        ui/ (shadcn-style), layout/ (shell, sidebar), team/, audit/
-  i18n/ messages/    en, pt-PT, es (other EU languages fall back to English)
+  i18n/ messages/    en + 24 languages of the Schengen countries (built from scripts/i18n/<lang>.txt)
 tests/
   unit/              RBAC resolution, sidebar config, NIF validation
   integration/       Real Postgres: DB-enforced rules, approval gating, tenant isolation, RBAC
@@ -169,7 +169,7 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   - Every discount is stored per order line with the FIRINGI and vendor amounts, which feeds the "Who paid the discounts" report.
 - **Invoicing** (`src/server/invoicing/`): when an order is delivered, two documents are created and linked to the order:
   - FIRINGI issues the **sales invoice** to the buyer.
-  - A **billing statement** tells the vendor exactly what to invoice FIRINGI: domestic VAT, or 0% reverse charge for a vendor in another EU country.
+  - A **billing statement** tells the vendor exactly what to invoice FIRINGI: domestic VAT, or 0% reverse charge for a vendor in another EU Schengen country.
   - Vendors upload their own invoice. It is matched automatically (±0.02 €) and approved by finance before it can be paid.
   - Corrections are made only with **credit notes**, full or partial. Each one also creates a vendor credit statement.
   - **Numbering, ATCUD, hash chain and QR data** go through a provider adapter. The internal provider marks documents **"not a fiscal document"** until an AT-certified provider is connected.
@@ -181,9 +181,22 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 
 ## Configuration notes
 
+- **Area:** FIRINGI operates within the **Schengen area only** (`Country.isSchengen`): the 25 EU
+  members in Schengen plus Norway, Switzerland, Iceland and Liechtenstein. Cyprus and Ireland
+  (EU, not Schengen) are inactive.
 - **Markets:** each `Country` has `customerMarketEnabled` / `wholesalerMarketEnabled` /
-  `distributorSourcingEnabled`. Launch: customers and wholesalers 🇵🇹 only; distributors in all 27 EU countries.
-- **Language:** each user picks one of their company country's languages or English (saved per user).
+  `distributorSourcingEnabled`. Launch: customers and wholesalers 🇵🇹 only; distributors in any EU
+  Schengen country. NO / CH / IS / LI are set up (currency, language, VAT) but closed: selling across
+  that border needs customs / import handling, which is not built yet (invoicing refuses it).
+- **Language:** every company works in its registration country's language by default and can
+  always switch to English (Belgium: Dutch, French or German; Switzerland: German, French or
+  Italian). A user's own choice is remembered. Before sign-in the browser language is used.
+  Translations live in `scripts/i18n/<lang>.txt` (one line per English message) and are built with
+  `python3 scripts/i18n/build.py <lang>`, which checks placeholders; `tests/unit/i18n-messages.test.ts`
+  fails if a language misses a key. Product and category names show in Portuguese / English /
+  Spanish (catalogue data) until translated.
+- **Invoice language:** documents follow the issuing country — FIRINGI Portugal invoices and
+  credit notes are in Portuguese only. Vendor billing statements are Portuguese + English.
 - **Tax rates** are seeded for development (PT incl. Madeira/Azores, ES incl. Canary Islands IGIC,
   standard rate for other EU countries). **Have your accountant confirm them before go-live.**
 - **Invoicing** (Phase 5) goes through a certified-provider adapter; the provider is still to be chosen.
