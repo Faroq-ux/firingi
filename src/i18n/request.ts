@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server";
 import { cookies, headers } from "next/headers";
-import { DEFAULT_LOCALE, LOCALE_COOKIE, UI_LOCALES } from "./config";
+import { DEFAULT_LOCALE, LOCALE_COOKIE, UI_LOCALES, toUiLocale } from "./config";
 import en from "@/messages/en.json";
 
 type Messages = Record<string, unknown>;
@@ -22,18 +22,16 @@ export function localeFromAcceptLanguage(header: string | null): string {
     return { tag: tag.toLowerCase(), q: q ? Number(q.trim().slice(2)) || 0 : 1 };
   }).sort((a, b) => b.q - a.q);
   for (const { tag } of langs) {
-    const base = tag.split("-")[0];
-    if (base === "pt") return "pt-PT";
-    if (base === "es") return "es";
-    if (base === "en") return "en";
+    const ui = toUiLocale(tag);
+    if (ui) return ui;
   }
   return DEFAULT_LOCALE;
 }
 
 /**
  * Locale comes from the cookie (set at login from the user's preference / company
- * country). Without a cookie (first visit, login page) the browser language decides:
- * Portuguese → pt-PT, Spanish → es, otherwise English. Missing translations fall back to English key-by-key.
+ * country). Without a cookie (first visit, login page) the browser language decides, if we
+ * have that language; otherwise English. Missing translations fall back to English key-by-key.
  */
 export default getRequestConfig(async () => {
   const cookieLocale = (await cookies()).get(LOCALE_COOKIE)?.value ?? localeFromAcceptLanguage((await headers()).get("accept-language"));

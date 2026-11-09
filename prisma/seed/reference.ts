@@ -6,6 +6,7 @@
  * ⚠ Tax rates are seeded for development. Have them confirmed by your accountant
  *   before go-live; rates change via new TaxRate rows (validFrom/validTo), never edits.
  */
+import { UI_LOCALES } from "../../src/i18n/config";
 import type { PrismaClient, Restriction } from "@prisma/client";
 
 const CURRENCIES = [
@@ -21,7 +22,7 @@ const CURRENCIES = [
 /** Approximate EUR rates for development only — replace with an ECB feed. */
 const FX: Record<string, number> = { CZK: 24.3, DKK: 7.46, HUF: 395, PLN: 4.25, RON: 5.08, SEK: 11.0 };
 
-const LANGUAGES: [code: string, name: string, native: string, ui?: boolean][] = [
+const LANGUAGES: [code: string, name: string, native: string, ui?: boolean][] = [ // ui flag now comes from UI_LOCALES
   ["en", "English", "English", true], ["pt-PT", "Portuguese (Portugal)", "Português", true], ["es", "Spanish", "Español", true],
   ["de", "German", "Deutsch"], ["fr", "French", "Français"], ["nl", "Dutch", "Nederlands"], ["it", "Italian", "Italiano"],
   ["pl", "Polish", "Polski"], ["ro", "Romanian", "Română"], ["cs", "Czech", "Čeština"], ["sk", "Slovak", "Slovenčina"],
@@ -162,8 +163,10 @@ export async function seedReference(db: PrismaClient) {
       create: { baseCode: "EUR", quoteCode: code, rate, date, source: "seed (approximate)" },
     });
   }
-  for (const [code, name, native, ui] of LANGUAGES)
-    await db.language.upsert({ where: { code }, update: { name, native, uiAvailable: !!ui }, create: { code, name, native, uiAvailable: !!ui } });
+  for (const [code, name, native] of LANGUAGES) {
+    const ui = (UI_LOCALES as readonly string[]).includes(code);
+    await db.language.upsert({ where: { code }, update: { name, native, uiAvailable: ui }, create: { code, name, native, uiAvailable: ui } });
+  }
 
   const countryIds: Record<string, string> = {};
   for (const c of EU) {

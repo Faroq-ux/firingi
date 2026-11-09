@@ -2,7 +2,7 @@
  * Server component used by every portal layout: guards the portal, filters the nav by
  * permission, resolves labels and renders the AppShell.
  */
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { pagePortal, portalsFor, type Portal } from "@/server/rbac/guard";
 import { NAV_BY_PORTAL, resolveNav } from "@/config/nav/resolve";
@@ -20,8 +20,9 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
     getTranslations("companyType"),
     allowedLocales(ctx.company.countryId),
   ]);
-  const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale);
-  const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: locale.startsWith("pt") ? "Carrinho" : locale.startsWith("es") ? "Carrito" : "Cart" } : null;
+  const messages = (await getMessages()) as { navLabels?: Record<string, string>; shell?: { cart?: string; soon?: string } };
+  const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale, messages.navLabels);
+  const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: messages.shell?.cart ?? "Cart" } : null;
   const companyLabel = ctx.company.tradeName ?? ctx.company.legalName;
 
   return (
@@ -29,7 +30,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
       nav={nav}
       title="FIRINGI"
       subtitle={portal === "admin" ? tp("admin") : `${tp(portal)} · ${tc(ctx.company.type)}`}
-      soonLabel={locale.startsWith("pt") ? "breve" : locale.startsWith("es") ? "pronto" : "soon"}
+      soonLabel={messages.shell?.soon ?? "soon"}
       topbar={{
         userName: ctx.user.name,
         userEmail: ctx.user.email,

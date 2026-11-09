@@ -1,6 +1,8 @@
 /**
  * PDF documents (server-side, @react-pdf/renderer): FIRINGI invoices / credit notes and
- * vendor billing statements. Bilingual labels (PT / EN) as the business is Portuguese.
+ * vendor billing statements. Invoices and credit notes are always in the language of the
+ * issuing country (FIRINGI Portugal → Portuguese only). Billing statements are Portuguese
+ * with English as the second language for every vendor.
  */
 import React from "react";
 import { Document, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
@@ -33,15 +35,27 @@ export type InvoicePdfData = {
   netTotal: string; vatTotal: string; grossTotal: string; taxLabel: string;
 };
 
-const TITLE = { INVOICE: "Fatura / Invoice", INVOICE_RECEIPT: "Fatura-Recibo / Invoice-Receipt", CREDIT_NOTE: "Nota de Crédito / Credit Note" };
+/** Invoice labels per issuing country. Add a country here when FIRINGI issues from it. */
+const INVOICE_LABELS = {
+  PT: {
+    title: { INVOICE: "Fatura", INVOICE_RECEIPT: "Fatura-Recibo", CREDIT_NOTE: "Nota de Crédito" },
+    date: "Data", due: "Vencimento", seller: "Vendedor", customer: "Cliente", vat: "NIF-IVA", nif: "NIF",
+    order: "Encomenda", original: "Documento de origem", reason: "Motivo", reverseCharge: "IVA — autoliquidação",
+    description: "Descrição", qty: "Qtd.", unitPrice: "Preço unit.", discount: "Desconto", totalExcl: "Total s/", summary: "Resumo de",
+    notFiscal: "DOCUMENTO NÃO FISCAL — ambiente de testes, não emitido por programa certificado pela AT",
+    certified: "Processado por programa certificado", notCertified: "Processado por FIRINGI (ambiente de testes, programa não certificado)",
+  },
+};
+type InvoiceLabels = (typeof INVOICE_LABELS)["PT"];
+const invoiceLabels = (country?: string): InvoiceLabels => INVOICE_LABELS[(country ?? "PT") as keyof typeof INVOICE_LABELS] ?? INVOICE_LABELS.PT;
 
-function PartyBox({ title, p }: { title: string; p: Party }) {
+function PartyBox({ title, p, nif = "NIF", vat = "VAT" }: { title: string; p: Party; nif?: string; vat?: string }) {
   return (
     <View style={s.box}>
       <Text style={[s.muted, { marginBottom: 3 }]}>{title}</Text>
       <Text style={{ fontFamily: "Helvetica-Bold" }}>{p.name}</Text>
       {p.address && <Text>{p.address}</Text>}
-      <Text>NIF: {p.taxId}{p.vatNumber ? `   VAT: ${p.vatNumber}` : ""}</Text>
+      <Text>{nif}: {p.taxId}{p.vatNumber ? `   ${vat}: ${p.vatNumber}` : ""}</Text>
       {p.email && <Text>{p.email}</Text>}
     </View>
   );
@@ -49,33 +63,34 @@ function PartyBox({ title, p }: { title: string; p: Party }) {
 
 function InvoiceDoc({ d }: { d: InvoicePdfData }) {
   const cols = [44, 8, 12, 10, 10, 16]; // widths % (sum 100)
+  const L = invoiceLabels(d.issuer.country);
   return (
     <Document title={d.fullNumber} author="FIRINGI">
       <Page size="A4" style={s.page}>
         <View style={s.between}>
           <View><Text style={s.brand}>FIRINGI</Text><Text style={s.muted}>WHOLESALE MADE SIMPLE</Text></View>
           <View style={{ alignItems: "flex-end" }}>
-            <Text style={s.h1}>{TITLE[d.docType]}</Text>
+            <Text style={s.h1}>{L.title[d.docType]}</Text>
             <Text style={{ fontFamily: "Helvetica-Bold" }}>{d.fullNumber}</Text>
-            <Text>Data / Date: {d.issuedAt.toISOString().slice(0, 10)}</Text>
-            {d.dueAt && d.docType !== "CREDIT_NOTE" && <Text>Vencimento / Due: {d.dueAt.toISOString().slice(0, 10)}</Text>}
+            <Text>{L.date}: {d.issuedAt.toISOString().slice(0, 10)}</Text>
+            {d.dueAt && d.docType !== "CREDIT_NOTE" && <Text>{L.due}: {d.dueAt.toISOString().slice(0, 10)}</Text>}
             {d.atcud && <Text>ATCUD: {d.atcud}</Text>}
           </View>
         </View>
-        {!d.certified && <Text style={s.warn}>DOCUMENTO NÃO FISCAL — NOT A FISCAL DOCUMENT (test environment, not issued by AT-certified software)</Text>}
+        {!d.certified && <Text style={s.warn}>{L.notFiscal}</Text>}
         <View style={[s.between, { marginTop: 12 }]}>
-          <PartyBox title="Vendedor / Seller" p={d.issuer} />
-          <PartyBox title="Cliente / Customer" p={d.recipient} />
+          <PartyBox title={L.seller} p={d.issuer} nif={L.nif} vat={L.vat} />
+          <PartyBox title={L.customer} p={d.recipient} nif={L.nif} vat={L.vat} />
         </View>
         <View style={{ marginTop: 8 }}>
-          {d.orderNumber && <Text>Encomenda / Order: {d.orderNumber}</Text>}
-          {d.originalNumber && <Text>Documento de origem / Original document: {d.originalNumber}</Text>}
-          {d.reason && <Text>Motivo / Reason: {d.reason}</Text>}
-          {d.taxRegime === "INTRA_EU_REVERSE_CHARGE" && <Text>IVA — autoliquidação / VAT reverse charge</Text>}
+          {d.orderNumber && <Text>{L.order}: {d.orderNumber}</Text>}
+          {d.originalNumber && <Text>{L.original}: {d.originalNumber}</Text>}
+          {d.reason && <Text>{L.reason}: {d.reason}</Text>}
+          {d.taxRegime === "INTRA_EU_REVERSE_CHARGE" && <Text>{L.reverseCharge}</Text>}
         </View>
         <View style={{ marginTop: 10 }}>
           <View style={s.row}>
-            {["Descrição / Description", "Qtd.", "Preço unit.", "Desconto", d.taxLabel, "Total s/ " + d.taxLabel].map((h, i) => (
+            {[L.description, L.qty, L.unitPrice, L.discount, d.taxLabel, `${L.totalExcl} ${d.taxLabel}`].map((h, i) => (
               <Text key={h} style={[s.th, { width: `${cols[i]}%`, textAlign: i ? "right" : "left" }]}>{h}</Text>
             ))}
           </View>
@@ -92,12 +107,12 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
         </View>
         <View style={[s.between, { marginTop: 12 }]}>
           <View style={{ width: "48%" }}>
-            <Text style={{ fontFamily: "Helvetica-Bold", marginBottom: 3 }}>Resumo de {d.taxLabel} / {d.taxLabel} summary</Text>
+            <Text style={{ fontFamily: "Helvetica-Bold", marginBottom: 3 }}>{L.summary} {d.taxLabel}</Text>
             {d.taxSummary.map((t) => <Text key={t.taxRate}>{Number(t.taxRate)}% — base {eur(t.base)} — {d.taxLabel} {eur(t.vat)}</Text>)}
             {d.issuer.iban && d.docType !== "CREDIT_NOTE" && <Text style={{ marginTop: 6 }}>IBAN: {d.issuer.iban}</Text>}
           </View>
           <View style={{ width: "40%" }}>
-            <View style={s.between}><Text>Total s/ {d.taxLabel}</Text><Text>{eur(d.netTotal)}</Text></View>
+            <View style={s.between}><Text>{L.totalExcl} {d.taxLabel}</Text><Text>{eur(d.netTotal)}</Text></View>
             <View style={s.between}><Text>{d.taxLabel}</Text><Text>{eur(d.vatTotal)}</Text></View>
             <View style={[s.between, { marginTop: 4, paddingTop: 4, borderTopWidth: 1, borderColor: "#111827" }]}>
               <Text style={{ fontFamily: "Helvetica-Bold", fontSize: 11 }}>Total</Text><Text style={{ fontFamily: "Helvetica-Bold", fontSize: 11 }}>{eur(d.grossTotal)}</Text>
@@ -106,7 +121,7 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
         </View>
         <Text style={s.footer} fixed>
           {d.hash ? `${d.hash.slice(0, 1)}${d.hash.slice(10, 11)}${d.hash.slice(20, 21)}${d.hash.slice(30, 31)} - ` : ""}
-          {d.certified ? "Processado por programa certificado" : "Processado por FIRINGI (ambiente de testes, programa não certificado)"} · {d.issuer.name} · NIF {d.issuer.taxId}
+          {d.certified ? L.certified : L.notCertified} · {d.issuer.name} · NIF {d.issuer.taxId}
         </Text>
       </Page>
     </Document>
@@ -124,26 +139,28 @@ function StatementDoc({ d }: { d: StatementPdfData }) {
     <Document title={d.number} author="FIRINGI">
       <Page size="A4" style={s.page}>
         <View style={s.between}>
-          <View><Text style={s.brand}>FIRINGI</Text><Text style={s.muted}>Billing statement / Extrato de faturação</Text></View>
+          <View><Text style={s.brand}>FIRINGI</Text><Text style={s.muted}>WHOLESALE MADE SIMPLE</Text></View>
           <View style={{ alignItems: "flex-end" }}>
-            <Text style={s.h1}>{d.isCredit ? "Credit statement" : "Billing statement"}</Text>
+            <Text style={s.h1}>{d.isCredit ? "Extrato de crédito / Credit statement" : "Extrato de faturação / Billing statement"}</Text>
             <Text style={{ fontFamily: "Helvetica-Bold" }}>{d.number}</Text>
-            <Text>Order / Encomenda: {d.orderNumber}</Text>
-            <Text>Date: {d.createdAt.toISOString().slice(0, 10)}</Text>
+            <Text>Encomenda / Order: {d.orderNumber}</Text>
+            <Text>Data / Date: {d.createdAt.toISOString().slice(0, 10)}</Text>
           </View>
         </View>
         <Text style={[s.warn, { backgroundColor: "#e0e7ff", color: "#1e3a8a" }]}>
-          {d.isCredit ? "Please issue a CREDIT NOTE to FIRINGI for exactly these amounts and upload it." : "Please issue an INVOICE to FIRINGI for exactly these amounts and upload it in the FIRINGI portal."}
+          {d.isCredit
+            ? "Emita uma NOTA DE CRÉDITO à FIRINGI com exatamente estes valores e carregue-a no portal FIRINGI. / Please issue a CREDIT NOTE to FIRINGI for exactly these amounts and upload it."
+            : "Emita uma FATURA à FIRINGI com exatamente estes valores e carregue-a no portal FIRINGI. / Please issue an INVOICE to FIRINGI for exactly these amounts and upload it in the FIRINGI portal."}
         </Text>
         <View style={[s.between, { marginTop: 12 }]}>
-          <PartyBox title="Invoice from (you) / De" p={d.vendor} />
-          <PartyBox title="Invoice to / Para" p={d.firingi} />
+          <PartyBox title="De (o seu negócio) / Invoice from (you)" p={d.vendor} vat="NIF-IVA / VAT" />
+          <PartyBox title="Para / Invoice to" p={d.firingi} vat="NIF-IVA / VAT" />
         </View>
-        {d.taxRegime === "INTRA_EU_REVERSE_CHARGE" && <Text style={{ marginTop: 6 }}>Intra-EU supply — VAT reverse charge (Art. 138 / 196 Directive 2006/112/EC). Invoice WITHOUT VAT and state the reverse charge.</Text>}
+        {d.taxRegime === "INTRA_EU_REVERSE_CHARGE" && <Text style={{ marginTop: 6 }}>Fornecimento intracomunitário — autoliquidação (art. 138.º / 196.º Diretiva 2006/112/CE): fature SEM IVA e indique a autoliquidação. / Intra-EU supply — VAT reverse charge: invoice WITHOUT VAT and state the reverse charge.</Text>}
         <View style={{ marginTop: 10 }}>
           <View style={s.row}>
-            {[["SKU", 14], ["Description", 40], ["Qty", 8], ["Unit cost", 12], ["VAT", 8], ["Net", 18]].map(([h, w]) => (
-              <Text key={h} style={[s.th, { width: `${w}%`, textAlign: h === "SKU" || h === "Description" ? "left" : "right" }]}>{h}</Text>
+            {[["SKU", 14], ["Descrição / Description", 40], ["Qtd.", 8], ["Custo unit.", 12], ["IVA", 8], ["Base", 18]].map(([h, w]) => (
+              <Text key={h} style={[s.th, { width: `${w}%`, textAlign: Number(w) === 14 || Number(w) === 40 ? "left" : "right" }]}>{h}</Text>
             ))}
           </View>
           {d.lines.map((l, k) => (
@@ -158,10 +175,10 @@ function StatementDoc({ d }: { d: StatementPdfData }) {
           ))}
         </View>
         <View style={{ marginTop: 12, marginLeft: "55%" }}>
-          <View style={s.between}><Text>Net</Text><Text>{eur(d.expectedNet)}</Text></View>
-          <View style={s.between}><Text>VAT</Text><Text>{eur(d.expectedVat)}</Text></View>
+          <View style={s.between}><Text>Base / Net</Text><Text>{eur(d.expectedNet)}</Text></View>
+          <View style={s.between}><Text>IVA / VAT</Text><Text>{eur(d.expectedVat)}</Text></View>
           <View style={[s.between, { borderTopWidth: 1, marginTop: 3, paddingTop: 3 }]}><Text style={{ fontFamily: "Helvetica-Bold" }}>Total</Text><Text style={{ fontFamily: "Helvetica-Bold" }}>{eur(d.expectedGross)}</Text></View>
-          {!d.isCredit && <Text style={[s.muted, { marginTop: 6 }]}>FIRINGI commission already deducted: {eur(d.commissionTotal)}</Text>}
+          {!d.isCredit && <Text style={[s.muted, { marginTop: 6 }]}>Comissão FIRINGI já deduzida / commission already deducted: {eur(d.commissionTotal)}</Text>}
         </View>
       </Page>
     </Document>

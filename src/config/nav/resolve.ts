@@ -22,16 +22,24 @@ export type ResolvedSection = { key: string; label: string; icon: string; items:
 
 const visible = (item: NavItem, perms: Set<PermissionCode>) => item.permission.some((p) => perms.has(p));
 
-export function resolveNav(nav: NavSection[], perms: Set<PermissionCode>, locale: string): ResolvedSection[] {
-  const mapItem = (i: NavItem): ResolvedItem => ({ key: i.key, label: pickLocalized(i.label, locale), href: i.href, live: i.live });
+/**
+ * `navLabels` (from the locale's message file, keyed by the English label) translates labels
+ * for languages that are not written inline in the nav config.
+ */
+export function resolveNav(nav: NavSection[], perms: Set<PermissionCode>, locale: string, navLabels: Record<string, string> = {}): ResolvedSection[] {
+  const label = (v: unknown) => {
+    const o = v as Record<string, string>;
+    return o[locale] ?? o[locale.split("-")[0]] ?? navLabels[o.en] ?? pickLocalized(v, "en");
+  };
+  const mapItem = (i: NavItem): ResolvedItem => ({ key: i.key, label: label(i.label), href: i.href, live: i.live });
   return nav
     .map((s) => ({
       key: s.key,
-      label: pickLocalized(s.label, locale),
+      label: label(s.label),
       icon: s.icon,
       items: (s.items ?? []).filter((i) => visible(i, perms)).map(mapItem),
       groups: (s.groups ?? [])
-        .map((g) => ({ key: g.key, label: pickLocalized(g.label, locale), items: g.items.filter((i) => visible(i, perms)).map(mapItem) }))
+        .map((g) => ({ key: g.key, label: label(g.label), items: g.items.filter((i) => visible(i, perms)).map(mapItem) }))
         .filter((g) => g.items.length > 0),
     }))
     .filter((s) => s.items.length > 0 || s.groups.length > 0);

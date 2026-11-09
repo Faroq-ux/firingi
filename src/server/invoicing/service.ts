@@ -135,7 +135,7 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
       ? await tx.taxRate.findMany({ where: { countryId: order.countryId, taxCategoryId: order.deliveryRule.feeTaxCategoryId, validTo: null }, orderBy: { validFrom: "desc" } })
       : [];
     const rate = (rates.find((r) => regionId && r.regionId === regionId) ?? rates.find((r) => r.regionId === null))?.rate.toString() ?? "0";
-    lines.push({ description: "Entrega / Delivery (FIRINGI)", qty: new Decimal(1), unitPriceNet: fee, taxRate: new Decimal(rate), lineNet: fee, lineVat: feeVat });
+    lines.push({ description: "Entrega (FIRINGI)", qty: new Decimal(1), unitPriceNet: fee, taxRate: new Decimal(rate), lineNet: fee, lineVat: feeVat });
   }
   const buyerAddr = await billingAddress(tx, order.buyerCompanyId);
   const invoice = await issueDocument(tx, {

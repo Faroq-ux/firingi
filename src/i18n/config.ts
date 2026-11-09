@@ -1,5 +1,19 @@
-/** Locales that ship a UI translation file. Any other country language falls back to English. */
-export const UI_LOCALES = ["en", "pt-PT", "es"] as const;
+/**
+ * Locales that ship a UI translation file (src/messages/<code>.json). Every company works in its
+ * country's language by default and can always switch to English. A language without a file
+ * falls back to English.
+ */
+export const UI_LOCALES = ["en", "pt-PT", "es", "fr", "de"] as const;
+
+/** Map a browser/base language tag to a UI locale, or null. */
+export function toUiLocale(tag: string): string | null {
+  const t = tag.toLowerCase();
+  const list = UI_LOCALES as readonly string[];
+  const exact = list.find((l) => l.toLowerCase() === t);
+  if (exact) return exact;
+  const base = t.split("-")[0];
+  return list.find((l) => l.split("-")[0] === base) ?? null;
+}
 export const DEFAULT_LOCALE = "en";
 export const LOCALE_COOKIE = "NEXT_LOCALE";
 
