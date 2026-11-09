@@ -17,6 +17,7 @@ import { scopeWhere } from "./admin-access";
 import { deliveryRulesFor } from "./cart";
 import { writeAudit } from "./audit";
 import { notifyCompany } from "./notify";
+import { invoiceDeliveredOrder } from "@/server/invoicing/service";
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 
@@ -126,7 +127,11 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     const lines = [];
     for (const i of items) {
       const rate = await vatRate(tx, ctx.company.countryId, address.city?.regionId ?? null, i.taxCategoryId);
-      const c = computeLine({ qty: i.qty, unitListPriceNet: i.price!.unitPriceNet, vatRatePercent: rate, commissionRatePercent: commission.rate.toString() });
+      // List price before promotions; discounts split by who pays (commission stays on list).
+      const c = computeLine({
+        qty: i.qty, unitListPriceNet: i.price!.listUnitNet, vatRatePercent: rate, commissionRatePercent: commission.rate.toString(),
+        vendorFundedDiscountPerUnit: i.price!.vendorFundedPerUnit, firingiFundedDiscountPerUnit: i.price!.firingiFundedPerUnit,
+      });
       lines.push({ item: i, rate, calc: { ...c, qty: i.qty } });
     }
     const goodsNet = lines.reduce((a, l) => a.plus(l.calc.lineNet), new Decimal(0));
@@ -169,11 +174,22 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
       await tx.orderLine.create({
         data: {
           orderId: order.id, offerId: l.item.offerId, productName: l.item.name, sku: l.item.sku, packagingName: l.item.packaging.name, qtyOrdered: l.item.qty,
-          unitListPriceNet: l.calc.unitListPriceNet.toFixed(4), vendorDiscountNet: 0, adminDiscountNet: 0,
+          unitListPriceNet: l.calc.unitListPriceNet.toFixed(4),
+          vendorDiscountNet: l.item.price!.promotions.find((x) => x.ownerType === "VENDOR")?.perUnit ?? 0,
+          adminDiscountNet: l.item.price!.promotions.find((x) => x.ownerType === "ADMIN")?.perUnit ?? 0,
           firingiFundedDiscount: l.calc.firingiFundedDiscount.toFixed(4), vendorFundedDiscount: l.calc.vendorFundedDiscount.toFixed(4),
           unitSalePriceNet: l.calc.unitSalePriceNet.toFixed(4), taxRate: l.rate.toFixed(3), lineNet: l.calc.lineNet.toFixed(2), lineVat: l.calc.lineVat.toFixed(2),
           commissionRuleId: commission.id, commissionType: commission.type, commissionRate: commission.rate, commissionBase: l.calc.commissionBase.toFixed(2),
           commissionAmount: l.calc.commissionAmount.toFixed(2), vendorUnitCostNet: l.calc.vendorUnitCostNet.toFixed(4), vendorLineNet: l.calc.vendorLineNet.toFixed(2),
+          // Who funded each discount (finance reporting).
+          discounts: {
+            create: l.item.price!.promotions.map((pr) => ({
+              promotionId: pr.id,
+              amount: new Decimal(pr.perUnit).mul(l.item.qty).toFixed(2),
+              firingiAmount: new Decimal(pr.firingiPerUnit).mul(l.item.qty).toFixed(2),
+              vendorAmount: new Decimal(pr.vendorPerUnit).mul(l.item.qty).toFixed(2),
+            })),
+          },
         },
       });
     }
@@ -304,11 +320,16 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
     if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
     if (to === "CANCELLED") await releaseStock(tx, orderId);
     if (to === "DISPATCHED") await shipStock(tx, orderId);
+    if (to === "DELIVERED") {
+      // Delivered = what was confirmed. FIRINGI invoices the buyer and tells the vendor what to invoice.
+      for (const l of order.lines) await tx.orderLine.update({ where: { id: l.id }, data: { qtyDelivered: l.qtyConfirmed ?? l.qtyOrdered } });
+      await invoiceDeliveredOrder(tx, orderId, ctx.user.id);
+    }
     if (to === "EXCEPTION") await tx.orderException.create({ data: { orderId, type: "OTHER", description: reason!.trim() } });
     await tx.orderStatusHistory.create({ data: { orderId, fromStatus: order.status, toStatus: to, reason: reason?.trim() || null, byUserId: ctx.user.id } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `order.status.${to.toLowerCase()}`, entityType: "Order", entityId: orderId, before: { status: order.status }, after: { status: to, reason } }, tx);
   });
-  const text = `Order ${order.number} is ${NOTIFY[to] ?? to.toLowerCase()}.${reason ? ` ${reason}` : ""}`;
+  const text = `Order ${order.number} is ${NOTIFY[to] ?? to.toLowerCase()}.${reason ? ` ${reason}` : ""}${to === "DELIVERED" ? " The invoice is available under Invoices." : ""}`;
   if (actor !== "BUYER") await notifyCompany(order.buyerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/buy/orders/${orderId}` });
   if (actor !== "VENDOR") await notifyCompany(order.sellerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/vendor/orders/${orderId}` });
 }
@@ -339,7 +360,14 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
         where: { id: line.id },
         data: { qtyConfirmed: qty, lineNet: c.lineNet.toFixed(2), lineVat: c.lineVat.toFixed(2), commissionBase: c.commissionBase.toFixed(2), commissionAmount: c.commissionAmount.toFixed(2), vendorLineNet: c.vendorLineNet.toFixed(2) },
       });
-      if (qty < line.qtyOrdered) await releaseStock(tx, orderId, { offerId: line.offerId, qty: line.qtyOrdered - qty });
+      if (qty < line.qtyOrdered) {
+        await releaseStock(tx, orderId, { offerId: line.offerId, qty: line.qtyOrdered - qty });
+        const discounts = await tx.orderLineDiscount.findMany({ where: { orderLineId: line.id } });
+        for (const d of discounts) {
+          const f = new Decimal(qty).div(line.qtyOrdered);
+          await tx.orderLineDiscount.update({ where: { id: d.id }, data: { amount: d.amount.mul(f.toString()).toFixed(2), firingiAmount: d.firingiAmount.mul(f.toString()).toFixed(2), vendorAmount: d.vendorAmount.mul(f.toString()).toFixed(2) } });
+        }
+      }
     }
     // Delivery fee VAT: rate of the fee's tax category in the buyer's (region of) country.
     let feeVatPercent: Decimal = new Decimal(0);

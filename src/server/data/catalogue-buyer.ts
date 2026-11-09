@@ -14,6 +14,8 @@ import { allowedRestrictions } from "@/server/services/restrictions";
 import { browsableCategoryIds, categoryInfo, withDescendants } from "@/server/catalogue/restrictions";
 import { applicablePriceListWhere, visibleOfferWhere, type BuyerScope } from "@/server/catalogue/visibility";
 import { grossOf, resolvePrice } from "@/server/catalogue/pricing";
+import { applyPromotions, type PromoCandidate } from "@/server/catalogue/promotions";
+import { loadActivePromotions, promotionsForOffer } from "@/server/services/promotions";
 import { asBarcode } from "@/lib/barcode";
 import { taxLabel } from "@/lib/tax-label";
 import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance";
@@ -60,8 +62,23 @@ async function vatRates(countryId: string, taxCategoryIds: string[]) {
 }
 
 type VatMap = Awaited<ReturnType<typeof vatRates>>;
+type PromoFn = (o: OfferRow) => PromoCandidate[];
 
-function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1) {
+/** Active promotions for this buyer (its customer groups, its country), as a per-offer matcher. */
+async function promoMatcher(ctx: Ctx, scope: Awaited<ReturnType<typeof buyerScope>>): Promise<PromoFn> {
+  const [promos, groups] = await Promise.all([
+    loadActivePromotions(scope.buyerCountryId),
+    prisma.customerGroupMember.findMany({ where: { companyId: ctx.company.id }, select: { groupId: true } }),
+  ]);
+  const groupIds = groups.map((g) => g.groupId);
+  return (o) => {
+    const product = o.packaging.variant.product;
+    const categoryIds = [...(scope.info.get(product.categoryId)?.ancestors ?? []), product.categoryId];
+    return promotionsForOffer(promos, { id: o.id, vendorCompanyId: o.vendorCompanyId, productId: product.id, categoryIds }, groupIds);
+  };
+}
+
+function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1, promoFn?: PromoFn) {
   const price = resolvePrice(
     o.prices.map((p) => ({ priceListId: p.priceListId, scope: p.priceList.scope, priority: p.priceList.priority, minQty: p.minQty, unitPriceNet: p.unitPriceNet })),
     Math.max(qty, o.minOrderQty),
@@ -69,6 +86,9 @@ function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1) {
   const product = o.packaging.variant.product;
   const available = o.stockLevels.reduce((a, s) => a + s.onHand - s.reserved, 0);
   const tax = vat.get(product.taxCategoryId) ?? { rate: new Decimal(0), taxType: "VAT" };
+  // Promotions apply on top of the resolved (list) price.
+  const promo = price ? applyPromotions(price.unitPriceNet, Math.max(qty, o.minOrderQty), promoFn ? promoFn(o) : []) : null;
+  const sale = promo ? promo.salePriceNet : null;
   return {
     offerId: o.id,
     productId: product.id,
@@ -88,12 +108,19 @@ function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1) {
     minOrderQty: o.minOrderQty,
     qtyStep: o.qtyStep,
     leadTimeDays: o.leadTimeDays,
-    price: price && {
-      unitPriceNet: price.unitPriceNet.toFixed(2),
-      unitPriceGross: grossOf(price.unitPriceNet, tax.rate).toFixed(2),
-      vatAmount: grossOf(price.unitPriceNet, tax.rate).minus(price.unitPriceNet.toDecimalPlaces(2)).toFixed(2),
-      perUnitNet: price.unitPriceNet.div(o.packaging.unitsPerPack).toFixed(4),
-      perUnitGross: grossOf(price.unitPriceNet.div(o.packaging.unitsPerPack), tax.rate).toFixed(2),
+    price: price && sale && promo && {
+      /** Price before promotions (the vendor's list / contract price). */
+      listUnitNet: price.unitPriceNet.toFixed(2),
+      listUnitGross: grossOf(price.unitPriceNet, tax.rate).toFixed(2),
+      /** What the buyer pays per unit (after promotions). */
+      unitPriceNet: sale.toFixed(2),
+      unitPriceGross: grossOf(sale, tax.rate).toFixed(2),
+      vatAmount: grossOf(sale, tax.rate).minus(sale.toDecimalPlaces(2)).toFixed(2),
+      perUnitNet: sale.div(o.packaging.unitsPerPack).toFixed(4),
+      perUnitGross: grossOf(sale.div(o.packaging.unitsPerPack), tax.rate).toFixed(2),
+      promotions: promo.applied.map((a) => ({ id: a.promotionId, name: a.name ?? "", ownerType: a.ownerType, perUnit: a.perUnit.toFixed(4), firingiPerUnit: a.firingiPerUnit.toFixed(4), vendorPerUnit: a.vendorPerUnit.toFixed(4) })),
+      vendorFundedPerUnit: promo.vendorFundedPerUnit.toFixed(4),
+      firingiFundedPerUnit: promo.firingiFundedPerUnit.toFixed(4),
       scope: price.scope,
       tiers: price.tiers.map((t) => ({ minQty: t.minQty, unitPriceNet: t.unitPriceNet.toFixed(2), unitPriceGross: grossOf(t.unitPriceNet, tax.rate).toFixed(2) })),
     },
@@ -136,10 +163,10 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string) {
     include: offerInclude(scope),
     take: 100,
   });
-  const vat = await vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]);
+  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
   const suppliers = new Map((await visibleSuppliers(ctx)).map((s) => [s.id, s]));
   const items = rows
-    .map((r) => ({ ...present(r, vat, ctx.company.countryCode), distanceKm: suppliers.get(r.vendorCompanyId)?.distanceKm ?? null }))
+    .map((r) => ({ ...present(r, vat, ctx.company.countryCode, 1, promoFn), distanceKm: suppliers.get(r.vendorCompanyId)?.distanceKm ?? null }))
     .sort((a, b) => byDistance({ name: a.vendor.name, distanceKm: a.distanceKm }, { name: b.vendor.name, distanceKm: b.distanceKm }));
   return { items, barcode: asBarcode(q) };
 }
@@ -161,8 +188,8 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
     prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }], skip: (page - 1) * pageSize, take: pageSize }),
     prisma.vendorOffer.count({ where }),
   ]);
-  const vat = await vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]);
-  return { items: rows.map((r) => present(r, vat, ctx.company.countryCode)), total, page, pageCount: Math.max(1, Math.ceil(total / pageSize)) };
+  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
+  return { items: rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn)), total, page, pageCount: Math.max(1, Math.ceil(total / pageSize)) };
 }
 
 /** A single offer — 404 (not 403) when it isn't visible, so its existence isn't revealed. */
@@ -170,14 +197,14 @@ export async function catalogueItem(ctx: Ctx, offerId: string) {
   const scope = await buyerScope(ctx);
   const row = await prisma.vendorOffer.findFirst({ where: { AND: [{ id: offerId }, visibleOfferWhere(scope)] }, include: offerInclude(scope) });
   if (!row) throw new NotFoundError("Product");
-  const vat = await vatRates(scope.buyerCountryId, [row.packaging.variant.product.taxCategoryId]);
+  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [row.packaging.variant.product.taxCategoryId]), promoMatcher(ctx, scope)]);
   // Other visible packagings / suppliers of the same product, for comparison.
   const alternatives = await prisma.vendorOffer.findMany({
     where: { AND: [visibleOfferWhere(scope), { id: { not: offerId } }, { packaging: { variant: { productId: row.packaging.variant.productId } } }] },
     include: offerInclude(scope),
     take: 20,
   });
-  return { item: present(row, vat, ctx.company.countryCode), alternatives: alternatives.map((a) => present(a, vat, ctx.company.countryCode)) };
+  return { item: present(row, vat, ctx.company.countryCode, 1, promoFn), alternatives: alternatives.map((a) => present(a, vat, ctx.company.countryCode, 1, promoFn)) };
 }
 
 /** Category tree the buyer may browse (restricted branches only with approval). */
@@ -336,11 +363,11 @@ export async function pricedOffers(ctx: Ctx, lines: { offerId: string; qty: numb
     where: { AND: [visibleOfferWhere(scope), { id: { in: lines.map((l) => l.offerId) } }] },
     include: offerInclude(scope),
   });
-  const vat = await vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]);
+  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
   const byId = new Map(rows.map((r) => [r.id, r]));
   const items = lines.filter((l) => byId.has(l.offerId)).map((l) => {
     const r = byId.get(l.offerId)!;
-    return { ...present(r, vat, ctx.company.countryCode, l.qty), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId };
+    return { ...present(r, vat, ctx.company.countryCode, l.qty, promoFn), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId };
   });
   return { items, unavailable: lines.filter((l) => !byId.has(l.offerId)).map((l) => l.offerId) };
 }
