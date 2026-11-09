@@ -8,7 +8,7 @@ export async function SupplierCard({ s, categoryId }: { s: Supplier; categoryId?
   return (
     <Link
       href={`/buy/catalogue/suppliers/${s.id}${categoryId ? `?category=${categoryId}` : ""}`}
-      className="flex items-center gap-3 rounded-xl border bg-card p-4 transition-colors hover:border-primary"
+      className="flex items-center gap-3 rounded-xl border bg-card p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
     >
       <div className="grid size-11 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary"><Store className="size-5" /></div>
       <div className="min-w-0 flex-1">

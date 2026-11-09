@@ -31,11 +31,11 @@ const email = `e2e.${Date.now()}@restaurante.pt`;
 const legalName = `Restaurante E2E ${Date.now()}`;
 
 const browser = await chromium.launch();
-const settle = async (page) => { await page.waitForLoadState("networkidle"); await page.waitForTimeout(600); };
+const settle = async (page) => { await page.waitForLoadState("networkidle"); await page.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await page.waitForTimeout(600); };
 
 // ── 1. Register ──
 const applicant = await (await browser.newContext({ viewport: { width: 1280, height: 900 } })).newPage();
-await applicant.goto(`${BASE}/register`);
+await applicant.goto(`${BASE}/register`); await applicant.waitForLoadState("networkidle"); await applicant.waitForTimeout(400);
 await shot(applicant, "p2-01-register-choose");
 await applicant.click('a[href="/register/customer"]');
 await settle(applicant);
@@ -89,17 +89,17 @@ await shot(applicant, "p2-03-application-ready");
 await applicant.getByRole("button", { name: /Enviar candidatura|Submit application/ }).click();
 await settle(applicant);
 check("application submitted (under review)", /Em análise|Under review/.test(await applicant.textContent("main")));
-await applicant.goto(`${BASE}/buy`);
+await applicant.goto(`${BASE}/buy`); await applicant.waitForLoadState("networkidle"); await applicant.waitForTimeout(400);
 check("applicant still cannot open the Buy portal", applicant.url().endsWith("/application-status"), applicant.url());
 
 // ── 3. Admin review ──
 const admin = await (await browser.newContext({ viewport: { width: 1440, height: 1000 } })).newPage();
-await admin.goto(`${BASE}/login`);
+await admin.goto(`${BASE}/login`); await admin.waitForLoadState("networkidle"); await admin.waitForTimeout(400);
 await admin.fill("#email", "ops@firingi.test");
 await admin.fill("#password", PASSWORD);
 await admin.click("button[type=submit]");
 await settle(admin);
-await admin.goto(`${BASE}/admin/customers/applications`);
+await admin.goto(`${BASE}/admin/customers/applications`); await admin.waitForLoadState("networkidle"); await admin.waitForTimeout(400);
 await settle(admin);
 check("application appears in Customer Applications", (await admin.textContent("main")).includes(legalName));
 await shot(admin, "p2-04-admin-applications");
@@ -117,10 +117,10 @@ check("company approved", /APPROVED|Aprovado/.test(await admin.textContent("main
 await shot(admin, "p2-06-admin-company-approved");
 
 // ── 4. Customer is now active ──
-await applicant.goto(`${BASE}/`);
+await applicant.goto(`${BASE}/`); await applicant.waitForLoadState("networkidle"); await applicant.waitForTimeout(400);
 await settle(applicant);
 check("approved customer lands in the Buy portal", applicant.url().includes("/buy/"), applicant.url());
-await applicant.goto(`${BASE}/buy/company/restricted-products`);
+await applicant.goto(`${BASE}/buy/company/restricted-products`); await applicant.waitForLoadState("networkidle"); await applicant.waitForTimeout(400);
 await settle(applicant);
 await applicant.getByRole("button", { name: /Pedir acesso|Request access/ }).first().click();
 await applicant.fill("#ln-TOBACCO", "TAB-2026-0001");
@@ -131,7 +131,7 @@ await settle(applicant);
 check("tobacco access requested", /A aguardar|Waiting/.test(await applicant.textContent("main")));
 await shot(applicant, "p2-07-restricted-request");
 
-await admin.goto(`${BASE}/admin/risk/compliance`);
+await admin.goto(`${BASE}/admin/risk/compliance`); await admin.waitForLoadState("networkidle"); await admin.waitForTimeout(400);
 await settle(admin);
 const row = admin.locator("tr").filter({ hasText: legalName });
 await row.locator('input[type="date"]').fill(`${new Date().getFullYear() + 1}-12-31`);
@@ -143,7 +143,7 @@ check("tobacco access approved with expiry date", /Acesso até|Access until/.tes
 
 // ── 5. Other company cannot download the document ──
 const other = await (await browser.newContext()).newPage();
-await other.goto(`${BASE}/login`);
+await other.goto(`${BASE}/login`); await other.waitForLoadState("networkidle"); await other.waitForTimeout(400);
 await other.fill("#email", "owner@kebabhouse.test");
 await other.fill("#password", PASSWORD);
 await other.click("button[type=submit]");

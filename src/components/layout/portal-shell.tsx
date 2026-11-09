@@ -3,6 +3,7 @@
  * permission, resolves labels and renders the AppShell.
  */
 import { getLocale, getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
 import { pagePortal, portalsFor, type Portal } from "@/server/rbac/guard";
 import { NAV_BY_PORTAL, resolveNav } from "@/config/nav/resolve";
 import { allowedLocales } from "@/server/data/geo";
@@ -42,6 +43,10 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
         locales,
         labels: { signOut: t("signOut"), language: t("language"), company: t("company"), menu: t("menu") },
         cart,
+        theme: {
+          initial: (["light", "dark", "system"].includes((await cookies()).get("theme")?.value ?? "") ? (await cookies()).get("theme")!.value : "system") as "light" | "dark" | "system",
+          labels: { light: t("themeLight"), dark: t("themeDark"), system: t("themeSystem") },
+        },
       }}
     >
       {children}

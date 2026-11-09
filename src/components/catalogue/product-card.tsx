@@ -23,7 +23,7 @@ export function ProductThumb({ productId, hasImage, className = "" }: { productI
 export async function ProductCard({ item, hasImage, showVendor = true }: { item: CatalogueItem; hasImage: boolean; showVendor?: boolean }) {
   const [t, locale] = await Promise.all([getTranslations("catalogue"), getLocale()]);
   return (
-    <Link href={`/buy/catalogue/offers/${item.offerId}`} className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-md">
+    <Link href={`/buy/catalogue/offers/${item.offerId}`} className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
       <ProductThumb productId={item.productId} hasImage={hasImage} className="h-32 w-full" />
       <div className="flex flex-1 flex-col gap-1.5 p-3">
         <div className="text-xs text-muted-foreground">{item.brand ?? pickLocalized(item.category.name, locale)}</div>

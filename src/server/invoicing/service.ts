@@ -10,7 +10,7 @@
  */
 import type { InvoiceDocType, Prisma, TaxRegime } from "@prisma/client";
 import Decimal from "decimal.js";
-import { prisma, type Tx } from "@/server/db";
+import type { Tx } from "@/server/db";
 import { invoiceProvider } from "./provider";
 
 const r2 = (d: Decimal) => d.toDecimalPlaces(2, Decimal.ROUND_HALF_UP);

@@ -35,7 +35,7 @@ function NavLink({ item, pathname, search, soonLabel }: { item: ResolvedItem; pa
       href={item.href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "flex items-center justify-between gap-2 rounded-md py-1.5 pl-9 pr-2 text-[13px] transition-colors",
+        "flex items-center justify-between gap-2 rounded-md py-1.5 pl-9 pr-2 text-[13px] transition-all duration-150 hover:translate-x-0.5",
         active ? "bg-sidebar-active text-white" : "text-sidebar-foreground/85 hover:bg-sidebar-accent hover:text-white",
       )}
     >
@@ -84,10 +84,10 @@ export function Sidebar({ nav, title, subtitle, soonLabel }: { nav: ResolvedSect
                 <span className="w-4 text-right text-[10px] text-sidebar-muted">{nav.length > 8 ? idx + 1 : ""}</span>
                 <Icon className="size-4 shrink-0 text-sidebar-muted" />
                 <span className="flex-1 truncate">{s.label}</span>
-                <ChevronDown className={cn("size-3.5 text-sidebar-muted transition-transform", isOpen && "rotate-180")} />
+                <ChevronDown className={cn("size-3.5 text-sidebar-muted transition-transform duration-200", isOpen && "rotate-180")} />
               </button>
-              {isOpen && (
-                <div className="mb-1 mt-0.5 space-y-0.5">
+              <div className="collapsible" data-open={isOpen ? "true" : "false"} inert={!isOpen}>
+                <div className={cn("space-y-0.5", isOpen && "mb-1 mt-0.5")}>
                   {s.items.map((i) => <NavLink key={i.key} item={i} pathname={pathname} search={search} soonLabel={soonLabel} />)}
                   {s.groups.map((g) => (
                     <div key={g.key} className="pt-1">
@@ -96,7 +96,7 @@ export function Sidebar({ nav, title, subtitle, soonLabel }: { nav: ResolvedSect
                     </div>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
           );
         })}

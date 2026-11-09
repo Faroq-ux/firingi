@@ -30,24 +30,33 @@
   --sidebar-active: oklch(0.45 0.13 255);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: oklch(0.17 0.015 260);
-    --foreground: oklch(0.95 0.005 250);
-    --card: oklch(0.21 0.02 260);
-    --card-foreground: oklch(0.95 0.005 250);
-    --primary: oklch(0.65 0.14 255);
-    --primary-foreground: oklch(0.15 0.02 260);
-    --secondary: oklch(0.27 0.02 260);
-    --secondary-foreground: oklch(0.95 0.005 250);
-    --muted: oklch(0.27 0.02 260);
-    --muted-foreground: oklch(0.7 0.015 255);
-    --accent: oklch(0.3 0.03 260);
-    --accent-foreground: oklch(0.95 0.005 250);
-    --border: oklch(0.32 0.02 260);
-    --input: oklch(0.32 0.02 260);
-    --sidebar: oklch(0.14 0.02 260);
-  }
+/* Dark theme — applied with the `dark` class on <html> (chosen by the user, or
+   following the device when the user picks "system"; see ThemeScript). */
+.dark {
+  --background: oklch(0.16 0.014 262);
+  --foreground: oklch(0.95 0.005 250);
+  --card: oklch(0.205 0.018 262);
+  --card-foreground: oklch(0.95 0.005 250);
+  --primary: oklch(0.68 0.15 255);
+  --primary-foreground: oklch(0.16 0.02 262);
+  --secondary: oklch(0.27 0.02 262);
+  --secondary-foreground: oklch(0.95 0.005 250);
+  --muted: oklch(0.255 0.018 262);
+  --muted-foreground: oklch(0.72 0.015 255);
+  --accent: oklch(0.29 0.03 262);
+  --accent-foreground: oklch(0.96 0.005 250);
+  --destructive: oklch(0.65 0.2 25);
+  --success: oklch(0.7 0.15 155);
+  --warning: oklch(0.8 0.15 80);
+  --border: oklch(0.31 0.02 262);
+  --input: oklch(0.33 0.02 262);
+  --ring: oklch(0.68 0.15 255);
+  --sidebar: oklch(0.13 0.016 262);
+  --sidebar-foreground: oklch(0.88 0.01 255);
+  --sidebar-muted: oklch(0.62 0.02 255);
+  --sidebar-accent: oklch(0.22 0.03 262);
+  --sidebar-active: oklch(0.55 0.15 255);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -84,4 +93,43 @@
 @layer base {
   * { @apply border-border; }
   body { @apply bg-background text-foreground antialiased; }
+  /* Smooth colour change when switching theme. */
+  body, header, aside nav, main, .rounded-xl, .rounded-lg, input, select, textarea, table {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+  }
+  button, a { -webkit-tap-highlight-color: transparent; }
+}
+
+/* ── Motion ─────────────────────────────────────────────────────────────── */
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+@keyframes scale-in { from { opacity: 0; transform: translateY(4px) scale(0.97) } to { opacity: 1; transform: none } }
+@keyframes shimmer { 0% { background-position: -400px 0 } 100% { background-position: 400px 0 } }
+@keyframes pop { 0% { transform: scale(0.6) } 70% { transform: scale(1.15) } 100% { transform: scale(1) } }
+
+@utility animate-page { animation: fade-in-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@utility animate-fade { animation: fade-in 0.2s ease both; }
+@utility animate-pop { animation: pop 0.3s ease both; }
+@utility skeleton {
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--muted) 25%, color-mix(in oklch, var(--muted), var(--foreground) 6%) 50%, var(--muted) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+/* Every dialog (all forms use role="dialog") fades in with a gentle scale. */
+[role="dialog"] { animation: fade-in 0.18s ease both; backdrop-filter: blur(2px); }
+[role="dialog"] > * { animation: scale-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+/* Alerts / status messages slide in. */
+[role="alert"], [role="status"] { animation: fade-in-up 0.25s ease both; }
+/* Table rows and list items of a freshly rendered page cascade in. */
+main tbody tr { animation: fade-in 0.3s ease both; }
+
+/* Collapsible sidebar sections animate their height. */
+.collapsible { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.collapsible[data-open="true"] { grid-template-rows: 1fr; }
+.collapsible > div { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }

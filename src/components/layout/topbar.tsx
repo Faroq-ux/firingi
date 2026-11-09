@@ -6,6 +6,7 @@ import { LogOut, Menu, ShoppingCart } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
+import { ThemeToggle, type ThemeChoice } from "@/components/theme/theme";
 
 export type TopbarProps = {
   userName: string;
@@ -18,6 +19,7 @@ export type TopbarProps = {
   locales: { code: string; native: string }[];
   labels: { signOut: string; language: string; company: string; menu: string };
   cart?: { count: number; label: string } | null;
+  theme: { initial: ThemeChoice; labels: Record<ThemeChoice, string> };
   onMenu?: () => void;
 };
 
@@ -51,7 +53,7 @@ export function Topbar(p: TopbarProps) {
         {p.cart && (
           <Link href="/buy/orders/cart" className="relative rounded-md p-2 hover:bg-accent" aria-label={`${p.cart.label} (${p.cart.count})`}>
             <ShoppingCart className="size-5" />
-            {p.cart.count > 0 && <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">{p.cart.count}</span>}
+            {p.cart.count > 0 && <span key={p.cart.count} className="animate-pop absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">{p.cart.count}</span>}
           </Link>
         )}
         {p.memberships.length > 1 ? (
@@ -83,6 +85,7 @@ export function Topbar(p: TopbarProps) {
           {p.locales.map((l) => <option key={l.code} value={l.code}>{l.native}</option>)}
         </select>
 
+        <ThemeToggle initial={p.theme.initial} labels={p.theme.labels} />
         <div className="hidden text-right leading-tight lg:block">
           <div className="text-sm font-medium">{p.userName}</div>
           <div className="text-xs text-muted-foreground">{p.userEmail}</div>

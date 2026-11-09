@@ -14,10 +14,10 @@ let failures = 0;
 const check = (name, ok, extra = "") => { console.log(`${ok ? "✔" : "✘"} ${name}${extra ? ` — ${extra}` : ""}`); if (!ok) failures++; };
 const shot = async (page, name, full = true) => SHOTS && page.screenshot({ path: `${SHOTS}/${name}.png`, fullPage: full });
 const browser = await chromium.launch();
-const settle = async (p) => { await p.waitForLoadState("networkidle"); await p.waitForTimeout(500); };
+const settle = async (p) => { await p.waitForLoadState("networkidle"); await p.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await p.waitForTimeout(500); };
 async function login(email) {
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 950 } })).newPage();
-  await page.goto(`${BASE}/login`);
+  await page.goto(`${BASE}/login`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
   await page.fill("#email", email);
   await page.fill("#password", PASSWORD);
   await page.click("button[type=submit]");
@@ -32,14 +32,14 @@ async function offerIdFor(page, q, vendorName, units) {
 
 const customer = await login("owner@kebabhouse.test");
 // Start from an empty cart.
-await customer.goto(`${BASE}/buy/orders/cart`);
+await customer.goto(`${BASE}/buy/orders/cart`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 const clear = customer.getByRole("button", { name: /Esvaziar carrinho|Clear cart/ });
 if (await clear.count()) { await clear.click(); await settle(customer); }
 
 // 1. Add mozzarella (contract price) from Lisboa Central
 const mozz = await offerIdFor(customer, "mozzarella", "Lisboa Central", 1);
-await customer.goto(`${BASE}/buy/catalogue/offers/${mozz}`);
+await customer.goto(`${BASE}/buy/catalogue/offers/${mozz}`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 await customer.locator('input[type="number"]').first().fill("2");
 await customer.getByRole("button", { name: /Adicionar ao carrinho|Add to cart/ }).click();
@@ -49,7 +49,7 @@ check("cart badge shows 1 item", (await customer.locator('header a[href="/buy/or
 
 // 2. Try a product from another wholesaler → one-supplier message
 const almadaFlour = await offerIdFor(customer, "farinha", "C&C Almada");
-await customer.goto(`${BASE}/buy/catalogue/offers/${almadaFlour}`);
+await customer.goto(`${BASE}/buy/catalogue/offers/${almadaFlour}`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 await customer.getByRole("button", { name: /Adicionar ao carrinho|Add to cart/ }).click();
 await settle(customer);
@@ -58,7 +58,7 @@ check("second wholesaler refused with a clear message", /um fornecedor de cada v
 await shot(customer, "p4-01-one-supplier-message", false);
 
 // 3. Cart below FIRINGI minimum (2 × 12.20 = 24.40 € < 50 €)
-await customer.goto(`${BASE}/buy/orders/cart`);
+await customer.goto(`${BASE}/buy/orders/cart`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 const cartText = await customer.textContent("main");
 check("cart shows FIRINGI minimum warning", /Encomenda mínima para entrega: 50,00|Minimum order for delivery is/.test(cartText));
@@ -84,7 +84,7 @@ await shot(customer, "p4-04-order-placed");
 
 // 5. Vendor confirms with fewer units, prepares
 const vendor = await login("owner@lisboacentral.test");
-await vendor.goto(`${BASE}/vendor/orders/incoming`);
+await vendor.goto(`${BASE}/vendor/orders/incoming`); await vendor.waitForLoadState("networkidle"); await vendor.waitForTimeout(400);
 await settle(vendor);
 check("vendor sees the order in Incoming orders", (await vendor.textContent("main")).includes(number));
 await vendor.getByRole("link", { name: number }).click();
@@ -101,7 +101,7 @@ await shot(vendor, "p4-05-vendor-order");
 
 // 6. FIRINGI dispatches and delivers
 const ops = await login("ops@firingi.test");
-await ops.goto(`${BASE}/admin/orders/ready-for-pickup`);
+await ops.goto(`${BASE}/admin/orders/ready-for-pickup`); await ops.waitForLoadState("networkidle"); await ops.waitForTimeout(400);
 await settle(ops);
 await ops.getByRole("link", { name: number }).click();
 await settle(ops);
@@ -113,27 +113,27 @@ check("FIRINGI delivered the order", /Entregue|Delivered/.test(await ops.locator
 await shot(ops, "p4-06-admin-order");
 
 // 7. Customer sees full history
-await customer.goto(orderUrl.replace("?placed=1", ""));
+await customer.goto(orderUrl.replace("?placed=1", "")); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 const hist = await customer.textContent("main");
 check("customer sees the full status history", ["Nova|New", "Em preparação|Supplier processing", "Expedida|Dispatched", "Entregue|Delivered"].every((s) => new RegExp(s).test(hist)));
 
 // 8. Admin changes FIRINGI minimum → customer cart reflects it
-await ops.goto(`${BASE}/admin/delivery/minimum-order`);
+await ops.goto(`${BASE}/admin/delivery/minimum-order`); await ops.waitForLoadState("networkidle"); await ops.waitForTimeout(400);
 await settle(ops);
 await shot(ops, "p4-07-admin-minimums");
 const minInput = ops.locator('input[type="number"]').first();
 await minInput.fill("60");
 await ops.getByRole("button", { name: "Save" }).first().click();
 await settle(ops);
-await customer.goto(`${BASE}/buy/catalogue/offers/${mozz}`);
+await customer.goto(`${BASE}/buy/catalogue/offers/${mozz}`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 await customer.getByRole("button", { name: /Adicionar ao carrinho|Add to cart/ }).click();
 await settle(customer);
-await customer.goto(`${BASE}/buy/orders/cart`);
+await customer.goto(`${BASE}/buy/orders/cart`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 check("customer cart uses the new FIRINGI minimum (60 €)", /60,00/.test(await customer.textContent("main")));
-await ops.goto(`${BASE}/admin/delivery/minimum-order`);
+await ops.goto(`${BASE}/admin/delivery/minimum-order`); await ops.waitForLoadState("networkidle"); await ops.waitForTimeout(400);
 await settle(ops);
 await ops.locator('input[type="number"]').first().fill("50");
 await ops.getByRole("button", { name: "Save" }).first().click();
@@ -141,7 +141,7 @@ await settle(ops);
 await customer.getByRole("button", { name: /Esvaziar carrinho|Clear cart/ }).click();
 
 // 9. Vendor sets its own delivery minimum
-await vendor.goto(`${BASE}/vendor/fleet/delivery-rules`);
+await vendor.goto(`${BASE}/vendor/fleet/delivery-rules`); await vendor.waitForLoadState("networkidle"); await vendor.waitForTimeout(400);
 await settle(vendor);
 await vendor.fill("#min", "140");
 await vendor.getByRole("button", { name: /Guardar|Save/ }).click();
