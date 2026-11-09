@@ -29,6 +29,14 @@ export function looksLikeEuVat(vat: string): boolean {
   );
 }
 
+/** VAT-number formats of the non-EU Schengen countries (not in VIES). */
+const NON_EU_VAT: Record<string, RegExp> = {
+  NO: /^NO\d{9}(MVA)?$/, // organisasjonsnummer + MVA
+  CHE: /^CHE\d{9}(MWST|TVA|IVA)?$/, // UID + VAT suffix
+  IS: /^IS\d{5,6}$/, // VSK-númer
+  LI: /^LI\d{5,9}$/,
+};
+
 /**
  * Validate a company's VAT number against its country of registration.
  * Returns the normalised VAT number or an error message.
@@ -40,7 +48,8 @@ export function checkCompanyVat(raw: string | null | undefined, country: { code:
   const prefix = country.vatPrefix ?? country.code;
   const vat = (raw ?? "").replace(/[\s.-]/g, "").toUpperCase();
   if (!vat) return { ok: false, error: "VAT number is required." };
-  if (!vat.startsWith(prefix) || !looksLikeEuVat(vat)) return { ok: false, error: `VAT number must start with ${prefix}.` };
+  const nonEu = NON_EU_VAT[prefix];
+  if (!vat.startsWith(prefix) || !(nonEu ? nonEu.test(vat) : looksLikeEuVat(vat))) return { ok: false, error: `VAT number must start with ${prefix}.` };
   if (country.code === "PT" && vat !== `PT${taxId}`) return { ok: false, error: "For Portugal the VAT number is PT followed by the NIF." };
   return { ok: true, vat };
 }

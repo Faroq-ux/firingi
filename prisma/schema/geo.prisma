@@ -45,11 +45,14 @@ model Country {
   name                Json
   flag                String?
   isEU                Boolean @default(false)
+  /// FIRINGI operates within the Schengen area only (EU members except CY/IE, plus NO, CH, IS, LI).
+  isSchengen          Boolean @default(false)
   vatPrefix           String? // VIES prefix (GR uses "EL")
   defaultCurrencyCode String
   defaultLanguageCode String
   /// Market switches — wholesale customers & wholesalers are Portugal-only at launch,
-  /// distributors may be in any EU country. Opening a market is configuration only.
+  /// distributors may be in any EU Schengen country. Opening a market is configuration only.
+  /// Non-EU Schengen countries (NO, CH, IS, LI) stay closed until customs/import handling exists.
   customerMarketEnabled      Boolean @default(false)
   wholesalerMarketEnabled    Boolean @default(false)
   distributorSourcingEnabled Boolean @default(false)

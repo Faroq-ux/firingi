@@ -17,10 +17,13 @@ const CURRENCIES = [
   { code: "PLN", name: "Polish złoty", symbol: "zł" },
   { code: "RON", name: "Romanian leu", symbol: "lei" },
   { code: "SEK", name: "Swedish krona", symbol: "kr" },
+  { code: "NOK", name: "Norwegian krone", symbol: "kr" },
+  { code: "CHF", name: "Swiss franc", symbol: "CHF" },
+  { code: "ISK", name: "Icelandic króna", symbol: "kr" },
 ];
 
 /** Approximate EUR rates for development only — replace with an ECB feed. */
-const FX: Record<string, number> = { CZK: 24.3, DKK: 7.46, HUF: 395, PLN: 4.25, RON: 5.08, SEK: 11.0 };
+const FX: Record<string, number> = { CZK: 24.3, DKK: 7.46, HUF: 395, PLN: 4.25, RON: 5.08, SEK: 11.0, NOK: 11.7, CHF: 0.94, ISK: 150 };
 
 const LANGUAGES: [code: string, name: string, native: string, ui?: boolean][] = [ // ui flag now comes from UI_LOCALES
   ["en", "English", "English", true], ["pt-PT", "Portuguese (Portugal)", "Português", true], ["es", "Spanish", "Español", true],
@@ -29,10 +32,15 @@ const LANGUAGES: [code: string, name: string, native: string, ui?: boolean][] = 
   ["sl", "Slovenian", "Slovenščina"], ["hr", "Croatian", "Hrvatski"], ["bg", "Bulgarian", "Български"], ["el", "Greek", "Ελληνικά"],
   ["hu", "Hungarian", "Magyar"], ["da", "Danish", "Dansk"], ["sv", "Swedish", "Svenska"], ["fi", "Finnish", "Suomi"],
   ["et", "Estonian", "Eesti"], ["lv", "Latvian", "Latviešu"], ["lt", "Lithuanian", "Lietuvių"], ["mt", "Maltese", "Malti"],
-  ["ga", "Irish", "Gaeilge"], ["lb", "Luxembourgish", "Lëtzebuergesch"],
+  ["ga", "Irish", "Gaeilge"], ["lb", "Luxembourgish", "Lëtzebuergesch"], ["nb", "Norwegian (Bokmål)", "Norsk bokmål"],
+  ["is", "Icelandic", "Íslenska"], ["rm", "Romansh", "Rumantsch"],
 ];
 
-type C = { code: string; en: string; pt: string; es: string; flag: string; cur: string; langs: string[]; vat: number; prefix?: string };
+type C = { code: string; en: string; pt: string; es: string; flag: string; cur: string; langs: string[]; vat: number; prefix?: string; eu?: false; schengen?: false };
+/**
+ * FIRINGI operates within the Schengen area. Cyprus and Ireland are EU but not Schengen
+ * (kept inactive); Norway, Switzerland, Iceland and Liechtenstein are Schengen but not EU.
+ */
 const EU: C[] = [
   { code: "PT", en: "Portugal", pt: "Portugal", es: "Portugal", flag: "🇵🇹", cur: "EUR", langs: ["pt-PT"], vat: 23 },
   { code: "ES", en: "Spain", pt: "Espanha", es: "España", flag: "🇪🇸", cur: "EUR", langs: ["es"], vat: 21 },
@@ -40,7 +48,7 @@ const EU: C[] = [
   { code: "BE", en: "Belgium", pt: "Bélgica", es: "Bélgica", flag: "🇧🇪", cur: "EUR", langs: ["nl", "fr", "de"], vat: 21 },
   { code: "BG", en: "Bulgaria", pt: "Bulgária", es: "Bulgaria", flag: "🇧🇬", cur: "EUR", langs: ["bg"], vat: 20 },
   { code: "HR", en: "Croatia", pt: "Croácia", es: "Croacia", flag: "🇭🇷", cur: "EUR", langs: ["hr"], vat: 25 },
-  { code: "CY", en: "Cyprus", pt: "Chipre", es: "Chipre", flag: "🇨🇾", cur: "EUR", langs: ["el"], vat: 19 },
+  { code: "CY", en: "Cyprus", pt: "Chipre", es: "Chipre", flag: "🇨🇾", cur: "EUR", langs: ["el"], vat: 19, schengen: false },
   { code: "CZ", en: "Czechia", pt: "Chéquia", es: "Chequia", flag: "🇨🇿", cur: "CZK", langs: ["cs"], vat: 21 },
   { code: "DK", en: "Denmark", pt: "Dinamarca", es: "Dinamarca", flag: "🇩🇰", cur: "DKK", langs: ["da"], vat: 25 },
   { code: "EE", en: "Estonia", pt: "Estónia", es: "Estonia", flag: "🇪🇪", cur: "EUR", langs: ["et"], vat: 24 },
@@ -49,7 +57,7 @@ const EU: C[] = [
   { code: "DE", en: "Germany", pt: "Alemanha", es: "Alemania", flag: "🇩🇪", cur: "EUR", langs: ["de"], vat: 19 },
   { code: "GR", en: "Greece", pt: "Grécia", es: "Grecia", flag: "🇬🇷", cur: "EUR", langs: ["el"], vat: 24, prefix: "EL" },
   { code: "HU", en: "Hungary", pt: "Hungria", es: "Hungría", flag: "🇭🇺", cur: "HUF", langs: ["hu"], vat: 27 },
-  { code: "IE", en: "Ireland", pt: "Irlanda", es: "Irlanda", flag: "🇮🇪", cur: "EUR", langs: ["en", "ga"], vat: 23 },
+  { code: "IE", en: "Ireland", pt: "Irlanda", es: "Irlanda", flag: "🇮🇪", cur: "EUR", langs: ["en", "ga"], vat: 23, schengen: false },
   { code: "IT", en: "Italy", pt: "Itália", es: "Italia", flag: "🇮🇹", cur: "EUR", langs: ["it"], vat: 22 },
   { code: "LV", en: "Latvia", pt: "Letónia", es: "Letonia", flag: "🇱🇻", cur: "EUR", langs: ["lv"], vat: 21 },
   { code: "LT", en: "Lithuania", pt: "Lituânia", es: "Lituania", flag: "🇱🇹", cur: "EUR", langs: ["lt"], vat: 21 },
@@ -61,6 +69,10 @@ const EU: C[] = [
   { code: "SK", en: "Slovakia", pt: "Eslováquia", es: "Eslovaquia", flag: "🇸🇰", cur: "EUR", langs: ["sk"], vat: 23 },
   { code: "SI", en: "Slovenia", pt: "Eslovénia", es: "Eslovenia", flag: "🇸🇮", cur: "EUR", langs: ["sl"], vat: 22 },
   { code: "SE", en: "Sweden", pt: "Suécia", es: "Suecia", flag: "🇸🇪", cur: "SEK", langs: ["sv"], vat: 25 },
+  { code: "NO", en: "Norway", pt: "Noruega", es: "Noruega", flag: "🇳🇴", cur: "NOK", langs: ["nb"], vat: 25, eu: false },
+  { code: "CH", en: "Switzerland", pt: "Suíça", es: "Suiza", flag: "🇨🇭", cur: "CHF", langs: ["de", "fr", "it"], vat: 8.1, prefix: "CHE", eu: false },
+  { code: "IS", en: "Iceland", pt: "Islândia", es: "Islandia", flag: "🇮🇸", cur: "ISK", langs: ["is"], vat: 24, eu: false },
+  { code: "LI", en: "Liechtenstein", pt: "Listenstaine", es: "Liechtenstein", flag: "🇱🇮", cur: "CHF", langs: ["de"], vat: 8.1, eu: false },
 ];
 
 /** Regions & cities for the launch markets. taxRegion = regions with their own rates. */
@@ -173,14 +185,17 @@ export async function seedReference(db: PrismaClient) {
     const data = {
       name: { en: c.en, pt: c.pt, es: c.es },
       flag: c.flag,
-      isEU: true,
+      isEU: c.eu !== false,
+      isSchengen: c.schengen !== false,
+      isActive: c.schengen !== false,
       vatPrefix: c.prefix ?? c.code,
       defaultCurrencyCode: c.cur,
       defaultLanguageCode: c.langs[0],
-      // Launch configuration: customers & wholesalers Portugal-only; distributors EU-wide.
+      // Launch configuration: customers & wholesalers Portugal-only; distributors in any EU
+      // Schengen country. Non-EU Schengen countries wait for customs/import handling.
       customerMarketEnabled: c.code === "PT",
       wholesalerMarketEnabled: c.code === "PT",
-      distributorSourcingEnabled: true,
+      distributorSourcingEnabled: c.schengen !== false && c.eu !== false,
     };
     const row = await db.country.upsert({ where: { code: c.code }, update: data, create: { code: c.code, ...data } });
     countryIds[c.code] = row.id;

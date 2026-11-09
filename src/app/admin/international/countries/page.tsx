@@ -18,12 +18,12 @@ export default async function CountriesPage() {
     <>
       <PageHeader
         title="Countries"
-        description="Market switches per country. At launch wholesale customers and wholesalers are Portugal-only; distributors may be based in any EU country."
+        description="FIRINGI operates within the Schengen area. At launch wholesale customers and wholesalers are Portugal-only; distributors may be based in any EU Schengen country. Non-EU Schengen countries (NO, CH, IS, LI) open once customs handling exists; Cyprus and Ireland are outside Schengen."
       />
       <Table>
         <THead>
           <TR>
-            <TH>Country</TH><TH>VAT prefix</TH><TH>Currency</TH><TH>Languages</TH>
+            <TH>Country</TH><TH>Area</TH><TH>VAT prefix</TH><TH>Currency</TH><TH>Languages</TH>
             <TH>Customers</TH><TH>Wholesalers</TH><TH>Distributors</TH><TH className="text-right">Regions · Cities</TH>
           </TR>
         </THead>
@@ -31,6 +31,7 @@ export default async function CountriesPage() {
           {rows.map((c) => (
             <TR key={c.id}>
               <TD className="font-medium">{c.flag} {pickLocalized(c.name, locale)} <span className="text-xs text-muted-foreground">{c.code}</span></TD>
+              <TD className="text-xs">{!c.isSchengen ? <span className="text-muted-foreground">Outside Schengen</span> : c.isEU ? "EU · Schengen" : "Schengen (non-EU)"}</TD>
               <TD><code className="text-xs">{c.vatPrefix}</code></TD>
               <TD>{c.defaultCurrencyCode}</TD>
               <TD className="text-xs">{c.languages.map((l) => l.language.native).join(", ")} + English</TD>

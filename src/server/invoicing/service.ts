@@ -147,6 +147,12 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
 
   // What the vendor must invoice FIRINGI.
   const crossBorder = order.seller.countryId !== le.countryId;
+  if (crossBorder) {
+    // Intra-EU reverse charge only. Non-EU Schengen sellers (NO, CH, IS, LI) need customs /
+    // import handling, which does not exist yet — their markets stay closed until then.
+    const sellerCountry = await tx.country.findUniqueOrThrow({ where: { id: order.seller.countryId }, select: { isEU: true, code: true } });
+    if (!sellerCountry.isEU) throw new Error(`NON_EU_SELLER_NOT_SUPPORTED:${sellerCountry.code}`);
+  }
   const regime: TaxRegime = crossBorder ? "INTRA_EU_REVERSE_CHARGE" : "DOMESTIC";
   const stLines = order.lines.filter((l) => (l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered) > 0).map((l) => {
     const net = new Decimal(l.vendorLineNet.toString());

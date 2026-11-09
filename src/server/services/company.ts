@@ -141,6 +141,8 @@ async function transition(companyId: string, from: AccountStatus, to: AccountSta
 export async function runViesCheck(ctx: Ctx, companyId: string, fetchImpl?: typeof fetch) {
   const c = await loadForAdmin(ctx, companyId);
   if (!c.vatNumber) throw new ValidationError("This company has no VAT number.");
+  const country = await prisma.country.findUniqueOrThrow({ where: { id: c.countryId }, select: { isEU: true } });
+  if (!country.isEU) throw new ValidationError("VIES covers EU VAT numbers only. Record a manual verification for this country.");
   const r = await checkVies(c.vatNumber, fetchImpl);
   const row = await prisma.vatValidation.create({
     data: {

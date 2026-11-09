@@ -1,5 +1,6 @@
 /** International / multi-country reference data (read). */
 import { prisma } from "@/server/db";
+import { UI_LOCALES } from "@/i18n/config";
 import type { Ctx } from "@/server/context";
 import { requirePermission } from "@/server/rbac/guard";
 
@@ -80,7 +81,10 @@ export async function allowedLocales(countryId: string | null) {
   const langs = countryId
     ? await prisma.countryLanguage.findMany({ where: { countryId }, include: { language: true }, orderBy: { sortOrder: "asc" } })
     : [];
-  const list = langs.map((l) => ({ code: l.language.code, native: l.language.native }));
+  // Only languages with a UI translation; English is always offered.
+  const list = langs
+    .filter((l) => (UI_LOCALES as readonly string[]).includes(l.language.code))
+    .map((l) => ({ code: l.language.code, native: l.language.native }));
   if (!list.some((l) => l.code === "en")) list.push({ code: "en", native: "English" });
   return list;
 }

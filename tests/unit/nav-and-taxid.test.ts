@@ -66,6 +66,11 @@ describe("company VAT number", () => {
     expect(checkCompanyVat("EL123456789", GR, "123456789").ok).toBe(true);
     expect(checkCompanyVat("GR123456789", GR, "123456789").ok).toBe(false);
   });
+  it("accepts the non-EU Schengen formats (Norway, Switzerland)", () => {
+    expect(checkCompanyVat("NO 923 609 016 MVA", { code: "NO", vatPrefix: "NO" }, "923609016")).toEqual({ ok: true, vat: "NO923609016MVA" });
+    expect(checkCompanyVat("CHE-116.281.710 MWST", { code: "CH", vatPrefix: "CHE" }, "CHE116281710")).toEqual({ ok: true, vat: "CHE116281710MWST" });
+    expect(checkCompanyVat("CHE12345", { code: "CH", vatPrefix: "CHE" }, "x").ok).toBe(false);
+  });
 });
 
 describe("B2B only", () => {
