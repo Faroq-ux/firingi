@@ -12,7 +12,9 @@ import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/serv
 import { pricedOffers } from "@/server/data/catalogue-buyer";
 import { computeLine, computeTotals } from "@/server/orders/calc";
 import { canTransition, CLOSED, RESERVED_STATUSES, type Actor } from "@/server/orders/state";
+import { deliveryStatusForOrder } from "@/server/delivery/state";
 import { decideDelivery } from "@/server/orders/delivery-rule";
+import { vendorReaches } from "@/server/delivery/coverage";
 import { scopeWhere } from "./admin-access";
 import { deliveryRulesFor } from "./cart";
 import { writeAudit } from "./audit";
@@ -99,6 +101,46 @@ async function shipStock(tx: Tx, orderId: string) {
   }
 }
 
+/**
+ * Goods that already left the warehouse come back (cancelled after dispatch, or a return):
+ * on hand increases again. `only` limits it to some offers / quantities.
+ */
+export async function restockShipped(tx: Tx, orderId: string, only?: Map<string, number>) {
+  const moves = await tx.stockMovement.findMany({ where: { orderId, type: { in: ["SHIPMENT", "RETURN"] } } });
+  const net = new Map<string, { offerId: string; addressId: string; qty: number }>();
+  for (const m of moves) {
+    const k = `${m.offerId}|${m.addressId}`;
+    const cur = net.get(k) ?? { offerId: m.offerId, addressId: m.addressId, qty: 0 };
+    cur.qty += m.type === "SHIPMENT" ? m.qty : -m.qty;
+    net.set(k, cur);
+  }
+  const left = only ? new Map(only) : null;
+  for (const r of net.values()) {
+    let q = r.qty;
+    if (left) q = Math.min(q, left.get(r.offerId) ?? 0);
+    if (q <= 0) continue;
+    await tx.stockLevel.update({ where: { offerId_addressId: { offerId: r.offerId, addressId: r.addressId } }, data: { onHand: { increment: q } } });
+    await tx.stockMovement.create({ data: { offerId: r.offerId, addressId: r.addressId, type: "RETURN", qty: q, orderId } });
+    if (left) left.set(r.offerId, (left.get(r.offerId) ?? 0) - q);
+  }
+}
+
+/** Company that executes the delivery: the vendor (own fleet / carrier) or FIRINGI. */
+async function executorFor(tx: Tx, order: { sellerCompanyId: string; deliveryMode: DeliveryMode | null }) {
+  if (order.deliveryMode === "FIRINGI_FLEET") return (await tx.company.findFirstOrThrow({ where: { type: "ADMIN" }, select: { id: true } })).id;
+  return order.sellerCompanyId;
+}
+
+/** Make sure a confirmed order has its delivery record (created once, on confirmation). */
+export async function ensureDelivery(tx: Tx, orderId: string) {
+  const order = await tx.order.findUniqueOrThrow({ where: { id: orderId }, select: { id: true, sellerCompanyId: true, deliveryMode: true, deliveryFeeNet: true, requestedDeliveryDate: true, delivery: { select: { id: true } } } });
+  if (order.delivery) return order.delivery.id;
+  const d = await tx.delivery.create({
+    data: { orderId, mode: order.deliveryMode ?? "VENDOR_FLEET", executingCompanyId: await executorFor(tx, order), feeNet: order.deliveryFeeNet, scheduledFor: order.requestedDeliveryDate },
+  });
+  return d.id;
+}
+
 // ── checkout ────────────────────────────────────────────────────────────────
 
 export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null }) {
@@ -111,6 +153,8 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
   const address = await prisma.address.findFirst({ where: { id: input.deliveryAddressId, companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, include: { city: true, country: true } });
   if (!address) throw new ValidationError("Choose one of your delivery addresses.");
   if (address.countryId !== ctx.company.countryId) throw new ValidationError("Delivery address must be in your company's country.");
+  if (!(await vendorReaches(sellerId, address.id)))
+    throw new AppError("OUTSIDE_SERVICE_AREA", "This supplier doesn't deliver to that address. Choose another delivery address or another supplier.", 422);
 
   // Re-price everything server-side with the same visibility rules as the catalogue.
   const { items, unavailable } = await pricedOffers(ctx, cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })));
@@ -315,23 +359,56 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   if (!canTransition(order.status, to, actor, order.deliveryMode)) throw new AppError("BAD_TRANSITION", `You can't change this order from ${order.status} to ${to}.`, 409);
   if ((to === "CANCELLED" || to === "EXCEPTION" || to === "RETURNED") && !reason?.trim()) throw new ValidationError("Please give a reason.");
   if (to === "SUPPLIER_PROCESSING" && order.status === "PENDING_CONFIRMATION") return confirmOrder(ctx, orderId, {});
-  await prisma.$transaction(async (tx) => {
-    const res = await tx.order.updateMany({ where: { id: orderId, status: order.status }, data: { status: to } });
-    if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
-    if (to === "CANCELLED") await releaseStock(tx, orderId);
-    if (to === "DISPATCHED") await shipStock(tx, orderId);
-    if (to === "DELIVERED") {
-      // Delivered = what was confirmed. FIRINGI invoices the buyer and tells the vendor what to invoice.
-      for (const l of order.lines) await tx.orderLine.update({ where: { id: l.id }, data: { qtyDelivered: l.qtyConfirmed ?? l.qtyOrdered } });
-      await invoiceDeliveredOrder(tx, orderId, ctx.user.id);
-    }
-    if (to === "EXCEPTION") await tx.orderException.create({ data: { orderId, type: "OTHER", description: reason!.trim() } });
-    await tx.orderStatusHistory.create({ data: { orderId, fromStatus: order.status, toStatus: to, reason: reason?.trim() || null, byUserId: ctx.user.id } });
-    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `order.status.${to.toLowerCase()}`, entityType: "Order", entityId: orderId, before: { status: order.status }, after: { status: to, reason } }, tx);
-  });
+  await prisma.$transaction((tx) => applyOrderTransition(tx, order, to, { reason, userId: ctx.user.id, companyId: ctx.company.id }));
+  await notifyOrderChange(order, to, reason, actor);
+}
+
+type OrderForChange = { id: string; number: string; status: OrderStatus; buyerCompanyId: string; sellerCompanyId: string; lines: { id: string; qtyOrdered: number; qtyConfirmed: number | null }[] };
+
+/**
+ * The one place an order changes status (after authorisation): stock, invoicing,
+ * exceptions, history, audit — and the delivery record follows.
+ * `exceptionType` tags the exception opened when moving to EXCEPTION.
+ */
+export async function applyOrderTransition(
+  tx: Tx,
+  order: OrderForChange,
+  to: OrderStatus,
+  by: { reason?: string | null; userId: string | null; companyId: string | null; exceptionType?: string; syncDelivery?: boolean },
+) {
+  const reason = by.reason?.trim() || null;
+  const res = await tx.order.updateMany({ where: { id: order.id, status: order.status }, data: { status: to } });
+  if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
+  if (to === "CANCELLED") {
+    await releaseStock(tx, order.id);
+    await restockShipped(tx, order.id); // cancelled after dispatch: goods go back on hand
+  }
+  if (to === "DISPATCHED") await shipStock(tx, order.id); // no-op when already shipped (retry after a failed attempt)
+  if (to === "DELIVERED") {
+    // Delivered = what was confirmed. FIRINGI invoices the buyer and tells the vendor what to invoice.
+    for (const l of order.lines) await tx.orderLine.update({ where: { id: l.id }, data: { qtyDelivered: l.qtyConfirmed ?? l.qtyOrdered } });
+    await invoiceDeliveredOrder(tx, order.id, by.userId);
+  }
+  if (to === "EXCEPTION") await tx.orderException.create({ data: { orderId: order.id, type: by.exceptionType ?? "OTHER", description: reason ?? "Exception" } });
+  if (order.status === "EXCEPTION" && to !== "EXCEPTION")
+    await tx.orderException.updateMany({ where: { orderId: order.id, isResolved: false }, data: { isResolved: true, resolvedById: by.userId, resolvedAt: new Date() } });
+  if (by.syncDelivery !== false) {
+    const d = await tx.delivery.findUnique({ where: { orderId: order.id } });
+    const next = d ? deliveryStatusForOrder(to, d.status) : null;
+    if (d && next)
+      await tx.delivery.update({
+        where: { id: d.id },
+        data: { status: next, ...(next === "PICKED_UP" && !d.pickedUpAt ? { pickedUpAt: new Date() } : {}), ...(next === "DELIVERED" || next === "RETURNED" || next === "CANCELLED" ? { completedAt: new Date() } : {}) },
+      });
+  }
+  await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: order.status, toStatus: to, reason, byUserId: by.userId } });
+  await writeAudit({ actorUserId: by.userId, actorCompanyId: by.companyId, action: `order.status.${to.toLowerCase()}`, entityType: "Order", entityId: order.id, before: { status: order.status }, after: { status: to, reason } }, tx);
+}
+
+export async function notifyOrderChange(order: Pick<OrderForChange, "id" | "number" | "buyerCompanyId" | "sellerCompanyId">, to: OrderStatus, reason: string | null | undefined, actor: Actor) {
   const text = `Order ${order.number} is ${NOTIFY[to] ?? to.toLowerCase()}.${reason ? ` ${reason}` : ""}${to === "DELIVERED" ? " The invoice is available under Invoices." : ""}`;
-  if (actor !== "BUYER") await notifyCompany(order.buyerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/buy/orders/${orderId}` });
-  if (actor !== "VENDOR") await notifyCompany(order.sellerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/vendor/orders/${orderId}` });
+  if (actor !== "BUYER") await notifyCompany(order.buyerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/buy/orders/${order.id}` });
+  if (actor !== "VENDOR") await notifyCompany(order.sellerCompanyId, { type: `order.${to.toLowerCase()}`, title: `Order ${order.number}`, body: text, link: `/vendor/orders/${order.id}` });
 }
 
 /**
@@ -386,6 +463,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       },
     });
     if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
+    await ensureDelivery(tx, orderId);
     const short = confirmed.filter((c) => c.qty < c.line.qtyOrdered).length;
     await tx.orderStatusHistory.create({ data: { orderId, fromStatus: order.status, toStatus: "SUPPLIER_PROCESSING", byUserId: ctx.user.id, reason: short ? `Confirmed with ${short} line(s) reduced` : "Confirmed" } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.confirmed", entityType: "Order", entityId: orderId, after: { quantities: Object.fromEntries(confirmed.map((c) => [c.line.id, c.qty])) } }, tx);

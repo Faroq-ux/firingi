@@ -93,8 +93,10 @@ export async function registerCompany(input: CompanyRegistration) {
     await tx.membership.create({
       data: { userId: user.id, companyId: company.id, isOwner: true, roles: { create: { roleId: role.id } } },
     });
+    const city = input.headOffice.cityId ? await tx.city.findFirst({ where: { id: input.headOffice.cityId, countryId: country.id }, select: { latitude: true, longitude: true } }) : null;
     await tx.address.create({
       data: {
+        latitude: city?.latitude ?? null, longitude: city?.longitude ?? null,
         companyId: company.id, kind: "HEAD_OFFICE", label: "Head office", line1: input.headOffice.line1, line2: input.headOffice.line2 ?? null,
         postalCode: input.headOffice.postalCode, cityId: input.headOffice.cityId ?? null, cityName: input.headOffice.cityName,
         countryId: country.id, isDefault: true,

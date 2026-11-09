@@ -1,7 +1,7 @@
 // ───────────────────────── Delivery & fleet ─────────────────────────
 
 enum ServiceAreaType {
-  COUNTRY   // distributors (cross-border within EU)
+  COUNTRY // distributors (cross-border within EU)
   REGION
   CITY
   ZONE
@@ -40,17 +40,20 @@ enum DeliveryStatus {
 }
 
 model DeliveryZone {
-  id                 String   @id @default(cuid())
+  id                 String                    @id @default(cuid())
   countryId          String
   name               String
   postalCodePatterns String[] // e.g. ["1000-*", "1100-*"]
-  polygon            Json?    // GeoJSON (PostGIS geometry added in Phase 6)
-  isActive           Boolean  @default(true)
-  createdAt          DateTime @default(now())
+  polygon            Json? // GeoJSON as entered; `area` is the PostGIS geography built from it
+  area               Unsupported("geography")?
+  isActive           Boolean                   @default(true)
+  createdAt          DateTime                  @default(now())
 
   country      Country             @relation(fields: [countryId], references: [id])
   serviceAreas VendorServiceArea[]
   rules        DeliveryRule[]
+
+  @@index([area], map: "DeliveryZone_area_idx", type: Gist)
 }
 
 /// Where a vendor sells / delivers. Wholesalers: own country only (enforced in service).
@@ -62,18 +65,18 @@ model VendorServiceArea {
   regionId        String?
   cityId          String?
   zoneId          String?
-  originAddressId String?         // RADIUS_KM
+  originAddressId String? // RADIUS_KM
   radiusKm        Decimal?        @db.Decimal(8, 2)
   ownFleet        Boolean         @default(true) // vendor delivers with own fleet here
   isActive        Boolean         @default(true)
   createdAt       DateTime        @default(now())
 
-  vendor        Company       @relation(fields: [vendorCompanyId], references: [id], onDelete: Cascade)
-  country       Country       @relation(fields: [countryId], references: [id])
-  region        Region?       @relation(fields: [regionId], references: [id])
-  city          City?         @relation(fields: [cityId], references: [id])
-  zone          DeliveryZone? @relation(fields: [zoneId], references: [id])
-  originAddress Address?      @relation(fields: [originAddressId], references: [id])
+  vendor        Company        @relation(fields: [vendorCompanyId], references: [id], onDelete: Cascade)
+  country       Country        @relation(fields: [countryId], references: [id])
+  region        Region?        @relation(fields: [regionId], references: [id])
+  city          City?          @relation(fields: [cityId], references: [id])
+  zone          DeliveryZone?  @relation(fields: [zoneId], references: [id])
+  originAddress Address?       @relation(fields: [originAddressId], references: [id])
   rules         DeliveryRule[]
 }
 
@@ -112,9 +115,9 @@ model DeliveryRule {
 
 model Vehicle {
   id             String        @id @default(cuid())
-  ownerCompanyId String        // FIRINGI (admin fleet) or a vendor
+  ownerCompanyId String // FIRINGI (admin fleet) or a vendor
   plate          String
-  type           String        // van, truck, refrigerated …
+  type           String // van, truck, refrigerated …
   make           String?
   model          String?
   capacityKg     Decimal?      @db.Decimal(10, 2)
@@ -134,7 +137,7 @@ model Vehicle {
 model Driver {
   id             String             @id @default(cuid())
   userId         String             @unique
-  ownerCompanyId String             // FIRINGI or the vendor that employs the driver
+  ownerCompanyId String // FIRINGI or the vendor that employs the driver
   licenceNumber  String
   licenceExpiry  DateTime?
   status         AccountStatus      @default(PENDING) // admin approval required
@@ -148,9 +151,10 @@ model Driver {
   deliveries Delivery[]
 }
 
+/// One delivery per order (retries after a failed attempt reuse it; each try is a DeliveryAttempt).
 model Delivery {
   id                 String         @id @default(cuid())
-  orderId            String
+  orderId            String         @unique
   mode               DeliveryMode
   executingCompanyId String
   driverId           String?
@@ -161,15 +165,23 @@ model Delivery {
   scheduledFor       DateTime?
   eta                DateTime?
   feeNet             Decimal        @default(0) @db.Decimal(18, 2)
+  notes              String?
+  assignedAt         DateTime?
+  assignedById       String?
+  pickedUpAt         DateTime?
+  completedAt        DateTime?
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
 
-  order     Order             @relation(fields: [orderId], references: [id])
-  executor  Company           @relation(fields: [executingCompanyId], references: [id])
-  driver    Driver?           @relation(fields: [driverId], references: [id])
-  vehicle   Vehicle?          @relation(fields: [vehicleId], references: [id])
-  attempts  DeliveryAttempt[]
-  proof     ProofOfDelivery?
+  order    Order             @relation(fields: [orderId], references: [id])
+  executor Company           @relation(fields: [executingCompanyId], references: [id])
+  driver   Driver?           @relation(fields: [driverId], references: [id])
+  vehicle  Vehicle?          @relation(fields: [vehicleId], references: [id])
+  attempts DeliveryAttempt[]
+  proof    ProofOfDelivery?
+
+  @@index([executingCompanyId, status])
+  @@index([driverId, status])
 }
 
 model DeliveryAttempt {
@@ -177,7 +189,9 @@ model DeliveryAttempt {
   deliveryId    String
   at            DateTime @default(now())
   succeeded     Boolean
-  failureReason String?
+  reasonCode    String? // CUSTOMER_ABSENT | CLOSED | REFUSED | WRONG_ADDRESS | DAMAGED | NO_PAYMENT | OTHER
+  failureReason String? // driver's note
+  photoKey      String?
   latitude      Decimal? @db.Decimal(9, 6)
   longitude     Decimal? @db.Decimal(9, 6)
   byUserId      String?

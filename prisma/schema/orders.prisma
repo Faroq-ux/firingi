@@ -19,9 +19,9 @@ enum OrderStatus {
 }
 
 enum DeliveryMode {
-  VENDOR_FLEET  // order meets the vendor's free-delivery rules → vendor delivers
+  VENDOR_FLEET // order meets the vendor's free-delivery rules → vendor delivers
   FIRINGI_FLEET // otherwise FIRINGI delivers and a fee applies
-  CARRIER       // third-party carrier (cross-border distributor shipments)
+  CARRIER // third-party carrier (cross-border distributor shipments)
 }
 
 /// One cart per user per buyer company. `sellerCompanyId` locks the cart to a single
@@ -43,11 +43,11 @@ model Cart {
 }
 
 model CartItem {
-  id        String   @id @default(cuid())
-  cartId    String
-  offerId   String
-  qty       Int
-  addedAt   DateTime @default(now())
+  id      String   @id @default(cuid())
+  cartId  String
+  offerId String
+  qty     Int
+  addedAt DateTime @default(now())
 
   cart  Cart        @relation(fields: [cartId], references: [id], onDelete: Cascade)
   offer VendorOffer @relation(fields: [offerId], references: [id])
@@ -56,24 +56,24 @@ model CartItem {
 }
 
 model Order {
-  id               String       @id @default(cuid())
-  number           String       @unique // FO-2026-000001
-  flow             OrderFlow
-  buyerCompanyId   String
-  sellerCompanyId  String
-  placedByUserId   String
-  countryId        String       // buyer's country (tax country of FIRINGI's sale)
-  currencyCode     String       @default("EUR")
-  vendorCurrencyCode String     @default("EUR")
-  fxRate           Decimal      @default(1) @db.Decimal(18, 8) // vendor → buyer currency at order time
-  status           OrderStatus  @default(NEW)
-  deliveryMode     DeliveryMode?
-  deliveryAddress  Json         // snapshot
-  sourceAddressId  String?
-  deliveryRuleId   String?
+  id                    String        @id @default(cuid())
+  number                String        @unique // FO-2026-000001
+  flow                  OrderFlow
+  buyerCompanyId        String
+  sellerCompanyId       String
+  placedByUserId        String
+  countryId             String // buyer's country (tax country of FIRINGI's sale)
+  currencyCode          String        @default("EUR")
+  vendorCurrencyCode    String        @default("EUR")
+  fxRate                Decimal       @default(1) @db.Decimal(18, 8) // vendor → buyer currency at order time
+  status                OrderStatus   @default(NEW)
+  deliveryMode          DeliveryMode?
+  deliveryAddress       Json // snapshot
+  sourceAddressId       String?
+  deliveryRuleId        String?
   requestedDeliveryDate DateTime?
-  buyerNotes       String?
-  parentOrderId    String?      // admin split / re-allocation
+  buyerNotes            String?
+  parentOrderId         String? // admin split / re-allocation
 
   // Totals (frozen at placement, recalculated on vendor confirmation)
   listNet          Decimal @default(0) @db.Decimal(18, 2)
@@ -86,25 +86,25 @@ model Order {
   vendorPayableNet Decimal @default(0) @db.Decimal(18, 2)
   firingiMarginNet Decimal @default(0) @db.Decimal(18, 2)
 
-  placedAt   DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  placedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  buyer         Company   @relation("OrderBuyer", fields: [buyerCompanyId], references: [id])
-  seller        Company   @relation("OrderSeller", fields: [sellerCompanyId], references: [id])
-  placedBy      User      @relation("OrderPlacedBy", fields: [placedByUserId], references: [id])
-  country       Country   @relation(fields: [countryId], references: [id])
-  sourceAddress Address?  @relation("OrderSourceAddress", fields: [sourceAddressId], references: [id])
-  deliveryRule  DeliveryRule? @relation(fields: [deliveryRuleId], references: [id])
-  parentOrder   Order?    @relation("OrderSplit", fields: [parentOrderId], references: [id])
-  childOrders   Order[]   @relation("OrderSplit")
-  lines         OrderLine[]
-  statusHistory OrderStatusHistory[]
-  exceptions    OrderException[]
-  stockMovements StockMovement[]
-  invoices      Invoice[]
+  buyer             Company                  @relation("OrderBuyer", fields: [buyerCompanyId], references: [id])
+  seller            Company                  @relation("OrderSeller", fields: [sellerCompanyId], references: [id])
+  placedBy          User                     @relation("OrderPlacedBy", fields: [placedByUserId], references: [id])
+  country           Country                  @relation(fields: [countryId], references: [id])
+  sourceAddress     Address?                 @relation("OrderSourceAddress", fields: [sourceAddressId], references: [id])
+  deliveryRule      DeliveryRule?            @relation(fields: [deliveryRuleId], references: [id])
+  parentOrder       Order?                   @relation("OrderSplit", fields: [parentOrderId], references: [id])
+  childOrders       Order[]                  @relation("OrderSplit")
+  lines             OrderLine[]
+  statusHistory     OrderStatusHistory[]
+  exceptions        OrderException[]
+  stockMovements    StockMovement[]
+  invoices          Invoice[]
   billingStatements VendorBillingStatement[]
-  returns       ReturnRequest[]
-  deliveries    Delivery[]
+  returns           ReturnRequest[]
+  delivery          Delivery?
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])
@@ -114,15 +114,15 @@ model Order {
 /// Every commercial number is frozen on the line so finance reports stay correct even
 /// when prices, promotions or commission rates change later.
 model OrderLine {
-  id              String  @id @default(cuid())
-  orderId         String
-  offerId         String
-  productName     Json    // snapshot
-  sku             String
-  packagingName   Json
-  qtyOrdered      Int
-  qtyConfirmed    Int?
-  qtyDelivered    Int?
+  id            String @id @default(cuid())
+  orderId       String
+  offerId       String
+  productName   Json // snapshot
+  sku           String
+  packagingName Json
+  qtyOrdered    Int
+  qtyConfirmed  Int?
+  qtyDelivered  Int?
 
   unitListPriceNet      Decimal @db.Decimal(18, 4) // vendor price before any discount
   vendorDiscountNet     Decimal @default(0) @db.Decimal(18, 4) // per unit, from vendor promotions
@@ -131,17 +131,17 @@ model OrderLine {
   vendorFundedDiscount  Decimal @default(0) @db.Decimal(18, 4) // per unit, paid by vendor
   unitSalePriceNet      Decimal @db.Decimal(18, 4) // what the buyer pays per unit (net)
 
-  taxRate         Decimal @db.Decimal(6, 3)
-  lineNet         Decimal @db.Decimal(18, 2)
-  lineVat         Decimal @db.Decimal(18, 2)
+  taxRate Decimal @db.Decimal(6, 3)
+  lineNet Decimal @db.Decimal(18, 2)
+  lineVat Decimal @db.Decimal(18, 2)
 
-  commissionRuleId String?
-  commissionType   CommissionType?
-  commissionRate   Decimal? @db.Decimal(10, 4)
-  commissionBase   Decimal  @default(0) @db.Decimal(18, 2) // always pre-discount list net
-  commissionAmount Decimal  @default(0) @db.Decimal(18, 2)
-  vendorUnitCostNet Decimal @db.Decimal(18, 4) // what FIRINGI pays the vendor per unit
-  vendorLineNet    Decimal  @db.Decimal(18, 2)
+  commissionRuleId  String?
+  commissionType    CommissionType?
+  commissionRate    Decimal?        @db.Decimal(10, 4)
+  commissionBase    Decimal         @default(0) @db.Decimal(18, 2) // always pre-discount list net
+  commissionAmount  Decimal         @default(0) @db.Decimal(18, 2)
+  vendorUnitCostNet Decimal         @db.Decimal(18, 4) // what FIRINGI pays the vendor per unit
+  vendorLineNet     Decimal         @db.Decimal(18, 2)
 
   order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
   offer          VendorOffer         @relation(fields: [offerId], references: [id])
@@ -179,14 +179,14 @@ model OrderStatusHistory {
 }
 
 model OrderException {
-  id          String    @id @default(cuid())
-  orderId     String
-  type        String    // STOCK_SHORT | DELIVERY_FAILED | PAYMENT | PRICE_MISMATCH | OTHER
-  description String
-  isResolved  Boolean   @default(false)
+  id           String    @id @default(cuid())
+  orderId      String
+  type         String // STOCK_SHORT | DELIVERY_FAILED | PAYMENT | PRICE_MISMATCH | OTHER
+  description  String
+  isResolved   Boolean   @default(false)
   resolvedById String?
-  resolvedAt  DateTime?
-  createdAt   DateTime  @default(now())
+  resolvedAt   DateTime?
+  createdAt    DateTime  @default(now())
 
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }

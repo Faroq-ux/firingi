@@ -4,8 +4,8 @@ enum AddressKind {
   HEAD_OFFICE
   BILLING
   WAREHOUSE // vendor distribution / warehouse address (stock location)
-  PICKUP    // vendor wholesale / pickup address
-  DELIVERY  // buyer delivery address
+  PICKUP // vendor wholesale / pickup address
+  DELIVERY // buyer delivery address
 }
 
 enum DocumentType {
@@ -43,59 +43,62 @@ enum VatValidationResult {
 }
 
 model Address {
-  id          String      @id @default(cuid())
-  companyId   String
-  kind        AddressKind
-  label       String
-  line1       String
-  line2       String?
-  postalCode  String
-  cityId      String?
-  cityName    String      // free text fallback / display
-  countryId   String
-  latitude    Decimal?    @db.Decimal(9, 6) // set by geocoding on save (Phase 2/6)
-  longitude   Decimal?    @db.Decimal(9, 6)
-  contactName String?
-  phone       String?
+  id           String                    @id @default(cuid())
+  companyId    String
+  kind         AddressKind
+  label        String
+  line1        String
+  line2        String?
+  postalCode   String
+  cityId       String?
+  cityName     String // free text fallback / display
+  countryId    String
+  latitude     Decimal?                  @db.Decimal(9, 6) // from geocoding / the city's centre
+  longitude    Decimal?                  @db.Decimal(9, 6)
+  /// PostGIS point kept in sync with latitude / longitude by a trigger (read-only, SQL only).
+  geo          Unsupported("geography")?
+  contactName  String?
+  phone        String?
   openingHours Json?
-  isDefault   Boolean     @default(false)
-  isActive    Boolean     @default(true)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  isDefault    Boolean                   @default(false)
+  isActive     Boolean                   @default(true)
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
 
-  company Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  city    City?    @relation(fields: [cityId], references: [id])
-  country Country  @relation(fields: [countryId], references: [id])
+  company        Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  city           City?               @relation(fields: [cityId], references: [id])
+  country        Country             @relation(fields: [countryId], references: [id])
   stockLevels    StockLevel[]
   stockMovements StockMovement[]
   radiusAreas    VendorServiceArea[]
-  ordersFrom     Order[] @relation("OrderSourceAddress")
+  ordersFrom     Order[]             @relation("OrderSourceAddress")
 
   @@index([companyId, kind])
+  @@index([geo], map: "Address_geo_idx", type: Gist)
 }
 
 model Document {
-  id          String       @id @default(cuid())
-  companyId   String?
-  driverId    String?
-  vehicleId   String?
+  id                    String       @id @default(cuid())
+  companyId             String?
+  driverId              String?
+  vehicleId             String?
   restrictionApprovalId String?
-  type        DocumentType
-  fileKey     String       // object-storage key
-  fileName    String
-  mimeType    String
-  sizeBytes   Int
-  status      ReviewStatus @default(PENDING)
-  expiresAt   DateTime?
-  reviewedById String?
-  reviewedAt  DateTime?
-  reviewNote  String?
-  uploadedById String?
-  createdAt   DateTime     @default(now())
+  type                  DocumentType
+  fileKey               String // object-storage key
+  fileName              String
+  mimeType              String
+  sizeBytes             Int
+  status                ReviewStatus @default(PENDING)
+  expiresAt             DateTime?
+  reviewedById          String?
+  reviewedAt            DateTime?
+  reviewNote            String?
+  uploadedById          String?
+  createdAt             DateTime     @default(now())
 
-  company     Company?             @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  driver      Driver?              @relation(fields: [driverId], references: [id], onDelete: Cascade)
-  vehicle     Vehicle?             @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  company             Company?             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  driver              Driver?              @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  vehicle             Vehicle?             @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   restrictionApproval RestrictionApproval? @relation(fields: [restrictionApprovalId], references: [id])
 
   @@index([companyId])
@@ -105,17 +108,17 @@ model Document {
 /// A buyer must be approved per restriction (tobacco / alcohol) before it can see or buy
 /// restricted products.
 model RestrictionApproval {
-  id          String       @id @default(cuid())
-  companyId   String
-  restriction Restriction
-  status      ReviewStatus @default(PENDING)
-  extraInfo   Json?        // licence number, issuing authority …
-  validUntil  DateTime?
+  id           String       @id @default(cuid())
+  companyId    String
+  restriction  Restriction
+  status       ReviewStatus @default(PENDING)
+  extraInfo    Json? // licence number, issuing authority …
+  validUntil   DateTime?
   reviewedById String?
-  reviewedAt  DateTime?
-  reviewNote  String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  reviewedAt   DateTime?
+  reviewNote   String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
   company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
   documents Document[]
@@ -125,15 +128,15 @@ model RestrictionApproval {
 
 /// History of EU VIES VAT-number checks (required before approving EU distributors).
 model VatValidation {
-  id              String              @id @default(cuid())
-  companyId       String
-  vatNumber       String
-  result          VatValidationResult
-  registeredName  String?
+  id                String              @id @default(cuid())
+  companyId         String
+  vatNumber         String
+  result            VatValidationResult
+  registeredName    String?
   registeredAddress String?
-  consultationRef String?
-  checkedAt       DateTime            @default(now())
-  checkedById     String?
+  consultationRef   String?
+  checkedAt         DateTime            @default(now())
+  checkedById       String?
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 

@@ -4,6 +4,7 @@
  *   • wholesale customers only ever see wholesalers' offers (never distributors),
  *   • wholesalers only see distributors' offers,
  *   • wholesalers' offers are only visible inside their own country,
+ *   • vendors with service areas are only visible where they cover the buyer's address,
  *   • only approved vendors / products and active offers are visible,
  *   • tobacco / alcohol products are hidden unless the buyer holds a valid approval,
  *   • an offer is only visible if the buyer has a price for it.
@@ -17,6 +18,8 @@ export type BuyerScope = {
   allowedRestrictions: Restriction[];
   /** Category ids that are active and not hidden by restriction (see restrictions.ts). */
   browsableCategoryIds: string[];
+  /** Vendors whose service areas don't cover the buyer's delivery address (delivery/coverage.ts). */
+  excludedVendorIds?: string[];
   /** Category ids whose effective restriction is NOT allowed (for the product-level override check). */
   now?: Date;
 };
@@ -49,9 +52,9 @@ export function visibleOfferWhere(s: BuyerScope): Prisma.VendorOfferWhereInput {
   return {
     status: "ACTIVE",
     sellerType: seller,
-    vendorCompanyId: { not: s.buyerCompanyId },
-    // Wholesalers sell only inside their own country; distributors sell EU-wide
-    // (delivery coverage via service areas is added in Phase 6).
+    vendorCompanyId: { not: s.buyerCompanyId, ...(s.excludedVendorIds?.length ? { notIn: s.excludedVendorIds } : {}) },
+    // Wholesalers sell only inside their own country; distributors sell EU-wide. Within
+    // that, a vendor's service areas narrow where it sells.
     ...(seller === "WHOLESALER" ? { countryId: s.buyerCountryId } : {}),
     vendor: { status: "APPROVED", type: seller },
     packaging: {

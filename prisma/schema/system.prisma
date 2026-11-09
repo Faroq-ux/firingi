@@ -7,13 +7,13 @@ enum SettingScope {
 }
 
 model Setting {
-  id        String       @id @default(cuid())
-  scope     SettingScope
-  scopeId   String       @default("") // "" for GLOBAL
-  key       String
-  value     Json
+  id          String       @id @default(cuid())
+  scope       SettingScope
+  scopeId     String       @default("") // "" for GLOBAL
+  key         String
+  value       Json
   updatedById String?
-  updatedAt DateTime     @updatedAt
+  updatedAt   DateTime     @updatedAt
 
   @@unique([scope, scopeId, key])
 }
@@ -43,12 +43,12 @@ model Notification {
 }
 
 model FileObject {
-  key         String   @id
+  key            String   @id
   ownerCompanyId String?
-  fileName    String
-  mimeType    String
-  sizeBytes   Int
-  sha256      String?
-  uploadedById String?
-  createdAt   DateTime @default(now())
+  fileName       String
+  mimeType       String
+  sizeBytes      Int
+  sha256         String?
+  uploadedById   String?
+  createdAt      DateTime @default(now())
 }

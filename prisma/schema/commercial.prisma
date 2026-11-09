@@ -2,7 +2,7 @@
 
 enum CommissionType {
   PERCENT
-  FIXED_PER_UNIT  // reserved — later phase
+  FIXED_PER_UNIT // reserved — later phase
   FIXED_PER_ORDER // reserved — later phase
 }
 
@@ -35,7 +35,7 @@ model CommissionRule {
   id              String         @id @default(cuid())
   vendorCompanyId String
   type            CommissionType @default(PERCENT)
-  categoryId      String?        // reserved for per-category commission
+  categoryId      String? // reserved for per-category commission
   rate            Decimal        @db.Decimal(10, 4) // percent for PERCENT, money for FIXED_*
   validFrom       DateTime       @default(now())
   validTo         DateTime?
@@ -53,31 +53,31 @@ model CommissionRule {
 /// Vendor promotions are always 100 % vendor-funded and never reduce FIRINGI commission.
 /// Admin promotions declare the split (FIRINGI / vendor / e.g. 50-50). DB CHECKs enforce it.
 model Promotion {
-  id               String          @id @default(cuid())
-  ownerType        PromotionOwner
-  ownerCompanyId   String?         // vendor for VENDOR promotions
-  name             Json
-  kind             PromotionKind
-  value            Decimal         @db.Decimal(18, 4)
-  firingiFundPct   Decimal         @default(0) @db.Decimal(5, 2)
-  vendorFundPct    Decimal         @default(100) @db.Decimal(5, 2)
-  countryId        String?
-  minQty           Int?
-  minOrderValue    Decimal?        @db.Decimal(18, 2)
-  validFrom        DateTime
-  validTo          DateTime?
-  priority         Int             @default(0)
-  status           PromotionStatus @default(DRAFT)
-  requiresVendorAcceptance Boolean @default(false)
-  budget           Decimal?        @db.Decimal(18, 2)
-  createdById      String?
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+  id                       String          @id @default(cuid())
+  ownerType                PromotionOwner
+  ownerCompanyId           String? // vendor for VENDOR promotions
+  name                     Json
+  kind                     PromotionKind
+  value                    Decimal         @db.Decimal(18, 4)
+  firingiFundPct           Decimal         @default(0) @db.Decimal(5, 2)
+  vendorFundPct            Decimal         @default(100) @db.Decimal(5, 2)
+  countryId                String?
+  minQty                   Int?
+  minOrderValue            Decimal?        @db.Decimal(18, 2)
+  validFrom                DateTime
+  validTo                  DateTime?
+  priority                 Int             @default(0)
+  status                   PromotionStatus @default(DRAFT)
+  requiresVendorAcceptance Boolean         @default(false)
+  budget                   Decimal?        @db.Decimal(18, 2)
+  createdById              String?
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
 
-  owner       Company?                    @relation(fields: [ownerCompanyId], references: [id])
-  country     Country?                    @relation(fields: [countryId], references: [id])
-  targets     PromotionTarget[]
-  acceptances PromotionVendorAcceptance[]
+  owner         Company?                    @relation(fields: [ownerCompanyId], references: [id])
+  country       Country?                    @relation(fields: [countryId], references: [id])
+  targets       PromotionTarget[]
+  acceptances   PromotionVendorAcceptance[]
   lineDiscounts OrderLineDiscount[]
 }
 

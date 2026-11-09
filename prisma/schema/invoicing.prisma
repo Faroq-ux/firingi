@@ -23,8 +23,8 @@ enum TaxRegime {
 }
 
 enum BillingStatementStatus {
-  OPEN      // waiting for the vendor's invoice
-  INVOICED  // vendor invoice uploaded, not yet matched
+  OPEN // waiting for the vendor's invoice
+  INVOICED // vendor invoice uploaded, not yet matched
   MATCHED
   DISPUTED
   CLOSED
@@ -48,7 +48,7 @@ enum ReturnStatus {
 }
 
 enum PaymentDirection {
-  INBOUND  // buyer → FIRINGI
+  INBOUND // buyer → FIRINGI
   OUTBOUND // FIRINGI → vendor
 }
 
@@ -71,16 +71,16 @@ enum PaymentStatus {
 
 /// Gap-free sequential numbering: numbers are taken with SELECT … FOR UPDATE.
 model InvoiceSeries {
-  id            String         @id @default(cuid())
-  legalEntityId String
-  countryId     String
-  docType       InvoiceDocType
-  prefix        String         // e.g. "FT FIR2026"
-  year          Int
-  nextNumber    Int            @default(1)
-  atcudValidationCode String?  // PT: code given by AT when the series is registered
-  isActive      Boolean        @default(true)
-  createdAt     DateTime       @default(now())
+  id                  String         @id @default(cuid())
+  legalEntityId       String
+  countryId           String
+  docType             InvoiceDocType
+  prefix              String // e.g. "FT FIR2026"
+  year                Int
+  nextNumber          Int            @default(1)
+  atcudValidationCode String? // PT: code given by AT when the series is registered
+  isActive            Boolean        @default(true)
+  createdAt           DateTime       @default(now())
 
   legalEntity LegalEntity @relation(fields: [legalEntityId], references: [id])
   country     Country     @relation(fields: [countryId], references: [id])
@@ -92,7 +92,7 @@ model InvoiceSeries {
 /// Issued documents are immutable (DB trigger). Corrections only via credit notes.
 model Invoice {
   id                 String         @id @default(cuid())
-  legalEntityId      String         // issuer (FIRINGI)
+  legalEntityId      String // issuer (FIRINGI)
   seriesId           String?
   docType            InvoiceDocType
   number             Int?
@@ -103,7 +103,7 @@ model Invoice {
   issuerSnapshot     Json
   recipientSnapshot  Json
   orderId            String?
-  originalInvoiceId  String?        // for credit notes
+  originalInvoiceId  String? // for credit notes
   currencyCode       String         @default("EUR")
   netTotal           Decimal        @db.Decimal(18, 2)
   vatTotal           Decimal        @db.Decimal(18, 2)
@@ -122,15 +122,15 @@ model Invoice {
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
 
-  legalEntity     LegalEntity        @relation(fields: [legalEntityId], references: [id])
-  series          InvoiceSeries?     @relation(fields: [seriesId], references: [id])
-  recipient       Company            @relation("InvoiceRecipient", fields: [recipientCompanyId], references: [id])
-  order           Order?             @relation(fields: [orderId], references: [id])
-  originalInvoice Invoice?           @relation("CreditNotes", fields: [originalInvoiceId], references: [id])
-  creditNotes     Invoice[]          @relation("CreditNotes")
-  lines           InvoiceLine[]
-  taxSummary      InvoiceTaxSummary[]
-  allocations     PaymentAllocation[]
+  legalEntity       LegalEntity              @relation(fields: [legalEntityId], references: [id])
+  series            InvoiceSeries?           @relation(fields: [seriesId], references: [id])
+  recipient         Company                  @relation("InvoiceRecipient", fields: [recipientCompanyId], references: [id])
+  order             Order?                   @relation(fields: [orderId], references: [id])
+  originalInvoice   Invoice?                 @relation("CreditNotes", fields: [originalInvoiceId], references: [id])
+  creditNotes       Invoice[]                @relation("CreditNotes")
+  lines             InvoiceLine[]
+  taxSummary        InvoiceTaxSummary[]
+  allocations       PaymentAllocation[]
   billingStatements VendorBillingStatement[]
 
   @@index([recipientCompanyId, issuedAt])
@@ -138,19 +138,19 @@ model Invoice {
 }
 
 model InvoiceLine {
-  id           String   @id @default(cuid())
-  invoiceId    String
-  orderLineId  String?
-  position     Int
-  description  String
-  qty          Decimal  @db.Decimal(18, 3)
-  unitPriceNet Decimal  @db.Decimal(18, 4)
-  discountNet  Decimal  @default(0) @db.Decimal(18, 2)
-  taxRate      Decimal  @db.Decimal(6, 3)
-  saftTaxCode  String?
+  id                String  @id @default(cuid())
+  invoiceId         String
+  orderLineId       String?
+  position          Int
+  description       String
+  qty               Decimal @db.Decimal(18, 3)
+  unitPriceNet      Decimal @db.Decimal(18, 4)
+  discountNet       Decimal @default(0) @db.Decimal(18, 2)
+  taxRate           Decimal @db.Decimal(6, 3)
+  saftTaxCode       String?
   exemptionReasonId String?
-  lineNet      Decimal  @db.Decimal(18, 2)
-  lineVat      Decimal  @db.Decimal(18, 2)
+  lineNet           Decimal @db.Decimal(18, 2)
+  lineVat           Decimal @db.Decimal(18, 2)
 
   invoice         Invoice             @relation(fields: [invoiceId], references: [id])
   orderLine       OrderLine?          @relation(fields: [orderLineId], references: [id])
@@ -169,22 +169,22 @@ model InvoiceTaxSummary {
 
 /// What FIRINGI expects the vendor to invoice for an order (net of commission).
 model VendorBillingStatement {
-  id              String                 @id @default(cuid())
-  number          String                 @unique // VBS-2026-000001
-  vendorCompanyId String
-  orderId         String
-  salesInvoiceId  String?                // the paired FIRINGI sales invoice
-  isCreditStatement Boolean              @default(false) // for returns
-  taxRegime       TaxRegime              @default(DOMESTIC)
-  currencyCode    String                 @default("EUR")
-  expectedNet     Decimal                @db.Decimal(18, 2)
-  expectedVat     Decimal                @db.Decimal(18, 2)
-  expectedGross   Decimal                @db.Decimal(18, 2)
-  commissionTotal Decimal                @db.Decimal(18, 2)
-  lines           Json                   // snapshot of the expected lines
-  status          BillingStatementStatus @default(OPEN)
-  createdAt       DateTime               @default(now())
-  updatedAt       DateTime               @updatedAt
+  id                String                 @id @default(cuid())
+  number            String                 @unique // VBS-2026-000001
+  vendorCompanyId   String
+  orderId           String
+  salesInvoiceId    String? // the paired FIRINGI sales invoice
+  isCreditStatement Boolean                @default(false) // for returns
+  taxRegime         TaxRegime              @default(DOMESTIC)
+  currencyCode      String                 @default("EUR")
+  expectedNet       Decimal                @db.Decimal(18, 2)
+  expectedVat       Decimal                @db.Decimal(18, 2)
+  expectedGross     Decimal                @db.Decimal(18, 2)
+  commissionTotal   Decimal                @db.Decimal(18, 2)
+  lines             Json // snapshot of the expected lines
+  status            BillingStatementStatus @default(OPEN)
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
 
   vendor       Company                   @relation(fields: [vendorCompanyId], references: [id])
   order        Order                     @relation(fields: [orderId], references: [id])
@@ -197,7 +197,7 @@ model VendorInvoice {
   id              String              @id @default(cuid())
   vendorCompanyId String
   docType         InvoiceDocType      @default(INVOICE)
-  externalNumber  String              // the vendor's own invoice number
+  externalNumber  String // the vendor's own invoice number
   issueDate       DateTime            @db.Date
   dueDate         DateTime?           @db.Date
   taxRegime       TaxRegime           @default(DOMESTIC)
@@ -208,17 +208,17 @@ model VendorInvoice {
   /// FIRINGI self-assessed VAT for intra-EU reverse-charge purchases
   selfAssessedVat Decimal             @default(0) @db.Decimal(18, 2)
   fileKey         String
-  structuredData  Json?               // UBL / Peppol payload if provided
+  structuredData  Json? // UBL / Peppol payload if provided
   status          VendorInvoiceStatus @default(SUBMITTED)
-  matchResult     Json?               // differences found by the matcher
+  matchResult     Json? // differences found by the matcher
   submittedById   String?
   reviewedById    String?
   reviewedAt      DateTime?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
 
-  vendor      Company                   @relation(fields: [vendorCompanyId], references: [id])
-  allocations VendorInvoiceAllocation[]
+  vendor             Company                   @relation(fields: [vendorCompanyId], references: [id])
+  allocations        VendorInvoiceAllocation[]
   paymentAllocations PaymentAllocation[]
 
   @@unique([vendorCompanyId, externalNumber])
@@ -236,14 +236,20 @@ model VendorInvoiceAllocation {
 }
 
 model ReturnRequest {
-  id          String       @id @default(cuid())
-  orderId     String
-  reason      String
-  status      ReturnStatus @default(REQUESTED)
+  id            String       @id @default(cuid())
+  orderId       String
+  reason        String
+  status        ReturnStatus @default(REQUESTED)
   requestedById String?
   reviewedById  String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  reviewNote    String?
+  photoKeys     String[]
+  restock       Boolean      @default(true) // goods go back into the vendor's stock on receipt
+  receivedAt    DateTime?
+  receivedById  String?
+  creditNoteId  String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   order Order        @relation(fields: [orderId], references: [id])
   lines ReturnLine[]
@@ -261,7 +267,7 @@ model ReturnLine {
 
 model Payment {
   id           String           @id @default(cuid())
-  companyId    String           // payer (INBOUND) or payee (OUTBOUND)
+  companyId    String // payer (INBOUND) or payee (OUTBOUND)
   direction    PaymentDirection
   method       PaymentMethod
   amount       Decimal          @db.Decimal(18, 2)

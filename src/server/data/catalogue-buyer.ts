@@ -19,6 +19,7 @@ import { loadActivePromotions, promotionsForOffer } from "@/server/services/prom
 import { asBarcode } from "@/lib/barcode";
 import { taxLabel } from "@/lib/tax-label";
 import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance";
+import { excludedVendorIds } from "@/server/delivery/coverage";
 
 async function loadCategoryInfo() {
   const cats = await prisma.category.findMany({ select: { id: true, parentId: true, restriction: true, isActive: true } });
@@ -29,13 +30,14 @@ async function loadCategoryInfo() {
 export const buyerScope = cache(async (ctx: Ctx): Promise<BuyerScope & { info: Awaited<ReturnType<typeof loadCategoryInfo>> }> => {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.catalogue.view"))
     throw new ForbiddenError();
-  const [allowed, info] = await Promise.all([allowedRestrictions(ctx.company.id), loadCategoryInfo()]);
+  const [allowed, info, addressId] = await Promise.all([allowedRestrictions(ctx.company.id), loadCategoryInfo(), buyerAddressId(ctx.company.id)]);
   return {
     buyerCompanyId: ctx.company.id,
     buyerType: ctx.company.type,
     buyerCountryId: ctx.company.countryId,
     allowedRestrictions: allowed,
     browsableCategoryIds: browsableCategoryIds(info, allowed),
+    excludedVendorIds: await excludedVendorIds(addressId),
     info,
   };
 });
@@ -218,12 +220,18 @@ export async function browsableCategories(ctx: Ctx) {
 }
 
 /** Where the buyer receives goods: default delivery address, else head office. */
-export async function buyerLocation(ctx: Ctx): Promise<LatLng | null> {
-  const a = await prisma.address.findFirst({
-    where: { companyId: ctx.company.id, isActive: true, kind: { in: ["DELIVERY", "HEAD_OFFICE"] }, latitude: { not: null } },
+const buyerAddress = cache(async (companyId: string) =>
+  prisma.address.findFirst({
+    where: { companyId, isActive: true, kind: { in: ["DELIVERY", "HEAD_OFFICE"] } },
     orderBy: [{ kind: "asc" }, { isDefault: "desc" }], // DELIVERY sorts before HEAD_OFFICE
-  });
-  return a ? { lat: Number(a.latitude), lng: Number(a.longitude) } : null;
+    select: { id: true, latitude: true, longitude: true },
+  }),
+);
+const buyerAddressId = async (companyId: string) => (await buyerAddress(companyId))?.id ?? null;
+
+export async function buyerLocation(ctx: Ctx): Promise<LatLng | null> {
+  const a = await buyerAddress(ctx.company.id);
+  return a?.latitude != null && a.longitude != null ? { lat: Number(a.latitude), lng: Number(a.longitude) } : null;
 }
 
 /**

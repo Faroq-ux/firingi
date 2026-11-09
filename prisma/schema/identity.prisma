@@ -1,10 +1,10 @@
 // ───────────────────────── Identity, tenancy, RBAC, audit ─────────────────────────
 
 enum CompanyType {
-  ADMIN       // FIRINGI itself (merchant of record)
+  ADMIN // FIRINGI itself (merchant of record)
   DISTRIBUTOR // vendor — sells to wholesalers only (cross-border within EU allowed)
-  WHOLESALER  // vendor + buyer — sells to customers in its own country, buys from distributors
-  CUSTOMER    // wholesale business customer — buys from wholesalers only
+  WHOLESALER // vendor + buyer — sells to customers in its own country, buys from distributors
+  CUSTOMER // wholesale business customer — buys from wholesalers only
 }
 
 /// Shared by companies and drivers: every registration must be approved by admin.
@@ -29,11 +29,11 @@ enum MembershipStatus {
 
 /// Which portal / area a permission belongs to.
 enum PermissionAudience {
-  ADMIN   // FIRINGI back office
-  VENDOR  // sell portal (distributors, wholesalers)
-  BUYER   // buy portal (customers, wholesalers buying from distributors)
+  ADMIN // FIRINGI back office
+  VENDOR // sell portal (distributors, wholesalers)
+  BUYER // buy portal (customers, wholesalers buying from distributors)
   COMPANY // company self-management (team, profile, documents) — any non-admin company
-  DRIVER  // driver portal
+  DRIVER // driver portal
 }
 
 // ---- better-auth core tables (field names required by better-auth) ----
@@ -45,33 +45,33 @@ model User {
   emailVerified Boolean    @default(false)
   image         String?
   phone         String?
-  locale        String?    // preferred UI language (must be a country language or "en")
+  locale        String? // preferred UI language (must be a country language or "en")
   status        UserStatus @default(ACTIVE)
   lastLoginAt   DateTime?
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
-  sessions    Session[]
-  accounts    Account[]
-  memberships Membership[]
-  driver      Driver?
-  notifications Notification[]
-  carts       Cart[]
-  ordersPlaced Order[] @relation("OrderPlacedBy")
-  regionalManagerOf Company[] @relation("RegionalManager")
+  sessions          Session[]
+  accounts          Account[]
+  memberships       Membership[]
+  driver            Driver?
+  notifications     Notification[]
+  carts             Cart[]
+  ordersPlaced      Order[]        @relation("OrderPlacedBy")
+  regionalManagerOf Company[]      @relation("RegionalManager")
 }
 
 model Session {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  userId    String
-  expiresAt DateTime
-  ipAddress String?
-  userAgent String?
+  id              String   @id @default(cuid())
+  token           String   @unique
+  userId          String
+  expiresAt       DateTime
+  ipAddress       String?
+  userAgent       String?
   /// The company the user is currently acting for (users can belong to several).
   activeCompanyId String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -112,62 +112,62 @@ model Verification {
 /// One table for every account. "Vendor" = DISTRIBUTOR | WHOLESALER.
 /// A wholesaler is ONE company that uses both the Sell and the Buy portal.
 model Company {
-  id              String        @id @default(cuid())
-  type            CompanyType
-  status          AccountStatus @default(PENDING)
-  legalName       String
-  tradeName       String?
-  taxId           String        // national tax id (NIF in PT)
-  vatNumber       String?       // EU VAT number incl. prefix (validated with VIES)
-  countryId       String
-  email           String
-  phone           String?
-  website         String?
-  businessType    String?       // restaurant, kebab/pizza, mini-market … (customers)
-  defaultCurrencyCode String    @default("EUR")
+  id                  String        @id @default(cuid())
+  type                CompanyType
+  status              AccountStatus @default(PENDING)
+  legalName           String
+  tradeName           String?
+  taxId               String // national tax id (NIF in PT)
+  vatNumber           String? // EU VAT number incl. prefix (validated with VIES)
+  countryId           String
+  email               String
+  phone               String?
+  website             String?
+  businessType        String? // restaurant, kebab/pizza, mini-market … (customers)
+  defaultCurrencyCode String        @default("EUR")
   defaultLanguageCode String?
-  creditLimit     Decimal?      @db.Decimal(18, 2)
-  paymentTermsDays Int          @default(0)
-  regionalManagerId String?
-  notes           String?
-  approvedAt      DateTime?
-  approvedById    String?
-  statusReason    String?       // rejection / suspension reason
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  creditLimit         Decimal?      @db.Decimal(18, 2)
+  paymentTermsDays    Int           @default(0)
+  regionalManagerId   String?
+  notes               String?
+  approvedAt          DateTime?
+  approvedById        String?
+  statusReason        String? // rejection / suspension reason
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
 
-  country          Country       @relation(fields: [countryId], references: [id])
-  regionalManager  User?         @relation("RegionalManager", fields: [regionalManagerId], references: [id])
-  memberships      Membership[]
-  roles            Role[]
-  statusHistory    CompanyStatusHistory[]
-  addresses        Address[]
-  documents        Document[]
-  restrictionApprovals RestrictionApproval[]
-  vatValidations   VatValidation[]
-  productsProposed Product[]
-  vendorOffers     VendorOffer[]
-  customerGroupsOwned CustomerGroup[]       @relation("GroupOwner")
+  country                  Country                     @relation(fields: [countryId], references: [id])
+  regionalManager          User?                       @relation("RegionalManager", fields: [regionalManagerId], references: [id])
+  memberships              Membership[]
+  roles                    Role[]
+  statusHistory            CompanyStatusHistory[]
+  addresses                Address[]
+  documents                Document[]
+  restrictionApprovals     RestrictionApproval[]
+  vatValidations           VatValidation[]
+  productsProposed         Product[]
+  vendorOffers             VendorOffer[]
+  customerGroupsOwned      CustomerGroup[]             @relation("GroupOwner")
   customerGroupMemberships CustomerGroupMember[]
-  priceListsOwned  PriceList[]              @relation("PriceListVendor")
-  priceListsTargeted PriceList[]            @relation("PriceListTargetCompany")
-  carts            Cart[]                   @relation("CartBuyer")
-  cartsAsSeller    Cart[]                   @relation("CartSeller")
-  ordersAsBuyer    Order[]                  @relation("OrderBuyer")
-  ordersAsSeller   Order[]                  @relation("OrderSeller")
-  commissionRules  CommissionRule[]
-  promotions       Promotion[]
-  promotionTargets PromotionTarget[]
-  promotionAcceptances PromotionVendorAcceptance[]
-  billingStatements VendorBillingStatement[]
-  vendorInvoices   VendorInvoice[]
-  invoicesReceived Invoice[]                @relation("InvoiceRecipient")
-  payments         Payment[]
-  serviceAreas     VendorServiceArea[]
-  deliveryRules    DeliveryRule[]
-  vehicles         Vehicle[]
-  drivers          Driver[]
-  deliveries       Delivery[]
+  priceListsOwned          PriceList[]                 @relation("PriceListVendor")
+  priceListsTargeted       PriceList[]                 @relation("PriceListTargetCompany")
+  carts                    Cart[]                      @relation("CartBuyer")
+  cartsAsSeller            Cart[]                      @relation("CartSeller")
+  ordersAsBuyer            Order[]                     @relation("OrderBuyer")
+  ordersAsSeller           Order[]                     @relation("OrderSeller")
+  commissionRules          CommissionRule[]
+  promotions               Promotion[]
+  promotionTargets         PromotionTarget[]
+  promotionAcceptances     PromotionVendorAcceptance[]
+  billingStatements        VendorBillingStatement[]
+  vendorInvoices           VendorInvoice[]
+  invoicesReceived         Invoice[]                   @relation("InvoiceRecipient")
+  payments                 Payment[]
+  serviceAreas             VendorServiceArea[]
+  deliveryRules            DeliveryRule[]
+  vehicles                 Vehicle[]
+  drivers                  Driver[]
+  deliveries               Delivery[]
 
   @@unique([countryId, taxId, type])
   @@index([type, status])
@@ -205,28 +205,28 @@ model LegalEntity {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  country Country         @relation(fields: [countryId], references: [id])
+  country       Country         @relation(fields: [countryId], references: [id])
   invoiceSeries InvoiceSeries[]
-  invoices Invoice[]
+  invoices      Invoice[]
 
   @@unique([countryId, taxId])
 }
 
 model Membership {
-  id        String           @id @default(cuid())
-  userId    String
-  companyId String
-  isOwner   Boolean          @default(false)
-  status    MembershipStatus @default(ACTIVE)
-  jobTitle  String?
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  id          String           @id @default(cuid())
+  userId      String
+  companyId   String
+  isOwner     Boolean          @default(false)
+  status      MembershipStatus @default(ACTIVE)
+  jobTitle    String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
   createdById String?
 
-  user   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  company Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  roles  MembershipRole[]
-  scopes MembershipScope[]
+  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  roles   MembershipRole[]
+  scopes  MembershipScope[]
 
   @@unique([userId, companyId])
   @@index([companyId])
@@ -262,7 +262,7 @@ model Permission {
 model Role {
   id          String        @id @default(cuid())
   companyId   String?
-  key         String        // stable key, e.g. SUPER_ADMIN, BUYER_PURCHASER, custom-xyz
+  key         String // stable key, e.g. SUPER_ADMIN, BUYER_PURCHASER, custom-xyz
   name        String
   description String?
   appliesTo   CompanyType[]
@@ -307,7 +307,7 @@ model AuditLog {
   at             DateTime @default(now())
   actorUserId    String?
   actorCompanyId String?
-  action         String   // e.g. "company.approved", "role.updated", "auth.login"
+  action         String // e.g. "company.approved", "role.updated", "auth.login"
   entityType     String
   entityId       String?
   before         Json?
