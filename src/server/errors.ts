@@ -1,8 +1,11 @@
 /** Typed application errors. Messages are safe to show to users. */
 export class AppError extends Error {
-  constructor(public code: string, message: string, public status = 400) {
+  /** Optional structured values so the UI can show a translated message. */
+  public details?: Record<string, string>;
+  constructor(public code: string, message: string, public status = 400, details?: Record<string, string>) {
     super(message);
     this.name = "AppError";
+    this.details = details;
   }
 }
 export class UnauthenticatedError extends AppError {

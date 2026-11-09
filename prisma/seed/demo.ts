@@ -56,6 +56,11 @@ export const DEMO_COMPANIES: CompanyDef[] = [
     ],
   },
   {
+    key: "whs-almada", type: "WHOLESALER", status: "APPROVED", country: "PT", legalName: "Cash & Carry Almada, Lda", tradeName: "C&C Almada",
+    taxId: makePtNif("51077777"), vatNumber: `PT${makePtNif("51077777")}`, email: "geral@ccalmada.test",
+    users: [{ email: "owner@ccalmada.test", name: "Alice Almada", roles: ["COMPANY_ADMIN"], owner: true }],
+  },
+  {
     key: "whs-porto", type: "WHOLESALER", status: "PENDING", country: "PT", legalName: "Grossista Porto Norte, Lda",
     taxId: makePtNif("51055555"), vatNumber: `PT${makePtNif("51055555")}`, email: "geral@portonorte.test",
     users: [{ email: "owner@portonorte.test", name: "Pedro Norte", roles: ["COMPANY_ADMIN"], owner: true }],
@@ -165,13 +170,10 @@ export async function seedDemo(
       create: { scope: "GLOBAL", scopeId: "", key, value: value as never },
     });
 
-  // Default Portugal delivery rule (demo values — all configurable per country/zone/vendor).
+  // FIRINGI delivery rule for Portugal (set by admin): minimum order for FIRINGI delivery + fee.
   if (!(await db.deliveryRule.findFirst({ where: { scope: "COUNTRY", countryId: refs.countryIds.PT } })))
     await db.deliveryRule.create({
-      data: {
-        scope: "COUNTRY", countryId: refs.countryIds.PT, minOrderValue: 50, freeDeliveryThreshold: 150,
-        firingiDeliveryFeeNet: 9.9, feeTaxCategoryId: refs.taxCatIds.STANDARD,
-      },
+      data: { scope: "COUNTRY", countryId: refs.countryIds.PT, minOrderValue: 50, firingiDeliveryFeeNet: 9.9, feeTaxCategoryId: refs.taxCatIds.STANDARD },
     });
 
   return { companies };

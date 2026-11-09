@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, ShoppingCart } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ export type TopbarProps = {
   locale: string;
   locales: { code: string; native: string }[];
   labels: { signOut: string; language: string; company: string; menu: string };
+  cart?: { count: number; label: string } | null;
   onMenu?: () => void;
 };
 
@@ -47,6 +48,12 @@ export function Topbar(p: TopbarProps) {
       )}
 
       <div className="ml-auto flex items-center gap-2">
+        {p.cart && (
+          <Link href="/buy/orders/cart" className="relative rounded-md p-2 hover:bg-accent" aria-label={`${p.cart.label} (${p.cart.count})`}>
+            <ShoppingCart className="size-5" />
+            {p.cart.count > 0 && <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">{p.cart.count}</span>}
+          </Link>
+        )}
         {p.memberships.length > 1 ? (
           <select
             aria-label={p.labels.company}

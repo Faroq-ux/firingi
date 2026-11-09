@@ -23,6 +23,14 @@ export async function adminOverview(ctx: Ctx) {
   const count = (type: string, statuses?: string[]) =>
     byTypeStatus.filter((r) => r.type === type && (!statuses || statuses.includes(r.status))).reduce((a, r) => a + r._count._all, 0);
   const pendingStatuses = ["PENDING", "UNDER_REVIEW"];
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const month = new Date(today.getFullYear(), today.getMonth(), 1);
+  const [ordersToday, awaiting, exceptions, monthAgg] = await Promise.all([
+    prisma.order.count({ where: { placedAt: { gte: today } } }),
+    prisma.order.count({ where: { status: "PENDING_CONFIRMATION" } }),
+    prisma.orderException.count({ where: { isResolved: false } }),
+    prisma.order.aggregate({ where: { placedAt: { gte: month }, status: { notIn: ["CANCELLED"] } }, _sum: { netTotal: true, firingiMarginNet: true }, _count: { _all: true } }),
+  ]);
   return {
     distributors: { total: count("DISTRIBUTOR"), active: count("DISTRIBUTOR", ["APPROVED"]), pending: count("DISTRIBUTOR", pendingStatuses) },
     wholesalers: { total: count("WHOLESALER"), active: count("WHOLESALER", ["APPROVED"]), pending: count("WHOLESALER", pendingStatuses) },
@@ -31,6 +39,10 @@ export async function adminOverview(ctx: Ctx) {
     customerMarkets: countries.filter((c) => c.customerMarketEnabled).reduce((a, r) => a + r._count._all, 0),
     sourcingCountries: countries.filter((c) => c.distributorSourcingEnabled).reduce((a, r) => a + r._count._all, 0),
     recent,
+    orders: {
+      today: ordersToday, awaiting, exceptions, monthCount: monthAgg._count._all,
+      monthNet: monthAgg._sum.netTotal?.toString() ?? "0", monthMargin: monthAgg._sum.firingiMarginNet?.toString() ?? "0",
+    },
   };
 }
 

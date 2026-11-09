@@ -25,7 +25,9 @@ describe("admin sidebar", () => {
   it("hides sections the user has no permission for", () => {
     const support = new Set<PermissionCode>(["admin.dashboard.view", "admin.orders.view"]);
     const nav = resolveNav(ADMIN_NAV, support, "en");
-    expect(nav.map((s) => s.key)).toEqual(["dashboard", "orders"]);
+    // Order lists also appear under Vendors / Customers for people with order access.
+    expect(nav.map((s) => s.key)).toEqual(["dashboard", "orders", "vendors", "customers"]);
+    expect(nav.find((s) => s.key === "vendors")!.groups.flatMap((g) => g.items).every((i) => i.key.endsWith("/orders"))).toBe(true);
     expect(nav[1].items.find((i) => i.key.endsWith("/split"))).toBeUndefined(); // needs admin.orders.manage
   });
   it("resolves Portuguese labels with English fallback", () => {

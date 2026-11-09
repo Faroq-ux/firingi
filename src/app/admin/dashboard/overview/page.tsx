@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Building2, Globe, Store, Truck, Users } from "lucide-react";
+import { AlertTriangle, Building2, Clock, Globe, Package, Store, Truck, Users, Wallet } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { adminOverview } from "@/server/data/dashboard";
 import { PageHeader } from "@/components/layout/page-header";
 import { AccountStatusBadge } from "@/components/layout/status-badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatMoney } from "@/lib/utils";
 
 export const metadata = { title: "Executive Overview" };
 
@@ -33,7 +33,13 @@ export default async function OverviewPage() {
 
   return (
     <>
-      <PageHeader title={t("welcome", { name: ctx.user.name })} description={t("phaseNote")} />
+      <PageHeader title={t("welcome", { name: ctx.user.name })} />
+      <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Link href="/admin/dashboard/today"><Stat icon={Package} label={t("ordersToday")} value={o.orders.today} /></Link>
+        <Link href="/admin/orders/pending-confirmation"><Stat icon={Clock} label={t("awaitingConfirmation")} value={o.orders.awaiting} /></Link>
+        <Link href="/admin/dashboard/alerts"><Stat icon={AlertTriangle} label={t("openExceptions")} value={o.orders.exceptions} /></Link>
+        <Stat icon={Wallet} label={t("monthSales")} value={o.orders.monthCount} hint={`${formatMoney(o.orders.monthNet, locale)} · ${t("margin")} ${formatMoney(o.orders.monthMargin, locale)}`} />
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <Stat icon={Truck} label={t("distributors")} value={o.distributors.total} hint={t("activeOf", o.distributors)} />
         <Stat icon={Store} label={t("wholesalers")} value={o.wholesalers.total} hint={t("activeOf", o.wholesalers)} />

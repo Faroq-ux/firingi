@@ -77,9 +77,13 @@ model VendorServiceArea {
   rules         DeliveryRule[]
 }
 
-/// Most specific active rule wins: VENDOR_AREA > VENDOR > ZONE > COUNTRY.
-/// below minOrderValue → checkout blocked; ≥ freeDeliveryThreshold (inside own-fleet
-/// area) → vendor delivers free; otherwise FIRINGI delivers and charges the fee.
+/// Two kinds of rule (most specific active one of each kind wins):
+///  • FIRINGI delivery rule — scope COUNTRY / ZONE, set by FIRINGI admin:
+///      minOrderValue = minimum order for FIRINGI to deliver, firingiDeliveryFeeNet = fee charged.
+///  • Vendor delivery minimum — scope VENDOR / VENDOR_AREA, set by the vendor:
+///      vendorDeliveryMinimum = from this order value the vendor delivers with its own fleet.
+/// At checkout: goods ≥ vendor minimum → vendor delivers; else goods ≥ FIRINGI minimum →
+/// FIRINGI delivers (+fee); else checkout is blocked.
 model DeliveryRule {
   id                    String            @id @default(cuid())
   scope                 DeliveryRuleScope
@@ -87,21 +91,22 @@ model DeliveryRule {
   zoneId                String?
   vendorCompanyId       String?
   serviceAreaId         String?
-  minOrderValue         Decimal           @db.Decimal(18, 2)
-  freeDeliveryThreshold Decimal           @db.Decimal(18, 2)
-  firingiDeliveryFeeNet Decimal           @db.Decimal(18, 2)
-  feeTaxCategoryId      String
+  minOrderValue         Decimal?          @db.Decimal(18, 2)
+  firingiDeliveryFeeNet Decimal?          @db.Decimal(18, 2)
+  feeTaxCategoryId      String?
+  vendorDeliveryMinimum Decimal?          @db.Decimal(18, 2)
   priority              Int               @default(0)
   validFrom             DateTime          @default(now())
   validTo               DateTime?
   isActive              Boolean           @default(true)
+  updatedById           String?
   createdAt             DateTime          @default(now())
 
   country        Country            @relation(fields: [countryId], references: [id])
   zone           DeliveryZone?      @relation(fields: [zoneId], references: [id])
   vendor         Company?           @relation(fields: [vendorCompanyId], references: [id])
   serviceArea    VendorServiceArea? @relation(fields: [serviceAreaId], references: [id])
-  feeTaxCategory TaxCategory        @relation(fields: [feeTaxCategoryId], references: [id])
+  feeTaxCategory TaxCategory?       @relation(fields: [feeTaxCategoryId], references: [id])
   orders         Order[]
 }
 

@@ -31,10 +31,15 @@ describe("customer visibility (checklist)", () => {
   it("a customer only ever sees approved wholesalers in its own country", async () => {
     const items = await allItems(KEBAB);
     expect(items.length).toBeGreaterThan(5);
-    const vendors = new Set(items.map((i) => i.vendor.name));
-    expect([...vendors]).toEqual(["Lisboa Central"]); // not the pending Porto Norte, never a distributor
+    // Every visible vendor is an APPROVED WHOLESALER in Portugal (other tests may add more).
+    const vendorIds = [...new Set(items.map((i) => i.vendor.id))];
+    const vendors = await prisma.company.findMany({ where: { id: { in: vendorIds } }, include: { country: true } });
+    expect(vendors.every((v) => v.type === "WHOLESALER" && v.status === "APPROVED" && v.country.code === "PT")).toBe(true);
+    expect(vendors.map((v) => v.legalName)).toContain("Grossista Lisboa Central, Lda");
+    expect(vendors.map((v) => v.legalName)).not.toContain("Grossista Porto Norte, Lda"); // pending
     const suppliers = await visibleSuppliers(await ctxFor(KEBAB));
-    expect(suppliers.map((s) => s.legalName)).toEqual(["Grossista Lisboa Central, Lda"]);
+    expect(suppliers.map((s) => s.legalName)).toContain("Grossista Lisboa Central, Lda");
+    expect(suppliers.some((s) => /Atlântico|Ibéricas/.test(s.legalName))).toBe(false);
   });
 
   it("opening a distributor offer directly is refused as 'not found'", async () => {
@@ -250,12 +255,16 @@ describe("barcodes and prices with IVA", () => {
     const can = await searchAcrossSuppliers(kebab, "5449000000996"); // Coca-Cola can EAN
     expect(can.barcode).toBe("5449000000996");
     expect(can.items.length).toBeGreaterThan(0);
-    expect(can.items.every((i) => i.vendor.name === "Lisboa Central" && i.unitGtin === "5449000000996")).toBe(true);
+    expect(can.items.every((i) => i.unitGtin === "5449000000996")).toBe(true);
+    const vendorsInOrder = [...new Set(can.items.map((i) => i.vendor.name))];
+    expect(vendorsInOrder.slice(0, 2)).toEqual(["Lisboa Central", "C&C Almada"]); // nearest first (Lisbon, then Almada)
+    expect(can.items.every((i, k) => k === 0 || (can.items[k - 1].distanceKm ?? 0) <= (i.distanceKm ?? Infinity))).toBe(true);
 
     // The case has its own barcode, which finds the case offer only.
     const caseGtin = can.items.find((i) => i.packaging.unitsPerPack === 24)!.gtin!;
     const byCase = await searchAcrossSuppliers(kebab, caseGtin);
-    expect(byCase.items.map((i) => i.packaging.unitsPerPack)).toEqual([24]);
+    expect(byCase.items.length).toBeGreaterThan(0);
+    expect(byCase.items.every((i) => i.packaging.unitsPerPack === 24)).toBe(true);
 
     // A wholesaler scanning the same code sees distributors, nearest first.
     const w = await searchAcrossSuppliers(await ctxFor(LX_BUYER), caseGtin);

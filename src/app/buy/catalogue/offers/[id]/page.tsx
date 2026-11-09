@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
-import { pagePermission, pagePortal } from "@/server/rbac/guard";
+import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { AddToCart } from "@/components/orders/add-to-cart";
 import { catalogueItem } from "@/server/data/catalogue-buyer";
 import { productsWithImages } from "@/server/data/catalogue-admin";
 import { NotFoundError } from "@/server/errors";
 import { pickLocalized } from "@/i18n/config";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProductThumb, StockBadge } from "@/components/catalogue/product-card";
 import { Codes, PriceBlock } from "@/components/catalogue/price";
@@ -65,10 +65,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
                 {item.qtyStep > 1 && <span className="text-muted-foreground">{t("step", { qty: item.qtyStep })}</span>}
                 <span className="text-muted-foreground">{t("leadTime", { days: item.leadTimeDays })}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <Button disabled>{t("addToCart")}</Button>
-                <span className="text-xs text-muted-foreground">{t("cartPhase")}</span>
-              </div>
+              {can(ctx, "buyer.orders.place") && item.price && <AddToCart offerId={item.offerId} minOrderQty={item.minOrderQty} qtyStep={item.qtyStep} />}
             </CardContent>
           </Card>
           <div className="text-sm">

@@ -51,7 +51,7 @@ check("contract / group price badge shown", /Preço de contrato|Contract price|P
 const api = await customer.request.get(`${BASE}/api/catalogue/offers`);
 const json = await api.json();
 const vendors = [...new Set(json.items.map((i) => i.vendor.name))];
-check("JSON API: only the wholesaler", api.status() === 200 && vendors.join() === "Lisboa Central", vendors.join());
+check("JSON API: only wholesalers, never distributors", api.status() === 200 && vendors.includes("Lisboa Central") && !vendors.some((v) => /Atlântico|Ibéricas/.test(v)), vendors.join());
 check("JSON API: no restricted products", json.items.every((i) => !i.restriction));
 
 await customer.locator('a[href^="/buy/catalogue/offers/"]').first().click();

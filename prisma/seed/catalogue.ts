@@ -52,11 +52,14 @@ const OFFERS: Record<string, [string, number, number, [number, number][]?][]> = 
     ["FIR-AZEITE75", 0, 6.4], ["FIR-AZEITE75", 1, 37.5], ["FIR-FARINHA25", 0, 19.9], ["FIR-KEBAB10", 0, 69], ["FIR-MOZZ2", 0, 13.5],
     ["FIR-MOZZ2", 1, 78], ["FIR-PIZZABOX33", 0, 21], ["FIR-SBOCK33", 0, 15.9], ["FIR-DOURO75", 0, 33], ["FIR-CIG20", 0, 52], ["FIR-RUMCAKE", 0, 29],
   ],
+  "Cash & Carry Almada, Lda": [
+    ["FIR-COLA33", 1, 13.5], ["FIR-LUSO15", 0, 2.45], ["FIR-MOZZ2", 0, 13.2], ["FIR-FARINHA25", 0, 19.5], ["FIR-ARROZ1", 0, 10.9],
+  ],
   // Pending wholesaler: its offers exist but must never be visible.
   "Grossista Porto Norte, Lda": [["FIR-COLA33", 1, 12.5], ["FIR-MOZZ2", 1, 70]],
 };
 
-const COMMISSION: Record<string, number> = { "Distribuidora Atlântico, Lda": 5, "Distribuciones Ibéricas S.L.": 6, "Grossista Lisboa Central, Lda": 8 };
+const COMMISSION: Record<string, number> = { "Distribuidora Atlântico, Lda": 5, "Distribuciones Ibéricas S.L.": 6, "Grossista Lisboa Central, Lda": 8, "Cash & Carry Almada, Lda": 7 };
 
 const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" | "DELIVERY"; label: string; line1: string; postal: string; city: string; country: string }[]> = {
   "Distribuidora Atlântico, Lda": [
@@ -72,6 +75,10 @@ const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" |
     { kind: "WAREHOUSE", label: "Armazém Lisboa", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", country: "PT" },
     { kind: "PICKUP", label: "Cash & carry Amadora", line1: "Estrada da Falagueira 20", postal: "2700-365", city: "Amadora", country: "PT" },
     { kind: "DELIVERY", label: "Receção armazém", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", country: "PT" },
+  ],
+  "Cash & Carry Almada, Lda": [
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Avenida D. Nuno Álvares Pereira 10", postal: "2800-180", city: "Almada", country: "PT" },
+    { kind: "WAREHOUSE", label: "Armazém Almada", line1: "Rua da Indústria 7", postal: "2810-000", city: "Almada", country: "PT" },
   ],
   "Grossista Porto Norte, Lda": [{ kind: "HEAD_OFFICE", label: "Sede", line1: "Rua de Santa Catarina 200", postal: "4000-442", city: "Porto", country: "PT" }],
   "Kebab House Lisboa, Lda": [
@@ -195,6 +202,13 @@ export async function seedCatalogue(db: PrismaClient) {
     (await db.priceList.create({ data: { vendorCompanyId: lx.id, name: "Kebab House contract 2026", scope: "CONTRACT", targetCompanyId: kebab.id, countryId: lx.countryId } }));
   const mozz = await lxOffer("FIR-MOZZ2", 0);
   await db.priceListItem.upsert({ where: { priceListId_offerId_minQty: { priceListId: contract.id, offerId: mozz.id, minQty: 1 } }, update: {}, create: { priceListId: contract.id, offerId: mozz.id, minQty: 1, unitPriceNet: 12.2 } });
+
+  // Vendor delivery minimums (set by each vendor): from this amount the vendor delivers itself.
+  for (const [name, amount] of [["Grossista Lisboa Central, Lda", 150], ["Cash & Carry Almada, Lda", 200], ["Distribuidora Atlântico, Lda", 300], ["Distribuciones Ibéricas S.L.", 500]] as const) {
+    const v = await company(name);
+    if (!(await db.deliveryRule.findFirst({ where: { scope: "VENDOR", vendorCompanyId: v.id } })))
+      await db.deliveryRule.create({ data: { scope: "VENDOR", vendorCompanyId: v.id, countryId: v.countryId, vendorDeliveryMinimum: amount } });
+  }
 
   await db.setting.upsert({
     where: { scope_scopeId_key: { scope: "GLOBAL", scopeId: "", key: "catalogue.offerApprovalRequired" } },

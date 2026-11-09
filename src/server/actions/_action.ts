@@ -11,7 +11,7 @@ import { AppError, fromDbError } from "@/server/errors";
 
 export type ActionResult<T = unknown> =
   | { ok: true; data: T }
-  | { ok: false; error: string; code: string; fieldErrors?: Record<string, string[]> };
+  | { ok: false; error: string; code: string; fieldErrors?: Record<string, string[]>; details?: Record<string, string> };
 
 export function defineAction<S extends z.ZodTypeAny, R>(opts: {
   permission: PermissionCode | PermissionCode[] | null; // null = any signed-in member
@@ -35,7 +35,7 @@ export function defineAction<S extends z.ZodTypeAny, R>(opts: {
       return { ok: true, data: await opts.handler(ctx, parsed.data) };
     } catch (e) {
       const err = e instanceof AppError ? e : fromDbError(e);
-      if (err) return { ok: false, code: err.code, error: err.message };
+      if (err) return { ok: false, code: err.code, error: err.message, details: err.details };
       console.error(e);
       return { ok: false, code: "INTERNAL", error: "Something went wrong. Please try again." };
     }

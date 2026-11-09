@@ -48,6 +48,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/smoke.mjs http://localhost:3000 [screenshotDir]` | Browser end-to-end smoke test against a running server* |
 | `node tests/e2e/onboarding.mjs http://localhost:3000 [screenshotDir]` | Browser test of registration → documents → admin approval → tobacco access* |
 | `node tests/e2e/catalogue.mjs http://localhost:3000 [screenshotDir]` | Browser + API test of catalogue visibility, vendor pricing, product proposal and approval* |
+| `node tests/e2e/orders.mjs http://localhost:3000 [screenshotDir]` | Browser test of cart lock, minimums, checkout, vendor confirmation, FIRINGI delivery* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -138,6 +139,24 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   Hidden items return 404 rather than "forbidden", so their existence isn't revealed.
 - **JSON API** for buyers: `GET /api/catalogue/offers?q=&category=&vendor=&page=` and `GET /api/catalogue/offers/:id`. The same rules apply.
 - **Setting** `catalogue.offerApprovalRequired` (default `false`): when `true`, new offers on existing products also need admin approval.
+
+## Orders (Phase 4)
+
+- **Shopping:** businesses only. Buyers browse by category or by supplier (nearest first), or find goods by barcode: typed, with a USB / Bluetooth scanner, or with a phone camera.
+- **One supplier per cart.** The cart locks to the first supplier, and the database refuses a second one too. To buy from another supplier, check out or clear the cart first.
+- **Who delivers** (`src/server/orders/delivery-rule.ts`):
+  - If the order reaches the **supplier's own delivery minimum** (set by the supplier under Delivery & Fleet › Delivery minimum), the supplier delivers for free.
+  - Otherwise **FIRINGI** delivers and charges its fee, provided the order reaches **FIRINGI's minimum**. Admin sets both per country under Delivery › Minimum Order Rules.
+  - Below both, checkout is blocked.
+  - Cross-border distributors must deliver themselves, so only their own minimum applies.
+- **Checkout re-checks everything on the server** in one transaction: visibility, prices, quantity rules, stock (reserved), IVA for the buyer's region, and the minimums.
+  - The order freezes every number on each line: list price, discounts (Phase 5), tax rate, commission rule and rate, and the vendor's cost and payout.
+  - Order numbers (`FO-YYYY-NNNNNN`) are gap-free.
+- **Statuses** (`src/server/orders/state.ts`):
+  - **Buyers** can cancel until the vendor confirms.
+  - **Vendors** confirm (they can confirm fewer units, which recalculates totals and releases the stock), prepare, and dispatch / deliver their own deliveries.
+  - **FIRINGI** dispatches and delivers its own deliveries, and handles exceptions and returns.
+  - Stock is reserved at checkout, released on cancellation, and leaves the warehouse at dispatch. Every change goes into the append-only history.
 
 ## Configuration notes
 

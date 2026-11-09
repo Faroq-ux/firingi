@@ -6,6 +6,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { pagePortal, portalsFor, type Portal } from "@/server/rbac/guard";
 import { NAV_BY_PORTAL, resolveNav } from "@/config/nav/resolve";
 import { allowedLocales } from "@/server/data/geo";
+import { cartCount } from "@/server/services/cart";
+import { can } from "@/server/rbac/guard";
 import { AppShell } from "./app-shell";
 
 export async function PortalShell({ portal, children }: { portal: Portal; children: React.ReactNode }) {
@@ -18,6 +20,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
     allowedLocales(ctx.company.countryId),
   ]);
   const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale);
+  const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: locale.startsWith("pt") ? "Carrinho" : "Cart" } : null;
   const companyLabel = ctx.company.tradeName ?? ctx.company.legalName;
 
   return (
@@ -38,6 +41,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
         locale,
         locales,
         labels: { signOut: t("signOut"), language: t("language"), company: t("company"), menu: t("menu") },
+        cart,
       }}
     >
       {children}

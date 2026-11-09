@@ -24,8 +24,8 @@ export const VENDOR_NAV: NavSection[] = [
   {
     key: "orders", icon: "Package", label: { en: "Orders", pt: "Encomendas", es: "Pedidos" },
     items: [
-      vo("incoming", "Incoming Orders", "Encomendas Recebidas", "P4", { es: "Pedidos recibidos" }),
-      vo("history", "Order History", "Histórico", "P4", { es: "Historial" }),
+      vo("incoming", "Incoming Orders", "Encomendas Recebidas", "P4", { live: true, es: "Pedidos recibidos" }),
+      vo("history", "Order History", "Histórico", "P4", { live: true, es: "Historial" }),
     ],
   },
   {
@@ -43,7 +43,7 @@ export const VENDOR_NAV: NavSection[] = [
       vfl("drivers", "Drivers", "Motoristas", "P6", { es: "Conductores" }),
       vfl("vehicles", "Vehicles", "Veículos", "P6", { es: "Vehículos" }),
       vfl("service-areas", "Service Areas", "Áreas de Serviço", "P6", { perm: "vendor.service_areas.manage", es: "Áreas de servicio" }),
-      vfl("delivery-rules", "Delivery Rules", "Regras de Entrega", "P6", { perm: "vendor.service_areas.manage", es: "Reglas de entrega" }),
+      vfl("delivery-rules", "Delivery Minimum", "Mínimo de Entrega", "P4", { live: true, perm: "vendor.service_areas.manage", es: "Reglas de entrega" }),
     ],
   },
   {
@@ -77,8 +77,8 @@ export const BUY_NAV: NavSection[] = [
   {
     key: "orders", icon: "Package", label: { en: "Orders", pt: "Encomendas", es: "Pedidos" },
     items: [
-      bo("cart", "Cart", "Carrinho", "P4", { perm: "buyer.orders.place", es: "Carrito" }),
-      bo("history", "My Orders", "As Minhas Encomendas", "P4", { es: "Mis pedidos" }),
+      bo("cart", "Cart", "Carrinho", "P4", { live: true, perm: "buyer.orders.place", es: "Carrito" }),
+      bo("history", "My Orders", "As Minhas Encomendas", "P4", { live: true, es: "Mis pedidos" }),
     ],
   },
   {

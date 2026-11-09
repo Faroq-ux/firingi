@@ -325,3 +325,22 @@ export async function productImageForViewer(ctx: Ctx, productId: string, index: 
   }
   return allowed ? key : null;
 }
+
+/**
+ * Price a set of offers for the buyer at given quantities (cart / checkout). Offers
+ * that are no longer visible to the buyer are returned in `unavailable`.
+ */
+export async function pricedOffers(ctx: Ctx, lines: { offerId: string; qty: number }[]) {
+  const scope = await buyerScope(ctx);
+  const rows = await prisma.vendorOffer.findMany({
+    where: { AND: [visibleOfferWhere(scope), { id: { in: lines.map((l) => l.offerId) } }] },
+    include: offerInclude(scope),
+  });
+  const vat = await vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]);
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const items = lines.filter((l) => byId.has(l.offerId)).map((l) => {
+    const r = byId.get(l.offerId)!;
+    return { ...present(r, vat, ctx.company.countryCode, l.qty), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId };
+  });
+  return { items, unavailable: lines.filter((l) => !byId.has(l.offerId)).map((l) => l.offerId) };
+}
