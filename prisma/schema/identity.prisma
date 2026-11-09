@@ -162,6 +162,8 @@ model Company {
   cartsAsSeller            Cart[]                      @relation("CartSeller")
   ordersAsBuyer            Order[]                     @relation("OrderBuyer")
   ordersAsSeller           Order[]                     @relation("OrderSeller")
+  allocationsFrom          AllocationEvent[]           @relation("AllocationFrom")
+  allocationProfile        VendorAllocationProfile?
   commissionRules          CommissionRule[]
   promotions               Promotion[]
   promotionTargets         PromotionTarget[]

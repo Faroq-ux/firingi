@@ -34,7 +34,7 @@ export async function nextNumber(tx: Tx, name: string, prefix: string) {
 }
 
 /** VAT rate for the buyer's delivery region (Madeira, Azores…) falling back to the country rate. */
-async function vatRate(tx: Tx, countryId: string, regionId: string | null, taxCategoryId: string) {
+export async function vatRate(tx: Tx, countryId: string, regionId: string | null, taxCategoryId: string) {
   const now = new Date();
   const rows = await tx.taxRate.findMany({
     where: { countryId, taxCategoryId, validFrom: { lte: now }, OR: [{ validTo: null }, { validTo: { gt: now } }], AND: [{ OR: [{ regionId: null }, ...(regionId ? [{ regionId }] : [])] }] },
@@ -43,12 +43,12 @@ async function vatRate(tx: Tx, countryId: string, regionId: string | null, taxCa
   return new Decimal((rows.find((r) => r.regionId === regionId && regionId) ?? rows.find((r) => r.regionId === null))?.rate.toString() ?? 0);
 }
 
-async function activeCommission(tx: Tx, vendorId: string) {
+export async function activeCommission(tx: Tx, vendorId: string) {
   return tx.commissionRule.findFirst({ where: { vendorCompanyId: vendorId, validTo: null, categoryId: null, validFrom: { lte: new Date() } }, orderBy: { validFrom: "desc" } });
 }
 
 /** Reserve qty for an offer across the vendor's stock locations (most available first). */
-async function reserveStock(tx: Tx, orderId: string, offerId: string, qty: number) {
+export async function reserveStock(tx: Tx, orderId: string, offerId: string, qty: number) {
   const levels = await tx.$queryRaw<{ id: string; addressId: string; free: number }[]>`
     SELECT id, "addressId", "onHand" - reserved AS free FROM "StockLevel" WHERE "offerId" = ${offerId} AND "onHand" - reserved > 0
     ORDER BY "onHand" - reserved DESC FOR UPDATE`;
@@ -277,6 +277,8 @@ export async function getOrder(ctx: Ctx, id: string) {
       lines: { orderBy: { id: "asc" } },
       statusHistory: { orderBy: { at: "asc" } },
       exceptions: { orderBy: { createdAt: "desc" } },
+      parentOrder: { select: { id: true, number: true, seller: { select: { legalName: true, tradeName: true } } } },
+      childOrders: { select: { id: true, number: true, status: true, placedAt: true, seller: { select: { legalName: true, tradeName: true } } }, orderBy: { placedAt: "asc" } },
     },
   });
   if (!order) throw new NotFoundError("Order");
@@ -362,6 +364,12 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   if ((to === "CANCELLED" || to === "EXCEPTION" || to === "RETURNED") && !reason?.trim()) throw new ValidationError("Please give a reason.");
   if (to === "SUPPLIER_PROCESSING" && order.status === "PENDING_CONFIRMATION") return confirmOrder(ctx, orderId, {});
   await prisma.$transaction((tx) => applyOrderTransition(tx, order, to, { reason, userId: ctx.user.id, companyId: ctx.company.id }));
+  if (to === "CANCELLED" && actor === "VENDOR" && order.status === "PENDING_CONFIRMATION") {
+    // Supplier declined: FIRINGI tries to move the order to another supplier (Phase 9).
+    const { onSupplierEvent } = await import("@/server/allocation/engine");
+    const ev = await onSupplierEvent(orderId, "DECLINED");
+    if (ev && (ev.status === "MOVED" || ev.status === "PARTIAL")) return; // buyer is told about the move instead
+  }
   await notifyOrderChange(order, to, reason, actor);
 }
 
@@ -476,6 +484,11 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
   });
   const seller = await prisma.company.findUniqueOrThrow({ where: { id: order.sellerCompanyId }, select: { legalName: true, tradeName: true } });
   await notify("order.confirmed", [{ companyId: order.buyerCompanyId, link: `/buy/orders/${orderId}` }], { number: order.number, supplier: seller.tradeName ?? seller.legalName }, { ref: { type: "Order", id: orderId } });
+  if (confirmed.some((c) => c.qty < c.line.qtyOrdered)) {
+    // Short supply: the missing quantities go to another supplier (Phase 9).
+    const { onSupplierEvent } = await import("@/server/allocation/engine");
+    await onSupplierEvent(orderId, "SHORTFALL");
+  }
 }
 
 export async function resolveException(ctx: Ctx, exceptionId: string, note: string) {

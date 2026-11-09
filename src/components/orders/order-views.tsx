@@ -80,6 +80,28 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
         description={<span className="flex flex-wrap items-center gap-2"><OrderStatusBadge status={o.status} /> {formatDate(o.placedAt, locale, true)} · {o.deliveryMode && t(`modes.${o.deliveryMode}`)}</span>}
       />
       {placed && <p className="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">{t("orderPlaced", { number: o.number })}</p>}
+      {o.parentOrder && (
+        <p className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="moved-from">
+          {role === "VENDOR" ? t("passedOn") : (
+            <Link className="hover:underline" href={`${BASE[role]}/${o.parentOrder.id}`}>{t("movedFrom", { number: o.parentOrder.number })}</Link>
+          )}
+        </p>
+      )}
+      {o.childOrders.length > 0 && role !== "VENDOR" && (
+        <div className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="moved-to">
+          <p>{t("movedTo")}</p>
+          <ul className="mt-1 space-y-1">
+            {o.childOrders.map((c) => (
+              <li key={c.id} className="flex flex-wrap items-center gap-2">
+                <Link className="font-medium text-primary hover:underline" href={`${BASE[role]}/${c.id}`}>{c.number}</Link>
+                <span>{c.seller.tradeName ?? c.seller.legalName}</span>
+                <OrderStatusBadge status={c.status} />
+              </li>
+            ))}
+          </ul>
+          {role === "ADMIN" && <Link className="mt-2 inline-block text-xs text-primary hover:underline" href={`/admin/allocation/allocation-history?order=${o.id}`}>Allocation history →</Link>}
+        </div>
+      )}
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           <Card>

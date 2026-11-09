@@ -522,7 +522,10 @@
       "notSet": "No definido: FIRINGI entrega todos sus pedidos.",
       "save": "Guardar",
       "remove": "Eliminar"
-    }
+    },
+    "movedFrom": "Este pedido sustituye al pedido {number}: el proveedor original no pudo entregarlo, así que FIRINGI lo pasó a otro proveedor al mismo precio o inferior.",
+    "movedTo": "El proveedor no pudo entregar todo este pedido. FIRINGI ha pasado estos artículos a otro proveedor:",
+    "passedOn": "FIRINGI le ha pasado este pedido de otro proveedor. Confírmelo como de costumbre."
   },
   "finance": {
     "invoices": "Facturas",
@@ -944,6 +947,14 @@
     "promotion_acceptance": {
       "title": "Promoción FIRINGI — necesitamos su respuesta",
       "body": "FIRINGI propone \"{promotion}\" y le pide que financie el {share}% del descuento."
+    },
+    "order_reallocated": {
+      "title": "Pedido {number}: nuevo proveedor",
+      "body": "Su proveedor no pudo entregar todo el pedido {number}. FIRINGI lo ha pasado a {supplier} como pedido {newNumber}, al mismo precio o inferior."
+    },
+    "allocation_needed": {
+      "title": "El pedido {number} necesita un nuevo proveedor",
+      "body": "No se ha encontrado automáticamente ningún proveedor para el pedido {number} ({reason}). Decida en la Torre de Control de Asignación."
     }
   },
   "notifications": {

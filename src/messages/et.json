@@ -543,7 +543,10 @@
       "save": "Salvesta",
       "remove": "Eemalda"
     },
-    "otherSupplierFull": "Teie ostukorvis on juba tooted tarnijalt {current}. Ostate korraga ühelt tarnijalt — lõpetage tellimus või tühjendage ostukorv enne, kui lisate tooteid tarnijalt {next}."
+    "otherSupplierFull": "Teie ostukorvis on juba tooted tarnijalt {current}. Ostate korraga ühelt tarnijalt — lõpetage tellimus või tühjendage ostukorv enne, kui lisate tooteid tarnijalt {next}.",
+    "movedFrom": "See tellimus asendab tellimust {number}: algne tarnija ei saanud seda tarnida, seega andis FIRINGI selle edasi sama või madalama hinnaga.",
+    "movedTo": "Tarnija ei saanud kogu tellimust tarnida. FIRINGI andis need tooted edasi teisele tarnijale:",
+    "passedOn": "FIRINGI andis selle tellimuse teile edasi teiselt tarnijalt. Kinnitage see nagu tavaliselt."
   },
   "finance": {
     "invoices": "Arved",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "FIRINGI kampaania — vajame teie vastust",
       "body": "FIRINGI pakub välja kampaania „{promotion}” ja palub teil rahastada {share}% allahindlusest."
+    },
+    "order_reallocated": {
+      "title": "Tellimus {number}: uus tarnija",
+      "body": "Teie tarnija ei saanud kogu tellimust {number} tarnida. FIRINGI andis selle tarnijale {supplier} edasi tellimusena {newNumber} sama või madalama hinnaga."
+    },
+    "allocation_needed": {
+      "title": "Tellimus {number} vajab uut tarnijat",
+      "body": "Tellimusele {number} ei leitud automaatselt tarnijat ({reason}). Otsustage jaotuse juhtimiskeskuses."
     }
   },
   "notifications": {

@@ -52,6 +52,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/finance.mjs http://localhost:3000 [screenshotDir]` | Browser test of promotions, invoices + PDFs, vendor statements and invoices, payments, credit notes* |
 | `node tests/e2e/delivery.mjs http://localhost:3000 [screenshotDir]` | Browser test of vendor fleet + service areas, driver app with signature, returns, failed delivery, control tower, multi-order setting* |
 | `node tests/e2e/notifications.mjs http://localhost:3000 [screenshotDir]` | Browser test of the bell, notification settings, message log, WhatsApp test send, templates and per-event channels* |
+| `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
@@ -267,6 +268,33 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 - **Export** — every report downloads as CSV (UTF-8, Excel-friendly) or Excel
   (`/api/analytics/export`); the caller's scope is always applied and other audiences'
   figures are refused.
+
+## Supplier Allocation (Phase 9)
+
+- **The buyer still chooses the supplier.** When that supplier **declines**, **confirms less**
+  than ordered, or **doesn't confirm in time** (default 4 h — `/api/cron/allocation`, every
+  10–15 minutes with the cron secret), FIRINGI moves the order — or only the missing items — to
+  other suppliers as new orders linked to the original (`parentOrderId`). Automatic; the buyer
+  is notified (`order.reallocated`) and sees both orders linked. The new supplier only sees
+  that FIRINGI passed the order on; the original supplier never sees who took it.
+- **Same price for the buyer.** Each moved item keeps the original unit price (lower if the new
+  supplier is cheaper). FIRINGI pays any difference while its margin on the moved goods stays
+  above the **margin floor** (default 0 % = it may give up its commission, never lose money).
+  The delivery fee agreed at checkout follows the goods; no new fee is charged.
+- **Who can take it** (`src/server/allocation/engine.ts`): same seller type (wholesalers for
+  customers, distributors for wholesalers), approved, not excluded, covers the address with its
+  service areas, within the distance limit (per country), has free stock and a price for this
+  buyer, under its daily capacity, has a commission agreement, and never a supplier that already
+  had these items. Ranked by distance, margin, vendor priority, 90-day reliability, already
+  delivering nearby and already having an open order for this buyer (weights editable). Items
+  may be split over up to N suppliers; the same items move at most M times.
+- **Back office** (*Supplier/Vendor Allocation*, `admin.allocation.manage` — Super Admin,
+  Operations): Control Tower (open cases, overdue confirmations, recent moves), Auto
+  Allocation, Manual Allocation (candidates with score, distance, margin and why-not; move with
+  an optional margin override), Distributor vs Wholesaler, Distance Rules, Route Matching,
+  Existing Order Matching, Margin Rules, Stock Availability, Delivery Capacity, Vendor Priority,
+  Allocation History and Overrides. When nobody can take an order, the case waits in the
+  Control Tower and FIRINGI staff are notified (`allocation.needed`).
 
 ## Configuration notes
 

@@ -1,0 +1,63 @@
+// ───────────────────────── Supplier / vendor allocation ─────────────────────────
+// The buyer chooses the supplier. When that supplier declines, confirms less than ordered
+// or doesn't answer in time, FIRINGI moves the order (or the missing items) to another
+// supplier that reaches the buyer — at the buyer's original price.
+
+enum AllocationTrigger {
+  DECLINED // supplier declined before confirming
+  SHORTFALL // supplier confirmed lower quantities
+  NO_RESPONSE // supplier didn't confirm within the response time
+  MANUAL // back office moved it
+}
+
+enum AllocationStatus {
+  MOVED // replacement order(s) created
+  PARTIAL // some items moved, others found no supplier
+  NO_CANDIDATE // nobody can take it (needs a decision)
+  PENDING // automatic moves are off: waiting for the back office
+  DISMISSED // back office closed it without moving
+  FAILED // error while moving (see note)
+}
+
+/// One allocation decision (automatic or manual) for an order.
+model AllocationEvent {
+  id             String            @id @default(cuid())
+  orderId        String // the order whose items were (to be) moved
+  trigger        AllocationTrigger
+  status         AllocationStatus
+  automatic      Boolean           @default(true)
+  fromVendorId   String
+  /// [{ offerId, packagingUnitId, qty, name, sku, unitSalePriceNet }] — what had to be moved
+  items          Json
+  /// Scored candidates at decision time: [{ vendorId, name, score, parts, distanceKm, marginPct, covers, reasons }]
+  candidates     Json              @default("[]")
+  /// [{ orderId, number, vendorId, goodsNet, marginNet }]
+  newOrders      Json              @default("[]")
+  marginOverride Boolean           @default(false) // back office accepted a margin below the floor
+  absorbedNet    Decimal           @default(0) @db.Decimal(18, 2) // price difference FIRINGI pays
+  note           String?
+  byUserId       String?
+  resolvedAt     DateTime?
+  resolvedById   String?
+  createdAt      DateTime          @default(now())
+
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  fromVendor Company @relation("AllocationFrom", fields: [fromVendorId], references: [id])
+
+  @@index([status, createdAt])
+  @@index([orderId])
+}
+
+/// Back-office settings per supplier for allocation.
+model VendorAllocationProfile {
+  id                 String   @id @default(cuid())
+  companyId          String   @unique
+  priority           Int      @default(50) // 0–100, higher = preferred
+  excluded           Boolean  @default(false) // never receives moved orders
+  dailyOrderCapacity Int? // max orders per day (null = no limit)
+  note               String?
+  updatedById        String?
+  updatedAt          DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}

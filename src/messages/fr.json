@@ -543,7 +543,10 @@
       "save": "Enregistrer",
       "remove": "Supprimer"
     },
-    "otherSupplierFull": "Votre panier contient déjà des produits de {current}. Vous achetez auprès d'un seul fournisseur à la fois : validez ou videz votre panier avant d'ajouter des produits de {next}."
+    "otherSupplierFull": "Votre panier contient déjà des produits de {current}. Vous achetez auprès d'un seul fournisseur à la fois : validez ou videz votre panier avant d'ajouter des produits de {next}.",
+    "movedFrom": "Cette commande remplace la commande {number} : le fournisseur d'origine n'a pas pu la livrer, FIRINGI l'a donc transmise au même prix ou moins cher.",
+    "movedTo": "Le fournisseur n'a pas pu livrer toute cette commande. FIRINGI a transmis ces articles à un autre fournisseur :",
+    "passedOn": "FIRINGI vous a transmis cette commande d'un autre fournisseur. Veuillez la confirmer comme d'habitude."
   },
   "finance": {
     "invoices": "Factures",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "Promotion FIRINGI — votre réponse est attendue",
       "body": "FIRINGI propose « {promotion} » et vous demande de financer {share} % de la remise."
+    },
+    "order_reallocated": {
+      "title": "Commande {number} : nouveau fournisseur",
+      "body": "Votre fournisseur n'a pas pu livrer toute la commande {number}. FIRINGI l'a transmise à {supplier} sous le numéro {newNumber}, au même prix ou moins cher."
+    },
+    "allocation_needed": {
+      "title": "La commande {number} a besoin d'un nouveau fournisseur",
+      "body": "Aucun fournisseur n'a été trouvé automatiquement pour la commande {number} ({reason}). Veuillez décider dans la tour de contrôle d'allocation."
     }
   },
   "notifications": {

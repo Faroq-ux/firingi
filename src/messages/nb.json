@@ -543,7 +543,10 @@
       "save": "Lagre",
       "remove": "Fjern"
     },
-    "otherSupplierFull": "Handlekurven din inneholder allerede produkter fra {current}. Du kjøper fra én leverandør om gangen — fullfør bestillingen eller tøm handlekurven før du legger til produkter fra {next}."
+    "otherSupplierFull": "Handlekurven din inneholder allerede produkter fra {current}. Du kjøper fra én leverandør om gangen — fullfør bestillingen eller tøm handlekurven før du legger til produkter fra {next}.",
+    "movedFrom": "Denne ordren erstatter ordre {number}: den opprinnelige leverandøren kunne ikke levere, så FIRINGI ga den videre til samme eller lavere pris.",
+    "movedTo": "Leverandøren kunne ikke levere hele ordren. FIRINGI har gitt disse varene videre til en annen leverandør:",
+    "passedOn": "FIRINGI har gitt denne ordren videre til deg fra en annen leverandør. Bekreft den som vanlig."
   },
   "finance": {
     "invoices": "Fakturaer",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "FIRINGI-kampanje — vi trenger svaret ditt",
       "body": "FIRINGI foreslår «{promotion}» og ber deg finansiere {share} % av rabatten."
+    },
+    "order_reallocated": {
+      "title": "Ordre {number}: ny leverandør",
+      "body": "Leverandøren din kunne ikke levere hele ordre {number}. FIRINGI har gitt den videre til {supplier} som ordre {newNumber}, til samme eller lavere pris."
+    },
+    "allocation_needed": {
+      "title": "Ordre {number} trenger en ny leverandør",
+      "body": "Fant ingen leverandør automatisk for ordre {number} ({reason}). Bestem i allokeringens kontrolltårn."
     }
   },
   "notifications": {

@@ -543,7 +543,10 @@
       "save": "Salva",
       "remove": "Rimuovi"
     },
-    "otherSupplierFull": "Il carrello contiene già prodotti di {current}. Acquisti da un fornitore alla volta: completa l'ordine o svuota il carrello prima di aggiungere prodotti di {next}."
+    "otherSupplierFull": "Il carrello contiene già prodotti di {current}. Acquisti da un fornitore alla volta: completa l'ordine o svuota il carrello prima di aggiungere prodotti di {next}.",
+    "movedFrom": "Questo ordine sostituisce l'ordine {number}: il fornitore originale non ha potuto consegnarlo, quindi FIRINGI lo ha passato allo stesso prezzo o inferiore.",
+    "movedTo": "Il fornitore non ha potuto consegnare tutto questo ordine. FIRINGI ha passato questi articoli a un altro fornitore:",
+    "passedOn": "FIRINGI ti ha passato questo ordine da un altro fornitore. Confermalo come di consueto."
   },
   "finance": {
     "invoices": "Fatture",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "Promozione FIRINGI — serve la tua risposta",
       "body": "FIRINGI propone «{promotion}» e ti chiede di finanziare il {share}% dello sconto."
+    },
+    "order_reallocated": {
+      "title": "Ordine {number}: nuovo fornitore",
+      "body": "Il tuo fornitore non ha potuto consegnare tutto l'ordine {number}. FIRINGI lo ha passato a {supplier} come ordine {newNumber}, allo stesso prezzo o inferiore."
+    },
+    "allocation_needed": {
+      "title": "L'ordine {number} ha bisogno di un nuovo fornitore",
+      "body": "Nessun fornitore trovato automaticamente per l'ordine {number} ({reason}). Decidi nella torre di controllo dell'allocazione."
     }
   },
   "notifications": {

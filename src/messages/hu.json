@@ -543,7 +543,10 @@
       "save": "Mentés",
       "remove": "Eltávolítás"
     },
-    "otherSupplierFull": "A kosarában már vannak termékek innen: {current}. Egyszerre egy szállítótól vásárolhat — fejezze be a rendelést vagy ürítse a kosarat, mielőtt innen adna hozzá termékeket: {next}."
+    "otherSupplierFull": "A kosarában már vannak termékek innen: {current}. Egyszerre egy szállítótól vásárolhat — fejezze be a rendelést vagy ürítse a kosarat, mielőtt innen adna hozzá termékeket: {next}.",
+    "movedFrom": "Ez a rendelés a(z) {number} rendelést váltja fel: az eredeti beszállító nem tudta teljesíteni, ezért a FIRINGI azonos vagy alacsonyabb áron továbbadta.",
+    "movedTo": "A beszállító nem tudta teljesíteni ezt a rendelést. A FIRINGI ezeket a tételeket másik beszállítónak adta tovább:",
+    "passedOn": "A FIRINGI egy másik beszállítótól adta át Önnek ezt a rendelést. Kérjük, igazolja vissza a szokásos módon."
   },
   "finance": {
     "invoices": "Számlák",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "FIRINGI-akció — várjuk válaszát",
       "body": "A FIRINGI a(z) „{promotion}” akciót javasolja, és arra kéri, hogy a kedvezmény {share}%-át Ön állja."
+    },
+    "order_reallocated": {
+      "title": "{number} rendelés: új beszállító",
+      "body": "A beszállítója nem tudta teljesíteni a(z) {number} rendelést. A FIRINGI továbbadta a(z) {supplier} részére {newNumber} rendelésként, azonos vagy alacsonyabb áron."
+    },
+    "allocation_needed": {
+      "title": "A(z) {number} rendeléshez új beszállító kell",
+      "body": "A(z) {number} rendeléshez nem található automatikusan beszállító ({reason}). Kérjük, döntsön az elosztási irányítóközpontban."
     }
   },
   "notifications": {

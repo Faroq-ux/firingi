@@ -105,6 +105,7 @@ model Order {
   billingStatements VendorBillingStatement[]
   returns           ReturnRequest[]
   delivery          Delivery?
+  allocations       AllocationEvent[]
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])

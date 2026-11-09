@@ -543,7 +543,10 @@
       "save": "Tallenna",
       "remove": "Poista"
     },
-    "otherSupplierFull": "Ostoskorissasi on jo tuotteita toimittajalta {current}. Ostat yhdeltä toimittajalta kerrallaan — viimeistele tilaus tai tyhjennä ostoskori ennen kuin lisäät tuotteita toimittajalta {next}."
+    "otherSupplierFull": "Ostoskorissasi on jo tuotteita toimittajalta {current}. Ostat yhdeltä toimittajalta kerrallaan — viimeistele tilaus tai tyhjennä ostoskori ennen kuin lisäät tuotteita toimittajalta {next}.",
+    "movedFrom": "Tämä tilaus korvaa tilauksen {number}: alkuperäinen toimittaja ei voinut toimittaa sitä, joten FIRINGI siirsi sen samaan tai edullisempaan hintaan.",
+    "movedTo": "Toimittaja ei voinut toimittaa koko tilausta. FIRINGI siirsi nämä tuotteet toiselle toimittajalle:",
+    "passedOn": "FIRINGI siirsi tämän tilauksen sinulle toiselta toimittajalta. Vahvista se tavalliseen tapaan."
   },
   "finance": {
     "invoices": "Laskut",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "FIRINGI-kampanja — tarvitsemme vastauksesi",
       "body": "FIRINGI ehdottaa kampanjaa ”{promotion}” ja pyytää sinua rahoittamaan {share} % alennuksesta."
+    },
+    "order_reallocated": {
+      "title": "Tilaus {number}: uusi toimittaja",
+      "body": "Toimittajasi ei voinut toimittaa koko tilausta {number}. FIRINGI siirsi sen toimittajalle {supplier} tilauksena {newNumber} samaan tai edullisempaan hintaan."
+    },
+    "allocation_needed": {
+      "title": "Tilaus {number} tarvitsee uuden toimittajan",
+      "body": "Tilaukselle {number} ei löytynyt automaattisesti toimittajaa ({reason}). Päätä kohdistuksen ohjaustornissa."
     }
   },
   "notifications": {

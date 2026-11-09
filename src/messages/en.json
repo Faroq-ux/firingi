@@ -543,7 +543,10 @@
       "save": "Save",
       "remove": "Remove"
     },
-    "otherSupplierFull": "Your cart already has products from {current}. You can buy from one supplier at a time — check out or clear your cart before adding products from {next}."
+    "otherSupplierFull": "Your cart already has products from {current}. You can buy from one supplier at a time — check out or clear your cart before adding products from {next}.",
+    "movedFrom": "This order replaces order {number}: the original supplier couldn't deliver it, so FIRINGI passed it on at the same price or lower.",
+    "movedTo": "The supplier couldn't deliver all of this order. FIRINGI passed these items to another supplier:",
+    "passedOn": "FIRINGI passed this order on from another supplier. Please confirm it as usual."
   },
   "finance": {
     "invoices": "Invoices",
@@ -904,6 +907,14 @@
     "order_returned": {
       "title": "Order {number} returned",
       "body": "Order {number} was returned. {reason}"
+    },
+    "order_reallocated": {
+      "title": "Order {number}: new supplier",
+      "body": "Your supplier couldn't deliver all of order {number}. FIRINGI passed it to {supplier} as order {newNumber}, at the same price or lower."
+    },
+    "allocation_needed": {
+      "title": "Order {number} needs a new supplier",
+      "body": "No supplier could be found automatically for order {number} ({reason}). Please decide in the Allocation Control Tower."
     },
     "delivery_assigned": {
       "title": "New delivery {number}",

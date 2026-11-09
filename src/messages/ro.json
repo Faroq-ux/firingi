@@ -543,7 +543,10 @@
       "save": "Salvează",
       "remove": "Elimină"
     },
-    "otherSupplierFull": "Coșul tău are deja produse de la {current}. Cumperi de la un singur furnizor odată — finalizează comanda sau golește coșul înainte de a adăuga produse de la {next}."
+    "otherSupplierFull": "Coșul tău are deja produse de la {current}. Cumperi de la un singur furnizor odată — finalizează comanda sau golește coșul înainte de a adăuga produse de la {next}.",
+    "movedFrom": "Această comandă înlocuiește comanda {number}: furnizorul inițial nu a putut-o livra, așa că FIRINGI a transmis-o la același preț sau mai mic.",
+    "movedTo": "Furnizorul nu a putut livra toată această comandă. FIRINGI a transmis aceste articole altui furnizor:",
+    "passedOn": "FIRINGI v-a transmis această comandă de la alt furnizor. Confirmați-o ca de obicei."
   },
   "finance": {
     "invoices": "Facturi",
@@ -989,6 +992,14 @@
     "promotion_acceptance": {
       "title": "Promoție FIRINGI — avem nevoie de răspunsul tău",
       "body": "FIRINGI propune „{promotion}” și îți cere să finanțezi {share}% din reducere."
+    },
+    "order_reallocated": {
+      "title": "Comanda {number}: furnizor nou",
+      "body": "Furnizorul dvs. nu a putut livra toată comanda {number}. FIRINGI a transmis-o către {supplier} ca și comanda {newNumber}, la același preț sau mai mic."
+    },
+    "allocation_needed": {
+      "title": "Comanda {number} are nevoie de un furnizor nou",
+      "body": "Nu s-a găsit automat niciun furnizor pentru comanda {number} ({reason}). Decideți în turnul de control al alocării."
     }
   },
   "notifications": {

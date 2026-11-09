@@ -23,14 +23,29 @@ def flat(d, p=""):
 
 # Namespaces / nav labels added after the first translation round are appended at the end,
 # in this order, so existing <lang>.txt files only grow at the bottom.
-LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("reports", ["Reports", "Sales Report", "Spending Report"])]
+# An entry may name a dotted path (e.g. "notify.order_reallocated"): those keys are left out of
+# their namespace's earlier block and appended at that point instead.
+LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("reports", ["Reports", "Sales Report", "Spending Report"]),
+         ("notify.order_reallocated", []), ("notify.allocation_needed", []),
+         ("orders.movedFrom", []), ("orders.movedTo", []), ("orders.passedOn", [])]
+
+def get(path):
+    d = EN
+    for p in path.split("."): d = d[p]
+    return d
 
 def source():
-    later = {ns for ns, _ in LATER}
-    items = [(k, v) for k, v in flat({k: v for k, v in EN.items() if k != "navLabels" and k not in later}) if v != ""]
+    later = [ns for ns, _ in LATER]
+    def skip(k, own):
+        return any(k == l or k.startswith(l + ".") for l in later if l != own and not own.startswith(l + ".") and l.count(".") > own.count("."))
+    items = [(k, v) for k, v in flat({k: v for k, v in EN.items() if k != "navLabels" and k not in later}) if v != "" and not skip(k, "")]
     items += [("navLabels." + n, n) for n in NAV]
     for ns, nav in LATER:
-        items += [(k, v) for k, v in flat({ns: EN[ns]}) if v != ""]
+        node = get(ns)
+        pairs = flat({ns: node}) if isinstance(node, dict) else [(ns, node)]
+        if "." in ns and isinstance(node, dict):
+            pairs = list(flat(node, ns + "."))
+        items += [(k, v) for k, v in pairs if v != "" and not skip(k, ns)]
         items += [("navLabels." + n, n) for n in nav]
     return items
 
