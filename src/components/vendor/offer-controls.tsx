@@ -97,7 +97,7 @@ export function ProposeProductForm({ categories, brands, taxCategories, units, c
         run(() => proposeProductAction({
           name: { en: s(fd, "nameEn"), pt: s(fd, "namePt") || null }, categoryId: s(fd, "categoryId"), brandId: s(fd, "brandId") || null,
           taxCategoryId: s(fd, "taxCategoryId"), restriction: (s(fd, "restriction") || null) as "TOBACCO" | null, gtin: s(fd, "gtin") || null,
-          packaging: { uomCode: s(fd, "uomCode"), name: { en: s(fd, "packName"), pt: s(fd, "packName") }, unitsPerPack: Number(fd.get("unitsPerPack")), gtin: null },
+          packaging: { uomCode: s(fd, "uomCode"), name: { en: s(fd, "packName"), pt: s(fd, "packName") }, unitsPerPack: Number(fd.get("unitsPerPack")), gtin: s(fd, "packGtin") || null },
           offer: { vendorSku: s(fd, "vendorSku") || null, minOrderQty: Number(fd.get("minOrderQty")), qtyStep: 1, leadTimeDays: Number(fd.get("leadTimeDays")) },
           basePrice: fd.get("basePrice") ? Number(fd.get("basePrice")) : undefined,
         }), () => { setOpen(false); setDone(true); });
@@ -116,7 +116,8 @@ export function ProposeProductForm({ categories, brands, taxCategories, units, c
           <Select id="taxCategoryId" name="taxCategoryId" required>{taxCategories.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}</Select></div>
         <div className="space-y-1"><Label htmlFor="restriction">{t("restriction")}</Label>
           <Select id="restriction" name="restriction" defaultValue=""><option value="">{t("none")}</option><option value="TOBACCO">Tobacco</option><option value="ALCOHOL">Alcohol</option></Select></div>
-        <div className="space-y-1"><Label htmlFor="gtin">{t("gtin")}</Label><Input id="gtin" name="gtin" /></div>
+        <div className="space-y-1"><Label htmlFor="gtin">{t("unitBarcode")}</Label><Input id="gtin" name="gtin" inputMode="numeric" /></div>
+        <div className="space-y-1"><Label htmlFor="packGtin">{t("packBarcode")}</Label><Input id="packGtin" name="packGtin" inputMode="numeric" /></div>
         <div className="space-y-1"><Label htmlFor="packName">{t("packagingName")}</Label><Input id="packName" name="packName" required placeholder="Case 12 × 1L" /></div>
         <div className="space-y-1"><Label htmlFor="uomCode">{t("unit")}</Label>
           <Select id="uomCode" name="uomCode">{units.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}</Select></div>

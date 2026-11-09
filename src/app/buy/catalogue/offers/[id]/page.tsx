@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProductThumb, StockBadge } from "@/components/catalogue/product-card";
+import { Codes, PriceBlock } from "@/components/catalogue/price";
 import { formatMoney } from "@/lib/utils";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
@@ -20,7 +21,6 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const { item, alternatives } = data;
   const [t, locale, images] = await Promise.all([getTranslations("catalogue"), getLocale(), productsWithImages([item.productId])]);
   const name = pickLocalized(item.name, locale);
-  const gross = item.price ? (Number(item.price.unitPriceNet) * (1 + Number(item.vatRate) / 100)).toFixed(2) : null;
 
   return (
     <>
@@ -33,27 +33,28 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
             <h1 className="text-2xl font-semibold">{name}</h1>
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
               <Badge variant="secondary">{pickLocalized(item.packaging.name, locale)}</Badge>
-              <span className="text-muted-foreground">SKU {item.sku}{item.gtin ? ` · EAN ${item.gtin}` : ""}</span>
+
               {item.restriction && <Badge variant="warning">{t(`restricted.${item.restriction}`)}</Badge>}
             </div>
+            <div className="mt-2"><Codes item={item} full /></div>
           </div>
           <Card>
             <CardContent className="space-y-3 pt-5">
-              {item.price && (
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-2">
-                    <span className="text-3xl font-semibold tabular-nums">{formatMoney(item.price.unitPriceNet, locale)}</span>
-                    <span className="text-sm text-muted-foreground">{t("exVat")} · {t("vat", { rate: Number(item.vatRate) })} → {formatMoney(gross!, locale)}</span>
-                    {item.price.scope !== "BASE" && <Badge>{t(`priceScope.${item.price.scope}`)}</Badge>}
-                  </div>
-                  {item.packaging.unitsPerPack > 1 && <div className="text-sm text-muted-foreground">{t("unitsPerPack", { units: item.packaging.unitsPerPack })} · {t("perUnit", { price: formatMoney(item.price.perUnitNet, locale) })}</div>}
-                </div>
-              )}
+              <div className="flex flex-wrap items-start gap-3">
+                <PriceBlock item={item} size="lg" />
+                {item.price && item.price.scope !== "BASE" && <Badge>{t(`priceScope.${item.price.scope}`)}</Badge>}
+              </div>
+              {item.packaging.unitsPerPack > 1 && <div className="text-sm text-muted-foreground">{t("unitsPerPack", { units: item.packaging.unitsPerPack })}</div>}
               {item.price && item.price.tiers.length > 1 && (
                 <div>
                   <div className="mb-1 text-sm font-medium">{t("tiers")}</div>
                   <div className="flex flex-wrap gap-2">
-                    {item.price.tiers.map((tier) => <span key={tier.minQty} className="rounded-md border px-2 py-1 text-sm">{t("from", { qty: tier.minQty })}: <b>{formatMoney(tier.unitPriceNet, locale)}</b></span>)}
+                    {item.price.tiers.map((tier) => (
+                      <span key={tier.minQty} className="rounded-md border px-2 py-1 text-sm">
+                        {t("from", { qty: tier.minQty })}: <b>{formatMoney(tier.unitPriceGross, locale)}</b> {t("incTax", { tax: item.taxLabel })}
+                        <span className="text-xs text-muted-foreground"> ({formatMoney(tier.unitPriceNet, locale)} {t("exTax", { tax: item.taxLabel })})</span>
+                      </span>
+                    ))}
                   </div>
                 </div>
               )}
@@ -82,7 +83,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
                 {alternatives.map((a) => (
                   <li key={a.offerId} className="flex items-center justify-between gap-2 p-3 text-sm">
                     <Link href={`/buy/catalogue/offers/${a.offerId}`} className="text-primary hover:underline">{pickLocalized(a.packaging.name, locale)} · {a.vendor.name}</Link>
-                    <span className="tabular-nums">{a.price ? formatMoney(a.price.unitPriceNet, locale) : "—"}</span>
+                    <span className="tabular-nums">{a.price ? `${formatMoney(a.price.unitPriceGross, locale)} ${t("incTax", { tax: a.taxLabel })}` : "—"}</span>
                   </li>
                 ))}
               </ul>

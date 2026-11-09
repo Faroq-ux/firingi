@@ -9,7 +9,7 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import type { PermissionCode } from "@/server/rbac/permissions";
 import { writeAudit } from "./audit";
-import { newSku, refreshSearchText, validateProductRefs, type L10n } from "./catalogue-admin";
+import { assertGtinUsable, newSku, refreshSearchText, validateProductRefs, type L10n } from "./catalogue-admin";
 
 function requireVendor(ctx: Ctx, perm: PermissionCode | PermissionCode[]) {
   if (ctx.company.type !== "DISTRIBUTOR" && ctx.company.type !== "WHOLESALER") throw new ForbiddenError();
@@ -108,6 +108,9 @@ export async function proposeProduct(
   return prisma.$transaction(async (tx) => {
     await validateProductRefs(tx, input);
     if (!(await tx.unitOfMeasure.findUnique({ where: { code: input.packaging.uomCode } }))) throw new ValidationError("Unknown unit.");
+    const unitGtin = await assertGtinUsable(tx, input.gtin);
+    const packGtin = await assertGtinUsable(tx, input.packaging.gtin);
+    if (unitGtin && unitGtin === packGtin && input.packaging.unitsPerPack > 1) throw new ValidationError("The case barcode must differ from the unit barcode.");
     const product = await tx.product.create({
       data: {
         name: Object.fromEntries(Object.entries(input.name).filter(([, v]) => v)), description: input.description ?? undefined,
@@ -115,8 +118,8 @@ export async function proposeProduct(
         status: "PENDING_APPROVAL", proposedByCompanyId: ctx.company.id,
         variants: {
           create: {
-            sku: newSku(), gtin: input.gtin?.trim() || null, attributes: input.attributes ?? undefined,
-            packagings: { create: { uomCode: input.packaging.uomCode, name: Object.fromEntries(Object.entries(input.packaging.name).filter(([, v]) => v)), unitsPerPack: input.packaging.unitsPerPack, gtin: input.packaging.gtin?.trim() || null } },
+            sku: newSku(), gtin: unitGtin, attributes: input.attributes ?? undefined,
+            packagings: { create: { uomCode: input.packaging.uomCode, name: Object.fromEntries(Object.entries(input.packaging.name).filter(([, v]) => v)), unitsPerPack: input.packaging.unitsPerPack, gtin: packGtin } },
           },
         },
       },

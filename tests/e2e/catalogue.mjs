@@ -56,7 +56,19 @@ check("JSON API: no restricted products", json.items.every((i) => !i.restriction
 
 await customer.locator('a[href^="/buy/catalogue/offers/"]').first().click();
 await settle(customer);
-check("product page opens with price and stock", /s\/ IVA|excl\. VAT/.test(await customer.textContent("main")));
+const pp = await customer.textContent("main");
+check("product page shows price incl. and excl. IVA", /c\/ IVA/.test(pp) && /s\/ IVA/.test(pp) && /IVA \d+%/.test(pp));
+check("product page shows SKU and barcode", /SKU FIR-/.test(pp) && /▮▯▮ \d{8,14}/.test(pp));
+
+// Barcode search from the shop home (typed or scanned with a USB scanner)
+await customer.goto(`${BASE}/buy/catalogue/browse`);
+await settle(customer);
+await customer.fill('input[name="q"]', "5449000000996");
+await customer.keyboard.press("Enter");
+await settle(customer);
+const found = await customer.textContent("main");
+check("barcode search finds the product at the nearest wholesaler", customer.url().includes("/buy/catalogue/search") && /Coca-Cola/.test(found) && found.includes("Lisboa Central"));
+await shot(customer, "p3-08-barcode-search");
 await shot(customer, "p3-02-customer-product", true);
 
 // Discover a distributor offer id as a wholesaler, then try it as the customer.

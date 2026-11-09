@@ -4,7 +4,7 @@ import { Package } from "lucide-react";
 import type { CatalogueItem } from "@/server/data/catalogue-buyer";
 import { pickLocalized } from "@/i18n/config";
 import { Badge } from "@/components/ui/badge";
-import { formatMoney } from "@/lib/utils";
+import { PriceBlock, Codes } from "./price";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -29,14 +29,10 @@ export async function ProductCard({ item, hasImage, showVendor = true }: { item:
         <div className="text-xs text-muted-foreground">{item.brand ?? pickLocalized(item.category.name, locale)}</div>
         <div className="line-clamp-2 font-medium group-hover:text-primary">{pickLocalized(item.name, locale)}</div>
         <div className="text-xs text-muted-foreground">{pickLocalized(item.packaging.name, locale)}</div>
+        <Codes item={item} />
         <div className="mt-auto pt-2">
-          {item.price && (
-            <>
-              <div className="text-lg font-semibold tabular-nums">{formatMoney(item.price.unitPriceNet, locale)} <span className="text-xs font-normal text-muted-foreground">{t("exVat")}</span></div>
-              {item.packaging.unitsPerPack > 1 && <div className="text-xs text-muted-foreground">{t("perUnit", { price: formatMoney(item.price.perUnitNet, locale) })}</div>}
-              {item.price.scope !== "BASE" && <Badge className="mt-1">{t(`priceScope.${item.price.scope}`)}</Badge>}
-            </>
-          )}
+          <PriceBlock item={item} />
+          {item.price && item.price.scope !== "BASE" && <Badge className="mt-1">{t(`priceScope.${item.price.scope}`)}</Badge>}
           <div className="mt-2 flex items-center justify-between gap-2 text-xs">
             <span className="truncate text-muted-foreground">{showVendor ? `${item.vendor.country.flag ?? ""} ${item.vendor.name}` : ""}</span>
             <StockBadge status={item.stockStatus} />

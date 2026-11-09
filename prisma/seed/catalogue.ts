@@ -4,6 +4,7 @@
  * commission rates for the approved vendors. Idempotent (keyed by SKU / names).
  */
 import type { PrismaClient, Restriction } from "@prisma/client";
+import { makeEan13 } from "../../src/lib/barcode";
 
 type Pk = { uom: string; en: string; pt: string; units: number };
 type P = { sku: string; en: string; pt: string; cat: string; brand?: string; tax: string; restriction?: Restriction; packs: Pk[] };
@@ -81,6 +82,17 @@ const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" |
   "Pizzaria Bella Porto, Lda": [{ kind: "HEAD_OFFICE", label: "Pizzaria", line1: "Rua das Flores 50", postal: "4050-262", city: "Porto", country: "PT" }],
 };
 
+/** Demo barcodes: unit EAN-13 per SKU, and a separate barcode per multi-unit packaging. */
+const UNIT_EAN: Record<string, string> = {
+  "FIR-COLA33": "5449000000996", // real Coca-Cola 33cl can EAN
+  "FIR-LUSO15": makeEan13("560100000015"), "FIR-ARROZ1": makeEan13("560100000022"), "FIR-AZEITE75": makeEan13("560100000039"),
+  "FIR-FARINHA25": makeEan13("560100000046"), "FIR-KEBAB10": makeEan13("560100000053"), "FIR-MOZZ2": makeEan13("560100000060"),
+  "FIR-PIZZABOX33": makeEan13("560100000077"), "FIR-SKIP3L": makeEan13("560100000084"), "FIR-SBOCK33": makeEan13("560100000091"),
+  "FIR-DOURO75": makeEan13("560100000107"), "FIR-CIG20": makeEan13("560100000114"), "FIR-RUMCAKE": makeEan13("560100000121"),
+};
+/** Case / pack barcode: GTIN-14 style "1" + unit EAN body, recomputed check digit. */
+const packGtin = (unitEan: string, idx: number) => makeEan13(`56020${unitEan.slice(5, 11)}${idx}`);
+
 export async function seedCatalogue(db: PrismaClient) {
   const country = Object.fromEntries((await db.country.findMany({ select: { code: true, id: true } })).map((c) => [c.code, c.id]));
   const tax = Object.fromEntries((await db.taxCategory.findMany()).map((t) => [t.code, t.id]));
@@ -119,6 +131,15 @@ export async function seedCatalogue(db: PrismaClient) {
       void product;
     }
     packIds[p.sku] = variant.packagings.map((x) => x.id);
+    // Barcodes (filled in when missing, so re-seeding an older database adds them).
+    const ean = UNIT_EAN[p.sku];
+    if (ean && !variant.gtin) await db.productVariant.update({ where: { id: variant.id }, data: { gtin: ean } });
+    for (const [i, pk] of variant.packagings.entries())
+      if (!pk.gtin) await db.packagingUnit.update({ where: { id: pk.id }, data: { gtin: pk.unitsPerPack === 1 ? null : packGtin(ean, i) } });
+    await db.product.update({
+      where: { id: variant.productId },
+      data: { searchText: [p.en, p.pt, p.brand ?? "", p.sku, ean, ...variant.packagings.map((pk, i) => (pk.unitsPerPack === 1 ? "" : packGtin(ean, i)))].join(" ").toLowerCase() },
+    });
   }
 
   // Commission for approved vendors (no default commission in FIRINGI).

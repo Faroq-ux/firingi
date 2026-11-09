@@ -43,7 +43,7 @@ export async function OffersView({ ctx, title, description, basePath, sellerType
               <TR key={o.id}>
                 <TD>
                   <Link href={`/admin/catalogue/products/${o.packaging.variant.product.id}`} className="font-medium text-primary hover:underline">{pickLocalized(o.packaging.variant.product.name, locale)}</Link>
-                  <div className="text-xs text-muted-foreground">{pickLocalized(o.packaging.name, locale)} · {o.packaging.variant.sku}</div>
+                  <div className="text-xs text-muted-foreground">{pickLocalized(o.packaging.name, locale)} · SKU {o.packaging.variant.sku}{(o.packaging.gtin ?? o.packaging.variant.gtin) ? ` · EAN ${o.packaging.gtin ?? o.packaging.variant.gtin}` : ""}</div>
                 </TD>
                 <TD><Link href={`/admin/companies/${o.vendor.id}`} className="hover:underline">{o.vendor.country.flag} {o.vendor.legalName}</Link><div className="text-xs text-muted-foreground">{o.vendor.type.toLowerCase()}</div></TD>
                 <TD className="text-sm tabular-nums">{o.prices.length ? o.prices.map((p) => `${p.minQty > 1 ? `≥${p.minQty}: ` : ""}${formatMoney(p.unitPriceNet.toString(), locale)}`).join(" · ") : <Badge variant="warning">no price</Badge>}</TD>

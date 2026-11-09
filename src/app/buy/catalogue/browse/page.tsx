@@ -6,8 +6,7 @@ import { shopCategories, visibleSuppliers } from "@/server/data/catalogue-buyer"
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
 import { SupplierCard } from "@/components/catalogue/supplier-card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { BarcodeSearch } from "@/components/catalogue/barcode-search";
 
 export const metadata = { title: "Shop" };
 
@@ -16,12 +15,13 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
   const { q } = await searchParams;
-  const [categories, suppliers, t, c, locale] = await Promise.all([
-    shopCategories(ctx), visibleSuppliers(ctx, { q }), getTranslations("catalogue"), getTranslations("common"), getLocale(),
+  const [categories, suppliers, t, locale] = await Promise.all([
+    shopCategories(ctx), visibleSuppliers(ctx, { q }), getTranslations("catalogue"), getLocale(),
   ]);
   return (
     <>
       <PageHeader title={t("shop")} description={t("shopIntro")} />
+      <div className="mb-8 max-w-2xl"><BarcodeSearch action="/buy/catalogue/search" /></div>
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold">{t("categories")}</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -38,13 +38,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </section>
       <section>
-        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
-          <h2 className="text-lg font-semibold">{t("nearestSuppliers")}</h2>
-          <form className="flex gap-2" action="/buy/catalogue/browse">
-            <Input name="q" defaultValue={q} placeholder={t("findSupplier")} className="w-64" />
-            <Button type="submit" variant="outline">{c("search")}</Button>
-          </form>
-        </div>
+        <h2 className="mb-3 text-lg font-semibold">{t("nearestSuppliers")}</h2>
         {suppliers.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noSuppliers")}</p> : (
           <div className="grid gap-3 md:grid-cols-2">{suppliers.slice(0, 8).map((s) => <SupplierCard key={s.id} s={s} />)}</div>
         )}

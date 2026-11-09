@@ -8,6 +8,7 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "./audit";
+import { isValidGtin } from "@/lib/barcode";
 import { notifyCompany } from "./notify";
 
 export type L10n = { en: string; pt?: string | null; es?: string | null };
@@ -161,6 +162,22 @@ export async function saveProduct(ctx: Ctx, input: ProductInput) {
   });
 }
 
+/**
+ * A barcode must be a valid GTIN and belong to only one variant / packaging unit
+ * (otherwise a scan would be ambiguous).
+ */
+export async function assertGtinUsable(tx: Tx, raw: string | null | undefined, exclude: { variantId?: string; packagingId?: string } = {}) {
+  const code = raw?.replace(/[\s-]/g, "");
+  if (!code) return null;
+  if (!isValidGtin(code)) throw new ValidationError(`Barcode ${code} is not a valid EAN / GTIN (check digit).`);
+  const [v, p] = await Promise.all([
+    tx.productVariant.findFirst({ where: { gtin: code, NOT: exclude.variantId ? { id: exclude.variantId } : undefined }, select: { sku: true } }),
+    tx.packagingUnit.findFirst({ where: { gtin: code, NOT: exclude.packagingId ? { id: exclude.packagingId } : undefined }, select: { variant: { select: { sku: true } } } }),
+  ]);
+  if (v || p) throw new AppError("DUPLICATE_BARCODE", `Barcode ${code} is already used by ${v?.sku ?? p?.variant.sku}.`, 409);
+  return code;
+}
+
 export const newSku = () => `FIR-${Math.random().toString(36).slice(2, 6).toUpperCase()}${Date.now().toString(36).slice(-4).toUpperCase()}`;
 
 export async function saveVariant(ctx: Ctx, input: { id?: string; productId: string; sku?: string | null; gtin?: string | null; attributes?: Record<string, string> | null; isActive?: boolean }) {
@@ -169,7 +186,8 @@ export async function saveVariant(ctx: Ctx, input: { id?: string; productId: str
   if (sku && (await prisma.productVariant.findFirst({ where: { sku, NOT: input.id ? { id: input.id } : undefined } })))
     throw new AppError("DUPLICATE", `SKU ${sku} is already used.`, 409);
   return prisma.$transaction(async (tx) => {
-    const data = { gtin: input.gtin?.trim() || null, attributes: (input.attributes ?? undefined) as Prisma.InputJsonValue | undefined, ...(sku ? { sku } : {}), ...(input.isActive !== undefined ? { isActive: input.isActive } : {}) };
+    const gtin = await assertGtinUsable(tx, input.gtin, { variantId: input.id });
+    const data = { gtin, attributes: (input.attributes ?? undefined) as Prisma.InputJsonValue | undefined, ...(sku ? { sku } : {}), ...(input.isActive !== undefined ? { isActive: input.isActive } : {}) };
     const v = input.id
       ? await tx.productVariant.update({ where: { id: input.id }, data })
       : await tx.productVariant.create({ data: { ...data, sku: sku!, productId: input.productId } });
@@ -184,7 +202,8 @@ export async function savePackaging(ctx: Ctx, input: { id?: string; variantId: s
   if (!(input.unitsPerPack >= 1)) throw new ValidationError("Units per pack must be at least 1.");
   return prisma.$transaction(async (tx) => {
     if (!(await tx.unitOfMeasure.findUnique({ where: { code: input.uomCode } }))) throw new ValidationError("Unknown unit.");
-    const data = { uomCode: input.uomCode, name: cleanL10n(input.name), unitsPerPack: input.unitsPerPack, gtin: input.gtin?.trim() || null, netWeightKg: input.netWeightKg ?? null, ...(input.isActive !== undefined ? { isActive: input.isActive } : {}) };
+    const gtin = await assertGtinUsable(tx, input.gtin, { packagingId: input.id });
+    const data = { uomCode: input.uomCode, name: cleanL10n(input.name), unitsPerPack: input.unitsPerPack, gtin, netWeightKg: input.netWeightKg ?? null, ...(input.isActive !== undefined ? { isActive: input.isActive } : {}) };
     const pk = input.id
       ? await tx.packagingUnit.update({ where: { id: input.id }, data })
       : await tx.packagingUnit.create({ data: { ...data, variantId: input.variantId } });

@@ -242,3 +242,46 @@ describe("store-based shopping: categories and nearest suppliers", () => {
     await expect(shopCategory(kebab, tob.id)).rejects.toThrow(/not found/);
   });
 });
+
+describe("barcodes and prices with IVA", () => {
+  it("finding goods by barcode: exact match, only visible suppliers, nearest first", async () => {
+    const { searchAcrossSuppliers } = await import("@/server/data/catalogue-buyer");
+    const kebab = await ctxFor(KEBAB);
+    const can = await searchAcrossSuppliers(kebab, "5449000000996"); // Coca-Cola can EAN
+    expect(can.barcode).toBe("5449000000996");
+    expect(can.items.length).toBeGreaterThan(0);
+    expect(can.items.every((i) => i.vendor.name === "Lisboa Central" && i.unitGtin === "5449000000996")).toBe(true);
+
+    // The case has its own barcode, which finds the case offer only.
+    const caseGtin = can.items.find((i) => i.packaging.unitsPerPack === 24)!.gtin!;
+    const byCase = await searchAcrossSuppliers(kebab, caseGtin);
+    expect(byCase.items.map((i) => i.packaging.unitsPerPack)).toEqual([24]);
+
+    // A wholesaler scanning the same code sees distributors, nearest first.
+    const w = await searchAcrossSuppliers(await ctxFor(LX_BUYER), caseGtin);
+    expect(w.items.map((i) => i.vendor.name)).toEqual(["Atlântico", "Ibéricas"]);
+
+    // Restricted product barcode returns nothing without a licence.
+    const cig = await prisma.productVariant.findUniqueOrThrow({ where: { sku: "FIR-CIG20" } });
+    expect((await searchAcrossSuppliers(kebab, cig.gtin!)).items).toEqual([]);
+  });
+
+  it("prices show the local tax name and the amount incl. IVA", async () => {
+    const { searchAcrossSuppliers } = await import("@/server/data/catalogue-buyer");
+    const res = await searchAcrossSuppliers(await ctxFor(KEBAB), "5449000000996");
+    const can = res.items.find((i) => i.packaging.unitsPerPack === 1)!;
+    expect(can.taxLabel).toBe("IVA");
+    expect(can.price).toMatchObject({ unitPriceNet: "0.62", unitPriceGross: "0.76", vatAmount: "0.14" });
+    const caseItem = res.items.find((i) => i.packaging.unitsPerPack === 24)!;
+    expect(caseItem.price!.tiers[1]).toMatchObject({ minQty: 10, unitPriceNet: "13.40", unitPriceGross: "16.48" });
+  });
+
+  it("barcodes must be valid and unique", async () => {
+    const lx = await ctxFor(LX_OWNER);
+    const cat = await prisma.category.findUniqueOrThrow({ where: { slug: "spices" } });
+    const tax = await prisma.taxCategory.findUniqueOrThrow({ where: { code: "REDUCED" } });
+    const base = { name: { en: "Pepper" }, categoryId: cat.id, taxCategoryId: tax.id, packaging: { uomCode: "UN", name: { en: "Jar" }, unitsPerPack: 1 }, offer: { minOrderQty: 1, qtyStep: 1, leadTimeDays: 1 } };
+    await expect(proposeProduct(lx, { ...base, gtin: "5449000000997" })).rejects.toThrow(/not a valid EAN/);
+    await expect(proposeProduct(lx, { ...base, gtin: "5449000000996" })).rejects.toThrow(/already used by FIR-COLA33/);
+  });
+});
