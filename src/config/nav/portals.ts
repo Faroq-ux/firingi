@@ -43,7 +43,7 @@ export const VENDOR_NAV: NavSection[] = [
       vfl("drivers", "Drivers", "Motoristas", "P6", { es: "Conductores" }),
       vfl("vehicles", "Vehicles", "Veículos", "P6", { es: "Vehículos" }),
       vfl("service-areas", "Service Areas", "Áreas de Serviço", "P6", { perm: "vendor.service_areas.manage", es: "Áreas de servicio" }),
-      vfl("delivery-rules", "Delivery Minimum", "Mínimo de Entrega", "P4", { live: true, perm: "vendor.service_areas.manage", es: "Reglas de entrega" }),
+      vfl("delivery-rules", "Delivery Minimum", "Mínimo de Entrega", "P4", { live: true, perm: "vendor.service_areas.manage", es: "Mínimo de entrega" }),
     ],
   },
   {

@@ -21,7 +21,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
     allowedLocales(ctx.company.countryId),
   ]);
   const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale);
-  const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: locale.startsWith("pt") ? "Carrinho" : "Cart" } : null;
+  const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: locale.startsWith("pt") ? "Carrinho" : locale.startsWith("es") ? "Carrito" : "Cart" } : null;
   const companyLabel = ctx.company.tradeName ?? ctx.company.legalName;
 
   return (

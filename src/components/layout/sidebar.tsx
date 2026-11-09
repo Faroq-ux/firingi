@@ -4,6 +4,7 @@
  * server, so nothing the user may not see is ever sent to the browser.
  */
 import Link from "next/link";
+import { BRAND_SLOGAN } from "@/config/brand";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -101,6 +102,7 @@ export function Sidebar({ nav, title, subtitle, soonLabel }: { nav: ResolvedSect
           );
         })}
       </div>
+      <div className="shrink-0 border-t border-white/10 px-4 py-2 text-[10px] font-medium tracking-[0.2em] text-sidebar-muted">{BRAND_SLOGAN}</div>
     </nav>
   );
 }

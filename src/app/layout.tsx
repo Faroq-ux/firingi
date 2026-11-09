@@ -9,8 +9,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: { default: "FIRINGI", template: "%s · FIRINGI" },
-  description: "FIRINGI — B2B marketplace and ERP for distributors, wholesalers and businesses",
+  title: { default: "FIRINGI — Wholesale made simple", template: "%s · FIRINGI" },
+  description: "FIRINGI — Wholesale made simple. B2B marketplace and ERP for distributors, wholesalers and businesses",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

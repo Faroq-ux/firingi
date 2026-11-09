@@ -53,7 +53,7 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
     <Document title={d.fullNumber} author="FIRINGI">
       <Page size="A4" style={s.page}>
         <View style={s.between}>
-          <View><Text style={s.brand}>FIRINGI</Text><Text style={s.muted}>B2B marketplace</Text></View>
+          <View><Text style={s.brand}>FIRINGI</Text><Text style={s.muted}>WHOLESALE MADE SIMPLE</Text></View>
           <View style={{ alignItems: "flex-end" }}>
             <Text style={s.h1}>{TITLE[d.docType]}</Text>
             <Text style={{ fontFamily: "Helvetica-Bold" }}>{d.fullNumber}</Text>
