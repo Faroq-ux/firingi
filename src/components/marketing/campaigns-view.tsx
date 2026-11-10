@@ -10,7 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { Kpi } from "@/components/analytics/kit";
-import { CampaignBuilder, CHANNEL_INFO } from "./campaign-forms";
+import { CampaignBuilder } from "./campaign-forms";
+import { CHANNEL_INFO } from "@/lib/campaign-channels";
 import { formatDate, formatMoney } from "@/lib/utils";
 
 const pct = (a: number, b: number) => (b ? `${Math.round((a / b) * 100)} %` : "—");

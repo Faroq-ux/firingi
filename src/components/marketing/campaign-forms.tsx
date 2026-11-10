@@ -2,16 +2,13 @@
 /** Campaign builder and actions (FIRINGI back office, English). */
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Mail, MessageCircle, MessageSquare, Bell, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
+import { CHANNEL_INFO, type CampaignChannel } from "@/lib/campaign-channels";
 import { cancelCampaignAction, duplicateCampaignAction, previewAudienceAction, saveCampaignAction, sendCampaignAction } from "@/server/actions/marketing";
 
 type Opt = { id: string; label: string };
-type Ch = "EMAIL" | "PUSH" | "IN_APP" | "SMS" | "WHATSAPP";
-export const CHANNEL_INFO: Record<Ch, { label: string; icon: typeof Mail }> = {
-  EMAIL: { label: "E-mail", icon: Mail }, PUSH: { label: "Push", icon: Smartphone }, IN_APP: { label: "In-app (bell)", icon: Bell }, SMS: { label: "SMS", icon: MessageSquare }, WHATSAPP: { label: "WhatsApp", icon: MessageCircle },
-};
+type Ch = CampaignChannel;
 const LANGS = [["en", "English (required)"], ["pt", "Português"], ["es", "Español"], ["fr", "Français"], ["de", "Deutsch"], ["it", "Italiano"]] as const;
 
 export function CampaignBuilder({ defaults, segments, buyers, countries, promotions }: { defaults?: { channels?: Ch[] }; segments: Opt[]; buyers: Opt[]; countries: Opt[]; promotions: Opt[] }) {

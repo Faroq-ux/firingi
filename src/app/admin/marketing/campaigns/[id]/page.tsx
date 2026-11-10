@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { Kpi } from "@/components/analytics/kit";
-import { CampaignActions, CHANNEL_INFO } from "@/components/marketing/campaign-forms";
+import { CampaignActions } from "@/components/marketing/campaign-forms";
+import { CHANNEL_INFO } from "@/lib/campaign-channels";
 import { STATUS_TONE } from "@/components/marketing/campaigns-view";
 import { formatDate } from "@/lib/utils";
 

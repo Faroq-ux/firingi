@@ -24,7 +24,7 @@ export async function MyNotifications({ ctx, base }: { ctx: Ctx; base: string })
               {n.body && <div className="text-xs">{n.body}</div>}
               <div className="mt-0.5 text-xs text-muted-foreground">{formatDate(n.createdAt, locale, true)}</div>
             </div>
-            {n.link && <Link href={n.link} className="shrink-0 text-xs text-primary hover:underline">{t("open")}</Link>}
+            {n.link && (n.link.startsWith("/api/") ? <a href={n.link} className="shrink-0 text-xs text-primary hover:underline">{t("open")}</a> : <Link href={n.link} className="shrink-0 text-xs text-primary hover:underline">{t("open")}</Link>)}
           </div>
         ))}
       </CardContent></Card>

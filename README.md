@@ -465,6 +465,35 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   average order, buying and new customers, supplier fill rate and customer rating, each with a
   monthly target set by finance and progress against it. Commission and supplier payout stay invisible to buyers.
 
+## Marketing & promotions (Phase 15)
+
+- **Offers** (one engine for FIRINGI's and suppliers'): % off, € off per unit, **buy X get Y**,
+  **€ off the order** (spread over the matching lines, so VAT stays right per line) and **free
+  delivery**. Per line: the best supplier offer, the best FIRINGI offer, then the coupon.
+  Commission is always on the normal price. Who pays: suppliers pay their own; FIRINGI chooses
+  FIRINGI / supplier / split for its offers (a supplier must accept its share). Free delivery is
+  paid entirely by FIRINGI (it waives its fleet fee, or still pays the supplier's flat rate) or
+  entirely by the supplier (it delivers free).
+- **Coupons**: a code, limits in total / per customer, a budget, first order only, minimum order.
+  Customers enter it in the cart or use it from **My offers**; one coupon per order. Limits are
+  locked at checkout; cancelled orders give the use back. "Order from FIRINGI" carts take
+  FIRINGI-paid coupons only. Error messages in the buyer's language.
+- **Customer offers**: automatic offers for one company, a CRM segment, a customer group or
+  first orders. Customers see what they can use under *Catalogue › My Offers* (and a banner on
+  their dashboard); orders show the coupon and a waived delivery fee.
+- **Campaigns** (*Marketing › Campaigns / Email Campaigns / Push Notifications*): to a CRM
+  segment, company types and countries, or chosen companies — by e-mail (designed, in each
+  person's language, with the code and a button), push, in-app, SMS and WhatsApp (approved
+  template). Preview the reach, send now or schedule (cron). Everyone gets *offers & news* unless
+  they switch it off (per channel in their notification settings, or the unsubscribe link in
+  every e-mail); SMS / WhatsApp also need consent. Results: delivered, skipped with the reason,
+  opened, clicked, orders within 7 days of a click or with the campaign's offer, goods sold.
+- **Marketing Analytics**: discounts given and who paid, orders and goods sold with an offer,
+  coupon orders, discount by kind, top offers, campaign results. Every offer used on an order is
+  recorded (`PromotionRedemption`) — limits, budgets and analytics count it.
+- Suppliers create coupons, € off the order, free delivery and buy X get Y on their Promotions
+  page (translated).
+
 ## Look & feel: colour and motion
 
 - **Vivid, glossy design**: a decorative palette (`--vivid-*` in `globals.css`: blue, violet, pink,

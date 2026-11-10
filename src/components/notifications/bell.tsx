@@ -49,7 +49,7 @@ export function NotificationBell({ initialUnread, base, labels }: { initialUnrea
             {items?.map((n) => (
               <li key={n.id}>
                 <button type="button" className={`block w-full px-3 py-2 text-left text-sm hover:bg-accent ${n.read ? "text-muted-foreground" : ""}`}
-                  onClick={async () => { if (!n.read) await read(n.id); setOpen(false); if (n.link) router.push(n.link); }}>
+                  onClick={async () => { if (!n.read) await read(n.id); setOpen(false); if (n.link) { if (n.link.startsWith("/api/")) window.location.assign(n.link); else router.push(n.link); } }}>
                   <div className="flex items-start gap-2">
                     {!n.read && <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary" />}
                     <div className="min-w-0"><div className={n.read ? "" : "font-medium"}>{n.title}</div>{n.body && <div className="line-clamp-2 text-xs text-muted-foreground">{n.body}</div>}</div>
