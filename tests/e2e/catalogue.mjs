@@ -43,8 +43,11 @@ const text = await customer.textContent("main");
 check("store opens filtered on that category", /Cone de kebab|Chicken kebab/.test(text) && !/Coca-Cola/.test(text));
 await customer.getByRole("link", { name: /Todos os produtos|All products/ }).click();
 await settle(customer);
+// The store pages its products (earlier runs add more): look the two up by search within the store.
 const all = await customer.textContent("main");
-check("store shows all the wholesaler's products", /Coca-Cola/.test(all) && /Mozzarella/.test(all));
+const storeUrl = customer.url().split("?")[0];
+const inStore = async (q) => { await customer.goto(`${storeUrl}?q=${encodeURIComponent(q)}`); await settle(customer); return (await customer.textContent("main")).includes(q); };
+check("store shows all the wholesaler's products", (await inStore("Coca-Cola")) && (await inStore("Mozzarella")));
 check("no restricted products in the store", !/Cigarros|Cigarettes|Cerveja|Lager|Vinho|Douro|Bolo de rum|Rum cake/.test(all));
 check("contract / group price badge shown", /Preço de contrato|Contract price|Preço de grupo|Group price/.test(all));
 
