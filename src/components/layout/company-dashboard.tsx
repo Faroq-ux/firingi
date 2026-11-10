@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { ClipboardCheck, FileText, PackageCheck, ShoppingCart, Truck, Users, Wallet } from "lucide-react";
+import { Star, ClipboardCheck, FileText, PackageCheck, ShoppingCart, Truck, Users, Wallet } from "lucide-react";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { buyerLive, companyOverview, vendorLive } from "@/server/data/dashboard";
+import { supplierScorecards } from "@/server/services/performance";
 import { pickLocalized } from "@/i18n/config";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Aurora, LiveDot, ProgressRing, Sparkline } from "@/components/motion/shapes";
@@ -41,7 +42,7 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
   );
 
   if (portal === "vendor") {
-    const v = await vendorLive(ctx);
+    const [v, card] = await Promise.all([vendorLive(ctx), supplierScorecards(ctx, "ALL", { from: new Date(Date.now() - 90 * 86400_000), to: new Date() }, ctx.company.id).then((c) => c[0] ?? null)]);
     const d = v.deliveries;
     return (
       <div className="space-y-5">
@@ -75,7 +76,10 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
           <div className="grid gap-4">
             <Tile icon={ClipboardCheck} tone="tone-orange" label={t("newOrders")} value={v.toConfirm} locale={locale} href="/vendor/orders/incoming" i={5} />
             <Tile icon={Wallet} tone="tone-blue" label={t("payout30")} value={v.payout30} fmt="money" locale={locale} hint={t("ordersCount", { count: v.orders30 })} href="/vendor/finance/statements" i={6} />
-            <Tile icon={Users} tone="tone-pink" label={t("teamMembers")} value={o.members} locale={locale} href="/vendor/company/users" i={7} />
+            {card && card.score !== null
+              ? <Tile icon={Star} tone="tone-pink" label={t("yourScore")} value={card.score} locale={locale} i={7} testId="supplier-score"
+                  hint={card.rating !== null ? t("ratingHint", { rating: card.rating.toFixed(1), count: card.ratingCount }) : undefined} />
+              : <Tile icon={Users} tone="tone-pink" label={t("teamMembers")} value={o.members} locale={locale} href="/vendor/company/users" i={7} />}
           </div>
         </div>
         {v.routes.length > 0 && (

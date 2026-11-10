@@ -1,6 +1,7 @@
 /** Order list and order detail, shared by buyer, vendor and admin screens. */
 import Link from "next/link";
 import type { OrderStatus } from "@prisma/client";
+import { RatingPanel } from "@/components/profit/rating-panel";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { Ctx } from "@/server/context";
 import { getOrder, listOrders, type OrderRole } from "@/server/services/orders";
@@ -143,6 +144,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
               </dl>
             </CardContent>
           </Card>
+          <RatingPanel ctx={ctx} orderId={o.id} status={o.status} role={role} />
           <OrderReturnsPanel ctx={ctx} orderId={o.id} role={role} />
           {o.exceptions.length > 0 && (
             <Card>

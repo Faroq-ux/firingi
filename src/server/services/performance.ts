@@ -330,3 +330,10 @@ export async function marginRuleOptions(ctx: Ctx) {
     vendors: vendors.map((v) => ({ id: v.id, label: v.legalName })),
   };
 }
+
+/** The rating of one order, for its customer or supplier (null if none / not theirs). */
+export async function orderRatingFor(ctx: Ctx, orderId: string) {
+  const r = await prisma.orderRating.findUnique({ where: { orderId } });
+  if (!r) return null;
+  return r.buyerCompanyId === ctx.company.id || r.sellerCompanyId === ctx.company.id || ctx.company.type === "ADMIN" ? r : null;
+}
