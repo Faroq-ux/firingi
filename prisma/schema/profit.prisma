@@ -1,0 +1,89 @@
+// ───────────────────────── Profit, margin rules, targets, ratings ─────────────────────────
+// FIRINGI's own costs (for net profit), minimum / target margins, monthly KPI targets and the
+// ratings customers give to delivered orders (supplier scorecards).
+
+enum CostCategory {
+  DRIVERS // driver wages beyond the per-route pay computed by the system
+  FLEET // fuel, maintenance, vehicle leasing, insurance
+  WAREHOUSE // in-house warehouse rent, utilities
+  STAFF
+  MARKETING
+  IT
+  PAYMENT_FEES
+  OTHER
+}
+
+/// A cost FIRINGI pays (one-off, or every month from `date` until `endDate`).
+model CostEntry {
+  id          String       @id @default(cuid())
+  date        DateTime     @db.Date
+  endDate     DateTime?    @db.Date // monthly costs: last month included (null = still running)
+  monthly     Boolean      @default(false)
+  category    CostCategory
+  description String
+  amountNet   Decimal      @db.Decimal(18, 2)
+  vatAmount   Decimal      @default(0) @db.Decimal(18, 2)
+  countryId   String? // market it belongs to (null = whole company)
+  paid        Boolean      @default(true)
+  createdById String
+  createdAt   DateTime     @default(now())
+
+  @@index([date])
+}
+
+enum MarginScope {
+  GLOBAL
+  COUNTRY
+  CATEGORY
+  VENDOR
+}
+
+/// Minimum (and target) margin FIRINGI wants; the most specific rule wins (vendor > category > country > global).
+model MarginRule {
+  id                  String      @id @default(cuid())
+  scope               MarginScope
+  countryId           String?
+  categoryId          String?
+  vendorCompanyId     String?
+  minMarginPercent    Decimal     @db.Decimal(6, 2)
+  targetMarginPercent Decimal?    @db.Decimal(6, 2)
+  note                String?
+  isActive            Boolean     @default(true)
+  updatedById         String?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@index([scope, isActive])
+}
+
+/// Monthly target for a KPI (gmv, margin, netProfit, orders, activeBuyers, onTimeRate, …).
+model KpiTarget {
+  id          String   @id @default(cuid())
+  month       DateTime @db.Date // first day of the month
+  metric      String
+  target      Decimal  @db.Decimal(18, 4)
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+
+  @@unique([month, metric])
+}
+
+/// A customer's rating of a delivered order (the supplier's goods and the delivery).
+model OrderRating {
+  id              String    @id @default(cuid())
+  orderId         String    @unique
+  buyerCompanyId  String
+  sellerCompanyId String
+  byUserId        String
+  stars           Int // 1–5, the order overall
+  deliveryStars   Int? // 1–5, the delivery
+  comment         String?
+  reply           String? // the supplier's answer
+  repliedAt       DateTime?
+  hidden          Boolean   @default(false) // FIRINGI moderation
+  createdAt       DateTime  @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([sellerCompanyId, createdAt])
+}

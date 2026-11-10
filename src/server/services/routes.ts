@@ -31,10 +31,13 @@ export type RoutingSettings = RoutingParams & {
   etaWindowMinutes: number;
   /** FIRINGI drivers' pay: per route, per delivered order, per planned km. */
   pay: { perRoute: number; perDelivery: number; perKm: number };
+  /** Running cost of a FIRINGI vehicle per km (fuel, wear) — for route profitability. */
+  vehicleCostPerKm: number;
 };
 export const DEFAULT_ROUTING: RoutingSettings = {
   avgSpeedKmh: 30, roadFactor: 1.3, pickupMinutes: 5, dropMinutes: 8, startTime: "08:00", depotAddressId: null, etaWindowMinutes: 60,
   pay: { perRoute: 15, perDelivery: 3.5, perKm: 0.25 },
+  vehicleCostPerKm: 0.18,
 };
 
 export async function routingSettings(): Promise<RoutingSettings> {
@@ -53,6 +56,7 @@ export async function setRoutingSettings(ctx: Ctx, patch: Partial<RoutingSetting
   n.pickupMinutes = num(n.pickupMinutes, 0, 120, "Pickup time (minutes)");
   n.dropMinutes = num(n.dropMinutes, 0, 120, "Drop time (minutes)");
   n.etaWindowMinutes = num(n.etaWindowMinutes, 15, 240, "ETA window (minutes)");
+  n.vehicleCostPerKm = num(n.vehicleCostPerKm, 0, 10, "Vehicle cost per km");
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(n.startTime)) throw new ValidationError("Start time must be HH:MM.");
   n.pay = { perRoute: num(n.pay.perRoute, 0, 1000, "Pay per route"), perDelivery: num(n.pay.perDelivery, 0, 1000, "Pay per delivery"), perKm: num(n.pay.perKm, 0, 100, "Pay per km") };
   if (n.depotAddressId) {

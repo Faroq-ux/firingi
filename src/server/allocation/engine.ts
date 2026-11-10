@@ -25,6 +25,17 @@ import { checkQty, computeLine, computeTotals } from "@/server/orders/calc";
 import { activeCommission, applyOrderTransition, nextNumber, reserveStock, vatRate } from "@/server/services/orders";
 import { deliveryRulesFor } from "@/server/services/cart";
 import { vendorInput, vendorMinimumReached, type VendorRule } from "@/server/orders/delivery-rule";
+import { pickRule } from "@/server/services/performance";
+
+/** Categories (with their parents) of the products behind these packaging units. */
+async function categoriesOf(packagingUnitIds: string[]) {
+  const pus = await prisma.packagingUnit.findMany({ where: { id: { in: packagingUnitIds } }, select: { variant: { select: { product: { select: { categoryId: true } } } } } });
+  const cats = await prisma.category.findMany({ select: { id: true, parentId: true } });
+  const parent = new Map(cats.map((c) => [c.id, c.parentId]));
+  const out = new Set<string>();
+  for (const p of pus) for (let c: string | null | undefined = p.variant.product.categoryId; c; c = parent.get(c)) out.add(c);
+  return [...out];
+}
 import { writeAudit } from "@/server/services/audit";
 import { notify } from "@/server/notify/dispatch";
 import { allocationRules, assertAllocationManager, distanceLimit, type AllocationRules } from "./rules";
@@ -140,6 +151,9 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
   });
   if (!vendors.length || !addressId) return [];
   const ids = vendors.map((v) => v.id);
+  // Margin rules (Pricing › Margin Rules): the most specific floor applies, else the allocation rules' minimum.
+  const marginRules = await prisma.marginRule.findMany({ where: { isActive: true } });
+  const itemCategories = marginRules.some((r) => r.scope === "CATEGORY") ? await categoriesOf(items.map((i) => i.packagingUnitId)) : [];
   const since90 = new Date(Date.now() - 90 * 86400_000);
   const dayStart = new Date(); dayStart.setHours(0, 0, 0, 0);
 
@@ -230,12 +244,14 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
     const marginNet = covers.reduce((a, c) => a + Number(c.lineNet) - Number(c.vendorLineNet), 0);
     const absorbedNet = covers.reduce((a, c) => a + Math.max(0, Number(c.candidateSaleUnitNet) - Number(c.saleUnitNet)) * c.qty, 0);
     const marginPct = goodsNet > 0 ? (marginNet / goodsNet) * 100 : null;
-    if (marginPct !== null && marginPct < rules.minMarginPercent) reasons.push(`Margin ${marginPct.toFixed(1)}% below ${rules.minMarginPercent}%`);
+    const floorRule = pickRule(marginRules, { vendorId: v.id, categoryIds: itemCategories, countryId: target.countryId });
+    const floor = floorRule ? Number(floorRule.minMarginPercent) : rules.minMarginPercent;
+    if (marginPct !== null && marginPct < floor) reasons.push(`Margin ${marginPct.toFixed(1)}% below ${floor}%`);
 
     const total = (acc.get(v.id) ?? 0) + (dec.get(v.id) ?? 0);
     const parts = {
       distance: d === null ? 0.5 : crossBorder ? 0.2 : clamp01(1 - d / limitKm),
-      price: marginPct === null ? 0 : clamp01((marginPct - rules.minMarginPercent) / 20),
+      price: marginPct === null ? 0 : clamp01((marginPct - floor) / 20),
       priority: (profile?.priority ?? 50) / 100,
       reliability: total < 3 ? 0.8 : (acc.get(v.id) ?? 0) / total,
       route: onRoute.has(v.id) ? 1 : 0,

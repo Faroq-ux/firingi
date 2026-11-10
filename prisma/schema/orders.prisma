@@ -111,6 +111,7 @@ model Order {
   delivery          Delivery?
   allocations       AllocationEvent[]
   supportTickets    SupportTicket[]
+  rating            OrderRating?
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])
