@@ -37,7 +37,7 @@ LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("rep
          ("support", ["Help & Support"]), ("notify.support_new", []), ("notify.support_message", []), ("notify.support_reply", []), ("notify.support_resolved", []), ("notify.crm_task_assigned", []),
          ("dashboard.live", []), ("dashboard.today", []), ("dashboard.salesTrend", []), ("dashboard.latestOrders", []), ("dashboard.deliveriesToday", []), ("dashboard.deliveredOf", []), ("dashboard.routesOnRoad", []), ("dashboard.noRoutes", []), ("dashboard.network", []), ("dashboard.newOrders", []), ("dashboard.sales30", []), ("dashboard.payout30", []), ("dashboard.vsPrev", []), ("dashboard.toDeliver", []), ("dashboard.topProducts", []), ("dashboard.inProgress", []), ("dashboard.onTheWay", []), ("dashboard.noneOnTheWay", []), ("dashboard.spend30", []), ("dashboard.openInvoices", []), ("dashboard.overdueAmount", []), ("dashboard.topBought", []), ("dashboard.expected", []), ("dashboard.shopNow", []), ("dashboard.seeAll", []), ("dashboard.noOrders", []), ("dashboard.ordersCount", []), ("routes.stopsDone", []),
          ("dashboard.spendTrend", []), ("dashboard.mapDepot", []), ("dashboard.mapDone", []), ("dashboard.mapTodo", []),
-         ("ratings", []), ("dashboard.yourScore", []), ("dashboard.ratingHint", [])]
+         ("ratings", []), ("dashboard.yourScore", []), ("dashboard.ratingHint", []), ("coupons", [])]
 
 def get(path):
     d = EN

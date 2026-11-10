@@ -34,6 +34,8 @@ export type DeliveryInput = {
   crossBorder: boolean;
   firingi: FiringiRule;
   vendor: VendorRule;
+  /** A supplier-paid free-delivery offer: the supplier delivers free, as if its minimum were reached. */
+  vendorFree?: boolean;
 };
 
 /** Has the order reached the supplier's free-delivery minimum? (No minimum set → no.) */
@@ -50,7 +52,7 @@ export function decideDelivery(i: DeliveryInput): DeliveryDecision {
   const vendorMode: DeliveryMode = i.crossBorder ? "CARRIER" : "VENDOR_FLEET";
   const vendorAmount = v && v.kind !== "UNITS" && v.amount != null ? new Decimal(v.amount) : null;
 
-  if (vendorMinimumReached(v, goods, i.units)) return { ok: true, mode: vendorMode, feeNet: new Decimal(0), ruleId: v!.id, feeOwner: null, free: "VENDOR" };
+  if (vendorMinimumReached(v, goods, i.units) || i.vendorFree) return { ok: true, mode: vendorMode, feeNet: new Decimal(0), ruleId: v?.id ?? null, feeOwner: null, free: "VENDOR" };
 
   if (i.supplierDelivers || i.crossBorder) {
     if (!hasMinimum(v) && (v?.flatFeeNet == null)) return { ok: true, mode: vendorMode, feeNet: new Decimal(0), ruleId: v?.id ?? null, feeOwner: null, free: "VENDOR" };

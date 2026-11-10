@@ -18,6 +18,7 @@ import { applicablePriceListWhere, visibleOfferWhere, type BuyerScope } from "@/
 import { grossOf, resolvePrice } from "@/server/catalogue/pricing";
 import { applyPromotions, type PromoCandidate } from "@/server/catalogue/promotions";
 import { loadActivePromotions, promotionsForOffer } from "@/server/services/promotions";
+import { buyerPromoContext } from "@/server/marketing/offers";
 import { asBarcode } from "@/lib/barcode";
 import { taxLabel } from "@/lib/tax-label";
 import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance";
@@ -69,18 +70,16 @@ type VatMap = Awaited<ReturnType<typeof vatRates>>;
 type PromoFn = (o: OfferRow) => PromoCandidate[];
 
 /** Active promotions for this buyer (its customer groups, its country), as a per-offer matcher. */
-async function promoMatcher(ctx: Ctx, scope: Awaited<ReturnType<typeof buyerScope>>): Promise<PromoFn> {
-  const [promos, groups] = await Promise.all([
-    loadActivePromotions(scope.buyerCountryId),
-    prisma.customerGroupMember.findMany({ where: { companyId: ctx.company.id }, select: { groupId: true } }),
-  ]);
-  const groupIds = groups.map((g) => g.groupId);
+async function promoMatcher(ctx: Ctx, scope: Awaited<ReturnType<typeof buyerScope>>, couponId?: string | null): Promise<PromoFn> {
+  const promos = await loadActivePromotions(scope.buyerCountryId);
+  const buyer = await buyerPromoContext(ctx.company.id, promos, couponId);
   return (o) => {
     const product = o.packaging.variant.product;
-    const categoryIds = [...(scope.info.get(product.categoryId)?.ancestors ?? []), product.categoryId];
-    return promotionsForOffer(promos, { id: o.id, vendorCompanyId: o.vendorCompanyId, productId: product.id, categoryIds }, groupIds);
+    return promotionsForOffer(promos, { id: o.id, vendorCompanyId: o.vendorCompanyId, productId: product.id, categoryIds: categoryIdsOf(scope, product.categoryId) }, buyer);
   };
 }
+
+const categoryIdsOf = (scope: Awaited<ReturnType<typeof buyerScope>>, categoryId: string) => [...(scope.info.get(categoryId)?.ancestors ?? []), categoryId];
 
 function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1, promoFn?: PromoFn) {
   const price = resolvePrice(
@@ -123,7 +122,7 @@ function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1, promoFn
       vatAmount: grossOf(sale, tax.rate).minus(sale.toDecimalPlaces(2)).toFixed(2),
       perUnitNet: sale.div(o.packaging.unitsPerPack).toFixed(4),
       perUnitGross: grossOf(sale.div(o.packaging.unitsPerPack), tax.rate).toFixed(2),
-      promotions: promo.applied.map((a) => ({ id: a.promotionId, name: a.name ?? "", ownerType: a.ownerType, perUnit: a.perUnit.toFixed(4), firingiPerUnit: a.firingiPerUnit.toFixed(4), vendorPerUnit: a.vendorPerUnit.toFixed(4) })),
+      promotions: promo.applied.map((a) => ({ id: a.promotionId, name: a.name ?? "", ownerType: a.ownerType, coupon: !!a.coupon, perUnit: a.perUnit.toFixed(4), firingiPerUnit: a.firingiPerUnit.toFixed(4), vendorPerUnit: a.vendorPerUnit.toFixed(4) })),
       vendorFundedPerUnit: promo.vendorFundedPerUnit.toFixed(4),
       firingiFundedPerUnit: promo.firingiFundedPerUnit.toFixed(4),
       scope: price.scope,
@@ -414,17 +413,21 @@ export async function productImageForViewer(ctx: Ctx, productId: string, index: 
  * Price a set of offers for the buyer at given quantities (cart / checkout). Offers
  * that are no longer visible to the buyer are returned in `unavailable`.
  */
-export async function pricedOffers(ctx: Ctx, lines: { offerId: string; qty: number }[]) {
+/** Cart lines priced for this buyer (automatic offers + the coupon, if `couponId`). */
+export async function pricedOffers(ctx: Ctx, lines: { offerId: string; qty: number }[], opts: { couponId?: string | null } = {}) {
   const scope = await buyerScope(ctx);
   const rows = await prisma.vendorOffer.findMany({
     where: { AND: [visibleOfferWhere(scope), { id: { in: lines.map((l) => l.offerId) } }] },
     include: offerInclude(scope),
   });
-  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
+  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope, opts.couponId)]);
   const byId = new Map(rows.map((r) => [r.id, r]));
   const items = lines.filter((l) => byId.has(l.offerId)).map((l) => {
     const r = byId.get(l.offerId)!;
-    return { ...present(r, vat, ctx.company.countryCode, l.qty, promoFn), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId };
+    return {
+      ...present(r, vat, ctx.company.countryCode, l.qty, promoFn), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId,
+      categoryIds: categoryIdsOf(scope, r.packaging.variant.product.categoryId),
+    };
   });
   return { items, unavailable: lines.filter((l) => !byId.has(l.offerId)).map((l) => l.offerId) };
 }

@@ -1,0 +1,71 @@
+// ───────────────────────── Marketing campaigns (Phase 15) ─────────────────────────
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  CANCELLED
+}
+
+enum RecipientStatus {
+  QUEUED
+  SENT
+  SKIPPED
+  FAILED
+}
+
+/// A message to an audience of business customers (and/or suppliers) on one or more channels,
+/// optionally promoting an offer / coupon. Texts per language ({ en, pt, es, … }); missing
+/// languages fall back to English. Marketing respects each user's opt-out.
+model MarketingCampaign {
+  id             String                @id @default(cuid())
+  name           String
+  status         CampaignStatus        @default(DRAFT)
+  channels       NotificationChannel[]
+  /// { segmentId?, types?: CUSTOMER|WHOLESALER|DISTRIBUTOR[], countryCodes?: string[], companyIds?: string[] }
+  audience       Json
+  subject        Json
+  body           Json
+  ctaLabel       Json?
+  /// Where the button / link goes (a page in FIRINGI, e.g. /buy/marketing/offers).
+  ctaPath        String?
+  promotionId    String?
+  crmSegmentId   String?
+  /// Meta-approved WhatsApp marketing template (name, language); without it WhatsApp is skipped.
+  waTemplateName String?
+  scheduledAt    DateTime?
+  sentAt         DateTime?
+  createdById    String
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  promotion  Promotion?          @relation(fields: [promotionId], references: [id], onDelete: SetNull)
+  segment    CrmSegment?         @relation(fields: [crmSegmentId], references: [id], onDelete: SetNull)
+  recipients CampaignRecipient[]
+
+  @@index([status, scheduledAt])
+}
+
+/// One person × channel of a campaign. `token` identifies opens, clicks and unsubscribes.
+model CampaignRecipient {
+  id         String              @id @default(cuid())
+  campaignId String
+  userId     String
+  companyId  String
+  channel    NotificationChannel
+  status     RecipientStatus     @default(QUEUED)
+  skipReason String?
+  messageId  String?
+  token      String              @unique
+  openedAt   DateTime?
+  clickedAt  DateTime?
+  createdAt  DateTime            @default(now())
+
+  campaign MarketingCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company  Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, userId, channel])
+  @@index([companyId, clickedAt])
+}

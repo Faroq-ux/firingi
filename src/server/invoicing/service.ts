@@ -126,16 +126,18 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     });
   }
   const goodsVat = lines.reduce((a, l) => a.plus(l.lineVat), new Decimal(0));
-  if (order.deliveryFeeNet.gt(0)) {
-    const fee = new Decimal(order.deliveryFeeNet.toString());
-    const feeVat = r2(new Decimal(order.vatTotal.toString()).minus(goodsVat)); // exactly what the buyer was charged
-    // Rate of the fee's tax category in the delivery region (e.g. 23 % mainland PT).
+  // Rate of the fee's tax category in the delivery region (e.g. 23 % mainland PT).
+  const feeTaxRate = async () => {
     const regionId = (order.deliveryAddress as { regionId?: string | null }).regionId ?? null;
     const rates = order.deliveryRule?.feeTaxCategoryId
       ? await tx.taxRate.findMany({ where: { countryId: order.countryId, taxCategoryId: order.deliveryRule.feeTaxCategoryId, validTo: null }, orderBy: { validFrom: "desc" } })
       : [];
-    const rate = (rates.find((r) => regionId && r.regionId === regionId) ?? rates.find((r) => r.regionId === null))?.rate.toString() ?? "0";
-    lines.push({ description: order.deliveryMode === "FIRINGI_FLEET" ? "Entrega (FIRINGI)" : "Entrega (taxa fixa do fornecedor)", qty: new Decimal(1), unitPriceNet: fee, taxRate: new Decimal(rate), lineNet: fee, lineVat: feeVat });
+    return new Decimal((rates.find((r) => regionId && r.regionId === regionId) ?? rates.find((r) => r.regionId === null))?.rate.toString() ?? "0");
+  };
+  if (order.deliveryFeeNet.gt(0)) {
+    const fee = new Decimal(order.deliveryFeeNet.toString());
+    const feeVat = r2(new Decimal(order.vatTotal.toString()).minus(goodsVat)); // exactly what the buyer was charged
+    lines.push({ description: order.deliveryMode === "FIRINGI_FLEET" ? "Entrega (FIRINGI)" : "Entrega (taxa fixa do fornecedor)", qty: new Decimal(1), unitPriceNet: fee, taxRate: await feeTaxRate(), lineNet: fee, lineVat: feeVat });
   }
   const buyerAddr = await billingAddress(tx, order.buyerCompanyId);
   const invoice = await issueDocument(tx, {
@@ -160,10 +162,12 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     return { orderLineId: l.id as string | null, sku: l.sku, description: `${pick(l.productName)} — ${pick(l.packagingName)}`, qty: l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered,
       unitCostNet: l.vendorUnitCostNet.toString(), lineNet: net.toFixed(2), taxRate: rate.toFixed(3), vat: r2(net.mul(rate).div(100)).toFixed(2), commission: l.commissionAmount.toString() };
   });
-  // Supplier's own flat delivery rate (distributor → wholesaler): FIRINGI invoiced it to the buyer and pays it on.
-  if (order.deliveryMode !== "FIRINGI_FLEET" && order.deliveryFeeNet.gt(0)) {
-    const fee = new Decimal(order.deliveryFeeNet.toString());
-    const buyerRate = new Decimal(lines[lines.length - 1].taxRate.toString()); // the fee line FIRINGI just invoiced
+  // Supplier's own flat delivery rate (distributor → wholesaler): FIRINGI invoiced it to the buyer and pays it on
+  // — also when a FIRINGI-paid free-delivery offer waived it for the buyer (deliveryDiscountNet).
+  const vendorFee = new Decimal(order.deliveryFeeNet.toString()).plus(order.deliveryDiscountNet.toString());
+  if (order.deliveryMode !== "FIRINGI_FLEET" && vendorFee.gt(0)) {
+    const fee = vendorFee;
+    const buyerRate = await feeTaxRate();
     const feeRate = crossBorder ? new Decimal(0) : buyerRate;
     stLines.push({
       orderLineId: null, sku: "DELIVERY", description: "Entrega (taxa fixa)", qty: 1, unitCostNet: fee.toFixed(4), lineNet: fee.toFixed(2),

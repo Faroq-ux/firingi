@@ -7,7 +7,8 @@ import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
-import { CartQty, CheckoutForm, ClearCartButton } from "@/components/orders/cart-controls";
+import { CartQty, CheckoutForm, ClearCartButton, CouponBox } from "@/components/orders/cart-controls";
+import { COUPON_ERRORS } from "@/lib/coupons";
 import { formatMoney } from "@/lib/utils";
 
 export const metadata = { title: "Cart" };
@@ -15,7 +16,7 @@ export const metadata = { title: "Cart" };
 export default async function CartPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.orders.place");
-  const [cart, t, locale] = await Promise.all([cartView(ctx), getTranslations("orders"), getLocale()]);
+  const [cart, t, tc, locale] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale()]);
   const tax = cart.taxLabel;
   const L = (v: unknown) => pickLocalized(v, locale);
   if (cart.lines.length === 0)
@@ -53,15 +54,16 @@ export default async function CartPage() {
           <CardHeader><CardTitle>{t("total")}</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <dl className="grid grid-cols-2 gap-y-1 text-sm">
-              <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{formatMoney(cart.goodsNet, locale)}</dd>
-              {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{formatMoney(d.feeNet, locale)}</dd></>}
+              <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{formatMoney(Number(cart.goodsNet) + Number(cart.offerDiscount), locale)}</dd>
+              {Number(cart.offerDiscount) > 0 && <><dt className="text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]">{tc("offerDiscount")}</dt><dd className="text-right tabular-nums text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]" data-testid="offer-discount">−{formatMoney(cart.offerDiscount, locale)}</dd></>}
+              {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{cart.freeDelivery ? <><s className="text-muted-foreground">{formatMoney(cart.freeDelivery.amount, locale)}</s> {formatMoney(0, locale)}</> : formatMoney(d.feeNet, locale)}</dd></>}
               <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(cart.totalVat, locale)}</dd>
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
             </dl>
             {d && (d.ok ? (
               <p className="rounded-md bg-muted p-2 text-sm">
                 {d.mode === "FIRINGI_FLEET" ? t("deliveryFirINGI") : d.mode === "CARRIER" ? t("deliveryCarrier") : t("deliveryVendor")}
-                {Number(d.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : d.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}
+                {cart.freeDelivery ? <> · <b data-testid="free-delivery">{tc("freeDelivery")}</b></> : Number(d.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : d.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}
               </p>
             ) : (
               <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">
@@ -74,7 +76,11 @@ export default async function CartPage() {
                 <Link href="/buy/finance/invoices" className="underline">{t("openInvoices")}</Link>
               </p>
             )}
-            <CheckoutForm disabled={!d?.ok || !!cart.credit} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}` }))} />
+            <CouponBox coupon={cart.coupon && {
+              code: cart.coupon.code, ok: cart.coupon.ok, savings: cart.coupon.savings, savingsText: tc("saves", { amount: formatMoney(cart.coupon.savings, locale) }),
+              errorText: cart.coupon.error ? ((COUPON_ERRORS as readonly string[]).includes(cart.coupon.error.code) ? tc(`errors.${cart.coupon.error.code}`, { missing: formatMoney(cart.coupon.error.details?.missing ?? 0, locale), min: formatMoney(cart.coupon.error.details?.minimum ?? 0, locale) }) : cart.coupon.error.message) : null,
+            }} />
+            <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok)} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}` }))} />
           </CardContent>
         </Card>
       </div>

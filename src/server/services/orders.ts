@@ -9,14 +9,13 @@ import { prisma, type Tx } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
-import { pricedOffers } from "@/server/data/catalogue-buyer";
 import { computeLine, computeTotals } from "@/server/orders/calc";
+import { priceCart } from "@/server/orders/pricing";
+import { assertCouponLimits, recordRedemptions, syncRedemptions } from "@/server/marketing/offers";
 import { canTransition, CLOSED, RESERVED_STATUSES, type Actor } from "@/server/orders/state";
 import { deliveryStatusForOrder } from "@/server/delivery/state";
-import { decideDelivery, firingiInput, vendorInput } from "@/server/orders/delivery-rule";
 import { vendorReaches } from "@/server/delivery/coverage";
 import { scopeWhere } from "./admin-access";
-import { deliveryRulesFor } from "./cart";
 import { writeAudit } from "./audit";
 import { detachFromRoute } from "./routes";
 import { notify } from "@/server/notify/dispatch";
@@ -169,35 +168,20 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
   if (!(await vendorReaches(sellerId, address.id)))
     throw new AppError("OUTSIDE_SERVICE_AREA", "This supplier doesn't deliver to that address. Choose another delivery address or another supplier.", 422);
 
-  // Re-price everything server-side with the same visibility rules as the catalogue.
-  const { items, unavailable } = await pricedOffers(ctx, cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })));
-  if (unavailable.length) throw new AppError("ITEM_UNAVAILABLE", "Some products in your cart are no longer available. Please review your cart.", 409);
-  if (items.some((i) => !i.price)) throw new AppError("ITEM_UNAVAILABLE", "Some products no longer have a price for you. Please review your cart.", 409);
-
-  const seller = await prisma.company.findUniqueOrThrow({ where: { id: sellerId } });
+  // Re-price everything server-side with the same visibility rules as the catalogue (offers, coupon, delivery).
   const flow: OrderFlow = ctx.company.type === "CUSTOMER" ? "CUSTOMER_FROM_WHOLESALER" : "WHOLESALER_FROM_DISTRIBUTOR";
+  const commission0 = await activeCommission(prisma as unknown as Tx, sellerId);
+  if (!commission0) throw new AppError("SUPPLIER_UNAVAILABLE", "This supplier can't take orders at the moment.", 409);
+  const pc = await priceCart(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), sellerId, couponCode: cart.couponCode }, { regionId: address.city?.regionId ?? null, addressId: address.id, commissionRate: commission0.rate.toString() });
+  if (pc.unavailable.length) throw new AppError("ITEM_UNAVAILABLE", "Some products in your cart are no longer available. Please review your cart.", 409);
+  if (pc.lines.length !== cart.items.length) throw new AppError("ITEM_UNAVAILABLE", "Some products no longer have a price for you. Please review your cart.", 409);
+  if (pc.coupon && !pc.coupon.ok) throw pc.coupon.error!;
 
   return prisma.$transaction(async (tx) => {
     const commission = await activeCommission(tx, sellerId);
-    if (!commission) throw new AppError("SUPPLIER_UNAVAILABLE", "This supplier can't take orders at the moment.", 409);
-
-    const lines = [];
-    for (const i of items) {
-      const rate = await vatRate(tx, ctx.company.countryId, address.city?.regionId ?? null, i.taxCategoryId);
-      // List price before promotions; discounts split by who pays (commission stays on list).
-      const c = computeLine({
-        qty: i.qty, unitListPriceNet: i.price!.listUnitNet, vatRatePercent: rate, commissionRatePercent: commission.rate.toString(),
-        vendorFundedDiscountPerUnit: i.price!.vendorFundedPerUnit, firingiFundedDiscountPerUnit: i.price!.firingiFundedPerUnit,
-      });
-      lines.push({ item: i, rate, calc: { ...c, qty: i.qty } });
-    }
-    const goodsNet = lines.reduce((a, l) => a.plus(l.calc.lineNet), new Decimal(0));
-
-    const rules = await deliveryRulesFor(ctx.company.countryId, sellerId, address.id);
-    const decision = decideDelivery({
-      goodsNet, units: lines.reduce((a, l) => a + l.calc.qty, 0), supplierDelivers: flow === "WHOLESALER_FROM_DISTRIBUTOR",
-      crossBorder: seller.countryId !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor),
-    });
+    if (!commission || commission.id !== commission0.id) throw new AppError("SUPPLIER_UNAVAILABLE", "This supplier can't take orders at the moment.", 409);
+    const lines = pc.lines;
+    const decision = pc.decision;
     if (!decision.ok)
       throw new AppError(
         "BELOW_MINIMUM",
@@ -206,9 +190,7 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
           : `Minimum order for delivery is ${decision.minimum.toFixed(2)} € (excl. VAT). Add ${decision.missing.toFixed(2)} € more.`,
         422,
       );
-    const feeRule = decision.feeOwner === "VENDOR" ? rules.vendor : rules.firingi;
-    const feeVatRate = decision.feeNet.gt(0) && feeRule?.feeTaxCategoryId ? await vatRate(tx, ctx.company.countryId, address.city?.regionId ?? null, feeRule.feeTaxCategoryId) : new Decimal(0);
-    const totals = computeTotals(lines.map((l) => l.calc), { feeNet: decision.feeNet, feeVatPercent: feeVatRate, toVendor: decision.feeOwner === "VENDOR" });
+    const totals = pc.totals;
     // Credit control: overdue invoices / credit limit (Payment Settings).
     await assertCanOrder(ctx.company.id, totals.grandTotal);
 
@@ -217,6 +199,7 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
       data: {
         number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId,
         status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId,
+        couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: pc.waived.toFixed(2), deliveryPromotionId: pc.deliveryPromotionId,
         deliveryAddress: {
           id: address.id, label: address.label, line1: address.line1, line2: address.line2, postalCode: address.postalCode, city: address.cityName,
           regionId: address.city?.regionId ?? null, country: address.country.code, contactName: address.contactName, phone: address.phone,
@@ -239,30 +222,34 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
         data: {
           orderId: order.id, offerId: l.item.offerId, productName: l.item.name, sku: l.item.sku, packagingName: l.item.packaging.name, qtyOrdered: l.item.qty,
           unitListPriceNet: l.calc.unitListPriceNet.toFixed(4),
-          vendorDiscountNet: l.item.price!.promotions.find((x) => x.ownerType === "VENDOR")?.perUnit ?? 0,
-          adminDiscountNet: l.item.price!.promotions.find((x) => x.ownerType === "ADMIN")?.perUnit ?? 0,
+          vendorDiscountNet: l.discounts.filter((x) => x.ownerType === "VENDOR").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
+          adminDiscountNet: l.discounts.filter((x) => x.ownerType === "ADMIN").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
           firingiFundedDiscount: l.calc.firingiFundedDiscount.toFixed(4), vendorFundedDiscount: l.calc.vendorFundedDiscount.toFixed(4),
           unitSalePriceNet: l.calc.unitSalePriceNet.toFixed(4), taxRate: l.rate.toFixed(3), lineNet: l.calc.lineNet.toFixed(2), lineVat: l.calc.lineVat.toFixed(2),
           commissionRuleId: commission.id, commissionType: commission.type, commissionRate: commission.rate, commissionBase: l.calc.commissionBase.toFixed(2),
           commissionAmount: l.calc.commissionAmount.toFixed(2), vendorUnitCostNet: l.calc.vendorUnitCostNet.toFixed(4), vendorLineNet: l.calc.vendorLineNet.toFixed(2),
           // Who funded each discount (finance reporting).
           discounts: {
-            create: l.item.price!.promotions.map((pr) => ({
-              promotionId: pr.id,
-              amount: new Decimal(pr.perUnit).mul(l.item.qty).toFixed(2),
-              firingiAmount: new Decimal(pr.firingiPerUnit).mul(l.item.qty).toFixed(2),
-              vendorAmount: new Decimal(pr.vendorPerUnit).mul(l.item.qty).toFixed(2),
+            create: l.discounts.map((pr) => ({
+              promotionId: pr.promotionId,
+              amount: pr.perUnit.mul(l.item.qty).toFixed(2),
+              firingiAmount: pr.firingiPerUnit.mul(l.item.qty).toFixed(2),
+              vendorAmount: pr.vendorPerUnit.mul(l.item.qty).toFixed(2),
             })),
           },
         },
       });
     }
+    await recordRedemptions(tx, order.id, ctx.company.id, pc.redemptions);
+    // A coupon that has reached a limit while this order was being placed is refused.
+    if (pc.coupon?.ok) await assertCouponLimits(tx, pc.coupon.code, ctx.company.id);
     await tx.orderStatusHistory.create({ data: { orderId: order.id, toStatus: "NEW", byUserId: ctx.user.id, reason: "Order placed" } });
     // No online payment step yet → the order goes straight to the vendor for confirmation.
     await tx.order.update({ where: { id: order.id }, data: { status: "PENDING_CONFIRMATION" } });
     await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: "NEW", toStatus: "PENDING_CONFIRMATION", reason: "Sent to supplier" } });
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
-    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: order.id, after: { number, sellerId, grandTotal: totals.grandTotal.toFixed(2), deliveryMode: decision.mode } }, tx);
+    await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
+    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: order.id, after: { number, sellerId, grandTotal: totals.grandTotal.toFixed(2), deliveryMode: decision.mode, coupon: pc.coupon?.ok ? pc.coupon.code : null } }, tx);
     return { id: order.id, number };
   }).then(async (r) => {
     const o = await prisma.order.findUniqueOrThrow({ where: { id: r.id }, select: { grandTotal: true, buyer: { select: { legalName: true, tradeName: true } } } });
@@ -498,7 +485,8 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       const regionId = (order.deliveryAddress as { regionId?: string | null }).regionId ?? null;
       if (rule?.feeTaxCategoryId) feeVatPercent = await vatRate(tx, order.countryId, regionId, rule.feeTaxCategoryId);
     }
-    const t = computeTotals(calcLines, { feeNet: order.deliveryFeeNet.toString(), feeVatPercent, toVendor: order.deliveryMode !== "FIRINGI_FLEET" });
+    const toVendor = order.deliveryMode !== "FIRINGI_FLEET";
+    const t = computeTotals(calcLines, { feeNet: order.deliveryFeeNet.toString(), feeVatPercent, toVendor, firingiPaysVendorFeeNet: toVendor ? order.deliveryDiscountNet.toString() : 0 });
     const res = await tx.order.updateMany({
       where: { id: orderId, status: order.status },
       data: {
@@ -508,6 +496,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       },
     });
     if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
+    await syncRedemptions(tx, orderId);
     await ensureDelivery(tx, orderId);
     const short = confirmed.filter((c) => c.qty < c.line.qtyOrdered).length;
     await tx.orderStatusHistory.create({ data: { orderId, fromStatus: order.status, toStatus: "SUPPLIER_PROCESSING", byUserId: ctx.user.id, reason: short ? `Confirmed with ${short} line(s) reduced` : "Confirmed" } });

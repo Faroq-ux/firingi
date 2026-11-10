@@ -13,7 +13,10 @@ enum PromotionOwner {
 
 enum PromotionKind {
   PERCENT
-  FIXED_AMOUNT
+  FIXED_AMOUNT // € off per unit (net)
+  ORDER_AMOUNT // € off the order (net), spread over the matching lines
+  FREE_DELIVERY // the delivery fee is waived (100 % FIRINGI- or 100 % supplier-funded)
+  BUY_X_GET_Y // buy `buyQty`, get `freeQty` of the same product free
 }
 
 enum PromotionStatus {
@@ -70,6 +73,16 @@ model Promotion {
   status                   PromotionStatus @default(DRAFT)
   requiresVendorAcceptance Boolean         @default(false)
   budget                   Decimal?        @db.Decimal(18, 2)
+  /// Coupon: only applies when the buyer enters this code (UPPERCASE). Null = automatic.
+  code                     String?         @unique
+  description              Json?
+  firstOrderOnly           Boolean         @default(false)
+  maxRedemptions           Int?
+  maxPerCustomer           Int?
+  buyQty                   Int?
+  freeQty                  Int?
+  /// Listed on the customer's "My offers" page.
+  showInOffers             Boolean         @default(true)
   createdById              String?
   createdAt                DateTime        @default(now())
   updatedAt                DateTime        @updatedAt
@@ -79,6 +92,8 @@ model Promotion {
   targets       PromotionTarget[]
   acceptances   PromotionVendorAcceptance[]
   lineDiscounts OrderLineDiscount[]
+  redemptions   PromotionRedemption[]
+  campaigns     MarketingCampaign[]
 }
 
 /// Any combination; a line matches if it matches at least one target row.
@@ -90,12 +105,17 @@ model PromotionTarget {
   categoryId      String?
   vendorCompanyId String?
   customerGroupId String?
+  /// WHO targets (any one matches): a customer group, one buying company, a CRM segment.
+  buyerCompanyId  String?
+  crmSegmentId    String?
 
   promotion     Promotion      @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  buyer         Company?       @relation("PromotionTargetBuyer", fields: [buyerCompanyId], references: [id], onDelete: Cascade)
+  segment       CrmSegment?    @relation(fields: [crmSegmentId], references: [id], onDelete: Cascade)
   offer         VendorOffer?   @relation(fields: [offerId], references: [id])
   product       Product?       @relation(fields: [productId], references: [id])
   category      Category?      @relation(fields: [categoryId], references: [id])
-  vendor        Company?       @relation(fields: [vendorCompanyId], references: [id])
+  vendor        Company?       @relation("PromotionTargetVendor", fields: [vendorCompanyId], references: [id])
   customerGroup CustomerGroup? @relation(fields: [customerGroupId], references: [id])
 }
 
@@ -110,4 +130,25 @@ model PromotionVendorAcceptance {
   vendor    Company   @relation(fields: [vendorCompanyId], references: [id])
 
   @@id([promotionId, vendorCompanyId])
+}
+
+/// A promotion used on an order (coupons, order discounts, free delivery and line offers).
+/// Counted for coupon limits and budgets while the order is not cancelled.
+model PromotionRedemption {
+  id             String   @id @default(cuid())
+  promotionId    String
+  orderId        String
+  buyerCompanyId String
+  code           String?
+  amount         Decimal  @db.Decimal(18, 2) // discount given (net)
+  firingiAmount  Decimal  @db.Decimal(18, 2)
+  vendorAmount   Decimal  @db.Decimal(18, 2)
+  createdAt      DateTime @default(now())
+
+  promotion Promotion @relation(fields: [promotionId], references: [id])
+  order     Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  buyer     Company   @relation("RedemptionBuyer", fields: [buyerCompanyId], references: [id])
+
+  @@unique([promotionId, orderId])
+  @@index([buyerCompanyId])
 }

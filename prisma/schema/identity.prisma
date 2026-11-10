@@ -66,6 +66,7 @@ model User {
   notificationMessages    NotificationMessage[]
   notificationPreferences NotificationPreference[]
   pushSubscriptions       PushSubscription[]
+  campaignRecipients      CampaignRecipient[]
   inboundMessages         InboundMessage[]
   carts                   Cart[]
   ordersPlaced            Order[]                  @relation("OrderPlacedBy")
@@ -192,7 +193,10 @@ model Company {
   routes                   Route[]
   commissionRules          CommissionRule[]
   promotions               Promotion[]
-  promotionTargets         PromotionTarget[]
+  promotionTargets         PromotionTarget[]           @relation("PromotionTargetVendor")
+  offersForMe              PromotionTarget[]           @relation("PromotionTargetBuyer")
+  redemptions              PromotionRedemption[]       @relation("RedemptionBuyer")
+  campaignRecipients       CampaignRecipient[]
   promotionAcceptances     PromotionVendorAcceptance[]
   billingStatements        VendorBillingStatement[]
   vendorInvoices           VendorInvoice[]

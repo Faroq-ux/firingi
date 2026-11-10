@@ -3,13 +3,13 @@
  * vendor or split funded, vendor must accept its share). Matching is done in memory
  * against the (small) set of currently active promotions.
  */
-import type { Prisma, PromotionKind } from "@prisma/client";
+import { Prisma, type PromotionKind } from "@prisma/client";
 import Decimal from "decimal.js";
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
-import type { PromoCandidate } from "@/server/catalogue/promotions";
+import { LINE_KINDS, type PromoCandidate } from "@/server/catalogue/promotions";
 import { writeAudit } from "./audit";
 import { notify } from "@/server/notify/dispatch";
 
@@ -17,40 +17,85 @@ const activeWhere = (now = new Date()): Prisma.PromotionWhereInput => ({
   status: "ACTIVE", validFrom: { lte: now }, OR: [{ validTo: null }, { validTo: { gt: now } }],
 });
 
-/** All currently active promotions with targets and acceptances (one query per request). */
+/** All currently active promotions with targets and acceptances (one query per request).
+ *  Promotions that used up their redemption limit or budget are left out. */
 export async function loadActivePromotions(countryId: string) {
-  return prisma.promotion.findMany({
+  const promos = await prisma.promotion.findMany({
     where: { AND: [activeWhere(), { OR: [{ countryId: null }, { countryId }] }] },
     include: { targets: true, acceptances: { where: { status: "ACCEPTED" }, select: { vendorCompanyId: true } } },
+  });
+  const limited = promos.filter((p) => p.maxRedemptions != null || p.budget != null);
+  if (!limited.length) return promos;
+  const used = await usage(limited.map((p) => p.id));
+  return promos.filter((p) => {
+    const u = used.get(p.id);
+    if (!u) return true;
+    if (p.maxRedemptions != null && u.count >= p.maxRedemptions) return false;
+    if (p.budget != null && u.amount >= Number(p.budget)) return false;
+    return true;
   });
 }
 export type ActivePromotions = Awaited<ReturnType<typeof loadActivePromotions>>;
 
-/** Promotions applicable to one offer for one buyer. */
+/** Redemptions (orders not cancelled) per promotion, optionally for one buyer. */
+export async function usage(promotionIds: string[], buyerCompanyId?: string) {
+  const rows = await prisma.promotionRedemption.groupBy({
+    by: ["promotionId"], where: { promotionId: { in: promotionIds }, order: { status: { not: "CANCELLED" } }, ...(buyerCompanyId ? { buyerCompanyId } : {}) },
+    _count: { _all: true }, _sum: { amount: true },
+  });
+  return new Map(rows.map((r) => [r.promotionId, { count: r._count._all, amount: Number(r._sum.amount ?? 0) }]));
+}
+
+/** Who is buying: what decides which customer offers apply. */
+export type BuyerPromoContext = {
+  companyId: string;
+  groupIds: string[];
+  /** CRM segments (referenced by active promotions) this buyer is in. */
+  segmentIds: string[];
+  /** No order yet (cancelled ones don't count). */
+  firstOrder: boolean;
+  /** The coupon the buyer entered (already validated), if any. */
+  couponId?: string | null;
+};
+
+type Promo = ActivePromotions[number];
+
+/** WHO targets (customer group, company, CRM segment): none = everyone; else the buyer must match one. */
+export function promoForBuyer(p: Promo, buyer: BuyerPromoContext) {
+  if (p.code && p.id !== buyer.couponId) return false;
+  if (p.firstOrderOnly && !buyer.firstOrder) return false;
+  const who = p.targets.filter((t) => t.customerGroupId || t.buyerCompanyId || t.crmSegmentId);
+  return !who.length || who.some((t) =>
+    (t.customerGroupId && buyer.groupIds.includes(t.customerGroupId)) || (t.buyerCompanyId && t.buyerCompanyId === buyer.companyId) || (t.crmSegmentId && buyer.segmentIds.includes(t.crmSegmentId)));
+}
+
+/** WHAT targets (offer, product, category, supplier): none = everything (a vendor's own: its offers). */
+export function promoMatchesOffer(p: Promo, offer: { id: string; vendorCompanyId: string; productId: string; categoryIds: string[] }) {
+  if (p.ownerType === "VENDOR" && p.ownerCompanyId !== offer.vendorCompanyId) return false;
+  // A FIRINGI promotion that the vendor co-funds applies only if this vendor accepted.
+  if (p.ownerType === "ADMIN" && new Decimal(p.vendorFundPct.toString()).gt(0) && !p.acceptances.some((a) => a.vendorCompanyId === offer.vendorCompanyId)) return false;
+  const what = p.targets.filter((t) => t.offerId || t.productId || t.categoryId || t.vendorCompanyId);
+  if (!what.length) return p.ownerType === "VENDOR" || p.targets.length > 0 || p.code != null || p.kind === "ORDER_AMOUNT" || p.kind === "FREE_DELIVERY";
+  return what.some((t) =>
+    (t.offerId && t.offerId === offer.id) || (t.productId && t.productId === offer.productId) ||
+    (t.categoryId && offer.categoryIds.includes(t.categoryId)) || (t.vendorCompanyId && t.vendorCompanyId === offer.vendorCompanyId));
+}
+
+export function candidateOf(p: Promo): PromoCandidate {
+  return {
+    id: p.id, ownerType: p.ownerType, kind: p.kind, value: p.value.toString(), firingiFundPct: p.firingiFundPct.toString(), vendorFundPct: p.vendorFundPct.toString(),
+    minQty: p.minQty, buyQty: p.buyQty, freeQty: p.freeQty, priority: p.priority, coupon: p.code != null,
+    name: (p.name as Record<string, string>).pt ?? (p.name as Record<string, string>).en,
+  };
+}
+
+/** Line promotions applicable to one offer for one buyer. */
 export function promotionsForOffer(
   promos: ActivePromotions,
   offer: { id: string; vendorCompanyId: string; productId: string; categoryIds: string[] },
-  buyerGroupIds: string[],
+  buyer: BuyerPromoContext,
 ): PromoCandidate[] {
-  return promos
-    .filter((p) => {
-      if (p.ownerType === "VENDOR" && p.ownerCompanyId !== offer.vendorCompanyId) return false;
-      // A FIRINGI promotion that the vendor co-funds applies only if this vendor accepted.
-      if (p.ownerType === "ADMIN" && new Decimal(p.vendorFundPct.toString()).gt(0) && !p.acceptances.some((a) => a.vendorCompanyId === offer.vendorCompanyId)) return false;
-      if (p.targets.length === 0) return p.ownerType === "VENDOR"; // vendor promo with no target = all its offers
-      // Customer-group targets restrict WHO gets the promotion; the others restrict WHAT.
-      const groupTargets = p.targets.filter((t) => t.customerGroupId);
-      if (groupTargets.length && !groupTargets.some((t) => buyerGroupIds.includes(t.customerGroupId!))) return false;
-      const what = p.targets.filter((t) => !t.customerGroupId);
-      if (what.length === 0) return true;
-      return what.some((t) =>
-        (t.offerId && t.offerId === offer.id) || (t.productId && t.productId === offer.productId) ||
-        (t.categoryId && offer.categoryIds.includes(t.categoryId)) || (t.vendorCompanyId && t.vendorCompanyId === offer.vendorCompanyId));
-    })
-    .map((p) => ({
-      id: p.id, ownerType: p.ownerType, kind: p.kind, value: p.value.toString(), firingiFundPct: p.firingiFundPct.toString(),
-      vendorFundPct: p.vendorFundPct.toString(), minQty: p.minQty, priority: p.priority, name: (p.name as Record<string, string>).pt ?? (p.name as Record<string, string>).en,
-    }));
+  return promos.filter((p) => LINE_KINDS.includes(p.kind) && promoForBuyer(p, buyer) && promoMatchesOffer(p, offer)).map(candidateOf);
 }
 
 export type PromotionInput = {
@@ -61,17 +106,42 @@ export type PromotionInput = {
   validFrom: Date;
   validTo?: Date | null;
   minQty?: number | null;
-  targets: { offerIds?: string[]; productIds?: string[]; categoryIds?: string[]; vendorIds?: string[]; customerGroupIds?: string[] };
+  targets: { offerIds?: string[]; productIds?: string[]; categoryIds?: string[]; vendorIds?: string[]; customerGroupIds?: string[]; buyerCompanyIds?: string[]; segmentIds?: string[] };
+  // Phase 15: coupons and customer offers
+  code?: string | null;
+  description?: { en: string; pt?: string | null } | null;
+  firstOrderOnly?: boolean;
+  maxRedemptions?: number | null;
+  maxPerCustomer?: number | null;
+  buyQty?: number | null;
+  freeQty?: number | null;
+  minOrderValue?: number | null;
+  budget?: number | null;
+  showInOffers?: boolean;
   // admin only
   firingiFundPct?: number;
   countryCode?: string | null;
 };
 
+/** Coupon codes: 3–32 of A–Z, 0–9, "-" and "_", stored in capitals. */
+export const normaliseCode = (c: string | null | undefined) => (c ? c.trim().toUpperCase().replace(/\s+/g, "") : "") || null;
+
 function validate(i: PromotionInput) {
   if (!i.name.en?.trim()) throw new ValidationError("Name is required.");
+  if (i.kind === "FREE_DELIVERY") i.value = 100; // the whole fee
+  if (i.kind === "BUY_X_GET_Y") {
+    if (!(Number.isInteger(i.buyQty) && i.buyQty! >= 1 && Number.isInteger(i.freeQty) && i.freeQty! >= 1)) throw new ValidationError("Enter how many to buy and how many are free (at least 1 each).");
+    i.value = i.freeQty!;
+  } else { i.buyQty = null; i.freeQty = null; }
   if (!(i.value > 0)) throw new ValidationError("Discount must be greater than 0.");
   if (i.kind === "PERCENT" && i.value >= 100) throw new ValidationError("A percentage discount must be below 100 %.");
   if (i.validTo && i.validTo <= i.validFrom) throw new ValidationError("End date must be after start date.");
+  i.code = normaliseCode(i.code);
+  if (i.code && !/^[A-Z0-9_-]{3,32}$/.test(i.code)) throw new ValidationError("A coupon code has 3 to 32 letters, digits, - or _.");
+  for (const [n, v] of [["Uses in total", i.maxRedemptions], ["Uses per customer", i.maxPerCustomer]] as const)
+    if (v != null && !(Number.isInteger(v) && v >= 1)) throw new ValidationError(`${n} must be at least 1.`);
+  if (i.minOrderValue != null && !(i.minOrderValue >= 0)) throw new ValidationError("Minimum order can't be negative.");
+  if (i.budget != null && !(i.budget > 0)) throw new ValidationError("Budget must be greater than 0.");
 }
 
 function targetRows(t: PromotionInput["targets"]) {
@@ -79,6 +149,7 @@ function targetRows(t: PromotionInput["targets"]) {
     ...(t.offerIds ?? []).map((offerId) => ({ offerId })), ...(t.productIds ?? []).map((productId) => ({ productId })),
     ...(t.categoryIds ?? []).map((categoryId) => ({ categoryId })), ...(t.vendorIds ?? []).map((vendorCompanyId) => ({ vendorCompanyId })),
     ...(t.customerGroupIds ?? []).map((customerGroupId) => ({ customerGroupId })),
+    ...(t.buyerCompanyIds ?? []).map((buyerCompanyId) => ({ buyerCompanyId })), ...(t.segmentIds ?? []).map((crmSegmentId) => ({ crmSegmentId })),
   ];
 }
 
@@ -91,7 +162,8 @@ export async function saveVendorPromotion(ctx: Ctx, i: PromotionInput) {
     throw new ValidationError("You can only promote your own products.");
   if (i.targets.customerGroupIds?.length && (await prisma.customerGroup.count({ where: { id: { in: i.targets.customerGroupIds }, ownerCompanyId: ctx.company.id } })) !== i.targets.customerGroupIds.length)
     throw new ValidationError("Choose one of your own customer groups.");
-  if (i.targets.vendorIds?.length || i.targets.productIds?.length) throw new ValidationError("Vendor promotions target your offers, categories or customer groups.");
+  if (i.targets.vendorIds?.length || i.targets.productIds?.length || i.targets.buyerCompanyIds?.length || i.targets.segmentIds?.length)
+    throw new ValidationError("Vendor promotions target your offers, categories or customer groups.");
   return savePromotion(ctx, i, { ownerType: "VENDOR", ownerCompanyId: ctx.company.id, firingiFundPct: 0, vendorFundPct: 100, countryId: null });
 }
 
@@ -101,6 +173,7 @@ export async function saveAdminPromotion(ctx: Ctx, i: PromotionInput) {
   validate(i);
   const firingiPct = i.firingiFundPct ?? 100;
   if (!(firingiPct >= 0 && firingiPct <= 100)) throw new ValidationError("FIRINGI's share must be between 0 and 100 %.");
+  if (i.kind === "FREE_DELIVERY" && firingiPct !== 0 && firingiPct !== 100) throw new ValidationError("Free delivery is paid entirely by FIRINGI or entirely by the supplier.");
   const country = i.countryCode ? await prisma.country.findUnique({ where: { code: i.countryCode } }) : null;
   return savePromotion(ctx, i, { ownerType: "ADMIN", ownerCompanyId: null, firingiFundPct: firingiPct, vendorFundPct: 100 - firingiPct, countryId: country?.id ?? null });
 }
@@ -109,7 +182,11 @@ async function savePromotion(ctx: Ctx, i: PromotionInput, fixed: { ownerType: "V
   const data = {
     name: Object.fromEntries(Object.entries(i.name).filter(([, v]) => v)), kind: i.kind, value: i.value, validFrom: i.validFrom, validTo: i.validTo ?? null,
     minQty: i.minQty ?? null, ...fixed, requiresVendorAcceptance: fixed.ownerType === "ADMIN" && fixed.vendorFundPct > 0,
+    code: i.code ?? null, description: i.description ? (Object.fromEntries(Object.entries(i.description).filter(([, v]) => v)) as Prisma.InputJsonValue) : Prisma.DbNull,
+    firstOrderOnly: !!i.firstOrderOnly, maxRedemptions: i.maxRedemptions ?? null, maxPerCustomer: i.maxPerCustomer ?? null, buyQty: i.buyQty ?? null, freeQty: i.freeQty ?? null,
+    minOrderValue: i.minOrderValue ?? null, budget: i.budget ?? null, showInOffers: i.showInOffers ?? true,
   };
+  if (data.code && (await prisma.promotion.count({ where: { code: data.code, ...(i.id ? { id: { not: i.id } } : {}) } }))) throw new ValidationError("This coupon code is already used. Choose another.");
   const promo = await prisma.$transaction(async (tx) => {
     let id = i.id;
     if (id) {

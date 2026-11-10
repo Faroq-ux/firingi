@@ -10,9 +10,10 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { catalogueItem, pricedOffers } from "@/server/data/catalogue-buyer";
 import { checkQty, computeLine } from "@/server/orders/calc";
-import { decideDelivery, firingiInput, vendorInput } from "@/server/orders/delivery-rule";
+import { priceCart } from "@/server/orders/pricing";
+import { findCoupon } from "@/server/marketing/offers";
 import { zoneIdsForAddress } from "@/server/delivery/coverage";
-import { orderingMode, planRouted } from "@/server/allocation/routed";
+import { orderingMode, planRouted, routedOffers, type RoutedOffers } from "@/server/allocation/routed";
 import { creditBlock } from "./payments";
 
 function requireBuyer(ctx: Ctx) {
@@ -89,6 +90,24 @@ export async function clearCart(ctx: Ctx) {
   await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
 }
 
+/**
+ * Enter a coupon code. Codes that can't work for this buyer (unknown, expired, used up, not for
+ * them, another supplier's) are refused; whether it fits the cart (minimum order …) is shown in the cart.
+ */
+export async function applyCoupon(ctx: Ctx, code: string) {
+  requireBuyer(ctx);
+  const cart = await cartRow(ctx);
+  const { promo } = await findCoupon(ctx, code, { sellerId: cart.sellerCompanyId, routed: cart.routed });
+  await prisma.cart.update({ where: { id: cart.id }, data: { couponCode: promo.code } });
+  return { code: promo.code! };
+}
+
+export async function removeCoupon(ctx: Ctx) {
+  requireBuyer(ctx);
+  const cart = await cartRow(ctx);
+  await prisma.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
+}
+
 export async function cartCount(ctx: Ctx) {
   if (!can(ctx, "buyer.orders.place") || ctx.company.status !== "APPROVED") return 0;
   return prisma.cartItem.count({ where: { cart: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } } });
@@ -116,51 +135,57 @@ export async function deliveryRulesFor(buyerCountryId: string, vendorCompanyId: 
 export async function cartView(ctx: Ctx) {
   requireBuyer(ctx);
   const cart = await cartRow(ctx);
-  const { items, unavailable } = await pricedOffers(ctx, cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })));
-  const lines = items.map((i) => {
-    const c = computeLine({ qty: i.qty, unitListPriceNet: i.price?.unitPriceNet ?? 0, vatRatePercent: i.vatRate, commissionRatePercent: 0 });
-    return { ...i, lineNet: c.lineNet.toFixed(2), lineVat: c.lineVat.toFixed(2), lineGross: c.lineNet.plus(c.lineVat).toFixed(2) };
-  });
-  const goodsNet = lines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
-  const goodsVat = lines.reduce((a, l) => a.plus(l.lineVat), new Decimal(0));
-  const addresses = await prisma.address.findMany({ where: { companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, orderBy: [{ isDefault: "desc" }, { label: "asc" }] });
-  if (cart.routed) return routedCartView(ctx, cart, lines, unavailable, goodsNet, goodsVat, addresses);
-  const seller = cart.seller;
-  let delivery: ReturnType<typeof decideDelivery> | null = null;
-  let feeVat = new Decimal(0);
-  let feeVatRate = new Decimal(0);
-  if (seller && lines.length) {
-    const sellerCountry = (await prisma.company.findUniqueOrThrow({ where: { id: seller.id }, select: { countryId: true } })).countryId;
-    const rules = await deliveryRulesFor(ctx.company.countryId, seller.id, addresses[0]?.id ?? null);
-    delivery = decideDelivery({
-      goodsNet, units: lines.reduce((a, l) => a + l.qty, 0), supplierDelivers: ctx.company.type === "WHOLESALER",
-      crossBorder: sellerCountry !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor),
+  const addresses = await prisma.address.findMany({ where: { companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, orderBy: [{ isDefault: "desc" }, { label: "asc" }], include: { city: { select: { regionId: true } } } });
+  if (cart.routed) {
+    const ro = await routedOffers(ctx, cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), cart.couponCode);
+    const lines = ro.items.map((i) => {
+      const c = computeLine({ qty: i.qty, unitListPriceNet: i.price?.unitPriceNet ?? 0, vatRatePercent: i.vatRate, commissionRatePercent: 0 });
+      return { ...i, lineNet: c.lineNet.toFixed(2), lineVat: c.lineVat.toFixed(2), lineGross: c.lineNet.plus(c.lineVat).toFixed(2) };
     });
-    const feeRule = delivery.ok ? (delivery.feeOwner === "VENDOR" ? rules.vendor : rules.firingi) : null;
-    if (delivery.ok && delivery.feeNet.gt(0) && feeRule?.feeTaxCategoryId) {
-      const r = await prisma.taxRate.findFirst({ where: { countryId: ctx.company.countryId, regionId: null, taxCategoryId: feeRule.feeTaxCategoryId }, orderBy: { validFrom: "desc" } });
-      feeVatRate = new Decimal(r?.rate.toString() ?? 0);
-      feeVat = delivery.feeNet.mul(feeVatRate).div(100).toDecimalPlaces(2);
+    // € off the order (FIRINGI offer / coupon), spread per unit: goods and VAT after it.
+    let goodsNet = new Decimal(0), goodsVat = new Decimal(0), shown = new Decimal(0);
+    for (const l of lines) {
+      const c = computeLine({ qty: l.qty, unitListPriceNet: new Decimal(l.price?.unitPriceNet ?? 0).minus(ro.extra.get(l.offerId) ?? 0), vatRatePercent: l.vatRate, commissionRatePercent: 0 });
+      goodsNet = goodsNet.plus(c.lineNet); goodsVat = goodsVat.plus(c.lineVat); shown = shown.plus(l.lineNet);
     }
+    return routedCartView(ctx, cart, lines, ro, goodsNet, goodsVat, shown.minus(goodsNet), addresses);
   }
-  const feeNet = delivery?.ok ? delivery.feeNet : new Decimal(0);
-  const credit = lines.length ? await creditBlock(ctx.company.id, goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat)) : null;
+  const seller = cart.seller;
+  const empty = { credit: null, routed: false as const, seller: null, lines: [], unavailable: [], taxLabel: "VAT", goodsNet: "0.00", goodsVat: "0.00", delivery: null, totalNet: "0.00", totalVat: "0.00", totalGross: "0.00", addresses, coupon: null, offerDiscount: "0.00", freeDelivery: null };
+  if (!seller || !cart.items.length) return { ...empty, unavailable: cart.items.length ? cart.items.map((i) => i.offerId) : [] };
+  const pc = await priceCart(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), sellerId: seller.id, couponCode: cart.couponCode }, { regionId: addresses[0]?.city?.regionId ?? null, addressId: addresses[0]?.id ?? null });
+  // Lines at their price after product offers (incl. a product coupon); € off the order is shown apart.
+  const lines = pc.lines.map((l) => {
+    const c = computeLine({ qty: l.item.qty, unitListPriceNet: l.item.price!.unitPriceNet, vatRatePercent: l.rate, commissionRatePercent: 0 });
+    return { ...l.item, lineNet: c.lineNet.toFixed(2), lineVat: c.lineVat.toFixed(2), lineGross: c.lineNet.plus(c.lineVat).toFixed(2) };
+  });
+  const shownGoods = lines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
+  const offerDiscount = shownGoods.minus(pc.totals.goodsNet); // € off the order (offer and/or coupon)
+  const feeVat = pc.totals.deliveryFeeVat;
+  const d = pc.decision;
+  const credit = await creditBlock(ctx.company.id, pc.totals.grandTotal);
   return {
     credit,
-    routed: false,
-    seller: seller && { id: seller.id, name: seller.tradeName ?? seller.legalName },
+    routed: false as const,
+    seller: { id: seller.id, name: seller.tradeName ?? seller.legalName },
     lines,
-    unavailable,
+    unavailable: pc.unavailable,
     taxLabel: lines[0]?.taxLabel ?? "VAT",
-    goodsNet: goodsNet.toFixed(2),
-    goodsVat: goodsVat.toFixed(2),
-    delivery: delivery && (delivery.ok
-      ? { ok: true as const, mode: delivery.mode, feeNet: feeNet.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: feeVatRate.toString(), free: delivery.free }
-      : { ok: false as const, reason: delivery.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: delivery.unit === "UNITS" ? String(delivery.minimum) : delivery.minimum.toFixed(2), missing: delivery.unit === "UNITS" ? String(delivery.missing) : delivery.missing.toFixed(2), unit: delivery.unit, vendorMinimum: delivery.vendorMinimum?.toFixed(2) ?? null }),
-    totalNet: goodsNet.plus(feeNet).toFixed(2),
-    totalVat: goodsVat.plus(feeVat).toFixed(2),
-    totalGross: goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat).toFixed(2),
+    goodsNet: pc.totals.goodsNet.toFixed(2),
+    goodsVat: pc.totals.vatTotal.minus(feeVat).toFixed(2),
+    delivery: d.ok
+      ? { ok: true as const, mode: d.mode, feeNet: pc.chargedFee.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: pc.feeVatRate.toString(), free: pc.freeDelivery ? ("OFFER" as const) : d.free }
+      : { ok: false as const, reason: d.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: d.unit === "UNITS" ? String(d.minimum) : d.minimum.toFixed(2), missing: d.unit === "UNITS" ? String(d.missing) : d.missing.toFixed(2), unit: d.unit, vendorMinimum: d.vendorMinimum?.toFixed(2) ?? null },
+    totalNet: pc.totals.netTotal.toFixed(2),
+    totalVat: pc.totals.vatTotal.toFixed(2),
+    totalGross: pc.totals.grandTotal.toFixed(2),
     addresses,
+    offerDiscount: offerDiscount.gt(0) ? offerDiscount.toFixed(2) : "0.00",
+    freeDelivery: pc.freeDelivery ? { amount: pc.freeDelivery.amount.toFixed(2) } : null,
+    coupon: pc.coupon && {
+      code: pc.coupon.code, ok: pc.coupon.ok, savings: pc.couponSavings.toFixed(2),
+      error: pc.coupon.error ? { code: pc.coupon.error.code, message: pc.coupon.error.message, details: pc.coupon.error.details ?? null } : null,
+    },
   };
 }
 
@@ -169,16 +194,23 @@ export async function cartView(ctx: Ctx) {
  * supplier choice for the default delivery address (checkout runs it again for the chosen one).
  */
 async function routedCartView(
-  ctx: Ctx, cart: { items: { offerId: string; qty: number }[] },
+  ctx: Ctx, cart: { items: { offerId: string; qty: number }[]; couponCode?: string | null },
   lines: (Awaited<ReturnType<typeof pricedOffers>>["items"][number] & { lineNet: string; lineVat: string; lineGross: string })[],
-  unavailable: string[], goodsNet: Decimal, goodsVat: Decimal, addresses: Awaited<ReturnType<typeof prisma.address.findMany>>,
+  ro: RoutedOffers, goodsNet: Decimal, goodsVat: Decimal, offerDiscount: Decimal, addresses: Awaited<ReturnType<typeof prisma.address.findMany>>,
 ) {
+  const unavailable = ro.unavailable;
+  let free: { amount: string } | null = null;
+  let couponSavings = ro.coupon?.ok ? ro.redemptions.filter((r) => r.code === ro.coupon!.code).reduce((a, r) => a.plus(r.amount), new Decimal(0)) : new Decimal(0);
   type D = { ok: true; mode: "VENDOR_FLEET" | "FIRINGI_FLEET" | "CARRIER"; feeNet: string; feeVat: string; feeVatRate: string; suppliers: number }
     | { ok: false; reason: "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE"; minimum: string; missing: string; vendorMinimum: string | null };
   let delivery: D | null = null;
   let feeNet = new Decimal(0), feeVat = new Decimal(0);
   if (lines.length && addresses[0] && !unavailable.length) {
-    const plan = await planRouted(ctx, cart.items, addresses[0].id);
+    const plan = await planRouted(ctx, cart.items, addresses[0].id, cart.couponCode ?? null);
+    if (plan.waived.gt(0)) {
+      free = { amount: plan.waived.toFixed(2) };
+      if (ro.freeDelivery?.coupon) couponSavings = couponSavings.plus(plan.waived);
+    }
     if (plan.leftover.length) delivery = { ok: false, reason: "NOT_AVAILABLE_HERE", minimum: "0", missing: "0", vendorMinimum: null };
     else if (goodsNet.lt(plan.minimum)) delivery = { ok: false, reason: "BELOW_MINIMUM", minimum: plan.minimum.toFixed(2), missing: new Decimal(plan.minimum).minus(goodsNet).toFixed(2), vendorMinimum: null };
     else {
@@ -206,5 +238,11 @@ async function routedCartView(
     totalVat: goodsVat.plus(feeVat).toFixed(2),
     totalGross: goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat).toFixed(2),
     addresses,
+    offerDiscount: offerDiscount.gt(0) ? offerDiscount.toFixed(2) : "0.00",
+    freeDelivery: free,
+    coupon: ro.coupon && {
+      code: ro.coupon.code, ok: ro.coupon.ok, savings: couponSavings.toFixed(2),
+      error: ro.coupon.error ? { code: ro.coupon.error.code, message: ro.coupon.error.message, details: ro.coupon.error.details ?? null } : null,
+    },
   };
 }

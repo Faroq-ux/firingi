@@ -45,8 +45,12 @@ export function computeLine(i: LineInput) {
 
 export type ComputedLine = ReturnType<typeof computeLine> & { qty: number };
 
-/** `delivery.toVendor`: the supplier delivers at its own flat rate — FIRINGI invoices the fee and pays it on. */
-export function computeTotals(lines: ComputedLine[], delivery: { feeNet: Decimal.Value; feeVatPercent: Decimal.Value; toVendor?: boolean }) {
+/**
+ * `delivery.toVendor`: the supplier delivers at its own flat rate — FIRINGI invoices the fee and pays it on.
+ * `delivery.firingiPaysVendorFeeNet`: a FIRINGI-paid free-delivery offer waived that fee for the buyer;
+ * FIRINGI still pays it to the supplier.
+ */
+export function computeTotals(lines: ComputedLine[], delivery: { feeNet: Decimal.Value; feeVatPercent: Decimal.Value; toVendor?: boolean; firingiPaysVendorFeeNet?: Decimal.Value }) {
   const sum = (f: (l: ComputedLine) => Decimal) => lines.reduce((a, l) => a.plus(f(l)), new Decimal(0));
   const goodsNet = sum((l) => l.lineNet);
   const listNet = sum((l) => l.commissionBase);
@@ -55,7 +59,7 @@ export function computeTotals(lines: ComputedLine[], delivery: { feeNet: Decimal
   const vatTotal = sum((l) => l.lineVat).plus(feeVat);
   const netTotal = goodsNet.plus(feeNet);
   const vendorGoodsNet = sum((l) => l.vendorLineNet);
-  const vendorPayableNet = delivery.toVendor ? vendorGoodsNet.plus(feeNet) : vendorGoodsNet;
+  const vendorPayableNet = delivery.toVendor ? vendorGoodsNet.plus(feeNet).plus(r2(new Decimal(delivery.firingiPaysVendorFeeNet ?? 0))) : vendorGoodsNet;
   return {
     listNet,
     discountTotal: listNet.minus(goodsNet),

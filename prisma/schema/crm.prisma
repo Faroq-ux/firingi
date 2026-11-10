@@ -225,6 +225,9 @@ model CrmSegment {
   createdById String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  promotionTargets PromotionTarget[]
+  campaigns        MarketingCampaign[]
 }
 
 /// A support request from a customer or supplier.

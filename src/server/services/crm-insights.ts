@@ -38,8 +38,13 @@ function statusOf(r: { firstOrderAt: Date | null; daysSince: number | null; avgG
 /** Buying companies (customers + wholesalers) with their ordering pattern. */
 export async function customerActivity(ctx: Ctx): Promise<ActivityRow[]> {
   if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.crm.view", "admin.crm.manage", "admin.customers.view"])) throw new ForbiddenError();
+  return activityRows(scopeWhere(ctx));
+}
+
+/** Activity rows without a permission check — server use only (segment checks at checkout, campaign audiences). */
+export async function activityRows(where: Prisma.CompanyWhereInput = {}): Promise<ActivityRow[]> {
   const companies = await prisma.company.findMany({
-    where: { type: { in: ["CUSTOMER", "WHOLESALER"] }, status: "APPROVED", isInHouse: false, ...scopeWhere(ctx) },
+    where: { type: { in: ["CUSTOMER", "WHOLESALER"] }, status: "APPROVED", isInHouse: false, ...where },
     select: {
       id: true, legalName: true, type: true, country: { select: { code: true, flag: true } }, crmAccount: { select: { tags: true, tier: true, ownerId: true, owner: { select: { name: true } } } },
       addresses: { where: { kind: "HEAD_OFFICE", isActive: true }, select: { city: { select: { regionId: true } } }, take: 1 },

@@ -34,6 +34,7 @@ model Cart {
   /// FIRINGI-routed cart (country in "order from FIRINGI" mode): items may come from several
   /// suppliers; FIRINGI picks the supplier(s) at checkout.
   routed          Boolean  @default(false)
+  couponCode      String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -69,6 +70,10 @@ model Order {
   currencyCode          String        @default("EUR")
   vendorCurrencyCode    String        @default("EUR")
   fxRate                Decimal       @default(1) @db.Decimal(18, 8) // vendor → buyer currency at order time
+  couponCode            String?
+  /// Delivery fee waived by a FIRINGI-funded free-delivery offer (FIRINGI still pays a supplier's flat rate).
+  deliveryDiscountNet   Decimal       @default(0) @db.Decimal(18, 2)
+  deliveryPromotionId   String?
   status                OrderStatus   @default(NEW)
   deliveryMode          DeliveryMode?
   deliveryAddress       Json // snapshot
@@ -112,6 +117,7 @@ model Order {
   allocations       AllocationEvent[]
   supportTickets    SupportTicket[]
   rating            OrderRating?
+  redemptions       PromotionRedemption[]
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])

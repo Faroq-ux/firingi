@@ -29,6 +29,16 @@ export const clearCartAction = defineAction({
   schema: z.object({}),
   handler: async (ctx) => done(await cart.clearCart(ctx)),
 });
+export const applyCouponAction = defineAction({
+  permission: "buyer.orders.place",
+  schema: z.object({ code: z.string().trim().min(1).max(40) }),
+  handler: async (ctx, i) => done(await cart.applyCoupon(ctx, i.code)),
+});
+export const removeCouponAction = defineAction({
+  permission: "buyer.orders.place",
+  schema: z.object({}),
+  handler: async (ctx) => done(await cart.removeCoupon(ctx)),
+});
 export const placeOrderAction = defineAction({
   permission: "buyer.orders.place",
   schema: z.object({ deliveryAddressId: z.string().min(1, "Choose a delivery address"), notes: z.string().max(500).optional().nullable(), requestedDeliveryDate: z.string().optional().nullable() }),
