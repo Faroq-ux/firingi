@@ -81,6 +81,7 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bc("browse", "Shop", "Loja", "P3", { live: true, es: "Tienda" }),
       bc("suppliers", "Suppliers", "Fornecedores", "P3", { live: true, es: "Proveedores" }),
+      bc("deals", "My Offers", "As Minhas Ofertas", "P15", { live: true, es: "Mis ofertas" }),
     ],
   },
   {

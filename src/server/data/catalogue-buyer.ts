@@ -431,3 +431,9 @@ export async function pricedOffers(ctx: Ctx, lines: { offerId: string; qty: numb
   });
   return { items, unavailable: lines.filter((l) => !byId.has(l.offerId)).map((l) => l.offerId) };
 }
+
+/** Suppliers whose offers this buyer can see (e.g. for showing their promotions). */
+export async function visibleVendorIds(ctx: Ctx) {
+  const scope = await buyerScope(ctx);
+  return (await prisma.vendorOffer.groupBy({ by: ["vendorCompanyId"], where: visibleOfferWhere(scope) })).map((g) => g.vendorCompanyId);
+}

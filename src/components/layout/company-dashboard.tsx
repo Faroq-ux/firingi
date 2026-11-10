@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Star, ClipboardCheck, FileText, PackageCheck, ShoppingCart, Truck, Users, Wallet } from "lucide-react";
+import { Gift, Star, ClipboardCheck, FileText, PackageCheck, ShoppingCart, Truck, Users, Wallet } from "lucide-react";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { buyerLive, companyOverview, vendorLive } from "@/server/data/dashboard";
+import { myOffers } from "@/server/marketing/my-offers";
 import { supplierScorecards } from "@/server/services/performance";
 import { pickLocalized } from "@/i18n/config";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -92,7 +93,7 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
     );
   }
 
-  const b = await buyerLive(ctx);
+  const [b, offers, to] = await Promise.all([buyerLive(ctx), myOffers(ctx).catch(() => []), getTranslations("offers")]);
   const hm = (dt: Date) => new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit" }).format(dt);
   return (
     <div className="space-y-5">
@@ -103,6 +104,15 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
         <HeroStat label={t("spend30")} value={b.spend30} fmt="money" locale={locale} sub={<Trend cur={b.spend30} prev={b.spendPrev} label={t("vsPrev")} />} i={2} />
         <HeroStat label={t("openInvoices")} value={b.openInvoices} fmt="money" locale={locale} href="/buy/finance/invoices" sub={b.overdue > 0 ? t("overdueAmount", { amount: new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(b.overdue) }) : undefined} i={3} />
       </>, { values: b.series.map((x) => x.net), total: b.series.reduce((a, x) => a + x.net, 0), label: t("spendTrend") })}
+      {offers.length > 0 && (
+        <Link href="/buy/catalogue/deals" data-testid="offers-banner"
+          className="gloss motion-rise motion-lift flex flex-wrap items-center gap-3 rounded-xl border p-4 text-white shadow-md bg-[linear-gradient(110deg,var(--vivid-pink),var(--vivid-violet)_55%,var(--vivid-orange))]" style={{ ["--i" as string]: 1 }}>
+          <Gift className="size-6" aria-hidden />
+          <span className="text-lg font-bold">{to("banner", { count: offers.length })}</span>
+          <span className="text-sm opacity-90">{offers.slice(0, 3).map((x) => x.code ?? pickLocalized(x.name, locale)).join(" · ")}</span>
+          <span className="ml-auto rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">{to("see")} →</span>
+        </Link>
+      )}
       {b.latest.length > 0 && (
         <section className="motion-rise" style={{ ["--i" as string]: 2 }}>
           <h2 className="mb-2 text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]">{t("latestOrders")}</h2>

@@ -227,3 +227,25 @@ describe("free delivery", () => {
     }
   });
 });
+
+describe("my offers", () => {
+  it("lists what this buyer can use: targeted offers and coupons, not others' or used-up ones", async () => {
+    const sa = await ctxFor(SA);
+    const k = await ctxFor(KEBAB), w = await ctxFor(LXB);
+    const forKebab = await saveAdminPromotion(sa, { name: { en: "Kebab only" }, kind: "PERCENT", value: 4, firingiFundPct: 100, validFrom: since(), targets: { buyerCompanyIds: [k.company.id] } });
+    const c = code("ONCE");
+    const once = await saveAdminPromotion(sa, { name: { en: "Once" }, kind: "ORDER_AMOUNT", value: 5, firingiFundPct: 100, validFrom: since(), code: c, maxPerCustomer: 1, targets: {} });
+    const hidden = await saveAdminPromotion(sa, { name: { en: "Hidden" }, kind: "PERCENT", value: 2, firingiFundPct: 100, validFrom: since(), showInOffers: false, targets: {} });
+    const { myOffers } = await import("@/server/marketing/my-offers");
+    const mine = (await myOffers(k)).map((o) => o.id);
+    expect(mine).toEqual(expect.arrayContaining([forKebab.id, once.id]));
+    expect(mine).not.toContain(hidden.id);
+    expect((await myOffers(w)).map((o) => o.id)).not.toContain(forKebab.id);
+    // used once → gone from the list
+    const mozz = await offerOf("Grossista Lisboa Central, Lda", "FIR-MOZZ2", 1);
+    await cartWith(KEBAB, mozz.id, 10, "owner@lisboacentral.test");
+    await applyCoupon(k, c);
+    await placeOrder(k, { deliveryAddressId: await addressOf(k.company.id) });
+    expect((await myOffers(k)).map((o) => o.id)).not.toContain(once.id);
+  });
+});

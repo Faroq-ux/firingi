@@ -71,7 +71,7 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
 
 export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; placed?: boolean }) {
   const { order: o, role, actors, allowed } = await getOrder(ctx, id);
-  const [t, locale] = await Promise.all([getTranslations("orders"), getLocale()]);
+  const [t, tOffers, locale] = await Promise.all([getTranslations("orders"), getTranslations("offers"), getLocale()]);
   const decision = role === "BUYER" ? await openBuyerDecision(ctx, o.id) : null;
   const rules = decision ? await allocationRules() : null;
   const tax = taxLabel((o.deliveryAddress as { country?: string }).country ?? ctx.company.countryCode);
@@ -135,6 +135,8 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
               <dl className="ml-auto mt-4 grid max-w-xs grid-cols-2 gap-y-1 text-sm">
                 <dt className="text-muted-foreground">{t("subtotal")}</dt><dd className="text-right tabular-nums">{formatMoney(goodsNet, locale)}</dd>
                 <dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{formatMoney(o.deliveryFeeNet.toString(), locale)}</dd>
+                {o.deliveryDiscountNet.gt(0) && <><dt className="text-xs text-muted-foreground">{tOffers("orderFreeDelivery")}</dt><dd className="text-right text-xs tabular-nums text-muted-foreground"><s>{formatMoney(o.deliveryDiscountNet.toString(), locale)}</s></dd></>}
+                {o.couponCode && <><dt className="text-xs text-muted-foreground">{tOffers("orderCoupon", { code: "" }).trim()}</dt><dd className="text-right font-mono text-xs" data-testid="order-coupon">{o.couponCode}</dd></>}
                 <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(o.vatTotal.toString(), locale)}</dd>
                 <dt className="font-semibold">{t("total")} ({t("vatIncluded", { tax })})</dt><dd className="text-right font-semibold tabular-nums">{formatMoney(o.grandTotal.toString(), locale)}</dd>
                 {role !== "BUYER" && (<>
