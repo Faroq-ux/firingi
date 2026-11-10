@@ -70,6 +70,14 @@ model User {
   carts                   Cart[]
   ordersPlaced            Order[]                  @relation("OrderPlacedBy")
   regionalManagerOf       Company[]                @relation("RegionalManager")
+  leadsOwned              Lead[]                   @relation("LeadOwner")
+  accountsOwned           CrmAccount[]             @relation("AccountOwner")
+  dealsOwned              Deal[]                   @relation("DealOwner")
+  crmActivities           CrmActivity[]            @relation("CrmActivityBy")
+  crmTasks                CrmTask[]                @relation("CrmTaskAssignee")
+  ticketsOpened           SupportTicket[]          @relation("TicketOpenedBy")
+  ticketsAssigned         SupportTicket[]          @relation("TicketAssignee")
+  ticketMessages          TicketMessage[]          @relation("TicketMessageAuthor")
 }
 
 /// Authenticator-app secret and backup codes (encrypted by better-auth).
@@ -195,6 +203,13 @@ model Company {
   vehicles                 Vehicle[]
   drivers                  Driver[]
   deliveries               Delivery[]
+  leadsConverted           Lead[]                      @relation("LeadConverted")
+  crmAccount               CrmAccount?
+  crmContacts              CrmContact[]
+  deals                    Deal[]
+  crmActivities            CrmActivity[]
+  crmTasks                 CrmTask[]
+  supportTickets           SupportTicket[]
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

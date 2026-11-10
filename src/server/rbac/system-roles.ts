@@ -27,7 +27,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
       "admin.dashboard.view", "admin.orders.view", "admin.orders.manage", "admin.vendors.view", "admin.vendors.approve",
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
       "admin.allocation.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
-      "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage",
+      "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage", "admin.support.manage",
     ],
   },
   {
@@ -43,14 +43,14 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     permissions: [
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.customers.manage",
       "admin.catalogue.view", "admin.pricing.view", "admin.pricing.manage", "admin.crm.view", "admin.crm.manage",
-      "admin.marketing.view", "admin.marketing.manage", "admin.analytics.view",
+      "admin.marketing.view", "admin.marketing.manage", "admin.analytics.view", "admin.support.manage",
     ],
   },
   {
     key: "SUPPORT", name: "Support", description: "Read access to help customers and vendors", appliesTo: ["ADMIN"],
     permissions: [
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.catalogue.view",
-      "admin.delivery.view", "admin.notifications.view", "admin.messages.manage", "admin.crm.view",
+      "admin.delivery.view", "admin.notifications.view", "admin.messages.manage", "admin.crm.view", "admin.support.manage",
     ],
   },
   {
@@ -70,30 +70,30 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "VENDOR_SALES", name: "Sales Manager", description: "Products, pricing, promotions and orders", appliesTo: VENDOR_TYPES,
-    permissions: [
+    permissions: ["company.support.use", 
       "vendor.dashboard.view", "vendor.products.view", "vendor.products.manage", "vendor.pricing.manage",
       "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.reports.view",
     ],
   },
   {
     key: "VENDOR_WAREHOUSE", name: "Warehouse", description: "Stock and order preparation", appliesTo: VENDOR_TYPES,
-    permissions: ["vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.orders.view", "vendor.orders.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.orders.view", "vendor.orders.manage"],
   },
   {
     key: "VENDOR_FLEET", name: "Fleet Manager", description: "Drivers, vehicles and service areas", appliesTo: VENDOR_TYPES,
-    permissions: ["vendor.dashboard.view", "vendor.orders.view", "vendor.fleet.view", "vendor.drivers.manage", "vendor.vehicles.manage", "vendor.service_areas.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.fleet.view", "vendor.drivers.manage", "vendor.vehicles.manage", "vendor.service_areas.manage"],
   },
   {
     key: "VENDOR_ACCOUNTANT", name: "Accountant (sales)", description: "Billing statements, invoices to FIRINGI, payments", appliesTo: VENDOR_TYPES,
-    permissions: ["vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view"],
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,
-    permissions: ["buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.addresses.manage", "buyer.reports.view"],
+    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.addresses.manage", "buyer.reports.view"],
   },
   {
     key: "BUYER_ACCOUNTANT", name: "Accountant (purchases)", description: "Invoices and payments", appliesTo: BUYER_TYPES,
-    permissions: ["buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.reports.view"],
+    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.reports.view"],
   },
   { key: "VENDOR_DRIVER", name: "Driver", description: "Driver in the company's own fleet", appliesTo: VENDOR_TYPES, permissions: ["driver.deliveries.view", "driver.deliveries.update", "driver.pod.capture"] },
 ];

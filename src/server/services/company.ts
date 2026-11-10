@@ -12,6 +12,7 @@ import {
 } from "@/server/onboarding/rules";
 import { canDecideType, canViewType, requireAdmin, scopeWhere } from "./admin-access";
 import { applyBuyerDefaults } from "./payments";
+import { convertMatchingLeads } from "./crm";
 import { writeAudit } from "./audit";
 import { notify } from "@/server/notify/dispatch";
 import { checkVies } from "./vies";
@@ -130,6 +131,7 @@ async function transition(companyId: string, from: AccountStatus, to: AccountSta
   });
   const notified: AccountStatus[] = ["UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED", "PENDING"];
   if (notified.includes(to)) await notify(`company.${to.toLowerCase()}`, [{ companyId, link: "/" }], { reason: reason ?? "" });
+  if (to === "APPROVED") await convertMatchingLeads(companyId); // CRM: the lead that brought this company converts
 }
 
 /** Run the EU VIES check for a company's VAT number and record the result. */

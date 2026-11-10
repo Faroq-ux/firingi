@@ -76,6 +76,12 @@ export const EVENTS: EventDef[] = [
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
   E("vendor_invoice.approved", "finance", ["vendor.invoices.view", "vendor.invoices.submit"], ["EMAIL"], ["document"], true),
   E("vendor_invoice.rejected", "finance", ["vendor.invoices.view", "vendor.invoices.submit"], ["EMAIL"], ["document", "reason"], true),
+  // support & CRM
+  E("support.new", "account", ["admin.support.manage"], ["EMAIL", "PUSH"], ["number", "company", "subject"]),
+  E("support.message", "account", ["admin.support.manage"], ["PUSH"], ["number", "company"]),
+  E("support.reply", "account", null, ["EMAIL", "PUSH"], ["number", "subject"]),
+  E("support.resolved", "account", null, ["EMAIL"], ["number", "subject"]),
+  E("crm.task_assigned", "account", ["admin.crm.view", "admin.crm.manage"], ["PUSH"], ["title", "due"]),
   E("promotion.acceptance", "finance", ["vendor.promotions.manage"], ["EMAIL"], ["promotion", "share"]),
 ];
 

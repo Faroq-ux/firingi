@@ -110,6 +110,7 @@ model Order {
   returns           ReturnRequest[]
   delivery          Delivery?
   allocations       AllocationEvent[]
+  supportTickets    SupportTicket[]
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])

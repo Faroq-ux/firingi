@@ -1,0 +1,270 @@
+// ───────────────────────── CRM & Sales, customer support ─────────────────────────
+// FIRINGI's sales team works leads (prospective customers, wholesalers, distributors) into
+// accounts (approved companies), tracks deals in a pipeline, logs every call / e-mail /
+// WhatsApp / visit, and follows up with tasks. Customers and suppliers open support tickets.
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED // registered and linked to its company
+  LOST
+}
+
+enum LeadSource {
+  WEBSITE
+  REFERRAL
+  FIELD_VISIT
+  PHONE
+  EVENT
+  SOCIAL
+  OTHER
+}
+
+enum DealStage {
+  PROSPECTING
+  QUALIFIED
+  PROPOSAL
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum CrmActivityKind {
+  CALL
+  EMAIL
+  WHATSAPP
+  MEETING
+  VISIT
+  NOTE
+}
+
+enum CrmTaskKind {
+  FOLLOW_UP
+  TASK
+}
+
+enum CrmTaskStatus {
+  OPEN
+  DONE
+  CANCELLED
+}
+
+enum TicketStatus {
+  OPEN // waiting for FIRINGI
+  PENDING_CUSTOMER // FIRINGI answered, waiting for the company
+  RESOLVED
+  CLOSED
+}
+
+enum TicketCategory {
+  ORDER
+  DELIVERY
+  INVOICE
+  PAYMENT
+  PRODUCT
+  ACCOUNT
+  OTHER
+}
+
+enum TicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+/// A business FIRINGI wants on the platform (not registered yet).
+model Lead {
+  id                  String      @id @default(cuid())
+  number              String      @unique // LD-YYYY-NNNNNN
+  companyName         String
+  contactName         String?
+  email               String?
+  phone               String?
+  countryId           String
+  city                String?
+  kind                CompanyType // CUSTOMER | WHOLESALER | DISTRIBUTOR it would become
+  source              LeadSource  @default(OTHER)
+  status              LeadStatus  @default(NEW)
+  ownerId             String?
+  estimatedMonthlyNet Decimal?    @db.Decimal(18, 2)
+  notes               String?
+  lostReason          String?
+  convertedCompanyId  String?
+  convertedAt         DateTime?
+  createdById         String
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  country          Country       @relation(fields: [countryId], references: [id])
+  owner            User?         @relation("LeadOwner", fields: [ownerId], references: [id])
+  convertedCompany Company?      @relation("LeadConverted", fields: [convertedCompanyId], references: [id])
+  contacts         CrmContact[]
+  deals            Deal[]
+  activities       CrmActivity[]
+  tasks            CrmTask[]
+
+  @@index([status, ownerId])
+  @@index([email])
+}
+
+/// FIRINGI's sales view of an approved company: account manager, tier, tags.
+model CrmAccount {
+  companyId String   @id
+  ownerId   String?
+  tier      String? // A / B / C
+  tags      String[]
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  owner   User?   @relation("AccountOwner", fields: [ownerId], references: [id])
+}
+
+/// A person at a lead or a company (beyond the company's platform users).
+model CrmContact {
+  id        String   @id @default(cuid())
+  companyId String?
+  leadId    String?
+  name      String
+  jobTitle  String?
+  email     String?
+  phone     String?
+  isPrimary Boolean  @default(false)
+  notes     String?
+  createdAt DateTime @default(now())
+
+  company Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  lead    Lead?    @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([leadId])
+}
+
+/// A sales opportunity in the pipeline (new account, more volume, a contract …).
+model Deal {
+  id              String    @id @default(cuid())
+  number          String    @unique // DL-YYYY-NNNNNN
+  title           String
+  companyId       String?
+  leadId          String?
+  stage           DealStage @default(PROSPECTING)
+  valueNet        Decimal   @default(0) @db.Decimal(18, 2) // expected monthly order value
+  probability     Int       @default(10)
+  expectedCloseAt DateTime? @db.Date
+  ownerId         String?
+  lostReason      String?
+  closedAt        DateTime?
+  createdById     String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  company    Company?      @relation(fields: [companyId], references: [id])
+  lead       Lead?         @relation(fields: [leadId], references: [id])
+  owner      User?         @relation("DealOwner", fields: [ownerId], references: [id])
+  activities CrmActivity[]
+  tasks      CrmTask[]
+
+  @@index([stage, ownerId])
+}
+
+/// A call, e-mail, WhatsApp, meeting, visit or note — the communications history.
+model CrmActivity {
+  id        String          @id @default(cuid())
+  kind      CrmActivityKind
+  outbound  Boolean         @default(true)
+  subject   String
+  body      String?
+  at        DateTime        @default(now())
+  companyId String?
+  leadId    String?
+  dealId    String?
+  byUserId  String
+  createdAt DateTime        @default(now())
+
+  company Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  lead    Lead?    @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  deal    Deal?    @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  by      User     @relation("CrmActivityBy", fields: [byUserId], references: [id])
+
+  @@index([companyId, at])
+  @@index([leadId, at])
+  @@index([kind, at])
+}
+
+/// A follow-up or task for someone in FIRINGI's team.
+model CrmTask {
+  id          String        @id @default(cuid())
+  kind        CrmTaskKind   @default(TASK)
+  title       String
+  notes       String?
+  dueAt       DateTime
+  status      CrmTaskStatus @default(OPEN)
+  assigneeId  String
+  companyId   String?
+  leadId      String?
+  dealId      String?
+  createdById String
+  doneAt      DateTime?
+  createdAt   DateTime      @default(now())
+
+  assignee User     @relation("CrmTaskAssignee", fields: [assigneeId], references: [id])
+  company  Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  lead     Lead?    @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  deal     Deal?    @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([assigneeId, status, dueAt])
+}
+
+/// A saved customer segment: rules evaluated live (type, country, tags, spend, activity …).
+model CrmSegment {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  rules       Json
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// A support request from a customer or supplier.
+model SupportTicket {
+  id            String         @id @default(cuid())
+  number        String         @unique // TK-YYYY-NNNNNN
+  companyId     String
+  openedById    String
+  subject       String
+  category      TicketCategory @default(OTHER)
+  priority      TicketPriority @default(NORMAL)
+  status        TicketStatus   @default(OPEN)
+  assigneeId    String?
+  orderId       String?
+  lastMessageAt DateTime       @default(now())
+  resolvedAt    DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  company  Company         @relation(fields: [companyId], references: [id])
+  openedBy User            @relation("TicketOpenedBy", fields: [openedById], references: [id])
+  assignee User?           @relation("TicketAssignee", fields: [assigneeId], references: [id])
+  order    Order?          @relation(fields: [orderId], references: [id])
+  messages TicketMessage[]
+
+  @@index([status, assigneeId])
+  @@index([companyId, status])
+}
+
+model TicketMessage {
+  id        String   @id @default(cuid())
+  ticketId  String
+  authorId  String
+  body      String
+  internal  Boolean  @default(false) // FIRINGI staff note, never shown to the company
+  fromStaff Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author User          @relation("TicketMessageAuthor", fields: [authorId], references: [id])
+
+  @@index([ticketId, createdAt])
+}

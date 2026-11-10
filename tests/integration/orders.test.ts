@@ -240,7 +240,7 @@ describe("wholesaler buying from distributors", () => {
     const mine = (await listOrders(w, "BUYER")).rows.find((r) => r.id === small.id)! as Record<string, unknown>;
     expect(mine).toBeTruthy();
     for (const k of ["commissionTotal", "vendorPayableNet", "firingiMarginNet", "fxRate", "vendorCurrencyCode"]) expect(mine[k]).toBeUndefined();
-    expect((await listOrders(await ctxFor("owner@atlantico.test"), "VENDOR")).rows.find((r) => r.id === small.id)!.commissionTotal).toBeDefined();
+    expect(((await listOrders(await ctxFor("owner@atlantico.test"), "VENDOR")).rows.find((r) => r.id === small.id) as unknown as Record<string, unknown>).commissionTotal).toBeDefined();
     // Delivered → the distributor's statement (what it invoices FIRINGI) includes its flat rate.
     const atlOwner = await ctxFor("owner@atlantico.test");
     for (const st of ["READY_FOR_PICKUP", "DISPATCHED", "OUT_FOR_DELIVERY", "DELIVERED"] as const) {
