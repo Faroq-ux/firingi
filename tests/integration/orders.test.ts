@@ -224,6 +224,10 @@ describe("wholesaler buying from distributors", () => {
     expect(o1.flow).toBe("WHOLESALER_FROM_DISTRIBUTOR");
     expect(o1.deliveryMode).toBe("VENDOR_FLEET");
     expect(o1.deliveryFeeNet.toFixed(2)).toBe("15.00");
+    // The delivery rate is taxable: VAT at the standard rate (23 % mainland PT) on top of the goods' VAT.
+    const goodsVat = (await prisma.orderLine.findMany({ where: { orderId: small.id } })).reduce((a, l) => a + Number(l.lineVat), 0);
+    expect(Number(o1.vatTotal) - goodsVat).toBeCloseTo(3.45, 2);
+    expect(Number(o1.grandTotal)).toBeCloseTo(Number(o1.netTotal) + Number(o1.vatTotal), 2);
     // FIRINGI invoices the fee and passes it on: the distributor's payout includes it, FIRINGI's margin doesn't.
     const goodsPayout = (await prisma.orderLine.findMany({ where: { orderId: small.id } })).reduce((a, l) => a + Number(l.vendorLineNet), 0);
     expect(Number(o1.vendorPayableNet)).toBeCloseTo(goodsPayout + 15, 2);
@@ -323,7 +327,7 @@ describe("FIRINGI free delivery (customer orders below the wholesaler's minimum)
       // The zone of Kebab House's address has its own rule: free delivery off, 4.50 € flat rate.
       await addToCart(kebab, mozz.id, 5);
       await setFiringiRule(ops, { zoneId: zone.id, minOrderValue: 0, feeNet: 4.5, freeEnabled: false, freeFrom: null });
-      expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", feeNet: "4.50" });
+      expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", feeNet: "4.50", feeVat: "1.04" }); // a zone's rate is taxable too (23 %)
       await removeZoneRule(ops, zone.id);
       expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, feeNet: "0.00" });
       // Switched off → the flat rate again.

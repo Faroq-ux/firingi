@@ -155,7 +155,13 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 
 - **Shopping:** businesses only. Buyers browse by category or by supplier (nearest first), or find goods by barcode: typed, with a USB / Bluetooth scanner, or with a phone camera.
 - **One supplier per cart.** The cart locks to the first supplier, and the database refuses a second one too. To buy from another supplier, check out or clear the cart first.
-- **Who delivers, and the delivery fee** (`src/server/orders/delivery-rule.ts`):
+- **Who sells to whom** (catalogue rule + database triggers): customers buy only from
+  **wholesalers of their own country**; wholesalers buy only from **distributors**, who sell
+  across FIRINGI's European (Schengen) markets in larger volumes. An offer is always sold from
+  its vendor's country. Buyers never see FIRINGI's commission, the supplier's payout or FIRINGI's
+  margin (pages, API, exports).
+- **Who delivers, and the delivery fee** (`src/server/orders/delivery-rule.ts`). Every delivery
+  rate is taxable (VAT at the standard rate of the buyer's region, on FIRINGI's invoice):
   - **Customer ← wholesaler:** when the order reaches the **wholesaler's free-delivery minimum**
     (Delivery & Fleet › Delivery minimum; by order value or by number of units), the wholesaler
     delivers free. Below it **FIRINGI** delivers: **free** from FIRINGI's free-delivery amount when

@@ -132,6 +132,8 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
   const vendors = await prisma.company.findMany({
     where: {
       type: sellerType, status: "APPROVED", id: { notIn: [...exclude] },
+      // Wholesalers sell only inside their own country; distributors across FIRINGI's European markets.
+      ...(sellerType === "WHOLESALER" ? { countryId: target.countryId } : {}),
       vendorOffers: { some: { status: "ACTIVE", packagingUnitId: { in: items.map((i) => i.packagingUnitId) } } },
     },
     select: { id: true, legalName: true, tradeName: true, countryId: true, isInHouse: true, country: { select: { code: true } }, allocationProfile: true },

@@ -4,7 +4,7 @@
  */
 import { afterAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
-import { companyId, makeOffers } from "../helpers";
+import { companyId, makeApprovedCompany, makeOffers } from "../helpers";
 
 afterAll(() => prisma.$disconnect());
 
@@ -39,6 +39,44 @@ describe("vendor offers", () => {
     await expect(prisma.company.update({ where: { id: await companyId(DIST_PT) }, data: { type: "WHOLESALER" } })).rejects.toThrow(
       /COMPANY_TYPE_IMMUTABLE/,
     );
+  });
+});
+
+describe("who sells where (customers ← own-country wholesalers; wholesalers ← distributors across Europe)", () => {
+  it("an offer is always sold from its vendor's country", async () => {
+    const es = await makeApprovedCompany("WHOLESALER", "ES");
+    const name = (await prisma.company.findUniqueOrThrow({ where: { id: es.companyId } })).legalName;
+    const offers = await makeOffers([name]); // fixture writes PT
+    const o = await prisma.vendorOffer.findUniqueOrThrow({ where: { id: offers[name] }, include: { country: true } });
+    expect(o.country.code).toBe("ES");
+  });
+
+  it("a customer can't buy from a wholesaler of another country (cart and order)", async () => {
+    const es = await makeApprovedCompany("WHOLESALER", "ES");
+    const name = (await prisma.company.findUniqueOrThrow({ where: { id: es.companyId } })).legalName;
+    const offers = await makeOffers([name]);
+    const cart = await cartFor(KEBAB, "owner@kebabhouse.test");
+    await expect(prisma.cartItem.create({ data: { cartId: cart.id, offerId: offers[name], qty: 1 } })).rejects.toThrow(/SELLER_COUNTRY_NOT_ALLOWED/);
+    const kebab = await prisma.company.findUniqueOrThrow({ where: { id: await companyId(KEBAB) } });
+    const placedByUserId = (await prisma.user.findUniqueOrThrow({ where: { email: "owner@kebabhouse.test" } })).id;
+    const base = { flow: "CUSTOMER_FROM_WHOLESALER" as const, buyerCompanyId: kebab.id, placedByUserId, countryId: kebab.countryId, status: "NEW" as const, deliveryAddress: {}, number: `T-${Date.now()}` };
+    await expect(prisma.order.create({ data: { ...base, sellerCompanyId: es.companyId } })).rejects.toThrow(/SELLER_COUNTRY_NOT_ALLOWED/);
+    await expect(prisma.order.create({ data: { ...base, number: `${base.number}b`, sellerCompanyId: await companyId(DIST_PT) } })).rejects.toThrow(/ORDER_PARTIES_INVALID/);
+  });
+
+  it("a wholesaler can buy from a distributor in another European country, never from a wholesaler", async () => {
+    const es = await makeApprovedCompany("DISTRIBUTOR", "ES");
+    const name = (await prisma.company.findUniqueOrThrow({ where: { id: es.companyId } })).legalName;
+    const offers = await makeOffers([name, WHS_LX]);
+    const cart = await cartFor(WHS_LX, "purchasing@lisboacentral.test");
+    await prisma.cartItem.create({ data: { cartId: cart.id, offerId: offers[name], qty: 1 } });
+    await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
+    const almada = await companyId("Cash & Carry Almada, Lda");
+    const other = await makeOffers(["Cash & Carry Almada, Lda"]);
+    await expect(prisma.cartItem.create({ data: { cartId: cart.id, offerId: other["Cash & Carry Almada, Lda"], qty: 1 } })).rejects.toThrow(/SELLER_NOT_ALLOWED/);
+    const lx = await prisma.company.findUniqueOrThrow({ where: { id: await companyId(WHS_LX) } });
+    const placedByUserId = (await prisma.user.findUniqueOrThrow({ where: { email: "purchasing@lisboacentral.test" } })).id;
+    await expect(prisma.order.create({ data: { flow: "WHOLESALER_FROM_DISTRIBUTOR", buyerCompanyId: lx.id, sellerCompanyId: almada, placedByUserId, countryId: lx.countryId, status: "NEW", deliveryAddress: {}, number: `T-${Date.now()}w` } })).rejects.toThrow(/ORDER_PARTIES_INVALID/);
   });
 });
 
