@@ -712,7 +712,8 @@
     "Returns": "Palautukset",
     "Reports": "Raportit",
     "Sales Report": "Myyntiraportti",
-    "Spending Report": "Kulutusraportti"
+    "Spending Report": "Kulutusraportti",
+    "Routes": "Reitit"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Tilaus {number}: {supplier} ei voi toimittaa",
       "body": "{supplier} ei voi toimittaa koko tilausta {number}. Avaa tilaus, jotta FIRINGI etsii toisen tukkurin samaan tai edullisempaan hintaan, tai peruuta se."
+    },
+    "delivery_eta": {
+      "title": "Toimitus {number} on tänään matkalla",
+      "body": "Tilauksen {number} arvioidaan saapuvan klo {from}–{to}."
+    },
+    "route_assigned": {
+      "title": "Uusi reitti {number}",
+      "body": "Reitti {number} {date}: {stops} toimitusta. Avaa sovellus nähdäksesi pysähdykset."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Pyysit tilisi poistamista — FIRINGI vastaa 30 päivän kuluessa.",
     "withdraw": "Peru pyyntö",
     "rejected": "FIRINGI ei vielä voinut poistaa tiliäsi: {note}"
+  },
+  "routes": {
+    "title": "Reitit",
+    "intro": "Kokoa useita toimituksia yhden kuljettajan kierrokselle: ensin noudot toimittajilta, sitten asiakkaat lyhimmässä järjestyksessä. Jokaisella pysähdyksellä on arvioitu aika.",
+    "plan": "Suunnittele reitti",
+    "waiting": "Odottaa reittiä",
+    "noWaiting": "Yksikään vahvistettu toimitus ei odota reittiä.",
+    "autoPlan": "Suunnittele päivä automaattisesti",
+    "autoPlanned": "{planned} toimitusta suunniteltu {routes} reitille. {left} odottaa yhä.",
+    "date": "Päivämäärä",
+    "driver": "Kuljettaja",
+    "vehicle": "Ajoneuvo",
+    "noVehicle": "Ei ajoneuvoa",
+    "offDuty": "ei vuorossa",
+    "create": "Luo reitti",
+    "created": "Reitti {number} luotu.",
+    "selected": "{count} valittu",
+    "order": "Tilaus",
+    "customer": "Asiakas",
+    "supplier": "Toimittaja",
+    "pickupAt": "Nouto paikasta",
+    "city": "Kaupunki",
+    "requested": "Toivottu päivä",
+    "number": "Reitti",
+    "status": "Tila",
+    "stops": "Pysähdykset",
+    "progress": "Tehty",
+    "distance": "Matka",
+    "duration": "Aika",
+    "plannedStart": "Suunniteltu lähtö",
+    "empty": "Ei vielä reittejä.",
+    "open": "Avoimet",
+    "history": "Historia",
+    "reoptimise": "Optimoi uudelleen",
+    "reoptimised": "Lyhin järjestys: {before} km → {after} km",
+    "cancel": "Peru reitti",
+    "cancelConfirm": "Perutaanko reitti? Sen toimitukset palaavat odottamaan.",
+    "remove": "Poista reitiltä",
+    "up": "Siirrä ylös",
+    "down": "Siirrä alas",
+    "pickup": "Nouto",
+    "drop": "Toimitus",
+    "eta": "Arvioitu",
+    "doneAt": "Tehty",
+    "late": "{count} myöhässä",
+    "openMaps": "Avaa Google Mapsissa",
+    "myRoute": "Oma reittini",
+    "startRoute": "Aloita reitti",
+    "startHint": "Asiakkaat saavat arvioidun toimitusajan, kun aloitat.",
+    "nextStop": "Seuraava pysähdys",
+    "deliveryWindow": "Arvioitu toimitus: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Suunniteltu",
+      "IN_PROGRESS": "Matkalla",
+      "COMPLETED": "Valmis",
+      "CANCELLED": "Peruttu"
+    }
   }
 }

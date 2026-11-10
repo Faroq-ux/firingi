@@ -712,7 +712,8 @@
     "Returns": "Atgriešanas",
     "Reports": "Pārskati",
     "Sales Report": "Pārdošanas pārskats",
-    "Spending Report": "Izdevumu pārskats"
+    "Spending Report": "Izdevumu pārskats",
+    "Routes": "Maršruti"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Pasūtījums {number}: {supplier} nevar piegādāt",
       "body": "{supplier} nevar piegādāt visu pasūtījumu {number}. Atveriet pasūtījumu, lai FIRINGI atrastu citu vairumtirgotāju par tādu pašu vai zemāku cenu, vai atceltu to."
+    },
+    "delivery_eta": {
+      "title": "Piegāde {number} šodien ir ceļā",
+      "body": "Pasūtījums {number} gaidāms no {from} līdz {to}."
+    },
+    "route_assigned": {
+      "title": "Jauns maršruts {number}",
+      "body": "Maršruts {number} {date}: {stops} piegādes. Atveriet lietotni, lai redzētu pieturas."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Jūs lūdzāt dzēst kontu — FIRINGI atbildēs 30 dienu laikā.",
     "withdraw": "Atsaukt pieprasījumu",
     "rejected": "FIRINGI vēl nevarēja dzēst jūsu kontu: {note}"
+  },
+  "routes": {
+    "title": "Maršruti",
+    "intro": "Apvienojiet vairākas piegādes viena vadītāja braucienā: vispirms saņemšana pie piegādātājiem, tad klienti īsākajā secībā. Katrai pieturai ir paredzamais laiks.",
+    "plan": "Plānot maršrutu",
+    "waiting": "Gaida maršrutu",
+    "noWaiting": "Nav apstiprinātu piegāžu, kas gaida maršrutu.",
+    "autoPlan": "Plānot dienu automātiski",
+    "autoPlanned": "{planned} piegādes ieplānotas {routes} maršrutos. {left} joprojām gaida.",
+    "date": "Datums",
+    "driver": "Vadītājs",
+    "vehicle": "Transportlīdzeklis",
+    "noVehicle": "Bez transportlīdzekļa",
+    "offDuty": "nav dienestā",
+    "create": "Izveidot maršrutu",
+    "created": "Maršruts {number} izveidots.",
+    "selected": "Atlasītas: {count}",
+    "order": "Pasūtījums",
+    "customer": "Klients",
+    "supplier": "Piegādātājs",
+    "pickupAt": "Saņemšana",
+    "city": "Pilsēta",
+    "requested": "Vēlamais datums",
+    "number": "Maršruts",
+    "status": "Statuss",
+    "stops": "Pieturas",
+    "progress": "Izpildītas",
+    "distance": "Attālums",
+    "duration": "Laiks",
+    "plannedStart": "Plānotais sākums",
+    "empty": "Maršrutu vēl nav.",
+    "open": "Atvērtie",
+    "history": "Vēsture",
+    "reoptimise": "Optimizēt vēlreiz",
+    "reoptimised": "Īsākā secība: {before} km → {after} km",
+    "cancel": "Atcelt maršrutu",
+    "cancelConfirm": "Atcelt šo maršrutu? Tā piegādes atkal gaidīs.",
+    "remove": "Noņemt no maršruta",
+    "up": "Uz augšu",
+    "down": "Uz leju",
+    "pickup": "Saņemšana",
+    "drop": "Piegāde",
+    "eta": "Paredzams",
+    "doneAt": "Izpildīts",
+    "late": "Kavējas: {count}",
+    "openMaps": "Atvērt Google Maps",
+    "myRoute": "Mans maršruts",
+    "startRoute": "Sākt maršrutu",
+    "startHint": "Klienti saņem paredzamo piegādes laiku, kad sākat.",
+    "nextStop": "Nākamā pietura",
+    "deliveryWindow": "Paredzamā piegāde: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Plānots",
+      "IN_PROGRESS": "Ceļā",
+      "COMPLETED": "Pabeigts",
+      "CANCELLED": "Atcelts"
+    }
   }
 }

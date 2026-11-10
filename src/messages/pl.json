@@ -712,7 +712,8 @@
     "Returns": "Zwroty",
     "Reports": "Raporty",
     "Sales Report": "Raport sprzedaży",
-    "Spending Report": "Raport wydatków"
+    "Spending Report": "Raport wydatków",
+    "Routes": "Trasy"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Zamówienie {number}: {supplier} nie może dostarczyć",
       "body": "{supplier} nie może dostarczyć całego zamówienia {number}. Otwórz zamówienie, aby FIRINGI znalazło innego hurtownika w tej samej lub niższej cenie, albo aby je anulować."
+    },
+    "delivery_eta": {
+      "title": "Dostawa {number} jest dziś w drodze",
+      "body": "Zamówienie {number} dotrze między {from} a {to}."
+    },
+    "route_assigned": {
+      "title": "Nowa trasa {number}",
+      "body": "Trasa {number} w dniu {date}: {stops} dostaw. Otwórz aplikację, aby zobaczyć przystanki."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Poprosiłeś o usunięcie konta — FIRINGI odpowie w ciągu 30 dni.",
     "withdraw": "Anuluj prośbę",
     "rejected": "FIRINGI nie mogło jeszcze usunąć Twojego konta: {note}"
+  },
+  "routes": {
+    "title": "Trasy",
+    "intro": "Połącz kilka dostaw w jeden kurs kierowcy: najpierw odbiory u dostawców, potem klienci w najkrótszej kolejności. Każdy przystanek ma przewidywaną godzinę.",
+    "plan": "Zaplanuj trasę",
+    "waiting": "Czeka na trasę",
+    "noWaiting": "Brak potwierdzonych dostaw czekających na trasę.",
+    "autoPlan": "Zaplanuj dzień automatycznie",
+    "autoPlanned": "Zaplanowano {planned} dostaw na {routes} trasach. Nadal czeka: {left}.",
+    "date": "Data",
+    "driver": "Kierowca",
+    "vehicle": "Pojazd",
+    "noVehicle": "Bez pojazdu",
+    "offDuty": "poza służbą",
+    "create": "Utwórz trasę",
+    "created": "Utworzono trasę {number}.",
+    "selected": "Wybrano: {count}",
+    "order": "Zamówienie",
+    "customer": "Klient",
+    "supplier": "Dostawca",
+    "pickupAt": "Odbiór w",
+    "city": "Miasto",
+    "requested": "Termin",
+    "number": "Trasa",
+    "status": "Status",
+    "stops": "Przystanki",
+    "progress": "Wykonane",
+    "distance": "Odległość",
+    "duration": "Czas",
+    "plannedStart": "Planowany start",
+    "empty": "Brak tras.",
+    "open": "Otwarte",
+    "history": "Historia",
+    "reoptimise": "Optymalizuj ponownie",
+    "reoptimised": "Najkrótsza kolejność: {before} km → {after} km",
+    "cancel": "Anuluj trasę",
+    "cancelConfirm": "Anulować tę trasę? Jej dostawy wrócą do oczekujących.",
+    "remove": "Usuń z trasy",
+    "up": "W górę",
+    "down": "W dół",
+    "pickup": "Odbiór",
+    "drop": "Dostawa",
+    "eta": "Przewidywana",
+    "doneAt": "Wykonano",
+    "late": "Opóźnione: {count}",
+    "openMaps": "Otwórz w Mapach Google",
+    "myRoute": "Moja trasa",
+    "startRoute": "Rozpocznij trasę",
+    "startHint": "Klienci otrzymają przewidywaną godzinę dostawy, gdy rozpoczniesz.",
+    "nextStop": "Następny przystanek",
+    "deliveryWindow": "Przewidywana dostawa: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Zaplanowana",
+      "IN_PROGRESS": "W drodze",
+      "COMPLETED": "Zakończona",
+      "CANCELLED": "Anulowana"
+    }
   }
 }

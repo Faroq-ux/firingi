@@ -21,6 +21,7 @@ import { storeUpload } from "./storage";
 import { writeAudit } from "./audit";
 import { assertDriverCapacity } from "./delivery-settings";
 import { notify } from "@/server/notify/dispatch";
+import { detachFromRoute, onDeliveryStep } from "./routes";
 
 const isAdmin = (ctx: Ctx) => ctx.company.type === "ADMIN";
 
@@ -186,6 +187,8 @@ export async function assignDelivery(ctx: Ctx, id: string, input: { driverId: st
         assignedAt: driver ? new Date() : null, assignedById: ctx.user.id,
       },
     });
+    // Handed to another driver by hand: it leaves its route (the route's other stops are re-timed).
+    if (d.routeId && driver?.id !== d.driverId) await detachFromRoute(tx, id);
     // Retry after a failed attempt: the goods are still with the fleet → back on the road.
     if (retry && d.order.status === "EXCEPTION")
       await applyOrderTransition(tx, { ...d.order, lines: d.order.lines }, "DISPATCHED", { reason: "New delivery attempt", userId: ctx.user.id, companyId: ctx.company.id, syncDelivery: false });
@@ -249,6 +252,7 @@ async function moveAsDriver(ctx: Ctx, id: string, to: DeliveryStatus, effect?: (
     }
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `delivery.${to.toLowerCase()}`, entityType: "Delivery", entityId: id, before: { status: d.status }, after: { status: to, reason } }, tx);
   });
+  if (to !== "ASSIGNED" && to !== "UNASSIGNED" && to !== "CANCELLED") await onDeliveryStep(id, to);
   if (orderTo && orderTo !== d.order.status) await notifyOrderChange(d.order, orderTo, reason, "SYSTEM");
   if (to === "FAILED" && d.executingCompanyId !== d.order.sellerCompanyId)
     await notify("delivery.failed", [{ companyId: d.executingCompanyId, link: "/admin/delivery/failed" }], { number: d.order.number, reason }, { ref: { type: "Delivery", id } });
@@ -304,5 +308,6 @@ export async function returnToSupplier(ctx: Ctx, id: string, reason: string) {
     await applyOrderTransition(tx, d.order, orderTo, { reason: `Returned to supplier after failed delivery: ${reason.trim()}`, userId: ctx.user.id, companyId: ctx.company.id, syncDelivery: false });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "delivery.returned_to_supplier", entityType: "Delivery", entityId: id, after: { reason } }, tx);
   });
+  await onDeliveryStep(id, "RETURNED");
   await notifyOrderChange(d.order, orderTo, `Not delivered — returned to the supplier. ${reason.trim()}`, "SYSTEM");
 }

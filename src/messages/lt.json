@@ -712,7 +712,8 @@
     "Returns": "Grąžinimai",
     "Reports": "Ataskaitos",
     "Sales Report": "Pardavimų ataskaita",
-    "Spending Report": "Išlaidų ataskaita"
+    "Spending Report": "Išlaidų ataskaita",
+    "Routes": "Maršrutai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Užsakymas {number}: {supplier} negali pristatyti",
       "body": "{supplier} negali pristatyti viso užsakymo {number}. Atidarykite užsakymą, kad FIRINGI surastų kitą didmenininką ta pačia arba mažesne kaina, arba jį atšaukite."
+    },
+    "delivery_eta": {
+      "title": "Pristatymas {number} šiandien pakeliui",
+      "body": "Užsakymas {number} numatomas tarp {from} ir {to}."
+    },
+    "route_assigned": {
+      "title": "Naujas maršrutas {number}",
+      "body": "Maršrutas {number} {date}: {stops} pristatymai. Atidarykite programėlę ir pamatysite stoteles."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Paprašėte ištrinti paskyrą — FIRINGI atsakys per 30 dienų.",
     "withdraw": "Atšaukti prašymą",
     "rejected": "FIRINGI dar negalėjo ištrinti jūsų paskyros: {note}"
+  },
+  "routes": {
+    "title": "Maršrutai",
+    "intro": "Sujunkite kelis pristatymus į vieno vairuotojo reisą: pirmiausia paėmimai pas tiekėjus, tada klientai trumpiausia tvarka. Kiekviena stotelė turi numatomą laiką.",
+    "plan": "Planuoti maršrutą",
+    "waiting": "Laukia maršruto",
+    "noWaiting": "Nėra patvirtintų pristatymų, laukiančių maršruto.",
+    "autoPlan": "Planuoti dieną automatiškai",
+    "autoPlanned": "{planned} pristatymai suplanuoti {routes} maršrutuose. Dar laukia: {left}.",
+    "date": "Data",
+    "driver": "Vairuotojas",
+    "vehicle": "Transporto priemonė",
+    "noVehicle": "Be transporto priemonės",
+    "offDuty": "ne darbe",
+    "create": "Sukurti maršrutą",
+    "created": "Maršrutas {number} sukurtas.",
+    "selected": "Pasirinkta: {count}",
+    "order": "Užsakymas",
+    "customer": "Klientas",
+    "supplier": "Tiekėjas",
+    "pickupAt": "Paėmimas",
+    "city": "Miestas",
+    "requested": "Pageidaujama data",
+    "number": "Maršrutas",
+    "status": "Būsena",
+    "stops": "Stotelės",
+    "progress": "Atlikta",
+    "distance": "Atstumas",
+    "duration": "Laikas",
+    "plannedStart": "Planuojama pradžia",
+    "empty": "Maršrutų dar nėra.",
+    "open": "Atviri",
+    "history": "Istorija",
+    "reoptimise": "Optimizuoti iš naujo",
+    "reoptimised": "Trumpiausia tvarka: {before} km → {after} km",
+    "cancel": "Atšaukti maršrutą",
+    "cancelConfirm": "Atšaukti šį maršrutą? Jo pristatymai vėl lauks.",
+    "remove": "Išimti iš maršruto",
+    "up": "Aukštyn",
+    "down": "Žemyn",
+    "pickup": "Paėmimas",
+    "drop": "Pristatymas",
+    "eta": "Numatoma",
+    "doneAt": "Atlikta",
+    "late": "Vėluoja: {count}",
+    "openMaps": "Atidaryti Google Maps",
+    "myRoute": "Mano maršrutas",
+    "startRoute": "Pradėti maršrutą",
+    "startHint": "Klientai gauna numatomą pristatymo laiką, kai pradedate.",
+    "nextStop": "Kita stotelė",
+    "deliveryWindow": "Numatomas pristatymas: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Suplanuotas",
+      "IN_PROGRESS": "Kelyje",
+      "COMPLETED": "Baigtas",
+      "CANCELLED": "Atšauktas"
+    }
   }
 }

@@ -712,7 +712,8 @@
     "Returns": "Vračila",
     "Reports": "Poročila",
     "Sales Report": "Poročilo o prodaji",
-    "Spending Report": "Poročilo o porabi"
+    "Spending Report": "Poročilo o porabi",
+    "Routes": "Poti"
   },
   "delivery": {
     "title": "Dostava",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Naročilo {number}: {supplier} ne more dobaviti",
       "body": "{supplier} ne more dobaviti celotnega naročila {number}. Odprite naročilo in pustite FIRINGI, da poišče drugega veletrgovca po enaki ali nižji ceni, ali ga prekličite."
+    },
+    "delivery_eta": {
+      "title": "Dostava {number} je danes na poti",
+      "body": "Naročilo {number} pričakujemo med {from} in {to}."
+    },
+    "route_assigned": {
+      "title": "Nova pot {number}",
+      "body": "Pot {number} dne {date}: {stops} dostav. Odprite aplikacijo za ogled postankov."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Zahtevali ste izbris računa — FIRINGI bo odgovoril v 30 dneh.",
     "withdraw": "Prekliči zahtevo",
     "rejected": "FIRINGI vašega računa še ni mogel izbrisati: {note}"
+  },
+  "routes": {
+    "title": "Poti",
+    "intro": "Združite več dostav v vožnjo enega voznika: najprej prevzemi pri dobaviteljih, nato stranke v najkrajšem vrstnem redu. Vsak postanek ima pričakovani čas.",
+    "plan": "Načrtuj pot",
+    "waiting": "Čaka na pot",
+    "noWaiting": "Nobena potrjena dostava ne čaka na pot.",
+    "autoPlan": "Samodejno načrtuj dan",
+    "autoPlanned": "{planned} dostav načrtovanih na {routes} poteh. Še čaka: {left}.",
+    "date": "Datum",
+    "driver": "Voznik",
+    "vehicle": "Vozilo",
+    "noVehicle": "Brez vozila",
+    "offDuty": "ni v službi",
+    "create": "Ustvari pot",
+    "created": "Pot {number} ustvarjena.",
+    "selected": "Izbrano: {count}",
+    "order": "Naročilo",
+    "customer": "Stranka",
+    "supplier": "Dobavitelj",
+    "pickupAt": "Prevzem pri",
+    "city": "Kraj",
+    "requested": "Želeni datum",
+    "number": "Pot",
+    "status": "Stanje",
+    "stops": "Postanki",
+    "progress": "Opravljeno",
+    "distance": "Razdalja",
+    "duration": "Čas",
+    "plannedStart": "Načrtovani začetek",
+    "empty": "Še ni poti.",
+    "open": "Odprte",
+    "history": "Zgodovina",
+    "reoptimise": "Ponovno optimiziraj",
+    "reoptimised": "Najkrajši vrstni red: {before} km → {after} km",
+    "cancel": "Prekliči pot",
+    "cancelConfirm": "Preklicati to pot? Njene dostave bodo spet čakale.",
+    "remove": "Odstrani s poti",
+    "up": "Premakni gor",
+    "down": "Premakni dol",
+    "pickup": "Prevzem",
+    "drop": "Dostava",
+    "eta": "Pričakovano",
+    "doneAt": "Opravljeno",
+    "late": "Zamuja: {count}",
+    "openMaps": "Odpri v Google Zemljevidih",
+    "myRoute": "Moja pot",
+    "startRoute": "Začni pot",
+    "startHint": "Stranke prejmejo pričakovani čas dostave, ko začnete.",
+    "nextStop": "Naslednji postanek",
+    "deliveryWindow": "Pričakovana dostava: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Načrtovana",
+      "IN_PROGRESS": "Na poti",
+      "COMPLETED": "Zaključena",
+      "CANCELLED": "Preklicana"
+    }
   }
 }

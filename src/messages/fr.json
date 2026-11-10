@@ -712,7 +712,8 @@
     "Returns": "Retours",
     "Reports": "Rapports",
     "Sales Report": "Rapport des ventes",
-    "Spending Report": "Rapport des dépenses"
+    "Spending Report": "Rapport des dépenses",
+    "Routes": "Tournées"
   },
   "delivery": {
     "title": "Livraison",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Commande {number} : {supplier} ne peut pas livrer",
       "body": "{supplier} ne peut pas livrer toute la commande {number}. Ouvrez la commande pour laisser FIRINGI trouver un autre grossiste au même prix ou moins cher, ou pour l'annuler."
+    },
+    "delivery_eta": {
+      "title": "La livraison {number} arrive aujourd'hui",
+      "body": "La commande {number} est attendue entre {from} et {to}."
+    },
+    "route_assigned": {
+      "title": "Nouvelle tournée {number}",
+      "body": "Tournée {number} le {date} : {stops} livraisons. Ouvrez l'app pour voir les arrêts."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Vous avez demandé la suppression de votre compte — FIRINGI répondra sous 30 jours.",
     "withdraw": "Annuler la demande",
     "rejected": "FIRINGI n'a pas encore pu supprimer votre compte : {note}"
+  },
+  "routes": {
+    "title": "Tournées",
+    "intro": "Regroupez plusieurs livraisons dans la tournée d'un chauffeur : d'abord les enlèvements chez les fournisseurs, puis les clients dans l'ordre le plus court. Chaque arrêt a une heure prévue.",
+    "plan": "Planifier une tournée",
+    "waiting": "En attente de tournée",
+    "noWaiting": "Aucune livraison confirmée n'attend de tournée.",
+    "autoPlan": "Planifier la journée automatiquement",
+    "autoPlanned": "{planned} livraisons planifiées sur {routes} tournées. {left} encore en attente.",
+    "date": "Date",
+    "driver": "Chauffeur",
+    "vehicle": "Véhicule",
+    "noVehicle": "Aucun véhicule",
+    "offDuty": "hors service",
+    "create": "Créer la tournée",
+    "created": "Tournée {number} créée.",
+    "selected": "{count} sélectionnées",
+    "order": "Commande",
+    "customer": "Client",
+    "supplier": "Fournisseur",
+    "pickupAt": "Enlèvement à",
+    "city": "Ville",
+    "requested": "Souhaitée le",
+    "number": "Tournée",
+    "status": "Statut",
+    "stops": "Arrêts",
+    "progress": "Faits",
+    "distance": "Distance",
+    "duration": "Durée",
+    "plannedStart": "Départ prévu",
+    "empty": "Aucune tournée pour l'instant.",
+    "open": "En cours",
+    "history": "Historique",
+    "reoptimise": "Réoptimiser",
+    "reoptimised": "Ordre le plus court : {before} km → {after} km",
+    "cancel": "Annuler la tournée",
+    "cancelConfirm": "Annuler cette tournée ? Ses livraisons repassent en attente.",
+    "remove": "Retirer de la tournée",
+    "up": "Monter",
+    "down": "Descendre",
+    "pickup": "Enlèvement",
+    "drop": "Livraison",
+    "eta": "Prévu",
+    "doneAt": "Fait",
+    "late": "{count} en retard",
+    "openMaps": "Ouvrir dans Google Maps",
+    "myRoute": "Ma tournée",
+    "startRoute": "Démarrer la tournée",
+    "startHint": "Les clients reçoivent leur heure de livraison prévue dès que vous démarrez.",
+    "nextStop": "Prochain arrêt",
+    "deliveryWindow": "Livraison prévue : {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planifiée",
+      "IN_PROGRESS": "En route",
+      "COMPLETED": "Terminée",
+      "CANCELLED": "Annulée"
+    }
   }
 }

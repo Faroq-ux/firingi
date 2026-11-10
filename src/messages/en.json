@@ -993,6 +993,14 @@
     "order_supplier_unavailable": {
       "title": "Order {number}: {supplier} can't deliver",
       "body": "{supplier} can't deliver all of order {number}. Open the order to let FIRINGI find another wholesaler at the same price or lower, or to cancel."
+    },
+    "delivery_eta": {
+      "title": "Delivery {number} is on its way today",
+      "body": "Order {number} is expected between {from} and {to}."
+    },
+    "route_assigned": {
+      "title": "New route {number}",
+      "body": "Route {number} on {date}: {stops} deliveries. Open the app to see the stops."
     }
   },
   "notifications": {
@@ -1175,5 +1183,62 @@
     "requested": "You asked to delete your account — FIRINGI will answer within 30 days.",
     "withdraw": "Cancel the request",
     "rejected": "FIRINGI couldn't delete your account yet: {note}"
+  },
+  "routes": {
+    "title": "Routes",
+    "intro": "Put several deliveries on one driver's run: pickups at the suppliers first, then the customers in the shortest order. Each stop gets an expected time.",
+    "plan": "Plan a route",
+    "waiting": "Waiting for a route",
+    "noWaiting": "No confirmed deliveries are waiting for a route.",
+    "autoPlan": "Plan the day automatically",
+    "autoPlanned": "{planned} deliveries planned on {routes} routes. {left} still waiting.",
+    "date": "Date",
+    "driver": "Driver",
+    "vehicle": "Vehicle",
+    "noVehicle": "No vehicle",
+    "offDuty": "off duty",
+    "create": "Create route",
+    "created": "Route {number} created.",
+    "selected": "{count} selected",
+    "order": "Order",
+    "customer": "Customer",
+    "supplier": "Supplier",
+    "pickupAt": "Pickup at",
+    "city": "City",
+    "requested": "Requested",
+    "number": "Route",
+    "status": "Status",
+    "stops": "Stops",
+    "progress": "Done",
+    "distance": "Distance",
+    "duration": "Time",
+    "plannedStart": "Planned start",
+    "empty": "No routes yet.",
+    "open": "Open",
+    "history": "History",
+    "reoptimise": "Re-optimise",
+    "reoptimised": "Shortest order: {before} km → {after} km",
+    "cancel": "Cancel route",
+    "cancelConfirm": "Cancel this route? Its deliveries go back to waiting.",
+    "remove": "Take off route",
+    "up": "Move up",
+    "down": "Move down",
+    "pickup": "Pickup",
+    "drop": "Delivery",
+    "eta": "Expected",
+    "doneAt": "Done",
+    "late": "{count} late",
+    "openMaps": "Open in Google Maps",
+    "myRoute": "My route",
+    "startRoute": "Start route",
+    "startHint": "Customers get their expected delivery time when you start.",
+    "nextStop": "Next stop",
+    "deliveryWindow": "Expected delivery: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planned",
+      "IN_PROGRESS": "On the road",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    }
   }
 }

@@ -712,7 +712,8 @@
     "Returns": "Retururi",
     "Reports": "Rapoarte",
     "Sales Report": "Raport de vânzări",
-    "Spending Report": "Raport de cheltuieli"
+    "Spending Report": "Raport de cheltuieli",
+    "Routes": "Rute"
   },
   "delivery": {
     "title": "Livrare",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Comanda {number}: {supplier} nu poate livra",
       "body": "{supplier} nu poate livra toată comanda {number}. Deschideți comanda pentru ca FIRINGI să găsească alt angrosist la același preț sau mai mic, sau pentru a o anula."
+    },
+    "delivery_eta": {
+      "title": "Livrarea {number} este pe drum astăzi",
+      "body": "Comanda {number} este estimată între {from} și {to}."
+    },
+    "route_assigned": {
+      "title": "Rută nouă {number}",
+      "body": "Ruta {number} din {date}: {stops} livrări. Deschideți aplicația pentru a vedea opririle."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Ați cerut ștergerea contului — FIRINGI va răspunde în 30 de zile.",
     "withdraw": "Anulați cererea",
     "rejected": "FIRINGI nu v-a putut șterge încă contul: {note}"
+  },
+  "routes": {
+    "title": "Rute",
+    "intro": "Grupați mai multe livrări în cursa unui șofer: întâi ridicările de la furnizori, apoi clienții în ordinea cea mai scurtă. Fiecare oprire are o oră estimată.",
+    "plan": "Planifică o rută",
+    "waiting": "Așteaptă o rută",
+    "noWaiting": "Nicio livrare confirmată nu așteaptă o rută.",
+    "autoPlan": "Planifică ziua automat",
+    "autoPlanned": "{planned} livrări planificate pe {routes} rute. {left} încă așteaptă.",
+    "date": "Data",
+    "driver": "Șofer",
+    "vehicle": "Vehicul",
+    "noVehicle": "Fără vehicul",
+    "offDuty": "în afara serviciului",
+    "create": "Creează ruta",
+    "created": "Ruta {number} a fost creată.",
+    "selected": "{count} selectate",
+    "order": "Comandă",
+    "customer": "Client",
+    "supplier": "Furnizor",
+    "pickupAt": "Ridicare de la",
+    "city": "Oraș",
+    "requested": "Solicitat pentru",
+    "number": "Rută",
+    "status": "Stare",
+    "stops": "Opriri",
+    "progress": "Efectuate",
+    "distance": "Distanță",
+    "duration": "Timp",
+    "plannedStart": "Start planificat",
+    "empty": "Nu există încă rute.",
+    "open": "Deschise",
+    "history": "Istoric",
+    "reoptimise": "Reoptimizează",
+    "reoptimised": "Ordinea cea mai scurtă: {before} km → {after} km",
+    "cancel": "Anulează ruta",
+    "cancelConfirm": "Anulați această rută? Livrările ei revin în așteptare.",
+    "remove": "Scoate din rută",
+    "up": "Mută sus",
+    "down": "Mută jos",
+    "pickup": "Ridicare",
+    "drop": "Livrare",
+    "eta": "Estimat",
+    "doneAt": "Efectuat",
+    "late": "{count} întârziate",
+    "openMaps": "Deschide în Google Maps",
+    "myRoute": "Ruta mea",
+    "startRoute": "Pornește ruta",
+    "startHint": "Clienții primesc ora estimată de livrare când porniți.",
+    "nextStop": "Următoarea oprire",
+    "deliveryWindow": "Livrare estimată: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planificată",
+      "IN_PROGRESS": "Pe drum",
+      "COMPLETED": "Finalizată",
+      "CANCELLED": "Anulată"
+    }
   }
 }

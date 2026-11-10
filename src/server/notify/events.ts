@@ -64,6 +64,8 @@ export const EVENTS: EventDef[] = [
   E("allocation.needed", "orders", ["admin.allocation.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),
+  E("delivery.eta", "deliveries", BUYER_ORDERS, ["WHATSAPP", "SMS", "PUSH"], ["number", "from", "to"]),
+  E("route.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "stops", "date"]),
   E("delivery.failed", "deliveries", ["admin.delivery.view", "admin.delivery.manage", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),
   // returns
   E("return.requested", "returns", ["admin.orders.manage", "admin.delivery.view", ...VENDOR_ORDERS], ["EMAIL"], ["number", "reason"]),

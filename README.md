@@ -57,6 +57,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
 | `node tests/e2e/go-live.mjs http://localhost:3000 [screenshotDir]` | Browser test of two-factor login, sessions, SAF-T, data privacy, payments, settings notice and API keys* |
 | `node tests/e2e/firingi-ordering.mjs http://localhost:3000 [screenshotDir]` | Browser test of ordering from FIRINGI, Delivery Orders, in-house small orders, the customer's decision* |
+| `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
@@ -360,6 +361,35 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 - **API & Integrations**: FIRINGI issues API keys for a company user with scopes
   (`catalogue.read`, `orders.read`); shown once, stored as a hash, revocable. Use
   `Authorization: Bearer fk_live_…` with `GET /api/catalogue/offers` and `GET /api/v1/orders`.
+
+## Routes & Fleet (Phase 12)
+
+- **Multi-stop routes** (*Delivery & Logistics › Multi-Stop Routes*, vendors: *Delivery & Fleet ›
+  Routes*): the small orders FIRINGI's fleet delivers wait for a route. Tick deliveries, pick a
+  driver (and vehicle) and a day → one route: pickups at each supplier first, then the customers.
+  *Plan the day automatically* splits the waiting deliveries by direction over the free drivers
+  (approved, on duty, no route that day), longest-waiting first. The **multi-order limit** from
+  Delivery Settings caps orders per driver (off by default for FIRINGI's fleet: one order per
+  driver — the Super Admin switches it on); vendors plan their own fleet the same way.
+- **Stop order** (*Route Optimization*): nearest stop first, then every stop is tried in every
+  position, always keeping a pickup before its delivery. Distance = straight line × road factor
+  (no external maps service needed); time = average speed + time per pickup / delivery. A route
+  can be re-optimised (stops already done stay), stops moved up / down or taken off; a manual
+  reassignment, a cancelled order or a suspended driver takes the delivery off its route.
+- **ETAs** (*ETA Management*): every stop has a planned and an expected time. When the driver
+  taps *Start route*, each customer is notified ("Delivery FO-… is on its way today", window =
+  ETA ± half the configured window, default 60 min) and sees the window on the order. Each
+  pickup / delivery the driver records ticks its stop and moves the expected times of the rest;
+  the route completes when every stop is done. Drivers see their route on *Today's deliveries*
+  with the next stop and a Google Maps link through the remaining stops.
+- **Live Operations** (*Dashboard*): routes today with progress, next stop, late stops, finish
+  time; tiles for deliveries waiting for a route, failed, open exceptions and driver availability
+  (refreshes every 30 s).
+- **Performance**: *Delivery Performance* (delivered, failed, on time = by the planned time +
+  half the window, first-attempt rate, lead time, failure reasons, per day) and *Driver
+  Performance* (routes, deliveries, success, on time, km, hours, deliveries per hour).
+- **Driver Earnings**: FIRINGI's own drivers per period — per completed route + per delivered
+  order + per planned km (rates on the same page). Vendors pay their own drivers.
 
 ## Configuration notes
 

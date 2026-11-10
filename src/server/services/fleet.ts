@@ -167,7 +167,10 @@ export async function setDriverActive(ctx: Ctx, driverId: string, active: boolea
   }
   await prisma.$transaction(async (tx) => {
     await tx.driver.update({ where: { id: driverId }, data: { status: active ? "APPROVED" : "SUSPENDED", ...(active ? {} : { availability: "OFF_DUTY" }) } });
-    if (!active) await tx.delivery.updateMany({ where: { driverId, status: "ASSIGNED" }, data: { driverId: null, status: "UNASSIGNED" } });
+    if (!active) {
+      await tx.delivery.updateMany({ where: { driverId, status: "ASSIGNED" }, data: { driverId: null, status: "UNASSIGNED", routeId: null, eta: null } });
+      await tx.route.updateMany({ where: { driverId, status: "PLANNED" }, data: { status: "CANCELLED" } });
+    }
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: active ? "driver.reactivated" : "driver.suspended", entityType: "Driver", entityId: driverId, before: { status: d.status }, after: { reason } }, tx);
   });
   if (!active) await notify("driver.suspended", [{ userId: d.userId, link: "/" }], { reason });

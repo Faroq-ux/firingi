@@ -712,7 +712,8 @@
     "Returns": "Tagastused",
     "Reports": "Aruanded",
     "Sales Report": "Müügiaruanne",
-    "Spending Report": "Kuluaruanne"
+    "Spending Report": "Kuluaruanne",
+    "Routes": "Marsruudid"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Tellimus {number}: {supplier} ei saa tarnida",
       "body": "{supplier} ei saa tarnida kogu tellimust {number}. Avage tellimus, et FIRINGI leiaks teise hulgimüüja sama või madalama hinnaga, või tühistage see."
+    },
+    "delivery_eta": {
+      "title": "Tarne {number} on täna teel",
+      "body": "Tellimus {number} saabub eeldatavalt {from}–{to}."
+    },
+    "route_assigned": {
+      "title": "Uus marsruut {number}",
+      "body": "Marsruut {number} {date}: {stops} tarnet. Ava rakendus, et peatusi näha."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Palusite oma konto kustutada — FIRINGI vastab 30 päeva jooksul.",
     "withdraw": "Tühista taotlus",
     "rejected": "FIRINGI ei saanud teie kontot veel kustutada: {note}"
+  },
+  "routes": {
+    "title": "Marsruudid",
+    "intro": "Pane mitu tarnet ühe juhi ringile: kõigepealt pealevõtmised tarnijatelt, siis kliendid lühimas järjekorras. Igal peatusel on eeldatav aeg.",
+    "plan": "Planeeri marsruut",
+    "waiting": "Ootab marsruuti",
+    "noWaiting": "Ükski kinnitatud tarne ei oota marsruuti.",
+    "autoPlan": "Planeeri päev automaatselt",
+    "autoPlanned": "{planned} tarnet planeeritud {routes} marsruudile. {left} ootab veel.",
+    "date": "Kuupäev",
+    "driver": "Juht",
+    "vehicle": "Sõiduk",
+    "noVehicle": "Sõidukita",
+    "offDuty": "pole tööl",
+    "create": "Loo marsruut",
+    "created": "Marsruut {number} loodud.",
+    "selected": "{count} valitud",
+    "order": "Tellimus",
+    "customer": "Klient",
+    "supplier": "Tarnija",
+    "pickupAt": "Pealevõtmine",
+    "city": "Linn",
+    "requested": "Soovitud kuupäev",
+    "number": "Marsruut",
+    "status": "Olek",
+    "stops": "Peatused",
+    "progress": "Tehtud",
+    "distance": "Vahemaa",
+    "duration": "Aeg",
+    "plannedStart": "Kavandatud algus",
+    "empty": "Marsruute veel pole.",
+    "open": "Avatud",
+    "history": "Ajalugu",
+    "reoptimise": "Optimeeri uuesti",
+    "reoptimised": "Lühim järjekord: {before} km → {after} km",
+    "cancel": "Tühista marsruut",
+    "cancelConfirm": "Kas tühistada see marsruut? Selle tarned ootavad uuesti.",
+    "remove": "Eemalda marsruudilt",
+    "up": "Liiguta üles",
+    "down": "Liiguta alla",
+    "pickup": "Pealevõtmine",
+    "drop": "Tarne",
+    "eta": "Eeldatav",
+    "doneAt": "Tehtud",
+    "late": "{count} hilineb",
+    "openMaps": "Ava Google Mapsis",
+    "myRoute": "Minu marsruut",
+    "startRoute": "Alusta marsruuti",
+    "startHint": "Kliendid saavad eeldatava tarneaja, kui alustad.",
+    "nextStop": "Järgmine peatus",
+    "deliveryWindow": "Eeldatav tarne: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planeeritud",
+      "IN_PROGRESS": "Teel",
+      "COMPLETED": "Lõpetatud",
+      "CANCELLED": "Tühistatud"
+    }
   }
 }

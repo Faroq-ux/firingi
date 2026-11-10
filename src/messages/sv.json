@@ -712,7 +712,8 @@
     "Returns": "Returer",
     "Reports": "Rapporter",
     "Sales Report": "Försäljningsrapport",
-    "Spending Report": "Utgiftsrapport"
+    "Spending Report": "Utgiftsrapport",
+    "Routes": "Rutter"
   },
   "delivery": {
     "title": "Leverans",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Order {number}: {supplier} kan inte leverera",
       "body": "{supplier} kan inte leverera hela order {number}. Öppna ordern för att låta FIRINGI hitta en annan grossist till samma eller lägre pris, eller för att avbryta."
+    },
+    "delivery_eta": {
+      "title": "Leverans {number} är på väg i dag",
+      "body": "Order {number} väntas mellan {from} och {to}."
+    },
+    "route_assigned": {
+      "title": "Ny rutt {number}",
+      "body": "Rutt {number} den {date}: {stops} leveranser. Öppna appen för att se stoppen."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Du har bett om att få ditt konto raderat — FIRINGI svarar inom 30 dagar.",
     "withdraw": "Återkalla begäran",
     "rejected": "FIRINGI kunde ännu inte radera ditt konto: {note}"
+  },
+  "routes": {
+    "title": "Rutter",
+    "intro": "Lägg flera leveranser på en förares runda: först upphämtning hos leverantörerna, sedan kunderna i kortaste ordning. Varje stopp får en beräknad tid.",
+    "plan": "Planera en rutt",
+    "waiting": "Väntar på rutt",
+    "noWaiting": "Inga bekräftade leveranser väntar på en rutt.",
+    "autoPlan": "Planera dagen automatiskt",
+    "autoPlanned": "{planned} leveranser planerade på {routes} rutter. {left} väntar fortfarande.",
+    "date": "Datum",
+    "driver": "Förare",
+    "vehicle": "Fordon",
+    "noVehicle": "Inget fordon",
+    "offDuty": "ledig",
+    "create": "Skapa rutt",
+    "created": "Rutt {number} skapad.",
+    "selected": "{count} valda",
+    "order": "Order",
+    "customer": "Kund",
+    "supplier": "Leverantör",
+    "pickupAt": "Upphämtning vid",
+    "city": "Ort",
+    "requested": "Önskat datum",
+    "number": "Rutt",
+    "status": "Status",
+    "stops": "Stopp",
+    "progress": "Klara",
+    "distance": "Sträcka",
+    "duration": "Tid",
+    "plannedStart": "Planerad start",
+    "empty": "Inga rutter ännu.",
+    "open": "Öppna",
+    "history": "Historik",
+    "reoptimise": "Optimera om",
+    "reoptimised": "Kortaste ordning: {before} km → {after} km",
+    "cancel": "Avbryt rutt",
+    "cancelConfirm": "Avbryta rutten? Leveranserna går tillbaka till väntande.",
+    "remove": "Ta bort från rutt",
+    "up": "Flytta upp",
+    "down": "Flytta ned",
+    "pickup": "Upphämtning",
+    "drop": "Leverans",
+    "eta": "Beräknad",
+    "doneAt": "Klar",
+    "late": "{count} försenade",
+    "openMaps": "Öppna i Google Maps",
+    "myRoute": "Min rutt",
+    "startRoute": "Starta rutt",
+    "startHint": "Kunderna får sin beräknade leveranstid när du startar.",
+    "nextStop": "Nästa stopp",
+    "deliveryWindow": "Beräknad leverans: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planerad",
+      "IN_PROGRESS": "På väg",
+      "COMPLETED": "Slutförd",
+      "CANCELLED": "Avbruten"
+    }
   }
 }

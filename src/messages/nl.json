@@ -712,7 +712,8 @@
     "Returns": "Retouren",
     "Reports": "Rapporten",
     "Sales Report": "Verkooprapport",
-    "Spending Report": "Uitgavenrapport"
+    "Spending Report": "Uitgavenrapport",
+    "Routes": "Routes"
   },
   "delivery": {
     "title": "Levering",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Bestelling {number}: {supplier} kan niet leveren",
       "body": "{supplier} kan bestelling {number} niet volledig leveren. Open de bestelling om FIRINGI een andere groothandel te laten zoeken tegen dezelfde of een lagere prijs, of om te annuleren."
+    },
+    "delivery_eta": {
+      "title": "Levering {number} is vandaag onderweg",
+      "body": "Bestelling {number} wordt verwacht tussen {from} en {to}."
+    },
+    "route_assigned": {
+      "title": "Nieuwe route {number}",
+      "body": "Route {number} op {date}: {stops} leveringen. Open de app om de stops te zien."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "U hebt gevraagd uw account te verwijderen — FIRINGI antwoordt binnen 30 dagen.",
     "withdraw": "Verzoek intrekken",
     "rejected": "FIRINGI kon uw account nog niet verwijderen: {note}"
+  },
+  "routes": {
+    "title": "Routes",
+    "intro": "Zet meerdere leveringen op de rit van één chauffeur: eerst ophalen bij de leveranciers, dan de klanten in de kortste volgorde. Elke stop krijgt een verwachte tijd.",
+    "plan": "Route plannen",
+    "waiting": "Wacht op een route",
+    "noWaiting": "Er wachten geen bevestigde leveringen op een route.",
+    "autoPlan": "De dag automatisch plannen",
+    "autoPlanned": "{planned} leveringen gepland op {routes} routes. {left} wachten nog.",
+    "date": "Datum",
+    "driver": "Chauffeur",
+    "vehicle": "Voertuig",
+    "noVehicle": "Geen voertuig",
+    "offDuty": "niet in dienst",
+    "create": "Route aanmaken",
+    "created": "Route {number} aangemaakt.",
+    "selected": "{count} geselecteerd",
+    "order": "Bestelling",
+    "customer": "Klant",
+    "supplier": "Leverancier",
+    "pickupAt": "Ophalen bij",
+    "city": "Plaats",
+    "requested": "Gewenst op",
+    "number": "Route",
+    "status": "Status",
+    "stops": "Stops",
+    "progress": "Gedaan",
+    "distance": "Afstand",
+    "duration": "Tijd",
+    "plannedStart": "Geplande start",
+    "empty": "Nog geen routes.",
+    "open": "Open",
+    "history": "Geschiedenis",
+    "reoptimise": "Opnieuw optimaliseren",
+    "reoptimised": "Kortste volgorde: {before} km → {after} km",
+    "cancel": "Route annuleren",
+    "cancelConfirm": "Deze route annuleren? De leveringen gaan terug naar de wachtrij.",
+    "remove": "Van route halen",
+    "up": "Omhoog",
+    "down": "Omlaag",
+    "pickup": "Ophalen",
+    "drop": "Levering",
+    "eta": "Verwacht",
+    "doneAt": "Gedaan",
+    "late": "{count} te laat",
+    "openMaps": "Openen in Google Maps",
+    "myRoute": "Mijn route",
+    "startRoute": "Route starten",
+    "startHint": "Klanten krijgen hun verwachte levertijd zodra u start.",
+    "nextStop": "Volgende stop",
+    "deliveryWindow": "Verwachte levering: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Gepland",
+      "IN_PROGRESS": "Onderweg",
+      "COMPLETED": "Voltooid",
+      "CANCELLED": "Geannuleerd"
+    }
   }
 }

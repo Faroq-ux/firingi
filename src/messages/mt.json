@@ -712,7 +712,8 @@
     "Returns": "Ritorni",
     "Reports": "Rapporti",
     "Sales Report": "Rapport tal-bejgħ",
-    "Spending Report": "Rapport tal-infiq"
+    "Spending Report": "Rapport tal-infiq",
+    "Routes": "Rotot"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Ordni {number}: {supplier} ma jistax iwassal",
       "body": "{supplier} ma jistax iwassal l-ordni {number} kollha. Iftaħ l-ordni biex tħalli lil FIRINGI ssib grossista ieħor bl-istess prezz jew orħos, jew biex tikkanċellaha."
+    },
+    "delivery_eta": {
+      "title": "Il-kunsinna {number} hija fit-triq illum",
+      "body": "L-ordni {number} hija mistennija bejn {from} u {to}."
+    },
+    "route_assigned": {
+      "title": "Rotta ġdida {number}",
+      "body": "Rotta {number} fil-{date}: {stops} kunsinni. Iftaħ l-app biex tara l-waqfiet."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Tlabt li jitħassar il-kont tiegħek — FIRINGI se twieġeb fi żmien 30 jum.",
     "withdraw": "Ikkanċella t-talba",
     "rejected": "FIRINGI għadha ma setgħetx tħassar il-kont tiegħek: {note}"
+  },
+  "routes": {
+    "title": "Rotot",
+    "intro": "Iġbor diversi kunsinni fir-rotta ta' xufier wieħed: l-ewwel il-ġbir mingħand il-fornituri, imbagħad il-klijenti fl-iqsar ordni. Kull waqfa jkollha ħin mistenni.",
+    "plan": "Ippjana rotta",
+    "waiting": "Qed tistenna rotta",
+    "noWaiting": "L-ebda kunsinna kkonfermata ma qed tistenna rotta.",
+    "autoPlan": "Ippjana l-jum awtomatikament",
+    "autoPlanned": "{planned} kunsinni ppjanati fuq {routes} rotot. {left} għadhom jistennew.",
+    "date": "Data",
+    "driver": "Xufier",
+    "vehicle": "Vettura",
+    "noVehicle": "L-ebda vettura",
+    "offDuty": "mhux fuq ix-xogħol",
+    "create": "Oħloq rotta",
+    "created": "Ir-rotta {number} inħolqot.",
+    "selected": "{count} magħżula",
+    "order": "Ordni",
+    "customer": "Klijent",
+    "supplier": "Fornitur",
+    "pickupAt": "Ġbir minn",
+    "city": "Belt",
+    "requested": "Mitlub għal",
+    "number": "Rotta",
+    "status": "Status",
+    "stops": "Waqfiet",
+    "progress": "Lesti",
+    "distance": "Distanza",
+    "duration": "Ħin",
+    "plannedStart": "Bidu ppjanat",
+    "empty": "Għad m'hemm l-ebda rotta.",
+    "open": "Miftuħa",
+    "history": "Storja",
+    "reoptimise": "Erġa' ottimizza",
+    "reoptimised": "L-iqsar ordni: {before} km → {after} km",
+    "cancel": "Ikkanċella r-rotta",
+    "cancelConfirm": "Tikkanċella din ir-rotta? Il-kunsinni tagħha jerġgħu jistennew.",
+    "remove": "Neħħi mir-rotta",
+    "up": "Ittella' 'l fuq",
+    "down": "Niżżel 'l isfel",
+    "pickup": "Ġbir",
+    "drop": "Kunsinna",
+    "eta": "Mistenni",
+    "doneAt": "Lest",
+    "late": "{count} tard",
+    "openMaps": "Iftaħ f'Google Maps",
+    "myRoute": "Ir-rotta tiegħi",
+    "startRoute": "Ibda r-rotta",
+    "startHint": "Il-klijenti jirċievu l-ħin mistenni tal-kunsinna meta tibda.",
+    "nextStop": "Il-waqfa li jmiss",
+    "deliveryWindow": "Kunsinna mistennija: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Ippjanata",
+      "IN_PROGRESS": "Fit-triq",
+      "COMPLETED": "Mitmuma",
+      "CANCELLED": "Ikkanċellata"
+    }
   }
 }

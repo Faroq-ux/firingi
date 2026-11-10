@@ -712,7 +712,8 @@
     "Returns": "Resi",
     "Reports": "Report",
     "Sales Report": "Report vendite",
-    "Spending Report": "Report spese"
+    "Spending Report": "Report spese",
+    "Routes": "Giri"
   },
   "delivery": {
     "title": "Consegna",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Ordine {number}: {supplier} non può consegnare",
       "body": "{supplier} non può consegnare tutto l'ordine {number}. Apri l'ordine per lasciare che FIRINGI trovi un altro grossista allo stesso prezzo o inferiore, oppure per annullarlo."
+    },
+    "delivery_eta": {
+      "title": "La consegna {number} è in arrivo oggi",
+      "body": "L'ordine {number} è previsto tra le {from} e le {to}."
+    },
+    "route_assigned": {
+      "title": "Nuovo giro {number}",
+      "body": "Giro {number} del {date}: {stops} consegne. Apri l'app per vedere le fermate."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Hai chiesto di cancellare il tuo account — FIRINGI risponderà entro 30 giorni.",
     "withdraw": "Annulla la richiesta",
     "rejected": "FIRINGI non ha ancora potuto cancellare il tuo account: {note}"
+  },
+  "routes": {
+    "title": "Giri",
+    "intro": "Raggruppa più consegne nel giro di un autista: prima i ritiri presso i fornitori, poi i clienti nell'ordine più breve. Ogni fermata ha un orario previsto.",
+    "plan": "Pianifica un giro",
+    "waiting": "In attesa di giro",
+    "noWaiting": "Nessuna consegna confermata è in attesa di un giro.",
+    "autoPlan": "Pianifica la giornata automaticamente",
+    "autoPlanned": "{planned} consegne pianificate su {routes} giri. {left} ancora in attesa.",
+    "date": "Data",
+    "driver": "Autista",
+    "vehicle": "Veicolo",
+    "noVehicle": "Nessun veicolo",
+    "offDuty": "fuori servizio",
+    "create": "Crea giro",
+    "created": "Giro {number} creato.",
+    "selected": "{count} selezionate",
+    "order": "Ordine",
+    "customer": "Cliente",
+    "supplier": "Fornitore",
+    "pickupAt": "Ritiro presso",
+    "city": "Città",
+    "requested": "Richiesta per",
+    "number": "Giro",
+    "status": "Stato",
+    "stops": "Fermate",
+    "progress": "Fatte",
+    "distance": "Distanza",
+    "duration": "Tempo",
+    "plannedStart": "Partenza prevista",
+    "empty": "Ancora nessun giro.",
+    "open": "Aperti",
+    "history": "Storico",
+    "reoptimise": "Riottimizza",
+    "reoptimised": "Ordine più breve: {before} km → {after} km",
+    "cancel": "Annulla giro",
+    "cancelConfirm": "Annullare questo giro? Le sue consegne tornano in attesa.",
+    "remove": "Togli dal giro",
+    "up": "Sposta su",
+    "down": "Sposta giù",
+    "pickup": "Ritiro",
+    "drop": "Consegna",
+    "eta": "Previsto",
+    "doneAt": "Fatto",
+    "late": "{count} in ritardo",
+    "openMaps": "Apri in Google Maps",
+    "myRoute": "Il mio giro",
+    "startRoute": "Inizia il giro",
+    "startHint": "I clienti ricevono l'orario di consegna previsto quando inizi.",
+    "nextStop": "Prossima fermata",
+    "deliveryWindow": "Consegna prevista: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Pianificato",
+      "IN_PROGRESS": "In viaggio",
+      "COMPLETED": "Completato",
+      "CANCELLED": "Annullato"
+    }
   }
 }

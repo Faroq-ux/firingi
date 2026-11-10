@@ -43,6 +43,7 @@ export const VENDOR_NAV: NavSection[] = [
     key: "fleet", icon: "Truck", label: { en: "Delivery & Fleet", pt: "Entregas e Frota", es: "Entregas y flota" },
     items: [
       vfl("deliveries", "Deliveries", "Entregas", "P6", { live: true, perm: ["vendor.orders.view", "vendor.fleet.view"], es: "Entregas" }),
+      vfl("routes", "Routes", "Rotas", "P12", { live: true, perm: ["vendor.orders.manage", "vendor.drivers.manage"], es: "Rutas" }),
       vfl("drivers", "Drivers", "Motoristas", "P6", { live: true, perm: ["vendor.fleet.view", "vendor.drivers.manage"], es: "Conductores" }),
       vfl("vehicles", "Vehicles", "Veículos", "P6", { live: true, perm: ["vendor.fleet.view", "vendor.vehicles.manage"], es: "Vehículos" }),
       vfl("service-areas", "Service Areas", "Áreas de Serviço", "P6", { live: true, perm: ["vendor.service_areas.manage", "vendor.fleet.view"], es: "Áreas de servicio" }),

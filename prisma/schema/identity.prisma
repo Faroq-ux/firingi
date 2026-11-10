@@ -181,6 +181,7 @@ model Company {
   allocationsFrom          AllocationEvent[]           @relation("AllocationFrom")
   allocationProfile        VendorAllocationProfile?
   apiKeys                  ApiKey[]
+  routes                   Route[]
   commissionRules          CommissionRule[]
   promotions               Promotion[]
   promotionTargets         PromotionTarget[]

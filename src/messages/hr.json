@@ -712,7 +712,8 @@
     "Returns": "Povrati",
     "Reports": "Izvješća",
     "Sales Report": "Izvješće o prodaji",
-    "Spending Report": "Izvješće o potrošnji"
+    "Spending Report": "Izvješće o potrošnji",
+    "Routes": "Rute"
   },
   "delivery": {
     "title": "Dostava",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Narudžba {number}: {supplier} ne može isporučiti",
       "body": "{supplier} ne može isporučiti cijelu narudžbu {number}. Otvorite narudžbu kako bi FIRINGI pronašao drugog veletrgovca po istoj ili nižoj cijeni, ili je otkažite."
+    },
+    "delivery_eta": {
+      "title": "Dostava {number} danas je na putu",
+      "body": "Narudžba {number} očekuje se između {from} i {to}."
+    },
+    "route_assigned": {
+      "title": "Nova ruta {number}",
+      "body": "Ruta {number} dana {date}: {stops} dostava. Otvorite aplikaciju za pregled stajališta."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Zatražili ste brisanje računa — FIRINGI će odgovoriti u roku od 30 dana.",
     "withdraw": "Otkaži zahtjev",
     "rejected": "FIRINGI još nije mogao izbrisati vaš račun: {note}"
+  },
+  "routes": {
+    "title": "Rute",
+    "intro": "Spojite više dostava u vožnju jednog vozača: najprije preuzimanja kod dobavljača, zatim kupci najkraćim redoslijedom. Svako stajalište ima očekivano vrijeme.",
+    "plan": "Planiraj rutu",
+    "waiting": "Čeka rutu",
+    "noWaiting": "Nema potvrđenih dostava koje čekaju rutu.",
+    "autoPlan": "Automatski planiraj dan",
+    "autoPlanned": "{planned} dostava planirano na {routes} ruta. Još čeka: {left}.",
+    "date": "Datum",
+    "driver": "Vozač",
+    "vehicle": "Vozilo",
+    "noVehicle": "Bez vozila",
+    "offDuty": "nije na dužnosti",
+    "create": "Izradi rutu",
+    "created": "Ruta {number} izrađena.",
+    "selected": "Odabrano: {count}",
+    "order": "Narudžba",
+    "customer": "Kupac",
+    "supplier": "Dobavljač",
+    "pickupAt": "Preuzimanje kod",
+    "city": "Grad",
+    "requested": "Željeni datum",
+    "number": "Ruta",
+    "status": "Status",
+    "stops": "Stajališta",
+    "progress": "Obavljeno",
+    "distance": "Udaljenost",
+    "duration": "Vrijeme",
+    "plannedStart": "Planirani početak",
+    "empty": "Još nema ruta.",
+    "open": "Otvorene",
+    "history": "Povijest",
+    "reoptimise": "Ponovno optimiziraj",
+    "reoptimised": "Najkraći redoslijed: {before} km → {after} km",
+    "cancel": "Otkaži rutu",
+    "cancelConfirm": "Otkazati ovu rutu? Njezine dostave ponovno čekaju.",
+    "remove": "Ukloni s rute",
+    "up": "Pomakni gore",
+    "down": "Pomakni dolje",
+    "pickup": "Preuzimanje",
+    "drop": "Dostava",
+    "eta": "Očekivano",
+    "doneAt": "Obavljeno",
+    "late": "Kasni: {count}",
+    "openMaps": "Otvori u Google kartama",
+    "myRoute": "Moja ruta",
+    "startRoute": "Započni rutu",
+    "startHint": "Kupci dobivaju očekivano vrijeme dostave kad započnete.",
+    "nextStop": "Sljedeće stajalište",
+    "deliveryWindow": "Očekivana dostava: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planirana",
+      "IN_PROGRESS": "Na putu",
+      "COMPLETED": "Završena",
+      "CANCELLED": "Otkazana"
+    }
   }
 }

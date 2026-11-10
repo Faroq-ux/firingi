@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
+import { EtaWindow } from "@/components/routes/route-views";
 import { AssignForm, CarrierForm, ReturnActions, ReturnRequestForm, ReturnToSupplierButton } from "./delivery-forms";
 
 const D_VARIANT: Record<DeliveryStatus, "default" | "secondary" | "success" | "warning" | "destructive"> = {
@@ -94,6 +95,7 @@ export async function DeliveryPanel({ ctx, orderId }: { ctx: Ctx; orderId: strin
             <div>{d.driver ? <>{d.driver.user.name}{role !== "VIEWER" && d.driver.user.phone ? ` · ${d.driver.user.phone}` : ""}</> : <span className="text-muted-foreground">{t("noDriver")}</span>}{d.vehicle ? ` · ${d.vehicle.plate}` : ""}</div>
           </div>
         )}
+        {d.mode !== "CARRIER" && <EtaWindow eta={d.eta} status={d.status} />}
         {d.scheduledFor && <div><div className="text-muted-foreground">{t("scheduled")}</div><div>{formatDate(d.scheduledFor, locale)}</div></div>}
         {d.notes && role !== "VIEWER" && <div><div className="text-muted-foreground">{t("notes")}</div><div>{d.notes}</div></div>}
         <DeliveryEvidence d={d} />

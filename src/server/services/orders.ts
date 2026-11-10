@@ -18,6 +18,7 @@ import { vendorReaches } from "@/server/delivery/coverage";
 import { scopeWhere } from "./admin-access";
 import { deliveryRulesFor } from "./cart";
 import { writeAudit } from "./audit";
+import { detachFromRoute } from "./routes";
 import { notify } from "@/server/notify/dispatch";
 import { invoiceDeliveredOrder } from "@/server/invoicing/service";
 import { assertCanOrder } from "./payments";
@@ -427,6 +428,7 @@ export async function applyOrderTransition(
         where: { id: d.id },
         data: { status: next, ...(next === "PICKED_UP" && !d.pickedUpAt ? { pickedUpAt: new Date() } : {}), ...(next === "DELIVERED" || next === "RETURNED" || next === "CANCELLED" ? { completedAt: new Date() } : {}) },
       });
+    if (d?.routeId && (next === "CANCELLED" || next === "RETURNED")) await detachFromRoute(tx, d.id);
   }
   await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: order.status, toStatus: to, reason, byUserId: by.userId } });
   await writeAudit({ actorUserId: by.userId, actorCompanyId: by.companyId, action: `order.status.${to.toLowerCase()}`, entityType: "Order", entityId: order.id, before: { status: order.status }, after: { status: to, reason } }, tx);

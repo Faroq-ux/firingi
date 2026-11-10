@@ -993,6 +993,14 @@
     "order_supplier_unavailable": {
       "title": "Encomenda {number}: {supplier} não pode entregar",
       "body": "{supplier} não pode entregar toda a encomenda {number}. Abra a encomenda para deixar a FIRINGI encontrar outro grossista ao mesmo preço ou mais barato, ou para cancelar."
+    },
+    "delivery_eta": {
+      "title": "A entrega {number} está a caminho hoje",
+      "body": "A encomenda {number} deve chegar entre as {from} e as {to}."
+    },
+    "route_assigned": {
+      "title": "Nova rota {number}",
+      "body": "Rota {number} em {date}: {stops} entregas. Abra a app para ver as paragens."
     }
   },
   "notifications": {
@@ -1175,5 +1183,65 @@
     "requested": "Pediu para apagar a sua conta — a FIRINGI responderá no prazo de 30 dias.",
     "withdraw": "Cancelar o pedido",
     "rejected": "A FIRINGI ainda não pôde apagar a sua conta: {note}"
+  },
+  "routes": {
+    "title": "Rotas",
+    "intro": "Junte várias entregas na volta de um motorista: primeiro as recolhas nos fornecedores, depois os clientes pela ordem mais curta. Cada paragem tem uma hora prevista.",
+    "plan": "Planear uma rota",
+    "waiting": "À espera de rota",
+    "noWaiting": "Não há entregas confirmadas à espera de rota.",
+    "autoPlan": "Planear o dia automaticamente",
+    "autoPlanned": "{planned} entregas planeadas em {routes} rotas. {left} ainda à espera.",
+    "date": "Data",
+    "driver": "Motorista",
+    "vehicle": "Veículo",
+    "noVehicle": "Sem veículo",
+    "offDuty": "fora de serviço",
+    "create": "Criar rota",
+    "created": "Rota {number} criada.",
+    "selected": "{count} selecionadas",
+    "order": "Encomenda",
+    "customer": "Cliente",
+    "supplier": "Fornecedor",
+    "pickupAt": "Recolha em",
+    "city": "Cidade",
+    "requested": "Pedida para",
+    "number": "Rota",
+    "status": "Estado",
+    "stops": "Paragens",
+    "progress": "Feitas",
+    "distance": "Distância",
+    "duration": "Tempo",
+    "plannedStart": "Início previsto",
+    "empty": "Ainda não há rotas.",
+    "open": "Abertas",
+    "history": "Histórico",
+    "reoptimise": "Reotimizar",
+    "reoptimised": "Ordem mais curta: {before} km → {after} km",
+    "cancel": "Cancelar rota",
+    "cancelConfirm": "Cancelar esta rota? As entregas voltam a ficar à espera.",
+    "remove": "Retirar da rota",
+    "up": "Subir",
+    "down": "Descer",
+    "pickup": "Recolha",
+    "drop": "Entrega",
+    "eta": "Previsto",
+    "doneAt": "Feito",
+    "late": "{count} atrasadas",
+    "openMaps": "Abrir no Google Maps",
+    "myRoute": "A minha rota",
+    "startRoute": "Iniciar rota",
+    "startHint": "Os clientes recebem a hora prevista de entrega quando iniciar.",
+    "nextStop": "Próxima paragem",
+    "deliveryWindow": "Entrega prevista: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planeada",
+      "IN_PROGRESS": "Em curso",
+      "COMPLETED": "Concluída",
+      "CANCELLED": "Cancelada"
+    }
+  },
+  "navLabels": {
+    "Routes": "Rotas"
   }
 }

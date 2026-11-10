@@ -130,6 +130,7 @@ model Vehicle {
   owner      Company    @relation(fields: [ownerCompanyId], references: [id])
   documents  Document[]
   deliveries Delivery[]
+  routes     Route[]
 
   @@unique([ownerCompanyId, plate])
 }
@@ -149,6 +150,7 @@ model Driver {
   owner      Company    @relation(fields: [ownerCompanyId], references: [id])
   documents  Document[]
   deliveries Delivery[]
+  routes     Route[]
 }
 
 /// One delivery per order (retries after a failed attempt reuse it; each try is a DeliveryAttempt).
@@ -166,6 +168,7 @@ model Delivery {
   eta                DateTime?
   feeNet             Decimal        @default(0) @db.Decimal(18, 2)
   notes              String?
+  routeId            String? // open route this delivery is on
   assignedAt         DateTime?
   assignedById       String?
   pickedUpAt         DateTime?
@@ -179,6 +182,8 @@ model Delivery {
   vehicle  Vehicle?          @relation(fields: [vehicleId], references: [id])
   attempts DeliveryAttempt[]
   proof    ProofOfDelivery?
+  route    Route?            @relation(fields: [routeId], references: [id], onDelete: SetNull)
+  stops    RouteStop[]
 
   @@index([executingCompanyId, status])
   @@index([driverId, status])

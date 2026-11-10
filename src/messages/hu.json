@@ -712,7 +712,8 @@
     "Returns": "Visszaküldések",
     "Reports": "Jelentések",
     "Sales Report": "Értékesítési jelentés",
-    "Spending Report": "Kiadási jelentés"
+    "Spending Report": "Kiadási jelentés",
+    "Routes": "Útvonalak"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "{number} rendelés: {supplier} nem tud szállítani",
       "body": "{supplier} nem tudja teljesíteni a(z) {number} rendelést. Nyissa meg a rendelést, hogy a FIRINGI másik nagykereskedőt keressen azonos vagy alacsonyabb áron, vagy hogy lemondja."
+    },
+    "delivery_eta": {
+      "title": "A(z) {number} szállítás ma úton van",
+      "body": "A(z) {number} rendelés {from} és {to} között érkezik."
+    },
+    "route_assigned": {
+      "title": "Új útvonal: {number}",
+      "body": "{number} útvonal, {date}: {stops} szállítás. A megállókat az alkalmazásban látja."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Kérte fiókja törlését — a FIRINGI 30 napon belül válaszol.",
     "withdraw": "Kérés visszavonása",
     "rejected": "A FIRINGI még nem tudta törölni a fiókját: {note}"
+  },
+  "routes": {
+    "title": "Útvonalak",
+    "intro": "Fűzzön több szállítást egy sofőr körútjába: először az átvételek a beszállítóknál, aztán a vevők a legrövidebb sorrendben. Minden megálló várható időpontot kap.",
+    "plan": "Útvonal tervezése",
+    "waiting": "Útvonalra vár",
+    "noWaiting": "Nincs útvonalra váró visszaigazolt szállítás.",
+    "autoPlan": "A nap automatikus tervezése",
+    "autoPlanned": "{planned} szállítás tervezve {routes} útvonalon. Még vár: {left}.",
+    "date": "Dátum",
+    "driver": "Sofőr",
+    "vehicle": "Jármű",
+    "noVehicle": "Nincs jármű",
+    "offDuty": "nincs szolgálatban",
+    "create": "Útvonal létrehozása",
+    "created": "{number} útvonal létrehozva.",
+    "selected": "Kijelölve: {count}",
+    "order": "Rendelés",
+    "customer": "Vevő",
+    "supplier": "Beszállító",
+    "pickupAt": "Átvétel helye",
+    "city": "Város",
+    "requested": "Kért dátum",
+    "number": "Útvonal",
+    "status": "Állapot",
+    "stops": "Megállók",
+    "progress": "Kész",
+    "distance": "Távolság",
+    "duration": "Idő",
+    "plannedStart": "Tervezett indulás",
+    "empty": "Még nincs útvonal.",
+    "open": "Nyitott",
+    "history": "Előzmények",
+    "reoptimise": "Újraoptimalizálás",
+    "reoptimised": "Legrövidebb sorrend: {before} km → {after} km",
+    "cancel": "Útvonal törlése",
+    "cancelConfirm": "Törli ezt az útvonalat? A szállítások újra várakoznak.",
+    "remove": "Levétel az útvonalról",
+    "up": "Fel",
+    "down": "Le",
+    "pickup": "Átvétel",
+    "drop": "Szállítás",
+    "eta": "Várható",
+    "doneAt": "Kész",
+    "late": "Késik: {count}",
+    "openMaps": "Megnyitás a Google Térképen",
+    "myRoute": "Saját útvonalam",
+    "startRoute": "Útvonal indítása",
+    "startHint": "A vevők az indításkor megkapják a várható szállítási időt.",
+    "nextStop": "Következő megálló",
+    "deliveryWindow": "Várható szállítás: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Tervezett",
+      "IN_PROGRESS": "Úton",
+      "COMPLETED": "Befejezett",
+      "CANCELLED": "Törölt"
+    }
   }
 }

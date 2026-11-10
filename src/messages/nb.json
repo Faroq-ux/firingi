@@ -712,7 +712,8 @@
     "Returns": "Returer",
     "Reports": "Rapporter",
     "Sales Report": "Salgsrapport",
-    "Spending Report": "Utgiftsrapport"
+    "Spending Report": "Utgiftsrapport",
+    "Routes": "Ruter"
   },
   "delivery": {
     "title": "Levering",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Ordre {number}: {supplier} kan ikke levere",
       "body": "{supplier} kan ikke levere hele ordre {number}. Åpne ordren for å la FIRINGI finne en annen grossist til samme eller lavere pris, eller for å kansellere."
+    },
+    "delivery_eta": {
+      "title": "Levering {number} er på vei i dag",
+      "body": "Ordre {number} ventes mellom {from} og {to}."
+    },
+    "route_assigned": {
+      "title": "Ny rute {number}",
+      "body": "Rute {number} den {date}: {stops} leveranser. Åpne appen for å se stoppene."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Du har bedt om å få kontoen slettet — FIRINGI svarer innen 30 dager.",
     "withdraw": "Trekk forespørselen",
     "rejected": "FIRINGI kunne ennå ikke slette kontoen din: {note}"
+  },
+  "routes": {
+    "title": "Ruter",
+    "intro": "Samle flere leveranser på én sjåførs runde: først henting hos leverandørene, deretter kundene i korteste rekkefølge. Hvert stopp får et forventet tidspunkt.",
+    "plan": "Planlegg en rute",
+    "waiting": "Venter på rute",
+    "noWaiting": "Ingen bekreftede leveranser venter på en rute.",
+    "autoPlan": "Planlegg dagen automatisk",
+    "autoPlanned": "{planned} leveranser planlagt på {routes} ruter. {left} venter fortsatt.",
+    "date": "Dato",
+    "driver": "Sjåfør",
+    "vehicle": "Kjøretøy",
+    "noVehicle": "Uten kjøretøy",
+    "offDuty": "ikke på vakt",
+    "create": "Opprett rute",
+    "created": "Rute {number} opprettet.",
+    "selected": "{count} valgt",
+    "order": "Ordre",
+    "customer": "Kunde",
+    "supplier": "Leverandør",
+    "pickupAt": "Henting hos",
+    "city": "Sted",
+    "requested": "Ønsket dato",
+    "number": "Rute",
+    "status": "Status",
+    "stops": "Stopp",
+    "progress": "Utført",
+    "distance": "Avstand",
+    "duration": "Tid",
+    "plannedStart": "Planlagt start",
+    "empty": "Ingen ruter ennå.",
+    "open": "Åpne",
+    "history": "Historikk",
+    "reoptimise": "Optimaliser på nytt",
+    "reoptimised": "Korteste rekkefølge: {before} km → {after} km",
+    "cancel": "Avbryt rute",
+    "cancelConfirm": "Avbryte denne ruten? Leveransene venter igjen.",
+    "remove": "Ta ut av ruten",
+    "up": "Flytt opp",
+    "down": "Flytt ned",
+    "pickup": "Henting",
+    "drop": "Levering",
+    "eta": "Forventet",
+    "doneAt": "Utført",
+    "late": "{count} forsinket",
+    "openMaps": "Åpne i Google Maps",
+    "myRoute": "Min rute",
+    "startRoute": "Start rute",
+    "startHint": "Kundene får forventet leveringstid når du starter.",
+    "nextStop": "Neste stopp",
+    "deliveryWindow": "Forventet levering: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Planlagt",
+      "IN_PROGRESS": "På vei",
+      "COMPLETED": "Fullført",
+      "CANCELLED": "Avbrutt"
+    }
   }
 }

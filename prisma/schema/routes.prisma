@@ -1,0 +1,67 @@
+// ───────────────────────── Routes (multi-stop delivery runs) ─────────────────────────
+// A route is one driver's run on one day: collect goods at the suppliers' pickup points, then
+// drop them at the customers — in an optimised order with an ETA for every stop. Each delivery
+// is on at most one open route. Stops follow the deliveries' own steps (picked up / delivered).
+
+enum RouteStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum RouteStopKind {
+  PICKUP
+  DROP
+}
+
+model Route {
+  id                 String      @id @default(cuid())
+  number             String      @unique // RT-2026-000001
+  executingCompanyId String // FIRINGI or the vendor whose fleet drives it
+  driverId           String?
+  vehicleId          String?
+  date               DateTime    @db.Date
+  status             RouteStatus @default(PLANNED)
+  startLabel         String? // depot / start point
+  startLat           Decimal?    @db.Decimal(9, 6)
+  startLng           Decimal?    @db.Decimal(9, 6)
+  plannedStartAt     DateTime
+  plannedKm          Decimal     @default(0) @db.Decimal(10, 2)
+  plannedMinutes     Int         @default(0)
+  startedAt          DateTime?
+  completedAt        DateTime?
+  createdById        String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  executor   Company     @relation(fields: [executingCompanyId], references: [id])
+  driver     Driver?     @relation(fields: [driverId], references: [id])
+  vehicle    Vehicle?    @relation(fields: [vehicleId], references: [id])
+  stops      RouteStop[]
+  deliveries Delivery[]
+
+  @@index([executingCompanyId, date])
+  @@index([driverId, status])
+}
+
+model RouteStop {
+  id             String        @id @default(cuid())
+  routeId        String
+  deliveryId     String
+  kind           RouteStopKind
+  sequence       Int
+  label          String // supplier / customer name
+  address        String
+  lat            Decimal?      @db.Decimal(9, 6)
+  lng            Decimal?      @db.Decimal(9, 6)
+  plannedArrival DateTime? // when the route was planned
+  eta            DateTime? // updated while the route runs
+  doneAt         DateTime?
+
+  route    Route    @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+
+  @@unique([routeId, deliveryId, kind])
+  @@index([routeId, sequence])
+}

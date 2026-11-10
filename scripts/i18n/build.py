@@ -31,7 +31,8 @@ LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("rep
          ("notify.order_supplier_unavailable", []), ("catalogue.firingiMode", []), ("catalogue.soldByFiringi", []),
          ("orders.routedCart", []), ("orders.notAvailableHere", []),
          ("orders.deliveryOrder", []), ("orders.deliveryOrderFromFiringi", []), ("orders.decision", []), ("deliveryOrder", []),
-         ("auth.codeTitle", []), ("auth.codeHint", []), ("auth.backupHint", []), ("auth.code", []), ("auth.verify", []), ("auth.useBackup", []), ("auth.useApp", []), ("auth.badCode", []), ("security", []), ("privacy", []), ("finance.howToPay", []), ("finance.payByTransfer", []), ("finance.payByMbWay", []), ("finance.payOnDelivery", []), ("finance.payReference", []), ("orders.creditOverdue", []), ("orders.creditLimit", []), ("orders.openInvoices", [])]
+         ("auth.codeTitle", []), ("auth.codeHint", []), ("auth.backupHint", []), ("auth.code", []), ("auth.verify", []), ("auth.useBackup", []), ("auth.useApp", []), ("auth.badCode", []), ("security", []), ("privacy", []), ("finance.howToPay", []), ("finance.payByTransfer", []), ("finance.payByMbWay", []), ("finance.payOnDelivery", []), ("finance.payReference", []), ("orders.creditOverdue", []), ("orders.creditLimit", []), ("orders.openInvoices", []),
+         ("routes", ["Routes"]), ("notify.delivery_eta", []), ("notify.route_assigned", [])]
 
 def get(path):
     d = EN

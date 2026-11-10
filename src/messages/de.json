@@ -712,7 +712,8 @@
     "Returns": "Retouren",
     "Reports": "Berichte",
     "Sales Report": "Verkaufsbericht",
-    "Spending Report": "Ausgabenbericht"
+    "Spending Report": "Ausgabenbericht",
+    "Routes": "Touren"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Bestellung {number}: {supplier} kann nicht liefern",
       "body": "{supplier} kann die Bestellung {number} nicht vollständig liefern. Öffnen Sie die Bestellung, um FIRINGI einen anderen Großhändler zum gleichen oder niedrigeren Preis suchen zu lassen oder um zu stornieren."
+    },
+    "delivery_eta": {
+      "title": "Lieferung {number} ist heute unterwegs",
+      "body": "Bestellung {number} wird zwischen {from} und {to} erwartet."
+    },
+    "route_assigned": {
+      "title": "Neue Tour {number}",
+      "body": "Tour {number} am {date}: {stops} Lieferungen. Öffnen Sie die App, um die Stopps zu sehen."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Sie haben die Löschung Ihres Kontos beantragt — FIRINGI antwortet innerhalb von 30 Tagen.",
     "withdraw": "Antrag zurückziehen",
     "rejected": "FIRINGI konnte Ihr Konto noch nicht löschen: {note}"
+  },
+  "routes": {
+    "title": "Touren",
+    "intro": "Mehrere Lieferungen auf die Tour eines Fahrers legen: zuerst die Abholungen bei den Lieferanten, dann die Kunden in der kürzesten Reihenfolge. Jeder Stopp erhält eine voraussichtliche Zeit.",
+    "plan": "Tour planen",
+    "waiting": "Wartet auf eine Tour",
+    "noWaiting": "Keine bestätigten Lieferungen warten auf eine Tour.",
+    "autoPlan": "Tag automatisch planen",
+    "autoPlanned": "{planned} Lieferungen auf {routes} Touren geplant. {left} warten noch.",
+    "date": "Datum",
+    "driver": "Fahrer",
+    "vehicle": "Fahrzeug",
+    "noVehicle": "Kein Fahrzeug",
+    "offDuty": "nicht im Dienst",
+    "create": "Tour anlegen",
+    "created": "Tour {number} angelegt.",
+    "selected": "{count} ausgewählt",
+    "order": "Bestellung",
+    "customer": "Kunde",
+    "supplier": "Lieferant",
+    "pickupAt": "Abholung bei",
+    "city": "Ort",
+    "requested": "Gewünscht für",
+    "number": "Tour",
+    "status": "Status",
+    "stops": "Stopps",
+    "progress": "Erledigt",
+    "distance": "Strecke",
+    "duration": "Zeit",
+    "plannedStart": "Geplanter Start",
+    "empty": "Noch keine Touren.",
+    "open": "Offen",
+    "history": "Verlauf",
+    "reoptimise": "Neu optimieren",
+    "reoptimised": "Kürzeste Reihenfolge: {before} km → {after} km",
+    "cancel": "Tour stornieren",
+    "cancelConfirm": "Diese Tour stornieren? Ihre Lieferungen warten dann wieder.",
+    "remove": "Von der Tour nehmen",
+    "up": "Nach oben",
+    "down": "Nach unten",
+    "pickup": "Abholung",
+    "drop": "Lieferung",
+    "eta": "Erwartet",
+    "doneAt": "Erledigt",
+    "late": "{count} verspätet",
+    "openMaps": "In Google Maps öffnen",
+    "myRoute": "Meine Tour",
+    "startRoute": "Tour starten",
+    "startHint": "Die Kunden erhalten ihre voraussichtliche Lieferzeit, sobald Sie starten.",
+    "nextStop": "Nächster Stopp",
+    "deliveryWindow": "Voraussichtliche Lieferung: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Geplant",
+      "IN_PROGRESS": "Unterwegs",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Storniert"
+    }
   }
 }

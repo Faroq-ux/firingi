@@ -712,7 +712,8 @@
     "Returns": "Vratky",
     "Reports": "Přehledy",
     "Sales Report": "Přehled prodeje",
-    "Spending Report": "Přehled výdajů"
+    "Spending Report": "Přehled výdajů",
+    "Routes": "Trasy"
   },
   "delivery": {
     "title": "Doručení",
@@ -1038,6 +1039,14 @@
     "order_supplier_unavailable": {
       "title": "Objednávka {number}: {supplier} nemůže dodat",
       "body": "{supplier} nemůže dodat celou objednávku {number}. Otevřete objednávku a nechte FIRINGI najít jiného velkoobchodníka za stejnou nebo nižší cenu, nebo ji zrušte."
+    },
+    "delivery_eta": {
+      "title": "Doručení {number} je dnes na cestě",
+      "body": "Objednávka {number} dorazí mezi {from} a {to}."
+    },
+    "route_assigned": {
+      "title": "Nová trasa {number}",
+      "body": "Trasa {number} dne {date}: {stops} doručení. Otevřete aplikaci a uvidíte zastávky."
     }
   },
   "notifications": {
@@ -1220,5 +1229,62 @@
     "requested": "Požádali jste o smazání účtu — FIRINGI odpoví do 30 dnů.",
     "withdraw": "Zrušit žádost",
     "rejected": "FIRINGI zatím nemohlo smazat váš účet: {note}"
+  },
+  "routes": {
+    "title": "Trasy",
+    "intro": "Spojte několik doručení do jedné jízdy řidiče: nejprve vyzvednutí u dodavatelů, pak zákazníci v nejkratším pořadí. Každá zastávka má předpokládaný čas.",
+    "plan": "Naplánovat trasu",
+    "waiting": "Čeká na trasu",
+    "noWaiting": "Žádná potvrzená doručení nečekají na trasu.",
+    "autoPlan": "Naplánovat den automaticky",
+    "autoPlanned": "{planned} doručení naplánováno na {routes} trasách. Stále čeká: {left}.",
+    "date": "Datum",
+    "driver": "Řidič",
+    "vehicle": "Vozidlo",
+    "noVehicle": "Bez vozidla",
+    "offDuty": "mimo službu",
+    "create": "Vytvořit trasu",
+    "created": "Trasa {number} vytvořena.",
+    "selected": "Vybráno: {count}",
+    "order": "Objednávka",
+    "customer": "Zákazník",
+    "supplier": "Dodavatel",
+    "pickupAt": "Vyzvednutí u",
+    "city": "Město",
+    "requested": "Požadováno na",
+    "number": "Trasa",
+    "status": "Stav",
+    "stops": "Zastávky",
+    "progress": "Hotovo",
+    "distance": "Vzdálenost",
+    "duration": "Čas",
+    "plannedStart": "Plánovaný start",
+    "empty": "Zatím žádné trasy.",
+    "open": "Otevřené",
+    "history": "Historie",
+    "reoptimise": "Znovu optimalizovat",
+    "reoptimised": "Nejkratší pořadí: {before} km → {after} km",
+    "cancel": "Zrušit trasu",
+    "cancelConfirm": "Zrušit tuto trasu? Její doručení budou opět čekat.",
+    "remove": "Odebrat z trasy",
+    "up": "Posunout nahoru",
+    "down": "Posunout dolů",
+    "pickup": "Vyzvednutí",
+    "drop": "Doručení",
+    "eta": "Předpoklad",
+    "doneAt": "Hotovo",
+    "late": "Zpožděno: {count}",
+    "openMaps": "Otevřít v Mapách Google",
+    "myRoute": "Moje trasa",
+    "startRoute": "Zahájit trasu",
+    "startHint": "Zákazníci dostanou předpokládaný čas doručení, jakmile začnete.",
+    "nextStop": "Další zastávka",
+    "deliveryWindow": "Předpokládané doručení: {from}–{to}",
+    "statuses": {
+      "PLANNED": "Naplánovaná",
+      "IN_PROGRESS": "Na cestě",
+      "COMPLETED": "Dokončená",
+      "CANCELLED": "Zrušená"
+    }
   }
 }
