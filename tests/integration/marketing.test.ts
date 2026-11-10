@@ -15,7 +15,10 @@ import { saveSegment } from "@/server/services/crm-insights";
 import { catalogueItem } from "@/server/data/catalogue-buyer";
 import { ctxFor } from "../helpers";
 
-afterAll(() => prisma.$disconnect());
+afterAll(async () => {
+  await prisma.promotion.updateMany({ where: { status: "ACTIVE" }, data: { status: "ENDED" } }); // leave no offers behind for other test files
+  await prisma.$disconnect();
+});
 const KEBAB = "owner@kebabhouse.test";
 const LXB = "purchasing@lisboacentral.test";
 const SA = "superadmin@firingi.test";
