@@ -26,7 +26,7 @@ async function login(email, password = PASSWORD) {
   await page.fill("#password", password);
   await page.click("button[type=submit]");
   // A portal root (/admin, /vendor, /buy, /driver) redirects to its landing page: wait for it.
-  await page.waitForURL((u) => !/\/(admin|vendor|buy|driver)\/?$/.test(u.pathname), { timeout: 15000 }).catch(() => {});
+  await page.waitForURL((u) => u.pathname !== "/login" && !/^\/(admin|vendor|buy|driver)\/?$/.test(u.pathname), { timeout: 15000 }).catch(() => {});
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(500);
   return { ctx, page };
