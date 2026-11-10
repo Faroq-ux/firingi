@@ -232,6 +232,25 @@ describe("wholesaler buying from distributors", () => {
     const c1 = await prisma.order.findUniqueOrThrow({ where: { id: small.id } });
     expect(Number(c1.vendorPayableNet)).toBeCloseTo(goodsPayout + 15, 2); // still after confirmation
     expect((await prisma.delivery.findUniqueOrThrow({ where: { orderId: small.id }, include: { executor: true } })).executor.legalName).toBe("Distribuidora Atlântico, Lda");
+    // The wholesaler (buyer) never sees FIRINGI's commission from the distributor, the payout or the margin.
+    const mine = (await listOrders(w, "BUYER")).rows.find((r) => r.id === small.id)! as Record<string, unknown>;
+    expect(mine).toBeTruthy();
+    for (const k of ["commissionTotal", "vendorPayableNet", "firingiMarginNet", "fxRate", "vendorCurrencyCode"]) expect(mine[k]).toBeUndefined();
+    expect((await listOrders(await ctxFor("owner@atlantico.test"), "VENDOR")).rows.find((r) => r.id === small.id)!.commissionTotal).toBeDefined();
+    // Delivered → the distributor's statement (what it invoices FIRINGI) includes its flat rate.
+    const atlOwner = await ctxFor("owner@atlantico.test");
+    for (const st of ["READY_FOR_PICKUP", "DISPATCHED", "OUT_FOR_DELIVERY", "DELIVERED"] as const) {
+      const cur = await prisma.order.findUniqueOrThrow({ where: { id: small.id } });
+      if (cur.status !== "DELIVERED") await changeOrderStatus(atlOwner, small.id, st).catch(() => {});
+    }
+    expect((await prisma.order.findUniqueOrThrow({ where: { id: small.id } })).status).toBe("DELIVERED");
+    const statement = await prisma.vendorBillingStatement.findFirstOrThrow({ where: { orderId: small.id } });
+    const stLines = statement.lines as { sku: string; lineNet: string }[];
+    expect(stLines.find((l) => l.sku === "DELIVERY")?.lineNet).toBe("15.00");
+    expect(Number(statement.expectedNet)).toBeCloseTo(goodsPayout + 15, 2);
+    const inv = await prisma.invoice.findFirstOrThrow({ where: { orderId: small.id, docType: "INVOICE" }, include: { lines: true } });
+    expect(inv.lines.some((l) => l.description === "Entrega (taxa fixa do fornecedor)")).toBe(true);
+
     await addToCart(w, flour.id, 20); // 338 € ≥ 300
     const big = await placeOrder(w, { deliveryAddressId: await deliveryAddress("purchasing@lisboacentral.test") });
     const o2 = await prisma.order.findUniqueOrThrow({ where: { id: big.id } });

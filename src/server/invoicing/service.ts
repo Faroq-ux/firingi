@@ -157,9 +157,20 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
   const stLines = order.lines.filter((l) => (l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered) > 0).map((l) => {
     const net = new Decimal(l.vendorLineNet.toString());
     const rate = crossBorder ? new Decimal(0) : new Decimal(l.taxRate.toString());
-    return { orderLineId: l.id, sku: l.sku, description: `${pick(l.productName)} — ${pick(l.packagingName)}`, qty: l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered,
+    return { orderLineId: l.id as string | null, sku: l.sku, description: `${pick(l.productName)} — ${pick(l.packagingName)}`, qty: l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered,
       unitCostNet: l.vendorUnitCostNet.toString(), lineNet: net.toFixed(2), taxRate: rate.toFixed(3), vat: r2(net.mul(rate).div(100)).toFixed(2), commission: l.commissionAmount.toString() };
   });
+  // Supplier's own flat delivery rate (distributor → wholesaler): FIRINGI invoiced it to the buyer and pays it on.
+  if (order.deliveryMode !== "FIRINGI_FLEET" && order.deliveryFeeNet.gt(0)) {
+    const fee = new Decimal(order.deliveryFeeNet.toString());
+    const buyerRate = new Decimal(lines[lines.length - 1].taxRate.toString()); // the fee line FIRINGI just invoiced
+    const feeRate = crossBorder ? new Decimal(0) : buyerRate;
+    stLines.push({
+      orderLineId: null, sku: "DELIVERY", description: "Entrega (taxa fixa)", qty: 1, unitCostNet: fee.toFixed(4), lineNet: fee.toFixed(2),
+      taxRate: feeRate.toFixed(3), vat: r2(fee.mul(feeRate).div(100)).toFixed(2), commission: "0",
+      ...(crossBorder ? { selfAssessRate: buyerRate.toFixed(3) } : {}),
+    });
+  }
   const expNet = stLines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
   const expVat = stLines.reduce((a, l) => a.plus(l.vat), new Decimal(0));
   const year = new Date().getFullYear();

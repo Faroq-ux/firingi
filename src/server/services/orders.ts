@@ -351,6 +351,8 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
   const [rows, total] = await Promise.all([
     prisma.order.findMany({
       where: full,
+      // Buyers never see FIRINGI's side of the deal: the supplier's commission, its payout, FIRINGI's margin.
+      omit: as === "BUYER" ? BUYER_HIDDEN : undefined,
       include: { buyer: { select: { legalName: true, tradeName: true } }, seller: { select: { legalName: true, tradeName: true, type: true } }, _count: { select: { lines: true, exceptions: { where: { isResolved: false } } } } },
       orderBy: { placedAt: "desc" },
       skip: (page - 1) * 50,
@@ -358,8 +360,13 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
     }),
     prisma.order.count({ where: full }),
   ]);
-  return { rows, total, page, pageCount: Math.max(1, Math.ceil(total / 50)) };
+  // Ordered from FIRINGI: the buyer's supplier is FIRINGI, not the wholesaler it picked.
+  const shown = as === "BUYER" ? rows.map((o) => (o.routedByFiringi ? { ...o, seller: { legalName: "FIRINGI", tradeName: "FIRINGI", type: "ADMIN" as const } } : o)) : rows;
+  return { rows: shown, total, page, pageCount: Math.max(1, Math.ceil(total / 50)) };
 }
+
+/** Order fields a buyer must not see (FIRINGI's commission, the supplier's payout and currency, FIRINGI's margin). */
+const BUYER_HIDDEN = { commissionTotal: true, vendorPayableNet: true, firingiMarginNet: true, vendorCurrencyCode: true, fxRate: true, deliveryRuleId: true, sourceAddressId: true } as const;
 
 // ── changes ─────────────────────────────────────────────────────────────────
 

@@ -133,9 +133,10 @@ export async function submitVendorInvoice(ctx: Ctx, input: {
   let selfAssessed = new Decimal(0);
   if (regime === "INTRA_EU_REVERSE_CHARGE")
     for (const s of statements) {
-      const lines = s.lines as { orderLineId: string; lineNet: string }[];
-      const ols = await prisma.orderLine.findMany({ where: { id: { in: lines.map((l) => l.orderLineId) } }, select: { id: true, taxRate: true } });
-      for (const l of lines) selfAssessed = selfAssessed.plus(new Decimal(l.lineNet).mul(ols.find((o) => o.id === l.orderLineId)?.taxRate.toString() ?? 0).div(100));
+      const lines = s.lines as { orderLineId: string | null; lineNet: string; selfAssessRate?: string }[];
+      const ols = await prisma.orderLine.findMany({ where: { id: { in: lines.map((l) => l.orderLineId).filter((x): x is string => !!x) } }, select: { id: true, taxRate: true } });
+      // Goods: the order line's rate; the supplier's delivery fee: the rate FIRINGI charged on it.
+      for (const l of lines) selfAssessed = selfAssessed.plus(new Decimal(l.lineNet).mul(l.selfAssessRate ?? ols.find((o) => o.id === l.orderLineId)?.taxRate.toString() ?? 0).div(100));
     }
   const stored = await storeUpload(input.file, `vendor-invoices/${ctx.company.id}`);
 

@@ -10,7 +10,7 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
 import { addToCart, cartView, clearCart } from "@/server/services/cart";
-import { changeOrderStatus, confirmOrder, placeOrder } from "@/server/services/orders";
+import { changeOrderStatus, confirmOrder, listOrders, placeOrder } from "@/server/services/orders";
 import { setStock } from "@/server/services/vendor-catalogue";
 import { browseCatalogue, visibleSuppliers } from "@/server/data/catalogue-buyer";
 import { allocationRules, updateAllocationRules } from "@/server/allocation/rules";
@@ -183,6 +183,10 @@ describe("order from FIRINGI", () => {
     expect(orders).toHaveLength(1);
     expect(orders[0]).toMatchObject({ sellerCompanyId: lx, deliveryMode: "VENDOR_FLEET" });
     expect(Number(orders[0].deliveryFeeNet)).toBe(0);
+    // In the customer's order list (and API) the supplier is FIRINGI; no commission / payout / margin.
+    const listed = (await listOrders(kebab, "BUYER")).rows.find((r) => r.id === orders[0].id)! as unknown as Record<string, unknown> & { seller: { legalName: string } };
+    expect(listed.seller.legalName).toBe("FIRINGI");
+    expect([listed.commissionTotal, listed.vendorPayableNet, listed.firingiMarginNet]).toEqual([undefined, undefined, undefined]);
     expect(await prisma.cartItem.count({ where: { cart: { buyerCompanyId: kebab.company.id, userId: kebab.user.id } } })).toBe(0);
   });
 
