@@ -494,6 +494,33 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 - Suppliers create coupons, € off the order, free delivery and buy X get Y on their Promotions
   page (translated).
 
+## Risk & control (Phase 16)
+
+- **One cart, several suppliers**: a customer (or a wholesaler buying from distributors) fills
+  one cart from several suppliers and checks out once; each supplier's part becomes its own
+  order with its own offers, minimum, delivery and fee. FIRINGI-paid coupons count once for
+  the whole checkout; credit is checked on the total. The cart shows a group per supplier,
+  the order page lists the other orders of the checkout, and *Orders › Order Split* shows split
+  checkouts and orders FIRINGI moved to other suppliers. (Who may sell to whom is still enforced
+  in the database.)
+- **Risk checks at checkout** (*Risk › Fraud Detection*): points for a new account with a big
+  order, a big first order, many orders in a short time, an order much bigger than usual, a
+  delivery far from the company, a brand-new address or user, a coupon also used by a look-alike
+  company (same e-mail domain, phone or address) and frequent cancellations. From the *hold* score
+  the orders go **On hold**: stock is reserved, the supplier neither sees nor is told, the customer
+  is told it is being checked (and may cancel). From the *review* score they go through and are
+  reviewed afterwards. FIRINGI changes thresholds and switches checks on/off.
+- **Suspicious Orders**: release a held order to its supplier or cancel it (the customer sees the
+  reason); mark flagged ones fine or fraud. Reviewers are alerted.
+- **Four-eyes approvals** (*Users › Approval Workflows*): credit notes above an amount, raising a
+  credit limit / payment terms, changing an agreed commission, big FIRINGI-paid offers or coupons,
+  FIRINGI's IBAN (invoice settings), powerful staff roles and big payments wait for a second
+  person — never the requester (also a database rule) and with the same right. Approving runs the
+  action exactly as requested; rejecting needs a reason; the requester may withdraw. New staff get
+  their ordinary roles at once and powerful ones after approval. Thresholds: settings managers.
+- Demo accounts are seeded as long-established (approved a year ago). The test database starts
+  with risk checks off; the risk tests switch them on.
+
 ## Look & feel: colour and motion
 
 - **Vivid, glossy design**: a decorative palette (`--vivid-*` in `globals.css`: blue, violet, pink,
