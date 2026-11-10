@@ -768,7 +768,10 @@
     "Spending Report": "Raport de cheltuieli",
     "Routes": "Rute",
     "Help & Support": "Ajutor și asistență",
-    "My Offers": "Ofertele mele"
+    "My Offers": "Ofertele mele",
+    "AI Assistant": "Asistent IA",
+    "Buy Again": "Cumpără din nou",
+    "Demand & Stock": "Cerere și stoc"
   },
   "delivery": {
     "title": "Livrare",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Cererea dvs. „{summary}” a fost {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} se termină",
+      "body": "În ritmul actual, stocul dvs. de {product} ajunge pentru aproximativ {days} zile (au rămas {available}). Reaprovizionați ca să primiți în continuare comenzi."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ reducere la comandă",
       "FREE_DELIVERY": "Livrare gratuită (livrați gratuit)",
       "BUY_X_GET_Y": "Cumpărați X, primiți Y gratuit"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Asistent IA",
+      "description": "Întrebați despre afacerea dvs. cu propriile cuvinte. IA FIRINGI (Claude) vede doar datele companiei dvs. și nu modifică niciodată nimic.",
+      "newChat": "Conversație nouă",
+      "history": "Conversații",
+      "noHistory": "Nicio conversație încă.",
+      "placeholderBuyer": "Întrebați despre comenzi, cheltuieli, produse…",
+      "placeholderVendor": "Întrebați despre vânzări, stoc, clienți…",
+      "send": "Întreabă",
+      "thinking": "Analizez datele dvs.…",
+      "lookedAt": "Consultat",
+      "you": "Dvs.",
+      "assistant": "IA FIRINGI",
+      "suggestOnly": "Asistentul citește datele dvs. și sugerează — nu modifică niciodată nimic.",
+      "delete": "Șterge conversația",
+      "tryAsking": "Încercați să întrebați",
+      "offTitle": "Asistentul IA nu este încă disponibil",
+      "offText": "FIRINGI nu a activat încă asistentul pentru contul dvs. Celelalte sugestii IA funcționează în continuare.",
+      "buyerEx1": "Cât am cheltuit în ultimele 30 de zile?",
+      "buyerEx2": "Când comand de obicei din nou și ce?",
+      "buyerEx3": "Ce produse cumpăr cel mai mult?",
+      "buyerEx4": "Găsește ulei de măsline la furnizorii mei",
+      "vendorEx1": "Cum au mers vânzările mele în ultimele 30 de zile?",
+      "vendorEx2": "Ce produse se vor epuiza curând?",
+      "vendorEx3": "Ce clienți întârzie cu comanda obișnuită?",
+      "vendorEx4": "Ce comenzi deschise ar putea ajunge cu întârziere?"
+    },
+    "tools": {
+      "sales_summary": "Rezumat",
+      "breakdown": "Detaliere",
+      "demand_forecast": "Prognoza cererii",
+      "stock_outlook": "Stoc",
+      "reorder_outlook": "Ritmul comenzilor",
+      "delivery_risk": "Risc de livrare",
+      "supplier_scorecards": "Evaluare",
+      "find_orders": "Comenzi",
+      "search_catalogue": "Catalog",
+      "open_suggestions": "Sugestii"
+    },
+    "buyAgain": {
+      "title": "Cumpără din nou",
+      "description": "Comenzile dvs. obișnuite, învățate din ce ați cumpărat în ultimele 6 luni. O atingere pune cantitățile obișnuite în coș — le verificați și plasați comanda.",
+      "timeToReorder": "E timpul să comandați din nou",
+      "dueOn": "De obicei comandați din nou în jurul datei de {date}",
+      "lateBy": "Cu {days} zile mai târziu decât de obicei",
+      "dueToday": "Acum e momentul",
+      "upcoming": "Următoarea în {days} zile",
+      "every": "La fiecare {days} zile",
+      "lastOrder": "Ultima comandă {date}",
+      "usual": "Comandă obișnuită de aproximativ {amount}",
+      "button": "Adaugă în coș",
+      "added": "{n} produse adăugate în coș",
+      "goToCart": "Mergi la coș",
+      "notAvailable": "nu mai este disponibil",
+      "empty": "După ce comandați de câteva ori de la un furnizor, comenzile dvs. obișnuite apar aici.",
+      "notNow": "Nu acum",
+      "dashboardTitle": "E timpul să comandați din nou",
+      "seeAll": "Cumpără din nou"
+    },
+    "demand": {
+      "title": "Cerere și stoc",
+      "description": "IA FIRINGI estimează cât din fiecare produs vor comanda clienții dvs. în următoarele 4 săptămâni și cât vă ajunge stocul. Doar sugerează.",
+      "forecastTitle": "Cerere, următoarele 4 săptămâni",
+      "product": "Produs",
+      "chart": "12 săptămâni → 4 săptămâni",
+      "last4": "Ultimele 4 săptămâni",
+      "next4": "Următoarele 4 săptămâni",
+      "trend": "Tendință",
+      "stockTitle": "Stoc pe terminate",
+      "available": "Disponibil",
+      "perDay": "Vânzări pe zi",
+      "daysLeft": "Zile rămase",
+      "runsOut": "Se termină pe",
+      "statusCol": "Stare",
+      "riskTitle": "Comenzi care pot întârzia",
+      "order": "Comandă",
+      "customer": "Client",
+      "why": "De ce",
+      "dueTitle": "Clienți care ar trebui să comande din nou",
+      "expected": "Așteptată",
+      "usualBasket": "Comandă obișnuită",
+      "noForecast": "Încă nu există comenzi din ultimele 12 săptămâni din care să se învețe.",
+      "noStockRisk": "Nimic nu e pe cale să se termine.",
+      "noRisk": "Nicio comandă deschisă nu pare în pericol.",
+      "noDue": "Niciun client nu trebuie să comande acum.",
+      "suggestions": "Sugestii",
+      "dismiss": "Respinge",
+      "done": "Gata",
+      "dashboardTitle": "Stoc pe terminate",
+      "dashboardNone": "Stocul dvs. acoperă următoarele două săptămâni.",
+      "seeAll": "Cerere și stoc"
+    },
+    "status": {
+      "OUT": "Stoc epuizat",
+      "CRITICAL": "Critic",
+      "LOW": "Scăzut",
+      "OK": "OK",
+      "NO_SALES": "Fără vânzări"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Neconfirmată după {n} h",
+      "DATE_PASSED": "Data de livrare cerută a trecut",
+      "DUE_SOON": "De livrat în 24 h și încă neexpediată",
+      "LATE_ETA": "Sosirea estimată a șoferului este după ziua cerută",
+      "SHORT_STOCK": "{n} produse cu stoc mai mic decât s-a comandat",
+      "SUPPLIER_DECLINES": "Ați refuzat sau ratat {n} comenzi în 60 de zile"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} se termină în {days} zile",
+      "OUT": "{product} nu mai este în stoc",
+      "LOW_COVER": "{product}: stoc pentru {days} zile",
+      "DEMAND_SURGE": "Cererea pentru {product} crește ({pct})",
+      "DELIVERY_RISK": "Comanda {number} pentru {customer} poate întârzia",
+      "REORDER_DUE": "E timpul să comandați din nou de la {supplier}"
     }
   }
 }

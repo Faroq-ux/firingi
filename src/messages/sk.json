@@ -768,7 +768,10 @@
     "Spending Report": "Prehľad výdavkov",
     "Routes": "Trasy",
     "Help & Support": "Pomoc a podpora",
-    "My Offers": "Moje ponuky"
+    "My Offers": "Moje ponuky",
+    "AI Assistant": "AI asistent",
+    "Buy Again": "Kúpiť znova",
+    "Demand & Stock": "Dopyt a zásoby"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Vaša žiadosť „{summary}“ bola {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} dochádza",
+      "body": "Pri súčasnom tempe vám zásoba {product} vydrží asi {days} dní (zostáva {available}). Doplňte ju, aby objednávky prichádzali ďalej."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ zľava na objednávku",
       "FREE_DELIVERY": "Doprava zadarmo (doručíte zadarmo)",
       "BUY_X_GET_Y": "Kúpte X, Y zadarmo"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI asistent",
+      "description": "Pýtajte sa na svoje podnikanie vlastnými slovami. AI od FIRINGI (Claude) vidí len údaje vašej firmy a nikdy nič nemení.",
+      "newChat": "Nová konverzácia",
+      "history": "Konverzácie",
+      "noHistory": "Zatiaľ žiadne konverzácie.",
+      "placeholderBuyer": "Opýtajte sa na objednávky, výdavky, produkty…",
+      "placeholderVendor": "Opýtajte sa na predaj, zásoby, zákazníkov…",
+      "send": "Opýtať sa",
+      "thinking": "Prezerám vaše údaje…",
+      "lookedAt": "Prezreté",
+      "you": "Vy",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "Asistent číta vaše údaje a navrhuje — nikdy nič nemení.",
+      "delete": "Vymazať konverzáciu",
+      "tryAsking": "Skúste sa opýtať",
+      "offTitle": "AI asistent zatiaľ nie je k dispozícii",
+      "offText": "FIRINGI zatiaľ nezaplo asistenta pre váš účet. Ostatné návrhy AI fungujú aj tak.",
+      "buyerEx1": "Koľko som minul za posledných 30 dní?",
+      "buyerEx2": "Kedy zvyčajne objednávam znova a čo?",
+      "buyerEx3": "Ktoré produkty kupujem najviac?",
+      "buyerEx4": "Nájdi olivový olej u mojich dodávateľov",
+      "vendorEx1": "Ako išiel môj predaj za posledných 30 dní?",
+      "vendorEx2": "Ktoré produkty čoskoro dôjdu?",
+      "vendorEx3": "Ktorí zákazníci meškajú so svojou zvyčajnou objednávkou?",
+      "vendorEx4": "Ktoré otvorené objednávky môžu prísť neskoro?"
+    },
+    "tools": {
+      "sales_summary": "Súhrn",
+      "breakdown": "Rozpis",
+      "demand_forecast": "Prognóza dopytu",
+      "stock_outlook": "Zásoby",
+      "reorder_outlook": "Rytmus objednávok",
+      "delivery_risk": "Riziko doručenia",
+      "supplier_scorecards": "Hodnotenie",
+      "find_orders": "Objednávky",
+      "search_catalogue": "Katalóg",
+      "open_suggestions": "Návrhy"
+    },
+    "buyAgain": {
+      "title": "Kúpiť znova",
+      "description": "Vaše zvyčajné objednávky, naučené z toho, čo ste kúpili za posledných 6 mesiacov. Jedným ťuknutím vložíte zvyčajné množstvá do košíka — skontrolujete ich a objednáte.",
+      "timeToReorder": "Čas znova objednať",
+      "dueOn": "Zvyčajne objednávate znova okolo {date}",
+      "lateBy": "O {days} dní neskôr ako zvyčajne",
+      "dueToday": "Na rade teraz",
+      "upcoming": "Ďalšia o {days} dní",
+      "every": "Každých {days} dní",
+      "lastOrder": "Posledná objednávka {date}",
+      "usual": "Zvyčajná objednávka asi {amount}",
+      "button": "Do košíka",
+      "added": "Do košíka pridaných {n} produktov",
+      "goToCart": "Prejsť do košíka",
+      "notAvailable": "už nie je k dispozícii",
+      "empty": "Keď u dodávateľa niekoľkokrát objednáte, zobrazia sa tu vaše zvyčajné objednávky.",
+      "notNow": "Teraz nie",
+      "dashboardTitle": "Čas znova objednať",
+      "seeAll": "Kúpiť znova"
+    },
+    "demand": {
+      "title": "Dopyt a zásoby",
+      "description": "AI od FIRINGI predpovedá, koľko každého produktu objednajú vaši zákazníci v nasledujúcich 4 týždňoch a ako dlho vám vydržia zásoby. Iba navrhuje.",
+      "forecastTitle": "Dopyt, nasledujúce 4 týždne",
+      "product": "Produkt",
+      "chart": "12 týždňov → 4 týždne",
+      "last4": "Posledné 4 týždne",
+      "next4": "Nasledujúce 4 týždne",
+      "trend": "Trend",
+      "stockTitle": "Dochádzajúce zásoby",
+      "available": "K dispozícii",
+      "perDay": "Predaj za deň",
+      "daysLeft": "Zostáva dní",
+      "runsOut": "Dôjde",
+      "statusCol": "Stav",
+      "riskTitle": "Objednávky, ktoré môžu meškať",
+      "order": "Objednávka",
+      "customer": "Zákazník",
+      "why": "Prečo",
+      "dueTitle": "Zákazníci, ktorí by mali znova objednať",
+      "expected": "Očakávané",
+      "usualBasket": "Zvyčajná objednávka",
+      "noForecast": "Zatiaľ nie sú objednávky z posledných 12 týždňov, z ktorých sa dá učiť.",
+      "noStockRisk": "Nič nedochádza.",
+      "noRisk": "Žiadna otvorená objednávka nevyzerá ohrozene.",
+      "noDue": "Žiadny zákazník teraz nemusí objednávať.",
+      "suggestions": "Návrhy",
+      "dismiss": "Zamietnuť",
+      "done": "Hotovo",
+      "dashboardTitle": "Dochádzajúce zásoby",
+      "dashboardNone": "Vaše zásoby pokryjú nasledujúce dva týždne.",
+      "seeAll": "Dopyt a zásoby"
+    },
+    "status": {
+      "OUT": "Vypredané",
+      "CRITICAL": "Kritické",
+      "LOW": "Nízke",
+      "OK": "OK",
+      "NO_SALES": "Bez predaja"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Nepotvrdené po {n} h",
+      "DATE_PASSED": "Požadovaný dátum doručenia už uplynul",
+      "DUE_SOON": "Doručenie do 24 h a ešte neodoslané",
+      "LATE_ETA": "Predpokladaný príchod vodiča je po požadovanom dni",
+      "SHORT_STOCK": "{n} produkty s menšou zásobou, než bolo objednané",
+      "SUPPLIER_DECLINES": "Za 60 dní ste odmietli alebo zmeškali {n} objednávok"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} dôjde o {days} dní",
+      "OUT": "{product} je vypredané",
+      "LOW_COVER": "{product}: zásoba na {days} dní",
+      "DEMAND_SURGE": "Dopyt po {product} rastie ({pct})",
+      "DELIVERY_RISK": "Objednávka {number} pre {customer} môže meškať",
+      "REORDER_DUE": "Čas znova objednať u {supplier}"
     }
   }
 }

@@ -768,7 +768,10 @@
     "Spending Report": "Útgjaldaskýrsla",
     "Routes": "Leiðir",
     "Help & Support": "Hjálp og þjónusta",
-    "My Offers": "Mín tilboð"
+    "My Offers": "Mín tilboð",
+    "AI Assistant": "Gervigreindaraðstoð",
+    "Buy Again": "Kaupa aftur",
+    "Demand & Stock": "Eftirspurn og lager"
   },
   "delivery": {
     "title": "Afhending",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Beiðnin „{summary}“ var {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} er að klárast",
+      "body": "Á núverandi hraða endist lagerinn þinn af {product} í um {days} daga ({available} eftir). Fylltu á svo pantanir haldi áfram að berast."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ afsláttur af pöntun",
       "FREE_DELIVERY": "Frí afhending (þú afhendir frítt)",
       "BUY_X_GET_Y": "Keyptu X, fáðu Y frítt"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Gervigreindaraðstoð",
+      "description": "Spyrðu um reksturinn með þínum eigin orðum. Gervigreind FIRINGI (Claude) skoðar aðeins gögn fyrirtækisins þíns og breytir aldrei neinu.",
+      "newChat": "Nýtt samtal",
+      "history": "Samtöl",
+      "noHistory": "Engin samtöl enn.",
+      "placeholderBuyer": "Spyrðu um pantanir, innkaup, vörur…",
+      "placeholderVendor": "Spyrðu um sölu, lager, viðskiptavini…",
+      "send": "Spyrja",
+      "thinking": "Skoða gögnin þín…",
+      "lookedAt": "Skoðað",
+      "you": "Þú",
+      "assistant": "FIRINGI gervigreind",
+      "suggestOnly": "Aðstoðin les gögnin þín og stingur upp á — hún breytir aldrei neinu.",
+      "delete": "Eyða samtali",
+      "tryAsking": "Prófaðu að spyrja",
+      "offTitle": "Gervigreindaraðstoðin er ekki enn í boði",
+      "offText": "FIRINGI hefur ekki enn kveikt á aðstoðinni fyrir aðganginn þinn. Hinar tillögur gervigreindarinnar virka samt.",
+      "buyerEx1": "Hversu miklu eyddi ég síðustu 30 daga?",
+      "buyerEx2": "Hvenær panta ég yfirleitt aftur, og hvað?",
+      "buyerEx3": "Hvaða vörur kaupi ég mest?",
+      "buyerEx4": "Finndu ólífuolíu hjá birgjunum mínum",
+      "vendorEx1": "Hvernig gekk salan síðustu 30 daga?",
+      "vendorEx2": "Hvaða vörur klárast bráðum?",
+      "vendorEx3": "Hvaða viðskiptavinir eru seinir með venjulegu pöntunina?",
+      "vendorEx4": "Hvaða opnar pantanir gætu borist seint?"
+    },
+    "tools": {
+      "sales_summary": "Samantekt",
+      "breakdown": "Sundurliðun",
+      "demand_forecast": "Eftirspurnarspá",
+      "stock_outlook": "Lager",
+      "reorder_outlook": "Pöntunartaktur",
+      "delivery_risk": "Afhendingaráhætta",
+      "supplier_scorecards": "Einkunn",
+      "find_orders": "Pantanir",
+      "search_catalogue": "Vörulisti",
+      "open_suggestions": "Tillögur"
+    },
+    "buyAgain": {
+      "title": "Kaupa aftur",
+      "description": "Venjulegu pantanirnar þínar, lærðar af því sem þú keyptir síðustu 6 mánuði. Eitt smell setur venjulegt magn í körfuna — þú yfirferð og pantar.",
+      "timeToReorder": "Kominn tími á að panta aftur",
+      "dueOn": "Þú pantar yfirleitt aftur um {date}",
+      "lateBy": "{days} dögum seinna en venjulega",
+      "dueToday": "Komið að því",
+      "upcoming": "Næst eftir {days} daga",
+      "every": "Á {days} daga fresti",
+      "lastOrder": "Síðasta pöntun {date}",
+      "usual": "Venjuleg pöntun um {amount}",
+      "button": "Setja í körfu",
+      "added": "{n} vörum bætt í körfuna",
+      "goToCart": "Fara í körfu",
+      "notAvailable": "ekki lengur í boði",
+      "empty": "Þegar þú hefur pantað nokkrum sinnum frá birgi birtast venjulegu pantanirnar þínar hér.",
+      "notNow": "Ekki núna",
+      "dashboardTitle": "Kominn tími á að panta aftur",
+      "seeAll": "Kaupa aftur"
+    },
+    "demand": {
+      "title": "Eftirspurn og lager",
+      "description": "Gervigreind FIRINGI spáir fyrir um hversu mikið af hverri vöru viðskiptavinir þínir panta næstu 4 vikur og hversu lengi lagerinn endist. Hún stingur bara upp á.",
+      "forecastTitle": "Eftirspurn, næstu 4 vikur",
+      "product": "Vara",
+      "chart": "12 vikur → 4 vikur",
+      "last4": "Síðustu 4 vikur",
+      "next4": "Næstu 4 vikur",
+      "trend": "Þróun",
+      "stockTitle": "Lager að klárast",
+      "available": "Til ráðstöfunar",
+      "perDay": "Selst á dag",
+      "daysLeft": "Dagar eftir",
+      "runsOut": "Klárast",
+      "statusCol": "Staða",
+      "riskTitle": "Pantanir sem gætu tafist",
+      "order": "Pöntun",
+      "customer": "Viðskiptavinur",
+      "why": "Af hverju",
+      "dueTitle": "Viðskiptavinir sem ættu að panta aftur",
+      "expected": "Væntanleg",
+      "usualBasket": "Venjuleg pöntun",
+      "noForecast": "Engar pantanir síðustu 12 vikna til að læra af enn.",
+      "noStockRisk": "Ekkert er að klárast.",
+      "noRisk": "Engin opin pöntun virðist í hættu.",
+      "noDue": "Enginn viðskiptavinur þarf að panta núna.",
+      "suggestions": "Tillögur",
+      "dismiss": "Hafna",
+      "done": "Lokið",
+      "dashboardTitle": "Lager að klárast",
+      "dashboardNone": "Lagerinn þinn dugar næstu tvær vikur.",
+      "seeAll": "Eftirspurn og lager"
+    },
+    "status": {
+      "OUT": "Uppselt",
+      "CRITICAL": "Alvarlegt",
+      "LOW": "Lágt",
+      "OK": "Í lagi",
+      "NO_SALES": "Engin sala"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Ekki staðfest eftir {n} klst.",
+      "DATE_PASSED": "Umbeðinn afhendingardagur er liðinn",
+      "DUE_SOON": "Á að afhenda innan 24 klst. og ekki sent",
+      "LATE_ETA": "Áætluð koma bílstjóra er eftir umbeðinn dag",
+      "SHORT_STOCK": "{n} vörur með minni lager en pantað var",
+      "SUPPLIER_DECLINES": "Þú hafnaðir eða misstir af {n} pöntunum á 60 dögum"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} klárast eftir {days} daga",
+      "OUT": "{product} er uppselt",
+      "LOW_COVER": "{product}: lager í {days} daga",
+      "DEMAND_SURGE": "Eftirspurn eftir {product} eykst ({pct})",
+      "DELIVERY_RISK": "Pöntun {number} fyrir {customer} gæti tafist",
+      "REORDER_DUE": "Kominn tími á að panta aftur frá {supplier}"
     }
   }
 }

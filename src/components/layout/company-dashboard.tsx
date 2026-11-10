@@ -13,6 +13,7 @@ import { HeroStat, OrderTicker, Tile, TopBars } from "@/components/motion/dashbo
 import { RouteMap } from "@/components/motion/route-map";
 import { CountUp } from "@/components/motion/count-up";
 import { AutoRefresh } from "@/components/routes/auto-refresh";
+import { ReorderCard, StockCard } from "@/components/ai/portal-cards";
 
 const pct = (cur: number, prev: number) => (prev > 0 ? (cur - prev) / prev : null);
 function Trend({ cur, prev, label }: { cur: number; prev: number; label: string }) {
@@ -83,6 +84,7 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
               : <Tile icon={Users} tone="tone-pink" label={t("teamMembers")} value={o.members} locale={locale} href="/vendor/company/users" i={7} />}
           </div>
         </div>
+        <StockCard ctx={ctx} locale={locale} />
         {v.routes.length > 0 && (
           <Card className="motion-rise" style={{ ["--i" as string]: 8 }}>
             <CardHeader className="flex-row items-center justify-between"><CardTitle>{t("routesOnRoad")}</CardTitle><LiveDot label={t("live")} /></CardHeader>
@@ -113,6 +115,7 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
           <span className="ml-auto rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">{to("see")} →</span>
         </Link>
       )}
+      <ReorderCard ctx={ctx} locale={locale} />
       {b.latest.length > 0 && (
         <section className="motion-rise" style={{ ["--i" as string]: 2 }}>
           <h2 className="mb-2 text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]">{t("latestOrders")}</h2>

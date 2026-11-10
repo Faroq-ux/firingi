@@ -768,7 +768,10 @@
     "Spending Report": "Ausgabenbericht",
     "Routes": "Touren",
     "Help & Support": "Hilfe & Support",
-    "My Offers": "Meine Angebote"
+    "My Offers": "Meine Angebote",
+    "AI Assistant": "KI-Assistent",
+    "Buy Again": "Erneut kaufen",
+    "Demand & Stock": "Nachfrage & Bestand"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Ihr Antrag „{summary}“ wurde {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} geht zur Neige",
+      "body": "Beim aktuellen Tempo reicht Ihr Bestand an {product} etwa {days} Tage (noch {available}). Füllen Sie ihn auf, damit die Bestellungen weiterlaufen."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ Rabatt auf die Bestellung",
       "FREE_DELIVERY": "Gratislieferung (Sie liefern kostenlos)",
       "BUY_X_GET_Y": "Kaufe X, erhalte Y gratis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "KI-Assistent",
+      "description": "Fragen Sie in eigenen Worten nach Ihrem Geschäft. Die KI von FIRINGI (Claude) sieht nur die Daten Ihres Unternehmens und ändert nie etwas.",
+      "newChat": "Neues Gespräch",
+      "history": "Gespräche",
+      "noHistory": "Noch keine Gespräche.",
+      "placeholderBuyer": "Fragen Sie nach Ihren Bestellungen, Ausgaben, Produkten…",
+      "placeholderVendor": "Fragen Sie nach Ihren Verkäufen, Ihrem Bestand, Ihren Kunden…",
+      "send": "Fragen",
+      "thinking": "Ihre Daten werden ausgewertet…",
+      "lookedAt": "Angesehen",
+      "you": "Sie",
+      "assistant": "FIRINGI KI",
+      "suggestOnly": "Der Assistent liest Ihre Daten und macht Vorschläge — er ändert nie etwas.",
+      "delete": "Gespräch löschen",
+      "tryAsking": "Fragen Sie zum Beispiel",
+      "offTitle": "Der KI-Assistent ist noch nicht verfügbar",
+      "offText": "FIRINGI hat den Assistenten für Ihr Konto noch nicht eingeschaltet. Die übrigen KI-Vorschläge funktionieren trotzdem.",
+      "buyerEx1": "Wie viel habe ich in den letzten 30 Tagen ausgegeben?",
+      "buyerEx2": "Wann bestelle ich normalerweise nach, und was?",
+      "buyerEx3": "Welche Produkte kaufe ich am meisten?",
+      "buyerEx4": "Olivenöl bei meinen Lieferanten finden",
+      "vendorEx1": "Wie liefen meine Verkäufe in den letzten 30 Tagen?",
+      "vendorEx2": "Welche Produkte sind bald ausverkauft?",
+      "vendorEx3": "Welche Kunden sind mit ihrer üblichen Bestellung spät dran?",
+      "vendorEx4": "Welche offenen Bestellungen könnten zu spät geliefert werden?"
+    },
+    "tools": {
+      "sales_summary": "Übersicht",
+      "breakdown": "Aufschlüsselung",
+      "demand_forecast": "Nachfrageprognose",
+      "stock_outlook": "Bestand",
+      "reorder_outlook": "Bestellrhythmus",
+      "delivery_risk": "Lieferrisiko",
+      "supplier_scorecards": "Bewertung",
+      "find_orders": "Bestellungen",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Vorschläge"
+    },
+    "buyAgain": {
+      "title": "Erneut kaufen",
+      "description": "Ihre üblichen Bestellungen, gelernt aus Ihren Einkäufen der letzten 6 Monate. Ein Tippen legt die üblichen Mengen in den Warenkorb — Sie prüfen sie und bestellen.",
+      "timeToReorder": "Zeit nachzubestellen",
+      "dueOn": "Sie bestellen normalerweise um den {date} wieder",
+      "lateBy": "{days} Tage später als üblich",
+      "dueToday": "Jetzt fällig",
+      "upcoming": "Nächste in {days} Tagen",
+      "every": "Alle {days} Tage",
+      "lastOrder": "Letzte Bestellung {date}",
+      "usual": "Übliche Bestellung etwa {amount}",
+      "button": "In den Warenkorb",
+      "added": "{n} Produkte in Ihren Warenkorb gelegt",
+      "goToCart": "Zum Warenkorb",
+      "notAvailable": "nicht mehr verfügbar",
+      "empty": "Sobald Sie einige Male bei einem Lieferanten bestellt haben, erscheinen Ihre üblichen Bestellungen hier.",
+      "notNow": "Nicht jetzt",
+      "dashboardTitle": "Zeit nachzubestellen",
+      "seeAll": "Erneut kaufen"
+    },
+    "demand": {
+      "title": "Nachfrage & Bestand",
+      "description": "Die KI von FIRINGI prognostiziert, wie viel Ihre Kunden in den nächsten 4 Wochen von jedem Produkt bestellen und wie lange Ihr Bestand reicht. Sie macht nur Vorschläge.",
+      "forecastTitle": "Nachfrage, nächste 4 Wochen",
+      "product": "Produkt",
+      "chart": "12 Wochen → 4 Wochen",
+      "last4": "Letzte 4 Wochen",
+      "next4": "Nächste 4 Wochen",
+      "trend": "Trend",
+      "stockTitle": "Bestand geht zur Neige",
+      "available": "Verfügbar",
+      "perDay": "Verkauf pro Tag",
+      "daysLeft": "Tage übrig",
+      "runsOut": "Leer am",
+      "statusCol": "Status",
+      "riskTitle": "Bestellungen, die sich verspäten könnten",
+      "order": "Bestellung",
+      "customer": "Kunde",
+      "why": "Warum",
+      "dueTitle": "Kunden, die nachbestellen sollten",
+      "expected": "Erwartet",
+      "usualBasket": "Übliche Bestellung",
+      "noForecast": "Noch keine Bestellungen der letzten 12 Wochen, aus denen gelernt werden kann.",
+      "noStockRisk": "Nichts geht gerade zur Neige.",
+      "noRisk": "Keine offene Bestellung scheint gefährdet.",
+      "noDue": "Kein Kunde muss gerade nachbestellen.",
+      "suggestions": "Vorschläge",
+      "dismiss": "Verwerfen",
+      "done": "Erledigt",
+      "dashboardTitle": "Bestand geht zur Neige",
+      "dashboardNone": "Ihr Bestand reicht für die nächsten zwei Wochen.",
+      "seeAll": "Nachfrage & Bestand"
+    },
+    "status": {
+      "OUT": "Ausverkauft",
+      "CRITICAL": "Kritisch",
+      "LOW": "Niedrig",
+      "OK": "OK",
+      "NO_SALES": "Keine Verkäufe"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Nach {n} Std. nicht bestätigt",
+      "DATE_PASSED": "Der gewünschte Liefertermin ist vorbei",
+      "DUE_SOON": "Fällig in 24 Std. und noch nicht versandt",
+      "LATE_ETA": "Die voraussichtliche Ankunft des Fahrers liegt nach dem gewünschten Tag",
+      "SHORT_STOCK": "{n} Produkte mit weniger Bestand als bestellt",
+      "SUPPLIER_DECLINES": "Sie haben {n} Bestellungen in 60 Tagen abgelehnt oder verpasst"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} ist in {days} Tagen ausverkauft",
+      "OUT": "{product} ist ausverkauft",
+      "LOW_COVER": "{product}: Bestand für {days} Tage",
+      "DEMAND_SURGE": "Die Nachfrage nach {product} steigt ({pct})",
+      "DELIVERY_RISK": "Bestellung {number} für {customer} könnte sich verspäten",
+      "REORDER_DUE": "Zeit, bei {supplier} nachzubestellen"
     }
   }
 }

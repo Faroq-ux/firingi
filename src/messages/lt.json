@@ -768,7 +768,10 @@
     "Spending Report": "Išlaidų ataskaita",
     "Routes": "Maršrutai",
     "Help & Support": "Pagalba ir palaikymas",
-    "My Offers": "Mano pasiūlymai"
+    "My Offers": "Mano pasiūlymai",
+    "AI Assistant": "DI asistentas",
+    "Buy Again": "Pirkti dar kartą",
+    "Demand & Stock": "Paklausa ir atsargos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Jūsų prašymas „{summary}“ buvo {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} baigiasi",
+      "body": "Tokiu tempu jūsų {product} atsargų užteks maždaug {days} d. (liko {available}). Papildykite, kad užsakymai nesustotų."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ nuolaida užsakymui",
       "FREE_DELIVERY": "Nemokamas pristatymas (pristatote nemokamai)",
       "BUY_X_GET_Y": "Pirkite X, gaukite Y nemokamai"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "DI asistentas",
+      "description": "Klauskite apie savo verslą savais žodžiais. FIRINGI DI (Claude) žiūri tik į jūsų įmonės duomenis ir niekada nieko nekeičia.",
+      "newChat": "Naujas pokalbis",
+      "history": "Pokalbiai",
+      "noHistory": "Pokalbių dar nėra.",
+      "placeholderBuyer": "Klauskite apie savo užsakymus, išlaidas, produktus…",
+      "placeholderVendor": "Klauskite apie savo pardavimus, atsargas, klientus…",
+      "send": "Klausti",
+      "thinking": "Peržiūriu jūsų duomenis…",
+      "lookedAt": "Peržiūrėta",
+      "you": "Jūs",
+      "assistant": "FIRINGI DI",
+      "suggestOnly": "Asistentas skaito jūsų duomenis ir siūlo — jis niekada nieko nekeičia.",
+      "delete": "Ištrinti pokalbį",
+      "tryAsking": "Pabandykite paklausti",
+      "offTitle": "DI asistentas dar neprieinamas",
+      "offText": "FIRINGI dar neįjungė asistento jūsų paskyrai. Kiti DI pasiūlymai vis tiek veikia.",
+      "buyerEx1": "Kiek išleidau per pastarąsias 30 dienų?",
+      "buyerEx2": "Kada paprastai vėl užsakau ir ką?",
+      "buyerEx3": "Kokius produktus perku daugiausia?",
+      "buyerEx4": "Rask alyvuogių aliejaus pas mano tiekėjus",
+      "vendorEx1": "Kaip sekėsi mano pardavimams per pastarąsias 30 dienų?",
+      "vendorEx2": "Kurie produktai greitai baigsis?",
+      "vendorEx3": "Kurie klientai vėluoja su įprastu užsakymu?",
+      "vendorEx4": "Kurie atviri užsakymai gali būti pristatyti pavėluotai?"
+    },
+    "tools": {
+      "sales_summary": "Santrauka",
+      "breakdown": "Išskaidymas",
+      "demand_forecast": "Paklausos prognozė",
+      "stock_outlook": "Atsargos",
+      "reorder_outlook": "Užsakymų ritmas",
+      "delivery_risk": "Pristatymo rizika",
+      "supplier_scorecards": "Įvertinimas",
+      "find_orders": "Užsakymai",
+      "search_catalogue": "Katalogas",
+      "open_suggestions": "Pasiūlymai"
+    },
+    "buyAgain": {
+      "title": "Pirkti dar kartą",
+      "description": "Jūsų įprasti užsakymai, išmokti iš to, ką pirkote per pastaruosius 6 mėnesius. Vienas palietimas įdeda įprastus kiekius į krepšelį — jūs juos patikrinate ir pateikiate užsakymą.",
+      "timeToReorder": "Laikas vėl užsakyti",
+      "dueOn": "Paprastai vėl užsakote apie {date}",
+      "lateBy": "{days} d. vėliau nei įprastai",
+      "dueToday": "Laikas dabar",
+      "upcoming": "Kitas po {days} d.",
+      "every": "Kas {days} d.",
+      "lastOrder": "Paskutinis užsakymas {date}",
+      "usual": "Įprastas užsakymas apie {amount}",
+      "button": "Į krepšelį",
+      "added": "{n} produktai įdėti į jūsų krepšelį",
+      "goToCart": "Eiti į krepšelį",
+      "notAvailable": "nebeprieinamas",
+      "empty": "Kai kelis kartus užsakysite iš tiekėjo, čia atsiras jūsų įprasti užsakymai.",
+      "notNow": "Ne dabar",
+      "dashboardTitle": "Laikas vėl užsakyti",
+      "seeAll": "Pirkti dar kartą"
+    },
+    "demand": {
+      "title": "Paklausa ir atsargos",
+      "description": "FIRINGI DI prognozuoja, kiek kiekvieno produkto jūsų klientai užsakys per ateinančias 4 savaites ir kiek laiko užteks jūsų atsargų. Jis tik siūlo.",
+      "forecastTitle": "Paklausa, ateinančios 4 savaitės",
+      "product": "Produktas",
+      "chart": "12 savaičių → 4 savaitės",
+      "last4": "Pastarosios 4 savaitės",
+      "next4": "Ateinančios 4 savaitės",
+      "trend": "Tendencija",
+      "stockTitle": "Baigiasi atsargos",
+      "available": "Turima",
+      "perDay": "Parduodama per dieną",
+      "daysLeft": "Liko dienų",
+      "runsOut": "Baigsis",
+      "statusCol": "Būsena",
+      "riskTitle": "Užsakymai, kurie gali vėluoti",
+      "order": "Užsakymas",
+      "customer": "Klientas",
+      "why": "Kodėl",
+      "dueTitle": "Klientai, kurie turėtų vėl užsakyti",
+      "expected": "Laukiama",
+      "usualBasket": "Įprastas užsakymas",
+      "noForecast": "Per pastarąsias 12 savaičių dar nėra užsakymų, iš kurių būtų galima mokytis.",
+      "noStockRisk": "Niekas greitai nesibaigia.",
+      "noRisk": "Nė vienas atviras užsakymas neatrodo rizikingas.",
+      "noDue": "Šiuo metu nė vienam klientui nereikia vėl užsakyti.",
+      "suggestions": "Pasiūlymai",
+      "dismiss": "Atmesti",
+      "done": "Atlikta",
+      "dashboardTitle": "Baigiasi atsargos",
+      "dashboardNone": "Jūsų atsargų užtenka ateinančioms dviem savaitėms.",
+      "seeAll": "Paklausa ir atsargos"
+    },
+    "status": {
+      "OUT": "Išparduota",
+      "CRITICAL": "Kritinis",
+      "LOW": "Mažas",
+      "OK": "OK",
+      "NO_SALES": "Nėra pardavimų"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Nepatvirtinta po {n} val.",
+      "DATE_PASSED": "Pageidaujama pristatymo data jau praėjo",
+      "DUE_SOON": "Pristatyti per 24 val., bet dar neišsiųsta",
+      "LATE_ETA": "Numatomas vairuotojo atvykimas yra po pageidaujamos dienos",
+      "SHORT_STOCK": "{n} produktai, kurių atsargų mažiau nei užsakyta",
+      "SUPPLIER_DECLINES": "Per 60 dienų atmetėte arba praleidote {n} užsakymus"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} baigsis po {days} d.",
+      "OUT": "{product} išparduotas",
+      "LOW_COVER": "{product}: atsargų {days} d.",
+      "DEMAND_SURGE": "{product} paklausa auga ({pct})",
+      "DELIVERY_RISK": "Užsakymas {number} klientui {customer} gali vėluoti",
+      "REORDER_DUE": "Laikas vėl užsakyti iš {supplier}"
     }
   }
 }

@@ -2,7 +2,7 @@
  * Phase 16: four-eyes approvals — the action waits; a second person with the same right approves
  * (it then runs as requested) or rejects; never the one who asked.
  */
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
 import { setCustomerTerms, setLegalEntityIban } from "@/server/services/payments";
 import { saveAdminPromotion } from "@/server/services/promotions";
@@ -11,7 +11,13 @@ import { approvalSettings } from "@/server/approvals/gate";
 import { decideApproval, listApprovals, saveApprovalSettings, withdrawApproval } from "@/server/approvals/service";
 import { ctxFor } from "../helpers";
 
-afterAll(() => prisma.$disconnect());
+// Kebab House's credit terms are changed here; put them back so later suites can still order.
+let kebabTerms: { creditLimit: unknown; paymentTermsDays: number } | null = null;
+beforeAll(async () => { kebabTerms = await prisma.company.findFirstOrThrow({ where: { legalName: "Kebab House Lisboa, Lda" }, select: { creditLimit: true, paymentTermsDays: true } }); });
+afterAll(async () => {
+  if (kebabTerms) await prisma.company.updateMany({ where: { legalName: "Kebab House Lisboa, Lda" }, data: { creditLimit: kebabTerms.creditLimit as never, paymentTermsDays: kebabTerms.paymentTermsDays } });
+  await prisma.$disconnect();
+});
 const SA = "superadmin@firingi.test", FIN = "finance@firingi.test", SALES = "sales@firingi.test";
 const pending = (kind: string) => prisma.approvalRequest.findFirstOrThrow({ where: { kind, status: "PENDING" }, orderBy: { requestedAt: "desc" } });
 

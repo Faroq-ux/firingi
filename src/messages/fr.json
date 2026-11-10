@@ -768,7 +768,10 @@
     "Spending Report": "Rapport des dépenses",
     "Routes": "Tournées",
     "Help & Support": "Aide et support",
-    "My Offers": "Mes offres"
+    "My Offers": "Mes offres",
+    "AI Assistant": "Assistant IA",
+    "Buy Again": "Racheter",
+    "Demand & Stock": "Demande & stock"
   },
   "delivery": {
     "title": "Livraison",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind} : {decision}",
       "body": "Votre demande « {summary} » a été {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} est bientôt épuisé",
+      "body": "Au rythme actuel, votre stock de {product} dure environ {days} jours ({available} restants). Réapprovisionnez pour continuer à recevoir des commandes."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ de remise sur la commande",
       "FREE_DELIVERY": "Livraison offerte (vous livrez gratuitement)",
       "BUY_X_GET_Y": "Achetez X, Y offert(s)"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Assistant IA",
+      "description": "Posez vos questions sur votre activité avec vos propres mots. L'IA de FIRINGI (Claude) ne consulte que les données de votre entreprise et ne modifie jamais rien.",
+      "newChat": "Nouvelle conversation",
+      "history": "Conversations",
+      "noHistory": "Aucune conversation pour l'instant.",
+      "placeholderBuyer": "Posez une question sur vos commandes, vos achats, vos produits…",
+      "placeholderVendor": "Posez une question sur vos ventes, votre stock, vos clients…",
+      "send": "Demander",
+      "thinking": "Analyse de vos données…",
+      "lookedAt": "Consulté",
+      "you": "Vous",
+      "assistant": "IA FIRINGI",
+      "suggestOnly": "L'assistant lit vos données et fait des suggestions — il ne modifie jamais rien.",
+      "delete": "Supprimer la conversation",
+      "tryAsking": "Essayez de demander",
+      "offTitle": "L'assistant IA n'est pas encore disponible",
+      "offText": "FIRINGI n'a pas encore activé l'assistant pour votre compte. Les autres suggestions de l'IA fonctionnent toujours.",
+      "buyerEx1": "Combien ai-je dépensé ces 30 derniers jours ?",
+      "buyerEx2": "Quand est-ce que je recommande d'habitude, et quoi ?",
+      "buyerEx3": "Quels produits est-ce que j'achète le plus ?",
+      "buyerEx4": "Trouver de l'huile d'olive chez mes fournisseurs",
+      "vendorEx1": "Comment se sont passées mes ventes ces 30 derniers jours ?",
+      "vendorEx2": "Quels produits seront bientôt en rupture ?",
+      "vendorEx3": "Quels clients sont en retard sur leur commande habituelle ?",
+      "vendorEx4": "Quelles commandes en cours risquent d'être livrées en retard ?"
+    },
+    "tools": {
+      "sales_summary": "Résumé",
+      "breakdown": "Détail",
+      "demand_forecast": "Prévision de la demande",
+      "stock_outlook": "Stock",
+      "reorder_outlook": "Rythme de commande",
+      "delivery_risk": "Risque de livraison",
+      "supplier_scorecards": "Évaluation",
+      "find_orders": "Commandes",
+      "search_catalogue": "Catalogue",
+      "open_suggestions": "Suggestions"
+    },
+    "buyAgain": {
+      "title": "Racheter",
+      "description": "Vos commandes habituelles, apprises de vos achats des 6 derniers mois. Un clic met les quantités habituelles dans votre panier — vous les vérifiez et passez la commande.",
+      "timeToReorder": "C'est le moment de recommander",
+      "dueOn": "Vous recommandez d'habitude vers le {date}",
+      "lateBy": "{days} jours plus tard que d'habitude",
+      "dueToday": "À faire maintenant",
+      "upcoming": "Prochaine dans {days} jours",
+      "every": "Tous les {days} jours",
+      "lastOrder": "Dernière commande le {date}",
+      "usual": "Commande habituelle d'environ {amount}",
+      "button": "Ajouter au panier",
+      "added": "{n} produits ajoutés à votre panier",
+      "goToCart": "Voir le panier",
+      "notAvailable": "plus disponible",
+      "empty": "Après quelques commandes chez un fournisseur, vos commandes habituelles apparaissent ici.",
+      "notNow": "Pas maintenant",
+      "dashboardTitle": "C'est le moment de recommander",
+      "seeAll": "Racheter"
+    },
+    "demand": {
+      "title": "Demande & stock",
+      "description": "L'IA de FIRINGI prévoit la quantité de chaque produit que vos clients commanderont dans les 4 prochaines semaines et la durée de votre stock. Elle ne fait que suggérer.",
+      "forecastTitle": "Demande, 4 prochaines semaines",
+      "product": "Produit",
+      "chart": "12 semaines → 4 semaines",
+      "last4": "4 dernières semaines",
+      "next4": "4 prochaines semaines",
+      "trend": "Tendance",
+      "stockTitle": "Stock bientôt épuisé",
+      "available": "Disponible",
+      "perDay": "Ventes par jour",
+      "daysLeft": "Jours restants",
+      "runsOut": "Épuisé le",
+      "statusCol": "Statut",
+      "riskTitle": "Commandes qui risquent d'être en retard",
+      "order": "Commande",
+      "customer": "Client",
+      "why": "Pourquoi",
+      "dueTitle": "Clients qui devraient recommander",
+      "expected": "Prévue",
+      "usualBasket": "Commande habituelle",
+      "noForecast": "Pas encore de commandes sur les 12 dernières semaines pour apprendre.",
+      "noStockRisk": "Rien n'est sur le point de s'épuiser.",
+      "noRisk": "Aucune commande en cours ne semble à risque.",
+      "noDue": "Aucun client ne doit recommander pour l'instant.",
+      "suggestions": "Suggestions",
+      "dismiss": "Ignorer",
+      "done": "Fait",
+      "dashboardTitle": "Stock bientôt épuisé",
+      "dashboardNone": "Votre stock couvre les deux prochaines semaines.",
+      "seeAll": "Demande & stock"
+    },
+    "status": {
+      "OUT": "En rupture",
+      "CRITICAL": "Critique",
+      "LOW": "Bas",
+      "OK": "OK",
+      "NO_SALES": "Aucune vente"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Non confirmée après {n} h",
+      "DATE_PASSED": "La date de livraison demandée est dépassée",
+      "DUE_SOON": "À livrer sous 24 h et pas encore expédiée",
+      "LATE_ETA": "L'heure d'arrivée prévue du chauffeur est après le jour demandé",
+      "SHORT_STOCK": "{n} produits avec moins de stock que commandé",
+      "SUPPLIER_DECLINES": "Vous avez refusé ou manqué {n} commandes en 60 jours"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} sera épuisé dans {days} jours",
+      "OUT": "{product} est en rupture de stock",
+      "LOW_COVER": "{product} : stock pour {days} jours",
+      "DEMAND_SURGE": "La demande de {product} augmente ({pct})",
+      "DELIVERY_RISK": "La commande {number} pour {customer} risque d'être en retard",
+      "REORDER_DUE": "C'est le moment de recommander chez {supplier}"
     }
   }
 }

@@ -768,7 +768,10 @@
     "Spending Report": "Utgiftsrapport",
     "Routes": "Rutter",
     "Help & Support": "Hjälp & support",
-    "My Offers": "Mina erbjudanden"
+    "My Offers": "Mina erbjudanden",
+    "AI Assistant": "AI-assistent",
+    "Buy Again": "Köp igen",
+    "Demand & Stock": "Efterfrågan & lager"
   },
   "delivery": {
     "title": "Leverans",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Din begäran ”{summary}” blev {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} håller på att ta slut",
+      "body": "I nuvarande takt räcker ditt lager av {product} cirka {days} dagar ({available} kvar). Fyll på för att fortsätta få beställningar."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ rabatt på ordern",
       "FREE_DELIVERY": "Fri leverans (du levererar gratis)",
       "BUY_X_GET_Y": "Köp X, få Y gratis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI-assistent",
+      "description": "Fråga om din verksamhet med egna ord. FIRINGI:s AI (Claude) tittar bara på ditt företags data och ändrar aldrig något.",
+      "newChat": "Ny konversation",
+      "history": "Konversationer",
+      "noHistory": "Inga konversationer ännu.",
+      "placeholderBuyer": "Fråga om dina beställningar, inköp, produkter…",
+      "placeholderVendor": "Fråga om din försäljning, ditt lager, dina kunder…",
+      "send": "Fråga",
+      "thinking": "Tittar på dina data…",
+      "lookedAt": "Tittade på",
+      "you": "Du",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "Assistenten läser dina data och föreslår — den ändrar aldrig något.",
+      "delete": "Radera konversation",
+      "tryAsking": "Prova att fråga",
+      "offTitle": "AI-assistenten är inte tillgänglig ännu",
+      "offText": "FIRINGI har inte aktiverat assistenten för ditt konto ännu. De andra AI-förslagen fungerar ändå.",
+      "buyerEx1": "Hur mycket har jag handlat för de senaste 30 dagarna?",
+      "buyerEx2": "När brukar jag beställa igen, och vad?",
+      "buyerEx3": "Vilka produkter köper jag mest?",
+      "buyerEx4": "Hitta olivolja hos mina leverantörer",
+      "vendorEx1": "Hur gick min försäljning de senaste 30 dagarna?",
+      "vendorEx2": "Vilka produkter tar snart slut?",
+      "vendorEx3": "Vilka kunder är sena med sin vanliga beställning?",
+      "vendorEx4": "Vilka öppna beställningar kan levereras sent?"
+    },
+    "tools": {
+      "sales_summary": "Sammanfattning",
+      "breakdown": "Uppdelning",
+      "demand_forecast": "Efterfrågeprognos",
+      "stock_outlook": "Lager",
+      "reorder_outlook": "Beställningsrytm",
+      "delivery_risk": "Leveransrisk",
+      "supplier_scorecards": "Betyg",
+      "find_orders": "Beställningar",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Förslag"
+    },
+    "buyAgain": {
+      "title": "Köp igen",
+      "description": "Dina vanliga beställningar, inlärda från vad du köpt de senaste 6 månaderna. Ett tryck lägger de vanliga mängderna i varukorgen — du kontrollerar och lägger beställningen.",
+      "timeToReorder": "Dags att beställa igen",
+      "dueOn": "Du brukar beställa igen runt {date}",
+      "lateBy": "{days} dagar senare än vanligt",
+      "dueToday": "Dags nu",
+      "upcoming": "Nästa om {days} dagar",
+      "every": "Var {days}:e dag",
+      "lastOrder": "Senaste beställning {date}",
+      "usual": "Vanlig beställning cirka {amount}",
+      "button": "Lägg i varukorgen",
+      "added": "{n} produkter lades i din varukorg",
+      "goToCart": "Till varukorgen",
+      "notAvailable": "inte längre tillgänglig",
+      "empty": "När du har beställt från en leverantör några gånger visas dina vanliga beställningar här.",
+      "notNow": "Inte nu",
+      "dashboardTitle": "Dags att beställa igen",
+      "seeAll": "Köp igen"
+    },
+    "demand": {
+      "title": "Efterfrågan & lager",
+      "description": "FIRINGI:s AI förutser hur mycket av varje produkt dina kunder beställer de kommande 4 veckorna och hur länge ditt lager räcker. Den föreslår bara.",
+      "forecastTitle": "Efterfrågan, kommande 4 veckor",
+      "product": "Produkt",
+      "chart": "12 veckor → 4 veckor",
+      "last4": "Senaste 4 veckorna",
+      "next4": "Kommande 4 veckorna",
+      "trend": "Trend",
+      "stockTitle": "Lager som tar slut",
+      "available": "Tillgängligt",
+      "perDay": "Säljs per dag",
+      "daysLeft": "Dagar kvar",
+      "runsOut": "Tar slut",
+      "statusCol": "Status",
+      "riskTitle": "Beställningar som kan bli sena",
+      "order": "Beställning",
+      "customer": "Kund",
+      "why": "Varför",
+      "dueTitle": "Kunder som borde beställa igen",
+      "expected": "Väntas",
+      "usualBasket": "Vanlig beställning",
+      "noForecast": "Inga beställningar de senaste 12 veckorna att lära av ännu.",
+      "noStockRisk": "Inget håller på att ta slut.",
+      "noRisk": "Ingen öppen beställning ser ut att vara i riskzonen.",
+      "noDue": "Ingen kund behöver beställa igen just nu.",
+      "suggestions": "Förslag",
+      "dismiss": "Avfärda",
+      "done": "Klart",
+      "dashboardTitle": "Lager som tar slut",
+      "dashboardNone": "Ditt lager räcker de kommande två veckorna.",
+      "seeAll": "Efterfrågan & lager"
+    },
+    "status": {
+      "OUT": "Slut i lager",
+      "CRITICAL": "Kritiskt",
+      "LOW": "Lågt",
+      "OK": "OK",
+      "NO_SALES": "Ingen försäljning"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Inte bekräftad efter {n} h",
+      "DATE_PASSED": "Det begärda leveransdatumet har passerat",
+      "DUE_SOON": "Ska levereras inom 24 h och är inte skickad",
+      "LATE_ETA": "Förarens beräknade ankomst är efter den begärda dagen",
+      "SHORT_STOCK": "{n} produkter med mindre lager än beställt",
+      "SUPPLIER_DECLINES": "Du har avböjt eller missat {n} beställningar på 60 dagar"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} tar slut om {days} dagar",
+      "OUT": "{product} är slut i lager",
+      "LOW_COVER": "{product}: lager för {days} dagar",
+      "DEMAND_SURGE": "Efterfrågan på {product} ökar ({pct})",
+      "DELIVERY_RISK": "Beställning {number} till {customer} kan bli sen",
+      "REORDER_DUE": "Dags att beställa igen från {supplier}"
     }
   }
 }

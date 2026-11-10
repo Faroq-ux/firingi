@@ -768,7 +768,10 @@
     "Spending Report": "Udgiftsrapport",
     "Routes": "Ruter",
     "Help & Support": "Hjælp og support",
-    "My Offers": "Mine tilbud"
+    "My Offers": "Mine tilbud",
+    "AI Assistant": "AI-assistent",
+    "Buy Again": "Køb igen",
+    "Demand & Stock": "Efterspørgsel & lager"
   },
   "delivery": {
     "title": "Levering",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Din anmodning “{summary}” blev {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} er ved at slippe op",
+      "body": "Med det nuværende tempo rækker dit lager af {product} ca. {days} dage ({available} tilbage). Fyld op for at blive ved med at få ordrer."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ rabat på ordren",
       "FREE_DELIVERY": "Gratis levering (du leverer gratis)",
       "BUY_X_GET_Y": "Køb X, få Y gratis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI-assistent",
+      "description": "Spørg om din forretning med dine egne ord. FIRINGI's AI (Claude) ser kun på din virksomheds data og ændrer aldrig noget.",
+      "newChat": "Ny samtale",
+      "history": "Samtaler",
+      "noHistory": "Ingen samtaler endnu.",
+      "placeholderBuyer": "Spørg om dine ordrer, indkøb, produkter…",
+      "placeholderVendor": "Spørg om dit salg, lager, dine kunder…",
+      "send": "Spørg",
+      "thinking": "Kigger på dine data…",
+      "lookedAt": "Kiggede på",
+      "you": "Dig",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "Assistenten læser dine data og foreslår — den ændrer aldrig noget.",
+      "delete": "Slet samtale",
+      "tryAsking": "Prøv at spørge",
+      "offTitle": "AI-assistenten er ikke tilgængelig endnu",
+      "offText": "FIRINGI har ikke slået assistenten til for din konto endnu. De andre AI-forslag virker stadig.",
+      "buyerEx1": "Hvor meget har jeg brugt de sidste 30 dage?",
+      "buyerEx2": "Hvornår bestiller jeg normalt igen, og hvad?",
+      "buyerEx3": "Hvilke produkter køber jeg mest?",
+      "buyerEx4": "Find olivenolie hos mine leverandører",
+      "vendorEx1": "Hvordan gik mit salg de sidste 30 dage?",
+      "vendorEx2": "Hvilke produkter løber snart tør?",
+      "vendorEx3": "Hvilke kunder er forsinkede med deres sædvanlige ordre?",
+      "vendorEx4": "Hvilke åbne ordrer kan blive leveret for sent?"
+    },
+    "tools": {
+      "sales_summary": "Oversigt",
+      "breakdown": "Opdeling",
+      "demand_forecast": "Efterspørgselsprognose",
+      "stock_outlook": "Lager",
+      "reorder_outlook": "Ordrerytme",
+      "delivery_risk": "Leveringsrisiko",
+      "supplier_scorecards": "Scorekort",
+      "find_orders": "Ordrer",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Forslag"
+    },
+    "buyAgain": {
+      "title": "Køb igen",
+      "description": "Dine sædvanlige ordrer, lært af det, du har købt de sidste 6 måneder. Ét tryk lægger de sædvanlige mængder i kurven — du tjekker dem og afgiver ordren.",
+      "timeToReorder": "Tid til at bestille igen",
+      "dueOn": "Du bestiller normalt igen omkring {date}",
+      "lateBy": "{days} dage senere end normalt",
+      "dueToday": "Aktuel nu",
+      "upcoming": "Næste om {days} dage",
+      "every": "Hver {days}. dag",
+      "lastOrder": "Seneste ordre {date}",
+      "usual": "Sædvanlig ordre ca. {amount}",
+      "button": "Læg i kurv",
+      "added": "{n} produkter lagt i din kurv",
+      "goToCart": "Gå til kurven",
+      "notAvailable": "ikke længere tilgængelig",
+      "empty": "Når du har bestilt hos en leverandør et par gange, vises dine sædvanlige ordrer her.",
+      "notNow": "Ikke nu",
+      "dashboardTitle": "Tid til at bestille igen",
+      "seeAll": "Køb igen"
+    },
+    "demand": {
+      "title": "Efterspørgsel & lager",
+      "description": "FIRINGI's AI forudsiger, hvor meget af hvert produkt dine kunder bestiller de næste 4 uger, og hvor længe dit lager rækker. Den foreslår kun.",
+      "forecastTitle": "Efterspørgsel, næste 4 uger",
+      "product": "Produkt",
+      "chart": "12 uger → 4 uger",
+      "last4": "Sidste 4 uger",
+      "next4": "Næste 4 uger",
+      "trend": "Tendens",
+      "stockTitle": "Lager der slipper op",
+      "available": "Tilgængeligt",
+      "perDay": "Sælger pr. dag",
+      "daysLeft": "Dage tilbage",
+      "runsOut": "Tomt den",
+      "statusCol": "Status",
+      "riskTitle": "Ordrer der kan blive forsinkede",
+      "order": "Ordre",
+      "customer": "Kunde",
+      "why": "Hvorfor",
+      "dueTitle": "Kunder der bør bestille igen",
+      "expected": "Forventet",
+      "usualBasket": "Sædvanlig ordre",
+      "noForecast": "Ingen ordrer fra de sidste 12 uger at lære af endnu.",
+      "noStockRisk": "Intet er ved at slippe op.",
+      "noRisk": "Ingen åben ordre ser ud til at være i fare.",
+      "noDue": "Ingen kunder skal bestille igen lige nu.",
+      "suggestions": "Forslag",
+      "dismiss": "Afvis",
+      "done": "Udført",
+      "dashboardTitle": "Lager der slipper op",
+      "dashboardNone": "Dit lager dækker de næste to uger.",
+      "seeAll": "Efterspørgsel & lager"
+    },
+    "status": {
+      "OUT": "Udsolgt",
+      "CRITICAL": "Kritisk",
+      "LOW": "Lavt",
+      "OK": "OK",
+      "NO_SALES": "Intet salg"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Ikke bekræftet efter {n} t",
+      "DATE_PASSED": "Den ønskede leveringsdato er overskredet",
+      "DUE_SOON": "Skal leveres inden for 24 t og er ikke afsendt",
+      "LATE_ETA": "Chaufførens forventede ankomst er efter den ønskede dag",
+      "SHORT_STOCK": "{n} produkter med mindre lager end bestilt",
+      "SUPPLIER_DECLINES": "Du har afvist eller misset {n} ordrer på 60 dage"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} slipper op om {days} dage",
+      "OUT": "{product} er udsolgt",
+      "LOW_COVER": "{product}: lager til {days} dage",
+      "DEMAND_SURGE": "Efterspørgslen på {product} stiger ({pct})",
+      "DELIVERY_RISK": "Ordre {number} til {customer} kan blive forsinket",
+      "REORDER_DUE": "Tid til at bestille igen hos {supplier}"
     }
   }
 }

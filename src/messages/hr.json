@@ -768,7 +768,10 @@
     "Spending Report": "Izvješće o potrošnji",
     "Routes": "Rute",
     "Help & Support": "Pomoć i podrška",
-    "My Offers": "Moje ponude"
+    "My Offers": "Moje ponude",
+    "AI Assistant": "AI asistent",
+    "Buy Again": "Kupi ponovno",
+    "Demand & Stock": "Potražnja i zalihe"
   },
   "delivery": {
     "title": "Dostava",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Vaš zahtjev „{summary}” je {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} je na izmaku",
+      "body": "Ovim tempom vaše zalihe {product} traju još oko {days} dana (preostalo {available}). Nadopunite ih kako bi narudžbe i dalje stizale."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ popusta na narudžbu",
       "FREE_DELIVERY": "Besplatna dostava (dostavljate besplatno)",
       "BUY_X_GET_Y": "Kupite X, Y gratis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI asistent",
+      "description": "Pitajte o svom poslovanju vlastitim riječima. FIRINGI-jev AI (Claude) gleda samo podatke vaše tvrtke i nikad ništa ne mijenja.",
+      "newChat": "Novi razgovor",
+      "history": "Razgovori",
+      "noHistory": "Još nema razgovora.",
+      "placeholderBuyer": "Pitajte o narudžbama, potrošnji, proizvodima…",
+      "placeholderVendor": "Pitajte o prodaji, zalihama, kupcima…",
+      "send": "Pitaj",
+      "thinking": "Pregledavam vaše podatke…",
+      "lookedAt": "Pregledano",
+      "you": "Vi",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "Asistent čita vaše podatke i predlaže — nikad ništa ne mijenja.",
+      "delete": "Izbriši razgovor",
+      "tryAsking": "Pokušajte pitati",
+      "offTitle": "AI asistent još nije dostupan",
+      "offText": "FIRINGI još nije uključio asistenta za vaš račun. Ostali AI prijedlozi i dalje rade.",
+      "buyerEx1": "Koliko sam potrošio u zadnjih 30 dana?",
+      "buyerEx2": "Kada obično ponovno naručujem i što?",
+      "buyerEx3": "Koje proizvode najviše kupujem?",
+      "buyerEx4": "Pronađi maslinovo ulje kod mojih dobavljača",
+      "vendorEx1": "Kako je išla moja prodaja u zadnjih 30 dana?",
+      "vendorEx2": "Koji će proizvodi uskoro nestati?",
+      "vendorEx3": "Koji kupci kasne sa svojom uobičajenom narudžbom?",
+      "vendorEx4": "Koje otvorene narudžbe mogu stići sa zakašnjenjem?"
+    },
+    "tools": {
+      "sales_summary": "Sažetak",
+      "breakdown": "Raščlamba",
+      "demand_forecast": "Prognoza potražnje",
+      "stock_outlook": "Zalihe",
+      "reorder_outlook": "Ritam narudžbi",
+      "delivery_risk": "Rizik dostave",
+      "supplier_scorecards": "Ocjena",
+      "find_orders": "Narudžbe",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Prijedlozi"
+    },
+    "buyAgain": {
+      "title": "Kupi ponovno",
+      "description": "Vaše uobičajene narudžbe, naučene iz onoga što ste kupili u zadnjih 6 mjeseci. Jedan dodir stavlja uobičajene količine u košaricu — provjerite ih i pošaljite narudžbu.",
+      "timeToReorder": "Vrijeme za ponovnu narudžbu",
+      "dueOn": "Obično ponovno naručujete oko {date}",
+      "lateBy": "{days} dana kasnije nego obično",
+      "dueToday": "Na redu sada",
+      "upcoming": "Sljedeća za {days} dana",
+      "every": "Svakih {days} dana",
+      "lastOrder": "Zadnja narudžba {date}",
+      "usual": "Uobičajena narudžba oko {amount}",
+      "button": "U košaricu",
+      "added": "{n} proizvoda dodano u košaricu",
+      "goToCart": "Idi u košaricu",
+      "notAvailable": "više nije dostupno",
+      "empty": "Kad nekoliko puta naručite od dobavljača, ovdje će se pojaviti vaše uobičajene narudžbe.",
+      "notNow": "Ne sada",
+      "dashboardTitle": "Vrijeme za ponovnu narudžbu",
+      "seeAll": "Kupi ponovno"
+    },
+    "demand": {
+      "title": "Potražnja i zalihe",
+      "description": "FIRINGI-jev AI predviđa koliko će svakog proizvoda vaši kupci naručiti u sljedeća 4 tjedna i koliko će trajati vaše zalihe. Samo predlaže.",
+      "forecastTitle": "Potražnja, sljedeća 4 tjedna",
+      "product": "Proizvod",
+      "chart": "12 tjedana → 4 tjedna",
+      "last4": "Zadnja 4 tjedna",
+      "next4": "Sljedeća 4 tjedna",
+      "trend": "Trend",
+      "stockTitle": "Zalihe na izmaku",
+      "available": "Dostupno",
+      "perDay": "Prodaja po danu",
+      "daysLeft": "Preostalo dana",
+      "runsOut": "Nestaje",
+      "statusCol": "Status",
+      "riskTitle": "Narudžbe koje mogu kasniti",
+      "order": "Narudžba",
+      "customer": "Kupac",
+      "why": "Zašto",
+      "dueTitle": "Kupci koji bi trebali ponovno naručiti",
+      "expected": "Očekivano",
+      "usualBasket": "Uobičajena narudžba",
+      "noForecast": "Još nema narudžbi iz zadnjih 12 tjedana iz kojih bi se moglo učiti.",
+      "noStockRisk": "Ništa uskoro ne nestaje.",
+      "noRisk": "Nijedna otvorena narudžba ne izgleda ugroženo.",
+      "noDue": "Nijedan kupac sada ne treba naručiti.",
+      "suggestions": "Prijedlozi",
+      "dismiss": "Odbaci",
+      "done": "Gotovo",
+      "dashboardTitle": "Zalihe na izmaku",
+      "dashboardNone": "Vaše zalihe pokrivaju sljedeća dva tjedna.",
+      "seeAll": "Potražnja i zalihe"
+    },
+    "status": {
+      "OUT": "Nema na zalihi",
+      "CRITICAL": "Kritično",
+      "LOW": "Nisko",
+      "OK": "OK",
+      "NO_SALES": "Nema prodaje"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Nije potvrđeno nakon {n} h",
+      "DATE_PASSED": "Traženi datum dostave je prošao",
+      "DUE_SOON": "Dostava u roku od 24 h, a još nije poslano",
+      "LATE_ETA": "Procijenjeni dolazak vozača je nakon traženog dana",
+      "SHORT_STOCK": "{n} proizvoda s manje zaliha nego što je naručeno",
+      "SUPPLIER_DECLINES": "U 60 dana odbili ste ili propustili {n} narudžbi"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} nestaje za {days} dana",
+      "OUT": "{product} nema na zalihi",
+      "LOW_COVER": "{product}: zalihe za {days} dana",
+      "DEMAND_SURGE": "Potražnja za {product} raste ({pct})",
+      "DELIVERY_RISK": "Narudžba {number} za {customer} mogla bi kasniti",
+      "REORDER_DUE": "Vrijeme za ponovnu narudžbu od {supplier}"
     }
   }
 }

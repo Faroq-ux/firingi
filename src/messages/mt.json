@@ -768,7 +768,10 @@
     "Spending Report": "Rapport tal-infiq",
     "Routes": "Rotot",
     "Help & Support": "Għajnuna u appoġġ",
-    "My Offers": "L-offerti tiegħi"
+    "My Offers": "L-offerti tiegħi",
+    "AI Assistant": "Assistent tal-IA",
+    "Buy Again": "Erġa' xtri",
+    "Demand & Stock": "Domanda u stokk"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "It-talba tiegħek “{summary}” ġiet {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} qed jispiċċa",
+      "body": "Bir-ritmu attwali, l-istokk tiegħek ta' {product} idum madwar {days} jiem (fadal {available}). Erġa' imla biex l-ordnijiet ikomplu jaslu."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ skont fuq l-ordni",
       "FREE_DELIVERY": "Kunsinna b'xejn (tikkunsinna b'xejn)",
       "BUY_X_GET_Y": "Ixtri X, ħu Y b'xejn"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Assistent tal-IA",
+      "description": "Staqsi dwar in-negozju tiegħek bi kliemek. L-IA ta' FIRINGI (Claude) tħares biss lejn id-data tal-kumpanija tiegħek u qatt ma tibdel xejn.",
+      "newChat": "Konversazzjoni ġdida",
+      "history": "Konversazzjonijiet",
+      "noHistory": "Għad m'hemm l-ebda konversazzjoni.",
+      "placeholderBuyer": "Staqsi dwar l-ordnijiet, l-infiq, il-prodotti tiegħek…",
+      "placeholderVendor": "Staqsi dwar il-bejgħ, l-istokk, il-klijenti tiegħek…",
+      "send": "Staqsi",
+      "thinking": "Qed inħares lejn id-data tiegħek…",
+      "lookedAt": "Ħares lejn",
+      "you": "Int",
+      "assistant": "IA ta' FIRINGI",
+      "suggestOnly": "L-assistent jaqra d-data tiegħek u jissuġġerixxi — qatt ma jibdel xejn.",
+      "delete": "Ħassar il-konversazzjoni",
+      "tryAsking": "Ipprova staqsi",
+      "offTitle": "L-assistent tal-IA għadu mhux disponibbli",
+      "offText": "FIRINGI għadha ma xegħlitx l-assistent għall-kont tiegħek. Is-suġġerimenti l-oħra tal-IA xorta jaħdmu.",
+      "buyerEx1": "Kemm nfaqt fl-aħħar 30 jum?",
+      "buyerEx2": "Meta normalment nordna mill-ġdid, u x'inhu?",
+      "buyerEx3": "Liema prodotti nixtri l-aktar?",
+      "buyerEx4": "Sib iż-żejt taż-żebbuġa mill-fornituri tiegħi",
+      "vendorEx1": "Kif mar il-bejgħ tiegħi fl-aħħar 30 jum?",
+      "vendorEx2": "Liema prodotti se jispiċċaw dalwaqt?",
+      "vendorEx3": "Liema klijenti qed jittardjaw bl-ordni tas-soltu tagħhom?",
+      "vendorEx4": "Liema ordnijiet miftuħa jistgħu jaslu tard?"
+    },
+    "tools": {
+      "sales_summary": "Sommarju",
+      "breakdown": "Tqassim",
+      "demand_forecast": "Tbassir tad-domanda",
+      "stock_outlook": "Stokk",
+      "reorder_outlook": "Ritmu tal-ordnijiet",
+      "delivery_risk": "Riskju tal-kunsinna",
+      "supplier_scorecards": "Valutazzjoni",
+      "find_orders": "Ordnijiet",
+      "search_catalogue": "Katalgu",
+      "open_suggestions": "Suġġerimenti"
+    },
+    "buyAgain": {
+      "title": "Erġa' xtri",
+      "description": "L-ordnijiet tas-soltu tiegħek, mitgħallma minn dak li xtrajt fl-aħħar 6 xhur. Pessa waħda tpoġġi l-kwantitajiet tas-soltu fil-karrettun — tiċċekkjahom u tagħmel l-ordni.",
+      "timeToReorder": "Wasal iż-żmien li terġa' tordna",
+      "dueOn": "Normalment terġa' tordna madwar {date}",
+      "lateBy": "{days} jiem aktar tard mis-soltu",
+      "dueToday": "Issa",
+      "upcoming": "Li jmiss f'{days} jiem",
+      "every": "Kull {days} jiem",
+      "lastOrder": "L-aħħar ordni {date}",
+      "usual": "Ordni tas-soltu ta' madwar {amount}",
+      "button": "Żid mal-karrettun",
+      "added": "{n} prodotti miżjuda mal-karrettun tiegħek",
+      "goToCart": "Mur fil-karrettun",
+      "notAvailable": "m'għadux disponibbli",
+      "empty": "Ladarba tordna minn fornitur ftit drabi, l-ordnijiet tas-soltu tiegħek jidhru hawn.",
+      "notNow": "Mhux issa",
+      "dashboardTitle": "Wasal iż-żmien li terġa' tordna",
+      "seeAll": "Erġa' xtri"
+    },
+    "demand": {
+      "title": "Domanda u stokk",
+      "description": "L-IA ta' FIRINGI tbassar kemm se jordnaw il-klijenti tiegħek minn kull prodott fl-4 ġimgħat li ġejjin u kemm se jdum l-istokk tiegħek. Tissuġġerixxi biss.",
+      "forecastTitle": "Domanda, l-4 ġimgħat li ġejjin",
+      "product": "Prodott",
+      "chart": "12-il ġimgħa → 4 ġimgħat",
+      "last4": "L-aħħar 4 ġimgħat",
+      "next4": "L-4 ġimgħat li ġejjin",
+      "trend": "Xejra",
+      "stockTitle": "Stokk li qed jispiċċa",
+      "available": "Disponibbli",
+      "perDay": "Jinbiegħ kuljum",
+      "daysLeft": "Jiem fadal",
+      "runsOut": "Jispiċċa",
+      "statusCol": "Status",
+      "riskTitle": "Ordnijiet li jistgħu jittardjaw",
+      "order": "Ordni",
+      "customer": "Klijent",
+      "why": "Għaliex",
+      "dueTitle": "Klijenti li għandhom jerġgħu jordnaw",
+      "expected": "Mistennija",
+      "usualBasket": "Ordni tas-soltu",
+      "noForecast": "Għad m'hemmx ordnijiet mill-aħħar 12-il ġimgħa biex titgħallem minnhom.",
+      "noStockRisk": "Xejn mhu se jispiċċa dalwaqt.",
+      "noRisk": "L-ebda ordni miftuħa ma tidher f'riskju.",
+      "noDue": "L-ebda klijent m'għandu bżonn jordna issa.",
+      "suggestions": "Suġġerimenti",
+      "dismiss": "Warrab",
+      "done": "Lest",
+      "dashboardTitle": "Stokk li qed jispiċċa",
+      "dashboardNone": "L-istokk tiegħek ikopri l-ġimgħatejn li ġejjin.",
+      "seeAll": "Domanda u stokk"
+    },
+    "status": {
+      "OUT": "Spiċċa",
+      "CRITICAL": "Kritiku",
+      "LOW": "Baxx",
+      "OK": "OK",
+      "NO_SALES": "L-ebda bejgħ"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Mhux ikkonfermata wara {n} siegħa",
+      "DATE_PASSED": "Id-data mitluba tal-kunsinna għaddiet",
+      "DUE_SOON": "Għandha titwassal fi żmien 24 siegħa u għadha ma ntbagħtitx",
+      "LATE_ETA": "L-wasla stmata tas-sewwieq hija wara l-jum mitlub",
+      "SHORT_STOCK": "{n} prodotti b'inqas stokk milli ordnat",
+      "SUPPLIER_DECLINES": "Irrifjutajt jew tlift {n} ordnijiet f'60 jum"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} jispiċċa f'{days} jiem",
+      "OUT": "{product} spiċċa",
+      "LOW_COVER": "{product}: stokk għal {days} jiem",
+      "DEMAND_SURGE": "Id-domanda għal {product} qed tiżdied ({pct})",
+      "DELIVERY_RISK": "L-ordni {number} għal {customer} tista' tittardja",
+      "REORDER_DUE": "Wasal iż-żmien li terġa' tordna minn {supplier}"
     }
   }
 }

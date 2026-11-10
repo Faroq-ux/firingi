@@ -768,7 +768,10 @@
     "Spending Report": "Uitgavenrapport",
     "Routes": "Routes",
     "Help & Support": "Hulp & support",
-    "My Offers": "Mijn aanbiedingen"
+    "My Offers": "Mijn aanbiedingen",
+    "AI Assistant": "AI-assistent",
+    "Buy Again": "Opnieuw kopen",
+    "Demand & Stock": "Vraag & voorraad"
   },
   "delivery": {
     "title": "Levering",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Uw verzoek “{summary}” is {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} raakt op",
+      "body": "In het huidige tempo gaat uw voorraad {product} nog ongeveer {days} dagen mee ({available} over). Vul aan om bestellingen te blijven ontvangen."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ korting op de bestelling",
       "FREE_DELIVERY": "Gratis levering (u levert gratis)",
       "BUY_X_GET_Y": "Koop X, krijg Y gratis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI-assistent",
+      "description": "Stel vragen over uw bedrijf in uw eigen woorden. De AI van FIRINGI (Claude) bekijkt alleen de gegevens van uw bedrijf en verandert nooit iets.",
+      "newChat": "Nieuw gesprek",
+      "history": "Gesprekken",
+      "noHistory": "Nog geen gesprekken.",
+      "placeholderBuyer": "Vraag naar uw bestellingen, uitgaven, producten…",
+      "placeholderVendor": "Vraag naar uw verkoop, voorraad, klanten…",
+      "send": "Vragen",
+      "thinking": "Uw gegevens worden bekeken…",
+      "lookedAt": "Bekeken",
+      "you": "U",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "De assistent leest uw gegevens en doet voorstellen — hij verandert nooit iets.",
+      "delete": "Gesprek verwijderen",
+      "tryAsking": "Vraag bijvoorbeeld",
+      "offTitle": "De AI-assistent is nog niet beschikbaar",
+      "offText": "FIRINGI heeft de assistent voor uw account nog niet ingeschakeld. De andere AI-suggesties werken wel.",
+      "buyerEx1": "Hoeveel heb ik de afgelopen 30 dagen uitgegeven?",
+      "buyerEx2": "Wanneer bestel ik meestal opnieuw, en wat?",
+      "buyerEx3": "Welke producten koop ik het meest?",
+      "buyerEx4": "Zoek olijfolie bij mijn leveranciers",
+      "vendorEx1": "Hoe ging mijn verkoop de afgelopen 30 dagen?",
+      "vendorEx2": "Welke producten raken binnenkort op?",
+      "vendorEx3": "Welke klanten zijn laat met hun gebruikelijke bestelling?",
+      "vendorEx4": "Welke open bestellingen worden mogelijk te laat geleverd?"
+    },
+    "tools": {
+      "sales_summary": "Overzicht",
+      "breakdown": "Uitsplitsing",
+      "demand_forecast": "Vraagvoorspelling",
+      "stock_outlook": "Voorraad",
+      "reorder_outlook": "Bestelritme",
+      "delivery_risk": "Leveringsrisico",
+      "supplier_scorecards": "Scorekaart",
+      "find_orders": "Bestellingen",
+      "search_catalogue": "Catalogus",
+      "open_suggestions": "Suggesties"
+    },
+    "buyAgain": {
+      "title": "Opnieuw kopen",
+      "description": "Uw gebruikelijke bestellingen, geleerd van wat u de afgelopen 6 maanden kocht. Eén tik zet de gebruikelijke aantallen in uw winkelwagen — u controleert ze en plaatst de bestelling.",
+      "timeToReorder": "Tijd om opnieuw te bestellen",
+      "dueOn": "U bestelt meestal weer rond {date}",
+      "lateBy": "{days} dagen later dan gewoonlijk",
+      "dueToday": "Nu aan de beurt",
+      "upcoming": "Volgende over {days} dagen",
+      "every": "Elke {days} dagen",
+      "lastOrder": "Laatste bestelling {date}",
+      "usual": "Gebruikelijke bestelling ongeveer {amount}",
+      "button": "In winkelwagen",
+      "added": "{n} producten in uw winkelwagen gezet",
+      "goToCart": "Naar winkelwagen",
+      "notAvailable": "niet meer leverbaar",
+      "empty": "Zodra u een paar keer bij een leverancier hebt besteld, verschijnen uw gebruikelijke bestellingen hier.",
+      "notNow": "Niet nu",
+      "dashboardTitle": "Tijd om opnieuw te bestellen",
+      "seeAll": "Opnieuw kopen"
+    },
+    "demand": {
+      "title": "Vraag & voorraad",
+      "description": "De AI van FIRINGI voorspelt hoeveel uw klanten de komende 4 weken van elk product bestellen en hoe lang uw voorraad meegaat. Ze doet alleen voorstellen.",
+      "forecastTitle": "Vraag, komende 4 weken",
+      "product": "Product",
+      "chart": "12 weken → 4 weken",
+      "last4": "Afgelopen 4 weken",
+      "next4": "Komende 4 weken",
+      "trend": "Trend",
+      "stockTitle": "Voorraad raakt op",
+      "available": "Beschikbaar",
+      "perDay": "Verkoop per dag",
+      "daysLeft": "Dagen over",
+      "runsOut": "Leeg op",
+      "statusCol": "Status",
+      "riskTitle": "Bestellingen die te laat kunnen komen",
+      "order": "Bestelling",
+      "customer": "Klant",
+      "why": "Waarom",
+      "dueTitle": "Klanten die opnieuw moeten bestellen",
+      "expected": "Verwacht",
+      "usualBasket": "Gebruikelijke bestelling",
+      "noForecast": "Nog geen bestellingen uit de afgelopen 12 weken om van te leren.",
+      "noStockRisk": "Niets raakt binnenkort op.",
+      "noRisk": "Geen enkele open bestelling lijkt risico te lopen.",
+      "noDue": "Geen klant hoeft nu opnieuw te bestellen.",
+      "suggestions": "Suggesties",
+      "dismiss": "Negeren",
+      "done": "Gedaan",
+      "dashboardTitle": "Voorraad raakt op",
+      "dashboardNone": "Uw voorraad dekt de komende twee weken.",
+      "seeAll": "Vraag & voorraad"
+    },
+    "status": {
+      "OUT": "Uitverkocht",
+      "CRITICAL": "Kritiek",
+      "LOW": "Laag",
+      "OK": "OK",
+      "NO_SALES": "Geen verkoop"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Na {n} u niet bevestigd",
+      "DATE_PASSED": "De gevraagde leverdatum is verstreken",
+      "DUE_SOON": "Binnen 24 u te leveren en nog niet verzonden",
+      "LATE_ETA": "De verwachte aankomst van de chauffeur is na de gevraagde dag",
+      "SHORT_STOCK": "{n} producten met minder voorraad dan besteld",
+      "SUPPLIER_DECLINES": "U hebt {n} bestellingen in 60 dagen geweigerd of gemist"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} is over {days} dagen op",
+      "OUT": "{product} is uitverkocht",
+      "LOW_COVER": "{product}: voorraad voor {days} dagen",
+      "DEMAND_SURGE": "De vraag naar {product} stijgt ({pct})",
+      "DELIVERY_RISK": "Bestelling {number} voor {customer} komt mogelijk te laat",
+      "REORDER_DUE": "Tijd om opnieuw te bestellen bij {supplier}"
     }
   }
 }

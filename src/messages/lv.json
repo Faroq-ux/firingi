@@ -768,7 +768,10 @@
     "Spending Report": "Izdevumu pārskats",
     "Routes": "Maršruti",
     "Help & Support": "Palīdzība un atbalsts",
-    "My Offers": "Mani piedāvājumi"
+    "My Offers": "Mani piedāvājumi",
+    "AI Assistant": "MI asistents",
+    "Buy Again": "Pirkt vēlreiz",
+    "Demand & Stock": "Pieprasījums un krājumi"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Jūsu pieprasījums “{summary}” ir {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} beidzas",
+      "body": "Pašreizējā tempā jūsu {product} krājumu pietiks aptuveni {days} dienām (atlikuši {available}). Papildiniet, lai pasūtījumi turpinātu nākt."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ atlaide pasūtījumam",
       "FREE_DELIVERY": "Bezmaksas piegāde (jūs piegādājat bez maksas)",
       "BUY_X_GET_Y": "Pērciet X, saņemiet Y bez maksas"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "MI asistents",
+      "description": "Jautājiet par savu uzņēmējdarbību saviem vārdiem. FIRINGI MI (Claude) skatās tikai jūsu uzņēmuma datus un nekad neko nemaina.",
+      "newChat": "Jauna saruna",
+      "history": "Sarunas",
+      "noHistory": "Sarunu vēl nav.",
+      "placeholderBuyer": "Jautājiet par saviem pasūtījumiem, tēriņiem, produktiem…",
+      "placeholderVendor": "Jautājiet par saviem pārdošanas apjomiem, krājumiem, klientiem…",
+      "send": "Jautāt",
+      "thinking": "Aplūkoju jūsu datus…",
+      "lookedAt": "Aplūkots",
+      "you": "Jūs",
+      "assistant": "FIRINGI MI",
+      "suggestOnly": "Asistents lasa jūsu datus un iesaka — tas nekad neko nemaina.",
+      "delete": "Dzēst sarunu",
+      "tryAsking": "Pamēģiniet pajautāt",
+      "offTitle": "MI asistents vēl nav pieejams",
+      "offText": "FIRINGI vēl nav ieslēgusi asistentu jūsu kontam. Pārējie MI ieteikumi joprojām darbojas.",
+      "buyerEx1": "Cik es iztērēju pēdējās 30 dienās?",
+      "buyerEx2": "Kad es parasti pasūtu atkārtoti un ko?",
+      "buyerEx3": "Kurus produktus es pērku visvairāk?",
+      "buyerEx4": "Atrast olīveļļu pie maniem piegādātājiem",
+      "vendorEx1": "Kā gāja mana pārdošana pēdējās 30 dienās?",
+      "vendorEx2": "Kuri produkti drīz beigsies?",
+      "vendorEx3": "Kuri klienti kavējas ar savu ierasto pasūtījumu?",
+      "vendorEx4": "Kuri atvērtie pasūtījumi varētu tikt piegādāti ar nokavēšanos?"
+    },
+    "tools": {
+      "sales_summary": "Kopsavilkums",
+      "breakdown": "Sadalījums",
+      "demand_forecast": "Pieprasījuma prognoze",
+      "stock_outlook": "Krājumi",
+      "reorder_outlook": "Pasūtījumu ritms",
+      "delivery_risk": "Piegādes risks",
+      "supplier_scorecards": "Vērtējums",
+      "find_orders": "Pasūtījumi",
+      "search_catalogue": "Katalogs",
+      "open_suggestions": "Ieteikumi"
+    },
+    "buyAgain": {
+      "title": "Pirkt vēlreiz",
+      "description": "Jūsu ierastie pasūtījumi, apgūti no tā, ko pirkāt pēdējos 6 mēnešos. Viens pieskāriens ieliek ierastos daudzumus grozā — jūs tos pārbaudāt un veicat pasūtījumu.",
+      "timeToReorder": "Laiks pasūtīt atkārtoti",
+      "dueOn": "Parasti jūs atkal pasūtāt ap {date}",
+      "lateBy": "{days} dienas vēlāk nekā parasti",
+      "dueToday": "Laiks tagad",
+      "upcoming": "Nākamais pēc {days} dienām",
+      "every": "Ik pēc {days} dienām",
+      "lastOrder": "Pēdējais pasūtījums {date}",
+      "usual": "Ierastais pasūtījums aptuveni {amount}",
+      "button": "Pievienot grozam",
+      "added": "{n} produkti pievienoti jūsu grozam",
+      "goToCart": "Uz grozu",
+      "notAvailable": "vairs nav pieejams",
+      "empty": "Kad būsiet dažas reizes pasūtījis no piegādātāja, šeit parādīsies jūsu ierastie pasūtījumi.",
+      "notNow": "Ne tagad",
+      "dashboardTitle": "Laiks pasūtīt atkārtoti",
+      "seeAll": "Pirkt vēlreiz"
+    },
+    "demand": {
+      "title": "Pieprasījums un krājumi",
+      "description": "FIRINGI MI prognozē, cik daudz katra produkta jūsu klienti pasūtīs nākamajās 4 nedēļās un cik ilgi pietiks jūsu krājumu. Tas tikai iesaka.",
+      "forecastTitle": "Pieprasījums, nākamās 4 nedēļas",
+      "product": "Produkts",
+      "chart": "12 nedēļas → 4 nedēļas",
+      "last4": "Pēdējās 4 nedēļas",
+      "next4": "Nākamās 4 nedēļas",
+      "trend": "Tendence",
+      "stockTitle": "Krājumi beidzas",
+      "available": "Pieejams",
+      "perDay": "Pārdod dienā",
+      "daysLeft": "Atlikušās dienas",
+      "runsOut": "Beigsies",
+      "statusCol": "Statuss",
+      "riskTitle": "Pasūtījumi, kas var kavēties",
+      "order": "Pasūtījums",
+      "customer": "Klients",
+      "why": "Kāpēc",
+      "dueTitle": "Klienti, kuriem būtu jāpasūta atkārtoti",
+      "expected": "Gaidāms",
+      "usualBasket": "Ierastais pasūtījums",
+      "noForecast": "Pēdējās 12 nedēļās vēl nav pasūtījumu, no kuriem mācīties.",
+      "noStockRisk": "Nekas drīz nebeigsies.",
+      "noRisk": "Neviens atvērts pasūtījums neizskatās apdraudēts.",
+      "noDue": "Nevienam klientam tagad nav jāpasūta atkārtoti.",
+      "suggestions": "Ieteikumi",
+      "dismiss": "Noraidīt",
+      "done": "Gatavs",
+      "dashboardTitle": "Krājumi beidzas",
+      "dashboardNone": "Jūsu krājumu pietiek nākamajām divām nedēļām.",
+      "seeAll": "Pieprasījums un krājumi"
+    },
+    "status": {
+      "OUT": "Izpārdots",
+      "CRITICAL": "Kritisks",
+      "LOW": "Zems",
+      "OK": "OK",
+      "NO_SALES": "Nav pārdošanas"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Nav apstiprināts pēc {n} st.",
+      "DATE_PASSED": "Pieprasītais piegādes datums ir pagājis",
+      "DUE_SOON": "Jāpiegādā 24 st. laikā, un vēl nav nosūtīts",
+      "LATE_ETA": "Vadītāja paredzamā ierašanās ir pēc pieprasītās dienas",
+      "SHORT_STOCK": "{n} produkti, kuru krājumi ir mazāki par pasūtīto",
+      "SUPPLIER_DECLINES": "Jūs 60 dienās noraidījāt vai nokavējāt {n} pasūtījumus"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} beigsies pēc {days} dienām",
+      "OUT": "{product} ir izpārdots",
+      "LOW_COVER": "{product}: krājumi {days} dienām",
+      "DEMAND_SURGE": "Pieprasījums pēc {product} pieaug ({pct})",
+      "DELIVERY_RISK": "Pasūtījums {number} klientam {customer} var kavēties",
+      "REORDER_DUE": "Laiks atkal pasūtīt no {supplier}"
     }
   }
 }

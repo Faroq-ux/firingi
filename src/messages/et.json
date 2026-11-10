@@ -768,7 +768,10 @@
     "Spending Report": "Kuluaruanne",
     "Routes": "Marsruudid",
     "Help & Support": "Abi ja tugi",
-    "My Offers": "Minu pakkumised"
+    "My Offers": "Minu pakkumised",
+    "AI Assistant": "Tehisintellekti assistent",
+    "Buy Again": "Osta uuesti",
+    "Demand & Stock": "Nõudlus ja ladu"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Teie taotlus „{summary}“ on {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} on otsa saamas",
+      "body": "Praeguse tempoga jätkub teie toote {product} laovaru umbes {days} päeva ({available} alles). Täiendage, et tellimused jätkuksid."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ allahindlust tellimuselt",
       "FREE_DELIVERY": "Tasuta tarne (tarnite tasuta)",
       "BUY_X_GET_Y": "Osta X, saad Y tasuta"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Tehisintellekti assistent",
+      "description": "Küsige oma äri kohta oma sõnadega. FIRINGI tehisintellekt (Claude) vaatab ainult teie ettevõtte andmeid ega muuda kunagi midagi.",
+      "newChat": "Uus vestlus",
+      "history": "Vestlused",
+      "noHistory": "Vestlusi veel pole.",
+      "placeholderBuyer": "Küsige oma tellimuste, kulutuste, toodete kohta…",
+      "placeholderVendor": "Küsige oma müügi, lao, klientide kohta…",
+      "send": "Küsi",
+      "thinking": "Vaatan teie andmeid…",
+      "lookedAt": "Vaadatud",
+      "you": "Teie",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "Assistent loeb teie andmeid ja soovitab — ta ei muuda kunagi midagi.",
+      "delete": "Kustuta vestlus",
+      "tryAsking": "Proovige küsida",
+      "offTitle": "Tehisintellekti assistent pole veel saadaval",
+      "offText": "FIRINGI pole teie kontole assistenti veel sisse lülitanud. Teised tehisintellekti soovitused töötavad ikka.",
+      "buyerEx1": "Kui palju ma viimase 30 päevaga kulutasin?",
+      "buyerEx2": "Millal ma tavaliselt uuesti tellin ja mida?",
+      "buyerEx3": "Milliseid tooteid ma kõige rohkem ostan?",
+      "buyerEx4": "Leia oliiviõli minu tarnijatelt",
+      "vendorEx1": "Kuidas läks mu müük viimase 30 päevaga?",
+      "vendorEx2": "Millised tooted saavad varsti otsa?",
+      "vendorEx3": "Millised kliendid hilinevad oma tavapärase tellimusega?",
+      "vendorEx4": "Millised avatud tellimused võivad hilineda?"
+    },
+    "tools": {
+      "sales_summary": "Kokkuvõte",
+      "breakdown": "Jaotus",
+      "demand_forecast": "Nõudluse prognoos",
+      "stock_outlook": "Ladu",
+      "reorder_outlook": "Tellimisrütm",
+      "delivery_risk": "Tarneoht",
+      "supplier_scorecards": "Hinnang",
+      "find_orders": "Tellimused",
+      "search_catalogue": "Kataloog",
+      "open_suggestions": "Soovitused"
+    },
+    "buyAgain": {
+      "title": "Osta uuesti",
+      "description": "Teie tavapärased tellimused, õpitud viimase 6 kuu ostudest. Üks puudutus paneb tavapärased kogused ostukorvi — kontrollite need üle ja esitate tellimuse.",
+      "timeToReorder": "Aeg uuesti tellida",
+      "dueOn": "Tavaliselt tellite uuesti umbes {date}",
+      "lateBy": "{days} päeva tavapärasest hiljem",
+      "dueToday": "Nüüd käes",
+      "upcoming": "Järgmine {days} päeva pärast",
+      "every": "Iga {days} päeva järel",
+      "lastOrder": "Viimane tellimus {date}",
+      "usual": "Tavaline tellimus umbes {amount}",
+      "button": "Lisa ostukorvi",
+      "added": "{n} toodet lisati ostukorvi",
+      "goToCart": "Ava ostukorv",
+      "notAvailable": "enam saadaval ei ole",
+      "empty": "Kui olete tarnijalt paar korda tellinud, ilmuvad teie tavapärased tellimused siia.",
+      "notNow": "Mitte praegu",
+      "dashboardTitle": "Aeg uuesti tellida",
+      "seeAll": "Osta uuesti"
+    },
+    "demand": {
+      "title": "Nõudlus ja ladu",
+      "description": "FIRINGI tehisintellekt prognoosib, kui palju iga toodet teie kliendid järgmise 4 nädala jooksul tellivad ja kui kaua teie laovaru jätkub. See ainult soovitab.",
+      "forecastTitle": "Nõudlus, järgmised 4 nädalat",
+      "product": "Toode",
+      "chart": "12 nädalat → 4 nädalat",
+      "last4": "Viimased 4 nädalat",
+      "next4": "Järgmised 4 nädalat",
+      "trend": "Suund",
+      "stockTitle": "Lõppev laovaru",
+      "available": "Saadaval",
+      "perDay": "Müük päevas",
+      "daysLeft": "Päevi jäänud",
+      "runsOut": "Lõpeb",
+      "statusCol": "Olek",
+      "riskTitle": "Tellimused, mis võivad hilineda",
+      "order": "Tellimus",
+      "customer": "Klient",
+      "why": "Miks",
+      "dueTitle": "Kliendid, kes peaksid uuesti tellima",
+      "expected": "Oodatud",
+      "usualBasket": "Tavaline tellimus",
+      "noForecast": "Viimase 12 nädala jooksul pole veel tellimusi, millest õppida.",
+      "noStockRisk": "Miski ei ole otsa saamas.",
+      "noRisk": "Ükski avatud tellimus ei paista ohus olevat.",
+      "noDue": "Ükski klient ei pea praegu uuesti tellima.",
+      "suggestions": "Soovitused",
+      "dismiss": "Loobu",
+      "done": "Tehtud",
+      "dashboardTitle": "Lõppev laovaru",
+      "dashboardNone": "Teie laovaru katab järgmised kaks nädalat.",
+      "seeAll": "Nõudlus ja ladu"
+    },
+    "status": {
+      "OUT": "Otsas",
+      "CRITICAL": "Kriitiline",
+      "LOW": "Madal",
+      "OK": "OK",
+      "NO_SALES": "Müüki pole"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Pole kinnitatud {n} tunni järel",
+      "DATE_PASSED": "Soovitud tarnekuupäev on möödas",
+      "DUE_SOON": "Tarne 24 tunni jooksul ja veel välja saatmata",
+      "LATE_ETA": "Juhi eeldatav saabumine on pärast soovitud päeva",
+      "SHORT_STOCK": "{n} toodet, mida on laos vähem kui tellitud",
+      "SUPPLIER_DECLINES": "Olete 60 päevaga keeldunud või jätnud vastamata {n} tellimusele"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} saab otsa {days} päeva pärast",
+      "OUT": "{product} on otsas",
+      "LOW_COVER": "{product}: laovaru {days} päevaks",
+      "DEMAND_SURGE": "Nõudlus toote {product} järele kasvab ({pct})",
+      "DELIVERY_RISK": "Tellimus {number} kliendile {customer} võib hilineda",
+      "REORDER_DUE": "Aeg tellida uuesti tarnijalt {supplier}"
     }
   }
 }

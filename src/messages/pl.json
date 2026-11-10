@@ -768,7 +768,10 @@
     "Spending Report": "Raport wydatków",
     "Routes": "Trasy",
     "Help & Support": "Pomoc i wsparcie",
-    "My Offers": "Moje oferty"
+    "My Offers": "Moje oferty",
+    "AI Assistant": "Asystent AI",
+    "Buy Again": "Kup ponownie",
+    "Demand & Stock": "Popyt i magazyn"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Twoja prośba „{summary}” została {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} się kończy",
+      "body": "Przy obecnym tempie zapas {product} wystarczy na około {days} dni (pozostało {available}). Uzupełnij go, aby zamówienia dalej napływały."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ rabatu na zamówienie",
       "FREE_DELIVERY": "Darmowa dostawa (dostarczasz za darmo)",
       "BUY_X_GET_Y": "Kup X, Y gratis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Asystent AI",
+      "description": "Pytaj o swój biznes własnymi słowami. AI FIRINGI (Claude) widzi tylko dane Twojej firmy i nigdy niczego nie zmienia.",
+      "newChat": "Nowa rozmowa",
+      "history": "Rozmowy",
+      "noHistory": "Brak rozmów.",
+      "placeholderBuyer": "Zapytaj o zamówienia, wydatki, produkty…",
+      "placeholderVendor": "Zapytaj o sprzedaż, stany magazynowe, klientów…",
+      "send": "Zapytaj",
+      "thinking": "Analizuję Twoje dane…",
+      "lookedAt": "Sprawdzono",
+      "you": "Ty",
+      "assistant": "AI FIRINGI",
+      "suggestOnly": "Asystent czyta Twoje dane i podpowiada — nigdy niczego nie zmienia.",
+      "delete": "Usuń rozmowę",
+      "tryAsking": "Zapytaj na przykład",
+      "offTitle": "Asystent AI nie jest jeszcze dostępny",
+      "offText": "FIRINGI nie włączyło jeszcze asystenta dla Twojego konta. Pozostałe podpowiedzi AI nadal działają.",
+      "buyerEx1": "Ile wydałem w ostatnich 30 dniach?",
+      "buyerEx2": "Kiedy zwykle zamawiam ponownie i co?",
+      "buyerEx3": "Które produkty kupuję najczęściej?",
+      "buyerEx4": "Znajdź oliwę u moich dostawców",
+      "vendorEx1": "Jak szła moja sprzedaż w ostatnich 30 dniach?",
+      "vendorEx2": "Których produktów wkrótce zabraknie?",
+      "vendorEx3": "Którzy klienci spóźniają się ze zwykłym zamówieniem?",
+      "vendorEx4": "Które otwarte zamówienia mogą dotrzeć z opóźnieniem?"
+    },
+    "tools": {
+      "sales_summary": "Podsumowanie",
+      "breakdown": "Zestawienie",
+      "demand_forecast": "Prognoza popytu",
+      "stock_outlook": "Magazyn",
+      "reorder_outlook": "Rytm zamówień",
+      "delivery_risk": "Ryzyko dostawy",
+      "supplier_scorecards": "Ocena",
+      "find_orders": "Zamówienia",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Podpowiedzi"
+    },
+    "buyAgain": {
+      "title": "Kup ponownie",
+      "description": "Twoje zwykłe zamówienia, wyuczone z tego, co kupowałeś w ostatnich 6 miesiącach. Jedno dotknięcie dodaje zwykłe ilości do koszyka — sprawdzasz je i składasz zamówienie.",
+      "timeToReorder": "Czas zamówić ponownie",
+      "dueOn": "Zwykle zamawiasz ponownie około {date}",
+      "lateBy": "{days} dni później niż zwykle",
+      "dueToday": "Pora teraz",
+      "upcoming": "Następne za {days} dni",
+      "every": "Co {days} dni",
+      "lastOrder": "Ostatnie zamówienie {date}",
+      "usual": "Zwykłe zamówienie około {amount}",
+      "button": "Dodaj do koszyka",
+      "added": "Dodano {n} produktów do koszyka",
+      "goToCart": "Przejdź do koszyka",
+      "notAvailable": "już niedostępny",
+      "empty": "Gdy kilka razy zamówisz u dostawcy, tutaj pojawią się Twoje zwykłe zamówienia.",
+      "notNow": "Nie teraz",
+      "dashboardTitle": "Czas zamówić ponownie",
+      "seeAll": "Kup ponownie"
+    },
+    "demand": {
+      "title": "Popyt i magazyn",
+      "description": "AI FIRINGI prognozuje, ile każdego produktu zamówią Twoi klienci w ciągu najbliższych 4 tygodni i na jak długo starczy Twojego zapasu. Tylko podpowiada.",
+      "forecastTitle": "Popyt, najbliższe 4 tygodnie",
+      "product": "Produkt",
+      "chart": "12 tygodni → 4 tygodnie",
+      "last4": "Ostatnie 4 tygodnie",
+      "next4": "Najbliższe 4 tygodnie",
+      "trend": "Trend",
+      "stockTitle": "Kończący się zapas",
+      "available": "Dostępne",
+      "perDay": "Sprzedaż dziennie",
+      "daysLeft": "Pozostało dni",
+      "runsOut": "Skończy się",
+      "statusCol": "Status",
+      "riskTitle": "Zamówienia, które mogą się opóźnić",
+      "order": "Zamówienie",
+      "customer": "Klient",
+      "why": "Dlaczego",
+      "dueTitle": "Klienci, którzy powinni zamówić ponownie",
+      "expected": "Oczekiwane",
+      "usualBasket": "Zwykłe zamówienie",
+      "noForecast": "Brak jeszcze zamówień z ostatnich 12 tygodni, z których można się uczyć.",
+      "noStockRisk": "Nic się nie kończy.",
+      "noRisk": "Żadne otwarte zamówienie nie wygląda na zagrożone.",
+      "noDue": "Żaden klient nie musi teraz zamawiać.",
+      "suggestions": "Podpowiedzi",
+      "dismiss": "Odrzuć",
+      "done": "Gotowe",
+      "dashboardTitle": "Kończący się zapas",
+      "dashboardNone": "Twój zapas wystarczy na najbliższe dwa tygodnie.",
+      "seeAll": "Popyt i magazyn"
+    },
+    "status": {
+      "OUT": "Brak w magazynie",
+      "CRITICAL": "Krytyczny",
+      "LOW": "Niski",
+      "OK": "OK",
+      "NO_SALES": "Brak sprzedaży"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Niepotwierdzone po {n} godz.",
+      "DATE_PASSED": "Żądana data dostawy minęła",
+      "DUE_SOON": "Dostawa w ciągu 24 godz. i jeszcze niewysłane",
+      "LATE_ETA": "Przewidywany przyjazd kierowcy jest po żądanym dniu",
+      "SHORT_STOCK": "{n} produkty z mniejszym zapasem niż zamówiono",
+      "SUPPLIER_DECLINES": "Odrzuciłeś lub przegapiłeś {n} zamówień w ciągu 60 dni"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} skończy się za {days} dni",
+      "OUT": "{product} jest niedostępny",
+      "LOW_COVER": "{product}: zapas na {days} dni",
+      "DEMAND_SURGE": "Popyt na {product} rośnie ({pct})",
+      "DELIVERY_RISK": "Zamówienie {number} dla {customer} może się opóźnić",
+      "REORDER_DUE": "Czas zamówić ponownie u {supplier}"
     }
   }
 }

@@ -41,8 +41,8 @@ const shot = async (page, name) => SHOTS && page.screenshot({ path: `${SHOTS}/${
   check("super admin sees all 20 sidebar sections", sections === 20, `${sections}`);
   await shot(page, "01-admin-dashboard");
   await page.goto(`${BASE}/admin/ai/demand-forecasting`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
-  check("placeholder page renders Coming soon (PT: Brevemente)", /Coming soon|Brevemente/.test(await page.textContent("main")));
-  await shot(page, "02-coming-soon");
+  check("AI Centre page renders (no placeholders left)", (await page.getByTestId("demand-table").count()) === 1 && !/Coming soon/.test(await page.textContent("main")));
+  await shot(page, "02-ai-demand");
   await page.goto(`${BASE}/admin/users/all`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
   check("admin users page lists staff", (await page.textContent("main")).includes("rm.lisboa@firingi.test"));
   await shot(page, "03-admin-users");

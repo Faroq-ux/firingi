@@ -1,0 +1,94 @@
+// ───────────────────────── AI Centre (Phase 17) ─────────────────────────
+
+enum AiRecStatus {
+  OPEN
+  ACCEPTED
+  DISMISSED
+  EXPIRED // the situation went away on the next refresh
+}
+
+enum AiAudience {
+  STAFF // FIRINGI back office
+  BUYER // a customer / wholesaler buying
+  VENDOR // a supplier selling
+}
+
+/// A suggestion computed from FIRINGI's data. AI only suggests: a person accepts (which may
+/// create a task / send a notice) or dismisses it. One open row per situation (dedupeKey).
+model AiRecommendation {
+  id          String      @id @default(cuid())
+  /// REORDER_DUE, STOCK_OUT, LOW_COVER, CHEAPER_SUPPLIER, MARGIN_GAP, DELIVERY_RISK, DEMAND_SURGE
+  kind        String
+  audience    AiAudience
+  /// Whose suggestion it is (buyer / supplier company); null = FIRINGI staff.
+  companyId   String?
+  subjectType String?
+  subjectId   String?
+  dedupeKey   String      @unique
+  title       String
+  /// Facts behind it (numbers, ids) — shown and used when accepted.
+  detail      Json
+  score       Int         @default(0) // 0–100, higher = more important
+  status      AiRecStatus @default(OPEN)
+  decidedById String?
+  decidedAt   DateTime?
+  result      Json?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([audience, status, score])
+  @@index([companyId, status])
+  @@index([kind, status])
+}
+
+/// Everything the AI did: insight refreshes, assistant answers (with token use), accepted / dismissed suggestions.
+model AiActivity {
+  id          String   @id @default(cuid())
+  kind        String // REFRESH, ASSISTANT, ACCEPT, DISMISS, TOOL
+  actorUserId String?
+  companyId   String?
+  summary     String
+  detail      Json?
+  model       String?
+  tokensIn    Int      @default(0)
+  tokensOut   Int      @default(0)
+  at          DateTime @default(now())
+
+  @@index([at])
+  @@index([kind, at])
+  @@index([companyId, at])
+}
+
+/// A chat with the AI Business Assistant. Private to the user, in the company they were in.
+model AiConversation {
+  id        String      @id @default(cuid())
+  userId    String
+  companyId String
+  /// Which portal it was asked from (a wholesaler chats as a buyer and as a supplier).
+  side      AiAudience
+  title     String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  messages  AiMessage[]
+
+  @@index([userId, companyId, side, updatedAt])
+}
+
+model AiMessage {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String // user | assistant
+  /// Text shown in the chat.
+  text           String
+  /// Tools the assistant used for this answer: [{ name, input, ok }]
+  tools          Json?
+  model          String?
+  tokensIn       Int      @default(0)
+  tokensOut      Int      @default(0)
+  stopReason     String?
+  at             DateTime @default(now())
+
+  conversation AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, at])
+}

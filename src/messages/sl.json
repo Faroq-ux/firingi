@@ -768,7 +768,10 @@
     "Spending Report": "Poročilo o porabi",
     "Routes": "Poti",
     "Help & Support": "Pomoč in podpora",
-    "My Offers": "Moje ponudbe"
+    "My Offers": "Moje ponudbe",
+    "AI Assistant": "Pomočnik UI",
+    "Buy Again": "Kupi znova",
+    "Demand & Stock": "Povpraševanje in zaloga"
   },
   "delivery": {
     "title": "Dostava",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Vaša zahteva »{summary}« je bila {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} pohaja",
+      "body": "Pri trenutnem tempu vam zaloga {product} zadošča še približno {days} dni (ostalo {available}). Dopolnite jo, da bodo naročila še prihajala."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ popusta na naročilo",
       "FREE_DELIVERY": "Brezplačna dostava (dostavite brezplačno)",
       "BUY_X_GET_Y": "Kupite X, Y brezplačno"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Pomočnik UI",
+      "description": "Vprašajte o svojem poslovanju s svojimi besedami. UI družbe FIRINGI (Claude) vidi samo podatke vašega podjetja in nikoli ničesar ne spremeni.",
+      "newChat": "Nov pogovor",
+      "history": "Pogovori",
+      "noHistory": "Še ni pogovorov.",
+      "placeholderBuyer": "Vprašajte o naročilih, porabi, izdelkih…",
+      "placeholderVendor": "Vprašajte o prodaji, zalogi, strankah…",
+      "send": "Vprašaj",
+      "thinking": "Pregledujem vaše podatke…",
+      "lookedAt": "Pregledano",
+      "you": "Vi",
+      "assistant": "FIRINGI UI",
+      "suggestOnly": "Pomočnik bere vaše podatke in predlaga — nikoli ničesar ne spremeni.",
+      "delete": "Izbriši pogovor",
+      "tryAsking": "Poskusite vprašati",
+      "offTitle": "Pomočnik UI še ni na voljo",
+      "offText": "FIRINGI pomočnika za vaš račun še ni vklopil. Drugi predlogi UI kljub temu delujejo.",
+      "buyerEx1": "Koliko sem porabil v zadnjih 30 dneh?",
+      "buyerEx2": "Kdaj običajno ponovno naročim in kaj?",
+      "buyerEx3": "Katere izdelke kupujem največ?",
+      "buyerEx4": "Poišči oljčno olje pri mojih dobaviteljih",
+      "vendorEx1": "Kako je šla moja prodaja v zadnjih 30 dneh?",
+      "vendorEx2": "Kateri izdelki bodo kmalu pošli?",
+      "vendorEx3": "Katere stranke zamujajo z običajnim naročilom?",
+      "vendorEx4": "Katera odprta naročila bi lahko prispela pozno?"
+    },
+    "tools": {
+      "sales_summary": "Povzetek",
+      "breakdown": "Razčlenitev",
+      "demand_forecast": "Napoved povpraševanja",
+      "stock_outlook": "Zaloga",
+      "reorder_outlook": "Ritem naročanja",
+      "delivery_risk": "Tveganje dostave",
+      "supplier_scorecards": "Ocena",
+      "find_orders": "Naročila",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Predlogi"
+    },
+    "buyAgain": {
+      "title": "Kupi znova",
+      "description": "Vaša običajna naročila, naučena iz tega, kar ste kupili v zadnjih 6 mesecih. En dotik doda običajne količine v košarico — preverite jih in oddate naročilo.",
+      "timeToReorder": "Čas za ponovno naročilo",
+      "dueOn": "Običajno znova naročite okoli {date}",
+      "lateBy": "{days} dni pozneje kot običajno",
+      "dueToday": "Na vrsti zdaj",
+      "upcoming": "Naslednje čez {days} dni",
+      "every": "Vsakih {days} dni",
+      "lastOrder": "Zadnje naročilo {date}",
+      "usual": "Običajno naročilo približno {amount}",
+      "button": "V košarico",
+      "added": "V košarico dodanih {n} izdelkov",
+      "goToCart": "Na košarico",
+      "notAvailable": "ni več na voljo",
+      "empty": "Ko pri dobavitelju nekajkrat naročite, se tu prikažejo vaša običajna naročila.",
+      "notNow": "Ne zdaj",
+      "dashboardTitle": "Čas za ponovno naročilo",
+      "seeAll": "Kupi znova"
+    },
+    "demand": {
+      "title": "Povpraševanje in zaloga",
+      "description": "UI družbe FIRINGI napove, koliko vsakega izdelka bodo vaše stranke naročile v naslednjih 4 tednih in kako dolgo bo zdržala vaša zaloga. Samo predlaga.",
+      "forecastTitle": "Povpraševanje, naslednji 4 tedni",
+      "product": "Izdelek",
+      "chart": "12 tednov → 4 tedni",
+      "last4": "Zadnji 4 tedni",
+      "next4": "Naslednji 4 tedni",
+      "trend": "Trend",
+      "stockTitle": "Zaloga pohaja",
+      "available": "Na voljo",
+      "perDay": "Prodaja na dan",
+      "daysLeft": "Preostali dnevi",
+      "runsOut": "Poide",
+      "statusCol": "Stanje",
+      "riskTitle": "Naročila, ki lahko zamujajo",
+      "order": "Naročilo",
+      "customer": "Stranka",
+      "why": "Zakaj",
+      "dueTitle": "Stranke, ki bi morale znova naročiti",
+      "expected": "Pričakovano",
+      "usualBasket": "Običajno naročilo",
+      "noForecast": "Iz zadnjih 12 tednov še ni naročil, iz katerih bi se lahko učili.",
+      "noStockRisk": "Nič ne bo kmalu pošlo.",
+      "noRisk": "Nobeno odprto naročilo ni videti ogroženo.",
+      "noDue": "Nobeni stranki zdaj ni treba naročiti.",
+      "suggestions": "Predlogi",
+      "dismiss": "Opusti",
+      "done": "Opravljeno",
+      "dashboardTitle": "Zaloga pohaja",
+      "dashboardNone": "Vaša zaloga zadošča za naslednja dva tedna.",
+      "seeAll": "Povpraševanje in zaloga"
+    },
+    "status": {
+      "OUT": "Ni na zalogi",
+      "CRITICAL": "Kritično",
+      "LOW": "Nizko",
+      "OK": "OK",
+      "NO_SALES": "Ni prodaje"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Ni potrjeno po {n} h",
+      "DATE_PASSED": "Zahtevani datum dostave je minil",
+      "DUE_SOON": "Dostava v 24 h in še ni odposlano",
+      "LATE_ETA": "Predviden prihod voznika je po zahtevanem dnevu",
+      "SHORT_STOCK": "{n} izdelki z manjšo zalogo, kot je naročeno",
+      "SUPPLIER_DECLINES": "V 60 dneh ste zavrnili ali zamudili {n} naročil"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} poide čez {days} dni",
+      "OUT": "{product} ni na zalogi",
+      "LOW_COVER": "{product}: zaloga za {days} dni",
+      "DEMAND_SURGE": "Povpraševanje po {product} narašča ({pct})",
+      "DELIVERY_RISK": "Naročilo {number} za {customer} lahko zamuja",
+      "REORDER_DUE": "Čas za ponovno naročilo pri {supplier}"
     }
   }
 }

@@ -62,6 +62,8 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/delivery-fees.mjs http://localhost:3000 [screenshotDir]` | Browser test of FIRINGI free delivery (on / off), a distributor's units minimum and flat rate in the wholesaler's cart* |
 | `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
+| `node tests/e2e/ai.mjs http://localhost:3000 [screenshotDir]` | Browser test of the AI Centre: insights, suggestions → CRM task, activity log, customer Buy Again, supplier Demand & Stock (run `pnpm db:demo-history` first)* |
+| `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -520,6 +522,44 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   their ordinary roles at once and powerful ones after approval. Thresholds: settings managers.
 - Demo accounts are seeded as long-established (approved a year ago). The test database starts
   with risk checks off; the risk tests switch them on.
+
+## AI Centre (Phase 17)
+
+AI at FIRINGI **only suggests**: nothing it computes or says changes an order, a price, stock
+or a setting by itself. A person accepts or dismisses each suggestion.
+
+- **Insights from FIRINGI's own data** (`src/server/ai/insights.ts`, maths in `forecast.ts`):
+  demand per product for the next 4 weeks (trend-following smoothing over 12 weeks of orders),
+  days of stock left at the current selling rate, each customer's reorder rhythm per supplier
+  (median gap, expected date, how late, usual basket), the same product cheaper or more reliable
+  elsewhere, offers below the margin rules sized in € a year, and open orders likely to be late
+  (not confirmed, requested day close or passed, too little stock, late ETA, supplier history).
+  Every insight is scoped to who asks: staff need the AI right **and** the right to that data;
+  suppliers see only their own products and customers; buyers only their own orders — never
+  commission or payouts (and a buyer ordering from FIRINGI never sees which supplier it picked).
+- **Suggestions feed** (*AI Centre › Automated Recommendations*, `src/server/ai/feed.ts`): recomputed
+  hourly (`/api/cron/ai` with `Authorization: Bearer $CRON_SECRET`, or when a page finds it stale),
+  one suggestion per situation. Accepting a late reorder creates a CRM call task for the account
+  owner; accepting a stock warning notifies the supplier (in its language). Suppliers get their own
+  stock / demand / late-order suggestions; customers get "time to reorder".
+- **AI Business Assistant** — Claude through the Anthropic API (`@anthropic-ai/sdk`, model
+  `claude-opus-5-5` by default; Sonnet / Haiku selectable in the AI settings). It answers with
+  read-only tools that call FIRINGI's own services **with the asking user's rights** (sales
+  summary, breakdowns, forecasts, stock, reorders, scorecards, orders, catalogue, suggestions,
+  P&L for finance). Staff, suppliers and customers each get their own tool set; it replies in the
+  user's language. Server-side fallback is on (`fallbacks: "default"`): if the model is busy the
+  API answers with an eligible fallback model, and the model that answered is logged. Prompt
+  caching is on; questions per person per hour are limited (AI settings). Conversations are private
+  to the user. **To switch it on, set `ANTHROPIC_API_KEY` on the server and restart**; without it the
+  pages explain this and everything else in the AI Centre still works.
+- **Pages**: *Dashboard › AI Insights* and the 11 *AI Centre* pages (staff, English); *Orders › Buy
+  Again* and the dashboard's "time to reorder" card (customers: one tap puts the usual quantities in
+  the cart to check and place); *Reports › Demand & Stock* and the dashboard's stock card
+  (suppliers); *AI Assistant* in both portals — all in the 25 languages.
+- **AI Activity Log**: every assistant answer (who, which tools, tokens, model), refresh, accept
+  and dismiss. Operations, Finance and Sales roles now include the AI right.
+- **Demo history**: `pnpm db:demo-history` adds 16 weeks of delivered demo orders (marked
+  "Demo history", not invoiced) so forecasts have something to learn from. Never on the test DB.
 
 ## Look & feel: colour and motion
 

@@ -10,6 +10,7 @@ const vfl = section(`${V}/fleet`, "vendor.fleet.view");
 const vc = section(`${V}/company`, "company.profile.manage");
 const vr = section(`${V}/reports`, "vendor.reports.view");
 const vs = section(`${V}`, "company.support.use");
+const vai = section(`${V}`, ["vendor.reports.view", "vendor.dashboard.view"]);
 
 export const VENDOR_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [vd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -51,7 +52,8 @@ export const VENDOR_NAV: NavSection[] = [
       vfl("delivery-rules", "Delivery Minimum", "Mínimo de Entrega", "P4", { live: true, perm: "vendor.service_areas.manage", es: "Mínimo de entrega" }),
     ],
   },
-  { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" })] },
+  { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" })] },
+  { key: "ai", icon: "Bot", label: { en: "AI Assistant", pt: "Assistente IA", es: "Asistente IA" }, items: [vai("assistant", "AI Assistant", "Assistente IA", "P17", { live: true, es: "Asistente IA" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [vs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
@@ -73,6 +75,7 @@ const bf = section(`${B}/finance`, "buyer.invoices.view");
 const bco = section(`${B}/company`, "company.profile.manage");
 const br = section(`${B}/reports`, "buyer.reports.view");
 const bs = section(`${B}`, "company.support.use");
+const bai = section(`${B}`, ["buyer.orders.view", "buyer.orders.place"]);
 
 export const BUY_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [bd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -89,6 +92,7 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bo("cart", "Cart", "Carrinho", "P4", { live: true, perm: "buyer.orders.place", es: "Carrito" }),
       bo("history", "My Orders", "As Minhas Encomendas", "P4", { live: true, es: "Mis pedidos" }),
+      bo("buy-again", "Buy Again", "Comprar de Novo", "P17", { live: true, perm: "buyer.orders.place", es: "Volver a comprar" }),
       bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
     ],
   },
@@ -100,6 +104,7 @@ export const BUY_NAV: NavSection[] = [
     ],
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
+  { key: "ai", icon: "Bot", label: { en: "AI Assistant", pt: "Assistente IA", es: "Asistente IA" }, items: [bai("assistant", "AI Assistant", "Assistente IA", "P17", { live: true, es: "Asistente IA" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [bs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },

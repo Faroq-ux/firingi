@@ -1098,6 +1098,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "O seu pedido “{summary}” foi {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} está a acabar",
+      "body": "Ao ritmo atual, o seu stock de {product} dura cerca de {days} dias ({available} restantes). Reponha para continuar a receber encomendas."
     }
   },
   "notifications": {
@@ -1343,7 +1347,10 @@
   "navLabels": {
     "Routes": "Rotas",
     "Help & Support": "Ajuda e Suporte",
-    "My Offers": "As Minhas Ofertas"
+    "My Offers": "As Minhas Ofertas",
+    "AI Assistant": "Assistente IA",
+    "Buy Again": "Comprar de Novo",
+    "Demand & Stock": "Procura e Stock"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -1471,6 +1478,123 @@
       "ORDER_AMOUNT": "€ de desconto na encomenda",
       "FREE_DELIVERY": "Entrega grátis (entrega sem custo)",
       "BUY_X_GET_Y": "Compre X, leve Y grátis"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Assistente IA",
+      "description": "Pergunte sobre o seu negócio por palavras suas. A IA da FIRINGI (Claude) só consulta os dados da sua empresa e nunca altera nada.",
+      "newChat": "Nova conversa",
+      "history": "Conversas",
+      "noHistory": "Ainda sem conversas.",
+      "placeholderBuyer": "Pergunte sobre as suas encomendas, compras, produtos…",
+      "placeholderVendor": "Pergunte sobre as suas vendas, stock, clientes…",
+      "send": "Perguntar",
+      "thinking": "A analisar os seus dados…",
+      "lookedAt": "Consultou",
+      "you": "Você",
+      "assistant": "IA FIRINGI",
+      "suggestOnly": "O assistente lê os seus dados e sugere — nunca altera nada.",
+      "delete": "Apagar conversa",
+      "tryAsking": "Experimente perguntar",
+      "offTitle": "O assistente IA ainda não está disponível",
+      "offText": "A FIRINGI ainda não ativou o assistente para a sua conta. As outras sugestões de IA continuam a funcionar.",
+      "buyerEx1": "Quanto gastei nos últimos 30 dias?",
+      "buyerEx2": "Quando costumo voltar a encomendar, e o quê?",
+      "buyerEx3": "Que produtos compro mais?",
+      "buyerEx4": "Encontrar azeite nos meus fornecedores",
+      "vendorEx1": "Como correram as minhas vendas nos últimos 30 dias?",
+      "vendorEx2": "Que produtos vão esgotar em breve?",
+      "vendorEx3": "Que clientes estão atrasados na encomenda habitual?",
+      "vendorEx4": "Que encomendas em aberto podem chegar atrasadas?"
+    },
+    "tools": {
+      "sales_summary": "Resumo",
+      "breakdown": "Detalhe",
+      "demand_forecast": "Previsão de procura",
+      "stock_outlook": "Stock",
+      "reorder_outlook": "Ritmo de encomendas",
+      "delivery_risk": "Risco de entrega",
+      "supplier_scorecards": "Avaliação",
+      "find_orders": "Encomendas",
+      "search_catalogue": "Catálogo",
+      "open_suggestions": "Sugestões"
+    },
+    "buyAgain": {
+      "title": "Comprar de Novo",
+      "description": "As suas encomendas habituais, aprendidas com o que comprou nos últimos 6 meses. Um toque coloca as quantidades habituais no carrinho — confirma-as e faz a encomenda.",
+      "timeToReorder": "Hora de voltar a encomendar",
+      "dueOn": "Costuma encomendar de novo por volta de {date}",
+      "lateBy": "{days} dias mais tarde do que o habitual",
+      "dueToday": "Para já",
+      "upcoming": "Próxima daqui a {days} dias",
+      "every": "A cada {days} dias",
+      "lastOrder": "Última encomenda {date}",
+      "usual": "Encomenda habitual cerca de {amount}",
+      "button": "Adicionar ao carrinho",
+      "added": "{n} produtos adicionados ao carrinho",
+      "goToCart": "Ir para o carrinho",
+      "notAvailable": "já não disponível",
+      "empty": "Depois de encomendar algumas vezes a um fornecedor, as suas encomendas habituais aparecem aqui.",
+      "notNow": "Agora não",
+      "dashboardTitle": "Hora de voltar a encomendar",
+      "seeAll": "Comprar de novo"
+    },
+    "demand": {
+      "title": "Procura e Stock",
+      "description": "A IA da FIRINGI prevê quanto de cada produto os seus clientes vão encomendar nas próximas 4 semanas e quanto tempo dura o seu stock. Apenas sugere.",
+      "forecastTitle": "Procura, próximas 4 semanas",
+      "product": "Produto",
+      "chart": "12 semanas → 4 semanas",
+      "last4": "Últimas 4 semanas",
+      "next4": "Próximas 4 semanas",
+      "trend": "Tendência",
+      "stockTitle": "Stock a acabar",
+      "available": "Disponível",
+      "perDay": "Vende por dia",
+      "daysLeft": "Dias restantes",
+      "runsOut": "Esgota em",
+      "statusCol": "Estado",
+      "riskTitle": "Encomendas que podem atrasar",
+      "order": "Encomenda",
+      "customer": "Cliente",
+      "why": "Porquê",
+      "dueTitle": "Clientes que devem voltar a encomendar",
+      "expected": "Prevista",
+      "usualBasket": "Encomenda habitual",
+      "noForecast": "Ainda não há encomendas nas últimas 12 semanas para aprender.",
+      "noStockRisk": "Nada está prestes a esgotar.",
+      "noRisk": "Nenhuma encomenda em aberto parece em risco.",
+      "noDue": "Nenhum cliente deve voltar a encomendar agora.",
+      "suggestions": "Sugestões",
+      "dismiss": "Dispensar",
+      "done": "Feito",
+      "dashboardTitle": "Stock a acabar",
+      "dashboardNone": "O seu stock cobre as próximas duas semanas.",
+      "seeAll": "Procura e stock"
+    },
+    "status": {
+      "OUT": "Esgotado",
+      "CRITICAL": "Crítico",
+      "LOW": "Baixo",
+      "OK": "OK",
+      "NO_SALES": "Sem vendas"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Não confirmada após {n} h",
+      "DATE_PASSED": "A data de entrega pedida já passou",
+      "DUE_SOON": "Entrega nas próximas 24 h e ainda não expedida",
+      "LATE_ETA": "A hora prevista do motorista é depois do dia pedido",
+      "SHORT_STOCK": "{n} produtos com menos stock do que o encomendado",
+      "SUPPLIER_DECLINES": "Recusou ou não respondeu a {n} encomendas em 60 dias"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} esgota em {days} dias",
+      "OUT": "{product} está esgotado",
+      "LOW_COVER": "{product}: stock para {days} dias",
+      "DEMAND_SURGE": "A procura de {product} está a subir ({pct})",
+      "DELIVERY_RISK": "A encomenda {number} para {customer} pode atrasar",
+      "REORDER_DUE": "Hora de voltar a encomendar a {supplier}"
     }
   }
 }

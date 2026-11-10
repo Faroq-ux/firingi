@@ -768,7 +768,10 @@
     "Spending Report": "Přehled výdajů",
     "Routes": "Trasy",
     "Help & Support": "Nápověda a podpora",
-    "My Offers": "Moje nabídky"
+    "My Offers": "Moje nabídky",
+    "AI Assistant": "AI asistent",
+    "Buy Again": "Koupit znovu",
+    "Demand & Stock": "Poptávka a zásoby"
   },
   "delivery": {
     "title": "Doručení",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Vaše žádost „{summary}“ byla {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} dochází",
+      "body": "Při současném tempu vám zásoba {product} vydrží asi {days} dní (zbývá {available}). Doplňte ji, ať objednávky přicházejí dál."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ sleva na objednávku",
       "FREE_DELIVERY": "Doprava zdarma (doručíte zdarma)",
       "BUY_X_GET_Y": "Kupte X, Y zdarma"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI asistent",
+      "description": "Ptejte se na své podnikání vlastními slovy. AI od FIRINGI (Claude) vidí jen data vaší firmy a nikdy nic nemění.",
+      "newChat": "Nová konverzace",
+      "history": "Konverzace",
+      "noHistory": "Zatím žádné konverzace.",
+      "placeholderBuyer": "Zeptejte se na objednávky, útratu, produkty…",
+      "placeholderVendor": "Zeptejte se na prodej, zásoby, zákazníky…",
+      "send": "Zeptat se",
+      "thinking": "Procházím vaše data…",
+      "lookedAt": "Prohlédnuto",
+      "you": "Vy",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "Asistent čte vaše data a navrhuje — nikdy nic nemění.",
+      "delete": "Smazat konverzaci",
+      "tryAsking": "Zkuste se zeptat",
+      "offTitle": "AI asistent zatím není k dispozici",
+      "offText": "FIRINGI pro váš účet asistenta zatím nezapnulo. Ostatní návrhy AI fungují i tak.",
+      "buyerEx1": "Kolik jsem utratil za posledních 30 dní?",
+      "buyerEx2": "Kdy obvykle objednávám znovu a co?",
+      "buyerEx3": "Které produkty kupuji nejvíc?",
+      "buyerEx4": "Najdi olivový olej u mých dodavatelů",
+      "vendorEx1": "Jak šly mé prodeje za posledních 30 dní?",
+      "vendorEx2": "Které produkty brzy dojdou?",
+      "vendorEx3": "Kteří zákazníci se zpožďují se svou obvyklou objednávkou?",
+      "vendorEx4": "Které otevřené objednávky mohou dorazit pozdě?"
+    },
+    "tools": {
+      "sales_summary": "Souhrn",
+      "breakdown": "Rozpis",
+      "demand_forecast": "Prognóza poptávky",
+      "stock_outlook": "Zásoby",
+      "reorder_outlook": "Rytmus objednávek",
+      "delivery_risk": "Riziko doručení",
+      "supplier_scorecards": "Hodnocení",
+      "find_orders": "Objednávky",
+      "search_catalogue": "Katalog",
+      "open_suggestions": "Návrhy"
+    },
+    "buyAgain": {
+      "title": "Koupit znovu",
+      "description": "Vaše obvyklé objednávky, naučené z toho, co jste koupili za posledních 6 měsíců. Jedním klepnutím vložíte obvyklá množství do košíku — zkontrolujete je a objednáte.",
+      "timeToReorder": "Čas znovu objednat",
+      "dueOn": "Obvykle objednáváte znovu kolem {date}",
+      "lateBy": "O {days} dní později než obvykle",
+      "dueToday": "Na řadě teď",
+      "upcoming": "Další za {days} dní",
+      "every": "Každých {days} dní",
+      "lastOrder": "Poslední objednávka {date}",
+      "usual": "Obvyklá objednávka asi {amount}",
+      "button": "Do košíku",
+      "added": "Do košíku přidáno {n} produktů",
+      "goToCart": "Přejít do košíku",
+      "notAvailable": "již není k dispozici",
+      "empty": "Až u dodavatele několikrát objednáte, objeví se tu vaše obvyklé objednávky.",
+      "notNow": "Teď ne",
+      "dashboardTitle": "Čas znovu objednat",
+      "seeAll": "Koupit znovu"
+    },
+    "demand": {
+      "title": "Poptávka a zásoby",
+      "description": "AI od FIRINGI předpovídá, kolik každého produktu vaši zákazníci objednají v příštích 4 týdnech a jak dlouho vám vydrží zásoby. Jen navrhuje.",
+      "forecastTitle": "Poptávka, příští 4 týdny",
+      "product": "Produkt",
+      "chart": "12 týdnů → 4 týdny",
+      "last4": "Posledních 4 týdnů",
+      "next4": "Příští 4 týdny",
+      "trend": "Trend",
+      "stockTitle": "Docházející zásoby",
+      "available": "K dispozici",
+      "perDay": "Prodej za den",
+      "daysLeft": "Zbývá dní",
+      "runsOut": "Dojde",
+      "statusCol": "Stav",
+      "riskTitle": "Objednávky, které se mohou zpozdit",
+      "order": "Objednávka",
+      "customer": "Zákazník",
+      "why": "Proč",
+      "dueTitle": "Zákazníci, kteří by měli znovu objednat",
+      "expected": "Očekáváno",
+      "usualBasket": "Obvyklá objednávka",
+      "noForecast": "Zatím nejsou objednávky z posledních 12 týdnů, ze kterých se lze učit.",
+      "noStockRisk": "Nic nedochází.",
+      "noRisk": "Žádná otevřená objednávka nevypadá ohroženě.",
+      "noDue": "Žádný zákazník teď nemusí objednávat.",
+      "suggestions": "Návrhy",
+      "dismiss": "Zamítnout",
+      "done": "Hotovo",
+      "dashboardTitle": "Docházející zásoby",
+      "dashboardNone": "Vaše zásoby pokryjí příští dva týdny.",
+      "seeAll": "Poptávka a zásoby"
+    },
+    "status": {
+      "OUT": "Vyprodáno",
+      "CRITICAL": "Kritické",
+      "LOW": "Nízké",
+      "OK": "OK",
+      "NO_SALES": "Bez prodeje"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Nepotvrzeno po {n} h",
+      "DATE_PASSED": "Požadované datum doručení již uplynulo",
+      "DUE_SOON": "Doručení do 24 h a dosud neodesláno",
+      "LATE_ETA": "Předpokládaný příjezd řidiče je po požadovaném dni",
+      "SHORT_STOCK": "{n} produkty s menší zásobou, než bylo objednáno",
+      "SUPPLIER_DECLINES": "Za 60 dní jste odmítli nebo zmeškali {n} objednávek"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} dojde za {days} dní",
+      "OUT": "{product} je vyprodáno",
+      "LOW_COVER": "{product}: zásoba na {days} dní",
+      "DEMAND_SURGE": "Poptávka po {product} roste ({pct})",
+      "DELIVERY_RISK": "Objednávka {number} pro {customer} se může zpozdit",
+      "REORDER_DUE": "Čas znovu objednat u {supplier}"
     }
   }
 }

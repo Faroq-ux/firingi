@@ -768,7 +768,10 @@
     "Spending Report": "Kulutusraportti",
     "Routes": "Reitit",
     "Help & Support": "Ohjeet ja tuki",
-    "My Offers": "Omat tarjoukset"
+    "My Offers": "Omat tarjoukset",
+    "AI Assistant": "Tekoälyavustaja",
+    "Buy Again": "Osta uudelleen",
+    "Demand & Stock": "Kysyntä ja varasto"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Pyyntösi ”{summary}” on {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} on loppumassa",
+      "body": "Nykyisellä tahdilla {product}-varastosi riittää noin {days} päivää ({available} jäljellä). Täydennä, jotta tilauksia tulee edelleen."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ alennus tilauksesta",
       "FREE_DELIVERY": "Ilmainen toimitus (toimitat ilmaiseksi)",
       "BUY_X_GET_Y": "Osta X, saat Y ilmaiseksi"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "Tekoälyavustaja",
+      "description": "Kysy yrityksesi asioista omin sanoin. FIRINGIn tekoäly (Claude) katsoo vain yrityksesi tietoja eikä koskaan muuta mitään.",
+      "newChat": "Uusi keskustelu",
+      "history": "Keskustelut",
+      "noHistory": "Ei vielä keskusteluja.",
+      "placeholderBuyer": "Kysy tilauksistasi, ostoistasi, tuotteista…",
+      "placeholderVendor": "Kysy myynnistäsi, varastostasi, asiakkaistasi…",
+      "send": "Kysy",
+      "thinking": "Tarkastelen tietojasi…",
+      "lookedAt": "Tarkasteltu",
+      "you": "Sinä",
+      "assistant": "FIRINGI-tekoäly",
+      "suggestOnly": "Avustaja lukee tietojasi ja ehdottaa — se ei koskaan muuta mitään.",
+      "delete": "Poista keskustelu",
+      "tryAsking": "Kokeile kysyä",
+      "offTitle": "Tekoälyavustaja ei ole vielä käytettävissä",
+      "offText": "FIRINGI ei ole vielä ottanut avustajaa käyttöön tilillesi. Muut tekoälyn ehdotukset toimivat silti.",
+      "buyerEx1": "Paljonko käytin viimeisen 30 päivän aikana?",
+      "buyerEx2": "Milloin yleensä tilaan uudelleen, ja mitä?",
+      "buyerEx3": "Mitä tuotteita ostan eniten?",
+      "buyerEx4": "Etsi oliiviöljyä toimittajiltani",
+      "vendorEx1": "Miten myyntini sujui viimeisen 30 päivän aikana?",
+      "vendorEx2": "Mitkä tuotteet loppuvat pian?",
+      "vendorEx3": "Mitkä asiakkaat ovat myöhässä tavallisesta tilauksestaan?",
+      "vendorEx4": "Mitkä avoimet tilaukset voivat myöhästyä?"
+    },
+    "tools": {
+      "sales_summary": "Yhteenveto",
+      "breakdown": "Erittely",
+      "demand_forecast": "Kysyntäennuste",
+      "stock_outlook": "Varasto",
+      "reorder_outlook": "Tilausrytmi",
+      "delivery_risk": "Toimitusriski",
+      "supplier_scorecards": "Arvio",
+      "find_orders": "Tilaukset",
+      "search_catalogue": "Tuoteluettelo",
+      "open_suggestions": "Ehdotukset"
+    },
+    "buyAgain": {
+      "title": "Osta uudelleen",
+      "description": "Tavalliset tilauksesi, opittu siitä mitä olet ostanut viimeisten 6 kuukauden aikana. Yksi napautus lisää tavalliset määrät ostoskoriin — tarkistat ne ja teet tilauksen.",
+      "timeToReorder": "Aika tilata uudelleen",
+      "dueOn": "Tilaat yleensä uudelleen noin {date}",
+      "lateBy": "{days} päivää tavallista myöhemmin",
+      "dueToday": "Ajankohtainen nyt",
+      "upcoming": "Seuraava {days} päivän päästä",
+      "every": "{days} päivän välein",
+      "lastOrder": "Viimeisin tilaus {date}",
+      "usual": "Tavallinen tilaus noin {amount}",
+      "button": "Lisää ostoskoriin",
+      "added": "{n} tuotetta lisätty ostoskoriin",
+      "goToCart": "Siirry ostoskoriin",
+      "notAvailable": "ei enää saatavilla",
+      "empty": "Kun olet tilannut toimittajalta muutaman kerran, tavalliset tilauksesi näkyvät tässä.",
+      "notNow": "Ei nyt",
+      "dashboardTitle": "Aika tilata uudelleen",
+      "seeAll": "Osta uudelleen"
+    },
+    "demand": {
+      "title": "Kysyntä ja varasto",
+      "description": "FIRINGIn tekoäly ennustaa, kuinka paljon kutakin tuotetta asiakkaasi tilaavat seuraavien 4 viikon aikana ja kuinka kauan varastosi riittää. Se vain ehdottaa.",
+      "forecastTitle": "Kysyntä, seuraavat 4 viikkoa",
+      "product": "Tuote",
+      "chart": "12 viikkoa → 4 viikkoa",
+      "last4": "Viimeiset 4 viikkoa",
+      "next4": "Seuraavat 4 viikkoa",
+      "trend": "Suunta",
+      "stockTitle": "Loppumassa oleva varasto",
+      "available": "Saatavilla",
+      "perDay": "Myynti päivässä",
+      "daysLeft": "Päiviä jäljellä",
+      "runsOut": "Loppuu",
+      "statusCol": "Tila",
+      "riskTitle": "Tilaukset, jotka voivat myöhästyä",
+      "order": "Tilaus",
+      "customer": "Asiakas",
+      "why": "Miksi",
+      "dueTitle": "Asiakkaat, joiden pitäisi tilata uudelleen",
+      "expected": "Odotettu",
+      "usualBasket": "Tavallinen tilaus",
+      "noForecast": "Viimeisiltä 12 viikolta ei vielä ole tilauksia, joista oppia.",
+      "noStockRisk": "Mikään ei ole loppumassa.",
+      "noRisk": "Mikään avoin tilaus ei näytä olevan vaarassa.",
+      "noDue": "Kenenkään asiakkaan ei tarvitse tilata nyt.",
+      "suggestions": "Ehdotukset",
+      "dismiss": "Hylkää",
+      "done": "Valmis",
+      "dashboardTitle": "Loppumassa oleva varasto",
+      "dashboardNone": "Varastosi riittää seuraavat kaksi viikkoa.",
+      "seeAll": "Kysyntä ja varasto"
+    },
+    "status": {
+      "OUT": "Loppu varastosta",
+      "CRITICAL": "Kriittinen",
+      "LOW": "Matala",
+      "OK": "OK",
+      "NO_SALES": "Ei myyntiä"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Ei vahvistettu {n} tunnin jälkeen",
+      "DATE_PASSED": "Pyydetty toimituspäivä on mennyt",
+      "DUE_SOON": "Toimitus 24 tunnin sisällä, eikä sitä ole lähetetty",
+      "LATE_ETA": "Kuljettajan arvioitu saapuminen on pyydetyn päivän jälkeen",
+      "SHORT_STOCK": "{n} tuotetta, joita on varastossa vähemmän kuin tilattu",
+      "SUPPLIER_DECLINES": "Olet hylännyt tai ohittanut {n} tilausta 60 päivässä"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} loppuu {days} päivässä",
+      "OUT": "{product} on loppu",
+      "LOW_COVER": "{product}: varastoa {days} päiväksi",
+      "DEMAND_SURGE": "Kysyntä tuotteelle {product} kasvaa ({pct})",
+      "DELIVERY_RISK": "Tilaus {number} asiakkaalle {customer} voi myöhästyä",
+      "REORDER_DUE": "Aika tilata uudelleen toimittajalta {supplier}"
     }
   }
 }

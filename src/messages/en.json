@@ -1098,6 +1098,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "Your request “{summary}” was {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "{product} is running out",
+      "body": "At the current rate your stock of {product} lasts about {days} days ({available} left). Restock to keep the orders coming."
     }
   },
   "notifications": {
@@ -1466,6 +1470,123 @@
       "ORDER_AMOUNT": "€ off the order",
       "FREE_DELIVERY": "Free delivery (you deliver free)",
       "BUY_X_GET_Y": "Buy X, get Y free"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "AI Assistant",
+      "description": "Ask about your business in your own words. FIRINGI's AI (Claude) looks only at your company's data and never changes anything.",
+      "newChat": "New conversation",
+      "history": "Conversations",
+      "noHistory": "No conversations yet.",
+      "placeholderBuyer": "Ask about your orders, spending, products…",
+      "placeholderVendor": "Ask about your sales, stock, customers…",
+      "send": "Ask",
+      "thinking": "Looking at your data…",
+      "lookedAt": "Looked at",
+      "you": "You",
+      "assistant": "FIRINGI AI",
+      "suggestOnly": "The assistant reads your data and suggests — it never changes anything.",
+      "delete": "Delete conversation",
+      "tryAsking": "Try asking",
+      "offTitle": "The AI assistant isn't available yet",
+      "offText": "FIRINGI hasn't switched the assistant on for your account yet. The other AI suggestions still work.",
+      "buyerEx1": "How much did I spend in the last 30 days?",
+      "buyerEx2": "When do I usually reorder, and what?",
+      "buyerEx3": "Which products do I buy most?",
+      "buyerEx4": "Find olive oil from my suppliers",
+      "vendorEx1": "How were my sales in the last 30 days?",
+      "vendorEx2": "Which products will run out of stock soon?",
+      "vendorEx3": "Which customers are late with their usual order?",
+      "vendorEx4": "Which open orders might be delivered late?"
+    },
+    "tools": {
+      "sales_summary": "Summary",
+      "breakdown": "Breakdown",
+      "demand_forecast": "Demand forecast",
+      "stock_outlook": "Stock",
+      "reorder_outlook": "Reorder timing",
+      "delivery_risk": "Delivery risk",
+      "supplier_scorecards": "Scorecard",
+      "find_orders": "Orders",
+      "search_catalogue": "Catalogue",
+      "open_suggestions": "Suggestions"
+    },
+    "buyAgain": {
+      "title": "Buy Again",
+      "description": "Your usual orders, learned from what you bought in the last 6 months. One tap puts the usual quantities in your cart — you check them and place the order.",
+      "timeToReorder": "Time to reorder",
+      "dueOn": "You usually order again around {date}",
+      "lateBy": "{days} days later than usual",
+      "dueToday": "Due now",
+      "upcoming": "Next in {days} days",
+      "every": "Every {days} days",
+      "lastOrder": "Last order {date}",
+      "usual": "Usual order about {amount}",
+      "button": "Add to cart",
+      "added": "{n} products added to your cart",
+      "goToCart": "Go to cart",
+      "notAvailable": "no longer available",
+      "empty": "Once you've ordered from a supplier a few times, your usual orders appear here.",
+      "notNow": "Not now",
+      "dashboardTitle": "Time to reorder",
+      "seeAll": "Buy again"
+    },
+    "demand": {
+      "title": "Demand & Stock",
+      "description": "FIRINGI's AI forecasts how much of each product your customers will order in the next 4 weeks and how long your stock lasts. It only suggests.",
+      "forecastTitle": "Demand, next 4 weeks",
+      "product": "Product",
+      "chart": "12 weeks → 4 weeks",
+      "last4": "Last 4 weeks",
+      "next4": "Next 4 weeks",
+      "trend": "Trend",
+      "stockTitle": "Stock running out",
+      "available": "Available",
+      "perDay": "Sells per day",
+      "daysLeft": "Days left",
+      "runsOut": "Runs out",
+      "statusCol": "Status",
+      "riskTitle": "Orders that may be late",
+      "order": "Order",
+      "customer": "Customer",
+      "why": "Why",
+      "dueTitle": "Customers due to reorder",
+      "expected": "Expected",
+      "usualBasket": "Usual order",
+      "noForecast": "No orders in the last 12 weeks to learn from yet.",
+      "noStockRisk": "Nothing is about to run out.",
+      "noRisk": "No open order looks at risk.",
+      "noDue": "No customer is due to reorder.",
+      "suggestions": "Suggestions",
+      "dismiss": "Dismiss",
+      "done": "Done",
+      "dashboardTitle": "Stock running out",
+      "dashboardNone": "Your stock covers the next two weeks.",
+      "seeAll": "Demand & stock"
+    },
+    "status": {
+      "OUT": "Out of stock",
+      "CRITICAL": "Critical",
+      "LOW": "Low",
+      "OK": "OK",
+      "NO_SALES": "No sales"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "Not confirmed after {n} h",
+      "DATE_PASSED": "The requested delivery date has passed",
+      "DUE_SOON": "Due within 24 h and not dispatched",
+      "LATE_ETA": "The driver's ETA is after the requested day",
+      "SHORT_STOCK": "{n} products with less stock than ordered",
+      "SUPPLIER_DECLINES": "You declined or missed {n} orders in 60 days"
+    },
+    "rec": {
+      "STOCK_OUT": "{product} runs out in {days} days",
+      "OUT": "{product} is out of stock",
+      "LOW_COVER": "{product}: stock for {days} days",
+      "DEMAND_SURGE": "Demand for {product} is rising ({pct})",
+      "DELIVERY_RISK": "Order {number} for {customer} may be late",
+      "REORDER_DUE": "Time to reorder from {supplier}"
     }
   }
 }

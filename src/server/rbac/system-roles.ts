@@ -28,6 +28,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
       "admin.allocation.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
       "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage", "admin.support.manage",
+      "admin.ai.view",
     ],
   },
   {
@@ -36,6 +37,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.vendors.commission", "admin.customers.view",
       "admin.customers.manage", "admin.pricing.view", "admin.finance.view", "admin.finance.manage", "admin.invoices.view",
       "admin.invoices.issue", "admin.tax.manage", "admin.analytics.view", "admin.international.view", "admin.audit.view",
+      "admin.ai.view",
     ],
   },
   {
@@ -44,6 +46,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.customers.manage",
       "admin.catalogue.view", "admin.pricing.view", "admin.pricing.manage", "admin.crm.view", "admin.crm.manage",
       "admin.marketing.view", "admin.marketing.manage", "admin.analytics.view", "admin.support.manage",
+      "admin.ai.view",
     ],
   },
   {

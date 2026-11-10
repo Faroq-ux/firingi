@@ -768,7 +768,10 @@
     "Spending Report": "Kiadási jelentés",
     "Routes": "Útvonalak",
     "Help & Support": "Súgó és támogatás",
-    "My Offers": "Ajánlataim"
+    "My Offers": "Ajánlataim",
+    "AI Assistant": "MI-asszisztens",
+    "Buy Again": "Újravásárlás",
+    "Demand & Stock": "Kereslet és készlet"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1146,6 +1149,10 @@
     "approval_decided": {
       "title": "{kind}: {decision}",
       "body": "A(z) „{summary}” kérése: {decision}. {reason}"
+    },
+    "ai_stock_low": {
+      "title": "A(z) {product} fogyóban van",
+      "body": "A jelenlegi ütemben a(z) {product} készlete kb. {days} napig tart ki ({available} maradt). Töltse fel, hogy a rendelések továbbra is érkezzenek."
     }
   },
   "notifications": {
@@ -1514,6 +1521,123 @@
       "ORDER_AMOUNT": "€ kedvezmény a rendelésből",
       "FREE_DELIVERY": "Ingyenes szállítás (Ön ingyen szállít)",
       "BUY_X_GET_Y": "Vegyen X-et, Y ingyen"
+    }
+  },
+  "ai": {
+    "assistant": {
+      "title": "MI-asszisztens",
+      "description": "Kérdezzen a vállalkozásáról a saját szavaival. A FIRINGI MI-je (Claude) csak a cége adatait látja, és soha semmit nem módosít.",
+      "newChat": "Új beszélgetés",
+      "history": "Beszélgetések",
+      "noHistory": "Még nincs beszélgetés.",
+      "placeholderBuyer": "Kérdezzen a rendeléseiről, költéseiről, termékeiről…",
+      "placeholderVendor": "Kérdezzen az eladásairól, készletéről, vevőiről…",
+      "send": "Kérdezek",
+      "thinking": "Átnézem az adatait…",
+      "lookedAt": "Megnézve",
+      "you": "Ön",
+      "assistant": "FIRINGI MI",
+      "suggestOnly": "Az asszisztens olvassa az adatait és javasol — soha semmit nem módosít.",
+      "delete": "Beszélgetés törlése",
+      "tryAsking": "Kérdezze például",
+      "offTitle": "Az MI-asszisztens még nem érhető el",
+      "offText": "A FIRINGI még nem kapcsolta be az asszisztenst az Ön fiókjához. A többi MI-javaslat ettől még működik.",
+      "buyerEx1": "Mennyit költöttem az elmúlt 30 napban?",
+      "buyerEx2": "Mikor szoktam újra rendelni, és mit?",
+      "buyerEx3": "Milyen termékeket veszek a legtöbbet?",
+      "buyerEx4": "Keress olívaolajat a beszállítóimnál",
+      "vendorEx1": "Hogyan alakult az eladásom az elmúlt 30 napban?",
+      "vendorEx2": "Mely termékek fogynak ki hamarosan?",
+      "vendorEx3": "Mely vevők késnek a szokásos rendelésükkel?",
+      "vendorEx4": "Mely nyitott rendelések érkezhetnek késve?"
+    },
+    "tools": {
+      "sales_summary": "Összegzés",
+      "breakdown": "Bontás",
+      "demand_forecast": "Keresleti előrejelzés",
+      "stock_outlook": "Készlet",
+      "reorder_outlook": "Rendelési ritmus",
+      "delivery_risk": "Szállítási kockázat",
+      "supplier_scorecards": "Értékelés",
+      "find_orders": "Rendelések",
+      "search_catalogue": "Katalógus",
+      "open_suggestions": "Javaslatok"
+    },
+    "buyAgain": {
+      "title": "Újravásárlás",
+      "description": "A szokásos rendelései, abból tanulva, amit az elmúlt 6 hónapban vásárolt. Egy koppintással a szokásos mennyiségek a kosárba kerülnek — Ön ellenőrzi őket és leadja a rendelést.",
+      "timeToReorder": "Ideje újra rendelni",
+      "dueOn": "Általában {date} körül rendel újra",
+      "lateBy": "{days} nappal később a szokásosnál",
+      "dueToday": "Most esedékes",
+      "upcoming": "Következő {days} nap múlva",
+      "every": "{days} naponta",
+      "lastOrder": "Utolsó rendelés: {date}",
+      "usual": "Szokásos rendelés kb. {amount}",
+      "button": "Kosárba",
+      "added": "{n} termék a kosárba került",
+      "goToCart": "Ugrás a kosárhoz",
+      "notAvailable": "már nem elérhető",
+      "empty": "Ha néhányszor rendelt egy beszállítótól, itt jelennek meg a szokásos rendelései.",
+      "notNow": "Most nem",
+      "dashboardTitle": "Ideje újra rendelni",
+      "seeAll": "Újravásárlás"
+    },
+    "demand": {
+      "title": "Kereslet és készlet",
+      "description": "A FIRINGI MI-je előre jelzi, hogy vevői a következő 4 hétben mennyit rendelnek az egyes termékekből, és meddig tart ki a készlete. Csak javasol.",
+      "forecastTitle": "Kereslet, következő 4 hét",
+      "product": "Termék",
+      "chart": "12 hét → 4 hét",
+      "last4": "Elmúlt 4 hét",
+      "next4": "Következő 4 hét",
+      "trend": "Trend",
+      "stockTitle": "Fogyó készlet",
+      "available": "Elérhető",
+      "perDay": "Napi eladás",
+      "daysLeft": "Hátralévő napok",
+      "runsOut": "Kifogy",
+      "statusCol": "Állapot",
+      "riskTitle": "Rendelések, amelyek késhetnek",
+      "order": "Rendelés",
+      "customer": "Vevő",
+      "why": "Miért",
+      "dueTitle": "Vevők, akiknek újra kellene rendelniük",
+      "expected": "Várható",
+      "usualBasket": "Szokásos rendelés",
+      "noForecast": "Az elmúlt 12 hétből még nincs rendelés, amelyből tanulni lehetne.",
+      "noStockRisk": "Semmi sem fogy ki hamarosan.",
+      "noRisk": "Egyik nyitott rendelés sem tűnik veszélyben lévőnek.",
+      "noDue": "Egyik vevőnek sem kell most rendelnie.",
+      "suggestions": "Javaslatok",
+      "dismiss": "Elvetés",
+      "done": "Kész",
+      "dashboardTitle": "Fogyó készlet",
+      "dashboardNone": "A készlete a következő két hétre elég.",
+      "seeAll": "Kereslet és készlet"
+    },
+    "status": {
+      "OUT": "Elfogyott",
+      "CRITICAL": "Kritikus",
+      "LOW": "Alacsony",
+      "OK": "OK",
+      "NO_SALES": "Nincs eladás"
+    },
+    "reason": {
+      "NOT_CONFIRMED": "{n} óra után sincs visszaigazolva",
+      "DATE_PASSED": "A kért szállítási nap elmúlt",
+      "DUE_SOON": "24 órán belül esedékes, és még nincs feladva",
+      "LATE_ETA": "A sofőr várható érkezése a kért nap utánra esik",
+      "SHORT_STOCK": "{n} termék kevesebb készlettel, mint a rendelt",
+      "SUPPLIER_DECLINES": "60 nap alatt {n} rendelést utasított el vagy hagyott ki"
+    },
+    "rec": {
+      "STOCK_OUT": "A(z) {product} {days} nap múlva elfogy",
+      "OUT": "A(z) {product} elfogyott",
+      "LOW_COVER": "{product}: készlet {days} napra",
+      "DEMAND_SURGE": "A(z) {product} iránti kereslet nő ({pct})",
+      "DELIVERY_RISK": "A(z) {number} rendelés ({customer}) késhet",
+      "REORDER_DUE": "Ideje újra rendelni innen: {supplier}"
     }
   }
 }
