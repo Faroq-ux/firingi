@@ -31,20 +31,20 @@ export function Topbar(p: TopbarProps) {
   const [pending, start] = useTransition();
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b bg-card/95 px-3 backdrop-blur md:px-5">
+    <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b sm:gap-3 bg-card/95 px-3 backdrop-blur md:px-5">
       <button type="button" className="rounded-md p-2 hover:bg-accent md:hidden" onClick={p.onMenu} aria-label={p.labels.menu}>
         <Menu className="size-5" />
       </button>
 
       {p.portals.length > 1 && (
-        <div className="flex rounded-lg bg-muted p-0.5 text-sm" role="tablist">
+        <div className="flex shrink-0 rounded-lg bg-muted p-0.5 text-xs sm:text-sm" role="tablist">
           {p.portals.map((x) => (
             <Link
               key={x.key}
               href={x.href}
               role="tab"
               aria-selected={x.active}
-              className={cn("rounded-md px-3 py-1 font-medium", x.active ? "bg-card shadow-xs" : "text-muted-foreground hover:text-foreground")}
+              className={cn("rounded-md px-2 py-1 font-medium sm:px-3", x.active ? "bg-card shadow-xs" : "text-muted-foreground hover:text-foreground")}
             >
               {x.label}
             </Link>
@@ -52,7 +52,7 @@ export function Topbar(p: TopbarProps) {
         </div>
       )}
 
-      <div className="ml-auto flex items-center gap-2">
+      <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
         {p.bell && <NotificationBell {...p.bell} />}
         {p.cart && (
           <Link href="/buy/orders/cart" className="relative rounded-md p-2 hover:bg-accent" aria-label={`${p.cart.label} (${p.cart.count})`}>
@@ -63,7 +63,7 @@ export function Topbar(p: TopbarProps) {
         {p.memberships.length > 1 ? (
           <select
             aria-label={p.labels.company}
-            className="h-8 max-w-48 rounded-md border bg-card px-2 text-sm"
+            className="h-8 w-24 rounded-md border bg-card px-1 text-sm sm:w-auto sm:max-w-48 sm:px-2"
             value={p.companyId}
             disabled={pending}
             onChange={(e) =>
@@ -81,7 +81,7 @@ export function Topbar(p: TopbarProps) {
 
         <select
           aria-label={p.labels.language}
-          className="h-8 rounded-md border bg-card px-2 text-sm"
+          className="h-8 w-16 rounded-md border bg-card px-1 text-sm sm:w-auto sm:px-2"
           value={p.locale}
           disabled={pending}
           onChange={(e) => start(async () => { await setLocaleAction(e.target.value); router.refresh(); })}
