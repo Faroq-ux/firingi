@@ -195,6 +195,12 @@ await go(ops, "/admin/settings/delivery");
 check("operations can't change the multi-order policy", /Only Super Admin/.test(await main(ops)));
 const sa = await login("superadmin@firingi.test");
 await go(sa, "/admin/settings/delivery");
+const multiWasOn = await sa.locator('input[name="firingiFleet"]').isChecked();
+if (multiWasOn) { // start from "off" whatever an earlier run left behind
+  await sa.locator('input[name="firingiFleet"]').uncheck();
+  await sa.getByRole("button", { name: "Save" }).click();
+  await settle(sa);
+}
 await sa.locator('input[name="firingiFleet"]').check();
 await sa.getByRole("button", { name: "Save" }).click();
 await settle(sa);
