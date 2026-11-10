@@ -8,14 +8,14 @@ import { BRAND_SLOGAN } from "@/config/brand";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
-  BarChart3, Bell, Bot, Building2, ChevronDown, Coins, Contact, Globe, Handshake, LayoutDashboard, Megaphone, Package,
+  BarChart3, Bell, Bot, Building2, ChevronDown, Coins, Contact, Globe, Handshake, LayoutDashboard, LifeBuoy, Megaphone, Package,
   Receipt, Settings, ShieldCheck, ShoppingBag, Store, Truck, UserCog, UserRound, Users, Wallet, type LucideIcon,
 } from "lucide-react";
 import type { ResolvedItem, ResolvedSection } from "@/config/nav/resolve";
 import { cn } from "@/lib/utils";
 
 const ICONS: Record<string, LucideIcon> = {
-  BarChart3, Bell, Bot, Building2, Coins, Contact, Globe, Handshake, LayoutDashboard, Megaphone, Package, Receipt,
+  BarChart3, Bell, Bot, Building2, Coins, Contact, Globe, Handshake, LayoutDashboard, LifeBuoy, Megaphone, Package, Receipt,
   Settings, ShieldCheck, ShoppingBag, Store, Truck, UserCog, UserRound, Users, Wallet,
 };
 

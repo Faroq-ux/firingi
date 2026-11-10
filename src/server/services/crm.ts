@@ -462,3 +462,9 @@ export async function crmTargets(ctx: Ctx) {
   ]);
   return { companies, leads };
 }
+
+/** Active countries for CRM forms (code + flag + name). */
+export async function crmCountries() {
+  const cs = await prisma.country.findMany({ where: { isActive: true }, orderBy: { code: "asc" }, select: { code: true, flag: true, name: true } });
+  return cs.map((c) => ({ id: c.code, label: `${c.flag ?? ""} ${(c.name as Record<string, string>).en ?? c.code}`.trim() }));
+}

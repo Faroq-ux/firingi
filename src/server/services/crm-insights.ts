@@ -12,7 +12,8 @@
 import { Prisma, type CompanyType } from "@prisma/client";
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
-import { ValidationError } from "@/server/errors";
+import { ForbiddenError, ValidationError } from "@/server/errors";
+import { can } from "@/server/rbac/guard";
 import { scopeWhere } from "./admin-access";
 import { assertCrmManage, assertCrmView } from "./crm";
 import { writeAudit } from "./audit";
@@ -36,7 +37,7 @@ function statusOf(r: { firstOrderAt: Date | null; daysSince: number | null; avgG
 
 /** Buying companies (customers + wholesalers) with their ordering pattern. */
 export async function customerActivity(ctx: Ctx): Promise<ActivityRow[]> {
-  assertCrmView(ctx);
+  if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.crm.view", "admin.crm.manage", "admin.customers.view"])) throw new ForbiddenError();
   const companies = await prisma.company.findMany({
     where: { type: { in: ["CUSTOMER", "WHOLESALER"] }, status: "APPROVED", isInHouse: false, ...scopeWhere(ctx) },
     select: {
