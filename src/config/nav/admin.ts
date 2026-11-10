@@ -70,7 +70,7 @@ export const ADMIN_NAV: NavSection[] = [
       ord("delivered", "Delivered", "Entregue", "P4", { live: true }),
       ord("cancelled-returned", "Cancelled / Returned", "Canceladas / Devolvidas", "P4", { live: true }),
       ord("exceptions", "Order Exceptions", "Exceções de Encomendas", "P4", { live: true }),
-      ord("split", "Order Split / Multi-Vendor Orders", "Divisão / Multi-Fornecedor", "LATER", { perm: "admin.orders.manage" }),
+      ord("split", "Order Split / Multi-Vendor Orders", "Divisão / Multi-Fornecedor", "P16", { live: true }),
     ],
   },
   {
@@ -321,8 +321,8 @@ export const ADMIN_NAV: NavSection[] = [
       rsk("customer-verification", "Customer Verification", "Verificação de Clientes", "P2", { live: true, perm: ["admin.risk.view", "admin.customers.approve"] }),
       rsk("kyc", "KYC/KYB", "KYC/KYB", "P2", { live: true }),
       rsk("documents", "Documents", "Documentos", "P2", { live: true, perm: ["admin.risk.view", "admin.risk.manage"] }),
-      rsk("fraud", "Fraud Detection", "Deteção de Fraude", "LATER"),
-      rsk("suspicious-orders", "Suspicious Orders", "Encomendas Suspeitas", "LATER"),
+      rsk("fraud", "Fraud Detection", "Deteção de Fraude", "P16", { live: true, perm: ["admin.risk.view", "admin.risk.manage"] }),
+      rsk("suspicious-orders", "Suspicious Orders", "Encomendas Suspeitas", "P16", { live: true, perm: ["admin.risk.view", "admin.risk.manage"] }),
       rsk("payment-risk", "Payment Risk", "Risco de Pagamento", "P11", { live: true, perm: ["admin.finance.view", "admin.finance.manage", "admin.risk.view"] }),
       rsk("compliance", "Compliance", "Conformidade", "P2", { live: true, perm: ["admin.risk.view", "admin.risk.manage", "admin.customers.approve"] }),
       rsk("audit-trail", "Audit Trail", "Trilho de Auditoria", "P1", { live: true, perm: "admin.audit.view" }),
@@ -342,7 +342,7 @@ export const ADMIN_NAV: NavSection[] = [
       usr("vendor-users", "Vendor Users", "Utilizadores de Fornecedores", "P1", { live: true }),
       usr("roles", "Roles", "Funções", "P1", { live: true }),
       usr("permissions", "Permissions", "Permissões", "P1", { live: true }),
-      usr("approval-workflows", "Approval Workflows", "Fluxos de Aprovação", "LATER"),
+      usr("approval-workflows", "Approval Workflows", "Fluxos de Aprovação", "P16", { live: true, perm: ["admin.users.view", "admin.users.manage", "admin.finance.view", "admin.settings.view", "admin.marketing.manage", "admin.customers.manage"] }),
     ],
   },
   {

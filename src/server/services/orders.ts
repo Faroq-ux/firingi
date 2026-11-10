@@ -575,3 +575,25 @@ export async function checkoutSiblings(ctx: Ctx, order: { id: string; checkoutId
     select: { id: true, number: true, status: true, seller: { select: { legalName: true, tradeName: true } } }, orderBy: { number: "asc" },
   });
 }
+
+/**
+ * Order split: checkouts that became several orders (a cart from several suppliers, or FIRINGI's
+ * split across wholesalers), and orders FIRINGI moved on to other suppliers. Last 90 days.
+ */
+export async function splitOrders(ctx: Ctx) {
+  if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.orders.view", "admin.orders.manage"])) throw new ForbiddenError();
+  const since = new Date(Date.now() - 90 * 86400_000);
+  const scope = { buyer: scopeWhere(ctx) };
+  const select = { id: true, number: true, status: true, grandTotal: true, placedAt: true, checkoutId: true, routedByFiringi: true, buyer: { select: { legalName: true } }, seller: { select: { legalName: true } } } as const;
+  const grouped = await prisma.order.groupBy({ by: ["checkoutId"], where: { checkoutId: { not: null }, placedAt: { gte: since }, ...scope }, _count: { _all: true }, having: { checkoutId: { _count: { gt: 1 } } } });
+  const orders = await prisma.order.findMany({ where: { checkoutId: { in: grouped.map((g) => g.checkoutId!) } }, select, orderBy: { number: "asc" } });
+  const checkouts = grouped.map((g) => {
+    const os = orders.filter((o) => o.checkoutId === g.checkoutId);
+    return { checkoutId: g.checkoutId!, buyer: os[0]?.buyer.legalName ?? "", placedAt: os[0]?.placedAt ?? null, routed: os.some((o) => o.routedByFiringi), orders: os, total: os.reduce((a, o) => a + Number(o.grandTotal), 0) };
+  }).sort((a, b) => (b.placedAt?.getTime() ?? 0) - (a.placedAt?.getTime() ?? 0));
+  const moved = await prisma.order.findMany({
+    where: { childOrders: { some: {} }, placedAt: { gte: since }, ...scope }, orderBy: { placedAt: "desc" }, take: 100,
+    select: { ...select, childOrders: { select } },
+  });
+  return { checkouts, moved };
+}

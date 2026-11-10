@@ -30,7 +30,7 @@ describe("admin sidebar", () => {
     // …and returns (order-related) under Delivery — nothing else from Delivery.
     expect(nav.find((s) => s.key === "delivery")!.items.map((i) => i.key)).toEqual(["/admin/delivery/returns"]);
     expect(nav.find((s) => s.key === "vendors")!.groups.flatMap((g) => g.items).every((i) => i.key.endsWith("/orders"))).toBe(true);
-    expect(nav[1].items.find((i) => i.key.endsWith("/split"))).toBeUndefined(); // needs admin.orders.manage
+    expect(nav[1].items.find((i) => i.key.endsWith("/split"))).toBeTruthy(); // order split is read-only: order viewers see it
   });
   it("resolves Portuguese labels with English fallback", () => {
     const nav = resolveNav(ADMIN_NAV, new Set(["admin.dashboard.view"]), "pt-PT");

@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -21,6 +21,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P13: { en: "Phase 13 — CRM & Sales", pt: "Fase 13 — CRM e Vendas" },
   P14: { en: "Phase 14 — Profit & Performance", pt: "Fase 14 — Lucro e Desempenho" },
   P15: { en: "Phase 15 — Marketing & Promotions", pt: "Fase 15 — Marketing e Promoções" },
+  P16: { en: "Phase 16 — Risk & Control", pt: "Fase 16 — Risco e Controlo" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

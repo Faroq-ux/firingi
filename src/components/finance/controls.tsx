@@ -15,10 +15,14 @@ function useRun() {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  const run = (fn: () => Promise<Res>, after?: () => void) => start(async () => { setError(null); const r = await fn(); if (r.ok) { after?.(); router.refresh(); } else setError(r.error ?? "Error"); });
+  // "Sent for approval" (four-eyes) is a notice, not an error.
+  const run = (fn: () => Promise<Res>, after?: () => void) => start(async () => { setError(null); const r = await fn(); if (r.ok) { after?.(); router.refresh(); } else setError((r as { code?: string }).code === "APPROVAL_REQUIRED" ? `${PENDING}${r.error}` : r.error ?? "Error"); });
   return { pending, error, run };
 }
-const Err = ({ e }: { e: string | null }) => (e ? <p role="alert" className="text-sm text-destructive">{e}</p> : null);
+const PENDING = "\u23F3 ";
+const Err = ({ e }: { e: string | null }) => (e ? (e.startsWith(PENDING)
+  ? <p role="status" className="text-sm text-[color:color-mix(in_oklch,var(--vivid-violet)_80%,var(--foreground))]" data-testid="approval-pending">{e}</p>
+  : <p role="alert" className="text-sm text-destructive">{e}</p>) : null);
 
 export function VendorInvoiceUpload({ statements }: { statements: { id: string; label: string; net: string; vat: string; credit: boolean }[] }) {
   const t = useTranslations("finance");

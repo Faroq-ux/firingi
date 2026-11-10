@@ -34,9 +34,15 @@ export function OfferForm({ mode, variant, l = EN_OFFER_LABELS, offers = [], cat
   const [open, setOpen] = useState(false);
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [kind, setKind] = useState<(typeof OFFER_KINDS)[number]>(variant === "offer" ? "ORDER_AMOUNT" : "PERCENT");
   const [fund, setFund] = useState(100);
-  if (!open) return <Button onClick={() => setOpen(true)} data-testid="new-offer">{variant === "coupon" ? l.newCoupon : l.newOffer}</Button>;
+  if (!open) return (
+    <div className="space-y-2">
+      <Button onClick={() => { setOpen(true); setNotice(null); }} data-testid="new-offer">{variant === "coupon" ? l.newCoupon : l.newOffer}</Button>
+      {notice && <p role="status" className="text-sm text-[color:color-mix(in_oklch,var(--vivid-violet)_80%,var(--foreground))]" data-testid="approval-pending">{notice}</p>}
+    </div>
+  );
   const multi = (fd: FormData, k: string) => fd.getAll(k).map(String).filter(Boolean);
   const n = (fd: FormData, k: string) => (fd.get(k) ? Number(fd.get(k)) : null);
   const box = (name: string, label: string, opts: Opt[]) => opts.length > 0 && (
@@ -58,7 +64,7 @@ export function OfferForm({ mode, variant, l = EN_OFFER_LABELS, offers = [], cat
       };
       start(async () => {
         const r = await (mode === "ADMIN" ? saveOfferAction(payload) : saveVendorOfferAction(payload));
-        if (r.ok) { setError(null); setOpen(false); router.refresh(); } else setError(r.error);
+        if (r.ok) { setError(null); setOpen(false); router.refresh(); } else if (r.code === "APPROVAL_REQUIRED") { setError(null); setNotice(r.error); setOpen(false); } else setError(r.error);
       });
     }}>
       {l.note && <p className="text-sm text-muted-foreground">{l.note}</p>}
