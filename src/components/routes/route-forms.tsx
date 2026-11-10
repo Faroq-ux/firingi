@@ -131,7 +131,7 @@ export function StartRouteButton({ id, label }: { id: string; label: string }) {
   );
 }
 
-export type RoutingValues = { avgSpeedKmh: number; roadFactor: number; pickupMinutes: number; dropMinutes: number; startTime: string; depotAddressId: string | null; etaWindowMinutes: number; pay: { perRoute: number; perDelivery: number; perKm: number } };
+export type RoutingValues = { avgSpeedKmh: number; roadFactor: number; pickupMinutes: number; dropMinutes: number; startTime: string; depotAddressId: string | null; etaWindowMinutes: number; pay: { perRoute: number; perDelivery: number; perKm: number }; vehicleCostPerKm: number };
 
 /** FIRINGI's routing settings (English back office). `only` limits which fields show. */
 export function RoutingSettingsForm({ values, depots, canEdit, only }: { values: RoutingValues; depots: { id: string; label: string }[]; canEdit: boolean; only?: ("plan" | "eta" | "pay")[] }) {
@@ -171,7 +171,7 @@ export function RoutingSettingsForm({ values, depots, canEdit, only }: { values:
           {num("dropMinutes", "Time per delivery", "Unloading and signature at the customer.", 1, "min")}
         </>}
         {show("eta") && num("etaWindowMinutes", "Customer time window", "Customers are told: expected between ETA − half and ETA + half of this window. A stop is late when it runs past the window.", 5, "min")}
-        {show("pay") && <>{pay("perRoute", "Pay per completed route")}{pay("perDelivery", "Pay per delivered order")}{pay("perKm", "Pay per planned km")}</>}
+        {show("pay") && <>{pay("perRoute", "Pay per completed route")}{pay("perDelivery", "Pay per delivered order")}{pay("perKm", "Pay per planned km")}{num("vehicleCostPerKm", "Vehicle cost per km", "Fuel and wear of a FIRINGI vehicle — used for route profitability.", 0.01, "€")}</>}
       </fieldset>
       {canEdit && (
         <div className="flex items-center gap-3">

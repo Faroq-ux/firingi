@@ -315,3 +315,18 @@ export async function kpiBoard(ctx: Ctx) {
     }),
   };
 }
+
+/** Choices for the margin rule form. */
+export async function marginRuleOptions(ctx: Ctx) {
+  if (!isAdmin(ctx, ["admin.pricing.view", "admin.pricing.manage"])) throw new ForbiddenError();
+  const [countries, categories, vendors] = await Promise.all([
+    prisma.country.findMany({ where: { isActive: true }, select: { id: true, code: true, flag: true }, orderBy: { code: "asc" } }),
+    prisma.category.findMany({ where: { isActive: true }, select: { id: true, name: true, parentId: true }, orderBy: { sortOrder: "asc" } }),
+    prisma.company.findMany({ where: { type: { in: ["DISTRIBUTOR", "WHOLESALER"] }, status: "APPROVED" }, select: { id: true, legalName: true }, orderBy: { legalName: "asc" } }),
+  ]);
+  return {
+    countries: countries.map((c) => ({ id: c.id, label: `${c.flag ?? ""} ${c.code}`.trim() })),
+    categories: categories.map((c) => ({ id: c.id, label: `${c.parentId ? "— " : ""}${(c.name as Record<string, string>).en ?? c.id}` })),
+    vendors: vendors.map((v) => ({ id: v.id, label: v.legalName })),
+  };
+}
