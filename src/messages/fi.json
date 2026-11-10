@@ -561,7 +561,8 @@
       "DELIVERED": "Toimitettu",
       "CANCELLED": "Peruttu",
       "RETURNED": "Palautettu",
-      "EXCEPTION": "Poikkeama"
+      "EXCEPTION": "Poikkeama",
+      "ON_HOLD": "Tarkistettavana"
     },
     "modes": {
       "VENDOR_FLEET": "Toimittaja toimittaa",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Tämä toimittaja toimittaa ilmaiseksi {min} yksiköstä alkaen. Lisää vielä {missing}.",
     "splitNote": "Tuotteita {count} toimittajalta: tilaat kerran ja jokainen toimittaja saa oman tilauksensa omalla toimituksella.",
     "splitBlocked": "Yhden toimittajan osaa ei voi vielä toimittaa — katso viesti sen tuotteiden alla.",
-    "splitPlaced": "Ostoksestasi tuli {count} tilausta, yksi toimittajaa kohden. Muut:"
+    "splitPlaced": "Ostoksestasi tuli {count} tilausta, yksi toimittajaa kohden. Muut:",
+    "heldNote": "FIRINGI tarkistaa tilauksen ennen sen lähettämistä toimittajalle — yleensä muutamassa tunnissa. Voit vielä perua sen."
   },
   "finance": {
     "invoices": "Laskut",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Uutta sinulle: {title}",
       "body": "Määräpäivä {due}. Avaa FIRINGI nähdäksesi."
+    },
+    "order_held": {
+      "title": "Tilausta {number} tarkistetaan",
+      "body": "FIRINGI tarkistaa tilauksesi {number} ennen sen lähettämistä toimittajalle. Ilmoitamme pian."
+    },
+    "order_released": {
+      "title": "Tilaus {number} lähetetty toimittajalle",
+      "body": "FIRINGI tarkisti tilauksesi {number}; se on nyt toimittajalla {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Tilaus {number} pidätetty tarkistettavaksi",
+      "body": "Yrityksen {company} tilaus {number} sai {score} riskipistettä ja odottaa tarkistustasi."
+    },
+    "risk_order_flagged": {
+      "title": "Tilaus {number} merkitty",
+      "body": "Yrityksen {company} tilaus {number} sai {score} riskipistettä. Se meni läpi; tarkista se."
     }
   },
   "notifications": {

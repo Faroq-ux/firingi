@@ -561,7 +561,8 @@
       "DELIVERED": "Kiszállítva",
       "CANCELLED": "Lemondva",
       "RETURNED": "Visszaküldve",
-      "EXCEPTION": "Probléma"
+      "EXCEPTION": "Probléma",
+      "ON_HOLD": "Ellenőrzés alatt"
     },
     "modes": {
       "VENDOR_FLEET": "A szállító szállít",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Ez a beszállító {min} egységtől ingyen szállít. Adjon hozzá még {missing} egységet.",
     "splitNote": "{count} beszállító termékei: egyszer rendel, és minden beszállító saját rendelést kap saját szállítással.",
     "splitBlocked": "Egy beszállító része még nem szállítható — lásd az üzenetet a termékei alatt.",
-    "splitPlaced": "A vásárlásból {count} rendelés lett, beszállítónként egy. A többi:"
+    "splitPlaced": "A vásárlásból {count} rendelés lett, beszállítónként egy. A többi:",
+    "heldNote": "A FIRINGI ellenőrzi ezt a rendelést, mielőtt a beszállítónak küldi — általában néhány órán belül. Még lemondhatja."
   },
   "finance": {
     "invoices": "Számlák",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Új feladat: {title}",
       "body": "Határidő: {due}. Nyissa meg a FIRINGI-t a megtekintéshez."
+    },
+    "order_held": {
+      "title": "A(z) {number} rendelés ellenőrzés alatt",
+      "body": "A FIRINGI ellenőrzi a(z) {number} rendelést, mielőtt a beszállítónak küldi. Hamarosan jelentkezünk."
+    },
+    "order_released": {
+      "title": "A(z) {number} rendelés a beszállítóhoz került",
+      "body": "A FIRINGI ellenőrizte a(z) {number} rendelést; most a(z) {supplier} beszállítónál van."
+    },
+    "risk_order_held": {
+      "title": "A(z) {number} rendelés ellenőrzésre visszatartva",
+      "body": "{company} {number} rendelése {score} kockázati pontot kapott, és ellenőrzésre vár."
+    },
+    "risk_order_flagged": {
+      "title": "A(z) {number} rendelés megjelölve",
+      "body": "{company} {number} rendelése {score} kockázati pontot kapott. Továbbment; kérjük, ellenőrizze."
     }
   },
   "notifications": {

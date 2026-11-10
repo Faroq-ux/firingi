@@ -94,7 +94,7 @@ export async function applyBuyerDefaults(tx: Tx, companyId: string) {
   });
 }
 
-const OPEN_ORDER = ["NEW", "PENDING_CONFIRMATION", "SUPPLIER_PROCESSING", "READY_FOR_PICKUP", "DISPATCHED", "OUT_FOR_DELIVERY", "EXCEPTION"] as const;
+const OPEN_ORDER = ["NEW", "ON_HOLD", "PENDING_CONFIRMATION", "SUPPLIER_PROCESSING", "READY_FOR_PICKUP", "DISPATCHED", "OUT_FOR_DELIVERY", "EXCEPTION"] as const;
 
 /** Exposure, overdue and limit of buyers (all, or the given ones). */
 export async function creditStatuses(companyIds?: string[]) {

@@ -561,7 +561,8 @@
       "DELIVERED": "Delivered",
       "CANCELLED": "Cancelled",
       "RETURNED": "Returned",
-      "EXCEPTION": "Exception"
+      "EXCEPTION": "Exception",
+      "ON_HOLD": "Being checked"
     },
     "modes": {
       "VENDOR_FLEET": "Supplier delivers",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "This supplier delivers free from {min} units. Add {missing} more.",
     "splitNote": "Products from {count} suppliers: you check out once and each supplier gets its own order, with its own delivery.",
     "splitBlocked": "One supplier's part can't be delivered yet — see the message under its products.",
-    "splitPlaced": "Your checkout became {count} orders, one per supplier. The others:"
+    "splitPlaced": "Your checkout became {count} orders, one per supplier. The others:",
+    "heldNote": "FIRINGI is checking this order before sending it to the supplier — usually within a few hours. You can still cancel it."
   },
   "finance": {
     "invoices": "Invoices",
@@ -1072,6 +1074,22 @@
     "crm_task_assigned": {
       "title": "New for you: {title}",
       "body": "Due {due}. Open FIRINGI to see it."
+    },
+    "order_held": {
+      "title": "Order {number} is being checked",
+      "body": "FIRINGI is checking your order {number} before sending it to the supplier. We'll let you know shortly."
+    },
+    "order_released": {
+      "title": "Order {number} sent to the supplier",
+      "body": "FIRINGI checked your order {number}; it is now with {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Order {number} held for review",
+      "body": "{company}'s order {number} scored {score} on the risk checks and waits for your review."
+    },
+    "risk_order_flagged": {
+      "title": "Order {number} flagged",
+      "body": "{company}'s order {number} scored {score} on the risk checks. It went through; please review it."
     }
   },
   "notifications": {

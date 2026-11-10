@@ -561,7 +561,8 @@
       "DELIVERED": "Consegnato",
       "CANCELLED": "Annullato",
       "RETURNED": "Reso",
-      "EXCEPTION": "Anomalia"
+      "EXCEPTION": "Anomalia",
+      "ON_HOLD": "In verifica"
     },
     "modes": {
       "VENDOR_FLEET": "Consegna il fornitore",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Questo fornitore consegna gratis da {min} unità. Aggiungine altre {missing}.",
     "splitNote": "Prodotti di {count} fornitori: confermi una volta e ogni fornitore riceve il proprio ordine, con la propria consegna.",
     "splitBlocked": "La parte di un fornitore non può ancora essere consegnata — vedi il messaggio sotto i suoi prodotti.",
-    "splitPlaced": "Il tuo acquisto ha generato {count} ordini, uno per fornitore. Gli altri:"
+    "splitPlaced": "Il tuo acquisto ha generato {count} ordini, uno per fornitore. Gli altri:",
+    "heldNote": "FIRINGI sta verificando questo ordine prima di inviarlo al fornitore — di solito entro poche ore. Puoi ancora annullarlo."
   },
   "finance": {
     "invoices": "Fatture",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nuovo per te: {title}",
       "body": "Scadenza {due}. Apri FIRINGI per vederlo."
+    },
+    "order_held": {
+      "title": "L'ordine {number} è in verifica",
+      "body": "FIRINGI sta verificando il tuo ordine {number} prima di inviarlo al fornitore. Ti aggiorneremo a breve."
+    },
+    "order_released": {
+      "title": "Ordine {number} inviato al fornitore",
+      "body": "FIRINGI ha verificato il tuo ordine {number}; ora è presso {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Ordine {number} trattenuto per verifica",
+      "body": "L'ordine {number} di {company} ha {score} punti di rischio e attende la tua verifica."
+    },
+    "risk_order_flagged": {
+      "title": "Ordine {number} segnalato",
+      "body": "L'ordine {number} di {company} ha {score} punti di rischio. È passato; verificalo per favore."
     }
   },
   "notifications": {

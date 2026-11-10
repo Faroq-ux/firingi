@@ -7,6 +7,7 @@
  * FIRINGI's fleet at FIRINGI's flat fee, charged once per checkout.
  */
 import type { Prisma } from "@prisma/client";
+import { randomUUID } from "node:crypto";
 import Decimal from "decimal.js";
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -151,6 +152,12 @@ export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: Cart
     requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null, deliveryRuleId: plan.feeRuleId,
     parentOrderId: null, routedByFiringi: true,
   };
+  // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.
+  const { assessCheckout, recordRisk, afterCheckout } = await import("@/server/risk/service");
+  // Gross as the customer saw it: items at their price with VAT, plus the delivery fee.
+  const gross = plan.items.reduce((a, i) => a + Number(i.unitSalePriceNet) * i.qty * (1 + Number(i.taxRate) / 100), 0) + plan.feeNet.toNumber();
+  const risk = await assessCheckout(ctx, { gross, goods: plan.goodsNet, addressId: input.deliveryAddressId, couponCode: plan.offers.coupon?.ok ? plan.offers.coupon.code : null });
+  const checkoutId = randomUUID();
   // The flat fee goes on the first order FIRINGI's fleet delivers.
   const feeIdx = plan.picks.findIndex((p) => p.candidate.inHouse || !freeFor(p.candidate, p.covers));
   const created = await prisma.$transaction(async (tx) => {
@@ -166,15 +173,24 @@ export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: Cart
     // Credit control on the whole checkout (rolls everything back when blocked).
     const gross = (await tx.order.findMany({ where: { id: { in: out.map((o) => o.orderId) } }, select: { grandTotal: true } })).reduce((a, o) => a.plus(o.grandTotal.toString()), new Decimal(0));
     await assertCanOrder(ctx.company.id, gross);
+    await tx.order.updateMany({ where: { id: { in: out.map((o) => o.orderId) } }, data: { checkoutId } });
+    if (await recordRisk(tx, risk, out.map((o) => ({ id: o.orderId, buyerCompanyId: ctx.company.id })), checkoutId))
+      for (const o of out) {
+        await tx.order.update({ where: { id: o.orderId }, data: { status: "ON_HOLD" } });
+        await tx.orderStatusHistory.create({ data: { orderId: o.orderId, fromStatus: "PENDING_CONFIRMATION", toStatus: "ON_HOLD", reason: `Held for a check by FIRINGI (risk ${risk.score})` } });
+      }
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
     await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: out[0].orderId, after: { routed: true, orders: out.map((o) => ({ number: o.number, vendorId: o.vendorId, mode: o.mode })) } }, tx);
     return out;
   });
   const buyer = ctx.company.tradeName ?? ctx.company.legalName;
+  await afterCheckout(risk, created.map((c) => ({ id: c.orderId, number: c.number })), ctx.company.id, buyer);
+  if (risk.level === "HIGH") return { id: created[0].orderId, number: created[0].number, orders: created.map((c) => ({ id: c.orderId, number: c.number })) };
   for (const c of created) {
     const o = await prisma.order.findUniqueOrThrow({ where: { id: c.orderId }, select: { grandTotal: true } });
     await notify("order.new", [{ companyId: c.vendorId, link: `/vendor/orders/${c.orderId}` }], { number: c.number, buyer, total: o.grandTotal.toNumber() }, { ref: { type: "Order", id: c.orderId } });
   }
   return { id: created[0].orderId, number: created[0].number, orders: created.map((c) => ({ id: c.orderId, number: c.number })) };
 }
+

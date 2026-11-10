@@ -561,7 +561,8 @@
       "DELIVERED": "Pristatyta",
       "CANCELLED": "Atšaukta",
       "RETURNED": "Grąžinta",
-      "EXCEPTION": "Problema"
+      "EXCEPTION": "Problema",
+      "ON_HOLD": "Tikrinamas"
     },
     "modes": {
       "VENDOR_FLEET": "Pristato tiekėjas",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Šis tiekėjas pristato nemokamai nuo {min} vienetų. Pridėkite dar {missing}.",
     "splitNote": "Produktai iš {count} tiekėjų: užsakote vieną kartą, o kiekvienas tiekėjas gauna savo užsakymą su savo pristatymu.",
     "splitBlocked": "Vieno tiekėjo dalies dar negalima pristatyti — žr. pranešimą po jo produktais.",
-    "splitPlaced": "Jūsų pirkinys tapo {count} užsakymais, po vieną tiekėjui. Kiti:"
+    "splitPlaced": "Jūsų pirkinys tapo {count} užsakymais, po vieną tiekėjui. Kiti:",
+    "heldNote": "FIRINGI tikrina šį užsakymą prieš siųsdama tiekėjui — paprastai per kelias valandas. Dar galite jį atšaukti."
   },
   "finance": {
     "invoices": "Sąskaitos",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nauja jums: {title}",
       "body": "Terminas {due}. Atidarykite FIRINGI, kad pamatytumėte."
+    },
+    "order_held": {
+      "title": "Užsakymas {number} tikrinamas",
+      "body": "FIRINGI tikrina jūsų užsakymą {number} prieš siųsdama tiekėjui. Netrukus pranešime."
+    },
+    "order_released": {
+      "title": "Užsakymas {number} išsiųstas tiekėjui",
+      "body": "FIRINGI patikrino jūsų užsakymą {number}; jis dabar pas {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Užsakymas {number} sulaikytas patikrai",
+      "body": "{company} užsakymas {number} surinko {score} rizikos taškų ir laukia patikros."
+    },
+    "risk_order_flagged": {
+      "title": "Užsakymas {number} pažymėtas",
+      "body": "{company} užsakymas {number} surinko {score} rizikos taškų. Jis praėjo; prašome patikrinti."
     }
   },
   "notifications": {

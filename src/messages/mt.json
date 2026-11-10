@@ -561,7 +561,8 @@
       "DELIVERED": "Ikkunsinnata",
       "CANCELLED": "Ikkanċellata",
       "RETURNED": "Ritornata",
-      "EXCEPTION": "Problema"
+      "EXCEPTION": "Problema",
+      "ON_HOLD": "Qed tiġi ċċekkjata"
     },
     "modes": {
       "VENDOR_FLEET": "Il-fornitur jikkunsinna",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Dan il-fornitur jikkunsinna b'xejn minn {min} unità. Żid {missing} oħra.",
     "splitNote": "Prodotti minn {count} fornituri: tħallas darba u kull fornitur jirċievi l-ordni tiegħu, bil-kunsinna tiegħu.",
     "splitBlocked": "Il-parti ta' fornitur wieħed għadha ma tistax tiġi kkunsinnata — ara l-messaġġ taħt il-prodotti tiegħu.",
-    "splitPlaced": "Ix-xiri tiegħek sar {count} ordnijiet, waħda għal kull fornitur. L-oħrajn:"
+    "splitPlaced": "Ix-xiri tiegħek sar {count} ordnijiet, waħda għal kull fornitur. L-oħrajn:",
+    "heldNote": "FIRINGI qed tiċċekkja din l-ordni qabel tibgħatha lill-fornitur — normalment fi ftit sigħat. Għadek tista' tikkanċellaha."
   },
   "finance": {
     "invoices": "Fatturi",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Ġdid għalik: {title}",
       "body": "Skadenza {due}. Iftaħ FIRINGI biex tarah."
+    },
+    "order_held": {
+      "title": "L-ordni {number} qed tiġi ċċekkjata",
+      "body": "FIRINGI qed tiċċekkja l-ordni {number} qabel tibgħatha lill-fornitur. Ninfurmawk dalwaqt."
+    },
+    "order_released": {
+      "title": "L-ordni {number} intbagħtet lill-fornitur",
+      "body": "FIRINGI ċċekkjat l-ordni {number}; issa qiegħda għand {supplier}."
+    },
+    "risk_order_held": {
+      "title": "L-ordni {number} miżmuma għal verifika",
+      "body": "L-ordni {number} ta' {company} ħadet {score} punti ta' riskju u qed tistenna l-verifika."
+    },
+    "risk_order_flagged": {
+      "title": "L-ordni {number} immarkata",
+      "body": "L-ordni {number} ta' {company} ħadet {score} punti ta' riskju. Għaddiet; jekk jogħġbok iċċekkjaha."
     }
   },
   "notifications": {

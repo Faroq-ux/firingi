@@ -561,7 +561,8 @@
       "DELIVERED": "Zugestellt",
       "CANCELLED": "Storniert",
       "RETURNED": "Retourniert",
-      "EXCEPTION": "Störfall"
+      "EXCEPTION": "Störfall",
+      "ON_HOLD": "In Prüfung"
     },
     "modes": {
       "VENDOR_FLEET": "Lieferant liefert",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Dieser Lieferant liefert ab {min} Einheiten kostenlos. Fügen Sie {missing} weitere hinzu.",
     "splitNote": "Produkte von {count} Lieferanten: Sie bestellen einmal, jeder Lieferant erhält seine eigene Bestellung mit eigener Lieferung.",
     "splitBlocked": "Der Teil eines Lieferanten kann noch nicht geliefert werden — siehe Hinweis unter seinen Produkten.",
-    "splitPlaced": "Ihr Einkauf ergab {count} Bestellungen, eine pro Lieferant. Die anderen:"
+    "splitPlaced": "Ihr Einkauf ergab {count} Bestellungen, eine pro Lieferant. Die anderen:",
+    "heldNote": "FIRINGI prüft diese Bestellung, bevor sie an den Lieferanten geht — meist innerhalb weniger Stunden. Sie können sie noch stornieren."
   },
   "finance": {
     "invoices": "Rechnungen",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Neu für Sie: {title}",
       "body": "Fällig am {due}. Öffnen Sie FIRINGI, um es zu sehen."
+    },
+    "order_held": {
+      "title": "Bestellung {number} wird geprüft",
+      "body": "FIRINGI prüft Ihre Bestellung {number}, bevor sie an den Lieferanten geht. Wir melden uns in Kürze."
+    },
+    "order_released": {
+      "title": "Bestellung {number} an den Lieferanten gesendet",
+      "body": "FIRINGI hat Ihre Bestellung {number} geprüft; sie liegt jetzt bei {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Bestellung {number} zur Prüfung angehalten",
+      "body": "Die Bestellung {number} von {company} hat {score} Risikopunkte und wartet auf Ihre Prüfung."
+    },
+    "risk_order_flagged": {
+      "title": "Bestellung {number} markiert",
+      "body": "Die Bestellung {number} von {company} hat {score} Risikopunkte. Sie ging durch; bitte prüfen Sie sie."
     }
   },
   "notifications": {

@@ -561,7 +561,8 @@
       "DELIVERED": "Livrată",
       "CANCELLED": "Anulată",
       "RETURNED": "Returnată",
-      "EXCEPTION": "Incident"
+      "EXCEPTION": "Incident",
+      "ON_HOLD": "În verificare"
     },
     "modes": {
       "VENDOR_FLEET": "Livrează furnizorul",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Acest furnizor livrează gratuit de la {min} unități. Mai adăugați {missing}.",
     "splitNote": "Produse de la {count} furnizori: finalizați o dată și fiecare furnizor primește propria comandă, cu propria livrare.",
     "splitBlocked": "Partea unui furnizor nu poate fi încă livrată — vedeți mesajul de sub produsele sale.",
-    "splitPlaced": "Achiziția dvs. a devenit {count} comenzi, câte una pe furnizor. Celelalte:"
+    "splitPlaced": "Achiziția dvs. a devenit {count} comenzi, câte una pe furnizor. Celelalte:",
+    "heldNote": "FIRINGI verifică această comandă înainte de a o trimite furnizorului — de obicei în câteva ore. O mai puteți anula."
   },
   "finance": {
     "invoices": "Facturi",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nou pentru dvs.: {title}",
       "body": "Termen {due}. Deschideți FIRINGI pentru a vedea."
+    },
+    "order_held": {
+      "title": "Comanda {number} este în verificare",
+      "body": "FIRINGI verifică comanda {number} înainte de a o trimite furnizorului. Vă anunțăm în curând."
+    },
+    "order_released": {
+      "title": "Comanda {number} trimisă furnizorului",
+      "body": "FIRINGI a verificat comanda {number}; acum este la {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Comanda {number} reținută pentru verificare",
+      "body": "Comanda {number} a {company} a obținut {score} puncte de risc și așteaptă verificarea."
+    },
+    "risk_order_flagged": {
+      "title": "Comanda {number} semnalată",
+      "body": "Comanda {number} a {company} a obținut {score} puncte de risc. A trecut; vă rugăm s-o verificați."
     }
   },
   "notifications": {

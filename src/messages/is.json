@@ -561,7 +561,8 @@
       "DELIVERED": "Afhent",
       "CANCELLED": "Afpöntuð",
       "RETURNED": "Skilað",
-      "EXCEPTION": "Frávik"
+      "EXCEPTION": "Frávik",
+      "ON_HOLD": "Í yfirferð"
     },
     "modes": {
       "VENDOR_FLEET": "Birgir afhendir",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Þessi birgir afhendir frítt frá {min} einingum. Bættu við {missing} í viðbót.",
     "splitNote": "Vörur frá {count} birgjum: þú gengur frá einu sinni og hver birgir fær sína pöntun með eigin afhendingu.",
     "splitBlocked": "Ekki er enn hægt að afhenda hluta eins birgis — sjá skilaboðin undir vörum hans.",
-    "splitPlaced": "Kaupin urðu að {count} pöntunum, einni á birgi. Hinar:"
+    "splitPlaced": "Kaupin urðu að {count} pöntunum, einni á birgi. Hinar:",
+    "heldNote": "FIRINGI yfirfer þessa pöntun áður en hún fer til birgis — yfirleitt innan nokkurra klukkustunda. Þú getur enn hætt við hana."
   },
   "finance": {
     "invoices": "Reikningar",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nýtt fyrir þig: {title}",
       "body": "Frestur {due}. Opnaðu FIRINGI til að skoða."
+    },
+    "order_held": {
+      "title": "Verið er að yfirfara pöntun {number}",
+      "body": "FIRINGI yfirfer pöntun {number} áður en hún fer til birgis. Við látum vita fljótlega."
+    },
+    "order_released": {
+      "title": "Pöntun {number} send til birgis",
+      "body": "FIRINGI yfirfór pöntun {number}; hún er nú hjá {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Pöntun {number} haldið til yfirferðar",
+      "body": "Pöntun {number} frá {company} fékk {score} áhættustig og bíður yfirferðar."
+    },
+    "risk_order_flagged": {
+      "title": "Pöntun {number} merkt",
+      "body": "Pöntun {number} frá {company} fékk {score} áhættustig. Hún fór í gegn; vinsamlegast yfirfarðu hana."
     }
   },
   "notifications": {

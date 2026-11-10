@@ -561,7 +561,8 @@
       "DELIVERED": "Doručené",
       "CANCELLED": "Zrušené",
       "RETURNED": "Vrátené",
-      "EXCEPTION": "Incident"
+      "EXCEPTION": "Incident",
+      "ON_HOLD": "Kontroluje sa"
     },
     "modes": {
       "VENDOR_FLEET": "Doručuje dodávateľ",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Tento dodávateľ doručuje zadarmo od {min} jednotiek. Pridajte ešte {missing}.",
     "splitNote": "Produkty od {count} dodávateľov: objednáte raz a každý dodávateľ dostane vlastnú objednávku s vlastným doručením.",
     "splitBlocked": "Časť jedného dodávateľa zatiaľ nemožno doručiť — pozrite správu pod jeho produktmi.",
-    "splitPlaced": "Z vášho nákupu vzniklo {count} objednávok, jedna na dodávateľa. Ostatné:"
+    "splitPlaced": "Z vášho nákupu vzniklo {count} objednávok, jedna na dodávateľa. Ostatné:",
+    "heldNote": "FIRINGI kontroluje túto objednávku pred odoslaním dodávateľovi — zvyčajne do niekoľkých hodín. Stále ju môžete zrušiť."
   },
   "finance": {
     "invoices": "Faktúry",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nové pre vás: {title}",
       "body": "Termín {due}. Otvorte FIRINGI a pozrite sa."
+    },
+    "order_held": {
+      "title": "Objednávka {number} sa kontroluje",
+      "body": "FIRINGI kontroluje vašu objednávku {number} pred odoslaním dodávateľovi. Čoskoro sa ozveme."
+    },
+    "order_released": {
+      "title": "Objednávka {number} odoslaná dodávateľovi",
+      "body": "FIRINGI skontrolovala vašu objednávku {number}; teraz je u {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Objednávka {number} pozastavená na kontrolu",
+      "body": "Objednávka {number} firmy {company} získala {score} rizikových bodov a čaká na kontrolu."
+    },
+    "risk_order_flagged": {
+      "title": "Objednávka {number} označená",
+      "body": "Objednávka {number} firmy {company} získala {score} rizikových bodov. Prešla; prosím skontrolujte ju."
     }
   },
   "notifications": {

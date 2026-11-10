@@ -561,7 +561,8 @@
       "DELIVERED": "Dostavljeno",
       "CANCELLED": "Preklicano",
       "RETURNED": "Vrnjeno",
-      "EXCEPTION": "Težava"
+      "EXCEPTION": "Težava",
+      "ON_HOLD": "V preverjanju"
     },
     "modes": {
       "VENDOR_FLEET": "Dostavi dobavitelj",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Ta dobavitelj dostavlja brezplačno od {min} enot. Dodajte še {missing}.",
     "splitNote": "Izdelki {count} dobaviteljev: naročite enkrat in vsak dobavitelj prejme svoje naročilo s svojo dostavo.",
     "splitBlocked": "Dela enega dobavitelja še ni mogoče dostaviti — glejte sporočilo pod njegovimi izdelki.",
-    "splitPlaced": "Iz vašega nakupa je nastalo {count} naročil, eno na dobavitelja. Ostala:"
+    "splitPlaced": "Iz vašega nakupa je nastalo {count} naročil, eno na dobavitelja. Ostala:",
+    "heldNote": "FIRINGI preverja to naročilo, preden ga pošlje dobavitelju — običajno v nekaj urah. Še vedno ga lahko prekličete."
   },
   "finance": {
     "invoices": "Računi",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Novo za vas: {title}",
       "body": "Rok {due}. Odprite FIRINGI za ogled."
+    },
+    "order_held": {
+      "title": "Naročilo {number} se preverja",
+      "body": "FIRINGI preverja vaše naročilo {number}, preden ga pošlje dobavitelju. Kmalu vas obvestimo."
+    },
+    "order_released": {
+      "title": "Naročilo {number} poslano dobavitelju",
+      "body": "FIRINGI je preveril vaše naročilo {number}; zdaj je pri {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Naročilo {number} zadržano za preverjanje",
+      "body": "Naročilo {number} podjetja {company} je dobilo {score} točk tveganja in čaka na preverjanje."
+    },
+    "risk_order_flagged": {
+      "title": "Naročilo {number} označeno",
+      "body": "Naročilo {number} podjetja {company} je dobilo {score} točk tveganja. Šlo je naprej; prosimo, preverite ga."
     }
   },
   "notifications": {

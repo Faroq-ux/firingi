@@ -561,7 +561,8 @@
       "DELIVERED": "Geleverd",
       "CANCELLED": "Geannuleerd",
       "RETURNED": "Geretourneerd",
-      "EXCEPTION": "Incident"
+      "EXCEPTION": "Incident",
+      "ON_HOLD": "In controle"
     },
     "modes": {
       "VENDOR_FLEET": "Leverancier levert",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Deze leverancier levert gratis vanaf {min} eenheden. Voeg er nog {missing} toe.",
     "splitNote": "Producten van {count} leveranciers: u rekent één keer af en elke leverancier krijgt een eigen bestelling, met eigen levering.",
     "splitBlocked": "Het deel van een leverancier kan nog niet worden geleverd — zie het bericht onder zijn producten.",
-    "splitPlaced": "Uw aankoop werd {count} bestellingen, één per leverancier. De andere:"
+    "splitPlaced": "Uw aankoop werd {count} bestellingen, één per leverancier. De andere:",
+    "heldNote": "FIRINGI controleert deze bestelling voordat ze naar de leverancier gaat — meestal binnen enkele uren. U kunt ze nog annuleren."
   },
   "finance": {
     "invoices": "Facturen",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nieuw voor u: {title}",
       "body": "Vervalt op {due}. Open FIRINGI om het te bekijken."
+    },
+    "order_held": {
+      "title": "Bestelling {number} wordt gecontroleerd",
+      "body": "FIRINGI controleert uw bestelling {number} voordat die naar de leverancier gaat. We laten het u snel weten."
+    },
+    "order_released": {
+      "title": "Bestelling {number} naar de leverancier gestuurd",
+      "body": "FIRINGI heeft uw bestelling {number} gecontroleerd; ze ligt nu bij {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Bestelling {number} vastgehouden voor controle",
+      "body": "Bestelling {number} van {company} scoorde {score} risicopunten en wacht op uw controle."
+    },
+    "risk_order_flagged": {
+      "title": "Bestelling {number} gemarkeerd",
+      "body": "Bestelling {number} van {company} scoorde {score} risicopunten. Ze ging door; controleer ze a.u.b."
     }
   },
   "notifications": {

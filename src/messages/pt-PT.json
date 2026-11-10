@@ -561,7 +561,8 @@
       "DELIVERED": "Entregue",
       "CANCELLED": "Cancelada",
       "RETURNED": "Devolvida",
-      "EXCEPTION": "Exceção"
+      "EXCEPTION": "Exceção",
+      "ON_HOLD": "Em verificação"
     },
     "modes": {
       "VENDOR_FLEET": "Entrega pelo fornecedor",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Este fornecedor entrega gratuitamente a partir de {min} unidades. Adicione mais {missing}.",
     "splitNote": "Produtos de {count} fornecedores: finaliza uma vez e cada fornecedor recebe a sua encomenda, com a sua entrega.",
     "splitBlocked": "A parte de um fornecedor ainda não pode ser entregue — veja a mensagem por baixo dos seus produtos.",
-    "splitPlaced": "A sua compra deu origem a {count} encomendas, uma por fornecedor. As outras:"
+    "splitPlaced": "A sua compra deu origem a {count} encomendas, uma por fornecedor. As outras:",
+    "heldNote": "A FIRINGI está a verificar esta encomenda antes de a enviar ao fornecedor — normalmente em poucas horas. Ainda a pode cancelar."
   },
   "finance": {
     "invoices": "Faturas",
@@ -1072,6 +1074,22 @@
     "crm_task_assigned": {
       "title": "Novo para si: {title}",
       "body": "Prazo {due}. Abra a FIRINGI para ver."
+    },
+    "order_held": {
+      "title": "A encomenda {number} está a ser verificada",
+      "body": "A FIRINGI está a verificar a sua encomenda {number} antes de a enviar ao fornecedor. Informamos em breve."
+    },
+    "order_released": {
+      "title": "Encomenda {number} enviada ao fornecedor",
+      "body": "A FIRINGI verificou a sua encomenda {number}; já está com {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Encomenda {number} retida para verificação",
+      "body": "A encomenda {number} de {company} teve {score} pontos de risco e aguarda a sua verificação."
+    },
+    "risk_order_flagged": {
+      "title": "Encomenda {number} assinalada",
+      "body": "A encomenda {number} de {company} teve {score} pontos de risco. Seguiu; verifique-a por favor."
     }
   },
   "notifications": {

@@ -561,7 +561,8 @@
       "DELIVERED": "Livrée",
       "CANCELLED": "Annulée",
       "RETURNED": "Retournée",
-      "EXCEPTION": "Incident"
+      "EXCEPTION": "Incident",
+      "ON_HOLD": "En vérification"
     },
     "modes": {
       "VENDOR_FLEET": "Le fournisseur livre",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Ce fournisseur livre gratuitement à partir de {min} unités. Ajoutez-en {missing}.",
     "splitNote": "Produits de {count} fournisseurs : vous validez une fois et chaque fournisseur reçoit sa propre commande, avec sa propre livraison.",
     "splitBlocked": "La partie d'un fournisseur ne peut pas encore être livrée — voir le message sous ses produits.",
-    "splitPlaced": "Votre achat a donné {count} commandes, une par fournisseur. Les autres :"
+    "splitPlaced": "Votre achat a donné {count} commandes, une par fournisseur. Les autres :",
+    "heldNote": "FIRINGI vérifie cette commande avant de l'envoyer au fournisseur — généralement en quelques heures. Vous pouvez encore l'annuler."
   },
   "finance": {
     "invoices": "Factures",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nouveau pour vous : {title}",
       "body": "Échéance {due}. Ouvrez FIRINGI pour voir."
+    },
+    "order_held": {
+      "title": "La commande {number} est en vérification",
+      "body": "FIRINGI vérifie votre commande {number} avant de l'envoyer au fournisseur. Nous vous informons rapidement."
+    },
+    "order_released": {
+      "title": "Commande {number} envoyée au fournisseur",
+      "body": "FIRINGI a vérifié votre commande {number} ; elle est maintenant chez {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Commande {number} retenue pour vérification",
+      "body": "La commande {number} de {company} a obtenu {score} points de risque et attend votre vérification."
+    },
+    "risk_order_flagged": {
+      "title": "Commande {number} signalée",
+      "body": "La commande {number} de {company} a obtenu {score} points de risque. Elle est passée ; merci de la vérifier."
     }
   },
   "notifications": {

@@ -21,7 +21,7 @@ import { allocationRules } from "@/server/allocation/rules";
 import { DeliveryPanel, OrderReturnsPanel } from "@/components/delivery/delivery-views";
 
 const STATUS_VARIANT: Record<OrderStatus, "default" | "secondary" | "success" | "warning" | "destructive"> = {
-  NEW: "secondary", PENDING_CONFIRMATION: "warning", SUPPLIER_PROCESSING: "default", READY_FOR_PICKUP: "default", DISPATCHED: "default",
+  NEW: "secondary", ON_HOLD: "warning", PENDING_CONFIRMATION: "warning", SUPPLIER_PROCESSING: "default", READY_FOR_PICKUP: "default", DISPATCHED: "default",
   OUT_FOR_DELIVERY: "default", DELIVERED: "success", CANCELLED: "secondary", RETURNED: "secondary", EXCEPTION: "destructive",
 };
 
@@ -92,6 +92,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
           deadline={formatDate(new Date(decision.createdAt.getTime() + rules.buyerDecisionHours * 3600_000), locale, true)} />
       )}
       {placed && <p className="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">{t("orderPlaced", { number: o.number })}</p>}
+      {o.status === "ON_HOLD" && role === "BUYER" && <p className="mb-4 rounded-md bg-warning/15 p-3 text-sm" data-testid="held-note">{t("heldNote")}</p>}
       {siblings.length > 0 && (
         <div className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="checkout-siblings">
           <p>{t("splitPlaced", { count: siblings.length + 1 })}</p>

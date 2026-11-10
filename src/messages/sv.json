@@ -561,7 +561,8 @@
       "DELIVERED": "Levererad",
       "CANCELLED": "Avbruten",
       "RETURNED": "Returnerad",
-      "EXCEPTION": "Avvikelse"
+      "EXCEPTION": "Avvikelse",
+      "ON_HOLD": "Kontrolleras"
     },
     "modes": {
       "VENDOR_FLEET": "Leverantören levererar",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Leverantören levererar fritt från {min} enheter. Lägg till {missing} till.",
     "splitNote": "Produkter från {count} leverantörer: du beställer en gång och varje leverantör får sin egen order med egen leverans.",
     "splitBlocked": "En leverantörs del kan inte levereras än — se meddelandet under dess produkter.",
-    "splitPlaced": "Ditt köp blev {count} order, en per leverantör. De andra:"
+    "splitPlaced": "Ditt köp blev {count} order, en per leverantör. De andra:",
+    "heldNote": "FIRINGI kontrollerar ordern innan den skickas till leverantören — oftast inom några timmar. Du kan fortfarande avbryta den."
   },
   "finance": {
     "invoices": "Fakturor",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nytt för dig: {title}",
       "body": "Förfaller {due}. Öppna FIRINGI för att se det."
+    },
+    "order_held": {
+      "title": "Order {number} kontrolleras",
+      "body": "FIRINGI kontrollerar din order {number} innan den skickas till leverantören. Vi hör av oss snart."
+    },
+    "order_released": {
+      "title": "Order {number} skickad till leverantören",
+      "body": "FIRINGI har kontrollerat din order {number}; den ligger nu hos {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Order {number} stoppad för granskning",
+      "body": "Order {number} från {company} fick {score} riskpoäng och väntar på din granskning."
+    },
+    "risk_order_flagged": {
+      "title": "Order {number} flaggad",
+      "body": "Order {number} från {company} fick {score} riskpoäng. Den gick igenom; granska den gärna."
     }
   },
   "notifications": {

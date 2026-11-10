@@ -499,7 +499,8 @@
       "DELIVERED": "Entregado",
       "CANCELLED": "Cancelado",
       "RETURNED": "Devuelto",
-      "EXCEPTION": "Incidencia"
+      "EXCEPTION": "Incidencia",
+      "ON_HOLD": "En verificación"
     },
     "modes": {
       "VENDOR_FLEET": "Entrega el proveedor",
@@ -605,7 +606,8 @@
     "belowSupplierUnits": "Este proveedor entrega gratis a partir de {min} unidades. Añada {missing} más.",
     "splitNote": "Productos de {count} proveedores: finaliza una vez y cada proveedor recibe su propio pedido, con su propia entrega.",
     "splitBlocked": "La parte de un proveedor aún no se puede entregar — vea el mensaje bajo sus productos.",
-    "splitPlaced": "Su compra generó {count} pedidos, uno por proveedor. Los demás:"
+    "splitPlaced": "Su compra generó {count} pedidos, uno por proveedor. Los demás:",
+    "heldNote": "FIRINGI está verificando este pedido antes de enviarlo al proveedor — normalmente en pocas horas. Aún puede cancelarlo."
   },
   "finance": {
     "invoices": "Facturas",
@@ -1072,6 +1074,22 @@
     "crm_task_assigned": {
       "title": "Nuevo para usted: {title}",
       "body": "Vence el {due}. Abra FIRINGI para verlo."
+    },
+    "order_held": {
+      "title": "El pedido {number} se está verificando",
+      "body": "FIRINGI está verificando su pedido {number} antes de enviarlo al proveedor. Le avisaremos pronto."
+    },
+    "order_released": {
+      "title": "Pedido {number} enviado al proveedor",
+      "body": "FIRINGI verificó su pedido {number}; ya está con {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Pedido {number} retenido para revisión",
+      "body": "El pedido {number} de {company} obtuvo {score} puntos de riesgo y espera su revisión."
+    },
+    "risk_order_flagged": {
+      "title": "Pedido {number} señalado",
+      "body": "El pedido {number} de {company} obtuvo {score} puntos de riesgo. Siguió adelante; revíselo por favor."
     }
   },
   "notifications": {

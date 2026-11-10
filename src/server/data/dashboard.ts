@@ -136,15 +136,16 @@ export async function vendorLive(ctx: Ctx) {
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const [toConfirm, ordersToday, cur, prev, series, latest, deliveries, top, routes] = await Promise.all([
     prisma.order.count({ where: { sellerCompanyId: me, status: "PENDING_CONFIRMATION" } }),
-    prisma.order.count({ where: { sellerCompanyId: me, placedAt: { gte: today } } }),
-    prisma.order.aggregate({ where: { sellerCompanyId: me, status: { not: "CANCELLED" }, placedAt: { gte: since30 } }, _sum: { netTotal: true, vendorPayableNet: true }, _count: true }),
-    prisma.order.aggregate({ where: { sellerCompanyId: me, status: { not: "CANCELLED" }, placedAt: { gte: since60, lt: since30 } }, _sum: { netTotal: true, vendorPayableNet: true } }),
-    dailySeries(Prisma.sql`"sellerCompanyId" = ${me}`),
-    latestOrders({ sellerCompanyId: me }, "buyer"),
+    prisma.order.count({ where: { sellerCompanyId: me, status: { not: "ON_HOLD" }, placedAt: { gte: today } } }),
+    prisma.order.aggregate({ where: { sellerCompanyId: me, status: { notIn: ["CANCELLED", "ON_HOLD"] }, placedAt: { gte: since30 } }, _sum: { netTotal: true, vendorPayableNet: true }, _count: true }),
+    prisma.order.aggregate({ where: { sellerCompanyId: me, status: { notIn: ["CANCELLED", "ON_HOLD"] }, placedAt: { gte: since60, lt: since30 } }, _sum: { netTotal: true, vendorPayableNet: true } }),
+    // Orders FIRINGI holds for a check aren't the supplier's yet.
+    dailySeries(Prisma.sql`"sellerCompanyId" = ${me} AND status <> 'ON_HOLD'`),
+    latestOrders({ sellerCompanyId: me, status: { not: "ON_HOLD" } }, "buyer"),
     deliveriesToday({ executingCompanyId: me }),
     prisma.$queryRaw<{ name: Prisma.JsonValue; net: number }[]>`
       SELECT l."productName" AS name, sum(l."vendorLineNet")::float8 AS net FROM "OrderLine" l JOIN "Order" o ON o.id = l."orderId"
-      WHERE o."sellerCompanyId" = ${me} AND o.status <> 'CANCELLED' AND o."placedAt" >= ${since30}
+      WHERE o."sellerCompanyId" = ${me} AND o.status NOT IN ('CANCELLED', 'ON_HOLD') AND o."placedAt" >= ${since30}
       GROUP BY l."productName" ORDER BY net DESC LIMIT 5`,
     liveMapRoutes({ executingCompanyId: me }),
   ]);

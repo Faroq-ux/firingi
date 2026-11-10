@@ -561,7 +561,8 @@
       "DELIVERED": "Kohale toimetatud",
       "CANCELLED": "Tühistatud",
       "RETURNED": "Tagastatud",
-      "EXCEPTION": "Probleem"
+      "EXCEPTION": "Probleem",
+      "ON_HOLD": "Kontrollimisel"
     },
     "modes": {
       "VENDOR_FLEET": "Toimetab tarnija",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "See tarnija tarnib tasuta alates {min} ühikust. Lisa veel {missing}.",
     "splitNote": "Tooted {count} tarnijalt: vormistate korra ja iga tarnija saab oma tellimuse oma tarnega.",
     "splitBlocked": "Ühe tarnija osa ei saa veel tarnida — vaadake teadet tema toodete all.",
-    "splitPlaced": "Teie ostust sai {count} tellimust, üks tarnija kohta. Teised:"
+    "splitPlaced": "Teie ostust sai {count} tellimust, üks tarnija kohta. Teised:",
+    "heldNote": "FIRINGI kontrollib tellimust enne tarnijale saatmist — tavaliselt mõne tunni jooksul. Saate selle veel tühistada."
   },
   "finance": {
     "invoices": "Arved",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Uus teile: {title}",
       "body": "Tähtaeg {due}. Avage FIRINGI, et näha."
+    },
+    "order_held": {
+      "title": "Tellimust {number} kontrollitakse",
+      "body": "FIRINGI kontrollib teie tellimust {number} enne tarnijale saatmist. Anname varsti teada."
+    },
+    "order_released": {
+      "title": "Tellimus {number} saadetud tarnijale",
+      "body": "FIRINGI kontrollis teie tellimust {number}; see on nüüd tarnija {supplier} juures."
+    },
+    "risk_order_held": {
+      "title": "Tellimus {number} kontrolliks peatatud",
+      "body": "Ettevõtte {company} tellimus {number} sai {score} riskipunkti ja ootab kontrolli."
+    },
+    "risk_order_flagged": {
+      "title": "Tellimus {number} märgistatud",
+      "body": "Ettevõtte {company} tellimus {number} sai {score} riskipunkti. See läks läbi; palun kontrollige."
     }
   },
   "notifications": {

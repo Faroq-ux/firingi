@@ -561,7 +561,8 @@
       "DELIVERED": "Dostarczone",
       "CANCELLED": "Anulowane",
       "RETURNED": "Zwrócone",
-      "EXCEPTION": "Problem"
+      "EXCEPTION": "Problem",
+      "ON_HOLD": "W weryfikacji"
     },
     "modes": {
       "VENDOR_FLEET": "Dostarcza dostawca",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Ten dostawca dostarcza za darmo od {min} jednostek. Dodaj jeszcze {missing}.",
     "splitNote": "Produkty od {count} dostawców: zamawiasz raz, a każdy dostawca otrzymuje własne zamówienie z własną dostawą.",
     "splitBlocked": "Część jednego dostawcy nie może jeszcze zostać dostarczona — zobacz komunikat pod jego produktami.",
-    "splitPlaced": "Twój zakup utworzył {count} zamówienia, po jednym na dostawcę. Pozostałe:"
+    "splitPlaced": "Twój zakup utworzył {count} zamówienia, po jednym na dostawcę. Pozostałe:",
+    "heldNote": "FIRINGI sprawdza to zamówienie przed wysłaniem do dostawcy — zwykle w ciągu kilku godzin. Nadal możesz je anulować."
   },
   "finance": {
     "invoices": "Faktury",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Nowe dla Ciebie: {title}",
       "body": "Termin {due}. Otwórz FIRINGI, aby zobaczyć."
+    },
+    "order_held": {
+      "title": "Zamówienie {number} jest sprawdzane",
+      "body": "FIRINGI sprawdza Twoje zamówienie {number} przed wysłaniem do dostawcy. Wkrótce damy znać."
+    },
+    "order_released": {
+      "title": "Zamówienie {number} wysłane do dostawcy",
+      "body": "FIRINGI sprawdziło Twoje zamówienie {number}; jest teraz u {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Zamówienie {number} wstrzymane do weryfikacji",
+      "body": "Zamówienie {number} firmy {company} uzyskało {score} pkt ryzyka i czeka na weryfikację."
+    },
+    "risk_order_flagged": {
+      "title": "Zamówienie {number} oznaczone",
+      "body": "Zamówienie {number} firmy {company} uzyskało {score} pkt ryzyka. Przeszło dalej; prosimy je sprawdzić."
     }
   },
   "notifications": {

@@ -561,7 +561,8 @@
       "DELIVERED": "Dostavljeno",
       "CANCELLED": "Otkazano",
       "RETURNED": "Vraćeno",
-      "EXCEPTION": "Problem"
+      "EXCEPTION": "Problem",
+      "ON_HOLD": "U provjeri"
     },
     "modes": {
       "VENDOR_FLEET": "Dostavlja dobavljač",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Ovaj dobavljač dostavlja besplatno od {min} jedinica. Dodajte još {missing}.",
     "splitNote": "Proizvodi od {count} dobavljača: naručujete jednom, a svaki dobavljač dobiva svoju narudžbu sa svojom dostavom.",
     "splitBlocked": "Dio jednog dobavljača još se ne može dostaviti — pogledajte poruku ispod njegovih proizvoda.",
-    "splitPlaced": "Vaša kupnja postala je {count} narudžbe, po jedna za dobavljača. Ostale:"
+    "splitPlaced": "Vaša kupnja postala je {count} narudžbe, po jedna za dobavljača. Ostale:",
+    "heldNote": "FIRINGI provjerava ovu narudžbu prije slanja dobavljaču — obično u nekoliko sati. Još je možete otkazati."
   },
   "finance": {
     "invoices": "Računi",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Novo za vas: {title}",
       "body": "Rok {due}. Otvorite FIRINGI za pregled."
+    },
+    "order_held": {
+      "title": "Narudžba {number} se provjerava",
+      "body": "FIRINGI provjerava vašu narudžbu {number} prije slanja dobavljaču. Uskoro ćemo vas obavijestiti."
+    },
+    "order_released": {
+      "title": "Narudžba {number} poslana dobavljaču",
+      "body": "FIRINGI je provjerio vašu narudžbu {number}; sada je kod {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Narudžba {number} zadržana radi provjere",
+      "body": "Narudžba {number} tvrtke {company} dobila je {score} bodova rizika i čeka provjeru."
+    },
+    "risk_order_flagged": {
+      "title": "Narudžba {number} označena",
+      "body": "Narudžba {number} tvrtke {company} dobila je {score} bodova rizika. Prošla je; molimo provjerite je."
     }
   },
   "notifications": {

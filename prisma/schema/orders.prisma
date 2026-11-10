@@ -7,6 +7,7 @@ enum OrderFlow {
 
 enum OrderStatus {
   NEW
+  ON_HOLD // FIRINGI checks it (risk) before the supplier sees it
   PENDING_CONFIRMATION
   SUPPLIER_PROCESSING
   READY_FOR_PICKUP
@@ -120,6 +121,7 @@ model Order {
   supportTickets    SupportTicket[]
   rating            OrderRating?
   redemptions       PromotionRedemption[]
+  risk              RiskAssessment?
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])

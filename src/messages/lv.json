@@ -561,7 +561,8 @@
       "DELIVERED": "Piegādāts",
       "CANCELLED": "Atcelts",
       "RETURNED": "Atgriezts",
-      "EXCEPTION": "Problēma"
+      "EXCEPTION": "Problēma",
+      "ON_HOLD": "Pārbaudē"
     },
     "modes": {
       "VENDOR_FLEET": "Piegādā piegādātājs",
@@ -626,7 +627,8 @@
     "belowSupplierUnits": "Šis piegādātājs piegādā bez maksas no {min} vienībām. Pievienojiet vēl {missing}.",
     "splitNote": "Produkti no {count} piegādātājiem: noformējat vienreiz, un katrs piegādātājs saņem savu pasūtījumu ar savu piegādi.",
     "splitBlocked": "Viena piegādātāja daļu vēl nevar piegādāt — skatiet ziņu zem tā produktiem.",
-    "splitPlaced": "Jūsu pirkums kļuva par {count} pasūtījumiem, pa vienam katram piegādātājam. Pārējie:"
+    "splitPlaced": "Jūsu pirkums kļuva par {count} pasūtījumiem, pa vienam katram piegādātājam. Pārējie:",
+    "heldNote": "FIRINGI pārbauda šo pasūtījumu pirms nosūtīšanas piegādātājam — parasti dažu stundu laikā. Jūs to vēl varat atcelt."
   },
   "finance": {
     "invoices": "Rēķini",
@@ -1120,6 +1122,22 @@
     "crm_task_assigned": {
       "title": "Jauns jums: {title}",
       "body": "Termiņš {due}. Atveriet FIRINGI, lai redzētu."
+    },
+    "order_held": {
+      "title": "Pasūtījums {number} tiek pārbaudīts",
+      "body": "FIRINGI pārbauda jūsu pasūtījumu {number} pirms nosūtīšanas piegādātājam. Drīz paziņosim."
+    },
+    "order_released": {
+      "title": "Pasūtījums {number} nosūtīts piegādātājam",
+      "body": "FIRINGI pārbaudīja jūsu pasūtījumu {number}; tas tagad ir pie {supplier}."
+    },
+    "risk_order_held": {
+      "title": "Pasūtījums {number} aizturēts pārbaudei",
+      "body": "Uzņēmuma {company} pasūtījums {number} ieguva {score} riska punktus un gaida pārbaudi."
+    },
+    "risk_order_flagged": {
+      "title": "Pasūtījums {number} atzīmēts",
+      "body": "Uzņēmuma {company} pasūtījums {number} ieguva {score} riska punktus. Tas tika izpildīts; lūdzu, pārbaudiet."
     }
   },
   "notifications": {

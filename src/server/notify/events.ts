@@ -62,6 +62,10 @@ export const EVENTS: EventDef[] = [
   E("order.reallocated", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["number", "newNumber", "supplier"]),
   E("order.supplier_unavailable", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["number", "supplier"]),
   E("allocation.needed", "orders", ["admin.allocation.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),
+  E("order.held", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number"]),
+  E("order.released", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "supplier"]),
+  E("risk.order_held", "orders", ["admin.risk.manage"], ["EMAIL", "PUSH"], ["number", "company", "score"]),
+  E("risk.order_flagged", "orders", ["admin.risk.manage"], ["PUSH"], ["number", "company", "score"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),
   E("delivery.eta", "deliveries", BUYER_ORDERS, ["WHATSAPP", "SMS", "PUSH"], ["number", "from", "to"]),

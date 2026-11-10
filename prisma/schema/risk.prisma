@@ -1,0 +1,67 @@
+// ───────────────────────── Risk & control (Phase 16) ─────────────────────────
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RiskReview {
+  OPEN
+  CLEARED // reviewed: fine
+  FRAUD // reviewed: fraud / abuse confirmed
+}
+
+/// FIRINGI's checks on an order at checkout. HIGH holds the order (ON_HOLD) until a reviewer
+/// releases or cancels it; MEDIUM lets it through but asks for a review; LOW is only recorded.
+model RiskAssessment {
+  id             String     @id @default(cuid())
+  orderId        String     @unique
+  checkoutId     String?
+  buyerCompanyId String
+  score          Int
+  level          RiskLevel
+  /// [{ rule, points, detail }]
+  reasons        Json
+  held           Boolean    @default(false)
+  review         RiskReview @default(OPEN)
+  reviewedById   String?
+  reviewedAt     DateTime?
+  note           String?
+  createdAt      DateTime   @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([review, level, createdAt])
+  @@index([buyerCompanyId])
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+  FAILED // approved, but applying it failed (e.g. the data changed meanwhile)
+}
+
+/// Four-eyes: an action that needs a second FIRINGI person. The request holds what to do;
+/// approving applies it (as the requester), by someone other than the requester.
+model ApprovalRequest {
+  id           String         @id @default(cuid())
+  kind         String // CREDIT_NOTE | CUSTOMER_TERMS | COMMISSION | OFFER | BANK_DETAILS | STAFF_ROLE | PAYMENT
+  summary      String
+  payload      Json
+  amount       Decimal?       @db.Decimal(18, 2)
+  companyId    String?
+  status       ApprovalStatus @default(PENDING)
+  requestedById String
+  requestedAt  DateTime       @default(now())
+  decidedById  String?
+  decidedAt    DateTime?
+  reason       String?
+  result       Json?
+  error        String?
+
+  @@index([status, requestedAt])
+  @@index([kind, status])
+}

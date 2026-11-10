@@ -197,6 +197,9 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     }
   }
   const checkoutId = randomUUID();
+  // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.
+  const { assessCheckout, recordRisk, afterCheckout } = await import("@/server/risk/service");
+  const risk = await assessCheckout(ctx, { gross: pc.grandTotal.toNumber(), goods: pc.goodsNet.toNumber(), addressId: address.id, couponCode: pc.coupon?.ok ? pc.coupon.code : null });
   const deliveryAddress = {
     id: address.id, label: address.label, line1: address.line1, line2: address.line2, postalCode: address.postalCode, city: address.cityName,
     regionId: address.city?.regionId ?? null, country: address.country.code, contactName: address.contactName, phone: address.phone,
@@ -261,16 +264,20 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     }
     // A coupon that has reached a limit while this checkout was being placed is refused.
     if (pc.coupon?.ok) await assertCouponLimits(tx, pc.coupon.code, ctx.company.id);
-    // No online payment step yet → the orders go straight to the suppliers for confirmation.
+    // No online payment step yet → the orders go straight to the suppliers for confirmation (unless held).
+    const held = await recordRisk(tx, risk, out.map((o) => ({ id: o.id, buyerCompanyId: ctx.company.id })), pc.parts.length > 1 ? checkoutId : null);
     for (const o of out) {
-      await tx.order.update({ where: { id: o.id }, data: { status: "PENDING_CONFIRMATION" } });
-      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: "PENDING_CONFIRMATION", reason: "Sent to supplier" } });
+      const to = held ? "ON_HOLD" : "PENDING_CONFIRMATION";
+      await tx.order.update({ where: { id: o.id }, data: { status: to } });
+      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : "Sent to supplier" } });
     }
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
     await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
     return out;
   });
   const buyerName = ctx.company.tradeName ?? ctx.company.legalName;
+  await afterCheckout(risk, created, ctx.company.id, buyerName);
+  if (risk.level === "HIGH") return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })) };
   for (const o of created) {
     const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });
     await notify("order.new", [{ companyId: o.sellerId, link: `/vendor/orders/${o.id}` }], { number: o.number, buyer: buyerName, total: row.grandTotal.toNumber() }, { ref: { type: "Order", id: o.id } });
@@ -283,9 +290,10 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
 export type OrderRole = "BUYER" | "VENDOR" | "ADMIN";
 
 /** Which side the caller is on for this order (or null = may not see it). */
-export async function roleFor(ctx: Ctx, order: { buyerCompanyId: string; sellerCompanyId: string }): Promise<OrderRole | null> {
+export async function roleFor(ctx: Ctx, order: { buyerCompanyId: string; sellerCompanyId: string; status?: OrderStatus }): Promise<OrderRole | null> {
   if (ctx.company.id === order.buyerCompanyId && can(ctx, ["buyer.orders.view", "buyer.orders.place"])) return "BUYER";
-  if (ctx.company.id === order.sellerCompanyId && can(ctx, ["vendor.orders.view", "vendor.orders.manage"])) return "VENDOR";
+  // A held order isn't the supplier's yet: FIRINGI checks it first.
+  if (ctx.company.id === order.sellerCompanyId && order.status !== "ON_HOLD" && can(ctx, ["vendor.orders.view", "vendor.orders.manage"])) return "VENDOR";
   if (ctx.company.type === "ADMIN" && can(ctx, ["admin.orders.view", "admin.orders.manage"])) {
     const inScope = await prisma.company.count({ where: { id: order.buyerCompanyId, ...scopeWhere(ctx) } });
     return inScope ? "ADMIN" : null;
@@ -339,7 +347,7 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
     where = { buyerCompanyId: ctx.company.id };
   } else if (as === "VENDOR") {
     if (!can(ctx, ["vendor.orders.view", "vendor.orders.manage"])) throw new ForbiddenError();
-    where = { sellerCompanyId: ctx.company.id };
+    where = { sellerCompanyId: ctx.company.id, status: { not: "ON_HOLD" } };
   } else {
     if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.orders.view", "admin.orders.manage"])) throw new ForbiddenError();
     where = { buyer: scopeWhere(ctx) };
@@ -400,7 +408,13 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   if ((to === "CANCELLED" || to === "EXCEPTION" || to === "RETURNED") && !reason?.trim()) throw new ValidationError("Please give a reason.");
   if (actor === "BUYER" && to === "CANCELLED" && !(await platformSettings()).buyerCanCancel) throw new ForbiddenError("Please contact FIRINGI to cancel this order.");
   if (to === "SUPPLIER_PROCESSING" && order.status === "PENDING_CONFIRMATION") return confirmOrder(ctx, orderId, {});
-  await prisma.$transaction((tx) => applyOrderTransition(tx, order, to, { reason, userId: ctx.user.id, companyId: ctx.company.id }));
+  await prisma.$transaction(async (tx) => {
+    await applyOrderTransition(tx, order, to, { reason, userId: ctx.user.id, companyId: ctx.company.id });
+    // A held order released or cancelled by FIRINGI: its risk check is reviewed.
+    if (order.status === "ON_HOLD" && actor === "ADMIN")
+      await tx.riskAssessment.updateMany({ where: { orderId, review: "OPEN" }, data: { review: to === "CANCELLED" ? "FRAUD" : "CLEARED", reviewedById: ctx.user.id, reviewedAt: new Date(), note: reason?.trim() || null } });
+  });
+  if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);
   if (to === "CANCELLED" && actor === "VENDOR" && order.status === "PENDING_CONFIRMATION") {
     // Supplier declined: FIRINGI tries to move the order to another supplier (Phase 9).
     const { onSupplierEvent } = await import("@/server/allocation/engine");
@@ -451,6 +465,17 @@ export async function applyOrderTransition(
   }
   await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: order.status, toStatus: to, reason, byUserId: by.userId } });
   await writeAudit({ actorUserId: by.userId, actorCompanyId: by.companyId, action: `order.status.${to.toLowerCase()}`, entityType: "Order", entityId: order.id, before: { status: order.status }, after: { status: to, reason } }, tx);
+}
+
+/** A held order released (→ supplier gets it, buyer told) or cancelled (only the buyer is told). */
+export async function notifyHoldDecision(order: Pick<OrderForChange, "id" | "number" | "buyerCompanyId" | "sellerCompanyId">, to: OrderStatus, reason: string | null | undefined, actor: Actor) {
+  if (to === "PENDING_CONFIRMATION") {
+    const o = await prisma.order.findUniqueOrThrow({ where: { id: order.id }, select: { grandTotal: true, buyer: { select: { legalName: true, tradeName: true } }, seller: { select: { legalName: true, tradeName: true } } } });
+    await notify("order.new", [{ companyId: order.sellerCompanyId, link: `/vendor/orders/${order.id}` }], { number: order.number, buyer: o.buyer.tradeName ?? o.buyer.legalName, total: o.grandTotal.toNumber() }, { ref: { type: "Order", id: order.id } });
+    await notify("order.released", [{ companyId: order.buyerCompanyId, link: `/buy/orders/${order.id}` }], { number: order.number, supplier: o.seller.tradeName ?? o.seller.legalName }, { ref: { type: "Order", id: order.id } });
+  } else if (to === "CANCELLED" && actor !== "BUYER") {
+    await notify("order.cancelled", [{ companyId: order.buyerCompanyId, link: `/buy/orders/${order.id}` }], { number: order.number, reason: reason ?? "" }, { ref: { type: "Order", id: order.id } });
+  }
 }
 
 export async function notifyOrderChange(order: Pick<OrderForChange, "id" | "number" | "buyerCompanyId" | "sellerCompanyId">, to: OrderStatus, reason: string | null | undefined, actor: Actor) {
