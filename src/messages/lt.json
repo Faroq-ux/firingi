@@ -55,7 +55,15 @@
     "invalid": "Neteisingas el. paštas ar slaptažodis arba paskyra išjungta.",
     "noAccount": "Naujas FIRINGI naudotojas?",
     "register": "Pateikti paraišką paskyrai",
-    "tooMany": "Per daug bandymų prisijungti. Palaukite minutę ir bandykite dar kartą."
+    "tooMany": "Per daug bandymų prisijungti. Palaukite minutę ir bandykite dar kartą.",
+    "codeTitle": "Dviejų veiksmų prisijungimas",
+    "codeHint": "Įveskite 6 skaitmenų kodą iš autentifikavimo programėlės.",
+    "backupHint": "Įveskite vieną iš atsarginių kodų.",
+    "code": "Kodas",
+    "verify": "Patvirtinti",
+    "useBackup": "Naudoti atsarginį kodą",
+    "useApp": "Naudoti autentifikavimo programėlę",
+    "badCode": "Šis kodas netiko."
   },
   "register": {
     "title": "Pateikti paraišką FIRINGI paskyrai",
@@ -564,7 +572,10 @@
       "moved": "Atlikta — FIRINGI perdavė jį kitam didmenininkui:",
       "none": "Šiuo metu jo negali priimti nė vienas didmenininkas. FIRINGI komanda ieškos sprendimo ir susisieks su jumis.",
       "cancelled": "Atšaukta. Mokesčio nebus."
-    }
+    },
+    "creditOverdue": "Turite sąskaitą, vėluojančią {days} d. — apmokėkite ją prieš naujus užsakymus.",
+    "creditLimit": "Šis užsakymas viršija jūsų turimą kreditą ({available} iš {limit}).",
+    "openInvoices": "Peržiūrėti neapmokėtas sąskaitas"
   },
   "finance": {
     "invoices": "Sąskaitos",
@@ -647,7 +658,12 @@
       "PAUSED": "Pristabdyta",
       "ENDED": "Baigta",
       "DRAFT": "Juodraštis"
-    }
+    },
+    "howToPay": "Kaip sumokėti",
+    "payByTransfer": "Banko pervedimas gavėjui {holder}, IBAN",
+    "payByMbWay": "MB WAY numeriu",
+    "payOnDelivery": "Grynaisiais arba kortele vairuotojui pristatymo metu.",
+    "payReference": "Mokėjimo paskirtyje nurodykite sąskaitos numerį."
   },
   "shell": {
     "cart": "Krepšelis",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Iš viso (be PVM)",
     "total": "Sąskaitai FIRINGI (be PVM)",
     "notes": "Kliento pastabos"
+  },
+  "security": {
+    "title": "Saugumas",
+    "required": "Jūsų paskyrai dviejų veiksmų prisijungimas privalomas. Įjunkite jį, kad tęstumėte.",
+    "twoFactor": "Dviejų veiksmų prisijungimas",
+    "twoFactorIntro": "Be slaptažodžio prisijungiate 6 skaitmenų kodu iš autentifikavimo programėlės (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Įjungta",
+    "off": "Išjungta",
+    "password": "Jūsų slaptažodis",
+    "turnOn": "Įjungti",
+    "scan": "Nuskaitykite šį kodą programėle arba įveskite raktą ranka:",
+    "key": "Raktas",
+    "backupCodes": "Atsarginiai kodai — laikykite juos saugioje vietoje. Kiekvienas veikia vieną kartą, jei pamestumėte telefoną.",
+    "enterCode": "6 skaitmenų kodas iš programėlės",
+    "verify": "Patvirtinti ir įjungti",
+    "enabled": "Dviejų veiksmų prisijungimas įjungtas.",
+    "turnOff": "Išjungti",
+    "cannotTurnOff": "Privaloma jūsų paskyrai — negalima išjungti.",
+    "badCode": "Šis kodas netiko. Bandykite dar kartą.",
+    "wrongPassword": "Neteisingas slaptažodis.",
+    "sessions": "Kur esate prisijungę",
+    "sessionsIntro": "Atjunkite įrenginius, kurių neatpažįstate.",
+    "thisDevice": "Šis įrenginys",
+    "lastActive": "paskutinį kartą aktyvus {date}",
+    "signedIn": "prisijungta {date}",
+    "end": "Atsijungti",
+    "endOthers": "Atjungti visus kitus įrenginius",
+    "ended": "Atjungta įrenginių: {count}."
+  },
+  "privacy": {
+    "title": "Mano duomenys",
+    "intro": "Jūsų teisės pagal BDAR: matyti, pasiimti ir ištrinti savo asmens duomenis.",
+    "exportIntro": "Atsisiųskite visko, ką FIRINGI saugo apie jus, kopiją (paskyra, įmonės ir vaidmenys, prisijungimai, pranešimai ir žinutės, sutikimai).",
+    "export": "Atsisiųsti mano duomenis",
+    "eraseIntro": "Paprašykite FIRINGI ištrinti jūsų paskyrą. Vardas, el. paštas, telefonas ir istorija pašalinami; jūsų įmonės užsakymai ir sąskaitos saugomi anonimiškai, kaip reikalauja įstatymas (10 metų).",
+    "reason": "Priežastis (neprivaloma)",
+    "erase": "Ištrinti mano paskyrą",
+    "requested": "Paprašėte ištrinti paskyrą — FIRINGI atsakys per 30 dienų.",
+    "withdraw": "Atšaukti prašymą",
+    "rejected": "FIRINGI dar negalėjo ištrinti jūsų paskyros: {note}"
   }
 }

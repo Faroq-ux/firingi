@@ -55,7 +55,15 @@
     "invalid": "Nieprawidłowy e-mail lub hasło albo konto jest wyłączone.",
     "noAccount": "Nowy w FIRINGI?",
     "register": "Złóż wniosek o konto",
-    "tooMany": "Zbyt wiele prób logowania. Odczekaj minutę i spróbuj ponownie."
+    "tooMany": "Zbyt wiele prób logowania. Odczekaj minutę i spróbuj ponownie.",
+    "codeTitle": "Logowanie dwuetapowe",
+    "codeHint": "Wpisz 6-cyfrowy kod z aplikacji uwierzytelniającej.",
+    "backupHint": "Wpisz jeden z kodów zapasowych.",
+    "code": "Kod",
+    "verify": "Zweryfikuj",
+    "useBackup": "Użyj kodu zapasowego",
+    "useApp": "Użyj aplikacji uwierzytelniającej",
+    "badCode": "Ten kod nie zadziałał."
   },
   "register": {
     "title": "Złóż wniosek o konto FIRINGI",
@@ -564,7 +572,10 @@
       "moved": "Gotowe — FIRINGI przekazało je innej hurtowni:",
       "none": "Żadna hurtownia nie może go teraz przyjąć. Zespół FIRINGI poszuka rozwiązania i skontaktuje się z Tobą.",
       "cancelled": "Anulowane. Nie zostaniesz obciążony."
-    }
+    },
+    "creditOverdue": "Masz fakturę przeterminowaną o {days} dni — zapłać ją przed złożeniem nowych zamówień.",
+    "creditLimit": "To zamówienie przekracza dostępny kredyt ({available} z {limit}).",
+    "openInvoices": "Zobacz otwarte faktury"
   },
   "finance": {
     "invoices": "Faktury",
@@ -647,7 +658,12 @@
       "PAUSED": "Wstrzymana",
       "ENDED": "Zakończona",
       "DRAFT": "Szkic"
-    }
+    },
+    "howToPay": "Jak zapłacić",
+    "payByTransfer": "Przelew bankowy na {holder}, IBAN",
+    "payByMbWay": "MB WAY na numer",
+    "payOnDelivery": "Gotówką lub kartą kierowcy przy dostawie.",
+    "payReference": "Podaj numer faktury w tytule płatności."
   },
   "shell": {
     "cart": "Koszyk",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Razem (netto)",
     "total": "Do zafakturowania FIRINGI (netto)",
     "notes": "Uwagi klienta"
+  },
+  "security": {
+    "title": "Bezpieczeństwo",
+    "required": "Logowanie dwuetapowe jest wymagane dla Twojego konta. Włącz je, aby kontynuować.",
+    "twoFactor": "Logowanie dwuetapowe",
+    "twoFactorIntro": "Oprócz hasła logujesz się 6-cyfrowym kodem z aplikacji uwierzytelniającej (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Włączone",
+    "off": "Wyłączone",
+    "password": "Twoje hasło",
+    "turnOn": "Włącz",
+    "scan": "Zeskanuj ten kod aplikacją uwierzytelniającą lub wpisz klucz ręcznie:",
+    "key": "Klucz",
+    "backupCodes": "Kody zapasowe — przechowuj je w bezpiecznym miejscu. Każdy działa raz, jeśli zgubisz telefon.",
+    "enterCode": "6-cyfrowy kod z aplikacji",
+    "verify": "Zweryfikuj i włącz",
+    "enabled": "Logowanie dwuetapowe jest włączone.",
+    "turnOff": "Wyłącz",
+    "cannotTurnOff": "Wymagane dla Twojego konta — nie można go wyłączyć.",
+    "badCode": "Ten kod nie zadziałał. Spróbuj ponownie.",
+    "wrongPassword": "Nieprawidłowe hasło.",
+    "sessions": "Gdzie jesteś zalogowany",
+    "sessionsIntro": "Wyloguj urządzenia, których nie rozpoznajesz.",
+    "thisDevice": "To urządzenie",
+    "lastActive": "ostatnia aktywność {date}",
+    "signedIn": "zalogowano {date}",
+    "end": "Wyloguj",
+    "endOthers": "Wyloguj wszystkie inne urządzenia",
+    "ended": "Wylogowano {count} urządzenie(-a)."
+  },
+  "privacy": {
+    "title": "Moje dane",
+    "intro": "Twoje prawa wynikające z RODO: wgląd, przeniesienie i usunięcie danych osobowych.",
+    "exportIntro": "Pobierz kopię wszystkiego, co FIRINGI przechowuje o Tobie (konto, firmy i role, logowania, powiadomienia i wiadomości, zgody).",
+    "export": "Pobierz moje dane",
+    "eraseIntro": "Poproś FIRINGI o usunięcie konta. Imię, e-mail, telefon i historia zostaną usunięte; zamówienia i faktury Twojej firmy są przechowywane anonimowo, zgodnie z prawem (10 lat).",
+    "reason": "Powód (opcjonalnie)",
+    "erase": "Usuń moje konto",
+    "requested": "Poprosiłeś o usunięcie konta — FIRINGI odpowie w ciągu 30 dni.",
+    "withdraw": "Anuluj prośbę",
+    "rejected": "FIRINGI nie mogło jeszcze usunąć Twojego konta: {note}"
   }
 }

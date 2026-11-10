@@ -2,6 +2,7 @@
  * Self-registration for distributors, wholesalers, wholesale customers and drivers.
  * Every new account starts PENDING and needs FIRINGI approval before it can trade.
  */
+import { platformSettings } from "./platform-settings";
 import type { CompanyType } from "@prisma/client";
 import { hashPassword } from "better-auth/crypto";
 import { prisma } from "@/server/db";
@@ -44,6 +45,8 @@ export function normaliseTaxId(countryCode: string, taxId: string) {
 }
 
 export async function registerCompany(input: CompanyRegistration) {
+  if (!(await platformSettings()).registrations[input.type as "CUSTOMER" | "WHOLESALER" | "DISTRIBUTOR"])
+    throw new ValidationError("New applications for this account type are paused. Please try again later.");
   const country = await prisma.country.findUnique({ where: { code: input.countryCode } });
   if (!country || !country.isActive || !country[MARKET_FLAG[input.type]])
     throw new ValidationError("Registration for this account type is not open in the selected country yet.", { countryCode: ["Not available"] });
@@ -121,6 +124,7 @@ export type DriverRegistration = {
 
 /** Independent drivers apply to join the FIRINGI fleet (vendor drivers are added by vendors in Phase 6). */
 export async function registerDriver(input: DriverRegistration) {
+  if (!(await platformSettings()).registrations.DRIVER) throw new ValidationError("New driver applications are paused. Please try again later.");
   const email = input.email.trim().toLowerCase();
   if (await prisma.user.findUnique({ where: { email } })) throw new AppError("EMAIL_TAKEN", "An account with this e-mail already exists. Please sign in.", 409);
   const firingi = await prisma.company.findFirstOrThrow({ where: { type: "ADMIN" }, orderBy: { createdAt: "asc" } });

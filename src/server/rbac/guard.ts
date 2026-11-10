@@ -75,10 +75,15 @@ export async function pageContext(): Promise<Ctx> {
   return ctx;
 }
 
-export async function pagePortal(portal: Portal): Promise<Ctx> {
+export async function pagePortal(portal: Portal, opts: { securitySetup?: boolean } = {}): Promise<Ctx> {
   const ctx = await pageContext();
   if (portal !== "admin" && ctx.company.status !== "APPROVED") redirect("/application-status");
   if (!portalsFor(ctx).includes(portal)) redirect("/forbidden");
+  // Two-factor login required by the security policy: set it up before anything else.
+  if (!opts.securitySetup && portal !== "driver") {
+    const { mustSetUpTwoFactor } = await import("@/server/services/security");
+    if (await mustSetUpTwoFactor(ctx)) redirect(`/${portal}/me/security?required=1`);
+  }
   return ctx;
 }
 

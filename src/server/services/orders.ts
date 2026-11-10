@@ -20,6 +20,8 @@ import { deliveryRulesFor } from "./cart";
 import { writeAudit } from "./audit";
 import { notify } from "@/server/notify/dispatch";
 import { invoiceDeliveredOrder } from "@/server/invoicing/service";
+import { assertCanOrder } from "./payments";
+import { platformSettings } from "./platform-settings";
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 
@@ -146,6 +148,11 @@ export async function ensureDelivery(tx: Tx, orderId: string) {
 export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null }) {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.orders.place"))
     throw new ForbiddenError();
+  if (input.requestedDeliveryDate) {
+    const days = (input.requestedDeliveryDate.getTime() - Date.now()) / 86400_000;
+    const max = (await platformSettings()).maxRequestedDays;
+    if (days < -1 || days > max) throw new ValidationError(`Choose a delivery date between today and ${max} days from now.`);
+  }
   const cart = await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
   if (cart?.routed && cart.items.length) {
     // "Order from FIRINGI": FIRINGI picks the supplier(s).
@@ -196,6 +203,8 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
       throw new AppError("BELOW_MINIMUM", `Minimum order for delivery is ${decision.minimum.toFixed(2)} € (excl. VAT). Add ${decision.missing.toFixed(2)} € more.`, 422);
     const feeVatRate = decision.feeNet.gt(0) && rules.firingi?.feeTaxCategoryId ? await vatRate(tx, ctx.company.countryId, address.city?.regionId ?? null, rules.firingi.feeTaxCategoryId) : new Decimal(0);
     const totals = computeTotals(lines.map((l) => l.calc), { feeNet: decision.feeNet, feeVatPercent: feeVatRate });
+    // Credit control: overdue invoices / credit limit (Payment Settings).
+    await assertCanOrder(ctx.company.id, totals.grandTotal);
 
     const number = await nextNumber(tx, "order", "FO");
     const order = await tx.order.create({
@@ -290,7 +299,9 @@ export async function getOrder(ctx: Ctx, id: string) {
   const role = await roleFor(ctx, order);
   if (!role) throw new NotFoundError("Order"); // don't reveal other companies' orders
   const actors = new Map((await prisma.user.findMany({ where: { id: { in: order.statusHistory.map((h) => h.byUserId).filter(Boolean) as string[] } }, select: { id: true, name: true } })).map((u) => [u.id, u.name]));
-  return { order, role, actors, allowed: allowedTransitions(ctx, role, order.status, order.deliveryMode) };
+  const settings = await platformSettings();
+  const allowed = allowedTransitions(ctx, role, order.status, order.deliveryMode).filter((s) => !(role === "BUYER" && s === "CANCELLED" && !settings.buyerCanCancel));
+  return { order, role, actors, allowed };
 }
 
 function actorFor(ctx: Ctx, role: OrderRole): Actor | null {
@@ -367,6 +378,7 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   const { order, actor } = await loadForChange(ctx, orderId);
   if (!canTransition(order.status, to, actor, order.deliveryMode)) throw new AppError("BAD_TRANSITION", `You can't change this order from ${order.status} to ${to}.`, 409);
   if ((to === "CANCELLED" || to === "EXCEPTION" || to === "RETURNED") && !reason?.trim()) throw new ValidationError("Please give a reason.");
+  if (actor === "BUYER" && to === "CANCELLED" && !(await platformSettings()).buyerCanCancel) throw new ForbiddenError("Please contact FIRINGI to cancel this order.");
   if (to === "SUPPLIER_PROCESSING" && order.status === "PENDING_CONFIRMATION") return confirmOrder(ctx, orderId, {});
   await prisma.$transaction((tx) => applyOrderTransition(tx, order, to, { reason, userId: ctx.user.id, companyId: ctx.company.id }));
   if (to === "CANCELLED" && actor === "VENDOR" && order.status === "PENDING_CONFIRMATION") {

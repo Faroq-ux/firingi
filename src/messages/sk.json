@@ -55,7 +55,15 @@
     "invalid": "Neplatný e-mail alebo heslo, alebo je účet vypnutý.",
     "noAccount": "Ste na FIRINGI noví?",
     "register": "Požiadať o účet",
-    "tooMany": "Príliš veľa pokusov o prihlásenie. Počkajte minútu a skúste to znova."
+    "tooMany": "Príliš veľa pokusov o prihlásenie. Počkajte minútu a skúste to znova.",
+    "codeTitle": "Dvojfázové prihlásenie",
+    "codeHint": "Zadajte 6-miestny kód z overovacej aplikácie.",
+    "backupHint": "Zadajte jeden zo záložných kódov.",
+    "code": "Kód",
+    "verify": "Overiť",
+    "useBackup": "Použiť záložný kód",
+    "useApp": "Použiť overovaciu aplikáciu",
+    "badCode": "Tento kód nefungoval."
   },
   "register": {
     "title": "Požiadať o účet FIRINGI",
@@ -564,7 +572,10 @@
       "moved": "Hotovo — FIRINGI ju odovzdalo inému veľkoobchodu:",
       "none": "Teraz ju nemôže prevziať žiadny veľkoobchod. Tím FIRINGI nájde riešenie a ozve sa vám.",
       "cancelled": "Zrušené. Nebude vám nič účtované."
-    }
+    },
+    "creditOverdue": "Máte faktúru po splatnosti už {days} dní — zaplaťte ju pred novými objednávkami.",
+    "creditLimit": "Táto objednávka presahuje váš dostupný úver ({available} z {limit}).",
+    "openInvoices": "Zobraziť otvorené faktúry"
   },
   "finance": {
     "invoices": "Faktúry",
@@ -647,7 +658,12 @@
       "PAUSED": "Pozastavená",
       "ENDED": "Ukončená",
       "DRAFT": "Koncept"
-    }
+    },
+    "howToPay": "Ako zaplatiť",
+    "payByTransfer": "Bankový prevod na {holder}, IBAN",
+    "payByMbWay": "MB WAY na číslo",
+    "payOnDelivery": "V hotovosti alebo kartou vodičovi pri doručení.",
+    "payReference": "Uveďte číslo faktúry v referencii platby."
   },
   "shell": {
     "cart": "Košík",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Spolu (bez DPH)",
     "total": "Na fakturáciu FIRINGI (bez DPH)",
     "notes": "Poznámky zákazníka"
+  },
+  "security": {
+    "title": "Zabezpečenie",
+    "required": "Pre váš účet je dvojfázové prihlásenie povinné. Zapnite ho, aby ste mohli pokračovať.",
+    "twoFactor": "Dvojfázové prihlásenie",
+    "twoFactorIntro": "Okrem hesla sa prihlasujete 6-miestnym kódom z overovacej aplikácie (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Zapnuté",
+    "off": "Vypnuté",
+    "password": "Vaše heslo",
+    "turnOn": "Zapnúť",
+    "scan": "Naskenujte tento kód overovacou aplikáciou alebo zadajte kľúč ručne:",
+    "key": "Kľúč",
+    "backupCodes": "Záložné kódy — uložte ich na bezpečné miesto. Každý funguje raz, ak stratíte telefón.",
+    "enterCode": "6-miestny kód z aplikácie",
+    "verify": "Overiť a zapnúť",
+    "enabled": "Dvojfázové prihlásenie je zapnuté.",
+    "turnOff": "Vypnúť",
+    "cannotTurnOff": "Pre váš účet povinné — nedá sa vypnúť.",
+    "badCode": "Tento kód nefungoval. Skúste to znova.",
+    "wrongPassword": "Nesprávne heslo.",
+    "sessions": "Kde ste prihlásení",
+    "sessionsIntro": "Odhláste zariadenia, ktoré nepoznáte.",
+    "thisDevice": "Toto zariadenie",
+    "lastActive": "naposledy aktívne {date}",
+    "signedIn": "prihlásené {date}",
+    "end": "Odhlásiť",
+    "endOthers": "Odhlásiť všetky ostatné zariadenia",
+    "ended": "Odhlásených {count} zariadení."
+  },
+  "privacy": {
+    "title": "Moje údaje",
+    "intro": "Vaše práva podľa GDPR: zobraziť, odniesť a vymazať svoje osobné údaje.",
+    "exportIntro": "Stiahnite si kópiu všetkého, čo o vás FIRINGI uchováva (účet, firmy a roly, prihlásenia, oznámenia a správy, súhlasy).",
+    "export": "Stiahnuť moje údaje",
+    "eraseIntro": "Požiadajte FIRINGI o vymazanie účtu. Meno, e-mail, telefón a história sa odstránia; objednávky a faktúry vašej firmy sa uchovávajú anonymne, ako vyžaduje zákon (10 rokov).",
+    "reason": "Dôvod (nepovinné)",
+    "erase": "Vymazať môj účet",
+    "requested": "Požiadali ste o vymazanie účtu — FIRINGI odpovie do 30 dní.",
+    "withdraw": "Zrušiť žiadosť",
+    "rejected": "FIRINGI zatiaľ nemohlo vymazať váš účet: {note}"
   }
 }

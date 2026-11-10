@@ -55,7 +55,15 @@
     "invalid": "Invalid e-mail or password, or the account is disabled.",
     "noAccount": "New to FIRINGI?",
     "register": "Apply for an account",
-    "tooMany": "Too many sign-in attempts. Please wait a minute and try again."
+    "tooMany": "Too many sign-in attempts. Please wait a minute and try again.",
+    "codeTitle": "Two-factor login",
+    "codeHint": "Enter the 6-digit code from your authenticator app.",
+    "backupHint": "Enter one of your backup codes.",
+    "code": "Code",
+    "verify": "Verify",
+    "useBackup": "Use a backup code instead",
+    "useApp": "Use the authenticator app",
+    "badCode": "That code didn't work."
   },
   "register": {
     "title": "Apply for a FIRINGI account",
@@ -564,7 +572,10 @@
       "moved": "Done — FIRINGI passed it to another wholesaler:",
       "none": "No wholesaler can take it right now. FIRINGI's team will look for a solution and contact you.",
       "cancelled": "Cancelled. You won't be charged for it."
-    }
+    },
+    "creditOverdue": "You have an invoice overdue for {days} days — please pay it before placing new orders.",
+    "creditLimit": "This order is above your available credit ({available} of {limit}).",
+    "openInvoices": "See open invoices"
   },
   "finance": {
     "invoices": "Invoices",
@@ -647,7 +658,12 @@
       "PAUSED": "Paused",
       "ENDED": "Ended",
       "DRAFT": "Draft"
-    }
+    },
+    "howToPay": "How to pay",
+    "payByTransfer": "Bank transfer to {holder}, IBAN",
+    "payByMbWay": "MB WAY to",
+    "payOnDelivery": "Cash or card to the driver on delivery.",
+    "payReference": "Please put the invoice number in the payment reference."
   },
   "shell": {
     "cart": "Cart",
@@ -1119,5 +1135,45 @@
     "lineTotal": "Total (excl. VAT)",
     "total": "To invoice FIRINGI (excl. VAT)",
     "notes": "Customer notes"
+  },
+  "security": {
+    "title": "Security",
+    "required": "Two-factor login is required for your account. Turn it on to continue.",
+    "twoFactor": "Two-factor login",
+    "twoFactorIntro": "Besides your password, sign in with a 6-digit code from an authenticator app (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "On",
+    "off": "Off",
+    "password": "Your password",
+    "turnOn": "Turn on",
+    "scan": "Scan this code with your authenticator app, or enter the key by hand:",
+    "key": "Key",
+    "backupCodes": "Backup codes — keep them somewhere safe. Each one works once if you lose your phone.",
+    "enterCode": "6-digit code from the app",
+    "verify": "Verify and turn on",
+    "enabled": "Two-factor login is on.",
+    "turnOff": "Turn off",
+    "cannotTurnOff": "Required for your account — it can't be turned off.",
+    "badCode": "That code didn't work. Try again.",
+    "wrongPassword": "Wrong password.",
+    "sessions": "Where you're signed in",
+    "sessionsIntro": "Sign out devices you don't recognise.",
+    "thisDevice": "This device",
+    "lastActive": "last active {date}",
+    "signedIn": "signed in {date}",
+    "end": "Sign out",
+    "endOthers": "Sign out all other devices",
+    "ended": "Signed out {count} device(s)."
+  },
+  "privacy": {
+    "title": "My data",
+    "intro": "Your rights under the GDPR: see, take and delete your personal data.",
+    "exportIntro": "Download a copy of everything FIRINGI keeps about you (account, companies and roles, sign-ins, notifications and messages, consents).",
+    "export": "Download my data",
+    "eraseIntro": "Ask FIRINGI to delete your account. Your name, e-mail, phone and history are removed; your company's orders and invoices are kept anonymously, as the law requires (10 years).",
+    "reason": "Reason (optional)",
+    "erase": "Delete my account",
+    "requested": "You asked to delete your account — FIRINGI will answer within 30 days.",
+    "withdraw": "Cancel the request",
+    "rejected": "FIRINGI couldn't delete your account yet: {note}"
   }
 }

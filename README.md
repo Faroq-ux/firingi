@@ -55,6 +55,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/delivery.mjs http://localhost:3000 [screenshotDir]` | Browser test of vendor fleet + service areas, driver app with signature, returns, failed delivery, control tower, multi-order setting* |
 | `node tests/e2e/notifications.mjs http://localhost:3000 [screenshotDir]` | Browser test of the bell, notification settings, message log, WhatsApp test send, templates and per-event channels* |
 | `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
+| `node tests/e2e/go-live.mjs http://localhost:3000 [screenshotDir]` | Browser test of two-factor login, sessions, SAF-T, data privacy, payments, settings notice and API keys* |
 | `node tests/e2e/firingi-ordering.mjs http://localhost:3000 [screenshotDir]` | Browser test of ordering from FIRINGI, Delivery Orders, in-house small orders, the customer's decision* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
@@ -328,6 +329,37 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
     close after the decision time (default 48 h);
   - **wholesaler ← distributor** → a distributor's cancellation cancels the order; nothing moves.
   - The customer is only invoiced for what is delivered.
+
+## Go-live essentials (Phase 11)
+
+- **SAF-T (PT)** (*Invoices & Tax › SAF-T / Compliance*): monthly SAF-T PT 1.04_01 XML of
+  FIRINGI's invoices and credit notes per legal entity (Header, Customers, Products, Tax table,
+  SalesInvoices with ATCUD, hash, references for credit notes). The page checks every series:
+  numbering without gaps, unbroken hash chain, ATCUD on every document, series communicated to
+  AT. **Before go-live** a certified invoicing provider must replace the internal development
+  provider (the page warns until then; set `SAFT_CERTIFICATE_NUMBER`).
+- **Security**: two-factor login with an authenticator app (TOTP + 10 backup codes) on everyone's
+  *Security* page (click your name); sessions per device with sign-out; *Settings › Security*
+  can require two-factor for FIRINGI staff (the admin must use it first) and for company owners,
+  set the maximum session length, sign a user out everywhere and reset a lost authenticator.
+- **Data privacy (GDPR)**: everyone downloads their personal data (JSON) from *Security › My data*
+  and can ask for deletion; *Risk & Compliance › Data Privacy* reviews requests. Deletion
+  anonymises the account (name, e-mail, phone, consents, password, two-factor, devices,
+  notifications, message texts); orders and invoices are kept (10-year legal retention) and the
+  append-only audit log stays. A company's only owner can't be deleted first.
+- **Payments & credit control** (*Settings › Payment Settings*): payment methods shown to buyers
+  (bank transfer to FIRINGI's IBAN, MB WAY, cash/card on delivery; Multibanco, SEPA debit and
+  card need a payment provider), default terms and credit limit for newly approved buyers,
+  checkout blocked when an invoice is overdue beyond the grace period (default 15 days) or when
+  unpaid invoices + open orders + the new order exceed the credit limit. *Risk › Payment Risk*
+  lists every buyer's exposure, overdue amounts and status, with terms/limit editing.
+- **Settings**: *Marketplace* (support contacts, a notice shown on every portal, driver
+  applications), *Orders* (buyers may cancel until confirmation; furthest requested delivery
+  date), *Vendors* (wholesaler / distributor applications, offer approval), *Customers*
+  (customer applications).
+- **API & Integrations**: FIRINGI issues API keys for a company user with scopes
+  (`catalogue.read`, `orders.read`); shown once, stored as a hash, revocable. Use
+  `Authorization: Bearer fk_live_…` with `GET /api/catalogue/offers` and `GET /api/v1/orders`.
 
 ## Configuration notes
 

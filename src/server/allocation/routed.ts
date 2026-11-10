@@ -15,6 +15,7 @@ import { pricedOffers } from "@/server/data/catalogue-buyer";
 import { vatRate } from "@/server/services/orders";
 import { deliveryRulesFor } from "@/server/services/cart";
 import { writeAudit } from "@/server/services/audit";
+import { assertCanOrder } from "@/server/services/payments";
 import { notify } from "@/server/notify/dispatch";
 import { allocationRules } from "./rules";
 import { createAllocatedOrder, findCandidates, planMoves, type Candidate, type MoveItem } from "./engine";
@@ -91,6 +92,9 @@ export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: Cart
     const out = [];
     for (const [i, p] of plan.picks.entries())
       out.push(await createAllocatedOrder(tx, base, p.candidate.vendorId, plan.items, p.covers, i === feeIdx ? plan.feeNet : new Decimal(0), "Ordered from FIRINGI", ctx.user.id));
+    // Credit control on the whole checkout (rolls everything back when blocked).
+    const gross = (await tx.order.findMany({ where: { id: { in: out.map((o) => o.orderId) } }, select: { grandTotal: true } })).reduce((a, o) => a.plus(o.grandTotal.toString()), new Decimal(0));
+    await assertCanOrder(ctx.company.id, gross);
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: out[0].orderId, after: { routed: true, orders: out.map((o) => ({ number: o.number, vendorId: o.vendorId, mode: o.mode })) } }, tx);
     return out;

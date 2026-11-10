@@ -12,6 +12,7 @@ import { catalogueItem, pricedOffers } from "@/server/data/catalogue-buyer";
 import { checkQty, computeLine } from "@/server/orders/calc";
 import { decideDelivery } from "@/server/orders/delivery-rule";
 import { orderingMode, planRouted } from "@/server/allocation/routed";
+import { creditBlock } from "./payments";
 
 function requireBuyer(ctx: Ctx) {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.orders.place"))
@@ -140,7 +141,9 @@ export async function cartView(ctx: Ctx) {
     }
   }
   const feeNet = delivery?.ok ? delivery.feeNet : new Decimal(0);
+  const credit = lines.length ? await creditBlock(ctx.company.id, goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat)) : null;
   return {
+    credit,
     routed: false,
     seller: seller && { id: seller.id, name: seller.tradeName ?? seller.legalName },
     lines,
@@ -186,7 +189,9 @@ async function routedCartView(
       delivery = { ok: true, mode: plan.byFiringi ? "FIRINGI_FLEET" : "VENDOR_FLEET", feeNet: feeNet.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: rate.toString(), suppliers: plan.picks.length };
     }
   }
+  const credit = lines.length ? await creditBlock(ctx.company.id, goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat)) : null;
   return {
+    credit,
     routed: true,
     seller: { id: "", name: "FIRINGI" },
     lines, unavailable,

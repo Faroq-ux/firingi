@@ -55,7 +55,15 @@
     "invalid": "E-Mail oder Passwort ungültig, oder das Konto ist deaktiviert.",
     "noAccount": "Neu bei FIRINGI?",
     "register": "Konto beantragen",
-    "tooMany": "Zu viele Anmeldeversuche. Bitte warten Sie eine Minute und versuchen Sie es erneut."
+    "tooMany": "Zu viele Anmeldeversuche. Bitte warten Sie eine Minute und versuchen Sie es erneut.",
+    "codeTitle": "Zwei-Faktor-Anmeldung",
+    "codeHint": "Geben Sie den 6-stelligen Code aus Ihrer Authenticator-App ein.",
+    "backupHint": "Geben Sie einen Ihrer Backup-Codes ein.",
+    "code": "Code",
+    "verify": "Bestätigen",
+    "useBackup": "Stattdessen einen Backup-Code verwenden",
+    "useApp": "Authenticator-App verwenden",
+    "badCode": "Dieser Code hat nicht funktioniert."
   },
   "register": {
     "title": "FIRINGI-Konto beantragen",
@@ -564,7 +572,10 @@
       "moved": "Erledigt — FIRINGI hat sie an einen anderen Großhändler weitergegeben:",
       "none": "Derzeit kann kein Großhändler sie übernehmen. Das FIRINGI-Team sucht eine Lösung und meldet sich bei Ihnen.",
       "cancelled": "Storniert. Ihnen wird nichts berechnet."
-    }
+    },
+    "creditOverdue": "Sie haben eine Rechnung, die seit {days} Tagen überfällig ist — bitte bezahlen Sie sie vor neuen Bestellungen.",
+    "creditLimit": "Diese Bestellung übersteigt Ihren verfügbaren Kredit ({available} von {limit}).",
+    "openInvoices": "Offene Rechnungen ansehen"
   },
   "finance": {
     "invoices": "Rechnungen",
@@ -647,7 +658,12 @@
       "PAUSED": "Pausiert",
       "ENDED": "Beendet",
       "DRAFT": "Entwurf"
-    }
+    },
+    "howToPay": "So bezahlen Sie",
+    "payByTransfer": "Überweisung an {holder}, IBAN",
+    "payByMbWay": "MB WAY an",
+    "payOnDelivery": "Bar oder mit Karte beim Fahrer bei Lieferung.",
+    "payReference": "Bitte geben Sie die Rechnungsnummer im Verwendungszweck an."
   },
   "shell": {
     "cart": "Warenkorb",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Summe (netto)",
     "total": "An FIRINGI zu berechnen (netto)",
     "notes": "Hinweise des Kunden"
+  },
+  "security": {
+    "title": "Sicherheit",
+    "required": "Für Ihr Konto ist die Zwei-Faktor-Anmeldung erforderlich. Aktivieren Sie sie, um fortzufahren.",
+    "twoFactor": "Zwei-Faktor-Anmeldung",
+    "twoFactorIntro": "Zusätzlich zu Ihrem Passwort melden Sie sich mit einem 6-stelligen Code aus einer Authenticator-App an (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Ein",
+    "off": "Aus",
+    "password": "Ihr Passwort",
+    "turnOn": "Aktivieren",
+    "scan": "Scannen Sie diesen Code mit Ihrer Authenticator-App oder geben Sie den Schlüssel von Hand ein:",
+    "key": "Schlüssel",
+    "backupCodes": "Backup-Codes — bewahren Sie sie sicher auf. Jeder funktioniert einmal, falls Sie Ihr Telefon verlieren.",
+    "enterCode": "6-stelliger Code aus der App",
+    "verify": "Bestätigen und aktivieren",
+    "enabled": "Die Zwei-Faktor-Anmeldung ist aktiv.",
+    "turnOff": "Deaktivieren",
+    "cannotTurnOff": "Für Ihr Konto erforderlich — kann nicht deaktiviert werden.",
+    "badCode": "Dieser Code hat nicht funktioniert. Bitte erneut versuchen.",
+    "wrongPassword": "Falsches Passwort.",
+    "sessions": "Wo Sie angemeldet sind",
+    "sessionsIntro": "Melden Sie Geräte ab, die Sie nicht kennen.",
+    "thisDevice": "Dieses Gerät",
+    "lastActive": "zuletzt aktiv {date}",
+    "signedIn": "angemeldet {date}",
+    "end": "Abmelden",
+    "endOthers": "Alle anderen Geräte abmelden",
+    "ended": "{count} Gerät(e) abgemeldet."
+  },
+  "privacy": {
+    "title": "Meine Daten",
+    "intro": "Ihre Rechte nach der DSGVO: Ihre personenbezogenen Daten einsehen, mitnehmen und löschen.",
+    "exportIntro": "Laden Sie eine Kopie von allem herunter, was FIRINGI über Sie speichert (Konto, Firmen und Rollen, Anmeldungen, Benachrichtigungen und Nachrichten, Einwilligungen).",
+    "export": "Meine Daten herunterladen",
+    "eraseIntro": "Bitten Sie FIRINGI, Ihr Konto zu löschen. Name, E-Mail, Telefon und Verlauf werden entfernt; Bestellungen und Rechnungen Ihrer Firma werden anonym aufbewahrt, wie es das Gesetz verlangt (10 Jahre).",
+    "reason": "Grund (optional)",
+    "erase": "Mein Konto löschen",
+    "requested": "Sie haben die Löschung Ihres Kontos beantragt — FIRINGI antwortet innerhalb von 30 Tagen.",
+    "withdraw": "Antrag zurückziehen",
+    "rejected": "FIRINGI konnte Ihr Konto noch nicht löschen: {note}"
   }
 }

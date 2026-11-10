@@ -55,7 +55,15 @@
     "invalid": "Vale e-post või parool või konto on keelatud.",
     "noAccount": "Uus FIRINGI kasutaja?",
     "register": "Taotle kontot",
-    "tooMany": "Liiga palju sisselogimiskatseid. Oodake minut ja proovige uuesti."
+    "tooMany": "Liiga palju sisselogimiskatseid. Oodake minut ja proovige uuesti.",
+    "codeTitle": "Kaheastmeline sisselogimine",
+    "codeHint": "Sisestage autentimisrakenduse 6-kohaline kood.",
+    "backupHint": "Sisestage üks oma varukoodidest.",
+    "code": "Kood",
+    "verify": "Kinnita",
+    "useBackup": "Kasuta varukoodi",
+    "useApp": "Kasuta autentimisrakendust",
+    "badCode": "See kood ei toiminud."
   },
   "register": {
     "title": "Taotle FIRINGI kontot",
@@ -564,7 +572,10 @@
       "moved": "Valmis — FIRINGI andis selle teisele hulgimüüjale:",
       "none": "Praegu ei saa ükski hulgimüüja seda võtta. FIRINGI meeskond otsib lahenduse ja võtab teiega ühendust.",
       "cancelled": "Tühistatud. Teilt tasu ei võeta."
-    }
+    },
+    "creditOverdue": "Teil on arve, mis on {days} päeva üle tähtaja — tasuge see enne uusi tellimusi.",
+    "creditLimit": "See tellimus ületab teie vaba krediiti ({available} / {limit}).",
+    "openInvoices": "Vaata tasumata arveid"
   },
   "finance": {
     "invoices": "Arved",
@@ -647,7 +658,12 @@
       "PAUSED": "Peatatud",
       "ENDED": "Lõppenud",
       "DRAFT": "Mustand"
-    }
+    },
+    "howToPay": "Kuidas maksta",
+    "payByTransfer": "Pangaülekanne saajale {holder}, IBAN",
+    "payByMbWay": "MB WAY numbrile",
+    "payOnDelivery": "Sularahas või kaardiga juhile kättetoimetamisel.",
+    "payReference": "Märkige makse selgitusse arve number."
   },
   "shell": {
     "cart": "Ostukorv",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Kokku (km-ta)",
     "total": "FIRINGI-le arveldada (km-ta)",
     "notes": "Kliendi märkused"
+  },
+  "security": {
+    "title": "Turvalisus",
+    "required": "Teie kontol on kaheastmeline sisselogimine kohustuslik. Jätkamiseks lülitage see sisse.",
+    "twoFactor": "Kaheastmeline sisselogimine",
+    "twoFactorIntro": "Lisaks paroolile logite sisse autentimisrakenduse 6-kohalise koodiga (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Sees",
+    "off": "Väljas",
+    "password": "Teie parool",
+    "turnOn": "Lülita sisse",
+    "scan": "Skannige see kood autentimisrakendusega või sisestage võti käsitsi:",
+    "key": "Võti",
+    "backupCodes": "Varukoodid — hoidke neid turvalises kohas. Iga kood töötab üks kord, kui kaotate telefoni.",
+    "enterCode": "Rakenduse 6-kohaline kood",
+    "verify": "Kinnita ja lülita sisse",
+    "enabled": "Kaheastmeline sisselogimine on sees.",
+    "turnOff": "Lülita välja",
+    "cannotTurnOff": "Teie kontol kohustuslik — välja lülitada ei saa.",
+    "badCode": "See kood ei toiminud. Proovige uuesti.",
+    "wrongPassword": "Vale parool.",
+    "sessions": "Kus olete sisse logitud",
+    "sessionsIntro": "Logige välja seadmed, mida te ei tunne.",
+    "thisDevice": "See seade",
+    "lastActive": "viimati aktiivne {date}",
+    "signedIn": "sisse logitud {date}",
+    "end": "Logi välja",
+    "endOthers": "Logi välja kõik teised seadmed",
+    "ended": "Välja logitud seadmeid: {count}."
+  },
+  "privacy": {
+    "title": "Minu andmed",
+    "intro": "Teie õigused GDPR-i järgi: oma isikuandmeid näha, kaasa võtta ja kustutada.",
+    "exportIntro": "Laadige alla koopia kõigest, mida FIRINGI teie kohta hoiab (konto, ettevõtted ja rollid, sisselogimised, teavitused ja sõnumid, nõusolekud).",
+    "export": "Laadi minu andmed alla",
+    "eraseIntro": "Paluge FIRINGI-l oma konto kustutada. Nimi, e-post, telefon ja ajalugu eemaldatakse; teie ettevõtte tellimused ja arved säilitatakse anonüümselt, nagu seadus nõuab (10 aastat).",
+    "reason": "Põhjus (valikuline)",
+    "erase": "Kustuta minu konto",
+    "requested": "Palusite oma konto kustutada — FIRINGI vastab 30 päeva jooksul.",
+    "withdraw": "Tühista taotlus",
+    "rejected": "FIRINGI ei saanud teie kontot veel kustutada: {note}"
   }
 }

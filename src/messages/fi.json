@@ -55,7 +55,15 @@
     "invalid": "Virheellinen sähköposti tai salasana, tai tili on poistettu käytöstä.",
     "noAccount": "Uusi FIRINGIssä?",
     "register": "Hae tiliä",
-    "tooMany": "Liian monta kirjautumisyritystä. Odota minuutti ja yritä uudelleen."
+    "tooMany": "Liian monta kirjautumisyritystä. Odota minuutti ja yritä uudelleen.",
+    "codeTitle": "Kaksivaiheinen kirjautuminen",
+    "codeHint": "Anna todennussovelluksen 6-numeroinen koodi.",
+    "backupHint": "Anna yksi varakoodeistasi.",
+    "code": "Koodi",
+    "verify": "Vahvista",
+    "useBackup": "Käytä varakoodia",
+    "useApp": "Käytä todennussovellusta",
+    "badCode": "Koodi ei toiminut."
   },
   "register": {
     "title": "Hae FIRINGI-tiliä",
@@ -564,7 +572,10 @@
       "moved": "Valmis — FIRINGI siirsi sen toiselle tukkurille:",
       "none": "Mikään tukkuri ei voi ottaa sitä juuri nyt. FIRINGIn tiimi etsii ratkaisun ja ottaa sinuun yhteyttä.",
       "cancelled": "Peruutettu. Sinua ei laskuteta."
-    }
+    },
+    "creditOverdue": "Sinulla on lasku, joka on ollut erääntyneenä {days} päivää — maksa se ennen uusia tilauksia.",
+    "creditLimit": "Tilaus ylittää käytettävissä olevan luottosi ({available} / {limit}).",
+    "openInvoices": "Näytä avoimet laskut"
   },
   "finance": {
     "invoices": "Laskut",
@@ -647,7 +658,12 @@
       "PAUSED": "Keskeytetty",
       "ENDED": "Päättynyt",
       "DRAFT": "Luonnos"
-    }
+    },
+    "howToPay": "Näin maksat",
+    "payByTransfer": "Tilisiirto: {holder}, IBAN",
+    "payByMbWay": "MB WAY numeroon",
+    "payOnDelivery": "Käteisellä tai kortilla kuljettajalle toimituksen yhteydessä.",
+    "payReference": "Merkitse laskun numero maksun viitteeksi."
   },
   "shell": {
     "cart": "Ostoskori",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Yhteensä (alv 0 %)",
     "total": "Laskutettava FIRINGIltä (alv 0 %)",
     "notes": "Asiakkaan huomautukset"
+  },
+  "security": {
+    "title": "Turvallisuus",
+    "required": "Kaksivaiheinen kirjautuminen on pakollinen tilillesi. Ota se käyttöön jatkaaksesi.",
+    "twoFactor": "Kaksivaiheinen kirjautuminen",
+    "twoFactorIntro": "Salasanan lisäksi kirjaudut todennussovelluksen 6-numeroisella koodilla (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Käytössä",
+    "off": "Pois",
+    "password": "Salasanasi",
+    "turnOn": "Ota käyttöön",
+    "scan": "Skannaa koodi todennussovelluksella tai syötä avain käsin:",
+    "key": "Avain",
+    "backupCodes": "Varakoodit — säilytä ne turvassa. Kukin toimii kerran, jos kadotat puhelimesi.",
+    "enterCode": "Sovelluksen 6-numeroinen koodi",
+    "verify": "Vahvista ja ota käyttöön",
+    "enabled": "Kaksivaiheinen kirjautuminen on käytössä.",
+    "turnOff": "Poista käytöstä",
+    "cannotTurnOff": "Pakollinen tilillesi — ei voi poistaa käytöstä.",
+    "badCode": "Koodi ei toiminut. Yritä uudelleen.",
+    "wrongPassword": "Väärä salasana.",
+    "sessions": "Missä olet kirjautuneena",
+    "sessionsIntro": "Kirjaa ulos laitteet, joita et tunnista.",
+    "thisDevice": "Tämä laite",
+    "lastActive": "viimeksi aktiivinen {date}",
+    "signedIn": "kirjautunut {date}",
+    "end": "Kirjaudu ulos",
+    "endOthers": "Kirjaa ulos kaikki muut laitteet",
+    "ended": "{count} laitetta kirjattu ulos."
+  },
+  "privacy": {
+    "title": "Omat tietoni",
+    "intro": "Oikeutesi GDPR:n mukaan: nähdä, saada ja poistaa henkilötietosi.",
+    "exportIntro": "Lataa kopio kaikesta, mitä FIRINGI säilyttää sinusta (tili, yritykset ja roolit, kirjautumiset, ilmoitukset ja viestit, suostumukset).",
+    "export": "Lataa tietoni",
+    "eraseIntro": "Pyydä FIRINGIä poistamaan tilisi. Nimi, sähköposti, puhelin ja historia poistetaan; yrityksesi tilaukset ja laskut säilytetään nimettöminä, kuten laki vaatii (10 vuotta).",
+    "reason": "Syy (valinnainen)",
+    "erase": "Poista tilini",
+    "requested": "Pyysit tilisi poistamista — FIRINGI vastaa 30 päivän kuluessa.",
+    "withdraw": "Peru pyyntö",
+    "rejected": "FIRINGI ei vielä voinut poistaa tiliäsi: {note}"
   }
 }

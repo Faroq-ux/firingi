@@ -67,7 +67,13 @@ export default async function CartPage() {
                 {d.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : t(d.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(d.minimum, locale), missing: formatMoney(d.missing, locale), tax })}
               </p>
             ))}
-            <CheckoutForm disabled={!d?.ok} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}` }))} />
+            {cart.credit && (
+              <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive" data-testid="credit-block">
+                {cart.credit.code === "PAYMENT_OVERDUE" ? t("creditOverdue", { days: cart.credit.days ?? 0 }) : t("creditLimit", { available: formatMoney(cart.credit.available ?? 0, locale), limit: formatMoney(cart.credit.limit ?? 0, locale) })}{" "}
+                <Link href="/buy/finance/invoices" className="underline">{t("openInvoices")}</Link>
+              </p>
+            )}
+            <CheckoutForm disabled={!d?.ok || !!cart.credit} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}` }))} />
           </CardContent>
         </Card>
       </div>

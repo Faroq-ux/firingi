@@ -18,7 +18,8 @@ export type TopbarProps = {
   portals: { key: string; label: string; href: string; active: boolean }[];
   locale: string;
   locales: { code: string; native: string }[];
-  labels: { signOut: string; language: string; company: string; menu: string };
+  labels: { signOut: string; language: string; company: string; menu: string; security?: string };
+  securityHref?: string | null;
   cart?: { count: number; label: string } | null;
   bell?: { initialUnread: number; base: string; labels: BellLabels } | null;
   theme: { initial: ThemeChoice; labels: Record<ThemeChoice, string> };
@@ -89,10 +90,17 @@ export function Topbar(p: TopbarProps) {
         </select>
 
         <ThemeToggle initial={p.theme.initial} labels={p.theme.labels} />
-        <div className="hidden text-right leading-tight lg:block">
-          <div className="text-sm font-medium">{p.userName}</div>
-          <div className="text-xs text-muted-foreground">{p.userEmail}</div>
-        </div>
+        {p.securityHref ? (
+          <Link href={p.securityHref} title={p.labels.security} data-testid="my-security" className="hidden rounded-md px-1 text-right leading-tight hover:bg-accent lg:block">
+            <div className="text-sm font-medium">{p.userName}</div>
+            <div className="text-xs text-muted-foreground">{p.userEmail}</div>
+          </Link>
+        ) : (
+          <div className="hidden text-right leading-tight lg:block">
+            <div className="text-sm font-medium">{p.userName}</div>
+            <div className="text-xs text-muted-foreground">{p.userEmail}</div>
+          </div>
+        )}
         <button
           type="button"
           title={p.labels.signOut}

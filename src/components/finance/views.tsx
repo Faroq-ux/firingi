@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { pickLocalized } from "@/i18n/config";
+import { paymentInstructions } from "@/server/services/payments";
 import { AcceptButtons, PaymentForm, PromotionStatusButtons, VendorInvoiceReview, VendorInvoiceUpload } from "./controls";
 
 const VARIANT: Record<string, "success" | "warning" | "destructive" | "secondary" | "default"> = {
@@ -32,9 +33,21 @@ const pdfLink = (href: string, label = "PDF") => (
 export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean }) {
   const [rows, t, locale] = await Promise.all([listSalesInvoices(ctx, { as, docType, buyerType, unpaidOnly }), getTranslations("finance"), getLocale()]);
   const open = rows.reduce((a, r) => a + Number(r.open), 0);
+  const howToPay = as === "BUYER" ? await paymentInstructions(ctx.company.countryId) : null;
   return (
     <>
       <PageHeader title={title} description={`${rows.length} · ${t("balance")}: ${formatMoney(open, locale)}`} />
+      {howToPay && (howToPay.bankTransfer || howToPay.mbWay || howToPay.cashOnDelivery) && (
+        <Card className="mb-4" data-testid="how-to-pay">
+          <CardHeader><CardTitle>{t("howToPay")}</CardTitle></CardHeader>
+          <CardContent className="space-y-1 text-sm">
+            {howToPay.bankTransfer && <p>{t("payByTransfer", { holder: howToPay.bankTransfer.holder })} <span className="font-mono">{howToPay.bankTransfer.iban}</span></p>}
+            {howToPay.mbWay && <p>{t("payByMbWay")} <span className="font-mono">{howToPay.mbWay.phone}</span></p>}
+            {howToPay.cashOnDelivery && <p>{t("payOnDelivery")}</p>}
+            <p className="text-muted-foreground">{t("payReference")}</p>
+          </CardContent>
+        </Card>
+      )}
       <Table>
         <THead><TR><TH>{t("number")}</TH><TH>{t("date")}</TH>{as === "ADMIN" && <TH>Customer</TH>}<TH>{t("order")}</TH><TH className="text-right">{t("total")}</TH><TH className="text-right">{t("open")}</TH><TH>{t("status")}</TH><TH /></TR></THead>
         <TBody>

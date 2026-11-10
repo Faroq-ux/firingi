@@ -55,7 +55,15 @@
     "invalid": "Rangt netfang eða lykilorð, eða aðgangurinn er óvirkur.",
     "noAccount": "Ný(r) á FIRINGI?",
     "register": "Sækja um aðgang",
-    "tooMany": "Of margar innskráningartilraunir. Bíddu í mínútu og reyndu aftur."
+    "tooMany": "Of margar innskráningartilraunir. Bíddu í mínútu og reyndu aftur.",
+    "codeTitle": "Tveggja þrepa innskráning",
+    "codeHint": "Sláðu inn 6 stafa kóðann úr auðkenningarforritinu.",
+    "backupHint": "Sláðu inn einn af varakóðunum þínum.",
+    "code": "Kóði",
+    "verify": "Staðfesta",
+    "useBackup": "Nota varakóða í staðinn",
+    "useApp": "Nota auðkenningarforritið",
+    "badCode": "Þessi kóði virkaði ekki."
   },
   "register": {
     "title": "Sækja um FIRINGI-aðgang",
@@ -564,7 +572,10 @@
       "moved": "Lokið — FIRINGI færði hana til annars heildsala:",
       "none": "Enginn heildsali getur tekið hana núna. Teymi FIRINGI leitar lausnar og hefur samband við þig.",
       "cancelled": "Hætt við. Þú verður ekki rukkaður."
-    }
+    },
+    "creditOverdue": "Þú ert með reikning sem er {days} daga í vanskilum — greiddu hann áður en þú pantar meira.",
+    "creditLimit": "Þessi pöntun er umfram tiltæka heimild þína ({available} af {limit}).",
+    "openInvoices": "Sjá ógreidda reikninga"
   },
   "finance": {
     "invoices": "Reikningar",
@@ -647,7 +658,12 @@
       "PAUSED": "Í hléi",
       "ENDED": "Lokið",
       "DRAFT": "Drög"
-    }
+    },
+    "howToPay": "Hvernig á að greiða",
+    "payByTransfer": "Millifærsla til {holder}, IBAN",
+    "payByMbWay": "MB WAY í",
+    "payOnDelivery": "Reiðufé eða kort til bílstjórans við afhendingu.",
+    "payReference": "Settu reikningsnúmerið í skýringu greiðslunnar."
   },
   "shell": {
     "cart": "Karfa",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Samtals (án VSK)",
     "total": "Til reiknings til FIRINGI (án VSK)",
     "notes": "Athugasemdir viðskiptavinar"
+  },
+  "security": {
+    "title": "Öryggi",
+    "required": "Tveggja þrepa innskráning er skylda fyrir aðganginn þinn. Kveiktu á henni til að halda áfram.",
+    "twoFactor": "Tveggja þrepa innskráning",
+    "twoFactorIntro": "Auk lykilorðsins skráir þú þig inn með 6 stafa kóða úr auðkenningarforriti (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Kveikt",
+    "off": "Slökkt",
+    "password": "Lykilorðið þitt",
+    "turnOn": "Kveikja",
+    "scan": "Skannaðu þennan kóða með auðkenningarforritinu eða sláðu lykilinn inn handvirkt:",
+    "key": "Lykill",
+    "backupCodes": "Varakóðar — geymdu þá á öruggum stað. Hver virkar einu sinni ef þú týnir símanum.",
+    "enterCode": "6 stafa kóði úr forritinu",
+    "verify": "Staðfesta og kveikja",
+    "enabled": "Kveikt er á tveggja þrepa innskráningu.",
+    "turnOff": "Slökkva",
+    "cannotTurnOff": "Skylda fyrir aðganginn þinn — ekki hægt að slökkva.",
+    "badCode": "Þessi kóði virkaði ekki. Reyndu aftur.",
+    "wrongPassword": "Rangt lykilorð.",
+    "sessions": "Hvar þú ert skráð(ur) inn",
+    "sessionsIntro": "Skráðu út tæki sem þú þekkir ekki.",
+    "thisDevice": "Þetta tæki",
+    "lastActive": "síðast virkt {date}",
+    "signedIn": "skráð inn {date}",
+    "end": "Skrá út",
+    "endOthers": "Skrá út öll önnur tæki",
+    "ended": "{count} tæki skráð út."
+  },
+  "privacy": {
+    "title": "Gögnin mín",
+    "intro": "Réttindi þín samkvæmt GDPR: sjá, taka með og eyða persónuupplýsingum þínum.",
+    "exportIntro": "Sæktu afrit af öllu sem FIRINGI geymir um þig (aðgangur, fyrirtæki og hlutverk, innskráningar, tilkynningar og skilaboð, samþykki).",
+    "export": "Sækja gögnin mín",
+    "eraseIntro": "Biddu FIRINGI að eyða aðganginum þínum. Nafn, netfang, sími og saga eru fjarlægð; pantanir og reikningar fyrirtækisins eru geymd nafnlaust eins og lög krefjast (10 ár).",
+    "reason": "Ástæða (valfrjálst)",
+    "erase": "Eyða aðganginum mínum",
+    "requested": "Þú baðst um að aðganginum yrði eytt — FIRINGI svarar innan 30 daga.",
+    "withdraw": "Draga beiðnina til baka",
+    "rejected": "FIRINGI gat ekki enn eytt aðganginum þínum: {note}"
   }
 }

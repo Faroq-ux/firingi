@@ -5,6 +5,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
+import { twoFactor } from "better-auth/plugins";
 import { prisma } from "@/server/db";
 import { writeAudit } from "@/server/services/audit";
 
@@ -65,7 +66,8 @@ export const auth = betterAuth({
       },
     },
   },
-  plugins: [nextCookies()],
+  // Authenticator-app (TOTP) second factor with backup codes; nextCookies must stay last.
+  plugins: [twoFactor({ issuer: "FIRINGI" }), nextCookies()],
 });
 
 export type AuthSession = typeof auth.$Infer.Session;

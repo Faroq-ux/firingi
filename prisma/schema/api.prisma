@@ -1,0 +1,21 @@
+// ───────────────────────── API keys ─────────────────────────
+
+/// Key for FIRINGI's JSON API (integrations: ERP, POS, e-commerce). It acts as `userId` in
+/// `companyId`, limited to `scopes` AND that user's own permissions. Only a hash is stored.
+model ApiKey {
+  id          String    @id @default(cuid())
+  companyId   String
+  userId      String
+  name        String
+  prefix      String // first characters, shown to recognise the key
+  hash        String    @unique // sha256 of the full key
+  scopes      String[] // catalogue.read | orders.read
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
+  createdById String
+  createdAt   DateTime  @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}

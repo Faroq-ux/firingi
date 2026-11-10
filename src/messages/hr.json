@@ -55,7 +55,15 @@
     "invalid": "Neispravna e-pošta ili lozinka, ili je račun onemogućen.",
     "noAccount": "Novi ste na FIRINGI?",
     "register": "Zatražite račun",
-    "tooMany": "Previše pokušaja prijave. Pričekajte minutu i pokušajte ponovno."
+    "tooMany": "Previše pokušaja prijave. Pričekajte minutu i pokušajte ponovno.",
+    "codeTitle": "Prijava u dva koraka",
+    "codeHint": "Unesite 6-znamenkasti kôd iz aplikacije za autentifikaciju.",
+    "backupHint": "Unesite jedan od pričuvnih kôdova.",
+    "code": "Kôd",
+    "verify": "Potvrdi",
+    "useBackup": "Koristi pričuvni kôd",
+    "useApp": "Koristi aplikaciju za autentifikaciju",
+    "badCode": "Taj kôd nije uspio."
   },
   "register": {
     "title": "Zatražite FIRINGI račun",
@@ -564,7 +572,10 @@
       "moved": "Gotovo — FIRINGI ju je proslijedio drugom veletrgovcu:",
       "none": "Trenutačno je nijedan veletrgovac ne može preuzeti. Tim FIRINGI-ja potražit će rješenje i javiti vam se.",
       "cancelled": "Otkazano. Neće vam biti naplaćeno."
-    }
+    },
+    "creditOverdue": "Imate račun koji kasni {days} dana — platite ga prije novih narudžbi.",
+    "creditLimit": "Ova narudžba premašuje vaš raspoloživi kredit ({available} od {limit}).",
+    "openInvoices": "Pogledaj otvorene račune"
   },
   "finance": {
     "invoices": "Računi",
@@ -647,7 +658,12 @@
       "PAUSED": "Pauzirana",
       "ENDED": "Završena",
       "DRAFT": "Nacrt"
-    }
+    },
+    "howToPay": "Kako platiti",
+    "payByTransfer": "Bankovni prijenos na {holder}, IBAN",
+    "payByMbWay": "MB WAY na",
+    "payOnDelivery": "Gotovinom ili karticom vozaču pri dostavi.",
+    "payReference": "U poziv na broj upišite broj računa."
   },
   "shell": {
     "cart": "Košarica",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Ukupno (bez PDV-a)",
     "total": "Za račun FIRINGI-ju (bez PDV-a)",
     "notes": "Napomene kupca"
+  },
+  "security": {
+    "title": "Sigurnost",
+    "required": "Prijava u dva koraka obavezna je za vaš račun. Uključite je da biste nastavili.",
+    "twoFactor": "Prijava u dva koraka",
+    "twoFactorIntro": "Uz lozinku prijavljujete se 6-znamenkastim kôdom iz aplikacije za autentifikaciju (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Uključeno",
+    "off": "Isključeno",
+    "password": "Vaša lozinka",
+    "turnOn": "Uključi",
+    "scan": "Skenirajte ovaj kôd aplikacijom za autentifikaciju ili ručno unesite ključ:",
+    "key": "Ključ",
+    "backupCodes": "Pričuvni kôdovi — čuvajte ih na sigurnom mjestu. Svaki radi jednom ako izgubite telefon.",
+    "enterCode": "6-znamenkasti kôd iz aplikacije",
+    "verify": "Potvrdi i uključi",
+    "enabled": "Prijava u dva koraka je uključena.",
+    "turnOff": "Isključi",
+    "cannotTurnOff": "Obavezno za vaš račun — ne može se isključiti.",
+    "badCode": "Taj kôd nije uspio. Pokušajte ponovno.",
+    "wrongPassword": "Pogrešna lozinka.",
+    "sessions": "Gdje ste prijavljeni",
+    "sessionsIntro": "Odjavite uređaje koje ne prepoznajete.",
+    "thisDevice": "Ovaj uređaj",
+    "lastActive": "zadnja aktivnost {date}",
+    "signedIn": "prijavljeno {date}",
+    "end": "Odjava",
+    "endOthers": "Odjavi sve ostale uređaje",
+    "ended": "Odjavljeno uređaja: {count}."
+  },
+  "privacy": {
+    "title": "Moji podaci",
+    "intro": "Vaša prava prema GDPR-u: vidjeti, preuzeti i izbrisati svoje osobne podatke.",
+    "exportIntro": "Preuzmite kopiju svega što FIRINGI čuva o vama (račun, tvrtke i uloge, prijave, obavijesti i poruke, privole).",
+    "export": "Preuzmi moje podatke",
+    "eraseIntro": "Zatražite od FIRINGI-ja brisanje računa. Vaše ime, e-pošta, telefon i povijest se brišu; narudžbe i računi vaše tvrtke čuvaju se anonimno, kako zakon zahtijeva (10 godina).",
+    "reason": "Razlog (neobavezno)",
+    "erase": "Izbriši moj račun",
+    "requested": "Zatražili ste brisanje računa — FIRINGI će odgovoriti u roku od 30 dana.",
+    "withdraw": "Otkaži zahtjev",
+    "rejected": "FIRINGI još nije mogao izbrisati vaš račun: {note}"
   }
 }

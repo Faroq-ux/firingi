@@ -13,7 +13,7 @@ import { computeEffectivePermissions } from "@/server/rbac/effective";
 import type { PermissionCode } from "@/server/rbac/permissions";
 
 export type Ctx = {
-  user: { id: string; email: string; name: string; locale: string | null };
+  user: { id: string; email: string; name: string; locale: string | null; twoFactor: boolean };
   sessionId: string;
   membership: { id: string; isOwner: boolean };
   company: {
@@ -73,7 +73,7 @@ export async function loadContext(userId: string, sessionId: string, preferredCo
   });
 
   return {
-    user: { id: user.id, email: user.email, name: user.name, locale: user.locale },
+    user: { id: user.id, email: user.email, name: user.name, locale: user.locale, twoFactor: !!user.twoFactorEnabled },
     sessionId,
     membership: { id: m.id, isOwner: m.isOwner },
     company: {
@@ -99,8 +99,25 @@ export async function loadContext(userId: string, sessionId: string, preferredCo
 
 /** Context of the current request (memoised per request). null = not signed in / no access. */
 export const getContext = cache(async (): Promise<Ctx | null> => {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const h = await headers();
+  // API key ("Authorization: Bearer fk_…"): the key's user in the key's company, limited to its scopes.
+  if (h.get("authorization")?.startsWith("Bearer fk_")) {
+    const { resolveApiKey, scopePermissions } = await import("@/server/services/api-keys");
+    const key = await resolveApiKey(h.get("authorization"));
+    if (!key) return null;
+    const ctx = await loadContext(key.userId, `api:${key.id}`, key.companyId);
+    if (!ctx || ctx.company.id !== key.companyId) return null;
+    const allowed = scopePermissions(key.scopes);
+    return { ...ctx, permissions: new Set([...ctx.permissions].filter((p) => allowed.has(p))) };
+  }
+  const session = await auth.api.getSession({ headers: h });
   if (!session) return null;
+  // Maximum session length (Security settings): older sessions must sign in again.
+  const { sessionTooOld } = await import("@/server/services/security");
+  if (await sessionTooOld(new Date(session.session.createdAt))) {
+    await prisma.session.deleteMany({ where: { id: session.session.id } });
+    return null;
+  }
   const activeCompanyId = (session.session as { activeCompanyId?: string | null }).activeCompanyId;
   return loadContext(session.user.id, session.session.id, activeCompanyId);
 });

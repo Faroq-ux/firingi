@@ -55,7 +55,15 @@
     "invalid": "Fel e-post eller lösenord, eller så är kontot inaktiverat.",
     "noAccount": "Ny på FIRINGI?",
     "register": "Ansök om konto",
-    "tooMany": "För många inloggningsförsök. Vänta en minut och försök igen."
+    "tooMany": "För många inloggningsförsök. Vänta en minut och försök igen.",
+    "codeTitle": "Tvåstegsinloggning",
+    "codeHint": "Ange den 6-siffriga koden från din autentiseringsapp.",
+    "backupHint": "Ange en av dina reservkoder.",
+    "code": "Kod",
+    "verify": "Verifiera",
+    "useBackup": "Använd en reservkod i stället",
+    "useApp": "Använd autentiseringsappen",
+    "badCode": "Koden fungerade inte."
   },
   "register": {
     "title": "Ansök om ett FIRINGI-konto",
@@ -564,7 +572,10 @@
       "moved": "Klart — FIRINGI har lämnat den vidare till en annan grossist:",
       "none": "Ingen grossist kan ta den just nu. FIRINGIs team letar efter en lösning och kontaktar dig.",
       "cancelled": "Avbruten. Du debiteras inte."
-    }
+    },
+    "creditOverdue": "Du har en faktura som är {days} dagar försenad — betala den innan du lägger nya ordrar.",
+    "creditLimit": "Ordern överstiger din tillgängliga kredit ({available} av {limit}).",
+    "openInvoices": "Visa obetalda fakturor"
   },
   "finance": {
     "invoices": "Fakturor",
@@ -647,7 +658,12 @@
       "PAUSED": "Pausad",
       "ENDED": "Avslutad",
       "DRAFT": "Utkast"
-    }
+    },
+    "howToPay": "Så betalar du",
+    "payByTransfer": "Banköverföring till {holder}, IBAN",
+    "payByMbWay": "MB WAY till",
+    "payOnDelivery": "Kontant eller kort till föraren vid leverans.",
+    "payReference": "Ange fakturanumret som betalningsreferens."
   },
   "shell": {
     "cart": "Varukorg",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Totalt (exkl. moms)",
     "total": "Att fakturera FIRINGI (exkl. moms)",
     "notes": "Kundens anteckningar"
+  },
+  "security": {
+    "title": "Säkerhet",
+    "required": "Tvåstegsinloggning krävs för ditt konto. Aktivera den för att fortsätta.",
+    "twoFactor": "Tvåstegsinloggning",
+    "twoFactorIntro": "Utöver lösenordet loggar du in med en 6-siffrig kod från en autentiseringsapp (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "På",
+    "off": "Av",
+    "password": "Ditt lösenord",
+    "turnOn": "Aktivera",
+    "scan": "Skanna koden med din autentiseringsapp eller ange nyckeln manuellt:",
+    "key": "Nyckel",
+    "backupCodes": "Reservkoder — förvara dem säkert. Varje kod fungerar en gång om du tappar bort telefonen.",
+    "enterCode": "6-siffrig kod från appen",
+    "verify": "Verifiera och aktivera",
+    "enabled": "Tvåstegsinloggning är på.",
+    "turnOff": "Stäng av",
+    "cannotTurnOff": "Krävs för ditt konto — kan inte stängas av.",
+    "badCode": "Koden fungerade inte. Försök igen.",
+    "wrongPassword": "Fel lösenord.",
+    "sessions": "Var du är inloggad",
+    "sessionsIntro": "Logga ut enheter du inte känner igen.",
+    "thisDevice": "Den här enheten",
+    "lastActive": "senast aktiv {date}",
+    "signedIn": "inloggad {date}",
+    "end": "Logga ut",
+    "endOthers": "Logga ut alla andra enheter",
+    "ended": "{count} enhet(er) utloggade."
+  },
+  "privacy": {
+    "title": "Mina uppgifter",
+    "intro": "Dina rättigheter enligt GDPR: se, ta med och radera dina personuppgifter.",
+    "exportIntro": "Ladda ner en kopia av allt FIRINGI sparar om dig (konto, företag och roller, inloggningar, aviseringar och meddelanden, samtycken).",
+    "export": "Ladda ner mina uppgifter",
+    "eraseIntro": "Be FIRINGI radera ditt konto. Namn, e-post, telefon och historik tas bort; ditt företags ordrar och fakturor sparas anonymt, som lagen kräver (10 år).",
+    "reason": "Anledning (valfritt)",
+    "erase": "Radera mitt konto",
+    "requested": "Du har bett om att få ditt konto raderat — FIRINGI svarar inom 30 dagar.",
+    "withdraw": "Återkalla begäran",
+    "rejected": "FIRINGI kunde ännu inte radera ditt konto: {note}"
   }
 }

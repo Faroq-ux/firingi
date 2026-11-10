@@ -30,7 +30,8 @@ LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("rep
          ("orders.movedFrom", []), ("orders.movedTo", []), ("orders.passedOn", []),
          ("notify.order_supplier_unavailable", []), ("catalogue.firingiMode", []), ("catalogue.soldByFiringi", []),
          ("orders.routedCart", []), ("orders.notAvailableHere", []),
-         ("orders.deliveryOrder", []), ("orders.deliveryOrderFromFiringi", []), ("orders.decision", []), ("deliveryOrder", [])]
+         ("orders.deliveryOrder", []), ("orders.deliveryOrderFromFiringi", []), ("orders.decision", []), ("deliveryOrder", []),
+         ("auth.codeTitle", []), ("auth.codeHint", []), ("auth.backupHint", []), ("auth.code", []), ("auth.verify", []), ("auth.useBackup", []), ("auth.useApp", []), ("auth.badCode", []), ("security", []), ("privacy", []), ("finance.howToPay", []), ("finance.payByTransfer", []), ("finance.payByMbWay", []), ("finance.payOnDelivery", []), ("finance.payReference", []), ("orders.creditOverdue", []), ("orders.creditLimit", []), ("orders.openInvoices", [])]
 
 def get(path):
     d = EN

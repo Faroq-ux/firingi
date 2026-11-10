@@ -55,7 +55,15 @@
     "invalid": "Forkert e-mail eller adgangskode, eller kontoen er deaktiveret.",
     "noAccount": "Ny på FIRINGI?",
     "register": "Ansøg om en konto",
-    "tooMany": "For mange loginforsøg. Vent et minut, og prøv igen."
+    "tooMany": "For mange loginforsøg. Vent et minut, og prøv igen.",
+    "codeTitle": "Totrinslogin",
+    "codeHint": "Indtast den 6-cifrede kode fra din godkendelsesapp.",
+    "backupHint": "Indtast en af dine backupkoder.",
+    "code": "Kode",
+    "verify": "Bekræft",
+    "useBackup": "Brug en backupkode i stedet",
+    "useApp": "Brug godkendelsesappen",
+    "badCode": "Den kode virkede ikke."
   },
   "register": {
     "title": "Ansøg om en FIRINGI-konto",
@@ -564,7 +572,10 @@
       "moved": "Færdig — FIRINGI har givet den videre til en anden grossist:",
       "none": "Ingen grossist kan tage den lige nu. FIRINGIs team finder en løsning og kontakter dig.",
       "cancelled": "Annulleret. Du bliver ikke opkrævet."
-    }
+    },
+    "creditOverdue": "Du har en faktura, der er {days} dage forfalden — betal den, før du afgiver nye ordrer.",
+    "creditLimit": "Denne ordre overstiger din tilgængelige kredit ({available} af {limit}).",
+    "openInvoices": "Se åbne fakturaer"
   },
   "finance": {
     "invoices": "Fakturaer",
@@ -647,7 +658,12 @@
       "PAUSED": "På pause",
       "ENDED": "Afsluttet",
       "DRAFT": "Kladde"
-    }
+    },
+    "howToPay": "Sådan betaler du",
+    "payByTransfer": "Bankoverførsel til {holder}, IBAN",
+    "payByMbWay": "MB WAY til",
+    "payOnDelivery": "Kontant eller kort til chaufføren ved levering.",
+    "payReference": "Angiv fakturanummeret i betalingsreferencen."
   },
   "shell": {
     "cart": "Kurv",
@@ -1164,5 +1180,45 @@
     "lineTotal": "I alt (ekskl. moms)",
     "total": "Til fakturering til FIRINGI (ekskl. moms)",
     "notes": "Kundens bemærkninger"
+  },
+  "security": {
+    "title": "Sikkerhed",
+    "required": "Totrinslogin er påkrævet for din konto. Slå det til for at fortsætte.",
+    "twoFactor": "Totrinslogin",
+    "twoFactorIntro": "Ud over din adgangskode logger du ind med en 6-cifret kode fra en godkendelsesapp (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Til",
+    "off": "Fra",
+    "password": "Din adgangskode",
+    "turnOn": "Slå til",
+    "scan": "Scan denne kode med din godkendelsesapp, eller indtast nøglen manuelt:",
+    "key": "Nøgle",
+    "backupCodes": "Backupkoder — opbevar dem et sikkert sted. Hver virker én gang, hvis du mister din telefon.",
+    "enterCode": "6-cifret kode fra appen",
+    "verify": "Bekræft og slå til",
+    "enabled": "Totrinslogin er slået til.",
+    "turnOff": "Slå fra",
+    "cannotTurnOff": "Påkrævet for din konto — kan ikke slås fra.",
+    "badCode": "Den kode virkede ikke. Prøv igen.",
+    "wrongPassword": "Forkert adgangskode.",
+    "sessions": "Hvor du er logget ind",
+    "sessionsIntro": "Log enheder ud, som du ikke kender.",
+    "thisDevice": "Denne enhed",
+    "lastActive": "sidst aktiv {date}",
+    "signedIn": "logget ind {date}",
+    "end": "Log ud",
+    "endOthers": "Log alle andre enheder ud",
+    "ended": "{count} enhed(er) logget ud."
+  },
+  "privacy": {
+    "title": "Mine data",
+    "intro": "Dine rettigheder efter GDPR: se, tage med og slette dine personoplysninger.",
+    "exportIntro": "Download en kopi af alt, hvad FIRINGI gemmer om dig (konto, virksomheder og roller, logins, notifikationer og beskeder, samtykker).",
+    "export": "Download mine data",
+    "eraseIntro": "Bed FIRINGI om at slette din konto. Navn, e-mail, telefon og historik fjernes; din virksomheds ordrer og fakturaer gemmes anonymt, som loven kræver (10 år).",
+    "reason": "Årsag (valgfri)",
+    "erase": "Slet min konto",
+    "requested": "Du har bedt om at få din konto slettet — FIRINGI svarer inden for 30 dage.",
+    "withdraw": "Træk anmodningen tilbage",
+    "rejected": "FIRINGI kunne endnu ikke slette din konto: {note}"
   }
 }

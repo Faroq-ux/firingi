@@ -55,7 +55,15 @@
     "invalid": "Nepareizs e-pasts vai parole, vai konts ir atspējots.",
     "noAccount": "Jauns FIRINGI lietotājs?",
     "register": "Pieteikties kontam",
-    "tooMany": "Pārāk daudz pieteikšanās mēģinājumu. Pagaidiet minūti un mēģiniet vēlreiz."
+    "tooMany": "Pārāk daudz pieteikšanās mēģinājumu. Pagaidiet minūti un mēģiniet vēlreiz.",
+    "codeTitle": "Divpakāpju pieteikšanās",
+    "codeHint": "Ievadiet 6 ciparu kodu no autentifikācijas lietotnes.",
+    "backupHint": "Ievadiet vienu no rezerves kodiem.",
+    "code": "Kods",
+    "verify": "Apstiprināt",
+    "useBackup": "Izmantot rezerves kodu",
+    "useApp": "Izmantot autentifikācijas lietotni",
+    "badCode": "Šis kods nedarbojās."
   },
   "register": {
     "title": "Pieteikties FIRINGI kontam",
@@ -564,7 +572,10 @@
       "moved": "Gatavs — FIRINGI to nodeva citam vairumtirgotājam:",
       "none": "Pašlaik neviens vairumtirgotājs to nevar pieņemt. FIRINGI komanda meklēs risinājumu un sazināsies ar jums.",
       "cancelled": "Atcelts. Jums netiks iekasēta maksa."
-    }
+    },
+    "creditOverdue": "Jums ir rēķins, kas kavēts {days} dienas — samaksājiet to pirms jauniem pasūtījumiem.",
+    "creditLimit": "Šis pasūtījums pārsniedz pieejamo kredītu ({available} no {limit}).",
+    "openInvoices": "Skatīt neapmaksātos rēķinus"
   },
   "finance": {
     "invoices": "Rēķini",
@@ -647,7 +658,12 @@
       "PAUSED": "Apturēta",
       "ENDED": "Beigusies",
       "DRAFT": "Melnraksts"
-    }
+    },
+    "howToPay": "Kā samaksāt",
+    "payByTransfer": "Bankas pārskaitījums uz {holder}, IBAN",
+    "payByMbWay": "MB WAY uz",
+    "payOnDelivery": "Skaidrā naudā vai ar karti vadītājam piegādes brīdī.",
+    "payReference": "Maksājuma mērķī norādiet rēķina numuru."
   },
   "shell": {
     "cart": "Grozs",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Kopā (bez PVN)",
     "total": "Rēķinam FIRINGI (bez PVN)",
     "notes": "Klienta piezīmes"
+  },
+  "security": {
+    "title": "Drošība",
+    "required": "Jūsu kontam divpakāpju pieteikšanās ir obligāta. Ieslēdziet to, lai turpinātu.",
+    "twoFactor": "Divpakāpju pieteikšanās",
+    "twoFactorIntro": "Papildus parolei piesakāties ar 6 ciparu kodu no autentifikācijas lietotnes (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Ieslēgta",
+    "off": "Izslēgta",
+    "password": "Jūsu parole",
+    "turnOn": "Ieslēgt",
+    "scan": "Noskenējiet šo kodu ar autentifikācijas lietotni vai ievadiet atslēgu manuāli:",
+    "key": "Atslēga",
+    "backupCodes": "Rezerves kodi — glabājiet tos drošā vietā. Katrs darbojas vienu reizi, ja pazaudējat tālruni.",
+    "enterCode": "6 ciparu kods no lietotnes",
+    "verify": "Apstiprināt un ieslēgt",
+    "enabled": "Divpakāpju pieteikšanās ir ieslēgta.",
+    "turnOff": "Izslēgt",
+    "cannotTurnOff": "Obligāta jūsu kontam — to nevar izslēgt.",
+    "badCode": "Šis kods nedarbojās. Mēģiniet vēlreiz.",
+    "wrongPassword": "Nepareiza parole.",
+    "sessions": "Kur esat pieteicies",
+    "sessionsIntro": "Izrakstiet ierīces, kuras neatpazīstat.",
+    "thisDevice": "Šī ierīce",
+    "lastActive": "pēdējā aktivitāte {date}",
+    "signedIn": "pieteicies {date}",
+    "end": "Izrakstīties",
+    "endOthers": "Izrakstīt visas pārējās ierīces",
+    "ended": "Izrakstītas ierīces: {count}."
+  },
+  "privacy": {
+    "title": "Mani dati",
+    "intro": "Jūsu tiesības saskaņā ar VDAR: redzēt, saņemt un dzēst savus personas datus.",
+    "exportIntro": "Lejupielādējiet kopiju visam, ko FIRINGI glabā par jums (konts, uzņēmumi un lomas, pieteikšanās, paziņojumi un ziņojumi, piekrišanas).",
+    "export": "Lejupielādēt manus datus",
+    "eraseIntro": "Lūdziet FIRINGI dzēst jūsu kontu. Vārds, e-pasts, tālrunis un vēsture tiek dzēsti; jūsu uzņēmuma pasūtījumi un rēķini tiek glabāti anonīmi, kā to prasa likums (10 gadi).",
+    "reason": "Iemesls (nav obligāts)",
+    "erase": "Dzēst manu kontu",
+    "requested": "Jūs lūdzāt dzēst kontu — FIRINGI atbildēs 30 dienu laikā.",
+    "withdraw": "Atsaukt pieprasījumu",
+    "rejected": "FIRINGI vēl nevarēja dzēst jūsu kontu: {note}"
   }
 }

@@ -50,12 +50,16 @@ model User {
   smsConsentAt      DateTime?
   whatsappConsentAt DateTime?
   status            UserStatus @default(ACTIVE)
+  /// Two-factor login (authenticator app) is on.
+  twoFactorEnabled  Boolean?   @default(false)
   lastLoginAt       DateTime?
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @updatedAt
 
   sessions                Session[]
   accounts                Account[]
+  twoFactors              TwoFactor[]
+  dataRequests            DataRequest[]
   memberships             Membership[]
   driver                  Driver?
   notifications           Notification[]
@@ -66,6 +70,16 @@ model User {
   carts                   Cart[]
   ordersPlaced            Order[]                  @relation("OrderPlacedBy")
   regionalManagerOf       Company[]                @relation("RegionalManager")
+}
+
+/// Authenticator-app secret and backup codes (encrypted by better-auth).
+model TwoFactor {
+  id          String @id @default(cuid())
+  secret      String
+  backupCodes String
+  userId      String @unique // one authenticator per user
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
@@ -166,6 +180,7 @@ model Company {
   ordersAsSeller           Order[]                     @relation("OrderSeller")
   allocationsFrom          AllocationEvent[]           @relation("AllocationFrom")
   allocationProfile        VendorAllocationProfile?
+  apiKeys                  ApiKey[]
   commissionRules          CommissionRule[]
   promotions               Promotion[]
   promotionTargets         PromotionTarget[]

@@ -55,7 +55,15 @@
     "invalid": "Ongeldig e-mailadres of wachtwoord, of het account is uitgeschakeld.",
     "noAccount": "Nieuw bij FIRINGI?",
     "register": "Account aanvragen",
-    "tooMany": "Te veel aanmeldpogingen. Wacht een minuut en probeer het opnieuw."
+    "tooMany": "Te veel aanmeldpogingen. Wacht een minuut en probeer het opnieuw.",
+    "codeTitle": "Inloggen in twee stappen",
+    "codeHint": "Voer de 6-cijferige code uit uw authenticator-app in.",
+    "backupHint": "Voer een van uw back-upcodes in.",
+    "code": "Code",
+    "verify": "Verifiëren",
+    "useBackup": "Een back-upcode gebruiken",
+    "useApp": "De authenticator-app gebruiken",
+    "badCode": "Die code werkte niet."
   },
   "register": {
     "title": "Een FIRINGI-account aanvragen",
@@ -564,7 +572,10 @@
       "moved": "Klaar — FIRINGI heeft haar doorgegeven aan een andere groothandel:",
       "none": "Geen enkele groothandel kan haar nu aannemen. Het FIRINGI-team zoekt een oplossing en neemt contact met u op.",
       "cancelled": "Geannuleerd. U betaalt er niets voor."
-    }
+    },
+    "creditOverdue": "U hebt een factuur die {days} dagen te laat is — betaal die voordat u nieuwe bestellingen plaatst.",
+    "creditLimit": "Deze bestelling is hoger dan uw beschikbare krediet ({available} van {limit}).",
+    "openInvoices": "Openstaande facturen bekijken"
   },
   "finance": {
     "invoices": "Facturen",
@@ -647,7 +658,12 @@
       "PAUSED": "Gepauzeerd",
       "ENDED": "Beëindigd",
       "DRAFT": "Concept"
-    }
+    },
+    "howToPay": "Zo betaalt u",
+    "payByTransfer": "Bankoverschrijving naar {holder}, IBAN",
+    "payByMbWay": "MB WAY naar",
+    "payOnDelivery": "Contant of met kaart aan de chauffeur bij levering.",
+    "payReference": "Vermeld het factuurnummer in de betalingsreferentie."
   },
   "shell": {
     "cart": "Winkelwagen",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Totaal (excl. btw)",
     "total": "Te factureren aan FIRINGI (excl. btw)",
     "notes": "Opmerkingen van de klant"
+  },
+  "security": {
+    "title": "Beveiliging",
+    "required": "Inloggen in twee stappen is verplicht voor uw account. Schakel het in om door te gaan.",
+    "twoFactor": "Inloggen in twee stappen",
+    "twoFactorIntro": "Naast uw wachtwoord logt u in met een 6-cijferige code uit een authenticator-app (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Aan",
+    "off": "Uit",
+    "password": "Uw wachtwoord",
+    "turnOn": "Inschakelen",
+    "scan": "Scan deze code met uw authenticator-app of voer de sleutel handmatig in:",
+    "key": "Sleutel",
+    "backupCodes": "Back-upcodes — bewaar ze op een veilige plek. Elke code werkt één keer als u uw telefoon kwijtraakt.",
+    "enterCode": "6-cijferige code uit de app",
+    "verify": "Verifiëren en inschakelen",
+    "enabled": "Inloggen in twee stappen staat aan.",
+    "turnOff": "Uitschakelen",
+    "cannotTurnOff": "Verplicht voor uw account — kan niet worden uitgeschakeld.",
+    "badCode": "Die code werkte niet. Probeer het opnieuw.",
+    "wrongPassword": "Verkeerd wachtwoord.",
+    "sessions": "Waar u bent ingelogd",
+    "sessionsIntro": "Log apparaten uit die u niet herkent.",
+    "thisDevice": "Dit apparaat",
+    "lastActive": "laatst actief {date}",
+    "signedIn": "ingelogd {date}",
+    "end": "Uitloggen",
+    "endOthers": "Alle andere apparaten uitloggen",
+    "ended": "{count} apparaat/apparaten uitgelogd."
+  },
+  "privacy": {
+    "title": "Mijn gegevens",
+    "intro": "Uw rechten onder de AVG: uw persoonsgegevens inzien, meenemen en verwijderen.",
+    "exportIntro": "Download een kopie van alles wat FIRINGI over u bewaart (account, bedrijven en rollen, aanmeldingen, meldingen en berichten, toestemmingen).",
+    "export": "Mijn gegevens downloaden",
+    "eraseIntro": "Vraag FIRINGI uw account te verwijderen. Uw naam, e-mail, telefoon en geschiedenis worden gewist; de bestellingen en facturen van uw bedrijf worden anoniem bewaard, zoals de wet vereist (10 jaar).",
+    "reason": "Reden (optioneel)",
+    "erase": "Mijn account verwijderen",
+    "requested": "U hebt gevraagd uw account te verwijderen — FIRINGI antwoordt binnen 30 dagen.",
+    "withdraw": "Verzoek intrekken",
+    "rejected": "FIRINGI kon uw account nog niet verwijderen: {note}"
   }
 }

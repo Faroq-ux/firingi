@@ -55,7 +55,15 @@
     "invalid": "E-mail sau parolă incorecte, sau contul este dezactivat.",
     "noAccount": "Nou pe FIRINGI?",
     "register": "Solicită un cont",
-    "tooMany": "Prea multe încercări de autentificare. Așteaptă un minut și încearcă din nou."
+    "tooMany": "Prea multe încercări de autentificare. Așteaptă un minut și încearcă din nou.",
+    "codeTitle": "Autentificare în doi pași",
+    "codeHint": "Introduceți codul de 6 cifre din aplicația de autentificare.",
+    "backupHint": "Introduceți unul dintre codurile de rezervă.",
+    "code": "Cod",
+    "verify": "Verificați",
+    "useBackup": "Folosiți un cod de rezervă",
+    "useApp": "Folosiți aplicația de autentificare",
+    "badCode": "Codul nu a funcționat."
   },
   "register": {
     "title": "Solicită un cont FIRINGI",
@@ -564,7 +572,10 @@
       "moved": "Gata — FIRINGI a transmis-o altui angrosist:",
       "none": "Niciun angrosist nu o poate prelua acum. Echipa FIRINGI va căuta o soluție și vă va contacta.",
       "cancelled": "Anulată. Nu vi se va factura."
-    }
+    },
+    "creditOverdue": "Aveți o factură restantă de {days} zile — plătiți-o înainte de comenzi noi.",
+    "creditLimit": "Această comandă depășește creditul disponibil ({available} din {limit}).",
+    "openInvoices": "Vedeți facturile neachitate"
   },
   "finance": {
     "invoices": "Facturi",
@@ -647,7 +658,12 @@
       "PAUSED": "Pe pauză",
       "ENDED": "Încheiată",
       "DRAFT": "Ciornă"
-    }
+    },
+    "howToPay": "Cum plătiți",
+    "payByTransfer": "Transfer bancar către {holder}, IBAN",
+    "payByMbWay": "MB WAY la",
+    "payOnDelivery": "Numerar sau card la șofer, la livrare.",
+    "payReference": "Indicați numărul facturii în referința plății."
   },
   "shell": {
     "cart": "Coș",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Total (fără TVA)",
     "total": "De facturat către FIRINGI (fără TVA)",
     "notes": "Note ale clientului"
+  },
+  "security": {
+    "title": "Securitate",
+    "required": "Autentificarea în doi pași este obligatorie pentru contul dvs. Activați-o pentru a continua.",
+    "twoFactor": "Autentificare în doi pași",
+    "twoFactorIntro": "Pe lângă parolă, vă conectați cu un cod de 6 cifre dintr-o aplicație de autentificare (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Activată",
+    "off": "Dezactivată",
+    "password": "Parola dvs.",
+    "turnOn": "Activați",
+    "scan": "Scanați acest cod cu aplicația de autentificare sau introduceți cheia manual:",
+    "key": "Cheie",
+    "backupCodes": "Coduri de rezervă — păstrați-le într-un loc sigur. Fiecare funcționează o dată dacă pierdeți telefonul.",
+    "enterCode": "Cod de 6 cifre din aplicație",
+    "verify": "Verificați și activați",
+    "enabled": "Autentificarea în doi pași este activată.",
+    "turnOff": "Dezactivați",
+    "cannotTurnOff": "Obligatorie pentru contul dvs. — nu poate fi dezactivată.",
+    "badCode": "Codul nu a funcționat. Încercați din nou.",
+    "wrongPassword": "Parolă greșită.",
+    "sessions": "Unde sunteți conectat",
+    "sessionsIntro": "Deconectați dispozitivele pe care nu le recunoașteți.",
+    "thisDevice": "Acest dispozitiv",
+    "lastActive": "ultima activitate {date}",
+    "signedIn": "conectat {date}",
+    "end": "Deconectare",
+    "endOthers": "Deconectați toate celelalte dispozitive",
+    "ended": "{count} dispozitiv(e) deconectat(e)."
+  },
+  "privacy": {
+    "title": "Datele mele",
+    "intro": "Drepturile dvs. conform GDPR: să vedeți, să luați și să ștergeți datele personale.",
+    "exportIntro": "Descărcați o copie a tot ce păstrează FIRINGI despre dvs. (cont, companii și roluri, conectări, notificări și mesaje, consimțăminte).",
+    "export": "Descărcați datele mele",
+    "eraseIntro": "Cereți FIRINGI să vă șteargă contul. Numele, e-mailul, telefonul și istoricul sunt șterse; comenzile și facturile companiei sunt păstrate anonim, cum cere legea (10 ani).",
+    "reason": "Motiv (opțional)",
+    "erase": "Ștergeți contul meu",
+    "requested": "Ați cerut ștergerea contului — FIRINGI va răspunde în 30 de zile.",
+    "withdraw": "Anulați cererea",
+    "rejected": "FIRINGI nu v-a putut șterge încă contul: {note}"
   }
 }

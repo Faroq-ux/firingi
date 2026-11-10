@@ -55,7 +55,15 @@
     "invalid": "E-mail ou palavra-passe inválidos, ou a conta está desativada.",
     "noAccount": "Novo na FIRINGI?",
     "register": "Pedir uma conta",
-    "tooMany": "Demasiadas tentativas de entrada. Aguarde um minuto e tente novamente."
+    "tooMany": "Demasiadas tentativas de entrada. Aguarde um minuto e tente novamente.",
+    "codeTitle": "Autenticação de dois fatores",
+    "codeHint": "Introduza o código de 6 dígitos da sua aplicação de autenticação.",
+    "backupHint": "Introduza um dos seus códigos de recuperação.",
+    "code": "Código",
+    "verify": "Verificar",
+    "useBackup": "Usar um código de recuperação",
+    "useApp": "Usar a aplicação de autenticação",
+    "badCode": "Esse código não funcionou."
   },
   "register": {
     "title": "Pedir uma conta FIRINGI",
@@ -564,7 +572,10 @@
       "moved": "Feito — a FIRINGI passou-a a outro grossista:",
       "none": "Nenhum grossista a pode aceitar neste momento. A equipa da FIRINGI vai procurar uma solução e contactá-lo.",
       "cancelled": "Cancelada. Não lhe será cobrada."
-    }
+    },
+    "creditOverdue": "Tem uma fatura vencida há {days} dias — pague-a antes de fazer novas encomendas.",
+    "creditLimit": "Esta encomenda ultrapassa o seu crédito disponível ({available} de {limit}).",
+    "openInvoices": "Ver faturas em aberto"
   },
   "finance": {
     "invoices": "Faturas",
@@ -647,7 +658,12 @@
       "PAUSED": "Em pausa",
       "ENDED": "Terminada",
       "DRAFT": "Rascunho"
-    }
+    },
+    "howToPay": "Como pagar",
+    "payByTransfer": "Transferência bancária para {holder}, IBAN",
+    "payByMbWay": "MB WAY para",
+    "payOnDelivery": "Dinheiro ou cartão ao motorista na entrega.",
+    "payReference": "Indique o número da fatura na referência do pagamento."
   },
   "shell": {
     "cart": "Carrinho",
@@ -1119,5 +1135,45 @@
     "lineTotal": "Total (s/ IVA)",
     "total": "A faturar à FIRINGI (s/ IVA)",
     "notes": "Notas do cliente"
+  },
+  "security": {
+    "title": "Segurança",
+    "required": "A autenticação de dois fatores é obrigatória para a sua conta. Ative-a para continuar.",
+    "twoFactor": "Autenticação de dois fatores",
+    "twoFactorIntro": "Além da palavra-passe, entre com um código de 6 dígitos de uma aplicação de autenticação (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Ativa",
+    "off": "Desativada",
+    "password": "A sua palavra-passe",
+    "turnOn": "Ativar",
+    "scan": "Leia este código com a sua aplicação de autenticação ou introduza a chave manualmente:",
+    "key": "Chave",
+    "backupCodes": "Códigos de recuperação — guarde-os num local seguro. Cada um funciona uma vez se perder o telemóvel.",
+    "enterCode": "Código de 6 dígitos da aplicação",
+    "verify": "Verificar e ativar",
+    "enabled": "A autenticação de dois fatores está ativa.",
+    "turnOff": "Desativar",
+    "cannotTurnOff": "Obrigatória para a sua conta — não pode ser desativada.",
+    "badCode": "Esse código não funcionou. Tente novamente.",
+    "wrongPassword": "Palavra-passe errada.",
+    "sessions": "Onde tem sessão iniciada",
+    "sessionsIntro": "Termine sessões em dispositivos que não reconhece.",
+    "thisDevice": "Este dispositivo",
+    "lastActive": "última atividade {date}",
+    "signedIn": "sessão iniciada {date}",
+    "end": "Terminar sessão",
+    "endOthers": "Terminar sessão em todos os outros dispositivos",
+    "ended": "Sessão terminada em {count} dispositivo(s)."
+  },
+  "privacy": {
+    "title": "Os meus dados",
+    "intro": "Os seus direitos ao abrigo do RGPD: ver, levar e apagar os seus dados pessoais.",
+    "exportIntro": "Descarregue uma cópia de tudo o que a FIRINGI guarda sobre si (conta, empresas e funções, sessões, notificações e mensagens, consentimentos).",
+    "export": "Descarregar os meus dados",
+    "eraseIntro": "Peça à FIRINGI para apagar a sua conta. O seu nome, e-mail, telefone e histórico são removidos; as encomendas e faturas da sua empresa são guardadas de forma anónima, como a lei exige (10 anos).",
+    "reason": "Motivo (opcional)",
+    "erase": "Apagar a minha conta",
+    "requested": "Pediu para apagar a sua conta — a FIRINGI responderá no prazo de 30 dias.",
+    "withdraw": "Cancelar o pedido",
+    "rejected": "A FIRINGI ainda não pôde apagar a sua conta: {note}"
   }
 }

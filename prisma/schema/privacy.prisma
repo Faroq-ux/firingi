@@ -1,0 +1,30 @@
+// ───────────────────────── Data privacy (GDPR) ─────────────────────────
+
+enum DataRequestType {
+  ERASURE // delete my personal data (anonymise the account)
+}
+
+enum DataRequestStatus {
+  REQUESTED
+  COMPLETED
+  REJECTED
+  WITHDRAWN
+}
+
+/// A person's request about their personal data. Exports are self-service (immediate
+/// download); erasure is reviewed by FIRINGI because invoices must be kept for years.
+model DataRequest {
+  id          String            @id @default(cuid())
+  userId      String
+  type        DataRequestType
+  status      DataRequestStatus @default(REQUESTED)
+  reason      String?
+  note        String? // FIRINGI's answer
+  requestedAt DateTime          @default(now())
+  handledById String?
+  handledAt   DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status, requestedAt])
+}

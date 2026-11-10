@@ -55,7 +55,15 @@
     "invalid": "Hibás e-mail-cím vagy jelszó, vagy a fiók le van tiltva.",
     "noAccount": "Új a FIRINGI-n?",
     "register": "Fiók igénylése",
-    "tooMany": "Túl sok bejelentkezési kísérlet. Várjon egy percet, majd próbálja újra."
+    "tooMany": "Túl sok bejelentkezési kísérlet. Várjon egy percet, majd próbálja újra.",
+    "codeTitle": "Kétlépcsős bejelentkezés",
+    "codeHint": "Írja be a hitelesítő alkalmazás 6 jegyű kódját.",
+    "backupHint": "Írja be az egyik tartalékkódját.",
+    "code": "Kód",
+    "verify": "Ellenőrzés",
+    "useBackup": "Tartalékkód használata",
+    "useApp": "Hitelesítő alkalmazás használata",
+    "badCode": "A kód nem működött."
   },
   "register": {
     "title": "FIRINGI-fiók igénylése",
@@ -564,7 +572,10 @@
       "moved": "Kész — a FIRINGI továbbadta egy másik nagykereskedőnek:",
       "none": "Jelenleg egyik nagykereskedő sem tudja vállalni. A FIRINGI csapata megoldást keres, és felveszi Önnel a kapcsolatot.",
       "cancelled": "Lemondva. Nem számlázzuk ki."
-    }
+    },
+    "creditOverdue": "Van egy {days} napja lejárt számlája — fizesse ki, mielőtt új rendelést ad le.",
+    "creditLimit": "Ez a rendelés meghaladja az elérhető hitelkeretét ({available} / {limit}).",
+    "openInvoices": "Nyitott számlák megtekintése"
   },
   "finance": {
     "invoices": "Számlák",
@@ -647,7 +658,12 @@
       "PAUSED": "Szüneteltetve",
       "ENDED": "Befejezve",
       "DRAFT": "Piszkozat"
-    }
+    },
+    "howToPay": "Fizetés módja",
+    "payByTransfer": "Banki átutalás ide: {holder}, IBAN",
+    "payByMbWay": "MB WAY erre a számra:",
+    "payOnDelivery": "Készpénzzel vagy kártyával a sofőrnél, átvételkor.",
+    "payReference": "A közleményben adja meg a számla számát."
   },
   "shell": {
     "cart": "Kosár",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Összesen (nettó)",
     "total": "A FIRINGI-nek számlázandó (nettó)",
     "notes": "Az ügyfél megjegyzései"
+  },
+  "security": {
+    "title": "Biztonság",
+    "required": "Fiókjához kötelező a kétlépcsős bejelentkezés. Kapcsolja be a folytatáshoz.",
+    "twoFactor": "Kétlépcsős bejelentkezés",
+    "twoFactorIntro": "A jelszó mellett egy hitelesítő alkalmazás 6 jegyű kódjával jelentkezik be (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Be",
+    "off": "Ki",
+    "password": "Az Ön jelszava",
+    "turnOn": "Bekapcsolás",
+    "scan": "Olvassa be ezt a kódot a hitelesítő alkalmazással, vagy írja be kézzel a kulcsot:",
+    "key": "Kulcs",
+    "backupCodes": "Tartalékkódok — őrizze biztonságos helyen. Mindegyik egyszer használható, ha elveszíti a telefonját.",
+    "enterCode": "Az alkalmazás 6 jegyű kódja",
+    "verify": "Ellenőrzés és bekapcsolás",
+    "enabled": "A kétlépcsős bejelentkezés be van kapcsolva.",
+    "turnOff": "Kikapcsolás",
+    "cannotTurnOff": "Fiókjához kötelező — nem kapcsolható ki.",
+    "badCode": "A kód nem működött. Próbálja újra.",
+    "wrongPassword": "Hibás jelszó.",
+    "sessions": "Hol van bejelentkezve",
+    "sessionsIntro": "Jelentkeztesse ki az ismeretlen eszközöket.",
+    "thisDevice": "Ez az eszköz",
+    "lastActive": "utoljára aktív: {date}",
+    "signedIn": "bejelentkezés: {date}",
+    "end": "Kijelentkezés",
+    "endOthers": "Kijelentkezés az összes többi eszközről",
+    "ended": "{count} eszköz kijelentkeztetve."
+  },
+  "privacy": {
+    "title": "Saját adataim",
+    "intro": "GDPR szerinti jogai: személyes adatai megtekintése, kikérése és törlése.",
+    "exportIntro": "Töltse le mindannak a másolatát, amit a FIRINGI Önről tárol (fiók, cégek és szerepkörök, bejelentkezések, értesítések és üzenetek, hozzájárulások).",
+    "export": "Adataim letöltése",
+    "eraseIntro": "Kérje a FIRINGI-t fiókja törlésére. Neve, e-mail-címe, telefonszáma és előzményei törlődnek; cége rendelései és számlái névtelenül megmaradnak, ahogy a törvény előírja (10 év).",
+    "reason": "Indok (nem kötelező)",
+    "erase": "Fiókom törlése",
+    "requested": "Kérte fiókja törlését — a FIRINGI 30 napon belül válaszol.",
+    "withdraw": "Kérés visszavonása",
+    "rejected": "A FIRINGI még nem tudta törölni a fiókját: {note}"
   }
 }

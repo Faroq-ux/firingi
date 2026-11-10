@@ -55,7 +55,15 @@
     "invalid": "E-mail o password non validi, oppure l'account è disattivato.",
     "noAccount": "Nuovo su FIRINGI?",
     "register": "Richiedi un account",
-    "tooMany": "Troppi tentativi di accesso. Attendi un minuto e riprova."
+    "tooMany": "Troppi tentativi di accesso. Attendi un minuto e riprova.",
+    "codeTitle": "Accesso in due passaggi",
+    "codeHint": "Inserisci il codice a 6 cifre della tua app di autenticazione.",
+    "backupHint": "Inserisci uno dei tuoi codici di backup.",
+    "code": "Codice",
+    "verify": "Verifica",
+    "useBackup": "Usa un codice di backup",
+    "useApp": "Usa l'app di autenticazione",
+    "badCode": "Il codice non ha funzionato."
   },
   "register": {
     "title": "Richiedi un account FIRINGI",
@@ -564,7 +572,10 @@
       "moved": "Fatto — FIRINGI lo ha passato a un altro grossista:",
       "none": "Al momento nessun grossista può prenderlo. Il team FIRINGI cercherà una soluzione e ti contatterà.",
       "cancelled": "Annullato. Non ti verrà addebitato."
-    }
+    },
+    "creditOverdue": "Hai una fattura scaduta da {days} giorni — pagala prima di fare nuovi ordini.",
+    "creditLimit": "Questo ordine supera il tuo credito disponibile ({available} su {limit}).",
+    "openInvoices": "Vedi le fatture aperte"
   },
   "finance": {
     "invoices": "Fatture",
@@ -647,7 +658,12 @@
       "PAUSED": "Sospesa",
       "ENDED": "Terminata",
       "DRAFT": "Bozza"
-    }
+    },
+    "howToPay": "Come pagare",
+    "payByTransfer": "Bonifico bancario a {holder}, IBAN",
+    "payByMbWay": "MB WAY al",
+    "payOnDelivery": "Contanti o carta all'autista alla consegna.",
+    "payReference": "Indica il numero della fattura nella causale del pagamento."
   },
   "shell": {
     "cart": "Carrello",
@@ -1164,5 +1180,45 @@
     "lineTotal": "Totale (IVA esclusa)",
     "total": "Da fatturare a FIRINGI (IVA esclusa)",
     "notes": "Note del cliente"
+  },
+  "security": {
+    "title": "Sicurezza",
+    "required": "L'accesso in due passaggi è obbligatorio per il tuo account. Attivalo per continuare.",
+    "twoFactor": "Accesso in due passaggi",
+    "twoFactorIntro": "Oltre alla password, accedi con un codice a 6 cifre di un'app di autenticazione (Google Authenticator, Microsoft Authenticator, 1Password …).",
+    "on": "Attivo",
+    "off": "Disattivo",
+    "password": "La tua password",
+    "turnOn": "Attiva",
+    "scan": "Scansiona questo codice con la tua app di autenticazione o inserisci la chiave a mano:",
+    "key": "Chiave",
+    "backupCodes": "Codici di backup — conservali in un luogo sicuro. Ognuno funziona una volta se perdi il telefono.",
+    "enterCode": "Codice a 6 cifre dell'app",
+    "verify": "Verifica e attiva",
+    "enabled": "L'accesso in due passaggi è attivo.",
+    "turnOff": "Disattiva",
+    "cannotTurnOff": "Obbligatorio per il tuo account — non può essere disattivato.",
+    "badCode": "Il codice non ha funzionato. Riprova.",
+    "wrongPassword": "Password errata.",
+    "sessions": "Dove hai effettuato l'accesso",
+    "sessionsIntro": "Esci dai dispositivi che non riconosci.",
+    "thisDevice": "Questo dispositivo",
+    "lastActive": "ultima attività {date}",
+    "signedIn": "accesso {date}",
+    "end": "Esci",
+    "endOthers": "Esci da tutti gli altri dispositivi",
+    "ended": "Uscito da {count} dispositivo/i."
+  },
+  "privacy": {
+    "title": "I miei dati",
+    "intro": "I tuoi diritti secondo il GDPR: vedere, portare via e cancellare i tuoi dati personali.",
+    "exportIntro": "Scarica una copia di tutto ciò che FIRINGI conserva su di te (account, aziende e ruoli, accessi, notifiche e messaggi, consensi).",
+    "export": "Scarica i miei dati",
+    "eraseIntro": "Chiedi a FIRINGI di cancellare il tuo account. Nome, e-mail, telefono e cronologia vengono rimossi; ordini e fatture della tua azienda sono conservati in forma anonima, come richiesto dalla legge (10 anni).",
+    "reason": "Motivo (facoltativo)",
+    "erase": "Cancella il mio account",
+    "requested": "Hai chiesto di cancellare il tuo account — FIRINGI risponderà entro 30 giorni.",
+    "withdraw": "Annulla la richiesta",
+    "rejected": "FIRINGI non ha ancora potuto cancellare il tuo account: {note}"
   }
 }

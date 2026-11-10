@@ -11,6 +11,7 @@ import {
   ADMIN_TRANSITIONS, describeMissing, isVendorType, missingForApproval, missingForSubmission, type ReadinessInput,
 } from "@/server/onboarding/rules";
 import { canDecideType, canViewType, requireAdmin, scopeWhere } from "./admin-access";
+import { applyBuyerDefaults } from "./payments";
 import { writeAudit } from "./audit";
 import { notify } from "@/server/notify/dispatch";
 import { checkVies } from "./vies";
@@ -124,6 +125,7 @@ async function transition(companyId: string, from: AccountStatus, to: AccountSta
     });
     if (res.count !== 1) throw new AppError("CONFLICT", "The status was changed by someone else. Please reload.", 409);
     await tx.companyStatusHistory.create({ data: { companyId, fromStatus: from, toStatus: to, reason, byUserId: ctx.user.id } });
+    if (to === "APPROVED") await applyBuyerDefaults(tx, companyId); // default payment terms / credit limit
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `company.status.${to.toLowerCase()}`, entityType: "Company", entityId: companyId, before: { status: from }, after: { status: to, reason } }, tx);
   });
   const notified: AccountStatus[] = ["UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED", "PENDING"];
