@@ -436,6 +436,35 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 - Roles: *Sales* manages the CRM and answers support; *Support* reads the CRM and answers
   support (`admin.support.manage`); every company role may ask for help (`company.support.use`).
 
+## Profit & finance insight (Phase 14)
+
+- **Profit & Loss** (*Finance › Profit & Loss*, by invoice date, per month): revenue (goods sold to
+  customers + delivery fees of FIRINGI's fleet), cost of goods (supplier price), credit notes both
+  ways → **gross profit**; minus driver pay, price differences FIRINGI absorbed when moving orders
+  and **operating costs** → **net profit**. Costs (drivers, fleet, warehouse, staff, marketing, IT,
+  payment fees, other) are recorded once or *every month* (until an end date), for the whole
+  company or one market. Suppliers' own flat delivery rates are passed on, not FIRINGI revenue.
+- **Cash Flow**: money received (confirmed customer payments), paid to suppliers and paid costs per
+  month, and an 8-week forecast: customers' open invoices by due date, approved supplier invoices,
+  running monthly costs; overdue customer money shown apart.
+- **Net Profit** (*Analytics*) per supplier, customer or country, and **Route Profitability**: per
+  route, FIRINGI's delivery fees + commission on its stops against driver pay and vehicle cost
+  (km × cost per km, *Routing settings*, default € 0.18).
+- **Margin Rules** (*Pricing*): minimum and target margin for everything, a country, a category or
+  a supplier — the most specific wins (supplier › category › country › everything). Supplier
+  allocation never moves an order to a supplier below the minimum; offers below minimum / target
+  are listed. **Contract Pricing**: customer- and group-specific prices with their discount
+  against the supplier's base price, per wholesaler and distributor.
+- **Ratings**: a customer rates a delivered order (order and delivery, 1–5 stars, comment; can be
+  changed for 30 days); the supplier sees it on the order and answers; FIRINGI sees all ratings
+  (*Vendors › Ratings*) and can hide one that breaks the rules. The supplier dashboard shows its
+  score and rating.
+- **Supplier Performance** (wholesalers / distributors): scorecard with orders, confirmation
+  time, fill rate, on-time delivery, cancellations, returns, rating and an overall score.
+- **KPI & Performance** (*Dashboard*): this month's revenue, gross / net profit, margin, orders,
+  average order, buying and new customers, supplier fill rate and customer rating, each with a
+  monthly target set by finance and progress against it. Commission and supplier payout stay invisible to buyers.
+
 ## Look & feel: colour and motion
 
 - **Vivid, glossy design**: a decorative palette (`--vivid-*` in `globals.css`: blue, violet, pink,

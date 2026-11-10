@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
+import { COST_LABELS } from "@/lib/cost-labels";
 import type { ActionResult } from "@/server/actions/_action";
 import { deleteCostAction, moderateRatingAction, rateOrderAction, removeMarginRuleAction, replyRatingAction, saveCostAction, saveMarginRuleAction, setKpiTargetAction } from "@/server/actions/profit";
 
@@ -27,7 +28,6 @@ const Msg = ({ error, msg }: { error: string | null; msg: string | null }) =>
   error ? <span className="text-sm text-destructive" role="alert">{error}</span> : msg ? <span className="text-sm text-success" role="status">{msg}</span> : null;
 const today = () => new Date().toISOString().slice(0, 10);
 
-export const COST_LABELS: Record<string, string> = { DRIVERS: "Drivers", FLEET: "Fleet (fuel, maintenance, leasing)", WAREHOUSE: "Warehouse", STAFF: "Staff", MARKETING: "Marketing", IT: "IT & software", PAYMENT_FEES: "Payment fees", OTHER: "Other" };
 
 export function CostForm({ countries }: { countries: Opt[] }) {
   const { pending, error, msg, run } = useAct();

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { defineAction } from "./_action";
 import { deleteCost, saveCost } from "@/server/services/profit";
-import { moderateRating, rateOrder, removeMarginRule, replyRating, saveMarginRule, setKpiTarget, KPI_METRICS } from "@/server/services/performance";
+import { moderateRating, rateOrder, removeMarginRule, replyRating, saveMarginRule, setKpiTarget } from "@/server/services/performance";
 
 const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).transform((s) => new Date(`${s}T00:00:00Z`));
 const CATS = ["DRIVERS", "FLEET", "WAREHOUSE", "STAFF", "MARKETING", "IT", "PAYMENT_FEES", "OTHER"] as const;
@@ -31,7 +31,7 @@ export const removeMarginRuleAction = defineAction({ permission: "admin.pricing.
 
 export const setKpiTargetAction = defineAction({
   permission: ["admin.finance.manage", "admin.settings.manage"],
-  schema: z.object({ month: day, metric: z.enum(KPI_METRICS.map((m) => m.key) as [string, ...string[]]), target: z.coerce.number().nullable() }),
+  schema: z.object({ month: day, metric: z.string().min(1).max(40), target: z.coerce.number().nullable() }),
   handler: async (ctx, i) => { await setKpiTarget(ctx, i.month, i.metric as never, i.target); revalidatePath("/admin/dashboard/kpi"); return i.metric; },
 });
 

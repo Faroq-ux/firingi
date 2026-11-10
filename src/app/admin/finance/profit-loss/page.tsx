@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { Kpi } from "@/components/analytics/kit";
 import { ChartCard, TimeChart } from "@/components/analytics/charts";
-import { COST_LABELS, CostForm, DeleteCost } from "@/components/profit/forms";
+import { CostForm, DeleteCost } from "@/components/profit/forms";
+import { COST_LABELS } from "@/lib/cost-labels";
 import { Pills, eur } from "@/components/crm/views";
 import { formatDate } from "@/lib/utils";
 
@@ -21,9 +22,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ m
   const countries = await crmCountries();
   const [{ rows, total }, costs] = await Promise.all([profitAndLoss(ctx, { months }), listCosts(ctx)]);
   const label = (m: string) => new Intl.DateTimeFormat("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(`${m}-01T00:00:00Z`));
-  const line = (name: string, get: (r: (typeof rows)[number]) => number, opts: { strong?: boolean; minus?: boolean; tone?: string } = {}) => (
+  const line = (name: string, get: (r: (typeof rows)[number]) => number, opts: { strong?: boolean; minus?: boolean; plus?: boolean; tone?: string } = {}) => (
     <TR className={opts.strong ? "bg-[color-mix(in_oklch,var(--vivid-blue)_6%,transparent)] font-semibold" : ""}>
-      <TD className={opts.tone}>{opts.minus ? "− " : ""}{name}</TD>
+      <TD className={opts.tone}>{opts.minus ? "− " : opts.plus ? "+ " : ""}{name}</TD>
       {rows.map((r) => <TD key={r.month} className={`text-right tabular-nums ${opts.tone ?? ""}`}>{eur(get(r))}</TD>)}
       <TD className={`text-right font-semibold tabular-nums ${opts.tone ?? ""}`}>{eur(rows.reduce((a, r) => a + get(r), 0))}</TD>
     </TR>
@@ -56,7 +57,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ m
               {line("Revenue", (r) => r.revenue, { strong: true })}
               {line("Cost of goods & supplier fees", (r) => r.cogs, { minus: true })}
               {line("Credit notes to customers", (r) => r.credits, { minus: true })}
-              {line("Supplier credit statements", (r) => -r.vendorCredits, { minus: true })}
+              {line("Supplier credit statements", (r) => r.vendorCredits, { plus: true })}
               {line("Gross profit", (r) => r.gross, { strong: true, tone: "text-[color:color-mix(in_oklch,var(--vivid-teal)_80%,var(--foreground))]" })}
               {line("Driver pay (FIRINGI routes)", (r) => r.driverPay, { minus: true })}
               {line("Price differences absorbed", (r) => r.absorbed, { minus: true })}
