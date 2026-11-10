@@ -12,6 +12,7 @@ import { allowedRestrictions, requestRestrictionAccess, reviewRestrictionAccess 
 import { reviewDriver } from "@/server/services/drivers";
 import { listCompanies } from "@/server/data/companies";
 import { homeFor, portalsFor } from "@/server/rbac/guard";
+import { decideApproval } from "@/server/approvals/service";
 import { ctxFor, fakePdf, freshNif, pdfFile, pngFile } from "../helpers";
 
 afterAll(() => prisma.$disconnect());
@@ -181,7 +182,11 @@ describe("vendor approval: commission + VIES", () => {
     // Finance can set commission; operations cannot.
     await expect(setCommissionRate(await ctxFor("ops@firingi.test"), companyId, 7)).rejects.toThrow(/permission/);
     await setCommissionRate(await ctxFor("finance@firingi.test"), companyId, 7);
-    await setCommissionRate(await ctxFor("finance@firingi.test"), companyId, 6.5, "renegotiated");
+    // Changing an agreed rate needs a second person (four-eyes): finance asks, superadmin approves.
+    await expect(setCommissionRate(await ctxFor("finance@firingi.test"), companyId, 6.5, "renegotiated")).rejects.toMatchObject({ code: "APPROVAL_REQUIRED" });
+    const req = await prisma.approvalRequest.findFirstOrThrow({ where: { kind: "COMMISSION", status: "PENDING", companyId }, orderBy: { requestedAt: "desc" } });
+    await expect(decideApproval(await ctxFor("finance@firingi.test"), req.id, true, null)).rejects.toThrow(/second person/);
+    await decideApproval(sa, req.id, true, null);
     const rules = await prisma.commissionRule.findMany({ where: { vendorCompanyId: companyId }, orderBy: { validFrom: "asc" } });
     expect(rules.map((r) => [Number(r.rate), r.validTo === null])).toEqual([[7, false], [6.5, true]]);
 

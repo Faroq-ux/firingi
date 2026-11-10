@@ -1,7 +1,7 @@
 /**
  * Context, approval gating, tenant isolation and RBAC management (team service).
  */
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, onTestFinished } from "vitest";
 import { prisma } from "@/server/db";
 import { homeFor, portalsFor } from "@/server/rbac/guard";
 import * as team from "@/server/services/team";
@@ -101,6 +101,12 @@ describe("team management", () => {
 
   it("no privilege escalation: an admin with users.manage but not finance cannot grant FINANCE", async () => {
     const superAdmin = await ctxFor("superadmin@firingi.test");
+    // (Four-eyes for powerful staff roles is tested in risk-approvals; off here.)
+    const { approvalSettings } = await import("@/server/approvals/gate");
+    const { saveApprovalSettings } = await import("@/server/approvals/service");
+    const before = await approvalSettings();
+    await saveApprovalSettings(superAdmin, { staffRoles: false });
+    onTestFinished(() => saveApprovalSettings(superAdmin, before).then(() => undefined));
     const roles = await team.listRoles(superAdmin);
     const id = (k: string) => roles.find((r) => r.key === k)!.id;
     // A user-manager role without finance permissions.

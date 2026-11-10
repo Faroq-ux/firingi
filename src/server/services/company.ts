@@ -173,6 +173,14 @@ export async function setCommissionRate(ctx: Ctx, vendorCompanyId: string, rateP
   if (!can(ctx, "admin.vendors.commission")) throw new ForbiddenError();
   if (!isVendorType(c.type)) throw new ValidationError("Commission applies to distributors and wholesalers only.");
   if (!(ratePercent >= 0 && ratePercent <= 100)) throw new ValidationError("Commission must be between 0 and 100 %.");
+  // Changing an agreed commission needs a second person (the first rate, at approval, doesn't).
+  const existing = await prisma.commissionRule.findFirst({ where: { vendorCompanyId, validTo: null, categoryId: null } });
+  if (existing && Number(existing.rate) !== ratePercent) {
+    const { approvalSettings, fourEyes } = await import("@/server/approvals/gate");
+    const s = await approvalSettings();
+    if (s.enabled && s.commissionChanges)
+      await fourEyes(ctx, { kind: "COMMISSION", companyId: vendorCompanyId, summary: `${c.legalName}: commission ${Number(existing.rate)} % → ${ratePercent} %${note ? ` — ${note}` : ""}`, payload: { vendorCompanyId, ratePercent, note: note ?? null } });
+  }
   const now = new Date();
   await prisma.$transaction(async (tx) => {
     const current = await tx.commissionRule.findFirst({ where: { vendorCompanyId, validTo: null, categoryId: null } });

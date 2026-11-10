@@ -20,5 +20,8 @@ export default async function setup() {
   process.env.DATABASE_URL = url;
   const { runSeed } = await import("../prisma/seed/index");
   await runSeed(db);
+  // Tests place and cancel many orders within minutes; FIRINGI's risk checks would (rightly) start
+  // holding them. They are off in the test database — the risk tests switch them on themselves.
+  await db.setting.create({ data: { scope: "GLOBAL", key: "risk.rules", value: { enabled: false } } });
   await db.$disconnect();
 }

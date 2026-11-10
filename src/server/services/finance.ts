@@ -67,7 +67,19 @@ export async function invoiceForViewer(ctx: Ctx, id: string) {
 export async function issueCreditNote(ctx: Ctx, invoiceId: string, input: { lines: { invoiceLineId: string; qty: number }[] | "ALL"; reason: string }) {
   if (!isAdmin(ctx, "admin.invoices.issue")) throw new ForbiddenError();
   if (input.reason.trim().length < 3) throw new ValidationError("Give the reason for the credit note.");
-  await invoiceForViewer(ctx, invoiceId);
+  const inv = await invoiceForViewer(ctx, invoiceId);
+  // Four-eyes above FIRINGI's threshold (gross amount credited).
+  const { approvalSettings, fourEyes } = await import("@/server/approvals/gate");
+  const s = await approvalSettings();
+  if (s.enabled) {
+    const lines = (inv as unknown as { lines: { id: string; qty: unknown; lineNet: unknown; lineVat: unknown }[]; grandTotal: unknown }).lines ?? [];
+    const gross = input.lines === "ALL"
+      ? Number((inv as unknown as { grandTotal: unknown }).grandTotal)
+      : input.lines.reduce((a, l) => { const x = lines.find((y) => y.id === l.invoiceLineId); return x ? a + ((Number(x.lineNet) + Number(x.lineVat)) / Math.max(1, Number(x.qty))) * l.qty : a; }, 0);
+    if (gross > s.creditNoteAbove)
+      await fourEyes(ctx, { kind: "CREDIT_NOTE", amount: Math.round(gross * 100) / 100, companyId: (inv as unknown as { recipientCompanyId: string }).recipientCompanyId,
+        summary: `Credit note on ${(inv as unknown as { fullNumber: string }).fullNumber}: ${gross.toFixed(2)} € — ${input.reason.trim()}`, payload: { invoiceId, lines: input.lines, reason: input.reason } });
+  }
   try {
     const cn = await prisma.$transaction(async (tx) => {
       const doc = await creditInvoice(tx, invoiceId, { ...input, actorUserId: ctx.user.id });
@@ -198,6 +210,15 @@ export async function recordPayment(ctx: Ctx, input: {
   if (!isAdmin(ctx, "admin.finance.manage")) throw new ForbiddenError();
   const amount = new Decimal(input.amount);
   if (amount.lte(0)) throw new ValidationError("Amount must be greater than 0.");
+  // Four-eyes for big payments (FIRINGI confirming money in, or paying a supplier).
+  const { approvalSettings, fourEyes } = await import("@/server/approvals/gate");
+  const s = await approvalSettings();
+  if (s.enabled && amount.gt(s.paymentAbove)) {
+    const co = await prisma.company.findUnique({ where: { id: input.companyId }, select: { legalName: true } });
+    await fourEyes(ctx, { kind: "PAYMENT", amount: amount.toNumber(), companyId: input.companyId,
+      summary: `${input.direction === "INBOUND" ? "Payment received from" : "Payment to"} ${co?.legalName ?? "?"}: ${amount.toFixed(2)} € (${input.method})`,
+      payload: { input: { ...input, paidAt: input.paidAt.toISOString() } } });
+  }
   const allocTotal = input.allocations.reduce((a, x) => a.plus(x.amount), new Decimal(0));
   if (allocTotal.gt(amount)) throw new ValidationError("Allocations exceed the payment amount.");
   const open = input.direction === "INBOUND"

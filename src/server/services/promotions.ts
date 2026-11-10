@@ -177,6 +177,16 @@ export async function saveAdminPromotion(ctx: Ctx, i: PromotionInput) {
   const firingiPct = i.firingiFundPct ?? 100;
   if (!(firingiPct >= 0 && firingiPct <= 100)) throw new ValidationError("FIRINGI's share must be between 0 and 100 %.");
   if (i.kind === "FREE_DELIVERY" && firingiPct !== 0 && firingiPct !== 100) throw new ValidationError("Free delivery is paid entirely by FIRINGI or entirely by the supplier.");
+  // Big FIRINGI-paid offers need a second person.
+  const { approvalSettings, fourEyes } = await import("@/server/approvals/gate");
+  const ap = await approvalSettings();
+  const big = firingiPct > 0 && ((i.kind === "PERCENT" && i.value > ap.offerPercentAbove) || (i.kind === "ORDER_AMOUNT" && i.value > ap.offerAmountAbove) || (i.budget != null && i.budget > ap.offerAmountAbove));
+  if (ap.enabled && big)
+    await fourEyes(ctx, {
+      kind: "OFFER", amount: i.budget ?? (i.kind === "ORDER_AMOUNT" ? i.value : null),
+      summary: `${i.code ? `Coupon ${i.code}` : "Offer"} “${i.name.en}”: ${i.kind === "PERCENT" ? `${i.value} %` : `${i.value} €`} ${i.kind.toLowerCase().replace(/_/g, " ")}, FIRINGI pays ${firingiPct} %${i.budget ? `, budget ${i.budget} €` : ""}`,
+      payload: { input: { ...i, validFrom: i.validFrom.toISOString(), validTo: i.validTo ? i.validTo.toISOString() : null } },
+    });
   const country = i.countryCode ? await prisma.country.findUnique({ where: { code: i.countryCode } }) : null;
   return savePromotion(ctx, i, { ownerType: "ADMIN", ownerCompanyId: null, firingiFundPct: firingiPct, vendorFundPct: 100 - firingiPct, countryId: country?.id ?? null });
 }

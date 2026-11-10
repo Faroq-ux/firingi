@@ -11,7 +11,7 @@ import Decimal from "decimal.js";
 import { prisma, type Tx } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
-import { AppError, ForbiddenError, ValidationError } from "@/server/errors";
+import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { scopeWhere } from "./admin-access";
 import { writeAudit } from "./audit";
 
@@ -179,4 +179,40 @@ export async function paymentInstructions(countryId: string) {
     mbWay: p.methods.MB_WAY && p.mbWayPhone ? { phone: p.mbWayPhone } : null,
     cashOnDelivery: p.methods.CASH_ON_DELIVERY,
   };
+}
+
+/** A customer's payment terms and credit limit. Raising them above FIRINGI's thresholds needs a second person. */
+export async function setCustomerTerms(ctx: Ctx, companyId: string, paymentTermsDays: number, creditLimit: number | null) {
+  if (ctx.company.type !== "ADMIN" || !can(ctx, "admin.customers.manage")) throw new ForbiddenError();
+  if (!(Number.isInteger(paymentTermsDays) && paymentTermsDays >= 0 && paymentTermsDays <= 180)) throw new ValidationError("Payment terms are 0 to 180 days.");
+  if (creditLimit !== null && !(creditLimit >= 0)) throw new ValidationError("The credit limit can't be negative.");
+  const before = await prisma.company.findUniqueOrThrow({ where: { id: companyId }, select: { legalName: true, paymentTermsDays: true, creditLimit: true } });
+  const { approvalSettings, fourEyes } = await import("@/server/approvals/gate");
+  const s = await approvalSettings();
+  const oldLimit = before.creditLimit === null ? null : Number(before.creditLimit);
+  // "No limit" is the most generous of all.
+  const limitUp = (creditLimit === null && oldLimit !== null) || (creditLimit !== null && creditLimit > s.creditLimitAbove && (oldLimit === null ? false : creditLimit > oldLimit));
+  const daysUp = paymentTermsDays > s.paymentDaysAbove && paymentTermsDays > before.paymentTermsDays;
+  if (s.enabled && (limitUp || daysUp))
+    await fourEyes(ctx, {
+      kind: "CUSTOMER_TERMS", companyId, amount: creditLimit,
+      summary: `${before.legalName}: ${before.paymentTermsDays} → ${paymentTermsDays} days, credit limit ${oldLimit ?? "none"} → ${creditLimit ?? "none"} €`,
+      payload: { companyId, paymentTermsDays, creditLimit },
+    });
+  await prisma.company.update({ where: { id: companyId }, data: { paymentTermsDays, creditLimit } });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.credit_terms_set", entityType: "Company", entityId: companyId, before: { days: before.paymentTermsDays, limit: before.creditLimit?.toString() ?? null }, after: { paymentTermsDays, creditLimit } });
+}
+
+/** FIRINGI's IBAN on invoices (where customers pay): always needs a second person. */
+export async function setLegalEntityIban(ctx: Ctx, legalEntityId: string, iban: string) {
+  if (ctx.company.type !== "ADMIN" || !can(ctx, "admin.settings.manage")) throw new ForbiddenError();
+  const clean = iban.replace(/\s+/g, "").toUpperCase();
+  if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(clean)) throw new ValidationError("Enter a valid IBAN, e.g. PT50 0002 0123 1234 5678 9015 4.");
+  const le = await prisma.legalEntity.findUnique({ where: { id: legalEntityId } });
+  if (!le) throw new NotFoundError("Legal entity");
+  const { approvalSettings, fourEyes } = await import("@/server/approvals/gate");
+  if ((await approvalSettings()).bankDetails)
+    await fourEyes(ctx, { kind: "BANK_DETAILS", summary: `${le.legalName}: IBAN ${le.iban ?? "none"} → ${clean}`, payload: { legalEntityId, iban: clean } });
+  await prisma.legalEntity.update({ where: { id: legalEntityId }, data: { iban: clean } });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "legal_entity.iban_changed", entityType: "LegalEntity", entityId: legalEntityId, before: { iban: le.iban }, after: { iban: clean } });
 }

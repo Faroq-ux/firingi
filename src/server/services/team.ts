@@ -181,8 +181,11 @@ export async function createMember(
   if (await prisma.user.findUnique({ where: { email } }))
     throw new AppError("EMAIL_TAKEN", "A user with this e-mail already exists.", 409);
 
+  // FIRINGI staff: powerful roles wait for a second person; the member is created with the others.
+  const powerful = await powerfulRoles(ctx, roles.map((r) => r.id));
+  const now = roles.filter((r) => !powerful.some((p) => p.id === r.id));
   const passwordHash = await hashPassword(input.password);
-  return prisma.$transaction(async (tx) => {
+  const created = await prisma.$transaction(async (tx) => {
     const user = await tx.user.create({ data: { email, name: input.name, emailVerified: false } });
     await tx.account.create({ data: { userId: user.id, accountId: user.id, providerId: "credential", password: passwordHash } });
     const membership = await tx.membership.create({
@@ -191,7 +194,7 @@ export async function createMember(
         companyId: ctx.company.id,
         jobTitle: input.jobTitle ?? null,
         createdById: ctx.user.id,
-        roles: { create: roles.map((r) => ({ roleId: r.id, assignedById: ctx.user.id })) },
+        roles: { create: now.map((r) => ({ roleId: r.id, assignedById: ctx.user.id })) },
       },
     });
     if (isAdminCo(ctx) && input.regionIds?.length) {
@@ -213,6 +216,22 @@ export async function createMember(
     );
     return { userId: user.id, membershipId: membership.id };
   });
+  let approvalId: string | null = null;
+  if (powerful.length) {
+    const { requestApproval } = await import("@/server/approvals/gate");
+    approvalId = await requestApproval(ctx, { kind: "STAFF_ROLE", summary: `${email} (new): add ${powerful.map((r) => r.name).join(", ")}`, payload: { membershipId: created.membershipId, roleIds: roles.map((r) => r.id) } });
+  }
+  return { ...created, approvalId };
+}
+
+/** Roles (of FIRINGI staff) that grant a powerful right — when approvals for staff roles are on. */
+async function powerfulRoles(ctx: Ctx, roleIds: string[]) {
+  if (!isAdminCo(ctx) || !roleIds.length) return [];
+  const { approvalSettings, insideApproval, POWERFUL_PERMISSIONS } = await import("@/server/approvals/gate");
+  if (insideApproval()) return [];
+  const s = await approvalSettings();
+  if (!s.enabled || !s.staffRoles) return [];
+  return prisma.role.findMany({ where: { id: { in: roleIds }, permissions: { some: { permissionCode: { in: POWERFUL_PERMISSIONS } } } }, select: { id: true, name: true } });
 }
 
 async function loadOwnMembership(ctx: Ctx, membershipId: string) {
@@ -232,6 +251,13 @@ export async function setMemberRoles(ctx: Ctx, membershipId: string, roleIds: st
   const roles = await resolveAssignableRoles(ctx, roleIds);
   // Also may not REMOVE roles that grant permissions the actor lacks (would be a covert downgrade by a junior user).
   const currentRoles = await resolveRemovableCheck(ctx, m.roles.map((r) => r.roleId), roleIds);
+  // FIRINGI staff: giving someone a powerful role (money, settings, rights) needs a second person.
+  const added = roles.filter((r) => !m.roles.some((x) => x.roleId === r.id));
+  const powerful = await powerfulRoles(ctx, added.map((r) => r.id));
+  if (powerful.length) {
+    const { fourEyes } = await import("@/server/approvals/gate");
+    await fourEyes(ctx, { kind: "STAFF_ROLE", summary: `${m.user.email}: add ${powerful.map((r) => r.name).join(", ")}`, payload: { membershipId, roleIds } });
+  }
   await prisma.$transaction(async (tx) => {
     await tx.membershipRole.deleteMany({ where: { membershipId } });
     if (roles.length)

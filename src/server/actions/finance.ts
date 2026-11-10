@@ -5,10 +5,7 @@ import { revalidatePath } from "next/cache";
 import { defineAction, runAction } from "./_action";
 import * as promos from "@/server/services/promotions";
 import * as fin from "@/server/services/finance";
-import { prisma } from "@/server/db";
-import { can } from "@/server/rbac/guard";
-import { ForbiddenError } from "@/server/errors";
-import { writeAudit } from "@/server/services/audit";
+import * as payments from "@/server/services/payments";
 
 const done = <T>(v: T) => { revalidatePath("/", "layout"); return v; };
 const ids = z.array(z.string()).optional();
@@ -70,11 +67,5 @@ export const recordPaymentAction = defineAction({
 export const setCustomerTermsAction = defineAction({
   permission: "admin.customers.manage",
   schema: z.object({ companyId: z.string(), paymentTermsDays: z.coerce.number().int().min(0).max(180), creditLimit: z.coerce.number().min(0).nullable() }),
-  handler: async (ctx, i) => {
-    if (ctx.company.type !== "ADMIN" || !can(ctx, "admin.customers.manage")) throw new ForbiddenError();
-    const before = await prisma.company.findUniqueOrThrow({ where: { id: i.companyId } });
-    await prisma.company.update({ where: { id: i.companyId }, data: { paymentTermsDays: i.paymentTermsDays, creditLimit: i.creditLimit } });
-    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.credit_terms_set", entityType: "Company", entityId: i.companyId, before: { days: before.paymentTermsDays, limit: before.creditLimit?.toString() ?? null }, after: i });
-    return done(null);
-  },
+  handler: async (ctx, i) => done(await payments.setCustomerTerms(ctx, i.companyId, i.paymentTermsDays, i.creditLimit)),
 });
