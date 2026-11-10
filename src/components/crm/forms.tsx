@@ -31,6 +31,10 @@ const Msg = ({ error, msg }: { error: string | null; msg: string | null }) =>
 const F = ({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) => (
   <label className={`space-y-1 text-sm ${className}`}><span className="block text-xs text-muted-foreground">{label}</span>{children}</label>
 );
+/** Group of toggle chips: a fieldset, so each chip keeps its own accessible name. */
+const G = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <fieldset className="space-y-1 text-sm"><legend className="mb-1 block text-xs text-muted-foreground">{label}</legend>{children}</fieldset>
+);
 const today = () => new Date().toISOString().slice(0, 10);
 /** Small disclosure: a button that opens the form. */
 function Toggle({ label, children, open: initial = false }: { label: string; children: (close: () => void) => React.ReactNode; open?: boolean }) {
@@ -303,10 +307,10 @@ export function SegmentForm({ id, name, description, rules, countries, team, onS
         <F label="Description"><Input name="segmentDescription" value={d} onChange={(e) => setD(e.target.value)} /></F>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <F label="Buyer type">{chips("types", [{ id: "CUSTOMER", label: "Customers" }, { id: "WHOLESALER", label: "Wholesalers" }])}</F>
-        <F label="Activity">{chips("statuses", STATUSES.map((s) => ({ id: s, label: pretty(s) })))}</F>
-        <F label="Country">{chips("countryCodes", countries)}</F>
-        <F label="Tier">{chips("tiers", ["A", "B", "C"].map((t) => ({ id: t, label: t })))}</F>
+        <G label="Buyer type">{chips("types", [{ id: "CUSTOMER", label: "Customers" }, { id: "WHOLESALER", label: "Wholesalers" }])}</G>
+        <G label="Activity">{chips("statuses", STATUSES.map((s) => ({ id: s, label: pretty(s) })))}</G>
+        <G label="Country">{chips("countryCodes", countries)}</G>
+        <G label="Tier">{chips("tiers", ["A", "B", "C"].map((t) => ({ id: t, label: t })))}</G>
         <F label="Tags (any of, comma separated)"><Input name="segmentTags" value={r.tags} onChange={(e) => setR({ ...r, tags: e.target.value })} /></F>
         <F label="Account manager"><Select name="segmentOwner" value={r.ownerId} onChange={(e) => setR({ ...r, ownerId: e.target.value })}><option value="">Anyone</option>{team.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}</Select></F>
         <F label="Spend last 90 days from (€)"><Input name="minSpend90" type="number" min={0} value={r.minSpend90} onChange={(e) => setR({ ...r, minSpend90: e.target.value })} /></F>

@@ -57,6 +57,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
 | `node tests/e2e/go-live.mjs http://localhost:3000 [screenshotDir]` | Browser test of two-factor login, sessions, SAF-T, data privacy, payments, settings notice and API keys* |
 | `node tests/e2e/firingi-ordering.mjs http://localhost:3000 [screenshotDir]` | Browser test of ordering from FIRINGI, Delivery Orders, in-house small orders, the customer's decision* |
+| `node tests/e2e/crm.mjs http://localhost:3000 [screenshotDir]` | Browser test of leads, activities, follow-ups, pipeline, accounts, segments, customer activity and a support request answered by FIRINGI* |
 | `node tests/e2e/delivery-fees.mjs http://localhost:3000 [screenshotDir]` | Browser test of FIRINGI free delivery (on / off), a distributor's units minimum and flat rate in the wholesaler's cart* |
 | `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
@@ -406,6 +407,33 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   Performance* (routes, deliveries, success, on time, km, hours, deliveries per hour).
 - **Driver Earnings**: FIRINGI's own drivers per period — per completed route + per delivered
   order + per planned km (rates on the same page). Vendors pay their own drivers.
+
+## CRM & Sales, customer support (Phase 13)
+
+- **Leads** (*CRM › Leads*): businesses FIRINGI wants on the platform (customer, wholesaler or
+  distributor to be), with source, owner and expected monthly orders. The first call / e-mail /
+  visit moves a new lead to *contacted*; *lost* needs a reason. A lead **converts by itself** when
+  a company registering with the same e-mail is approved, or is linked by hand; its contacts,
+  activities, tasks and deals move to the account and its owner becomes the account manager.
+- **Business accounts** (*CRM › Business Accounts*): approved companies with account manager,
+  tier (A/B/C) and tags, 90-day buying / selling, last order, last contact and open tasks. Each
+  account has a 360° page: KPIs, timeline, follow-ups, recent orders, people (CRM contacts +
+  platform users), deals and support requests.
+- **Pipeline** (*CRM › Sales Pipeline*): deals by stage (prospecting → won / lost) with expected
+  monthly value and probability (weighted value per stage). **Communications** and **Notes** are
+  the activity history (calls, e-mails, WhatsApp, meetings, visits; notes). **Follow-ups** and
+  **Tasks** go to a teammate (who is notified), overdue ones are flagged.
+- **Customer Segments**: saved rules (buyer type, country, tier, tags, account manager, activity
+  status, 90-day spend) evaluated live. **Customer Activity** (*Customers*) shows who orders as
+  usual, who is *at risk* (no order for twice its usual gap, at least 30 days), *dormant* (> 90
+  days), *new* or *never ordered*, with spend trend and last sign-in. **Sales Performance** per
+  team member: leads, conversions, deals won, contacts made, tasks, accounts' purchases.
+- **Help & Support**: customers and suppliers open requests from their portal (about an order,
+  delivery, invoice …, in their language); FIRINGI answers in *Customers › Customer Support*
+  with internal notes the company never sees, assignment, priority and status. A staff answer
+  waits for the company; the company's reply reopens it; the person who asked is notified.
+- Roles: *Sales* manages the CRM and answers support; *Support* reads the CRM and answers
+  support (`admin.support.manage`); every company role may ask for help (`company.support.use`).
 
 ## Configuration notes
 
