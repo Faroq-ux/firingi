@@ -47,15 +47,18 @@ await settle(customer);
 check("added to cart", /Adicionado|Added/.test(await customer.textContent("main")));
 check("cart badge shows 1 item", (await customer.locator('header a[href="/buy/orders/cart"]').textContent()).includes("1"));
 
-// 2. Try a product from another wholesaler → one-supplier message
+// 2. A product from another wholesaler joins the same cart (one order per supplier at checkout)
 const almadaFlour = await offerIdFor(customer, "farinha", "C&C Almada");
 await customer.goto(`${BASE}/buy/catalogue/offers/${almadaFlour}`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
 await customer.getByRole("button", { name: /Adicionar ao carrinho|Add to cart/ }).click();
 await settle(customer);
-const conflict = await customer.locator('main [role="alert"]').textContent();
-check("second wholesaler refused with a clear message", /um fornecedor de cada vez|one supplier at a time/i.test(conflict) && conflict.includes("Lisboa Central"), conflict.slice(0, 120));
-await shot(customer, "p4-01-one-supplier-message", false);
+check("second wholesaler's product added to the same cart", /Adicionado|Added/.test(await customer.textContent("main")));
+await customer.goto(`${BASE}/buy/orders/cart`); await settle(customer);
+check("cart groups products by supplier", (await customer.getByTestId("cart-group").count()) === 2 && /2 fornecedores|2 suppliers/.test(await customer.getByTestId("split-note").textContent()));
+await shot(customer, "p4-01-two-suppliers", false);
+await customer.getByTestId("cart-group").filter({ hasText: "C&C Almada" }).getByRole("button", { name: /Remover|Remove/ }).click();
+await settle(customer);
 
 // 3. Cart below FIRINGI minimum (2 × 12.20 = 24.40 € < 50 €)
 await customer.goto(`${BASE}/buy/orders/cart`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);

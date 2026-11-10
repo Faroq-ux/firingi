@@ -37,7 +37,7 @@ export async function routedOffers(ctx: Ctx, lines: CartLine[], couponCode: stri
   let coupon: Awaited<ReturnType<typeof findCoupon>> | null = null;
   let couponErr: AppError | null = null;
   if (couponCode && !skipCoupon) {
-    try { coupon = await findCoupon(ctx, couponCode, { sellerId: null, routed: true }); } catch (e) { if (e instanceof AppError) couponErr = e; else throw e; }
+    try { coupon = await findCoupon(ctx, couponCode, { sellerIds: [], routed: true }); } catch (e) { if (e instanceof AppError) couponErr = e; else throw e; }
   }
   const promos = coupon?.promos ?? (await loadActivePromotions(ctx.company.countryId));
   const buyer = coupon?.buyer ?? (await buyerPromoContext(ctx.company.id, promos, null));

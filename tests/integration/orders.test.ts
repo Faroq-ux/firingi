@@ -43,25 +43,29 @@ beforeEach(async () => {
   await clearCart(await ctxFor("purchasing@lisboacentral.test"));
 });
 
-describe("cart: one supplier at a time (checklist)", () => {
-  it("adding a product from a second wholesaler is refused with a clear message", async () => {
+describe("cart: several suppliers, one checkout", () => {
+  it("a cart from two wholesalers checks out once into one order per supplier, each with its own delivery", async () => {
     const kebab = await ctxFor(KEBAB);
-    // A second approved wholesaler in Portugal with a priced, stocked offer.
-    const other = await makeApprovedCompany("WHOLESALER", "PT");
-    const otherCtx = await ctxFor(other.email);
-    const pack = await prisma.packagingUnit.findFirstOrThrow({ where: { variant: { sku: "FIR-ARROZ1" } } });
-    const offer = await prisma.vendorOffer.create({ data: { vendorCompanyId: other.companyId, sellerType: "WHOLESALER", packagingUnitId: pack.id, countryId: otherCtx.company.countryId, status: "ACTIVE" } });
-    await setPrice(otherCtx, (await ensureBaseList(otherCtx)).id, offer.id, 1, 10);
-
-    await addToCart(kebab, (await offerOf(LX, "FIR-MOZZ2", 1)).id, 2);
-    await expect(addToCart(kebab, offer.id, 1)).rejects.toThrow(/one supplier at a time/);
-    // The database refuses it too, even bypassing the service.
-    const cart = await prisma.cart.findFirstOrThrow({ where: { buyerCompanyId: kebab.company.id, userId: kebab.user.id } });
-    await expect(prisma.cartItem.create({ data: { cartId: cart.id, offerId: offer.id, qty: 1 } })).rejects.toThrow(/CART_SELLER_MISMATCH/);
-    // After clearing the cart the other wholesaler is fine.
-    await clearCart(kebab);
-    await addToCart(kebab, offer.id, 1);
-    expect((await cartView(kebab)).seller!.name).toMatch(/Fixture/);
+    const mozz = await offerOf(LX, "FIR-MOZZ2", 1);
+    const rice = await offerOf("Cash & Carry Almada, Lda", "FIR-ARROZ1");
+    await restock(mozz.id, "owner@lisboacentral.test");
+    await restock(rice.id, "owner@ccalmada.test");
+    await addToCart(kebab, mozz.id, 6);
+    await addToCart(kebab, rice.id, 40); // a second supplier in the same cart
+    const v = await cartView(kebab);
+    expect(v.groups.map((g) => g.supplier.name).sort()).toEqual(["C&C Almada", "Lisboa Central"]);
+    // each part has its own delivery decision; totals add up
+    expect(v.groups.reduce((a, g) => a + Number(g.goodsNet), 0)).toBeCloseTo(Number(v.goodsNet), 2);
+    expect(v.groups.every((g) => g.delivery?.ok)).toBe(true);
+    const r = await placeOrder(kebab, { deliveryAddressId: await deliveryAddress(KEBAB) });
+    expect(r.orders).toHaveLength(2);
+    const orders = await prisma.order.findMany({ where: { id: { in: r.orders!.map((o) => o.id) } }, include: { lines: true } });
+    expect(new Set(orders.map((o) => o.sellerCompanyId)).size).toBe(2);
+    expect(orders[0].checkoutId).toBeTruthy();
+    expect(orders[0].checkoutId).toBe(orders[1].checkoutId);
+    expect(orders.every((o) => o.status === "PENDING_CONFIRMATION" && o.lines.length === 1)).toBe(true);
+    expect(orders.reduce((a, o) => a + Number(o.grandTotal), 0)).toBeCloseTo(Number(v.totalGross), 2);
+    expect(await prisma.cartItem.count({ where: { cart: { buyerCompanyId: kebab.company.id, userId: kebab.user.id } } })).toBe(0);
   });
 
   it("customers can't put distributor products in the cart", async () => {

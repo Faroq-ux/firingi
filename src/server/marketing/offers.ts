@@ -41,7 +41,7 @@ export async function buyerPromoContext(companyId: string, promos: ActivePromoti
 const err = (code: string, message: string, details?: Record<string, string>) => new AppError(code, message, 422, details);
 
 /** Look up and check a coupon for this buyer (everything that doesn't depend on the cart's goods). */
-export async function findCoupon(ctx: Ctx, rawCode: string, cart: { sellerId: string | null; routed: boolean }) {
+export async function findCoupon(ctx: Ctx, rawCode: string, cart: { sellerIds: string[]; routed: boolean }) {
   const code = normaliseCode(rawCode);
   if (!code) throw err("COUPON_UNKNOWN", "This coupon code doesn't exist or has expired.");
   const promos = await loadActivePromotions(ctx.company.countryId);
@@ -59,9 +59,10 @@ export async function findCoupon(ctx: Ctx, rawCode: string, cart: { sellerId: st
     throw err("COUPON_LIMIT_REACHED", "You have already used this coupon.");
   const firingiPays = p.ownerType === "ADMIN" && new Decimal(p.firingiFundPct.toString()).eq(100);
   if (cart.routed && !firingiPays) throw err("COUPON_OTHER_SUPPLIER", "This coupon can't be used on this order.");
-  if (!cart.routed && cart.sellerId) {
-    if (p.ownerType === "VENDOR" && p.ownerCompanyId !== cart.sellerId) throw err("COUPON_OTHER_SUPPLIER", "This coupon can't be used on this order.");
-    if (p.ownerType === "ADMIN" && !firingiPays && !p.acceptances.some((a) => a.vendorCompanyId === cart.sellerId)) throw err("COUPON_OTHER_SUPPLIER", "This coupon can't be used on this order.");
+  // A supplier's coupon needs that supplier in the cart; a FIRINGI coupon a supplier co-pays needs one that accepted.
+  if (!cart.routed && cart.sellerIds.length) {
+    if (p.ownerType === "VENDOR" && !cart.sellerIds.includes(p.ownerCompanyId ?? "")) throw err("COUPON_OTHER_SUPPLIER", "This coupon can't be used on this order.");
+    if (p.ownerType === "ADMIN" && !firingiPays && !p.acceptances.some((a) => cart.sellerIds.includes(a.vendorCompanyId))) throw err("COUPON_OTHER_SUPPLIER", "This coupon can't be used on this order.");
   }
   return { promo: p, promos, buyer };
 }
@@ -113,7 +114,7 @@ export function linePromoTotal(listUnitNet: Decimal.Value, qty: number, promos: 
 export type RedemptionIn = { promotionId: string; code?: string | null; amount: Decimal; firingiAmount: Decimal; vendorAmount: Decimal };
 
 /** Add up the promotions used on an order (one row per promotion) and record them. */
-export async function recordRedemptions(tx: Tx, orderId: string, buyerCompanyId: string, entries: RedemptionIn[]) {
+export async function recordRedemptions(tx: Tx, orderId: string, buyerCompanyId: string, entries: RedemptionIn[], checkoutId: string | null = null) {
   const by = new Map<string, RedemptionIn>();
   for (const e of entries) {
     const cur = by.get(e.promotionId);
@@ -122,7 +123,7 @@ export async function recordRedemptions(tx: Tx, orderId: string, buyerCompanyId:
   for (const e of by.values()) {
     const amount = e.firingiAmount.toDecimalPlaces(2).plus(e.vendorAmount.toDecimalPlaces(2));
     await tx.promotionRedemption.create({
-      data: { promotionId: e.promotionId, orderId, buyerCompanyId, code: e.code ?? null, amount: amount.toFixed(2), firingiAmount: e.firingiAmount.toFixed(2), vendorAmount: e.vendorAmount.toFixed(2) },
+      data: { promotionId: e.promotionId, orderId, buyerCompanyId, checkoutId, code: e.code ?? null, amount: amount.toFixed(2), firingiAmount: e.firingiAmount.toFixed(2), vendorAmount: e.vendorAmount.toFixed(2) },
     });
   }
 }
@@ -151,11 +152,11 @@ export async function assertCouponLimits(tx: Tx, code: string, buyerCompanyId: s
   const [p] = await tx.$queryRaw<{ id: string; maxRedemptions: number | null; maxPerCustomer: number | null }[]>`
     SELECT id, "maxRedemptions", "maxPerCustomer" FROM "Promotion" WHERE code = ${code} FOR UPDATE`;
   if (!p) return;
-  const live = { promotionId: p.id, order: { status: { not: "CANCELLED" as const } } };
-  const [all, mine] = await Promise.all([
-    tx.promotionRedemption.aggregate({ where: live, _count: { _all: true } }),
-    p.maxPerCustomer != null ? tx.promotionRedemption.count({ where: { ...live, buyerCompanyId } }) : Promise.resolve(0),
-  ]);
+  const u = await tx.$queryRaw<{ total: number; mine: number }[]>`
+    SELECT count(DISTINCT COALESCE(r."checkoutId", r."orderId"))::int AS total,
+           count(DISTINCT COALESCE(r."checkoutId", r."orderId")) FILTER (WHERE r."buyerCompanyId" = ${buyerCompanyId})::int AS mine
+      FROM "PromotionRedemption" r JOIN "Order" o ON o.id = r."orderId" WHERE r."promotionId" = ${p.id} AND o.status <> 'CANCELLED'`;
+  const all = { _count: { _all: u[0].total } }, mine = u[0].mine;
   if (p.maxRedemptions != null && all._count._all > p.maxRedemptions) throw err("COUPON_USED_UP", "This coupon has been fully used.");
   if (p.maxPerCustomer != null && mine > p.maxPerCustomer) throw err("COUPON_LIMIT_REACHED", "You have already used this coupon.");
 }

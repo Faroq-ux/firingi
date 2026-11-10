@@ -140,6 +140,8 @@ model PromotionRedemption {
   orderId        String
   buyerCompanyId String
   code           String?
+  /// One use of a coupon per checkout, even when the checkout became several orders.
+  checkoutId     String?
   amount         Decimal  @db.Decimal(18, 2) // discount given (net)
   firingiAmount  Decimal  @db.Decimal(18, 2)
   vendorAmount   Decimal  @db.Decimal(18, 2)

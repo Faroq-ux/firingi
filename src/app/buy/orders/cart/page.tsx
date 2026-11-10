@@ -27,28 +27,49 @@ export default async function CartPage() {
       </>
     );
   const d = cart.delivery;
+  type G = (typeof cart.groups)[number];
+  const deliveryNote = (g: G) => {
+    const gd = g.delivery;
+    if (!gd) return null;
+    return gd.ok ? (
+      <p className="rounded-md bg-muted p-2 text-sm" data-testid="group-delivery">
+        {gd.mode === "FIRINGI_FLEET" ? t("deliveryFirINGI") : gd.mode === "CARRIER" ? t("deliveryCarrier") : t("deliveryVendor")}
+        {g.freeDelivery ? <> · <b data-testid="free-delivery">{tc("freeDelivery")}</b></> : Number(gd.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : <> · {t("fee")} {formatMoney(gd.feeNet, locale)}{gd.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}</>}
+      </p>
+    ) : (
+      <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm" data-testid="group-delivery">
+        {gd.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : "unit" in gd && gd.unit === "UNITS" ? t("belowSupplierUnits", { min: gd.minimum, missing: gd.missing }) : t(gd.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(gd.minimum, locale), missing: formatMoney(gd.missing, locale), tax })}
+      </p>
+    );
+  };
   return (
     <>
-      <PageHeader title={t("cart")} description={cart.routed ? <span data-testid="routed-cart">{t("routedCart")}</span> : <span>{t("supplier")}: <Link className="font-medium text-primary hover:underline" href={`/buy/catalogue/suppliers/${cart.seller!.id}`}>{cart.seller!.name}</Link></span>} actions={<ClearCartButton />} />
+      <PageHeader title={t("cart")} description={cart.routed ? <span data-testid="routed-cart">{t("routedCart")}</span> : cart.groups.length > 1 ? <span data-testid="split-note">{t("splitNote", { count: cart.groups.length })}</span> : <span>{t("supplier")}: <Link className="font-medium text-primary hover:underline" href={`/buy/catalogue/suppliers/${cart.groups[0].supplier.id}`}>{cart.groups[0].supplier.name}</Link></span>} actions={<ClearCartButton />} />
       {cart.unavailable.length > 0 && <p className="mb-4 rounded-md bg-warning/10 p-3 text-sm">{t("unavailable", { count: cart.unavailable.length })}</p>}
       <div className="grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <Table>
-            <THead><TR><TH>{t("product")}</TH><TH className="text-right">{t("unitPrice")}</TH><TH className="text-right">{t("qty")}</TH><TH className="text-right">{t("lineTotal")}</TH></TR></THead>
-            <TBody>
-              {cart.lines.map((l) => (
-                <TR key={l.offerId}>
-                  <TD>
-                    <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
-                    <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
-                  </TD>
-                  <TD className="text-right text-sm tabular-nums">{formatMoney(l.price!.unitPriceGross, locale)}<div className="text-xs text-muted-foreground">{formatMoney(l.price!.unitPriceNet, locale)} s/ {tax}</div></TD>
-                  <TD><CartQty offerId={l.offerId} qty={l.qty} min={l.minOrderQty} step={l.qtyStep} /></TD>
-                  <TD className="text-right tabular-nums">{formatMoney(l.lineGross, locale)}<div className="text-xs text-muted-foreground">{tax} {Number(l.vatRate)}%</div></TD>
-                </TR>
-              ))}
-            </TBody>
-          </Table>
+        <div className="space-y-4 lg:col-span-2">
+          {cart.groups.map((g) => (
+            <div key={g.supplier.id || "firingi"} className="space-y-2" data-testid="cart-group">
+              {cart.groups.length > 1 && <h2 className="text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]"><Link href={`/buy/catalogue/suppliers/${g.supplier.id}`} className="hover:underline">{g.supplier.name}</Link></h2>}
+              <Table>
+                <THead><TR><TH>{t("product")}</TH><TH className="text-right">{t("unitPrice")}</TH><TH className="text-right">{t("qty")}</TH><TH className="text-right">{t("lineTotal")}</TH></TR></THead>
+                <TBody>
+                  {g.lines.map((l) => (
+                    <TR key={l.offerId}>
+                      <TD>
+                        <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
+                        <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
+                      </TD>
+                      <TD className="text-right text-sm tabular-nums">{formatMoney(l.price!.unitPriceGross, locale)}<div className="text-xs text-muted-foreground">{formatMoney(l.price!.unitPriceNet, locale)} s/ {tax}</div></TD>
+                      <TD><CartQty offerId={l.offerId} qty={l.qty} min={l.minOrderQty} step={l.qtyStep} /></TD>
+                      <TD className="text-right tabular-nums">{formatMoney(l.lineGross, locale)}<div className="text-xs text-muted-foreground">{tax} {Number(l.vatRate)}%</div></TD>
+                    </TR>
+                  ))}
+                </TBody>
+              </Table>
+              {cart.groups.length > 1 && deliveryNote(g)}
+            </div>
+          ))}
         </div>
         <Card>
           <CardHeader><CardTitle>{t("total")}</CardTitle></CardHeader>
@@ -56,20 +77,12 @@ export default async function CartPage() {
             <dl className="grid grid-cols-2 gap-y-1 text-sm">
               <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{formatMoney(Number(cart.goodsNet) + Number(cart.offerDiscount), locale)}</dd>
               {Number(cart.offerDiscount) > 0 && <><dt className="text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]">{tc("offerDiscount")}</dt><dd className="text-right tabular-nums text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]" data-testid="offer-discount">−{formatMoney(cart.offerDiscount, locale)}</dd></>}
-              {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{cart.freeDelivery ? <><s className="text-muted-foreground">{formatMoney(cart.freeDelivery.amount, locale)}</s> {formatMoney(0, locale)}</> : formatMoney(d.feeNet, locale)}</dd></>}
+              {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{cart.freeDelivery ? <><s className="text-muted-foreground">{formatMoney(cart.freeDelivery.amount, locale)}</s> {formatMoney(d.feeNet, locale)}</> : formatMoney(d.feeNet, locale)}</dd></>}
               <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(cart.totalVat, locale)}</dd>
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
             </dl>
-            {d && (d.ok ? (
-              <p className="rounded-md bg-muted p-2 text-sm">
-                {d.mode === "FIRINGI_FLEET" ? t("deliveryFirINGI") : d.mode === "CARRIER" ? t("deliveryCarrier") : t("deliveryVendor")}
-                {cart.freeDelivery ? <> · <b data-testid="free-delivery">{tc("freeDelivery")}</b></> : Number(d.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : d.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}
-              </p>
-            ) : (
-              <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">
-                {d.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : "unit" in d && d.unit === "UNITS" ? t("belowSupplierUnits", { min: d.minimum, missing: d.missing }) : t(d.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(d.minimum, locale), missing: formatMoney(d.missing, locale), tax })}
-              </p>
-            ))}
+            {cart.groups.length === 1 && deliveryNote(cart.groups[0])}
+            {cart.groups.length > 1 && d && !d.ok && <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">{t("splitBlocked")}</p>}
             {cart.credit && (
               <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive" data-testid="credit-block">
                 {cart.credit.code === "PAYMENT_OVERDUE" ? t("creditOverdue", { days: cart.credit.days ?? 0 }) : t("creditLimit", { available: formatMoney(cart.credit.available ?? 0, locale), limit: formatMoney(cart.credit.limit ?? 0, locale) })}{" "}

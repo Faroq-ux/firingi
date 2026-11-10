@@ -4,7 +4,7 @@ import type { OrderStatus } from "@prisma/client";
 import { RatingPanel } from "@/components/profit/rating-panel";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { Ctx } from "@/server/context";
-import { getOrder, listOrders, type OrderRole } from "@/server/services/orders";
+import { getOrder, listOrders, type OrderRole, checkoutSiblings } from "@/server/services/orders";
 import { pickLocalized } from "@/i18n/config";
 import { taxLabel } from "@/lib/tax-label";
 import { PageHeader } from "@/components/layout/page-header";
@@ -74,6 +74,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
   const [t, tOffers, locale] = await Promise.all([getTranslations("orders"), getTranslations("offers"), getLocale()]);
   const decision = role === "BUYER" ? await openBuyerDecision(ctx, o.id) : null;
   const rules = decision ? await allocationRules() : null;
+  const siblings = role === "VENDOR" ? [] : await checkoutSiblings(ctx, o);
   const tax = taxLabel((o.deliveryAddress as { country?: string }).country ?? ctx.company.countryCode);
   const addr = o.deliveryAddress as { label?: string; line1?: string; line2?: string; postalCode?: string; city?: string; country?: string };
   const goodsNet = o.lines.reduce((a, l) => a + Number(l.lineNet), 0);
@@ -91,6 +92,20 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
           deadline={formatDate(new Date(decision.createdAt.getTime() + rules.buyerDecisionHours * 3600_000), locale, true)} />
       )}
       {placed && <p className="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">{t("orderPlaced", { number: o.number })}</p>}
+      {siblings.length > 0 && (
+        <div className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="checkout-siblings">
+          <p>{t("splitPlaced", { count: siblings.length + 1 })}</p>
+          <ul className="mt-1 space-y-1">
+            {siblings.map((c) => (
+              <li key={c.id} className="flex flex-wrap items-center gap-2">
+                <Link className="font-medium text-primary hover:underline" href={`${BASE[role]}/${c.id}`}>{c.number}</Link>
+                <span>{c.seller.tradeName ?? c.seller.legalName}</span>
+                <OrderStatusBadge status={c.status} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {o.parentOrder && (
         <p className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="moved-from">
           {role === "VENDOR" ? t("passedOn") : (

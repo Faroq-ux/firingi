@@ -87,17 +87,14 @@ describe("cart rules (checklist: customer never buys from distributors; one vend
     await expect(prisma.cartItem.create({ data: { cartId: cart.id, offerId: offers[DIST_PT], qty: 1 } })).rejects.toThrow(/SELLER_NOT_ALLOWED/);
   });
 
-  it("customer cannot mix two wholesalers in one cart, and the cart unlocks when emptied", async () => {
+  it("a customer may mix wholesalers of its own country in one cart (one order per supplier at checkout)", async () => {
     const offers = await makeOffers([WHS_LX, WHS_PORTO]);
     const cart = await cartFor(KEBAB, "owner@kebabhouse.test");
     await prisma.cartItem.create({ data: { cartId: cart.id, offerId: offers[WHS_LX], qty: 2 } });
-    expect((await prisma.cart.findUniqueOrThrow({ where: { id: cart.id } })).sellerCompanyId).toBe(await companyId(WHS_LX));
-
-    await expect(prisma.cartItem.create({ data: { cartId: cart.id, offerId: offers[WHS_PORTO], qty: 1 } })).rejects.toThrow(/CART_SELLER_MISMATCH/);
-
-    await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
-    expect((await prisma.cart.findUniqueOrThrow({ where: { id: cart.id } })).sellerCompanyId).toBeNull();
     await prisma.cartItem.create({ data: { cartId: cart.id, offerId: offers[WHS_PORTO], qty: 1 } });
+    expect((await prisma.cart.findUniqueOrThrow({ where: { id: cart.id } })).sellerCompanyId).toBeNull();
+    expect(await prisma.cartItem.count({ where: { cartId: cart.id } })).toBe(2);
+    await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
   });
 
   it("wholesaler buys from distributors only", async () => {

@@ -37,13 +37,16 @@ export async function loadActivePromotions(countryId: string) {
 }
 export type ActivePromotions = Awaited<ReturnType<typeof loadActivePromotions>>;
 
-/** Redemptions (orders not cancelled) per promotion, optionally for one buyer. */
+/** Uses (checkouts with an order not cancelled) and amount given per promotion, optionally for one buyer. */
 export async function usage(promotionIds: string[], buyerCompanyId?: string) {
-  const rows = await prisma.promotionRedemption.groupBy({
-    by: ["promotionId"], where: { promotionId: { in: promotionIds }, order: { status: { not: "CANCELLED" } }, ...(buyerCompanyId ? { buyerCompanyId } : {}) },
-    _count: { _all: true }, _sum: { amount: true },
-  });
-  return new Map(rows.map((r) => [r.promotionId, { count: r._count._all, amount: Number(r._sum.amount ?? 0) }]));
+  if (!promotionIds.length) return new Map<string, { count: number; amount: number }>();
+  const rows = await prisma.$queryRaw<{ promotionId: string; count: number; amount: number }[]>`
+    SELECT r."promotionId", count(DISTINCT COALESCE(r."checkoutId", r."orderId"))::int AS count, COALESCE(sum(r.amount), 0)::float8 AS amount
+      FROM "PromotionRedemption" r JOIN "Order" o ON o.id = r."orderId"
+     WHERE o.status <> 'CANCELLED' AND r."promotionId" IN (${Prisma.join(promotionIds)})
+       ${buyerCompanyId ? Prisma.sql`AND r."buyerCompanyId" = ${buyerCompanyId}` : Prisma.empty}
+     GROUP BY r."promotionId"`;
+  return new Map(rows.map((r) => [r.promotionId, { count: r.count, amount: r.amount }]));
 }
 
 /** Who is buying: what decides which customer offers apply. */

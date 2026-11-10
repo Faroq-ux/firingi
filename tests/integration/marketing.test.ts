@@ -105,7 +105,7 @@ describe("coupons", () => {
     v = await cartView(k);
     expect(v.coupon).toMatchObject({ ok: true, savings: "20.00" });
     expect(v.offerDiscount).toBe("20.00");
-    const linesSum = v.lines.reduce((a, l) => a + Number(l.lineNet), 0);
+    const linesSum = (v.lines as { lineNet: string }[]).reduce((a, l) => a + Number(l.lineNet), 0);
     expect(Number(v.goodsNet)).toBeCloseTo(linesSum - 20, 2);
 
     const { id } = await placeOrder(k, { deliveryAddressId: await addressOf(k.company.id) });

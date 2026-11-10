@@ -10,7 +10,8 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { computeLine, computeTotals } from "@/server/orders/calc";
-import { priceCart } from "@/server/orders/pricing";
+import { priceCheckout } from "@/server/orders/pricing";
+import { randomUUID } from "node:crypto";
 import { assertCouponLimits, recordRedemptions, syncRedemptions } from "@/server/marketing/offers";
 import { canTransition, CLOSED, RESERVED_STATUSES, type Actor } from "@/server/orders/state";
 import { deliveryStatusForOrder } from "@/server/delivery/state";
@@ -159,103 +160,122 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     const { placeRoutedOrder } = await import("@/server/allocation/routed");
     return placeRoutedOrder(ctx, cart, input);
   }
-  if (!cart || !cart.sellerCompanyId || cart.items.length === 0) throw new ValidationError("Your cart is empty.");
-  const sellerId = cart.sellerCompanyId;
+  if (!cart || cart.items.length === 0) throw new ValidationError("Your cart is empty.");
 
   const address = await prisma.address.findFirst({ where: { id: input.deliveryAddressId, companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, include: { city: true, country: true } });
   if (!address) throw new ValidationError("Choose one of your delivery addresses.");
   if (address.countryId !== ctx.company.countryId) throw new ValidationError("Delivery address must be in your company's country.");
-  if (!(await vendorReaches(sellerId, address.id)))
-    throw new AppError("OUTSIDE_SERVICE_AREA", "This supplier doesn't deliver to that address. Choose another delivery address or another supplier.", 422);
+
+  // Suppliers in the cart: each must serve the address and have a commission agreement.
+  const sellerIds = [...new Set((await prisma.vendorOffer.findMany({ where: { id: { in: cart.items.map((i) => i.offerId) } }, select: { vendorCompanyId: true } })).map((o) => o.vendorCompanyId))];
+  const sellers = await prisma.company.findMany({ where: { id: { in: sellerIds } }, select: { id: true, legalName: true, tradeName: true } });
+  const nameOf = (id: string) => { const c = sellers.find((x) => x.id === id); return c?.tradeName ?? c?.legalName ?? "a supplier"; };
+  const commissions = new Map<string, NonNullable<Awaited<ReturnType<typeof activeCommission>>>>();
+  for (const sid of sellerIds) {
+    if (!(await vendorReaches(sid, address.id)))
+      throw new AppError("OUTSIDE_SERVICE_AREA", `${nameOf(sid)} doesn't deliver to that address. Choose another delivery address or remove its products.`, 422, { supplier: nameOf(sid) });
+    const c = await activeCommission(prisma as unknown as Tx, sid);
+    if (!c) throw new AppError("SUPPLIER_UNAVAILABLE", `${nameOf(sid)} can't take orders at the moment. Remove its products to continue.`, 409, { supplier: nameOf(sid) });
+    commissions.set(sid, c);
+  }
 
   // Re-price everything server-side with the same visibility rules as the catalogue (offers, coupon, delivery).
   const flow: OrderFlow = ctx.company.type === "CUSTOMER" ? "CUSTOMER_FROM_WHOLESALER" : "WHOLESALER_FROM_DISTRIBUTOR";
-  const commission0 = await activeCommission(prisma as unknown as Tx, sellerId);
-  if (!commission0) throw new AppError("SUPPLIER_UNAVAILABLE", "This supplier can't take orders at the moment.", 409);
-  const pc = await priceCart(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), sellerId, couponCode: cart.couponCode }, { regionId: address.city?.regionId ?? null, addressId: address.id, commissionRate: commission0.rate.toString() });
+  const pc = await priceCheckout(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), couponCode: cart.couponCode }, {
+    regionId: address.city?.regionId ?? null, addressId: address.id, commissionRates: new Map([...commissions].map(([k, c]) => [k, c.rate.toString()])),
+  });
   if (pc.unavailable.length) throw new AppError("ITEM_UNAVAILABLE", "Some products in your cart are no longer available. Please review your cart.", 409);
-  if (pc.lines.length !== cart.items.length) throw new AppError("ITEM_UNAVAILABLE", "Some products no longer have a price for you. Please review your cart.", 409);
+  if (pc.parts.reduce((a, p) => a + p.lines.length, 0) !== cart.items.length) throw new AppError("ITEM_UNAVAILABLE", "Some products no longer have a price for you. Please review your cart.", 409);
   if (pc.coupon && !pc.coupon.ok) throw pc.coupon.error!;
+  for (const part of pc.parts) {
+    const d = part.decision;
+    if (!d.ok) {
+      const who = pc.parts.length > 1 ? `${nameOf(part.sellerId)}: ` : "";
+      throw new AppError("BELOW_MINIMUM", d.unit === "UNITS"
+        ? `${who}Minimum order for delivery is ${d.minimum} units. Add ${d.missing} more.`
+        : `${who}Minimum order for delivery is ${d.minimum.toFixed(2)} € (excl. VAT). Add ${d.missing.toFixed(2)} € more.`, 422);
+    }
+  }
+  const checkoutId = randomUUID();
+  const deliveryAddress = {
+    id: address.id, label: address.label, line1: address.line1, line2: address.line2, postalCode: address.postalCode, city: address.cityName,
+    regionId: address.city?.regionId ?? null, country: address.country.code, contactName: address.contactName, phone: address.phone,
+    latitude: address.latitude?.toString() ?? null, longitude: address.longitude?.toString() ?? null,
+  };
 
-  return prisma.$transaction(async (tx) => {
-    const commission = await activeCommission(tx, sellerId);
-    if (!commission || commission.id !== commission0.id) throw new AppError("SUPPLIER_UNAVAILABLE", "This supplier can't take orders at the moment.", 409);
-    const lines = pc.lines;
-    const decision = pc.decision;
-    if (!decision.ok)
-      throw new AppError(
-        "BELOW_MINIMUM",
-        decision.unit === "UNITS"
-          ? `Minimum order for delivery is ${decision.minimum} units. Add ${decision.missing} more.`
-          : `Minimum order for delivery is ${decision.minimum.toFixed(2)} € (excl. VAT). Add ${decision.missing.toFixed(2)} € more.`,
-        422,
-      );
-    const totals = pc.totals;
-    // Credit control: overdue invoices / credit limit (Payment Settings).
-    await assertCanOrder(ctx.company.id, totals.grandTotal);
-
-    const number = await nextNumber(tx, "order", "FO");
-    const order = await tx.order.create({
-      data: {
-        number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId,
-        status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId,
-        couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: pc.waived.toFixed(2), deliveryPromotionId: pc.deliveryPromotionId,
-        deliveryAddress: {
-          id: address.id, label: address.label, line1: address.line1, line2: address.line2, postalCode: address.postalCode, city: address.cityName,
-          regionId: address.city?.regionId ?? null, country: address.country.code, contactName: address.contactName, phone: address.phone,
-          latitude: address.latitude?.toString() ?? null, longitude: address.longitude?.toString() ?? null,
-        },
-        requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null,
-        listNet: totals.listNet.toFixed(2), discountTotal: totals.discountTotal.toFixed(2), deliveryFeeNet: totals.deliveryFeeNet.toFixed(2),
-        netTotal: totals.netTotal.toFixed(2), vatTotal: totals.vatTotal.toFixed(2), grandTotal: totals.grandTotal.toFixed(2),
-        commissionTotal: totals.commissionTotal.toFixed(2), vendorPayableNet: totals.vendorPayableNet.toFixed(2), firingiMarginNet: totals.firingiMarginNet.toFixed(2),
-      },
-    });
-    for (const l of lines) {
-      const res = await reserveStock(tx, order.id, l.item.offerId, l.item.qty);
-      if (!res.ok) {
-        const name = l.item.name.pt ?? l.item.name.en;
-        throw new AppError("OUT_OF_STOCK", `Only ${res.available} available of "${name}". Please change the quantity.`, 409);
-      }
-      if (!order.sourceAddressId) await tx.order.update({ where: { id: order.id }, data: { sourceAddressId: res.addressId } }).then((o) => (order.sourceAddressId = o.sourceAddressId));
-      await tx.orderLine.create({
+  const created = await prisma.$transaction(async (tx) => {
+    // Credit control on the whole checkout: overdue invoices / credit limit (Payment Settings).
+    await assertCanOrder(ctx.company.id, pc.grandTotal);
+    const out: { id: string; number: string; sellerId: string }[] = [];
+    for (const part of pc.parts) {
+      const sellerId = part.sellerId;
+      const commission = await activeCommission(tx, sellerId);
+      if (!commission || commission.id !== commissions.get(sellerId)!.id) throw new AppError("SUPPLIER_UNAVAILABLE", `${nameOf(sellerId)} can't take orders at the moment.`, 409);
+      const decision = part.decision as Extract<typeof part.decision, { ok: true }>;
+      const totals = part.totals;
+      const number = await nextNumber(tx, "order", "FO");
+      const order = await tx.order.create({
         data: {
-          orderId: order.id, offerId: l.item.offerId, productName: l.item.name, sku: l.item.sku, packagingName: l.item.packaging.name, qtyOrdered: l.item.qty,
-          unitListPriceNet: l.calc.unitListPriceNet.toFixed(4),
-          vendorDiscountNet: l.discounts.filter((x) => x.ownerType === "VENDOR").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
-          adminDiscountNet: l.discounts.filter((x) => x.ownerType === "ADMIN").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
-          firingiFundedDiscount: l.calc.firingiFundedDiscount.toFixed(4), vendorFundedDiscount: l.calc.vendorFundedDiscount.toFixed(4),
-          unitSalePriceNet: l.calc.unitSalePriceNet.toFixed(4), taxRate: l.rate.toFixed(3), lineNet: l.calc.lineNet.toFixed(2), lineVat: l.calc.lineVat.toFixed(2),
-          commissionRuleId: commission.id, commissionType: commission.type, commissionRate: commission.rate, commissionBase: l.calc.commissionBase.toFixed(2),
-          commissionAmount: l.calc.commissionAmount.toFixed(2), vendorUnitCostNet: l.calc.vendorUnitCostNet.toFixed(4), vendorLineNet: l.calc.vendorLineNet.toFixed(2),
-          // Who funded each discount (finance reporting).
-          discounts: {
-            create: l.discounts.map((pr) => ({
-              promotionId: pr.promotionId,
-              amount: pr.perUnit.mul(l.item.qty).toFixed(2),
-              firingiAmount: pr.firingiPerUnit.mul(l.item.qty).toFixed(2),
-              vendorAmount: pr.vendorPerUnit.mul(l.item.qty).toFixed(2),
-            })),
-          },
+          number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId,
+          status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId, checkoutId: pc.parts.length > 1 ? checkoutId : null,
+          couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: part.waived.toFixed(2), deliveryPromotionId: part.deliveryPromotionId,
+          deliveryAddress, requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null,
+          listNet: totals.listNet.toFixed(2), discountTotal: totals.discountTotal.toFixed(2), deliveryFeeNet: totals.deliveryFeeNet.toFixed(2),
+          netTotal: totals.netTotal.toFixed(2), vatTotal: totals.vatTotal.toFixed(2), grandTotal: totals.grandTotal.toFixed(2),
+          commissionTotal: totals.commissionTotal.toFixed(2), vendorPayableNet: totals.vendorPayableNet.toFixed(2), firingiMarginNet: totals.firingiMarginNet.toFixed(2),
         },
       });
+      for (const l of part.lines) {
+        const res = await reserveStock(tx, order.id, l.item.offerId, l.item.qty);
+        if (!res.ok) {
+          const name = l.item.name.pt ?? l.item.name.en;
+          throw new AppError("OUT_OF_STOCK", `Only ${res.available} available of "${name}". Please change the quantity.`, 409);
+        }
+        if (!order.sourceAddressId) await tx.order.update({ where: { id: order.id }, data: { sourceAddressId: res.addressId } }).then((o) => (order.sourceAddressId = o.sourceAddressId));
+        await tx.orderLine.create({
+          data: {
+            orderId: order.id, offerId: l.item.offerId, productName: l.item.name, sku: l.item.sku, packagingName: l.item.packaging.name, qtyOrdered: l.item.qty,
+            unitListPriceNet: l.calc.unitListPriceNet.toFixed(4),
+            vendorDiscountNet: l.discounts.filter((x) => x.ownerType === "VENDOR").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
+            adminDiscountNet: l.discounts.filter((x) => x.ownerType === "ADMIN").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
+            firingiFundedDiscount: l.calc.firingiFundedDiscount.toFixed(4), vendorFundedDiscount: l.calc.vendorFundedDiscount.toFixed(4),
+            unitSalePriceNet: l.calc.unitSalePriceNet.toFixed(4), taxRate: l.rate.toFixed(3), lineNet: l.calc.lineNet.toFixed(2), lineVat: l.calc.lineVat.toFixed(2),
+            commissionRuleId: commission.id, commissionType: commission.type, commissionRate: commission.rate, commissionBase: l.calc.commissionBase.toFixed(2),
+            commissionAmount: l.calc.commissionAmount.toFixed(2), vendorUnitCostNet: l.calc.vendorUnitCostNet.toFixed(4), vendorLineNet: l.calc.vendorLineNet.toFixed(2),
+            // Who funded each discount (finance reporting).
+            discounts: {
+              create: l.discounts.map((pr) => ({
+                promotionId: pr.promotionId,
+                amount: pr.perUnit.mul(l.item.qty).toFixed(2),
+                firingiAmount: pr.firingiPerUnit.mul(l.item.qty).toFixed(2),
+                vendorAmount: pr.vendorPerUnit.mul(l.item.qty).toFixed(2),
+              })),
+            },
+          },
+        });
+      }
+      await recordRedemptions(tx, order.id, ctx.company.id, part.redemptions, checkoutId);
+      await tx.orderStatusHistory.create({ data: { orderId: order.id, toStatus: "NEW", byUserId: ctx.user.id, reason: "Order placed" } });
+      await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: order.id, after: { number, sellerId, grandTotal: totals.grandTotal.toFixed(2), deliveryMode: decision.mode, coupon: pc.coupon?.ok ? pc.coupon.code : null, checkout: pc.parts.length > 1 ? checkoutId : null } }, tx);
+      out.push({ id: order.id, number, sellerId });
     }
-    await recordRedemptions(tx, order.id, ctx.company.id, pc.redemptions);
-    // A coupon that has reached a limit while this order was being placed is refused.
+    // A coupon that has reached a limit while this checkout was being placed is refused.
     if (pc.coupon?.ok) await assertCouponLimits(tx, pc.coupon.code, ctx.company.id);
-    await tx.orderStatusHistory.create({ data: { orderId: order.id, toStatus: "NEW", byUserId: ctx.user.id, reason: "Order placed" } });
-    // No online payment step yet → the order goes straight to the vendor for confirmation.
-    await tx.order.update({ where: { id: order.id }, data: { status: "PENDING_CONFIRMATION" } });
-    await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: "NEW", toStatus: "PENDING_CONFIRMATION", reason: "Sent to supplier" } });
+    // No online payment step yet → the orders go straight to the suppliers for confirmation.
+    for (const o of out) {
+      await tx.order.update({ where: { id: o.id }, data: { status: "PENDING_CONFIRMATION" } });
+      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: "PENDING_CONFIRMATION", reason: "Sent to supplier" } });
+    }
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
     await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
-    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: order.id, after: { number, sellerId, grandTotal: totals.grandTotal.toFixed(2), deliveryMode: decision.mode, coupon: pc.coupon?.ok ? pc.coupon.code : null } }, tx);
-    return { id: order.id, number };
-  }).then(async (r) => {
-    const o = await prisma.order.findUniqueOrThrow({ where: { id: r.id }, select: { grandTotal: true, buyer: { select: { legalName: true, tradeName: true } } } });
-    await notify("order.new", [{ companyId: sellerId, link: `/vendor/orders/${r.id}` }], { number: r.number, buyer: o.buyer.tradeName ?? o.buyer.legalName, total: o.grandTotal.toNumber() }, { ref: { type: "Order", id: r.id } });
-    return r;
+    return out;
   });
+  const buyerName = ctx.company.tradeName ?? ctx.company.legalName;
+  for (const o of created) {
+    const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });
+    await notify("order.new", [{ companyId: o.sellerId, link: `/vendor/orders/${o.id}` }], { number: o.number, buyer: buyerName, total: row.grandTotal.toNumber() }, { ref: { type: "Order", id: o.id } });
+  }
+  return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })) };
 }
 
 // ── viewing ─────────────────────────────────────────────────────────────────
@@ -520,3 +540,13 @@ export async function resolveException(ctx: Ctx, exceptionId: string, note: stri
 }
 
 export { CLOSED, RESERVED_STATUSES };
+
+/** The other orders of the same checkout (a cart from several suppliers), for the buyer and FIRINGI. */
+export async function checkoutSiblings(ctx: Ctx, order: { id: string; checkoutId: string | null; buyerCompanyId: string }) {
+  if (!order.checkoutId) return [];
+  if (ctx.company.type !== "ADMIN" && ctx.company.id !== order.buyerCompanyId) return [];
+  return prisma.order.findMany({
+    where: { checkoutId: order.checkoutId, id: { not: order.id }, buyerCompanyId: order.buyerCompanyId },
+    select: { id: true, number: true, status: true, seller: { select: { legalName: true, tradeName: true } } }, orderBy: { number: "asc" },
+  });
+}

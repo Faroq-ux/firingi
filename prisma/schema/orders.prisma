@@ -71,6 +71,8 @@ model Order {
   vendorCurrencyCode    String        @default("EUR")
   fxRate                Decimal       @default(1) @db.Decimal(18, 8) // vendor → buyer currency at order time
   couponCode            String?
+  /// Orders placed in one checkout (a cart from several suppliers, or one FIRINGI picked) share it.
+  checkoutId            String?
   /// Delivery fee waived by a FIRINGI-funded free-delivery offer (FIRINGI still pays a supplier's flat rate).
   deliveryDiscountNet   Decimal       @default(0) @db.Decimal(18, 2)
   deliveryPromotionId   String?
@@ -121,6 +123,7 @@ model Order {
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])
+  @@index([checkoutId])
   @@index([status])
 }
 
