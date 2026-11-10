@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
 import { PlanRouteForm, RouteActions, StartRouteButton, StopControls } from "./route-forms";
+import { ProgressRing } from "@/components/motion/shapes";
+import { RouteMap } from "@/components/motion/route-map";
 
 const VARIANT: Record<RouteStatus, "default" | "secondary" | "success" | "warning" | "destructive"> = { PLANNED: "warning", IN_PROGRESS: "default", COMPLETED: "success", CANCELLED: "secondary" };
 type Msgs = typeof en.routes;
@@ -142,7 +144,7 @@ export async function RoutesList({ ctx, english, base, tab, all }: { ctx: Ctx; e
 /** Driver: the open route(s) with start button, next stop and the ordered stop list. */
 export async function DriverRoutes({ routes }: { routes: Awaited<ReturnType<typeof import("@/server/services/routes").myRoutes>> }) {
   if (!routes.length) return null;
-  const [{ l, locale }, td] = await Promise.all([routeLabels(false), getTranslations("delivery.statuses")]);
+  const [{ l, locale }, td, tdash] = await Promise.all([routeLabels(false), getTranslations("delivery.statuses"), getTranslations("dashboard")]);
   return (
     <div className="mb-4 space-y-4">
       {routes.map((r) => {
@@ -163,6 +165,16 @@ export async function DriverRoutes({ routes }: { routes: Awaited<ReturnType<type
                 <span className="text-muted-foreground">{Number(r.plannedKm).toFixed(1)} km · {dur(r.plannedMinutes)}{r.vehicle ? ` · ${r.vehicle.plate}` : ""}</span>
               </div>
               {r.status === "PLANNED" && <p className="text-xs text-muted-foreground">{l.startHint}</p>}
+              <div className="flex flex-wrap items-center gap-4">
+                <ProgressRing value={r.stops.length ? r.stops.filter((s) => s.doneAt).length / r.stops.length : 0} size={92} stroke={10} label={fill(l.stopsDone, { done: r.stops.filter((s) => s.doneAt).length, total: r.stops.length })}>
+                  <div className="text-lg font-extrabold text-gradient">{r.stops.filter((s) => s.doneAt).length}/{r.stops.length}</div>
+                </ProgressRing>
+                <div className="min-w-0 flex-1">
+                  <RouteMap height={180} label={l.myRoute} legend={{ depot: tdash("mapDepot"), done: tdash("mapDone"), todo: tdash("mapTodo") }}
+                    routes={[{ id: r.id, label: r.number, start: r.startLat !== null && r.startLng !== null ? { lat: Number(r.startLat), lng: Number(r.startLng) } : null,
+                      stops: r.stops.filter((s) => s.lat !== null && s.lng !== null).map((s) => ({ lat: Number(s.lat), lng: Number(s.lng), done: !!s.doneAt, kind: s.kind })) }]} />
+                </div>
+              </div>
               {next && (
                 <div className="rounded-md border border-primary/40 bg-primary/5 p-3">
                   <div className="text-xs text-muted-foreground">{l.nextStop} · {hm(next.eta, locale)}</div>

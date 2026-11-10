@@ -57,6 +57,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
 | `node tests/e2e/go-live.mjs http://localhost:3000 [screenshotDir]` | Browser test of two-factor login, sessions, SAF-T, data privacy, payments, settings notice and API keys* |
 | `node tests/e2e/firingi-ordering.mjs http://localhost:3000 [screenshotDir]` | Browser test of ordering from FIRINGI, Delivery Orders, in-house small orders, the customer's decision* |
+| `node tests/e2e/dashboards.mjs http://localhost:3000 [screenshotDir]` | Browser test of the animated dashboards (admin, live operations, supplier, customer), reduced motion and phone width* |
 | `node tests/e2e/crm.mjs http://localhost:3000 [screenshotDir]` | Browser test of leads, activities, follow-ups, pipeline, accounts, segments, customer activity and a support request answered by FIRINGI* |
 | `node tests/e2e/delivery-fees.mjs http://localhost:3000 [screenshotDir]` | Browser test of FIRINGI free delivery (on / off), a distributor's units minimum and flat rate in the wholesaler's cart* |
 | `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
@@ -434,6 +435,26 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   waits for the company; the company's reply reopens it; the person who asked is notified.
 - Roles: *Sales* manages the CRM and answers support; *Support* reads the CRM and answers
   support (`admin.support.manage`); every company role may ask for help (`company.support.use`).
+
+## Look & feel: colour and motion
+
+- **Vivid, glossy design**: a decorative palette (`--vivid-*` in `globals.css`: blue, violet, pink,
+  orange, teal, lime) for gradient page titles, coloured section titles and table headers, glossy
+  KPI tiles with gradient icon chips, frosted-glass panels on a coloured hero band and glossy
+  primary buttons — in light and dark mode. Charts keep the validated colour-blind-safe series
+  colours; body text stays dark on light for readability.
+- **Motion graphics** (`src/components/motion`): numbers count up (and flash when they change),
+  cards rise in one after the other, charts draw themselves and bars grow, the hero colours drift,
+  the latest orders scroll by on a ribbon (pauses on hover), progress rings fill, and the live map
+  shows each route with travelled / still-to-go lines flowing and a vehicle moving along it.
+- **Dashboards**: FIRINGI's executive overview (orders today, month sales, awaiting confirmation,
+  exceptions, 14-day sales trend, latest orders, deliveries today, live route map, network), Live
+  Operations (map), the supplier dashboard (orders to confirm, payout vs previous 30 days,
+  deliveries, top products, routes) and the customer dashboard (orders in progress, on the way
+  with expected time, spending, open / overdue invoices, most bought); the driver's route card
+  gets a progress ring and a mini map. Dashboards refresh every minute.
+- Everything respects the device's **reduce motion** setting (values shown at once, no ribbon or
+  moving vehicles) and fits a phone screen.
 
 ## Configuration notes
 

@@ -107,11 +107,15 @@ export function TimeChart({ points, grain, series, fmt, locale, kind = "line", h
               const d = v >= 0
                 ? `M${cx},${top + h} V${top + r} Q${cx},${top} ${cx + r},${top} H${cx + barW - r} Q${cx + barW},${top} ${cx + barW},${top + r} V${top + h} Z`
                 : `M${cx},${y(0)} V${y(v) - r} Q${cx},${y(v)} ${cx + r},${y(v)} H${cx + barW - r} Q${cx + barW},${y(v)} ${cx + barW},${y(v) - r} V${y(0)} Z`;
-              return <path key={`${s.key}-${i}`} d={d} fill={SERIES[si]} opacity={hover === null || hover === i ? 1 : 0.55} />;
+              return <path key={`${s.key}-${i}`} d={d} fill={SERIES[si]} opacity={hover === null || hover === i ? 1 : 0.55} className="motion-grow-y" style={{ ["--i" as string]: i } as React.CSSProperties} />;
             }))
           : S.map((s, si) => (
               <g key={s.key}>
-                <path d={s.values.map((v, i) => `${i ? "L" : "M"}${x(i)},${y(v)}`).join(" ")} fill="none" stroke={SERIES[si]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+                {si === 0 && n > 1 && (
+                  <path className="motion-fade-late" fill={SERIES[0]} opacity={0.1}
+                    d={`${s.values.map((v, i) => `${i ? "L" : "M"}${x(i)},${y(v)}`).join(" ")} L${x(n - 1)},${y(Math.max(0, y0))} L${x(0)},${y(Math.max(0, y0))} Z`} />
+                )}
+                <path d={s.values.map((v, i) => `${i ? "L" : "M"}${x(i)},${y(v)}`).join(" ")} pathLength={1} className="motion-draw" fill="none" stroke={SERIES[si]} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
                 {(n === 1 || hover !== null) && (
                   <circle cx={x(hover ?? 0)} cy={y(s.values[hover ?? 0])} r={4} fill={SERIES[si]} stroke="var(--card)" strokeWidth={2} />
                 )}
@@ -149,7 +153,7 @@ export function BarList({ rows, fmt, locale, testId, emptyText = "—" }: {
   if (!rows.length) return <p className="py-8 text-center text-sm text-muted-foreground" data-testid={testId}>{emptyText}</p>;
   return (
     <ul className="space-y-2" data-testid={testId}>
-      {rows.map((r) => {
+      {rows.map((r, ri) => {
         const pct = max > 0 ? Math.max(0, r.value) / max : 0;
         const label = r.href ? <a href={r.href} className="hover:underline">{r.label}</a> : r.label;
         return (
@@ -161,8 +165,8 @@ export function BarList({ rows, fmt, locale, testId, emptyText = "—" }: {
                 <span className={cn("ml-1.5 text-xs text-muted-foreground", hover === r.key ? "inline" : "hidden sm:inline")} suppressHydrationWarning>{total > 0 ? fmtValue(Math.max(0, r.value) / total, "percent", locale) : ""}</span>
               </span>
             </div>
-            <div className="h-3 w-full">
-              <div className="h-3 rounded-r-[4px] transition-opacity" style={{ width: `${Math.max(pct * 100, r.value > 0 ? 0.5 : 0)}%`, background: SERIES[0], opacity: hover && hover !== r.key ? 0.55 : 1 }} />
+            <div className="h-3 w-full rounded-full bg-[color-mix(in_oklch,var(--vivid-blue)_8%,transparent)]">
+              <div className="motion-grow-x h-3 rounded-full transition-opacity" style={{ width: `${Math.max(pct * 100, r.value > 0 ? 0.5 : 0)}%`, background: `linear-gradient(90deg, ${SERIES[0]}, color-mix(in oklch, ${SERIES[0]} 55%, var(--vivid-violet)))`, opacity: hover && hover !== r.key ? 0.55 : 1, ["--i" as string]: ri } as React.CSSProperties} />
             </div>
           </li>
         );
@@ -179,10 +183,10 @@ export function ChartCard({ title, description, table, children, labels, actions
   const [view, setView] = React.useState<"chart" | "table">("chart");
   const L = labels ?? { chart: "Chart", table: "Table" };
   return (
-    <section className={cn("rounded-xl border bg-card p-4", className)}>
+    <section className={cn("tile motion-rise motion-lift rounded-xl border bg-card p-4", className)}>
       <header className="mb-3 flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h2 className="text-sm font-semibold">{title}</h2>
+          <h2 className="text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-blue)_75%,var(--foreground))]">{title}</h2>
           {description && <p className="text-xs text-muted-foreground">{description}</p>}
         </div>
         <div className="flex items-center gap-2">

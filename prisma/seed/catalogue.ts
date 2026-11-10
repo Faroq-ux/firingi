@@ -63,36 +63,37 @@ const OFFERS: Record<string, [string, number, number, [number, number][]?][]> = 
 
 const COMMISSION: Record<string, number> = { "Distribuidora Atlântico, Lda": 5, "Distribuciones Ibéricas S.L.": 6, "Grossista Lisboa Central, Lda": 8, "Cash & Carry Almada, Lda": 7, "FIRINGI Armazém Central, Lda": 0 };
 
-const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" | "DELIVERY"; label: string; line1: string; postal: string; city: string; country: string }[]> = {
+/** Demo addresses with street-level coordinates (so maps and distances look real). */
+const ADDRESSES: Record<string, { kind: "HEAD_OFFICE" | "WAREHOUSE" | "PICKUP" | "DELIVERY"; label: string; line1: string; postal: string; city: string; at?: [number, number]; country: string }[]> = {
   "Distribuidora Atlântico, Lda": [
-    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua do Comércio 5", postal: "4000-100", city: "Porto", country: "PT" },
-    { kind: "WAREHOUSE", label: "Armazém Maia", line1: "Zona Industrial da Maia, Lote 12", postal: "4470-000", city: "Matosinhos", country: "PT" },
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua do Comércio 5", postal: "4000-100", city: "Porto", at: [41.147, -8.611], country: "PT" },
+    { kind: "WAREHOUSE", label: "Armazém Maia", line1: "Zona Industrial da Maia, Lote 12", postal: "4470-000", city: "Matosinhos", at: [41.233, -8.638], country: "PT" },
   ],
   "Distribuciones Ibéricas S.L.": [
-    { kind: "HEAD_OFFICE", label: "Oficina central", line1: "Calle de Alcalá 100", postal: "28009", city: "Madrid", country: "ES" },
-    { kind: "WAREHOUSE", label: "Almacén Coslada", line1: "Polígono Industrial 3", postal: "28820", city: "Madrid", country: "ES" },
+    { kind: "HEAD_OFFICE", label: "Oficina central", line1: "Calle de Alcalá 100", postal: "28009", city: "Madrid", at: [40.423, -3.682], country: "ES" },
+    { kind: "WAREHOUSE", label: "Almacén Coslada", line1: "Polígono Industrial 3", postal: "28820", city: "Madrid", at: [40.428, -3.545], country: "ES" },
   ],
   "Grossista Lisboa Central, Lda": [
-    { kind: "HEAD_OFFICE", label: "Sede", line1: "Avenida Infante D. Henrique 300", postal: "1950-421", city: "Lisboa", country: "PT" },
-    { kind: "WAREHOUSE", label: "Armazém Lisboa", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", country: "PT" },
-    { kind: "PICKUP", label: "Cash & carry Amadora", line1: "Estrada da Falagueira 20", postal: "2700-365", city: "Amadora", country: "PT" },
-    { kind: "DELIVERY", label: "Receção armazém", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", country: "PT" },
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Avenida Infante D. Henrique 300", postal: "1950-421", city: "Lisboa", at: [38.743, -9.101], country: "PT" },
+    { kind: "WAREHOUSE", label: "Armazém Lisboa", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", at: [38.7379, -9.1046], country: "PT" },
+    { kind: "PICKUP", label: "Cash & carry Amadora", line1: "Estrada da Falagueira 20", postal: "2700-365", city: "Amadora", at: [38.76, -9.229], country: "PT" },
+    { kind: "DELIVERY", label: "Receção armazém", line1: "Rua do Açúcar 50", postal: "1950-009", city: "Lisboa", at: [38.7379, -9.1046], country: "PT" },
   ],
   "FIRINGI Armazém Central, Lda": [
-    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua Castilho 39", postal: "1250-068", city: "Lisboa", country: "PT" },
-    { kind: "WAREHOUSE", label: "Armazém FIRINGI", line1: "Rua Cidade de Bolama 1", postal: "1800-079", city: "Lisboa", country: "PT" },
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua Castilho 39", postal: "1250-068", city: "Lisboa", at: [38.724, -9.153], country: "PT" },
+    { kind: "WAREHOUSE", label: "Armazém FIRINGI", line1: "Rua Cidade de Bolama 1", postal: "1800-079", city: "Lisboa", at: [38.769, -9.115], country: "PT" },
   ],
   "Cash & Carry Almada, Lda": [
-    { kind: "HEAD_OFFICE", label: "Sede", line1: "Avenida D. Nuno Álvares Pereira 10", postal: "2800-180", city: "Almada", country: "PT" },
-    { kind: "WAREHOUSE", label: "Armazém Almada", line1: "Rua da Indústria 7", postal: "2810-000", city: "Almada", country: "PT" },
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Avenida D. Nuno Álvares Pereira 10", postal: "2800-180", city: "Almada", at: [38.679, -9.158], country: "PT" },
+    { kind: "WAREHOUSE", label: "Armazém Almada", line1: "Rua da Indústria 7", postal: "2810-000", city: "Almada", at: [38.666, -9.17], country: "PT" },
   ],
-  "Grossista Porto Norte, Lda": [{ kind: "HEAD_OFFICE", label: "Sede", line1: "Rua de Santa Catarina 200", postal: "4000-442", city: "Porto", country: "PT" }],
+  "Grossista Porto Norte, Lda": [{ kind: "HEAD_OFFICE", label: "Sede", line1: "Rua de Santa Catarina 200", postal: "4000-442", city: "Porto", at: [41.149, -8.606], country: "PT" }],
   "Kebab House Lisboa, Lda": [
-    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua da Madalena 120", postal: "1100-319", city: "Lisboa", country: "PT" },
-    { kind: "DELIVERY", label: "Restaurante Baixa", line1: "Rua da Madalena 120", postal: "1100-319", city: "Lisboa", country: "PT" },
+    { kind: "HEAD_OFFICE", label: "Sede", line1: "Rua da Madalena 120", postal: "1100-319", city: "Lisboa", at: [38.711, -9.135], country: "PT" },
+    { kind: "DELIVERY", label: "Restaurante Baixa", line1: "Rua da Madalena 120", postal: "1100-319", city: "Lisboa", at: [38.711, -9.135], country: "PT" },
   ],
-  "Mini-Mercado Sol, Unipessoal Lda": [{ kind: "HEAD_OFFICE", label: "Loja", line1: "Rua de Benfica 300", postal: "1500-086", city: "Lisboa", country: "PT" }],
-  "Pizzaria Bella Porto, Lda": [{ kind: "HEAD_OFFICE", label: "Pizzaria", line1: "Rua das Flores 50", postal: "4050-262", city: "Porto", country: "PT" }],
+  "Mini-Mercado Sol, Unipessoal Lda": [{ kind: "HEAD_OFFICE", label: "Loja", line1: "Rua de Benfica 300", postal: "1500-086", city: "Lisboa", at: [38.748, -9.193], country: "PT" }],
+  "Pizzaria Bella Porto, Lda": [{ kind: "HEAD_OFFICE", label: "Pizzaria", line1: "Rua das Flores 50", postal: "4050-262", city: "Porto", at: [41.143, -8.614], country: "PT" }],
 };
 
 /** Demo barcodes: unit EAN-13 per SKU, and a separate barcode per multi-unit packaging. */
@@ -115,12 +116,16 @@ export async function seedCatalogue(db: PrismaClient) {
   for (const [name, list] of Object.entries(ADDRESSES)) {
     const c = await company(name);
     for (const a of list) {
-      if (await db.address.findFirst({ where: { companyId: c.id, kind: a.kind, label: a.label } })) continue;
+      const existing = await db.address.findFirst({ where: { companyId: c.id, kind: a.kind, label: a.label } });
+      if (existing) {
+        if (a.at && (Number(existing.latitude) !== a.at[0] || Number(existing.longitude) !== a.at[1])) await db.address.update({ where: { id: existing.id }, data: { latitude: a.at[0], longitude: a.at[1] } });
+        continue;
+      }
       const city = await db.city.findFirst({ where: { name: a.city, countryId: country[a.country] } });
       const isDefault = !(await db.address.count({ where: { companyId: c.id, kind: a.kind, isDefault: true } }));
       await db.address.create({
         data: { companyId: c.id, kind: a.kind, label: a.label, line1: a.line1, postalCode: a.postal, cityId: city?.id ?? null, cityName: a.city,
-          countryId: country[a.country], latitude: city?.latitude ?? null, longitude: city?.longitude ?? null, isDefault },
+          countryId: country[a.country], latitude: a.at?.[0] ?? city?.latitude ?? null, longitude: a.at?.[1] ?? city?.longitude ?? null, isDefault },
       });
     }
   }

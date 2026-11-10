@@ -7,6 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { hm } from "@/components/routes/route-views";
 import { AutoRefresh } from "@/components/routes/auto-refresh";
+import { liveMapRoutes } from "@/server/data/dashboard";
+import { RouteMap } from "@/components/motion/route-map";
+import { CountUp } from "@/components/motion/count-up";
+import { LiveDot } from "@/components/motion/shapes";
 
 export const metadata = { title: "Live Operations" };
 export const dynamic = "force-dynamic";
@@ -16,10 +20,14 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
   const ctx = await pagePortal("admin");
   pagePermission(ctx, ["admin.dashboard.view", "admin.delivery.view", "admin.delivery.manage"]);
   const all = (await searchParams).all === "1";
-  const { rows, kpi } = await liveBoard(ctx, all);
+  const [{ rows, kpi }, mapRoutes] = await Promise.all([liveBoard(ctx, all), liveMapRoutes(all ? {} : { executingCompanyId: ctx.company.id })]);
+  const TONES = ["tone-blue", "tone-violet", "tone-teal", "tone-pink", "tone-lime", "tone-orange", "tone-blue"];
+  let n = 0;
   const tile = (label: string, value: number, href?: string, tone = "") => {
-    const body = <><div className="text-xs text-muted-foreground">{label}</div><div className={`text-2xl font-semibold tabular-nums ${tone}`}>{value}</div></>;
-    return href ? <Link href={href} className="rounded-lg border bg-card p-3 hover:shadow-sm">{body}</Link> : <div className="rounded-lg border bg-card p-3">{body}</div>;
+    const i = n++;
+    const body = <><div className="text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</div><div className={`text-2xl font-bold tabular-nums ${tone}`}><CountUp value={value} fmt="int" /></div></>;
+    const cls = `tile gloss motion-rise motion-lift rounded-xl border p-3 ${TONES[i % TONES.length]}`;
+    return href ? <Link href={href} className={cls} style={{ ["--i" as string]: i }}>{body}</Link> : <div className={cls} style={{ ["--i" as string]: i }}>{body}</div>;
   };
   return (
     <>
@@ -36,8 +44,12 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
         {tile("Delivered today", kpi.deliveredToday, undefined, "text-success")}
         {tile("Failed (open)", kpi.failed, "/admin/delivery/failed", kpi.failed ? "text-destructive" : "")}
         {tile("Open exceptions", kpi.exceptions, "/admin/orders/exceptions")}
-        <div className="rounded-lg border bg-card p-3"><div className="text-xs text-muted-foreground">Drivers</div><div className="text-sm tabular-nums"><span className="text-success">{kpi.drivers.available} free</span> · {kpi.drivers.busy} busy · <span className="text-muted-foreground">{kpi.drivers.off} off</span></div></div>
+        <div className="tile gloss tone-violet motion-rise rounded-xl border p-3"><div className="text-xs font-semibold uppercase tracking-wide">Drivers</div><div className="text-sm tabular-nums"><span className="text-success">{kpi.drivers.available} free</span> · {kpi.drivers.busy} busy · <span className="text-muted-foreground">{kpi.drivers.off} off</span></div></div>
       </div>
+      <Card className="mb-4 motion-rise" style={{ ["--i" as string]: 8 }}>
+        <CardHeader className="flex-row items-center justify-between"><CardTitle>Live map</CardTitle><LiveDot label="Live" /></CardHeader>
+        <CardContent>{mapRoutes.length ? <RouteMap routes={mapRoutes.map((r) => ({ ...r, href: `/admin/delivery/routes/${r.id}` }))} label="Routes on the road" height={340} /> : <p className="py-8 text-center text-sm text-muted-foreground">No routes on the road right now.</p>}</CardContent>
+      </Card>
       <Card>
         <CardHeader><CardTitle>Routes today</CardTitle></CardHeader>
         <CardContent>

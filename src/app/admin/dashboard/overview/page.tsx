@@ -1,59 +1,92 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { AlertTriangle, Building2, Clock, Globe, Package, Store, Truck, Users, Wallet } from "lucide-react";
+import { Building2, Globe, Store, Truck, Users } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
-import { adminOverview } from "@/server/data/dashboard";
-import { PageHeader } from "@/components/layout/page-header";
+import { adminLive, adminOverview } from "@/server/data/dashboard";
 import { AccountStatusBadge } from "@/components/layout/status-badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate, formatMoney } from "@/lib/utils";
+import { Aurora, LiveDot, ProgressRing, Sparkline, rise } from "@/components/motion/shapes";
+import { HeroStat, OrderTicker, Tile } from "@/components/motion/dashboard-kit";
+import { RouteMap } from "@/components/motion/route-map";
+import { CountUp } from "@/components/motion/count-up";
+import { AutoRefresh } from "@/components/routes/auto-refresh";
 
 export const metadata = { title: "Executive Overview" };
-
-function Stat({ icon: Icon, label, value, hint }: { icon: typeof Users; label: string; value: number; hint?: string }) {
-  return (
-    <Card>
-      <CardContent className="flex items-start gap-4 p-5">
-        <div className="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary"><Icon className="size-5" /></div>
-        <div>
-          <p className="text-sm text-muted-foreground">{label}</p>
-          <p className="text-2xl font-semibold tabular-nums">{value}</p>
-          {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+export const dynamic = "force-dynamic";
 
 export default async function OverviewPage() {
   const ctx = await pagePortal("admin");
   pagePermission(ctx, "admin.dashboard.view");
-  const [o, t, tc, locale] = await Promise.all([adminOverview(ctx), getTranslations("dashboard"), getTranslations("companyType"), getLocale()]);
-
+  const [o, live, t, tc, ts, locale] = await Promise.all([adminOverview(ctx), adminLive(ctx), getTranslations("dashboard"), getTranslations("companyType"), getTranslations("orders.statuses"), getLocale()]);
+  const net14 = live.series.reduce((a, d) => a + d.net, 0);
+  const d = live.deliveries;
   return (
-    <>
-      <PageHeader title={t("welcome", { name: ctx.user.name })} />
-      <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Link href="/admin/dashboard/today"><Stat icon={Package} label={t("ordersToday")} value={o.orders.today} /></Link>
-        <Link href="/admin/orders/pending-confirmation"><Stat icon={Clock} label={t("awaitingConfirmation")} value={o.orders.awaiting} /></Link>
-        <Link href="/admin/dashboard/alerts"><Stat icon={AlertTriangle} label={t("openExceptions")} value={o.orders.exceptions} /></Link>
-        <Stat icon={Wallet} label={t("monthSales")} value={o.orders.monthCount} hint={`${formatMoney(o.orders.monthNet, locale)} · ${t("margin")} ${formatMoney(o.orders.monthMargin, locale)}`} />
+    <div className="space-y-5">
+      <AutoRefresh seconds={60} />
+      <Aurora>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="motion-rise">
+            <div className="mb-2 flex items-center gap-3 text-white/80"><LiveDot label={t("live")} /><span className="text-sm">{new Intl.DateTimeFormat(locale, { weekday: "long", day: "numeric", month: "long" }).format(new Date())}</span></div>
+            <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow sm:text-4xl">{t("welcome", { name: ctx.user.name })}</h1>
+            <p className="mt-1 text-white/80">FIRINGI · WHOLESALE MADE SIMPLE</p>
+          </div>
+          <div className="glass motion-rise w-full rounded-xl p-3 sm:w-72" style={{ ["--i" as string]: 1 }}>
+            <div className="flex items-baseline justify-between text-white"><span className="text-xs font-semibold uppercase tracking-wider text-white/75">{t("salesTrend")}</span><span className="font-bold"><CountUp value={net14} fmt="money" locale={locale} /></span></div>
+            <Sparkline values={live.series.map((x) => x.net)} label={t("salesTrend")} color="white" height={64} className="mt-2" />
+          </div>
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <HeroStat label={t("ordersToday")} value={o.orders.today} locale={locale} href="/admin/dashboard/today" i={0} />
+          <HeroStat label={t("monthSales")} value={Number(o.orders.monthNet)} fmt="money" locale={locale} sub={`${o.orders.monthCount} · ${t("margin")} ${formatMoney(o.orders.monthMargin, locale)}`} i={1} />
+          <HeroStat label={t("awaitingConfirmation")} value={o.orders.awaiting} locale={locale} href="/admin/orders/pending-confirmation" i={2} />
+          <HeroStat label={t("openExceptions")} value={o.orders.exceptions} locale={locale} href="/admin/dashboard/alerts" i={3} />
+        </div>
+      </Aurora>
+
+      {live.latest.length > 0 && (
+        <section {...rise(2)}>
+          <h2 className="mb-2 text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]">{t("latestOrders")}</h2>
+          <OrderTicker orders={live.latest} locale={locale} base="/admin/orders" label={t("latestOrders")} statusLabel={(s) => ts(s)} />
+        </section>
+      )}
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <Card className="tile gloss tone-teal motion-rise" style={{ ["--i" as string]: 3 }}>
+          <CardHeader><CardTitle>{t("deliveriesToday")}</CardTitle></CardHeader>
+          <CardContent className="flex flex-col items-center gap-3">
+            <ProgressRing value={d.total ? d.done / d.total : 0} size={150} stroke={14} label={t("deliveredOf", { done: d.done, total: d.total })}>
+              <div><div className="text-3xl font-extrabold text-gradient"><CountUp value={d.done} fmt="int" locale={locale} /></div><div className="text-xs text-muted-foreground">/ {d.total}</div></div>
+            </ProgressRing>
+            <p className="text-sm">{t("deliveredOf", { done: d.done, total: d.total })}{d.failed ? <span className="ml-2 font-semibold text-destructive">⚠ {d.failed}</span> : null}</p>
+            <Link href="/admin/dashboard/live-operations" className="text-sm font-medium text-primary hover:underline">{t("seeAll")} →</Link>
+          </CardContent>
+        </Card>
+        <Card className="motion-rise lg:col-span-2" style={{ ["--i" as string]: 4 }}>
+          <CardHeader className="flex-row items-center justify-between"><CardTitle>{t("routesOnRoad")}</CardTitle><LiveDot label={t("live")} /></CardHeader>
+          <CardContent>
+            {live.routes.length ? <RouteMap routes={live.routes.map((r) => ({ ...r, href: `/admin/delivery/routes/${r.id}` }))} label={t("routesOnRoad")} height={260} legend={{ depot: t("mapDepot"), done: t("mapDone"), todo: t("mapTodo") }} /> : <p className="py-10 text-center text-sm text-muted-foreground">{t("noRoutes")}</p>}
+          </CardContent>
+        </Card>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <Stat icon={Truck} label={t("distributors")} value={o.distributors.total} hint={t("activeOf", o.distributors)} />
-        <Stat icon={Store} label={t("wholesalers")} value={o.wholesalers.total} hint={t("activeOf", o.wholesalers)} />
-        <Stat icon={Building2} label={t("customers")} value={o.customers.total} hint={t("activeOf", o.customers)} />
-        <Stat icon={Users} label={t("users")} value={o.activeUsers} />
-        <Stat icon={Globe} label={t("markets")} value={o.customerMarkets} />
-        <Stat icon={Globe} label={t("sourcing")} value={o.sourcingCountries} />
-      </div>
-      <Card className="mt-6">
+
+      <section>
+        <h2 className="mb-2 text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]">{t("network")}</h2>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <Tile icon={Truck} tone="tone-blue" label={t("distributors")} value={o.distributors.total} hint={t("activeOf", o.distributors)} locale={locale} href="/admin/vendors/distributors/all" i={5} />
+          <Tile icon={Store} tone="tone-violet" label={t("wholesalers")} value={o.wholesalers.total} hint={t("activeOf", o.wholesalers)} locale={locale} href="/admin/vendors/wholesalers/all" i={6} />
+          <Tile icon={Building2} tone="tone-pink" label={t("customers")} value={o.customers.total} hint={t("activeOf", o.customers)} locale={locale} href="/admin/customers/all" i={7} />
+          <Tile icon={Users} tone="tone-orange" label={t("users")} value={o.activeUsers} locale={locale} i={8} />
+          <Tile icon={Globe} tone="tone-teal" label={t("markets")} value={o.customerMarkets} locale={locale} i={9} />
+          <Tile icon={Globe} tone="tone-lime" label={t("sourcing")} value={o.sourcingCountries} locale={locale} i={10} />
+        </div>
+      </section>
+
+      <Card {...rise(11)}>
         <CardHeader>
           <CardTitle>{t("recent")}</CardTitle>
-          <CardDescription>
-            <Link className="text-primary hover:underline" href="/admin/vendors/distributors/applications">→ {t("applications")}</Link>
-          </CardDescription>
+          <CardDescription><Link className="text-primary hover:underline" href="/admin/vendors/distributors/applications">→ {t("applications")}</Link></CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
@@ -72,6 +105,6 @@ export default async function OverviewPage() {
           </Table>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }

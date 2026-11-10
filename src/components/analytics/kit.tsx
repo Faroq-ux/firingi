@@ -1,19 +1,25 @@
+import type * as React from "react";
 /** Server-side building blocks shared by the admin, vendor and buyer report pages. */
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 import { pickLocalized } from "@/i18n/config";
 import { labelsFor, type Dim, type Row } from "@/server/analytics/engine";
 import { fmtValue, type Fmt } from "@/lib/analytics-format";
+import { CountUp } from "@/components/motion/count-up";
 
-/** Stat tile: headline number + change against the previous period (arrow + text, not colour alone). */
-export function Kpi({ label, value, prev, fmt, locale, hint, testId, vsLabel = "vs previous period" }: {
-  label: string; value: number; prev?: number; fmt: Fmt; locale: string; hint?: string; testId?: string; vsLabel?: string;
+const TONES = ["tone-blue", "tone-violet", "tone-teal", "tone-pink", "tone-orange", "tone-lime"];
+/** Stable colour per label so a KPI keeps its colour everywhere. */
+export const toneFor = (label: string) => TONES[Math.abs(label.split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7)) % TONES.length];
+
+/** Stat tile: headline number (counts up) + change against the previous period (arrow + text, not colour alone). */
+export function Kpi({ label, value, prev, fmt, locale, hint, testId, vsLabel = "vs previous period", tone, index = 0 }: {
+  label: string; value: number; prev?: number; fmt: Fmt; locale: string; hint?: string; testId?: string; vsLabel?: string; tone?: string; index?: number;
 }) {
   const delta = prev === undefined ? null : prev === 0 ? (value === 0 ? 0 : null) : (value - prev) / Math.abs(prev);
   const Icon = delta === null || delta === 0 ? Minus : delta > 0 ? ArrowUpRight : ArrowDownRight;
   return (
-    <div className="rounded-xl border bg-card p-4" data-testid={testId}>
-      <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-1 text-2xl font-semibold tabular-nums">{fmtValue(value, fmt, locale)}</div>
+    <div className={`tile gloss motion-rise motion-lift rounded-xl border p-4 ${tone ?? toneFor(label)}`} style={{ ["--i" as string]: index } as React.CSSProperties} data-testid={testId}>
+      <div className="text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</div>
+      <div className="mt-1 text-2xl font-bold"><CountUp value={value} fmt={fmt} locale={locale} /></div>
       {prev !== undefined && (
         <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground" title={`${vsLabel}: ${fmtValue(prev, fmt, locale)}`}>
           {delta !== null && <Icon className={`h-3.5 w-3.5 ${delta > 0 ? "text-success" : delta < 0 ? "text-destructive" : ""}`} aria-hidden />}

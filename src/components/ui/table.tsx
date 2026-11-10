@@ -8,13 +8,13 @@ export function Table({ className, ...props }: React.HTMLAttributes<HTMLTableEle
     </div>
   );
 }
-export const THead = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <thead className="bg-muted/50 [&_tr]:border-b" {...p} />;
+export const THead = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <thead className="bg-[linear-gradient(90deg,color-mix(in_oklch,var(--vivid-blue)_12%,var(--card)),color-mix(in_oklch,var(--vivid-violet)_10%,var(--card)),color-mix(in_oklch,var(--vivid-pink)_8%,var(--card)))] [&_tr]:border-b" {...p} />;
 export const TBody = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <tbody className="[&_tr:last-child]:border-0" {...p} />;
 export const TR = ({ className, ...p }: React.HTMLAttributes<HTMLTableRowElement>) => (
-  <tr className={cn("border-b transition-colors hover:bg-muted/30", className)} {...p} />
+  <tr className={cn("border-b transition-colors hover:bg-[color-mix(in_oklch,var(--vivid-blue)_6%,transparent)]", className)} {...p} />
 );
 export const TH = ({ className, ...p }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-  <th className={cn("h-10 px-3 text-left align-middle text-xs font-medium uppercase tracking-wide text-muted-foreground", className)} {...p} />
+  <th className={cn("h-10 px-3 text-left align-middle text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--vivid-violet)_70%,var(--foreground))]", className)} {...p} />
 );
 export const TD = ({ className, ...p }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
   <td className={cn("px-3 py-2.5 align-middle", className)} {...p} />
