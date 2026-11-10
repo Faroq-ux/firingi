@@ -83,7 +83,8 @@ function metricSql(m: Metric, line: boolean): Prisma.Sql {
     case "commission": return Prisma.sql`sum(o."commissionTotal")::float8`;
     case "margin": return Prisma.sql`sum(o."firingiMarginNet")::float8`;
     case "fees": return Prisma.sql`sum(o."deliveryFeeNet")::float8`;
-    case "revenue": return Prisma.sql`sum(o."firingiMarginNet" + o."deliveryFeeNet")::float8`;
+    // FIRINGI's own income: goods margin + the fees of FIRINGI's fleet (a supplier's flat rate is passed on).
+    case "revenue": return Prisma.sql`sum(o."firingiMarginNet" + CASE WHEN o."deliveryMode" = 'FIRINGI_FLEET' THEN o."deliveryFeeNet" ELSE 0 END)::float8`;
     case "discount": return Prisma.sql`sum(o."discountTotal")::float8`;
     case "payout": return Prisma.sql`sum(o."vendorPayableNet")::float8`;
     case "aov": return Prisma.sql`(sum(o."netTotal") / nullif(count(*), 0))::float8`;

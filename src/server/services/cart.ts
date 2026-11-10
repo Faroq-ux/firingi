@@ -10,7 +10,8 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { catalogueItem, pricedOffers } from "@/server/data/catalogue-buyer";
 import { checkQty, computeLine } from "@/server/orders/calc";
-import { decideDelivery } from "@/server/orders/delivery-rule";
+import { decideDelivery, firingiInput, vendorInput } from "@/server/orders/delivery-rule";
+import { zoneIdsForAddress } from "@/server/delivery/coverage";
 import { orderingMode, planRouted } from "@/server/allocation/routed";
 import { creditBlock } from "./payments";
 
@@ -95,17 +96,20 @@ export async function cartCount(ctx: Ctx) {
 
 /**
  * The rules that decide delivery for an order from `vendorCompanyId` to a buyer in
- * `buyerCountryId`: FIRINGI's rule for that country (admin minimum + fee) and the
- * vendor's own delivery minimum. (Zone / area-specific rules are added in Phase 6.)
+ * `buyerCountryId`: FIRINGI's rule (the delivery zone of `addressId` overrides the country)
+ * and the vendor's own rule (free-delivery minimum, flat rate).
  */
-export async function deliveryRulesFor(buyerCountryId: string, vendorCompanyId: string) {
+export async function deliveryRulesFor(buyerCountryId: string, vendorCompanyId: string, addressId?: string | null) {
   const now = new Date();
   const valid = { isActive: true, validFrom: { lte: now }, OR: [{ validTo: null }, { validTo: { gt: now } }] };
-  const [firingi, vendor] = await Promise.all([
-    prisma.deliveryRule.findFirst({ where: { ...valid, scope: "COUNTRY", countryId: buyerCountryId }, orderBy: [{ priority: "desc" }, { validFrom: "desc" }] }),
-    prisma.deliveryRule.findFirst({ where: { ...valid, scope: "VENDOR", vendorCompanyId }, orderBy: [{ priority: "desc" }, { validFrom: "desc" }] }),
+  const zones = addressId ? await zoneIdsForAddress(addressId) : [];
+  const order = [{ priority: "desc" as const }, { validFrom: "desc" as const }];
+  const [zone, country, vendor] = await Promise.all([
+    zones.length ? prisma.deliveryRule.findFirst({ where: { ...valid, scope: "ZONE", zoneId: { in: zones } }, orderBy: order }) : null,
+    prisma.deliveryRule.findFirst({ where: { ...valid, scope: "COUNTRY", countryId: buyerCountryId }, orderBy: order }),
+    vendorCompanyId ? prisma.deliveryRule.findFirst({ where: { ...valid, scope: "VENDOR", vendorCompanyId }, orderBy: order }) : null,
   ]);
-  return { firingi, vendor };
+  return { firingi: zone ?? country, vendor };
 }
 
 /** Full cart view: priced lines, totals (incl. VAT), delivery decision. */
@@ -127,15 +131,14 @@ export async function cartView(ctx: Ctx) {
   let feeVatRate = new Decimal(0);
   if (seller && lines.length) {
     const sellerCountry = (await prisma.company.findUniqueOrThrow({ where: { id: seller.id }, select: { countryId: true } })).countryId;
-    const rules = await deliveryRulesFor(ctx.company.countryId, seller.id);
-    delivery = decideDelivery(
-      goodsNet,
-      rules.firingi && { id: rules.firingi.id, minOrderValue: rules.firingi.minOrderValue!.toString(), feeNet: rules.firingi.firingiDeliveryFeeNet!.toString() },
-      rules.vendor && { id: rules.vendor.id, amount: rules.vendor.vendorDeliveryMinimum!.toString() },
-      sellerCountry !== ctx.company.countryId,
-    );
-    if (delivery.ok && delivery.feeNet.gt(0) && rules.firingi?.feeTaxCategoryId) {
-      const r = await prisma.taxRate.findFirst({ where: { countryId: ctx.company.countryId, regionId: null, taxCategoryId: rules.firingi.feeTaxCategoryId }, orderBy: { validFrom: "desc" } });
+    const rules = await deliveryRulesFor(ctx.company.countryId, seller.id, addresses[0]?.id ?? null);
+    delivery = decideDelivery({
+      goodsNet, units: lines.reduce((a, l) => a + l.qty, 0), supplierDelivers: ctx.company.type === "WHOLESALER",
+      crossBorder: sellerCountry !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor),
+    });
+    const feeRule = delivery.ok ? (delivery.feeOwner === "VENDOR" ? rules.vendor : rules.firingi) : null;
+    if (delivery.ok && delivery.feeNet.gt(0) && feeRule?.feeTaxCategoryId) {
+      const r = await prisma.taxRate.findFirst({ where: { countryId: ctx.company.countryId, regionId: null, taxCategoryId: feeRule.feeTaxCategoryId }, orderBy: { validFrom: "desc" } });
       feeVatRate = new Decimal(r?.rate.toString() ?? 0);
       feeVat = delivery.feeNet.mul(feeVatRate).div(100).toDecimalPlaces(2);
     }
@@ -152,8 +155,8 @@ export async function cartView(ctx: Ctx) {
     goodsNet: goodsNet.toFixed(2),
     goodsVat: goodsVat.toFixed(2),
     delivery: delivery && (delivery.ok
-      ? { ok: true as const, mode: delivery.mode, feeNet: feeNet.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: feeVatRate.toString() }
-      : { ok: false as const, reason: delivery.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: delivery.minimum.toFixed(2), missing: delivery.missing.toFixed(2), vendorMinimum: delivery.vendorMinimum?.toFixed(2) ?? null }),
+      ? { ok: true as const, mode: delivery.mode, feeNet: feeNet.toFixed(2), feeVat: feeVat.toFixed(2), feeVatRate: feeVatRate.toString(), free: delivery.free }
+      : { ok: false as const, reason: delivery.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: delivery.unit === "UNITS" ? String(delivery.minimum) : delivery.minimum.toFixed(2), missing: delivery.unit === "UNITS" ? String(delivery.missing) : delivery.missing.toFixed(2), unit: delivery.unit, vendorMinimum: delivery.vendorMinimum?.toFixed(2) ?? null }),
     totalNet: goodsNet.plus(feeNet).toFixed(2),
     totalVat: goodsVat.plus(feeVat).toFixed(2),
     totalGross: goodsNet.plus(feeNet).plus(goodsVat).plus(feeVat).toFixed(2),

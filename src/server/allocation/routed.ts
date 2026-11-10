@@ -18,6 +18,7 @@ import { writeAudit } from "@/server/services/audit";
 import { assertCanOrder } from "@/server/services/payments";
 import { notify } from "@/server/notify/dispatch";
 import { allocationRules } from "./rules";
+import { vendorMinimumReached } from "@/server/orders/delivery-rule";
 import { createAllocatedOrder, findCandidates, planMoves, type Candidate, type MoveItem } from "./engine";
 
 export { orderingMode } from "./mode";
@@ -52,19 +53,21 @@ export async function planRouted(ctx: Ctx, lines: CartLine[], addressId: string)
     items, rules, new Set(),
   );
   const { picks, leftover } = planMoves(cands, items.length, rules.maxSplitOrders);
-  const firingi = (await deliveryRulesFor(ctx.company.countryId, "")).firingi;
+  const firingi = (await deliveryRulesFor(ctx.company.countryId, "", addressId)).firingi;
   const goodsNet = picks.reduce((a, p) => a + p.covers.reduce((s, c) => s + Number(c.lineNet), 0), 0);
   // FIRINGI's fleet (flat fee, once) for every part that isn't delivered free by its supplier.
   const byFiringi = picks.some((p) => p.candidate.inHouse || !freeFor(p.candidate, p.covers));
-  const feeNet = byFiringi && firingi ? new Decimal(firingi.firingiDeliveryFeeNet?.toString() ?? 0) : new Decimal(0);
+  // FIRINGI's free delivery (admin switch, per country / zone) on the whole checkout, else its flat rate.
+  const firingiFree = !!firingi?.firingiFreeEnabled && firingi.firingiFreeFrom != null && goodsNet >= Number(firingi.firingiFreeFrom);
+  const feeNet = byFiringi && firingi && !firingiFree ? new Decimal(firingi.firingiDeliveryFeeNet?.toString() ?? 0) : new Decimal(0);
   const minimum = firingi?.minOrderValue ? Number(firingi.minOrderValue) : 0;
   return { address, items, candidates: cands, picks, leftover, goodsNet, feeNet, minimum, byFiringi, feeRuleId: firingi?.id ?? null, feeTaxCategoryId: firingi?.feeTaxCategoryId ?? null };
 }
 
 /** Does this pick reach the supplier's own free-delivery minimum? (In-house: FIRINGI's fleet.) */
-function freeFor(c: Candidate, covers: { lineNet: string }[]) {
-  if (c.inHouse || c.deliveryMinimum === null) return false;
-  return covers.reduce((a, x) => a + Number(x.lineNet), 0) >= c.deliveryMinimum;
+function freeFor(c: Candidate, covers: { lineNet: string; qty: number }[]) {
+  if (c.inHouse) return false;
+  return vendorMinimumReached(c.deliveryRule, covers.reduce((a, x) => a + Number(x.lineNet), 0), covers.reduce((a, x) => a + x.qty, 0));
 }
 
 /** Check out a FIRINGI cart: one order per picked supplier. */

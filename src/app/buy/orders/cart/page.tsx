@@ -61,10 +61,11 @@ export default async function CartPage() {
             {d && (d.ok ? (
               <p className="rounded-md bg-muted p-2 text-sm">
                 {d.mode === "FIRINGI_FLEET" ? t("deliveryFirINGI") : d.mode === "CARRIER" ? t("deliveryCarrier") : t("deliveryVendor")}
+                {Number(d.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : d.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}
               </p>
             ) : (
               <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">
-                {d.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : t(d.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(d.minimum, locale), missing: formatMoney(d.missing, locale), tax })}
+                {d.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : "unit" in d && d.unit === "UNITS" ? t("belowSupplierUnits", { min: d.minimum, missing: d.missing }) : t(d.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(d.minimum, locale), missing: formatMoney(d.missing, locale), tax })}
               </p>
             ))}
             {cart.credit && (

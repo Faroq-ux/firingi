@@ -320,7 +320,7 @@ describe("rules", () => {
 
 describe("planning", () => {
   const cand = (vendorId: string, score: number, idx: number[], eligible = true): Candidate => ({
-    vendorId, name: vendorId, country: "PT", eligible, reasons: [], score, inHouse: false, freeDelivery: true, deliveryMinimum: null, buyerCost: 0, rank: 99,
+    vendorId, name: vendorId, country: "PT", eligible, reasons: [], score, inHouse: false, freeDelivery: true, deliveryMinimum: null, deliveryRule: null, buyerCost: 0, rank: 99,
     parts: {}, distanceKm: 1, marginPct: 10, goodsNet: 0, marginNet: 0, absorbedNet: 0,
     covers: idx.map((index) => ({ index, offerId: `${vendorId}${index}`, qty: 1, listUnitNet: "1", vendorFunded: "0", firingiFunded: "0", saleUnitNet: "1", candidateSaleUnitNet: "1", lineNet: "1", vendorLineNet: "1", commissionRate: "0" })),
   });

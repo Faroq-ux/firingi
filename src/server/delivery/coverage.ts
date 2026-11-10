@@ -105,3 +105,14 @@ export async function checkPolygon(geojson: unknown, db: Db = prisma): Promise<{
     return { ok: false, error: "This is not valid GeoJSON." };
   }
 }
+
+/** Active delivery zones that contain this address (polygon, else postal-code patterns). */
+export async function zoneIdsForAddress(addressId: string, db: Db = prisma): Promise<string[]> {
+  const rows = await db.$queryRaw<{ id: string }[]>(Prisma.sql`
+    SELECT z.id FROM "DeliveryZone" z JOIN "Address" b ON b.id = ${addressId}
+    WHERE z."isActive" AND z."countryId" = b."countryId" AND (
+      (z.area IS NOT NULL AND b.geo IS NOT NULL AND postgis.ST_Covers(z.area, b.geo))
+      OR EXISTS (SELECT 1 FROM unnest(z."postalCodePatterns") p
+                 WHERE upper(b."postalCode") LIKE replace(replace(replace(upper(p), '%', '\\%'), '_', '\\_'), '*', '%')))`);
+  return rows.map((r) => r.id);
+}

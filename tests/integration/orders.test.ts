@@ -9,6 +9,7 @@ import { addToCart, cartView, clearCart, setCartQty } from "@/server/services/ca
 import { changeOrderStatus, confirmOrder, getOrder, listOrders, placeOrder } from "@/server/services/orders";
 import { ensureBaseList, setPrice } from "@/server/services/pricing";
 import { setStock } from "@/server/services/vendor-catalogue";
+import { removeZoneRule, setFiringiRule, setVendorMinimum } from "@/server/services/delivery-rules";
 import { ctxFor, makeApprovedCompany } from "../helpers";
 
 afterAll(() => prisma.$disconnect());
@@ -212,19 +213,56 @@ describe("order lifecycle & access", () => {
 });
 
 describe("wholesaler buying from distributors", () => {
-  it("domestic distributor: FIRINGI delivers below the distributor's minimum, distributor above it", async () => {
+  it("domestic distributor always delivers: its flat rate below its minimum (passed on to it), free above", async () => {
     const w = await ctxFor("purchasing@lisboacentral.test");
     const flour = await offerOf("Distribuidora Atlântico, Lda", "FIR-FARINHA25");
     await restock(flour.id, "owner@atlantico.test");
-    await addToCart(w, flour.id, 5); // 84.50 €
+    await addToCart(w, flour.id, 5); // 84.50 € < 300 € → Atlântico's 15 € flat rate
+    expect((await cartView(w)).delivery).toMatchObject({ ok: true, mode: "VENDOR_FLEET", feeNet: "15.00" });
     const small = await placeOrder(w, { deliveryAddressId: await deliveryAddress("purchasing@lisboacentral.test") });
     const o1 = await prisma.order.findUniqueOrThrow({ where: { id: small.id } });
     expect(o1.flow).toBe("WHOLESALER_FROM_DISTRIBUTOR");
-    expect(o1.deliveryMode).toBe("FIRINGI_FLEET");
+    expect(o1.deliveryMode).toBe("VENDOR_FLEET");
+    expect(o1.deliveryFeeNet.toFixed(2)).toBe("15.00");
+    // FIRINGI invoices the fee and passes it on: the distributor's payout includes it, FIRINGI's margin doesn't.
+    const goodsPayout = (await prisma.orderLine.findMany({ where: { orderId: small.id } })).reduce((a, l) => a + Number(l.vendorLineNet), 0);
+    expect(Number(o1.vendorPayableNet)).toBeCloseTo(goodsPayout + 15, 2);
     expect((await prisma.orderLine.findFirstOrThrow({ where: { orderId: small.id } })).commissionRate!.toFixed(0)).toBe("5");
+    await confirmOrder(await ctxFor("owner@atlantico.test"), small.id, {});
+    const c1 = await prisma.order.findUniqueOrThrow({ where: { id: small.id } });
+    expect(Number(c1.vendorPayableNet)).toBeCloseTo(goodsPayout + 15, 2); // still after confirmation
+    expect((await prisma.delivery.findUniqueOrThrow({ where: { orderId: small.id }, include: { executor: true } })).executor.legalName).toBe("Distribuidora Atlântico, Lda");
     await addToCart(w, flour.id, 20); // 338 € ≥ 300
     const big = await placeOrder(w, { deliveryAddressId: await deliveryAddress("purchasing@lisboacentral.test") });
-    expect((await prisma.order.findUniqueOrThrow({ where: { id: big.id } })).deliveryMode).toBe("VENDOR_FLEET");
+    const o2 = await prisma.order.findUniqueOrThrow({ where: { id: big.id } });
+    expect([o2.deliveryMode, o2.deliveryFeeNet.toFixed(2)]).toEqual(["VENDOR_FLEET", "0.00"]);
+  });
+
+  it("distributor minimum by units: free from N units, otherwise its flat rate; no flat rate → blocked", async () => {
+    const atl = await ctxFor("owner@atlantico.test");
+    const w = await ctxFor("purchasing@lisboacentral.test");
+    const before = await prisma.deliveryRule.findFirstOrThrow({ where: { scope: "VENDOR", vendorCompanyId: atl.company.id, validTo: null } });
+    const flour = await offerOf("Distribuidora Atlântico, Lda", "FIR-FARINHA25");
+    await restock(flour.id, "owner@atlantico.test");
+    try {
+      await setVendorMinimum(atl, { kind: "UNITS", units: 8, flatFeeNet: 12 });
+      await clearCart(w);
+      await addToCart(w, flour.id, 7);
+      expect((await cartView(w)).delivery).toMatchObject({ ok: true, feeNet: "12.00" });
+      await setCartQty(w, flour.id, 8);
+      expect((await cartView(w)).delivery).toMatchObject({ ok: true, feeNet: "0.00", free: "VENDOR" });
+      await setVendorMinimum(atl, { kind: "UNITS", units: 8, flatFeeNet: null });
+      await setCartQty(w, flour.id, 5);
+      expect((await cartView(w)).delivery).toMatchObject({ ok: false, reason: "BELOW_SUPPLIER_MINIMUM", unit: "UNITS", minimum: "8", missing: "3" });
+      await expect(placeOrder(w, { deliveryAddressId: await deliveryAddress("purchasing@lisboacentral.test") })).rejects.toThrow(/8 units/);
+      // a wholesaler can't set a flat rate (FIRINGI delivers below its minimum)
+      await setVendorMinimum(await ctxFor("owner@lisboacentral.test"), { kind: "AMOUNT", amount: 150, flatFeeNet: 9 });
+      const lxRule = await prisma.deliveryRule.findFirstOrThrow({ where: { scope: "VENDOR", vendor: { legalName: "Grossista Lisboa Central, Lda" }, validTo: null } });
+      expect(lxRule.vendorFlatFeeNet).toBeNull();
+    } finally {
+      await setVendorMinimum(atl, { kind: before.vendorMinimumKind, amount: before.vendorDeliveryMinimum?.toString() ?? null, units: before.vendorMinimumUnits, flatFeeNet: before.vendorFlatFeeNet?.toString() ?? null });
+      await clearCart(w);
+    }
   });
 
   it("cross-border distributor must deliver itself: below its minimum checkout is blocked", async () => {
@@ -237,5 +275,46 @@ describe("wholesaler buying from distributors", () => {
     await setCartQty(w, rice.id, 60); // 528 €
     const { id } = await placeOrder(w, { deliveryAddressId: await deliveryAddress("purchasing@lisboacentral.test") });
     expect((await prisma.order.findUniqueOrThrow({ where: { id } })).deliveryMode).toBe("CARRIER");
+  });
+});
+
+describe("FIRINGI free delivery (customer orders below the wholesaler's minimum)", () => {
+  it("admin switches free delivery on from an amount; a delivery zone overrides the country", async () => {
+    const ops = await ctxFor("ops@firingi.test");
+    const kebab = await ctxFor("owner@kebabhouse.test");
+    const pt = await prisma.deliveryRule.findFirstOrThrow({ where: { scope: "COUNTRY", country: { code: "PT" }, validTo: null } });
+    const base = { countryCode: "PT", minOrderValue: pt.minOrderValue!.toString(), feeNet: pt.firingiDeliveryFeeNet!.toString() };
+    const addr = await prisma.address.findFirstOrThrow({ where: { companyId: kebab.company.id, kind: "DELIVERY", isActive: true }, orderBy: { isDefault: "desc" } });
+    const zone = await prisma.deliveryZone.create({ data: { countryId: addr.countryId, name: `Kebab zone ${Date.now()}`, postalCodePatterns: [addr.postalCode] } });
+    const mozz = await prisma.vendorOffer.findFirstOrThrow({ where: { vendor: { legalName: "Grossista Lisboa Central, Lda" }, status: "ACTIVE", packaging: { variant: { sku: "FIR-MOZZ2" }, unitsPerPack: 1 } } });
+    await restock(mozz.id, "owner@lisboacentral.test");
+    try {
+      await clearCart(kebab);
+      await addToCart(kebab, mozz.id, 5); // ≈ 61 € — below Lisboa Central's 150 € → FIRINGI delivers
+      const flat = (await cartView(kebab)).delivery;
+      expect(flat).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", feeNet: Number(base.feeNet).toFixed(2) });
+
+      await expect(setFiringiRule(ops, { ...base, freeEnabled: true, freeFrom: null })).rejects.toThrow(/free/);
+      await setFiringiRule(ops, { ...base, freeEnabled: true, freeFrom: 60 });
+      expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", feeNet: "0.00", free: "FIRINGI" });
+      const { id } = await placeOrder(kebab, { deliveryAddressId: addr.id });
+      const o = await prisma.order.findUniqueOrThrow({ where: { id } });
+      expect([o.deliveryMode, o.deliveryFeeNet.toFixed(2)]).toEqual(["FIRINGI_FLEET", "0.00"]);
+
+      // The zone of Kebab House's address has its own rule: free delivery off, 4.50 € flat rate.
+      await addToCart(kebab, mozz.id, 5);
+      await setFiringiRule(ops, { zoneId: zone.id, minOrderValue: 0, feeNet: 4.5, freeEnabled: false, freeFrom: null });
+      expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", feeNet: "4.50" });
+      await removeZoneRule(ops, zone.id);
+      expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, feeNet: "0.00" });
+      // Switched off → the flat rate again.
+      await setFiringiRule(ops, { ...base, freeEnabled: false, freeFrom: 60 });
+      expect((await cartView(kebab)).delivery).toMatchObject({ ok: true, feeNet: Number(base.feeNet).toFixed(2) });
+    } finally {
+      await setFiringiRule(ops, { ...base, freeEnabled: pt.firingiFreeEnabled, freeFrom: pt.firingiFreeFrom?.toString() ?? null });
+      await prisma.deliveryRule.deleteMany({ where: { zoneId: zone.id } });
+      await prisma.deliveryZone.delete({ where: { id: zone.id } });
+      await clearCart(kebab);
+    }
   });
 });

@@ -298,13 +298,15 @@ export async function financeOverview(ctx: Ctx) {
     prisma.invoice.aggregate({ where: { docType: "INVOICE", issuedAt: { gte: from } }, _sum: { netTotal: true, vatTotal: true, grossTotal: true }, _count: { _all: true } }),
     prisma.invoice.aggregate({ where: { docType: "CREDIT_NOTE", issuedAt: { gte: from } }, _sum: { netTotal: true } }),
     balances(ctx),
-    prisma.order.aggregate({ where: { status: "DELIVERED", updatedAt: { gte: from } }, _sum: { commissionTotal: true, firingiMarginNet: true, deliveryFeeNet: true } }),
+    prisma.order.aggregate({ where: { status: "DELIVERED", updatedAt: { gte: from } }, _sum: { commissionTotal: true, firingiMarginNet: true } }),
     prisma.orderLineDiscount.aggregate({ where: { orderLine: { order: { placedAt: { gte: from } } } }, _sum: { firingiAmount: true, vendorAmount: true } }),
   ]);
+  // Delivery fees FIRINGI keeps (its own fleet); suppliers' flat rates are passed on to them.
+  const fees = await prisma.order.aggregate({ where: { status: "DELIVERED", updatedAt: { gte: from }, deliveryMode: "FIRINGI_FLEET" }, _sum: { deliveryFeeNet: true } });
   const z = (d: Prisma.Decimal | null | undefined) => d?.toString() ?? "0";
   return {
     invoices: inv._count._all, salesNet: z(inv._sum.netTotal), vat: z(inv._sum.vatTotal), creditNotesNet: z(cn._sum.netTotal),
-    commission: z(commission._sum.commissionTotal), margin: z(commission._sum.firingiMarginNet), deliveryFees: z(commission._sum.deliveryFeeNet),
+    commission: z(commission._sum.commissionTotal), margin: z(commission._sum.firingiMarginNet), deliveryFees: z(fees._sum.deliveryFeeNet),
     discountFiringi: z(discounts._sum.firingiAmount), discountVendors: z(discounts._sum.vendorAmount),
     receivable: b.receivable.reduce((a, r) => a.plus(r.open), new Decimal(0)).toFixed(2), overdue: b.receivable.reduce((a, r) => a.plus(r.overdue), new Decimal(0)).toFixed(2),
     payable: b.payable.reduce((a, r) => a.plus(r.open), new Decimal(0)).toFixed(2),

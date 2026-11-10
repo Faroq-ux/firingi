@@ -25,6 +25,11 @@ describe("order maths", () => {
     expect(t.grandTotal.toFixed(2)).toBe("70.28");
     expect(t.commissionTotal.toFixed(2)).toBe("2.50");
     expect(t.firingiMarginNet.toFixed(2)).toBe("2.50");
+    expect(t.vendorPayableNet.toFixed(2)).toBe("47.50");
+    // Distributor's own flat rate: FIRINGI invoices it and pays it on; FIRINGI's margin unchanged.
+    const v = computeTotals([a, b], { feeNet: "9.90", feeVatPercent: 23, toVendor: true });
+    expect(v.vendorPayableNet.toFixed(2)).toBe("57.40");
+    expect(v.firingiMarginNet.toFixed(2)).toBe("2.50");
   });
   it("quantity rules", () => {
     expect(checkQty(5, 1, 1)).toBeNull();
@@ -56,30 +61,66 @@ describe("status machine", () => {
   });
 });
 
-describe("delivery decision: vendor minimum, else FIRINGI (admin minimum + fee)", () => {
+describe("delivery decision", () => {
   const firingi = { id: "f", minOrderValue: 50, feeNet: "9.90" };
   const vendor = { id: "v", amount: 150 };
-  it("vendor delivers free when its own minimum is met", () => {
-    expect(decideDelivery(150, firingi, vendor, false)).toMatchObject({ ok: true, mode: "VENDOR_FLEET", ruleId: "v" });
+  const D = (goodsNet: number, f: Parameters<typeof decideDelivery>[0]["firingi"], v: Parameters<typeof decideDelivery>[0]["vendor"], o: { units?: number; supplierDelivers?: boolean; crossBorder?: boolean } = {}) =>
+    decideDelivery({ goodsNet, units: o.units ?? 1, supplierDelivers: o.supplierDelivers ?? false, crossBorder: o.crossBorder ?? false, firingi: f, vendor: v });
+  const fee = (d: unknown) => (d as { feeNet: { toFixed: (n: number) => string } }).feeNet.toFixed(2);
+
+  describe("customer ← wholesaler", () => {
+    it("wholesaler delivers free when its own minimum is met", () => {
+      expect(D(150, firingi, vendor)).toMatchObject({ ok: true, mode: "VENDOR_FLEET", ruleId: "v", free: "VENDOR" });
+    });
+    it("otherwise FIRINGI delivers at its flat rate, if FIRINGI's minimum is met", () => {
+      const d = D(100, firingi, vendor);
+      expect(d).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", feeOwner: "FIRINGI" });
+      expect(fee(d)).toBe("9.90");
+    });
+    it("FIRINGI free delivery (switched on): free from its threshold, flat rate below", () => {
+      const f = { ...firingi, freeEnabled: true, freeFrom: 120 };
+      expect(D(130, f, vendor)).toMatchObject({ ok: true, mode: "FIRINGI_FLEET", free: "FIRINGI", feeOwner: null });
+      expect(fee(D(130, f, vendor))).toBe("0.00");
+      expect(fee(D(110, f, vendor))).toBe("9.90");
+      expect(fee(D(130, { ...f, freeEnabled: false }, vendor))).toBe("9.90"); // switched off → flat rate
+    });
+    it("below FIRINGI's minimum, checkout is blocked (and says how much is missing)", () => {
+      const d = D(40, firingi, vendor);
+      expect(d).toMatchObject({ ok: false, reason: "BELOW_MINIMUM", unit: "AMOUNT" });
+      expect((d as { missing: { toFixed: (n: number) => string } }).missing.toFixed(2)).toBe("10.00");
+    });
+    it("a wholesaler minimum below FIRINGI's still lets the wholesaler deliver", () => {
+      expect(D(30, firingi, { id: "v", amount: 25 })).toMatchObject({ ok: true, mode: "VENDOR_FLEET" });
+    });
+    it("a wholesaler without a minimum never delivers itself", () => {
+      expect(D(1000, firingi, null)).toMatchObject({ ok: true, mode: "FIRINGI_FLEET" });
+    });
   });
-  it("otherwise FIRINGI delivers with its fee, if FIRINGI's minimum is met", () => {
-    const d = decideDelivery(100, firingi, vendor, false);
-    expect(d).toMatchObject({ ok: true, mode: "FIRINGI_FLEET" });
-    expect((d as { feeNet: { toFixed: (n: number) => string } }).feeNet.toFixed(2)).toBe("9.90");
-  });
-  it("below FIRINGI's minimum, checkout is blocked (and says how much is missing)", () => {
-    const d = decideDelivery(40, firingi, vendor, false);
-    expect(d).toMatchObject({ ok: false, reason: "BELOW_MINIMUM" });
-    expect((d as { missing: { toFixed: (n: number) => string } }).missing.toFixed(2)).toBe("10.00");
-  });
-  it("a vendor minimum below FIRINGI's still lets the vendor deliver", () => {
-    expect(decideDelivery(30, firingi, { id: "v", amount: 25 }, false)).toMatchObject({ ok: true, mode: "VENDOR_FLEET" });
-  });
-  it("a vendor without a minimum never delivers itself", () => {
-    expect(decideDelivery(1000, firingi, null, false)).toMatchObject({ ok: true, mode: "FIRINGI_FLEET" });
-  });
-  it("cross-border: only the vendor (carrier) delivers; below its minimum checkout is blocked", () => {
-    expect(decideDelivery(600, firingi, { id: "v", amount: 500 }, true)).toMatchObject({ ok: true, mode: "CARRIER" });
-    expect(decideDelivery(400, firingi, { id: "v", amount: 500 }, true)).toMatchObject({ ok: false, reason: "BELOW_SUPPLIER_MINIMUM" });
+
+  describe("wholesaler ← distributor (the distributor always delivers)", () => {
+    const S = { supplierDelivers: true };
+    it("minimum by amount reached → free", () => {
+      expect(D(600, firingi, { id: "v", amount: 500, flatFeeNet: 25 }, S)).toMatchObject({ ok: true, mode: "VENDOR_FLEET", free: "VENDOR" });
+    });
+    it("minimum by units: free from N units, else the distributor's flat rate (passed on to it)", () => {
+      const v = { id: "v", kind: "UNITS" as const, units: 20, flatFeeNet: 25 };
+      expect(D(100, firingi, v, { ...S, units: 20 })).toMatchObject({ ok: true, mode: "VENDOR_FLEET", free: "VENDOR" });
+      const d = D(5000, firingi, v, { ...S, units: 19 });
+      expect(d).toMatchObject({ ok: true, mode: "VENDOR_FLEET", feeOwner: "VENDOR" });
+      expect(fee(d)).toBe("25.00");
+    });
+    it("below the minimum without a flat rate, checkout is blocked (missing units)", () => {
+      expect(D(100, firingi, { id: "v", kind: "UNITS", units: 20 }, { ...S, units: 12 })).toMatchObject({ ok: false, reason: "BELOW_SUPPLIER_MINIMUM", unit: "UNITS" });
+      expect(String((D(100, firingi, { id: "v", kind: "UNITS", units: 20 }, { ...S, units: 12 }) as { missing: unknown }).missing)).toBe("8");
+    });
+    it("never FIRINGI's fleet, even below FIRINGI's minimum; no rule → free", () => {
+      expect(D(10, firingi, null, S)).toMatchObject({ ok: true, mode: "VENDOR_FLEET", free: "VENDOR" });
+      expect(fee(D(10, firingi, { id: "v", flatFeeNet: 12 }, S))).toBe("12.00"); // flat rate only, no minimum
+    });
+    it("cross-border: carrier; below the minimum the flat rate, else blocked", () => {
+      expect(D(600, firingi, { id: "v", amount: 500 }, { crossBorder: true })).toMatchObject({ ok: true, mode: "CARRIER" });
+      expect(D(400, firingi, { id: "v", amount: 500 }, { crossBorder: true })).toMatchObject({ ok: false, reason: "BELOW_SUPPLIER_MINIMUM" });
+      expect(D(400, firingi, { id: "v", amount: 500, flatFeeNet: 30 }, { crossBorder: true })).toMatchObject({ ok: true, mode: "CARRIER", feeOwner: "VENDOR" });
+    });
   });
 });

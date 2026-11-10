@@ -24,6 +24,7 @@ import { vendorReaches } from "@/server/delivery/coverage";
 import { checkQty, computeLine, computeTotals } from "@/server/orders/calc";
 import { activeCommission, applyOrderTransition, nextNumber, reserveStock, vatRate } from "@/server/services/orders";
 import { deliveryRulesFor } from "@/server/services/cart";
+import { vendorInput, vendorMinimumReached, type VendorRule } from "@/server/orders/delivery-rule";
 import { writeAudit } from "@/server/services/audit";
 import { notify } from "@/server/notify/dispatch";
 import { allocationRules, assertAllocationManager, distanceLimit, type AllocationRules } from "./rules";
@@ -45,6 +46,7 @@ export type Candidate = {
   /** FIRINGI's in-house warehouse. */ inHouse: boolean;
   /** Goods reach this supplier's free-delivery minimum. */ freeDelivery: boolean;
   /** The supplier's own free-delivery minimum (null = none; in-house = always FIRINGI's fleet). */ deliveryMinimum: number | null;
+  /** The supplier's delivery rule (minimum by amount or units). */ deliveryRule: VendorRule;
   /** What the buyer would pay this supplier for the covered items (before FIRINGI's cap). */ buyerCost: number;
   /** Position after ranking (0 = first choice). */ rank: number;
   score: number; parts: Record<string, number>; distanceKm: number | null; marginPct: number | null;
@@ -220,8 +222,9 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
 
     const goodsNet = covers.reduce((a, c) => a + Number(c.lineNet), 0);
     const buyerCost = covers.reduce((a, c) => a + Number(c.candidateSaleUnitNet) * c.qty, 0);
-    const vendorMin = (await deliveryRulesFor(target.countryId, v.id)).vendor?.vendorDeliveryMinimum;
-    const freeDelivery = !v.isInHouse && !!vendorMin && goodsNet >= Number(vendorMin);
+    const vRule = vendorInput((await deliveryRulesFor(target.countryId, v.id)).vendor);
+    const vendorMin = vRule?.kind === "AMOUNT" ? vRule.amount : null;
+    const freeDelivery = !v.isInHouse && vendorMinimumReached(vRule, goodsNet, covers.reduce((a, c) => a + c.qty, 0));
     const marginNet = covers.reduce((a, c) => a + Number(c.lineNet) - Number(c.vendorLineNet), 0);
     const absorbedNet = covers.reduce((a, c) => a + Math.max(0, Number(c.candidateSaleUnitNet) - Number(c.saleUnitNet)) * c.qty, 0);
     const marginPct = goodsNet > 0 ? (marginNet / goodsNet) * 100 : null;
@@ -239,7 +242,7 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
     const score = (Object.keys(parts) as (keyof typeof parts)[]).reduce((a, k) => a + parts[k] * w[k], 0) / wSum * 100;
     out.push({
       vendorId: v.id, name: v.tradeName ?? v.legalName, country: v.country.code, eligible: reasons.length === 0, reasons,
-      inHouse: v.isInHouse, freeDelivery, deliveryMinimum: vendorMin ? Number(vendorMin) : null, buyerCost: round2(buyerCost), rank: 0,
+      inHouse: v.isInHouse, freeDelivery, deliveryMinimum: vendorMin ? Number(vendorMin) : null, deliveryRule: vRule, buyerCost: round2(buyerCost), rank: 0,
       score: round2(score), parts: Object.fromEntries(Object.entries(parts).map(([k, x]) => [k, round2(x)])), distanceKm: d === null ? null : round2(d),
       marginPct: marginPct === null ? null : round2(marginPct), goodsNet: round2(goodsNet), marginNet: round2(marginNet), absorbedNet: round2(absorbedNet), covers,
     });
@@ -293,8 +296,8 @@ export async function createAllocatedOrder(tx: Tx, original: OrderBase, vendorId
   // The buyer pays no new fee — only the fee agreed on the original order is carried over.
   const rules = await deliveryRulesFor(original.countryId, vendorId);
   const crossBorder = vendor.countryId !== original.countryId;
-  const vendorMin = rules.vendor?.vendorDeliveryMinimum;
-  const mode: DeliveryMode = vendor.isInHouse ? "FIRINGI_FLEET" : vendorMin && goodsNet.gte(vendorMin.toString()) ? (crossBorder ? "CARRIER" : "VENDOR_FLEET") : crossBorder ? "CARRIER" : "FIRINGI_FLEET";
+  const reached = vendorMinimumReached(vendorInput(rules.vendor), goodsNet, lines.reduce((a, l) => a + l.calc.qty, 0));
+  const mode: DeliveryMode = vendor.isInHouse ? "FIRINGI_FLEET" : reached ? (crossBorder ? "CARRIER" : "VENDOR_FLEET") : crossBorder ? "CARRIER" : "FIRINGI_FLEET";
   const ruleId = mode === "FIRINGI_FLEET" ? rules.firingi?.id ?? null : rules.vendor?.id ?? null;
   let feeVat = new Decimal(0);
   const feeRule = feeNet.gt(0) ? await tx.deliveryRule.findFirst({ where: { id: { in: [original.deliveryRuleId ?? "", rules.firingi?.id ?? ""] }, feeTaxCategoryId: { not: null } } }) : null;

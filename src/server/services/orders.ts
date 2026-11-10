@@ -13,7 +13,7 @@ import { pricedOffers } from "@/server/data/catalogue-buyer";
 import { computeLine, computeTotals } from "@/server/orders/calc";
 import { canTransition, CLOSED, RESERVED_STATUSES, type Actor } from "@/server/orders/state";
 import { deliveryStatusForOrder } from "@/server/delivery/state";
-import { decideDelivery } from "@/server/orders/delivery-rule";
+import { decideDelivery, firingiInput, vendorInput } from "@/server/orders/delivery-rule";
 import { vendorReaches } from "@/server/delivery/coverage";
 import { scopeWhere } from "./admin-access";
 import { deliveryRulesFor } from "./cart";
@@ -193,17 +193,22 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     }
     const goodsNet = lines.reduce((a, l) => a.plus(l.calc.lineNet), new Decimal(0));
 
-    const rules = await deliveryRulesFor(ctx.company.countryId, sellerId);
-    const decision = decideDelivery(
-      goodsNet,
-      rules.firingi && { id: rules.firingi.id, minOrderValue: rules.firingi.minOrderValue!.toString(), feeNet: rules.firingi.firingiDeliveryFeeNet!.toString() },
-      rules.vendor && { id: rules.vendor.id, amount: rules.vendor.vendorDeliveryMinimum!.toString() },
-      seller.countryId !== ctx.company.countryId,
-    );
+    const rules = await deliveryRulesFor(ctx.company.countryId, sellerId, address.id);
+    const decision = decideDelivery({
+      goodsNet, units: lines.reduce((a, l) => a + l.calc.qty, 0), supplierDelivers: flow === "WHOLESALER_FROM_DISTRIBUTOR",
+      crossBorder: seller.countryId !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor),
+    });
     if (!decision.ok)
-      throw new AppError("BELOW_MINIMUM", `Minimum order for delivery is ${decision.minimum.toFixed(2)} € (excl. VAT). Add ${decision.missing.toFixed(2)} € more.`, 422);
-    const feeVatRate = decision.feeNet.gt(0) && rules.firingi?.feeTaxCategoryId ? await vatRate(tx, ctx.company.countryId, address.city?.regionId ?? null, rules.firingi.feeTaxCategoryId) : new Decimal(0);
-    const totals = computeTotals(lines.map((l) => l.calc), { feeNet: decision.feeNet, feeVatPercent: feeVatRate });
+      throw new AppError(
+        "BELOW_MINIMUM",
+        decision.unit === "UNITS"
+          ? `Minimum order for delivery is ${decision.minimum} units. Add ${decision.missing} more.`
+          : `Minimum order for delivery is ${decision.minimum.toFixed(2)} € (excl. VAT). Add ${decision.missing.toFixed(2)} € more.`,
+        422,
+      );
+    const feeRule = decision.feeOwner === "VENDOR" ? rules.vendor : rules.firingi;
+    const feeVatRate = decision.feeNet.gt(0) && feeRule?.feeTaxCategoryId ? await vatRate(tx, ctx.company.countryId, address.city?.regionId ?? null, feeRule.feeTaxCategoryId) : new Decimal(0);
+    const totals = computeTotals(lines.map((l) => l.calc), { feeNet: decision.feeNet, feeVatPercent: feeVatRate, toVendor: decision.feeOwner === "VENDOR" });
     // Credit control: overdue invoices / credit limit (Payment Settings).
     await assertCanOrder(ctx.company.id, totals.grandTotal);
 
@@ -486,7 +491,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       const regionId = (order.deliveryAddress as { regionId?: string | null }).regionId ?? null;
       if (rule?.feeTaxCategoryId) feeVatPercent = await vatRate(tx, order.countryId, regionId, rule.feeTaxCategoryId);
     }
-    const t = computeTotals(calcLines, { feeNet: order.deliveryFeeNet.toString(), feeVatPercent });
+    const t = computeTotals(calcLines, { feeNet: order.deliveryFeeNet.toString(), feeVatPercent, toVendor: order.deliveryMode !== "FIRINGI_FLEET" });
     const res = await tx.order.updateMany({
       where: { id: orderId, status: order.status },
       data: {

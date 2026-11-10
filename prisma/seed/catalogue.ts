@@ -215,6 +215,10 @@ export async function seedCatalogue(db: PrismaClient) {
     if (!(await db.deliveryRule.findFirst({ where: { scope: "VENDOR", vendorCompanyId: v.id } })))
       await db.deliveryRule.create({ data: { scope: "VENDOR", vendorCompanyId: v.id, countryId: v.countryId, vendorDeliveryMinimum: amount } });
   }
+  // Distribuidora Atlântico delivers smaller wholesaler orders at its own flat rate (FIRINGI invoices it and pays it on).
+  const atl = await company("Distribuidora Atlântico, Lda");
+  const standardTax = await db.taxCategory.findUniqueOrThrow({ where: { code: "STANDARD" } });
+  await db.deliveryRule.updateMany({ where: { scope: "VENDOR", vendorCompanyId: atl.id, validTo: null, vendorFlatFeeNet: null }, data: { vendorFlatFeeNet: 15, feeTaxCategoryId: standardTax.id } });
 
   await db.setting.upsert({
     where: { scope_scopeId_key: { scope: "GLOBAL", scopeId: "", key: "catalogue.offerApprovalRequired" } },

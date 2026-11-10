@@ -8,6 +8,12 @@ enum ServiceAreaType {
   RADIUS_KM // radius around one of the vendor's addresses
 }
 
+/// How a supplier's free-delivery minimum is counted.
+enum DeliveryMinimumKind {
+  AMOUNT // order value (excl. VAT)
+  UNITS // number of selling units (packs / cases) in the order
+}
+
 enum DeliveryRuleScope {
   COUNTRY
   ZONE
@@ -88,22 +94,29 @@ model VendorServiceArea {
 /// At checkout: goods ≥ vendor minimum → vendor delivers; else goods ≥ FIRINGI minimum →
 /// FIRINGI delivers (+fee); else checkout is blocked.
 model DeliveryRule {
-  id                    String            @id @default(cuid())
+  id                    String              @id @default(cuid())
   scope                 DeliveryRuleScope
   countryId             String
   zoneId                String?
   vendorCompanyId       String?
   serviceAreaId         String?
-  minOrderValue         Decimal?          @db.Decimal(18, 2)
-  firingiDeliveryFeeNet Decimal?          @db.Decimal(18, 2)
+  minOrderValue         Decimal?            @db.Decimal(18, 2)
+  firingiDeliveryFeeNet Decimal?            @db.Decimal(18, 2)
   feeTaxCategoryId      String?
-  vendorDeliveryMinimum Decimal?          @db.Decimal(18, 2)
-  priority              Int               @default(0)
-  validFrom             DateTime          @default(now())
+  vendorDeliveryMinimum Decimal?            @db.Decimal(18, 2)
+  /// FIRINGI (COUNTRY / ZONE rules, customer orders only): free FIRINGI delivery from this value, when switched on.
+  firingiFreeEnabled    Boolean             @default(false)
+  firingiFreeFrom       Decimal?            @db.Decimal(18, 2)
+  /// Supplier (VENDOR rules): minimum counted by amount or by units, and the supplier's own flat rate below it.
+  vendorMinimumKind     DeliveryMinimumKind @default(AMOUNT)
+  vendorMinimumUnits    Int?
+  vendorFlatFeeNet      Decimal?            @db.Decimal(18, 2)
+  priority              Int                 @default(0)
+  validFrom             DateTime            @default(now())
   validTo               DateTime?
-  isActive              Boolean           @default(true)
+  isActive              Boolean             @default(true)
   updatedById           String?
-  createdAt             DateTime          @default(now())
+  createdAt             DateTime            @default(now())
 
   country        Country            @relation(fields: [countryId], references: [id])
   zone           DeliveryZone?      @relation(fields: [zoneId], references: [id])

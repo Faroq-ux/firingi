@@ -55,11 +55,21 @@ export const resolveExceptionAction = defineAction({
 });
 export const setFiringiRuleAction = defineAction({
   permission: "admin.delivery.manage",
-  schema: z.object({ countryCode: z.string().length(2), minOrderValue: z.coerce.number().min(0), feeNet: z.coerce.number().min(0) }),
+  schema: z.object({
+    countryCode: z.string().length(2).optional(), zoneId: z.string().min(1).optional(), minOrderValue: z.coerce.number().min(0), feeNet: z.coerce.number().min(0),
+    freeEnabled: z.boolean().default(false), freeFrom: z.coerce.number().min(0).nullable().default(null),
+  }),
   handler: async (ctx, i) => done(await rules.setFiringiRule(ctx, i)),
+});
+export const removeZoneRuleAction = defineAction({
+  permission: "admin.delivery.manage",
+  schema: z.object({ zoneId: z.string().min(1) }),
+  handler: async (ctx, i) => done(await rules.removeZoneRule(ctx, i.zoneId)),
 });
 export const setVendorMinimumAction = defineAction({
   permission: "vendor.service_areas.manage",
-  schema: z.object({ amount: z.coerce.number().min(0).nullable() }),
-  handler: async (ctx, i) => done(await rules.setVendorMinimum(ctx, i.amount)),
+  schema: z.object({
+    rule: z.object({ kind: z.enum(["AMOUNT", "UNITS"]), amount: z.coerce.number().min(0).nullable().optional(), units: z.coerce.number().int().min(1).nullable().optional(), flatFeeNet: z.coerce.number().min(0).nullable().optional() }).nullable(),
+  }),
+  handler: async (ctx, i) => done(await rules.setVendorMinimum(ctx, i.rule)),
 });

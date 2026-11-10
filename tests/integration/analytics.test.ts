@@ -50,7 +50,9 @@ describe("engine totals", () => {
     close(k.net, n(agg._sum.netTotal));
     close(k.gross, n(agg._sum.grandTotal));
     close(k.commission, n(agg._sum.commissionTotal));
-    close(k.revenue, n(agg._sum.firingiMarginNet) + n(agg._sum.deliveryFeeNet));
+    // FIRINGI revenue = goods margin + its own fleet's fees (suppliers' flat rates are passed on).
+    const fleetFees = await prisma.order.aggregate({ where: { status: { not: "CANCELLED" }, deliveryMode: "FIRINGI_FLEET" }, _sum: { deliveryFeeNet: true } });
+    close(k.revenue, n(agg._sum.firingiMarginNet) + n(fleetFees._sum.deliveryFeeNet));
     expect(k.cancelled).toBe(await prisma.order.count({ where: { status: "CANCELLED" } }));
   });
 

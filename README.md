@@ -57,6 +57,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/allocation.mjs http://localhost:3000 [screenshotDir]` | Browser test of supplier allocation: decline → automatic move, buyer / supplier views, Control Tower, open case → manual move* |
 | `node tests/e2e/go-live.mjs http://localhost:3000 [screenshotDir]` | Browser test of two-factor login, sessions, SAF-T, data privacy, payments, settings notice and API keys* |
 | `node tests/e2e/firingi-ordering.mjs http://localhost:3000 [screenshotDir]` | Browser test of ordering from FIRINGI, Delivery Orders, in-house small orders, the customer's decision* |
+| `node tests/e2e/delivery-fees.mjs http://localhost:3000 [screenshotDir]` | Browser test of FIRINGI free delivery (on / off), a distributor's units minimum and flat rate in the wholesaler's cart* |
 | `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
@@ -154,11 +155,20 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
 
 - **Shopping:** businesses only. Buyers browse by category or by supplier (nearest first), or find goods by barcode: typed, with a USB / Bluetooth scanner, or with a phone camera.
 - **One supplier per cart.** The cart locks to the first supplier, and the database refuses a second one too. To buy from another supplier, check out or clear the cart first.
-- **Who delivers** (`src/server/orders/delivery-rule.ts`):
-  - If the order reaches the **supplier's own delivery minimum** (set by the supplier under Delivery & Fleet › Delivery minimum), the supplier delivers for free.
-  - Otherwise **FIRINGI** delivers and charges its fee, provided the order reaches **FIRINGI's minimum**. Admin sets both per country under Delivery › Minimum Order Rules.
-  - Below both, checkout is blocked.
-  - Cross-border distributors must deliver themselves, so only their own minimum applies.
+- **Who delivers, and the delivery fee** (`src/server/orders/delivery-rule.ts`):
+  - **Customer ← wholesaler:** when the order reaches the **wholesaler's free-delivery minimum**
+    (Delivery & Fleet › Delivery minimum; by order value or by number of units), the wholesaler
+    delivers free. Below it **FIRINGI** delivers: **free** from FIRINGI's free-delivery amount when
+    the admin has switched FIRINGI free delivery on, otherwise at **FIRINGI's flat rate**. Below
+    **FIRINGI's minimum order**, checkout is blocked. The admin sets all of this per country under
+    Delivery › Minimum Order Rules; a **delivery zone** can have its own rule, which overrides
+    the country for addresses inside it.
+  - **Wholesaler ← distributor:** the distributor always delivers (its own fleet, or a carrier
+    abroad). From its minimum (order value or units — the distributor decides) delivery is
+    free; below it the distributor's own **flat rate** applies. FIRINGI puts the fee on its invoice
+    to the wholesaler and adds it to the distributor's payout (FIRINGI's revenue counts only its
+    own fleet's fees). A distributor without a flat rate refuses orders below its minimum; one
+    without any rule delivers every order free.
 - **Checkout re-checks everything on the server** in one transaction: visibility, prices, quantity rules, stock (reserved), IVA for the buyer's region, and the minimums.
   - The order freezes every number on each line: list price, discounts (Phase 5), tax rate, commission rule and rate, and the vendor's cost and payout.
   - Order numbers (`FO-YYYY-NNNNNN`) are gap-free.
@@ -317,7 +327,7 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   free-delivery minimum; otherwise only when no wholesaler can), **always first**, or **not used**.
 - **Delivery**: a wholesaler delivers itself when the goods reach its free-delivery minimum;
   otherwise — and always for in-house stock — FIRINGI's fleet delivers at FIRINGI's flat fee
-  (charged once per checkout). The **Control Tower** groups these small orders by pickup point
+  (charged once per checkout; free from FIRINGI's free-delivery amount when switched on). The **Control Tower** groups these small orders by pickup point
   (with delivery areas) so one FIRINGI driver can collect them together (*Assign all*; needs
   multi-order delivery for FIRINGI's fleet).
 - **Delivery Order**: every supplier order has a printable *Delivery Order from FIRINGI*
