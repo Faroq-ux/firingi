@@ -45,15 +45,17 @@ const PORTAL_RULES: Record<Portal, { types: CompanyType[]; audience: string }> =
 
 /** Which portals this context may enter. Team pages (COMPANY audience) live inside vendor/buy. */
 export function portalsFor(ctx: Ctx): Portal[] {
+  // Company-wide permissions (profile, team, support) open the vendor / buy portals only for
+  // people who neither sell nor buy (e.g. an office manager); otherwise a warehouse employee
+  // of a wholesaler would get the buying portal just for being able to ask for help.
+  const audiences = new Set<string>([...ctx.permissions].map((c) => PERMISSIONS[c].audience));
+  const tradeOnly = audiences.has("VENDOR") || audiences.has("BUYER");
   return (Object.keys(PORTAL_RULES) as Portal[]).filter((p) => {
     const rule = PORTAL_RULES[p];
     if (!rule.types.includes(ctx.company.type)) return false;
     if (ctx.company.status !== "APPROVED") return false;
-    for (const c of ctx.permissions) {
-      const a = PERMISSIONS[c].audience;
-      if (a === rule.audience || (a === "COMPANY" && (p === "vendor" || p === "buy"))) return true;
-    }
-    return false;
+    if (audiences.has(rule.audience)) return true;
+    return !tradeOnly && audiences.has("COMPANY") && (p === "vendor" || p === "buy");
   });
 }
 
