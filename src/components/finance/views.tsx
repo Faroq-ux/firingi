@@ -171,7 +171,14 @@ export async function VendorInvoicesView({ ctx, as, title, vendorType }: { ctx: 
 }
 
 export async function PromotionsView({ ctx, as, title, form }: { ctx: Ctx; as: "VENDOR" | "ADMIN"; title: string; form: React.ReactNode }) {
-  const [data, t, locale] = await Promise.all([listPromotions(ctx, as), getTranslations("finance"), getLocale()]);
+  const [data, t, to, locale] = await Promise.all([listPromotions(ctx, as), getTranslations("finance"), getTranslations("offers"), getLocale()]);
+  const what = (p: (typeof data.own)[number]) => {
+    const v = Number(p.value);
+    const base = p.kind === "PERCENT" ? to("kind.PERCENT", { value: v }) : p.kind === "FIXED_AMOUNT" ? to("kind.FIXED_AMOUNT", { value: formatMoney(v, locale) })
+      : p.kind === "ORDER_AMOUNT" ? to("kind.ORDER_AMOUNT", { value: formatMoney(v, locale) }) : p.kind === "BUY_X_GET_Y" ? to("kind.BUY_X_GET_Y", { buy: p.buyQty ?? 0, free: p.freeQty ?? 0 }) : to("kind.FREE_DELIVERY");
+    const extra = [p.minQty ? `≥ ${p.minQty}` : null, p.minOrderValue ? to("minOrder", { amount: formatMoney(p.minOrderValue.toString(), locale) }) : null, p.firstOrderOnly ? to("firstOrder") : null].filter(Boolean);
+    return extra.length ? `${base} (${extra.join(" · ")})` : base;
+  };
   const funding = as === "ADMIN" && can(ctx, ["admin.finance.view", "admin.pricing.view"]) ? await promotionFunding(ctx) : [];
   const targetText = (p: (typeof data.own)[number]) => p.targets.map((x) => x.offer ? pickLocalized(x.offer.packaging.variant.product.name, locale) : x.category ? pickLocalized(x.category.name, locale) : x.vendor?.legalName ?? x.customerGroup?.name ?? (x.product ? pickLocalized(x.product.name, locale) : "")).join(", ") || t("allMyProducts");
   return (
@@ -185,7 +192,7 @@ export async function PromotionsView({ ctx, as, title, form }: { ctx: Ctx; as: "
             return (
               <div key={p.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3 text-sm">
                 <div><div className="font-medium">{pickLocalized(p.name, locale)}</div>
-                  <div className="text-muted-foreground">{p.kind === "PERCENT" ? `${Number(p.value)}%` : formatMoney(p.value.toString(), locale)} · {t("yourShare")} {Number(p.vendorFundPct)}% · {t("firingiShare")} {Number(p.firingiFundPct)}% · {formatDate(p.validFrom, locale)} → {p.validTo ? formatDate(p.validTo, locale) : "∞"}</div></div>
+                  <div className="text-muted-foreground">{what(p)} · {t("yourShare")} {Number(p.vendorFundPct)}% · {t("firingiShare")} {Number(p.firingiFundPct)}% · {formatDate(p.validFrom, locale)} → {p.validTo ? formatDate(p.validTo, locale) : "∞"}</div></div>
                 {mine.status === "PENDING" ? <AcceptButtons id={p.id} /> : <StatusBadge status={mine.status} />}
               </div>
             );
@@ -200,7 +207,7 @@ export async function PromotionsView({ ctx, as, title, form }: { ctx: Ctx; as: "
             <TR key={p.id}>
               <TD className="font-medium">{pickLocalized(p.name, locale)}<div className="text-xs text-muted-foreground">{t("used", { count: p._count.lineDiscounts })}</div></TD>
               {as === "ADMIN" && <TD>{p.ownerType === "ADMIN" ? "FIRINGI" : p.owner?.legalName}</TD>}
-              <TD>{p.kind === "PERCENT" ? `${Number(p.value)}%` : `${formatMoney(p.value.toString(), locale)} / un.`}{p.minQty ? ` (≥ ${p.minQty})` : ""}</TD>
+              <TD>{what(p)}{p.code && <div className="font-mono text-xs font-semibold tracking-wide" data-testid="promo-code">{p.code}</div>}</TD>
               <TD className="max-w-xs truncate text-xs">{targetText(p)}</TD>
               <TD className="text-xs">FIRINGI {Number(p.firingiFundPct)}% · vendor {Number(p.vendorFundPct)}%{p.acceptances.length > 0 && <div>{p.acceptances.map((a) => `${a.vendor.legalName}: ${a.status.toLowerCase()}`).join(", ")}</div>}</TD>
               <TD className="text-xs">{formatDate(p.validFrom, locale)} → {p.validTo ? formatDate(p.validTo, locale) : "∞"}</TD>
