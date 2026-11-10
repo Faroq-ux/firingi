@@ -91,7 +91,7 @@ for (const r of ["gross-margin", "orders", "customers", "vendors", "distributors
   check(`/admin/analytics/${r} renders`, res.status() === 200 && !/Application error|Something went wrong/.test(await main(sa)));
 }
 await go(sa, "/admin/analytics/net-profit");
-check("net profit stays a later phase", /coming|breve|soon/i.test(await main(sa)));
+check("net profit page is live (Phase 14)", (await sa.getByTestId("net-table").count()) === 1);
 
 // regional manager sees only their regions
 const rm = await login("rm.lisboa@firingi.test");
