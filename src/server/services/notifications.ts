@@ -39,13 +39,20 @@ export async function myPreferences(ctx: Ctx) {
     enabledChannels(),
     prisma.pushSubscription.count({ where: { userId: ctx.user.id } }),
   ]);
-  const categories = CATEGORIES.map((category) => ({
+  const categories: { category: Category | "marketing"; critical: boolean; channels: { channel: NotificationChannel; enabled: boolean }[] }[] = CATEGORIES.map((category) => ({
     category,
     critical: EVENTS.some((e) => e.category === category && e.critical),
     channels: channelsOfCategory(category).filter((ch) => enabled.has(ch)).map((channel) => ({
       channel, enabled: rows.find((r) => r.category === category && r.channel === channel)?.enabled ?? true,
     })),
   })).filter((c) => c.channels.length > 0);
+  // Offers & news (marketing campaigns): on unless switched off; in-app too.
+  categories.push({
+    category: "marketing", critical: false,
+    channels: (["IN_APP", ...OPTIONAL_CHANNELS] as NotificationChannel[]).filter((ch) => ch === "IN_APP" || enabled.has(ch)).map((channel) => ({
+      channel, enabled: rows.find((r) => r.category === "marketing" && r.channel === channel)?.enabled ?? true,
+    })),
+  });
   return { categories, phone: user.phone ?? "", smsConsent: !!user.smsConsentAt, whatsappConsent: !!user.whatsappConsentAt, pushDevices: subs, vapidPublicKey: process.env.VAPID_PUBLIC_KEY ?? null };
 }
 
@@ -57,7 +64,8 @@ export async function savePreferences(ctx: Ctx, input: { prefs: { category: stri
   const now = new Date();
   await prisma.$transaction(async (tx) => {
     for (const p of input.prefs) {
-      if (!(CATEGORIES as readonly string[]).includes(p.category) || !OPTIONAL_CHANNELS.includes(p.channel)) continue;
+      const marketing = p.category === "marketing" && (p.channel === "IN_APP" || OPTIONAL_CHANNELS.includes(p.channel));
+      if (!marketing && (!(CATEGORIES as readonly string[]).includes(p.category) || !OPTIONAL_CHANNELS.includes(p.channel))) continue;
       await tx.notificationPreference.upsert({
         where: { userId_category_channel: { userId: ctx.user.id, category: p.category, channel: p.channel } },
         update: { enabled: p.enabled }, create: { userId: ctx.user.id, category: p.category, channel: p.channel, enabled: p.enabled },

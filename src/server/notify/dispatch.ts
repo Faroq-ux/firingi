@@ -42,7 +42,7 @@ export const SETTINGS_KEYS = { SETTING_CHANNELS, SETTING_EVENTS };
 
 type Msgs = { notify?: Record<string, { title: string; body: string }>; onboarding?: { restricted?: Record<string, string> } };
 const msgCache = new Map<string, Msgs>();
-async function messages(locale: string): Promise<Msgs> {
+export async function messages(locale: string): Promise<Msgs> {
   if (!msgCache.has(locale)) {
     try {
       msgCache.set(locale, (await import(`@/messages/${locale}.json`)).default as Msgs);
@@ -54,6 +54,8 @@ async function messages(locale: string): Promise<Msgs> {
 }
 
 /** Title + body of an event for a channel and language (FIRINGI's template wins). */
+export { uiLocaleFor, appUrl, esc };
+
 export async function renderEvent(eventKey: string, channel: NotificationChannel, locale: string, vars: Vars) {
   const tpl = await prisma.notificationTemplate.findUnique({ where: { eventKey_channel_locale: { eventKey, channel, locale } } });
   const [loc, en] = await Promise.all([messages(locale), messages("en")]);
@@ -146,7 +148,7 @@ export async function deliverMessage(id: string, fetchImpl?: typeof fetch) {
   if (!m || (m.status !== "QUEUED" && m.status !== "FAILED")) return m;
   const vars = (m.variables ?? {}) as { _wa?: { name: string; language: string; params: string[] }; _push?: { endpoint: string; p256dh: string; auth: string } };
   const r = await sendVia(
-    { channel: m.channel, to: m.to, subject: m.subject, body: m.body, link: m.link, html: m.channel === "EMAIL" ? emailHtml(m.subject ?? "FIRINGI", m.body, m.link, "FIRINGI →") : null, waTemplate: vars._wa ?? null, push: vars._push ?? null },
+    { channel: m.channel, to: m.to, subject: m.subject, body: m.body, link: m.link, html: m.channel === "EMAIL" ? ((m.variables as { _html?: string } | null)?._html ?? emailHtml(m.subject ?? "FIRINGI", m.body, m.link, "FIRINGI →")) : null, waTemplate: vars._wa ?? null, push: vars._push ?? null },
     fetchImpl,
   );
   const attempts = m.attempts + 1;
