@@ -7,6 +7,7 @@ import { Sidebar } from "./sidebar";
 import { Topbar, type TopbarProps } from "./topbar";
 import { NavProgress } from "./nav-progress";
 import { CommandPalette } from "./command-palette";
+import { NavContext } from "./nav-context";
 import type { ResolvedSection } from "@/config/nav/resolve";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,7 @@ export function AppShell({
   useEffect(() => setMobileOpen(false), [pathname]);
 
   return (
+    <NavContext.Provider value={nav}>
     <div className="flex min-h-dvh">
       <Suspense><NavProgress /></Suspense>
       <TableLabeler />
@@ -43,5 +45,6 @@ export function AppShell({
         <main key={pathname} className="animate-page mx-auto w-full min-w-0 max-w-7xl flex-1 p-4 md:p-6">{children}</main>
       </div>
     </div>
+    </NavContext.Provider>
   );
 }

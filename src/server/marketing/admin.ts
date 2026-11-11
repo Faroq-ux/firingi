@@ -70,7 +70,7 @@ export async function marketingAnalytics(ctx: Ctx, p: { from: Date; to: Date }) 
   assertView(ctx);
   const inPeriod = { order: { status: { not: "CANCELLED" as const }, placedAt: { gte: p.from, lt: p.to } } };
   const [red, orders, all, campaigns] = await Promise.all([
-    prisma.promotionRedemption.findMany({ where: inPeriod, select: { orderId: true, promotionId: true, code: true, amount: true, firingiAmount: true, vendorAmount: true, promotion: { select: { name: true, kind: true, code: true, ownerType: true, owner: { select: { legalName: true } } } } } }),
+    prisma.promotionRedemption.findMany({ where: inPeriod, select: { orderId: true, promotionId: true, code: true, order: { select: { placedAt: true } }, amount: true, firingiAmount: true, vendorAmount: true, promotion: { select: { name: true, kind: true, code: true, ownerType: true, owner: { select: { legalName: true } } } } } }),
     prisma.order.findMany({ where: { status: { not: "CANCELLED" }, placedAt: { gte: p.from, lt: p.to }, redemptions: { some: {} } }, select: { id: true, netTotal: true, deliveryFeeNet: true } }),
     prisma.order.aggregate({ where: { status: { not: "CANCELLED" }, placedAt: { gte: p.from, lt: p.to } }, _count: { _all: true }, _sum: { netTotal: true, deliveryFeeNet: true } }),
     prisma.marketingCampaign.findMany({ where: { sentAt: { gte: p.from, lt: p.to } }, select: { id: true, name: true, channels: true, sentAt: true }, orderBy: { sentAt: "desc" } }),
@@ -79,12 +79,12 @@ export async function marketingAnalytics(ctx: Ctx, p: { from: Date; to: Date }) 
   const goodsWith = orders.reduce((a, o) => a + Number(o.netTotal) - Number(o.deliveryFeeNet), 0);
   const goodsAll = Number(all._sum.netTotal ?? 0) - Number(all._sum.deliveryFeeNet ?? 0);
   const byKind = new Map<string, { kind: string; uses: number; amount: number }>();
-  const byPromo = new Map<string, { id: string; name: string; code: string | null; owner: string; kind: string; orders: Set<string>; amount: number; firingi: number; vendor: number }>();
+  const byPromo = new Map<string, { id: string; name: string; code: string | null; owner: string; kind: string; orders: Set<string>; amount: number; firingi: number; vendor: number; last: number }>();
   for (const r of red) {
     const k = byKind.get(r.promotion.kind) ?? { kind: r.promotion.kind, uses: 0, amount: 0 };
     k.uses++; k.amount += Number(r.amount); byKind.set(r.promotion.kind, k);
-    const b = byPromo.get(r.promotionId) ?? { id: r.promotionId, name: (r.promotion.name as { en?: string }).en ?? "", code: r.promotion.code, owner: r.promotion.ownerType === "ADMIN" ? "FIRINGI" : r.promotion.owner?.legalName ?? "", kind: r.promotion.kind, orders: new Set(), amount: 0, firingi: 0, vendor: 0 };
-    b.orders.add(r.orderId); b.amount += Number(r.amount); b.firingi += Number(r.firingiAmount); b.vendor += Number(r.vendorAmount);
+    const b = byPromo.get(r.promotionId) ?? { id: r.promotionId, name: (r.promotion.name as { en?: string }).en ?? "", code: r.promotion.code, owner: r.promotion.ownerType === "ADMIN" ? "FIRINGI" : r.promotion.owner?.legalName ?? "", kind: r.promotion.kind, orders: new Set(), amount: 0, firingi: 0, vendor: 0, last: 0 };
+    b.orders.add(r.orderId); b.amount += Number(r.amount); b.firingi += Number(r.firingiAmount); b.vendor += Number(r.vendorAmount); b.last = Math.max(b.last, r.order.placedAt?.getTime() ?? 0);
     byPromo.set(r.promotionId, b);
   }
   const stats = await campaignStats(campaigns.map((c) => c.id));
@@ -94,7 +94,8 @@ export async function marketingAnalytics(ctx: Ctx, p: { from: Date; to: Date }) 
     ordersWithOffer: orders.length, orders: all._count._all, goodsWithOffer: r2(goodsWith), goods: r2(goodsAll),
     couponUses: new Set(red.filter((r) => r.code).map((r) => r.orderId)).size,
     byKind: [...byKind.values()].map((k) => ({ ...k, amount: r2(k.amount) })).sort((a, b) => b.amount - a.amount),
-    top: [...byPromo.values()].map((b) => ({ ...b, orders: b.orders.size, amount: r2(b.amount), firingi: r2(b.firingi), vendor: r2(b.vendor) })).sort((a, b) => b.amount - a.amount).slice(0, 15),
+    // biggest discount first; on a tie, the offer used most recently
+    top: [...byPromo.values()].sort((a, b) => r2(b.amount) - r2(a.amount) || b.last - a.last).slice(0, 15).map((b) => ({ id: b.id, name: b.name, code: b.code, owner: b.owner, kind: b.kind, orders: b.orders.size, amount: r2(b.amount), firingi: r2(b.firingi), vendor: r2(b.vendor) })),
     campaigns: campaigns.map((c) => ({ ...c, stats: stats.get(c.id)! })),
   };
 }

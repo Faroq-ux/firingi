@@ -1,4 +1,6 @@
 /** Finance views shared by the buyer, vendor and admin portals. */
+import { DataTable } from "@/components/ui/data-table";
+import { listViews } from "@/server/services/workspace";
 import { Pager } from "@/components/ui/pager";
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -34,7 +36,7 @@ const pdfLink = (href: string, label = "PDF") => (
   <a href={href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline"><FileText className="size-3.5" />{label}</a>
 );
 
-const PAGE = 50;
+const PAGE = 300;
 
 export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly, page = 1, basePath, before }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean; page?: number; basePath?: string; before?: React.ReactNode }) {
   const [all, t, locale] = await Promise.all([listSalesInvoices(ctx, { as, docType, buyerType, unpaidOnly }), getTranslations("finance"), getLocale()]);
@@ -59,28 +61,34 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
           </CardContent>
         </Card>
       )}
-      <Table>
-        <THead><TR><TH>{t("number")}</TH><TH>{t("date")}</TH>{as === "ADMIN" && <TH>Customer</TH>}<TH>{t("order")}</TH><TH className="text-right">{t("total")}</TH><TH className="text-right">{t("open")}</TH><TH>{t("status")}</TH><TH /></TR></THead>
-        <TBody>
-          {rows.length === 0 && <EmptyRow colSpan={8}>{t("noInvoices")}</EmptyRow>}
-          {rows.map((r) => (
-            <TR key={r.id}>
-              <TD className="font-mono text-xs">
-                {as === "ADMIN" ? <Link href={`/admin/invoices/${r.id}`} className="text-primary hover:underline">{r.providerNumber ?? r.fullNumber}</Link> : r.providerNumber ?? r.fullNumber}
-                {pendingFiscal(r) && <div><Badge variant="secondary">{t("beingIssued")}</Badge></div>}
-                {r.docType === "CREDIT_NOTE" && <div className="text-muted-foreground">{t("creditNote")} → {r.originalInvoice?.providerNumber ?? r.originalInvoice?.fullNumber}</div>}
-              </TD>
-              <TD className="text-xs">{formatDate(r.issuedAt, locale)}{r.dueAt && r.docType !== "CREDIT_NOTE" && <div className={r.overdue ? "text-destructive" : "text-muted-foreground"}>{t("due")} {formatDate(r.dueAt, locale)}</div>}</TD>
-              {as === "ADMIN" && <TD>{r.recipient.legalName}</TD>}
-              <TD className="font-mono text-xs">{r.order?.number}</TD>
-              <TD className="text-right tabular-nums">{r.docType === "CREDIT_NOTE" ? "−" : ""}{formatMoney(r.grossTotal.toString(), locale)}</TD>
-              <TD className="text-right tabular-nums">{Number(r.open) > 0 ? formatMoney(r.open, locale) : "—"}</TD>
-              <TD>{r.overdue ? <Badge variant="destructive">{t("overdue")}</Badge> : Number(r.open) === 0 && r.docType === "INVOICE" ? <StatusBadge status="PAID" /> : <StatusBadge status={r.status} />}</TD>
-              <TD>{pendingFiscal(r) ? null : pdfLink(`/api/invoices/${r.id}/pdf`)}</TD>
-            </TR>
-          ))}
-        </TBody>
-      </Table>
+      <DataTable tableId={`${as.toLowerCase()}.invoices`} views={await listViews(ctx, `${as.toLowerCase()}.invoices`)} empty={t("noInvoices")} exportName="invoices" testId="invoices-table"
+        columns={[
+          { key: "number", label: t("number") }, { key: "date", label: t("date"), type: "date" }, ...(as === "ADMIN" ? [{ key: "customer", label: "Customer" }] : []),
+          { key: "order", label: t("order") }, { key: "total", label: t("total"), type: "money" as const }, { key: "open", label: t("open"), type: "money" as const },
+          { key: "status", label: t("status"), type: "badge" as const }, { key: "pdf", label: "PDF", filter: false },
+        ]}
+        rows={rows.map((r) => {
+          const status = r.overdue ? t("overdue") : Number(r.open) === 0 && r.docType === "INVOICE" ? "PAID" : r.status;
+          return {
+            id: r.id, href: as === "ADMIN" ? `/admin/invoices/${r.id}` : undefined,
+            cells: {
+              number: { t: `${r.providerNumber ?? r.fullNumber ?? ""}`, mono: true, node: (
+                <span className="font-mono text-xs">
+                  {as === "ADMIN" ? <Link href={`/admin/invoices/${r.id}`} className="text-primary hover:underline">{r.providerNumber ?? r.fullNumber}</Link> : r.providerNumber ?? r.fullNumber}
+                  {pendingFiscal(r) && <span className="block"><Badge variant="secondary">{t("beingIssued")}</Badge></span>}
+                  {r.docType === "CREDIT_NOTE" && <span className="block text-muted-foreground">{t("creditNote")} → {r.originalInvoice?.providerNumber ?? r.originalInvoice?.fullNumber}</span>}
+                </span>
+              ) },
+              date: { t: formatDate(r.issuedAt, locale), v: r.issuedAt?.getTime() ?? 0, node: <span className="text-xs">{formatDate(r.issuedAt, locale)}{r.dueAt && r.docType !== "CREDIT_NOTE" && <span className={`block ${r.overdue ? "text-destructive" : "text-muted-foreground"}`}>{t("due")} {formatDate(r.dueAt, locale)}</span>}</span> },
+              customer: r.recipient.legalName,
+              order: { t: r.order?.number ?? "", mono: true },
+              total: { t: `${r.docType === "CREDIT_NOTE" ? "−" : ""}${formatMoney(r.grossTotal.toString(), locale)}`, v: Number(r.grossTotal) * (r.docType === "CREDIT_NOTE" ? -1 : 1) },
+              open: { t: Number(r.open) > 0 ? formatMoney(r.open, locale) : "—", v: Number(r.open) },
+              status: { t: status, node: r.overdue ? <Badge variant="destructive">{t("overdue")}</Badge> : Number(r.open) === 0 && r.docType === "INVOICE" ? <StatusBadge status="PAID" /> : <StatusBadge status={r.status} /> },
+              pdf: { t: "", node: pendingFiscal(r) ? null : pdfLink(`/api/invoices/${r.id}/pdf`) },
+            },
+          };
+        })} />
       {basePath && <Pager page={current} pageCount={pageCount} basePath={basePath} />}
     </>
   );

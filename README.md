@@ -597,6 +597,22 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## The redesign everywhere (Phase 23)
+
+- **Every table is smart**: the shared `Table` now sits in a `TableShell` — as soon as a table has
+  6+ rows it gets a toolbar: quick filter, show / hide columns (remembered per person, per page and
+  table, on their account), compact rows, CSV of what is shown, row count. It works on the rendered
+  table (rows / columns are hidden, never moved), so every page keeps its forms and buttons; small
+  detail tables stay clean. Opt out with `<Table smart={false}>`.
+- **Full smart tables** (sort, saved views, bulk actions) also on invoices (FIRINGI and customers)
+  and CRM leads / accounts — in addition to orders, companies and products (Phase 22). Cells can
+  carry links, badges and buttons (`{ t, node }`) while still sorting / filtering on their text.
+- **Every page header** shows its menu section's icon and name automatically (from the
+  permission-filtered menu), with the gradient title.
+- **"Everywhere" check** — `tests/e2e/crawl.mjs`: signs in as FIRINGI, a wholesaler, a customer, a
+  distributor and a driver, opens **every menu page** (329) on a laptop in light mode and on a phone
+  in dark mode: no page errors, a title on each page, no sideways scrolling on phones.
+
 ## Futuristic redesign: glass & aurora, command palette, smart tables, live dashboards (Phase 22)
 
 - **Design system v2** (`src/app/globals.css`, `src/components/ui/*`): an ambient aurora behind

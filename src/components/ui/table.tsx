@@ -1,17 +1,16 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { TableShell } from "./table-shell";
 
 /**
  * On phones (< 640 px) every row becomes a stacked card: the first cell is the card title and
  * each other cell shows its column name (labels are filled in by <TableLabeler />, see
  * globals.css › .ft-stack). Pass stack={false} for wide grids that should scroll instead.
  */
-export function Table({ className, stack = true, ...props }: React.HTMLAttributes<HTMLTableElement> & { stack?: boolean }) {
-  return (
-    <div className="glass-panel w-full overflow-x-auto rounded-2xl border">
-      <table className={cn("w-full caption-bottom text-sm", stack && "ft-stack", className)} {...props} />
-    </div>
-  );
+export function Table({ className, stack = true, smart = true, ...props }: React.HTMLAttributes<HTMLTableElement> & { stack?: boolean; smart?: boolean }) {
+  const table = <table className={cn("w-full caption-bottom text-sm", stack && "ft-stack", className)} {...props} />;
+  // Bigger tables get a toolbar (filter, columns, compact, CSV) — see TableShell.
+  return smart ? <TableShell>{table}</TableShell> : <div className="glass-panel w-full overflow-x-auto rounded-2xl border">{table}</div>;
 }
 export const THead = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <thead className="bg-[linear-gradient(90deg,color-mix(in_oklch,var(--vivid-blue)_10%,transparent),color-mix(in_oklch,var(--vivid-violet)_9%,transparent),color-mix(in_oklch,var(--vivid-teal)_7%,transparent))] [&_tr]:border-b" {...p} />;
 export const TBody = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <tbody className="[&_tr:last-child]:border-0" {...p} />;

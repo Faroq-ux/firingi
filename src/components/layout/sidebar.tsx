@@ -17,7 +17,7 @@ import {
 import type { ResolvedItem, ResolvedSection } from "@/config/nav/resolve";
 import { cn } from "@/lib/utils";
 
-const ICONS: Record<string, LucideIcon> = {
+export const ICONS: Record<string, LucideIcon> = {
   BarChart3, Bell, Bot, Building2, Coins, Contact, Globe, Handshake, LayoutDashboard, LifeBuoy, Megaphone, Package, Receipt,
   Settings, ShieldCheck, ShoppingBag, Store, Truck, UserCog, UserRound, Users, Wallet,
 };

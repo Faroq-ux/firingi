@@ -6,6 +6,7 @@ import { NotFoundError, ValidationError } from "@/server/errors";
 
 const TABLE = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
 const KEY = /^[a-z0-9]+(\.[a-z0-9-]+)+$/;
+// e.g. "table.admin.finance.online-payments.0"
 const json = (v: unknown, max = 20_000) => {
   const s = JSON.stringify(v ?? null);
   if (s.length > max) throw new ValidationError("Too large.");

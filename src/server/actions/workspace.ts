@@ -2,7 +2,7 @@
 /** Saved table views and personal preferences (any signed-in member). */
 import { z } from "zod";
 import { defineAction } from "./_action";
-import { deleteView, saveView, setPreference } from "@/server/services/workspace";
+import { deleteView, getPreference, saveView, setPreference } from "@/server/services/workspace";
 
 export const saveViewAction = defineAction({
   permission: null,
@@ -10,6 +10,7 @@ export const saveViewAction = defineAction({
   handler: (ctx, i) => saveView(ctx, { ...i, state: i.state ?? {} }),
 });
 export const deleteViewAction = defineAction({ permission: null, schema: z.object({ id: z.string().min(1).max(40) }), handler: async (ctx, i) => { await deleteView(ctx, i.id); return true; } });
+export const getPreferenceAction = defineAction({ permission: null, schema: z.object({ key: z.string().max(80) }), handler: (ctx, i) => getPreference<unknown>(ctx, i.key) });
 export const setPreferenceAction = defineAction({
   permission: null, schema: z.object({ key: z.string().max(60), value: z.unknown() }),
   handler: async (ctx, i) => { await setPreference(ctx, i.key, i.value ?? null); return true; },

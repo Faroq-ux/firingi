@@ -1,11 +1,10 @@
-import Link from "next/link";
 import type { CompanyType } from "@prisma/client";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { crmTeam, listAccounts } from "@/server/services/crm";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
+import { DataTable } from "@/components/ui/data-table";
+import { listViews } from "@/server/services/workspace";
 import { Pills, eur, pretty, when } from "@/components/crm/views";
 
 export const metadata = { title: "Business Accounts" };
@@ -32,27 +31,21 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
           <button className="h-8 rounded-md border px-2 text-sm">Filter</button>
         </form>
       </div>
-      <Card><CardContent className="pt-5">
-        <Table data-testid="accounts-table">
-          <THead><TR><TH>Company</TH><TH>Type</TH><TH>Manager</TH><TH>Tier · tags</TH><TH className="text-right">Bought 90 d</TH><TH className="text-right">Sold 90 d</TH><TH>Last order</TH><TH>Last contact</TH><TH className="text-right">Open tasks</TH></TR></THead>
-          <TBody>
-            {rows.map((a) => (
-              <TR key={a.id}>
-                <TD><Link className="font-medium text-primary hover:underline" href={`/admin/crm/accounts/${a.id}`}>{a.tradeName ?? a.legalName}</Link><div className="text-xs text-muted-foreground">{a.country.flag} {a.legalName}</div></TD>
-                <TD>{pretty(a.type)}{a.isInHouse ? " (in-house)" : ""}</TD>
-                <TD>{a.crmAccount?.owner?.name ?? <span className="text-muted-foreground">—</span>}</TD>
-                <TD>{a.crmAccount?.tier && <Badge>{a.crmAccount.tier}</Badge>} {a.crmAccount?.tags.map((t) => <Badge key={t} variant="secondary" className="mr-1">{t}</Badge>)}</TD>
-                <TD className="text-right tabular-nums">{a.type === "DISTRIBUTOR" ? "—" : eur(a.bought90)}</TD>
-                <TD className="text-right tabular-nums">{a.type === "CUSTOMER" ? "—" : eur(a.sold90)}</TD>
-                <TD className="text-xs">{when(a.lastOrderAt)}</TD>
-                <TD className="text-xs">{when(a.lastContactAt)}</TD>
-                <TD className="text-right tabular-nums">{a.openTasks || ""}</TD>
-              </TR>
-            ))}
-            {!rows.length && <EmptyRow colSpan={9}>No accounts.</EmptyRow>}
-          </TBody>
-        </Table>
-      </CardContent></Card>
+      <DataTable tableId="admin.crm-accounts" views={await listViews(ctx, "admin.crm-accounts")} testId="accounts-table" empty="No accounts." exportName="accounts"
+        columns={[{ key: "company", label: "Company" }, { key: "type", label: "Type", type: "badge" }, { key: "manager", label: "Manager", type: "badge" }, { key: "tags", label: "Tier · tags" }, { key: "bought", label: "Bought 90 d", type: "money" }, { key: "sold", label: "Sold 90 d", type: "money" }, { key: "lastOrder", label: "Last order", type: "date" }, { key: "lastContact", label: "Last contact", type: "date" }, { key: "tasks", label: "Open tasks", type: "number" }]}
+        rows={rows.map((a) => ({
+          id: a.id, href: `/admin/crm/accounts/${a.id}`,
+          cells: {
+            company: { t: a.tradeName ?? a.legalName, sub: `${a.country.flag ?? ""} ${a.legalName}`.trim() },
+            type: `${pretty(a.type)}${a.isInHouse ? " (in-house)" : ""}`, manager: a.crmAccount?.owner?.name ?? "—",
+            tags: { t: [a.crmAccount?.tier, ...(a.crmAccount?.tags ?? [])].filter(Boolean).join(" "), node: <>{a.crmAccount?.tier && <Badge>{a.crmAccount.tier}</Badge>} {a.crmAccount?.tags.map((t) => <Badge key={t} variant="secondary" className="mr-1">{t}</Badge>)}</> },
+            bought: { t: a.type === "DISTRIBUTOR" ? "—" : eur(a.bought90), v: a.type === "DISTRIBUTOR" ? null : Number(a.bought90) },
+            sold: { t: a.type === "CUSTOMER" ? "—" : eur(a.sold90), v: a.type === "CUSTOMER" ? null : Number(a.sold90) },
+            lastOrder: { t: when(a.lastOrderAt), v: a.lastOrderAt ? new Date(a.lastOrderAt).getTime() : null },
+            lastContact: { t: when(a.lastContactAt), v: a.lastContactAt ? new Date(a.lastContactAt).getTime() : null },
+            tasks: a.openTasks || 0,
+          },
+        }))} />
     </>
   );
 }

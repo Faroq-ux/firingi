@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 import { deleteViewAction, saveViewAction } from "@/server/actions/workspace";
 
 export type Tone = "default" | "secondary" | "success" | "warning" | "destructive" | "outline";
-export type Cell = string | number | null | { t: string; v?: string | number | null; href?: string; tone?: Tone; mono?: boolean; sub?: string };
+export type Cell = string | number | null | { t: string; v?: string | number | null; href?: string; tone?: Tone; mono?: boolean; sub?: string; node?: React.ReactNode };
 export type Column = { key: string; label: string; type?: "text" | "number" | "money" | "date" | "badge"; align?: "left" | "right"; hidden?: boolean; filter?: boolean };
 export type Row = { id: string; href?: string; cells: Record<string, Cell> };
 export type View = { id: string; name: string; state: unknown; isDefault: boolean };
@@ -96,6 +96,7 @@ export function DataTable({ tableId, columns, rows, views: initialViews = [], bu
 
   const cellView = (c: Column, v: Cell, row: Row, first: boolean) => {
     const o = typeof v === "object" && v ? v : null;
+    if (o?.node !== undefined) return <>{o.node}{o.sub && <span className="block text-xs text-muted-foreground">{o.sub}</span>}</>;
     const body = o?.tone ? <Badge variant={o.tone}>{o.t}</Badge> : <span className={cn(o?.mono && "font-mono text-xs", c.type === "money" || c.type === "number" ? "tabular-nums" : "")}>{text(v) || "—"}</span>;
     const href = o?.href ?? (first ? row.href : undefined);
     return (
@@ -111,7 +112,7 @@ export function DataTable({ tableId, columns, rows, views: initialViews = [], bu
       {/* toolbar */}
       <div className="flex flex-wrap items-center gap-2">
         <label className="relative min-w-0 flex-1 basis-56">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+          <Search className="pointer-events-none absolute left-3 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
           <input value={state.q} onChange={(e) => set({ q: e.target.value })} placeholder={t("search")} aria-label={t("search")} data-testid="dt-search"
             className="h-10 w-full rounded-xl border border-[color:var(--glass-border)] bg-[var(--glass-strong)] pl-9 pr-3 text-sm shadow-xs outline-none backdrop-blur focus-visible:border-[color:color-mix(in_oklch,var(--vivid-violet)_45%,var(--border))]" />
         </label>
