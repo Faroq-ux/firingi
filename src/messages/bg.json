@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} плащания към доставчици наближават",
       "body": "{count} фактури от доставчици ({amount}) са с падеж до 3 дни, {overdue} от тях са просрочени. Вижте Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Проверка на системата FIRINGI: {detail}. Вижте Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Решено: {title}",
+      "body": "Проблемът „{title}“ е отстранен. Вижте Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Поръчка {number} за {customer} може да закъснее",
       "REORDER_DUE": "Време е за нова поръчка от {supplier}"
     }
+  },
+  "status": {
+    "title": "Състояние на системата",
+    "allOk": "Всички системи работят",
+    "degraded": "Някои услуги работят с проблеми",
+    "outage": "Сериозен срив",
+    "components": {
+      "web": "Уебсайт и приложения",
+      "ordering": "Поръчки",
+      "files": "Документи и файлове",
+      "notifications": "Известия",
+      "invoicing": "Фактуриране"
+    },
+    "states": {
+      "ok": "Работи",
+      "warning": "С проблеми",
+      "critical": "Не работи"
+    },
+    "incidents": "Инциденти, последните 7 дни",
+    "noIncidents": "Няма инциденти през последните 7 дни.",
+    "ongoing": "продължава",
+    "checked": "Проверено {time} UTC"
   }
 }

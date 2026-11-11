@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} plaćanja dobavljačima dospijeva",
       "body": "{count} računa dobavljača ({amount}) dospijeva u 3 dana, od toga {overdue} zakašnjelih. Vidi Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Provjera sustava FIRINGI: {detail}. Pogledajte Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Riješeno: {title}",
+      "body": "Problem „{title}” je nestao. Pogledajte Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Narudžba {number} za {customer} mogla bi kasniti",
       "REORDER_DUE": "Vrijeme za ponovnu narudžbu od {supplier}"
     }
+  },
+  "status": {
+    "title": "Stanje sustava",
+    "allOk": "Svi sustavi rade",
+    "degraded": "Neke usluge imaju poteškoća",
+    "outage": "Veliki prekid",
+    "components": {
+      "web": "Web-stranica i aplikacije",
+      "ordering": "Narudžbe",
+      "files": "Dokumenti i datoteke",
+      "notifications": "Obavijesti",
+      "invoicing": "Fakturiranje"
+    },
+    "states": {
+      "ok": "Radi",
+      "warning": "Otežano",
+      "critical": "Ne radi"
+    },
+    "incidents": "Incidenti, zadnjih 7 dana",
+    "noIncidents": "Nema incidenata u zadnjih 7 dana.",
+    "ongoing": "u tijeku",
+    "checked": "Provjereno {time} UTC"
   }
 }

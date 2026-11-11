@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} Lieferantenzahlungen fällig",
       "body": "{count} Lieferantenrechnungen ({amount}) sind in den nächsten 3 Tagen fällig, {overdue} davon überfällig. Siehe Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI-Systemprüfung: {detail}. Siehe Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Behoben: {title}",
+      "body": "Das Problem „{title}“ ist behoben. Siehe Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Bestellung {number} für {customer} könnte sich verspäten",
       "REORDER_DUE": "Zeit, bei {supplier} nachzubestellen"
     }
+  },
+  "status": {
+    "title": "Systemstatus",
+    "allOk": "Alle Systeme funktionieren",
+    "degraded": "Einige Dienste sind eingeschränkt",
+    "outage": "Schwere Störung",
+    "components": {
+      "web": "Website & Apps",
+      "ordering": "Bestellungen",
+      "files": "Dokumente & Dateien",
+      "notifications": "Benachrichtigungen",
+      "invoicing": "Rechnungsstellung"
+    },
+    "states": {
+      "ok": "In Betrieb",
+      "warning": "Eingeschränkt",
+      "critical": "Ausgefallen"
+    },
+    "incidents": "Vorfälle, letzte 7 Tage",
+    "noIncidents": "Keine Vorfälle in den letzten 7 Tagen.",
+    "ongoing": "andauernd",
+    "checked": "Geprüft {time} UTC"
   }
 }

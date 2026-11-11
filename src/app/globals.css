@@ -122,6 +122,34 @@
     transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
   }
   button, a { -webkit-tap-highlight-color: transparent; }
+  /* Phones: grid/flex children and fieldsets may shrink below their content (tables then scroll
+     inside their own box instead of widening the page); long words, codes and e-mails wrap. */
+  fieldset { min-width: 0; }
+  .grid > * { min-width: 0; }
+  main { overflow-wrap: break-word; }
+}
+
+/* ── Tables on phones: each row is a card ────────────────────────────────── */
+@media (max-width: 639.98px) {
+  table.ft-stack > thead { display: none; }
+  table.ft-stack, table.ft-stack > tbody, table.ft-stack > tfoot, table.ft-stack > tbody > tr, table.ft-stack > tfoot > tr { display: block; width: 100%; }
+  table.ft-stack > tbody > tr, table.ft-stack > tfoot > tr { padding: 0.6rem 0.25rem; }
+  table.ft-stack > tbody > tr > td, table.ft-stack > tfoot > tr > td {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem;
+    width: 100%; padding: 0.2rem 0.75rem; text-align: right; min-height: 0; height: auto;
+  }
+  table.ft-stack > tbody > tr > td::before, table.ft-stack > tfoot > tr > td::before {
+    content: attr(data-label); flex: none; max-width: 45%; text-align: left;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  table.ft-stack td[data-label=""]::before, table.ft-stack td:not([data-label])::before { content: none; }
+  table.ft-stack td[data-label=""], table.ft-stack td:not([data-label]) { justify-content: flex-start; text-align: left; }
+  /* the first cell is the card title */
+  table.ft-stack > tbody > tr > td:first-child { display: block; text-align: left; font-weight: 600; font-size: 0.95rem; }
+  table.ft-stack > tbody > tr > td:first-child::before { content: none; }
+  table.ft-stack > tbody > tr > td[colspan] { display: block; text-align: center; }
+  table.ft-stack > tbody > tr > td > * { min-width: 0; }
 }
 
 /* ── Motion ─────────────────────────────────────────────────────────────── */

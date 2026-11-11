@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} leveranciersbetalingen te betalen",
       "body": "{count} leveranciersfacturen ({amount}) vervallen binnen 3 dagen, waarvan {overdue} te laat. Zie Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI-systeemcontrole: {detail}. Zie Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Opgelost: {title}",
+      "body": "Het probleem ‘{title}’ is verholpen. Zie Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Bestelling {number} voor {customer} komt mogelijk te laat",
       "REORDER_DUE": "Tijd om opnieuw te bestellen bij {supplier}"
     }
+  },
+  "status": {
+    "title": "Systeemstatus",
+    "allOk": "Alle systemen werken",
+    "degraded": "Sommige diensten werken beperkt",
+    "outage": "Grote storing",
+    "components": {
+      "web": "Website en apps",
+      "ordering": "Bestellingen",
+      "files": "Documenten en bestanden",
+      "notifications": "Meldingen",
+      "invoicing": "Facturatie"
+    },
+    "states": {
+      "ok": "Operationeel",
+      "warning": "Beperkt",
+      "critical": "Storing"
+    },
+    "incidents": "Incidenten, laatste 7 dagen",
+    "noIncidents": "Geen incidenten in de laatste 7 dagen.",
+    "ongoing": "lopend",
+    "checked": "Gecontroleerd {time} UTC"
   }
 }

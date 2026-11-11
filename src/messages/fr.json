@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} paiements fournisseurs à échéance",
       "body": "{count} factures fournisseurs ({amount}) arrivent à échéance dans les 3 jours, dont {overdue} en retard. Voir Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity} : {title}",
+      "body": "Contrôle du système FIRINGI : {detail}. Voir Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Résolu : {title}",
+      "body": "Le problème « {title} » a disparu. Voir Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "La commande {number} pour {customer} risque d'être en retard",
       "REORDER_DUE": "C'est le moment de recommander chez {supplier}"
     }
+  },
+  "status": {
+    "title": "État du système",
+    "allOk": "Tous les systèmes fonctionnent",
+    "degraded": "Certains services sont perturbés",
+    "outage": "Panne majeure",
+    "components": {
+      "web": "Site et applications",
+      "ordering": "Commandes",
+      "files": "Documents et fichiers",
+      "notifications": "Notifications",
+      "invoicing": "Facturation"
+    },
+    "states": {
+      "ok": "Opérationnel",
+      "warning": "Perturbé",
+      "critical": "En panne"
+    },
+    "incidents": "Incidents, 7 derniers jours",
+    "noIncidents": "Aucun incident ces 7 derniers jours.",
+    "ongoing": "en cours",
+    "checked": "Vérifié à {time} UTC"
   }
 }

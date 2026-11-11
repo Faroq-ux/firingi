@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} leverandørbetalinger forfalder",
       "body": "{count} leverandørfakturaer ({amount}) forfalder inden for 3 dage, heraf {overdue} for sent. Se Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI-systemtjek: {detail}. Se Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Løst: {title}",
+      "body": "Problemet “{title}” er væk. Se Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Ordre {number} til {customer} kan blive forsinket",
       "REORDER_DUE": "Tid til at bestille igen hos {supplier}"
     }
+  },
+  "status": {
+    "title": "Systemstatus",
+    "allOk": "Alle systemer kører",
+    "degraded": "Nogle tjenester har problemer",
+    "outage": "Større nedbrud",
+    "components": {
+      "web": "Websted og apps",
+      "ordering": "Bestillinger",
+      "files": "Dokumenter og filer",
+      "notifications": "Notifikationer",
+      "invoicing": "Fakturering"
+    },
+    "states": {
+      "ok": "Kører",
+      "warning": "Nedsat",
+      "critical": "Nede"
+    },
+    "incidents": "Hændelser, seneste 7 dage",
+    "noIncidents": "Ingen hændelser de seneste 7 dage.",
+    "ongoing": "igangværende",
+    "checked": "Tjekket {time} UTC"
   }
 }

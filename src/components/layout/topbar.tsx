@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { LogOut, Menu, ShoppingCart } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { usePathname } from "next/navigation";
+import { EllipsisVertical, LogOut, Menu, ShoppingCart } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,10 @@ export type TopbarProps = {
 export function Topbar(p: TopbarProps) {
   const router = useRouter();
   const [pending, start] = useTransition();
+  // Phones: language, theme and sign-out fold into a small menu so the bar never overflows.
+  const [more, setMore] = useState(false);
+  const pathname = usePathname();
+  useEffect(() => setMore(false), [pathname]);
 
   return (
     <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b sm:gap-3 bg-card/95 px-3 backdrop-blur md:px-5">
@@ -79,9 +84,13 @@ export function Topbar(p: TopbarProps) {
           <span className="hidden max-w-56 truncate text-sm text-muted-foreground sm:inline">{p.companyLabel}</span>
         )}
 
+        <button type="button" className="rounded-md p-2 hover:bg-accent sm:hidden" aria-expanded={more} aria-label={`${p.labels.language} · ${p.labels.signOut}`} data-testid="topbar-more" onClick={() => setMore((v) => !v)}>
+          <EllipsisVertical className="size-5" />
+        </button>
+        <div className={cn("items-center gap-2 sm:static sm:flex sm:flex-row sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none", more ? "animate-fade absolute right-2 top-14 z-30 flex flex-col items-stretch rounded-lg border bg-card p-3 shadow-lg" : "hidden")}>
         <select
           aria-label={p.labels.language}
-          className="h-8 w-16 rounded-md border bg-card px-1 text-sm sm:w-auto sm:px-2"
+          className="h-8 rounded-md border bg-card px-2 text-sm"
           value={p.locale}
           disabled={pending}
           onChange={(e) => start(async () => { await setLocaleAction(e.target.value); router.refresh(); })}
@@ -89,7 +98,7 @@ export function Topbar(p: TopbarProps) {
           {p.locales.map((l) => <option key={l.code} value={l.code}>{l.native}</option>)}
         </select>
 
-        <ThemeToggle initial={p.theme.initial} labels={p.theme.labels} />
+        <ThemeToggle initial={p.theme.initial} labels={p.theme.labels} labelClassName="sm:hidden" />
         {p.securityHref ? (
           <Link href={p.securityHref} title={p.labels.security} data-testid="my-security" className="hidden rounded-md px-1 text-right leading-tight hover:bg-accent lg:block">
             <div className="text-sm font-medium">{p.userName}</div>
@@ -105,11 +114,13 @@ export function Topbar(p: TopbarProps) {
           type="button"
           title={p.labels.signOut}
           aria-label={p.labels.signOut}
-          className="rounded-md p-2 hover:bg-accent"
+          className="flex items-center gap-2 rounded-md p-2 text-sm hover:bg-accent"
           onClick={() => start(async () => { await authClient.signOut(); router.push("/login"); router.refresh(); })}
         >
           <LogOut className="size-4" />
+          <span className="sm:hidden" aria-hidden>{p.labels.signOut}</span>
         </button>
+        </div>
       </div>
     </header>
   );

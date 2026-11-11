@@ -25,9 +25,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
       <div className="mb-3 flex flex-wrap items-center gap-3">
         <Pills items={[{ value: "", label: "All" }, { value: "CUSTOMER", label: "Customers" }, { value: "WHOLESALER", label: "Wholesalers" }, { value: "DISTRIBUTOR", label: "Distributors" }]} current={sp.type ?? ""} param="type" base={base} />
         <Pills items={[{ value: "", label: "Any manager" }, { value: "me", label: "Mine" }, { value: "none", label: "No manager" }, ...team.slice(0, 6).map((t) => ({ value: t.id, label: t.name }))]} current={sp.owner ?? ""} param="owner" base={base} />
-        <form className="flex gap-1">
+        <form className="flex w-full min-w-0 gap-1 sm:w-auto">
           {sp.type && <input type="hidden" name="type" value={sp.type} />}
-          <input name="q" defaultValue={sp.q} placeholder="Name or VAT…" className="h-8 rounded-md border bg-card px-2 text-sm" />
+          <input name="q" defaultValue={sp.q} placeholder="Name or VAT…" className="h-8 min-w-0 flex-1 rounded-md border bg-card px-2 text-sm" />
           <input name="tag" defaultValue={sp.tag} placeholder="Tag" className="h-8 w-24 rounded-md border bg-card px-2 text-sm" />
           <button className="h-8 rounded-md border px-2 text-sm">Filter</button>
         </form>

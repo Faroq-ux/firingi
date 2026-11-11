@@ -117,6 +117,7 @@ model PromotionTarget {
   category      Category?      @relation(fields: [categoryId], references: [id])
   vendor        Company?       @relation("PromotionTargetVendor", fields: [vendorCompanyId], references: [id])
   customerGroup CustomerGroup? @relation(fields: [customerGroupId], references: [id])
+  @@index([promotionId])
 }
 
 model PromotionVendorAcceptance {
@@ -153,4 +154,5 @@ model PromotionRedemption {
 
   @@unique([promotionId, orderId])
   @@index([buyerCompanyId])
+  @@index([orderId])
 }

@@ -14,7 +14,7 @@ function apply(choice: ThemeChoice) {
   document.documentElement.classList.toggle("dark", dark);
 }
 
-export function ThemeToggle({ initial, labels }: { initial: ThemeChoice; labels: Record<ThemeChoice, string> }) {
+export function ThemeToggle({ initial, labels, labelClassName }: { initial: ThemeChoice; labels: Record<ThemeChoice, string>; labelClassName?: string }) {
   const [choice, setChoice] = useState<ThemeChoice>(initial);
   useEffect(() => {
     apply(choice);
@@ -31,7 +31,7 @@ export function ThemeToggle({ initial, labels }: { initial: ThemeChoice; labels:
       type="button"
       title={labels[choice]}
       aria-label={labels[choice]}
-      className="rounded-md p-2 transition-colors hover:bg-accent"
+      className="flex items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-accent"
       onClick={() => {
         const c = next[choice];
         document.cookie = `${THEME_COOKIE}=${c}; path=/; max-age=31536000; samesite=lax`;
@@ -39,6 +39,7 @@ export function ThemeToggle({ initial, labels }: { initial: ThemeChoice; labels:
       }}
     >
       <Icon key={choice} className="size-5 animate-pop" />
+      {labelClassName && <span className={labelClassName} aria-hidden>{labels[choice]}</span>}
     </button>
   );
 }

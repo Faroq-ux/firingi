@@ -68,4 +68,5 @@ model CampaignRecipient {
 
   @@unique([campaignId, userId, channel])
   @@index([companyId, clickedAt])
+  @@index([userId])
 }

@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} plăți către furnizori scadente",
       "body": "{count} facturi de la furnizori ({amount}) sunt scadente în 3 zile, dintre care {overdue} restante. Vedeți Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Verificarea sistemului FIRINGI: {detail}. Vedeți Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Rezolvat: {title}",
+      "body": "Problema „{title}” a dispărut. Vedeți Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Comanda {number} pentru {customer} poate întârzia",
       "REORDER_DUE": "E timpul să comandați din nou de la {supplier}"
     }
+  },
+  "status": {
+    "title": "Starea sistemului",
+    "allOk": "Toate sistemele funcționează",
+    "degraded": "Unele servicii au probleme",
+    "outage": "Întrerupere majoră",
+    "components": {
+      "web": "Site și aplicații",
+      "ordering": "Comenzi",
+      "files": "Documente și fișiere",
+      "notifications": "Notificări",
+      "invoicing": "Facturare"
+    },
+    "states": {
+      "ok": "Funcțional",
+      "warning": "Cu probleme",
+      "critical": "Nefuncțional"
+    },
+    "incidents": "Incidente, ultimele 7 zile",
+    "noIncidents": "Niciun incident în ultimele 7 zile.",
+    "ongoing": "în curs",
+    "checked": "Verificat la {time} UTC"
   }
 }

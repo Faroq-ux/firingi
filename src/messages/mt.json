@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} ħlasijiet lill-fornituri dovuti",
       "body": "{count} fatturi tal-fornituri ({amount}) huma dovuti fi żmien 3 ijiem, {overdue} minnhom tard. Ara Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Verifika tas-sistema FIRINGI: {detail}. Ara Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Solvut: {title}",
+      "body": "Il-problema “{title}” spiċċat. Ara Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "L-ordni {number} għal {customer} tista' tittardja",
       "REORDER_DUE": "Wasal iż-żmien li terġa' tordna minn {supplier}"
     }
+  },
+  "status": {
+    "title": "Stat tas-sistema",
+    "allOk": "Is-sistemi kollha jaħdmu",
+    "degraded": "Xi servizzi għandhom problemi",
+    "outage": "Waqfa kbira",
+    "components": {
+      "web": "Sit u apps",
+      "ordering": "Ordnijiet",
+      "files": "Dokumenti u fajls",
+      "notifications": "Notifiki",
+      "invoicing": "Fatturazzjoni"
+    },
+    "states": {
+      "ok": "Jaħdem",
+      "warning": "Bi problemi",
+      "critical": "Mhux jaħdem"
+    },
+    "incidents": "Inċidenti, l-aħħar 7 ijiem",
+    "noIncidents": "L-ebda inċident fl-aħħar 7 ijiem.",
+    "ongoing": "għaddej",
+    "checked": "Iċċekkjat {time} UTC"
   }
 }

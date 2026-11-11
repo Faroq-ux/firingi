@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} greiðslur til birgja á gjalddaga",
       "body": "{count} reikningar birgja ({amount}) eru á gjalddaga innan 3 daga, þar af {overdue} í vanskilum. Sjá Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Kerfisathugun FIRINGI: {detail}. Sjá Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Leyst: {title}",
+      "body": "Vandamálið „{title}“ er horfið. Sjá Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Pöntun {number} fyrir {customer} gæti tafist",
       "REORDER_DUE": "Kominn tími á að panta aftur frá {supplier}"
     }
+  },
+  "status": {
+    "title": "Staða kerfis",
+    "allOk": "Öll kerfi virka",
+    "degraded": "Sumar þjónustur eru skertar",
+    "outage": "Alvarleg bilun",
+    "components": {
+      "web": "Vefur og öpp",
+      "ordering": "Pantanir",
+      "files": "Skjöl og skrár",
+      "notifications": "Tilkynningar",
+      "invoicing": "Reikningagerð"
+    },
+    "states": {
+      "ok": "Virkar",
+      "warning": "Skert",
+      "critical": "Niðri"
+    },
+    "incidents": "Atvik, síðustu 7 daga",
+    "noIncidents": "Engin atvik síðustu 7 daga.",
+    "ongoing": "í gangi",
+    "checked": "Athugað {time} UTC"
   }
 }

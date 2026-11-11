@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} maksājumi piegādātājiem drīz jāveic",
       "body": "{count} piegādātāju rēķini ({amount}) jāapmaksā 3 dienu laikā, {overdue} no tiem nokavēti. Skatiet Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI sistēmas pārbaude: {detail}. Skatiet Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Atrisināts: {title}",
+      "body": "Problēma “{title}” ir novērsta. Skatiet Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Pasūtījums {number} klientam {customer} var kavēties",
       "REORDER_DUE": "Laiks atkal pasūtīt no {supplier}"
     }
+  },
+  "status": {
+    "title": "Sistēmas statuss",
+    "allOk": "Visas sistēmas darbojas",
+    "degraded": "Dažiem pakalpojumiem ir traucējumi",
+    "outage": "Nopietns pārtraukums",
+    "components": {
+      "web": "Vietne un lietotnes",
+      "ordering": "Pasūtījumi",
+      "files": "Dokumenti un faili",
+      "notifications": "Paziņojumi",
+      "invoicing": "Rēķinu izrakstīšana"
+    },
+    "states": {
+      "ok": "Darbojas",
+      "warning": "Traucēts",
+      "critical": "Nedarbojas"
+    },
+    "incidents": "Incidenti, pēdējās 7 dienas",
+    "noIncidents": "Pēdējās 7 dienās incidentu nav bijis.",
+    "ongoing": "notiek",
+    "checked": "Pārbaudīts {time} UTC"
   }
 }

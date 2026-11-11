@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} plačil dobaviteljem zapade",
       "body": "{count} računov dobaviteljev ({amount}) zapade v 3 dneh, {overdue} od njih je zapadlih. Glejte Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Preverjanje sistema FIRINGI: {detail}. Glejte Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Rešeno: {title}",
+      "body": "Težava »{title}« je odpravljena. Glejte Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Naročilo {number} za {customer} lahko zamuja",
       "REORDER_DUE": "Čas za ponovno naročilo pri {supplier}"
     }
+  },
+  "status": {
+    "title": "Stanje sistema",
+    "allOk": "Vsi sistemi delujejo",
+    "degraded": "Nekatere storitve imajo težave",
+    "outage": "Večji izpad",
+    "components": {
+      "web": "Spletno mesto in aplikacije",
+      "ordering": "Naročila",
+      "files": "Dokumenti in datoteke",
+      "notifications": "Obvestila",
+      "invoicing": "Izdajanje računov"
+    },
+    "states": {
+      "ok": "Deluje",
+      "warning": "Moteno",
+      "critical": "Ne deluje"
+    },
+    "incidents": "Incidenti, zadnjih 7 dni",
+    "noIncidents": "V zadnjih 7 dneh ni bilo incidentov.",
+    "ongoing": "v teku",
+    "checked": "Preverjeno {time} UTC"
   }
 }

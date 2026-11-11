@@ -1111,6 +1111,14 @@
     "payout_due": {
       "title": "{count} supplier payouts due",
       "body": "{count} supplier invoices ({amount}) are due within 3 days, {overdue} of them overdue. See Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI system check: {detail}. See Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Resolved: {title}",
+      "body": "The problem “{title}” is gone. See Settings › System Health."
     }
   },
   "notifications": {
@@ -1597,5 +1605,27 @@
       "DELIVERY_RISK": "Order {number} for {customer} may be late",
       "REORDER_DUE": "Time to reorder from {supplier}"
     }
+  },
+  "status": {
+    "title": "System status",
+    "allOk": "All systems operational",
+    "degraded": "Some services are degraded",
+    "outage": "Major outage",
+    "components": {
+      "web": "Website & apps",
+      "ordering": "Ordering",
+      "files": "Documents & files",
+      "notifications": "Notifications",
+      "invoicing": "Invoicing"
+    },
+    "states": {
+      "ok": "Operational",
+      "warning": "Degraded",
+      "critical": "Down"
+    },
+    "incidents": "Incidents, last 7 days",
+    "noIncidents": "No incidents in the last 7 days.",
+    "ongoing": "ongoing",
+    "checked": "Checked {time} UTC"
   }
 }

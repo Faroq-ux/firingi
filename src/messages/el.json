@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} πληρωμές προμηθευτών λήγουν",
       "body": "{count} τιμολόγια προμηθευτών ({amount}) λήγουν εντός 3 ημερών, {overdue} από αυτά ληξιπρόθεσμα. Δείτε Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Έλεγχος συστήματος FIRINGI: {detail}. Δείτε Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Επιλύθηκε: {title}",
+      "body": "Το πρόβλημα «{title}» λύθηκε. Δείτε Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Η παραγγελία {number} για {customer} μπορεί να καθυστερήσει",
       "REORDER_DUE": "Ώρα για νέα παραγγελία από {supplier}"
     }
+  },
+  "status": {
+    "title": "Κατάσταση συστήματος",
+    "allOk": "Όλα τα συστήματα λειτουργούν",
+    "degraded": "Ορισμένες υπηρεσίες έχουν προβλήματα",
+    "outage": "Σοβαρή διακοπή",
+    "components": {
+      "web": "Ιστότοπος και εφαρμογές",
+      "ordering": "Παραγγελίες",
+      "files": "Έγγραφα και αρχεία",
+      "notifications": "Ειδοποιήσεις",
+      "invoicing": "Τιμολόγηση"
+    },
+    "states": {
+      "ok": "Λειτουργεί",
+      "warning": "Με προβλήματα",
+      "critical": "Εκτός λειτουργίας"
+    },
+    "incidents": "Συμβάντα, τελευταίες 7 ημέρες",
+    "noIncidents": "Κανένα συμβάν τις τελευταίες 7 ημέρες.",
+    "ongoing": "σε εξέλιξη",
+    "checked": "Έλεγχος {time} UTC"
   }
 }

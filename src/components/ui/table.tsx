@@ -1,10 +1,15 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export function Table({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) {
+/**
+ * On phones (< 640 px) every row becomes a stacked card: the first cell is the card title and
+ * each other cell shows its column name (labels are filled in by <TableLabeler />, see
+ * globals.css › .ft-stack). Pass stack={false} for wide grids that should scroll instead.
+ */
+export function Table({ className, stack = true, ...props }: React.HTMLAttributes<HTMLTableElement> & { stack?: boolean }) {
   return (
     <div className="w-full overflow-x-auto rounded-xl border bg-card">
-      <table className={cn("w-full caption-bottom text-sm", className)} {...props} />
+      <table className={cn("w-full caption-bottom text-sm", stack && "ft-stack", className)} {...props} />
     </div>
   );
 }

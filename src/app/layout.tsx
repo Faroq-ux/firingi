@@ -18,7 +18,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const theme = (await cookies()).get("theme")?.value;
   return (
     <html lang={locale} className={`${inter.variable}${theme === "dark" ? " dark" : ""}`} suppressHydrationWarning>
-      <head><ThemeScript /></head>
+      <head>
+        <ThemeScript />
+        {/* Error reporting config for the browser (no secrets: a Sentry DSN is public by design). */}
+        <script dangerouslySetInnerHTML={{ __html: `window.__FIRINGI__=${JSON.stringify({ sentryDsn: process.env.SENTRY_DSN ?? null, release: process.env.GIT_COMMIT ?? null, env: process.env.FIRINGI_ENV ?? "development" }).replace(/</g, "\\u003c")};` }} />
+      </head>
       <body className="font-sans">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>

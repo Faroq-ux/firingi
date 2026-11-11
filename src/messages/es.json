@@ -1111,6 +1111,14 @@
     "payout_due": {
       "title": "{count} pagos a proveedores por vencer",
       "body": "{count} facturas de proveedores ({amount}) vencen en los próximos 3 días, {overdue} de ellas vencidas. Vea Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Comprobación del sistema FIRINGI: {detail}. Vea Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Resuelto: {title}",
+      "body": "El problema «{title}» se ha resuelto. Vea Settings › System Health."
     }
   },
   "notifications": {
@@ -1605,5 +1613,27 @@
       "DELIVERY_RISK": "El pedido {number} para {customer} puede retrasarse",
       "REORDER_DUE": "Hora de volver a pedir a {supplier}"
     }
+  },
+  "status": {
+    "title": "Estado del sistema",
+    "allOk": "Todos los sistemas operativos",
+    "degraded": "Algunos servicios funcionan con problemas",
+    "outage": "Caída grave",
+    "components": {
+      "web": "Web y aplicaciones",
+      "ordering": "Pedidos",
+      "files": "Documentos y archivos",
+      "notifications": "Notificaciones",
+      "invoicing": "Facturación"
+    },
+    "states": {
+      "ok": "Operativo",
+      "warning": "Con problemas",
+      "critical": "Caído"
+    },
+    "incidents": "Incidencias, últimos 7 días",
+    "noIncidents": "Sin incidencias en los últimos 7 días.",
+    "ongoing": "en curso",
+    "checked": "Comprobado {time} UTC"
   }
 }

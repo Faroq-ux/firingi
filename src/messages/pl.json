@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} płatności dla dostawców do zapłaty",
       "body": "{count} faktur dostawców ({amount}) ma termin w ciągu 3 dni, w tym {overdue} po terminie. Zobacz Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Kontrola systemu FIRINGI: {detail}. Zobacz Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Rozwiązano: {title}",
+      "body": "Problem „{title}” zniknął. Zobacz Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Zamówienie {number} dla {customer} może się opóźnić",
       "REORDER_DUE": "Czas zamówić ponownie u {supplier}"
     }
+  },
+  "status": {
+    "title": "Stan systemu",
+    "allOk": "Wszystkie systemy działają",
+    "degraded": "Niektóre usługi działają z problemami",
+    "outage": "Poważna awaria",
+    "components": {
+      "web": "Strona i aplikacje",
+      "ordering": "Zamówienia",
+      "files": "Dokumenty i pliki",
+      "notifications": "Powiadomienia",
+      "invoicing": "Fakturowanie"
+    },
+    "states": {
+      "ok": "Działa",
+      "warning": "Problemy",
+      "critical": "Nie działa"
+    },
+    "incidents": "Incydenty, ostatnie 7 dni",
+    "noIncidents": "Brak incydentów w ostatnich 7 dniach.",
+    "ongoing": "trwa",
+    "checked": "Sprawdzono {time} UTC"
   }
 }

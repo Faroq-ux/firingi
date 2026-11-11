@@ -92,8 +92,8 @@ export function EndOthersButton({ disabled }: { disabled: boolean }) {
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<string | null>(null);
   return (
-    <span className="inline-flex items-center gap-2">
-      <Button variant="outline" disabled={disabled || pending} onClick={() => start(async () => { const r = await endOtherSessionsAction({}); if (r.ok) setMsg(t("ended", { count: r.data })); router.refresh(); })}>{t("endOthers")}</Button>
+    <span className="inline-flex max-w-full flex-wrap items-center gap-2">
+      <Button variant="outline" className="h-auto min-h-9 max-w-full whitespace-normal text-left" disabled={disabled || pending} onClick={() => start(async () => { const r = await endOtherSessionsAction({}); if (r.ok) setMsg(t("ended", { count: r.data })); router.refresh(); })}>{t("endOthers")}</Button>
       {msg && <span className="text-sm text-success">{msg}</span>}
     </span>
   );

@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} leverantörsbetalningar förfaller",
       "body": "{count} leverantörsfakturor ({amount}) förfaller inom 3 dagar, varav {overdue} är försenade. Se Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI-systemkontroll: {detail}. Se Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Löst: {title}",
+      "body": "Problemet ”{title}” är borta. Se Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Beställning {number} till {customer} kan bli sen",
       "REORDER_DUE": "Dags att beställa igen från {supplier}"
     }
+  },
+  "status": {
+    "title": "Systemstatus",
+    "allOk": "Alla system fungerar",
+    "degraded": "Vissa tjänster har problem",
+    "outage": "Större avbrott",
+    "components": {
+      "web": "Webbplats och appar",
+      "ordering": "Beställningar",
+      "files": "Dokument och filer",
+      "notifications": "Aviseringar",
+      "invoicing": "Fakturering"
+    },
+    "states": {
+      "ok": "I drift",
+      "warning": "Begränsad",
+      "critical": "Nere"
+    },
+    "incidents": "Incidenter, senaste 7 dagarna",
+    "noIncidents": "Inga incidenter de senaste 7 dagarna.",
+    "ongoing": "pågår",
+    "checked": "Kontrollerat {time} UTC"
   }
 }

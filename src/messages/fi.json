@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} toimittajamaksua erääntyy",
       "body": "{count} toimittajalaskua ({amount}) erääntyy 3 päivän sisällä, joista {overdue} on myöhässä. Katso Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI-järjestelmätarkistus: {detail}. Katso Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Ratkaistu: {title}",
+      "body": "Ongelma ”{title}” on poistunut. Katso Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Tilaus {number} asiakkaalle {customer} voi myöhästyä",
       "REORDER_DUE": "Aika tilata uudelleen toimittajalta {supplier}"
     }
+  },
+  "status": {
+    "title": "Järjestelmän tila",
+    "allOk": "Kaikki järjestelmät toimivat",
+    "degraded": "Joissakin palveluissa on häiriöitä",
+    "outage": "Vakava katkos",
+    "components": {
+      "web": "Verkkosivusto ja sovellukset",
+      "ordering": "Tilaukset",
+      "files": "Asiakirjat ja tiedostot",
+      "notifications": "Ilmoitukset",
+      "invoicing": "Laskutus"
+    },
+    "states": {
+      "ok": "Toiminnassa",
+      "warning": "Häiriöitä",
+      "critical": "Poissa käytöstä"
+    },
+    "incidents": "Häiriöt, viimeiset 7 päivää",
+    "noIncidents": "Ei häiriöitä viimeisten 7 päivän aikana.",
+    "ongoing": "käynnissä",
+    "checked": "Tarkistettu {time} UTC"
   }
 }

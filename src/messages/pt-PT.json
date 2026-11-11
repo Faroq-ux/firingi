@@ -1111,6 +1111,14 @@
     "payout_due": {
       "title": "{count} pagamentos a fornecedores a vencer",
       "body": "{count} faturas de fornecedores ({amount}) vencem nos próximos 3 dias, {overdue} delas em atraso. Veja Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Verificação do sistema FIRINGI: {detail}. Veja Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Resolvido: {title}",
+      "body": "O problema “{title}” desapareceu. Veja Settings › System Health."
     }
   },
   "notifications": {
@@ -1605,5 +1613,27 @@
       "DELIVERY_RISK": "A encomenda {number} para {customer} pode atrasar",
       "REORDER_DUE": "Hora de voltar a encomendar a {supplier}"
     }
+  },
+  "status": {
+    "title": "Estado do sistema",
+    "allOk": "Todos os sistemas operacionais",
+    "degraded": "Alguns serviços estão degradados",
+    "outage": "Falha grave",
+    "components": {
+      "web": "Site e aplicações",
+      "ordering": "Encomendas",
+      "files": "Documentos e ficheiros",
+      "notifications": "Notificações",
+      "invoicing": "Faturação"
+    },
+    "states": {
+      "ok": "Operacional",
+      "warning": "Degradado",
+      "critical": "Em baixo"
+    },
+    "incidents": "Incidentes, últimos 7 dias",
+    "noIncidents": "Sem incidentes nos últimos 7 dias.",
+    "ongoing": "em curso",
+    "checked": "Verificado às {time} UTC"
   }
 }

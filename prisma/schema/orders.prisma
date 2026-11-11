@@ -45,6 +45,7 @@ model Cart {
   items  CartItem[]
 
   @@unique([buyerCompanyId, userId])
+  @@index([userId])
 }
 
 model CartItem {
@@ -127,6 +128,8 @@ model Order {
   @@index([sellerCompanyId, placedAt])
   @@index([checkoutId])
   @@index([status])
+  @@index([parentOrderId])
+  @@index([placedByUserId])
 }
 
 /// Every commercial number is frozen on the line so finance reports stay correct even
@@ -167,6 +170,7 @@ model OrderLine {
   discounts      OrderLineDiscount[]
   invoiceLines   InvoiceLine[]
   returnLines    ReturnLine[]
+  @@index([orderId])
 }
 
 /// Who funded each discount on each line (finance reporting).
@@ -180,6 +184,7 @@ model OrderLineDiscount {
 
   orderLine OrderLine @relation(fields: [orderLineId], references: [id], onDelete: Cascade)
   promotion Promotion @relation(fields: [promotionId], references: [id])
+  @@index([orderLineId])
 }
 
 model OrderStatusHistory {
@@ -207,4 +212,5 @@ model OrderException {
   createdAt    DateTime  @default(now())
 
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  @@index([orderId])
 }

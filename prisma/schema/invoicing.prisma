@@ -152,6 +152,7 @@ model Invoice {
   @@index([recipientCompanyId, issuedAt])
   @@index([orderId])
   @@index([fiscalStatus, fiscalNextAt])
+  @@index([originalInvoiceId])
 }
 
 /// FIRINGI record ↔ the provider's id (customers, products), so each is created there once.
@@ -184,6 +185,7 @@ model InvoiceLine {
   invoice         Invoice             @relation(fields: [invoiceId], references: [id])
   orderLine       OrderLine?          @relation(fields: [orderLineId], references: [id])
   exemptionReason TaxExemptionReason? @relation(fields: [exemptionReasonId], references: [id])
+  @@index([invoiceId])
 }
 
 model InvoiceTaxSummary {
@@ -194,6 +196,7 @@ model InvoiceTaxSummary {
   vat       Decimal @db.Decimal(18, 2)
 
   invoice Invoice @relation(fields: [invoiceId], references: [id])
+  @@index([invoiceId])
 }
 
 /// What FIRINGI expects the vendor to invoice for an order (net of commission).
@@ -219,6 +222,9 @@ model VendorBillingStatement {
   order        Order                     @relation(fields: [orderId], references: [id])
   salesInvoice Invoice?                  @relation(fields: [salesInvoiceId], references: [id])
   allocations  VendorInvoiceAllocation[]
+  @@index([vendorCompanyId])
+  @@index([orderId])
+  @@index([salesInvoiceId])
 }
 
 /// Invoice uploaded by the vendor (issued in the vendor's own software).
@@ -262,6 +268,7 @@ model VendorInvoiceAllocation {
   statement     VendorBillingStatement @relation(fields: [statementId], references: [id])
 
   @@id([vendorInvoiceId, statementId])
+  @@index([statementId])
 }
 
 model ReturnRequest {
@@ -282,6 +289,7 @@ model ReturnRequest {
 
   order Order        @relation(fields: [orderId], references: [id])
   lines ReturnLine[]
+  @@index([orderId])
 }
 
 model ReturnLine {
@@ -292,6 +300,7 @@ model ReturnLine {
 
   returnRequest ReturnRequest @relation(fields: [returnId], references: [id], onDelete: Cascade)
   orderLine     OrderLine     @relation(fields: [orderLineId], references: [id])
+  @@index([returnId])
 }
 
 model Payment {
@@ -309,6 +318,7 @@ model Payment {
 
   company     Company             @relation(fields: [companyId], references: [id])
   allocations PaymentAllocation[]
+  @@index([companyId])
 }
 
 model PaymentAllocation {
@@ -321,4 +331,7 @@ model PaymentAllocation {
   payment       Payment        @relation(fields: [paymentId], references: [id], onDelete: Cascade)
   invoice       Invoice?       @relation(fields: [invoiceId], references: [id])
   vendorInvoice VendorInvoice? @relation(fields: [vendorInvoiceId], references: [id])
+  @@index([invoiceId])
+  @@index([paymentId])
+  @@index([vendorInvoiceId])
 }

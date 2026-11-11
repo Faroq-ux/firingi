@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} tarnijamakset tähtaeg läheneb",
       "body": "{count} tarnija arvet ({amount}) tuleb tasuda 3 päeva jooksul, neist {overdue} on hilinenud. Vt Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI süsteemikontroll: {detail}. Vaadake Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Lahendatud: {title}",
+      "body": "Probleem „{title}“ on kadunud. Vaadake Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Tellimus {number} kliendile {customer} võib hilineda",
       "REORDER_DUE": "Aeg tellida uuesti tarnijalt {supplier}"
     }
+  },
+  "status": {
+    "title": "Süsteemi olek",
+    "allOk": "Kõik süsteemid töötavad",
+    "degraded": "Mõnel teenusel on häireid",
+    "outage": "Suur katkestus",
+    "components": {
+      "web": "Veebileht ja rakendused",
+      "ordering": "Tellimused",
+      "files": "Dokumendid ja failid",
+      "notifications": "Teavitused",
+      "invoicing": "Arveldus"
+    },
+    "states": {
+      "ok": "Töötab",
+      "warning": "Häiritud",
+      "critical": "Maas"
+    },
+    "incidents": "Intsidendid, viimased 7 päeva",
+    "noIncidents": "Viimase 7 päeva jooksul intsidente pole.",
+    "ongoing": "käimas",
+    "checked": "Kontrollitud {time} UTC"
   }
 }

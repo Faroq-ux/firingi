@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} beszállítói kifizetés esedékes",
       "body": "{count} beszállítói számla ({amount}) 3 napon belül esedékes, ebből {overdue} lejárt. Lásd: Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI rendszerellenőrzés: {detail}. Lásd: Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Megoldva: {title}",
+      "body": "A(z) „{title}” probléma megszűnt. Lásd: Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "A(z) {number} rendelés ({customer}) késhet",
       "REORDER_DUE": "Ideje újra rendelni innen: {supplier}"
     }
+  },
+  "status": {
+    "title": "Rendszerállapot",
+    "allOk": "Minden rendszer működik",
+    "degraded": "Néhány szolgáltatás zavart",
+    "outage": "Súlyos leállás",
+    "components": {
+      "web": "Weboldal és alkalmazások",
+      "ordering": "Rendelések",
+      "files": "Dokumentumok és fájlok",
+      "notifications": "Értesítések",
+      "invoicing": "Számlázás"
+    },
+    "states": {
+      "ok": "Működik",
+      "warning": "Zavart",
+      "critical": "Leállt"
+    },
+    "incidents": "Incidensek, utolsó 7 nap",
+    "noIncidents": "Nem volt incidens az utolsó 7 napban.",
+    "ongoing": "folyamatban",
+    "checked": "Ellenőrizve: {time} UTC"
   }
 }

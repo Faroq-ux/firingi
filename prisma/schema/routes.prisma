@@ -64,4 +64,5 @@ model RouteStop {
 
   @@unique([routeId, deliveryId, kind])
   @@index([routeId, sequence])
+  @@index([deliveryId])
 }

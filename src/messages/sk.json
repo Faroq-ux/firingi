@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} platieb dodávateľom je splatných",
       "body": "{count} faktúr dodávateľov ({amount}) je splatných do 3 dní, z toho {overdue} po splatnosti. Pozri Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Kontrola systému FIRINGI: {detail}. Pozrite Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Vyriešené: {title}",
+      "body": "Problém „{title}“ zmizol. Pozrite Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Objednávka {number} pre {customer} môže meškať",
       "REORDER_DUE": "Čas znova objednať u {supplier}"
     }
+  },
+  "status": {
+    "title": "Stav systému",
+    "allOk": "Všetky systémy fungujú",
+    "degraded": "Niektoré služby majú problémy",
+    "outage": "Vážny výpadok",
+    "components": {
+      "web": "Web a aplikácie",
+      "ordering": "Objednávky",
+      "files": "Dokumenty a súbory",
+      "notifications": "Upozornenia",
+      "invoicing": "Fakturácia"
+    },
+    "states": {
+      "ok": "V prevádzke",
+      "warning": "Obmedzené",
+      "critical": "Mimo prevádzky"
+    },
+    "incidents": "Incidenty za posledných 7 dní",
+    "noIncidents": "Žiadne incidenty za posledných 7 dní.",
+    "ongoing": "prebieha",
+    "checked": "Skontrolované {time} UTC"
   }
 }

@@ -378,6 +378,7 @@ export const ADMIN_NAV: NavSection[] = [
       set("api", "API & Integrations", "API e Integrações", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("security", "Security", "Segurança", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("audit-logs", "Audit Logs", "Registos de Auditoria", "P1", { live: true, perm: ["admin.audit.view", "admin.settings.view"] }),
+      set("system-health", "System Health", "Saúde do Sistema", "P19", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
     ],
   },
 ];

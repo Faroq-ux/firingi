@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} pagamenti a fornitori in scadenza",
       "body": "{count} fatture di fornitori ({amount}) scadono entro 3 giorni, {overdue} già scadute. Vedi Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "Controllo di sistema FIRINGI: {detail}. Vedi Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Risolto: {title}",
+      "body": "Il problema «{title}» è stato risolto. Vedi Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "L'ordine {number} per {customer} potrebbe ritardare",
       "REORDER_DUE": "È ora di riordinare da {supplier}"
     }
+  },
+  "status": {
+    "title": "Stato del sistema",
+    "allOk": "Tutti i sistemi funzionano",
+    "degraded": "Alcuni servizi hanno problemi",
+    "outage": "Interruzione grave",
+    "components": {
+      "web": "Sito e app",
+      "ordering": "Ordini",
+      "files": "Documenti e file",
+      "notifications": "Notifiche",
+      "invoicing": "Fatturazione"
+    },
+    "states": {
+      "ok": "Operativo",
+      "warning": "Rallentato",
+      "critical": "Non disponibile"
+    },
+    "incidents": "Incidenti, ultimi 7 giorni",
+    "noIncidents": "Nessun incidente negli ultimi 7 giorni.",
+    "ongoing": "in corso",
+    "checked": "Controllato alle {time} UTC"
   }
 }

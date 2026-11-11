@@ -84,6 +84,7 @@ model VendorServiceArea {
   zone          DeliveryZone?  @relation(fields: [zoneId], references: [id])
   originAddress Address?       @relation(fields: [originAddressId], references: [id])
   rules         DeliveryRule[]
+  @@index([vendorCompanyId])
 }
 
 /// Two kinds of rule (most specific active one of each kind wins):
@@ -200,6 +201,7 @@ model Delivery {
 
   @@index([executingCompanyId, status])
   @@index([driverId, status])
+  @@index([routeId])
 }
 
 model DeliveryAttempt {
@@ -215,6 +217,7 @@ model DeliveryAttempt {
   byUserId      String?
 
   delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+  @@index([deliveryId])
 }
 
 model ProofOfDelivery {

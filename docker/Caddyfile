@@ -1,0 +1,15 @@
+# Automatic HTTPS (Let's Encrypt) in front of FIRINGI. DOMAIN comes from .env.production.
+{$DOMAIN} {
+	encode zstd gzip
+	# Uploads go up to 12 MB (documents, delivery photos).
+	request_body {
+		max_size 15MB
+	}
+	reverse_proxy app:3000 {
+		header_up X-Forwarded-Proto {scheme}
+	}
+	log {
+		output stdout
+		format console
+	}
+}

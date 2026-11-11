@@ -166,6 +166,7 @@ model Deal {
   tasks      CrmTask[]
 
   @@index([stage, ownerId])
+  @@index([companyId])
 }
 
 /// A call, e-mail, WhatsApp, meeting, visit or note — the communications history.
@@ -190,6 +191,7 @@ model CrmActivity {
   @@index([companyId, at])
   @@index([leadId, at])
   @@index([kind, at])
+  @@index([dealId])
 }
 
 /// A follow-up or task for someone in FIRINGI's team.
@@ -214,6 +216,7 @@ model CrmTask {
   deal     Deal?    @relation(fields: [dealId], references: [id], onDelete: Cascade)
 
   @@index([assigneeId, status, dueAt])
+  @@index([dealId])
 }
 
 /// A saved customer segment: rules evaluated live (type, country, tags, spend, activity …).
@@ -255,6 +258,7 @@ model SupportTicket {
 
   @@index([status, assigneeId])
   @@index([companyId, status])
+  @@index([orderId])
 }
 
 model TicketMessage {

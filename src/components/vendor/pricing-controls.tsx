@@ -116,8 +116,8 @@ export function GroupMembers({ groupId, members, candidates }: { groupId: string
           </li>
         ))}
       </ul>
-      <div className="flex gap-2">
-        <Select className="h-8 w-64" value={pick} onChange={(e) => setPick(e.target.value)}>
+      <div className="flex flex-wrap gap-2">
+        <Select className="h-8 w-full min-w-0 sm:w-64" value={pick} onChange={(e) => setPick(e.target.value)}>
           <option value="">{t("chooseCustomer")}</option>
           {available.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
         </Select>

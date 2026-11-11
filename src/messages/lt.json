@@ -1162,6 +1162,14 @@
     "payout_due": {
       "title": "{count} mokėjimai tiekėjams artėja",
       "body": "{count} tiekėjų sąskaitos ({amount}) apmokėtinos per 3 dienas, {overdue} iš jų pradelstos. Žr. Finance › Supplier Payouts Due."
+    },
+    "ops_alert": {
+      "title": "{severity}: {title}",
+      "body": "FIRINGI sistemos patikra: {detail}. Žr. Settings › System Health."
+    },
+    "ops_resolved": {
+      "title": "Išspręsta: {title}",
+      "body": "Problema „{title}“ išnyko. Žr. Settings › System Health."
     }
   },
   "notifications": {
@@ -1648,5 +1656,27 @@
       "DELIVERY_RISK": "Užsakymas {number} klientui {customer} gali vėluoti",
       "REORDER_DUE": "Laikas vėl užsakyti iš {supplier}"
     }
+  },
+  "status": {
+    "title": "Sistemos būsena",
+    "allOk": "Visos sistemos veikia",
+    "degraded": "Kai kurios paslaugos veikia su trikdžiais",
+    "outage": "Didelis sutrikimas",
+    "components": {
+      "web": "Svetainė ir programėlės",
+      "ordering": "Užsakymai",
+      "files": "Dokumentai ir failai",
+      "notifications": "Pranešimai",
+      "invoicing": "Sąskaitų išrašymas"
+    },
+    "states": {
+      "ok": "Veikia",
+      "warning": "Su trikdžiais",
+      "critical": "Neveikia"
+    },
+    "incidents": "Incidentai, paskutinės 7 dienos",
+    "noIncidents": "Per paskutines 7 dienas incidentų nebuvo.",
+    "ongoing": "vyksta",
+    "checked": "Patikrinta {time} UTC"
   }
 }
