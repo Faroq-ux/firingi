@@ -773,7 +773,10 @@
     "AI Assistant": "AI-assistent",
     "Buy Again": "Köp igen",
     "Demand & Stock": "Efterfrågan & lager",
-    "Direct Debit": "Autogiro"
+    "Direct Debit": "Autogiro",
+    "Import & Sync": "Import & synk",
+    "Integrations": "Integrationer",
+    "Exports": "Exporter"
   },
   "delivery": {
     "title": "Leverans",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Betalning kräver åtgärd: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Flöde pausat för kontroll: {name}",
+      "body": "Vi tillämpade inte dagens fil för \"{name}\" eftersom {reason}. Granska ändringarna och tillämpa dem, eller förkasta dem."
+    },
+    "integration_feed_failed": {
+      "title": "Flöde ej läst: {name}",
+      "body": "Vi kunde inte läsa filen för \"{name}\": {reason}. Dina priser och ditt lager ändrades inte. Vi försöker igen vid nästa körning."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook avstängd",
+      "body": "Vi slutade anropa {url} efter att det misslyckats många gånger i rad ({reason}). Åtgärda ditt system och slå på det igen under Integrationer."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Dina fakturor dras automatiskt via autogiro (konto som slutar på {last4}).",
       "legal": "Genom att aktivera autogiro ger du FIRINGI och dess betaltjänstleverantör rätt att instruera din bank att debitera ditt konto, och din bank rätt att göra det. Du kan begära återbetalning från din bank inom 8 veckor efter en dragning."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrationer",
+      "subtitle": "Koppla dina egna system till FIRINGI: filer, automatiska flöden, ett API och direkta aviseringar.",
+      "live": "Aktiva kopplingar"
+    },
+    "stat": {
+      "keys": "API-nycklar",
+      "webhooks": "Webhooks",
+      "feeds": "Aktiva flöden",
+      "calls": "API-anrop · 7 dagar"
+    },
+    "import": {
+      "title": "Import & synk",
+      "subtitle": "Uppdatera priser, lager och minimum från en Excel- eller CSV-fil – eller låt FIRINGI hämta din fil regelbundet.",
+      "drop": "Släpp din Excel- eller CSV-fil här",
+      "choose": "Välj en fil",
+      "limits": "Excel (.xlsx) eller CSV · upp till 10 MB · upp till 5000 rader",
+      "template": "Ladda ner min mall",
+      "templateHint": "Dina nuvarande erbjudanden, redo att redigera och ladda upp igen.",
+      "reading": "Läser filen…",
+      "steps": {
+        "upload": "Ladda upp",
+        "match": "Matcha kolumner",
+        "check": "Granska",
+        "apply": "Tillämpa"
+      },
+      "rowsFound": "{count} rader i {file}",
+      "mapTitle": "Vilken kolumn är vilken?",
+      "mapHint": "Vi gissade utifrån kolumnnamnen. Rader matchas via din artikelkod eller streckkoden.",
+      "ignore": "Importera inte",
+      "sample": "Första raderna i filen",
+      "saveAs": "Spara dessa kolumner till nästa gång som",
+      "saveAsPlaceholder": "t.ex. Daglig prislista",
+      "preview": "Visa vad som ändras",
+      "back": "Tillbaka",
+      "another": "En annan fil"
+    },
+    "fields": {
+      "vendor_sku": "Din artikelkod",
+      "gtin": "Streckkod (EAN)",
+      "price": "Pris, netto",
+      "stock": "Lager",
+      "warehouse": "Lagerplats",
+      "min_qty": "Minsta order",
+      "qty_step": "Säljs i multiplar av",
+      "lead_days": "Leveranstid, dagar",
+      "active": "Till salu (ja / nej)",
+      "name": "Namn (som referens)"
+    },
+    "run": {
+      "title": "Granska innan du tillämpar",
+      "held": "Pausat för kontroll: {reason}",
+      "summary": {
+        "total": "Rader",
+        "newOffers": "Nya erbjudanden",
+        "updates": "Uppdateringar",
+        "unchanged": "Oförändrade",
+        "notFound": "Hittades inte",
+        "errors": "Fel"
+      },
+      "status": {
+        "NEW_OFFER": "Nytt erbjudande",
+        "UPDATE": "Uppdatering",
+        "UNCHANGED": "Oförändrad",
+        "NOT_FOUND": "Inte i katalogen",
+        "ERROR": "Fel"
+      },
+      "filter": {
+        "changes": "Ändringar",
+        "problems": "Problem",
+        "all": "Alla rader"
+      },
+      "col": {
+        "line": "Rad",
+        "product": "Produkt",
+        "changes": "Vad ändras",
+        "status": "Status"
+      },
+      "bigWarn": "{count} priser ändras med mer än 50 %. Granska dem.",
+      "confirmBig": "Jag har granskat de stora prisändringarna",
+      "apply": "Tillämpa {count} ändringar",
+      "discard": "Förkasta",
+      "applied": "Klart: {applied} rader tillämpade, {failed} misslyckades.",
+      "discarded": "Förkastat – inget ändrades.",
+      "nothing": "Inget att ändra – din katalog är redan uppdaterad.",
+      "notFoundHint": "Produkter som inte finns i FIRINGI-katalogen kan inte importeras. Be FIRINGI att lägga till dem.",
+      "more": "Visar {shown} av {total} rader."
+    },
+    "runStatus": {
+      "PREVIEW": "Väntar på dig",
+      "APPLIED": "Tillämpad",
+      "FAILED": "Misslyckades",
+      "CANCELLED": "Förkastad",
+      "HELD": "Pausad"
+    },
+    "source": {
+      "UPLOAD": "Fil",
+      "URL": "Flöde",
+      "API": "API"
+    },
+    "history": {
+      "title": "Historik",
+      "empty": "Inga importer än.",
+      "open": "Öppna"
+    },
+    "feeds": {
+      "title": "Sparade importer & flöden",
+      "intro": "Publicera din pris-/lagerfil på en webbadress så hämtar och tillämpar FIRINGI den regelbundet. Körningar som ser fel ut pausas så att du kan granska dem.",
+      "none": "Inget sparat än. Ladda upp en fil och spara dess kolumner för att skapa en.",
+      "url": "Filens adress (https://…)",
+      "every": "Hämta var",
+      "hours": "{n} h",
+      "save": "Spara",
+      "saved": "Sparat",
+      "runNow": "Kör nu",
+      "delete": "Ta bort",
+      "deleteConfirm": "Ta bort denna sparade import?",
+      "lastRun": "Senaste körning {when}",
+      "never": "Inte körd än",
+      "on": "Automatisk",
+      "manual": "Endast uppladdning",
+      "result": {
+        "APPLIED": "Tillämpad",
+        "HELD": "Pausad för kontroll",
+        "FAILED": "Filen kunde inte läsas"
+      }
+    },
+    "keys": {
+      "title": "API-nycklar",
+      "intro": "Låt ditt affärssystem, din webbutik eller kassa arbeta med FIRINGI. En nyckel agerar som du, bara med de behörigheter du kryssar i.",
+      "name": "Namn",
+      "namePlaceholder": "t.ex. Vårt affärssystem",
+      "perms": "Behörigheter",
+      "create": "Skapa nyckel",
+      "once": "Kopiera nyckeln nu – den visas inte igen.",
+      "none": "Inga nycklar än.",
+      "revoke": "Återkalla",
+      "revokeConfirm": "Återkalla nyckeln? System som använder den slutar fungera direkt.",
+      "revoked": "Återkallad",
+      "lastUsed": "Senast använd {when}",
+      "neverUsed": "Aldrig använd",
+      "usage": "{calls} anrop · {errors} fel på 7 dagar",
+      "actsAs": "Agerar som {name}",
+      "recent": "Senaste anrop"
+    },
+    "scope": {
+      "catalogue_read": "Se katalogen och mina priser",
+      "orders_read": "Se ordrar",
+      "orders_write": "Lägga, bekräfta och uppdatera ordrar",
+      "offers_write": "Uppdatera mina priser, lager och minimum",
+      "invoices_read": "Se fakturor och avräkningar"
+    },
+    "hooks": {
+      "title": "Webhooks",
+      "intro": "FIRINGI anropar ditt system i samma stund som något händer. Varje anrop är signerat så att du kan kontrollera att det kommer från oss.",
+      "url": "Din adress (https://…)",
+      "events": "Meddela mig när",
+      "add": "Lägg till webhook",
+      "secretOnce": "Signeringshemlighet – kopiera den nu, den visas inte igen:",
+      "test": "Skicka test",
+      "testOk": "Ditt system svarade {status} – allt fungerar.",
+      "testFail": "Ditt system accepterade det inte ({status}).",
+      "pause": "Pausa",
+      "resume": "Slå på",
+      "delete": "Ta bort",
+      "deleteConfirm": "Ta bort denna webhook?",
+      "off": "Av: {reason}",
+      "paused": "Pausad",
+      "active": "Aktiv",
+      "none": "Inga webhooks än.",
+      "recent": "Senaste leveranser"
+    },
+    "event": {
+      "order_created": "Ny order att bekräfta",
+      "order_placed": "Order lagd",
+      "order_status_changed": "Orderstatus ändrad",
+      "invoice_issued": "Faktura utfärdad",
+      "payment_received": "Betalning mottagen",
+      "payout_sent": "Utbetalning skickad",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Levererad",
+      "PENDING": "Försöker igen",
+      "FAILED": "Misslyckades"
+    },
+    "docs": {
+      "title": "API-referens",
+      "intro": "Allt din utvecklare behöver: adresser, behörigheter och exempel. Svar är JSON; belopp är exkl. moms om de inte anges som brutto.",
+      "open": "Öppna API-referensen",
+      "base": "Basadress",
+      "auth": "Skicka din nyckel med varje anrop",
+      "limit": "Upp till {n} anrop per minut och nyckel.",
+      "openapi": "Ladda ner OpenAPI-filen",
+      "who": {
+        "Buyers": "Köpare",
+        "Suppliers": "Leverantörer",
+        "Everyone": "Alla"
+      },
+      "needs": "Kräver: {scope}",
+      "example": "Exempel på body",
+      "signature": "Kontrollera en webhook-signatur"
+    },
+    "exports": {
+      "title": "Exporter",
+      "intro": "Ladda ner dina dokument till din redovisningskonsult eller ditt eget system – Excel eller CSV.",
+      "from": "Från",
+      "to": "Till",
+      "what": "Vad",
+      "file": "Fil",
+      "download": "Ladda ner",
+      "thisMonth": "Denna månad",
+      "lastMonth": "Förra månaden",
+      "thisYear": "I år"
+    },
+    "kind": {
+      "buyer_invoices": "Fakturor och kreditnotor från FIRINGI",
+      "buyer_payments": "Mina betalningar",
+      "supplier_statements": "Faktureringsavräkningar",
+      "supplier_invoices": "Fakturor jag skickat till FIRINGI",
+      "supplier_payouts": "Mottagna utbetalningar"
+    },
+    "copy": "Kopiera",
+    "copied": "Kopierad"
   }
 }

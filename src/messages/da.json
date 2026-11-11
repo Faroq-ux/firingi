@@ -773,7 +773,10 @@
     "AI Assistant": "AI-assistent",
     "Buy Again": "Køb igen",
     "Demand & Stock": "Efterspørgsel & lager",
-    "Direct Debit": "Direkte debitering"
+    "Direct Debit": "Direkte debitering",
+    "Import & Sync": "Import & synk",
+    "Integrations": "Integrationer",
+    "Exports": "Eksporter"
   },
   "delivery": {
     "title": "Levering",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Betaling kræver opmærksomhed: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed holdt tilbage til kontrol: {name}",
+      "body": "Vi brugte ikke dagens fil for \"{name}\", fordi {reason}. Tjek ændringerne og anvend dem, eller kassér dem."
+    },
+    "integration_feed_failed": {
+      "title": "Feed ikke læst: {name}",
+      "body": "Vi kunne ikke læse filen for \"{name}\": {reason}. Dine priser og lager er ikke ændret. Vi prøver igen ved næste kørsel."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook slået fra",
+      "body": "Vi stoppede med at kalde {url}, efter at det fejlede mange gange i træk ({reason}). Ret dit system, og slå det til igen under Integrationer."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Dine fakturaer trækkes automatisk via direkte debitering (konto der slutter på {last4}).",
       "legal": "Ved at oprette en direkte debitering giver du FIRINGI og dets betalingsudbyder tilladelse til at sende instrukser til din bank om at trække beløb fra din konto, og din bank tilladelse til at gøre det. Du kan bede din bank om tilbagebetaling inden for 8 uger efter en trækning."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrationer",
+      "subtitle": "Forbind dine egne systemer med FIRINGI: filer, automatiske feeds, et API og øjeblikkelige beskeder.",
+      "live": "Aktive forbindelser"
+    },
+    "stat": {
+      "keys": "API-nøgler",
+      "webhooks": "Webhooks",
+      "feeds": "Aktive feeds",
+      "calls": "API-kald · 7 dage"
+    },
+    "import": {
+      "title": "Import & synk",
+      "subtitle": "Opdatér priser, lager og minimum fra en Excel- eller CSV-fil – eller lad FIRINGI hente din fil fast.",
+      "drop": "Slip din Excel- eller CSV-fil her",
+      "choose": "Vælg en fil",
+      "limits": "Excel (.xlsx) eller CSV · op til 10 MB · op til 5000 rækker",
+      "template": "Hent min skabelon",
+      "templateHint": "Dine nuværende tilbud, klar til at redigere og uploade igen.",
+      "reading": "Læser filen…",
+      "steps": {
+        "upload": "Upload",
+        "match": "Match kolonner",
+        "check": "Tjek",
+        "apply": "Anvend"
+      },
+      "rowsFound": "{count} rækker i {file}",
+      "mapTitle": "Hvilken kolonne er hvilken?",
+      "mapHint": "Vi har gættet ud fra kolonnenavnene. Rækker matches på din varekode eller stregkoden.",
+      "ignore": "Importér ikke",
+      "sample": "Første rækker i din fil",
+      "saveAs": "Gem disse kolonner til næste gang som",
+      "saveAsPlaceholder": "fx Daglig prisliste",
+      "preview": "Vis hvad der ændres",
+      "back": "Tilbage",
+      "another": "Anden fil"
+    },
+    "fields": {
+      "vendor_sku": "Din varekode",
+      "gtin": "Stregkode (EAN)",
+      "price": "Pris, netto",
+      "stock": "Lager",
+      "warehouse": "Lager (sted)",
+      "min_qty": "Minimumsordre",
+      "qty_step": "Sælges i multipla af",
+      "lead_days": "Leveringstid, dage",
+      "active": "Til salg (ja / nej)",
+      "name": "Navn (til reference)"
+    },
+    "run": {
+      "title": "Tjek før du anvender",
+      "held": "Holdt tilbage til kontrol: {reason}",
+      "summary": {
+        "total": "Rækker",
+        "newOffers": "Nye tilbud",
+        "updates": "Opdateringer",
+        "unchanged": "Uændret",
+        "notFound": "Ikke fundet",
+        "errors": "Fejl"
+      },
+      "status": {
+        "NEW_OFFER": "Nyt tilbud",
+        "UPDATE": "Opdatering",
+        "UNCHANGED": "Uændret",
+        "NOT_FOUND": "Ikke i kataloget",
+        "ERROR": "Fejl"
+      },
+      "filter": {
+        "changes": "Ændringer",
+        "problems": "Problemer",
+        "all": "Alle rækker"
+      },
+      "col": {
+        "line": "Række",
+        "product": "Produkt",
+        "changes": "Hvad ændres",
+        "status": "Status"
+      },
+      "bigWarn": "{count} priser ændres mere end 50 %. Tjek dem venligst.",
+      "confirmBig": "Jeg har tjekket de store prisændringer",
+      "apply": "Anvend {count} ændringer",
+      "discard": "Kassér",
+      "applied": "Færdig: {applied} rækker anvendt, {failed} fejlede.",
+      "discarded": "Kasseret – intet blev ændret.",
+      "nothing": "Intet at ændre – dit katalog er allerede opdateret.",
+      "notFoundHint": "Produkter, der ikke er i FIRINGI-kataloget, kan ikke importeres. Bed FIRINGI om at tilføje dem.",
+      "more": "Viser {shown} af {total} rækker."
+    },
+    "runStatus": {
+      "PREVIEW": "Venter på dig",
+      "APPLIED": "Anvendt",
+      "FAILED": "Mislykkedes",
+      "CANCELLED": "Kasseret",
+      "HELD": "Holdt tilbage"
+    },
+    "source": {
+      "UPLOAD": "Fil",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Historik",
+      "empty": "Ingen importer endnu.",
+      "open": "Åbn"
+    },
+    "feeds": {
+      "title": "Gemte importer & feeds",
+      "intro": "Læg din pris-/lagerfil på en webadresse, så henter og anvender FIRINGI den fast. Kørsler, der ser forkerte ud, holdes tilbage, så du kan tjekke dem.",
+      "none": "Intet gemt endnu. Upload en fil, og gem dens kolonner for at oprette en.",
+      "url": "Filadresse (https://…)",
+      "every": "Hent hver",
+      "hours": "{n} t",
+      "save": "Gem",
+      "saved": "Gemt",
+      "runNow": "Kør nu",
+      "delete": "Slet",
+      "deleteConfirm": "Slette denne gemte import?",
+      "lastRun": "Seneste kørsel {when}",
+      "never": "Ikke kørt endnu",
+      "on": "Automatisk",
+      "manual": "Kun upload",
+      "result": {
+        "APPLIED": "Anvendt",
+        "HELD": "Holdt tilbage til kontrol",
+        "FAILED": "Filen kunne ikke læses"
+      }
+    },
+    "keys": {
+      "title": "API-nøgler",
+      "intro": "Lad dit ERP, din webshop eller dit kasseapparat arbejde med FIRINGI. En nøgle handler som dig, kun med de rettigheder du vælger.",
+      "name": "Navn",
+      "namePlaceholder": "fx Vores ERP",
+      "perms": "Rettigheder",
+      "create": "Opret nøgle",
+      "once": "Kopiér nøglen nu – den vises ikke igen.",
+      "none": "Ingen nøgler endnu.",
+      "revoke": "Tilbagekald",
+      "revokeConfirm": "Tilbagekalde nøglen? Systemer, der bruger den, holder straks op med at virke.",
+      "revoked": "Tilbagekaldt",
+      "lastUsed": "Sidst brugt {when}",
+      "neverUsed": "Aldrig brugt",
+      "usage": "{calls} kald · {errors} fejl på 7 dage",
+      "actsAs": "Handler som {name}",
+      "recent": "Seneste kald"
+    },
+    "scope": {
+      "catalogue_read": "Se kataloget og mine priser",
+      "orders_read": "Se ordrer",
+      "orders_write": "Afgive, bekræfte og opdatere ordrer",
+      "offers_write": "Opdatere mine priser, lager og minimum",
+      "invoices_read": "Se fakturaer og opgørelser"
+    },
+    "hooks": {
+      "title": "Webhooks",
+      "intro": "FIRINGI kalder dit system, i det øjeblik noget sker. Hvert kald er signeret, så du kan tjekke, at det kommer fra os.",
+      "url": "Din adresse (https://…)",
+      "events": "Giv mig besked når",
+      "add": "Tilføj webhook",
+      "secretOnce": "Signeringsnøgle – kopiér den nu, den vises ikke igen:",
+      "test": "Send en test",
+      "testOk": "Dit system svarede {status} – alt er i orden.",
+      "testFail": "Dit system accepterede det ikke ({status}).",
+      "pause": "Sæt på pause",
+      "resume": "Slå til",
+      "delete": "Slet",
+      "deleteConfirm": "Slette denne webhook?",
+      "off": "Slået fra: {reason}",
+      "paused": "På pause",
+      "active": "Aktiv",
+      "none": "Ingen webhooks endnu.",
+      "recent": "Seneste leveringer"
+    },
+    "event": {
+      "order_created": "Ny ordre til bekræftelse",
+      "order_placed": "Ordre afgivet",
+      "order_status_changed": "Ordrestatus ændret",
+      "invoice_issued": "Faktura udstedt",
+      "payment_received": "Betaling modtaget",
+      "payout_sent": "Udbetaling sendt",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Leveret",
+      "PENDING": "Prøver igen",
+      "FAILED": "Mislykkedes"
+    },
+    "docs": {
+      "title": "API-reference",
+      "intro": "Alt hvad din udvikler har brug for: adresser, rettigheder og eksempler. Svar er JSON; beløb er ekskl. moms, medmindre de er markeret brutto.",
+      "open": "Åbn API-referencen",
+      "base": "Basisadresse",
+      "auth": "Send din nøgle med hvert kald",
+      "limit": "Op til {n} kald i minuttet pr. nøgle.",
+      "openapi": "Hent OpenAPI-filen",
+      "who": {
+        "Buyers": "Købere",
+        "Suppliers": "Leverandører",
+        "Everyone": "Alle"
+      },
+      "needs": "Kræver: {scope}",
+      "example": "Eksempel på body",
+      "signature": "Tjek af webhook-signatur"
+    },
+    "exports": {
+      "title": "Eksporter",
+      "intro": "Hent dine dokumenter til din revisor eller dit eget system – Excel eller CSV.",
+      "from": "Fra",
+      "to": "Til",
+      "what": "Hvad",
+      "file": "Fil",
+      "download": "Hent",
+      "thisMonth": "Denne måned",
+      "lastMonth": "Sidste måned",
+      "thisYear": "I år"
+    },
+    "kind": {
+      "buyer_invoices": "Fakturaer og kreditnotaer fra FIRINGI",
+      "buyer_payments": "Mine betalinger",
+      "supplier_statements": "Faktureringsopgørelser",
+      "supplier_invoices": "Fakturaer jeg har sendt til FIRINGI",
+      "supplier_payouts": "Modtagne udbetalinger"
+    },
+    "copy": "Kopiér",
+    "copied": "Kopieret"
   }
 }

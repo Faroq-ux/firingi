@@ -22,6 +22,7 @@ export const VENDOR_NAV: NavSection[] = [
       vp("price-lists", "Price Lists", "Listas de Preços", "P3", { live: true, perm: "vendor.pricing.manage", es: "Listas de precios" }),
       vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
       vp("promotions", "Promotions", "Promoções", "P5", { live: true, perm: "vendor.promotions.manage", es: "Promociones" }),
+      vp("import", "Import & Sync", "Importar e Sincronizar", "P21", { live: true, perm: ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], es: "Importar y sincronizar" }),
     ],
   },
   {
@@ -39,6 +40,7 @@ export const VENDOR_NAV: NavSection[] = [
       vf("invoices", "My Invoices to FIRINGI", "As Minhas Faturas à FIRINGI", "P5", { live: true, perm: ["vendor.invoices.view", "vendor.invoices.submit"], es: "Mis facturas a FIRINGI" }),
       vf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "vendor.payments.view", es: "Pagos" }),
       vf("commission", "Commission", "Comissão", "P5", { live: true, perm: ["vendor.invoices.view", "vendor.payments.view"], es: "Comisión" }),
+      vf("exports", "Exports", "Exportações", "P21", { live: true, perm: ["vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view"], es: "Exportaciones" }),
     ],
   },
   {
@@ -63,6 +65,7 @@ export const VENDOR_NAV: NavSection[] = [
       vc("documents", "Documents", "Documentos", "P2", { live: true, perm: "company.documents.manage", es: "Documentos" }),
       vc("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       vc("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
+      vc("integrations", "Integrations", "Integrações", "P21", { live: true, perm: "company.integrations.manage", es: "Integraciones" }),
     ],
   },
 ];
@@ -102,6 +105,7 @@ export const BUY_NAV: NavSection[] = [
       bf("invoices", "Invoices", "Faturas", "P5", { live: true, es: "Facturas" }),
       bf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "buyer.payments.view", es: "Pagos" }),
       bf("direct-debit", "Direct Debit", "Débito Direto", "P20", { live: true, perm: ["buyer.payments.make", "buyer.payments.view"], es: "Domiciliación bancaria" }),
+      bf("exports", "Exports", "Exportações", "P21", { live: true, perm: ["buyer.invoices.view", "buyer.payments.view"], es: "Exportaciones" }),
     ],
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
@@ -116,6 +120,7 @@ export const BUY_NAV: NavSection[] = [
       bco("restricted-products", "Tobacco & Alcohol Access", "Acesso a Tabaco e Álcool", "P2", { live: true, perm: "buyer.compliance.manage", es: "Acceso a tabaco y alcohol" }),
       bco("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       bco("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
+      bco("integrations", "Integrations", "Integrações", "P21", { live: true, perm: "company.integrations.manage", es: "Integraciones" }),
     ],
   },
 ];

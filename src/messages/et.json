@@ -773,7 +773,10 @@
     "AI Assistant": "Tehisintellekti assistent",
     "Buy Again": "Osta uuesti",
     "Demand & Stock": "Nõudlus ja ladu",
-    "Direct Debit": "Otsekorraldus"
+    "Direct Debit": "Otsekorraldus",
+    "Import & Sync": "Import ja sünkroonimine",
+    "Integrations": "Liidestused",
+    "Exports": "Ekspordid"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Makse vajab tähelepanu: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Voog peatati kontrolliks: {name}",
+      "body": "Me ei rakendanud tänast faili „{name}“ jaoks, sest {reason}. Vaadake muudatused üle ja rakendage või loobuge neist."
+    },
+    "integration_feed_failed": {
+      "title": "Voogu ei loetud: {name}",
+      "body": "Me ei saanud lugeda faili „{name}“ jaoks: {reason}. Teie hinnad ja laoseis ei muutunud. Proovime järgmisel käivitusel uuesti."
+    },
+    "integration_webhook_disabled": {
+      "title": "Veebikonks lülitati välja",
+      "body": "Lõpetasime {url} väljakutsumise, sest see ebaõnnestus mitu korda järjest ({reason}). Parandage oma süsteem ja lülitage see jaotises Liidestused uuesti sisse."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Teie arved võetakse automaatselt otsekorraldusega (konto lõpeb numbritega {last4}).",
       "legal": "Otsekorralduse seadistamisega volitate FIRINGI-t ja selle makseteenuse pakkujat saatma teie pangale korraldusi teie konto debiteerimiseks ning oma panka seda tegema. Võite pangalt tagasimakset nõuda 8 nädala jooksul pärast debiteerimist."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Liidestused",
+      "subtitle": "Ühendage oma süsteemid FIRINGIga: failid, automaatsed vood, API ja kohesed teavitused.",
+      "live": "Aktiivsed ühendused"
+    },
+    "stat": {
+      "keys": "API-võtmed",
+      "webhooks": "Veebikonksud",
+      "feeds": "Aktiivsed vood",
+      "calls": "API-päringud · 7 päeva"
+    },
+    "import": {
+      "title": "Import ja sünkroonimine",
+      "subtitle": "Uuendage hindu, laoseisu ja miinimume Exceli- või CSV-failist – või laske FIRINGIl teie faili regulaarselt alla laadida.",
+      "drop": "Lohistage Exceli- või CSV-fail siia",
+      "choose": "Vali fail",
+      "limits": "Excel (.xlsx) või CSV · kuni 10 MB · kuni 5000 rida",
+      "template": "Laadi alla minu mall",
+      "templateHint": "Teie praegused pakkumised, valmis muutmiseks ja uuesti üleslaadimiseks.",
+      "reading": "Faili lugemine…",
+      "steps": {
+        "upload": "Üleslaadimine",
+        "match": "Veergude sidumine",
+        "check": "Kontroll",
+        "apply": "Rakendamine"
+      },
+      "rowsFound": "{count} rida failis {file}",
+      "mapTitle": "Milline veerg on milline?",
+      "mapHint": "Arvasime veergude nimede järgi. Read seotakse teie tootekoodi või vöötkoodi järgi.",
+      "ignore": "Ära impordi",
+      "sample": "Faili esimesed read",
+      "saveAs": "Salvesta need veerud järgmiseks korraks nimega",
+      "saveAsPlaceholder": "nt Päevane hinnakiri",
+      "preview": "Näita, mis muutub",
+      "back": "Tagasi",
+      "another": "Teine fail"
+    },
+    "fields": {
+      "vendor_sku": "Teie tootekood",
+      "gtin": "Vöötkood (EAN)",
+      "price": "Hind ilma KM-ta",
+      "stock": "Laoseis",
+      "warehouse": "Ladu",
+      "min_qty": "Minimaalne tellimus",
+      "qty_step": "Müüakse kordsetena",
+      "lead_days": "Tarneaeg, päeva",
+      "active": "Müügil (jah / ei)",
+      "name": "Nimi (viiteks)"
+    },
+    "run": {
+      "title": "Kontrollige enne rakendamist",
+      "held": "Peatati kontrolliks: {reason}",
+      "summary": {
+        "total": "Read",
+        "newOffers": "Uued pakkumised",
+        "updates": "Uuendused",
+        "unchanged": "Muutmata",
+        "notFound": "Ei leitud",
+        "errors": "Vead"
+      },
+      "status": {
+        "NEW_OFFER": "Uus pakkumine",
+        "UPDATE": "Uuendus",
+        "UNCHANGED": "Muutmata",
+        "NOT_FOUND": "Kataloogis pole",
+        "ERROR": "Viga"
+      },
+      "filter": {
+        "changes": "Muudatused",
+        "problems": "Probleemid",
+        "all": "Kõik read"
+      },
+      "col": {
+        "line": "Rida",
+        "product": "Toode",
+        "changes": "Mis muutub",
+        "status": "Olek"
+      },
+      "bigWarn": "{count} hinda muutub üle 50 %. Palun kontrollige neid.",
+      "confirmBig": "Kontrollisin suuri hinnamuutusi",
+      "apply": "Rakenda {count} muudatust",
+      "discard": "Loobu",
+      "applied": "Valmis: rakendati {applied} rida, ebaõnnestus {failed}.",
+      "discarded": "Loobutud – midagi ei muudetud.",
+      "nothing": "Pole midagi muuta – teie kataloog on juba ajakohane.",
+      "notFoundHint": "Tooteid, mida pole FIRINGI kataloogis, ei saa importida. Paluge FIRINGIl need lisada.",
+      "more": "Näidatakse {shown} rida {total}-st."
+    },
+    "runStatus": {
+      "PREVIEW": "Ootab teid",
+      "APPLIED": "Rakendatud",
+      "FAILED": "Ebaõnnestus",
+      "CANCELLED": "Loobutud",
+      "HELD": "Peatatud"
+    },
+    "source": {
+      "UPLOAD": "Fail",
+      "URL": "Voog",
+      "API": "API"
+    },
+    "history": {
+      "title": "Ajalugu",
+      "empty": "Importe pole veel.",
+      "open": "Ava"
+    },
+    "feeds": {
+      "title": "Salvestatud impordid ja vood",
+      "intro": "Avaldage oma hinna-/laofail veebiaadressil ja FIRINGI laadib ning rakendab selle regulaarselt. Kahtlased käivitused peatatakse, et saaksite need üle vaadata.",
+      "none": "Midagi pole veel salvestatud. Laadige fail üles ja salvestage selle veerud.",
+      "url": "Faili aadress (https://…)",
+      "every": "Laadi iga",
+      "hours": "{n} h järel",
+      "save": "Salvesta",
+      "saved": "Salvestatud",
+      "runNow": "Käivita kohe",
+      "delete": "Kustuta",
+      "deleteConfirm": "Kas kustutada see salvestatud import?",
+      "lastRun": "Viimane käivitus {when}",
+      "never": "Pole veel käivitatud",
+      "on": "Automaatne",
+      "manual": "Ainult üleslaadimine",
+      "result": {
+        "APPLIED": "Rakendatud",
+        "HELD": "Peatatud kontrolliks",
+        "FAILED": "Faili ei õnnestunud lugeda"
+      }
+    },
+    "keys": {
+      "title": "API-võtmed",
+      "intro": "Laske oma ERP-l, e-poel või kassal FIRINGIga töötada. Võti tegutseb teie nimel ainult märgitud õigustega.",
+      "name": "Nimi",
+      "namePlaceholder": "nt Meie ERP",
+      "perms": "Õigused",
+      "create": "Loo võti",
+      "once": "Kopeerige võti kohe – seda ei näidata uuesti.",
+      "none": "Võtmeid pole veel.",
+      "revoke": "Tühista",
+      "revokeConfirm": "Kas tühistada see võti? Seda kasutavad süsteemid lõpetavad kohe töö.",
+      "revoked": "Tühistatud",
+      "lastUsed": "Viimati kasutatud {when}",
+      "neverUsed": "Pole kunagi kasutatud",
+      "usage": "{calls} päringut · {errors} viga 7 päevaga",
+      "actsAs": "Tegutseb kasutajana {name}",
+      "recent": "Viimased päringud"
+    },
+    "scope": {
+      "catalogue_read": "Näha kataloogi ja minu hindu",
+      "orders_read": "Näha tellimusi",
+      "orders_write": "Teha, kinnitada ja uuendada tellimusi",
+      "offers_write": "Uuendada minu hindu, laoseisu ja miinimume",
+      "invoices_read": "Näha arveid ja aruandeid"
+    },
+    "hooks": {
+      "title": "Veebikonksud",
+      "intro": "FIRINGI kutsub teie süsteemi välja hetkel, kui midagi juhtub. Iga väljakutse on allkirjastatud, et saaksite kontrollida, et see tuleb meilt.",
+      "url": "Teie aadress (https://…)",
+      "events": "Teavita mind, kui",
+      "add": "Lisa veebikonks",
+      "secretOnce": "Allkirjastamise saladus – kopeerige see kohe, seda ei näidata uuesti:",
+      "test": "Saada test",
+      "testOk": "Teie süsteem vastas {status} – kõik korras.",
+      "testFail": "Teie süsteem ei võtnud seda vastu ({status}).",
+      "pause": "Peata",
+      "resume": "Lülita sisse",
+      "delete": "Kustuta",
+      "deleteConfirm": "Kas kustutada see veebikonks?",
+      "off": "Väljas: {reason}",
+      "paused": "Peatatud",
+      "active": "Aktiivne",
+      "none": "Veebikonkse pole veel.",
+      "recent": "Viimased saatmised"
+    },
+    "event": {
+      "order_created": "Uus kinnitamist ootav tellimus",
+      "order_placed": "Tellimus esitatud",
+      "order_status_changed": "Tellimuse olek muutus",
+      "invoice_issued": "Arve väljastatud",
+      "payment_received": "Makse laekus",
+      "payout_sent": "Väljamakse saadetud",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Kohale toimetatud",
+      "PENDING": "Proovitakse uuesti",
+      "FAILED": "Ebaõnnestus"
+    },
+    "docs": {
+      "title": "API dokumentatsioon",
+      "intro": "Kõik, mida teie arendaja vajab: aadressid, õigused ja näited. Vastused on JSON; summad on ilma KM-ta, kui pole märgitud brutona.",
+      "open": "Ava API dokumentatsioon",
+      "base": "Põhiaadress",
+      "auth": "Saatke oma võti iga päringuga",
+      "limit": "Kuni {n} päringut minutis võtme kohta.",
+      "openapi": "Laadi alla OpenAPI fail",
+      "who": {
+        "Buyers": "Ostjad",
+        "Suppliers": "Tarnijad",
+        "Everyone": "Kõik"
+      },
+      "needs": "Vajab: {scope}",
+      "example": "Näidissisu",
+      "signature": "Veebikonksu allkirja kontrollimine"
+    },
+    "exports": {
+      "title": "Ekspordid",
+      "intro": "Laadige oma dokumendid alla raamatupidajale või oma süsteemi – Excel või CSV.",
+      "from": "Alates",
+      "to": "Kuni",
+      "what": "Mida",
+      "file": "Fail",
+      "download": "Laadi alla",
+      "thisMonth": "See kuu",
+      "lastMonth": "Eelmine kuu",
+      "thisYear": "See aasta"
+    },
+    "kind": {
+      "buyer_invoices": "FIRINGI arved ja kreeditarved",
+      "buyer_payments": "Minu maksed",
+      "supplier_statements": "Arveldusaruanded",
+      "supplier_invoices": "Arved, mille saatsin FIRINGIle",
+      "supplier_payouts": "Saadud väljamaksed"
+    },
+    "copy": "Kopeeri",
+    "copied": "Kopeeritud"
   }
 }

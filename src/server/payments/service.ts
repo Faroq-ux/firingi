@@ -331,6 +331,7 @@ async function settle(requestId: string, providerKey: string, ev: ProviderEvent)
         reference: ev.providerPaymentRef ?? r.providerRef ?? ev.providerRef ?? null, status: "CONFIRMED", paidAt: new Date(), provider: providerKey,
       },
     });
+    await (await import("@/server/integrations/webhooks")).emitWebhook(tx, r.companyId, "payment.received", { paymentId: payment.id, amount: payment.amount.toString(), method: payment.method, reference: payment.reference, paidAt: payment.paidAt?.toISOString() ?? null, documents: r.items.map((i) => i.invoiceId) });
     // Allocate to the request's invoices — never more than what is still open now.
     const open = await openAmounts(r.items.map((i) => i.invoiceId), tx);
     let free = paid;
@@ -372,6 +373,7 @@ async function releasePaidOrder(tx: Tx, orderId: string) {
   await tx.order.update({ where: { id: orderId }, data: { awaitingPayment: false, ...(o.status === "ON_HOLD" && !stillRiskHeld ? { status: "PENDING_CONFIRMATION" } : {}) } });
   if (o.status === "ON_HOLD" && !stillRiskHeld) {
     await tx.orderStatusHistory.create({ data: { orderId, fromStatus: "ON_HOLD", toStatus: "PENDING_CONFIRMATION", reason: "Paid — sent to supplier" } });
+    await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, orderId, { from: "ON_HOLD", to: "PENDING_CONFIRMATION", reason: "paid" });
     return true;
   }
   return false;

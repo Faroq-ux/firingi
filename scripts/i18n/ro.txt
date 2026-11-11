@@ -1496,3 +1496,188 @@ Debitul direct nu este încă disponibil.
 Facturile dvs. sunt încasate automat prin debit direct (cont care se termină în {last4}).
 Prin activarea debitului direct autorizați FIRINGI și furnizorul său de plăți să trimită instrucțiuni băncii dvs. pentru a vă debita contul, iar banca dvs. să îl debiteze. Puteți cere băncii rambursarea în 8 săptămâni de la un debit.
 Debit direct
+Feed reținut pentru verificare: {name}
+Nu am aplicat fișierul de azi pentru „{name}” deoarece {reason}. Verificați modificările și aplicați-le sau renunțați la ele.
+Feed necitit: {name}
+Nu am putut citi fișierul pentru „{name}”: {reason}. Prețurile și stocul nu s-au schimbat. Reîncercăm la următoarea rulare.
+Webhook dezactivat
+Am încetat să apelăm {url} după ce a eșuat de multe ori la rând ({reason}). Reparați sistemul și reactivați-l în Integrări.
+Integrări
+Conectați-vă sistemele la FIRINGI: fișiere, feeduri automate, un API și notificări instantanee.
+Conexiuni active
+Chei API
+Webhookuri
+Feeduri active
+Apeluri API · 7 zile
+Import și sincronizare
+Actualizați prețuri, stoc și minime dintr-un fișier Excel sau CSV — sau lăsați FIRINGI să vă preia fișierul periodic.
+Trageți aici fișierul Excel sau CSV
+Alegeți un fișier
+Excel (.xlsx) sau CSV · până la 10 MB · până la 5000 de rânduri
+Descarcă șablonul meu
+Ofertele dvs. actuale, gata de editat și de încărcat din nou.
+Se citește fișierul…
+Încărcare
+Asociere coloane
+Verificare
+Aplicare
+{count} rânduri în {file}
+Care coloană ce este?
+Am ghicit după numele coloanelor. Rândurile sunt asociate după codul dvs. de produs sau după codul de bare.
+Nu importa
+Primele rânduri din fișier
+Salvează aceste coloane pentru data viitoare ca
+ex. Listă de prețuri zilnică
+Arată ce se schimbă
+Înapoi
+Alt fișier
+Codul dvs. de produs
+Cod de bare (EAN)
+Preț fără TVA
+Stoc
+Depozit
+Comandă minimă
+Vândut în multipli de
+Termen de livrare, zile
+La vânzare (da / nu)
+Denumire (orientativ)
+Verificați înainte de aplicare
+Reținut pentru verificare: {reason}
+Rânduri
+Oferte noi
+Actualizări
+Neschimbate
+Negăsite
+Erori
+Ofertă nouă
+Actualizare
+Neschimbat
+În afara catalogului
+Eroare
+Modificări
+Probleme
+Toate rândurile
+Rând
+Produs
+Ce se schimbă
+Stare
+{count} prețuri se schimbă cu peste 50 %. Vă rugăm să le verificați.
+Am verificat modificările mari de preț
+Aplică {count} modificări
+Renunță
+Gata: {applied} rânduri aplicate, {failed} eșuate.
+Renunțat — nimic nu s-a schimbat.
+Nimic de schimbat — catalogul dvs. este deja la zi.
+Produsele care nu sunt în catalogul FIRINGI nu pot fi importate. Cereți FIRINGI să le adauge.
+Se afișează {shown} din {total} rânduri.
+Vă așteaptă
+Aplicat
+Eșuat
+Renunțat
+Reținut
+Fișier
+Feed
+API
+Istoric
+Încă nu există importuri.
+Deschide
+Importuri salvate și feeduri
+Publicați fișierul de prețuri / stoc la o adresă web, iar FIRINGI îl preia și îl aplică periodic. Rulările suspecte sunt reținute pentru verificare.
+Nimic salvat încă. Încărcați un fișier și salvați-i coloanele.
+Adresa fișierului (https://…)
+Preluare la fiecare
+{n} h
+Salvează
+Salvat
+Rulează acum
+Șterge
+Ștergeți acest import salvat?
+Ultima rulare {when}
+Încă nerulat
+Automat
+Doar încărcare
+Aplicat
+Reținut pentru verificare
+Fișierul nu a putut fi citit
+Chei API
+Conectați ERP-ul, magazinul online sau casa de marcat la FIRINGI. O cheie acționează în numele dvs., doar cu permisiunile bifate.
+Nume
+ex. ERP-ul nostru
+Permisiuni
+Creează cheie
+Copiați cheia acum — nu va mai fi afișată.
+Încă nu există chei.
+Revocă
+Revocați această cheie? Sistemele care o folosesc nu vor mai funcționa imediat.
+Revocată
+Folosită ultima dată {when}
+Nefolosită niciodată
+{calls} apeluri · {errors} erori în 7 zile
+Acționează ca {name}
+Ultimele apeluri
+Să vadă catalogul și prețurile mele
+Să vadă comenzile
+Să plaseze, confirme și actualizeze comenzi
+Să actualizeze prețurile, stocul și minimele mele
+Să vadă facturile și decontările
+Webhookuri
+FIRINGI apelează sistemul dvs. imediat ce se întâmplă ceva. Fiecare apel este semnat, ca să puteți verifica faptul că vine de la noi.
+Adresa dvs. (https://…)
+Anunță-mă când
+Adaugă webhook
+Secret de semnare — copiați-l acum, nu va mai fi afișat:
+Trimite test
+Sistemul dvs. a răspuns {status} — totul e în regulă.
+Sistemul dvs. nu a acceptat ({status}).
+Pauză
+Activează
+Șterge
+Ștergeți acest webhook?
+Oprit: {reason}
+În pauză
+Activ
+Încă nu există webhookuri.
+Ultimele livrări
+Comandă nouă de confirmat
+Comandă plasată
+Starea comenzii s-a schimbat
+Factură emisă
+Plată primită
+Plată către furnizor trimisă
+Test
+Livrat
+Se reîncearcă
+Eșuat
+Documentație API
+Tot ce îi trebuie programatorului: adrese, permisiuni și exemple. Răspunsurile sunt JSON; sumele sunt fără TVA, dacă nu sunt marcate brut.
+Deschide documentația API
+Adresa de bază
+Trimiteți cheia la fiecare apel
+Până la {n} apeluri pe minut per cheie.
+Descarcă fișierul OpenAPI
+Cumpărători
+Furnizori
+Toți
+Necesită: {scope}
+Exemplu de corp
+Verificarea semnăturii unui webhook
+Exporturi
+Descărcați documentele pentru contabil sau pentru propriul sistem — Excel sau CSV.
+De la
+Până la
+Ce
+Fișier
+Descarcă
+Luna aceasta
+Luna trecută
+Anul acesta
+Facturi și note de credit de la FIRINGI
+Plățile mele
+Decontări
+Facturi trimise de mine către FIRINGI
+Plăți primite
+Copiază
+Copiat
+Import și sincronizare
+Integrări
+Exporturi

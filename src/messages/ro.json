@@ -773,7 +773,10 @@
     "AI Assistant": "Asistent IA",
     "Buy Again": "Cumpără din nou",
     "Demand & Stock": "Cerere și stoc",
-    "Direct Debit": "Debit direct"
+    "Direct Debit": "Debit direct",
+    "Import & Sync": "Import și sincronizare",
+    "Integrations": "Integrări",
+    "Exports": "Exporturi"
   },
   "delivery": {
     "title": "Livrare",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Plată care necesită atenție: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed reținut pentru verificare: {name}",
+      "body": "Nu am aplicat fișierul de azi pentru „{name}” deoarece {reason}. Verificați modificările și aplicați-le sau renunțați la ele."
+    },
+    "integration_feed_failed": {
+      "title": "Feed necitit: {name}",
+      "body": "Nu am putut citi fișierul pentru „{name}”: {reason}. Prețurile și stocul nu s-au schimbat. Reîncercăm la următoarea rulare."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook dezactivat",
+      "body": "Am încetat să apelăm {url} după ce a eșuat de multe ori la rând ({reason}). Reparați sistemul și reactivați-l în Integrări."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Facturile dvs. sunt încasate automat prin debit direct (cont care se termină în {last4}).",
       "legal": "Prin activarea debitului direct autorizați FIRINGI și furnizorul său de plăți să trimită instrucțiuni băncii dvs. pentru a vă debita contul, iar banca dvs. să îl debiteze. Puteți cere băncii rambursarea în 8 săptămâni de la un debit."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrări",
+      "subtitle": "Conectați-vă sistemele la FIRINGI: fișiere, feeduri automate, un API și notificări instantanee.",
+      "live": "Conexiuni active"
+    },
+    "stat": {
+      "keys": "Chei API",
+      "webhooks": "Webhookuri",
+      "feeds": "Feeduri active",
+      "calls": "Apeluri API · 7 zile"
+    },
+    "import": {
+      "title": "Import și sincronizare",
+      "subtitle": "Actualizați prețuri, stoc și minime dintr-un fișier Excel sau CSV — sau lăsați FIRINGI să vă preia fișierul periodic.",
+      "drop": "Trageți aici fișierul Excel sau CSV",
+      "choose": "Alegeți un fișier",
+      "limits": "Excel (.xlsx) sau CSV · până la 10 MB · până la 5000 de rânduri",
+      "template": "Descarcă șablonul meu",
+      "templateHint": "Ofertele dvs. actuale, gata de editat și de încărcat din nou.",
+      "reading": "Se citește fișierul…",
+      "steps": {
+        "upload": "Încărcare",
+        "match": "Asociere coloane",
+        "check": "Verificare",
+        "apply": "Aplicare"
+      },
+      "rowsFound": "{count} rânduri în {file}",
+      "mapTitle": "Care coloană ce este?",
+      "mapHint": "Am ghicit după numele coloanelor. Rândurile sunt asociate după codul dvs. de produs sau după codul de bare.",
+      "ignore": "Nu importa",
+      "sample": "Primele rânduri din fișier",
+      "saveAs": "Salvează aceste coloane pentru data viitoare ca",
+      "saveAsPlaceholder": "ex. Listă de prețuri zilnică",
+      "preview": "Arată ce se schimbă",
+      "back": "Înapoi",
+      "another": "Alt fișier"
+    },
+    "fields": {
+      "vendor_sku": "Codul dvs. de produs",
+      "gtin": "Cod de bare (EAN)",
+      "price": "Preț fără TVA",
+      "stock": "Stoc",
+      "warehouse": "Depozit",
+      "min_qty": "Comandă minimă",
+      "qty_step": "Vândut în multipli de",
+      "lead_days": "Termen de livrare, zile",
+      "active": "La vânzare (da / nu)",
+      "name": "Denumire (orientativ)"
+    },
+    "run": {
+      "title": "Verificați înainte de aplicare",
+      "held": "Reținut pentru verificare: {reason}",
+      "summary": {
+        "total": "Rânduri",
+        "newOffers": "Oferte noi",
+        "updates": "Actualizări",
+        "unchanged": "Neschimbate",
+        "notFound": "Negăsite",
+        "errors": "Erori"
+      },
+      "status": {
+        "NEW_OFFER": "Ofertă nouă",
+        "UPDATE": "Actualizare",
+        "UNCHANGED": "Neschimbat",
+        "NOT_FOUND": "În afara catalogului",
+        "ERROR": "Eroare"
+      },
+      "filter": {
+        "changes": "Modificări",
+        "problems": "Probleme",
+        "all": "Toate rândurile"
+      },
+      "col": {
+        "line": "Rând",
+        "product": "Produs",
+        "changes": "Ce se schimbă",
+        "status": "Stare"
+      },
+      "bigWarn": "{count} prețuri se schimbă cu peste 50 %. Vă rugăm să le verificați.",
+      "confirmBig": "Am verificat modificările mari de preț",
+      "apply": "Aplică {count} modificări",
+      "discard": "Renunță",
+      "applied": "Gata: {applied} rânduri aplicate, {failed} eșuate.",
+      "discarded": "Renunțat — nimic nu s-a schimbat.",
+      "nothing": "Nimic de schimbat — catalogul dvs. este deja la zi.",
+      "notFoundHint": "Produsele care nu sunt în catalogul FIRINGI nu pot fi importate. Cereți FIRINGI să le adauge.",
+      "more": "Se afișează {shown} din {total} rânduri."
+    },
+    "runStatus": {
+      "PREVIEW": "Vă așteaptă",
+      "APPLIED": "Aplicat",
+      "FAILED": "Eșuat",
+      "CANCELLED": "Renunțat",
+      "HELD": "Reținut"
+    },
+    "source": {
+      "UPLOAD": "Fișier",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Istoric",
+      "empty": "Încă nu există importuri.",
+      "open": "Deschide"
+    },
+    "feeds": {
+      "title": "Importuri salvate și feeduri",
+      "intro": "Publicați fișierul de prețuri / stoc la o adresă web, iar FIRINGI îl preia și îl aplică periodic. Rulările suspecte sunt reținute pentru verificare.",
+      "none": "Nimic salvat încă. Încărcați un fișier și salvați-i coloanele.",
+      "url": "Adresa fișierului (https://…)",
+      "every": "Preluare la fiecare",
+      "hours": "{n} h",
+      "save": "Salvează",
+      "saved": "Salvat",
+      "runNow": "Rulează acum",
+      "delete": "Șterge",
+      "deleteConfirm": "Ștergeți acest import salvat?",
+      "lastRun": "Ultima rulare {when}",
+      "never": "Încă nerulat",
+      "on": "Automat",
+      "manual": "Doar încărcare",
+      "result": {
+        "APPLIED": "Aplicat",
+        "HELD": "Reținut pentru verificare",
+        "FAILED": "Fișierul nu a putut fi citit"
+      }
+    },
+    "keys": {
+      "title": "Chei API",
+      "intro": "Conectați ERP-ul, magazinul online sau casa de marcat la FIRINGI. O cheie acționează în numele dvs., doar cu permisiunile bifate.",
+      "name": "Nume",
+      "namePlaceholder": "ex. ERP-ul nostru",
+      "perms": "Permisiuni",
+      "create": "Creează cheie",
+      "once": "Copiați cheia acum — nu va mai fi afișată.",
+      "none": "Încă nu există chei.",
+      "revoke": "Revocă",
+      "revokeConfirm": "Revocați această cheie? Sistemele care o folosesc nu vor mai funcționa imediat.",
+      "revoked": "Revocată",
+      "lastUsed": "Folosită ultima dată {when}",
+      "neverUsed": "Nefolosită niciodată",
+      "usage": "{calls} apeluri · {errors} erori în 7 zile",
+      "actsAs": "Acționează ca {name}",
+      "recent": "Ultimele apeluri"
+    },
+    "scope": {
+      "catalogue_read": "Să vadă catalogul și prețurile mele",
+      "orders_read": "Să vadă comenzile",
+      "orders_write": "Să plaseze, confirme și actualizeze comenzi",
+      "offers_write": "Să actualizeze prețurile, stocul și minimele mele",
+      "invoices_read": "Să vadă facturile și decontările"
+    },
+    "hooks": {
+      "title": "Webhookuri",
+      "intro": "FIRINGI apelează sistemul dvs. imediat ce se întâmplă ceva. Fiecare apel este semnat, ca să puteți verifica faptul că vine de la noi.",
+      "url": "Adresa dvs. (https://…)",
+      "events": "Anunță-mă când",
+      "add": "Adaugă webhook",
+      "secretOnce": "Secret de semnare — copiați-l acum, nu va mai fi afișat:",
+      "test": "Trimite test",
+      "testOk": "Sistemul dvs. a răspuns {status} — totul e în regulă.",
+      "testFail": "Sistemul dvs. nu a acceptat ({status}).",
+      "pause": "Pauză",
+      "resume": "Activează",
+      "delete": "Șterge",
+      "deleteConfirm": "Ștergeți acest webhook?",
+      "off": "Oprit: {reason}",
+      "paused": "În pauză",
+      "active": "Activ",
+      "none": "Încă nu există webhookuri.",
+      "recent": "Ultimele livrări"
+    },
+    "event": {
+      "order_created": "Comandă nouă de confirmat",
+      "order_placed": "Comandă plasată",
+      "order_status_changed": "Starea comenzii s-a schimbat",
+      "invoice_issued": "Factură emisă",
+      "payment_received": "Plată primită",
+      "payout_sent": "Plată către furnizor trimisă",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Livrat",
+      "PENDING": "Se reîncearcă",
+      "FAILED": "Eșuat"
+    },
+    "docs": {
+      "title": "Documentație API",
+      "intro": "Tot ce îi trebuie programatorului: adrese, permisiuni și exemple. Răspunsurile sunt JSON; sumele sunt fără TVA, dacă nu sunt marcate brut.",
+      "open": "Deschide documentația API",
+      "base": "Adresa de bază",
+      "auth": "Trimiteți cheia la fiecare apel",
+      "limit": "Până la {n} apeluri pe minut per cheie.",
+      "openapi": "Descarcă fișierul OpenAPI",
+      "who": {
+        "Buyers": "Cumpărători",
+        "Suppliers": "Furnizori",
+        "Everyone": "Toți"
+      },
+      "needs": "Necesită: {scope}",
+      "example": "Exemplu de corp",
+      "signature": "Verificarea semnăturii unui webhook"
+    },
+    "exports": {
+      "title": "Exporturi",
+      "intro": "Descărcați documentele pentru contabil sau pentru propriul sistem — Excel sau CSV.",
+      "from": "De la",
+      "to": "Până la",
+      "what": "Ce",
+      "file": "Fișier",
+      "download": "Descarcă",
+      "thisMonth": "Luna aceasta",
+      "lastMonth": "Luna trecută",
+      "thisYear": "Anul acesta"
+    },
+    "kind": {
+      "buyer_invoices": "Facturi și note de credit de la FIRINGI",
+      "buyer_payments": "Plățile mele",
+      "supplier_statements": "Decontări",
+      "supplier_invoices": "Facturi trimise de mine către FIRINGI",
+      "supplier_payouts": "Plăți primite"
+    },
+    "copy": "Copiază",
+    "copied": "Copiat"
   }
 }

@@ -1,0 +1,121 @@
+// Phase 21 — integrations: catalogue imports & feeds, outbound webhooks, API call log.
+
+enum ImportSource {
+  UPLOAD
+  URL
+  API
+}
+
+enum ImportStatus {
+  PREVIEW // parsed and compared, waiting for "Apply" (or held for review)
+  APPLIED
+  FAILED
+  CANCELLED
+}
+
+/// A supplier's saved import: column mapping, and optionally a file URL fetched on a schedule.
+model ImportProfile {
+  id          String    @id @default(cuid())
+  companyId   String
+  name        String
+  /// { "<file column>": "<field>" } — fields: vendor_sku, gtin, price, stock, warehouse, min_qty, qty_step, lead_days, active, name
+  mapping     Json
+  feedUrl     String?
+  everyHours  Int? // scheduled feed interval (null = manual uploads only)
+  enabled     Boolean   @default(true)
+  lastRunAt   DateTime?
+  createdById String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  company Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  runs    ImportRun[]
+
+  @@index([companyId])
+  @@index([enabled, lastRunAt])
+}
+
+model ImportRun {
+  id          String       @id @default(cuid())
+  companyId   String
+  profileId   String?
+  source      ImportSource
+  fileName    String?
+  status      ImportStatus @default(PREVIEW)
+  /// Normalised rows (what will be applied) and the per-row comparison.
+  rows        Json
+  summary     Json // { total, newOffers, priceChanges, stockChanges, unchanged, notFound, errors, bigChanges }
+  heldReason  String?
+  error       String?
+  byUserId    String?
+  createdAt   DateTime     @default(now())
+  appliedAt   DateTime?
+
+  company Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  profile ImportProfile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, createdAt])
+}
+
+/// A company's endpoint for FIRINGI's signed event notifications.
+model WebhookEndpoint {
+  id            String    @id @default(cuid())
+  companyId     String
+  url           String
+  /// HMAC-SHA256 signing secret (shown to the company once).
+  secret        String
+  events        String[]
+  active        Boolean   @default(true)
+  failureStreak Int       @default(0)
+  disabledReason String?
+  lastSuccessAt DateTime?
+  lastFailureAt DateTime?
+  createdById   String
+  createdAt     DateTime  @default(now())
+
+  company    Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  deliveries WebhookDelivery[]
+
+  @@index([companyId])
+}
+
+enum WebhookDeliveryStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+/// Outbox: written in the same transaction as the business change, sent by the integrations job.
+model WebhookDelivery {
+  id            String                @id @default(cuid())
+  endpointId    String
+  event         String
+  payload       Json
+  status        WebhookDeliveryStatus @default(PENDING)
+  attempts      Int                   @default(0)
+  nextAttemptAt DateTime              @default(now())
+  responseCode  Int?
+  responseBody  String?
+  createdAt     DateTime              @default(now())
+  sentAt        DateTime?
+
+  endpoint WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+
+  @@index([status, nextAttemptAt])
+  @@index([endpointId, createdAt])
+}
+
+/// Recent API calls per key (kept 30 days) — shown to the company and FIRINGI.
+model ApiCallLog {
+  id       String   @id @default(cuid())
+  apiKeyId String
+  method   String
+  path     String
+  status   Int
+  ms       Int
+  at       DateTime @default(now())
+
+  apiKey ApiKey @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+
+  @@index([apiKeyId, at])
+}

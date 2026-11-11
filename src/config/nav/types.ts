@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -26,6 +26,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P18: { en: "Phase 18 — Certified invoicing & payouts", pt: "Fase 18 — Faturação certificada e pagamentos" },
   P19: { en: "Phase 19 — Production readiness", pt: "Fase 19 — Pronto para produção" },
   P20: { en: "Phase 20 — Customer payments", pt: "Fase 20 — Pagamentos de clientes" },
+  P21: { en: "Phase 21 — Integrations", pt: "Fase 21 — Integrações" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

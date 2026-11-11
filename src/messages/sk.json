@@ -773,7 +773,10 @@
     "AI Assistant": "AI asistent",
     "Buy Again": "Kúpiť znova",
     "Demand & Stock": "Dopyt a zásoby",
-    "Direct Debit": "Inkaso"
+    "Direct Debit": "Inkaso",
+    "Import & Sync": "Import a synchronizácia",
+    "Integrations": "Integrácie",
+    "Exports": "Exporty"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Platba si vyžaduje pozornosť: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed pozastavený na kontrolu: {name}",
+      "body": "Dnešný súbor pre „{name}“ sme nepoužili, pretože {reason}. Skontrolujte zmeny a použite ich, alebo ich zahoďte."
+    },
+    "integration_feed_failed": {
+      "title": "Feed nenačítaný: {name}",
+      "body": "Súbor pre „{name}“ sa nepodarilo načítať: {reason}. Vaše ceny a zásoby sa nezmenili. Skúsime to znova pri ďalšom behu."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook vypnutý",
+      "body": "Prestali sme volať {url}, pretože mnohokrát po sebe zlyhal ({reason}). Opravte svoj systém a znova ho zapnite v Integráciách."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Vaše faktúry sa sťahujú automaticky inkasom (účet končiaci na {last4}).",
       "legal": "Nastavením inkasa splnomocňujete FIRINGI a jeho poskytovateľa platieb posielať vašej banke pokyny na odpísanie z vášho účtu a vašu banku na jeho odpísanie. O vrátenie môžete banku požiadať do 8 týždňov od stiahnutia."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrácie",
+      "subtitle": "Prepojte svoje systémy s FIRINGI: súbory, automatické feedy, API a okamžité upozornenia.",
+      "live": "Aktívne prepojenia"
+    },
+    "stat": {
+      "keys": "Kľúče API",
+      "webhooks": "Webhooky",
+      "feeds": "Aktívne feedy",
+      "calls": "Volania API · 7 dní"
+    },
+    "import": {
+      "title": "Import a synchronizácia",
+      "subtitle": "Aktualizujte ceny, zásoby a minimá zo súboru Excel alebo CSV — alebo nechajte FIRINGI váš súbor pravidelne sťahovať.",
+      "drop": "Sem pretiahnite súbor Excel alebo CSV",
+      "choose": "Vybrať súbor",
+      "limits": "Excel (.xlsx) alebo CSV · do 10 MB · do 5000 riadkov",
+      "template": "Stiahnuť moju šablónu",
+      "templateHint": "Vaše súčasné ponuky pripravené na úpravu a opätovné nahratie.",
+      "reading": "Načítavam súbor…",
+      "steps": {
+        "upload": "Nahrať",
+        "match": "Priradiť stĺpce",
+        "check": "Skontrolovať",
+        "apply": "Použiť"
+      },
+      "rowsFound": "{count} riadkov v {file}",
+      "mapTitle": "Ktorý stĺpec je ktorý?",
+      "mapHint": "Odhadli sme to podľa názvov stĺpcov. Riadky sa párujú podľa vášho kódu produktu alebo čiarového kódu.",
+      "ignore": "Neimportovať",
+      "sample": "Prvé riadky súboru",
+      "saveAs": "Uložiť tieto stĺpce na budúce ako",
+      "saveAsPlaceholder": "napr. Denný cenník",
+      "preview": "Ukázať, čo sa zmení",
+      "back": "Späť",
+      "another": "Iný súbor"
+    },
+    "fields": {
+      "vendor_sku": "Váš kód produktu",
+      "gtin": "Čiarový kód (EAN)",
+      "price": "Cena bez DPH",
+      "stock": "Zásoba",
+      "warehouse": "Sklad",
+      "min_qty": "Minimálna objednávka",
+      "qty_step": "Predáva sa v násobkoch",
+      "lead_days": "Dodacia lehota, dni",
+      "active": "V predaji (áno / nie)",
+      "name": "Názov (na orientáciu)"
+    },
+    "run": {
+      "title": "Skontrolujte pred použitím",
+      "held": "Pozastavené na kontrolu: {reason}",
+      "summary": {
+        "total": "Riadky",
+        "newOffers": "Nové ponuky",
+        "updates": "Aktualizácie",
+        "unchanged": "Bez zmeny",
+        "notFound": "Nenájdené",
+        "errors": "Chyby"
+      },
+      "status": {
+        "NEW_OFFER": "Nová ponuka",
+        "UPDATE": "Aktualizácia",
+        "UNCHANGED": "Bez zmeny",
+        "NOT_FOUND": "Mimo katalógu",
+        "ERROR": "Chyba"
+      },
+      "filter": {
+        "changes": "Zmeny",
+        "problems": "Problémy",
+        "all": "Všetky riadky"
+      },
+      "col": {
+        "line": "Riadok",
+        "product": "Produkt",
+        "changes": "Čo sa mení",
+        "status": "Stav"
+      },
+      "bigWarn": "{count} cien sa mení o viac ako 50 %. Skontrolujte ich, prosím.",
+      "confirmBig": "Veľké zmeny cien som skontroloval(a)",
+      "apply": "Použiť zmeny ({count})",
+      "discard": "Zahodiť",
+      "applied": "Hotovo: použitých {applied} riadkov, chýb: {failed}.",
+      "discarded": "Zahodené — nič sa nezmenilo.",
+      "nothing": "Nie je čo meniť — váš katalóg je aktuálny.",
+      "notFoundHint": "Produkty, ktoré nie sú v katalógu FIRINGI, nemožno importovať. Požiadajte FIRINGI o ich doplnenie.",
+      "more": "Zobrazených {shown} z {total} riadkov."
+    },
+    "runStatus": {
+      "PREVIEW": "Čaká na vás",
+      "APPLIED": "Použité",
+      "FAILED": "Zlyhalo",
+      "CANCELLED": "Zahodené",
+      "HELD": "Pozastavené"
+    },
+    "source": {
+      "UPLOAD": "Súbor",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "História",
+      "empty": "Zatiaľ žiadne importy.",
+      "open": "Otvoriť"
+    },
+    "feeds": {
+      "title": "Uložené importy a feedy",
+      "intro": "Zverejnite súbor s cenami / zásobami na webovej adrese a FIRINGI ho bude pravidelne sťahovať a používať. Podozrivé behy sa pozastavia na kontrolu.",
+      "none": "Zatiaľ nič uložené. Nahrajte súbor a uložte jeho stĺpce.",
+      "url": "Adresa súboru (https://…)",
+      "every": "Sťahovať každých",
+      "hours": "{n} h",
+      "save": "Uložiť",
+      "saved": "Uložené",
+      "runNow": "Spustiť teraz",
+      "delete": "Zmazať",
+      "deleteConfirm": "Zmazať tento uložený import?",
+      "lastRun": "Posledný beh {when}",
+      "never": "Zatiaľ nespustené",
+      "on": "Automaticky",
+      "manual": "Len nahrávanie",
+      "result": {
+        "APPLIED": "Použité",
+        "HELD": "Pozastavené na kontrolu",
+        "FAILED": "Súbor sa nedá načítať"
+      }
+    },
+    "keys": {
+      "title": "Kľúče API",
+      "intro": "Prepojte svoj ERP, e-shop alebo pokladnicu s FIRINGI. Kľúč koná za vás, len s oprávneniami, ktoré zaškrtnete.",
+      "name": "Názov",
+      "namePlaceholder": "napr. Náš ERP",
+      "perms": "Oprávnenia",
+      "create": "Vytvoriť kľúč",
+      "once": "Skopírujte kľúč hneď — znova sa nezobrazí.",
+      "none": "Zatiaľ žiadne kľúče.",
+      "revoke": "Zrušiť",
+      "revokeConfirm": "Zrušiť tento kľúč? Systémy, ktoré ho používajú, okamžite prestanú fungovať.",
+      "revoked": "Zrušený",
+      "lastUsed": "Naposledy použitý {when}",
+      "neverUsed": "Nikdy nepoužitý",
+      "usage": "{calls} volaní · {errors} chýb za 7 dní",
+      "actsAs": "Koná ako {name}",
+      "recent": "Posledné volania"
+    },
+    "scope": {
+      "catalogue_read": "Vidieť katalóg a moje ceny",
+      "orders_read": "Vidieť objednávky",
+      "orders_write": "Zadávať, potvrdzovať a aktualizovať objednávky",
+      "offers_write": "Aktualizovať moje ceny, zásoby a minimá",
+      "invoices_read": "Vidieť faktúry a vyúčtovania"
+    },
+    "hooks": {
+      "title": "Webhooky",
+      "intro": "FIRINGI zavolá váš systém v momente, keď sa niečo stane. Každé volanie je podpísané, aby ste mohli overiť, že je od nás.",
+      "url": "Vaša adresa (https://…)",
+      "events": "Upozorniť ma, keď",
+      "add": "Pridať webhook",
+      "secretOnce": "Podpisový kľúč — skopírujte ho hneď, znova sa nezobrazí:",
+      "test": "Poslať test",
+      "testOk": "Váš systém odpovedal {status} — všetko v poriadku.",
+      "testFail": "Váš systém to neprijal ({status}).",
+      "pause": "Pozastaviť",
+      "resume": "Zapnúť",
+      "delete": "Zmazať",
+      "deleteConfirm": "Zmazať tento webhook?",
+      "off": "Vypnuté: {reason}",
+      "paused": "Pozastavené",
+      "active": "Aktívny",
+      "none": "Zatiaľ žiadne webhooky.",
+      "recent": "Posledné doručenia"
+    },
+    "event": {
+      "order_created": "Nová objednávka na potvrdenie",
+      "order_placed": "Objednávka zadaná",
+      "order_status_changed": "Zmenil sa stav objednávky",
+      "invoice_issued": "Faktúra vystavená",
+      "payment_received": "Platba prijatá",
+      "payout_sent": "Výplata odoslaná",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Doručené",
+      "PENDING": "Opakuje sa",
+      "FAILED": "Zlyhalo"
+    },
+    "docs": {
+      "title": "Dokumentácia API",
+      "intro": "Všetko, čo váš vývojár potrebuje: adresy, oprávnenia a príklady. Odpovede sú v JSON; sumy sú bez DPH, ak nie sú označené ako brutto.",
+      "open": "Otvoriť dokumentáciu API",
+      "base": "Základná adresa",
+      "auth": "Posielajte kľúč s každým volaním",
+      "limit": "Až {n} volaní za minútu na kľúč.",
+      "openapi": "Stiahnuť súbor OpenAPI",
+      "who": {
+        "Buyers": "Kupujúci",
+        "Suppliers": "Dodávatelia",
+        "Everyone": "Všetci"
+      },
+      "needs": "Vyžaduje: {scope}",
+      "example": "Ukážkové telo",
+      "signature": "Overenie podpisu webhooku"
+    },
+    "exports": {
+      "title": "Exporty",
+      "intro": "Stiahnite si doklady pre účtovníka alebo vlastný systém — Excel alebo CSV.",
+      "from": "Od",
+      "to": "Do",
+      "what": "Čo",
+      "file": "Súbor",
+      "download": "Stiahnuť",
+      "thisMonth": "Tento mesiac",
+      "lastMonth": "Minulý mesiac",
+      "thisYear": "Tento rok"
+    },
+    "kind": {
+      "buyer_invoices": "Faktúry a dobropisy od FIRINGI",
+      "buyer_payments": "Moje platby",
+      "supplier_statements": "Vyúčtovania",
+      "supplier_invoices": "Faktúry, ktoré som poslal(a) FIRINGI",
+      "supplier_payouts": "Prijaté výplaty"
+    },
+    "copy": "Kopírovať",
+    "copied": "Skopírované"
   }
 }

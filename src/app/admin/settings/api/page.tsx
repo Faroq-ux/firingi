@@ -7,7 +7,7 @@ import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table
 import { CreateApiKeyForm, RevokeApiKeyButton } from "@/components/admin/security-admin-forms";
 import { formatDate } from "@/lib/utils";
 
-export const metadata = { title: "API & Integrations" };
+export const metadata = { title: "API Keys" };
 
 export default async function Page() {
   const ctx = await pagePortal("admin");
@@ -16,7 +16,7 @@ export default async function Page() {
   const [keys, targets] = await Promise.all([listApiKeys(ctx), canEdit ? apiKeyTargets(ctx) : Promise.resolve([])]);
   return (
     <>
-      <PageHeader title="API & Integrations" description="Keys for suppliers' and buyers' systems (ERP, POS, e-commerce). A key acts as one user of the company, limited to its scopes and that user's permissions." />
+      <PageHeader title="API Keys" description="Keys for suppliers' and buyers' systems (ERP, POS, e-commerce) for API v2. Companies usually create their own (Company › Integrations); here FIRINGI can issue one for a company user. A key acts as that user, limited to its scopes and the user's permissions. Overview: Settings › Integrations." />
       <div className="grid gap-4 lg:grid-cols-2">
         {canEdit && (
           <Card><CardHeader><CardTitle>New key</CardTitle></CardHeader>

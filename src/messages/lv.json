@@ -773,7 +773,10 @@
     "AI Assistant": "MI asistents",
     "Buy Again": "Pirkt vēlreiz",
     "Demand & Stock": "Pieprasījums un krājumi",
-    "Direct Debit": "Tiešais debets"
+    "Direct Debit": "Tiešais debets",
+    "Import & Sync": "Imports un sinhronizācija",
+    "Integrations": "Integrācijas",
+    "Exports": "Eksporti"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Maksājumam vajadzīga uzmanība: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Plūsma aizturēta pārbaudei: {name}",
+      "body": "Mēs nepiemērojām šodienas failu \"{name}\", jo {reason}. Pārskatiet izmaiņas un piemērojiet tās vai atmetiet."
+    },
+    "integration_feed_failed": {
+      "title": "Plūsma netika nolasīta: {name}",
+      "body": "Mēs nevarējām nolasīt failu \"{name}\": {reason}. Jūsu cenas un krājumi netika mainīti. Mēģināsim vēlreiz nākamajā palaišanā."
+    },
+    "integration_webhook_disabled": {
+      "title": "Tīmekļa āķis izslēgts",
+      "body": "Mēs pārtraucām izsaukt {url}, jo tas daudzas reizes pēc kārtas neizdevās ({reason}). Salabojiet savu sistēmu un ieslēdziet to atkal sadaļā Integrācijas."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Jūsu rēķini tiek iekasēti automātiski ar tiešo debetu (konts beidzas ar {last4}).",
       "legal": "Iestatot tiešo debetu, jūs pilnvarojat FIRINGI un tās maksājumu pakalpojumu sniedzēju sūtīt jūsu bankai rīkojumus debetēt jūsu kontu, un savu banku to debetēt. Atmaksu no bankas varat pieprasīt 8 nedēļu laikā pēc debetēšanas."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrācijas",
+      "subtitle": "Savienojiet savas sistēmas ar FIRINGI: faili, automātiskas plūsmas, API un tūlītēji paziņojumi.",
+      "live": "Aktīvie savienojumi"
+    },
+    "stat": {
+      "keys": "API atslēgas",
+      "webhooks": "Tīmekļa āķi",
+      "feeds": "Aktīvās plūsmas",
+      "calls": "API izsaukumi · 7 dienas"
+    },
+    "import": {
+      "title": "Imports un sinhronizācija",
+      "subtitle": "Atjauniniet cenas, krājumus un minimumus no Excel vai CSV faila — vai ļaujiet FIRINGI regulāri ielādēt jūsu failu.",
+      "drop": "Ievelciet šeit savu Excel vai CSV failu",
+      "choose": "Izvēlēties failu",
+      "limits": "Excel (.xlsx) vai CSV · līdz 10 MB · līdz 5000 rindām",
+      "template": "Lejupielādēt manu veidni",
+      "templateHint": "Jūsu pašreizējie piedāvājumi, gatavi labošanai un atkārtotai augšupielādei.",
+      "reading": "Lasa failu…",
+      "steps": {
+        "upload": "Augšupielāde",
+        "match": "Kolonnu sasaiste",
+        "check": "Pārbaude",
+        "apply": "Piemērošana"
+      },
+      "rowsFound": "{count} rindas failā {file}",
+      "mapTitle": "Kura kolonna ir kura?",
+      "mapHint": "Uzminējām pēc kolonnu nosaukumiem. Rindas tiek sasaistītas pēc jūsu produkta koda vai svītrkoda.",
+      "ignore": "Neimportēt",
+      "sample": "Faila pirmās rindas",
+      "saveAs": "Saglabāt šīs kolonnas nākamajai reizei kā",
+      "saveAsPlaceholder": "piem. Dienas cenrādis",
+      "preview": "Parādīt, kas mainīsies",
+      "back": "Atpakaļ",
+      "another": "Cits fails"
+    },
+    "fields": {
+      "vendor_sku": "Jūsu produkta kods",
+      "gtin": "Svītrkods (EAN)",
+      "price": "Cena bez PVN",
+      "stock": "Krājums",
+      "warehouse": "Noliktava",
+      "min_qty": "Minimālais pasūtījums",
+      "qty_step": "Pārdod daudzkārtņos",
+      "lead_days": "Piegādes laiks, dienas",
+      "active": "Pārdošanā (jā / nē)",
+      "name": "Nosaukums (atsaucei)"
+    },
+    "run": {
+      "title": "Pārbaudiet pirms piemērošanas",
+      "held": "Aizturēts pārbaudei: {reason}",
+      "summary": {
+        "total": "Rindas",
+        "newOffers": "Jauni piedāvājumi",
+        "updates": "Atjauninājumi",
+        "unchanged": "Bez izmaiņām",
+        "notFound": "Nav atrasti",
+        "errors": "Kļūdas"
+      },
+      "status": {
+        "NEW_OFFER": "Jauns piedāvājums",
+        "UPDATE": "Atjauninājums",
+        "UNCHANGED": "Bez izmaiņām",
+        "NOT_FOUND": "Nav katalogā",
+        "ERROR": "Kļūda"
+      },
+      "filter": {
+        "changes": "Izmaiņas",
+        "problems": "Problēmas",
+        "all": "Visas rindas"
+      },
+      "col": {
+        "line": "Rinda",
+        "product": "Produkts",
+        "changes": "Kas mainās",
+        "status": "Statuss"
+      },
+      "bigWarn": "{count} cenas mainās vairāk nekā par 50 %. Lūdzu, pārbaudiet tās.",
+      "confirmBig": "Esmu pārbaudījis lielās cenu izmaiņas",
+      "apply": "Piemērot izmaiņas ({count})",
+      "discard": "Atmest",
+      "applied": "Gatavs: piemērotas {applied} rindas, neizdevās {failed}.",
+      "discarded": "Atmests — nekas netika mainīts.",
+      "nothing": "Nav ko mainīt — jūsu katalogs jau ir aktuāls.",
+      "notFoundHint": "Produktus, kas nav FIRINGI katalogā, nevar importēt. Lūdziet FIRINGI tos pievienot.",
+      "more": "Rāda {shown} no {total} rindām."
+    },
+    "runStatus": {
+      "PREVIEW": "Gaida jūs",
+      "APPLIED": "Piemērots",
+      "FAILED": "Neizdevās",
+      "CANCELLED": "Atmests",
+      "HELD": "Aizturēts"
+    },
+    "source": {
+      "UPLOAD": "Fails",
+      "URL": "Plūsma",
+      "API": "API"
+    },
+    "history": {
+      "title": "Vēsture",
+      "empty": "Vēl nav importu.",
+      "open": "Atvērt"
+    },
+    "feeds": {
+      "title": "Saglabātie importi un plūsmas",
+      "intro": "Publicējiet savu cenu / krājumu failu tīmekļa adresē, un FIRINGI to regulāri ielādēs un piemēros. Aizdomīgas palaišanas tiek aizturētas jūsu pārbaudei.",
+      "none": "Vēl nekas nav saglabāts. Augšupielādējiet failu un saglabājiet tā kolonnas.",
+      "url": "Faila adrese (https://…)",
+      "every": "Ielādēt ik pēc",
+      "hours": "{n} h",
+      "save": "Saglabāt",
+      "saved": "Saglabāts",
+      "runNow": "Palaist tagad",
+      "delete": "Dzēst",
+      "deleteConfirm": "Vai dzēst šo saglabāto importu?",
+      "lastRun": "Pēdējā palaišana {when}",
+      "never": "Vēl nav palaists",
+      "on": "Automātiski",
+      "manual": "Tikai augšupielāde",
+      "result": {
+        "APPLIED": "Piemērots",
+        "HELD": "Aizturēts pārbaudei",
+        "FAILED": "Failu nevarēja nolasīt"
+      }
+    },
+    "keys": {
+      "title": "API atslēgas",
+      "intro": "Ļaujiet savam ERP, e-veikalam vai kasei strādāt ar FIRINGI. Atslēga darbojas jūsu vārdā tikai ar atzīmētajām atļaujām.",
+      "name": "Nosaukums",
+      "namePlaceholder": "piem. Mūsu ERP",
+      "perms": "Atļaujas",
+      "create": "Izveidot atslēgu",
+      "once": "Nokopējiet atslēgu tagad — tā vairs netiks parādīta.",
+      "none": "Vēl nav atslēgu.",
+      "revoke": "Atsaukt",
+      "revokeConfirm": "Vai atsaukt šo atslēgu? Sistēmas, kas to izmanto, uzreiz pārstās darboties.",
+      "revoked": "Atsaukta",
+      "lastUsed": "Pēdējoreiz lietota {when}",
+      "neverUsed": "Nekad nav lietota",
+      "usage": "{calls} izsaukumi · {errors} kļūdas 7 dienās",
+      "actsAs": "Darbojas kā {name}",
+      "recent": "Pēdējie izsaukumi"
+    },
+    "scope": {
+      "catalogue_read": "Redzēt katalogu un manas cenas",
+      "orders_read": "Redzēt pasūtījumus",
+      "orders_write": "Veikt, apstiprināt un atjaunināt pasūtījumus",
+      "offers_write": "Atjaunināt manas cenas, krājumus un minimumus",
+      "invoices_read": "Redzēt rēķinus un pārskatus"
+    },
+    "hooks": {
+      "title": "Tīmekļa āķi",
+      "intro": "FIRINGI izsauc jūsu sistēmu brīdī, kad kaut kas notiek. Katrs izsaukums ir parakstīts, lai varētu pārbaudīt, ka tas nāk no mums.",
+      "url": "Jūsu adrese (https://…)",
+      "events": "Paziņot man, kad",
+      "add": "Pievienot tīmekļa āķi",
+      "secretOnce": "Paraksta noslēpums — nokopējiet to tagad, tas vairs netiks parādīts:",
+      "test": "Sūtīt testu",
+      "testOk": "Jūsu sistēma atbildēja {status} — viss kārtībā.",
+      "testFail": "Jūsu sistēma to nepieņēma ({status}).",
+      "pause": "Pauzēt",
+      "resume": "Ieslēgt",
+      "delete": "Dzēst",
+      "deleteConfirm": "Vai dzēst šo tīmekļa āķi?",
+      "off": "Izslēgts: {reason}",
+      "paused": "Pauzēts",
+      "active": "Aktīvs",
+      "none": "Vēl nav tīmekļa āķu.",
+      "recent": "Pēdējās piegādes"
+    },
+    "event": {
+      "order_created": "Jauns pasūtījums apstiprināšanai",
+      "order_placed": "Pasūtījums veikts",
+      "order_status_changed": "Mainījies pasūtījuma statuss",
+      "invoice_issued": "Izrakstīts rēķins",
+      "payment_received": "Saņemts maksājums",
+      "payout_sent": "Nosūtīta izmaksa",
+      "ping": "Tests"
+    },
+    "delivery": {
+      "SENT": "Piegādāts",
+      "PENDING": "Atkārto",
+      "FAILED": "Neizdevās"
+    },
+    "docs": {
+      "title": "API dokumentācija",
+      "intro": "Viss, kas vajadzīgs jūsu izstrādātājam: adreses, atļaujas un piemēri. Atbildes ir JSON; summas ir bez PVN, ja vien nav norādītas kā bruto.",
+      "open": "Atvērt API dokumentāciju",
+      "base": "Bāzes adrese",
+      "auth": "Sūtiet savu atslēgu ar katru izsaukumu",
+      "limit": "Līdz {n} izsaukumiem minūtē vienai atslēgai.",
+      "openapi": "Lejupielādēt OpenAPI failu",
+      "who": {
+        "Buyers": "Pircēji",
+        "Suppliers": "Piegādātāji",
+        "Everyone": "Visi"
+      },
+      "needs": "Nepieciešams: {scope}",
+      "example": "Ķermeņa piemērs",
+      "signature": "Tīmekļa āķa paraksta pārbaude"
+    },
+    "exports": {
+      "title": "Eksporti",
+      "intro": "Lejupielādējiet savus dokumentus grāmatvedim vai savai sistēmai — Excel vai CSV.",
+      "from": "No",
+      "to": "Līdz",
+      "what": "Ko",
+      "file": "Fails",
+      "download": "Lejupielādēt",
+      "thisMonth": "Šis mēnesis",
+      "lastMonth": "Iepriekšējais mēnesis",
+      "thisYear": "Šis gads"
+    },
+    "kind": {
+      "buyer_invoices": "FIRINGI rēķini un kredītrēķini",
+      "buyer_payments": "Mani maksājumi",
+      "supplier_statements": "Norēķinu pārskati",
+      "supplier_invoices": "Rēķini, ko nosūtīju FIRINGI",
+      "supplier_payouts": "Saņemtās izmaksas"
+    },
+    "copy": "Kopēt",
+    "copied": "Nokopēts"
   }
 }

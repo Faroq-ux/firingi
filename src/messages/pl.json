@@ -773,7 +773,10 @@
     "AI Assistant": "Asystent AI",
     "Buy Again": "Kup ponownie",
     "Demand & Stock": "Popyt i magazyn",
-    "Direct Debit": "Polecenie zapłaty"
+    "Direct Debit": "Polecenie zapłaty",
+    "Import & Sync": "Import i synchronizacja",
+    "Integrations": "Integracje",
+    "Exports": "Eksporty"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Płatność wymaga uwagi: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed wstrzymany do sprawdzenia: {name}",
+      "body": "Nie zastosowaliśmy dzisiejszego pliku dla „{name}”, ponieważ {reason}. Sprawdź zmiany i zastosuj je albo odrzuć."
+    },
+    "integration_feed_failed": {
+      "title": "Nie odczytano feedu: {name}",
+      "body": "Nie udało się odczytać pliku dla „{name}”: {reason}. Twoje ceny i stany nie zostały zmienione. Spróbujemy ponownie przy następnym uruchomieniu."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook wyłączony",
+      "body": "Przestaliśmy wywoływać {url} po wielu kolejnych niepowodzeniach ({reason}). Napraw swój system i włącz go ponownie w Integracjach."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Twoje faktury są pobierane automatycznie poleceniem zapłaty (konto kończące się na {last4}).",
       "legal": "Ustawiając polecenie zapłaty, upoważniasz FIRINGI i jego operatora płatności do wysyłania Twojemu bankowi poleceń obciążenia Twojego konta, a Twój bank do jego obciążenia. Możesz poprosić bank o zwrot w ciągu 8 tygodni od obciążenia."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integracje",
+      "subtitle": "Połącz własne systemy z FIRINGI: pliki, automatyczne feedy, API i natychmiastowe powiadomienia.",
+      "live": "Aktywne połączenia"
+    },
+    "stat": {
+      "keys": "Klucze API",
+      "webhooks": "Webhooki",
+      "feeds": "Aktywne feedy",
+      "calls": "Wywołania API · 7 dni"
+    },
+    "import": {
+      "title": "Import i synchronizacja",
+      "subtitle": "Aktualizuj ceny, stany i minima z pliku Excel lub CSV — albo pozwól FIRINGI regularnie pobierać Twój plik.",
+      "drop": "Upuść tutaj plik Excel lub CSV",
+      "choose": "Wybierz plik",
+      "limits": "Excel (.xlsx) lub CSV · do 10 MB · do 5000 wierszy",
+      "template": "Pobierz mój szablon",
+      "templateHint": "Twoje obecne oferty, gotowe do edycji i ponownego wgrania.",
+      "reading": "Odczytywanie pliku…",
+      "steps": {
+        "upload": "Wgraj",
+        "match": "Dopasuj kolumny",
+        "check": "Sprawdź",
+        "apply": "Zastosuj"
+      },
+      "rowsFound": "{count} wierszy w {file}",
+      "mapTitle": "Która kolumna jest którą?",
+      "mapHint": "Zgadliśmy na podstawie nazw kolumn. Wiersze są dopasowywane po Twoim kodzie produktu lub kodzie kreskowym.",
+      "ignore": "Nie importuj",
+      "sample": "Pierwsze wiersze pliku",
+      "saveAs": "Zapisz te kolumny na następny raz jako",
+      "saveAsPlaceholder": "np. Dzienny cennik",
+      "preview": "Pokaż, co się zmieni",
+      "back": "Wstecz",
+      "another": "Inny plik"
+    },
+    "fields": {
+      "vendor_sku": "Twój kod produktu",
+      "gtin": "Kod kreskowy (EAN)",
+      "price": "Cena netto",
+      "stock": "Stan",
+      "warehouse": "Magazyn",
+      "min_qty": "Minimalne zamówienie",
+      "qty_step": "Sprzedawane w wielokrotnościach",
+      "lead_days": "Czas dostawy, dni",
+      "active": "W sprzedaży (tak / nie)",
+      "name": "Nazwa (pomocniczo)"
+    },
+    "run": {
+      "title": "Sprawdź przed zastosowaniem",
+      "held": "Wstrzymano do sprawdzenia: {reason}",
+      "summary": {
+        "total": "Wiersze",
+        "newOffers": "Nowe oferty",
+        "updates": "Aktualizacje",
+        "unchanged": "Bez zmian",
+        "notFound": "Nie znaleziono",
+        "errors": "Błędy"
+      },
+      "status": {
+        "NEW_OFFER": "Nowa oferta",
+        "UPDATE": "Aktualizacja",
+        "UNCHANGED": "Bez zmian",
+        "NOT_FOUND": "Poza katalogiem",
+        "ERROR": "Błąd"
+      },
+      "filter": {
+        "changes": "Zmiany",
+        "problems": "Problemy",
+        "all": "Wszystkie wiersze"
+      },
+      "col": {
+        "line": "Wiersz",
+        "product": "Produkt",
+        "changes": "Co się zmienia",
+        "status": "Status"
+      },
+      "bigWarn": "{count} cen zmienia się o ponad 50 %. Sprawdź je, proszę.",
+      "confirmBig": "Sprawdziłem duże zmiany cen",
+      "apply": "Zastosuj zmiany ({count})",
+      "discard": "Odrzuć",
+      "applied": "Gotowe: zastosowano {applied} wierszy, błędów: {failed}.",
+      "discarded": "Odrzucono — nic nie zostało zmienione.",
+      "nothing": "Nic do zmiany — Twój katalog jest już aktualny.",
+      "notFoundHint": "Produktów, których nie ma w katalogu FIRINGI, nie można zaimportować. Poproś FIRINGI o ich dodanie.",
+      "more": "Pokazano {shown} z {total} wierszy."
+    },
+    "runStatus": {
+      "PREVIEW": "Czeka na Ciebie",
+      "APPLIED": "Zastosowano",
+      "FAILED": "Niepowodzenie",
+      "CANCELLED": "Odrzucono",
+      "HELD": "Wstrzymano"
+    },
+    "source": {
+      "UPLOAD": "Plik",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Historia",
+      "empty": "Brak importów.",
+      "open": "Otwórz"
+    },
+    "feeds": {
+      "title": "Zapisane importy i feedy",
+      "intro": "Opublikuj plik cen / stanów pod adresem www, a FIRINGI będzie go regularnie pobierać i stosować. Podejrzane uruchomienia są wstrzymywane do Twojej kontroli.",
+      "none": "Nic jeszcze nie zapisano. Wgraj plik i zapisz jego kolumny, aby utworzyć import.",
+      "url": "Adres pliku (https://…)",
+      "every": "Pobieraj co",
+      "hours": "{n} h",
+      "save": "Zapisz",
+      "saved": "Zapisano",
+      "runNow": "Uruchom teraz",
+      "delete": "Usuń",
+      "deleteConfirm": "Usunąć ten zapisany import?",
+      "lastRun": "Ostatnie uruchomienie {when}",
+      "never": "Jeszcze nie uruchomiono",
+      "on": "Automatycznie",
+      "manual": "Tylko wgrywanie",
+      "result": {
+        "APPLIED": "Zastosowano",
+        "HELD": "Wstrzymano do sprawdzenia",
+        "FAILED": "Nie udało się odczytać pliku"
+      }
+    },
+    "keys": {
+      "title": "Klucze API",
+      "intro": "Połącz swój ERP, sklep internetowy lub kasę z FIRINGI. Klucz działa w Twoim imieniu, tylko z zaznaczonymi uprawnieniami.",
+      "name": "Nazwa",
+      "namePlaceholder": "np. Nasz ERP",
+      "perms": "Uprawnienia",
+      "create": "Utwórz klucz",
+      "once": "Skopiuj ten klucz teraz — nie zostanie pokazany ponownie.",
+      "none": "Brak kluczy.",
+      "revoke": "Unieważnij",
+      "revokeConfirm": "Unieważnić ten klucz? Systemy, które go używają, od razu przestaną działać.",
+      "revoked": "Unieważniony",
+      "lastUsed": "Ostatnio użyty {when}",
+      "neverUsed": "Nigdy nieużywany",
+      "usage": "{calls} wywołań · {errors} błędów w 7 dni",
+      "actsAs": "Działa jako {name}",
+      "recent": "Ostatnie wywołania"
+    },
+    "scope": {
+      "catalogue_read": "Widzieć katalog i moje ceny",
+      "orders_read": "Widzieć zamówienia",
+      "orders_write": "Składać, potwierdzać i aktualizować zamówienia",
+      "offers_write": "Aktualizować moje ceny, stany i minima",
+      "invoices_read": "Widzieć faktury i zestawienia"
+    },
+    "hooks": {
+      "title": "Webhooki",
+      "intro": "FIRINGI wywołuje Twój system w chwili, gdy coś się dzieje. Każde wywołanie jest podpisane, abyś mógł sprawdzić, że pochodzi od nas.",
+      "url": "Twój adres (https://…)",
+      "events": "Powiadom mnie, gdy",
+      "add": "Dodaj webhook",
+      "secretOnce": "Sekret podpisu — skopiuj go teraz, nie zostanie pokazany ponownie:",
+      "test": "Wyślij test",
+      "testOk": "Twój system odpowiedział {status} — wszystko w porządku.",
+      "testFail": "Twój system tego nie przyjął ({status}).",
+      "pause": "Wstrzymaj",
+      "resume": "Włącz",
+      "delete": "Usuń",
+      "deleteConfirm": "Usunąć ten webhook?",
+      "off": "Wyłączony: {reason}",
+      "paused": "Wstrzymany",
+      "active": "Aktywny",
+      "none": "Brak webhooków.",
+      "recent": "Ostatnie doręczenia"
+    },
+    "event": {
+      "order_created": "Nowe zamówienie do potwierdzenia",
+      "order_placed": "Złożono zamówienie",
+      "order_status_changed": "Zmienił się status zamówienia",
+      "invoice_issued": "Wystawiono fakturę",
+      "payment_received": "Otrzymano płatność",
+      "payout_sent": "Wysłano wypłatę",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Doręczono",
+      "PENDING": "Ponawianie",
+      "FAILED": "Niepowodzenie"
+    },
+    "docs": {
+      "title": "Dokumentacja API",
+      "intro": "Wszystko, czego potrzebuje Twój programista: adresy, uprawnienia i przykłady. Odpowiedzi w JSON; kwoty netto, chyba że oznaczono jako brutto.",
+      "open": "Otwórz dokumentację API",
+      "base": "Adres bazowy",
+      "auth": "Wysyłaj klucz przy każdym wywołaniu",
+      "limit": "Do {n} wywołań na minutę na klucz.",
+      "openapi": "Pobierz plik OpenAPI",
+      "who": {
+        "Buyers": "Kupujący",
+        "Suppliers": "Dostawcy",
+        "Everyone": "Wszyscy"
+      },
+      "needs": "Wymaga: {scope}",
+      "example": "Przykładowa treść",
+      "signature": "Sprawdzanie podpisu webhooka"
+    },
+    "exports": {
+      "title": "Eksporty",
+      "intro": "Pobierz dokumenty dla księgowego lub własnego systemu — Excel lub CSV.",
+      "from": "Od",
+      "to": "Do",
+      "what": "Co",
+      "file": "Plik",
+      "download": "Pobierz",
+      "thisMonth": "Ten miesiąc",
+      "lastMonth": "Poprzedni miesiąc",
+      "thisYear": "Ten rok"
+    },
+    "kind": {
+      "buyer_invoices": "Faktury i korekty od FIRINGI",
+      "buyer_payments": "Moje płatności",
+      "supplier_statements": "Zestawienia rozliczeniowe",
+      "supplier_invoices": "Faktury wysłane przeze mnie do FIRINGI",
+      "supplier_payouts": "Otrzymane wypłaty"
+    },
+    "copy": "Kopiuj",
+    "copied": "Skopiowano"
   }
 }

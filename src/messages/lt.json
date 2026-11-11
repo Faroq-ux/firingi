@@ -773,7 +773,10 @@
     "AI Assistant": "DI asistentas",
     "Buy Again": "Pirkti dar kartą",
     "Demand & Stock": "Paklausa ir atsargos",
-    "Direct Debit": "Tiesioginis debetas"
+    "Direct Debit": "Tiesioginis debetas",
+    "Import & Sync": "Importas ir sinchronizavimas",
+    "Integrations": "Integracijos",
+    "Exports": "Eksportai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Mokėjimui reikia dėmesio: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Srautas sulaikytas patikrai: {name}",
+      "body": "Šiandienos failo „{name}“ nepritaikėme, nes {reason}. Peržiūrėkite pakeitimus ir pritaikykite juos arba atmeskite."
+    },
+    "integration_feed_failed": {
+      "title": "Srautas nenuskaitytas: {name}",
+      "body": "Nepavyko nuskaityti failo „{name}“: {reason}. Jūsų kainos ir atsargos nepakeistos. Bandysime dar kartą kito paleidimo metu."
+    },
+    "integration_webhook_disabled": {
+      "title": "Žiniatinklio kablys išjungtas",
+      "body": "Nustojome kviesti {url}, nes daug kartų iš eilės nepavyko ({reason}). Sutvarkykite savo sistemą ir vėl įjunkite ją skiltyje Integracijos."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Jūsų sąskaitos apmokamos automatiškai tiesioginiu debetu (sąskaita baigiasi {last4}).",
       "legal": "Nustatydami tiesioginį debetą įgaliojate FIRINGI ir jos mokėjimų paslaugų teikėją siųsti jūsų bankui nurodymus nurašyti lėšas iš jūsų sąskaitos, o savo banką — jas nurašyti. Grąžinimo galite prašyti banko per 8 savaites nuo nurašymo."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integracijos",
+      "subtitle": "Sujunkite savo sistemas su FIRINGI: failai, automatiniai srautai, API ir greiti pranešimai.",
+      "live": "Aktyvūs ryšiai"
+    },
+    "stat": {
+      "keys": "API raktai",
+      "webhooks": "Žiniatinklio kabliai",
+      "feeds": "Aktyvūs srautai",
+      "calls": "API užklausos · 7 dienos"
+    },
+    "import": {
+      "title": "Importas ir sinchronizavimas",
+      "subtitle": "Atnaujinkite kainas, atsargas ir minimumus iš Excel ar CSV failo — arba leiskite FIRINGI reguliariai paimti jūsų failą.",
+      "drop": "Numeskite čia savo Excel ar CSV failą",
+      "choose": "Pasirinkti failą",
+      "limits": "Excel (.xlsx) arba CSV · iki 10 MB · iki 5000 eilučių",
+      "template": "Atsisiųsti mano šabloną",
+      "templateHint": "Jūsų dabartiniai pasiūlymai, paruošti redaguoti ir įkelti iš naujo.",
+      "reading": "Skaitomas failas…",
+      "steps": {
+        "upload": "Įkėlimas",
+        "match": "Stulpelių susiejimas",
+        "check": "Patikra",
+        "apply": "Pritaikymas"
+      },
+      "rowsFound": "{count} eilutės faile {file}",
+      "mapTitle": "Kuris stulpelis yra kuris?",
+      "mapHint": "Atspėjome pagal stulpelių pavadinimus. Eilutės susiejamos pagal jūsų prekės kodą arba brūkšninį kodą.",
+      "ignore": "Neimportuoti",
+      "sample": "Pirmosios failo eilutės",
+      "saveAs": "Išsaugoti šiuos stulpelius kitam kartui kaip",
+      "saveAsPlaceholder": "pvz. Dienos kainoraštis",
+      "preview": "Parodyti, kas pasikeis",
+      "back": "Atgal",
+      "another": "Kitas failas"
+    },
+    "fields": {
+      "vendor_sku": "Jūsų prekės kodas",
+      "gtin": "Brūkšninis kodas (EAN)",
+      "price": "Kaina be PVM",
+      "stock": "Atsargos",
+      "warehouse": "Sandėlis",
+      "min_qty": "Minimalus užsakymas",
+      "qty_step": "Parduodama kartotiniais",
+      "lead_days": "Pristatymo laikas, dienos",
+      "active": "Parduodama (taip / ne)",
+      "name": "Pavadinimas (orientacijai)"
+    },
+    "run": {
+      "title": "Patikrinkite prieš pritaikydami",
+      "held": "Sulaikyta patikrai: {reason}",
+      "summary": {
+        "total": "Eilutės",
+        "newOffers": "Nauji pasiūlymai",
+        "updates": "Atnaujinimai",
+        "unchanged": "Nepakitę",
+        "notFound": "Nerasta",
+        "errors": "Klaidos"
+      },
+      "status": {
+        "NEW_OFFER": "Naujas pasiūlymas",
+        "UPDATE": "Atnaujinimas",
+        "UNCHANGED": "Nepakitęs",
+        "NOT_FOUND": "Nėra kataloge",
+        "ERROR": "Klaida"
+      },
+      "filter": {
+        "changes": "Pakeitimai",
+        "problems": "Problemos",
+        "all": "Visos eilutės"
+      },
+      "col": {
+        "line": "Eilutė",
+        "product": "Prekė",
+        "changes": "Kas keičiasi",
+        "status": "Būsena"
+      },
+      "bigWarn": "{count} kainų keičiasi daugiau nei 50 %. Patikrinkite jas.",
+      "confirmBig": "Patikrinau didelius kainų pokyčius",
+      "apply": "Pritaikyti pakeitimus ({count})",
+      "discard": "Atmesti",
+      "applied": "Atlikta: pritaikyta eilučių {applied}, nepavyko {failed}.",
+      "discarded": "Atmesta — niekas nepakeista.",
+      "nothing": "Nėra ką keisti — jūsų katalogas jau atnaujintas.",
+      "notFoundHint": "Prekių, kurių nėra FIRINGI kataloge, importuoti negalima. Paprašykite FIRINGI jas pridėti.",
+      "more": "Rodoma {shown} iš {total} eilučių."
+    },
+    "runStatus": {
+      "PREVIEW": "Laukia jūsų",
+      "APPLIED": "Pritaikyta",
+      "FAILED": "Nepavyko",
+      "CANCELLED": "Atmesta",
+      "HELD": "Sulaikyta"
+    },
+    "source": {
+      "UPLOAD": "Failas",
+      "URL": "Srautas",
+      "API": "API"
+    },
+    "history": {
+      "title": "Istorija",
+      "empty": "Importų dar nėra.",
+      "open": "Atidaryti"
+    },
+    "feeds": {
+      "title": "Išsaugoti importai ir srautai",
+      "intro": "Paskelbkite kainų / atsargų failą interneto adresu ir FIRINGI reguliariai jį paims ir pritaikys. Įtartini paleidimai sulaikomi jūsų patikrai.",
+      "none": "Dar nieko neišsaugota. Įkelkite failą ir išsaugokite jo stulpelius.",
+      "url": "Failo adresas (https://…)",
+      "every": "Imti kas",
+      "hours": "{n} val.",
+      "save": "Išsaugoti",
+      "saved": "Išsaugota",
+      "runNow": "Paleisti dabar",
+      "delete": "Ištrinti",
+      "deleteConfirm": "Ištrinti šį išsaugotą importą?",
+      "lastRun": "Paskutinis paleidimas {when}",
+      "never": "Dar nepaleista",
+      "on": "Automatiškai",
+      "manual": "Tik įkėlimas",
+      "result": {
+        "APPLIED": "Pritaikyta",
+        "HELD": "Sulaikyta patikrai",
+        "FAILED": "Nepavyko nuskaityti failo"
+      }
+    },
+    "keys": {
+      "title": "API raktai",
+      "intro": "Leiskite savo ERP, el. parduotuvei ar kasai dirbti su FIRINGI. Raktas veikia jūsų vardu tik su pažymėtais leidimais.",
+      "name": "Pavadinimas",
+      "namePlaceholder": "pvz. Mūsų ERP",
+      "perms": "Leidimai",
+      "create": "Sukurti raktą",
+      "once": "Nukopijuokite raktą dabar — jis daugiau nebus rodomas.",
+      "none": "Raktų dar nėra.",
+      "revoke": "Atšaukti",
+      "revokeConfirm": "Atšaukti šį raktą? Jį naudojančios sistemos iškart nustos veikti.",
+      "revoked": "Atšauktas",
+      "lastUsed": "Paskutinį kartą naudotas {when}",
+      "neverUsed": "Niekada nenaudotas",
+      "usage": "{calls} užklausų · {errors} klaidų per 7 dienas",
+      "actsAs": "Veikia kaip {name}",
+      "recent": "Paskutinės užklausos"
+    },
+    "scope": {
+      "catalogue_read": "Matyti katalogą ir mano kainas",
+      "orders_read": "Matyti užsakymus",
+      "orders_write": "Pateikti, patvirtinti ir atnaujinti užsakymus",
+      "offers_write": "Atnaujinti mano kainas, atsargas ir minimumus",
+      "invoices_read": "Matyti sąskaitas ir išrašus"
+    },
+    "hooks": {
+      "title": "Žiniatinklio kabliai",
+      "intro": "FIRINGI iškviečia jūsų sistemą tą akimirką, kai kas nors įvyksta. Kiekvienas iškvietimas pasirašytas, kad galėtumėte patikrinti, jog jis iš mūsų.",
+      "url": "Jūsų adresas (https://…)",
+      "events": "Pranešti man, kai",
+      "add": "Pridėti žiniatinklio kablį",
+      "secretOnce": "Pasirašymo paslaptis — nukopijuokite ją dabar, ji daugiau nebus rodoma:",
+      "test": "Siųsti bandymą",
+      "testOk": "Jūsų sistema atsakė {status} — viskas gerai.",
+      "testFail": "Jūsų sistema to nepriėmė ({status}).",
+      "pause": "Pristabdyti",
+      "resume": "Įjungti",
+      "delete": "Ištrinti",
+      "deleteConfirm": "Ištrinti šį žiniatinklio kablį?",
+      "off": "Išjungta: {reason}",
+      "paused": "Pristabdyta",
+      "active": "Aktyvus",
+      "none": "Žiniatinklio kablių dar nėra.",
+      "recent": "Paskutiniai pristatymai"
+    },
+    "event": {
+      "order_created": "Naujas užsakymas patvirtinimui",
+      "order_placed": "Užsakymas pateiktas",
+      "order_status_changed": "Pasikeitė užsakymo būsena",
+      "invoice_issued": "Išrašyta sąskaita",
+      "payment_received": "Gautas mokėjimas",
+      "payout_sent": "Išsiųsta išmoka",
+      "ping": "Bandymas"
+    },
+    "delivery": {
+      "SENT": "Pristatyta",
+      "PENDING": "Bandoma iš naujo",
+      "FAILED": "Nepavyko"
+    },
+    "docs": {
+      "title": "API dokumentacija",
+      "intro": "Viskas, ko reikia jūsų programuotojui: adresai, leidimai ir pavyzdžiai. Atsakymai JSON formatu; sumos be PVM, nebent pažymėtos kaip bruto.",
+      "open": "Atidaryti API dokumentaciją",
+      "base": "Bazinis adresas",
+      "auth": "Siųskite raktą su kiekviena užklausa",
+      "limit": "Iki {n} užklausų per minutę vienam raktui.",
+      "openapi": "Atsisiųsti OpenAPI failą",
+      "who": {
+        "Buyers": "Pirkėjai",
+        "Suppliers": "Tiekėjai",
+        "Everyone": "Visi"
+      },
+      "needs": "Reikia: {scope}",
+      "example": "Turinio pavyzdys",
+      "signature": "Žiniatinklio kablio parašo tikrinimas"
+    },
+    "exports": {
+      "title": "Eksportai",
+      "intro": "Atsisiųskite savo dokumentus buhalteriui arba savo sistemai — Excel ar CSV.",
+      "from": "Nuo",
+      "to": "Iki",
+      "what": "Ką",
+      "file": "Failas",
+      "download": "Atsisiųsti",
+      "thisMonth": "Šis mėnuo",
+      "lastMonth": "Praėjęs mėnuo",
+      "thisYear": "Šie metai"
+    },
+    "kind": {
+      "buyer_invoices": "FIRINGI sąskaitos ir kreditinės sąskaitos",
+      "buyer_payments": "Mano mokėjimai",
+      "supplier_statements": "Atsiskaitymų išrašai",
+      "supplier_invoices": "Sąskaitos, kurias išsiunčiau FIRINGI",
+      "supplier_payouts": "Gautos išmokos"
+    },
+    "copy": "Kopijuoti",
+    "copied": "Nukopijuota"
   }
 }

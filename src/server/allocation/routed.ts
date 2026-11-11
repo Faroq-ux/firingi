@@ -179,6 +179,10 @@ export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: Cart
         await tx.order.update({ where: { id: o.orderId }, data: { status: "ON_HOLD" } });
         await tx.orderStatusHistory.create({ data: { orderId: o.orderId, fromStatus: "PENDING_CONFIRMATION", toStatus: "ON_HOLD", reason: `Held for a check by FIRINGI (risk ${risk.score})` } });
       }
+    for (const o of out) {
+      const now = await tx.order.findUniqueOrThrow({ where: { id: o.orderId }, select: { status: true } });
+      await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, o.orderId, { from: "NEW", to: now.status, placed: true });
+    }
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
     await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: out[0].orderId, after: { routed: true, orders: out.map((o) => ({ number: o.number, vendorId: o.vendorId, mode: o.mode })) } }, tx);

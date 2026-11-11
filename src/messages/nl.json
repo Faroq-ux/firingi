@@ -773,7 +773,10 @@
     "AI Assistant": "AI-assistent",
     "Buy Again": "Opnieuw kopen",
     "Demand & Stock": "Vraag & voorraad",
-    "Direct Debit": "Incasso"
+    "Direct Debit": "Incasso",
+    "Import & Sync": "Import & sync",
+    "Integrations": "Integraties",
+    "Exports": "Exports"
   },
   "delivery": {
     "title": "Levering",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Betaling vraagt aandacht: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed tegengehouden ter controle: {name}",
+      "body": "We hebben het bestand van vandaag voor \"{name}\" niet verwerkt omdat {reason}. Controleer de wijzigingen en pas ze toe, of verwerp ze."
+    },
+    "integration_feed_failed": {
+      "title": "Feed niet gelezen: {name}",
+      "body": "We konden het bestand voor \"{name}\" niet lezen: {reason}. Uw prijzen en voorraad zijn niet gewijzigd. We proberen het bij de volgende run opnieuw."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook uitgeschakeld",
+      "body": "We roepen {url} niet meer aan nadat het vele keren achter elkaar mislukte ({reason}). Herstel uw systeem en zet hem weer aan bij Integraties."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Uw facturen worden automatisch geïnd via incasso (rekening eindigend op {last4}).",
       "legal": "Door een incasso in te stellen machtigt u FIRINGI en zijn betaaldienstverlener om uw bank opdracht te geven uw rekening te debiteren, en uw bank om dat te doen. U kunt uw bank binnen 8 weken na een afschrijving om terugbetaling vragen."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integraties",
+      "subtitle": "Koppel uw eigen systemen aan FIRINGI: bestanden, automatische feeds, een API en directe meldingen.",
+      "live": "Actieve koppelingen"
+    },
+    "stat": {
+      "keys": "API-sleutels",
+      "webhooks": "Webhooks",
+      "feeds": "Actieve feeds",
+      "calls": "API-aanroepen · 7 dagen"
+    },
+    "import": {
+      "title": "Import & sync",
+      "subtitle": "Werk prijzen, voorraad en minimums bij vanuit een Excel- of CSV-bestand — of laat FIRINGI uw bestand op vaste tijden ophalen.",
+      "drop": "Sleep uw Excel- of CSV-bestand hierheen",
+      "choose": "Kies een bestand",
+      "limits": "Excel (.xlsx) of CSV · tot 10 MB · tot 5000 regels",
+      "template": "Download mijn sjabloon",
+      "templateHint": "Uw huidige aanbiedingen, klaar om te bewerken en opnieuw te uploaden.",
+      "reading": "Bestand wordt gelezen…",
+      "steps": {
+        "upload": "Uploaden",
+        "match": "Kolommen koppelen",
+        "check": "Controleren",
+        "apply": "Toepassen"
+      },
+      "rowsFound": "{count} regels in {file}",
+      "mapTitle": "Welke kolom is welke?",
+      "mapHint": "We hebben het afgeleid uit de kolomnamen. Regels worden gekoppeld via uw productcode of de barcode.",
+      "ignore": "Niet importeren",
+      "sample": "Eerste regels van uw bestand",
+      "saveAs": "Deze kolommen bewaren voor de volgende keer als",
+      "saveAsPlaceholder": "bijv. Dagelijkse prijslijst",
+      "preview": "Laat zien wat er verandert",
+      "back": "Terug",
+      "another": "Ander bestand"
+    },
+    "fields": {
+      "vendor_sku": "Uw productcode",
+      "gtin": "Barcode (EAN)",
+      "price": "Prijs, excl. btw",
+      "stock": "Voorraad",
+      "warehouse": "Magazijn",
+      "min_qty": "Minimale bestelling",
+      "qty_step": "Verkocht per veelvoud van",
+      "lead_days": "Levertijd, dagen",
+      "active": "Te koop (ja / nee)",
+      "name": "Naam (ter referentie)"
+    },
+    "run": {
+      "title": "Controleer voor het toepassen",
+      "held": "Tegengehouden ter controle: {reason}",
+      "summary": {
+        "total": "Regels",
+        "newOffers": "Nieuwe aanbiedingen",
+        "updates": "Wijzigingen",
+        "unchanged": "Ongewijzigd",
+        "notFound": "Niet gevonden",
+        "errors": "Fouten"
+      },
+      "status": {
+        "NEW_OFFER": "Nieuwe aanbieding",
+        "UPDATE": "Wijziging",
+        "UNCHANGED": "Ongewijzigd",
+        "NOT_FOUND": "Niet in catalogus",
+        "ERROR": "Fout"
+      },
+      "filter": {
+        "changes": "Wijzigingen",
+        "problems": "Problemen",
+        "all": "Alle regels"
+      },
+      "col": {
+        "line": "Regel",
+        "product": "Product",
+        "changes": "Wat verandert",
+        "status": "Status"
+      },
+      "bigWarn": "{count} prijzen veranderen meer dan 50 %. Controleer ze alstublieft.",
+      "confirmBig": "Ik heb de grote prijswijzigingen gecontroleerd",
+      "apply": "{count} wijzigingen toepassen",
+      "discard": "Verwerpen",
+      "applied": "Klaar: {applied} regels toegepast, {failed} mislukt.",
+      "discarded": "Verworpen — er is niets gewijzigd.",
+      "nothing": "Niets te wijzigen — uw catalogus is al actueel.",
+      "notFoundHint": "Producten die niet in de FIRINGI-catalogus staan, kunnen niet worden geïmporteerd. Vraag FIRINGI ze toe te voegen.",
+      "more": "{shown} van {total} regels getoond."
+    },
+    "runStatus": {
+      "PREVIEW": "Wacht op u",
+      "APPLIED": "Toegepast",
+      "FAILED": "Mislukt",
+      "CANCELLED": "Verworpen",
+      "HELD": "Tegengehouden"
+    },
+    "source": {
+      "UPLOAD": "Bestand",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Geschiedenis",
+      "empty": "Nog geen imports.",
+      "open": "Openen"
+    },
+    "feeds": {
+      "title": "Opgeslagen imports & feeds",
+      "intro": "Publiceer uw prijs-/voorraadbestand op een webadres; FIRINGI haalt het op en past het regelmatig toe. Runs die er verkeerd uitzien, worden tegengehouden zodat u ze kunt controleren.",
+      "none": "Nog niets opgeslagen. Upload een bestand en bewaar de kolommen om er een te maken.",
+      "url": "Bestandsadres (https://…)",
+      "every": "Ophalen elke",
+      "hours": "{n} u",
+      "save": "Opslaan",
+      "saved": "Opgeslagen",
+      "runNow": "Nu uitvoeren",
+      "delete": "Verwijderen",
+      "deleteConfirm": "Deze opgeslagen import verwijderen?",
+      "lastRun": "Laatste run {when}",
+      "never": "Nog niet uitgevoerd",
+      "on": "Automatisch",
+      "manual": "Alleen uploaden",
+      "result": {
+        "APPLIED": "Toegepast",
+        "HELD": "Tegengehouden ter controle",
+        "FAILED": "Bestand kon niet worden gelezen"
+      }
+    },
+    "keys": {
+      "title": "API-sleutels",
+      "intro": "Koppel uw ERP, webshop of kassa aan FIRINGI. Een sleutel handelt namens u, alleen met de rechten die u aanvinkt.",
+      "name": "Naam",
+      "namePlaceholder": "bijv. Ons ERP",
+      "perms": "Rechten",
+      "create": "Sleutel maken",
+      "once": "Kopieer deze sleutel nu — hij wordt niet opnieuw getoond.",
+      "none": "Nog geen sleutels.",
+      "revoke": "Intrekken",
+      "revokeConfirm": "Deze sleutel intrekken? Systemen die hem gebruiken, werken direct niet meer.",
+      "revoked": "Ingetrokken",
+      "lastUsed": "Laatst gebruikt {when}",
+      "neverUsed": "Nooit gebruikt",
+      "usage": "{calls} aanroepen · {errors} fouten in 7 dagen",
+      "actsAs": "Handelt als {name}",
+      "recent": "Laatste aanroepen"
+    },
+    "scope": {
+      "catalogue_read": "De catalogus en mijn prijzen zien",
+      "orders_read": "Bestellingen zien",
+      "orders_write": "Bestellingen plaatsen, bevestigen en bijwerken",
+      "offers_write": "Mijn prijzen, voorraad en minimums bijwerken",
+      "invoices_read": "Facturen en overzichten zien"
+    },
+    "hooks": {
+      "title": "Webhooks",
+      "intro": "FIRINGI roept uw systeem aan zodra er iets gebeurt. Elke aanroep is ondertekend, zodat u kunt controleren dat hij van ons komt.",
+      "url": "Uw adres (https://…)",
+      "events": "Laat het me weten bij",
+      "add": "Webhook toevoegen",
+      "secretOnce": "Ondertekeningsgeheim — kopieer het nu, het wordt niet opnieuw getoond:",
+      "test": "Test sturen",
+      "testOk": "Uw systeem antwoordde {status} — alles in orde.",
+      "testFail": "Uw systeem accepteerde het niet ({status}).",
+      "pause": "Pauzeren",
+      "resume": "Inschakelen",
+      "delete": "Verwijderen",
+      "deleteConfirm": "Deze webhook verwijderen?",
+      "off": "Uit: {reason}",
+      "paused": "Gepauzeerd",
+      "active": "Actief",
+      "none": "Nog geen webhooks.",
+      "recent": "Laatste leveringen"
+    },
+    "event": {
+      "order_created": "Nieuwe bestelling te bevestigen",
+      "order_placed": "Bestelling geplaatst",
+      "order_status_changed": "Bestelstatus gewijzigd",
+      "invoice_issued": "Factuur uitgegeven",
+      "payment_received": "Betaling ontvangen",
+      "payout_sent": "Uitbetaling verstuurd",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Afgeleverd",
+      "PENDING": "Nieuwe poging",
+      "FAILED": "Mislukt"
+    },
+    "docs": {
+      "title": "API-referentie",
+      "intro": "Alles wat uw ontwikkelaar nodig heeft: adressen, rechten en voorbeelden. Antwoorden zijn JSON; bedragen zijn excl. btw tenzij als bruto aangegeven.",
+      "open": "API-referentie openen",
+      "base": "Basisadres",
+      "auth": "Stuur uw sleutel bij elke aanroep mee",
+      "limit": "Tot {n} aanroepen per minuut per sleutel.",
+      "openapi": "OpenAPI-bestand downloaden",
+      "who": {
+        "Buyers": "Kopers",
+        "Suppliers": "Leveranciers",
+        "Everyone": "Iedereen"
+      },
+      "needs": "Vereist: {scope}",
+      "example": "Voorbeeldbody",
+      "signature": "Een webhookhandtekening controleren"
+    },
+    "exports": {
+      "title": "Exports",
+      "intro": "Download uw documenten voor uw boekhouder of uw eigen systeem — Excel of CSV.",
+      "from": "Van",
+      "to": "Tot",
+      "what": "Wat",
+      "file": "Bestand",
+      "download": "Downloaden",
+      "thisMonth": "Deze maand",
+      "lastMonth": "Vorige maand",
+      "thisYear": "Dit jaar"
+    },
+    "kind": {
+      "buyer_invoices": "Facturen en creditnota's van FIRINGI",
+      "buyer_payments": "Mijn betalingen",
+      "supplier_statements": "Facturatieoverzichten",
+      "supplier_invoices": "Facturen die ik naar FIRINGI stuurde",
+      "supplier_payouts": "Ontvangen uitbetalingen"
+    },
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd"
   }
 }

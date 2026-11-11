@@ -773,7 +773,10 @@
     "AI Assistant": "Tekoälyavustaja",
     "Buy Again": "Osta uudelleen",
     "Demand & Stock": "Kysyntä ja varasto",
-    "Direct Debit": "Suoraveloitus"
+    "Direct Debit": "Suoraveloitus",
+    "Import & Sync": "Tuonti ja synkronointi",
+    "Integrations": "Integraatiot",
+    "Exports": "Viennit"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Maksu vaatii huomiota: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Syöte pysäytetty tarkistettavaksi: {name}",
+      "body": "Emme ottaneet käyttöön tämänpäiväistä tiedostoa \"{name}\", koska {reason}. Tarkista muutokset ja ota ne käyttöön tai hylkää ne."
+    },
+    "integration_feed_failed": {
+      "title": "Syötettä ei luettu: {name}",
+      "body": "Emme pystyneet lukemaan tiedostoa \"{name}\": {reason}. Hintojasi ja varastoasi ei muutettu. Yritämme uudelleen seuraavalla ajolla."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook poistettu käytöstä",
+      "body": "Lopetimme osoitteen {url} kutsumisen, koska se epäonnistui monta kertaa peräkkäin ({reason}). Korjaa järjestelmäsi ja ota se uudelleen käyttöön kohdassa Integraatiot."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Laskusi veloitetaan automaattisesti suoraveloituksella (tili päättyy {last4}).",
       "legal": "Ottamalla suoraveloituksen käyttöön valtuutat FIRINGIn ja sen maksupalveluntarjoajan lähettämään pankillesi ohjeita tilisi veloittamiseksi ja pankkisi veloittamaan sen. Voit pyytää pankiltasi palautusta 8 viikon kuluessa veloituksesta."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integraatiot",
+      "subtitle": "Yhdistä omat järjestelmäsi FIRINGIin: tiedostot, automaattiset syötteet, API ja välittömät ilmoitukset.",
+      "live": "Aktiiviset yhteydet"
+    },
+    "stat": {
+      "keys": "API-avaimet",
+      "webhooks": "Webhookit",
+      "feeds": "Aktiiviset syötteet",
+      "calls": "API-kutsut · 7 päivää"
+    },
+    "import": {
+      "title": "Tuonti ja synkronointi",
+      "subtitle": "Päivitä hinnat, varasto ja minimit Excel- tai CSV-tiedostosta – tai anna FIRINGIn hakea tiedostosi säännöllisesti.",
+      "drop": "Pudota Excel- tai CSV-tiedostosi tähän",
+      "choose": "Valitse tiedosto",
+      "limits": "Excel (.xlsx) tai CSV · enintään 10 Mt · enintään 5000 riviä",
+      "template": "Lataa oma pohjani",
+      "templateHint": "Nykyiset tarjouksesi valmiina muokattavaksi ja ladattavaksi uudelleen.",
+      "reading": "Luetaan tiedostoa…",
+      "steps": {
+        "upload": "Lataa",
+        "match": "Yhdistä sarakkeet",
+        "check": "Tarkista",
+        "apply": "Ota käyttöön"
+      },
+      "rowsFound": "{count} riviä tiedostossa {file}",
+      "mapTitle": "Mikä sarake on mikä?",
+      "mapHint": "Arvasimme sarakkeiden nimistä. Rivit yhdistetään tuotekoodisi tai viivakoodin perusteella.",
+      "ignore": "Älä tuo",
+      "sample": "Tiedoston ensimmäiset rivit",
+      "saveAs": "Tallenna nämä sarakkeet seuraavaa kertaa varten nimellä",
+      "saveAsPlaceholder": "esim. Päivittäinen hinnasto",
+      "preview": "Näytä, mikä muuttuu",
+      "back": "Takaisin",
+      "another": "Toinen tiedosto"
+    },
+    "fields": {
+      "vendor_sku": "Oma tuotekoodisi",
+      "gtin": "Viivakoodi (EAN)",
+      "price": "Hinta, veroton",
+      "stock": "Varasto",
+      "warehouse": "Varastopaikka",
+      "min_qty": "Vähimmäistilaus",
+      "qty_step": "Myydään kerrannaisina",
+      "lead_days": "Toimitusaika, päivää",
+      "active": "Myynnissä (kyllä / ei)",
+      "name": "Nimi (viitteeksi)"
+    },
+    "run": {
+      "title": "Tarkista ennen käyttöönottoa",
+      "held": "Pysäytetty tarkistettavaksi: {reason}",
+      "summary": {
+        "total": "Rivit",
+        "newOffers": "Uudet tarjoukset",
+        "updates": "Päivitykset",
+        "unchanged": "Ennallaan",
+        "notFound": "Ei löytynyt",
+        "errors": "Virheet"
+      },
+      "status": {
+        "NEW_OFFER": "Uusi tarjous",
+        "UPDATE": "Päivitys",
+        "UNCHANGED": "Ennallaan",
+        "NOT_FOUND": "Ei luettelossa",
+        "ERROR": "Virhe"
+      },
+      "filter": {
+        "changes": "Muutokset",
+        "problems": "Ongelmat",
+        "all": "Kaikki rivit"
+      },
+      "col": {
+        "line": "Rivi",
+        "product": "Tuote",
+        "changes": "Mikä muuttuu",
+        "status": "Tila"
+      },
+      "bigWarn": "{count} hintaa muuttuu yli 50 %. Tarkista ne.",
+      "confirmBig": "Olen tarkistanut suuret hintamuutokset",
+      "apply": "Ota käyttöön {count} muutosta",
+      "discard": "Hylkää",
+      "applied": "Valmis: {applied} riviä otettu käyttöön, {failed} epäonnistui.",
+      "discarded": "Hylätty – mitään ei muutettu.",
+      "nothing": "Ei muutettavaa – luettelosi on jo ajan tasalla.",
+      "notFoundHint": "Tuotteita, jotka eivät ole FIRINGIn luettelossa, ei voi tuoda. Pyydä FIRINGIa lisäämään ne.",
+      "more": "Näytetään {shown}/{total} riviä."
+    },
+    "runStatus": {
+      "PREVIEW": "Odottaa sinua",
+      "APPLIED": "Otettu käyttöön",
+      "FAILED": "Epäonnistui",
+      "CANCELLED": "Hylätty",
+      "HELD": "Pysäytetty"
+    },
+    "source": {
+      "UPLOAD": "Tiedosto",
+      "URL": "Syöte",
+      "API": "API"
+    },
+    "history": {
+      "title": "Historia",
+      "empty": "Ei vielä tuonteja.",
+      "open": "Avaa"
+    },
+    "feeds": {
+      "title": "Tallennetut tuonnit ja syötteet",
+      "intro": "Julkaise hinta-/varastotiedostosi verkko-osoitteessa, niin FIRINGI hakee ja ottaa sen käyttöön säännöllisesti. Oudolta näyttävät ajot pysäytetään tarkistettaviksi.",
+      "none": "Ei vielä mitään tallennettu. Lataa tiedosto ja tallenna sen sarakkeet.",
+      "url": "Tiedoston osoite (https://…)",
+      "every": "Hae joka",
+      "hours": "{n} t",
+      "save": "Tallenna",
+      "saved": "Tallennettu",
+      "runNow": "Aja nyt",
+      "delete": "Poista",
+      "deleteConfirm": "Poistetaanko tämä tallennettu tuonti?",
+      "lastRun": "Viimeisin ajo {when}",
+      "never": "Ei vielä ajettu",
+      "on": "Automaattinen",
+      "manual": "Vain lataus",
+      "result": {
+        "APPLIED": "Otettu käyttöön",
+        "HELD": "Pysäytetty tarkistettavaksi",
+        "FAILED": "Tiedostoa ei voitu lukea"
+      }
+    },
+    "keys": {
+      "title": "API-avaimet",
+      "intro": "Anna ERP-järjestelmäsi, verkkokauppasi tai kassasi toimia FIRINGIn kanssa. Avain toimii sinun nimissäsi vain valitsemillasi oikeuksilla.",
+      "name": "Nimi",
+      "namePlaceholder": "esim. Meidän ERP",
+      "perms": "Oikeudet",
+      "create": "Luo avain",
+      "once": "Kopioi avain nyt – sitä ei näytetä uudelleen.",
+      "none": "Ei vielä avaimia.",
+      "revoke": "Peru",
+      "revokeConfirm": "Perutaanko avain? Sitä käyttävät järjestelmät lakkaavat toimimasta heti.",
+      "revoked": "Peruttu",
+      "lastUsed": "Viimeksi käytetty {when}",
+      "neverUsed": "Ei koskaan käytetty",
+      "usage": "{calls} kutsua · {errors} virhettä 7 päivässä",
+      "actsAs": "Toimii käyttäjänä {name}",
+      "recent": "Viimeisimmät kutsut"
+    },
+    "scope": {
+      "catalogue_read": "Nähdä luettelo ja hintani",
+      "orders_read": "Nähdä tilaukset",
+      "orders_write": "Tehdä, vahvistaa ja päivittää tilauksia",
+      "offers_write": "Päivittää hintani, varastoni ja minimini",
+      "invoices_read": "Nähdä laskut ja tilitykset"
+    },
+    "hooks": {
+      "title": "Webhookit",
+      "intro": "FIRINGI kutsuu järjestelmääsi heti, kun jotain tapahtuu. Jokainen kutsu on allekirjoitettu, joten voit tarkistaa, että se tulee meiltä.",
+      "url": "Osoitteesi (https://…)",
+      "events": "Ilmoita, kun",
+      "add": "Lisää webhook",
+      "secretOnce": "Allekirjoitussalaisuus – kopioi se nyt, sitä ei näytetä uudelleen:",
+      "test": "Lähetä testi",
+      "testOk": "Järjestelmäsi vastasi {status} – kaikki kunnossa.",
+      "testFail": "Järjestelmäsi ei hyväksynyt sitä ({status}).",
+      "pause": "Keskeytä",
+      "resume": "Ota käyttöön",
+      "delete": "Poista",
+      "deleteConfirm": "Poistetaanko tämä webhook?",
+      "off": "Pois päältä: {reason}",
+      "paused": "Keskeytetty",
+      "active": "Aktiivinen",
+      "none": "Ei vielä webhookeja.",
+      "recent": "Viimeisimmät toimitukset"
+    },
+    "event": {
+      "order_created": "Uusi vahvistettava tilaus",
+      "order_placed": "Tilaus tehty",
+      "order_status_changed": "Tilauksen tila muuttui",
+      "invoice_issued": "Lasku laadittu",
+      "payment_received": "Maksu vastaanotettu",
+      "payout_sent": "Maksu toimittajalle lähetetty",
+      "ping": "Testi"
+    },
+    "delivery": {
+      "SENT": "Toimitettu",
+      "PENDING": "Yritetään uudelleen",
+      "FAILED": "Epäonnistui"
+    },
+    "docs": {
+      "title": "API-ohjeet",
+      "intro": "Kaikki mitä kehittäjäsi tarvitsee: osoitteet, oikeudet ja esimerkit. Vastaukset ovat JSONia; summat ovat verottomia, ellei niitä ole merkitty bruttona.",
+      "open": "Avaa API-ohjeet",
+      "base": "Perusosoite",
+      "auth": "Lähetä avaimesi jokaisen kutsun mukana",
+      "limit": "Enintään {n} kutsua minuutissa avainta kohden.",
+      "openapi": "Lataa OpenAPI-tiedosto",
+      "who": {
+        "Buyers": "Ostajat",
+        "Suppliers": "Toimittajat",
+        "Everyone": "Kaikki"
+      },
+      "needs": "Vaatii: {scope}",
+      "example": "Esimerkkirunko",
+      "signature": "Webhookin allekirjoituksen tarkistus"
+    },
+    "exports": {
+      "title": "Viennit",
+      "intro": "Lataa asiakirjasi kirjanpitäjällesi tai omaan järjestelmääsi – Excel tai CSV.",
+      "from": "Alkaen",
+      "to": "Päättyen",
+      "what": "Mitä",
+      "file": "Tiedosto",
+      "download": "Lataa",
+      "thisMonth": "Tämä kuukausi",
+      "lastMonth": "Viime kuukausi",
+      "thisYear": "Tämä vuosi"
+    },
+    "kind": {
+      "buyer_invoices": "FIRINGIn laskut ja hyvityslaskut",
+      "buyer_payments": "Maksuni",
+      "supplier_statements": "Laskutustilitykset",
+      "supplier_invoices": "Laskut, jotka lähetin FIRINGIlle",
+      "supplier_payouts": "Saadut maksut"
+    },
+    "copy": "Kopioi",
+    "copied": "Kopioitu"
   }
 }

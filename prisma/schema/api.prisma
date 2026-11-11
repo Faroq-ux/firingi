@@ -9,13 +9,16 @@ model ApiKey {
   name        String
   prefix      String // first characters, shown to recognise the key
   hash        String    @unique // sha256 of the full key
-  scopes      String[] // catalogue.read | orders.read
+  scopes      String[] // catalogue.read | orders.read | orders.write | offers.write | invoices.read
+  /// Created by the company itself (portal › Integrations) rather than FIRINGI staff.
+  selfService Boolean   @default(false)
   lastUsedAt  DateTime?
   revokedAt   DateTime?
   createdById String
   createdAt   DateTime  @default(now())
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  calls   ApiCallLog[]
 
   @@index([companyId])
 }

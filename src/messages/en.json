@@ -1167,6 +1167,18 @@
     "payment_attention": {
       "title": "Payment needs attention: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed held for your check: {name}",
+      "body": "We didn't apply today's file for \"{name}\" because {reason}. Check the changes and apply them, or discard them."
+    },
+    "integration_feed_failed": {
+      "title": "Feed not read: {name}",
+      "body": "We couldn't read the file for \"{name}\": {reason}. Your prices and stock were not changed. We'll try again at the next run."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook switched off",
+      "body": "We stopped calling {url} after it failed many times in a row ({reason}). Fix your system and switch it back on in Integrations."
     }
   },
   "notifications": {
@@ -1762,5 +1774,231 @@
       "collectedAuto": "Your invoices are collected automatically by direct debit (account ending {last4}).",
       "legal": "By setting up a direct debit you authorise FIRINGI and its payment provider to send instructions to your bank to debit your account, and your bank to debit it accordingly. You can ask your bank for a refund within 8 weeks of a debit."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrations",
+      "subtitle": "Connect your own systems to FIRINGI: files, live feeds, an API and instant notifications.",
+      "live": "Live connections"
+    },
+    "stat": {
+      "keys": "API keys",
+      "webhooks": "Webhooks",
+      "feeds": "Live feeds",
+      "calls": "API calls · 7 days"
+    },
+    "import": {
+      "title": "Import & Sync",
+      "subtitle": "Update prices, stock and minimums from an Excel or CSV file — or let FIRINGI fetch your file on a schedule.",
+      "drop": "Drop your Excel or CSV file here",
+      "choose": "Choose a file",
+      "limits": "Excel (.xlsx) or CSV · up to 10 MB · up to 5000 rows",
+      "template": "Download my template",
+      "templateHint": "Your current offers, ready to edit and upload again.",
+      "reading": "Reading the file…",
+      "steps": {
+        "upload": "Upload",
+        "match": "Match columns",
+        "check": "Check",
+        "apply": "Apply"
+      },
+      "rowsFound": "{count} rows in {file}",
+      "mapTitle": "Which column is which?",
+      "mapHint": "We guessed from the column names. Rows are matched by your product code or by the barcode.",
+      "ignore": "Don't import",
+      "sample": "First rows of your file",
+      "saveAs": "Save these columns for next time as",
+      "saveAsPlaceholder": "e.g. Daily price list",
+      "preview": "Show what will change",
+      "back": "Back",
+      "another": "Another file"
+    },
+    "fields": {
+      "vendor_sku": "Your product code",
+      "gtin": "Barcode (EAN)",
+      "price": "Price, net",
+      "stock": "Stock",
+      "warehouse": "Warehouse",
+      "min_qty": "Minimum order",
+      "qty_step": "Sold in multiples of",
+      "lead_days": "Lead time, days",
+      "active": "For sale (yes / no)",
+      "name": "Name (for your reference)"
+    },
+    "run": {
+      "title": "Check before applying",
+      "held": "Held for your check: {reason}",
+      "summary": {
+        "total": "Rows",
+        "newOffers": "New offers",
+        "updates": "Updates",
+        "unchanged": "Unchanged",
+        "notFound": "Not found",
+        "errors": "Errors"
+      },
+      "status": {
+        "NEW_OFFER": "New offer",
+        "UPDATE": "Update",
+        "UNCHANGED": "Unchanged",
+        "NOT_FOUND": "Not in catalogue",
+        "ERROR": "Error"
+      },
+      "filter": {
+        "changes": "Changes",
+        "problems": "Problems",
+        "all": "All rows"
+      },
+      "col": {
+        "line": "Row",
+        "product": "Product",
+        "changes": "What changes",
+        "status": "Status"
+      },
+      "bigWarn": "{count} prices change by more than 50 %. Please check them.",
+      "confirmBig": "I checked the big price changes",
+      "apply": "Apply {count} changes",
+      "discard": "Discard",
+      "applied": "Done: {applied} rows applied, {failed} failed.",
+      "discarded": "Discarded — nothing was changed.",
+      "nothing": "Nothing to change — your catalogue is already up to date.",
+      "notFoundHint": "Products that aren't in the FIRINGI catalogue can't be imported. Ask FIRINGI to add them.",
+      "more": "Showing {shown} of {total} rows."
+    },
+    "runStatus": {
+      "PREVIEW": "Waiting for you",
+      "APPLIED": "Applied",
+      "FAILED": "Failed",
+      "CANCELLED": "Discarded",
+      "HELD": "Held"
+    },
+    "source": {
+      "UPLOAD": "File",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "History",
+      "empty": "No imports yet.",
+      "open": "Open"
+    },
+    "feeds": {
+      "title": "Saved imports & feeds",
+      "intro": "Publish your price / stock file at a web address and FIRINGI fetches and applies it on schedule. Runs that look wrong are held for you to check.",
+      "none": "Nothing saved yet. Upload a file and save its columns to create one.",
+      "url": "File address (https://…)",
+      "every": "Fetch every",
+      "hours": "{n} h",
+      "save": "Save",
+      "saved": "Saved",
+      "runNow": "Run now",
+      "delete": "Delete",
+      "deleteConfirm": "Delete this saved import?",
+      "lastRun": "Last run {when}",
+      "never": "Not run yet",
+      "on": "Automatic",
+      "manual": "Upload only",
+      "result": {
+        "APPLIED": "Applied",
+        "HELD": "Held for your check",
+        "FAILED": "Couldn't read the file"
+      }
+    },
+    "keys": {
+      "title": "API keys",
+      "intro": "Let your ERP, shop or till work with FIRINGI. A key acts as you, with only the permissions you tick.",
+      "name": "Name",
+      "namePlaceholder": "e.g. Our ERP",
+      "perms": "Permissions",
+      "create": "Create key",
+      "once": "Copy this key now — it won't be shown again.",
+      "none": "No keys yet.",
+      "revoke": "Revoke",
+      "revokeConfirm": "Revoke this key? Systems using it stop working at once.",
+      "revoked": "Revoked",
+      "lastUsed": "Last used {when}",
+      "neverUsed": "Never used",
+      "usage": "{calls} calls · {errors} errors in 7 days",
+      "actsAs": "Acts as {name}",
+      "recent": "Latest calls"
+    },
+    "scope": {
+      "catalogue_read": "See the catalogue and my prices",
+      "orders_read": "See orders",
+      "orders_write": "Place, confirm and update orders",
+      "offers_write": "Update my prices, stock and minimums",
+      "invoices_read": "See invoices and statements"
+    },
+    "hooks": {
+      "title": "Webhooks",
+      "intro": "FIRINGI calls your system the moment something happens. Every call is signed, so you can check it came from us.",
+      "url": "Your address (https://…)",
+      "events": "Tell me when",
+      "add": "Add webhook",
+      "secretOnce": "Signing secret — copy it now, it won't be shown again:",
+      "test": "Send a test",
+      "testOk": "Your system answered {status} — all good.",
+      "testFail": "Your system didn't accept it ({status}).",
+      "pause": "Pause",
+      "resume": "Switch on",
+      "delete": "Delete",
+      "deleteConfirm": "Delete this webhook?",
+      "off": "Off: {reason}",
+      "paused": "Paused",
+      "active": "Active",
+      "none": "No webhooks yet.",
+      "recent": "Latest deliveries"
+    },
+    "event": {
+      "order_created": "New order to confirm",
+      "order_placed": "Order placed",
+      "order_status_changed": "Order status changed",
+      "invoice_issued": "Invoice issued",
+      "payment_received": "Payment received",
+      "payout_sent": "Payout sent",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Delivered",
+      "PENDING": "Retrying",
+      "FAILED": "Failed"
+    },
+    "docs": {
+      "title": "API reference",
+      "intro": "Everything your developer needs: addresses, permissions and examples. Answers are JSON; amounts are net of VAT unless marked gross.",
+      "open": "Open the API reference",
+      "base": "Base address",
+      "auth": "Send your key with every call",
+      "limit": "Up to {n} calls a minute per key.",
+      "openapi": "Download the OpenAPI file",
+      "who": {
+        "Buyers": "Buyers",
+        "Suppliers": "Suppliers",
+        "Everyone": "Everyone"
+      },
+      "needs": "Needs: {scope}",
+      "example": "Example body",
+      "signature": "Checking a webhook signature"
+    },
+    "exports": {
+      "title": "Exports",
+      "intro": "Download your documents for your accountant or your own system — Excel or CSV.",
+      "from": "From",
+      "to": "To",
+      "what": "What",
+      "file": "File",
+      "download": "Download",
+      "thisMonth": "This month",
+      "lastMonth": "Last month",
+      "thisYear": "This year"
+    },
+    "kind": {
+      "buyer_invoices": "Invoices and credit notes from FIRINGI",
+      "buyer_payments": "My payments",
+      "supplier_statements": "Billing statements",
+      "supplier_invoices": "Invoices I sent to FIRINGI",
+      "supplier_payouts": "Payouts received"
+    },
+    "copy": "Copy",
+    "copied": "Copied"
   }
 }

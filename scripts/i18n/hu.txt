@@ -1496,3 +1496,188 @@ A csoportos beszedés még nem érhető el.
 Számláit automatikusan csoportos beszedéssel egyenlítjük ki (a számla vége: {last4}).
 A csoportos beszedés beállításával felhatalmazza a FIRINGI-t és fizetési szolgáltatóját, hogy utasításokat küldjenek bankjának számlája megterhelésére, bankját pedig a terhelésre. A terheléstől számított 8 héten belül visszatérítést kérhet bankjától.
 Csoportos beszedés
+Feed ellenőrzésre visszatartva: {name}
+Nem alkalmaztuk a mai fájlt ehhez: „{name}”, mert {reason}. Nézze át a változásokat, és alkalmazza vagy vesse el őket.
+A feed nem olvasható: {name}
+Nem tudtuk beolvasni a fájlt ehhez: „{name}”: {reason}. Az árai és készletei nem változtak. A következő futáskor újra megpróbáljuk.
+Webhook kikapcsolva
+Leállítottuk a(z) {url} hívását, mert sokszor egymás után hibázott ({reason}). Javítsa a rendszerét, majd kapcsolja vissza az Integrációk alatt.
+Integrációk
+Kösse össze saját rendszereit a FIRINGI-vel: fájlok, automatikus feedek, API és azonnali értesítések.
+Aktív kapcsolatok
+API-kulcsok
+Webhookok
+Aktív feedek
+API-hívások · 7 nap
+Importálás és szinkron
+Frissítse az árakat, készletet és minimumokat Excel- vagy CSV-fájlból — vagy hagyja, hogy a FIRINGI rendszeresen letöltse a fájlját.
+Húzza ide Excel- vagy CSV-fájlját
+Fájl kiválasztása
+Excel (.xlsx) vagy CSV · max. 10 MB · max. 5000 sor
+Saját sablon letöltése
+A jelenlegi ajánlatai, szerkesztésre és újrafeltöltésre készen.
+A fájl beolvasása…
+Feltöltés
+Oszlopok párosítása
+Ellenőrzés
+Alkalmazás
+{count} sor itt: {file}
+Melyik oszlop melyik?
+Az oszlopnevek alapján tippeltünk. A sorokat a cikkszám vagy a vonalkód alapján párosítjuk.
+Ne importálja
+A fájl első sorai
+Az oszlopok mentése legközelebbre ezen a néven
+pl. Napi árlista
+Mutassa, mi változik
+Vissza
+Másik fájl
+Saját cikkszám
+Vonalkód (EAN)
+Nettó ár
+Készlet
+Raktár
+Minimális rendelés
+Ennek többszöröseiben
+Szállítási idő, nap
+Eladó (igen / nem)
+Név (tájékoztató)
+Ellenőrizze alkalmazás előtt
+Ellenőrzésre visszatartva: {reason}
+Sorok
+Új ajánlatok
+Frissítések
+Változatlan
+Nem található
+Hibák
+Új ajánlat
+Frissítés
+Változatlan
+Nincs a katalógusban
+Hiba
+Változások
+Problémák
+Minden sor
+Sor
+Termék
+Mi változik
+Állapot
+{count} ár több mint 50 %-kal változik. Kérjük, ellenőrizze őket.
+Ellenőriztem a nagy árváltozásokat
+{count} változás alkalmazása
+Elvetés
+Kész: {applied} sor alkalmazva, {failed} hibás.
+Elvetve — semmi sem változott.
+Nincs mit módosítani — a katalógusa naprakész.
+A FIRINGI katalógusában nem szereplő termékek nem importálhatók. Kérje a FIRINGI-t, hogy vegye fel őket.
+{total} sorból {shown} látható.
+Önre vár
+Alkalmazva
+Sikertelen
+Elvetve
+Visszatartva
+Fájl
+Feed
+API
+Előzmények
+Még nincs importálás.
+Megnyitás
+Mentett importok és feedek
+Tegye közzé ár-/készletfájlját egy webcímen, és a FIRINGI rendszeresen letölti és alkalmazza. A gyanús futásokat visszatartjuk, hogy ellenőrizhesse.
+Még nincs mentve semmi. Töltsön fel egy fájlt, és mentse az oszlopait.
+Fájl címe (https://…)
+Letöltés
+{n} óránként
+Mentés
+Mentve
+Futtatás most
+Törlés
+Törli ezt a mentett importot?
+Utolsó futás: {when}
+Még nem futott
+Automatikus
+Csak feltöltés
+Alkalmazva
+Ellenőrzésre visszatartva
+A fájl nem olvasható
+API-kulcsok
+Kösse össze ERP-jét, webáruházát vagy pénztárát a FIRINGI-vel. A kulcs az Ön nevében jár el, csak a bejelölt jogosultságokkal.
+Név
+pl. Saját ERP
+Jogosultságok
+Kulcs létrehozása
+Másolja ki most a kulcsot — többé nem jelenik meg.
+Még nincs kulcs.
+Visszavonás
+Visszavonja ezt a kulcsot? Az azt használó rendszerek azonnal leállnak.
+Visszavonva
+Utoljára használva: {when}
+Soha nem használt
+{calls} hívás · {errors} hiba 7 nap alatt
+Felhasználó: {name}
+Legutóbbi hívások
+Katalógus és árai megtekintése
+Rendelések megtekintése
+Rendelések leadása, visszaigazolása, frissítése
+Árak, készlet és minimumok frissítése
+Számlák és elszámolások megtekintése
+Webhookok
+A FIRINGI azonnal hívja a rendszerét, amikor valami történik. Minden hívás alá van írva, így ellenőrizheti, hogy tőlünk jön.
+Az Ön címe (https://…)
+Szóljon, ha
+Webhook hozzáadása
+Aláírási titok — másolja ki most, többé nem jelenik meg:
+Teszt küldése
+A rendszere {status} választ adott — minden rendben.
+A rendszere nem fogadta el ({status}).
+Szüneteltetés
+Bekapcsolás
+Törlés
+Törli ezt a webhookot?
+Kikapcsolva: {reason}
+Szüneteltetve
+Aktív
+Még nincs webhook.
+Legutóbbi kézbesítések
+Új rendelés visszaigazolásra
+Rendelés leadva
+Megváltozott a rendelés állapota
+Számla kiállítva
+Fizetés beérkezett
+Kifizetés elküldve
+Teszt
+Kézbesítve
+Újrapróbálás
+Sikertelen
+API-dokumentáció
+Minden, amire fejlesztőjének szüksége van: címek, jogosultságok, példák. A válaszok JSON-ok; az összegek nettók, kivéve ha bruttónak jelöltük.
+API-dokumentáció megnyitása
+Alapcím
+Minden hívással küldje a kulcsát
+Kulcsonként percenként legfeljebb {n} hívás.
+OpenAPI-fájl letöltése
+Vevők
+Beszállítók
+Mindenki
+Szükséges: {scope}
+Példa törzs
+Webhook-aláírás ellenőrzése
+Exportok
+Töltse le dokumentumait könyvelőjének vagy saját rendszerének — Excel vagy CSV.
+Ettől
+Eddig
+Mit
+Fájl
+Letöltés
+Ez a hónap
+Előző hónap
+Ez az év
+A FIRINGI számlái és jóváírásai
+Fizetéseim
+Elszámolások
+A FIRINGI-nek küldött számláim
+Kapott kifizetések
+Másolás
+Másolva
+Importálás és szinkron
+Integrációk
+Exportok

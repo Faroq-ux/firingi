@@ -1496,3 +1496,188 @@ Incasso is nog niet beschikbaar.
 Uw facturen worden automatisch geïnd via incasso (rekening eindigend op {last4}).
 Door een incasso in te stellen machtigt u FIRINGI en zijn betaaldienstverlener om uw bank opdracht te geven uw rekening te debiteren, en uw bank om dat te doen. U kunt uw bank binnen 8 weken na een afschrijving om terugbetaling vragen.
 Incasso
+Feed tegengehouden ter controle: {name}
+We hebben het bestand van vandaag voor "{name}" niet verwerkt omdat {reason}. Controleer de wijzigingen en pas ze toe, of verwerp ze.
+Feed niet gelezen: {name}
+We konden het bestand voor "{name}" niet lezen: {reason}. Uw prijzen en voorraad zijn niet gewijzigd. We proberen het bij de volgende run opnieuw.
+Webhook uitgeschakeld
+We roepen {url} niet meer aan nadat het vele keren achter elkaar mislukte ({reason}). Herstel uw systeem en zet hem weer aan bij Integraties.
+Integraties
+Koppel uw eigen systemen aan FIRINGI: bestanden, automatische feeds, een API en directe meldingen.
+Actieve koppelingen
+API-sleutels
+Webhooks
+Actieve feeds
+API-aanroepen · 7 dagen
+Import & sync
+Werk prijzen, voorraad en minimums bij vanuit een Excel- of CSV-bestand — of laat FIRINGI uw bestand op vaste tijden ophalen.
+Sleep uw Excel- of CSV-bestand hierheen
+Kies een bestand
+Excel (.xlsx) of CSV · tot 10 MB · tot 5000 regels
+Download mijn sjabloon
+Uw huidige aanbiedingen, klaar om te bewerken en opnieuw te uploaden.
+Bestand wordt gelezen…
+Uploaden
+Kolommen koppelen
+Controleren
+Toepassen
+{count} regels in {file}
+Welke kolom is welke?
+We hebben het afgeleid uit de kolomnamen. Regels worden gekoppeld via uw productcode of de barcode.
+Niet importeren
+Eerste regels van uw bestand
+Deze kolommen bewaren voor de volgende keer als
+bijv. Dagelijkse prijslijst
+Laat zien wat er verandert
+Terug
+Ander bestand
+Uw productcode
+Barcode (EAN)
+Prijs, excl. btw
+Voorraad
+Magazijn
+Minimale bestelling
+Verkocht per veelvoud van
+Levertijd, dagen
+Te koop (ja / nee)
+Naam (ter referentie)
+Controleer voor het toepassen
+Tegengehouden ter controle: {reason}
+Regels
+Nieuwe aanbiedingen
+Wijzigingen
+Ongewijzigd
+Niet gevonden
+Fouten
+Nieuwe aanbieding
+Wijziging
+Ongewijzigd
+Niet in catalogus
+Fout
+Wijzigingen
+Problemen
+Alle regels
+Regel
+Product
+Wat verandert
+Status
+{count} prijzen veranderen meer dan 50 %. Controleer ze alstublieft.
+Ik heb de grote prijswijzigingen gecontroleerd
+{count} wijzigingen toepassen
+Verwerpen
+Klaar: {applied} regels toegepast, {failed} mislukt.
+Verworpen — er is niets gewijzigd.
+Niets te wijzigen — uw catalogus is al actueel.
+Producten die niet in de FIRINGI-catalogus staan, kunnen niet worden geïmporteerd. Vraag FIRINGI ze toe te voegen.
+{shown} van {total} regels getoond.
+Wacht op u
+Toegepast
+Mislukt
+Verworpen
+Tegengehouden
+Bestand
+Feed
+API
+Geschiedenis
+Nog geen imports.
+Openen
+Opgeslagen imports & feeds
+Publiceer uw prijs-/voorraadbestand op een webadres; FIRINGI haalt het op en past het regelmatig toe. Runs die er verkeerd uitzien, worden tegengehouden zodat u ze kunt controleren.
+Nog niets opgeslagen. Upload een bestand en bewaar de kolommen om er een te maken.
+Bestandsadres (https://…)
+Ophalen elke
+{n} u
+Opslaan
+Opgeslagen
+Nu uitvoeren
+Verwijderen
+Deze opgeslagen import verwijderen?
+Laatste run {when}
+Nog niet uitgevoerd
+Automatisch
+Alleen uploaden
+Toegepast
+Tegengehouden ter controle
+Bestand kon niet worden gelezen
+API-sleutels
+Koppel uw ERP, webshop of kassa aan FIRINGI. Een sleutel handelt namens u, alleen met de rechten die u aanvinkt.
+Naam
+bijv. Ons ERP
+Rechten
+Sleutel maken
+Kopieer deze sleutel nu — hij wordt niet opnieuw getoond.
+Nog geen sleutels.
+Intrekken
+Deze sleutel intrekken? Systemen die hem gebruiken, werken direct niet meer.
+Ingetrokken
+Laatst gebruikt {when}
+Nooit gebruikt
+{calls} aanroepen · {errors} fouten in 7 dagen
+Handelt als {name}
+Laatste aanroepen
+De catalogus en mijn prijzen zien
+Bestellingen zien
+Bestellingen plaatsen, bevestigen en bijwerken
+Mijn prijzen, voorraad en minimums bijwerken
+Facturen en overzichten zien
+Webhooks
+FIRINGI roept uw systeem aan zodra er iets gebeurt. Elke aanroep is ondertekend, zodat u kunt controleren dat hij van ons komt.
+Uw adres (https://…)
+Laat het me weten bij
+Webhook toevoegen
+Ondertekeningsgeheim — kopieer het nu, het wordt niet opnieuw getoond:
+Test sturen
+Uw systeem antwoordde {status} — alles in orde.
+Uw systeem accepteerde het niet ({status}).
+Pauzeren
+Inschakelen
+Verwijderen
+Deze webhook verwijderen?
+Uit: {reason}
+Gepauzeerd
+Actief
+Nog geen webhooks.
+Laatste leveringen
+Nieuwe bestelling te bevestigen
+Bestelling geplaatst
+Bestelstatus gewijzigd
+Factuur uitgegeven
+Betaling ontvangen
+Uitbetaling verstuurd
+Test
+Afgeleverd
+Nieuwe poging
+Mislukt
+API-referentie
+Alles wat uw ontwikkelaar nodig heeft: adressen, rechten en voorbeelden. Antwoorden zijn JSON; bedragen zijn excl. btw tenzij als bruto aangegeven.
+API-referentie openen
+Basisadres
+Stuur uw sleutel bij elke aanroep mee
+Tot {n} aanroepen per minuut per sleutel.
+OpenAPI-bestand downloaden
+Kopers
+Leveranciers
+Iedereen
+Vereist: {scope}
+Voorbeeldbody
+Een webhookhandtekening controleren
+Exports
+Download uw documenten voor uw boekhouder of uw eigen systeem — Excel of CSV.
+Van
+Tot
+Wat
+Bestand
+Downloaden
+Deze maand
+Vorige maand
+Dit jaar
+Facturen en creditnota's van FIRINGI
+Mijn betalingen
+Facturatieoverzichten
+Facturen die ik naar FIRINGI stuurde
+Ontvangen uitbetalingen
+Kopiëren
+Gekopieerd
+Import & sync
+Integraties
+Exports

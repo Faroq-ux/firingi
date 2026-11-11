@@ -273,6 +273,7 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
       const to = held || payFirst ? "ON_HOLD" : "PENDING_CONFIRMATION";
       await tx.order.update({ where: { id: o.id }, data: { status: to, awaitingPayment: payFirst } });
       await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : payFirst ? "Waiting for payment" : "Sent to supplier" } });
+      await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, o.id, { from: "NEW", to, placed: true });
     }
     payFirstOrders = payFirst;
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
@@ -376,7 +377,7 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
     prisma.order.findMany({
       where: full,
       // Buyers never see FIRINGI's side of the deal: the supplier's commission, its payout, FIRINGI's margin.
-      omit: as === "BUYER" ? BUYER_HIDDEN : undefined,
+      omit: as === "BUYER" ? BUYER_HIDDEN : as === "VENDOR" ? VENDOR_HIDDEN : undefined,
       include: { buyer: { select: { legalName: true, tradeName: true } }, seller: { select: { legalName: true, tradeName: true, type: true } }, _count: { select: { lines: true, exceptions: { where: { isResolved: false } } } } },
       orderBy: { placedAt: "desc" },
       skip: (page - 1) * 50,
@@ -390,6 +391,8 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
 }
 
 /** Order fields a buyer must not see (FIRINGI's commission, the supplier's payout and currency, FIRINGI's margin). */
+/** Order fields a supplier must not see (FIRINGI's margin). */
+const VENDOR_HIDDEN = { firingiMarginNet: true } as const;
 const BUYER_HIDDEN = { commissionTotal: true, vendorPayableNet: true, firingiMarginNet: true, vendorCurrencyCode: true, fxRate: true, deliveryRuleId: true, sourceAddressId: true } as const;
 
 // ── changes ─────────────────────────────────────────────────────────────────
@@ -480,6 +483,7 @@ export async function applyOrderTransition(
     if (d?.routeId && (next === "CANCELLED" || next === "RETURNED")) await detachFromRoute(tx, d.id);
   }
   await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: order.status, toStatus: to, reason, byUserId: by.userId } });
+  await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, order.id, { from: order.status, to, reason });
   await writeAudit({ actorUserId: by.userId, actorCompanyId: by.companyId, action: `order.status.${to.toLowerCase()}`, entityType: "Order", entityId: order.id, before: { status: order.status }, after: { status: to, reason } }, tx);
 }
 
@@ -561,6 +565,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
     await ensureDelivery(tx, orderId);
     const short = confirmed.filter((c) => c.qty < c.line.qtyOrdered).length;
     await tx.orderStatusHistory.create({ data: { orderId, fromStatus: order.status, toStatus: "SUPPLIER_PROCESSING", byUserId: ctx.user.id, reason: short ? `Confirmed with ${short} line(s) reduced` : "Confirmed" } });
+    await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, orderId, { from: order.status, to: "SUPPLIER_PROCESSING", reason: short ? "short" : null });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.confirmed", entityType: "Order", entityId: orderId, after: { quantities: Object.fromEntries(confirmed.map((c) => [c.line.id, c.qty])) } }, tx);
   });
   const seller = await prisma.company.findUniqueOrThrow({ where: { id: order.sellerCompanyId }, select: { legalName: true, tradeName: true } });

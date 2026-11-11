@@ -773,7 +773,10 @@
     "AI Assistant": "MI-asszisztens",
     "Buy Again": "Újravásárlás",
     "Demand & Stock": "Kereslet és készlet",
-    "Direct Debit": "Csoportos beszedés"
+    "Direct Debit": "Csoportos beszedés",
+    "Import & Sync": "Importálás és szinkron",
+    "Integrations": "Integrációk",
+    "Exports": "Exportok"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Fizetés figyelmet igényel: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed ellenőrzésre visszatartva: {name}",
+      "body": "Nem alkalmaztuk a mai fájlt ehhez: „{name}”, mert {reason}. Nézze át a változásokat, és alkalmazza vagy vesse el őket."
+    },
+    "integration_feed_failed": {
+      "title": "A feed nem olvasható: {name}",
+      "body": "Nem tudtuk beolvasni a fájlt ehhez: „{name}”: {reason}. Az árai és készletei nem változtak. A következő futáskor újra megpróbáljuk."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook kikapcsolva",
+      "body": "Leállítottuk a(z) {url} hívását, mert sokszor egymás után hibázott ({reason}). Javítsa a rendszerét, majd kapcsolja vissza az Integrációk alatt."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Számláit automatikusan csoportos beszedéssel egyenlítjük ki (a számla vége: {last4}).",
       "legal": "A csoportos beszedés beállításával felhatalmazza a FIRINGI-t és fizetési szolgáltatóját, hogy utasításokat küldjenek bankjának számlája megterhelésére, bankját pedig a terhelésre. A terheléstől számított 8 héten belül visszatérítést kérhet bankjától."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrációk",
+      "subtitle": "Kösse össze saját rendszereit a FIRINGI-vel: fájlok, automatikus feedek, API és azonnali értesítések.",
+      "live": "Aktív kapcsolatok"
+    },
+    "stat": {
+      "keys": "API-kulcsok",
+      "webhooks": "Webhookok",
+      "feeds": "Aktív feedek",
+      "calls": "API-hívások · 7 nap"
+    },
+    "import": {
+      "title": "Importálás és szinkron",
+      "subtitle": "Frissítse az árakat, készletet és minimumokat Excel- vagy CSV-fájlból — vagy hagyja, hogy a FIRINGI rendszeresen letöltse a fájlját.",
+      "drop": "Húzza ide Excel- vagy CSV-fájlját",
+      "choose": "Fájl kiválasztása",
+      "limits": "Excel (.xlsx) vagy CSV · max. 10 MB · max. 5000 sor",
+      "template": "Saját sablon letöltése",
+      "templateHint": "A jelenlegi ajánlatai, szerkesztésre és újrafeltöltésre készen.",
+      "reading": "A fájl beolvasása…",
+      "steps": {
+        "upload": "Feltöltés",
+        "match": "Oszlopok párosítása",
+        "check": "Ellenőrzés",
+        "apply": "Alkalmazás"
+      },
+      "rowsFound": "{count} sor itt: {file}",
+      "mapTitle": "Melyik oszlop melyik?",
+      "mapHint": "Az oszlopnevek alapján tippeltünk. A sorokat a cikkszám vagy a vonalkód alapján párosítjuk.",
+      "ignore": "Ne importálja",
+      "sample": "A fájl első sorai",
+      "saveAs": "Az oszlopok mentése legközelebbre ezen a néven",
+      "saveAsPlaceholder": "pl. Napi árlista",
+      "preview": "Mutassa, mi változik",
+      "back": "Vissza",
+      "another": "Másik fájl"
+    },
+    "fields": {
+      "vendor_sku": "Saját cikkszám",
+      "gtin": "Vonalkód (EAN)",
+      "price": "Nettó ár",
+      "stock": "Készlet",
+      "warehouse": "Raktár",
+      "min_qty": "Minimális rendelés",
+      "qty_step": "Ennek többszöröseiben",
+      "lead_days": "Szállítási idő, nap",
+      "active": "Eladó (igen / nem)",
+      "name": "Név (tájékoztató)"
+    },
+    "run": {
+      "title": "Ellenőrizze alkalmazás előtt",
+      "held": "Ellenőrzésre visszatartva: {reason}",
+      "summary": {
+        "total": "Sorok",
+        "newOffers": "Új ajánlatok",
+        "updates": "Frissítések",
+        "unchanged": "Változatlan",
+        "notFound": "Nem található",
+        "errors": "Hibák"
+      },
+      "status": {
+        "NEW_OFFER": "Új ajánlat",
+        "UPDATE": "Frissítés",
+        "UNCHANGED": "Változatlan",
+        "NOT_FOUND": "Nincs a katalógusban",
+        "ERROR": "Hiba"
+      },
+      "filter": {
+        "changes": "Változások",
+        "problems": "Problémák",
+        "all": "Minden sor"
+      },
+      "col": {
+        "line": "Sor",
+        "product": "Termék",
+        "changes": "Mi változik",
+        "status": "Állapot"
+      },
+      "bigWarn": "{count} ár több mint 50 %-kal változik. Kérjük, ellenőrizze őket.",
+      "confirmBig": "Ellenőriztem a nagy árváltozásokat",
+      "apply": "{count} változás alkalmazása",
+      "discard": "Elvetés",
+      "applied": "Kész: {applied} sor alkalmazva, {failed} hibás.",
+      "discarded": "Elvetve — semmi sem változott.",
+      "nothing": "Nincs mit módosítani — a katalógusa naprakész.",
+      "notFoundHint": "A FIRINGI katalógusában nem szereplő termékek nem importálhatók. Kérje a FIRINGI-t, hogy vegye fel őket.",
+      "more": "{total} sorból {shown} látható."
+    },
+    "runStatus": {
+      "PREVIEW": "Önre vár",
+      "APPLIED": "Alkalmazva",
+      "FAILED": "Sikertelen",
+      "CANCELLED": "Elvetve",
+      "HELD": "Visszatartva"
+    },
+    "source": {
+      "UPLOAD": "Fájl",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Előzmények",
+      "empty": "Még nincs importálás.",
+      "open": "Megnyitás"
+    },
+    "feeds": {
+      "title": "Mentett importok és feedek",
+      "intro": "Tegye közzé ár-/készletfájlját egy webcímen, és a FIRINGI rendszeresen letölti és alkalmazza. A gyanús futásokat visszatartjuk, hogy ellenőrizhesse.",
+      "none": "Még nincs mentve semmi. Töltsön fel egy fájlt, és mentse az oszlopait.",
+      "url": "Fájl címe (https://…)",
+      "every": "Letöltés",
+      "hours": "{n} óránként",
+      "save": "Mentés",
+      "saved": "Mentve",
+      "runNow": "Futtatás most",
+      "delete": "Törlés",
+      "deleteConfirm": "Törli ezt a mentett importot?",
+      "lastRun": "Utolsó futás: {when}",
+      "never": "Még nem futott",
+      "on": "Automatikus",
+      "manual": "Csak feltöltés",
+      "result": {
+        "APPLIED": "Alkalmazva",
+        "HELD": "Ellenőrzésre visszatartva",
+        "FAILED": "A fájl nem olvasható"
+      }
+    },
+    "keys": {
+      "title": "API-kulcsok",
+      "intro": "Kösse össze ERP-jét, webáruházát vagy pénztárát a FIRINGI-vel. A kulcs az Ön nevében jár el, csak a bejelölt jogosultságokkal.",
+      "name": "Név",
+      "namePlaceholder": "pl. Saját ERP",
+      "perms": "Jogosultságok",
+      "create": "Kulcs létrehozása",
+      "once": "Másolja ki most a kulcsot — többé nem jelenik meg.",
+      "none": "Még nincs kulcs.",
+      "revoke": "Visszavonás",
+      "revokeConfirm": "Visszavonja ezt a kulcsot? Az azt használó rendszerek azonnal leállnak.",
+      "revoked": "Visszavonva",
+      "lastUsed": "Utoljára használva: {when}",
+      "neverUsed": "Soha nem használt",
+      "usage": "{calls} hívás · {errors} hiba 7 nap alatt",
+      "actsAs": "Felhasználó: {name}",
+      "recent": "Legutóbbi hívások"
+    },
+    "scope": {
+      "catalogue_read": "Katalógus és árai megtekintése",
+      "orders_read": "Rendelések megtekintése",
+      "orders_write": "Rendelések leadása, visszaigazolása, frissítése",
+      "offers_write": "Árak, készlet és minimumok frissítése",
+      "invoices_read": "Számlák és elszámolások megtekintése"
+    },
+    "hooks": {
+      "title": "Webhookok",
+      "intro": "A FIRINGI azonnal hívja a rendszerét, amikor valami történik. Minden hívás alá van írva, így ellenőrizheti, hogy tőlünk jön.",
+      "url": "Az Ön címe (https://…)",
+      "events": "Szóljon, ha",
+      "add": "Webhook hozzáadása",
+      "secretOnce": "Aláírási titok — másolja ki most, többé nem jelenik meg:",
+      "test": "Teszt küldése",
+      "testOk": "A rendszere {status} választ adott — minden rendben.",
+      "testFail": "A rendszere nem fogadta el ({status}).",
+      "pause": "Szüneteltetés",
+      "resume": "Bekapcsolás",
+      "delete": "Törlés",
+      "deleteConfirm": "Törli ezt a webhookot?",
+      "off": "Kikapcsolva: {reason}",
+      "paused": "Szüneteltetve",
+      "active": "Aktív",
+      "none": "Még nincs webhook.",
+      "recent": "Legutóbbi kézbesítések"
+    },
+    "event": {
+      "order_created": "Új rendelés visszaigazolásra",
+      "order_placed": "Rendelés leadva",
+      "order_status_changed": "Megváltozott a rendelés állapota",
+      "invoice_issued": "Számla kiállítva",
+      "payment_received": "Fizetés beérkezett",
+      "payout_sent": "Kifizetés elküldve",
+      "ping": "Teszt"
+    },
+    "delivery": {
+      "SENT": "Kézbesítve",
+      "PENDING": "Újrapróbálás",
+      "FAILED": "Sikertelen"
+    },
+    "docs": {
+      "title": "API-dokumentáció",
+      "intro": "Minden, amire fejlesztőjének szüksége van: címek, jogosultságok, példák. A válaszok JSON-ok; az összegek nettók, kivéve ha bruttónak jelöltük.",
+      "open": "API-dokumentáció megnyitása",
+      "base": "Alapcím",
+      "auth": "Minden hívással küldje a kulcsát",
+      "limit": "Kulcsonként percenként legfeljebb {n} hívás.",
+      "openapi": "OpenAPI-fájl letöltése",
+      "who": {
+        "Buyers": "Vevők",
+        "Suppliers": "Beszállítók",
+        "Everyone": "Mindenki"
+      },
+      "needs": "Szükséges: {scope}",
+      "example": "Példa törzs",
+      "signature": "Webhook-aláírás ellenőrzése"
+    },
+    "exports": {
+      "title": "Exportok",
+      "intro": "Töltse le dokumentumait könyvelőjének vagy saját rendszerének — Excel vagy CSV.",
+      "from": "Ettől",
+      "to": "Eddig",
+      "what": "Mit",
+      "file": "Fájl",
+      "download": "Letöltés",
+      "thisMonth": "Ez a hónap",
+      "lastMonth": "Előző hónap",
+      "thisYear": "Ez az év"
+    },
+    "kind": {
+      "buyer_invoices": "A FIRINGI számlái és jóváírásai",
+      "buyer_payments": "Fizetéseim",
+      "supplier_statements": "Elszámolások",
+      "supplier_invoices": "A FIRINGI-nek küldött számláim",
+      "supplier_payouts": "Kapott kifizetések"
+    },
+    "copy": "Másolás",
+    "copied": "Másolva"
   }
 }

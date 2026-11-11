@@ -773,7 +773,10 @@
     "AI Assistant": "Assistente IA",
     "Buy Again": "Riacquista",
     "Demand & Stock": "Domanda e scorte",
-    "Direct Debit": "Addebito diretto"
+    "Direct Debit": "Addebito diretto",
+    "Import & Sync": "Importa e sincronizza",
+    "Integrations": "Integrazioni",
+    "Exports": "Esportazioni"
   },
   "delivery": {
     "title": "Consegna",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Pagamento da verificare: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed sospeso per verifica: {name}",
+      "body": "Non abbiamo applicato il file di oggi per \"{name}\" perché {reason}. Controlla le modifiche e applicale, oppure scartale."
+    },
+    "integration_feed_failed": {
+      "title": "Feed non letto: {name}",
+      "body": "Non siamo riusciti a leggere il file di \"{name}\": {reason}. Prezzi e scorte non sono cambiati. Riproveremo alla prossima esecuzione."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook disattivato",
+      "body": "Abbiamo smesso di chiamare {url} dopo molti errori consecutivi ({reason}). Correggi il tuo sistema e riattivalo in Integrazioni."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Le tue fatture vengono addebitate automaticamente (conto che termina con {last4}).",
       "legal": "Attivando l'addebito diretto autorizzi FIRINGI e il suo fornitore di pagamenti a inviare istruzioni alla tua banca per addebitare il tuo conto, e la tua banca ad addebitarlo. Puoi chiedere il rimborso alla tua banca entro 8 settimane da un addebito."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrazioni",
+      "subtitle": "Collega i tuoi sistemi a FIRINGI: file, feed automatici, un'API e notifiche immediate.",
+      "live": "Connessioni attive"
+    },
+    "stat": {
+      "keys": "Chiavi API",
+      "webhooks": "Webhook",
+      "feeds": "Feed attivi",
+      "calls": "Chiamate API · 7 giorni"
+    },
+    "import": {
+      "title": "Importa e sincronizza",
+      "subtitle": "Aggiorna prezzi, scorte e minimi da un file Excel o CSV, oppure lascia che FIRINGI prenda il tuo file a intervalli regolari.",
+      "drop": "Trascina qui il tuo file Excel o CSV",
+      "choose": "Scegli un file",
+      "limits": "Excel (.xlsx) o CSV · fino a 10 MB · fino a 5000 righe",
+      "template": "Scarica il mio modello",
+      "templateHint": "Le tue offerte attuali, pronte da modificare e ricaricare.",
+      "reading": "Lettura del file…",
+      "steps": {
+        "upload": "Carica",
+        "match": "Abbina le colonne",
+        "check": "Controlla",
+        "apply": "Applica"
+      },
+      "rowsFound": "{count} righe in {file}",
+      "mapTitle": "Quale colonna è quale?",
+      "mapHint": "Le abbiamo indovinate dai nomi delle colonne. Le righe vengono abbinate tramite il tuo codice prodotto o il codice a barre.",
+      "ignore": "Non importare",
+      "sample": "Prime righe del file",
+      "saveAs": "Salva queste colonne per la prossima volta come",
+      "saveAsPlaceholder": "es. Listino giornaliero",
+      "preview": "Mostra cosa cambierà",
+      "back": "Indietro",
+      "another": "Un altro file"
+    },
+    "fields": {
+      "vendor_sku": "Il tuo codice prodotto",
+      "gtin": "Codice a barre (EAN)",
+      "price": "Prezzo, netto",
+      "stock": "Scorte",
+      "warehouse": "Magazzino",
+      "min_qty": "Ordine minimo",
+      "qty_step": "Venduto in multipli di",
+      "lead_days": "Tempi di consegna, giorni",
+      "active": "In vendita (sì / no)",
+      "name": "Nome (come riferimento)"
+    },
+    "run": {
+      "title": "Controlla prima di applicare",
+      "held": "Sospeso per verifica: {reason}",
+      "summary": {
+        "total": "Righe",
+        "newOffers": "Nuove offerte",
+        "updates": "Aggiornamenti",
+        "unchanged": "Invariate",
+        "notFound": "Non trovati",
+        "errors": "Errori"
+      },
+      "status": {
+        "NEW_OFFER": "Nuova offerta",
+        "UPDATE": "Aggiornamento",
+        "UNCHANGED": "Invariata",
+        "NOT_FOUND": "Fuori catalogo",
+        "ERROR": "Errore"
+      },
+      "filter": {
+        "changes": "Modifiche",
+        "problems": "Problemi",
+        "all": "Tutte le righe"
+      },
+      "col": {
+        "line": "Riga",
+        "product": "Prodotto",
+        "changes": "Cosa cambia",
+        "status": "Stato"
+      },
+      "bigWarn": "{count} prezzi cambiano di oltre il 50 %. Controllali, per favore.",
+      "confirmBig": "Ho controllato le grandi variazioni di prezzo",
+      "apply": "Applica {count} modifiche",
+      "discard": "Scarta",
+      "applied": "Fatto: {applied} righe applicate, {failed} con errore.",
+      "discarded": "Scartato: non è stato cambiato nulla.",
+      "nothing": "Niente da cambiare: il tuo catalogo è già aggiornato.",
+      "notFoundHint": "I prodotti che non sono nel catalogo FIRINGI non si possono importare. Chiedi a FIRINGI di aggiungerli.",
+      "more": "Mostrate {shown} di {total} righe."
+    },
+    "runStatus": {
+      "PREVIEW": "In attesa di te",
+      "APPLIED": "Applicato",
+      "FAILED": "Non riuscito",
+      "CANCELLED": "Scartato",
+      "HELD": "Sospeso"
+    },
+    "source": {
+      "UPLOAD": "File",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Cronologia",
+      "empty": "Ancora nessuna importazione.",
+      "open": "Apri"
+    },
+    "feeds": {
+      "title": "Importazioni salvate e feed",
+      "intro": "Pubblica il tuo file prezzi / scorte a un indirizzo web: FIRINGI lo preleva e lo applica regolarmente. Le esecuzioni sospette vengono sospese per la tua verifica.",
+      "none": "Ancora niente di salvato. Carica un file e salvane le colonne per crearne uno.",
+      "url": "Indirizzo del file (https://…)",
+      "every": "Preleva ogni",
+      "hours": "{n} h",
+      "save": "Salva",
+      "saved": "Salvato",
+      "runNow": "Esegui ora",
+      "delete": "Elimina",
+      "deleteConfirm": "Eliminare questa importazione salvata?",
+      "lastRun": "Ultima esecuzione {when}",
+      "never": "Non ancora eseguito",
+      "on": "Automatico",
+      "manual": "Solo caricamento",
+      "result": {
+        "APPLIED": "Applicato",
+        "HELD": "Sospeso per verifica",
+        "FAILED": "Impossibile leggere il file"
+      }
+    },
+    "keys": {
+      "title": "Chiavi API",
+      "intro": "Collega il tuo ERP, negozio online o cassa a FIRINGI. Una chiave agisce a tuo nome, solo con i permessi che spunti.",
+      "name": "Nome",
+      "namePlaceholder": "es. Il nostro ERP",
+      "perms": "Permessi",
+      "create": "Crea chiave",
+      "once": "Copia questa chiave ora: non verrà più mostrata.",
+      "none": "Ancora nessuna chiave.",
+      "revoke": "Revoca",
+      "revokeConfirm": "Revocare questa chiave? I sistemi che la usano smettono subito di funzionare.",
+      "revoked": "Revocata",
+      "lastUsed": "Ultimo uso {when}",
+      "neverUsed": "Mai usata",
+      "usage": "{calls} chiamate · {errors} errori in 7 giorni",
+      "actsAs": "Agisce come {name}",
+      "recent": "Ultime chiamate"
+    },
+    "scope": {
+      "catalogue_read": "Vedere il catalogo e i miei prezzi",
+      "orders_read": "Vedere gli ordini",
+      "orders_write": "Fare, confermare e aggiornare ordini",
+      "offers_write": "Aggiornare i miei prezzi, scorte e minimi",
+      "invoices_read": "Vedere fatture ed estratti"
+    },
+    "hooks": {
+      "title": "Webhook",
+      "intro": "FIRINGI chiama il tuo sistema nel momento in cui succede qualcosa. Ogni chiamata è firmata, così puoi verificare che arrivi da noi.",
+      "url": "Il tuo indirizzo (https://…)",
+      "events": "Avvisami quando",
+      "add": "Aggiungi webhook",
+      "secretOnce": "Segreto di firma: copialo ora, non verrà più mostrato:",
+      "test": "Invia un test",
+      "testOk": "Il tuo sistema ha risposto {status}: tutto ok.",
+      "testFail": "Il tuo sistema non l'ha accettato ({status}).",
+      "pause": "Metti in pausa",
+      "resume": "Attiva",
+      "delete": "Elimina",
+      "deleteConfirm": "Eliminare questo webhook?",
+      "off": "Disattivato: {reason}",
+      "paused": "In pausa",
+      "active": "Attivo",
+      "none": "Ancora nessun webhook.",
+      "recent": "Ultimi invii"
+    },
+    "event": {
+      "order_created": "Nuovo ordine da confermare",
+      "order_placed": "Ordine effettuato",
+      "order_status_changed": "Stato dell'ordine cambiato",
+      "invoice_issued": "Fattura emessa",
+      "payment_received": "Pagamento ricevuto",
+      "payout_sent": "Pagamento al fornitore inviato",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Consegnato",
+      "PENDING": "Nuovo tentativo",
+      "FAILED": "Non riuscito"
+    },
+    "docs": {
+      "title": "Riferimento API",
+      "intro": "Tutto ciò che serve al tuo sviluppatore: indirizzi, permessi ed esempi. Le risposte sono JSON; gli importi sono netti salvo indicazione lordo.",
+      "open": "Apri il riferimento API",
+      "base": "Indirizzo base",
+      "auth": "Invia la tua chiave a ogni chiamata",
+      "limit": "Fino a {n} chiamate al minuto per chiave.",
+      "openapi": "Scarica il file OpenAPI",
+      "who": {
+        "Buyers": "Acquirenti",
+        "Suppliers": "Fornitori",
+        "Everyone": "Tutti"
+      },
+      "needs": "Richiede: {scope}",
+      "example": "Esempio di corpo",
+      "signature": "Verificare la firma di un webhook"
+    },
+    "exports": {
+      "title": "Esportazioni",
+      "intro": "Scarica i tuoi documenti per il commercialista o il tuo sistema, in Excel o CSV.",
+      "from": "Dal",
+      "to": "Al",
+      "what": "Cosa",
+      "file": "File",
+      "download": "Scarica",
+      "thisMonth": "Questo mese",
+      "lastMonth": "Mese scorso",
+      "thisYear": "Quest'anno"
+    },
+    "kind": {
+      "buyer_invoices": "Fatture e note di credito di FIRINGI",
+      "buyer_payments": "I miei pagamenti",
+      "supplier_statements": "Estratti di fatturazione",
+      "supplier_invoices": "Fatture che ho inviato a FIRINGI",
+      "supplier_payouts": "Pagamenti ricevuti"
+    },
+    "copy": "Copia",
+    "copied": "Copiato"
   }
 }

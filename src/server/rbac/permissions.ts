@@ -96,6 +96,7 @@ const defs = {
   "company.documents.manage": { audience: "COMPANY", module: "Company", description: "Upload and manage company documents" },
   "company.addresses.manage": { audience: "COMPANY", module: "Company", description: "Manage company addresses" },
   "company.support.use": { audience: "COMPANY", module: "Support", description: "Ask FIRINGI for help and follow support requests" },
+  "company.integrations.manage": { audience: "COMPANY", module: "Integrations", description: "Create API keys and webhooks for the company's own systems" },
   "team.users.view": { audience: "COMPANY", module: "Team", description: "View company users" },
   "team.users.manage": { audience: "COMPANY", module: "Team", description: "Create, disable and assign roles to company users" },
   "team.roles.manage": { audience: "COMPANY", module: "Team", description: "Create and edit company roles" },

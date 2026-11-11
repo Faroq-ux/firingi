@@ -86,6 +86,9 @@ export const EVENTS: EventDef[] = [
   // finance
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
   // online payments (Phase 20) — {total} is shown in the reader's currency format
+  E("integration.feed_held", "catalogue", ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], ["EMAIL", "PUSH"], ["name", "reason"]),
+  E("integration.feed_failed", "catalogue", ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], ["EMAIL", "PUSH"], ["name", "reason"]),
+  E("integration.webhook_disabled", "account", ["company.integrations.manage"], ["EMAIL"], ["url", "reason"]),
   E("payment.received", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH"], ["total", "documents"]),
   E("payment.failed", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH"], ["total", "reason"]),
   E("payment.refunded", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL"], ["total"]),

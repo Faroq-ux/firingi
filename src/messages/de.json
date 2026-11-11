@@ -773,7 +773,10 @@
     "AI Assistant": "KI-Assistent",
     "Buy Again": "Erneut kaufen",
     "Demand & Stock": "Nachfrage & Bestand",
-    "Direct Debit": "Lastschrift"
+    "Direct Debit": "Lastschrift",
+    "Import & Sync": "Import & Abgleich",
+    "Integrations": "Integrationen",
+    "Exports": "Exporte"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Zahlung braucht Aufmerksamkeit: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed zur Prüfung angehalten: {name}",
+      "body": "Wir haben die heutige Datei für „{name}“ nicht übernommen, weil {reason}. Prüfen Sie die Änderungen und übernehmen oder verwerfen Sie sie."
+    },
+    "integration_feed_failed": {
+      "title": "Feed nicht gelesen: {name}",
+      "body": "Wir konnten die Datei für „{name}“ nicht lesen: {reason}. Ihre Preise und Bestände wurden nicht geändert. Wir versuchen es beim nächsten Lauf erneut."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook abgeschaltet",
+      "body": "Wir rufen {url} nicht mehr auf, nachdem es viele Male hintereinander fehlgeschlagen ist ({reason}). Beheben Sie das Problem und schalten Sie ihn unter Integrationen wieder ein."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Ihre Rechnungen werden automatisch per Lastschrift eingezogen (Konto endet auf {last4}).",
       "legal": "Mit der Einrichtung einer Lastschrift ermächtigen Sie FIRINGI und seinen Zahlungsdienstleister, Ihre Bank anzuweisen, Ihr Konto zu belasten, und Ihre Bank, die Belastung auszuführen. Sie können innerhalb von 8 Wochen nach einer Belastung die Erstattung bei Ihrer Bank verlangen."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrationen",
+      "subtitle": "Verbinden Sie Ihre Systeme mit FIRINGI: Dateien, automatische Feeds, eine API und sofortige Benachrichtigungen.",
+      "live": "Aktive Verbindungen"
+    },
+    "stat": {
+      "keys": "API-Schlüssel",
+      "webhooks": "Webhooks",
+      "feeds": "Aktive Feeds",
+      "calls": "API-Aufrufe · 7 Tage"
+    },
+    "import": {
+      "title": "Import & Abgleich",
+      "subtitle": "Aktualisieren Sie Preise, Bestand und Mindestmengen aus einer Excel- oder CSV-Datei – oder lassen Sie FIRINGI Ihre Datei regelmäßig abholen.",
+      "drop": "Excel- oder CSV-Datei hier ablegen",
+      "choose": "Datei auswählen",
+      "limits": "Excel (.xlsx) oder CSV · bis 10 MB · bis 5000 Zeilen",
+      "template": "Meine Vorlage herunterladen",
+      "templateHint": "Ihre aktuellen Angebote, bereit zum Bearbeiten und erneuten Hochladen.",
+      "reading": "Datei wird gelesen…",
+      "steps": {
+        "upload": "Hochladen",
+        "match": "Spalten zuordnen",
+        "check": "Prüfen",
+        "apply": "Übernehmen"
+      },
+      "rowsFound": "{count} Zeilen in {file}",
+      "mapTitle": "Welche Spalte ist welche?",
+      "mapHint": "Wir haben anhand der Spaltennamen geraten. Zeilen werden über Ihre Artikelnummer oder den Barcode zugeordnet.",
+      "ignore": "Nicht importieren",
+      "sample": "Erste Zeilen Ihrer Datei",
+      "saveAs": "Diese Spalten für das nächste Mal speichern als",
+      "saveAsPlaceholder": "z. B. Tägliche Preisliste",
+      "preview": "Zeigen, was sich ändert",
+      "back": "Zurück",
+      "another": "Andere Datei"
+    },
+    "fields": {
+      "vendor_sku": "Ihre Artikelnummer",
+      "gtin": "Barcode (EAN)",
+      "price": "Preis, netto",
+      "stock": "Bestand",
+      "warehouse": "Lager",
+      "min_qty": "Mindestbestellmenge",
+      "qty_step": "Verkauft in Vielfachen von",
+      "lead_days": "Lieferzeit, Tage",
+      "active": "Im Verkauf (ja / nein)",
+      "name": "Name (zur Orientierung)"
+    },
+    "run": {
+      "title": "Vor dem Übernehmen prüfen",
+      "held": "Zur Prüfung angehalten: {reason}",
+      "summary": {
+        "total": "Zeilen",
+        "newOffers": "Neue Angebote",
+        "updates": "Änderungen",
+        "unchanged": "Unverändert",
+        "notFound": "Nicht gefunden",
+        "errors": "Fehler"
+      },
+      "status": {
+        "NEW_OFFER": "Neues Angebot",
+        "UPDATE": "Änderung",
+        "UNCHANGED": "Unverändert",
+        "NOT_FOUND": "Nicht im Katalog",
+        "ERROR": "Fehler"
+      },
+      "filter": {
+        "changes": "Änderungen",
+        "problems": "Probleme",
+        "all": "Alle Zeilen"
+      },
+      "col": {
+        "line": "Zeile",
+        "product": "Produkt",
+        "changes": "Was sich ändert",
+        "status": "Status"
+      },
+      "bigWarn": "{count} Preise ändern sich um mehr als 50 %. Bitte prüfen Sie sie.",
+      "confirmBig": "Ich habe die großen Preisänderungen geprüft",
+      "apply": "{count} Änderungen übernehmen",
+      "discard": "Verwerfen",
+      "applied": "Fertig: {applied} Zeilen übernommen, {failed} fehlgeschlagen.",
+      "discarded": "Verworfen – nichts wurde geändert.",
+      "nothing": "Nichts zu ändern – Ihr Katalog ist bereits aktuell.",
+      "notFoundHint": "Produkte, die nicht im FIRINGI-Katalog sind, können nicht importiert werden. Bitten Sie FIRINGI, sie aufzunehmen.",
+      "more": "{shown} von {total} Zeilen angezeigt."
+    },
+    "runStatus": {
+      "PREVIEW": "Wartet auf Sie",
+      "APPLIED": "Übernommen",
+      "FAILED": "Fehlgeschlagen",
+      "CANCELLED": "Verworfen",
+      "HELD": "Angehalten"
+    },
+    "source": {
+      "UPLOAD": "Datei",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Verlauf",
+      "empty": "Noch keine Importe.",
+      "open": "Öffnen"
+    },
+    "feeds": {
+      "title": "Gespeicherte Importe & Feeds",
+      "intro": "Veröffentlichen Sie Ihre Preis-/Bestandsdatei unter einer Webadresse; FIRINGI holt sie regelmäßig ab und übernimmt sie. Auffällige Läufe werden zur Prüfung angehalten.",
+      "none": "Noch nichts gespeichert. Laden Sie eine Datei hoch und speichern Sie ihre Spalten.",
+      "url": "Dateiadresse (https://…)",
+      "every": "Abholen alle",
+      "hours": "{n} Std.",
+      "save": "Speichern",
+      "saved": "Gespeichert",
+      "runNow": "Jetzt ausführen",
+      "delete": "Löschen",
+      "deleteConfirm": "Diesen gespeicherten Import löschen?",
+      "lastRun": "Letzter Lauf {when}",
+      "never": "Noch nicht gelaufen",
+      "on": "Automatisch",
+      "manual": "Nur Upload",
+      "result": {
+        "APPLIED": "Übernommen",
+        "HELD": "Zur Prüfung angehalten",
+        "FAILED": "Datei konnte nicht gelesen werden"
+      }
+    },
+    "keys": {
+      "title": "API-Schlüssel",
+      "intro": "Verbinden Sie Ihr ERP, Ihren Shop oder Ihre Kasse mit FIRINGI. Ein Schlüssel handelt in Ihrem Namen, nur mit den Rechten, die Sie ankreuzen.",
+      "name": "Name",
+      "namePlaceholder": "z. B. Unser ERP",
+      "perms": "Berechtigungen",
+      "create": "Schlüssel erstellen",
+      "once": "Kopieren Sie diesen Schlüssel jetzt – er wird nicht noch einmal angezeigt.",
+      "none": "Noch keine Schlüssel.",
+      "revoke": "Widerrufen",
+      "revokeConfirm": "Diesen Schlüssel widerrufen? Systeme, die ihn nutzen, funktionieren sofort nicht mehr.",
+      "revoked": "Widerrufen",
+      "lastUsed": "Zuletzt genutzt {when}",
+      "neverUsed": "Nie genutzt",
+      "usage": "{calls} Aufrufe · {errors} Fehler in 7 Tagen",
+      "actsAs": "Handelt als {name}",
+      "recent": "Letzte Aufrufe"
+    },
+    "scope": {
+      "catalogue_read": "Katalog und meine Preise sehen",
+      "orders_read": "Bestellungen sehen",
+      "orders_write": "Bestellungen aufgeben, bestätigen und aktualisieren",
+      "offers_write": "Meine Preise, Bestände und Mindestmengen aktualisieren",
+      "invoices_read": "Rechnungen und Abrechnungen sehen"
+    },
+    "hooks": {
+      "title": "Webhooks",
+      "intro": "FIRINGI ruft Ihr System auf, sobald etwas passiert. Jeder Aufruf ist signiert, damit Sie prüfen können, dass er von uns kommt.",
+      "url": "Ihre Adresse (https://…)",
+      "events": "Benachrichtigen bei",
+      "add": "Webhook hinzufügen",
+      "secretOnce": "Signaturgeheimnis – kopieren Sie es jetzt, es wird nicht noch einmal angezeigt:",
+      "test": "Test senden",
+      "testOk": "Ihr System hat mit {status} geantwortet – alles in Ordnung.",
+      "testFail": "Ihr System hat es nicht angenommen ({status}).",
+      "pause": "Pausieren",
+      "resume": "Einschalten",
+      "delete": "Löschen",
+      "deleteConfirm": "Diesen Webhook löschen?",
+      "off": "Aus: {reason}",
+      "paused": "Pausiert",
+      "active": "Aktiv",
+      "none": "Noch keine Webhooks.",
+      "recent": "Letzte Zustellungen"
+    },
+    "event": {
+      "order_created": "Neue Bestellung zu bestätigen",
+      "order_placed": "Bestellung aufgegeben",
+      "order_status_changed": "Bestellstatus geändert",
+      "invoice_issued": "Rechnung ausgestellt",
+      "payment_received": "Zahlung erhalten",
+      "payout_sent": "Auszahlung gesendet",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Zugestellt",
+      "PENDING": "Neuer Versuch",
+      "FAILED": "Fehlgeschlagen"
+    },
+    "docs": {
+      "title": "API-Referenz",
+      "intro": "Alles, was Ihr Entwickler braucht: Adressen, Berechtigungen und Beispiele. Antworten sind JSON; Beträge sind netto, sofern nicht als brutto gekennzeichnet.",
+      "open": "API-Referenz öffnen",
+      "base": "Basisadresse",
+      "auth": "Senden Sie Ihren Schlüssel bei jedem Aufruf",
+      "limit": "Bis zu {n} Aufrufe pro Minute und Schlüssel.",
+      "openapi": "OpenAPI-Datei herunterladen",
+      "who": {
+        "Buyers": "Käufer",
+        "Suppliers": "Lieferanten",
+        "Everyone": "Alle"
+      },
+      "needs": "Benötigt: {scope}",
+      "example": "Beispiel-Body",
+      "signature": "Webhook-Signatur prüfen"
+    },
+    "exports": {
+      "title": "Exporte",
+      "intro": "Laden Sie Ihre Belege für Ihre Buchhaltung oder Ihr eigenes System herunter – Excel oder CSV.",
+      "from": "Von",
+      "to": "Bis",
+      "what": "Was",
+      "file": "Datei",
+      "download": "Herunterladen",
+      "thisMonth": "Dieser Monat",
+      "lastMonth": "Letzter Monat",
+      "thisYear": "Dieses Jahr"
+    },
+    "kind": {
+      "buyer_invoices": "Rechnungen und Gutschriften von FIRINGI",
+      "buyer_payments": "Meine Zahlungen",
+      "supplier_statements": "Abrechnungen",
+      "supplier_invoices": "Rechnungen, die ich an FIRINGI geschickt habe",
+      "supplier_payouts": "Erhaltene Auszahlungen"
+    },
+    "copy": "Kopieren",
+    "copied": "Kopiert"
   }
 }

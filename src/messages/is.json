@@ -773,7 +773,10 @@
     "AI Assistant": "Gervigreindaraðstoð",
     "Buy Again": "Kaupa aftur",
     "Demand & Stock": "Eftirspurn og lager",
-    "Direct Debit": "Beingreiðsla"
+    "Direct Debit": "Beingreiðsla",
+    "Import & Sync": "Innflutningur og samstilling",
+    "Integrations": "Tengingar",
+    "Exports": "Útflutningur"
   },
   "delivery": {
     "title": "Afhending",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Greiðsla þarfnast athugunar: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Straumur stöðvaður til yfirferðar: {name}",
+      "body": "Við notuðum ekki skrá dagsins fyrir \"{name}\" því {reason}. Farðu yfir breytingarnar og notaðu þær eða hafnaðu þeim."
+    },
+    "integration_feed_failed": {
+      "title": "Straumur ekki lesinn: {name}",
+      "body": "Við gátum ekki lesið skrána fyrir \"{name}\": {reason}. Verðum þínum og birgðum var ekki breytt. Við reynum aftur í næstu keyrslu."
+    },
+    "integration_webhook_disabled": {
+      "title": "Slökkt á vefkrók",
+      "body": "Við hættum að kalla á {url} eftir að það mistókst mörgum sinnum í röð ({reason}). Lagaðu kerfið þitt og kveiktu á honum aftur undir Tengingar."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Reikningarnir þínir eru innheimtir sjálfkrafa með beingreiðslu (reikningur endar á {last4}).",
       "legal": "Með því að setja upp beingreiðslu heimilar þú FIRINGI og greiðsluþjónustuaðila þess að senda bankanum þínum fyrirmæli um að skuldfæra reikninginn þinn, og bankanum þínum að gera það. Þú getur beðið bankann um endurgreiðslu innan 8 vikna frá skuldfærslu."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Tengingar",
+      "subtitle": "Tengdu þín eigin kerfi við FIRINGI: skrár, sjálfvirka strauma, API og tafarlausar tilkynningar.",
+      "live": "Virkar tengingar"
+    },
+    "stat": {
+      "keys": "API-lyklar",
+      "webhooks": "Vefkrókar",
+      "feeds": "Virkir straumar",
+      "calls": "API-köll · 7 dagar"
+    },
+    "import": {
+      "title": "Innflutningur og samstilling",
+      "subtitle": "Uppfærðu verð, birgðir og lágmörk úr Excel- eða CSV-skrá – eða láttu FIRINGI sækja skrána þína reglulega.",
+      "drop": "Slepptu Excel- eða CSV-skránni hér",
+      "choose": "Velja skrá",
+      "limits": "Excel (.xlsx) eða CSV · allt að 10 MB · allt að 5000 línur",
+      "template": "Sækja sniðmátið mitt",
+      "templateHint": "Núverandi tilboð þín, tilbúin til að breyta og hlaða upp aftur.",
+      "reading": "Les skrána…",
+      "steps": {
+        "upload": "Hlaða upp",
+        "match": "Para dálka",
+        "check": "Yfirfara",
+        "apply": "Nota"
+      },
+      "rowsFound": "{count} línur í {file}",
+      "mapTitle": "Hvaða dálkur er hvað?",
+      "mapHint": "Við giskuðum út frá heitum dálkanna. Línur eru paraðar eftir vörunúmerinu þínu eða strikamerkinu.",
+      "ignore": "Ekki flytja inn",
+      "sample": "Fyrstu línur skrárinnar",
+      "saveAs": "Vista þessa dálka fyrir næsta skipti sem",
+      "saveAsPlaceholder": "t.d. Dagleg verðskrá",
+      "preview": "Sýna hvað breytist",
+      "back": "Til baka",
+      "another": "Önnur skrá"
+    },
+    "fields": {
+      "vendor_sku": "Vörunúmerið þitt",
+      "gtin": "Strikamerki (EAN)",
+      "price": "Verð án VSK",
+      "stock": "Birgðir",
+      "warehouse": "Vöruhús",
+      "min_qty": "Lágmarkspöntun",
+      "qty_step": "Selt í margfeldum af",
+      "lead_days": "Afhendingartími, dagar",
+      "active": "Til sölu (já / nei)",
+      "name": "Heiti (til viðmiðunar)"
+    },
+    "run": {
+      "title": "Farðu yfir áður en þú notar",
+      "held": "Stöðvað til yfirferðar: {reason}",
+      "summary": {
+        "total": "Línur",
+        "newOffers": "Ný tilboð",
+        "updates": "Uppfærslur",
+        "unchanged": "Óbreytt",
+        "notFound": "Fannst ekki",
+        "errors": "Villur"
+      },
+      "status": {
+        "NEW_OFFER": "Nýtt tilboð",
+        "UPDATE": "Uppfærsla",
+        "UNCHANGED": "Óbreytt",
+        "NOT_FOUND": "Ekki í vörulista",
+        "ERROR": "Villa"
+      },
+      "filter": {
+        "changes": "Breytingar",
+        "problems": "Vandamál",
+        "all": "Allar línur"
+      },
+      "col": {
+        "line": "Lína",
+        "product": "Vara",
+        "changes": "Hvað breytist",
+        "status": "Staða"
+      },
+      "bigWarn": "{count} verð breytast um meira en 50 %. Vinsamlegast farðu yfir þau.",
+      "confirmBig": "Ég hef farið yfir stóru verðbreytingarnar",
+      "apply": "Nota {count} breytingar",
+      "discard": "Hafna",
+      "applied": "Lokið: {applied} línur notaðar, {failed} mistókust.",
+      "discarded": "Hafnað – engu var breytt.",
+      "nothing": "Engu að breyta – vörulistinn þinn er þegar uppfærður.",
+      "notFoundHint": "Vörur sem eru ekki í vörulista FIRINGI er ekki hægt að flytja inn. Biddu FIRINGI um að bæta þeim við.",
+      "more": "Sýni {shown} af {total} línum."
+    },
+    "runStatus": {
+      "PREVIEW": "Bíður eftir þér",
+      "APPLIED": "Notað",
+      "FAILED": "Mistókst",
+      "CANCELLED": "Hafnað",
+      "HELD": "Stöðvað"
+    },
+    "source": {
+      "UPLOAD": "Skrá",
+      "URL": "Straumur",
+      "API": "API"
+    },
+    "history": {
+      "title": "Saga",
+      "empty": "Enginn innflutningur enn.",
+      "open": "Opna"
+    },
+    "feeds": {
+      "title": "Vistaður innflutningur og straumar",
+      "intro": "Birtu verð-/birgðaskrána þína á vefslóð og FIRINGI sækir hana og notar reglulega. Keyrslur sem líta rangt út eru stöðvaðar svo þú getir farið yfir þær.",
+      "none": "Ekkert vistað enn. Hladdu upp skrá og vistaðu dálkana til að búa til einn.",
+      "url": "Slóð skrár (https://…)",
+      "every": "Sækja á",
+      "hours": "{n} klst. fresti",
+      "save": "Vista",
+      "saved": "Vistað",
+      "runNow": "Keyra núna",
+      "delete": "Eyða",
+      "deleteConfirm": "Eyða þessum vistaða innflutningi?",
+      "lastRun": "Síðasta keyrsla {when}",
+      "never": "Ekki keyrt enn",
+      "on": "Sjálfvirkt",
+      "manual": "Aðeins upphleðsla",
+      "result": {
+        "APPLIED": "Notað",
+        "HELD": "Stöðvað til yfirferðar",
+        "FAILED": "Ekki tókst að lesa skrána"
+      }
+    },
+    "keys": {
+      "title": "API-lyklar",
+      "intro": "Láttu bókhaldskerfið, vefverslunina eða kassann vinna með FIRINGI. Lykill virkar sem þú, aðeins með þeim heimildum sem þú hakar við.",
+      "name": "Heiti",
+      "namePlaceholder": "t.d. Bókhaldskerfið okkar",
+      "perms": "Heimildir",
+      "create": "Búa til lykil",
+      "once": "Afritaðu lykilinn núna – hann birtist ekki aftur.",
+      "none": "Engir lyklar enn.",
+      "revoke": "Afturkalla",
+      "revokeConfirm": "Afturkalla þennan lykil? Kerfi sem nota hann hætta strax að virka.",
+      "revoked": "Afturkallaður",
+      "lastUsed": "Síðast notaður {when}",
+      "neverUsed": "Aldrei notaður",
+      "usage": "{calls} köll · {errors} villur á 7 dögum",
+      "actsAs": "Virkar sem {name}",
+      "recent": "Nýjustu köll"
+    },
+    "scope": {
+      "catalogue_read": "Sjá vörulistann og verðin mín",
+      "orders_read": "Sjá pantanir",
+      "orders_write": "Gera, staðfesta og uppfæra pantanir",
+      "offers_write": "Uppfæra verð, birgðir og lágmörk mín",
+      "invoices_read": "Sjá reikninga og uppgjör"
+    },
+    "hooks": {
+      "title": "Vefkrókar",
+      "intro": "FIRINGI kallar á kerfið þitt um leið og eitthvað gerist. Hvert kall er undirritað svo þú getir staðfest að það komi frá okkur.",
+      "url": "Slóðin þín (https://…)",
+      "events": "Láta mig vita þegar",
+      "add": "Bæta við vefkrók",
+      "secretOnce": "Undirritunarleyndarmál – afritaðu það núna, það birtist ekki aftur:",
+      "test": "Senda prófun",
+      "testOk": "Kerfið þitt svaraði {status} – allt í lagi.",
+      "testFail": "Kerfið þitt samþykkti það ekki ({status}).",
+      "pause": "Gera hlé",
+      "resume": "Kveikja",
+      "delete": "Eyða",
+      "deleteConfirm": "Eyða þessum vefkrók?",
+      "off": "Slökkt: {reason}",
+      "paused": "Í hléi",
+      "active": "Virkur",
+      "none": "Engir vefkrókar enn.",
+      "recent": "Nýjustu sendingar"
+    },
+    "event": {
+      "order_created": "Ný pöntun til staðfestingar",
+      "order_placed": "Pöntun gerð",
+      "order_status_changed": "Staða pöntunar breyttist",
+      "invoice_issued": "Reikningur gefinn út",
+      "payment_received": "Greiðsla móttekin",
+      "payout_sent": "Útgreiðsla send",
+      "ping": "Prófun"
+    },
+    "delivery": {
+      "SENT": "Afhent",
+      "PENDING": "Reynir aftur",
+      "FAILED": "Mistókst"
+    },
+    "docs": {
+      "title": "API-tilvísun",
+      "intro": "Allt sem forritarinn þinn þarf: slóðir, heimildir og dæmi. Svör eru JSON; upphæðir eru án VSK nema merktar brúttó.",
+      "open": "Opna API-tilvísunina",
+      "base": "Grunnslóð",
+      "auth": "Sendu lykilinn með hverju kalli",
+      "limit": "Allt að {n} köll á mínútu á hvern lykil.",
+      "openapi": "Sækja OpenAPI-skrána",
+      "who": {
+        "Buyers": "Kaupendur",
+        "Suppliers": "Birgjar",
+        "Everyone": "Allir"
+      },
+      "needs": "Krefst: {scope}",
+      "example": "Dæmi um meginmál",
+      "signature": "Að staðfesta undirskrift vefkróks"
+    },
+    "exports": {
+      "title": "Útflutningur",
+      "intro": "Sæktu skjölin þín fyrir bókarann eða þitt eigið kerfi – Excel eða CSV.",
+      "from": "Frá",
+      "to": "Til",
+      "what": "Hvað",
+      "file": "Skrá",
+      "download": "Sækja",
+      "thisMonth": "Þessi mánuður",
+      "lastMonth": "Síðasti mánuður",
+      "thisYear": "Þetta ár"
+    },
+    "kind": {
+      "buyer_invoices": "Reikningar og kreditreikningar frá FIRINGI",
+      "buyer_payments": "Greiðslurnar mínar",
+      "supplier_statements": "Reikningsyfirlit",
+      "supplier_invoices": "Reikningar sem ég sendi FIRINGI",
+      "supplier_payouts": "Mótteknar útgreiðslur"
+    },
+    "copy": "Afrita",
+    "copied": "Afritað"
   }
 }

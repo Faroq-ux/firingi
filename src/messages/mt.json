@@ -773,7 +773,10 @@
     "AI Assistant": "Assistent tal-IA",
     "Buy Again": "Erġa' xtri",
     "Demand & Stock": "Domanda u stokk",
-    "Direct Debit": "Debitu dirett"
+    "Direct Debit": "Debitu dirett",
+    "Import & Sync": "Importazzjoni u sinkronizzazzjoni",
+    "Integrations": "Integrazzjonijiet",
+    "Exports": "Esportazzjonijiet"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Ħlas jeħtieġ attenzjoni: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed miżmum għall-verifika: {name}",
+      "body": "Ma applikajniex il-fajl tal-lum għal \"{name}\" għax {reason}. Iċċekkja l-bidliet u applikahom, jew warrabhom."
+    },
+    "integration_feed_failed": {
+      "title": "Feed ma nqarax: {name}",
+      "body": "Ma stajniex naqraw il-fajl għal \"{name}\": {reason}. Il-prezzijiet u l-istokk tiegħek ma nbidlux. Nerġgħu nippruvaw fir-run li jmiss."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook mitfi",
+      "body": "Waqafna nċemplu {url} wara li falla ħafna drabi wara xulxin ({reason}). Irranġa s-sistema tiegħek u erġa' xegħlu f'Integrazzjonijiet."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Il-fatturi tiegħek jinġabru awtomatikament b'debitu dirett (kont li jispiċċa b'{last4}).",
       "legal": "Billi twaqqaf debitu dirett, tawtorizza lil FIRINGI u lill-fornitur tal-ħlas tagħha jibagħtu struzzjonijiet lill-bank tiegħek biex jiddebita l-kont tiegħek, u lill-bank tiegħek biex jiddebitah. Tista' titlob rifużjoni mill-bank tiegħek fi żmien 8 ġimgħat minn debitu."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integrazzjonijiet",
+      "subtitle": "Qabbad is-sistemi tiegħek ma' FIRINGI: fajls, feeds awtomatiċi, API u notifiki immedjati.",
+      "live": "Konnessjonijiet attivi"
+    },
+    "stat": {
+      "keys": "Ċwievet tal-API",
+      "webhooks": "Webhooks",
+      "feeds": "Feeds attivi",
+      "calls": "Sejħiet tal-API · 7 ijiem"
+    },
+    "import": {
+      "title": "Importazzjoni u sinkronizzazzjoni",
+      "subtitle": "Aġġorna l-prezzijiet, l-istokk u l-minimi minn fajl Excel jew CSV — jew ħalli lil FIRINGI tiġbor il-fajl tiegħek regolarment.",
+      "drop": "Itlaq il-fajl Excel jew CSV tiegħek hawn",
+      "choose": "Agħżel fajl",
+      "limits": "Excel (.xlsx) jew CSV · sa 10 MB · sa 5000 ringiela",
+      "template": "Niżżel il-mudell tiegħi",
+      "templateHint": "L-offerti attwali tiegħek, lesti biex teditjahom u ttellagħhom mill-ġdid.",
+      "reading": "Qed naqraw il-fajl…",
+      "steps": {
+        "upload": "Tella'",
+        "match": "Qabbel il-kolonni",
+        "check": "Iċċekkja",
+        "apply": "Applika"
+      },
+      "rowsFound": "{count} ringiela f'{file}",
+      "mapTitle": "Liema kolonna hi liema?",
+      "mapHint": "Qtajna mill-ismijiet tal-kolonni. Ir-ringieli jitqabblu bil-kodiċi tal-prodott tiegħek jew bil-barcode.",
+      "ignore": "Timportax",
+      "sample": "L-ewwel ringieli tal-fajl",
+      "saveAs": "Issejvja dawn il-kolonni għad-darba li jmiss bħala",
+      "saveAsPlaceholder": "eż. Lista tal-prezzijiet ta' kuljum",
+      "preview": "Uri x'se jinbidel",
+      "back": "Lura",
+      "another": "Fajl ieħor"
+    },
+    "fields": {
+      "vendor_sku": "Il-kodiċi tal-prodott tiegħek",
+      "gtin": "Barcode (EAN)",
+      "price": "Prezz mingħajr VAT",
+      "stock": "Stokk",
+      "warehouse": "Maħżen",
+      "min_qty": "Ordni minima",
+      "qty_step": "Jinbiegħ f'multipli ta'",
+      "lead_days": "Żmien tal-kunsinna, jiem",
+      "active": "Għall-bejgħ (iva / le)",
+      "name": "Isem (għar-referenza)"
+    },
+    "run": {
+      "title": "Iċċekkja qabel tapplika",
+      "held": "Miżmum għall-verifika: {reason}",
+      "summary": {
+        "total": "Ringieli",
+        "newOffers": "Offerti ġodda",
+        "updates": "Aġġornamenti",
+        "unchanged": "Ma nbidlux",
+        "notFound": "Ma nstabux",
+        "errors": "Żbalji"
+      },
+      "status": {
+        "NEW_OFFER": "Offerta ġdida",
+        "UPDATE": "Aġġornament",
+        "UNCHANGED": "Ma nbidilx",
+        "NOT_FOUND": "Mhux fil-katalgu",
+        "ERROR": "Żball"
+      },
+      "filter": {
+        "changes": "Bidliet",
+        "problems": "Problemi",
+        "all": "Ir-ringieli kollha"
+      },
+      "col": {
+        "line": "Ringiela",
+        "product": "Prodott",
+        "changes": "X'jinbidel",
+        "status": "Status"
+      },
+      "bigWarn": "{count} prezzijiet jinbidlu b'aktar minn 50 %. Jekk jogħġbok iċċekkjahom.",
+      "confirmBig": "Iċċekkjajt il-bidliet kbar fil-prezz",
+      "apply": "Applika {count} bidliet",
+      "discard": "Warrab",
+      "applied": "Lest: {applied} ringieli applikati, {failed} fallew.",
+      "discarded": "Imwarrab — ma nbidel xejn.",
+      "nothing": "Xejn x'tibdel — il-katalgu tiegħek diġà aġġornat.",
+      "notFoundHint": "Prodotti li mhumiex fil-katalgu ta' FIRINGI ma jistgħux jiġu importati. Itlob lil FIRINGI biex iżżidhom.",
+      "more": "Qed nuru {shown} minn {total} ringiela."
+    },
+    "runStatus": {
+      "PREVIEW": "Qed jistennik",
+      "APPLIED": "Applikat",
+      "FAILED": "Falla",
+      "CANCELLED": "Imwarrab",
+      "HELD": "Miżmum"
+    },
+    "source": {
+      "UPLOAD": "Fajl",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Storja",
+      "empty": "Għad m'hemm l-ebda importazzjoni.",
+      "open": "Iftaħ"
+    },
+    "feeds": {
+      "title": "Importazzjonijiet issejvjati u feeds",
+      "intro": "Ippubblika l-fajl tal-prezzijiet / stokk f'indirizz tal-web u FIRINGI tiġbru u tapplikah regolarment. Runs li jidhru ħżiena jinżammu biex tiċċekkjahom.",
+      "none": "Għad m'hemm xejn issejvjat. Tella' fajl u ssejvja l-kolonni tiegħu.",
+      "url": "Indirizz tal-fajl (https://…)",
+      "every": "Iġbor kull",
+      "hours": "{n} siegħa",
+      "save": "Issejvja",
+      "saved": "Issejvjat",
+      "runNow": "Ħaddem issa",
+      "delete": "Ħassar",
+      "deleteConfirm": "Tħassar din l-importazzjoni ssejvjata?",
+      "lastRun": "L-aħħar run {when}",
+      "never": "Għadu ma tħaddimx",
+      "on": "Awtomatiku",
+      "manual": "Tlugħ biss",
+      "result": {
+        "APPLIED": "Applikat",
+        "HELD": "Miżmum għall-verifika",
+        "FAILED": "Ma setax jinqara l-fajl"
+      }
+    },
+    "keys": {
+      "title": "Ċwievet tal-API",
+      "intro": "Ħalli l-ERP, il-ħanut online jew il-kaxxa tiegħek jaħdmu ma' FIRINGI. Ċavetta taġixxi f'ismek, bil-permessi li tagħżel biss.",
+      "name": "Isem",
+      "namePlaceholder": "eż. L-ERP tagħna",
+      "perms": "Permessi",
+      "create": "Oħloq ċavetta",
+      "once": "Ikkopja din iċ-ċavetta issa — mhux se terġa' tidher.",
+      "none": "Għad m'hemmx ċwievet.",
+      "revoke": "Irrevoka",
+      "revokeConfirm": "Tirrevoka din iċ-ċavetta? Is-sistemi li jużawha jieqfu jaħdmu minnufih.",
+      "revoked": "Irrevokata",
+      "lastUsed": "L-aħħar użata {when}",
+      "neverUsed": "Qatt ma ntużat",
+      "usage": "{calls} sejħa · {errors} żball f'7 ijiem",
+      "actsAs": "Taġixxi bħala {name}",
+      "recent": "L-aħħar sejħiet"
+    },
+    "scope": {
+      "catalogue_read": "Tara l-katalgu u l-prezzijiet tiegħi",
+      "orders_read": "Tara l-ordnijiet",
+      "orders_write": "Tagħmel, tikkonferma u taġġorna ordnijiet",
+      "offers_write": "Taġġorna l-prezzijiet, l-istokk u l-minimi tiegħi",
+      "invoices_read": "Tara fatturi u dikjarazzjonijiet"
+    },
+    "hooks": {
+      "title": "Webhooks",
+      "intro": "FIRINGI ssejjaħ lis-sistema tiegħek mal-ewwel ma jiġri xi ħaġa. Kull sejħa hija ffirmata, biex tkun tista' tiċċekkja li ġejja mingħandna.",
+      "url": "L-indirizz tiegħek (https://…)",
+      "events": "Għidli meta",
+      "add": "Żid webhook",
+      "secretOnce": "Sigriet tal-firma — ikkopjah issa, mhux se jerġa' jidher:",
+      "test": "Ibgħat test",
+      "testOk": "Is-sistema tiegħek wieġbet {status} — kollox sew.",
+      "testFail": "Is-sistema tiegħek ma aċċettatux ({status}).",
+      "pause": "Waqqaf",
+      "resume": "Ixgħel",
+      "delete": "Ħassar",
+      "deleteConfirm": "Tħassar dan il-webhook?",
+      "off": "Mitfi: {reason}",
+      "paused": "Waqfien",
+      "active": "Attiv",
+      "none": "Għad m'hemmx webhooks.",
+      "recent": "L-aħħar konsenji"
+    },
+    "event": {
+      "order_created": "Ordni ġdida biex tikkonferma",
+      "order_placed": "Saret ordni",
+      "order_status_changed": "Inbidel l-istatus tal-ordni",
+      "invoice_issued": "Inħarġet fattura",
+      "payment_received": "Wasal ħlas",
+      "payout_sent": "Intbagħat ħlas lill-fornitur",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Ikkunsinnat",
+      "PENDING": "Qed jerġa' jipprova",
+      "FAILED": "Falla"
+    },
+    "docs": {
+      "title": "Referenza tal-API",
+      "intro": "Dak kollu li jeħtieġ l-iżviluppatur tiegħek: indirizzi, permessi u eżempji. It-tweġibiet huma JSON; l-ammonti huma mingħajr VAT sakemm ma jkunux immarkati gross.",
+      "open": "Iftaħ ir-referenza tal-API",
+      "base": "Indirizz bażi",
+      "auth": "Ibgħat iċ-ċavetta tiegħek ma' kull sejħa",
+      "limit": "Sa {n} sejħa kull minuta għal kull ċavetta.",
+      "openapi": "Niżżel il-fajl OpenAPI",
+      "who": {
+        "Buyers": "Xerrejja",
+        "Suppliers": "Fornituri",
+        "Everyone": "Kulħadd"
+      },
+      "needs": "Jeħtieġ: {scope}",
+      "example": "Eżempju ta' body",
+      "signature": "Kif tiċċekkja l-firma ta' webhook"
+    },
+    "exports": {
+      "title": "Esportazzjonijiet",
+      "intro": "Niżżel id-dokumenti tiegħek għall-accountant jew għas-sistema tiegħek — Excel jew CSV.",
+      "from": "Minn",
+      "to": "Sa",
+      "what": "X'inhu",
+      "file": "Fajl",
+      "download": "Niżżel",
+      "thisMonth": "Dan ix-xahar",
+      "lastMonth": "Ix-xahar li għadda",
+      "thisYear": "Din is-sena"
+    },
+    "kind": {
+      "buyer_invoices": "Fatturi u noti ta' kreditu minn FIRINGI",
+      "buyer_payments": "Il-ħlasijiet tiegħi",
+      "supplier_statements": "Dikjarazzjonijiet tal-kontijiet",
+      "supplier_invoices": "Fatturi li bgħatt lil FIRINGI",
+      "supplier_payouts": "Ħlasijiet riċevuti"
+    },
+    "copy": "Ikkopja",
+    "copied": "Ikkupjat"
   }
 }

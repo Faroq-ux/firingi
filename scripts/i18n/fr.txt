@@ -1496,3 +1496,188 @@ Le prélèvement n'est pas encore disponible.
 Vos factures sont prélevées automatiquement (compte se terminant par {last4}).
 En mettant en place un prélèvement, vous autorisez FIRINGI et son prestataire de paiement à envoyer des instructions à votre banque pour débiter votre compte, et votre banque à le débiter. Vous pouvez demander un remboursement à votre banque dans les 8 semaines suivant un prélèvement.
 Prélèvement
+Flux suspendu pour vérification : {name}
+Nous n'avons pas appliqué le fichier du jour pour « {name} » car {reason}. Vérifiez les modifications puis appliquez-les ou rejetez-les.
+Flux non lu : {name}
+Nous n'avons pas pu lire le fichier de « {name} » : {reason}. Vos prix et stocks n'ont pas changé. Nouvel essai au prochain passage.
+Webhook désactivé
+Nous avons cessé d'appeler {url} après de nombreux échecs consécutifs ({reason}). Corrigez votre système puis réactivez-le dans Intégrations.
+Intégrations
+Reliez vos systèmes à FIRINGI : fichiers, flux automatiques, une API et des notifications instantanées.
+Connexions actives
+Clés API
+Webhooks
+Flux actifs
+Appels API · 7 jours
+Import & synchronisation
+Mettez à jour prix, stocks et minimums depuis un fichier Excel ou CSV — ou laissez FIRINGI récupérer votre fichier régulièrement.
+Déposez ici votre fichier Excel ou CSV
+Choisir un fichier
+Excel (.xlsx) ou CSV · 10 Mo max · 5000 lignes max
+Télécharger mon modèle
+Vos offres actuelles, prêtes à modifier et à renvoyer.
+Lecture du fichier…
+Importer
+Associer les colonnes
+Vérifier
+Appliquer
+{count} lignes dans {file}
+Quelle colonne correspond à quoi ?
+Nous avons deviné d'après les noms de colonnes. Les lignes sont reconnues par votre code produit ou par le code-barres.
+Ne pas importer
+Premières lignes de votre fichier
+Enregistrer ces colonnes pour la prochaine fois sous
+ex. Tarif du jour
+Voir ce qui va changer
+Retour
+Autre fichier
+Votre code produit
+Code-barres (EAN)
+Prix HT
+Stock
+Entrepôt
+Commande minimum
+Vendu par multiples de
+Délai, jours
+En vente (oui / non)
+Nom (pour repère)
+Vérifiez avant d'appliquer
+Suspendu pour vérification : {reason}
+Lignes
+Nouvelles offres
+Mises à jour
+Inchangées
+Introuvables
+Erreurs
+Nouvelle offre
+Mise à jour
+Inchangée
+Hors catalogue
+Erreur
+Modifications
+Problèmes
+Toutes les lignes
+Ligne
+Produit
+Ce qui change
+Statut
+{count} prix changent de plus de 50 %. Merci de les vérifier.
+J'ai vérifié les fortes variations de prix
+Appliquer {count} modifications
+Rejeter
+Terminé : {applied} lignes appliquées, {failed} en échec.
+Rejeté — rien n'a été modifié.
+Rien à changer — votre catalogue est déjà à jour.
+Les produits absents du catalogue FIRINGI ne peuvent pas être importés. Demandez à FIRINGI de les ajouter.
+{shown} lignes affichées sur {total}.
+En attente de vous
+Appliqué
+Échec
+Rejeté
+Suspendu
+Fichier
+Flux
+API
+Historique
+Aucun import pour l'instant.
+Ouvrir
+Imports enregistrés & flux
+Publiez votre fichier prix / stock à une adresse web : FIRINGI le récupère et l'applique régulièrement. Les passages suspects sont suspendus pour que vous les vérifiiez.
+Rien d'enregistré pour l'instant. Importez un fichier et enregistrez ses colonnes.
+Adresse du fichier (https://…)
+Récupérer toutes les
+{n} h
+Enregistrer
+Enregistré
+Lancer maintenant
+Supprimer
+Supprimer cet import enregistré ?
+Dernier passage {when}
+Pas encore lancé
+Automatique
+Import manuel
+Appliqué
+Suspendu pour vérification
+Impossible de lire le fichier
+Clés API
+Reliez votre ERP, boutique en ligne ou caisse à FIRINGI. Une clé agit en votre nom, avec seulement les droits que vous cochez.
+Nom
+ex. Notre ERP
+Droits
+Créer une clé
+Copiez cette clé maintenant — elle ne sera plus affichée.
+Aucune clé pour l'instant.
+Révoquer
+Révoquer cette clé ? Les systèmes qui l'utilisent cessent de fonctionner immédiatement.
+Révoquée
+Utilisée {when}
+Jamais utilisée
+{calls} appels · {errors} erreurs sur 7 jours
+Agit en tant que {name}
+Derniers appels
+Voir le catalogue et mes prix
+Voir les commandes
+Passer, confirmer et mettre à jour des commandes
+Mettre à jour mes prix, stocks et minimums
+Voir factures et relevés
+Webhooks
+FIRINGI appelle votre système dès qu'un événement se produit. Chaque appel est signé pour que vous puissiez vérifier qu'il vient de nous.
+Votre adresse (https://…)
+Me prévenir quand
+Ajouter un webhook
+Secret de signature — copiez-le maintenant, il ne sera plus affiché :
+Envoyer un test
+Votre système a répondu {status} — tout va bien.
+Votre système ne l'a pas accepté ({status}).
+Mettre en pause
+Activer
+Supprimer
+Supprimer ce webhook ?
+Désactivé : {reason}
+En pause
+Actif
+Aucun webhook pour l'instant.
+Derniers envois
+Nouvelle commande à confirmer
+Commande passée
+Statut de commande modifié
+Facture émise
+Paiement reçu
+Versement envoyé
+Test
+Livré
+Nouvel essai
+Échec
+Référence de l'API
+Tout ce dont votre développeur a besoin : adresses, droits et exemples. Réponses en JSON ; montants HT sauf mention TTC.
+Ouvrir la référence de l'API
+Adresse de base
+Envoyez votre clé à chaque appel
+Jusqu'à {n} appels par minute et par clé.
+Télécharger le fichier OpenAPI
+Acheteurs
+Fournisseurs
+Tous
+Nécessite : {scope}
+Exemple de corps
+Vérifier la signature d'un webhook
+Exports
+Téléchargez vos documents pour votre comptable ou votre propre système — Excel ou CSV.
+Du
+Au
+Quoi
+Fichier
+Télécharger
+Ce mois-ci
+Mois dernier
+Cette année
+Factures et avoirs de FIRINGI
+Mes paiements
+Relevés de facturation
+Factures que j'ai envoyées à FIRINGI
+Versements reçus
+Copier
+Copié
+Import & synchronisation
+Intégrations
+Exports

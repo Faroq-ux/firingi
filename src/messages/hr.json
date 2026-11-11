@@ -773,7 +773,10 @@
     "AI Assistant": "AI asistent",
     "Buy Again": "Kupi ponovno",
     "Demand & Stock": "Potražnja i zalihe",
-    "Direct Debit": "Izravno terećenje"
+    "Direct Debit": "Izravno terećenje",
+    "Import & Sync": "Uvoz i sinkronizacija",
+    "Integrations": "Integracije",
+    "Exports": "Izvozi"
   },
   "delivery": {
     "title": "Dostava",
@@ -1219,6 +1222,18 @@
     "payment_attention": {
       "title": "Plaćanje traži pažnju: {company}",
       "body": "{company}, {total}: {reason}"
+    },
+    "integration_feed_held": {
+      "title": "Feed zadržan radi provjere: {name}",
+      "body": "Današnju datoteku za „{name}” nismo primijenili jer {reason}. Provjerite promjene i primijenite ih ili ih odbacite."
+    },
+    "integration_feed_failed": {
+      "title": "Feed nije pročitan: {name}",
+      "body": "Nismo mogli pročitati datoteku za „{name}”: {reason}. Vaše cijene i zalihe nisu promijenjene. Pokušat ćemo ponovno pri sljedećem pokretanju."
+    },
+    "integration_webhook_disabled": {
+      "title": "Webhook isključen",
+      "body": "Prestali smo pozivati {url} nakon što je mnogo puta zaredom zakazao ({reason}). Popravite svoj sustav i ponovno ga uključite u Integracijama."
     }
   },
   "notifications": {
@@ -1814,5 +1829,231 @@
       "collectedAuto": "Vaši računi naplaćuju se automatski izravnim terećenjem (račun koji završava s {last4}).",
       "legal": "Postavljanjem izravnog terećenja ovlašćujete FIRINGI i njegovog pružatelja usluga plaćanja da vašoj banci šalju naloge za terećenje vašeg računa, a vašu banku da ga tereti. Povrat možete zatražiti od banke u roku od 8 tjedana od terećenja."
     }
+  },
+  "integrations": {
+    "hub": {
+      "title": "Integracije",
+      "subtitle": "Povežite svoje sustave s FIRINGI: datoteke, automatski feedovi, API i trenutne obavijesti.",
+      "live": "Aktivne veze"
+    },
+    "stat": {
+      "keys": "API ključevi",
+      "webhooks": "Webhookovi",
+      "feeds": "Aktivni feedovi",
+      "calls": "API pozivi · 7 dana"
+    },
+    "import": {
+      "title": "Uvoz i sinkronizacija",
+      "subtitle": "Ažurirajte cijene, zalihe i minimume iz Excel ili CSV datoteke — ili neka FIRINGI redovito preuzima vašu datoteku.",
+      "drop": "Ovdje ispustite Excel ili CSV datoteku",
+      "choose": "Odaberite datoteku",
+      "limits": "Excel (.xlsx) ili CSV · do 10 MB · do 5000 redaka",
+      "template": "Preuzmi moj predložak",
+      "templateHint": "Vaše trenutne ponude, spremne za uređivanje i ponovni prijenos.",
+      "reading": "Čitam datoteku…",
+      "steps": {
+        "upload": "Prijenos",
+        "match": "Poveži stupce",
+        "check": "Provjeri",
+        "apply": "Primijeni"
+      },
+      "rowsFound": "{count} redaka u {file}",
+      "mapTitle": "Koji je stupac koji?",
+      "mapHint": "Pogodili smo prema nazivima stupaca. Retci se povezuju prema vašoj šifri proizvoda ili barkodu.",
+      "ignore": "Ne uvozi",
+      "sample": "Prvi retci datoteke",
+      "saveAs": "Spremi ove stupce za sljedeći put kao",
+      "saveAsPlaceholder": "npr. Dnevni cjenik",
+      "preview": "Prikaži što će se promijeniti",
+      "back": "Natrag",
+      "another": "Druga datoteka"
+    },
+    "fields": {
+      "vendor_sku": "Vaša šifra proizvoda",
+      "gtin": "Barkod (EAN)",
+      "price": "Cijena bez PDV-a",
+      "stock": "Zaliha",
+      "warehouse": "Skladište",
+      "min_qty": "Minimalna narudžba",
+      "qty_step": "Prodaje se u višekratnicima od",
+      "lead_days": "Rok isporuke, dani",
+      "active": "U prodaji (da / ne)",
+      "name": "Naziv (za snalaženje)"
+    },
+    "run": {
+      "title": "Provjerite prije primjene",
+      "held": "Zadržano radi provjere: {reason}",
+      "summary": {
+        "total": "Retci",
+        "newOffers": "Nove ponude",
+        "updates": "Ažuriranja",
+        "unchanged": "Bez promjene",
+        "notFound": "Nije pronađeno",
+        "errors": "Pogreške"
+      },
+      "status": {
+        "NEW_OFFER": "Nova ponuda",
+        "UPDATE": "Ažuriranje",
+        "UNCHANGED": "Bez promjene",
+        "NOT_FOUND": "Nije u katalogu",
+        "ERROR": "Pogreška"
+      },
+      "filter": {
+        "changes": "Promjene",
+        "problems": "Problemi",
+        "all": "Svi retci"
+      },
+      "col": {
+        "line": "Redak",
+        "product": "Proizvod",
+        "changes": "Što se mijenja",
+        "status": "Status"
+      },
+      "bigWarn": "Cijene se kod {count} proizvoda mijenjaju za više od 50 %. Molimo provjerite ih.",
+      "confirmBig": "Provjerio/la sam velike promjene cijena",
+      "apply": "Primijeni promjene ({count})",
+      "discard": "Odbaci",
+      "applied": "Gotovo: primijenjeno redaka {applied}, neuspjelih {failed}.",
+      "discarded": "Odbačeno — ništa nije promijenjeno.",
+      "nothing": "Nema promjena — vaš katalog je već ažuran.",
+      "notFoundHint": "Proizvodi kojih nema u katalogu FIRINGI ne mogu se uvesti. Zamolite FIRINGI da ih doda.",
+      "more": "Prikazano {shown} od {total} redaka."
+    },
+    "runStatus": {
+      "PREVIEW": "Čeka vas",
+      "APPLIED": "Primijenjeno",
+      "FAILED": "Nije uspjelo",
+      "CANCELLED": "Odbačeno",
+      "HELD": "Zadržano"
+    },
+    "source": {
+      "UPLOAD": "Datoteka",
+      "URL": "Feed",
+      "API": "API"
+    },
+    "history": {
+      "title": "Povijest",
+      "empty": "Još nema uvoza.",
+      "open": "Otvori"
+    },
+    "feeds": {
+      "title": "Spremljeni uvozi i feedovi",
+      "intro": "Objavite datoteku cijena / zaliha na web-adresi i FIRINGI će je redovito preuzimati i primjenjivati. Sumnjiva pokretanja zadržavaju se radi vaše provjere.",
+      "none": "Još ništa nije spremljeno. Prenesite datoteku i spremite njezine stupce.",
+      "url": "Adresa datoteke (https://…)",
+      "every": "Preuzimaj svakih",
+      "hours": "{n} h",
+      "save": "Spremi",
+      "saved": "Spremljeno",
+      "runNow": "Pokreni sada",
+      "delete": "Izbriši",
+      "deleteConfirm": "Izbrisati ovaj spremljeni uvoz?",
+      "lastRun": "Zadnje pokretanje {when}",
+      "never": "Još nije pokrenuto",
+      "on": "Automatski",
+      "manual": "Samo prijenos",
+      "result": {
+        "APPLIED": "Primijenjeno",
+        "HELD": "Zadržano radi provjere",
+        "FAILED": "Datoteku nije moguće pročitati"
+      }
+    },
+    "keys": {
+      "title": "API ključevi",
+      "intro": "Povežite svoj ERP, web-trgovinu ili blagajnu s FIRINGI. Ključ djeluje u vaše ime, samo s dopuštenjima koja označite.",
+      "name": "Naziv",
+      "namePlaceholder": "npr. Naš ERP",
+      "perms": "Dopuštenja",
+      "create": "Izradi ključ",
+      "once": "Kopirajte ovaj ključ sada — neće se ponovno prikazati.",
+      "none": "Još nema ključeva.",
+      "revoke": "Opozovi",
+      "revokeConfirm": "Opozvati ovaj ključ? Sustavi koji ga koriste odmah prestaju raditi.",
+      "revoked": "Opozvan",
+      "lastUsed": "Zadnje korišten {when}",
+      "neverUsed": "Nikad korišten",
+      "usage": "{calls} poziva · {errors} pogrešaka u 7 dana",
+      "actsAs": "Djeluje kao {name}",
+      "recent": "Zadnji pozivi"
+    },
+    "scope": {
+      "catalogue_read": "Vidjeti katalog i moje cijene",
+      "orders_read": "Vidjeti narudžbe",
+      "orders_write": "Slati, potvrđivati i ažurirati narudžbe",
+      "offers_write": "Ažurirati moje cijene, zalihe i minimume",
+      "invoices_read": "Vidjeti račune i obračune"
+    },
+    "hooks": {
+      "title": "Webhookovi",
+      "intro": "FIRINGI poziva vaš sustav onog trenutka kad se nešto dogodi. Svaki poziv je potpisan pa možete provjeriti da dolazi od nas.",
+      "url": "Vaša adresa (https://…)",
+      "events": "Javi mi kad",
+      "add": "Dodaj webhook",
+      "secretOnce": "Tajna za potpis — kopirajte je sada, neće se ponovno prikazati:",
+      "test": "Pošalji test",
+      "testOk": "Vaš sustav je odgovorio {status} — sve u redu.",
+      "testFail": "Vaš sustav to nije prihvatio ({status}).",
+      "pause": "Pauziraj",
+      "resume": "Uključi",
+      "delete": "Izbriši",
+      "deleteConfirm": "Izbrisati ovaj webhook?",
+      "off": "Isključeno: {reason}",
+      "paused": "Pauzirano",
+      "active": "Aktivno",
+      "none": "Još nema webhookova.",
+      "recent": "Zadnje isporuke"
+    },
+    "event": {
+      "order_created": "Nova narudžba za potvrdu",
+      "order_placed": "Narudžba poslana",
+      "order_status_changed": "Promijenio se status narudžbe",
+      "invoice_issued": "Račun izdan",
+      "payment_received": "Plaćanje primljeno",
+      "payout_sent": "Isplata poslana",
+      "ping": "Test"
+    },
+    "delivery": {
+      "SENT": "Isporučeno",
+      "PENDING": "Ponovni pokušaj",
+      "FAILED": "Nije uspjelo"
+    },
+    "docs": {
+      "title": "API dokumentacija",
+      "intro": "Sve što vaš programer treba: adrese, dopuštenja i primjeri. Odgovori su u JSON-u; iznosi su bez PDV-a osim ako su označeni kao bruto.",
+      "open": "Otvori API dokumentaciju",
+      "base": "Osnovna adresa",
+      "auth": "Pošaljite ključ uz svaki poziv",
+      "limit": "Do {n} poziva u minuti po ključu.",
+      "openapi": "Preuzmi OpenAPI datoteku",
+      "who": {
+        "Buyers": "Kupci",
+        "Suppliers": "Dobavljači",
+        "Everyone": "Svi"
+      },
+      "needs": "Potrebno: {scope}",
+      "example": "Primjer tijela",
+      "signature": "Provjera potpisa webhooka"
+    },
+    "exports": {
+      "title": "Izvozi",
+      "intro": "Preuzmite dokumente za računovođu ili vlastiti sustav — Excel ili CSV.",
+      "from": "Od",
+      "to": "Do",
+      "what": "Što",
+      "file": "Datoteka",
+      "download": "Preuzmi",
+      "thisMonth": "Ovaj mjesec",
+      "lastMonth": "Prošli mjesec",
+      "thisYear": "Ova godina"
+    },
+    "kind": {
+      "buyer_invoices": "Računi i odobrenja od FIRINGI",
+      "buyer_payments": "Moja plaćanja",
+      "supplier_statements": "Obračuni",
+      "supplier_invoices": "Računi koje sam poslao/la FIRINGI",
+      "supplier_payouts": "Primljene isplate"
+    },
+    "copy": "Kopiraj",
+    "copied": "Kopirano"
   }
 }

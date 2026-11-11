@@ -83,23 +83,30 @@ async function issueDocument(tx: Tx, d: {
   if (viaMoloni) {
     // Booked now (FIRINGI reference, totals, balances); the legal document is issued at Moloni by
     // the fiscal queue right after this transaction commits (see fiscal.ts).
-    return tx.invoice.update({
+    return issued(tx, await tx.invoice.update({
       where: { id: draft.id },
       data: { status: "ISSUED", seriesId: num.seriesId, number: num.number, fullNumber: num.fullNumber, issuedAt, dueAt: new Date(issuedAt.getTime() + d.dueDays * 86400000), externalProvider: "moloni", fiscalStatus: "PENDING" },
-    });
+    }));
   }
   const fiscal = await invoiceProvider().issue({
     docType: d.docType, fullNumber: num.fullNumber, number: num.number, seriesValidationCode: num.validationCode, issuedAt,
     issuerTaxId: issuer.taxId, recipientTaxId: d.recipientSnapshot.taxId ?? "999999990", recipientCountry: d.recipientSnapshot.country ?? "PT",
     netTotal: net.toFixed(2), vatTotal: vat.toFixed(2), grossTotal: net.plus(vat).toFixed(2), previousHash: await previousHash(tx, num.seriesId),
   });
-  return tx.invoice.update({
+  return issued(tx, await tx.invoice.update({
     where: { id: draft.id },
     data: {
       status: "ISSUED", seriesId: num.seriesId, number: num.number, fullNumber: num.fullNumber, issuedAt, dueAt: new Date(issuedAt.getTime() + d.dueDays * 86400000),
       atcud: fiscal.atcud, hash: fiscal.hash, previousHash: await previousHash(tx, num.seriesId), qrPayload: fiscal.qrPayload, externalProvider: fiscal.provider, externalId: fiscal.externalId,
     },
-  });
+  }));
+}
+
+/** Webhook "invoice.issued" for the recipient (same transaction). */
+async function issued<T extends { id: string; recipientCompanyId: string; fullNumber: string | null; docType: string; orderId: string | null; grossTotal: { toString(): string }; dueAt: Date | null }>(tx: Tx, inv: T): Promise<T> {
+  const { emitWebhook } = await import("@/server/integrations/webhooks");
+  await emitWebhook(tx, inv.recipientCompanyId, "invoice.issued", { invoiceId: inv.id, number: inv.fullNumber, docType: inv.docType, orderId: inv.orderId, total: inv.grossTotal.toString(), dueAt: inv.dueAt?.toISOString() ?? null });
+  return inv;
 }
 
 function companySnapshot(c: { legalName: string; tradeName: string | null; taxId: string; vatNumber: string | null; email: string; country: { code: string } }, addr: { line1: string; line2: string | null; postalCode: string; cityName: string } | null) {

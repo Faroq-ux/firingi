@@ -432,6 +432,7 @@ export async function allocate(input: AllocateInput) {
       const carryFee = movesAll && (order.status === "PENDING_CONFIRMATION" || order.status === "CANCELLED") ? new Decimal(order.deliveryFeeNet.toString()) : new Decimal(0);
       const out = [];
       for (const [i, p] of picks.entries()) out.push(await createAllocatedOrder(tx, orderBase, p.candidate.vendorId, items, p.covers, i === 0 ? carryFee : new Decimal(0), why, input.byUserId ?? null));
+      for (const o of out) await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, o.orderId, { from: "NEW", to: "PENDING_CONFIRMATION", placed: true, reason: "moved" });
       await writeAudit({ actorUserId: input.byUserId ?? null, actorCompanyId: null, action: "order.reallocated", entityType: "Order", entityId: order.id, after: { trigger: input.trigger, automatic: input.automatic, to: out.map((o) => o.number) } }, tx);
       return out;
     });

@@ -597,6 +597,55 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Integrations: import & sync, API v2, webhooks, accounting exports (Phase 21)
+
+Developer guide: **[docs/integrations.md](docs/integrations.md)** (API v2 quick start, webhook
+signatures, file columns, accounting layouts).
+
+- **Import & Sync** (*Sell › Products › Import & Sync*): a supplier drops an **Excel or CSV** file
+  (`;` `,` tab or `|`, decimal comma or dot, ≤ 10 MB, ≤ 5000 rows). Columns are **guessed** from
+  Portuguese / English / Spanish headers (Referência, EAN, Preço, Stock, Armazém, Mínimo, Prazo…)
+  and can be changed; a **preview** shows every row as new offer / update / unchanged / not in
+  catalogue / error, with what changes. Rows match by the supplier's own code, or by barcode — a
+  code used on several pack sizes needs the barcode. **Prices moving more than 50 %** need an
+  explicit tick. Applying uses the normal services (offers, base price list, stock, pause/resume)
+  and is audited; a preview applies once. *Download my template* gives the current offers ready to
+  edit.
+- **Scheduled feeds**: saved column mappings can point at a URL (https in production; private /
+  internal addresses refused, redirects re-checked, 30 s, 10 MB). FIRINGI fetches it every 1–168 h
+  and applies it — unless prices jump > 50 % or > 20 % of rows are wrong: then the run is **held**
+  and the supplier is told (*integration.feed_held*). A file that can't be read is recorded and
+  told once (*integration.feed_failed*).
+- **API v2** (`/api/v2`, OpenAPI at `/api/v2/openapi.json`, reference in the portal): `GET /me`;
+  suppliers `GET /offers`, `POST /offers/sync` (same engine as the file import, `dryRun`,
+  `confirmBigChanges`), `POST /orders/{id}/confirm`, `POST /orders/{id}/status`; buyers
+  `GET /catalogue`, `GET /addresses`, `POST /orders` (lines → same checks as the portal; refused
+  while the key's user has a portal cart); everyone `GET /orders`, `GET /orders/{id}`,
+  `GET /invoices`, `GET /invoices/{id}/pdf`. Answers list fields **per side**: buyers never see
+  commission or payouts, suppliers never FIRINGI's margin. Errors `{ error: { code, message } }`;
+  **120 calls/min per key** (`API_RATE_LIMIT_PER_MIN`), every call logged (90 days). The old
+  `/api/v1/orders` keeps working (deprecated header) and no longer sends FIRINGI's margin to
+  suppliers.
+- **Self-service keys** (*Company › Integrations*, permission `company.integrations.manage`):
+  scopes `catalogue.read`, `orders.read`, `orders.write`, `offers.write`, `invoices.read` (only those
+  that fit the company type); a key acts as its creator and never exceeds that person's current
+  permissions; shown once, stored as a hash; revoke any time; usage and latest calls shown.
+- **Webhooks**: `order.created` (supplier, once it may see the order), `order.placed`,
+  `order.status_changed`, `invoice.issued`, `payment.received`, `payout.sent`. Written in the same
+  database transaction as the change (outbox — never sent for a change that rolled back), signed
+  `X-Firingi-Signature: t=…,v1=HMAC-SHA256(secret, t.body)`, retried after 1 min → 24 h, switched
+  off after 20 failures in a row (company told). Test button; delivery log.
+- **Accounting export** (*Finance › Accounting Export*): sales invoices, credit notes, receipts,
+  supplier invoices, payouts for a date range — as **documents** (one row each, easiest to check) or
+  **balanced journal entries** (SNC defaults 211 / 221 / 711 / 312 / 2433x / 2432x / 12 / 11 / 278,
+  editable, optional per-partner sub-accounts), also in **PHC, Primavera and Sage** column layouts;
+  Excel or CSV (`;`, decimal comma). Preview shows totals and whether debits = credits. Import
+  templates differ by version — the accountant confirms the layout before the first import; the
+  legal tax file stays the SAF-T. Companies download their own documents in *Exports*.
+- **Back office** (*Settings › Integrations*): keys in use, API traffic and errors, busiest keys,
+  webhooks failing or off, feeds and their last result. Job `/api/cron/integrations` every 5
+  minutes (feeds due, webhook deliveries, log clean-up).
+
 ## Customer payments online (Phase 20)
 
 - **How customers pay**: MB WAY, Multibanco reference, card and SEPA direct debit — from the

@@ -246,6 +246,7 @@ export async function recordPayment(ctx: Ctx, input: {
         const paid = vi.paymentAllocations.reduce((s, x) => s.plus(x.amount.toString()), new Decimal(0));
         if (paid.gte(vi.grossTotal.toString())) await tx.vendorInvoice.update({ where: { id: vi.id }, data: { status: "PAID" } });
       }
+    await (await import("@/server/integrations/webhooks")).emitWebhook(tx, input.companyId, input.direction === "INBOUND" ? "payment.received" : "payout.sent", { paymentId: p.id, amount: p.amount.toString(), method: p.method, reference: p.reference, paidAt: input.paidAt.toISOString(), documents: input.allocations.map((a) => a.documentId) });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `payment.${input.direction.toLowerCase()}`, entityType: "Payment", entityId: p.id, after: { ...input, paidAt: input.paidAt.toISOString() } }, tx);
     return p;
   });

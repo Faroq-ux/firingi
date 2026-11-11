@@ -1496,3 +1496,188 @@ Avtalegiro er ikke tilgjengelig ennå.
 Fakturaene dine trekkes automatisk med avtalegiro (konto som slutter på {last4}).
 Ved å opprette avtalegiro gir du FIRINGI og betalingsleverandøren tillatelse til å sende instrukser til banken din om å belaste kontoen din, og banken din tillatelse til å gjøre det. Du kan be banken om tilbakebetaling innen 8 uker etter et trekk.
 Avtalegiro
+Feed holdt tilbake for kontroll: {name}
+Vi brukte ikke dagens fil for "{name}" fordi {reason}. Sjekk endringene og bruk dem, eller forkast dem.
+Feed ikke lest: {name}
+Vi klarte ikke å lese filen for "{name}": {reason}. Prisene og lageret ditt er ikke endret. Vi prøver igjen ved neste kjøring.
+Webhook slått av
+Vi sluttet å kalle {url} etter at det feilet mange ganger på rad ({reason}). Rett systemet ditt og slå det på igjen under Integrasjoner.
+Integrasjoner
+Koble dine egne systemer til FIRINGI: filer, automatiske feeder, et API og varsler med en gang.
+Aktive koblinger
+API-nøkler
+Webhooks
+Aktive feeder
+API-kall · 7 dager
+Import og synk
+Oppdater priser, lager og minimum fra en Excel- eller CSV-fil – eller la FIRINGI hente filen din fast.
+Slipp Excel- eller CSV-filen din her
+Velg en fil
+Excel (.xlsx) eller CSV · opptil 10 MB · opptil 5000 rader
+Last ned malen min
+Dine nåværende tilbud, klare til å redigere og laste opp igjen.
+Leser filen…
+Last opp
+Koble kolonner
+Sjekk
+Bruk
+{count} rader i {file}
+Hvilken kolonne er hvilken?
+Vi gjettet ut fra kolonnenavnene. Rader kobles via varekoden din eller strekkoden.
+Ikke importer
+Første rader i filen
+Lagre disse kolonnene til neste gang som
+f.eks. Daglig prisliste
+Vis hva som endres
+Tilbake
+En annen fil
+Varekoden din
+Strekkode (EAN)
+Pris, netto
+Lager
+Lagersted
+Minste bestilling
+Selges i multipler av
+Leveringstid, dager
+Til salgs (ja / nei)
+Navn (til referanse)
+Sjekk før du bruker
+Holdt tilbake for kontroll: {reason}
+Rader
+Nye tilbud
+Oppdateringer
+Uendret
+Ikke funnet
+Feil
+Nytt tilbud
+Oppdatering
+Uendret
+Ikke i katalogen
+Feil
+Endringer
+Problemer
+Alle rader
+Rad
+Produkt
+Hva endres
+Status
+{count} priser endres med mer enn 50 %. Sjekk dem.
+Jeg har sjekket de store prisendringene
+Bruk {count} endringer
+Forkast
+Ferdig: {applied} rader brukt, {failed} feilet.
+Forkastet – ingenting ble endret.
+Ingenting å endre – katalogen din er allerede oppdatert.
+Produkter som ikke er i FIRINGI-katalogen kan ikke importeres. Be FIRINGI om å legge dem til.
+Viser {shown} av {total} rader.
+Venter på deg
+Brukt
+Mislyktes
+Forkastet
+Holdt tilbake
+Fil
+Feed
+API
+Historikk
+Ingen importer ennå.
+Åpne
+Lagrede importer og feeder
+Legg pris-/lagerfilen din på en nettadresse, så henter og bruker FIRINGI den fast. Kjøringer som ser feil ut holdes tilbake så du kan sjekke dem.
+Ingenting lagret ennå. Last opp en fil og lagre kolonnene for å lage en.
+Filadresse (https://…)
+Hent hver
+{n} t
+Lagre
+Lagret
+Kjør nå
+Slett
+Slette denne lagrede importen?
+Siste kjøring {when}
+Ikke kjørt ennå
+Automatisk
+Bare opplasting
+Brukt
+Holdt tilbake for kontroll
+Kunne ikke lese filen
+API-nøkler
+La ERP-et, nettbutikken eller kassen din jobbe med FIRINGI. En nøkkel handler som deg, bare med rettighetene du krysser av.
+Navn
+f.eks. Vårt ERP
+Rettigheter
+Lag nøkkel
+Kopier nøkkelen nå – den vises ikke igjen.
+Ingen nøkler ennå.
+Trekk tilbake
+Trekke tilbake nøkkelen? Systemer som bruker den slutter å virke med en gang.
+Trukket tilbake
+Sist brukt {when}
+Aldri brukt
+{calls} kall · {errors} feil på 7 dager
+Handler som {name}
+Siste kall
+Se katalogen og prisene mine
+Se bestillinger
+Legge inn, bekrefte og oppdatere bestillinger
+Oppdatere prisene, lageret og minimum mine
+Se fakturaer og oppgjør
+Webhooks
+FIRINGI kaller systemet ditt i det øyeblikket noe skjer. Hvert kall er signert, så du kan sjekke at det kommer fra oss.
+Adressen din (https://…)
+Si fra når
+Legg til webhook
+Signeringshemmelighet – kopier den nå, den vises ikke igjen:
+Send en test
+Systemet ditt svarte {status} – alt i orden.
+Systemet ditt godtok det ikke ({status}).
+Sett på pause
+Slå på
+Slett
+Slette denne webhooken?
+Av: {reason}
+På pause
+Aktiv
+Ingen webhooks ennå.
+Siste leveranser
+Ny bestilling å bekrefte
+Bestilling lagt inn
+Bestillingsstatus endret
+Faktura utstedt
+Betaling mottatt
+Utbetaling sendt
+Test
+Levert
+Prøver igjen
+Mislyktes
+API-referanse
+Alt utvikleren din trenger: adresser, rettigheter og eksempler. Svar er JSON; beløp er eks. mva. med mindre de er merket brutto.
+Åpne API-referansen
+Basisadresse
+Send nøkkelen din med hvert kall
+Opptil {n} kall i minuttet per nøkkel.
+Last ned OpenAPI-filen
+Kjøpere
+Leverandører
+Alle
+Krever: {scope}
+Eksempel på body
+Sjekke en webhook-signatur
+Eksporter
+Last ned dokumentene dine til regnskapsføreren eller ditt eget system – Excel eller CSV.
+Fra
+Til
+Hva
+Fil
+Last ned
+Denne måneden
+Forrige måned
+I år
+Fakturaer og kreditnotaer fra FIRINGI
+Mine betalinger
+Faktureringsoppgjør
+Fakturaer jeg har sendt til FIRINGI
+Mottatte utbetalinger
+Kopier
+Kopiert
+Import og synk
+Integrasjoner
+Eksporter
