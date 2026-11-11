@@ -188,6 +188,33 @@ await shot(sa, "p24-08-admin-overview");
 await go(sa, "/admin/inventory/expiring?days=30");
 check("admin expiring stock answers", (await sa.getByTestId("admin-expiring-table").count()) === 1);
 
+// ── 8b. Expiry alerts for goods bought on FIRINGI (admin decides days, switches, message) ──
+await go(sa, "/admin/inventory/expiry-alerts");
+await sa.selectOption('[data-testid="first-days"]', "21");
+await sa.selectOption('[data-testid="second-days"]', "4");
+await sa.getByTestId("save-alerts").click();
+check("admin saves the two alert days", await until(async () => /Saved/.test(await sa.getByTestId("alerts-form").textContent())));
+await go(sa, "/admin/inventory/expiry-alerts");
+check("alert days kept (21 and 4)", (await sa.locator('[data-testid="first-days"]').inputValue()) === "21" && (await sa.locator('[data-testid="second-days"]').inputValue()) === "4");
+const kebabRow = sa.getByTestId("alert-company-row").filter({ hasText: "Kebab House" }).first();
+await kebabRow.getByTestId("company-alerts").selectOption("off");
+check("admin switches alerts off for one customer", await until(async () => /off/.test(await sa.getByTestId("alert-company-row").filter({ hasText: "Kebab House" }).first().textContent())));
+await sa.getByTestId("alert-company-row").filter({ hasText: "Kebab House" }).first().getByTestId("company-alerts").selectOption("");
+await settle(sa);
+await shot(sa, "p24-10-admin-expiry-alerts");
+await sa.getByTestId("edit-message").getByRole("link", { name: "Edit Portuguese" }).click();
+await settle(sa);
+check("message text editable in the template editor", sa.url().includes("event=inventory.expiring") && /inventory\.expiring/.test(await sa.textContent("main")));
+const cron = await sa.request.post(`${BASE}/api/cron/inventory`, { headers: { authorization: `Bearer ${process.env.CRON_SECRET ?? "test-cron-secret-0123456789abcdef"}` } });
+check("daily expiry alert job runs", cron.ok() && "enabled" in (await cron.json()));
+await go(kebab, "/buy/orders/expiring");
+check("customer sees 'Compras a expirar' (Portuguese)", /Compras a expirar/.test(await kebab.textContent("main")) && (await kebab.getByTestId("purchased-lots").count()) === 1);
+await shot(kebab, "p24-11-customer-expiring-purchases");
+// back to the defaults
+await go(sa, "/admin/inventory/expiry-alerts");
+await sa.selectOption('[data-testid="first-days"]', "14"); await sa.selectOption('[data-testid="second-days"]', "3");
+await sa.getByTestId("save-alerts").click(); await until(async () => /Saved/.test(await sa.getByTestId("alerts-form").textContent()));
+
 // ── 9. Phone width ──
 const phone = await login("owner@lisboacentral.test", { ...devices["iPhone 13"], colorScheme: "dark" });
 for (const path of ["/vendor/inventory/overview", "/vendor/inventory/expiry", "/vendor/inventory/purchase-orders"]) {

@@ -5,6 +5,7 @@ import { defineAction } from "./_action";
 import { receiveStock, setOpeningCost, setReorder, writeOff } from "@/server/inventory/service";
 import { cancelPurchaseOrder, createPurchaseOrder, draftFromSuggestions, receivePurchaseOrder, saveSupplier, sendPurchaseOrder, updatePurchaseOrder } from "@/server/inventory/purchasing";
 import { addFoundLine, approveCount, cancelCount, cancelTransfer, createTransfer, receiveTransfer, recordCount, reopenCount, sendTransfer, startCount, submitCount } from "@/server/inventory/warehouse";
+import { markUsed, setAlertSettings, setCompanyAlerts, stockDeliveredOrder } from "@/server/inventory/purchased";
 import { acceptMarkdown, cancelFeatureRequest, decideFeatureRequest, requestFeature, resetSupplierFeatures, setDefaults, setSupplierFeature } from "@/server/inventory/expiry";
 
 const id = z.string().min(1).max(40);
@@ -135,4 +136,22 @@ export const decideFeatureRequestAction = defineAction({
 export const setInventoryDefaultsAction = defineAction({
   permission: "admin.inventory.manage", schema: z.object({ fefo: z.boolean(), expiryAlerts: z.boolean(), markdown: z.boolean(), showExpiry: z.boolean() }),
   handler: async (ctx, i) => { await setDefaults(ctx, i); return true; },
+});
+
+// ── goods bought on FIRINGI: expiry alerts ──
+export const markUsedAction = defineAction({
+  permission: ["buyer.orders.view", "buyer.orders.place"], schema: z.object({ id, qty: z.number().int().min(1).max(10_000_000) }),
+  handler: async (ctx, i) => { await markUsed(ctx, i.id, i.qty); return true; },
+});
+export const stockDeliveredOrderAction = defineAction({
+  permission: ["vendor.inventory.manage", "vendor.purchasing.manage"], schema: z.object({ orderId: id, addressId: id }),
+  handler: (ctx, i) => stockDeliveredOrder(ctx, i.orderId, i.addressId),
+});
+export const setPurchaseAlertsAction = defineAction({
+  permission: "admin.inventory.manage", schema: z.object({ enabled: z.boolean(), firstDays: z.number().int().min(1).max(30), secondDays: z.number().int().min(1).max(30) }),
+  handler: async (ctx, i) => { await setAlertSettings(ctx, i); return true; },
+});
+export const setCompanyAlertsAction = defineAction({
+  permission: "admin.inventory.manage", schema: z.object({ companyId: id, enabled: z.boolean().nullable() }),
+  handler: async (ctx, i) => { await setCompanyAlerts(ctx, i.companyId, i.enabled); return true; },
 });

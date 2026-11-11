@@ -789,7 +789,8 @@
     "Stock Counts": "Inventaires",
     "Transfers": "Transferts",
     "Stock Movements": "Mouvements de stock",
-    "Valuation": "Valorisation"
+    "Valuation": "Valorisation",
+    "Expiring Purchases": "Achats bientôt périmés"
   },
   "delivery": {
     "title": "Livraison",
@@ -1249,8 +1250,8 @@
       "body": "Nous avons cessé d'appeler {url} après de nombreux échecs consécutifs ({reason}). Corrigez votre système puis réactivez-le dans Intégrations."
     },
     "inventory_expiring": {
-      "title": "{count} lots expirent dans {days} jours",
-      "body": "{count} de vos lots atteignent leur date de péremption dans {days} jours. Vendez-les en premier, baissez leur prix ou déplacez-les."
+      "title": "{count} produits achetés sur FIRINGI expirent dans {days} jours",
+      "body": "Encore invendus : {products}. Vendez-les ou utilisez-les en premier, ou baissez leur prix, avant la date de péremption."
     },
     "inventory_expired": {
       "title": "{count} lots ont expiré",
@@ -2351,5 +2352,32 @@
     "units": "Unités",
     "empty": "Rien ici pour l'instant.",
     "bestBeforeDate": "À consommer avant le {date}"
+  },
+  "purchased": {
+    "title": "Achats bientôt périmés",
+    "hint": "Marchandises invendues achetées sur FIRINGI qui atteignent bientôt leur date de péremption. FIRINGI vous prévient avant qu'elles n'expirent.",
+    "product": "Produit",
+    "order": "Commande",
+    "lot": "Lot",
+    "bestBefore": "À consommer avant",
+    "delivered": "Livré",
+    "unsold": "Invendu",
+    "inStock": "Dans votre stock",
+    "inStockHint": "Diminue à mesure que vous vendez.",
+    "markUsed": "Marquer comme vendu / utilisé",
+    "qty": "Quantité",
+    "save": "Enregistrer",
+    "none": "Rien de ce que vous avez acheté sur FIRINGI n'expire bientôt.",
+    "expired": "Expiré",
+    "days": "{days} jours",
+    "stockTitle": "Mettre dans mon stock",
+    "stockHint": "Enregistre cette livraison dans votre stock avec les lots et dates de péremption du distributeur.",
+    "stockButton": "Mettre en stock",
+    "stockDone": "Dans votre stock : {lines} produits.",
+    "stockMissing": "{count} produits ne sont pas encore dans votre catalogue — ajoutez-les pour les stocker.",
+    "stocked": "Cette livraison est dans votre stock.",
+    "viaPo": "Cette commande appartient à la commande fournisseur {number} — réceptionnez-la là.",
+    "warehouse": "Entrepôt",
+    "fromDistributor": "Laissez le lot et la date vides : ils viennent de la livraison du distributeur."
   }
 }

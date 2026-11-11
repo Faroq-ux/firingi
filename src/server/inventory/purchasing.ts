@@ -16,6 +16,7 @@ import { writeAudit } from "@/server/services/audit";
 import { nextNumber, placeOrder } from "@/server/services/orders";
 import { sendMail } from "@/server/services/mailer";
 import { receive } from "./ledger";
+import { stockPurchased } from "./purchased";
 import { ownOffer, ownWarehouse, requireInventory } from "./service";
 
 const D = Prisma.Decimal;
@@ -280,8 +281,18 @@ export async function receivePurchaseOrder(ctx: Ctx, id: string, input: { lines:
       if (r.expiresOn && r.expiresOn < today) throw new ValidationError(`${line.description}: that best-before date has already passed.`);
       const cost = po.viaOrderId ? line.unitCost : r.unitCost !== null && r.unitCost !== undefined ? new D(r.unitCost) : line.unitCost;
       if (cost.isNegative()) throw new ValidationError("Cost can't be negative.");
-      const b = await receive(tx, { offerId: line.offerId, addressId: po.addressId, qty: r.qty, unitCost: cost, lotCode: r.lotCode, expiresOn: r.expiresOn ?? null, source: "RECEIPT", refType: "PO", refId: po.id, byUserId: ctx.user.id, note: po.number });
-      await tx.goodsReceiptLine.create({ data: { receiptId: receipt.id, poLineId: line.id, qty: r.qty, lotCode: clean(r.lotCode), expiresOn: r.expiresOn ?? null, unitCost: cost, batchId: b.batchId } });
+      // Bought on FIRINGI and no lot typed in: the distributor's lots and best-before dates come along
+      // (each its own batch, never mixed with other goods) — the basis of the expiry alerts.
+      let rest = r.qty;
+      if (po.viaOrderId && line.sourceOfferId && !clean(r.lotCode) && !r.expiresOn) {
+        const got = await stockPurchased(tx, { buyerCompanyId: ctx.company.id, orderId: po.viaOrderId, sellerOfferId: line.sourceOfferId, ownOfferId: line.offerId, addressId: po.addressId, qty: r.qty, unitCost: cost, refType: "PO", refId: po.id, byUserId: ctx.user.id, note: po.number });
+        for (const m of got.made) await tx.goodsReceiptLine.create({ data: { receiptId: receipt.id, poLineId: line.id, qty: m.qty, lotCode: m.lotCode, expiresOn: m.expiresOn, unitCost: cost, batchId: m.batchId } });
+        rest = got.rest;
+      }
+      if (rest > 0) {
+        const b = await receive(tx, { offerId: line.offerId, addressId: po.addressId, qty: rest, unitCost: cost, lotCode: r.lotCode, expiresOn: r.expiresOn ?? null, source: "RECEIPT", refType: "PO", refId: po.id, byUserId: ctx.user.id, note: po.number });
+        await tx.goodsReceiptLine.create({ data: { receiptId: receipt.id, poLineId: line.id, qty: rest, lotCode: clean(r.lotCode), expiresOn: r.expiresOn ?? null, unitCost: cost, batchId: b.batchId } });
+      }
       await tx.purchaseOrderLine.update({ where: { id: line.id }, data: { receivedQty: { increment: r.qty } } });
     }
     const after = await tx.purchaseOrderLine.findMany({ where: { poId: po.id } });

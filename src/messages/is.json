@@ -789,7 +789,8 @@
     "Stock Counts": "Talningar",
     "Transfers": "Flutningar",
     "Stock Movements": "Birgðahreyfingar",
-    "Valuation": "Verðmat"
+    "Valuation": "Verðmat",
+    "Expiring Purchases": "Innkaup sem renna út bráðum"
   },
   "delivery": {
     "title": "Afhending",
@@ -1249,8 +1250,8 @@
       "body": "Við hættum að kalla á {url} eftir að það mistókst mörgum sinnum í röð ({reason}). Lagaðu kerfið þitt og kveiktu á honum aftur undir Tengingar."
     },
     "inventory_expiring": {
-      "title": "{count} lotur renna út eftir {days} daga",
-      "body": "{count} af lotunum þínum ná gildistíma sínum eftir {days} daga. Seldu þær fyrst, lækkaðu verðið eða færðu þær."
+      "title": "{count} vörur keyptar á FIRINGI renna út innan {days} daga",
+      "body": "Enn óselt: {products}. Seldu eða notaðu þær fyrst, eða lækkaðu verðið, fyrir gildistímann."
     },
     "inventory_expired": {
       "title": "{count} lotur eru útrunnar",
@@ -2351,5 +2352,32 @@
     "units": "Einingar",
     "empty": "Hér er ekkert enn.",
     "bestBeforeDate": "Best fyrir {date}"
+  },
+  "purchased": {
+    "title": "Innkaup sem renna út bráðum",
+    "hint": "Óseldar vörur sem þú keyptir á FIRINGI og ná bráðum gildistíma sínum. FIRINGI minnir þig á áður en þær renna út.",
+    "product": "Vara",
+    "order": "Pöntun",
+    "lot": "Lota",
+    "bestBefore": "Best fyrir",
+    "delivered": "Afhent",
+    "unsold": "Óselt",
+    "inStock": "Á lagernum þínum",
+    "inStockHint": "Lækkar eftir því sem þú selur.",
+    "markUsed": "Merkja sem selt / notað",
+    "qty": "Magn",
+    "save": "Vista",
+    "none": "Ekkert sem þú keyptir á FIRINGI rennur út bráðum.",
+    "expired": "Útrunnið",
+    "days": "{days} dagar",
+    "stockTitle": "Setja á lagerinn minn",
+    "stockHint": "Bókar þessa afhendingu á lagerinn þinn með lotum og gildistíma dreifingaraðilans.",
+    "stockButton": "Setja á lager",
+    "stockDone": "Á lagernum þínum: {lines} vörur.",
+    "stockMissing": "{count} vörur eru ekki enn í vörulistanum þínum — bættu þeim við til að setja þær á lager.",
+    "stocked": "Þessi afhending er á lagernum þínum.",
+    "viaPo": "Þessi pöntun tilheyrir innkaupapöntun {number} — taktu á móti henni þar.",
+    "warehouse": "Vöruhús",
+    "fromDistributor": "Láttu lotu og dagsetningu vera auðar: þær koma úr afhendingu dreifingaraðilans."
   }
 }

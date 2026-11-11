@@ -21,6 +21,7 @@ import { Prisma, type StockMovementType, type BatchSource } from "@prisma/client
 import type { Tx } from "@/server/db";
 import { ValidationError } from "@/server/errors";
 import { inventorySettings } from "./settings";
+import { purchasedReturned } from "./purchased-core";
 
 const D = Prisma.Decimal;
 type Dec = Prisma.Decimal;
@@ -239,6 +240,7 @@ export async function restockForOrder(tx: Tx, orderId: string, only?: Map<string
     const avg = weighted(level.onHand, level.avgCost, q, r.cost);
     await tx.stockLevel.update({ where: { id: level.id }, data: { onHand: { increment: q }, avgCost: avg } });
     await move(tx, { offerId: r.offerId, addressId: r.addressId, type: "RETURN", qty: q, batchId, unitCost: r.cost, orderId });
+    if (r.batchId) await purchasedReturned(tx, orderId, r.offerId, r.batchId, q);
     if (left) left.set(r.offerId, (left.get(r.offerId) ?? 0) - q);
   }
 }
@@ -251,10 +253,19 @@ export function weighted(onHand: number, avg: Dec, qty: number, cost: Dec) {
   return avg.mul(onHand).add(cost.mul(qty)).div(onHand + qty).toDecimalPlaces(4);
 }
 
+/** Batches holding goods bought on FIRINGI (kept apart: they carry the buyer's expiry alerts). */
+async function firingiBatchIds(tx: Tx, offerId: string) {
+  const rows = await tx.$queryRaw<{ id: string }[]>`
+    SELECT p."ownBatchId" AS id FROM "PurchasedLot" p JOIN "StockBatch" b ON b.id = p."ownBatchId" WHERE b."offerId" = ${offerId}`;
+  return rows.map((r) => r.id);
+}
+
 export type ReceiveInput = {
   offerId: string; addressId: string; qty: number; unitCost: Dec | number | string | null;
   lotCode?: string | null; expiresOn?: Date | null; source: BatchSource; type?: StockMovementType;
   refType?: string | null; refId?: string | null; byUserId?: string | null; note?: string | null;
+  /** always a batch of its own (goods bought on FIRINGI) */
+  separate?: boolean;
 };
 
 /**
@@ -268,7 +279,8 @@ export async function receive(tx: Tx, i: ReceiveInput) {
   if (cost.isNegative()) throw new ValidationError("Cost can't be negative.");
   const lotCode = i.lotCode?.trim() || null;
   const same = lotCode || i.expiresOn
-    ? await tx.stockBatch.findFirst({ where: { offerId: i.offerId, addressId: i.addressId, lotCode, expiresOn: i.expiresOn ?? null, writtenOffAt: null } })
+    // goods bought on FIRINGI always get their own batch, and nothing else joins one of them
+    ? i.separate ? null : await tx.stockBatch.findFirst({ where: { offerId: i.offerId, addressId: i.addressId, lotCode, expiresOn: i.expiresOn ?? null, writtenOffAt: null, id: { notIn: await firingiBatchIds(tx, i.offerId) } } })
     : null;
   const batch = same
     ? await tx.stockBatch.update({ where: { id: same.id }, data: { onHand: { increment: i.qty }, unitCost: weighted(same.onHand, new D(same.unitCost.toString()), i.qty, cost) } })

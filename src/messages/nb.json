@@ -789,7 +789,8 @@
     "Stock Counts": "Varetellinger",
     "Transfers": "Overføringer",
     "Stock Movements": "Lagerbevegelser",
-    "Valuation": "Verdivurdering"
+    "Valuation": "Verdivurdering",
+    "Expiring Purchases": "Innkjøp som snart går ut"
   },
   "delivery": {
     "title": "Levering",
@@ -1249,8 +1250,8 @@
       "body": "Vi sluttet å kalle {url} etter at det feilet mange ganger på rad ({reason}). Rett systemet ditt og slå det på igjen under Integrasjoner."
     },
     "inventory_expiring": {
-      "title": "{count} partier går ut om {days} dager",
-      "body": "{count} av partiene dine når best før-datoen om {days} dager. Selg dem først, sett ned prisen eller flytt dem."
+      "title": "{count} produkter kjøpt på FIRINGI går ut innen {days} dager",
+      "body": "Fortsatt usolgt: {products}. Selg eller bruk dem først, eller sett ned prisen, før best før-datoen."
     },
     "inventory_expired": {
       "title": "{count} partier har gått ut",
@@ -2351,5 +2352,32 @@
     "units": "Enheter",
     "empty": "Her er det ingenting ennå.",
     "bestBeforeDate": "Best før {date}"
+  },
+  "purchased": {
+    "title": "Innkjøp som snart går ut",
+    "hint": "Usolgte varer du har kjøpt på FIRINGI som snart når best før-datoen. FIRINGI minner deg på det før de går ut.",
+    "product": "Produkt",
+    "order": "Ordre",
+    "lot": "Parti",
+    "bestBefore": "Best før",
+    "delivered": "Levert",
+    "unsold": "Usolgt",
+    "inStock": "På lageret ditt",
+    "inStockHint": "Teller ned når du selger.",
+    "markUsed": "Merk som solgt / brukt",
+    "qty": "Antall",
+    "save": "Lagre",
+    "none": "Ingenting du har kjøpt på FIRINGI går ut snart.",
+    "expired": "Utgått",
+    "days": "{days} dager",
+    "stockTitle": "Legg på lageret mitt",
+    "stockHint": "Bokfører denne leveransen på lageret ditt med distributørens partier og best før-datoer.",
+    "stockButton": "Legg på lager",
+    "stockDone": "På lageret ditt: {lines} produkter.",
+    "stockMissing": "{count} produkter er ikke i katalogen din ennå — legg dem til for å lagerføre dem.",
+    "stocked": "Denne leveransen er på lageret ditt.",
+    "viaPo": "Denne ordren hører til innkjøpsordre {number} — motta den der.",
+    "warehouse": "Lager",
+    "fromDistributor": "La parti og dato stå tomme: de kommer fra distributørens leveranse."
   }
 }

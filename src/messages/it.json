@@ -789,7 +789,8 @@
     "Stock Counts": "Inventari",
     "Transfers": "Trasferimenti",
     "Stock Movements": "Movimenti di magazzino",
-    "Valuation": "Valorizzazione"
+    "Valuation": "Valorizzazione",
+    "Expiring Purchases": "Acquisti in scadenza"
   },
   "delivery": {
     "title": "Consegna",
@@ -1249,8 +1250,8 @@
       "body": "Abbiamo smesso di chiamare {url} dopo molti errori consecutivi ({reason}). Correggi il tuo sistema e riattivalo in Integrazioni."
     },
     "inventory_expiring": {
-      "title": "{count} lotti scadono tra {days} giorni",
-      "body": "{count} dei tuoi lotti raggiungono la data di scadenza tra {days} giorni. Vendili per primi, ribassali o spostali."
+      "title": "{count} prodotti acquistati su FIRINGI scadono entro {days} giorni",
+      "body": "Ancora invenduti: {products}. Vendili o usali per primi, o ribassali, prima della data di scadenza."
     },
     "inventory_expired": {
       "title": "{count} lotti sono scaduti",
@@ -2351,5 +2352,32 @@
     "units": "Unità",
     "empty": "Ancora niente qui.",
     "bestBeforeDate": "Da consumarsi entro il {date}"
+  },
+  "purchased": {
+    "title": "Acquisti in scadenza",
+    "hint": "Merce invenduta acquistata su FIRINGI che raggiunge presto la data di scadenza. FIRINGI ti avvisa prima che scada.",
+    "product": "Prodotto",
+    "order": "Ordine",
+    "lot": "Lotto",
+    "bestBefore": "Da consumarsi entro",
+    "delivered": "Consegnato",
+    "unsold": "Invenduto",
+    "inStock": "Nel tuo magazzino",
+    "inStockHint": "Si riduce man mano che vendi.",
+    "markUsed": "Segna come venduto / usato",
+    "qty": "Quantità",
+    "save": "Salva",
+    "none": "Niente di ciò che hai acquistato su FIRINGI scade a breve.",
+    "expired": "Scaduto",
+    "days": "{days} giorni",
+    "stockTitle": "Metti nel mio magazzino",
+    "stockHint": "Registra questa consegna nel tuo magazzino con i lotti e le scadenze del distributore.",
+    "stockButton": "Metti in magazzino",
+    "stockDone": "Nel tuo magazzino: {lines} prodotti.",
+    "stockMissing": "{count} prodotti non sono ancora nel tuo catalogo — aggiungili per metterli in magazzino.",
+    "stocked": "Questa consegna è nel tuo magazzino.",
+    "viaPo": "Questo ordine appartiene all'ordine d'acquisto {number} — ricevilo lì.",
+    "warehouse": "Magazzino",
+    "fromDistributor": "Lascia vuoti lotto e scadenza: arrivano dalla consegna del distributore."
   }
 }

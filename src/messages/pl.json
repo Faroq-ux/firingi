@@ -789,7 +789,8 @@
     "Stock Counts": "Inwentaryzacje",
     "Transfers": "Przesunięcia",
     "Stock Movements": "Ruchy magazynowe",
-    "Valuation": "Wycena"
+    "Valuation": "Wycena",
+    "Expiring Purchases": "Zakupy z kończącym się terminem"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1249,8 +1250,8 @@
       "body": "Przestaliśmy wywoływać {url} po wielu kolejnych niepowodzeniach ({reason}). Napraw swój system i włącz go ponownie w Integracjach."
     },
     "inventory_expiring": {
-      "title": "{count} partii traci ważność za {days} dni",
-      "body": "{count} Twoich partii osiągnie termin ważności za {days} dni. Sprzedaj je najpierw, obniż cenę lub je przenieś."
+      "title": "{count} produktów kupionych w FIRINGI traci ważność w ciągu {days} dni",
+      "body": "Wciąż niesprzedane: {products}. Sprzedaj je lub zużyj w pierwszej kolejności albo obniż cenę przed upływem terminu."
     },
     "inventory_expired": {
       "title": "{count} partii straciło ważność",
@@ -2351,5 +2352,32 @@
     "units": "Jednostki",
     "empty": "Na razie nic tu nie ma.",
     "bestBeforeDate": "Najlepiej spożyć przed {date}"
+  },
+  "purchased": {
+    "title": "Zakupy z kończącym się terminem",
+    "hint": "Niesprzedane towary kupione w FIRINGI, którym wkrótce kończy się termin ważności. FIRINGI przypomni Ci przed jego upływem.",
+    "product": "Produkt",
+    "order": "Zamówienie",
+    "lot": "Partia",
+    "bestBefore": "Najlepiej spożyć przed",
+    "delivered": "Dostarczono",
+    "unsold": "Niesprzedane",
+    "inStock": "W Twoim magazynie",
+    "inStockHint": "Zmniejsza się w miarę sprzedaży.",
+    "markUsed": "Oznacz jako sprzedane / zużyte",
+    "qty": "Ilość",
+    "save": "Zapisz",
+    "none": "Nic z tego, co kupiłeś w FIRINGI, nie traci wkrótce ważności.",
+    "expired": "Przeterminowane",
+    "days": "{days} dni",
+    "stockTitle": "Przyjmij do mojego magazynu",
+    "stockHint": "Przyjmuje tę dostawę do Twojego magazynu z partiami i terminami ważności dystrybutora.",
+    "stockButton": "Przyjmij na stan",
+    "stockDone": "W Twoim magazynie: {lines} produktów.",
+    "stockMissing": "{count} produktów nie ma jeszcze w Twoim katalogu — dodaj je, aby przyjąć je na stan.",
+    "stocked": "Ta dostawa jest w Twoim magazynie.",
+    "viaPo": "To zamówienie należy do zamówienia zakupu {number} — przyjmij je tam.",
+    "warehouse": "Magazyn",
+    "fromDistributor": "Zostaw partię i termin puste: pochodzą z dostawy dystrybutora."
   }
 }

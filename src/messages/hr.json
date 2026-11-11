@@ -789,7 +789,8 @@
     "Stock Counts": "Inventure",
     "Transfers": "Prijenosi",
     "Stock Movements": "Kretanja zaliha",
-    "Valuation": "Vrednovanje"
+    "Valuation": "Vrednovanje",
+    "Expiring Purchases": "Kupnje kojima istječe rok"
   },
   "delivery": {
     "title": "Dostava",
@@ -1249,8 +1250,8 @@
       "body": "Prestali smo pozivati {url} nakon što je mnogo puta zaredom zakazao ({reason}). Popravite svoj sustav i ponovno ga uključite u Integracijama."
     },
     "inventory_expiring": {
-      "title": "{count} serija istječe za {days} dana",
-      "body": "{count} vaših serija dostiže rok trajanja za {days} dana. Prodajte ih prve, snizite im cijenu ili ih premjestite."
+      "title": "{count} proizvoda kupljenih na FIRINGI istječe za {days} dana",
+      "body": "Još neprodano: {products}. Prodajte ih ili potrošite prve ili im snizite cijenu prije isteka roka."
     },
     "inventory_expired": {
       "title": "{count} serija je isteklo",
@@ -2351,5 +2352,32 @@
     "units": "Jedinice",
     "empty": "Ovdje još nema ničega.",
     "bestBeforeDate": "Najbolje upotrijebiti do {date}"
+  },
+  "purchased": {
+    "title": "Kupnje kojima istječe rok",
+    "hint": "Neprodana roba kupljena na FIRINGI kojoj uskoro istječe rok trajanja. FIRINGI vas upozorava prije isteka.",
+    "product": "Proizvod",
+    "order": "Narudžba",
+    "lot": "Serija",
+    "bestBefore": "Najbolje upotrijebiti do",
+    "delivered": "Isporučeno",
+    "unsold": "Neprodano",
+    "inStock": "U vašoj zalihi",
+    "inStockHint": "Smanjuje se kako prodajete.",
+    "markUsed": "Označi kao prodano / potrošeno",
+    "qty": "Količina",
+    "save": "Spremi",
+    "none": "Ništa što ste kupili na FIRINGI ne istječe uskoro.",
+    "expired": "Isteklo",
+    "days": "{days} dana",
+    "stockTitle": "Stavi u moju zalihu",
+    "stockHint": "Knjiži ovu isporuku u vašu zalihu sa serijama i rokovima trajanja distributera.",
+    "stockButton": "Stavi na zalihu",
+    "stockDone": "U vašoj zalihi: {lines} proizvoda.",
+    "stockMissing": "{count} proizvoda još nije u vašem katalogu — dodajte ih da biste ih stavili na zalihu.",
+    "stocked": "Ova je isporuka u vašoj zalihi.",
+    "viaPo": "Ova narudžba pripada narudžbi dobavljaču {number} — zaprimite je tamo.",
+    "warehouse": "Skladište",
+    "fromDistributor": "Seriju i rok ostavite praznima: dolaze s isporuke distributera."
   }
 }

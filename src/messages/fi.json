@@ -789,7 +789,8 @@
     "Stock Counts": "Inventaariot",
     "Transfers": "Siirrot",
     "Stock Movements": "Varastotapahtumat",
-    "Valuation": "Arvostus"
+    "Valuation": "Arvostus",
+    "Expiring Purchases": "Pian vanhenevat ostot"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1249,8 +1250,8 @@
       "body": "Lopetimme osoitteen {url} kutsumisen, koska se epäonnistui monta kertaa peräkkäin ({reason}). Korjaa järjestelmäsi ja ota se uudelleen käyttöön kohdassa Integraatiot."
     },
     "inventory_expiring": {
-      "title": "{count} erää vanhenee {days} päivän kuluttua",
-      "body": "{count} eräsi saavuttaa parasta ennen -päiväyksen {days} päivän kuluttua. Myy ne ensin, alenna hintaa tai siirrä ne."
+      "title": "{count} FIRINGIstä ostettua tuotetta vanhenee {days} päivän sisällä",
+      "body": "Yhä myymättä: {products}. Myy tai käytä ne ensin tai alenna hintaa ennen parasta ennen -päiväystä."
     },
     "inventory_expired": {
       "title": "{count} erää on vanhentunut",
@@ -2351,5 +2352,32 @@
     "units": "Yksiköt",
     "empty": "Täällä ei ole vielä mitään.",
     "bestBeforeDate": "Parasta ennen {date}"
+  },
+  "purchased": {
+    "title": "Pian vanhenevat ostot",
+    "hint": "FIRINGIstä ostetut myymättömät tuotteet, joiden parasta ennen -päiväys on pian. FIRINGI muistuttaa ennen vanhenemista.",
+    "product": "Tuote",
+    "order": "Tilaus",
+    "lot": "Erä",
+    "bestBefore": "Parasta ennen",
+    "delivered": "Toimitettu",
+    "unsold": "Myymättä",
+    "inStock": "Varastossasi",
+    "inStockHint": "Vähenee, kun myyt.",
+    "markUsed": "Merkitse myydyksi / käytetyksi",
+    "qty": "Määrä",
+    "save": "Tallenna",
+    "none": "Mikään FIRINGIstä ostamasi ei vanhene pian.",
+    "expired": "Vanhentunut",
+    "days": "{days} päivää",
+    "stockTitle": "Vie omaan varastooni",
+    "stockHint": "Kirjaa toimituksen varastoosi jakelijan erillä ja parasta ennen -päiväyksillä.",
+    "stockButton": "Vie varastoon",
+    "stockDone": "Varastossasi: {lines} tuotetta.",
+    "stockMissing": "{count} tuotetta ei ole vielä luettelossasi — lisää ne, jotta voit viedä ne varastoon.",
+    "stocked": "Tämä toimitus on varastossasi.",
+    "viaPo": "Tämä tilaus kuuluu ostotilaukseen {number} — vastaanota se siellä.",
+    "warehouse": "Varasto",
+    "fromDistributor": "Jätä erä ja päiväys tyhjiksi: ne tulevat jakelijan toimituksesta."
   }
 }

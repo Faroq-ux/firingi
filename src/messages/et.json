@@ -789,7 +789,8 @@
     "Stock Counts": "Inventuurid",
     "Transfers": "Ümberpaigutused",
     "Stock Movements": "Laoliikumised",
-    "Valuation": "Hindamine"
+    "Valuation": "Hindamine",
+    "Expiring Purchases": "Peagi aeguvad ostud"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1249,8 +1250,8 @@
       "body": "Lõpetasime {url} väljakutsumise, sest see ebaõnnestus mitu korda järjest ({reason}). Parandage oma süsteem ja lülitage see jaotises Liidestused uuesti sisse."
     },
     "inventory_expiring": {
-      "title": "{count} partiid aeguvad {days} päeva pärast",
-      "body": "{count} sinu partiid jõuavad {days} päeva pärast säilivusaja lõppu. Müü need esimesena, hinda alla või paiguta ümber."
+      "title": "{count} FIRINGI-st ostetud toodet aegub {days} päeva jooksul",
+      "body": "Endiselt müümata: {products}. Müü või kasuta need esimesena või hinda alla enne säilivusaja lõppu."
     },
     "inventory_expired": {
       "title": "{count} partiid on aegunud",
@@ -2351,5 +2352,32 @@
     "units": "Ühikud",
     "empty": "Siin pole veel midagi.",
     "bestBeforeDate": "Parim enne {date}"
+  },
+  "purchased": {
+    "title": "Peagi aeguvad ostud",
+    "hint": "FIRINGI-st ostetud müümata kaup, mille säilivusaeg saab peagi läbi. FIRINGI tuletab seda enne aegumist meelde.",
+    "product": "Toode",
+    "order": "Tellimus",
+    "lot": "Partii",
+    "bestBefore": "Parim enne",
+    "delivered": "Kohale toimetatud",
+    "unsold": "Müümata",
+    "inStock": "Sinu laos",
+    "inStockHint": "Väheneb müües.",
+    "markUsed": "Märgi müüduks / kasutatuks",
+    "qty": "Kogus",
+    "save": "Salvesta",
+    "none": "Miski FIRINGI-st ostetu ei aegu peagi.",
+    "expired": "Aegunud",
+    "days": "{days} päeva",
+    "stockTitle": "Võta minu lattu",
+    "stockHint": "Kirjendab selle tarne sinu lattu turustaja partiide ja säilivusaegadega.",
+    "stockButton": "Võta lattu",
+    "stockDone": "Sinu laos: {lines} toodet.",
+    "stockMissing": "{count} toodet pole veel sinu kataloogis — lisa need, et need lattu võtta.",
+    "stocked": "See tarne on sinu laos.",
+    "viaPo": "See tellimus kuulub ostutellimusele {number} — võta see vastu seal.",
+    "warehouse": "Ladu",
+    "fromDistributor": "Jäta partii ja kuupäev tühjaks: need tulevad turustaja tarnest."
   }
 }

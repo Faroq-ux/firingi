@@ -789,7 +789,8 @@
     "Stock Counts": "Inventuren",
     "Transfers": "Umlagerungen",
     "Stock Movements": "Lagerbewegungen",
-    "Valuation": "Bewertung"
+    "Valuation": "Bewertung",
+    "Expiring Purchases": "Bald ablaufende Einkäufe"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1249,8 +1250,8 @@
       "body": "Wir rufen {url} nicht mehr auf, nachdem es viele Male hintereinander fehlgeschlagen ist ({reason}). Beheben Sie das Problem und schalten Sie ihn unter Integrationen wieder ein."
     },
     "inventory_expiring": {
-      "title": "{count} Chargen laufen in {days} Tagen ab",
-      "body": "{count} Ihrer Chargen erreichen in {days} Tagen ihr Mindesthaltbarkeitsdatum. Verkaufen Sie sie zuerst, reduzieren Sie den Preis oder lagern Sie sie um."
+      "title": "{count} auf FIRINGI gekaufte Produkte laufen in {days} Tagen ab",
+      "body": "Noch unverkauft: {products}. Verkaufen oder verbrauchen Sie sie zuerst oder reduzieren Sie den Preis vor dem Mindesthaltbarkeitsdatum."
     },
     "inventory_expired": {
       "title": "{count} Chargen sind abgelaufen",
@@ -2351,5 +2352,32 @@
     "units": "Einheiten",
     "empty": "Noch nichts vorhanden.",
     "bestBeforeDate": "Mindestens haltbar bis {date}"
+  },
+  "purchased": {
+    "title": "Bald ablaufende Einkäufe",
+    "hint": "Unverkaufte Ware, die Sie auf FIRINGI gekauft haben und die bald ihr Mindesthaltbarkeitsdatum erreicht. FIRINGI erinnert Sie vor dem Ablauf.",
+    "product": "Produkt",
+    "order": "Bestellung",
+    "lot": "Charge",
+    "bestBefore": "Mindestens haltbar bis",
+    "delivered": "Geliefert",
+    "unsold": "Unverkauft",
+    "inStock": "In Ihrem Lager",
+    "inStockHint": "Sinkt, während Sie verkaufen.",
+    "markUsed": "Als verkauft / verbraucht markieren",
+    "qty": "Menge",
+    "save": "Speichern",
+    "none": "Nichts, was Sie auf FIRINGI gekauft haben, läuft bald ab.",
+    "expired": "Abgelaufen",
+    "days": "{days} Tage",
+    "stockTitle": "In mein Lager buchen",
+    "stockHint": "Bucht diese Lieferung mit den Chargen und Mindesthaltbarkeitsdaten des Großhändlers in Ihr Lager.",
+    "stockButton": "Einbuchen",
+    "stockDone": "In Ihrem Lager: {lines} Produkte.",
+    "stockMissing": "{count} Produkte sind noch nicht in Ihrem Katalog — legen Sie sie an, um sie einzubuchen.",
+    "stocked": "Diese Lieferung ist in Ihrem Lager.",
+    "viaPo": "Diese Bestellung gehört zur Bestellung {number} — buchen Sie sie dort ein.",
+    "warehouse": "Lager",
+    "fromDistributor": "Charge und Datum leer lassen: Sie kommen aus der Lieferung des Großhändlers."
   }
 }

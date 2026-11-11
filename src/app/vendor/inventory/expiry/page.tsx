@@ -5,7 +5,7 @@ import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
 import { expiringBatches } from "@/server/inventory/service";
 import { markdownSuggestions, myFeatures } from "@/server/inventory/expiry";
 import { offerLabel } from "@/server/inventory/options";
-import { FEATURES, FIELD } from "@/server/inventory/settings";
+import { SUPPLIER_FEATURES as FEATURES, FIELD } from "@/server/inventory/settings";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

@@ -789,7 +789,8 @@
     "Stock Counts": "Inventúry",
     "Transfers": "Presuny",
     "Stock Movements": "Skladové pohyby",
-    "Valuation": "Ocenenie"
+    "Valuation": "Ocenenie",
+    "Expiring Purchases": "Nákupy s končiacou trvanlivosťou"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1249,8 +1250,8 @@
       "body": "Prestali sme volať {url}, pretože mnohokrát po sebe zlyhal ({reason}). Opravte svoj systém a znova ho zapnite v Integráciách."
     },
     "inventory_expiring": {
-      "title": "{count} šarží expiruje o {days} dní",
-      "body": "{count} vašich šarží dosiahne dátum trvanlivosti o {days} dní. Predajte ich ako prvé, zlacnite ich alebo ich presuňte."
+      "title": "{count} produktov kúpených na FIRINGI expiruje do {days} dní",
+      "body": "Stále nepredané: {products}. Predajte alebo spotrebujte ich ako prvé, prípadne ich zlacnite pred dátumom trvanlivosti."
     },
     "inventory_expired": {
       "title": "{count} šarží expirovalo",
@@ -2351,5 +2352,32 @@
     "units": "Kusy",
     "empty": "Zatiaľ tu nič nie je.",
     "bestBeforeDate": "Minimálna trvanlivosť do {date}"
+  },
+  "purchased": {
+    "title": "Nákupy s končiacou trvanlivosťou",
+    "hint": "Nepredaný tovar kúpený na FIRINGI, ktorému čoskoro končí trvanlivosť. FIRINGI vás upozorní vopred.",
+    "product": "Produkt",
+    "order": "Objednávka",
+    "lot": "Šarža",
+    "bestBefore": "Minimálna trvanlivosť do",
+    "delivered": "Doručené",
+    "unsold": "Nepredané",
+    "inStock": "Vo vašom sklade",
+    "inStockHint": "Ubúda, ako predávate.",
+    "markUsed": "Označiť ako predané / spotrebované",
+    "qty": "Množstvo",
+    "save": "Uložiť",
+    "none": "Nič, čo ste kúpili na FIRINGI, čoskoro neexpiruje.",
+    "expired": "Expirované",
+    "days": "{days} dní",
+    "stockTitle": "Naskladniť k sebe",
+    "stockHint": "Zaskladní túto dodávku k vám so šaržami a dátumami trvanlivosti distribútora.",
+    "stockButton": "Naskladniť",
+    "stockDone": "Vo vašom sklade: {lines} produktov.",
+    "stockMissing": "{count} produktov ešte nemáte v katalógu — pridajte ich, aby ste ich mohli naskladniť.",
+    "stocked": "Táto dodávka je vo vašom sklade.",
+    "viaPo": "Táto objednávka patrí k nákupnej objednávke {number} — prijmite ju tam.",
+    "warehouse": "Sklad",
+    "fromDistributor": "Šaržu a dátum nechajte prázdne: prídu z dodávky distribútora."
   }
 }

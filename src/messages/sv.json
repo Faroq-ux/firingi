@@ -789,7 +789,8 @@
     "Stock Counts": "Inventeringar",
     "Transfers": "Flyttar",
     "Stock Movements": "Lagerrörelser",
-    "Valuation": "Värdering"
+    "Valuation": "Värdering",
+    "Expiring Purchases": "Inköp som snart går ut"
   },
   "delivery": {
     "title": "Leverans",
@@ -1249,8 +1250,8 @@
       "body": "Vi slutade anropa {url} efter att det misslyckats många gånger i rad ({reason}). Åtgärda ditt system och slå på det igen under Integrationer."
     },
     "inventory_expiring": {
-      "title": "{count} batcher går ut om {days} dagar",
-      "body": "{count} av dina batcher når sitt bäst före-datum om {days} dagar. Sälj dem först, sätt ned priset eller flytta dem."
+      "title": "{count} produkter köpta på FIRINGI går ut inom {days} dagar",
+      "body": "Fortfarande osålt: {products}. Sälj eller använd dem först, eller sätt ned priset, före bäst före-datumet."
     },
     "inventory_expired": {
       "title": "{count} batcher har gått ut",
@@ -2351,5 +2352,32 @@
     "units": "Enheter",
     "empty": "Här finns inget ännu.",
     "bestBeforeDate": "Bäst före {date}"
+  },
+  "purchased": {
+    "title": "Inköp som snart går ut",
+    "hint": "Osålda varor du köpt på FIRINGI som snart når sitt bäst före-datum. FIRINGI påminner dig innan de går ut.",
+    "product": "Produkt",
+    "order": "Order",
+    "lot": "Batch",
+    "bestBefore": "Bäst före",
+    "delivered": "Levererat",
+    "unsold": "Osålt",
+    "inStock": "I ditt lager",
+    "inStockHint": "Räknas ned när du säljer.",
+    "markUsed": "Markera som sålt / använt",
+    "qty": "Antal",
+    "save": "Spara",
+    "none": "Inget du köpt på FIRINGI går ut snart.",
+    "expired": "Utgånget",
+    "days": "{days} dagar",
+    "stockTitle": "Lägg i mitt lager",
+    "stockHint": "Bokför leveransen i ditt lager med distributörens batcher och bäst före-datum.",
+    "stockButton": "Lägg i lager",
+    "stockDone": "I ditt lager: {lines} produkter.",
+    "stockMissing": "{count} produkter finns inte i din katalog än — lägg till dem för att kunna lagerföra dem.",
+    "stocked": "Den här leveransen finns i ditt lager.",
+    "viaPo": "Den här ordern hör till inköpsorder {number} — ta emot den där.",
+    "warehouse": "Lager",
+    "fromDistributor": "Lämna batch och datum tomma: de kommer från distributörens leverans."
   }
 }

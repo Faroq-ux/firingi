@@ -23,6 +23,7 @@ import { receiveStock, setOpeningCost, stockOverview, valuation, writeOff, reord
 import { cancelPurchaseOrder, createPurchaseOrder, getPurchaseOrder, receivePurchaseOrder, saveSupplier, sendPurchaseOrder, listPurchaseOrders } from "@/server/inventory/purchasing";
 import { addFoundLine, approveCount, cancelTransfer, createTransfer, getCount, getTransfer, receiveTransfer, recordCount, sendTransfer, startCount, submitCount } from "@/server/inventory/warehouse";
 import { acceptMarkdown, bestBeforeFor, decideFeatureRequest, markdownSuggestions, requestFeature, resetSupplierFeatures, runExpiryAlerts, setSupplierFeature, supplierFeatures } from "@/server/inventory/expiry";
+import { alertSettings, markUsed, myPurchasedLots, setAlertSettings, setCompanyAlerts, stockDeliveredOrder } from "@/server/inventory/purchased";
 import { ctxFor } from "../helpers";
 
 const SA = "superadmin@firingi.test", FIN = "finance@firingi.test", KEBAB = "owner@kebabhouse.test", LX = "owner@lisboacentral.test", ATL = "owner@atlantico.test";
@@ -289,7 +290,7 @@ describe("expiry features", () => {
     await expect(setSupplierFeature(await ctxFor(FIN), lx.company.id, "FEFO", false)).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 
-  it("markdown suggestions, best-before for customers, daily alerts", async () => {
+  it("markdown suggestions and best-before for customers", async () => {
     const sa = await ctxFor(SA);
     await freshStock();
     // far more than sells in 5 days at the usual pace (other tests ship this product too)
@@ -309,12 +310,140 @@ describe("expiry features", () => {
     await setSupplierFeature(sa, lx.company.id, "SHOW_EXPIRY", true);
     expect((await bestBeforeFor([offerId])).get(offerId)?.toISOString().slice(0, 10)).toBe(inDays(5).toISOString().slice(0, 10));
 
-    await receiveStock(lx, { offerId, addressId: lisboa, qty: 3, unitCost: 5, lotCode: "SEVEN", expiresOn: inDays(7) });
-    const before = await prisma.notification.count({ where: { userId: lx.user.id, type: "inventory.expiring" } });
-    const res = await runExpiryAlerts();
-    expect(res.messages).toBeGreaterThan(0);
-    expect(await prisma.notification.count({ where: { userId: lx.user.id, type: "inventory.expiring" } })).toBeGreaterThan(before);
     await resetSupplierFeatures(sa, lx.company.id);
+  });
+});
+
+/** Seller confirms → ready → FIRINGI (or the seller) dispatches → out for delivery → delivered. */
+async function deliver(orderId: string) {
+  const o = await prisma.order.findUniqueOrThrow({ where: { id: orderId }, select: { sellerCompanyId: true } });
+  const seller = await prisma.membership.findFirstOrThrow({ where: { companyId: o.sellerCompanyId, isOwner: true }, include: { user: true } });
+  const sc = await ctxFor(seller.user.email), ops = await ctxFor("ops@firingi.test");
+  await confirmOrder(sc, orderId, {});
+  for (const to of ["READY_FOR_PICKUP", "DISPATCHED", "OUT_FOR_DELIVERY", "DELIVERED"] as const) {
+    const cur = (await prisma.order.findUniqueOrThrow({ where: { id: orderId } })).status;
+    if (cur === "DELIVERED") break;
+    if (to === "READY_FOR_PICKUP" && cur !== "SUPPLIER_PROCESSING") continue;
+    await changeOrderStatus(ops, orderId, to).catch(() => changeOrderStatus(sc, orderId, to));
+  }
+  expect((await prisma.order.findUniqueOrThrow({ where: { id: orderId } })).status).toBe("DELIVERED");
+}
+const alertCount = (userId: string) => prisma.notification.count({ where: { userId, type: "inventory.expiring" } });
+
+describe("expiry alerts for goods bought on FIRINGI", () => {
+  afterAll(async () => {
+    const sa = await ctxFor(SA);
+    await setAlertSettings(sa, { enabled: true, firstDays: 14, secondDays: 3 });
+    for (const e of [KEBAB, LX]) await setCompanyAlerts(sa, (await ctxFor(e)).company.id, null);
+  });
+
+  it("FIRINGI sets two alert days (1–30), globally and per company", async () => {
+    const sa = await ctxFor(SA), fin = await ctxFor(FIN), kebab = await ctxFor(KEBAB);
+    await expect(setAlertSettings(sa, { enabled: true, firstDays: 3, secondDays: 10 })).rejects.toThrow(/first alert/);
+    await expect(setAlertSettings(sa, { enabled: true, firstDays: 31, secondDays: 3 })).rejects.toThrow(/1 and 30/);
+    await expect(setAlertSettings(fin, { enabled: true, firstDays: 14, secondDays: 3 })).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await expect(setCompanyAlerts(kebab, kebab.company.id, false)).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await setAlertSettings(sa, { enabled: true, firstDays: 20, secondDays: 5 });
+    expect(await alertSettings()).toEqual({ enabled: true, firstDays: 20, secondDays: 5 });
+  });
+
+  it("a customer is reminded twice about unsold goods it bought, until marked sold / used", async () => {
+    const sa = await ctxFor(SA), kebab = await ctxFor(KEBAB);
+    await freshStock();
+    await receiveStock(lx, { offerId, addressId: lisboa, qty: 40, unitCost: 5, lotCode: `CUST-${Date.now()}`, expiresOn: inDays(12) });
+    const o = await orderMozz(6);
+    await deliver(o.id);
+    const lots = await prisma.purchasedLot.findMany({ where: { orderId: o.id } });
+    expect(lots).toHaveLength(1);
+    expect(lots[0]).toMatchObject({ buyerCompanyId: kebab.company.id, qty: 6 });
+    expect(lots[0].expiresOn.toISOString().slice(0, 10)).toBe(inDays(12).toISOString().slice(0, 10));
+    expect((await myPurchasedLots(kebab, "pt-PT")).find((r) => r.id === lots[0].id)?.unsold).toBe(6);
+
+    await setAlertSettings(sa, { enabled: true, firstDays: 14, secondDays: 3 });
+    const n0 = await alertCount(kebab.user.id);
+    await runExpiryAlerts();
+    expect(await alertCount(kebab.user.id)).toBe(n0 + 1); // 1st alert (12 days ≤ 14)
+    await runExpiryAlerts();
+    expect(await alertCount(kebab.user.id)).toBe(n0 + 1); // not twice
+    await prisma.purchasedLot.update({ where: { id: lots[0].id }, data: { expiresOn: inDays(2) } });
+    await runExpiryAlerts();
+    expect(await alertCount(kebab.user.id)).toBe(n0 + 2); // 2nd alert (2 days ≤ 3)
+
+    // turned off for this customer → no alert; sold / used → nothing left to remind about
+    const again = await prisma.purchasedLot.create({ data: { ...lots[0], id: undefined, sellerBatchId: null, firstAlertAt: null, secondAlertAt: null, expiresOn: inDays(10), createdAt: undefined } as never });
+    await setCompanyAlerts(sa, kebab.company.id, false);
+    await runExpiryAlerts();
+    expect(await alertCount(kebab.user.id)).toBe(n0 + 2);
+    await setCompanyAlerts(sa, kebab.company.id, null);
+    await markUsed(kebab, again.id, 6);
+    await runExpiryAlerts();
+    expect(await alertCount(kebab.user.id)).toBe(n0 + 2);
+    await expect(markUsed(kebab, lots[0].id, 99)).rejects.toThrow(/Enter 1 to/);
+    // FIRINGI switched everything off → nothing
+    await setAlertSettings(sa, { enabled: false, firstDays: 14, secondDays: 3 });
+    expect((await runExpiryAlerts()).enabled).toBe(false);
+    await setAlertSettings(sa, { enabled: true, firstDays: 14, secondDays: 3 });
+  });
+
+  it("a wholesaler buying on FIRINGI: the distributor's lot and date go into its stock, alerts follow what is unsold", async () => {
+    const sa = await ctxFor(SA), atl = await ctxFor(ATL);
+    const src = await prisma.vendorOffer.findFirstOrThrow({ where: { vendorCompanyId: atl.company.id, vendorSku: "DIS-COLA33", status: "ACTIVE" } });
+    const own = await prisma.vendorOffer.findFirstOrThrow({ where: { vendorCompanyId: lx.company.id, vendorSku: "GRO-COLA33", packaging: { unitsPerPack: 24 } } });
+    const atlWh = await prisma.address.findFirstOrThrow({ where: { companyId: atl.company.id, kind: "WAREHOUSE" } });
+    const lot = `ATL-${Date.now()}`;
+    await setStock(atl, src.id, atlWh.id, 0).catch(() => null);
+    await receiveStock(atl, { offerId: src.id, addressId: atlWh.id, qty: 60, unitCost: 9, lotCode: lot, expiresOn: inDays(25) });
+    const po = await createPurchaseOrder(lx, { sellerCompanyId: atl.company.id, addressId: lisboa, lines: [{ offerId: own.id, sourceOfferId: src.id, qty: 5 }] });
+    const sent = await sendPurchaseOrder(lx, po.id);
+    await deliver(sent.order!.id);
+    const pl = await prisma.purchasedLot.findFirstOrThrow({ where: { orderId: sent.order!.id } });
+    expect(pl).toMatchObject({ buyerCompanyId: lx.company.id, lotCode: lot, qty: 5 });
+    // the shop path refuses: it belongs to the purchase order
+    await expect(stockDeliveredOrder(lx, sent.order!.id, lisboa)).rejects.toThrow(/purchase order/);
+    const view = await getPurchaseOrder(lx, po.id);
+    await receivePurchaseOrder(lx, po.id, { lines: [{ lineId: view.lines[0].id, qty: 5 }] }); // no lot typed in
+    const linked = await prisma.purchasedLot.findUniqueOrThrow({ where: { id: pl.id } });
+    const batch = await prisma.stockBatch.findUniqueOrThrow({ where: { id: linked.ownBatchId! } });
+    expect(batch).toMatchObject({ lotCode: lot, onHand: 5 });
+    expect(batch.expiresOn!.toISOString().slice(0, 10)).toBe(inDays(25).toISOString().slice(0, 10));
+    // the same lot code + date received by hand stays a separate batch (never mixed with FIRINGI goods)
+    await receiveStock(lx, { offerId: own.id, addressId: lisboa, qty: 3, unitCost: 1, lotCode: lot, expiresOn: inDays(25) });
+    expect(await prisma.stockBatch.count({ where: { offerId: own.id, lotCode: lot } })).toBe(2);
+
+    await setAlertSettings(sa, { enabled: true, firstDays: 30, secondDays: 3 });
+    const n0 = await alertCount(lx.user.id);
+    await runExpiryAlerts();
+    expect(await alertCount(lx.user.id)).toBe(n0 + 1);
+    expect((await myPurchasedLots(lx, "pt-PT")).find((r) => r.id === pl.id)).toMatchObject({ unsold: 5, inStock: true });
+    // sold out of its stock → nothing unsold → no 2nd alert
+    await prisma.purchasedLot.update({ where: { id: pl.id }, data: { expiresOn: inDays(2) } });
+    await writeOff(lx, { batchId: batch.id, reason: "sold at the counter (test)" });
+    await runExpiryAlerts();
+    expect(await alertCount(lx.user.id)).toBe(n0 + 1);
+    await expect(markUsed(lx, pl.id, 1)).rejects.toThrow(/in your stock/);
+  });
+
+  it("a wholesaler puts a delivered shop order into stock with the distributor's lots", async () => {
+    const atl = await ctxFor(ATL);
+    const src = await prisma.vendorOffer.findFirstOrThrow({ where: { vendorCompanyId: atl.company.id, vendorSku: "DIS-COLA33", status: "ACTIVE" } });
+    const atlWh = await prisma.address.findFirstOrThrow({ where: { companyId: atl.company.id, kind: "WAREHOUSE" } });
+    const lot = `SHOP-${Date.now()}`;
+    await setStock(atl, src.id, atlWh.id, 0).catch(() => null);
+    // expires before the earlier test's lot, so first-to-expire picking ships this one
+    await receiveStock(atl, { offerId: src.id, addressId: atlWh.id, qty: 30, unitCost: 9, lotCode: lot, expiresOn: inDays(9) });
+    await clearCart(lx);
+    await addToCart(lx, src.id, 4);
+    const addr = await prisma.address.findFirstOrThrow({ where: { companyId: lx.company.id, kind: "DELIVERY", isActive: true }, orderBy: { isDefault: "desc" } });
+    const o = await placeOrder(lx, { deliveryAddressId: addr.id });
+    await deliver(o.id);
+    const r = await stockDeliveredOrder(lx, o.id, lisboa);
+    expect(r.lines).toBe(1);
+    const pl = await prisma.purchasedLot.findFirstOrThrow({ where: { orderId: o.id } });
+    expect(pl.ownBatchId).not.toBeNull();
+    expect((await prisma.stockBatch.findUniqueOrThrow({ where: { id: pl.ownBatchId! } })).lotCode).toBe(lot);
+    await expect(stockDeliveredOrder(lx, o.id, lisboa)).rejects.toThrow(/already/);
+    // a customer can't put orders into stock
+    await expect(stockDeliveredOrder(await ctxFor(KEBAB), o.id, lisboa)).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 });
 

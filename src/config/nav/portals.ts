@@ -111,6 +111,7 @@ export const BUY_NAV: NavSection[] = [
       bo("cart", "Cart", "Carrinho", "P4", { live: true, perm: "buyer.orders.place", es: "Carrito" }),
       bo("history", "My Orders", "As Minhas Encomendas", "P4", { live: true, es: "Mis pedidos" }),
       bo("buy-again", "Buy Again", "Comprar de Novo", "P17", { live: true, perm: "buyer.orders.place", es: "Volver a comprar" }),
+      bo("expiring", "Expiring Purchases", "Compras a Expirar", "P24", { live: true, es: "Compras por caducar" }),
       bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
     ],
   },

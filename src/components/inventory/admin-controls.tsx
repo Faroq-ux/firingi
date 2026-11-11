@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { decideFeatureRequestAction, resetSupplierFeaturesAction, setInventoryDefaultsAction, setSupplierFeatureAction } from "@/server/actions/inventory";
+import { decideFeatureRequestAction, resetSupplierFeaturesAction, setCompanyAlertsAction, setInventoryDefaultsAction, setPurchaseAlertsAction, setSupplierFeatureAction } from "@/server/actions/inventory";
 
 type Feature = "FEFO" | "EXPIRY_ALERTS" | "MARKDOWN" | "SHOW_EXPIRY";
 function useRun() {
@@ -58,5 +58,38 @@ export function DefaultsForm({ value, canManage }: { value: { fefo: boolean; exp
       {canManage && <Button size="sm" disabled={!changed || pending} onClick={() => run(() => setInventoryDefaultsAction(v))}>Save defaults</Button>}
       {error && <span className="text-xs text-destructive">{error}</span>}
     </div>
+  );
+}
+
+export function PurchaseAlertsForm({ value, canManage }: { value: { enabled: boolean; firstDays: number; secondDays: number }; canManage: boolean }) {
+  const { pending, error, run } = useRun();
+  const [v, setV] = useState({ enabled: value.enabled, firstDays: String(value.firstDays), secondDays: String(value.secondDays) });
+  const [saved, setSaved] = useState(false);
+  const days = Array.from({ length: 30 }, (_, i) => i + 1);
+  return (
+    <form className="flex flex-wrap items-end gap-4" data-testid="alerts-form"
+      onSubmit={(e) => { e.preventDefault(); setSaved(false); run(() => setPurchaseAlertsAction({ enabled: v.enabled, firstDays: Number(v.firstDays), secondDays: Number(v.secondDays) }), () => setSaved(true)); }}>
+      <label className="flex items-center gap-2 text-sm font-medium"><input type="checkbox" className="size-4" disabled={!canManage} checked={v.enabled} onChange={(e) => setV({ ...v, enabled: e.target.checked })} data-testid="alerts-enabled" />Alerts on for everyone</label>
+      <label className="space-y-1 text-sm"><span className="block text-xs text-muted-foreground">1st alert — days before best-before</span>
+        <select className="h-9 rounded-md border bg-background px-2" disabled={!canManage} value={v.firstDays} onChange={(e) => setV({ ...v, firstDays: e.target.value })} data-testid="first-days">{days.map((d) => <option key={d} value={d}>{d}</option>)}</select></label>
+      <label className="space-y-1 text-sm"><span className="block text-xs text-muted-foreground">2nd alert — days before best-before</span>
+        <select className="h-9 rounded-md border bg-background px-2" disabled={!canManage} value={v.secondDays} onChange={(e) => setV({ ...v, secondDays: e.target.value })} data-testid="second-days">{days.map((d) => <option key={d} value={d}>{d}</option>)}</select></label>
+      {canManage && <Button disabled={pending} data-testid="save-alerts">Save</Button>}
+      {saved && <span className="text-sm text-[color:var(--success,#16a34a)]">Saved.</span>}
+      {error && <span className="text-sm text-destructive">{error}</span>}
+    </form>
+  );
+}
+
+export function CompanyAlertSwitch({ companyId, value, canManage }: { companyId: string; value: boolean | null; canManage: boolean }) {
+  const { pending, error, run } = useRun();
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <select aria-label="Alerts for this company" className="h-8 rounded-md border bg-background px-2 text-sm" disabled={!canManage || pending} value={value === null ? "" : value ? "on" : "off"} data-testid="company-alerts"
+        onChange={(e) => run(() => setCompanyAlertsAction({ companyId, enabled: e.target.value === "" ? null : e.target.value === "on" }))}>
+        <option value="">Follow global</option><option value="on">On</option><option value="off">Off</option>
+      </select>
+      {error && <span className="text-xs text-destructive">{error}</span>}
+    </span>
   );
 }

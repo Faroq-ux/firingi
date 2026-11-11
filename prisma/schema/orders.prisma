@@ -127,7 +127,10 @@ model Order {
   redemptions       PromotionRedemption[]
   risk              RiskAssessment?
 
-  purchaseOrder PurchaseOrder?
+  purchaseOrder  PurchaseOrder?
+  purchasedLots  PurchasedLot[] @relation("PurchasedLotOrder")
+  /// a wholesaler put this delivered order into its own stock (Phase 24)
+  buyerStockedAt DateTime?
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])

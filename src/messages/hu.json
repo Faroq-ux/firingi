@@ -789,7 +789,8 @@
     "Stock Counts": "Leltárak",
     "Transfers": "Átvezetések",
     "Stock Movements": "Készletmozgások",
-    "Valuation": "Értékelés"
+    "Valuation": "Értékelés",
+    "Expiring Purchases": "Hamarosan lejáró vásárlások"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1249,8 +1250,8 @@
       "body": "Leállítottuk a(z) {url} hívását, mert sokszor egymás után hibázott ({reason}). Javítsa a rendszerét, majd kapcsolja vissza az Integrációk alatt."
     },
     "inventory_expiring": {
-      "title": "{count} tétel {days} nap múlva lejár",
-      "body": "{count} tétele {days} nap múlva éri el a lejárati dátumát. Adja el őket először, árazza le vagy helyezze át őket."
+      "title": "{count} FIRINGI-n vásárolt termék {days} napon belül lejár",
+      "body": "Még eladatlan: {products}. Adja el vagy használja fel őket elsőként, vagy árazza le őket a lejárat előtt."
     },
     "inventory_expired": {
       "title": "{count} tétel lejárt",
@@ -2351,5 +2352,32 @@
     "units": "Egység",
     "empty": "Itt még nincs semmi.",
     "bestBeforeDate": "Minőségét megőrzi: {date}"
+  },
+  "purchased": {
+    "title": "Hamarosan lejáró vásárlások",
+    "hint": "A FIRINGI-n vásárolt, még el nem adott áruk, amelyek hamarosan elérik a lejárati dátumot. A FIRINGI még a lejárat előtt figyelmezteti.",
+    "product": "Termék",
+    "order": "Rendelés",
+    "lot": "Tétel",
+    "bestBefore": "Minőségét megőrzi",
+    "delivered": "Kiszállítva",
+    "unsold": "Eladatlan",
+    "inStock": "Az Ön készletében",
+    "inStockHint": "Csökken, ahogy elad.",
+    "markUsed": "Megjelölés eladottként / felhasználtként",
+    "qty": "Mennyiség",
+    "save": "Mentés",
+    "none": "Semmi, amit a FIRINGI-n vásárolt, nem jár le hamarosan.",
+    "expired": "Lejárt",
+    "days": "{days} nap",
+    "stockTitle": "Bevételezés a készletembe",
+    "stockHint": "A szállítmányt a forgalmazó tételeivel és lejárati dátumaival veszi fel a készletébe.",
+    "stockButton": "Bevételezés",
+    "stockDone": "Az Ön készletében: {lines} termék.",
+    "stockMissing": "{count} termék még nincs a katalógusában — vegye fel őket a bevételezéshez.",
+    "stocked": "Ez a szállítmány az Ön készletében van.",
+    "viaPo": "Ez a rendelés a(z) {number} beszerzési rendeléshez tartozik — ott vételezze be.",
+    "warehouse": "Raktár",
+    "fromDistributor": "A tételt és a dátumot hagyja üresen: a forgalmazó szállítmányából jönnek."
   }
 }

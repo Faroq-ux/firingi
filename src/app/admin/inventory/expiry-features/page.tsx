@@ -1,6 +1,6 @@
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
 import { getDefaults, listFeatureRequests, supplierFeatures } from "@/server/inventory/expiry";
-import { FEATURES, FEATURE_LABEL, FIELD } from "@/server/inventory/settings";
+import { SUPPLIER_FEATURES as FEATURES, FEATURE_LABEL, FIELD } from "@/server/inventory/settings";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

@@ -5,6 +5,8 @@
 import type { Tx } from "@/server/db";
 
 export const FEATURES = ["FEFO", "EXPIRY_ALERTS", "MARKDOWN", "SHOW_EXPIRY"] as const;
+/** Switched per supplier on the features pages (expiry alerts have their own page: goods bought on FIRINGI). */
+export const SUPPLIER_FEATURES = ["FEFO", "MARKDOWN", "SHOW_EXPIRY"] as const;
 export type Feature = (typeof FEATURES)[number];
 export type Features = { fefo: boolean; expiryAlerts: boolean; markdown: boolean; showExpiry: boolean };
 export const FIELD: Record<Feature, keyof Features> = { FEFO: "fefo", EXPIRY_ALERTS: "expiryAlerts", MARKDOWN: "markdown", SHOW_EXPIRY: "showExpiry" };
@@ -16,8 +18,7 @@ export const FEATURE_LABEL: Record<Feature, string> = {
 };
 export const DEFAULTS: Features = { fefo: true, expiryAlerts: true, markdown: false, showExpiry: false };
 export const DEFAULTS_KEY = "inventory.defaults";
-/** Days before expiry when alerts go out, and from when a batch counts as "short-dated". */
-export const ALERT_DAYS = [30, 14, 7] as const;
+/** From when a batch counts as "short-dated". */
 export const SHORT_DATED_DAYS = 14;
 
 export async function inventoryDefaults(tx: Tx): Promise<Features> {

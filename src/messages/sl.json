@@ -789,7 +789,8 @@
     "Stock Counts": "Inventure",
     "Transfers": "Prenosi",
     "Stock Movements": "Premiki zaloge",
-    "Valuation": "Vrednotenje"
+    "Valuation": "Vrednotenje",
+    "Expiring Purchases": "Nakupi, ki jim poteka rok"
   },
   "delivery": {
     "title": "Dostava",
@@ -1249,8 +1250,8 @@
       "body": "Nehali smo klicati {url}, ker je večkrat zapored spodletelo ({reason}). Popravite svoj sistem in ga znova vklopite v Integracijah."
     },
     "inventory_expiring": {
-      "title": "{count} serij poteče čez {days} dni",
-      "body": "{count} vaših serij doseže rok uporabe čez {days} dni. Prodajte jih najprej, znižajte jim ceno ali jih premaknite."
+      "title": "{count} izdelkov, kupljenih na FIRINGI, poteče v {days} dneh",
+      "body": "Še neprodano: {products}. Najprej jih prodajte ali porabite ali jim znižajte ceno pred rokom uporabe."
     },
     "inventory_expired": {
       "title": "{count} serij je poteklo",
@@ -2351,5 +2352,32 @@
     "units": "Enote",
     "empty": "Tu še ni ničesar.",
     "bestBeforeDate": "Uporabno najmanj do {date}"
+  },
+  "purchased": {
+    "title": "Nakupi, ki jim poteka rok",
+    "hint": "Neprodano blago, kupljeno na FIRINGI, ki mu kmalu poteče rok uporabe. FIRINGI vas opozori pred iztekom.",
+    "product": "Izdelek",
+    "order": "Naročilo",
+    "lot": "Serija",
+    "bestBefore": "Uporabno najmanj do",
+    "delivered": "Dostavljeno",
+    "unsold": "Neprodano",
+    "inStock": "V vaši zalogi",
+    "inStockHint": "Se zmanjšuje, ko prodajate.",
+    "markUsed": "Označi kot prodano / porabljeno",
+    "qty": "Količina",
+    "save": "Shrani",
+    "none": "Nič, kar ste kupili na FIRINGI, ne poteče kmalu.",
+    "expired": "Poteklo",
+    "days": "{days} dni",
+    "stockTitle": "Daj v mojo zalogo",
+    "stockHint": "Knjiži to dostavo v vašo zalogo s serijami in roki uporabe distributerja.",
+    "stockButton": "Daj v zalogo",
+    "stockDone": "V vaši zalogi: {lines} izdelkov.",
+    "stockMissing": "{count} izdelkov še ni v vašem katalogu — dodajte jih, da jih boste lahko dali v zalogo.",
+    "stocked": "Ta dostava je v vaši zalogi.",
+    "viaPo": "To naročilo spada k naročilu dobavitelju {number} — prevzemite ga tam.",
+    "warehouse": "Skladišče",
+    "fromDistributor": "Serijo in rok pustite prazna: prideta z dostave distributerja."
   }
 }

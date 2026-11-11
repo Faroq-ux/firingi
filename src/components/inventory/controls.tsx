@@ -257,11 +257,13 @@ export function PoActions({ id, canSend, canCancel, viaFiringi, supplierEmail, d
 
 export function ReceivePoForm({ poId, lines, viaFiringi }: { poId: string; viaFiringi: boolean; lines: { id: string; label: string; open: number; unitCost: string }[] }) {
   const t = useTranslations("inventory");
+  const tp = useTranslations("purchased");
   const { pending, error, done, run } = useRun();
   const [rows, setRows] = useState(lines.map((l) => ({ lineId: l.id, qty: String(l.open), lotCode: "", expiresOn: "", unitCost: l.unitCost })));
   const set = (i: number, k: "qty" | "lotCode" | "expiresOn" | "unitCost", v: string) => setRows(rows.map((r, j) => (j === i ? { ...r, [k]: v } : r)));
   return (
     <form className="space-y-2" data-testid="po-receive" onSubmit={(e) => { e.preventDefault(); run(() => receivePurchaseOrderAction({ id: poId, lines: rows.map((r) => ({ lineId: r.lineId, qty: Number(r.qty || 0), lotCode: r.lotCode || null, expiresOn: r.expiresOn || null, unitCost: viaFiringi ? null : num(r.unitCost) })) }), undefined, t("done")); }}>
+      {viaFiringi && <p className="text-xs text-muted-foreground" data-testid="from-distributor">{tp("fromDistributor")}</p>}
       {lines.map((l, i) => (
         <div key={l.id} className="grid gap-2 rounded-xl border p-2 sm:grid-cols-[1fr_6rem_8rem_9rem_8rem] sm:items-end">
           <div className="text-sm font-medium">{l.label}<div className="text-xs text-muted-foreground">{t("toReceive")}: {l.open}</div></div>

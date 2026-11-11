@@ -277,3 +277,32 @@ model InventoryFeatureRequest {
 
   @@index([status, requestedAt])
 }
+
+/// Goods a buyer (wholesaler or customer) bought on FIRINGI, one row per delivered lot with a
+/// best-before date — the basis of FIRINGI's expiry alerts for unsold goods bought on FIRINGI.
+/// Unsold = what is still in the wholesaler's own stock from it (`ownBatchId`), otherwise
+/// delivered − returned − marked sold / used by the buyer.
+model PurchasedLot {
+  id              String    @id @default(cuid())
+  buyerCompanyId  String
+  orderId         String
+  offerId         String // the seller's offer
+  packagingUnitId String
+  sellerBatchId   String? // the seller's batch it was shipped from
+  lotCode         String?
+  expiresOn       DateTime  @db.Date
+  qty             Int // delivered from this lot (returns are taken off)
+  usedQty         Int       @default(0) // marked sold / used by the buyer
+  ownBatchId      String? // wholesaler: the batch in its own stock it went into
+  stockedAt       DateTime?
+  firstAlertAt    DateTime?
+  secondAlertAt   DateTime?
+  createdAt       DateTime  @default(now())
+
+  buyer Company @relation("PurchasedLotBuyer", fields: [buyerCompanyId], references: [id], onDelete: Cascade)
+  order Order   @relation("PurchasedLotOrder", fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, offerId, sellerBatchId])
+  @@index([buyerCompanyId, expiresOn])
+  @@index([expiresOn])
+}

@@ -231,6 +231,7 @@ model Company {
   stockTransfers         StockTransfer[]           @relation("StockTransferOwner")
   inventorySettings      InventorySettings?        @relation("InventorySettingsCompany")
   inventoryRequests      InventoryFeatureRequest[] @relation("InventoryFeatureRequestCompany")
+  purchasedLots          PurchasedLot[]            @relation("PurchasedLotBuyer")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

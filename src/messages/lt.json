@@ -789,7 +789,8 @@
     "Stock Counts": "Inventorizacijos",
     "Transfers": "Perkėlimai",
     "Stock Movements": "Atsargų judėjimai",
-    "Valuation": "Įvertinimas"
+    "Valuation": "Įvertinimas",
+    "Expiring Purchases": "Pirkiniai, kurių galiojimas baigiasi"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1249,8 +1250,8 @@
       "body": "Nustojome kviesti {url}, nes daug kartų iš eilės nepavyko ({reason}). Sutvarkykite savo sistemą ir vėl įjunkite ją skiltyje Integracijos."
     },
     "inventory_expiring": {
-      "title": "{count} partijų galiojimas baigiasi po {days} d.",
-      "body": "{count} jūsų partijų pasieks galiojimo datą po {days} d. Parduokite jas pirmiausia, nukainokite arba perkelkite."
+      "title": "{count} produktų, pirktų FIRINGI, galiojimas baigiasi per {days} d.",
+      "body": "Vis dar neparduota: {products}. Parduokite ar sunaudokite juos pirmiausia arba nukainokite iki galiojimo pabaigos."
     },
     "inventory_expired": {
       "title": "{count} partijų galiojimas pasibaigė",
@@ -2351,5 +2352,32 @@
     "units": "Vienetai",
     "empty": "Čia dar nieko nėra.",
     "bestBeforeDate": "Geriausias iki {date}"
+  },
+  "purchased": {
+    "title": "Pirkiniai, kurių galiojimas baigiasi",
+    "hint": "Neparduotos prekės, pirktos FIRINGI, kurių galiojimas greitai baigiasi. FIRINGI jums primins prieš tai.",
+    "product": "Produktas",
+    "order": "Užsakymas",
+    "lot": "Partija",
+    "bestBefore": "Geriausias iki",
+    "delivered": "Pristatyta",
+    "unsold": "Neparduota",
+    "inStock": "Jūsų sandėlyje",
+    "inStockHint": "Mažėja, kai parduodate.",
+    "markUsed": "Pažymėti kaip parduotą / sunaudotą",
+    "qty": "Kiekis",
+    "save": "Išsaugoti",
+    "none": "Niekas, ką pirkote FIRINGI, greitai nesibaigia.",
+    "expired": "Pasibaigęs",
+    "days": "{days} d.",
+    "stockTitle": "Priimti į mano sandėlį",
+    "stockHint": "Užregistruoja šį pristatymą jūsų sandėlyje su platintojo partijomis ir galiojimo datomis.",
+    "stockButton": "Priimti į sandėlį",
+    "stockDone": "Jūsų sandėlyje: {lines} produktų.",
+    "stockMissing": "{count} produktų dar nėra jūsų kataloge — pridėkite juos, kad galėtumėte priimti.",
+    "stocked": "Šis pristatymas yra jūsų sandėlyje.",
+    "viaPo": "Šis užsakymas priklauso pirkimo užsakymui {number} — priimkite jį ten.",
+    "warehouse": "Sandėlis",
+    "fromDistributor": "Partiją ir datą palikite tuščias: jos ateina iš platintojo pristatymo."
   }
 }

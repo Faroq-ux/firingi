@@ -4,6 +4,7 @@
  * FIRINGI, FIRINGI buys from the vendor — the order freezes both sides' numbers.
  */
 import { releaseForOrder, reserveForOrder, restockForOrder, shipForOrder } from "@/server/inventory/ledger";
+import { recordPurchasedLots } from "@/server/inventory/purchased-core";
 import type { DeliveryMode, OrderFlow, OrderStatus, Prisma } from "@prisma/client";
 import Decimal from "decimal.js";
 import { prisma, type Tx } from "@/server/db";
@@ -404,6 +405,8 @@ export async function applyOrderTransition(
     // Delivered = what was confirmed. FIRINGI invoices the buyer and tells the vendor what to invoice.
     for (const l of order.lines) await tx.orderLine.update({ where: { id: l.id }, data: { qtyDelivered: l.qtyConfirmed ?? l.qtyOrdered } });
     await invoiceDeliveredOrder(tx, order.id, by.userId);
+    // goods bought on FIRINGI with a best-before date: the basis of the buyer's expiry alerts
+    await recordPurchasedLots(tx, order.id);
     // A prepayment (or other customer credit) pays the new invoice at once.
     const { applyCustomerCredit } = await import("@/server/payments/service");
     await applyCustomerCredit(tx, order.buyerCompanyId);

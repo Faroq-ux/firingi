@@ -789,7 +789,8 @@
     "Stock Counts": "Voorraadtellingen",
     "Transfers": "Overboekingen",
     "Stock Movements": "Voorraadmutaties",
-    "Valuation": "Waardering"
+    "Valuation": "Waardering",
+    "Expiring Purchases": "Aankopen die bijna verlopen"
   },
   "delivery": {
     "title": "Levering",
@@ -1249,8 +1250,8 @@
       "body": "We roepen {url} niet meer aan nadat het vele keren achter elkaar mislukte ({reason}). Herstel uw systeem en zet hem weer aan bij Integraties."
     },
     "inventory_expiring": {
-      "title": "{count} partijen verlopen over {days} dagen",
-      "body": "{count} van uw partijen bereiken over {days} dagen hun houdbaarheidsdatum. Verkoop ze eerst, prijs ze af of verplaats ze."
+      "title": "{count} op FIRINGI gekochte producten verlopen binnen {days} dagen",
+      "body": "Nog onverkocht: {products}. Verkoop of gebruik ze eerst, of prijs ze af, vóór de houdbaarheidsdatum."
     },
     "inventory_expired": {
       "title": "{count} partijen zijn verlopen",
@@ -2351,5 +2352,32 @@
     "units": "Eenheden",
     "empty": "Hier is nog niets.",
     "bestBeforeDate": "Ten minste houdbaar tot {date}"
+  },
+  "purchased": {
+    "title": "Aankopen die bijna verlopen",
+    "hint": "Onverkochte goederen die u op FIRINGI kocht en die binnenkort hun houdbaarheidsdatum bereiken. FIRINGI waarschuwt u voordat ze verlopen.",
+    "product": "Product",
+    "order": "Bestelling",
+    "lot": "Partij",
+    "bestBefore": "Ten minste houdbaar tot",
+    "delivered": "Geleverd",
+    "unsold": "Onverkocht",
+    "inStock": "In uw voorraad",
+    "inStockHint": "Telt af terwijl u verkoopt.",
+    "markUsed": "Markeren als verkocht / gebruikt",
+    "qty": "Aantal",
+    "save": "Opslaan",
+    "none": "Niets wat u op FIRINGI kocht verloopt binnenkort.",
+    "expired": "Verlopen",
+    "days": "{days} dagen",
+    "stockTitle": "In mijn voorraad zetten",
+    "stockHint": "Boekt deze levering in uw voorraad met de partijen en houdbaarheidsdata van de distributeur.",
+    "stockButton": "In voorraad zetten",
+    "stockDone": "In uw voorraad: {lines} producten.",
+    "stockMissing": "{count} producten staan nog niet in uw catalogus — voeg ze toe om ze in voorraad te nemen.",
+    "stocked": "Deze levering staat in uw voorraad.",
+    "viaPo": "Deze bestelling hoort bij inkooporder {number} — ontvang ze daar.",
+    "warehouse": "Magazijn",
+    "fromDistributor": "Laat partij en datum leeg: ze komen uit de levering van de distributeur."
   }
 }

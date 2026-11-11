@@ -625,13 +625,24 @@ For every supplier (wholesalers, distributors and FIRINGI's own in-house warehou
 - **Transfers** between the supplier's warehouses — the lots and dates travel with the goods; what
   doesn't arrive is recorded as lost in transit; cancelling in transit puts everything back.
 - **Expiry features, switched per supplier by FIRINGI** (Inventory › Expiry Features; defaults for
-  everyone else): FEFO, expiry alerts (daily job: 30 / 14 / 7 days before, and expired), AI markdown
+  everyone else): FEFO, AI markdown
   suggestions (short-dated batches that won't sell at the usual pace → a suggested discount; the
   supplier decides and one click creates a normal promotion ending on the best-before), best-before
   shown to customers on the product page. A supplier can **ask** for a change; FIRINGI approves or
   rejects it (with a reason).
 - **Movements** ledger (who, when, lot, value) and FIRINGI's **overview** (stock value per supplier,
   in-house warehouse, low, expiring and expired) and **expiring stock** across suppliers.
+- **Expiry alerts for goods bought on FIRINGI** — for wholesalers (buying from distributors) and
+  customers (buying from wholesalers to resell), and only for goods bought on FIRINGI: every
+  delivered order records the lots it was shipped from with their best-before (`PurchasedLot`).
+  Unsold = what is still in the wholesaler's own stock from it (goods bought on FIRINGI are put into
+  stock with the distributor's lot and date — by the purchase order, or "Put into my stock" on a
+  delivered shop order — and are never mixed with other goods), otherwise delivered − returned −
+  marked sold / used by the buyer (buyer portal › Orders › **Expiring Purchases**). FIRINGI ›
+  Inventory › **Expiry Alerts**: on / off for everyone and per company, the two alert days (each
+  1–30 days before the best-before; a lot arriving inside the second window gets only the second),
+  and the message (Notification templates › `inventory.expiring`, per language; placeholders
+  `{count}`, `{days}`, `{products}`).
 - Daily job `inventory` (`/api/cron/inventory`, scheduler 06:13 UTC). Permissions:
   `vendor.inventory.view|manage`, `vendor.purchasing.manage`, `admin.inventory.view|manage`.
 - Tests: `tests/integration/inventory.test.ts`, `tests/e2e/inventory.mjs`.

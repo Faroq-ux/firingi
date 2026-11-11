@@ -135,6 +135,7 @@ export const ADMIN_NAV: NavSection[] = [
       invn("overview", "Inventory Overview", "Visão Geral do Inventário", "P24", { live: true }),
       invn("expiring", "Expiring Stock", "Stock a Expirar", "P24", { live: true }),
       invn("expiry-features", "Expiry Features", "Funcionalidades de Validade", "P24", { live: true }),
+      invn("expiry-alerts", "Expiry Alerts", "Alertas de Validade", "P24", { live: true }),
     ],
   },
   {

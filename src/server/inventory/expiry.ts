@@ -13,9 +13,8 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "@/server/services/audit";
-import { notify } from "@/server/notify/dispatch";
 import { isExpired } from "./ledger";
-import { ALERT_DAYS, DEFAULTS_KEY, FEATURES, FIELD, SHORT_DATED_DAYS, inventoryDefaults, inventorySettings, type Feature, type Features } from "./settings";
+import { DEFAULTS_KEY, FEATURES, FIELD, SHORT_DATED_DAYS, inventoryDefaults, inventorySettings, type Feature, type Features } from "./settings";
 import { daysLeft, requireInventory } from "./service";
 
 const D = Prisma.Decimal;
@@ -231,30 +230,8 @@ export async function bestBeforeFor(offerIds: string[], withinDays = 30): Promis
 
 // ───────────────────────────── daily job ─────────────────────────────
 
-/** Expiry alerts for every supplier with EXPIRY_ALERTS on (one message per threshold, not per batch). */
+/** Expiry alerts are for goods bought on FIRINGI (see purchased.ts). */
 export async function runExpiryAlerts() {
-  const today = todayUtc();
-  const vendors = await prisma.company.findMany({ where: { type: { in: ["DISTRIBUTOR", "WHOLESALER"] }, status: "APPROVED" }, select: { id: true } });
-  let messages = 0, suppliers = 0;
-  for (const v of vendors) {
-    if (!(await inventorySettings(prisma, v.id)).expiryAlerts) continue;
-    const batches = await prisma.stockBatch.findMany({
-      where: { offer: { vendorCompanyId: v.id }, writtenOffAt: null, onHand: { gt: 0 }, expiresOn: { not: null, lte: new Date(today.getTime() + ALERT_DAYS[0] * day) } },
-      select: { expiresOn: true, onHand: true, offerId: true, addressId: true },
-    });
-    if (!batches.length) continue;
-    suppliers++;
-    for (const d of ALERT_DAYS) {
-      const n = batches.filter((b) => daysLeft(b.expiresOn) === d).length;
-      if (n) { await notify("inventory.expiring", [{ companyId: v.id, link: `/vendor/inventory/expiry?days=${d}` }], { count: String(n), days: String(d) }); messages++; }
-    }
-    const yesterday = batches.filter((b) => daysLeft(b.expiresOn) === -1);
-    if (yesterday.length) {
-      const levels = await prisma.stockLevel.findMany({ where: { OR: yesterday.map((b) => ({ offerId: b.offerId, addressId: b.addressId })) }, select: { offerId: true, addressId: true, avgCost: true } });
-      const value = yesterday.reduce((a, b) => a.add(new D(levels.find((l) => l.offerId === b.offerId && l.addressId === b.addressId)?.avgCost.toString() ?? 0).mul(b.onHand)), new D(0));
-      await notify("inventory.expired", [{ companyId: v.id, link: "/vendor/inventory/expiry?days=0" }], { count: String(yesterday.length), value: `${value.toFixed(2)} €` });
-      messages++;
-    }
-  }
-  return { suppliers, messages };
+  const { runPurchaseExpiryAlerts } = await import("./purchased");
+  return runPurchaseExpiryAlerts();
 }

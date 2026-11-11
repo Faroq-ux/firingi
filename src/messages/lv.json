@@ -789,7 +789,8 @@
     "Stock Counts": "Inventarizācijas",
     "Transfers": "Pārvietošanas",
     "Stock Movements": "Krājumu kustības",
-    "Valuation": "Novērtēšana"
+    "Valuation": "Novērtēšana",
+    "Expiring Purchases": "Pirkumi ar beidzamies derīgumu"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1249,8 +1250,8 @@
       "body": "Mēs pārtraucām izsaukt {url}, jo tas daudzas reizes pēc kārtas neizdevās ({reason}). Salabojiet savu sistēmu un ieslēdziet to atkal sadaļā Integrācijas."
     },
     "inventory_expiring": {
-      "title": "{count} partijām derīgums beidzas pēc {days} dienām",
-      "body": "{count} jūsu partijām derīguma termiņš pienāks pēc {days} dienām. Pārdodiet tās pirmās, samaziniet cenu vai pārvietojiet tās."
+      "title": "{count} FIRINGI pirktiem produktiem derīgums beigsies {days} dienu laikā",
+      "body": "Joprojām nepārdots: {products}. Pārdodiet vai izlietojiet tos pirmos vai samaziniet cenu pirms derīguma beigām."
     },
     "inventory_expired": {
       "title": "{count} partijām beidzies derīgums",
@@ -2351,5 +2352,32 @@
     "units": "Vienības",
     "empty": "Šeit vēl nekā nav.",
     "bestBeforeDate": "Ieteicams līdz {date}"
+  },
+  "purchased": {
+    "title": "Pirkumi ar beidzamies derīgumu",
+    "hint": "Nepārdotas preces, kas pirktas FIRINGI un kurām drīz beigsies derīgums. FIRINGI jums atgādinās iepriekš.",
+    "product": "Produkts",
+    "order": "Pasūtījums",
+    "lot": "Partija",
+    "bestBefore": "Ieteicams līdz",
+    "delivered": "Piegādāts",
+    "unsold": "Nepārdots",
+    "inStock": "Jūsu krājumā",
+    "inStockHint": "Samazinās, kad pārdodat.",
+    "markUsed": "Atzīmēt kā pārdotu / izlietotu",
+    "qty": "Daudzums",
+    "save": "Saglabāt",
+    "none": "Nekas no FIRINGI nopirktā drīz nebeigsies.",
+    "expired": "Beidzies derīgums",
+    "days": "{days} dienas",
+    "stockTitle": "Ielikt manā krājumā",
+    "stockHint": "Iegrāmato šo piegādi jūsu krājumā ar izplatītāja partijām un derīguma termiņiem.",
+    "stockButton": "Ielikt krājumā",
+    "stockDone": "Jūsu krājumā: {lines} produkti.",
+    "stockMissing": "{count} produktu vēl nav jūsu katalogā — pievienojiet tos, lai ieliktu krājumā.",
+    "stocked": "Šī piegāde ir jūsu krājumā.",
+    "viaPo": "Šis pasūtījums pieder pirkuma pasūtījumam {number} — pieņemiet to tur.",
+    "warehouse": "Noliktava",
+    "fromDistributor": "Partiju un datumu atstājiet tukšu: tie nāk no izplatītāja piegādes."
   }
 }
