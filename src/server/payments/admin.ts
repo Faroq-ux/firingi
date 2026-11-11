@@ -9,6 +9,9 @@ import { scopeWhere } from "@/server/services/admin-access";
 import { activeProvider } from "./provider";
 import { customerCredit, payLinkUrl } from "./service";
 
+/** "FT 1, FT 2, FT 3 +12 more" — long payment links stay one line. */
+const shortList = (xs: string[], n = 3) => (xs.length > n ? `${xs.slice(0, n).join(", ")} +${xs.length - n} more` : xs.join(", "));
+
 function assertStaff(ctx: Ctx) {
   if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.finance.view", "admin.finance.manage"])) throw new ForbiddenError();
 }
@@ -46,7 +49,7 @@ export async function onlinePaymentsOverview(ctx: Ctx, f: { status?: PaymentRequ
     paid30: paid30.map((p) => ({ method: p.method ?? "OTHER", count: p._count, amount: Number(p._sum.paidAmount ?? 0) })),
     requests: requests.map((r) => ({
       id: r.id, company: r.company.legalName, companyId: r.companyId, status: r.status, source: r.source, method: r.method, amount: r.amount.toFixed(2), paidAmount: r.paidAmount?.toFixed(2) ?? null,
-      docs: r.order ? `Order ${r.order.number}` : r.items.map((i) => i.invoice.providerNumber ?? i.invoice.fullNumber ?? "?").join(", "), failureReason: r.failureReason,
+      docs: r.order ? `Order ${r.order.number}` : shortList(r.items.map((i) => i.invoice.providerNumber ?? i.invoice.fullNumber ?? "?")), failureReason: r.failureReason,
       updatedAt: r.updatedAt, expiresAt: r.expiresAt, link: r.status === "OPEN" || r.status === "FAILED" ? payLinkUrl(r.token) : null,
       multibanco: r.method === "MULTIBANCO" && r.status === "PROCESSING",
     })),
