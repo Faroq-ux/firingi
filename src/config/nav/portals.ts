@@ -12,6 +12,7 @@ const vr = section(`${V}/reports`, "vendor.reports.view");
 const vs = section(`${V}`, "company.support.use");
 const vai = section(`${V}`, ["vendor.reports.view", "vendor.dashboard.view"]);
 const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
+const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [vd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -38,6 +39,16 @@ export const VENDOR_NAV: NavSection[] = [
       vin("transfers", "Transfers", "Transferências", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage"], es: "Transferencias" }),
       vin("movements", "Stock Movements", "Movimentos de Stock", "P24", { live: true, es: "Movimientos de stock" }),
       vin("valuation", "Valuation", "Valorização", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.reports.view"], es: "Valoración" }),
+    ],
+  },
+  {
+    key: "warehouse", icon: "ScanBarcode", label: { en: "Warehouse", pt: "Armazém", es: "Almacén" },
+    items: [
+      vwh("pick", "Pick & Pack", "Preparação e Embalagem", "P25", { live: true, perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Preparación y embalaje" }),
+      vwh("scan", "Scanner", "Leitor", "P25", { live: true, perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Escáner" }),
+      vwh("shelves", "Shelves", "Prateleiras", "P25", { live: true, perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Estanterías" }),
+      vwh("trace", "Traceability", "Rastreabilidade", "P25", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.recalls.manage"], es: "Trazabilidad" }),
+      vwh("recalls", "Recalls", "Recolhas", "P25", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.recalls.manage"], es: "Retiradas" }),
     ],
   },
   {
@@ -112,6 +123,7 @@ export const BUY_NAV: NavSection[] = [
       bo("history", "My Orders", "As Minhas Encomendas", "P4", { live: true, es: "Mis pedidos" }),
       bo("buy-again", "Buy Again", "Comprar de Novo", "P17", { live: true, perm: "buyer.orders.place", es: "Volver a comprar" }),
       bo("expiring", "Expiring Purchases", "Compras a Expirar", "P24", { live: true, es: "Compras por caducar" }),
+      bo("recalls", "Product Recalls", "Recolhas de Produtos", "P25", { live: true, es: "Retiradas de productos" }),
       bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
     ],
   },

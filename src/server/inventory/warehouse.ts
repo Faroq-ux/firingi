@@ -244,7 +244,7 @@ export async function sendTransfer(ctx: Ctx, id: string) {
   });
 }
 
-type StoredPick = { lotCode: string | null; expiresOn: string | null; qty: number };
+type StoredPick = { batchId?: string; lotCode: string | null; expiresOn: string | null; qty: number };
 
 /** Book stock in at `addressId` from the picks (soonest-expiring first), up to `qty`. */
 async function bookPicks(tx: Parameters<typeof receive>[0], ctx: Ctx, t: { id: string; number: string }, l: { offerId: string; unitCost: Prisma.Decimal; picks: Prisma.JsonValue }, addressId: string, qty: number, type: "TRANSFER_IN" | "RETURN") {
@@ -252,7 +252,7 @@ async function bookPicks(tx: Parameters<typeof receive>[0], ctx: Ctx, t: { id: s
   for (const p of (l.picks as unknown as StoredPick[]) ?? []) {
     if (!left) break;
     const q = Math.min(left, p.qty);
-    await receive(tx, { offerId: l.offerId, addressId, qty: q, unitCost: l.unitCost, lotCode: p.lotCode, expiresOn: p.expiresOn ? new Date(p.expiresOn) : null, source: "TRANSFER", type: type === "RETURN" ? "TRANSFER_IN" : type, refType: "TRANSFER", refId: t.id, byUserId: ctx.user.id, note: type === "RETURN" ? `${t.number} cancelled` : t.number });
+    await receive(tx, { offerId: l.offerId, addressId, qty: q, unitCost: l.unitCost, splitFromId: p.batchId ?? null, lotCode: p.lotCode, expiresOn: p.expiresOn ? new Date(p.expiresOn) : null, source: "TRANSFER", type: type === "RETURN" ? "TRANSFER_IN" : type, refType: "TRANSFER", refId: t.id, byUserId: ctx.user.id, note: type === "RETURN" ? `${t.number} cancelled` : t.number });
     left -= q;
   }
 }

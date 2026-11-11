@@ -597,6 +597,50 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Warehouse operations & traceability (Phase 25)
+
+Supplier portal › **Armazém / Warehouse** (25 languages, phone-first); customers › Orders ›
+**Product Recalls**; FIRINGI › Inventory & Warehouses › **Recalls** and **Lot Traceability** (English).
+
+- **Shelves (bins)** per warehouse: a whole range at once (aisle-rack-level → `A-01-1` … in walking
+  order) or one shelf with its own code; shelf labels as PDF (QR code `FIR:L:<id>`). New lots wait in
+  **Put away** until placed on a shelf; a whole lot moves with its reservations, part of a lot (free
+  units only) becomes a lot of its own on the new shelf — `StockBatch.splitFromId` keeps the family
+  together for traceability and for the expiry alerts of goods bought on FIRINGI.
+- **Scanning** — phone camera (the browser's BarcodeDetector, or ZXing on iPhone / Firefox) and USB /
+  Bluetooth scanners (they type + Enter). Reads FIRINGI labels (`FIR:B:` lot, `FIR:L:` shelf,
+  `FIR:O:` order / box), product barcodes (EAN / GTIN of the packaging or variant), shelf codes, lot
+  numbers and order numbers. The **Scanner** page shows what it is (lot: product, best-before, shelf,
+  free units, move it, print its label; shelf: what is on it; order) and warns loudly on a recalled lot.
+- **Pick & pack** — a pick list is built from the reservations the accepted orders already hold in
+  one warehouse (so it follows FEFO exactly) and sorted in shelf walking order. Each line is confirmed
+  by scanning the lot label or lot number (the product barcode only when the lot has no number); a
+  wrong lot, wrong product, shelf label or recalled lot is refused. "Confirm by hand" is allowed and
+  recorded as such. **Short pick**: the picker says how many were on the shelf; the rest of that lot
+  there is counted out of stock (COUNT movement), the order is covered from other lots when there are
+  any (new lines appear on the list) and otherwise FIRINGI gets a `STOCK_SHORT` exception on the
+  order. **Packing** records the boxes and marks the order ready for pickup; packing slip (no prices,
+  lots and best-before per line, QR) and one label per box (A6, QR `FIR:O:<number>:<box>`) as PDF.
+- **Lot traceability** — where a lot came from (purchase order and outside supplier, or the order on
+  FIRINGI and the seller's lot) and where it went: every order it was shipped on, and — through goods
+  bought on FIRINGI put into a wholesaler's stock — on to that wholesaler's customers, level by level.
+  A supplier sees its own stock and its direct buyers; buyers further down are shown to FIRINGI only
+  (the supplier sees how many).
+- **Recalls** (by the supplier for its own lot, `vendor.recalls.manage`, or by FIRINGI for any lot,
+  `admin.recalls.manage`; class I/II/III, reason, instructions): in one transaction every batch of
+  the lot at every level is **blocked** (its units leave stock with a RECALL movement; never reserved,
+  picked, merged into or restocked again — recalled goods sent back are booked in and straight out),
+  open orders holding it get **other lots** (what can't be covered becomes a `STOCK_SHORT` exception),
+  open pick lists are corrected (picked recalled units are flagged "put aside" and never packed), and
+  **every company that received it is told** (`recall.notice`, critical: e-mail, SMS, WhatsApp, push).
+  Buyers acknowledge and report what they returned / destroyed (or that none is left); the recall
+  page shows who was told, who acknowledged and what came back. The supplier is told when FIRINGI
+  starts one, FIRINGI when a supplier does (`recall.started`). Recalled goods bought on FIRINGI get no
+  more best-before alerts. Taking recalled goods back for a credit uses the normal returns flow.
+- Permissions: `vendor.warehouse.pick` (new, in the Warehouse role), `vendor.recalls.manage` (company
+  administrators), `admin.recalls.manage` (Operations). Tests: `tests/integration/warehouse.test.ts`,
+  `tests/e2e/warehouse.mjs`.
+
 ## Inventory & warehouses (Phase 24)
 
 For every supplier (wholesalers, distributors and FIRINGI's own in-house warehouse) — supplier portal

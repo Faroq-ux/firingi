@@ -39,6 +39,8 @@ enum StockMovementType {
   TRANSFER_IN
   COUNT
   WRITE_OFF
+  MOVE // shelf to shelf (Phase 25; total unchanged)
+  RECALL // recalled stock blocked / returned (Phase 25)
 }
 
 /// Unlimited-depth tree. `path` is a materialized path of ids ("/rootId/childId/").

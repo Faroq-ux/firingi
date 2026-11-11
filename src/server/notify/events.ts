@@ -74,6 +74,9 @@ export const EVENTS: EventDef[] = [
   E("ops.resolved", "account", null, ["EMAIL", "PUSH"], ["title"]),
   // unsold goods bought on FIRINGI near their best-before (wholesalers and customers; FIRINGI sets the days)
   E("inventory.expiring", "orders", ["buyer.orders.view", "buyer.orders.place", "vendor.inventory.view", "vendor.inventory.manage"], ["EMAIL", "PUSH"], ["count", "days", "products"]),
+  // product recalls (Phase 25): every buyer down the chain is told; the supplier / FIRINGI when the other one starts it
+  E("recall.notice", "orders", ["buyer.orders.view", "buyer.orders.place", "vendor.inventory.view", "vendor.inventory.manage"], ["EMAIL", "SMS", "WHATSAPP", "PUSH"], ["number", "product", "lot", "reason"], true),
+  E("recall.started", "catalogue", ["vendor.recalls.manage", "vendor.inventory.manage", "admin.recalls.manage", "admin.inventory.view"], ["EMAIL", "PUSH"], ["number", "product", "lot", "units", "buyers"], true),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

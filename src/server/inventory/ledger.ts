@@ -14,6 +14,10 @@
  * (no date last), otherwise the oldest receipt first. Expired or written-off batches are never
  * reserved for an order.
  *
+ * Recalled batches (`blockedAt`) are out of stock for good: never reserved, picked, merged into or
+ * restocked (Phase 25). Batches can be split (part moved to another shelf, or transferred):
+ * `splitFromId` keeps the family together for traceability.
+ *
  * `syncBatches` repairs a level whose batches drifted (stock written directly, e.g. by an old
  * import or a test): the difference goes to / comes from a batch without a lot number.
  */
@@ -67,7 +71,7 @@ function cryptoId() {
 
 async function liveBatches(tx: Tx, offerId: string, addressId: string): Promise<BatchRow[]> {
   return tx.stockBatch.findMany({
-    where: { offerId, addressId, writtenOffAt: null, onHand: { gt: 0 } },
+    where: { offerId, addressId, writtenOffAt: null, blockedAt: null, onHand: { gt: 0 } },
     select: { id: true, lotCode: true, expiresOn: true, onHand: true, reserved: true, unitCost: true, receivedAt: true },
   });
 }
@@ -127,6 +131,7 @@ export async function reserveForOrder(tx: Tx, orderId: string, offerId: string, 
   if (available < qty) return { ok: false as const, available };
   let left = qty;
   const used: string[] = [];
+  const picks: { batchId: string; addressId: string; qty: number }[] = [];
   for (const u of usable) {
     if (!left) break;
     const level = await lockLevel(tx, offerId, u.addressId);
@@ -137,6 +142,7 @@ export async function reserveForOrder(tx: Tx, orderId: string, offerId: string, 
       if (take <= 0) continue;
       await tx.stockBatch.update({ where: { id: b.id }, data: { reserved: { increment: take } } });
       await move(tx, { offerId, addressId: u.addressId, type: "RESERVE", qty: take, batchId: b.id, unitCost: level.avgCost, orderId });
+      picks.push({ batchId: b.id, addressId: u.addressId, qty: take });
       left -= take;
       here += take;
     }
@@ -145,13 +151,13 @@ export async function reserveForOrder(tx: Tx, orderId: string, offerId: string, 
       used.push(u.addressId);
     }
   }
-  return { ok: true as const, addressId: used[0] };
+  return { ok: true as const, addressId: used[0], picks };
 }
 
-type Held = { offerId: string; addressId: string; batchId: string | null; qty: number };
+export type Held = { offerId: string; addressId: string; batchId: string | null; qty: number };
 
 /** What is still reserved for an order, per offer × warehouse × batch (from the movements). */
-async function reservedFor(tx: Tx, orderId: string): Promise<Held[]> {
+export async function reservedFor(tx: Tx, orderId: string): Promise<Held[]> {
   const moves = await tx.stockMovement.findMany({ where: { orderId, type: { in: ["RESERVE", "RELEASE", "SHIPMENT"] } }, orderBy: { at: "asc" } });
   const map = new Map<string, Held>();
   for (const m of moves) {
@@ -234,9 +240,17 @@ export async function restockForOrder(tx: Tx, orderId: string, only?: Map<string
     if (q <= 0) continue;
     const level = await syncBatches(tx, r.offerId, r.addressId);
     const batch = r.batchId ? await tx.stockBatch.findUnique({ where: { id: r.batchId } }) : null;
+    if (batch?.blockedAt) {
+      // recalled goods coming back are not stock again: in and straight out to the recall
+      await move(tx, { offerId: r.offerId, addressId: r.addressId, type: "RETURN", qty: q, batchId: batch.id, unitCost: r.cost, orderId });
+      await move(tx, { offerId: r.offerId, addressId: r.addressId, type: "RECALL", qty: q, batchId: batch.id, unitCost: r.cost, orderId, refType: "RECALL", refId: batch.recallId, note: "Recalled goods returned" });
+      await purchasedReturned(tx, orderId, r.offerId, batch.id, q);
+      if (left) left.set(r.offerId, (left.get(r.offerId) ?? 0) - q);
+      continue;
+    }
     const batchId = batch && !batch.writtenOffAt
       ? (await tx.stockBatch.update({ where: { id: batch.id }, data: { onHand: { increment: q } } })).id
-      : (await tx.stockBatch.create({ data: { offerId: r.offerId, addressId: r.addressId, onHand: q, source: "RETURN", unitCost: r.cost, lotCode: batch?.lotCode ?? null, expiresOn: batch?.expiresOn ?? null, refId: orderId } })).id;
+      : (await tx.stockBatch.create({ data: { offerId: r.offerId, addressId: r.addressId, onHand: q, source: "RETURN", unitCost: r.cost, lotCode: batch?.lotCode ?? null, expiresOn: batch?.expiresOn ?? null, refId: orderId, splitFromId: batch?.id ?? null } })).id;
     const avg = weighted(level.onHand, level.avgCost, q, r.cost);
     await tx.stockLevel.update({ where: { id: level.id }, data: { onHand: { increment: q }, avgCost: avg } });
     await move(tx, { offerId: r.offerId, addressId: r.addressId, type: "RETURN", qty: q, batchId, unitCost: r.cost, orderId });
@@ -266,6 +280,9 @@ export type ReceiveInput = {
   refType?: string | null; refId?: string | null; byUserId?: string | null; note?: string | null;
   /** always a batch of its own (goods bought on FIRINGI) */
   separate?: boolean;
+  /** the batch these goods come from (transfer) — kept for traceability; goods bought on FIRINGI stay apart */
+  splitFromId?: string | null;
+  binId?: string | null;
 };
 
 /**
@@ -278,13 +295,14 @@ export async function receive(tx: Tx, i: ReceiveInput) {
   const cost = i.unitCost === null ? level.avgCost : new D(i.unitCost.toString());
   if (cost.isNegative()) throw new ValidationError("Cost can't be negative.");
   const lotCode = i.lotCode?.trim() || null;
+  const separate = i.separate || (i.splitFromId ? await fromFiringiGoods(tx, i.splitFromId, i.offerId) : false);
   const same = lotCode || i.expiresOn
     // goods bought on FIRINGI always get their own batch, and nothing else joins one of them
-    ? i.separate ? null : await tx.stockBatch.findFirst({ where: { offerId: i.offerId, addressId: i.addressId, lotCode, expiresOn: i.expiresOn ?? null, writtenOffAt: null, id: { notIn: await firingiBatchIds(tx, i.offerId) } } })
+    ? separate ? null : await tx.stockBatch.findFirst({ where: { offerId: i.offerId, addressId: i.addressId, lotCode, expiresOn: i.expiresOn ?? null, writtenOffAt: null, blockedAt: null, id: { notIn: await firingiBatchIds(tx, i.offerId) }, ...(i.binId !== undefined ? { binId: i.binId } : {}) } })
     : null;
   const batch = same
     ? await tx.stockBatch.update({ where: { id: same.id }, data: { onHand: { increment: i.qty }, unitCost: weighted(same.onHand, new D(same.unitCost.toString()), i.qty, cost) } })
-    : await tx.stockBatch.create({ data: { offerId: i.offerId, addressId: i.addressId, lotCode, expiresOn: i.expiresOn ?? null, onHand: i.qty, unitCost: cost, source: i.source, refId: i.refId ?? null } });
+    : await tx.stockBatch.create({ data: { offerId: i.offerId, addressId: i.addressId, lotCode, expiresOn: i.expiresOn ?? null, onHand: i.qty, unitCost: cost, source: i.source, refId: i.refId ?? null, splitFromId: i.splitFromId ?? null, binId: i.binId ?? null } });
   const avg = i.unitCost === null ? (level.avgCost.isZero() ? cost : level.avgCost) : weighted(level.onHand, level.avgCost, i.qty, cost);
   await tx.stockLevel.update({ where: { id: level.id }, data: { onHand: { increment: i.qty }, avgCost: avg } });
   await move(tx, { offerId: i.offerId, addressId: i.addressId, type: i.type ?? "RECEIPT", qty: i.qty, batchId: batch.id, unitCost: cost, refType: i.refType, refId: i.refId, byUserId: i.byUserId, note: i.note });
@@ -332,6 +350,86 @@ export async function setOnHand(tx: Tx, i: { offerId: string; addressId: string;
   else if (delta < 0) await issue(tx, { offerId: i.offerId, addressId: i.addressId, qty: -delta, type: "ADJUSTMENT", byUserId: i.byUserId, note: i.note });
   return delta;
 }
+
+// ───────────────────────────── shelves, recalls (Phase 25) ─────────────────────────────
+
+/** Is this batch (or the batch it was split from, up the chain) holding goods bought on FIRINGI? */
+async function fromFiringiGoods(tx: Tx, batchId: string, offerId: string) {
+  const ids = new Set(await firingiBatchIds(tx, offerId));
+  if (!ids.size) return false;
+  let cur: string | null = batchId;
+  for (let n = 0; cur && n < 20; n++) {
+    if (ids.has(cur)) return true;
+    const b: { splitFromId: string | null } | null = await tx.stockBatch.findUnique({ where: { id: cur }, select: { splitFromId: true } });
+    cur = b?.splitFromId ?? null;
+  }
+  return false;
+}
+
+/** The batches and every batch split off them (moved to another shelf, transferred, returned). */
+export async function batchFamily(tx: Tx, ids: string[]) {
+  const all = new Set(ids);
+  let frontier = [...ids];
+  for (let n = 0; frontier.length && n < 20; n++) {
+    const kids = await tx.stockBatch.findMany({ where: { splitFromId: { in: frontier } }, select: { id: true } });
+    frontier = kids.map((k) => k.id).filter((id) => !all.has(id));
+    frontier.forEach((id) => all.add(id));
+  }
+  return [...all];
+}
+
+/** Give back `qty` reserved for an order from one batch (the order keeps the rest). */
+export async function releaseBatch(tx: Tx, orderId: string, batchId: string, qty: number) {
+  const b = await tx.stockBatch.findUniqueOrThrow({ where: { id: batchId } });
+  const level = await lockLevel(tx, b.offerId, b.addressId);
+  const q = Math.min(qty, b.reserved);
+  if (q <= 0) return 0;
+  await tx.stockBatch.update({ where: { id: b.id }, data: { reserved: { decrement: q } } });
+  await tx.stockLevel.update({ where: { id: level.id }, data: { reserved: { decrement: Math.min(q, level.reserved) } } });
+  await move(tx, { offerId: b.offerId, addressId: b.addressId, type: "RELEASE", qty: q, batchId: b.id, unitCost: level.avgCost, orderId });
+  return q;
+}
+
+/**
+ * Put a batch (or part of it) on a shelf. The whole batch just changes shelf (its reservations go
+ * with it); a part — only free units — becomes a batch of its own on the new shelf.
+ */
+export async function moveToBin(tx: Tx, i: { batchId: string; qty: number; binId: string | null; byUserId?: string | null; note?: string | null }) {
+  const b = await tx.stockBatch.findUniqueOrThrow({ where: { id: i.batchId } });
+  if (b.blockedAt || b.writtenOffAt) throw new ValidationError("This lot is blocked.");
+  if (!Number.isInteger(i.qty) || i.qty <= 0 || i.qty > b.onHand) throw new ValidationError(`Quantity must be between 1 and ${b.onHand}.`);
+  if ((b.binId ?? null) === (i.binId ?? null)) throw new ValidationError("It is already on this shelf.");
+  const level = await lockLevel(tx, b.offerId, b.addressId);
+  if (i.qty === b.onHand) {
+    await tx.stockBatch.update({ where: { id: b.id }, data: { binId: i.binId } });
+    await move(tx, { offerId: b.offerId, addressId: b.addressId, type: "MOVE", qty: 0, batchId: b.id, unitCost: level.avgCost, refType: "MOVE", byUserId: i.byUserId, note: i.note ?? null });
+    return b.id;
+  }
+  if (i.qty > b.onHand - b.reserved) throw new ValidationError(`Only ${b.onHand - b.reserved} of this lot are free (the rest is reserved for orders) — move the whole lot, or fewer.`);
+  const part = await tx.stockBatch.create({ data: { offerId: b.offerId, addressId: b.addressId, lotCode: b.lotCode, expiresOn: b.expiresOn, receivedAt: b.receivedAt, unitCost: b.unitCost, onHand: i.qty, source: b.source, refId: b.refId, binId: i.binId, splitFromId: b.id } });
+  await tx.stockBatch.update({ where: { id: b.id }, data: { onHand: { decrement: i.qty } } });
+  await move(tx, { offerId: b.offerId, addressId: b.addressId, type: "MOVE", qty: -i.qty, batchId: b.id, unitCost: level.avgCost, refType: "MOVE", refId: part.id, byUserId: i.byUserId, note: i.note ?? null });
+  await move(tx, { offerId: b.offerId, addressId: b.addressId, type: "MOVE", qty: i.qty, batchId: part.id, unitCost: level.avgCost, refType: "MOVE", refId: b.id, byUserId: i.byUserId, note: i.note ?? null });
+  return part.id;
+}
+
+/** Take a recalled batch's units out of stock and block it for good. Its reservations must be released first. */
+export async function blockBatch(tx: Tx, i: { batchId: string; recallId: string; byUserId?: string | null; note?: string | null }) {
+  const b = await tx.stockBatch.findUniqueOrThrow({ where: { id: i.batchId } });
+  if (b.blockedAt) return 0;
+  const level = await syncBatches(tx, b.offerId, b.addressId);
+  const fresh = await tx.stockBatch.findUniqueOrThrow({ where: { id: b.id } });
+  if (fresh.reserved > 0) throw new ValidationError("Release the orders' reservations on this lot first.");
+  const q = fresh.writtenOffAt ? 0 : fresh.onHand;
+  if (q > 0) {
+    await tx.stockBatch.update({ where: { id: b.id }, data: { onHand: 0 } });
+    await tx.stockLevel.update({ where: { id: level.id }, data: { onHand: { decrement: Math.min(q, level.onHand) } } });
+    await move(tx, { offerId: b.offerId, addressId: b.addressId, type: "RECALL", qty: q, batchId: b.id, unitCost: level.avgCost, refType: "RECALL", refId: i.recallId, byUserId: i.byUserId, note: i.note ?? null });
+  }
+  await tx.stockBatch.update({ where: { id: b.id }, data: { blockedAt: new Date(), recallId: i.recallId } });
+  return q;
+}
+
 
 /** Value of what is in stock (Σ onHand × average cost). */
 export const valueOf = (onHand: number, avgCost: Dec | string | number) => new D(avgCost.toString()).mul(onHand).toDecimalPlaces(2);

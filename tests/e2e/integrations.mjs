@@ -175,7 +175,8 @@ const catalogue = await api(bKey, "GET", "/catalogue?q=mozzarella&lang=pt");
 const mozz = catalogue.json?.items?.find((i) => i.supplier === "Lisboa Central" && i.packaging.unitsPerPack === 1);
 check("catalogue by API (no funding details)", !!mozz && !JSON.stringify(catalogue.json).includes("firingiPerUnit"), mozz?.name);
 // The supplier's ERP tops up stock through the API first (single 2 kg block: code shared with the case → barcode decides).
-const topUp = await api(vKey, "POST", "/offers/sync", { rows: [{ vendorSku: "GRO-MOZZ2", gtin: "5601000000608", stock: 900 }] });
+// (well above what the open test orders of earlier runs hold reserved — stock can't go below that)
+const topUp = await api(vKey, "POST", "/offers/sync", { rows: [{ vendorSku: "GRO-MOZZ2", gtin: "5601000000608", stock: 3000 }] });
 check("supplier tops up stock by API", topUp.status === 200 && topUp.json.failed === 0, JSON.stringify(topUp.json?.rows?.[0]));
 hits.length = 0;
 let placed = await api(bKey, "POST", "/orders", { lines: [{ offerId: mozz.offerId, qty: 30 }], notes: "E2E API order" });

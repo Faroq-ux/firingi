@@ -128,7 +128,8 @@ model Order {
   risk              RiskAssessment?
 
   purchaseOrder  PurchaseOrder?
-  purchasedLots  PurchasedLot[] @relation("PurchasedLotOrder")
+  purchasedLots  PurchasedLot[]  @relation("PurchasedLotOrder")
+  pickLists      PickListOrder[] @relation("PickListOrderOrder")
   /// a wholesaler put this delivered order into its own stock (Phase 24)
   buyerStockedAt DateTime?
 

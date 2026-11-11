@@ -26,7 +26,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     permissions: [
       "admin.dashboard.view", "admin.orders.view", "admin.orders.manage", "admin.vendors.view", "admin.vendors.approve",
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
-      "admin.allocation.manage", "admin.inventory.view", "admin.inventory.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
+      "admin.allocation.manage", "admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
       "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage", "admin.support.manage",
       "admin.ai.view",
     ],
@@ -81,7 +81,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "VENDOR_WAREHOUSE", name: "Warehouse", description: "Stock and order preparation", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.orders.view", "vendor.orders.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.warehouse.pick", "vendor.orders.view", "vendor.orders.manage"],
   },
   {
     key: "VENDOR_FLEET", name: "Fleet Manager", description: "Drivers, vehicles and service areas", appliesTo: VENDOR_TYPES,

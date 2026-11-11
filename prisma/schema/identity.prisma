@@ -232,6 +232,10 @@ model Company {
   inventorySettings      InventorySettings?        @relation("InventorySettingsCompany")
   inventoryRequests      InventoryFeatureRequest[] @relation("InventoryFeatureRequestCompany")
   purchasedLots          PurchasedLot[]            @relation("PurchasedLotBuyer")
+  bins                   Bin[]                     @relation("BinCompany")
+  pickLists              PickList[]                @relation("PickListCompany")
+  recallsOwned           Recall[]                  @relation("RecallOwner")
+  recallNotices          RecallRecipient[]         @relation("RecallRecipientCompany")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

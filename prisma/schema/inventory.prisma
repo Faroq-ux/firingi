@@ -66,14 +66,21 @@ model StockBatch {
   source       BatchSource
   refId        String? // purchase order / transfer / count it came from
   writtenOffAt DateTime?
+  binId        String? // shelf it sits on (Phase 25)
+  blockedAt    DateTime? // recalled — never reserved, picked or sold
+  recallId     String?
+  splitFromId  String? // part of another batch (moved to another shelf / transferred) — traceability
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 
   offer     VendorOffer     @relation(fields: [offerId], references: [id], onDelete: Cascade)
   address   Address         @relation(fields: [addressId], references: [id])
+  bin       Bin?            @relation(fields: [binId], references: [id], onDelete: SetNull)
   movements StockMovement[]
 
   @@index([offerId, addressId, expiresOn])
+  @@index([binId])
+  @@index([splitFromId])
   @@index([expiresOn])
 }
 

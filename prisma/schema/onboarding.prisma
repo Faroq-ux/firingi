@@ -77,6 +77,8 @@ model Address {
   transfersTo    StockTransfer[]     @relation("StockTransferTo")
   radiusAreas    VendorServiceArea[]
   ordersFrom     Order[]             @relation("OrderSourceAddress")
+  bins           Bin[]               @relation("BinAddress")
+  pickLists      PickList[]          @relation("PickListAddress")
 
   @@index([companyId, kind])
   @@index([geo], map: "Address_geo_idx", type: Gist)

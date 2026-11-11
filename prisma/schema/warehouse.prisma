@@ -1,0 +1,171 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 25 — warehouse operations & traceability: shelves (bins), pick & pack lists with scan-
+// verified picking, packing (boxes, slip, labels), lot traceability and product recalls.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum PickListStatus {
+  OPEN // being picked
+  PICKED // everything picked (or reported short)
+  PACKED // boxes packed, documents printed
+  CANCELLED
+}
+
+enum RecallClass {
+  CLASS_I // health risk — stop, return / destroy at once
+  CLASS_II // may cause a temporary problem
+  CLASS_III // quality issue, no health risk
+}
+
+enum RecallStatus {
+  OPEN
+  CLOSED
+}
+
+enum RecallRecipientStatus {
+  NOTIFIED
+  ACKNOWLEDGED
+  DONE // everything returned / destroyed (or none left)
+}
+
+/// A shelf location in a warehouse (aisle-rack-level, e.g. "A-01-03"). Lots are placed on bins.
+model Bin {
+  id        String   @id @default(cuid())
+  companyId String
+  addressId String
+  code      String
+  zone      String? // e.g. "Frio", "Seco"
+  sortOrder Int      @default(0) // walking order for picking
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  company Company      @relation("BinCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  address Address      @relation("BinAddress", fields: [addressId], references: [id])
+  batches StockBatch[]
+
+  @@unique([addressId, code])
+}
+
+/// What to pick for some orders at one warehouse, in shelf order; then packed into boxes.
+model PickList {
+  id          String         @id @default(cuid())
+  companyId   String
+  addressId   String
+  number      String         @unique // PL-2026-000001
+  status      PickListStatus @default(OPEN)
+  note        String?
+  createdById String
+  createdAt   DateTime       @default(now())
+  pickedAt    DateTime?
+  pickedById  String?
+  packedAt    DateTime?
+  packedById  String?
+
+  company Company         @relation("PickListCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  address Address         @relation("PickListAddress", fields: [addressId], references: [id])
+  lines   PickLine[]
+  orders  PickListOrder[]
+
+  @@index([companyId, status])
+}
+
+model PickListOrder {
+  pickListId String
+  orderId    String
+  boxes      Int       @default(0)
+  packedAt   DateTime?
+
+  pickList PickList @relation(fields: [pickListId], references: [id], onDelete: Cascade)
+  order    Order    @relation("PickListOrderOrder", fields: [orderId], references: [id])
+
+  @@id([pickListId, orderId])
+  @@index([orderId])
+}
+
+/// One product × lot of one order to pick (from the reservation the order already holds).
+model PickLine {
+  id          String    @id @default(cuid())
+  pickListId  String
+  orderId     String
+  offerId     String
+  batchId     String?
+  binCode     String? // shelf at the time the list was made
+  lotCode     String?
+  expiresOn   DateTime? @db.Date
+  qty         Int
+  pickedQty   Int       @default(0)
+  shortReason String?
+  coveredQty  Int       @default(0) // of the shortfall, put on new lines from other lots
+  pickedAt    DateTime?
+  pickedById  String?
+  verified    String? // SCAN (lot label / lot code / barcode scanned) or MANUAL (confirmed by hand)
+  sortKey     String // shelf walking order
+
+  pickList PickList @relation(fields: [pickListId], references: [id], onDelete: Cascade)
+
+  @@index([pickListId, sortKey])
+}
+
+/// A product recall: one product's lot(s) blocked everywhere and every buyer down the chain told.
+model Recall {
+  id                 String       @id @default(cuid())
+  number             String       @unique // RC-2026-000001
+  ownerCompanyId     String // the supplier whose lot it is
+  startedByCompanyId String // that supplier, or FIRINGI
+  offerId            String
+  lotCode            String?
+  expiresOn          DateTime?    @db.Date
+  recallClass        RecallClass
+  reason             String
+  instructions       String?
+  status             RecallStatus @default(OPEN)
+  blockedUnits       Int          @default(0)
+  reReserved         Int          @default(0) // order units moved to another lot
+  notReReserved      Int          @default(0) // order units that couldn't be covered
+  createdById        String
+  createdAt          DateTime     @default(now())
+  closedAt           DateTime?
+  closedById         String?
+  closeNote          String?
+
+  owner      Company           @relation("RecallOwner", fields: [ownerCompanyId], references: [id])
+  batches    RecallBatch[]
+  recipients RecallRecipient[]
+
+  @@index([ownerCompanyId, status])
+}
+
+model RecallBatch {
+  recallId String
+  batchId  String
+  level    Int    @default(0) // 0 = the supplier's own lot, 1 = in a buyer's stock, …
+
+  recall Recall @relation(fields: [recallId], references: [id], onDelete: Cascade)
+
+  @@id([recallId, batchId])
+}
+
+/// A company that received the recalled goods (direct buyer = level 1, its customers = level 2 …).
+model RecallRecipient {
+  id               String                @id @default(cuid())
+  recallId         String
+  companyId        String
+  viaCompanyId     String // who sold it to them
+  qty              Int // units received from the recalled lot(s)
+  level            Int                   @default(1)
+  orders           Json                  @default("[]") // [{ id, number }]
+  status           RecallRecipientStatus @default(NOTIFIED)
+  notifiedAt       DateTime              @default(now())
+  acknowledgedAt   DateTime?
+  acknowledgedById String?
+  returnedQty      Int                   @default(0)
+  destroyedQty     Int                   @default(0)
+  noneLeft         Boolean               @default(false)
+  note             String?
+  doneAt           DateTime?
+
+  recall  Recall  @relation(fields: [recallId], references: [id], onDelete: Cascade)
+  company Company @relation("RecallRecipientCompany", fields: [companyId], references: [id])
+
+  @@unique([recallId, companyId])
+  @@index([companyId, status])
+}

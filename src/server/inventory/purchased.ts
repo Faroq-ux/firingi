@@ -17,7 +17,7 @@ import { ForbiddenError, NotFoundError, ValidationError } from "@/server/errors"
 import { writeAudit } from "@/server/services/audit";
 import { notify } from "@/server/notify/dispatch";
 import { pickLocalized } from "@/i18n/config";
-import { receive } from "./ledger";
+import { batchFamily, receive } from "./ledger";
 
 const D = Prisma.Decimal;
 const day = 86_400_000;
@@ -73,10 +73,14 @@ export function unsold(l: { qty: number; usedQty: number; ownBatchId: string | n
 
 async function withOwnStock<T extends { ownBatchId: string | null }>(rows: T[]) {
   const ids = rows.map((r) => r.ownBatchId).filter((x): x is string => !!x);
-  const own = ids.length ? await prisma.stockBatch.findMany({ where: { id: { in: ids } }, select: { id: true, onHand: true, writtenOffAt: true } }) : [];
+  // a batch moved in part to another shelf / warehouse lives on in the pieces split off it
+  const fam = new Map<string, string[]>();
+  for (const id of ids) fam.set(id, await batchFamily(prisma, [id]));
+  const own = ids.length ? await prisma.stockBatch.findMany({ where: { id: { in: [...fam.values()].flat() } }, select: { id: true, onHand: true, writtenOffAt: true, blockedAt: true } }) : [];
   return rows.map((r) => {
-    const b = own.find((x) => x.id === r.ownBatchId);
-    return { ...r, ownOnHand: b ? (b.writtenOffAt ? 0 : b.onHand) : null };
+    if (!r.ownBatchId) return { ...r, ownOnHand: null };
+    const members = own.filter((x) => fam.get(r.ownBatchId!)?.includes(x.id));
+    return { ...r, ownOnHand: members.length ? members.reduce((a, b) => a + (b.writtenOffAt || b.blockedAt ? 0 : b.onHand), 0) : null };
   });
 }
 

@@ -14,7 +14,7 @@ const vm = section(`${A}/vendors/management`, "admin.vendors.view");
 const cus = section(`${A}/customers`, "admin.customers.view");
 const cat = section(`${A}/catalogue`, "admin.catalogue.view");
 const alo = section(`${A}/allocation`, "admin.allocation.manage");
-const invn = section(`${A}/inventory`, ["admin.inventory.view", "admin.inventory.manage"]);
+const invn = section(`${A}/inventory`, ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"]);
 const del = section(`${A}/delivery`, "admin.delivery.view");
 const flt = section(`${A}/fleet`, "admin.fleet.view");
 const prc = section(`${A}/pricing`, "admin.pricing.view");
@@ -136,6 +136,8 @@ export const ADMIN_NAV: NavSection[] = [
       invn("expiring", "Expiring Stock", "Stock a Expirar", "P24", { live: true }),
       invn("expiry-features", "Expiry Features", "Funcionalidades de Validade", "P24", { live: true }),
       invn("expiry-alerts", "Expiry Alerts", "Alertas de Validade", "P24", { live: true }),
+      invn("recalls", "Recalls", "Recolhas", "P25", { live: true, perm: ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"] }),
+      invn("trace", "Lot Traceability", "Rastreabilidade de Lotes", "P25", { live: true, perm: ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"] }),
     ],
   },
   {
