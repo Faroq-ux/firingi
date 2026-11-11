@@ -185,5 +185,57 @@ function StatementDoc({ d }: { d: StatementPdfData }) {
   );
 }
 
+
+export type PurchaseOrderPdfData = {
+  number: string; date: Date; expectedOn: Date | null; notes: string | null; deliverTo: string; total: string;
+  buyer: Party; supplier: Party;
+  lines: { description: string; sku: string | null; qty: number; unitCost: string; total: string }[];
+};
+
+/** A supplier's purchase order to its own (outside) supplier — Portuguese, English second. Prices net of VAT. */
+function PurchaseOrderDoc({ d }: { d: PurchaseOrderPdfData }) {
+  return (
+    <Document title={d.number} author={d.buyer.name ?? ""}>
+      <Page size="A4" style={s.page}>
+        <View style={s.between}>
+          <View><Text style={[s.brand, { fontSize: 16 }]}>{d.buyer.name}</Text>{d.buyer.vatNumber ? <Text style={s.muted}>NIF-IVA / VAT {d.buyer.vatNumber}</Text> : null}{d.buyer.email ? <Text style={s.muted}>{d.buyer.email}</Text> : null}</View>
+          <View style={{ alignItems: "flex-end" }}>
+            <Text style={s.h1}>Nota de encomenda / Purchase order</Text>
+            <Text style={{ fontFamily: "Helvetica-Bold" }}>{d.number}</Text>
+            <Text>Data / Date: {d.date.toISOString().slice(0, 10)}</Text>
+            {d.expectedOn ? <Text>Entrega prevista / Expected: {d.expectedOn.toISOString().slice(0, 10)}</Text> : null}
+          </View>
+        </View>
+        <View style={[s.between, { marginTop: 14 }]}>
+          <PartyBox title="Fornecedor / Supplier" p={d.supplier} vat="NIF-IVA / VAT" />
+          <View style={s.box}><Text style={{ fontFamily: "Helvetica-Bold", marginBottom: 3 }}>Entregar em / Deliver to</Text><Text>{d.deliverTo}</Text></View>
+        </View>
+        <View style={{ marginTop: 12 }}>
+          <View style={s.row}>
+            {[["Ref.", 14], ["Descrição / Description", 46], ["Qtd. / Qty", 10], ["Preço unit. / Unit price", 15], ["Total", 15]].map(([h, w]) => (
+              <Text key={h} style={[s.th, { width: `${w}%`, textAlign: Number(w) === 14 || Number(w) === 46 ? "left" : "right" }]}>{h}</Text>
+            ))}
+          </View>
+          {d.lines.map((l, k) => (
+            <View key={k} style={s.row} wrap={false}>
+              <Text style={[s.td, { width: "14%" }]}>{l.sku ?? ""}</Text>
+              <Text style={[s.td, { width: "46%" }]}>{l.description}</Text>
+              <Text style={[s.td, { width: "10%", textAlign: "right" }]}>{qtyFmt(l.qty)}</Text>
+              <Text style={[s.td, { width: "15%", textAlign: "right" }]}>{eur(l.unitCost)}</Text>
+              <Text style={[s.td, { width: "15%", textAlign: "right" }]}>{eur(l.total)}</Text>
+            </View>
+          ))}
+        </View>
+        <View style={{ marginTop: 12, marginLeft: "55%" }}>
+          <View style={[s.between, { borderTopWidth: 1, paddingTop: 3 }]}><Text style={{ fontFamily: "Helvetica-Bold" }}>Total (s/ IVA / excl. VAT)</Text><Text style={{ fontFamily: "Helvetica-Bold" }}>{eur(d.total)}</Text></View>
+        </View>
+        {d.notes ? <Text style={{ marginTop: 14 }}>Notas / Notes: {d.notes}</Text> : null}
+        <Text style={s.footer}>Por favor indique o lote e a data de validade de cada produto na guia de remessa. / Please state the lot number and best-before date of every product on the delivery note.</Text>
+      </Page>
+    </Document>
+  );
+}
+
 export const renderInvoicePdf = (d: InvoicePdfData) => renderToBuffer(<InvoiceDoc d={d} />);
 export const renderStatementPdf = (d: StatementPdfData) => renderToBuffer(<StatementDoc d={d} />);
+export const renderPurchaseOrderPdf = (d: PurchaseOrderPdfData) => renderToBuffer(<PurchaseOrderDoc d={d} />);

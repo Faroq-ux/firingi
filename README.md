@@ -597,6 +597,45 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Inventory & warehouses (Phase 24)
+
+For every supplier (wholesalers, distributors and FIRINGI's own in-house warehouse) — supplier portal
+› **Inventário** (25 languages); FIRINGI › **Inventory & Warehouses** (English).
+
+- **Batches with best-before dates** (`StockBatch`): every stock level is split into lots (lot code,
+  best-before, cost, where it came from). One ledger (`src/server/inventory/ledger.ts`) is the only
+  place stock changes — orders reserve / ship / restock through it — and it keeps
+  Σ batches = stock level at all times (database checks + a self-repair for old direct writes).
+  Expired or written-off stock is never reserved for an order.
+- **FEFO** — orders take the batch that expires first (FIFO by receipt when FEFO is off).
+- **Weighted average cost** per product × warehouse: each receipt moves the average; shipments
+  record the cost of goods sold at that average; returns come back at the cost they left with.
+  **Valuation** page: stock value per warehouse, cost of goods sold, received and written off for a
+  period. Opening cost can be entered once for stock that has none.
+- **Purchase orders** to the supplier's own outside suppliers (PDF in Portuguese + English, e-mailed)
+  or — wholesalers — **on FIRINGI** to a distributor: sending places a normal FIRINGI order (same
+  prices, risk checks and invoices; the buying price shown is the buyer's price, never the
+  distributor's payout); goods can be received once it is delivered. Receipts (partial or full)
+  create batches with lot, best-before and cost.
+- **Reorder points** per product × warehouse → **Reorder** suggestions (usable + incoming ≤ point),
+  with the last supplier and cost, turned into draft purchase orders in one click.
+- **Stock counts** — full or cycle, blind by default; submitted → approved; only the difference
+  counted − expected is posted (orders shipped meanwhile don't distort it); a difference over
+  250 € needs a second person (or the owner).
+- **Transfers** between the supplier's warehouses — the lots and dates travel with the goods; what
+  doesn't arrive is recorded as lost in transit; cancelling in transit puts everything back.
+- **Expiry features, switched per supplier by FIRINGI** (Inventory › Expiry Features; defaults for
+  everyone else): FEFO, expiry alerts (daily job: 30 / 14 / 7 days before, and expired), AI markdown
+  suggestions (short-dated batches that won't sell at the usual pace → a suggested discount; the
+  supplier decides and one click creates a normal promotion ending on the best-before), best-before
+  shown to customers on the product page. A supplier can **ask** for a change; FIRINGI approves or
+  rejects it (with a reason).
+- **Movements** ledger (who, when, lot, value) and FIRINGI's **overview** (stock value per supplier,
+  in-house warehouse, low, expiring and expired) and **expiring stock** across suppliers.
+- Daily job `inventory` (`/api/cron/inventory`, scheduler 06:13 UTC). Permissions:
+  `vendor.inventory.view|manage`, `vendor.purchasing.manage`, `admin.inventory.view|manage`.
+- Tests: `tests/integration/inventory.test.ts`, `tests/e2e/inventory.mjs`.
+
 ## The redesign everywhere (Phase 23)
 
 - **Every table is smart**: the shared `Table` now sits in a `TableShell` — as soon as a table has

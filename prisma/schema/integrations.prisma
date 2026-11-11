@@ -36,20 +36,20 @@ model ImportProfile {
 }
 
 model ImportRun {
-  id          String       @id @default(cuid())
-  companyId   String
-  profileId   String?
-  source      ImportSource
-  fileName    String?
-  status      ImportStatus @default(PREVIEW)
+  id         String       @id @default(cuid())
+  companyId  String
+  profileId  String?
+  source     ImportSource
+  fileName   String?
+  status     ImportStatus @default(PREVIEW)
   /// Normalised rows (what will be applied) and the per-row comparison.
-  rows        Json
-  summary     Json // { total, newOffers, priceChanges, stockChanges, unchanged, notFound, errors, bigChanges }
-  heldReason  String?
-  error       String?
-  byUserId    String?
-  createdAt   DateTime     @default(now())
-  appliedAt   DateTime?
+  rows       Json
+  summary    Json // { total, newOffers, priceChanges, stockChanges, unchanged, notFound, errors, bigChanges }
+  heldReason String?
+  error      String?
+  byUserId   String?
+  createdAt  DateTime     @default(now())
+  appliedAt  DateTime?
 
   company Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   profile ImportProfile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
@@ -59,19 +59,19 @@ model ImportRun {
 
 /// A company's endpoint for FIRINGI's signed event notifications.
 model WebhookEndpoint {
-  id            String    @id @default(cuid())
-  companyId     String
-  url           String
+  id             String    @id @default(cuid())
+  companyId      String
+  url            String
   /// HMAC-SHA256 signing secret (shown to the company once).
-  secret        String
-  events        String[]
-  active        Boolean   @default(true)
-  failureStreak Int       @default(0)
+  secret         String
+  events         String[]
+  active         Boolean   @default(true)
+  failureStreak  Int       @default(0)
   disabledReason String?
-  lastSuccessAt DateTime?
-  lastFailureAt DateTime?
-  createdById   String
-  createdAt     DateTime  @default(now())
+  lastSuccessAt  DateTime?
+  lastFailureAt  DateTime?
+  createdById    String
+  createdAt      DateTime  @default(now())
 
   company    Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   deliveries WebhookDelivery[]

@@ -14,6 +14,7 @@ const vm = section(`${A}/vendors/management`, "admin.vendors.view");
 const cus = section(`${A}/customers`, "admin.customers.view");
 const cat = section(`${A}/catalogue`, "admin.catalogue.view");
 const alo = section(`${A}/allocation`, "admin.allocation.manage");
+const invn = section(`${A}/inventory`, ["admin.inventory.view", "admin.inventory.manage"]);
 const del = section(`${A}/delivery`, "admin.delivery.view");
 const flt = section(`${A}/fleet`, "admin.fleet.view");
 const prc = section(`${A}/pricing`, "admin.pricing.view");
@@ -126,6 +127,14 @@ export const ADMIN_NAV: NavSection[] = [
       cat("customer-pricing", "Customer-Specific Pricing", "Preços por Cliente", "P3", { live: true, perm: ["admin.catalogue.view", "admin.pricing.view"] }),
       cat("promotions", "Promotions", "Promoções", "P5", { live: true, perm: ["admin.pricing.view", "admin.catalogue.view"] }),
       cat("approval", "Product Approval", "Aprovação de Produtos", "P3", { live: true, perm: "admin.catalogue.approve" }),
+    ],
+  },
+  {
+    key: "inventory", icon: "Warehouse", label: { en: "Inventory & Warehouses", pt: "Inventário e Armazéns", es: "Inventario y almacenes" },
+    items: [
+      invn("overview", "Inventory Overview", "Visão Geral do Inventário", "P24", { live: true }),
+      invn("expiring", "Expiring Stock", "Stock a Expirar", "P24", { live: true }),
+      invn("expiry-features", "Expiry Features", "Funcionalidades de Validade", "P24", { live: true }),
     ],
   },
   {

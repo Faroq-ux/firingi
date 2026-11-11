@@ -2,6 +2,7 @@
  * Vendor side of the catalogue: offers on master products, proposing new products,
  * and stock per warehouse. Every function is scoped to ctx.company (the vendor).
  */
+import { setOnHand } from "@/server/inventory/ledger";
 import type { Restriction } from "@prisma/client";
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -168,11 +169,5 @@ export async function setStock(ctx: Ctx, offerId: string, addressId: string, onH
   const addr = await prisma.address.findFirst({ where: { id: addressId, companyId: ctx.company.id, isActive: true, kind: { in: ["WAREHOUSE", "PICKUP"] } } });
   if (!addr) throw new ValidationError("Choose one of your warehouse or pickup addresses.");
   await prisma.$transaction(async (tx) => {
-    const current = await tx.stockLevel.findUnique({ where: { offerId_addressId: { offerId: o.id, addressId } } });
-    if (current && onHand < current.reserved) throw new ValidationError(`${current.reserved} units are reserved for open orders.`);
-    const delta = onHand - (current?.onHand ?? 0);
-    if (delta === 0) return;
-    await tx.stockLevel.upsert({ where: { offerId_addressId: { offerId: o.id, addressId } }, update: { onHand }, create: { offerId: o.id, addressId, onHand } });
-    await tx.stockMovement.create({ data: { offerId: o.id, addressId, type: "ADJUSTMENT", qty: delta, note: note ?? null, byUserId: ctx.user.id } });
-  });
-}
+    await setOnHand(tx, { offerId: o.id, addressId, onHand, byUserId: ctx.user.id, note: note ?? null });
+  });}

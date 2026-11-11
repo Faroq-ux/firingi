@@ -70,6 +70,11 @@ model Address {
   country        Country             @relation(fields: [countryId], references: [id])
   stockLevels    StockLevel[]
   stockMovements StockMovement[]
+  stockBatches   StockBatch[]
+  purchaseOrders PurchaseOrder[]     @relation("PurchaseOrderAddress")
+  stockCounts    StockCount[]        @relation("StockCountAddress")
+  transfersFrom  StockTransfer[]     @relation("StockTransferFrom")
+  transfersTo    StockTransfer[]     @relation("StockTransferTo")
   radiusAreas    VendorServiceArea[]
   ordersFrom     Order[]             @relation("OrderSourceAddress")
 

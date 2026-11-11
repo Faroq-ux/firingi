@@ -26,7 +26,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     permissions: [
       "admin.dashboard.view", "admin.orders.view", "admin.orders.manage", "admin.vendors.view", "admin.vendors.approve",
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
-      "admin.allocation.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
+      "admin.allocation.manage", "admin.inventory.view", "admin.inventory.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
       "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage", "admin.support.manage",
       "admin.ai.view",
     ],
@@ -34,6 +34,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   {
     key: "FINANCE", name: "Finance", description: "Finance, invoices, tax, commission", appliesTo: ["ADMIN"],
     permissions: [
+      "admin.inventory.view",
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.vendors.commission", "admin.customers.view",
       "admin.customers.manage", "admin.pricing.view", "admin.finance.view", "admin.finance.manage", "admin.invoices.view",
       "admin.invoices.issue", "admin.tax.manage", "admin.analytics.view", "admin.international.view", "admin.audit.view",
@@ -52,7 +53,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   {
     key: "SUPPORT", name: "Support", description: "Read access to help customers and vendors", appliesTo: ["ADMIN"],
     permissions: [
-      "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.catalogue.view",
+      "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.catalogue.view", "admin.inventory.view",
       "admin.delivery.view", "admin.notifications.view", "admin.messages.manage", "admin.crm.view", "admin.support.manage",
     ],
   },
@@ -75,12 +76,12 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "VENDOR_SALES", name: "Sales Manager", description: "Products, pricing, promotions and orders", appliesTo: VENDOR_TYPES,
     permissions: ["company.support.use", 
       "vendor.dashboard.view", "vendor.products.view", "vendor.products.manage", "vendor.pricing.manage",
-      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.reports.view",
+      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.reports.view", "vendor.inventory.view",
     ],
   },
   {
     key: "VENDOR_WAREHOUSE", name: "Warehouse", description: "Stock and order preparation", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.orders.view", "vendor.orders.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.orders.view", "vendor.orders.manage"],
   },
   {
     key: "VENDOR_FLEET", name: "Fleet Manager", description: "Drivers, vehicles and service areas", appliesTo: VENDOR_TYPES,
@@ -88,7 +89,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "VENDOR_ACCOUNTANT", name: "Accountant (sales)", description: "Billing statements, invoices to FIRINGI, payments", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view", "vendor.inventory.view"],
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,

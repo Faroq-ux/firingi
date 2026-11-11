@@ -1,0 +1,279 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 24 — inventory & warehouses: batches with expiry, weighted average cost,
+// purchase orders (outside suppliers or an order on FIRINGI), stock counts, transfers,
+// reorder points, expiry features switched per supplier by FIRINGI.
+//
+// StockLevel (catalogue.prisma) stays the per offer × warehouse total that ordering uses;
+// StockBatch is the detail underneath it: Σ batch.onHand = level.onHand and
+// Σ batch.reserved = level.reserved (kept by src/server/inventory/ledger.ts).
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum BatchSource {
+  OPENING // stock that existed before batches (or set by hand without a lot)
+  RECEIPT // goods receipt of a purchase order
+  TRANSFER // arrived from another warehouse of the same company
+  RETURN // came back from a customer
+  COUNT // found in a stock count
+}
+
+enum PurchaseOrderStatus {
+  DRAFT
+  SENT
+  PARTIALLY_RECEIVED
+  RECEIVED
+  CANCELLED
+}
+
+enum StockCountStatus {
+  OPEN
+  SUBMITTED
+  APPROVED
+  CANCELLED
+}
+
+enum StockTransferStatus {
+  DRAFT
+  IN_TRANSIT
+  RECEIVED
+  CANCELLED
+}
+
+enum InventoryFeature {
+  FEFO // orders take the batch that expires first
+  EXPIRY_ALERTS // warnings before expiry + expired list to write off
+  MARKDOWN // AI suggests a discount for short-dated batches (supplier decides)
+  SHOW_EXPIRY // customers see the best-before date when it is close
+}
+
+enum FeatureRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+/// A lot of one offer in one warehouse.
+model StockBatch {
+  id           String      @id @default(cuid())
+  offerId      String
+  addressId    String
+  lotCode      String? // null = no lot number (opening stock / set by hand)
+  expiresOn    DateTime?   @db.Date
+  receivedAt   DateTime    @default(now())
+  unitCost     Decimal     @default(0) @db.Decimal(18, 4) // what this lot cost (for information; valuation uses the average)
+  onHand       Int         @default(0)
+  reserved     Int         @default(0)
+  source       BatchSource
+  refId        String? // purchase order / transfer / count it came from
+  writtenOffAt DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  offer     VendorOffer     @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  address   Address         @relation(fields: [addressId], references: [id])
+  movements StockMovement[]
+
+  @@index([offerId, addressId, expiresOn])
+  @@index([expiresOn])
+}
+
+/// The company's own list of outside suppliers (manufacturers, importers…). Not FIRINGI users.
+model PurchaseSupplier {
+  id             String   @id @default(cuid())
+  ownerCompanyId String
+  name           String
+  vatNumber      String?
+  email          String?
+  phone          String?
+  address        String?
+  leadTimeDays   Int      @default(2)
+  notes          String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  owner  Company         @relation("PurchaseSupplierOwner", fields: [ownerCompanyId], references: [id], onDelete: Cascade)
+  orders PurchaseOrder[]
+
+  @@unique([ownerCompanyId, name])
+}
+
+/// What a supplier (or FIRINGI's own warehouse) buys to restock. Either from an outside supplier
+/// (sent as a PDF / e-mail) or as a normal order to a distributor on FIRINGI (`viaOrderId`).
+model PurchaseOrder {
+  id              String              @id @default(cuid())
+  ownerCompanyId  String
+  number          String              @unique // PO-2026-000001
+  supplierId      String?
+  sellerCompanyId String? // a distributor on FIRINGI
+  viaOrderId      String?             @unique // the FIRINGI order placed for it
+  addressId       String // warehouse the goods go into
+  status          PurchaseOrderStatus @default(DRAFT)
+  expectedOn      DateTime?           @db.Date
+  notes           String?
+  sentAt          DateTime?
+  receivedAt      DateTime?
+  cancelledAt     DateTime?
+  createdById     String
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  owner    Company             @relation("PurchaseOrderOwner", fields: [ownerCompanyId], references: [id])
+  supplier PurchaseSupplier?   @relation(fields: [supplierId], references: [id])
+  seller   Company?            @relation("PurchaseOrderSeller", fields: [sellerCompanyId], references: [id])
+  viaOrder Order?              @relation(fields: [viaOrderId], references: [id])
+  address  Address             @relation("PurchaseOrderAddress", fields: [addressId], references: [id])
+  lines    PurchaseOrderLine[]
+  receipts GoodsReceipt[]
+
+  @@index([ownerCompanyId, status])
+}
+
+model PurchaseOrderLine {
+  id            String  @id @default(cuid())
+  poId          String
+  offerId       String // own offer the goods are stocked as
+  sourceOfferId String? // the distributor's offer, when bought on FIRINGI
+  description   String
+  qty           Int
+  unitCost      Decimal @db.Decimal(18, 4) // net, per unit of the own offer
+  receivedQty   Int     @default(0)
+
+  po           PurchaseOrder      @relation(fields: [poId], references: [id], onDelete: Cascade)
+  offer        VendorOffer        @relation("PurchaseLineOffer", fields: [offerId], references: [id])
+  receiptLines GoodsReceiptLine[]
+}
+
+model GoodsReceipt {
+  id       String   @id @default(cuid())
+  poId     String
+  at       DateTime @default(now())
+  byUserId String
+  note     String?
+
+  po    PurchaseOrder      @relation(fields: [poId], references: [id], onDelete: Cascade)
+  lines GoodsReceiptLine[]
+}
+
+model GoodsReceiptLine {
+  id        String    @id @default(cuid())
+  receiptId String
+  poLineId  String
+  qty       Int
+  lotCode   String?
+  expiresOn DateTime? @db.Date
+  unitCost  Decimal   @db.Decimal(18, 4)
+  batchId   String
+
+  receipt GoodsReceipt      @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+  poLine  PurchaseOrderLine @relation(fields: [poLineId], references: [id])
+}
+
+/// A full or cycle count of one warehouse. Counted quantities post as adjustments when approved.
+model StockCount {
+  id             String           @id @default(cuid())
+  ownerCompanyId String
+  addressId      String
+  number         String           @unique // SC-2026-000001
+  kind           String // FULL | CYCLE
+  blind          Boolean          @default(true) // counters don't see the expected quantity
+  status         StockCountStatus @default(OPEN)
+  note           String?
+  createdById    String
+  createdAt      DateTime         @default(now())
+  submittedById  String?
+  submittedAt    DateTime?
+  approvedById   String?
+  approvedAt     DateTime?
+  varianceQty    Int?
+  varianceValue  Decimal?         @db.Decimal(18, 2)
+
+  owner   Company          @relation("StockCountOwner", fields: [ownerCompanyId], references: [id])
+  address Address          @relation("StockCountAddress", fields: [addressId], references: [id])
+  lines   StockCountLine[]
+
+  @@index([ownerCompanyId, status])
+}
+
+model StockCountLine {
+  id          String  @id @default(cuid())
+  countId     String
+  offerId     String
+  batchId     String? // null = stock without batches / a new find
+  expectedQty Int
+  countedQty  Int?
+  unitCost    Decimal @db.Decimal(18, 4)
+
+  count StockCount  @relation(fields: [countId], references: [id], onDelete: Cascade)
+  offer VendorOffer @relation("StockCountLineOffer", fields: [offerId], references: [id])
+
+  @@index([countId])
+}
+
+/// Moving stock between two warehouses of the same company (sent → in transit → received).
+model StockTransfer {
+  id             String              @id @default(cuid())
+  ownerCompanyId String
+  number         String              @unique // ST-2026-000001
+  fromAddressId  String
+  toAddressId    String
+  status         StockTransferStatus @default(DRAFT)
+  note           String?
+  createdById    String
+  createdAt      DateTime            @default(now())
+  sentAt         DateTime?
+  receivedAt     DateTime?
+  receivedById   String?
+
+  owner Company             @relation("StockTransferOwner", fields: [ownerCompanyId], references: [id])
+  from  Address             @relation("StockTransferFrom", fields: [fromAddressId], references: [id])
+  to    Address             @relation("StockTransferTo", fields: [toAddressId], references: [id])
+  lines StockTransferLine[]
+
+  @@index([ownerCompanyId, status])
+}
+
+model StockTransferLine {
+  id          String  @id @default(cuid())
+  transferId  String
+  offerId     String
+  qty         Int
+  receivedQty Int?
+  unitCost    Decimal @default(0) @db.Decimal(18, 4) // average cost when sent
+  picks       Json    @default("[]") // [{ lotCode, expiresOn, qty, unitCost }] taken at the source
+
+  transfer StockTransfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
+  offer    VendorOffer   @relation("StockTransferLineOffer", fields: [offerId], references: [id])
+}
+
+/// Expiry features of one supplier — switched by FIRINGI (no row = FIRINGI's defaults).
+model InventorySettings {
+  companyId    String   @id
+  fefo         Boolean  @default(true)
+  expiryAlerts Boolean  @default(true)
+  markdown     Boolean  @default(false)
+  showExpiry   Boolean  @default(false)
+  updatedAt    DateTime @updatedAt
+  updatedById  String?
+
+  company Company @relation("InventorySettingsCompany", fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+/// A supplier asks FIRINGI to switch an expiry feature on or off.
+model InventoryFeatureRequest {
+  id            String               @id @default(cuid())
+  companyId     String
+  feature       InventoryFeature
+  enable        Boolean
+  note          String?
+  status        FeatureRequestStatus @default(PENDING)
+  requestedById String
+  requestedAt   DateTime             @default(now())
+  decidedById   String?
+  decidedAt     DateTime?
+  reason        String?
+
+  company Company @relation("InventoryFeatureRequestCompany", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([status, requestedAt])
+}

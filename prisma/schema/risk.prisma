@@ -47,20 +47,20 @@ enum ApprovalStatus {
 /// Four-eyes: an action that needs a second FIRINGI person. The request holds what to do;
 /// approving applies it (as the requester), by someone other than the requester.
 model ApprovalRequest {
-  id           String         @id @default(cuid())
-  kind         String // CREDIT_NOTE | CUSTOMER_TERMS | COMMISSION | OFFER | BANK_DETAILS | STAFF_ROLE | PAYMENT
-  summary      String
-  payload      Json
-  amount       Decimal?       @db.Decimal(18, 2)
-  companyId    String?
-  status       ApprovalStatus @default(PENDING)
+  id            String         @id @default(cuid())
+  kind          String // CREDIT_NOTE | CUSTOMER_TERMS | COMMISSION | OFFER | BANK_DETAILS | STAFF_ROLE | PAYMENT
+  summary       String
+  payload       Json
+  amount        Decimal?       @db.Decimal(18, 2)
+  companyId     String?
+  status        ApprovalStatus @default(PENDING)
   requestedById String
-  requestedAt  DateTime       @default(now())
-  decidedById  String?
-  decidedAt    DateTime?
-  reason       String?
-  result       Json?
-  error        String?
+  requestedAt   DateTime       @default(now())
+  decidedById   String?
+  decidedAt     DateTime?
+  reason        String?
+  result        Json?
+  error         String?
 
   @@index([status, requestedAt])
   @@index([kind, status])

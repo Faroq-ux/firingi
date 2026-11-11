@@ -187,6 +187,7 @@ model InvoiceLine {
   invoice         Invoice             @relation(fields: [invoiceId], references: [id])
   orderLine       OrderLine?          @relation(fields: [orderLineId], references: [id])
   exemptionReason TaxExemptionReason? @relation(fields: [exemptionReasonId], references: [id])
+
   @@index([invoiceId])
 }
 
@@ -198,6 +199,7 @@ model InvoiceTaxSummary {
   vat       Decimal @db.Decimal(18, 2)
 
   invoice Invoice @relation(fields: [invoiceId], references: [id])
+
   @@index([invoiceId])
 }
 
@@ -224,6 +226,7 @@ model VendorBillingStatement {
   order        Order                     @relation(fields: [orderId], references: [id])
   salesInvoice Invoice?                  @relation(fields: [salesInvoiceId], references: [id])
   allocations  VendorInvoiceAllocation[]
+
   @@index([vendorCompanyId])
   @@index([orderId])
   @@index([salesInvoiceId])
@@ -291,6 +294,7 @@ model ReturnRequest {
 
   order Order        @relation(fields: [orderId], references: [id])
   lines ReturnLine[]
+
   @@index([orderId])
 }
 
@@ -302,28 +306,30 @@ model ReturnLine {
 
   returnRequest ReturnRequest @relation(fields: [returnId], references: [id], onDelete: Cascade)
   orderLine     OrderLine     @relation(fields: [orderLineId], references: [id])
+
   @@index([returnId])
 }
 
 model Payment {
-  id           String           @id @default(cuid())
-  companyId    String // payer (INBOUND) or payee (OUTBOUND)
-  direction    PaymentDirection
-  method       PaymentMethod
-  amount       Decimal          @db.Decimal(18, 2)
-  currencyCode String           @default("EUR")
-  reference    String?
-  status       PaymentStatus    @default(PENDING)
-  paidAt       DateTime?
-  recordedById String?
-  createdAt    DateTime         @default(now())
+  id             String           @id @default(cuid())
+  companyId      String // payer (INBOUND) or payee (OUTBOUND)
+  direction      PaymentDirection
+  method         PaymentMethod
+  amount         Decimal          @db.Decimal(18, 2)
+  currencyCode   String           @default("EUR")
+  reference      String?
+  status         PaymentStatus    @default(PENDING)
+  paidAt         DateTime?
+  recordedById   String?
+  createdAt      DateTime         @default(now())
   /// Online payments: who processed it; refunds of the unallocated part.
   provider       String?
-  refundedAmount Decimal        @default(0) @db.Decimal(18, 2)
+  refundedAmount Decimal          @default(0) @db.Decimal(18, 2)
 
   company     Company             @relation(fields: [companyId], references: [id])
   allocations PaymentAllocation[]
   request     PaymentRequest?
+
   @@index([companyId])
 }
 
@@ -337,6 +343,7 @@ model PaymentAllocation {
   payment       Payment        @relation(fields: [paymentId], references: [id], onDelete: Cascade)
   invoice       Invoice?       @relation(fields: [invoiceId], references: [id])
   vendorInvoice VendorInvoice? @relation(fields: [vendorInvoiceId], references: [id])
+
   @@index([invoiceId])
   @@index([paymentId])
   @@index([vendorInvoiceId])

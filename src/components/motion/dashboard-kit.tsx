@@ -26,10 +26,10 @@ export function Tile({ icon: Icon, label, value, fmt = "int", locale, hint, href
   const body = (
     <div className={`tile gloss motion-rise motion-lift h-full rounded-xl border p-4 ${tone}`} style={{ ["--i" as string]: i } as CSSProperties} data-testid={testId}>
       <div className="flex items-start gap-3">
-        <div className="tile-chip grid size-11 shrink-0 place-items-center rounded-xl motion-float"><Icon className="size-5" aria-hidden /></div>
+        <div className="tile-chip hidden size-11 shrink-0 place-items-center rounded-xl motion-float sm:grid"><Icon className="size-5" aria-hidden /></div>
         <div className="min-w-0 flex-1">
           <p className="text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</p>
-          {value !== undefined && <p className="text-2xl font-bold"><CountUp value={value} fmt={fmt} locale={locale} /></p>}
+          {value !== undefined && <p className="whitespace-nowrap text-lg font-bold tabular-nums sm:text-2xl"><CountUp value={value} fmt={fmt} locale={locale} /></p>}
           {hint && <div className="text-xs text-muted-foreground">{hint}</div>}
           {children}
         </div>

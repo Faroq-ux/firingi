@@ -7,7 +7,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-export type Mail = { to: string; subject: string; text: string };
+export type Mail = { to: string; subject: string; text: string; attachments?: { filename: string; content: Buffer }[] };
 
 export async function sendMail(mail: Mail): Promise<void> {
   const from = process.env.MAIL_FROM ?? "FIRINGI <no-reply@firingi.test>";
@@ -20,7 +20,10 @@ export async function sendMail(mail: Mail): Promise<void> {
     const dir = path.resolve(process.env.STORAGE_DIR ?? "./storage", "mail-outbox");
     await mkdir(dir, { recursive: true });
     const file = path.join(dir, `${new Date().toISOString().replace(/[:.]/g, "-")}-${Math.random().toString(36).slice(2, 7)}.json`);
-    await writeFile(file, JSON.stringify({ from, ...mail, at: new Date().toISOString() }, null, 2));
+    // attachments are kept next to the message (the JSON lists their names and sizes)
+    for (const a of mail.attachments ?? []) await writeFile(`${file.replace(/\.json$/, "")}-${a.filename.replace(/[^\w.-]+/g, "_")}`, a.content);
+    const { attachments, ...rest } = mail;
+    await writeFile(file, JSON.stringify({ from, ...rest, attachments: attachments?.map((a) => ({ filename: a.filename, bytes: a.content.length })), at: new Date().toISOString() }, null, 2));
   } catch (e) {
     console.error("[mailer] failed to send", mail.subject, e);
   }

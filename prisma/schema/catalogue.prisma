@@ -35,6 +35,10 @@ enum StockMovementType {
   RELEASE
   SHIPMENT
   RETURN
+  TRANSFER_OUT
+  TRANSFER_IN
+  COUNT
+  WRITE_OFF
 }
 
 /// Unlimited-depth tree. `path` is a materialized path of ids ("/rootId/childId/").
@@ -120,6 +124,7 @@ model ProductVariant {
 
   product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
   packagings PackagingUnit[]
+
   @@index([productId])
 }
 
@@ -145,6 +150,7 @@ model PackagingUnit {
   variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
   uom     UnitOfMeasure  @relation(fields: [uomCode], references: [code])
   offers  VendorOffer[]
+
   @@index([variantId])
 }
 
@@ -167,12 +173,16 @@ model VendorOffer {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 
-  vendor           Company           @relation(fields: [vendorCompanyId], references: [id])
-  packaging        PackagingUnit     @relation(fields: [packagingUnitId], references: [id])
-  country          Country           @relation(fields: [countryId], references: [id])
+  vendor           Company             @relation(fields: [vendorCompanyId], references: [id])
+  packaging        PackagingUnit       @relation(fields: [packagingUnitId], references: [id])
+  country          Country             @relation(fields: [countryId], references: [id])
   prices           PriceListItem[]
   stockLevels      StockLevel[]
   stockMovements   StockMovement[]
+  stockBatches     StockBatch[]
+  purchaseLines    PurchaseOrderLine[] @relation("PurchaseLineOffer")
+  countLines       StockCountLine[]    @relation("StockCountLineOffer")
+  transferLines    StockTransferLine[] @relation("StockTransferLineOffer")
   cartItems        CartItem[]
   orderLines       OrderLine[]
   promotionTargets PromotionTarget[]
@@ -245,12 +255,17 @@ model PriceListItem {
 }
 
 model StockLevel {
-  id        String   @id @default(cuid())
-  offerId   String
-  addressId String // WAREHOUSE address
-  onHand    Int      @default(0)
-  reserved  Int      @default(0)
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  offerId      String
+  addressId    String // WAREHOUSE address
+  onHand       Int      @default(0)
+  reserved     Int      @default(0)
+  /// Weighted average cost per unit (net) — updated by every receipt; 0 = no cost known yet.
+  avgCost      Decimal  @default(0) @db.Decimal(18, 4)
+  /// Reorder when free stock falls to this; suggested quantity to buy.
+  reorderPoint Int?
+  reorderQty   Int?
+  updatedAt    DateTime @updatedAt
 
   offer   VendorOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
   address Address     @relation(fields: [addressId], references: [id])
@@ -268,10 +283,15 @@ model StockMovement {
   note      String?
   byUserId  String?
   at        DateTime          @default(now())
+  batchId   String?
+  unitCost  Decimal?          @db.Decimal(18, 4) // average cost at the time (value = qty × unitCost)
+  refType   String? // PO | COUNT | TRANSFER | WRITE_OFF
+  refId     String?
 
   offer   VendorOffer @relation(fields: [offerId], references: [id])
   address Address     @relation(fields: [addressId], references: [id])
   order   Order?      @relation(fields: [orderId], references: [id])
+  batch   StockBatch? @relation(fields: [batchId], references: [id])
 
   @@index([offerId, at])
   @@index([orderId])

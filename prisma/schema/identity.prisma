@@ -79,8 +79,8 @@ model User {
   ticketsOpened           SupportTicket[]          @relation("TicketOpenedBy")
   ticketsAssigned         SupportTicket[]          @relation("TicketAssignee")
   ticketMessages          TicketMessage[]          @relation("TicketMessageAuthor")
-  savedViews  SavedView[]
-  preferences UserPreference[]
+  savedViews              SavedView[]
+  preferences             UserPreference[]
 }
 
 /// Authenticator-app secret and backup codes (encrypted by better-auth).
@@ -224,6 +224,14 @@ model Company {
   crmTasks                 CrmTask[]
   supportTickets           SupportTicket[]
 
+  purchaseSuppliers      PurchaseSupplier[]        @relation("PurchaseSupplierOwner")
+  purchaseOrders         PurchaseOrder[]           @relation("PurchaseOrderOwner")
+  purchaseOrdersAsSeller PurchaseOrder[]           @relation("PurchaseOrderSeller")
+  stockCounts            StockCount[]              @relation("StockCountOwner")
+  stockTransfers         StockTransfer[]           @relation("StockTransferOwner")
+  inventorySettings      InventorySettings?        @relation("InventorySettingsCompany")
+  inventoryRequests      InventoryFeatureRequest[] @relation("InventoryFeatureRequestCompany")
+
   @@unique([countryId, taxId, type])
   @@index([type, status])
 }
@@ -297,6 +305,7 @@ model MembershipScope {
   membership Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
   country    Country?   @relation(fields: [countryId], references: [id])
   region     Region?    @relation(fields: [regionId], references: [id])
+
   @@index([membershipId])
 }
 

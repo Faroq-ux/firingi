@@ -6,6 +6,7 @@ import { AddToCart } from "@/components/orders/add-to-cart";
 import { catalogueItem } from "@/server/data/catalogue-buyer";
 import { productsWithImages } from "@/server/data/catalogue-admin";
 import { NotFoundError } from "@/server/errors";
+import { bestBeforeFor } from "@/server/inventory/expiry";
 import { pickLocalized } from "@/i18n/config";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,7 +20,8 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const { id } = await params;
   const data = await catalogueItem(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
   const { item, alternatives } = data;
-  const [t, locale, images] = await Promise.all([getTranslations("catalogue"), getLocale(), productsWithImages([item.productId])]);
+  const [t, ti, locale, images, bestBefore] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id])]);
+  const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
   return (
@@ -35,6 +37,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
             <h1 className="text-2xl font-semibold">{name}</h1>
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
               <Badge variant="secondary">{pickLocalized(item.packaging.name, locale)}</Badge>
+              {bb && <Badge variant="warning" data-testid="best-before">{ti("bestBeforeDate", { date: new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(bb) })}</Badge>}
 
               {item.restriction && <Badge variant="warning">{t(`restricted.${item.restriction}`)}</Badge>}
             </div>

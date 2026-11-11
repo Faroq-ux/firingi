@@ -127,6 +127,8 @@ model Order {
   redemptions       PromotionRedemption[]
   risk              RiskAssessment?
 
+  purchaseOrder PurchaseOrder?
+
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])
   @@index([checkoutId])
@@ -173,6 +175,7 @@ model OrderLine {
   discounts      OrderLineDiscount[]
   invoiceLines   InvoiceLine[]
   returnLines    ReturnLine[]
+
   @@index([orderId])
 }
 
@@ -187,6 +190,7 @@ model OrderLineDiscount {
 
   orderLine OrderLine @relation(fields: [orderLineId], references: [id], onDelete: Cascade)
   promotion Promotion @relation(fields: [promotionId], references: [id])
+
   @@index([orderLineId])
 }
 
@@ -215,5 +219,6 @@ model OrderException {
   createdAt    DateTime  @default(now())
 
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
   @@index([orderId])
 }

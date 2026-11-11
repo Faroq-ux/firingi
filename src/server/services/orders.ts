@@ -3,6 +3,7 @@
  * cancellation and exceptions. FIRINGI is merchant of record: the buyer buys from
  * FIRINGI, FIRINGI buys from the vendor — the order freezes both sides' numbers.
  */
+import { releaseForOrder, reserveForOrder, restockForOrder, shipForOrder } from "@/server/inventory/ledger";
 import type { DeliveryMode, OrderFlow, OrderStatus, Prisma } from "@prisma/client";
 import Decimal from "decimal.js";
 import { prisma, type Tx } from "@/server/db";
@@ -50,83 +51,12 @@ export async function activeCommission(tx: Tx, vendorId: string) {
   return tx.commissionRule.findFirst({ where: { vendorCompanyId: vendorId, validTo: null, categoryId: null, validFrom: { lte: new Date() } }, orderBy: { validFrom: "desc" } });
 }
 
-/** Reserve qty for an offer across the vendor's stock locations (most available first). */
-export async function reserveStock(tx: Tx, orderId: string, offerId: string, qty: number) {
-  const levels = await tx.$queryRaw<{ id: string; addressId: string; free: number }[]>`
-    SELECT id, "addressId", "onHand" - reserved AS free FROM "StockLevel" WHERE "offerId" = ${offerId} AND "onHand" - reserved > 0
-    ORDER BY "onHand" - reserved DESC FOR UPDATE`;
-  const available = levels.reduce((a, l) => a + Number(l.free), 0);
-  if (available < qty) return { ok: false as const, available };
-  let left = qty;
-  const used: string[] = [];
-  for (const l of levels) {
-    if (left === 0) break;
-    const take = Math.min(left, Number(l.free));
-    await tx.stockLevel.update({ where: { id: l.id }, data: { reserved: { increment: take } } });
-    await tx.stockMovement.create({ data: { offerId, addressId: l.addressId, type: "RESERVE", qty: take, orderId } });
-    used.push(l.addressId);
-    left -= take;
-  }
-  return { ok: true as const, addressId: used[0] };
-}
-
-/** What is still reserved for this order per (offer, location), from the movement ledger. */
-async function reservations(tx: Tx, orderId: string) {
-  const moves = await tx.stockMovement.findMany({ where: { orderId, type: { in: ["RESERVE", "RELEASE", "SHIPMENT"] } } });
-  const map = new Map<string, { offerId: string; addressId: string; qty: number }>();
-  for (const m of moves) {
-    const k = `${m.offerId}|${m.addressId}`;
-    const cur = map.get(k) ?? { offerId: m.offerId, addressId: m.addressId, qty: 0 };
-    cur.qty += m.type === "RESERVE" ? m.qty : -m.qty;
-    map.set(k, cur);
-  }
-  return [...map.values()].filter((r) => r.qty > 0);
-}
-
-/** Release reserved stock (whole order, or `qty` of one offer). */
-async function releaseStock(tx: Tx, orderId: string, only?: { offerId: string; qty: number }) {
-  let left = only?.qty ?? Infinity;
-  for (const r of await reservations(tx, orderId)) {
-    if (only && r.offerId !== only.offerId) continue;
-    const q = Math.min(r.qty, left);
-    if (q <= 0) continue;
-    await tx.stockLevel.update({ where: { offerId_addressId: { offerId: r.offerId, addressId: r.addressId } }, data: { reserved: { decrement: q } } });
-    await tx.stockMovement.create({ data: { offerId: r.offerId, addressId: r.addressId, type: "RELEASE", qty: q, orderId } });
-    left -= q;
-  }
-}
-
-/** Goods leave the warehouse: reserved → shipped (on hand decreases). */
-async function shipStock(tx: Tx, orderId: string) {
-  for (const r of await reservations(tx, orderId)) {
-    await tx.stockLevel.update({ where: { offerId_addressId: { offerId: r.offerId, addressId: r.addressId } }, data: { reserved: { decrement: r.qty }, onHand: { decrement: r.qty } } });
-    await tx.stockMovement.create({ data: { offerId: r.offerId, addressId: r.addressId, type: "SHIPMENT", qty: r.qty, orderId } });
-  }
-}
-
-/**
- * Goods that already left the warehouse come back (cancelled after dispatch, or a return):
- * on hand increases again. `only` limits it to some offers / quantities.
- */
-export async function restockShipped(tx: Tx, orderId: string, only?: Map<string, number>) {
-  const moves = await tx.stockMovement.findMany({ where: { orderId, type: { in: ["SHIPMENT", "RETURN"] } } });
-  const net = new Map<string, { offerId: string; addressId: string; qty: number }>();
-  for (const m of moves) {
-    const k = `${m.offerId}|${m.addressId}`;
-    const cur = net.get(k) ?? { offerId: m.offerId, addressId: m.addressId, qty: 0 };
-    cur.qty += m.type === "SHIPMENT" ? m.qty : -m.qty;
-    net.set(k, cur);
-  }
-  const left = only ? new Map(only) : null;
-  for (const r of net.values()) {
-    let q = r.qty;
-    if (left) q = Math.min(q, left.get(r.offerId) ?? 0);
-    if (q <= 0) continue;
-    await tx.stockLevel.update({ where: { offerId_addressId: { offerId: r.offerId, addressId: r.addressId } }, data: { onHand: { increment: q } } });
-    await tx.stockMovement.create({ data: { offerId: r.offerId, addressId: r.addressId, type: "RETURN", qty: q, orderId } });
-    if (left) left.set(r.offerId, (left.get(r.offerId) ?? 0) - q);
-  }
-}
+/** Stock for orders goes through the inventory ledger (batches, FEFO, cost of goods). */
+export const reserveStock = (tx: Tx, orderId: string, offerId: string, qty: number) => reserveForOrder(tx, orderId, offerId, qty);
+const releaseStock = (tx: Tx, orderId: string, only?: { offerId: string; qty: number }) => releaseForOrder(tx, orderId, only);
+const shipStock = (tx: Tx, orderId: string) => shipForOrder(tx, orderId);
+/** Goods that already left come back (cancelled after dispatch, or a return). */
+export const restockShipped = (tx: Tx, orderId: string, only?: Map<string, number>) => restockForOrder(tx, orderId, only);
 
 /** Company that executes the delivery: the vendor (own fleet / carrier) or FIRINGI. */
 async function executorFor(tx: Tx, order: { sellerCompanyId: string; deliveryMode: DeliveryMode | null }) {
@@ -146,7 +76,11 @@ export async function ensureDelivery(tx: Tx, orderId: string) {
 
 // ── checkout ────────────────────────────────────────────────────────────────
 
-export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null }) {
+/**
+ * Place the buyer's cart as order(s), one per supplier. `items` (purchase orders, Phase 24) places
+ * exactly those items instead of the cart — the cart is left as it is.
+ */
+export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; items?: { offerId: string; qty: number }[] }) {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.orders.place"))
     throw new ForbiddenError();
   if (input.requestedDeliveryDate) {
@@ -154,7 +88,9 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     const max = (await platformSettings()).maxRequestedDays;
     if (days < -1 || days > max) throw new ValidationError(`Choose a delivery date between today and ${max} days from now.`);
   }
-  const cart = await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
+  const cart = input.items
+    ? { id: "", routed: false, couponCode: null as string | null, items: input.items.map((i) => ({ ...i, id: "" })) }
+    : await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
   if (cart?.routed && cart.items.length) {
     // "Order from FIRINGI": FIRINGI picks the supplier(s).
     const { placeRoutedOrder } = await import("@/server/allocation/routed");
@@ -276,8 +212,10 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
       await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, o.id, { from: "NEW", to, placed: true });
     }
     payFirstOrders = payFirst;
-    await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
-    await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
+    if (!input.items) {
+      await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
+      await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
+    }
     return out;
   });
   const buyerName = ctx.company.tradeName ?? ctx.company.legalName;

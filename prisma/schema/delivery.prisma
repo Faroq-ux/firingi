@@ -84,6 +84,7 @@ model VendorServiceArea {
   zone          DeliveryZone?  @relation(fields: [zoneId], references: [id])
   originAddress Address?       @relation(fields: [originAddressId], references: [id])
   rules         DeliveryRule[]
+
   @@index([vendorCompanyId])
 }
 
@@ -217,6 +218,7 @@ model DeliveryAttempt {
   byUserId      String?
 
   delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+
   @@index([deliveryId])
 }
 

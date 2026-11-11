@@ -72,6 +72,8 @@ export const EVENTS: EventDef[] = [
   E("payout.due", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["count", "amount", "overdue"]),
   E("ops.alert", "account", null, ["EMAIL", "PUSH", "WHATSAPP", "SMS"], ["severity", "title", "detail"], true),
   E("ops.resolved", "account", null, ["EMAIL", "PUSH"], ["title"]),
+  E("inventory.expiring", "catalogue", ["vendor.inventory.view", "vendor.inventory.manage", "vendor.stock.manage"], ["EMAIL", "PUSH"], ["count", "days"]),
+  E("inventory.expired", "catalogue", ["vendor.inventory.view", "vendor.inventory.manage", "vendor.stock.manage"], ["EMAIL", "PUSH"], ["count", "value"]),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

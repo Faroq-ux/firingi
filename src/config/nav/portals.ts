@@ -11,6 +11,7 @@ const vc = section(`${V}/company`, "company.profile.manage");
 const vr = section(`${V}/reports`, "vendor.reports.view");
 const vs = section(`${V}`, "company.support.use");
 const vai = section(`${V}`, ["vendor.reports.view", "vendor.dashboard.view"]);
+const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [vd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -23,6 +24,20 @@ export const VENDOR_NAV: NavSection[] = [
       vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
       vp("promotions", "Promotions", "Promoções", "P5", { live: true, perm: "vendor.promotions.manage", es: "Promociones" }),
       vp("import", "Import & Sync", "Importar e Sincronizar", "P21", { live: true, perm: ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], es: "Importar y sincronizar" }),
+    ],
+  },
+  {
+    key: "inventory", icon: "Warehouse", label: { en: "Inventory", pt: "Inventário", es: "Inventario" },
+    items: [
+      vin("overview", "Stock & Batches", "Stock e Lotes", "P24", { live: true, es: "Stock y lotes" }),
+      vin("expiry", "Expiry", "Validades", "P24", { live: true, es: "Caducidad" }),
+      vin("purchase-orders", "Purchase Orders", "Notas de Encomenda", "P24", { live: true, perm: ["vendor.purchasing.manage", "vendor.inventory.view", "vendor.inventory.manage"], es: "Órdenes de compra" }),
+      vin("suppliers", "My Suppliers", "Os Meus Fornecedores", "P24", { live: true, perm: ["vendor.purchasing.manage", "vendor.inventory.view", "vendor.inventory.manage"], es: "Mis proveedores" }),
+      vin("reorder", "Reorder", "Reaprovisionamento", "P24", { live: true, es: "Reposición" }),
+      vin("counts", "Stock Counts", "Contagens de Stock", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage"], es: "Recuentos de stock" }),
+      vin("transfers", "Transfers", "Transferências", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage"], es: "Transferencias" }),
+      vin("movements", "Stock Movements", "Movimentos de Stock", "P24", { live: true, es: "Movimientos de stock" }),
+      vin("valuation", "Valuation", "Valorização", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.reports.view"], es: "Valoración" }),
     ],
   },
   {
