@@ -69,6 +69,10 @@ function s3() {
     region: process.env.S3_REGION ?? "eu-central-1",
     endpoint: process.env.S3_ENDPOINT || undefined,
     forcePathStyle: process.env.S3_FORCE_PATH_STYLE === "true",
+    // Newer AWS SDKs add CRC checksums to every upload by default; many S3-compatible providers
+    // refuse them. Only send checksums when an operation requires one.
+    requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED",
     credentials: process.env.S3_ACCESS_KEY_ID ? { accessKeyId: process.env.S3_ACCESS_KEY_ID, secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? "" } : undefined,
   });
   return client;
@@ -77,7 +81,7 @@ function s3() {
 /** Store bytes under a key (never overwrites on local disk). */
 export async function putObject(key: string, buf: Buffer, contentType: string) {
   if (driver() === "s3") {
-    await s3().send(new PutObjectCommand({ Bucket: bucket(), Key: key, Body: buf, ContentType: contentType, ServerSideEncryption: process.env.S3_SSE === "none" ? undefined : "AES256" }));
+    await s3().send(new PutObjectCommand({ Bucket: bucket(), Key: key, Body: buf, ContentType: contentType, ServerSideEncryption: process.env.S3_SSE === "AES256" ? "AES256" : undefined }));
     return;
   }
   const full = path.join(root(), key);

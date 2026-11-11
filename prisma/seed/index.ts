@@ -20,7 +20,7 @@ export async function runSeed(db: PrismaClient, opts: { demo?: boolean } = {}) {
 }
 
 // Run only when executed directly (not when imported by tests).
-if (process.argv[1]?.includes("prisma/seed")) {
+if (/prisma\/seed\/index\.ts$/.test(process.argv[1] ?? "")) {
   const db = new PrismaClient();
   const t0 = Date.now();
   runSeed(db, { demo: process.env.SEED_DEMO !== "false" })

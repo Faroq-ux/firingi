@@ -1,4 +1,5 @@
 /** Order list and order detail, shared by buyer, vendor and admin screens. */
+import { Pager } from "@/components/ui/pager";
 import Link from "next/link";
 import type { OrderStatus } from "@prisma/client";
 import { RatingPanel } from "@/components/profit/rating-panel";
@@ -64,7 +65,7 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
           ))}
         </TBody>
       </Table>
-      <p className="mt-3 text-sm text-muted-foreground">{c("pageOf", { page: data.page, count: data.pageCount })}</p>
+      <Pager page={data.page} pageCount={data.pageCount} basePath={basePath} params={{ q: params.q }} />
     </>
   );
 }

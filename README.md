@@ -10,7 +10,7 @@ PostgreSQL 16 · Prisma 6 · better-auth (email + password) · next-intl · Vite
 
 ## Quick start
 
-Requirements: Node 22+, pnpm 10+, and PostgreSQL 16 **with PostGIS 3** (local: `apt-get install postgresql-16-postgis-3`, or `docker compose up -d`). The migrations install PostGIS into its own `postgis` schema.
+Requirements: Node 22+, pnpm 10+, and PostgreSQL 16 **with PostGIS 3** (local: `apt-get install postgresql-16-postgis-3`, or `docker compose up -d`). The migrations install PostGIS into its own `postgis` schema. For production see [docs/operations.md](docs/operations.md).
 
 ```bash
 pnpm install
@@ -597,6 +597,37 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payment providers (MB WAY, Multibanco references, cards, SEPA debit) come later.
 
+## Production readiness (Phase 19)
+
+Full guide: **[docs/operations.md](docs/operations.md)** (deploy, update, settings, monitoring,
+backups & restore, incidents, security, capacity).
+
+- **Portable deploy**: `Dockerfile` (app on the slim Node image, non-root, health check; `tools`
+  for migrations / first admin; `ops` for backups) and `docker-compose.prod.yml` — PostgreSQL 16 +
+  PostGIS, one-shot migrations, app, scheduler, backups, optional Caddy for automatic HTTPS.
+  Runs on any Docker host; nothing is tied to a cloud. Tested here: fresh database → migrations →
+  first super admin (`prisma/seed/bootstrap.ts`) → sign-in → jobs running.
+- **Files** on local disk or any S3-compatible storage (`STORAGE_DRIVER=s3`; AWS, Hetzner, Scaleway,
+  R2, MinIO, SeaweedFS…).
+- **Settings check**: with `FIRINGI_ENV=production` the app refuses to start (exit 1, says what to
+  fix) when a secret is missing or weak, the address isn't https, or a chosen driver lacks its keys.
+- **Scheduled jobs** (`scripts/ops/scheduler.mjs`): messages, certified invoicing, allocation, AI,
+  health checks — every run recorded (`JobRun`).
+- **Backups**: nightly `pg_dump`, encrypted (AES-256), checksum, kept 30 days, off-site copy to S3,
+  **monthly automatic restore test**; `restore.sh` from a file or from S3 (`scripts/ops/`).
+- **Monitoring**: `/api/health` for uptime monitors; *Settings › System Health* (checks, jobs,
+  alerts, grouped server + browser errors, version, *Run checks now*); public **`/status`** page
+  (25 languages). **Built-in alerts** to super admins for failing / late jobs and backups, queues,
+  error spikes, disk, database size, settings — re-sent every 6 h, and a "resolved" message.
+  **Sentry** optional (`SENTRY_DSN`).
+- **Security**: Content Security Policy, HSTS behind HTTPS, `Permissions-Policy`, no framing,
+  `__Secure-` HttpOnly cookies, `no-store` API answers, non-root container.
+- **Performance**: 37 indexes for unindexed foreign keys; paged order and invoice lists; load test
+  script (`scripts/load-test.mjs`) and results in the guide (one instance: ~34 customer page
+  views/s, p95 1.5 s, 0 errors).
+- **Phones**: every page fits a phone screen (all pages checked), tables turn into stacked cards,
+  the top bar folds language / theme / sign-out into a menu; light and dark mode follow the device.
+
 ## Look & feel: colour and motion
 
 - **Vivid, glossy design**: a decorative palette (`--vivid-*` in `globals.css`: blue, violet, pink,
@@ -637,4 +668,4 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   credit notes are in Portuguese only. Vendor billing statements are Portuguese + English.
 - **Tax rates** are seeded for development (PT incl. Madeira/Azores, ES incl. Canary Islands IGIC,
   standard rate for other EU countries). **Have your accountant confirm them before go-live.**
-- **Invoicing** (Phase 5) goes through a certified-provider adapter; the provider is still to be chosen.
+- **Invoicing** goes through Moloni (Phase 18) once connected; until then FIRINGI's internal numbering is used.

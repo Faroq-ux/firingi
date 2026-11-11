@@ -1,9 +1,9 @@
 # FIRINGI production stack — portable: runs on any Linux host with Docker (VPS, dedicated server,
-# or as a reference for a container platform). Everything is configured in .env.production
-# (copy .env.production.example). See docs/operations.md.
+# or as a reference for a container platform). Everything is configured in production.env
+# (copy production.env.example). See docs/operations.md.
 #
-#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
-#   docker compose -f docker-compose.prod.yml --env-file .env.production --profile https up -d   # + automatic HTTPS (Caddy)
+#   docker compose -f docker-compose.prod.yml --env-file production.env up -d --build
+#   docker compose -f docker-compose.prod.yml --env-file production.env --profile https up -d   # + automatic HTTPS (Caddy)
 #
 # Services: db (PostgreSQL 16 + PostGIS) → migrate (one-shot) → app (Next.js) ← scheduler (jobs),
 #           backup (nightly encrypted dumps + monthly restore test), caddy (optional HTTPS).
@@ -20,7 +20,9 @@ services:
       POSTGRES_USER: firingi
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: firingi
-    volumes: [pgdata:/var/lib/postgresql/data]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/db-init/20-firingi-postgis.sql:/docker-entrypoint-initdb.d/20-firingi-postgis.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U firingi -d firingi"]
       interval: 10s
@@ -31,7 +33,7 @@ services:
   migrate:
     build: { context: ., target: tools }
     image: firingi-tools:${FIRINGI_VERSION:-latest}
-    env_file: [.env.production]
+    env_file: [production.env]
     environment: *app-env
     depends_on: { db: { condition: service_healthy } }
     command: ["pnpm", "prisma", "migrate", "deploy"]
@@ -41,7 +43,7 @@ services:
     build: { context: ., target: app, args: { GIT_COMMIT: "${GIT_COMMIT:-dev}" } }
     image: firingi:${FIRINGI_VERSION:-latest}
     restart: unless-stopped
-    env_file: [.env.production]
+    env_file: [production.env]
     environment: *app-env
     depends_on:
       db: { condition: service_healthy }
@@ -50,19 +52,20 @@ services:
     volumes: [storage:/app/storage]
 
   scheduler:
-    build: { context: ., target: ops }
-    image: firingi-ops:${FIRINGI_VERSION:-latest}
+    image: firingi:${FIRINGI_VERSION:-latest}
     restart: unless-stopped
     environment:
       APP_INTERNAL_URL: http://app:3000
       CRON_SECRET: ${CRON_SECRET}
     depends_on: { app: { condition: service_healthy } }
-    command: ["/opt/firingi/scheduler.sh"]
+    command: ["node", "ops/scheduler.mjs"]
+    healthcheck: { disable: true }
 
   backup:
+    build: { context: ., target: ops }
     image: firingi-ops:${FIRINGI_VERSION:-latest}
     restart: unless-stopped
-    env_file: [.env.production]
+    env_file: [production.env]
     environment:
       <<: *app-env
       APP_INTERNAL_URL: http://app:3000

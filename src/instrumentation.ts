@@ -13,7 +13,10 @@ export async function register() {
   const findings = checkEnv(process.env);
   for (const f of findings) console[f.level === "error" ? "error" : "warn"](`[env] ${f.level.toUpperCase()} ${f.key}: ${f.message}`);
   if (strictEnv() && findings.some((f) => f.level === "error")) {
-    throw new Error(`FIRINGI can't start: fix the settings above (${findings.filter((f) => f.level === "error").map((f) => f.key).join(", ")}).`);
+    // Next.js only logs errors thrown here and keeps serving — stop the process for real so the
+    // container fails visibly (and the orchestrator doesn't route traffic to a misconfigured app).
+    console.error(`[env] FIRINGI can't start: fix the settings above (${findings.filter((f) => f.level === "error").map((f) => f.key).join(", ")}).`);
+    process.exit(1);
   }
   if (process.env.SENTRY_DSN) {
     const Sentry = await import("@sentry/nextjs");

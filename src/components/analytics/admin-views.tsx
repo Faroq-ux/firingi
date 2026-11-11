@@ -216,7 +216,7 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {row("revenue", "margin", "fees", "credited")}
           <div className="grid gap-4">
             <TimeCard f={f} grain={g} locale={locale} title="Revenue over time" description="Goods margin and delivery fees per period." metrics={[{ m: "margin", label: "Goods margin" }, { m: "fees", label: "Delivery fees" }]} fmt="money" kind="bar" />
-            <section className="rounded-xl border bg-card">
+            <section className="overflow-x-auto rounded-xl border bg-card">
               <h2 className="border-b px-4 py-3 text-sm font-semibold">Revenue by month</h2>
               <table className="w-full text-sm" data-testid="table-revenue-month">
                 <thead><tr className="border-b bg-muted/50">{["Month", "Goods margin", "Delivery fees", "Revenue", "Credit notes (net)"].map((h, i) => <th key={h} className={`px-3 py-2 text-xs font-medium uppercase tracking-wide text-muted-foreground ${i ? "text-right" : "text-left"}`}>{h}</th>)}</tr></thead>

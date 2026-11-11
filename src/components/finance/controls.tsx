@@ -111,7 +111,7 @@ export function PaymentForm({ direction, docs }: { direction: "INBOUND" | "OUTBO
           </div>
         ))}
       </div>
-      <div className="flex items-end gap-3">
+      <div className="flex flex-wrap items-end gap-3">
         <div className="space-y-1"><Label>Amount received / paid</Label><Input name="amount" inputMode="decimal" className="w-36" placeholder={total.toFixed(2)} /></div>
         <Button type="submit" disabled={pending || total <= 0}>Record payment ({total.toFixed(2)} €)</Button>
       </div>

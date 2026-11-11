@@ -2,7 +2,7 @@ import { z } from "zod";
 import { cronGuard, recordExternalRun } from "@/server/ops/jobs";
 
 /** The backup service reports its runs here ("Authorization: Bearer $CRON_SECRET"). */
-const Body = z.object({ job: z.enum(["backup", "restore-test"]), ok: z.boolean(), durationMs: z.number().int().nonnegative().optional(), summary: z.record(z.string(), z.unknown()).optional(), error: z.string().max(4000).nullable().optional() });
+const Body = z.object({ job: z.enum(["backup", "restore-test"]), ok: z.boolean(), durationMs: z.number().int().nonnegative().optional(), summary: z.record(z.string(), z.unknown()).nullable().optional(), error: z.string().max(4000).nullable().optional() });
 
 export async function POST(req: Request) {
   const denied = cronGuard(req);

@@ -71,8 +71,10 @@ export async function healthReport(now = new Date()) {
     { key: "fiscal", label: "Certified invoicing queue", state: fiscalStuck > 0 ? "critical" : fiscalFailed > 0 ? "warning" : "ok", detail: `${fiscalFailed} refused · ${fiscalStuck} pending > 1 h` },
   ];
   for (const j of jobs) {
-    // Outside production, a job that never ran is just not scheduled here — not a problem.
-    if (j.state === "never" && !production) continue;
+    // A job that never ran: outside production it simply isn't scheduled here; in production it
+    // only becomes a problem once the app has been up longer than the job's allowed gap.
+    const upMin = (now.getTime() - new Date(VERSION.startedAt).getTime()) / 60_000;
+    if (j.state === "never" && (!production || upMin < j.staleAfterMin)) continue;
     const state: CheckState = j.state === "ok" ? "ok" : j.state === "last-failed" ? "warning" : j.critical ? "critical" : "warning";
     checks.push({
       key: `job:${j.key}`, label: `Job: ${j.label}`, state,

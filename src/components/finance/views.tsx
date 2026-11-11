@@ -1,4 +1,5 @@
 /** Finance views shared by the buyer, vendor and admin portals. */
+import { Pager } from "@/components/ui/pager";
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { FileText } from "lucide-react";
@@ -33,13 +34,19 @@ const pdfLink = (href: string, label = "PDF") => (
   <a href={href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline"><FileText className="size-3.5" />{label}</a>
 );
 
-export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean }) {
-  const [rows, t, locale] = await Promise.all([listSalesInvoices(ctx, { as, docType, buyerType, unpaidOnly }), getTranslations("finance"), getLocale()]);
-  const open = rows.reduce((a, r) => a + Number(r.open), 0);
+const PAGE = 50;
+
+export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly, page = 1, basePath }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean; page?: number; basePath?: string }) {
+  const [all, t, locale] = await Promise.all([listSalesInvoices(ctx, { as, docType, buyerType, unpaidOnly }), getTranslations("finance"), getLocale()]);
+  const open = all.reduce((a, r) => a + Number(r.open), 0);
+  // The balance covers every open invoice; the table shows 50 at a time.
+  const pageCount = Math.max(1, Math.ceil(all.length / PAGE));
+  const current = Math.min(Math.max(1, page), pageCount);
+  const rows = all.slice((current - 1) * PAGE, current * PAGE);
   const howToPay = as === "BUYER" ? await paymentInstructions(ctx.company.countryId) : null;
   return (
     <>
-      <PageHeader title={title} description={`${rows.length} · ${t("balance")}: ${formatMoney(open, locale)}`} />
+      <PageHeader title={title} description={`${all.length} · ${t("balance")}: ${formatMoney(open, locale)}`} />
       {howToPay && (howToPay.bankTransfer || howToPay.mbWay || howToPay.cashOnDelivery) && (
         <Card className="mb-4" data-testid="how-to-pay">
           <CardHeader><CardTitle>{t("howToPay")}</CardTitle></CardHeader>
@@ -73,6 +80,7 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
           ))}
         </TBody>
       </Table>
+      {basePath && <Pager page={current} pageCount={pageCount} basePath={basePath} />}
     </>
   );
 }

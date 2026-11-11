@@ -24,9 +24,12 @@ s3_url() {
   if [ -n "${S3_ENDPOINT:-}" ]; then echo "${S3_ENDPOINT%/}/$bucket/$key"; else echo "https://$bucket.s3.$region.amazonaws.com/$key"; fi
 }
 s3_enabled() { [ -n "${BACKUP_S3_BUCKET:-${S3_BUCKET:-}}" ] && [ -n "${S3_ACCESS_KEY_ID:-}" ] && [ "${BACKUP_S3:-on}" != "off" ]; }
+# Backups are encrypted before upload; S3_SSE=AES256 also asks the provider to encrypt at rest
+# (AWS supports it; several S3-compatible providers refuse the header).
 s3_put() {
+  local sse=(); [ "${S3_SSE:-}" = "AES256" ] && sse=(-H "x-amz-server-side-encryption: AES256")
   curl -fsS -m 3600 --aws-sigv4 "aws:amz:${S3_REGION:-eu-west-1}:s3" --user "$S3_ACCESS_KEY_ID:$S3_SECRET_ACCESS_KEY" \
-    -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" -H "x-amz-server-side-encryption: AES256" -T "$1" "$(s3_url "$2")" >/dev/null
+    -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" "${sse[@]}" -T "$1" "$(s3_url "$2")" >/dev/null
 }
 s3_get() {
   curl -fsS -m 3600 --aws-sigv4 "aws:amz:${S3_REGION:-eu-west-1}:s3" --user "$S3_ACCESS_KEY_ID:$S3_SECRET_ACCESS_KEY" \
