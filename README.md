@@ -595,7 +595,42 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   and *Record payout* (four-eyes for big amounts). A supplier invoice without a due date is due
   after the payout days in *Payments* settings (30 by default). Finance gets one reminder a day
   when something is due within 3 days.
-- Customer payment providers (MB WAY, Multibanco references, cards, SEPA debit) come later.
+- Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
+
+## Customer payments online (Phase 20)
+
+- **How customers pay**: MB WAY, Multibanco reference, card and SEPA direct debit — from the
+  portal (*Invoices › Pay online*: tick invoices, pay together) or from a **payment link** that
+  needs no sign-in (sent by FIRINGI finance, and inside every payment reminder). Bank transfer
+  stays available. Pages in the customer's language (25), on phones too.
+- **Provider-neutral** (`src/server/payments/`): one interface, today the **Stripe** adapter
+  (Checkout for card / MB WAY / Multibanco, SEPA mandates + off-session debits, refunds, signed
+  webhooks at `/api/webhooks/payments/stripe`) and a **simulated provider** (`PAYMENTS_SIMULATE=1`,
+  development and demos: hosted card page, MB WAY approval, Multibanco references, mandates — no
+  money). A Portuguese provider (ifthenpay, Easypay, SIBS) can be added behind the same interface.
+  Keys only in the server environment: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`.
+- **Automatic matching**: a confirmed payment becomes a `Payment` allocated to the invoices it was
+  for (never more than what is still open). Every provider notification is stored once
+  (`PaymentEvent`), so a repeated webhook can't record money twice, and a paid request can't change
+  afterwards (database rule). Money left over (overpaid, invoices paid meanwhile) is **customer
+  credit**, used automatically on the next invoices; finance can refund it (four-eyes above the
+  threshold).
+- **SEPA direct debit**: the customer signs a mandate with the provider (FIRINGI keeps only the
+  last 4 digits); invoices are collected on their due date after a notice N days before
+  (pre-notification); a bounced debit (e.g. AM04 insufficient funds) is reported to the customer
+  and finance.
+- **Reminders**: before the due date, on it and when overdue (default 3 days before, on the day, 7
+  / 14 / 30 days late) — each once per invoice, daytime only, with a pay link; customers on direct
+  debit aren't reminded (they're collected).
+- **Pay before shipping**: per business (*Customers › Credit & Limits*, or by default for new
+  customers): orders wait — unseen by the supplier — until paid, then go to the supplier; the
+  prepayment pays the invoice on delivery; cancelled → refunded automatically; unpaid after N days
+  → cancelled and the stock released.
+- **Back office** (*Finance › Online Payments / Direct Debit*): provider status and connection
+  test, payment requests (filter, copy link, cancel), new payment links, customer credit + refunds,
+  the provider's notifications (applied / errors), mandates and collections. *Settings › Payment*:
+  methods, reminders, link validity, direct debit notice, unpaid-order cancellation. Job
+  `/api/cron/payments` every 5 minutes; System Health checks the provider and webhooks.
 
 ## Production readiness (Phase 19)
 

@@ -772,7 +772,8 @@
     "My Offers": "Mina erbjudanden",
     "AI Assistant": "AI-assistent",
     "Buy Again": "Köp igen",
-    "Demand & Stock": "Efterfrågan & lager"
+    "Demand & Stock": "Efterfrågan & lager",
+    "Direct Debit": "Autogiro"
   },
   "delivery": {
     "title": "Leverans",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Löst: {title}",
       "body": "Problemet ”{title}” är borta. Se Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Betalning mottagen: {total}",
+      "body": "Tack — vi har tagit emot {total} för {documents}."
+    },
+    "payment_failed": {
+      "title": "Betalningen genomfördes inte: {total}",
+      "body": "Din betalning på {total} gick inte igenom: {reason}. Du kan försöka igen eller välja ett annat sätt."
+    },
+    "payment_refunded": {
+      "title": "Återbetalning på väg: {total}",
+      "body": "Vi återbetalar {total} till dig. Beroende på metod kan det ta några dagar."
+    },
+    "payment_link": {
+      "title": "Betalningsbegäran: {total}",
+      "body": "FIRINGI har skickat en länk för att betala {documents} ({total}) online — MB WAY, Multibanco, kort eller autogiro."
+    },
+    "payment_reminder_soon": {
+      "title": "Faktura förfaller snart: {total}",
+      "body": "{documents} ({total}) förfaller {due}. Du kan betala online nu."
+    },
+    "payment_reminder_due": {
+      "title": "Faktura förfaller i dag: {total}",
+      "body": "{documents} ({total}) förfaller i dag. Betala online på en minut med MB WAY, Multibanco eller kort."
+    },
+    "payment_reminder_overdue": {
+      "title": "Faktura förfallen: {total}",
+      "body": "{documents} ({total}) är {days} dagar försenad. Betala nu för att fortsätta beställa utan avbrott."
+    },
+    "direct_debit_notice": {
+      "title": "Autogiro den {date}: {total}",
+      "body": "Den {date} drar vi {total} för {documents} från ditt konto via SEPA-autogiro."
+    },
+    "direct_debit_active": {
+      "title": "Autogiro aktiverat",
+      "body": "Ditt SEPA-autogiro (konto som slutar på {last4}) är aktivt. Fakturor dras på förfallodagen — vi meddelar dig några dagar innan."
+    },
+    "order_awaiting_payment": {
+      "title": "Betala order {number} för att skicka den",
+      "body": "Order {number} ({total}) är reserverad. Den går till leverantören så snart den är betald."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Order {number} avbruten",
+      "body": "Order {number} avbröts eftersom den inte betalades i tid. Du kan beställa igen när som helst."
+    },
+    "payment_attention": {
+      "title": "Betalning kräver åtgärd: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Beställningar",
       "files": "Dokument och filer",
       "notifications": "Aviseringar",
-      "invoicing": "Fakturering"
+      "invoicing": "Fakturering",
+      "payments": "Betalningar"
     },
     "states": {
       "ok": "I drift",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Inga incidenter de senaste 7 dagarna.",
     "ongoing": "pågår",
     "checked": "Kontrollerat {time} UTC"
+  },
+  "pay": {
+    "title": "Betala online",
+    "backToInvoices": "Tillbaka till fakturor",
+    "linkFor": "Betalning för {company}",
+    "amountDue": "Belopp att betala",
+    "order": "Order {number}",
+    "chooseMethod": "Hur vill du betala?",
+    "methods": {
+      "CARD": "Kort",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-referens",
+      "DIRECT_DEBIT": "Autogiro"
+    },
+    "methodHints": {
+      "CARD": "Visa eller Mastercard på en säker betalsida",
+      "MB_WAY": "Godkänn i din telefon",
+      "MULTIBANCO": "Betala i en bankomat eller internetbank",
+      "DIRECT_DEBIT": "Från ditt konto som slutar på {last4}"
+    },
+    "phone": "Telefonnummer för MB WAY",
+    "badPhone": "Ange ett mobilnummer med 9 siffror som börjar med 9.",
+    "payNow": "Betala {amount}",
+    "secure": "Betalningar hanteras säkert av {provider}. FIRINGI ser aldrig dina kortuppgifter.",
+    "noMethods": "Onlinebetalning är inte tillgänglig just nu.",
+    "bankTransfer": "Eller betala med banköverföring till {holder}:",
+    "waiting": "Väntar på bekräftelse…",
+    "mbwayWaiting": "Öppna MB WAY-appen i din telefon ({phone}) och godkänn betalningen på {amount}.",
+    "mbwayExpires": "Begäran går ut om {minutes} min.",
+    "multibancoTitle": "Betala med denna Multibanco-referens",
+    "entity": "Enhet",
+    "reference": "Referens",
+    "amount": "Belopp",
+    "copy": "Kopiera",
+    "copied": "Kopierat",
+    "validUntil": "Giltig till {date}",
+    "multibancoHint": "Vi bekräftar betalningen automatiskt så snart den är gjord.",
+    "debitSubmitted": "Autogirodragningen har skickats till din bank. Det tar några bankdagar; vi meddelar dig när den är klar.",
+    "paid": "Betalt — tack!",
+    "paidDetail": "Vi har tagit emot {amount}.",
+    "paidOrder": "Din order går nu till leverantören.",
+    "failed": "Betalningen gick inte igenom: {reason}.",
+    "tryAgain": "Försök igen eller välj ett annat sätt.",
+    "expired": "Denna betalningsbegäran har gått ut.",
+    "cancelled": "Denna betalningsbegäran har ersatts av en nyare.",
+    "payWhatsOpen": "Betala det som fortfarande är öppet",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "En betalning för detta pågår redan.",
+      "PAYMENT_EXPIRED": "Denna betalningsbegäran har gått ut.",
+      "PROVIDER_UNAVAILABLE": "Betaltjänsten är inte tillgänglig just nu. Försök igen om några minuter.",
+      "generic": "Något gick fel. Försök igen."
+    },
+    "payInvoices": "Betala online",
+    "selectInvoices": "Välj fakturorna du vill betala:",
+    "paySelected": "Betala {amount}",
+    "inProgress": "Betalning pågår",
+    "credit": "Tillgodo: {amount} — används automatiskt på dina nästa fakturor.",
+    "setUpDebit": "Aktivera autogiro",
+    "pendingPayments": "Pågående betalningar",
+    "open": "Öppna",
+    "awaitingTitle": "Väntar på din betalning",
+    "awaitingBody": "Denna order är reserverad och går till leverantören så snart den är betald. Obetalda order avbryts efter {days} dagar.",
+    "payOrder": "Betala order",
+    "statuses": {
+      "ACTIVE": "Aktiv"
+    },
+    "dd": {
+      "title": "Autogiro",
+      "intro": "Betala dina fakturor automatiskt på förfallodagen med SEPA-autogiro. Vi meddelar dig {days} dagar före varje dragning.",
+      "active": "Aktivt — konto som slutar på {last4}",
+      "holder": "Kontoinnehavare",
+      "since": "sedan {date}",
+      "autoCollect": "Dra fakturor automatiskt på förfallodagen",
+      "setUp": "Aktivera autogiro",
+      "replace": "Använd ett annat konto",
+      "revoke": "Avsluta autogiro",
+      "revokeConfirm": "Avsluta autogirot? Fakturorna måste då betalas på annat sätt.",
+      "none": "Inget autogiro aktiverat.",
+      "pending": "Väntar på bekräftelse av dina bankuppgifter…",
+      "upcoming": "Nästa dragningar",
+      "noUpcoming": "Inget att dra just nu.",
+      "dueOn": "förfaller {date}",
+      "notAvailable": "Autogiro är inte tillgängligt ännu.",
+      "collectedAuto": "Dina fakturor dras automatiskt via autogiro (konto som slutar på {last4}).",
+      "legal": "Genom att aktivera autogiro ger du FIRINGI och dess betaltjänstleverantör rätt att instruera din bank att debitera ditt konto, och din bank rätt att göra det. Du kan begära återbetalning från din bank inom 8 veckor efter en dragning."
+    }
   }
 }

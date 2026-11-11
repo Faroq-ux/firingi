@@ -772,7 +772,8 @@
     "My Offers": "Le mie offerte",
     "AI Assistant": "Assistente IA",
     "Buy Again": "Riacquista",
-    "Demand & Stock": "Domanda e scorte"
+    "Demand & Stock": "Domanda e scorte",
+    "Direct Debit": "Addebito diretto"
   },
   "delivery": {
     "title": "Consegna",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Risolto: {title}",
       "body": "Il problema «{title}» è stato risolto. Vedi Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Pagamento ricevuto: {total}",
+      "body": "Grazie — abbiamo ricevuto {total} per {documents}."
+    },
+    "payment_failed": {
+      "title": "Pagamento non completato: {total}",
+      "body": "Il pagamento di {total} non è andato a buon fine: {reason}. Puoi riprovare o scegliere un altro metodo."
+    },
+    "payment_refunded": {
+      "title": "Rimborso in arrivo: {total}",
+      "body": "Ti stiamo rimborsando {total}. A seconda del metodo può richiedere alcuni giorni."
+    },
+    "payment_link": {
+      "title": "Richiesta di pagamento: {total}",
+      "body": "FIRINGI ti ha inviato un link per pagare {documents} ({total}) online — MB WAY, Multibanco, carta o addebito diretto."
+    },
+    "payment_reminder_soon": {
+      "title": "Fattura in scadenza: {total}",
+      "body": "{documents} ({total}) scade il {due}. Puoi pagarla subito online."
+    },
+    "payment_reminder_due": {
+      "title": "Fattura in scadenza oggi: {total}",
+      "body": "{documents} ({total}) scade oggi. Paga online in un minuto con MB WAY, Multibanco o carta."
+    },
+    "payment_reminder_overdue": {
+      "title": "Fattura scaduta: {total}",
+      "body": "{documents} ({total}) è scaduta da {days} giorni. Paga ora per continuare a ordinare senza interruzioni."
+    },
+    "direct_debit_notice": {
+      "title": "Addebito diretto il {date}: {total}",
+      "body": "Il {date} addebiteremo {total} per {documents} sul tuo conto tramite addebito diretto SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Addebito diretto attivato",
+      "body": "Il tuo addebito diretto SEPA (conto che termina con {last4}) è attivo. Le fatture saranno addebitate alla scadenza — ti avvisiamo qualche giorno prima."
+    },
+    "order_awaiting_payment": {
+      "title": "Paga l'ordine {number} per inviarlo",
+      "body": "L'ordine {number} ({total}) è riservato. Passa al fornitore appena viene pagato."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Ordine {number} annullato",
+      "body": "L'ordine {number} è stato annullato perché non è stato pagato in tempo. Puoi ordinare di nuovo quando vuoi."
+    },
+    "payment_attention": {
+      "title": "Pagamento da verificare: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Ordini",
       "files": "Documenti e file",
       "notifications": "Notifiche",
-      "invoicing": "Fatturazione"
+      "invoicing": "Fatturazione",
+      "payments": "Pagamenti"
     },
     "states": {
       "ok": "Operativo",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Nessun incidente negli ultimi 7 giorni.",
     "ongoing": "in corso",
     "checked": "Controllato alle {time} UTC"
+  },
+  "pay": {
+    "title": "Paga online",
+    "backToInvoices": "Torna alle fatture",
+    "linkFor": "Pagamento per {company}",
+    "amountDue": "Importo da pagare",
+    "order": "Ordine {number}",
+    "chooseMethod": "Come vuoi pagare?",
+    "methods": {
+      "CARD": "Carta",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Riferimento Multibanco",
+      "DIRECT_DEBIT": "Addebito diretto"
+    },
+    "methodHints": {
+      "CARD": "Visa o Mastercard su una pagina di pagamento sicura",
+      "MB_WAY": "Approva sul telefono",
+      "MULTIBANCO": "Paga allo sportello o nell'home banking",
+      "DIRECT_DEBIT": "Dal tuo conto che termina con {last4}"
+    },
+    "phone": "Numero di telefono MB WAY",
+    "badPhone": "Inserisci un numero di cellulare di 9 cifre che inizi con 9.",
+    "payNow": "Paga {amount}",
+    "secure": "I pagamenti sono gestiti in modo sicuro da {provider}. FIRINGI non vede mai i dati della tua carta.",
+    "noMethods": "Il pagamento online non è disponibile al momento.",
+    "bankTransfer": "Oppure paga con bonifico a {holder}:",
+    "waiting": "In attesa di conferma…",
+    "mbwayWaiting": "Apri l'app MB WAY sul telefono ({phone}) e approva il pagamento di {amount}.",
+    "mbwayExpires": "La richiesta scade tra {minutes} min.",
+    "multibancoTitle": "Paga con questo riferimento Multibanco",
+    "entity": "Entità",
+    "reference": "Riferimento",
+    "amount": "Importo",
+    "copy": "Copia",
+    "copied": "Copiato",
+    "validUntil": "Valido fino al {date}",
+    "multibancoHint": "Confermiamo il pagamento automaticamente non appena viene effettuato.",
+    "debitSubmitted": "L'addebito è stato inviato alla tua banca. Richiede alcuni giorni lavorativi; ti avvisiamo quando è completato.",
+    "paid": "Pagato — grazie!",
+    "paidDetail": "Abbiamo ricevuto {amount}.",
+    "paidOrder": "Il tuo ordine passa ora al fornitore.",
+    "failed": "Il pagamento non è andato a buon fine: {reason}.",
+    "tryAgain": "Riprova o scegli un altro metodo.",
+    "expired": "Questa richiesta di pagamento è scaduta.",
+    "cancelled": "Questa richiesta di pagamento è stata sostituita da una più recente.",
+    "payWhatsOpen": "Paga quanto ancora aperto",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "C'è già un pagamento in corso per questo.",
+      "PAYMENT_EXPIRED": "Questa richiesta di pagamento è scaduta.",
+      "PROVIDER_UNAVAILABLE": "Il servizio di pagamento non è disponibile ora. Riprova tra qualche minuto.",
+      "generic": "Qualcosa è andato storto. Riprova."
+    },
+    "payInvoices": "Paga online",
+    "selectInvoices": "Scegli le fatture da pagare:",
+    "paySelected": "Paga {amount}",
+    "inProgress": "Pagamento in corso",
+    "credit": "Credito: {amount} — usato automaticamente sulle prossime fatture.",
+    "setUpDebit": "Attiva l'addebito diretto",
+    "pendingPayments": "Pagamenti in corso",
+    "open": "Apri",
+    "awaitingTitle": "In attesa del tuo pagamento",
+    "awaitingBody": "Questo ordine è riservato e passa al fornitore appena viene pagato. Gli ordini non pagati vengono annullati dopo {days} giorni.",
+    "payOrder": "Paga l'ordine",
+    "statuses": {
+      "ACTIVE": "Attivo"
+    },
+    "dd": {
+      "title": "Addebito diretto",
+      "intro": "Paga le fatture automaticamente alla scadenza con addebito diretto SEPA. Ti avvisiamo {days} giorni prima di ogni addebito.",
+      "active": "Attivo — conto che termina con {last4}",
+      "holder": "Intestatario del conto",
+      "since": "dal {date}",
+      "autoCollect": "Addebita le fatture automaticamente alla scadenza",
+      "setUp": "Attiva l'addebito diretto",
+      "replace": "Usa un altro conto",
+      "revoke": "Disattiva l'addebito diretto",
+      "revokeConfirm": "Disattivare l'addebito diretto? Le fatture dovranno essere pagate in un altro modo.",
+      "none": "Nessun addebito diretto attivo.",
+      "pending": "In attesa della conferma dei dati bancari…",
+      "upcoming": "Prossimi addebiti",
+      "noUpcoming": "Niente da addebitare al momento.",
+      "dueOn": "scade il {date}",
+      "notAvailable": "L'addebito diretto non è ancora disponibile.",
+      "collectedAuto": "Le tue fatture vengono addebitate automaticamente (conto che termina con {last4}).",
+      "legal": "Attivando l'addebito diretto autorizzi FIRINGI e il suo fornitore di pagamenti a inviare istruzioni alla tua banca per addebitare il tuo conto, e la tua banca ad addebitarlo. Puoi chiedere il rimborso alla tua banca entro 8 settimane da un addebito."
+    }
   }
 }

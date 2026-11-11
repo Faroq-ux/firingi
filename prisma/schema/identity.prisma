@@ -160,6 +160,8 @@ model Company {
   defaultLanguageCode String?
   creditLimit         Decimal?      @db.Decimal(18, 2)
   paymentTermsDays    Int           @default(0)
+  /// Orders wait for payment before the supplier sees them (buyers without credit terms).
+  payBeforeShipping   Boolean       @default(false)
   regionalManagerId   String?
   notes               String?
   approvedAt          DateTime?
@@ -202,6 +204,8 @@ model Company {
   vendorInvoices           VendorInvoice[]
   invoicesReceived         Invoice[]                   @relation("InvoiceRecipient")
   payments                 Payment[]
+  paymentRequests          PaymentRequest[]
+  sepaMandates             SepaMandate[]
   serviceAreas             VendorServiceArea[]
   deliveryRules            DeliveryRule[]
   vehicles                 Vehicle[]

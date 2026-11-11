@@ -1119,6 +1119,54 @@
     "ops_resolved": {
       "title": "Resolved: {title}",
       "body": "The problem “{title}” is gone. See Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Payment received: {total}",
+      "body": "Thank you — we received {total} for {documents}."
+    },
+    "payment_failed": {
+      "title": "Payment not completed: {total}",
+      "body": "Your payment of {total} didn't go through: {reason}. You can try again or choose another method."
+    },
+    "payment_refunded": {
+      "title": "Refund on its way: {total}",
+      "body": "We are refunding {total} to you. Depending on the method it can take a few days to arrive."
+    },
+    "payment_link": {
+      "title": "Payment request: {total}",
+      "body": "FIRINGI sent you a link to pay {documents} ({total}) online — MB WAY, Multibanco, card or direct debit."
+    },
+    "payment_reminder_soon": {
+      "title": "Invoice due soon: {total}",
+      "body": "{documents} ({total}) is due on {due}. You can pay it online now."
+    },
+    "payment_reminder_due": {
+      "title": "Invoice due today: {total}",
+      "body": "{documents} ({total}) is due today. Pay online in a minute with MB WAY, Multibanco or card."
+    },
+    "payment_reminder_overdue": {
+      "title": "Invoice overdue: {total}",
+      "body": "{documents} ({total}) is {days} days overdue. Please pay now to keep ordering without interruption."
+    },
+    "direct_debit_notice": {
+      "title": "Direct debit on {date}: {total}",
+      "body": "On {date} we will collect {total} for {documents} from your account by SEPA direct debit."
+    },
+    "direct_debit_active": {
+      "title": "Direct debit is set up",
+      "body": "Your SEPA direct debit (account ending {last4}) is active. Invoices will be collected on their due date — we tell you a few days before."
+    },
+    "order_awaiting_payment": {
+      "title": "Pay order {number} to send it",
+      "body": "Order {number} ({total}) is reserved. It goes to the supplier as soon as it is paid."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Order {number} cancelled",
+      "body": "Order {number} was cancelled because it wasn't paid in time. You can order again any time."
+    },
+    "payment_attention": {
+      "title": "Payment needs attention: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1616,7 +1664,8 @@
       "ordering": "Ordering",
       "files": "Documents & files",
       "notifications": "Notifications",
-      "invoicing": "Invoicing"
+      "invoicing": "Invoicing",
+      "payments": "Payments"
     },
     "states": {
       "ok": "Operational",
@@ -1627,5 +1676,91 @@
     "noIncidents": "No incidents in the last 7 days.",
     "ongoing": "ongoing",
     "checked": "Checked {time} UTC"
+  },
+  "pay": {
+    "title": "Pay online",
+    "backToInvoices": "Back to invoices",
+    "linkFor": "Payment for {company}",
+    "amountDue": "Amount to pay",
+    "order": "Order {number}",
+    "chooseMethod": "How do you want to pay?",
+    "methods": {
+      "CARD": "Card",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco reference",
+      "DIRECT_DEBIT": "Direct debit"
+    },
+    "methodHints": {
+      "CARD": "Visa or Mastercard on a secure payment page",
+      "MB_WAY": "Approve on your phone",
+      "MULTIBANCO": "Pay at an ATM or in your home banking",
+      "DIRECT_DEBIT": "From your account ending {last4}"
+    },
+    "phone": "MB WAY phone number",
+    "badPhone": "Enter a mobile number of 9 digits starting with 9.",
+    "payNow": "Pay {amount}",
+    "secure": "Payments are processed securely by {provider}. FIRINGI never sees your card details.",
+    "noMethods": "Online payment isn't available right now.",
+    "bankTransfer": "Or pay by bank transfer to {holder}:",
+    "waiting": "Waiting for confirmation…",
+    "mbwayWaiting": "Open the MB WAY app on your phone ({phone}) and approve the payment of {amount}.",
+    "mbwayExpires": "The request expires in {minutes} min.",
+    "multibancoTitle": "Pay with this Multibanco reference",
+    "entity": "Entity",
+    "reference": "Reference",
+    "amount": "Amount",
+    "copy": "Copy",
+    "copied": "Copied",
+    "validUntil": "Valid until {date}",
+    "multibancoHint": "We confirm the payment automatically as soon as it is made.",
+    "debitSubmitted": "The direct debit has been sent to your bank. It takes a few working days; we let you know when it is done.",
+    "paid": "Paid — thank you!",
+    "paidDetail": "We received {amount}.",
+    "paidOrder": "Your order now goes to the supplier.",
+    "failed": "The payment didn't go through: {reason}.",
+    "tryAgain": "Try again or choose another method.",
+    "expired": "This payment request has expired.",
+    "cancelled": "This payment request was replaced by a newer one.",
+    "payWhatsOpen": "Pay what is still open",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "A payment for this is already in progress.",
+      "PAYMENT_EXPIRED": "This payment request has expired.",
+      "PROVIDER_UNAVAILABLE": "The payment service is unavailable right now. Please try again in a few minutes.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "payInvoices": "Pay online",
+    "selectInvoices": "Choose the invoices to pay:",
+    "paySelected": "Pay {amount}",
+    "inProgress": "Payment in progress",
+    "credit": "Credit balance: {amount} — used automatically on your next invoices.",
+    "setUpDebit": "Set up direct debit",
+    "pendingPayments": "Payments in progress",
+    "open": "Open",
+    "awaitingTitle": "Waiting for your payment",
+    "awaitingBody": "This order is reserved and goes to the supplier as soon as it is paid. Unpaid orders are cancelled after {days} days.",
+    "payOrder": "Pay order",
+    "statuses": {
+      "ACTIVE": "Active"
+    },
+    "dd": {
+      "title": "Direct debit",
+      "intro": "Pay your invoices automatically on their due date by SEPA direct debit. We tell you {days} days before each collection.",
+      "active": "Active — account ending {last4}",
+      "holder": "Account holder",
+      "since": "since {date}",
+      "autoCollect": "Collect invoices automatically on their due date",
+      "setUp": "Set up direct debit",
+      "replace": "Use another account",
+      "revoke": "Cancel direct debit",
+      "revokeConfirm": "Cancel the direct debit? Invoices will then need to be paid another way.",
+      "none": "No direct debit set up.",
+      "pending": "Waiting for your bank details to be confirmed…",
+      "upcoming": "Next collections",
+      "noUpcoming": "Nothing to collect right now.",
+      "dueOn": "due {date}",
+      "notAvailable": "Direct debit isn't available yet.",
+      "collectedAuto": "Your invoices are collected automatically by direct debit (account ending {last4}).",
+      "legal": "By setting up a direct debit you authorise FIRINGI and its payment provider to send instructions to your bank to debit your account, and your bank to debit it accordingly. You can ask your bank for a refund within 8 weeks of a debit."
+    }
   }
 }

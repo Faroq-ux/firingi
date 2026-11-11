@@ -1,0 +1,138 @@
+// Phase 20 — customer payments online (provider-neutral: simulated / Stripe / others later).
+// A PaymentRequest is "pay these invoices" (or "pay this order before it ships"): it has a secret
+// token for the public pay link, the provider's reference and what the payer must do (redirect,
+// Multibanco reference, MB WAY approval). When the provider confirms, FIRINGI records a Payment
+// and matches it to the invoices; anything left over is customer credit used on the next invoices.
+
+enum PaymentRequestStatus {
+  OPEN // waiting for the payer to choose / start
+  PROCESSING // started: Multibanco reference issued, MB WAY sent, direct debit submitted, card in progress
+  PAID
+  FAILED
+  EXPIRED
+  CANCELLED
+}
+
+enum PaymentRequestSource {
+  BUYER // the customer chose invoices to pay in the portal
+  STAFF // FIRINGI created a payment link
+  REMINDER // created for a reminder message
+  DIRECT_DEBIT // collected automatically from a SEPA mandate
+  ORDER // pay-before-shipping order
+}
+
+enum MandateStatus {
+  PENDING
+  ACTIVE
+  REVOKED
+  FAILED
+}
+
+model PaymentRequest {
+  id                 String               @id @default(cuid())
+  /// Secret for the public pay link (/pay/<token>).
+  token              String               @unique
+  companyId          String
+  orderId            String?
+  amount             Decimal              @db.Decimal(18, 2)
+  currencyCode       String               @default("EUR")
+  status             PaymentRequestStatus @default(OPEN)
+  source             PaymentRequestSource
+  provider           String?
+  method             PaymentMethod?
+  /// The provider's id for this attempt (checkout session, MB WAY / Multibanco id, payment intent).
+  providerRef        String?
+  /// The provider's id of the money movement once paid (used for refunds).
+  providerPaymentRef String?
+  /// What the payer must do: {type:"redirect",url} | {type:"multibanco",entity,reference,expiresAt} | {type:"mbway",phone,expiresAt}
+  action             Json?
+  mandateId          String?
+  expiresAt          DateTime
+  paidAt             DateTime?
+  paidAmount         Decimal?             @db.Decimal(18, 2)
+  paymentId          String?              @unique
+  failureReason      String?
+  createdById        String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  company Company              @relation(fields: [companyId], references: [id])
+  order   Order?               @relation(fields: [orderId], references: [id])
+  payment Payment?             @relation(fields: [paymentId], references: [id])
+  mandate SepaMandate?         @relation(fields: [mandateId], references: [id])
+  items   PaymentRequestItem[]
+
+  @@unique([provider, providerRef])
+  @@index([companyId, status])
+  @@index([status, expiresAt])
+  @@index([orderId])
+  @@index([mandateId])
+}
+
+model PaymentRequestItem {
+  id        String  @id @default(cuid())
+  requestId String
+  invoiceId String
+  amount    Decimal @db.Decimal(18, 2)
+
+  request PaymentRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  invoice Invoice        @relation(fields: [invoiceId], references: [id])
+
+  @@unique([requestId, invoiceId])
+  @@index([invoiceId])
+}
+
+/// A customer's SEPA direct debit authorisation (signed with the provider; FIRINGI keeps only the last 4 digits).
+model SepaMandate {
+  id                       String        @id @default(cuid())
+  companyId                String
+  provider                 String
+  status                   MandateStatus @default(PENDING)
+  holderName               String?
+  ibanLast4                String?
+  providerCustomerRef      String?
+  providerMandateRef       String?
+  providerPaymentMethodRef String?
+  /// The provider's set-up session (to match the confirmation).
+  setupRef                 String?
+  /// Collect invoices automatically on their due date.
+  autoCollect              Boolean       @default(true)
+  signedAt                 DateTime?
+  revokedAt                DateTime?
+  failureReason            String?
+  createdById              String?
+  createdAt                DateTime      @default(now())
+
+  company  Company          @relation(fields: [companyId], references: [id])
+  requests PaymentRequest[]
+
+  @@index([companyId, status])
+  @@index([setupRef])
+}
+
+/// Every webhook call from a payment provider, kept once (the same event is never applied twice).
+model PaymentEvent {
+  id          String    @id @default(cuid())
+  provider    String
+  eventId     String
+  type        String
+  payload     Json
+  receivedAt  DateTime  @default(now())
+  processedAt DateTime?
+  error       String?
+
+  @@unique([provider, eventId])
+  @@index([receivedAt])
+}
+
+/// Reminders already sent for an invoice (kind: soon / due / overdue-7 / dd-notice …) — each once.
+model InvoiceReminder {
+  id        String   @id @default(cuid())
+  invoiceId String
+  kind      String
+  sentAt    DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@unique([invoiceId, kind])
+}

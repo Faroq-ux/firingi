@@ -772,7 +772,8 @@
     "My Offers": "Meine Angebote",
     "AI Assistant": "KI-Assistent",
     "Buy Again": "Erneut kaufen",
-    "Demand & Stock": "Nachfrage & Bestand"
+    "Demand & Stock": "Nachfrage & Bestand",
+    "Direct Debit": "Lastschrift"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Behoben: {title}",
       "body": "Das Problem „{title}“ ist behoben. Siehe Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Zahlung erhalten: {total}",
+      "body": "Vielen Dank — wir haben {total} für {documents} erhalten."
+    },
+    "payment_failed": {
+      "title": "Zahlung nicht abgeschlossen: {total}",
+      "body": "Ihre Zahlung über {total} ist nicht durchgegangen: {reason}. Sie können es erneut versuchen oder eine andere Methode wählen."
+    },
+    "payment_refunded": {
+      "title": "Rückerstattung unterwegs: {total}",
+      "body": "Wir erstatten Ihnen {total}. Je nach Methode kann es einige Tage dauern."
+    },
+    "payment_link": {
+      "title": "Zahlungsaufforderung: {total}",
+      "body": "FIRINGI hat Ihnen einen Link geschickt, um {documents} ({total}) online zu bezahlen — MB WAY, Multibanco, Karte oder Lastschrift."
+    },
+    "payment_reminder_soon": {
+      "title": "Rechnung bald fällig: {total}",
+      "body": "{documents} ({total}) ist am {due} fällig. Sie können jetzt online bezahlen."
+    },
+    "payment_reminder_due": {
+      "title": "Rechnung heute fällig: {total}",
+      "body": "{documents} ({total}) ist heute fällig. Bezahlen Sie in einer Minute online mit MB WAY, Multibanco oder Karte."
+    },
+    "payment_reminder_overdue": {
+      "title": "Rechnung überfällig: {total}",
+      "body": "{documents} ({total}) ist seit {days} Tagen überfällig. Bitte zahlen Sie jetzt, damit Sie weiter bestellen können."
+    },
+    "direct_debit_notice": {
+      "title": "Lastschrift am {date}: {total}",
+      "body": "Am {date} ziehen wir {total} für {documents} per SEPA-Lastschrift von Ihrem Konto ein."
+    },
+    "direct_debit_active": {
+      "title": "Lastschrift eingerichtet",
+      "body": "Ihre SEPA-Lastschrift (Konto endet auf {last4}) ist aktiv. Rechnungen werden am Fälligkeitstag eingezogen — wir sagen Ihnen einige Tage vorher Bescheid."
+    },
+    "order_awaiting_payment": {
+      "title": "Bestellung {number} bezahlen und versenden",
+      "body": "Bestellung {number} ({total}) ist reserviert. Sie geht an den Lieferanten, sobald sie bezahlt ist."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Bestellung {number} storniert",
+      "body": "Bestellung {number} wurde storniert, weil sie nicht rechtzeitig bezahlt wurde. Sie können jederzeit neu bestellen."
+    },
+    "payment_attention": {
+      "title": "Zahlung braucht Aufmerksamkeit: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Bestellungen",
       "files": "Dokumente & Dateien",
       "notifications": "Benachrichtigungen",
-      "invoicing": "Rechnungsstellung"
+      "invoicing": "Rechnungsstellung",
+      "payments": "Zahlungen"
     },
     "states": {
       "ok": "In Betrieb",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Keine Vorfälle in den letzten 7 Tagen.",
     "ongoing": "andauernd",
     "checked": "Geprüft {time} UTC"
+  },
+  "pay": {
+    "title": "Online bezahlen",
+    "backToInvoices": "Zurück zu den Rechnungen",
+    "linkFor": "Zahlung für {company}",
+    "amountDue": "Zu zahlender Betrag",
+    "order": "Bestellung {number}",
+    "chooseMethod": "Wie möchten Sie bezahlen?",
+    "methods": {
+      "CARD": "Karte",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-Referenz",
+      "DIRECT_DEBIT": "Lastschrift"
+    },
+    "methodHints": {
+      "CARD": "Visa oder Mastercard auf einer sicheren Zahlungsseite",
+      "MB_WAY": "Auf Ihrem Handy bestätigen",
+      "MULTIBANCO": "Am Geldautomaten oder im Online-Banking bezahlen",
+      "DIRECT_DEBIT": "Von Ihrem Konto mit Endung {last4}"
+    },
+    "phone": "MB-WAY-Telefonnummer",
+    "badPhone": "Geben Sie eine 9-stellige Handynummer ein, die mit 9 beginnt.",
+    "payNow": "{amount} bezahlen",
+    "secure": "Zahlungen werden sicher von {provider} abgewickelt. FIRINGI sieht Ihre Kartendaten nie.",
+    "noMethods": "Online-Zahlung ist gerade nicht verfügbar.",
+    "bankTransfer": "Oder per Überweisung an {holder} bezahlen:",
+    "waiting": "Warten auf Bestätigung…",
+    "mbwayWaiting": "Öffnen Sie die MB-WAY-App auf Ihrem Handy ({phone}) und bestätigen Sie die Zahlung über {amount}.",
+    "mbwayExpires": "Die Anfrage läuft in {minutes} Min. ab.",
+    "multibancoTitle": "Mit dieser Multibanco-Referenz bezahlen",
+    "entity": "Entität",
+    "reference": "Referenz",
+    "amount": "Betrag",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "validUntil": "Gültig bis {date}",
+    "multibancoHint": "Wir bestätigen die Zahlung automatisch, sobald sie erfolgt ist.",
+    "debitSubmitted": "Die Lastschrift wurde an Ihre Bank gesendet. Das dauert einige Werktage; wir melden uns, wenn sie abgeschlossen ist.",
+    "paid": "Bezahlt — vielen Dank!",
+    "paidDetail": "Wir haben {amount} erhalten.",
+    "paidOrder": "Ihre Bestellung geht jetzt an den Lieferanten.",
+    "failed": "Die Zahlung ist nicht durchgegangen: {reason}.",
+    "tryAgain": "Versuchen Sie es erneut oder wählen Sie eine andere Methode.",
+    "expired": "Diese Zahlungsaufforderung ist abgelaufen.",
+    "cancelled": "Diese Zahlungsaufforderung wurde durch eine neuere ersetzt.",
+    "payWhatsOpen": "Offenen Betrag bezahlen",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Dafür läuft bereits eine Zahlung.",
+      "PAYMENT_EXPIRED": "Diese Zahlungsaufforderung ist abgelaufen.",
+      "PROVIDER_UNAVAILABLE": "Der Zahlungsdienst ist gerade nicht verfügbar. Bitte versuchen Sie es in ein paar Minuten erneut.",
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    },
+    "payInvoices": "Online bezahlen",
+    "selectInvoices": "Wählen Sie die Rechnungen, die Sie bezahlen möchten:",
+    "paySelected": "{amount} bezahlen",
+    "inProgress": "Zahlung läuft",
+    "credit": "Guthaben: {amount} — wird automatisch mit Ihren nächsten Rechnungen verrechnet.",
+    "setUpDebit": "Lastschrift einrichten",
+    "pendingPayments": "Laufende Zahlungen",
+    "open": "Öffnen",
+    "awaitingTitle": "Wir warten auf Ihre Zahlung",
+    "awaitingBody": "Diese Bestellung ist reserviert und geht an den Lieferanten, sobald sie bezahlt ist. Unbezahlte Bestellungen werden nach {days} Tagen storniert.",
+    "payOrder": "Bestellung bezahlen",
+    "statuses": {
+      "ACTIVE": "Aktiv"
+    },
+    "dd": {
+      "title": "Lastschrift",
+      "intro": "Bezahlen Sie Ihre Rechnungen am Fälligkeitstag automatisch per SEPA-Lastschrift. Wir informieren Sie {days} Tage vor jedem Einzug.",
+      "active": "Aktiv — Konto endet auf {last4}",
+      "holder": "Kontoinhaber",
+      "since": "seit {date}",
+      "autoCollect": "Rechnungen am Fälligkeitstag automatisch einziehen",
+      "setUp": "Lastschrift einrichten",
+      "replace": "Anderes Konto verwenden",
+      "revoke": "Lastschrift kündigen",
+      "revokeConfirm": "Lastschrift kündigen? Die Rechnungen müssen dann auf andere Weise bezahlt werden.",
+      "none": "Keine Lastschrift eingerichtet.",
+      "pending": "Warten auf die Bestätigung Ihrer Bankdaten…",
+      "upcoming": "Nächste Einzüge",
+      "noUpcoming": "Derzeit nichts einzuziehen.",
+      "dueOn": "fällig am {date}",
+      "notAvailable": "Lastschrift ist noch nicht verfügbar.",
+      "collectedAuto": "Ihre Rechnungen werden automatisch per Lastschrift eingezogen (Konto endet auf {last4}).",
+      "legal": "Mit der Einrichtung einer Lastschrift ermächtigen Sie FIRINGI und seinen Zahlungsdienstleister, Ihre Bank anzuweisen, Ihr Konto zu belasten, und Ihre Bank, die Belastung auszuführen. Sie können innerhalb von 8 Wochen nach einer Belastung die Erstattung bei Ihrer Bank verlangen."
+    }
   }
 }

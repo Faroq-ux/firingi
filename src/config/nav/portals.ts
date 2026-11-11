@@ -101,6 +101,7 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bf("invoices", "Invoices", "Faturas", "P5", { live: true, es: "Facturas" }),
       bf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "buyer.payments.view", es: "Pagos" }),
+      bf("direct-debit", "Direct Debit", "Débito Direto", "P20", { live: true, perm: ["buyer.payments.make", "buyer.payments.view"], es: "Domiciliación bancaria" }),
     ],
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },

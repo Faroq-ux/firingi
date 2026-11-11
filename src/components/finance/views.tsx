@@ -36,7 +36,7 @@ const pdfLink = (href: string, label = "PDF") => (
 
 const PAGE = 50;
 
-export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly, page = 1, basePath }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean; page?: number; basePath?: string }) {
+export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly, page = 1, basePath, before }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean; page?: number; basePath?: string; before?: React.ReactNode }) {
   const [all, t, locale] = await Promise.all([listSalesInvoices(ctx, { as, docType, buyerType, unpaidOnly }), getTranslations("finance"), getLocale()]);
   const open = all.reduce((a, r) => a + Number(r.open), 0);
   // The balance covers every open invoice; the table shows 50 at a time.
@@ -47,6 +47,7 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
   return (
     <>
       <PageHeader title={title} description={`${all.length} · ${t("balance")}: ${formatMoney(open, locale)}`} />
+      {before}
       {howToPay && (howToPay.bankTransfer || howToPay.mbWay || howToPay.cashOnDelivery) && (
         <Card className="mb-4" data-testid="how-to-pay">
           <CardHeader><CardTitle>{t("howToPay")}</CardTitle></CardHeader>
@@ -85,7 +86,7 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
   );
 }
 
-export async function PaymentsView({ ctx, as, title, direction, vendorType, withForm }: { ctx: Ctx; as: "BUYER" | "VENDOR" | "ADMIN"; title: string; direction?: "INBOUND" | "OUTBOUND"; vendorType?: "DISTRIBUTOR" | "WHOLESALER"; withForm?: boolean }) {
+export async function PaymentsView({ ctx, as, title, direction, vendorType, withForm, before }: { ctx: Ctx; as: "BUYER" | "VENDOR" | "ADMIN"; title: string; direction?: "INBOUND" | "OUTBOUND"; vendorType?: "DISTRIBUTOR" | "WHOLESALER"; withForm?: boolean; before?: React.ReactNode }) {
   const [rows, t, locale] = await Promise.all([listPayments(ctx, as, { direction, vendorType }), getTranslations("finance"), getLocale()]);
   let docs: { id: string; companyId: string; company: string; label: string; open: string }[] = [];
   if (withForm && as === "ADMIN" && can(ctx, "admin.finance.manage")) {
@@ -97,6 +98,7 @@ export async function PaymentsView({ ctx, as, title, direction, vendorType, with
   return (
     <>
       <PageHeader title={title} />
+      {before}
       {withForm && direction && docs !== undefined && can(ctx, "admin.finance.manage") && (
         <Card className="mb-4"><CardHeader><CardTitle>{direction === "INBOUND" ? "Record a customer payment" : "Record a payout to a vendor"}</CardTitle></CardHeader><CardContent><PaymentForm direction={direction} docs={docs} /></CardContent></Card>
       )}

@@ -47,6 +47,20 @@ async function dbSizeCheck(): Promise<Check> {
   return { key: "db-size", label: "Database size", state: gb > warnGb ? "warning" : "ok", detail: `${gb.toFixed(2)} GB (warning above ${warnGb} GB)` };
 }
 
+/** Online payments: provider reachable, webhooks applied, direct debits not stuck. */
+async function paymentsCheck(now: Date): Promise<Check> {
+  const { activeProvider } = await import("@/server/payments/provider");
+  const p = activeProvider();
+  if (!p) return { key: "payments", label: "Online payments", state: "ok", detail: "no provider configured (bank transfer only)" };
+  const [c, failedEvents, stuck] = await Promise.all([
+    p.check(),
+    prisma.paymentEvent.count({ where: { processedAt: null, error: { not: null }, receivedAt: { gt: new Date(now.getTime() - 86400_000) } } }),
+    prisma.paymentRequest.count({ where: { status: "PROCESSING", method: "DIRECT_DEBIT", updatedAt: { lt: new Date(now.getTime() - 10 * 86400_000) } } }),
+  ]);
+  const state: CheckState = !c.ok ? "critical" : failedEvents || stuck ? "warning" : "ok";
+  return { key: "payments", label: "Online payments", state, detail: `${p.label} (${p.mode}): ${c.detail} · ${failedEvents} provider events not applied (24 h) · ${stuck} direct debits pending > 10 days` };
+}
+
 export async function healthReport(now = new Date()) {
   const live = await liveness();
   if (!live.ok) return { status: "critical" as CheckState, checks: [{ key: "db", label: "Database", state: "critical", detail: live.error ?? "unreachable" } as Check], jobs: [], version: VERSION, at: now.toISOString() };
@@ -61,6 +75,7 @@ export async function healthReport(now = new Date()) {
     prisma.$queryRaw<{ n: number }[]>`SELECT count(*)::int AS n FROM "_prisma_migrations" WHERE finished_at IS NULL AND rolled_back_at IS NULL`.then((r) => r[0]?.n ?? 0).catch(() => 0),
   ]);
   const errorWarn = Number(process.env.ALERT_ERRORS_15MIN ?? 20);
+  const payments = await paymentsCheck(now);
   const checks: Check[] = [
     { key: "db", label: "Database", state: live.dbMs > 1000 ? "warning" : "ok", detail: `answers in ${live.dbMs} ms` },
     { key: "migrations", label: "Database migrations", state: failedMigrations ? "critical" : "ok", detail: failedMigrations ? `${failedMigrations} migration(s) did not finish` : "all applied" },
@@ -68,6 +83,7 @@ export async function healthReport(now = new Date()) {
     disk, dbSize,
     { key: "errors", label: "Server errors (15 min)", state: errors15 >= errorWarn * 5 ? "critical" : errors15 >= errorWarn ? "warning" : "ok", detail: `${errors15} in 15 min · ${errors24} in 24 h (incl. browser)` },
     { key: "messages", label: "Message queue", state: msgStuck > 0 || msgFailed >= 10 ? "warning" : "ok", detail: `${msgStuck} waiting > 30 min · ${msgFailed} failed in the last hour` },
+    payments,
     { key: "fiscal", label: "Certified invoicing queue", state: fiscalStuck > 0 ? "critical" : fiscalFailed > 0 ? "warning" : "ok", detail: `${fiscalFailed} refused · ${fiscalStuck} pending > 1 h` },
   ];
   for (const j of jobs) {

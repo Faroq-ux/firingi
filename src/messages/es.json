@@ -1119,6 +1119,54 @@
     "ops_resolved": {
       "title": "Resuelto: {title}",
       "body": "El problema «{title}» se ha resuelto. Vea Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Pago recibido: {total}",
+      "body": "Gracias — hemos recibido {total} por {documents}."
+    },
+    "payment_failed": {
+      "title": "Pago no completado: {total}",
+      "body": "Su pago de {total} no se ha completado: {reason}. Puede intentarlo de nuevo o elegir otro método."
+    },
+    "payment_refunded": {
+      "title": "Reembolso en camino: {total}",
+      "body": "Le estamos reembolsando {total}. Según el método, puede tardar unos días en llegar."
+    },
+    "payment_link": {
+      "title": "Solicitud de pago: {total}",
+      "body": "FIRINGI le ha enviado un enlace para pagar {documents} ({total}) online — MB WAY, Multibanco, tarjeta o domiciliación."
+    },
+    "payment_reminder_soon": {
+      "title": "Factura próxima a vencer: {total}",
+      "body": "{documents} ({total}) vence el {due}. Puede pagarla ya online."
+    },
+    "payment_reminder_due": {
+      "title": "Factura vence hoy: {total}",
+      "body": "{documents} ({total}) vence hoy. Pague online en un minuto con MB WAY, Multibanco o tarjeta."
+    },
+    "payment_reminder_overdue": {
+      "title": "Factura vencida: {total}",
+      "body": "{documents} ({total}) lleva {days} días vencida. Pague ahora para seguir pidiendo sin interrupciones."
+    },
+    "direct_debit_notice": {
+      "title": "Domiciliación el {date}: {total}",
+      "body": "El {date} cobraremos {total} por {documents} de su cuenta mediante adeudo directo SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Domiciliación activada",
+      "body": "Su adeudo directo SEPA (cuenta terminada en {last4}) está activo. Las facturas se cobrarán en su vencimiento — le avisamos unos días antes."
+    },
+    "order_awaiting_payment": {
+      "title": "Pague el pedido {number} para enviarlo",
+      "body": "El pedido {number} ({total}) está reservado. Pasa al proveedor en cuanto esté pagado."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Pedido {number} cancelado",
+      "body": "El pedido {number} se ha cancelado porque no se pagó a tiempo. Puede volver a pedir cuando quiera."
+    },
+    "payment_attention": {
+      "title": "Pago requiere atención: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1367,7 +1415,8 @@
     "My Offers": "Mis ofertas",
     "AI Assistant": "Asistente IA",
     "Buy Again": "Volver a comprar",
-    "Demand & Stock": "Demanda y stock"
+    "Demand & Stock": "Demanda y stock",
+    "Direct Debit": "Domiciliación bancaria"
   },
   "support": {
     "title": "Ayuda y soporte",
@@ -1624,7 +1673,8 @@
       "ordering": "Pedidos",
       "files": "Documentos y archivos",
       "notifications": "Notificaciones",
-      "invoicing": "Facturación"
+      "invoicing": "Facturación",
+      "payments": "Pagos"
     },
     "states": {
       "ok": "Operativo",
@@ -1635,5 +1685,91 @@
     "noIncidents": "Sin incidencias en los últimos 7 días.",
     "ongoing": "en curso",
     "checked": "Comprobado {time} UTC"
+  },
+  "pay": {
+    "title": "Pagar online",
+    "backToInvoices": "Volver a las facturas",
+    "linkFor": "Pago para {company}",
+    "amountDue": "Importe a pagar",
+    "order": "Pedido {number}",
+    "chooseMethod": "¿Cómo quiere pagar?",
+    "methods": {
+      "CARD": "Tarjeta",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referencia Multibanco",
+      "DIRECT_DEBIT": "Domiciliación bancaria"
+    },
+    "methodHints": {
+      "CARD": "Visa o Mastercard en una página de pago segura",
+      "MB_WAY": "Apruébelo en su móvil",
+      "MULTIBANCO": "Pague en un cajero o en la banca online",
+      "DIRECT_DEBIT": "Desde su cuenta terminada en {last4}"
+    },
+    "phone": "Número de móvil MB WAY",
+    "badPhone": "Introduzca un número móvil de 9 dígitos que empiece por 9.",
+    "payNow": "Pagar {amount}",
+    "secure": "Los pagos los procesa de forma segura {provider}. FIRINGI nunca ve los datos de su tarjeta.",
+    "noMethods": "El pago online no está disponible en este momento.",
+    "bankTransfer": "O pague por transferencia bancaria a {holder}:",
+    "waiting": "Esperando confirmación…",
+    "mbwayWaiting": "Abra la app MB WAY en su móvil ({phone}) y apruebe el pago de {amount}.",
+    "mbwayExpires": "La solicitud caduca en {minutes} min.",
+    "multibancoTitle": "Pague con esta referencia Multibanco",
+    "entity": "Entidad",
+    "reference": "Referencia",
+    "amount": "Importe",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "validUntil": "Válida hasta {date}",
+    "multibancoHint": "Confirmamos el pago automáticamente en cuanto se realice.",
+    "debitSubmitted": "El adeudo se ha enviado a su banco. Tarda unos días hábiles; le avisaremos cuando se complete.",
+    "paid": "Pagado — ¡gracias!",
+    "paidDetail": "Hemos recibido {amount}.",
+    "paidOrder": "Su pedido pasa ahora al proveedor.",
+    "failed": "El pago no se ha completado: {reason}.",
+    "tryAgain": "Inténtelo de nuevo o elija otro método.",
+    "expired": "Esta solicitud de pago ha caducado.",
+    "cancelled": "Esta solicitud de pago se ha sustituido por otra más reciente.",
+    "payWhatsOpen": "Pagar lo que queda pendiente",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Ya hay un pago en curso para esto.",
+      "PAYMENT_EXPIRED": "Esta solicitud de pago ha caducado.",
+      "PROVIDER_UNAVAILABLE": "El servicio de pagos no está disponible ahora. Inténtelo de nuevo en unos minutos.",
+      "generic": "Algo ha fallado. Inténtelo de nuevo."
+    },
+    "payInvoices": "Pagar online",
+    "selectInvoices": "Elija las facturas que quiere pagar:",
+    "paySelected": "Pagar {amount}",
+    "inProgress": "Pago en curso",
+    "credit": "Saldo a su favor: {amount} — se usa automáticamente en sus próximas facturas.",
+    "setUpDebit": "Activar domiciliación",
+    "pendingPayments": "Pagos en curso",
+    "open": "Abrir",
+    "awaitingTitle": "Esperando su pago",
+    "awaitingBody": "Este pedido está reservado y pasa al proveedor en cuanto esté pagado. Los pedidos no pagados se cancelan a los {days} días.",
+    "payOrder": "Pagar pedido",
+    "statuses": {
+      "ACTIVE": "Activa"
+    },
+    "dd": {
+      "title": "Domiciliación bancaria",
+      "intro": "Pague sus facturas automáticamente en su vencimiento mediante adeudo directo SEPA. Le avisamos {days} días antes de cada cobro.",
+      "active": "Activa — cuenta terminada en {last4}",
+      "holder": "Titular de la cuenta",
+      "since": "desde el {date}",
+      "autoCollect": "Cobrar las facturas automáticamente en su vencimiento",
+      "setUp": "Activar domiciliación",
+      "replace": "Usar otra cuenta",
+      "revoke": "Cancelar domiciliación",
+      "revokeConfirm": "¿Cancelar la domiciliación? Las facturas tendrán que pagarse de otra forma.",
+      "none": "Sin domiciliación activa.",
+      "pending": "Esperando la confirmación de sus datos bancarios…",
+      "upcoming": "Próximos cobros",
+      "noUpcoming": "Nada que cobrar por ahora.",
+      "dueOn": "vence el {date}",
+      "notAvailable": "La domiciliación todavía no está disponible.",
+      "collectedAuto": "Sus facturas se cobran automáticamente por domiciliación (cuenta terminada en {last4}).",
+      "legal": "Al activar la domiciliación autoriza a FIRINGI y a su proveedor de pagos a enviar instrucciones a su banco para adeudar su cuenta, y a su banco a adeudarla. Puede pedir a su banco el reembolso en las 8 semanas siguientes a un adeudo."
+    }
   }
 }

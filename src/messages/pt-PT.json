@@ -1119,6 +1119,54 @@
     "ops_resolved": {
       "title": "Resolvido: {title}",
       "body": "O problema “{title}” desapareceu. Veja Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Pagamento recebido: {total}",
+      "body": "Obrigado — recebemos {total} referente a {documents}."
+    },
+    "payment_failed": {
+      "title": "Pagamento não concluído: {total}",
+      "body": "O seu pagamento de {total} não foi concluído: {reason}. Pode tentar novamente ou escolher outro método."
+    },
+    "payment_refunded": {
+      "title": "Reembolso a caminho: {total}",
+      "body": "Estamos a reembolsar {total}. Consoante o método, pode demorar alguns dias a chegar."
+    },
+    "payment_link": {
+      "title": "Pedido de pagamento: {total}",
+      "body": "A FIRINGI enviou-lhe um link para pagar {documents} ({total}) online — MB WAY, Multibanco, cartão ou débito direto."
+    },
+    "payment_reminder_soon": {
+      "title": "Fatura a vencer: {total}",
+      "body": "{documents} ({total}) vence a {due}. Pode pagar já online."
+    },
+    "payment_reminder_due": {
+      "title": "Fatura vence hoje: {total}",
+      "body": "{documents} ({total}) vence hoje. Pague online num minuto com MB WAY, Multibanco ou cartão."
+    },
+    "payment_reminder_overdue": {
+      "title": "Fatura em atraso: {total}",
+      "body": "{documents} ({total}) está em atraso há {days} dias. Pague agora para continuar a encomendar sem interrupções."
+    },
+    "direct_debit_notice": {
+      "title": "Débito direto a {date}: {total}",
+      "body": "A {date} vamos cobrar {total} referente a {documents} da sua conta por débito direto SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Débito direto ativado",
+      "body": "O seu débito direto SEPA (conta terminada em {last4}) está ativo. As faturas serão cobradas na data de vencimento — avisamos uns dias antes."
+    },
+    "order_awaiting_payment": {
+      "title": "Pague a encomenda {number} para a enviar",
+      "body": "A encomenda {number} ({total}) está reservada. Segue para o fornecedor assim que for paga."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Encomenda {number} cancelada",
+      "body": "A encomenda {number} foi cancelada por não ter sido paga a tempo. Pode voltar a encomendar quando quiser."
+    },
+    "payment_attention": {
+      "title": "Pagamento requer atenção: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1367,7 +1415,8 @@
     "My Offers": "As Minhas Ofertas",
     "AI Assistant": "Assistente IA",
     "Buy Again": "Comprar de Novo",
-    "Demand & Stock": "Procura e Stock"
+    "Demand & Stock": "Procura e Stock",
+    "Direct Debit": "Débito Direto"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -1624,7 +1673,8 @@
       "ordering": "Encomendas",
       "files": "Documentos e ficheiros",
       "notifications": "Notificações",
-      "invoicing": "Faturação"
+      "invoicing": "Faturação",
+      "payments": "Pagamentos"
     },
     "states": {
       "ok": "Operacional",
@@ -1635,5 +1685,91 @@
     "noIncidents": "Sem incidentes nos últimos 7 dias.",
     "ongoing": "em curso",
     "checked": "Verificado às {time} UTC"
+  },
+  "pay": {
+    "title": "Pagar online",
+    "backToInvoices": "Voltar às faturas",
+    "linkFor": "Pagamento de {company}",
+    "amountDue": "Valor a pagar",
+    "order": "Encomenda {number}",
+    "chooseMethod": "Como quer pagar?",
+    "methods": {
+      "CARD": "Cartão",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referência Multibanco",
+      "DIRECT_DEBIT": "Débito direto"
+    },
+    "methodHints": {
+      "CARD": "Visa ou Mastercard numa página de pagamento segura",
+      "MB_WAY": "Aprove no seu telemóvel",
+      "MULTIBANCO": "Pague no Multibanco ou no homebanking",
+      "DIRECT_DEBIT": "Da sua conta terminada em {last4}"
+    },
+    "phone": "Número de telemóvel MB WAY",
+    "badPhone": "Indique um número de telemóvel de 9 dígitos começado por 9.",
+    "payNow": "Pagar {amount}",
+    "secure": "Os pagamentos são processados com segurança por {provider}. A FIRINGI nunca vê os dados do seu cartão.",
+    "noMethods": "O pagamento online não está disponível neste momento.",
+    "bankTransfer": "Ou pague por transferência bancária para {holder}:",
+    "waiting": "A aguardar confirmação…",
+    "mbwayWaiting": "Abra a app MB WAY no seu telemóvel ({phone}) e aprove o pagamento de {amount}.",
+    "mbwayExpires": "O pedido expira dentro de {minutes} min.",
+    "multibancoTitle": "Pague com esta referência Multibanco",
+    "entity": "Entidade",
+    "reference": "Referência",
+    "amount": "Montante",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "validUntil": "Válida até {date}",
+    "multibancoHint": "Confirmamos o pagamento automaticamente assim que for feito.",
+    "debitSubmitted": "O débito direto foi enviado ao seu banco. Demora alguns dias úteis; avisamos quando estiver concluído.",
+    "paid": "Pago — obrigado!",
+    "paidDetail": "Recebemos {amount}.",
+    "paidOrder": "A sua encomenda segue agora para o fornecedor.",
+    "failed": "O pagamento não foi concluído: {reason}.",
+    "tryAgain": "Tente novamente ou escolha outro método.",
+    "expired": "Este pedido de pagamento expirou.",
+    "cancelled": "Este pedido de pagamento foi substituído por um mais recente.",
+    "payWhatsOpen": "Pagar o que ainda está em aberto",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Já há um pagamento em curso para isto.",
+      "PAYMENT_EXPIRED": "Este pedido de pagamento expirou.",
+      "PROVIDER_UNAVAILABLE": "O serviço de pagamentos está indisponível de momento. Tente novamente dentro de alguns minutos.",
+      "generic": "Algo correu mal. Tente novamente."
+    },
+    "payInvoices": "Pagar online",
+    "selectInvoices": "Escolha as faturas a pagar:",
+    "paySelected": "Pagar {amount}",
+    "inProgress": "Pagamento em curso",
+    "credit": "Saldo a seu favor: {amount} — usado automaticamente nas próximas faturas.",
+    "setUpDebit": "Ativar débito direto",
+    "pendingPayments": "Pagamentos em curso",
+    "open": "Abrir",
+    "awaitingTitle": "A aguardar o seu pagamento",
+    "awaitingBody": "Esta encomenda está reservada e segue para o fornecedor assim que for paga. Encomendas não pagas são canceladas ao fim de {days} dias.",
+    "payOrder": "Pagar encomenda",
+    "statuses": {
+      "ACTIVE": "Ativo"
+    },
+    "dd": {
+      "title": "Débito direto",
+      "intro": "Pague as suas faturas automaticamente na data de vencimento por débito direto SEPA. Avisamos {days} dias antes de cada cobrança.",
+      "active": "Ativo — conta terminada em {last4}",
+      "holder": "Titular da conta",
+      "since": "desde {date}",
+      "autoCollect": "Cobrar as faturas automaticamente na data de vencimento",
+      "setUp": "Ativar débito direto",
+      "replace": "Usar outra conta",
+      "revoke": "Cancelar débito direto",
+      "revokeConfirm": "Cancelar o débito direto? As faturas terão de ser pagas de outra forma.",
+      "none": "Sem débito direto ativo.",
+      "pending": "A aguardar a confirmação dos dados bancários…",
+      "upcoming": "Próximas cobranças",
+      "noUpcoming": "Nada a cobrar de momento.",
+      "dueOn": "vence a {date}",
+      "notAvailable": "O débito direto ainda não está disponível.",
+      "collectedAuto": "As suas faturas são cobradas automaticamente por débito direto (conta terminada em {last4}).",
+      "legal": "Ao ativar o débito direto autoriza a FIRINGI e o seu prestador de pagamentos a enviar instruções ao seu banco para debitar a sua conta, e o seu banco a debitá-la em conformidade. Pode pedir o reembolso ao seu banco até 8 semanas após um débito."
+    }
   }
 }

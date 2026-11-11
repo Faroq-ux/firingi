@@ -1,5 +1,6 @@
 import { pagePermission, pagePortal, can } from "@/server/rbac/guard";
-import { NEEDS_PROVIDER, paymentPolicy } from "@/server/services/payments";
+import { paymentPolicy, unavailableMethods } from "@/server/services/payments";
+import { activeProvider } from "@/server/payments/provider";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { PaymentPolicyForm } from "@/components/admin/security-admin-forms";
@@ -13,7 +14,7 @@ export default async function Page() {
   return (
     <>
       <PageHeader title="Payment Settings" description="How buyers pay FIRINGI, payment terms and credit control. Payments are recorded in Finance › Customer Payments; the IBAN comes from Invoice Settings (legal entity)." />
-      <Card className="max-w-3xl"><CardContent className="pt-5"><PaymentPolicyForm policy={policy} needsProvider={NEEDS_PROVIDER} canEdit={can(ctx, ["admin.settings.manage", "admin.finance.manage"])} /></CardContent></Card>
+      <Card className="max-w-3xl"><CardContent className="pt-5"><PaymentPolicyForm policy={policy} needsProvider={unavailableMethods()} provider={activeProvider()?.label ?? null} canEdit={can(ctx, ["admin.settings.manage", "admin.finance.manage"])} /></CardContent></Card>
     </>
   );
 }

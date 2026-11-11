@@ -86,6 +86,7 @@ const defs = {
   "buyer.orders.view": { audience: "BUYER", module: "Orders", description: "View orders" },
   "buyer.invoices.view": { audience: "BUYER", module: "Finance", description: "View and download invoices" },
   "buyer.payments.view": { audience: "BUYER", module: "Finance", description: "View payments and balance" },
+  "buyer.payments.make": { audience: "BUYER", module: "Finance", description: "Pay invoices online and manage direct debit" },
   "buyer.addresses.manage": { audience: "BUYER", module: "Addresses", description: "Manage delivery addresses" },
   "buyer.compliance.manage": { audience: "BUYER", module: "Compliance", description: "Apply for tobacco / alcohol access" },
   "buyer.reports.view": { audience: "BUYER", module: "Reports", description: "View purchase reports and export them" },

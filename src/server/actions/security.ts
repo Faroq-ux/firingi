@@ -35,6 +35,10 @@ export const setPaymentPolicyAction = defineAction({
     defaultTermsDays: z.object({ CUSTOMER: z.number().int(), WHOLESALER: z.number().int() }),
     defaultCreditLimit: z.object({ CUSTOMER: z.number().nullable(), WHOLESALER: z.number().nullable() }),
     supplierPayoutDays: z.number().int().optional(),
+    online: z.object({
+      linkExpiryDays: z.coerce.number(), reminderDaysBefore: z.coerce.number().nullable(), reminderOnDue: z.boolean(),
+      reminderOverdueDays: z.union([z.array(z.coerce.number()), z.string()]), directDebitNoticeDays: z.coerce.number(), prepayCancelDays: z.coerce.number(), newCustomersPayFirst: z.boolean(),
+    }).partial().optional(),
   }),
   handler: async (ctx, i) => done(await setPaymentPolicy(ctx, i as Parameters<typeof setPaymentPolicy>[1])),
 });

@@ -60,7 +60,7 @@ for (const job of ["notifications", "invoicing", "allocation", "ai", "ops"]) {
 // ── 3. Public status page ──
 const anon = await (await browser.newContext({ viewport: { width: 1280, height: 900 } })).newPage();
 await go(anon, "/status");
-check("status page lists 5 components", (await anon.locator("[data-component]").count()) === 5);
+check("status page lists 6 components", (await anon.locator("[data-component]").count()) === 6);
 check("status page shows an overall state", ["ok", "warning", "critical"].includes(await anon.getByTestId("status-overall").getAttribute("data-state")));
 check("status page doesn't leak internals", !/CRON_SECRET|Disk space|Database size|STORAGE_DRIVER/.test(await anon.textContent("body")));
 await shot(anon, "ops-status");

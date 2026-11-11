@@ -772,7 +772,8 @@
     "My Offers": "Moje oferty",
     "AI Assistant": "Asystent AI",
     "Buy Again": "Kup ponownie",
-    "Demand & Stock": "Popyt i magazyn"
+    "Demand & Stock": "Popyt i magazyn",
+    "Direct Debit": "Polecenie zapłaty"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Rozwiązano: {title}",
       "body": "Problem „{title}” zniknął. Zobacz Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Płatność otrzymana: {total}",
+      "body": "Dziękujemy — otrzymaliśmy {total} za {documents}."
+    },
+    "payment_failed": {
+      "title": "Płatność nieudana: {total}",
+      "body": "Twoja płatność {total} nie została zrealizowana: {reason}. Możesz spróbować ponownie lub wybrać inną metodę."
+    },
+    "payment_refunded": {
+      "title": "Zwrot w drodze: {total}",
+      "body": "Zwracamy Ci {total}. W zależności od metody może to potrwać kilka dni."
+    },
+    "payment_link": {
+      "title": "Prośba o płatność: {total}",
+      "body": "FIRINGI wysłało Ci link do opłacenia {documents} ({total}) online — MB WAY, Multibanco, karta lub polecenie zapłaty."
+    },
+    "payment_reminder_soon": {
+      "title": "Faktura wkrótce wymagalna: {total}",
+      "body": "{documents} ({total}) jest płatna do {due}. Możesz ją teraz opłacić online."
+    },
+    "payment_reminder_due": {
+      "title": "Faktura płatna dziś: {total}",
+      "body": "{documents} ({total}) jest płatna dzisiaj. Zapłać online w minutę przez MB WAY, Multibanco lub kartą."
+    },
+    "payment_reminder_overdue": {
+      "title": "Faktura przeterminowana: {total}",
+      "body": "{documents} ({total}) jest przeterminowana o {days} dni. Zapłać teraz, aby dalej zamawiać bez przerw."
+    },
+    "direct_debit_notice": {
+      "title": "Polecenie zapłaty {date}: {total}",
+      "body": "{date} pobierzemy {total} za {documents} z Twojego konta poleceniem zapłaty SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Polecenie zapłaty aktywne",
+      "body": "Twoje polecenie zapłaty SEPA (konto kończące się na {last4}) jest aktywne. Faktury będą pobierane w dniu płatności — uprzedzimy kilka dni wcześniej."
+    },
+    "order_awaiting_payment": {
+      "title": "Opłać zamówienie {number}, aby je wysłać",
+      "body": "Zamówienie {number} ({total}) jest zarezerwowane. Trafi do dostawcy, gdy tylko zostanie opłacone."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Zamówienie {number} anulowane",
+      "body": "Zamówienie {number} zostało anulowane, bo nie zostało opłacone na czas. Możesz zamówić ponownie w każdej chwili."
+    },
+    "payment_attention": {
+      "title": "Płatność wymaga uwagi: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Zamówienia",
       "files": "Dokumenty i pliki",
       "notifications": "Powiadomienia",
-      "invoicing": "Fakturowanie"
+      "invoicing": "Fakturowanie",
+      "payments": "Płatności"
     },
     "states": {
       "ok": "Działa",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Brak incydentów w ostatnich 7 dniach.",
     "ongoing": "trwa",
     "checked": "Sprawdzono {time} UTC"
+  },
+  "pay": {
+    "title": "Zapłać online",
+    "backToInvoices": "Wróć do faktur",
+    "linkFor": "Płatność dla {company}",
+    "amountDue": "Kwota do zapłaty",
+    "order": "Zamówienie {number}",
+    "chooseMethod": "Jak chcesz zapłacić?",
+    "methods": {
+      "CARD": "Karta",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referencja Multibanco",
+      "DIRECT_DEBIT": "Polecenie zapłaty"
+    },
+    "methodHints": {
+      "CARD": "Visa lub Mastercard na bezpiecznej stronie płatności",
+      "MB_WAY": "Zatwierdź w telefonie",
+      "MULTIBANCO": "Zapłać w bankomacie lub w bankowości internetowej",
+      "DIRECT_DEBIT": "Z Twojego konta kończącego się na {last4}"
+    },
+    "phone": "Numer telefonu MB WAY",
+    "badPhone": "Podaj 9-cyfrowy numer komórkowy zaczynający się od 9.",
+    "payNow": "Zapłać {amount}",
+    "secure": "Płatności bezpiecznie obsługuje {provider}. FIRINGI nigdy nie widzi danych Twojej karty.",
+    "noMethods": "Płatność online jest teraz niedostępna.",
+    "bankTransfer": "Lub zapłać przelewem na rzecz {holder}:",
+    "waiting": "Czekamy na potwierdzenie…",
+    "mbwayWaiting": "Otwórz aplikację MB WAY w telefonie ({phone}) i zatwierdź płatność {amount}.",
+    "mbwayExpires": "Prośba wygaśnie za {minutes} min.",
+    "multibancoTitle": "Zapłać tą referencją Multibanco",
+    "entity": "Podmiot",
+    "reference": "Referencja",
+    "amount": "Kwota",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano",
+    "validUntil": "Ważna do {date}",
+    "multibancoHint": "Potwierdzimy płatność automatycznie, gdy tylko zostanie wykonana.",
+    "debitSubmitted": "Polecenie zapłaty wysłano do Twojego banku. Trwa to kilka dni roboczych; damy znać, gdy się zakończy.",
+    "paid": "Zapłacono — dziękujemy!",
+    "paidDetail": "Otrzymaliśmy {amount}.",
+    "paidOrder": "Twoje zamówienie trafia teraz do dostawcy.",
+    "failed": "Płatność nie została zrealizowana: {reason}.",
+    "tryAgain": "Spróbuj ponownie lub wybierz inną metodę.",
+    "expired": "Ta prośba o płatność wygasła.",
+    "cancelled": "Ta prośba o płatność została zastąpiona nowszą.",
+    "payWhatsOpen": "Zapłać to, co pozostało",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Płatność za to jest już w toku.",
+      "PAYMENT_EXPIRED": "Ta prośba o płatność wygasła.",
+      "PROVIDER_UNAVAILABLE": "Usługa płatności jest teraz niedostępna. Spróbuj ponownie za kilka minut.",
+      "generic": "Coś poszło nie tak. Spróbuj ponownie."
+    },
+    "payInvoices": "Zapłać online",
+    "selectInvoices": "Wybierz faktury do zapłaty:",
+    "paySelected": "Zapłać {amount}",
+    "inProgress": "Płatność w toku",
+    "credit": "Saldo na Twoją korzyść: {amount} — użyte automatycznie przy następnych fakturach.",
+    "setUpDebit": "Ustaw polecenie zapłaty",
+    "pendingPayments": "Płatności w toku",
+    "open": "Otwórz",
+    "awaitingTitle": "Czekamy na Twoją płatność",
+    "awaitingBody": "To zamówienie jest zarezerwowane i trafi do dostawcy, gdy tylko zostanie opłacone. Nieopłacone zamówienia są anulowane po {days} dniach.",
+    "payOrder": "Opłać zamówienie",
+    "statuses": {
+      "ACTIVE": "Aktywne"
+    },
+    "dd": {
+      "title": "Polecenie zapłaty",
+      "intro": "Opłacaj faktury automatycznie w dniu płatności poleceniem zapłaty SEPA. Uprzedzamy {days} dni przed każdym pobraniem.",
+      "active": "Aktywne — konto kończące się na {last4}",
+      "holder": "Właściciel konta",
+      "since": "od {date}",
+      "autoCollect": "Pobieraj faktury automatycznie w dniu płatności",
+      "setUp": "Ustaw polecenie zapłaty",
+      "replace": "Użyj innego konta",
+      "revoke": "Anuluj polecenie zapłaty",
+      "revokeConfirm": "Anulować polecenie zapłaty? Faktury trzeba będzie wtedy opłacać inaczej.",
+      "none": "Brak polecenia zapłaty.",
+      "pending": "Czekamy na potwierdzenie danych bankowych…",
+      "upcoming": "Najbliższe pobrania",
+      "noUpcoming": "Na razie nic do pobrania.",
+      "dueOn": "płatna {date}",
+      "notAvailable": "Polecenie zapłaty nie jest jeszcze dostępne.",
+      "collectedAuto": "Twoje faktury są pobierane automatycznie poleceniem zapłaty (konto kończące się na {last4}).",
+      "legal": "Ustawiając polecenie zapłaty, upoważniasz FIRINGI i jego operatora płatności do wysyłania Twojemu bankowi poleceń obciążenia Twojego konta, a Twój bank do jego obciążenia. Możesz poprosić bank o zwrot w ciągu 8 tygodni od obciążenia."
+    }
   }
 }

@@ -14,6 +14,7 @@ export const JOBS: JobDef[] = [
   { key: "notifications", label: "Messages & campaigns", every: "every 2 minutes", staleAfterMin: 20, critical: true, path: "/api/cron/notifications" },
   { key: "invoicing", label: "Certified invoicing & payout reminders", every: "every 5 minutes", staleAfterMin: 30, critical: true, path: "/api/cron/invoicing" },
   { key: "allocation", label: "Supplier allocation (unconfirmed orders)", every: "every 10 minutes", staleAfterMin: 45, critical: true, path: "/api/cron/allocation" },
+  { key: "payments", label: "Online payments, direct debits & reminders", every: "every 5 minutes", staleAfterMin: 30, critical: true, path: "/api/cron/payments" },
   { key: "ops", label: "Health checks & alerts", every: "every 5 minutes", staleAfterMin: 20, critical: false, path: "/api/cron/ops" },
   { key: "ai", label: "AI suggestions", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/ai" },
   { key: "backup", label: "Database backup", every: "nightly", staleAfterMin: 26 * 60, critical: true, path: null },

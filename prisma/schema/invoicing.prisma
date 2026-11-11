@@ -147,6 +147,8 @@ model Invoice {
   lines             InvoiceLine[]
   taxSummary        InvoiceTaxSummary[]
   allocations       PaymentAllocation[]
+  paymentItems      PaymentRequestItem[]
+  reminders         InvoiceReminder[]
   billingStatements VendorBillingStatement[]
 
   @@index([recipientCompanyId, issuedAt])
@@ -315,9 +317,13 @@ model Payment {
   paidAt       DateTime?
   recordedById String?
   createdAt    DateTime         @default(now())
+  /// Online payments: who processed it; refunds of the unallocated part.
+  provider       String?
+  refundedAmount Decimal        @default(0) @db.Decimal(18, 2)
 
   company     Company             @relation(fields: [companyId], references: [id])
   allocations PaymentAllocation[]
+  request     PaymentRequest?
   @@index([companyId])
 }
 

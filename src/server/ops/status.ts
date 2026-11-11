@@ -6,7 +6,7 @@ import "server-only";
 import { prisma } from "@/server/db";
 import { healthReport, type CheckState } from "./health";
 
-export const PUBLIC_COMPONENTS = ["web", "ordering", "files", "notifications", "invoicing"] as const;
+export const PUBLIC_COMPONENTS = ["web", "ordering", "files", "notifications", "invoicing", "payments"] as const;
 export type PublicComponent = (typeof PUBLIC_COMPONENTS)[number];
 /** Which internal checks make up each public component (others — disk, settings, errors — stay internal). */
 const MAP: Record<PublicComponent, string[]> = {
@@ -15,6 +15,7 @@ const MAP: Record<PublicComponent, string[]> = {
   files: ["storage"],
   notifications: ["messages", "job:notifications"],
   invoicing: ["fiscal", "job:invoicing"],
+  payments: ["payments", "job:payments"],
 };
 export const componentOf = (checkKey: string) => PUBLIC_COMPONENTS.find((c) => MAP[c].includes(checkKey)) ?? null;
 const RANK: Record<CheckState, number> = { ok: 0, warning: 1, critical: 2 };

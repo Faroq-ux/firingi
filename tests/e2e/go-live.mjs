@@ -168,7 +168,9 @@ check("the person sees FIRINGI's answer", (await buyer.getByTestId("erasure-reje
 
 // ── 4. Payments ──
 await go(sa, "/admin/settings/payment");
-check("payment settings page", (await sa.getByTestId("payment-policy").count()) === 1 && (await sa.locator('input[name="method-CARD"]').isDisabled()));
+// Card is only offered when a payment provider is configured (Phase 20); otherwise it's greyed out.
+const hasProvider = /Online methods go through/.test(await sa.getByTestId("payment-policy").textContent());
+check("payment settings page", (await sa.getByTestId("payment-policy").count()) === 1 && (await sa.locator('input[name="method-CARD"]').isDisabled()) === !hasProvider);
 await go(sa, "/admin/risk/payment-risk");
 check("payment risk lists buyers", (await sa.getByTestId("risk-row").count()) > 0);
 await shot(sa, "p11-05-payment-risk");

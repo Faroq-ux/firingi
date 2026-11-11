@@ -206,6 +206,7 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     latitude: address.latitude?.toString() ?? null, longitude: address.longitude?.toString() ?? null,
   };
 
+  let payFirstOrders = false;
   const created = await prisma.$transaction(async (tx) => {
     // Credit control on the whole checkout: overdue invoices / credit limit (Payment Settings).
     await assertCanOrder(ctx.company.id, pc.grandTotal);
@@ -264,20 +265,28 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     }
     // A coupon that has reached a limit while this checkout was being placed is refused.
     if (pc.coupon?.ok) await assertCouponLimits(tx, pc.coupon.code, ctx.company.id);
-    // No online payment step yet → the orders go straight to the suppliers for confirmation (unless held).
+    // The orders go to the suppliers for confirmation — unless FIRINGI's risk check holds them, or
+    // this buyer pays before shipping (then they wait, unseen by the supplier, until paid).
     const held = await recordRisk(tx, risk, out.map((o) => ({ id: o.id, buyerCompanyId: ctx.company.id })), pc.parts.length > 1 ? checkoutId : null);
+    const payFirst = (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;
     for (const o of out) {
-      const to = held ? "ON_HOLD" : "PENDING_CONFIRMATION";
-      await tx.order.update({ where: { id: o.id }, data: { status: to } });
-      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : "Sent to supplier" } });
+      const to = held || payFirst ? "ON_HOLD" : "PENDING_CONFIRMATION";
+      await tx.order.update({ where: { id: o.id }, data: { status: to, awaitingPayment: payFirst } });
+      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : payFirst ? "Waiting for payment" : "Sent to supplier" } });
     }
+    payFirstOrders = payFirst;
     await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
     await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
     return out;
   });
   const buyerName = ctx.company.tradeName ?? ctx.company.legalName;
   await afterCheckout(risk, created, ctx.company.id, buyerName);
-  if (risk.level === "HIGH") return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })) };
+  if (payFirstOrders)
+    for (const o of created) {
+      const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });
+      await notify("order.awaiting_payment", [{ companyId: ctx.company.id, link: `/buy/orders/${o.id}` }], { number: o.number, total: row.grandTotal.toNumber() }, { ref: { type: "Order", id: o.id } });
+    }
+  if (risk.level === "HIGH" || payFirstOrders) return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })), payFirst: payFirstOrders };
   for (const o of created) {
     const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });
     await notify("order.new", [{ companyId: o.sellerId, link: `/vendor/orders/${o.id}` }], { number: o.number, buyer: buyerName, total: row.grandTotal.toNumber() }, { ref: { type: "Order", id: o.id } });
@@ -415,6 +424,8 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
       await tx.riskAssessment.updateMany({ where: { orderId, review: "OPEN" }, data: { review: to === "CANCELLED" ? "FRAUD" : "CLEARED", reviewedById: ctx.user.id, reviewedAt: new Date(), note: reason?.trim() || null } });
   });
   if (to === "DELIVERED") (await import("@/server/invoicing/fiscal")).kickFiscalQueue(); // send the invoice to Moloni now (the cron retries)
+  // Cancelled before delivery: a prepayment paid online goes back to the customer.
+  if (to === "CANCELLED") await (await import("@/server/payments/service")).refundOrderPrepayment(orderId).catch(() => null);
   if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);
   if (to === "CANCELLED" && actor === "VENDOR" && order.status === "PENDING_CONFIRMATION") {
     // Supplier declined: FIRINGI tries to move the order to another supplier (Phase 9).
@@ -439,7 +450,8 @@ export async function applyOrderTransition(
   by: { reason?: string | null; userId: string | null; companyId: string | null; exceptionType?: string; syncDelivery?: boolean },
 ) {
   const reason = by.reason?.trim() || null;
-  const res = await tx.order.updateMany({ where: { id: order.id, status: order.status }, data: { status: to } });
+  // Leaving the hold for the supplier (FIRINGI's decision, or paid): nothing is awaited any more.
+  const res = await tx.order.updateMany({ where: { id: order.id, status: order.status }, data: { status: to, ...(order.status === "ON_HOLD" && to === "PENDING_CONFIRMATION" ? { awaitingPayment: false } : {}) } });
   if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
   if (to === "CANCELLED") {
     await releaseStock(tx, order.id);
@@ -450,6 +462,9 @@ export async function applyOrderTransition(
     // Delivered = what was confirmed. FIRINGI invoices the buyer and tells the vendor what to invoice.
     for (const l of order.lines) await tx.orderLine.update({ where: { id: l.id }, data: { qtyDelivered: l.qtyConfirmed ?? l.qtyOrdered } });
     await invoiceDeliveredOrder(tx, order.id, by.userId);
+    // A prepayment (or other customer credit) pays the new invoice at once.
+    const { applyCustomerCredit } = await import("@/server/payments/service");
+    await applyCustomerCredit(tx, order.buyerCompanyId);
   }
   if (to === "EXCEPTION") await tx.orderException.create({ data: { orderId: order.id, type: by.exceptionType ?? "OTHER", description: reason ?? "Exception" } });
   if (order.status === "EXCEPTION" && to !== "EXCEPTION")

@@ -772,7 +772,8 @@
     "My Offers": "Ajánlataim",
     "AI Assistant": "MI-asszisztens",
     "Buy Again": "Újravásárlás",
-    "Demand & Stock": "Kereslet és készlet"
+    "Demand & Stock": "Kereslet és készlet",
+    "Direct Debit": "Csoportos beszedés"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Megoldva: {title}",
       "body": "A(z) „{title}” probléma megszűnt. Lásd: Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Fizetés beérkezett: {total}",
+      "body": "Köszönjük — megkaptuk a(z) {total} összeget ({documents})."
+    },
+    "payment_failed": {
+      "title": "A fizetés nem sikerült: {total}",
+      "body": "A(z) {total} összegű fizetése nem ment át: {reason}. Próbálja újra, vagy válasszon másik módot."
+    },
+    "payment_refunded": {
+      "title": "Visszatérítés úton: {total}",
+      "body": "Visszatérítünk Önnek {total} összeget. A módtól függően ez néhány napig tarthat."
+    },
+    "payment_link": {
+      "title": "Fizetési kérés: {total}",
+      "body": "A FIRINGI linket küldött Önnek a(z) {documents} ({total}) online fizetéséhez — MB WAY, Multibanco, kártya vagy csoportos beszedés."
+    },
+    "payment_reminder_soon": {
+      "title": "Hamarosan esedékes számla: {total}",
+      "body": "{documents} ({total}) esedékessége: {due}. Most online is kifizetheti."
+    },
+    "payment_reminder_due": {
+      "title": "Ma esedékes számla: {total}",
+      "body": "{documents} ({total}) ma esedékes. Fizessen online egy perc alatt MB WAY-jel, Multibancóval vagy kártyával."
+    },
+    "payment_reminder_overdue": {
+      "title": "Lejárt számla: {total}",
+      "body": "{documents} ({total}) {days} napja lejárt. Kérjük, fizessen most, hogy zavartalanul rendelhessen tovább."
+    },
+    "direct_debit_notice": {
+      "title": "Csoportos beszedés: {date}, {total}",
+      "body": "{date} napján SEPA csoportos beszedéssel leemelünk {total} összeget a(z) {documents} kiegyenlítésére."
+    },
+    "direct_debit_active": {
+      "title": "Csoportos beszedés beállítva",
+      "body": "SEPA csoportos beszedése (a számla vége: {last4}) aktív. A számlákat esedékességkor szedjük be — néhány nappal előtte értesítjük."
+    },
+    "order_awaiting_payment": {
+      "title": "Fizesse ki a(z) {number} rendelést a küldéshez",
+      "body": "A(z) {number} rendelés ({total}) le van foglalva. Amint kifizeti, a beszállítóhoz kerül."
+    },
+    "order_cancelled_unpaid": {
+      "title": "A(z) {number} rendelés törölve",
+      "body": "A(z) {number} rendelést töröltük, mert nem lett időben kifizetve. Bármikor rendelhet újra."
+    },
+    "payment_attention": {
+      "title": "Fizetés figyelmet igényel: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Rendelések",
       "files": "Dokumentumok és fájlok",
       "notifications": "Értesítések",
-      "invoicing": "Számlázás"
+      "invoicing": "Számlázás",
+      "payments": "Fizetések"
     },
     "states": {
       "ok": "Működik",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Nem volt incidens az utolsó 7 napban.",
     "ongoing": "folyamatban",
     "checked": "Ellenőrizve: {time} UTC"
+  },
+  "pay": {
+    "title": "Online fizetés",
+    "backToInvoices": "Vissza a számlákhoz",
+    "linkFor": "Fizetés: {company}",
+    "amountDue": "Fizetendő összeg",
+    "order": "{number} rendelés",
+    "chooseMethod": "Hogyan szeretne fizetni?",
+    "methods": {
+      "CARD": "Kártya",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco hivatkozás",
+      "DIRECT_DEBIT": "Csoportos beszedés"
+    },
+    "methodHints": {
+      "CARD": "Visa vagy Mastercard biztonságos fizetési oldalon",
+      "MB_WAY": "Hagyja jóvá a telefonján",
+      "MULTIBANCO": "Fizessen ATM-nél vagy netbankban",
+      "DIRECT_DEBIT": "A {last4} végű számlájáról"
+    },
+    "phone": "MB WAY telefonszám",
+    "badPhone": "Adjon meg egy 9 számjegyű, 9-cel kezdődő mobilszámot.",
+    "payNow": "{amount} fizetése",
+    "secure": "A fizetéseket biztonságosan a(z) {provider} kezeli. A FIRINGI soha nem látja kártyaadatait.",
+    "noMethods": "Az online fizetés jelenleg nem érhető el.",
+    "bankTransfer": "Vagy fizessen átutalással ide: {holder}:",
+    "waiting": "Megerősítésre várunk…",
+    "mbwayWaiting": "Nyissa meg az MB WAY alkalmazást a telefonján ({phone}), és hagyja jóvá a(z) {amount} fizetését.",
+    "mbwayExpires": "A kérés {minutes} perc múlva lejár.",
+    "multibancoTitle": "Fizessen ezzel a Multibanco hivatkozással",
+    "entity": "Entitás",
+    "reference": "Hivatkozás",
+    "amount": "Összeg",
+    "copy": "Másolás",
+    "copied": "Másolva",
+    "validUntil": "Érvényes: {date}",
+    "multibancoHint": "A fizetést automatikusan megerősítjük, amint megtörtént.",
+    "debitSubmitted": "A beszedést elküldtük a bankjának. Néhány munkanapig tart; szólunk, ha elkészült.",
+    "paid": "Kifizetve — köszönjük!",
+    "paidDetail": "Megkaptuk: {amount}.",
+    "paidOrder": "Rendelése most a beszállítóhoz kerül.",
+    "failed": "A fizetés nem ment át: {reason}.",
+    "tryAgain": "Próbálja újra, vagy válasszon másik módot.",
+    "expired": "Ez a fizetési kérés lejárt.",
+    "cancelled": "Ezt a fizetési kérést egy újabb váltotta fel.",
+    "payWhatsOpen": "A még nyitott összeg kifizetése",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Erre már folyamatban van egy fizetés.",
+      "PAYMENT_EXPIRED": "Ez a fizetési kérés lejárt.",
+      "PROVIDER_UNAVAILABLE": "A fizetési szolgáltatás jelenleg nem érhető el. Próbálja újra néhány perc múlva.",
+      "generic": "Hiba történt. Próbálja újra."
+    },
+    "payInvoices": "Online fizetés",
+    "selectInvoices": "Válassza ki a fizetendő számlákat:",
+    "paySelected": "{amount} fizetése",
+    "inProgress": "Fizetés folyamatban",
+    "credit": "Jóváírás: {amount} — automatikusan felhasználjuk a következő számláin.",
+    "setUpDebit": "Csoportos beszedés beállítása",
+    "pendingPayments": "Folyamatban lévő fizetések",
+    "open": "Megnyitás",
+    "awaitingTitle": "Fizetésére várunk",
+    "awaitingBody": "Ez a rendelés le van foglalva, és amint kifizeti, a beszállítóhoz kerül. A ki nem fizetett rendeléseket {days} nap után töröljük.",
+    "payOrder": "Rendelés kifizetése",
+    "statuses": {
+      "ACTIVE": "Aktív"
+    },
+    "dd": {
+      "title": "Csoportos beszedés",
+      "intro": "Fizesse számláit automatikusan esedékességkor SEPA csoportos beszedéssel. Minden beszedés előtt {days} nappal értesítjük.",
+      "active": "Aktív — a számla vége: {last4}",
+      "holder": "Számlatulajdonos",
+      "since": "{date} óta",
+      "autoCollect": "Számlák automatikus beszedése esedékességkor",
+      "setUp": "Csoportos beszedés beállítása",
+      "replace": "Másik számla használata",
+      "revoke": "Csoportos beszedés megszüntetése",
+      "revokeConfirm": "Megszünteti a csoportos beszedést? A számlákat ezután más módon kell fizetni.",
+      "none": "Nincs beállítva csoportos beszedés.",
+      "pending": "Bankadatai megerősítésére várunk…",
+      "upcoming": "Következő beszedések",
+      "noUpcoming": "Jelenleg nincs mit beszedni.",
+      "dueOn": "esedékes: {date}",
+      "notAvailable": "A csoportos beszedés még nem érhető el.",
+      "collectedAuto": "Számláit automatikusan csoportos beszedéssel egyenlítjük ki (a számla vége: {last4}).",
+      "legal": "A csoportos beszedés beállításával felhatalmazza a FIRINGI-t és fizetési szolgáltatóját, hogy utasításokat küldjenek bankjának számlája megterhelésére, bankját pedig a terhelésre. A terheléstől számított 8 héten belül visszatérítést kérhet bankjától."
+    }
   }
 }

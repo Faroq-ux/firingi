@@ -772,7 +772,8 @@
     "My Offers": "Omat tarjoukset",
     "AI Assistant": "Tekoälyavustaja",
     "Buy Again": "Osta uudelleen",
-    "Demand & Stock": "Kysyntä ja varasto"
+    "Demand & Stock": "Kysyntä ja varasto",
+    "Direct Debit": "Suoraveloitus"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Ratkaistu: {title}",
       "body": "Ongelma ”{title}” on poistunut. Katso Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Maksu vastaanotettu: {total}",
+      "body": "Kiitos — saimme {total} laskuista {documents}."
+    },
+    "payment_failed": {
+      "title": "Maksu ei onnistunut: {total}",
+      "body": "Maksusi {total} ei mennyt läpi: {reason}. Voit yrittää uudelleen tai valita toisen tavan."
+    },
+    "payment_refunded": {
+      "title": "Hyvitys tulossa: {total}",
+      "body": "Palautamme sinulle {total}. Maksutavasta riippuen se voi kestää muutaman päivän."
+    },
+    "payment_link": {
+      "title": "Maksupyyntö: {total}",
+      "body": "FIRINGI lähetti sinulle linkin, jolla voit maksaa {documents} ({total}) verkossa — MB WAY, Multibanco, kortti tai suoraveloitus."
+    },
+    "payment_reminder_soon": {
+      "title": "Lasku erääntyy pian: {total}",
+      "body": "{documents} ({total}) erääntyy {due}. Voit maksaa sen verkossa nyt."
+    },
+    "payment_reminder_due": {
+      "title": "Lasku erääntyy tänään: {total}",
+      "body": "{documents} ({total}) erääntyy tänään. Maksa verkossa minuutissa MB WAYlla, Multibancolla tai kortilla."
+    },
+    "payment_reminder_overdue": {
+      "title": "Lasku erääntynyt: {total}",
+      "body": "{documents} ({total}) on ollut erääntyneenä {days} päivää. Maksa nyt, jotta voit jatkaa tilaamista."
+    },
+    "direct_debit_notice": {
+      "title": "Suoraveloitus {date}: {total}",
+      "body": "{date} veloitamme tililtäsi {total} laskuista {documents} SEPA-suoraveloituksella."
+    },
+    "direct_debit_active": {
+      "title": "Suoraveloitus otettu käyttöön",
+      "body": "SEPA-suoraveloituksesi (tili päättyy {last4}) on voimassa. Laskut veloitetaan eräpäivänä — ilmoitamme muutamaa päivää ennen."
+    },
+    "order_awaiting_payment": {
+      "title": "Maksa tilaus {number}, niin se lähetetään",
+      "body": "Tilaus {number} ({total}) on varattu. Se menee toimittajalle heti, kun se on maksettu."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Tilaus {number} peruttu",
+      "body": "Tilaus {number} peruttiin, koska sitä ei maksettu ajoissa. Voit tilata uudelleen milloin tahansa."
+    },
+    "payment_attention": {
+      "title": "Maksu vaatii huomiota: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Tilaukset",
       "files": "Asiakirjat ja tiedostot",
       "notifications": "Ilmoitukset",
-      "invoicing": "Laskutus"
+      "invoicing": "Laskutus",
+      "payments": "Maksut"
     },
     "states": {
       "ok": "Toiminnassa",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Ei häiriöitä viimeisten 7 päivän aikana.",
     "ongoing": "käynnissä",
     "checked": "Tarkistettu {time} UTC"
+  },
+  "pay": {
+    "title": "Maksa verkossa",
+    "backToInvoices": "Takaisin laskuihin",
+    "linkFor": "Maksu: {company}",
+    "amountDue": "Maksettava summa",
+    "order": "Tilaus {number}",
+    "chooseMethod": "Miten haluat maksaa?",
+    "methods": {
+      "CARD": "Kortti",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-viite",
+      "DIRECT_DEBIT": "Suoraveloitus"
+    },
+    "methodHints": {
+      "CARD": "Visa tai Mastercard turvallisella maksusivulla",
+      "MB_WAY": "Hyväksy puhelimellasi",
+      "MULTIBANCO": "Maksa pankkiautomaatilla tai verkkopankissa",
+      "DIRECT_DEBIT": "Tililtäsi, joka päättyy {last4}"
+    },
+    "phone": "MB WAY -puhelinnumero",
+    "badPhone": "Anna 9-numeroinen matkapuhelinnumero, joka alkaa numerolla 9.",
+    "payNow": "Maksa {amount}",
+    "secure": "Maksut käsittelee turvallisesti {provider}. FIRINGI ei koskaan näe korttitietojasi.",
+    "noMethods": "Verkkomaksu ei ole juuri nyt käytettävissä.",
+    "bankTransfer": "Tai maksa tilisiirrolla saajalle {holder}:",
+    "waiting": "Odotetaan vahvistusta…",
+    "mbwayWaiting": "Avaa MB WAY -sovellus puhelimessasi ({phone}) ja hyväksy {amount} maksu.",
+    "mbwayExpires": "Pyyntö vanhenee {minutes} min kuluttua.",
+    "multibancoTitle": "Maksa tällä Multibanco-viitteellä",
+    "entity": "Yhteisö",
+    "reference": "Viite",
+    "amount": "Summa",
+    "copy": "Kopioi",
+    "copied": "Kopioitu",
+    "validUntil": "Voimassa {date} asti",
+    "multibancoHint": "Vahvistamme maksun automaattisesti heti, kun se on tehty.",
+    "debitSubmitted": "Suoraveloitus on lähetetty pankkiisi. Se kestää muutaman pankkipäivän; ilmoitamme, kun se on valmis.",
+    "paid": "Maksettu — kiitos!",
+    "paidDetail": "Saimme {amount}.",
+    "paidOrder": "Tilauksesi menee nyt toimittajalle.",
+    "failed": "Maksu ei mennyt läpi: {reason}.",
+    "tryAgain": "Yritä uudelleen tai valitse toinen tapa.",
+    "expired": "Tämä maksupyyntö on vanhentunut.",
+    "cancelled": "Tämä maksupyyntö on korvattu uudemmalla.",
+    "payWhatsOpen": "Maksa vielä avoinna oleva",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Tälle on jo maksu käynnissä.",
+      "PAYMENT_EXPIRED": "Tämä maksupyyntö on vanhentunut.",
+      "PROVIDER_UNAVAILABLE": "Maksupalvelu ei ole juuri nyt käytettävissä. Yritä uudelleen muutaman minuutin kuluttua.",
+      "generic": "Jokin meni vikaan. Yritä uudelleen."
+    },
+    "payInvoices": "Maksa verkossa",
+    "selectInvoices": "Valitse maksettavat laskut:",
+    "paySelected": "Maksa {amount}",
+    "inProgress": "Maksu käynnissä",
+    "credit": "Hyvitys: {amount} — käytetään automaattisesti seuraaviin laskuihisi.",
+    "setUpDebit": "Ota suoraveloitus käyttöön",
+    "pendingPayments": "Käynnissä olevat maksut",
+    "open": "Avaa",
+    "awaitingTitle": "Odotetaan maksuasi",
+    "awaitingBody": "Tämä tilaus on varattu ja menee toimittajalle heti, kun se on maksettu. Maksamattomat tilaukset perutaan {days} päivän kuluttua.",
+    "payOrder": "Maksa tilaus",
+    "statuses": {
+      "ACTIVE": "Voimassa"
+    },
+    "dd": {
+      "title": "Suoraveloitus",
+      "intro": "Maksa laskusi automaattisesti eräpäivänä SEPA-suoraveloituksella. Ilmoitamme {days} päivää ennen jokaista veloitusta.",
+      "active": "Voimassa — tili päättyy {last4}",
+      "holder": "Tilin omistaja",
+      "since": "{date} alkaen",
+      "autoCollect": "Veloita laskut automaattisesti eräpäivänä",
+      "setUp": "Ota suoraveloitus käyttöön",
+      "replace": "Käytä toista tiliä",
+      "revoke": "Lopeta suoraveloitus",
+      "revokeConfirm": "Lopetetaanko suoraveloitus? Laskut on silloin maksettava muulla tavalla.",
+      "none": "Suoraveloitusta ei ole otettu käyttöön.",
+      "pending": "Odotetaan pankkitietojesi vahvistusta…",
+      "upcoming": "Seuraavat veloitukset",
+      "noUpcoming": "Ei veloitettavaa juuri nyt.",
+      "dueOn": "erääntyy {date}",
+      "notAvailable": "Suoraveloitus ei ole vielä käytettävissä.",
+      "collectedAuto": "Laskusi veloitetaan automaattisesti suoraveloituksella (tili päättyy {last4}).",
+      "legal": "Ottamalla suoraveloituksen käyttöön valtuutat FIRINGIn ja sen maksupalveluntarjoajan lähettämään pankillesi ohjeita tilisi veloittamiseksi ja pankkisi veloittamaan sen. Voit pyytää pankiltasi palautusta 8 viikon kuluessa veloituksesta."
+    }
   }
 }

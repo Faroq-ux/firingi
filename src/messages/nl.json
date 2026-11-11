@@ -772,7 +772,8 @@
     "My Offers": "Mijn aanbiedingen",
     "AI Assistant": "AI-assistent",
     "Buy Again": "Opnieuw kopen",
-    "Demand & Stock": "Vraag & voorraad"
+    "Demand & Stock": "Vraag & voorraad",
+    "Direct Debit": "Incasso"
   },
   "delivery": {
     "title": "Levering",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Opgelost: {title}",
       "body": "Het probleem ‘{title}’ is verholpen. Zie Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Betaling ontvangen: {total}",
+      "body": "Bedankt — we hebben {total} ontvangen voor {documents}."
+    },
+    "payment_failed": {
+      "title": "Betaling niet gelukt: {total}",
+      "body": "Uw betaling van {total} is niet gelukt: {reason}. U kunt het opnieuw proberen of een andere methode kiezen."
+    },
+    "payment_refunded": {
+      "title": "Terugbetaling onderweg: {total}",
+      "body": "We betalen u {total} terug. Afhankelijk van de methode kan het een paar dagen duren."
+    },
+    "payment_link": {
+      "title": "Betaalverzoek: {total}",
+      "body": "FIRINGI heeft u een link gestuurd om {documents} ({total}) online te betalen — MB WAY, Multibanco, kaart of incasso."
+    },
+    "payment_reminder_soon": {
+      "title": "Factuur vervalt binnenkort: {total}",
+      "body": "{documents} ({total}) vervalt op {due}. U kunt nu online betalen."
+    },
+    "payment_reminder_due": {
+      "title": "Factuur vervalt vandaag: {total}",
+      "body": "{documents} ({total}) vervalt vandaag. Betaal in een minuut online met MB WAY, Multibanco of kaart."
+    },
+    "payment_reminder_overdue": {
+      "title": "Factuur te laat: {total}",
+      "body": "{documents} ({total}) is {days} dagen te laat. Betaal nu om zonder onderbreking te blijven bestellen."
+    },
+    "direct_debit_notice": {
+      "title": "Incasso op {date}: {total}",
+      "body": "Op {date} schrijven we {total} voor {documents} af van uw rekening via SEPA-incasso."
+    },
+    "direct_debit_active": {
+      "title": "Incasso ingesteld",
+      "body": "Uw SEPA-incasso (rekening eindigend op {last4}) is actief. Facturen worden op de vervaldag geïnd — we laten het u een paar dagen vooraf weten."
+    },
+    "order_awaiting_payment": {
+      "title": "Betaal bestelling {number} om ze te verzenden",
+      "body": "Bestelling {number} ({total}) is gereserveerd. Ze gaat naar de leverancier zodra ze betaald is."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Bestelling {number} geannuleerd",
+      "body": "Bestelling {number} is geannuleerd omdat ze niet op tijd betaald is. U kunt altijd opnieuw bestellen."
+    },
+    "payment_attention": {
+      "title": "Betaling vraagt aandacht: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Bestellingen",
       "files": "Documenten en bestanden",
       "notifications": "Meldingen",
-      "invoicing": "Facturatie"
+      "invoicing": "Facturatie",
+      "payments": "Betalingen"
     },
     "states": {
       "ok": "Operationeel",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Geen incidenten in de laatste 7 dagen.",
     "ongoing": "lopend",
     "checked": "Gecontroleerd {time} UTC"
+  },
+  "pay": {
+    "title": "Online betalen",
+    "backToInvoices": "Terug naar facturen",
+    "linkFor": "Betaling voor {company}",
+    "amountDue": "Te betalen bedrag",
+    "order": "Bestelling {number}",
+    "chooseMethod": "Hoe wilt u betalen?",
+    "methods": {
+      "CARD": "Kaart",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-referentie",
+      "DIRECT_DEBIT": "Incasso"
+    },
+    "methodHints": {
+      "CARD": "Visa of Mastercard op een beveiligde betaalpagina",
+      "MB_WAY": "Keur goed op uw telefoon",
+      "MULTIBANCO": "Betaal bij een geldautomaat of via internetbankieren",
+      "DIRECT_DEBIT": "Van uw rekening eindigend op {last4}"
+    },
+    "phone": "MB WAY-telefoonnummer",
+    "badPhone": "Vul een mobiel nummer van 9 cijfers in dat met 9 begint.",
+    "payNow": "{amount} betalen",
+    "secure": "Betalingen worden veilig verwerkt door {provider}. FIRINGI ziet uw kaartgegevens nooit.",
+    "noMethods": "Online betalen is nu niet beschikbaar.",
+    "bankTransfer": "Of betaal per overschrijving aan {holder}:",
+    "waiting": "Wachten op bevestiging…",
+    "mbwayWaiting": "Open de MB WAY-app op uw telefoon ({phone}) en keur de betaling van {amount} goed.",
+    "mbwayExpires": "Het verzoek verloopt over {minutes} min.",
+    "multibancoTitle": "Betaal met deze Multibanco-referentie",
+    "entity": "Entiteit",
+    "reference": "Referentie",
+    "amount": "Bedrag",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd",
+    "validUntil": "Geldig tot {date}",
+    "multibancoHint": "We bevestigen de betaling automatisch zodra ze gedaan is.",
+    "debitSubmitted": "De incasso is naar uw bank gestuurd. Dit duurt een paar werkdagen; we laten het u weten als het klaar is.",
+    "paid": "Betaald — bedankt!",
+    "paidDetail": "We hebben {amount} ontvangen.",
+    "paidOrder": "Uw bestelling gaat nu naar de leverancier.",
+    "failed": "De betaling is niet gelukt: {reason}.",
+    "tryAgain": "Probeer het opnieuw of kies een andere methode.",
+    "expired": "Dit betaalverzoek is verlopen.",
+    "cancelled": "Dit betaalverzoek is vervangen door een nieuwer verzoek.",
+    "payWhatsOpen": "Betaal wat nog openstaat",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Hiervoor loopt al een betaling.",
+      "PAYMENT_EXPIRED": "Dit betaalverzoek is verlopen.",
+      "PROVIDER_UNAVAILABLE": "De betaaldienst is nu niet beschikbaar. Probeer het over een paar minuten opnieuw.",
+      "generic": "Er ging iets mis. Probeer het opnieuw."
+    },
+    "payInvoices": "Online betalen",
+    "selectInvoices": "Kies de facturen die u wilt betalen:",
+    "paySelected": "{amount} betalen",
+    "inProgress": "Betaling bezig",
+    "credit": "Tegoed: {amount} — wordt automatisch verrekend met uw volgende facturen.",
+    "setUpDebit": "Incasso instellen",
+    "pendingPayments": "Lopende betalingen",
+    "open": "Openen",
+    "awaitingTitle": "Wachten op uw betaling",
+    "awaitingBody": "Deze bestelling is gereserveerd en gaat naar de leverancier zodra ze betaald is. Onbetaalde bestellingen worden na {days} dagen geannuleerd.",
+    "payOrder": "Bestelling betalen",
+    "statuses": {
+      "ACTIVE": "Actief"
+    },
+    "dd": {
+      "title": "Incasso",
+      "intro": "Betaal uw facturen automatisch op de vervaldag via SEPA-incasso. We laten het u {days} dagen voor elke incasso weten.",
+      "active": "Actief — rekening eindigend op {last4}",
+      "holder": "Rekeninghouder",
+      "since": "sinds {date}",
+      "autoCollect": "Facturen automatisch op de vervaldag innen",
+      "setUp": "Incasso instellen",
+      "replace": "Een andere rekening gebruiken",
+      "revoke": "Incasso stopzetten",
+      "revokeConfirm": "Incasso stopzetten? De facturen moeten dan op een andere manier betaald worden.",
+      "none": "Geen incasso ingesteld.",
+      "pending": "Wachten op bevestiging van uw bankgegevens…",
+      "upcoming": "Volgende incasso's",
+      "noUpcoming": "Momenteel niets te innen.",
+      "dueOn": "vervalt op {date}",
+      "notAvailable": "Incasso is nog niet beschikbaar.",
+      "collectedAuto": "Uw facturen worden automatisch geïnd via incasso (rekening eindigend op {last4}).",
+      "legal": "Door een incasso in te stellen machtigt u FIRINGI en zijn betaaldienstverlener om uw bank opdracht te geven uw rekening te debiteren, en uw bank om dat te doen. U kunt uw bank binnen 8 weken na een afschrijving om terugbetaling vragen."
+    }
   }
 }

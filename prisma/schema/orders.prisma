@@ -79,6 +79,8 @@ model Order {
   deliveryDiscountNet   Decimal       @default(0) @db.Decimal(18, 2)
   deliveryPromotionId   String?
   status                OrderStatus   @default(NEW)
+  /// Held (ON_HOLD) until the buyer pays — pay-before-shipping buyers.
+  awaitingPayment       Boolean       @default(false)
   deliveryMode          DeliveryMode?
   deliveryAddress       Json // snapshot
   sourceAddressId       String?
@@ -115,6 +117,7 @@ model Order {
   exceptions        OrderException[]
   stockMovements    StockMovement[]
   invoices          Invoice[]
+  paymentRequests   PaymentRequest[]
   billingStatements VendorBillingStatement[]
   returns           ReturnRequest[]
   delivery          Delivery?

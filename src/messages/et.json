@@ -772,7 +772,8 @@
     "My Offers": "Minu pakkumised",
     "AI Assistant": "Tehisintellekti assistent",
     "Buy Again": "Osta uuesti",
-    "Demand & Stock": "Nõudlus ja ladu"
+    "Demand & Stock": "Nõudlus ja ladu",
+    "Direct Debit": "Otsekorraldus"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Lahendatud: {title}",
       "body": "Probleem „{title}“ on kadunud. Vaadake Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Makse laekunud: {total}",
+      "body": "Aitäh — saime {total} arvete {documents} eest."
+    },
+    "payment_failed": {
+      "title": "Makse ei õnnestunud: {total}",
+      "body": "Teie makse {total} ei läinud läbi: {reason}. Võite uuesti proovida või valida muu viisi."
+    },
+    "payment_refunded": {
+      "title": "Tagasimakse teel: {total}",
+      "body": "Maksame teile tagasi {total}. Olenevalt viisist võib see võtta mõne päeva."
+    },
+    "payment_link": {
+      "title": "Maksetaotlus: {total}",
+      "body": "FIRINGI saatis teile lingi, et maksta {documents} ({total}) veebis — MB WAY, Multibanco, kaart või otsekorraldus."
+    },
+    "payment_reminder_soon": {
+      "title": "Arve tähtaeg läheneb: {total}",
+      "body": "{documents} ({total}) maksetähtaeg on {due}. Võite selle kohe veebis tasuda."
+    },
+    "payment_reminder_due": {
+      "title": "Arve tähtaeg on täna: {total}",
+      "body": "{documents} ({total}) maksetähtaeg on täna. Makske veebis minutiga MB WAY, Multibanco või kaardiga."
+    },
+    "payment_reminder_overdue": {
+      "title": "Arve on tähtaja ületanud: {total}",
+      "body": "{documents} ({total}) on {days} päeva tähtaja ületanud. Palun makske kohe, et saaksite edasi tellida."
+    },
+    "direct_debit_notice": {
+      "title": "Otsekorraldus {date}: {total}",
+      "body": "{date} võtame teie kontolt SEPA otsekorraldusega {total} arvete {documents} eest."
+    },
+    "direct_debit_active": {
+      "title": "Otsekorraldus on seadistatud",
+      "body": "Teie SEPA otsekorraldus (konto lõpeb numbritega {last4}) on aktiivne. Arved võetakse maksetähtajal — anname paar päeva ette teada."
+    },
+    "order_awaiting_payment": {
+      "title": "Makske tellimus {number}, et see saata",
+      "body": "Tellimus {number} ({total}) on broneeritud. See läheb tarnijale kohe, kui on makstud."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Tellimus {number} tühistati",
+      "body": "Tellimus {number} tühistati, sest seda ei makstud õigel ajal. Võite igal ajal uuesti tellida."
+    },
+    "payment_attention": {
+      "title": "Makse vajab tähelepanu: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Tellimused",
       "files": "Dokumendid ja failid",
       "notifications": "Teavitused",
-      "invoicing": "Arveldus"
+      "invoicing": "Arveldus",
+      "payments": "Maksed"
     },
     "states": {
       "ok": "Töötab",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Viimase 7 päeva jooksul intsidente pole.",
     "ongoing": "käimas",
     "checked": "Kontrollitud {time} UTC"
+  },
+  "pay": {
+    "title": "Maksa veebis",
+    "backToInvoices": "Tagasi arvete juurde",
+    "linkFor": "Makse: {company}",
+    "amountDue": "Tasumisele kuuluv summa",
+    "order": "Tellimus {number}",
+    "chooseMethod": "Kuidas soovite maksta?",
+    "methods": {
+      "CARD": "Kaart",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco viide",
+      "DIRECT_DEBIT": "Otsekorraldus"
+    },
+    "methodHints": {
+      "CARD": "Visa või Mastercard turvalisel makselehel",
+      "MB_WAY": "Kinnitage telefonis",
+      "MULTIBANCO": "Makske pangaautomaadis või internetipangas",
+      "DIRECT_DEBIT": "Teie kontolt, mis lõpeb numbritega {last4}"
+    },
+    "phone": "MB WAY telefoninumber",
+    "badPhone": "Sisestage 9-kohaline mobiilinumber, mis algab 9-ga.",
+    "payNow": "Maksa {amount}",
+    "secure": "Makseid töötleb turvaliselt {provider}. FIRINGI ei näe kunagi teie kaardiandmeid.",
+    "noMethods": "Veebimakse pole praegu saadaval.",
+    "bankTransfer": "Või makske pangaülekandega saajale {holder}:",
+    "waiting": "Ootame kinnitust…",
+    "mbwayWaiting": "Avage telefonis MB WAY rakendus ({phone}) ja kinnitage makse {amount}.",
+    "mbwayExpires": "Taotlus aegub {minutes} min pärast.",
+    "multibancoTitle": "Makske selle Multibanco viitega",
+    "entity": "Asutus",
+    "reference": "Viide",
+    "amount": "Summa",
+    "copy": "Kopeeri",
+    "copied": "Kopeeritud",
+    "validUntil": "Kehtib kuni {date}",
+    "multibancoHint": "Kinnitame makse automaatselt kohe, kui see on tehtud.",
+    "debitSubmitted": "Otsekorraldus saadeti teie panka. See võtab mõne tööpäeva; anname teada, kui see on tehtud.",
+    "paid": "Makstud — aitäh!",
+    "paidDetail": "Saime {amount}.",
+    "paidOrder": "Teie tellimus läheb nüüd tarnijale.",
+    "failed": "Makse ei läinud läbi: {reason}.",
+    "tryAgain": "Proovige uuesti või valige muu viis.",
+    "expired": "See maksetaotlus on aegunud.",
+    "cancelled": "Selle maksetaotluse asendas uuem.",
+    "payWhatsOpen": "Maksa veel tasumata osa",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Selle eest on makse juba pooleli.",
+      "PAYMENT_EXPIRED": "See maksetaotlus on aegunud.",
+      "PROVIDER_UNAVAILABLE": "Makseteenus pole praegu saadaval. Proovige mõne minuti pärast uuesti.",
+      "generic": "Midagi läks valesti. Proovige uuesti."
+    },
+    "payInvoices": "Maksa veebis",
+    "selectInvoices": "Valige tasutavad arved:",
+    "paySelected": "Maksa {amount}",
+    "inProgress": "Makse pooleli",
+    "credit": "Ettemaks: {amount} — kasutatakse automaatselt järgmiste arvete tasumiseks.",
+    "setUpDebit": "Seadista otsekorraldus",
+    "pendingPayments": "Pooleliolevad maksed",
+    "open": "Ava",
+    "awaitingTitle": "Ootame teie makset",
+    "awaitingBody": "See tellimus on broneeritud ja läheb tarnijale kohe, kui on makstud. Maksmata tellimused tühistatakse {days} päeva pärast.",
+    "payOrder": "Maksa tellimus",
+    "statuses": {
+      "ACTIVE": "Aktiivne"
+    },
+    "dd": {
+      "title": "Otsekorraldus",
+      "intro": "Tasuge arved automaatselt maksetähtajal SEPA otsekorraldusega. Anname {days} päeva enne iga sissenõudmist teada.",
+      "active": "Aktiivne — konto lõpeb numbritega {last4}",
+      "holder": "Konto omanik",
+      "since": "alates {date}",
+      "autoCollect": "Võta arved automaatselt maksetähtajal",
+      "setUp": "Seadista otsekorraldus",
+      "replace": "Kasuta teist kontot",
+      "revoke": "Lõpeta otsekorraldus",
+      "revokeConfirm": "Kas lõpetada otsekorraldus? Arveid tuleb siis tasuda muul viisil.",
+      "none": "Otsekorraldust pole seadistatud.",
+      "pending": "Ootame pangaandmete kinnitust…",
+      "upcoming": "Järgmised sissenõudmised",
+      "noUpcoming": "Praegu pole midagi sisse nõuda.",
+      "dueOn": "tähtaeg {date}",
+      "notAvailable": "Otsekorraldus pole veel saadaval.",
+      "collectedAuto": "Teie arved võetakse automaatselt otsekorraldusega (konto lõpeb numbritega {last4}).",
+      "legal": "Otsekorralduse seadistamisega volitate FIRINGI-t ja selle makseteenuse pakkujat saatma teie pangale korraldusi teie konto debiteerimiseks ning oma panka seda tegema. Võite pangalt tagasimakset nõuda 8 nädala jooksul pärast debiteerimist."
+    }
   }
 }

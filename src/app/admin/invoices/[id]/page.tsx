@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { CreditNoteForm } from "@/components/finance/controls";
+import { PaymentLinkForm } from "@/components/admin/payments-admin";
 import { formatDate, formatMoney } from "@/lib/utils";
 
 export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
@@ -24,7 +25,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
         {inv.fiscalStatus === "LOCAL" ? <> · ATCUD {inv.atcud} · not a fiscal document (internal test numbering)</>
           : inv.fiscalStatus === "DONE" ? <> · issued at Moloni{inv.externalProvider === "moloni" ? "" : ` (${inv.externalProvider?.replace("moloni-", "")})`} · FIRINGI ref {inv.fullNumber}</>
             : <><Badge variant={inv.fiscalStatus === "FAILED" ? "destructive" : "warning"}>{inv.fiscalStatus === "FAILED" ? "Moloni refused it" : "being issued at Moloni"}</Badge>{inv.fiscalError && <span className="text-destructive">{inv.fiscalError}</span>} <Link className="text-primary hover:underline" href="/admin/finance/invoicing">Certified Invoicing →</Link></>}</span>}
-        actions={<a className="text-sm text-primary hover:underline" href={`/api/invoices/${inv.id}/pdf`} target="_blank" rel="noreferrer">Open PDF</a>} />
+        actions={<span className="flex flex-wrap items-center gap-3">{can(ctx, "admin.finance.manage") && inv.docType !== "CREDIT_NOTE" && <PaymentLinkForm companyId={inv.recipientCompanyId} invoiceIds={[inv.id]} compact />}<a className="text-sm text-primary hover:underline" href={`/api/invoices/${inv.id}/pdf`} target="_blank" rel="noreferrer">Open PDF</a></span>} />
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2"><CardContent className="pt-5">
           <p className="mb-3 text-sm"><b>{r.name}</b> · NIF {r.taxId} · {r.address}{inv.order && <> · order {inv.order.number}</>}{inv.originalInvoice && <> · credits {inv.originalInvoice.fullNumber}</>}</p>

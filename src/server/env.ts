@@ -34,6 +34,11 @@ export function checkEnv(env: Record<string, string | undefined>): EnvFinding[] 
   if (env.PUSH_DRIVER === "webpush" && (!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY)) err("VAPID_PRIVATE_KEY", "Web push needs VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY.");
 
   if (env.MOLONI_SIMULATE === "1") err("MOLONI_SIMULATE", "The simulated Moloni must not run in production (its documents are not fiscal).");
+  if (env.PAYMENTS_SIMULATE === "1" || env.PAYMENTS_PROVIDER === "sim") err("PAYMENTS_SIMULATE", "The simulated payment provider must not run in production (no real money moves).");
+  if (env.STRIPE_SECRET_KEY && !env.STRIPE_WEBHOOK_SECRET) err("STRIPE_WEBHOOK_SECRET", "Stripe needs STRIPE_WEBHOOK_SECRET to confirm payments (webhook /api/webhooks/payments/stripe).");
+  if (env.STRIPE_SECRET_KEY && !/^sk_(live|test)_/.test(env.STRIPE_SECRET_KEY)) err("STRIPE_SECRET_KEY", "STRIPE_SECRET_KEY should start with sk_live_ or sk_test_.");
+  if (env.STRIPE_SECRET_KEY?.startsWith("sk_test_")) warn("STRIPE_SECRET_KEY", "Stripe is in test mode — no real payments.");
+  if (!env.STRIPE_SECRET_KEY && env.PAYMENTS_SIMULATE !== "1" && !env.PAYMENTS_PROVIDER) warn("STRIPE_SECRET_KEY", "No payment provider — customers can only pay by bank transfer / manual MB WAY.");
   if (Number(env.AUTH_SIGNIN_RATE_LIMIT ?? 10) > 30) warn("AUTH_SIGNIN_RATE_LIMIT", "The sign-in limit is raised (testing value?) — keep it at 10 or so.");
   if (env.SEED_PASSWORD) warn("SEED_PASSWORD", "A seed password is set — demo accounts must not exist in production.");
   if (!env.SENTRY_DSN) warn("SENTRY_DSN", "No external error tracking (Sentry) — FIRINGI's own error log and alerts still work.");

@@ -772,7 +772,8 @@
     "My Offers": "Moje ponudbe",
     "AI Assistant": "Pomočnik UI",
     "Buy Again": "Kupi znova",
-    "Demand & Stock": "Povpraševanje in zaloga"
+    "Demand & Stock": "Povpraševanje in zaloga",
+    "Direct Debit": "Direktna bremenitev"
   },
   "delivery": {
     "title": "Dostava",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Rešeno: {title}",
       "body": "Težava »{title}« je odpravljena. Glejte Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Plačilo prejeto: {total}",
+      "body": "Hvala — prejeli smo {total} za {documents}."
+    },
+    "payment_failed": {
+      "title": "Plačilo ni uspelo: {total}",
+      "body": "Vaše plačilo {total} ni uspelo: {reason}. Lahko poskusite znova ali izberete drug način."
+    },
+    "payment_refunded": {
+      "title": "Vračilo je na poti: {total}",
+      "body": "Vračamo vam {total}. Odvisno od načina lahko traja nekaj dni."
+    },
+    "payment_link": {
+      "title": "Zahteva za plačilo: {total}",
+      "body": "FIRINGI vam je poslal povezavo za spletno plačilo {documents} ({total}) — MB WAY, Multibanco, kartica ali direktna bremenitev."
+    },
+    "payment_reminder_soon": {
+      "title": "Račun kmalu zapade: {total}",
+      "body": "{documents} ({total}) zapade {due}. Lahko ga plačate na spletu že zdaj."
+    },
+    "payment_reminder_due": {
+      "title": "Račun zapade danes: {total}",
+      "body": "{documents} ({total}) zapade danes. Plačajte na spletu v minuti z MB WAY, Multibanco ali kartico."
+    },
+    "payment_reminder_overdue": {
+      "title": "Račun je zapadel: {total}",
+      "body": "{documents} ({total}) je zapadel pred {days} dnevi. Plačajte zdaj, da boste lahko še naprej naročali."
+    },
+    "direct_debit_notice": {
+      "title": "Direktna bremenitev {date}: {total}",
+      "body": "{date} bomo z vašega računa z direktno bremenitvijo SEPA poravnali {total} za {documents}."
+    },
+    "direct_debit_active": {
+      "title": "Direktna bremenitev vzpostavljena",
+      "body": "Vaša direktna bremenitev SEPA (račun, ki se konča s {last4}) je aktivna. Računi se bodo poravnali na dan zapadlosti — obvestimo vas nekaj dni prej."
+    },
+    "order_awaiting_payment": {
+      "title": "Plačajte naročilo {number}, da ga pošljemo",
+      "body": "Naročilo {number} ({total}) je rezervirano. K dobavitelju gre takoj, ko je plačano."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Naročilo {number} preklicano",
+      "body": "Naročilo {number} je bilo preklicano, ker ni bilo pravočasno plačano. Kadar koli lahko naročite znova."
+    },
+    "payment_attention": {
+      "title": "Plačilo zahteva pozornost: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Naročila",
       "files": "Dokumenti in datoteke",
       "notifications": "Obvestila",
-      "invoicing": "Izdajanje računov"
+      "invoicing": "Izdajanje računov",
+      "payments": "Plačila"
     },
     "states": {
       "ok": "Deluje",
@@ -1678,5 +1728,91 @@
     "noIncidents": "V zadnjih 7 dneh ni bilo incidentov.",
     "ongoing": "v teku",
     "checked": "Preverjeno {time} UTC"
+  },
+  "pay": {
+    "title": "Plačaj na spletu",
+    "backToInvoices": "Nazaj na račune",
+    "linkFor": "Plačilo za {company}",
+    "amountDue": "Znesek za plačilo",
+    "order": "Naročilo {number}",
+    "chooseMethod": "Kako želite plačati?",
+    "methods": {
+      "CARD": "Kartica",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referenca Multibanco",
+      "DIRECT_DEBIT": "Direktna bremenitev"
+    },
+    "methodHints": {
+      "CARD": "Visa ali Mastercard na varni plačilni strani",
+      "MB_WAY": "Potrdite na telefonu",
+      "MULTIBANCO": "Plačajte na bankomatu ali v spletni banki",
+      "DIRECT_DEBIT": "Z vašega računa, ki se konča s {last4}"
+    },
+    "phone": "Telefonska številka MB WAY",
+    "badPhone": "Vnesite 9-mestno mobilno številko, ki se začne z 9.",
+    "payNow": "Plačaj {amount}",
+    "secure": "Plačila varno obdeluje {provider}. FIRINGI nikoli ne vidi podatkov vaše kartice.",
+    "noMethods": "Spletno plačilo trenutno ni na voljo.",
+    "bankTransfer": "Ali plačajte z nakazilom na račun {holder}:",
+    "waiting": "Čakamo na potrditev…",
+    "mbwayWaiting": "Odprite aplikacijo MB WAY na telefonu ({phone}) in potrdite plačilo {amount}.",
+    "mbwayExpires": "Zahteva poteče čez {minutes} min.",
+    "multibancoTitle": "Plačajte s to referenco Multibanco",
+    "entity": "Subjekt",
+    "reference": "Referenca",
+    "amount": "Znesek",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "validUntil": "Velja do {date}",
+    "multibancoHint": "Plačilo potrdimo samodejno, takoj ko je opravljeno.",
+    "debitSubmitted": "Direktna bremenitev je bila poslana vaši banki. Traja nekaj delovnih dni; obvestimo vas, ko bo končana.",
+    "paid": "Plačano — hvala!",
+    "paidDetail": "Prejeli smo {amount}.",
+    "paidOrder": "Vaše naročilo gre zdaj k dobavitelju.",
+    "failed": "Plačilo ni uspelo: {reason}.",
+    "tryAgain": "Poskusite znova ali izberite drug način.",
+    "expired": "Ta zahteva za plačilo je potekla.",
+    "cancelled": "To zahtevo za plačilo je nadomestila novejša.",
+    "payWhatsOpen": "Plačaj, kar je še odprto",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Plačilo za to že poteka.",
+      "PAYMENT_EXPIRED": "Ta zahteva za plačilo je potekla.",
+      "PROVIDER_UNAVAILABLE": "Plačilna storitev trenutno ni na voljo. Poskusite znova čez nekaj minut.",
+      "generic": "Nekaj je šlo narobe. Poskusite znova."
+    },
+    "payInvoices": "Plačaj na spletu",
+    "selectInvoices": "Izberite račune za plačilo:",
+    "paySelected": "Plačaj {amount}",
+    "inProgress": "Plačilo poteka",
+    "credit": "Dobroimetje: {amount} — samodejno se porabi za naslednje račune.",
+    "setUpDebit": "Vzpostavi direktno bremenitev",
+    "pendingPayments": "Plačila v teku",
+    "open": "Odpri",
+    "awaitingTitle": "Čakamo na vaše plačilo",
+    "awaitingBody": "To naročilo je rezervirano in gre k dobavitelju takoj, ko je plačano. Neplačana naročila se prekličejo po {days} dneh.",
+    "payOrder": "Plačaj naročilo",
+    "statuses": {
+      "ACTIVE": "Aktivno"
+    },
+    "dd": {
+      "title": "Direktna bremenitev",
+      "intro": "Plačujte račune samodejno na dan zapadlosti z direktno bremenitvijo SEPA. Obvestimo vas {days} dni pred vsako bremenitvijo.",
+      "active": "Aktivno — račun, ki se konča s {last4}",
+      "holder": "Imetnik računa",
+      "since": "od {date}",
+      "autoCollect": "Samodejno poravnaj račune na dan zapadlosti",
+      "setUp": "Vzpostavi direktno bremenitev",
+      "replace": "Uporabi drug račun",
+      "revoke": "Prekliči direktno bremenitev",
+      "revokeConfirm": "Preklicati direktno bremenitev? Račune boste morali potem plačevati drugače.",
+      "none": "Direktna bremenitev ni vzpostavljena.",
+      "pending": "Čakamo na potrditev bančnih podatkov…",
+      "upcoming": "Naslednje bremenitve",
+      "noUpcoming": "Trenutno ni ničesar za bremenitev.",
+      "dueOn": "zapade {date}",
+      "notAvailable": "Direktna bremenitev še ni na voljo.",
+      "collectedAuto": "Vaši računi se poravnajo samodejno z direktno bremenitvijo (račun, ki se konča s {last4}).",
+      "legal": "Z vzpostavitvijo direktne bremenitve pooblaščate FIRINGI in njegovega ponudnika plačil, da vaši banki pošiljata navodila za bremenitev vašega računa, in vašo banko, da ga bremeni. Vračilo lahko pri banki zahtevate v 8 tednih po bremenitvi."
+    }
   }
 }

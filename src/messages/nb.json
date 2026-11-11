@@ -772,7 +772,8 @@
     "My Offers": "Mine tilbud",
     "AI Assistant": "AI-assistent",
     "Buy Again": "Kjøp igjen",
-    "Demand & Stock": "Etterspørsel og lager"
+    "Demand & Stock": "Etterspørsel og lager",
+    "Direct Debit": "Avtalegiro"
   },
   "delivery": {
     "title": "Levering",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Løst: {title}",
       "body": "Problemet «{title}» er borte. Se Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Betaling mottatt: {total}",
+      "body": "Takk — vi har mottatt {total} for {documents}."
+    },
+    "payment_failed": {
+      "title": "Betalingen ble ikke fullført: {total}",
+      "body": "Betalingen din på {total} gikk ikke gjennom: {reason}. Du kan prøve igjen eller velge en annen metode."
+    },
+    "payment_refunded": {
+      "title": "Refusjon på vei: {total}",
+      "body": "Vi refunderer {total} til deg. Avhengig av metoden kan det ta noen dager."
+    },
+    "payment_link": {
+      "title": "Betalingsforespørsel: {total}",
+      "body": "FIRINGI har sendt deg en lenke for å betale {documents} ({total}) på nett — MB WAY, Multibanco, kort eller avtalegiro."
+    },
+    "payment_reminder_soon": {
+      "title": "Faktura forfaller snart: {total}",
+      "body": "{documents} ({total}) forfaller {due}. Du kan betale på nett nå."
+    },
+    "payment_reminder_due": {
+      "title": "Faktura forfaller i dag: {total}",
+      "body": "{documents} ({total}) forfaller i dag. Betal på nett på ett minutt med MB WAY, Multibanco eller kort."
+    },
+    "payment_reminder_overdue": {
+      "title": "Faktura forfalt: {total}",
+      "body": "{documents} ({total}) er {days} dager forfalt. Betal nå for å kunne fortsette å bestille."
+    },
+    "direct_debit_notice": {
+      "title": "Avtalegiro {date}: {total}",
+      "body": "{date} trekker vi {total} for {documents} fra kontoen din med SEPA-avtalegiro."
+    },
+    "direct_debit_active": {
+      "title": "Avtalegiro opprettet",
+      "body": "SEPA-avtalegiroen din (konto som slutter på {last4}) er aktiv. Fakturaer trekkes på forfallsdagen — vi varsler deg noen dager før."
+    },
+    "order_awaiting_payment": {
+      "title": "Betal ordre {number} for å sende den",
+      "body": "Ordre {number} ({total}) er reservert. Den går til leverandøren så snart den er betalt."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Ordre {number} kansellert",
+      "body": "Ordre {number} ble kansellert fordi den ikke ble betalt i tide. Du kan bestille igjen når som helst."
+    },
+    "payment_attention": {
+      "title": "Betaling trenger oppfølging: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Bestillinger",
       "files": "Dokumenter og filer",
       "notifications": "Varsler",
-      "invoicing": "Fakturering"
+      "invoicing": "Fakturering",
+      "payments": "Betalinger"
     },
     "states": {
       "ok": "I drift",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Ingen hendelser de siste 7 dagene.",
     "ongoing": "pågår",
     "checked": "Sjekket {time} UTC"
+  },
+  "pay": {
+    "title": "Betal på nett",
+    "backToInvoices": "Tilbake til fakturaer",
+    "linkFor": "Betaling for {company}",
+    "amountDue": "Beløp å betale",
+    "order": "Ordre {number}",
+    "chooseMethod": "Hvordan vil du betale?",
+    "methods": {
+      "CARD": "Kort",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-referanse",
+      "DIRECT_DEBIT": "Avtalegiro"
+    },
+    "methodHints": {
+      "CARD": "Visa eller Mastercard på en sikker betalingsside",
+      "MB_WAY": "Godkjenn på telefonen",
+      "MULTIBANCO": "Betal i minibank eller nettbank",
+      "DIRECT_DEBIT": "Fra kontoen din som slutter på {last4}"
+    },
+    "phone": "Telefonnummer for MB WAY",
+    "badPhone": "Skriv inn et mobilnummer med 9 sifre som starter med 9.",
+    "payNow": "Betal {amount}",
+    "secure": "Betalinger behandles sikkert av {provider}. FIRINGI ser aldri kortopplysningene dine.",
+    "noMethods": "Nettbetaling er ikke tilgjengelig akkurat nå.",
+    "bankTransfer": "Eller betal med bankoverføring til {holder}:",
+    "waiting": "Venter på bekreftelse…",
+    "mbwayWaiting": "Åpne MB WAY-appen på telefonen ({phone}) og godkjenn betalingen på {amount}.",
+    "mbwayExpires": "Forespørselen utløper om {minutes} min.",
+    "multibancoTitle": "Betal med denne Multibanco-referansen",
+    "entity": "Enhet",
+    "reference": "Referanse",
+    "amount": "Beløp",
+    "copy": "Kopier",
+    "copied": "Kopiert",
+    "validUntil": "Gyldig til {date}",
+    "multibancoHint": "Vi bekrefter betalingen automatisk så snart den er gjort.",
+    "debitSubmitted": "Trekket er sendt til banken din. Det tar noen virkedager; vi gir beskjed når det er fullført.",
+    "paid": "Betalt — takk!",
+    "paidDetail": "Vi har mottatt {amount}.",
+    "paidOrder": "Ordren din går nå til leverandøren.",
+    "failed": "Betalingen gikk ikke gjennom: {reason}.",
+    "tryAgain": "Prøv igjen eller velg en annen metode.",
+    "expired": "Denne betalingsforespørselen har utløpt.",
+    "cancelled": "Denne betalingsforespørselen er erstattet av en nyere.",
+    "payWhatsOpen": "Betal det som fortsatt er åpent",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Det pågår allerede en betaling for dette.",
+      "PAYMENT_EXPIRED": "Denne betalingsforespørselen har utløpt.",
+      "PROVIDER_UNAVAILABLE": "Betalingstjenesten er utilgjengelig akkurat nå. Prøv igjen om noen minutter.",
+      "generic": "Noe gikk galt. Prøv igjen."
+    },
+    "payInvoices": "Betal på nett",
+    "selectInvoices": "Velg fakturaene du vil betale:",
+    "paySelected": "Betal {amount}",
+    "inProgress": "Betaling pågår",
+    "credit": "Tilgode: {amount} — brukes automatisk på dine neste fakturaer.",
+    "setUpDebit": "Opprett avtalegiro",
+    "pendingPayments": "Pågående betalinger",
+    "open": "Åpne",
+    "awaitingTitle": "Venter på betalingen din",
+    "awaitingBody": "Denne ordren er reservert og går til leverandøren så snart den er betalt. Ubetalte ordrer kanselleres etter {days} dager.",
+    "payOrder": "Betal ordre",
+    "statuses": {
+      "ACTIVE": "Aktiv"
+    },
+    "dd": {
+      "title": "Avtalegiro",
+      "intro": "Betal fakturaene dine automatisk på forfallsdagen med SEPA-avtalegiro. Vi varsler deg {days} dager før hvert trekk.",
+      "active": "Aktiv — konto som slutter på {last4}",
+      "holder": "Kontoinnehaver",
+      "since": "siden {date}",
+      "autoCollect": "Trekk fakturaer automatisk på forfallsdagen",
+      "setUp": "Opprett avtalegiro",
+      "replace": "Bruk en annen konto",
+      "revoke": "Avslutt avtalegiro",
+      "revokeConfirm": "Avslutte avtalegiroen? Fakturaene må da betales på annen måte.",
+      "none": "Ingen avtalegiro opprettet.",
+      "pending": "Venter på bekreftelse av bankopplysningene dine…",
+      "upcoming": "Neste trekk",
+      "noUpcoming": "Ingenting å trekke akkurat nå.",
+      "dueOn": "forfaller {date}",
+      "notAvailable": "Avtalegiro er ikke tilgjengelig ennå.",
+      "collectedAuto": "Fakturaene dine trekkes automatisk med avtalegiro (konto som slutter på {last4}).",
+      "legal": "Ved å opprette avtalegiro gir du FIRINGI og betalingsleverandøren tillatelse til å sende instrukser til banken din om å belaste kontoen din, og banken din tillatelse til å gjøre det. Du kan be banken om tilbakebetaling innen 8 uker etter et trekk."
+    }
   }
 }

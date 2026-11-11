@@ -1,5 +1,7 @@
 /** Order list and order detail, shared by buyer, vendor and admin screens. */
 import { Pager } from "@/components/ui/pager";
+import { PayOrderButton } from "@/components/payments/direct-debit";
+import { paymentPolicy } from "@/server/services/payments";
 import Link from "next/link";
 import type { OrderStatus } from "@prisma/client";
 import { RatingPanel } from "@/components/profit/rating-panel";
@@ -72,7 +74,7 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
 
 export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; placed?: boolean }) {
   const { order: o, role, actors, allowed } = await getOrder(ctx, id);
-  const [t, tOffers, locale] = await Promise.all([getTranslations("orders"), getTranslations("offers"), getLocale()]);
+  const [t, tOffers, tPay, locale, payDays] = await Promise.all([getTranslations("orders"), getTranslations("offers"), getTranslations("pay"), getLocale(), paymentPolicy().then((p) => p.online.prepayCancelDays)]);
   const decision = role === "BUYER" ? await openBuyerDecision(ctx, o.id) : null;
   const rules = decision ? await allocationRules() : null;
   const siblings = role === "VENDOR" ? [] : await checkoutSiblings(ctx, o);
@@ -93,7 +95,13 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
           deadline={formatDate(new Date(decision.createdAt.getTime() + rules.buyerDecisionHours * 3600_000), locale, true)} />
       )}
       {placed && <p className="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">{t("orderPlaced", { number: o.number })}</p>}
-      {o.status === "ON_HOLD" && role === "BUYER" && <p className="mb-4 rounded-md bg-warning/15 p-3 text-sm" data-testid="held-note">{t("heldNote")}</p>}
+      {o.status === "ON_HOLD" && role === "BUYER" && o.awaitingPayment && (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warning/40 bg-warning/10 p-4" data-testid="awaiting-payment">
+          <div className="min-w-0 space-y-1 text-sm"><p className="font-semibold">{tPay("awaitingTitle")}</p><p>{tPay("awaitingBody", { days: payDays })}</p></div>
+          <PayOrderButton orderId={o.id} label={`${tPay("payOrder")} · ${formatMoney(o.grandTotal.toString(), locale)}`} />
+        </div>
+      )}
+      {o.status === "ON_HOLD" && role === "BUYER" && !o.awaitingPayment && <p className="mb-4 rounded-md bg-warning/15 p-3 text-sm" data-testid="held-note">{t("heldNote")}</p>}
       {siblings.length > 0 && (
         <div className="mb-4 rounded-md border bg-card p-3 text-sm" data-testid="checkout-siblings">
           <p>{t("splitPlaced", { count: siblings.length + 1 })}</p>

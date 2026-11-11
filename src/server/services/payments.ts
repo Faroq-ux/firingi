@@ -14,6 +14,7 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { scopeWhere } from "./admin-access";
 import { writeAudit } from "./audit";
+import { providerMethods } from "@/server/payments/provider";
 
 const KEY = "payments.policy";
 export const METHODS = ["BANK_TRANSFER", "MB_WAY", "MULTIBANCO", "DIRECT_DEBIT", "CARD", "CASH_ON_DELIVERY"] as const;
@@ -33,6 +34,23 @@ export type PaymentPolicy = {
   defaultCreditLimit: Record<BuyerType, number | null>;
   /** When a supplier's invoice to FIRINGI has no due date: FIRINGI pays it this many days after its date. */
   supplierPayoutDays: number;
+  /** Online payments (Phase 20). */
+  online: OnlinePolicy;
+};
+
+export type OnlinePolicy = {
+  /** Payment links (and reminder links) stay valid this many days. */
+  linkExpiryDays: number;
+  /** Reminder this many days before the due date (null = none), on the due date, and N days overdue. */
+  reminderDaysBefore: number | null;
+  reminderOnDue: boolean;
+  reminderOverdueDays: number[];
+  /** Direct debit: customers are told this many days before an invoice is collected. */
+  directDebitNoticeDays: number;
+  /** Pay-before-shipping orders not paid within this many days are cancelled. */
+  prepayCancelDays: number;
+  /** Newly approved customers (restaurants, shops) pay before their orders ship. */
+  newCustomersPayFirst: boolean;
 };
 
 export const DEFAULT_PAYMENTS: PaymentPolicy = {
@@ -43,10 +61,16 @@ export const DEFAULT_PAYMENTS: PaymentPolicy = {
   defaultTermsDays: { CUSTOMER: 0, WHOLESALER: 30 },
   defaultCreditLimit: { CUSTOMER: null, WHOLESALER: null },
   supplierPayoutDays: 30,
+  online: { linkExpiryDays: 30, reminderDaysBefore: 3, reminderOnDue: true, reminderOverdueDays: [7, 14, 30], directDebitNoticeDays: 2, prepayCancelDays: 3, newCustomersPayFirst: false },
 };
 
-/** Methods that need a payment provider integration (not available yet). */
+/** Methods that need a payment provider (Phase 20: available when the provider supports them). */
 export const NEEDS_PROVIDER: Method[] = ["MULTIBANCO", "DIRECT_DEBIT", "CARD"];
+/** Methods the configured provider can't take yet. */
+export function unavailableMethods(): Method[] {
+  const supported = providerMethods();
+  return NEEDS_PROVIDER.filter((m) => !supported.includes(m as never));
+}
 
 export async function paymentPolicy(db: Tx | typeof prisma = prisma): Promise<PaymentPolicy> {
   const s = await db.setting.findUnique({ where: { scope_scopeId_key: { scope: "GLOBAL", scopeId: "", key: KEY } } });
@@ -56,6 +80,7 @@ export async function paymentPolicy(db: Tx | typeof prisma = prisma): Promise<Pa
     methods: { ...DEFAULT_PAYMENTS.methods, ...(v.methods ?? {}) },
     defaultTermsDays: { ...DEFAULT_PAYMENTS.defaultTermsDays, ...(v.defaultTermsDays ?? {}) },
     defaultCreditLimit: { ...DEFAULT_PAYMENTS.defaultCreditLimit, ...(v.defaultCreditLimit ?? {}) },
+    online: { ...DEFAULT_PAYMENTS.online, ...(v.online ?? {}) },
   };
 }
 
@@ -63,10 +88,12 @@ export async function setPaymentPolicy(ctx: Ctx, input: PaymentPolicy) {
   if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.settings.manage", "admin.finance.manage"])) throw new ForbiddenError();
   const days = (n: unknown, label: string) => { const x = Number(n); if (!Number.isInteger(x) || x < 0 || x > 180) throw new ValidationError(`${label} must be 0–180 days.`); return x; };
   const limit = (n: unknown) => { if (n === null || n === "" || n === undefined) return null; const x = Number(n); if (!Number.isFinite(x) || x < 0) throw new ValidationError("Credit limit must be 0 or more (empty = no limit)."); return x; };
-  const methods = Object.fromEntries(METHODS.map((m) => [m, !!input.methods?.[m] && !NEEDS_PROVIDER.includes(m)])) as Record<Method, boolean>;
+  const blocked = unavailableMethods();
+  const methods = Object.fromEntries(METHODS.map((m) => [m, !!input.methods?.[m] && !blocked.includes(m)])) as Record<Method, boolean>;
   if (!Object.values(methods).some(Boolean)) throw new ValidationError("Keep at least one payment method.");
   const phone = input.mbWayPhone?.replace(/\s+/g, "") || null;
-  if (methods.MB_WAY && !(phone && /^\+?\d{9,15}$/.test(phone))) throw new ValidationError("Enter the MB WAY phone number.");
+  // MB WAY through the provider needs no number; manual MB WAY (send money to FIRINGI's phone) does.
+  if (methods.MB_WAY && !providerMethods().includes("MB_WAY") && !(phone && /^\+?\d{9,15}$/.test(phone))) throw new ValidationError("Enter the MB WAY phone number.");
   const value: PaymentPolicy = {
     methods, mbWayPhone: phone,
     overdueBlockDays: input.overdueBlockDays === null ? null : days(input.overdueBlockDays, "Grace period"),
@@ -74,6 +101,7 @@ export async function setPaymentPolicy(ctx: Ctx, input: PaymentPolicy) {
     defaultTermsDays: { CUSTOMER: days(input.defaultTermsDays.CUSTOMER, "Customer terms"), WHOLESALER: days(input.defaultTermsDays.WHOLESALER, "Wholesaler terms") },
     defaultCreditLimit: { CUSTOMER: limit(input.defaultCreditLimit.CUSTOMER), WHOLESALER: limit(input.defaultCreditLimit.WHOLESALER) },
     supplierPayoutDays: days(input.supplierPayoutDays ?? DEFAULT_PAYMENTS.supplierPayoutDays, "Supplier payout terms"),
+    online: onlinePolicy(input.online),
   };
   const before = await paymentPolicy();
   await prisma.setting.upsert({
@@ -84,6 +112,21 @@ export async function setPaymentPolicy(ctx: Ctx, input: PaymentPolicy) {
   return value;
 }
 
+function onlinePolicy(o: Partial<OnlinePolicy> | undefined): OnlinePolicy {
+  const d = DEFAULT_PAYMENTS.online, v = { ...d, ...(o ?? {}) };
+  const int = (n: unknown, min: number, max: number, label: string) => { const x = Number(n); if (!Number.isInteger(x) || x < min || x > max) throw new ValidationError(`${label} must be ${min}–${max}.`); return x; };
+  const overdue = [...new Set((Array.isArray(v.reminderOverdueDays) ? v.reminderOverdueDays : String(v.reminderOverdueDays ?? "").split(/[,\s]+/)).filter((x) => x !== "" && x !== null).map((x) => int(x, 1, 180, "Overdue reminder days")))].sort((a, b) => a - b).slice(0, 6);
+  return {
+    linkExpiryDays: int(v.linkExpiryDays, 1, 90, "Payment link validity (days)"),
+    reminderDaysBefore: v.reminderDaysBefore === null || (v.reminderDaysBefore as unknown) === "" ? null : int(v.reminderDaysBefore, 1, 30, "Reminder before due date (days)"),
+    reminderOnDue: !!v.reminderOnDue,
+    reminderOverdueDays: overdue,
+    directDebitNoticeDays: int(v.directDebitNoticeDays, 1, 14, "Direct debit notice (days)"),
+    prepayCancelDays: int(v.prepayCancelDays, 1, 30, "Unpaid order cancellation (days)"),
+    newCustomersPayFirst: !!v.newCustomersPayFirst,
+  };
+}
+
 /** Defaults for a buyer that has just been approved (only fills what isn't set yet). */
 export async function applyBuyerDefaults(tx: Tx, companyId: string) {
   const c = await tx.company.findUniqueOrThrow({ where: { id: companyId }, select: { type: true, creditLimit: true, paymentTermsDays: true } });
@@ -92,6 +135,7 @@ export async function applyBuyerDefaults(tx: Tx, companyId: string) {
   await tx.company.update({
     where: { id: companyId },
     data: {
+      ...(c.type === "CUSTOMER" && p.online.newCustomersPayFirst ? { payBeforeShipping: true } : {}),
       ...(c.paymentTermsDays === 0 ? { paymentTermsDays: p.defaultTermsDays[c.type] } : {}),
       ...(c.creditLimit === null && p.defaultCreditLimit[c.type] !== null ? { creditLimit: p.defaultCreditLimit[c.type]! } : {}),
     },

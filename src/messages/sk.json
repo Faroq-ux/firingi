@@ -772,7 +772,8 @@
     "My Offers": "Moje ponuky",
     "AI Assistant": "AI asistent",
     "Buy Again": "Kúpiť znova",
-    "Demand & Stock": "Dopyt a zásoby"
+    "Demand & Stock": "Dopyt a zásoby",
+    "Direct Debit": "Inkaso"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Vyriešené: {title}",
       "body": "Problém „{title}“ zmizol. Pozrite Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Platba prijatá: {total}",
+      "body": "Ďakujeme — prijali sme {total} za {documents}."
+    },
+    "payment_failed": {
+      "title": "Platba nebola dokončená: {total}",
+      "body": "Vaša platba {total} neprešla: {reason}. Môžete to skúsiť znova alebo zvoliť inú metódu."
+    },
+    "payment_refunded": {
+      "title": "Vrátenie peňazí na ceste: {total}",
+      "body": "Vraciame vám {total}. Podľa metódy to môže trvať niekoľko dní."
+    },
+    "payment_link": {
+      "title": "Žiadosť o platbu: {total}",
+      "body": "FIRINGI vám poslal odkaz na online platbu {documents} ({total}) — MB WAY, Multibanco, kartou alebo inkasom."
+    },
+    "payment_reminder_soon": {
+      "title": "Faktúra čoskoro splatná: {total}",
+      "body": "{documents} ({total}) je splatná {due}. Môžete ju zaplatiť online už teraz."
+    },
+    "payment_reminder_due": {
+      "title": "Faktúra splatná dnes: {total}",
+      "body": "{documents} ({total}) je splatná dnes. Zaplaťte online za minútu cez MB WAY, Multibanco alebo kartou."
+    },
+    "payment_reminder_overdue": {
+      "title": "Faktúra po splatnosti: {total}",
+      "body": "{documents} ({total}) je {days} dní po splatnosti. Zaplaťte, prosím, hneď, aby ste mohli ďalej objednávať."
+    },
+    "direct_debit_notice": {
+      "title": "Inkaso {date}: {total}",
+      "body": "{date} stiahneme {total} za {documents} z vášho účtu inkasom SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Inkaso nastavené",
+      "body": "Vaše inkaso SEPA (účet končiaci na {last4}) je aktívne. Faktúry sa stiahnu v deň splatnosti — upozorníme vás pár dní vopred."
+    },
+    "order_awaiting_payment": {
+      "title": "Zaplaťte objednávku {number}, aby sme ju odoslali",
+      "body": "Objednávka {number} ({total}) je rezervovaná. K dodávateľovi pôjde, hneď ako bude zaplatená."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Objednávka {number} zrušená",
+      "body": "Objednávka {number} bola zrušená, pretože nebola včas zaplatená. Môžete kedykoľvek objednať znova."
+    },
+    "payment_attention": {
+      "title": "Platba si vyžaduje pozornosť: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Objednávky",
       "files": "Dokumenty a súbory",
       "notifications": "Upozornenia",
-      "invoicing": "Fakturácia"
+      "invoicing": "Fakturácia",
+      "payments": "Platby"
     },
     "states": {
       "ok": "V prevádzke",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Žiadne incidenty za posledných 7 dní.",
     "ongoing": "prebieha",
     "checked": "Skontrolované {time} UTC"
+  },
+  "pay": {
+    "title": "Zaplatiť online",
+    "backToInvoices": "Späť na faktúry",
+    "linkFor": "Platba pre {company}",
+    "amountDue": "Suma na úhradu",
+    "order": "Objednávka {number}",
+    "chooseMethod": "Ako chcete zaplatiť?",
+    "methods": {
+      "CARD": "Karta",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referencia Multibanco",
+      "DIRECT_DEBIT": "Inkaso"
+    },
+    "methodHints": {
+      "CARD": "Visa alebo Mastercard na zabezpečenej platobnej stránke",
+      "MB_WAY": "Potvrďte v telefóne",
+      "MULTIBANCO": "Zaplaťte v bankomate alebo v internetbankingu",
+      "DIRECT_DEBIT": "Z vášho účtu končiaceho na {last4}"
+    },
+    "phone": "Telefónne číslo MB WAY",
+    "badPhone": "Zadajte 9-miestne mobilné číslo začínajúce 9.",
+    "payNow": "Zaplatiť {amount}",
+    "secure": "Platby bezpečne spracúva {provider}. FIRINGI nikdy nevidí údaje vašej karty.",
+    "noMethods": "Online platba teraz nie je dostupná.",
+    "bankTransfer": "Alebo zaplaťte prevodom v prospech {holder}:",
+    "waiting": "Čakáme na potvrdenie…",
+    "mbwayWaiting": "Otvorte aplikáciu MB WAY v telefóne ({phone}) a potvrďte platbu {amount}.",
+    "mbwayExpires": "Žiadosť vyprší o {minutes} min.",
+    "multibancoTitle": "Zaplaťte touto referenciou Multibanco",
+    "entity": "Subjekt",
+    "reference": "Referencia",
+    "amount": "Suma",
+    "copy": "Kopírovať",
+    "copied": "Skopírované",
+    "validUntil": "Platí do {date}",
+    "multibancoHint": "Platbu potvrdíme automaticky, hneď ako prebehne.",
+    "debitSubmitted": "Inkaso bolo odoslané do vašej banky. Trvá to niekoľko pracovných dní; dáme vám vedieť, keď bude hotové.",
+    "paid": "Zaplatené — ďakujeme!",
+    "paidDetail": "Prijali sme {amount}.",
+    "paidOrder": "Vaša objednávka teraz ide k dodávateľovi.",
+    "failed": "Platba neprešla: {reason}.",
+    "tryAgain": "Skúste to znova alebo zvoľte inú metódu.",
+    "expired": "Táto žiadosť o platbu vypršala.",
+    "cancelled": "Táto žiadosť o platbu bola nahradená novšou.",
+    "payWhatsOpen": "Zaplatiť, čo zostáva",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Platba za toto už prebieha.",
+      "PAYMENT_EXPIRED": "Táto žiadosť o platbu vypršala.",
+      "PROVIDER_UNAVAILABLE": "Platobná služba teraz nie je dostupná. Skúste to o pár minút.",
+      "generic": "Niečo sa pokazilo. Skúste to znova."
+    },
+    "payInvoices": "Zaplatiť online",
+    "selectInvoices": "Vyberte faktúry na úhradu:",
+    "paySelected": "Zaplatiť {amount}",
+    "inProgress": "Platba prebieha",
+    "credit": "Kredit: {amount} — automaticky sa použije na ďalšie faktúry.",
+    "setUpDebit": "Nastaviť inkaso",
+    "pendingPayments": "Prebiehajúce platby",
+    "open": "Otvoriť",
+    "awaitingTitle": "Čakáme na vašu platbu",
+    "awaitingBody": "Táto objednávka je rezervovaná a k dodávateľovi pôjde, hneď ako bude zaplatená. Nezaplatené objednávky sa rušia po {days} dňoch.",
+    "payOrder": "Zaplatiť objednávku",
+    "statuses": {
+      "ACTIVE": "Aktívne"
+    },
+    "dd": {
+      "title": "Inkaso",
+      "intro": "Plaťte faktúry automaticky v deň splatnosti inkasom SEPA. Upozorníme vás {days} dní pred každým stiahnutím.",
+      "active": "Aktívne — účet končiaci na {last4}",
+      "holder": "Majiteľ účtu",
+      "since": "od {date}",
+      "autoCollect": "Sťahovať faktúry automaticky v deň splatnosti",
+      "setUp": "Nastaviť inkaso",
+      "replace": "Použiť iný účet",
+      "revoke": "Zrušiť inkaso",
+      "revokeConfirm": "Zrušiť inkaso? Faktúry bude potom nutné platiť inak.",
+      "none": "Inkaso nie je nastavené.",
+      "pending": "Čakáme na potvrdenie bankových údajov…",
+      "upcoming": "Najbližšie stiahnutia",
+      "noUpcoming": "Teraz nie je čo stiahnuť.",
+      "dueOn": "splatné {date}",
+      "notAvailable": "Inkaso zatiaľ nie je dostupné.",
+      "collectedAuto": "Vaše faktúry sa sťahujú automaticky inkasom (účet končiaci na {last4}).",
+      "legal": "Nastavením inkasa splnomocňujete FIRINGI a jeho poskytovateľa platieb posielať vašej banke pokyny na odpísanie z vášho účtu a vašu banku na jeho odpísanie. O vrátenie môžete banku požiadať do 8 týždňov od stiahnutia."
+    }
   }
 }

@@ -772,7 +772,8 @@
     "My Offers": "Mani piedāvājumi",
     "AI Assistant": "MI asistents",
     "Buy Again": "Pirkt vēlreiz",
-    "Demand & Stock": "Pieprasījums un krājumi"
+    "Demand & Stock": "Pieprasījums un krājumi",
+    "Direct Debit": "Tiešais debets"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Atrisināts: {title}",
       "body": "Problēma “{title}” ir novērsta. Skatiet Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Maksājums saņemts: {total}",
+      "body": "Paldies — saņēmām {total} par {documents}."
+    },
+    "payment_failed": {
+      "title": "Maksājums nav izdevies: {total}",
+      "body": "Jūsu maksājums {total} neizdevās: {reason}. Varat mēģināt vēlreiz vai izvēlēties citu veidu."
+    },
+    "payment_refunded": {
+      "title": "Atmaksa ceļā: {total}",
+      "body": "Mēs jums atmaksājam {total}. Atkarībā no veida tas var aizņemt dažas dienas."
+    },
+    "payment_link": {
+      "title": "Maksājuma pieprasījums: {total}",
+      "body": "FIRINGI jums nosūtīja saiti, lai tiešsaistē apmaksātu {documents} ({total}) — MB WAY, Multibanco, karte vai tiešais debets."
+    },
+    "payment_reminder_soon": {
+      "title": "Rēķina termiņš drīz: {total}",
+      "body": "{documents} ({total}) apmaksas termiņš ir {due}. Varat to apmaksāt tiešsaistē jau tagad."
+    },
+    "payment_reminder_due": {
+      "title": "Rēķina termiņš šodien: {total}",
+      "body": "{documents} ({total}) apmaksas termiņš ir šodien. Maksājiet tiešsaistē minūtes laikā ar MB WAY, Multibanco vai karti."
+    },
+    "payment_reminder_overdue": {
+      "title": "Rēķins kavēts: {total}",
+      "body": "{documents} ({total}) kavējums ir {days} dienas. Lūdzu, samaksājiet tagad, lai varētu turpināt pasūtīt."
+    },
+    "direct_debit_notice": {
+      "title": "Tiešais debets {date}: {total}",
+      "body": "{date} mēs ar SEPA tiešo debetu no jūsu konta iekasēsim {total} par {documents}."
+    },
+    "direct_debit_active": {
+      "title": "Tiešais debets iestatīts",
+      "body": "Jūsu SEPA tiešais debets (konts beidzas ar {last4}) ir aktīvs. Rēķini tiks iekasēti apmaksas termiņā — paziņosim dažas dienas iepriekš."
+    },
+    "order_awaiting_payment": {
+      "title": "Apmaksājiet pasūtījumu {number}, lai to nosūtītu",
+      "body": "Pasūtījums {number} ({total}) ir rezervēts. Tas nonāks pie piegādātāja, tiklīdz būs apmaksāts."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Pasūtījums {number} atcelts",
+      "body": "Pasūtījums {number} tika atcelts, jo netika laikus apmaksāts. Varat pasūtīt vēlreiz jebkurā laikā."
+    },
+    "payment_attention": {
+      "title": "Maksājumam vajadzīga uzmanība: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Pasūtījumi",
       "files": "Dokumenti un faili",
       "notifications": "Paziņojumi",
-      "invoicing": "Rēķinu izrakstīšana"
+      "invoicing": "Rēķinu izrakstīšana",
+      "payments": "Maksājumi"
     },
     "states": {
       "ok": "Darbojas",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Pēdējās 7 dienās incidentu nav bijis.",
     "ongoing": "notiek",
     "checked": "Pārbaudīts {time} UTC"
+  },
+  "pay": {
+    "title": "Maksāt tiešsaistē",
+    "backToInvoices": "Atpakaļ uz rēķiniem",
+    "linkFor": "Maksājums: {company}",
+    "amountDue": "Maksājamā summa",
+    "order": "Pasūtījums {number}",
+    "chooseMethod": "Kā vēlaties maksāt?",
+    "methods": {
+      "CARD": "Karte",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco atsauce",
+      "DIRECT_DEBIT": "Tiešais debets"
+    },
+    "methodHints": {
+      "CARD": "Visa vai Mastercard drošā maksājumu lapā",
+      "MB_WAY": "Apstipriniet tālrunī",
+      "MULTIBANCO": "Maksājiet bankomātā vai internetbankā",
+      "DIRECT_DEBIT": "No jūsu konta, kas beidzas ar {last4}"
+    },
+    "phone": "MB WAY tālruņa numurs",
+    "badPhone": "Ievadiet 9 ciparu mobilā tālruņa numuru, kas sākas ar 9.",
+    "payNow": "Maksāt {amount}",
+    "secure": "Maksājumus droši apstrādā {provider}. FIRINGI nekad neredz jūsu kartes datus.",
+    "noMethods": "Tiešsaistes maksājums pašlaik nav pieejams.",
+    "bankTransfer": "Vai samaksājiet ar bankas pārskaitījumu saņēmējam {holder}:",
+    "waiting": "Gaidām apstiprinājumu…",
+    "mbwayWaiting": "Atveriet MB WAY lietotni tālrunī ({phone}) un apstipriniet maksājumu {amount}.",
+    "mbwayExpires": "Pieprasījums beigsies pēc {minutes} min.",
+    "multibancoTitle": "Maksājiet ar šo Multibanco atsauci",
+    "entity": "Iestāde",
+    "reference": "Atsauce",
+    "amount": "Summa",
+    "copy": "Kopēt",
+    "copied": "Nokopēts",
+    "validUntil": "Derīga līdz {date}",
+    "multibancoHint": "Maksājumu apstiprinām automātiski, tiklīdz tas veikts.",
+    "debitSubmitted": "Tiešais debets nosūtīts jūsu bankai. Tas aizņem dažas darba dienas; paziņosim, kad tas būs pabeigts.",
+    "paid": "Samaksāts — paldies!",
+    "paidDetail": "Saņēmām {amount}.",
+    "paidOrder": "Jūsu pasūtījums tagad nonāk pie piegādātāja.",
+    "failed": "Maksājums neizdevās: {reason}.",
+    "tryAgain": "Mēģiniet vēlreiz vai izvēlieties citu veidu.",
+    "expired": "Šī maksājuma pieprasījuma termiņš ir beidzies.",
+    "cancelled": "Šo maksājuma pieprasījumu aizstāja jaunāks.",
+    "payWhatsOpen": "Samaksāt atlikušo",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Par šo maksājums jau notiek.",
+      "PAYMENT_EXPIRED": "Šī maksājuma pieprasījuma termiņš ir beidzies.",
+      "PROVIDER_UNAVAILABLE": "Maksājumu pakalpojums pašlaik nav pieejams. Mēģiniet vēlreiz pēc dažām minūtēm.",
+      "generic": "Kaut kas nogāja greizi. Mēģiniet vēlreiz."
+    },
+    "payInvoices": "Maksāt tiešsaistē",
+    "selectInvoices": "Izvēlieties apmaksājamos rēķinus:",
+    "paySelected": "Maksāt {amount}",
+    "inProgress": "Maksājums notiek",
+    "credit": "Kredīts: {amount} — automātiski tiek izmantots nākamajiem rēķiniem.",
+    "setUpDebit": "Iestatīt tiešo debetu",
+    "pendingPayments": "Notiekošie maksājumi",
+    "open": "Atvērt",
+    "awaitingTitle": "Gaidām jūsu maksājumu",
+    "awaitingBody": "Šis pasūtījums ir rezervēts un nonāks pie piegādātāja, tiklīdz būs apmaksāts. Neapmaksāti pasūtījumi tiek atcelti pēc {days} dienām.",
+    "payOrder": "Apmaksāt pasūtījumu",
+    "statuses": {
+      "ACTIVE": "Aktīvs"
+    },
+    "dd": {
+      "title": "Tiešais debets",
+      "intro": "Apmaksājiet rēķinus automātiski apmaksas termiņā ar SEPA tiešo debetu. Paziņojam {days} dienas pirms katras iekasēšanas.",
+      "active": "Aktīvs — konts beidzas ar {last4}",
+      "holder": "Konta īpašnieks",
+      "since": "kopš {date}",
+      "autoCollect": "Automātiski iekasēt rēķinus apmaksas termiņā",
+      "setUp": "Iestatīt tiešo debetu",
+      "replace": "Izmantot citu kontu",
+      "revoke": "Atcelt tiešo debetu",
+      "revokeConfirm": "Atcelt tiešo debetu? Tad rēķini būs jāapmaksā citā veidā.",
+      "none": "Tiešais debets nav iestatīts.",
+      "pending": "Gaidām bankas datu apstiprinājumu…",
+      "upcoming": "Nākamās iekasēšanas",
+      "noUpcoming": "Pašlaik nav ko iekasēt.",
+      "dueOn": "termiņš {date}",
+      "notAvailable": "Tiešais debets vēl nav pieejams.",
+      "collectedAuto": "Jūsu rēķini tiek iekasēti automātiski ar tiešo debetu (konts beidzas ar {last4}).",
+      "legal": "Iestatot tiešo debetu, jūs pilnvarojat FIRINGI un tās maksājumu pakalpojumu sniedzēju sūtīt jūsu bankai rīkojumus debetēt jūsu kontu, un savu banku to debetēt. Atmaksu no bankas varat pieprasīt 8 nedēļu laikā pēc debetēšanas."
+    }
   }
 }

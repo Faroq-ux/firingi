@@ -62,13 +62,15 @@ export function ErasureActions({ id, blocked }: { id: string; blocked: boolean }
 type Policy = {
   methods: Record<string, boolean>; mbWayPhone: string | null; overdueBlockDays: number | null; creditCheck: boolean;
   defaultTermsDays: { CUSTOMER: number; WHOLESALER: number }; defaultCreditLimit: { CUSTOMER: number | null; WHOLESALER: number | null }; supplierPayoutDays: number;
+  online: { linkExpiryDays: number; reminderDaysBefore: number | null; reminderOnDue: boolean; reminderOverdueDays: number[] | string; directDebitNoticeDays: number; prepayCancelDays: number; newCustomersPayFirst: boolean };
 };
+const ONLINE_LABEL: Record<string, string> = { MB_WAY: "MB WAY (online)", MULTIBANCO: "Multibanco references", DIRECT_DEBIT: "SEPA direct debit", CARD: "Card online" };
 const METHOD_LABEL: Record<string, string> = {
   BANK_TRANSFER: "Bank transfer (FIRINGI's IBAN)", MB_WAY: "MB WAY (to FIRINGI's number)", CASH_ON_DELIVERY: "Cash / card to the driver on delivery",
   MULTIBANCO: "Multibanco references", DIRECT_DEBIT: "SEPA direct debit", CARD: "Card online",
 };
 
-export function PaymentPolicyForm({ policy, needsProvider, canEdit }: { policy: Policy; needsProvider: string[]; canEdit: boolean }) {
+export function PaymentPolicyForm({ policy, needsProvider, canEdit, provider }: { policy: Policy; needsProvider: string[]; canEdit: boolean; provider: string | null }) {
   const { pending, msg, run } = useAct();
   const [p, setP] = useState(policy);
   const num = (v: string) => (v.trim() === "" ? null : Number(v));
@@ -81,11 +83,28 @@ export function PaymentPolicyForm({ policy, needsProvider, canEdit }: { policy: 
             {Object.keys(METHOD_LABEL).map((m) => (
               <label key={m} className="flex items-center gap-2">
                 <input type="checkbox" name={`method-${m}`} disabled={needsProvider.includes(m)} checked={!!p.methods[m]} onChange={(e) => setP({ ...p, methods: { ...p.methods, [m]: e.target.checked } })} />
-                {METHOD_LABEL[m]}{needsProvider.includes(m) && <span className="text-xs text-muted-foreground">(needs a payment provider)</span>}
+                {provider && ONLINE_LABEL[m] ? ONLINE_LABEL[m] : METHOD_LABEL[m]}{needsProvider.includes(m) && <span className="text-xs text-muted-foreground">(needs a payment provider)</span>}
               </label>
             ))}
           </div>
-          {p.methods.MB_WAY && <label className="mt-2 flex items-center gap-2">MB WAY number <Input name="mbWayPhone" className="w-48" value={p.mbWayPhone ?? ""} onChange={(e) => setP({ ...p, mbWayPhone: e.target.value })} /></label>}
+          {p.methods.MB_WAY && !provider && <label className="mt-2 flex items-center gap-2">MB WAY number <Input name="mbWayPhone" className="w-48" value={p.mbWayPhone ?? ""} onChange={(e) => setP({ ...p, mbWayPhone: e.target.value })} /></label>}
+          <p className="mt-2 text-xs text-muted-foreground">{provider ? `Online methods go through ${provider} — customers pay in the portal or from a payment link (Finance › Online Payments).` : "No payment provider is configured: card, Multibanco and direct debit need one (server settings)."}</p>
+        </div>
+        <div className="rounded-md border p-3" data-testid="online-policy">
+          <div className="mb-2 font-medium">Online payments, reminders &amp; direct debit</div>
+          <label className="mb-1 flex flex-wrap items-center gap-2">Remind customers
+            <Input type="number" name="reminderDaysBefore" min={1} max={30} className="w-16 text-right" placeholder="off" value={p.online.reminderDaysBefore ?? ""} onChange={(e) => setP({ ...p, online: { ...p.online, reminderDaysBefore: num(e.target.value) } })} /> days before the due date (empty = no)</label>
+          <label className="mb-1 flex items-center gap-2"><input type="checkbox" checked={p.online.reminderOnDue} onChange={(e) => setP({ ...p, online: { ...p.online, reminderOnDue: e.target.checked } })} />…and on the due date</label>
+          <label className="mb-1 flex flex-wrap items-center gap-2">…and when overdue by
+            <Input name="reminderOverdueDays" className="w-32" value={Array.isArray(p.online.reminderOverdueDays) ? p.online.reminderOverdueDays.join(", ") : p.online.reminderOverdueDays} onChange={(e) => setP({ ...p, online: { ...p.online, reminderOverdueDays: e.target.value } })} /> days (each reminder carries a pay link)</label>
+          <label className="mb-1 flex flex-wrap items-center gap-2">Payment links stay valid
+            <Input type="number" name="linkExpiryDays" min={1} max={90} className="w-16 text-right" value={p.online.linkExpiryDays} onChange={(e) => setP({ ...p, online: { ...p.online, linkExpiryDays: Number(e.target.value) } })} /> days</label>
+          <label className="mb-1 flex flex-wrap items-center gap-2">Direct debit: tell the customer
+            <Input type="number" name="directDebitNoticeDays" min={1} max={14} className="w-16 text-right" value={p.online.directDebitNoticeDays} onChange={(e) => setP({ ...p, online: { ...p.online, directDebitNoticeDays: Number(e.target.value) } })} /> days before collecting</label>
+          <label className="mb-1 flex flex-wrap items-center gap-2">Pay-before-shipping orders not paid within
+            <Input type="number" name="prepayCancelDays" min={1} max={30} className="w-16 text-right" value={p.online.prepayCancelDays} onChange={(e) => setP({ ...p, online: { ...p.online, prepayCancelDays: Number(e.target.value) } })} /> days are cancelled</label>
+          <label className="flex items-center gap-2"><input type="checkbox" checked={p.online.newCustomersPayFirst} onChange={(e) => setP({ ...p, online: { ...p.online, newCustomersPayFirst: e.target.checked } })} />Newly approved customers (restaurants, shops) pay before their orders ship</label>
+          <p className="mt-1 text-xs text-muted-foreground">Per business: Customers › Credit &amp; Limits › Pay before shipping.</p>
         </div>
         <div className="rounded-md border p-3">
           <div className="mb-2 font-medium">Credit control at checkout</div>

@@ -85,6 +85,19 @@ export const EVENTS: EventDef[] = [
   E("return.credited", "returns", [...BUYER_ORDERS, "buyer.invoices.view"], ["EMAIL"], ["number"]),
   // finance
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
+  // online payments (Phase 20) — {total} is shown in the reader's currency format
+  E("payment.received", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH"], ["total", "documents"]),
+  E("payment.failed", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH"], ["total", "reason"]),
+  E("payment.refunded", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL"], ["total"]),
+  E("payment.link", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "WHATSAPP"], ["total", "documents"]),
+  E("payment.reminder_soon", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL"], ["total", "documents", "due"]),
+  E("payment.reminder_due", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH"], ["total", "documents"]),
+  E("payment.reminder_overdue", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "WHATSAPP"], ["total", "documents", "days"]),
+  E("direct_debit.notice", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL"], ["total", "documents", "date"]),
+  E("direct_debit.active", "finance", ["buyer.payments.make", "buyer.payments.view"], ["EMAIL"], ["last4"]),
+  E("order.awaiting_payment", "orders", ["buyer.orders.place", "buyer.payments.make"], ["EMAIL", "PUSH"], ["number", "total"]),
+  E("order.cancelled_unpaid", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL"], ["number"]),
+  E("payment.attention", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["company", "total", "reason"]),
   E("vendor_invoice.approved", "finance", ["vendor.invoices.view", "vendor.invoices.submit"], ["EMAIL"], ["document"], true),
   E("vendor_invoice.rejected", "finance", ["vendor.invoices.view", "vendor.invoices.submit"], ["EMAIL"], ["document", "reason"], true),
   // support & CRM

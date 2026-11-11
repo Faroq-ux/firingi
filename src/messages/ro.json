@@ -772,7 +772,8 @@
     "My Offers": "Ofertele mele",
     "AI Assistant": "Asistent IA",
     "Buy Again": "Cumpără din nou",
-    "Demand & Stock": "Cerere și stoc"
+    "Demand & Stock": "Cerere și stoc",
+    "Direct Debit": "Debit direct"
   },
   "delivery": {
     "title": "Livrare",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Rezolvat: {title}",
       "body": "Problema „{title}” a dispărut. Vedeți Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Plată primită: {total}",
+      "body": "Mulțumim — am primit {total} pentru {documents}."
+    },
+    "payment_failed": {
+      "title": "Plata nu s-a finalizat: {total}",
+      "body": "Plata dvs. de {total} nu a reușit: {reason}. Puteți încerca din nou sau alege altă metodă."
+    },
+    "payment_refunded": {
+      "title": "Rambursare în curs: {total}",
+      "body": "Vă rambursăm {total}. În funcție de metodă, poate dura câteva zile."
+    },
+    "payment_link": {
+      "title": "Cerere de plată: {total}",
+      "body": "FIRINGI v-a trimis un link pentru a plăti {documents} ({total}) online — MB WAY, Multibanco, card sau debit direct."
+    },
+    "payment_reminder_soon": {
+      "title": "Factură scadentă curând: {total}",
+      "body": "{documents} ({total}) este scadentă pe {due}. O puteți plăti online acum."
+    },
+    "payment_reminder_due": {
+      "title": "Factură scadentă azi: {total}",
+      "body": "{documents} ({total}) este scadentă azi. Plătiți online într-un minut cu MB WAY, Multibanco sau card."
+    },
+    "payment_reminder_overdue": {
+      "title": "Factură restantă: {total}",
+      "body": "{documents} ({total}) are o întârziere de {days} zile. Vă rugăm plătiți acum pentru a putea comanda în continuare."
+    },
+    "direct_debit_notice": {
+      "title": "Debit direct pe {date}: {total}",
+      "body": "Pe {date} vom încasa {total} pentru {documents} din contul dvs. prin debit direct SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Debit direct activat",
+      "body": "Debitul direct SEPA (cont care se termină în {last4}) este activ. Facturile vor fi încasate la scadență — vă anunțăm cu câteva zile înainte."
+    },
+    "order_awaiting_payment": {
+      "title": "Plătiți comanda {number} pentru a o trimite",
+      "body": "Comanda {number} ({total}) este rezervată. Ajunge la furnizor imediat ce este plătită."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Comanda {number} anulată",
+      "body": "Comanda {number} a fost anulată pentru că nu a fost plătită la timp. Puteți comanda din nou oricând."
+    },
+    "payment_attention": {
+      "title": "Plată care necesită atenție: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Comenzi",
       "files": "Documente și fișiere",
       "notifications": "Notificări",
-      "invoicing": "Facturare"
+      "invoicing": "Facturare",
+      "payments": "Plăți"
     },
     "states": {
       "ok": "Funcțional",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Niciun incident în ultimele 7 zile.",
     "ongoing": "în curs",
     "checked": "Verificat la {time} UTC"
+  },
+  "pay": {
+    "title": "Plătiți online",
+    "backToInvoices": "Înapoi la facturi",
+    "linkFor": "Plată pentru {company}",
+    "amountDue": "Suma de plată",
+    "order": "Comanda {number}",
+    "chooseMethod": "Cum doriți să plătiți?",
+    "methods": {
+      "CARD": "Card",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referință Multibanco",
+      "DIRECT_DEBIT": "Debit direct"
+    },
+    "methodHints": {
+      "CARD": "Visa sau Mastercard pe o pagină de plată securizată",
+      "MB_WAY": "Aprobați pe telefon",
+      "MULTIBANCO": "Plătiți la bancomat sau în internet banking",
+      "DIRECT_DEBIT": "Din contul dvs. care se termină în {last4}"
+    },
+    "phone": "Număr de telefon MB WAY",
+    "badPhone": "Introduceți un număr de mobil de 9 cifre care începe cu 9.",
+    "payNow": "Plătiți {amount}",
+    "secure": "Plățile sunt procesate în siguranță de {provider}. FIRINGI nu vede niciodată datele cardului dvs.",
+    "noMethods": "Plata online nu este disponibilă acum.",
+    "bankTransfer": "Sau plătiți prin transfer bancar către {holder}:",
+    "waiting": "Se așteaptă confirmarea…",
+    "mbwayWaiting": "Deschideți aplicația MB WAY pe telefon ({phone}) și aprobați plata de {amount}.",
+    "mbwayExpires": "Cererea expiră în {minutes} min.",
+    "multibancoTitle": "Plătiți cu această referință Multibanco",
+    "entity": "Entitate",
+    "reference": "Referință",
+    "amount": "Sumă",
+    "copy": "Copiați",
+    "copied": "Copiat",
+    "validUntil": "Valabilă până la {date}",
+    "multibancoHint": "Confirmăm plata automat imediat ce este efectuată.",
+    "debitSubmitted": "Debitul direct a fost trimis băncii dvs. Durează câteva zile lucrătoare; vă anunțăm când este finalizat.",
+    "paid": "Plătit — mulțumim!",
+    "paidDetail": "Am primit {amount}.",
+    "paidOrder": "Comanda dvs. merge acum la furnizor.",
+    "failed": "Plata nu a reușit: {reason}.",
+    "tryAgain": "Încercați din nou sau alegeți altă metodă.",
+    "expired": "Această cerere de plată a expirat.",
+    "cancelled": "Această cerere de plată a fost înlocuită de una mai nouă.",
+    "payWhatsOpen": "Plătiți ce a rămas de plată",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Există deja o plată în curs pentru aceasta.",
+      "PAYMENT_EXPIRED": "Această cerere de plată a expirat.",
+      "PROVIDER_UNAVAILABLE": "Serviciul de plăți nu este disponibil acum. Încercați din nou peste câteva minute.",
+      "generic": "Ceva nu a mers. Încercați din nou."
+    },
+    "payInvoices": "Plătiți online",
+    "selectInvoices": "Alegeți facturile de plătit:",
+    "paySelected": "Plătiți {amount}",
+    "inProgress": "Plată în curs",
+    "credit": "Sold în favoarea dvs.: {amount} — folosit automat la următoarele facturi.",
+    "setUpDebit": "Activați debitul direct",
+    "pendingPayments": "Plăți în curs",
+    "open": "Deschideți",
+    "awaitingTitle": "Se așteaptă plata dvs.",
+    "awaitingBody": "Această comandă este rezervată și ajunge la furnizor imediat ce este plătită. Comenzile neplătite se anulează după {days} zile.",
+    "payOrder": "Plătiți comanda",
+    "statuses": {
+      "ACTIVE": "Activ"
+    },
+    "dd": {
+      "title": "Debit direct",
+      "intro": "Plătiți facturile automat la scadență prin debit direct SEPA. Vă anunțăm cu {days} zile înainte de fiecare încasare.",
+      "active": "Activ — cont care se termină în {last4}",
+      "holder": "Titularul contului",
+      "since": "din {date}",
+      "autoCollect": "Încasați facturile automat la scadență",
+      "setUp": "Activați debitul direct",
+      "replace": "Folosiți alt cont",
+      "revoke": "Anulați debitul direct",
+      "revokeConfirm": "Anulați debitul direct? Facturile vor trebui plătite altfel.",
+      "none": "Niciun debit direct activ.",
+      "pending": "Se așteaptă confirmarea datelor bancare…",
+      "upcoming": "Următoarele încasări",
+      "noUpcoming": "Nimic de încasat acum.",
+      "dueOn": "scadentă pe {date}",
+      "notAvailable": "Debitul direct nu este încă disponibil.",
+      "collectedAuto": "Facturile dvs. sunt încasate automat prin debit direct (cont care se termină în {last4}).",
+      "legal": "Prin activarea debitului direct autorizați FIRINGI și furnizorul său de plăți să trimită instrucțiuni băncii dvs. pentru a vă debita contul, iar banca dvs. să îl debiteze. Puteți cere băncii rambursarea în 8 săptămâni de la un debit."
+    }
   }
 }

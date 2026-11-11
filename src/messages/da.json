@@ -772,7 +772,8 @@
     "My Offers": "Mine tilbud",
     "AI Assistant": "AI-assistent",
     "Buy Again": "Køb igen",
-    "Demand & Stock": "Efterspørgsel & lager"
+    "Demand & Stock": "Efterspørgsel & lager",
+    "Direct Debit": "Direkte debitering"
   },
   "delivery": {
     "title": "Levering",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Løst: {title}",
       "body": "Problemet “{title}” er væk. Se Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Betaling modtaget: {total}",
+      "body": "Tak — vi har modtaget {total} for {documents}."
+    },
+    "payment_failed": {
+      "title": "Betaling ikke gennemført: {total}",
+      "body": "Din betaling på {total} gik ikke igennem: {reason}. Du kan prøve igen eller vælge en anden metode."
+    },
+    "payment_refunded": {
+      "title": "Refusion på vej: {total}",
+      "body": "Vi refunderer {total} til dig. Afhængigt af metoden kan det tage nogle dage."
+    },
+    "payment_link": {
+      "title": "Betalingsanmodning: {total}",
+      "body": "FIRINGI har sendt dig et link til at betale {documents} ({total}) online — MB WAY, Multibanco, kort eller direkte debitering."
+    },
+    "payment_reminder_soon": {
+      "title": "Faktura forfalder snart: {total}",
+      "body": "{documents} ({total}) forfalder den {due}. Du kan betale online nu."
+    },
+    "payment_reminder_due": {
+      "title": "Faktura forfalder i dag: {total}",
+      "body": "{documents} ({total}) forfalder i dag. Betal online på et minut med MB WAY, Multibanco eller kort."
+    },
+    "payment_reminder_overdue": {
+      "title": "Faktura forfalden: {total}",
+      "body": "{documents} ({total}) er {days} dage forfalden. Betal nu for at kunne fortsætte med at bestille."
+    },
+    "direct_debit_notice": {
+      "title": "Direkte debitering den {date}: {total}",
+      "body": "Den {date} trækker vi {total} for {documents} fra din konto via SEPA direkte debitering."
+    },
+    "direct_debit_active": {
+      "title": "Direkte debitering oprettet",
+      "body": "Din SEPA direkte debitering (konto der slutter på {last4}) er aktiv. Fakturaer trækkes på forfaldsdagen — vi giver besked nogle dage før."
+    },
+    "order_awaiting_payment": {
+      "title": "Betal ordre {number} for at sende den",
+      "body": "Ordre {number} ({total}) er reserveret. Den går til leverandøren, så snart den er betalt."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Ordre {number} annulleret",
+      "body": "Ordre {number} blev annulleret, fordi den ikke blev betalt i tide. Du kan bestille igen når som helst."
+    },
+    "payment_attention": {
+      "title": "Betaling kræver opmærksomhed: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Bestillinger",
       "files": "Dokumenter og filer",
       "notifications": "Notifikationer",
-      "invoicing": "Fakturering"
+      "invoicing": "Fakturering",
+      "payments": "Betalinger"
     },
     "states": {
       "ok": "Kører",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Ingen hændelser de seneste 7 dage.",
     "ongoing": "igangværende",
     "checked": "Tjekket {time} UTC"
+  },
+  "pay": {
+    "title": "Betal online",
+    "backToInvoices": "Tilbage til fakturaer",
+    "linkFor": "Betaling for {company}",
+    "amountDue": "Beløb at betale",
+    "order": "Ordre {number}",
+    "chooseMethod": "Hvordan vil du betale?",
+    "methods": {
+      "CARD": "Kort",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-reference",
+      "DIRECT_DEBIT": "Direkte debitering"
+    },
+    "methodHints": {
+      "CARD": "Visa eller Mastercard på en sikker betalingsside",
+      "MB_WAY": "Godkend på din telefon",
+      "MULTIBANCO": "Betal i en hæveautomat eller netbank",
+      "DIRECT_DEBIT": "Fra din konto der slutter på {last4}"
+    },
+    "phone": "MB WAY-telefonnummer",
+    "badPhone": "Indtast et mobilnummer på 9 cifre, der starter med 9.",
+    "payNow": "Betal {amount}",
+    "secure": "Betalinger behandles sikkert af {provider}. FIRINGI ser aldrig dine kortoplysninger.",
+    "noMethods": "Onlinebetaling er ikke tilgængelig lige nu.",
+    "bankTransfer": "Eller betal via bankoverførsel til {holder}:",
+    "waiting": "Venter på bekræftelse…",
+    "mbwayWaiting": "Åbn MB WAY-appen på din telefon ({phone}) og godkend betalingen på {amount}.",
+    "mbwayExpires": "Anmodningen udløber om {minutes} min.",
+    "multibancoTitle": "Betal med denne Multibanco-reference",
+    "entity": "Enhed",
+    "reference": "Reference",
+    "amount": "Beløb",
+    "copy": "Kopiér",
+    "copied": "Kopieret",
+    "validUntil": "Gyldig til {date}",
+    "multibancoHint": "Vi bekræfter betalingen automatisk, så snart den er foretaget.",
+    "debitSubmitted": "Den direkte debitering er sendt til din bank. Det tager nogle hverdage; vi giver besked, når den er gennemført.",
+    "paid": "Betalt — tak!",
+    "paidDetail": "Vi har modtaget {amount}.",
+    "paidOrder": "Din ordre går nu til leverandøren.",
+    "failed": "Betalingen gik ikke igennem: {reason}.",
+    "tryAgain": "Prøv igen eller vælg en anden metode.",
+    "expired": "Denne betalingsanmodning er udløbet.",
+    "cancelled": "Denne betalingsanmodning er erstattet af en nyere.",
+    "payWhatsOpen": "Betal det, der stadig er åbent",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Der er allerede en betaling i gang for dette.",
+      "PAYMENT_EXPIRED": "Denne betalingsanmodning er udløbet.",
+      "PROVIDER_UNAVAILABLE": "Betalingstjenesten er utilgængelig lige nu. Prøv igen om et par minutter.",
+      "generic": "Noget gik galt. Prøv igen."
+    },
+    "payInvoices": "Betal online",
+    "selectInvoices": "Vælg de fakturaer, du vil betale:",
+    "paySelected": "Betal {amount}",
+    "inProgress": "Betaling i gang",
+    "credit": "Tilgodehavende: {amount} — bruges automatisk på dine næste fakturaer.",
+    "setUpDebit": "Opret direkte debitering",
+    "pendingPayments": "Betalinger i gang",
+    "open": "Åbn",
+    "awaitingTitle": "Venter på din betaling",
+    "awaitingBody": "Denne ordre er reserveret og går til leverandøren, så snart den er betalt. Ubetalte ordrer annulleres efter {days} dage.",
+    "payOrder": "Betal ordre",
+    "statuses": {
+      "ACTIVE": "Aktiv"
+    },
+    "dd": {
+      "title": "Direkte debitering",
+      "intro": "Betal dine fakturaer automatisk på forfaldsdagen med SEPA direkte debitering. Vi giver besked {days} dage før hver opkrævning.",
+      "active": "Aktiv — konto der slutter på {last4}",
+      "holder": "Kontohaver",
+      "since": "siden {date}",
+      "autoCollect": "Træk fakturaer automatisk på forfaldsdagen",
+      "setUp": "Opret direkte debitering",
+      "replace": "Brug en anden konto",
+      "revoke": "Stop direkte debitering",
+      "revokeConfirm": "Stop den direkte debitering? Fakturaerne skal så betales på anden vis.",
+      "none": "Ingen direkte debitering oprettet.",
+      "pending": "Venter på bekræftelse af dine bankoplysninger…",
+      "upcoming": "Næste opkrævninger",
+      "noUpcoming": "Intet at opkræve lige nu.",
+      "dueOn": "forfalder {date}",
+      "notAvailable": "Direkte debitering er ikke tilgængelig endnu.",
+      "collectedAuto": "Dine fakturaer trækkes automatisk via direkte debitering (konto der slutter på {last4}).",
+      "legal": "Ved at oprette en direkte debitering giver du FIRINGI og dets betalingsudbyder tilladelse til at sende instrukser til din bank om at trække beløb fra din konto, og din bank tilladelse til at gøre det. Du kan bede din bank om tilbagebetaling inden for 8 uger efter en trækning."
+    }
   }
 }

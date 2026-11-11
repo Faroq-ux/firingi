@@ -772,7 +772,8 @@
     "My Offers": "Mín tilboð",
     "AI Assistant": "Gervigreindaraðstoð",
     "Buy Again": "Kaupa aftur",
-    "Demand & Stock": "Eftirspurn og lager"
+    "Demand & Stock": "Eftirspurn og lager",
+    "Direct Debit": "Beingreiðsla"
   },
   "delivery": {
     "title": "Afhending",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Leyst: {title}",
       "body": "Vandamálið „{title}“ er horfið. Sjá Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Greiðsla móttekin: {total}",
+      "body": "Takk — við höfum tekið við {total} fyrir {documents}."
+    },
+    "payment_failed": {
+      "title": "Greiðsla tókst ekki: {total}",
+      "body": "Greiðslan þín upp á {total} gekk ekki í gegn: {reason}. Þú getur reynt aftur eða valið aðra leið."
+    },
+    "payment_refunded": {
+      "title": "Endurgreiðsla á leiðinni: {total}",
+      "body": "Við endurgreiðum þér {total}. Eftir greiðsluleið getur það tekið nokkra daga."
+    },
+    "payment_link": {
+      "title": "Greiðslubeiðni: {total}",
+      "body": "FIRINGI sendi þér tengil til að greiða {documents} ({total}) á netinu — MB WAY, Multibanco, kort eða beingreiðslu."
+    },
+    "payment_reminder_soon": {
+      "title": "Reikningur á gjalddaga bráðlega: {total}",
+      "body": "{documents} ({total}) er á gjalddaga {due}. Þú getur greitt á netinu núna."
+    },
+    "payment_reminder_due": {
+      "title": "Reikningur á gjalddaga í dag: {total}",
+      "body": "{documents} ({total}) er á gjalddaga í dag. Greiddu á netinu á mínútu með MB WAY, Multibanco eða korti."
+    },
+    "payment_reminder_overdue": {
+      "title": "Reikningur í vanskilum: {total}",
+      "body": "{documents} ({total}) er {days} dögum í vanskilum. Greiddu núna til að geta haldið áfram að panta."
+    },
+    "direct_debit_notice": {
+      "title": "Beingreiðsla {date}: {total}",
+      "body": "{date} innheimtum við {total} fyrir {documents} af reikningnum þínum með SEPA-beingreiðslu."
+    },
+    "direct_debit_active": {
+      "title": "Beingreiðsla virk",
+      "body": "SEPA-beingreiðslan þín (reikningur endar á {last4}) er virk. Reikningar eru innheimtir á gjalddaga — við látum vita nokkrum dögum áður."
+    },
+    "order_awaiting_payment": {
+      "title": "Greiddu pöntun {number} til að senda hana",
+      "body": "Pöntun {number} ({total}) er frátekin. Hún fer til birgisins um leið og hún er greidd."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Pöntun {number} felld niður",
+      "body": "Pöntun {number} var felld niður þar sem hún var ekki greidd í tæka tíð. Þú getur pantað aftur hvenær sem er."
+    },
+    "payment_attention": {
+      "title": "Greiðsla þarfnast athugunar: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Pantanir",
       "files": "Skjöl og skrár",
       "notifications": "Tilkynningar",
-      "invoicing": "Reikningagerð"
+      "invoicing": "Reikningagerð",
+      "payments": "Greiðslur"
     },
     "states": {
       "ok": "Virkar",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Engin atvik síðustu 7 daga.",
     "ongoing": "í gangi",
     "checked": "Athugað {time} UTC"
+  },
+  "pay": {
+    "title": "Greiða á netinu",
+    "backToInvoices": "Aftur í reikninga",
+    "linkFor": "Greiðsla fyrir {company}",
+    "amountDue": "Upphæð til greiðslu",
+    "order": "Pöntun {number}",
+    "chooseMethod": "Hvernig viltu greiða?",
+    "methods": {
+      "CARD": "Kort",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco-tilvísun",
+      "DIRECT_DEBIT": "Beingreiðsla"
+    },
+    "methodHints": {
+      "CARD": "Visa eða Mastercard á öruggri greiðslusíðu",
+      "MB_WAY": "Samþykktu í símanum",
+      "MULTIBANCO": "Greiddu í hraðbanka eða netbanka",
+      "DIRECT_DEBIT": "Af reikningnum þínum sem endar á {last4}"
+    },
+    "phone": "Símanúmer fyrir MB WAY",
+    "badPhone": "Sláðu inn 9 stafa farsímanúmer sem byrjar á 9.",
+    "payNow": "Greiða {amount}",
+    "secure": "Greiðslur eru meðhöndlaðar á öruggan hátt af {provider}. FIRINGI sér aldrei kortaupplýsingarnar þínar.",
+    "noMethods": "Netgreiðsla er ekki í boði í augnablikinu.",
+    "bankTransfer": "Eða greiddu með millifærslu til {holder}:",
+    "waiting": "Bíður staðfestingar…",
+    "mbwayWaiting": "Opnaðu MB WAY-appið í símanum ({phone}) og samþykktu greiðsluna upp á {amount}.",
+    "mbwayExpires": "Beiðnin rennur út eftir {minutes} mín.",
+    "multibancoTitle": "Greiddu með þessari Multibanco-tilvísun",
+    "entity": "Aðili",
+    "reference": "Tilvísun",
+    "amount": "Upphæð",
+    "copy": "Afrita",
+    "copied": "Afritað",
+    "validUntil": "Gildir til {date}",
+    "multibancoHint": "Við staðfestum greiðsluna sjálfkrafa um leið og hún er gerð.",
+    "debitSubmitted": "Beingreiðslan hefur verið send bankanum þínum. Það tekur nokkra virka daga; við látum vita þegar henni er lokið.",
+    "paid": "Greitt — takk!",
+    "paidDetail": "Við höfum tekið við {amount}.",
+    "paidOrder": "Pöntunin þín fer nú til birgisins.",
+    "failed": "Greiðslan gekk ekki í gegn: {reason}.",
+    "tryAgain": "Reyndu aftur eða veldu aðra leið.",
+    "expired": "Þessi greiðslubeiðni er útrunnin.",
+    "cancelled": "Þessari greiðslubeiðni hefur verið skipt út fyrir nýrri.",
+    "payWhatsOpen": "Greiða það sem enn er ógreitt",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Greiðsla fyrir þetta er þegar í gangi.",
+      "PAYMENT_EXPIRED": "Þessi greiðslubeiðni er útrunnin.",
+      "PROVIDER_UNAVAILABLE": "Greiðsluþjónustan er ekki tiltæk núna. Reyndu aftur eftir nokkrar mínútur.",
+      "generic": "Eitthvað fór úrskeiðis. Reyndu aftur."
+    },
+    "payInvoices": "Greiða á netinu",
+    "selectInvoices": "Veldu reikningana sem á að greiða:",
+    "paySelected": "Greiða {amount}",
+    "inProgress": "Greiðsla í gangi",
+    "credit": "Inneign: {amount} — notuð sjálfkrafa á næstu reikninga.",
+    "setUpDebit": "Setja upp beingreiðslu",
+    "pendingPayments": "Greiðslur í gangi",
+    "open": "Opna",
+    "awaitingTitle": "Bíður eftir greiðslu frá þér",
+    "awaitingBody": "Þessi pöntun er frátekin og fer til birgisins um leið og hún er greidd. Ógreiddar pantanir eru felldar niður eftir {days} daga.",
+    "payOrder": "Greiða pöntun",
+    "statuses": {
+      "ACTIVE": "Virk"
+    },
+    "dd": {
+      "title": "Beingreiðsla",
+      "intro": "Greiddu reikningana sjálfkrafa á gjalddaga með SEPA-beingreiðslu. Við látum vita {days} dögum fyrir hverja innheimtu.",
+      "active": "Virk — reikningur endar á {last4}",
+      "holder": "Reikningshafi",
+      "since": "frá {date}",
+      "autoCollect": "Innheimta reikninga sjálfkrafa á gjalddaga",
+      "setUp": "Setja upp beingreiðslu",
+      "replace": "Nota annan reikning",
+      "revoke": "Hætta við beingreiðslu",
+      "revokeConfirm": "Hætta við beingreiðsluna? Þá þarf að greiða reikningana á annan hátt.",
+      "none": "Engin beingreiðsla uppsett.",
+      "pending": "Bíður eftir staðfestingu bankaupplýsinga…",
+      "upcoming": "Næstu innheimtur",
+      "noUpcoming": "Ekkert til innheimtu núna.",
+      "dueOn": "gjalddagi {date}",
+      "notAvailable": "Beingreiðsla er ekki enn í boði.",
+      "collectedAuto": "Reikningarnir þínir eru innheimtir sjálfkrafa með beingreiðslu (reikningur endar á {last4}).",
+      "legal": "Með því að setja upp beingreiðslu heimilar þú FIRINGI og greiðsluþjónustuaðila þess að senda bankanum þínum fyrirmæli um að skuldfæra reikninginn þinn, og bankanum þínum að gera það. Þú getur beðið bankann um endurgreiðslu innan 8 vikna frá skuldfærslu."
+    }
   }
 }

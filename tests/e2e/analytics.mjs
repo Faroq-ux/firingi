@@ -20,7 +20,7 @@ const go = async (p, url) => { await p.goto(`${BASE}${url}`); await settle(p); }
 const errors = [];
 async function login(email, opts = {}) {
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 950 }, ...opts })).newPage();
-  page.on("pageerror", (e) => errors.push(`${email}: ${e.message}`));
+  page.on("pageerror", (e) => errors.push(`${email} @ ${page.url().replace(BASE, "")}: ${e.message.slice(0, 100)}`));
   await go(page, "/login");
   await page.fill("#email", email);
   await page.fill("#password", PASSWORD);

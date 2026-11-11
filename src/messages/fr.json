@@ -772,7 +772,8 @@
     "My Offers": "Mes offres",
     "AI Assistant": "Assistant IA",
     "Buy Again": "Racheter",
-    "Demand & Stock": "Demande & stock"
+    "Demand & Stock": "Demande & stock",
+    "Direct Debit": "Prélèvement"
   },
   "delivery": {
     "title": "Livraison",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Résolu : {title}",
       "body": "Le problème « {title} » a disparu. Voir Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Paiement reçu : {total}",
+      "body": "Merci — nous avons reçu {total} pour {documents}."
+    },
+    "payment_failed": {
+      "title": "Paiement non abouti : {total}",
+      "body": "Votre paiement de {total} n'a pas abouti : {reason}. Vous pouvez réessayer ou choisir un autre moyen."
+    },
+    "payment_refunded": {
+      "title": "Remboursement en cours : {total}",
+      "body": "Nous vous remboursons {total}. Selon le moyen de paiement, cela peut prendre quelques jours."
+    },
+    "payment_link": {
+      "title": "Demande de paiement : {total}",
+      "body": "FIRINGI vous a envoyé un lien pour payer {documents} ({total}) en ligne — MB WAY, Multibanco, carte ou prélèvement."
+    },
+    "payment_reminder_soon": {
+      "title": "Facture bientôt à échéance : {total}",
+      "body": "{documents} ({total}) arrive à échéance le {due}. Vous pouvez la payer en ligne dès maintenant."
+    },
+    "payment_reminder_due": {
+      "title": "Facture à échéance aujourd'hui : {total}",
+      "body": "{documents} ({total}) arrive à échéance aujourd'hui. Payez en ligne en une minute avec MB WAY, Multibanco ou carte."
+    },
+    "payment_reminder_overdue": {
+      "title": "Facture en retard : {total}",
+      "body": "{documents} ({total}) a {days} jours de retard. Merci de payer maintenant pour continuer à commander sans interruption."
+    },
+    "direct_debit_notice": {
+      "title": "Prélèvement le {date} : {total}",
+      "body": "Le {date}, nous prélèverons {total} pour {documents} sur votre compte par prélèvement SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Prélèvement activé",
+      "body": "Votre prélèvement SEPA (compte se terminant par {last4}) est actif. Les factures seront prélevées à leur échéance — nous vous prévenons quelques jours avant."
+    },
+    "order_awaiting_payment": {
+      "title": "Payez la commande {number} pour l'envoyer",
+      "body": "La commande {number} ({total}) est réservée. Elle part chez le fournisseur dès qu'elle est payée."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Commande {number} annulée",
+      "body": "La commande {number} a été annulée car elle n'a pas été payée à temps. Vous pouvez commander à nouveau à tout moment."
+    },
+    "payment_attention": {
+      "title": "Paiement à vérifier : {company}",
+      "body": "{company}, {total} : {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Commandes",
       "files": "Documents et fichiers",
       "notifications": "Notifications",
-      "invoicing": "Facturation"
+      "invoicing": "Facturation",
+      "payments": "Paiements"
     },
     "states": {
       "ok": "Opérationnel",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Aucun incident ces 7 derniers jours.",
     "ongoing": "en cours",
     "checked": "Vérifié à {time} UTC"
+  },
+  "pay": {
+    "title": "Payer en ligne",
+    "backToInvoices": "Retour aux factures",
+    "linkFor": "Paiement pour {company}",
+    "amountDue": "Montant à payer",
+    "order": "Commande {number}",
+    "chooseMethod": "Comment voulez-vous payer ?",
+    "methods": {
+      "CARD": "Carte",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Référence Multibanco",
+      "DIRECT_DEBIT": "Prélèvement"
+    },
+    "methodHints": {
+      "CARD": "Visa ou Mastercard sur une page de paiement sécurisée",
+      "MB_WAY": "Validez sur votre téléphone",
+      "MULTIBANCO": "Payez au distributeur ou dans votre banque en ligne",
+      "DIRECT_DEBIT": "Depuis votre compte se terminant par {last4}"
+    },
+    "phone": "Numéro de téléphone MB WAY",
+    "badPhone": "Indiquez un numéro de mobile de 9 chiffres commençant par 9.",
+    "payNow": "Payer {amount}",
+    "secure": "Les paiements sont traités en toute sécurité par {provider}. FIRINGI ne voit jamais les données de votre carte.",
+    "noMethods": "Le paiement en ligne n'est pas disponible pour le moment.",
+    "bankTransfer": "Ou payez par virement à {holder} :",
+    "waiting": "En attente de confirmation…",
+    "mbwayWaiting": "Ouvrez l'app MB WAY sur votre téléphone ({phone}) et validez le paiement de {amount}.",
+    "mbwayExpires": "La demande expire dans {minutes} min.",
+    "multibancoTitle": "Payez avec cette référence Multibanco",
+    "entity": "Entité",
+    "reference": "Référence",
+    "amount": "Montant",
+    "copy": "Copier",
+    "copied": "Copié",
+    "validUntil": "Valable jusqu'au {date}",
+    "multibancoHint": "Nous confirmons le paiement automatiquement dès qu'il est effectué.",
+    "debitSubmitted": "Le prélèvement a été envoyé à votre banque. Cela prend quelques jours ouvrés ; nous vous prévenons quand c'est fait.",
+    "paid": "Payé — merci !",
+    "paidDetail": "Nous avons reçu {amount}.",
+    "paidOrder": "Votre commande part maintenant chez le fournisseur.",
+    "failed": "Le paiement n'a pas abouti : {reason}.",
+    "tryAgain": "Réessayez ou choisissez un autre moyen de paiement.",
+    "expired": "Cette demande de paiement a expiré.",
+    "cancelled": "Cette demande de paiement a été remplacée par une plus récente.",
+    "payWhatsOpen": "Payer ce qui reste dû",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Un paiement est déjà en cours pour cela.",
+      "PAYMENT_EXPIRED": "Cette demande de paiement a expiré.",
+      "PROVIDER_UNAVAILABLE": "Le service de paiement est indisponible pour le moment. Réessayez dans quelques minutes.",
+      "generic": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "payInvoices": "Payer en ligne",
+    "selectInvoices": "Choisissez les factures à payer :",
+    "paySelected": "Payer {amount}",
+    "inProgress": "Paiement en cours",
+    "credit": "Avoir : {amount} — utilisé automatiquement sur vos prochaines factures.",
+    "setUpDebit": "Mettre en place le prélèvement",
+    "pendingPayments": "Paiements en cours",
+    "open": "Ouvrir",
+    "awaitingTitle": "En attente de votre paiement",
+    "awaitingBody": "Cette commande est réservée et part chez le fournisseur dès qu'elle est payée. Les commandes non payées sont annulées après {days} jours.",
+    "payOrder": "Payer la commande",
+    "statuses": {
+      "ACTIVE": "Actif"
+    },
+    "dd": {
+      "title": "Prélèvement",
+      "intro": "Payez vos factures automatiquement à l'échéance par prélèvement SEPA. Nous vous prévenons {days} jours avant chaque prélèvement.",
+      "active": "Actif — compte se terminant par {last4}",
+      "holder": "Titulaire du compte",
+      "since": "depuis le {date}",
+      "autoCollect": "Prélever les factures automatiquement à l'échéance",
+      "setUp": "Mettre en place le prélèvement",
+      "replace": "Utiliser un autre compte",
+      "revoke": "Annuler le prélèvement",
+      "revokeConfirm": "Annuler le prélèvement ? Les factures devront alors être payées autrement.",
+      "none": "Aucun prélèvement en place.",
+      "pending": "En attente de la confirmation de vos coordonnées bancaires…",
+      "upcoming": "Prochains prélèvements",
+      "noUpcoming": "Rien à prélever pour le moment.",
+      "dueOn": "échéance le {date}",
+      "notAvailable": "Le prélèvement n'est pas encore disponible.",
+      "collectedAuto": "Vos factures sont prélevées automatiquement (compte se terminant par {last4}).",
+      "legal": "En mettant en place un prélèvement, vous autorisez FIRINGI et son prestataire de paiement à envoyer des instructions à votre banque pour débiter votre compte, et votre banque à le débiter. Vous pouvez demander un remboursement à votre banque dans les 8 semaines suivant un prélèvement."
+    }
   }
 }

@@ -117,10 +117,17 @@ export async function decideHeld(ctx: Ctx, orderId: string, decision: "RELEASE" 
   if (!order) throw new NotFoundError("Order");
   if (order.status !== "ON_HOLD") throw new AppError("NOT_HELD", "This order isn't on hold any more.", 409);
   const to = decision === "RELEASE" ? "PENDING_CONFIRMATION" : "CANCELLED";
+  // Checked, but the customer still has to pay first (pay-before-shipping): it stays on hold until paid.
+  if (decision === "RELEASE" && order.awaitingPayment) {
+    await prisma.riskAssessment.updateMany({ where: { orderId }, data: { review: "CLEARED", reviewedById: ctx.user.id, reviewedAt: new Date(), note: note?.trim() || null } });
+    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "risk.cleared_awaiting_payment", entityType: "Order", entityId: orderId, after: { note } });
+    return;
+  }
   await prisma.$transaction(async (tx) => {
     await applyOrderTransition(tx, order, to, { reason: note?.trim() || (decision === "RELEASE" ? "Checked by FIRINGI" : null), userId: ctx.user.id, companyId: ctx.company.id });
     await tx.riskAssessment.updateMany({ where: { orderId }, data: { review: decision === "RELEASE" ? "CLEARED" : "FRAUD", reviewedById: ctx.user.id, reviewedAt: new Date(), note: note?.trim() || null } });
   });
+  if (to === "CANCELLED") await (await import("@/server/payments/service")).refundOrderPrepayment(orderId).catch(() => null);
   await notifyHoldDecision(order, to, note, "ADMIN");
 }
 

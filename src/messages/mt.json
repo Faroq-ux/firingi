@@ -772,7 +772,8 @@
     "My Offers": "L-offerti tiegħi",
     "AI Assistant": "Assistent tal-IA",
     "Buy Again": "Erġa' xtri",
-    "Demand & Stock": "Domanda u stokk"
+    "Demand & Stock": "Domanda u stokk",
+    "Direct Debit": "Debitu dirett"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Solvut: {title}",
       "body": "Il-problema “{title}” spiċċat. Ara Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Ħlas riċevut: {total}",
+      "body": "Grazzi — irċevejna {total} għal {documents}."
+    },
+    "payment_failed": {
+      "title": "Il-ħlas ma tlestiex: {total}",
+      "body": "Il-ħlas tiegħek ta' {total} ma għaddiex: {reason}. Tista' terġa' tipprova jew tagħżel metodu ieħor."
+    },
+    "payment_refunded": {
+      "title": "Rifużjoni fit-triq: {total}",
+      "body": "Qed nirrifondulek {total}. Skont il-metodu, jista' jieħu ftit jiem."
+    },
+    "payment_link": {
+      "title": "Talba għal ħlas: {total}",
+      "body": "FIRINGI bagħtitlek link biex tħallas {documents} ({total}) online — MB WAY, Multibanco, karta jew debitu dirett."
+    },
+    "payment_reminder_soon": {
+      "title": "Fattura dalwaqt tiskadi: {total}",
+      "body": "{documents} ({total}) tiskadi fl-{due}. Tista' tħallasha online issa."
+    },
+    "payment_reminder_due": {
+      "title": "Fattura tiskadi llum: {total}",
+      "body": "{documents} ({total}) tiskadi llum. Ħallas online f'minuta b'MB WAY, Multibanco jew karta."
+    },
+    "payment_reminder_overdue": {
+      "title": "Fattura skaduta: {total}",
+      "body": "{documents} ({total}) ilha skaduta {days} jum. Jekk jogħġbok ħallas issa biex tibqa' tordna."
+    },
+    "direct_debit_notice": {
+      "title": "Debitu dirett fl-{date}: {total}",
+      "body": "Fl-{date} se niġbru {total} għal {documents} mill-kont tiegħek b'debitu dirett SEPA."
+    },
+    "direct_debit_active": {
+      "title": "Debitu dirett imwaqqaf",
+      "body": "Id-debitu dirett SEPA tiegħek (kont li jispiċċa b'{last4}) huwa attiv. Il-fatturi jinġabru fid-data tal-iskadenza — ninfurmawk ftit jiem qabel."
+    },
+    "order_awaiting_payment": {
+      "title": "Ħallas l-ordni {number} biex tintbagħat",
+      "body": "L-ordni {number} ({total}) hija riżervata. Tmur għand il-fornitur hekk kif titħallas."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Ordni {number} ikkanċellata",
+      "body": "L-ordni {number} ġiet ikkanċellata għax ma tħallsitx fil-ħin. Tista' terġa' tordna meta trid."
+    },
+    "payment_attention": {
+      "title": "Ħlas jeħtieġ attenzjoni: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Ordnijiet",
       "files": "Dokumenti u fajls",
       "notifications": "Notifiki",
-      "invoicing": "Fatturazzjoni"
+      "invoicing": "Fatturazzjoni",
+      "payments": "Ħlasijiet"
     },
     "states": {
       "ok": "Jaħdem",
@@ -1678,5 +1728,91 @@
     "noIncidents": "L-ebda inċident fl-aħħar 7 ijiem.",
     "ongoing": "għaddej",
     "checked": "Iċċekkjat {time} UTC"
+  },
+  "pay": {
+    "title": "Ħallas online",
+    "backToInvoices": "Lura għall-fatturi",
+    "linkFor": "Ħlas għal {company}",
+    "amountDue": "Ammont li jrid jitħallas",
+    "order": "Ordni {number}",
+    "chooseMethod": "Kif trid tħallas?",
+    "methods": {
+      "CARD": "Karta",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Referenza Multibanco",
+      "DIRECT_DEBIT": "Debitu dirett"
+    },
+    "methodHints": {
+      "CARD": "Visa jew Mastercard fuq paġna tal-ħlas sigura",
+      "MB_WAY": "Approva fuq il-mobile tiegħek",
+      "MULTIBANCO": "Ħallas f'ATM jew fl-internet banking",
+      "DIRECT_DEBIT": "Mill-kont tiegħek li jispiċċa b'{last4}"
+    },
+    "phone": "Numru tal-mobile għal MB WAY",
+    "badPhone": "Daħħal numru tal-mobile ta' 9 ċifri li jibda b'9.",
+    "payNow": "Ħallas {amount}",
+    "secure": "Il-ħlasijiet jiġu pproċessati b'mod sigur minn {provider}. FIRINGI qatt ma tara d-dettalji tal-karta tiegħek.",
+    "noMethods": "Il-ħlas online mhuwiex disponibbli bħalissa.",
+    "bankTransfer": "Jew ħallas bi trasferiment bankarju lil {holder}:",
+    "waiting": "Qed nistennew il-konferma…",
+    "mbwayWaiting": "Iftaħ l-app MB WAY fuq il-mobile tiegħek ({phone}) u approva l-ħlas ta' {amount}.",
+    "mbwayExpires": "It-talba tiskadi fi żmien {minutes} min.",
+    "multibancoTitle": "Ħallas b'din ir-referenza Multibanco",
+    "entity": "Entità",
+    "reference": "Referenza",
+    "amount": "Ammont",
+    "copy": "Ikkopja",
+    "copied": "Ikkupjat",
+    "validUntil": "Validu sal-{date}",
+    "multibancoHint": "Nikkonfermaw il-ħlas awtomatikament hekk kif isir.",
+    "debitSubmitted": "Id-debitu dirett intbagħat lill-bank tiegħek. Jieħu ftit jiem tax-xogħol; ninfurmawk meta jitlesta.",
+    "paid": "Imħallas — grazzi!",
+    "paidDetail": "Irċevejna {amount}.",
+    "paidOrder": "L-ordni tiegħek issa tmur għand il-fornitur.",
+    "failed": "Il-ħlas ma għaddiex: {reason}.",
+    "tryAgain": "Erġa' pprova jew agħżel metodu ieħor.",
+    "expired": "Din it-talba għal ħlas skadiet.",
+    "cancelled": "Din it-talba għal ħlas ġiet sostitwita b'waħda iktar ġdida.",
+    "payWhatsOpen": "Ħallas dak li għadu miftuħ",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Diġà hemm ħlas għaddej għal dan.",
+      "PAYMENT_EXPIRED": "Din it-talba għal ħlas skadiet.",
+      "PROVIDER_UNAVAILABLE": "Is-servizz tal-ħlas mhuwiex disponibbli bħalissa. Erġa' pprova fi ftit minuti.",
+      "generic": "Xi ħaġa marret ħażin. Erġa' pprova."
+    },
+    "payInvoices": "Ħallas online",
+    "selectInvoices": "Agħżel il-fatturi li trid tħallas:",
+    "paySelected": "Ħallas {amount}",
+    "inProgress": "Ħlas għaddej",
+    "credit": "Kreditu: {amount} — jintuża awtomatikament fuq il-fatturi li jmiss.",
+    "setUpDebit": "Waqqaf debitu dirett",
+    "pendingPayments": "Ħlasijiet għaddejjin",
+    "open": "Iftaħ",
+    "awaitingTitle": "Qed nistennew il-ħlas tiegħek",
+    "awaitingBody": "Din l-ordni hija riżervata u tmur għand il-fornitur hekk kif titħallas. Ordnijiet mhux imħallsa jiġu kkanċellati wara {days} jum.",
+    "payOrder": "Ħallas l-ordni",
+    "statuses": {
+      "ACTIVE": "Attiv"
+    },
+    "dd": {
+      "title": "Debitu dirett",
+      "intro": "Ħallas il-fatturi tiegħek awtomatikament fid-data tal-iskadenza b'debitu dirett SEPA. Ninfurmawk {days} jum qabel kull ġbir.",
+      "active": "Attiv — kont li jispiċċa b'{last4}",
+      "holder": "Detentur tal-kont",
+      "since": "mill-{date}",
+      "autoCollect": "Iġbor il-fatturi awtomatikament fid-data tal-iskadenza",
+      "setUp": "Waqqaf debitu dirett",
+      "replace": "Uża kont ieħor",
+      "revoke": "Ikkanċella d-debitu dirett",
+      "revokeConfirm": "Tikkanċella d-debitu dirett? Il-fatturi mbagħad iridu jitħallsu b'mod ieħor.",
+      "none": "L-ebda debitu dirett imwaqqaf.",
+      "pending": "Qed nistennew il-konferma tad-dettalji bankarji…",
+      "upcoming": "Il-ġbir li jmiss",
+      "noUpcoming": "Xejn x'jinġabar bħalissa.",
+      "dueOn": "jiskadi fl-{date}",
+      "notAvailable": "Id-debitu dirett għadu mhux disponibbli.",
+      "collectedAuto": "Il-fatturi tiegħek jinġabru awtomatikament b'debitu dirett (kont li jispiċċa b'{last4}).",
+      "legal": "Billi twaqqaf debitu dirett, tawtorizza lil FIRINGI u lill-fornitur tal-ħlas tagħha jibagħtu struzzjonijiet lill-bank tiegħek biex jiddebita l-kont tiegħek, u lill-bank tiegħek biex jiddebitah. Tista' titlob rifużjoni mill-bank tiegħek fi żmien 8 ġimgħat minn debitu."
+    }
   }
 }

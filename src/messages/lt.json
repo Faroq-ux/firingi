@@ -772,7 +772,8 @@
     "My Offers": "Mano pasiūlymai",
     "AI Assistant": "DI asistentas",
     "Buy Again": "Pirkti dar kartą",
-    "Demand & Stock": "Paklausa ir atsargos"
+    "Demand & Stock": "Paklausa ir atsargos",
+    "Direct Debit": "Tiesioginis debetas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1170,6 +1171,54 @@
     "ops_resolved": {
       "title": "Išspręsta: {title}",
       "body": "Problema „{title}“ išnyko. Žr. Settings › System Health."
+    },
+    "payment_received": {
+      "title": "Mokėjimas gautas: {total}",
+      "body": "Ačiū — gavome {total} už {documents}."
+    },
+    "payment_failed": {
+      "title": "Mokėjimas neatliktas: {total}",
+      "body": "Jūsų mokėjimas {total} nepavyko: {reason}. Galite bandyti dar kartą arba pasirinkti kitą būdą."
+    },
+    "payment_refunded": {
+      "title": "Grąžinimas pakeliui: {total}",
+      "body": "Grąžiname jums {total}. Priklausomai nuo būdo, tai gali užtrukti kelias dienas."
+    },
+    "payment_link": {
+      "title": "Mokėjimo prašymas: {total}",
+      "body": "FIRINGI atsiuntė jums nuorodą sumokėti {documents} ({total}) internetu — MB WAY, Multibanco, kortele arba tiesioginiu debetu."
+    },
+    "payment_reminder_soon": {
+      "title": "Sąskaitos terminas artėja: {total}",
+      "body": "{documents} ({total}) apmokėjimo terminas — {due}. Galite ją sumokėti internetu jau dabar."
+    },
+    "payment_reminder_due": {
+      "title": "Sąskaitos terminas šiandien: {total}",
+      "body": "{documents} ({total}) apmokėjimo terminas — šiandien. Sumokėkite internetu per minutę su MB WAY, Multibanco arba kortele."
+    },
+    "payment_reminder_overdue": {
+      "title": "Sąskaita vėluoja: {total}",
+      "body": "{documents} ({total}) vėluoja {days} d. Prašome sumokėti dabar, kad galėtumėte toliau užsakinėti."
+    },
+    "direct_debit_notice": {
+      "title": "Tiesioginis debetas {date}: {total}",
+      "body": "{date} SEPA tiesioginiu debetu nuskaičiuosime {total} už {documents} iš jūsų sąskaitos."
+    },
+    "direct_debit_active": {
+      "title": "Tiesioginis debetas nustatytas",
+      "body": "Jūsų SEPA tiesioginis debetas (sąskaita baigiasi {last4}) aktyvus. Sąskaitos bus apmokamos termino dieną — pranešime keliomis dienomis anksčiau."
+    },
+    "order_awaiting_payment": {
+      "title": "Apmokėkite užsakymą {number}, kad jį išsiųstume",
+      "body": "Užsakymas {number} ({total}) rezervuotas. Jis pateks tiekėjui, kai tik bus apmokėtas."
+    },
+    "order_cancelled_unpaid": {
+      "title": "Užsakymas {number} atšauktas",
+      "body": "Užsakymas {number} atšauktas, nes nebuvo laiku apmokėtas. Galite užsisakyti iš naujo bet kada."
+    },
+    "payment_attention": {
+      "title": "Mokėjimui reikia dėmesio: {company}",
+      "body": "{company}, {total}: {reason}"
     }
   },
   "notifications": {
@@ -1667,7 +1716,8 @@
       "ordering": "Užsakymai",
       "files": "Dokumentai ir failai",
       "notifications": "Pranešimai",
-      "invoicing": "Sąskaitų išrašymas"
+      "invoicing": "Sąskaitų išrašymas",
+      "payments": "Mokėjimai"
     },
     "states": {
       "ok": "Veikia",
@@ -1678,5 +1728,91 @@
     "noIncidents": "Per paskutines 7 dienas incidentų nebuvo.",
     "ongoing": "vyksta",
     "checked": "Patikrinta {time} UTC"
+  },
+  "pay": {
+    "title": "Mokėti internetu",
+    "backToInvoices": "Atgal į sąskaitas",
+    "linkFor": "Mokėjimas: {company}",
+    "amountDue": "Mokėtina suma",
+    "order": "Užsakymas {number}",
+    "chooseMethod": "Kaip norite mokėti?",
+    "methods": {
+      "CARD": "Kortelė",
+      "MB_WAY": "MB WAY",
+      "MULTIBANCO": "Multibanco nuoroda",
+      "DIRECT_DEBIT": "Tiesioginis debetas"
+    },
+    "methodHints": {
+      "CARD": "Visa arba Mastercard saugiame mokėjimo puslapyje",
+      "MB_WAY": "Patvirtinkite telefone",
+      "MULTIBANCO": "Mokėkite bankomate arba internetinėje bankininkystėje",
+      "DIRECT_DEBIT": "Iš jūsų sąskaitos, kuri baigiasi {last4}"
+    },
+    "phone": "MB WAY telefono numeris",
+    "badPhone": "Įveskite 9 skaitmenų mobiliojo numerį, prasidedantį 9.",
+    "payNow": "Mokėti {amount}",
+    "secure": "Mokėjimus saugiai apdoroja {provider}. FIRINGI niekada nemato jūsų kortelės duomenų.",
+    "noMethods": "Mokėjimas internetu šiuo metu negalimas.",
+    "bankTransfer": "Arba sumokėkite banko pavedimu gavėjui {holder}:",
+    "waiting": "Laukiama patvirtinimo…",
+    "mbwayWaiting": "Atidarykite MB WAY programėlę telefone ({phone}) ir patvirtinkite mokėjimą {amount}.",
+    "mbwayExpires": "Prašymas baigs galioti po {minutes} min.",
+    "multibancoTitle": "Mokėkite su šia Multibanco nuoroda",
+    "entity": "Subjektas",
+    "reference": "Nuoroda",
+    "amount": "Suma",
+    "copy": "Kopijuoti",
+    "copied": "Nukopijuota",
+    "validUntil": "Galioja iki {date}",
+    "multibancoHint": "Mokėjimą patvirtiname automatiškai, kai tik jis atliekamas.",
+    "debitSubmitted": "Tiesioginis debetas išsiųstas jūsų bankui. Tai užtrunka kelias darbo dienas; pranešime, kai bus atlikta.",
+    "paid": "Apmokėta — ačiū!",
+    "paidDetail": "Gavome {amount}.",
+    "paidOrder": "Jūsų užsakymas dabar keliauja tiekėjui.",
+    "failed": "Mokėjimas nepavyko: {reason}.",
+    "tryAgain": "Bandykite dar kartą arba pasirinkite kitą būdą.",
+    "expired": "Šio mokėjimo prašymo galiojimas baigėsi.",
+    "cancelled": "Šį mokėjimo prašymą pakeitė naujesnis.",
+    "payWhatsOpen": "Sumokėti, kas dar liko",
+    "errors": {
+      "PAYMENT_IN_PROGRESS": "Už tai jau vykdomas mokėjimas.",
+      "PAYMENT_EXPIRED": "Šio mokėjimo prašymo galiojimas baigėsi.",
+      "PROVIDER_UNAVAILABLE": "Mokėjimų paslauga šiuo metu nepasiekiama. Bandykite po kelių minučių.",
+      "generic": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "payInvoices": "Mokėti internetu",
+    "selectInvoices": "Pasirinkite sąskaitas apmokėti:",
+    "paySelected": "Mokėti {amount}",
+    "inProgress": "Mokėjimas vykdomas",
+    "credit": "Kreditas: {amount} — automatiškai panaudojamas kitoms sąskaitoms.",
+    "setUpDebit": "Nustatyti tiesioginį debetą",
+    "pendingPayments": "Vykdomi mokėjimai",
+    "open": "Atidaryti",
+    "awaitingTitle": "Laukiame jūsų mokėjimo",
+    "awaitingBody": "Šis užsakymas rezervuotas ir pateks tiekėjui, kai tik bus apmokėtas. Neapmokėti užsakymai atšaukiami po {days} d.",
+    "payOrder": "Apmokėti užsakymą",
+    "statuses": {
+      "ACTIVE": "Aktyvus"
+    },
+    "dd": {
+      "title": "Tiesioginis debetas",
+      "intro": "Apmokėkite sąskaitas automatiškai termino dieną SEPA tiesioginiu debetu. Pranešame {days} d. prieš kiekvieną nuskaičiavimą.",
+      "active": "Aktyvus — sąskaita baigiasi {last4}",
+      "holder": "Sąskaitos savininkas",
+      "since": "nuo {date}",
+      "autoCollect": "Automatiškai apmokėti sąskaitas termino dieną",
+      "setUp": "Nustatyti tiesioginį debetą",
+      "replace": "Naudoti kitą sąskaitą",
+      "revoke": "Atšaukti tiesioginį debetą",
+      "revokeConfirm": "Atšaukti tiesioginį debetą? Tada sąskaitas reikės apmokėti kitaip.",
+      "none": "Tiesioginis debetas nenustatytas.",
+      "pending": "Laukiama banko duomenų patvirtinimo…",
+      "upcoming": "Kiti nuskaičiavimai",
+      "noUpcoming": "Šiuo metu nėra ką nuskaičiuoti.",
+      "dueOn": "terminas {date}",
+      "notAvailable": "Tiesioginis debetas dar negalimas.",
+      "collectedAuto": "Jūsų sąskaitos apmokamos automatiškai tiesioginiu debetu (sąskaita baigiasi {last4}).",
+      "legal": "Nustatydami tiesioginį debetą įgaliojate FIRINGI ir jos mokėjimų paslaugų teikėją siųsti jūsų bankui nurodymus nurašyti lėšas iš jūsų sąskaitos, o savo banką — jas nurašyti. Grąžinimo galite prašyti banko per 8 savaites nuo nurašymo."
+    }
   }
 }

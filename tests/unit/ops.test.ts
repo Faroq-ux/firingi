@@ -8,6 +8,7 @@ const good = {
   DATABASE_URL: "postgresql://x", BETTER_AUTH_SECRET: "q8V3xZr1Lk0pT7bN2mW9yH4sJ6dF5gA0cE", BETTER_AUTH_URL: "https://app.firingi.pt",
   APP_URL: "https://app.firingi.pt", CRON_SECRET: "a".repeat(30), STORAGE_DRIVER: "s3", S3_BUCKET: "b", S3_ACCESS_KEY_ID: "k", S3_SECRET_ACCESS_KEY: "s",
   MAIL_DRIVER: "smtp", SMTP_URL: "smtps://u:p@mail:465", SENTRY_DSN: "https://k@o1.ingest.sentry.io/1", BACKUP_ENCRYPTION_KEY: "k".repeat(40),
+  STRIPE_SECRET_KEY: "sk_live_abc", STRIPE_WEBHOOK_SECRET: "whsec_abc",
 };
 const keys = (env: Record<string, string | undefined>, level?: "error" | "warning") => checkEnv(env).filter((f) => !level || f.level === level).map((f) => f.key);
 
@@ -30,6 +31,13 @@ describe("checkEnv", () => {
   it("risky but workable choices are warnings", () => {
     expect(keys({ ...good, STORAGE_DRIVER: "local", SENTRY_DSN: undefined, BACKUP_ENCRYPTION_KEY: undefined, SEED_PASSWORD: "x", AUTH_SIGNIN_RATE_LIMIT: "500", MAIL_DRIVER: "log" }, "warning").sort())
       .toEqual(["AUTH_SIGNIN_RATE_LIMIT", "BACKUP_ENCRYPTION_KEY", "MAIL_DRIVER", "SEED_PASSWORD", "SENTRY_DSN", "STORAGE_DRIVER"]);
+  });
+  it("payments: no simulator in production, Stripe needs its webhook secret, test keys are flagged", () => {
+    expect(keys({ ...good, PAYMENTS_SIMULATE: "1" }, "error")).toEqual(["PAYMENTS_SIMULATE"]);
+    expect(keys({ ...good, STRIPE_WEBHOOK_SECRET: undefined }, "error")).toEqual(["STRIPE_WEBHOOK_SECRET"]);
+    expect(keys({ ...good, STRIPE_SECRET_KEY: "pk_live_wrong" }, "error")).toEqual(["STRIPE_SECRET_KEY"]);
+    expect(keys({ ...good, STRIPE_SECRET_KEY: "sk_test_1" }, "warning")).toEqual(["STRIPE_SECRET_KEY"]);
+    expect(keys({ ...good, STRIPE_SECRET_KEY: undefined, STRIPE_WEBHOOK_SECRET: undefined }, "warning")).toEqual(["STRIPE_SECRET_KEY"]); // bank transfer only
     expect(keys({ ...good, APP_URL: "https://other.pt" }, "warning")).toEqual(["APP_URL"]);
   });
 });

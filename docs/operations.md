@@ -36,6 +36,7 @@ Scheduled jobs (UTC). Every run is recorded and shown in *Settings › System He
 |---|---|---|
 | Messages & campaigns (`/api/cron/notifications`) | every 2 min | 20 min (critical) |
 | Certified invoicing & payout reminders (`/api/cron/invoicing`) | every 5 min | 30 min (critical) |
+| Online payments, direct debits & reminders (`/api/cron/payments`) | every 5 min | 30 min (critical) |
 | Health checks & alerts (`/api/cron/ops`) | every 5 min | 20 min |
 | Supplier allocation (`/api/cron/allocation`) | every 10 min | 45 min (critical) |
 | AI suggestions (`/api/cron/ai`) | hourly | 3 h |
@@ -124,6 +125,15 @@ unsafe and prints what to fix:
 Warnings (shown in the log and on System Health, start anyway): files on local disk, e-mail only
 logged, no Sentry, unencrypted backups, demo seed password set, raised sign-in limit.
 
+**Customer payments online**: `STRIPE_SECRET_KEY` (sk_live_…) and `STRIPE_WEBHOOK_SECRET`. In the
+Stripe dashboard: activate the payment methods card, MB WAY, Multibanco and SEPA Direct Debit; add
+the webhook endpoint `https://<DOMAIN>/api/webhooks/payments/stripe` with the events
+`checkout.session.completed`, `checkout.session.async_payment_succeeded`,
+`checkout.session.async_payment_failed`, `checkout.session.expired`, `payment_intent.succeeded`,
+`payment_intent.processing`, `payment_intent.payment_failed`, `mandate.updated`; copy its signing
+secret into `STRIPE_WEBHOOK_SECRET`. Then switch the methods on in *Settings › Payment* and check
+*Finance › Online Payments › Test connection*. `PAYMENTS_SIMULATE=1` is refused in production.
+
 **File storage**: `STORAGE_DRIVER=s3` with any S3-compatible service (AWS S3, Hetzner, Scaleway,
 OVH, Cloudflare R2, MinIO, SeaweedFS…). `S3_ENDPOINT` for non-AWS providers, `S3_FORCE_PATH_STYLE=true`
 for most of them, `S3_SSE=AES256` to ask the provider to encrypt at rest (AWS; leave empty if the
@@ -143,6 +153,7 @@ volume up too.
 | Server errors | ≥ `ALERT_ERRORS_15MIN` (20) in 15 min | ≥ 5 × that |
 | Message queue | messages waiting > 30 min, or ≥ 10 failed in an hour | — |
 | Certified invoicing queue | a document refused by Moloni | a document pending > 1 h |
+| Online payments | provider notifications not applied, direct debits pending > 10 days | provider unreachable / keys wrong |
 | Each scheduled job / backup | last run failed | 3 failures in a row, or no success for too long (critical jobs) |
 | Settings | (production) a risky choice | (production) an essential setting missing |
 
@@ -225,6 +236,7 @@ in 1.6 s on the demo data.
 | **Job: … failing / stale** | System Health shows the job's last error. `logs scheduler`; is `CRON_SECRET` the same in app and scheduler? Run one job by hand: `curl -X POST -H "Authorization: Bearer $CRON_SECRET" https://<DOMAIN>/api/cron/<job>`. |
 | **Job: Database backup** | `logs backup` shows `BACKUP FAILED: <reason>` (database password, disk, S3 keys). Take one by hand once fixed. |
 | **Certified invoicing queue** | *Finance › Certified Invoicing*: refused documents show Moloni's reason; fix it and *Send again*. Pending > 1 h: Moloni down or keys wrong. |
+| **Online payments** | *Finance › Online Payments*: provider notifications with errors (fix, then the provider retries), failed payments and why, the connection test. Payments made but not matched become customer credit — use or refund it there. |
 | **Message queue** | *Notifications › Message log*: failed sends and why (SMTP / Twilio / WhatsApp keys, provider down). |
 | **Server errors** | System Health › Errors (grouped), or Sentry. |
 | **Settings** | the message says what to set; restart the app after changing `production.env`. |
