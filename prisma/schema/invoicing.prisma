@@ -16,6 +16,14 @@ enum InvoiceStatus {
   CREDITED
 }
 
+/// Where the legally valid document stands at the certified provider (Moloni).
+enum FiscalStatus {
+  LOCAL // issued by FIRINGI's internal stand-in (development, or before a provider is connected)
+  PENDING // waiting to be issued at the provider (queue)
+  DONE // issued at the provider: providerNumber is the legal number
+  FAILED // the provider refused it; finance must look (retries stop after several attempts)
+}
+
 enum TaxRegime {
   DOMESTIC
   INTRA_EU_REVERSE_CHARGE
@@ -117,6 +125,14 @@ model Invoice {
   qrPayload          String?
   externalProvider   String?
   externalId         String?
+  /// Legal number given by the certified provider (e.g. "FT 2026/12"); fullNumber is then FIRINGI's reference.
+  providerNumber     String?        @unique
+  /// Provider details kept for credit notes and checks: document id, line ids, totals, warnings.
+  providerData       Json?
+  fiscalStatus       FiscalStatus   @default(LOCAL)
+  fiscalAttempts     Int            @default(0)
+  fiscalNextAt       DateTime?
+  fiscalError        String?
   pdfKey             String?
   createdById        String?
   createdAt          DateTime       @default(now())
@@ -135,6 +151,19 @@ model Invoice {
 
   @@index([recipientCompanyId, issuedAt])
   @@index([orderId])
+  @@index([fiscalStatus, fiscalNextAt])
+}
+
+/// FIRINGI record ↔ the provider's id (customers, products), so each is created there once.
+model ProviderEntityMap {
+  id        String   @id @default(cuid())
+  provider  String // "moloni"
+  kind      String // CUSTOMER | PRODUCT
+  localId   String // company id / SKU
+  remoteId  String
+  createdAt DateTime @default(now())
+
+  @@unique([provider, kind, localId])
 }
 
 model InvoiceLine {

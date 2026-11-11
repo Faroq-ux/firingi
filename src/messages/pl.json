@@ -710,7 +710,8 @@
       "ACTIVE": "Aktywna",
       "PAUSED": "Wstrzymana",
       "ENDED": "Zakończona",
-      "DRAFT": "Szkic"
+      "DRAFT": "Szkic",
+      "beingIssued": "W trakcie wystawiania"
     },
     "howToPay": "Jak zapłacić",
     "payByTransfer": "Przelew bankowy na {holder}, IBAN",
@@ -1153,6 +1154,14 @@
     "ai_stock_low": {
       "title": "{product} się kończy",
       "body": "Przy obecnym tempie zapas {product} wystarczy na około {days} dni (pozostało {available}). Uzupełnij go, aby zamówienia dalej napływały."
+    },
+    "invoicing_failed": {
+      "title": "Faktura {number} nie została wystawiona w Moloni",
+      "body": "Moloni odrzuciło fakturę {number}: {reason}. Sprawdź ją w Finance › Certified Invoicing."
+    },
+    "payout_due": {
+      "title": "{count} płatności dla dostawców do zapłaty",
+      "body": "{count} faktur dostawców ({amount}) ma termin w ciągu 3 dni, w tym {overdue} po terminie. Zobacz Finance › Supplier Payouts Due."
     }
   },
   "notifications": {

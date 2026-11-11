@@ -38,7 +38,7 @@ export async function listSalesInvoices(ctx: Ctx, f: { as: "BUYER" | "ADMIN"; do
   }
   const rows = await prisma.invoice.findMany({
     where: { ...where, status: { not: "DRAFT" }, ...(f.docType ? { docType: f.docType } : {}) },
-    include: { recipient: { select: { legalName: true } }, order: { select: { id: true, number: true } }, originalInvoice: { select: { fullNumber: true } } },
+    include: { recipient: { select: { legalName: true } }, order: { select: { id: true, number: true } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } } },
     orderBy: { issuedAt: "desc" },
     take: 300,
   });
@@ -55,7 +55,7 @@ export async function listSalesInvoices(ctx: Ctx, f: { as: "BUYER" | "ADMIN"; do
 export async function invoiceForViewer(ctx: Ctx, id: string) {
   const inv = await prisma.invoice.findUnique({
     where: { id },
-    include: { lines: { orderBy: { position: "asc" } }, taxSummary: true, order: { select: { number: true } }, originalInvoice: { select: { fullNumber: true } }, recipient: { select: { type: true } } },
+    include: { lines: { orderBy: { position: "asc" } }, taxSummary: true, order: { select: { number: true } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } }, recipient: { select: { type: true } } },
   });
   if (!inv || inv.status === "DRAFT") throw new NotFoundError("Invoice");
   const mine = inv.recipientCompanyId === ctx.company.id && can(ctx, ["buyer.invoices.view", "buyer.payments.view"]);
@@ -87,6 +87,7 @@ export async function issueCreditNote(ctx: Ctx, invoiceId: string, input: { line
       return doc;
     });
     await notify("invoice.credit_note", [{ companyId: cn.recipientCompanyId, link: "/buy/finance/invoices" }], { document: cn.fullNumber }, { ref: { type: "Invoice", id: cn.id } });
+    (await import("@/server/invoicing/fiscal")).kickFiscalQueue();
     return cn;
   } catch (e) {
     const m = e instanceof Error ? e.message : "";

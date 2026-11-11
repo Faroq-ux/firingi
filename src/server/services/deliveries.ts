@@ -277,6 +277,7 @@ export async function completeDelivery(ctx: Ctx, id: string, input: Where & { re
     await tx.deliveryAttempt.create({ data: { deliveryId: d.id, succeeded: true, failureReason: input.note?.trim() || null, latitude: lat, longitude: lng, byUserId: ctx.user.id } });
     await tx.proofOfDelivery.create({ data: { deliveryId: d.id, recipientName: name, signatureKey, photoKeys, latitude: lat, longitude: lng, byUserId: ctx.user.id } });
   });
+  (await import("@/server/invoicing/fiscal")).kickFiscalQueue(); // the delivery invoiced the order: send it to Moloni
 }
 
 export async function failDelivery(ctx: Ctx, id: string, input: Where & { reasonCode: string; note?: string | null; photo?: File | null }) {

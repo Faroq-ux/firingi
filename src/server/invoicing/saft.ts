@@ -44,7 +44,8 @@ export function monthRange(month: string) {
 
 async function documents(legalEntityId: string, start: Date, end: Date) {
   return prisma.invoice.findMany({
-    where: { legalEntityId, status: { not: "DRAFT" }, issuedAt: { gte: start, lt: end } },
+    // Documents issued at Moloni are in Moloni's SAF-T, not FIRINGI's.
+    where: { legalEntityId, status: { not: "DRAFT" }, issuedAt: { gte: start, lt: end }, fiscalStatus: "LOCAL" },
     include: {
       lines: { orderBy: { position: "asc" }, include: { orderLine: { select: { sku: true, productName: true } }, exemptionReason: true } },
       originalInvoice: { select: { fullNumber: true, issuedAt: true } },
@@ -57,7 +58,8 @@ async function documents(legalEntityId: string, start: Date, end: Date) {
 
 /** Hash chain and numbering per series, for everything issued up to `end`. */
 export async function checkSeries(legalEntityId: string, end: Date) {
-  const series = await prisma.invoiceSeries.findMany({ where: { legalEntityId }, orderBy: [{ year: "desc" }, { prefix: "asc" }] });
+  // FIRINGI's own fiscal series only: reference series ("-REF") are for documents Moloni issued (Moloni's own chain).
+  const series = await prisma.invoiceSeries.findMany({ where: { legalEntityId, NOT: { prefix: { contains: "-REF" } } }, orderBy: [{ year: "desc" }, { prefix: "asc" }] });
   const out = [];
   for (const s of series) {
     const docs = await prisma.invoice.findMany({ where: { seriesId: s.id, status: { not: "DRAFT" }, issuedAt: { lt: end } }, orderBy: { number: "asc" }, select: { number: true, fullNumber: true, hash: true, previousHash: true, atcud: true } });

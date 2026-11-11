@@ -12,6 +12,7 @@ import type { InvoiceDocType, Prisma, TaxRegime } from "@prisma/client";
 import Decimal from "decimal.js";
 import type { Tx } from "@/server/db";
 import { invoiceProvider } from "./provider";
+import { usesMoloni } from "./fiscal";
 
 const r2 = (d: Decimal) => d.toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
 const PREFIX: Record<InvoiceDocType, string> = { INVOICE: "FT", INVOICE_RECEIPT: "FR", CREDIT_NOTE: "NC" };
@@ -23,9 +24,11 @@ export async function legalEntityFor(tx: Tx, countryId: string) {
 }
 
 /** Gap-free number in a series (row-locked; rolls back with the transaction). */
-async function takeNumber(tx: Tx, legalEntityId: string, countryId: string, docType: InvoiceDocType) {
+async function takeNumber(tx: Tx, legalEntityId: string, countryId: string, docType: InvoiceDocType, reference = false) {
   const year = new Date().getFullYear();
-  const prefix = `${PREFIX[docType]} FIR${year}`;
+  // Documents issued at Moloni get Moloni's legal number; FIRINGI then only needs its own
+  // reference, from a separate series so its fiscal series stays gap-free and hash-chained.
+  const prefix = `${PREFIX[docType]}${reference ? "-REF" : ""} FIR${year}`;
   await tx.invoiceSeries.upsert({
     where: { legalEntityId_docType_prefix_year: { legalEntityId, docType, prefix, year } },
     update: {},
@@ -74,8 +77,17 @@ async function issueDocument(tx: Tx, d: {
   await tx.invoiceTaxSummary.createMany({ data: [...byRate].map(([rate, v]) => ({ invoiceId: draft.id, taxRate: rate, base: r2(v.base).toFixed(2), vat: r2(v.vat).toFixed(2) })) });
 
   const issuer = d.issuerSnapshot as { taxId: string };
-  const num = await takeNumber(tx, d.legalEntityId, d.countryId, d.docType);
+  const viaMoloni = await usesMoloni(tx);
+  const num = await takeNumber(tx, d.legalEntityId, d.countryId, d.docType, viaMoloni);
   const issuedAt = new Date();
+  if (viaMoloni) {
+    // Booked now (FIRINGI reference, totals, balances); the legal document is issued at Moloni by
+    // the fiscal queue right after this transaction commits (see fiscal.ts).
+    return tx.invoice.update({
+      where: { id: draft.id },
+      data: { status: "ISSUED", seriesId: num.seriesId, number: num.number, fullNumber: num.fullNumber, issuedAt, dueAt: new Date(issuedAt.getTime() + d.dueDays * 86400000), externalProvider: "moloni", fiscalStatus: "PENDING" },
+    });
+  }
   const fiscal = await invoiceProvider().issue({
     docType: d.docType, fullNumber: num.fullNumber, number: num.number, seriesValidationCode: num.validationCode, issuedAt,
     issuerTaxId: issuer.taxId, recipientTaxId: d.recipientSnapshot.taxId ?? "999999990", recipientCountry: d.recipientSnapshot.country ?? "PT",

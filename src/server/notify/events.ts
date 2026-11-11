@@ -68,6 +68,8 @@ export const EVENTS: EventDef[] = [
   E("risk.order_flagged", "orders", ["admin.risk.manage"], ["PUSH"], ["number", "company", "score"]),
   E("approval.requested", "account", ["admin.invoices.issue", "admin.customers.manage", "admin.vendors.commission", "admin.marketing.manage", "admin.pricing.manage", "admin.settings.manage", "admin.users.manage", "admin.finance.manage"], ["EMAIL", "PUSH"], ["kind", "summary", "by"]),
   E("approval.decided", "account", null, ["EMAIL", "PUSH"], ["kind", "summary", "decision", "reason"]),
+  E("invoicing.failed", "finance", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
+  E("payout.due", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["count", "amount", "overdue"]),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

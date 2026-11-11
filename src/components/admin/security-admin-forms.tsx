@@ -61,7 +61,7 @@ export function ErasureActions({ id, blocked }: { id: string; blocked: boolean }
 
 type Policy = {
   methods: Record<string, boolean>; mbWayPhone: string | null; overdueBlockDays: number | null; creditCheck: boolean;
-  defaultTermsDays: { CUSTOMER: number; WHOLESALER: number }; defaultCreditLimit: { CUSTOMER: number | null; WHOLESALER: number | null };
+  defaultTermsDays: { CUSTOMER: number; WHOLESALER: number }; defaultCreditLimit: { CUSTOMER: number | null; WHOLESALER: number | null }; supplierPayoutDays: number;
 };
 const METHOD_LABEL: Record<string, string> = {
   BANK_TRANSFER: "Bank transfer (FIRINGI's IBAN)", MB_WAY: "MB WAY (to FIRINGI's number)", CASH_ON_DELIVERY: "Cash / card to the driver on delivery",
@@ -103,6 +103,12 @@ export function PaymentPolicyForm({ policy, needsProvider, canEdit }: { policy: 
             </div>
           ))}
           <p className="text-xs text-muted-foreground">Change a single buyer&apos;s terms and limit in Customers › Credit &amp; Terms or Payment Risk.</p>
+        </div>
+        <div className="rounded-md border p-3">
+          <div className="mb-2 font-medium">Paying suppliers</div>
+          <label className="flex flex-wrap items-center gap-2">When a supplier&apos;s invoice has no due date, pay it
+            <Input type="number" name="supplierPayoutDays" min={0} max={180} className="w-20 text-right" value={p.supplierPayoutDays} onChange={(e) => setP({ ...p, supplierPayoutDays: Number(e.target.value) })} /> days after its date</label>
+          <p className="text-xs text-muted-foreground">Finance sees what is due in Finance › Supplier Payouts Due and gets a daily reminder.</p>
         </div>
       </fieldset>
       {canEdit && <div className="flex items-center gap-3"><Button disabled={pending} onClick={() => run(() => setPaymentPolicyAction(p), () => "Saved")}>Save</Button>{msg && <span className={msg.ok ? "text-success" : "text-destructive"} role={msg.ok ? undefined : "alert"}>{msg.text}</span>}</div>}

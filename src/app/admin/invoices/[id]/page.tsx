@@ -20,7 +20,10 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   return (
     <>
       <Link href="/admin/invoices/customer" className="text-sm text-primary hover:underline">← Invoices</Link>
-      <PageHeader title={inv.fullNumber!} description={<span className="flex flex-wrap items-center gap-2"><Badge>{inv.docType.replace("_", " ").toLowerCase()}</Badge><Badge variant="secondary">{inv.status.replace("_", " ").toLowerCase()}</Badge>{formatDate(inv.issuedAt, locale, true)} · ATCUD {inv.atcud} · {inv.externalProvider === "internal" ? "not a fiscal document (test provider)" : inv.externalProvider}</span>}
+      <PageHeader title={inv.providerNumber ?? inv.fullNumber!} description={<span className="flex flex-wrap items-center gap-2" data-testid="fiscal-state"><Badge>{inv.docType.replace("_", " ").toLowerCase()}</Badge><Badge variant="secondary">{inv.status.replace("_", " ").toLowerCase()}</Badge>{formatDate(inv.issuedAt, locale, true)}
+        {inv.fiscalStatus === "LOCAL" ? <> · ATCUD {inv.atcud} · not a fiscal document (internal test numbering)</>
+          : inv.fiscalStatus === "DONE" ? <> · issued at Moloni{inv.externalProvider === "moloni" ? "" : ` (${inv.externalProvider?.replace("moloni-", "")})`} · FIRINGI ref {inv.fullNumber}</>
+            : <><Badge variant={inv.fiscalStatus === "FAILED" ? "destructive" : "warning"}>{inv.fiscalStatus === "FAILED" ? "Moloni refused it" : "being issued at Moloni"}</Badge>{inv.fiscalError && <span className="text-destructive">{inv.fiscalError}</span>} <Link className="text-primary hover:underline" href="/admin/finance/invoicing">Certified Invoicing →</Link></>}</span>}
         actions={<a className="text-sm text-primary hover:underline" href={`/api/invoices/${inv.id}/pdf`} target="_blank" rel="noreferrer">Open PDF</a>} />
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2"><CardContent className="pt-5">

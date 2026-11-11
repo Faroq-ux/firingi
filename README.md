@@ -63,6 +63,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `node tests/e2e/ai.mjs http://localhost:3000 [screenshotDir]` | Browser test of the AI Centre: insights, suggestions → CRM task, activity log, customer Buy Again, supplier Demand & Stock (run `pnpm db:demo-history` first)* |
+| `node tests/e2e/invoicing.mjs http://localhost:3000 [screenshotDir]` | Browser test of certified invoicing with a simulated Moloni (start the server with `MOLONI_SIMULATE=1`), payouts due* |
 | `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
@@ -560,6 +561,41 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   and dismiss. Operations, Finance and Sales roles now include the AI right.
 - **Demo history**: `pnpm db:demo-history` adds 16 weeks of delivered demo orders (marked
   "Demo history", not invoiced) so forecasts have something to learn from. Never on the test DB.
+
+## Certified invoicing (Moloni) & supplier payouts (Phase 18)
+
+- **Moloni** (AT-certified, certificate n.º 2860) issues FIRINGI Portugal's legal invoices and
+  credit notes (`src/server/invoicing/fiscal.ts`, client in `moloni/client.ts`, built from
+  moloni.pt/dev). FIRINGI still books every document at once inside the delivery / credit
+  transaction (balances, credit, statements never wait); with Moloni on, the document is then
+  **pending** and a queue issues it at Moloni (closed = Moloni communicates it to AT), stores
+  Moloni's legal number (e.g. `FT 2026/12`), hash and line ids, and serves **Moloni's signed PDF**.
+  FIRINGI keeps its own reference in a separate series (`FT-REF FIR2026/…`), so its internal fiscal
+  series stays gap-free and hash-chained; Moloni files the SAF-T for what it issued.
+- **Robust queue**: sent right after the delivery / credit note and by the cron
+  (`/api/cron/invoicing`, every 5 minutes, `Authorization: Bearer $CRON_SECRET`). Moloni down →
+  retries with back-off; refused → **Failed**, finance is alerted and can *Send again* after the
+  fix. A document is claimed before sending (cron and kick never both send it) and FIRINGI first
+  looks for it at Moloni by its reference, so it is **never issued twice** even after a crash.
+  Credit notes wait for their invoice and point at its lines. The legal number and a done state
+  can't be changed afterwards (database rule).
+- **Customers and products** are created at Moloni the first time they are invoiced (customer by
+  NIF, product by SKU; delivery fees as a service) and remembered. FIRINGI's VAT rates map to
+  Moloni taxes (mainland / Madeira / Azores suggested automatically); 0 % lines carry an exemption
+  reason.
+- **Settings** (*Finance › Certified Invoicing*): connection status, company, series for invoices
+  and credit notes, defaults for new customers / products, VAT mapping, the queue, documents that
+  need attention, last issued. Keys only in the server environment: `MOLONI_CLIENT_ID`,
+  `MOLONI_CLIENT_SECRET`, `MOLONI_USERNAME`, `MOLONI_PASSWORD` (password grant; tokens kept in
+  memory and refreshed), `MOLONI_SANDBOX=true` for Moloni's sandbox. `MOLONI_SIMULATE=1` runs a
+  built-in simulated Moloni for development and demos (documents marked `SIM`, not fiscal). Until
+  switched on, FIRINGI's internal numbering (marked "not a fiscal document") stays in use.
+- **Supplier payouts** stay manual (bank transfer). *Finance › Supplier Payouts Due* lists approved
+  supplier invoices still to pay — overdue, due soon, later — by supplier, with a CSV for the bank
+  and *Record payout* (four-eyes for big amounts). A supplier invoice without a due date is due
+  after the payout days in *Payments* settings (30 by default). Finance gets one reminder a day
+  when something is due within 3 days.
+- Customer payment providers (MB WAY, Multibanco references, cards, SEPA debit) come later.
 
 ## Look & feel: colour and motion
 

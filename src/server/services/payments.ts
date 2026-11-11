@@ -31,6 +31,8 @@ export type PaymentPolicy = {
   /** Applied when a buyer is approved (its own values can be changed later). */
   defaultTermsDays: Record<BuyerType, number>;
   defaultCreditLimit: Record<BuyerType, number | null>;
+  /** When a supplier's invoice to FIRINGI has no due date: FIRINGI pays it this many days after its date. */
+  supplierPayoutDays: number;
 };
 
 export const DEFAULT_PAYMENTS: PaymentPolicy = {
@@ -40,6 +42,7 @@ export const DEFAULT_PAYMENTS: PaymentPolicy = {
   creditCheck: true,
   defaultTermsDays: { CUSTOMER: 0, WHOLESALER: 30 },
   defaultCreditLimit: { CUSTOMER: null, WHOLESALER: null },
+  supplierPayoutDays: 30,
 };
 
 /** Methods that need a payment provider integration (not available yet). */
@@ -70,6 +73,7 @@ export async function setPaymentPolicy(ctx: Ctx, input: PaymentPolicy) {
     creditCheck: !!input.creditCheck,
     defaultTermsDays: { CUSTOMER: days(input.defaultTermsDays.CUSTOMER, "Customer terms"), WHOLESALER: days(input.defaultTermsDays.WHOLESALER, "Wholesaler terms") },
     defaultCreditLimit: { CUSTOMER: limit(input.defaultCreditLimit.CUSTOMER), WHOLESALER: limit(input.defaultCreditLimit.WHOLESALER) },
+    supplierPayoutDays: days(input.supplierPayoutDays ?? DEFAULT_PAYMENTS.supplierPayoutDays, "Supplier payout terms"),
   };
   const before = await paymentPolicy();
   await prisma.setting.upsert({

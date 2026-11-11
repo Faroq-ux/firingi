@@ -710,7 +710,8 @@
       "ACTIVE": "Активна",
       "PAUSED": "На пауза",
       "ENDED": "Приключила",
-      "DRAFT": "Чернова"
+      "DRAFT": "Чернова",
+      "beingIssued": "В процес на издаване"
     },
     "howToPay": "Как да платите",
     "payByTransfer": "Банков превод към {holder}, IBAN",
@@ -1153,6 +1154,14 @@
     "ai_stock_low": {
       "title": "{product} свършва",
       "body": "При сегашното темпо наличността ви от {product} ще стигне за около {days} дни (остават {available}). Заредете, за да продължат поръчките."
+    },
+    "invoicing_failed": {
+      "title": "Фактура {number} не е издадена в Moloni",
+      "body": "Moloni отхвърли фактура {number}: {reason}. Проверете я във Finance › Certified Invoicing."
+    },
+    "payout_due": {
+      "title": "{count} плащания към доставчици наближават",
+      "body": "{count} фактури от доставчици ({amount}) са с падеж до 3 дни, {overdue} от тях са просрочени. Вижте Finance › Supplier Payouts Due."
     }
   },
   "notifications": {

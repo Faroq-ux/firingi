@@ -17,6 +17,9 @@ import { pickLocalized } from "@/i18n/config";
 import { paymentInstructions } from "@/server/services/payments";
 import { AcceptButtons, PaymentForm, PromotionStatusButtons, VendorInvoiceReview, VendorInvoiceUpload } from "./controls";
 
+/** Booked by FIRINGI, still being issued at the certified provider (Moloni). */
+const pendingFiscal = (r: { externalProvider: string | null; fiscalStatus: string }) => !!r.externalProvider?.startsWith("moloni") && r.fiscalStatus !== "DONE";
+
 const VARIANT: Record<string, "success" | "warning" | "destructive" | "secondary" | "default"> = {
   PAID: "success", APPROVED: "success", CLOSED: "success", MATCHED: "default", ISSUED: "default", ACTIVE: "success", ACCEPTED: "success",
   DISPUTED: "destructive", REJECTED: "destructive", DECLINED: "destructive", OPEN: "warning", PENDING: "warning", SUBMITTED: "warning", INVOICED: "warning",
@@ -55,8 +58,9 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
           {rows.map((r) => (
             <TR key={r.id}>
               <TD className="font-mono text-xs">
-                {as === "ADMIN" ? <Link href={`/admin/invoices/${r.id}`} className="text-primary hover:underline">{r.fullNumber}</Link> : r.fullNumber}
-                {r.docType === "CREDIT_NOTE" && <div className="text-muted-foreground">{t("creditNote")} → {r.originalInvoice?.fullNumber}</div>}
+                {as === "ADMIN" ? <Link href={`/admin/invoices/${r.id}`} className="text-primary hover:underline">{r.providerNumber ?? r.fullNumber}</Link> : r.providerNumber ?? r.fullNumber}
+                {pendingFiscal(r) && <div><Badge variant="secondary">{t("beingIssued")}</Badge></div>}
+                {r.docType === "CREDIT_NOTE" && <div className="text-muted-foreground">{t("creditNote")} → {r.originalInvoice?.providerNumber ?? r.originalInvoice?.fullNumber}</div>}
               </TD>
               <TD className="text-xs">{formatDate(r.issuedAt, locale)}{r.dueAt && r.docType !== "CREDIT_NOTE" && <div className={r.overdue ? "text-destructive" : "text-muted-foreground"}>{t("due")} {formatDate(r.dueAt, locale)}</div>}</TD>
               {as === "ADMIN" && <TD>{r.recipient.legalName}</TD>}
@@ -64,7 +68,7 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
               <TD className="text-right tabular-nums">{r.docType === "CREDIT_NOTE" ? "−" : ""}{formatMoney(r.grossTotal.toString(), locale)}</TD>
               <TD className="text-right tabular-nums">{Number(r.open) > 0 ? formatMoney(r.open, locale) : "—"}</TD>
               <TD>{r.overdue ? <Badge variant="destructive">{t("overdue")}</Badge> : Number(r.open) === 0 && r.docType === "INVOICE" ? <StatusBadge status="PAID" /> : <StatusBadge status={r.status} />}</TD>
-              <TD>{pdfLink(`/api/invoices/${r.id}/pdf`)}</TD>
+              <TD>{pendingFiscal(r) ? null : pdfLink(`/api/invoices/${r.id}/pdf`)}</TD>
             </TR>
           ))}
         </TBody>

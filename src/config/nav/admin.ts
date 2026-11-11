@@ -213,6 +213,8 @@ export const ADMIN_NAV: NavSection[] = [
       fin("payable", "Accounts Payable", "Contas a Pagar", "P5", { live: true }),
       fin("profit-loss", "Profit & Loss", "Lucros e Perdas", "P14", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
       fin("cash-flow", "Cash Flow", "Fluxo de Caixa", "P14", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
+      fin("payouts-due", "Supplier Payouts Due", "Pagamentos a Fornecedores Pendentes", "P18", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
+      fin("invoicing", "Certified Invoicing", "Faturação Certificada", "P18", { live: true, perm: ["admin.finance.view", "admin.tax.manage", "admin.settings.manage", "admin.invoices.view"] }),
     ],
   },
   {

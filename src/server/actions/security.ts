@@ -34,6 +34,7 @@ export const setPaymentPolicyAction = defineAction({
     methods: z.record(z.string(), z.boolean()), mbWayPhone: z.string().nullable(), overdueBlockDays: z.number().int().nullable(), creditCheck: z.boolean(),
     defaultTermsDays: z.object({ CUSTOMER: z.number().int(), WHOLESALER: z.number().int() }),
     defaultCreditLimit: z.object({ CUSTOMER: z.number().nullable(), WHOLESALER: z.number().nullable() }),
+    supplierPayoutDays: z.number().int().optional(),
   }),
   handler: async (ctx, i) => done(await setPaymentPolicy(ctx, i as Parameters<typeof setPaymentPolicy>[1])),
 });

@@ -414,6 +414,7 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
     if (order.status === "ON_HOLD" && actor === "ADMIN")
       await tx.riskAssessment.updateMany({ where: { orderId, review: "OPEN" }, data: { review: to === "CANCELLED" ? "FRAUD" : "CLEARED", reviewedById: ctx.user.id, reviewedAt: new Date(), note: reason?.trim() || null } });
   });
+  if (to === "DELIVERED") (await import("@/server/invoicing/fiscal")).kickFiscalQueue(); // send the invoice to Moloni now (the cron retries)
   if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);
   if (to === "CANCELLED" && actor === "VENDOR" && order.status === "PENDING_CONFIRMATION") {
     // Supplier declined: FIRINGI tries to move the order to another supplier (Phase 9).
