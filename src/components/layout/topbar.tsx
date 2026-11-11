@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
-import { EllipsisVertical, LogOut, Menu, ShoppingCart } from "lucide-react";
+import { EllipsisVertical, LogOut, Menu, Search, ShoppingCart } from "lucide-react";
+import { openPalette } from "./command-palette";
 import { authClient } from "@/lib/auth-client";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
@@ -19,7 +20,7 @@ export type TopbarProps = {
   portals: { key: string; label: string; href: string; active: boolean }[];
   locale: string;
   locales: { code: string; native: string }[];
-  labels: { signOut: string; language: string; company: string; menu: string; security?: string };
+  labels: { signOut: string; language: string; company: string; menu: string; security?: string; search?: string };
   securityHref?: string | null;
   cart?: { count: number; label: string } | null;
   bell?: { initialUnread: number; base: string; labels: BellLabels } | null;
@@ -36,26 +37,31 @@ export function Topbar(p: TopbarProps) {
   useEffect(() => setMore(false), [pathname]);
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b sm:gap-3 bg-card/95 px-3 backdrop-blur md:px-5">
+    <header className="glass-strong sticky top-0 z-20 flex h-16 items-center gap-2 border-b border-[color:var(--glass-border)] px-3 sm:gap-3 md:px-6">
       <button type="button" className="rounded-md p-2 hover:bg-accent md:hidden" onClick={p.onMenu} aria-label={p.labels.menu}>
         <Menu className="size-5" />
       </button>
 
       {p.portals.length > 1 && (
-        <div className="flex shrink-0 rounded-lg bg-muted p-0.5 text-xs sm:text-sm" role="tablist">
+        <div className="flex shrink-0 rounded-xl bg-muted/70 p-1 text-xs sm:text-sm" role="tablist">
           {p.portals.map((x) => (
             <Link
               key={x.key}
               href={x.href}
               role="tab"
               aria-selected={x.active}
-              className={cn("rounded-md px-2 py-1 font-medium sm:px-3", x.active ? "bg-card shadow-xs" : "text-muted-foreground hover:text-foreground")}
+              className={cn("rounded-lg px-2 py-1 font-medium transition-all sm:px-3", x.active ? "bg-card text-foreground shadow-[0_4px_14px_-6px_color-mix(in_oklch,var(--vivid-violet)_60%,transparent)]" : "text-muted-foreground hover:text-foreground")}
             >
               {x.label}
             </Link>
           ))}
         </div>
       )}
+
+      <button type="button" onClick={openPalette} className="hidden h-10 min-w-0 max-w-sm flex-1 items-center gap-2 rounded-xl border border-[color:var(--glass-border)] bg-card/60 px-3 text-left text-sm text-muted-foreground shadow-xs transition-all hover:border-[color:color-mix(in_oklch,var(--vivid-violet)_40%,var(--border))] hover:shadow-[0_0_0_4px_color-mix(in_oklch,var(--vivid-violet)_10%,transparent)] lg:flex" data-testid="topbar-search">
+        <Search className="size-4 text-[var(--vivid-violet)]" /><span className="flex-1 truncate">{p.labels.search ?? "Search"}</span><span className="kbd">Ctrl K</span>
+      </button>
+      <button type="button" onClick={openPalette} aria-label={p.labels.search ?? "Search"} className="rounded-md p-2 hover:bg-accent lg:hidden"><Search className="size-5" /></button>
 
       <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
         {p.bell && <NotificationBell {...p.bell} />}

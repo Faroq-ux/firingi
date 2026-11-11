@@ -24,6 +24,12 @@ export function ThemeToggle({ initial, labels, labelClassName }: { initial: Them
     mq.addEventListener("change", on);
     return () => mq.removeEventListener("change", on);
   }, [choice]);
+  // The command palette can switch the theme too.
+  useEffect(() => {
+    const on = (e: Event) => { const c = (e as CustomEvent<ThemeChoice>).detail; document.cookie = `${THEME_COOKIE}=${c}; path=/; max-age=31536000; samesite=lax`; setChoice(c); };
+    window.addEventListener("firingi:theme", on);
+    return () => window.removeEventListener("firingi:theme", on);
+  }, []);
   const next: Record<ThemeChoice, ThemeChoice> = { system: "light", light: "dark", dark: "system" };
   const Icon = choice === "dark" ? Moon : choice === "light" ? Sun : Monitor;
   return (

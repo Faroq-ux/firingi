@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { defineAction } from "./_action";
+import { ValidationError } from "@/server/errors";
 import * as cart from "@/server/services/cart";
 import * as orders from "@/server/services/orders";
 import * as rules from "@/server/services/delivery-rules";
@@ -23,6 +24,18 @@ export const removeFromCartAction = defineAction({
   permission: "buyer.orders.place",
   schema: z.object({ offerId: z.string() }),
   handler: async (ctx, i) => done(await cart.removeFromCart(ctx, i.offerId)),
+});
+/** Supplier: confirm several orders as ordered (each one on its own; failures are reported). */
+export const bulkConfirmOrdersAction = defineAction({
+  permission: "vendor.orders.manage",
+  schema: z.object({ ids: z.array(z.string().min(1).max(40)).min(1).max(100) }),
+  handler: async (ctx, i) => {
+    const failed: string[] = [];
+    for (const id of i.ids) await orders.confirmOrder(ctx, id, {}).catch((e: Error) => failed.push(e.message));
+    if (failed.length === i.ids.length) throw new ValidationError(failed[0]);
+    revalidatePath("/vendor/orders", "layout");
+    return { confirmed: i.ids.length - failed.length, failed: failed.length };
+  },
 });
 export const clearCartAction = defineAction({
   permission: "buyer.orders.place",

@@ -8,13 +8,13 @@ import { canDecideType, canReviewDocsOf, requireAdmin, scopeWhere, viewableTypes
 import { missingForApproval } from "@/server/onboarding/rules";
 import { readinessInput } from "@/server/services/company";
 
-export type CompanyFilter = { types: CompanyType[]; statuses?: AccountStatus[]; countryCode?: string; q?: string; page?: number };
+export type CompanyFilter = { types: CompanyType[]; statuses?: AccountStatus[]; countryCode?: string; q?: string; page?: number; pageSize?: number };
 
 export async function listCompanies(ctx: Ctx, f: CompanyFilter) {
   requireAdmin(ctx);
   const types = f.types.filter((t) => viewableTypes(ctx).includes(t));
   if (types.length === 0) throw new ForbiddenError();
-  const pageSize = 50;
+  const pageSize = Math.min(500, Math.max(1, f.pageSize ?? 50));
   const page = Math.max(1, f.page ?? 1);
   const where: Prisma.CompanyWhereInput = {
     AND: [

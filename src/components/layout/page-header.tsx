@@ -1,12 +1,19 @@
-export function PageHeader({ title, description, actions }: { title: string; description?: React.ReactNode; actions?: React.ReactNode }) {
+/** Page title band: gradient title, optional eyebrow / icon, actions on the right (glass, aurora edge). */
+import type { LucideIcon } from "lucide-react";
+
+export function PageHeader({ title, description, actions, eyebrow, icon: Icon }: { title: string; description?: React.ReactNode; actions?: React.ReactNode; eyebrow?: string; icon?: LucideIcon }) {
   return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      <div className="motion-rise">
-        <span aria-hidden className="mb-2 block h-1 w-12 rounded-full bg-[linear-gradient(90deg,var(--vivid-blue),var(--vivid-violet),var(--vivid-pink))]" />
-        <h1 className="text-gradient text-2xl font-bold tracking-tight">{title}</h1>
-        {description && <div className="mt-1 text-sm text-muted-foreground">{description}</div>}
+    <div className="motion-rise mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex min-w-0 items-start gap-3">
+        {Icon && <span className="tile-chip gloss mt-0.5 grid size-11 shrink-0 place-items-center rounded-2xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white shadow-[0_10px_24px_-10px_var(--vivid-violet)]"><Icon className="size-5" aria-hidden /></span>}
+        <div className="min-w-0">
+          {eyebrow ? <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:color-mix(in_oklch,var(--vivid-violet)_70%,var(--foreground))]">{eyebrow}</p>
+            : <span aria-hidden className="mb-2 block h-1 w-12 rounded-full bg-[linear-gradient(90deg,var(--vivid-blue),var(--vivid-violet),var(--vivid-teal))] shadow-[0_0_12px_var(--vivid-violet)]" />}
+          <h1 className="text-gradient text-2xl font-bold tracking-tight sm:text-[1.75rem]">{title}</h1>
+          {description && <div className="mt-1 max-w-3xl text-sm text-muted-foreground">{description}</div>}
+        </div>
       </div>
-      {actions && <div className="flex gap-2">{actions}</div>}
+      {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
   );
 }

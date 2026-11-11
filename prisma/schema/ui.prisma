@@ -1,0 +1,33 @@
+// ───────────────────────── Personal workspace (Phase 22) ─────────────────────────
+
+/// A saved view of a smart table (visible columns, order, sort, filters, density) — per user,
+/// per company they work in, per table.
+model SavedView {
+  id        String   @id @default(cuid())
+  userId    String
+  companyId String
+  tableId   String // e.g. "admin.orders"
+  name      String
+  state     Json
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId, tableId, name])
+  @@index([userId, companyId, tableId])
+}
+
+/// Personal settings that follow the user across devices (e.g. dashboard layout).
+model UserPreference {
+  userId    String
+  companyId String
+  key       String // e.g. "dashboard.admin"
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, companyId, key])
+}

@@ -15,10 +15,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
+import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
+import { DataTable, type Row } from "@/components/ui/data-table";
+import { listViews } from "@/server/services/workspace";
+import { can } from "@/server/rbac/guard";
+import { bulkConfirmOrdersAction } from "@/server/actions/orders";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { ResolveException, StatusActions } from "./order-actions";
 import { DecisionPanel } from "./decision-panel";
+import { OrderProgress } from "./order-progress";
 import { openBuyerDecision } from "@/server/allocation/engine";
 import { allocationRules } from "@/server/allocation/rules";
 import { DeliveryPanel, OrderReturnsPanel } from "@/components/delivery/delivery-views";
@@ -39,35 +44,43 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
   ctx: Ctx; as: OrderRole; title: string; description?: string; statuses?: OrderStatus[]; since?: Date; sellerType?: "DISTRIBUTOR" | "WHOLESALER";
   withOpenExceptions?: boolean; params: { q?: string; page?: string }; basePath: string;
 }) {
-  const [data, t, c, locale] = await Promise.all([
-    listOrders(ctx, as, { statuses, since, sellerType, withOpenExceptions, q: params.q, page: Number(params.page) || 1 }),
-    getTranslations("orders"), getTranslations("common"), getLocale(),
+  const tableId = `${as.toLowerCase()}.orders`;
+  const [data, t, ts, c, locale, views] = await Promise.all([
+    listOrders(ctx, as, { statuses, since, sellerType, withOpenExceptions, q: params.q, page: Number(params.page) || 1, pageSize: 300 }),
+    getTranslations("orders"), getTranslations("orders.statuses"), getTranslations("common"), getLocale(), listViews(ctx, tableId),
   ]);
+  const rows: Row[] = data.rows.map((o) => ({
+    id: o.id, href: `${BASE[as]}/${o.id}`,
+    cells: {
+      number: { t: o.number, mono: true, sub: o._count.exceptions > 0 ? "⚠" : undefined },
+      date: { t: formatDate(o.placedAt, locale, true), v: o.placedAt.getTime() },
+      buyer: o.buyer.tradeName ?? o.buyer.legalName,
+      supplier: o.seller.tradeName ?? o.seller.legalName,
+      delivery: o.deliveryMode ? t(`modes.${o.deliveryMode}`) : "—",
+      lines: o._count.lines,
+      total: { t: formatMoney(o.grandTotal.toString(), locale), v: Number(o.grandTotal) },
+      status: { t: ts(o.status), tone: STATUS_VARIANT[o.status] },
+    },
+  }));
+  const columns = [
+    { key: "number", label: t("order") }, { key: "date", label: t("date"), type: "date" as const },
+    ...(as !== "BUYER" ? [{ key: "buyer", label: t("vendor.buyer") }] : []), ...(as !== "VENDOR" ? [{ key: "supplier", label: t("supplier") }] : []),
+    { key: "delivery", label: t("delivery") }, { key: "lines", label: "#", type: "number" as const, hidden: true },
+    { key: "total", label: t("total"), type: "money" as const }, { key: "status", label: t("status"), type: "badge" as const },
+  ];
+  const canConfirm = as === "VENDOR" && can(ctx, "vendor.orders.manage") && data.rows.some((o) => o.status === "PENDING_CONFIRMATION");
   return (
     <>
       <PageHeader title={title} description={description ?? `${data.total}`} />
-      <form className="mb-4 flex gap-2" action={basePath}>
-        <Input name="q" defaultValue={params.q} placeholder={c("search")} className="w-64" />
-        <Button type="submit" variant="outline">{c("filter")}</Button>
-      </form>
-      <Table>
-        <THead><TR><TH>{t("order")}</TH><TH>{t("date")}</TH>{as !== "BUYER" && <TH>{t("vendor.buyer")}</TH>}{as !== "VENDOR" && <TH>{t("supplier")}</TH>}<TH>{t("delivery")}</TH><TH className="text-right">{t("total")}</TH><TH>{t("status")}</TH></TR></THead>
-        <TBody>
-          {data.rows.length === 0 && <EmptyRow colSpan={7}>{t("noOrders")}</EmptyRow>}
-          {data.rows.map((o) => (
-            <TR key={o.id}>
-              <TD><Link href={`${BASE[as]}/${o.id}`} className="font-mono font-medium text-primary hover:underline">{o.number}</Link>{o._count.exceptions > 0 && <Badge variant="destructive" className="ml-1">!</Badge>}</TD>
-              <TD className="text-xs text-muted-foreground">{formatDate(o.placedAt, locale, true)}</TD>
-              {as !== "BUYER" && <TD>{o.buyer.tradeName ?? o.buyer.legalName}</TD>}
-              {as !== "VENDOR" && <TD>{o.seller.tradeName ?? o.seller.legalName}</TD>}
-              <TD className="text-xs">{o.deliveryMode ? t(`modes.${o.deliveryMode}`) : "—"}</TD>
-              <TD className="text-right tabular-nums">{formatMoney(o.grandTotal.toString(), locale)}</TD>
-              <TD><OrderStatusBadge status={o.status} /></TD>
-            </TR>
-          ))}
-        </TBody>
-      </Table>
-      <Pager page={data.page} pageCount={data.pageCount} basePath={basePath} params={{ q: params.q }} />
+      {data.pageCount > 1 && (
+        <form className="mb-4 flex gap-2" action={basePath}>
+          <Input name="q" defaultValue={params.q} placeholder={c("search")} className="w-64" />
+          <Button type="submit" variant="outline">{c("filter")}</Button>
+        </form>
+      )}
+      <DataTable tableId={tableId} columns={columns} rows={rows} views={views} empty={t("noOrders")} exportName={`orders-${title}`}
+        bulk={canConfirm ? [{ key: "confirm", label: t("vendor.confirmSelected"), action: bulkConfirmOrdersAction }] : []} />
+      {data.pageCount > 1 && <Pager page={data.page} pageCount={data.pageCount} basePath={basePath} params={{ q: params.q }} />}
     </>
   );
 }
@@ -90,6 +103,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
         description={<span className="flex flex-wrap items-center gap-2"><OrderStatusBadge status={o.status} /> {formatDate(o.placedAt, locale, true)} · {o.deliveryMode && t(`modes.${o.deliveryMode}`)}{role === "VENDOR" && o.routedByFiringi && <Badge data-testid="routed-badge">{t("deliveryOrderFromFiringi")}</Badge>}</span>}
         actions={role === "VENDOR" ? <Link className={buttonVariants({ variant: "outline" })} href={`/vendor/orders/${o.id}/delivery-order`} data-testid="delivery-order-link">{t("deliveryOrder")}</Link> : undefined}
       />
+      <OrderProgress status={o.status} history={o.statusHistory} />
       {decision && rules && (
         <DecisionPanel eventId={decision.id} shortfall={decision.trigger === "SHORTFALL"} supplier={o.seller.tradeName ?? o.seller.legalName}
           deadline={formatDate(new Date(decision.createdAt.getTime() + rules.buyerDecisionHours * 3600_000), locale, true)} />

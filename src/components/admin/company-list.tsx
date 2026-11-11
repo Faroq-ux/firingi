@@ -5,15 +5,15 @@ import { getLocale, getTranslations } from "next-intl/server";
 import type { Ctx } from "@/server/context";
 import { listCompanies } from "@/server/data/companies";
 import { PageHeader } from "@/components/layout/page-header";
-import { AccountStatusBadge } from "@/components/layout/status-badge";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
-import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
+import { DataTable, type Tone } from "@/components/ui/data-table";
+import { listViews } from "@/server/services/workspace";
 import { formatDate } from "@/lib/utils";
 import { isIndividualPtNif } from "@/lib/tax-id";
 
 const STATUSES: AccountStatus[] = ["PENDING", "UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED"];
+const STATUS_TONE: Record<string, Tone> = { PENDING: "secondary", UNDER_REVIEW: "warning", APPROVED: "success", REJECTED: "destructive", SUSPENDED: "destructive" };
 
 export async function CompanyList({
   ctx, title, description, basePath, types, defaultStatuses, params, columns = [],
@@ -24,9 +24,10 @@ export async function CompanyList({
 }) {
   const statuses = params.status ? (params.status.split(",") as AccountStatus[]).filter((s) => STATUSES.includes(s)) : defaultStatuses;
   const [data, tc, tb, c, locale] = await Promise.all([
-    listCompanies(ctx, { types, statuses, countryCode: params.country || undefined, q: params.q || undefined, page: Number(params.page) || 1 }),
+    listCompanies(ctx, { types, statuses, countryCode: params.country || undefined, q: params.q || undefined, page: Number(params.page) || 1, pageSize: 300 }),
     getTranslations("companyType"), getTranslations("onboarding.businessTypes"), getTranslations("common"), getLocale(),
   ]);
+  const views = await listViews(ctx, `admin.companies-${types.join("-").toLowerCase()}`);
   const qs = (page: number) => `${basePath}?${new URLSearchParams({ ...(params.q ? { q: params.q } : {}), ...(params.status ? { status: params.status } : {}), ...(params.country ? { country: params.country } : {}), page: String(page) })}`;
 
   return (
@@ -41,45 +42,29 @@ export async function CompanyList({
         <Input name="country" placeholder="Country (PT, ES…)" defaultValue={params.country} className="w-40" maxLength={2} />
         <Button type="submit" variant="outline">{c("filter")}</Button>
       </form>
-      <Table>
-        <THead>
-          <TR>
-            <TH>Company</TH>
-            {columns.includes("type") && <TH>Type</TH>}
-            <TH>Country / city</TH>
-            {columns.includes("businessType") && <TH>Business</TH>}
-            {columns.includes("vies") && <TH>VAT / VIES</TH>}
-            {columns.includes("commission") && <TH>Commission</TH>}
-            <TH>Docs to review</TH>
-            <TH>Status</TH>
-            <TH>Updated</TH>
-          </TR>
-        </THead>
-        <TBody>
-          {data.rows.length === 0 && <EmptyRow colSpan={9}>{c("noData")}</EmptyRow>}
-          {data.rows.map((r) => (
-            <TR key={r.id}>
-              <TD>
-                <Link href={`/admin/companies/${r.id}`} className="font-medium text-primary hover:underline">{r.legalName}</Link>
-                <div className="text-xs text-muted-foreground">NIF {r.taxId}{r.tradeName ? ` · ${r.tradeName}` : ""} {r.country.code === "PT" && isIndividualPtNif(r.taxId) && <Badge variant="warning">sole trader</Badge>}</div>
-              </TD>
-              {columns.includes("type") && <TD>{tc(r.type)}</TD>}
-              <TD>{r.country.flag} {r.country.code} <span className="text-muted-foreground">{r.addresses[0]?.cityName}</span></TD>
-              {columns.includes("businessType") && <TD>{r.businessType ? tb(r.businessType as "other") : "—"}</TD>}
-              {columns.includes("vies") && (
-                <TD className="text-xs">
-                  {r.vatNumber ?? "—"}{" "}
-                  {r.vatNumber && <Badge variant={r.vatValidations[0]?.result === "VALID" ? "success" : r.vatValidations[0] ? "destructive" : "secondary"}>{r.vatValidations[0]?.result ?? "not checked"}</Badge>}
-                </TD>
-              )}
-              {columns.includes("commission") && <TD>{r.commissionRules[0] ? `${Number(r.commissionRules[0].rate)} %` : <Badge variant="warning">not set</Badge>}</TD>}
-              <TD>{r._count.documents > 0 ? <Badge variant="warning">{r._count.documents}</Badge> : <span className="text-muted-foreground">0</span>}</TD>
-              <TD><AccountStatusBadge status={r.status} /></TD>
-              <TD className="text-xs text-muted-foreground">{formatDate(r.updatedAt, locale)}</TD>
-            </TR>
-          ))}
-        </TBody>
-      </Table>
+      <DataTable tableId={`admin.companies-${types.join("-").toLowerCase()}`} views={views} empty={c("noData")} exportName={title.toLowerCase().replace(/\W+/g, "-")}
+        columns={[
+          { key: "company", label: "Company" }, ...(columns.includes("type") ? [{ key: "type", label: "Type", type: "badge" as const }] : []),
+          { key: "taxId", label: "NIF", hidden: true }, { key: "country", label: "Country / city" },
+          ...(columns.includes("businessType") ? [{ key: "business", label: "Business" }] : []),
+          ...(columns.includes("vies") ? [{ key: "vies", label: "VAT / VIES", type: "badge" as const }] : []),
+          ...(columns.includes("commission") ? [{ key: "commission", label: "Commission" }] : []),
+          { key: "docs", label: "Docs to review", type: "number" as const }, { key: "status", label: "Status", type: "badge" as const }, { key: "updated", label: "Updated", type: "date" as const },
+        ]}
+        rows={data.rows.map((r) => ({
+          id: r.id, href: `/admin/companies/${r.id}`,
+          cells: {
+            company: { t: r.legalName, sub: `NIF ${r.taxId}${r.tradeName ? ` · ${r.tradeName}` : ""}${r.country.code === "PT" && isIndividualPtNif(r.taxId) ? " · sole trader" : ""}` },
+            type: { t: tc(r.type), tone: "secondary" as const }, taxId: r.taxId,
+            country: `${r.country.flag} ${r.country.code} ${r.addresses[0]?.cityName ?? ""}`.trim(),
+            business: r.businessType ? tb(r.businessType as "other") : "—",
+            vies: r.vatNumber ? { t: `${r.vatNumber} · ${r.vatValidations[0]?.result ?? "not checked"}`, tone: r.vatValidations[0]?.result === "VALID" ? "success" as const : r.vatValidations[0] ? "destructive" as const : "secondary" as const } : "—",
+            commission: r.commissionRules[0] ? { t: `${Number(r.commissionRules[0].rate)} %`, v: Number(r.commissionRules[0].rate) } : { t: "not set", tone: "warning" as const },
+            docs: r._count.documents,
+            status: { t: r.status.replace("_", " ").toLowerCase(), tone: STATUS_TONE[r.status] },
+            updated: { t: formatDate(r.updatedAt, locale), v: r.updatedAt.getTime() },
+          },
+        }))} />
       <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
         <span>{c("pageOf", { page: data.page, count: data.pageCount })} · {data.total}</span>
         <div className="flex gap-2">

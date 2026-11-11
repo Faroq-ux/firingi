@@ -23,6 +23,8 @@ async function open(email, url, opts = {}) {
   await page.fill("#email", email);
   await page.fill("#password", PASSWORD);
   await page.click("button[type=submit]");
+  // Wait until the sign-in finished (left /login), not only until the network went quiet.
+  await page.waitForURL((u) => u.pathname !== "/login", { timeout: 20000 }).catch(() => {});
   await page.waitForLoadState("networkidle");
   await page.goto(`${BASE}${url}`);
   await page.waitForLoadState("networkidle");

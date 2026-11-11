@@ -348,7 +348,7 @@ export function allowedTransitions(ctx: Ctx, role: OrderRole, status: OrderStatu
   return all.filter((to) => canTransition(status, to, actor, mode));
 }
 
-export type OrderListFilter = { statuses?: OrderStatus[]; q?: string; page?: number; since?: Date; sellerType?: "DISTRIBUTOR" | "WHOLESALER"; withOpenExceptions?: boolean };
+export type OrderListFilter = { statuses?: OrderStatus[]; q?: string; page?: number; pageSize?: number; since?: Date; sellerType?: "DISTRIBUTOR" | "WHOLESALER"; withOpenExceptions?: boolean };
 
 export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {}) {
   let where: Prisma.OrderWhereInput;
@@ -363,6 +363,7 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
     where = { buyer: scopeWhere(ctx) };
   }
   const page = Math.max(1, f.page ?? 1);
+  const size = Math.min(500, Math.max(1, f.pageSize ?? 50));
   const full: Prisma.OrderWhereInput = {
     AND: [
       where,
@@ -380,14 +381,14 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
       omit: as === "BUYER" ? BUYER_HIDDEN : as === "VENDOR" ? VENDOR_HIDDEN : undefined,
       include: { buyer: { select: { legalName: true, tradeName: true } }, seller: { select: { legalName: true, tradeName: true, type: true } }, _count: { select: { lines: true, exceptions: { where: { isResolved: false } } } } },
       orderBy: { placedAt: "desc" },
-      skip: (page - 1) * 50,
-      take: 50,
+      skip: (page - 1) * size,
+      take: size,
     }),
     prisma.order.count({ where: full }),
   ]);
   // Ordered from FIRINGI: the buyer's supplier is FIRINGI, not the wholesaler it picked.
   const shown = as === "BUYER" ? rows.map((o) => (o.routedByFiringi ? { ...o, seller: { legalName: "FIRINGI", tradeName: "FIRINGI", type: "ADMIN" as const } } : o)) : rows;
-  return { rows: shown, total, page, pageCount: Math.max(1, Math.ceil(total / 50)) };
+  return { rows: shown, total, page, pageCount: Math.max(1, Math.ceil(total / size)) };
 }
 
 /** Order fields a buyer must not see (FIRINGI's commission, the supplier's payout and currency, FIRINGI's margin). */

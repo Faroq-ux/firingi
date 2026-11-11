@@ -597,6 +597,36 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Futuristic redesign: glass & aurora, command palette, smart tables, live dashboards (Phase 22)
+
+- **Design system v2** (`src/app/globals.css`, `src/components/ui/*`): an ambient aurora behind
+  every page; frosted-glass cards, tables, inputs and top bar (`.glass-panel`, `--glass*` tokens
+  for light and dark); a deep-night sidebar with an aurora glow, gradient active item and section
+  icon chips that **folds into an icon rail** (remembered on the device); a glowing gradient page
+  header (`PageHeader` with optional icon / eyebrow); a crisp sign-in page on a moving night-sky
+  aurora. Every existing page picks this up; motion respects *reduce motion*.
+- **Command palette** — `Ctrl K` / `⌘K`, the sidebar search or the top-bar search: jump to any page
+  of the portal, find orders, companies, products and invoices (`/api/search`, only what the person
+  may open in that portal), recent pages, switch light / dark. Keyboard: ↑ ↓ Enter Esc.
+- **Smart tables** (`DataTable`): quick filter, filters per column (lists for status-like columns),
+  sort, show / hide / reorder columns, compact rows, CSV export of what is shown, sticky header,
+  phone cards, **saved views** per person (synced across devices, one opens by default) and **bulk
+  actions** (suppliers: *Confirm selected*; FIRINGI: *Approve selected* products). Used by every
+  order list (admin, supplier, customer — 36 screens), the supplier / customer company lists and the
+  product catalogue.
+- **Customisable dashboards** (admin, supplier, customer): *Customise* → drag cards (or arrows),
+  change width (1–3 columns), hide / show, reset; saved to the person's account (`UserPreference`).
+- **Live activity feed**: a card on each dashboard, refreshed every 8 s while the page is visible
+  (`/api/live?format=json`; a Server-Sent Events stream is also available): order status changes, payments in, payouts out, invoices issued —
+  with the same visibility rules as everywhere (a supplier never sees FIRINGI's holds; a customer of
+  a FIRINGI-routed order sees FIRINGI).
+- **CRM pipeline board**: colour-coded stage columns with totals, drag a deal to another stage
+  (lost deals ask why), probability bar, owner avatar; the stage picker stays for keyboard users.
+- **Shopping**: an aurora shop landing with the barcode / name search, gradient category tiles,
+  glass product and supplier cards; an **order progress tracker** (placed → confirmed → shipped →
+  out for delivery → delivered) on every order.
+- New in 25 languages (palette, tables, dashboards, live feed). Data: `SavedView`, `UserPreference`.
+
 ## Integrations: import & sync, API v2, webhooks, accounting exports (Phase 21)
 
 Developer guide: **[docs/integrations.md](docs/integrations.md)** (API v2 quick start, webhook

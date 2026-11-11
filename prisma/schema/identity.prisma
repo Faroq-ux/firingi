@@ -79,6 +79,8 @@ model User {
   ticketsOpened           SupportTicket[]          @relation("TicketOpenedBy")
   ticketsAssigned         SupportTicket[]          @relation("TicketAssignee")
   ticketMessages          TicketMessage[]          @relation("TicketMessageAuthor")
+  savedViews  SavedView[]
+  preferences UserPreference[]
 }
 
 /// Authenticator-app secret and backup codes (encrypted by better-auth).

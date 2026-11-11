@@ -32,6 +32,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
   const notice = (await platformSettings()).notice;
   return (
     <AppShell
+      portal={portal}
       nav={nav}
       title="FIRINGI"
       subtitle={portal === "admin" ? tp("admin") : `${tp(portal)} · ${tc(ctx.company.type)}`}
@@ -47,7 +48,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
           .map((p) => ({ key: p, label: tp(p), href: `/${p}`, active: p === portal })),
         locale,
         locales,
-        labels: { signOut: t("signOut"), language: t("language"), company: t("company"), menu: t("menu"), security: (await getTranslations("security"))("title") },
+        labels: { signOut: t("signOut"), language: t("language"), company: t("company"), menu: t("menu"), security: (await getTranslations("security"))("title"), search: (await getTranslations("palette"))("search") },
         securityHref: portal === "driver" ? null : `/${portal}/me/security`,
         cart,
         bell: { initialUnread: await unreadCount(ctx), base: `/${portal}`, labels: { title: tn("title"), empty: tn("empty"), markAllRead: tn("markAllRead"), viewAll: tn("viewAll"), preferences: tn("preferences") } },

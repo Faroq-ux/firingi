@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.6rem;
+  --radius: 0.75rem;
   --background: oklch(0.985 0.002 247);
   --foreground: oklch(0.21 0.02 260);
   --card: oklch(1 0 0);
@@ -41,6 +41,14 @@
   --vivid-orange: oklch(0.72 0.19 50);
   --vivid-teal: oklch(0.7 0.14 185);
   --vivid-lime: oklch(0.78 0.18 130);
+  /* glass & aurora (Phase 22) */
+  --glass: color-mix(in oklch, white 72%, transparent);
+  --glass-strong: color-mix(in oklch, white 86%, transparent);
+  --glass-border: color-mix(in oklch, white 70%, var(--border));
+  --glass-shadow: 0 1px 0 color-mix(in oklch, white 80%, transparent) inset, 0 12px 32px -20px color-mix(in oklch, var(--vivid-violet) 45%, transparent), 0 2px 6px -4px rgb(15 23 42 / 0.12);
+  --ambient-a: color-mix(in oklch, var(--vivid-blue) 16%, transparent);
+  --ambient-b: color-mix(in oklch, var(--vivid-violet) 13%, transparent);
+  --ambient-c: color-mix(in oklch, var(--vivid-teal) 11%, transparent);
 }
 
 /* Dark theme — applied with the `dark` class on <html> (chosen by the user, or
@@ -80,6 +88,13 @@
   --vivid-orange: oklch(0.76 0.17 55);
   --vivid-teal: oklch(0.75 0.13 185);
   --vivid-lime: oklch(0.8 0.17 130);
+  --glass: color-mix(in oklch, oklch(0.22 0.025 265) 70%, transparent);
+  --glass-strong: color-mix(in oklch, oklch(0.22 0.025 265) 88%, transparent);
+  --glass-border: color-mix(in oklch, white 9%, transparent);
+  --glass-shadow: 0 1px 0 color-mix(in oklch, white 7%, transparent) inset, 0 16px 40px -24px color-mix(in oklch, var(--vivid-violet) 70%, transparent), 0 2px 8px -4px rgb(0 0 0 / 0.5);
+  --ambient-a: color-mix(in oklch, var(--vivid-blue) 22%, transparent);
+  --ambient-b: color-mix(in oklch, var(--vivid-violet) 20%, transparent);
+  --ambient-c: color-mix(in oklch, var(--vivid-teal) 12%, transparent);
   color-scheme: dark;
 }
 
@@ -266,3 +281,32 @@ main tbody tr { animation: fade-in 0.3s ease both; }
 .tile .tile-chip { position: relative; overflow: hidden; }
 .tile .tile-chip::after { content: ""; position: absolute; inset: 0 0 50% 0; background: linear-gradient(180deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0)); }
 button[data-variant="default"], a[data-variant="default"] { background-image: linear-gradient(180deg, color-mix(in oklch, white 18%, transparent), transparent 55%), linear-gradient(135deg, var(--primary), color-mix(in oklch, var(--primary) 70%, var(--vivid-violet))); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 6px 14px -8px var(--primary); }
+
+
+/* ── Glass & aurora design system (Phase 22) ─────────────────────────────── */
+/* Ambient aurora behind every page: three soft colour fields, fixed, very low contrast. */
+body { background-image: radial-gradient(60rem 40rem at 8% -10%, var(--ambient-a), transparent 60%), radial-gradient(50rem 36rem at 100% 0%, var(--ambient-b), transparent 60%), radial-gradient(50rem 40rem at 60% 110%, var(--ambient-c), transparent 60%); background-attachment: fixed; }
+/* Frosted surface for cards, tables, panels. */
+.glass-panel { background: var(--glass); border-color: var(--glass-border); box-shadow: var(--glass-shadow); backdrop-filter: blur(18px) saturate(1.35); -webkit-backdrop-filter: blur(18px) saturate(1.35); }
+.glass-strong { background: var(--glass-strong); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); }
+/* Gradient hairline border (cards that matter). */
+.glow-border { position: relative; }
+.glow-border::before { content: ""; position: absolute; inset: 0; padding: 1px; border-radius: inherit; background: linear-gradient(135deg, color-mix(in oklch, var(--vivid-blue) 70%, transparent), color-mix(in oklch, var(--vivid-violet) 50%, transparent) 45%, color-mix(in oklch, var(--vivid-teal) 55%, transparent)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+/* Sidebar: deep night gradient with an aurora glow at the top. */
+.sidebar-aurora { background: radial-gradient(28rem 16rem at 0% 0%, color-mix(in oklch, var(--vivid-violet) 34%, transparent), transparent 70%), radial-gradient(24rem 18rem at 100% 30%, color-mix(in oklch, var(--vivid-blue) 22%, transparent), transparent 70%), linear-gradient(180deg, oklch(0.2 0.05 270), oklch(0.15 0.03 262) 55%, oklch(0.13 0.02 262)); }
+.nav-active { background: linear-gradient(90deg, color-mix(in oklch, var(--vivid-blue) 85%, transparent), color-mix(in oklch, var(--vivid-violet) 70%, transparent)); box-shadow: 0 6px 18px -8px color-mix(in oklch, var(--vivid-violet) 90%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.25); color: white; }
+/* Keyboard shortcut chip. */
+.kbd { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 6px; padding: 0 6px; font-size: 11px; font-family: ui-monospace, monospace; line-height: 18px; color: var(--muted-foreground); background: var(--card); }
+/* Inputs glow on focus. */
+input:not([type=checkbox]):not([type=radio]):not(.no-glow):focus-visible, select:focus-visible, textarea:focus-visible { box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 18%, transparent); }
+/* Table rows: a gradient accent bar on hover. */
+table tbody tr { position: relative; }
+table tbody tr:hover > td:first-child { box-shadow: inset 3px 0 0 color-mix(in oklch, var(--vivid-violet) 75%, var(--vivid-blue)); }
+/* Floating glass menu / popover. */
+.popover-glass { background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: 0 24px 60px -20px rgb(15 23 42 / 0.45); backdrop-filter: blur(22px) saturate(1.5); -webkit-backdrop-filter: blur(22px) saturate(1.5); }
+/* Drag & drop dashboard cards. */
+.drag-ghost { opacity: 0.4; }
+.drop-target { outline: 2px dashed color-mix(in oklch, var(--vivid-violet) 70%, transparent); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { body { background-attachment: scroll; } }
+/* Public pages (sign-in, payment links): the card sits on the dark aurora — keep it crisp and readable. */
+.public-shell .glass-panel { background: color-mix(in oklch, var(--card) 94%, transparent); border-color: color-mix(in oklch, white 22%, transparent); box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.7), 0 0 0 1px color-mix(in oklch, var(--vivid-violet) 25%, transparent), inset 0 1px 0 color-mix(in oklch, white 50%, transparent); }

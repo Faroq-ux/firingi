@@ -16,18 +16,20 @@ export function ProductThumb({ productId, hasImage, className = "" }: { productI
     // eslint-disable-next-line @next/next/no-img-element
     <img src={`/api/catalogue/images/${productId}/0`} alt="" className={`object-contain ${className}`} />
   ) : (
-    <div className={`grid place-items-center bg-muted text-muted-foreground ${className}`}><Package className="size-8" /></div>
+    <div className={`grid place-items-center bg-[radial-gradient(circle_at_30%_20%,color-mix(in_oklch,var(--vivid-blue)_18%,transparent),transparent_60%),radial-gradient(circle_at_80%_90%,color-mix(in_oklch,var(--vivid-violet)_16%,transparent),transparent_60%)] text-[color:color-mix(in_oklch,var(--vivid-violet)_60%,var(--muted-foreground))] ${className}`}><Package className="size-9 motion-float" /></div>
   );
 }
 
 export async function ProductCard({ item, hasImage, showVendor = true }: { item: CatalogueItem; hasImage: boolean; showVendor?: boolean }) {
   const [t, locale] = await Promise.all([getTranslations("catalogue"), getLocale()]);
   return (
-    <Link href={`/buy/catalogue/offers/${item.offerId}`} className="group flex flex-col overflow-hidden rounded-xl border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-      <ProductThumb productId={item.productId} hasImage={hasImage} className="h-32 w-full" />
+    <Link href={`/buy/catalogue/offers/${item.offerId}`} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
+      <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
+        <ProductThumb productId={item.productId} hasImage={hasImage} className="h-36 w-full transition-transform duration-500 group-hover:scale-105" />
+      </div>
       <div className="flex flex-1 flex-col gap-1.5 p-3">
         <div className="text-xs text-muted-foreground">{item.brand ?? pickLocalized(item.category.name, locale)}</div>
-        <div className="line-clamp-2 font-medium group-hover:text-primary">{pickLocalized(item.name, locale)}</div>
+        <div className="line-clamp-2 font-semibold leading-snug group-hover:text-primary">{pickLocalized(item.name, locale)}</div>
         <div className="text-xs text-muted-foreground">{pickLocalized(item.packaging.name, locale)}</div>
         <Codes item={item} />
         <div className="mt-auto pt-2">

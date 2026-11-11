@@ -16,7 +16,8 @@ function requireView(ctx: Ctx) {
     throw new ForbiddenError();
 }
 
-export async function adminProducts(ctx: Ctx, f: { q?: string; status?: ProductStatus; categoryId?: string; page?: number }) {
+export async function adminProducts(ctx: Ctx, f: { q?: string; status?: ProductStatus; categoryId?: string; page?: number; pageSize?: number }) {
+  const size = Math.min(500, Math.max(1, f.pageSize ?? 50));
   requireView(ctx);
   const where: Prisma.ProductWhereInput = {
     ...(f.q ? { searchText: { contains: f.q.toLowerCase() } } : {}),
@@ -33,12 +34,12 @@ export async function adminProducts(ctx: Ctx, f: { q?: string; status?: ProductS
         variants: { select: { sku: true, _count: { select: { packagings: true } }, packagings: { select: { _count: { select: { offers: true } } } } } },
       },
       orderBy: { updatedAt: "desc" },
-      skip: (page - 1) * 50,
-      take: 50,
+      skip: (page - 1) * size,
+      take: size,
     }),
     prisma.product.count({ where }),
   ]);
-  return { rows, total, page, pageCount: Math.max(1, Math.ceil(total / 50)) };
+  return { rows, total, page, pageCount: Math.max(1, Math.ceil(total / size)) };
 }
 
 export async function adminProduct(ctx: Ctx, id: string) {

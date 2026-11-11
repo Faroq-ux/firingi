@@ -8,21 +8,21 @@ import { cn } from "@/lib/utils";
  */
 export function Table({ className, stack = true, ...props }: React.HTMLAttributes<HTMLTableElement> & { stack?: boolean }) {
   return (
-    <div className="w-full overflow-x-auto rounded-xl border bg-card">
+    <div className="glass-panel w-full overflow-x-auto rounded-2xl border">
       <table className={cn("w-full caption-bottom text-sm", stack && "ft-stack", className)} {...props} />
     </div>
   );
 }
-export const THead = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <thead className="bg-[linear-gradient(90deg,color-mix(in_oklch,var(--vivid-blue)_12%,var(--card)),color-mix(in_oklch,var(--vivid-violet)_10%,var(--card)),color-mix(in_oklch,var(--vivid-pink)_8%,var(--card)))] [&_tr]:border-b" {...p} />;
+export const THead = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <thead className="bg-[linear-gradient(90deg,color-mix(in_oklch,var(--vivid-blue)_10%,transparent),color-mix(in_oklch,var(--vivid-violet)_9%,transparent),color-mix(in_oklch,var(--vivid-teal)_7%,transparent))] [&_tr]:border-b" {...p} />;
 export const TBody = (p: React.HTMLAttributes<HTMLTableSectionElement>) => <tbody className="[&_tr:last-child]:border-0" {...p} />;
 export const TR = ({ className, ...p }: React.HTMLAttributes<HTMLTableRowElement>) => (
-  <tr className={cn("border-b transition-colors hover:bg-[color-mix(in_oklch,var(--vivid-blue)_6%,transparent)]", className)} {...p} />
+  <tr className={cn("border-b border-[color:color-mix(in_oklch,var(--border)_70%,transparent)] transition-colors hover:bg-[color-mix(in_oklch,var(--vivid-blue)_7%,transparent)]", className)} {...p} />
 );
 export const TH = ({ className, ...p }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-  <th className={cn("h-10 px-3 text-left align-middle text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--vivid-violet)_70%,var(--foreground))]", className)} {...p} />
+  <th className={cn("h-11 px-3 text-left align-middle text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:color-mix(in_oklch,var(--vivid-violet)_60%,var(--foreground))]", className)} {...p} />
 );
 export const TD = ({ className, ...p }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-  <td className={cn("px-3 py-2.5 align-middle", className)} {...p} />
+  <td className={cn("px-3 py-3 align-middle", className)} {...p} />
 );
 export function EmptyRow({ colSpan, children }: { colSpan: number; children: React.ReactNode }) {
   return (

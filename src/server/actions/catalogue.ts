@@ -56,6 +56,16 @@ export const reviewProductAction = defineAction({
   schema: z.object({ productId: z.string(), decision: z.enum(["APPROVED", "REJECTED"]), note: z.string().trim().max(500).optional().nullable() }),
   handler: async (ctx, i) => done(await admin.reviewProduct(ctx, i.productId, i.decision, i.note)),
 });
+export const bulkApproveProductsAction = defineAction({
+  permission: "admin.catalogue.approve",
+  schema: z.object({ ids: z.array(z.string().min(1).max(40)).min(1).max(200) }),
+  handler: async (ctx, i) => {
+    let ok = 0;
+    for (const id of i.ids) await admin.reviewProduct(ctx, id, "APPROVED", null).then(() => ok++).catch(() => null);
+    revalidatePath("/admin/catalogue", "layout");
+    return { approved: ok, skipped: i.ids.length - ok };
+  },
+});
 export const reviewOfferAction = defineAction({
   permission: "admin.catalogue.approve",
   schema: z.object({ offerId: z.string(), to: z.enum(["ACTIVE", "REJECTED", "PAUSED"]), note: z.string().trim().max(500).optional().nullable() }),
