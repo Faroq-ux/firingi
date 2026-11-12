@@ -1,6 +1,8 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { ClipboardList, PackageCheck, ScanLine, Timer } from "lucide-react";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { featureOn } from "@/server/warehouse/features";
+import { FeatureOff } from "@/components/warehouse/feature-off";
 import { pickableOrders, pickLists, warehouseOptions } from "@/server/warehouse/picking";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +18,7 @@ export default async function PickPack({ searchParams }: { searchParams: Promise
   pagePermission(ctx, ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"]);
   const sp = await searchParams;
   const [t, locale] = await Promise.all([getTranslations("warehouse"), getLocale()]);
+  if (!(await featureOn(ctx, "PICK_PACK"))) return <FeatureOff title={t("pickTitle")} />;
   const whs = (await warehouseOptions(ctx)).map((w) => ({ id: w.id, label: w.label }));
   const addressId = whs.find((w) => w.id === sp.wh)?.id ?? whs[0]?.id;
   const canPick = can(ctx, ["vendor.warehouse.pick", "vendor.inventory.manage"]);

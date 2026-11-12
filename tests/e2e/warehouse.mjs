@@ -41,6 +41,19 @@ const lx = await login("owner@lisboacentral.test");
 const kebab = await login("owner@kebabhouse.test");
 const sa = await login("superadmin@firingi.test");
 
+// ── 0. FIRINGI switches a feature off for one supplier (and back on) ──
+await go(sa, "/admin/inventory/warehouse-features");
+const lxSwitches = sa.getByTestId("supplier-warehouse-row").filter({ hasText: "Lisboa Central" });
+if (await lxSwitches.getByRole("button", { name: "All on" }).count()) { await lxSwitches.getByRole("button", { name: "All on" }).click(); await settle(sa); }
+await lxSwitches.getByTestId("wh-switch-BINS").click();
+check("FIRINGI switched shelves off for Lisboa Central", await until(async () => (await lxSwitches.getByTestId("wh-switch-BINS").getAttribute("aria-checked")) === "false"));
+await shot(sa, "p25-00-admin-warehouse-features");
+await go(lx, "/vendor/warehouse/shelves");
+check("the supplier no longer has Shelves in its menu", !/Prateleiras/.test(await lx.locator("aside").textContent()) && /Preparação e Embalagem/.test(await lx.locator("aside").textContent()));
+check("the shelves page says FIRINGI switched it off", (await lx.getByTestId("feature-off").count()) === 1 && /FIRINGI desativou/.test(await lx.textContent("main")));
+await lxSwitches.getByRole("button", { name: "All on" }).click();
+check("FIRINGI switched everything back on", await until(async () => (await lxSwitches.getByTestId("wh-switch-BINS").getAttribute("aria-checked")) === "true"));
+
 // ── 1. Shelves ──
 await go(lx, "/vendor/warehouse/shelves");
 check("menu shows the Armazém section (Portuguese)", /Preparação e Embalagem/.test(await lx.locator("aside").textContent()));

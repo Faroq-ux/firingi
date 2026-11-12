@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { featureOn } from "@/server/warehouse/features";
 import { getRecall } from "@/server/warehouse/recalls";
 import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
@@ -19,7 +20,7 @@ export default async function RecallPage({ params }: { params: Promise<{ id: str
       <PageHeader title={`${t("recall")} ${r.number}`} description={`${r.product} · ${t("lot")} ${r.lotCode ?? "—"}`}
         actions={<Link className={buttonVariants({ variant: "outline", size: "sm" })} href={`/vendor/warehouse/trace?offer=${r.offerId}&lot=${encodeURIComponent(r.lotCode ?? "")}`}>{t("trace")}</Link>} />
       <RecallView r={r} t={t as never} locale={locale} />
-      {r.status === "OPEN" && can(ctx, "vendor.recalls.manage") && <div className="mt-6"><CloseRecall id={r.id} /></div>}
+      {r.status === "OPEN" && can(ctx, "vendor.recalls.manage") && (await featureOn(ctx, "RECALLS")) && <div className="mt-6"><CloseRecall id={r.id} /></div>}
     </>
   );
 }

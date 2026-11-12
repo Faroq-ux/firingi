@@ -637,6 +637,13 @@ Supplier portal › **Armazém / Warehouse** (25 languages, phone-first); custom
   page shows who was told, who acknowledged and what came back. The supplier is told when FIRINGI
   starts one, FIRINGI when a supplier does (`recall.started`). Recalled goods bought on FIRINGI get no
   more best-before alerts. Taking recalled goods back for a credit uses the normal returns flow.
+- **Switched on or off by FIRINGI per supplier** (Inventory & Warehouses › **Warehouse Features**):
+  pick & pack + scanning, shelves, lot traceability and the supplier's own recalls — everything is
+  on until FIRINGI switches it off for that supplier (`WarehouseFeatures`, no row = all on). Switched
+  off: the menu item disappears, pages show "switched off for your company" and the actions are
+  refused (`FEATURE_OFF`); recorded data is kept. Inside the supplier, who may use what is its own
+  team roles & permissions. Never switched off: customers' recall notices, recalls started by
+  FIRINGI and blocking of recalled stock; the scanner stays while pick & pack or shelves is on.
 - Permissions: `vendor.warehouse.pick` (new, in the Warehouse role), `vendor.recalls.manage` (company
   administrators), `admin.recalls.manage` (Operations). Tests: `tests/integration/warehouse.test.ts`,
   `tests/e2e/warehouse.mjs`.

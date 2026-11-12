@@ -7,6 +7,7 @@ import { createBin, createBinRange, putAway, updateBin } from "@/server/warehous
 import { resolveScan } from "@/server/warehouse/scan";
 import { cancelPickList, confirmPick, createPickList, packOrder, reportShort, scanPick } from "@/server/warehouse/picking";
 import { acknowledgeRecall, closeRecall, reportRecallAction, startRecall, traceableLots } from "@/server/warehouse/recalls";
+import { resetWarehouseFeatures, setWarehouseFeature } from "@/server/warehouse/features";
 
 const id = z.string().min(1).max(40);
 const MANAGE = "vendor.inventory.manage" as const;
@@ -87,4 +88,14 @@ export const acknowledgeRecallAction = defineAction({
 export const reportRecallNoticeAction = defineAction({
   permission: [...BUYER], schema: z.object({ id, returnedQty: z.number().int().min(0).max(10_000_000), destroyedQty: z.number().int().min(0).max(10_000_000), noneLeft: z.boolean(), note: z.string().max(500).nullable().optional() }),
   handler: async (ctx, i) => { await reportRecallAction(ctx, i.id, i); return true; },
+});
+
+// ── FIRINGI: warehouse features per supplier ──
+export const setWarehouseFeatureAction = defineAction({
+  permission: "admin.inventory.manage", schema: z.object({ companyId: id, feature: z.enum(["PICK_PACK", "BINS", "TRACE", "RECALLS"]), on: z.boolean() }),
+  handler: async (ctx, i) => { await setWarehouseFeature(ctx, i.companyId, i.feature, i.on); return true; },
+});
+export const resetWarehouseFeaturesAction = defineAction({
+  permission: "admin.inventory.manage", schema: z.object({ companyId: id }),
+  handler: async (ctx, i) => { await resetWarehouseFeatures(ctx, i.companyId); return true; },
 });

@@ -11,6 +11,7 @@ import { allowedLocales } from "@/server/data/geo";
 import { cartCount } from "@/server/services/cart";
 import { unreadCount } from "@/server/services/notifications";
 import { can } from "@/server/rbac/guard";
+import { hiddenWarehouseNav } from "@/server/warehouse/features";
 import { AppShell } from "./app-shell";
 
 export async function PortalShell({ portal, children }: { portal: Portal; children: React.ReactNode }) {
@@ -25,7 +26,10 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
     getTranslations("notifications"),
   ]);
   const messages = (await getMessages()) as { navLabels?: Record<string, string>; shell?: { cart?: string; soon?: string } };
-  const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale, messages.navLabels);
+  // Warehouse features FIRINGI switched off for this supplier are hidden (the scanner needs pick & pack or shelves)
+  const off = portal === "vendor" ? await hiddenWarehouseNav(ctx) : new Set<string>();
+  if (off.has("PICK_PACK") && off.has("BINS")) off.add("SCAN");
+  const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale, messages.navLabels, off);
   const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: messages.shell?.cart ?? "Cart" } : null;
   const companyLabel = ctx.company.tradeName ?? ctx.company.legalName;
 

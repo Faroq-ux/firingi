@@ -236,6 +236,7 @@ model Company {
   pickLists              PickList[]                @relation("PickListCompany")
   recallsOwned           Recall[]                  @relation("RecallOwner")
   recallNotices          RecallRecipient[]         @relation("RecallRecipientCompany")
+  warehouseFeatures      WarehouseFeatures?        @relation("WarehouseFeaturesCompany")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

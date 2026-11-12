@@ -136,6 +136,7 @@ export const ADMIN_NAV: NavSection[] = [
       invn("expiring", "Expiring Stock", "Stock a Expirar", "P24", { live: true }),
       invn("expiry-features", "Expiry Features", "Funcionalidades de Validade", "P24", { live: true }),
       invn("expiry-alerts", "Expiry Alerts", "Alertas de Validade", "P24", { live: true }),
+      invn("warehouse-features", "Warehouse Features", "Funcionalidades de Armazém", "P25", { live: true }),
       invn("recalls", "Recalls", "Recolhas", "P25", { live: true, perm: ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"] }),
       invn("trace", "Lot Traceability", "Rastreabilidade de Lotes", "P25", { live: true, perm: ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"] }),
     ],

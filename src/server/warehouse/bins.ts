@@ -9,6 +9,7 @@ import { writeAudit } from "@/server/services/audit";
 import { moveToBin } from "@/server/inventory/ledger";
 import { ownWarehouse, requireInventory, warehouses, daysLeft } from "@/server/inventory/service";
 import { pickLocalized } from "@/i18n/config";
+import { requireWarehouseFeature } from "./features";
 
 export const MANAGE = ["vendor.inventory.manage"] as const;
 export const SEE = ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick"] as const;
@@ -29,6 +30,7 @@ export async function ownBin(ctx: Ctx, id: string) {
 /** Shelves of a warehouse with what is on them (units, lots, earliest best-before). */
 export async function listBins(ctx: Ctx, addressId?: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "BINS", "PICK_PACK");
   const wh = await warehouses(ctx);
   const ids = addressId ? [addressId] : wh.map((w) => w.id);
   const bins = await prisma.bin.findMany({ where: { companyId: ctx.company.id, addressId: { in: ids } }, orderBy: [{ sortOrder: "asc" }, { code: "asc" }] });
@@ -44,6 +46,7 @@ export async function listBins(ctx: Ctx, addressId?: string) {
 
 export async function createBin(ctx: Ctx, i: { addressId: string; code: string; zone?: string | null; sortOrder?: number | null }) {
   requireInventory(ctx, [...MANAGE]);
+  await requireWarehouseFeature(ctx, "BINS");
   await ownWarehouse(ctx, i.addressId);
   const code = normCode(i.code);
   if (!CODE.test(code)) throw new ValidationError("Use letters, numbers, - . / (up to 24 characters).");
@@ -59,6 +62,7 @@ export async function createBin(ctx: Ctx, i: { addressId: string; code: string; 
  */
 export async function createBinRange(ctx: Ctx, i: { addressId: string; aisles: string; racks: number; levels: number; zone?: string | null }) {
   requireInventory(ctx, [...MANAGE]);
+  await requireWarehouseFeature(ctx, "BINS");
   await ownWarehouse(ctx, i.addressId);
   const aisles = i.aisles.split(/[,\s]+/).map((a) => normCode(a)).filter(Boolean);
   if (!aisles.length || aisles.some((a) => !/^[A-Z0-9]{1,4}$/.test(a))) throw new ValidationError("Aisles: letters or numbers, separated by commas (e.g. A, B, C).");
@@ -81,6 +85,7 @@ export async function createBinRange(ctx: Ctx, i: { addressId: string; aisles: s
 
 export async function updateBin(ctx: Ctx, i: { id: string; zone?: string | null; sortOrder?: number | null; isActive?: boolean }) {
   requireInventory(ctx, [...MANAGE]);
+  await requireWarehouseFeature(ctx, "BINS");
   const b = await ownBin(ctx, i.id);
   if (i.isActive === false) {
     const on = await prisma.stockBatch.count({ where: { binId: b.id, onHand: { gt: 0 }, blockedAt: null } });
@@ -112,20 +117,23 @@ export async function batchRows(ctx: Ctx, where: { addressId?: string; binId?: s
 
 export async function binDetail(ctx: Ctx, id: string, locale: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "BINS");
   const b = await ownBin(ctx, id);
   const wh = await prisma.address.findUniqueOrThrow({ where: { id: b.addressId }, select: { label: true } });
   return { bin: { ...b, warehouse: wh.label }, lots: await batchRows(ctx, { binId: b.id }, locale) };
 }
 
 /** Lots in a warehouse that are on no shelf yet. */
-export const unshelved = (ctx: Ctx, addressId: string | undefined, locale: string) => {
+export async function unshelved(ctx: Ctx, addressId: string | undefined, locale: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "BINS");
   return batchRows(ctx, { addressId, binId: null }, locale);
-};
+}
 
 /** Put a lot (or part of it) on a shelf of the same warehouse. */
 export async function putAway(ctx: Ctx, i: { batchId: string; binId: string; qty?: number | null }) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "BINS");
   const batch = await prisma.stockBatch.findFirst({ where: { id: i.batchId, offer: { vendorCompanyId: ctx.company.id } }, include: { bin: true } });
   if (!batch) throw new NotFoundError("Lot");
   const bin = await ownBin(ctx, i.binId);

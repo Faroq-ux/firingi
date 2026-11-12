@@ -9,6 +9,7 @@ import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { requireInventory } from "@/server/inventory/service";
 import { batchRows, SEE } from "./bins";
+import { requireWarehouseFeature } from "./features";
 
 export type Parsed = { kind: "BATCH" | "BIN" | "ORDER"; id: string; box?: number } | { kind: "TEXT"; text: string };
 
@@ -41,6 +42,7 @@ export type ScanResult =
 
 export async function resolveScan(ctx: Ctx, raw: string, locale: string): Promise<ScanResult> {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "PICK_PACK", "BINS");
   const p = parseScan(raw);
   const me = ctx.company.id;
   if (p.kind === "BATCH") {

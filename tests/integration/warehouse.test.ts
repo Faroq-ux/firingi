@@ -18,9 +18,13 @@ import { receiveStock } from "@/server/inventory/service";
 import { stockDeliveredOrder } from "@/server/inventory/purchased";
 import { createBin, createBinRange, listBins, putAway, updateBin, binDetail } from "@/server/warehouse/bins";
 import { parseScan, resolveScan, validGtin } from "@/server/warehouse/scan";
-import { cancelPickList, confirmPick, createPickList, getPickList, packOrder, pickableOrders, reportShort, scanPick } from "@/server/warehouse/picking";
+import { cancelPickList, confirmPick, createPickList, getPickList, packOrder, pickableOrders, pickLists, reportShort, scanPick } from "@/server/warehouse/picking";
 import { boxLabelsPdf, binLabelsPdf, lotLabelsPdf, packingSlipPdf } from "@/server/warehouse/documents";
 import { acknowledgeRecall, closeRecall, getRecall, listRecalls, myRecallNotices, reportRecallAction, startRecall, traceLot } from "@/server/warehouse/recalls";
+import { featureOn, resetWarehouseFeatures, setWarehouseFeature, supplierWarehouseFeatures, warehouseFeatures } from "@/server/warehouse/features";
+import { resolveNav } from "@/config/nav/resolve";
+import { VENDOR_NAV } from "@/config/nav/portals";
+import { hiddenWarehouseNav } from "@/server/warehouse/features";
 import { ctxFor } from "../helpers";
 
 const SA = "superadmin@firingi.test", OPS = "ops@firingi.test", FIN = "finance@firingi.test", KEBAB = "owner@kebabhouse.test", LX = "owner@lisboacentral.test", ATL = "owner@atlantico.test";
@@ -329,5 +333,41 @@ describe("recalls", () => {
     await expect(reportRecallAction(kebab, notice.id, { returnedQty: 2, destroyedQty: 0, noneLeft: false })).rejects.toThrow(/closed/);
     await clearCart(lx);
     await cancelPickList(lx, pick);
+  });
+});
+
+describe("FIRINGI switches the warehouse features per supplier", () => {
+  afterAll(async () => { await resetWarehouseFeatures(await ctxFor(SA), lx.company.id).catch(() => null); });
+
+  it("everything is on until FIRINGI switches a feature off for one supplier", async () => {
+    const sa = await ctxFor(SA), fin = await ctxFor(FIN), atl = await ctxFor(ATL);
+    await resetWarehouseFeatures(sa, lx.company.id);
+    expect(await warehouseFeatures(lx.company.id)).toEqual({ pickPack: true, bins: true, traceability: true, recalls: true });
+    await expect(setWarehouseFeature(fin, lx.company.id, "BINS", false)).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await expect(setWarehouseFeature(lx, lx.company.id, "BINS", false)).rejects.toMatchObject({ code: "FORBIDDEN" });
+
+    await setWarehouseFeature(sa, lx.company.id, "BINS", false);
+    await setWarehouseFeature(sa, lx.company.id, "TRACE", false);
+    await setWarehouseFeature(sa, lx.company.id, "RECALLS", false);
+    expect((await supplierWarehouseFeatures(sa)).find((s) => s.id === lx.company.id)).toMatchObject({ custom: true, features: { pickPack: true, bins: false, traceability: false, recalls: false } });
+    // refused for that supplier only
+    await expect(createBin(lx, { addressId: lisboa, code: "OFF-1" })).rejects.toMatchObject({ code: "FEATURE_OFF" });
+    await expect(listBins(lx, lisboa)).resolves.toBeDefined(); // pick lists still read shelf codes while pick & pack is on
+    await expect(traceLot(lx, { offerId, lotCode: "X" }, "pt-PT")).rejects.toMatchObject({ code: "FEATURE_OFF" });
+    await expect(startRecall(lx, { offerId, lotCode: "X", recallClass: "CLASS_III", reason: "test reason" })).rejects.toMatchObject({ code: "FEATURE_OFF" });
+    expect(await featureOn(atl, "BINS")).toBe(true); // another supplier keeps everything
+    expect(await featureOn(sa, "RECALLS")).toBe(true); // FIRINGI is never limited
+    // the menu hides what is off; recalls stay listed (history, recalls started by FIRINGI)
+    const nav = resolveNav(VENDOR_NAV, lx.permissions, "en", {}, await hiddenWarehouseNav(lx));
+    const wh = nav.find((x) => x.key === "warehouse")!.items.map((i) => i.href);
+    expect(wh).toEqual(["/vendor/warehouse/pick", "/vendor/warehouse/scan", "/vendor/warehouse/recalls"]);
+    // pick & pack off too → the scanner keeps working only while one of them is on
+    await setWarehouseFeature(sa, lx.company.id, "PICK_PACK", false);
+    await expect(pickLists(lx)).rejects.toMatchObject({ code: "FEATURE_OFF" });
+    await expect(resolveScan(lx, "A-01-1", "pt-PT")).rejects.toMatchObject({ code: "FEATURE_OFF" });
+    // back to all on
+    await resetWarehouseFeatures(sa, lx.company.id);
+    expect(await featureOn(lx, "BINS", "PICK_PACK", "TRACE", "RECALLS")).toBe(true);
+    expect((await listBins(lx, lisboa)).length).toBeGreaterThan(0);
   });
 });

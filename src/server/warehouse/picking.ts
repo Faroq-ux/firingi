@@ -22,6 +22,7 @@ import { ownWarehouse, requireInventory, warehouses } from "@/server/inventory/s
 import { pickLocalized } from "@/i18n/config";
 import { PICK, SEE, sortKey } from "./bins";
 import { parseScan } from "./scan";
+import { requireWarehouseFeature } from "./features";
 
 const ACTIVE = ["OPEN", "PICKED"] as const;
 const name = (c: { legalName: string; tradeName: string | null }) => c.tradeName ?? c.legalName;
@@ -29,6 +30,7 @@ const name = (c: { legalName: string; tradeName: string | null }) => c.tradeName
 /** Accepted orders with goods reserved in this warehouse that are on no open pick list. */
 export async function pickableOrders(ctx: Ctx, addressId: string) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   await ownWarehouse(ctx, addressId);
   const orders = await prisma.order.findMany({
     where: { sellerCompanyId: ctx.company.id, status: "SUPPLIER_PROCESSING", pickLists: { none: { pickList: { status: { in: [...ACTIVE] } } } } },
@@ -65,6 +67,7 @@ async function addLines(tx: Tx, pickListId: string, orderId: string, addressId: 
 
 export async function createPickList(ctx: Ctx, i: { addressId: string; orderIds: string[]; note?: string | null }) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   await ownWarehouse(ctx, i.addressId);
   if (!i.orderIds.length) throw new ValidationError("Choose at least one order.");
   if (i.orderIds.length > 50) throw new ValidationError("At most 50 orders on one pick list.");
@@ -90,6 +93,7 @@ export async function createPickList(ctx: Ctx, i: { addressId: string; orderIds:
 
 export async function pickLists(ctx: Ctx, status?: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const rows = await prisma.pickList.findMany({
     where: { companyId: ctx.company.id, ...(status ? { status: status as "OPEN" } : {}) },
     include: { address: { select: { label: true } }, lines: { select: { qty: true, pickedQty: true, shortReason: true } }, _count: { select: { orders: true } } },
@@ -110,6 +114,7 @@ async function ownList(ctx: Ctx, id: string) {
 
 export async function getPickList(ctx: Ctx, id: string, locale: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const p = await prisma.pickList.findFirst({
     where: { id, companyId: ctx.company.id },
     include: {
@@ -169,6 +174,7 @@ export type ScanOutcome = "OK" | "DONE" | "WRONG_LOT" | "WRONG_ITEM" | "LOT_NEED
  */
 export async function scanPick(ctx: Ctx, lineId: string, code: string, qty = 1): Promise<{ outcome: ScanOutcome; picked: number; qty: number }> {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const line = await openLine(ctx, lineId);
   const res = (outcome: ScanOutcome) => ({ outcome, picked: line.pickedQty, qty: line.qty });
   if (line.pickedQty >= line.qty || line.shortReason) return res("DONE");
@@ -210,6 +216,7 @@ export async function scanPick(ctx: Ctx, lineId: string, code: string, qty = 1):
 /** Confirm a pick by hand (no label to scan). Recorded as MANUAL. */
 export async function confirmPick(ctx: Ctx, lineId: string, qty: number) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const line = await openLine(ctx, lineId);
   if (!Number.isInteger(qty) || qty < 0 || qty > line.qty) throw new ValidationError(`Quantity must be between 0 and ${line.qty}.`);
   if (qty < line.qty) throw new ValidationError("Fewer than needed? Report it as short.");
@@ -222,6 +229,7 @@ export async function confirmPick(ctx: Ctx, lineId: string, qty: number) {
 /** Fewer on the shelf than the list says (see header). */
 export async function reportShort(ctx: Ctx, lineId: string, i: { found: number; reason: string }) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const line = await openLine(ctx, lineId);
   if (line.shortReason || line.pickedQty >= line.qty) throw new ValidationError("This line is already done.");
   if (!Number.isInteger(i.found) || i.found < line.pickedQty || i.found >= line.qty) throw new ValidationError(`Found must be between ${line.pickedQty} and ${line.qty - 1}.`);
@@ -264,6 +272,7 @@ export async function reportShort(ctx: Ctx, lineId: string, i: { found: number; 
 /** Pack an order: boxes recorded, order marked ready for pickup. */
 export async function packOrder(ctx: Ctx, i: { pickListId: string; orderId: string; boxes: number }) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const list = await ownList(ctx, i.pickListId);
   if (list.status !== "OPEN" && list.status !== "PICKED") throw new ValidationError("This pick list is closed.");
   if (!Number.isInteger(i.boxes) || i.boxes < 1 || i.boxes > 999) throw new ValidationError("Boxes: 1–999.");
@@ -284,6 +293,7 @@ export async function packOrder(ctx: Ctx, i: { pickListId: string; orderId: stri
 
 export async function cancelPickList(ctx: Ctx, id: string) {
   requireInventory(ctx, [...PICK]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const list = await ownList(ctx, id);
   if (list.status === "PACKED" || list.status === "CANCELLED") throw new ValidationError("This pick list is closed.");
   if (await prisma.pickListOrder.count({ where: { pickListId: id, packedAt: { not: null } } })) throw new ValidationError("Some orders are already packed.");

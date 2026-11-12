@@ -5,12 +5,14 @@ import { NotFoundError, ValidationError } from "@/server/errors";
 import { requireInventory } from "@/server/inventory/service";
 import { pickLocalized } from "@/i18n/config";
 import { SEE } from "./bins";
+import { requireWarehouseFeature } from "./features";
 
 const cname = (c: { legalName: string; tradeName: string | null }) => c.tradeName ?? c.legalName;
 const me = (ctx: Ctx) => prisma.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { legalName: true, tradeName: true } });
 
 export async function binLabelsPdf(ctx: Ctx, ids: string[]) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "BINS");
   if (!ids.length || ids.length > 400) throw new ValidationError("Choose 1–400 shelves.");
   const bins = await prisma.bin.findMany({ where: { id: { in: ids }, companyId: ctx.company.id }, include: { address: { select: { label: true } } }, orderBy: [{ sortOrder: "asc" }, { code: "asc" }] });
   if (!bins.length) throw new NotFoundError("Shelf");
@@ -21,6 +23,7 @@ export async function binLabelsPdf(ctx: Ctx, ids: string[]) {
 
 export async function lotLabelsPdf(ctx: Ctx, ids: string[], locale: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "BINS", "PICK_PACK");
   if (!ids.length || ids.length > 400) throw new ValidationError("Choose 1–400 lots.");
   const rows = await prisma.stockBatch.findMany({
     where: { id: { in: ids }, offer: { vendorCompanyId: ctx.company.id } },
@@ -37,6 +40,7 @@ export async function lotLabelsPdf(ctx: Ctx, ids: string[], locale: string) {
 
 async function slipData(ctx: Ctx, pickListId: string, orderId: string, locale: string) {
   requireInventory(ctx, [...SEE]);
+  await requireWarehouseFeature(ctx, "PICK_PACK");
   const plo = await prisma.pickListOrder.findFirst({
     where: { pickListId, orderId, pickList: { companyId: ctx.company.id } },
     include: { pickList: { include: { address: { select: { label: true } } } }, order: { select: { number: true, deliveryAddress: true, requestedDeliveryDate: true, buyer: { select: { legalName: true, tradeName: true } } } } },

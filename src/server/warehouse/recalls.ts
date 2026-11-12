@@ -30,6 +30,7 @@ import { pickLocalized } from "@/i18n/config";
 import { batchFamily, blockBatch, releaseBatch, reserveForOrder } from "@/server/inventory/ledger";
 import { daysLeft } from "@/server/inventory/service";
 import { refreshLinesAfterRecall } from "./picking";
+import { requireWarehouseFeature } from "./features";
 
 const MAX_LEVELS = 5;
 const isAdmin = (ctx: Ctx) => ctx.company.type === "ADMIN";
@@ -116,6 +117,7 @@ async function upstream(tx: Tx, batchIds: string[]) {
 /** Lots of a product that can be traced (for the picker). Admin: any supplier's product. */
 export async function traceableLots(ctx: Ctx, offerId: string) {
   requireTrace(ctx);
+  await requireWarehouseFeature(ctx, "TRACE");
   const offer = await prisma.vendorOffer.findFirst({ where: { id: offerId, ...(isAdmin(ctx) ? {} : { vendorCompanyId: ctx.company.id }) }, select: { id: true } });
   if (!offer) throw new NotFoundError("Product");
   const rows = await prisma.stockBatch.groupBy({ by: ["lotCode", "expiresOn"], where: { offerId, lotCode: { not: null } }, _sum: { onHand: true }, _count: { _all: true }, _min: { receivedAt: true } });
@@ -139,6 +141,7 @@ export async function adminTraceOffers(ctx: Ctx, locale: string) {
 /** Full trace of one lot: upstream, stock now (per warehouse / shelf), every order downstream by level. */
 export async function traceLot(ctx: Ctx, i: { offerId: string; lotCode?: string | null; batchId?: string | null }, locale: string) {
   requireTrace(ctx);
+  await requireWarehouseFeature(ctx, "TRACE");
   const offer = await prisma.vendorOffer.findFirst({
     where: { id: i.offerId, ...(isAdmin(ctx) ? {} : { vendorCompanyId: ctx.company.id }) },
     select: { id: true, vendorSku: true, vendorCompanyId: true, vendor: { select: { legalName: true, tradeName: true } }, packaging: { select: { name: true, variant: { select: { product: { select: { name: true } } } } } } },
@@ -185,6 +188,7 @@ export const CLASSES: RecallClass[] = ["CLASS_I", "CLASS_II", "CLASS_III"];
 
 export async function startRecall(ctx: Ctx, i: { offerId: string; lotCode?: string | null; batchId?: string | null; recallClass: RecallClass; reason: string; instructions?: string | null }) {
   requireRecall(ctx);
+  await requireWarehouseFeature(ctx, "RECALLS");
   const offer = await prisma.vendorOffer.findFirst({
     where: { id: i.offerId, ...(isAdmin(ctx) ? {} : { vendorCompanyId: ctx.company.id }) },
     select: { id: true, vendorCompanyId: true, packaging: { select: { name: true, variant: { select: { product: { select: { name: true } } } } } } },
@@ -321,6 +325,7 @@ export async function getRecall(ctx: Ctx, id: string, locale: string) {
 
 export async function closeRecall(ctx: Ctx, id: string, note?: string | null) {
   requireRecall(ctx);
+  await requireWarehouseFeature(ctx, "RECALLS");
   const r = await prisma.recall.findFirst({ where: { id, ...(isAdmin(ctx) ? {} : { ownerCompanyId: ctx.company.id }) } });
   if (!r) throw new NotFoundError("Recall");
   if (r.status === "CLOSED") throw new ValidationError("Already closed.");

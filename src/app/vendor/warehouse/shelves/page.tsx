@@ -1,6 +1,8 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Boxes, LayoutGrid, MapPinOff, PackageOpen } from "lucide-react";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { featureOn } from "@/server/warehouse/features";
+import { FeatureOff } from "@/components/warehouse/feature-off";
 import { listBins, unshelved } from "@/server/warehouse/bins";
 import { warehouseOptions } from "@/server/inventory/options";
 import { PageHeader } from "@/components/layout/page-header";
@@ -16,6 +18,7 @@ export default async function Shelves({ searchParams }: { searchParams: Promise<
   pagePermission(ctx, ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"]);
   const sp = await searchParams;
   const [t, locale] = await Promise.all([getTranslations("warehouse"), getLocale()]);
+  if (!(await featureOn(ctx, "BINS"))) return <FeatureOff title={t("shelvesTitle")} />;
   const whs = await warehouseOptions(ctx);
   const addressId = whs.find((w) => w.id === sp.wh)?.id ?? whs[0]?.id;
   const [bins, loose] = await Promise.all([listBins(ctx, addressId), addressId ? unshelved(ctx, addressId, locale) : Promise.resolve([])]);

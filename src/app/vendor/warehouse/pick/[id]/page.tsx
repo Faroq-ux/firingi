@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { featureOn } from "@/server/warehouse/features";
+import { FeatureOff } from "@/components/warehouse/feature-off";
 import { getPickList } from "@/server/warehouse/picking";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +15,7 @@ export default async function PickListPage({ params }: { params: Promise<{ id: s
   const ctx = await pagePortal("vendor");
   pagePermission(ctx, ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"]);
   const [t, locale] = await Promise.all([getTranslations("warehouse"), getLocale()]);
+  if (!(await featureOn(ctx, "PICK_PACK"))) return <FeatureOff title={t("pickTitle")} />;
   const pl = await getPickList(ctx, (await params).id, locale);
   const canPick = can(ctx, ["vendor.warehouse.pick", "vendor.inventory.manage"]);
   const open = pl.status === "OPEN" || pl.status === "PICKED";

@@ -42,7 +42,7 @@ LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("rep
          ("orders.vendor.confirmSelected", []), ("dashboard.stockCard", []), ("dashboard.reorderCard", []), ("palette", []), ("table", []), ("dash", []), ("live", []),
          ("inventory", ["Inventory", "Stock & Batches", "Expiry", "Purchase Orders", "My Suppliers", "Reorder", "Stock Counts", "Transfers", "Stock Movements", "Valuation"]), ("notify.inventory_expiring", []), ("notify.inventory_expired", []),
          ("purchased", ["Expiring Purchases"]),
-         ("warehouse", ["Warehouse", "Pick & Pack", "Scanner", "Shelves", "Traceability", "Recalls", "Product Recalls"]), ("notify.recall_notice", []), ("notify.recall_started", [])]
+         ("warehouse", ["Warehouse", "Pick & Pack", "Scanner", "Shelves", "Traceability", "Recalls", "Product Recalls"]), ("notify.recall_notice", []), ("notify.recall_started", []), ("warehouse.featureOff", [])]
 
 def get(path):
     d = EN

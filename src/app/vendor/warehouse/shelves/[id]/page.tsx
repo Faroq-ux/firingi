@@ -1,5 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { featureOn } from "@/server/warehouse/features";
+import { FeatureOff } from "@/components/warehouse/feature-off";
 import { binDetail, listBins } from "@/server/warehouse/bins";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +14,7 @@ export default async function ShelfPage({ params }: { params: Promise<{ id: stri
   const ctx = await pagePortal("vendor");
   pagePermission(ctx, ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"]);
   const [t, locale] = await Promise.all([getTranslations("warehouse"), getLocale()]);
+  if (!(await featureOn(ctx, "BINS"))) return <FeatureOff title={t("shelvesTitle")} />;
   const { bin, lots } = await binDetail(ctx, (await params).id, locale);
   const others = (await listBins(ctx, bin.addressId)).filter((b) => b.isActive).map((b) => ({ id: b.id, label: b.code }));
   const date = new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" });

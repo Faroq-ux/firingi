@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
+import { featureOn } from "@/server/warehouse/features";
+import { FeatureOff } from "@/components/warehouse/feature-off";
 import { traceLot } from "@/server/warehouse/recalls";
 import { offerOptions } from "@/server/inventory/options";
 import { PageHeader } from "@/components/layout/page-header";
@@ -16,19 +18,21 @@ export default async function TracePage({ searchParams }: { searchParams: Promis
   pagePermission(ctx, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.recalls.manage"]);
   const sp = await searchParams;
   const [t, locale] = await Promise.all([getTranslations("warehouse"), getLocale()]);
+  if (!(await featureOn(ctx, "TRACE"))) return <FeatureOff title={t("traceTitle")} />;
   const offers = await offerOptions(ctx, locale);
   let data: Awaited<ReturnType<typeof traceLot>> | null = null, error: string | null = null;
   if (sp.offer && sp.lot) {
     try { data = await traceLot(ctx, { offerId: sp.offer, lotCode: sp.lot }, locale); } catch (e) { if (e instanceof AppError) error = e.message; else throw e; }
   }
   const open = data?.recalls.find((r) => r.status === "OPEN");
+  const recallsOn = await featureOn(ctx, "RECALLS");
   return (
     <>
       <PageHeader title={t("traceTitle")} description={t("traceIntro")} />
       <Card className="mb-6"><CardContent className="pt-6"><TracePicker offers={offers} offerId={sp.offer} lotCode={sp.lot} base="/vendor/warehouse/trace" /></CardContent></Card>
       {error && <p className="mb-4 text-sm text-destructive" role="alert">{error}</p>}
       {data && <TraceView data={data} t={t as never} locale={locale} orderHref={(id, mine) => (mine ? `/vendor/orders/${id}` : null)} />}
-      {data && can(ctx, "vendor.recalls.manage") && (
+      {data && can(ctx, "vendor.recalls.manage") && recallsOn && (
         open ? (
           <p className="mt-6 text-sm"><Link className="font-medium text-destructive underline" href={`/vendor/warehouse/recalls/${open.id}`}>{t("openRecall", { number: open.number })}</Link></p>
         ) : (

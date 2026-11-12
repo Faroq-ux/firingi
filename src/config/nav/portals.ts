@@ -44,10 +44,10 @@ export const VENDOR_NAV: NavSection[] = [
   {
     key: "warehouse", icon: "ScanBarcode", label: { en: "Warehouse", pt: "Armazém", es: "Almacén" },
     items: [
-      vwh("pick", "Pick & Pack", "Preparação e Embalagem", "P25", { live: true, perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Preparación y embalaje" }),
-      vwh("scan", "Scanner", "Leitor", "P25", { live: true, perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Escáner" }),
-      vwh("shelves", "Shelves", "Prateleiras", "P25", { live: true, perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Estanterías" }),
-      vwh("trace", "Traceability", "Rastreabilidade", "P25", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.recalls.manage"], es: "Trazabilidad" }),
+      vwh("pick", "Pick & Pack", "Preparação e Embalagem", "P25", { live: true, feature: "PICK_PACK", perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Preparación y embalaje" }),
+      vwh("scan", "Scanner", "Leitor", "P25", { live: true, feature: "SCAN", perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Escáner" }),
+      vwh("shelves", "Shelves", "Prateleiras", "P25", { live: true, feature: "BINS", perm: ["vendor.warehouse.pick", "vendor.inventory.manage", "vendor.inventory.view"], es: "Estanterías" }),
+      vwh("trace", "Traceability", "Rastreabilidade", "P25", { live: true, feature: "TRACE", perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.recalls.manage"], es: "Trazabilidad" }),
       vwh("recalls", "Recalls", "Recolhas", "P25", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.recalls.manage"], es: "Retiradas" }),
     ],
   },

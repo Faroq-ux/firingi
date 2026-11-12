@@ -169,3 +169,16 @@ model RecallRecipient {
   @@unique([recallId, companyId])
   @@index([companyId, status])
 }
+
+/// FIRINGI switches the warehouse features on or off per supplier (no row = all on).
+model WarehouseFeatures {
+  companyId    String   @id
+  pickPack     Boolean  @default(true) // pick lists, scan-verified picking, packing slips, box labels
+  bins         Boolean  @default(true) // shelves, put-away, shelf labels
+  traceability Boolean  @default(true) // the supplier's lot trace page
+  recalls      Boolean  @default(true) // the supplier may start / close its own recalls
+  updatedAt    DateTime @updatedAt
+  updatedById  String?
+
+  company Company @relation("WarehouseFeaturesCompany", fields: [companyId], references: [id], onDelete: Cascade)
+}

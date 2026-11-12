@@ -41,6 +41,8 @@ export type NavItem = {
   /** "live" pages are implemented; others render the Coming-soon placeholder. */
   phase: Phase;
   live: boolean;
+  /** Hidden when FIRINGI switched this feature off for the company (warehouse features, Phase 25). */
+  feature?: string;
 };
 
 export type NavGroup = { key: string; label: L; items: NavItem[] };
@@ -61,7 +63,7 @@ export function section(base: string, perm: PermissionCode | PermissionCode[]) {
     en: string,
     pt: string,
     phase: Phase,
-    opts: { live?: boolean; perm?: PermissionCode | PermissionCode[]; href?: string; es?: string } = {},
+    opts: { live?: boolean; perm?: PermissionCode | PermissionCode[]; href?: string; es?: string; feature?: string } = {},
   ): NavItem => ({
     key: `${base}/${slug}`,
     label: { en, pt, ...(opts.es ? { es: opts.es } : {}) },
@@ -69,5 +71,6 @@ export function section(base: string, perm: PermissionCode | PermissionCode[]) {
     permission: opts.perm ? (Array.isArray(opts.perm) ? opts.perm : [opts.perm]) : defaultPerm,
     phase,
     live: opts.live ?? false,
+    ...(opts.feature ? { feature: opts.feature } : {}),
   });
 }
