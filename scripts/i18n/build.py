@@ -43,7 +43,8 @@ LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("rep
          ("inventory", ["Inventory", "Stock & Batches", "Expiry", "Purchase Orders", "My Suppliers", "Reorder", "Stock Counts", "Transfers", "Stock Movements", "Valuation"]), ("notify.inventory_expiring", []), ("notify.inventory_expired", []),
          ("purchased", ["Expiring Purchases"]),
          ("warehouse", ["Warehouse", "Pick & Pack", "Scanner", "Shelves", "Traceability", "Recalls", "Product Recalls"]), ("notify.recall_notice", []), ("notify.recall_started", []), ("warehouse.featureOff", []),
-         ("buying", ["Quotes", "Recurring Orders", "Order Lists", "Approvals", "Quote Requests"]), ("notify.quote_requested", []), ("notify.quote_answered", []), ("notify.quote_declined", []), ("notify.buyer_approval_pending", []), ("notify.buyer_approval_approved", []), ("notify.buyer_approval_rejected", []), ("notify.recurring_reminder", []), ("notify.recurring_placed", []), ("notify.recurring_failed", [])]
+         ("buying", ["Quotes", "Recurring Orders", "Order Lists", "Approvals", "Quote Requests"]), ("notify.quote_requested", []), ("notify.quote_answered", []), ("notify.quote_declined", []), ("notify.buyer_approval_pending", []), ("notify.buyer_approval_approved", []), ("notify.buyer_approval_rejected", []), ("notify.recurring_reminder", []), ("notify.recurring_placed", []), ("notify.recurring_failed", []),
+         ("multisite", ["My Shops", "Shops", "Budgets", "Shop Reports"]), ("accounting", ["Accounting", "Accounting Dashboard", "Daily Sales", "Expenses", "Profit & Loss"]), ("notify.budget_threshold", [])]
 
 def get(path):
     d = EN

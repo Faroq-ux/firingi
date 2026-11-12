@@ -14,7 +14,8 @@ export async function invoicePdfData(ctx: Ctx, id: string): Promise<InvoicePdfDa
   return {
     // A document issued at Moloni carries Moloni's legal number; only live Moloni is certified.
     docType: inv.docType, fullNumber: inv.providerNumber ?? inv.fullNumber!, issuedAt: inv.issuedAt!, dueAt: inv.dueAt, atcud: inv.atcud, hash: inv.hash,
-    certified: inv.fiscalStatus === "DONE" && inv.externalProvider === "moloni", orderNumber: inv.order?.number ?? null, originalNumber: inv.originalInvoice?.providerNumber ?? inv.originalInvoice?.fullNumber ?? null,
+    certified: inv.fiscalStatus === "DONE" && inv.externalProvider === "moloni", orderNumber: inv.order?.number ?? null,
+    branch: inv.order?.branch?.name ?? null, costCentre: inv.order?.costCentre ?? null, poReference: inv.order?.poReference ?? null, originalNumber: inv.originalInvoice?.providerNumber ?? inv.originalInvoice?.fullNumber ?? null,
     reason: recipient.reason ?? null, taxRegime: inv.taxRegime, issuer, recipient, taxLabel: taxLabel(issuer.country ?? "PT"),
     lines: inv.lines.map((l) => ({ description: l.description, qty: l.qty.toString(), unitPriceNet: l.unitPriceNet.toString(), discountNet: l.discountNet.toString(), taxRate: l.taxRate.toString(), lineNet: l.lineNet.toString() })),
     taxSummary: inv.taxSummary.map((t) => ({ taxRate: t.taxRate.toString(), base: t.base.toString(), vat: t.vat.toString() })),

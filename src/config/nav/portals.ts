@@ -1,6 +1,16 @@
 /** Smaller navigations for the vendor (Sell), buyer (Buy) and driver portals. */
 import { section, type NavSection } from "./types";
 
+/** The optional accounting section (Phase 27) — same pages in the buy and sell portals; FIRINGI switches it on per company. */
+function ACCOUNTING_ITEMS(s: ReturnType<typeof section>) {
+  return [
+    s("overview", "Accounting Dashboard", "Painel de Contabilidade", "P27", { live: true, feature: "ACCOUNTING", es: "Panel de contabilidad" }),
+    s("sales", "Daily Sales", "Vendas Diárias", "P27", { live: true, feature: "ACCOUNTING", es: "Ventas diarias" }),
+    s("expenses", "Expenses", "Despesas", "P27", { live: true, feature: "ACCOUNTING", es: "Gastos" }),
+    s("profit-loss", "Profit & Loss", "Lucros e Perdas", "P27", { live: true, feature: "ACCOUNTING", es: "Pérdidas y ganancias" }),
+  ];
+}
+
 const V = "/vendor";
 const vd = section(`${V}/dashboard`, "vendor.dashboard.view");
 const vp = section(`${V}/products`, "vendor.products.view");
@@ -11,6 +21,7 @@ const vc = section(`${V}/company`, "company.profile.manage");
 const vr = section(`${V}/reports`, "vendor.reports.view");
 const vs = section(`${V}`, "company.support.use");
 const vai = section(`${V}`, ["vendor.reports.view", "vendor.dashboard.view"]);
+const vac = section(`${V}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
@@ -82,6 +93,7 @@ export const VENDOR_NAV: NavSection[] = [
     ],
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" })] },
+  { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(vac) },
   { key: "ai", icon: "Bot", label: { en: "AI Assistant", pt: "Assistente IA", es: "Asistente IA" }, items: [vai("assistant", "AI Assistant", "Assistente IA", "P17", { live: true, es: "Asistente IA" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [vs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
   {
@@ -106,6 +118,8 @@ const bco = section(`${B}/company`, "company.profile.manage");
 const br = section(`${B}/reports`, "buyer.reports.view");
 const bs = section(`${B}`, "company.support.use");
 const bai = section(`${B}`, ["buyer.orders.view", "buyer.orders.place"]);
+const bsh = section(`${B}/branches`, ["buyer.branches.manage", "buyer.orders.view", "buyer.orders.place", "buyer.reports.view"]);
+const bac = section(`${B}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 
 export const BUY_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [bd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -141,6 +155,15 @@ export const BUY_NAV: NavSection[] = [
       bf("exports", "Exports", "Exportações", "P21", { live: true, perm: ["buyer.invoices.view", "buyer.payments.view"], es: "Exportaciones" }),
     ],
   },
+  {
+    key: "shops", icon: "Store", label: { en: "My Shops", pt: "As Minhas Lojas", es: "Mis tiendas" },
+    items: [
+      bsh("", "Shops", "Lojas", "P27", { live: true, href: `${B}/branches`, es: "Tiendas" }),
+      bsh("budgets", "Budgets", "Orçamentos de Compras", "P27", { live: true, es: "Presupuestos de compras" }),
+      bsh("reports", "Shop Reports", "Relatórios por Loja", "P27", { live: true, perm: ["buyer.reports.view", "buyer.branches.manage"], es: "Informes por tienda" }),
+    ],
+  },
+  { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(bac) },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
   { key: "ai", icon: "Bot", label: { en: "AI Assistant", pt: "Assistente IA", es: "Asistente IA" }, items: [bai("assistant", "AI Assistant", "Assistente IA", "P17", { live: true, es: "Asistente IA" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [bs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },

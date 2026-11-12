@@ -99,6 +99,7 @@ const defs = {
   "buyer.addresses.manage": { audience: "BUYER", module: "Addresses", description: "Manage delivery addresses" },
   "buyer.compliance.manage": { audience: "BUYER", module: "Compliance", description: "Apply for tobacco / alcohol access" },
   "buyer.reports.view": { audience: "BUYER", module: "Reports", description: "View purchase reports and export them" },
+  "buyer.branches.manage": { audience: "BUYER", module: "Branches", description: "Manage branches, staff assignments and budgets; see every branch" },
 
   // ── COMPANY (self-management) ────────────────────────────────────────────
   "company.profile.manage": { audience: "COMPANY", module: "Company", description: "Edit company profile" },
@@ -106,6 +107,8 @@ const defs = {
   "company.addresses.manage": { audience: "COMPANY", module: "Company", description: "Manage company addresses" },
   "company.support.use": { audience: "COMPANY", module: "Support", description: "Ask FIRINGI for help and follow support requests" },
   "company.integrations.manage": { audience: "COMPANY", module: "Integrations", description: "Create API keys and webhooks for the company's own systems" },
+  "company.accounting.view": { audience: "COMPANY", module: "Accounting", description: "See the company's own accounting: sales, expenses, profit & loss (when FIRINGI switched it on)" },
+  "company.accounting.manage": { audience: "COMPANY", module: "Accounting", description: "Enter daily sales and expenses (when FIRINGI switched it on)" },
   "team.users.view": { audience: "COMPANY", module: "Team", description: "View company users" },
   "team.users.manage": { audience: "COMPANY", module: "Team", description: "Create, disable and assign roles to company users" },
   "team.roles.manage": { audience: "COMPANY", module: "Team", description: "Create and edit company roles" },

@@ -62,10 +62,13 @@ model Address {
   openingHours Json?
   isDefault    Boolean                   @default(false)
   isActive     Boolean                   @default(true)
+  /// Phase 27: the branch this delivery address belongs to
+  branchId     String?
   createdAt    DateTime                  @default(now())
   updatedAt    DateTime                  @updatedAt
 
   company        Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  branch         Branch?             @relation("BranchAddresses", fields: [branchId], references: [id], onDelete: SetNull)
   city           City?               @relation(fields: [cityId], references: [id])
   country        Country             @relation(fields: [countryId], references: [id])
   stockLevels    StockLevel[]

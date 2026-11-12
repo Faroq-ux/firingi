@@ -59,7 +59,8 @@ function requireBuyer(ctx: Ctx, place = false) {
 }
 
 async function ownAddress(ctx: Ctx, id: string) {
-  const a = await prisma.address.findFirst({ where: { id, companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, include: { city: true } });
+  const { orderableAddressWhere } = await import("@/server/multisite/branches");
+  const a = await prisma.address.findFirst({ where: { id, ...(await orderableAddressWhere(ctx)) }, include: { city: true } });
   if (!a) throw new ValidationError("Choose one of your delivery addresses.");
   return a;
 }
@@ -88,7 +89,7 @@ async function approvalFor(ctx: Ctx, items: { offerId: string; qty: number }[], 
   return { reasons, gross: pc.grandTotal };
 }
 
-export async function createRecurring(ctx: Ctx, i: Schedule & { name: string; items: { offerId: string; qty: number }[]; deliveryAddressId: string; notes?: string | null; remindDaysBefore?: number | null }) {
+export async function createRecurring(ctx: Ctx, i: Schedule & { name: string; items: { offerId: string; qty: number }[]; deliveryAddressId: string; notes?: string | null; remindDaysBefore?: number | null; poReference?: string | null }) {
   requireBuyer(ctx, true);
   const name = i.name.trim();
   if (!name) throw new ValidationError("Give it a name.");
@@ -103,6 +104,7 @@ export async function createRecurring(ctx: Ctx, i: Schedule & { name: string; it
     data: {
       buyerCompanyId: ctx.company.id, createdById: ctx.user.id, name, frequency: i.frequency, weekday: i.frequency === "MONTHLY" ? null : i.weekday, dayOfMonth: i.frequency === "MONTHLY" ? i.dayOfMonth : null,
       deliveryAddressId: i.deliveryAddressId, notes: i.notes?.trim() || null, remindDaysBefore: remind, nextRunAt: firstRun(i, new Date()), items: { create: items },
+      poReference: i.poReference?.trim().slice(0, 60) || null,
     },
   });
   const ap = await approvalFor(ctx, items, i.deliveryAddressId);
@@ -120,7 +122,7 @@ async function own(ctx: Ctx, id: string) {
   return r;
 }
 
-export async function updateRecurring(ctx: Ctx, id: string, i: Partial<Schedule> & { name?: string; items?: { offerId: string; qty: number }[]; deliveryAddressId?: string; notes?: string | null; remindDaysBefore?: number }) {
+export async function updateRecurring(ctx: Ctx, id: string, i: Partial<Schedule> & { name?: string; items?: { offerId: string; qty: number }[]; deliveryAddressId?: string; notes?: string | null; remindDaysBefore?: number; poReference?: string | null }) {
   requireBuyer(ctx, true);
   const r = await own(ctx, id);
   if (r.status === "ENDED") throw new ValidationError("This recurring order has ended.");
@@ -139,6 +141,7 @@ export async function updateRecurring(ctx: Ctx, id: string, i: Partial<Schedule>
         ...(i.name?.trim() ? { name: i.name.trim() } : {}), frequency: s.frequency, weekday: s.frequency === "MONTHLY" ? null : s.weekday, dayOfMonth: s.frequency === "MONTHLY" ? s.dayOfMonth : null,
         ...(i.deliveryAddressId ? { deliveryAddressId: i.deliveryAddressId } : {}), ...(i.notes !== undefined ? { notes: i.notes?.trim() || null } : {}),
         ...(i.remindDaysBefore !== undefined ? { remindDaysBefore: Math.max(0, Math.min(7, i.remindDaysBefore)) } : {}),
+        ...(i.poReference !== undefined ? { poReference: i.poReference?.trim().slice(0, 60) || null } : {}),
         ...(scheduleChanged ? { nextRunAt: firstRun(s, new Date()), reminderSentFor: null } : {}),
       },
     });
@@ -207,7 +210,7 @@ export async function orderRecurringNow(ctx: Ctx, id: string) {
   const r = await own(ctx, id);
   if (r.status !== "ACTIVE" && r.status !== "PAUSED") throw new ValidationError("This recurring order can't be placed now.");
   const { placeOrder } = await import("@/server/services/orders");
-  const placed = await placeOrder(ctx, { deliveryAddressId: r.deliveryAddressId, notes: [r.name, r.notes].filter(Boolean).join(" — "), items: r.items.map((x) => ({ offerId: x.offerId, qty: x.qty })), source: { type: "RECURRING", id } });
+  const placed = await placeOrder(ctx, { deliveryAddressId: r.deliveryAddressId, notes: [r.name, r.notes].filter(Boolean).join(" — "), items: r.items.map((x) => ({ offerId: x.offerId, qty: x.qty })), source: { type: "RECURRING", id }, poReference: r.poReference });
   if (!placed.approval) await prisma.recurringOrder.update({ where: { id }, data: { lastRunAt: new Date(), lastResult: "PLACED", lastError: null, lastOrders: placed.orders, runs: { increment: 1 } } });
   return placed;
 }
@@ -250,7 +253,7 @@ export async function runRecurringOrders(now = new Date()) {
         throw new AppError("NO_PERSON", "The person who set it up can no longer order for the company — it was paused.", 409);
       }
       const { placeOrder } = await import("@/server/services/orders");
-      const placed = await placeOrder(ctx, { deliveryAddressId: r.deliveryAddressId, notes: [r.name, r.notes].filter(Boolean).join(" — "), items: r.items.map((x) => ({ offerId: x.offerId, qty: x.qty })), approved: true, source: { type: "RECURRING", id: r.id } });
+      const placed = await placeOrder(ctx, { deliveryAddressId: r.deliveryAddressId, notes: [r.name, r.notes].filter(Boolean).join(" — "), items: r.items.map((x) => ({ offerId: x.offerId, qty: x.qty })), approved: true, source: { type: "RECURRING", id: r.id }, poReference: r.poReference });
       await prisma.recurringOrder.update({ where: { id: r.id }, data: { lastRunAt: now, lastResult: "PLACED", lastError: null, lastOrders: placed.orders, runs: { increment: 1 } } });
       await notify("recurring.placed", [{ userId: r.createdById, link: `/buy/orders/${placed.orders[0]?.id ?? ""}` }], { name: r.name, orders: placed.orders.map((o) => o.number).join(", ") }, { ref: { type: "RecurringOrder", id: r.id } }).catch(() => null);
       out.placed++;

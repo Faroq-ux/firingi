@@ -117,7 +117,7 @@ export async function buyerQuote(ctx: Ctx, id: string, locale: string) {
   };
 }
 
-export async function acceptQuote(ctx: Ctx, id: string, i: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null }) {
+export async function acceptQuote(ctx: Ctx, id: string, i: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; poReference?: string | null }) {
   requireBuyer(ctx, BUY);
   const q = await loadQuote(id);
   if (!q || q.buyerCompanyId !== ctx.company.id) throw new NotFoundError("Quote");
@@ -125,7 +125,7 @@ export async function acceptQuote(ctx: Ctx, id: string, i: { deliveryAddressId: 
   const { placeOrder } = await import("@/server/services/orders");
   const placed = await placeOrder(ctx, {
     deliveryAddressId: i.deliveryAddressId, notes: [`${q.number}`, i.notes?.trim()].filter(Boolean).join(" — "), requestedDeliveryDate: i.requestedDeliveryDate ?? null,
-    items: q.lines.map((l) => ({ offerId: l.offerId, qty: l.qty })), fixedPrices: new Map(q.lines.map((l) => [l.offerId, l.quotedUnitNet!.toString()])), source: { type: "QUOTE", id: q.id },
+    items: q.lines.map((l) => ({ offerId: l.offerId, qty: l.qty })), fixedPrices: new Map(q.lines.map((l) => [l.offerId, l.quotedUnitNet!.toString()])), source: { type: "QUOTE", id: q.id }, poReference: i.poReference ?? null,
   });
   if (placed.approval) return { approval: placed.approval, orders: [] as { id: string; number: string }[] };
   await markAccepted(ctx, q.id, placed.orders);
@@ -138,14 +138,14 @@ async function markAccepted(ctx: Ctx, id: string, orders: { id: string; number: 
 }
 
 /** The buyer's manager approved an accepted quote: place it at the quoted prices (even if the date passed meanwhile). */
-export async function acceptQuoteApproved(ctx: Ctx, id: string, i: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null }) {
+export async function acceptQuoteApproved(ctx: Ctx, id: string, i: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; poReference?: string | null }) {
   const q = await loadQuote(id);
   if (!q || q.buyerCompanyId !== ctx.company.id) throw new NotFoundError("Quote");
   if (q.status !== "QUOTED") throw new ValidationError("This quote can no longer be accepted.");
   const { placeOrder } = await import("@/server/services/orders");
   const placed = await placeOrder(ctx, {
     deliveryAddressId: i.deliveryAddressId, notes: i.notes ?? q.number, requestedDeliveryDate: i.requestedDeliveryDate ?? null,
-    items: q.lines.map((l) => ({ offerId: l.offerId, qty: l.qty })), fixedPrices: new Map(q.lines.map((l) => [l.offerId, l.quotedUnitNet!.toString()])), approved: true, source: { type: "QUOTE", id: q.id },
+    items: q.lines.map((l) => ({ offerId: l.offerId, qty: l.qty })), fixedPrices: new Map(q.lines.map((l) => [l.offerId, l.quotedUnitNet!.toString()])), approved: true, source: { type: "QUOTE", id: q.id }, poReference: i.poReference ?? null,
   });
   await markAccepted(ctx, q.id, placed.orders);
   return placed.orders;

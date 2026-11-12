@@ -1,0 +1,198 @@
+// Phase 27 — multi-site buyers (branches, staff, budgets, cost centres) and the buyer's own
+// accounting (daily sales, expenses, profit & loss). Accounting data is the customer's own
+// bookkeeping: FIRINGI staff never see it.
+
+/// A shop / restaurant / site of a customer or wholesaler. Delivery addresses belong to a branch;
+/// orders remember the branch they were delivered to.
+model Branch {
+  id                  String   @id @default(cuid())
+  companyId           String
+  name                String
+  code                String? // short code, e.g. "LX1"
+  /// shop category (restaurant, kebab / pizza, café, mini-market… — the business types) so FIRINGI can serve each shop better
+  category            String?
+  /// printed on orders and FIRINGI's invoices, carried to accounting exports
+  costCentre          String?
+  /// branch manager — gets the branch's approvals and budget alerts
+  managerMembershipId String?
+  phone               String?
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  manager           Membership?        @relation("BranchManager", fields: [managerMembershipId], references: [id], onDelete: SetNull)
+  members           BranchMember[]
+  addresses         Address[]          @relation("BranchAddresses")
+  orders            Order[]            @relation("BranchOrders")
+  budgets           Budget[]
+  entries           AccountingEntry[]
+  recurringExpenses RecurringExpense[]
+
+  @@unique([companyId, name])
+  @@index([companyId])
+}
+
+/// Staff assigned to a branch. A team member with at least one assignment only sees and orders for
+/// those branches (unless they manage branches); a member with none sees the whole company.
+model BranchMember {
+  branchId     String
+  membershipId String
+  createdAt    DateTime @default(now())
+
+  branch     Branch     @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  membership Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@id([branchId, membershipId])
+  @@index([membershipId])
+}
+
+enum BudgetPeriod {
+  WEEKLY
+  MONTHLY
+}
+
+/// What happens to an order that would go over the budget.
+enum BudgetAction {
+  APPROVAL // needs a manager's approval (people who may approve go through)
+  BLOCK // refused
+  WARN // placed; managers are told
+}
+
+/// Spending limit for a branch (or the whole company when branchId is empty), optionally only for
+/// some categories. Amounts incl. VAT.
+model Budget {
+  id          String       @id @default(cuid())
+  companyId   String
+  branchId    String?
+  name        String
+  period      BudgetPeriod @default(MONTHLY)
+  amount      Decimal      @db.Decimal(18, 2)
+  categoryIds Json         @default("[]")
+  action      BudgetAction @default(APPROVAL)
+  isActive    Boolean      @default(true)
+  createdById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  branch  Branch?       @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  alerts  BudgetAlert[]
+
+  @@index([companyId])
+}
+
+/// One alert per budget, period and level (80 % / 100 %).
+model BudgetAlert {
+  id          String   @id @default(cuid())
+  budgetId    String
+  periodStart DateTime
+  level       Int
+  sentAt      DateTime @default(now())
+
+  budget Budget @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+
+  @@unique([budgetId, periodStart, level])
+}
+
+enum AccountingKind {
+  SALE
+  EXPENSE
+}
+
+enum AccountingCategory {
+  // sales
+  SALES_CASH
+  SALES_CARD
+  SALES_DELIVERY_APPS
+  SALES_OTHER
+  // expenses
+  OTHER_SUPPLIERS // goods bought outside FIRINGI
+  RENT
+  ELECTRICITY
+  WATER
+  GAS
+  TELECOM
+  SALARIES
+  SOCIAL_SECURITY
+  INSURANCE
+  MAINTENANCE
+  MARKETING
+  BANK_FEES
+  TAXES_FEES
+  ACCOUNTANT
+  TRANSPORT
+  OTHER
+}
+
+/// A day's sales or an expense, entered by the buyer. `amount` incl. VAT; `vatRate` (percent) when
+/// known — the profit & loss can then be shown without VAT.
+model AccountingEntry {
+  id          String             @id @default(cuid())
+  companyId   String
+  branchId    String?
+  kind        AccountingKind
+  category    AccountingCategory
+  date        DateTime           @db.Date
+  amount      Decimal            @db.Decimal(18, 2)
+  vatRate     Decimal?           @db.Decimal(5, 2)
+  payee       String?
+  description String?
+  receiptKey  String?
+  receiptName String?
+  receiptMime String?
+  recurringId String?
+  createdById String
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  company   Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  branch    Branch?           @relation(fields: [branchId], references: [id], onDelete: SetNull)
+  recurring RecurringExpense? @relation(fields: [recurringId], references: [id], onDelete: SetNull)
+
+  @@unique([recurringId, date])
+  @@index([companyId, date])
+  @@index([branchId, date])
+}
+
+/// A fixed monthly expense (rent, salaries, social security, a phone contract…): an entry is added
+/// automatically on its day each month.
+model RecurringExpense {
+  id               String             @id @default(cuid())
+  companyId        String
+  branchId         String?
+  category         AccountingCategory
+  amount           Decimal            @db.Decimal(18, 2)
+  vatRate          Decimal?           @db.Decimal(5, 2)
+  payee            String?
+  description      String?
+  dayOfMonth       Int
+  startsOn         DateTime           @db.Date
+  /// the last date an entry was added for (a deleted entry isn't added again)
+  generatedThrough DateTime?          @db.Date
+  endsOn           DateTime?          @db.Date
+  isActive         Boolean            @default(true)
+  createdById      String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  company Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  branch  Branch?           @relation(fields: [branchId], references: [id], onDelete: SetNull)
+  entries AccountingEntry[]
+
+  @@index([companyId])
+}
+
+/// Optional features FIRINGI switches on or off per company (suppliers and customers).
+/// No row = off. Keys: ACCOUNTING.
+model CompanyFeature {
+  companyId   String
+  key         String
+  enabled     Boolean  @default(false)
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@id([companyId, key])
+}

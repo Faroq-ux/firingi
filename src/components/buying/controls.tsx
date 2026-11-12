@@ -87,14 +87,16 @@ export function SaveOrderAsList({ orderId, number }: { orderId: string; number: 
 export function AcceptQuote({ id, addresses }: { id: string; addresses: Opt[] }) {
   const t = useTranslations("buying");
   const { pending, error, run, router } = useRun();
-  const [f, setF] = useState({ address: addresses[0]?.id ?? "", date: "", notes: "" });
+  const tm = useTranslations("multisite");
+  const [f, setF] = useState({ address: addresses[0]?.id ?? "", date: "", notes: "", po: "" });
   const [reject, setReject] = useState<string | null>(null);
   return (
     <div className="space-y-4">
-      <form className="grid gap-3 sm:grid-cols-2" data-testid="accept-quote" onSubmit={(e) => { e.preventDefault(); run(() => acceptQuoteAction({ id, deliveryAddressId: f.address, requestedDeliveryDate: f.date || null, notes: f.notes || null }), (d) => { const r = d as { orders: { id: string }[]; approval?: { id: string } }; router.push(r.approval ? `/buy/orders/approvals/${r.approval.id}?sent=1` : `/buy/orders/${r.orders[0].id}?placed=1`); }); }}>
+      <form className="grid gap-3 sm:grid-cols-2" data-testid="accept-quote" onSubmit={(e) => { e.preventDefault(); run(() => acceptQuoteAction({ id, deliveryAddressId: f.address, requestedDeliveryDate: f.date || null, notes: f.notes || null, poReference: f.po || null }), (d) => { const r = d as { orders: { id: string }[]; approval?: { id: string } }; router.push(r.approval ? `/buy/orders/approvals/${r.approval.id}?sent=1` : `/buy/orders/${r.orders[0].id}?placed=1`); }); }}>
         <div className="space-y-1 sm:col-span-2"><Label htmlFor="aq-a">{t("deliveryAddress")}</Label><Select id="aq-a" value={f.address} onChange={(e) => setF({ ...f, address: e.target.value })}>{addresses.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}</Select></div>
         <div className="space-y-1"><Label htmlFor="aq-d">{t("deliveryDate")} <span className="text-muted-foreground">({t("optional")})</span></Label><Input id="aq-d" type="date" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></div>
         <div className="space-y-1"><Label htmlFor="aq-n">{t("notes")}</Label><Input id="aq-n" maxLength={500} value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} /></div>
+        <div className="space-y-1"><Label htmlFor="aq-po">{tm("poReference")}</Label><Input id="aq-po" maxLength={60} value={f.po} onChange={(e) => setF({ ...f, po: e.target.value })} placeholder="PO-1234" /></div>
         <div className="flex flex-wrap items-center gap-2 sm:col-span-2">
           <Button type="submit" disabled={pending || !addresses.length}><Spin on={pending} icon={Check} />{t("acceptOrder")}</Button>
           <Button type="button" variant="outline" onClick={() => setReject(reject === null ? "" : null)}><X className="size-4" />{t("reject")}</Button>

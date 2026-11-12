@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { AlertTriangle, Boxes, CircleDollarSign, ClipboardList, PackageX, TimerReset } from "lucide-react";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
@@ -18,7 +19,7 @@ export default async function InventoryOverview({ searchParams }: { searchParams
   const ctx = await pagePortal("vendor");
   pagePermission(ctx, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
   const sp = await searchParams;
-  const [t, locale] = await Promise.all([getTranslations("inventory"), getLocale()]);
+  const [t, tb, locale] = await Promise.all([getTranslations("inventory"), getTranslations("onboarding"), getLocale()]);
   const [sum, rows, offers, whs, views] = await Promise.all([inventorySummary(ctx), stockOverview(ctx, { addressId: sp.wh || undefined }), offerOptions(ctx, locale), warehouseOptions(ctx), listViews(ctx, "vendor.inventory")]);
   const date = new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" });
   return (
@@ -32,13 +33,12 @@ export default async function InventoryOverview({ searchParams }: { searchParams
         <Tile icon={PackageX} label={t("kpiExpired")} value={sum.expired} locale={locale} tone="tone-pink" i={4} href="/vendor/inventory/expiry?days=0" />
         <Tile icon={ClipboardList} label={t("kpiOpenPos")} value={sum.openPos} locale={locale} tone="tone-teal" i={5} href="/vendor/inventory/purchase-orders" />
       </div>
-      {whs.length > 1 && (
-        <nav className="mb-3 flex flex-wrap gap-2 text-sm" aria-label={t("warehouse")}>
-          {[{ id: "", label: t("allWarehouses") }, ...whs].map((w) => (
-            <a key={w.id} href={w.id ? `?wh=${w.id}` : "?"} className={`rounded-full border px-3 py-1 ${(sp.wh ?? "") === w.id ? "border-primary bg-primary/10 font-medium" : ""}`}>{w.label}</a>
-          ))}
-        </nav>
-      )}
+      <nav className="mb-3 flex flex-wrap gap-2 text-sm" aria-label={t("warehouse")}>
+        {whs.length > 1 && [{ id: "", label: t("allWarehouses") }, ...whs].map((w) => (
+          <a key={w.id} href={w.id ? `?wh=${w.id}` : "?"} className={`rounded-full border px-3 py-1 ${(sp.wh ?? "") === w.id ? "border-primary bg-primary/10 font-medium" : ""}`}>{w.label}</a>
+        ))}
+        {ctx.permissions.has("company.addresses.manage") && <Link href="/vendor/company/addresses" className="rounded-full border border-dashed px-3 py-1 text-muted-foreground hover:bg-accent hover:text-foreground" data-testid="add-warehouse">+ {tb("addressKinds.WAREHOUSE")}</Link>}
+      </nav>
       <DataTable tableId="vendor.inventory" views={views} testId="inventory-table" empty={t("empty")} exportName="inventory"
         columns={[
           { key: "product", label: t("product") }, { key: "warehouse", label: t("warehouse"), filter: true },

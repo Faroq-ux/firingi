@@ -184,7 +184,7 @@ async function issueAtMoloni(invoiceId: string): Promise<"DONE" | "WAIT"> {
   if (missing(m).length) throw new MoloniError("Moloni settings are incomplete.", "CONFIG");
   const inv = await prisma.invoice.findUniqueOrThrow({
     where: { id: invoiceId },
-    include: { lines: { orderBy: { position: "asc" }, include: { orderLine: { select: { sku: true } }, exemptionReason: { select: { code: true } } } }, originalInvoice: { include: { lines: { orderBy: { position: "asc" } } } }, order: { select: { number: true } } },
+    include: { lines: { orderBy: { position: "asc" }, include: { orderLine: { select: { sku: true } }, exemptionReason: { select: { code: true } } } }, originalInvoice: { include: { lines: { orderBy: { position: "asc" } } } }, order: { select: { number: true, poReference: true, costCentre: true, branch: { select: { name: true } } } } },
   });
   const credit = inv.docType === "CREDIT_NOTE";
   if (credit && inv.originalInvoice?.fiscalStatus !== "DONE") return "WAIT"; // the invoice must be at Moloni first
@@ -214,7 +214,9 @@ async function issueAtMoloni(invoiceId: string): Promise<"DONE" | "WAIT"> {
   }
   const common = {
     company_id: m.companyId, date: day(inv.issuedAt ?? new Date()), customer_id: customer, our_reference: inv.fullNumber ?? "", your_reference: inv.order?.number ?? "",
-    notes: credit ? `Nota de crédito FIRINGI ${inv.fullNumber}${(inv.recipientSnapshot as { reason?: string }).reason ? ` — ${(inv.recipientSnapshot as { reason?: string }).reason}` : ""}` : `Fatura FIRINGI ${inv.fullNumber}`,
+    notes: [credit ? `Nota de crédito FIRINGI ${inv.fullNumber}${(inv.recipientSnapshot as { reason?: string }).reason ? ` — ${(inv.recipientSnapshot as { reason?: string }).reason}` : ""}` : `Fatura FIRINGI ${inv.fullNumber}`,
+      // Phase 27: the customer's references
+      inv.order?.poReference ? `PO: ${inv.order.poReference}` : null, inv.order?.branch ? `Loja: ${inv.order.branch.name}` : null, inv.order?.costCentre ? `Centro de custo: ${inv.order.costCentre}` : null].filter(Boolean).join(" · "),
     products, status: 1,
   };
   // Never issue twice: if an earlier attempt reached Moloni but FIRINGI didn't hear back, reuse it.

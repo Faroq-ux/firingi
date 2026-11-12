@@ -9,7 +9,7 @@
 import type { Prisma } from "@prisma/client";
 import { randomUUID } from "node:crypto";
 import Decimal from "decimal.js";
-import { prisma } from "@/server/db";
+import { prisma, type Tx } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { AppError, ValidationError } from "@/server/errors";
 import { pricedOffers } from "@/server/data/catalogue-buyer";
@@ -133,7 +133,7 @@ function freeFor(c: Candidate, covers: { lineNet: string; qty: number }[]) {
 }
 
 /** Check out a FIRINGI cart: one order per picked supplier. */
-export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: CartLine[]; couponCode?: string | null }, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null }) {
+export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: CartLine[]; couponCode?: string | null }, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; poReference?: string | null }) {
   const plan = await planRouted(ctx, cart.items, input.deliveryAddressId, cart.couponCode ?? null);
   if (plan.offers.coupon && !plan.offers.coupon.ok) throw plan.offers.coupon.error!;
   if (plan.leftover.length) {
@@ -151,6 +151,7 @@ export async function placeRoutedOrder(ctx: Ctx, cart: { id: string; items: Cart
     } as Prisma.JsonValue,
     requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null, deliveryRuleId: plan.feeRuleId,
     parentOrderId: null, routedByFiringi: true,
+    ...(await (await import("@/server/multisite/branches")).branchStamp(prisma as unknown as Tx, a.id)), poReference: input.poReference ?? null,
   };
   // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.
   const { assessCheckout, recordRisk, afterCheckout } = await import("@/server/risk/service");

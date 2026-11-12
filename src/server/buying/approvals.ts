@@ -57,7 +57,7 @@ export async function requestApproval(ctx: Ctx, i: { input: PlaceOrderInput; car
       data: {
         companyId: ctx.company.id, requestedById: ctx.user.id, kind: "ORDER", items: i.cart.items.map((x) => ({ offerId: x.offerId, qty: x.qty })),
         couponCode: i.cart.couponCode, deliveryAddressId: i.input.deliveryAddressId, notes: i.input.notes?.trim() || null, requestedDeliveryDate: i.input.requestedDeliveryDate ?? null,
-        grossTotal: i.gross.toFixed(2), reasons: i.reasons, quoteId: i.input.source?.type === "QUOTE" ? i.input.source.id : null,
+        grossTotal: i.gross.toFixed(2), reasons: i.reasons, quoteId: i.input.source?.type === "QUOTE" ? i.input.source.id : null, poReference: i.input.poReference ?? null,
       },
     });
     if (!i.input.items && i.cart.id) {
@@ -81,10 +81,19 @@ export async function requestRecurringApproval(ctx: Ctx, r: { id: string; delive
   return a.id;
 }
 
+/** Which requests the caller sees: their own; approvers all — branch approvers their branches' (Phase 27). */
+async function visibleWhere(ctx: Ctx) {
+  if (!can(ctx, APPROVE)) return { requestedById: ctx.user.id };
+  const { branchScope } = await import("@/server/multisite/branches");
+  const s = await branchScope(ctx);
+  if (!s) return {};
+  const addrs = await prisma.address.findMany({ where: { companyId: ctx.company.id, branchId: { in: s } }, select: { id: true } });
+  return { OR: [{ requestedById: ctx.user.id }, { deliveryAddressId: { in: addrs.map((a) => a.id) } }] };
+}
+
 export async function listApprovals(ctx: Ctx) {
   requireBuyer(ctx);
-  const mine = !can(ctx, APPROVE);
-  const rows = await prisma.buyerApproval.findMany({ where: { companyId: ctx.company.id, ...(mine ? { requestedById: ctx.user.id } : {}) }, orderBy: { createdAt: "desc" }, take: 200 });
+  const rows = await prisma.buyerApproval.findMany({ where: { companyId: ctx.company.id, ...(await visibleWhere(ctx)) }, orderBy: { createdAt: "desc" }, take: 200 });
   const users = await prisma.user.findMany({ where: { id: { in: [...new Set(rows.flatMap((r) => [r.requestedById, r.decidedById].filter((x): x is string => !!x)))] } }, select: { id: true, name: true } });
   const name = (id: string | null) => users.find((u) => u.id === id)?.name ?? null;
   return rows.map((r) => ({
@@ -95,7 +104,7 @@ export async function listApprovals(ctx: Ctx) {
 
 export async function getApproval(ctx: Ctx, id: string, locale: string) {
   requireBuyer(ctx);
-  const r = await prisma.buyerApproval.findFirst({ where: { id, companyId: ctx.company.id, ...(can(ctx, APPROVE) ? {} : { requestedById: ctx.user.id }) } });
+  const r = await prisma.buyerApproval.findFirst({ where: { id, companyId: ctx.company.id, ...(await visibleWhere(ctx)) } });
   if (!r) throw new NotFoundError("Approval");
   const items = r.items as { offerId: string; qty: number }[];
   const offers = await prisma.vendorOffer.findMany({ where: { id: { in: items.map((x) => x.offerId) } }, select: { id: true, vendorSku: true, vendor: { select: { legalName: true, tradeName: true } }, packaging: { select: { name: true, variant: { select: { product: { select: { name: true } } } } } } } });
@@ -118,7 +127,7 @@ export async function getApproval(ctx: Ctx, id: string, locale: string) {
 /** Approve (the order is placed now, for the person who asked) or reject with a reason. */
 export async function decideApproval(ctx: Ctx, id: string, approve: boolean, note?: string | null) {
   requireApprover(ctx);
-  const r = await prisma.buyerApproval.findFirst({ where: { id, companyId: ctx.company.id } });
+  const r = await prisma.buyerApproval.findFirst({ where: { id, companyId: ctx.company.id, ...(await visibleWhere(ctx)) } });
   if (!r) throw new NotFoundError("Approval");
   if (r.status !== "PENDING") throw new ValidationError("This request was already decided.");
   if (!approve && !note?.trim()) throw new ValidationError("Please give a reason.");
@@ -133,10 +142,10 @@ export async function decideApproval(ctx: Ctx, id: string, approve: boolean, not
       const items = r.items as { offerId: string; qty: number }[];
       if (r.quoteId) {
         const { acceptQuoteApproved } = await import("./quotes");
-        orders = await acceptQuoteApproved(actor, r.quoteId, { deliveryAddressId: r.deliveryAddressId, notes: r.notes, requestedDeliveryDate: r.requestedDeliveryDate });
+        orders = await acceptQuoteApproved(actor, r.quoteId, { deliveryAddressId: r.deliveryAddressId, notes: r.notes, requestedDeliveryDate: r.requestedDeliveryDate, poReference: r.poReference });
       } else {
         const { placeOrder } = await import("@/server/services/orders");
-        const placed = await placeOrder(actor, { deliveryAddressId: r.deliveryAddressId, notes: r.notes, requestedDeliveryDate: r.requestedDeliveryDate, items, couponCode: r.couponCode, approved: true, source: { type: "APPROVAL", id: r.id } });
+        const placed = await placeOrder(actor, { deliveryAddressId: r.deliveryAddressId, notes: r.notes, requestedDeliveryDate: r.requestedDeliveryDate, items, couponCode: r.couponCode, approved: true, source: { type: "APPROVAL", id: r.id }, poReference: r.poReference });
         orders = placed.orders;
       }
     }
@@ -167,7 +176,7 @@ export async function cancelApproval(ctx: Ctx, id: string) {
 
 export async function pendingApprovalCount(ctx: Ctx) {
   if (!isBuyer(ctx) || !can(ctx, APPROVE)) return 0;
-  return prisma.buyerApproval.count({ where: { companyId: ctx.company.id, status: "PENDING" } });
+  return prisma.buyerApproval.count({ where: { companyId: ctx.company.id, status: "PENDING", ...(await visibleWhere(ctx)) } });
 }
 
 // ───────────────────────────── rules ─────────────────────────────

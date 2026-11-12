@@ -99,6 +99,8 @@ model RecurringOrder {
   lastOrders        Json               @default("[]") // [{ id, number }]
   runs              Int                @default(0)
   approvalId        String?
+  /// Phase 27: purchase-order reference put on each order it places
+  poReference       String?
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
@@ -145,6 +147,7 @@ model BuyerApproval {
   kind                  String              @default("ORDER") // ORDER | RECURRING
   recurringId           String?
   quoteId               String? // an accepted quote waiting for approval (its prices are kept)
+  poReference           String? // Phase 27
   items                 Json // [{ offerId, qty }]
   couponCode            String?
   deliveryAddressId     String

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { cartView } from "@/server/services/cart";
+import { orderingSettings } from "@/server/multisite/branches";
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
@@ -17,7 +18,8 @@ export const metadata = { title: "Cart" };
 export default async function CartPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.orders.place");
-  const [cart, t, tc, locale] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale()]);
+  const [cart, t, tc, locale, ordering] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx)]);
+  const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
   const L = (v: unknown) => pickLocalized(v, locale);
   if (cart.lines.length === 0)
@@ -94,7 +96,7 @@ export default async function CartPage() {
               code: cart.coupon.code, ok: cart.coupon.ok, savings: cart.coupon.savings, savingsText: tc("saves", { amount: formatMoney(cart.coupon.savings, locale) }),
               errorText: cart.coupon.error ? ((COUPON_ERRORS as readonly string[]).includes(cart.coupon.error.code) ? tc(`errors.${cart.coupon.error.code}`, { missing: formatMoney(cart.coupon.error.details?.missing ?? 0, locale), min: formatMoney(cart.coupon.error.details?.minimum ?? 0, locale) }) : cart.coupon.error.message) : null,
             }} />
-            <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok)} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}` }))} />
+            <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok)} poRequired={poRequired} locale={locale} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}${(a as { branch?: { name: string } | null }).branch ? ` · ${(a as { branch?: { name: string } | null }).branch!.name}` : ""}` }))} />
             <CartExtras canQuote={!cart.routed} />
           </CardContent>
         </Card>

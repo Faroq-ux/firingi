@@ -293,6 +293,8 @@ export function planMoves(cands: Candidate[], itemCount: number, maxSplit: numbe
 /** What a new order copies: buyer, delivery address, notes — and its link to the original, if any. */
 export type OrderBase = Pick<Order, "flow" | "buyerCompanyId" | "countryId" | "placedByUserId" | "deliveryAddress" | "requestedDeliveryDate" | "buyerNotes" | "deliveryRuleId"> & {
   parentOrderId: string | null; routedByFiringi: boolean;
+  /** Phase 27: the buyer's branch, cost centre and PO reference carry over */
+  branchId?: string | null; costCentre?: string | null; poReference?: string | null;
 };
 
 /**
@@ -328,6 +330,7 @@ export async function createAllocatedOrder(tx: Tx, original: OrderBase, vendorId
       number, flow: original.flow, buyerCompanyId: original.buyerCompanyId, sellerCompanyId: vendorId, placedByUserId: original.placedByUserId,
       countryId: original.countryId, status: "NEW", deliveryMode: mode, deliveryRuleId: ruleId, deliveryAddress: original.deliveryAddress as Prisma.InputJsonValue,
       requestedDeliveryDate: original.requestedDeliveryDate, buyerNotes: original.buyerNotes, parentOrderId: original.parentOrderId, routedByFiringi: original.routedByFiringi,
+      branchId: original.branchId ?? null, costCentre: original.costCentre ?? null, poReference: original.poReference ?? null,
       listNet: t.listNet.toFixed(2), discountTotal: t.discountTotal.toFixed(2), deliveryFeeNet: t.deliveryFeeNet.toFixed(2), netTotal: t.netTotal.toFixed(2),
       vatTotal: t.vatTotal.toFixed(2), grandTotal: t.grandTotal.toFixed(2), commissionTotal: t.commissionTotal.toFixed(2),
       vendorPayableNet: t.vendorPayableNet.toFixed(2), firingiMarginNet: t.firingiMarginNet.toFixed(2),

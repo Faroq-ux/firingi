@@ -89,7 +89,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "VENDOR_ACCOUNTANT", name: "Accountant (sales)", description: "Billing statements, invoices to FIRINGI, payments", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view", "vendor.inventory.view"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view", "vendor.reports.view", "vendor.inventory.view", "company.accounting.view", "company.accounting.manage"],
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,
@@ -97,7 +97,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "BUYER_ACCOUNTANT", name: "Accountant (purchases)", description: "Invoices and payments", appliesTo: BUYER_TYPES,
-    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.payments.make", "buyer.reports.view"],
+    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.payments.make", "buyer.reports.view", "company.accounting.view", "company.accounting.manage"],
   },
   { key: "VENDOR_DRIVER", name: "Driver", description: "Driver in the company's own fleet", appliesTo: VENDOR_TYPES, permissions: ["driver.deliveries.view", "driver.deliveries.update", "driver.pod.capture"] },
 ];

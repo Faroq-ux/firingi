@@ -87,7 +87,7 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
 
 export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; placed?: boolean }) {
   const { order: o, role, actors, allowed } = await getOrder(ctx, id);
-  const [t, tOffers, tPay, locale, payDays] = await Promise.all([getTranslations("orders"), getTranslations("offers"), getTranslations("pay"), getLocale(), paymentPolicy().then((p) => p.online.prepayCancelDays)]);
+  const [t, tOffers, tPay, tm, locale, payDays] = await Promise.all([getTranslations("orders"), getTranslations("offers"), getTranslations("pay"), getTranslations("multisite"), getLocale(), paymentPolicy().then((p) => p.online.prepayCancelDays)]);
   const decision = role === "BUYER" ? await openBuyerDecision(ctx, o.id) : null;
   const rules = decision ? await allocationRules() : null;
   const siblings = role === "VENDOR" ? [] : await checkoutSiblings(ctx, o);
@@ -221,6 +221,13 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
               <div><div className="text-muted-foreground">{t("supplier")}</div><div className="font-medium">{o.seller.tradeName ?? o.seller.legalName}</div></div>
               <div><div className="text-muted-foreground">{t("vendor.buyer")}</div><div className="font-medium">{o.buyer.tradeName ?? o.buyer.legalName}</div><div className="text-xs text-muted-foreground">{o.placedBy.name}</div></div>
               <div><div className="text-muted-foreground">{t("deliveryTo")}</div><div>{addr.label}</div><div className="text-muted-foreground">{addr.line1}{addr.line2 ? `, ${addr.line2}` : ""}, {addr.postalCode} {addr.city}</div></div>
+              {role !== "VENDOR" && (o.branch || o.costCentre || o.poReference) && (
+                <div data-testid="order-shop">
+                  {o.branch && <div><span className="text-muted-foreground">{tm("shop")}: </span><span className="font-medium">{o.branch.name}</span></div>}
+                  {o.costCentre && <div><span className="text-muted-foreground">{tm("costCentre")}: </span>{o.costCentre}</div>}
+                  {o.poReference && <div><span className="text-muted-foreground">{tm("poReference")}: </span><span className="font-mono">{o.poReference}</span></div>}
+                </div>
+              )}
               {o.requestedDeliveryDate && <div><div className="text-muted-foreground">{t("requestedDate")}</div><div>{formatDate(o.requestedDeliveryDate, locale)}</div></div>}
               {o.buyerNotes && <div><div className="text-muted-foreground">{t("notes")}</div><div className="whitespace-pre-line">{o.buyerNotes}</div></div>}
             </CardContent>

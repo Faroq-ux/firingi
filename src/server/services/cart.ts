@@ -127,7 +127,8 @@ export async function deliveryRulesFor(buyerCountryId: string, vendorCompanyId: 
 export async function cartView(ctx: Ctx) {
   requireBuyer(ctx);
   const cart = await cartRow(ctx);
-  const addresses = await prisma.address.findMany({ where: { companyId: ctx.company.id, isActive: true, kind: "DELIVERY" }, orderBy: [{ isDefault: "desc" }, { label: "asc" }], include: { city: { select: { regionId: true } } } });
+  const { orderableAddressWhere } = await import("@/server/multisite/branches");
+  const addresses = await prisma.address.findMany({ where: await orderableAddressWhere(ctx), orderBy: [{ isDefault: "desc" }, { label: "asc" }], include: { city: { select: { regionId: true } }, branch: { select: { name: true } } } });
   if (cart.routed) {
     const ro = await routedOffers(ctx, cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), cart.couponCode);
     const lines = ro.items.map((i) => {

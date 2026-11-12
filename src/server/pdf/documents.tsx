@@ -29,6 +29,8 @@ export type InvoicePdfData = {
   docType: "INVOICE" | "INVOICE_RECEIPT" | "CREDIT_NOTE";
   fullNumber: string; issuedAt: Date; dueAt: Date | null; atcud: string | null; hash: string | null; certified: boolean;
   orderNumber: string | null; originalNumber: string | null; reason?: string | null; taxRegime: string;
+  /** Phase 27: the buyer's branch, cost centre and PO reference */
+  branch?: string | null; costCentre?: string | null; poReference?: string | null;
   issuer: Party; recipient: Party;
   lines: { description: string; qty: string; unitPriceNet: string; discountNet: string; taxRate: string; lineNet: string }[];
   taxSummary: { taxRate: string; base: string; vat: string }[];
@@ -40,7 +42,7 @@ const INVOICE_LABELS = {
   PT: {
     title: { INVOICE: "Fatura", INVOICE_RECEIPT: "Fatura-Recibo", CREDIT_NOTE: "Nota de Crédito" },
     date: "Data", due: "Vencimento", seller: "Vendedor", customer: "Cliente", vat: "NIF-IVA", nif: "NIF",
-    order: "Encomenda", original: "Documento de origem", reason: "Motivo", reverseCharge: "IVA — autoliquidação",
+    order: "Encomenda", branch: "Loja / filial", costCentre: "Centro de custo", po: "Vossa referência (PO)", original: "Documento de origem", reason: "Motivo", reverseCharge: "IVA — autoliquidação",
     description: "Descrição", qty: "Qtd.", unitPrice: "Preço unit.", discount: "Desconto", totalExcl: "Total s/", summary: "Resumo de",
     notFiscal: "DOCUMENTO NÃO FISCAL — ambiente de testes, não emitido por programa certificado pela AT",
     certified: "Processado por programa certificado", notCertified: "Processado por FIRINGI (ambiente de testes, programa não certificado)",
@@ -84,6 +86,8 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
         </View>
         <View style={{ marginTop: 8 }}>
           {d.orderNumber && <Text>{L.order}: {d.orderNumber}</Text>}
+          {d.poReference && <Text>{L.po}: {d.poReference}</Text>}
+          {(d.branch || d.costCentre) && <Text>{[d.branch ? `${L.branch}: ${d.branch}` : null, d.costCentre ? `${L.costCentre}: ${d.costCentre}` : null].filter(Boolean).join("   ")}</Text>}
           {d.originalNumber && <Text>{L.original}: {d.originalNumber}</Text>}
           {d.reason && <Text>{L.reason}: {d.reason}</Text>}
           {d.taxRegime === "INTRA_EU_REVERSE_CHARGE" && <Text>{L.reverseCharge}</Text>}

@@ -164,6 +164,8 @@ model Company {
   paymentTermsDays    Int           @default(0)
   /// Orders wait for payment before the supplier sees them (buyers without credit terms).
   payBeforeShipping   Boolean       @default(false)
+  /// Phase 27: the buyer must give a purchase-order reference at checkout
+  requirePoReference  Boolean       @default(false)
   regionalManagerId   String?
   notes               String?
   approvedAt          DateTime?
@@ -175,6 +177,11 @@ model Company {
   country                  Country                     @relation(fields: [countryId], references: [id])
   regionalManager          User?                       @relation("RegionalManager", fields: [regionalManagerId], references: [id])
   memberships              Membership[]
+  branches                 Branch[]
+  budgets                  Budget[]
+  accountingEntries        AccountingEntry[]
+  recurringExpenses        RecurringExpense[]
+  features                 CompanyFeature[]
   roles                    Role[]
   statusHistory            CompanyStatusHistory[]
   addresses                Address[]
@@ -298,10 +305,12 @@ model Membership {
   updatedAt   DateTime         @updatedAt
   createdById String?
 
-  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  company Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  roles   MembershipRole[]
-  scopes  MembershipScope[]
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company           Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  roles             MembershipRole[]
+  scopes            MembershipScope[]
+  branchAssignments BranchMember[]
+  managedBranches   Branch[]          @relation("BranchManager")
 
   @@unique([userId, companyId])
   @@index([companyId])

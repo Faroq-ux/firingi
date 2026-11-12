@@ -22,6 +22,7 @@ export async function warehouseOptions(ctx: Ctx) {
 }
 
 export async function deliveryAddressOptions(ctx: Ctx) {
-  const rows = await prisma.address.findMany({ where: { companyId: ctx.company.id, kind: "DELIVERY", isActive: true }, orderBy: [{ isDefault: "desc" }, { label: "asc" }], select: { id: true, label: true, cityName: true } });
-  return rows.map((r) => ({ id: r.id, label: `${r.label} · ${r.cityName}` }));
+  const { orderableAddressWhere } = await import("@/server/multisite/branches");
+  const rows = await prisma.address.findMany({ where: await orderableAddressWhere(ctx), orderBy: [{ isDefault: "desc" }, { label: "asc" }], select: { id: true, label: true, cityName: true, branch: { select: { name: true } } } });
+  return rows.map((r) => ({ id: r.id, label: `${r.label} · ${r.cityName}${r.branch ? ` · ${r.branch.name}` : ""}` }));
 }

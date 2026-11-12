@@ -87,6 +87,7 @@ export const EVENTS: EventDef[] = [
   E("recurring.reminder", "orders", null, ["EMAIL", "PUSH"], ["name", "date", "problems"]),
   E("recurring.placed", "orders", null, ["PUSH"], ["name", "orders"]),
   E("recurring.failed", "orders", null, ["EMAIL", "PUSH"], ["name", "reason"]),
+  E("budget.threshold", "orders", ["buyer.branches.manage"], ["EMAIL", "PUSH"], ["name", "pct", "spent", "amount"]),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

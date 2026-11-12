@@ -1,4 +1,5 @@
 "use client";
+import { CheckoutBudgets } from "@/components/multisite/controls";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -32,11 +33,13 @@ export function ClearCartButton() {
   return <Button variant="ghost" size="sm" disabled={pending} onClick={() => start(async () => { await clearCartAction({}); router.refresh(); })}>{t("clear")}</Button>;
 }
 
-export function CheckoutForm({ addresses, disabled }: { addresses: { id: string; label: string }[]; disabled: boolean }) {
+export function CheckoutForm({ addresses, disabled, poRequired = false, locale = "pt-PT" }: { addresses: { id: string; label: string }[]; disabled: boolean; poRequired?: boolean; locale?: string }) {
   const t = useTranslations("orders");
+  const tm = useTranslations("multisite");
   const router = useRouter();
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [addressId, setAddressId] = useState(addresses[0]?.id ?? "");
   if (addresses.length === 0) return <p className="text-sm text-warning">{t("noDeliveryAddress")}</p>;
   return (
     <form
@@ -45,14 +48,16 @@ export function CheckoutForm({ addresses, disabled }: { addresses: { id: string;
         e.preventDefault();
         const fd = new FormData(e.currentTarget);
         start(async () => {
-          const r = await placeOrderAction({ deliveryAddressId: String(fd.get("address")), notes: String(fd.get("notes") || "") || null, requestedDeliveryDate: String(fd.get("date") || "") || null });
+          const r = await placeOrderAction({ deliveryAddressId: String(fd.get("address")), notes: String(fd.get("notes") || "") || null, requestedDeliveryDate: String(fd.get("date") || "") || null, poReference: String(fd.get("po") || "") || null });
           if (r.ok) router.push(r.data.approval ? `/buy/orders/approvals/${r.data.approval.id}?sent=1` : `/buy/orders/${r.data.id}?placed=1`);
           else setError(r.error);
         });
       }}
     >
       <div className="space-y-1"><Label htmlFor="address">{t("deliveryAddress")}</Label>
-        <Select id="address" name="address">{addresses.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}</Select></div>
+        <Select id="address" name="address" value={addressId} onChange={(e) => setAddressId(e.target.value)}>{addresses.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}</Select></div>
+      <CheckoutBudgets addressId={addressId} locale={locale} />
+      <div className="space-y-1"><Label htmlFor="po">{tm("poReference")}{!poRequired && <span className="text-muted-foreground"> ({tm("optional")})</span>}</Label><Input id="po" name="po" maxLength={60} required={poRequired} placeholder="PO-1234" /></div>
       <div className="space-y-1"><Label htmlFor="date">{t("requestedDate")}</Label><Input id="date" name="date" type="date" /></div>
       <div className="space-y-1"><Label htmlFor="notes">{t("notes")}</Label><textarea id="notes" name="notes" maxLength={500} className="min-h-16 w-full rounded-md border bg-card p-2 text-sm" /></div>
       {error && <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive">{error}</p>}

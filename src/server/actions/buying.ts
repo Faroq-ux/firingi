@@ -22,8 +22,8 @@ export const requestQuoteAction = defineAction({
   handler: async (ctx, i) => requestQuotes(ctx, { note: i.note, neededBy: date(i.neededBy) }),
 });
 export const acceptQuoteAction = defineAction({
-  permission: BUY, schema: z.object({ id, deliveryAddressId: id, notes: z.string().max(500).nullable().optional(), requestedDeliveryDate: isoDate.nullable().optional() }),
-  handler: async (ctx, i) => acceptQuote(ctx, i.id, { deliveryAddressId: i.deliveryAddressId, notes: i.notes, requestedDeliveryDate: date(i.requestedDeliveryDate) }),
+  permission: BUY, schema: z.object({ id, deliveryAddressId: id, notes: z.string().max(500).nullable().optional(), requestedDeliveryDate: isoDate.nullable().optional(), poReference: z.string().max(60).nullable().optional() }),
+  handler: async (ctx, i) => acceptQuote(ctx, i.id, { deliveryAddressId: i.deliveryAddressId, notes: i.notes, requestedDeliveryDate: date(i.requestedDeliveryDate), poReference: i.poReference }),
 });
 export const rejectQuoteAction = defineAction({
   permission: [...SEE], schema: z.object({ id, reason: z.string().max(500).nullable().optional() }),

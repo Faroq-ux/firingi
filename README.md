@@ -597,6 +597,57 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Shops, budgets & optional accounting (Phase 27)
+
+Customers and wholesalers › **My Shops** (Shops, Budgets, Shop Reports) and, when FIRINGI switched it
+on, **Accounting** (Dashboard, Daily Sales, Expenses, Profit & Loss) — also in the Sell portal for
+suppliers; FIRINGI › Customers › **Customer Shops** and Settings › **Business Features** (English).
+
+- **Shops under one company** — a customer adds its shops / restaurants / sites to its one company
+  account (one tax ID, one team, FIRINGI's invoices to the company). Each shop has its own delivery
+  address (created with it, more can be added or moved in), a **category** (restaurant, kebab / pizza,
+  café / bar, mini-market… — the business types) so FIRINGI can serve each shop better, a short code,
+  a **cost centre**, a phone and a manager. A shop that never ordered can be deleted; otherwise it is
+  deactivated (its addresses can't be ordered to; its history stays). Suppliers keep using
+  Company › Warehouse & Pickup Addresses for their warehouses (Inventory has a shortcut).
+- **Staff per shop** — team members assigned to shops only see, order to, approve and get notified
+  about their own shops (orders, invoices, approvals, budget alerts, branch reports); members with no
+  assignment and people with the new `buyer.branches.manage` see everything. Notifications about an
+  order / invoice / approval / budget are routed by the shop of what they are about.
+- **Orders carry the shop** — the shop (from the delivery address), its cost centre and the buyer's
+  **PO reference** are stamped on every order (also orders FIRINGI routes or moves to another
+  supplier), shown on the order to the buyer and FIRINGI, printed on FIRINGI's invoice PDF and sent
+  to Moloni in the document notes. The company can make the PO reference **required** (people placing
+  in the shop or accepting a quote; approvals and recurring orders carry theirs).
+- **Budgets** — weekly (Mon–Sun) or monthly limits incl. VAT per shop or for the whole company,
+  optionally only for some categories. Over the budget, the company chooses: **needs a manager's
+  approval** (goes into the Phase 26 approvals; people who may approve go through), **refused**, or
+  **placed and the managers told**. The cart shows the shop's budgets live for the chosen address.
+  Alerts once per period at 80 % and 100 % (`budget.threshold`, to people who manage shops and the
+  shop's manager). API orders and purchase orders aren't checked; FIRINGI-routed carts count but
+  aren't held.
+- **Shop reports** — spend per shop and share, orders, average order, budget use, waiting approvals,
+  top products; **the price each shop paid** for the same product (spread %); FIRINGI's invoices and
+  credit notes of a month per shop and cost centre, with a CSV of every document (FIRINGI still
+  issues one invoice per delivered order — this is the consolidated monthly view).
+- **Accounting (optional)** — off until FIRINGI switches it on per company (Business Features; no row
+  = off; switching off hides it and keeps the data). For customers, wholesalers and distributors;
+  permissions `company.accounting.view` / `.manage` (company administrators and the accountant roles).
+  - **Daily close**: cash, card, delivery apps and other sales of a day per shop (saving the day again
+    replaces it).
+  - **Expenses**: rent, electricity, water, gas, phone, salaries, social security, insurance, other
+    suppliers, maintenance, marketing, bank fees, taxes, accountant, transport, other — with an
+    optional receipt photo / PDF (private download). **Fixed monthly expenses** are added on their day
+    by the `buying` job (and straight away when saved); a deleted one isn't added again.
+  - **Profit & loss** for a day, a week or a month (and a 6-month trend): sales (+ for suppliers
+    *sales through FIRINGI* from FIRINGI's billing statements) − purchases (**purchases on FIRINGI**
+    from FIRINGI's invoices less credit notes, + other suppliers) = gross profit − expenses = net
+    profit and margin; per shop or company level; **with or without VAT** (entries with a VAT rate are
+    split, FIRINGI's documents exactly) and a VAT estimate (on sales − on purchases).
+  - It is the company's own bookkeeping: FIRINGI staff never see the figures (only whether it is on).
+- Permissions: `buyer.branches.manage`, `company.accounting.view`, `company.accounting.manage`.
+  Tests: `tests/integration/multisite.test.ts`, `tests/e2e/shops.mjs`.
+
 ## Quotes, recurring orders, buyer approvals & order lists (Phase 26)
 
 Customers and wholesalers › Orders › **Quotes**, **Recurring Orders**, **Order Lists**, **Approvals**;

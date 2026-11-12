@@ -31,14 +31,16 @@ export async function listSalesInvoices(ctx: Ctx, f: { as: "BUYER" | "ADMIN"; do
   let where: Prisma.InvoiceWhereInput;
   if (f.as === "BUYER") {
     if (!can(ctx, ["buyer.invoices.view", "buyer.payments.view"])) throw new ForbiddenError();
-    where = { recipientCompanyId: ctx.company.id };
+    const { branchScope } = await import("@/server/multisite/branches");
+    const s = await branchScope(ctx);
+    where = { recipientCompanyId: ctx.company.id, ...(s ? { order: { branchId: { in: s } } } : {}) };
   } else {
     if (!isAdmin(ctx, ["admin.invoices.view", "admin.finance.view"])) throw new ForbiddenError();
     where = { recipient: { ...scopeWhere(ctx), ...(f.buyerType ? { type: f.buyerType } : {}) } };
   }
   const rows = await prisma.invoice.findMany({
     where: { ...where, status: { not: "DRAFT" }, ...(f.docType ? { docType: f.docType } : {}) },
-    include: { recipient: { select: { legalName: true } }, order: { select: { id: true, number: true } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } } },
+    include: { recipient: { select: { legalName: true } }, order: { select: { id: true, number: true, costCentre: true, poReference: true, branch: { select: { id: true, name: true } } } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } } },
     orderBy: { issuedAt: "desc" },
     take: 300,
   });
@@ -55,10 +57,15 @@ export async function listSalesInvoices(ctx: Ctx, f: { as: "BUYER" | "ADMIN"; do
 export async function invoiceForViewer(ctx: Ctx, id: string) {
   const inv = await prisma.invoice.findUnique({
     where: { id },
-    include: { lines: { orderBy: { position: "asc" } }, taxSummary: true, order: { select: { number: true } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } }, recipient: { select: { type: true } } },
+    include: { lines: { orderBy: { position: "asc" } }, taxSummary: true, order: { select: { number: true, branchId: true, costCentre: true, poReference: true, branch: { select: { name: true } } } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } }, recipient: { select: { type: true } } },
   });
   if (!inv || inv.status === "DRAFT") throw new NotFoundError("Invoice");
-  const mine = inv.recipientCompanyId === ctx.company.id && can(ctx, ["buyer.invoices.view", "buyer.payments.view"]);
+  let mine = inv.recipientCompanyId === ctx.company.id && can(ctx, ["buyer.invoices.view", "buyer.payments.view"]);
+  if (mine) {
+    const { branchScope } = await import("@/server/multisite/branches");
+    const s = await branchScope(ctx);
+    if (s && !(inv.order?.branchId && s.includes(inv.order.branchId))) mine = false;
+  }
   const staff = isAdmin(ctx, ["admin.invoices.view", "admin.finance.view"]) && (await prisma.company.count({ where: { id: inv.recipientCompanyId, ...scopeWhere(ctx) } })) > 0;
   if (!mine && !staff) throw new NotFoundError("Invoice");
   return inv;

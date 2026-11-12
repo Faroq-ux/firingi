@@ -100,7 +100,34 @@ async function uiLocaleFor(userLocale: string | null, countryId: string | null):
   return "en";
 }
 
-async function recipients(def: EventDef, targets: Target[]): Promise<Recipient[]> {
+/**
+ * Phase 27: what an Order / Invoice / approval / budget notification is about decides which of the
+ * buyer's branch staff get it — staff assigned to branches only hear about their own branches.
+ */
+export async function branchOfRef(ref?: { type: string; id: string } | null): Promise<{ companyId: string; branchId: string | null } | null> {
+  if (!ref) return null;
+  if (ref.type === "Order") {
+    const o = await prisma.order.findUnique({ where: { id: ref.id }, select: { buyerCompanyId: true, branchId: true } });
+    return o ? { companyId: o.buyerCompanyId, branchId: o.branchId } : null;
+  }
+  if (ref.type === "Invoice") {
+    const i = await prisma.invoice.findUnique({ where: { id: ref.id }, select: { recipientCompanyId: true, order: { select: { branchId: true } } } });
+    return i ? { companyId: i.recipientCompanyId, branchId: i.order?.branchId ?? null } : null;
+  }
+  if (ref.type === "BuyerApproval") {
+    const a = await prisma.buyerApproval.findUnique({ where: { id: ref.id }, select: { companyId: true, deliveryAddressId: true } });
+    if (!a) return null;
+    const addr = await prisma.address.findUnique({ where: { id: a.deliveryAddressId }, select: { branchId: true } });
+    return { companyId: a.companyId, branchId: addr?.branchId ?? null };
+  }
+  if (ref.type === "Budget") {
+    const b = await prisma.budget.findUnique({ where: { id: ref.id }, select: { companyId: true, branchId: true } });
+    return b ? { companyId: b.companyId, branchId: b.branchId } : null;
+  }
+  return null;
+}
+
+async function recipients(def: EventDef, targets: Target[], branchRef: { companyId: string; branchId: string | null } | null = null): Promise<Recipient[]> {
   const out = new Map<string, Recipient>();
   for (const t of targets) {
     const link = t.link ? (t.link.startsWith("http") ? t.link : `${appUrl()}${t.link}`) : null;
@@ -116,20 +143,23 @@ async function recipients(def: EventDef, targets: Target[]): Promise<Recipient[]
       include: {
         memberships: {
           where: { status: "ACTIVE", user: { status: "ACTIVE" } },
-          include: { user: { include: { driver: { select: { status: true, ownerCompanyId: true } } } }, roles: { include: { role: { include: { permissions: { select: { permissionCode: true } } } } } } },
+          include: { user: { include: { driver: { select: { status: true, ownerCompanyId: true } } } }, roles: { include: { role: { include: { permissions: { select: { permissionCode: true } } } } } }, branchAssignments: { select: { branchId: true } } },
         },
       },
     });
     if (!company) continue;
     for (const m of company.memberships) {
       if (out.has(m.userId)) continue;
-      if (def.perms) {
+      const branchScoped = branchRef?.companyId === company.id && m.branchAssignments.length > 0;
+      if (def.perms || branchScoped) {
         const perms = computeEffectivePermissions({
           companyType: company.type, companyStatus: company.status, membershipStatus: m.status, userStatus: m.user.status, isOwner: m.isOwner,
           driverStatus: m.user.driver && m.user.driver.ownerCompanyId === company.id ? m.user.driver.status : null,
           roles: m.roles.map((r) => ({ key: r.role.key, isSystem: r.role.isSystem, permissionCodes: r.role.permissions.map((p) => p.permissionCode) })),
         });
-        if (!m.isOwner && !def.perms.some((p) => perms.has(p))) continue;
+        if (def.perms && !m.isOwner && !def.perms.some((p) => perms.has(p))) continue;
+        // branch staff only hear about their own branches (people who manage branches hear about all)
+        if (branchScoped && !perms.has("buyer.branches.manage") && !m.branchAssignments.some((b) => b.branchId === branchRef!.branchId)) continue;
       }
       const u = m.user;
       out.set(u.id, { userId: u.id, email: u.email, phone: normalisePhone(u.phone), smsConsent: !!u.smsConsentAt, waConsent: !!u.whatsappConsentAt, locale: await uiLocaleFor(u.locale, company.countryId), companyId: company.id, link });
@@ -178,7 +208,7 @@ export async function notify(eventKey: string, targets: Target[], vars: Vars = {
   const result: NotifyResult = { recipients: 0, messages: [] };
   try {
     const def = eventDef(eventKey);
-    const [enabled, overrides, people] = await Promise.all([enabledChannels(), eventChannelOverrides(), recipients(def, targets)]);
+    const [enabled, overrides, people] = await Promise.all([enabledChannels(), eventChannelOverrides(), branchOfRef(opts.ref).then((b) => recipients(def, targets, b))]);
     result.recipients = people.length;
     const eventChannels = overrides[eventKey] ?? def.channels;
     const prefs = await prisma.notificationPreference.findMany({ where: { userId: { in: people.map((p) => p.userId) }, category: def.category } });

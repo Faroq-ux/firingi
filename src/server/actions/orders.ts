@@ -54,7 +54,7 @@ export const removeCouponAction = defineAction({
 });
 export const placeOrderAction = defineAction({
   permission: "buyer.orders.place",
-  schema: z.object({ deliveryAddressId: z.string().min(1, "Choose a delivery address"), notes: z.string().max(500).optional().nullable(), requestedDeliveryDate: z.string().optional().nullable() }),
+  schema: z.object({ deliveryAddressId: z.string().min(1, "Choose a delivery address"), notes: z.string().max(500).optional().nullable(), requestedDeliveryDate: z.string().optional().nullable(), poReference: z.string().max(60).optional().nullable() }),
   handler: async (ctx, i) => done(await orders.placeOrder(ctx, { ...i, requestedDeliveryDate: i.requestedDeliveryDate ? new Date(i.requestedDeliveryDate) : null })),
 });
 export const changeOrderStatusAction = defineAction({

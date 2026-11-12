@@ -85,6 +85,8 @@ export type PlaceOrderInput = {
   deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; items?: { offerId: string; qty: number }[];
   /** Phase 26: coupon for an `items` checkout (approved order), agreed prices (accepted quote), skip the buyer's approval rules (already approved / recurring). */
   couponCode?: string | null; fixedPrices?: Map<string, Decimal.Value>; approved?: boolean; source?: { type: "QUOTE" | "RECURRING" | "APPROVAL"; id: string };
+  /** Phase 27: the buyer's purchase-order reference (required when the company says so). */
+  poReference?: string | null;
 };
 
 export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<import("@/server/buying/approvals").PlacedOrPending> {
@@ -95,13 +97,23 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     const max = (await platformSettings()).maxRequestedDays;
     if (days < -1 || days > max) throw new ValidationError(`Choose a delivery date between today and ${max} days from now.`);
   }
+  // Phase 27: a PO reference when the company requires one (people placing in the shop / accepting a quote)
+  const poReference = input.poReference?.trim().slice(0, 60) || null;
+  if (!poReference && !input.approved && (await prisma.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { requirePoReference: true } })).requirePoReference)
+    throw new AppError("PO_REQUIRED", "Your company asks for a purchase-order (PO) reference on every order.", 422);
+  // Phase 27: branch staff order only to their own branches' addresses
+  const { canOrderTo, branchStamp } = await import("@/server/multisite/branches");
+  if (!(await canOrderTo(ctx, input.deliveryAddressId))) throw new ValidationError("Choose one of your delivery addresses.");
   const cart = input.items
     ? { id: "", routed: false, couponCode: (input.couponCode ?? null) as string | null, items: input.items.map((i) => ({ ...i, id: "" })) }
     : await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
   if (cart?.routed && cart.items.length) {
     // "Order from FIRINGI": FIRINGI picks the supplier(s).
     const { placeRoutedOrder } = await import("@/server/allocation/routed");
-    return placeRoutedOrder(ctx, cart, input);
+    const placed = await placeRoutedOrder(ctx, cart, { ...input, poReference });
+    const { budgetAlertsAfterOrder } = await import("@/server/multisite/budgets");
+    await budgetAlertsAfterOrder(ctx.company.id, (await branchStamp(prisma as unknown as Tx, input.deliveryAddressId)).branchId).catch(() => null);
+    return placed;
   }
   if (!cart || cart.items.length === 0) throw new ValidationError("Your cart is empty.");
 
@@ -140,11 +152,20 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
         : `${who}Minimum order for delivery is ${d.minimum.toFixed(2)} € (excl. VAT). Add ${d.missing.toFixed(2)} € more.`, 422);
     }
   }
+  // Phase 27: the branch's budgets. Over a "block" budget → refused; over an "approval" budget → a
+  // manager decides (unless the person may approve). API orders and purchase orders aren't checked.
+  const stamp = await branchStamp(prisma as unknown as Tx, address.id);
+  const { evaluateBudgets, checkoutLines, budgetAlertsAfterOrder } = await import("@/server/multisite/budgets");
+  const budgets = !input.approved || input.source ? await evaluateBudgets(ctx.company.id, stamp.branchId, checkoutLines(pc)) : [];
+  const blocked = budgets.find((b) => b.exceeded && b.action === "BLOCK");
+  if (blocked)
+    throw new AppError("BUDGET_EXCEEDED", `This order would go over the budget "${blocked.name}" (${blocked.spent} € of ${blocked.amount} € used, this order ${blocked.adding} €). Ask a manager to raise it.`, 422, { budget: blocked.name, spent: blocked.spent, amount: blocked.amount, adding: blocked.adding });
   // The buyer's own approval rules (Phase 26): a matching order waits for a manager instead.
   if (!input.approved) {
-    const { approvalNeeded, requestApproval } = await import("@/server/buying/approvals");
+    const { approvalNeeded, requestApproval, APPROVE } = await import("@/server/buying/approvals");
     const reasons = await approvalNeeded(ctx, pc);
-    if (reasons.length) return requestApproval(ctx, { input, cart, gross: pc.grandTotal, reasons });
+    if (!can(ctx, APPROVE)) for (const b of budgets.filter((x) => x.exceeded && x.action === "APPROVAL")) reasons.push(`Budget: ${b.name} (${b.projected} € / ${b.amount} €)`);
+    if (reasons.length) return requestApproval(ctx, { input: { ...input, poReference }, cart, gross: pc.grandTotal, reasons });
   }
   const checkoutId = randomUUID();
   // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.
@@ -174,6 +195,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
           status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId, checkoutId: pc.parts.length > 1 ? checkoutId : null,
           couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: part.waived.toFixed(2), deliveryPromotionId: part.deliveryPromotionId,
           deliveryAddress, requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null,
+          branchId: stamp.branchId, costCentre: stamp.costCentre, poReference,
           listNet: totals.listNet.toFixed(2), discountTotal: totals.discountTotal.toFixed(2), deliveryFeeNet: totals.deliveryFeeNet.toFixed(2),
           netTotal: totals.netTotal.toFixed(2), vatTotal: totals.vatTotal.toFixed(2), grandTotal: totals.grandTotal.toFixed(2),
           commissionTotal: totals.commissionTotal.toFixed(2), vendorPayableNet: totals.vendorPayableNet.toFixed(2), firingiMarginNet: totals.firingiMarginNet.toFixed(2),
@@ -234,6 +256,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   });
   const buyerName = ctx.company.tradeName ?? ctx.company.legalName;
   await afterCheckout(risk, created, ctx.company.id, buyerName);
+  await budgetAlertsAfterOrder(ctx.company.id, stamp.branchId).catch(() => null);
   if (payFirstOrders)
     for (const o of created) {
       const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });
@@ -252,8 +275,14 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
 export type OrderRole = "BUYER" | "VENDOR" | "ADMIN";
 
 /** Which side the caller is on for this order (or null = may not see it). */
-export async function roleFor(ctx: Ctx, order: { buyerCompanyId: string; sellerCompanyId: string; status?: OrderStatus }): Promise<OrderRole | null> {
-  if (ctx.company.id === order.buyerCompanyId && can(ctx, ["buyer.orders.view", "buyer.orders.place"])) return "BUYER";
+export async function roleFor(ctx: Ctx, order: { buyerCompanyId: string; sellerCompanyId: string; status?: OrderStatus; branchId?: string | null }): Promise<OrderRole | null> {
+  if (ctx.company.id === order.buyerCompanyId && can(ctx, ["buyer.orders.view", "buyer.orders.place"])) {
+    // Phase 27: branch staff see their own branches' orders only
+    const { branchScope } = await import("@/server/multisite/branches");
+    const s = await branchScope(ctx);
+    if (s && (order.branchId === undefined || !order.branchId || !s.includes(order.branchId))) return null;
+    return "BUYER";
+  }
   // A held order isn't the supplier's yet: FIRINGI checks it first.
   if (ctx.company.id === order.sellerCompanyId && order.status !== "ON_HOLD" && can(ctx, ["vendor.orders.view", "vendor.orders.manage"])) return "VENDOR";
   if (ctx.company.type === "ADMIN" && can(ctx, ["admin.orders.view", "admin.orders.manage"])) {
@@ -270,6 +299,7 @@ export async function getOrder(ctx: Ctx, id: string) {
       buyer: { select: { id: true, legalName: true, tradeName: true, taxId: true, vatNumber: true, phone: true, email: true } },
       seller: { select: { id: true, legalName: true, tradeName: true, type: true, phone: true } },
       placedBy: { select: { name: true, email: true } },
+      branch: { select: { name: true } },
       sourceAddress: true,
       lines: { orderBy: { id: "asc" } },
       statusHistory: { orderBy: { at: "asc" } },
@@ -306,7 +336,8 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
   let where: Prisma.OrderWhereInput;
   if (as === "BUYER") {
     if (!can(ctx, ["buyer.orders.view", "buyer.orders.place"])) throw new ForbiddenError();
-    where = { buyerCompanyId: ctx.company.id };
+    const { orderScopeWhere } = await import("@/server/multisite/branches");
+    where = { buyerCompanyId: ctx.company.id, ...(await orderScopeWhere(ctx)) };
   } else if (as === "VENDOR") {
     if (!can(ctx, ["vendor.orders.view", "vendor.orders.manage"])) throw new ForbiddenError();
     where = { sellerCompanyId: ctx.company.id, status: { not: "ON_HOLD" } };
