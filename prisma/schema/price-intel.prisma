@@ -1,0 +1,102 @@
+// Phase 29 — price intelligence: every price change kept (written by a DB trigger on PriceListItem,
+// so seed, imports, API and the UI are all covered), big supplier increases held for FIRINGI's
+// approval and announced to customers before they apply, and price alerts (jumps, prices far from
+// the market). Comparison, margin heat-map, suggestions and supplier insights are computed on read.
+
+enum PriceChangeStatus {
+  PENDING // waiting for FIRINGI
+  APPROVED // approved, applies on effectiveAt (customers told)
+  REJECTED
+  CANCELLED // withdrawn by the supplier, or replaced by a newer request
+  APPLIED
+}
+
+enum PriceAlertKind {
+  JUMP // price rose a lot within a few days
+  ABOVE_MARKET // far above the market median for the same product
+  BELOW_MARKET // far below — possibly a typo
+}
+
+enum PriceAlertStatus {
+  OPEN
+  ACKNOWLEDGED
+  DISMISSED
+  RESOLVED // the condition went away
+}
+
+/// Append-only log of price list item changes (DB trigger). No foreign keys: history outlives offers.
+model PriceHistory {
+  id          String         @id @default(cuid())
+  offerId     String
+  priceListId String
+  scope       PriceListScope
+  minQty      Int
+  /// null = the price was created
+  oldPrice    Decimal?       @db.Decimal(18, 4)
+  /// null = the price was removed
+  newPrice    Decimal?       @db.Decimal(18, 4)
+  changePct   Decimal?       @db.Decimal(9, 2)
+  changedAt   DateTime       @default(now())
+
+  @@index([offerId, changedAt])
+  @@index([changedAt])
+}
+
+/// A supplier's price increase above FIRINGI's threshold — held until FIRINGI approves it.
+model PriceChangeRequest {
+  id              String            @id @default(cuid())
+  vendorCompanyId String
+  offerId         String
+  priceListId     String
+  minQty          Int
+  oldPrice        Decimal           @db.Decimal(18, 4)
+  newPrice        Decimal           @db.Decimal(18, 4)
+  changePct       Decimal           @db.Decimal(9, 2)
+  reason          String?
+  status          PriceChangeStatus @default(PENDING)
+  /// when the new price applies (set on approval: at least the notice days later)
+  effectiveAt     DateTime?
+  decisionNote    String?
+  decidedById     String?
+  decidedAt       DateTime?
+  appliedAt       DateTime?
+  /// customers told in advance (count)
+  noticeSent      Int               @default(0)
+  createdById     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  vendor    Company     @relation("PriceChangeVendor", fields: [vendorCompanyId], references: [id], onDelete: Cascade)
+  offer     VendorOffer @relation("PriceChangeOffer", fields: [offerId], references: [id], onDelete: Cascade)
+  priceList PriceList   @relation("PriceChangeList", fields: [priceListId], references: [id], onDelete: Cascade)
+
+  @@index([status, effectiveAt])
+  @@index([vendorCompanyId, status])
+  @@index([offerId, status])
+}
+
+/// Something about a price FIRINGI should look at. At most one open / acknowledged alert per offer and kind.
+model PriceAlert {
+  id              String           @id @default(cuid())
+  kind            PriceAlertKind
+  status          PriceAlertStatus @default(OPEN)
+  offerId         String
+  vendorCompanyId String
+  /// per-unit price when detected
+  unitPrice       Decimal          @db.Decimal(18, 4)
+  /// market median per unit (ABOVE / BELOW) or the price before the jump (JUMP)
+  reference       Decimal          @db.Decimal(18, 4)
+  deviationPct    Decimal          @db.Decimal(9, 2)
+  firstSeenAt     DateTime         @default(now())
+  lastSeenAt      DateTime         @default(now())
+  resolvedAt      DateTime?
+  handledById     String?
+  handledAt       DateTime?
+  note            String?
+
+  offer  VendorOffer @relation("PriceAlertOffer", fields: [offerId], references: [id], onDelete: Cascade)
+  vendor Company     @relation("PriceAlertVendor", fields: [vendorCompanyId], references: [id], onDelete: Cascade)
+
+  @@index([status, kind])
+  @@index([offerId, kind])
+}

@@ -166,7 +166,11 @@ describe("catalogue import", () => {
     await expect(applyImport(lx, run.id)).rejects.toMatchObject({ code: "BIG_CHANGES" });
     expect(await basePrice(arroz.id)).toBe(restore!.arroz);
     await applyImport(lx, run.id, { confirmBig: true });
-    expect(await basePrice(arroz.id)).toBeCloseTo(restore!.arroz * 3, 2);
+    // Phase 29: an increase above FIRINGI's threshold isn't applied by the import either — it waits for approval
+    expect(await basePrice(arroz.id)).toBe(restore!.arroz);
+    const held = await prisma.priceChangeRequest.findFirstOrThrow({ where: { offerId: arroz.id, status: "PENDING" } });
+    expect(Number(held.newPrice)).toBeCloseTo(restore!.arroz * 3, 2);
+    await prisma.priceChangeRequest.delete({ where: { id: held.id } });
   });
 
   it("needs a column to match on and one to update; customers can't import", async () => {

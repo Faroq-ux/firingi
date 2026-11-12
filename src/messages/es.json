@@ -1284,6 +1284,30 @@
     "compliance_recheck": {
       "title": "{count} certificados por volver a comprobar",
       "body": "Compruébelos con el emisor y márquelos como comprobados en Cumplimiento de proveedores."
+    },
+    "price_change_requested": {
+      "title": "Subida de precio por aprobar: {product}",
+      "body": "{vendor} quiere {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nuevo precio aprobado: {product}",
+      "body": "FIRINGI ha aprobado {new} €. Se aplica el {date}; se ha avisado a sus clientes."
+    },
+    "price_change_rejected": {
+      "title": "Subida de precio no aprobada: {product}",
+      "body": "Motivo de FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Revise su precio: {product}",
+      "body": "Su precio está un {pct} % lejos de la mediana del mercado para este producto. {message}"
+    },
+    "price_increase_notice": {
+      "title": "El precio va a subir: {product}",
+      "body": "{supplier}: {old} € → {new} € desde el {date}. Hasta entonces paga el precio actual."
+    },
+    "price_alerts": {
+      "title": "{count} nuevas alertas de precio",
+      "body": "Subidas de precio o precios lejos del mercado — vea Inteligencia de precios."
     }
   },
   "notifications": {
@@ -3218,6 +3242,66 @@
       "LIABILITY_INSURANCE": "Póliza de seguro que cubre la responsabilidad civil de producto.",
       "TAX_CLEARANCE": "Certificado de que no tiene deudas tributarias.",
       "SOCIAL_SECURITY_CLEARANCE": "Certificado de que no tiene deudas con la Seguridad Social."
+    }
+  },
+  "priceIntel": {
+    "held": "Esta subida es mayor de lo que FIRINGI permite sin aprobación. Se ha enviado a FIRINGI; los clientes mantienen el precio actual hasta que se apruebe y llegue la fecha. Síguela en Productos › Análisis de precios.",
+    "heldShort": "Enviado a FIRINGI para aprobación",
+    "title": "Análisis de precios",
+    "intro": "Cómo se comparan sus precios base con otros proveedores de los mismos productos, cómo han cambiado y sus cambios de precio pendientes de FIRINGI.",
+    "ruleInfo": "Las subidas de más del {pct} % necesitan la aprobación de FIRINGI; una vez aprobadas, se avisa a los clientes que compran el producto y el nuevo precio se aplica {days} días después.",
+    "anonHint": "Las cifras de mercado proceden de al menos {n} proveedores y nunca muestran quiénes son ni sus precios exactos.",
+    "compared": "{n} de {total} productos comparados",
+    "marketTitle": "Sus precios en el mercado",
+    "marketHint": "Precio base por envase; mediana del mercado para el mismo producto y envase. Los más caros primero.",
+    "noOffers": "No tiene productos activos con precio base.",
+    "colProduct": "Producto",
+    "colPrice": "Su precio",
+    "colMedian": "Mediana del mercado",
+    "colPosition": "Posición",
+    "colVsMedian": "vs. mediana",
+    "colTrend": "Su precio, 6 meses",
+    "colSuggestion": "Sugerencia",
+    "notCompared": "No comparado",
+    "notEnough": "Menos de {n} proveedores — no comparado",
+    "suggestLower": "Entre los más caros. A {price} o menos volvería al centro del mercado.",
+    "suggestBest": "Entre los más baratos — los clientes ven un precio fuerte.",
+    "requestsTitle": "Cambios de precio pendientes de FIRINGI",
+    "requestsHint": "Subidas grandes y su estado. Puede retirar una hasta que se aplique.",
+    "requestsEmpty": "No hay cambios de precio pendientes.",
+    "colChange": "Cambio",
+    "colStatus": "Estado",
+    "colApplies": "Se aplica el",
+    "colNote": "Nota de FIRINGI",
+    "basePrices": "Precios base",
+    "fromQty": "desde {qty}",
+    "cancel": "Retirar",
+    "buyerTitle": "Cambios de precio",
+    "buyerIntro": "Cambios de precio de los productos que compra, tiene en sus listas o pide con regularidad. Las subidas mayores de los proveedores se anuncian al menos {days} días antes de aplicarse.",
+    "upcomingTitle": "Próximos",
+    "upcomingHint": "Subidas aprobadas que aún no se aplican — hasta la fecha paga el precio actual.",
+    "upcomingEmpty": "No hay subidas de precio previstas para sus productos.",
+    "upcomingTip": "Consejo: pida ahora al precio actual o mire otros proveedores.",
+    "toLists": "Sus listas de pedido",
+    "recentTitle": "Cambiados en los últimos 30 días",
+    "recentEmpty": "Sin cambios de precio en los últimos 30 días.",
+    "recentUp": "Subieron (30 días)",
+    "recentDown": "Bajaron (30 días)",
+    "colSupplier": "Proveedor",
+    "colFrom": "Desde",
+    "colWhen": "Fecha",
+    "positions": {
+      "CHEAPEST": "Entre los más baratos",
+      "BELOW_MEDIAN": "Por debajo de la mediana",
+      "ABOVE_MEDIAN": "Por encima de la mediana",
+      "MOST_EXPENSIVE": "Entre los más caros"
+    },
+    "statuses": {
+      "PENDING": "Pendiente de FIRINGI",
+      "APPROVED": "Aprobado",
+      "APPLIED": "Aplicado",
+      "REJECTED": "No aprobado",
+      "CANCELLED": "Retirado"
     }
   }
 }

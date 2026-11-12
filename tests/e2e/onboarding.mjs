@@ -84,7 +84,10 @@ await applicant.fill("#doc-issued", new Date(Date.now() - 2 * 86400000).toISOStr
 await applicant.setInputFiles("#doc-file", pdf);
 await applicant.locator("form:has(#doc-file) button[type=submit]").click();
 await settle(applicant);
-check("POS invoice uploaded", (await applicant.locator('a[href^="/api/files/"]').count()) === 1);
+const uploaded = async () => (await applicant.locator('a[href^="/api/files/"]').count()) === 1;
+for (let i = 0; i < 40 && !(await uploaded()); i++) await applicant.waitForTimeout(250);
+check("POS invoice uploaded", await uploaded());
+for (let i = 0; i < 40 && (await applicant.locator('[data-testid="recommended"]').count()) > 0; i++) await applicant.waitForTimeout(250);
 check("nothing else is asked for after the POS invoice", (await applicant.locator('[data-testid="recommended"]').count()) === 0);
 await shot(applicant, "p2-03-application-ready");
 await applicant.getByRole("button", { name: /Enviar candidatura|Submit application/ }).click();

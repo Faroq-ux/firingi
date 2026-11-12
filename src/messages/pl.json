@@ -826,7 +826,9 @@
     "Daily Sales": "Sprzedaż Dzienna",
     "Expenses": "Wydatki",
     "Profit & Loss": "Zysk i Strata",
-    "Certificates & Compliance": "Certyfikaty i zgodność"
+    "Certificates & Compliance": "Certyfikaty i zgodność",
+    "Price Insights": "Analiza cen",
+    "Price Changes": "Zmiany cen"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certyfikatów do ponownego sprawdzenia",
       "body": "Sprawdź je u wystawcy i oznacz jako sprawdzone w Zgodności dostawców."
+    },
+    "price_change_requested": {
+      "title": "Podwyżka do zatwierdzenia: {product}",
+      "body": "{vendor} chce {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nowa cena zatwierdzona: {product}",
+      "body": "FIRINGI zatwierdziło {new} €. Obowiązuje od {date}; Twoi klienci zostali powiadomieni."
+    },
+    "price_change_rejected": {
+      "title": "Podwyżka niezatwierdzona: {product}",
+      "body": "Powód FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Sprawdź swoją cenę: {product}",
+      "body": "Twoja cena różni się o {pct} % od mediany rynkowej dla tego produktu. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Cena wzrośnie: {product}",
+      "body": "{supplier}: {old} € → {new} € od {date}. Do tego czasu płacisz obecną cenę."
+    },
+    "price_alerts": {
+      "title": "{count} nowych alertów cenowych",
+      "body": "Skoki cen lub ceny daleko od rynku — zobacz Inteligencję cenową."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Polisa ubezpieczeniowa obejmująca odpowiedzialność za produkt.",
       "TAX_CLEARANCE": "Zaświadczenie, że nie masz zaległości podatkowych.",
       "SOCIAL_SECURITY_CLEARANCE": "Zaświadczenie, że nie masz zaległości wobec ubezpieczeń społecznych."
+    }
+  },
+  "priceIntel": {
+    "held": "Ta podwyżka jest większa, niż FIRINGI dopuszcza bez zatwierdzenia. Została wysłana do FIRINGI; klienci płacą obecną cenę, dopóki nie zostanie zatwierdzona i nie nadejdzie jej data. Śledź ją w Produkty › Analiza cen.",
+    "heldShort": "Wysłano do FIRINGI do zatwierdzenia",
+    "title": "Analiza cen",
+    "intro": "Jak Twoje ceny bazowe wypadają na tle innych dostawców tych samych produktów, jak się zmieniały i Twoje zmiany cen czekające na FIRINGI.",
+    "ruleInfo": "Podwyżki powyżej {pct} % wymagają zatwierdzenia przez FIRINGI; po zatwierdzeniu klienci kupujący produkt są powiadamiani, a nowa cena obowiązuje po {days} dniach.",
+    "anonHint": "Dane rynkowe pochodzą od co najmniej {n} dostawców i nigdy nie pokazują, kim są ani ich dokładnych cen.",
+    "compared": "Porównano {n} z {total} produktów",
+    "marketTitle": "Twoje ceny na rynku",
+    "marketHint": "Cena bazowa za opakowanie; mediana rynkowa dla tego samego produktu i opakowania. Najdroższe najpierw.",
+    "noOffers": "Nie masz aktywnych produktów z ceną bazową.",
+    "colProduct": "Produkt",
+    "colPrice": "Twoja cena",
+    "colMedian": "Mediana rynkowa",
+    "colPosition": "Pozycja",
+    "colVsMedian": "wzgl. mediany",
+    "colTrend": "Twoja cena, 6 miesięcy",
+    "colSuggestion": "Sugestia",
+    "notCompared": "Nie porównano",
+    "notEnough": "Mniej niż {n} dostawców — nie porównano",
+    "suggestLower": "Wśród najdroższych. Przy {price} lub mniej wrócisz do środka rynku.",
+    "suggestBest": "Wśród najtańszych — klienci widzą mocną cenę.",
+    "requestsTitle": "Zmiany cen czekające na FIRINGI",
+    "requestsHint": "Duże podwyżki i ich status. Możesz wycofać podwyżkę, dopóki nie wejdzie w życie.",
+    "requestsEmpty": "Brak oczekujących zmian cen.",
+    "colChange": "Zmiana",
+    "colStatus": "Status",
+    "colApplies": "Obowiązuje od",
+    "colNote": "Uwaga FIRINGI",
+    "basePrices": "Ceny bazowe",
+    "fromQty": "od {qty}",
+    "cancel": "Wycofaj",
+    "buyerTitle": "Zmiany cen",
+    "buyerIntro": "Zmiany cen produktów, które kupujesz, masz na listach lub zamawiasz regularnie. Większe podwyżki dostawców są ogłaszane co najmniej {days} dni wcześniej.",
+    "upcomingTitle": "Nadchodzące",
+    "upcomingHint": "Zatwierdzone podwyżki, które jeszcze nie obowiązują — do tej daty płacisz obecną cenę.",
+    "upcomingEmpty": "Brak nadchodzących podwyżek dla Twoich produktów.",
+    "upcomingTip": "Wskazówka: zamów teraz po obecnej cenie lub sprawdź innych dostawców.",
+    "toLists": "Twoje listy zamówień",
+    "recentTitle": "Zmienione w ostatnich 30 dniach",
+    "recentEmpty": "Brak zmian cen w ostatnich 30 dniach.",
+    "recentUp": "Wzrosły (30 dni)",
+    "recentDown": "Spadły (30 dni)",
+    "colSupplier": "Dostawca",
+    "colFrom": "Od",
+    "colWhen": "Data",
+    "positions": {
+      "CHEAPEST": "Wśród najtańszych",
+      "BELOW_MEDIAN": "Poniżej mediany",
+      "ABOVE_MEDIAN": "Powyżej mediany",
+      "MOST_EXPENSIVE": "Wśród najdroższych"
+    },
+    "statuses": {
+      "PENDING": "Czeka na FIRINGI",
+      "APPROVED": "Zatwierdzona",
+      "APPLIED": "Zastosowana",
+      "REJECTED": "Niezatwierdzona",
+      "CANCELLED": "Wycofana"
     }
   }
 }

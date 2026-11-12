@@ -826,7 +826,9 @@
     "Daily Sales": "Dienos Pardavimai",
     "Expenses": "Išlaidos",
     "Profit & Loss": "Pelnas ir Nuostoliai",
-    "Certificates & Compliance": "Sertifikatai ir atitiktis"
+    "Certificates & Compliance": "Sertifikatai ir atitiktis",
+    "Price Insights": "Kainų analizė",
+    "Price Changes": "Kainų pakeitimai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} sertifikatų reikia patikrinti iš naujo",
       "body": "Patikrinkite juos pas išdavėją ir pažymėkite patikrintais skiltyje Tiekėjų atitiktis."
+    },
+    "price_change_requested": {
+      "title": "Tvirtintinas kainos padidinimas: {product}",
+      "body": "{vendor} nori {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nauja kaina patvirtinta: {product}",
+      "body": "FIRINGI patvirtino {new} €. Galioja nuo {date}; jūsų klientai informuoti."
+    },
+    "price_change_rejected": {
+      "title": "Kainos padidinimas nepatvirtintas: {product}",
+      "body": "FIRINGI priežastis: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Peržiūrėkite savo kainą: {product}",
+      "body": "Jūsų kaina nuo šio produkto rinkos medianos skiriasi {pct} %. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Kaina didėja: {product}",
+      "body": "{supplier}: {old} € → {new} € nuo {date}. Iki tol mokate dabartinę kainą."
+    },
+    "price_alerts": {
+      "title": "{count} nauji kainų įspėjimai",
+      "body": "Kainų šuoliai ar nuo rinkos nutolusios kainos — žr. Kainų analitiką."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Draudimo polisas, apimantis atsakomybę už produktą.",
       "TAX_CLEARANCE": "Pažyma, kad neturite mokestinių skolų.",
       "SOCIAL_SECURITY_CLEARANCE": "Pažyma, kad neturite socialinio draudimo skolų."
+    }
+  },
+  "priceIntel": {
+    "held": "Šis kainos padidinimas didesnis, nei FIRINGI leidžia be patvirtinimo. Jis išsiųstas FIRINGI; klientai moka dabartinę kainą, kol jis bus patvirtintas ir ateis jo data. Sekite skiltyje Produktai › Kainų analizė.",
+    "heldShort": "Išsiųsta FIRINGI patvirtinti",
+    "title": "Kainų analizė",
+    "intro": "Kaip jūsų bazinės kainos atrodo, palyginti su kitais tų pačių produktų tiekėjais, kaip jos keitėsi, ir jūsų kainų pakeitimai, laukiantys FIRINGI.",
+    "ruleInfo": "Didesniems nei {pct} % padidinimams reikia FIRINGI patvirtinimo; patvirtinus, produktą perkantys klientai informuojami, o nauja kaina įsigalioja po {days} d.",
+    "anonHint": "Rinkos duomenys gaunami iš ne mažiau kaip {n} tiekėjų ir niekada neparodo, kas jie, ar jų tikslių kainų.",
+    "compared": "Palyginta {n} iš {total} produktų",
+    "marketTitle": "Jūsų kainos rinkoje",
+    "marketHint": "Bazinė kaina už pakuotę; to paties produkto ir pakuotės rinkos mediana. Brangiausi pirmi.",
+    "noOffers": "Neturite aktyvių produktų su bazine kaina.",
+    "colProduct": "Produktas",
+    "colPrice": "Jūsų kaina",
+    "colMedian": "Rinkos mediana",
+    "colPosition": "Pozicija",
+    "colVsMedian": "palyginti su mediana",
+    "colTrend": "Jūsų kaina, 6 mėn.",
+    "colSuggestion": "Pasiūlymas",
+    "notCompared": "Nepalyginta",
+    "notEnough": "Mažiau nei {n} tiekėjai — nepalyginta",
+    "suggestLower": "Tarp brangiausių. Už {price} ar mažiau vėl būtumėte rinkos viduryje.",
+    "suggestBest": "Tarp pigiausių — klientai mato stiprią kainą.",
+    "requestsTitle": "Kainų pakeitimai, laukiantys FIRINGI",
+    "requestsHint": "Dideli padidinimai ir jų būsena. Galite atšaukti, kol neįsigaliojo.",
+    "requestsEmpty": "Laukiančių kainų pakeitimų nėra.",
+    "colChange": "Pakeitimas",
+    "colStatus": "Būsena",
+    "colApplies": "Galioja nuo",
+    "colNote": "FIRINGI pastaba",
+    "basePrices": "Bazinės kainos",
+    "fromQty": "nuo {qty}",
+    "cancel": "Atšaukti",
+    "buyerTitle": "Kainų pakeitimai",
+    "buyerIntro": "Produktų, kuriuos perkate, turite sąrašuose ar reguliariai užsakote, kainų pakeitimai. Didesni tiekėjų padidinimai skelbiami bent prieš {days} d.",
+    "upcomingTitle": "Artėjantys",
+    "upcomingHint": "Patvirtinti padidinimai, kurie dar negalioja — iki datos mokate dabartinę kainą.",
+    "upcomingEmpty": "Jūsų produktams kainų padidinimų nenumatyta.",
+    "upcomingTip": "Patarimas: užsakykite dabar dabartine kaina arba pažiūrėkite kitus tiekėjus.",
+    "toLists": "Jūsų užsakymų sąrašai",
+    "recentTitle": "Pasikeitė per paskutines 30 d.",
+    "recentEmpty": "Per paskutines 30 d. kainų pakeitimų nebuvo.",
+    "recentUp": "Pabrango (30 d.)",
+    "recentDown": "Atpigo (30 d.)",
+    "colSupplier": "Tiekėjas",
+    "colFrom": "Nuo",
+    "colWhen": "Data",
+    "positions": {
+      "CHEAPEST": "Tarp pigiausių",
+      "BELOW_MEDIAN": "Žemiau medianos",
+      "ABOVE_MEDIAN": "Aukščiau medianos",
+      "MOST_EXPENSIVE": "Tarp brangiausių"
+    },
+    "statuses": {
+      "PENDING": "Laukia FIRINGI",
+      "APPROVED": "Patvirtinta",
+      "APPLIED": "Pritaikyta",
+      "REJECTED": "Nepatvirtinta",
+      "CANCELLED": "Atšaukta"
     }
   }
 }

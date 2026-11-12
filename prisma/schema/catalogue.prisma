@@ -178,22 +178,24 @@ model VendorOffer {
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
 
-  vendor           Company              @relation(fields: [vendorCompanyId], references: [id])
-  packaging        PackagingUnit        @relation(fields: [packagingUnitId], references: [id])
-  country          Country              @relation(fields: [countryId], references: [id])
-  prices           PriceListItem[]
-  stockLevels      StockLevel[]
-  stockMovements   StockMovement[]
-  stockBatches     StockBatch[]
-  quoteLines       QuoteLine[]          @relation("QuoteLineOffer")
-  recurringItems   RecurringOrderItem[] @relation("RecurringItemOffer")
-  orderListItems   OrderListItem[]      @relation("OrderListItemOffer")
-  purchaseLines    PurchaseOrderLine[]  @relation("PurchaseLineOffer")
-  countLines       StockCountLine[]     @relation("StockCountLineOffer")
-  transferLines    StockTransferLine[]  @relation("StockTransferLineOffer")
-  cartItems        CartItem[]
-  orderLines       OrderLine[]
-  promotionTargets PromotionTarget[]
+  vendor              Company              @relation(fields: [vendorCompanyId], references: [id])
+  packaging           PackagingUnit        @relation(fields: [packagingUnitId], references: [id])
+  country             Country              @relation(fields: [countryId], references: [id])
+  prices              PriceListItem[]
+  stockLevels         StockLevel[]
+  stockMovements      StockMovement[]
+  stockBatches        StockBatch[]
+  quoteLines          QuoteLine[]          @relation("QuoteLineOffer")
+  recurringItems      RecurringOrderItem[] @relation("RecurringItemOffer")
+  orderListItems      OrderListItem[]      @relation("OrderListItemOffer")
+  purchaseLines       PurchaseOrderLine[]  @relation("PurchaseLineOffer")
+  countLines          StockCountLine[]     @relation("StockCountLineOffer")
+  transferLines       StockTransferLine[]  @relation("StockTransferLineOffer")
+  cartItems           CartItem[]
+  orderLines          OrderLine[]
+  promotionTargets    PromotionTarget[]
+  priceChangeRequests PriceChangeRequest[] @relation("PriceChangeOffer")
+  priceAlerts         PriceAlert[]         @relation("PriceAlertOffer")
 
   @@unique([vendorCompanyId, packagingUnitId])
   @@index([sellerType, status, countryId])
@@ -241,11 +243,12 @@ model PriceList {
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 
-  vendor        Company         @relation("PriceListVendor", fields: [vendorCompanyId], references: [id])
-  targetGroup   CustomerGroup?  @relation(fields: [targetGroupId], references: [id])
-  targetCompany Company?        @relation("PriceListTargetCompany", fields: [targetCompanyId], references: [id])
-  country       Country         @relation(fields: [countryId], references: [id])
-  items         PriceListItem[]
+  vendor         Company              @relation("PriceListVendor", fields: [vendorCompanyId], references: [id])
+  targetGroup    CustomerGroup?       @relation(fields: [targetGroupId], references: [id])
+  targetCompany  Company?             @relation("PriceListTargetCompany", fields: [targetCompanyId], references: [id])
+  country        Country              @relation(fields: [countryId], references: [id])
+  items          PriceListItem[]
+  changeRequests PriceChangeRequest[] @relation("PriceChangeList")
 }
 
 model PriceListItem {

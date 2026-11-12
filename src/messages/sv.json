@@ -826,7 +826,9 @@
     "Daily Sales": "Daglig Försäljning",
     "Expenses": "Utgifter",
     "Profit & Loss": "Resultat",
-    "Certificates & Compliance": "Certifikat och efterlevnad"
+    "Certificates & Compliance": "Certifikat och efterlevnad",
+    "Price Insights": "Prisanalys",
+    "Price Changes": "Prisändringar"
   },
   "delivery": {
     "title": "Leverans",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certifikat ska kontrolleras igen",
       "body": "Kontrollera dem hos utfärdaren och markera dem som kontrollerade i Leverantörsefterlevnad."
+    },
+    "price_change_requested": {
+      "title": "Prishöjning att godkänna: {product}",
+      "body": "{vendor} vill ha {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nytt pris godkänt: {product}",
+      "body": "FIRINGI har godkänt {new} €. Det gäller från {date}; dina kunder har meddelats."
+    },
+    "price_change_rejected": {
+      "title": "Prishöjning inte godkänd: {product}",
+      "body": "FIRINGI:s motivering: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Se över ditt pris: {product}",
+      "body": "Ditt pris ligger {pct} % från marknadsmedianen för produkten. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Priset höjs: {product}",
+      "body": "{supplier}: {old} € → {new} € från {date}. Fram till dess betalar du nuvarande pris."
+    },
+    "price_alerts": {
+      "title": "{count} nya prisvarningar",
+      "body": "Prishopp eller priser långt från marknaden — se Prisintelligens."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Försäkring som täcker produktansvar.",
       "TAX_CLEARANCE": "Intyg om att du inte har några skatteskulder.",
       "SOCIAL_SECURITY_CLEARANCE": "Intyg om att du inte har några skulder för socialavgifter."
+    }
+  },
+  "priceIntel": {
+    "held": "Den här höjningen är större än FIRINGI tillåter utan godkännande. Den har skickats till FIRINGI; kunderna behåller nuvarande pris tills den är godkänd och datumet är nått. Följ den under Produkter › Prisanalys.",
+    "heldShort": "Skickat till FIRINGI för godkännande",
+    "title": "Prisanalys",
+    "intro": "Hur dina grundpriser står sig mot andra leverantörer av samma produkter, hur de har ändrats och dina prisändringar som väntar på FIRINGI.",
+    "ruleInfo": "Höjningar över {pct} % kräver FIRINGI:s godkännande; när de godkänts meddelas kunder som köper produkten och det nya priset gäller {days} dagar senare.",
+    "anonHint": "Marknadssiffrorna kommer från minst {n} leverantörer och visar aldrig vilka de är eller deras exakta priser.",
+    "compared": "{n} av {total} produkter jämförda",
+    "marketTitle": "Dina priser på marknaden",
+    "marketHint": "Grundpris per förpackning; marknadsmedian för samma produkt och förpackning. Dyraste först.",
+    "noOffers": "Du har inga aktiva produkter med grundpris.",
+    "colProduct": "Produkt",
+    "colPrice": "Ditt pris",
+    "colMedian": "Marknadsmedian",
+    "colPosition": "Position",
+    "colVsMedian": "mot median",
+    "colTrend": "Ditt pris, 6 månader",
+    "colSuggestion": "Förslag",
+    "notCompared": "Inte jämförd",
+    "notEnough": "Färre än {n} leverantörer — inte jämförd",
+    "suggestLower": "Bland de dyraste. För {price} eller mindre skulle du vara mitt i marknaden igen.",
+    "suggestBest": "Bland de billigaste — kunderna ser ett starkt pris.",
+    "requestsTitle": "Prisändringar som väntar på FIRINGI",
+    "requestsHint": "Stora höjningar och deras status. Du kan dra tillbaka en tills den gäller.",
+    "requestsEmpty": "Inga väntande prisändringar.",
+    "colChange": "Ändring",
+    "colStatus": "Status",
+    "colApplies": "Gäller från",
+    "colNote": "FIRINGI:s anteckning",
+    "basePrices": "Grundpriser",
+    "fromQty": "från {qty}",
+    "cancel": "Dra tillbaka",
+    "buyerTitle": "Prisändringar",
+    "buyerIntro": "Prisändringar för produkter du köper, har i dina listor eller beställer regelbundet. Leverantörernas större höjningar aviseras minst {days} dagar i förväg.",
+    "upcomingTitle": "Kommande",
+    "upcomingHint": "Godkända höjningar som inte gäller än — fram till datumet betalar du nuvarande pris.",
+    "upcomingEmpty": "Inga kommande prishöjningar för dina produkter.",
+    "upcomingTip": "Tips: beställ nu till nuvarande pris, eller titta på andra leverantörer.",
+    "toLists": "Dina beställningslistor",
+    "recentTitle": "Ändrade de senaste 30 dagarna",
+    "recentEmpty": "Inga prisändringar de senaste 30 dagarna.",
+    "recentUp": "Höjda (30 dagar)",
+    "recentDown": "Sänkta (30 dagar)",
+    "colSupplier": "Leverantör",
+    "colFrom": "Från",
+    "colWhen": "Datum",
+    "positions": {
+      "CHEAPEST": "Bland de billigaste",
+      "BELOW_MEDIAN": "Under medianen",
+      "ABOVE_MEDIAN": "Över medianen",
+      "MOST_EXPENSIVE": "Bland de dyraste"
+    },
+    "statuses": {
+      "PENDING": "Väntar på FIRINGI",
+      "APPROVED": "Godkänd",
+      "APPLIED": "Tillämpad",
+      "REJECTED": "Inte godkänd",
+      "CANCELLED": "Tillbakadragen"
     }
   }
 }

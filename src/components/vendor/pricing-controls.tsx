@@ -60,7 +60,9 @@ export function NewPriceListForm({ groups, customers }: { groups: Opt[]; custome
 
 export function AddPriceForm({ priceListId, offers }: { priceListId: string; offers: Opt[] }) {
   const t = useTranslations("catalogue.vendor");
+  const tp = useTranslations("priceIntel");
   const { pending, error, run } = useRun();
+  const [held, setHeld] = useState(false);
   return (
     <form
       className="flex flex-wrap items-end gap-2 rounded-lg border border-dashed p-3"
@@ -68,7 +70,8 @@ export function AddPriceForm({ priceListId, offers }: { priceListId: string; off
         e.preventDefault();
         const fd = new FormData(e.currentTarget);
         const form = e.currentTarget;
-        run(() => setPriceAction({ priceListId, offerId: String(fd.get("offerId")), minQty: Number(fd.get("minQty")), price: Number(fd.get("price")) }), () => form.reset());
+        setHeld(false);
+        run(() => setPriceAction({ priceListId, offerId: String(fd.get("offerId")), minQty: Number(fd.get("minQty")), price: Number(fd.get("price")) }), (d) => { form.reset(); if ((d as { held?: string | null } | undefined)?.held) setHeld(true); });
       }}
     >
       <div className="min-w-64 flex-1 space-y-1"><Label htmlFor="ap-offer">{t("product")}</Label>
@@ -77,6 +80,7 @@ export function AddPriceForm({ priceListId, offers }: { priceListId: string; off
       <div className="space-y-1"><Label htmlFor="ap-price">{t("price")}</Label><Input id="ap-price" name="price" type="number" min="0.01" step="0.01" required className="w-28" /></div>
       <Button type="submit" disabled={pending}>{t("addPrice")}</Button>
       {error && <p className="w-full text-sm text-destructive">{error}</p>}
+      {held && <p className="w-full text-sm text-amber-700 dark:text-warning" data-testid="price-held">{tp("held")}</p>}
     </form>
   );
 }

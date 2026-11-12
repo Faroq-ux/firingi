@@ -826,7 +826,9 @@
     "Daily Sales": "Vânzări Zilnice",
     "Expenses": "Cheltuieli",
     "Profit & Loss": "Profit și Pierdere",
-    "Certificates & Compliance": "Certificate și conformitate"
+    "Certificates & Compliance": "Certificate și conformitate",
+    "Price Insights": "Analiza prețurilor",
+    "Price Changes": "Modificări de preț"
   },
   "delivery": {
     "title": "Livrare",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certificate de reverificat",
       "body": "Verificați-le la emitent și marcați-le ca reverificate în Conformitatea furnizorilor."
+    },
+    "price_change_requested": {
+      "title": "Creștere de preț de aprobat: {product}",
+      "body": "{vendor} dorește {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Preț nou aprobat: {product}",
+      "body": "FIRINGI a aprobat {new} €. Se aplică din {date}; clienții dvs. au fost anunțați."
+    },
+    "price_change_rejected": {
+      "title": "Creștere de preț neaprobată: {product}",
+      "body": "Motivul FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Revizuiți prețul: {product}",
+      "body": "Prețul dvs. diferă cu {pct} % de mediana pieței pentru acest produs. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Prețul crește: {product}",
+      "body": "{supplier}: {old} € → {new} € din {date}. Până atunci plătiți prețul actual."
+    },
+    "price_alerts": {
+      "title": "{count} alerte noi de preț",
+      "body": "Salturi de preț sau prețuri departe de piață — vedeți Inteligența prețurilor."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Poliță de asigurare care acoperă răspunderea pentru produs.",
       "TAX_CLEARANCE": "Certificat că nu aveți datorii fiscale.",
       "SOCIAL_SECURITY_CLEARANCE": "Certificat că nu aveți datorii la asigurările sociale."
+    }
+  },
+  "priceIntel": {
+    "held": "Această creștere depășește ce permite FIRINGI fără aprobare. A fost trimisă la FIRINGI; clienții plătesc prețul actual până la aprobare și până la data intrării în vigoare. Urmăriți-o în Produse › Analiza prețurilor.",
+    "heldShort": "Trimis la FIRINGI spre aprobare",
+    "title": "Analiza prețurilor",
+    "intro": "Cum se compară prețurile de bază cu ale altor furnizori ai acelorași produse, cum s-au schimbat și modificările de preț care așteaptă FIRINGI.",
+    "ruleInfo": "Creșterile de peste {pct} % au nevoie de aprobarea FIRINGI; după aprobare, clienții care cumpără produsul sunt anunțați, iar noul preț se aplică după {days} zile.",
+    "anonHint": "Datele de piață provin de la cel puțin {n} furnizori și nu arată niciodată cine sunt sau prețurile lor exacte.",
+    "compared": "{n} din {total} produse comparate",
+    "marketTitle": "Prețurile dvs. pe piață",
+    "marketHint": "Preț de bază pe ambalaj; mediana pieței pentru același produs și ambalaj. Cele mai scumpe primele.",
+    "noOffers": "Nu aveți produse active cu preț de bază.",
+    "colProduct": "Produs",
+    "colPrice": "Prețul dvs.",
+    "colMedian": "Mediana pieței",
+    "colPosition": "Poziție",
+    "colVsMedian": "față de mediană",
+    "colTrend": "Prețul dvs., 6 luni",
+    "colSuggestion": "Sugestie",
+    "notCompared": "Necomparat",
+    "notEnough": "Mai puțin de {n} furnizori — necomparat",
+    "suggestLower": "Printre cele mai scumpe. La {price} sau mai puțin ați reveni la mijlocul pieței.",
+    "suggestBest": "Printre cele mai ieftine — clienții văd un preț bun.",
+    "requestsTitle": "Modificări de preț care așteaptă FIRINGI",
+    "requestsHint": "Creșteri mari și starea lor. Puteți retrage una până intră în vigoare.",
+    "requestsEmpty": "Nicio modificare de preț în așteptare.",
+    "colChange": "Modificare",
+    "colStatus": "Stare",
+    "colApplies": "Se aplică din",
+    "colNote": "Nota FIRINGI",
+    "basePrices": "Prețuri de bază",
+    "fromQty": "de la {qty}",
+    "cancel": "Retrage",
+    "buyerTitle": "Modificări de preț",
+    "buyerIntro": "Modificările de preț ale produselor pe care le cumpărați, le aveți în liste sau le comandați regulat. Creșterile mai mari ale furnizorilor sunt anunțate cu cel puțin {days} zile înainte.",
+    "upcomingTitle": "Urmează",
+    "upcomingHint": "Creșteri aprobate care nu se aplică încă — până la dată plătiți prețul actual.",
+    "upcomingEmpty": "Nicio creștere de preț programată pentru produsele dvs.",
+    "upcomingTip": "Sfat: comandați acum la prețul actual sau vedeți alți furnizori.",
+    "toLists": "Listele dvs. de comenzi",
+    "recentTitle": "Modificate în ultimele 30 de zile",
+    "recentEmpty": "Nicio modificare de preț în ultimele 30 de zile.",
+    "recentUp": "Au crescut (30 de zile)",
+    "recentDown": "Au scăzut (30 de zile)",
+    "colSupplier": "Furnizor",
+    "colFrom": "Din",
+    "colWhen": "Data",
+    "positions": {
+      "CHEAPEST": "Printre cele mai ieftine",
+      "BELOW_MEDIAN": "Sub mediană",
+      "ABOVE_MEDIAN": "Peste mediană",
+      "MOST_EXPENSIVE": "Printre cele mai scumpe"
+    },
+    "statuses": {
+      "PENDING": "Așteaptă FIRINGI",
+      "APPROVED": "Aprobată",
+      "APPLIED": "Aplicată",
+      "REJECTED": "Neaprobată",
+      "CANCELLED": "Retrasă"
     }
   }
 }

@@ -19,6 +19,7 @@ const invn = section(`${A}/inventory`, ["admin.inventory.view", "admin.inventory
 const del = section(`${A}/delivery`, "admin.delivery.view");
 const flt = section(`${A}/fleet`, "admin.fleet.view");
 const prc = section(`${A}/pricing`, "admin.pricing.view");
+const pin = section(`${A}/pricing/intelligence`, ["admin.pricing.view", "admin.pricing.manage"]);
 const fin = section(`${A}/finance`, "admin.finance.view");
 const inv = section(`${A}/invoices`, "admin.invoices.view");
 const ana = section(`${A}/analytics`, "admin.analytics.view");
@@ -210,19 +211,37 @@ export const ADMIN_NAV: NavSection[] = [
   },
   {
     key: "pricing", icon: "Coins", label: { en: "Pricing & Commercial", pt: "Preços e Comercial", es: "Precios y comercial" },
-    items: [
-      prc("price-lists", "Price Lists", "Listas de Preços", "P3", { live: true }),
-      prc("vendor", "Vendor Pricing", "Preços de Fornecedores", "P3", { live: true }),
-      prc("customer", "Customer Pricing", "Preços de Clientes", "P3", { live: true }),
-      prc("wholesale", "Wholesale Pricing", "Preços Grossista", "P3", { live: true }),
-      prc("distributor", "Distributor Pricing", "Preços Distribuidor", "P3", { live: true }),
-      prc("promotions", "Promotions", "Promoções", "P5", { live: true }),
-      prc("discounts", "Discounts", "Descontos", "P5", { live: true }),
-      prc("minimum-order", "Minimum Order Value", "Valor Mínimo de Encomenda", "P4", { live: true, perm: ["admin.pricing.view", "admin.delivery.view"] }),
-      prc("delivery-fees", "Delivery Fee Rules", "Regras de Taxa de Entrega", "P4", { live: true, perm: ["admin.pricing.view", "admin.delivery.view"] }),
-      prc("commission", "Commission Rules", "Regras de Comissão", "P5", { live: true, perm: ["admin.vendors.commission", "admin.finance.view"] }),
-      prc("margin", "Margin Rules", "Regras de Margem", "P14", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage"] }),
-      prc("contract", "Contract Pricing", "Preços Contratuais", "P14", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage", "admin.vendors.view"] }),
+    groups: [
+      {
+        key: "rules", label: { en: "Prices & Rules", pt: "Preços e Regras", es: "Precios y reglas" },
+        items: [
+          prc("price-lists", "Price Lists", "Listas de Preços", "P3", { live: true }),
+          prc("vendor", "Vendor Pricing", "Preços de Fornecedores", "P3", { live: true }),
+          prc("customer", "Customer Pricing", "Preços de Clientes", "P3", { live: true }),
+          prc("wholesale", "Wholesale Pricing", "Preços Grossista", "P3", { live: true }),
+          prc("distributor", "Distributor Pricing", "Preços Distribuidor", "P3", { live: true }),
+          prc("promotions", "Promotions", "Promoções", "P5", { live: true }),
+          prc("discounts", "Discounts", "Descontos", "P5", { live: true }),
+          prc("minimum-order", "Minimum Order Value", "Valor Mínimo de Encomenda", "P4", { live: true, perm: ["admin.pricing.view", "admin.delivery.view"] }),
+          prc("delivery-fees", "Delivery Fee Rules", "Regras de Taxa de Entrega", "P4", { live: true, perm: ["admin.pricing.view", "admin.delivery.view"] }),
+          prc("commission", "Commission Rules", "Regras de Comissão", "P5", { live: true, perm: ["admin.vendors.commission", "admin.finance.view"] }),
+          prc("margin", "Margin Rules", "Regras de Margem", "P14", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage"] }),
+          prc("contract", "Contract Pricing", "Preços Contratuais", "P14", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage", "admin.vendors.view"] }),
+        ],
+      },
+      {
+        key: "intelligence", label: { en: "Price Intelligence", pt: "Inteligência de Preços", es: "Inteligencia de precios" },
+        items: [
+          pin("overview", "Price Intelligence", "Inteligência de Preços", "P29", { live: true }),
+          pin("comparison", "Price Comparison", "Comparação de Preços", "P29", { live: true }),
+          pin("history", "Price History", "Histórico de Preços", "P29", { live: true }),
+          pin("alerts", "Price Alerts", "Alertas de Preço", "P29", { live: true }),
+          pin("requests", "Price Change Approvals", "Aprovação de Alterações de Preço", "P29", { live: true }),
+          pin("margin", "Margin Heat-map", "Mapa de Margens", "P29", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage", "admin.finance.view"] }),
+          pin("suggestions", "Price Suggestions", "Sugestões de Preço", "P29", { live: true }),
+          pin("settings", "Price Rules & Approvals", "Regras e Aprovações de Preço", "P29", { live: true }),
+        ],
+      },
     ],
   },
   {

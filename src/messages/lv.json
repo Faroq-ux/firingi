@@ -826,7 +826,9 @@
     "Daily Sales": "Dienas Pārdošana",
     "Expenses": "Izdevumi",
     "Profit & Loss": "Peļņa un Zaudējumi",
-    "Certificates & Compliance": "Sertifikāti un atbilstība"
+    "Certificates & Compliance": "Sertifikāti un atbilstība",
+    "Price Insights": "Cenu analīze",
+    "Price Changes": "Cenu izmaiņas"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} sertifikāti jāpārbauda atkārtoti",
       "body": "Pārbaudiet tos pie izdevēja un atzīmējiet kā pārbaudītus sadaļā Piegādātāju atbilstība."
+    },
+    "price_change_requested": {
+      "title": "Apstiprināms cenas kāpums: {product}",
+      "body": "{vendor} vēlas {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Jauna cena apstiprināta: {product}",
+      "body": "FIRINGI apstiprināja {new} €. Spēkā no {date}; jūsu klienti ir informēti."
+    },
+    "price_change_rejected": {
+      "title": "Cenas kāpums nav apstiprināts: {product}",
+      "body": "FIRINGI iemesls: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Lūdzu, pārskatiet cenu: {product}",
+      "body": "Jūsu cena atšķiras par {pct} % no šī produkta tirgus mediānas. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Cena pieaug: {product}",
+      "body": "{supplier}: {old} € → {new} € no {date}. Līdz tam maksājat pašreizējo cenu."
+    },
+    "price_alerts": {
+      "title": "{count} jauni cenu brīdinājumi",
+      "body": "Cenu lēcieni vai cenas tālu no tirgus — skatiet Cenu analītiku."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Apdrošināšanas polise, kas sedz atbildību par produktu.",
       "TAX_CLEARANCE": "Izziņa, ka jums nav nodokļu parādu.",
       "SOCIAL_SECURITY_CLEARANCE": "Izziņa, ka jums nav sociālās apdrošināšanas parādu."
+    }
+  },
+  "priceIntel": {
+    "held": "Šis cenas kāpums ir lielāks, nekā FIRINGI atļauj bez apstiprinājuma. Tas nosūtīts FIRINGI; klienti maksā pašreizējo cenu, līdz tas tiks apstiprināts un pienāks tā datums. Sekojiet sadaļā Produkti › Cenu analīze.",
+    "heldShort": "Nosūtīts FIRINGI apstiprināšanai",
+    "title": "Cenu analīze",
+    "intro": "Kā jūsu pamatcenas salīdzināmas ar citiem to pašu produktu piegādātājiem, kā tās mainījušās, un jūsu cenu izmaiņas, kas gaida FIRINGI.",
+    "ruleInfo": "Kāpumiem virs {pct} % nepieciešams FIRINGI apstiprinājums; pēc apstiprināšanas klienti, kas pērk produktu, tiek informēti, un jaunā cena stājas spēkā pēc {days} dienām.",
+    "anonHint": "Tirgus dati nāk no vismaz {n} piegādātājiem un nekad neatklāj, kas viņi ir, vai viņu precīzās cenas.",
+    "compared": "Salīdzināti {n} no {total} produktiem",
+    "marketTitle": "Jūsu cenas tirgū",
+    "marketHint": "Pamatcena par iepakojumu; tirgus mediāna tam pašam produktam un iepakojumam. Dārgākie vispirms.",
+    "noOffers": "Jums nav aktīvu produktu ar pamatcenu.",
+    "colProduct": "Produkts",
+    "colPrice": "Jūsu cena",
+    "colMedian": "Tirgus mediāna",
+    "colPosition": "Pozīcija",
+    "colVsMedian": "pret mediānu",
+    "colTrend": "Jūsu cena, 6 mēneši",
+    "colSuggestion": "Ieteikums",
+    "notCompared": "Nav salīdzināts",
+    "notEnough": "Mazāk nekā {n} piegādātāji — nav salīdzināts",
+    "suggestLower": "Starp dārgākajiem. Par {price} vai mazāk jūs atkal būtu tirgus vidū.",
+    "suggestBest": "Starp lētākajiem — klienti redz spēcīgu cenu.",
+    "requestsTitle": "Cenu izmaiņas, kas gaida FIRINGI",
+    "requestsHint": "Lieli kāpumi un to statuss. Varat atsaukt, kamēr tas nav stājies spēkā.",
+    "requestsEmpty": "Nav gaidošu cenu izmaiņu.",
+    "colChange": "Izmaiņas",
+    "colStatus": "Statuss",
+    "colApplies": "Spēkā no",
+    "colNote": "FIRINGI piezīme",
+    "basePrices": "Pamatcenas",
+    "fromQty": "no {qty}",
+    "cancel": "Atsaukt",
+    "buyerTitle": "Cenu izmaiņas",
+    "buyerIntro": "To produktu cenu izmaiņas, kurus pērkat, turat sarakstos vai regulāri pasūtāt. Lielāki piegādātāju kāpumi tiek paziņoti vismaz {days} dienas iepriekš.",
+    "upcomingTitle": "Gaidāmie",
+    "upcomingHint": "Apstiprināti kāpumi, kas vēl nav spēkā — līdz datumam maksājat pašreizējo cenu.",
+    "upcomingEmpty": "Jūsu produktiem nav gaidāmu cenu kāpumu.",
+    "upcomingTip": "Padoms: pasūtiet tagad par pašreizējo cenu vai apskatiet citus piegādātājus.",
+    "toLists": "Jūsu pasūtījumu saraksti",
+    "recentTitle": "Mainījušās pēdējās 30 dienās",
+    "recentEmpty": "Pēdējās 30 dienās cenu izmaiņu nav.",
+    "recentUp": "Sadārdzinājās (30 dienas)",
+    "recentDown": "Lētāki (30 dienas)",
+    "colSupplier": "Piegādātājs",
+    "colFrom": "No",
+    "colWhen": "Datums",
+    "positions": {
+      "CHEAPEST": "Starp lētākajiem",
+      "BELOW_MEDIAN": "Zem mediānas",
+      "ABOVE_MEDIAN": "Virs mediānas",
+      "MOST_EXPENSIVE": "Starp dārgākajiem"
+    },
+    "statuses": {
+      "PENDING": "Gaida FIRINGI",
+      "APPROVED": "Apstiprināts",
+      "APPLIED": "Piemērots",
+      "REJECTED": "Nav apstiprināts",
+      "CANCELLED": "Atsaukts"
     }
   }
 }

@@ -826,7 +826,9 @@
     "Daily Sales": "Päeva Müük",
     "Expenses": "Kulud",
     "Profit & Loss": "Kasum ja Kahjum",
-    "Certificates & Compliance": "Sertifikaadid ja vastavus"
+    "Certificates & Compliance": "Sertifikaadid ja vastavus",
+    "Price Insights": "Hinnaanalüüs",
+    "Price Changes": "Hinnamuudatused"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} sertifikaati vajab uut kontrolli",
       "body": "Kontrollige neid väljaandjalt ja märkige tarnijate vastavuses kontrollituks."
+    },
+    "price_change_requested": {
+      "title": "Kinnitamist ootav hinnatõus: {product}",
+      "body": "{vendor} soovib {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Uus hind kinnitatud: {product}",
+      "body": "FIRINGI kinnitas {new} €. See kehtib alates {date}; teie kliente on teavitatud."
+    },
+    "price_change_rejected": {
+      "title": "Hinnatõusu ei kinnitatud: {product}",
+      "body": "FIRINGI põhjendus: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Palun vaadake oma hind üle: {product}",
+      "body": "Teie hind erineb selle toote turu mediaanist {pct} %. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Hind tõuseb: {product}",
+      "body": "{supplier}: {old} € → {new} € alates {date}. Seni maksate praegust hinda."
+    },
+    "price_alerts": {
+      "title": "{count} uut hinnahoiatust",
+      "body": "Hinnahüpped või turust kaugel olevad hinnad — vaadake Hinnaanalüütikat."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Tootevastutust kattev kindlustuspoliis.",
       "TAX_CLEARANCE": "Tõend, et teil pole maksuvõlga.",
       "SOCIAL_SECURITY_CLEARANCE": "Tõend, et teil pole sotsiaalmaksuvõlga."
+    }
+  },
+  "priceIntel": {
+    "held": "See hinnatõus on suurem, kui FIRINGI ilma kinnituseta lubab. See saadeti FIRINGI-le; kliendid maksavad praegust hinda, kuni tõus on kinnitatud ja kuupäev kätte jõuab. Jälgige seda jaotises Tooted › Hinnaanalüüs.",
+    "heldShort": "Saadetud FIRINGI-le kinnitamiseks",
+    "title": "Hinnaanalüüs",
+    "intro": "Kuidas teie baashinnad võrduvad samade toodete teiste tarnijatega, kuidas need on muutunud ja teie hinnamuudatused, mis ootavad FIRINGI-t.",
+    "ruleInfo": "Üle {pct} % hinnatõusud vajavad FIRINGI kinnitust; pärast kinnitust teavitatakse toodet ostvaid kliente ja uus hind kehtib {days} päeva hiljem.",
+    "anonHint": "Turunäitajad pärinevad vähemalt {n} tarnijalt ega näita kunagi, kes nad on või nende täpseid hindu.",
+    "compared": "Võrreldud {n} toodet {total}-st",
+    "marketTitle": "Teie hinnad turul",
+    "marketHint": "Baashind pakendi kohta; turu mediaan sama toote ja pakendi kohta. Kalleimad eespool.",
+    "noOffers": "Teil pole baashinnaga aktiivseid tooteid.",
+    "colProduct": "Toode",
+    "colPrice": "Teie hind",
+    "colMedian": "Turu mediaan",
+    "colPosition": "Positsioon",
+    "colVsMedian": "vs. mediaan",
+    "colTrend": "Teie hind, 6 kuud",
+    "colSuggestion": "Soovitus",
+    "notCompared": "Pole võrreldud",
+    "notEnough": "Vähem kui {n} tarnijat — pole võrreldud",
+    "suggestLower": "Kõige kallimate seas. Hinnaga {price} või alla selle oleksite taas turu keskel.",
+    "suggestBest": "Kõige soodsamate seas — kliendid näevad tugevat hinda.",
+    "requestsTitle": "FIRINGI-t ootavad hinnamuudatused",
+    "requestsHint": "Suured hinnatõusud ja nende olek. Saate tõusu tagasi võtta, kuni see jõustub.",
+    "requestsEmpty": "Ootavaid hinnamuudatusi pole.",
+    "colChange": "Muudatus",
+    "colStatus": "Olek",
+    "colApplies": "Kehtib alates",
+    "colNote": "FIRINGI märkus",
+    "basePrices": "Baashinnad",
+    "fromQty": "alates {qty}",
+    "cancel": "Võta tagasi",
+    "buyerTitle": "Hinnamuudatused",
+    "buyerIntro": "Toodete hinnamuudatused, mida ostate, hoiate nimekirjades või tellite regulaarselt. Tarnijate suurematest hinnatõusudest teatatakse vähemalt {days} päeva ette.",
+    "upcomingTitle": "Tulekul",
+    "upcomingHint": "Kinnitatud hinnatõusud, mis pole veel jõustunud — kuni kuupäevani maksate praegust hinda.",
+    "upcomingEmpty": "Teie toodetele pole hinnatõuse tulekul.",
+    "upcomingTip": "Nõuanne: tellige kohe praeguse hinnaga või vaadake teisi tarnijaid.",
+    "toLists": "Teie tellimisnimekirjad",
+    "recentTitle": "Muutunud viimase 30 päeva jooksul",
+    "recentEmpty": "Viimase 30 päeva jooksul hinnamuudatusi pole.",
+    "recentUp": "Tõusnud (30 päeva)",
+    "recentDown": "Langenud (30 päeva)",
+    "colSupplier": "Tarnija",
+    "colFrom": "Alates",
+    "colWhen": "Kuupäev",
+    "positions": {
+      "CHEAPEST": "Kõige soodsamate seas",
+      "BELOW_MEDIAN": "Alla mediaani",
+      "ABOVE_MEDIAN": "Üle mediaani",
+      "MOST_EXPENSIVE": "Kõige kallimate seas"
+    },
+    "statuses": {
+      "PENDING": "Ootab FIRINGI-t",
+      "APPROVED": "Kinnitatud",
+      "APPLIED": "Jõustunud",
+      "REJECTED": "Pole kinnitatud",
+      "CANCELLED": "Tagasi võetud"
     }
   }
 }

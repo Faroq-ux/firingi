@@ -2,7 +2,7 @@
 /**
  * FIRINGI scheduler: calls the app's job endpoints on time (UTC) with the CRON_SECRET. The app
  * records every run (System Health › Scheduled jobs) and alerts when a job stops or keeps failing.
- *   notifications every 2 min · invoicing every 5 · payments every 5 (+2) · ops every 5 (+1) · integrations every 5 (+4) · allocation every 10 (+3) · ai hourly (:07) · inventory daily (06:13) · compliance daily (05:47) · buying every 15 (+11)
+ *   notifications every 2 min · invoicing every 5 · payments every 5 (+2) · ops every 5 (+1) · integrations every 5 (+4) · allocation every 10 (+3) · ai hourly (:07) · pricing hourly (:23) · inventory daily (06:13) · compliance daily (05:47) · buying every 15 (+11)
  * Runs anywhere Node 18+ runs:  APP_INTERNAL_URL=http://app:3000 CRON_SECRET=… node scheduler.mjs
  */
 const BASE = (process.env.APP_INTERNAL_URL ?? "http://app:3000").replace(/\/$/, "");
@@ -16,6 +16,7 @@ const SCHEDULE = [
   { job: "integrations", due: (m) => m % 5 === 4 },
   { job: "allocation", due: (m) => m % 10 === 3 },
   { job: "ai", due: (m) => m % 60 === 7 },
+  { job: "pricing", due: (m) => m % 60 === 23 },
   { job: "inventory", due: (m) => m % 1440 === 6 * 60 + 13 }, // daily 06:13 UTC
   { job: "compliance", due: (m) => m % 1440 === 5 * 60 + 47 }, // daily 05:47 UTC
   { job: "buying", due: (m) => m % 15 === 11 }, // recurring orders & quotes, every 15 min (+11)

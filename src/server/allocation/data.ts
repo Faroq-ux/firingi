@@ -47,11 +47,14 @@ export async function listEvents(ctx: Ctx, f: { status?: string; trigger?: strin
 export async function controlTower(ctx: Ctx) {
   assertAllocationManager(ctx);
   const d30 = since(30);
-  const [byStatus, auto, absorbed, open, waiting, recent] = await Promise.all([
+  const [byStatus, auto, absorbed, needsAction, awaitingBuyer, openCount, waiting, recent] = await Promise.all([
     prisma.allocationEvent.groupBy({ by: ["status"], where: { createdAt: { gte: d30 } }, _count: true }),
     prisma.allocationEvent.count({ where: { createdAt: { gte: d30 }, automatic: true, status: { in: ["MOVED", "PARTIAL"] } } }),
     prisma.allocationEvent.aggregate({ where: { createdAt: { gte: d30 } }, _sum: { absorbedNet: true } }),
-    prisma.allocationEvent.findMany({ where: { resolvedAt: null }, include: eventInclude, orderBy: { createdAt: "asc" }, take: 100 }),
+    // cases FIRINGI must act on come first (oldest first); cases waiting for the buyer's answer after them (newest first)
+    prisma.allocationEvent.findMany({ where: { resolvedAt: null, status: { not: "AWAITING_BUYER" } }, include: eventInclude, orderBy: { createdAt: "asc" }, take: 100 }),
+    prisma.allocationEvent.findMany({ where: { resolvedAt: null, status: "AWAITING_BUYER" }, include: eventInclude, orderBy: { createdAt: "desc" }, take: 50 }),
+    prisma.allocationEvent.count({ where: { resolvedAt: null } }),
     prisma.$queryRaw<{ id: string; number: string; seller: string; buyer: string; since: Date; grand: number }[]>`
       SELECT o.id, o.number, coalesce(s."tradeName", s."legalName") AS seller, coalesce(b."tradeName", b."legalName") AS buyer,
              (SELECT max(h.at) FROM "OrderStatusHistory" h WHERE h."orderId" = o.id AND h."toStatus" = 'PENDING_CONFIRMATION') AS since, o."grandTotal"::float8 AS grand
@@ -61,8 +64,9 @@ export async function controlTower(ctx: Ctx) {
   ]);
   const count = (s: AllocationStatus) => byStatus.find((b) => b.status === s)?._count ?? 0;
   const moved = count("MOVED") + count("PARTIAL");
+  const open = [...needsAction, ...awaitingBuyer];
   return {
-    kpis: { moved, autoShare: moved ? auto / moved : 0, open: open.length, absorbed: Number(absorbed._sum.absorbedNet ?? 0), noCandidate: count("NO_CANDIDATE") },
+    kpis: { moved, autoShare: moved ? auto / moved : 0, open: openCount, absorbed: Number(absorbed._sum.absorbedNet ?? 0), noCandidate: count("NO_CANDIDATE") },
     open: open.map((r) => ({ id: r.id, createdAt: r.createdAt, trigger: r.trigger, status: r.status, note: r.note, order: { id: r.order.id, number: r.order.number, buyer: name(r.order.buyer) }, from: name(r.fromVendor) })),
     waiting, recent,
   };

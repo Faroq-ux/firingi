@@ -826,7 +826,9 @@
     "Daily Sales": "Bejgħ ta' Kuljum",
     "Expenses": "Spejjeż",
     "Profit & Loss": "Qligħ u Telf",
-    "Certificates & Compliance": "Ċertifikati u konformità"
+    "Certificates & Compliance": "Ċertifikati u konformità",
+    "Price Insights": "Analiżi tal-prezzijiet",
+    "Price Changes": "Bidliet fil-prezz"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} ċertifikati għal verifika mill-ġdid",
       "body": "Iċċekkjahom mal-emittent u immarkahom bħala ċċekkjati f'Konformità tal-Fornituri."
+    },
+    "price_change_requested": {
+      "title": "Żieda fil-prezz biex tiġi approvata: {product}",
+      "body": "{vendor} irid {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Prezz ġdid approvat: {product}",
+      "body": "FIRINGI approvat {new} €. Japplika minn {date}; il-klijenti tiegħek ġew infurmati."
+    },
+    "price_change_rejected": {
+      "title": "Żieda fil-prezz mhux approvata: {product}",
+      "body": "Ir-raġuni ta' FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Jekk jogħġbok irrevedi l-prezz: {product}",
+      "body": "Il-prezz tiegħek huwa {pct} % 'il bogħod mill-medjan tas-suq għal dan il-prodott. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Il-prezz se jogħla: {product}",
+      "body": "{supplier}: {old} € → {new} € minn {date}. Sa dakinhar tħallas il-prezz attwali."
+    },
+    "price_alerts": {
+      "title": "{count} twissijiet ġodda tal-prezzijiet",
+      "body": "Qabżiet fil-prezz jew prezzijiet 'il bogħod mis-suq — ara l-Intelliġenza tal-Prezzijiet."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Polza tal-assigurazzjoni li tkopri r-responsabbiltà tal-prodott.",
       "TAX_CLEARANCE": "Ċertifikat li ma għandekx dejn tat-taxxa.",
       "SOCIAL_SECURITY_CLEARANCE": "Ċertifikat li ma għandekx dejn tas-sigurtà soċjali."
+    }
+  },
+  "priceIntel": {
+    "held": "Din iż-żieda hija akbar minn dak li FIRINGI tippermetti mingħajr approvazzjoni. Intbagħtet lil FIRINGI; il-klijenti jħallsu l-prezz attwali sakemm tiġi approvata u tasal id-data tagħha. Segwiha fi Prodotti › Analiżi tal-prezzijiet.",
+    "heldShort": "Mibgħut lil FIRINGI għall-approvazzjoni",
+    "title": "Analiżi tal-prezzijiet",
+    "intro": "Kif il-prezzijiet bażi tiegħek iqabblu ma' fornituri oħra tal-istess prodotti, kif inbidlu, u l-bidliet fil-prezz tiegħek li qed jistennew lil FIRINGI.",
+    "ruleInfo": "Żidiet ta' aktar minn {pct} % jeħtieġu l-approvazzjoni ta' FIRINGI; ladarba approvati, il-klijenti li jixtru l-prodott jiġu infurmati u l-prezz il-ġdid jidħol fis-seħħ {days} jiem wara.",
+    "anonHint": "Iċ-ċifri tas-suq ġejjin minn mill-inqas {n} fornituri u qatt ma juru min huma jew il-prezzijiet eżatti tagħhom.",
+    "compared": "{n} minn {total} prodotti mqabbla",
+    "marketTitle": "Il-prezzijiet tiegħek fis-suq",
+    "marketHint": "Prezz bażi għal kull ippakkjar; il-medjan tas-suq għall-istess prodott u ppakkjar. L-aktar għaljin l-ewwel.",
+    "noOffers": "M'għandekx prodotti attivi bi prezz bażi.",
+    "colProduct": "Prodott",
+    "colPrice": "Il-prezz tiegħek",
+    "colMedian": "Medjan tas-suq",
+    "colPosition": "Pożizzjoni",
+    "colVsMedian": "kontra l-medjan",
+    "colTrend": "Il-prezz tiegħek, 6 xhur",
+    "colSuggestion": "Suġġeriment",
+    "notCompared": "Mhux imqabbel",
+    "notEnough": "Inqas minn {n} fornituri — mhux imqabbel",
+    "suggestLower": "Fost l-aktar għaljin. B'{price} jew inqas terġa' tkun f'nofs is-suq.",
+    "suggestBest": "Fost l-orħos — il-klijenti jaraw prezz qawwi.",
+    "requestsTitle": "Bidliet fil-prezz li qed jistennew lil FIRINGI",
+    "requestsHint": "Żidiet kbar u l-istatus tagħhom. Tista' tirtira waħda sakemm ma tidħolx fis-seħħ.",
+    "requestsEmpty": "L-ebda bidla fil-prezz qed tistenna.",
+    "colChange": "Bidla",
+    "colStatus": "Status",
+    "colApplies": "Japplika minn",
+    "colNote": "Nota ta' FIRINGI",
+    "basePrices": "Prezzijiet bażi",
+    "fromQty": "minn {qty}",
+    "cancel": "Irtira",
+    "buyerTitle": "Bidliet fil-prezz",
+    "buyerIntro": "Bidliet fil-prezz tal-prodotti li tixtri, għandek fil-listi jew tordna regolarment. Żidiet akbar tal-fornituri jitħabbru mill-inqas {days} jiem qabel.",
+    "upcomingTitle": "Ġejjin",
+    "upcomingHint": "Żidiet approvati li għadhom ma japplikawx — sad-data tħallas il-prezz attwali.",
+    "upcomingEmpty": "L-ebda żieda fil-prezz ġejja għall-prodotti tiegħek.",
+    "upcomingTip": "Parir: ordna issa bil-prezz attwali, jew ara fornituri oħra.",
+    "toLists": "Il-listi tal-ordnijiet tiegħek",
+    "recentTitle": "Inbidlu fl-aħħar 30 jum",
+    "recentEmpty": "L-ebda bidla fil-prezz fl-aħħar 30 jum.",
+    "recentUp": "Telgħu (30 jum)",
+    "recentDown": "Niżlu (30 jum)",
+    "colSupplier": "Fornitur",
+    "colFrom": "Minn",
+    "colWhen": "Data",
+    "positions": {
+      "CHEAPEST": "Fost l-orħos",
+      "BELOW_MEDIAN": "Taħt il-medjan",
+      "ABOVE_MEDIAN": "Fuq il-medjan",
+      "MOST_EXPENSIVE": "Fost l-aktar għaljin"
+    },
+    "statuses": {
+      "PENDING": "Qed jistenna lil FIRINGI",
+      "APPROVED": "Approvat",
+      "APPLIED": "Applikat",
+      "REJECTED": "Mhux approvat",
+      "CANCELLED": "Irtirat"
     }
   }
 }

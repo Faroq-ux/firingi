@@ -54,6 +54,13 @@ export const EVENTS: EventDef[] = [
   E("compliance.rejected", "account", COMPLIANCE, ["EMAIL"], ["certificate", "reason"], true),
   E("compliance.review", "account", ["admin.vendors.approve", "admin.risk.manage"], ["EMAIL"], ["company", "certificate"]),
   E("compliance.recheck", "account", ["admin.vendors.approve", "admin.risk.manage"], ["EMAIL"], ["count"]),
+  // price intelligence (Phase 29)
+  E("price.change_requested", "catalogue", ["admin.pricing.manage"], ["EMAIL", "PUSH"], ["vendor", "product", "old", "new", "pct"]),
+  E("price.change_approved", "catalogue", ["vendor.pricing.manage", "vendor.products.manage"], ["EMAIL"], ["product", "new", "date"]),
+  E("price.change_rejected", "catalogue", ["vendor.pricing.manage", "vendor.products.manage"], ["EMAIL"], ["product", "reason"]),
+  E("price.review_requested", "catalogue", ["vendor.pricing.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "pct", "message"]),
+  E("price.increase_notice", "catalogue", [...BUYER_ORDERS, "buyer.catalogue.view"], ["EMAIL", "PUSH"], ["product", "supplier", "old", "new", "date"]),
+  E("price.alerts", "catalogue", ["admin.pricing.view", "admin.pricing.manage"], ["PUSH"], ["count"]),
   // catalogue
   E("product.approved", "catalogue", ["vendor.products.view", "vendor.products.manage"], ["EMAIL"], ["product"]),
   E("product.rejected", "catalogue", ["vendor.products.view", "vendor.products.manage"], ["EMAIL"], ["product", "reason"]),

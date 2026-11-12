@@ -192,6 +192,8 @@ model Company {
   recurringExpenses        RecurringExpense[]
   features                 CompanyFeature[]
   certificates             Certificate[]               @relation("CompanyCertificates")
+  priceChangeRequests      PriceChangeRequest[]        @relation("PriceChangeVendor")
+  priceAlerts              PriceAlert[]                @relation("PriceAlertVendor")
   complianceWaivers        ComplianceWaiver[]          @relation("CompanyWaivers")
   roles                    Role[]
   statusHistory            CompanyStatusHistory[]

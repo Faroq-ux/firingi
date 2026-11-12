@@ -600,6 +600,49 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Price intelligence (Phase 29)
+
+FIRINGI › Pricing & Commercial › **Price Intelligence** — Overview, Price Comparison, Price History,
+Price Alerts, Price Change Approvals, Margin Heat-map, Price Suggestions, Price Rules & Approvals
+(English); suppliers › Products › **Price Insights**; customers › Catalogue › **Price Changes**
+(25 languages).
+
+- **Every price change is kept** — a database trigger on `PriceListItem` writes `PriceHistory`
+  (old / new price, change %, base / group / customer / contract list, quantity tier) whatever
+  changed it: the supplier's screens, catalogue imports, the API or the approval job. The history is
+  append-only. The prices that existed at the upgrade start it; `pnpm db:demo-prices` adds six months
+  of earlier demo prices (dev / demo databases only).
+- **Comparison** — per product variant, the base price per unit (a 12-pack counts as 12 units) of
+  every active, visible offer, compared within its market: wholesalers per country, distributors
+  EU-wide; min / median / max, spread, cheapest and dearest supplier. **History**: a step chart per
+  supplier for six months (hover for every supplier's price on a day) plus the table of changes.
+- **Big increases wait for FIRINGI** — a supplier increase above the threshold (default 10 %, on any
+  price list and tier with a current price) isn't applied: it becomes a request FIRINGI approves
+  (with the market median beside it) or rejects with a reason. An approved increase applies at least
+  the notice days later (default 7); customers who bought the product in the last 90 days, keep it in
+  an order list or recurring order — or the customers of the group / contract list — are told right
+  away (`price.increase_notice`) and see it under **Price Changes**; until the date they pay the old
+  price. The supplier can withdraw a request until it applies; a newer price for the same item
+  replaces it. Decreases, small increases and new prices apply at once.
+- **Alerts** (hourly job `pricing`, `/api/cron/pricing`, scheduler :23): a base price up ≥ 15 %
+  within 7 days, or ≥ 30 % above / below the median of the same product (markets with 3+ suppliers).
+  Alerts close by themselves when the price is back in line; dismissed alerts stay dismissed while
+  the price is the same. The same job applies approved increases on their date. FIRINGI can ask a
+  supplier to review a price (`price.review_requested`).
+- **Margin heat-map** — FIRINGI's margin (what customers paid net − what FIRINGI pays the supplier)
+  per top category × supplier / customer type / customer country, 30 days to 12 months; one-hue scale.
+- **Suggestions** (FIRINGI decides; nothing is applied automatically) — suppliers whose margin over
+  90 days is under the margin rule: suggested commission and what it would have earned (applying it
+  uses the normal commission change, incl. four-eyes); offers far above / below the market: ask the
+  supplier to review / check for a typo.
+- **Supplier price insights** — each product's position (among the cheapest, below / above the
+  median, among the most expensive), the market median and % difference, a 6-month sparkline of its
+  own price and a suggestion. Markets are only shown with at least 3 suppliers and never name
+  competitors or show their exact prices.
+- All thresholds are in **Price Rules & Approvals** (`pricing.intel` setting). Notifications:
+  `price.change_requested`, `price.alerts` (FIRINGI), `price.change_approved`, `price.change_rejected`,
+  `price.review_requested` (suppliers), `price.increase_notice` (customers).
+
 ## Supplier compliance (Phase 28)
 
 Suppliers › Company › **Certificates & Compliance** (25 languages); FIRINGI › Vendors › **Supplier

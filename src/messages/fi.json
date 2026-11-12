@@ -826,7 +826,9 @@
     "Daily Sales": "Päivittäinen Myynti",
     "Expenses": "Kulut",
     "Profit & Loss": "Tuloslaskelma",
-    "Certificates & Compliance": "Todistukset ja vaatimustenmukaisuus"
+    "Certificates & Compliance": "Todistukset ja vaatimustenmukaisuus",
+    "Price Insights": "Hinta-analyysi",
+    "Price Changes": "Hinnanmuutokset"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} todistusta odottaa uudelleentarkistusta",
       "body": "Tarkista ne myöntäjältä ja merkitse tarkistetuiksi kohdassa Toimittajien vaatimustenmukaisuus."
+    },
+    "price_change_requested": {
+      "title": "Hyväksyttävä hinnankorotus: {product}",
+      "body": "{vendor} haluaa {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Uusi hinta hyväksytty: {product}",
+      "body": "FIRINGI hyväksyi {new} €. Se tulee voimaan {date}; asiakkaillesi on ilmoitettu."
+    },
+    "price_change_rejected": {
+      "title": "Hinnankorotusta ei hyväksytty: {product}",
+      "body": "FIRINGIn perustelu: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Tarkista hintasi: {product}",
+      "body": "Hintasi poikkeaa {pct} % tämän tuotteen markkinamediaanista. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Hinta nousee: {product}",
+      "body": "{supplier}: {old} € → {new} € alkaen {date}. Siihen asti maksat nykyistä hintaa."
+    },
+    "price_alerts": {
+      "title": "{count} uutta hintahälytystä",
+      "body": "Hintahyppyjä tai markkinoista poikkeavia hintoja — katso Hintatieto."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Tuotevastuun kattava vakuutus.",
       "TAX_CLEARANCE": "Todistus siitä, ettei sinulla ole verovelkaa.",
       "SOCIAL_SECURITY_CLEARANCE": "Todistus siitä, ettei sinulla ole sosiaaliturvamaksuvelkaa."
+    }
+  },
+  "priceIntel": {
+    "held": "Tämä korotus on suurempi kuin FIRINGI sallii ilman hyväksyntää. Se on lähetetty FIRINGIlle; asiakkaat maksavat nykyistä hintaa, kunnes korotus on hyväksytty ja sen päivä koittaa. Seuraa sitä kohdassa Tuotteet › Hinta-analyysi.",
+    "heldShort": "Lähetetty FIRINGIlle hyväksyttäväksi",
+    "title": "Hinta-analyysi",
+    "intro": "Miten perushintasi vertautuvat samojen tuotteiden muihin toimittajiin, miten ne ovat muuttuneet ja FIRINGIä odottavat hinnanmuutoksesi.",
+    "ruleInfo": "Yli {pct} %:n korotukset tarvitsevat FIRINGIn hyväksynnän; hyväksynnän jälkeen tuotetta ostaville asiakkaille ilmoitetaan ja uusi hinta tulee voimaan {days} päivän kuluttua.",
+    "anonHint": "Markkinaluvut perustuvat vähintään {n} toimittajaan eivätkä koskaan paljasta, keitä he ovat tai heidän tarkkoja hintojaan.",
+    "compared": "{n}/{total} tuotetta verrattu",
+    "marketTitle": "Hintasi markkinoilla",
+    "marketHint": "Perushinta pakkausta kohden; saman tuotteen ja pakkauksen markkinamediaani. Kalleimmat ensin.",
+    "noOffers": "Sinulla ei ole aktiivisia tuotteita, joilla on perushinta.",
+    "colProduct": "Tuote",
+    "colPrice": "Hintasi",
+    "colMedian": "Markkinamediaani",
+    "colPosition": "Sijoitus",
+    "colVsMedian": "vs. mediaani",
+    "colTrend": "Hintasi, 6 kk",
+    "colSuggestion": "Ehdotus",
+    "notCompared": "Ei verrattu",
+    "notEnough": "Alle {n} toimittajaa — ei verrattu",
+    "suggestLower": "Kalleimpien joukossa. Hinnalla {price} tai alle olisit taas markkinoiden keskivaiheilla.",
+    "suggestBest": "Edullisimpien joukossa — asiakkaat näkevät vahvan hinnan.",
+    "requestsTitle": "FIRINGIä odottavat hinnanmuutokset",
+    "requestsHint": "Suuret korotukset ja niiden tila. Voit perua korotuksen, kunnes se tulee voimaan.",
+    "requestsEmpty": "Ei odottavia hinnanmuutoksia.",
+    "colChange": "Muutos",
+    "colStatus": "Tila",
+    "colApplies": "Voimassa alkaen",
+    "colNote": "FIRINGIn huomautus",
+    "basePrices": "Perushinnat",
+    "fromQty": "alkaen {qty}",
+    "cancel": "Peru",
+    "buyerTitle": "Hinnanmuutokset",
+    "buyerIntro": "Ostamiesi, listoillasi olevien tai säännöllisesti tilaamiesi tuotteiden hinnanmuutokset. Toimittajien suuremmista korotuksista ilmoitetaan vähintään {days} päivää etukäteen.",
+    "upcomingTitle": "Tulossa",
+    "upcomingHint": "Hyväksytyt korotukset, jotka eivät ole vielä voimassa — siihen asti maksat nykyistä hintaa.",
+    "upcomingEmpty": "Tuotteillesi ei ole tulossa hinnankorotuksia.",
+    "upcomingTip": "Vinkki: tilaa nyt nykyiseen hintaan tai katso muita toimittajia.",
+    "toLists": "Tilauslistasi",
+    "recentTitle": "Muuttuneet viim. 30 päivänä",
+    "recentEmpty": "Ei hinnanmuutoksia viimeisten 30 päivän aikana.",
+    "recentUp": "Nousseet (30 pv)",
+    "recentDown": "Laskeneet (30 pv)",
+    "colSupplier": "Toimittaja",
+    "colFrom": "Alkaen",
+    "colWhen": "Päivä",
+    "positions": {
+      "CHEAPEST": "Edullisimpien joukossa",
+      "BELOW_MEDIAN": "Mediaanin alapuolella",
+      "ABOVE_MEDIAN": "Mediaanin yläpuolella",
+      "MOST_EXPENSIVE": "Kalleimpien joukossa"
+    },
+    "statuses": {
+      "PENDING": "Odottaa FIRINGIä",
+      "APPROVED": "Hyväksytty",
+      "APPLIED": "Voimassa",
+      "REJECTED": "Ei hyväksytty",
+      "CANCELLED": "Peruttu"
     }
   }
 }

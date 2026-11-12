@@ -1284,6 +1284,30 @@
     "compliance_recheck": {
       "title": "{count} certificates due for a re-check",
       "body": "Check them with the issuer and mark them re-checked in Supplier Compliance."
+    },
+    "price_change_requested": {
+      "title": "Price increase to approve: {product}",
+      "body": "{vendor} wants {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "New price approved: {product}",
+      "body": "FIRINGI approved {new} €. It applies on {date}; your customers have been told."
+    },
+    "price_change_rejected": {
+      "title": "Price increase not approved: {product}",
+      "body": "FIRINGI's reason: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Please review your price: {product}",
+      "body": "Your price is {pct} % from the market median for this product. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Price going up: {product}",
+      "body": "{supplier}: {old} € → {new} € from {date}. Until then you pay the current price."
+    },
+    "price_alerts": {
+      "title": "{count} new price alerts",
+      "body": "Price jumps or prices far from the market — see Price Intelligence."
     }
   },
   "notifications": {
@@ -3206,6 +3230,66 @@
       "LIABILITY_INSURANCE": "Insurance policy covering product liability.",
       "TAX_CLEARANCE": "Certificate that you have no tax debt (PT: certidão de não dívida — Finanças).",
       "SOCIAL_SECURITY_CLEARANCE": "Certificate that you have no social security debt (PT: Segurança Social)."
+    }
+  },
+  "priceIntel": {
+    "held": "This increase is bigger than FIRINGI allows without approval. It has been sent to FIRINGI; customers keep the current price until it's approved and its date comes. Follow it in Products › Price Insights.",
+    "heldShort": "Sent to FIRINGI for approval",
+    "title": "Price insights",
+    "intro": "How your base prices compare with other suppliers of the same products, how they changed, and your price changes waiting for FIRINGI.",
+    "ruleInfo": "Increases above {pct} % need FIRINGI's approval; once approved, customers who buy the product are told and the new price applies {days} days later.",
+    "anonHint": "Market figures come from at least {n} suppliers and never show who they are or their exact prices.",
+    "compared": "{n} of {total} products compared",
+    "marketTitle": "Your prices in the market",
+    "marketHint": "Base price per pack; market median for the same product and pack size. Most expensive first.",
+    "noOffers": "You have no active products with a base price.",
+    "colProduct": "Product",
+    "colPrice": "Your price",
+    "colMedian": "Market median",
+    "colPosition": "Position",
+    "colVsMedian": "vs. median",
+    "colTrend": "Your price, 6 months",
+    "colSuggestion": "Suggestion",
+    "notCompared": "Not compared",
+    "notEnough": "Fewer than {n} suppliers — not compared",
+    "suggestLower": "Among the most expensive. At {price} or less you'd be back in the middle of the market.",
+    "suggestBest": "Among the cheapest — customers see a strong price.",
+    "requestsTitle": "Price changes waiting for FIRINGI",
+    "requestsHint": "Big increases and their status. You can withdraw one until it applies.",
+    "requestsEmpty": "No price changes waiting.",
+    "colChange": "Change",
+    "colStatus": "Status",
+    "colApplies": "Applies on",
+    "colNote": "FIRINGI's note",
+    "basePrices": "Base prices",
+    "fromQty": "from {qty}",
+    "cancel": "Withdraw",
+    "buyerTitle": "Price changes",
+    "buyerIntro": "Price changes of the products you buy, have in your lists or order regularly. Suppliers' bigger increases are announced at least {days} days before they apply.",
+    "upcomingTitle": "Coming up",
+    "upcomingHint": "Approved increases that haven't applied yet — until the date you pay the current price.",
+    "upcomingEmpty": "No price increases coming up for your products.",
+    "upcomingTip": "Tip: order now at the current price, or look at other suppliers.",
+    "toLists": "Your order lists",
+    "recentTitle": "Changed in the last 30 days",
+    "recentEmpty": "No price changes in the last 30 days.",
+    "recentUp": "Went up (30 days)",
+    "recentDown": "Went down (30 days)",
+    "colSupplier": "Supplier",
+    "colFrom": "From",
+    "colWhen": "Date",
+    "positions": {
+      "CHEAPEST": "Among the cheapest",
+      "BELOW_MEDIAN": "Below the median",
+      "ABOVE_MEDIAN": "Above the median",
+      "MOST_EXPENSIVE": "Among the most expensive"
+    },
+    "statuses": {
+      "PENDING": "Waiting for FIRINGI",
+      "APPROVED": "Approved",
+      "APPLIED": "Applied",
+      "REJECTED": "Not approved",
+      "CANCELLED": "Withdrawn"
     }
   }
 }

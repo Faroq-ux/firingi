@@ -9,6 +9,7 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "./audit";
+import { holdForApproval } from "@/server/price-intel/service";
 
 function requirePricing(ctx: Ctx) {
   if ((ctx.company.type !== "DISTRIBUTOR" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "vendor.pricing.manage"))
@@ -94,8 +95,12 @@ export async function getOwnPriceList(ctx: Ctx, id: string) {
   return pl;
 }
 
-/** Set (create or replace) the price of one of the vendor's offers at a quantity tier. */
-export async function setPrice(ctx: Ctx, priceListId: string, offerId: string, minQty: number, unitPriceNet: string | number) {
+/**
+ * Set (create or replace) the price of one of the vendor's offers at a quantity tier.
+ * Phase 29: an increase above FIRINGI's threshold isn't applied — it waits for FIRINGI's approval
+ * (returned as `held`) and is announced to customers before it applies.
+ */
+export async function setPrice(ctx: Ctx, priceListId: string, offerId: string, minQty: number, unitPriceNet: string | number, reason?: string | null): Promise<{ held: string | null }> {
   requirePricing(ctx);
   const price = new Decimal(unitPriceNet);
   if (!price.isFinite() || price.lte(0)) throw new ValidationError("Price must be greater than 0.");
@@ -104,12 +109,17 @@ export async function setPrice(ctx: Ctx, priceListId: string, offerId: string, m
   if (!pl) throw new NotFoundError("Price list");
   if (!(await prisma.vendorOffer.findFirst({ where: { id: offerId, vendorCompanyId: ctx.company.id } }))) throw new NotFoundError("Offer");
   const before = await prisma.priceListItem.findUnique({ where: { priceListId_offerId_minQty: { priceListId, offerId, minQty } } });
+  // holdForApproval also withdraws an open request for this price (the supplier changed their mind)
+  const held = await holdForApproval(ctx, pl, offerId, minQty, before ? new Decimal(before.unitPriceNet.toString()) : null, price, reason);
+  if (held) return { held };
+  if (before && new Decimal(before.unitPriceNet.toString()).eq(price)) return { held: null };
   await prisma.priceListItem.upsert({
     where: { priceListId_offerId_minQty: { priceListId, offerId, minQty } },
     update: { unitPriceNet: price.toFixed(4) },
     create: { priceListId, offerId, minQty, unitPriceNet: price.toFixed(4) },
   });
   await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "price.set", entityType: "PriceList", entityId: priceListId, before: before ? { offerId, minQty, price: before.unitPriceNet.toString() } : null, after: { offerId, minQty, price: price.toFixed(4) } });
+  return { held: null };
 }
 
 export async function removePrice(ctx: Ctx, itemId: string) {

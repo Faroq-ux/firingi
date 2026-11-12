@@ -826,7 +826,9 @@
     "Daily Sales": "Denní Tržby",
     "Expenses": "Výdaje",
     "Profit & Loss": "Zisk a Ztráta",
-    "Certificates & Compliance": "Certifikáty a shoda"
+    "Certificates & Compliance": "Certifikáty a shoda",
+    "Price Insights": "Analýza cen",
+    "Price Changes": "Změny cen"
   },
   "delivery": {
     "title": "Doručení",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certifikátů k opětovné kontrole",
       "body": "Ověřte je u vydavatele a označte jako zkontrolované v Shodě dodavatelů."
+    },
+    "price_change_requested": {
+      "title": "Zvýšení ceny ke schválení: {product}",
+      "body": "{vendor} chce {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nová cena schválena: {product}",
+      "body": "FIRINGI schválilo {new} €. Platí od {date}; vaši zákazníci byli informováni."
+    },
+    "price_change_rejected": {
+      "title": "Zvýšení ceny neschváleno: {product}",
+      "body": "Důvod FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Zkontrolujte prosím svou cenu: {product}",
+      "body": "Vaše cena se od tržního mediánu tohoto produktu liší o {pct} %. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Cena se zvýší: {product}",
+      "body": "{supplier}: {old} € → {new} € od {date}. Do té doby platíte současnou cenu."
+    },
+    "price_alerts": {
+      "title": "{count} nových cenových upozornění",
+      "body": "Cenové skoky nebo ceny daleko od trhu — viz Cenová inteligence."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Pojistná smlouva kryjící odpovědnost za výrobek.",
       "TAX_CLEARANCE": "Potvrzení, že nemáte daňové nedoplatky.",
       "SOCIAL_SECURITY_CLEARANCE": "Potvrzení, že nemáte nedoplatky na sociálním pojištění."
+    }
+  },
+  "priceIntel": {
+    "held": "Toto zvýšení je větší, než FIRINGI povoluje bez schválení. Bylo odesláno FIRINGI; zákazníci platí současnou cenu, dokud nebude schváleno a nenastane jeho datum. Sledujte je v Produkty › Analýza cen.",
+    "heldShort": "Odesláno FIRINGI ke schválení",
+    "title": "Analýza cen",
+    "intro": "Jak si vaše základní ceny stojí vůči ostatním dodavatelům stejných produktů, jak se měnily, a vaše změny cen čekající na FIRINGI.",
+    "ruleInfo": "Zvýšení nad {pct} % vyžadují schválení FIRINGI; po schválení jsou zákazníci, kteří produkt kupují, informováni a nová cena platí o {days} dní později.",
+    "anonHint": "Tržní údaje pocházejí od nejméně {n} dodavatelů a nikdy neukazují, kdo to je, ani jejich přesné ceny.",
+    "compared": "Porovnáno {n} z {total} produktů",
+    "marketTitle": "Vaše ceny na trhu",
+    "marketHint": "Základní cena za balení; tržní medián pro stejný produkt a balení. Nejdražší první.",
+    "noOffers": "Nemáte žádné aktivní produkty se základní cenou.",
+    "colProduct": "Produkt",
+    "colPrice": "Vaše cena",
+    "colMedian": "Tržní medián",
+    "colPosition": "Pozice",
+    "colVsMedian": "vůči mediánu",
+    "colTrend": "Vaše cena, 6 měsíců",
+    "colSuggestion": "Návrh",
+    "notCompared": "Neporovnáno",
+    "notEnough": "Méně než {n} dodavatelů — neporovnáno",
+    "suggestLower": "Mezi nejdražšími. Za {price} nebo méně byste byli opět uprostřed trhu.",
+    "suggestBest": "Mezi nejlevnějšími — zákazníci vidí silnou cenu.",
+    "requestsTitle": "Změny cen čekající na FIRINGI",
+    "requestsHint": "Velká zvýšení a jejich stav. Zvýšení můžete stáhnout, dokud nezačne platit.",
+    "requestsEmpty": "Žádné čekající změny cen.",
+    "colChange": "Změna",
+    "colStatus": "Stav",
+    "colApplies": "Platí od",
+    "colNote": "Poznámka FIRINGI",
+    "basePrices": "Základní ceny",
+    "fromQty": "od {qty}",
+    "cancel": "Stáhnout",
+    "buyerTitle": "Změny cen",
+    "buyerIntro": "Změny cen produktů, které kupujete, máte v seznamech nebo pravidelně objednáváte. Větší zvýšení dodavatelů jsou oznámena nejméně {days} dní předem.",
+    "upcomingTitle": "Chystané",
+    "upcomingHint": "Schválená zvýšení, která ještě neplatí — do data platíte současnou cenu.",
+    "upcomingEmpty": "Pro vaše produkty se nechystají žádná zvýšení cen.",
+    "upcomingTip": "Tip: objednejte teď za současnou cenu nebo se podívejte na jiné dodavatele.",
+    "toLists": "Vaše objednací seznamy",
+    "recentTitle": "Změněno za posledních 30 dní",
+    "recentEmpty": "Za posledních 30 dní žádné změny cen.",
+    "recentUp": "Zdražilo (30 dní)",
+    "recentDown": "Zlevnilo (30 dní)",
+    "colSupplier": "Dodavatel",
+    "colFrom": "Od",
+    "colWhen": "Datum",
+    "positions": {
+      "CHEAPEST": "Mezi nejlevnějšími",
+      "BELOW_MEDIAN": "Pod mediánem",
+      "ABOVE_MEDIAN": "Nad mediánem",
+      "MOST_EXPENSIVE": "Mezi nejdražšími"
+    },
+    "statuses": {
+      "PENDING": "Čeká na FIRINGI",
+      "APPROVED": "Schváleno",
+      "APPLIED": "Uplatněno",
+      "REJECTED": "Neschváleno",
+      "CANCELLED": "Staženo"
     }
   }
 }

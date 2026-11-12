@@ -826,7 +826,9 @@
     "Daily Sales": "Dagligt Salg",
     "Expenses": "Udgifter",
     "Profit & Loss": "Resultatopgørelse",
-    "Certificates & Compliance": "Certifikater og compliance"
+    "Certificates & Compliance": "Certifikater og compliance",
+    "Price Insights": "Prisanalyse",
+    "Price Changes": "Prisændringer"
   },
   "delivery": {
     "title": "Levering",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certifikater skal kontrolleres igen",
       "body": "Kontrollér dem hos udstederen, og markér dem som kontrolleret i Leverandør-compliance."
+    },
+    "price_change_requested": {
+      "title": "Prisstigning til godkendelse: {product}",
+      "body": "{vendor} ønsker {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Ny pris godkendt: {product}",
+      "body": "FIRINGI har godkendt {new} €. Den gælder fra {date}; dine kunder har fået besked."
+    },
+    "price_change_rejected": {
+      "title": "Prisstigning ikke godkendt: {product}",
+      "body": "FIRINGI's begrundelse: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Se venligst på din pris: {product}",
+      "body": "Din pris ligger {pct} % fra markedsmedianen for dette produkt. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Prisen stiger: {product}",
+      "body": "{supplier}: {old} € → {new} € fra {date}. Indtil da betaler du den nuværende pris."
+    },
+    "price_alerts": {
+      "title": "{count} nye prisalarmer",
+      "body": "Prisspring eller priser langt fra markedet — se Prisintelligens."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Forsikringspolice, der dækker produktansvar.",
       "TAX_CLEARANCE": "Erklæring om, at du ikke har skattegæld.",
       "SOCIAL_SECURITY_CLEARANCE": "Erklæring om, at du ikke har gæld til sociale bidrag."
+    }
+  },
+  "priceIntel": {
+    "held": "Denne stigning er større, end FIRINGI tillader uden godkendelse. Den er sendt til FIRINGI; kunderne beholder den nuværende pris, indtil den er godkendt og datoen er nået. Følg den under Produkter › Prisanalyse.",
+    "heldShort": "Sendt til FIRINGI til godkendelse",
+    "title": "Prisanalyse",
+    "intro": "Hvordan dine grundpriser ligger i forhold til andre leverandører af de samme produkter, hvordan de har ændret sig, og dine prisændringer, der venter på FIRINGI.",
+    "ruleInfo": "Stigninger over {pct} % kræver FIRINGI's godkendelse; når de er godkendt, får kunder, der køber produktet, besked, og den nye pris gælder {days} dage senere.",
+    "anonHint": "Markedstal kommer fra mindst {n} leverandører og viser aldrig, hvem de er, eller deres præcise priser.",
+    "compared": "{n} af {total} produkter sammenlignet",
+    "marketTitle": "Dine priser på markedet",
+    "marketHint": "Grundpris pr. pakning; markedsmedian for samme produkt og pakning. Dyreste først.",
+    "noOffers": "Du har ingen aktive produkter med grundpris.",
+    "colProduct": "Produkt",
+    "colPrice": "Din pris",
+    "colMedian": "Markedsmedian",
+    "colPosition": "Placering",
+    "colVsMedian": "ift. median",
+    "colTrend": "Din pris, 6 måneder",
+    "colSuggestion": "Forslag",
+    "notCompared": "Ikke sammenlignet",
+    "notEnough": "Færre end {n} leverandører — ikke sammenlignet",
+    "suggestLower": "Blandt de dyreste. Til {price} eller mindre ville du være tilbage midt i markedet.",
+    "suggestBest": "Blandt de billigste — kunderne ser en stærk pris.",
+    "requestsTitle": "Prisændringer, der venter på FIRINGI",
+    "requestsHint": "Store stigninger og deres status. Du kan trække en tilbage, indtil den gælder.",
+    "requestsEmpty": "Ingen ventende prisændringer.",
+    "colChange": "Ændring",
+    "colStatus": "Status",
+    "colApplies": "Gælder fra",
+    "colNote": "FIRINGI's note",
+    "basePrices": "Grundpriser",
+    "fromQty": "fra {qty}",
+    "cancel": "Træk tilbage",
+    "buyerTitle": "Prisændringer",
+    "buyerIntro": "Prisændringer på produkter, du køber, har på dine lister eller bestiller fast. Leverandørernes større stigninger annonceres mindst {days} dage før.",
+    "upcomingTitle": "Kommende",
+    "upcomingHint": "Godkendte stigninger, der endnu ikke gælder — indtil datoen betaler du den nuværende pris.",
+    "upcomingEmpty": "Ingen kommende prisstigninger på dine produkter.",
+    "upcomingTip": "Tip: bestil nu til den nuværende pris, eller se på andre leverandører.",
+    "toLists": "Dine bestillingslister",
+    "recentTitle": "Ændret de sidste 30 dage",
+    "recentEmpty": "Ingen prisændringer de sidste 30 dage.",
+    "recentUp": "Steget (30 dage)",
+    "recentDown": "Faldet (30 dage)",
+    "colSupplier": "Leverandør",
+    "colFrom": "Fra",
+    "colWhen": "Dato",
+    "positions": {
+      "CHEAPEST": "Blandt de billigste",
+      "BELOW_MEDIAN": "Under medianen",
+      "ABOVE_MEDIAN": "Over medianen",
+      "MOST_EXPENSIVE": "Blandt de dyreste"
+    },
+    "statuses": {
+      "PENDING": "Venter på FIRINGI",
+      "APPROVED": "Godkendt",
+      "APPLIED": "Anvendt",
+      "REJECTED": "Ikke godkendt",
+      "CANCELLED": "Trukket tilbage"
     }
   }
 }

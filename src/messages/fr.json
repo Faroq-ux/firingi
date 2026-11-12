@@ -826,7 +826,9 @@
     "Daily Sales": "Ventes du Jour",
     "Expenses": "Dépenses",
     "Profit & Loss": "Compte de Résultat",
-    "Certificates & Compliance": "Certificats et conformité"
+    "Certificates & Compliance": "Certificats et conformité",
+    "Price Insights": "Analyse des prix",
+    "Price Changes": "Changements de prix"
   },
   "delivery": {
     "title": "Livraison",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certificats à revérifier",
       "body": "Vérifiez-les auprès de l'émetteur et marquez-les comme revérifiés dans Conformité des fournisseurs."
+    },
+    "price_change_requested": {
+      "title": "Hausse de prix à approuver : {product}",
+      "body": "{vendor} demande {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nouveau prix approuvé : {product}",
+      "body": "FIRINGI a approuvé {new} €. Il s'applique le {date} ; vos clients ont été prévenus."
+    },
+    "price_change_rejected": {
+      "title": "Hausse de prix non approuvée : {product}",
+      "body": "Motif de FIRINGI : {reason}"
+    },
+    "price_review_requested": {
+      "title": "Merci de revoir votre prix : {product}",
+      "body": "Votre prix est à {pct} % de la médiane du marché pour ce produit. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Hausse de prix : {product}",
+      "body": "{supplier} : {old} € → {new} € à partir du {date}. D'ici là, vous payez le prix actuel."
+    },
+    "price_alerts": {
+      "title": "{count} nouvelles alertes de prix",
+      "body": "Hausses de prix ou prix éloignés du marché — voir Intelligence des prix."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Police d'assurance couvrant la responsabilité du fait des produits.",
       "TAX_CLEARANCE": "Attestation que vous n'avez pas de dettes fiscales.",
       "SOCIAL_SECURITY_CLEARANCE": "Attestation que vous n'avez pas de dettes sociales."
+    }
+  },
+  "priceIntel": {
+    "held": "Cette hausse dépasse ce que FIRINGI autorise sans approbation. Elle a été envoyée à FIRINGI ; les clients gardent le prix actuel jusqu'à son approbation et sa date d'effet. Suivez-la dans Produits › Analyse des prix.",
+    "heldShort": "Envoyé à FIRINGI pour approbation",
+    "title": "Analyse des prix",
+    "intro": "Comment vos prix de base se situent par rapport aux autres fournisseurs des mêmes produits, leur évolution, et vos changements de prix en attente de FIRINGI.",
+    "ruleInfo": "Les hausses de plus de {pct} % nécessitent l'approbation de FIRINGI ; une fois approuvées, les clients qui achètent le produit sont prévenus et le nouveau prix s'applique {days} jours plus tard.",
+    "anonHint": "Les chiffres du marché proviennent d'au moins {n} fournisseurs et ne révèlent jamais qui ils sont ni leurs prix exacts.",
+    "compared": "{n} produits comparés sur {total}",
+    "marketTitle": "Vos prix sur le marché",
+    "marketHint": "Prix de base par conditionnement ; médiane du marché pour le même produit et conditionnement. Les plus chers d'abord.",
+    "noOffers": "Vous n'avez aucun produit actif avec un prix de base.",
+    "colProduct": "Produit",
+    "colPrice": "Votre prix",
+    "colMedian": "Médiane du marché",
+    "colPosition": "Position",
+    "colVsMedian": "vs médiane",
+    "colTrend": "Votre prix, 6 mois",
+    "colSuggestion": "Suggestion",
+    "notCompared": "Non comparé",
+    "notEnough": "Moins de {n} fournisseurs — non comparé",
+    "suggestLower": "Parmi les plus chers. À {price} ou moins, vous reviendriez au milieu du marché.",
+    "suggestBest": "Parmi les moins chers — les clients voient un prix fort.",
+    "requestsTitle": "Changements de prix en attente de FIRINGI",
+    "requestsHint": "Les fortes hausses et leur statut. Vous pouvez en retirer une tant qu'elle ne s'applique pas.",
+    "requestsEmpty": "Aucun changement de prix en attente.",
+    "colChange": "Changement",
+    "colStatus": "Statut",
+    "colApplies": "S'applique le",
+    "colNote": "Note de FIRINGI",
+    "basePrices": "Prix de base",
+    "fromQty": "à partir de {qty}",
+    "cancel": "Retirer",
+    "buyerTitle": "Changements de prix",
+    "buyerIntro": "Les changements de prix des produits que vous achetez, avez dans vos listes ou commandez régulièrement. Les fortes hausses des fournisseurs sont annoncées au moins {days} jours avant de s'appliquer.",
+    "upcomingTitle": "À venir",
+    "upcomingHint": "Hausses approuvées pas encore appliquées — jusqu'à la date vous payez le prix actuel.",
+    "upcomingEmpty": "Aucune hausse de prix à venir pour vos produits.",
+    "upcomingTip": "Astuce : commandez maintenant au prix actuel, ou regardez d'autres fournisseurs.",
+    "toLists": "Vos listes de commande",
+    "recentTitle": "Modifiés ces 30 derniers jours",
+    "recentEmpty": "Aucun changement de prix ces 30 derniers jours.",
+    "recentUp": "En hausse (30 jours)",
+    "recentDown": "En baisse (30 jours)",
+    "colSupplier": "Fournisseur",
+    "colFrom": "À partir du",
+    "colWhen": "Date",
+    "positions": {
+      "CHEAPEST": "Parmi les moins chers",
+      "BELOW_MEDIAN": "Sous la médiane",
+      "ABOVE_MEDIAN": "Au-dessus de la médiane",
+      "MOST_EXPENSIVE": "Parmi les plus chers"
+    },
+    "statuses": {
+      "PENDING": "En attente de FIRINGI",
+      "APPROVED": "Approuvé",
+      "APPLIED": "Appliqué",
+      "REJECTED": "Non approuvé",
+      "CANCELLED": "Retiré"
     }
   }
 }

@@ -826,7 +826,9 @@
     "Daily Sales": "Napi Forgalom",
     "Expenses": "Kiadások",
     "Profit & Loss": "Eredménykimutatás",
-    "Certificates & Compliance": "Tanúsítványok és megfelelőség"
+    "Certificates & Compliance": "Tanúsítványok és megfelelőség",
+    "Price Insights": "Árelemzés",
+    "Price Changes": "Árváltozások"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} tanúsítvány újraellenőrzése esedékes",
       "body": "Ellenőrizze őket a kiállítónál, és jelölje ellenőrzöttnek a Beszállítói megfelelőségben."
+    },
+    "price_change_requested": {
+      "title": "Jóváhagyandó áremelés: {product}",
+      "body": "{vendor} ezt kéri: {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Új ár jóváhagyva: {product}",
+      "body": "A FIRINGI jóváhagyta: {new} €. Érvényes ettől: {date}; vevőit értesítettük."
+    },
+    "price_change_rejected": {
+      "title": "Áremelés nincs jóváhagyva: {product}",
+      "body": "A FIRINGI indoka: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Kérjük, nézze át az árát: {product}",
+      "body": "Az Ön ára {pct} %-kal tér el a termék piaci mediánjától. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Árnövekedés: {product}",
+      "body": "{supplier}: {old} € → {new} € ettől: {date}. Addig a jelenlegi árat fizeti."
+    },
+    "price_alerts": {
+      "title": "{count} új árriasztás",
+      "body": "Árugrások vagy a piactól távoli árak — lásd Árintelligencia."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Termékfelelősséget fedező biztosítási kötvény.",
       "TAX_CLEARANCE": "Igazolás arról, hogy nincs adótartozása.",
       "SOCIAL_SECURITY_CLEARANCE": "Igazolás arról, hogy nincs társadalombiztosítási tartozása."
+    }
+  },
+  "priceIntel": {
+    "held": "Ez az emelés nagyobb, mint amit a FIRINGI jóváhagyás nélkül enged. Elküldtük a FIRINGI-nek; a vevők a jelenlegi árat fizetik, amíg jóvá nem hagyják és el nem jön a dátuma. Kövesse a Termékek › Árelemzés alatt.",
+    "heldShort": "Jóváhagyásra elküldve a FIRINGI-nek",
+    "title": "Árelemzés",
+    "intro": "Hogyan viszonyulnak alapárai ugyanazon termékek más beszállítóihoz, hogyan változtak, és a FIRINGI-re váró árváltozásai.",
+    "ruleInfo": "A {pct} % feletti emelésekhez a FIRINGI jóváhagyása kell; jóváhagyás után a terméket vásárló vevők értesítést kapnak, és az új ár {days} nappal később lép életbe.",
+    "anonHint": "A piaci adatok legalább {n} beszállítótól származnak, és soha nem mutatják meg, kik ők, sem pontos áraikat.",
+    "compared": "{total} termékből {n} összehasonlítva",
+    "marketTitle": "Az Ön árai a piacon",
+    "marketHint": "Alapár csomagonként; piaci medián ugyanarra a termékre és kiszerelésre. A legdrágábbak elöl.",
+    "noOffers": "Nincs aktív, alapárral rendelkező terméke.",
+    "colProduct": "Termék",
+    "colPrice": "Az Ön ára",
+    "colMedian": "Piaci medián",
+    "colPosition": "Helyezés",
+    "colVsMedian": "a mediánhoz képest",
+    "colTrend": "Az Ön ára, 6 hónap",
+    "colSuggestion": "Javaslat",
+    "notCompared": "Nincs összehasonlítva",
+    "notEnough": "{n}-nál kevesebb beszállító — nincs összehasonlítva",
+    "suggestLower": "A legdrágábbak között. {price} vagy kevesebb áron ismét a piac közepén lenne.",
+    "suggestBest": "A legolcsóbbak között — a vevők erős árat látnak.",
+    "requestsTitle": "A FIRINGI-re váró árváltozások",
+    "requestsHint": "Nagy emelések és állapotuk. Visszavonhat egyet, amíg életbe nem lép.",
+    "requestsEmpty": "Nincs váró árváltozás.",
+    "colChange": "Változás",
+    "colStatus": "Állapot",
+    "colApplies": "Érvényes ettől",
+    "colNote": "A FIRINGI megjegyzése",
+    "basePrices": "Alapárak",
+    "fromQty": "{qty}-tól",
+    "cancel": "Visszavonás",
+    "buyerTitle": "Árváltozások",
+    "buyerIntro": "Az Ön által vásárolt, listáin szereplő vagy rendszeresen rendelt termékek árváltozásai. A beszállítók nagyobb emeléseit legalább {days} nappal előre bejelentik.",
+    "upcomingTitle": "Közelgő",
+    "upcomingHint": "Jóváhagyott, még életbe nem lépett emelések — addig a jelenlegi árat fizeti.",
+    "upcomingEmpty": "Termékeire nincs közelgő áremelés.",
+    "upcomingTip": "Tipp: rendeljen most a jelenlegi áron, vagy nézzen meg más beszállítókat.",
+    "toLists": "Rendelési listái",
+    "recentTitle": "Az elmúlt 30 napban változott",
+    "recentEmpty": "Az elmúlt 30 napban nem volt árváltozás.",
+    "recentUp": "Drágult (30 nap)",
+    "recentDown": "Olcsóbb lett (30 nap)",
+    "colSupplier": "Beszállító",
+    "colFrom": "Ettől",
+    "colWhen": "Dátum",
+    "positions": {
+      "CHEAPEST": "A legolcsóbbak között",
+      "BELOW_MEDIAN": "A medián alatt",
+      "ABOVE_MEDIAN": "A medián felett",
+      "MOST_EXPENSIVE": "A legdrágábbak között"
+    },
+    "statuses": {
+      "PENDING": "A FIRINGI-re vár",
+      "APPROVED": "Jóváhagyva",
+      "APPLIED": "Életbe lépett",
+      "REJECTED": "Nincs jóváhagyva",
+      "CANCELLED": "Visszavonva"
     }
   }
 }

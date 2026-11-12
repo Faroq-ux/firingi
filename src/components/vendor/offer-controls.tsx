@@ -19,13 +19,16 @@ function useRun() {
 
 export function BasePriceCell({ offerId, price, canEdit }: { offerId: string; price: string | null; canEdit: boolean }) {
   const t = useTranslations("catalogue.vendor");
+  const tp = useTranslations("priceIntel");
   const { pending, error, run } = useRun();
   const [value, setValue] = useState(price ?? "");
+  const [held, setHeld] = useState(false);
   if (!canEdit) return <span className="tabular-nums">{price ?? "—"}</span>;
   return (
     <div className="flex items-center gap-1">
       <Input aria-label={t("basePrice")} className="h-8 w-24 text-right" type="number" min="0.01" step="0.01" value={value} onChange={(e) => setValue(e.target.value)} />
-      {value !== (price ?? "") && value && <Button size="sm" disabled={pending} onClick={() => run(() => setBasePriceAction({ offerId, price: Number(value) }))}>{t("save")}</Button>}
+      {value !== (price ?? "") && value && <Button size="sm" disabled={pending} onClick={() => run(async () => { setHeld(false); const r = await setBasePriceAction({ offerId, price: Number(value) }); if (r.ok && r.data?.held) { setHeld(true); setValue(price ?? ""); } return r; })}>{t("save")}</Button>}
+      {held && <span className="text-xs text-amber-700 dark:text-warning" data-testid="price-held">{tp("heldShort")}</span>}
       {!price && !value && <span className="text-xs text-warning">{t("noPrice")}</span>}
       {error && <span className="text-xs text-destructive">{error}</span>}
     </div>

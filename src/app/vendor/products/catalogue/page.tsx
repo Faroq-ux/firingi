@@ -50,7 +50,7 @@ export default async function VendorProductsPage({ searchParams }: { searchParam
             const base = o.prices.find((x) => x.minQty === 1);
             const stock = o.stockLevels.reduce((a, s) => a + s.onHand - s.reserved, 0);
             return (
-              <TR key={o.id}>
+              <TR key={o.id} data-testid={`offer-${o.id}`}>
                 <TD>
                   <div className="font-medium">{L(p.name)}</div>
                   <div className="text-xs text-muted-foreground">{L(o.packaging.name)} · SKU {o.packaging.variant.sku}{o.vendorSku ? ` · ${o.vendorSku}` : ""}</div>

@@ -826,7 +826,9 @@
     "Daily Sales": "Dnevna Prodaja",
     "Expenses": "Troškovi",
     "Profit & Loss": "Dobit i Gubitak",
-    "Certificates & Compliance": "Certifikati i usklađenost"
+    "Certificates & Compliance": "Certifikati i usklađenost",
+    "Price Insights": "Analiza cijena",
+    "Price Changes": "Promjene cijena"
   },
   "delivery": {
     "title": "Dostava",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certifikata za ponovnu provjeru",
       "body": "Provjerite ih kod izdavatelja i označite kao provjerene u Usklađenosti dobavljača."
+    },
+    "price_change_requested": {
+      "title": "Povećanje cijene za odobrenje: {product}",
+      "body": "{vendor} želi {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nova cijena odobrena: {product}",
+      "body": "FIRINGI je odobrio {new} €. Vrijedi od {date}; vaši kupci su obaviješteni."
+    },
+    "price_change_rejected": {
+      "title": "Povećanje cijene nije odobreno: {product}",
+      "body": "Razlog FIRINGI-ja: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Provjerite svoju cijenu: {product}",
+      "body": "Vaša cijena odstupa {pct} % od tržišnog medijana za ovaj proizvod. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Cijena raste: {product}",
+      "body": "{supplier}: {old} € → {new} € od {date}. Do tada plaćate trenutačnu cijenu."
+    },
+    "price_alerts": {
+      "title": "{count} novih upozorenja o cijenama",
+      "body": "Skokovi cijena ili cijene daleko od tržišta — pogledajte Cjenovnu inteligenciju."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Polica osiguranja od odgovornosti za proizvod.",
       "TAX_CLEARANCE": "Potvrda da nemate poreznog duga.",
       "SOCIAL_SECURITY_CLEARANCE": "Potvrda da nemate duga za doprinose."
+    }
+  },
+  "priceIntel": {
+    "held": "Ovo povećanje veće je nego što FIRINGI dopušta bez odobrenja. Poslano je FIRINGI-ju; kupci plaćaju trenutačnu cijenu dok se ne odobri i ne dođe njegov datum. Pratite ga u Proizvodi › Analiza cijena.",
+    "heldShort": "Poslano FIRINGI-ju na odobrenje",
+    "title": "Analiza cijena",
+    "intro": "Kako se vaše osnovne cijene uspoređuju s drugim dobavljačima istih proizvoda, kako su se mijenjale, i vaše promjene cijena koje čekaju FIRINGI.",
+    "ruleInfo": "Povećanja iznad {pct} % trebaju odobrenje FIRINGI-ja; nakon odobrenja kupci koji kupuju proizvod bivaju obaviješteni, a nova cijena vrijedi {days} dana kasnije.",
+    "anonHint": "Tržišni podaci dolaze od najmanje {n} dobavljača i nikad ne otkrivaju tko su ni njihove točne cijene.",
+    "compared": "Uspoređeno {n} od {total} proizvoda",
+    "marketTitle": "Vaše cijene na tržištu",
+    "marketHint": "Osnovna cijena po pakiranju; tržišni medijan za isti proizvod i pakiranje. Najskuplji prvi.",
+    "noOffers": "Nemate aktivnih proizvoda s osnovnom cijenom.",
+    "colProduct": "Proizvod",
+    "colPrice": "Vaša cijena",
+    "colMedian": "Tržišni medijan",
+    "colPosition": "Položaj",
+    "colVsMedian": "u odnosu na medijan",
+    "colTrend": "Vaša cijena, 6 mjeseci",
+    "colSuggestion": "Prijedlog",
+    "notCompared": "Nije uspoređeno",
+    "notEnough": "Manje od {n} dobavljača — nije uspoređeno",
+    "suggestLower": "Među najskupljima. Uz {price} ili manje opet biste bili na sredini tržišta.",
+    "suggestBest": "Među najjeftinijima — kupci vide snažnu cijenu.",
+    "requestsTitle": "Promjene cijena koje čekaju FIRINGI",
+    "requestsHint": "Velika povećanja i njihovo stanje. Povećanje možete povući dok ne počne vrijediti.",
+    "requestsEmpty": "Nema promjena cijena na čekanju.",
+    "colChange": "Promjena",
+    "colStatus": "Status",
+    "colApplies": "Vrijedi od",
+    "colNote": "Napomena FIRINGI-ja",
+    "basePrices": "Osnovne cijene",
+    "fromQty": "od {qty}",
+    "cancel": "Povuci",
+    "buyerTitle": "Promjene cijena",
+    "buyerIntro": "Promjene cijena proizvoda koje kupujete, imate na popisima ili redovito naručujete. Veća povećanja dobavljača najavljuju se najmanje {days} dana unaprijed.",
+    "upcomingTitle": "Uskoro",
+    "upcomingHint": "Odobrena povećanja koja još ne vrijede — do datuma plaćate trenutačnu cijenu.",
+    "upcomingEmpty": "Za vaše proizvode nema najavljenih povećanja cijena.",
+    "upcomingTip": "Savjet: naručite sada po trenutačnoj cijeni ili pogledajte druge dobavljače.",
+    "toLists": "Vaši popisi narudžbi",
+    "recentTitle": "Promijenjeno u zadnjih 30 dana",
+    "recentEmpty": "Nema promjena cijena u zadnjih 30 dana.",
+    "recentUp": "Poskupljenja (30 dana)",
+    "recentDown": "Pojeftinjenja (30 dana)",
+    "colSupplier": "Dobavljač",
+    "colFrom": "Od",
+    "colWhen": "Datum",
+    "positions": {
+      "CHEAPEST": "Među najjeftinijima",
+      "BELOW_MEDIAN": "Ispod medijana",
+      "ABOVE_MEDIAN": "Iznad medijana",
+      "MOST_EXPENSIVE": "Među najskupljima"
+    },
+    "statuses": {
+      "PENDING": "Čeka FIRINGI",
+      "APPROVED": "Odobreno",
+      "APPLIED": "Primijenjeno",
+      "REJECTED": "Nije odobreno",
+      "CANCELLED": "Povučeno"
     }
   }
 }

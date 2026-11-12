@@ -826,7 +826,9 @@
     "Daily Sales": "Vendite Giornaliere",
     "Expenses": "Spese",
     "Profit & Loss": "Conto Economico",
-    "Certificates & Compliance": "Certificati e conformità"
+    "Certificates & Compliance": "Certificati e conformità",
+    "Price Insights": "Analisi prezzi",
+    "Price Changes": "Variazioni di prezzo"
   },
   "delivery": {
     "title": "Consegna",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certificati da ricontrollare",
       "body": "Verificali presso l'emittente e segnali come ricontrollati in Conformità fornitori."
+    },
+    "price_change_requested": {
+      "title": "Aumento di prezzo da approvare: {product}",
+      "body": "{vendor} chiede {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nuovo prezzo approvato: {product}",
+      "body": "FIRINGI ha approvato {new} €. Si applica dal {date}; i tuoi clienti sono stati avvisati."
+    },
+    "price_change_rejected": {
+      "title": "Aumento di prezzo non approvato: {product}",
+      "body": "Motivo di FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Rivedi il tuo prezzo: {product}",
+      "body": "Il tuo prezzo è al {pct} % dalla mediana di mercato per questo prodotto. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Il prezzo aumenta: {product}",
+      "body": "{supplier}: {old} € → {new} € dal {date}. Fino ad allora paghi il prezzo attuale."
+    },
+    "price_alerts": {
+      "title": "{count} nuovi avvisi di prezzo",
+      "body": "Aumenti improvvisi o prezzi lontani dal mercato — vedi Intelligenza prezzi."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Polizza assicurativa che copre la responsabilità da prodotto.",
       "TAX_CLEARANCE": "Certificato che attesta l'assenza di debiti fiscali.",
       "SOCIAL_SECURITY_CLEARANCE": "Certificato che attesta l'assenza di debiti previdenziali."
+    }
+  },
+  "priceIntel": {
+    "held": "Questo aumento supera quanto FIRINGI consente senza approvazione. È stato inviato a FIRINGI; i clienti mantengono il prezzo attuale finché non viene approvato e arriva la data. Seguilo in Prodotti › Analisi prezzi.",
+    "heldShort": "Inviato a FIRINGI per approvazione",
+    "title": "Analisi prezzi",
+    "intro": "Come i tuoi prezzi base si confrontano con altri fornitori degli stessi prodotti, come sono cambiati e le tue variazioni di prezzo in attesa di FIRINGI.",
+    "ruleInfo": "Gli aumenti oltre il {pct} % richiedono l'approvazione di FIRINGI; una volta approvati, i clienti che acquistano il prodotto vengono avvisati e il nuovo prezzo si applica {days} giorni dopo.",
+    "anonHint": "I dati di mercato provengono da almeno {n} fornitori e non mostrano mai chi sono né i loro prezzi esatti.",
+    "compared": "{n} di {total} prodotti confrontati",
+    "marketTitle": "I tuoi prezzi sul mercato",
+    "marketHint": "Prezzo base per confezione; mediana di mercato per lo stesso prodotto e confezione. I più cari per primi.",
+    "noOffers": "Non hai prodotti attivi con prezzo base.",
+    "colProduct": "Prodotto",
+    "colPrice": "Il tuo prezzo",
+    "colMedian": "Mediana di mercato",
+    "colPosition": "Posizione",
+    "colVsMedian": "vs mediana",
+    "colTrend": "Il tuo prezzo, 6 mesi",
+    "colSuggestion": "Suggerimento",
+    "notCompared": "Non confrontato",
+    "notEnough": "Meno di {n} fornitori — non confrontato",
+    "suggestLower": "Tra i più cari. A {price} o meno torneresti a metà mercato.",
+    "suggestBest": "Tra i più economici — i clienti vedono un prezzo forte.",
+    "requestsTitle": "Variazioni di prezzo in attesa di FIRINGI",
+    "requestsHint": "Aumenti importanti e il loro stato. Puoi ritirarne uno finché non si applica.",
+    "requestsEmpty": "Nessuna variazione di prezzo in attesa.",
+    "colChange": "Variazione",
+    "colStatus": "Stato",
+    "colApplies": "Si applica dal",
+    "colNote": "Nota di FIRINGI",
+    "basePrices": "Prezzi base",
+    "fromQty": "da {qty}",
+    "cancel": "Ritira",
+    "buyerTitle": "Variazioni di prezzo",
+    "buyerIntro": "Variazioni di prezzo dei prodotti che acquisti, hai nelle tue liste o ordini regolarmente. Gli aumenti più grandi dei fornitori vengono annunciati almeno {days} giorni prima.",
+    "upcomingTitle": "In arrivo",
+    "upcomingHint": "Aumenti approvati non ancora applicati — fino alla data paghi il prezzo attuale.",
+    "upcomingEmpty": "Nessun aumento di prezzo in arrivo per i tuoi prodotti.",
+    "upcomingTip": "Consiglio: ordina ora al prezzo attuale o guarda altri fornitori.",
+    "toLists": "Le tue liste d'ordine",
+    "recentTitle": "Cambiati negli ultimi 30 giorni",
+    "recentEmpty": "Nessuna variazione di prezzo negli ultimi 30 giorni.",
+    "recentUp": "Aumentati (30 giorni)",
+    "recentDown": "Diminuiti (30 giorni)",
+    "colSupplier": "Fornitore",
+    "colFrom": "Dal",
+    "colWhen": "Data",
+    "positions": {
+      "CHEAPEST": "Tra i più economici",
+      "BELOW_MEDIAN": "Sotto la mediana",
+      "ABOVE_MEDIAN": "Sopra la mediana",
+      "MOST_EXPENSIVE": "Tra i più cari"
+    },
+    "statuses": {
+      "PENDING": "In attesa di FIRINGI",
+      "APPROVED": "Approvato",
+      "APPLIED": "Applicato",
+      "REJECTED": "Non approvato",
+      "CANCELLED": "Ritirato"
     }
   }
 }

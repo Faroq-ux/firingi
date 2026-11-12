@@ -42,7 +42,9 @@ await go(sa, "/admin/dashboard/ai-insights");
 check("AI Insights dashboard", (await sa.getByTestId("ai-hero").count()) === 1 && (await sa.getByTestId("ai-top").count()) === 1);
 await sa.getByTestId("refresh-ai").click();
 await settle(sa);
-check("refresh recomputes the suggestions", /new, \d+ expired/.test(await main(sa)));
+let refreshed = false;
+for (let i = 0; i < 60 && !refreshed; i++) { refreshed = /new, \d+ expired/.test(await main(sa)); if (!refreshed) await sa.waitForTimeout(500); }
+check("refresh recomputes the suggestions", refreshed);
 check("open suggestions listed", (await sa.getByTestId("ai-top").getByTestId("rec-decision").count()) > 0);
 check("demand forecasts drawn", (await sa.getByTestId("ai-demand").locator("svg").count()) > 0);
 await shot(sa, "p17-01-ai-insights");

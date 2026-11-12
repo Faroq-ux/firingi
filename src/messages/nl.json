@@ -826,7 +826,9 @@
     "Daily Sales": "Dagomzet",
     "Expenses": "Uitgaven",
     "Profit & Loss": "Winst en Verlies",
-    "Certificates & Compliance": "Certificaten & compliance"
+    "Certificates & Compliance": "Certificaten & compliance",
+    "Price Insights": "Prijsinzicht",
+    "Price Changes": "Prijswijzigingen"
   },
   "delivery": {
     "title": "Levering",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} certificaten moeten opnieuw gecontroleerd worden",
       "body": "Controleer ze bij de uitgever en markeer ze als gecontroleerd in Leverancierscompliance."
+    },
+    "price_change_requested": {
+      "title": "Prijsverhoging goed te keuren: {product}",
+      "body": "{vendor} wil {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nieuwe prijs goedgekeurd: {product}",
+      "body": "FIRINGI heeft {new} € goedgekeurd. Die geldt vanaf {date}; uw klanten zijn ingelicht."
+    },
+    "price_change_rejected": {
+      "title": "Prijsverhoging niet goedgekeurd: {product}",
+      "body": "Reden van FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Bekijk uw prijs: {product}",
+      "body": "Uw prijs ligt {pct} % van de marktmediaan voor dit product. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Prijs gaat omhoog: {product}",
+      "body": "{supplier}: {old} € → {new} € vanaf {date}. Tot dan betaalt u de huidige prijs."
+    },
+    "price_alerts": {
+      "title": "{count} nieuwe prijswaarschuwingen",
+      "body": "Prijssprongen of prijzen ver van de markt — zie Prijsintelligentie."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Verzekeringspolis die productaansprakelijkheid dekt.",
       "TAX_CLEARANCE": "Verklaring dat u geen belastingschulden hebt.",
       "SOCIAL_SECURITY_CLEARANCE": "Verklaring dat u geen schulden bij de sociale zekerheid hebt."
+    }
+  },
+  "priceIntel": {
+    "held": "Deze verhoging is groter dan FIRINGI zonder goedkeuring toestaat. Ze is naar FIRINGI gestuurd; klanten houden de huidige prijs tot ze is goedgekeurd en de datum is bereikt. Volg ze in Producten › Prijsinzicht.",
+    "heldShort": "Ter goedkeuring naar FIRINGI gestuurd",
+    "title": "Prijsinzicht",
+    "intro": "Hoe uw basisprijzen zich verhouden tot andere leveranciers van dezelfde producten, hoe ze veranderden, en uw prijswijzigingen die op FIRINGI wachten.",
+    "ruleInfo": "Verhogingen boven {pct} % hebben goedkeuring van FIRINGI nodig; na goedkeuring worden klanten die het product kopen ingelicht en geldt de nieuwe prijs {days} dagen later.",
+    "anonHint": "Marktcijfers komen van minstens {n} leveranciers en tonen nooit wie ze zijn of hun exacte prijzen.",
+    "compared": "{n} van {total} producten vergeleken",
+    "marketTitle": "Uw prijzen in de markt",
+    "marketHint": "Basisprijs per verpakking; marktmediaan voor hetzelfde product en dezelfde verpakking. Duurste eerst.",
+    "noOffers": "U hebt geen actieve producten met een basisprijs.",
+    "colProduct": "Product",
+    "colPrice": "Uw prijs",
+    "colMedian": "Marktmediaan",
+    "colPosition": "Positie",
+    "colVsMedian": "t.o.v. mediaan",
+    "colTrend": "Uw prijs, 6 maanden",
+    "colSuggestion": "Suggestie",
+    "notCompared": "Niet vergeleken",
+    "notEnough": "Minder dan {n} leveranciers — niet vergeleken",
+    "suggestLower": "Bij de duurste. Voor {price} of minder zit u weer midden in de markt.",
+    "suggestBest": "Bij de goedkoopste — klanten zien een sterke prijs.",
+    "requestsTitle": "Prijswijzigingen die op FIRINGI wachten",
+    "requestsHint": "Grote verhogingen en hun status. U kunt er een intrekken tot ze geldt.",
+    "requestsEmpty": "Geen wachtende prijswijzigingen.",
+    "colChange": "Wijziging",
+    "colStatus": "Status",
+    "colApplies": "Geldt vanaf",
+    "colNote": "Notitie van FIRINGI",
+    "basePrices": "Basisprijzen",
+    "fromQty": "vanaf {qty}",
+    "cancel": "Intrekken",
+    "buyerTitle": "Prijswijzigingen",
+    "buyerIntro": "Prijswijzigingen van producten die u koopt, in uw lijsten hebt of regelmatig bestelt. Grotere verhogingen van leveranciers worden minstens {days} dagen vooraf aangekondigd.",
+    "upcomingTitle": "Binnenkort",
+    "upcomingHint": "Goedgekeurde verhogingen die nog niet gelden — tot de datum betaalt u de huidige prijs.",
+    "upcomingEmpty": "Geen komende prijsverhogingen voor uw producten.",
+    "upcomingTip": "Tip: bestel nu tegen de huidige prijs, of bekijk andere leveranciers.",
+    "toLists": "Uw bestellijsten",
+    "recentTitle": "Gewijzigd in de laatste 30 dagen",
+    "recentEmpty": "Geen prijswijzigingen in de laatste 30 dagen.",
+    "recentUp": "Gestegen (30 dagen)",
+    "recentDown": "Gedaald (30 dagen)",
+    "colSupplier": "Leverancier",
+    "colFrom": "Vanaf",
+    "colWhen": "Datum",
+    "positions": {
+      "CHEAPEST": "Bij de goedkoopste",
+      "BELOW_MEDIAN": "Onder de mediaan",
+      "ABOVE_MEDIAN": "Boven de mediaan",
+      "MOST_EXPENSIVE": "Bij de duurste"
+    },
+    "statuses": {
+      "PENDING": "Wacht op FIRINGI",
+      "APPROVED": "Goedgekeurd",
+      "APPLIED": "Toegepast",
+      "REJECTED": "Niet goedgekeurd",
+      "CANCELLED": "Ingetrokken"
     }
   }
 }

@@ -826,7 +826,9 @@
     "Daily Sales": "Dagleg Sala",
     "Expenses": "Útgjöld",
     "Profit & Loss": "Rekstrarreikningur",
-    "Certificates & Compliance": "Vottorð og regluvarsla"
+    "Certificates & Compliance": "Vottorð og regluvarsla",
+    "Price Insights": "Verðgreining",
+    "Price Changes": "Verðbreytingar"
   },
   "delivery": {
     "title": "Afhending",
@@ -1372,6 +1374,30 @@
     "compliance_recheck": {
       "title": "{count} vottorð þarf að yfirfara aftur",
       "body": "Kannið þau hjá útgefanda og merkið sem yfirfarin í Regluvörslu birgja."
+    },
+    "price_change_requested": {
+      "title": "Verðhækkun til samþykktar: {product}",
+      "body": "{vendor} vill {old} € → {new} € (+{pct} %)."
+    },
+    "price_change_approved": {
+      "title": "Nýtt verð samþykkt: {product}",
+      "body": "FIRINGI samþykkti {new} €. Það gildir frá {date}; viðskiptavinum ykkar hefur verið tilkynnt."
+    },
+    "price_change_rejected": {
+      "title": "Verðhækkun ekki samþykkt: {product}",
+      "body": "Ástæða FIRINGI: {reason}"
+    },
+    "price_review_requested": {
+      "title": "Vinsamlegast endurskoðið verðið: {product}",
+      "body": "Verðið ykkar er {pct} % frá miðgildi markaðarins fyrir þessa vöru. {message}"
+    },
+    "price_increase_notice": {
+      "title": "Verð hækkar: {product}",
+      "body": "{supplier}: {old} € → {new} € frá {date}. Fram að því greiðið þið núverandi verð."
+    },
+    "price_alerts": {
+      "title": "{count} nýjar verðviðvaranir",
+      "body": "Verðstökk eða verð fjarri markaðnum — sjá Verðgreind."
     }
   },
   "notifications": {
@@ -3294,6 +3320,66 @@
       "LIABILITY_INSURANCE": "Tryggingarskírteini sem nær yfir vöruábyrgð.",
       "TAX_CLEARANCE": "Vottorð um að þið skuldið ekki skatta.",
       "SOCIAL_SECURITY_CLEARANCE": "Vottorð um að þið skuldið ekki tryggingagjald."
+    }
+  },
+  "priceIntel": {
+    "held": "Þessi hækkun er meiri en FIRINGI leyfir án samþykkis. Hún hefur verið send til FIRINGI; viðskiptavinir halda núverandi verði þar til hún er samþykkt og dagsetningin kemur. Fylgist með undir Vörur › Verðgreining.",
+    "heldShort": "Sent til FIRINGI til samþykktar",
+    "title": "Verðgreining",
+    "intro": "Hvernig grunnverð ykkar standa gagnvart öðrum birgjum sömu vara, hvernig þau hafa breyst og verðbreytingar ykkar sem bíða eftir FIRINGI.",
+    "ruleInfo": "Hækkanir yfir {pct} % þurfa samþykki FIRINGI; eftir samþykkt fá viðskiptavinir sem kaupa vöruna að vita og nýja verðið gildir {days} dögum síðar.",
+    "anonHint": "Markaðstölur koma frá að minnsta kosti {n} birgjum og sýna aldrei hverjir þeir eru eða nákvæm verð þeirra.",
+    "compared": "{n} af {total} vörum bornar saman",
+    "marketTitle": "Verð ykkar á markaðnum",
+    "marketHint": "Grunnverð á pakkningu; miðgildi markaðarins fyrir sömu vöru og pakkningu. Dýrustu fyrst.",
+    "noOffers": "Þið eruð ekki með virkar vörur með grunnverð.",
+    "colProduct": "Vara",
+    "colPrice": "Ykkar verð",
+    "colMedian": "Miðgildi markaðar",
+    "colPosition": "Staða",
+    "colVsMedian": "miðað við miðgildi",
+    "colTrend": "Ykkar verð, 6 mánuðir",
+    "colSuggestion": "Tillaga",
+    "notCompared": "Ekki borið saman",
+    "notEnough": "Færri en {n} birgjar — ekki borið saman",
+    "suggestLower": "Meðal þeirra dýrustu. Á {price} eða minna væruð þið aftur um miðjan markað.",
+    "suggestBest": "Meðal þeirra ódýrustu — viðskiptavinir sjá sterkt verð.",
+    "requestsTitle": "Verðbreytingar sem bíða eftir FIRINGI",
+    "requestsHint": "Stórar hækkanir og staða þeirra. Þið getið dregið eina til baka þar til hún tekur gildi.",
+    "requestsEmpty": "Engar verðbreytingar í bið.",
+    "colChange": "Breyting",
+    "colStatus": "Staða",
+    "colApplies": "Gildir frá",
+    "colNote": "Athugasemd FIRINGI",
+    "basePrices": "Grunnverð",
+    "fromQty": "frá {qty}",
+    "cancel": "Draga til baka",
+    "buyerTitle": "Verðbreytingar",
+    "buyerIntro": "Verðbreytingar á vörum sem þið kaupið, eruð með á listum eða pantið reglulega. Stærri hækkanir birgja eru tilkynntar að minnsta kosti {days} dögum áður.",
+    "upcomingTitle": "Á döfinni",
+    "upcomingHint": "Samþykktar hækkanir sem hafa ekki tekið gildi — fram að dagsetningunni greiðið þið núverandi verð.",
+    "upcomingEmpty": "Engar verðhækkanir á döfinni fyrir vörur ykkar.",
+    "upcomingTip": "Ábending: pantið núna á núverandi verði eða skoðið aðra birgja.",
+    "toLists": "Pöntunarlistarnir ykkar",
+    "recentTitle": "Breytt síðustu 30 daga",
+    "recentEmpty": "Engar verðbreytingar síðustu 30 daga.",
+    "recentUp": "Hækkuðu (30 dagar)",
+    "recentDown": "Lækkuðu (30 dagar)",
+    "colSupplier": "Birgir",
+    "colFrom": "Frá",
+    "colWhen": "Dagsetning",
+    "positions": {
+      "CHEAPEST": "Meðal þeirra ódýrustu",
+      "BELOW_MEDIAN": "Undir miðgildi",
+      "ABOVE_MEDIAN": "Yfir miðgildi",
+      "MOST_EXPENSIVE": "Meðal þeirra dýrustu"
+    },
+    "statuses": {
+      "PENDING": "Bíður eftir FIRINGI",
+      "APPROVED": "Samþykkt",
+      "APPLIED": "Tekið gildi",
+      "REJECTED": "Ekki samþykkt",
+      "CANCELLED": "Dregið til baka"
     }
   }
 }
