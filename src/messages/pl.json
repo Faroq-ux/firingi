@@ -248,7 +248,11 @@
       "licenceExpiry": "Data ważności prawa jazdy",
       "notOpen": "Rejestracja tego rodzaju konta nie jest jeszcze otwarta w żadnym kraju.",
       "chooseCity": "Wybierz…",
-      "businessDeclaration": "Potwierdzam, że rejestruję firmę (spółkę lub jednoosobową działalność) i nie kupuję jako konsument."
+      "businessDeclaration": "Potwierdzam, że rejestruję firmę (spółkę lub jednoosobową działalność) i nie kupuję jako konsument.",
+      "legalForm": "Forma prawna",
+      "certificateCode": "Kod odpisu z rejestru",
+      "certificateCodeHint": "Numer Twojej firmy w rejestrze przedsiębiorców. Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują.",
+      "certificateCodeHintPt": "Kod dostępu do certidão permanente (12 cyfr, 0000-0000-0000). Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują."
     },
     "businessTypes": {
       "restaurant": "Restauracja",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Prześlij dokument: {detail}",
         "ADDRESS_MISSING": "Dodaj adres: {detail}",
-        "VAT_NUMBER_MISSING": "Dodaj swój numer VAT"
-      }
+        "VAT_NUMBER_MISSING": "Dodaj swój numer VAT",
+        "CERTIFICATE_CODE_MISSING": "Dodaj kod odpisu z rejestru (Profil)",
+        "POS_INVOICE_MISSING": "Prześlij jedną niedawną fakturę z kasy (Dokumenty)"
+      },
+      "recommended": "Również wymagane — FIRINGI może rozpatrzyć wniosek bez tego, ale przyspiesza to zatwierdzenie:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Odpis z rejestru (KRS / CEIDG)",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Ubezpieczenie pojazdu",
       "SELF_BILLING_AGREEMENT": "Umowa o samofakturowanie",
       "CONTRACT": "Umowa",
-      "OTHER": "Inne"
+      "OTHER": "Inne",
+      "POS_INVOICE": "Niedawna faktura z Twojej kasy (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Siedziba",
@@ -332,7 +340,9 @@
       "withdraw": "Wycofaj",
       "note": "Uwaga FIRINGI",
       "none": "Brak dokumentów.",
-      "required": "Wymagany"
+      "required": "Wymagany",
+      "invoiceDate": "Data faktury",
+      "posHint": "Jedna niedawna faktura (ostatnie 90 dni) z kasy Twojego sklepu — pokazuje FIRINGI, że działalność jest prowadzona. PDF lub zdjęcie, maks. 10 MB."
     },
     "profile": {
       "save": "Zapisz zmiany",
@@ -354,6 +364,10 @@
       "accessUntil": "Dostęp do {date}",
       "notRequested": "Nie wnioskowano",
       "note": "Uwaga FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Spółka (sp. z o.o., S.A., …)",
+      "SOLE_TRADER": "Jednoosobowa działalność gospodarcza"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Pulpit Księgowości",
     "Daily Sales": "Sprzedaż Dzienna",
     "Expenses": "Wydatki",
-    "Profit & Loss": "Zysk i Strata"
+    "Profit & Loss": "Zysk i Strata",
+    "Certificates & Compliance": "Certyfikaty i zgodność"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Budżet „{name}” na {pct}%",
       "body": "Wykorzystano {spent} € z {amount} € w tym okresie."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} wygasa za {days} dni",
+      "body": "Twój {certificate} jest ważny do {date}. Prześlij odnowienie, aby oferty pozostały widoczne."
+    },
+    "compliance_expired": {
+      "title": "{certificate} wygasł",
+      "body": "Prześlij odnowiony certyfikat. Jeśli FIRINGI go wymaga, Twoje oferty zostaną wstrzymane po {grace} dniach karencji."
+    },
+    "compliance_paused": {
+      "title": "Twoje oferty są wstrzymane",
+      "body": "{offers} ofert jest ukrytych przed klientami, ponieważ brakuje wymaganego certyfikatu lub wygasł: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Twoje oferty są znów widoczne",
+      "body": "Twoje certyfikaty są w porządku — klienci znów widzą i zamawiają Twoje oferty."
+    },
+    "compliance_approved": {
+      "title": "{certificate} zatwierdzony",
+      "body": "FIRINGI sprawdziło i zatwierdziło Twój {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} nie został przyjęty",
+      "body": "FIRINGI nie przyjęło Twojego {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Certyfikat do sprawdzenia: {certificate}",
+      "body": "{company} przesłał(a) {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} certyfikatów do ponownego sprawdzenia",
+      "body": "Sprawdź je u wystawcy i oznacz jako sprawdzone w Zgodności dostawców."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Księgowy",
       "TRANSPORT": "Transport i paliwo",
       "OTHER": "Inne"
+    }
+  },
+  "compliance": {
+    "title": "Certyfikaty i zgodność",
+    "intro": "Certyfikaty, o które prosi FIRINGI. Dbaj o ich ważność: brak lub wygaśnięcie wymaganego certyfikatu wstrzymuje Twoje oferty, dopóki FIRINGI nie zatwierdzi nowego. Zatwierdzone certyfikaty mogą być widoczne dla klientów jako zweryfikowane odznaki.",
+    "score": "Wynik zgodności",
+    "scoreHint": "Wymagane certyfikaty liczą się podwójnie. 100 = wszystko, o co proszono, jest ważne.",
+    "valid": "Ważne",
+    "expiring": "Wkrótce wygasają",
+    "missingRequired": "Brakujące (wymagane)",
+    "pendingReview": "Czeka na FIRINGI",
+    "pausedTitle": "Twoje oferty są wstrzymane",
+    "pausedWhole": "Klienci nie widzą żadnej Twojej oferty, dopóki FIRINGI nie zatwierdzi: {certificates}. Prześlij certyfikat poniżej.",
+    "pausedOffers": "{count} Twoich ofert jest ukrytych przed klientami, dopóki FIRINGI nie zatwierdzi: {certificates}. Prześlij certyfikat poniżej.",
+    "pausedShort": "Wstrzymana — certyfikat",
+    "checklist": "O co prosi FIRINGI",
+    "nothingAsked": "FIRINGI nie prosi obecnie Twojej firmy o żaden certyfikat.",
+    "required": "Wymagany",
+    "optional": "Opcjonalny",
+    "badgeEligible": "Pokazywany klientom jako zweryfikowana odznaka",
+    "categoriesOnly": "Tylko dla: {categories}",
+    "expiresOn": "ważny do {date}",
+    "noExpiry": "bez daty ważności",
+    "daysLeft": "pozostało {days} dni",
+    "graceUntil": "Wygasł — możesz sprzedawać do {date}. Prześlij teraz odnowiony certyfikat.",
+    "waivedUntil": "FIRINGI pozwala Ci sprzedawać do {date}.",
+    "pendingUpload": "Nowy certyfikat przesłany {date} — czeka na FIRINGI.",
+    "rejectedNote": "Odrzucony przez FIRINGI: {note}",
+    "uploadNew": "Prześlij certyfikat",
+    "renew": "Prześlij odnowienie",
+    "number": "Numer certyfikatu",
+    "issuer": "Wystawiony przez",
+    "issuedOn": "Data wystawienia",
+    "expiresOnLabel": "Ważny do",
+    "file": "Plik (PDF, JPG, PNG lub WEBP — maks. 10 MB)",
+    "upload": "Wyślij do FIRINGI",
+    "uploading": "Wysyłanie…",
+    "uploaded": "Wysłano — FIRINGI go sprawdzi.",
+    "cancel": "Anuluj",
+    "withdraw": "Wycofaj",
+    "history": "Wszystkie przesłane",
+    "historyEmpty": "Nie przesłano jeszcze certyfikatów.",
+    "colType": "Certyfikat",
+    "colUploaded": "Przesłano",
+    "colExpires": "Ważny do",
+    "colStatus": "Status",
+    "view": "Zobacz",
+    "superseded": "Zastąpiony",
+    "badgesTitle": "Twoje zweryfikowane odznaki",
+    "badgesHint": "To, co klienci widzą obok Twojej nazwy i produktów.",
+    "badgesNone": "Brak odznak. Tu pojawią się zatwierdzone certyfikaty typu, który FIRINGI pokazuje jako odznakę.",
+    "badgeHidden": "FIRINGI ukryło tę odznakę dla Twojej firmy.",
+    "alertPaused": "Część Twoich ofert jest wstrzymana, ponieważ brakuje wymaganego certyfikatu lub wygasł.",
+    "alertExpiring": "{count} certyfikatów wkrótce wygasa — prześlij odnowienia na czas.",
+    "alertOpen": "Certyfikaty",
+    "verifiedBy": "Zweryfikowane przez FIRINGI",
+    "verifiedBadgeTitle": "{name} — certyfikat sprawdzony przez FIRINGI",
+    "verifiedHint": "FIRINGI sprawdziło te certyfikaty i ich ważność.",
+    "download": "Certyfikat",
+    "filterLabel": "Zweryfikowane",
+    "filterAll": "Wszyscy dostawcy",
+    "states": {
+      "VALID": "Ważny",
+      "EXPIRING": "Wkrótce wygasa",
+      "WAIVED": "Przedłużenie od FIRINGI",
+      "GRACE": "Wygasł — dni karencji",
+      "EXPIRED": "Wygasł",
+      "PENDING": "Czeka na weryfikację",
+      "REJECTED": "Odrzucony",
+      "MISSING": "Brak"
+    },
+    "statuses": {
+      "PENDING": "Czeka na weryfikację",
+      "APPROVED": "Zatwierdzony",
+      "REJECTED": "Odrzucony",
+      "EXPIRED": "Wygasł",
+      "REVOKED": "Cofnięty"
+    },
+    "types": {
+      "HACCP": "Bezpieczeństwo żywności HACCP",
+      "FOOD_ESTABLISHMENT": "Zatwierdzenie zakładu spożywczego",
+      "ORGANIC": "Ekologiczny UE",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Ubezpieczenie OC za produkt",
+      "TAX_CLEARANCE": "Zaświadczenie o niezaleganiu w podatkach",
+      "SOCIAL_SECURITY_CLEARANCE": "Zaświadczenie o niezaleganiu w ZUS"
+    },
+    "typeDesc": {
+      "HACCP": "Plan HACCP lub certyfikat bezpieczeństwa żywności dla Twojego zakładu.",
+      "FOOD_ESTABLISHMENT": "Weterynaryjny / sanitarny numer zatwierdzenia Twojego zakładu.",
+      "ORGANIC": "Certyfikat UE produkcji ekologicznej od uznanej jednostki kontrolnej.",
+      "ISO_22000": "Certyfikat systemu zarządzania bezpieczeństwem żywności.",
+      "IFS_BRCGS": "Certyfikat IFS Food, IFS Logistics lub BRCGS.",
+      "HALAL": "Certyfikat Halal od uznanej jednostki certyfikującej.",
+      "LIABILITY_INSURANCE": "Polisa ubezpieczeniowa obejmująca odpowiedzialność za produkt.",
+      "TAX_CLEARANCE": "Zaświadczenie, że nie masz zaległości podatkowych.",
+      "SOCIAL_SECURITY_CLEARANCE": "Zaświadczenie, że nie masz zaległości wobec ubezpieczeń społecznych."
     }
   }
 }

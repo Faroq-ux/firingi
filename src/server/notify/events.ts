@@ -28,6 +28,7 @@ export type EventDef = {
 const BUYER_ORDERS: PermissionCode[] = ["buyer.orders.view", "buyer.orders.place"];
 const VENDOR_ORDERS: PermissionCode[] = ["vendor.orders.view", "vendor.orders.manage"];
 const ORDERS: PermissionCode[] = [...BUYER_ORDERS, ...VENDOR_ORDERS];
+const COMPLIANCE: PermissionCode[] = ["company.documents.manage", "company.profile.manage", "vendor.products.manage"];
 const E = (key: string, category: Category, perms: PermissionCode[] | null, channels: NotificationChannel[], vars: string[], critical = false): EventDef => ({ key, category, perms, channels, vars, critical });
 
 export const EVENTS: EventDef[] = [
@@ -44,6 +45,15 @@ export const EVENTS: EventDef[] = [
   E("restriction.approved", "account", null, ["EMAIL"], ["restriction", "until"], true),
   E("restriction.rejected", "account", null, ["EMAIL"], ["restriction", "reason"], true),
   E("restriction.revoked", "account", null, ["EMAIL"], ["restriction", "reason"], true),
+  // supplier compliance (Phase 28)
+  E("compliance.expiring", "account", COMPLIANCE, ["EMAIL"], ["certificate", "days", "date"]),
+  E("compliance.expired", "account", COMPLIANCE, ["EMAIL", "PUSH"], ["certificate", "grace"], true),
+  E("compliance.paused", "account", COMPLIANCE, ["EMAIL", "PUSH", "WHATSAPP"], ["certificates", "offers"], true),
+  E("compliance.resumed", "account", COMPLIANCE, ["EMAIL", "PUSH"], []),
+  E("compliance.approved", "account", COMPLIANCE, ["EMAIL"], ["certificate"]),
+  E("compliance.rejected", "account", COMPLIANCE, ["EMAIL"], ["certificate", "reason"], true),
+  E("compliance.review", "account", ["admin.vendors.approve", "admin.risk.manage"], ["EMAIL"], ["company", "certificate"]),
+  E("compliance.recheck", "account", ["admin.vendors.approve", "admin.risk.manage"], ["EMAIL"], ["count"]),
   // catalogue
   E("product.approved", "catalogue", ["vendor.products.view", "vendor.products.manage"], ["EMAIL"], ["product"]),
   E("product.rejected", "catalogue", ["vendor.products.view", "vendor.products.manage"], ["EMAIL"], ["product", "reason"]),

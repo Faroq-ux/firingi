@@ -248,7 +248,11 @@
       "licenceExpiry": "Gildistími ökuskírteinis",
       "notOpen": "Skráning fyrir þessa tegund aðgangs er ekki enn opin í neinu landi.",
       "chooseCity": "Veldu…",
-      "businessDeclaration": "Ég staðfesti að ég skrái fyrirtæki (félag eða einyrkja) og kaupi ekki sem einstaklingur."
+      "businessDeclaration": "Ég staðfesti að ég skrái fyrirtæki (félag eða einyrkja) og kaupi ekki sem einstaklingur.",
+      "legalForm": "Rekstrarform",
+      "certificateCode": "Kóði fyrirtækjaskrárvottorðs",
+      "certificateCodeHint": "Skráningarnúmer fyrirtækisins í fyrirtækjaskrá. Birgjar sem eru félög gefa það upp; einstaklingar í rekstri þurfa það ekki.",
+      "certificateCodeHintPt": "Aðgangskóði certidão permanente (12 tölustafir, 0000-0000-0000). Birgjar sem eru félög gefa hann upp; einstaklingar í rekstri þurfa hann ekki."
     },
     "businessTypes": {
       "restaurant": "Veitingastaður",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Hlaða upp skjali: {detail}",
         "ADDRESS_MISSING": "Bæta við heimilisfangi: {detail}",
-        "VAT_NUMBER_MISSING": "Bættu við VSK-númerinu þínu"
-      }
+        "VAT_NUMBER_MISSING": "Bættu við VSK-númerinu þínu",
+        "CERTIFICATE_CODE_MISSING": "Bætið við kóða fyrirtækjaskrárvottorðs (Prófíll)",
+        "POS_INVOICE_MISSING": "Hlaðið upp einum nýlegum reikningi úr afgreiðslukerfinu (Skjöl)"
+      },
+      "recommended": "Einnig beðið um — FIRINGI getur farið yfir umsóknina án þess, en það flýtir samþykkt:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Vottorð úr fyrirtækjaskrá",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Trygging ökutækis",
       "SELF_BILLING_AGREEMENT": "Samkomulag um sjálfsreikningagerð",
       "CONTRACT": "Samningur",
-      "OTHER": "Annað"
+      "OTHER": "Annað",
+      "POS_INVOICE": "Nýlegur reikningur úr afgreiðslukerfinu (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Höfuðstöðvar",
@@ -332,7 +340,9 @@
       "withdraw": "Draga til baka",
       "note": "Athugasemd frá FIRINGI",
       "none": "Engin skjöl ennþá.",
-      "required": "Skylda"
+      "required": "Skylda",
+      "invoiceDate": "Dagsetning reiknings",
+      "posHint": "Einn nýlegur reikningur (síðustu 90 daga) úr kassa verslunarinnar — hann sýnir FIRINGI að reksturinn sé í gangi. PDF eða mynd, hám. 10 MB."
     },
     "profile": {
       "save": "Vista breytingar",
@@ -354,6 +364,10 @@
       "accessUntil": "Aðgangur til {date}",
       "notRequested": "Ekki beðið um",
       "note": "Athugasemd frá FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Félag (ehf., hf., …)",
+      "SOLE_TRADER": "Einstaklingur í rekstri"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Bókhaldsyfirlit",
     "Daily Sales": "Dagleg Sala",
     "Expenses": "Útgjöld",
-    "Profit & Loss": "Rekstrarreikningur"
+    "Profit & Loss": "Rekstrarreikningur",
+    "Certificates & Compliance": "Vottorð og regluvarsla"
   },
   "delivery": {
     "title": "Afhending",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Áætlun „{name}“ í {pct}%",
       "body": "{spent} € af {amount} € notað á þessu tímabili."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} rennur út eftir {days} daga",
+      "body": "{certificate} ykkar gildir til {date}. Hlaðið endurnýjuninni upp svo tilboðin haldist sýnileg."
+    },
+    "compliance_expired": {
+      "title": "{certificate} er útrunnið",
+      "body": "Hlaðið endurnýjaða vottorðinu upp. Krefjist FIRINGI þess fara tilboðin í bið eftir {grace} frestdaga."
+    },
+    "compliance_paused": {
+      "title": "Tilboðin ykkar eru í bið",
+      "body": "{offers} tilboð eru falin viðskiptavinum vegna þess að skylduvottorð vantar eða er útrunnið: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Tilboðin ykkar eru sýnileg aftur",
+      "body": "Vottorðin ykkar eru í lagi — viðskiptavinir sjá og panta tilboðin ykkar aftur."
+    },
+    "compliance_approved": {
+      "title": "{certificate} samþykkt",
+      "body": "FIRINGI fór yfir og samþykkti {certificate} ykkar."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} ekki samþykkt",
+      "body": "FIRINGI samþykkti ekki {certificate} ykkar: {reason}"
+    },
+    "compliance_review": {
+      "title": "Vottorð til yfirferðar: {certificate}",
+      "body": "{company} hlóð upp {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} vottorð þarf að yfirfara aftur",
+      "body": "Kannið þau hjá útgefanda og merkið sem yfirfarin í Regluvörslu birgja."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Bókari",
       "TRANSPORT": "Flutningar og eldsneyti",
       "OTHER": "Annað"
+    }
+  },
+  "compliance": {
+    "title": "Vottorð og regluvarsla",
+    "intro": "Vottorðin sem FIRINGI biður um. Haldið þeim gildum: vanti skylduvottorð eða sé það útrunnið eru tilboðin ykkar sett í bið þar til FIRINGI samþykkir nýtt. Samþykkt vottorð geta birst viðskiptavinum sem staðfest merki.",
+    "score": "Regluvörslustig",
+    "scoreHint": "Skylduvottorð telja tvöfalt. 100 = allt sem beðið er um er gilt.",
+    "valid": "Gild",
+    "expiring": "Renna brátt út",
+    "missingRequired": "Vantar (skylda)",
+    "pendingReview": "Bíður eftir FIRINGI",
+    "pausedTitle": "Tilboðin ykkar eru í bið",
+    "pausedWhole": "Viðskiptavinir sjá engin tilboð ykkar fyrr en FIRINGI samþykkir: {certificates}. Hlaðið vottorðinu upp hér að neðan.",
+    "pausedOffers": "{count} tilboða ykkar eru falin viðskiptavinum þar til FIRINGI samþykkir: {certificates}. Hlaðið vottorðinu upp hér að neðan.",
+    "pausedShort": "Í bið — vottorð",
+    "checklist": "Það sem FIRINGI biður um",
+    "nothingAsked": "FIRINGI biður fyrirtækið ykkar ekki um neitt vottorð í augnablikinu.",
+    "required": "Skylda",
+    "optional": "Valfrjálst",
+    "badgeEligible": "Birt viðskiptavinum sem staðfest merki",
+    "categoriesOnly": "Aðeins fyrir: {categories}",
+    "expiresOn": "gildir til {date}",
+    "noExpiry": "engin gildislok",
+    "daysLeft": "{days} dagar eftir",
+    "graceUntil": "Útrunnið — þið getið haldið áfram að selja til {date}. Hlaðið endurnýjaða vottorðinu upp núna.",
+    "waivedUntil": "FIRINGI leyfir ykkur að selja áfram til {date}.",
+    "pendingUpload": "Nýtt vottorð hlaðið upp {date} — bíður eftir FIRINGI.",
+    "rejectedNote": "Hafnað af FIRINGI: {note}",
+    "uploadNew": "Hlaða upp vottorði",
+    "renew": "Hlaða upp endurnýjun",
+    "number": "Númer vottorðs",
+    "issuer": "Gefið út af",
+    "issuedOn": "Útgáfudagur",
+    "expiresOnLabel": "Gildir til",
+    "file": "Skrá (PDF, JPG, PNG eða WEBP — hám. 10 MB)",
+    "upload": "Senda til FIRINGI",
+    "uploading": "Sendir…",
+    "uploaded": "Sent — FIRINGI fer yfir það.",
+    "cancel": "Hætta við",
+    "withdraw": "Draga til baka",
+    "history": "Allar upphleðslur",
+    "historyEmpty": "Engum vottorðum hlaðið upp enn.",
+    "colType": "Vottorð",
+    "colUploaded": "Hlaðið upp",
+    "colExpires": "Gildir til",
+    "colStatus": "Staða",
+    "view": "Skoða",
+    "superseded": "Leyst af hólmi",
+    "badgesTitle": "Staðfest merki ykkar",
+    "badgesHint": "Það sem viðskiptavinir sjá við nafnið ykkar og vörur.",
+    "badgesNone": "Engin merki enn. Samþykkt vottorð af tegund sem FIRINGI sýnir sem merki birtast hér.",
+    "badgeHidden": "FIRINGI hefur falið þetta merki fyrir fyrirtækið ykkar.",
+    "alertPaused": "Sum tilboða ykkar eru í bið vegna þess að skylduvottorð vantar eða er útrunnið.",
+    "alertExpiring": "{count} vottorð renna brátt út — hlaðið endurnýjunum upp í tæka tíð.",
+    "alertOpen": "Vottorð",
+    "verifiedBy": "Staðfest af FIRINGI",
+    "verifiedBadgeTitle": "{name} — vottorð yfirfarið af FIRINGI",
+    "verifiedHint": "FIRINGI hefur yfirfarið þessi vottorð og gildi þeirra.",
+    "download": "Vottorð",
+    "filterLabel": "Staðfest",
+    "filterAll": "Allir birgjar",
+    "states": {
+      "VALID": "Gilt",
+      "EXPIRING": "Rennur brátt út",
+      "WAIVED": "Frestur frá FIRINGI",
+      "GRACE": "Útrunnið — frestdagar",
+      "EXPIRED": "Útrunnið",
+      "PENDING": "Bíður yfirferðar",
+      "REJECTED": "Hafnað",
+      "MISSING": "Vantar"
+    },
+    "statuses": {
+      "PENDING": "Bíður yfirferðar",
+      "APPROVED": "Samþykkt",
+      "REJECTED": "Hafnað",
+      "EXPIRED": "Útrunnið",
+      "REVOKED": "Afturkallað"
+    },
+    "types": {
+      "HACCP": "HACCP matvælaöryggi",
+      "FOOD_ESTABLISHMENT": "Leyfi matvælafyrirtækis",
+      "ORGANIC": "Lífrænt ESB",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Vöruábyrgðartrygging",
+      "TAX_CLEARANCE": "Skuldleysisvottorð frá skattinum",
+      "SOCIAL_SECURITY_CLEARANCE": "Vottorð um skuldleysi tryggingagjalds"
+    },
+    "typeDesc": {
+      "HACCP": "HACCP-áætlun eða matvælaöryggisvottorð fyrir húsnæðið ykkar.",
+      "FOOD_ESTABLISHMENT": "Dýralækna- / matvælaleyfisnúmer húsnæðisins ykkar.",
+      "ORGANIC": "ESB-vottorð um lífræna framleiðslu frá viðurkenndri eftirlitsstofu.",
+      "ISO_22000": "Vottorð um stjórnunarkerfi fyrir matvælaöryggi.",
+      "IFS_BRCGS": "IFS Food, IFS Logistics eða BRCGS vottorð.",
+      "HALAL": "Halal-vottorð frá viðurkenndri vottunarstofu.",
+      "LIABILITY_INSURANCE": "Tryggingarskírteini sem nær yfir vöruábyrgð.",
+      "TAX_CLEARANCE": "Vottorð um að þið skuldið ekki skatta.",
+      "SOCIAL_SECURITY_CLEARANCE": "Vottorð um að þið skuldið ekki tryggingagjald."
     }
   }
 }

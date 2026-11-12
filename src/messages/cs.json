@@ -248,7 +248,11 @@
       "licenceExpiry": "Platnost řidičského průkazu",
       "notOpen": "Registrace pro tento typ účtu zatím není otevřena v žádné zemi.",
       "chooseCity": "Vyberte…",
-      "businessDeclaration": "Potvrzuji, že registruji firmu (společnost nebo OSVČ) a nenakupuji jako spotřebitel."
+      "businessDeclaration": "Potvrzuji, že registruji firmu (společnost nebo OSVČ) a nenakupuji jako spotřebitel.",
+      "legalForm": "Právní forma",
+      "certificateCode": "Kód výpisu z obchodního rejstříku",
+      "certificateCodeHint": "Číslo vaší firmy v obchodním rejstříku. Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují.",
+      "certificateCodeHintPt": "Přístupový kód certidão permanente (12 číslic, 0000-0000-0000). Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují."
     },
     "businessTypes": {
       "restaurant": "Restaurace",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Nahrajte dokument: {detail}",
         "ADDRESS_MISSING": "Přidejte adresu: {detail}",
-        "VAT_NUMBER_MISSING": "Přidejte DIČ pro DPH"
-      }
+        "VAT_NUMBER_MISSING": "Přidejte DIČ pro DPH",
+        "CERTIFICATE_CODE_MISSING": "Doplňte kód výpisu z obchodního rejstříku (Profil)",
+        "POS_INVOICE_MISSING": "Nahrajte jeden nedávný doklad z pokladny (Dokumenty)"
+      },
+      "recommended": "Také požadováno — FIRINGI může žádost posoudit i bez toho, ale urychlí to schválení:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Výpis z obchodního rejstříku",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Pojištění vozidla",
       "SELF_BILLING_AGREEMENT": "Dohoda o samofakturaci",
       "CONTRACT": "Smlouva",
-      "OTHER": "Ostatní"
+      "OTHER": "Ostatní",
+      "POS_INVOICE": "Nedávná účtenka z vaší pokladny (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Sídlo",
@@ -332,7 +340,9 @@
       "withdraw": "Stáhnout zpět",
       "note": "Poznámka FIRINGI",
       "none": "Zatím žádné dokumenty.",
-      "required": "Povinné"
+      "required": "Povinné",
+      "invoiceDate": "Datum dokladu",
+      "posHint": "Jeden nedávný doklad (posledních 90 dní) z pokladny vaší prodejny — ukazuje FIRINGI, že provoz běží. PDF nebo fotografie, max. 10 MB."
     },
     "profile": {
       "save": "Uložit změny",
@@ -354,6 +364,10 @@
       "accessUntil": "Přístup do {date}",
       "notRequested": "Nepožádáno",
       "note": "Poznámka FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Společnost (s.r.o., a.s., …)",
+      "SOLE_TRADER": "OSVČ"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Přehled Účetnictví",
     "Daily Sales": "Denní Tržby",
     "Expenses": "Výdaje",
-    "Profit & Loss": "Zisk a Ztráta"
+    "Profit & Loss": "Zisk a Ztráta",
+    "Certificates & Compliance": "Certifikáty a shoda"
   },
   "delivery": {
     "title": "Doručení",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Rozpočet „{name}“ na {pct} %",
       "body": "V tomto období využito {spent} € z {amount} €."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} vyprší za {days} dní",
+      "body": "Váš {certificate} platí do {date}. Nahrajte obnovení, aby vaše nabídky zůstaly viditelné."
+    },
+    "compliance_expired": {
+      "title": "{certificate} vypršel",
+      "body": "Nahrajte obnovený certifikát. Pokud jej FIRINGI vyžaduje, vaše nabídky se po {grace} dnech odkladu pozastaví."
+    },
+    "compliance_paused": {
+      "title": "Vaše nabídky jsou pozastaveny",
+      "body": "{offers} nabídek je skryto před zákazníky, protože chybí povinný certifikát nebo vypršel: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Vaše nabídky jsou opět viditelné",
+      "body": "Vaše certifikáty jsou v pořádku — zákazníci opět vidí a objednávají vaše nabídky."
+    },
+    "compliance_approved": {
+      "title": "{certificate} schválen",
+      "body": "FIRINGI zkontrolovalo a schválilo váš {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} nepřijat",
+      "body": "FIRINGI nepřijalo váš {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Certifikát ke kontrole: {certificate}",
+      "body": "{company} nahrál(a) {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} certifikátů k opětovné kontrole",
+      "body": "Ověřte je u vydavatele a označte jako zkontrolované v Shodě dodavatelů."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Účetní",
       "TRANSPORT": "Doprava a palivo",
       "OTHER": "Ostatní"
+    }
+  },
+  "compliance": {
+    "title": "Certifikáty a shoda",
+    "intro": "Certifikáty, které FIRINGI požaduje. Udržujte je platné: chybí-li povinný certifikát nebo vypršel, vaše nabídky se pozastaví, dokud FIRINGI neschválí nový. Schválené certifikáty se mohou zákazníkům zobrazovat jako ověřené odznaky.",
+    "score": "Skóre shody",
+    "scoreHint": "Povinné certifikáty se počítají dvakrát. 100 = vše požadované je platné.",
+    "valid": "Platné",
+    "expiring": "Brzy vyprší",
+    "missingRequired": "Chybí (povinné)",
+    "pendingReview": "Čeká na FIRINGI",
+    "pausedTitle": "Vaše nabídky jsou pozastaveny",
+    "pausedWhole": "Zákazníci neuvidí žádnou vaši nabídku, dokud FIRINGI neschválí: {certificates}. Nahrajte certifikát níže.",
+    "pausedOffers": "{count} vašich nabídek je skryto před zákazníky, dokud FIRINGI neschválí: {certificates}. Nahrajte certifikát níže.",
+    "pausedShort": "Pozastaveno — certifikát",
+    "checklist": "Co FIRINGI požaduje",
+    "nothingAsked": "FIRINGI od vaší firmy momentálně nepožaduje žádný certifikát.",
+    "required": "Povinné",
+    "optional": "Volitelné",
+    "badgeEligible": "Zákazníkům se zobrazuje jako ověřený odznak",
+    "categoriesOnly": "Jen pro: {categories}",
+    "expiresOn": "platí do {date}",
+    "noExpiry": "bez data platnosti",
+    "daysLeft": "zbývá {days} dní",
+    "graceUntil": "Vypršel — můžete prodávat do {date}. Nahrajte hned obnovený certifikát.",
+    "waivedUntil": "FIRINGI vám umožňuje prodávat do {date}.",
+    "pendingUpload": "Nový certifikát nahrán {date} — čeká na FIRINGI.",
+    "rejectedNote": "Zamítnuto FIRINGI: {note}",
+    "uploadNew": "Nahrát certifikát",
+    "renew": "Nahrát obnovení",
+    "number": "Číslo certifikátu",
+    "issuer": "Vydal",
+    "issuedOn": "Datum vydání",
+    "expiresOnLabel": "Platí do",
+    "file": "Soubor (PDF, JPG, PNG nebo WEBP — max. 10 MB)",
+    "upload": "Odeslat FIRINGI",
+    "uploading": "Odesílám…",
+    "uploaded": "Odesláno — FIRINGI jej zkontroluje.",
+    "cancel": "Zrušit",
+    "withdraw": "Stáhnout",
+    "history": "Všechna nahrání",
+    "historyEmpty": "Zatím nejsou nahrány žádné certifikáty.",
+    "colType": "Certifikát",
+    "colUploaded": "Nahráno",
+    "colExpires": "Platí do",
+    "colStatus": "Stav",
+    "view": "Zobrazit",
+    "superseded": "Nahrazeno",
+    "badgesTitle": "Vaše ověřené odznaky",
+    "badgesHint": "Co zákazníci vidí u vašeho jména a produktů.",
+    "badgesNone": "Zatím žádné odznaky. Zde se zobrazí schválené certifikáty typu, který FIRINGI ukazuje jako odznak.",
+    "badgeHidden": "FIRINGI tento odznak pro vaši firmu skrylo.",
+    "alertPaused": "Některé vaše nabídky jsou pozastaveny, protože chybí povinný certifikát nebo vypršel.",
+    "alertExpiring": "{count} certifikátů brzy vyprší — nahrajte obnovení včas.",
+    "alertOpen": "Certifikáty",
+    "verifiedBy": "Ověřeno FIRINGI",
+    "verifiedBadgeTitle": "{name} — certifikát zkontrolovaný FIRINGI",
+    "verifiedHint": "FIRINGI zkontrolovalo tyto certifikáty a jejich platnost.",
+    "download": "Certifikát",
+    "filterLabel": "Ověřeno",
+    "filterAll": "Všichni dodavatelé",
+    "states": {
+      "VALID": "Platný",
+      "EXPIRING": "Brzy vyprší",
+      "WAIVED": "Lhůta od FIRINGI",
+      "GRACE": "Vypršel — dny odkladu",
+      "EXPIRED": "Vypršel",
+      "PENDING": "Čeká na kontrolu",
+      "REJECTED": "Zamítnut",
+      "MISSING": "Chybí"
+    },
+    "statuses": {
+      "PENDING": "Čeká na kontrolu",
+      "APPROVED": "Schválen",
+      "REJECTED": "Zamítnut",
+      "EXPIRED": "Vypršel",
+      "REVOKED": "Odvolán"
+    },
+    "types": {
+      "HACCP": "Bezpečnost potravin HACCP",
+      "FOOD_ESTABLISHMENT": "Schválení potravinářského podniku",
+      "ORGANIC": "Bio EU",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Pojištění odpovědnosti za výrobek",
+      "TAX_CLEARANCE": "Potvrzení o bezdlužnosti (daně)",
+      "SOCIAL_SECURITY_CLEARANCE": "Potvrzení o bezdlužnosti (sociální pojištění)"
+    },
+    "typeDesc": {
+      "HACCP": "Plán HACCP nebo certifikát bezpečnosti potravin pro vaši provozovnu.",
+      "FOOD_ESTABLISHMENT": "Veterinární / potravinářské schvalovací číslo vaší provozovny.",
+      "ORGANIC": "Certifikát EU pro ekologickou produkci od uznaného kontrolního subjektu.",
+      "ISO_22000": "Certifikát systému managementu bezpečnosti potravin.",
+      "IFS_BRCGS": "Certifikát IFS Food, IFS Logistics nebo BRCGS.",
+      "HALAL": "Certifikát Halal od uznaného certifikačního orgánu.",
+      "LIABILITY_INSURANCE": "Pojistná smlouva kryjící odpovědnost za výrobek.",
+      "TAX_CLEARANCE": "Potvrzení, že nemáte daňové nedoplatky.",
+      "SOCIAL_SECURITY_CLEARANCE": "Potvrzení, že nemáte nedoplatky na sociálním pojištění."
     }
   }
 }

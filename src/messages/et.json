@@ -248,7 +248,11 @@
       "licenceExpiry": "Juhiloa kehtivus",
       "notOpen": "Selle kontotüübi registreerimine pole veel üheski riigis avatud.",
       "chooseCity": "Valige…",
-      "businessDeclaration": "Kinnitan, et registreerin ettevõtte (äriühingu või FIE) ega osta eraisikuna."
+      "businessDeclaration": "Kinnitan, et registreerin ettevõtte (äriühingu või FIE) ega osta eraisikuna.",
+      "legalForm": "Õiguslik vorm",
+      "certificateCode": "Äriregistri tõendi kood",
+      "certificateCodeHint": "Teie ettevõtte äriregistri number. Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda.",
+      "certificateCodeHintPt": "certidão permanente juurdepääsukood (12 numbrit, 0000-0000-0000). Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda."
     },
     "businessTypes": {
       "restaurant": "Restoran",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Laadi üles dokument: {detail}",
         "ADDRESS_MISSING": "Lisa aadress: {detail}",
-        "VAT_NUMBER_MISSING": "Lisage oma KMKR number"
-      }
+        "VAT_NUMBER_MISSING": "Lisage oma KMKR number",
+        "CERTIFICATE_CODE_MISSING": "Lisage äriregistri tõendi kood (Profiil)",
+        "POS_INVOICE_MISSING": "Laadige üles üks värske arve oma kassasüsteemist (Dokumendid)"
+      },
+      "recommended": "Küsitakse ka — FIRINGI saab teie taotluse ka ilma selleta läbi vaadata, kuid see kiirendab kinnitamist:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Äriregistri väljavõte",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Sõiduki kindlustus",
       "SELF_BILLING_AGREEMENT": "Iselaskutuse kokkulepe",
       "CONTRACT": "Leping",
-      "OTHER": "Muu"
+      "OTHER": "Muu",
+      "POS_INVOICE": "Värske arve teie kassasüsteemist (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Peakontor",
@@ -332,7 +340,9 @@
       "withdraw": "Võta tagasi",
       "note": "FIRINGI märkus",
       "none": "Dokumente veel pole.",
-      "required": "Kohustuslik"
+      "required": "Kohustuslik",
+      "invoiceDate": "Arve kuupäev",
+      "posHint": "Üks värske arve (viimased 90 päeva) teie poe kassast — see näitab FIRINGI-le, et teie äri tegutseb. PDF või foto, kuni 10 MB."
     },
     "profile": {
       "save": "Salvesta muudatused",
@@ -354,6 +364,10 @@
       "accessUntil": "Juurdepääs kuni {date}",
       "notRequested": "Taotlemata",
       "note": "FIRINGI märkus"
+    },
+    "legalForms": {
+      "COMPANY": "Äriühing (OÜ, AS, …)",
+      "SOLE_TRADER": "FIE"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Raamatupidamise Ülevaade",
     "Daily Sales": "Päeva Müük",
     "Expenses": "Kulud",
-    "Profit & Loss": "Kasum ja Kahjum"
+    "Profit & Loss": "Kasum ja Kahjum",
+    "Certificates & Compliance": "Sertifikaadid ja vastavus"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Eelarve „{name}“ {pct}% juures",
       "body": "Sel perioodil kasutatud {spent} € / {amount} €."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} aegub {days} päeva pärast",
+      "body": "Teie {certificate} kehtib kuni {date}. Laadige uuendus üles, et pakkumised jääksid nähtavaks."
+    },
+    "compliance_expired": {
+      "title": "{certificate} on aegunud",
+      "body": "Laadige uuendatud sertifikaat üles. Kui FIRINGI seda nõuab, peatatakse pakkumised {grace} armupäeva järel."
+    },
+    "compliance_paused": {
+      "title": "Teie pakkumised on peatatud",
+      "body": "{offers} pakkumist on klientide eest peidetud, sest kohustuslik sertifikaat puudub või on aegunud: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Teie pakkumised on taas nähtavad",
+      "body": "Teie sertifikaadid on korras — kliendid saavad teie pakkumisi taas näha ja tellida."
+    },
+    "compliance_approved": {
+      "title": "{certificate} kinnitatud",
+      "body": "FIRINGI kontrollis ja kinnitas teie {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} ei aktsepteeritud",
+      "body": "FIRINGI ei aktsepteerinud teie {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Ülevaatamiseks sertifikaat: {certificate}",
+      "body": "{company} laadis üles {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} sertifikaati vajab uut kontrolli",
+      "body": "Kontrollige neid väljaandjalt ja märkige tarnijate vastavuses kontrollituks."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Raamatupidaja",
       "TRANSPORT": "Transport ja kütus",
       "OTHER": "Muu"
+    }
+  },
+  "compliance": {
+    "title": "Sertifikaadid ja vastavus",
+    "intro": "Sertifikaadid, mida FIRINGI küsib. Hoidke need kehtivad: kui kohustuslik sertifikaat puudub või on aegunud, peatatakse teie pakkumised, kuni FIRINGI kinnitab uue. Kinnitatud sertifikaate saab klientidele näidata kontrollitud märkidena.",
+    "score": "Vastavusskoor",
+    "scoreHint": "Kohustuslikud sertifikaadid lähevad arvesse topelt. 100 = kõik küsitu kehtib.",
+    "valid": "Kehtivad",
+    "expiring": "Aeguvad peagi",
+    "missingRequired": "Puuduvad (kohustuslikud)",
+    "pendingReview": "Ootab FIRINGI-t",
+    "pausedTitle": "Teie pakkumised on peatatud",
+    "pausedWhole": "Kliendid ei näe ühtegi teie pakkumist, kuni FIRINGI kinnitab: {certificates}. Laadige sertifikaat allpool üles.",
+    "pausedOffers": "{count} teie pakkumist on klientide eest peidetud, kuni FIRINGI kinnitab: {certificates}. Laadige sertifikaat allpool üles.",
+    "pausedShort": "Peatatud — sertifikaat",
+    "checklist": "Mida FIRINGI küsib",
+    "nothingAsked": "FIRINGI ei küsi praegu teie ettevõttelt ühtegi sertifikaati.",
+    "required": "Kohustuslik",
+    "optional": "Valikuline",
+    "badgeEligible": "Näidatakse klientidele kontrollitud märgina",
+    "categoriesOnly": "Ainult: {categories}",
+    "expiresOn": "kehtib kuni {date}",
+    "noExpiry": "aegumiskuupäev puudub",
+    "daysLeft": "jäänud {days} päeva",
+    "graceUntil": "Aegunud — võite müüa kuni {date}. Laadige uuendatud sertifikaat kohe üles.",
+    "waivedUntil": "FIRINGI lubab teil müüa kuni {date}.",
+    "pendingUpload": "Uus sertifikaat üles laaditud {date} — ootab FIRINGI-t.",
+    "rejectedNote": "FIRINGI lükkas tagasi: {note}",
+    "uploadNew": "Laadi sertifikaat üles",
+    "renew": "Laadi uuendus üles",
+    "number": "Sertifikaadi number",
+    "issuer": "Väljaandja",
+    "issuedOn": "Väljaandmise kuupäev",
+    "expiresOnLabel": "Kehtib kuni",
+    "file": "Fail (PDF, JPG, PNG või WEBP — kuni 10 MB)",
+    "upload": "Saada FIRINGI-le",
+    "uploading": "Saadan…",
+    "uploaded": "Saadetud — FIRINGI vaatab selle üle.",
+    "cancel": "Tühista",
+    "withdraw": "Võta tagasi",
+    "history": "Kõik üleslaadimised",
+    "historyEmpty": "Sertifikaate pole veel üles laaditud.",
+    "colType": "Sertifikaat",
+    "colUploaded": "Üles laaditud",
+    "colExpires": "Kehtib kuni",
+    "colStatus": "Olek",
+    "view": "Vaata",
+    "superseded": "Asendatud",
+    "badgesTitle": "Teie kontrollitud märgid",
+    "badgesHint": "Mida kliendid näevad teie nime ja toodete juures.",
+    "badgesNone": "Märke veel pole. Siin kuvatakse kinnitatud sertifikaadid, mille tüüpi FIRINGI näitab märgina.",
+    "badgeHidden": "FIRINGI on selle märgi teie ettevõtte jaoks peitnud.",
+    "alertPaused": "Mõned teie pakkumised on peatatud, sest kohustuslik sertifikaat puudub või on aegunud.",
+    "alertExpiring": "{count} sertifikaati aegub peagi — laadige uuendused õigel ajal üles.",
+    "alertOpen": "Sertifikaadid",
+    "verifiedBy": "FIRINGI kontrollitud",
+    "verifiedBadgeTitle": "{name} — FIRINGI kontrollitud sertifikaat",
+    "verifiedHint": "FIRINGI kontrollis neid sertifikaate ja nende kehtivust.",
+    "download": "Sertifikaat",
+    "filterLabel": "Kontrollitud",
+    "filterAll": "Kõik tarnijad",
+    "states": {
+      "VALID": "Kehtiv",
+      "EXPIRING": "Aegub peagi",
+      "WAIVED": "FIRINGI ajapikendus",
+      "GRACE": "Aegunud — armuaeg",
+      "EXPIRED": "Aegunud",
+      "PENDING": "Ootab ülevaatust",
+      "REJECTED": "Tagasi lükatud",
+      "MISSING": "Puudub"
+    },
+    "statuses": {
+      "PENDING": "Ootab ülevaatust",
+      "APPROVED": "Kinnitatud",
+      "REJECTED": "Tagasi lükatud",
+      "EXPIRED": "Aegunud",
+      "REVOKED": "Tühistatud"
+    },
+    "types": {
+      "HACCP": "HACCP toiduohutus",
+      "FOOD_ESTABLISHMENT": "Toidukäitlemisettevõtte tunnustamine",
+      "ORGANIC": "ELi mahe",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Tootevastutuskindlustus",
+      "TAX_CLEARANCE": "Maksuvõla puudumise tõend",
+      "SOCIAL_SECURITY_CLEARANCE": "Sotsiaalmaksuvõla puudumise tõend"
+    },
+    "typeDesc": {
+      "HACCP": "Teie ruumide HACCP-plaan või toiduohutuse sertifikaat.",
+      "FOOD_ESTABLISHMENT": "Teie ruumide veterinaar- / toidukäitlemise tunnustamisnumber.",
+      "ORGANIC": "Tunnustatud kontrolliasutuse ELi mahetootmise sertifikaat.",
+      "ISO_22000": "Toiduohutuse juhtimissüsteemi sertifikaat.",
+      "IFS_BRCGS": "IFS Food, IFS Logistics või BRCGS sertifikaat.",
+      "HALAL": "Tunnustatud sertifitseerimisasutuse halal-sertifikaat.",
+      "LIABILITY_INSURANCE": "Tootevastutust kattev kindlustuspoliis.",
+      "TAX_CLEARANCE": "Tõend, et teil pole maksuvõlga.",
+      "SOCIAL_SECURITY_CLEARANCE": "Tõend, et teil pole sotsiaalmaksuvõlga."
     }
   }
 }

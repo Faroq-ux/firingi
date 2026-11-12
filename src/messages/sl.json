@@ -248,7 +248,11 @@
       "licenceExpiry": "Veljavnost vozniškega dovoljenja",
       "notOpen": "Registracija za to vrsto računa še ni odprta v nobeni državi.",
       "chooseCity": "Izberite…",
-      "businessDeclaration": "Potrjujem, da registriram podjetje (družbo ali samostojnega podjetnika) in ne kupujem kot potrošnik."
+      "businessDeclaration": "Potrjujem, da registriram podjetje (družbo ali samostojnega podjetnika) in ne kupujem kot potrošnik.",
+      "legalForm": "Pravna oblika",
+      "certificateCode": "Koda izpiska iz sodnega registra",
+      "certificateCodeHint": "Številka vašega podjetja v poslovnem registru. Dobavitelji, ki so družbe, jo navedejo; samostojni podjetniki je ne potrebujejo.",
+      "certificateCodeHintPt": "Dostopna koda certidão permanente (12 števk, 0000-0000-0000). Dobavitelji, ki so družbe, jo navedejo; samostojni podjetniki je ne potrebujejo."
     },
     "businessTypes": {
       "restaurant": "Restavracija",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Naložite dokument: {detail}",
         "ADDRESS_MISSING": "Dodajte naslov: {detail}",
-        "VAT_NUMBER_MISSING": "Dodajte ID za DDV"
-      }
+        "VAT_NUMBER_MISSING": "Dodajte ID za DDV",
+        "CERTIFICATE_CODE_MISSING": "Dodajte kodo izpiska iz registra (Profil)",
+        "POS_INVOICE_MISSING": "Naložite en nedavni račun iz blagajne (Dokumenti)"
+      },
+      "recommended": "Prav tako zahtevano — FIRINGI lahko vlogo pregleda tudi brez tega, vendar to pospeši odobritev:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Izpis iz poslovnega registra",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Zavarovanje vozila",
       "SELF_BILLING_AGREEMENT": "Dogovor o samofakturiranju",
       "CONTRACT": "Pogodba",
-      "OTHER": "Drugo"
+      "OTHER": "Drugo",
+      "POS_INVOICE": "Nedavni račun iz vaše blagajne (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Sedež",
@@ -332,7 +340,9 @@
       "withdraw": "Umakni",
       "note": "Opomba FIRINGI",
       "none": "Še ni dokumentov.",
-      "required": "Obvezno"
+      "required": "Obvezno",
+      "invoiceDate": "Datum računa",
+      "posHint": "En nedavni račun (zadnjih 90 dni) iz blagajne vaše trgovine — FIRINGI pokaže, da poslujete. PDF ali fotografija, najv. 10 MB."
     },
     "profile": {
       "save": "Shrani spremembe",
@@ -354,6 +364,10 @@
       "accessUntil": "Dostop do {date}",
       "notRequested": "Ni zahtevano",
       "note": "Opomba FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Družba (d.o.o., d.d., …)",
+      "SOLE_TRADER": "Samostojni podjetnik"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Pregled Računovodstva",
     "Daily Sales": "Dnevna Prodaja",
     "Expenses": "Stroški",
-    "Profit & Loss": "Izkaz Poslovnega Izida"
+    "Profit & Loss": "Izkaz Poslovnega Izida",
+    "Certificates & Compliance": "Certifikati in skladnost"
   },
   "delivery": {
     "title": "Dostava",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Proračun »{name}« na {pct} %",
       "body": "V tem obdobju porabljeno {spent} € od {amount} €."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} poteče čez {days} dni",
+      "body": "Vaš {certificate} velja do {date}. Naložite obnovitev, da bodo ponudbe ostale vidne."
+    },
+    "compliance_expired": {
+      "title": "{certificate} je potekel",
+      "body": "Naložite obnovljeni certifikat. Če ga FIRINGI zahteva, se vaše ponudbe po {grace} dneh odloga zaustavijo."
+    },
+    "compliance_paused": {
+      "title": "Vaše ponudbe so zaustavljene",
+      "body": "{offers} ponudb je skritih strankam, ker obvezni certifikat manjka ali je potekel: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Vaše ponudbe so spet vidne",
+      "body": "Vaši certifikati so v redu — stranke spet vidijo in naročajo vaše ponudbe."
+    },
+    "compliance_approved": {
+      "title": "{certificate} odobren",
+      "body": "FIRINGI je preveril in odobril vaš {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} ni sprejet",
+      "body": "FIRINGI ni sprejel vašega {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Certifikat za pregled: {certificate}",
+      "body": "{company} je naložil {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} certifikatov za ponovni pregled",
+      "body": "Preverite jih pri izdajatelju in jih označite kot preverjene v Skladnosti dobaviteljev."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Računovodja",
       "TRANSPORT": "Prevoz in gorivo",
       "OTHER": "Drugo"
+    }
+  },
+  "compliance": {
+    "title": "Certifikati in skladnost",
+    "intro": "Certifikati, ki jih zahteva FIRINGI. Ohranjajte jih veljavne: če obvezni certifikat manjka ali je potekel, se vaše ponudbe zaustavijo, dokler FIRINGI ne odobri novega. Odobreni certifikati se lahko strankam prikažejo kot preverjene značke.",
+    "score": "Ocena skladnosti",
+    "scoreHint": "Obvezni certifikati štejejo dvojno. 100 = vse zahtevano je veljavno.",
+    "valid": "Veljavni",
+    "expiring": "Kmalu potečejo",
+    "missingRequired": "Manjkajo (obvezni)",
+    "pendingReview": "Čaka na FIRINGI",
+    "pausedTitle": "Vaše ponudbe so zaustavljene",
+    "pausedWhole": "Stranke ne vidijo nobene vaše ponudbe, dokler FIRINGI ne odobri: {certificates}. Naložite certifikat spodaj.",
+    "pausedOffers": "{count} vaših ponudb je skritih strankam, dokler FIRINGI ne odobri: {certificates}. Naložite certifikat spodaj.",
+    "pausedShort": "Zaustavljeno — certifikat",
+    "checklist": "Kaj zahteva FIRINGI",
+    "nothingAsked": "FIRINGI od vašega podjetja trenutno ne zahteva nobenega certifikata.",
+    "required": "Obvezno",
+    "optional": "Neobvezno",
+    "badgeEligible": "Strankam prikazano kot preverjena značka",
+    "categoriesOnly": "Samo za: {categories}",
+    "expiresOn": "velja do {date}",
+    "noExpiry": "brez datuma veljavnosti",
+    "daysLeft": "še {days} dni",
+    "graceUntil": "Potekel — prodajate lahko do {date}. Takoj naložite obnovljeni certifikat.",
+    "waivedUntil": "FIRINGI vam dovoli prodajati do {date}.",
+    "pendingUpload": "Nov certifikat naložen {date} — čaka na FIRINGI.",
+    "rejectedNote": "FIRINGI je zavrnil: {note}",
+    "uploadNew": "Naloži certifikat",
+    "renew": "Naloži obnovitev",
+    "number": "Številka certifikata",
+    "issuer": "Izdajatelj",
+    "issuedOn": "Datum izdaje",
+    "expiresOnLabel": "Velja do",
+    "file": "Datoteka (PDF, JPG, PNG ali WEBP — najv. 10 MB)",
+    "upload": "Pošlji FIRINGI",
+    "uploading": "Pošiljam…",
+    "uploaded": "Poslano — FIRINGI ga bo pregledal.",
+    "cancel": "Prekliči",
+    "withdraw": "Umakni",
+    "history": "Vse naložitve",
+    "historyEmpty": "Ni še naloženih certifikatov.",
+    "colType": "Certifikat",
+    "colUploaded": "Naloženo",
+    "colExpires": "Velja do",
+    "colStatus": "Stanje",
+    "view": "Poglej",
+    "superseded": "Nadomeščen",
+    "badgesTitle": "Vaše preverjene značke",
+    "badgesHint": "Kar stranke vidijo ob vašem imenu in izdelkih.",
+    "badgesNone": "Še ni značk. Tukaj se prikažejo odobreni certifikati vrste, ki jo FIRINGI prikazuje kot značko.",
+    "badgeHidden": "FIRINGI je to značko za vaše podjetje skril.",
+    "alertPaused": "Nekatere vaše ponudbe so zaustavljene, ker obvezni certifikat manjka ali je potekel.",
+    "alertExpiring": "{count} certifikatov kmalu poteče — pravočasno naložite obnovitve.",
+    "alertOpen": "Certifikati",
+    "verifiedBy": "Preveril FIRINGI",
+    "verifiedBadgeTitle": "{name} — certifikat, ki ga je preveril FIRINGI",
+    "verifiedHint": "FIRINGI je preveril te certifikate in njihovo veljavnost.",
+    "download": "Certifikat",
+    "filterLabel": "Preverjeno",
+    "filterAll": "Vsi dobavitelji",
+    "states": {
+      "VALID": "Veljaven",
+      "EXPIRING": "Kmalu poteče",
+      "WAIVED": "Podaljšanje FIRINGI",
+      "GRACE": "Potekel — dnevi odloga",
+      "EXPIRED": "Potekel",
+      "PENDING": "Čaka na pregled",
+      "REJECTED": "Zavrnjen",
+      "MISSING": "Manjka"
+    },
+    "statuses": {
+      "PENDING": "Čaka na pregled",
+      "APPROVED": "Odobren",
+      "REJECTED": "Zavrnjen",
+      "EXPIRED": "Potekel",
+      "REVOKED": "Preklican"
+    },
+    "types": {
+      "HACCP": "Varnost hrane HACCP",
+      "FOOD_ESTABLISHMENT": "Odobritev živilskega obrata",
+      "ORGANIC": "Ekološko EU",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Zavarovanje odgovornosti za proizvod",
+      "TAX_CLEARANCE": "Potrdilo o plačanih davkih",
+      "SOCIAL_SECURITY_CLEARANCE": "Potrdilo o plačanih prispevkih"
+    },
+    "typeDesc": {
+      "HACCP": "Načrt HACCP ali certifikat o varnosti hrane za vaše prostore.",
+      "FOOD_ESTABLISHMENT": "Veterinarska / živilska številka odobritve vašega obrata.",
+      "ORGANIC": "Certifikat EU za ekološko pridelavo priznanega kontrolnega organa.",
+      "ISO_22000": "Certifikat sistema vodenja varnosti živil.",
+      "IFS_BRCGS": "Certifikat IFS Food, IFS Logistics ali BRCGS.",
+      "HALAL": "Certifikat Halal priznanega certifikacijskega organa.",
+      "LIABILITY_INSURANCE": "Zavarovalna polica za odgovornost za proizvod.",
+      "TAX_CLEARANCE": "Potrdilo, da nimate davčnega dolga.",
+      "SOCIAL_SECURITY_CLEARANCE": "Potrdilo, da nimate dolga za prispevke za socialno varnost."
     }
   }
 }

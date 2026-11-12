@@ -248,7 +248,11 @@
       "licenceExpiry": "Vadītāja apliecības derīgums",
       "notOpen": "Reģistrācija šim konta veidam vēl nav atvērta nevienā valstī.",
       "chooseCity": "Izvēlieties…",
-      "businessDeclaration": "Apstiprinu, ka reģistrēju uzņēmumu (sabiedrību vai individuālo komersantu) un nepērku kā patērētājs."
+      "businessDeclaration": "Apstiprinu, ka reģistrēju uzņēmumu (sabiedrību vai individuālo komersantu) un nepērku kā patērētājs.",
+      "legalForm": "Juridiskā forma",
+      "certificateCode": "Uzņēmumu reģistra izziņas kods",
+      "certificateCodeHint": "Jūsu uzņēmuma numurs komercreģistrā. Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs.",
+      "certificateCodeHintPt": "certidão permanente piekļuves kods (12 cipari, 0000-0000-0000). Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs."
     },
     "businessTypes": {
       "restaurant": "Restorāns",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Augšupielādējiet dokumentu: {detail}",
         "ADDRESS_MISSING": "Pievienojiet adresi: {detail}",
-        "VAT_NUMBER_MISSING": "Pievienojiet savu PVN numuru"
-      }
+        "VAT_NUMBER_MISSING": "Pievienojiet savu PVN numuru",
+        "CERTIFICATE_CODE_MISSING": "Pievienojiet reģistra izziņas kodu (Profils)",
+        "POS_INVOICE_MISSING": "Augšupielādējiet vienu nesenu kases čeku (Dokumenti)"
+      },
+      "recommended": "Pieprasīts arī — FIRINGI var izskatīt pieteikumu arī bez tā, bet tas paātrina apstiprināšanu:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Uzņēmumu reģistra izraksts",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Transportlīdzekļa apdrošināšana",
       "SELF_BILLING_AGREEMENT": "Pašrēķinu vienošanās",
       "CONTRACT": "Līgums",
-      "OTHER": "Cits"
+      "OTHER": "Cits",
+      "POS_INVOICE": "Nesens čeks no jūsu kases (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Juridiskā adrese",
@@ -332,7 +340,9 @@
       "withdraw": "Atsaukt",
       "note": "FIRINGI piezīme",
       "none": "Vēl nav dokumentu.",
-      "required": "Obligāts"
+      "required": "Obligāts",
+      "invoiceDate": "Čeka datums",
+      "posHint": "Viens nesens čeks (pēdējās 90 dienas) no jūsu veikala kases — tas parāda FIRINGI, ka uzņēmums darbojas. PDF vai fotoattēls, līdz 10 MB."
     },
     "profile": {
       "save": "Saglabāt izmaiņas",
@@ -354,6 +364,10 @@
       "accessUntil": "Piekļuve līdz {date}",
       "notRequested": "Nav pieprasīts",
       "note": "FIRINGI piezīme"
+    },
+    "legalForms": {
+      "COMPANY": "Sabiedrība (SIA, AS, …)",
+      "SOLE_TRADER": "Individuālais komersants"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Grāmatvedības Pārskats",
     "Daily Sales": "Dienas Pārdošana",
     "Expenses": "Izdevumi",
-    "Profit & Loss": "Peļņa un Zaudējumi"
+    "Profit & Loss": "Peļņa un Zaudējumi",
+    "Certificates & Compliance": "Sertifikāti un atbilstība"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Budžets “{name}” sasniedzis {pct}%",
       "body": "Šajā periodā izlietoti {spent} € no {amount} €."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} beigsies pēc {days} dienām",
+      "body": "Jūsu {certificate} ir derīgs līdz {date}. Augšupielādējiet atjaunojumu, lai piedāvājumi paliktu redzami."
+    },
+    "compliance_expired": {
+      "title": "{certificate} ir beidzies",
+      "body": "Augšupielādējiet atjaunoto sertifikātu. Ja FIRINGI to pieprasa, piedāvājumi tiek apturēti pēc {grace} labvēlības dienām."
+    },
+    "compliance_paused": {
+      "title": "Jūsu piedāvājumi ir apturēti",
+      "body": "{offers} piedāvājumi ir paslēpti no klientiem, jo trūkst obligātā sertifikāta vai tas ir beidzies: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Jūsu piedāvājumi atkal ir redzami",
+      "body": "Jūsu sertifikāti ir kārtībā — klienti atkal redz un pasūta jūsu piedāvājumus."
+    },
+    "compliance_approved": {
+      "title": "{certificate} apstiprināts",
+      "body": "FIRINGI pārbaudīja un apstiprināja jūsu {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} nav pieņemts",
+      "body": "FIRINGI nepieņēma jūsu {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Pārbaudāms sertifikāts: {certificate}",
+      "body": "{company} augšupielādēja {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} sertifikāti jāpārbauda atkārtoti",
+      "body": "Pārbaudiet tos pie izdevēja un atzīmējiet kā pārbaudītus sadaļā Piegādātāju atbilstība."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Grāmatvedis",
       "TRANSPORT": "Transports un degviela",
       "OTHER": "Citi"
+    }
+  },
+  "compliance": {
+    "title": "Sertifikāti un atbilstība",
+    "intro": "Sertifikāti, ko pieprasa FIRINGI. Uzturiet tos derīgus: ja trūkst obligātā sertifikāta vai tas ir beidzies, jūsu piedāvājumi tiek apturēti, līdz FIRINGI apstiprina jaunu. Apstiprinātie sertifikāti klientiem var tikt rādīti kā pārbaudītas zīmes.",
+    "score": "Atbilstības vērtējums",
+    "scoreHint": "Obligātie sertifikāti skaitās divkārši. 100 = viss pieprasītais ir derīgs.",
+    "valid": "Derīgi",
+    "expiring": "Drīz beigsies",
+    "missingRequired": "Trūkst (obligātie)",
+    "pendingReview": "Gaida FIRINGI",
+    "pausedTitle": "Jūsu piedāvājumi ir apturēti",
+    "pausedWhole": "Klienti neredz nevienu jūsu piedāvājumu, līdz FIRINGI apstiprina: {certificates}. Augšupielādējiet sertifikātu zemāk.",
+    "pausedOffers": "{count} jūsu piedāvājumi ir paslēpti no klientiem, līdz FIRINGI apstiprina: {certificates}. Augšupielādējiet sertifikātu zemāk.",
+    "pausedShort": "Apturēts — sertifikāts",
+    "checklist": "Ko pieprasa FIRINGI",
+    "nothingAsked": "Pašlaik FIRINGI no jūsu uzņēmuma nepieprasa nevienu sertifikātu.",
+    "required": "Obligāts",
+    "optional": "Neobligāts",
+    "badgeEligible": "Klientiem rāda kā pārbaudītu zīmi",
+    "categoriesOnly": "Tikai: {categories}",
+    "expiresOn": "derīgs līdz {date}",
+    "noExpiry": "bez derīguma termiņa",
+    "daysLeft": "atlikušas {days} dienas",
+    "graceUntil": "Beidzies — varat pārdot līdz {date}. Tūlīt augšupielādējiet atjaunoto sertifikātu.",
+    "waivedUntil": "FIRINGI ļauj jums pārdot līdz {date}.",
+    "pendingUpload": "Jauns sertifikāts augšupielādēts {date} — gaida FIRINGI.",
+    "rejectedNote": "FIRINGI noraidīja: {note}",
+    "uploadNew": "Augšupielādēt sertifikātu",
+    "renew": "Augšupielādēt atjaunojumu",
+    "number": "Sertifikāta numurs",
+    "issuer": "Izdevējs",
+    "issuedOn": "Izdošanas datums",
+    "expiresOnLabel": "Derīgs līdz",
+    "file": "Fails (PDF, JPG, PNG vai WEBP — līdz 10 MB)",
+    "upload": "Sūtīt FIRINGI",
+    "uploading": "Sūta…",
+    "uploaded": "Nosūtīts — FIRINGI to pārbaudīs.",
+    "cancel": "Atcelt",
+    "withdraw": "Atsaukt",
+    "history": "Visas augšupielādes",
+    "historyEmpty": "Sertifikāti vēl nav augšupielādēti.",
+    "colType": "Sertifikāts",
+    "colUploaded": "Augšupielādēts",
+    "colExpires": "Derīgs līdz",
+    "colStatus": "Statuss",
+    "view": "Skatīt",
+    "superseded": "Aizstāts",
+    "badgesTitle": "Jūsu pārbaudītās zīmes",
+    "badgesHint": "Ko klienti redz pie jūsu nosaukuma un produktiem.",
+    "badgesNone": "Zīmju vēl nav. Šeit parādās apstiprinātie sertifikāti, kuru veidu FIRINGI rāda kā zīmi.",
+    "badgeHidden": "FIRINGI ir paslēpis šo zīmi jūsu uzņēmumam.",
+    "alertPaused": "Daži jūsu piedāvājumi ir apturēti, jo trūkst obligātā sertifikāta vai tas ir beidzies.",
+    "alertExpiring": "{count} sertifikāti drīz beigsies — laikus augšupielādējiet atjaunojumus.",
+    "alertOpen": "Sertifikāti",
+    "verifiedBy": "Pārbaudījis FIRINGI",
+    "verifiedBadgeTitle": "{name} — FIRINGI pārbaudīts sertifikāts",
+    "verifiedHint": "FIRINGI pārbaudīja šos sertifikātus un to derīgumu.",
+    "download": "Sertifikāts",
+    "filterLabel": "Pārbaudīts",
+    "filterAll": "Visi piegādātāji",
+    "states": {
+      "VALID": "Derīgs",
+      "EXPIRING": "Drīz beigsies",
+      "WAIVED": "FIRINGI pagarinājums",
+      "GRACE": "Beidzies — labvēlības dienas",
+      "EXPIRED": "Beidzies",
+      "PENDING": "Gaida pārbaudi",
+      "REJECTED": "Noraidīts",
+      "MISSING": "Trūkst"
+    },
+    "statuses": {
+      "PENDING": "Gaida pārbaudi",
+      "APPROVED": "Apstiprināts",
+      "REJECTED": "Noraidīts",
+      "EXPIRED": "Beidzies",
+      "REVOKED": "Atsaukts"
+    },
+    "types": {
+      "HACCP": "HACCP pārtikas nekaitīgums",
+      "FOOD_ESTABLISHMENT": "Pārtikas uzņēmuma atzīšana",
+      "ORGANIC": "ES bioloģiskais",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Produkta civiltiesiskās atbildības apdrošināšana",
+      "TAX_CLEARANCE": "Izziņa par nodokļu parādu neesamību",
+      "SOCIAL_SECURITY_CLEARANCE": "Izziņa par sociālo iemaksu parādu neesamību"
+    },
+    "typeDesc": {
+      "HACCP": "Jūsu telpu HACCP plāns vai pārtikas nekaitīguma sertifikāts.",
+      "FOOD_ESTABLISHMENT": "Jūsu telpu veterinārais / pārtikas uzņēmuma atzīšanas numurs.",
+      "ORGANIC": "Atzītas kontroles institūcijas ES bioloģiskās ražošanas sertifikāts.",
+      "ISO_22000": "Pārtikas nekaitīguma pārvaldības sistēmas sertifikāts.",
+      "IFS_BRCGS": "IFS Food, IFS Logistics vai BRCGS sertifikāts.",
+      "HALAL": "Atzītas sertificēšanas institūcijas halal sertifikāts.",
+      "LIABILITY_INSURANCE": "Apdrošināšanas polise, kas sedz atbildību par produktu.",
+      "TAX_CLEARANCE": "Izziņa, ka jums nav nodokļu parādu.",
+      "SOCIAL_SECURITY_CLEARANCE": "Izziņa, ka jums nav sociālās apdrošināšanas parādu."
     }
   }
 }

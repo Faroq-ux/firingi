@@ -248,7 +248,11 @@
       "licenceExpiry": "Data expirării permisului",
       "notOpen": "Înregistrarea pentru acest tip de cont nu este încă deschisă în nicio țară.",
       "chooseCity": "Alege…",
-      "businessDeclaration": "Confirm că înregistrez o firmă (societate sau PFA) și nu cumpăr ca persoană fizică."
+      "businessDeclaration": "Confirm că înregistrez o firmă (societate sau PFA) și nu cumpăr ca persoană fizică.",
+      "legalForm": "Formă juridică",
+      "certificateCode": "Codul certificatului de la registrul comerțului",
+      "certificateCodeHint": "Numărul companiei în registrul comerțului. Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el.",
+      "certificateCodeHintPt": "Codul de acces al certidão permanente (12 cifre, 0000-0000-0000). Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Încarcă documentul: {detail}",
         "ADDRESS_MISSING": "Adaugă o adresă: {detail}",
-        "VAT_NUMBER_MISSING": "Adaugă codul de TVA"
-      }
+        "VAT_NUMBER_MISSING": "Adaugă codul de TVA",
+        "CERTIFICATE_CODE_MISSING": "Adăugați codul certificatului de la registru (Profil)",
+        "POS_INVOICE_MISSING": "Încărcați o factură recentă din casa de marcat (Documente)"
+      },
+      "recommended": "Se cere și — FIRINGI poate analiza cererea fără acesta, dar aprobarea este mai rapidă:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Certificat de înregistrare (ONRC)",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Asigurarea vehiculului",
       "SELF_BILLING_AGREEMENT": "Acord de autofacturare",
       "CONTRACT": "Contract",
-      "OTHER": "Altele"
+      "OTHER": "Altele",
+      "POS_INVOICE": "Factură recentă din casa de marcat (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Sediu",
@@ -332,7 +340,9 @@
       "withdraw": "Retrage",
       "note": "Notă FIRINGI",
       "none": "Încă nu există documente.",
-      "required": "Obligatoriu"
+      "required": "Obligatoriu",
+      "invoiceDate": "Data facturii",
+      "posHint": "O factură recentă (ultimele 90 de zile) emisă de casa magazinului — îi arată FIRINGI că afacerea funcționează. PDF sau fotografie, max. 10 MB."
     },
     "profile": {
       "save": "Salvează modificările",
@@ -354,6 +364,10 @@
       "accessUntil": "Acces până la {date}",
       "notRequested": "Nesolicitat",
       "note": "Notă FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Societate (SRL, SA, …)",
+      "SOLE_TRADER": "PFA / întreprindere individuală"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Panou Contabilitate",
     "Daily Sales": "Vânzări Zilnice",
     "Expenses": "Cheltuieli",
-    "Profit & Loss": "Profit și Pierdere"
+    "Profit & Loss": "Profit și Pierdere",
+    "Certificates & Compliance": "Certificate și conformitate"
   },
   "delivery": {
     "title": "Livrare",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Bugetul „{name}” la {pct}%",
       "body": "{spent} € din {amount} € folosiți în această perioadă."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} expiră în {days} zile",
+      "body": "{certificate} este valabil până la {date}. Încărcați reînnoirea ca ofertele să rămână vizibile."
+    },
+    "compliance_expired": {
+      "title": "{certificate} a expirat",
+      "body": "Încărcați certificatul reînnoit. Dacă FIRINGI îl cere, ofertele sunt suspendate după {grace} zile de grație."
+    },
+    "compliance_paused": {
+      "title": "Ofertele dvs. sunt suspendate",
+      "body": "{offers} oferte sunt ascunse clienților deoarece un certificat obligatoriu lipsește sau a expirat: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Ofertele dvs. sunt din nou vizibile",
+      "body": "Certificatele sunt în regulă — clienții pot din nou vedea și comanda ofertele dvs."
+    },
+    "compliance_approved": {
+      "title": "{certificate} aprobat",
+      "body": "FIRINGI a verificat și a aprobat {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} neacceptat",
+      "body": "FIRINGI nu a acceptat {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Certificat de verificat: {certificate}",
+      "body": "{company} a încărcat {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} certificate de reverificat",
+      "body": "Verificați-le la emitent și marcați-le ca reverificate în Conformitatea furnizorilor."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Contabil",
       "TRANSPORT": "Transport și combustibil",
       "OTHER": "Altele"
+    }
+  },
+  "compliance": {
+    "title": "Certificate și conformitate",
+    "intro": "Certificatele pe care le cere FIRINGI. Păstrați-le valabile: un certificat obligatoriu lipsă sau expirat vă suspendă ofertele până când FIRINGI aprobă unul nou. Certificatele aprobate pot apărea clienților ca insigne verificate.",
+    "score": "Scor de conformitate",
+    "scoreHint": "Certificatele obligatorii contează dublu. 100 = tot ce se cere este valabil.",
+    "valid": "Valabile",
+    "expiring": "Expiră curând",
+    "missingRequired": "Lipsă (obligatorii)",
+    "pendingReview": "Așteaptă FIRINGI",
+    "pausedTitle": "Ofertele dvs. sunt suspendate",
+    "pausedWhole": "Clienții nu văd niciuna dintre ofertele dvs. până când FIRINGI aprobă: {certificates}. Încărcați certificatul mai jos.",
+    "pausedOffers": "{count} dintre ofertele dvs. sunt ascunse clienților până când FIRINGI aprobă: {certificates}. Încărcați certificatul mai jos.",
+    "pausedShort": "Suspendată — certificat",
+    "checklist": "Ce cere FIRINGI",
+    "nothingAsked": "Momentan FIRINGI nu cere niciun certificat companiei dvs.",
+    "required": "Obligatoriu",
+    "optional": "Opțional",
+    "badgeEligible": "Afișat clienților ca insignă verificată",
+    "categoriesOnly": "Doar pentru: {categories}",
+    "expiresOn": "valabil până la {date}",
+    "noExpiry": "fără dată de expirare",
+    "daysLeft": "mai sunt {days} zile",
+    "graceUntil": "Expirat — puteți vinde în continuare până la {date}. Încărcați acum certificatul reînnoit.",
+    "waivedUntil": "FIRINGI vă permite să vindeți până la {date}.",
+    "pendingUpload": "Certificat nou încărcat pe {date} — așteaptă FIRINGI.",
+    "rejectedNote": "Respins de FIRINGI: {note}",
+    "uploadNew": "Încarcă certificatul",
+    "renew": "Încarcă reînnoirea",
+    "number": "Numărul certificatului",
+    "issuer": "Emis de",
+    "issuedOn": "Data emiterii",
+    "expiresOnLabel": "Valabil până la",
+    "file": "Fișier (PDF, JPG, PNG sau WEBP — max. 10 MB)",
+    "upload": "Trimite la FIRINGI",
+    "uploading": "Se trimite…",
+    "uploaded": "Trimis — FIRINGI îl va verifica.",
+    "cancel": "Anulează",
+    "withdraw": "Retrage",
+    "history": "Toate încărcările",
+    "historyEmpty": "Niciun certificat încărcat încă.",
+    "colType": "Certificat",
+    "colUploaded": "Încărcat",
+    "colExpires": "Valabil până la",
+    "colStatus": "Stare",
+    "view": "Vezi",
+    "superseded": "Înlocuit",
+    "badgesTitle": "Insignele dvs. verificate",
+    "badgesHint": "Ce văd clienții lângă numele și produsele dvs.",
+    "badgesNone": "Încă nu aveți insigne. Aici apar certificatele aprobate de un tip pe care FIRINGI îl afișează ca insignă.",
+    "badgeHidden": "FIRINGI a ascuns această insignă pentru compania dvs.",
+    "alertPaused": "Unele oferte sunt suspendate deoarece un certificat obligatoriu lipsește sau a expirat.",
+    "alertExpiring": "{count} certificate expiră curând — încărcați reînnoirile la timp.",
+    "alertOpen": "Certificate",
+    "verifiedBy": "Verificat de FIRINGI",
+    "verifiedBadgeTitle": "{name} — certificat verificat de FIRINGI",
+    "verifiedHint": "FIRINGI a verificat aceste certificate și valabilitatea lor.",
+    "download": "Certificat",
+    "filterLabel": "Verificat",
+    "filterAll": "Toți furnizorii",
+    "states": {
+      "VALID": "Valabil",
+      "EXPIRING": "Expiră curând",
+      "WAIVED": "Prelungire de la FIRINGI",
+      "GRACE": "Expirat — zile de grație",
+      "EXPIRED": "Expirat",
+      "PENDING": "Așteaptă verificarea",
+      "REJECTED": "Respins",
+      "MISSING": "Lipsă"
+    },
+    "statuses": {
+      "PENDING": "Așteaptă verificarea",
+      "APPROVED": "Aprobat",
+      "REJECTED": "Respins",
+      "EXPIRED": "Expirat",
+      "REVOKED": "Revocat"
+    },
+    "types": {
+      "HACCP": "Siguranța alimentară HACCP",
+      "FOOD_ESTABLISHMENT": "Autorizarea unității alimentare",
+      "ORGANIC": "Ecologic UE",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Asigurare de răspundere pentru produs",
+      "TAX_CLEARANCE": "Certificat de atestare fiscală",
+      "SOCIAL_SECURITY_CLEARANCE": "Adeverință privind contribuțiile sociale"
+    },
+    "typeDesc": {
+      "HACCP": "Plan HACCP sau certificat de siguranță alimentară pentru spațiile dvs.",
+      "FOOD_ESTABLISHMENT": "Numărul de autorizare sanitar-veterinară a unității dvs.",
+      "ORGANIC": "Certificat UE de producție ecologică de la un organism de control aprobat.",
+      "ISO_22000": "Certificat al sistemului de management al siguranței alimentare.",
+      "IFS_BRCGS": "Certificat IFS Food, IFS Logistics sau BRCGS.",
+      "HALAL": "Certificat Halal de la un organism de certificare recunoscut.",
+      "LIABILITY_INSURANCE": "Poliță de asigurare care acoperă răspunderea pentru produs.",
+      "TAX_CLEARANCE": "Certificat că nu aveți datorii fiscale.",
+      "SOCIAL_SECURITY_CLEARANCE": "Certificat că nu aveți datorii la asigurările sociale."
     }
   }
 }

@@ -102,6 +102,7 @@ export const VENDOR_NAV: NavSection[] = [
       vc("profile", "Profile", "Perfil", "P2", { live: true, es: "Perfil" }),
       vc("addresses", "Warehouse & Pickup Addresses", "Moradas de Armazém e Recolha", "P2", { live: true, perm: "company.addresses.manage", es: "Direcciones" }),
       vc("documents", "Documents", "Documentos", "P2", { live: true, perm: "company.documents.manage", es: "Documentos" }),
+      vc("compliance", "Certificates & Compliance", "Certificados e Conformidade", "P28", { live: true, perm: ["company.documents.manage", "company.profile.manage", "vendor.products.view", "vendor.products.manage"], es: "Certificados y cumplimiento" }),
       vc("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       vc("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
       vc("integrations", "Integrations", "Integrações", "P21", { live: true, perm: "company.integrations.manage", es: "Integraciones" }),

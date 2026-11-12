@@ -248,7 +248,11 @@
       "licenceExpiry": "Ajokortin voimassaolo",
       "notOpen": "Rekisteröinti tälle tilityypille ei ole vielä auki missään maassa.",
       "chooseCity": "Valitse…",
-      "businessDeclaration": "Vahvistan, että rekisteröin yrityksen (yhtiö tai toiminimi) enkä osta kuluttajana."
+      "businessDeclaration": "Vahvistan, että rekisteröin yrityksen (yhtiö tai toiminimi) enkä osta kuluttajana.",
+      "legalForm": "Yhtiömuoto",
+      "certificateCode": "Kaupparekisteriotteen koodi",
+      "certificateCodeHint": "Yrityksesi kaupparekisterinumero. Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä.",
+      "certificateCodeHintPt": "certidão permanente -todistuksen käyttökoodi (12 numeroa, 0000-0000-0000). Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä."
     },
     "businessTypes": {
       "restaurant": "Ravintola",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Lataa asiakirja: {detail}",
         "ADDRESS_MISSING": "Lisää osoite: {detail}",
-        "VAT_NUMBER_MISSING": "Lisää ALV-tunnisteesi"
-      }
+        "VAT_NUMBER_MISSING": "Lisää ALV-tunnisteesi",
+        "CERTIFICATE_CODE_MISSING": "Lisää kaupparekisteriotteen koodi (Profiili)",
+        "POS_INVOICE_MISSING": "Lataa yksi tuore lasku kassajärjestelmästäsi (Asiakirjat)"
+      },
+      "recommended": "Pyydetään myös — FIRINGI voi käsitellä hakemuksesi ilman tätä, mutta se nopeuttaa hyväksyntää:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Kaupparekisteriote",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Ajoneuvovakuutus",
       "SELF_BILLING_AGREEMENT": "Itselaskutussopimus",
       "CONTRACT": "Sopimus",
-      "OTHER": "Muu"
+      "OTHER": "Muu",
+      "POS_INVOICE": "Tuore lasku kassajärjestelmästäsi (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Pääkonttori",
@@ -332,7 +340,9 @@
       "withdraw": "Peru",
       "note": "FIRINGIn huomautus",
       "none": "Ei vielä asiakirjoja.",
-      "required": "Pakollinen"
+      "required": "Pakollinen",
+      "invoiceDate": "Laskun päiväys",
+      "posHint": "Yksi tuore lasku (viim. 90 päivää) myymäläsi kassasta — se osoittaa FIRINGIlle, että liikkeesi toimii. PDF tai kuva, enint. 10 Mt."
     },
     "profile": {
       "save": "Tallenna muutokset",
@@ -354,6 +364,10 @@
       "accessUntil": "Käyttöoikeus {date} asti",
       "notRequested": "Ei pyydetty",
       "note": "FIRINGIn huomautus"
+    },
+    "legalForms": {
+      "COMPANY": "Yhtiö (Oy, Oyj, …)",
+      "SOLE_TRADER": "Toiminimi"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Kirjanpidon Yleiskatsaus",
     "Daily Sales": "Päivittäinen Myynti",
     "Expenses": "Kulut",
-    "Profit & Loss": "Tuloslaskelma"
+    "Profit & Loss": "Tuloslaskelma",
+    "Certificates & Compliance": "Todistukset ja vaatimustenmukaisuus"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Budjetti ”{name}” {pct} %:ssa",
       "body": "Tällä jaksolla käytetty {spent} € / {amount} €."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} vanhenee {days} päivän kuluttua",
+      "body": "{certificate} on voimassa {date} asti. Lataa uusinta, jotta tarjouksesi pysyvät näkyvissä."
+    },
+    "compliance_expired": {
+      "title": "{certificate} on vanhentunut",
+      "body": "Lataa uusittu todistus. Jos FIRINGI vaatii sen, tarjouksesi keskeytetään {grace} armonpäivän jälkeen."
+    },
+    "compliance_paused": {
+      "title": "Tarjouksesi on keskeytetty",
+      "body": "{offers} tarjousta on piilotettu asiakkailta, koska pakollinen todistus puuttuu tai on vanhentunut: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Tarjouksesi näkyvät taas",
+      "body": "Todistuksesi ovat kunnossa — asiakkaat voivat taas nähdä ja tilata tarjouksiasi."
+    },
+    "compliance_approved": {
+      "title": "{certificate} hyväksytty",
+      "body": "FIRINGI tarkisti ja hyväksyi todistuksen {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} ei hyväksytty",
+      "body": "FIRINGI ei hyväksynyt todistusta {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Tarkistettava todistus: {certificate}",
+      "body": "{company} latasi todistuksen {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} todistusta odottaa uudelleentarkistusta",
+      "body": "Tarkista ne myöntäjältä ja merkitse tarkistetuiksi kohdassa Toimittajien vaatimustenmukaisuus."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Kirjanpitäjä",
       "TRANSPORT": "Kuljetus ja polttoaine",
       "OTHER": "Muut"
+    }
+  },
+  "compliance": {
+    "title": "Todistukset ja vaatimustenmukaisuus",
+    "intro": "Todistukset, joita FIRINGI pyytää. Pidä ne voimassa: jos pakollinen todistus puuttuu tai on vanhentunut, tarjouksesi keskeytetään, kunnes FIRINGI hyväksyy uuden. Hyväksytyt todistukset voidaan näyttää asiakkaille vahvistettuina merkkeinä.",
+    "score": "Vaatimustenmukaisuuspisteet",
+    "scoreHint": "Pakolliset todistukset lasketaan kahteen kertaan. 100 = kaikki pyydetty on voimassa.",
+    "valid": "Voimassa",
+    "expiring": "Vanhenee pian",
+    "missingRequired": "Puuttuu (pakollinen)",
+    "pendingReview": "Odottaa FIRINGIä",
+    "pausedTitle": "Tarjouksesi on keskeytetty",
+    "pausedWhole": "Asiakkaat eivät näe yhtään tarjoustasi, ennen kuin FIRINGI hyväksyy: {certificates}. Lataa todistus alla.",
+    "pausedOffers": "{count} tarjoustasi on piilotettu asiakkailta, kunnes FIRINGI hyväksyy: {certificates}. Lataa todistus alla.",
+    "pausedShort": "Keskeytetty — todistus",
+    "checklist": "Mitä FIRINGI pyytää",
+    "nothingAsked": "FIRINGI ei tällä hetkellä pyydä yritykseltäsi todistuksia.",
+    "required": "Pakollinen",
+    "optional": "Valinnainen",
+    "badgeEligible": "Näytetään asiakkaille vahvistettuna merkkinä",
+    "categoriesOnly": "Vain: {categories}",
+    "expiresOn": "voimassa {date} asti",
+    "noExpiry": "ei voimassaolon päättymispäivää",
+    "daysLeft": "{days} päivää jäljellä",
+    "graceUntil": "Vanhentunut — voit jatkaa myyntiä {date} asti. Lataa uusittu todistus nyt.",
+    "waivedUntil": "FIRINGI antaa sinun jatkaa myyntiä {date} asti.",
+    "pendingUpload": "Uusi todistus ladattu {date} — odottaa FIRINGIä.",
+    "rejectedNote": "FIRINGI hylkäsi: {note}",
+    "uploadNew": "Lataa todistus",
+    "renew": "Lataa uusinta",
+    "number": "Todistuksen numero",
+    "issuer": "Myöntäjä",
+    "issuedOn": "Myöntämispäivä",
+    "expiresOnLabel": "Voimassa asti",
+    "file": "Tiedosto (PDF, JPG, PNG tai WEBP — enint. 10 Mt)",
+    "upload": "Lähetä FIRINGIlle",
+    "uploading": "Lähetetään…",
+    "uploaded": "Lähetetty — FIRINGI tarkistaa sen.",
+    "cancel": "Peruuta",
+    "withdraw": "Peru",
+    "history": "Kaikki lataukset",
+    "historyEmpty": "Todistuksia ei ole vielä ladattu.",
+    "colType": "Todistus",
+    "colUploaded": "Ladattu",
+    "colExpires": "Voimassa asti",
+    "colStatus": "Tila",
+    "view": "Näytä",
+    "superseded": "Korvattu",
+    "badgesTitle": "Vahvistetut merkkisi",
+    "badgesHint": "Mitä asiakkaat näkevät nimesi ja tuotteidesi vieressä.",
+    "badgesNone": "Ei vielä merkkejä. Tässä näkyvät hyväksytyt todistukset, joiden tyypin FIRINGI näyttää merkkinä.",
+    "badgeHidden": "FIRINGI on piilottanut tämän merkin yritykseltäsi.",
+    "alertPaused": "Osa tarjouksistasi on keskeytetty, koska pakollinen todistus puuttuu tai on vanhentunut.",
+    "alertExpiring": "{count} todistusta vanhenee pian — lataa uusinnat ajoissa.",
+    "alertOpen": "Todistukset",
+    "verifiedBy": "FIRINGIn vahvistama",
+    "verifiedBadgeTitle": "{name} — FIRINGIn tarkistama todistus",
+    "verifiedHint": "FIRINGI on tarkistanut nämä todistukset ja niiden voimassaolon.",
+    "download": "Todistus",
+    "filterLabel": "Vahvistettu",
+    "filterAll": "Kaikki toimittajat",
+    "states": {
+      "VALID": "Voimassa",
+      "EXPIRING": "Vanhenee pian",
+      "WAIVED": "FIRINGIn lisäaika",
+      "GRACE": "Vanhentunut — armonaika",
+      "EXPIRED": "Vanhentunut",
+      "PENDING": "Odottaa tarkistusta",
+      "REJECTED": "Hylätty",
+      "MISSING": "Puuttuu"
+    },
+    "statuses": {
+      "PENDING": "Odottaa tarkistusta",
+      "APPROVED": "Hyväksytty",
+      "REJECTED": "Hylätty",
+      "EXPIRED": "Vanhentunut",
+      "REVOKED": "Peruttu"
+    },
+    "types": {
+      "HACCP": "HACCP-elintarviketurvallisuus",
+      "FOOD_ESTABLISHMENT": "Elintarvikehuoneiston hyväksyntä",
+      "ORGANIC": "EU-luomu",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Tuotevastuuvakuutus",
+      "TAX_CLEARANCE": "Verovelkatodistus",
+      "SOCIAL_SECURITY_CLEARANCE": "Todistus sosiaaliturvamaksujen maksamisesta"
+    },
+    "typeDesc": {
+      "HACCP": "HACCP-suunnitelma tai elintarviketurvallisuustodistus tiloillesi.",
+      "FOOD_ESTABLISHMENT": "Tilojesi eläinlääkintä- / elintarvikehuoneiston hyväksyntänumero.",
+      "ORGANIC": "Hyväksytyn valvontaelimen EU-luomutuotantotodistus.",
+      "ISO_22000": "Elintarviketurvallisuuden hallintajärjestelmän sertifikaatti.",
+      "IFS_BRCGS": "IFS Food-, IFS Logistics- tai BRCGS-sertifikaatti.",
+      "HALAL": "Tunnustetun sertifiointielimen halal-todistus.",
+      "LIABILITY_INSURANCE": "Tuotevastuun kattava vakuutus.",
+      "TAX_CLEARANCE": "Todistus siitä, ettei sinulla ole verovelkaa.",
+      "SOCIAL_SECURITY_CLEARANCE": "Todistus siitä, ettei sinulla ole sosiaaliturvamaksuvelkaa."
     }
   }
 }

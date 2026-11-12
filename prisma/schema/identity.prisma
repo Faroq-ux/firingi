@@ -144,35 +144,44 @@ model Verification {
 /// One table for every account. "Vendor" = DISTRIBUTOR | WHOLESALER.
 /// A wholesaler is ONE company that uses both the Sell and the Buy portal.
 model Company {
-  id                  String        @id @default(cuid())
-  type                CompanyType
-  status              AccountStatus @default(PENDING)
-  legalName           String
-  tradeName           String?
-  taxId               String // national tax id (NIF in PT)
-  vatNumber           String? // EU VAT number incl. prefix (validated with VIES)
-  countryId           String
-  email               String
-  phone               String?
-  website             String?
-  businessType        String? // restaurant, kebab/pizza, mini-market … (customers)
+  id                      String        @id @default(cuid())
+  type                    CompanyType
+  status                  AccountStatus @default(PENDING)
+  legalName               String
+  tradeName               String?
+  taxId                   String // national tax id (NIF in PT)
+  vatNumber               String? // EU VAT number incl. prefix (validated with VIES)
+  countryId               String
+  email                   String
+  phone                   String?
+  website                 String?
+  businessType            String? // restaurant, kebab/pizza, mini-market … (customers)
   /// FIRINGI's own in-house warehouse, run as a wholesaler (managed by FIRINGI staff).
-  isInHouse           Boolean       @default(false)
-  defaultCurrencyCode String        @default("EUR")
-  defaultLanguageCode String?
-  creditLimit         Decimal?      @db.Decimal(18, 2)
-  paymentTermsDays    Int           @default(0)
+  isInHouse               Boolean       @default(false)
+  defaultCurrencyCode     String        @default("EUR")
+  defaultLanguageCode     String?
+  creditLimit             Decimal?      @db.Decimal(18, 2)
+  paymentTermsDays        Int           @default(0)
   /// Orders wait for payment before the supplier sees them (buyers without credit terms).
-  payBeforeShipping   Boolean       @default(false)
+  payBeforeShipping       Boolean       @default(false)
   /// Phase 27: the buyer must give a purchase-order reference at checkout
-  requirePoReference  Boolean       @default(false)
-  regionalManagerId   String?
-  notes               String?
-  approvedAt          DateTime?
-  approvedById        String?
-  statusReason        String? // rejection / suspension reason
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
+  requirePoReference      Boolean       @default(false)
+  /// Phase 28: company or sole trader — companies selling on FIRINGI give their registry certificate code
+  legalForm               LegalForm     @default(COMPANY)
+  /// Phase 28: PT "código de acesso à certidão permanente" (or the registry number elsewhere)
+  registryCertificateCode String?
+  /// Phase 28: what admin approved the account without ({ items, note, byUserId, at })
+  approvalWaiver          Json?
+  /// Phase 28: all offers paused because a required certificate (whole supplier) is missing / expired
+  compliancePausedAt      DateTime?
+  compliancePauseReason   String?
+  regionalManagerId       String?
+  notes                   String?
+  approvedAt              DateTime?
+  approvedById            String?
+  statusReason            String? // rejection / suspension reason
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
 
   country                  Country                     @relation(fields: [countryId], references: [id])
   regionalManager          User?                       @relation("RegionalManager", fields: [regionalManagerId], references: [id])
@@ -182,6 +191,8 @@ model Company {
   accountingEntries        AccountingEntry[]
   recurringExpenses        RecurringExpense[]
   features                 CompanyFeature[]
+  certificates             Certificate[]               @relation("CompanyCertificates")
+  complianceWaivers        ComplianceWaiver[]          @relation("CompanyWaivers")
   roles                    Role[]
   statusHistory            CompanyStatusHistory[]
   addresses                Address[]

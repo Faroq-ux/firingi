@@ -5,7 +5,7 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
 import { registerCompany, registerDriver } from "@/server/services/registration";
-import { submitForReview, adminSetStatus, setCommissionRate, runViesCheck, recordManualVatVerification } from "@/server/services/company";
+import { submitForReview, adminSetStatus, updateOwnProfile, setCommissionRate, runViesCheck, recordManualVatVerification } from "@/server/services/company";
 import { saveAddress } from "@/server/services/addresses";
 import { uploadCompanyDocument, uploadOwnDriverDocument, reviewDocument, documentForDownload } from "@/server/services/documents";
 import { allowedRestrictions, requestRestrictionAccess, reviewRestrictionAccess } from "@/server/services/restrictions";
@@ -86,17 +86,19 @@ describe("applicant onboarding → admin approval", () => {
 
     await expect(submitForReview(ctx)).rejects.toThrow(/complete your application/);
     await saveAddress(ctx, { kind: "DELIVERY", label: "Restaurant", line1: "Rua B 2", postalCode: "1000-002", countryCode: "PT", cityId: await lisbon(), cityName: "Lisboa" });
-    const d1 = await uploadCompanyDocument(ctx, { type: "BUSINESS_REGISTRATION", file: pdfFile("certidao.pdf") });
-    const d2 = await uploadCompanyDocument(ctx, { type: "TAX_ID_CERTIFICATE", file: pngFile("nif.png") });
+    // Phase 28: no document is needed to submit; a customer is asked for one recent invoice from its POS.
+    await expect(uploadCompanyDocument(ctx, { type: "POS_INVOICE", file: pdfFile("fatura.pdf") })).rejects.toThrow(/date on the invoice/);
+    await expect(uploadCompanyDocument(ctx, { type: "POS_INVOICE", file: pdfFile("fatura.pdf"), issuedOn: new Date(Date.now() - 120 * 86_400_000) })).rejects.toThrow(/recent/);
+    const d1 = await uploadCompanyDocument(ctx, { type: "POS_INVOICE", file: pdfFile("fatura.pdf"), issuedOn: new Date(Date.now() - 3 * 86_400_000) });
     await submitForReview(ctx);
     expect((await prisma.company.findUniqueOrThrow({ where: { id: companyId } })).status).toBe("UNDER_REVIEW");
 
     const ops = await ctxFor("ops@firingi.test");
-    await expect(adminSetStatus(ops, companyId, "APPROVED")).rejects.toThrow(/Document not approved/);
+    await expect(adminSetStatus(ops, companyId, "APPROVED")).rejects.toThrow(/POS invoice not approved.*Approve anyway/);
+    await expect(reviewDocument(ops, d1.id, "REJECTED")).rejects.toThrow(/explain/);
     await reviewDocument(ops, d1.id, "APPROVED");
-    await expect(reviewDocument(ops, d2.id, "REJECTED")).rejects.toThrow(/explain/);
-    await reviewDocument(ops, d2.id, "APPROVED");
     await adminSetStatus(ops, companyId, "APPROVED");
+    expect((await prisma.company.findUniqueOrThrow({ where: { id: companyId } })).approvalWaiver).toBeNull();
 
     const after = await ctxFor(email);
     expect(after.company.status).toBe("APPROVED");
@@ -105,6 +107,23 @@ describe("applicant onboarding → admin approval", () => {
     // Applicant was notified (in-app) and the decision is audited.
     expect(await prisma.notification.count({ where: { userId: after.user.id, type: "company.approved" } })).toBe(1);
     expect(await prisma.auditLog.count({ where: { entityId: companyId, action: { startsWith: "company.status." } } })).toBe(2);
+  });
+
+  it("admin can approve anyway without the POS invoice — with a note that is kept (Phase 28)", async () => {
+    const { email, companyId } = await newCustomer();
+    const ctx = await ctxFor(email);
+    await saveAddress(ctx, { kind: "DELIVERY", label: "Shop", line1: "Rua C 3", postalCode: "1000-003", countryCode: "PT", cityId: await lisbon(), cityName: "Lisboa" });
+    await submitForReview(ctx); // VAT + addresses are enough to submit
+    const ops = await ctxFor("ops@firingi.test");
+    await expect(adminSetStatus(ops, companyId, "APPROVED")).rejects.toThrow(/No recent invoice.*Approve anyway/);
+    await expect(adminSetStatus(ops, companyId, "APPROVED", "ok", { approveAnyway: true })).rejects.toThrow(/at least 10/);
+    await adminSetStatus(ops, companyId, "APPROVED", "Visited the shop, invoice to follow", { approveAnyway: true });
+    const co = await prisma.company.findUniqueOrThrow({ where: { id: companyId } });
+    expect(co.status).toBe("APPROVED");
+    expect(co.approvalWaiver).toMatchObject({ items: ["POS_INVOICE_MISSING"], note: "Visited the shop, invoice to follow", byUserId: ops.user.id });
+    expect(await prisma.auditLog.count({ where: { entityId: companyId, action: "company.status.approved_anyway" } })).toBe(1);
+    const h = await prisma.companyStatusHistory.findFirstOrThrow({ where: { companyId, toStatus: "APPROVED" } });
+    expect(h.reason).toMatch(/^Approved anyway \(without no recent invoice/);
   });
 
   it("reject / suspend need a reason; status changes follow the allowed transitions", async () => {
@@ -156,7 +175,7 @@ describe("applicant onboarding → admin approval", () => {
 });
 
 describe("vendor approval: commission + VIES", () => {
-  it("a distributor needs approved docs, a VIES-confirmed VAT number and a commission rate", async () => {
+  it("a distributor needs a VIES-confirmed VAT number, a commission rate and its certificate code", async () => {
     const email = `dist.${Date.now()}@test.pt`;
     const nif = await freshNif();
     const { companyId } = await registerCompany({
@@ -166,8 +185,7 @@ describe("vendor approval: commission + VIES", () => {
     const ctx = await ctxFor(email);
     // Distributor warehouse may be in another EU country (cross-border).
     await saveAddress(ctx, { kind: "WAREHOUSE", label: "Madrid hub", line1: "Calle 1", postalCode: "28001", countryCode: "ES", cityName: "Madrid" });
-    for (const type of ["BUSINESS_REGISTRATION", "TAX_ID_CERTIFICATE"] as const) await uploadCompanyDocument(ctx, { type, file: pdfFile() });
-    await submitForReview(ctx);
+    await submitForReview(ctx); // Phase 28: no documents needed
 
     const sa = await ctxFor("superadmin@firingi.test");
     for (const d of await prisma.document.findMany({ where: { companyId } })) await reviewDocument(sa, d.id, "APPROVED");
@@ -190,6 +208,11 @@ describe("vendor approval: commission + VIES", () => {
     const rules = await prisma.commissionRule.findMany({ where: { vendorCompanyId: companyId }, orderBy: { validFrom: "asc" } });
     expect(rules.map((r) => [Number(r.rate), r.validTo === null])).toEqual([[7, false], [6.5, true]]);
 
+    // A supplier company is also asked for its permanent certificate code (waivable; a sole trader isn't).
+    await expect(adminSetStatus(sa, companyId, "APPROVED")).rejects.toThrow(/Permanent certificate code/);
+    await expect(updateOwnProfile(ctx, { email, certificateCode: "1234-56" })).rejects.toThrow(/12 digits/);
+    await updateOwnProfile(ctx, { email, certificateCode: "123456789012" });
+    expect((await prisma.company.findUniqueOrThrow({ where: { id: companyId } })).registryCertificateCode).toBe("1234-5678-9012");
     await adminSetStatus(sa, companyId, "APPROVED");
     expect(portalsFor(await ctxFor(email))).toEqual(["vendor"]);
   });

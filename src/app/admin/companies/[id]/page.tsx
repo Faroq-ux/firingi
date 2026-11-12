@@ -2,7 +2,8 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePortal } from "@/server/rbac/guard";
 import { companyDetail } from "@/server/data/companies";
-import { ADMIN_TRANSITIONS, describeMissing, isVendorType, REQUIRED_DOCUMENTS } from "@/server/onboarding/rules";
+import { ADMIN_TRANSITIONS, describeMissing, isVendorType, needsCertificateCode } from "@/server/onboarding/rules";
+import { ApproveAnyway } from "@/components/compliance/admin";
 import { PageHeader } from "@/components/layout/page-header";
 import { AccountStatusBadge } from "@/components/layout/status-badge";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +22,10 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
   const [tc, td, tk, tb, locale] = await Promise.all([
     getTranslations("companyType"), getTranslations("onboarding.docTypes"), getTranslations("onboarding.addressKinds"), getTranslations("onboarding.businessTypes"), getLocale(),
   ]);
-  const required = c.type !== "ADMIN" ? REQUIRED_DOCUMENTS[c.type] : [];
+  const required: string[] = c.type === "CUSTOMER" ? ["POS_INVOICE"] : [];
+  const hard = readiness.filter((m) => !m.waivable);
+  const soft = readiness.filter((m) => m.waivable);
+  const waiver = c.approvalWaiver as { items: string[]; note: string; byUserId: string; at: string } | null;
   const companyDocs = c.documents.filter((d) => !d.restrictionApprovalId);
   const lastVies = c.vatValidations[0];
   const currentCommission = c.commissionRules.find((r) => !r.validTo);
@@ -47,29 +51,47 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
               )}
               {(c.status === "PENDING" || c.status === "UNDER_REVIEW") && (
                 readiness.length ? (
-                  <div className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
-                    <p className="mb-1 font-medium">Before approval:</p>
-                    <ul className="list-disc pl-5">{readiness.map((m, i) => <li key={i}>{describeMissing(m)}</li>)}</ul>
+                  <div className="space-y-2" data-testid="readiness">
+                    {hard.length > 0 && (
+                      <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm">
+                        <p className="mb-1 font-medium">Required before approval:</p>
+                        <ul className="list-disc pl-5">{hard.map((m, i) => <li key={i}>{describeMissing(m)}</li>)}</ul>
+                      </div>
+                    )}
+                    {soft.length > 0 && (
+                      <div className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
+                        <p className="mb-1 font-medium">Also asked for — you can approve anyway with a note:</p>
+                        <ul className="list-disc pl-5">{soft.map((m, i) => <li key={i}>{describeMissing(m)}</li>)}</ul>
+                      </div>
+                    )}
                   </div>
                 ) : <p className="rounded-md bg-success/10 p-3 text-sm text-success">All approval requirements are met.</p>
               )}
+              {waiver && (
+                <p className="rounded-md border border-dashed p-3 text-sm" data-testid="approval-waiver">
+                  <b>Approved without:</b> {waiver.items.map((x) => describeMissing({ code: x })).join("; ")} — “{waiver.note}” ({actors.get(waiver.byUserId) ?? "—"}, {formatDate(waiver.at, locale, true)})
+                </p>
+              )}
               {can.decide ? (
-                <CompanyStatusActions companyId={c.id} targets={ADMIN_TRANSITIONS[c.status]} approveBlocked={readiness.length > 0} />
+                <div className="flex flex-wrap items-start gap-3">
+                  <CompanyStatusActions companyId={c.id} targets={ADMIN_TRANSITIONS[c.status]} approveBlocked={readiness.length > 0} />
+                  {ADMIN_TRANSITIONS[c.status].includes("APPROVED") && hard.length === 0 && soft.length > 0 && <ApproveAnyway companyId={c.id} items={soft.map((m) => describeMissing(m))} />}
+                </div>
               ) : <p className="text-sm text-muted-foreground">You can view this account but not decide on it.</p>}
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader><CardTitle>Documents</CardTitle><CardDescription>Required: {required.map((r) => td(r)).join(", ")}</CardDescription></CardHeader>
+            <CardHeader><CardTitle>Documents</CardTitle><CardDescription>{c.type === "CUSTOMER" ? "Asked for: one recent invoice from the customer's POS (admin can approve without it). Other documents are optional." : "All documents are optional — supplier certificates are managed in Supplier Compliance."}</CardDescription></CardHeader>
             <CardContent>
               <ul className="divide-y rounded-lg border">
                 {companyDocs.length === 0 && <li className="p-3 text-sm text-muted-foreground">No documents uploaded.</li>}
                 {companyDocs.map((d) => (
                   <li key={d.id} className="flex flex-wrap items-center gap-3 p-3 text-sm">
                     <div className="min-w-0 flex-1">
-                      <div className="font-medium">{td(d.type)} {required.includes(d.type) && <Badge variant="secondary">required</Badge>}</div>
+                      <div className="font-medium">{td(d.type)} {required.includes(d.type) && <Badge variant="secondary">asked for</Badge>}</div>
                       <div className="text-xs text-muted-foreground">
-                        {d.fileName} · uploaded {formatDate(d.createdAt, locale, true)}{d.expiresAt ? ` · valid until ${formatDate(d.expiresAt, locale)}` : ""}
+                        {d.fileName} · uploaded {formatDate(d.createdAt, locale, true)}{d.issuedOn ? ` · invoice date ${formatDate(d.issuedOn, locale)}` : ""}{d.expiresAt ? ` · valid until ${formatDate(d.expiresAt, locale)}` : ""}
                         {d.reviewedById ? ` · reviewed by ${actors.get(d.reviewedById) ?? "—"}` : ""}
                       </div>
                       {d.reviewNote && <div className="text-xs text-destructive">Note: {d.reviewNote}</div>}
@@ -123,6 +145,8 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
                 <dt className="text-muted-foreground">E-mail</dt><dd className="break-all">{c.email}</dd>
                 <dt className="text-muted-foreground">Phone</dt><dd>{c.phone ?? "—"}</dd>
                 <dt className="text-muted-foreground">VAT</dt><dd>{c.vatNumber ?? "—"}</dd>
+                <dt className="text-muted-foreground">Legal form</dt><dd>{c.legalForm === "SOLE_TRADER" ? "Sole trader" : "Company"}</dd>
+                <dt className="text-muted-foreground">Cert. code</dt><dd data-testid="cert-code">{c.registryCertificateCode ?? (needsCertificateCode(c.type, c.legalForm) ? <span className="text-amber-700 dark:text-warning">not given</span> : "—")}</dd>
                 {c.businessType && (<><dt className="text-muted-foreground">Business</dt><dd>{tb(c.businessType as "other")}</dd></>)}
                 <dt className="text-muted-foreground">Registered</dt><dd>{formatDate(c.createdAt, locale)}</dd>
                 <dt className="text-muted-foreground">Users</dt><dd className="min-w-0">{c.memberships.map((m) => <div key={m.id} className="break-all">{m.user.email}{m.isOwner ? " (owner)" : ""}</div>)}</dd>
@@ -150,6 +174,12 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
             </Card>
           )}
 
+          {isVendorType(c.type) && c.status !== "PENDING" && (
+            <Card>
+              <CardHeader><CardTitle>Certificates</CardTitle><CardDescription>HACCP, insurance, tax clearance… and the verified badges customers see.</CardDescription></CardHeader>
+              <CardContent><Link href={`/admin/vendors/compliance/suppliers/${c.id}`} className="text-sm text-primary hover:underline">Supplier compliance →</Link></CardContent>
+            </Card>
+          )}
           {isVendorType(c.type) && (
             <Card>
               <CardHeader><CardTitle>Commission</CardTitle><CardDescription>No default — must be set before the vendor goes live.</CardDescription></CardHeader>

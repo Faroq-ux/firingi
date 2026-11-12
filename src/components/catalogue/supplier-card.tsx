@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { MapPin, Store } from "lucide-react";
 import type { Supplier } from "@/server/data/catalogue-buyer";
+import { VerifiedBadges } from "@/components/compliance/badges";
 
 export async function SupplierCard({ s, categoryId }: { s: Supplier; categoryId?: string }) {
   const t = await getTranslations("catalogue");
@@ -17,6 +18,7 @@ export async function SupplierCard({ s, categoryId }: { s: Supplier; categoryId?
           <span>{s.country.flag} {s.city ?? s.country.code}</span>
           <span>· {t("productsCount", { count: s.offers })}</span>
         </div>
+        <VerifiedBadges badges={s.badges} className="mt-1" />
       </div>
       <div className="flex shrink-0 items-center gap-1 rounded-full bg-[color:color-mix(in_oklch,var(--vivid-teal)_14%,transparent)] px-2.5 py-1 text-xs font-semibold">
         <MapPin className="size-3.5 text-[var(--vivid-teal)]" />

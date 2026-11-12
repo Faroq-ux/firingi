@@ -159,21 +159,24 @@ model PackagingUnit {
 /// What a vendor actually sells. `sellerType` mirrors the vendor company's type and is
 /// kept in sync by a DB trigger — the visibility layer filters on it.
 model VendorOffer {
-  id              String      @id @default(cuid())
-  vendorCompanyId String
-  sellerType      SellerType
-  packagingUnitId String
-  countryId       String // country the offer is sold from
-  vendorSku       String?
-  status          OfferStatus @default(PENDING_APPROVAL)
-  reviewNote      String?
-  reviewedById    String?
-  reviewedAt      DateTime?
-  minOrderQty     Int         @default(1)
-  qtyStep         Int         @default(1)
-  leadTimeDays    Int         @default(1)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id                    String      @id @default(cuid())
+  vendorCompanyId       String
+  sellerType            SellerType
+  packagingUnitId       String
+  countryId             String // country the offer is sold from
+  vendorSku             String?
+  status                OfferStatus @default(PENDING_APPROVAL)
+  reviewNote            String?
+  reviewedById          String?
+  reviewedAt            DateTime?
+  minOrderQty           Int         @default(1)
+  qtyStep               Int         @default(1)
+  leadTimeDays          Int         @default(1)
+  /// Phase 28: paused because a required certificate for its category is missing / expired
+  compliancePausedAt    DateTime?
+  compliancePauseReason String?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
 
   vendor           Company              @relation(fields: [vendorCompanyId], references: [id])
   packaging        PackagingUnit        @relation(fields: [packagingUnitId], references: [id])

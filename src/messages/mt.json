@@ -248,7 +248,11 @@
       "licenceExpiry": "Data ta' skadenza tal-liċenzja",
       "notOpen": "Ir-reġistrazzjoni għal dan it-tip ta' kont għadha mhix miftuħa f'ebda pajjiż.",
       "chooseCity": "Agħżel…",
-      "businessDeclaration": "Nikkonferma li qed nirreġistra negozju (kumpanija jew negozjant waħdieni) u mhux qed nixtri bħala konsumatur privat."
+      "businessDeclaration": "Nikkonferma li qed nirreġistra negozju (kumpanija jew negozjant waħdieni) u mhux qed nixtri bħala konsumatur privat.",
+      "legalForm": "Forma legali",
+      "certificateCode": "Kodiċi taċ-ċertifikat tar-reġistru",
+      "certificateCodeHint": "In-numru tar-reġistru tal-kumpaniji tiegħek. Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu.",
+      "certificateCodeHintPt": "Kodiċi ta' aċċess taċ-certidão permanente (12-il ċifra, 0000-0000-0000). Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu."
     },
     "businessTypes": {
       "restaurant": "Ristorant",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Tella' dokument: {detail}",
         "ADDRESS_MISSING": "Żid indirizz: {detail}",
-        "VAT_NUMBER_MISSING": "Żid in-numru tal-VAT tiegħek"
-      }
+        "VAT_NUMBER_MISSING": "Żid in-numru tal-VAT tiegħek",
+        "CERTIFICATE_CODE_MISSING": "Żid il-kodiċi taċ-ċertifikat tar-reġistru (Profil)",
+        "POS_INVOICE_MISSING": "Tella' fattura riċenti mill-cash register (Dokumenti)"
+      },
+      "recommended": "Mitlub ukoll — FIRINGI tista' tirrevedi l-applikazzjoni mingħajru, iżda jħaffef l-approvazzjoni:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Ċertifikat tar-Reġistru tal-Kumpaniji",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Assigurazzjoni tal-vettura",
       "SELF_BILLING_AGREEMENT": "Ftehim ta' awtofatturar",
       "CONTRACT": "Kuntratt",
-      "OTHER": "Oħrajn"
+      "OTHER": "Oħrajn",
+      "POS_INVOICE": "Fattura riċenti mill-cash register tiegħek (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Uffiċċju ewlieni",
@@ -332,7 +340,9 @@
       "withdraw": "Irtira",
       "note": "Nota ta' FIRINGI",
       "none": "Għad m'hemmx dokumenti.",
-      "required": "Obbligatorju"
+      "required": "Obbligatorju",
+      "invoiceDate": "Data tal-fattura",
+      "posHint": "Fattura waħda riċenti (l-aħħar 90 jum) mill-cash register tal-ħanut — turi lil FIRINGI li n-negozju qed jaħdem. PDF jew ritratt, massimu 10 MB."
     },
     "profile": {
       "save": "Issejvja l-bidliet",
@@ -354,6 +364,10 @@
       "accessUntil": "Aċċess sa {date}",
       "notRequested": "Mhux mitlub",
       "note": "Nota ta' FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Kumpanija (Ltd, plc, …)",
+      "SOLE_TRADER": "Sole trader"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Pannell tal-Kontabilità",
     "Daily Sales": "Bejgħ ta' Kuljum",
     "Expenses": "Spejjeż",
-    "Profit & Loss": "Qligħ u Telf"
+    "Profit & Loss": "Qligħ u Telf",
+    "Certificates & Compliance": "Ċertifikati u konformità"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Il-baġit “{name}” fil-{pct}%",
       "body": "Intużaw {spent} € minn {amount} € f'dan il-perjodu."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} jiskadi fi {days} jiem",
+      "body": "Il-{certificate} tiegħek huwa validu sa {date}. Tella' t-tiġdid biex l-offerti jibqgħu viżibbli."
+    },
+    "compliance_expired": {
+      "title": "{certificate} skada",
+      "body": "Tella' ċ-ċertifikat imġedded. Jekk FIRINGI titolbu, l-offerti jiġu sospiżi wara {grace} jiem ta' grazzja."
+    },
+    "compliance_paused": {
+      "title": "L-offerti tiegħek huma sospiżi",
+      "body": "{offers} offerti huma moħbija mill-klijenti għax ċertifikat obbligatorju huwa nieqes jew skada: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "L-offerti tiegħek reġgħu viżibbli",
+      "body": "Iċ-ċertifikati tiegħek huma f'ordni — il-klijenti jistgħu jerġgħu jaraw u jordnaw l-offerti tiegħek."
+    },
+    "compliance_approved": {
+      "title": "{certificate} approvat",
+      "body": "FIRINGI ċċekkjat u approvat il-{certificate} tiegħek."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} mhux aċċettat",
+      "body": "FIRINGI ma aċċettatx il-{certificate} tiegħek: {reason}"
+    },
+    "compliance_review": {
+      "title": "Ċertifikat biex jiġi rivedut: {certificate}",
+      "body": "{company} tellgħet {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} ċertifikati għal verifika mill-ġdid",
+      "body": "Iċċekkjahom mal-emittent u immarkahom bħala ċċekkjati f'Konformità tal-Fornituri."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Accountant",
       "TRANSPORT": "Trasport u fjuwil",
       "OTHER": "Oħrajn"
+    }
+  },
+  "compliance": {
+    "title": "Ċertifikati u konformità",
+    "intro": "Iċ-ċertifikati li titlob FIRINGI. Żommhom validi: jekk ċertifikat obbligatorju jkun nieqes jew skada, l-offerti tiegħek jiġu sospiżi sakemm FIRINGI tapprova wieħed ġdid. Iċ-ċertifikati approvati jistgħu jidhru lill-klijenti bħala badges ivverifikati.",
+    "score": "Punteġġ ta' konformità",
+    "scoreHint": "Iċ-ċertifikati obbligatorji jgħoddu doppju. 100 = kull ma jintalab huwa validu.",
+    "valid": "Validi",
+    "expiring": "Jiskadu dalwaqt",
+    "missingRequired": "Neqsin (obbligatorji)",
+    "pendingReview": "Qed jistenna lil FIRINGI",
+    "pausedTitle": "L-offerti tiegħek huma sospiżi",
+    "pausedWhole": "Il-klijenti ma jarawx l-ebda offerta tiegħek sakemm FIRINGI tapprova: {certificates}. Tella' ċ-ċertifikat hawn taħt.",
+    "pausedOffers": "{count} mill-offerti tiegħek huma moħbija mill-klijenti sakemm FIRINGI tapprova: {certificates}. Tella' ċ-ċertifikat hawn taħt.",
+    "pausedShort": "Sospiża — ċertifikat",
+    "checklist": "X'titlob FIRINGI",
+    "nothingAsked": "Bħalissa FIRINGI ma titlob l-ebda ċertifikat mill-kumpanija tiegħek.",
+    "required": "Obbligatorju",
+    "optional": "Fakultattiv",
+    "badgeEligible": "Jidher lill-klijenti bħala badge ivverifikat",
+    "categoriesOnly": "Biss għal: {categories}",
+    "expiresOn": "validu sa {date}",
+    "noExpiry": "l-ebda data ta' skadenza",
+    "daysLeft": "fadal {days} jiem",
+    "graceUntil": "Skada — tista' tibqa' tbigħ sa {date}. Tella' ċ-ċertifikat imġedded issa.",
+    "waivedUntil": "FIRINGI tħallik tibqa' tbigħ sa {date}.",
+    "pendingUpload": "Ċertifikat ġdid imtella' fil-{date} — qed jistenna lil FIRINGI.",
+    "rejectedNote": "Miċħud minn FIRINGI: {note}",
+    "uploadNew": "Tella' ċ-ċertifikat",
+    "renew": "Tella' t-tiġdid",
+    "number": "Numru taċ-ċertifikat",
+    "issuer": "Maħruġ minn",
+    "issuedOn": "Data tal-ħruġ",
+    "expiresOnLabel": "Validu sa",
+    "file": "Fajl (PDF, JPG, PNG jew WEBP — massimu 10 MB)",
+    "upload": "Ibgħat lil FIRINGI",
+    "uploading": "Qed jintbagħat…",
+    "uploaded": "Mibgħut — FIRINGI se tirrevedih.",
+    "cancel": "Ikkanċella",
+    "withdraw": "Irtira",
+    "history": "It-tellgħat kollha",
+    "historyEmpty": "Għadu ma ttella' l-ebda ċertifikat.",
+    "colType": "Ċertifikat",
+    "colUploaded": "Imtella'",
+    "colExpires": "Validu sa",
+    "colStatus": "Status",
+    "view": "Ara",
+    "superseded": "Sostitwit",
+    "badgesTitle": "Il-badges ivverifikati tiegħek",
+    "badgesHint": "Dak li jaraw il-klijenti ħdejn ismek u l-prodotti tiegħek.",
+    "badgesNone": "Għad m'hemmx badges. Hawn jidhru ċ-ċertifikati approvati ta' tip li FIRINGI turi bħala badge.",
+    "badgeHidden": "FIRINGI ħbiet dan il-badge għall-kumpanija tiegħek.",
+    "alertPaused": "Xi offerti tiegħek huma sospiżi għax ċertifikat obbligatorju huwa nieqes jew skada.",
+    "alertExpiring": "{count} ċertifikati jiskadu dalwaqt — tella' t-tiġdidiet fil-ħin.",
+    "alertOpen": "Ċertifikati",
+    "verifiedBy": "Ivverifikat minn FIRINGI",
+    "verifiedBadgeTitle": "{name} — ċertifikat iċċekkjat minn FIRINGI",
+    "verifiedHint": "FIRINGI ċċekkjat dawn iċ-ċertifikati u l-validità tagħhom.",
+    "download": "Ċertifikat",
+    "filterLabel": "Ivverifikat",
+    "filterAll": "Il-fornituri kollha",
+    "states": {
+      "VALID": "Validu",
+      "EXPIRING": "Jiskadi dalwaqt",
+      "WAIVED": "Perjodu ta' grazzja minn FIRINGI",
+      "GRACE": "Skada — jiem ta' grazzja",
+      "EXPIRED": "Skada",
+      "PENDING": "Qed jistenna reviżjoni",
+      "REJECTED": "Miċħud",
+      "MISSING": "Nieqes"
+    },
+    "statuses": {
+      "PENDING": "Qed jistenna reviżjoni",
+      "APPROVED": "Approvat",
+      "REJECTED": "Miċħud",
+      "EXPIRED": "Skada",
+      "REVOKED": "Revokat"
+    },
+    "types": {
+      "HACCP": "Sigurtà tal-ikel HACCP",
+      "FOOD_ESTABLISHMENT": "Approvazzjoni ta' stabbiliment tal-ikel",
+      "ORGANIC": "Organiku UE",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Assigurazzjoni tar-responsabbiltà tal-prodott",
+      "TAX_CLEARANCE": "Ċertifikat ta' konformità tat-taxxa",
+      "SOCIAL_SECURITY_CLEARANCE": "Ċertifikat tas-sigurtà soċjali"
+    },
+    "typeDesc": {
+      "HACCP": "Pjan HACCP jew ċertifikat tas-sigurtà tal-ikel għall-post tiegħek.",
+      "FOOD_ESTABLISHMENT": "Numru ta' approvazzjoni veterinarja / tal-ikel tal-post tiegħek.",
+      "ORGANIC": "Ċertifikat UE ta' produzzjoni organika minn korp ta' kontroll approvat.",
+      "ISO_22000": "Ċertifikat tas-sistema ta' ġestjoni tas-sigurtà tal-ikel.",
+      "IFS_BRCGS": "Ċertifikat IFS Food, IFS Logistics jew BRCGS.",
+      "HALAL": "Ċertifikat Halal minn korp ta' ċertifikazzjoni rikonoxxut.",
+      "LIABILITY_INSURANCE": "Polza tal-assigurazzjoni li tkopri r-responsabbiltà tal-prodott.",
+      "TAX_CLEARANCE": "Ċertifikat li ma għandekx dejn tat-taxxa.",
+      "SOCIAL_SECURITY_CLEARANCE": "Ċertifikat li ma għandekx dejn tas-sigurtà soċjali."
     }
   }
 }

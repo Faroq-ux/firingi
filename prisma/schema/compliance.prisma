@@ -1,0 +1,98 @@
+// Phase 28 — supplier compliance: certificate types FIRINGI requires (or just accepts) from
+// distributors and wholesalers, the certificates suppliers upload, expiry and re-checks, grace
+// waivers, automatic pausing of offers when a required certificate is missing or expired, and the
+// verified badges customers see (each badge switched on / off by FIRINGI).
+
+enum LegalForm {
+  COMPANY // limited company etc. — has a commercial-registry entry (PT: certidão permanente)
+  SOLE_TRADER // individual business (PT: empresário em nome individual) — no registry certificate
+}
+
+/// A kind of certificate FIRINGI asks suppliers for (HACCP, organic, insurance, tax clearance…).
+model CertificateType {
+  id             String        @id @default(cuid())
+  /// stable key; built-in types have translated names in the UI
+  key            String        @unique
+  name           String
+  description    String?
+  /// supplier types it applies to (DISTRIBUTOR / WHOLESALER)
+  appliesTo      CompanyType[]
+  /// supplier countries it applies to (empty = every country)
+  countryIds     String[]
+  /// only suppliers / offers in these categories (incl. sub-categories); empty = the whole supplier
+  categoryIds    String[]
+  /// missing or expired → the supplier's offers (or the offers in the categories) are paused
+  required       Boolean       @default(false)
+  needsNumber    Boolean       @default(true)
+  hasExpiry      Boolean       @default(true)
+  /// FIRINGI re-checks an approved certificate every N months (null = never)
+  recheckMonths  Int?
+  /// days after expiry before offers are paused
+  graceDays      Int           @default(0)
+  /// customers see a verified badge for this certificate
+  badgeEnabled   Boolean       @default(false)
+  /// customers may download the certificate file
+  publicDownload Boolean       @default(false)
+  isActive       Boolean       @default(true)
+  sortOrder      Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  certificates Certificate[]
+  waivers      ComplianceWaiver[]
+}
+
+/// A certificate a supplier uploaded. A new upload of the same type replaces the approved one only
+/// once FIRINGI approves it (the old one keeps counting until then).
+model Certificate {
+  id           String       @id @default(cuid())
+  companyId    String
+  typeId       String
+  number       String?
+  issuer       String?
+  issuedOn     DateTime?    @db.Date
+  expiresOn    DateTime?    @db.Date
+  fileKey      String
+  fileName     String
+  mimeType     String
+  sizeBytes    Int
+  status       ReviewStatus @default(PENDING)
+  reviewNote   String?
+  reviewedById String?
+  reviewedAt   DateTime?
+  /// next periodic re-check by FIRINGI
+  recheckDueOn DateTime?    @db.Date
+  lastCheckAt  DateTime?
+  /// FIRINGI hides this supplier's badge for this certificate
+  badgeHidden  Boolean      @default(false)
+  /// days-before-expiry reminders already sent (30 / 14 / 7)
+  remindedDays Int[]
+  /// set when a newer certificate of the same type was approved
+  supersededAt DateTime?
+  uploadedById String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  company Company         @relation("CompanyCertificates", fields: [companyId], references: [id], onDelete: Cascade)
+  type    CertificateType @relation(fields: [typeId], references: [id], onDelete: Restrict)
+
+  @@index([companyId, typeId])
+  @@index([status, expiresOn])
+}
+
+/// FIRINGI lets a supplier keep selling without a required certificate until a date.
+model ComplianceWaiver {
+  id          String    @id @default(cuid())
+  companyId   String
+  typeId      String
+  until       DateTime  @db.Date
+  reason      String
+  createdById String
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  company Company         @relation("CompanyWaivers", fields: [companyId], references: [id], onDelete: Cascade)
+  type    CertificateType @relation(fields: [typeId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, typeId])
+}

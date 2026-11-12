@@ -20,6 +20,8 @@ export function DocumentsManager({ rows, types, required, target = "company", ca
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const firstMissing = required.find((r) => !rows.some((d) => d.type === r && d.status !== "REJECTED")) ?? types[0];
+  const [type, setType] = useState(firstMissing);
+  const pos = type === "POS_INVOICE";
 
   return (
     <div className="space-y-4">
@@ -61,7 +63,7 @@ export function DocumentsManager({ rows, types, required, target = "company", ca
         >
           <div className="space-y-1.5">
             <Label htmlFor="doc-type">{t("docs.type")}</Label>
-            <Select id="doc-type" name="type" defaultValue={firstMissing}>
+            <Select id="doc-type" name="type" value={type} onChange={(e) => setType(e.target.value)}>
               {types.map((ty) => <option key={ty} value={ty}>{t(`docTypes.${ty}`)}{required.includes(ty) ? ` (${t("docs.required")})` : ""}</option>)}
             </Select>
           </div>
@@ -69,12 +71,19 @@ export function DocumentsManager({ rows, types, required, target = "company", ca
             <Label htmlFor="doc-file">{t("docs.file")}</Label>
             <Input id="doc-file" name="file" type="file" accept="application/pdf,image/jpeg,image/png,image/webp" required />
           </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="doc-exp">{t("docs.expiresAt")}</Label>
-            <Input id="doc-exp" name="expiresAt" type="date" />
-          </div>
+          {pos ? (
+            <div className="space-y-1.5">
+              <Label htmlFor="doc-issued">{t("docs.invoiceDate")}</Label>
+              <Input id="doc-issued" name="issuedOn" type="date" required max={new Date().toISOString().slice(0, 10)} />
+            </div>
+          ) : (
+            <div className="space-y-1.5">
+              <Label htmlFor="doc-exp">{t("docs.expiresAt")}</Label>
+              <Input id="doc-exp" name="expiresAt" type="date" />
+            </div>
+          )}
           <Button type="submit" disabled={pending}><Upload /> {pending ? t("docs.uploading") : t("docs.upload")}</Button>
-          <p className="text-xs text-muted-foreground sm:col-span-4">{t("docs.fileHint")}</p>
+          <p className="text-xs text-muted-foreground sm:col-span-4">{pos ? t("docs.posHint") : t("docs.fileHint")}</p>
           {error && <p className="text-sm text-destructive sm:col-span-4">{error}</p>}
         </form>
       )}

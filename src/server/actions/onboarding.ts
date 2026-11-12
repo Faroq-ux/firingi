@@ -100,6 +100,8 @@ export const updateProfileAction = defineAction({
     phone: z.string().trim().max(30).optional().nullable(),
     website: z.string().trim().max(200).optional().nullable(),
     businessType: z.string().max(40).optional().nullable(),
+    legalForm: z.enum(["COMPANY", "SOLE_TRADER"]).optional(),
+    certificateCode: z.string().trim().max(60).optional().nullable(),
   }),
   handler: async (ctx, input) => {
     await updateOwnProfile(ctx, input);
@@ -142,7 +144,7 @@ export const removeAddressAction = defineAction({
 });
 
 const docType = z.enum([
-  "BUSINESS_REGISTRATION", "TAX_ID_CERTIFICATE", "TRADE_LICENCE", "ID_DOCUMENT", "DRIVING_LICENCE", "CONTRACT", "OTHER",
+  "BUSINESS_REGISTRATION", "TAX_ID_CERTIFICATE", "TRADE_LICENCE", "ID_DOCUMENT", "DRIVING_LICENCE", "CONTRACT", "OTHER", "POS_INVOICE",
 ]);
 const optDate = (v: FormDataEntryValue | null) => (typeof v === "string" && v ? new Date(v) : null);
 
@@ -153,7 +155,7 @@ export async function uploadDocumentAction(fd: FormData) {
     const target = fd.get("target");
     const doc = target === "driver"
       ? await uploadOwnDriverDocument(ctx, { type, file, expiresAt: optDate(fd.get("expiresAt")) })
-      : await uploadCompanyDocument(ctx, { type, file, expiresAt: optDate(fd.get("expiresAt")) });
+      : await uploadCompanyDocument(ctx, { type, file, expiresAt: optDate(fd.get("expiresAt")), issuedOn: optDate(fd.get("issuedOn")) });
     revalidatePath("/", "layout");
     return { id: doc.id };
   });

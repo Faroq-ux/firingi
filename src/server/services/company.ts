@@ -8,7 +8,7 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import {
-  ADMIN_TRANSITIONS, describeMissing, isVendorType, missingForApproval, missingForSubmission, type ReadinessInput,
+  ADMIN_TRANSITIONS, blocking, describeMissing, isVendorType, missingForApproval, missingForSubmission, normaliseCertificateCode, waivable, type ReadinessInput,
 } from "@/server/onboarding/rules";
 import { canDecideType, canViewType, requireAdmin, scopeWhere } from "./admin-access";
 import { applyBuyerDefaults } from "./payments";
@@ -33,8 +33,10 @@ export async function readinessInput(companyId: string): Promise<ReadinessInput 
   const last = c.vatValidations[0];
   return {
     type: c.type,
+    legalForm: c.legalForm,
     status: c.status,
     documents: c.documents,
+    certificateCode: c.registryCertificateCode,
     addresses: c.addresses,
     vatNumber: c.vatNumber,
     viesValid: !!last && last.result === "VALID" && last.vatNumber === c.vatNumber,
@@ -48,6 +50,8 @@ export type ProfileInput = {
   tradeName?: string | null; email: string; phone?: string | null; website?: string | null; businessType?: string | null;
   // Legal identity — only editable while the application is not yet approved.
   legalName?: string; vatNumber?: string | null;
+  /** Phase 28 — legal form is locked after submission; the certificate code can be renewed any time. */
+  legalForm?: "COMPANY" | "SOLE_TRADER"; certificateCode?: string | null;
 };
 
 export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
@@ -65,6 +69,20 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
     ...(!locked && input.legalName ? { legalName: input.legalName.trim() } : {}),
     ...(!locked && input.vatNumber !== undefined ? { vatNumber: input.vatNumber?.replace(/[\s.-]/g, "").toUpperCase() || null } : {}),
   };
+  if (input.legalForm && input.legalForm !== before.legalForm) {
+    if (locked) throw new ValidationError("The legal form can't be changed after submission. Contact FIRINGI support.");
+    data.legalForm = input.legalForm;
+  }
+  if (input.certificateCode !== undefined) {
+    const raw = input.certificateCode?.trim() ?? "";
+    if (!raw) data.registryCertificateCode = null;
+    else {
+      const country = await prisma.country.findUniqueOrThrow({ where: { id: before.countryId }, select: { code: true } });
+      const n = normaliseCertificateCode(raw, country.code);
+      if (!n.ok) throw new ValidationError(country.code === "PT" ? "The permanent certificate code has 12 digits: 0000-0000-0000." : "Enter the company registry number (3–40 letters or digits).");
+      data.registryCertificateCode = n.code;
+    }
+  }
   if (!locked && input.vatNumber !== undefined) {
     const country = await prisma.country.findUniqueOrThrow({ where: { id: before.countryId } });
     const v = checkCompanyVat(input.vatNumber, country, before.taxId);
@@ -74,8 +92,8 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
   const after = await prisma.company.update({ where: { id: ctx.company.id }, data });
   await writeAudit({
     actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.profile_updated", entityType: "Company", entityId: ctx.company.id,
-    before: { tradeName: before.tradeName, email: before.email, phone: before.phone, legalName: before.legalName, vatNumber: before.vatNumber },
-    after: { tradeName: after.tradeName, email: after.email, phone: after.phone, legalName: after.legalName, vatNumber: after.vatNumber },
+    before: { tradeName: before.tradeName, email: before.email, phone: before.phone, legalName: before.legalName, vatNumber: before.vatNumber, legalForm: before.legalForm, certificateCode: before.registryCertificateCode },
+    after: { tradeName: after.tradeName, email: after.email, phone: after.phone, legalName: after.legalName, vatNumber: after.vatNumber, legalForm: after.legalForm, certificateCode: after.registryCertificateCode },
   });
 }
 
@@ -98,22 +116,34 @@ async function loadForAdmin(ctx: Ctx, companyId: string) {
   return c;
 }
 
-/** Admin decision: approve / reject / request changes / suspend / reactivate / reopen. */
-export async function adminSetStatus(ctx: Ctx, companyId: string, to: AccountStatus, reason?: string | null) {
+/**
+ * Admin decision: approve / reject / request changes / suspend / reactivate / reopen.
+ * `approveAnyway`: approve although waivable items (certificate code, POS invoice) are missing — the
+ * reason is required and recorded on the company, in the status history and the audit log.
+ */
+export async function adminSetStatus(ctx: Ctx, companyId: string, to: AccountStatus, reason?: string | null, opts: { approveAnyway?: boolean } = {}) {
   const c = await loadForAdmin(ctx, companyId);
   if (!canDecideType(ctx, c.type)) throw new ForbiddenError();
   if (!ADMIN_TRANSITIONS[c.status].includes(to)) throw new AppError("BAD_TRANSITION", `Cannot change status from ${c.status} to ${to}.`);
   if (["REJECTED", "SUSPENDED"].includes(to) || (c.status === "UNDER_REVIEW" && to === "PENDING")) {
     if (!reason?.trim()) throw new ValidationError("Please give a reason — it is shown to the applicant.");
   }
+  let waived: string[] = [];
   if (to === "APPROVED") {
     const missing = missingForApproval(await readinessInput(companyId));
-    if (missing.length) throw new ValidationError(`Cannot approve yet: ${missing.map(describeMissing).join("; ")}.`);
+    const hard = blocking(missing);
+    if (hard.length) throw new ValidationError(`Cannot approve yet: ${hard.map(describeMissing).join("; ")}.`);
+    const soft = waivable(missing);
+    if (soft.length && !opts.approveAnyway) throw new ValidationError(`Cannot approve yet: ${soft.map(describeMissing).join("; ")}. Use "Approve anyway" with a note to approve without it.`);
+    if (soft.length) {
+      if ((reason?.trim().length ?? 0) < 10) throw new ValidationError("Say why you approve without it (at least 10 characters) — it is kept on the account.");
+      waived = soft.map((m) => m.code);
+    }
   }
-  await transition(companyId, c.status, to, reason ?? null, ctx);
+  await transition(companyId, c.status, to, waived.length ? `Approved anyway (without ${waived.map((w) => describeMissing({ code: w }).toLowerCase()).join("; ")}): ${reason!.trim()}` : reason ?? null, ctx, waived.length ? { items: waived, note: reason!.trim() } : null);
 }
 
-async function transition(companyId: string, from: AccountStatus, to: AccountStatus, reason: string | null, ctx: Ctx) {
+async function transition(companyId: string, from: AccountStatus, to: AccountStatus, reason: string | null, ctx: Ctx, waiver: { items: string[]; note: string } | null = null) {
   await prisma.$transaction(async (tx) => {
     // Optimistic guard: only move if nobody changed the status in between.
     const res = await tx.company.updateMany({
@@ -122,15 +152,16 @@ async function transition(companyId: string, from: AccountStatus, to: AccountSta
         status: to,
         statusReason: ["REJECTED", "SUSPENDED", "PENDING"].includes(to) ? reason : null,
         ...(to === "APPROVED" ? { approvedAt: new Date(), approvedById: ctx.user.id } : {}),
+        ...(waiver ? { approvalWaiver: { ...waiver, byUserId: ctx.user.id, at: new Date().toISOString() } } : {}),
       },
     });
     if (res.count !== 1) throw new AppError("CONFLICT", "The status was changed by someone else. Please reload.", 409);
     await tx.companyStatusHistory.create({ data: { companyId, fromStatus: from, toStatus: to, reason, byUserId: ctx.user.id } });
     if (to === "APPROVED") await applyBuyerDefaults(tx, companyId); // default payment terms / credit limit
-    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: `company.status.${to.toLowerCase()}`, entityType: "Company", entityId: companyId, before: { status: from }, after: { status: to, reason } }, tx);
+    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: waiver ? "company.status.approved_anyway" : `company.status.${to.toLowerCase()}`, entityType: "Company", entityId: companyId, before: { status: from }, after: { status: to, reason, ...(waiver ? { waived: waiver.items } : {}) } }, tx);
   });
   const notified: AccountStatus[] = ["UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED", "PENDING"];
-  if (notified.includes(to)) await notify(`company.${to.toLowerCase()}`, [{ companyId, link: "/" }], { reason: reason ?? "" });
+  if (notified.includes(to)) await notify(`company.${to.toLowerCase()}`, [{ companyId, link: "/" }], { reason: waiver ? "" : reason ?? "" });
   if (to === "APPROVED") await convertMatchingLeads(companyId); // CRM: the lead that brought this company converts
 }
 

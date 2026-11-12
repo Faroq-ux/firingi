@@ -17,6 +17,7 @@ import { ReorderCard, StockCard } from "@/components/ai/portal-cards";
 import { DashboardGrid } from "@/components/dashboard/dashboard-grid";
 import { LiveFeed } from "@/components/dashboard/live-feed";
 import { getPreference } from "@/server/services/workspace";
+import { ComplianceAlert } from "@/components/compliance/alert";
 
 const pct = (cur: number, prev: number) => (prev > 0 ? (cur - prev) / prev : null);
 function Trend({ cur, prev, label }: { cur: number; prev: number; label: string }) {
@@ -52,6 +53,7 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
     return (
       <div className="space-y-5">
         <AutoRefresh seconds={60} />
+        <ComplianceAlert ctx={ctx} />
         {head(<>
           <HeroStat label={t("newOrders")} value={v.toConfirm} locale={locale} href="/vendor/orders/incoming" i={0} />
           <HeroStat label={t("ordersToday")} value={v.ordersToday} locale={locale} i={1} />

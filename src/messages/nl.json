@@ -248,7 +248,11 @@
       "licenceExpiry": "Vervaldatum rijbewijs",
       "notOpen": "Registratie voor dit accounttype is nog in geen enkel land open.",
       "chooseCity": "Kies…",
-      "businessDeclaration": "Ik bevestig dat ik een bedrijf registreer (vennootschap of eenmanszaak) en niet als particulier inkoop."
+      "businessDeclaration": "Ik bevestig dat ik een bedrijf registreer (vennootschap of eenmanszaak) en niet als particulier inkoop.",
+      "legalForm": "Rechtsvorm",
+      "certificateCode": "Code van het handelsregisteruittreksel",
+      "certificateCodeHint": "Het handelsregisternummer van uw bedrijf. Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig.",
+      "certificateCodeHintPt": "Toegangscode van de certidão permanente (12 cijfers, 0000-0000-0000). Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Document uploaden: {detail}",
         "ADDRESS_MISSING": "Adres toevoegen: {detail}",
-        "VAT_NUMBER_MISSING": "Voeg uw btw-nummer toe"
-      }
+        "VAT_NUMBER_MISSING": "Voeg uw btw-nummer toe",
+        "CERTIFICATE_CODE_MISSING": "Vul de code van het handelsregisteruittreksel in (Profiel)",
+        "POS_INVOICE_MISSING": "Upload een recente factuur uit uw kassa (Documenten)"
+      },
+      "recommended": "Ook gevraagd — FIRINGI kan uw aanvraag zonder dit beoordelen, maar het versnelt de goedkeuring:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Uittreksel handelsregister",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Voertuigverzekering",
       "SELF_BILLING_AGREEMENT": "Overeenkomst voor zelffacturering",
       "CONTRACT": "Contract",
-      "OTHER": "Overig"
+      "OTHER": "Overig",
+      "POS_INVOICE": "Recente factuur uit uw kassa (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Hoofdkantoor",
@@ -332,7 +340,9 @@
       "withdraw": "Intrekken",
       "note": "Opmerking van FIRINGI",
       "none": "Nog geen documenten.",
-      "required": "Verplicht"
+      "required": "Verplicht",
+      "invoiceDate": "Factuurdatum",
+      "posHint": "Eén recente factuur (laatste 90 dagen) uit de kassa van uw zaak — zo ziet FIRINGI dat uw zaak actief is. PDF of foto, max. 10 MB."
     },
     "profile": {
       "save": "Wijzigingen opslaan",
@@ -354,6 +364,10 @@
       "accessUntil": "Toegang tot {date}",
       "notRequested": "Niet aangevraagd",
       "note": "Opmerking van FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Vennootschap (bv, nv, …)",
+      "SOLE_TRADER": "Eenmanszaak"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Boekhouddashboard",
     "Daily Sales": "Dagomzet",
     "Expenses": "Uitgaven",
-    "Profit & Loss": "Winst en Verlies"
+    "Profit & Loss": "Winst en Verlies",
+    "Certificates & Compliance": "Certificaten & compliance"
   },
   "delivery": {
     "title": "Levering",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Budget ‘{name}’ op {pct}%",
       "body": "{spent} € van {amount} € gebruikt in deze periode."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} verloopt over {days} dagen",
+      "body": "Uw {certificate} is geldig tot {date}. Upload de vernieuwing zodat uw aanbiedingen zichtbaar blijven."
+    },
+    "compliance_expired": {
+      "title": "{certificate} is verlopen",
+      "body": "Upload het vernieuwde certificaat. Als FIRINGI het verplicht stelt, worden uw aanbiedingen na {grace} respijtdagen gepauzeerd."
+    },
+    "compliance_paused": {
+      "title": "Uw aanbiedingen zijn gepauzeerd",
+      "body": "{offers} aanbiedingen zijn verborgen voor klanten omdat een verplicht certificaat ontbreekt of verlopen is: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Uw aanbiedingen zijn weer zichtbaar",
+      "body": "Uw certificaten zijn in orde — klanten kunnen uw aanbiedingen weer zien en bestellen."
+    },
+    "compliance_approved": {
+      "title": "{certificate} goedgekeurd",
+      "body": "FIRINGI heeft uw {certificate} gecontroleerd en goedgekeurd."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} niet geaccepteerd",
+      "body": "FIRINGI heeft uw {certificate} niet geaccepteerd: {reason}"
+    },
+    "compliance_review": {
+      "title": "Certificaat te beoordelen: {certificate}",
+      "body": "{company} heeft {certificate} geüpload."
+    },
+    "compliance_recheck": {
+      "title": "{count} certificaten moeten opnieuw gecontroleerd worden",
+      "body": "Controleer ze bij de uitgever en markeer ze als gecontroleerd in Leverancierscompliance."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Boekhouder",
       "TRANSPORT": "Transport en brandstof",
       "OTHER": "Overig"
+    }
+  },
+  "compliance": {
+    "title": "Certificaten & compliance",
+    "intro": "De certificaten die FIRINGI vraagt. Houd ze geldig: ontbreekt een verplicht certificaat of is het verlopen, dan worden uw aanbiedingen gepauzeerd tot FIRINGI een nieuw goedkeurt. Goedgekeurde certificaten kunnen klanten als geverifieerde badges zien.",
+    "score": "Compliancescore",
+    "scoreHint": "Verplichte certificaten tellen dubbel. 100 = alles wat gevraagd wordt is geldig.",
+    "valid": "Geldig",
+    "expiring": "Verlopen binnenkort",
+    "missingRequired": "Ontbreekt (verplicht)",
+    "pendingReview": "Wacht op FIRINGI",
+    "pausedTitle": "Uw aanbiedingen zijn gepauzeerd",
+    "pausedWhole": "Klanten zien geen van uw aanbiedingen tot FIRINGI goedkeurt: {certificates}. Upload het certificaat hieronder.",
+    "pausedOffers": "{count} van uw aanbiedingen zijn verborgen voor klanten tot FIRINGI goedkeurt: {certificates}. Upload het certificaat hieronder.",
+    "pausedShort": "Gepauzeerd — certificaat",
+    "checklist": "Wat FIRINGI vraagt",
+    "nothingAsked": "FIRINGI vraagt op dit moment geen certificaat van uw bedrijf.",
+    "required": "Verplicht",
+    "optional": "Optioneel",
+    "badgeEligible": "Voor klanten getoond als geverifieerde badge",
+    "categoriesOnly": "Alleen voor: {categories}",
+    "expiresOn": "geldig tot {date}",
+    "noExpiry": "geen vervaldatum",
+    "daysLeft": "nog {days} dagen",
+    "graceUntil": "Verlopen — u kunt nog verkopen tot {date}. Upload nu het vernieuwde certificaat.",
+    "waivedUntil": "FIRINGI laat u verder verkopen tot {date}.",
+    "pendingUpload": "Nieuw certificaat geüpload op {date} — wacht op FIRINGI.",
+    "rejectedNote": "Afgewezen door FIRINGI: {note}",
+    "uploadNew": "Certificaat uploaden",
+    "renew": "Vernieuwing uploaden",
+    "number": "Certificaatnummer",
+    "issuer": "Uitgegeven door",
+    "issuedOn": "Uitgiftedatum",
+    "expiresOnLabel": "Geldig tot",
+    "file": "Bestand (PDF, JPG, PNG of WEBP — max. 10 MB)",
+    "upload": "Naar FIRINGI sturen",
+    "uploading": "Versturen…",
+    "uploaded": "Verstuurd — FIRINGI beoordeelt het.",
+    "cancel": "Annuleren",
+    "withdraw": "Intrekken",
+    "history": "Alle uploads",
+    "historyEmpty": "Nog geen certificaten geüpload.",
+    "colType": "Certificaat",
+    "colUploaded": "Geüpload",
+    "colExpires": "Geldig tot",
+    "colStatus": "Status",
+    "view": "Bekijken",
+    "superseded": "Vervangen",
+    "badgesTitle": "Uw geverifieerde badges",
+    "badgesHint": "Wat klanten naast uw naam en producten zien.",
+    "badgesNone": "Nog geen badges. Goedgekeurde certificaten van een soort die FIRINGI als badge toont, verschijnen hier.",
+    "badgeHidden": "FIRINGI heeft deze badge voor uw bedrijf verborgen.",
+    "alertPaused": "Sommige van uw aanbiedingen zijn gepauzeerd omdat een verplicht certificaat ontbreekt of verlopen is.",
+    "alertExpiring": "{count} certificaten verlopen binnenkort — upload de vernieuwingen op tijd.",
+    "alertOpen": "Certificaten",
+    "verifiedBy": "Geverifieerd door FIRINGI",
+    "verifiedBadgeTitle": "{name} — certificaat gecontroleerd door FIRINGI",
+    "verifiedHint": "FIRINGI heeft deze certificaten en hun geldigheid gecontroleerd.",
+    "download": "Certificaat",
+    "filterLabel": "Geverifieerd",
+    "filterAll": "Alle leveranciers",
+    "states": {
+      "VALID": "Geldig",
+      "EXPIRING": "Verloopt binnenkort",
+      "WAIVED": "Uitstel van FIRINGI",
+      "GRACE": "Verlopen — respijtdagen",
+      "EXPIRED": "Verlopen",
+      "PENDING": "Wacht op beoordeling",
+      "REJECTED": "Afgewezen",
+      "MISSING": "Ontbreekt"
+    },
+    "statuses": {
+      "PENDING": "Wacht op beoordeling",
+      "APPROVED": "Goedgekeurd",
+      "REJECTED": "Afgewezen",
+      "EXPIRED": "Verlopen",
+      "REVOKED": "Ingetrokken"
+    },
+    "types": {
+      "HACCP": "HACCP-voedselveiligheid",
+      "FOOD_ESTABLISHMENT": "Erkenning als levensmiddelenbedrijf",
+      "ORGANIC": "EU-biologisch",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Productaansprakelijkheidsverzekering",
+      "TAX_CLEARANCE": "Verklaring fiscale schuldvrijheid",
+      "SOCIAL_SECURITY_CLEARANCE": "Verklaring sociale zekerheid zonder schulden"
+    },
+    "typeDesc": {
+      "HACCP": "HACCP-plan of voedselveiligheidscertificaat van uw vestiging.",
+      "FOOD_ESTABLISHMENT": "Veterinair / levensmiddelen-erkenningsnummer van uw vestiging.",
+      "ORGANIC": "EU-certificaat biologische productie van een erkende controle-instantie.",
+      "ISO_22000": "Certificaat voor een managementsysteem voor voedselveiligheid.",
+      "IFS_BRCGS": "IFS Food-, IFS Logistics- of BRCGS-certificaat.",
+      "HALAL": "Halal-certificaat van een erkende certificeringsinstelling.",
+      "LIABILITY_INSURANCE": "Verzekeringspolis die productaansprakelijkheid dekt.",
+      "TAX_CLEARANCE": "Verklaring dat u geen belastingschulden hebt.",
+      "SOCIAL_SECURITY_CLEARANCE": "Verklaring dat u geen schulden bij de sociale zekerheid hebt."
     }
   }
 }

@@ -248,7 +248,11 @@
       "licenceExpiry": "Førerkortets utløpsdato",
       "notOpen": "Registrering for denne kontotypen er ennå ikke åpen i noe land.",
       "chooseCity": "Velg…",
-      "businessDeclaration": "Jeg bekrefter at jeg registrerer en bedrift (selskap eller enkeltpersonforetak) og ikke handler som privatperson."
+      "businessDeclaration": "Jeg bekrefter at jeg registrerer en bedrift (selskap eller enkeltpersonforetak) og ikke handler som privatperson.",
+      "legalForm": "Selskapsform",
+      "certificateCode": "Kode for firmaattest",
+      "certificateCodeHint": "Bedriftens nummer i Foretaksregisteret. Leverandører som er selskaper oppgir det; enkeltpersonforetak trenger det ikke.",
+      "certificateCodeHintPt": "Tilgangskode til certidão permanente (12 sifre, 0000-0000-0000). Leverandører som er selskaper oppgir den; enkeltpersonforetak trenger den ikke."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Last opp dokument: {detail}",
         "ADDRESS_MISSING": "Legg til en adresse: {detail}",
-        "VAT_NUMBER_MISSING": "Legg til MVA-nummeret ditt"
-      }
+        "VAT_NUMBER_MISSING": "Legg til MVA-nummeret ditt",
+        "CERTIFICATE_CODE_MISSING": "Legg inn koden for firmaattesten (Profil)",
+        "POS_INVOICE_MISSING": "Last opp én nylig faktura fra kassesystemet (Dokumenter)"
+      },
+      "recommended": "Bes også om — FIRINGI kan gjennomgå søknaden uten, men det gjør godkjenningen raskere:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Firmaattest",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Kjøretøyforsikring",
       "SELF_BILLING_AGREEMENT": "Avtale om egenfakturering",
       "CONTRACT": "Kontrakt",
-      "OTHER": "Annet"
+      "OTHER": "Annet",
+      "POS_INVOICE": "Nylig faktura fra kassesystemet ditt (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Hovedkontor",
@@ -332,7 +340,9 @@
       "withdraw": "Trekk tilbake",
       "note": "Merknad fra FIRINGI",
       "none": "Ingen dokumenter ennå.",
-      "required": "Påkrevd"
+      "required": "Påkrevd",
+      "invoiceDate": "Fakturadato",
+      "posHint": "Én nylig faktura (siste 90 dager) fra butikkens kasse — den viser FIRINGI at virksomheten er i drift. PDF eller bilde, maks. 10 MB."
     },
     "profile": {
       "save": "Lagre endringer",
@@ -354,6 +364,10 @@
       "accessUntil": "Tilgang til {date}",
       "notRequested": "Ikke forespurt",
       "note": "Merknad fra FIRINGI"
+    },
+    "legalForms": {
+      "COMPANY": "Selskap (AS, ASA, …)",
+      "SOLE_TRADER": "Enkeltpersonforetak"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Regnskapsoversikt",
     "Daily Sales": "Daglig Salg",
     "Expenses": "Utgifter",
-    "Profit & Loss": "Resultatregnskap"
+    "Profit & Loss": "Resultatregnskap",
+    "Certificates & Compliance": "Sertifikater og samsvar"
   },
   "delivery": {
     "title": "Levering",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Budsjett «{name}» på {pct} %",
       "body": "{spent} € av {amount} € brukt i denne perioden."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} utløper om {days} dager",
+      "body": "Ditt {certificate} er gyldig til {date}. Last opp fornyelsen så tilbudene dine forblir synlige."
+    },
+    "compliance_expired": {
+      "title": "{certificate} er utløpt",
+      "body": "Last opp det fornyede sertifikatet. Krever FIRINGI det, settes tilbudene dine på pause etter {grace} respittdager."
+    },
+    "compliance_paused": {
+      "title": "Tilbudene dine er satt på pause",
+      "body": "{offers} tilbud er skjult for kundene fordi et påkrevd sertifikat mangler eller er utløpt: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Tilbudene dine er synlige igjen",
+      "body": "Sertifikatene dine er i orden — kundene kan igjen se og bestille tilbudene dine."
+    },
+    "compliance_approved": {
+      "title": "{certificate} godkjent",
+      "body": "FIRINGI har kontrollert og godkjent ditt {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} ikke godtatt",
+      "body": "FIRINGI godtok ikke ditt {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Sertifikat til gjennomgang: {certificate}",
+      "body": "{company} har lastet opp {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} sertifikater skal kontrolleres på nytt",
+      "body": "Kontroller dem hos utstederen og merk dem som kontrollert i Leverandørsamsvar."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Regnskapsfører",
       "TRANSPORT": "Transport og drivstoff",
       "OTHER": "Annet"
+    }
+  },
+  "compliance": {
+    "title": "Sertifikater og samsvar",
+    "intro": "Sertifikatene FIRINGI ber om. Hold dem gyldige: mangler et påkrevd sertifikat eller er det utløpt, settes tilbudene dine på pause til FIRINGI godkjenner et nytt. Godkjente sertifikater kan vises for kunder som verifiserte merker.",
+    "score": "Samsvarspoeng",
+    "scoreHint": "Påkrevde sertifikater teller dobbelt. 100 = alt som bes om er gyldig.",
+    "valid": "Gyldige",
+    "expiring": "Utløper snart",
+    "missingRequired": "Mangler (påkrevd)",
+    "pendingReview": "Venter på FIRINGI",
+    "pausedTitle": "Tilbudene dine er satt på pause",
+    "pausedWhole": "Kundene ser ingen av tilbudene dine før FIRINGI godkjenner: {certificates}. Last opp sertifikatet nedenfor.",
+    "pausedOffers": "{count} av tilbudene dine er skjult for kundene til FIRINGI godkjenner: {certificates}. Last opp sertifikatet nedenfor.",
+    "pausedShort": "På pause — sertifikat",
+    "checklist": "Hva FIRINGI ber om",
+    "nothingAsked": "FIRINGI ber for øyeblikket ikke bedriften din om noe sertifikat.",
+    "required": "Påkrevd",
+    "optional": "Valgfritt",
+    "badgeEligible": "Vises for kunder som verifisert merke",
+    "categoriesOnly": "Bare for: {categories}",
+    "expiresOn": "gyldig til {date}",
+    "noExpiry": "ingen utløpsdato",
+    "daysLeft": "{days} dager igjen",
+    "graceUntil": "Utløpt — du kan fortsette å selge til {date}. Last opp det fornyede sertifikatet nå.",
+    "waivedUntil": "FIRINGI lar deg fortsette å selge til {date}.",
+    "pendingUpload": "Nytt sertifikat lastet opp {date} — venter på FIRINGI.",
+    "rejectedNote": "Avvist av FIRINGI: {note}",
+    "uploadNew": "Last opp sertifikat",
+    "renew": "Last opp fornyelse",
+    "number": "Sertifikatnummer",
+    "issuer": "Utstedt av",
+    "issuedOn": "Utstedelsesdato",
+    "expiresOnLabel": "Gyldig til",
+    "file": "Fil (PDF, JPG, PNG eller WEBP — maks. 10 MB)",
+    "upload": "Send til FIRINGI",
+    "uploading": "Sender…",
+    "uploaded": "Sendt — FIRINGI gjennomgår det.",
+    "cancel": "Avbryt",
+    "withdraw": "Trekk tilbake",
+    "history": "Alle opplastinger",
+    "historyEmpty": "Ingen sertifikater lastet opp ennå.",
+    "colType": "Sertifikat",
+    "colUploaded": "Lastet opp",
+    "colExpires": "Gyldig til",
+    "colStatus": "Status",
+    "view": "Vis",
+    "superseded": "Erstattet",
+    "badgesTitle": "Dine verifiserte merker",
+    "badgesHint": "Det kundene ser ved navnet ditt og produktene dine.",
+    "badgesNone": "Ingen merker ennå. Godkjente sertifikater av en type FIRINGI viser som merke, vises her.",
+    "badgeHidden": "FIRINGI har skjult dette merket for bedriften din.",
+    "alertPaused": "Noen av tilbudene dine er satt på pause fordi et påkrevd sertifikat mangler eller er utløpt.",
+    "alertExpiring": "{count} sertifikater utløper snart — last opp fornyelsene i tide.",
+    "alertOpen": "Sertifikater",
+    "verifiedBy": "Verifisert av FIRINGI",
+    "verifiedBadgeTitle": "{name} — sertifikat kontrollert av FIRINGI",
+    "verifiedHint": "FIRINGI har kontrollert disse sertifikatene og gyldigheten deres.",
+    "download": "Sertifikat",
+    "filterLabel": "Verifisert",
+    "filterAll": "Alle leverandører",
+    "states": {
+      "VALID": "Gyldig",
+      "EXPIRING": "Utløper snart",
+      "WAIVED": "Frist fra FIRINGI",
+      "GRACE": "Utløpt — respittdager",
+      "EXPIRED": "Utløpt",
+      "PENDING": "Venter på gjennomgang",
+      "REJECTED": "Avvist",
+      "MISSING": "Mangler"
+    },
+    "statuses": {
+      "PENDING": "Venter på gjennomgang",
+      "APPROVED": "Godkjent",
+      "REJECTED": "Avvist",
+      "EXPIRED": "Utløpt",
+      "REVOKED": "Tilbakekalt"
+    },
+    "types": {
+      "HACCP": "HACCP-mattrygghet",
+      "FOOD_ESTABLISHMENT": "Godkjenning som næringsmiddelvirksomhet",
+      "ORGANIC": "EU-økologisk",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Produktansvarsforsikring",
+      "TAX_CLEARANCE": "Skatteattest",
+      "SOCIAL_SECURITY_CLEARANCE": "Attest om ingen gjeld til trygdeavgift"
+    },
+    "typeDesc": {
+      "HACCP": "HACCP-plan eller mattrygghetssertifikat for lokalene dine.",
+      "FOOD_ESTABLISHMENT": "Veterinært / næringsmiddelgodkjenningsnummer for lokalene dine.",
+      "ORGANIC": "EU-sertifikat for økologisk produksjon fra et godkjent kontrollorgan.",
+      "ISO_22000": "Sertifikat for et styringssystem for mattrygghet.",
+      "IFS_BRCGS": "IFS Food-, IFS Logistics- eller BRCGS-sertifikat.",
+      "HALAL": "Halal-sertifikat fra et anerkjent sertifiseringsorgan.",
+      "LIABILITY_INSURANCE": "Forsikringspolise som dekker produktansvar.",
+      "TAX_CLEARANCE": "Attest på at du ikke har skattegjeld.",
+      "SOCIAL_SECURITY_CLEARANCE": "Attest på at du ikke har gjeld til trygdeavgift."
     }
   }
 }

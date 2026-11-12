@@ -65,6 +65,7 @@ export async function createOffer(ctx: Ctx, packagingUnitId: string, input: Offe
     },
   });
   await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "offer.created", entityType: "VendorOffer", entityId: offer.id, after: { packagingUnitId, status, ...input } });
+  await pauseCheckForNewOffer(ctx.company.id);
   return offer;
 }
 
@@ -136,7 +137,14 @@ export async function proposeProduct(
     });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "product.proposed", entityType: "Product", entityId: product.id, after: { name: input.name, categoryId: input.categoryId } }, tx);
     return { productId: product.id, offerId: offer.id };
-  });
+  }).then(async (r) => { await pauseCheckForNewOffer(ctx.company.id); return r; });
+}
+
+/** Phase 28: a new offer in a category that needs a certificate the supplier lacks starts paused. */
+async function pauseCheckForNewOffer(companyId: string) {
+  if (!(await prisma.certificateType.count({ where: { isActive: true, required: true, NOT: { categoryIds: { isEmpty: true } } } }))) return;
+  const { recomputeCompany } = await import("@/server/compliance/service");
+  await recomputeCompany(companyId);
 }
 
 export async function listOwnOffers(ctx: Ctx, opts: { q?: string } = {}) {

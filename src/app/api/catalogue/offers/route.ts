@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   if (!ctx) return Response.json({ error: "Unauthorized" }, { status: 401 });
   const u = new URL(req.url).searchParams;
   try {
-    return Response.json(await browseCatalogue(ctx, { q: u.get("q") ?? undefined, categoryId: u.get("category") ?? undefined, vendorId: u.get("vendor") ?? undefined, page: Number(u.get("page")) || 1 }));
+    return Response.json(await browseCatalogue(ctx, { q: u.get("q") ?? undefined, categoryId: u.get("category") ?? undefined, vendorId: u.get("vendor") ?? undefined, page: Number(u.get("page")) || 1, badge: u.get("badge") }));
   } catch (e) {
     const err = e instanceof AppError ? e : null;
     return Response.json({ error: err?.message ?? "Error" }, { status: err?.status ?? 500 });

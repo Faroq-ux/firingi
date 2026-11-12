@@ -248,7 +248,11 @@
       "licenceExpiry": "Licence expiry date",
       "notOpen": "Registration for this account type is not open in any country yet.",
       "chooseCity": "Choose…",
-      "businessDeclaration": "I confirm I am registering a business (company or sole trader) and not buying as a private consumer."
+      "businessDeclaration": "I confirm I am registering a business (company or sole trader) and not buying as a private consumer.",
+      "legalForm": "Legal form",
+      "certificateCode": "Permanent certificate code",
+      "certificateCodeHint": "Your company's commercial-registry number. Suppliers that are companies give it; sole traders don't need it.",
+      "certificateCodeHintPt": "Access code of the certidão permanente (12 digits, 0000-0000-0000). Suppliers that are companies give it; sole traders don't need it."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Upload document: {detail}",
         "ADDRESS_MISSING": "Add an address: {detail}",
-        "VAT_NUMBER_MISSING": "Add your VAT number"
-      }
+        "VAT_NUMBER_MISSING": "Add your VAT number",
+        "CERTIFICATE_CODE_MISSING": "Add your permanent certificate code (Profile)",
+        "POS_INVOICE_MISSING": "Upload one recent invoice from your POS (Documents)"
+      },
+      "recommended": "Also asked for — FIRINGI can review your application without it, but it speeds up approval:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Business registration (certidão permanente)",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Vehicle insurance",
       "SELF_BILLING_AGREEMENT": "Self-billing agreement",
       "CONTRACT": "Contract",
-      "OTHER": "Other"
+      "OTHER": "Other",
+      "POS_INVOICE": "Recent invoice from your POS (till)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Head office",
@@ -332,7 +340,9 @@
       "withdraw": "Withdraw",
       "note": "FIRINGI note",
       "none": "No documents yet.",
-      "required": "Required"
+      "required": "Required",
+      "invoiceDate": "Invoice date",
+      "posHint": "One recent invoice (last 90 days) printed by your shop's till — it shows FIRINGI your shop is trading. PDF or photo, max 10 MB."
     },
     "profile": {
       "save": "Save changes",
@@ -354,6 +364,10 @@
       "accessUntil": "Access until {date}",
       "notRequested": "Not requested",
       "note": "FIRINGI note"
+    },
+    "legalForms": {
+      "COMPANY": "Company (Lda., S.A., …)",
+      "SOLE_TRADER": "Sole trader"
     }
   },
   "catalogue": {
@@ -1238,6 +1252,38 @@
     "budget_threshold": {
       "title": "Budget “{name}” at {pct}%",
       "body": "{spent} € of {amount} € used this period."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} expires in {days} days",
+      "body": "Your {certificate} is valid until {date}. Upload the renewal so your offers stay visible."
+    },
+    "compliance_expired": {
+      "title": "{certificate} has expired",
+      "body": "Upload the renewed certificate. If FIRINGI requires it, your offers are paused after {grace} grace days."
+    },
+    "compliance_paused": {
+      "title": "Your offers are paused",
+      "body": "{offers} offers are hidden from customers because a required certificate is missing or expired: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Your offers are visible again",
+      "body": "Your certificates are in order — customers can see and order your offers again."
+    },
+    "compliance_approved": {
+      "title": "{certificate} approved",
+      "body": "FIRINGI checked and approved your {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} not accepted",
+      "body": "FIRINGI didn't accept your {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Certificate to review: {certificate}",
+      "body": "{company} uploaded {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} certificates due for a re-check",
+      "body": "Check them with the issuer and mark them re-checked in Supplier Compliance."
     }
   },
   "notifications": {
@@ -3061,6 +3107,105 @@
       "ACCOUNTANT": "Accountant",
       "TRANSPORT": "Transport & fuel",
       "OTHER": "Other"
+    }
+  },
+  "compliance": {
+    "title": "Certificates & compliance",
+    "intro": "The certificates FIRINGI asks for. Keep them valid: a missing or expired required certificate pauses your offers until FIRINGI approves a new one. Approved certificates can show as verified badges to customers.",
+    "score": "Compliance score",
+    "scoreHint": "Required certificates count double. 100 = everything asked for is valid.",
+    "valid": "Valid",
+    "expiring": "Expiring soon",
+    "missingRequired": "Missing (required)",
+    "pendingReview": "Waiting for FIRINGI",
+    "pausedTitle": "Your offers are paused",
+    "pausedWhole": "Customers can't see any of your offers until FIRINGI approves: {certificates}. Upload the certificate below.",
+    "pausedOffers": "{count} of your offers are hidden from customers until FIRINGI approves: {certificates}. Upload the certificate below.",
+    "pausedShort": "Paused — certificate",
+    "checklist": "What FIRINGI asks for",
+    "nothingAsked": "FIRINGI doesn't ask your company for any certificate at the moment.",
+    "required": "Required",
+    "optional": "Optional",
+    "badgeEligible": "Shown to customers as a verified badge",
+    "categoriesOnly": "Only for: {categories}",
+    "expiresOn": "valid until {date}",
+    "noExpiry": "no expiry date",
+    "daysLeft": "{days} days left",
+    "graceUntil": "Expired — you can keep selling until {date}. Upload the renewed certificate now.",
+    "waivedUntil": "FIRINGI lets you keep selling until {date}.",
+    "pendingUpload": "New certificate uploaded on {date} — waiting for FIRINGI.",
+    "rejectedNote": "Rejected by FIRINGI: {note}",
+    "uploadNew": "Upload certificate",
+    "renew": "Upload renewal",
+    "number": "Certificate number",
+    "issuer": "Issued by",
+    "issuedOn": "Issue date",
+    "expiresOnLabel": "Valid until",
+    "file": "File (PDF, JPG, PNG or WEBP — max 10 MB)",
+    "upload": "Send to FIRINGI",
+    "uploading": "Sending…",
+    "uploaded": "Sent — FIRINGI will review it.",
+    "cancel": "Cancel",
+    "withdraw": "Withdraw",
+    "history": "All uploads",
+    "historyEmpty": "No certificates uploaded yet.",
+    "colType": "Certificate",
+    "colUploaded": "Uploaded",
+    "colExpires": "Valid until",
+    "colStatus": "Status",
+    "view": "View",
+    "superseded": "Replaced",
+    "badgesTitle": "Your verified badges",
+    "badgesHint": "What customers see next to your name and products.",
+    "badgesNone": "No badges yet. Approved certificates of a type FIRINGI shows as a badge appear here.",
+    "badgeHidden": "FIRINGI has hidden this badge for your company.",
+    "alertPaused": "Some of your offers are paused because a required certificate is missing or expired.",
+    "alertExpiring": "{count} certificates expire soon — upload the renewals in time.",
+    "alertOpen": "Certificates",
+    "verifiedBy": "Verified by FIRINGI",
+    "verifiedBadgeTitle": "{name} — certificate checked by FIRINGI",
+    "verifiedHint": "FIRINGI checked these certificates and their validity.",
+    "download": "Certificate",
+    "filterLabel": "Verified",
+    "filterAll": "All suppliers",
+    "states": {
+      "VALID": "Valid",
+      "EXPIRING": "Expiring soon",
+      "WAIVED": "Grace period from FIRINGI",
+      "GRACE": "Expired — grace days",
+      "EXPIRED": "Expired",
+      "PENDING": "Waiting for review",
+      "REJECTED": "Rejected",
+      "MISSING": "Missing"
+    },
+    "statuses": {
+      "PENDING": "Waiting for review",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "EXPIRED": "Expired",
+      "REVOKED": "Revoked"
+    },
+    "types": {
+      "HACCP": "HACCP food safety",
+      "FOOD_ESTABLISHMENT": "Food establishment approval",
+      "ORGANIC": "EU organic",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Product liability insurance",
+      "TAX_CLEARANCE": "Tax clearance",
+      "SOCIAL_SECURITY_CLEARANCE": "Social security clearance"
+    },
+    "typeDesc": {
+      "HACCP": "HACCP plan or food safety certificate for your premises.",
+      "FOOD_ESTABLISHMENT": "Veterinary / food business approval number of your premises (PT: DGAV).",
+      "ORGANIC": "EU organic production certificate from an approved control body.",
+      "ISO_22000": "Food safety management system certificate.",
+      "IFS_BRCGS": "IFS Food, IFS Logistics or BRCGS certificate.",
+      "HALAL": "Halal certificate from a recognised certification body.",
+      "LIABILITY_INSURANCE": "Insurance policy covering product liability.",
+      "TAX_CLEARANCE": "Certificate that you have no tax debt (PT: certidão de não dívida — Finanças).",
+      "SOCIAL_SECURITY_CLEARANCE": "Certificate that you have no social security debt (PT: Segurança Social)."
     }
   }
 }

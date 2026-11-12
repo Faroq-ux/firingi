@@ -60,7 +60,7 @@ await applicant.click('button[type="submit"]');
 await applicant.waitForURL("**/application-status", { timeout: 15000 }).catch(() => {});
 await settle(applicant);
 check("registration signs in and opens the application page", applicant.url().endsWith("/application-status"), applicant.url());
-check("checklist asks for documents and a delivery address", /Certidão|Business registration/.test(await applicant.textContent("main")));
+check("checklist asks for a delivery address; a POS invoice is asked for but not blocking", /morada|address/i.test(await applicant.textContent("main")) && /fatura recente|recent invoice/i.test(await applicant.locator('[data-testid="recommended"]').textContent()));
 
 // ── 2. Onboarding: delivery address + documents ──
 await applicant.getByRole("button", { name: /Adicionar morada|Add address/ }).click();
@@ -78,13 +78,14 @@ await applicant.selectOption("#doc-type", "BUSINESS_REGISTRATION");
 await applicant.locator("form:has(#doc-file) button[type=submit]").click();
 await settle(applicant);
 check("disguised file is rejected", /PDF, JPG/.test(await applicant.textContent("main")));
-for (const type of ["BUSINESS_REGISTRATION", "TAX_ID_CERTIFICATE"]) {
-  await applicant.selectOption("#doc-type", type);
-  await applicant.setInputFiles("#doc-file", pdf);
-  await applicant.locator("form:has(#doc-file) button[type=submit]").click();
-  await settle(applicant);
-}
-check("two documents uploaded", (await applicant.locator('a[href^="/api/files/"]').count()) === 2);
+// Phase 28: the only document asked for is one recent invoice from the customer's POS (with its date).
+await applicant.selectOption("#doc-type", "POS_INVOICE");
+await applicant.fill("#doc-issued", new Date(Date.now() - 2 * 86400000).toISOString().slice(0, 10));
+await applicant.setInputFiles("#doc-file", pdf);
+await applicant.locator("form:has(#doc-file) button[type=submit]").click();
+await settle(applicant);
+check("POS invoice uploaded", (await applicant.locator('a[href^="/api/files/"]').count()) === 1);
+check("nothing else is asked for after the POS invoice", (await applicant.locator('[data-testid="recommended"]').count()) === 0);
 await shot(applicant, "p2-03-application-ready");
 await applicant.getByRole("button", { name: /Enviar candidatura|Submit application/ }).click();
 await settle(applicant);
@@ -105,7 +106,7 @@ check("application appears in Customer Applications", (await admin.textContent("
 await shot(admin, "p2-04-admin-applications");
 await admin.getByRole("link", { name: legalName }).click();
 await settle(admin);
-check("approve is blocked until documents are approved", await admin.getByRole("button", { name: "Approve", exact: true }).first().isDisabled());
+check("approve is blocked until the POS invoice is approved (approve anyway offered)", await admin.getByRole("button", { name: "Approve", exact: true }).first().isDisabled() && (await admin.getByTestId("approve-anyway").count()) === 1);
 await shot(admin, "p2-05-admin-company-before");
 const docApprove = admin.locator("li").filter({ hasText: "certidao.pdf" }).getByRole("button", { name: "Approve" });
 while ((await docApprove.count()) > 0) { await docApprove.first().click(); await settle(admin); }

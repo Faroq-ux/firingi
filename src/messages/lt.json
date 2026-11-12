@@ -248,7 +248,11 @@
       "licenceExpiry": "Vairuotojo pažymėjimo galiojimas",
       "notOpen": "Registracija šiam paskyros tipui dar neatidaryta nė vienoje šalyje.",
       "chooseCity": "Pasirinkite…",
-      "businessDeclaration": "Patvirtinu, kad registruoju įmonę (bendrovę ar individualią veiklą) ir neperku kaip vartotojas."
+      "businessDeclaration": "Patvirtinu, kad registruoju įmonę (bendrovę ar individualią veiklą) ir neperku kaip vartotojas.",
+      "legalForm": "Teisinė forma",
+      "certificateCode": "Registrų centro išrašo kodas",
+      "certificateCodeHint": "Jūsų įmonės kodas juridinių asmenų registre. Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia.",
+      "certificateCodeHintPt": "certidão permanente prieigos kodas (12 skaitmenų, 0000-0000-0000). Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia."
     },
     "businessTypes": {
       "restaurant": "Restoranas",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Įkelkite dokumentą: {detail}",
         "ADDRESS_MISSING": "Pridėkite adresą: {detail}",
-        "VAT_NUMBER_MISSING": "Pridėkite savo PVM mokėtojo kodą"
-      }
+        "VAT_NUMBER_MISSING": "Pridėkite savo PVM mokėtojo kodą",
+        "CERTIFICATE_CODE_MISSING": "Įrašykite registro išrašo kodą (Profilis)",
+        "POS_INVOICE_MISSING": "Įkelkite vieną naujausią kasos sąskaitą (Dokumentai)"
+      },
+      "recommended": "Taip pat prašoma — FIRINGI gali peržiūrėti paraišką ir be to, bet tai pagreitina patvirtinimą:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Juridinių asmenų registro išrašas",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Transporto priemonės draudimas",
       "SELF_BILLING_AGREEMENT": "Savarankiško sąskaitų išrašymo susitarimas",
       "CONTRACT": "Sutartis",
-      "OTHER": "Kita"
+      "OTHER": "Kita",
+      "POS_INVOICE": "Naujausia sąskaita iš jūsų kasos (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Buveinė",
@@ -332,7 +340,9 @@
       "withdraw": "Atšaukti",
       "note": "FIRINGI pastaba",
       "none": "Dokumentų dar nėra.",
-      "required": "Privaloma"
+      "required": "Privaloma",
+      "invoiceDate": "Sąskaitos data",
+      "posHint": "Viena naujausia sąskaita (paskutinės 90 d.) iš jūsų parduotuvės kasos — ji parodo FIRINGI, kad veikiate. PDF arba nuotrauka, iki 10 MB."
     },
     "profile": {
       "save": "Išsaugoti pakeitimus",
@@ -354,6 +364,10 @@
       "accessUntil": "Prieiga iki {date}",
       "notRequested": "Neprašyta",
       "note": "FIRINGI pastaba"
+    },
+    "legalForms": {
+      "COMPANY": "Bendrovė (UAB, AB, …)",
+      "SOLE_TRADER": "Individuali veikla"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Apskaitos Apžvalga",
     "Daily Sales": "Dienos Pardavimai",
     "Expenses": "Išlaidos",
-    "Profit & Loss": "Pelnas ir Nuostoliai"
+    "Profit & Loss": "Pelnas ir Nuostoliai",
+    "Certificates & Compliance": "Sertifikatai ir atitiktis"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "Biudžetas „{name}“ pasiekė {pct}%",
       "body": "Šiuo laikotarpiu panaudota {spent} € iš {amount} €."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} baigs galioti po {days} d.",
+      "body": "Jūsų {certificate} galioja iki {date}. Įkelkite atnaujinimą, kad pasiūlymai liktų matomi."
+    },
+    "compliance_expired": {
+      "title": "{certificate} nebegalioja",
+      "body": "Įkelkite atnaujintą sertifikatą. Jei FIRINGI jo reikalauja, pasiūlymai sustabdomi po {grace} lengvatinių dienų."
+    },
+    "compliance_paused": {
+      "title": "Jūsų pasiūlymai sustabdyti",
+      "body": "{offers} pasiūlymų paslėpti nuo klientų, nes trūksta privalomo sertifikato arba jis nebegalioja: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Jūsų pasiūlymai vėl matomi",
+      "body": "Jūsų sertifikatai tvarkingi — klientai vėl mato ir užsako jūsų pasiūlymus."
+    },
+    "compliance_approved": {
+      "title": "{certificate} patvirtintas",
+      "body": "FIRINGI patikrino ir patvirtino jūsų {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} nepriimtas",
+      "body": "FIRINGI nepriėmė jūsų {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Peržiūrėti sertifikatą: {certificate}",
+      "body": "{company} įkėlė {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} sertifikatų reikia patikrinti iš naujo",
+      "body": "Patikrinkite juos pas išdavėją ir pažymėkite patikrintais skiltyje Tiekėjų atitiktis."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Buhalteris",
       "TRANSPORT": "Transportas ir kuras",
       "OTHER": "Kita"
+    }
+  },
+  "compliance": {
+    "title": "Sertifikatai ir atitiktis",
+    "intro": "Sertifikatai, kurių prašo FIRINGI. Palaikykite juos galiojančius: jei trūksta privalomo sertifikato arba jis nebegalioja, jūsų pasiūlymai sustabdomi, kol FIRINGI patvirtins naują. Patvirtinti sertifikatai klientams gali būti rodomi kaip patikrinti ženkleliai.",
+    "score": "Atitikties balas",
+    "scoreHint": "Privalomi sertifikatai skaičiuojami dvigubai. 100 = viskas, ko prašoma, galioja.",
+    "valid": "Galiojantys",
+    "expiring": "Netrukus baigs galioti",
+    "missingRequired": "Trūksta (privalomi)",
+    "pendingReview": "Laukia FIRINGI",
+    "pausedTitle": "Jūsų pasiūlymai sustabdyti",
+    "pausedWhole": "Klientai nemato nė vieno jūsų pasiūlymo, kol FIRINGI patvirtins: {certificates}. Įkelkite sertifikatą žemiau.",
+    "pausedOffers": "{count} jūsų pasiūlymų paslėpti nuo klientų, kol FIRINGI patvirtins: {certificates}. Įkelkite sertifikatą žemiau.",
+    "pausedShort": "Sustabdyta — sertifikatas",
+    "checklist": "Ko prašo FIRINGI",
+    "nothingAsked": "Šiuo metu FIRINGI neprašo jūsų įmonės jokio sertifikato.",
+    "required": "Privalomas",
+    "optional": "Neprivalomas",
+    "badgeEligible": "Klientams rodomas kaip patikrintas ženklelis",
+    "categoriesOnly": "Tik: {categories}",
+    "expiresOn": "galioja iki {date}",
+    "noExpiry": "be galiojimo pabaigos",
+    "daysLeft": "liko {days} d.",
+    "graceUntil": "Nebegalioja — galite parduoti iki {date}. Dabar įkelkite atnaujintą sertifikatą.",
+    "waivedUntil": "FIRINGI leidžia jums parduoti iki {date}.",
+    "pendingUpload": "Naujas sertifikatas įkeltas {date} — laukia FIRINGI.",
+    "rejectedNote": "FIRINGI atmetė: {note}",
+    "uploadNew": "Įkelti sertifikatą",
+    "renew": "Įkelti atnaujinimą",
+    "number": "Sertifikato numeris",
+    "issuer": "Išdavė",
+    "issuedOn": "Išdavimo data",
+    "expiresOnLabel": "Galioja iki",
+    "file": "Failas (PDF, JPG, PNG arba WEBP — iki 10 MB)",
+    "upload": "Siųsti FIRINGI",
+    "uploading": "Siunčiama…",
+    "uploaded": "Išsiųsta — FIRINGI jį peržiūrės.",
+    "cancel": "Atšaukti",
+    "withdraw": "Atsiimti",
+    "history": "Visi įkėlimai",
+    "historyEmpty": "Sertifikatų dar neįkelta.",
+    "colType": "Sertifikatas",
+    "colUploaded": "Įkelta",
+    "colExpires": "Galioja iki",
+    "colStatus": "Būsena",
+    "view": "Peržiūrėti",
+    "superseded": "Pakeistas",
+    "badgesTitle": "Jūsų patikrinti ženkleliai",
+    "badgesHint": "Ką klientai mato prie jūsų pavadinimo ir produktų.",
+    "badgesNone": "Ženklelių dar nėra. Čia rodomi patvirtinti sertifikatai, kurių tipą FIRINGI rodo kaip ženklelį.",
+    "badgeHidden": "FIRINGI paslėpė šį ženklelį jūsų įmonei.",
+    "alertPaused": "Dalis jūsų pasiūlymų sustabdyti, nes trūksta privalomo sertifikato arba jis nebegalioja.",
+    "alertExpiring": "{count} sertifikatų netrukus baigs galioti — laiku įkelkite atnaujinimus.",
+    "alertOpen": "Sertifikatai",
+    "verifiedBy": "Patikrino FIRINGI",
+    "verifiedBadgeTitle": "{name} — FIRINGI patikrintas sertifikatas",
+    "verifiedHint": "FIRINGI patikrino šiuos sertifikatus ir jų galiojimą.",
+    "download": "Sertifikatas",
+    "filterLabel": "Patikrinta",
+    "filterAll": "Visi tiekėjai",
+    "states": {
+      "VALID": "Galioja",
+      "EXPIRING": "Netrukus baigs galioti",
+      "WAIVED": "FIRINGI lengvatinis laikotarpis",
+      "GRACE": "Nebegalioja — lengvatinės dienos",
+      "EXPIRED": "Nebegalioja",
+      "PENDING": "Laukia peržiūros",
+      "REJECTED": "Atmestas",
+      "MISSING": "Trūksta"
+    },
+    "statuses": {
+      "PENDING": "Laukia peržiūros",
+      "APPROVED": "Patvirtintas",
+      "REJECTED": "Atmestas",
+      "EXPIRED": "Nebegalioja",
+      "REVOKED": "Atšauktas"
+    },
+    "types": {
+      "HACCP": "HACCP maisto sauga",
+      "FOOD_ESTABLISHMENT": "Maisto įmonės patvirtinimas",
+      "ORGANIC": "ES ekologiškas",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Produkto civilinės atsakomybės draudimas",
+      "TAX_CLEARANCE": "Pažyma apie mokestinių skolų nebuvimą",
+      "SOCIAL_SECURITY_CLEARANCE": "Pažyma apie skolų Sodrai nebuvimą"
+    },
+    "typeDesc": {
+      "HACCP": "Jūsų patalpų HACCP planas arba maisto saugos sertifikatas.",
+      "FOOD_ESTABLISHMENT": "Jūsų patalpų veterinarinis / maisto įmonės patvirtinimo numeris.",
+      "ORGANIC": "Patvirtintos kontrolės įstaigos ES ekologinės gamybos sertifikatas.",
+      "ISO_22000": "Maisto saugos vadybos sistemos sertifikatas.",
+      "IFS_BRCGS": "IFS Food, IFS Logistics arba BRCGS sertifikatas.",
+      "HALAL": "Pripažintos sertifikavimo įstaigos halal sertifikatas.",
+      "LIABILITY_INSURANCE": "Draudimo polisas, apimantis atsakomybę už produktą.",
+      "TAX_CLEARANCE": "Pažyma, kad neturite mokestinių skolų.",
+      "SOCIAL_SECURITY_CLEARANCE": "Pažyma, kad neturite socialinio draudimo skolų."
     }
   }
 }

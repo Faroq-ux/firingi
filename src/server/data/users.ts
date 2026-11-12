@@ -20,7 +20,7 @@ export async function listVendorUsers(ctx: Ctx) {
 
 /** Onboarding hub data for the signed-in applicant (company and / or driver). */
 export async function myApplication(ctx: Ctx) {
-  const { missingForSubmission } = await import("@/server/onboarding/rules");
+  const { missingForSubmission, missingRecommended } = await import("@/server/onboarding/rules");
   const { readinessInput } = await import("@/server/services/company");
   const company = await prisma.company.findUniqueOrThrow({
     where: { id: ctx.company.id },
@@ -32,9 +32,12 @@ export async function myApplication(ctx: Ctx) {
     },
   });
   const isApplicantCompany = company.type !== "ADMIN";
-  const missing = isApplicantCompany && company.status === "PENDING" ? missingForSubmission(await readinessInput(company.id)) : [];
+  const ready = isApplicantCompany && (company.status === "PENDING" || company.status === "UNDER_REVIEW") ? await readinessInput(company.id) : null;
+  const missing = ready && company.status === "PENDING" ? missingForSubmission(ready) : [];
+  // Phase 28: asked for, but FIRINGI can approve without them (certificate code, POS invoice)
+  const recommended = ready ? missingRecommended(ready) : [];
   const driver = ctx.driver
     ? await prisma.driver.findUnique({ where: { id: ctx.driver.id }, include: { documents: { orderBy: { createdAt: "desc" } } } })
     : null;
-  return { company, isApplicantCompany, missing, driver };
+  return { company, isApplicantCompany, missing, recommended, driver };
 }

@@ -10,20 +10,22 @@ import { ProductCard } from "@/components/catalogue/product-card";
 import { pickLocalized } from "@/i18n/config";
 import { SupplierCard } from "@/components/catalogue/supplier-card";
 import { BarcodeSearch } from "@/components/catalogue/barcode-search";
+import { BadgeFilter } from "@/components/compliance/badges";
+import { badgeTypes } from "@/server/compliance/service";
 
 export const metadata = { title: "Shop" };
 const TONES = ["tone-blue", "tone-violet", "tone-teal", "tone-pink", "tone-orange", "tone-lime"];
 
 /** Shop home: categories + nearest suppliers (wholesalers for customers, distributors for wholesalers). */
-export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; badge?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
-  const { q } = await searchParams;
-  const [categories, suppliers, t, locale, mode] = await Promise.all([
-    shopCategories(ctx), visibleSuppliers(ctx, { q }), getTranslations("catalogue"), getLocale(), orderingMode(ctx),
+  const { q, badge } = await searchParams;
+  const [categories, suppliers, t, locale, mode, badges] = await Promise.all([
+    shopCategories(ctx), visibleSuppliers(ctx, { q, badge }), getTranslations("catalogue"), getLocale(), orderingMode(ctx), badgeTypes(),
   ]);
   const firingi = mode === "FIRINGI";
-  const products = firingi ? await browseCatalogue(ctx, { q }) : null;
+  const products = firingi ? await browseCatalogue(ctx, { q, badge }) : null;
   const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
   return (
     <>
@@ -50,6 +52,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           ))}
         </div>
       </section>
+      <BadgeFilter types={badges} active={badge} base="/buy/catalogue/browse" params={{ q }} />
       {products ? (
         <section data-testid="firingi-products">
           <h2 className="mb-3 text-lg font-semibold">{t("allProducts")}</h2>

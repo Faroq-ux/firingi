@@ -7,7 +7,7 @@ import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
-import { REQUIRED_DOCUMENTS, OPTIONAL_DOCUMENTS, REQUIRED_DRIVER_DOCUMENTS } from "@/server/onboarding/rules";
+import { UPLOADABLE_DOCUMENTS, REQUIRED_DRIVER_DOCUMENTS, POS_INVOICE_MAX_AGE_DAYS } from "@/server/onboarding/rules";
 import { canReviewDocsOf, canViewType, scopeWhere } from "./admin-access";
 import { writeAudit } from "./audit";
 import { readStored, storeUpload } from "./storage";
@@ -15,21 +15,29 @@ import { notify } from "@/server/notify/dispatch";
 
 /** Document types a company may upload itself (licences go through the restricted-access flow). */
 export function uploadableCompanyDocTypes(type: Exclude<Ctx["company"]["type"], "ADMIN">): DocumentType[] {
-  return [...new Set([...REQUIRED_DOCUMENTS[type], ...OPTIONAL_DOCUMENTS])];
+  return UPLOADABLE_DOCUMENTS[type];
 }
 
-export async function uploadCompanyDocument(ctx: Ctx, input: { type: DocumentType; file: File; expiresAt?: Date | null }) {
+export async function uploadCompanyDocument(ctx: Ctx, input: { type: DocumentType; file: File; expiresAt?: Date | null; issuedOn?: Date | null }) {
   if (ctx.company.type === "ADMIN") throw new ForbiddenError();
   if (!can(ctx, "company.documents.manage")) throw new ForbiddenError();
   if (!uploadableCompanyDocTypes(ctx.company.type).includes(input.type)) throw new ValidationError("This document type can't be uploaded here.");
+  if (input.type === "POS_INVOICE") {
+    // A recent invoice from the shop's own till: dated, not in the future, at most 90 days old.
+    const d = input.issuedOn;
+    const today = new Date(); today.setUTCHours(0, 0, 0, 0);
+    if (!d || Number.isNaN(d.getTime())) throw new ValidationError("Enter the date on the invoice.");
+    if (d.getTime() > today.getTime() + 86_400_000) throw new ValidationError("The invoice date can't be in the future.");
+    if (d.getTime() < today.getTime() - POS_INVOICE_MAX_AGE_DAYS * 86_400_000) throw new ValidationError(`The invoice must be recent (at most ${POS_INVOICE_MAX_AGE_DAYS} days old).`);
+  }
   const stored = await storeUpload(input.file, `companies/${ctx.company.id}`);
   const doc = await prisma.document.create({
     data: {
       companyId: ctx.company.id, type: input.type, fileKey: stored.key, fileName: stored.fileName, mimeType: stored.mimeType,
-      sizeBytes: stored.sizeBytes, expiresAt: input.expiresAt ?? null, uploadedById: ctx.user.id,
+      sizeBytes: stored.sizeBytes, expiresAt: input.expiresAt ?? null, issuedOn: input.type === "POS_INVOICE" ? input.issuedOn ?? null : null, uploadedById: ctx.user.id,
     },
   });
-  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "document.uploaded", entityType: "Document", entityId: doc.id, after: { type: input.type, file: stored.fileName, sha256: stored.sha256 } });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "document.uploaded", entityType: "Document", entityId: doc.id, after: { type: input.type, file: stored.fileName, sha256: stored.sha256, issuedOn: doc.issuedOn } });
   return doc;
 }
 

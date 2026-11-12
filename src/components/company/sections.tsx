@@ -9,7 +9,7 @@ import { listOwnAddresses } from "@/server/services/addresses";
 import { listOwnCompanyDocuments, ownCompanyProfile, euCountryOptions } from "@/server/data/self-service";
 import { listOwnRestrictionApprovals } from "@/server/services/restrictions";
 import { uploadableCompanyDocTypes } from "@/server/services/documents";
-import { ADDRESS_KINDS, REQUIRED_DOCUMENTS } from "@/server/onboarding/rules";
+import { ADDRESS_KINDS } from "@/server/onboarding/rules";
 import { pickLocalized } from "@/i18n/config";
 import { ProfileForm } from "./profile-form";
 import { AddressesManager } from "./addresses-manager";
@@ -25,6 +25,7 @@ export async function ProfileSection({ ctx }: { ctx: Ctx }) {
         type: c.type, legalName: c.legalName, tradeName: c.tradeName, taxId: c.taxId, vatNumber: c.vatNumber, email: c.email, phone: c.phone,
         website: c.website, businessType: c.businessType, locked: c.status !== "PENDING" && c.status !== "REJECTED",
         countryLabel: `${c.country.flag ?? ""} ${pickLocalized(c.country.name, locale)}`,
+        legalForm: c.legalForm, certificateCode: c.registryCertificateCode, countryCode: c.country.code,
       }}
     />
   );
@@ -56,7 +57,7 @@ export async function DocumentsSection({ ctx }: { ctx: Ctx }) {
     <DocumentsManager
       canEdit={can(ctx, "company.documents.manage")}
       types={uploadableCompanyDocTypes(ctx.company.type)}
-      required={REQUIRED_DOCUMENTS[ctx.company.type]}
+      required={ctx.company.type === "CUSTOMER" ? ["POS_INVOICE"] : []}
       rows={rows.map((d) => ({ id: d.id, type: d.type, fileName: d.fileName, status: d.status, reviewNote: d.reviewNote, createdAt: d.createdAt.toISOString(), expiresAt: d.expiresAt?.toISOString() ?? null }))}
     />
   );

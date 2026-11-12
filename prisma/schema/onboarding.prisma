@@ -21,6 +21,7 @@ enum DocumentType {
   SELF_BILLING_AGREEMENT
   CONTRACT
   OTHER
+  POS_INVOICE // Phase 28: a recent invoice from the customer's own till (proves the shop trades)
 }
 
 enum ReviewStatus {
@@ -100,6 +101,8 @@ model Document {
   sizeBytes             Int
   status                ReviewStatus @default(PENDING)
   expiresAt             DateTime?
+  /// Phase 28: date on the document (the POS invoice's date)
+  issuedOn              DateTime?    @db.Date
   reviewedById          String?
   reviewedAt            DateTime?
   reviewNote            String?

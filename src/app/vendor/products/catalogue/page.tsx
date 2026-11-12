@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
 import { listOwnOffers, searchMasterCatalogue } from "@/server/services/vendor-catalogue";
@@ -10,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { BasePriceCell, OfferActiveToggle, ProposeProductForm, SellThisForm } from "@/components/vendor/offer-controls";
+import { compliancePaused } from "@/server/compliance/service";
 
 export const metadata = { title: "My products" };
 
@@ -21,6 +23,7 @@ export default async function VendorProductsPage({ searchParams }: { searchParam
   const sp = await searchParams;
   const canManage = can(ctx, "vendor.products.manage");
   const canPrice = can(ctx, "vendor.pricing.manage");
+  const [tc, pausedWhole] = await Promise.all([getTranslations("compliance"), compliancePaused(ctx)]);
   const [offers, t, c, locale, options, found] = await Promise.all([
     listOwnOffers(ctx, { q: sp.q }),
     getTranslations("catalogue.vendor"),
@@ -54,7 +57,10 @@ export default async function VendorProductsPage({ searchParams }: { searchParam
                   {(o.packaging.gtin ?? o.packaging.variant.gtin) && <div className="font-mono text-[11px] text-muted-foreground">▮▯▮ {o.packaging.gtin ?? o.packaging.variant.gtin}</div>}
                   {o.reviewNote && <div className="text-xs text-destructive">{t("reviewNote")}: {o.reviewNote}</div>}
                 </TD>
-                <TD><Badge variant={STATUS_VARIANT[o.status]}>{t(`offerStatus.${o.status}`)}</Badge></TD>
+                <TD>
+                  <Badge variant={STATUS_VARIANT[o.status]}>{t(`offerStatus.${o.status}`)}</Badge>
+                  {(o.compliancePausedAt || pausedWhole) && <Link href="/vendor/company/compliance" className="ml-1 inline-block" data-testid="compliance-paused"><Badge variant="destructive">{tc("pausedShort")}</Badge></Link>}
+                </TD>
                 <TD><BasePriceCell offerId={o.id} price={base ? Number(base.unitPriceNet).toFixed(2) : null} canEdit={canPrice} /></TD>
                 <TD className="text-right tabular-nums">{stock}</TD>
                 <TD className="text-right">{canManage && <OfferActiveToggle offerId={o.id} status={o.status} />}</TD>

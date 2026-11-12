@@ -95,6 +95,14 @@ export default async function ApplicationPage() {
             </div>
           )}
           {co.status === "UNDER_REVIEW" && <p className="text-sm text-muted-foreground">{t("hub.waiting")}</p>}
+          {app.recommended.length > 0 && (
+            <div className="space-y-1.5 rounded-md border border-dashed p-3" data-testid="recommended">
+              <p className="text-sm font-medium">{t("hub.recommended")}</p>
+              <ul className="space-y-1 text-sm">
+                {app.recommended.map((m, i) => <li key={i} className="flex items-center gap-2"><Circle className="size-3.5 text-warning" /> {missingText(m.code, m.detail)}</li>)}
+              </ul>
+            </div>
+          )}
         </CardContent>
       </Card>
 

@@ -5,6 +5,7 @@ import type { CatalogueItem } from "@/server/data/catalogue-buyer";
 import { pickLocalized } from "@/i18n/config";
 import { Badge } from "@/components/ui/badge";
 import { PriceBlock, Codes } from "./price";
+import { VerifiedBadges } from "@/components/compliance/badges";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -35,6 +36,7 @@ export async function ProductCard({ item, hasImage, showVendor = true }: { item:
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />
           {item.price && item.price.scope !== "BASE" && <Badge className="mt-1">{t(`priceScope.${item.price.scope}`)}</Badge>}
+          {showVendor && <VerifiedBadges badges={item.vendor.badges} max={2} className="mt-2" />}
           <div className="mt-2 flex items-center justify-between gap-2 text-xs">
             <span className="truncate text-muted-foreground">{showVendor ? `${item.vendor.country.flag ?? ""} ${item.vendor.name}` : ""}</span>
             <StockBadge status={item.stockStatus} />

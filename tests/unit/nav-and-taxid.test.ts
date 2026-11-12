@@ -9,9 +9,9 @@ describe("admin sidebar", () => {
   it("has all 21 sections (Inventory & Warehouses added in Phase 24)", () => {
     expect(ADMIN_NAV).toHaveLength(21);
   });
-  it("vendors section has Distributors, Wholesalers and Vendor Management groups with all sub-pages", () => {
+  it("vendors section has Distributors, Wholesalers, Vendor Management and Supplier Compliance (Phase 28) groups", () => {
     const vendors = ADMIN_NAV.find((s) => s.key === "vendors")!;
-    expect(vendors.groups!.map((g) => g.items.length)).toEqual([10, 10, 9]);
+    expect(vendors.groups!.map((g) => g.items.length)).toEqual([10, 10, 9, 5]);
   });
   it("every item has a unique key, a known permission and an admin URL", () => {
     const items = allItems(ADMIN_NAV);

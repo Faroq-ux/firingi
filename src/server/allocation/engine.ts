@@ -142,10 +142,10 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
   const sellerType = sellerTypeOf(target.flow);
   const vendors = await prisma.company.findMany({
     where: {
-      type: sellerType, status: "APPROVED", id: { notIn: [...exclude] },
+      type: sellerType, status: "APPROVED", compliancePausedAt: null, id: { notIn: [...exclude] },
       // Wholesalers sell only inside their own country; distributors across FIRINGI's European markets.
       ...(sellerType === "WHOLESALER" ? { countryId: target.countryId } : {}),
-      vendorOffers: { some: { status: "ACTIVE", packagingUnitId: { in: items.map((i) => i.packagingUnitId) } } },
+      vendorOffers: { some: { status: "ACTIVE", compliancePausedAt: null, packagingUnitId: { in: items.map((i) => i.packagingUnitId) } } },
     },
     select: { id: true, legalName: true, tradeName: true, countryId: true, isInHouse: true, country: { select: { code: true } }, allocationProfile: true },
   });
@@ -190,7 +190,7 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
   const dec = new Map(declined.map((r) => [r.fromVendorId, r._count]));
 
   const offers = await prisma.vendorOffer.findMany({
-    where: { vendorCompanyId: { in: ids }, status: "ACTIVE", packagingUnitId: { in: items.map((i) => i.packagingUnitId) } },
+    where: { vendorCompanyId: { in: ids }, status: "ACTIVE", compliancePausedAt: null, packagingUnitId: { in: items.map((i) => i.packagingUnitId) } },
     select: { id: true, vendorCompanyId: true, packagingUnitId: true },
   });
   // Price every candidate offer as the buyer would see it (visibility, price lists, promotions, stock).

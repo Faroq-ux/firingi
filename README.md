@@ -123,11 +123,14 @@ tests/
 
 1. **Register** at `/register` as distributor, wholesaler, customer or driver. Each new account starts as **Pending**.
 2. On the **application page** (`/application-status`), the applicant completes their profile, adds addresses and uploads documents, then submits the application (**Under review**).
-3. **FIRINGI reviews it** at Vendors / Customers › Applications. The company page has a decision panel, document approval, an EU VIES check and the commission setting. Approval is blocked until:
-   - all required documents are approved;
-   - the required addresses exist;
+3. **FIRINGI reviews it** at Vendors / Customers › Applications. The company page has a decision panel, document approval, an EU VIES check and the commission setting. Approval is blocked until (Phase 28):
+   - the VAT number is given and the required addresses exist;
    - for distributors: the VAT number is confirmed in VIES;
    - for vendors: a commission rate is set.
+
+   FIRINGI also asks — but can **approve anyway** with a note — for the **permanent certificate code**
+   of suppliers that are companies (not sole traders) and **one recent invoice from the customer's
+   POS**. No other document is required.
 4. **Tobacco and alcohol:** approved buyers request access with a licence (Buy › Company). Admin approves it with an expiry date at Risk & Compliance › Compliance.
 5. **Drivers** upload their ID and driving licence. Admin approves both documents and the driver at Drivers & Fleet › Driver Applications.
 
@@ -596,6 +599,56 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   after the payout days in *Payments* settings (30 by default). Finance gets one reminder a day
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
+
+## Supplier compliance (Phase 28)
+
+Suppliers › Company › **Certificates & Compliance** (25 languages); FIRINGI › Vendors › **Supplier
+Compliance** — Compliance Dashboard, Certificate Review, Supplier Certificates, Certificate Types &
+Badges, Compliance Audit (English); customers see **verified badges** in the shop.
+
+- **Approval rules reworked** — the only hard requirements are the VAT number and addresses (plus VIES
+  for distributors and a commission for suppliers). Supplier **companies** give their **permanent
+  certificate code** (PT *certidão permanente* access code `0000-0000-0000`, elsewhere the registry
+  number) in Profile; **sole traders** don't (legal form is a new profile field; PT individual NIFs were
+  set to sole trader by the migration). **Customers** upload **one recent invoice from their POS**
+  (dated, at most 90 days old). FIRINGI can **approve anyway** without the code or the invoice: a note
+  (≥ 10 characters) is required and kept on the company, in the status history and in the audit log
+  (`company.status.approved_anyway`). Business registration / tax / trade-licence documents are optional.
+  The applicant's checklist shows these as "also asked for" — they don't block submitting.
+- **Certificate types** (FIRINGI) — 9 built-ins (HACCP, food establishment approval, EU organic,
+  ISO 22000 / FSSC 22000, IFS / BRCGS, Halal, product liability insurance, tax clearance, social
+  security clearance) plus any FIRINGI adds. Per type: distributors and / or wholesalers, supplier
+  countries, **categories** (empty = whole supplier), **required** or optional, number needed, has an
+  expiry, **grace days** after expiry, FIRINGI **re-check** every N months, **customer badge on / off**,
+  customers may download. Built-ins start optional, so nobody was paused by the upgrade. Saving a type
+  re-applies the rules to every supplier at once.
+- **Certificates** (suppliers) — upload with number, issuer, issue and expiry dates and the file
+  (PDF / image, 10 MB, private). FIRINGI reviews it with the file shown, corrects the expiry / number,
+  sets the next re-check and approves or rejects (note to the supplier). A renewal replaces the
+  approved certificate only once approved (versions kept). FIRINGI can revoke, mark re-checked and
+  hide the supplier's badge.
+- **Automatic pause** — a supplier missing a required certificate (missing, waiting for review,
+  rejected, or expired beyond its grace days) is paused: all its offers (whole-supplier types) or only
+  its offers in the type's categories (and sub-categories) disappear from the catalogue, search,
+  product pages, checkout pricing and FIRINGI's supplier allocation (`visibleOfferWhere` +
+  allocation candidates). New offers in such a category start paused. FIRINGI can give a **grace
+  period** (waiver until a date, ≤ 1 year, reason audited). Approval / waiver resumes immediately.
+  Suppliers see a banner on the dashboard, "Paused — certificate" in their product list and the reason
+  on the compliance page (score: required types count double).
+- **Daily job `compliance`** (`/api/cron/compliance`, scheduler 05:47 UTC): expires certificates,
+  reminds suppliers 30 / 14 / 7 days before expiry (once each; a late first run sends one), tells
+  FIRINGI about due re-checks and re-applies pauses. Notifications: `compliance.expiring`, `expired`,
+  `paused`, `resumed`, `approved`, `rejected` (suppliers) and `compliance.review`, `recheck` (FIRINGI).
+- **Verified badges** — approved, in-date certificates of types whose badge FIRINGI switched on, not
+  hidden for that supplier: chips on supplier and product cards, a "Verified by FIRINGI" panel (with
+  the certificate to download when the type allows it) on the supplier store and product page, and a
+  **Verified** filter on the shop home and suppliers list (also `?badge=` on `/api/catalogue/offers`).
+  In "order from FIRINGI" countries the supplier isn't shown, so no badges are; the filter still works.
+- **Dashboard & audits** (FIRINGI) — % of live suppliers fully compliant, average score, waiting for
+  review, expiring in 30 days, re-checks due, paused suppliers, coverage per certificate type,
+  expiring / re-check tables, per-supplier checklist with grace periods and every upload, and the
+  append-only compliance audit trail. Permissions: view = `admin.vendors.view` / `admin.risk.view`;
+  decide = `admin.vendors.approve` / `admin.risk.manage`.
 
 ## Shops, budgets & optional accounting (Phase 27)
 

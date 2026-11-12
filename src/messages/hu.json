@@ -248,7 +248,11 @@
       "licenceExpiry": "Jogosítvány lejárata",
       "notOpen": "Ehhez a fióktípushoz még egyik országban sem nyílt meg a regisztráció.",
       "chooseCity": "Válasszon…",
-      "businessDeclaration": "Megerősítem, hogy vállalkozást (céget vagy egyéni vállalkozót) regisztrálok, és nem magánszemélyként vásárolok."
+      "businessDeclaration": "Megerősítem, hogy vállalkozást (céget vagy egyéni vállalkozót) regisztrálok, és nem magánszemélyként vásárolok.",
+      "legalForm": "Társasági forma",
+      "certificateCode": "Cégkivonat kódja",
+      "certificateCodeHint": "Cége cégjegyzékszáma. A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell.",
+      "certificateCodeHintPt": "A certidão permanente hozzáférési kódja (12 számjegy, 0000-0000-0000). A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell."
     },
     "businessTypes": {
       "restaurant": "Étterem",
@@ -275,8 +279,11 @@
       "missing": {
         "DOCUMENT_MISSING": "Dokumentum feltöltése: {detail}",
         "ADDRESS_MISSING": "Cím hozzáadása: {detail}",
-        "VAT_NUMBER_MISSING": "Adja meg közösségi adószámát"
-      }
+        "VAT_NUMBER_MISSING": "Adja meg közösségi adószámát",
+        "CERTIFICATE_CODE_MISSING": "Adja meg a cégkivonat kódját (Profil)",
+        "POS_INVOICE_MISSING": "Töltsön fel egy friss számlát a pénztárgépéből (Dokumentumok)"
+      },
+      "recommended": "Szintén kérjük — a FIRINGI enélkül is elbírálhatja a kérelmet, de így gyorsabb a jóváhagyás:"
     },
     "docTypes": {
       "BUSINESS_REGISTRATION": "Cégkivonat",
@@ -290,7 +297,8 @@
       "VEHICLE_INSURANCE": "Gépjármű-biztosítás",
       "SELF_BILLING_AGREEMENT": "Önszámlázási megállapodás",
       "CONTRACT": "Szerződés",
-      "OTHER": "Egyéb"
+      "OTHER": "Egyéb",
+      "POS_INVOICE": "Friss számla a pénztárgépéből (POS)"
     },
     "addressKinds": {
       "HEAD_OFFICE": "Székhely",
@@ -332,7 +340,9 @@
       "withdraw": "Visszavonás",
       "note": "FIRINGI megjegyzés",
       "none": "Még nincsenek dokumentumok.",
-      "required": "Kötelező"
+      "required": "Kötelező",
+      "invoiceDate": "Számla dátuma",
+      "posHint": "Egy friss számla (utolsó 90 nap) üzlete pénztárgépéből — megmutatja a FIRINGI-nek, hogy működik az üzlet. PDF vagy fénykép, max. 10 MB."
     },
     "profile": {
       "save": "Módosítások mentése",
@@ -354,6 +364,10 @@
       "accessUntil": "Hozzáférés eddig: {date}",
       "notRequested": "Nem kérték",
       "note": "FIRINGI megjegyzés"
+    },
+    "legalForms": {
+      "COMPANY": "Társaság (Kft., Zrt., …)",
+      "SOLE_TRADER": "Egyéni vállalkozó"
     }
   },
   "catalogue": {
@@ -811,7 +825,8 @@
     "Accounting Dashboard": "Könyvelési Áttekintés",
     "Daily Sales": "Napi Forgalom",
     "Expenses": "Kiadások",
-    "Profit & Loss": "Eredménykimutatás"
+    "Profit & Loss": "Eredménykimutatás",
+    "Certificates & Compliance": "Tanúsítványok és megfelelőség"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1325,6 +1340,38 @@
     "budget_threshold": {
       "title": "„{name}” költségkeret {pct}%-on",
       "body": "Ebben az időszakban {spent} € felhasználva {amount} €-ból."
+    },
+    "compliance_expiring": {
+      "title": "{certificate} {days} nap múlva lejár",
+      "body": "{certificate} érvényes eddig: {date}. Töltse fel a megújítást, hogy ajánlatai láthatók maradjanak."
+    },
+    "compliance_expired": {
+      "title": "{certificate} lejárt",
+      "body": "Töltse fel a megújított tanúsítványt. Ha a FIRINGI kötelezővé teszi, ajánlatai {grace} türelmi nap után szünetelnek."
+    },
+    "compliance_paused": {
+      "title": "Az ajánlatai szünetelnek",
+      "body": "{offers} ajánlat rejtve van a vevők elől, mert egy kötelező tanúsítvány hiányzik vagy lejárt: {certificates}."
+    },
+    "compliance_resumed": {
+      "title": "Az ajánlatai újra láthatók",
+      "body": "Tanúsítványai rendben vannak — a vevők újra látják és rendelhetik ajánlatait."
+    },
+    "compliance_approved": {
+      "title": "{certificate} jóváhagyva",
+      "body": "A FIRINGI ellenőrizte és jóváhagyta: {certificate}."
+    },
+    "compliance_rejected": {
+      "title": "{certificate} nem elfogadott",
+      "body": "A FIRINGI nem fogadta el ezt: {certificate}: {reason}"
+    },
+    "compliance_review": {
+      "title": "Ellenőrizendő tanúsítvány: {certificate}",
+      "body": "{company} feltöltötte: {certificate}."
+    },
+    "compliance_recheck": {
+      "title": "{count} tanúsítvány újraellenőrzése esedékes",
+      "body": "Ellenőrizze őket a kiállítónál, és jelölje ellenőrzöttnek a Beszállítói megfelelőségben."
     }
   },
   "notifications": {
@@ -3148,6 +3195,105 @@
       "ACCOUNTANT": "Könyvelő",
       "TRANSPORT": "Szállítás és üzemanyag",
       "OTHER": "Egyéb"
+    }
+  },
+  "compliance": {
+    "title": "Tanúsítványok és megfelelőség",
+    "intro": "A FIRINGI által kért tanúsítványok. Tartsa őket érvényesen: ha egy kötelező tanúsítvány hiányzik vagy lejárt, az ajánlatai szünetelnek, amíg a FIRINGI jóvá nem hagy egy újat. A jóváhagyott tanúsítványok ellenőrzött jelvényként jelenhetnek meg a vevőknek.",
+    "score": "Megfelelőségi pontszám",
+    "scoreHint": "A kötelező tanúsítványok duplán számítanak. 100 = minden kért érvényes.",
+    "valid": "Érvényes",
+    "expiring": "Hamarosan lejár",
+    "missingRequired": "Hiányzik (kötelező)",
+    "pendingReview": "A FIRINGI-re vár",
+    "pausedTitle": "Az ajánlatai szünetelnek",
+    "pausedWhole": "A vevők egyetlen ajánlatát sem látják, amíg a FIRINGI jóvá nem hagyja: {certificates}. Töltse fel a tanúsítványt lent.",
+    "pausedOffers": "{count} ajánlata rejtve van a vevők elől, amíg a FIRINGI jóvá nem hagyja: {certificates}. Töltse fel a tanúsítványt lent.",
+    "pausedShort": "Szünetel — tanúsítvány",
+    "checklist": "Amit a FIRINGI kér",
+    "nothingAsked": "A FIRINGI jelenleg nem kér tanúsítványt a cégétől.",
+    "required": "Kötelező",
+    "optional": "Nem kötelező",
+    "badgeEligible": "Ellenőrzött jelvényként látják a vevők",
+    "categoriesOnly": "Csak: {categories}",
+    "expiresOn": "érvényes eddig: {date}",
+    "noExpiry": "nincs lejárati dátum",
+    "daysLeft": "még {days} nap",
+    "graceUntil": "Lejárt — eddig értékesíthet: {date}. Töltse fel most a megújított tanúsítványt.",
+    "waivedUntil": "A FIRINGI engedi, hogy eddig értékesítsen: {date}.",
+    "pendingUpload": "Új tanúsítvány feltöltve: {date} — a FIRINGI-re vár.",
+    "rejectedNote": "A FIRINGI elutasította: {note}",
+    "uploadNew": "Tanúsítvány feltöltése",
+    "renew": "Megújítás feltöltése",
+    "number": "Tanúsítvány száma",
+    "issuer": "Kiállító",
+    "issuedOn": "Kiállítás dátuma",
+    "expiresOnLabel": "Érvényes eddig",
+    "file": "Fájl (PDF, JPG, PNG vagy WEBP — max. 10 MB)",
+    "upload": "Küldés a FIRINGI-nek",
+    "uploading": "Küldés…",
+    "uploaded": "Elküldve — a FIRINGI ellenőrzi.",
+    "cancel": "Mégse",
+    "withdraw": "Visszavonás",
+    "history": "Összes feltöltés",
+    "historyEmpty": "Még nincs feltöltött tanúsítvány.",
+    "colType": "Tanúsítvány",
+    "colUploaded": "Feltöltve",
+    "colExpires": "Érvényes eddig",
+    "colStatus": "Állapot",
+    "view": "Megnézem",
+    "superseded": "Lecserélve",
+    "badgesTitle": "Az Ön ellenőrzött jelvényei",
+    "badgesHint": "Amit a vevők a neve és termékei mellett látnak.",
+    "badgesNone": "Még nincs jelvény. Itt jelennek meg azok a jóváhagyott tanúsítványok, amelyek típusát a FIRINGI jelvényként mutatja.",
+    "badgeHidden": "A FIRINGI elrejtette ezt a jelvényt a cége számára.",
+    "alertPaused": "Néhány ajánlata szünetel, mert egy kötelező tanúsítvány hiányzik vagy lejárt.",
+    "alertExpiring": "{count} tanúsítvány hamarosan lejár — töltse fel időben a megújításokat.",
+    "alertOpen": "Tanúsítványok",
+    "verifiedBy": "A FIRINGI ellenőrizte",
+    "verifiedBadgeTitle": "{name} — a FIRINGI által ellenőrzött tanúsítvány",
+    "verifiedHint": "A FIRINGI ellenőrizte ezeket a tanúsítványokat és érvényességüket.",
+    "download": "Tanúsítvány",
+    "filterLabel": "Ellenőrzött",
+    "filterAll": "Minden beszállító",
+    "states": {
+      "VALID": "Érvényes",
+      "EXPIRING": "Hamarosan lejár",
+      "WAIVED": "A FIRINGI haladéka",
+      "GRACE": "Lejárt — türelmi napok",
+      "EXPIRED": "Lejárt",
+      "PENDING": "Ellenőrzésre vár",
+      "REJECTED": "Elutasítva",
+      "MISSING": "Hiányzik"
+    },
+    "statuses": {
+      "PENDING": "Ellenőrzésre vár",
+      "APPROVED": "Jóváhagyva",
+      "REJECTED": "Elutasítva",
+      "EXPIRED": "Lejárt",
+      "REVOKED": "Visszavonva"
+    },
+    "types": {
+      "HACCP": "HACCP élelmiszer-biztonság",
+      "FOOD_ESTABLISHMENT": "Élelmiszer-ipari létesítmény engedélye",
+      "ORGANIC": "EU bio",
+      "ISO_22000": "ISO 22000 / FSSC 22000",
+      "IFS_BRCGS": "IFS / BRCGS",
+      "HALAL": "Halal",
+      "LIABILITY_INSURANCE": "Termékfelelősség-biztosítás",
+      "TAX_CLEARANCE": "Nemleges adóigazolás",
+      "SOCIAL_SECURITY_CLEARANCE": "Igazolás társadalombiztosítási tartozás hiányáról"
+    },
+    "typeDesc": {
+      "HACCP": "A telephelye HACCP-terve vagy élelmiszer-biztonsági tanúsítványa.",
+      "FOOD_ESTABLISHMENT": "A telephelye állategészségügyi / élelmiszer-ipari engedélyszáma.",
+      "ORGANIC": "Elismert ellenőrző szervezet EU-s ökológiai termelési tanúsítványa.",
+      "ISO_22000": "Élelmiszer-biztonsági irányítási rendszer tanúsítványa.",
+      "IFS_BRCGS": "IFS Food, IFS Logistics vagy BRCGS tanúsítvány.",
+      "HALAL": "Elismert tanúsító szervezet halal tanúsítványa.",
+      "LIABILITY_INSURANCE": "Termékfelelősséget fedező biztosítási kötvény.",
+      "TAX_CLEARANCE": "Igazolás arról, hogy nincs adótartozása.",
+      "SOCIAL_SECURITY_CLEARANCE": "Igazolás arról, hogy nincs társadalombiztosítási tartozása."
     }
   }
 }

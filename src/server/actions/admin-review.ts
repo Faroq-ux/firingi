@@ -16,8 +16,9 @@ export const setCompanyStatusAction = defineAction({
     companyId: z.string(),
     to: z.enum(["PENDING", "UNDER_REVIEW", "APPROVED", "REJECTED", "SUSPENDED"]),
     reason: z.string().trim().max(1000).optional().nullable(),
+    approveAnyway: z.boolean().optional(),
   }),
-  handler: async (ctx, i) => { await adminSetStatus(ctx, i.companyId, i.to, i.reason); return done(); },
+  handler: async (ctx, i) => { await adminSetStatus(ctx, i.companyId, i.to, i.reason, { approveAnyway: i.approveAnyway }); return done(); },
 });
 
 export const reviewDocumentAction = defineAction({

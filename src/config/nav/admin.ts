@@ -11,6 +11,7 @@ const ord = section(`${A}/orders`, ["admin.orders.view", "admin.orders.manage"])
 const dist = section(`${A}/vendors/distributors`, "admin.vendors.view");
 const whol = section(`${A}/vendors/wholesalers`, "admin.vendors.view");
 const vm = section(`${A}/vendors/management`, "admin.vendors.view");
+const vcp = section(`${A}/vendors/compliance`, ["admin.vendors.view", "admin.vendors.approve", "admin.risk.view", "admin.risk.manage"]);
 const cus = section(`${A}/customers`, "admin.customers.view");
 const cat = section(`${A}/catalogue`, "admin.catalogue.view");
 const alo = section(`${A}/allocation`, "admin.allocation.manage");
@@ -92,7 +93,17 @@ export const ADMIN_NAV: NavSection[] = [
           vm("service-areas", "Service Areas", "Áreas de Serviço", "P6", { live: true, href: `${A}/delivery/zones`, perm: ["admin.delivery.view", "admin.vendors.view"] }),
           vm("rules", "Rules", "Regras", "P6", { live: true, href: `${A}/delivery/minimum-order`, perm: ["admin.delivery.view", "admin.vendors.view"] }),
           vm("ratings", "Ratings", "Avaliações", "P14", { live: true, perm: ["admin.vendors.view", "admin.customers.view"] }),
-          vm("compliance", "Compliance", "Conformidade", "P2", { live: true, perm: ["admin.vendors.view", "admin.vendors.approve", "admin.risk.view"] }),
+          vm("compliance", "VAT & Commission Check", "Verificação de IVA e Comissões", "P2", { live: true, perm: ["admin.vendors.view", "admin.vendors.approve", "admin.risk.view"] }),
+        ],
+      },
+      {
+        key: "compliance", label: { en: "Supplier Compliance", pt: "Conformidade de Fornecedores", es: "Cumplimiento de proveedores" },
+        items: [
+          vcp("overview", "Compliance Dashboard", "Painel de Conformidade", "P28", { live: true }),
+          vcp("review", "Certificate Review", "Revisão de Certificados", "P28", { live: true }),
+          vcp("suppliers", "Supplier Certificates", "Certificados de Fornecedores", "P28", { live: true }),
+          vcp("types", "Certificate Types & Badges", "Tipos de Certificado e Selos", "P28", { live: true }),
+          vcp("audit", "Compliance Audit", "Auditoria de Conformidade", "P28", { live: true }),
         ],
       },
     ],

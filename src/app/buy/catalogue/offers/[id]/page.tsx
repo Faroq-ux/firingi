@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ProductThumb, StockBadge } from "@/components/catalogue/product-card";
 import { Codes, PriceBlock } from "@/components/catalogue/price";
 import { formatMoney } from "@/lib/utils";
+import { VerifiedPanel } from "@/components/compliance/badges";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -79,6 +80,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
               ? <Link href={`/buy/catalogue/suppliers/${item.vendor.id}`} className="font-medium text-primary hover:underline">{item.vendor.country.flag} {item.vendor.name}</Link>
               : <span className="font-medium" data-testid="sold-by-firingi">{t("soldByFiringi")}</span>}
           </div>
+          {item.vendor.badges.length > 0 && <VerifiedPanel badges={item.vendor.badges} />}
           {item.description && <p className="whitespace-pre-line text-sm text-muted-foreground">{pickLocalized(item.description, locale)}</p>}
           {alternatives.length > 0 && (
             <div>
