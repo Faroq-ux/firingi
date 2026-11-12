@@ -218,7 +218,7 @@ export async function sendPurchaseOrder(ctx: Ctx, id: string, opts: { deliveryAd
     const addressId = opts.deliveryAddressId
       ?? (await prisma.address.findFirst({ where: { companyId: ctx.company.id, kind: "DELIVERY", isActive: true }, orderBy: { isDefault: "desc" } }))?.id;
     if (!addressId) throw new ValidationError("Add a delivery address to your company first.");
-    const placed = await placeOrder(ctx, { deliveryAddressId: addressId, notes: `${po.number}${po.notes ? ` — ${po.notes}` : ""}`, items: lines.map((l) => ({ offerId: l.sourceOfferId!, qty: l.qty })) });
+    const placed = await placeOrder(ctx, { deliveryAddressId: addressId, notes: `${po.number}${po.notes ? ` — ${po.notes}` : ""}`, items: lines.map((l) => ({ offerId: l.sourceOfferId!, qty: l.qty })), approved: true });
     if (placed.orders.length !== 1) throw new AppError("PO_SPLIT", "The order was split unexpectedly — check your orders.", 409);
     const order = await prisma.order.findUniqueOrThrow({ where: { id: placed.id }, select: { id: true, lines: { select: { offerId: true, unitSalePriceNet: true } } } });
     await prisma.$transaction(async (tx) => {

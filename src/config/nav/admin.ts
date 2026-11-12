@@ -72,6 +72,8 @@ export const ADMIN_NAV: NavSection[] = [
       ord("cancelled-returned", "Cancelled / Returned", "Canceladas / Devolvidas", "P4", { live: true }),
       ord("exceptions", "Order Exceptions", "Exceções de Encomendas", "P4", { live: true }),
       ord("split", "Order Split / Multi-Vendor Orders", "Divisão / Multi-Fornecedor", "P16", { live: true }),
+      ord("quotes", "Quotes", "Orçamentos", "P26", { live: true }),
+      ord("recurring", "Recurring Orders", "Encomendas Recorrentes", "P26", { live: true }),
     ],
   },
   {

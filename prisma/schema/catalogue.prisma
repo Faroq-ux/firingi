@@ -175,16 +175,19 @@ model VendorOffer {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 
-  vendor           Company             @relation(fields: [vendorCompanyId], references: [id])
-  packaging        PackagingUnit       @relation(fields: [packagingUnitId], references: [id])
-  country          Country             @relation(fields: [countryId], references: [id])
+  vendor           Company              @relation(fields: [vendorCompanyId], references: [id])
+  packaging        PackagingUnit        @relation(fields: [packagingUnitId], references: [id])
+  country          Country              @relation(fields: [countryId], references: [id])
   prices           PriceListItem[]
   stockLevels      StockLevel[]
   stockMovements   StockMovement[]
   stockBatches     StockBatch[]
-  purchaseLines    PurchaseOrderLine[] @relation("PurchaseLineOffer")
-  countLines       StockCountLine[]    @relation("StockCountLineOffer")
-  transferLines    StockTransferLine[] @relation("StockTransferLineOffer")
+  quoteLines       QuoteLine[]          @relation("QuoteLineOffer")
+  recurringItems   RecurringOrderItem[] @relation("RecurringItemOffer")
+  orderListItems   OrderListItem[]      @relation("OrderListItemOffer")
+  purchaseLines    PurchaseOrderLine[]  @relation("PurchaseLineOffer")
+  countLines       StockCountLine[]     @relation("StockCountLineOffer")
+  transferLines    StockTransferLine[]  @relation("StockTransferLineOffer")
   cartItems        CartItem[]
   orderLines       OrderLine[]
   promotionTargets PromotionTarget[]

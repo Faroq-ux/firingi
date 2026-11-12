@@ -46,7 +46,7 @@ export function CheckoutForm({ addresses, disabled }: { addresses: { id: string;
         const fd = new FormData(e.currentTarget);
         start(async () => {
           const r = await placeOrderAction({ deliveryAddressId: String(fd.get("address")), notes: String(fd.get("notes") || "") || null, requestedDeliveryDate: String(fd.get("date") || "") || null });
-          if (r.ok) router.push(`/buy/orders/${r.data.id}?placed=1`);
+          if (r.ok) router.push(r.data.approval ? `/buy/orders/approvals/${r.data.approval.id}?sent=1` : `/buy/orders/${r.data.id}?placed=1`);
           else setError(r.error);
         });
       }}

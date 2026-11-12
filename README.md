@@ -597,6 +597,47 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Quotes, recurring orders, buyer approvals & order lists (Phase 26)
+
+Customers and wholesalers › Orders › **Quotes**, **Recurring Orders**, **Order Lists**, **Approvals**;
+suppliers › Orders › **Quote Requests** (25 languages); FIRINGI › Orders › **Quotes** and **Recurring
+Orders** (English, read-only overview).
+
+- **Quotes / RFQ** — from the cart, "Ask for a quote" sends one request per supplier (number `QR-…`)
+  with a note and an optional "needed by" date; nothing is ordered. The supplier answers with a unit
+  price per line (what the buyer pays, excl. VAT) and a date it is valid until (today up to 90 days
+  ahead) — or declines with a reason. The supplier sees its own list price, the buyer's target, and
+  **what it receives after FIRINGI's commission**; the buyer sees only the quoted prices and what it
+  saves — FIRINGI's commission is never shown to buyers. The buyer accepts (address, date, notes) and
+  the order goes through the normal checkout at **exactly the quoted prices** (no promotions or
+  coupons on top; stock, minimums, credit and risk checks still apply) — or rejects / withdraws it.
+  Quotes past their date expire (daily job). Events: `quote.requested`, `quote.answered`,
+  `quote.declined`.
+- **Buyer approvals** — the buyer's company sets its own rules (Approvals page, people with the new
+  `buyer.orders.approve`, company administrators by default): an order total incl. VAT from an
+  amount, and/or products from some categories. Orders from team members **without** that right that
+  match an active rule don't go to FIRINGI: the cart moves into an approval request and a manager is
+  told (`buyer_approval.pending`). Approve → the order is placed for the person who asked, at that
+  moment's prices (or the accepted quote's prices); reject (a note is required) → the requester is
+  told why; the requester can withdraw it and get the products back in the cart. Managers' own
+  orders go straight through. Accepted quotes and recurring orders follow the same rules (a
+  recurring order is approved once, when it is set up).
+- **Recurring orders** — a standing order from the cart or from a list: every week / every two weeks
+  on a weekday, or every month on a day (1–28). Placed automatically (06:00 UTC on the day, job
+  `buying` every 15 minutes) for the person who set it up, at that day's prices, through the normal
+  checkout. A reminder goes out 0–3 days before with a stock check (`recurring.reminder`); the buyer
+  can skip the next one, pause, resume, order now, change products, quantities, schedule or address,
+  or end it. A run that fails (out of stock, below minimum, credit …) tells the buyer the reason
+  (`recurring.failed`) and the next date stays; if the person who set it up has lost access, it is
+  paused. Each run is claimed once, so two schedulers can never place it twice.
+- **Order lists** — saved shopping lists, shared with the team or private: from the cart, from any
+  past order ("Save as list") or empty and filled by changing quantities. One click puts the whole
+  list in the cart (products no longer available are skipped and counted) or makes it a recurring
+  order. A shared list can be changed by anyone who orders; only its creator decides who sees it.
+- Limits: orders to FIRINGI itself (routed carts), API orders and purchase orders are not held by the
+  buyer's approval rules; a quote is asked from the cart (not from the product page).
+- Tests: `tests/integration/buying.test.ts`, `tests/e2e/buying.mjs`.
+
 ## Warehouse operations & traceability (Phase 25)
 
 Supplier portal › **Armazém / Warehouse** (25 languages, phone-first); customers › Orders ›

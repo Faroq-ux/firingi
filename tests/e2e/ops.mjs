@@ -52,7 +52,7 @@ check("API answers are not cached", (await fetch(`${BASE}/api/health`)).headers.
 
 // ── 2. Scheduled jobs through the cron endpoints ──
 check("cron endpoints refuse without the secret", (await fetch(`${BASE}/api/cron/notifications`, { method: "POST" })).status === 401);
-for (const job of ["notifications", "invoicing", "allocation", "ai", "ops"]) {
+for (const job of ["notifications", "invoicing", "allocation", "ai", "ops", "buying"]) {
   const r = await cron(job);
   check(`job ${job} runs`, r.status === 200, String(r.status));
 }

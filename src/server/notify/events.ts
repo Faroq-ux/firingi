@@ -77,6 +77,16 @@ export const EVENTS: EventDef[] = [
   // product recalls (Phase 25): every buyer down the chain is told; the supplier / FIRINGI when the other one starts it
   E("recall.notice", "orders", ["buyer.orders.view", "buyer.orders.place", "vendor.inventory.view", "vendor.inventory.manage"], ["EMAIL", "SMS", "WHATSAPP", "PUSH"], ["number", "product", "lot", "reason"], true),
   E("recall.started", "catalogue", ["vendor.recalls.manage", "vendor.inventory.manage", "admin.recalls.manage", "admin.inventory.view"], ["EMAIL", "PUSH"], ["number", "product", "lot", "units", "buyers"], true),
+  // B2B buying (Phase 26): quotes, the buyer's own approvals, recurring orders
+  E("quote.requested", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "buyer", "lines"]),
+  E("quote.answered", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "supplier", "until"]),
+  E("quote.declined", "orders", BUYER_ORDERS, ["EMAIL"], ["number", "supplier", "reason"]),
+  E("buyer_approval.pending", "orders", ["buyer.orders.approve"], ["EMAIL", "PUSH"], ["requester", "total"]),
+  E("buyer_approval.approved", "orders", null, ["EMAIL", "PUSH"], ["orders"]),
+  E("buyer_approval.rejected", "orders", null, ["EMAIL", "PUSH"], ["reason"]),
+  E("recurring.reminder", "orders", null, ["EMAIL", "PUSH"], ["name", "date", "problems"]),
+  E("recurring.placed", "orders", null, ["PUSH"], ["name", "orders"]),
+  E("recurring.failed", "orders", null, ["EMAIL", "PUSH"], ["name", "reason"]),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

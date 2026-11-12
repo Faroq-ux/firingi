@@ -52,7 +52,11 @@ export type PricedCheckout = {
   coupon: { code: string; ok: boolean; error: AppError | null } | null;
 };
 
-type Opts = { regionId: string | null; addressId: string | null; commissionRates?: Map<string, Decimal.Value>; skipCoupon?: boolean };
+type Opts = {
+  regionId: string | null; addressId: string | null; commissionRates?: Map<string, Decimal.Value>; skipCoupon?: boolean;
+  /** Agreed prices per offer (an accepted quote, Phase 26): the line costs exactly this — no promotions, no coupon. */
+  fixedPrices?: Map<string, Decimal.Value>;
+};
 
 export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; qty: number }[]; couponCode: string | null }, opts: Opts): Promise<PricedCheckout> {
   // Which suppliers are in the cart (for the coupon's supplier check).
@@ -62,14 +66,23 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
   // 1. coupon (buyer-level checks) — an invalid one is reported and ignored here
   let coupon: Awaited<ReturnType<typeof findCoupon>> | null = null;
   let couponErr: AppError | null = null;
-  if (cart.couponCode && !opts.skipCoupon) {
+  if (cart.couponCode && !opts.skipCoupon && !opts.fixedPrices) {
     try { coupon = await findCoupon(ctx, cart.couponCode, { sellerIds, routed: false }); } catch (e) { if (e instanceof AppError) couponErr = e; else throw e; }
   }
   const promos = coupon?.promos ?? (await loadActivePromotions(ctx.company.countryId));
   const buyer = coupon?.buyer ?? (await buyerPromoContext(ctx.company.id, promos, null));
   const noCoupon = { ...buyer, couponId: null };
 
-  const { items, unavailable } = await pricedOffers(ctx, cart.items, { couponId: coupon?.promo.id ?? null });
+  const { items: offered, unavailable } = await pricedOffers(ctx, cart.items, { couponId: coupon?.promo.id ?? null });
+  const fixed = opts.fixedPrices;
+  const items = fixed
+    ? offered.map((i) => {
+        const v = fixed.get(i.offerId);
+        if (v === undefined || !i.price) return i;
+        const net = new Decimal(v);
+        return { ...i, price: { ...i.price, listUnitNet: net.toFixed(4), unitPriceNet: net.toFixed(4), promotions: [], vendorFundedPerUnit: "0", firingiFundedPerUnit: "0" } };
+      })
+    : offered;
   const lines: Line[] = await Promise.all(items.filter((i) => i.price).map(async (i) => {
     const p = i.price!;
     return {
@@ -94,7 +107,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
 
   // 2. per supplier: automatic € off the order and free delivery
   const autoFree = new Map<string, FreeDelivery | null>();
-  for (const g of groups) {
+  for (const g of fixed ? [] : groups) {
     const r = orderPromotionsFor(promos, noCoupon, g.lines.map(pl));
     r.discounts.forEach(take);
     autoFree.set(g.sellerId, r.freeDelivery);

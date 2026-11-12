@@ -1,0 +1,194 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 26 — B2B buying: quotes (RFQ), recurring orders, the buyer's own approval rules and
+// saved order lists.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum QuoteStatus {
+  REQUESTED // waiting for the supplier
+  QUOTED // supplier answered; the buyer can accept until validUntil
+  ACCEPTED // turned into an order
+  DECLINED // the supplier won't quote
+  REJECTED // the buyer said no
+  EXPIRED // not accepted in time
+  CANCELLED // the buyer withdrew the request
+}
+
+enum RecurringFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum RecurringStatus {
+  ACTIVE
+  PAUSED
+  PENDING_APPROVAL // the buyer's approval rules ask a manager to approve it first
+  ENDED
+}
+
+enum BuyerApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+/// A buyer asks one supplier for prices on products and quantities (through FIRINGI).
+model QuoteRequest {
+  id              String      @id @default(cuid())
+  number          String      @unique // QR-2026-000001
+  buyerCompanyId  String
+  sellerCompanyId String
+  requestedById   String
+  status          QuoteStatus @default(REQUESTED)
+  note            String? // from the buyer
+  neededBy        DateTime?   @db.Date
+  supplierNote    String?
+  validUntil      DateTime?   @db.Date
+  quotedAt        DateTime?
+  quotedById      String?
+  decidedAt       DateTime? // accepted / rejected / declined / cancelled / expired
+  decidedById     String?
+  decisionNote    String?
+  orderId         String?     @unique
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  buyer  Company     @relation("QuoteBuyer", fields: [buyerCompanyId], references: [id])
+  seller Company     @relation("QuoteSeller", fields: [sellerCompanyId], references: [id])
+  lines  QuoteLine[]
+
+  @@index([buyerCompanyId, status])
+  @@index([sellerCompanyId, status])
+}
+
+model QuoteLine {
+  id            String   @id @default(cuid())
+  quoteId       String
+  offerId       String
+  qty           Int
+  targetUnitNet Decimal? @db.Decimal(18, 4) // the price the buyer hopes for (optional)
+  listUnitNet   Decimal  @db.Decimal(18, 4) // the buyer's normal price when asking
+  quotedUnitNet Decimal? @db.Decimal(18, 4) // the supplier's price (what the buyer pays, excl. VAT)
+
+  quote QuoteRequest @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  offer VendorOffer  @relation("QuoteLineOffer", fields: [offerId], references: [id])
+
+  @@unique([quoteId, offerId])
+}
+
+/// A standing order placed automatically on a schedule.
+model RecurringOrder {
+  id                String             @id @default(cuid())
+  buyerCompanyId    String
+  createdById       String // the order is placed on this person's behalf
+  name              String
+  frequency         RecurringFrequency
+  weekday           Int? // 1 = Monday … 7 = Sunday (weekly / every 2 weeks)
+  dayOfMonth        Int? // 1–28 (monthly)
+  deliveryAddressId String
+  notes             String?
+  status            RecurringStatus    @default(ACTIVE)
+  nextRunAt         DateTime // when the next order is placed (06:00 UTC on that day)
+  remindDaysBefore  Int                @default(1)
+  reminderSentFor   DateTime? // the nextRunAt the reminder was sent for
+  skipNext          Boolean            @default(false)
+  lastRunAt         DateTime?
+  lastResult        String? // PLACED | SKIPPED | FAILED
+  lastError         String?
+  lastOrders        Json               @default("[]") // [{ id, number }]
+  runs              Int                @default(0)
+  approvalId        String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  buyer Company              @relation("RecurringBuyer", fields: [buyerCompanyId], references: [id], onDelete: Cascade)
+  items RecurringOrderItem[]
+
+  @@index([status, nextRunAt])
+  @@index([buyerCompanyId])
+}
+
+model RecurringOrderItem {
+  id          String @id @default(cuid())
+  recurringId String
+  offerId     String
+  qty         Int
+
+  recurring RecurringOrder @relation(fields: [recurringId], references: [id], onDelete: Cascade)
+  offer     VendorOffer    @relation("RecurringItemOffer", fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([recurringId, offerId])
+}
+
+/// The buyer's own rule: orders matching it need a manager (buyer.orders.approve) to approve them.
+model BuyerApprovalRule {
+  id          String   @id @default(cuid())
+  companyId   String
+  name        String
+  minGross    Decimal? @db.Decimal(18, 2) // order total incl. VAT at or above
+  categoryIds Json     @default("[]") // any product in these categories (or below)
+  isActive    Boolean  @default(true)
+  createdById String
+  createdAt   DateTime @default(now())
+
+  company Company @relation("BuyerApprovalRuleCompany", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}
+
+/// An order (or a recurring order) waiting for the buyer's manager.
+model BuyerApproval {
+  id                    String              @id @default(cuid())
+  companyId             String
+  requestedById         String
+  kind                  String              @default("ORDER") // ORDER | RECURRING
+  recurringId           String?
+  quoteId               String? // an accepted quote waiting for approval (its prices are kept)
+  items                 Json // [{ offerId, qty }]
+  couponCode            String?
+  deliveryAddressId     String
+  notes                 String?
+  requestedDeliveryDate DateTime?
+  grossTotal            Decimal             @db.Decimal(18, 2)
+  reasons               Json                @default("[]") // rule names that matched
+  status                BuyerApprovalStatus @default(PENDING)
+  decidedById           String?
+  decidedAt             DateTime?
+  decisionNote          String?
+  orders                Json                @default("[]") // [{ id, number }] once placed
+  createdAt             DateTime            @default(now())
+
+  company Company @relation("BuyerApprovalCompany", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, status])
+}
+
+/// A saved shopping list ("Weekly kitchen"): private or shared with the team.
+model OrderList {
+  id          String   @id @default(cuid())
+  companyId   String
+  createdById String
+  name        String
+  shared      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company         @relation("OrderListCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  items   OrderListItem[]
+
+  @@index([companyId])
+}
+
+model OrderListItem {
+  id      String   @id @default(cuid())
+  listId  String
+  offerId String
+  qty     Int
+  addedAt DateTime @default(now())
+
+  list  OrderList   @relation(fields: [listId], references: [id], onDelete: Cascade)
+  offer VendorOffer @relation("OrderListItemOffer", fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, offerId])
+}

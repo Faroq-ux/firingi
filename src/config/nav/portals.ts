@@ -56,6 +56,7 @@ export const VENDOR_NAV: NavSection[] = [
     items: [
       vo("incoming", "Incoming Orders", "Encomendas Recebidas", "P4", { live: true, es: "Pedidos recibidos" }),
       vo("history", "Order History", "Histórico", "P4", { live: true, es: "Historial" }),
+      vo("quotes", "Quote Requests", "Pedidos de Orçamento", "P26", { live: true, perm: ["vendor.pricing.manage", "vendor.orders.manage", "vendor.orders.view"], es: "Solicitudes de presupuesto" }),
       vo("returns", "Returns", "Devoluções", "P6", { live: true, es: "Devoluciones" }),
     ],
   },
@@ -124,6 +125,10 @@ export const BUY_NAV: NavSection[] = [
       bo("buy-again", "Buy Again", "Comprar de Novo", "P17", { live: true, perm: "buyer.orders.place", es: "Volver a comprar" }),
       bo("expiring", "Expiring Purchases", "Compras a Expirar", "P24", { live: true, es: "Compras por caducar" }),
       bo("recalls", "Product Recalls", "Recolhas de Produtos", "P25", { live: true, es: "Retiradas de productos" }),
+      bo("quotes", "Quotes", "Orçamentos", "P26", { live: true, es: "Presupuestos" }),
+      bo("recurring", "Recurring Orders", "Encomendas Recorrentes", "P26", { live: true, es: "Pedidos recurrentes" }),
+      bo("lists", "Order Lists", "Listas de Encomenda", "P26", { live: true, es: "Listas de pedidos" }),
+      bo("approvals", "Approvals", "Aprovações", "P26", { live: true, perm: ["buyer.orders.place", "buyer.orders.view", "buyer.orders.approve"], es: "Aprobaciones" }),
       bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
     ],
   },

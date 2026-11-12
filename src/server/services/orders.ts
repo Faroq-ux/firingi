@@ -81,7 +81,13 @@ export async function ensureDelivery(tx: Tx, orderId: string) {
  * Place the buyer's cart as order(s), one per supplier. `items` (purchase orders, Phase 24) places
  * exactly those items instead of the cart — the cart is left as it is.
  */
-export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; items?: { offerId: string; qty: number }[] }) {
+export type PlaceOrderInput = {
+  deliveryAddressId: string; notes?: string | null; requestedDeliveryDate?: Date | null; items?: { offerId: string; qty: number }[];
+  /** Phase 26: coupon for an `items` checkout (approved order), agreed prices (accepted quote), skip the buyer's approval rules (already approved / recurring). */
+  couponCode?: string | null; fixedPrices?: Map<string, Decimal.Value>; approved?: boolean; source?: { type: "QUOTE" | "RECURRING" | "APPROVAL"; id: string };
+};
+
+export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<import("@/server/buying/approvals").PlacedOrPending> {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.orders.place"))
     throw new ForbiddenError();
   if (input.requestedDeliveryDate) {
@@ -90,7 +96,7 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
     if (days < -1 || days > max) throw new ValidationError(`Choose a delivery date between today and ${max} days from now.`);
   }
   const cart = input.items
-    ? { id: "", routed: false, couponCode: null as string | null, items: input.items.map((i) => ({ ...i, id: "" })) }
+    ? { id: "", routed: false, couponCode: (input.couponCode ?? null) as string | null, items: input.items.map((i) => ({ ...i, id: "" })) }
     : await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
   if (cart?.routed && cart.items.length) {
     // "Order from FIRINGI": FIRINGI picks the supplier(s).
@@ -120,6 +126,7 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
   const flow: OrderFlow = ctx.company.type === "CUSTOMER" ? "CUSTOMER_FROM_WHOLESALER" : "WHOLESALER_FROM_DISTRIBUTOR";
   const pc = await priceCheckout(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), couponCode: cart.couponCode }, {
     regionId: address.city?.regionId ?? null, addressId: address.id, commissionRates: new Map([...commissions].map(([k, c]) => [k, c.rate.toString()])),
+    fixedPrices: input.fixedPrices,
   });
   if (pc.unavailable.length) throw new AppError("ITEM_UNAVAILABLE", "Some products in your cart are no longer available. Please review your cart.", 409);
   if (pc.parts.reduce((a, p) => a + p.lines.length, 0) !== cart.items.length) throw new AppError("ITEM_UNAVAILABLE", "Some products no longer have a price for you. Please review your cart.", 409);
@@ -132,6 +139,12 @@ export async function placeOrder(ctx: Ctx, input: { deliveryAddressId: string; n
         ? `${who}Minimum order for delivery is ${d.minimum} units. Add ${d.missing} more.`
         : `${who}Minimum order for delivery is ${d.minimum.toFixed(2)} € (excl. VAT). Add ${d.missing.toFixed(2)} € more.`, 422);
     }
+  }
+  // The buyer's own approval rules (Phase 26): a matching order waits for a manager instead.
+  if (!input.approved) {
+    const { approvalNeeded, requestApproval } = await import("@/server/buying/approvals");
+    const reasons = await approvalNeeded(ctx, pc);
+    if (reasons.length) return requestApproval(ctx, { input, cart, gross: pc.grandTotal, reasons });
   }
   const checkoutId = randomUUID();
   // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.

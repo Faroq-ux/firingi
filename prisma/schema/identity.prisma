@@ -237,6 +237,12 @@ model Company {
   recallsOwned           Recall[]                  @relation("RecallOwner")
   recallNotices          RecallRecipient[]         @relation("RecallRecipientCompany")
   warehouseFeatures      WarehouseFeatures?        @relation("WarehouseFeaturesCompany")
+  quotesRequested        QuoteRequest[]            @relation("QuoteBuyer")
+  quotesReceived         QuoteRequest[]            @relation("QuoteSeller")
+  recurringOrders        RecurringOrder[]          @relation("RecurringBuyer")
+  buyerApprovalRules     BuyerApprovalRule[]       @relation("BuyerApprovalRuleCompany")
+  buyerApprovals         BuyerApproval[]           @relation("BuyerApprovalCompany")
+  orderLists             OrderList[]               @relation("OrderListCompany")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

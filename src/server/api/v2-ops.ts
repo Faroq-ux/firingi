@@ -101,7 +101,7 @@ export async function placeOrderViaApi(ctx: Ctx, input: z.infer<typeof PlaceBody
         throw e;
       }
     }
-    const r = await placeOrder(ctx, { deliveryAddressId: address.id, notes: input.notes ?? null, requestedDeliveryDate: input.requestedDeliveryDate ? new Date(input.requestedDeliveryDate) : null });
+    const r = await placeOrder(ctx, { deliveryAddressId: address.id, notes: input.notes ?? null, requestedDeliveryDate: input.requestedDeliveryDate ? new Date(input.requestedDeliveryDate) : null, approved: true });
     const placed = await prisma.order.findMany({ where: { id: { in: r.orders.map((o) => o.id) } }, select: { id: true, number: true, status: true, grandTotal: true, awaitingPayment: true } });
     return { created: true, orders: placed.map((o) => ({ id: o.id, number: o.number, status: o.status, totalGross: o.grandTotal.toFixed(2), awaitingPayment: o.awaitingPayment })) };
   } catch (e) {

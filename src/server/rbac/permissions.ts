@@ -92,6 +92,7 @@ const defs = {
   "buyer.catalogue.view": { audience: "BUYER", module: "Catalogue", description: "Browse the catalogue and prices" },
   "buyer.orders.place": { audience: "BUYER", module: "Orders", description: "Use the cart and place orders" },
   "buyer.orders.view": { audience: "BUYER", module: "Orders", description: "View orders" },
+  "buyer.orders.approve": { audience: "BUYER", module: "Orders", description: "Approve the team's orders and set the approval rules" },
   "buyer.invoices.view": { audience: "BUYER", module: "Finance", description: "View and download invoices" },
   "buyer.payments.view": { audience: "BUYER", module: "Finance", description: "View payments and balance" },
   "buyer.payments.make": { audience: "BUYER", module: "Finance", description: "Pay invoices online and manage direct debit" },
