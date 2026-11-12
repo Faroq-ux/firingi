@@ -68,21 +68,23 @@ model Address {
   createdAt    DateTime                  @default(now())
   updatedAt    DateTime                  @updatedAt
 
-  company        Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  branch         Branch?             @relation("BranchAddresses", fields: [branchId], references: [id], onDelete: SetNull)
-  city           City?               @relation(fields: [cityId], references: [id])
-  country        Country             @relation(fields: [countryId], references: [id])
-  stockLevels    StockLevel[]
-  stockMovements StockMovement[]
-  stockBatches   StockBatch[]
-  purchaseOrders PurchaseOrder[]     @relation("PurchaseOrderAddress")
-  stockCounts    StockCount[]        @relation("StockCountAddress")
-  transfersFrom  StockTransfer[]     @relation("StockTransferFrom")
-  transfersTo    StockTransfer[]     @relation("StockTransferTo")
-  radiusAreas    VendorServiceArea[]
-  ordersFrom     Order[]             @relation("OrderSourceAddress")
-  bins           Bin[]               @relation("BinAddress")
-  pickLists      PickList[]          @relation("PickListAddress")
+  company            Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  branch             Branch?             @relation("BranchAddresses", fields: [branchId], references: [id], onDelete: SetNull)
+  city               City?               @relation(fields: [cityId], references: [id])
+  country            Country             @relation(fields: [countryId], references: [id])
+  stockLevels        StockLevel[]
+  stockMovements     StockMovement[]
+  stockBatches       StockBatch[]
+  purchaseOrders     PurchaseOrder[]     @relation("PurchaseOrderAddress")
+  stockCounts        StockCount[]        @relation("StockCountAddress")
+  transfersFrom      StockTransfer[]     @relation("StockTransferFrom")
+  transfersTo        StockTransfer[]     @relation("StockTransferTo")
+  radiusAreas        VendorServiceArea[]
+  ordersFrom         Order[]             @relation("OrderSourceAddress")
+  bins               Bin[]               @relation("BinAddress")
+  pickLists          PickList[]          @relation("PickListAddress")
+  planningItems      PlanningItem[]      @relation("PlanningItemAddress")
+  restockSuggestions RestockSuggestion[] @relation("RestockSuggestionAddress")
 
   @@index([companyId, kind])
   @@index([geo], map: "Address_geo_idx", type: Gist)

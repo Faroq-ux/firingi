@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -33,6 +33,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P27: { en: "Phase 27 — Shops, budgets & accounting", pt: "Fase 27 — Lojas, orçamentos e contabilidade" },
   P28: { en: "Phase 28 — Supplier compliance", pt: "Fase 28 — Conformidade de fornecedores" },
   P29: { en: "Phase 29 — Price intelligence", pt: "Fase 29 — Inteligência de preços" },
+  P30: { en: "Phase 30 — Demand planning & restock", pt: "Fase 30 — Planeamento da procura e reposição" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

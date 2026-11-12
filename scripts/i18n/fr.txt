@@ -2857,3 +2857,232 @@ Hausse de prix : {product}
 {supplier} : {old} € → {new} € à partir du {date}. D'ici là, vous payez le prix actuel.
 {count} nouvelles alertes de prix
 Hausses de prix ou prix éloignés du marché — voir Intelligence des prix.
+Planification de la demande
+Ce que chaque produit va vendre dans chaque entrepôt, et quoi acheter, quand et combien — pour ne pas manquer de stock ni garder du stock qui dort. Le plan ne fait que suggérer ; c'est vous qui décidez.
+Recalculer maintenant
+Plan mis à jour
+Le plus urgent
+Toutes les suggestions de réassort →
+Rien à commander pour l'instant.
+acheter {qty}
+Prévision vs ventes réelles
+Tous vos produits, unités par semaine, 12 dernières semaines. Chaque prévision est figée au début de sa semaine.
+unités
+Comment fonctionne le plan
+Chaque nuit, chaque produit reçoit une prévision hebdomadaire par entrepôt. Plusieurs méthodes s'affrontent sur votre propre historique de ventes et la plus précise l'emporte :
+De la prévision, de votre niveau de service ({sl} %) et du délai de chaque fournisseur découlent le stock de sécurité, le point de commande et la quantité à commander pour tenir jusqu'à la prochaine commande ({review} jours plus tard).
+Les jours fériés et vos promotions sont retirés de l'historique puis réintégrés dans la prévision. Les bons de commande en brouillon comptent comme commandés, pour ne pas suggérer un produit deux fois.
+Paramètres de planification
+Événements de demande
+Délais de livraison
+Valeur du stock au coût moyen : {value}. Les montants à risque sont aussi au coût.
+Prévision de la demande
+Chaque produit et entrepôt : ventes récentes, prévision des {weeks} prochaines semaines et la méthode qui la prédit le mieux.
+Aucun produit avec du stock ou des ventes pour l'instant.
+Événements de demande : {count}
+{days} j
+{warehouse} — ventes, prévision et plan de réassort.
+← Toutes les prévisions
+Autres entrepôts :
+Ventes hebdomadaires et prévision
+Trait plein : unités vendues par semaine. Pointillés : prévision, avec la plage où elle tombera très probablement (80 %). Points : ce qui avait été prévu pour les semaines passées.
+Plan de réassort
+Commande suggérée : {qty} unités.
+Stock suffisant pour l'instant — rien à commander.
+Non réassorti (défini dans les choix de planification ci-dessous).
+Pourquoi cette prévision
+Appris sur {weeks} semaines de ventes
+ne se vend que certaines semaines
+Erreur moyenne par semaine
+Précision de {pct} % sur les {weeks} dernières semaines.
+Jours les plus chargés
+Part des unités commandées par jour de la semaine, 12 dernières semaines.
+Événements de demande
+Aucun événement pour ce produit.
+Choix de planification
+Où vous l'achetez, commande minimale, multiple de conditionnement et exceptions pour ce produit dans cet entrepôt.
+Réassort
+Quoi acheter maintenant, et pourquoi. Choisissez le fournisseur et la quantité, puis créez des bons de commande en brouillon — rien n'est envoyé tant que vous ne l'envoyez pas.
+libre {usable} + en commande {incoming} · commander à {rop} · jusqu'à {upto}
+vend {daily}/jour · délai {lead} j · stock de sécurité {safety}
+rupture le {date}
+commander avant le {date}
+Quantité
+Acheter chez
+Choisir…
+Coût unitaire (net)
+Créer des bons de commande en brouillon ({count})
+Brouillons créés pour {count} produits
+Un brouillon par fournisseur et par entrepôt. Vérifiez-le et envoyez-le depuis Bons de commande.
+Pas maintenant
+Masquer pendant
+{days} jours
+Raison (facultatif)
+Masquer
+Annuler
+{name} · {days} j
+Décidées ces 30 derniers jours
+Suggestions transformées en bons de commande ou masquées.
+Rien de décidé ces 30 derniers jours.
+jusqu'au {date}
+Surstock et péremption
+Le stock qui ne se vendra pas avant sa date limite au rythme prévu, et le stock au-delà de {days} jours de demande — avec quoi faire.
+Risque de péremption
+Premier périmé, premier sorti : les lots les plus anciens se vendent d'abord. Ce qui reste à la date est à risque.
+Surstock
+Plus de {days} jours de demande en stock.
+Rien ne périmera avant d'être vendu.
+Pas de surstock.
+périmé
+{days} jours restants
+aucune vente
+{days} jours de stock
+lot {lot}, à consommer avant le {date}
+{sells} sur {free} se vendent à temps
+vend {qty}/jour
+{units} unités à risque
+Déplacer {qty} vers {to}
+Transfert en brouillon créé — envoyez-le depuis Transferts
+Remise de {pct} %
+Promotion créée
+Remise suggérée de {pct} % — les démarques sont désactivées pour vous.
+Demander à FIRINGI de les activer
+Mettre au rebut (périmé) →
+Ne pas recommander avant de vendre
+Masquer 30 jours
+Lignes masquées : {count}
+Délais de livraison
+Le temps que mettent vraiment vos fournisseurs — de l'envoi du bon de commande à la réception — à côté de ce qu'ils promettent.
+La planification utilise le délai mesuré dès qu'un fournisseur a 3 réceptions, sauf si vous décochez.
+Pas encore de fournisseurs — ajoutez-les dans Mes fournisseurs.
+réceptions : {count}
+fournisseur propre
+Planifier avec le mesuré
+mesuré automatiquement
+Événements de demande
+Promotions, jours fériés et saisons qui font bouger la demande. FIRINGI ajoute les événements publics ; ajoutez ici vos propres promotions.
+Nouvel événement
++30 % = 30 % de demande en plus pendant sa durée ; −20 % = 20 % en moins. Aucun produit choisi = tous vos produits.
+Nom
+ex. Promotion boissons d'été
+Du
+Au
+Effet sur la demande
+Produits
+Maintenez Ctrl / ⌘ pour en choisir plusieurs.
+Ajouter l'événement
+Aucun événement.
+vous
+désactivé
+Tous les produits
+Désactiver
+Activer
+Paramètres de planification
+Avec quelle sécurité et à quelle fréquence vous voulez réassortir. Vide = valeur par défaut de FIRINGI.
+Votre politique de réassort
+S'applique à tous vos produits ; un produit peut avoir son propre niveau de service dans ses choix de planification.
+Niveau de service
+Part des cycles de commande sans rupture. 95 % est un bon début ; 99 % demande beaucoup plus de stock de sécurité.
+Commander tous les
+À quelle fréquence vous passez habituellement des bons de commande.
+Surstock au-delà de
+Plus de stock que ce nombre de jours de demande compte comme surstock.
+jours
+Par défaut : {value}.
+Enregistrer
+Enregistré
+Délai de livraison (jours)
+du fournisseur : {days}
+Commande minimale
+Commander par multiples de
+le vôtre : {value} %
+Note
+Ne pas suggérer de réassort pour ce produit ici
+Comme dans le dernier bon de commande
+En rupture
+À commander
+{count} seront en rupture avant que la marchandise puisse arriver
+À commander bientôt
+Précision des prévisions
+Pas encore de semaines terminées à comparer.
+prévisions {pct} % trop hautes
+prévisions {pct} % trop basses
+pas de biais
+Risque de péremption
+Surstock
+Produit
+Entrepôt
+Méthode
+4 dernières semaines
+4 prochaines semaines
+Évolution
+Ventes et prévision
+Le stock dure
+Précision
+Date
+Statut
+Note
+Fournisseur
+Type
+Promis
+Mesuré
+90 % en
+À l'heure
+Livré en totalité
+Planifié avec
+Par
+Unités vendues
+Prévision
+Plage probable (80 %)
+Prévision à l'époque
+maintenant
+Événement de demande
+Stock libre
+En commande / en transit
+{qty} en brouillons
+Ventes par jour
+Délai de livraison
+Niveau de service
+Stock de sécurité
+Point de commande
+Commander jusqu'à
+Le stock dure
+Acheté chez
+Minimum · multiple
+{min} · {mult}
+manuel
+En rupture
+Trop tard
+À commander
+Bientôt
+Suffisant
+Moyenne
+Tendance
+Intermittent
+Saisonnier
+Pas encore de ventes
+Les ventes sont stables, la moyenne hebdomadaire récente prédit donc le mieux.
+Les ventes montent ou baissent ; la tendance est suivie mais s'aplatit plus loin.
+Il ne se vend que certaines semaines ; la prévision répartit la quantité habituelle sur l'intervalle habituel entre commandes.
+Il y a un an d'historique : les mêmes semaines l'an dernier, ajustées au niveau de cette année.
+Pas encore de ventes — rien à prévoir.
+défini pour ce produit
+mesuré
+promis
+par défaut
+Commandé
+Masquée
+Ouverte
+Plus nécessaire
+Planification
+Vue d'ensemble de la planification
+Prévision de la demande
+Réassort
+Surstock et péremption
+Délais de livraison
+Événements de demande
+Paramètres de planification
+Produits à commander : {count}
+{late} d'entre eux seront en rupture avant l'arrivée de nouvelle marchandise. Voir Planification › Réassort.
+FIRINGI vous demande de réassortir : {product}
+{product} à {warehouse} est presque épuisé et les clients le demandent. {message}

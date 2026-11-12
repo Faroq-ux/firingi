@@ -16,6 +16,7 @@ const cus = section(`${A}/customers`, "admin.customers.view");
 const cat = section(`${A}/catalogue`, "admin.catalogue.view");
 const alo = section(`${A}/allocation`, "admin.allocation.manage");
 const invn = section(`${A}/inventory`, ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"]);
+const dpl = section(`${A}/inventory/planning`, ["admin.inventory.view", "admin.inventory.manage"]);
 const del = section(`${A}/delivery`, "admin.delivery.view");
 const flt = section(`${A}/fleet`, "admin.fleet.view");
 const prc = section(`${A}/pricing`, "admin.pricing.view");
@@ -146,7 +147,10 @@ export const ADMIN_NAV: NavSection[] = [
   },
   {
     key: "inventory", icon: "Warehouse", label: { en: "Inventory & Warehouses", pt: "Inventário e Armazéns", es: "Inventario y almacenes" },
-    items: [
+    groups: [
+      {
+        key: "stock", label: { en: "Stock & Expiry", pt: "Stock e Validades", es: "Stock y caducidad" },
+        items: [
       invn("overview", "Inventory Overview", "Visão Geral do Inventário", "P24", { live: true }),
       invn("expiring", "Expiring Stock", "Stock a Expirar", "P24", { live: true }),
       invn("expiry-features", "Expiry Features", "Funcionalidades de Validade", "P24", { live: true }),
@@ -154,6 +158,20 @@ export const ADMIN_NAV: NavSection[] = [
       invn("warehouse-features", "Warehouse Features", "Funcionalidades de Armazém", "P25", { live: true }),
       invn("recalls", "Recalls", "Recolhas", "P25", { live: true, perm: ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"] }),
       invn("trace", "Lot Traceability", "Rastreabilidade de Lotes", "P25", { live: true, perm: ["admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage"] }),
+        ],
+      },
+      {
+        key: "planning", label: { en: "Demand Planning", pt: "Planeamento da Procura", es: "Planificación de la demanda" },
+        items: [
+          dpl("overview", "Demand Planning", "Planeamento da Procura", "P30", { live: true }),
+          dpl("stockouts", "Stock-out Risk", "Risco de Rutura", "P30", { live: true }),
+          dpl("accuracy", "Forecast Accuracy", "Precisão da Previsão", "P30", { live: true }),
+          dpl("lead-times", "Supplier Lead Times", "Prazos dos Fornecedores", "P30", { live: true }),
+          dpl("overstock", "Overstock & Expiry Risk", "Excesso de Stock e Validades", "P30", { live: true }),
+          dpl("events", "Demand Events", "Eventos de Procura", "P30", { live: true }),
+          dpl("settings", "Planning Settings", "Definições de Planeamento", "P30", { live: true }),
+        ],
+      },
     ],
   },
   {

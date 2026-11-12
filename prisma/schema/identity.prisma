@@ -194,6 +194,9 @@ model Company {
   certificates             Certificate[]               @relation("CompanyCertificates")
   priceChangeRequests      PriceChangeRequest[]        @relation("PriceChangeVendor")
   priceAlerts              PriceAlert[]                @relation("PriceAlertVendor")
+  planningSettings         PlanningSettings?           @relation("PlanningSettingsCompany")
+  restockSuggestions       RestockSuggestion[]         @relation("RestockSuggestionCompany")
+  planningEvents           PlanningEvent[]             @relation("PlanningEventCompany")
   complianceWaivers        ComplianceWaiver[]          @relation("CompanyWaivers")
   roles                    Role[]
   statusHistory            CompanyStatusHistory[]

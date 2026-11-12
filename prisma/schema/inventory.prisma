@@ -86,21 +86,24 @@ model StockBatch {
 
 /// The company's own list of outside suppliers (manufacturers, importers…). Not FIRINGI users.
 model PurchaseSupplier {
-  id             String   @id @default(cuid())
-  ownerCompanyId String
-  name           String
-  vatNumber      String?
-  email          String?
-  phone          String?
-  address        String?
-  leadTimeDays   Int      @default(2)
-  notes          String?
-  isActive       Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  ownerCompanyId      String
+  name                String
+  vatNumber           String?
+  email               String?
+  phone               String?
+  address             String?
+  leadTimeDays        Int      @default(2)
+  /// Phase 30: plan with the lead time measured from received purchase orders (when there are ≥ 3)
+  useMeasuredLeadTime Boolean  @default(true)
+  notes               String?
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
-  owner  Company         @relation("PurchaseSupplierOwner", fields: [ownerCompanyId], references: [id], onDelete: Cascade)
-  orders PurchaseOrder[]
+  owner         Company         @relation("PurchaseSupplierOwner", fields: [ownerCompanyId], references: [id], onDelete: Cascade)
+  orders        PurchaseOrder[]
+  planningItems PlanningItem[]  @relation("PlanningItemSupplier")
 
   @@unique([ownerCompanyId, name])
 }

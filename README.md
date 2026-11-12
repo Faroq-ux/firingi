@@ -65,6 +65,8 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/ai.mjs http://localhost:3000 [screenshotDir]` | Browser test of the AI Centre: insights, suggestions → CRM task, activity log, customer Buy Again, supplier Demand & Stock (run `pnpm db:demo-history` first)* |
 | `node tests/e2e/invoicing.mjs http://localhost:3000 [screenshotDir]` | Browser test of certified invoicing with a simulated Moloni (start the server with `MOLONI_SIMULATE=1`), payouts due* |
 | `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
+| `pnpm db:demo-planning` | Demo stock, purchase history, a short-dated lot and a promotion for demand planning at Distribuidora Atlântico (dev / demo only) |
+| `node tests/e2e/planning.mjs http://localhost:3000 [screenshotDir]` | Browser test of demand planning: forecast, restock → draft purchase orders, lead times, events, overstock & expiry, FIRINGI's views (run `pnpm db:demo-history` and `pnpm db:demo-planning` first) |
 | `pnpm db:migrate` · `pnpm db:seed` · `pnpm db:studio` | Database tools |
 
 \* Start the server with `AUTH_SIGNIN_RATE_LIMIT=200` for the e2e run; it logs in many times and the
@@ -599,6 +601,53 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   after the payout days in *Payments* settings (30 by default). Finance gets one reminder a day
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
+
+## Demand planning & restock (Phase 30)
+
+Suppliers › **Planning** — Planning Overview, Demand Forecast (+ one product's page), Restock,
+Overstock & Expiry, Lead Times, Demand Events, Planning Settings (25 languages; FIRINGI's own warehouse
+uses the same pages through its in-house wholesaler). FIRINGI › Inventory & Warehouses › **Demand
+Planning** — Overview, Stock-out Risk, Forecast Accuracy, Supplier Lead Times, Overstock & Expiry Risk,
+Demand Events, Planning Settings (English). The plan only suggests: nothing is ordered, moved or
+discounted without a person.
+
+- **Forecast** (nightly job `planning`, `/api/cron/planning`, scheduler 04:37) — weekly units per
+  product × warehouse from the orders shipped from that warehouse (up to 78 weeks). Methods compete in
+  a rolling one-week-ahead back-test and the lowest mean absolute error wins: the recent average, Holt
+  with a damped trend (smoothing weights fitted to the product), Croston/SBA for products that sell in
+  some weeks only, and same-weeks-last-year once there is a year of history. The forecast comes with an
+  80 % range. **Demand events** (FIRINGI-wide holidays / seasons per country or category, suppliers' own
+  promotions per product; −90 % … +300 %) are taken out of the history and put back into the forecast.
+- **Accuracy** — each week's forecast is frozen when the week starts and compared with what sold
+  (accuracy = 1 − WAPE, bias); a series planned for the first time is back-tested over the previous
+  weeks with only the data available then, so accuracy shows from day one.
+- **Restock** (periodic review, order-up-to): safety stock = z(service level) × σ × √((lead time +
+  review days) / 7); reorder point = demand during the lead time + safety stock (a manual reorder point
+  is a floor); order up to the demand of lead time + review period + safety stock, rounded up to the
+  pack multiple, at least the minimum order. Free stock, purchase orders on the way **and drafts** and
+  transfers in transit count, so nothing is suggested twice. Urgency: out of stock, too late (runs out
+  before goods can arrive), order now, soon (with an order-by date). One open suggestion per product ×
+  warehouse; ticking suggestions creates **draft** purchase orders, one per source and warehouse (sent
+  as usual from Purchase Orders); "not now" hides one for 7–90 days. New urgent suggestions notify the
+  supplier (`planning.restock`).
+- **Lead times** — measured from purchase order sent to first goods receipt (median, 90 % within, on
+  time vs the promised date, filled in full) per outside supplier and per distributor on FIRINGI. With
+  3+ receipts planning uses the measured time unless the supplier unticks it; a product can override it.
+- **Planning choices** per product × warehouse: where it is bought (outside supplier or a distributor's
+  product on FIRINGI), agreed cost, minimum order, pack multiple, lead time, service level, "don't
+  restock". Supplier settings: service level, order rhythm, overstock limit (FIRINGI sets the defaults).
+- **Overstock & expiry** — first-expiry-first-out projection of each lot against the forecast: what
+  won't sell before its best-before is at risk (at cost). Suggested action: move it to another warehouse
+  of the supplier that will sell it (creates a draft transfer), a markdown when it is within 30 days of
+  the date (one click when FIRINGI allows markdowns for that supplier, otherwise ask FIRINGI), write off
+  if expired, otherwise stop buying. Stock beyond the overstock limit is listed the same way.
+- **FIRINGI** sees every supplier's out-of-stock / too-late / order-now products, accuracy, lead times
+  and stock at risk, and can ask a supplier to restock a product (`planning.flagged`, at most every 3
+  days per product), add public demand events, set the defaults and run the plan now.
+- Demo: `pnpm db:demo-planning` (dev / demo databases only) gives Distribuidora Atlântico's Armazém
+  Maia realistic stock on kebab cones, flour, rice and pizza boxes, three outside suppliers with past
+  purchase orders (the cold-chain one promises 5 days and takes ~7), a short-dated mozzarella lot and a
+  winter kebab promotion. `node tests/e2e/planning.mjs` needs it.
 
 ## Price intelligence (Phase 29)
 

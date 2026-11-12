@@ -1,0 +1,161 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 30 — demand planning & restock: weekly demand forecasts per product × warehouse (the
+// best of several methods, chosen by back-test), safety stock and order-up-to levels from the
+// service level and lead time, restock suggestions a person turns into purchase orders, measured
+// supplier lead times, overstock & expiry risk, and demand events (holidays, promotions).
+// The system only suggests — nothing is ordered, moved or discounted without a person.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum PlanningMethod {
+  AVERAGE // too little history, or the plain average wins the back-test
+  HOLT // level + damped trend
+  CROSTON // intermittent demand (many weeks without sales)
+  SEASONAL // same week last year, scaled to the recent level (≥ 1 year of history)
+}
+
+enum RestockStatus {
+  OPEN
+  ORDERED // a purchase order was drafted from it
+  DISMISSED
+  EXPIRED // no longer needed (stock arrived, product archived…)
+}
+
+enum RestockUrgency {
+  OUT // nothing left to sell
+  LATE // runs out before a new order could arrive
+  ORDER_NOW // at or below the reorder point
+  SOON // will reach the reorder point within the review period
+}
+
+/// One supplier's planning choices (null = FIRINGI's default, Setting "planning.defaults").
+model PlanningSettings {
+  companyId     String   @id
+  serviceLevel  Int? // % of order cycles without a stock-out (50–99.9 → z)
+  reviewDays    Int? // how often the supplier orders (days between purchase orders)
+  overstockDays Int? // more cover than this is overstock
+  updatedAt     DateTime @updatedAt
+  updatedById   String?
+
+  company Company @relation("PlanningSettingsCompany", fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+/// How one product is restocked in one warehouse: preferred source, minimums, overrides.
+model PlanningItem {
+  id              String   @id @default(cuid())
+  offerId         String
+  addressId       String
+  serviceLevel    Int?
+  leadTimeDays    Int? // overrides the source's lead time
+  minOrderQty     Int      @default(1)
+  packMultiple    Int      @default(1)
+  supplierId      String? // preferred outside supplier
+  sellerCompanyId String? // or a distributor on FIRINGI…
+  sourceOfferId   String? // …and its product
+  unitCost        Decimal? @db.Decimal(18, 4) // agreed cost with that source
+  excluded        Boolean  @default(false) // don't suggest restocking (discontinued, made to order…)
+  note            String?
+  updatedAt       DateTime @updatedAt
+  updatedById     String?
+
+  offer    VendorOffer       @relation("PlanningItemOffer", fields: [offerId], references: [id], onDelete: Cascade)
+  address  Address           @relation("PlanningItemAddress", fields: [addressId], references: [id], onDelete: Cascade)
+  supplier PurchaseSupplier? @relation("PlanningItemSupplier", fields: [supplierId], references: [id], onDelete: SetNull)
+
+  @@unique([offerId, addressId])
+}
+
+/// Forecast units of one product in one warehouse for one week (Monday). Future weeks are
+/// rewritten every night; once a week has started its forecast is frozen and `actual` is filled
+/// when it ends — the basis of the accuracy figures. `backtest` = made afterwards from the data
+/// available before that week (so a new supplier sees accuracy from day one).
+model DemandForecast {
+  id        String         @id @default(cuid())
+  companyId String
+  offerId   String
+  addressId String
+  weekStart DateTime       @db.Date
+  qty       Float
+  low       Float
+  high      Float
+  method    PlanningMethod
+  actual    Float?
+  backtest  Boolean        @default(false)
+  madeAt    DateTime       @default(now())
+
+  @@unique([offerId, addressId, weekStart])
+  @@index([companyId, weekStart])
+}
+
+/// "Buy N of this for that warehouse" — made by the nightly planning run, decided by a person.
+model RestockSuggestion {
+  id              String         @id @default(cuid())
+  companyId       String
+  offerId         String
+  addressId       String
+  status          RestockStatus  @default(OPEN)
+  urgency         RestockUrgency
+  qty             Int
+  usable          Int
+  incoming        Int
+  reorderPoint    Int
+  orderUpTo       Int
+  safetyStock     Int
+  leadTimeDays    Int
+  dailyDemand     Float
+  runsOutOn       DateTime?      @db.Date
+  orderBy         DateTime?      @db.Date
+  supplierId      String?
+  sellerCompanyId String?
+  sourceOfferId   String?
+  unitCost        Decimal?       @db.Decimal(18, 4)
+  poId            String?
+  decidedById     String?
+  decidedAt       DateTime?
+  dismissReason   String?
+  snoozeUntil     DateTime?      @db.Date
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  company Company     @relation("RestockSuggestionCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  offer   VendorOffer @relation("RestockSuggestionOffer", fields: [offerId], references: [id], onDelete: Cascade)
+  address Address     @relation("RestockSuggestionAddress", fields: [addressId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, status])
+  @@index([offerId, addressId, status])
+}
+
+/// Something that moves demand for a while: a public holiday, a season, a promotion.
+/// companyId null = FIRINGI-wide (optionally one country); otherwise the supplier's own.
+/// No products / categories = all products.
+model PlanningEvent {
+  id          String   @id @default(cuid())
+  companyId   String?
+  countryId   String?
+  name        String
+  startsOn    DateTime @db.Date
+  endsOn      DateTime @db.Date
+  upliftPct   Int // +40 = 40 % more demand, −30 = 30 % less
+  categoryIds String[] @default([])
+  offerIds    String[] @default([])
+  isActive    Boolean  @default(true)
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company Company? @relation("PlanningEventCompany", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, startsOn])
+}
+
+/// An overstock / expiry-risk line the supplier has looked at and set aside until a date.
+model StockRiskDismissal {
+  id          String   @id @default(cuid())
+  companyId   String
+  key         String // OVERSTOCK:<offerId>:<addressId> | EXPIRY:<batchId>
+  until       DateTime @db.Date
+  reason      String?
+  createdById String
+  createdAt   DateTime @default(now())
+
+  @@unique([companyId, key])
+}

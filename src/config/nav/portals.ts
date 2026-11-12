@@ -23,6 +23,7 @@ const vs = section(`${V}`, "company.support.use");
 const vai = section(`${V}`, ["vendor.reports.view", "vendor.dashboard.view"]);
 const vac = section(`${V}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
+const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
@@ -51,6 +52,18 @@ export const VENDOR_NAV: NavSection[] = [
       vin("transfers", "Transfers", "Transferências", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage"], es: "Transferencias" }),
       vin("movements", "Stock Movements", "Movimentos de Stock", "P24", { live: true, es: "Movimientos de stock" }),
       vin("valuation", "Valuation", "Valorização", "P24", { live: true, perm: ["vendor.inventory.view", "vendor.inventory.manage", "vendor.reports.view"], es: "Valoración" }),
+    ],
+  },
+  {
+    key: "planning", icon: "TrendingUp", label: { en: "Planning", pt: "Planeamento", es: "Planificación" },
+    items: [
+      vpl("", "Planning Overview", "Visão do Planeamento", "P30", { live: true, href: `${V}/inventory/planning`, es: "Resumen de planificación" }),
+      vpl("forecast", "Demand Forecast", "Previsão da Procura", "P30", { live: true, es: "Previsión de la demanda" }),
+      vpl("restock", "Restock", "Reposição", "P30", { live: true, es: "Reposición" }),
+      vpl("risk", "Overstock & Expiry", "Excesso e Validades", "P30", { live: true, es: "Exceso y caducidad" }),
+      vpl("lead-times", "Lead Times", "Prazos de Entrega", "P30", { live: true, es: "Plazos de entrega" }),
+      vpl("events", "Demand Events", "Eventos de Procura", "P30", { live: true, es: "Eventos de demanda" }),
+      vpl("settings", "Planning Settings", "Definições de Planeamento", "P30", { live: true, es: "Ajustes de planificación" }),
     ],
   },
   {

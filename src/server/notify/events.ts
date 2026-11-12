@@ -61,6 +61,9 @@ export const EVENTS: EventDef[] = [
   E("price.review_requested", "catalogue", ["vendor.pricing.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "pct", "message"]),
   E("price.increase_notice", "catalogue", [...BUYER_ORDERS, "buyer.catalogue.view"], ["EMAIL", "PUSH"], ["product", "supplier", "old", "new", "date"]),
   E("price.alerts", "catalogue", ["admin.pricing.view", "admin.pricing.manage"], ["PUSH"], ["count"]),
+  // demand planning (Phase 30)
+  E("planning.restock", "catalogue", ["vendor.purchasing.manage", "vendor.inventory.manage"], ["EMAIL", "PUSH"], ["count", "late"]),
+  E("planning.flagged", "catalogue", ["vendor.purchasing.manage", "vendor.inventory.manage"], ["EMAIL", "PUSH"], ["product", "warehouse", "message"]),
   // catalogue
   E("product.approved", "catalogue", ["vendor.products.view", "vendor.products.manage"], ["EMAIL"], ["product"]),
   E("product.rejected", "catalogue", ["vendor.products.view", "vendor.products.manage"], ["EMAIL"], ["product", "reason"]),

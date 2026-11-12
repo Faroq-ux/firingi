@@ -196,6 +196,8 @@ model VendorOffer {
   promotionTargets    PromotionTarget[]
   priceChangeRequests PriceChangeRequest[] @relation("PriceChangeOffer")
   priceAlerts         PriceAlert[]         @relation("PriceAlertOffer")
+  planningItems       PlanningItem[]       @relation("PlanningItemOffer")
+  restockSuggestions  RestockSuggestion[]  @relation("RestockSuggestionOffer")
 
   @@unique([vendorCompanyId, packagingUnitId])
   @@index([sellerType, status, countryId])

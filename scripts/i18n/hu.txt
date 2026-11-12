@@ -2857,3 +2857,232 @@ Az Ön ára {pct} %-kal tér el a termék piaci mediánjától. {message}
 {supplier}: {old} € → {new} € ettől: {date}. Addig a jelenlegi árat fizeti.
 {count} új árriasztás
 Árugrások vagy a piactól távoli árak — lásd Árintelligencia.
+Kereslettervezés
+Mennyit fog eladni az egyes termékekből az egyes raktárak, és mit, mikor és mennyit érdemes beszerezni — hogy se ki ne fogyjon az áru, se ne álljon a raktárban. A terv csak javasol; Ön dönt.
+Újraszámolás most
+Terv frissítve
+Legsürgősebb
+Az összes utánrendelési javaslat →
+Most nem kell semmit rendelni.
+vegyen {qty}
+Előrejelzés és tényleges eladás
+Az összes terméke, darab hetente, az utolsó 12 hét. Minden előrejelzés a hete kezdetén rögzül.
+db
+Így működik a terv
+Minden éjjel minden termék heti előrejelzést kap raktáranként. Több módszer versenyez a saját eladási előzményein, és a legpontosabb nyer:
+Az előrejelzésből, a szolgáltatási szintjéből ({sl} %) és az egyes beszállítók szállítási idejéből adódik a biztonsági készlet, a rendelési pont és az, hogy mennyit rendeljen, hogy kitartson a következő rendelésig ({review} nappal később).
+Az ünnepeket és az akcióit kivesszük az előzményekből, majd visszaszámítjuk az előrejelzésbe. A beszerzési rendelés-tervezetek megrendeltnek számítanak, így egy terméket nem javaslunk kétszer.
+Tervezési beállítások
+Keresleti események
+Szállítási idők
+A készlet értéke átlagos beszerzési áron: {value}. A kockázati értékek is beszerzési áron vannak.
+Kereslet-előrejelzés
+Minden termék és raktár: a legutóbbi eladások, a következő {weeks} hét előrejelzése és a legjobban előrejelző módszer.
+Még nincs készlettel vagy eladással rendelkező termék.
+Keresleti események: {count}
+{days} n
+{warehouse} — eladások, előrejelzés és utánrendelési terv.
+← Összes előrejelzés
+További raktárak:
+Heti eladások és előrejelzés
+Folytonos vonal: hetente eladott darabok. Szaggatott vonal: előrejelzés azzal a sávval, amelybe nagy valószínűséggel esik (80 %). Pontok: amit a korábbi hetekre előre jeleztek.
+Utánrendelési terv
+Javasolt rendelés: {qty} db.
+Egyelőre elég a készlet — nincs mit rendelni.
+Nincs utánrendelve (lent, a tervezési beállításokban megadva).
+Miért ez az előrejelzés
+{weeks} hét eladásaiból tanult
+csak néhány héten fogy
+Átlagos hiba hetente
+Pontosság: {pct} % az utolsó {weeks} hétben.
+Legerősebb napok
+A rendelt darabok aránya a hét napjai szerint, utolsó 12 hét.
+Keresleti események
+Ehhez a termékhez nincs esemény.
+Tervezési beállítások
+Honnan veszi, minimális rendelés, csomagolási többszörös és kivételek ennél a terméknél ebben a raktárban.
+Utánrendelés
+Mit vegyen most, és miért. Válassza ki a beszállítót és a mennyiséget, majd hozzon létre beszerzési rendelés-tervezeteket — semmi sem megy el, amíg Ön el nem küldi.
+szabad {usable} + rendelt {incoming} · rendeljen {rop}-nál · legfeljebb {upto}
+fogy {daily}/nap · szállítás {lead} n · biztonsági készlet {safety}
+elfogy: {date}
+rendeljen eddig: {date}
+Mennyiség
+Vásárlás innen
+Válasszon…
+Egységköltség (nettó)
+Beszerzési rendelés-tervezetek létrehozása ({count})
+Tervezetek létrehozva {count} termékhez
+Beszállítónként és raktáranként egy tervezet. Ellenőrizze, és küldje el a Beszerzési rendelések menüből.
+Most nem
+Elrejtés ennyi időre:
+{days} nap
+Indok (nem kötelező)
+Elrejtés
+Mégse
+{name} · {days} n
+Az elmúlt 30 napban eldöntve
+Javaslatok, amelyekből beszerzési rendelés lett, vagy amelyeket elrejtettek.
+Az elmúlt 30 napban nem született döntés.
+eddig: {date}
+Túlkészlet és lejárat
+Készlet, amely az előre jelzett ütemben nem fogy el a minőségmegőrzési idő előtt, és {days} napnyi keresletet meghaladó készlet — teendőkkel.
+Lejárati kockázat
+Ami előbb lejár, előbb megy ki: a régebbi tételek fogynak először. Ami a dátumkor megmarad, veszélyben van.
+Túlkészlet
+Több mint {days} napnyi kereslet van raktáron.
+Semmi sem jár le, mielőtt elfogyna.
+Nincs túlkészlet.
+lejárt
+még {days} nap
+nincs eladás
+{days} napnyi készlet
+{lot} tétel, minőségét megőrzi: {date}
+{free}-ból {sells} fogy el időben
+fogy {qty}/nap
+{units} db veszélyben
+{qty} áthelyezése ide: {to}
+Áthelyezés-tervezet létrehozva — küldje el az Áthelyezések menüből
+{pct} % kedvezmény
+Akció létrehozva
+Javasolt kedvezmény: {pct} % — az árleszállítás Önnél ki van kapcsolva.
+Kérje meg a FIRINGI-t a bekapcsolásra
+Leírás (lejárt) →
+Ne rendeljen újra, amíg el nem fogy
+Elrejtés 30 napra
+Elrejtett sorok: {count}
+Szállítási idők
+Mennyi idő alatt szállítanak valójában a beszállítói — a beszerzési rendelés elküldésétől az áru átvételéig — a vállalt idő mellett.
+A tervezés a mért időt használja, ha a beszállítónak 3 átvétele van, hacsak ki nem veszi a pipát.
+Még nincs beszállító — vegye fel őket a Saját beszállítók menüben.
+átvételek: {count}
+saját beszállító
+Tervezés mért idővel
+automatikusan mérve
+Keresleti események
+Akciók, ünnepek és szezonok, amelyek a keresletet mozgatják. A FIRINGI felveszi a nyilvánosakat; itt vegye fel a saját akcióit.
+Új esemény
++30 % = 30 %-kal nagyobb kereslet, amíg tart; −20 % = 20 %-kal kisebb. Ha nincs kiválasztott termék = az összes terméke.
+Név
+pl. Nyári italakció
+Ettől
+Eddig
+Hatás a keresletre
+Termékek
+Több kiválasztásához tartsa lenyomva a Ctrl / ⌘ billentyűt.
+Esemény hozzáadása
+Nincs esemény.
+Ön
+kikapcsolva
+Összes termék
+Kikapcsolás
+Bekapcsolás
+Tervezési beállítások
+Milyen biztonsággal és milyen gyakran szeretne utánrendelni. Üres = a FIRINGI alapértéke.
+Az Ön utánrendelési szabályai
+Minden termékére vonatkozik; egy terméknek a tervezési beállításaiban saját szolgáltatási szintje lehet.
+Szolgáltatási szint
+A hiány nélküli rendelési ciklusok aránya. 95 % jó kiindulás; 99 % sokkal több biztonsági készletet igényel.
+Rendelés gyakorisága
+Milyen gyakran ad le általában beszerzési rendelést.
+Túlkészlet efölött
+Ennyi napnyi keresletnél több készlet túlkészletnek számít.
+nap
+Alapérték: {value}.
+Mentés
+Mentve
+Szállítási idő (nap)
+beszállítói: {days}
+Minimális rendelés
+Rendelés többszöröseként
+az Öné: {value} %
+Megjegyzés
+Ne javasoljon utánrendelést ennél a terméknél itt
+Mint az utolsó beszerzési rendelésben
+Kifogyott
+Rendeljen most
+{count} elfogy, mielőtt áru érkezhetne
+Rendeljen hamarosan
+Előrejelzési pontosság
+Még nincs lezárt hét az összehasonlításhoz.
+az előrejelzések {pct} %-kal magasak
+az előrejelzések {pct} %-kal alacsonyak
+nincs torzítás
+Lejárati kockázat
+Túlkészlet
+Termék
+Raktár
+Módszer
+Utolsó 4 hét
+Következő 4 hét
+Változás
+Eladás és előrejelzés
+A készlet elég
+Pontosság
+Dátum
+Állapot
+Megjegyzés
+Beszállító
+Fajta
+Vállalt
+Mért
+90 % ennyin belül
+Időben
+Teljesen leszállítva
+Ezzel tervezve
+Ki
+Eladott darabok
+Előrejelzés
+Valószínű sáv (80 %)
+Akkori előrejelzés
+most
+Keresleti esemény
+Szabad készlet
+Rendelt / úton
+{qty} tervezetben
+Napi eladás
+Szállítási idő
+Szolgáltatási szint
+Biztonsági készlet
+Rendelési pont
+Feltöltés eddig
+A készlet elég
+Beszerzés innen
+Minimum · többszörös
+{min} · {mult}
+kézi
+Kifogyott
+Túl késő
+Rendeljen most
+Hamarosan
+Elég
+Átlag
+Trend
+Szakaszos
+Szezonális
+Még nincs eladás
+Az eladások stabilak, ezért a legutóbbi heti átlag jelez előre a legjobban.
+Az eladások nőnek vagy csökkennek; a trendet követjük, de a távolabbi hetekre ellaposodik.
+Csak néhány héten fogy; az előrejelzés a szokásos rendelési mennyiséget a rendelések közti szokásos időre osztja el.
+Egy évnyi előzmény van: a tavalyi azonos hetek, az idei szinthez igazítva.
+Még nincs eladás — nincs mit előre jelezni.
+ehhez a termékhez beállítva
+mért
+vállalt
+alapérték
+Megrendelve
+Elrejtve
+Nyitott
+Már nem szükséges
+Tervezés
+Tervezési áttekintés
+Kereslet-előrejelzés
+Utánrendelés
+Túlkészlet és lejárat
+Szállítási idők
+Keresleti események
+Tervezési beállítások
+Rendelendő termékek: {count}
+Közülük {late} elfogy, mielőtt új áru érkezhetne. Lásd: Tervezés › Utánrendelés.
+A FIRINGI utánrendelést kér: {product}
+A(z) {product} fogyóban van itt: {warehouse}, és a vevők keresik. {message}
