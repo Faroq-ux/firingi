@@ -13,7 +13,8 @@ import { setPreferenceAction } from "@/server/actions/workspace";
 
 export type DashCard = { id: string; title: string; size?: 1 | 2 | 3; node: ReactNode };
 type Layout = { order: string[]; hidden: string[]; size: Record<string, 1 | 2 | 3> };
-const SPAN = { 1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3" } as const;
+// Columns follow the space the grid really has (not the screen): 1 column, 2 from ~42rem, 3 from ~62rem.
+const SPAN = { 1: "", 2: "@2xl:col-span-2", 3: "@2xl:col-span-2 @6xl:col-span-3" } as const;
 
 export function DashboardGrid({ prefKey, cards, saved }: { prefKey: string; cards: DashCard[]; saved?: Partial<Layout> | null }) {
   const t = useTranslations("dash");
@@ -43,7 +44,7 @@ export function DashboardGrid({ prefKey, cards, saved }: { prefKey: string; card
           {pending ? <Loader2 className="size-4 animate-spin" /> : editing ? <Check className="size-4" /> : <LayoutGrid className="size-4" />}{editing ? t("done") : t("customise")}
         </Button>
       </div>
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="@container"><div className="grid gap-4 @2xl:grid-cols-2 @6xl:grid-cols-3">
         {shown.map((id, i) => {
           const c = byId.get(id)!, hidden = layout.hidden.includes(id), size = layout.size[id] ?? 1;
           return (
@@ -65,7 +66,7 @@ export function DashboardGrid({ prefKey, cards, saved }: { prefKey: string; card
             </section>
           );
         })}
-      </div>
+      </div></div>
     </div>
   );
 }

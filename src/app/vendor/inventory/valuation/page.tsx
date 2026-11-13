@@ -36,7 +36,7 @@ export default async function Valuation({ searchParams }: { searchParams: Promis
             const share = Number(v.total) ? (Number(w.value) / Number(v.total)) * 100 : 0;
             return (
               <div key={w.warehouse} className="rounded-xl border p-3">
-                <div className="flex items-baseline justify-between"><span className="font-medium">{w.warehouse}</span><span className="font-semibold tabular-nums">{formatMoney(w.value, locale)}</span></div>
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3"><span className="min-w-0 break-words font-medium">{w.warehouse}</span><span className="whitespace-nowrap font-semibold tabular-nums">{formatMoney(w.value, locale)}</span></div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-[linear-gradient(90deg,var(--vivid-blue),var(--vivid-violet))]" style={{ width: `${share}%` }} /></div>
                 <div className="mt-1 text-xs text-muted-foreground">{w.units} {t("units")} · {w.lines} {t("product")}</div>
               </div>

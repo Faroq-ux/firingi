@@ -98,7 +98,7 @@ async function driverPayByMonth(months: Date[]) {
       WHERE c.type = 'ADMIN' AND r.status = 'COMPLETED' AND r."completedAt" >= ${months[0]}
     )
     SELECT r.m, count(*)::int AS routes, sum(r."plannedKm")::float8 AS km,
-      sum((SELECT count(*) FROM "RouteStop" s JOIN "Delivery" d ON d.id = s."deliveryId" WHERE s."routeId" = r.id AND s.kind = 'DROP' AND d.status = 'DELIVERED'))::int AS delivered
+      sum((SELECT count(*) FROM "RouteStop" s JOIN "Delivery" d ON d.id = s."deliveryId" WHERE s."routeId" = r.id AND s.kind = 'DROP' AND d.status = 'DELIVERED' AND EXISTS (SELECT 1 FROM "Order" o WHERE o.id = d."orderId" AND o."deliveryFeeNet" > 0)))::int AS delivered
     FROM r GROUP BY r.m`;
   return new Map(rows.map((r) => [key(r.m), r2(r.routes * pay.perRoute + r.delivered * pay.perDelivery + r.km * pay.perKm)]));
 }
@@ -244,7 +244,7 @@ export async function netProfitBy(ctx: Ctx, dim: ProfitDim, p: { from: Date; to:
       sum(CASE WHEN o."deliveryMode" = 'FIRINGI_FLEET' THEN o."deliveryFeeNet" ELSE 0 END)::float8 AS ffee,
       COALESCE(sum((SELECT sum(c."netTotal") FROM "Invoice" c WHERE c."orderId" = o.id AND c."docType" = 'CREDIT_NOTE')), 0)::float8 AS credits,
       COALESCE(sum((SELECT sum(e."absorbedNet") FROM "AllocationEvent" e WHERE e."orderId" = o."parentOrderId" OR e."orderId" = o.id)), 0)::float8 AS absorbed,
-      sum(CASE WHEN o."deliveryMode" = 'FIRINGI_FLEET' THEN 1 ELSE 0 END)::int AS fleet,
+      sum(CASE WHEN o."deliveryMode" = 'FIRINGI_FLEET' AND o."deliveryFeeNet" > 0 THEN 1 ELSE 0 END)::int AS fleet,
       COALESCE(sum((SELECT max(sh.share) FROM shares sh WHERE sh."orderId" = o.id)), 0)::float8 AS "routeShare"
     FROM o GROUP BY 1`;
   const ids = rows.map((r) => r.id);
@@ -281,7 +281,7 @@ export async function routeProfitability(ctx: Ctx, p: { from: Date; to: Date }) 
     const fees = delivered.reduce((a, s) => a + (s.delivery.order.deliveryMode === "FIRINGI_FLEET" ? Number(s.delivery.order.deliveryFeeNet) : 0), 0);
     const margin = delivered.reduce((a, s) => a + Number(s.delivery.order.firingiMarginNet), 0);
     const km = Number(r.plannedKm);
-    const driverPay = pay.perRoute + delivered.length * pay.perDelivery + km * pay.perKm;
+    const driverPay = pay.perRoute + delivered.filter((s) => Number(s.delivery.order.deliveryFeeNet) > 0).length * pay.perDelivery + km * pay.perKm;
     const vehicle = km * vehicleCostPerKm;
     const cost = driverPay + vehicle;
     return {

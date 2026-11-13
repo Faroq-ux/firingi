@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Perteklius ir galiojimas",
     "Lead Times": "Pristatymo laikai",
     "Demand Events": "Paklausos įvykiai",
-    "Planning Settings": "Planavimo nustatymai"
+    "Planning Settings": "Planavimo nustatymai",
+    "Quality Claims": "Kokybės pretenzijos",
+    "Quality Score": "Kokybės balas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI prašo papildyti: {product}",
       "body": "{product} sandėlyje {warehouse} baigiasi, o klientai jo nori. {message}"
+    },
+    "claim_opened": {
+      "title": "Nauja pretenzija {number} — užsakymas {order}",
+      "body": "Klientas pranešė apie problemą su užsakymu {order}. Atsakykite savo pozicija."
+    },
+    "claim_message": {
+      "title": "Nauja žinutė pretenzijoje {number}",
+      "body": "Pretenzijoje {number} yra nauja žinutė."
+    },
+    "claim_supplier_responded": {
+      "title": "Tiekėjas atsakė į pretenziją {number}",
+      "body": "Tiekėjas atsakė į pretenziją {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Pretenzija {number} laukia jūsų atsakymo",
+      "body": "Pateikite savo poziciją dėl pretenzijos {number} — FIRINGI netrukus nuspręs."
+    },
+    "claim_decided": {
+      "title": "Pretenzija {number} išspręsta",
+      "body": "FIRINGI išsprendė pretenziją {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Pakeitimas pristatytas — pretenzija {number}",
+      "body": "Pakaitinės prekės pagal pretenziją {number} pristatytos."
+    },
+    "claim_chargeback": {
+      "title": "Išskaitymas pagal pretenziją {number}",
+      "body": "Pretenzija {number} patenkinta dėl jūsų kaltės. Išrašykite FIRINGI savo kreditinę sąskaitą; ji išskaičiuojama iš jūsų išmokos."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Išskaitymas ginčijamas — pretenzija {number}",
+      "body": "Tiekėjas ginčija išskaitymą pagal pretenziją {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Išskaitymas išspręstas — pretenzija {number}",
+      "body": "FIRINGI išsprendė jūsų prieštaravimą dėl pretenzijos {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} pretenzijos viršijo sprendimo terminą",
+      "body": "{count} kokybės pretenzijos laukia ilgiau nei nustatyta."
+    },
+    "quality_alert": {
+      "title": "Kokybės įspėjimas: {label}",
+      "body": "{label}: {value} (įspėjimas nuo {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Paslėpta",
       "OPEN": "Atvira",
       "EXPIRED": "Nebereikia"
+    }
+  },
+  "claims": {
+    "title": "Kokybės pretenzijos",
+    "buyerIntro": "Kažkas negerai su pristatymu — sugadinta, trūksta, ne ta prekė, per šilta, trumpas galiojimas ar prasta kokybė? Praneškite užsakyme per {hours} val. nuo pristatymo, su nuotraukomis. FIRINGI nusprendžia ir jums kredituoja arba pasirūpina prekių pakeitimu.",
+    "vendorIntro": "Klientų pretenzijos dėl jūsų pristatytų prekių. Greitai pateikite savo poziciją su nuotraukomis; FIRINGI nusprendžia. Patenkintos pretenzijos išskaičiuojamos iš jūsų ataskaitos ir įskaičiuojamos į kokybės balą.",
+    "all": "Visos",
+    "claim": "Pretenzija",
+    "order": "Užsakymas",
+    "customer": "Klientas",
+    "reasonCol": "Problema",
+    "products": "Prekės",
+    "statusCol": "Būsena",
+    "credit": "Kreditas",
+    "opened": "Pateikta",
+    "yourAnswer": "Jūsų atsakymas",
+    "answerNeeded": "Reikia atsakyti",
+    "units": "{qty} vnt.",
+    "emptyBuyer": "Pretenzijų nėra. Praneškite apie problemą užsakymo puslapyje po pristatymo.",
+    "emptyVendor": "Pretenzijų dėl jūsų pristatymų nėra.",
+    "qualityLink": "Jūsų kokybės balas →",
+    "replacementPending": "Pakaitinės prekės pakeliui",
+    "kpi": {
+      "open": "Atviros pretenzijos",
+      "approved": "Patvirtintos",
+      "credited": "Jums kredituota",
+      "replacements": "Laukiami pakeitimai",
+      "toAnswer": "Laukia jūsų atsakymo",
+      "chargebacksOpen": "Atviri išskaitymai",
+      "claimRate": "Pretenzijų dalis, 30 d.",
+      "claimRateHint": "{upheld} patenkinta iš {delivered} pristatytų užsakymų"
+    },
+    "status": {
+      "OPEN": "Atvira",
+      "APPROVED": "Patvirtinta",
+      "REJECTED": "Atmesta",
+      "WITHDRAWN": "Atšaukta"
+    },
+    "reason": {
+      "DAMAGED": "Sugadinta",
+      "MISSING": "Trūksta",
+      "WRONG_PRODUCT": "Ne ta prekė",
+      "TEMPERATURE": "Temperatūra (šaldymo grandinė)",
+      "SHORT_DATED": "Trumpas galiojimas ar pasibaigęs",
+      "QUALITY": "Prasta kokybė"
+    },
+    "outcome": {
+      "CREDIT": "Kreditinė sąskaita",
+      "REPLACEMENT": "Pakeitimas"
+    },
+    "prefer": {
+      "CREDIT": "Kreditinė sąskaita",
+      "REPLACEMENT": "Pakeisti prekes"
+    },
+    "fault": {
+      "SUPPLIER": "Tiekėjo kaltė",
+      "DRIVER": "Pristatymo klaida",
+      "FIRINGI": "FIRINGI geranoriškumas",
+      "CUSTOMER": "Nepagrįsta pretenzija"
+    },
+    "sla": {
+      "late": "vėluoja {hours} val.",
+      "left": "sprendimas po {hours} val."
+    },
+    "progress": "Eiga",
+    "step": {
+      "opened": "Pranešta",
+      "supplier": "Tiekėjo atsakymas",
+      "supplierBy": "laukiama iki {date}",
+      "decided": "FIRINGI sprendimas",
+      "replaced": "Pakeitimas pristatytas"
+    },
+    "lines": "Kas negerai",
+    "lot": "Partija",
+    "claimedQty": "{qty} iš {delivered} pretenzijoje",
+    "approvedQty": "{qty} patvirtinta",
+    "unitPaid": "{amount} / vnt. sumokėta",
+    "unitCost": "jūsų kaina {amount} / vnt.",
+    "photo": "Nuotrauka",
+    "supplierResponse": {
+      "ACCEPTED": "Tiekėjas pripažįsta pretenziją",
+      "DISPUTED": "Tiekėjas ginčija pretenziją"
+    },
+    "decided": {
+      "CREDIT": "Patvirtinta — išrašyta kreditinė sąskaita",
+      "REPLACEMENT": "Patvirtinta — prekės bus pakeistos",
+      "REJECTED": "Pretenzija atmesta"
+    },
+    "creditIssued": "Kreditinė sąskaita: {amount}.",
+    "feeIncluded": "Įskaičiuotas pristatymo mokestis.",
+    "viewCreditNote": "Atsisiųsti kreditinę sąskaitą",
+    "replacementDone": "Pakeitimas pristatytas {date}.",
+    "conversation": "Pokalbis",
+    "noMessages": "Žinučių dar nėra.",
+    "side": {
+      "CUSTOMER": "Klientas",
+      "SUPPLIER": "Tiekėjas",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Vidinė",
+    "messagePlaceholder": "Parašykite žinutę FIRINGI ir kitai šaliai…",
+    "send": "Siųsti",
+    "addPhotos": "Pridėti nuotraukų",
+    "cancel": "Atšaukti",
+    "withdraw": "Atšaukti pretenziją",
+    "withdrawConfirm": "Atšaukti šią pretenziją? Galėsite vėl pranešti, kol terminas nepasibaigęs.",
+    "detailTitle": "Pretenzija {number}",
+    "detailIntroBuyer": "Jūsų pretenzija dėl {supplier} prekių. FIRINGI nusprendžia ir informuoja jus čia.",
+    "detailIntroVendor": "{customer} pretenzija dėl jūsų pristatymo. Atsakykite savo pozicija ir nuotraukomis; FIRINGI nusprendžia.",
+    "newTitle": "Pranešti apie problemą — užsakymas {number}",
+    "newIntro": "Papasakokite, kas negerai su pristatytomis prekėmis, per {hours} val. nuo pristatymo. Nuotraukos padeda FIRINGI greitai nuspręsti.",
+    "earlier": "Ankstesnės šio užsakymo pretenzijos",
+    "deadline": "Apie problemas galite pranešti iki {date}.",
+    "closedSince": "Pretenzijų terminas baigėsi {date}.",
+    "notDelivered": "Užsakymas dar nepristatytas.",
+    "nothingLeft": "Viskas, kas pristatyta šiame užsakyme, jau pateikta pretenzijoje arba grąžinta.",
+    "windowClosed": "Apie problemas galima pranešti iki {hours} val. po pristatymo — terminas baigėsi. Kitais atvejais naudokite Grąžinimus arba Pagalbą.",
+    "orderCardTitle": "Problema su šiuo pristatymu?",
+    "orderCardHint": "Praneškite apie sugadintas, trūkstamas, netinkamas ar prastos kokybės prekes per {hours} val. nuo pristatymo.",
+    "orderCardClosed": "Jūsų pretenzijos dėl šio užsakymo.",
+    "reportProblem": "Pranešti apie problemą",
+    "form": {
+      "what": "Kas negerai?",
+      "which": "Kokios prekės, kiek?",
+      "delivered": "pristatyta {qty}",
+      "left": "dar galima pateikti {qty}",
+      "lotUnknown": "Partija — nežinau",
+      "qtyFor": "Kiekis: {product}",
+      "describe": "Aprašykite problemą",
+      "describeHint": "Pvz.: 3 dėžės sutraiškytos, produktas teka, atvyko šiltas (8 °C)…",
+      "photos": "Nuotraukos (neprivaloma)",
+      "photosNeeded": "Problemos nuotraukos (bent viena)",
+      "prefer": "Ko pageidaujate?",
+      "decides": "FIRINGI nusprendžia — paprastai per 48 val. Kreditinė sąskaita išskaičiuojama iš jūsų skolos.",
+      "send": "Siųsti pretenziją"
+    },
+    "respond": {
+      "title": "Jūsų pozicija",
+      "titleUpdate": "Keisti atsakymą",
+      "hint": "Pripažinkite pretenziją arba ginčykite ją su argumentais ir nuotraukomis (pakuotė, pakrovimas, temperatūros žurnalas). FIRINGI nusprendžia.",
+      "ACCEPTED": "Pripažįstame",
+      "DISPUTED": "Ginčijame",
+      "comment": "Komentaras (neprivaloma)",
+      "whyDispute": "Kodėl ginčijate?",
+      "photos": "Jūsų nuotraukos (neprivaloma)",
+      "send": "Siųsti atsakymą",
+      "update": "Atnaujinti atsakymą"
+    },
+    "replaceTitle": "Pristatyti pakeitimą",
+    "replaceHint": "FIRINGI patvirtino nemokamą pakeitimą. Pristatykite prekes iš naujo ir patvirtinkite čia.",
+    "replaceDone": "Pakeitimas pristatytas",
+    "chargeback": {
+      "title": "Išskaitymai",
+      "hint": "Dėl jūsų kaltės patenkintos pretenzijos: kreditas yra kreditinėje ataskaitoje — išrašykite FIRINGI savo kreditinę sąskaitą; ji išskaičiuojama iš jūsų išmokos.",
+      "amount": "Suma",
+      "statement": "Ataskaita",
+      "none": "Išskaitymų nėra.",
+      "dispute": "Ginčyti",
+      "why": "Kodėl ginčijate išskaitymą?",
+      "send": "Siųsti prieštaravimą",
+      "yourNote": "Jūsų prieštaravimas",
+      "status": {
+        "OPEN": "Kredituotina",
+        "DISPUTED": "Ginčijama",
+        "DEDUCTED": "Atsiskaityta",
+        "WAIVED": "Atsisakyta"
+      }
+    },
+    "quality": {
+      "title": "Kokybės balas",
+      "intro": "Jūsų patenkintos pretenzijos per paskutines {days} d. Viršijus {threshold} %, FIRINGI gauna įspėjimą, jūsų balas krenta ir gaunate mažiau priskirtų užsakymų.",
+      "alerts": "FIRINGI kokybės įspėjimai",
+      "alert": {
+        "SUPPLIER_RATE": "Pretenzijų dalis {value} — viršija {threshold}.",
+        "PRODUCT_RATE": "{label}: pretenzijų dalis {value} — viršija {threshold}.",
+        "LOT": "{label}: {value} pretenzijos (įspėjimas nuo {threshold}).",
+        "DRIVER": "{label}: {value} pretenzijos."
+      },
+      "threshold": "įspėjimas nuo {threshold} %",
+      "upheld": "Patenkintos pretenzijos",
+      "ofClaims": "iš {claims} pretenzijų",
+      "delivered": "Pristatyti užsakymai",
+      "byProduct": "Pagal prekę",
+      "byProductHint": "Pretenzijose esantys vienetai, palyginti su pristatytais",
+      "byLot": "Pagal partiją",
+      "byLotHint": "Kelios pretenzijos dėl vienos partijos: patikrinkite — galbūt reikia atšaukimo",
+      "claimedUnits": "Pretenzijoje",
+      "deliveredUnits": "Pristatyta",
+      "rate": "Dalis",
+      "claims": "Pretenzijos",
+      "none": "Šiuo laikotarpiu pretenzijų nėra."
     }
   }
 }

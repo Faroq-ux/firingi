@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Surstock et péremption",
     "Lead Times": "Délais de livraison",
     "Demand Events": "Événements de demande",
-    "Planning Settings": "Paramètres de planification"
+    "Planning Settings": "Paramètres de planification",
+    "Quality Claims": "Réclamations qualité",
+    "Quality Score": "Indice qualité"
   },
   "delivery": {
     "title": "Livraison",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI vous demande de réassortir : {product}",
       "body": "{product} à {warehouse} est presque épuisé et les clients le demandent. {message}"
+    },
+    "claim_opened": {
+      "title": "Nouvelle réclamation {number} — commande {order}",
+      "body": "Un client a signalé un problème avec la commande {order}. Merci de répondre avec votre version."
+    },
+    "claim_message": {
+      "title": "Nouveau message sur la réclamation {number}",
+      "body": "Il y a un nouveau message sur la réclamation {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Le fournisseur a répondu à la réclamation {number}",
+      "body": "Le fournisseur a répondu à la réclamation {number} : {response}."
+    },
+    "claim_answer_needed": {
+      "title": "La réclamation {number} attend votre réponse",
+      "body": "Merci de donner votre version sur la réclamation {number} — FIRINGI décide bientôt."
+    },
+    "claim_decided": {
+      "title": "Réclamation {number} tranchée",
+      "body": "FIRINGI a tranché la réclamation {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Remplacement livré — réclamation {number}",
+      "body": "La marchandise de remplacement de la réclamation {number} a été livrée."
+    },
+    "claim_chargeback": {
+      "title": "Débit pour la réclamation {number}",
+      "body": "La réclamation {number} a été retenue à votre charge. Merci d'émettre votre avoir à FIRINGI ; il est déduit de votre paiement."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Débit contesté — réclamation {number}",
+      "body": "Le fournisseur conteste le débit de la réclamation {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Débit tranché — réclamation {number}",
+      "body": "FIRINGI a statué sur votre contestation de la réclamation {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} réclamations hors délai de décision",
+      "body": "{count} réclamations qualité attendent au-delà du délai."
+    },
+    "quality_alert": {
+      "title": "Alerte qualité : {label}",
+      "body": "{label} : {value} (alerte dès {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Masquée",
       "OPEN": "Ouverte",
       "EXPIRED": "Plus nécessaire"
+    }
+  },
+  "claims": {
+    "title": "Réclamations qualité",
+    "buyerIntro": "Un problème avec une livraison — abîmé, manquant, erroné, chaud, date courte ou mauvaise qualité ? Signalez-le sur la commande dans les {hours} heures suivant la livraison, avec des photos. FIRINGI décide et vous crédite ou fait remplacer la marchandise.",
+    "vendorIntro": "Réclamations des clients sur la marchandise que vous avez livrée. Donnez votre version rapidement, avec des photos ; FIRINGI décide. Les réclamations retenues sont débitées sur votre relevé et comptent dans votre indice qualité.",
+    "all": "Toutes",
+    "claim": "Réclamation",
+    "order": "Commande",
+    "customer": "Client",
+    "reasonCol": "Problème",
+    "products": "Produits",
+    "statusCol": "Statut",
+    "credit": "Avoir",
+    "opened": "Ouverte",
+    "yourAnswer": "Votre réponse",
+    "answerNeeded": "Réponse attendue",
+    "units": "{qty} unités",
+    "emptyBuyer": "Aucune réclamation. Signalez un problème depuis la page de la commande après la livraison.",
+    "emptyVendor": "Aucune réclamation sur vos livraisons.",
+    "qualityLink": "Votre indice qualité →",
+    "replacementPending": "Remplacement en route",
+    "kpi": {
+      "open": "Réclamations ouvertes",
+      "approved": "Approuvées",
+      "credited": "Crédité pour vous",
+      "replacements": "Remplacements en attente",
+      "toAnswer": "En attente de votre réponse",
+      "chargebacksOpen": "Débits ouverts",
+      "claimRate": "Taux de réclamation, 30 jours",
+      "claimRateHint": "{upheld} retenues sur {delivered} commandes livrées"
+    },
+    "status": {
+      "OPEN": "Ouverte",
+      "APPROVED": "Approuvée",
+      "REJECTED": "Refusée",
+      "WITHDRAWN": "Retirée"
+    },
+    "reason": {
+      "DAMAGED": "Abîmé",
+      "MISSING": "Manquant",
+      "WRONG_PRODUCT": "Mauvais produit",
+      "TEMPERATURE": "Température (chaîne du froid)",
+      "SHORT_DATED": "Date courte ou périmé",
+      "QUALITY": "Mauvaise qualité"
+    },
+    "outcome": {
+      "CREDIT": "Avoir",
+      "REPLACEMENT": "Remplacement"
+    },
+    "prefer": {
+      "CREDIT": "Avoir",
+      "REPLACEMENT": "Remplacer la marchandise"
+    },
+    "fault": {
+      "SUPPLIER": "Faute du fournisseur",
+      "DRIVER": "Erreur de livraison",
+      "FIRINGI": "Geste commercial de FIRINGI",
+      "CUSTOMER": "Réclamation non fondée"
+    },
+    "sla": {
+      "late": "{hours} h de retard",
+      "left": "décision dans {hours} h"
+    },
+    "progress": "Avancement",
+    "step": {
+      "opened": "Signalée",
+      "supplier": "Réponse du fournisseur",
+      "supplierBy": "attendue avant le {date}",
+      "decided": "Décision de FIRINGI",
+      "replaced": "Remplacement livré"
+    },
+    "lines": "Ce qui ne va pas",
+    "lot": "Lot",
+    "claimedQty": "{qty} sur {delivered} réclamées",
+    "approvedQty": "{qty} approuvées",
+    "unitPaid": "{amount} / unité payé",
+    "unitCost": "votre prix {amount} / unité",
+    "photo": "Photo",
+    "supplierResponse": {
+      "ACCEPTED": "Le fournisseur accepte la réclamation",
+      "DISPUTED": "Le fournisseur conteste la réclamation"
+    },
+    "decided": {
+      "CREDIT": "Approuvée — avoir émis",
+      "REPLACEMENT": "Approuvée — la marchandise sera remplacée",
+      "REJECTED": "Réclamation refusée"
+    },
+    "creditIssued": "Avoir : {amount}.",
+    "feeIncluded": "Les frais de livraison sont inclus.",
+    "viewCreditNote": "Télécharger l'avoir",
+    "replacementDone": "Remplacement livré le {date}.",
+    "conversation": "Échanges",
+    "noMessages": "Pas encore de message.",
+    "side": {
+      "CUSTOMER": "Client",
+      "SUPPLIER": "Fournisseur",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Interne",
+    "messagePlaceholder": "Écrivez un message à FIRINGI et à l'autre partie…",
+    "send": "Envoyer",
+    "addPhotos": "Ajouter des photos",
+    "cancel": "Annuler",
+    "withdraw": "Retirer la réclamation",
+    "withdrawConfirm": "Retirer cette réclamation ? Vous pourrez la signaler à nouveau tant que le délai est ouvert.",
+    "detailTitle": "Réclamation {number}",
+    "detailIntroBuyer": "Votre réclamation sur la marchandise de {supplier}. FIRINGI décide et vous tient informé ici.",
+    "detailIntroVendor": "Réclamation de {customer} sur votre livraison. Répondez avec votre version et des photos ; FIRINGI décide.",
+    "newTitle": "Signaler un problème — commande {number}",
+    "newIntro": "Dites-nous ce qui ne va pas avec la marchandise livrée, dans les {hours} heures suivant la livraison. Les photos aident FIRINGI à décider vite.",
+    "earlier": "Réclamations précédentes sur cette commande",
+    "deadline": "Vous pouvez signaler un problème jusqu'au {date}.",
+    "closedSince": "Le délai de réclamation a pris fin le {date}.",
+    "notDelivered": "La commande n'a pas encore été livrée.",
+    "nothingLeft": "Tout ce qui a été livré sur cette commande est déjà réclamé ou retourné.",
+    "windowClosed": "Les problèmes peuvent être signalés jusqu'à {hours} heures après la livraison — le délai est écoulé. Pour les autres cas, utilisez Retours ou Aide et support.",
+    "orderCardTitle": "Un problème avec cette livraison ?",
+    "orderCardHint": "Signalez une marchandise abîmée, manquante, erronée ou de mauvaise qualité dans les {hours} heures suivant la livraison.",
+    "orderCardClosed": "Vos réclamations sur cette commande.",
+    "reportProblem": "Signaler un problème",
+    "form": {
+      "what": "Qu'est-ce qui ne va pas ?",
+      "which": "Quels produits, combien ?",
+      "delivered": "{qty} livrées",
+      "left": "{qty} encore réclamables",
+      "lotUnknown": "Lot — je ne sais pas",
+      "qtyFor": "Quantité pour {product}",
+      "describe": "Décrivez le problème",
+      "describeHint": "Ex. : 3 cartons écrasés, produit qui fuit, arrivé chaud (8 °C)…",
+      "photos": "Photos (facultatif)",
+      "photosNeeded": "Photos du problème (au moins une)",
+      "prefer": "Que préférez-vous ?",
+      "decides": "FIRINGI décide — en général sous 48 heures. Un avoir est déduit de ce que vous devez.",
+      "send": "Envoyer la réclamation"
+    },
+    "respond": {
+      "title": "Votre version",
+      "titleUpdate": "Modifier votre réponse",
+      "hint": "Acceptez la réclamation ou contestez-la avec vos raisons et photos (emballage, chargement, relevé de température). FIRINGI décide.",
+      "ACCEPTED": "Nous acceptons",
+      "DISPUTED": "Nous contestons",
+      "comment": "Commentaire (facultatif)",
+      "whyDispute": "Pourquoi la contestez-vous ?",
+      "photos": "Vos photos (facultatif)",
+      "send": "Envoyer la réponse",
+      "update": "Mettre à jour la réponse"
+    },
+    "replaceTitle": "Livrer le remplacement",
+    "replaceHint": "FIRINGI a approuvé un remplacement gratuit. Livrez la marchandise à nouveau, puis confirmez ici.",
+    "replaceDone": "Remplacement livré",
+    "chargeback": {
+      "title": "Débits",
+      "hint": "Réclamations retenues à votre charge : l'avoir figure sur un relevé d'avoir — émettez votre avoir à FIRINGI ; il est déduit de votre paiement.",
+      "amount": "Montant",
+      "statement": "Relevé",
+      "none": "Aucun débit.",
+      "dispute": "Contester",
+      "why": "Pourquoi contestez-vous le débit ?",
+      "send": "Envoyer la contestation",
+      "yourNote": "Votre contestation",
+      "status": {
+        "OPEN": "À créditer",
+        "DISPUTED": "Contesté",
+        "DEDUCTED": "Réglé",
+        "WAIVED": "Annulé"
+      }
+    },
+    "quality": {
+      "title": "Indice qualité",
+      "intro": "Vos réclamations retenues des {days} derniers jours. Au-delà de {threshold} %, FIRINGI est alerté, votre note baisse et vous recevez moins de commandes attribuées.",
+      "alerts": "Alertes qualité de FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Taux de réclamation {value} — au-dessus de {threshold}.",
+        "PRODUCT_RATE": "{label} : taux de réclamation {value} — au-dessus de {threshold}.",
+        "LOT": "{label} : {value} réclamations (alerte dès {threshold}).",
+        "DRIVER": "{label} : {value} réclamations."
+      },
+      "threshold": "alerte dès {threshold} %",
+      "upheld": "Réclamations retenues",
+      "ofClaims": "sur {claims} réclamations",
+      "delivered": "Commandes livrées",
+      "byProduct": "Par produit",
+      "byProductHint": "Unités réclamées par rapport aux unités livrées",
+      "byLot": "Par lot",
+      "byLotHint": "Plusieurs réclamations sur un même lot : vérifiez-le — peut-être un rappel",
+      "claimedUnits": "Réclamées",
+      "deliveredUnits": "Livrées",
+      "rate": "Taux",
+      "claims": "Réclamations",
+      "none": "Aucune réclamation sur cette période."
     }
   }
 }

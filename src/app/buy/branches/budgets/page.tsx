@@ -32,7 +32,7 @@ export default async function Budgets() {
               <CardDescription>{t(`per.${b.period}`)} · {date.format(b.periodStart)} – {date.format(b.periodEnd)}{b.categoryIds.length ? ` · ${t("categoriesCount", { count: b.categoryIds.length })}` : ""}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="flex items-baseline justify-between gap-2"><span className="text-2xl font-bold tabular-nums">{formatMoney(b.spent, locale)}</span><span className="text-sm text-muted-foreground">{t("ofAmount", { amount: formatMoney(b.amount, locale) })} · <Badge variant={pctTone(b.pct)}>{b.pct}%</Badge></span></div>
+              <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1"><span className="text-xl font-bold tabular-nums sm:text-2xl">{formatMoney(b.spent, locale)}</span><span className="text-sm text-muted-foreground">{t("ofAmount", { amount: formatMoney(b.amount, locale) })} · <Badge variant={pctTone(b.pct)}>{b.pct}%</Badge></span></div>
               <BudgetBar pct={b.pct} label={`${b.name}: ${b.pct}%`} />
               {manager && <details className="rounded-xl border p-3"><summary className="cursor-pointer text-sm font-medium">{t("edit")}</summary><div className="mt-3"><BudgetForm initial={{ ...b, branchId: b.branchId }} shops={shops} categories={cats} /></div></details>}
             </CardContent>

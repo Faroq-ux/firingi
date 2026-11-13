@@ -161,11 +161,12 @@ model Driver {
   createdAt      DateTime           @default(now())
   updatedAt      DateTime           @updatedAt
 
-  user       User       @relation(fields: [userId], references: [id])
-  owner      Company    @relation(fields: [ownerCompanyId], references: [id])
-  documents  Document[]
-  deliveries Delivery[]
-  routes     Route[]
+  user        User              @relation(fields: [userId], references: [id])
+  owner       Company           @relation(fields: [ownerCompanyId], references: [id])
+  documents   Document[]
+  deliveries  Delivery[]
+  routes      Route[]
+  chargebacks ClaimChargeback[] @relation("ChargebackDriver")
 }
 
 /// One delivery per order (retries after a failed attempt reuse it; each try is a DeliveryAttempt).

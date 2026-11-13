@@ -7,7 +7,7 @@ export const rise = (i: number): { className: string; style: CSSProperties } => 
 /** Gradient hero band with drifting colour blobs. */
 export function Aurora({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <section className={`motion-aurora hero-band motion-sheen rounded-2xl p-6 shadow-lg sm:p-8 ${className}`} data-testid="hero">
+    <section className={`@container motion-aurora hero-band motion-sheen rounded-2xl p-6 shadow-lg sm:p-8 ${className}`} data-testid="hero">
       <span className="aurora-blob a" aria-hidden /><span className="aurora-blob b" aria-hidden /><span className="aurora-blob c" aria-hidden /><span className="aurora-blob d" aria-hidden />
       {children}
     </section>

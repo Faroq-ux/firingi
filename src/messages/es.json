@@ -1316,6 +1316,50 @@
     "planning_flagged": {
       "title": "FIRINGI le pide que reponga: {product}",
       "body": "{product} en {warehouse} se está agotando y los clientes lo quieren. {message}"
+    },
+    "claim_opened": {
+      "title": "Nueva reclamación {number} — pedido {order}",
+      "body": "Un cliente reportó un problema con el pedido {order}. Responde con tu versión."
+    },
+    "claim_message": {
+      "title": "Nuevo mensaje en la reclamación {number}",
+      "body": "Hay un nuevo mensaje en la reclamación {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "El proveedor respondió a la reclamación {number}",
+      "body": "El proveedor respondió a la reclamación {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "La reclamación {number} espera tu respuesta",
+      "body": "Da tu versión sobre la reclamación {number} — FIRINGI decide pronto."
+    },
+    "claim_decided": {
+      "title": "Reclamación {number} decidida",
+      "body": "FIRINGI decidió la reclamación {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Reposición entregada — reclamación {number}",
+      "body": "La mercancía de reposición de la reclamación {number} se entregó."
+    },
+    "claim_chargeback": {
+      "title": "Cargo por la reclamación {number}",
+      "body": "La reclamación {number} se aceptó por tu culpa. Emite tu nota de abono a FIRINGI; se descuenta de tu pago."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Cargo impugnado — reclamación {number}",
+      "body": "El proveedor impugna el cargo de la reclamación {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Cargo decidido — reclamación {number}",
+      "body": "FIRINGI decidió tu impugnación de la reclamación {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reclamaciones fuera del plazo de decisión",
+      "body": "{count} reclamaciones de calidad esperan más del plazo."
+    },
+    "quality_alert": {
+      "title": "Alerta de calidad: {label}",
+      "body": "{label}: {value} (alerta desde {threshold})."
     }
   },
   "notifications": {
@@ -3547,6 +3591,197 @@
       "DISMISSED": "Ocultada",
       "OPEN": "Abierta",
       "EXPIRED": "Ya no hace falta"
+    }
+  },
+  "claims": {
+    "title": "Reclamaciones de calidad",
+    "buyerIntro": "¿Algo mal en una entrega — dañado, faltante, equivocado, caliente, con fecha corta o de mala calidad? Repórtalo en el pedido dentro de las {hours} horas siguientes a la entrega, con fotos. FIRINGI decide y te abona o hace reponer la mercancía.",
+    "vendorIntro": "Reclamaciones de clientes sobre mercancía que entregaste. Da tu versión rápido, con fotos; FIRINGI decide. Las reclamaciones aceptadas se cargan en tu extracto y cuentan en tu índice de calidad.",
+    "all": "Todas",
+    "claim": "Reclamación",
+    "order": "Pedido",
+    "customer": "Cliente",
+    "reasonCol": "Problema",
+    "products": "Productos",
+    "statusCol": "Estado",
+    "credit": "Abono",
+    "opened": "Abierta",
+    "yourAnswer": "Tu respuesta",
+    "answerNeeded": "Respuesta necesaria",
+    "units": "{qty} unidades",
+    "emptyBuyer": "Sin reclamaciones. Reporta un problema en la página del pedido después de la entrega.",
+    "emptyVendor": "Sin reclamaciones sobre tus entregas.",
+    "qualityLink": "Tu índice de calidad →",
+    "replacementPending": "Reposición en camino",
+    "kpi": {
+      "open": "Reclamaciones abiertas",
+      "approved": "Aprobadas",
+      "credited": "Abonado a ti",
+      "replacements": "Reposiciones pendientes",
+      "toAnswer": "Esperando tu respuesta",
+      "chargebacksOpen": "Cargos abiertos",
+      "claimRate": "Tasa de reclamaciones, 30 días",
+      "claimRateHint": "{upheld} aceptadas de {delivered} pedidos entregados"
+    },
+    "status": {
+      "OPEN": "Abierta",
+      "APPROVED": "Aprobada",
+      "REJECTED": "Rechazada",
+      "WITHDRAWN": "Retirada"
+    },
+    "reason": {
+      "DAMAGED": "Dañado",
+      "MISSING": "Faltante",
+      "WRONG_PRODUCT": "Producto equivocado",
+      "TEMPERATURE": "Temperatura (cadena de frío)",
+      "SHORT_DATED": "Fecha corta o caducado",
+      "QUALITY": "Mala calidad"
+    },
+    "outcome": {
+      "CREDIT": "Nota de abono",
+      "REPLACEMENT": "Reposición"
+    },
+    "prefer": {
+      "CREDIT": "Nota de abono",
+      "REPLACEMENT": "Reponer la mercancía"
+    },
+    "fault": {
+      "SUPPLIER": "Culpa del proveedor",
+      "DRIVER": "Fallo en la entrega",
+      "FIRINGI": "Cortesía de FIRINGI",
+      "CUSTOMER": "Reclamación no válida"
+    },
+    "sla": {
+      "late": "{hours} h de retraso",
+      "left": "decisión en {hours} h"
+    },
+    "progress": "Progreso",
+    "step": {
+      "opened": "Reportada",
+      "supplier": "Respuesta del proveedor",
+      "supplierBy": "esperada hasta {date}",
+      "decided": "Decisión de FIRINGI",
+      "replaced": "Reposición entregada"
+    },
+    "lines": "Qué está mal",
+    "lot": "Lote",
+    "claimedQty": "{qty} de {delivered} reclamadas",
+    "approvedQty": "{qty} aprobadas",
+    "unitPaid": "{amount} / unidad pagado",
+    "unitCost": "tu precio {amount} / unidad",
+    "photo": "Foto",
+    "supplierResponse": {
+      "ACCEPTED": "El proveedor acepta la reclamación",
+      "DISPUTED": "El proveedor rechaza la reclamación"
+    },
+    "decided": {
+      "CREDIT": "Aprobada — nota de abono emitida",
+      "REPLACEMENT": "Aprobada — la mercancía se repondrá",
+      "REJECTED": "Reclamación rechazada"
+    },
+    "creditIssued": "Nota de abono: {amount}.",
+    "feeIncluded": "Incluye el gasto de envío.",
+    "viewCreditNote": "Descargar la nota de abono",
+    "replacementDone": "Reposición entregada el {date}.",
+    "conversation": "Conversación",
+    "noMessages": "Aún no hay mensajes.",
+    "side": {
+      "CUSTOMER": "Cliente",
+      "SUPPLIER": "Proveedor",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Interna",
+    "messagePlaceholder": "Escribe un mensaje a FIRINGI y a la otra parte…",
+    "send": "Enviar",
+    "addPhotos": "Añadir fotos",
+    "cancel": "Cancelar",
+    "withdraw": "Retirar reclamación",
+    "withdrawConfirm": "¿Retirar esta reclamación? Puedes volver a reportar el problema mientras el plazo esté abierto.",
+    "detailTitle": "Reclamación {number}",
+    "detailIntroBuyer": "Tu reclamación sobre mercancía de {supplier}. FIRINGI decide y te informa aquí.",
+    "detailIntroVendor": "Reclamación de {customer} sobre tu entrega. Responde con tu versión y fotos; FIRINGI decide.",
+    "newTitle": "Reportar un problema — pedido {number}",
+    "newIntro": "Dinos qué está mal en la mercancía entregada, dentro de las {hours} horas siguientes a la entrega. Las fotos ayudan a FIRINGI a decidir rápido.",
+    "earlier": "Reclamaciones anteriores de este pedido",
+    "deadline": "Puedes reportar problemas hasta el {date}.",
+    "closedSince": "El plazo de reclamación terminó el {date}.",
+    "notDelivered": "El pedido aún no se ha entregado.",
+    "nothingLeft": "Todo lo entregado en este pedido ya está reclamado o devuelto.",
+    "windowClosed": "Los problemas se pueden reportar hasta {hours} horas después de la entrega — el plazo ha terminado. Para otros casos usa Devoluciones o Ayuda y soporte.",
+    "orderCardTitle": "¿Problema con esta entrega?",
+    "orderCardHint": "Reporta mercancía dañada, faltante, equivocada o de mala calidad dentro de las {hours} horas siguientes a la entrega.",
+    "orderCardClosed": "Tus reclamaciones de este pedido.",
+    "reportProblem": "Reportar un problema",
+    "form": {
+      "what": "¿Qué está mal?",
+      "which": "¿Qué productos y cuántos?",
+      "delivered": "{qty} entregadas",
+      "left": "aún se pueden reclamar {qty}",
+      "lotUnknown": "Lote — no lo sé",
+      "qtyFor": "Cantidad de {product}",
+      "describe": "Describe el problema",
+      "describeHint": "P. ej.: 3 cajas aplastadas, producto con fugas, llegó caliente (8 °C)…",
+      "photos": "Fotos (opcional)",
+      "photosNeeded": "Fotos del problema (al menos una)",
+      "prefer": "¿Qué prefieres?",
+      "decides": "FIRINGI decide — normalmente en 48 horas. La nota de abono se descuenta de lo que debes.",
+      "send": "Enviar reclamación"
+    },
+    "respond": {
+      "title": "Tu versión",
+      "titleUpdate": "Cambiar tu respuesta",
+      "hint": "Acepta la reclamación o recházala con tus motivos y fotos (embalaje, carga, registro de temperatura). FIRINGI decide.",
+      "ACCEPTED": "Aceptamos",
+      "DISPUTED": "Rechazamos",
+      "comment": "Comentario (opcional)",
+      "whyDispute": "¿Por qué la rechazas?",
+      "photos": "Tus fotos (opcional)",
+      "send": "Enviar respuesta",
+      "update": "Actualizar respuesta"
+    },
+    "replaceTitle": "Entregar la reposición",
+    "replaceHint": "FIRINGI aprobó una reposición sin coste. Entrega la mercancía de nuevo y confírmalo aquí.",
+    "replaceDone": "Reposición entregada",
+    "chargeback": {
+      "title": "Cargos",
+      "hint": "Reclamaciones aceptadas por tu culpa: el abono va en un extracto de abono — emite tu nota de abono a FIRINGI; se descuenta de tu pago.",
+      "amount": "Importe",
+      "statement": "Extracto",
+      "none": "Sin cargos.",
+      "dispute": "Impugnar",
+      "why": "¿Por qué impugnas el cargo?",
+      "send": "Enviar impugnación",
+      "yourNote": "Tu impugnación",
+      "status": {
+        "OPEN": "Por abonar",
+        "DISPUTED": "Impugnado",
+        "DEDUCTED": "Liquidado",
+        "WAIVED": "Anulado"
+      }
+    },
+    "quality": {
+      "title": "Índice de calidad",
+      "intro": "Tus reclamaciones aceptadas de los últimos {days} días. Por encima del {threshold} % se avisa a FIRINGI, baja tu puntuación y recibes menos pedidos asignados.",
+      "alerts": "Alertas de calidad de FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Tasa de reclamaciones {value} — por encima de {threshold}.",
+        "PRODUCT_RATE": "{label}: tasa de reclamaciones {value} — por encima de {threshold}.",
+        "LOT": "{label}: {value} reclamaciones (alerta desde {threshold}).",
+        "DRIVER": "{label}: {value} reclamaciones."
+      },
+      "threshold": "alerta desde el {threshold} %",
+      "upheld": "Reclamaciones aceptadas",
+      "ofClaims": "de {claims} reclamaciones",
+      "delivered": "Pedidos entregados",
+      "byProduct": "Por producto",
+      "byProductHint": "Unidades reclamadas frente a entregadas",
+      "byLot": "Por lote",
+      "byLotHint": "Varias reclamaciones del mismo lote: revísalo — quizá una retirada",
+      "claimedUnits": "Reclamadas",
+      "deliveredUnits": "Entregadas",
+      "rate": "Tasa",
+      "claims": "Reclamaciones",
+      "none": "Sin reclamaciones en este periodo."
     }
   }
 }

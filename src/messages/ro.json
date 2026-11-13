@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Supra-stoc și expirare",
     "Lead Times": "Termene de livrare",
     "Demand Events": "Evenimente de cerere",
-    "Planning Settings": "Setări de planificare"
+    "Planning Settings": "Setări de planificare",
+    "Quality Claims": "Reclamații de calitate",
+    "Quality Score": "Scor de calitate"
   },
   "delivery": {
     "title": "Livrare",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI vă cere să reaprovizionați: {product}",
       "body": "{product} din {warehouse} se epuizează, iar clienții îl vor. {message}"
+    },
+    "claim_opened": {
+      "title": "Reclamație nouă {number} — comanda {order}",
+      "body": "Un client a raportat o problemă cu comanda {order}. Răspundeți cu punctul dvs. de vedere."
+    },
+    "claim_message": {
+      "title": "Mesaj nou la reclamația {number}",
+      "body": "Există un mesaj nou la reclamația {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Furnizorul a răspuns la reclamația {number}",
+      "body": "Furnizorul a răspuns la reclamația {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reclamația {number} așteaptă răspunsul dvs.",
+      "body": "Spuneți-vă punctul de vedere la reclamația {number} — FIRINGI decide în curând."
+    },
+    "claim_decided": {
+      "title": "Reclamația {number} a fost soluționată",
+      "body": "FIRINGI a soluționat reclamația {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Înlocuire livrată — reclamația {number}",
+      "body": "Marfa de înlocuire pentru reclamația {number} a fost livrată."
+    },
+    "claim_chargeback": {
+      "title": "Reținere pentru reclamația {number}",
+      "body": "Reclamația {number} a fost admisă din vina dvs. Emiteți factura dvs. de credit către FIRINGI; se scade din plata dvs."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Reținere contestată — reclamația {number}",
+      "body": "Furnizorul contestă reținerea pentru reclamația {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Reținere soluționată — reclamația {number}",
+      "body": "FIRINGI a soluționat contestația dvs. privind reclamația {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reclamații peste termenul de decizie",
+      "body": "{count} reclamații de calitate așteaptă mai mult decât termenul."
+    },
+    "quality_alert": {
+      "title": "Alertă de calitate: {label}",
+      "body": "{label}: {value} (alertă de la {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Ascuns",
       "OPEN": "Deschis",
       "EXPIRED": "Nu mai e necesar"
+    }
+  },
+  "claims": {
+    "title": "Reclamații de calitate",
+    "buyerIntro": "Ceva nu e în regulă cu o livrare — deteriorat, lipsă, greșit, prea cald, termen scurt sau calitate slabă? Raportați pe comandă în {hours} ore de la livrare, cu fotografii. FIRINGI decide și vă creditează sau asigură înlocuirea mărfii.",
+    "vendorIntro": "Reclamațiile clienților despre marfa livrată de dvs. Spuneți-vă rapid punctul de vedere, cu fotografii; FIRINGI decide. Reclamațiile admise se rețin din decontul dvs. și contează în scorul de calitate.",
+    "all": "Toate",
+    "claim": "Reclamație",
+    "order": "Comandă",
+    "customer": "Client",
+    "reasonCol": "Problemă",
+    "products": "Produse",
+    "statusCol": "Stare",
+    "credit": "Credit",
+    "opened": "Deschisă",
+    "yourAnswer": "Răspunsul dvs.",
+    "answerNeeded": "Răspuns necesar",
+    "units": "{qty} buc.",
+    "emptyBuyer": "Nicio reclamație. Raportați o problemă din pagina comenzii după livrare.",
+    "emptyVendor": "Nicio reclamație la livrările dvs.",
+    "qualityLink": "Scorul dvs. de calitate →",
+    "replacementPending": "Înlocuire pe drum",
+    "kpi": {
+      "open": "Reclamații deschise",
+      "approved": "Aprobate",
+      "credited": "Creditat dvs.",
+      "replacements": "Înlocuiri în așteptare",
+      "toAnswer": "Așteaptă răspunsul dvs.",
+      "chargebacksOpen": "Rețineri deschise",
+      "claimRate": "Rata reclamațiilor, 30 de zile",
+      "claimRateHint": "{upheld} admise din {delivered} comenzi livrate"
+    },
+    "status": {
+      "OPEN": "Deschisă",
+      "APPROVED": "Aprobată",
+      "REJECTED": "Respinsă",
+      "WITHDRAWN": "Retrasă"
+    },
+    "reason": {
+      "DAMAGED": "Deteriorat",
+      "MISSING": "Lipsă",
+      "WRONG_PRODUCT": "Produs greșit",
+      "TEMPERATURE": "Temperatură (lanț frigorific)",
+      "SHORT_DATED": "Termen scurt sau expirat",
+      "QUALITY": "Calitate slabă"
+    },
+    "outcome": {
+      "CREDIT": "Factură de credit",
+      "REPLACEMENT": "Înlocuire"
+    },
+    "prefer": {
+      "CREDIT": "Factură de credit",
+      "REPLACEMENT": "Înlocuirea mărfii"
+    },
+    "fault": {
+      "SUPPLIER": "Vina furnizorului",
+      "DRIVER": "Eroare de livrare",
+      "FIRINGI": "Gest comercial FIRINGI",
+      "CUSTOMER": "Reclamație neîntemeiată"
+    },
+    "sla": {
+      "late": "{hours} h întârziere",
+      "left": "decizie în {hours} h"
+    },
+    "progress": "Progres",
+    "step": {
+      "opened": "Raportată",
+      "supplier": "Răspunsul furnizorului",
+      "supplierBy": "așteptat până la {date}",
+      "decided": "Decizia FIRINGI",
+      "replaced": "Înlocuire livrată"
+    },
+    "lines": "Ce nu e în regulă",
+    "lot": "Lot",
+    "claimedQty": "{qty} din {delivered} reclamate",
+    "approvedQty": "{qty} aprobate",
+    "unitPaid": "{amount} / buc. plătit",
+    "unitCost": "prețul dvs. {amount} / buc.",
+    "photo": "Fotografie",
+    "supplierResponse": {
+      "ACCEPTED": "Furnizorul acceptă reclamația",
+      "DISPUTED": "Furnizorul contestă reclamația"
+    },
+    "decided": {
+      "CREDIT": "Aprobată — factură de credit emisă",
+      "REPLACEMENT": "Aprobată — marfa va fi înlocuită",
+      "REJECTED": "Reclamație respinsă"
+    },
+    "creditIssued": "Factură de credit: {amount}.",
+    "feeIncluded": "Include taxa de livrare.",
+    "viewCreditNote": "Descărcați factura de credit",
+    "replacementDone": "Înlocuire livrată la {date}.",
+    "conversation": "Conversație",
+    "noMessages": "Încă nu sunt mesaje.",
+    "side": {
+      "CUSTOMER": "Client",
+      "SUPPLIER": "Furnizor",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Intern",
+    "messagePlaceholder": "Scrieți un mesaj către FIRINGI și cealaltă parte…",
+    "send": "Trimite",
+    "addPhotos": "Adăugați fotografii",
+    "cancel": "Anulare",
+    "withdraw": "Retrageți reclamația",
+    "withdrawConfirm": "Retrageți această reclamație? Puteți raporta din nou problema cât timp termenul este deschis.",
+    "detailTitle": "Reclamația {number}",
+    "detailIntroBuyer": "Reclamația dvs. privind marfa de la {supplier}. FIRINGI decide și vă ține la curent aici.",
+    "detailIntroVendor": "Reclamația {customer} privind livrarea dvs. Răspundeți cu punctul dvs. de vedere și fotografii; FIRINGI decide.",
+    "newTitle": "Raportați o problemă — comanda {number}",
+    "newIntro": "Spuneți-ne ce nu e în regulă cu marfa livrată, în {hours} ore de la livrare. Fotografiile ajută FIRINGI să decidă rapid.",
+    "earlier": "Reclamații anterioare pe această comandă",
+    "deadline": "Puteți raporta probleme până la {date}.",
+    "closedSince": "Termenul de reclamație s-a încheiat la {date}.",
+    "notDelivered": "Comanda nu a fost încă livrată.",
+    "nothingLeft": "Tot ce s-a livrat pe această comandă este deja reclamat sau returnat.",
+    "windowClosed": "Problemele pot fi raportate în {hours} ore de la livrare — termenul a expirat. Pentru alte cazuri folosiți Retururi sau Ajutor și asistență.",
+    "orderCardTitle": "Problemă cu această livrare?",
+    "orderCardHint": "Raportați marfă deteriorată, lipsă, greșită sau de calitate slabă în {hours} ore de la livrare.",
+    "orderCardClosed": "Reclamațiile dvs. pe această comandă.",
+    "reportProblem": "Raportați o problemă",
+    "form": {
+      "what": "Ce nu e în regulă?",
+      "which": "Ce produse, câte?",
+      "delivered": "{qty} livrate",
+      "left": "se mai pot reclama {qty}",
+      "lotUnknown": "Lot — nu știu",
+      "qtyFor": "Cantitate pentru {product}",
+      "describe": "Descrieți problema",
+      "describeHint": "De ex. 3 cutii strivite, produsul curge, a sosit cald (8 °C)…",
+      "photos": "Fotografii (opțional)",
+      "photosNeeded": "Fotografii cu problema (cel puțin una)",
+      "prefer": "Ce preferați?",
+      "decides": "FIRINGI decide — de obicei în 48 de ore. Creditul se scade din ce datorați.",
+      "send": "Trimiteți reclamația"
+    },
+    "respond": {
+      "title": "Punctul dvs. de vedere",
+      "titleUpdate": "Modificați răspunsul",
+      "hint": "Acceptați reclamația sau contestați-o cu motive și fotografii (ambalare, încărcare, jurnal de temperatură). FIRINGI decide.",
+      "ACCEPTED": "Acceptăm",
+      "DISPUTED": "Contestăm",
+      "comment": "Comentariu (opțional)",
+      "whyDispute": "De ce o contestați?",
+      "photos": "Fotografiile dvs. (opțional)",
+      "send": "Trimiteți răspunsul",
+      "update": "Actualizați răspunsul"
+    },
+    "replaceTitle": "Livrați înlocuirea",
+    "replaceHint": "FIRINGI a aprobat o înlocuire gratuită. Livrați din nou marfa și confirmați aici.",
+    "replaceDone": "Înlocuire livrată",
+    "chargeback": {
+      "title": "Rețineri",
+      "hint": "Reclamații admise din vina dvs.: creditul figurează pe un decont de credit — emiteți factura dvs. de credit către FIRINGI; se scade din plata dvs.",
+      "amount": "Sumă",
+      "statement": "Decont",
+      "none": "Nicio reținere.",
+      "dispute": "Contestați",
+      "why": "De ce contestați reținerea?",
+      "send": "Trimiteți contestația",
+      "yourNote": "Contestația dvs.",
+      "status": {
+        "OPEN": "De creditat",
+        "DISPUTED": "Contestată",
+        "DEDUCTED": "Decontată",
+        "WAIVED": "Anulată"
+      }
+    },
+    "quality": {
+      "title": "Scor de calitate",
+      "intro": "Reclamațiile dvs. admise în ultimele {days} zile. Peste {threshold} % FIRINGI este alertată, scorul scade și primiți mai puține comenzi alocate.",
+      "alerts": "Alerte de calitate FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Rata reclamațiilor {value} — peste {threshold}.",
+        "PRODUCT_RATE": "{label}: rata reclamațiilor {value} — peste {threshold}.",
+        "LOT": "{label}: {value} reclamații (alertă de la {threshold}).",
+        "DRIVER": "{label}: {value} reclamații."
+      },
+      "threshold": "alertă de la {threshold} %",
+      "upheld": "Reclamații admise",
+      "ofClaims": "din {claims} reclamații",
+      "delivered": "Comenzi livrate",
+      "byProduct": "Pe produs",
+      "byProductHint": "Unități reclamate față de cele livrate",
+      "byLot": "Pe lot",
+      "byLotHint": "Mai multe reclamații pe același lot: verificați-l — poate o retragere",
+      "claimedUnits": "Reclamate",
+      "deliveredUnits": "Livrate",
+      "rate": "Rată",
+      "claims": "Reclamații",
+      "none": "Nicio reclamație în această perioadă."
     }
   }
 }

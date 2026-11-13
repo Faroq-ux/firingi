@@ -41,7 +41,7 @@ export default async function Page() {
                 <li key={r.id} className="flex flex-wrap items-center gap-3 px-4 py-3 text-sm">
                   <Badge variant={st === "APPLIED" ? "success" : st === "FAILED" ? "destructive" : st === "CANCELLED" ? "outline" : "warning"}>{t(`runStatus.${st}`)}</Badge>
                   <span className="rounded bg-muted px-1.5 py-0.5 text-xs">{t(`source.${r.source}`)}</span>
-                  <span className="min-w-0 flex-1 truncate font-medium">{r.fileName ?? "—"}</span>
+                  <span className="min-w-0 flex-1 basis-32 truncate font-medium">{r.fileName ?? "—"}</span>
                   <span className="text-xs text-muted-foreground">{r.error ?? (st === "HELD" && s.bigChanges ? t("run.bigWarn", { count: s.bigChanges }) : `${t("run.summary.total")} ${s.total ?? 0} · ${t("run.summary.updates")} ${(s.updates ?? 0) + (s.newOffers ?? 0)}${s.applied !== undefined ? ` · ${t("runStatus.APPLIED")} ${s.applied}` : ""}`)}</span>
                   <span className="text-xs tabular-nums text-muted-foreground">{r.createdAt.toLocaleString(locale, { dateStyle: "short", timeStyle: "short" })}</span>
                   {r.status !== "FAILED" && <Link href={`/vendor/products/import/${r.id}`} className="text-sm font-medium text-primary hover:underline">{t("history.open")}</Link>}

@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Túlkészlet és lejárat",
     "Lead Times": "Szállítási idők",
     "Demand Events": "Keresleti események",
-    "Planning Settings": "Tervezési beállítások"
+    "Planning Settings": "Tervezési beállítások",
+    "Quality Claims": "Minőségi reklamációk",
+    "Quality Score": "Minőségi pontszám"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "A FIRINGI utánrendelést kér: {product}",
       "body": "A(z) {product} fogyóban van itt: {warehouse}, és a vevők keresik. {message}"
+    },
+    "claim_opened": {
+      "title": "Új reklamáció {number} — rendelés {order}",
+      "body": "Egy vevő problémát jelzett a(z) {order} rendeléssel. Válaszoljon az álláspontjával."
+    },
+    "claim_message": {
+      "title": "Új üzenet a(z) {number} reklamációban",
+      "body": "Új üzenet érkezett a(z) {number} reklamációban."
+    },
+    "claim_supplier_responded": {
+      "title": "A szállító válaszolt a(z) {number} reklamációra",
+      "body": "A szállító válaszolt a(z) {number} reklamációra: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "A(z) {number} reklamáció az Ön válaszára vár",
+      "body": "Adja meg álláspontját a(z) {number} reklamációról — a FIRINGI hamarosan dönt."
+    },
+    "claim_decided": {
+      "title": "A(z) {number} reklamáció eldőlt",
+      "body": "A FIRINGI döntött a(z) {number} reklamációról. {note}"
+    },
+    "claim_replaced": {
+      "title": "Csere kiszállítva — reklamáció {number}",
+      "body": "A(z) {number} reklamáció csereárui kiszállítva."
+    },
+    "claim_chargeback": {
+      "title": "Terhelés a(z) {number} reklamáció miatt",
+      "body": "A(z) {number} reklamációt az Ön hibájából fogadták el. Állítsa ki jóváíró számláját a FIRINGI-nek; levonjuk a kifizetéséből."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Terhelés vitatva — reklamáció {number}",
+      "body": "A szállító vitatja a(z) {number} reklamáció terhelését."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Terhelés eldőlt — reklamáció {number}",
+      "body": "A FIRINGI döntött a(z) {number} reklamációval kapcsolatos kifogásáról."
+    },
+    "claim_overdue": {
+      "title": "{count} reklamáció túllépte a döntési határidőt",
+      "body": "{count} minőségi reklamáció vár a határidőnél tovább."
+    },
+    "quality_alert": {
+      "title": "Minőségi riasztás: {label}",
+      "body": "{label}: {value} (riasztás {threshold}-tól)."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Elrejtve",
       "OPEN": "Nyitott",
       "EXPIRED": "Már nem szükséges"
+    }
+  },
+  "claims": {
+    "title": "Minőségi reklamációk",
+    "buyerIntro": "Valami nem stimmel egy szállítással — sérült, hiányzik, rossz, túl meleg, rövid lejárat vagy gyenge minőség? Jelezze a rendelésnél a kiszállítástól számított {hours} órán belül, fotókkal. A FIRINGI dönt, és jóváírást ad, vagy kicseréltetik az árut.",
+    "vendorIntro": "Vásárlói reklamációk az Ön által szállított árura. Gyorsan adja meg az álláspontját fotókkal; a FIRINGI dönt. Az elfogadott reklamációkat az elszámolásán terheljük, és beszámítanak a minőségi pontszámába.",
+    "all": "Összes",
+    "claim": "Reklamáció",
+    "order": "Rendelés",
+    "customer": "Vevő",
+    "reasonCol": "Probléma",
+    "products": "Termékek",
+    "statusCol": "Állapot",
+    "credit": "Jóváírás",
+    "opened": "Megnyitva",
+    "yourAnswer": "Az Ön válasza",
+    "answerNeeded": "Válasz szükséges",
+    "units": "{qty} db",
+    "emptyBuyer": "Nincs reklamáció. Problémát a kiszállítás után a rendelés oldalán jelezhet.",
+    "emptyVendor": "Nincs reklamáció a szállításaira.",
+    "qualityLink": "Az Ön minőségi pontszáma →",
+    "replacementPending": "Csere úton",
+    "kpi": {
+      "open": "Nyitott reklamációk",
+      "approved": "Jóváhagyva",
+      "credited": "Önnek jóváírva",
+      "replacements": "Függő cserék",
+      "toAnswer": "Az Ön válaszára vár",
+      "chargebacksOpen": "Nyitott terhelések",
+      "claimRate": "Reklamációs arány, 30 nap",
+      "claimRateHint": "{upheld} elfogadva {delivered} kiszállított rendelésből"
+    },
+    "status": {
+      "OPEN": "Nyitott",
+      "APPROVED": "Jóváhagyva",
+      "REJECTED": "Elutasítva",
+      "WITHDRAWN": "Visszavonva"
+    },
+    "reason": {
+      "DAMAGED": "Sérült",
+      "MISSING": "Hiányzik",
+      "WRONG_PRODUCT": "Rossz termék",
+      "TEMPERATURE": "Hőmérséklet (hűtőlánc)",
+      "SHORT_DATED": "Rövid lejárat vagy lejárt",
+      "QUALITY": "Gyenge minőség"
+    },
+    "outcome": {
+      "CREDIT": "Jóváíró számla",
+      "REPLACEMENT": "Csere"
+    },
+    "prefer": {
+      "CREDIT": "Jóváíró számla",
+      "REPLACEMENT": "Az áru cseréje"
+    },
+    "fault": {
+      "SUPPLIER": "A szállító hibája",
+      "DRIVER": "Kiszállítási hiba",
+      "FIRINGI": "FIRINGI méltányosság",
+      "CUSTOMER": "Nem megalapozott reklamáció"
+    },
+    "sla": {
+      "late": "{hours} óra késés",
+      "left": "döntés {hours} órán belül"
+    },
+    "progress": "Előrehaladás",
+    "step": {
+      "opened": "Bejelentve",
+      "supplier": "Szállítói válasz",
+      "supplierBy": "várható {date}-ig",
+      "decided": "A FIRINGI döntése",
+      "replaced": "Csere kiszállítva"
+    },
+    "lines": "Mi a probléma",
+    "lot": "Tétel",
+    "claimedQty": "{qty} / {delivered} reklamálva",
+    "approvedQty": "{qty} jóváhagyva",
+    "unitPaid": "{amount} / db fizetve",
+    "unitCost": "az Ön ára {amount} / db",
+    "photo": "Fotó",
+    "supplierResponse": {
+      "ACCEPTED": "A szállító elfogadja a reklamációt",
+      "DISPUTED": "A szállító vitatja a reklamációt"
+    },
+    "decided": {
+      "CREDIT": "Jóváhagyva — jóváíró számla kiállítva",
+      "REPLACEMENT": "Jóváhagyva — az árut kicserélik",
+      "REJECTED": "Reklamáció elutasítva"
+    },
+    "creditIssued": "Jóváíró számla: {amount}.",
+    "feeIncluded": "A szállítási díjat tartalmazza.",
+    "viewCreditNote": "Jóváíró számla letöltése",
+    "replacementDone": "Csere kiszállítva: {date}.",
+    "conversation": "Beszélgetés",
+    "noMessages": "Még nincs üzenet.",
+    "side": {
+      "CUSTOMER": "Vevő",
+      "SUPPLIER": "Szállító",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Belső",
+    "messagePlaceholder": "Írjon üzenetet a FIRINGI-nek és a másik félnek…",
+    "send": "Küldés",
+    "addPhotos": "Fotók hozzáadása",
+    "cancel": "Mégse",
+    "withdraw": "Reklamáció visszavonása",
+    "withdrawConfirm": "Visszavonja ezt a reklamációt? A határidőn belül újra bejelentheti a problémát.",
+    "detailTitle": "Reklamáció {number}",
+    "detailIntroBuyer": "Az Ön reklamációja a(z) {supplier} áruira. A FIRINGI dönt, és itt tájékoztatja.",
+    "detailIntroVendor": "{customer} reklamációja az Ön szállítására. Válaszoljon az álláspontjával és fotókkal; a FIRINGI dönt.",
+    "newTitle": "Probléma bejelentése — rendelés {number}",
+    "newIntro": "Mondja el, mi a baj a kiszállított áruval, a kiszállítástól számított {hours} órán belül. A fotók segítenek a FIRINGI-nek gyorsan dönteni.",
+    "earlier": "Korábbi reklamációk ennél a rendelésnél",
+    "deadline": "Problémát {date}-ig jelezhet.",
+    "closedSince": "A reklamációs határidő lejárt: {date}.",
+    "notDelivered": "A rendelést még nem szállították ki.",
+    "nothingLeft": "Ebben a rendelésben minden kiszállított tétel már reklamálva vagy visszaküldve.",
+    "windowClosed": "Problémát a kiszállítás után {hours} órán belül lehet bejelenteni — a határidő lejárt. Egyéb esetben használja a Visszáru vagy a Súgó és támogatás oldalt.",
+    "orderCardTitle": "Probléma ezzel a szállítással?",
+    "orderCardHint": "Jelezze a sérült, hiányzó, rossz vagy gyenge minőségű árut a kiszállítástól számított {hours} órán belül.",
+    "orderCardClosed": "Az Ön reklamációi ennél a rendelésnél.",
+    "reportProblem": "Probléma bejelentése",
+    "form": {
+      "what": "Mi a probléma?",
+      "which": "Mely termékek, mennyi?",
+      "delivered": "{qty} kiszállítva",
+      "left": "még {qty} reklamálható",
+      "lotUnknown": "Tétel — nem tudom",
+      "qtyFor": "Mennyiség: {product}",
+      "describe": "Írja le a problémát",
+      "describeHint": "Pl. 3 doboz összenyomódott, a termék szivárog, melegen érkezett (8 °C)…",
+      "photos": "Fotók (opcionális)",
+      "photosNeeded": "Fotók a problémáról (legalább egy)",
+      "prefer": "Mit szeretne inkább?",
+      "decides": "A FIRINGI dönt — általában 48 órán belül. A jóváírást levonjuk a tartozásából.",
+      "send": "Reklamáció küldése"
+    },
+    "respond": {
+      "title": "Az Ön álláspontja",
+      "titleUpdate": "Válasz módosítása",
+      "hint": "Fogadja el a reklamációt, vagy vitassa indoklással és fotókkal (csomagolás, rakodás, hőmérsékletnapló). A FIRINGI dönt.",
+      "ACCEPTED": "Elfogadjuk",
+      "DISPUTED": "Vitatjuk",
+      "comment": "Megjegyzés (opcionális)",
+      "whyDispute": "Miért vitatja?",
+      "photos": "Az Ön fotói (opcionális)",
+      "send": "Válasz küldése",
+      "update": "Válasz frissítése"
+    },
+    "replaceTitle": "Csere kiszállítása",
+    "replaceHint": "A FIRINGI ingyenes cserét hagyott jóvá. Szállítsa ki újra az árut, majd erősítse meg itt.",
+    "replaceDone": "Csere kiszállítva",
+    "chargeback": {
+      "title": "Terhelések",
+      "hint": "Az Ön hibájából elfogadott reklamációk: a jóváírás egy jóváírási elszámolásban szerepel — állítsa ki jóváíró számláját a FIRINGI-nek; levonjuk a kifizetéséből.",
+      "amount": "Összeg",
+      "statement": "Elszámolás",
+      "none": "Nincs terhelés.",
+      "dispute": "Vitatás",
+      "why": "Miért vitatja a terhelést?",
+      "send": "Kifogás küldése",
+      "yourNote": "Az Ön kifogása",
+      "status": {
+        "OPEN": "Jóváírandó",
+        "DISPUTED": "Vitatott",
+        "DEDUCTED": "Rendezve",
+        "WAIVED": "Elengedve"
+      }
+    },
+    "quality": {
+      "title": "Minőségi pontszám",
+      "intro": "Az elmúlt {days} nap elfogadott reklamációi. {threshold} % felett a FIRINGI riasztást kap, a pontszáma csökken, és kevesebb kiosztott rendelést kap.",
+      "alerts": "A FIRINGI minőségi riasztásai",
+      "alert": {
+        "SUPPLIER_RATE": "Reklamációs arány {value} — {threshold} felett.",
+        "PRODUCT_RATE": "{label}: reklamációs arány {value} — {threshold} felett.",
+        "LOT": "{label}: {value} reklamáció (riasztás {threshold}-tól).",
+        "DRIVER": "{label}: {value} reklamáció."
+      },
+      "threshold": "riasztás {threshold} %-tól",
+      "upheld": "Elfogadott reklamációk",
+      "ofClaims": "{claims} reklamációból",
+      "delivered": "Kiszállított rendelések",
+      "byProduct": "Termékenként",
+      "byProductHint": "Reklamált darabok a kiszállítottakhoz képest",
+      "byLot": "Tételenként",
+      "byLotHint": "Több reklamáció ugyanarra a tételre: ellenőrizze — talán visszahívás",
+      "claimedUnits": "Reklamálva",
+      "deliveredUnits": "Kiszállítva",
+      "rate": "Arány",
+      "claims": "Reklamációk",
+      "none": "Ebben az időszakban nincs reklamáció."
     }
   }
 }

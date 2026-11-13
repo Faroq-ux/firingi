@@ -24,7 +24,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   {
     key: "OPERATIONS", name: "Operations", description: "Orders, vendors, catalogue, delivery and fleet", appliesTo: ["ADMIN"],
     permissions: [
-      "admin.dashboard.view", "admin.orders.view", "admin.orders.manage", "admin.vendors.view", "admin.vendors.approve",
+      "admin.dashboard.view", "admin.orders.view", "admin.orders.manage", "admin.claims.manage", "admin.vendors.view", "admin.vendors.approve",
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
       "admin.allocation.manage", "admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
       "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage", "admin.support.manage",
@@ -76,12 +76,12 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "VENDOR_SALES", name: "Sales Manager", description: "Products, pricing, promotions and orders", appliesTo: VENDOR_TYPES,
     permissions: ["company.support.use", 
       "vendor.dashboard.view", "vendor.products.view", "vendor.products.manage", "vendor.pricing.manage",
-      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.reports.view", "vendor.inventory.view",
+      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.reports.view", "vendor.inventory.view",
     ],
   },
   {
     key: "VENDOR_WAREHOUSE", name: "Warehouse", description: "Stock and order preparation", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.warehouse.pick", "vendor.orders.view", "vendor.orders.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.warehouse.pick", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond"],
   },
   {
     key: "VENDOR_FLEET", name: "Fleet Manager", description: "Drivers, vehicles and service areas", appliesTo: VENDOR_TYPES,
@@ -93,7 +93,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,
-    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.addresses.manage", "buyer.reports.view"],
+    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.claims.manage", "buyer.addresses.manage", "buyer.reports.view"],
   },
   {
     key: "BUYER_ACCOUNTANT", name: "Accountant (purchases)", description: "Invoices and payments", appliesTo: BUYER_TYPES,

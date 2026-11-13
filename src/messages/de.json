@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Überbestand & Haltbarkeit",
     "Lead Times": "Lieferzeiten",
     "Demand Events": "Bedarfsereignisse",
-    "Planning Settings": "Planungseinstellungen"
+    "Planning Settings": "Planungseinstellungen",
+    "Quality Claims": "Qualitätsreklamationen",
+    "Quality Score": "Qualitätswert"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI bittet Sie nachzubestellen: {product}",
       "body": "{product} in {warehouse} geht zur Neige und Kunden möchten es. {message}"
+    },
+    "claim_opened": {
+      "title": "Neue Reklamation {number} — Bestellung {order}",
+      "body": "Ein Kunde hat ein Problem mit Bestellung {order} gemeldet. Bitte antworten Sie mit Ihrer Sicht."
+    },
+    "claim_message": {
+      "title": "Neue Nachricht zu Reklamation {number}",
+      "body": "Es gibt eine neue Nachricht zu Reklamation {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Lieferant hat auf Reklamation {number} geantwortet",
+      "body": "Der Lieferant hat auf Reklamation {number} geantwortet: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reklamation {number} wartet auf Ihre Antwort",
+      "body": "Bitte geben Sie Ihre Sicht zu Reklamation {number} an — FIRINGI entscheidet bald."
+    },
+    "claim_decided": {
+      "title": "Reklamation {number} entschieden",
+      "body": "FIRINGI hat Reklamation {number} entschieden. {note}"
+    },
+    "claim_replaced": {
+      "title": "Ersatz geliefert — Reklamation {number}",
+      "body": "Die Ersatzware zu Reklamation {number} wurde geliefert."
+    },
+    "claim_chargeback": {
+      "title": "Rückbelastung zu Reklamation {number}",
+      "body": "Reklamation {number} wurde mit Ihrem Verschulden anerkannt. Bitte stellen Sie FIRINGI Ihre Gutschrift aus; sie wird mit Ihrer Auszahlung verrechnet."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Rückbelastung bestritten — Reklamation {number}",
+      "body": "Der Lieferant bestreitet die Rückbelastung zu Reklamation {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Rückbelastung entschieden — Reklamation {number}",
+      "body": "FIRINGI hat über Ihren Einspruch zu Reklamation {number} entschieden."
+    },
+    "claim_overdue": {
+      "title": "{count} Reklamationen über der Entscheidungsfrist",
+      "body": "{count} Qualitätsreklamationen warten länger als vereinbart."
+    },
+    "quality_alert": {
+      "title": "Qualitätswarnung: {label}",
+      "body": "{label}: {value} (Warnung ab {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Ausgeblendet",
       "OPEN": "Offen",
       "EXPIRED": "Nicht mehr nötig"
+    }
+  },
+  "claims": {
+    "title": "Qualitätsreklamationen",
+    "buyerIntro": "Stimmt etwas mit einer Lieferung nicht — beschädigt, fehlend, falsch, zu warm, kurzes MHD oder schlechte Qualität? Melden Sie es innerhalb von {hours} Stunden nach der Lieferung mit Fotos an der Bestellung. FIRINGI entscheidet und schreibt Ihnen gut oder lässt die Ware ersetzen.",
+    "vendorIntro": "Reklamationen von Kunden zu Ware, die Sie geliefert haben. Geben Sie schnell Ihre Sicht mit Fotos an; FIRINGI entscheidet. Anerkannte Reklamationen werden auf Ihrer Abrechnung belastet und zählen in Ihren Qualitätswert.",
+    "all": "Alle",
+    "claim": "Reklamation",
+    "order": "Bestellung",
+    "customer": "Kunde",
+    "reasonCol": "Problem",
+    "products": "Produkte",
+    "statusCol": "Status",
+    "credit": "Gutschrift",
+    "opened": "Eröffnet",
+    "yourAnswer": "Ihre Antwort",
+    "answerNeeded": "Antwort nötig",
+    "units": "{qty} Stück",
+    "emptyBuyer": "Keine Reklamationen. Melden Sie ein Problem nach der Lieferung auf der Bestellseite.",
+    "emptyVendor": "Keine Reklamationen zu Ihren Lieferungen.",
+    "qualityLink": "Ihr Qualitätswert →",
+    "replacementPending": "Ersatz unterwegs",
+    "kpi": {
+      "open": "Offene Reklamationen",
+      "approved": "Genehmigt",
+      "credited": "Ihnen gutgeschrieben",
+      "replacements": "Ausstehende Ersatzlieferungen",
+      "toAnswer": "Wartet auf Ihre Antwort",
+      "chargebacksOpen": "Offene Rückbelastungen",
+      "claimRate": "Reklamationsquote, 30 Tage",
+      "claimRateHint": "{upheld} anerkannt von {delivered} gelieferten Bestellungen"
+    },
+    "status": {
+      "OPEN": "Offen",
+      "APPROVED": "Genehmigt",
+      "REJECTED": "Abgelehnt",
+      "WITHDRAWN": "Zurückgezogen"
+    },
+    "reason": {
+      "DAMAGED": "Beschädigt",
+      "MISSING": "Fehlt",
+      "WRONG_PRODUCT": "Falsches Produkt",
+      "TEMPERATURE": "Temperatur (Kühlkette)",
+      "SHORT_DATED": "Kurzes MHD oder abgelaufen",
+      "QUALITY": "Schlechte Qualität"
+    },
+    "outcome": {
+      "CREDIT": "Gutschrift",
+      "REPLACEMENT": "Ersatzlieferung"
+    },
+    "prefer": {
+      "CREDIT": "Gutschrift",
+      "REPLACEMENT": "Ware ersetzen"
+    },
+    "fault": {
+      "SUPPLIER": "Verschulden des Lieferanten",
+      "DRIVER": "Lieferfehler",
+      "FIRINGI": "Kulanz von FIRINGI",
+      "CUSTOMER": "Keine gültige Reklamation"
+    },
+    "sla": {
+      "late": "{hours} Std. überfällig",
+      "left": "Entscheidung in {hours} Std."
+    },
+    "progress": "Fortschritt",
+    "step": {
+      "opened": "Gemeldet",
+      "supplier": "Antwort des Lieferanten",
+      "supplierBy": "erwartet bis {date}",
+      "decided": "Entscheidung von FIRINGI",
+      "replaced": "Ersatz geliefert"
+    },
+    "lines": "Was nicht stimmt",
+    "lot": "Charge",
+    "claimedQty": "{qty} von {delivered} reklamiert",
+    "approvedQty": "{qty} genehmigt",
+    "unitPaid": "{amount} / Stück bezahlt",
+    "unitCost": "Ihr Preis {amount} / Stück",
+    "photo": "Foto",
+    "supplierResponse": {
+      "ACCEPTED": "Der Lieferant erkennt die Reklamation an",
+      "DISPUTED": "Der Lieferant bestreitet die Reklamation"
+    },
+    "decided": {
+      "CREDIT": "Genehmigt — Gutschrift ausgestellt",
+      "REPLACEMENT": "Genehmigt — die Ware wird ersetzt",
+      "REJECTED": "Reklamation abgelehnt"
+    },
+    "creditIssued": "Gutschrift: {amount}.",
+    "feeIncluded": "Die Liefergebühr ist enthalten.",
+    "viewCreditNote": "Gutschrift herunterladen",
+    "replacementDone": "Ersatz geliefert am {date}.",
+    "conversation": "Verlauf",
+    "noMessages": "Noch keine Nachrichten.",
+    "side": {
+      "CUSTOMER": "Kunde",
+      "SUPPLIER": "Lieferant",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Intern",
+    "messagePlaceholder": "Nachricht an FIRINGI und die andere Seite…",
+    "send": "Senden",
+    "addPhotos": "Fotos hinzufügen",
+    "cancel": "Abbrechen",
+    "withdraw": "Reklamation zurückziehen",
+    "withdrawConfirm": "Diese Reklamation zurückziehen? Sie können das Problem erneut melden, solange die Frist läuft.",
+    "detailTitle": "Reklamation {number}",
+    "detailIntroBuyer": "Ihre Reklamation zu Ware von {supplier}. FIRINGI entscheidet und informiert Sie hier.",
+    "detailIntroVendor": "Reklamation von {customer} zu Ihrer Lieferung. Antworten Sie mit Ihrer Sicht und Fotos; FIRINGI entscheidet.",
+    "newTitle": "Problem melden — Bestellung {number}",
+    "newIntro": "Sagen Sie uns, was mit der gelieferten Ware nicht stimmt, innerhalb von {hours} Stunden nach der Lieferung. Fotos helfen FIRINGI, schnell zu entscheiden.",
+    "earlier": "Frühere Reklamationen zu dieser Bestellung",
+    "deadline": "Sie können Probleme bis {date} melden.",
+    "closedSince": "Die Reklamationsfrist endete am {date}.",
+    "notDelivered": "Die Bestellung wurde noch nicht geliefert.",
+    "nothingLeft": "Alles Gelieferte dieser Bestellung ist bereits reklamiert oder retourniert.",
+    "windowClosed": "Probleme können bis {hours} Stunden nach der Lieferung gemeldet werden — die Frist ist abgelaufen. Für andere Fälle nutzen Sie Retouren oder Hilfe & Support.",
+    "orderCardTitle": "Problem mit dieser Lieferung?",
+    "orderCardHint": "Melden Sie beschädigte, fehlende, falsche oder mangelhafte Ware innerhalb von {hours} Stunden nach der Lieferung.",
+    "orderCardClosed": "Ihre Reklamationen zu dieser Bestellung.",
+    "reportProblem": "Problem melden",
+    "form": {
+      "what": "Was stimmt nicht?",
+      "which": "Welche Produkte, wie viele?",
+      "delivered": "{qty} geliefert",
+      "left": "{qty} noch reklamierbar",
+      "lotUnknown": "Charge — weiß nicht",
+      "qtyFor": "Menge für {product}",
+      "describe": "Beschreiben Sie das Problem",
+      "describeHint": "Z. B. 3 Kartons zerdrückt, Produkt läuft aus, warm angekommen (8 °C)…",
+      "photos": "Fotos (optional)",
+      "photosNeeded": "Fotos des Problems (mindestens eines)",
+      "prefer": "Was wäre Ihnen lieber?",
+      "decides": "FIRINGI entscheidet — meist innerhalb von 48 Stunden. Eine Gutschrift wird mit Ihrem offenen Betrag verrechnet.",
+      "send": "Reklamation senden"
+    },
+    "respond": {
+      "title": "Ihre Sicht",
+      "titleUpdate": "Antwort ändern",
+      "hint": "Erkennen Sie die Reklamation an oder bestreiten Sie sie mit Gründen und Fotos (Verpackung, Verladung, Temperaturprotokoll). FIRINGI entscheidet.",
+      "ACCEPTED": "Wir erkennen an",
+      "DISPUTED": "Wir bestreiten",
+      "comment": "Kommentar (optional)",
+      "whyDispute": "Warum bestreiten Sie sie?",
+      "photos": "Ihre Fotos (optional)",
+      "send": "Antwort senden",
+      "update": "Antwort aktualisieren"
+    },
+    "replaceTitle": "Ersatz liefern",
+    "replaceHint": "FIRINGI hat eine kostenlose Ersatzlieferung genehmigt. Liefern Sie die Ware erneut und bestätigen Sie hier.",
+    "replaceDone": "Ersatz geliefert",
+    "chargeback": {
+      "title": "Rückbelastungen",
+      "hint": "Anerkannte Reklamationen mit Ihrem Verschulden: Die Gutschrift steht auf einer Gutschriftsabrechnung — stellen Sie FIRINGI Ihre Gutschrift aus; sie wird mit Ihrer Auszahlung verrechnet.",
+      "amount": "Betrag",
+      "statement": "Abrechnung",
+      "none": "Keine Rückbelastungen.",
+      "dispute": "Bestreiten",
+      "why": "Warum bestreiten Sie die Rückbelastung?",
+      "send": "Einspruch senden",
+      "yourNote": "Ihr Einspruch",
+      "status": {
+        "OPEN": "Gutzuschreiben",
+        "DISPUTED": "Bestritten",
+        "DEDUCTED": "Erledigt",
+        "WAIVED": "Erlassen"
+      }
+    },
+    "quality": {
+      "title": "Qualitätswert",
+      "intro": "Ihre anerkannten Reklamationen der letzten {days} Tage. Über {threshold} % wird FIRINGI benachrichtigt, Ihre Bewertung sinkt und Sie erhalten weniger zugeteilte Bestellungen.",
+      "alerts": "Qualitätswarnungen von FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Reklamationsquote {value} — über {threshold}.",
+        "PRODUCT_RATE": "{label}: Reklamationsquote {value} — über {threshold}.",
+        "LOT": "{label}: {value} Reklamationen (Warnung ab {threshold}).",
+        "DRIVER": "{label}: {value} Reklamationen."
+      },
+      "threshold": "Warnung ab {threshold} %",
+      "upheld": "Anerkannte Reklamationen",
+      "ofClaims": "von {claims} Reklamationen",
+      "delivered": "Gelieferte Bestellungen",
+      "byProduct": "Nach Produkt",
+      "byProductHint": "Reklamierte im Verhältnis zu gelieferten Stück",
+      "byLot": "Nach Charge",
+      "byLotHint": "Mehrere Reklamationen zu einer Charge: prüfen — evtl. ein Rückruf",
+      "claimedUnits": "Reklamiert",
+      "deliveredUnits": "Geliefert",
+      "rate": "Quote",
+      "claims": "Reklamationen",
+      "none": "Keine Reklamationen in diesem Zeitraum."
     }
   }
 }

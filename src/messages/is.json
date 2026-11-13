@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Umframbirgðir & geymsluþol",
     "Lead Times": "Afhendingartímar",
     "Demand Events": "Eftirspurnaratburðir",
-    "Planning Settings": "Stillingar áætlunar"
+    "Planning Settings": "Stillingar áætlunar",
+    "Quality Claims": "Gæðakvartanir",
+    "Quality Score": "Gæðaeinkunn"
   },
   "delivery": {
     "title": "Afhending",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI biður þig að fylla á: {product}",
       "body": "{product} í {warehouse} er að klárast og viðskiptavinir vilja hana. {message}"
+    },
+    "claim_opened": {
+      "title": "Ný kvörtun {number} — pöntun {order}",
+      "body": "Viðskiptavinur tilkynnti vandamál með pöntun {order}. Svaraðu með þinni hlið."
+    },
+    "claim_message": {
+      "title": "Ný skilaboð við kvörtun {number}",
+      "body": "Það eru ný skilaboð við kvörtun {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Birgir svaraði kvörtun {number}",
+      "body": "Birgir svaraði kvörtun {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Kvörtun {number} bíður svars þíns",
+      "body": "Gefðu þína hlið á kvörtun {number} — FIRINGI ákveður fljótlega."
+    },
+    "claim_decided": {
+      "title": "Kvörtun {number} afgreidd",
+      "body": "FIRINGI afgreiddi kvörtun {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Útskipti afhent — kvörtun {number}",
+      "body": "Útskiptavörurnar fyrir kvörtun {number} hafa verið afhentar."
+    },
+    "claim_chargeback": {
+      "title": "Endurkrafa vegna kvörtunar {number}",
+      "body": "Kvörtun {number} var samþykkt á þína ábyrgð. Gefðu út kreditreikninginn þinn til FIRINGI; hann dregst frá útborgun þinni."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Endurkröfu mótmælt — kvörtun {number}",
+      "body": "Birgir mótmælir endurkröfunni vegna kvörtunar {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Endurkrafa afgreidd — kvörtun {number}",
+      "body": "FIRINGI afgreiddi mótmæli þín vegna kvörtunar {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} kvartanir komnar fram yfir ákvörðunarfrest",
+      "body": "{count} gæðakvartanir hafa beðið lengur en fresturinn."
+    },
+    "quality_alert": {
+      "title": "Gæðaviðvörun: {label}",
+      "body": "{label}: {value} (viðvörun frá {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Falið",
       "OPEN": "Opið",
       "EXPIRED": "Ekki lengur þörf"
+    }
+  },
+  "claims": {
+    "title": "Gæðakvartanir",
+    "buyerIntro": "Er eitthvað að afhendingu — skemmt, vantar, rangt, of heitt, stuttur geymslutími eða léleg gæði? Tilkynntu það á pöntuninni innan {hours} klukkustunda frá afhendingu, með myndum. FIRINGI ákveður og bakfærir til þín eða lætur skipta vörunum út.",
+    "vendorIntro": "Kvartanir viðskiptavina um vörur sem þú afhentir. Gefðu þína hlið fljótt með myndum; FIRINGI ákveður. Samþykktar kvartanir eru gjaldfærðar á uppgjörið þitt og telja í gæðaeinkunn þinni.",
+    "all": "Allar",
+    "claim": "Kvörtun",
+    "order": "Pöntun",
+    "customer": "Viðskiptavinur",
+    "reasonCol": "Vandamál",
+    "products": "Vörur",
+    "statusCol": "Staða",
+    "credit": "Inneign",
+    "opened": "Opnuð",
+    "yourAnswer": "Þitt svar",
+    "answerNeeded": "Svar vantar",
+    "units": "{qty} stk.",
+    "emptyBuyer": "Engar kvartanir. Tilkynntu vandamál á pöntunarsíðunni eftir afhendingu.",
+    "emptyVendor": "Engar kvartanir um afhendingar þínar.",
+    "qualityLink": "Gæðaeinkunn þín →",
+    "replacementPending": "Ný sending á leiðinni",
+    "kpi": {
+      "open": "Opnar kvartanir",
+      "approved": "Samþykktar",
+      "credited": "Bakfært til þín",
+      "replacements": "Útskipti í bið",
+      "toAnswer": "Bíður eftir svari þínu",
+      "chargebacksOpen": "Opnar endurkröfur",
+      "claimRate": "Kvörtunarhlutfall, 30 dagar",
+      "claimRateHint": "{upheld} samþykktar af {delivered} afhentum pöntunum"
+    },
+    "status": {
+      "OPEN": "Opin",
+      "APPROVED": "Samþykkt",
+      "REJECTED": "Hafnað",
+      "WITHDRAWN": "Dregin til baka"
+    },
+    "reason": {
+      "DAMAGED": "Skemmt",
+      "MISSING": "Vantar",
+      "WRONG_PRODUCT": "Röng vara",
+      "TEMPERATURE": "Hitastig (kælikeðja)",
+      "SHORT_DATED": "Stuttur geymslutími eða útrunnið",
+      "QUALITY": "Léleg gæði"
+    },
+    "outcome": {
+      "CREDIT": "Kreditreikningur",
+      "REPLACEMENT": "Útskipti"
+    },
+    "prefer": {
+      "CREDIT": "Kreditreikningur",
+      "REPLACEMENT": "Skipta vörunum út"
+    },
+    "fault": {
+      "SUPPLIER": "Sök birgis",
+      "DRIVER": "Afhendingarmistök",
+      "FIRINGI": "Velvild FIRINGI",
+      "CUSTOMER": "Ekki gild kvörtun"
+    },
+    "sla": {
+      "late": "{hours} klst. of seint",
+      "left": "ákvörðun eftir {hours} klst."
+    },
+    "progress": "Framvinda",
+    "step": {
+      "opened": "Tilkynnt",
+      "supplier": "Svar birgis",
+      "supplierBy": "vænst fyrir {date}",
+      "decided": "Ákvörðun FIRINGI",
+      "replaced": "Útskipti afhent"
+    },
+    "lines": "Hvað er að",
+    "lot": "Lota",
+    "claimedQty": "{qty} af {delivered} kvartað",
+    "approvedQty": "{qty} samþykkt",
+    "unitPaid": "{amount} / stk. greitt",
+    "unitCost": "þitt verð {amount} / stk.",
+    "photo": "Mynd",
+    "supplierResponse": {
+      "ACCEPTED": "Birgir samþykkir kvörtunina",
+      "DISPUTED": "Birgir mótmælir kvörtuninni"
+    },
+    "decided": {
+      "CREDIT": "Samþykkt — kreditreikningur gefinn út",
+      "REPLACEMENT": "Samþykkt — vörunum verður skipt út",
+      "REJECTED": "Kvörtun hafnað"
+    },
+    "creditIssued": "Kreditreikningur: {amount}.",
+    "feeIncluded": "Sendingargjaldið er innifalið.",
+    "viewCreditNote": "Sækja kreditreikninginn",
+    "replacementDone": "Útskipti afhent {date}.",
+    "conversation": "Samtal",
+    "noMessages": "Engin skilaboð enn.",
+    "side": {
+      "CUSTOMER": "Viðskiptavinur",
+      "SUPPLIER": "Birgir",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Innra",
+    "messagePlaceholder": "Skrifaðu skilaboð til FIRINGI og hins aðilans…",
+    "send": "Senda",
+    "addPhotos": "Bæta við myndum",
+    "cancel": "Hætta við",
+    "withdraw": "Draga kvörtun til baka",
+    "withdrawConfirm": "Draga þessa kvörtun til baka? Þú getur tilkynnt vandann aftur meðan fresturinn er opinn.",
+    "detailTitle": "Kvörtun {number}",
+    "detailIntroBuyer": "Kvörtun þín um vörur frá {supplier}. FIRINGI ákveður og upplýsir þig hér.",
+    "detailIntroVendor": "Kvörtun {customer} um afhendingu þína. Svaraðu með þinni hlið og myndum; FIRINGI ákveður.",
+    "newTitle": "Tilkynna vandamál — pöntun {number}",
+    "newIntro": "Segðu okkur hvað er að afhentu vörunum, innan {hours} klukkustunda frá afhendingu. Myndir hjálpa FIRINGI að ákveða fljótt.",
+    "earlier": "Fyrri kvartanir á þessari pöntun",
+    "deadline": "Þú getur tilkynnt vandamál til {date}.",
+    "closedSince": "Kvörtunarfresturinn rann út {date}.",
+    "notDelivered": "Pöntunin hefur ekki verið afhent enn.",
+    "nothingLeft": "Allt sem var afhent á þessari pöntun hefur þegar verið kvartað yfir eða skilað.",
+    "windowClosed": "Vandamál má tilkynna allt að {hours} klukkustundum eftir afhendingu — fresturinn er liðinn. Notaðu Skil eða Hjálp og aðstoð í öðrum tilvikum.",
+    "orderCardTitle": "Vandamál með þessa afhendingu?",
+    "orderCardHint": "Tilkynntu skemmdar, vantandi, rangar eða lélegar vörur innan {hours} klukkustunda frá afhendingu.",
+    "orderCardClosed": "Kvartanir þínar á þessari pöntun.",
+    "reportProblem": "Tilkynna vandamál",
+    "form": {
+      "what": "Hvað er að?",
+      "which": "Hvaða vörur, hversu margar?",
+      "delivered": "{qty} afhent",
+      "left": "enn má kvarta yfir {qty}",
+      "lotUnknown": "Lota — veit ekki",
+      "qtyFor": "Magn af {product}",
+      "describe": "Lýstu vandamálinu",
+      "describeHint": "T.d. 3 kassar kramdir, varan lekur, kom heit (8 °C)…",
+      "photos": "Myndir (valfrjálst)",
+      "photosNeeded": "Myndir af vandamálinu (a.m.k. ein)",
+      "prefer": "Hvað viltu frekar?",
+      "decides": "FIRINGI ákveður — yfirleitt innan 48 klukkustunda. Kreditreikningur dregst frá því sem þú skuldar.",
+      "send": "Senda kvörtun"
+    },
+    "respond": {
+      "title": "Þín hlið",
+      "titleUpdate": "Breyta svari þínu",
+      "hint": "Samþykktu kvörtunina eða mótmæltu henni með rökum og myndum (pökkun, hleðsla, hitaskráning). FIRINGI ákveður.",
+      "ACCEPTED": "Við samþykkjum",
+      "DISPUTED": "Við mótmælum",
+      "comment": "Athugasemd (valfrjálst)",
+      "whyDispute": "Af hverju mótmælir þú?",
+      "photos": "Myndirnar þínar (valfrjálst)",
+      "send": "Senda svar",
+      "update": "Uppfæra svar"
+    },
+    "replaceTitle": "Afhenda útskiptin",
+    "replaceHint": "FIRINGI samþykkti útskipti án endurgjalds. Afhentu vörurnar aftur og staðfestu hér.",
+    "replaceDone": "Útskipti afhent",
+    "chargeback": {
+      "title": "Endurkröfur",
+      "hint": "Samþykktar kvartanir á þína ábyrgð: inneignin er á kredituppgjöri — gefðu út kreditreikninginn þinn til FIRINGI; hann dregst frá útborgun þinni.",
+      "amount": "Upphæð",
+      "statement": "Uppgjör",
+      "none": "Engar endurkröfur.",
+      "dispute": "Mótmæla",
+      "why": "Af hverju mótmælir þú endurkröfunni?",
+      "send": "Senda mótmæli",
+      "yourNote": "Mótmæli þín",
+      "status": {
+        "OPEN": "Til inneignar",
+        "DISPUTED": "Mótmælt",
+        "DEDUCTED": "Gert upp",
+        "WAIVED": "Felld niður"
+      }
+    },
+    "quality": {
+      "title": "Gæðaeinkunn",
+      "intro": "Samþykktar kvartanir þínar síðustu {days} daga. Yfir {threshold} % fær FIRINGI viðvörun, einkunn þín lækkar og þú færð færri úthlutaðar pantanir.",
+      "alerts": "Gæðaviðvaranir frá FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Kvörtunarhlutfall {value} — yfir {threshold}.",
+        "PRODUCT_RATE": "{label}: kvörtunarhlutfall {value} — yfir {threshold}.",
+        "LOT": "{label}: {value} kvartanir (viðvörun frá {threshold}).",
+        "DRIVER": "{label}: {value} kvartanir."
+      },
+      "threshold": "viðvörun frá {threshold} %",
+      "upheld": "Samþykktar kvartanir",
+      "ofClaims": "af {claims} kvörtunum",
+      "delivered": "Afhentar pantanir",
+      "byProduct": "Eftir vöru",
+      "byProductHint": "Kvartaðar einingar miðað við afhentar",
+      "byLot": "Eftir lotu",
+      "byLotHint": "Margar kvartanir á eina lotu: skoðaðu hana — kannski innköllun",
+      "claimedUnits": "Kvartað",
+      "deliveredUnits": "Afhent",
+      "rate": "Hlutfall",
+      "claims": "Kvartanir",
+      "none": "Engar kvartanir á tímabilinu."
     }
   }
 }

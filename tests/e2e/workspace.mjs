@@ -88,7 +88,7 @@ await sa.getByTestId("dash-edit").click();
 await sa.waitForTimeout(800);
 await sa.reload(); await settle(sa);
 check("hidden card stays hidden after reload", (await sa.locator('[data-card="network"]').count()) === 0);
-check("wider card remembered", /lg:col-span-2/.test(await sa.locator('[data-card="live"]').getAttribute("class")));
+check("wider card remembered", /col-span-2/.test(await sa.locator('[data-card="live"]').getAttribute("class")));
 await sa.getByTestId("dash-edit").click();
 await sa.getByRole("button", { name: /Reset layout|Repor disposição/i }).click();
 await sa.getByTestId("dash-edit").click();

@@ -39,11 +39,11 @@ export async function CompanyDashboard({ ctx, portal }: { ctx: Ctx; portal: "ven
           <p className="mt-1 text-white/80">{o.company.country.flag} {name} · {tc(ctx.company.type)}</p>
         </div>
         <div className="glass motion-rise w-full rounded-xl p-3 sm:w-72" style={{ ["--i" as string]: 1 }}>
-          <div className="flex items-baseline justify-between text-white"><span className="text-xs font-semibold uppercase tracking-wider text-white/75">{spark.label}</span><span className="font-bold"><CountUp value={spark.total} fmt="money" locale={locale} /></span></div>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-2 text-white"><span className="text-xs font-semibold uppercase tracking-wider text-white/75">{spark.label}</span><span className="whitespace-nowrap font-bold"><CountUp value={spark.total} fmt="money" locale={locale} /></span></div>
           <Sparkline values={spark.values} label={spark.label} color="white" height={64} className="mt-2" />
         </div>
       </div>
-      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">{stats}</div>
+      <div className="mt-6 grid grid-cols-2 gap-3 @2xl:grid-cols-4">{stats}</div>
     </Aurora>
   );
 

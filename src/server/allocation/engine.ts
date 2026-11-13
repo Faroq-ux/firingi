@@ -188,6 +188,9 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
   const today = new Map(todayCounts.map((r) => [r.sellerCompanyId, r._count]));
   const acc = new Map(accepted.map((r) => [r.id, Number(r.n)]));
   const dec = new Map(declined.map((r) => [r.fromVendorId, r._count]));
+  // Upheld quality claims (supplier's fault) in 90 days per accepted order lower reliability.
+  const upheld = await prisma.qualityClaim.groupBy({ by: ["sellerCompanyId"], where: { sellerCompanyId: { in: ids }, status: "APPROVED", fault: "SUPPLIER", decidedAt: { gte: since90 } }, _count: true });
+  const claimsBy = new Map(upheld.map((r) => [r.sellerCompanyId, r._count]));
 
   const offers = await prisma.vendorOffer.findMany({
     where: { vendorCompanyId: { in: ids }, status: "ACTIVE", compliancePausedAt: null, packagingUnitId: { in: items.map((i) => i.packagingUnitId) } },
@@ -253,7 +256,7 @@ export async function findCandidates(target: Target, items: MoveItem[], rules: A
       distance: d === null ? 0.5 : crossBorder ? 0.2 : clamp01(1 - d / limitKm),
       price: marginPct === null ? 0 : clamp01((marginPct - floor) / 20),
       priority: (profile?.priority ?? 50) / 100,
-      reliability: total < 3 ? 0.8 : (acc.get(v.id) ?? 0) / total,
+      reliability: (total < 3 ? 0.8 : (acc.get(v.id) ?? 0) / total) * (1 - Math.min(0.5, ((claimsBy.get(v.id) ?? 0) / Math.max(1, acc.get(v.id) ?? 0)) * 5)),
       route: onRoute.has(v.id) ? 1 : 0,
       sameBuyer: hasOpen.has(v.id) ? 1 : 0,
     };

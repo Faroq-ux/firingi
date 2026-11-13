@@ -18,16 +18,16 @@ export function Kpi({ label, value, prev, fmt, locale, hint, testId, vsLabel = "
   const Icon = delta === null || delta === 0 ? Minus : delta > 0 ? ArrowUpRight : ArrowDownRight;
   return (
     <div className={`tile gloss motion-rise motion-lift rounded-xl border p-4 ${tone ?? toneFor(label)}`} style={{ ["--i" as string]: index } as React.CSSProperties} data-testid={testId}>
-      <div className="text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</div>
-      <div className="mt-1 text-2xl font-bold"><CountUp value={value} fmt={fmt} locale={locale} /></div>
+      <div className="kpi-label text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</div>
+      <div className="kpi-value mt-1"><CountUp value={value} fmt={fmt} locale={locale} /></div>
       {prev !== undefined && (
-        <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground" title={`${vsLabel}: ${fmtValue(prev, fmt, locale)}`}>
+        <div className="mt-1 flex flex-wrap items-center gap-1 text-xs text-muted-foreground" title={`${vsLabel}: ${fmtValue(prev, fmt, locale)}`}>
           {delta !== null && <Icon className={`h-3.5 w-3.5 ${delta > 0 ? "text-success" : delta < 0 ? "text-destructive" : ""}`} aria-hidden />}
           <span className="tabular-nums">{delta === null ? "—" : `${delta > 0 ? "+" : ""}${fmtValue(delta, "percent", locale)}`}</span>
           <span>{vsLabel}</span>
         </div>
       )}
-      {hint && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
+      {hint && <div className="kpi-hint mt-1 text-xs text-muted-foreground">{hint}</div>}
     </div>
   );
 }

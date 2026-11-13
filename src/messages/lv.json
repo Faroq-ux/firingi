@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Pārpalikums un derīgums",
     "Lead Times": "Piegādes laiki",
     "Demand Events": "Pieprasījuma notikumi",
-    "Planning Settings": "Plānošanas iestatījumi"
+    "Planning Settings": "Plānošanas iestatījumi",
+    "Quality Claims": "Kvalitātes pretenzijas",
+    "Quality Score": "Kvalitātes rādītājs"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI lūdz papildināt: {product}",
       "body": "{product} noliktavā {warehouse} beidzas, un klienti to vēlas. {message}"
+    },
+    "claim_opened": {
+      "title": "Jauna pretenzija {number} — pasūtījums {order}",
+      "body": "Klients ziņoja par problēmu ar pasūtījumu {order}. Atbildiet ar savu viedokli."
+    },
+    "claim_message": {
+      "title": "Jauna ziņa pretenzijā {number}",
+      "body": "Pretenzijā {number} ir jauna ziņa."
+    },
+    "claim_supplier_responded": {
+      "title": "Piegādātājs atbildēja uz pretenziju {number}",
+      "body": "Piegādātājs atbildēja uz pretenziju {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Pretenzija {number} gaida jūsu atbildi",
+      "body": "Sniedziet savu viedokli par pretenziju {number} — FIRINGI drīz izlems."
+    },
+    "claim_decided": {
+      "title": "Pretenzija {number} izlemta",
+      "body": "FIRINGI izlēma pretenziju {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Aizvietojums piegādāts — pretenzija {number}",
+      "body": "Aizvietojuma preces pretenzijai {number} ir piegādātas."
+    },
+    "claim_chargeback": {
+      "title": "Ieturējums par pretenziju {number}",
+      "body": "Pretenzija {number} apmierināta jūsu vainas dēļ. Izrakstiet FIRINGI savu kredītrēķinu; to atskaita no jūsu izmaksas."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Ieturējums apstrīdēts — pretenzija {number}",
+      "body": "Piegādātājs apstrīd ieturējumu par pretenziju {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Ieturējums izlemts — pretenzija {number}",
+      "body": "FIRINGI izlēma jūsu iebildumu par pretenziju {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} pretenzijas pārsniedz lēmuma termiņu",
+      "body": "{count} kvalitātes pretenzijas gaida ilgāk par termiņu."
+    },
+    "quality_alert": {
+      "title": "Kvalitātes brīdinājums: {label}",
+      "body": "{label}: {value} (brīdinājums no {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Paslēpts",
       "OPEN": "Atvērts",
       "EXPIRED": "Vairs nav vajadzīgs"
+    }
+  },
+  "claims": {
+    "title": "Kvalitātes pretenzijas",
+    "buyerIntro": "Vai ar piegādi kaut kas nav kārtībā — bojāts, trūkst, nepareizs, pārāk silts, īss derīguma termiņš vai slikta kvalitāte? Ziņojiet pasūtījumā {hours} stundu laikā pēc piegādes, ar fotoattēliem. FIRINGI izlemj un ieskaita jums kredītu vai nodrošina preču nomaiņu.",
+    "vendorIntro": "Klientu pretenzijas par jūsu piegādātajām precēm. Ātri sniedziet savu viedokli ar fotoattēliem; FIRINGI izlemj. Apmierinātās pretenzijas tiek ieturētas jūsu pārskatā un ietekmē jūsu kvalitātes rādītāju.",
+    "all": "Visas",
+    "claim": "Pretenzija",
+    "order": "Pasūtījums",
+    "customer": "Klients",
+    "reasonCol": "Problēma",
+    "products": "Preces",
+    "statusCol": "Statuss",
+    "credit": "Kredīts",
+    "opened": "Atvērta",
+    "yourAnswer": "Jūsu atbilde",
+    "answerNeeded": "Vajadzīga atbilde",
+    "units": "{qty} gab.",
+    "emptyBuyer": "Pretenziju nav. Ziņojiet par problēmu pasūtījuma lapā pēc piegādes.",
+    "emptyVendor": "Par jūsu piegādēm pretenziju nav.",
+    "qualityLink": "Jūsu kvalitātes rādītājs →",
+    "replacementPending": "Aizvietojums ceļā",
+    "kpi": {
+      "open": "Atvērtās pretenzijas",
+      "approved": "Apstiprinātās",
+      "credited": "Jums ieskaitīts",
+      "replacements": "Gaidāmie aizvietojumi",
+      "toAnswer": "Gaida jūsu atbildi",
+      "chargebacksOpen": "Atvērtie ieturējumi",
+      "claimRate": "Pretenziju īpatsvars, 30 dienas",
+      "claimRateHint": "{upheld} apmierinātas no {delivered} piegādātiem pasūtījumiem"
+    },
+    "status": {
+      "OPEN": "Atvērta",
+      "APPROVED": "Apstiprināta",
+      "REJECTED": "Noraidīta",
+      "WITHDRAWN": "Atsaukta"
+    },
+    "reason": {
+      "DAMAGED": "Bojāts",
+      "MISSING": "Trūkst",
+      "WRONG_PRODUCT": "Nepareiza prece",
+      "TEMPERATURE": "Temperatūra (aukstuma ķēde)",
+      "SHORT_DATED": "Īss derīguma termiņš vai beidzies",
+      "QUALITY": "Slikta kvalitāte"
+    },
+    "outcome": {
+      "CREDIT": "Kredītrēķins",
+      "REPLACEMENT": "Aizvietojums"
+    },
+    "prefer": {
+      "CREDIT": "Kredītrēķins",
+      "REPLACEMENT": "Aizvietot preces"
+    },
+    "fault": {
+      "SUPPLIER": "Piegādātāja vaina",
+      "DRIVER": "Piegādes kļūda",
+      "FIRINGI": "FIRINGI labā griba",
+      "CUSTOMER": "Nepamatota pretenzija"
+    },
+    "sla": {
+      "late": "kavējas {hours} h",
+      "left": "lēmums pēc {hours} h"
+    },
+    "progress": "Gaita",
+    "step": {
+      "opened": "Paziņots",
+      "supplier": "Piegādātāja atbilde",
+      "supplierBy": "gaidāma līdz {date}",
+      "decided": "FIRINGI lēmums",
+      "replaced": "Aizvietojums piegādāts"
+    },
+    "lines": "Kas nav kārtībā",
+    "lot": "Partija",
+    "claimedQty": "{qty} no {delivered} pieteikti",
+    "approvedQty": "{qty} apstiprināti",
+    "unitPaid": "{amount} / gab. samaksāts",
+    "unitCost": "jūsu cena {amount} / gab.",
+    "photo": "Foto",
+    "supplierResponse": {
+      "ACCEPTED": "Piegādātājs atzīst pretenziju",
+      "DISPUTED": "Piegādātājs apstrīd pretenziju"
+    },
+    "decided": {
+      "CREDIT": "Apstiprināta — izrakstīts kredītrēķins",
+      "REPLACEMENT": "Apstiprināta — preces tiks aizvietotas",
+      "REJECTED": "Pretenzija noraidīta"
+    },
+    "creditIssued": "Kredītrēķins: {amount}.",
+    "feeIncluded": "Iekļauta piegādes maksa.",
+    "viewCreditNote": "Lejupielādēt kredītrēķinu",
+    "replacementDone": "Aizvietojums piegādāts {date}.",
+    "conversation": "Saziņa",
+    "noMessages": "Ziņu vēl nav.",
+    "side": {
+      "CUSTOMER": "Klients",
+      "SUPPLIER": "Piegādātājs",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Iekšēja",
+    "messagePlaceholder": "Uzrakstiet ziņu FIRINGI un otrai pusei…",
+    "send": "Sūtīt",
+    "addPhotos": "Pievienot fotoattēlus",
+    "cancel": "Atcelt",
+    "withdraw": "Atsaukt pretenziju",
+    "withdrawConfirm": "Atsaukt šo pretenziju? Varēsiet ziņot vēlreiz, kamēr termiņš nav beidzies.",
+    "detailTitle": "Pretenzija {number}",
+    "detailIntroBuyer": "Jūsu pretenzija par {supplier} precēm. FIRINGI izlemj un informē jūs šeit.",
+    "detailIntroVendor": "{customer} pretenzija par jūsu piegādi. Atbildiet ar savu viedokli un fotoattēliem; FIRINGI izlemj.",
+    "newTitle": "Ziņot par problēmu — pasūtījums {number}",
+    "newIntro": "Pastāstiet, kas nav kārtībā ar piegādātajām precēm, {hours} stundu laikā pēc piegādes. Fotoattēli palīdz FIRINGI ātri izlemt.",
+    "earlier": "Iepriekšējās pretenzijas šim pasūtījumam",
+    "deadline": "Par problēmām varat ziņot līdz {date}.",
+    "closedSince": "Pretenziju termiņš beidzās {date}.",
+    "notDelivered": "Pasūtījums vēl nav piegādāts.",
+    "nothingLeft": "Viss šajā pasūtījumā piegādātais jau ir pieteikts pretenzijā vai atgriezts.",
+    "windowClosed": "Par problēmām var ziņot līdz {hours} stundām pēc piegādes — termiņš ir beidzies. Citos gadījumos izmantojiet Atgriešanu vai Palīdzību.",
+    "orderCardTitle": "Problēma ar šo piegādi?",
+    "orderCardHint": "Ziņojiet par bojātām, trūkstošām, nepareizām vai sliktas kvalitātes precēm {hours} stundu laikā pēc piegādes.",
+    "orderCardClosed": "Jūsu pretenzijas par šo pasūtījumu.",
+    "reportProblem": "Ziņot par problēmu",
+    "form": {
+      "what": "Kas nav kārtībā?",
+      "which": "Kuras preces, cik daudz?",
+      "delivered": "piegādāti {qty}",
+      "left": "vēl var pieteikt {qty}",
+      "lotUnknown": "Partija — nezinu",
+      "qtyFor": "Daudzums: {product}",
+      "describe": "Aprakstiet problēmu",
+      "describeHint": "Piem., 3 kastes saspiestas, produkts tek, pienāca silts (8 °C)…",
+      "photos": "Fotoattēli (pēc izvēles)",
+      "photosNeeded": "Problēmas fotoattēli (vismaz viens)",
+      "prefer": "Ko jūs vēlētos?",
+      "decides": "FIRINGI izlemj — parasti 48 stundu laikā. Kredītrēķins tiek atskaitīts no jūsu parāda.",
+      "send": "Sūtīt pretenziju"
+    },
+    "respond": {
+      "title": "Jūsu viedoklis",
+      "titleUpdate": "Mainīt atbildi",
+      "hint": "Atzīstiet pretenziju vai apstrīdiet to ar pamatojumu un fotoattēliem (iepakojums, iekraušana, temperatūras žurnāls). FIRINGI izlemj.",
+      "ACCEPTED": "Atzīstam",
+      "DISPUTED": "Apstrīdam",
+      "comment": "Komentārs (pēc izvēles)",
+      "whyDispute": "Kāpēc apstrīdat?",
+      "photos": "Jūsu fotoattēli (pēc izvēles)",
+      "send": "Sūtīt atbildi",
+      "update": "Atjaunināt atbildi"
+    },
+    "replaceTitle": "Piegādāt aizvietojumu",
+    "replaceHint": "FIRINGI apstiprināja bezmaksas aizvietojumu. Piegādājiet preces vēlreiz un apstipriniet šeit.",
+    "replaceDone": "Aizvietojums piegādāts",
+    "chargeback": {
+      "title": "Ieturējumi",
+      "hint": "Jūsu vainas dēļ apmierinātas pretenzijas: kredīts ir kredīta pārskatā — izrakstiet FIRINGI savu kredītrēķinu; to atskaita no jūsu izmaksas.",
+      "amount": "Summa",
+      "statement": "Pārskats",
+      "none": "Ieturējumu nav.",
+      "dispute": "Apstrīdēt",
+      "why": "Kāpēc apstrīdat ieturējumu?",
+      "send": "Sūtīt iebildumu",
+      "yourNote": "Jūsu iebildums",
+      "status": {
+        "OPEN": "Jāieskaita",
+        "DISPUTED": "Apstrīdēts",
+        "DEDUCTED": "Nokārtots",
+        "WAIVED": "Atcelts"
+      }
+    },
+    "quality": {
+      "title": "Kvalitātes rādītājs",
+      "intro": "Jūsu apmierinātās pretenzijas pēdējās {days} dienās. Virs {threshold} % FIRINGI saņem brīdinājumu, jūsu vērtējums krītas un saņemat mazāk piešķirtu pasūtījumu.",
+      "alerts": "FIRINGI kvalitātes brīdinājumi",
+      "alert": {
+        "SUPPLIER_RATE": "Pretenziju īpatsvars {value} — virs {threshold}.",
+        "PRODUCT_RATE": "{label}: pretenziju īpatsvars {value} — virs {threshold}.",
+        "LOT": "{label}: {value} pretenzijas (brīdinājums no {threshold}).",
+        "DRIVER": "{label}: {value} pretenzijas."
+      },
+      "threshold": "brīdinājums no {threshold} %",
+      "upheld": "Apmierinātās pretenzijas",
+      "ofClaims": "no {claims} pretenzijām",
+      "delivered": "Piegādātie pasūtījumi",
+      "byProduct": "Pa precēm",
+      "byProductHint": "Pieteiktās vienības pret piegādātajām",
+      "byLot": "Pa partijām",
+      "byLotHint": "Vairākas pretenzijas par vienu partiju: pārbaudiet — iespējams, atsaukums",
+      "claimedUnits": "Pieteikts",
+      "deliveredUnits": "Piegādāts",
+      "rate": "Īpatsvars",
+      "claims": "Pretenzijas",
+      "none": "Šajā periodā pretenziju nav."
     }
   }
 }

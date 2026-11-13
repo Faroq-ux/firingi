@@ -16,11 +16,12 @@ import { notify } from "@/server/notify/dispatch";
 import { writeAudit } from "@/server/services/audit";
 import type { PermissionCode } from "@/server/rbac/permissions";
 
-export type ApprovalKind = "CREDIT_NOTE" | "CUSTOMER_TERMS" | "COMMISSION" | "OFFER" | "BANK_DETAILS" | "STAFF_ROLE" | "PAYMENT";
+export type ApprovalKind = "CREDIT_NOTE" | "CLAIM" | "CUSTOMER_TERMS" | "COMMISSION" | "OFFER" | "BANK_DETAILS" | "STAFF_ROLE" | "PAYMENT";
 
 /** What an approver must be allowed to do (the same right the action needs). */
 export const APPROVAL_PERMISSION: Record<ApprovalKind, PermissionCode[]> = {
   CREDIT_NOTE: ["admin.invoices.issue"],
+  CLAIM: ["admin.claims.manage"],
   CUSTOMER_TERMS: ["admin.customers.manage"],
   COMMISSION: ["admin.vendors.commission"],
   OFFER: ["admin.marketing.manage", "admin.pricing.manage"],
@@ -29,7 +30,7 @@ export const APPROVAL_PERMISSION: Record<ApprovalKind, PermissionCode[]> = {
   PAYMENT: ["admin.finance.manage"],
 };
 export const APPROVAL_LABEL: Record<ApprovalKind, string> = {
-  CREDIT_NOTE: "Credit note", CUSTOMER_TERMS: "Credit limit / payment terms", COMMISSION: "Commission change", OFFER: "Big offer / coupon",
+  CREDIT_NOTE: "Credit note", CLAIM: "Quality claim credit", CUSTOMER_TERMS: "Credit limit / payment terms", COMMISSION: "Commission change", OFFER: "Big offer / coupon",
   BANK_DETAILS: "Bank details", STAFF_ROLE: "Powerful staff role", PAYMENT: "Payment",
 };
 

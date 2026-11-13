@@ -83,6 +83,8 @@ export const VENDOR_NAV: NavSection[] = [
       vo("history", "Order History", "Histórico", "P4", { live: true, es: "Historial" }),
       vo("quotes", "Quote Requests", "Pedidos de Orçamento", "P26", { live: true, perm: ["vendor.pricing.manage", "vendor.orders.manage", "vendor.orders.view"], es: "Solicitudes de presupuesto" }),
       vo("returns", "Returns", "Devoluções", "P6", { live: true, es: "Devoluciones" }),
+      vo("claims", "Quality Claims", "Reclamações de Qualidade", "P31", { live: true, perm: ["vendor.claims.respond", "vendor.orders.view"], es: "Reclamaciones de calidad" }),
+      vo("claims/quality", "Quality Score", "Índice de Qualidade", "P31", { live: true, perm: ["vendor.claims.respond", "vendor.orders.view"], es: "Índice de calidad" }),
     ],
   },
   {
@@ -160,6 +162,7 @@ export const BUY_NAV: NavSection[] = [
       bo("lists", "Order Lists", "Listas de Encomenda", "P26", { live: true, es: "Listas de pedidos" }),
       bo("approvals", "Approvals", "Aprovações", "P26", { live: true, perm: ["buyer.orders.place", "buyer.orders.view", "buyer.orders.approve"], es: "Aprobaciones" }),
       bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
+      bo("claims", "Quality Claims", "Reclamações de Qualidade", "P31", { live: true, perm: ["buyer.claims.manage", "buyer.orders.view"], es: "Reclamaciones de calidad" }),
     ],
   },
   {

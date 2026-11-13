@@ -51,7 +51,12 @@ export async function duePayouts(ctx: Ctx, opts: { withinDays?: number; now?: Da
     if (r.dueDate < g.nextDue) g.nextDue = r.dueDate;
     bySupplier.set(r.vendorId, g);
   }
-  return { rows, overdue, soon, later, totals: { overdue: sum(overdue), soon: sum(soon), later: sum(later) }, bySupplier: [...bySupplier.values()].sort((a, b) => b.overdue - a.overdue || b.open - a.open), withinDays: within };
+  // Quality-claim charge-backs still open: the supplier owes FIRINGI a credit note for them — net them off.
+  const { openSupplierChargebacks } = await import("@/server/claims/service");
+  const cbs = await openSupplierChargebacks();
+  const groups = [...bySupplier.values()].map((g) => { const cb = cbs.get(g.vendorId); return { ...g, claimDeductions: cb?.amount ?? 0, claimCount: cb?.count ?? 0, net: Math.round((g.open - (cb?.amount ?? 0)) * 100) / 100 }; });
+  const claimDeductions = Math.round([...cbs.values()].reduce((a, c) => a + c.amount, 0) * 100) / 100; // all suppliers, also those with nothing due yet
+  return { rows, overdue, soon, later, totals: { overdue: sum(overdue), soon: sum(soon), later: sum(later), claimDeductions }, bySupplier: groups.sort((a, b) => b.overdue - a.overdue || b.open - a.open), withinDays: within };
 }
 
 /** CSV of what is due (overdue + within the window) for the bank or the accountant. */

@@ -197,6 +197,9 @@ model Company {
   planningSettings         PlanningSettings?           @relation("PlanningSettingsCompany")
   restockSuggestions       RestockSuggestion[]         @relation("RestockSuggestionCompany")
   planningEvents           PlanningEvent[]             @relation("PlanningEventCompany")
+  claimsMade               QualityClaim[]              @relation("ClaimBuyer")
+  claimsReceived           QualityClaim[]              @relation("ClaimSeller")
+  chargebacks              ClaimChargeback[]           @relation("ChargebackVendor")
   complianceWaivers        ComplianceWaiver[]          @relation("CompanyWaivers")
   roles                    Role[]
   statusHistory            CompanyStatusHistory[]

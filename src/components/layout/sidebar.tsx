@@ -92,7 +92,7 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
           <div className="text-[15px] font-bold tracking-[0.12em] text-white">{title}</div>
           <div className="truncate text-[11px] text-sidebar-muted">{subtitle}</div>
         </div>
-        {onCollapse && <button type="button" onClick={() => onCollapse(true)} title={t("collapse")} aria-label={t("collapse")} className="hidden rounded-lg p-1.5 text-sidebar-muted hover:bg-white/10 hover:text-white md:block" data-testid="sidebar-collapse"><PanelLeftClose className="size-4" /></button>}
+        {onCollapse && <button type="button" onClick={() => onCollapse(true)} title={t("collapse")} aria-label={t("collapse")} className="hidden rounded-lg p-1.5 text-sidebar-muted hover:bg-white/10 hover:text-white lg:block" data-testid="sidebar-collapse"><PanelLeftClose className="size-4" /></button>}
       </div>
       <div className="px-3 pb-2">
         <button type="button" onClick={openPalette} className="flex w-full items-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-left text-[13px] text-sidebar-foreground/75 transition-colors hover:border-white/20 hover:bg-white/10" data-testid="palette-open">

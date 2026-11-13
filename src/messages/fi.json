@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Ylivarasto & vanheneminen",
     "Lead Times": "Toimitusajat",
     "Demand Events": "Kysyntätapahtumat",
-    "Planning Settings": "Suunnittelun asetukset"
+    "Planning Settings": "Suunnittelun asetukset",
+    "Quality Claims": "Laatureklamaatiot",
+    "Quality Score": "Laatupisteet"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI pyytää sinua täydentämään: {product}",
       "body": "{product} varastossa {warehouse} on loppumassa, ja asiakkaat haluavat sitä. {message}"
+    },
+    "claim_opened": {
+      "title": "Uusi reklamaatio {number} — tilaus {order}",
+      "body": "Asiakas ilmoitti ongelmasta tilauksessa {order}. Vastaa oma näkemyksesi."
+    },
+    "claim_message": {
+      "title": "Uusi viesti reklamaatiossa {number}",
+      "body": "Reklamaatiossa {number} on uusi viesti."
+    },
+    "claim_supplier_responded": {
+      "title": "Toimittaja vastasi reklamaatioon {number}",
+      "body": "Toimittaja vastasi reklamaatioon {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reklamaatio {number} odottaa vastaustasi",
+      "body": "Kerro näkemyksesi reklamaatiosta {number} — FIRINGI päättää pian."
+    },
+    "claim_decided": {
+      "title": "Reklamaatio {number} ratkaistu",
+      "body": "FIRINGI ratkaisi reklamaation {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Korvaus toimitettu — reklamaatio {number}",
+      "body": "Reklamaation {number} korvaavat tavarat on toimitettu."
+    },
+    "claim_chargeback": {
+      "title": "Takaisinveloitus reklamaatiosta {number}",
+      "body": "Reklamaatio {number} hyväksyttiin sinun viaksesi. Anna hyvityslaskusi FIRINGIlle; se vähennetään maksustasi."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Takaisinveloitus kiistetty — reklamaatio {number}",
+      "body": "Toimittaja kiistää reklamaation {number} takaisinveloituksen."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Takaisinveloitus ratkaistu — reklamaatio {number}",
+      "body": "FIRINGI ratkaisi vastineesi reklamaatiosta {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reklamaatiota yli päätösajan",
+      "body": "{count} laatureklamaatiota on odottanut määräaikaa kauemmin."
+    },
+    "quality_alert": {
+      "title": "Laatuhälytys: {label}",
+      "body": "{label}: {value} (hälytys alkaen {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Piilotettu",
       "OPEN": "Avoin",
       "EXPIRED": "Ei enää tarpeen"
+    }
+  },
+  "claims": {
+    "title": "Laatureklamaatiot",
+    "buyerIntro": "Onko toimituksessa jotain vialla — vaurioitunut, puuttuu, väärä, liian lämmin, lyhyt päiväys tai huono laatu? Ilmoita siitä tilauksella {hours} tunnin kuluessa toimituksesta kuvien kanssa. FIRINGI päättää ja hyvittää sinulle tai korvauttaa tavarat.",
+    "vendorIntro": "Asiakkaiden reklamaatiot toimittamistasi tavaroista. Kerro oma näkemyksesi nopeasti kuvien kanssa; FIRINGI päättää. Hyväksytyt reklamaatiot veloitetaan tilityksessäsi ja vaikuttavat laatupisteisiisi.",
+    "all": "Kaikki",
+    "claim": "Reklamaatio",
+    "order": "Tilaus",
+    "customer": "Asiakas",
+    "reasonCol": "Ongelma",
+    "products": "Tuotteet",
+    "statusCol": "Tila",
+    "credit": "Hyvitys",
+    "opened": "Avattu",
+    "yourAnswer": "Vastauksesi",
+    "answerNeeded": "Vastaus tarvitaan",
+    "units": "{qty} kpl",
+    "emptyBuyer": "Ei reklamaatioita. Ilmoita ongelmasta tilaussivulla toimituksen jälkeen.",
+    "emptyVendor": "Ei reklamaatioita toimituksistasi.",
+    "qualityLink": "Laatupisteesi →",
+    "replacementPending": "Korvaava toimitus matkalla",
+    "kpi": {
+      "open": "Avoimet reklamaatiot",
+      "approved": "Hyväksytyt",
+      "credited": "Sinulle hyvitetty",
+      "replacements": "Odottavat korvaukset",
+      "toAnswer": "Odottaa vastaustasi",
+      "chargebacksOpen": "Avoimet takaisinveloitukset",
+      "claimRate": "Reklamaatioaste, 30 päivää",
+      "claimRateHint": "{upheld} hyväksytty {delivered} toimitetusta tilauksesta"
+    },
+    "status": {
+      "OPEN": "Avoin",
+      "APPROVED": "Hyväksytty",
+      "REJECTED": "Hylätty",
+      "WITHDRAWN": "Peruttu"
+    },
+    "reason": {
+      "DAMAGED": "Vaurioitunut",
+      "MISSING": "Puuttuu",
+      "WRONG_PRODUCT": "Väärä tuote",
+      "TEMPERATURE": "Lämpötila (kylmäketju)",
+      "SHORT_DATED": "Lyhyt päiväys tai vanhentunut",
+      "QUALITY": "Huono laatu"
+    },
+    "outcome": {
+      "CREDIT": "Hyvityslasku",
+      "REPLACEMENT": "Korvaava toimitus"
+    },
+    "prefer": {
+      "CREDIT": "Hyvityslasku",
+      "REPLACEMENT": "Korvaa tavarat"
+    },
+    "fault": {
+      "SUPPLIER": "Toimittajan virhe",
+      "DRIVER": "Toimitusvirhe",
+      "FIRINGI": "FIRINGIn hyvityseleenä",
+      "CUSTOMER": "Ei pätevä reklamaatio"
+    },
+    "sla": {
+      "late": "{hours} h myöhässä",
+      "left": "päätös {hours} h:n kuluttua"
+    },
+    "progress": "Eteneminen",
+    "step": {
+      "opened": "Ilmoitettu",
+      "supplier": "Toimittajan vastaus",
+      "supplierBy": "odotetaan viimeistään {date}",
+      "decided": "FIRINGIn päätös",
+      "replaced": "Korvaus toimitettu"
+    },
+    "lines": "Mikä on vialla",
+    "lot": "Erä",
+    "claimedQty": "{qty}/{delivered} reklamoitu",
+    "approvedQty": "{qty} hyväksytty",
+    "unitPaid": "{amount} / kpl maksettu",
+    "unitCost": "hintasi {amount} / kpl",
+    "photo": "Kuva",
+    "supplierResponse": {
+      "ACCEPTED": "Toimittaja hyväksyy reklamaation",
+      "DISPUTED": "Toimittaja kiistää reklamaation"
+    },
+    "decided": {
+      "CREDIT": "Hyväksytty — hyvityslasku annettu",
+      "REPLACEMENT": "Hyväksytty — tavarat korvataan",
+      "REJECTED": "Reklamaatio hylätty"
+    },
+    "creditIssued": "Hyvityslasku: {amount}.",
+    "feeIncluded": "Toimitusmaksu sisältyy.",
+    "viewCreditNote": "Lataa hyvityslasku",
+    "replacementDone": "Korvaus toimitettu {date}.",
+    "conversation": "Keskustelu",
+    "noMessages": "Ei vielä viestejä.",
+    "side": {
+      "CUSTOMER": "Asiakas",
+      "SUPPLIER": "Toimittaja",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Sisäinen",
+    "messagePlaceholder": "Kirjoita viesti FIRINGIlle ja toiselle osapuolelle…",
+    "send": "Lähetä",
+    "addPhotos": "Lisää kuvia",
+    "cancel": "Peruuta",
+    "withdraw": "Peru reklamaatio",
+    "withdrawConfirm": "Perutaanko reklamaatio? Voit ilmoittaa ongelmasta uudelleen, kun määräaika on vielä voimassa.",
+    "detailTitle": "Reklamaatio {number}",
+    "detailIntroBuyer": "Reklamaatiosi toimittajan {supplier} tavaroista. FIRINGI päättää ja kertoo sinulle täällä.",
+    "detailIntroVendor": "Asiakkaan {customer} reklamaatio toimituksestasi. Vastaa oma näkemyksesi kuvineen; FIRINGI päättää.",
+    "newTitle": "Ilmoita ongelmasta — tilaus {number}",
+    "newIntro": "Kerro, mikä toimitetuissa tavaroissa on vialla, {hours} tunnin kuluessa toimituksesta. Kuvat auttavat FIRINGIä päättämään nopeasti.",
+    "earlier": "Aiemmat reklamaatiot tällä tilauksella",
+    "deadline": "Voit ilmoittaa ongelmista {date} asti.",
+    "closedSince": "Reklamaatioaika päättyi {date}.",
+    "notDelivered": "Tilausta ei ole vielä toimitettu.",
+    "nothingLeft": "Kaikki tällä tilauksella toimitettu on jo reklamoitu tai palautettu.",
+    "windowClosed": "Ongelmista voi ilmoittaa {hours} tunnin kuluessa toimituksesta — aika on päättynyt. Käytä muissa tapauksissa Palautukset- tai Apu ja tuki -sivua.",
+    "orderCardTitle": "Ongelma tässä toimituksessa?",
+    "orderCardHint": "Ilmoita vaurioituneista, puuttuvista, vääristä tai huonolaatuisista tavaroista {hours} tunnin kuluessa toimituksesta.",
+    "orderCardClosed": "Reklamaatiosi tällä tilauksella.",
+    "reportProblem": "Ilmoita ongelmasta",
+    "form": {
+      "what": "Mikä on vialla?",
+      "which": "Mitkä tuotteet, kuinka monta?",
+      "delivered": "{qty} toimitettu",
+      "left": "{qty} voi vielä reklamoida",
+      "lotUnknown": "Erä — en tiedä",
+      "qtyFor": "Määrä tuotteelle {product}",
+      "describe": "Kuvaile ongelma",
+      "describeHint": "Esim. 3 laatikkoa litistynyt, tuote vuotaa, saapui lämpimänä (8 °C)…",
+      "photos": "Kuvat (valinnainen)",
+      "photosNeeded": "Kuvat ongelmasta (vähintään yksi)",
+      "prefer": "Mitä toivot?",
+      "decides": "FIRINGI päättää — yleensä 48 tunnin kuluessa. Hyvitys vähennetään velastasi.",
+      "send": "Lähetä reklamaatio"
+    },
+    "respond": {
+      "title": "Sinun näkemyksesi",
+      "titleUpdate": "Muuta vastaustasi",
+      "hint": "Hyväksy reklamaatio tai kiistä se perusteluin ja kuvin (pakkaus, lastaus, lämpötilaloki). FIRINGI päättää.",
+      "ACCEPTED": "Hyväksymme",
+      "DISPUTED": "Kiistämme",
+      "comment": "Kommentti (valinnainen)",
+      "whyDispute": "Miksi kiistät sen?",
+      "photos": "Kuvasi (valinnainen)",
+      "send": "Lähetä vastaus",
+      "update": "Päivitä vastaus"
+    },
+    "replaceTitle": "Toimita korvaus",
+    "replaceHint": "FIRINGI hyväksyi maksuttoman korvauksen. Toimita tavarat uudelleen ja vahvista täällä.",
+    "replaceDone": "Korvaus toimitettu",
+    "chargeback": {
+      "title": "Takaisinveloitukset",
+      "hint": "Hyväksytyt reklamaatiot, joissa vika on sinun: hyvitys on hyvitystilityksellä — anna hyvityslaskusi FIRINGIlle; se vähennetään maksustasi.",
+      "amount": "Summa",
+      "statement": "Tilitys",
+      "none": "Ei takaisinveloituksia.",
+      "dispute": "Kiistä",
+      "why": "Miksi kiistät takaisinveloituksen?",
+      "send": "Lähetä vastine",
+      "yourNote": "Vastineesi",
+      "status": {
+        "OPEN": "Hyvitettävä",
+        "DISPUTED": "Kiistetty",
+        "DEDUCTED": "Selvitetty",
+        "WAIVED": "Peruttu"
+      }
+    },
+    "quality": {
+      "title": "Laatupisteet",
+      "intro": "Hyväksytyt reklamaatiosi viimeisen {days} päivän ajalta. Yli {threshold} %:ssa FIRINGI saa hälytyksen, pisteesi laskevat ja saat vähemmän kohdistettuja tilauksia.",
+      "alerts": "FIRINGIn laatuhälytykset",
+      "alert": {
+        "SUPPLIER_RATE": "Reklamaatioaste {value} — yli {threshold}.",
+        "PRODUCT_RATE": "{label}: reklamaatioaste {value} — yli {threshold}.",
+        "LOT": "{label}: {value} reklamaatiota (hälytys alkaen {threshold}).",
+        "DRIVER": "{label}: {value} reklamaatiota."
+      },
+      "threshold": "hälytys alkaen {threshold} %",
+      "upheld": "Hyväksytyt reklamaatiot",
+      "ofClaims": "/ {claims} reklamaatiota",
+      "delivered": "Toimitetut tilaukset",
+      "byProduct": "Tuotteittain",
+      "byProductHint": "Reklamoidut suhteessa toimitettuihin kappaleisiin",
+      "byLot": "Erittäin",
+      "byLotHint": "Useita reklamaatioita samasta erästä: tarkista se — ehkä takaisinveto",
+      "claimedUnits": "Reklamoitu",
+      "deliveredUnits": "Toimitettu",
+      "rate": "Aste",
+      "claims": "Reklamaatiot",
+      "none": "Ei reklamaatioita tällä jaksolla."
     }
   }
 }

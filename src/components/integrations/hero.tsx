@@ -17,8 +17,10 @@ export function IntegrationsHero({ title, subtitle, live, stats, locale, childre
         {children}
       </div>
       {stats.length > 0 && (
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {stats.map((s, i) => <HeroStat key={s.label} label={s.label} value={s.value} locale={locale} href={s.href} i={i} />)}
+        <div className="@container mt-5">
+          <div className="grid grid-cols-2 gap-3 @xl:grid-cols-4">
+            {stats.map((s, i) => <HeroStat key={s.label} label={s.label} value={s.value} locale={locale} href={s.href} i={i} />)}
+          </div>
         </div>
       )}
     </Aurora>

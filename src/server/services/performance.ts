@@ -199,7 +199,7 @@ export async function ratingSummary(vendorIds?: string[]) {
 
 /**
  * Score 0–100 from: confirmation speed (≤ 2 h best), fill rate, declines / no answer,
- * on-time delivery (own fleet), returns and customer rating. Missing parts don't count.
+ * on-time delivery (own fleet), returns, upheld quality claims and customer rating. Missing parts don't count.
  */
 export async function supplierScorecards(ctx: Ctx, type: "DISTRIBUTOR" | "WHOLESALER" | "ALL", p: { from: Date; to: Date }, vendorId?: string) {
   const admin = ctx.company.type === "ADMIN";
@@ -210,7 +210,7 @@ export async function supplierScorecards(ctx: Ctx, type: "DISTRIBUTOR" | "WHOLES
   });
   if (!vendors.length) return [];
   const ids = vendors.map((v) => v.id);
-  const stats = await prisma.$queryRaw<{ id: string; orders: number; confirmH: number | null; ordered: number; confirmed: number; declined: number; delivered: number; ontime: number; timed: number; returns: number }[]>`
+  const stats = await prisma.$queryRaw<{ id: string; orders: number; confirmH: number | null; ordered: number; confirmed: number; declined: number; delivered: number; ontime: number; timed: number; returns: number; claims: number }[]>`
     SELECT c.id,
       (SELECT count(*) FROM "Order" o WHERE o."sellerCompanyId" = c.id AND o."placedAt" BETWEEN ${p.from} AND ${p.to})::int AS orders,
       (SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM h."at" - o."placedAt") / 3600)
@@ -224,7 +224,8 @@ export async function supplierScorecards(ctx: Ctx, type: "DISTRIBUTOR" | "WHOLES
          AND o."requestedDeliveryDate" IS NOT NULL AND d."completedAt" < o."requestedDeliveryDate" + interval '1 day')::int AS ontime,
       (SELECT count(*) FROM "Delivery" d JOIN "Order" o ON o.id = d."orderId" WHERE d."executingCompanyId" = c.id AND d.status = 'DELIVERED' AND o."placedAt" BETWEEN ${p.from} AND ${p.to}
          AND o."requestedDeliveryDate" IS NOT NULL)::int AS timed,
-      (SELECT count(*) FROM "ReturnRequest" r JOIN "Order" o ON o.id = r."orderId" WHERE o."sellerCompanyId" = c.id AND r.status <> 'REJECTED' AND o."placedAt" BETWEEN ${p.from} AND ${p.to})::int AS returns
+      (SELECT count(*) FROM "ReturnRequest" r JOIN "Order" o ON o.id = r."orderId" WHERE o."sellerCompanyId" = c.id AND r.status <> 'REJECTED' AND o."placedAt" BETWEEN ${p.from} AND ${p.to})::int AS returns,
+      (SELECT count(*) FROM "QualityClaim" q JOIN "Order" o ON o.id = q."orderId" WHERE q."sellerCompanyId" = c.id AND q.status = 'APPROVED' AND q.fault = 'SUPPLIER' AND o."placedAt" BETWEEN ${p.from} AND ${p.to})::int AS claims
     FROM "Company" c WHERE c.id IN (${Prisma.join(ids)})`;
   const ratings = await ratingSummary(ids);
   const by = new Map(stats.map((s) => [s.id, s]));
@@ -235,18 +236,20 @@ export async function supplierScorecards(ctx: Ctx, type: "DISTRIBUTOR" | "WHOLES
     const declineRate = s.orders > 0 ? s.declined / s.orders : null;
     const onTime = s.timed > 0 ? s.ontime / s.timed : null;
     const returnRate = s.delivered > 0 ? s.returns / s.delivered : null;
+    const claimRate = s.delivered > 0 ? s.claims / s.delivered : null; // upheld quality claims (supplier's fault)
     const parts: [number, number][] = []; // [score 0–1, weight]
     if (s.confirmH !== null) parts.push([Math.max(0, Math.min(1, 1 - (s.confirmH - 2) / 22)), 15]);
     if (fill !== null) parts.push([fill, 25]);
     if (declineRate !== null) parts.push([1 - Math.min(1, declineRate * 3), 20]);
     if (onTime !== null) parts.push([onTime, 15]);
     if (returnRate !== null) parts.push([1 - Math.min(1, returnRate * 5), 10]);
+    if (claimRate !== null) parts.push([1 - Math.min(1, claimRate * 5), 15]);
     if (rt?.avg) parts.push([(rt.avg - 1) / 4, 15]);
     const w = parts.reduce((a, [, x]) => a + x, 0);
     const score = w ? Math.round((parts.reduce((a, [sc, x]) => a + sc * x, 0) / w) * 100) : null;
     return {
       id: v.id, name: v.tradeName ?? v.legalName, type: v.type, flag: v.country.flag, orders: s.orders, confirmHours: s.confirmH === null ? null : r2(s.confirmH),
-      fillRate: fill, declineRate, onTime, returnRate, rating: rt?.avg ?? null, ratingCount: rt?.count ?? 0, score,
+      fillRate: fill, declineRate, onTime, returnRate, claimRate, claims: s.claims, rating: rt?.avg ?? null, ratingCount: rt?.count ?? 0, score,
     };
   }).sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
 }

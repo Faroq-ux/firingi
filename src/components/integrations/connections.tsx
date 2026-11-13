@@ -89,7 +89,7 @@ export function ApiKeys({ keys, scopes, recent, locale }: { keys: KeyRow[]; scop
       {recent.length > 0 && (
         <details className="rounded-xl border bg-card p-3 text-sm">
           <summary className="cursor-pointer font-medium">{t("keys.recent")}</summary>
-          <ul className="mt-2 divide-y font-mono text-xs">{recent.map((c) => <li key={c.id} className="flex flex-wrap gap-x-3 py-1.5"><span className={c.status >= 400 ? "text-destructive" : "text-[var(--vivid-teal)]"}>{c.status}</span><span>{c.method}</span><span className="min-w-0 flex-1 truncate">{c.path}</span><span className="text-muted-foreground">{c.ms} ms · {c.keyName} · {when(c.at)}</span></li>)}</ul>
+          <ul className="mt-2 divide-y font-mono text-xs">{recent.map((c) => <li key={c.id} className="flex flex-wrap gap-x-3 py-1.5"><span className={c.status >= 400 ? "text-destructive" : "text-[var(--vivid-teal)]"}>{c.status}</span><span>{c.method}</span><span className="min-w-0 flex-1 basis-40 truncate">{c.path}</span><span className="basis-full text-muted-foreground sm:basis-auto">{c.ms} ms · {c.keyName} · {when(c.at)}</span></li>)}</ul>
         </details>
       )}
     </div>

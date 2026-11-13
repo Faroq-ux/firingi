@@ -1,0 +1,187 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 31 — quality claims: a customer reports a problem with delivered goods (damaged, missing,
+// wrong product, temperature, short-dated, quality) with photos within a time limit; the supplier
+// can respond with its side; FIRINGI (merchant of record) decides — credit note (certified through
+// the invoicing provider), replacement or rejection — and who was at fault. Faults are charged back:
+// to the supplier (deducted from its payout; its own drivers are the supplier's responsibility) or to
+// a FIRINGI driver (only on deliveries the customer paid a fee for, capped at the driver's pay for it).
+// Claim rates per supplier / product / lot / driver feed the scorecards, allocation and alerts.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum ClaimReason {
+  DAMAGED
+  MISSING
+  WRONG_PRODUCT
+  TEMPERATURE
+  SHORT_DATED
+  QUALITY
+}
+
+enum ClaimStatus {
+  OPEN // waiting for FIRINGI (the supplier may respond)
+  APPROVED // decided in the customer's favour (credit and / or replacement)
+  REJECTED
+  WITHDRAWN // by the customer
+}
+
+enum ClaimOutcome {
+  CREDIT // credit note for the approved quantities
+  REPLACEMENT // the supplier delivers the goods again, free of charge
+}
+
+enum ClaimFault {
+  SUPPLIER // goods, packing, picking, the supplier's own delivery
+  DRIVER // FIRINGI's delivery
+  FIRINGI // goodwill / FIRINGI's own mistake
+  CUSTOMER // not a valid complaint
+}
+
+enum SupplierClaimResponse {
+  ACCEPTED
+  DISPUTED
+}
+
+enum ChargebackTarget {
+  SUPPLIER
+  DRIVER
+}
+
+enum ChargebackStatus {
+  OPEN // to deduct from the next payout / driver pay
+  DISPUTED // the supplier disputes it — FIRINGI decides
+  DEDUCTED
+  WAIVED
+}
+
+enum QualityAlertKind {
+  SUPPLIER_RATE
+  PRODUCT_RATE
+  LOT
+  DRIVER
+}
+
+model QualityClaim {
+  id                  String                 @id @default(cuid())
+  number              String                 @unique // CL-2026-000001
+  orderId             String
+  buyerCompanyId      String
+  sellerCompanyId     String
+  reason              ClaimReason
+  description         String
+  photoKeys           String[]               @default([])
+  preferredOutcome    ClaimOutcome           @default(CREDIT)
+  status              ClaimStatus            @default(OPEN)
+  dueBy               DateTime // FIRINGI's decision deadline (SLA)
+  createdById         String
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+  // the supplier's side
+  supplierResponse    SupplierClaimResponse?
+  supplierComment     String?
+  supplierPhotoKeys   String[]               @default([])
+  supplierRespondedAt DateTime?
+  supplierRespondedBy String?
+  // FIRINGI's decision
+  outcome             ClaimOutcome?
+  fault               ClaimFault?
+  decisionNote        String?
+  decidedById         String?
+  decidedAt           DateTime?
+  creditNoteId        String?
+  creditGross         Decimal?               @db.Decimal(18, 2)
+  creditDeliveryFee   Boolean                @default(false)
+  replacementDoneAt   DateTime?
+  replacementById     String?
+
+  order       Order              @relation("ClaimOrder", fields: [orderId], references: [id], onDelete: Cascade)
+  buyer       Company            @relation("ClaimBuyer", fields: [buyerCompanyId], references: [id])
+  seller      Company            @relation("ClaimSeller", fields: [sellerCompanyId], references: [id])
+  lines       QualityClaimLine[]
+  messages    ClaimMessage[]
+  chargebacks ClaimChargeback[]
+
+  @@index([status, dueBy])
+  @@index([buyerCompanyId, createdAt])
+  @@index([sellerCompanyId, createdAt])
+  @@index([orderId])
+}
+
+model QualityClaimLine {
+  id          String  @id @default(cuid())
+  claimId     String
+  orderLineId String
+  offerId     String
+  qty         Int
+  approvedQty Int?
+  lotCode     String? // the lot delivered (from the purchased lots), when known
+
+  claim     QualityClaim @relation(fields: [claimId], references: [id], onDelete: Cascade)
+  orderLine OrderLine    @relation("ClaimOrderLine", fields: [orderLineId], references: [id])
+
+  @@index([claimId])
+  @@index([offerId])
+}
+
+/// Conversation on a claim. `internal` = FIRINGI staff only.
+model ClaimMessage {
+  id              String   @id @default(cuid())
+  claimId         String
+  authorCompanyId String
+  authorUserId    String
+  body            String
+  photoKeys       String[] @default([])
+  internal        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  claim QualityClaim @relation(fields: [claimId], references: [id], onDelete: Cascade)
+
+  @@index([claimId, createdAt])
+}
+
+model ClaimChargeback {
+  id              String           @id @default(cuid())
+  claimId         String
+  target          ChargebackTarget
+  vendorCompanyId String?
+  driverId        String?
+  amount          Decimal          @db.Decimal(18, 2)
+  status          ChargebackStatus @default(OPEN)
+  disputeNote     String?
+  disputedAt      DateTime?
+  disputedById    String?
+  resolvedById    String?
+  resolvedAt      DateTime?
+  resolutionNote  String?
+  deductedAt      DateTime?
+  deductedRef     String?
+  statementId     String? // supplier: the credit billing statement it settles through (the supplier's credit note to FIRINGI)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  claim  QualityClaim @relation(fields: [claimId], references: [id], onDelete: Cascade)
+  vendor Company?     @relation("ChargebackVendor", fields: [vendorCompanyId], references: [id])
+  driver Driver?      @relation("ChargebackDriver", fields: [driverId], references: [id])
+
+  @@index([target, status])
+  @@index([vendorCompanyId, status])
+  @@index([driverId, status])
+}
+
+/// Quality threshold crossed (daily job). One open alert per key.
+model QualityAlert {
+  id             String           @id @default(cuid())
+  kind           QualityAlertKind
+  key            String // SUPPLIER:<id> | PRODUCT:<offerId> | LOT:<offerId>:<lot> | DRIVER:<id>
+  label          String
+  companyId      String?
+  value          Float
+  threshold      Float
+  claims         Int
+  status         String           @default("OPEN") // OPEN | ACKNOWLEDGED
+  acknowledgedBy String?
+  acknowledgedAt DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([status, kind])
+}

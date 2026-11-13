@@ -159,18 +159,26 @@ export async function driverPerformance(ctx: Ctx, p: Period, all = false) {
   }).sort((a, b) => b.delivered - a.delivered || a.name.localeCompare(b.name));
 }
 
-/** FIRINGI drivers' pay for the period: per completed route + per delivered order + per planned km. */
+/** FIRINGI drivers' pay for the period: per completed route + per delivered order the customer paid delivery for + per planned km, less quality-claim charge-backs. */
 export async function driverEarnings(ctx: Ctx, p: Period) {
   if (ctx.company.type !== "ADMIN" || !can(ctx, ["admin.fleet.view", "admin.fleet.manage", "admin.finance.view"])) throw new ForbiddenError();
   const { pay } = await routingSettings();
   const perf = await driverPerformance(ctx, p);
   const completed = await prisma.route.groupBy({ by: ["driverId"], where: { executingCompanyId: ctx.company.id, status: "COMPLETED", completedAt: { gte: p.from, lte: p.to } }, _count: { _all: true }, _sum: { plannedKm: true } });
   const byDriver = new Map(completed.map((c) => [c.driverId, c]));
+  // Per-delivery pay only where the customer paid for delivery (fee or flat rate) — free deliveries earn route + km pay only.
+  const paid = await prisma.delivery.groupBy({ by: ["driverId"], where: { executingCompanyId: ctx.company.id, status: "DELIVERED", completedAt: { gte: p.from, lte: p.to }, order: { deliveryFeeNet: { gt: 0 } } }, _count: { _all: true } });
+  const paidBy = new Map(paid.map((x) => [x.driverId, x._count._all]));
+  // Quality-claim charge-backs raised in the period (open = still to deduct).
+  const cbs = await prisma.claimChargeback.groupBy({ by: ["driverId", "status"], where: { target: "DRIVER", status: { in: ["OPEN", "DEDUCTED"] }, createdAt: { gte: p.from, lte: p.to } }, _sum: { amount: true } });
+  const ded = new Map<string, { open: number; done: number }>();
+  for (const c of cbs) { const e = ded.get(c.driverId!) ?? { open: 0, done: 0 }; if (c.status === "OPEN") e.open += Number(c._sum.amount ?? 0); else e.done += Number(c._sum.amount ?? 0); ded.set(c.driverId!, e); }
   const rows = perf.map((d) => {
     const c = byDriver.get(d.id);
-    const routes = c?._count._all ?? 0, km = Number(c?._sum.plannedKm ?? 0);
-    const routePay = routes * pay.perRoute, deliveryPay = d.delivered * pay.perDelivery, kmPay = km * pay.perKm;
-    return { id: d.id, name: d.name, routes, delivered: d.delivered, km, routePay, deliveryPay, kmPay, total: routePay + deliveryPay + kmPay };
+    const routes = c?._count._all ?? 0, km = Number(c?._sum.plannedKm ?? 0), feePaid = paidBy.get(d.id) ?? 0;
+    const routePay = routes * pay.perRoute, deliveryPay = feePaid * pay.perDelivery, kmPay = km * pay.perKm;
+    const gross = routePay + deliveryPay + kmPay, dd = ded.get(d.id) ?? { open: 0, done: 0 }, deductions = Math.round((dd.open + dd.done) * 100) / 100;
+    return { id: d.id, name: d.name, routes, delivered: d.delivered, feePaid, km, routePay, deliveryPay, kmPay, gross, deductions, openDeductions: Math.round(dd.open * 100) / 100, total: Math.round((gross - deductions) * 100) / 100 };
   });
   return { pay, rows, total: rows.reduce((a, r) => a + r.total, 0) };
 }

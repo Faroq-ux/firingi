@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Stokk żejjed u skadenza",
     "Lead Times": "Żminijiet tal-kunsinna",
     "Demand Events": "Avvenimenti tad-domanda",
-    "Planning Settings": "Settings tal-ippjanar"
+    "Planning Settings": "Settings tal-ippjanar",
+    "Quality Claims": "Ilmenti dwar il-kwalità",
+    "Quality Score": "Punteġġ tal-kwalità"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI qed titolbok timla mill-ġdid: {product}",
       "body": "{product} f'{warehouse} qed jispiċċa u l-klijenti jridu. {message}"
+    },
+    "claim_opened": {
+      "title": "Ilment ġdid {number} — ordni {order}",
+      "body": "Klijent irrapporta problema bl-ordni {order}. Wieġeb bil-verżjoni tiegħek."
+    },
+    "claim_message": {
+      "title": "Messaġġ ġdid fuq l-ilment {number}",
+      "body": "Hemm messaġġ ġdid fuq l-ilment {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Il-fornitur wieġeb għall-ilment {number}",
+      "body": "Il-fornitur wieġeb għall-ilment {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "L-ilment {number} qed jistenna t-tweġiba tiegħek",
+      "body": "Agħti l-verżjoni tiegħek dwar l-ilment {number} — FIRINGI se tiddeċiedi dalwaqt."
+    },
+    "claim_decided": {
+      "title": "Ilment {number} deċiż",
+      "body": "FIRINGI ddeċidiet l-ilment {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Sostituzzjoni kkonsenjata — ilment {number}",
+      "body": "Il-merkanzija sostitwita għall-ilment {number} ġiet ikkonsenjata."
+    },
+    "claim_chargeback": {
+      "title": "Debitu għall-ilment {number}",
+      "body": "L-ilment {number} ġie aċċettat bi tort tiegħek. Oħroġ in-nota ta' kreditu tiegħek lil FIRINGI; titnaqqas mill-ħlas tiegħek."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Debitu kkontestat — ilment {number}",
+      "body": "Il-fornitur jikkontesta d-debitu tal-ilment {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Debitu deċiż — ilment {number}",
+      "body": "FIRINGI ddeċidiet il-kontestazzjoni tiegħek dwar l-ilment {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} ilmenti lil hinn mill-iskadenza tad-deċiżjoni",
+      "body": "{count} ilmenti dwar il-kwalità qed jistennew aktar mill-iskadenza."
+    },
+    "quality_alert": {
+      "title": "Twissija tal-kwalità: {label}",
+      "body": "{label}: {value} (twissija minn {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Moħbi",
       "OPEN": "Miftuħ",
       "EXPIRED": "M'għadux meħtieġ"
+    }
+  },
+  "claims": {
+    "title": "Ilmenti dwar il-kwalità",
+    "buyerIntro": "Xi ħaġa mhix sew f'konsenja — imħassra, nieqsa, ħażina, sħuna wisq, data qasira jew kwalità ħażina? Irrapportaha fuq l-ordni fi żmien {hours} siegħa mill-konsenja, b'ritratti. FIRINGI tiddeċiedi u tikkreditak jew tara li l-merkanzija tinbidel.",
+    "vendorIntro": "Ilmenti tal-klijenti dwar merkanzija li inti kkonsenjajt. Agħti l-verżjoni tiegħek malajr b'ritratti; FIRINGI tiddeċiedi. L-ilmenti aċċettati jiġu ddebitati fuq l-istqarrija tiegħek u jgħoddu fil-punteġġ tal-kwalità tiegħek.",
+    "all": "Kollha",
+    "claim": "Ilment",
+    "order": "Ordni",
+    "customer": "Klijent",
+    "reasonCol": "Problema",
+    "products": "Prodotti",
+    "statusCol": "Status",
+    "credit": "Kreditu",
+    "opened": "Miftuħ",
+    "yourAnswer": "It-tweġiba tiegħek",
+    "answerNeeded": "Tweġiba meħtieġa",
+    "units": "{qty} unità",
+    "emptyBuyer": "L-ebda lment. Irrapporta problema mill-paġna tal-ordni wara l-konsenja.",
+    "emptyVendor": "L-ebda lment dwar il-konsenji tiegħek.",
+    "qualityLink": "Il-punteġġ tal-kwalità tiegħek →",
+    "replacementPending": "Sostituzzjoni fit-triq",
+    "kpi": {
+      "open": "Ilmenti miftuħa",
+      "approved": "Approvati",
+      "credited": "Ikkreditat lilek",
+      "replacements": "Sostituzzjonijiet pendenti",
+      "toAnswer": "Qed jistennew it-tweġiba tiegħek",
+      "chargebacksOpen": "Debiti miftuħa",
+      "claimRate": "Rata ta' lmenti, 30 jum",
+      "claimRateHint": "{upheld} aċċettati minn {delivered} ordnijiet ikkonsenjati"
+    },
+    "status": {
+      "OPEN": "Miftuħ",
+      "APPROVED": "Approvat",
+      "REJECTED": "Miċħud",
+      "WITHDRAWN": "Irtirat"
+    },
+    "reason": {
+      "DAMAGED": "Imħassra",
+      "MISSING": "Nieqsa",
+      "WRONG_PRODUCT": "Prodott ħażin",
+      "TEMPERATURE": "Temperatura (katina tal-kesħa)",
+      "SHORT_DATED": "Data qasira jew skaduta",
+      "QUALITY": "Kwalità ħażina"
+    },
+    "outcome": {
+      "CREDIT": "Nota ta' kreditu",
+      "REPLACEMENT": "Sostituzzjoni"
+    },
+    "prefer": {
+      "CREDIT": "Nota ta' kreditu",
+      "REPLACEMENT": "Ibdel il-merkanzija"
+    },
+    "fault": {
+      "SUPPLIER": "Tort tal-fornitur",
+      "DRIVER": "Żball fil-konsenja",
+      "FIRINGI": "Rieda tajba ta' FIRINGI",
+      "CUSTOMER": "Ilment mhux validu"
+    },
+    "sla": {
+      "late": "{hours} siegħa tard",
+      "left": "deċiżjoni f'{hours} siegħa"
+    },
+    "progress": "Progress",
+    "step": {
+      "opened": "Irrapportat",
+      "supplier": "Tweġiba tal-fornitur",
+      "supplierBy": "mistennija sa {date}",
+      "decided": "Deċiżjoni ta' FIRINGI",
+      "replaced": "Sostituzzjoni kkonsenjata"
+    },
+    "lines": "X'inhu ħażin",
+    "lot": "Lott",
+    "claimedQty": "{qty} minn {delivered} ilmentati",
+    "approvedQty": "{qty} approvati",
+    "unitPaid": "{amount} / unità mħallsa",
+    "unitCost": "il-prezz tiegħek {amount} / unità",
+    "photo": "Ritratt",
+    "supplierResponse": {
+      "ACCEPTED": "Il-fornitur jaċċetta l-ilment",
+      "DISPUTED": "Il-fornitur jikkontesta l-ilment"
+    },
+    "decided": {
+      "CREDIT": "Approvat — inħarġet nota ta' kreditu",
+      "REPLACEMENT": "Approvat — il-merkanzija se tinbidel",
+      "REJECTED": "Ilment miċħud"
+    },
+    "creditIssued": "Nota ta' kreditu: {amount}.",
+    "feeIncluded": "Il-ħlas tal-konsenja huwa inkluż.",
+    "viewCreditNote": "Niżżel in-nota ta' kreditu",
+    "replacementDone": "Sostituzzjoni kkonsenjata fl-{date}.",
+    "conversation": "Konversazzjoni",
+    "noMessages": "Għad m'hemmx messaġġi.",
+    "side": {
+      "CUSTOMER": "Klijent",
+      "SUPPLIER": "Fornitur",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Intern",
+    "messagePlaceholder": "Ikteb messaġġ lil FIRINGI u lill-parti l-oħra…",
+    "send": "Ibgħat",
+    "addPhotos": "Żid ritratti",
+    "cancel": "Ikkanċella",
+    "withdraw": "Irtira l-ilment",
+    "withdrawConfirm": "Tirtira dan l-ilment? Tista' terġa' tirrapporta l-problema sakemm iż-żmien għadu miftuħ.",
+    "detailTitle": "Ilment {number}",
+    "detailIntroBuyer": "L-ilment tiegħek dwar merkanzija minn {supplier}. FIRINGI tiddeċiedi u żżommok aġġornat hawn.",
+    "detailIntroVendor": "L-ilment ta' {customer} dwar il-konsenja tiegħek. Wieġeb bil-verżjoni tiegħek u ritratti; FIRINGI tiddeċiedi.",
+    "newTitle": "Irrapporta problema — ordni {number}",
+    "newIntro": "Għidilna x'inhu ħażin fil-merkanzija kkonsenjata, fi żmien {hours} siegħa mill-konsenja. Ir-ritratti jgħinu lil FIRINGI tiddeċiedi malajr.",
+    "earlier": "Ilmenti preċedenti fuq din l-ordni",
+    "deadline": "Tista' tirrapporta problemi sa {date}.",
+    "closedSince": "Iż-żmien għall-ilmenti għalaq fl-{date}.",
+    "notDelivered": "L-ordni għadha ma ġietx ikkonsenjata.",
+    "nothingLeft": "Kulma ġie kkonsenjat f'din l-ordni diġà ġie ilmentat jew irritornat.",
+    "windowClosed": "Il-problemi jistgħu jiġu rrapportati sa {hours} siegħa wara l-konsenja — iż-żmien għalaq. Għal każijiet oħra uża Ritorni jew Għajnuna u appoġġ.",
+    "orderCardTitle": "Problema b'din il-konsenja?",
+    "orderCardHint": "Irrapporta merkanzija mħassra, nieqsa, ħażina jew ta' kwalità ħażina fi żmien {hours} siegħa mill-konsenja.",
+    "orderCardClosed": "L-ilmenti tiegħek fuq din l-ordni.",
+    "reportProblem": "Irrapporta problema",
+    "form": {
+      "what": "X'inhu ħażin?",
+      "which": "Liema prodotti, kemm?",
+      "delivered": "{qty} ikkonsenjati",
+      "left": "{qty} għadhom jistgħu jiġu ilmentati",
+      "lotUnknown": "Lott — ma nafx",
+      "qtyFor": "Kwantità għal {product}",
+      "describe": "Iddeskrivi l-problema",
+      "describeHint": "Eż. 3 kaxxi mgħaffġa, prodott inixxi, wasal sħun (8 °C)…",
+      "photos": "Ritratti (mhux obbligatorji)",
+      "photosNeeded": "Ritratti tal-problema (mill-inqas wieħed)",
+      "prefer": "X'tippreferi?",
+      "decides": "FIRINGI tiddeċiedi — normalment fi żmien 48 siegħa. Nota ta' kreditu titnaqqas minn dak li għandek tħallas.",
+      "send": "Ibgħat l-ilment"
+    },
+    "respond": {
+      "title": "Il-verżjoni tiegħek",
+      "titleUpdate": "Ibdel it-tweġiba",
+      "hint": "Aċċetta l-ilment jew ikkontestah bir-raġunijiet u ritratti (imballaġġ, tagħbija, reġistru tat-temperatura). FIRINGI tiddeċiedi.",
+      "ACCEPTED": "Naċċettaw",
+      "DISPUTED": "Nikkontestaw",
+      "comment": "Kumment (mhux obbligatorju)",
+      "whyDispute": "Għaliex tikkontestah?",
+      "photos": "Ir-ritratti tiegħek (mhux obbligatorji)",
+      "send": "Ibgħat it-tweġiba",
+      "update": "Aġġorna t-tweġiba"
+    },
+    "replaceTitle": "Ikkonsenja s-sostituzzjoni",
+    "replaceHint": "FIRINGI approvat sostituzzjoni b'xejn. Erġa' kkonsenja l-merkanzija u kkonferma hawn.",
+    "replaceDone": "Sostituzzjoni kkonsenjata",
+    "chargeback": {
+      "title": "Debiti",
+      "hint": "Ilmenti aċċettati bi tort tiegħek: il-kreditu jidher fuq stqarrija ta' kreditu — oħroġ in-nota ta' kreditu tiegħek lil FIRINGI; titnaqqas mill-ħlas tiegħek.",
+      "amount": "Ammont",
+      "statement": "Stqarrija",
+      "none": "L-ebda debitu.",
+      "dispute": "Ikkontesta",
+      "why": "Għaliex tikkontesta d-debitu?",
+      "send": "Ibgħat il-kontestazzjoni",
+      "yourNote": "Il-kontestazzjoni tiegħek",
+      "status": {
+        "OPEN": "Biex jiġi kkreditat",
+        "DISPUTED": "Ikkontestat",
+        "DEDUCTED": "Saldat",
+        "WAIVED": "Maħfur"
+      }
+    },
+    "quality": {
+      "title": "Punteġġ tal-kwalità",
+      "intro": "L-ilmenti aċċettati tiegħek tal-aħħar {days} jum. 'Il fuq minn {threshold} % FIRINGI tiġi avżata, il-punteġġ tiegħek jinżel u tirċievi inqas ordnijiet assenjati.",
+      "alerts": "Twissijiet tal-kwalità minn FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Rata ta' lmenti {value} — 'il fuq minn {threshold}.",
+        "PRODUCT_RATE": "{label}: rata ta' lmenti {value} — 'il fuq minn {threshold}.",
+        "LOT": "{label}: {value} ilmenti (twissija minn {threshold}).",
+        "DRIVER": "{label}: {value} ilmenti."
+      },
+      "threshold": "twissija minn {threshold} %",
+      "upheld": "Ilmenti aċċettati",
+      "ofClaims": "minn {claims} ilmenti",
+      "delivered": "Ordnijiet ikkonsenjati",
+      "byProduct": "Skont il-prodott",
+      "byProductHint": "Unitajiet ilmentati meta mqabbla ma' dawk ikkonsenjati",
+      "byLot": "Skont il-lott",
+      "byLotHint": "Diversi lmenti fuq lott wieħed: iċċekkjah — forsi rtirar",
+      "claimedUnits": "Ilmentati",
+      "deliveredUnits": "Ikkonsenjati",
+      "rate": "Rata",
+      "claims": "Ilmenti",
+      "none": "L-ebda lment f'dan il-perjodu."
     }
   }
 }

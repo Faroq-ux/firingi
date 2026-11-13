@@ -38,6 +38,11 @@ async function execute(ctx: Ctx, kind: ApprovalKind, p: Record<string, unknown>)
       const cn = await issueCreditNote(ctx, p.invoiceId as string, { lines: p.lines as "ALL", reason: p.reason as string });
       return { creditNote: cn.fullNumber };
     }
+    case "CLAIM": {
+      const { decideClaim } = await import("@/server/claims/service");
+      const r = await decideClaim(ctx, p.claimId as string, p.input as Parameters<typeof decideClaim>[2]);
+      return { claim: r.number, creditNote: r.creditNote ?? null };
+    }
     case "CUSTOMER_TERMS": {
       const { setCustomerTerms } = await import("@/server/services/payments");
       await setCustomerTerms(ctx, p.companyId as string, p.paymentTermsDays as number, p.creditLimit as number | null);

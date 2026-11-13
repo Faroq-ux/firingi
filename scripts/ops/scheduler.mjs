@@ -20,6 +20,7 @@ const SCHEDULE = [
   { job: "inventory", due: (m) => m % 1440 === 6 * 60 + 13 }, // daily 06:13 UTC
   { job: "compliance", due: (m) => m % 1440 === 5 * 60 + 47 }, // daily 05:47 UTC
   { job: "planning", due: (m) => m % 1440 === 4 * 60 + 37 }, // daily 04:37 UTC — forecasts & restock suggestions
+  { job: "claims", due: (m) => m % 1440 === 7 * 60 + 19 }, // daily 07:19 UTC — claim SLA, supplier reminders, charge-backs, quality alerts
   { job: "buying", due: (m) => m % 15 === 11 }, // recurring orders & quotes, every 15 min (+11)
 ];
 const running = new Set();

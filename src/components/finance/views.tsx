@@ -260,7 +260,7 @@ export async function PromotionsView({ ctx, as, title, form }: { ctx: Ctx; as: "
 }
 
 function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
-  return <Card><CardContent className="p-5"><p className="text-sm text-muted-foreground">{label}</p><p className="text-2xl font-semibold tabular-nums">{value}</p>{hint && <p className="text-xs text-muted-foreground">{hint}</p>}</CardContent></Card>;
+  return <Card className="stat-card"><CardContent className="p-5"><p className="kpi-label text-sm text-muted-foreground">{label}</p><p className="kpi-value font-semibold">{value}</p>{hint && <p className="kpi-hint text-xs text-muted-foreground">{hint}</p>}</CardContent></Card>;
 }
 
 export async function FinanceOverviewView({ ctx }: { ctx: Ctx }) {

@@ -33,7 +33,7 @@ const main = (p) => p.textContent("main");
 const stamp = Date.now().toString().slice(-6);
 /** "€ 1.234,56" / "1,234.56 €" / "-€120.00" → number (the last 2 digits are cents). */
 const euros = (s) => { const m = s.replace(/\s/g, "").match(/[-−]?[^\d-−]*[\d.,]+/); if (!m) return NaN; const neg = /^[-−]/.test(m[0]); const d = m[0].replace(/[^\d]/g, ""); return (neg ? -1 : 1) * Number(d) / 100; };
-const kpi = async (p, testid, label) => euros(await p.getByTestId(testid).locator("div.tile", { hasText: label }).first().locator("div.text-2xl").textContent());
+const kpi = async (p, testid, label) => euros(await p.getByTestId(testid).locator("div.tile", { hasText: label }).first().locator(".kpi-value").textContent());
 
 // ── 1. P&L: a cost lowers net profit by exactly its amount ──
 const fin = await login("finance@firingi.test");

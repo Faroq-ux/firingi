@@ -137,7 +137,7 @@ function useLocation() {
 }
 
 /** Shrink camera photos before upload (long side ≤ 1600 px, JPEG). */
-async function shrink(file: File): Promise<File> {
+export async function shrink(file: File): Promise<File> {
   if (!file.type.startsWith("image/") || file.size < 400_000) return file;
   try {
     const bmp = await createImageBitmap(file);

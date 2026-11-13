@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Overlager & holdbarhet",
     "Lead Times": "Leveringstider",
     "Demand Events": "Etterspørselshendelser",
-    "Planning Settings": "Planleggingsinnstillinger"
+    "Planning Settings": "Planleggingsinnstillinger",
+    "Quality Claims": "Kvalitetsreklamasjoner",
+    "Quality Score": "Kvalitetsscore"
   },
   "delivery": {
     "title": "Levering",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI ber deg fylle på: {product}",
       "body": "{product} på {warehouse} holder på å gå tomt, og kundene vil ha det. {message}"
+    },
+    "claim_opened": {
+      "title": "Ny reklamasjon {number} — ordre {order}",
+      "body": "En kunde har meldt et problem med ordre {order}. Svar med din side."
+    },
+    "claim_message": {
+      "title": "Ny melding på reklamasjon {number}",
+      "body": "Det er en ny melding på reklamasjon {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Leverandøren svarte på reklamasjon {number}",
+      "body": "Leverandøren svarte på reklamasjon {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reklamasjon {number} venter på svaret ditt",
+      "body": "Gi din side på reklamasjon {number} — FIRINGI avgjør snart."
+    },
+    "claim_decided": {
+      "title": "Reklamasjon {number} avgjort",
+      "body": "FIRINGI har avgjort reklamasjon {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Erstatning levert — reklamasjon {number}",
+      "body": "Erstatningsvarene for reklamasjon {number} er levert."
+    },
+    "claim_chargeback": {
+      "title": "Tilbakebelastning for reklamasjon {number}",
+      "body": "Reklamasjon {number} ble godkjent med deg som skyldig. Utsted kreditnotaen din til FIRINGI; den trekkes fra utbetalingen din."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Tilbakebelastning bestridt — reklamasjon {number}",
+      "body": "Leverandøren bestrider tilbakebelastningen for reklamasjon {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Tilbakebelastning avgjort — reklamasjon {number}",
+      "body": "FIRINGI har avgjort innsigelsen din om reklamasjon {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reklamasjoner over avgjørelsesfristen",
+      "body": "{count} kvalitetsreklamasjoner har ventet lenger enn fristen."
+    },
+    "quality_alert": {
+      "title": "Kvalitetsvarsel: {label}",
+      "body": "{label}: {value} (varsel fra {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Skjult",
       "OPEN": "Åpen",
       "EXPIRED": "Ikke lenger nødvendig"
+    }
+  },
+  "claims": {
+    "title": "Kvalitetsreklamasjoner",
+    "buyerIntro": "Er noe galt med en levering — skadet, mangler, feil, for varm, kort holdbarhet eller dårlig kvalitet? Meld det på ordren innen {hours} timer etter levering, med bilder. FIRINGI avgjør og krediterer deg eller får varene erstattet.",
+    "vendorIntro": "Kunders reklamasjoner på varer du har levert. Gi raskt din side med bilder; FIRINGI avgjør. Godkjente reklamasjoner belastes på oppgjøret ditt og teller i kvalitetsscoren din.",
+    "all": "Alle",
+    "claim": "Reklamasjon",
+    "order": "Ordre",
+    "customer": "Kunde",
+    "reasonCol": "Problem",
+    "products": "Produkter",
+    "statusCol": "Status",
+    "credit": "Kreditering",
+    "opened": "Opprettet",
+    "yourAnswer": "Ditt svar",
+    "answerNeeded": "Svar trengs",
+    "units": "{qty} stk.",
+    "emptyBuyer": "Ingen reklamasjoner. Meld et problem fra ordresiden etter levering.",
+    "emptyVendor": "Ingen reklamasjoner på leveransene dine.",
+    "qualityLink": "Kvalitetsscoren din →",
+    "replacementPending": "Erstatning på vei",
+    "kpi": {
+      "open": "Åpne reklamasjoner",
+      "approved": "Godkjent",
+      "credited": "Kreditert deg",
+      "replacements": "Ventende erstatninger",
+      "toAnswer": "Venter på svaret ditt",
+      "chargebacksOpen": "Åpne tilbakebelastninger",
+      "claimRate": "Reklamasjonsrate, 30 dager",
+      "claimRateHint": "{upheld} godkjent av {delivered} leverte ordrer"
+    },
+    "status": {
+      "OPEN": "Åpen",
+      "APPROVED": "Godkjent",
+      "REJECTED": "Avvist",
+      "WITHDRAWN": "Trukket tilbake"
+    },
+    "reason": {
+      "DAMAGED": "Skadet",
+      "MISSING": "Mangler",
+      "WRONG_PRODUCT": "Feil produkt",
+      "TEMPERATURE": "Temperatur (kjølekjede)",
+      "SHORT_DATED": "Kort holdbarhet eller utløpt",
+      "QUALITY": "Dårlig kvalitet"
+    },
+    "outcome": {
+      "CREDIT": "Kreditnota",
+      "REPLACEMENT": "Erstatning"
+    },
+    "prefer": {
+      "CREDIT": "Kreditnota",
+      "REPLACEMENT": "Erstatt varene"
+    },
+    "fault": {
+      "SUPPLIER": "Leverandørens feil",
+      "DRIVER": "Leveringsfeil",
+      "FIRINGI": "Kulanse fra FIRINGI",
+      "CUSTOMER": "Ikke en gyldig reklamasjon"
+    },
+    "sla": {
+      "late": "{hours} t forsinket",
+      "left": "avgjørelse om {hours} t"
+    },
+    "progress": "Fremdrift",
+    "step": {
+      "opened": "Meldt",
+      "supplier": "Leverandørens svar",
+      "supplierBy": "ventet innen {date}",
+      "decided": "FIRINGIs avgjørelse",
+      "replaced": "Erstatning levert"
+    },
+    "lines": "Hva som er galt",
+    "lot": "Parti",
+    "claimedQty": "{qty} av {delivered} reklamert",
+    "approvedQty": "{qty} godkjent",
+    "unitPaid": "{amount} / stk. betalt",
+    "unitCost": "din pris {amount} / stk.",
+    "photo": "Bilde",
+    "supplierResponse": {
+      "ACCEPTED": "Leverandøren godtar reklamasjonen",
+      "DISPUTED": "Leverandøren bestrider reklamasjonen"
+    },
+    "decided": {
+      "CREDIT": "Godkjent — kreditnota utstedt",
+      "REPLACEMENT": "Godkjent — varene erstattes",
+      "REJECTED": "Reklamasjonen avvist"
+    },
+    "creditIssued": "Kreditnota: {amount}.",
+    "feeIncluded": "Leveringsgebyret er inkludert.",
+    "viewCreditNote": "Last ned kreditnotaen",
+    "replacementDone": "Erstatning levert {date}.",
+    "conversation": "Samtale",
+    "noMessages": "Ingen meldinger ennå.",
+    "side": {
+      "CUSTOMER": "Kunde",
+      "SUPPLIER": "Leverandør",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Intern",
+    "messagePlaceholder": "Skriv en melding til FIRINGI og den andre parten…",
+    "send": "Send",
+    "addPhotos": "Legg til bilder",
+    "cancel": "Avbryt",
+    "withdraw": "Trekk tilbake reklamasjonen",
+    "withdrawConfirm": "Trekke tilbake reklamasjonen? Du kan melde problemet igjen så lenge fristen er åpen.",
+    "detailTitle": "Reklamasjon {number}",
+    "detailIntroBuyer": "Reklamasjonen din på varer fra {supplier}. FIRINGI avgjør og holder deg oppdatert her.",
+    "detailIntroVendor": "{customer}s reklamasjon på leveransen din. Svar med din side og bilder; FIRINGI avgjør.",
+    "newTitle": "Meld et problem — ordre {number}",
+    "newIntro": "Fortell oss hva som er galt med de leverte varene, innen {hours} timer etter levering. Bilder hjelper FIRINGI å avgjøre raskt.",
+    "earlier": "Tidligere reklamasjoner på denne ordren",
+    "deadline": "Du kan melde problemer til {date}.",
+    "closedSince": "Reklamasjonsfristen gikk ut {date}.",
+    "notDelivered": "Ordren er ikke levert ennå.",
+    "nothingLeft": "Alt som er levert på denne ordren er allerede reklamert eller returnert.",
+    "windowClosed": "Problemer kan meldes inntil {hours} timer etter levering — fristen er ute. Bruk Returer eller Hjelp og støtte i andre tilfeller.",
+    "orderCardTitle": "Problem med denne leveransen?",
+    "orderCardHint": "Meld skadde, manglende, feil eller dårlige varer innen {hours} timer etter levering.",
+    "orderCardClosed": "Reklamasjonene dine på denne ordren.",
+    "reportProblem": "Meld et problem",
+    "form": {
+      "what": "Hva er galt?",
+      "which": "Hvilke produkter, hvor mange?",
+      "delivered": "{qty} levert",
+      "left": "{qty} kan fortsatt reklameres",
+      "lotUnknown": "Parti — vet ikke",
+      "qtyFor": "Antall for {product}",
+      "describe": "Beskriv problemet",
+      "describeHint": "F.eks. 3 esker knust, produktet lekker, kom varmt fram (8 °C)…",
+      "photos": "Bilder (valgfritt)",
+      "photosNeeded": "Bilder av problemet (minst ett)",
+      "prefer": "Hva foretrekker du?",
+      "decides": "FIRINGI avgjør — vanligvis innen 48 timer. En kreditnota trekkes fra det du skylder.",
+      "send": "Send reklamasjon"
+    },
+    "respond": {
+      "title": "Din side",
+      "titleUpdate": "Endre svaret ditt",
+      "hint": "Godta reklamasjonen eller bestrid den med begrunnelse og bilder (emballasje, lasting, temperaturlogg). FIRINGI avgjør.",
+      "ACCEPTED": "Vi godtar",
+      "DISPUTED": "Vi bestrider",
+      "comment": "Kommentar (valgfritt)",
+      "whyDispute": "Hvorfor bestrider du den?",
+      "photos": "Bildene dine (valgfritt)",
+      "send": "Send svar",
+      "update": "Oppdater svar"
+    },
+    "replaceTitle": "Lever erstatningen",
+    "replaceHint": "FIRINGI har godkjent en gratis erstatning. Lever varene på nytt, og bekreft her.",
+    "replaceDone": "Erstatning levert",
+    "chargeback": {
+      "title": "Tilbakebelastninger",
+      "hint": "Godkjente reklamasjoner der du har skylden: krediteringen står på et kreditoppgjør — utsted kreditnotaen din til FIRINGI; den trekkes fra utbetalingen din.",
+      "amount": "Beløp",
+      "statement": "Oppgjør",
+      "none": "Ingen tilbakebelastninger.",
+      "dispute": "Bestrid",
+      "why": "Hvorfor bestrider du tilbakebelastningen?",
+      "send": "Send innsigelse",
+      "yourNote": "Din innsigelse",
+      "status": {
+        "OPEN": "Skal krediteres",
+        "DISPUTED": "Bestridt",
+        "DEDUCTED": "Oppgjort",
+        "WAIVED": "Frafalt"
+      }
+    },
+    "quality": {
+      "title": "Kvalitetsscore",
+      "intro": "Dine godkjente reklamasjoner de siste {days} dagene. Over {threshold} % varsles FIRINGI, scoren din synker og du får færre tildelte ordrer.",
+      "alerts": "Kvalitetsvarsler fra FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Reklamasjonsrate {value} — over {threshold}.",
+        "PRODUCT_RATE": "{label}: reklamasjonsrate {value} — over {threshold}.",
+        "LOT": "{label}: {value} reklamasjoner (varsel fra {threshold}).",
+        "DRIVER": "{label}: {value} reklamasjoner."
+      },
+      "threshold": "varsel fra {threshold} %",
+      "upheld": "Godkjente reklamasjoner",
+      "ofClaims": "av {claims} reklamasjoner",
+      "delivered": "Leverte ordrer",
+      "byProduct": "Per produkt",
+      "byProductHint": "Reklamerte mot leverte stk.",
+      "byLot": "Per parti",
+      "byLotHint": "Flere reklamasjoner på ett parti: sjekk det — kanskje en tilbakekalling",
+      "claimedUnits": "Reklamert",
+      "deliveredUnits": "Levert",
+      "rate": "Rate",
+      "claims": "Reklamasjoner",
+      "none": "Ingen reklamasjoner i perioden."
     }
   }
 }

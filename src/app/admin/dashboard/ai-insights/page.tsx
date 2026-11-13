@@ -40,7 +40,7 @@ export default async function Page() {
             {status.enabled && <Link href="/admin/ai/assistant" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white"><Bot className="size-4" aria-hidden /> Ask the assistant</Link>}
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4" data-testid="ai-hero">
+        <div className="mt-6 grid grid-cols-2 gap-3 @2xl:grid-cols-4" data-testid="ai-hero">
           <HeroStat label="Reorders late" value={c("REORDER_DUE")} locale="en" href="/admin/ai/reorder-predictions" i={0} />
           <HeroStat label="Stock running out" value={c("STOCK_OUT")} locale="en" href="/admin/ai/stock-predictions" i={1} />
           <HeroStat label="Deliveries at risk" value={c("DELIVERY_RISK")} locale="en" href="/admin/ai/delivery-risk" i={2} />

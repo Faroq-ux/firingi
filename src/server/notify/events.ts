@@ -119,6 +119,18 @@ export const EVENTS: EventDef[] = [
   E("return.approved", "returns", ORDERS, ["EMAIL", "WHATSAPP"], ["number"]),
   E("return.rejected", "returns", BUYER_ORDERS, ["EMAIL"], ["number", "reason"]),
   E("return.credited", "returns", [...BUYER_ORDERS, "buyer.invoices.view"], ["EMAIL"], ["number"]),
+  // quality claims (Phase 31)
+  E("claim.opened", "returns", ["admin.claims.manage", "vendor.claims.respond"], ["EMAIL", "PUSH"], ["number", "order", "reason"]),
+  E("claim.message", "returns", ["admin.claims.manage", "vendor.claims.respond", "buyer.claims.manage"], ["EMAIL", "PUSH"], ["number"]),
+  E("claim.supplier_responded", "returns", ["admin.claims.manage"], ["EMAIL", "PUSH"], ["number", "response"]),
+  E("claim.answer_needed", "returns", ["vendor.claims.respond"], ["EMAIL", "PUSH"], ["number"]),
+  E("claim.decided", "returns", ["buyer.claims.manage", "buyer.orders.view", "vendor.claims.respond"], ["EMAIL", "PUSH"], ["number", "decision", "note"]),
+  E("claim.replaced", "returns", ["buyer.claims.manage", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number"]),
+  E("claim.chargeback", "returns", ["vendor.claims.respond", "vendor.invoices.view"], ["EMAIL"], ["number"]),
+  E("claim.chargeback_disputed", "returns", ["admin.claims.manage"], ["EMAIL"], ["number"]),
+  E("claim.chargeback_resolved", "returns", ["vendor.claims.respond", "vendor.invoices.view"], ["EMAIL"], ["number", "decision"]),
+  E("claim.overdue", "returns", ["admin.claims.manage"], ["EMAIL", "PUSH"], ["count"]),
+  E("quality.alert", "returns", ["admin.claims.manage", "vendor.claims.respond"], ["EMAIL", "PUSH"], ["label", "value", "threshold"]),
   // finance
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
   // online payments (Phase 20) — {total} is shown in the reader's currency format

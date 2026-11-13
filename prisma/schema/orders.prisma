@@ -125,6 +125,7 @@ model Order {
   paymentRequests   PaymentRequest[]
   billingStatements VendorBillingStatement[]
   returns           ReturnRequest[]
+  claims            QualityClaim[]           @relation("ClaimOrder")
   delivery          Delivery?
   allocations       AllocationEvent[]
   supportTickets    SupportTicket[]
@@ -185,6 +186,7 @@ model OrderLine {
   discounts      OrderLineDiscount[]
   invoiceLines   InvoiceLine[]
   returnLines    ReturnLine[]
+  claimLines     QualityClaimLine[]  @relation("ClaimOrderLine")
 
   @@index([orderId])
 }

@@ -10,9 +10,9 @@ import { formatMoney } from "@/lib/utils";
 /** White stat on the coloured hero (frosted glass). */
 export function HeroStat({ label, value, fmt = "int", locale, href, sub, i = 0 }: { label: string; value: number; fmt?: Fmt | "int"; locale: string; href?: string; sub?: ReactNode; i?: number }) {
   const body = (
-    <div className="glass motion-rise rounded-xl p-3 transition-transform hover:-translate-y-0.5" style={{ ["--i" as string]: i + 2 } as CSSProperties}>
-      <div className="text-[11px] font-semibold uppercase tracking-wider text-white/75">{label}</div>
-      <div className="mt-0.5 text-2xl font-bold text-white drop-shadow-sm sm:text-3xl"><CountUp value={value} fmt={fmt} locale={locale} /></div>
+    <div className="stat-card glass motion-rise min-w-0 rounded-xl p-3 transition-transform hover:-translate-y-0.5" style={{ ["--i" as string]: i + 2 } as CSSProperties}>
+      <div className="kpi-label text-[11px] font-semibold uppercase tracking-wider text-white/75">{label}</div>
+      <div className="kpi-value mt-0.5 text-white drop-shadow-sm [font-size:clamp(1rem,12cqi,1.9rem)]"><CountUp value={value} fmt={fmt} locale={locale} /></div>
       {sub && <div className="mt-0.5 text-xs text-white/75">{sub}</div>}
     </div>
   );
@@ -28,9 +28,9 @@ export function Tile({ icon: Icon, label, value, fmt = "int", locale, hint, href
       <div className="flex items-start gap-3">
         <div className="tile-chip hidden size-11 shrink-0 place-items-center rounded-xl motion-float sm:grid"><Icon className="size-5" aria-hidden /></div>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</p>
-          {value !== undefined && <p className="whitespace-nowrap text-lg font-bold tabular-nums sm:text-2xl"><CountUp value={value} fmt={fmt} locale={locale} /></p>}
-          {hint && <div className="text-xs text-muted-foreground">{hint}</div>}
+          <p className="kpi-label text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</p>
+          {value !== undefined && <p className="kpi-value mt-0.5"><CountUp value={value} fmt={fmt} locale={locale} /></p>}
+          {hint && <div className="kpi-hint mt-0.5 text-xs text-muted-foreground">{hint}</div>}
           {children}
         </div>
       </div>

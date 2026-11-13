@@ -40,7 +40,7 @@ export default async function OverviewPage() {
             <Sparkline values={live.series.map((x) => x.net)} label={t("salesTrend")} color="white" height={64} className="mt-2" />
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 @2xl:grid-cols-4">
           <HeroStat label={t("ordersToday")} value={o.orders.today} locale={locale} href="/admin/dashboard/today" i={0} />
           <HeroStat label={t("monthSales")} value={Number(o.orders.monthNet)} fmt="money" locale={locale} sub={`${o.orders.monthCount} · ${t("margin")} ${formatMoney(o.orders.monthMargin, locale)}`} i={1} />
           <HeroStat label={t("awaitingConfirmation")} value={o.orders.awaiting} locale={locale} href="/admin/orders/pending-confirmation" i={2} />

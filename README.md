@@ -602,6 +602,62 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Quality claims & credits (Phase 31)
+
+Customers › Orders › **Quality Claims** (+ *Report a problem* on a delivered order); suppliers › Orders ›
+**Quality Claims** and **Quality Score** (25 languages); FIRINGI › Orders › **Quality Claims**, **Claim
+Charge-backs**, **Quality & Alerts**, **Claim Settings** (English). FIRINGI is merchant of record, so FIRINGI
+decides every claim; AI only suggests, a person decides.
+
+- **Customer claims** — within the claim window after delivery (48 h by default) the customer reports what
+  is wrong — damaged, missing, wrong product, temperature, short-dated / expired, poor quality — per order
+  line and quantity (never more than delivered minus earlier claims and returns), the lot when it got
+  several, a description and photos (required for the reasons FIRINGI chooses; resized on the phone), and
+  whether it prefers a credit note or a replacement. Branch staff see only their shops' orders. Photos are
+  served only to the customer, the supplier and FIRINGI.
+- **The supplier's side** — the supplier accepts or disputes (with reasons and photos) and can write in the
+  claim's conversation; it is reminded once when it hasn't answered in time (24 h). FIRINGI can add notes
+  only FIRINGI sees.
+- **FIRINGI's decision** within the SLA (48 h; overdue claims are flagged and FIRINGI gets one reminder a
+  day): reject (the reason is shown to both sides) or approve quantities per line with whose fault it was —
+  **credit note** (certified through the invoicing provider; optionally with the delivery fee) or a
+  **replacement** the supplier delivers free and confirms. Credits above the approval threshold
+  (Risk › Approvals) need a second person (four-eyes, kind *Quality claim credit*).
+- **Who pays** — *supplier's fault* (goods, packing, picking, and the supplier's **own** delivery: its
+  drivers are its own staff and get no fee from FIRINGI): the credit goes on a CREDIT billing statement at
+  the supplier's cost price; the supplier issues its credit note to FIRINGI and it is netted off its
+  payout (the payouts list shows open claim charge-backs per supplier). The supplier can dispute a
+  charge-back; FIRINGI upholds or waives it (waived = FIRINGI carries it, the statement is closed).
+  *FIRINGI driver's fault*: FIRINGI credits the customer; a charge-back to the driver is only possible when
+  the customer paid a delivery fee or flat rate for that delivery, and at most the driver's per-delivery
+  pay for it; it is deducted on Driver Earnings. *Goodwill*: FIRINGI carries it.
+- **Driver pay** — FIRINGI drivers earn per completed route and per planned km as before, and the
+  per-delivery pay **only for deliveries the customer paid a delivery fee or flat rate for** (free
+  deliveries earn none). Driver Earnings shows the fee-paid count and claim deductions; P&L and route
+  profitability use the same rule.
+- **Quality scores & alerts** (daily job `claims`, `/api/cron/claims`, scheduler 07:19) — claim rates per
+  supplier (upheld supplier-fault claims per delivered order), product (claimed per delivered unit), lot
+  and FIRINGI driver, claims by reason, time to decide and share decided within the SLA. Upheld claims
+  lower the supplier scorecard (Performance) and its reliability in supplier allocation. Thresholds
+  (Claim Settings) raise one alert per supplier / product / lot / driver, not again within 30 days of
+  being acknowledged; a lot alert links to Recalls. Suppliers see their own score, alerts, products, lots
+  and charge-backs.
+- **Privacy** — the customer sees what it paid and the credit, never the supplier's cost or FIRINGI's
+  margin; the supplier sees its own cost and charge-back, never the sale price or the customer's credit.
+- Notifications: `claim.opened`, `claim.message`, `claim.supplier_responded`, `claim.answer_needed`,
+  `claim.decided`, `claim.replaced`, `claim.chargeback`, `claim.chargeback_disputed`,
+  `claim.chargeback_resolved`, `claim.overdue`, `quality.alert`.
+- Test: `node tests/e2e/claims.mjs` (order → delivery → claim with photo → supplier disputes → FIRINGI
+  credits at the supplier's fault → charge-back disputed and upheld → quality, settings, payouts, driver
+  earnings, phone width).
+
+**Responsive cards (also in this release)** — wrapped titles and labels no longer overlap (titles use
+normal line height and break long words); KPI numbers shrink with their tile (container queries) instead of
+spilling out; tiles, hero stats and dashboard cards pick their columns from the space they actually have;
+the sidebar is a slide-in menu below 1024 px, so tablets get the full width; supplier cards, call logs,
+import history and warehouse value boxes wrap on phones. Checked page by page in all four portals at 390,
+768, 1024 and 1280 px.
+
 ## Demand planning & restock (Phase 30)
 
 Suppliers › **Planning** — Planning Overview, Demand Forecast (+ one product's page), Restock,

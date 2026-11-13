@@ -210,9 +210,10 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
 
 /**
  * Credit note on a sales invoice — whole invoice, or chosen quantities per line. Also
- * creates a CREDIT billing statement so the vendor issues its own credit note to FIRINGI.
+ * creates a CREDIT billing statement so the vendor issues its own credit note to FIRINGI
+ * (unless `chargeVendor` is false — FIRINGI then carries the cost).
  */
-export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { invoiceLineId: string; qty: number }[] | "ALL"; reason: string; actorUserId: string }) {
+export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { invoiceLineId: string; qty: number }[] | "ALL"; reason: string; actorUserId: string; chargeVendor?: boolean }) {
   const inv = await tx.invoice.findUniqueOrThrow({ where: { id: invoiceId }, include: { lines: true, creditNotes: { include: { lines: true } }, order: { include: { lines: true, seller: true } } } });
   if (inv.docType === "CREDIT_NOTE" || inv.status === "DRAFT" || inv.status === "CREDITED") throw new Error("NOT_CREDITABLE");
   const credited = new Map<string, Decimal>(); // invoice line position → qty already credited
@@ -243,8 +244,9 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
   const creditedQty = [...credited.values()].reduce((a, v) => a + v.toNumber(), 0) + lines.reduce((a, l) => a + l.qty.toNumber(), 0);
   await tx.invoice.update({ where: { id: inv.id }, data: { status: creditedQty >= totalQty ? "CREDITED" : "PARTIALLY_CREDITED" } });
 
-  // Vendor side: credit statement for the goods returned.
-  if (inv.order && vendorLines.length) {
+  let creditStatementId: string | null = null;
+  // Vendor side: credit statement for the goods returned (not when FIRINGI carries the cost, e.g. a claim for a FIRINGI delivery fault).
+  if (inv.order && vendorLines.length && sel.chargeVendor !== false) {
     const stLines = vendorLines.map((v) => {
       const ol = inv.order!.lines.find((x) => x.id === v.orderLineId)!;
       const delivered = ol.qtyDelivered ?? ol.qtyConfirmed ?? ol.qtyOrdered;
@@ -258,12 +260,12 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
     const seq = await tx.$queryRaw<{ n: number }[]>`INSERT INTO "Sequence" (name, year, "nextValue") VALUES ('statement', ${year}, 2)
       ON CONFLICT (name, year) DO UPDATE SET "nextValue" = "Sequence"."nextValue" + 1 RETURNING "nextValue" - 1 AS n`;
     const orig = await tx.vendorBillingStatement.findFirst({ where: { orderId: inv.orderId!, isCreditStatement: false } });
-    await tx.vendorBillingStatement.create({
+    creditStatementId = (await tx.vendorBillingStatement.create({
       data: {
         number: `VBS-${year}-${String(seq[0].n).padStart(6, "0")}`, vendorCompanyId: inv.order.sellerCompanyId, orderId: inv.orderId!, salesInvoiceId: cn.id, isCreditStatement: true,
         taxRegime: orig?.taxRegime ?? "DOMESTIC", expectedNet: n.toFixed(2), expectedVat: v.toFixed(2), expectedGross: n.plus(v).toFixed(2), commissionTotal: 0, lines: stLines,
       },
-    });
+    })).id;
   }
-  return cn;
+  return Object.assign(cn, { creditStatementId });
 }

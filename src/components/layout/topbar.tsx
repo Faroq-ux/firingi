@@ -38,7 +38,7 @@ export function Topbar(p: TopbarProps) {
 
   return (
     <header className="glass-strong sticky top-0 z-20 flex h-16 items-center gap-2 border-b border-[color:var(--glass-border)] px-3 sm:gap-3 md:px-6">
-      <button type="button" className="rounded-md p-2 hover:bg-accent md:hidden" onClick={p.onMenu} aria-label={p.labels.menu}>
+      <button type="button" className="rounded-md p-2 hover:bg-accent lg:hidden" onClick={p.onMenu} aria-label={p.labels.menu}>
         <Menu className="size-5" />
       </button>
 

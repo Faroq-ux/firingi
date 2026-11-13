@@ -160,7 +160,8 @@ describe("routes", () => {
     const pay = await driverEarnings(ops, p);
     const mine = pay.rows.find((x) => x.id === driverId)!;
     expect(mine.routes).toBeGreaterThanOrEqual(1);
-    expect(mine.total).toBeCloseTo(mine.routes * pay.pay.perRoute + mine.delivered * pay.pay.perDelivery + mine.km * pay.pay.perKm, 2);
+    expect(mine.feePaid).toBeLessThanOrEqual(mine.delivered);
+    expect(mine.total).toBeCloseTo(mine.routes * pay.pay.perRoute + mine.feePaid * pay.pay.perDelivery + mine.km * pay.pay.perKm - mine.deductions, 2);
     await expect(driverEarnings(lx, p)).rejects.toThrow();
   });
 

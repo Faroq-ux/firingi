@@ -22,9 +22,9 @@ export default async function Page() {
     <>
       <PageHeader title="Payment Risk" description={`Exposure = unpaid invoices + orders not yet invoiced. ${policy.overdueBlockDays !== null ? `Buyers with an invoice overdue more than ${policy.overdueBlockDays} days can't order.` : "Overdue invoices don't block orders."} ${policy.creditCheck ? "Credit limits are enforced at checkout." : "Credit limits are not enforced."}`} />
       <div className="mb-4 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border bg-card p-4"><div className="text-xs uppercase text-muted-foreground">Total exposure</div><div className="text-2xl font-semibold tabular-nums">{formatMoney(total("exposure"))}</div></div>
-        <div className="rounded-xl border bg-card p-4"><div className="text-xs uppercase text-muted-foreground">Overdue</div><div className="text-2xl font-semibold tabular-nums">{formatMoney(total("overdue"))}</div></div>
-        <div className="rounded-xl border bg-card p-4" data-testid="risk-blocked"><div className="text-xs uppercase text-muted-foreground">Buyers blocked</div><div className="text-2xl font-semibold tabular-nums">{rows.filter((r) => r.status === "BLOCKED_OVERDUE" || r.status === "AT_LIMIT").length}</div></div>
+        <div className="stat-card rounded-xl border bg-card p-4"><div className="kpi-label text-xs uppercase text-muted-foreground">Total exposure</div><div className="kpi-value font-semibold">{formatMoney(total("exposure"))}</div></div>
+        <div className="stat-card rounded-xl border bg-card p-4"><div className="kpi-label text-xs uppercase text-muted-foreground">Overdue</div><div className="kpi-value font-semibold">{formatMoney(total("overdue"))}</div></div>
+        <div className="stat-card rounded-xl border bg-card p-4" data-testid="risk-blocked"><div className="kpi-label text-xs uppercase text-muted-foreground">Buyers blocked</div><div className="kpi-value font-semibold">{rows.filter((r) => r.status === "BLOCKED_OVERDUE" || r.status === "AT_LIMIT").length}</div></div>
       </div>
       <Table>
         <THead><TR><TH>Buyer</TH><TH>Status</TH><TH className="text-right">Unpaid invoices</TH><TH className="text-right">Overdue</TH><TH className="text-right">Open orders</TH><TH className="text-right">Exposure</TH><TH>Terms · credit limit</TH></TR></THead>

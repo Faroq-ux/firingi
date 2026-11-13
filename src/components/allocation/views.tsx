@@ -49,10 +49,10 @@ const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
 
 function Stat({ label, value, hint, testId }: { label: string; value: string; hint?: string; testId?: string }) {
   return (
-    <div className="rounded-xl border bg-card p-4" data-testid={testId}>
-      <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-1 text-2xl font-semibold tabular-nums">{value}</div>
-      {hint && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
+    <div className="stat-card rounded-xl border bg-card p-4" data-testid={testId}>
+      <div className="kpi-label text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="kpi-value mt-1 font-semibold">{value}</div>
+      {hint && <div className="kpi-hint mt-1 text-xs text-muted-foreground">{hint}</div>}
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
   let n = 0;
   const tile = (label: string, value: number, href?: string, tone = "") => {
     const i = n++;
-    const body = <><div className="text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</div><div className={`text-2xl font-bold tabular-nums ${tone}`}><CountUp value={value} fmt="int" /></div></>;
+    const body = <><div className="kpi-label text-xs font-semibold uppercase tracking-wide text-[color:color-mix(in_oklch,var(--tone)_70%,var(--foreground))]">{label}</div><div className={`kpi-value ${tone}`}><CountUp value={value} fmt="int" /></div></>;
     const cls = `tile gloss motion-rise motion-lift rounded-xl border p-3 ${TONES[i % TONES.length]}`;
     return href ? <Link href={href} className={cls} style={{ ["--i" as string]: i }}>{body}</Link> : <div className={cls} style={{ ["--i" as string]: i }}>{body}</div>;
   };

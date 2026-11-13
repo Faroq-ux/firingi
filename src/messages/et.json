@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Ülevaru ja säilivus",
     "Lead Times": "Tarneajad",
     "Demand Events": "Nõudlussündmused",
-    "Planning Settings": "Planeerimise seaded"
+    "Planning Settings": "Planeerimise seaded",
+    "Quality Claims": "Kvaliteedipretensioonid",
+    "Quality Score": "Kvaliteediskoor"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI palub teil täiendada: {product}",
       "body": "{product} laos {warehouse} hakkab otsa saama ja kliendid soovivad seda. {message}"
+    },
+    "claim_opened": {
+      "title": "Uus pretensioon {number} — tellimus {order}",
+      "body": "Klient teatas probleemist tellimusega {order}. Vasta oma seisukohaga."
+    },
+    "claim_message": {
+      "title": "Uus sõnum pretensioonis {number}",
+      "body": "Pretensioonis {number} on uus sõnum."
+    },
+    "claim_supplier_responded": {
+      "title": "Tarnija vastas pretensioonile {number}",
+      "body": "Tarnija vastas pretensioonile {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Pretensioon {number} ootab sinu vastust",
+      "body": "Anna oma seisukoht pretensiooni {number} kohta — FIRINGI otsustab peagi."
+    },
+    "claim_decided": {
+      "title": "Pretensioon {number} otsustatud",
+      "body": "FIRINGI otsustas pretensiooni {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Asendus tarnitud — pretensioon {number}",
+      "body": "Pretensiooni {number} asenduskaup on tarnitud."
+    },
+    "claim_chargeback": {
+      "title": "Tagasinõue pretensiooni {number} eest",
+      "body": "Pretensioon {number} rahuldati sinu süül. Väljasta FIRINGI-le oma kreeditarve; see arvestatakse sinu väljamaksest maha."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Tagasinõue vaidlustatud — pretensioon {number}",
+      "body": "Tarnija vaidlustab pretensiooni {number} tagasinõude."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Tagasinõue otsustatud — pretensioon {number}",
+      "body": "FIRINGI otsustas sinu vaidlustuse pretensiooni {number} kohta."
+    },
+    "claim_overdue": {
+      "title": "{count} pretensiooni üle otsustamise tähtaja",
+      "body": "{count} kvaliteedipretensiooni ootab tähtajast kauem."
+    },
+    "quality_alert": {
+      "title": "Kvaliteedihoiatus: {label}",
+      "body": "{label}: {value} (hoiatus alates {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Peidetud",
       "OPEN": "Avatud",
       "EXPIRED": "Pole enam vaja"
+    }
+  },
+  "claims": {
+    "title": "Kvaliteedipretensioonid",
+    "buyerIntro": "Kas tarnega on midagi valesti — kahjustatud, puudu, vale, liiga soe, lühike säilivusaeg või halb kvaliteet? Teata sellest tellimusel {hours} tunni jooksul pärast tarnet koos fotodega. FIRINGI otsustab ja krediteerib sind või laseb kauba asendada.",
+    "vendorIntro": "Klientide pretensioonid sinu tarnitud kauba kohta. Anna kiiresti oma seisukoht koos fotodega; FIRINGI otsustab. Rahuldatud pretensioonid arvestatakse sinu aruandes ja mõjutavad sinu kvaliteediskoori.",
+    "all": "Kõik",
+    "claim": "Pretensioon",
+    "order": "Tellimus",
+    "customer": "Klient",
+    "reasonCol": "Probleem",
+    "products": "Tooted",
+    "statusCol": "Olek",
+    "credit": "Kreedit",
+    "opened": "Avatud",
+    "yourAnswer": "Sinu vastus",
+    "answerNeeded": "Vastus vajalik",
+    "units": "{qty} tk",
+    "emptyBuyer": "Pretensioone pole. Teata probleemist pärast tarnet tellimuse lehel.",
+    "emptyVendor": "Sinu tarnete kohta pretensioone pole.",
+    "qualityLink": "Sinu kvaliteediskoor →",
+    "replacementPending": "Asendus on teel",
+    "kpi": {
+      "open": "Avatud pretensioonid",
+      "approved": "Kinnitatud",
+      "credited": "Sulle krediteeritud",
+      "replacements": "Ootel asendused",
+      "toAnswer": "Ootab sinu vastust",
+      "chargebacksOpen": "Avatud tagasinõuded",
+      "claimRate": "Pretensioonide määr, 30 päeva",
+      "claimRateHint": "{upheld} rahuldatud {delivered} tarnitud tellimusest"
+    },
+    "status": {
+      "OPEN": "Avatud",
+      "APPROVED": "Kinnitatud",
+      "REJECTED": "Tagasi lükatud",
+      "WITHDRAWN": "Tagasi võetud"
+    },
+    "reason": {
+      "DAMAGED": "Kahjustatud",
+      "MISSING": "Puudu",
+      "WRONG_PRODUCT": "Vale toode",
+      "TEMPERATURE": "Temperatuur (külmaahel)",
+      "SHORT_DATED": "Lühike säilivusaeg või aegunud",
+      "QUALITY": "Halb kvaliteet"
+    },
+    "outcome": {
+      "CREDIT": "Kreeditarve",
+      "REPLACEMENT": "Asendus"
+    },
+    "prefer": {
+      "CREDIT": "Kreeditarve",
+      "REPLACEMENT": "Asenda kaup"
+    },
+    "fault": {
+      "SUPPLIER": "Tarnija süü",
+      "DRIVER": "Tarneviga",
+      "FIRINGI": "FIRINGI hea tahe",
+      "CUSTOMER": "Pole kehtiv pretensioon"
+    },
+    "sla": {
+      "late": "{hours} h hiljaks jäänud",
+      "left": "otsus {hours} h pärast"
+    },
+    "progress": "Edenemine",
+    "step": {
+      "opened": "Teatatud",
+      "supplier": "Tarnija vastus",
+      "supplierBy": "oodatud hiljemalt {date}",
+      "decided": "FIRINGI otsus",
+      "replaced": "Asendus tarnitud"
+    },
+    "lines": "Mis on valesti",
+    "lot": "Partii",
+    "claimedQty": "{qty}/{delivered} pretensioonis",
+    "approvedQty": "{qty} kinnitatud",
+    "unitPaid": "{amount} / tk makstud",
+    "unitCost": "sinu hind {amount} / tk",
+    "photo": "Foto",
+    "supplierResponse": {
+      "ACCEPTED": "Tarnija nõustub pretensiooniga",
+      "DISPUTED": "Tarnija vaidlustab pretensiooni"
+    },
+    "decided": {
+      "CREDIT": "Kinnitatud — kreeditarve väljastatud",
+      "REPLACEMENT": "Kinnitatud — kaup asendatakse",
+      "REJECTED": "Pretensioon tagasi lükatud"
+    },
+    "creditIssued": "Kreeditarve: {amount}.",
+    "feeIncluded": "Tarnetasu on sees.",
+    "viewCreditNote": "Laadi kreeditarve alla",
+    "replacementDone": "Asendus tarnitud {date}.",
+    "conversation": "Vestlus",
+    "noMessages": "Sõnumeid veel pole.",
+    "side": {
+      "CUSTOMER": "Klient",
+      "SUPPLIER": "Tarnija",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Sisemine",
+    "messagePlaceholder": "Kirjuta sõnum FIRINGI-le ja teisele poolele…",
+    "send": "Saada",
+    "addPhotos": "Lisa fotosid",
+    "cancel": "Tühista",
+    "withdraw": "Võta pretensioon tagasi",
+    "withdrawConfirm": "Kas võtta pretensioon tagasi? Saad probleemist uuesti teatada, kuni tähtaeg on avatud.",
+    "detailTitle": "Pretensioon {number}",
+    "detailIntroBuyer": "Sinu pretensioon tarnija {supplier} kauba kohta. FIRINGI otsustab ja annab siin teada.",
+    "detailIntroVendor": "Kliendi {customer} pretensioon sinu tarne kohta. Vasta oma seisukoha ja fotodega; FIRINGI otsustab.",
+    "newTitle": "Teata probleemist — tellimus {number}",
+    "newIntro": "Ütle meile, mis tarnitud kaubaga valesti on, {hours} tunni jooksul pärast tarnet. Fotod aitavad FIRINGI-l kiiresti otsustada.",
+    "earlier": "Varasemad pretensioonid sellel tellimusel",
+    "deadline": "Saad probleemidest teatada kuni {date}.",
+    "closedSince": "Pretensiooni tähtaeg lõppes {date}.",
+    "notDelivered": "Tellimust pole veel tarnitud.",
+    "nothingLeft": "Kõik selle tellimusega tarnitu on juba pretensioonis või tagastatud.",
+    "windowClosed": "Probleemidest saab teatada kuni {hours} tundi pärast tarnet — tähtaeg on möödas. Muudel juhtudel kasuta Tagastusi või Abi ja tuge.",
+    "orderCardTitle": "Probleem selle tarnega?",
+    "orderCardHint": "Teata kahjustatud, puuduvast, valest või halva kvaliteediga kaubast {hours} tunni jooksul pärast tarnet.",
+    "orderCardClosed": "Sinu pretensioonid sellel tellimusel.",
+    "reportProblem": "Teata probleemist",
+    "form": {
+      "what": "Mis on valesti?",
+      "which": "Millised tooted, kui palju?",
+      "delivered": "{qty} tarnitud",
+      "left": "{qty} saab veel esitada",
+      "lotUnknown": "Partii — ei tea",
+      "qtyFor": "Kogus tootele {product}",
+      "describe": "Kirjelda probleemi",
+      "describeHint": "Nt 3 kasti lömmis, toode lekib, saabus soojana (8 °C)…",
+      "photos": "Fotod (valikuline)",
+      "photosNeeded": "Fotod probleemist (vähemalt üks)",
+      "prefer": "Mida eelistad?",
+      "decides": "FIRINGI otsustab — tavaliselt 48 tunni jooksul. Kreeditarve arvestatakse sinu võlast maha.",
+      "send": "Saada pretensioon"
+    },
+    "respond": {
+      "title": "Sinu seisukoht",
+      "titleUpdate": "Muuda vastust",
+      "hint": "Nõustu pretensiooniga või vaidlusta see põhjenduste ja fotodega (pakend, laadimine, temperatuurilogi). FIRINGI otsustab.",
+      "ACCEPTED": "Nõustume",
+      "DISPUTED": "Vaidlustame",
+      "comment": "Kommentaar (valikuline)",
+      "whyDispute": "Miks sa selle vaidlustad?",
+      "photos": "Sinu fotod (valikuline)",
+      "send": "Saada vastus",
+      "update": "Uuenda vastust"
+    },
+    "replaceTitle": "Tarni asendus",
+    "replaceHint": "FIRINGI kinnitas tasuta asenduse. Tarni kaup uuesti ja kinnita siin.",
+    "replaceDone": "Asendus tarnitud",
+    "chargeback": {
+      "title": "Tagasinõuded",
+      "hint": "Sinu süül rahuldatud pretensioonid: kreedit on kreeditaruandel — väljasta FIRINGI-le oma kreeditarve; see arvestatakse sinu väljamaksest maha.",
+      "amount": "Summa",
+      "statement": "Aruanne",
+      "none": "Tagasinõudeid pole.",
+      "dispute": "Vaidlusta",
+      "why": "Miks sa tagasinõude vaidlustad?",
+      "send": "Saada vaidlustus",
+      "yourNote": "Sinu vaidlustus",
+      "status": {
+        "OPEN": "Krediteerida",
+        "DISPUTED": "Vaidlustatud",
+        "DEDUCTED": "Arveldatud",
+        "WAIVED": "Loobutud"
+      }
+    },
+    "quality": {
+      "title": "Kvaliteediskoor",
+      "intro": "Sinu rahuldatud pretensioonid viimase {days} päeva jooksul. Üle {threshold} % saab FIRINGI hoiatuse, sinu skoor langeb ja saad vähem määratud tellimusi.",
+      "alerts": "FIRINGI kvaliteedihoiatused",
+      "alert": {
+        "SUPPLIER_RATE": "Pretensioonide määr {value} — üle {threshold}.",
+        "PRODUCT_RATE": "{label}: pretensioonide määr {value} — üle {threshold}.",
+        "LOT": "{label}: {value} pretensiooni (hoiatus alates {threshold}).",
+        "DRIVER": "{label}: {value} pretensiooni."
+      },
+      "threshold": "hoiatus alates {threshold} %",
+      "upheld": "Rahuldatud pretensioonid",
+      "ofClaims": "{claims} pretensioonist",
+      "delivered": "Tarnitud tellimused",
+      "byProduct": "Toodete kaupa",
+      "byProductHint": "Pretensiooniga ühikud tarnitud ühikute suhtes",
+      "byLot": "Partiide kaupa",
+      "byLotHint": "Mitu pretensiooni ühele partiile: kontrolli — võib-olla tagasikutsumine",
+      "claimedUnits": "Pretensioonis",
+      "deliveredUnits": "Tarnitud",
+      "rate": "Määr",
+      "claims": "Pretensioonid",
+      "none": "Sel perioodil pretensioone pole."
     }
   }
 }

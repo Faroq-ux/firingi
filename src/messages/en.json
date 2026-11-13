@@ -1316,6 +1316,50 @@
     "planning_flagged": {
       "title": "FIRINGI asks you to restock: {product}",
       "body": "{product} at {warehouse} is running out and customers want it. {message}"
+    },
+    "claim_opened": {
+      "title": "New claim {number} — order {order}",
+      "body": "A customer reported a problem with order {order}. Please answer with your side."
+    },
+    "claim_message": {
+      "title": "New message on claim {number}",
+      "body": "There is a new message on claim {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Supplier answered claim {number}",
+      "body": "The supplier answered claim {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Claim {number} is waiting for your answer",
+      "body": "Please give your side on claim {number} — FIRINGI decides soon."
+    },
+    "claim_decided": {
+      "title": "Claim {number} decided",
+      "body": "FIRINGI decided claim {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Replacement delivered — claim {number}",
+      "body": "The replacement goods for claim {number} were delivered."
+    },
+    "claim_chargeback": {
+      "title": "Charge-back for claim {number}",
+      "body": "Claim {number} was upheld at your fault. Please issue your credit note to FIRINGI; it is netted off your payout."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Charge-back disputed — claim {number}",
+      "body": "The supplier disputes the charge-back on claim {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Charge-back decided — claim {number}",
+      "body": "FIRINGI decided on your dispute about claim {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} claims past the decision time",
+      "body": "{count} quality claims are waiting longer than the SLA."
+    },
+    "quality_alert": {
+      "title": "Quality alert: {label}",
+      "body": "{label}: {value} (alert from {threshold})."
     }
   },
   "notifications": {
@@ -3535,6 +3579,197 @@
       "DISMISSED": "Hidden",
       "OPEN": "Open",
       "EXPIRED": "No longer needed"
+    }
+  },
+  "claims": {
+    "title": "Quality claims",
+    "buyerIntro": "Something wrong with a delivery — damaged, missing, wrong, warm, short-dated or poor quality? Report it on the order within {hours} hours of delivery, with photos. FIRINGI decides and credits you or has the goods replaced.",
+    "vendorIntro": "Customers' complaints about goods you delivered. Give your side quickly with photos; FIRINGI decides. Upheld claims are charged back on your statement and count in your quality score.",
+    "all": "All",
+    "claim": "Claim",
+    "order": "Order",
+    "customer": "Customer",
+    "reasonCol": "Problem",
+    "products": "Products",
+    "statusCol": "Status",
+    "credit": "Credit",
+    "opened": "Opened",
+    "yourAnswer": "Your answer",
+    "answerNeeded": "Answer needed",
+    "units": "{qty} units",
+    "emptyBuyer": "No claims. Report a problem from the order page after delivery.",
+    "emptyVendor": "No claims about your deliveries.",
+    "qualityLink": "Your quality score →",
+    "replacementPending": "Replacement on its way",
+    "kpi": {
+      "open": "Open claims",
+      "approved": "Approved",
+      "credited": "Credited to you",
+      "replacements": "Replacements pending",
+      "toAnswer": "Waiting for your answer",
+      "chargebacksOpen": "Charge-backs open",
+      "claimRate": "Claim rate, 30 days",
+      "claimRateHint": "{upheld} upheld of {delivered} delivered orders"
+    },
+    "status": {
+      "OPEN": "Open",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "WITHDRAWN": "Withdrawn"
+    },
+    "reason": {
+      "DAMAGED": "Damaged",
+      "MISSING": "Missing",
+      "WRONG_PRODUCT": "Wrong product",
+      "TEMPERATURE": "Temperature (cold chain)",
+      "SHORT_DATED": "Short-dated or expired",
+      "QUALITY": "Poor quality"
+    },
+    "outcome": {
+      "CREDIT": "Credit note",
+      "REPLACEMENT": "Replacement"
+    },
+    "prefer": {
+      "CREDIT": "Credit note",
+      "REPLACEMENT": "Replace the goods"
+    },
+    "fault": {
+      "SUPPLIER": "Supplier's fault",
+      "DRIVER": "Delivery fault",
+      "FIRINGI": "Goodwill by FIRINGI",
+      "CUSTOMER": "Not a valid claim"
+    },
+    "sla": {
+      "late": "{hours} h late",
+      "left": "decision in {hours} h"
+    },
+    "progress": "Progress",
+    "step": {
+      "opened": "Reported",
+      "supplier": "Supplier's answer",
+      "supplierBy": "expected by {date}",
+      "decided": "FIRINGI's decision",
+      "replaced": "Replacement delivered"
+    },
+    "lines": "What is wrong",
+    "lot": "Lot",
+    "claimedQty": "{qty} of {delivered} claimed",
+    "approvedQty": "{qty} approved",
+    "unitPaid": "{amount} / unit paid",
+    "unitCost": "your price {amount} / unit",
+    "photo": "Photo",
+    "supplierResponse": {
+      "ACCEPTED": "The supplier accepts the claim",
+      "DISPUTED": "The supplier disputes the claim"
+    },
+    "decided": {
+      "CREDIT": "Approved — credit note issued",
+      "REPLACEMENT": "Approved — the goods will be replaced",
+      "REJECTED": "Claim rejected"
+    },
+    "creditIssued": "Credit note: {amount}.",
+    "feeIncluded": "The delivery fee is included.",
+    "viewCreditNote": "Download the credit note",
+    "replacementDone": "Replacement delivered on {date}.",
+    "conversation": "Conversation",
+    "noMessages": "No messages yet.",
+    "side": {
+      "CUSTOMER": "Customer",
+      "SUPPLIER": "Supplier",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Internal",
+    "messagePlaceholder": "Write a message to FIRINGI and the other side…",
+    "send": "Send",
+    "addPhotos": "Add photos",
+    "cancel": "Cancel",
+    "withdraw": "Withdraw claim",
+    "withdrawConfirm": "Withdraw this claim? You can report the problem again while the claim window is open.",
+    "detailTitle": "Claim {number}",
+    "detailIntroBuyer": "Your claim about goods from {supplier}. FIRINGI decides and keeps you posted here.",
+    "detailIntroVendor": "{customer}'s claim about your delivery. Answer with your side and photos; FIRINGI decides.",
+    "newTitle": "Report a problem — order {number}",
+    "newIntro": "Tell us what is wrong with the delivered goods, within {hours} hours of delivery. Photos help FIRINGI decide quickly.",
+    "earlier": "Earlier claims on this order",
+    "deadline": "You can report problems until {date}.",
+    "closedSince": "The claim window closed on {date}.",
+    "notDelivered": "The order hasn't been delivered yet.",
+    "nothingLeft": "Everything delivered on this order is already claimed or returned.",
+    "windowClosed": "Problems can be reported up to {hours} hours after delivery — the window has closed. For other cases use Returns or Help & Support.",
+    "orderCardTitle": "Problem with this delivery?",
+    "orderCardHint": "Report damaged, missing, wrong or poor-quality goods within {hours} hours of delivery.",
+    "orderCardClosed": "Your claims on this order.",
+    "reportProblem": "Report a problem",
+    "form": {
+      "what": "What is wrong?",
+      "which": "Which products, how many?",
+      "delivered": "{qty} delivered",
+      "left": "{qty} can still be claimed",
+      "lotUnknown": "Lot — don't know",
+      "qtyFor": "Quantity for {product}",
+      "describe": "Describe the problem",
+      "describeHint": "E.g. 3 boxes crushed, product leaking, arrived warm (8 °C)…",
+      "photos": "Photos (optional)",
+      "photosNeeded": "Photos of the problem (at least one)",
+      "prefer": "What would you prefer?",
+      "decides": "FIRINGI decides — usually within 48 hours. A credit note is deducted from what you owe.",
+      "send": "Send claim"
+    },
+    "respond": {
+      "title": "Your side",
+      "titleUpdate": "Change your answer",
+      "hint": "Accept the claim, or dispute it with your reasons and photos (packing, loading, temperature log). FIRINGI decides.",
+      "ACCEPTED": "We accept",
+      "DISPUTED": "We dispute",
+      "comment": "Comment (optional)",
+      "whyDispute": "Why do you dispute it?",
+      "photos": "Your photos (optional)",
+      "send": "Send answer",
+      "update": "Update answer"
+    },
+    "replaceTitle": "Deliver the replacement",
+    "replaceHint": "FIRINGI approved a replacement free of charge. Deliver the goods again, then confirm here.",
+    "replaceDone": "Replacement delivered",
+    "chargeback": {
+      "title": "Charge-backs",
+      "hint": "Upheld claims at your fault: the credit is on a credit statement — issue your credit note to FIRINGI; it is netted off your payout.",
+      "amount": "Amount",
+      "statement": "Statement",
+      "none": "No charge-backs.",
+      "dispute": "Dispute",
+      "why": "Why do you dispute the charge-back?",
+      "send": "Send dispute",
+      "yourNote": "Your dispute",
+      "status": {
+        "OPEN": "To credit",
+        "DISPUTED": "Disputed",
+        "DEDUCTED": "Settled",
+        "WAIVED": "Waived"
+      }
+    },
+    "quality": {
+      "title": "Quality score",
+      "intro": "Your upheld claims over the last {days} days. Above {threshold} % FIRINGI is alerted, your scorecard drops and you get fewer allocated orders.",
+      "alerts": "FIRINGI quality alerts",
+      "alert": {
+        "SUPPLIER_RATE": "Claim rate {value} — above {threshold}.",
+        "PRODUCT_RATE": "{label}: claim rate {value} — above {threshold}.",
+        "LOT": "{label}: {value} claims (alert from {threshold}).",
+        "DRIVER": "{label}: {value} claims."
+      },
+      "threshold": "alert from {threshold} %",
+      "upheld": "Upheld claims",
+      "ofClaims": "of {claims} claims",
+      "delivered": "Delivered orders",
+      "byProduct": "By product",
+      "byProductHint": "Claimed units against delivered units",
+      "byLot": "By lot",
+      "byLotHint": "Several claims on one lot: check it — maybe a recall",
+      "claimedUnits": "Claimed",
+      "deliveredUnits": "Delivered",
+      "rate": "Rate",
+      "claims": "Claims",
+      "none": "No claims in this period."
     }
   }
 }

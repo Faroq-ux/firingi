@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Nadbytok a trvanlivosť",
     "Lead Times": "Dodacie lehoty",
     "Demand Events": "Udalosti dopytu",
-    "Planning Settings": "Nastavenia plánovania"
+    "Planning Settings": "Nastavenia plánovania",
+    "Quality Claims": "Reklamácie kvality",
+    "Quality Score": "Skóre kvality"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI vás žiada o doplnenie: {product}",
       "body": "{product} v sklade {warehouse} sa míňa a zákazníci ho chcú. {message}"
+    },
+    "claim_opened": {
+      "title": "Nová reklamácia {number} — objednávka {order}",
+      "body": "Zákazník nahlásil problém s objednávkou {order}. Odpovedzte svojím stanoviskom."
+    },
+    "claim_message": {
+      "title": "Nová správa v reklamácii {number}",
+      "body": "V reklamácii {number} je nová správa."
+    },
+    "claim_supplier_responded": {
+      "title": "Dodávateľ odpovedal na reklamáciu {number}",
+      "body": "Dodávateľ odpovedal na reklamáciu {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reklamácia {number} čaká na vašu odpoveď",
+      "body": "Uveďte svoje stanovisko k reklamácii {number} — FIRINGI čoskoro rozhodne."
+    },
+    "claim_decided": {
+      "title": "Reklamácia {number} rozhodnutá",
+      "body": "FIRINGI rozhodla reklamáciu {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Náhrada doručená — reklamácia {number}",
+      "body": "Náhradný tovar k reklamácii {number} bol doručený."
+    },
+    "claim_chargeback": {
+      "title": "Zrážka z reklamácie {number}",
+      "body": "Reklamácia {number} bola uznaná vašou vinou. Vystavte FIRINGI svoj dobropis; odpočíta sa z vašej výplaty."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Zrážka namietaná — reklamácia {number}",
+      "body": "Dodávateľ namieta zrážku z reklamácie {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Zrážka rozhodnutá — reklamácia {number}",
+      "body": "FIRINGI rozhodla o vašej námietke k reklamácii {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reklamácií po lehote na rozhodnutie",
+      "body": "{count} reklamácií kvality čaká dlhšie, ako je lehota."
+    },
+    "quality_alert": {
+      "title": "Upozornenie na kvalitu: {label}",
+      "body": "{label}: {value} (upozornenie od {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Skryté",
       "OPEN": "Otvorené",
       "EXPIRED": "Už netreba"
+    }
+  },
+  "claims": {
+    "title": "Reklamácie kvality",
+    "buyerIntro": "Niečo nie je v poriadku s dodávkou — poškodené, chýbajúce, nesprávne, teplé, krátka trvanlivosť alebo zlá kvalita? Nahláste to pri objednávke do {hours} hodín od doručenia, s fotografiami. FIRINGI rozhodne a pripíše vám dobropis alebo zabezpečí výmenu tovaru.",
+    "vendorIntro": "Reklamácie zákazníkov na tovar, ktorý ste dodali. Rýchlo uveďte svoje stanovisko s fotografiami; FIRINGI rozhodne. Uznané reklamácie sa strhnú z vášho vyúčtovania a počítajú sa do vášho skóre kvality.",
+    "all": "Všetky",
+    "claim": "Reklamácia",
+    "order": "Objednávka",
+    "customer": "Zákazník",
+    "reasonCol": "Problém",
+    "products": "Produkty",
+    "statusCol": "Stav",
+    "credit": "Dobropis",
+    "opened": "Podaná",
+    "yourAnswer": "Vaša odpoveď",
+    "answerNeeded": "Potrebná odpoveď",
+    "units": "{qty} ks",
+    "emptyBuyer": "Žiadne reklamácie. Problém nahláste po doručení na stránke objednávky.",
+    "emptyVendor": "Žiadne reklamácie na vaše dodávky.",
+    "qualityLink": "Vaše skóre kvality →",
+    "replacementPending": "Náhrada je na ceste",
+    "kpi": {
+      "open": "Otvorené reklamácie",
+      "approved": "Uznané",
+      "credited": "Pripísané vám",
+      "replacements": "Čakajúce náhrady",
+      "toAnswer": "Čaká na vašu odpoveď",
+      "chargebacksOpen": "Otvorené zrážky",
+      "claimRate": "Miera reklamácií, 30 dní",
+      "claimRateHint": "{upheld} uznaných z {delivered} doručených objednávok"
+    },
+    "status": {
+      "OPEN": "Otvorená",
+      "APPROVED": "Uznaná",
+      "REJECTED": "Zamietnutá",
+      "WITHDRAWN": "Stiahnutá"
+    },
+    "reason": {
+      "DAMAGED": "Poškodené",
+      "MISSING": "Chýba",
+      "WRONG_PRODUCT": "Nesprávny produkt",
+      "TEMPERATURE": "Teplota (chladiaci reťazec)",
+      "SHORT_DATED": "Krátka trvanlivosť alebo po záruke",
+      "QUALITY": "Zlá kvalita"
+    },
+    "outcome": {
+      "CREDIT": "Dobropis",
+      "REPLACEMENT": "Výmena"
+    },
+    "prefer": {
+      "CREDIT": "Dobropis",
+      "REPLACEMENT": "Vymeniť tovar"
+    },
+    "fault": {
+      "SUPPLIER": "Chyba dodávateľa",
+      "DRIVER": "Chyba pri doručení",
+      "FIRINGI": "Ústretovosť FIRINGI",
+      "CUSTOMER": "Neoprávnená reklamácia"
+    },
+    "sla": {
+      "late": "{hours} h po termíne",
+      "left": "rozhodnutie o {hours} h"
+    },
+    "progress": "Priebeh",
+    "step": {
+      "opened": "Nahlásené",
+      "supplier": "Odpoveď dodávateľa",
+      "supplierBy": "očakávaná do {date}",
+      "decided": "Rozhodnutie FIRINGI",
+      "replaced": "Náhrada doručená"
+    },
+    "lines": "Čo je zle",
+    "lot": "Šarža",
+    "claimedQty": "{qty} z {delivered} reklamovaných",
+    "approvedQty": "{qty} uznaných",
+    "unitPaid": "{amount} / ks zaplatené",
+    "unitCost": "vaša cena {amount} / ks",
+    "photo": "Fotografia",
+    "supplierResponse": {
+      "ACCEPTED": "Dodávateľ reklamáciu uznáva",
+      "DISPUTED": "Dodávateľ reklamáciu namieta"
+    },
+    "decided": {
+      "CREDIT": "Uznané — vystavený dobropis",
+      "REPLACEMENT": "Uznané — tovar bude vymenený",
+      "REJECTED": "Reklamácia zamietnutá"
+    },
+    "creditIssued": "Dobropis: {amount}.",
+    "feeIncluded": "Zahŕňa poplatok za doručenie.",
+    "viewCreditNote": "Stiahnuť dobropis",
+    "replacementDone": "Náhrada doručená {date}.",
+    "conversation": "Konverzácia",
+    "noMessages": "Zatiaľ žiadne správy.",
+    "side": {
+      "CUSTOMER": "Zákazník",
+      "SUPPLIER": "Dodávateľ",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Interná",
+    "messagePlaceholder": "Napíšte správu FIRINGI a druhej strane…",
+    "send": "Odoslať",
+    "addPhotos": "Pridať fotografie",
+    "cancel": "Zrušiť",
+    "withdraw": "Stiahnuť reklamáciu",
+    "withdrawConfirm": "Stiahnuť túto reklamáciu? Problém môžete nahlásiť znova, kým lehota plynie.",
+    "detailTitle": "Reklamácia {number}",
+    "detailIntroBuyer": "Vaša reklamácia tovaru od {supplier}. FIRINGI rozhodne a bude vás tu informovať.",
+    "detailIntroVendor": "Reklamácia zákazníka {customer} k vašej dodávke. Odpovedzte svojím stanoviskom a fotografiami; FIRINGI rozhodne.",
+    "newTitle": "Nahlásiť problém — objednávka {number}",
+    "newIntro": "Povedzte nám, čo je s doručeným tovarom zle, do {hours} hodín od doručenia. Fotografie pomôžu FIRINGI rýchlo rozhodnúť.",
+    "earlier": "Skoršie reklamácie tejto objednávky",
+    "deadline": "Problémy môžete hlásiť do {date}.",
+    "closedSince": "Lehota na reklamáciu skončila {date}.",
+    "notDelivered": "Objednávka ešte nebola doručená.",
+    "nothingLeft": "Všetko doručené v tejto objednávke je už reklamované alebo vrátené.",
+    "windowClosed": "Problémy možno hlásiť do {hours} hodín od doručenia — lehota uplynula. V iných prípadoch použite Vrátenia alebo Pomoc a podporu.",
+    "orderCardTitle": "Problém s touto dodávkou?",
+    "orderCardHint": "Nahláste poškodený, chýbajúci, nesprávny alebo nekvalitný tovar do {hours} hodín od doručenia.",
+    "orderCardClosed": "Vaše reklamácie k tejto objednávke.",
+    "reportProblem": "Nahlásiť problém",
+    "form": {
+      "what": "Čo je zle?",
+      "which": "Ktoré produkty, koľko?",
+      "delivered": "doručené {qty}",
+      "left": "ešte možno reklamovať {qty}",
+      "lotUnknown": "Šarža — neviem",
+      "qtyFor": "Množstvo: {product}",
+      "describe": "Opíšte problém",
+      "describeHint": "Napr. 3 škatule rozpučené, produkt tečie, prišiel teplý (8 °C)…",
+      "photos": "Fotografie (nepovinné)",
+      "photosNeeded": "Fotografie problému (aspoň jedna)",
+      "prefer": "Čo by ste uprednostnili?",
+      "decides": "FIRINGI rozhodne — zvyčajne do 48 hodín. Dobropis sa odpočíta od vášho dlhu.",
+      "send": "Odoslať reklamáciu"
+    },
+    "respond": {
+      "title": "Vaše stanovisko",
+      "titleUpdate": "Zmeniť odpoveď",
+      "hint": "Uznajte reklamáciu alebo ju namietnite s odôvodnením a fotografiami (balenie, nakládka, teplotný záznam). FIRINGI rozhodne.",
+      "ACCEPTED": "Uznávame",
+      "DISPUTED": "Namietame",
+      "comment": "Komentár (nepovinné)",
+      "whyDispute": "Prečo ju namietate?",
+      "photos": "Vaše fotografie (nepovinné)",
+      "send": "Odoslať odpoveď",
+      "update": "Aktualizovať odpoveď"
+    },
+    "replaceTitle": "Doručiť náhradu",
+    "replaceHint": "FIRINGI schválila bezplatnú náhradu. Doručte tovar znova a potvrďte to tu.",
+    "replaceDone": "Náhrada doručená",
+    "chargeback": {
+      "title": "Zrážky",
+      "hint": "Uznané reklamácie vašou vinou: dobropis je na dobropisovom vyúčtovaní — vystavte FIRINGI svoj dobropis; odpočíta sa z vašej výplaty.",
+      "amount": "Suma",
+      "statement": "Vyúčtovanie",
+      "none": "Žiadne zrážky.",
+      "dispute": "Namietnuť",
+      "why": "Prečo namietate zrážku?",
+      "send": "Odoslať námietku",
+      "yourNote": "Vaša námietka",
+      "status": {
+        "OPEN": "Na dobropis",
+        "DISPUTED": "Namietané",
+        "DEDUCTED": "Vyrovnané",
+        "WAIVED": "Odpustené"
+      }
+    },
+    "quality": {
+      "title": "Skóre kvality",
+      "intro": "Vaše uznané reklamácie za posledných {days} dní. Nad {threshold} % dostane FIRINGI upozornenie, vaše hodnotenie klesne a dostanete menej pridelených objednávok.",
+      "alerts": "Upozornenia na kvalitu od FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Miera reklamácií {value} — nad {threshold}.",
+        "PRODUCT_RATE": "{label}: miera reklamácií {value} — nad {threshold}.",
+        "LOT": "{label}: {value} reklamácií (upozornenie od {threshold}).",
+        "DRIVER": "{label}: {value} reklamácií."
+      },
+      "threshold": "upozornenie od {threshold} %",
+      "upheld": "Uznané reklamácie",
+      "ofClaims": "z {claims} reklamácií",
+      "delivered": "Doručené objednávky",
+      "byProduct": "Podľa produktu",
+      "byProductHint": "Reklamované kusy voči doručeným",
+      "byLot": "Podľa šarže",
+      "byLotHint": "Viac reklamácií jednej šarže: skontrolujte ju — možno stiahnutie",
+      "claimedUnits": "Reklamované",
+      "deliveredUnits": "Doručené",
+      "rate": "Miera",
+      "claims": "Reklamácie",
+      "none": "V tomto období žiadne reklamácie."
     }
   }
 }

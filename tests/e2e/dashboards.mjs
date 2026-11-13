@@ -31,7 +31,7 @@ async function open(email, url, opts = {}) {
   return page;
 }
 const shot = async (p, n) => SHOTS && p.screenshot({ path: `${SHOTS}/${n}.png`, fullPage: true });
-const heroNumbers = (p) => p.locator('[data-testid="hero"] .glass .text-2xl, [data-testid="hero"] .glass .text-3xl').allTextContents();
+const heroNumbers = (p) => p.locator('[data-testid="hero"] .glass .kpi-value').allTextContents();
 
 // ── Admin overview ──
 const admin = await open("superadmin@firingi.test", "/admin/dashboard/overview");

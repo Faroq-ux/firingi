@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Overvoorraad & houdbaarheid",
     "Lead Times": "Levertijden",
     "Demand Events": "Vraaggebeurtenissen",
-    "Planning Settings": "Planningsinstellingen"
+    "Planning Settings": "Planningsinstellingen",
+    "Quality Claims": "Kwaliteitsclaims",
+    "Quality Score": "Kwaliteitsscore"
   },
   "delivery": {
     "title": "Levering",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI vraagt u bij te bestellen: {product}",
       "body": "{product} in {warehouse} raakt op en klanten willen het. {message}"
+    },
+    "claim_opened": {
+      "title": "Nieuwe claim {number} — bestelling {order}",
+      "body": "Een klant meldde een probleem met bestelling {order}. Antwoord met uw kant."
+    },
+    "claim_message": {
+      "title": "Nieuw bericht bij claim {number}",
+      "body": "Er is een nieuw bericht bij claim {number}."
+    },
+    "claim_supplier_responded": {
+      "title": "Leverancier antwoordde op claim {number}",
+      "body": "De leverancier antwoordde op claim {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Claim {number} wacht op uw antwoord",
+      "body": "Geef uw kant bij claim {number} — FIRINGI beslist binnenkort."
+    },
+    "claim_decided": {
+      "title": "Claim {number} beslist",
+      "body": "FIRINGI besliste over claim {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Vervanging geleverd — claim {number}",
+      "body": "De vervangende goederen voor claim {number} zijn geleverd."
+    },
+    "claim_chargeback": {
+      "title": "Doorbelasting voor claim {number}",
+      "body": "Claim {number} werd toegekend door uw schuld. Stel uw creditnota aan FIRINGI op; ze wordt verrekend met uw uitbetaling."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Doorbelasting betwist — claim {number}",
+      "body": "De leverancier betwist de doorbelasting van claim {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Doorbelasting beslist — claim {number}",
+      "body": "FIRINGI besliste over uw bezwaar bij claim {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} claims over de beslistermijn",
+      "body": "{count} kwaliteitsclaims wachten langer dan de termijn."
+    },
+    "quality_alert": {
+      "title": "Kwaliteitsmelding: {label}",
+      "body": "{label}: {value} (melding vanaf {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Verborgen",
       "OPEN": "Open",
       "EXPIRED": "Niet meer nodig"
+    }
+  },
+  "claims": {
+    "title": "Kwaliteitsclaims",
+    "buyerIntro": "Klopt er iets niet met een levering — beschadigd, ontbrekend, verkeerd, te warm, korte houdbaarheid of slechte kwaliteit? Meld het binnen {hours} uur na levering bij de bestelling, met foto's. FIRINGI beslist en crediteert u of laat de goederen vervangen.",
+    "vendorIntro": "Klachten van klanten over goederen die u leverde. Geef snel uw kant met foto's; FIRINGI beslist. Toegekende claims worden op uw afrekening doorbelast en tellen mee in uw kwaliteitsscore.",
+    "all": "Alle",
+    "claim": "Claim",
+    "order": "Bestelling",
+    "customer": "Klant",
+    "reasonCol": "Probleem",
+    "products": "Producten",
+    "statusCol": "Status",
+    "credit": "Creditering",
+    "opened": "Geopend",
+    "yourAnswer": "Uw antwoord",
+    "answerNeeded": "Antwoord nodig",
+    "units": "{qty} stuks",
+    "emptyBuyer": "Geen claims. Meld een probleem na de levering op de bestelpagina.",
+    "emptyVendor": "Geen claims over uw leveringen.",
+    "qualityLink": "Uw kwaliteitsscore →",
+    "replacementPending": "Vervanging onderweg",
+    "kpi": {
+      "open": "Open claims",
+      "approved": "Goedgekeurd",
+      "credited": "Aan u gecrediteerd",
+      "replacements": "Vervangingen in afwachting",
+      "toAnswer": "Wacht op uw antwoord",
+      "chargebacksOpen": "Open doorbelastingen",
+      "claimRate": "Claimpercentage, 30 dagen",
+      "claimRateHint": "{upheld} toegekend van {delivered} geleverde bestellingen"
+    },
+    "status": {
+      "OPEN": "Open",
+      "APPROVED": "Goedgekeurd",
+      "REJECTED": "Afgewezen",
+      "WITHDRAWN": "Ingetrokken"
+    },
+    "reason": {
+      "DAMAGED": "Beschadigd",
+      "MISSING": "Ontbreekt",
+      "WRONG_PRODUCT": "Verkeerd product",
+      "TEMPERATURE": "Temperatuur (koudeketen)",
+      "SHORT_DATED": "Korte houdbaarheid of verlopen",
+      "QUALITY": "Slechte kwaliteit"
+    },
+    "outcome": {
+      "CREDIT": "Creditnota",
+      "REPLACEMENT": "Vervanging"
+    },
+    "prefer": {
+      "CREDIT": "Creditnota",
+      "REPLACEMENT": "Goederen vervangen"
+    },
+    "fault": {
+      "SUPPLIER": "Schuld van de leverancier",
+      "DRIVER": "Leveringsfout",
+      "FIRINGI": "Coulance van FIRINGI",
+      "CUSTOMER": "Geen geldige claim"
+    },
+    "sla": {
+      "late": "{hours} u te laat",
+      "left": "beslissing over {hours} u"
+    },
+    "progress": "Voortgang",
+    "step": {
+      "opened": "Gemeld",
+      "supplier": "Antwoord leverancier",
+      "supplierBy": "verwacht vóór {date}",
+      "decided": "Beslissing van FIRINGI",
+      "replaced": "Vervanging geleverd"
+    },
+    "lines": "Wat er mis is",
+    "lot": "Lot",
+    "claimedQty": "{qty} van {delivered} geclaimd",
+    "approvedQty": "{qty} goedgekeurd",
+    "unitPaid": "{amount} / stuk betaald",
+    "unitCost": "uw prijs {amount} / stuk",
+    "photo": "Foto",
+    "supplierResponse": {
+      "ACCEPTED": "De leverancier aanvaardt de claim",
+      "DISPUTED": "De leverancier betwist de claim"
+    },
+    "decided": {
+      "CREDIT": "Goedgekeurd — creditnota uitgegeven",
+      "REPLACEMENT": "Goedgekeurd — de goederen worden vervangen",
+      "REJECTED": "Claim afgewezen"
+    },
+    "creditIssued": "Creditnota: {amount}.",
+    "feeIncluded": "De leveringskosten zijn inbegrepen.",
+    "viewCreditNote": "Creditnota downloaden",
+    "replacementDone": "Vervanging geleverd op {date}.",
+    "conversation": "Gesprek",
+    "noMessages": "Nog geen berichten.",
+    "side": {
+      "CUSTOMER": "Klant",
+      "SUPPLIER": "Leverancier",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Intern",
+    "messagePlaceholder": "Schrijf een bericht aan FIRINGI en de andere partij…",
+    "send": "Versturen",
+    "addPhotos": "Foto's toevoegen",
+    "cancel": "Annuleren",
+    "withdraw": "Claim intrekken",
+    "withdrawConfirm": "Deze claim intrekken? U kunt het probleem opnieuw melden zolang de termijn loopt.",
+    "detailTitle": "Claim {number}",
+    "detailIntroBuyer": "Uw claim over goederen van {supplier}. FIRINGI beslist en houdt u hier op de hoogte.",
+    "detailIntroVendor": "Claim van {customer} over uw levering. Antwoord met uw kant en foto's; FIRINGI beslist.",
+    "newTitle": "Probleem melden — bestelling {number}",
+    "newIntro": "Vertel ons wat er mis is met de geleverde goederen, binnen {hours} uur na levering. Foto's helpen FIRINGI snel te beslissen.",
+    "earlier": "Eerdere claims op deze bestelling",
+    "deadline": "U kunt problemen melden tot {date}.",
+    "closedSince": "De claimtermijn is op {date} verstreken.",
+    "notDelivered": "De bestelling is nog niet geleverd.",
+    "nothingLeft": "Alles wat op deze bestelling geleverd is, is al geclaimd of geretourneerd.",
+    "windowClosed": "Problemen kunnen tot {hours} uur na levering gemeld worden — de termijn is verstreken. Gebruik voor andere gevallen Retouren of Hulp & ondersteuning.",
+    "orderCardTitle": "Probleem met deze levering?",
+    "orderCardHint": "Meld beschadigde, ontbrekende, verkeerde of slechte goederen binnen {hours} uur na levering.",
+    "orderCardClosed": "Uw claims op deze bestelling.",
+    "reportProblem": "Probleem melden",
+    "form": {
+      "what": "Wat is er mis?",
+      "which": "Welke producten, hoeveel?",
+      "delivered": "{qty} geleverd",
+      "left": "nog {qty} te claimen",
+      "lotUnknown": "Lot — weet ik niet",
+      "qtyFor": "Aantal voor {product}",
+      "describe": "Beschrijf het probleem",
+      "describeHint": "Bijv. 3 dozen geplet, product lekt, warm aangekomen (8 °C)…",
+      "photos": "Foto's (optioneel)",
+      "photosNeeded": "Foto's van het probleem (minstens één)",
+      "prefer": "Wat heeft uw voorkeur?",
+      "decides": "FIRINGI beslist — meestal binnen 48 uur. Een creditnota wordt verrekend met wat u verschuldigd bent.",
+      "send": "Claim versturen"
+    },
+    "respond": {
+      "title": "Uw kant",
+      "titleUpdate": "Antwoord wijzigen",
+      "hint": "Aanvaard de claim of betwist ze met redenen en foto's (verpakking, laden, temperatuurlog). FIRINGI beslist.",
+      "ACCEPTED": "Wij aanvaarden",
+      "DISPUTED": "Wij betwisten",
+      "comment": "Opmerking (optioneel)",
+      "whyDispute": "Waarom betwist u ze?",
+      "photos": "Uw foto's (optioneel)",
+      "send": "Antwoord versturen",
+      "update": "Antwoord bijwerken"
+    },
+    "replaceTitle": "Vervanging leveren",
+    "replaceHint": "FIRINGI keurde een kosteloze vervanging goed. Lever de goederen opnieuw en bevestig dat hier.",
+    "replaceDone": "Vervanging geleverd",
+    "chargeback": {
+      "title": "Doorbelastingen",
+      "hint": "Toegekende claims door uw schuld: de creditering staat op een creditafrekening — stel uw creditnota aan FIRINGI op; ze wordt verrekend met uw uitbetaling.",
+      "amount": "Bedrag",
+      "statement": "Afrekening",
+      "none": "Geen doorbelastingen.",
+      "dispute": "Betwisten",
+      "why": "Waarom betwist u de doorbelasting?",
+      "send": "Bezwaar versturen",
+      "yourNote": "Uw bezwaar",
+      "status": {
+        "OPEN": "Te crediteren",
+        "DISPUTED": "Betwist",
+        "DEDUCTED": "Afgehandeld",
+        "WAIVED": "Kwijtgescholden"
+      }
+    },
+    "quality": {
+      "title": "Kwaliteitsscore",
+      "intro": "Uw toegekende claims van de laatste {days} dagen. Boven {threshold} % krijgt FIRINGI een melding, daalt uw score en krijgt u minder toegewezen bestellingen.",
+      "alerts": "Kwaliteitsmeldingen van FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Claimpercentage {value} — boven {threshold}.",
+        "PRODUCT_RATE": "{label}: claimpercentage {value} — boven {threshold}.",
+        "LOT": "{label}: {value} claims (melding vanaf {threshold}).",
+        "DRIVER": "{label}: {value} claims."
+      },
+      "threshold": "melding vanaf {threshold} %",
+      "upheld": "Toegekende claims",
+      "ofClaims": "van {claims} claims",
+      "delivered": "Geleverde bestellingen",
+      "byProduct": "Per product",
+      "byProductHint": "Geclaimde tegenover geleverde stuks",
+      "byLot": "Per lot",
+      "byLotHint": "Meerdere claims op één lot: controleer het — misschien een terugroeping",
+      "claimedUnits": "Geclaimd",
+      "deliveredUnits": "Geleverd",
+      "rate": "Percentage",
+      "claims": "Claims",
+      "none": "Geen claims in deze periode."
     }
   }
 }

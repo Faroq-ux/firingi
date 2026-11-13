@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Prevelike zaloge in rok uporabe",
     "Lead Times": "Dobavni roki",
     "Demand Events": "Dogodki povpraševanja",
-    "Planning Settings": "Nastavitve načrtovanja"
+    "Planning Settings": "Nastavitve načrtovanja",
+    "Quality Claims": "Reklamacije kakovosti",
+    "Quality Score": "Ocena kakovosti"
   },
   "delivery": {
     "title": "Dostava",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI vas prosi za dopolnitev: {product}",
       "body": "{product} v skladišču {warehouse} pohaja, kupci pa ga želijo. {message}"
+    },
+    "claim_opened": {
+      "title": "Nova reklamacija {number} — naročilo {order}",
+      "body": "Stranka je prijavila težavo z naročilom {order}. Odgovorite s svojim stališčem."
+    },
+    "claim_message": {
+      "title": "Novo sporočilo v reklamaciji {number}",
+      "body": "V reklamaciji {number} je novo sporočilo."
+    },
+    "claim_supplier_responded": {
+      "title": "Dobavitelj je odgovoril na reklamacijo {number}",
+      "body": "Dobavitelj je odgovoril na reklamacijo {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reklamacija {number} čaka na vaš odgovor",
+      "body": "Podajte svoje stališče k reklamaciji {number} — FIRINGI bo kmalu odločil."
+    },
+    "claim_decided": {
+      "title": "Reklamacija {number} je odločena",
+      "body": "FIRINGI je odločil o reklamaciji {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Zamenjava dostavljena — reklamacija {number}",
+      "body": "Nadomestno blago za reklamacijo {number} je dostavljeno."
+    },
+    "claim_chargeback": {
+      "title": "Odbitek za reklamacijo {number}",
+      "body": "Reklamacija {number} je bila priznana po vaši krivdi. Izdajte FIRINGI svoj dobropis; odšteje se od vašega izplačila."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Odbitek izpodbijan — reklamacija {number}",
+      "body": "Dobavitelj izpodbija odbitek za reklamacijo {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Odbitek odločen — reklamacija {number}",
+      "body": "FIRINGI je odločil o vašem ugovoru k reklamaciji {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reklamacij po roku za odločitev",
+      "body": "{count} reklamacij kakovosti čaka dlje od roka."
+    },
+    "quality_alert": {
+      "title": "Opozorilo o kakovosti: {label}",
+      "body": "{label}: {value} (opozorilo od {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Skrito",
       "OPEN": "Odprto",
       "EXPIRED": "Ni več potrebno"
+    }
+  },
+  "claims": {
+    "title": "Reklamacije kakovosti",
+    "buyerIntro": "Je z dostavo kaj narobe — poškodovano, manjka, napačno, pretoplo, kratek rok uporabe ali slaba kakovost? Prijavite pri naročilu v {hours} urah po dostavi, s fotografijami. FIRINGI odloči in vam odobri dobropis ali poskrbi za zamenjavo blaga.",
+    "vendorIntro": "Reklamacije strank za blago, ki ste ga dostavili. Hitro podajte svoje stališče s fotografijami; FIRINGI odloči. Upravičene reklamacije se odštejejo na vašem obračunu in štejejo v vašo oceno kakovosti.",
+    "all": "Vse",
+    "claim": "Reklamacija",
+    "order": "Naročilo",
+    "customer": "Stranka",
+    "reasonCol": "Težava",
+    "products": "Izdelki",
+    "statusCol": "Stanje",
+    "credit": "Dobropis",
+    "opened": "Odprta",
+    "yourAnswer": "Vaš odgovor",
+    "answerNeeded": "Potreben odgovor",
+    "units": "{qty} kos",
+    "emptyBuyer": "Ni reklamacij. Težavo prijavite po dostavi na strani naročila.",
+    "emptyVendor": "Ni reklamacij za vaše dostave.",
+    "qualityLink": "Vaša ocena kakovosti →",
+    "replacementPending": "Zamenjava je na poti",
+    "kpi": {
+      "open": "Odprte reklamacije",
+      "approved": "Odobrene",
+      "credited": "Odobreno vam",
+      "replacements": "Čakajoče zamenjave",
+      "toAnswer": "Čaka na vaš odgovor",
+      "chargebacksOpen": "Odprti odbitki",
+      "claimRate": "Delež reklamacij, 30 dni",
+      "claimRateHint": "{upheld} upravičenih od {delivered} dostavljenih naročil"
+    },
+    "status": {
+      "OPEN": "Odprta",
+      "APPROVED": "Odobrena",
+      "REJECTED": "Zavrnjena",
+      "WITHDRAWN": "Umaknjena"
+    },
+    "reason": {
+      "DAMAGED": "Poškodovano",
+      "MISSING": "Manjka",
+      "WRONG_PRODUCT": "Napačen izdelek",
+      "TEMPERATURE": "Temperatura (hladna veriga)",
+      "SHORT_DATED": "Kratek rok ali pretečeno",
+      "QUALITY": "Slaba kakovost"
+    },
+    "outcome": {
+      "CREDIT": "Dobropis",
+      "REPLACEMENT": "Zamenjava"
+    },
+    "prefer": {
+      "CREDIT": "Dobropis",
+      "REPLACEMENT": "Zamenjajte blago"
+    },
+    "fault": {
+      "SUPPLIER": "Krivda dobavitelja",
+      "DRIVER": "Napaka pri dostavi",
+      "FIRINGI": "Dobra volja FIRINGI",
+      "CUSTOMER": "Neupravičena reklamacija"
+    },
+    "sla": {
+      "late": "{hours} h zamude",
+      "left": "odločitev čez {hours} h"
+    },
+    "progress": "Potek",
+    "step": {
+      "opened": "Prijavljeno",
+      "supplier": "Odgovor dobavitelja",
+      "supplierBy": "pričakovan do {date}",
+      "decided": "Odločitev FIRINGI",
+      "replaced": "Zamenjava dostavljena"
+    },
+    "lines": "Kaj je narobe",
+    "lot": "Serija",
+    "claimedQty": "{qty} od {delivered} reklamiranih",
+    "approvedQty": "{qty} odobrenih",
+    "unitPaid": "{amount} / kos plačano",
+    "unitCost": "vaša cena {amount} / kos",
+    "photo": "Fotografija",
+    "supplierResponse": {
+      "ACCEPTED": "Dobavitelj priznava reklamacijo",
+      "DISPUTED": "Dobavitelj izpodbija reklamacijo"
+    },
+    "decided": {
+      "CREDIT": "Odobreno — izdan dobropis",
+      "REPLACEMENT": "Odobreno — blago bo zamenjano",
+      "REJECTED": "Reklamacija zavrnjena"
+    },
+    "creditIssued": "Dobropis: {amount}.",
+    "feeIncluded": "Vključuje strošek dostave.",
+    "viewCreditNote": "Prenesite dobropis",
+    "replacementDone": "Zamenjava dostavljena {date}.",
+    "conversation": "Pogovor",
+    "noMessages": "Še ni sporočil.",
+    "side": {
+      "CUSTOMER": "Stranka",
+      "SUPPLIER": "Dobavitelj",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Interno",
+    "messagePlaceholder": "Napišite sporočilo FIRINGI in drugi strani…",
+    "send": "Pošlji",
+    "addPhotos": "Dodaj fotografije",
+    "cancel": "Prekliči",
+    "withdraw": "Umakni reklamacijo",
+    "withdrawConfirm": "Umakniti to reklamacijo? Težavo lahko znova prijavite, dokler rok teče.",
+    "detailTitle": "Reklamacija {number}",
+    "detailIntroBuyer": "Vaša reklamacija za blago dobavitelja {supplier}. FIRINGI odloči in vas obvešča tukaj.",
+    "detailIntroVendor": "Reklamacija stranke {customer} za vašo dostavo. Odgovorite s svojim stališčem in fotografijami; FIRINGI odloči.",
+    "newTitle": "Prijavite težavo — naročilo {number}",
+    "newIntro": "Povejte nam, kaj je narobe z dostavljenim blagom, v {hours} urah po dostavi. Fotografije FIRINGI pomagajo hitro odločiti.",
+    "earlier": "Prejšnje reklamacije tega naročila",
+    "deadline": "Težave lahko prijavite do {date}.",
+    "closedSince": "Rok za reklamacije je potekel {date}.",
+    "notDelivered": "Naročilo še ni bilo dostavljeno.",
+    "nothingLeft": "Vse, kar je bilo dostavljeno v tem naročilu, je že reklamirano ali vrnjeno.",
+    "windowClosed": "Težave lahko prijavite do {hours} ur po dostavi — rok je potekel. V drugih primerih uporabite Vračila ali Pomoč in podporo.",
+    "orderCardTitle": "Težava s to dostavo?",
+    "orderCardHint": "Prijavite poškodovano, manjkajoče, napačno ali slabo blago v {hours} urah po dostavi.",
+    "orderCardClosed": "Vaše reklamacije za to naročilo.",
+    "reportProblem": "Prijavite težavo",
+    "form": {
+      "what": "Kaj je narobe?",
+      "which": "Kateri izdelki, koliko?",
+      "delivered": "dostavljeno {qty}",
+      "left": "še mogoče reklamirati {qty}",
+      "lotUnknown": "Serija — ne vem",
+      "qtyFor": "Količina: {product}",
+      "describe": "Opišite težavo",
+      "describeHint": "Npr. 3 škatle zmečkane, izdelek pušča, prispel topel (8 °C)…",
+      "photos": "Fotografije (neobvezno)",
+      "photosNeeded": "Fotografije težave (vsaj ena)",
+      "prefer": "Kaj bi raje?",
+      "decides": "FIRINGI odloči — običajno v 48 urah. Dobropis se odšteje od vašega dolga.",
+      "send": "Pošlji reklamacijo"
+    },
+    "respond": {
+      "title": "Vaše stališče",
+      "titleUpdate": "Spremeni odgovor",
+      "hint": "Priznajte reklamacijo ali jo izpodbijajte z razlogi in fotografijami (embalaža, nakladanje, zapis temperature). FIRINGI odloči.",
+      "ACCEPTED": "Priznavamo",
+      "DISPUTED": "Izpodbijamo",
+      "comment": "Komentar (neobvezno)",
+      "whyDispute": "Zakaj jo izpodbijate?",
+      "photos": "Vaše fotografije (neobvezno)",
+      "send": "Pošlji odgovor",
+      "update": "Posodobi odgovor"
+    },
+    "replaceTitle": "Dostavite zamenjavo",
+    "replaceHint": "FIRINGI je odobril brezplačno zamenjavo. Blago dostavite znova in to potrdite tukaj.",
+    "replaceDone": "Zamenjava dostavljena",
+    "chargeback": {
+      "title": "Odbitki",
+      "hint": "Upravičene reklamacije po vaši krivdi: dobropis je na obračunu dobropisa — izdajte FIRINGI svoj dobropis; odšteje se od vašega izplačila.",
+      "amount": "Znesek",
+      "statement": "Obračun",
+      "none": "Ni odbitkov.",
+      "dispute": "Izpodbijaj",
+      "why": "Zakaj izpodbijate odbitek?",
+      "send": "Pošlji ugovor",
+      "yourNote": "Vaš ugovor",
+      "status": {
+        "OPEN": "Za dobropis",
+        "DISPUTED": "Izpodbijano",
+        "DEDUCTED": "Poravnano",
+        "WAIVED": "Odpuščeno"
+      }
+    },
+    "quality": {
+      "title": "Ocena kakovosti",
+      "intro": "Vaše upravičene reklamacije v zadnjih {days} dneh. Nad {threshold} % FIRINGI prejme opozorilo, vaša ocena pade in prejmete manj dodeljenih naročil.",
+      "alerts": "Opozorila o kakovosti od FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Delež reklamacij {value} — nad {threshold}.",
+        "PRODUCT_RATE": "{label}: delež reklamacij {value} — nad {threshold}.",
+        "LOT": "{label}: {value} reklamacij (opozorilo od {threshold}).",
+        "DRIVER": "{label}: {value} reklamacij."
+      },
+      "threshold": "opozorilo od {threshold} %",
+      "upheld": "Upravičene reklamacije",
+      "ofClaims": "od {claims} reklamacij",
+      "delivered": "Dostavljena naročila",
+      "byProduct": "Po izdelku",
+      "byProductHint": "Reklamirani kosi glede na dostavljene",
+      "byLot": "Po seriji",
+      "byLotHint": "Več reklamacij iste serije: preverite jo — morda odpoklic",
+      "claimedUnits": "Reklamirano",
+      "deliveredUnits": "Dostavljeno",
+      "rate": "Delež",
+      "claims": "Reklamacije",
+      "none": "V tem obdobju ni reklamacij."
     }
   }
 }

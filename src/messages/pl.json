@@ -836,7 +836,9 @@
     "Overstock & Expiry": "Nadmiar i terminy",
     "Lead Times": "Czasy dostaw",
     "Demand Events": "Zdarzenia popytowe",
-    "Planning Settings": "Ustawienia planowania"
+    "Planning Settings": "Ustawienia planowania",
+    "Quality Claims": "Reklamacje jakościowe",
+    "Quality Score": "Wskaźnik jakości"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1414,6 +1416,50 @@
     "planning_flagged": {
       "title": "FIRINGI prosi o uzupełnienie: {product}",
       "body": "{product} w {warehouse} się kończy, a klienci go chcą. {message}"
+    },
+    "claim_opened": {
+      "title": "Nowa reklamacja {number} — zamówienie {order}",
+      "body": "Klient zgłosił problem z zamówieniem {order}. Odpowiedz swoim stanowiskiem."
+    },
+    "claim_message": {
+      "title": "Nowa wiadomość w reklamacji {number}",
+      "body": "W reklamacji {number} jest nowa wiadomość."
+    },
+    "claim_supplier_responded": {
+      "title": "Dostawca odpowiedział na reklamację {number}",
+      "body": "Dostawca odpowiedział na reklamację {number}: {response}."
+    },
+    "claim_answer_needed": {
+      "title": "Reklamacja {number} czeka na Twoją odpowiedź",
+      "body": "Przedstaw swoje stanowisko w reklamacji {number} — FIRINGI wkrótce zdecyduje."
+    },
+    "claim_decided": {
+      "title": "Reklamacja {number} rozpatrzona",
+      "body": "FIRINGI rozpatrzyło reklamację {number}. {note}"
+    },
+    "claim_replaced": {
+      "title": "Wymiana dostarczona — reklamacja {number}",
+      "body": "Towar zamienny do reklamacji {number} został dostarczony."
+    },
+    "claim_chargeback": {
+      "title": "Obciążenie z reklamacji {number}",
+      "body": "Reklamacja {number} została uznana z Twojej winy. Wystaw FIRINGI swoją fakturę korygującą; zostanie potrącona z Twojej wypłaty."
+    },
+    "claim_chargeback_disputed": {
+      "title": "Obciążenie zakwestionowane — reklamacja {number}",
+      "body": "Dostawca kwestionuje obciążenie z reklamacji {number}."
+    },
+    "claim_chargeback_resolved": {
+      "title": "Obciążenie rozstrzygnięte — reklamacja {number}",
+      "body": "FIRINGI rozstrzygnęło Twój sprzeciw w reklamacji {number}."
+    },
+    "claim_overdue": {
+      "title": "{count} reklamacji po terminie decyzji",
+      "body": "{count} reklamacji jakościowych czeka dłużej niż termin."
+    },
+    "quality_alert": {
+      "title": "Alert jakości: {label}",
+      "body": "{label}: {value} (alert od {threshold})."
     }
   },
   "notifications": {
@@ -3633,6 +3679,197 @@
       "DISMISSED": "Ukryte",
       "OPEN": "Otwarte",
       "EXPIRED": "Już niepotrzebne"
+    }
+  },
+  "claims": {
+    "title": "Reklamacje jakościowe",
+    "buyerIntro": "Coś nie tak z dostawą — uszkodzone, brakujące, niewłaściwe, za ciepłe, krótki termin lub słaba jakość? Zgłoś to w zamówieniu w ciągu {hours} godzin od dostawy, ze zdjęciami. FIRINGI decyduje i uznaje Ci kredyt albo zleca wymianę towaru.",
+    "vendorIntro": "Reklamacje klientów dotyczące dostarczonego przez Ciebie towaru. Szybko przedstaw swoje stanowisko ze zdjęciami; FIRINGI decyduje. Uznane reklamacje obciążają Twoje rozliczenie i liczą się do Twojego wskaźnika jakości.",
+    "all": "Wszystkie",
+    "claim": "Reklamacja",
+    "order": "Zamówienie",
+    "customer": "Klient",
+    "reasonCol": "Problem",
+    "products": "Produkty",
+    "statusCol": "Status",
+    "credit": "Korekta",
+    "opened": "Zgłoszona",
+    "yourAnswer": "Twoja odpowiedź",
+    "answerNeeded": "Wymagana odpowiedź",
+    "units": "{qty} szt.",
+    "emptyBuyer": "Brak reklamacji. Zgłoś problem na stronie zamówienia po dostawie.",
+    "emptyVendor": "Brak reklamacji dotyczących Twoich dostaw.",
+    "qualityLink": "Twój wskaźnik jakości →",
+    "replacementPending": "Wymiana w drodze",
+    "kpi": {
+      "open": "Otwarte reklamacje",
+      "approved": "Uznane",
+      "credited": "Uznane na Twoją korzyść",
+      "replacements": "Oczekujące wymiany",
+      "toAnswer": "Czekają na Twoją odpowiedź",
+      "chargebacksOpen": "Otwarte obciążenia",
+      "claimRate": "Wskaźnik reklamacji, 30 dni",
+      "claimRateHint": "{upheld} uznanych z {delivered} dostarczonych zamówień"
+    },
+    "status": {
+      "OPEN": "Otwarta",
+      "APPROVED": "Uznana",
+      "REJECTED": "Odrzucona",
+      "WITHDRAWN": "Wycofana"
+    },
+    "reason": {
+      "DAMAGED": "Uszkodzone",
+      "MISSING": "Brakuje",
+      "WRONG_PRODUCT": "Niewłaściwy produkt",
+      "TEMPERATURE": "Temperatura (łańcuch chłodniczy)",
+      "SHORT_DATED": "Krótki termin lub przeterminowane",
+      "QUALITY": "Słaba jakość"
+    },
+    "outcome": {
+      "CREDIT": "Faktura korygująca",
+      "REPLACEMENT": "Wymiana"
+    },
+    "prefer": {
+      "CREDIT": "Faktura korygująca",
+      "REPLACEMENT": "Wymiana towaru"
+    },
+    "fault": {
+      "SUPPLIER": "Wina dostawcy",
+      "DRIVER": "Błąd dostawy",
+      "FIRINGI": "Gest dobrej woli FIRINGI",
+      "CUSTOMER": "Reklamacja nieuzasadniona"
+    },
+    "sla": {
+      "late": "{hours} h po terminie",
+      "left": "decyzja za {hours} h"
+    },
+    "progress": "Postęp",
+    "step": {
+      "opened": "Zgłoszona",
+      "supplier": "Odpowiedź dostawcy",
+      "supplierBy": "oczekiwana do {date}",
+      "decided": "Decyzja FIRINGI",
+      "replaced": "Wymiana dostarczona"
+    },
+    "lines": "Co jest nie tak",
+    "lot": "Partia",
+    "claimedQty": "{qty} z {delivered} reklamowanych",
+    "approvedQty": "{qty} uznanych",
+    "unitPaid": "{amount} / szt. zapłacono",
+    "unitCost": "Twoja cena {amount} / szt.",
+    "photo": "Zdjęcie",
+    "supplierResponse": {
+      "ACCEPTED": "Dostawca uznaje reklamację",
+      "DISPUTED": "Dostawca kwestionuje reklamację"
+    },
+    "decided": {
+      "CREDIT": "Uznana — wystawiono fakturę korygującą",
+      "REPLACEMENT": "Uznana — towar zostanie wymieniony",
+      "REJECTED": "Reklamacja odrzucona"
+    },
+    "creditIssued": "Faktura korygująca: {amount}.",
+    "feeIncluded": "Obejmuje opłatę za dostawę.",
+    "viewCreditNote": "Pobierz fakturę korygującą",
+    "replacementDone": "Wymiana dostarczona {date}.",
+    "conversation": "Rozmowa",
+    "noMessages": "Brak wiadomości.",
+    "side": {
+      "CUSTOMER": "Klient",
+      "SUPPLIER": "Dostawca",
+      "FIRINGI": "FIRINGI"
+    },
+    "internal": "Wewnętrzna",
+    "messagePlaceholder": "Napisz wiadomość do FIRINGI i drugiej strony…",
+    "send": "Wyślij",
+    "addPhotos": "Dodaj zdjęcia",
+    "cancel": "Anuluj",
+    "withdraw": "Wycofaj reklamację",
+    "withdrawConfirm": "Wycofać tę reklamację? Możesz zgłosić problem ponownie, dopóki termin jest otwarty.",
+    "detailTitle": "Reklamacja {number}",
+    "detailIntroBuyer": "Twoja reklamacja towaru od {supplier}. FIRINGI decyduje i informuje Cię tutaj.",
+    "detailIntroVendor": "Reklamacja {customer} dotycząca Twojej dostawy. Odpowiedz swoim stanowiskiem i zdjęciami; FIRINGI decyduje.",
+    "newTitle": "Zgłoś problem — zamówienie {number}",
+    "newIntro": "Powiedz nam, co jest nie tak z dostarczonym towarem, w ciągu {hours} godzin od dostawy. Zdjęcia pomagają FIRINGI szybko zdecydować.",
+    "earlier": "Wcześniejsze reklamacje tego zamówienia",
+    "deadline": "Problemy możesz zgłaszać do {date}.",
+    "closedSince": "Termin reklamacji minął {date}.",
+    "notDelivered": "Zamówienie nie zostało jeszcze dostarczone.",
+    "nothingLeft": "Wszystko, co dostarczono w tym zamówieniu, jest już reklamowane lub zwrócone.",
+    "windowClosed": "Problemy można zgłaszać do {hours} godzin po dostawie — termin minął. W innych przypadkach skorzystaj ze Zwrotów lub Pomocy.",
+    "orderCardTitle": "Problem z tą dostawą?",
+    "orderCardHint": "Zgłoś uszkodzony, brakujący, niewłaściwy lub słabej jakości towar w ciągu {hours} godzin od dostawy.",
+    "orderCardClosed": "Twoje reklamacje tego zamówienia.",
+    "reportProblem": "Zgłoś problem",
+    "form": {
+      "what": "Co jest nie tak?",
+      "which": "Które produkty, ile?",
+      "delivered": "dostarczono {qty}",
+      "left": "można jeszcze reklamować {qty}",
+      "lotUnknown": "Partia — nie wiem",
+      "qtyFor": "Ilość: {product}",
+      "describe": "Opisz problem",
+      "describeHint": "Np. 3 kartony zgniecione, produkt cieknie, dotarł ciepły (8 °C)…",
+      "photos": "Zdjęcia (opcjonalnie)",
+      "photosNeeded": "Zdjęcia problemu (co najmniej jedno)",
+      "prefer": "Co wolisz?",
+      "decides": "FIRINGI decyduje — zwykle w ciągu 48 godzin. Faktura korygująca pomniejsza Twoje zadłużenie.",
+      "send": "Wyślij reklamację"
+    },
+    "respond": {
+      "title": "Twoje stanowisko",
+      "titleUpdate": "Zmień odpowiedź",
+      "hint": "Uznaj reklamację lub zakwestionuj ją z uzasadnieniem i zdjęciami (opakowanie, załadunek, zapis temperatury). FIRINGI decyduje.",
+      "ACCEPTED": "Uznajemy",
+      "DISPUTED": "Kwestionujemy",
+      "comment": "Komentarz (opcjonalnie)",
+      "whyDispute": "Dlaczego ją kwestionujesz?",
+      "photos": "Twoje zdjęcia (opcjonalnie)",
+      "send": "Wyślij odpowiedź",
+      "update": "Zaktualizuj odpowiedź"
+    },
+    "replaceTitle": "Dostarcz wymianę",
+    "replaceHint": "FIRINGI zatwierdziło bezpłatną wymianę. Dostarcz towar ponownie i potwierdź tutaj.",
+    "replaceDone": "Wymiana dostarczona",
+    "chargeback": {
+      "title": "Obciążenia",
+      "hint": "Uznane reklamacje z Twojej winy: korekta jest na rozliczeniu korygującym — wystaw FIRINGI swoją fakturę korygującą; zostanie potrącona z Twojej wypłaty.",
+      "amount": "Kwota",
+      "statement": "Rozliczenie",
+      "none": "Brak obciążeń.",
+      "dispute": "Zakwestionuj",
+      "why": "Dlaczego kwestionujesz obciążenie?",
+      "send": "Wyślij sprzeciw",
+      "yourNote": "Twój sprzeciw",
+      "status": {
+        "OPEN": "Do skorygowania",
+        "DISPUTED": "Zakwestionowane",
+        "DEDUCTED": "Rozliczone",
+        "WAIVED": "Umorzone"
+      }
+    },
+    "quality": {
+      "title": "Wskaźnik jakości",
+      "intro": "Twoje uznane reklamacje z ostatnich {days} dni. Powyżej {threshold} % FIRINGI dostaje alert, Twoja ocena spada i otrzymujesz mniej przydzielonych zamówień.",
+      "alerts": "Alerty jakości FIRINGI",
+      "alert": {
+        "SUPPLIER_RATE": "Wskaźnik reklamacji {value} — powyżej {threshold}.",
+        "PRODUCT_RATE": "{label}: wskaźnik reklamacji {value} — powyżej {threshold}.",
+        "LOT": "{label}: {value} reklamacji (alert od {threshold}).",
+        "DRIVER": "{label}: {value} reklamacji."
+      },
+      "threshold": "alert od {threshold} %",
+      "upheld": "Uznane reklamacje",
+      "ofClaims": "z {claims} reklamacji",
+      "delivered": "Dostarczone zamówienia",
+      "byProduct": "Wg produktu",
+      "byProductHint": "Reklamowane sztuki w stosunku do dostarczonych",
+      "byLot": "Wg partii",
+      "byLotHint": "Kilka reklamacji jednej partii: sprawdź ją — może wycofanie",
+      "claimedUnits": "Reklamowane",
+      "deliveredUnits": "Dostarczone",
+      "rate": "Wskaźnik",
+      "claims": "Reklamacje",
+      "none": "Brak reklamacji w tym okresie."
     }
   }
 }

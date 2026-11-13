@@ -9,7 +9,7 @@ export function PageHeader({ title, description, actions, eyebrow, icon: Icon }:
         {Icon ? <span className="tile-chip gloss mt-0.5 grid size-11 shrink-0 place-items-center rounded-2xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white shadow-[0_10px_24px_-10px_var(--vivid-violet)]"><Icon className="size-5" aria-hidden /></span> : <SectionChip />}
         <div className="min-w-0">
           {eyebrow ? <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:color-mix(in_oklch,var(--vivid-violet)_70%,var(--foreground))]">{eyebrow}</p> : <SectionEyebrow />}
-          <h1 className="text-gradient text-2xl font-bold tracking-tight sm:text-[1.75rem]">{title}</h1>
+          <h1 className="text-gradient break-words text-2xl font-bold leading-tight tracking-tight sm:text-[1.75rem]">{title}</h1>
           {description && <div className="mt-1 max-w-3xl text-sm text-muted-foreground">{description}</div>}
         </div>
       </div>
