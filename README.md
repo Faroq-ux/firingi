@@ -552,8 +552,10 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   `claude-opus-5-5` by default; Sonnet / Haiku selectable in the AI settings). It answers with
   read-only tools that call FIRINGI's own services **with the asking user's rights** (sales
   summary, breakdowns, forecasts, stock, reorders, scorecards, orders, catalogue, suggestions,
-  P&L for finance). Staff, suppliers and customers each get their own tool set; it replies in the
-  user's language. Server-side fallback is on (`fallbacks: "default"`): if the model is busy the
+  P&L for finance). Staff use it in the AI Centre. Suppliers and customers see it as **Assistant**
+  (its own tool set — only their company's data, never FIRINGI's commission or margins) **only when FIRINGI
+  switches it on for that company** (Settings › Business Features › Assistant; off by default). It replies in
+  the user's language. Server-side fallback is on (`fallbacks: "default"`): if the model is busy the
   API answers with an eligible fallback model, and the model that answered is logged. Prompt
   caching is on; questions per person per hour are limited (AI settings). Conversations are private
   to the user. **To switch it on, set `ANTHROPIC_API_KEY` on the server and restart**; without it the
@@ -561,9 +563,14 @@ or a setting by itself. A person accepts or dismisses each suggestion.
 - **Pages**: *Dashboard › AI Insights* and the 11 *AI Centre* pages (staff, English); *Orders › Buy
   Again* and the dashboard's "time to reorder" card (customers: one tap puts the usual quantities in
   the cart to check and place); *Reports › Demand & Stock* and the dashboard's stock card
-  (suppliers); *AI Assistant* in both portals — all in the 25 languages.
+  (suppliers); *Assistant* in both portals when switched on for the company — all in the 25 languages.
 - **AI Activity Log**: every assistant answer (who, which tools, tokens, model), refresh, accept
-  and dismiss. Operations, Finance and Sales roles now include the AI right.
+  and dismiss.
+- **Who gets the AI Centre** — FIRINGI staff only, and only the Super Admin by default. Other staff
+  get it when a role with *Use the AI Centre* (`admin.ai.view`) is given to them (Users & Permissions ›
+  Roles); the Operations, Finance and Sales roles don't include it. Suppliers and customers never see the
+  AI Centre; they get the *Assistant* only where FIRINGI switched it on, and can always write to FIRINGI
+  under *Help & Support*.
 - **Demo history**: `pnpm db:demo-history` adds 16 weeks of delivered demo orders (marked
   "Demo history", not invoiced) so forecasts have something to learn from. Never on the test DB.
 

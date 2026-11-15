@@ -1,16 +1,18 @@
+import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { assistantStatus, getConversation, listConversations } from "@/server/ai/assistant";
 import { PageHeader } from "@/components/layout/page-header";
 import { AssistantChat, AssistantOff, type ChatLabels } from "@/components/ai/chat";
 
-export const metadata = { title: "AI Assistant" };
+export const metadata = { title: "Assistant" };
 const TOOL_KEYS = ["sales_summary", "breakdown", "demand_forecast", "stock_outlook", "reorder_outlook", "delivery_risk", "supplier_scorecards", "find_orders", "search_catalogue", "open_suggestions"] as const;
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ c?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, ["buyer.orders.view", "buyer.orders.place"]);
-  const [t, locale, status] = await Promise.all([getTranslations("ai"), getLocale(), assistantStatus("BUYER")]);
+  const [t, locale, status] = await Promise.all([getTranslations("ai"), getLocale(), assistantStatus("BUYER", ctx.company.id)]);
+  if (!status.switchedOn) notFound(); // FIRINGI switches the Assistant on per company
   const c = (await searchParams).c ?? null;
   const header = <PageHeader title={t("assistant.title")} description={t("assistant.description")} />;
   if (!status.enabled) return <>{header}<AssistantOff title={t("assistant.offTitle")} text={t("assistant.offText")} /></>;

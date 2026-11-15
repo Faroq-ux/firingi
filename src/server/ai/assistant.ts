@@ -17,6 +17,7 @@ import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { aiScope, type Side } from "./insights";
+import { CompanyFeatureOffError, companyFeatureOn } from "@/server/accounting/features";
 import { logAi } from "./feed";
 import { apiTools, toolsFor } from "./tools";
 import { AI_MODELS, DEFAULT_AI, type AiSettings } from "@/lib/ai";
@@ -51,11 +52,11 @@ export async function saveAiSettings(ctx: Ctx, input: Partial<AiSettings>) {
   return next;
 }
 
-/** Is the assistant configured (API key) and switched on for this side? */
-export async function assistantStatus(side: Side) {
+/** Is the assistant configured (API key) and switched on — for staff globally, for a supplier / customer per company? */
+export async function assistantStatus(side: Side, companyId?: string) {
   const s = await aiSettings();
   const configured = !!process.env.ANTHROPIC_API_KEY || !!transportOverride;
-  const on = side === "STAFF" ? s.staff : side === "BUYER" ? s.buyers : s.suppliers;
+  const on = side === "STAFF" ? s.staff : !!companyId && (await companyFeatureOn(companyId, "ASSISTANT"));
   return { configured, enabled: configured && on, switchedOn: on, model: s.model };
 }
 
@@ -96,17 +97,22 @@ function systemPrompt(ctx: Ctx, side: Side, locale: string) {
 
 // ── conversations ───────────────────────────────────────────────────────────
 
-function assertSide(ctx: Ctx, side: Side) {
+/**
+ * Staff: the AI right (Super Admin by default, others by role). Suppliers and customers: only when
+ * FIRINGI switched the Assistant on for their company (Settings › Business Features).
+ */
+async function assertSide(ctx: Ctx, side: Side) {
   aiScope(ctx, side);
+  if (side !== "STAFF" && !(await companyFeatureOn(ctx.company.id, "ASSISTANT"))) throw new CompanyFeatureOffError();
 }
 
 export async function listConversations(ctx: Ctx, side: Side) {
-  assertSide(ctx, side);
+  await assertSide(ctx, side);
   return prisma.aiConversation.findMany({ where: { userId: ctx.user.id, companyId: ctx.company.id, side }, orderBy: { updatedAt: "desc" }, take: 50, select: { id: true, title: true, updatedAt: true } });
 }
 
 export async function getConversation(ctx: Ctx, side: Side, id: string) {
-  assertSide(ctx, side);
+  await assertSide(ctx, side);
   const c = await prisma.aiConversation.findFirst({ where: { id, userId: ctx.user.id, companyId: ctx.company.id, side }, include: { messages: { orderBy: { at: "asc" } } } });
   if (!c) throw new NotFoundError("Conversation");
   return c;
@@ -122,11 +128,11 @@ export async function deleteConversation(ctx: Ctx, side: Side, id: string) {
 const textOf = (m: BetaMessage) => m.content.filter((b): b is Anthropic.Beta.Messages.BetaTextBlock => b.type === "text").map((b) => b.text).join("\n").trim();
 
 export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string | null; text: string; locale?: string }) {
-  assertSide(ctx, side);
+  await assertSide(ctx, side);
   const text = input.text.trim();
   if (!text) throw new ValidationError("Type a question.");
   if (text.length > 4000) throw new ValidationError("Please keep the question under 4,000 characters.");
-  const status = await assistantStatus(side);
+  const status = await assistantStatus(side, ctx.company.id);
   if (!status.configured) throw new AppError("AI_NOT_CONFIGURED", "The AI assistant isn't set up yet (no Anthropic API key).", 503);
   if (!status.switchedOn) throw new ForbiddenError("The AI assistant is switched off.");
   const settings = await aiSettings();

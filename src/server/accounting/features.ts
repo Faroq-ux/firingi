@@ -1,6 +1,7 @@
 /**
- * Optional features FIRINGI switches on per company (Phase 27). Accounting is off until FIRINGI
- * switches it on for a supplier or a customer; switching it off hides it and keeps what was recorded.
+ * Optional features FIRINGI switches on per company (Phase 27): Accounting, and the Assistant (the
+ * business assistant for suppliers and customers). Off until FIRINGI switches it on for a supplier or a
+ * customer; switching it off hides it and keeps what was recorded.
  */
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -8,7 +9,7 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "@/server/services/audit";
 
-export const COMPANY_FEATURES = ["ACCOUNTING"] as const;
+export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT"] as const;
 export type CompanyFeatureKey = (typeof COMPANY_FEATURES)[number];
 
 export async function companyFeatureOn(companyId: string, key: CompanyFeatureKey) {
@@ -42,6 +43,7 @@ export async function companiesWithFeatures(ctx: Ctx) {
   return rows.map((c) => ({
     id: c.id, name: c.tradeName ?? c.legalName, legalName: c.legalName, type: c.type, country: c.country.code, entries: c._count.accountingEntries,
     accounting: !!c.features.find((f) => f.key === "ACCOUNTING")?.enabled, updatedAt: c.features.find((f) => f.key === "ACCOUNTING")?.updatedAt ?? null,
+    assistant: !!c.features.find((f) => f.key === "ASSISTANT")?.enabled,
   }));
 }
 

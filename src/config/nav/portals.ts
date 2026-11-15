@@ -110,7 +110,7 @@ export const VENDOR_NAV: NavSection[] = [
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" })] },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(vac) },
-  { key: "ai", icon: "Bot", label: { en: "AI Assistant", pt: "Assistente IA", es: "Asistente IA" }, items: [vai("assistant", "AI Assistant", "Assistente IA", "P17", { live: true, es: "Asistente IA" })] },
+  { key: "assistant", icon: "Bot", label: { en: "Assistant", pt: "Assistente", es: "Asistente" }, items: [vai("assistant", "Assistant", "Assistente", "P17", { live: true, feature: "ASSISTANT", es: "Asistente" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [vs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
@@ -184,7 +184,7 @@ export const BUY_NAV: NavSection[] = [
   },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(bac) },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
-  { key: "ai", icon: "Bot", label: { en: "AI Assistant", pt: "Assistente IA", es: "Asistente IA" }, items: [bai("assistant", "AI Assistant", "Assistente IA", "P17", { live: true, es: "Asistente IA" })] },
+  { key: "assistant", icon: "Bot", label: { en: "Assistant", pt: "Assistente", es: "Asistente" }, items: [bai("assistant", "Assistant", "Assistente", "P17", { live: true, feature: "ASSISTANT", es: "Asistente" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [bs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
   {
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },

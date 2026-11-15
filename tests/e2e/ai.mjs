@@ -5,8 +5,8 @@
  * accepting a late-reorder suggestion creates a CRM call task, activity log, assistant "not
  * connected" state with settings (no API key here: no live AI calls);
  * customer (Portuguese) — "time to reorder" on the dashboard, Buy Again puts the usual order in
- * the cart, assistant "not available yet";
- * supplier — Demand & Stock page and the stock card on its dashboard.
+ * the cart, the Assistant only once FIRINGI switches it on for the company (Business Features);
+ * supplier — Demand & Stock page and the stock card on its dashboard; no Assistant unless switched on.
  *   node tests/e2e/ai.mjs [baseUrl] [screenshotDir]
  */
 import { createRequire } from "node:module";
@@ -21,6 +21,7 @@ const shot = async (page, name) => SHOTS && page.screenshot({ path: `${SHOTS}/${
 const browser = await chromium.launch();
 const settle = async (p) => { await p.waitForLoadState("networkidle"); await p.waitForTimeout(500); };
 const go = async (p, url) => { await p.goto(`${BASE}${url}`); await settle(p); };
+const until = async (fn, ms = 20000) => { const end = Date.now() + ms; while (Date.now() < end) { if (await fn().catch(() => false)) return true; await new Promise((r) => setTimeout(r, 400)); } return false; };
 const errors = [];
 async function login(email) {
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 950 }, reducedMotion: "reduce" })).newPage();
@@ -64,19 +65,24 @@ for (const [url, id] of [["/admin/ai/supplier-recommendations", "supplier-table"
   check(`${url} renders`, (await sa.getByTestId(id).count()) === 1);
 }
 
-// ── 3. Accept a late reorder → CRM call task (sales) ──
+// ── 3. Who gets the AI Centre: Super Admin by default, other staff only through a role ──
 const sales = await login("sales@firingi.test");
-await go(sales, "/admin/ai/recommendations?kind=REORDER_DUE");
-const rec = sales.getByTestId("recommendations").locator("tr", { hasText: "C&C Almada" }).first();
+check("Sales staff without the AI right don't see the AI Centre", (await sales.locator("aside").getByText("AI Centre", { exact: true }).count()) === 0 && (await sales.locator("aside").getByText(/Centro de IA/).count()) === 0);
+await go(sales, "/admin/ai/recommendations");
+check("Sales staff without the AI right are blocked", sales.url().endsWith("/forbidden"), sales.url());
+
+// ── 3b. Accept a late reorder → CRM call task for the account owner ──
+await go(sa, "/admin/ai/recommendations?kind=REORDER_DUE");
+const rec = sa.getByTestId("recommendations").locator("tr", { hasText: "C&C Almada" }).first();
 // A suggestion is made once per situation: on a rerun this week it may already be accepted.
 const already = !(await rec.count());
 check("late reorder suggested to staff", already || (await rec.getByRole("button", { name: "Create call task" }).count()) === 1, already ? "already accepted earlier" : "");
-if (!already) { await rec.getByRole("button", { name: "Create call task" }).click(); await settle(sales); }
-await go(sales, "/admin/ai/recommendations?kind=REORDER_DUE&status=ACCEPTED");
-check("suggestion accepted", (await sales.getByTestId("recommendations").locator("tr", { hasText: "C&C Almada" }).count()) > 0);
+if (!already) { await rec.getByRole("button", { name: "Create call task" }).click(); await settle(sa); }
+await go(sa, "/admin/ai/recommendations?kind=REORDER_DUE&status=ACCEPTED");
+check("suggestion accepted", (await sa.getByTestId("recommendations").locator("tr", { hasText: "C&C Almada" }).count()) > 0);
 await go(sales, "/admin/crm/follow-ups");
-check("CRM call task created", /Call C&C Almada/.test(await main(sales)));
-await shot(sales, "p17-04-recommendations");
+check("CRM call task created for the account owner", /Call C&C Almada/.test(await main(sales)));
+await shot(sa, "p17-04-recommendations");
 
 // ── 4. Assistant (no API key here) + activity log ──
 await go(sa, "/admin/ai/assistant");
@@ -109,12 +115,26 @@ await go(k, "/buy/orders/cart");
 check("cart holds C&C Almada's products", /C&C Almada/.test(await main(k)));
 const clear2 = k.getByRole("button", { name: /Esvaziar carrinho|Clear cart/ });
 if (await clear2.count()) { await clear2.click(); await settle(k); }
+// The Assistant: off until FIRINGI switches it on for the company (Settings › Business Features).
+await go(k, "/buy/dashboard/overview");
+check("customer: no Assistant until FIRINGI switches it on", (await k.locator("aside").getByText(/^Assistente$/).count()) === 0 && (await k.request.get(`${BASE}/buy/assistant`)).status() === 404);
+await go(sa, "/admin/settings/business-features");
+const kRow = sa.getByTestId("business-features").locator("tr", { hasText: "Kebab House" }).first();
+await kRow.getByTestId("assistant-switch").click();
+await settle(sa);
+check("FIRINGI switched the Assistant on for Kebab House", await until(async () => (await kRow.getByTestId("assistant-switch").getAttribute("aria-checked")) === "true"));
+await shot(sa, "p17-08-business-features-assistant");
 await go(k, "/buy/assistant");
-check("customer assistant: not available yet (Portuguese)", (await k.getByTestId("assistant-off").count()) === 1 && /ainda não está disponível/.test(await main(k)));
+check("customer: menu shows \"Assistente\" (not \"Assistente IA\")", (await k.locator("aside").getByText(/^Assistente$/).count()) > 0 && (await k.locator("aside").getByText(/Assistente IA/).count()) === 0);
+check("customer Assistant page: not available yet without an API key (Portuguese)", (await k.getByTestId("assistant-off").count()) === 1 && /ainda não está disponível/.test(await main(k)) && /Assistente/.test(await k.locator("h1").textContent()));
+await kRow.getByTestId("assistant-switch").click();
+await settle(sa);
+check("switched off again → hidden", await until(async () => (await k.request.get(`${BASE}/buy/assistant`)).status() === 404));
 check("nav shows Comprar de Novo", (await k.locator("aside").getByText("Comprar de Novo").count()) > 0);
 
 // ── 6. Supplier: Demand & Stock ──
 const atl = await login("owner@atlantico.test");
+check("supplier: no Assistant unless FIRINGI switches it on", (await atl.locator("aside").getByText(/^Assistente$/).count()) === 0 && (await atl.request.get(`${BASE}/vendor/assistant`)).status() === 404);
 await go(atl, "/vendor/reports/demand");
 check("supplier demand forecast", (await rows(atl, "vendor-demand")) > 0);
 check("supplier sees customers due to reorder", /C&C Almada/.test(await atl.getByTestId("vendor-due").textContent()));

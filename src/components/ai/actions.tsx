@@ -73,7 +73,7 @@ export function AiSettingsForm({ settings }: { settings: AiSettings }) {
           <input id="ai-limit" type="number" min={1} max={500} value={v.hourlyLimit} onChange={(e) => setV({ ...v, hourlyLimit: Number(e.target.value) })} className="h-9 w-full rounded-md border bg-background px-3 text-sm" />
         </div>
       </div>
-      <fieldset className="flex flex-wrap gap-4"><legend className="mb-1 text-sm font-medium">Assistant available to</legend>{box("staff", "FIRINGI staff")}{box("buyers", "Customers & wholesalers buying")}{box("suppliers", "Suppliers")}</fieldset>
+      <fieldset className="flex flex-wrap gap-4"><legend className="mb-1 text-sm font-medium">Assistant available to</legend>{box("staff", "FIRINGI staff")}<p className="w-full text-xs text-muted-foreground">Suppliers and customers: switched on per company in Settings &rsaquo; Business Features (&ldquo;Assistant&rdquo;).</p></fieldset>
       <div className="flex items-center gap-2">
         <Button disabled={pending} onClick={() => start(async () => { const r = await saveAiSettingsAction(v); setMsg(r.ok ? { ok: true, text: "Saved" } : { ok: false, text: r.error }); if (r.ok) router.refresh(); })}>Save AI settings</Button>
         <Msg msg={msg} />

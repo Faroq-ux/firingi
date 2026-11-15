@@ -5,13 +5,14 @@
  * the hourly limit, private conversations, and the "not set up" state.
  */
 import Anthropic from "@anthropic-ai/sdk";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
 import { aiSettings, ask, assistantStatus, getConversation, listConversations, saveAiSettings, setAiTransportForTests, type AiTransport } from "@/server/ai/assistant";
-import { ctxFor } from "../helpers";
+import { ctxFor, setAiRole } from "../helpers";
+import { setCompanyFeature } from "@/server/accounting/features";
 
 type Params = Parameters<AiTransport>[0];
-const SA = "superadmin@firingi.test", OPS = "ops@firingi.test", SUPPORT = "support@firingi.test", KEBAB = "owner@kebabhouse.test";
+const SA = "superadmin@firingi.test", OPS = "ops@firingi.test", SUPPORT = "support@firingi.test", KEBAB = "owner@kebabhouse.test", LX_OWNER = "owner@lisboacentral.test";
 let original: Awaited<ReturnType<typeof aiSettings>> | null = null;
 
 const msg = (content: unknown[], stop_reason: string, model = "claude-opus-5-5") => ({
@@ -30,7 +31,15 @@ function script(...replies: ((p: Params) => Awaited<ReturnType<AiTransport>>)[])
 const lastToolResults = (p: Params) => (p.messages[p.messages.length - 1].content as { type: string; content: string; is_error?: boolean; tool_use_id: string }[]);
 
 afterEach(() => setAiTransportForTests(null));
+/** FIRINGI switches the Assistant on per supplier / customer (Settings › Business Features). */
+const assistantFor = async (email: string, on: boolean) => setCompanyFeature(await ctxFor(SA), (await ctxFor(email)).company.id, "ASSISTANT", on);
+beforeAll(async () => {
+  await setAiRole(OPS, true); // AI Centre via a role (Super Admin has it by default)
+  await assistantFor(KEBAB, true);
+});
 afterAll(async () => {
+  await setAiRole(OPS, false);
+  await assistantFor(KEBAB, false); await assistantFor(LX_OWNER, false);
   if (original) await saveAiSettings(await ctxFor(SA), original);
   await prisma.$disconnect();
 });
@@ -122,6 +131,22 @@ describe("AI assistant", () => {
     expect(results[2]).toMatchObject({ is_error: true, content: expect.stringMatching(/Unknown tool/) });
   });
 
+  it("suppliers and customers only when FIRINGI switched the Assistant on for their company", async () => {
+    const calls = script(() => msg([text("Olá")], "end_turn"));
+    const lx = await ctxFor(LX_OWNER);
+    await assistantFor(LX_OWNER, false);
+    await expect(ask(lx, "VENDOR", { text: "Vendas?" })).rejects.toThrow(/switched this on/);
+    await expect(listConversations(lx, "VENDOR")).rejects.toThrow(/switched this on/);
+    expect(calls).toHaveLength(0); // the model was never called
+    expect((await assistantStatus("VENDOR", lx.company.id)).switchedOn).toBe(false);
+    await expect(setCompanyFeature(await ctxFor(OPS), lx.company.id, "ASSISTANT", true)).rejects.toThrow(); // only settings managers switch it
+    await assistantFor(LX_OWNER, true);
+    expect((await assistantStatus("VENDOR", lx.company.id)).switchedOn).toBe(true);
+    expect((await ask(lx, "VENDOR", { text: "Vendas?" })).answer).toMatch(/Olá/);
+    await assistantFor(LX_OWNER, false);
+    await expect(ask(lx, "VENDOR", { text: "again" })).rejects.toThrow(/switched this on/);
+  });
+
   it("refusals, invalid tool input and API errors are handled", async () => {
     const sa = await ctxFor(SA);
     script(() => msg([], "refusal"));
@@ -143,13 +168,13 @@ describe("AI assistant", () => {
     await expect(ask(await ctxFor(KEBAB), "VENDOR", { text: "hi" })).rejects.toThrow(); // a restaurant isn't a supplier
     const sa = await ctxFor(SA);
     original = await aiSettings();
-    await expect(saveAiSettings(await ctxFor(OPS), { buyers: false })).rejects.toThrow();
+    await expect(saveAiSettings(await ctxFor(OPS), { staff: false })).rejects.toThrow();
     await expect(saveAiSettings(sa, { model: "gpt-x" as never })).rejects.toThrow(/model/);
-    await saveAiSettings(sa, { buyers: false });
+    await saveAiSettings(sa, { staff: false });
     script(() => msg([text("hi")], "end_turn"));
-    await expect(ask(await ctxFor(KEBAB), "BUYER", { text: "hi" })).rejects.toThrow(/switched off/);
+    await expect(ask(sa, "STAFF", { text: "hi" })).rejects.toThrow(/switched off/);
     const used = await prisma.aiMessage.count({ where: { role: "user", at: { gt: new Date(Date.now() - 3600_000) }, conversation: { userId: sa.user.id } } });
-    await saveAiSettings(sa, { buyers: true, hourlyLimit: used });
+    await saveAiSettings(sa, { staff: true, hourlyLimit: used });
     script(() => msg([text("hi")], "end_turn"));
     await expect(ask(sa, "STAFF", { text: "one more" })).rejects.toThrow(/questions this hour/);
     await saveAiSettings(sa, original);

@@ -10,7 +10,7 @@ import { seedDemoHistory } from "../../prisma/seed/history";
 import { deliveryRisk, demandForecast, marginOpportunities, reorderPredictions, stockPredictions, supplierRecommendations } from "@/server/ai/insights";
 import { decideRecommendation, listActivity, listRecommendations, refreshRecommendations } from "@/server/ai/feed";
 import { removeMarginRule, saveMarginRule } from "@/server/services/performance";
-import { ctxFor, companyId } from "../helpers";
+import { ctxFor, companyId, setAiRole } from "../helpers";
 
 const SA = "superadmin@firingi.test", SALES = "sales@firingi.test", OPS = "ops@firingi.test", SUPPORT = "support@firingi.test";
 const KEBAB = "owner@kebabhouse.test", LX = "owner@lisboacentral.test", ATL = "owner@atlantico.test";
@@ -23,14 +23,29 @@ beforeAll(async () => {
   const before = new Set((await prisma.order.findMany({ where: { buyerNotes: "Demo history" }, select: { id: true } })).map((o) => o.id));
   await seedDemoHistory(prisma, new Date(), { statusHistory: false });
   historyIds = (await prisma.order.findMany({ where: { buyerNotes: "Demo history" }, select: { id: true } })).map((o) => o.id).filter((id) => !before.has(id));
+  // The AI Centre is Super Admin only by default: the other staff here get it through a role.
+  await setAiRole(OPS, true); await setAiRole(SALES, true);
 });
 
 afterAll(async () => {
+  await setAiRole(OPS, false); await setAiRole(SALES, false);
   for (const s of stockBackup) await prisma.stockLevel.update({ where: { id: s.id }, data: { onHand: s.onHand } });
   if (ruleId) await removeMarginRule(await ctxFor(SA), ruleId).catch(() => {});
   await prisma.aiRecommendation.deleteMany({});
   await prisma.order.deleteMany({ where: { id: { in: historyIds } } });
   await prisma.$disconnect();
+});
+
+describe("who gets the AI Centre", () => {
+  it("Super Admin by default; other staff only through a role with the AI right; never suppliers or customers", async () => {
+    await setAiRole(SALES, false);
+    await expect(demandForecast(await ctxFor(SALES), "STAFF")).rejects.toThrow(); // Sales role alone: no AI Centre
+    await expect(demandForecast(await ctxFor(SUPPORT), "STAFF")).rejects.toThrow();
+    await expect(demandForecast(await ctxFor(SA), "STAFF")).resolves.toBeDefined();
+    await setAiRole(SALES, true);
+    await expect(demandForecast(await ctxFor(SALES), "STAFF")).resolves.toBeDefined(); // granted by role
+    await expect(demandForecast(await ctxFor(KEBAB), "STAFF")).rejects.toThrow();
+  });
 });
 
 describe("who may see AI insights", () => {

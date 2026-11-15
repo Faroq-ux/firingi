@@ -66,3 +66,19 @@ export async function makeApprovedCompany(type: "CUSTOMER" | "WHOLESALER" | "DIS
   await prisma.membership.create({ data: { userId: user.id, companyId: company.id, isOwner: true, roles: { create: { roleId: role.id } } } });
   return { companyId: company.id, email };
 }
+
+/**
+ * The AI Centre is Super Admin only by default; other FIRINGI staff get it when a role with
+ * `admin.ai.view` is given to them. Gives (or takes back) such a custom role for a seeded staff user.
+ */
+export async function setAiRole(email: string, on: boolean) {
+  const user = await prisma.user.findUniqueOrThrow({ where: { email }, include: { memberships: { include: { company: true } } } });
+  const m = user.memberships.find((x) => x.company.type === "ADMIN")!;
+  const role = await prisma.role.upsert({
+    where: { companyId_key: { companyId: m.companyId, key: "test-ai-centre" } },
+    update: {},
+    create: { companyId: m.companyId, key: "test-ai-centre", name: "AI Centre (test)", appliesTo: ["ADMIN"], permissions: { create: [{ permissionCode: "admin.ai.view" }] } },
+  });
+  if (on) await prisma.membershipRole.upsert({ where: { membershipId_roleId: { membershipId: m.id, roleId: role.id } }, update: {}, create: { membershipId: m.id, roleId: role.id } });
+  else await prisma.membershipRole.deleteMany({ where: { membershipId: m.id, roleId: role.id } });
+}
