@@ -95,6 +95,13 @@ async function helpFacts() {
   ].join("\n");
 }
 
+const PHOTOS_BUYER = "Photos and barcodes: the customer may send photos (a product or its label, a handwritten or printed order list, an empty shelf) or a scanned barcode number. Read what is in the photo; search the catalogue for each product by name, brand or the barcode digits you can read. For an order list, go through it line by line: add each line you matched with its quantity when the customer asked to order or add it, then list clearly what you added and what you could not match or read (ask about those). Never guess a quantity that isn't written or said — ask. If a photo is unclear, say what you can see and ask.";
+const PHOTOS_VENDOR = "Photos: the supplier may send photos (a delivery note, damaged goods, a document). Describe what matters for the question; if FIRINGI staff need to see it, offer the handover — the photos go with the chat.";
+
+/** Up to 3 photos per question (JPG / PNG / WEBP, 5 MB each — the browser shrinks them first). */
+export const MAX_PHOTOS = 3;
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+
 function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
   const who = side === "STAFF"
     ? "a member of FIRINGI's back-office staff. FIRINGI is a B2B wholesale marketplace in the Schengen area: restaurants and shops (customers) buy from wholesalers in their own country; wholesalers buy from distributors across the EU. FIRINGI buys from the supplier and resells to every buyer, earning a commission that buyers never see."
@@ -106,11 +113,13 @@ function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
         "You are FIRINGI's customer support and sales agent for this customer: help them find and buy products, and solve questions about their orders, deliveries, invoices, payments, returns and quality claims.",
         "Selling: search the catalogue, compare packs and prices, mention current offers and what they usually buy (reorder_outlook). When the customer clearly asks for a product and quantity, put it in their cart with add_to_cart; if the product or quantity is unclear, ask first. Never claim an order was placed — after adding, say what is in the cart and that they open the cart to check and place the order (and if a minimum order or delivery fee applies).",
         "You can't place, change or cancel orders, prices or settings yourself — only fill the cart. For anything only FIRINGI staff can do (refund, cancel an order, change an invoice, account changes, complaints) or when the customer asks for a person, use handover.",
+        PHOTOS_BUYER,
       ]
     : side === "VENDOR"
       ? [
           "You are FIRINGI's support agent for this supplier: answer questions about its orders, deliveries, billing statements, invoices to FIRINGI, payouts, quality claims and charge-backs, and how FIRINGI works. You don't sell to suppliers.",
           "You can only look and explain; for anything FIRINGI staff must decide or change, or when the supplier asks for a person, use handover.",
+          PHOTOS_VENDOR,
         ]
       : ["You can only look and suggest. You cannot place, change or cancel orders, prices, stock or settings; say where in FIRINGI the user can do it."];
   return [
@@ -156,10 +165,14 @@ export async function deleteConversation(ctx: Ctx, side: Side, id: string) {
 
 const textOf = (m: BetaMessage) => m.content.filter((b): b is Anthropic.Beta.Messages.BetaTextBlock => b.type === "text").map((b) => b.text).join("\n").trim();
 
-export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string | null; text: string; locale?: string }) {
+export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string | null; text: string; locale?: string; photos?: File[] }) {
   await assertSide(ctx, side);
-  const text = input.text.trim();
+  const files = (input.photos ?? []).filter((f) => f && f.size > 0);
+  const text = input.text.trim() || (files.length ? "(photo)" : "");
   if (!text) throw new ValidationError("Type a question.");
+  if (side === "STAFF" && files.length) throw new ValidationError("Photos are for the customer and supplier Assistant.");
+  if (files.length > MAX_PHOTOS) throw new ValidationError(`Up to ${MAX_PHOTOS} photos per question.`);
+  if (files.some((f) => f.size > MAX_PHOTO_BYTES)) throw new ValidationError("Each photo can be up to 5 MB.");
   if (text.length > 4000) throw new ValidationError("Please keep the question under 4,000 characters.");
   const status = await assistantStatus(side, ctx.company.id);
   if (!status.configured) throw new AppError("AI_NOT_CONFIGURED", "The AI assistant isn't set up yet (no Anthropic API key).", 503);
@@ -170,9 +183,26 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
 
   const locale = input.locale ?? ctx.user.locale ?? "en";
   const conv = input.conversationId ? await getConversation(ctx, side, input.conversationId) : null;
-  const history: BetaMessageParam[] = (conv?.messages ?? []).slice(-HISTORY_TURNS * 2).map((m) => ({ role: m.role as "user" | "assistant", content: m.text }));
+  // Earlier photos aren't sent again (cost); the answer that followed them says what they showed.
+  const history: BetaMessageParam[] = (conv?.messages ?? []).slice(-HISTORY_TURNS * 2).map((m) => ({
+    role: m.role as "user" | "assistant", content: m.photoKeys.length ? `[sent ${m.photoKeys.length} photo(s) earlier]\n${m.text}` : m.text,
+  }));
+  // Photos: stored (kept with the conversation, shown in the chat, passed on with a hand-over) and sent with this question.
+  const photos: { key: string; mime: string; data: string }[] = [];
+  for (const f of files) {
+    const { storeUpload, readStored } = await import("@/server/services/storage");
+    const stored = await storeUpload(f, "assistant");
+    if (!["image/jpeg", "image/png", "image/webp"].includes(stored.mimeType)) throw new ValidationError("Photos must be JPG, PNG or WEBP.");
+    photos.push({ key: stored.key, mime: stored.mimeType, data: (await readStored(stored.key)).toString("base64") });
+  }
   // The date goes in the newest turn (not the system prompt) so the cached prefix stays the same.
-  const messages: BetaMessageParam[] = [...history, { role: "user", content: `[Today is ${new Date().toISOString().slice(0, 10)}]\n\n${text}` }];
+  const question = `[Today is ${new Date().toISOString().slice(0, 10)}]\n\n${photos.length ? `[${photos.length} photo(s) attached]\n` : ""}${text}`;
+  const messages: BetaMessageParam[] = [...history, {
+    role: "user",
+    content: photos.length
+      ? [...photos.map((p) => ({ type: "image" as const, source: { type: "base64" as const, media_type: p.mime as "image/jpeg" | "image/png" | "image/webp", data: p.data } })), { type: "text" as const, text: question }]
+      : question,
+  }];
   const facts = side === "STAFF" ? "" : await helpFacts();
   const tools = apiTools(side);
   const runners = new Map(toolsFor(side).map((t) => [t.name, t]));
@@ -238,13 +268,21 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
 
   const saved = await prisma.$transaction(async (tx) => {
     const c = conv ?? await tx.aiConversation.create({ data: { userId: ctx.user.id, companyId: ctx.company.id, side, title: text.length > 80 ? `${text.slice(0, 77)}…` : text } });
-    await tx.aiMessage.create({ data: { conversationId: c.id, role: "user", text } });
+    const q = await tx.aiMessage.create({ data: { conversationId: c.id, role: "user", text, photoKeys: photos.map((p) => p.key) } });
     const m = await tx.aiMessage.create({ data: { conversationId: c.id, role: "assistant", text: answer, tools: used as Prisma.InputJsonValue, model: servedBy, tokensIn, tokensOut, stopReason } });
     await tx.aiConversation.update({ where: { id: c.id }, data: { updatedAt: new Date() } });
-    return { conversationId: c.id, message: m };
+    return { conversationId: c.id, message: m, question: q };
   });
-  await logAi({ kind: "ASSISTANT", ctx, summary: `${side.toLowerCase()} asked: ${text.slice(0, 160)}`, detail: { conversationId: saved.conversationId, tools: used.map((x) => `${x.name}${x.ok ? "" : " (error)"}`), stopReason, side }, model: servedBy, tokensIn, tokensOut });
-  return { conversationId: saved.conversationId, messageId: saved.message.id, answer, tools: used, model: servedBy, fellBack: servedBy !== settings.model };
+  await logAi({ kind: "ASSISTANT", ctx, summary: `${side.toLowerCase()} asked: ${text.slice(0, 160)}`, detail: { conversationId: saved.conversationId, tools: used.map((x) => `${x.name}${x.ok ? "" : " (error)"}`), stopReason, side, photos: photos.length }, model: servedBy, tokensIn, tokensOut });
+  return { conversationId: saved.conversationId, messageId: saved.message.id, questionId: saved.question.id, photos: photos.length, answer, tools: used, model: servedBy, fellBack: servedBy !== settings.model };
+}
+
+/** A photo the person sent in their own conversation (for the chat thumbnails). */
+export async function assistantPhotoKey(ctx: Ctx, messageId: string, n: number) {
+  const m = await prisma.aiMessage.findFirst({ where: { id: messageId, role: "user", conversation: { userId: ctx.user.id, companyId: ctx.company.id } }, select: { photoKeys: true } });
+  const key = m?.photoKeys[n];
+  if (!key) throw new NotFoundError("Photo");
+  return key;
 }
 
 // ── hand-over to FIRINGI support (a person) ─────────────────────────────────
@@ -266,11 +304,14 @@ export async function handoverToSupport(ctx: Ctx, side: Side, messageId: string)
   const prev = tools[i];
   if (prev.ticketId) return { ticketId: prev.ticketId, number: prev.ticketNumber ?? "", already: true };
   const card = prev.card as Extract<ToolCard, { kind: "handover" }>;
-  const chat = m.conversation.messages.filter((x) => x.at <= m.at).slice(-12)
-    .map((x) => `${x.role === "user" ? "Customer" : "Assistant"}: ${x.text}`).join("\n\n");
+  const recent = m.conversation.messages.filter((x) => x.at <= m.at).slice(-12);
+  // Support messages are plain text: drop the Markdown emphasis marks of the answers.
+  const plain = (t: string) => t.replace(/\*\*(.+?)\*\*/g, "$1").replace(/(^|[\s(])[*_]([^*_\n]+)[*_](?=[\s).,!?:;]|$)/gm, "$1$2");
+  const chat = recent.map((x) => `${x.role === "user" ? "Customer" : "Assistant"}: ${x.photoKeys.length ? `[${x.photoKeys.length} photo(s)] ` : ""}${plain(x.text)}`).join("\n\n");
+  const photoKeys = recent.flatMap((x) => x.photoKeys).slice(-6);
   const body = `${card.summary}\n\n— Chat with the FIRINGI assistant —\n\n${chat}`.slice(0, 8000);
   const { openTicket } = await import("@/server/services/support");
-  const t = await openTicket(ctx, { subject: card.subject.slice(0, 150), body, category: card.category as Parameters<typeof openTicket>[1]["category"] });
+  const t = await openTicket(ctx, { subject: card.subject.slice(0, 150), body, category: card.category as Parameters<typeof openTicket>[1]["category"], photoKeys });
   tools[i] = { ...prev, ticketId: t.id, ticketNumber: t.number };
   await prisma.aiMessage.update({ where: { id: m.id }, data: { tools: tools as unknown as Prisma.InputJsonValue } });
   await logAi({ kind: "ASSISTANT", ctx, summary: `handed over to FIRINGI support: ${t.number}`, detail: { conversationId: m.conversationId, ticketId: t.id, side } });

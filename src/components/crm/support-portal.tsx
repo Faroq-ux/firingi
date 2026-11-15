@@ -54,7 +54,7 @@ export async function SupportList({ ctx, base }: { ctx: Ctx; base: string }) {
 export async function SupportTicket({ ctx, id, base, sent }: { ctx: Ctx; id: string; base: string; sent?: boolean }) {
   const r = await ticketDetail(ctx, id).catch(() => null);
   if (!r) notFound();
-  const [t, locale] = await Promise.all([getTranslations("support"), getLocale()]);
+  const [t, ta, locale] = await Promise.all([getTranslations("support"), getTranslations("ai"), getLocale()]);
   const k = r.ticket;
   return (
     <>
@@ -62,7 +62,7 @@ export async function SupportTicket({ ctx, id, base, sent }: { ctx: Ctx; id: str
       <PageHeader title={`${k.number} · ${k.subject}`} description={<span className="flex flex-wrap items-center gap-2"><Badge variant={VARIANT[k.status]}>{t(`statuses.${k.status}`)}</Badge> {t(`categories.${k.category}`)}{k.order ? ` · ${k.order.number}` : ""}</span>} />
       {sent && <p role="status" className="mb-3 rounded-md bg-success/10 p-2 text-sm text-success">{t("sent")}</p>}
       <Card><CardContent className="space-y-4 pt-5">
-        <Thread messages={k.messages} locale={locale} staff={false} l={{ you: t("you"), firingi: t("firingi"), internalNote: "" }} />
+        <Thread messages={k.messages} locale={locale} staff={false} l={{ you: t("you"), firingi: t("firingi"), internalNote: "", photo: ta("agent.photo") }} />
         {(k.status === "RESOLVED" || k.status === "CLOSED") && <p className="text-sm text-muted-foreground">{t("reopenHint")}</p>}
         <ReplyForm id={k.id} l={{ reply: t("reply"), replyPlaceholder: t("replyPlaceholder"), send: t("send"), sendResolve: "", internal: "", addNote: "" }} />
       </CardContent></Card>

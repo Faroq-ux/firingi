@@ -24,7 +24,7 @@ const firingiId = async () => (await prisma.company.findFirstOrThrow({ where: { 
 
 export const CATEGORIES: TicketCategory[] = ["ORDER", "DELIVERY", "INVOICE", "PAYMENT", "PRODUCT", "ACCOUNT", "OTHER"];
 
-export async function openTicket(ctx: Ctx, i: { subject: string; body: string; category: TicketCategory; orderId?: string | null }) {
+export async function openTicket(ctx: Ctx, i: { subject: string; body: string; category: TicketCategory; orderId?: string | null; photoKeys?: string[] }) {
   if (!isMember(ctx)) throw new ForbiddenError();
   const subject = i.subject.trim(), body = i.body.trim();
   if (subject.length < 3) throw new ValidationError("Write a short subject.");
@@ -39,7 +39,7 @@ export async function openTicket(ctx: Ctx, i: { subject: string; body: string; c
       data: {
         number, companyId: ctx.company.id, openedById: ctx.user.id, subject, category: i.category, orderId: i.orderId ?? null,
         priority: i.category === "DELIVERY" || i.category === "ORDER" ? "HIGH" : "NORMAL",
-        messages: { create: { authorId: ctx.user.id, body } },
+        messages: { create: { authorId: ctx.user.id, body, photoKeys: (i.photoKeys ?? []).slice(0, 6) } },
       },
     });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "support.opened", entityType: "SupportTicket", entityId: t.id, after: { number, subject, category: i.category } }, tx);
@@ -66,6 +66,14 @@ export async function ticketDetail(ctx: Ctx, id: string) {
   }
   if (!isMember(ctx) || t.companyId !== ctx.company.id) throw new NotFoundError("Ticket");
   return { ticket: { ...t, messages: t.messages.filter((m) => !m.internal) }, staff: false, canAnswer: false };
+}
+
+/** A photo on a ticket message (same access as the ticket; internal notes stay with FIRINGI). */
+export async function ticketPhotoKey(ctx: Ctx, ticketId: string, messageId: string, n: number) {
+  const { ticket } = await ticketDetail(ctx, ticketId);
+  const key = ticket.messages.find((m) => m.id === messageId)?.photoKeys[n];
+  if (!key) throw new NotFoundError("Photo");
+  return key;
 }
 
 /** A message on a ticket: from the company, or from FIRINGI (answer or internal note). */

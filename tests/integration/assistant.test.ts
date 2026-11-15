@@ -7,9 +7,10 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
-import { aiSettings, ask, assistantStatus, getConversation, handoverToSupport, listConversations, saveAiSettings, setAiTransportForTests, type AiTransport } from "@/server/ai/assistant";
+import { aiSettings, ask, assistantPhotoKey, assistantStatus, getConversation, handoverToSupport, listConversations, saveAiSettings, setAiTransportForTests, type AiTransport } from "@/server/ai/assistant";
 import { companyFeatureOn } from "@/server/accounting/features";
 import { searchAcrossSuppliers } from "@/server/data/catalogue-buyer";
+import { ticketPhotoKey } from "@/server/services/support";
 import { ctxFor, setAiRole } from "../helpers";
 import { setCompanyFeature } from "@/server/accounting/features";
 
@@ -302,6 +303,62 @@ describe("AI assistant", () => {
       if (env.key) process.env.ANTHROPIC_API_KEY = env.key;
       if (env.sim) process.env.ASSISTANT_SIMULATE = env.sim; else delete process.env.ASSISTANT_SIMULATE;
       await prisma.cartItem.deleteMany({ where: { cart: { buyerCompanyId: k.company.id, userId: k.user.id }, offerId: { notIn: before } } });
+    }
+  });
+
+  it("photos: sent to the AI with the question, kept with the conversation, private, passed on with a hand-over", async () => {
+    const jpeg = (name = "list.jpg") => new File([Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0xff, 0xd9])], name, { type: "image/jpeg" });
+    const k = await ctxFor(KEBAB);
+    const calls = script(
+      () => msg([toolUse("handover", { subject: "Lista de encomenda", summary: "O cliente enviou uma foto da lista de encomenda.", category: "ORDER" })], "tool_use"),
+      () => msg([text("Vi a sua lista.")], "end_turn"),
+    );
+    const r = await ask(k, "BUYER", { text: "Encomenda isto", locale: "pt-PT", photos: [jpeg()] });
+    const first = calls[0].messages[calls[0].messages.length - 1].content as { type: string; source?: { media_type: string; data: string }; text?: string }[];
+    expect(first.map((b) => b.type)).toEqual(["image", "text"]);
+    expect(first[0].source?.media_type).toBe("image/jpeg");
+    expect(first[1].text).toMatch(/\[1 photo\(s\) attached\]\nEncomenda isto/);
+    expect(String(calls[0].system)).toMatch(/order list, go through it line by line/);
+    expect(r.photos).toBe(1);
+    const key = await assistantPhotoKey(k, r.questionId, 0);
+    expect(key).toMatch(/^assistant\//);
+    await expect(assistantPhotoKey(await ctxFor(LX_OWNER), r.questionId, 0)).rejects.toThrow(/not found/i); // someone else
+    await expect(assistantPhotoKey(k, r.questionId, 1)).rejects.toThrow(/not found/i);
+
+    // the next question doesn't send the photo again (cost) but says one was sent
+    const c2 = script(() => msg([text("ok")], "end_turn"));
+    await ask(k, "BUYER", { conversationId: r.conversationId, text: "e mais?" });
+    expect(c2[0].messages[0].content).toMatch(/^\[sent 1 photo\(s\) earlier\]\nEncomenda isto/);
+
+    // hand-over: the photo goes with the support request; FIRINGI support and the company can open it
+    const h = await handoverToSupport(k, "BUYER", r.messageId);
+    const msgRow = await prisma.ticketMessage.findFirstOrThrow({ where: { ticketId: h.ticketId } });
+    expect(msgRow.photoKeys).toEqual([key]);
+    expect(msgRow.body).toMatch(/Customer: \[1 photo\(s\)\] Encomenda isto/);
+    expect(await ticketPhotoKey(k, h.ticketId, msgRow.id, 0)).toBe(key);
+    expect(await ticketPhotoKey(await ctxFor(SUPPORT), h.ticketId, msgRow.id, 0)).toBe(key);
+    await expect(ticketPhotoKey(await ctxFor(LX_OWNER), h.ticketId, msgRow.id, 0)).rejects.toThrow(/not found/i);
+    await prisma.supportTicket.delete({ where: { id: h.ticketId } }).catch(() => {});
+
+    // limits: 3 photos, images only, not for staff
+    script(() => msg([text("x")], "end_turn"));
+    await expect(ask(k, "BUYER", { text: "x", photos: [jpeg(), jpeg(), jpeg(), jpeg()] })).rejects.toThrow(/Up to 3 photos/);
+    await expect(ask(k, "BUYER", { text: "x", photos: [new File([Buffer.from("%PDF-1.4 x")], "a.pdf")] })).rejects.toThrow(/JPG, PNG or WEBP/);
+    await expect(ask(await ctxFor(SA), "STAFF", { text: "x", photos: [jpeg()] })).rejects.toThrow(/customer and supplier/);
+    // a photo alone (no text) is a question too
+    const c3 = script(() => msg([text("ok")], "end_turn"));
+    await ask(k, "BUYER", { text: "", photos: [jpeg()] });
+    expect((c3[0].messages[0].content as { type: string }[])[0].type).toBe("image");
+
+    // the simulated assistant says it can't read photos
+    const env = { key: process.env.ANTHROPIC_API_KEY, sim: process.env.ASSISTANT_SIMULATE };
+    delete process.env.ANTHROPIC_API_KEY; process.env.ASSISTANT_SIMULATE = "1"; setAiTransportForTests(null);
+    try {
+      const sim = await ask(k, "BUYER", { text: "isto", photos: [jpeg()] });
+      expect(sim.answer).toMatch(/received 1 photo/);
+    } finally {
+      if (env.key) process.env.ANTHROPIC_API_KEY = env.key;
+      if (env.sim) process.env.ASSISTANT_SIMULATE = env.sim; else delete process.env.ASSISTANT_SIMULATE;
     }
   });
 

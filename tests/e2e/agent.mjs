@@ -5,6 +5,9 @@
  * (card + link; nothing ordered), asking by voice for a person offers the hand-over, one tap opens a
  * Help & Support request with the summary and the chat (shown as sent after a reload, once only),
  * FIRINGI support sees it; read-aloud; phone width and dark mode;
+ * photos — add, preview, remove, send (shown in the chat, owner-only), a photo goes with the hand-over
+ * to Help & Support (customer and FIRINGI see it); barcode scan with a fake camera fills the box, a
+ * blocked camera is explained;
  * supplier — support only (no cart), hand-over works too; FIRINGI switches it off → gone.
  *   ASSISTANT_SIMULATE=1 next start …  then  node tests/e2e/agent.mjs [baseUrl] [screenshotDir]
  */
@@ -23,6 +26,14 @@ const go = async (p, url) => { await p.goto(`${BASE}${url}`); await settle(p); }
 const until = async (fn, ms = 20000) => { const end = Date.now() + ms; while (Date.now() < end) { if (await fn().catch(() => false)) return true; await new Promise((r) => setTimeout(r, 250)); } return false; };
 const errors = [];
 
+/** A fake camera + barcode reader: the "camera" shows a canvas, the reader "sees" `code` (or the camera is blocked). */
+const fakeScanner = (code, blocked = false) => `(() => {
+  window.BarcodeDetector = class { constructor() {} async detect() { return window.__seen ? [{ rawValue: ${JSON.stringify(code)} }] : (window.__seen = true, []); } };
+  const md = navigator.mediaDevices || {};
+  md.getUserMedia = async () => { if (${blocked}) throw new DOMException("denied", "NotAllowedError"); const c = document.createElement("canvas"); c.width = 320; c.height = 240; c.getContext("2d").fillRect(0, 0, 320, 240); return c.captureStream(5); };
+  try { Object.defineProperty(navigator, "mediaDevices", { value: md, configurable: true }); } catch {}
+})();`;
+
 /** A fake speech engine: the microphone "hears" `sentence`; read-aloud is recorded. */
 const fakeSpeech = (sentence) => `(() => {
   const sentence = ${JSON.stringify(sentence)};
@@ -31,9 +42,10 @@ const fakeSpeech = (sentence) => `(() => {
   try { Object.defineProperty(window, "speechSynthesis", { value: { speaking: false, getVoices: () => [], cancel() {}, speak(u) { window.__spoken.push({ text: u.text, lang: u.lang }); } }, configurable: true }); } catch {}
   window.SpeechSynthesisUtterance = window.SpeechSynthesisUtterance || function (t) { this.text = t; };
 })();`;
-async function login(email, { sentence = "", viewport = { width: 1280, height: 900 }, colorScheme = "light" } = {}) {
+async function login(email, { sentence = "", viewport = { width: 1280, height: 900 }, colorScheme = "light", scan = null } = {}) {
   const ctx = await browser.newContext({ viewport, colorScheme, reducedMotion: "reduce", deviceScaleFactor: SHOTS ? 2 : 1 });
   if (sentence) await ctx.addInitScript(fakeSpeech(sentence));
+  if (scan) await ctx.addInitScript(fakeScanner(scan.code, scan.blocked));
   const page = await ctx.newPage();
   page.on("pageerror", (e) => errors.push(`${email} @ ${page.url().replace(BASE, "")}: ${e.message.slice(0, 140)}`));
   await go(page, "/login");
@@ -96,6 +108,61 @@ check("after a reload the card shows it was sent (no second request)", (await k.
 const sup = await login("support@firingi.test");
 await go(sup, `/admin/customers/support/${ticketUrl.split("/").pop()}`);
 check("FIRINGI support opens the request", /Quero falar com uma pessoa/.test(await sup.textContent("main")));
+
+// ── 2b. Photos ──
+const photo = await k.screenshot({ clip: { x: 0, y: 0, width: 480, height: 320 } }); // any real image
+await go(k, "/buy/assistant");
+const imgOk = (loc) => loc.evaluateAll((els) => els.length > 0 && els.every((e) => e.complete && e.naturalWidth > 0));
+await k.getByTestId("photo-input").setInputFiles([{ name: "lista.png", mimeType: "image/png", buffer: photo }, { name: "lista2.png", mimeType: "image/png", buffer: photo }]);
+check("two photos waiting, with a hint (Portuguese)", await until(async () => (await k.getByTestId("photo-tray").locator("img").count()) === 2) && /Até 3 fotos/.test(await k.getByTestId("photo-tray").textContent()));
+await k.getByTestId("photo-remove").first().click();
+check("a photo can be removed", (await k.getByTestId("photo-tray").locator("img").count()) === 1);
+await k.getByTestId("photo-input").setInputFiles([{ name: "a.png", mimeType: "image/png", buffer: photo }, { name: "b.png", mimeType: "image/png", buffer: photo }, { name: "c.png", mimeType: "image/png", buffer: photo }]);
+check("no more than 3 photos (told in Portuguese)", await until(async () => (await k.getByTestId("photo-tray").locator("img").count()) === 3) && /Até 3 fotos por pergunta/.test(await k.locator("[role=alert]").first().textContent()));
+check("photo button disabled at 3", await k.getByTestId("photo-btn").isDisabled());
+await k.getByTestId("photo-remove").first().click(); await k.getByTestId("photo-remove").first().click();
+await shot(k, "agent-07-photo-ready");
+await k.getByTestId("chat-input").fill("Encomenda o que está nesta lista");
+await k.getByTestId("chat-input").press("Enter");
+check("answer to the photo", await waitAnswer(k, 1) && /received 1 photo/.test(await answers(k).last().textContent()));
+check("the photo shows in the chat", await until(async () => imgOk(k.getByTestId("msg-photos").locator("img"))));
+await shot(k, "agent-08-photo-sent");
+const photoChat = k.url().replace(BASE, "");
+await go(k, photoChat);
+const served = k.getByTestId("msg-photos").locator("img");
+check("after a reload the photo is served from FIRINGI", await until(async () => imgOk(served)) && /\/api\/assistant\/photos\//.test(await served.first().getAttribute("src")));
+const photoSrc = await served.first().getAttribute("src");
+const other = await login("owner@lisboacentral.test");
+check("someone else can't open the photo", (await other.request.get(`${BASE}${photoSrc}`)).status() === 404);
+// a photo goes with the hand-over
+await k.getByTestId("photo-input").setInputFiles([{ name: "caixa.png", mimeType: "image/png", buffer: photo }]);
+await k.getByTestId("chat-input").fill("Quero falar com uma pessoa, a caixa veio assim");
+await k.getByTestId("chat-input").press("Enter");
+check("hand-over offered for the photo", await until(async () => (await k.getByTestId("handover-send").count()) === 1, 30000));
+await k.getByTestId("handover-send").click();
+await until(async () => (await k.getByTestId("handover-open").count()) === 1);
+await k.getByTestId("handover-open").click();
+await k.waitForURL(/\/buy\/support\/[a-z0-9]+/, { timeout: 15000 }).catch(() => {});
+await settle(k);
+check("Help & Support request shows the chat photos (customer)", await until(async () => imgOk(k.getByTestId("message-photos").locator("img"))) && (await k.getByTestId("message-photos").locator("img").count()) === 2);
+const photoTicket = k.url().split("/").pop();
+await go(sup, `/admin/customers/support/${photoTicket}`);
+check("FIRINGI support sees the photos", await until(async () => imgOk(sup.getByTestId("message-photos").locator("img"))));
+await shot(sup, "agent-09-support-photos");
+
+// ── 2c. Barcode scan ──
+const ks = await login("owner@kebabhouse.test", { scan: { code: "5601234567890" } });
+await go(ks, "/buy/assistant");
+await ks.getByTestId("scan-btn").click();
+check("scanned barcode lands in the box", await until(async () => /5601234567890/.test(await ks.getByTestId("chat-input").inputValue())));
+check("camera closed after the scan", (await ks.getByTestId("scan-view").count()) === 0);
+const kb = await login("owner@kebabhouse.test", { scan: { code: "1", blocked: true } });
+await go(kb, "/buy/assistant");
+await kb.getByTestId("scan-btn").click();
+check("blocked camera explained (Portuguese)", await until(async () => /A câmara está bloqueada/.test(await kb.getByTestId("scan-status").textContent())));
+const kn = await login("owner@kebabhouse.test");
+await go(kn, "/buy/assistant");
+check("browser without a barcode reader: no scan button, photo button still there", (await kn.getByTestId("scan-btn").count()) === 0 && (await kn.getByTestId("photo-btn").count()) === 1);
 
 // ── 3. Phone width + dark mode ──
 const kp = await login("owner@kebabhouse.test", { viewport: { width: 390, height: 844 }, colorScheme: "dark" });

@@ -2,7 +2,7 @@
 /** AI Centre: suggestions, refresh, buy again, assistant, settings (services re-check access). */
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { defineAction } from "./_action";
+import { defineAction, runAction } from "./_action";
 import * as feed from "@/server/ai/feed";
 import * as assistant from "@/server/ai/assistant";
 import { AI_MODELS } from "@/lib/ai";
@@ -13,14 +13,16 @@ const side = z.enum(["STAFF", "VENDOR", "BUYER"]);
 export const decideRecommendationAction = defineAction({ permission: null, schema: z.object({ id: z.string(), accept: z.boolean(), note: z.string().trim().max(500).optional().nullable() }), handler: async (ctx, i) => done(await feed.decideRecommendation(ctx, i.id, i.accept, i.note ?? null)) });
 export const refreshAiAction = defineAction({ permission: "admin.ai.view", schema: z.object({}), handler: async () => done(await feed.refreshRecommendations()) });
 export const buyAgainAction = defineAction({ permission: "buyer.orders.place", schema: z.object({ sellerId: z.string(), locale: z.string().max(10).optional() }), handler: async (ctx, i) => done(await feed.buyAgain(ctx, i.sellerId, i.locale)) });
-export const askAssistantAction = defineAction({
-  permission: null,
-  schema: z.object({ side, conversationId: z.string().optional().nullable(), text: z.string().max(4000), locale: z.string().max(10).optional() }),
-  handler: async (ctx, i) => {
-    const r = await assistant.ask(ctx, i.side, { conversationId: i.conversationId ?? null, text: i.text, locale: i.locale });
-    return { conversationId: r.conversationId, messageId: r.messageId, answer: r.answer, tools: r.tools.map((t) => ({ name: t.name, ok: t.ok, ...(t.card ? { card: t.card } : {}) })), model: r.model, fellBack: r.fellBack };
-  },
-});
+/** A question to the Assistant (multipart: side, conversationId, text, locale, photos — up to 3). */
+export async function askAssistantAction(fd: FormData) {
+  return runAction(async (ctx) => {
+    const str = (k: string) => { const v = fd.get(k); return typeof v === "string" ? v : ""; };
+    const s = side.parse(str("side"));
+    const photos = fd.getAll("photos").filter((v): v is File => v instanceof File && v.size > 0);
+    const r = await assistant.ask(ctx, s, { conversationId: str("conversationId") || null, text: str("text").slice(0, 4000), locale: str("locale").slice(0, 10) || undefined, photos });
+    return { conversationId: r.conversationId, messageId: r.messageId, questionId: r.questionId, photos: r.photos, answer: r.answer, tools: r.tools.map((t) => ({ name: t.name, ok: t.ok, ...(t.card ? { card: t.card } : {}) })), model: r.model, fellBack: r.fellBack };
+  });
+}
 export const handoverAction = defineAction({
   permission: "company.support.use",
   schema: z.object({ side: z.enum(["VENDOR", "BUYER"]), messageId: z.string().min(1) }),

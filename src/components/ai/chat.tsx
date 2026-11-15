@@ -14,6 +14,7 @@ import { TOOL_LABEL } from "@/lib/ai";
 import { Markdown } from "./markdown";
 import { MicButton, SpeakButton, appendSpoken } from "@/components/voice/voice";
 import { EN_VOICE } from "@/lib/voice";
+import { MAX_CHAT_PHOTOS, PhotoButton, PhotoTray, ScanButton, type MediaLabels } from "./media";
 
 export type ChatLabels = Record<"title" | "newChat" | "history" | "noHistory" | "placeholder" | "send" | "thinking" | "lookedAt" | "you" | "assistant" | "suggestOnly" | "delete" | "tryAsking", string>;
 export const EN_CHAT: ChatLabels = {
@@ -24,8 +25,9 @@ export const EN_CHAT: ChatLabels = {
 /** What the agent did, shown under its answer: products put in the cart, an offer to pass the chat to FIRINGI support. */
 export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string };
 export type ChatTool = { name: string; ok: boolean; card?: ToolCard; ticketId?: string; ticketNumber?: string };
-export type AgentLabels = Record<"addedToCart" | "cartNow" | "openCart" | "handoverTitle" | "handoverText" | "handoverSend" | "handoverSent" | "openRequest", string>;
-type Msg = { id: string; role: "user" | "assistant"; text: string; tools?: ChatTool[]; model?: string | null; fellBack?: boolean };
+export type AgentLabels = Record<"addedToCart" | "cartNow" | "openCart" | "handoverTitle" | "handoverText" | "handoverSend" | "handoverSent" | "openRequest", string> & { media: MediaLabels };
+/** `photos`: how many the person sent (served from the server); `previews`: local previews right after sending. */
+type Msg = { id: string; role: "user" | "assistant"; text: string; tools?: ChatTool[]; model?: string | null; fellBack?: boolean; photos?: number; previews?: string[] };
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ""));
 
 export function AssistantChat({ side, base, conversations, active, initial, examples, l = EN_CHAT, locale, showModel = false, toolLabel = TOOL_LABEL, agent }: {
@@ -36,6 +38,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
   const [messages, setMessages] = useState<Msg[]>(initial);
   const [conversationId, setConversationId] = useState<string | null>(active);
   const [text, setText] = useState("");
+  const [photos, setPhotos] = useState<{ file: File; url: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const end = useRef<HTMLDivElement>(null);
@@ -43,15 +46,30 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
   useEffect(() => { setMessages(initial); setConversationId(active); }, [active, initial]);
   useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages.length, pending]);
 
+  const media = agent?.media;
+  const addPhotos = (files: File[]) => {
+    setError(null);
+    setPhotos((cur) => {
+      const room = MAX_CHAT_PHOTOS - cur.length;
+      if (files.length > room && media) setError(media.tooMany);
+      return [...cur, ...files.slice(0, Math.max(0, room)).map((file) => ({ file, url: URL.createObjectURL(file) }))];
+    });
+  };
   const send = (q: string) => {
     const question = q.trim();
-    if (!question || pending) return;
+    const sending = photos;
+    if ((!question && !sending.length) || pending) return;
     setError(null);
     setText("");
-    setMessages((m) => [...m, { id: `u${Date.now()}`, role: "user", text: question }]);
+    setPhotos([]);
+    setMessages((m) => [...m, { id: `u${Date.now()}`, role: "user", text: question, previews: sending.map((p) => p.url) }]);
     start(async () => {
-      const r = await askAssistantAction({ side, conversationId, text: question, locale });
-      if (!r.ok) { setError(r.error); setMessages((m) => m.slice(0, -1)); setText(question); return; }
+      const fd = new FormData();
+      fd.set("side", side); fd.set("text", question); fd.set("locale", locale);
+      if (conversationId) fd.set("conversationId", conversationId);
+      for (const p of sending) fd.append("photos", p.file);
+      const r = await askAssistantAction(fd);
+      if (!r.ok) { setError(r.error); setMessages((m) => m.slice(0, -1)); setText(question); setPhotos(sending); return; }
       setMessages((m) => [...m, { id: r.data.messageId, role: "assistant", text: r.data.answer, tools: r.data.tools, model: r.data.model, fellBack: r.data.fellBack }]);
       if (!conversationId) { setConversationId(r.data.conversationId); router.replace(`${base}?c=${r.data.conversationId}`, { scroll: false }); }
       router.refresh();
@@ -90,7 +108,15 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
             <div key={m.id} className={`motion-rise flex gap-3 ${m.role === "user" ? "justify-end" : ""}`} data-testid={`msg-${m.role}`}>
               {m.role === "assistant" && <div className="grid size-8 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white"><Bot className="size-4" aria-label={l.assistant} /></div>}
               <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "border bg-background"}`}>
-                {m.role === "user" ? <p className="whitespace-pre-wrap text-sm">{m.text}</p> : <Markdown text={m.text} />}
+                {m.role === "user" && (!!m.previews?.length || !!m.photos) && (
+                  <div className="mb-2 flex flex-wrap justify-end gap-1.5" data-testid="msg-photos">
+                    {(m.previews ?? Array.from({ length: m.photos ?? 0 }, (_, i) => `/api/assistant/photos/${m.id}/${i}`)).map((src, i) => (
+                      // eslint-disable-next-line @next/next/no-img-element -- private photo (owner-only route) or local preview
+                      <img key={src} src={src} alt={`${media?.photo1 ?? "Photo"} ${i + 1}`} className="size-20 rounded-lg border border-white/30 object-cover" />
+                    ))}
+                  </div>
+                )}
+                {m.role === "user" ? (m.text && m.text !== "(photo)" && <p className="whitespace-pre-wrap text-sm">{m.text}</p>) : <Markdown text={m.text} />}
                 {m.role === "assistant" && agent && side !== "STAFF" && <AgentCards side={side} messageId={m.id} tools={m.tools ?? []} l={agent} />}
                 {m.role === "assistant" && <div className="mt-1 -ml-2"><SpeakButton text={m.text} labels={voice} lang={locale} /></div>}
                 {m.role === "assistant" && (!!m.tools?.length || (showModel && m.model)) && (
@@ -112,14 +138,17 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
           <div ref={end} />
         </div>
         {error && <p role="alert" className="px-4 text-sm text-destructive">{error}</p>}
-        <form className="flex items-end gap-2 border-t p-3" onSubmit={(e) => { e.preventDefault(); send(text); }}>
+        {media && <PhotoTray photos={photos} onRemove={(i) => setPhotos((p) => p.filter((_, j) => j !== i))} l={media} />}
+        <form className="flex flex-wrap items-end gap-2 border-t p-3 sm:flex-nowrap" onSubmit={(e) => { e.preventDefault(); send(text); }}>
           <textarea
             value={text} onChange={(e) => setText(e.target.value)} rows={2} maxLength={4000} placeholder={l.placeholder} aria-label={l.placeholder} data-testid="chat-input"
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
-            className="min-h-11 flex-1 resize-none rounded-xl border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="min-h-11 w-full flex-1 resize-none rounded-xl border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:w-auto"
           />
           <MicButton onText={(s) => setText((t) => appendSpoken(t, s))} labels={voice} lang={locale} />
-          <Button type="submit" disabled={pending || !text.trim()}><Send className="size-4" aria-hidden /> {l.send}</Button>
+          {media && side !== "STAFF" && <PhotoButton count={photos.length} onAdd={addPhotos} l={media} disabled={pending} />}
+          {media && side !== "STAFF" && <ScanButton onCode={(code) => setText((t) => appendSpoken(t, code))} l={media} />}
+          <Button type="submit" disabled={pending || (!text.trim() && !photos.length)}><Send className="size-4" aria-hidden /> {l.send}</Button>
           {conversationId && (
             <Button type="button" variant="ghost" size="sm" aria-label={l.delete} title={l.delete} disabled={pending}
               onClick={() => start(async () => { const r = await deleteConversationAction({ side, id: conversationId }); if (r.ok) { setMessages([]); setConversationId(null); router.replace(base); router.refresh(); } })}>

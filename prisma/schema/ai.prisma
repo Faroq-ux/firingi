@@ -80,6 +80,8 @@ model AiMessage {
   role           String // user | assistant
   /// Text shown in the chat.
   text           String
+  /// Photos the person sent with this question (storage keys, max 3): product, label, order list…
+  photoKeys      String[] @default([])
   /// Tools the assistant used for this answer: [{ name, input, ok }]
   tools          Json?
   model          String?

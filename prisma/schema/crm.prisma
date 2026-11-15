@@ -266,6 +266,8 @@ model TicketMessage {
   ticketId  String
   authorId  String
   body      String
+  /// Photos (storage keys) — e.g. sent with the chat when the Assistant passed it to FIRINGI support
+  photoKeys String[] @default([])
   internal  Boolean  @default(false) // FIRINGI staff note, never shown to the company
   fromStaff Boolean  @default(false)
   createdAt DateTime @default(now())

@@ -626,6 +626,17 @@ Customers and suppliers chat with FIRINGI's AI in their own language — typed o
   so far; FIRINGI answers there as usual. Once per answer (a second tap opens the same request).
 - It only reads the company's own data with the user's own rights, never FIRINGI's commission or margins
   (customers) or FIRINGI's margin (suppliers), and only writes the cart or a support request when asked.
+- **Photos and barcodes**: next to the 🎤 there is 🖼️ *Add a photo* (up to 3 per question, camera or
+  gallery; the browser shrinks them to 1600 px JPEG first) and 📷 *Scan a barcode* (camera, where the
+  browser has a barcode reader — Chrome / Edge on Android and most computers; elsewhere the button
+  doesn't show and a photo of the barcode works). The AI reads the photo: a product or its label, a
+  **handwritten or printed order list** (it goes line by line, fills the cart with what it matched and
+  lists what it couldn't read — it never guesses a quantity), a delivery note or damaged goods. Photos
+  are stored with the conversation (owner only — `/api/assistant/photos/…`); when the chat is passed
+  to FIRINGI support the photos go with the request and show in Help & Support for the company and
+  FIRINGI (`/api/support/<ticket>/photos/…`). Earlier photos aren't sent to the AI again (cost) — the
+  answer that followed them carries what they showed. Photos need the real AI; each costs a little more
+  than a text question.
 - **Costs**: the real AI needs `ANTHROPIC_API_KEY` on the server; every question is billed by Anthropic
   (the hourly limit per person in AI settings caps it). Without a key the page says it isn't connected
   and points to Help & Support.

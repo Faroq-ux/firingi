@@ -24,10 +24,15 @@ const ADD = /(?:add|adicion\w*|junt\w*|p[oõ]e|ponha|coloca\w*|quero|leg\w*|aña
 const product = (s: string) => s.replace(/[.!?]+$/, "").replace(/\s+(?:to|in|into)\s+(?:my|the)\s+(?:cart|basket)$|\s+(?:a|ao|no|para o)\s+(?:meu\s+)?carrinho$|\s+(?:a|al|en)\s+(?:mi\s+)?carrito$/i, "").trim();
 const HUMAN = /\b(human|person|agent|staff|pessoa|humano|suporte|support|falar com|hablar con|persona)\b/i;
 
+type Content = Params["messages"][number]["content"];
+const textOf = (c: Content) => (typeof c === "string" ? c : (c as Block[]).filter((b) => b.type === "text").map((b) => String(b.text)).join("\n"));
+const photosIn = (c: Content) => (typeof c === "string" ? 0 : (c as Block[]).filter((b) => b.type === "image").length);
+const isQuestion = (c: Content) => typeof c === "string" || !(c as Block[]).some((b) => b.type === "tool_result");
+
 function lastQuestion(messages: Params["messages"]) {
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
-    if (m.role === "user" && typeof m.content === "string") return m.content.replace(/^\[Today is [^\]]*\]\s*/, "").trim();
+    if (m.role === "user" && isQuestion(m.content)) return textOf(m.content).replace(/^\[Today is [^\]]*\]\s*/, "").replace(/^\[\d+ photo\(s\) attached\]\s*/, "").trim();
   }
   return "";
 }
@@ -38,9 +43,11 @@ export async function simulatedTransport(params: Params): Promise<BetaMessage> {
   const q = lastQuestion(params.messages);
 
   // A new question from the person.
-  if (typeof last.content === "string") {
+  if (isQuestion(last.content)) {
     if (HUMAN.test(q) && tools.has("handover"))
       return reply([callTool("handover", { subject: q.slice(0, 80), summary: `The customer asked for a person: "${q.slice(0, 300)}"`, category: "OTHER" })], "tool_use");
+    const n = photosIn(last.content);
+    if (n && !ADD.test(q)) return reply([text(`I received ${n} photo(s). The simulated assistant can't read photos — with the AI connected I would read the products, labels or order list in them and fill your cart.`)], "end_turn");
     const add = q.match(ADD);
     if (add && tools.has("add_to_cart")) return reply([callTool("search_catalogue", { query: product(add[2]), limit: 5 })], "tool_use");
     if (tools.has("search_catalogue") && q.length > 2) return reply([callTool("search_catalogue", { query: q.replace(/[?!.]+$/, "").split(/\s+/).slice(-2).join(" "), limit: 3 })], "tool_use");

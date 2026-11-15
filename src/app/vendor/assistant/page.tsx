@@ -26,6 +26,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
   const agent: AgentLabels = {
     addedToCart: t("agent.addedToCart"), cartNow: t("agent.cartNow"), openCart: t("agent.openCart"), handoverTitle: t("agent.handoverTitle"),
     handoverText: t("agent.handoverText"), handoverSend: t("agent.handoverSend"), handoverSent: t("agent.handoverSent"), openRequest: t("agent.openRequest"),
+    media: {
+      photo: t("agent.addPhoto"), photo1: t("agent.photo"), scan: t("agent.scan"), stopScan: t("agent.stopScan"), scanning: t("agent.scanning"),
+      removePhoto: t("agent.removePhoto"), photoHint: t("agent.photoHint"), tooMany: t("agent.tooMany"), cameraBlocked: t("agent.cameraBlocked"),
+    },
   };
   return (
     <>
@@ -36,7 +40,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
         toolLabel={{ ...Object.fromEntries(TOOL_KEYS.map((k) => [k, t(`tools.${k}`)])), ...Object.fromEntries(AGENT_TOOLS.map((k) => [k, t(`agent.tools.${k}`)])) }}
         conversations={conversations.map((x) => ({ id: x.id, title: x.title, updatedAt: x.updatedAt.toISOString() }))}
         active={active?.id ?? null}
-        initial={(active?.messages ?? []).map((m) => ({ id: m.id, role: m.role as "user" | "assistant", text: m.text, tools: (m.tools as ChatTool[] | null) ?? undefined }))}
+        initial={(active?.messages ?? []).map((m) => ({ id: m.id, role: m.role as "user" | "assistant", text: m.text, photos: m.photoKeys.length, tools: (m.tools as ChatTool[] | null) ?? undefined }))}
       />
     </>
   );
