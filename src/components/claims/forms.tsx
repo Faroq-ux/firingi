@@ -7,7 +7,8 @@ import { Camera, Check, Send, Truck, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
 import { shrink } from "@/components/delivery/delivery-forms";
-import { EN_VOICE, MicButton, appendSpoken } from "@/components/voice/voice";
+import { MicButton, appendSpoken } from "@/components/voice/voice";
+import { EN_VOICE } from "@/lib/voice";
 import type { ActionResult } from "@/server/actions/_action";
 import {
   acknowledgeAlertAction, addClaimMessageAction, claimPreviewAction, createClaimAction, decideClaimAction, disputeChargebackAction, markReplacementDoneAction,

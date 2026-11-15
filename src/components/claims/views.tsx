@@ -5,7 +5,8 @@ import type { claimDetail } from "@/server/claims/service";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatMoney } from "@/lib/utils";
-import { EN_VOICE, SpeakButton } from "@/components/voice/voice";
+import { SpeakButton } from "@/components/voice/voice";
+import { EN_VOICE } from "@/lib/voice";
 
 export type Detail = Awaited<ReturnType<typeof claimDetail>>;
 export type T = (key: string, vars?: Record<string, string | number>) => string;

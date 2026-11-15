@@ -10,12 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Mic, Square, Volume2, VolumeX } from "lucide-react";
 
-export type VoiceLabels = { speak: string; stop: string; listening: string; readAloud: string; stopReading: string; privacy: string; denied: string; noSpeech: string };
-/** FIRINGI back-office pages are English. */
-export const EN_VOICE: VoiceLabels = {
-  speak: "Speak instead of typing", stop: "Stop", listening: "Listening… speak now, tap again to stop", readAloud: "Read aloud", stopReading: "Stop reading",
-  privacy: "Your browser turns your speech into text (Chrome and Edge use their online speech service).", denied: "The microphone is blocked — allow it in your browser settings.", noSpeech: "Didn't catch that — please try again.",
-};
+import type { VoiceLabels } from "@/lib/voice";
 
 /** App locale → the language tag speech engines expect. */
 const SPEECH_LANG: Record<string, string> = {

@@ -553,8 +553,9 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   read-only tools that call FIRINGI's own services **with the asking user's rights** (sales
   summary, breakdowns, forecasts, stock, reorders, scorecards, orders, catalogue, suggestions,
   P&L for finance). Staff use it in the AI Centre. Suppliers and customers see it as **Assistant**
-  (its own tool set — only their company's data, never FIRINGI's commission or margins) **only when FIRINGI
-  switches it on for that company** (Settings › Business Features › Assistant; off by default). It replies in
+  (its own tool set — only their company's data, never FIRINGI's commission or margins): **on for every
+  supplier and customer; FIRINGI can switch it off per company** (Settings › Business Features › Assistant).
+  It works as their support & sales agent — see *Assistant: support & sales agent* below. It replies in
   the user's language. Server-side fallback is on (`fallbacks: "default"`): if the model is busy the
   API answers with an eligible fallback model, and the model that answered is logged. Prompt
   caching is on; questions per person per hour are limited (AI settings). Conversations are private
@@ -563,14 +564,14 @@ or a setting by itself. A person accepts or dismisses each suggestion.
 - **Pages**: *Dashboard › AI Insights* and the 11 *AI Centre* pages (staff, English); *Orders › Buy
   Again* and the dashboard's "time to reorder" card (customers: one tap puts the usual quantities in
   the cart to check and place); *Reports › Demand & Stock* and the dashboard's stock card
-  (suppliers); *Assistant* in both portals when switched on for the company — all in the 25 languages.
+  (suppliers); *Assistant* in both portals unless switched off for the company — all in the 25 languages.
 - **AI Activity Log**: every assistant answer (who, which tools, tokens, model), refresh, accept
   and dismiss.
 - **Who gets the AI Centre** — FIRINGI staff only, and only the Super Admin by default. Other staff
   get it when a role with *Use the AI Centre* (`admin.ai.view`) is given to them (Users & Permissions ›
   Roles); the Operations, Finance and Sales roles don't include it. Suppliers and customers never see the
-  AI Centre; they get the *Assistant* only where FIRINGI switched it on, and can always write to FIRINGI
-  under *Help & Support*.
+  AI Centre; they get the *Assistant* unless FIRINGI switched it off for them, and can always write to
+  FIRINGI under *Help & Support*.
 - **Demo history**: `pnpm db:demo-history` adds 16 weeks of delivered demo orders (marked
   "Demo history", not invoiced) so forecasts have something to learn from. Never on the test DB.
 
@@ -608,6 +609,30 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   after the payout days in *Payments* settings (30 by default). Finance gets one reminder a day
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
+
+## Assistant: support & sales agent
+
+Customers and suppliers chat with FIRINGI's AI in their own language — typed or spoken (🎤) — under
+**Assistant** (on for everyone; FIRINGI can switch it off per company in *Settings › Business Features*).
+- **Customers — support and sales**: products, prices, stock, offers, their orders and deliveries, unpaid
+  invoices, quality claims, the cart. When the customer clearly asks ("add 5 boxes of olive oil"), the
+  agent **puts it in the cart** (`add_to_cart`, the same rules as the shop: minimum, multiples, only offers
+  the customer can see) and shows a card with *Open cart*. **It never places an order** — the customer
+  checks the cart and places it.
+- **Suppliers — support only**: their orders, billing statements and charge-backs, quality claims. No cart.
+- **Hand-over to a person**: for anything only FIRINGI staff can do (refunds, cancellations, account or
+  price changes, complaints) or when someone asks for a person, the agent offers **Send to FIRINGI
+  support**. One tap opens a *Help & Support* request in their name with the agent's summary and the chat
+  so far; FIRINGI answers there as usual. Once per answer (a second tap opens the same request).
+- It only reads the company's own data with the user's own rights, never FIRINGI's commission or margins
+  (customers) or FIRINGI's margin (suppliers), and only writes the cart or a support request when asked.
+- **Costs**: the real AI needs `ANTHROPIC_API_KEY` on the server; every question is billed by Anthropic
+  (the hourly limit per person in AI settings caps it). Without a key the page says it isn't connected
+  and points to Help & Support.
+- **Development / tests**: `ASSISTANT_SIMULATE=1` (no API key, never in production — env validation
+  refuses it) runs a fixed-rule stand-in for the customer/supplier agent so the chat, cart filling and
+  hand-over can be tried and tested. Test: `ASSISTANT_SIMULATE=1 next start …` then
+  `node tests/e2e/agent.mjs`; integration: `tests/integration/assistant.test.ts`.
 
 ## Voice: speak instead of typing, read aloud
 

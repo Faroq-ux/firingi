@@ -7,12 +7,13 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Bot, MessageSquarePlus, Send, Sparkles, Trash2 } from "lucide-react";
+import { Bot, CheckCircle2, Headset, MessageSquarePlus, Send, ShoppingCart, Sparkles, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { askAssistantAction, deleteConversationAction } from "@/server/actions/ai";
+import { askAssistantAction, deleteConversationAction, handoverAction } from "@/server/actions/ai";
 import { TOOL_LABEL } from "@/lib/ai";
 import { Markdown } from "./markdown";
-import { EN_VOICE, MicButton, SpeakButton, appendSpoken } from "@/components/voice/voice";
+import { MicButton, SpeakButton, appendSpoken } from "@/components/voice/voice";
+import { EN_VOICE } from "@/lib/voice";
 
 export type ChatLabels = Record<"title" | "newChat" | "history" | "noHistory" | "placeholder" | "send" | "thinking" | "lookedAt" | "you" | "assistant" | "suggestOnly" | "delete" | "tryAsking", string>;
 export const EN_CHAT: ChatLabels = {
@@ -20,11 +21,16 @@ export const EN_CHAT: ChatLabels = {
   send: "Ask", thinking: "Looking at your data…", lookedAt: "Looked at", you: "You", assistant: "FIRINGI AI", suggestOnly: "The assistant reads your data and suggests — it never changes anything.",
   delete: "Delete conversation", tryAsking: "Try asking",
 };
-type Msg = { id: string; role: "user" | "assistant"; text: string; tools?: { name: string; ok: boolean }[]; model?: string | null; fellBack?: boolean };
+/** What the agent did, shown under its answer: products put in the cart, an offer to pass the chat to FIRINGI support. */
+export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string };
+export type ChatTool = { name: string; ok: boolean; card?: ToolCard; ticketId?: string; ticketNumber?: string };
+export type AgentLabels = Record<"addedToCart" | "cartNow" | "openCart" | "handoverTitle" | "handoverText" | "handoverSend" | "handoverSent" | "openRequest", string>;
+type Msg = { id: string; role: "user" | "assistant"; text: string; tools?: ChatTool[]; model?: string | null; fellBack?: boolean };
+const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ""));
 
-export function AssistantChat({ side, base, conversations, active, initial, examples, l = EN_CHAT, locale, showModel = false, toolLabel = TOOL_LABEL }: {
+export function AssistantChat({ side, base, conversations, active, initial, examples, l = EN_CHAT, locale, showModel = false, toolLabel = TOOL_LABEL, agent }: {
   side: "STAFF" | "VENDOR" | "BUYER"; base: string; conversations: { id: string; title: string; updatedAt: string }[]; active: string | null; initial: Msg[];
-  examples: string[]; l?: ChatLabels; locale: string; showModel?: boolean; toolLabel?: Record<string, string>;
+  examples: string[]; l?: ChatLabels; locale: string; showModel?: boolean; toolLabel?: Record<string, string>; agent?: AgentLabels;
 }) {
   const router = useRouter();
   const [messages, setMessages] = useState<Msg[]>(initial);
@@ -46,7 +52,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
     start(async () => {
       const r = await askAssistantAction({ side, conversationId, text: question, locale });
       if (!r.ok) { setError(r.error); setMessages((m) => m.slice(0, -1)); setText(question); return; }
-      setMessages((m) => [...m, { id: `a${Date.now()}`, role: "assistant", text: r.data.answer, tools: r.data.tools, model: r.data.model, fellBack: r.data.fellBack }]);
+      setMessages((m) => [...m, { id: r.data.messageId, role: "assistant", text: r.data.answer, tools: r.data.tools, model: r.data.model, fellBack: r.data.fellBack }]);
       if (!conversationId) { setConversationId(r.data.conversationId); router.replace(`${base}?c=${r.data.conversationId}`, { scroll: false }); }
       router.refresh();
     });
@@ -85,6 +91,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
               {m.role === "assistant" && <div className="grid size-8 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white"><Bot className="size-4" aria-label={l.assistant} /></div>}
               <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "border bg-background"}`}>
                 {m.role === "user" ? <p className="whitespace-pre-wrap text-sm">{m.text}</p> : <Markdown text={m.text} />}
+                {m.role === "assistant" && agent && side !== "STAFF" && <AgentCards side={side} messageId={m.id} tools={m.tools ?? []} l={agent} />}
                 {m.role === "assistant" && <div className="mt-1 -ml-2"><SpeakButton text={m.text} labels={voice} lang={locale} /></div>}
                 {m.role === "assistant" && (!!m.tools?.length || (showModel && m.model)) && (
                   <p className="mt-2 flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
@@ -121,6 +128,62 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
           )}
         </form>
       </section>
+    </div>
+  );
+}
+
+/** Cart and hand-over cards under an agent answer. */
+function AgentCards({ side, messageId, tools, l }: { side: "VENDOR" | "BUYER"; messageId: string; tools: ChatTool[]; l: AgentLabels }) {
+  const carts = tools.filter((t) => t.ok && t.card?.kind === "cart");
+  const handover = tools.find((t) => t.ok && t.card?.kind === "handover");
+  if (!carts.length && !handover) return null;
+  return (
+    <div className="mt-3 space-y-2">
+      {carts.map((t, i) => {
+        const c = t.card as Extract<ToolCard, { kind: "cart" }>;
+        return (
+          <div key={i} className="flex flex-wrap items-center gap-3 rounded-xl border border-[color-mix(in_oklab,var(--vivid-teal)_40%,transparent)] bg-[color-mix(in_oklab,var(--vivid-teal)_8%,transparent)] px-3 py-2" data-testid="cart-card">
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,var(--vivid-teal),var(--vivid-blue))] text-white"><ShoppingCart className="size-4" aria-hidden /></span>
+            <div className="min-w-0 flex-1 text-sm">
+              <p className="font-medium [overflow-wrap:anywhere]">{fill(l.addedToCart, { qty: c.qty, product: c.product })} <span className="text-muted-foreground">· {c.pack}</span></p>
+              <p className="text-xs text-muted-foreground">{fill(l.cartNow, { qty: c.cartQty })}</p>
+            </div>
+            <Link href="/buy/orders/cart" className="rounded-full bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90" data-testid="open-cart">{l.openCart}</Link>
+          </div>
+        );
+      })}
+      {handover && <HandoverCard side={side} messageId={messageId} tool={handover} l={l} />}
+    </div>
+  );
+}
+
+function HandoverCard({ side, messageId, tool, l }: { side: "VENDOR" | "BUYER"; messageId: string; tool: ChatTool; l: AgentLabels }) {
+  const router = useRouter();
+  const [sent, setSent] = useState<{ id: string; number: string } | null>(tool.ticketId ? { id: tool.ticketId, number: tool.ticketNumber ?? "" } : null);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, start] = useTransition();
+  const c = tool.card as Extract<ToolCard, { kind: "handover" }>;
+  const href = sent ? `${side === "BUYER" ? "/buy" : "/vendor"}/support/${sent.id}` : "";
+  return (
+    <div className="rounded-xl border border-[color-mix(in_oklab,var(--vivid-violet)_40%,transparent)] bg-[color-mix(in_oklab,var(--vivid-violet)_7%,transparent)] p-3" data-testid="handover-card">
+      <div className="flex items-start gap-3">
+        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,var(--vivid-violet),var(--vivid-pink))] text-white"><Headset className="size-4" aria-hidden /></span>
+        <div className="min-w-0 flex-1 text-sm">
+          <p className="font-medium">{sent ? fill(l.handoverSent, { number: sent.number }) : l.handoverTitle}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground [overflow-wrap:anywhere]">{sent ? c.subject : l.handoverText}</p>
+        </div>
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-2 pl-11">
+        {sent ? (
+          <Link href={href} className="inline-flex items-center gap-1.5 rounded-full border bg-background px-3 py-1.5 text-xs font-medium transition hover:border-[var(--vivid-violet)]" data-testid="handover-open"><CheckCircle2 className="size-3.5 text-[var(--vivid-teal)]" aria-hidden /> {l.openRequest}</Link>
+        ) : (
+          <Button type="button" size="sm" disabled={pending} data-testid="handover-send"
+            onClick={() => start(async () => { setError(null); const r = await handoverAction({ side, messageId }); if (!r.ok) { setError(r.error); return; } setSent({ id: r.data.ticketId, number: r.data.number }); router.refresh(); })}>
+            <Headset className="size-4" aria-hidden /> {l.handoverSend}
+          </Button>
+        )}
+        {error && <span role="alert" className="text-xs text-destructive">{error}</span>}
+      </div>
     </div>
   );
 }

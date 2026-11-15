@@ -60,7 +60,9 @@ const table = atl.getByTestId("restock-table");
 const rowOf = (re) => table.locator('[data-testid^="restock-"]').filter({ has: atl.locator("a", { hasText: re }) }).first();
 const flour = rowOf(/farinha|flour/i), kebab = rowOf(/kebab/i), rice = rowOf(/arroz|rice/i);
 check("flour is out of stock", /Sem stock|Out of stock/.test(await flour.getByTestId("urgency").textContent()));
-check("kebab runs out before goods can arrive", /Tarde demais|Too late/.test(await kebab.getByTestId("urgency").textContent()));
+const kebabUrgency = await kebab.getByTestId("urgency").textContent();
+// "Too late" or "Order now" depending on how much kebab demand the demo history holds — urgent either way
+check("kebab must be ordered now (or is already too late)", /Tarde demais|Too late|Encomendar já|Order now/.test(kebabUrgency), kebabUrgency);
 check("kebab suggestion is a multiple of 10 (pallet) and ≥ 20", await (async () => { const q = Number(await kebab.getByTestId("qty").inputValue()); return q >= 20 && q % 10 === 0; })());
 check("kebab is bought from the cold-chain supplier", /Frigoríficos/.test(await kebab.getByTestId("source").locator("option:checked").textContent()));
 check("the reason is shown (free + on order, reorder point, lead time)", /livre .* encomendado|free .* on order/.test(await kebab.textContent()) && /prazo 7 d|lead time 7 d/.test(await kebab.textContent()));

@@ -18,8 +18,13 @@ export const askAssistantAction = defineAction({
   schema: z.object({ side, conversationId: z.string().optional().nullable(), text: z.string().max(4000), locale: z.string().max(10).optional() }),
   handler: async (ctx, i) => {
     const r = await assistant.ask(ctx, i.side, { conversationId: i.conversationId ?? null, text: i.text, locale: i.locale });
-    return { conversationId: r.conversationId, answer: r.answer, tools: r.tools.map((t) => ({ name: t.name, ok: t.ok })), model: r.model, fellBack: r.fellBack };
+    return { conversationId: r.conversationId, messageId: r.messageId, answer: r.answer, tools: r.tools.map((t) => ({ name: t.name, ok: t.ok, ...(t.card ? { card: t.card } : {}) })), model: r.model, fellBack: r.fellBack };
   },
+});
+export const handoverAction = defineAction({
+  permission: "company.support.use",
+  schema: z.object({ side: z.enum(["VENDOR", "BUYER"]), messageId: z.string().min(1) }),
+  handler: async (ctx, i) => { const r = await assistant.handoverToSupport(ctx, i.side, i.messageId); revalidatePath("/", "layout"); return r; },
 });
 export const deleteConversationAction = defineAction({ permission: null, schema: z.object({ side, id: z.string() }), handler: async (ctx, i) => done(await assistant.deleteConversation(ctx, i.side, i.id)) });
 export const saveAiSettingsAction = defineAction({

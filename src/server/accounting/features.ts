@@ -1,7 +1,7 @@
 /**
- * Optional features FIRINGI switches on per company (Phase 27): Accounting, and the Assistant (the
- * business assistant for suppliers and customers). Off until FIRINGI switches it on for a supplier or a
- * customer; switching it off hides it and keeps what was recorded.
+ * Optional features per company (Phase 27): Accounting — off until FIRINGI switches it on; and the
+ * Assistant (the AI support & sales agent for customers and suppliers) — on for everyone unless FIRINGI
+ * switches it off for a company. Switching a feature off hides it and keeps what was recorded.
  */
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -11,10 +11,12 @@ import { writeAudit } from "@/server/services/audit";
 
 export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT"] as const;
 export type CompanyFeatureKey = (typeof COMPANY_FEATURES)[number];
+/** On for every company unless FIRINGI switched it off (the Assistant is the support & sales channel). */
+const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true };
 
 export async function companyFeatureOn(companyId: string, key: CompanyFeatureKey) {
   const row = await prisma.companyFeature.findUnique({ where: { companyId_key: { companyId, key } } });
-  return !!row?.enabled;
+  return row ? row.enabled : DEFAULT_ON[key];
 }
 
 export class CompanyFeatureOffError extends AppError {
@@ -24,8 +26,8 @@ export class CompanyFeatureOffError extends AppError {
 /** Nav feature keys that are off for the caller's company (hidden from the menu). */
 export async function hiddenCompanyNav(ctx: Ctx): Promise<Set<string>> {
   if (ctx.company.type === "ADMIN") return new Set();
-  const rows = await prisma.companyFeature.findMany({ where: { companyId: ctx.company.id, enabled: true } });
-  return new Set(COMPANY_FEATURES.filter((k) => !rows.some((r) => r.key === k)));
+  const rows = await prisma.companyFeature.findMany({ where: { companyId: ctx.company.id } });
+  return new Set(COMPANY_FEATURES.filter((k) => !(rows.find((r) => r.key === k)?.enabled ?? DEFAULT_ON[k])));
 }
 
 function requireStaff(ctx: Ctx, manage: boolean) {
@@ -43,7 +45,7 @@ export async function companiesWithFeatures(ctx: Ctx) {
   return rows.map((c) => ({
     id: c.id, name: c.tradeName ?? c.legalName, legalName: c.legalName, type: c.type, country: c.country.code, entries: c._count.accountingEntries,
     accounting: !!c.features.find((f) => f.key === "ACCOUNTING")?.enabled, updatedAt: c.features.find((f) => f.key === "ACCOUNTING")?.updatedAt ?? null,
-    assistant: !!c.features.find((f) => f.key === "ASSISTANT")?.enabled,
+    assistant: c.features.find((f) => f.key === "ASSISTANT")?.enabled ?? DEFAULT_ON.ASSISTANT,
   }));
 }
 

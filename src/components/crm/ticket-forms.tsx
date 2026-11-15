@@ -5,7 +5,8 @@ import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { openTicketAction, replyTicketAction } from "@/server/actions/crm";
-import { EN_VOICE, MicButton, appendSpoken } from "@/components/voice/voice";
+import { MicButton, appendSpoken } from "@/components/voice/voice";
+import { EN_VOICE } from "@/lib/voice";
 
 type L = Record<string, string>;
 

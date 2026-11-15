@@ -1,8 +1,10 @@
 /**
- * The AI Business Assistant's tools. All read-only, all run with the asking user's own context
- * (so the normal permission and visibility rules apply), and each is offered only on the sides
- * that may use it. Buyers never get commission, supplier payouts or other buyers' data: their
- * tools go through the buyer-facing services, which don't return those.
+ * The AI Business Assistant's tools — for FIRINGI staff, and the support & sales agent for customers
+ * and suppliers. All run with the asking user's own context (so the normal permission and visibility
+ * rules apply), and each is offered only on the sides that may use it. Buyers never get commission,
+ * supplier payouts or other buyers' data: their tools go through the buyer-facing services.
+ * Read-only, except `add_to_cart` (the customer asked; it only fills the cart — the customer checks it
+ * and places the order) and `handover` (only offers a button: the person sends it to FIRINGI support).
  */
 import "server-only";
 import { z } from "zod";
@@ -24,6 +26,8 @@ type ToolDef<T> = {
   input: z.ZodType<T>;
   run: (ctx: Ctx, side: Side, input: T, locale: string) => Promise<unknown>;
 };
+/** A tool result may carry a small `card` the chat shows (cart line added, hand-over offered). */
+export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string };
 const tool = <T,>(t: ToolDef<T>) => t as unknown as ToolDef<unknown>;
 
 const period = { type: "string", enum: [...PERIODS], description: "7d, 30d, 90d, 12m (last 12 months), mtd (this month), lastmonth, ytd (this year)" };
@@ -152,16 +156,106 @@ export const TOOLS: ToolDef<unknown>[] = [
   }),
   tool({
     name: "search_catalogue", sides: ["BUYER"],
-    description: "Search the products this buyer can order (its own country's suppliers), with price per pack and stock status.",
+    description: "Search the products this buyer can order (its own country's suppliers): offer id (for add_to_cart), price per pack excl. / incl. VAT, stock status, minimum order and multiples, current offers.",
     properties: { query: { type: "string", description: "Product name, brand, SKU or barcode" }, limit },
     input: z.object({ query: z.string(), limit: lim }),
     run: async (ctx, _s, i, locale) => {
       const { searchAcrossSuppliers } = await import("@/server/data/catalogue-buyer");
       const r = await searchAcrossSuppliers(ctx, i.query);
       return r.items.slice(0, i.limit).map((x) => ({
-        product: pickLocalized(x.name, locale), pack: pickLocalized(x.packaging.name, locale), supplier: x.vendor.name, sku: x.sku,
-        pricePerPackNet: x.price?.unitPriceNet ?? null, pricePerPackInclVat: x.price?.unitPriceGross ?? null, stock: x.stockStatus, minOrderQty: x.minOrderQty,
+        offerId: x.offerId, product: pickLocalized(x.name, locale), pack: pickLocalized(x.packaging.name, locale), supplier: x.vendor.name, sku: x.sku,
+        pricePerPackNet: x.price?.unitPriceNet ?? null, pricePerPackInclVat: x.price?.unitPriceGross ?? null, stock: x.stockStatus, minOrderQty: x.minOrderQty, qtyStep: x.qtyStep,
+        offers: (x.price?.promotions ?? []).map((p) => p.name).filter(Boolean),
       }));
+    },
+  }),
+
+  // ── support & sales agent (customers and suppliers) ──
+  tool({
+    name: "add_to_cart", sides: ["BUYER"],
+    description: "Put a product in this customer's cart — ONLY when the customer clearly asked for that product and quantity (ask first if it is unclear which product or how many). Uses the offer id from search_catalogue. It never places an order: the customer checks the cart and places it.",
+    properties: { offer_id: { type: "string", description: "offerId from search_catalogue" }, qty: { type: "integer", description: "Packs to add (respect the minimum and multiples)" } },
+    input: z.object({ offer_id: z.string().min(1), qty: z.number().int().min(1).max(10000) }),
+    run: async (ctx, _s, i, locale) => {
+      const { can } = await import("@/server/rbac/guard");
+      if (!can(ctx, "buyer.orders.place")) throw new (await import("@/server/errors")).ForbiddenError();
+      const { addToCart } = await import("@/server/services/cart");
+      const { catalogueItem } = await import("@/server/data/catalogue-buyer");
+      const r = await addToCart(ctx, i.offer_id, i.qty);
+      const { item } = await catalogueItem(ctx, i.offer_id);
+      const card: ToolCard = { kind: "cart", product: pickLocalized(item.name, locale), pack: pickLocalized(item.packaging.name, locale), qty: i.qty, cartQty: r.qty };
+      return { added: true, product: card.product, pack: card.pack, qtyAdded: i.qty, qtyInCartNow: r.qty, note: "Not ordered yet — the customer checks the cart and places the order.", card };
+    },
+  }),
+  tool({
+    name: "view_cart", sides: ["BUYER"],
+    description: "What is in this customer's cart now: products, quantities, totals, delivery fee, and whether a minimum order is still missing.",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx, _s, _i, locale) => {
+      const { cartView } = await import("@/server/services/cart");
+      const v = (await cartView(ctx)) as unknown as { lines: { name?: unknown; packaging?: { name?: unknown }; qty: number; lineGross?: string }[]; totalGross?: string; groups?: { supplier: { name: string }; delivery: { ok: boolean; reason?: string; missing?: string; unit?: string; feeNet?: string } }[] };
+      return {
+        lines: v.lines.map((l) => ({ product: pickLocalized((l.name ?? {}) as Record<string, string>, locale), pack: pickLocalized((l.packaging?.name ?? {}) as Record<string, string>, locale), qty: l.qty, lineInclVat: l.lineGross ?? null })),
+        totalInclVat: v.totalGross ?? null,
+        delivery: (v.groups ?? []).map((g) => ({ supplier: g.supplier.name, ok: g.delivery.ok, ...(g.delivery.ok ? { feeNet: g.delivery.feeNet } : { problem: g.delivery.reason, missing: g.delivery.missing, unit: g.delivery.unit }) })),
+        where: "Cart: /buy/orders/cart",
+      };
+    },
+  }),
+  tool({
+    name: "my_invoices", sides: ["BUYER"],
+    description: "This customer's unpaid invoices: number, date, due date, amount still open, overdue or not. Paying: Invoices & Payments.",
+    properties: { limit },
+    input: z.object({ limit: lim }),
+    run: async (ctx, _s, i) => {
+      const { listSalesInvoices } = await import("@/server/services/finance");
+      const rows = await listSalesInvoices(ctx, { as: "BUYER", unpaidOnly: true });
+      return { openInvoices: rows.slice(0, i.limit).map((r) => ({ number: r.fullNumber, issued: r.issuedAt?.toISOString().slice(0, 10) ?? null, due: r.dueAt?.toISOString().slice(0, 10) ?? null, openAmount: r.open, overdue: r.overdue, order: r.order?.number ?? null })), totalOpen: rows.reduce((a, r) => a + Number(r.open), 0).toFixed(2), where: "Invoices & Payments: /buy/finance/invoices" };
+    },
+  }),
+  tool({
+    name: "my_claims", sides: ["BUYER", "VENDOR"],
+    description: "Quality claims (damaged, missing, wrong, warm, short-dated or poor-quality goods): number, order, problem, status, credit. Customers report a new one from the delivered order (Report a problem), within the claim window.",
+    properties: { limit },
+    input: z.object({ limit: lim }),
+    run: async (ctx, side, i) => {
+      const { listClaims, claimSettings } = await import("@/server/claims/service");
+      const rows = await listClaims(ctx, side === "VENDOR" ? "VENDOR" : "BUYER");
+      const s = await claimSettings();
+      return { claimWindowHours: s.windowHours, claims: rows.slice(0, i.limit).map((r) => ({ number: r.number, order: r.orderNumber, problem: r.reason, status: r.status, opened: r.createdAt.toISOString().slice(0, 10), ...(side === "BUYER" ? { credit: r.credit } : { yourAnswer: r.supplierResponse }) })),
+        where: side === "VENDOR" ? "Orders › Quality Claims: /vendor/orders/claims" : "Orders › Quality Claims: /buy/orders/claims; report a problem from the delivered order: /buy/orders/<order id>/claim" };
+    },
+  }),
+  tool({
+    name: "my_statements", sides: ["VENDOR"],
+    description: "This supplier's billing statements still open (what to invoice FIRINGI, incl. credit statements from returns / quality claims) and its open claim charge-backs. Payouts follow approved invoices.",
+    properties: { limit },
+    input: z.object({ limit: lim }),
+    run: async (ctx, _s, i) => {
+      const { listStatements } = await import("@/server/services/finance");
+      const { listChargebacks } = await import("@/server/claims/service");
+      const st = await listStatements(ctx, "VENDOR", { openOnly: true });
+      const cbs = await listChargebacks(ctx, "VENDOR", {}).catch(() => []);
+      return {
+        openStatements: st.slice(0, i.limit).map((x) => ({ number: x.number, order: x.order.number, credit: x.isCreditStatement, gross: x.expectedGross.toString(), status: x.status })),
+        openChargebacks: cbs.filter((c) => c.status === "OPEN" || c.status === "DISPUTED").map((c) => ({ claim: c.claimNumber, amount: c.amount, status: c.status })),
+        where: "Finance › Billing Statements: /vendor/finance/statements",
+      };
+    },
+  }),
+  tool({
+    name: "handover", sides: ["BUYER", "VENDOR"],
+    description: "Offer to pass the conversation to FIRINGI's support team (a person). Use when you can't solve it, it needs a decision or a change only FIRINGI staff can make (refunds, cancellations, account or price changes, complaints), or the person asks for a human. Shows a 'Send to FIRINGI support' button; the person taps it to send a support request with your summary and this chat.",
+    properties: {
+      subject: { type: "string", description: "Short subject in the person's language" },
+      summary: { type: "string", description: "2–5 sentences for FIRINGI staff: the problem, what was checked, what the person wants (order / invoice numbers)" },
+      category: { type: "string", enum: ["ORDER", "DELIVERY", "INVOICE", "PAYMENT", "PRODUCT", "ACCOUNT", "OTHER"] },
+    },
+    input: z.object({ subject: z.string().min(3).max(150), summary: z.string().min(5).max(2000), category: z.enum(["ORDER", "DELIVERY", "INVOICE", "PAYMENT", "PRODUCT", "ACCOUNT", "OTHER"]) }),
+    run: async (_ctx, _s, i) => {
+      const card: ToolCard = { kind: "handover", subject: i.subject, summary: i.summary, category: i.category };
+      return { offered: true, note: "A 'Send to FIRINGI support' button is now shown — tell the person to tap it; FIRINGI staff answer in Help & Support.", card };
     },
   }),
   tool({

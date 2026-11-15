@@ -33,6 +33,7 @@ export function checkEnv(env: Record<string, string | undefined>): EnvFinding[] 
   if (env.WHATSAPP_DRIVER === "meta") for (const k of ["WHATSAPP_TOKEN", "WHATSAPP_PHONE_NUMBER_ID", "WHATSAPP_APP_SECRET"]) if (!env[k]) err(k, `WhatsApp (Meta) needs ${k}.`);
   if (env.PUSH_DRIVER === "webpush" && (!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY)) err("VAPID_PRIVATE_KEY", "Web push needs VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY.");
 
+  if (env.ASSISTANT_SIMULATE === "1") err("ASSISTANT_SIMULATE", "The simulated assistant must not run in production (it is a fixed-rule stand-in, not the AI).");
   if (env.MOLONI_SIMULATE === "1") err("MOLONI_SIMULATE", "The simulated Moloni must not run in production (its documents are not fiscal).");
   if (env.PAYMENTS_SIMULATE === "1" || env.PAYMENTS_PROVIDER === "sim") err("PAYMENTS_SIMULATE", "The simulated payment provider must not run in production (no real money moves).");
   if (env.STRIPE_SECRET_KEY && !env.STRIPE_WEBHOOK_SECRET) err("STRIPE_WEBHOOK_SECRET", "Stripe needs STRIPE_WEBHOOK_SECRET to confirm payments (webhook /api/webhooks/payments/stripe).");

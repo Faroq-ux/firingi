@@ -7,7 +7,9 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
-import { aiSettings, ask, assistantStatus, getConversation, listConversations, saveAiSettings, setAiTransportForTests, type AiTransport } from "@/server/ai/assistant";
+import { aiSettings, ask, assistantStatus, getConversation, handoverToSupport, listConversations, saveAiSettings, setAiTransportForTests, type AiTransport } from "@/server/ai/assistant";
+import { companyFeatureOn } from "@/server/accounting/features";
+import { searchAcrossSuppliers } from "@/server/data/catalogue-buyer";
 import { ctxFor, setAiRole } from "../helpers";
 import { setCompanyFeature } from "@/server/accounting/features";
 
@@ -39,7 +41,8 @@ beforeAll(async () => {
 });
 afterAll(async () => {
   await setAiRole(OPS, false);
-  await assistantFor(KEBAB, false); await assistantFor(LX_OWNER, false);
+  // back to the default (on for everyone)
+  await prisma.companyFeature.deleteMany({ where: { key: "ASSISTANT", companyId: { in: [(await ctxFor(KEBAB)).company.id, (await ctxFor(LX_OWNER)).company.id] } } });
   if (original) await saveAiSettings(await ctxFor(SA), original);
   await prisma.$disconnect();
 });
@@ -178,6 +181,128 @@ describe("AI assistant", () => {
     script(() => msg([text("hi")], "end_turn"));
     await expect(ask(sa, "STAFF", { text: "one more" })).rejects.toThrow(/questions this hour/);
     await saveAiSettings(sa, original);
+  });
+
+  it("on for every supplier and customer until FIRINGI switches it off", async () => {
+    const lx = await ctxFor(LX_OWNER);
+    await prisma.companyFeature.deleteMany({ where: { key: "ASSISTANT", companyId: lx.company.id } });
+    expect(await companyFeatureOn(lx.company.id, "ASSISTANT")).toBe(true);
+    expect(await companyFeatureOn(lx.company.id, "ACCOUNTING")).toBe(false); // accounting stays off by default
+    expect((await assistantStatus("VENDOR", lx.company.id)).switchedOn).toBe(true);
+    await assistantFor(LX_OWNER, false);
+    expect((await assistantStatus("VENDOR", lx.company.id)).switchedOn).toBe(false);
+    await prisma.companyFeature.deleteMany({ where: { key: "ASSISTANT", companyId: lx.company.id } });
+  });
+
+  it("sales agent: fills the customer's cart when asked — never places the order", async () => {
+    const k = await ctxFor(KEBAB);
+    const cart = await prisma.cart.findFirst({ where: { buyerCompanyId: k.company.id, userId: k.user.id }, include: { items: true } });
+    const before = cart?.items.map((i) => ({ offerId: i.offerId, qty: i.qty })) ?? [];
+    const offer = (await searchAcrossSuppliers(k, "a")).items.find((x) => x.stockStatus !== "OUT" && !before.some((b) => b.offerId === x.offerId))!;
+    expect(offer).toBeTruthy();
+    const orders = await prisma.order.count({ where: { buyerCompanyId: k.company.id } });
+    const qty = offer.minOrderQty * 2;
+    try {
+      const calls = script(
+        () => msg([toolUse("add_to_cart", { offer_id: offer.offerId, qty })], "tool_use"),
+        () => msg([text(`Adicionei ${qty} ao carrinho.`)], "end_turn"),
+      );
+      const r = await ask(k, "BUYER", { text: `Adiciona ${qty} caixas`, locale: "pt-PT" });
+      expect(String(calls[0].system)).toMatch(/sales/i);
+      expect(String(calls[0].system)).toMatch(/never|Never/);
+      const names = (calls[0].tools as { name: string }[]).map((t) => t.name);
+      expect(names).toEqual(expect.arrayContaining(["add_to_cart", "view_cart", "my_invoices", "my_claims", "handover"]));
+      expect(names).not.toContain("my_statements");
+      expect(r.tools[0]).toMatchObject({ name: "add_to_cart", ok: true, card: { kind: "cart", qty, cartQty: qty } });
+      const res = JSON.parse(lastToolResults(calls[1])[0].content);
+      expect(res).toMatchObject({ added: true, qtyInCartNow: qty });
+      const line = await prisma.cartItem.findFirst({ where: { cart: { buyerCompanyId: k.company.id, userId: k.user.id }, offerId: offer.offerId } });
+      expect(line?.qty).toBe(qty);
+      expect(await prisma.order.count({ where: { buyerCompanyId: k.company.id } })).toBe(orders); // nothing ordered
+      const stored = await prisma.aiMessage.findUniqueOrThrow({ where: { id: r.messageId } });
+      expect((stored.tools as { card?: { kind: string } }[])[0].card?.kind).toBe("cart");
+
+      // a wrong quantity (below the minimum / not a multiple) is refused with the reason
+      if (offer.minOrderQty > 1 || offer.qtyStep > 1) {
+        const c2 = script(() => msg([toolUse("add_to_cart", { offer_id: offer.offerId, qty: 1 })], "tool_use"), () => msg([text("ok")], "end_turn"));
+        await ask(k, "BUYER", { text: "add 1" });
+        expect(lastToolResults(c2[1])[0]).toMatchObject({ is_error: true });
+      }
+      // an offer the customer can't see is refused
+      const c3 = script(() => msg([toolUse("add_to_cart", { offer_id: "nope", qty: 1 })], "tool_use"), () => msg([text("ok")], "end_turn"));
+      await ask(k, "BUYER", { text: "add it" });
+      expect(lastToolResults(c3[1])[0]).toMatchObject({ is_error: true });
+    } finally {
+      await prisma.cartItem.deleteMany({ where: { cart: { buyerCompanyId: k.company.id, userId: k.user.id }, offerId: { notIn: before.map((b) => b.offerId) } } });
+    }
+  });
+
+  it("support agent for suppliers: support tools only, no cart", async () => {
+    const calls = script(() => msg([toolUse("my_statements", { limit: 5 }, "s"), toolUse("my_claims", { limit: 5 }, "c"), toolUse("add_to_cart", { offer_id: "x", qty: 1 }, "a")], "tool_use"), () => msg([text("ok")], "end_turn"));
+    const lx = await ctxFor(LX_OWNER);
+    await ask(lx, "VENDOR", { text: "What do I have to invoice?", locale: "pt-PT" });
+    const names = (calls[0].tools as { name: string }[]).map((t) => t.name);
+    expect(names).toEqual(expect.arrayContaining(["my_statements", "my_claims", "handover"]));
+    for (const n of ["add_to_cart", "view_cart", "search_catalogue", "my_invoices"]) expect(names).not.toContain(n);
+    expect(String(calls[0].system)).toMatch(/support/i);
+    const [st, cl, add] = lastToolResults(calls[1]);
+    expect(JSON.parse(st.content)).toHaveProperty("openStatements");
+    expect(JSON.parse(cl.content)).toHaveProperty("claimWindowHours");
+    expect(add).toMatchObject({ is_error: true, content: expect.stringMatching(/Unknown tool/) });
+  });
+
+  it("hand-over: one tap opens a Help & Support request with the summary and the chat — once", async () => {
+    const k = await ctxFor(KEBAB);
+    script(() => msg([toolUse("handover", { subject: "Reembolso da encomenda", summary: "O cliente pede o reembolso de uma caixa partida.", category: "ORDER" })], "tool_use"),
+      () => msg([text("Toque em Enviar para o suporte FIRINGI.")], "end_turn"));
+    const r = await ask(k, "BUYER", { text: "Quero falar com uma pessoa sobre um reembolso", locale: "pt-PT" });
+    expect(r.tools[0]).toMatchObject({ name: "handover", ok: true, card: { kind: "handover", subject: "Reembolso da encomenda", category: "ORDER" } });
+    expect(await prisma.supportTicket.count({ where: { subject: "Reembolso da encomenda" } })).toBe(0); // nothing sent until tapped
+
+    await expect(handoverToSupport(await ctxFor(LX_OWNER), "VENDOR", r.messageId)).rejects.toThrow(/not found/i); // someone else's chat
+    await expect(handoverToSupport(k, "STAFF", r.messageId)).rejects.toThrow();
+    const h = await handoverToSupport(k, "BUYER", r.messageId);
+    expect(h.already).toBe(false);
+    const t = await prisma.supportTicket.findUniqueOrThrow({ where: { id: h.ticketId }, include: { messages: true } });
+    expect(t).toMatchObject({ subject: "Reembolso da encomenda", category: "ORDER", companyId: k.company.id });
+    const body = t.messages.map((m) => m.body).join("\n");
+    expect(body).toMatch(/caixa partida/);
+    expect(body).toMatch(/Customer: Quero falar com uma pessoa/);
+    expect(body).toMatch(/Assistant: Toque em Enviar/);
+    const again = await handoverToSupport(k, "BUYER", r.messageId);
+    expect(again).toMatchObject({ ticketId: h.ticketId, already: true });
+    expect(await prisma.supportTicket.count({ where: { subject: "Reembolso da encomenda", companyId: k.company.id } })).toBe(1);
+    const stored = await prisma.aiMessage.findUniqueOrThrow({ where: { id: r.messageId } });
+    expect((stored.tools as { ticketId?: string }[])[0].ticketId).toBe(h.ticketId);
+
+    // an answer that didn't offer it can't be handed over
+    script(() => msg([text("Olá")], "end_turn"));
+    const plain = await ask(k, "BUYER", { text: "Olá" });
+    await expect(handoverToSupport(k, "BUYER", plain.messageId)).rejects.toThrow(/didn't offer/);
+    await prisma.supportTicket.delete({ where: { id: h.ticketId } }).catch(() => {});
+  });
+
+  it("the simulated assistant (development / browser tests) fills the cart and offers the hand-over", async () => {
+    const env = { key: process.env.ANTHROPIC_API_KEY, sim: process.env.ASSISTANT_SIMULATE };
+    delete process.env.ANTHROPIC_API_KEY; process.env.ASSISTANT_SIMULATE = "1";
+    const k = await ctxFor(KEBAB);
+    const cart = await prisma.cart.findFirst({ where: { buyerCompanyId: k.company.id, userId: k.user.id }, include: { items: true } });
+    const before = cart?.items.map((i) => i.offerId) ?? [];
+    try {
+      expect((await assistantStatus("BUYER", k.company.id)).configured).toBe(true);
+      const offer = (await searchAcrossSuppliers(k, "a")).items.find((x) => x.stockStatus !== "OUT" && !before.includes(x.offerId) && x.qtyStep === 1)!;
+      const name = (offer.name as Record<string, string>).en ?? Object.values(offer.name as Record<string, string>)[0];
+      const r = await ask(k, "BUYER", { text: `add ${offer.minOrderQty} ${name}`, locale: "en" });
+      expect(r.model).toBe("simulated");
+      expect(r.tools.map((t) => t.name)).toEqual(["search_catalogue", "add_to_cart"]);
+      expect(r.answer).toMatch(/Added/);
+      const h = await ask(k, "BUYER", { text: "I want to talk to a person", locale: "en" });
+      expect(h.tools[0]).toMatchObject({ name: "handover", card: { kind: "handover" } });
+    } finally {
+      if (env.key) process.env.ANTHROPIC_API_KEY = env.key;
+      if (env.sim) process.env.ASSISTANT_SIMULATE = env.sim; else delete process.env.ASSISTANT_SIMULATE;
+      await prisma.cartItem.deleteMany({ where: { cart: { buyerCompanyId: k.company.id, userId: k.user.id }, offerId: { notIn: before } } });
+    }
   });
 
   it("conversations are private to the user and the side they were asked on", async () => {

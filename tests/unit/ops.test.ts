@@ -20,6 +20,7 @@ describe("checkEnv", () => {
     expect(keys({ ...good, BETTER_AUTH_URL: "http://app.firingi.pt", APP_URL: undefined }, "error")).toEqual(["BETTER_AUTH_URL"]);
     expect(keys({ ...good, CRON_SECRET: "short" }, "error")).toEqual(["CRON_SECRET"]);
     expect(keys({ ...good, MOLONI_SIMULATE: "1" }, "error")).toEqual(["MOLONI_SIMULATE"]);
+    expect(keys({ ...good, ASSISTANT_SIMULATE: "1" }, "error")).toEqual(["ASSISTANT_SIMULATE"]);
   });
   it("driver settings must be complete", () => {
     expect(keys({ ...good, S3_BUCKET: undefined }, "error")).toEqual(["S3_BUCKET"]);

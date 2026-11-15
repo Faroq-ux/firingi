@@ -19,7 +19,7 @@ import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/serv
 import { aiScope, type Side } from "./insights";
 import { CompanyFeatureOffError, companyFeatureOn } from "@/server/accounting/features";
 import { logAi } from "./feed";
-import { apiTools, toolsFor } from "./tools";
+import { apiTools, toolsFor, type ToolCard } from "./tools";
 import { AI_MODELS, DEFAULT_AI, type AiSettings } from "@/lib/ai";
 export type { AiSettings };
 
@@ -55,7 +55,7 @@ export async function saveAiSettings(ctx: Ctx, input: Partial<AiSettings>) {
 /** Is the assistant configured (API key) and switched on — for staff globally, for a supplier / customer per company? */
 export async function assistantStatus(side: Side, companyId?: string) {
   const s = await aiSettings();
-  const configured = !!process.env.ANTHROPIC_API_KEY || !!transportOverride;
+  const configured = !!process.env.ANTHROPIC_API_KEY || !!transportOverride || simulating(side);
   const on = side === "STAFF" ? s.staff : !!companyId && (await companyFeatureOn(companyId, "ASSISTANT"));
   return { configured, enabled: configured && on, switchedOn: on, model: s.model };
 }
@@ -65,6 +65,9 @@ export async function assistantStatus(side: Side, companyId?: string) {
 export type AiTransport = (params: CreateParams) => Promise<BetaMessage>;
 let transportOverride: AiTransport | null = null;
 export function setAiTransportForTests(t: AiTransport | null) { transportOverride = t; }
+
+/** Development / browser tests only: a rule-based stand-in for the customer / supplier agent when there is no API key (see simulated.ts). */
+const simulating = (side: Side) => side !== "STAFF" && process.env.ASSISTANT_SIMULATE === "1" && !process.env.ANTHROPIC_API_KEY && process.env.FIRINGI_ENV !== "production";
 
 let client: Anthropic | null = null;
 const liveTransport: AiTransport = async (params) => {
@@ -79,16 +82,42 @@ function languageName(locale: string) {
   try { return new Intl.DisplayNames(["en"], { type: "language" }).of(locale) ?? "English"; } catch { return "English"; }
 }
 
-function systemPrompt(ctx: Ctx, side: Side, locale: string) {
+/** Facts the support agent may quote (from FIRINGI's own settings). */
+async function helpFacts() {
+  const [{ claimSettings }, { RETURN_WINDOW_DAYS }] = await Promise.all([import("@/server/claims/service"), import("@/server/services/returns")]);
+  const c = await claimSettings();
+  return [
+    "How FIRINGI works (for support answers): FIRINGI buys from the supplier and resells, so every invoice comes from FIRINGI.",
+    "Prices in the catalogue are per pack, excl. VAT; the cart shows VAT, the delivery fee and any minimum order still missing. Orders are placed from the cart (Orders › Cart); Buy Again refills a usual order.",
+    `Problems with delivered goods (damaged, missing, wrong, warm, short-dated, poor quality): report them on the delivered order with "Report a problem" within ${c.windowHours} hours of delivery, with photos; FIRINGI decides within ${c.slaHours} hours (credit note or replacement).`,
+    `Returns: up to ${RETURN_WINDOW_DAYS} days after delivery from the order (Orders › Returns); FIRINGI approves them.`,
+    "Invoices and payments: Invoices & Payments (MB WAY, Multibanco, card or SEPA direct debit where offered). Help & Support reaches FIRINGI staff.",
+  ].join("\n");
+}
+
+function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
   const who = side === "STAFF"
     ? "a member of FIRINGI's back-office staff. FIRINGI is a B2B wholesale marketplace in the Schengen area: restaurants and shops (customers) buy from wholesalers in their own country; wholesalers buy from distributors across the EU. FIRINGI buys from the supplier and resells to every buyer, earning a commission that buyers never see."
     : side === "VENDOR"
       ? `a supplier on FIRINGI: ${ctx.company.tradeName ?? ctx.company.legalName}, a ${ctx.company.type.toLowerCase()}. FIRINGI buys its goods and resells them to its customers; it is paid its payout (sales minus FIRINGI's commission).`
       : `a buyer on FIRINGI: ${ctx.company.tradeName ?? ctx.company.legalName}. It buys from suppliers through FIRINGI, which invoices it.`;
+  const agent = side === "BUYER"
+    ? [
+        "You are FIRINGI's customer support and sales agent for this customer: help them find and buy products, and solve questions about their orders, deliveries, invoices, payments, returns and quality claims.",
+        "Selling: search the catalogue, compare packs and prices, mention current offers and what they usually buy (reorder_outlook). When the customer clearly asks for a product and quantity, put it in their cart with add_to_cart; if the product or quantity is unclear, ask first. Never claim an order was placed — after adding, say what is in the cart and that they open the cart to check and place the order (and if a minimum order or delivery fee applies).",
+        "You can't place, change or cancel orders, prices or settings yourself — only fill the cart. For anything only FIRINGI staff can do (refund, cancel an order, change an invoice, account changes, complaints) or when the customer asks for a person, use handover.",
+      ]
+    : side === "VENDOR"
+      ? [
+          "You are FIRINGI's support agent for this supplier: answer questions about its orders, deliveries, billing statements, invoices to FIRINGI, payouts, quality claims and charge-backs, and how FIRINGI works. You don't sell to suppliers.",
+          "You can only look and explain; for anything FIRINGI staff must decide or change, or when the supplier asks for a person, use handover.",
+        ]
+      : ["You can only look and suggest. You cannot place, change or cancel orders, prices, stock or settings; say where in FIRINGI the user can do it."];
   return [
-    `You are FIRINGI's business assistant ("WHOLESALE MADE SIMPLE"). You are talking with ${who}`,
-    "Answer questions about their business using the tools, which read FIRINGI's live data with this user's own access rights. Use a tool whenever the answer depends on data — never guess numbers. If a tool says the user has no access, say so plainly.",
-    "You can only look and suggest. You cannot place, change or cancel orders, prices, stock or settings; say where in FIRINGI the user can do it.",
+    `You are FIRINGI's ${side === "STAFF" ? "business assistant" : "assistant"} ("WHOLESALE MADE SIMPLE"). You are talking with ${who}`,
+    "Answer using the tools, which read FIRINGI's live data with this user's own access rights. Use a tool whenever the answer depends on data — never guess numbers, prices or stock. If a tool says the user has no access, say so plainly.",
+    ...agent,
+    side !== "STAFF" ? facts : "",
     side === "BUYER" ? "Never mention FIRINGI's commission, margins, supplier costs or payouts, or other customers." : "",
     side === "VENDOR" ? "Talk only about this supplier's own products, orders and customers." : "",
     `Reply in ${languageName(locale)}. Be short and concrete: lead with the answer, then the few numbers that support it (amounts in EUR, excl. VAT unless said), then at most three suggestions. Use plain words; use a small Markdown table only when comparing several rows.`,
@@ -144,17 +173,18 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
   const history: BetaMessageParam[] = (conv?.messages ?? []).slice(-HISTORY_TURNS * 2).map((m) => ({ role: m.role as "user" | "assistant", content: m.text }));
   // The date goes in the newest turn (not the system prompt) so the cached prefix stays the same.
   const messages: BetaMessageParam[] = [...history, { role: "user", content: `[Today is ${new Date().toISOString().slice(0, 10)}]\n\n${text}` }];
+  const facts = side === "STAFF" ? "" : await helpFacts();
   const tools = apiTools(side);
   const runners = new Map(toolsFor(side).map((t) => [t.name, t]));
-  const transport = transportOverride ?? liveTransport;
-  const used: { name: string; input: unknown; ok: boolean }[] = [];
+  const transport = transportOverride ?? (simulating(side) ? (await import("./simulated")).simulatedTransport : liveTransport);
+  const used: { name: string; input: unknown; ok: boolean; card?: ToolCard }[] = [];
   let tokensIn = 0, tokensOut = 0, answer = "", stopReason: string | null = null, servedBy: string = settings.model;
 
   for (let step = 0; step < MAX_STEPS; step++) {
     let res: BetaMessage;
     try {
       res = await transport({
-        model: settings.model, max_tokens: 16000, system: systemPrompt(ctx, side, locale), tools, tool_choice: { type: "auto" }, messages,
+        model: settings.model, max_tokens: 16000, system: systemPrompt(ctx, side, locale, facts), tools, tool_choice: { type: "auto" }, messages,
         thinking: { type: "adaptive" }, output_config: { effort: "medium" }, cache_control: { type: "ephemeral" },
         betas: ["server-side-fallback-2026-07-01"], fallbacks: "default",
         metadata: { user_id: ctx.user.id },
@@ -179,12 +209,13 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
       if (block.type !== "tool_use") continue;
       const t = runners.get(block.name);
       const parsed = t?.input.safeParse(block.input);
-      let content: string, isError = false;
+      let content: string, isError = false, card: ToolCard | undefined;
       if (!t) { content = `Unknown tool ${block.name}.`; isError = true; }
       else if (!parsed!.success) { content = `Invalid input: ${parsed!.error.issues.map((x) => x.message).join("; ")}`; isError = true; }
       else {
         try {
           const out = await t.run(ctx, side, parsed!.data, locale);
+          card = (out as { card?: ToolCard } | null)?.card;
           content = JSON.stringify(out ?? null);
           if (content.length > MAX_TOOL_CHARS) content = `${content.slice(0, MAX_TOOL_CHARS)}… [cut: ask for fewer rows]`;
         } catch (e) {
@@ -192,7 +223,7 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
           content = e instanceof ForbiddenError ? "This user has no access to that data." : e instanceof AppError ? e.message : "The data couldn't be read just now.";
         }
       }
-      used.push({ name: block.name, input: block.input, ok: !isError });
+      used.push({ name: block.name, input: block.input, ok: !isError, ...(card ? { card } : {}) });
       results.push({ type: "tool_result", tool_use_id: block.id, content, ...(isError ? { is_error: true } : {}) });
     }
     messages.push({ role: "user", content: results });
@@ -213,7 +244,37 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
     return { conversationId: c.id, message: m };
   });
   await logAi({ kind: "ASSISTANT", ctx, summary: `${side.toLowerCase()} asked: ${text.slice(0, 160)}`, detail: { conversationId: saved.conversationId, tools: used.map((x) => `${x.name}${x.ok ? "" : " (error)"}`), stopReason, side }, model: servedBy, tokensIn, tokensOut });
-  return { conversationId: saved.conversationId, answer, tools: used, model: servedBy, fellBack: servedBy !== settings.model };
+  return { conversationId: saved.conversationId, messageId: saved.message.id, answer, tools: used, model: servedBy, fellBack: servedBy !== settings.model };
+}
+
+// ── hand-over to FIRINGI support (a person) ─────────────────────────────────
+
+type StoredTool = { name: string; input?: unknown; ok: boolean; card?: ToolCard; ticketId?: string; ticketNumber?: string };
+
+/**
+ * The person tapped "Send to FIRINGI support" under an answer that offered it: a Help & Support
+ * request is opened in their name with the assistant's summary and the chat so far. Once per answer.
+ */
+export async function handoverToSupport(ctx: Ctx, side: Side, messageId: string) {
+  if (side === "STAFF") throw new ForbiddenError();
+  await assertSide(ctx, side);
+  const m = await prisma.aiMessage.findFirst({ where: { id: messageId, role: "assistant", conversation: { userId: ctx.user.id, companyId: ctx.company.id, side } }, include: { conversation: { include: { messages: { orderBy: { at: "asc" } } } } } });
+  if (!m) throw new NotFoundError("Message");
+  const tools = ((m.tools ?? []) as unknown as StoredTool[]);
+  const i = tools.findIndex((t) => t.card?.kind === "handover");
+  if (i < 0) throw new ValidationError("This answer didn't offer to contact FIRINGI support.");
+  const prev = tools[i];
+  if (prev.ticketId) return { ticketId: prev.ticketId, number: prev.ticketNumber ?? "", already: true };
+  const card = prev.card as Extract<ToolCard, { kind: "handover" }>;
+  const chat = m.conversation.messages.filter((x) => x.at <= m.at).slice(-12)
+    .map((x) => `${x.role === "user" ? "Customer" : "Assistant"}: ${x.text}`).join("\n\n");
+  const body = `${card.summary}\n\n— Chat with the FIRINGI assistant —\n\n${chat}`.slice(0, 8000);
+  const { openTicket } = await import("@/server/services/support");
+  const t = await openTicket(ctx, { subject: card.subject.slice(0, 150), body, category: card.category as Parameters<typeof openTicket>[1]["category"] });
+  tools[i] = { ...prev, ticketId: t.id, ticketNumber: t.number };
+  await prisma.aiMessage.update({ where: { id: m.id }, data: { tools: tools as unknown as Prisma.InputJsonValue } });
+  await logAi({ kind: "ASSISTANT", ctx, summary: `handed over to FIRINGI support: ${t.number}`, detail: { conversationId: m.conversationId, ticketId: t.id, side } });
+  return { ticketId: t.id, number: t.number, already: false };
 }
 
 function friendlyError(e: unknown) {

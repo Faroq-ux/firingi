@@ -1,6 +1,7 @@
 /** Ticket conversation (company and staff). */
 import { formatDate } from "@/lib/utils";
-import { EN_VOICE, SpeakButton } from "@/components/voice/voice";
+import { SpeakButton } from "@/components/voice/voice";
+import { EN_VOICE } from "@/lib/voice";
 
 type Msg = { id: string; body: string; createdAt: Date; internal: boolean; fromStaff: boolean; author: { name: string } };
 
