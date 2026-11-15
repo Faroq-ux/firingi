@@ -33,12 +33,14 @@ export async function openTicket(ctx: Ctx, i: { subject: string; body: string; c
     const o = await prisma.order.findFirst({ where: { id: i.orderId, OR: [{ buyerCompanyId: ctx.company.id }, { sellerCompanyId: ctx.company.id }] } });
     if (!o) throw new ValidationError("Choose one of your orders.");
   }
+  // Phase 32: loyalty tiers with priority support (Gold by default) go to the top of FIRINGI's queue
+  const prioritySupport = !!(await (await import("@/server/loyalty/service")).buyerPerks(ctx.company.id).catch(() => null))?.prioritySupport;
   const t = await prisma.$transaction(async (tx) => {
     const number = await nextNumber(tx, "ticket", "TK");
     const t = await tx.supportTicket.create({
       data: {
         number, companyId: ctx.company.id, openedById: ctx.user.id, subject, category: i.category, orderId: i.orderId ?? null,
-        priority: i.category === "DELIVERY" || i.category === "ORDER" ? "HIGH" : "NORMAL",
+        priority: i.category === "DELIVERY" || i.category === "ORDER" || prioritySupport ? "HIGH" : "NORMAL",
         messages: { create: { authorId: ctx.user.id, body, photoKeys: (i.photoKeys ?? []).slice(0, 6) } },
       },
     });

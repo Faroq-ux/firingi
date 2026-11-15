@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { CartQty, CheckoutForm, ClearCartButton, CouponBox } from "@/components/orders/cart-controls";
 import { COUPON_ERRORS } from "@/lib/coupons";
+import { CartPoints } from "@/components/loyalty/controls";
+import { loyaltySettings } from "@/server/loyalty/service";
 import { CartExtras } from "@/components/buying/controls";
 import { formatMoney } from "@/lib/utils";
 
@@ -18,7 +20,7 @@ export const metadata = { title: "Cart" };
 export default async function CartPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.orders.place");
-  const [cart, t, tc, locale, ordering] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx)]);
+  const [cart, t, tc, locale, ordering, tl, ls] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx), getTranslations("loyalty"), loyaltySettings()]);
   const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
   const L = (v: unknown) => pickLocalized(v, locale);
@@ -78,8 +80,9 @@ export default async function CartPage() {
           <CardHeader><CardTitle>{t("total")}</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <dl className="grid grid-cols-2 gap-y-1 text-sm">
-              <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{formatMoney(Number(cart.goodsNet) + Number(cart.offerDiscount), locale)}</dd>
+              <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{formatMoney(Number(cart.goodsNet) + Number(cart.offerDiscount) + Number(cart.loyalty?.euros ?? 0), locale)}</dd>
               {Number(cart.offerDiscount) > 0 && <><dt className="text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]">{tc("offerDiscount")}</dt><dd className="text-right tabular-nums text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]" data-testid="offer-discount">−{formatMoney(cart.offerDiscount, locale)}</dd></>}
+              {cart.loyalty && cart.loyalty.used > 0 && <><dt className="text-[color:var(--vivid-violet)]">{tl("cartLine", { points: cart.loyalty.used.toLocaleString(locale) })}</dt><dd className="text-right tabular-nums text-[color:var(--vivid-violet)]" data-testid="points-discount">−{formatMoney(cart.loyalty.euros, locale)}</dd></>}
               {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{cart.freeDelivery ? <><s className="text-muted-foreground">{formatMoney(cart.freeDelivery.amount, locale)}</s> {formatMoney(d.feeNet, locale)}</> : formatMoney(d.feeNet, locale)}</dd></>}
               <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(cart.totalVat, locale)}</dd>
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
@@ -96,7 +99,9 @@ export default async function CartPage() {
               code: cart.coupon.code, ok: cart.coupon.ok, savings: cart.coupon.savings, savingsText: tc("saves", { amount: formatMoney(cart.coupon.savings, locale) }),
               errorText: cart.coupon.error ? ((COUPON_ERRORS as readonly string[]).includes(cart.coupon.error.code) ? tc(`errors.${cart.coupon.error.code}`, { missing: formatMoney(cart.coupon.error.details?.missing ?? 0, locale), min: formatMoney(cart.coupon.error.details?.minimum ?? 0, locale) }) : cart.coupon.error.message) : null,
             }} />
-            <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok)} poRequired={poRequired} locale={locale} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}${(a as { branch?: { name: string } | null }).branch ? ` · ${(a as { branch?: { name: string } | null }).branch!.name}` : ""}` }))} />
+            {cart.loyalty && <CartPoints l={cart.loyalty} min={ls.minRedeem} maxPct={ls.maxRedeemPct} valueText={formatMoney(cart.loyalty.balance * ls.pointValue, locale)} eurosText={formatMoney(cart.loyalty.euros, locale)} />}
+            {cart.loyalty?.freeDelivery && cart.freeDelivery && <p className="text-xs text-[color:var(--vivid-violet)]" data-testid="tier-free-delivery">{tl("cartFreeDelivery")}</p>}
+            <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok) || cart.loyalty?.reason === "NOT_ENOUGH" || cart.loyalty?.reason === "BELOW_MIN"} poRequired={poRequired} locale={locale} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}${(a as { branch?: { name: string } | null }).branch ? ` · ${(a as { branch?: { name: string } | null }).branch!.name}` : ""}` }))} />
             <CartExtras canQuote={!cart.routed} />
           </CardContent>
         </Card>

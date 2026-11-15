@@ -380,6 +380,7 @@ export const ADMIN_NAV: NavSection[] = [
       mkt("campaigns", "Campaigns", "Campanhas", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
       mkt("vendor-promotions", "Vendor Promotions", "Promoções de Fornecedores", "P5", { live: true, perm: ["admin.marketing.view", "admin.pricing.view"] }),
       mkt("customer-offers", "Customer Offers", "Ofertas a Clientes", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage", "admin.pricing.view", "admin.pricing.manage"] }),
+      mkt("loyalty", "Loyalty & Rewards", "Fidelização e Recompensas", "P32", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
       mkt("coupons", "Coupons", "Cupões", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage", "admin.pricing.view", "admin.pricing.manage"] }),
       mkt("push", "Push Notifications", "Notificações Push", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
       mkt("email", "Email Campaigns", "Campanhas de Email", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),

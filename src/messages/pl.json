@@ -252,7 +252,8 @@
       "legalForm": "Forma prawna",
       "certificateCode": "Kod odpisu z rejestru",
       "certificateCodeHint": "Numer Twojej firmy w rejestrze przedsiębiorców. Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują.",
-      "certificateCodeHintPt": "Kod dostępu do certidão permanente (12 cyfr, 0000-0000-0000). Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują."
+      "certificateCodeHintPt": "Kod dostępu do certidão permanente (12 cyfr, 0000-0000-0000). Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują.",
+      "referral": "Zostałeś zaproszony kodem {code} — po pierwszym dostarczonym zamówieniu otrzymasz punkty bonusowe."
     },
     "businessTypes": {
       "restaurant": "Restauracja",
@@ -838,7 +839,8 @@
     "Demand Events": "Zdarzenia popytowe",
     "Planning Settings": "Ustawienia planowania",
     "Quality Claims": "Reklamacje jakościowe",
-    "Quality Score": "Wskaźnik jakości"
+    "Quality Score": "Wskaźnik jakości",
+    "Rewards": "Nagrody"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Alert jakości: {label}",
       "body": "{label}: {value} (alert od {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Osiągnięto poziom {tier}",
+      "body": "Twoje zakupy z ostatnich 12 miesięcy dały Ci poziom {tier}. Zobacz nowe korzyści w Nagrodach."
+    },
+    "loyalty_expiring": {
+      "title": "{points} punktów wkrótce wygaśnie",
+      "body": "{points} Twoich punktów wygasa {date}. Wykorzystaj je wcześniej w koszyku lub jako kredyt."
+    },
+    "loyalty_referral": {
+      "title": "Bonus za polecenie: +{points} punktów",
+      "body": "Dzięki poleceniu z firmą {company} masz teraz {points} punktów w Nagrodach."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Przeglądarka zamienia mowę na tekst (Chrome i Edge korzystają ze swojej usługi mowy online).",
     "denied": "Mikrofon jest zablokowany — zezwól na niego w ustawieniach przeglądarki.",
     "noSpeech": "Nie zrozumiałem — spróbuj ponownie."
+  },
+  "loyalty": {
+    "title": "Nagrody",
+    "description": "Zbieraj punkty za każde dostarczone zamówienie i wykorzystuj je jako rabat lub jako kredyt. Wszystkie nagrody opłaca FIRINGI.",
+    "balance": "Twoje punkty",
+    "worth": "Wartość: {value}",
+    "lifetime": "Zebrane łącznie: {points}",
+    "expiring": "{points} punktów wygasa {date} — wykorzystaj je wcześniej.",
+    "tierLabel": "Twój poziom",
+    "tiers": {
+      "BRONZE": "Brąz",
+      "SILVER": "Srebro",
+      "GOLD": "Złoto"
+    },
+    "spend": "Zakupy w ostatnich 12 miesiącach: {amount}",
+    "tierNext": "Brakuje {missing} zakupów do poziomu {tier}",
+    "tierTop": "Jesteś na najwyższym poziomie.",
+    "perkPoints": "{mult}× punktów za każde €",
+    "perkFreeDelivery": "Darmowa dostawa każdego zamówienia",
+    "perkPriority": "Priorytetowe wsparcie",
+    "useTitle": "Wykorzystaj punkty",
+    "useCart": "W koszyku: {per} punktów = 1 €, od {min} punktów, do {pct}% zamówienia.",
+    "openCart": "Otwórz koszyk",
+    "creditTitle": "Zamień punkty na kredyt",
+    "creditText": "Kredyt zostanie odjęty od Twojej najstarszej niezapłaconej faktury (korekta od FIRINGI).",
+    "creditPoints": "Punkty",
+    "creditButton": "Otrzymaj kredyt",
+    "creditFew": "Na fakturę korygującą potrzeba co najmniej {min} punktów.",
+    "creditDone": "Faktura korygująca {number} na {amount} do faktury {invoice}.",
+    "referralTitle": "Zaproś firmę",
+    "referralText": "Udostępnij swój link. Gdy zaproszona firma otrzyma pierwszą dostawę, Ty dostaniesz {inviter} punktów, a ona {invited}.",
+    "referralCode": "Twój kod",
+    "referralCopy": "Kopiuj link",
+    "referralCopied": "Skopiowano",
+    "referralInvited": "Zaproszone firmy",
+    "referralRewarded": "Bonus otrzymany",
+    "referralPending": "Czeka na pierwszą dostawę",
+    "campaignsTitle": "Punkty bonusowe teraz",
+    "campaignMult": "{mult}× punktów do {date}",
+    "howTitle": "Jak to działa",
+    "howEarn": "Otrzymujesz {points} punkt za każde € dostarczonych towarów (netto).",
+    "howSpend": "{per} punktów = 1 €: wykorzystaj je w koszyku lub jako kredyt na fakturze.",
+    "howExpiry": "Punkty wygasają {months} miesięcy po ich zdobyciu.",
+    "historyTitle": "Historia punktów",
+    "historyEmpty": "Na razie brak punktów — pojawią się z pierwszym dostarczonym zamówieniem.",
+    "colDate": "Data",
+    "colWhat": "Co",
+    "colPoints": "Punkty",
+    "kinds": {
+      "EARN": "Dostarczone zamówienie",
+      "REFERRAL": "Bonus za polecenie",
+      "BONUS": "Bonus od FIRINGI",
+      "ADJUST": "Korekta FIRINGI",
+      "REDEEM_ORDER": "Wykorzystane na zamówienie",
+      "REDEEM_CREDIT": "Zamienione na kredyt",
+      "REFUND": "Zwrócone (zamówienie anulowane)",
+      "REVERSE": "Odebrane (towar skorygowany)",
+      "EXPIRE": "Wygasłe"
+    },
+    "expires": "wygasają {date}",
+    "cartTitle": "Wykorzystaj punkty",
+    "cartBalance": "Masz {points} punktów ({value})",
+    "cartHint": "od {min} punktów, do {pct}% towarów",
+    "cartUse": "Wykorzystaj",
+    "cartMax": "Wykorzystaj {points}",
+    "cartApplied": "Wykorzystano {points} punktów: −{amount}",
+    "cartNone": "Bez punktów w tym zamówieniu",
+    "cartRemove": "Nie używaj punktów",
+    "cartCapped": "W tym zamówieniu można wykorzystać tylko {points} punktów (do {pct}% towarów).",
+    "cartNotEnough": "Masz mniej punktów, niż wybrano — zmień liczbę.",
+    "cartBelowMin": "Wykorzystaj co najmniej {min} punktów.",
+    "cartFew": "Masz {points} punktów — od {min} możesz je tu wykorzystać.",
+    "cartLine": "Punkty ({points})",
+    "cartFreeDelivery": "Darmowa dostawa — korzyść Twojego poziomu."
   }
 }

@@ -105,7 +105,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   const { canOrderTo, branchStamp } = await import("@/server/multisite/branches");
   if (!(await canOrderTo(ctx, input.deliveryAddressId))) throw new ValidationError("Choose one of your delivery addresses.");
   const cart = input.items
-    ? { id: "", routed: false, couponCode: (input.couponCode ?? null) as string | null, items: input.items.map((i) => ({ ...i, id: "" })) }
+    ? { id: "", routed: false, couponCode: (input.couponCode ?? null) as string | null, loyaltyPoints: 0, items: input.items.map((i) => ({ ...i, id: "" })) }
     : await prisma.cart.findUnique({ where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } }, include: { items: true } });
   if (cart?.routed && cart.items.length) {
     // "Order from FIRINGI": FIRINGI picks the supplier(s).
@@ -138,8 +138,11 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   const flow: OrderFlow = ctx.company.type === "CUSTOMER" ? "CUSTOMER_FROM_WHOLESALER" : "WHOLESALER_FROM_DISTRIBUTOR";
   const pc = await priceCheckout(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), couponCode: cart.couponCode }, {
     regionId: address.city?.regionId ?? null, addressId: address.id, commissionRates: new Map([...commissions].map(([k, c]) => [k, c.rate.toString()])),
-    fixedPrices: input.fixedPrices,
+    fixedPrices: input.fixedPrices, loyaltyPoints: cart.loyaltyPoints,
   });
+  // Phase 32: points the buyer chose but can't use (fewer than the minimum, not enough) → refused, not silently dropped
+  if (pc.loyalty && (pc.loyalty.reason === "BELOW_MIN" || pc.loyalty.reason === "NOT_ENOUGH"))
+    throw new AppError("LOYALTY_POINTS", pc.loyalty.reason === "NOT_ENOUGH" ? `You have ${pc.loyalty.balance} points — fewer than you chose to use. Change the points in your cart.` : "Too few points chosen — change the points in your cart.", 409);
   if (pc.unavailable.length) throw new AppError("ITEM_UNAVAILABLE", "Some products in your cart are no longer available. Please review your cart.", 409);
   if (pc.parts.reduce((a, p) => a + p.lines.length, 0) !== cart.items.length) throw new AppError("ITEM_UNAVAILABLE", "Some products no longer have a price for you. Please review your cart.", 409);
   if (pc.coupon && !pc.coupon.ok) throw pc.coupon.error!;
@@ -178,6 +181,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   };
 
   let payFirstOrders = false;
+  const loyaltyShares: { orderId: string; number: string; euros: Decimal; points: number }[] = [];
   const created = await prisma.$transaction(async (tx) => {
     // Credit control on the whole checkout: overdue invoices / credit limit (Payment Settings).
     await assertCanOrder(ctx.company.id, pc.grandTotal);
@@ -231,12 +235,28 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
         });
       }
       await recordRedemptions(tx, order.id, ctx.company.id, part.redemptions, checkoutId);
+      // Phase 32: the points behind this order's share of the points discount
+      if (pc.loyalty && pc.loyalty.used > 0) {
+        const { LOYALTY_PROMOTION_ID } = await import("@/server/loyalty/service");
+        const off = part.lines.reduce((a, l) => a.plus(l.discounts.filter((d) => d.promotionId === LOYALTY_PROMOTION_ID).reduce((x, d) => x.plus(d.perUnit.mul(l.item.qty)), new Decimal(0))), new Decimal(0));
+        const share = pc.loyalty.euros.gt(0) ? Math.round(pc.loyalty.used * off.div(pc.loyalty.euros).toNumber()) : 0;
+        loyaltyShares.push({ orderId: order.id, number, euros: off.toDecimalPlaces(2), points: share });
+        // spent below, once all orders exist (the shares add up to exactly the points used)
+      }
       await tx.orderStatusHistory.create({ data: { orderId: order.id, toStatus: "NEW", byUserId: ctx.user.id, reason: "Order placed" } });
       await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "order.placed", entityType: "Order", entityId: order.id, after: { number, sellerId, grandTotal: totals.grandTotal.toFixed(2), deliveryMode: decision.mode, coupon: pc.coupon?.ok ? pc.coupon.code : null, checkout: pc.parts.length > 1 ? checkoutId : null } }, tx);
       out.push({ id: order.id, number, sellerId });
     }
     // A coupon that has reached a limit while this checkout was being placed is refused.
     if (pc.coupon?.ok) await assertCouponLimits(tx, pc.coupon.code, ctx.company.id);
+    // Phase 32: spend the points (refused if the balance changed meanwhile — nothing is placed then)
+    if (pc.loyalty && pc.loyalty.used > 0) {
+      const { spendPoints } = await import("@/server/loyalty/service");
+      const diff = pc.loyalty.used - loyaltyShares.reduce((a, x) => a + x.points, 0);
+      if (loyaltyShares.length) loyaltyShares[loyaltyShares.length - 1].points += diff;
+      for (const x of loyaltyShares) if (x.points > 0)
+        await spendPoints(tx, ctx.company.id, { kind: "REDEEM_ORDER", points: x.points, orderId: x.orderId, euros: x.euros, note: `Order ${x.number}`, createdById: ctx.user.id });
+    }
     // The orders go to the suppliers for confirmation — unless FIRINGI's risk check holds them, or
     // this buyer pays before shipping (then they wait, unseen by the supplier, until paid).
     const held = await recordRisk(tx, risk, out.map((o) => ({ id: o.id, buyerCompanyId: ctx.company.id })), pc.parts.length > 1 ? checkoutId : null);
@@ -250,7 +270,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     payFirstOrders = payFirst;
     if (!input.items) {
       await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
-      await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null } });
+      await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null, loyaltyPoints: 0 } });
     }
     return out;
   });
@@ -411,6 +431,8 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
       await tx.riskAssessment.updateMany({ where: { orderId, review: "OPEN" }, data: { review: to === "CANCELLED" ? "FRAUD" : "CLEARED", reviewedById: ctx.user.id, reviewedAt: new Date(), note: reason?.trim() || null } });
   });
   if (to === "DELIVERED") (await import("@/server/invoicing/fiscal")).kickFiscalQueue(); // send the invoice to Moloni now (the cron retries)
+  if (to === "DELIVERED") await (await import("@/server/loyalty/service")).earnForOrder(orderId).catch(() => null); // Phase 32: loyalty points (the job retries)
+  if (to === "CANCELLED") await (await import("@/server/loyalty/service")).refundForOrder(orderId).catch(() => null); // Phase 32: points spent on it go back
   // Cancelled before delivery: a prepayment paid online goes back to the customer.
   if (to === "CANCELLED") await (await import("@/server/payments/service")).refundOrderPrepayment(orderId).catch(() => null);
   if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);

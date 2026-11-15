@@ -252,7 +252,8 @@
       "legalForm": "Legal form",
       "certificateCode": "Permanent certificate code",
       "certificateCodeHint": "Your company's commercial-registry number. Suppliers that are companies give it; sole traders don't need it.",
-      "certificateCodeHintPt": "Access code of the certidão permanente (12 digits, 0000-0000-0000). Suppliers that are companies give it; sole traders don't need it."
+      "certificateCodeHintPt": "Access code of the certidão permanente (12 digits, 0000-0000-0000). Suppliers that are companies give it; sole traders don't need it.",
+      "referral": "You were invited with code {code} — you get bonus points after your first delivered order."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -1360,6 +1361,18 @@
     "quality_alert": {
       "title": "Quality alert: {label}",
       "body": "{label}: {value} (alert from {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "You reached {tier}",
+      "body": "Your purchases in the last 12 months put you at the {tier} level. See your new benefits in Rewards."
+    },
+    "loyalty_expiring": {
+      "title": "{points} points expire soon",
+      "body": "{points} of your points expire on {date}. Use them in the cart or as credit before then."
+    },
+    "loyalty_referral": {
+      "title": "Referral bonus: +{points} points",
+      "body": "Thanks to your referral with {company}, {points} points are now in your Rewards."
     }
   },
   "notifications": {
@@ -3824,5 +3837,79 @@
     "privacy": "Your browser turns your speech into text (Chrome and Edge use their online speech service).",
     "denied": "The microphone is blocked — allow it in your browser settings.",
     "noSpeech": "Didn't catch that — please try again."
+  },
+  "loyalty": {
+    "title": "Rewards",
+    "description": "Earn points on every delivered order and use them as a discount or as credit. FIRINGI pays for every reward.",
+    "balance": "Your points",
+    "worth": "Worth {value}",
+    "lifetime": "Earned in total: {points}",
+    "expiring": "{points} points expire on {date} — use them before then.",
+    "tierLabel": "Your level",
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Silver",
+      "GOLD": "Gold"
+    },
+    "spend": "Purchases in the last 12 months: {amount}",
+    "tierNext": "{missing} more in purchases to reach {tier}",
+    "tierTop": "You are at the top level.",
+    "perkPoints": "{mult}× points on every €",
+    "perkFreeDelivery": "Free delivery on every order",
+    "perkPriority": "Priority support",
+    "useTitle": "Use your points",
+    "useCart": "In the cart: {per} points = 1 €, from {min} points, up to {pct}% of an order.",
+    "openCart": "Open cart",
+    "creditTitle": "Turn points into credit",
+    "creditText": "The credit comes off your oldest unpaid invoice (a credit note from FIRINGI).",
+    "creditPoints": "Points",
+    "creditButton": "Get credit",
+    "creditFew": "You need at least {min} points for a credit note.",
+    "creditDone": "Credit note {number} for {amount} on invoice {invoice}.",
+    "referralTitle": "Invite a business",
+    "referralText": "Share your link. When the business you invite gets its first delivery, you get {inviter} points and they get {invited}.",
+    "referralCode": "Your code",
+    "referralCopy": "Copy link",
+    "referralCopied": "Copied",
+    "referralInvited": "Businesses you invited",
+    "referralRewarded": "Bonus received",
+    "referralPending": "Waiting for their first delivery",
+    "campaignsTitle": "Bonus points now",
+    "campaignMult": "{mult}× points until {date}",
+    "howTitle": "How it works",
+    "howEarn": "You earn {points} point per € of delivered goods (excl. VAT).",
+    "howSpend": "{per} points = 1 €: use them in the cart or as credit on an invoice.",
+    "howExpiry": "Points expire {months} months after you earn them.",
+    "historyTitle": "Points history",
+    "historyEmpty": "No points yet — they come with your first delivered order.",
+    "colDate": "Date",
+    "colWhat": "What",
+    "colPoints": "Points",
+    "kinds": {
+      "EARN": "Delivered order",
+      "REFERRAL": "Referral bonus",
+      "BONUS": "Bonus from FIRINGI",
+      "ADJUST": "Correction by FIRINGI",
+      "REDEEM_ORDER": "Used on an order",
+      "REDEEM_CREDIT": "Turned into credit",
+      "REFUND": "Given back (order cancelled)",
+      "REVERSE": "Taken back (goods credited)",
+      "EXPIRE": "Expired"
+    },
+    "expires": "expires {date}",
+    "cartTitle": "Use your points",
+    "cartBalance": "You have {points} points ({value})",
+    "cartHint": "from {min} points, up to {pct}% of the goods",
+    "cartUse": "Use",
+    "cartMax": "Use {points}",
+    "cartApplied": "{points} points used: −{amount}",
+    "cartNone": "No points used on this order",
+    "cartRemove": "Don't use points",
+    "cartCapped": "Only {points} points can be used on this order (up to {pct}% of the goods).",
+    "cartNotEnough": "You have fewer points than you chose — change the number.",
+    "cartBelowMin": "Use at least {min} points.",
+    "cartFew": "You have {points} points — from {min} you can use them here.",
+    "cartLine": "Points ({points})",
+    "cartFreeDelivery": "Free delivery — a benefit of your level."
   }
 }

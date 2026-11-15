@@ -252,7 +252,8 @@
       "legalForm": "Rechtsform",
       "certificateCode": "Code des Handelsregisterauszugs",
       "certificateCodeHint": "Handelsregisternummer Ihres Unternehmens. Lieferanten, die Gesellschaften sind, geben sie an; Einzelunternehmer brauchen sie nicht.",
-      "certificateCodeHintPt": "Zugangscode der certidão permanente (12 Ziffern, 0000-0000-0000). Lieferanten, die Gesellschaften sind, geben ihn an; Einzelunternehmer brauchen ihn nicht."
+      "certificateCodeHintPt": "Zugangscode der certidão permanente (12 Ziffern, 0000-0000-0000). Lieferanten, die Gesellschaften sind, geben ihn an; Einzelunternehmer brauchen ihn nicht.",
+      "referral": "Sie wurden mit dem Code {code} eingeladen — nach Ihrer ersten gelieferten Bestellung erhalten Sie Bonuspunkte."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -838,7 +839,8 @@
     "Demand Events": "Bedarfsereignisse",
     "Planning Settings": "Planungseinstellungen",
     "Quality Claims": "Qualitätsreklamationen",
-    "Quality Score": "Qualitätswert"
+    "Quality Score": "Qualitätswert",
+    "Rewards": "Prämien"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Qualitätswarnung: {label}",
       "body": "{label}: {value} (Warnung ab {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Sie haben {tier} erreicht",
+      "body": "Ihre Einkäufe der letzten 12 Monate bringen Sie auf die Stufe {tier}. Ihre neuen Vorteile finden Sie unter Prämien."
+    },
+    "loyalty_expiring": {
+      "title": "{points} Punkte verfallen bald",
+      "body": "{points} Ihrer Punkte verfallen am {date}. Lösen Sie sie vorher im Warenkorb oder als Gutschrift ein."
+    },
+    "loyalty_referral": {
+      "title": "Empfehlungsbonus: +{points} Punkte",
+      "body": "Dank Ihrer Empfehlung mit {company} sind jetzt {points} Punkte in Ihren Prämien."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Ihr Browser wandelt Ihre Sprache in Text um (Chrome und Edge nutzen dafür ihren Online-Sprachdienst).",
     "denied": "Das Mikrofon ist blockiert — erlauben Sie es in den Browser-Einstellungen.",
     "noSpeech": "Das habe ich nicht verstanden — bitte noch einmal."
+  },
+  "loyalty": {
+    "title": "Prämien",
+    "description": "Sammeln Sie Punkte für jede gelieferte Bestellung und nutzen Sie sie als Rabatt oder Gutschrift. FIRINGI zahlt alle Prämien.",
+    "balance": "Ihre Punkte",
+    "worth": "Wert: {value}",
+    "lifetime": "Insgesamt gesammelt: {points}",
+    "expiring": "{points} Punkte verfallen am {date} — nutzen Sie sie vorher.",
+    "tierLabel": "Ihre Stufe",
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Silber",
+      "GOLD": "Gold"
+    },
+    "spend": "Einkäufe der letzten 12 Monate: {amount}",
+    "tierNext": "Noch {missing} Einkäufe bis {tier}",
+    "tierTop": "Sie haben die höchste Stufe erreicht.",
+    "perkPoints": "{mult}× Punkte pro €",
+    "perkFreeDelivery": "Kostenlose Lieferung bei jeder Bestellung",
+    "perkPriority": "Bevorzugter Support",
+    "useTitle": "Punkte einlösen",
+    "useCart": "Im Warenkorb: {per} Punkte = 1 €, ab {min} Punkten, bis zu {pct} % einer Bestellung.",
+    "openCart": "Warenkorb öffnen",
+    "creditTitle": "Punkte in Gutschrift umwandeln",
+    "creditText": "Die Gutschrift wird von Ihrer ältesten offenen Rechnung abgezogen (eine Gutschrift von FIRINGI).",
+    "creditPoints": "Punkte",
+    "creditButton": "Gutschrift erhalten",
+    "creditFew": "Für eine Gutschrift brauchen Sie mindestens {min} Punkte.",
+    "creditDone": "Gutschrift {number} über {amount} auf Rechnung {invoice}.",
+    "referralTitle": "Ein Unternehmen einladen",
+    "referralText": "Teilen Sie Ihren Link. Erhält das eingeladene Unternehmen seine erste Lieferung, bekommen Sie {inviter} Punkte und es {invited}.",
+    "referralCode": "Ihr Code",
+    "referralCopy": "Link kopieren",
+    "referralCopied": "Kopiert",
+    "referralInvited": "Eingeladene Unternehmen",
+    "referralRewarded": "Bonus erhalten",
+    "referralPending": "Wartet auf die erste Lieferung",
+    "campaignsTitle": "Bonuspunkte jetzt",
+    "campaignMult": "{mult}× Punkte bis {date}",
+    "howTitle": "So funktioniert es",
+    "howEarn": "Sie erhalten {points} Punkt pro € gelieferter Ware (netto).",
+    "howSpend": "{per} Punkte = 1 €: im Warenkorb oder als Gutschrift auf einer Rechnung einlösen.",
+    "howExpiry": "Punkte verfallen {months} Monate nach dem Sammeln.",
+    "historyTitle": "Punkteverlauf",
+    "historyEmpty": "Noch keine Punkte — sie kommen mit Ihrer ersten gelieferten Bestellung.",
+    "colDate": "Datum",
+    "colWhat": "Was",
+    "colPoints": "Punkte",
+    "kinds": {
+      "EARN": "Gelieferte Bestellung",
+      "REFERRAL": "Empfehlungsbonus",
+      "BONUS": "Bonus von FIRINGI",
+      "ADJUST": "Korrektur durch FIRINGI",
+      "REDEEM_ORDER": "Für eine Bestellung eingelöst",
+      "REDEEM_CREDIT": "In Gutschrift umgewandelt",
+      "REFUND": "Zurückgegeben (Bestellung storniert)",
+      "REVERSE": "Zurückgenommen (Ware gutgeschrieben)",
+      "EXPIRE": "Verfallen"
+    },
+    "expires": "verfallen am {date}",
+    "cartTitle": "Punkte einlösen",
+    "cartBalance": "Sie haben {points} Punkte ({value})",
+    "cartHint": "ab {min} Punkten, bis zu {pct} % der Ware",
+    "cartUse": "Einlösen",
+    "cartMax": "{points} einlösen",
+    "cartApplied": "{points} Punkte eingelöst: −{amount}",
+    "cartNone": "Keine Punkte für diese Bestellung",
+    "cartRemove": "Keine Punkte einlösen",
+    "cartCapped": "Für diese Bestellung können nur {points} Punkte eingelöst werden (bis zu {pct} % der Ware).",
+    "cartNotEnough": "Sie haben weniger Punkte als gewählt — ändern Sie die Zahl.",
+    "cartBelowMin": "Lösen Sie mindestens {min} Punkte ein.",
+    "cartFew": "Sie haben {points} Punkte — ab {min} können Sie sie hier einlösen.",
+    "cartLine": "Punkte ({points})",
+    "cartFreeDelivery": "Kostenlose Lieferung — ein Vorteil Ihrer Stufe."
   }
 }

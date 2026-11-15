@@ -20,7 +20,7 @@ function Field({ id, label, errors, hint, children }: { id: string; label: strin
   );
 }
 
-export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[] }) {
+export function CompanyRegistrationForm({ type, countries, referralCode = null }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[]; referralCode?: string | null }) {
   const t = useTranslations("onboarding");
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -46,6 +46,7 @@ export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTO
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
             cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
+            referralCode: s(fd, "referralCode"),
           } as Parameters<typeof registerCompanyAction>[0]);
           if (r.ok) { router.push(r.data.redirectTo); router.refresh(); }
           else { setError(r.error); setFe(r.fieldErrors ?? {}); window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -53,6 +54,12 @@ export function CompanyRegistrationForm({ type, countries }: { type: "DISTRIBUTO
       }}
     >
       {error && <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive">{error}</p>}
+      {referralCode && (
+        <p className="rounded-md bg-[color-mix(in_oklab,var(--vivid-teal)_12%,transparent)] p-2 text-sm" data-testid="referral-note">
+          <input type="hidden" name="referralCode" value={referralCode} />
+          🎁 {t("form.referral", { code: referralCode })}
+        </p>
+      )}
       <fieldset className="grid gap-4 sm:grid-cols-2">
         <legend className="mb-2 text-sm font-semibold">{t("form.company")}</legend>
         <Field id="country" label={t("form.country")} errors={fe.countryCode}>

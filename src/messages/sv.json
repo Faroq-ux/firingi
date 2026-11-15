@@ -252,7 +252,8 @@
       "legalForm": "Bolagsform",
       "certificateCode": "Kod för registreringsbevis",
       "certificateCodeHint": "Ditt företags nummer i handelsregistret. Leverantörer som är bolag anger det; enskilda näringsidkare behöver det inte.",
-      "certificateCodeHintPt": "Åtkomstkod till certidão permanente (12 siffror, 0000-0000-0000). Leverantörer som är bolag anger den; enskilda näringsidkare behöver den inte."
+      "certificateCodeHintPt": "Åtkomstkod till certidão permanente (12 siffror, 0000-0000-0000). Leverantörer som är bolag anger den; enskilda näringsidkare behöver den inte.",
+      "referral": "Du bjöds in med koden {code} — du får bonuspoäng efter din första levererade beställning."
     },
     "businessTypes": {
       "restaurant": "Restaurang",
@@ -838,7 +839,8 @@
     "Demand Events": "Efterfrågehändelser",
     "Planning Settings": "Planeringsinställningar",
     "Quality Claims": "Kvalitetsreklamationer",
-    "Quality Score": "Kvalitetsbetyg"
+    "Quality Score": "Kvalitetsbetyg",
+    "Rewards": "Belöningar"
   },
   "delivery": {
     "title": "Leverans",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Kvalitetslarm: {label}",
       "body": "{label}: {value} (larm från {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Du har nått {tier}",
+      "body": "Dina inköp de senaste 12 månaderna tar dig till nivån {tier}. Se dina nya förmåner under Belöningar."
+    },
+    "loyalty_expiring": {
+      "title": "{points} poäng går snart ut",
+      "body": "{points} av dina poäng går ut den {date}. Använd dem i varukorgen eller som tillgodohavande innan dess."
+    },
+    "loyalty_referral": {
+      "title": "Värvningsbonus: +{points} poäng",
+      "body": "Tack vare din inbjudan med {company} finns nu {points} poäng under dina Belöningar."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Din webbläsare gör om ditt tal till text (Chrome och Edge använder sin taltjänst på nätet).",
     "denied": "Mikrofonen är blockerad — tillåt den i webbläsarens inställningar.",
     "noSpeech": "Det uppfattade jag inte — försök igen."
+  },
+  "loyalty": {
+    "title": "Belöningar",
+    "description": "Tjäna poäng på varje levererad beställning och använd dem som rabatt eller som tillgodohavande. FIRINGI betalar alla belöningar.",
+    "balance": "Dina poäng",
+    "worth": "Värde: {value}",
+    "lifetime": "Intjänat totalt: {points}",
+    "expiring": "{points} poäng går ut den {date} — använd dem innan dess.",
+    "tierLabel": "Din nivå",
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Silver",
+      "GOLD": "Guld"
+    },
+    "spend": "Inköp de senaste 12 månaderna: {amount}",
+    "tierNext": "{missing} till i inköp för att nå {tier}",
+    "tierTop": "Du är på högsta nivån.",
+    "perkPoints": "{mult}× poäng per €",
+    "perkFreeDelivery": "Fri leverans på varje beställning",
+    "perkPriority": "Prioriterad support",
+    "useTitle": "Använd dina poäng",
+    "useCart": "I varukorgen: {per} poäng = 1 €, från {min} poäng, upp till {pct} % av en beställning.",
+    "openCart": "Öppna varukorgen",
+    "creditTitle": "Gör om poäng till tillgodohavande",
+    "creditText": "Beloppet dras från din äldsta obetalda faktura (en kreditfaktura från FIRINGI).",
+    "creditPoints": "Poäng",
+    "creditButton": "Få tillgodohavande",
+    "creditFew": "Du behöver minst {min} poäng för en kreditfaktura.",
+    "creditDone": "Kreditfaktura {number} på {amount} på faktura {invoice}.",
+    "referralTitle": "Bjud in ett företag",
+    "referralText": "Dela din länk. När företaget du bjuder in får sin första leverans får du {inviter} poäng och företaget {invited}.",
+    "referralCode": "Din kod",
+    "referralCopy": "Kopiera länk",
+    "referralCopied": "Kopierat",
+    "referralInvited": "Företag du har bjudit in",
+    "referralRewarded": "Bonus mottagen",
+    "referralPending": "Väntar på första leveransen",
+    "campaignsTitle": "Bonuspoäng just nu",
+    "campaignMult": "{mult}× poäng till {date}",
+    "howTitle": "Så fungerar det",
+    "howEarn": "Du tjänar {points} poäng per € levererade varor (exkl. moms).",
+    "howSpend": "{per} poäng = 1 €: använd dem i varukorgen eller som tillgodohavande på en faktura.",
+    "howExpiry": "Poäng går ut {months} månader efter att du tjänat dem.",
+    "historyTitle": "Poänghistorik",
+    "historyEmpty": "Inga poäng än — de kommer med din första levererade beställning.",
+    "colDate": "Datum",
+    "colWhat": "Vad",
+    "colPoints": "Poäng",
+    "kinds": {
+      "EARN": "Levererad beställning",
+      "REFERRAL": "Värvningsbonus",
+      "BONUS": "Bonus från FIRINGI",
+      "ADJUST": "Rättelse från FIRINGI",
+      "REDEEM_ORDER": "Använda på en beställning",
+      "REDEEM_CREDIT": "Omgjorda till tillgodohavande",
+      "REFUND": "Återgivna (beställning avbruten)",
+      "REVERSE": "Återtagna (varor krediterade)",
+      "EXPIRE": "Utgångna"
+    },
+    "expires": "går ut den {date}",
+    "cartTitle": "Använd dina poäng",
+    "cartBalance": "Du har {points} poäng ({value})",
+    "cartHint": "från {min} poäng, upp till {pct} % av varorna",
+    "cartUse": "Använd",
+    "cartMax": "Använd {points}",
+    "cartApplied": "{points} poäng använda: −{amount}",
+    "cartNone": "Inga poäng på denna beställning",
+    "cartRemove": "Använd inte poäng",
+    "cartCapped": "Bara {points} poäng kan användas på denna beställning (upp till {pct} % av varorna).",
+    "cartNotEnough": "Du har färre poäng än du valt — ändra antalet.",
+    "cartBelowMin": "Använd minst {min} poäng.",
+    "cartFew": "Du har {points} poäng — från {min} kan du använda dem här.",
+    "cartLine": "Poäng ({points})",
+    "cartFreeDelivery": "Fri leverans — en förmån på din nivå."
   }
 }

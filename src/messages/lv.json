@@ -252,7 +252,8 @@
       "legalForm": "Juridiskā forma",
       "certificateCode": "Uzņēmumu reģistra izziņas kods",
       "certificateCodeHint": "Jūsu uzņēmuma numurs komercreģistrā. Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs.",
-      "certificateCodeHintPt": "certidão permanente piekļuves kods (12 cipari, 0000-0000-0000). Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs."
+      "certificateCodeHintPt": "certidão permanente piekļuves kods (12 cipari, 0000-0000-0000). Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs.",
+      "referral": "Jūs uzaicināja ar kodu {code} — pēc pirmā piegādātā pasūtījuma saņemsiet bonusa punktus."
     },
     "businessTypes": {
       "restaurant": "Restorāns",
@@ -838,7 +839,8 @@
     "Demand Events": "Pieprasījuma notikumi",
     "Planning Settings": "Plānošanas iestatījumi",
     "Quality Claims": "Kvalitātes pretenzijas",
-    "Quality Score": "Kvalitātes rādītājs"
+    "Quality Score": "Kvalitātes rādītājs",
+    "Rewards": "Balvas"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Kvalitātes brīdinājums: {label}",
       "body": "{label}: {value} (brīdinājums no {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Jūs sasniedzāt līmeni {tier}",
+      "body": "Jūsu pēdējo 12 mēnešu pirkumi jūs pacēla līmenī {tier}. Jaunās priekšrocības skatiet sadaļā Balvas."
+    },
+    "loyalty_expiring": {
+      "title": "{points} punktiem drīz beigsies derīgums",
+      "body": "{points} jūsu punktiem beidzas derīgums {date}. Izmantojiet tos agrāk grozā vai kā kredītu."
+    },
+    "loyalty_referral": {
+      "title": "Ieteikuma bonuss: +{points} punkti",
+      "body": "Pateicoties ieteikumam ar {company}, jums tagad ir {points} punkti sadaļā Balvas."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Pārlūks pārvērš jūsu runu tekstā (Chrome un Edge izmanto savu tiešsaistes runas pakalpojumu).",
     "denied": "Mikrofons ir bloķēts — atļaujiet to pārlūka iestatījumos.",
     "noSpeech": "Nesapratu — lūdzu, mēģiniet vēlreiz."
+  },
+  "loyalty": {
+    "title": "Balvas",
+    "description": "Krājiet punktus par katru piegādāto pasūtījumu un izmantojiet tos kā atlaidi vai kredītu. Visas balvas apmaksā FIRINGI.",
+    "balance": "Jūsu punkti",
+    "worth": "Vērtība: {value}",
+    "lifetime": "Kopā sakrāti: {points}",
+    "expiring": "{points} punktiem beidzas derīgums {date} — izmantojiet tos agrāk.",
+    "tierLabel": "Jūsu līmenis",
+    "tiers": {
+      "BRONZE": "Bronza",
+      "SILVER": "Sudrabs",
+      "GOLD": "Zelts"
+    },
+    "spend": "Pirkumi pēdējos 12 mēnešos: {amount}",
+    "tierNext": "Vēl {missing} pirkumu līdz līmenim {tier}",
+    "tierTop": "Jūs esat augstākajā līmenī.",
+    "perkPoints": "{mult}× punkti par katru €",
+    "perkFreeDelivery": "Bezmaksas piegāde katram pasūtījumam",
+    "perkPriority": "Prioritārs atbalsts",
+    "useTitle": "Izmantojiet punktus",
+    "useCart": "Grozā: {per} punkti = 1 €, no {min} punktiem, līdz {pct}% no pasūtījuma.",
+    "openCart": "Atvērt grozu",
+    "creditTitle": "Pārvērtiet punktus kredītā",
+    "creditText": "Kredītu atskaita no jūsu vecākā neapmaksātā rēķina (FIRINGI kredītrēķins).",
+    "creditPoints": "Punkti",
+    "creditButton": "Saņemt kredītu",
+    "creditFew": "Kredītrēķinam vajag vismaz {min} punktus.",
+    "creditDone": "Kredītrēķins {number} par {amount} rēķinam {invoice}.",
+    "referralTitle": "Uzaiciniet uzņēmumu",
+    "referralText": "Kopīgojiet savu saiti. Kad uzaicinātais uzņēmums saņems pirmo piegādi, jūs saņemsiet {inviter} punktus, bet tas — {invited}.",
+    "referralCode": "Jūsu kods",
+    "referralCopy": "Kopēt saiti",
+    "referralCopied": "Nokopēts",
+    "referralInvited": "Jūsu uzaicinātie uzņēmumi",
+    "referralRewarded": "Bonuss saņemts",
+    "referralPending": "Gaida pirmo piegādi",
+    "campaignsTitle": "Bonusa punkti tagad",
+    "campaignMult": "{mult}× punkti līdz {date}",
+    "howTitle": "Kā tas darbojas",
+    "howEarn": "Par katru piegādāto preču eiro (bez PVN) saņemat {points} punktu.",
+    "howSpend": "{per} punkti = 1 €: izmantojiet tos grozā vai kā kredītu rēķinā.",
+    "howExpiry": "Punktiem beidzas derīgums {months} mēnešus pēc saņemšanas.",
+    "historyTitle": "Punktu vēsture",
+    "historyEmpty": "Punktu vēl nav — tie nāks ar pirmo piegādāto pasūtījumu.",
+    "colDate": "Datums",
+    "colWhat": "Kas",
+    "colPoints": "Punkti",
+    "kinds": {
+      "EARN": "Piegādāts pasūtījums",
+      "REFERRAL": "Ieteikuma bonuss",
+      "BONUS": "FIRINGI bonuss",
+      "ADJUST": "FIRINGI labojums",
+      "REDEEM_ORDER": "Izmantoti pasūtījumam",
+      "REDEEM_CREDIT": "Pārvērsti kredītā",
+      "REFUND": "Atdoti atpakaļ (pasūtījums atcelts)",
+      "REVERSE": "Atņemti (preces kreditētas)",
+      "EXPIRE": "Beidzies derīgums"
+    },
+    "expires": "derīgi līdz {date}",
+    "cartTitle": "Izmantojiet punktus",
+    "cartBalance": "Jums ir {points} punkti ({value})",
+    "cartHint": "no {min} punktiem, līdz {pct}% no precēm",
+    "cartUse": "Izmantot",
+    "cartMax": "Izmantot {points}",
+    "cartApplied": "Izmantoti {points} punkti: −{amount}",
+    "cartNone": "Šim pasūtījumam punkti netiek izmantoti",
+    "cartRemove": "Neizmantot punktus",
+    "cartCapped": "Šim pasūtījumam var izmantot tikai {points} punktus (līdz {pct}% no precēm).",
+    "cartNotEnough": "Jums ir mazāk punktu, nekā izvēlējāties — mainiet skaitu.",
+    "cartBelowMin": "Izmantojiet vismaz {min} punktus.",
+    "cartFew": "Jums ir {points} punkti — no {min} tos varat izmantot šeit.",
+    "cartLine": "Punkti ({points})",
+    "cartFreeDelivery": "Bezmaksas piegāde — jūsu līmeņa priekšrocība."
   }
 }

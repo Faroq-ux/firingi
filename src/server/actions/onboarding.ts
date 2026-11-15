@@ -37,6 +37,8 @@ const companySchema = z.object({
   acceptTerms: z.literal(true, { errorMap: () => ({ message: "You must accept the terms" }) }),
   /** FIRINGI is B2B only — the applicant must declare they act for a business, not as a consumer. */
   businessDeclaration: z.literal(true, { errorMap: () => ({ message: "FIRINGI is for businesses only" }) }),
+  /** Phase 32: invitation code of the business that invited this one (loyalty referral bonus). */
+  referralCode: z.string().trim().max(20).optional().nullable(),
 });
 
 async function signInAfterRegistration(email: string, pw: string, locale: string) {
@@ -51,12 +53,13 @@ export async function registerCompanyAction(raw: z.input<typeof companySchema>):
     return { ok: false, code: "VALIDATION", error: "Please check the highlighted fields.", fieldErrors: parsed.error.flatten().fieldErrors as Record<string, string[]> };
   const i = parsed.data;
   try {
-    await registerCompany({
+    const reg = await registerCompany({
       type: i.type, countryCode: i.countryCode, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber,
       companyEmail: i.companyEmail, phone: i.phone, businessType: i.businessType,
       owner: { name: i.ownerName, email: i.ownerEmail, password: i.password },
       headOffice: { line1: i.line1, line2: i.line2, postalCode: i.postalCode, cityId: i.cityId, cityName: i.cityName },
     });
+    if (i.referralCode && i.type !== "DISTRIBUTOR") await (await import("@/server/loyalty/service")).attachReferral(reg.companyId, i.referralCode).catch(() => false);
     await signInAfterRegistration(i.ownerEmail.toLowerCase(), i.password, i.countryCode === "PT" ? "pt-PT" : i.countryCode === "ES" ? "es" : "en");
     return { ok: true, data: { redirectTo: "/application-status" } };
   } catch (e) {

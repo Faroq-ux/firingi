@@ -50,12 +50,16 @@ export type PricedCheckout = {
   goodsNet: Decimal; netTotal: Decimal; vatTotal: Decimal; grandTotal: Decimal;
   couponSavings: Decimal;
   coupon: { code: string; ok: boolean; error: AppError | null } | null;
+  /** Phase 32: loyalty points spent on this checkout (FIRINGI pays) and the Gold free delivery. */
+  loyalty: { requested: number; used: number; euros: Decimal; maxPoints: number; balance: number; freeDelivery: boolean; reason: "OFF" | "BELOW_MIN" | "NOT_ENOUGH" | "CAPPED" | null } | null;
 };
 
 type Opts = {
   regionId: string | null; addressId: string | null; commissionRates?: Map<string, Decimal.Value>; skipCoupon?: boolean;
   /** Agreed prices per offer (an accepted quote, Phase 26): the line costs exactly this — no promotions, no coupon. */
   fixedPrices?: Map<string, Decimal.Value>;
+  /** Phase 32: loyalty points the buyer wants to spend (discount at checkout, FIRINGI-funded). */
+  loyaltyPoints?: number;
 };
 
 export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; qty: number }[]; couponCode: string | null }, opts: Opts): Promise<PricedCheckout> {
@@ -113,6 +117,14 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     autoFree.set(g.sellerId, r.freeDelivery);
   }
 
+  // 2b. loyalty: the tier's free delivery (FIRINGI pays) where no other offer gives it
+  const { buyerPerks, LOYALTY_PROMOTION_ID, ensureLoyaltyPromotion } = await import("@/server/loyalty/pricing");
+  const perks = await buyerPerks(ctx.company.id);
+  if (perks?.freeDelivery && !fixed) {
+    await ensureLoyaltyPromotion();
+    for (const g of groups) if (!autoFree.get(g.sellerId)) autoFree.set(g.sellerId, { promotionId: LOYALTY_PROMOTION_ID, funder: "FIRINGI", coupon: false });
+  }
+
   // 3. the coupon's € off / free delivery over the whole checkout
   let couponFree: FreeDelivery | null = null;
   let orderCoupon = new Decimal(0);
@@ -137,6 +149,32 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     }
   }
 
+  // 3b. loyalty points: € off the whole checkout after every other discount, at most maxRedeemPct %
+  // of the goods, spread over the lines like a coupon — FIRINGI pays (supplier payouts don't change).
+  let loyalty: PricedCheckout["loyalty"] = null;
+  if (perks && !fixed) {
+    const s = perks.settings;
+    const requested = Math.max(0, Math.floor(opts.loyaltyPoints ?? 0));
+    const goodsNow = lines.reduce((a, l) => a.plus(l.unitSale.mul(l.item.qty)), new Decimal(0));
+    const cap = goodsNow.mul(s.maxRedeemPct).div(100);
+    const maxPoints = Math.floor(cap.div(s.pointValue).toNumber());
+    let used = 0, reason: NonNullable<PricedCheckout["loyalty"]>["reason"] = null;
+    if (requested > 0) {
+      if (requested < s.minRedeem) reason = "BELOW_MIN";
+      else if (requested > perks.balance) reason = "NOT_ENOUGH";
+      else { used = Math.min(requested, maxPoints); if (used < requested) reason = "CAPPED"; }
+    }
+    let euros = new Decimal(used).mul(s.pointValue).toDecimalPlaces(2, Decimal.ROUND_DOWN);
+    if (euros.gt(0)) {
+      await ensureLoyaltyPromotion();
+      const all = lines.map((l) => ({ key: l.item.offerId, qty: l.item.qty, lineNet: l.unitSale.mul(l.item.qty).toDecimalPlaces(2), unitSaleNet: l.unitSale }));
+      const r = applyOrderPromotions(all, [{ id: LOYALTY_PROMOTION_ID, ownerType: "ADMIN", kind: "ORDER_AMOUNT", value: euros, firingiFundPct: 100, vendorFundPct: 0, coupon: false, matches: () => true }]);
+      const d = r.discounts[0];
+      if (d) { take({ ...d, coupon: false }); euros = d.total; } else { used = 0; euros = new Decimal(0); }
+    }
+    loyalty = { requested, used, euros, maxPoints, balance: perks.balance, freeDelivery: perks.freeDelivery, reason };
+  }
+
   // 4. per supplier: delivery, totals, redemptions
   const parts: SupplierPart[] = [];
   for (const g of groups) {
@@ -152,8 +190,10 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     const goodsNet = calcLines.reduce((a, l) => a.plus(l.calc.lineNet), new Decimal(0));
     const seller = await prisma.company.findUniqueOrThrow({ where: { id: g.sellerId }, select: { countryId: true } });
     const rules = await deliveryRulesFor(ctx.company.countryId, g.sellerId, opts.addressId);
+    // Phase 32: the delivery minimum counts the goods before the points discount (using points never adds a fee)
+    const pointsOff = calcLines.reduce((a, l) => a.plus(l.discounts.filter((d) => d.promotionId === LOYALTY_PROMOTION_ID).reduce((x, d) => x.plus(d.perUnit.mul(l.item.qty)), new Decimal(0))), new Decimal(0));
     const input = {
-      goodsNet, units: calcLines.reduce((a, l) => a + l.calc.qty, 0), supplierDelivers: ctx.company.type === "WHOLESALER",
+      goodsNet: goodsNet.plus(pointsOff.toDecimalPlaces(2)), units: calcLines.reduce((a, l) => a + l.calc.qty, 0), supplierDelivers: ctx.company.type === "WHOLESALER",
       crossBorder: seller.countryId !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor),
     };
     // The coupon's free delivery counts for a supplier whose goods it applies to; else the automatic one.
@@ -187,5 +227,6 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     goodsNet: sum((p) => p.totals.goodsNet), netTotal: sum((p) => p.totals.netTotal), vatTotal: sum((p) => p.totals.vatTotal), grandTotal: sum((p) => p.totals.grandTotal),
     couponSavings: coupon ? parts.flatMap((p) => p.redemptions).filter((r) => r.promotionId === coupon!.promo.id).reduce((a, r) => a.plus(r.firingiAmount).plus(r.vendorAmount), new Decimal(0)) : new Decimal(0),
     coupon: cart.couponCode ? (couponErr ? { code: cart.couponCode, ok: false, error: couponErr } : coupon ? { code: coupon.promo.code!, ok: true, error: null } : null) : null,
+    loyalty,
   };
 }

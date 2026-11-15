@@ -252,7 +252,8 @@
       "legalForm": "Formă juridică",
       "certificateCode": "Codul certificatului de la registrul comerțului",
       "certificateCodeHint": "Numărul companiei în registrul comerțului. Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el.",
-      "certificateCodeHintPt": "Codul de acces al certidão permanente (12 cifre, 0000-0000-0000). Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el."
+      "certificateCodeHintPt": "Codul de acces al certidão permanente (12 cifre, 0000-0000-0000). Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el.",
+      "referral": "Ați fost invitat cu codul {code} — primiți puncte bonus după prima comandă livrată."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -838,7 +839,8 @@
     "Demand Events": "Evenimente de cerere",
     "Planning Settings": "Setări de planificare",
     "Quality Claims": "Reclamații de calitate",
-    "Quality Score": "Scor de calitate"
+    "Quality Score": "Scor de calitate",
+    "Rewards": "Recompense"
   },
   "delivery": {
     "title": "Livrare",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Alertă de calitate: {label}",
       "body": "{label}: {value} (alertă de la {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Ați ajuns la nivelul {tier}",
+      "body": "Cumpărăturile din ultimele 12 luni v-au adus la nivelul {tier}. Vedeți noile avantaje în Recompense."
+    },
+    "loyalty_expiring": {
+      "title": "{points} puncte expiră curând",
+      "body": "{points} din punctele dvs. expiră pe {date}. Folosiți-le înainte în coș sau ca credit."
+    },
+    "loyalty_referral": {
+      "title": "Bonus de recomandare: +{points} puncte",
+      "body": "Datorită recomandării cu {company}, aveți acum {points} puncte în Recompense."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Browserul transformă vocea dvs. în text (Chrome și Edge folosesc serviciul lor de voce online).",
     "denied": "Microfonul este blocat — permiteți-l din setările browserului.",
     "noSpeech": "Nu am înțeles — încercați din nou."
+  },
+  "loyalty": {
+    "title": "Recompense",
+    "description": "Câștigați puncte la fiecare comandă livrată și folosiți-le ca reducere sau ca credit. FIRINGI plătește toate recompensele.",
+    "balance": "Punctele dvs.",
+    "worth": "Valoare: {value}",
+    "lifetime": "Câștigate în total: {points}",
+    "expiring": "{points} puncte expiră pe {date} — folosiți-le înainte.",
+    "tierLabel": "Nivelul dvs.",
+    "tiers": {
+      "BRONZE": "Bronz",
+      "SILVER": "Argint",
+      "GOLD": "Aur"
+    },
+    "spend": "Cumpărături în ultimele 12 luni: {amount}",
+    "tierNext": "Încă {missing} cumpărături până la {tier}",
+    "tierTop": "Sunteți la cel mai înalt nivel.",
+    "perkPoints": "{mult}× puncte pentru fiecare €",
+    "perkFreeDelivery": "Livrare gratuită la fiecare comandă",
+    "perkPriority": "Asistență prioritară",
+    "useTitle": "Folosiți punctele",
+    "useCart": "În coș: {per} puncte = 1 €, de la {min} puncte, până la {pct}% dintr-o comandă.",
+    "openCart": "Deschide coșul",
+    "creditTitle": "Transformați punctele în credit",
+    "creditText": "Creditul se scade din cea mai veche factură neplătită (o notă de credit de la FIRINGI).",
+    "creditPoints": "Puncte",
+    "creditButton": "Obține credit",
+    "creditFew": "Pentru o notă de credit aveți nevoie de cel puțin {min} puncte.",
+    "creditDone": "Nota de credit {number} de {amount} pe factura {invoice}.",
+    "referralTitle": "Invitați o firmă",
+    "referralText": "Distribuiți linkul. Când firma invitată primește prima livrare, primiți {inviter} puncte, iar ea {invited}.",
+    "referralCode": "Codul dvs.",
+    "referralCopy": "Copiază linkul",
+    "referralCopied": "Copiat",
+    "referralInvited": "Firme invitate",
+    "referralRewarded": "Bonus primit",
+    "referralPending": "Așteaptă prima livrare",
+    "campaignsTitle": "Puncte bonus acum",
+    "campaignMult": "{mult}× puncte până pe {date}",
+    "howTitle": "Cum funcționează",
+    "howEarn": "Primiți {points} punct pentru fiecare € de marfă livrată (fără TVA).",
+    "howSpend": "{per} puncte = 1 €: folosiți-le în coș sau ca credit pe o factură.",
+    "howExpiry": "Punctele expiră la {months} luni după ce le câștigați.",
+    "historyTitle": "Istoricul punctelor",
+    "historyEmpty": "Încă nu aveți puncte — vin odată cu prima comandă livrată.",
+    "colDate": "Data",
+    "colWhat": "Ce",
+    "colPoints": "Puncte",
+    "kinds": {
+      "EARN": "Comandă livrată",
+      "REFERRAL": "Bonus de recomandare",
+      "BONUS": "Bonus de la FIRINGI",
+      "ADJUST": "Corecție FIRINGI",
+      "REDEEM_ORDER": "Folosite la o comandă",
+      "REDEEM_CREDIT": "Transformate în credit",
+      "REFUND": "Returnate (comandă anulată)",
+      "REVERSE": "Retrase (marfă creditată)",
+      "EXPIRE": "Expirate"
+    },
+    "expires": "expiră pe {date}",
+    "cartTitle": "Folosiți punctele",
+    "cartBalance": "Aveți {points} puncte ({value})",
+    "cartHint": "de la {min} puncte, până la {pct}% din marfă",
+    "cartUse": "Folosește",
+    "cartMax": "Folosește {points}",
+    "cartApplied": "{points} puncte folosite: −{amount}",
+    "cartNone": "Fără puncte la această comandă",
+    "cartRemove": "Nu folosi puncte",
+    "cartCapped": "La această comandă se pot folosi doar {points} puncte (până la {pct}% din marfă).",
+    "cartNotEnough": "Aveți mai puține puncte decât ați ales — schimbați numărul.",
+    "cartBelowMin": "Folosiți cel puțin {min} puncte.",
+    "cartFew": "Aveți {points} puncte — de la {min} le puteți folosi aici.",
+    "cartLine": "Puncte ({points})",
+    "cartFreeDelivery": "Livrare gratuită — un avantaj al nivelului dvs."
   }
 }

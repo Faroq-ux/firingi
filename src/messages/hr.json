@@ -252,7 +252,8 @@
       "legalForm": "Pravni oblik",
       "certificateCode": "Kod izvatka iz sudskog registra",
       "certificateCodeHint": "Broj vaše tvrtke u sudskom registru. Dobavljači koji su trgovačka društva ga navode; obrtnici ga ne trebaju.",
-      "certificateCodeHintPt": "Pristupni kod certidão permanente (12 znamenki, 0000-0000-0000). Dobavljači koji su trgovačka društva ga navode; obrtnici ga ne trebaju."
+      "certificateCodeHintPt": "Pristupni kod certidão permanente (12 znamenki, 0000-0000-0000). Dobavljači koji su trgovačka društva ga navode; obrtnici ga ne trebaju.",
+      "referral": "Pozvani ste kodom {code} — nakon prve isporučene narudžbe dobivate bonus bodove."
     },
     "businessTypes": {
       "restaurant": "Restoran",
@@ -838,7 +839,8 @@
     "Demand Events": "Događaji potražnje",
     "Planning Settings": "Postavke planiranja",
     "Quality Claims": "Reklamacije kvalitete",
-    "Quality Score": "Ocjena kvalitete"
+    "Quality Score": "Ocjena kvalitete",
+    "Rewards": "Nagrade"
   },
   "delivery": {
     "title": "Dostava",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Upozorenje o kvaliteti: {label}",
       "body": "{label}: {value} (upozorenje od {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Dosegnuli ste razinu {tier}",
+      "body": "Vaše kupnje u zadnjih 12 mjeseci dovele su vas na razinu {tier}. Nove pogodnosti potražite u Nagradama."
+    },
+    "loyalty_expiring": {
+      "title": "{points} bodova uskoro istječe",
+      "body": "{points} vaših bodova istječe {date}. Iskoristite ih prije toga u košarici ili kao odobrenje."
+    },
+    "loyalty_referral": {
+      "title": "Bonus za preporuku: +{points} bodova",
+      "body": "Zahvaljujući preporuci s tvrtkom {company} sada imate {points} bodova u Nagradama."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Preglednik pretvara vaš govor u tekst (Chrome i Edge koriste svoju mrežnu uslugu za govor).",
     "denied": "Mikrofon je blokiran — dopustite ga u postavkama preglednika.",
     "noSpeech": "Nisam razumio — pokušajte ponovno."
+  },
+  "loyalty": {
+    "title": "Nagrade",
+    "description": "Skupljajte bodove za svaku isporučenu narudžbu i koristite ih kao popust ili kao odobrenje. Sve nagrade plaća FIRINGI.",
+    "balance": "Vaši bodovi",
+    "worth": "Vrijednost: {value}",
+    "lifetime": "Ukupno skupljeno: {points}",
+    "expiring": "{points} bodova istječe {date} — iskoristite ih prije toga.",
+    "tierLabel": "Vaša razina",
+    "tiers": {
+      "BRONZE": "Bronca",
+      "SILVER": "Srebro",
+      "GOLD": "Zlato"
+    },
+    "spend": "Kupnje u zadnjih 12 mjeseci: {amount}",
+    "tierNext": "Još {missing} kupnji do razine {tier}",
+    "tierTop": "Na najvišoj ste razini.",
+    "perkPoints": "{mult}× bodova za svaki €",
+    "perkFreeDelivery": "Besplatna dostava za svaku narudžbu",
+    "perkPriority": "Prioritetna podrška",
+    "useTitle": "Iskoristite bodove",
+    "useCart": "U košarici: {per} bodova = 1 €, od {min} bodova, do {pct}% narudžbe.",
+    "openCart": "Otvori košaricu",
+    "creditTitle": "Pretvorite bodove u odobrenje",
+    "creditText": "Odobrenje se oduzima od vašeg najstarijeg neplaćenog računa (odobrenje od FIRINGI-ja).",
+    "creditPoints": "Bodovi",
+    "creditButton": "Dobij odobrenje",
+    "creditFew": "Za odobrenje trebate najmanje {min} bodova.",
+    "creditDone": "Odobrenje {number} od {amount} na računu {invoice}.",
+    "referralTitle": "Pozovite tvrtku",
+    "referralText": "Podijelite svoju poveznicu. Kad pozvana tvrtka primi prvu dostavu, vi dobivate {inviter} bodova, a ona {invited}.",
+    "referralCode": "Vaš kod",
+    "referralCopy": "Kopiraj poveznicu",
+    "referralCopied": "Kopirano",
+    "referralInvited": "Tvrtke koje ste pozvali",
+    "referralRewarded": "Bonus primljen",
+    "referralPending": "Čeka prvu dostavu",
+    "campaignsTitle": "Bonus bodovi sada",
+    "campaignMult": "{mult}× bodova do {date}",
+    "howTitle": "Kako funkcionira",
+    "howEarn": "Za svaki € isporučene robe (bez PDV-a) dobivate {points} bod.",
+    "howSpend": "{per} bodova = 1 €: iskoristite ih u košarici ili kao odobrenje na računu.",
+    "howExpiry": "Bodovi istječu {months} mjeseci nakon što ih dobijete.",
+    "historyTitle": "Povijest bodova",
+    "historyEmpty": "Još nema bodova — stižu s prvom isporučenom narudžbom.",
+    "colDate": "Datum",
+    "colWhat": "Što",
+    "colPoints": "Bodovi",
+    "kinds": {
+      "EARN": "Isporučena narudžba",
+      "REFERRAL": "Bonus za preporuku",
+      "BONUS": "Bonus od FIRINGI-ja",
+      "ADJUST": "Ispravak FIRINGI-ja",
+      "REDEEM_ORDER": "Iskorišteno na narudžbi",
+      "REDEEM_CREDIT": "Pretvoreno u odobrenje",
+      "REFUND": "Vraćeno (narudžba otkazana)",
+      "REVERSE": "Oduzeto (roba odobrena)",
+      "EXPIRE": "Isteklo"
+    },
+    "expires": "istječe {date}",
+    "cartTitle": "Iskoristite bodove",
+    "cartBalance": "Imate {points} bodova ({value})",
+    "cartHint": "od {min} bodova, do {pct}% robe",
+    "cartUse": "Iskoristi",
+    "cartMax": "Iskoristi {points}",
+    "cartApplied": "Iskorišteno {points} bodova: −{amount}",
+    "cartNone": "Bez bodova na ovoj narudžbi",
+    "cartRemove": "Ne koristi bodove",
+    "cartCapped": "Na ovoj narudžbi može se iskoristiti samo {points} bodova (do {pct}% robe).",
+    "cartNotEnough": "Imate manje bodova nego što ste odabrali — promijenite broj.",
+    "cartBelowMin": "Iskoristite najmanje {min} bodova.",
+    "cartFew": "Imate {points} bodova — od {min} ih možete iskoristiti ovdje.",
+    "cartLine": "Bodovi ({points})",
+    "cartFreeDelivery": "Besplatna dostava — pogodnost vaše razine."
   }
 }

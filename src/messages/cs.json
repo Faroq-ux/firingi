@@ -252,7 +252,8 @@
       "legalForm": "Právní forma",
       "certificateCode": "Kód výpisu z obchodního rejstříku",
       "certificateCodeHint": "Číslo vaší firmy v obchodním rejstříku. Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují.",
-      "certificateCodeHintPt": "Přístupový kód certidão permanente (12 číslic, 0000-0000-0000). Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují."
+      "certificateCodeHintPt": "Přístupový kód certidão permanente (12 číslic, 0000-0000-0000). Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují.",
+      "referral": "Byli jste pozváni kódem {code} — po první doručené objednávce získáte bonusové body."
     },
     "businessTypes": {
       "restaurant": "Restaurace",
@@ -838,7 +839,8 @@
     "Demand Events": "Události poptávky",
     "Planning Settings": "Nastavení plánování",
     "Quality Claims": "Reklamace kvality",
-    "Quality Score": "Skóre kvality"
+    "Quality Score": "Skóre kvality",
+    "Rewards": "Odměny"
   },
   "delivery": {
     "title": "Doručení",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Upozornění na kvalitu: {label}",
       "body": "{label}: {value} (upozornění od {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Dosáhli jste úrovně {tier}",
+      "body": "Vaše nákupy za posledních 12 měsíců vás posunuly na úroveň {tier}. Nové výhody najdete v Odměnách."
+    },
+    "loyalty_expiring": {
+      "title": "{points} bodů brzy vyprší",
+      "body": "{points} vašich bodů vyprší {date}. Využijte je do té doby v košíku nebo jako kredit."
+    },
+    "loyalty_referral": {
+      "title": "Bonus za doporučení: +{points} bodů",
+      "body": "Díky doporučení s firmou {company} máte nyní v Odměnách {points} bodů."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Prohlížeč převádí vaši řeč na text (Chrome a Edge používají svou online službu pro řeč).",
     "denied": "Mikrofon je zablokovaný — povolte ho v nastavení prohlížeče.",
     "noSpeech": "Nerozuměl jsem — zkuste to prosím znovu."
+  },
+  "loyalty": {
+    "title": "Odměny",
+    "description": "Sbírejte body za každou doručenou objednávku a použijte je jako slevu nebo jako dobropis. Všechny odměny platí FIRINGI.",
+    "balance": "Vaše body",
+    "worth": "Hodnota: {value}",
+    "lifetime": "Celkem získáno: {points}",
+    "expiring": "{points} bodů vyprší {date} — využijte je do té doby.",
+    "tierLabel": "Vaše úroveň",
+    "tiers": {
+      "BRONZE": "Bronz",
+      "SILVER": "Stříbro",
+      "GOLD": "Zlato"
+    },
+    "spend": "Nákupy za posledních 12 měsíců: {amount}",
+    "tierNext": "Ještě {missing} nákupů do úrovně {tier}",
+    "tierTop": "Jste na nejvyšší úrovni.",
+    "perkPoints": "{mult}× body za každé €",
+    "perkFreeDelivery": "Doprava zdarma u každé objednávky",
+    "perkPriority": "Přednostní podpora",
+    "useTitle": "Využijte body",
+    "useCart": "V košíku: {per} bodů = 1 €, od {min} bodů, až {pct} % objednávky.",
+    "openCart": "Otevřít košík",
+    "creditTitle": "Proměnit body v kredit",
+    "creditText": "Kredit se odečte z vaší nejstarší nezaplacené faktury (dobropis od FIRINGI).",
+    "creditPoints": "Body",
+    "creditButton": "Získat kredit",
+    "creditFew": "Na dobropis potřebujete alespoň {min} bodů.",
+    "creditDone": "Dobropis {number} na {amount} k faktuře {invoice}.",
+    "referralTitle": "Pozvěte firmu",
+    "referralText": "Sdílejte svůj odkaz. Až pozvaná firma dostane první dodávku, získáte {inviter} bodů a ona {invited}.",
+    "referralCode": "Váš kód",
+    "referralCopy": "Kopírovat odkaz",
+    "referralCopied": "Zkopírováno",
+    "referralInvited": "Pozvané firmy",
+    "referralRewarded": "Bonus získán",
+    "referralPending": "Čeká na první dodávku",
+    "campaignsTitle": "Bonusové body teď",
+    "campaignMult": "{mult}× body do {date}",
+    "howTitle": "Jak to funguje",
+    "howEarn": "Za každé € doručeného zboží (bez DPH) získáte {points} bod.",
+    "howSpend": "{per} bodů = 1 €: použijte je v košíku nebo jako kredit na faktuře.",
+    "howExpiry": "Body vyprší {months} měsíců po získání.",
+    "historyTitle": "Historie bodů",
+    "historyEmpty": "Zatím žádné body — přijdou s první doručenou objednávkou.",
+    "colDate": "Datum",
+    "colWhat": "Co",
+    "colPoints": "Body",
+    "kinds": {
+      "EARN": "Doručená objednávka",
+      "REFERRAL": "Bonus za doporučení",
+      "BONUS": "Bonus od FIRINGI",
+      "ADJUST": "Oprava od FIRINGI",
+      "REDEEM_ORDER": "Použito na objednávku",
+      "REDEEM_CREDIT": "Proměněno v kredit",
+      "REFUND": "Vráceno (objednávka zrušena)",
+      "REVERSE": "Odebráno (zboží dobropisováno)",
+      "EXPIRE": "Vypršelo"
+    },
+    "expires": "vyprší {date}",
+    "cartTitle": "Využijte body",
+    "cartBalance": "Máte {points} bodů ({value})",
+    "cartHint": "od {min} bodů, až {pct} % zboží",
+    "cartUse": "Použít",
+    "cartMax": "Použít {points}",
+    "cartApplied": "Použito {points} bodů: −{amount}",
+    "cartNone": "Na této objednávce žádné body",
+    "cartRemove": "Nepoužívat body",
+    "cartCapped": "Na této objednávce lze použít jen {points} bodů (až {pct} % zboží).",
+    "cartNotEnough": "Máte méně bodů, než jste zvolili — změňte počet.",
+    "cartBelowMin": "Použijte alespoň {min} bodů.",
+    "cartFew": "Máte {points} bodů — od {min} je můžete použít zde.",
+    "cartLine": "Body ({points})",
+    "cartFreeDelivery": "Doprava zdarma — výhoda vaší úrovně."
   }
 }

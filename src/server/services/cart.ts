@@ -75,6 +75,23 @@ export async function removeFromCart(ctx: Ctx, offerId: string) {
   await prisma.cartItem.deleteMany({ where: { cartId: cart.id, offerId } }); // trigger unlocks when empty
 }
 
+/** Phase 32: how many loyalty points to spend on this cart (0 = none). Checked again at checkout. */
+export async function setCartPoints(ctx: Ctx, points: number) {
+  requireBuyer(ctx);
+  if (!Number.isInteger(points) || points < 0 || points > 10_000_000) throw new ValidationError("Points: a whole number.");
+  const cart = await cartRow(ctx);
+  if (points > 0) {
+    if (cart.routed) throw new AppError("LOYALTY_ROUTED", "Points can't be used when FIRINGI chooses the supplier — use them as a credit note instead.", 409);
+    const { buyerPerks } = await import("@/server/loyalty/service");
+    const p = await buyerPerks(ctx.company.id);
+    if (!p) throw new AppError("LOYALTY_OFF", "Rewards aren't available for your company.", 403);
+    if (points < p.settings.minRedeem) throw new ValidationError(`Use at least ${p.settings.minRedeem} points.`);
+    if (points > p.balance) throw new AppError("NOT_ENOUGH_POINTS", `You have ${p.balance} points.`, 409);
+  }
+  await prisma.cart.update({ where: { id: cart.id }, data: { loyaltyPoints: points } });
+  return { points };
+}
+
 export async function clearCart(ctx: Ctx) {
   requireBuyer(ctx);
   const cart = await cartRow(ctx);
@@ -143,9 +160,12 @@ export async function cartView(ctx: Ctx) {
     }
     return routedCartView(ctx, cart, lines, ro, goodsNet, goodsVat, shown.minus(goodsNet), addresses);
   }
-  const empty = { credit: null, routed: false as const, groups: [], lines: [], unavailable: [], taxLabel: "VAT", goodsNet: "0.00", goodsVat: "0.00", delivery: null, totalNet: "0.00", totalVat: "0.00", totalGross: "0.00", addresses, coupon: null, offerDiscount: "0.00", freeDelivery: null };
+  const empty = { credit: null, routed: false as const, groups: [], lines: [], unavailable: [], taxLabel: "VAT", goodsNet: "0.00", goodsVat: "0.00", delivery: null, totalNet: "0.00", totalVat: "0.00", totalGross: "0.00", addresses, coupon: null, offerDiscount: "0.00", freeDelivery: null, loyalty: null };
   if (!cart.items.length) return empty;
-  const pc = await priceCheckout(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), couponCode: cart.couponCode }, { regionId: addresses[0]?.city?.regionId ?? null, addressId: addresses[0]?.id ?? null });
+  const pc = await priceCheckout(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), couponCode: cart.couponCode }, { regionId: addresses[0]?.city?.regionId ?? null, addressId: addresses[0]?.id ?? null, loyaltyPoints: cart.loyaltyPoints });
+  const { LOYALTY_PROMOTION_ID } = await import("@/server/loyalty/service");
+  // the points discount on the goods (not the tier's free delivery) — shown apart from offers
+  const loyaltyOff = (part: (typeof pc.parts)[number]) => part.lines.reduce((a, l) => a.plus(l.discounts.filter((d) => d.promotionId === LOYALTY_PROMOTION_ID).reduce((x, d) => x.plus(d.perUnit.mul(l.item.qty)), new Decimal(0))), new Decimal(0)).toDecimalPlaces(2);
   const sellers = await prisma.company.findMany({ where: { id: { in: pc.parts.map((p) => p.sellerId) } }, select: { id: true, legalName: true, tradeName: true } });
   // One group per supplier (= one order). Lines at their price after product offers (incl. a product
   // coupon); € off the order is shown apart.
@@ -159,7 +179,7 @@ export async function cartView(ctx: Ctx) {
     const s0 = sellers.find((x) => x.id === part.sellerId)!;
     return {
       supplier: { id: part.sellerId, name: s0.tradeName ?? s0.legalName },
-      lines, goodsNet: part.totals.goodsNet.toFixed(2), shownNet: shown.toFixed(2), offerDiscount: shown.minus(part.totals.goodsNet).toFixed(2),
+      lines, goodsNet: part.totals.goodsNet.toFixed(2), shownNet: shown.toFixed(2), offerDiscount: shown.minus(part.totals.goodsNet).minus(loyaltyOff(part)).toFixed(2),
       delivery: d.ok
         ? { ok: true as const, mode: d.mode, feeNet: part.chargedFee.toFixed(2), feeVat: part.totals.deliveryFeeVat.toFixed(2), feeVatRate: part.feeVatRate.toString(), free: part.freeDelivery ? ("OFFER" as const) : d.free }
         : { ok: false as const, reason: d.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: d.unit === "UNITS" ? String(d.minimum) : d.minimum.toFixed(2), missing: d.unit === "UNITS" ? String(d.missing) : d.missing.toFixed(2), unit: d.unit, vendorMinimum: d.vendorMinimum?.toFixed(2) ?? null },
@@ -193,6 +213,11 @@ export async function cartView(ctx: Ctx) {
     coupon: pc.coupon && {
       code: pc.coupon.code, ok: pc.coupon.ok, savings: pc.couponSavings.toFixed(2),
       error: pc.coupon.error ? { code: pc.coupon.error.code, message: pc.coupon.error.message, details: pc.coupon.error.details ?? null } : null,
+    },
+    /** Phase 32: points the buyer chose to spend, what they take off (excl. VAT), the limits. */
+    loyalty: pc.loyalty && {
+      balance: pc.loyalty.balance, requested: pc.loyalty.requested, used: pc.loyalty.used, euros: pc.loyalty.euros.toFixed(2),
+      max: Math.min(pc.loyalty.balance, pc.loyalty.maxPoints), reason: pc.loyalty.reason, freeDelivery: pc.loyalty.freeDelivery,
     },
   };
 }
@@ -236,6 +261,7 @@ async function routedCartView(
   return {
     credit,
     routed: true,
+    loyalty: null as null, // Phase 32: points can't be spent when FIRINGI chooses the supplier
     seller: { id: "", name: "FIRINGI" },
     lines, unavailable,
     taxLabel: lines[0]?.taxLabel ?? "VAT",

@@ -252,7 +252,8 @@
       "legalForm": "Teisinė forma",
       "certificateCode": "Registrų centro išrašo kodas",
       "certificateCodeHint": "Jūsų įmonės kodas juridinių asmenų registre. Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia.",
-      "certificateCodeHintPt": "certidão permanente prieigos kodas (12 skaitmenų, 0000-0000-0000). Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia."
+      "certificateCodeHintPt": "certidão permanente prieigos kodas (12 skaitmenų, 0000-0000-0000). Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia.",
+      "referral": "Buvote pakviesti kodu {code} — po pirmojo pristatyto užsakymo gausite premijinių taškų."
     },
     "businessTypes": {
       "restaurant": "Restoranas",
@@ -838,7 +839,8 @@
     "Demand Events": "Paklausos įvykiai",
     "Planning Settings": "Planavimo nustatymai",
     "Quality Claims": "Kokybės pretenzijos",
-    "Quality Score": "Kokybės balas"
+    "Quality Score": "Kokybės balas",
+    "Rewards": "Prizai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Kokybės įspėjimas: {label}",
       "body": "{label}: {value} (įspėjimas nuo {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Pasiekėte lygį {tier}",
+      "body": "Jūsų pastarųjų 12 mėnesių pirkiniai atvedė jus į lygį {tier}. Naujus privalumus rasite skiltyje Prizai."
+    },
+    "loyalty_expiring": {
+      "title": "{points} taškų netrukus nustos galioti",
+      "body": "{points} jūsų taškų nustos galioti {date}. Panaudokite juos anksčiau krepšelyje arba kaip kreditą."
+    },
+    "loyalty_referral": {
+      "title": "Rekomendavimo premija: +{points} taškų",
+      "body": "Dėka rekomendacijos su {company} dabar turite {points} taškų skiltyje Prizai."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Naršyklė paverčia jūsų kalbą tekstu („Chrome“ ir „Edge“ naudoja savo internetinę kalbos paslaugą).",
     "denied": "Mikrofonas užblokuotas — leiskite jį naršyklės nustatymuose.",
     "noSpeech": "Nesupratau — bandykite dar kartą."
+  },
+  "loyalty": {
+    "title": "Prizai",
+    "description": "Kaupkite taškus už kiekvieną pristatytą užsakymą ir naudokite juos kaip nuolaidą arba kreditą. Visus prizus apmoka FIRINGI.",
+    "balance": "Jūsų taškai",
+    "worth": "Vertė: {value}",
+    "lifetime": "Iš viso sukaupta: {points}",
+    "expiring": "{points} taškų nustos galioti {date} — panaudokite juos anksčiau.",
+    "tierLabel": "Jūsų lygis",
+    "tiers": {
+      "BRONZE": "Bronzinis",
+      "SILVER": "Sidabrinis",
+      "GOLD": "Auksinis"
+    },
+    "spend": "Pirkiniai per pastaruosius 12 mėnesių: {amount}",
+    "tierNext": "Dar {missing} pirkinių iki lygio {tier}",
+    "tierTop": "Esate aukščiausiame lygyje.",
+    "perkPoints": "{mult}× taškų už kiekvieną €",
+    "perkFreeDelivery": "Nemokamas pristatymas kiekvienam užsakymui",
+    "perkPriority": "Pirmenybinis aptarnavimas",
+    "useTitle": "Panaudokite taškus",
+    "useCart": "Krepšelyje: {per} taškų = 1 €, nuo {min} taškų, iki {pct}% užsakymo.",
+    "openCart": "Atidaryti krepšelį",
+    "creditTitle": "Paverskite taškus kreditu",
+    "creditText": "Kreditas atimamas iš seniausios neapmokėtos sąskaitos (FIRINGI kreditinė sąskaita).",
+    "creditPoints": "Taškai",
+    "creditButton": "Gauti kreditą",
+    "creditFew": "Kreditinei sąskaitai reikia bent {min} taškų.",
+    "creditDone": "Kreditinė sąskaita {number}, {amount}, sąskaitai {invoice}.",
+    "referralTitle": "Pakvieskite įmonę",
+    "referralText": "Pasidalykite nuoroda. Kai pakviesta įmonė gaus pirmą pristatymą, jūs gausite {inviter} taškų, o ji — {invited}.",
+    "referralCode": "Jūsų kodas",
+    "referralCopy": "Kopijuoti nuorodą",
+    "referralCopied": "Nukopijuota",
+    "referralInvited": "Jūsų pakviestos įmonės",
+    "referralRewarded": "Premija gauta",
+    "referralPending": "Laukia pirmojo pristatymo",
+    "campaignsTitle": "Premijiniai taškai dabar",
+    "campaignMult": "{mult}× taškų iki {date}",
+    "howTitle": "Kaip tai veikia",
+    "howEarn": "Už kiekvieną pristatytų prekių eurą (be PVM) gaunate {points} tašką.",
+    "howSpend": "{per} taškų = 1 €: naudokite juos krepšelyje arba kaip kreditą sąskaitoje.",
+    "howExpiry": "Taškai nustoja galioti po {months} mėn. nuo jų gavimo.",
+    "historyTitle": "Taškų istorija",
+    "historyEmpty": "Taškų dar nėra — jie atkeliaus su pirmuoju pristatytu užsakymu.",
+    "colDate": "Data",
+    "colWhat": "Kas",
+    "colPoints": "Taškai",
+    "kinds": {
+      "EARN": "Pristatytas užsakymas",
+      "REFERRAL": "Rekomendavimo premija",
+      "BONUS": "FIRINGI premija",
+      "ADJUST": "FIRINGI pataisa",
+      "REDEEM_ORDER": "Panaudota užsakymui",
+      "REDEEM_CREDIT": "Paversta kreditu",
+      "REFUND": "Grąžinta (užsakymas atšauktas)",
+      "REVERSE": "Atimta (prekės kredituotos)",
+      "EXPIRE": "Nebegalioja"
+    },
+    "expires": "galioja iki {date}",
+    "cartTitle": "Panaudokite taškus",
+    "cartBalance": "Turite {points} taškų ({value})",
+    "cartHint": "nuo {min} taškų, iki {pct}% prekių",
+    "cartUse": "Naudoti",
+    "cartMax": "Naudoti {points}",
+    "cartApplied": "Panaudota {points} taškų: −{amount}",
+    "cartNone": "Šiam užsakymui taškai nenaudojami",
+    "cartRemove": "Nenaudoti taškų",
+    "cartCapped": "Šiam užsakymui galima panaudoti tik {points} taškų (iki {pct}% prekių).",
+    "cartNotEnough": "Turite mažiau taškų, nei pasirinkote — pakeiskite skaičių.",
+    "cartBelowMin": "Panaudokite bent {min} taškų.",
+    "cartFew": "Turite {points} taškų — nuo {min} galite juos naudoti čia.",
+    "cartLine": "Taškai ({points})",
+    "cartFreeDelivery": "Nemokamas pristatymas — jūsų lygio privalumas."
   }
 }

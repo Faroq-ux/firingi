@@ -62,7 +62,7 @@ export async function requestApproval(ctx: Ctx, i: { input: PlaceOrderInput; car
     });
     if (!i.input.items && i.cart.id) {
       await tx.cartItem.deleteMany({ where: { cartId: i.cart.id } });
-      await tx.cart.update({ where: { id: i.cart.id }, data: { couponCode: null } });
+      await tx.cart.update({ where: { id: i.cart.id }, data: { couponCode: null, loyaltyPoints: 0 } }); // points aren't used on orders that wait for approval
     }
     return row;
   });

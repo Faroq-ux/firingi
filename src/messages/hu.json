@@ -252,7 +252,8 @@
       "legalForm": "Társasági forma",
       "certificateCode": "Cégkivonat kódja",
       "certificateCodeHint": "Cége cégjegyzékszáma. A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell.",
-      "certificateCodeHintPt": "A certidão permanente hozzáférési kódja (12 számjegy, 0000-0000-0000). A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell."
+      "certificateCodeHintPt": "A certidão permanente hozzáférési kódja (12 számjegy, 0000-0000-0000). A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell.",
+      "referral": "A(z) {code} kóddal hívták meg — az első kiszállított rendelése után bónuszpontokat kap."
     },
     "businessTypes": {
       "restaurant": "Étterem",
@@ -838,7 +839,8 @@
     "Demand Events": "Keresleti események",
     "Planning Settings": "Tervezési beállítások",
     "Quality Claims": "Minőségi reklamációk",
-    "Quality Score": "Minőségi pontszám"
+    "Quality Score": "Minőségi pontszám",
+    "Rewards": "Jutalmak"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Minőségi riasztás: {label}",
       "body": "{label}: {value} (riasztás {threshold}-tól)."
+    },
+    "loyalty_tier_up": {
+      "title": "Elérte a(z) {tier} szintet",
+      "body": "Az elmúlt 12 havi vásárlásai a(z) {tier} szintre emelték. Az új előnyöket a Jutalmak oldalon találja."
+    },
+    "loyalty_expiring": {
+      "title": "{points} pont hamarosan lejár",
+      "body": "{points} pontja lejár ekkor: {date}. Használja fel előtte a kosárban vagy jóváírásként."
+    },
+    "loyalty_referral": {
+      "title": "Ajánlási bónusz: +{points} pont",
+      "body": "A(z) {company} céggel kapcsolatos ajánlásának köszönhetően most {points} pont van a Jutalmai között."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "A böngészője szöveggé alakítja a beszédét (a Chrome és az Edge ehhez online beszédszolgáltatást használ).",
     "denied": "A mikrofon le van tiltva — engedélyezze a böngésző beállításaiban.",
     "noSpeech": "Ezt nem értettem — kérjük, próbálja újra."
+  },
+  "loyalty": {
+    "title": "Jutalmak",
+    "description": "Gyűjtsön pontokat minden kiszállított rendelés után, és használja fel őket kedvezményként vagy jóváírásként. Minden jutalmat a FIRINGI fizet.",
+    "balance": "Az Ön pontjai",
+    "worth": "Érték: {value}",
+    "lifetime": "Összesen gyűjtve: {points}",
+    "expiring": "{points} pont lejár ekkor: {date} — használja fel előtte.",
+    "tierLabel": "Az Ön szintje",
+    "tiers": {
+      "BRONZE": "Bronz",
+      "SILVER": "Ezüst",
+      "GOLD": "Arany"
+    },
+    "spend": "Vásárlások az elmúlt 12 hónapban: {amount}",
+    "tierNext": "Még {missing} vásárlás a(z) {tier} szintig",
+    "tierTop": "A legmagasabb szinten van.",
+    "perkPoints": "{mult}× pont minden euróért",
+    "perkFreeDelivery": "Ingyenes szállítás minden rendelésnél",
+    "perkPriority": "Elsőbbségi ügyfélszolgálat",
+    "useTitle": "Pontok felhasználása",
+    "useCart": "A kosárban: {per} pont = 1 €, {min} ponttól, a rendelés legfeljebb {pct}%-áig.",
+    "openCart": "Kosár megnyitása",
+    "creditTitle": "Pontok jóváírássá alakítása",
+    "creditText": "A jóváírást a legrégebbi kifizetetlen számlájából vonjuk le (a FIRINGI jóváíró számlája).",
+    "creditPoints": "Pontok",
+    "creditButton": "Jóváírás kérése",
+    "creditFew": "Jóváíró számlához legalább {min} pont kell.",
+    "creditDone": "{number} számú jóváíró számla {amount} összegben a(z) {invoice} számlára.",
+    "referralTitle": "Hívjon meg egy céget",
+    "referralText": "Ossza meg a linkjét. Amikor a meghívott cég megkapja az első szállítmányát, Ön {inviter} pontot kap, ő pedig {invited} pontot.",
+    "referralCode": "Az Ön kódja",
+    "referralCopy": "Link másolása",
+    "referralCopied": "Másolva",
+    "referralInvited": "Meghívott cégek",
+    "referralRewarded": "Bónusz megkapva",
+    "referralPending": "Az első szállításra vár",
+    "campaignsTitle": "Bónuszpontok most",
+    "campaignMult": "{mult}× pont eddig: {date}",
+    "howTitle": "Hogyan működik",
+    "howEarn": "Minden kiszállított áru eurója után (áfa nélkül) {points} pontot kap.",
+    "howSpend": "{per} pont = 1 €: használja a kosárban vagy jóváírásként egy számlán.",
+    "howExpiry": "A pontok a megszerzésük után {months} hónappal lejárnak.",
+    "historyTitle": "Pontelőzmények",
+    "historyEmpty": "Még nincs pontja — az első kiszállított rendeléssel érkeznek.",
+    "colDate": "Dátum",
+    "colWhat": "Mi",
+    "colPoints": "Pontok",
+    "kinds": {
+      "EARN": "Kiszállított rendelés",
+      "REFERRAL": "Ajánlási bónusz",
+      "BONUS": "FIRINGI bónusz",
+      "ADJUST": "FIRINGI javítás",
+      "REDEEM_ORDER": "Rendelésre felhasználva",
+      "REDEEM_CREDIT": "Jóváírássá alakítva",
+      "REFUND": "Visszaadva (rendelés törölve)",
+      "REVERSE": "Visszavonva (áru jóváírva)",
+      "EXPIRE": "Lejárt"
+    },
+    "expires": "lejár: {date}",
+    "cartTitle": "Pontok felhasználása",
+    "cartBalance": "Önnek {points} pontja van ({value})",
+    "cartHint": "{min} ponttól, az áru legfeljebb {pct}%-áig",
+    "cartUse": "Felhasználás",
+    "cartMax": "{points} felhasználása",
+    "cartApplied": "{points} pont felhasználva: −{amount}",
+    "cartNone": "Nincs pont ezen a rendelésen",
+    "cartRemove": "Ne használjon pontot",
+    "cartCapped": "Ezen a rendelésen csak {points} pont használható fel (az áru legfeljebb {pct}%-áig).",
+    "cartNotEnough": "Kevesebb pontja van, mint amennyit választott — módosítsa a számot.",
+    "cartBelowMin": "Használjon legalább {min} pontot.",
+    "cartFew": "Önnek {points} pontja van — {min} ponttól itt felhasználhatja.",
+    "cartLine": "Pontok ({points})",
+    "cartFreeDelivery": "Ingyenes szállítás — a szintje előnye."
   }
 }

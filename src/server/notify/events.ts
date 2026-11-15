@@ -131,6 +131,10 @@ export const EVENTS: EventDef[] = [
   E("claim.chargeback_resolved", "returns", ["vendor.claims.respond", "vendor.invoices.view"], ["EMAIL"], ["number", "decision"]),
   E("claim.overdue", "returns", ["admin.claims.manage"], ["EMAIL", "PUSH"], ["count"]),
   E("quality.alert", "returns", ["admin.claims.manage", "vendor.claims.respond"], ["EMAIL", "PUSH"], ["label", "value", "threshold"]),
+  // loyalty & rewards (Phase 32)
+  E("loyalty.tier_up", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["tier"]),
+  E("loyalty.expiring", "account", BUYER_ORDERS, ["EMAIL"], ["points", "date"]),
+  E("loyalty.referral", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["points", "company"]),
   // finance
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
   // online payments (Phase 20) — {total} is shown in the reader's currency format

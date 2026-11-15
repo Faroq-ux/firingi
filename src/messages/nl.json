@@ -252,7 +252,8 @@
       "legalForm": "Rechtsvorm",
       "certificateCode": "Code van het handelsregisteruittreksel",
       "certificateCodeHint": "Het handelsregisternummer van uw bedrijf. Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig.",
-      "certificateCodeHintPt": "Toegangscode van de certidão permanente (12 cijfers, 0000-0000-0000). Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig."
+      "certificateCodeHintPt": "Toegangscode van de certidão permanente (12 cijfers, 0000-0000-0000). Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig.",
+      "referral": "Je bent uitgenodigd met code {code} — na je eerste geleverde bestelling krijg je bonuspunten."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -838,7 +839,8 @@
     "Demand Events": "Vraaggebeurtenissen",
     "Planning Settings": "Planningsinstellingen",
     "Quality Claims": "Kwaliteitsclaims",
-    "Quality Score": "Kwaliteitsscore"
+    "Quality Score": "Kwaliteitsscore",
+    "Rewards": "Beloningen"
   },
   "delivery": {
     "title": "Levering",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Kwaliteitsmelding: {label}",
       "body": "{label}: {value} (melding vanaf {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Je hebt {tier} bereikt",
+      "body": "Door je aankopen van de afgelopen 12 maanden zit je nu op niveau {tier}. Bekijk je nieuwe voordelen bij Beloningen."
+    },
+    "loyalty_expiring": {
+      "title": "{points} punten vervallen binnenkort",
+      "body": "{points} van je punten vervallen op {date}. Gebruik ze daarvoor in de winkelwagen of als tegoed."
+    },
+    "loyalty_referral": {
+      "title": "Uitnodigingsbonus: +{points} punten",
+      "body": "Dankzij je uitnodiging met {company} staan er nu {points} punten in je Beloningen."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Uw browser zet uw spraak om in tekst (Chrome en Edge gebruiken daarvoor hun online spraakdienst).",
     "denied": "De microfoon is geblokkeerd — sta hem toe in de browserinstellingen.",
     "noSpeech": "Dat verstond ik niet — probeer het opnieuw."
+  },
+  "loyalty": {
+    "title": "Beloningen",
+    "description": "Verdien punten op elke geleverde bestelling en gebruik ze als korting of als tegoed. FIRINGI betaalt alle beloningen.",
+    "balance": "Je punten",
+    "worth": "Waarde: {value}",
+    "lifetime": "In totaal verdiend: {points}",
+    "expiring": "{points} punten vervallen op {date} — gebruik ze daarvoor.",
+    "tierLabel": "Je niveau",
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Zilver",
+      "GOLD": "Goud"
+    },
+    "spend": "Aankopen in de afgelopen 12 maanden: {amount}",
+    "tierNext": "Nog {missing} aan aankopen tot {tier}",
+    "tierTop": "Je zit op het hoogste niveau.",
+    "perkPoints": "{mult}× punten per €",
+    "perkFreeDelivery": "Gratis levering op elke bestelling",
+    "perkPriority": "Voorrang bij support",
+    "useTitle": "Je punten gebruiken",
+    "useCart": "In de winkelwagen: {per} punten = 1 €, vanaf {min} punten, tot {pct}% van een bestelling.",
+    "openCart": "Winkelwagen openen",
+    "creditTitle": "Punten omzetten in tegoed",
+    "creditText": "Het tegoed gaat af van je oudste onbetaalde factuur (een creditnota van FIRINGI).",
+    "creditPoints": "Punten",
+    "creditButton": "Tegoed krijgen",
+    "creditFew": "Je hebt minstens {min} punten nodig voor een creditnota.",
+    "creditDone": "Creditnota {number} van {amount} op factuur {invoice}.",
+    "referralTitle": "Nodig een bedrijf uit",
+    "referralText": "Deel je link. Als het bedrijf dat je uitnodigt zijn eerste levering krijgt, krijg jij {inviter} punten en het bedrijf {invited}.",
+    "referralCode": "Je code",
+    "referralCopy": "Link kopiëren",
+    "referralCopied": "Gekopieerd",
+    "referralInvited": "Bedrijven die je uitnodigde",
+    "referralRewarded": "Bonus ontvangen",
+    "referralPending": "Wacht op de eerste levering",
+    "campaignsTitle": "Bonuspunten nu",
+    "campaignMult": "{mult}× punten tot {date}",
+    "howTitle": "Zo werkt het",
+    "howEarn": "Je verdient {points} punt per € geleverde goederen (excl. btw).",
+    "howSpend": "{per} punten = 1 €: gebruik ze in de winkelwagen of als tegoed op een factuur.",
+    "howExpiry": "Punten vervallen {months} maanden nadat je ze verdient.",
+    "historyTitle": "Puntengeschiedenis",
+    "historyEmpty": "Nog geen punten — die komen met je eerste geleverde bestelling.",
+    "colDate": "Datum",
+    "colWhat": "Wat",
+    "colPoints": "Punten",
+    "kinds": {
+      "EARN": "Geleverde bestelling",
+      "REFERRAL": "Bonus voor uitnodiging",
+      "BONUS": "Bonus van FIRINGI",
+      "ADJUST": "Correctie door FIRINGI",
+      "REDEEM_ORDER": "Gebruikt op een bestelling",
+      "REDEEM_CREDIT": "Omgezet in tegoed",
+      "REFUND": "Teruggegeven (bestelling geannuleerd)",
+      "REVERSE": "Teruggenomen (goederen gecrediteerd)",
+      "EXPIRE": "Vervallen"
+    },
+    "expires": "vervallen op {date}",
+    "cartTitle": "Je punten gebruiken",
+    "cartBalance": "Je hebt {points} punten ({value})",
+    "cartHint": "vanaf {min} punten, tot {pct}% van de goederen",
+    "cartUse": "Gebruiken",
+    "cartMax": "{points} gebruiken",
+    "cartApplied": "{points} punten gebruikt: −{amount}",
+    "cartNone": "Geen punten op deze bestelling",
+    "cartRemove": "Geen punten gebruiken",
+    "cartCapped": "Op deze bestelling kunnen maar {points} punten gebruikt worden (tot {pct}% van de goederen).",
+    "cartNotEnough": "Je hebt minder punten dan gekozen — pas het aantal aan.",
+    "cartBelowMin": "Gebruik minstens {min} punten.",
+    "cartFew": "Je hebt {points} punten — vanaf {min} kun je ze hier gebruiken.",
+    "cartLine": "Punten ({points})",
+    "cartFreeDelivery": "Gratis levering — een voordeel van je niveau."
   }
 }

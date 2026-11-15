@@ -252,7 +252,8 @@
       "legalForm": "Rekstrarform",
       "certificateCode": "Kóði fyrirtækjaskrárvottorðs",
       "certificateCodeHint": "Skráningarnúmer fyrirtækisins í fyrirtækjaskrá. Birgjar sem eru félög gefa það upp; einstaklingar í rekstri þurfa það ekki.",
-      "certificateCodeHintPt": "Aðgangskóði certidão permanente (12 tölustafir, 0000-0000-0000). Birgjar sem eru félög gefa hann upp; einstaklingar í rekstri þurfa hann ekki."
+      "certificateCodeHintPt": "Aðgangskóði certidão permanente (12 tölustafir, 0000-0000-0000). Birgjar sem eru félög gefa hann upp; einstaklingar í rekstri þurfa hann ekki.",
+      "referral": "Þér var boðið með kóðanum {code} — þú færð bónuspunkta eftir fyrstu afhentu pöntunina."
     },
     "businessTypes": {
       "restaurant": "Veitingastaður",
@@ -838,7 +839,8 @@
     "Demand Events": "Eftirspurnaratburðir",
     "Planning Settings": "Stillingar áætlunar",
     "Quality Claims": "Gæðakvartanir",
-    "Quality Score": "Gæðaeinkunn"
+    "Quality Score": "Gæðaeinkunn",
+    "Rewards": "Umbun"
   },
   "delivery": {
     "title": "Afhending",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Gæðaviðvörun: {label}",
       "body": "{label}: {value} (viðvörun frá {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Þú náðir {tier}",
+      "body": "Kaupin þín síðustu 12 mánuði koma þér á stigið {tier}. Sjáðu ný fríðindi undir Umbun."
+    },
+    "loyalty_expiring": {
+      "title": "{points} punktar renna brátt út",
+      "body": "{points} af punktunum þínum renna út {date}. Notaðu þá í körfunni eða sem inneign fyrir þann tíma."
+    },
+    "loyalty_referral": {
+      "title": "Tilvísunarbónus: +{points} punktar",
+      "body": "Þökk sé tilvísuninni með {company} eru nú {points} punktar í Umbun þinni."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Vafrinn breytir tali þínu í texta (Chrome og Edge nota talþjónustu sína á netinu).",
     "denied": "Lokað er fyrir hljóðnemann — leyfðu hann í stillingum vafrans.",
     "noSpeech": "Ég náði þessu ekki — reyndu aftur."
+  },
+  "loyalty": {
+    "title": "Umbun",
+    "description": "Safnaðu punktum fyrir hverja afhenta pöntun og notaðu þá sem afslátt eða inneign. FIRINGI greiðir öll umbun.",
+    "balance": "Punktarnir þínir",
+    "worth": "Virði: {value}",
+    "lifetime": "Safnað alls: {points}",
+    "expiring": "{points} punktar renna út {date} — notaðu þá fyrir þann tíma.",
+    "tierLabel": "Stigið þitt",
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Silfur",
+      "GOLD": "Gull"
+    },
+    "spend": "Kaup síðustu 12 mánuði: {amount}",
+    "tierNext": "{missing} í viðbót í kaupum til að ná {tier}",
+    "tierTop": "Þú ert á hæsta stigi.",
+    "perkPoints": "{mult}× punktar fyrir hverja €",
+    "perkFreeDelivery": "Frí afhending á hverri pöntun",
+    "perkPriority": "Forgangsþjónusta",
+    "useTitle": "Notaðu punktana",
+    "useCart": "Í körfunni: {per} punktar = 1 €, frá {min} punktum, allt að {pct}% af pöntun.",
+    "openCart": "Opna körfu",
+    "creditTitle": "Breyta punktum í inneign",
+    "creditText": "Inneignin dregst frá elsta ógreidda reikningnum þínum (kreditreikningur frá FIRINGI).",
+    "creditPoints": "Punktar",
+    "creditButton": "Fá inneign",
+    "creditFew": "Þú þarft minnst {min} punkta fyrir kreditreikning.",
+    "creditDone": "Kreditreikningur {number} upp á {amount} á reikning {invoice}.",
+    "referralTitle": "Bjóða fyrirtæki",
+    "referralText": "Deildu hlekknum þínum. Þegar fyrirtækið sem þú býður fær fyrstu afhendinguna færð þú {inviter} punkta og það {invited}.",
+    "referralCode": "Kóðinn þinn",
+    "referralCopy": "Afrita hlekk",
+    "referralCopied": "Afritað",
+    "referralInvited": "Fyrirtæki sem þú bauðst",
+    "referralRewarded": "Bónus móttekinn",
+    "referralPending": "Bíður eftir fyrstu afhendingu",
+    "campaignsTitle": "Bónuspunktar núna",
+    "campaignMult": "{mult}× punktar til {date}",
+    "howTitle": "Svona virkar þetta",
+    "howEarn": "Þú færð {points} punkt fyrir hverja € af afhentum vörum (án vsk.).",
+    "howSpend": "{per} punktar = 1 €: notaðu þá í körfunni eða sem inneign á reikningi.",
+    "howExpiry": "Punktar renna út {months} mánuðum eftir að þú færð þá.",
+    "historyTitle": "Punktasaga",
+    "historyEmpty": "Engir punktar enn — þeir koma með fyrstu afhentu pöntuninni.",
+    "colDate": "Dagsetning",
+    "colWhat": "Hvað",
+    "colPoints": "Punktar",
+    "kinds": {
+      "EARN": "Afhent pöntun",
+      "REFERRAL": "Tilvísunarbónus",
+      "BONUS": "Bónus frá FIRINGI",
+      "ADJUST": "Leiðrétting frá FIRINGI",
+      "REDEEM_ORDER": "Notaðir á pöntun",
+      "REDEEM_CREDIT": "Breytt í inneign",
+      "REFUND": "Skilað (pöntun hætt við)",
+      "REVERSE": "Teknir til baka (vörur kreditfærðar)",
+      "EXPIRE": "Útrunnir"
+    },
+    "expires": "renna út {date}",
+    "cartTitle": "Notaðu punktana",
+    "cartBalance": "Þú átt {points} punkta ({value})",
+    "cartHint": "frá {min} punktum, allt að {pct}% af vörunum",
+    "cartUse": "Nota",
+    "cartMax": "Nota {points}",
+    "cartApplied": "{points} punktar notaðir: −{amount}",
+    "cartNone": "Engir punktar á þessari pöntun",
+    "cartRemove": "Ekki nota punkta",
+    "cartCapped": "Aðeins {points} punkta má nota á þessa pöntun (allt að {pct}% af vörunum).",
+    "cartNotEnough": "Þú átt færri punkta en þú valdir — breyttu fjöldanum.",
+    "cartBelowMin": "Notaðu að minnsta kosti {min} punkta.",
+    "cartFew": "Þú átt {points} punkta — frá {min} geturðu notað þá hér.",
+    "cartLine": "Punktar ({points})",
+    "cartFreeDelivery": "Frí afhending — fríðindi stigsins þíns."
   }
 }

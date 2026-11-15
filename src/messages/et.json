@@ -252,7 +252,8 @@
       "legalForm": "Õiguslik vorm",
       "certificateCode": "Äriregistri tõendi kood",
       "certificateCodeHint": "Teie ettevõtte äriregistri number. Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda.",
-      "certificateCodeHintPt": "certidão permanente juurdepääsukood (12 numbrit, 0000-0000-0000). Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda."
+      "certificateCodeHintPt": "certidão permanente juurdepääsukood (12 numbrit, 0000-0000-0000). Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda.",
+      "referral": "Sind kutsuti koodiga {code} — pärast esimest tarnitud tellimust saad boonuspunkte."
     },
     "businessTypes": {
       "restaurant": "Restoran",
@@ -838,7 +839,8 @@
     "Demand Events": "Nõudlussündmused",
     "Planning Settings": "Planeerimise seaded",
     "Quality Claims": "Kvaliteedipretensioonid",
-    "Quality Score": "Kvaliteediskoor"
+    "Quality Score": "Kvaliteediskoor",
+    "Rewards": "Preemiad"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Kvaliteedihoiatus: {label}",
       "body": "{label}: {value} (hoiatus alates {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Jõudsid tasemele {tier}",
+      "body": "Sinu viimase 12 kuu ostud tõid sind tasemele {tier}. Vaata uusi eeliseid jaotises Preemiad."
+    },
+    "loyalty_expiring": {
+      "title": "{points} punkti aegub peagi",
+      "body": "{points} sinu punktist aegub {date}. Kasuta need enne seda ostukorvis või krediidina."
+    },
+    "loyalty_referral": {
+      "title": "Soovitusboonus: +{points} punkti",
+      "body": "Tänu soovitusele ettevõttega {company} on sul nüüd Preemiates {points} punkti."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Brauser muudab su kõne tekstiks (Chrome ja Edge kasutavad oma veebipõhist kõneteenust).",
     "denied": "Mikrofon on blokeeritud — luba see brauseri seadetes.",
     "noSpeech": "Ei saanud aru — proovi palun uuesti."
+  },
+  "loyalty": {
+    "title": "Preemiad",
+    "description": "Kogu punkte iga tarnitud tellimuse eest ja kasuta neid allahindluse või ettemaksuna. Kõik preemiad maksab FIRINGI.",
+    "balance": "Sinu punktid",
+    "worth": "Väärtus: {value}",
+    "lifetime": "Kogutud kokku: {points}",
+    "expiring": "{points} punkti aegub {date} — kasuta need enne seda.",
+    "tierLabel": "Sinu tase",
+    "tiers": {
+      "BRONZE": "Pronks",
+      "SILVER": "Hõbe",
+      "GOLD": "Kuld"
+    },
+    "spend": "Ostud viimase 12 kuu jooksul: {amount}",
+    "tierNext": "Veel {missing} oste, et jõuda tasemele {tier}",
+    "tierTop": "Oled kõrgeimal tasemel.",
+    "perkPoints": "{mult}× punktid iga euro eest",
+    "perkFreeDelivery": "Tasuta tarne igale tellimusele",
+    "perkPriority": "Eelisjärjekorras tugi",
+    "useTitle": "Kasuta oma punkte",
+    "useCart": "Ostukorvis: {per} punkti = 1 €, alates {min} punktist, kuni {pct}% tellimusest.",
+    "openCart": "Ava ostukorv",
+    "creditTitle": "Muuda punktid krediidiks",
+    "creditText": "Krediit arvatakse maha sinu vanimalt tasumata arvelt (FIRINGI kreeditarve).",
+    "creditPoints": "Punktid",
+    "creditButton": "Saa krediit",
+    "creditFew": "Kreeditarveks on vaja vähemalt {min} punkti.",
+    "creditDone": "Kreeditarve {number} summas {amount} arvele {invoice}.",
+    "referralTitle": "Kutsu ettevõte",
+    "referralText": "Jaga oma linki. Kui kutsutud ettevõte saab esimese tarne, saad sina {inviter} punkti ja tema {invited}.",
+    "referralCode": "Sinu kood",
+    "referralCopy": "Kopeeri link",
+    "referralCopied": "Kopeeritud",
+    "referralInvited": "Ettevõtted, kelle kutsusid",
+    "referralRewarded": "Boonus saadud",
+    "referralPending": "Ootab esimest tarnet",
+    "campaignsTitle": "Boonuspunktid praegu",
+    "campaignMult": "{mult}× punktid kuni {date}",
+    "howTitle": "Kuidas see töötab",
+    "howEarn": "Saad {points} punkti iga tarnitud kauba euro eest (km-ta).",
+    "howSpend": "{per} punkti = 1 €: kasuta neid ostukorvis või krediidina arvel.",
+    "howExpiry": "Punktid aeguvad {months} kuud pärast nende saamist.",
+    "historyTitle": "Punktide ajalugu",
+    "historyEmpty": "Punkte veel pole — need tulevad esimese tarnitud tellimusega.",
+    "colDate": "Kuupäev",
+    "colWhat": "Mis",
+    "colPoints": "Punktid",
+    "kinds": {
+      "EARN": "Tarnitud tellimus",
+      "REFERRAL": "Soovitusboonus",
+      "BONUS": "FIRINGI boonus",
+      "ADJUST": "FIRINGI parandus",
+      "REDEEM_ORDER": "Kasutatud tellimusel",
+      "REDEEM_CREDIT": "Muudetud krediidiks",
+      "REFUND": "Tagastatud (tellimus tühistatud)",
+      "REVERSE": "Tagasi võetud (kaup krediteeritud)",
+      "EXPIRE": "Aegunud"
+    },
+    "expires": "aegub {date}",
+    "cartTitle": "Kasuta oma punkte",
+    "cartBalance": "Sul on {points} punkti ({value})",
+    "cartHint": "alates {min} punktist, kuni {pct}% kaubast",
+    "cartUse": "Kasuta",
+    "cartMax": "Kasuta {points}",
+    "cartApplied": "{points} punkti kasutatud: −{amount}",
+    "cartNone": "Sellel tellimusel punkte pole",
+    "cartRemove": "Ära kasuta punkte",
+    "cartCapped": "Sellel tellimusel saab kasutada ainult {points} punkti (kuni {pct}% kaubast).",
+    "cartNotEnough": "Sul on vähem punkte, kui valisid — muuda arvu.",
+    "cartBelowMin": "Kasuta vähemalt {min} punkti.",
+    "cartFew": "Sul on {points} punkti — alates {min} punktist saad neid siin kasutada.",
+    "cartLine": "Punktid ({points})",
+    "cartFreeDelivery": "Tasuta tarne — sinu taseme eelis."
   }
 }

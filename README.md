@@ -662,6 +662,42 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Loyalty & rewards (Phase 32)
+
+Customers and wholesalers earn points on delivered goods and spend them as a discount or as credit.
+**FIRINGI pays for every reward — supplier payouts and commission don't change.**
+- **Earning** (`src/server/loyalty/service.ts`): points per € of delivered goods (net, after discounts,
+  excl. VAT and delivery fee — from the invoice) × the level's multiplier × the best running bonus
+  campaign for each product line. Credited at delivery (status change or driver proof of delivery) and by
+  the hourly job (`/api/cron/loyalty`), once per order. Goods credited later (returns, quality claims,
+  FIRINGI credit notes) take their points back; a cancelled order gives spent points back (not when
+  FIRINGI moved it to another supplier — the discount went with it).
+- **Start date**: points only for orders delivered from the programme's start day (set the first time
+  loyalty runs; FIRINGI can change it in the rules) — switching it on doesn't pay out for old orders.
+- **Spending** — in the cart: "Use your points" (from the minimum, up to a share of the goods set by
+  FIRINGI). The points discount is a FIRINGI-funded "€ off the order" spread over the lines like a coupon
+  (system promotion `loyalty-points`, paused so it never applies on its own), shown apart from offers, on
+  FIRINGI's invoice; it doesn't push an order under a delivery minimum. Spent inside the order
+  transaction (refused if the balance changed). Not available when FIRINGI chooses the supplier
+  (routed cart) or on orders that wait for a manager's approval. **Credit note**: points turn into a rebate
+  credit note on the oldest unpaid invoice that covers it (split over the invoice's VAT rates, no goods,
+  no supplier credit statement).
+- **Levels** by the last 12 months' delivered spend: Bronze / Silver / Gold with a points multiplier, free
+  delivery (Gold by default, FIRINGI pays) and priority support (support requests open as HIGH).
+- **Referral**: every account has a code and link (`/register/customer?ref=CODE`); when the invited
+  business's first order is delivered, both get bonus points (once).
+- **Expiry**: points expire after N months, oldest first; a reminder goes out before (25 languages).
+- **Pages**: customers — *Rewards* (points, value, level and progress, benefits, campaigns, invite link,
+  credit note, history) and the cart box, 25 languages. FIRINGI (English) — *Marketing › Loyalty &
+  Rewards*: KPIs (members, points and value outstanding, used, earned, expired), rules, levels, referral,
+  *Run now*; *Bonus campaigns*; *Members* with each ledger and *Give or take points* (with a reason,
+  audited). *Settings › Business Features* — **Loyalty** switch per company (on by default); the global
+  switch is in the rules. Distributors only sell, so they aren't part of it.
+- **Finance**: points used appear as the "Loyalty points" promotion in Marketing Analytics and lower
+  FIRINGI's margin on those orders; credit notes reduce the customer's open invoices (the invoice list now
+  subtracts all credit notes — returns and claims too). The ledger can't go below zero (database rule).
+- Tests: `tests/integration/loyalty.test.ts`, `node tests/e2e/loyalty.mjs`.
+
 ## Quality claims & credits (Phase 31)
 
 Customers › Orders › **Quality Claims** (+ *Report a problem* on a delivered order); suppliers › Orders ›

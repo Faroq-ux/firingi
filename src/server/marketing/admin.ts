@@ -24,7 +24,7 @@ export async function listOffers(ctx: Ctx, kind: "COUPONS" | "OFFERS") {
     ? { code: { not: null } }
     : { code: null, OR: [{ kind: { in: ["ORDER_AMOUNT", "FREE_DELIVERY", "BUY_X_GET_Y"] } }, { targets: { some: { OR: [{ buyerCompanyId: { not: null } }, { crmSegmentId: { not: null } }] } } }, { firstOrderOnly: true }] };
   const rows = await prisma.promotion.findMany({
-    where, orderBy: [{ status: "asc" }, { createdAt: "desc" }],
+    where: { ...where, id: { not: "loyalty-points" } }, orderBy: [{ status: "asc" }, { createdAt: "desc" }],
     include: {
       owner: { select: { legalName: true, tradeName: true } },
       targets: { include: { buyer: { select: { legalName: true } }, segment: { select: { name: true } }, customerGroup: { select: { name: true } }, category: { select: { name: true } }, vendor: { select: { legalName: true } } } },

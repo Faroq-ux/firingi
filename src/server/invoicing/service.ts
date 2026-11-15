@@ -217,7 +217,7 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
   const inv = await tx.invoice.findUniqueOrThrow({ where: { id: invoiceId }, include: { lines: true, creditNotes: { include: { lines: true } }, order: { include: { lines: true, seller: true } } } });
   if (inv.docType === "CREDIT_NOTE" || inv.status === "DRAFT" || inv.status === "CREDITED") throw new Error("NOT_CREDITABLE");
   const credited = new Map<string, Decimal>(); // invoice line position → qty already credited
-  for (const cn of inv.creditNotes) for (const l of cn.lines) credited.set(l.description, (credited.get(l.description) ?? new Decimal(0)).plus(l.qty.toString()));
+  for (const cn of inv.creditNotes) for (const l of cn.lines) if (!l.description.startsWith(REBATE_PREFIX)) credited.set(l.description, (credited.get(l.description) ?? new Decimal(0)).plus(l.qty.toString()));
   const wanted = sel.lines === "ALL" ? inv.lines.map((l) => ({ invoiceLineId: l.id, qty: Number(l.qty) - Number(credited.get(l.description) ?? 0) })) : sel.lines;
   const lines: DraftLine[] = [];
   const vendorLines: { orderLineId: string; qty: number }[] = [];
@@ -268,4 +268,40 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
     })).id;
   }
   return Object.assign(cn, { creditStatementId });
+}
+
+
+/** Lines of loyalty rebate credit notes start with this (they credit money, not goods). */
+export const REBATE_PREFIX = "Desconto por pontos de fidelização";
+
+/**
+ * Phase 32: a rebate credit note — loyalty points turned into credit on an invoice. No goods come
+ * back (no order lines, no supplier credit statement): the amount (incl. VAT) is split over the
+ * invoice's VAT rates in proportion to their value, so VAT is corrected the same way. FIRINGI pays.
+ */
+export async function rebateCreditNote(tx: Tx, invoiceId: string, r: { gross: Decimal; description: string; reason: string; actorUserId: string }) {
+  const inv = await tx.invoice.findUniqueOrThrow({ where: { id: invoiceId }, include: { lines: true } });
+  if (inv.docType === "CREDIT_NOTE" || inv.status === "DRAFT" || inv.status === "CREDITED") throw new Error("NOT_CREDITABLE");
+  const byRate = new Map<string, Decimal>(); // VAT rate → gross of the invoice at that rate
+  for (const l of inv.lines) {
+    const k = new Decimal(l.taxRate.toString()).toFixed(3);
+    byRate.set(k, (byRate.get(k) ?? new Decimal(0)).plus(l.lineNet.toString()).plus(l.lineVat.toString()));
+  }
+  const total = [...byRate.values()].reduce((a, v) => a.plus(v), new Decimal(0));
+  if (total.lte(0) || r.gross.gt(total)) throw new Error("REBATE_TOO_HIGH");
+  const entries = [...byRate.entries()].filter(([, v]) => v.gt(0));
+  let given = new Decimal(0);
+  const lines: DraftLine[] = entries.map(([rate, v], i) => {
+    const gross = i === entries.length - 1 ? r.gross.minus(given) : r2(r.gross.mul(v).div(total));
+    given = given.plus(gross);
+    const rt = new Decimal(rate);
+    const net = r2(gross.div(rt.div(100).plus(1)));
+    return { orderLineId: null, description: entries.length > 1 ? `${r.description} (${rt.toFixed(0)} %)` : r.description, qty: new Decimal(1), unitPriceNet: net, taxRate: rt, lineNet: net, lineVat: gross.minus(net) };
+  });
+  return issueDocument(tx, {
+    legalEntityId: inv.legalEntityId, countryId: (await tx.legalEntity.findUniqueOrThrow({ where: { id: inv.legalEntityId } })).countryId, docType: "CREDIT_NOTE",
+    taxRegime: inv.taxRegime, recipientCompanyId: inv.recipientCompanyId, orderId: inv.orderId, originalInvoiceId: inv.id,
+    issuerSnapshot: inv.issuerSnapshot as Prisma.InputJsonValue, recipientSnapshot: { ...(inv.recipientSnapshot as object), reason: r.reason } as Prisma.InputJsonValue,
+    lines, dueDays: 0, createdById: r.actorUserId,
+  });
 }

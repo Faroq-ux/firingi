@@ -252,7 +252,8 @@
       "legalForm": "Selskapsform",
       "certificateCode": "Kode for firmaattest",
       "certificateCodeHint": "Bedriftens nummer i Foretaksregisteret. Leverandører som er selskaper oppgir det; enkeltpersonforetak trenger det ikke.",
-      "certificateCodeHintPt": "Tilgangskode til certidão permanente (12 sifre, 0000-0000-0000). Leverandører som er selskaper oppgir den; enkeltpersonforetak trenger den ikke."
+      "certificateCodeHintPt": "Tilgangskode til certidão permanente (12 sifre, 0000-0000-0000). Leverandører som er selskaper oppgir den; enkeltpersonforetak trenger den ikke.",
+      "referral": "Du ble invitert med koden {code} — du får bonuspoeng etter din første leverte bestilling."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -838,7 +839,8 @@
     "Demand Events": "Etterspørselshendelser",
     "Planning Settings": "Planleggingsinnstillinger",
     "Quality Claims": "Kvalitetsreklamasjoner",
-    "Quality Score": "Kvalitetsscore"
+    "Quality Score": "Kvalitetsscore",
+    "Rewards": "Belønninger"
   },
   "delivery": {
     "title": "Levering",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Kvalitetsvarsel: {label}",
       "body": "{label}: {value} (varsel fra {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Du har nådd {tier}",
+      "body": "Innkjøpene dine de siste 12 månedene gir deg nivået {tier}. Se de nye fordelene under Belønninger."
+    },
+    "loyalty_expiring": {
+      "title": "{points} poeng utløper snart",
+      "body": "{points} av poengene dine utløper {date}. Bruk dem i handlekurven eller som tilgodehavende før det."
+    },
+    "loyalty_referral": {
+      "title": "Vervebonus: +{points} poeng",
+      "body": "Takket være vervingen med {company} har du nå {points} poeng under Belønninger."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Nettleseren gjør talen din om til tekst (Chrome og Edge bruker sin talertjeneste på nett).",
     "denied": "Mikrofonen er blokkert — tillat den i nettleserinnstillingene.",
     "noSpeech": "Det fikk jeg ikke med meg — prøv igjen."
+  },
+  "loyalty": {
+    "title": "Belønninger",
+    "description": "Tjen poeng på hver leverte bestilling, og bruk dem som rabatt eller som tilgodehavende. FIRINGI betaler alle belønninger.",
+    "balance": "Dine poeng",
+    "worth": "Verdi: {value}",
+    "lifetime": "Opptjent totalt: {points}",
+    "expiring": "{points} poeng utløper {date} — bruk dem før det.",
+    "tierLabel": "Ditt nivå",
+    "tiers": {
+      "BRONZE": "Bronse",
+      "SILVER": "Sølv",
+      "GOLD": "Gull"
+    },
+    "spend": "Innkjøp siste 12 måneder: {amount}",
+    "tierNext": "{missing} til i innkjøp for å nå {tier}",
+    "tierTop": "Du er på høyeste nivå.",
+    "perkPoints": "{mult}× poeng per €",
+    "perkFreeDelivery": "Gratis levering på hver bestilling",
+    "perkPriority": "Prioritert støtte",
+    "useTitle": "Bruk poengene dine",
+    "useCart": "I handlekurven: {per} poeng = 1 €, fra {min} poeng, opptil {pct} % av en bestilling.",
+    "openCart": "Åpne handlekurven",
+    "creditTitle": "Gjør poeng om til tilgodehavende",
+    "creditText": "Beløpet trekkes fra den eldste ubetalte fakturaen din (en kreditnota fra FIRINGI).",
+    "creditPoints": "Poeng",
+    "creditButton": "Få tilgodehavende",
+    "creditFew": "Du trenger minst {min} poeng for en kreditnota.",
+    "creditDone": "Kreditnota {number} på {amount} på faktura {invoice}.",
+    "referralTitle": "Inviter en bedrift",
+    "referralText": "Del lenken din. Når bedriften du inviterer får sin første levering, får du {inviter} poeng og bedriften {invited}.",
+    "referralCode": "Koden din",
+    "referralCopy": "Kopier lenke",
+    "referralCopied": "Kopiert",
+    "referralInvited": "Bedrifter du har invitert",
+    "referralRewarded": "Bonus mottatt",
+    "referralPending": "Venter på første levering",
+    "campaignsTitle": "Bonuspoeng nå",
+    "campaignMult": "{mult}× poeng til {date}",
+    "howTitle": "Slik fungerer det",
+    "howEarn": "Du tjener {points} poeng per € leverte varer (eks. mva.).",
+    "howSpend": "{per} poeng = 1 €: bruk dem i handlekurven eller som tilgodehavende på en faktura.",
+    "howExpiry": "Poeng utløper {months} måneder etter at du tjente dem.",
+    "historyTitle": "Poenghistorikk",
+    "historyEmpty": "Ingen poeng ennå — de kommer med din første leverte bestilling.",
+    "colDate": "Dato",
+    "colWhat": "Hva",
+    "colPoints": "Poeng",
+    "kinds": {
+      "EARN": "Levert bestilling",
+      "REFERRAL": "Vervebonus",
+      "BONUS": "Bonus fra FIRINGI",
+      "ADJUST": "Korrigering fra FIRINGI",
+      "REDEEM_ORDER": "Brukt på en bestilling",
+      "REDEEM_CREDIT": "Gjort om til tilgodehavende",
+      "REFUND": "Gitt tilbake (bestilling kansellert)",
+      "REVERSE": "Tatt tilbake (varer kreditert)",
+      "EXPIRE": "Utløpt"
+    },
+    "expires": "utløper {date}",
+    "cartTitle": "Bruk poengene dine",
+    "cartBalance": "Du har {points} poeng ({value})",
+    "cartHint": "fra {min} poeng, opptil {pct} % av varene",
+    "cartUse": "Bruk",
+    "cartMax": "Bruk {points}",
+    "cartApplied": "{points} poeng brukt: −{amount}",
+    "cartNone": "Ingen poeng på denne bestillingen",
+    "cartRemove": "Ikke bruk poeng",
+    "cartCapped": "Bare {points} poeng kan brukes på denne bestillingen (opptil {pct} % av varene).",
+    "cartNotEnough": "Du har færre poeng enn du valgte — endre antallet.",
+    "cartBelowMin": "Bruk minst {min} poeng.",
+    "cartFew": "Du har {points} poeng — fra {min} kan du bruke dem her.",
+    "cartLine": "Poeng ({points})",
+    "cartFreeDelivery": "Gratis levering — en fordel på ditt nivå."
   }
 }

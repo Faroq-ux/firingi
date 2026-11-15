@@ -255,7 +255,7 @@ export async function listPromotions(ctx: Ctx, as: "VENDOR" | "ADMIN") {
     _count: { select: { lineDiscounts: true } },
   } satisfies Prisma.PromotionInclude;
   const [own, requests] = await Promise.all([
-    prisma.promotion.findMany({ where: as === "VENDOR" ? { ownerType: "VENDOR", ownerCompanyId: ctx.company.id } : {}, include, orderBy: { createdAt: "desc" } }),
+    prisma.promotion.findMany({ where: as === "VENDOR" ? { ownerType: "VENDOR", ownerCompanyId: ctx.company.id } : { id: { not: "loyalty-points" } }, include, orderBy: { createdAt: "desc" } }),
     as === "VENDOR" ? prisma.promotion.findMany({ where: { acceptances: { some: { vendorCompanyId: ctx.company.id } } }, include, orderBy: { createdAt: "desc" } }) : Promise.resolve([]),
   ]);
   return { own, requests };

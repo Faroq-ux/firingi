@@ -45,9 +45,12 @@ export async function listSalesInvoices(ctx: Ctx, f: { as: "BUYER" | "ADMIN"; do
     take: 300,
   });
   const paid = await paidMap(rows.map((r) => r.id));
+  // open = gross − credit notes − payments (credit notes — returns, claims, loyalty credit — reduce what is owed)
+  const { openAmounts } = await import("@/server/payments/service");
+  const opens = await openAmounts(rows.filter((r) => r.docType !== "CREDIT_NOTE").map((r) => r.id));
   const out = rows.map((r) => {
     const p = paid.get(r.id) ?? new Decimal(0);
-    const open = r.docType === "CREDIT_NOTE" ? new Decimal(0) : new Decimal(r.grossTotal.toString()).minus(p);
+    const open = r.docType === "CREDIT_NOTE" ? new Decimal(0) : opens.get(r.id) ?? new Decimal(r.grossTotal.toString()).minus(p);
     return { ...r, paid: p.toFixed(2), open: open.toFixed(2), overdue: open.gt(0) && !!r.dueAt && r.dueAt < new Date() };
   });
   return f.unpaidOnly ? out.filter((r) => new Decimal(r.open).gt(0)) : out;

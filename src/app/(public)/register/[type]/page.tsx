@@ -10,8 +10,9 @@ export const metadata = { title: "Apply" };
 
 const MAP = { customer: "CUSTOMER", wholesaler: "WHOLESALER", distributor: "DISTRIBUTOR" } as const;
 
-export default async function RegisterTypePage({ params }: { params: Promise<{ type: string }> }) {
+export default async function RegisterTypePage({ params, searchParams }: { params: Promise<{ type: string }>; searchParams: Promise<{ ref?: string }> }) {
   const { type } = await params;
+  const ref = ((await searchParams).ref ?? "").replace(/[^A-Za-z0-9]/g, "").slice(0, 20) || null;
   const [t, locale] = await Promise.all([getTranslations("onboarding"), getLocale()]);
   if (type === "driver")
     return (
@@ -35,7 +36,7 @@ export default async function RegisterTypePage({ params }: { params: Promise<{ t
           <p className="text-sm text-muted-foreground">{t("form.notOpen")}</p>
         ) : (
           <CompanyRegistrationForm
-            type={companyType}
+            type={companyType} referralCode={companyType === "DISTRIBUTOR" ? null : ref}
             countries={countries.map((c) => ({ code: c.code, label: `${c.flag ?? ""} ${pickLocalized(c.name, locale)}`, vatPrefix: c.vatPrefix ?? c.code, cities: c.cities }))}
           />
         )}

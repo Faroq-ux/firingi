@@ -252,7 +252,8 @@
       "legalForm": "Forme juridique",
       "certificateCode": "Code du certificat d'immatriculation",
       "certificateCodeHint": "Numéro d'immatriculation au registre du commerce. Les fournisseurs constitués en société l'indiquent ; les entrepreneurs individuels n'en ont pas besoin.",
-      "certificateCodeHintPt": "Code d'accès de la certidão permanente (12 chiffres, 0000-0000-0000). Les fournisseurs constitués en société l'indiquent ; les entrepreneurs individuels n'en ont pas besoin."
+      "certificateCodeHintPt": "Code d'accès de la certidão permanente (12 chiffres, 0000-0000-0000). Les fournisseurs constitués en société l'indiquent ; les entrepreneurs individuels n'en ont pas besoin.",
+      "referral": "Vous avez été invité avec le code {code} — vous recevrez des points bonus après votre première commande livrée."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -838,7 +839,8 @@
     "Demand Events": "Événements de demande",
     "Planning Settings": "Paramètres de planification",
     "Quality Claims": "Réclamations qualité",
-    "Quality Score": "Indice qualité"
+    "Quality Score": "Indice qualité",
+    "Rewards": "Récompenses"
   },
   "delivery": {
     "title": "Livraison",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Alerte qualité : {label}",
       "body": "{label} : {value} (alerte dès {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Vous avez atteint le niveau {tier}",
+      "body": "Vos achats des 12 derniers mois vous font passer au niveau {tier}. Découvrez vos nouveaux avantages dans Récompenses."
+    },
+    "loyalty_expiring": {
+      "title": "{points} points expirent bientôt",
+      "body": "{points} de vos points expirent le {date}. Utilisez-les dans le panier ou comme avoir avant."
+    },
+    "loyalty_referral": {
+      "title": "Bonus de parrainage : +{points} points",
+      "body": "Grâce au parrainage avec {company}, {points} points sont maintenant dans vos Récompenses."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Votre navigateur transforme votre voix en texte (Chrome et Edge utilisent leur service vocal en ligne).",
     "denied": "Le micro est bloqué — autorisez-le dans les réglages du navigateur.",
     "noSpeech": "Je n'ai pas compris — réessayez, s'il vous plaît."
+  },
+  "loyalty": {
+    "title": "Récompenses",
+    "description": "Gagnez des points sur chaque commande livrée et utilisez-les comme remise ou comme avoir. FIRINGI paie toutes les récompenses.",
+    "balance": "Vos points",
+    "worth": "Valeur : {value}",
+    "lifetime": "Gagnés au total : {points}",
+    "expiring": "{points} points expirent le {date} — utilisez-les avant.",
+    "tierLabel": "Votre niveau",
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Argent",
+      "GOLD": "Or"
+    },
+    "spend": "Achats des 12 derniers mois : {amount}",
+    "tierNext": "Encore {missing} d'achats pour atteindre {tier}",
+    "tierTop": "Vous êtes au niveau le plus élevé.",
+    "perkPoints": "{mult}× points par €",
+    "perkFreeDelivery": "Livraison gratuite sur chaque commande",
+    "perkPriority": "Support prioritaire",
+    "useTitle": "Utiliser vos points",
+    "useCart": "Dans le panier : {per} points = 1 €, dès {min} points, jusqu'à {pct} % d'une commande.",
+    "openCart": "Ouvrir le panier",
+    "creditTitle": "Transformer des points en avoir",
+    "creditText": "L'avoir est déduit de votre plus ancienne facture impayée (un avoir de FIRINGI).",
+    "creditPoints": "Points",
+    "creditButton": "Obtenir un avoir",
+    "creditFew": "Il faut au moins {min} points pour un avoir.",
+    "creditDone": "Avoir {number} de {amount} sur la facture {invoice}.",
+    "referralTitle": "Inviter une entreprise",
+    "referralText": "Partagez votre lien. Quand l'entreprise invitée reçoit sa première livraison, vous recevez {inviter} points et elle {invited}.",
+    "referralCode": "Votre code",
+    "referralCopy": "Copier le lien",
+    "referralCopied": "Copié",
+    "referralInvited": "Entreprises invitées",
+    "referralRewarded": "Bonus reçu",
+    "referralPending": "En attente de sa première livraison",
+    "campaignsTitle": "Points bonus en ce moment",
+    "campaignMult": "{mult}× points jusqu'au {date}",
+    "howTitle": "Comment ça marche",
+    "howEarn": "Vous gagnez {points} point par € de marchandises livrées (HT).",
+    "howSpend": "{per} points = 1 € : utilisez-les dans le panier ou comme avoir sur une facture.",
+    "howExpiry": "Les points expirent {months} mois après les avoir gagnés.",
+    "historyTitle": "Historique des points",
+    "historyEmpty": "Pas encore de points — ils arrivent avec votre première commande livrée.",
+    "colDate": "Date",
+    "colWhat": "Quoi",
+    "colPoints": "Points",
+    "kinds": {
+      "EARN": "Commande livrée",
+      "REFERRAL": "Bonus de parrainage",
+      "BONUS": "Bonus de FIRINGI",
+      "ADJUST": "Correction de FIRINGI",
+      "REDEEM_ORDER": "Utilisés sur une commande",
+      "REDEEM_CREDIT": "Transformés en avoir",
+      "REFUND": "Rendus (commande annulée)",
+      "REVERSE": "Repris (marchandises créditées)",
+      "EXPIRE": "Expirés"
+    },
+    "expires": "expirent le {date}",
+    "cartTitle": "Utiliser vos points",
+    "cartBalance": "Vous avez {points} points ({value})",
+    "cartHint": "dès {min} points, jusqu'à {pct} % des marchandises",
+    "cartUse": "Utiliser",
+    "cartMax": "Utiliser {points}",
+    "cartApplied": "{points} points utilisés : −{amount}",
+    "cartNone": "Aucun point sur cette commande",
+    "cartRemove": "Ne pas utiliser de points",
+    "cartCapped": "Seuls {points} points peuvent être utilisés sur cette commande (jusqu'à {pct} % des marchandises).",
+    "cartNotEnough": "Vous avez moins de points que choisi — changez le nombre.",
+    "cartBelowMin": "Utilisez au moins {min} points.",
+    "cartFew": "Vous avez {points} points — dès {min}, vous pouvez les utiliser ici.",
+    "cartLine": "Points ({points})",
+    "cartFreeDelivery": "Livraison gratuite — un avantage de votre niveau."
   }
 }

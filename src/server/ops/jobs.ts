@@ -22,6 +22,7 @@ export const JOBS: JobDef[] = [
   { key: "compliance", label: "Supplier certificates (expiry, reminders, pauses)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/compliance" },
   { key: "planning", label: "Demand forecasts & restock suggestions", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/planning" },
   { key: "claims", label: "Quality claims (SLA, charge-backs, quality alerts)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/claims" },
+  { key: "loyalty", label: "Loyalty & rewards (points for delivered orders, expiry, reminders, tiers)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/loyalty" },
   { key: "pricing", label: "Price changes due & price alerts", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/pricing" },
   { key: "ai", label: "AI suggestions", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/ai" },
   { key: "backup", label: "Database backup", every: "nightly", staleAfterMin: 26 * 60, critical: true, path: null },

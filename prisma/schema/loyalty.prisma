@@ -1,0 +1,103 @@
+// Phase 32 — Loyalty & rewards. Customers and wholesalers earn points on delivered goods (FIRINGI
+// pays; supplier payouts don't change), spend them as a discount at checkout or as a credit note,
+// climb tiers by their 12-month spend, invite other businesses, and points expire.
+
+enum LoyaltyTier {
+  BRONZE
+  SILVER
+  GOLD
+}
+
+enum LoyaltyEntryKind {
+  EARN // delivered order
+  REFERRAL // invited a business / was invited
+  BONUS // FIRINGI manual bonus
+  ADJUST // FIRINGI correction (+ or −)
+  REDEEM_ORDER // spent as a checkout discount (−)
+  REDEEM_CREDIT // turned into a credit note (−)
+  REFUND // points given back (cancelled order)
+  REVERSE // earned points taken back (goods credited / returned)
+  EXPIRE // expired (−)
+}
+
+/// One per buyer company (created on first use).
+model LoyaltyAccount {
+  companyId          String      @id
+  balance            Int         @default(0)
+  lifetimeEarned     Int         @default(0)
+  tier               LoyaltyTier @default(BRONZE)
+  /// Delivered goods (net, excl. VAT and delivery) in the last 12 months — decides the tier.
+  spend12m           Decimal     @default(0) @db.Decimal(18, 2)
+  tierUpdatedAt      DateTime?
+  /// Shared with other businesses: /register/customer?ref=CODE
+  referralCode       String      @unique
+  referredById       String?
+  /// Both sides got the referral bonus (after the invited business's first delivered order).
+  referralRewardedAt DateTime?
+  /// Last "points expiring soon" reminder.
+  expiryRemindedAt   DateTime?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  company    Company          @relation("LoyaltyAccount", fields: [companyId], references: [id], onDelete: Cascade)
+  referredBy LoyaltyAccount?  @relation("LoyaltyReferral", fields: [referredById], references: [companyId])
+  referrals  LoyaltyAccount[] @relation("LoyaltyReferral")
+  entries    LoyaltyEntry[]
+
+  @@index([referredById])
+  @@index([tier])
+}
+
+/// The points ledger (append-only; the balance is the sum). Positive entries keep `remaining`
+/// (what is not yet spent or expired) and expire at `expiresAt`; spending uses the oldest first.
+model LoyaltyEntry {
+  id          String           @id @default(cuid())
+  companyId   String
+  kind        LoyaltyEntryKind
+  points      Int
+  remaining   Int              @default(0)
+  expiresAt   DateTime?
+  /// Value of the points in € when spent (REDEEM_*), for finance.
+  euros       Decimal?         @db.Decimal(18, 2)
+  orderId     String?
+  invoiceId   String?
+  campaignId  String?
+  /// Makes automatic entries happen once (e.g. EARN:<order>, REV:<credit note>).
+  dedupeKey   String?          @unique
+  note        String?
+  createdById String?
+  createdAt   DateTime         @default(now())
+
+  account  LoyaltyAccount   @relation(fields: [companyId], references: [companyId], onDelete: Cascade)
+  campaign LoyaltyCampaign? @relation(fields: [campaignId], references: [id])
+
+  @@index([companyId, createdAt])
+  @@index([companyId, expiresAt])
+  @@index([orderId])
+  @@index([kind, createdAt])
+}
+
+/// FIRINGI's bonus campaigns: "double points this week", extra points on chosen suppliers,
+/// categories or products.
+model LoyaltyCampaign {
+  id          String    @id @default(cuid())
+  name        String
+  /// Shown to customers (per language; falls back to English).
+  message     Json?
+  /// Points per € are multiplied by this (e.g. 2 = double points).
+  multiplier  Decimal   @default(2) @db.Decimal(6, 2)
+  startsAt    DateTime
+  endsAt      DateTime
+  /// Empty = everything; otherwise only these suppliers / categories / offers.
+  vendorIds   String[]  @default([])
+  categoryIds String[]  @default([])
+  offerIds    String[]  @default([])
+  active      Boolean   @default(true)
+  createdById String?
+  createdAt   DateTime  @default(now())
+  endedAt     DateTime?
+
+  entries LoyaltyEntry[]
+
+  @@index([active, startsAt, endsAt])
+}

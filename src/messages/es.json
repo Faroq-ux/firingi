@@ -231,7 +231,8 @@
       "legalForm": "Forma jurídica",
       "certificateCode": "Código del certificado del registro mercantil",
       "certificateCodeHint": "Número de registro mercantil de su empresa. Lo indican los proveedores que son sociedades; los autónomos no lo necesitan.",
-      "certificateCodeHintPt": "Código de acceso de la certidão permanente (12 dígitos, 0000-0000-0000). Lo indican los proveedores que son sociedades; los autónomos no lo necesitan."
+      "certificateCodeHintPt": "Código de acceso de la certidão permanente (12 dígitos, 0000-0000-0000). Lo indican los proveedores que son sociedades; los autónomos no lo necesitan.",
+      "referral": "Te invitaron con el código {code}: recibirás puntos extra tras tu primer pedido entregado."
     },
     "hub": {
       "checklist": "Para completar su solicitud",
@@ -1360,6 +1361,18 @@
     "quality_alert": {
       "title": "Alerta de calidad: {label}",
       "body": "{label}: {value} (alerta desde {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Has llegado a {tier}",
+      "body": "Tus compras de los últimos 12 meses te llevan al nivel {tier}. Mira tus nuevas ventajas en Recompensas."
+    },
+    "loyalty_expiring": {
+      "title": "{points} puntos caducan pronto",
+      "body": "{points} de tus puntos caducan el {date}. Úsalos en el carrito o como crédito antes."
+    },
+    "loyalty_referral": {
+      "title": "Bono por invitación: +{points} puntos",
+      "body": "Gracias a la invitación con {company}, ya tienes {points} puntos en tus Recompensas."
     }
   },
   "notifications": {
@@ -3836,5 +3849,79 @@
     "privacy": "Tu navegador convierte tu voz en texto (Chrome y Edge usan su servicio de voz en línea).",
     "denied": "El micrófono está bloqueado: permítelo en la configuración del navegador.",
     "noSpeech": "No te he entendido; inténtalo de nuevo."
+  },
+  "loyalty": {
+    "title": "Recompensas",
+    "description": "Gana puntos en cada pedido entregado y úsalos como descuento o como crédito. FIRINGI paga todas las recompensas.",
+    "balance": "Tus puntos",
+    "worth": "Valen {value}",
+    "lifetime": "Ganados en total: {points}",
+    "expiring": "{points} puntos caducan el {date}: úsalos antes.",
+    "tierLabel": "Tu nivel",
+    "tiers": {
+      "BRONZE": "Bronce",
+      "SILVER": "Plata",
+      "GOLD": "Oro"
+    },
+    "spend": "Compras en los últimos 12 meses: {amount}",
+    "tierNext": "Te faltan {missing} en compras para llegar a {tier}",
+    "tierTop": "Estás en el nivel más alto.",
+    "perkPoints": "{mult}× puntos por cada €",
+    "perkFreeDelivery": "Entrega gratis en todos los pedidos",
+    "perkPriority": "Soporte prioritario",
+    "useTitle": "Usa tus puntos",
+    "useCart": "En el carrito: {per} puntos = 1 €, desde {min} puntos, hasta el {pct}% de un pedido.",
+    "openCart": "Abrir carrito",
+    "creditTitle": "Convertir puntos en crédito",
+    "creditText": "El crédito se descuenta de tu factura pendiente más antigua (una nota de crédito de FIRINGI).",
+    "creditPoints": "Puntos",
+    "creditButton": "Obtener crédito",
+    "creditFew": "Necesitas al menos {min} puntos para una nota de crédito.",
+    "creditDone": "Nota de crédito {number} de {amount} en la factura {invoice}.",
+    "referralTitle": "Invita a una empresa",
+    "referralText": "Comparte tu enlace. Cuando la empresa que invites reciba su primera entrega, tú recibes {inviter} puntos y ella {invited}.",
+    "referralCode": "Tu código",
+    "referralCopy": "Copiar enlace",
+    "referralCopied": "Copiado",
+    "referralInvited": "Empresas que invitaste",
+    "referralRewarded": "Bono recibido",
+    "referralPending": "Esperando su primera entrega",
+    "campaignsTitle": "Puntos extra ahora",
+    "campaignMult": "{mult}× puntos hasta el {date}",
+    "howTitle": "Cómo funciona",
+    "howEarn": "Ganas {points} punto por cada € de productos entregados (sin IVA).",
+    "howSpend": "{per} puntos = 1 €: úsalos en el carrito o como crédito en una factura.",
+    "howExpiry": "Los puntos caducan {months} meses después de ganarlos.",
+    "historyTitle": "Historial de puntos",
+    "historyEmpty": "Aún no tienes puntos: llegan con tu primer pedido entregado.",
+    "colDate": "Fecha",
+    "colWhat": "Concepto",
+    "colPoints": "Puntos",
+    "kinds": {
+      "EARN": "Pedido entregado",
+      "REFERRAL": "Bono por invitación",
+      "BONUS": "Bono de FIRINGI",
+      "ADJUST": "Corrección de FIRINGI",
+      "REDEEM_ORDER": "Usados en un pedido",
+      "REDEEM_CREDIT": "Convertidos en crédito",
+      "REFUND": "Devueltos (pedido cancelado)",
+      "REVERSE": "Retirados (productos abonados)",
+      "EXPIRE": "Caducados"
+    },
+    "expires": "caducan el {date}",
+    "cartTitle": "Usa tus puntos",
+    "cartBalance": "Tienes {points} puntos ({value})",
+    "cartHint": "desde {min} puntos, hasta el {pct}% de los productos",
+    "cartUse": "Usar",
+    "cartMax": "Usar {points}",
+    "cartApplied": "{points} puntos usados: −{amount}",
+    "cartNone": "Sin puntos en este pedido",
+    "cartRemove": "No usar puntos",
+    "cartCapped": "Solo se pueden usar {points} puntos en este pedido (hasta el {pct}% de los productos).",
+    "cartNotEnough": "Tienes menos puntos de los que elegiste: cambia el número.",
+    "cartBelowMin": "Usa al menos {min} puntos.",
+    "cartFew": "Tienes {points} puntos; desde {min} puedes usarlos aquí.",
+    "cartLine": "Puntos ({points})",
+    "cartFreeDelivery": "Entrega gratis: una ventaja de tu nivel."
   }
 }

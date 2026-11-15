@@ -254,6 +254,7 @@ async function moveAsDriver(ctx: Ctx, id: string, to: DeliveryStatus, effect?: (
   });
   if (to !== "ASSIGNED" && to !== "UNASSIGNED" && to !== "CANCELLED") await onDeliveryStep(id, to);
   if (orderTo && orderTo !== d.order.status) await notifyOrderChange(d.order, orderTo, reason, "SYSTEM");
+  if (orderTo === "DELIVERED") await (await import("@/server/loyalty/service")).earnForOrder(d.order.id).catch(() => null); // Phase 32 (the job retries)
   if (to === "FAILED" && d.executingCompanyId !== d.order.sellerCompanyId)
     await notify("delivery.failed", [{ companyId: d.executingCompanyId, link: "/admin/delivery/failed" }], { number: d.order.number, reason }, { ref: { type: "Delivery", id } });
   return d;

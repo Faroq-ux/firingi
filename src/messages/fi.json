@@ -252,7 +252,8 @@
       "legalForm": "Yhtiömuoto",
       "certificateCode": "Kaupparekisteriotteen koodi",
       "certificateCodeHint": "Yrityksesi kaupparekisterinumero. Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä.",
-      "certificateCodeHintPt": "certidão permanente -todistuksen käyttökoodi (12 numeroa, 0000-0000-0000). Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä."
+      "certificateCodeHintPt": "certidão permanente -todistuksen käyttökoodi (12 numeroa, 0000-0000-0000). Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä.",
+      "referral": "Sinut kutsuttiin koodilla {code} — saat bonuspisteitä ensimmäisen toimitetun tilauksesi jälkeen."
     },
     "businessTypes": {
       "restaurant": "Ravintola",
@@ -838,7 +839,8 @@
     "Demand Events": "Kysyntätapahtumat",
     "Planning Settings": "Suunnittelun asetukset",
     "Quality Claims": "Laatureklamaatiot",
-    "Quality Score": "Laatupisteet"
+    "Quality Score": "Laatupisteet",
+    "Rewards": "Palkinnot"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Laatuhälytys: {label}",
       "body": "{label}: {value} (hälytys alkaen {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Saavutit tason {tier}",
+      "body": "Viimeisten 12 kuukauden ostosi nostivat sinut tasolle {tier}. Katso uudet etusi Palkinnot-sivulta."
+    },
+    "loyalty_expiring": {
+      "title": "{points} pistettä vanhenee pian",
+      "body": "{points} pisteestäsi vanhenee {date}. Käytä ne ostoskorissa tai hyvityksenä ennen sitä."
+    },
+    "loyalty_referral": {
+      "title": "Suosittelubonus: +{points} pistettä",
+      "body": "Kiitos suosittelusta yrityksen {company} kanssa — {points} pistettä on nyt Palkinnoissasi."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Selaimesi muuttaa puheesi tekstiksi (Chrome ja Edge käyttävät verkossa toimivaa puhepalveluaan).",
     "denied": "Mikrofoni on estetty — salli se selaimen asetuksista.",
     "noSpeech": "En saanut selvää — yritä uudelleen."
+  },
+  "loyalty": {
+    "title": "Palkinnot",
+    "description": "Ansaitse pisteitä jokaisesta toimitetusta tilauksesta ja käytä ne alennuksena tai hyvityksenä. FIRINGI maksaa kaikki palkinnot.",
+    "balance": "Pisteesi",
+    "worth": "Arvo: {value}",
+    "lifetime": "Ansaittu yhteensä: {points}",
+    "expiring": "{points} pistettä vanhenee {date} — käytä ne ennen sitä.",
+    "tierLabel": "Tasosi",
+    "tiers": {
+      "BRONZE": "Pronssi",
+      "SILVER": "Hopea",
+      "GOLD": "Kulta"
+    },
+    "spend": "Ostot viimeisten 12 kuukauden aikana: {amount}",
+    "tierNext": "Vielä {missing} ostoja tasoon {tier}",
+    "tierTop": "Olet korkeimmalla tasolla.",
+    "perkPoints": "{mult}× pisteet jokaisesta eurosta",
+    "perkFreeDelivery": "Ilmainen toimitus jokaiseen tilaukseen",
+    "perkPriority": "Etusija tuessa",
+    "useTitle": "Käytä pisteesi",
+    "useCart": "Ostoskorissa: {per} pistettä = 1 €, alkaen {min} pisteestä, enintään {pct} % tilauksesta.",
+    "openCart": "Avaa ostoskori",
+    "creditTitle": "Muuta pisteet hyvitykseksi",
+    "creditText": "Hyvitys vähennetään vanhimmasta maksamattomasta laskustasi (FIRINGIn hyvityslasku).",
+    "creditPoints": "Pisteet",
+    "creditButton": "Hae hyvitys",
+    "creditFew": "Hyvityslaskuun tarvitaan vähintään {min} pistettä.",
+    "creditDone": "Hyvityslasku {number}, {amount}, laskulle {invoice}.",
+    "referralTitle": "Kutsu yritys",
+    "referralText": "Jaa linkkisi. Kun kutsumasi yritys saa ensimmäisen toimituksensa, saat {inviter} pistettä ja se {invited}.",
+    "referralCode": "Koodisi",
+    "referralCopy": "Kopioi linkki",
+    "referralCopied": "Kopioitu",
+    "referralInvited": "Kutsumasi yritykset",
+    "referralRewarded": "Bonus saatu",
+    "referralPending": "Odottaa ensimmäistä toimitusta",
+    "campaignsTitle": "Bonuspisteitä nyt",
+    "campaignMult": "{mult}× pisteet {date} asti",
+    "howTitle": "Näin se toimii",
+    "howEarn": "Ansaitset {points} pisteen jokaisesta toimitettujen tuotteiden eurosta (alv 0).",
+    "howSpend": "{per} pistettä = 1 €: käytä ne ostoskorissa tai hyvityksenä laskulla.",
+    "howExpiry": "Pisteet vanhenevat {months} kuukautta ansaitsemisen jälkeen.",
+    "historyTitle": "Pistehistoria",
+    "historyEmpty": "Ei vielä pisteitä — ne tulevat ensimmäisen toimitetun tilauksesi myötä.",
+    "colDate": "Päivä",
+    "colWhat": "Mitä",
+    "colPoints": "Pisteet",
+    "kinds": {
+      "EARN": "Toimitettu tilaus",
+      "REFERRAL": "Suosittelubonus",
+      "BONUS": "FIRINGIn bonus",
+      "ADJUST": "FIRINGIn korjaus",
+      "REDEEM_ORDER": "Käytetty tilaukseen",
+      "REDEEM_CREDIT": "Muutettu hyvitykseksi",
+      "REFUND": "Palautettu (tilaus peruttu)",
+      "REVERSE": "Peruttu (tuotteet hyvitetty)",
+      "EXPIRE": "Vanhentunut"
+    },
+    "expires": "vanhenee {date}",
+    "cartTitle": "Käytä pisteesi",
+    "cartBalance": "Sinulla on {points} pistettä ({value})",
+    "cartHint": "alkaen {min} pisteestä, enintään {pct} % tuotteista",
+    "cartUse": "Käytä",
+    "cartMax": "Käytä {points}",
+    "cartApplied": "{points} pistettä käytetty: −{amount}",
+    "cartNone": "Ei pisteitä tässä tilauksessa",
+    "cartRemove": "Älä käytä pisteitä",
+    "cartCapped": "Tähän tilaukseen voi käyttää vain {points} pistettä (enintään {pct} % tuotteista).",
+    "cartNotEnough": "Sinulla on vähemmän pisteitä kuin valitsit — muuta määrää.",
+    "cartBelowMin": "Käytä vähintään {min} pistettä.",
+    "cartFew": "Sinulla on {points} pistettä — {min} pisteestä alkaen voit käyttää ne täällä.",
+    "cartLine": "Pisteet ({points})",
+    "cartFreeDelivery": "Ilmainen toimitus — tasosi etu."
   }
 }

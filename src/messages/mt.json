@@ -252,7 +252,8 @@
       "legalForm": "Forma legali",
       "certificateCode": "Kodiċi taċ-ċertifikat tar-reġistru",
       "certificateCodeHint": "In-numru tar-reġistru tal-kumpaniji tiegħek. Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu.",
-      "certificateCodeHintPt": "Kodiċi ta' aċċess taċ-certidão permanente (12-il ċifra, 0000-0000-0000). Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu."
+      "certificateCodeHintPt": "Kodiċi ta' aċċess taċ-certidão permanente (12-il ċifra, 0000-0000-0000). Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu.",
+      "referral": "Ġejt mistieden bil-kodiċi {code} — tirċievi punti bonus wara l-ewwel ordni kkonsenjata."
     },
     "businessTypes": {
       "restaurant": "Ristorant",
@@ -838,7 +839,8 @@
     "Demand Events": "Avvenimenti tad-domanda",
     "Planning Settings": "Settings tal-ippjanar",
     "Quality Claims": "Ilmenti dwar il-kwalità",
-    "Quality Score": "Punteġġ tal-kwalità"
+    "Quality Score": "Punteġġ tal-kwalità",
+    "Rewards": "Premjijiet"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1460,6 +1462,18 @@
     "quality_alert": {
       "title": "Twissija tal-kwalità: {label}",
       "body": "{label}: {value} (twissija minn {threshold})."
+    },
+    "loyalty_tier_up": {
+      "title": "Wasalt għal {tier}",
+      "body": "Ix-xiri tiegħek fl-aħħar 12-il xahar wassalek għal-livell {tier}. Ara l-vantaġġi ġodda fil-Premjijiet."
+    },
+    "loyalty_expiring": {
+      "title": "{points} punt jiskadu dalwaqt",
+      "body": "{points} mill-punti tiegħek jiskadu fl-{date}. Użahom qabel fil-karrettun jew bħala kreditu."
+    },
+    "loyalty_referral": {
+      "title": "Bonus ta' riferiment: +{points} punt",
+      "body": "Grazzi għar-riferiment ma' {company}, issa għandek {points} punt fil-Premjijiet tiegħek."
     }
   },
   "notifications": {
@@ -3924,5 +3938,79 @@
     "privacy": "Il-browser tiegħek jibdel il-leħen tiegħek f'test (Chrome u Edge jużaw is-servizz tal-leħen online tagħhom).",
     "denied": "Il-mikrofonu huwa mblukkat — ippermettih fis-settings tal-browser.",
     "noSpeech": "Ma fhimtx — erġa' pprova, jekk jogħġbok."
+  },
+  "loyalty": {
+    "title": "Premjijiet",
+    "description": "Aqla' punti fuq kull ordni kkonsenjata u użahom bħala skont jew bħala kreditu. FIRINGI tħallas il-premjijiet kollha.",
+    "balance": "Il-punti tiegħek",
+    "worth": "Valur: {value}",
+    "lifetime": "Miksuba b'kollox: {points}",
+    "expiring": "{points} punt jiskadu fl-{date} — użahom qabel.",
+    "tierLabel": "Il-livell tiegħek",
+    "tiers": {
+      "BRONZE": "Bronż",
+      "SILVER": "Fidda",
+      "GOLD": "Deheb"
+    },
+    "spend": "Xiri fl-aħħar 12-il xahar: {amount}",
+    "tierNext": "Għad fadal {missing} xiri biex tasal għal {tier}",
+    "tierTop": "Inti fl-ogħla livell.",
+    "perkPoints": "{mult}× punti għal kull €",
+    "perkFreeDelivery": "Kunsinna b'xejn fuq kull ordni",
+    "perkPriority": "Appoġġ bi prijorità",
+    "useTitle": "Uża l-punti tiegħek",
+    "useCart": "Fil-karrettun: {per} punt = 1 €, minn {min} punt, sa {pct}% ta' ordni.",
+    "openCart": "Iftaħ il-karrettun",
+    "creditTitle": "Ibdel il-punti f'kreditu",
+    "creditText": "Il-kreditu jitnaqqas mill-eqdem fattura mhux imħallsa tiegħek (nota ta' kreditu minn FIRINGI).",
+    "creditPoints": "Punti",
+    "creditButton": "Ikseb kreditu",
+    "creditFew": "Għal nota ta' kreditu għandek bżonn mill-inqas {min} punt.",
+    "creditDone": "Nota ta' kreditu {number} ta' {amount} fuq il-fattura {invoice}.",
+    "referralTitle": "Stieden negozju",
+    "referralText": "Aqsam il-link tiegħek. Meta n-negozju li tistieden jirċievi l-ewwel kunsinna, int tieħu {inviter} punt u huwa {invited}.",
+    "referralCode": "Il-kodiċi tiegħek",
+    "referralCopy": "Ikkopja l-link",
+    "referralCopied": "Ikkopjat",
+    "referralInvited": "Negozji li stedint",
+    "referralRewarded": "Bonus riċevut",
+    "referralPending": "Qed jistenna l-ewwel kunsinna",
+    "campaignsTitle": "Punti bonus issa",
+    "campaignMult": "{mult}× punti sal-{date}",
+    "howTitle": "Kif taħdem",
+    "howEarn": "Taqla' {points} punt għal kull € ta' oġġetti kkonsenjati (mingħajr VAT).",
+    "howSpend": "{per} punt = 1 €: użahom fil-karrettun jew bħala kreditu fuq fattura.",
+    "howExpiry": "Il-punti jiskadu {months} xahar wara li taqlagħhom.",
+    "historyTitle": "Storja tal-punti",
+    "historyEmpty": "L-ebda punt s'issa — jaslu mal-ewwel ordni kkonsenjata.",
+    "colDate": "Data",
+    "colWhat": "X'inhu",
+    "colPoints": "Punti",
+    "kinds": {
+      "EARN": "Ordni kkonsenjata",
+      "REFERRAL": "Bonus ta' riferiment",
+      "BONUS": "Bonus minn FIRINGI",
+      "ADJUST": "Korrezzjoni minn FIRINGI",
+      "REDEEM_ORDER": "Użati fuq ordni",
+      "REDEEM_CREDIT": "Mibdula f'kreditu",
+      "REFUND": "Mogħtija lura (ordni kkanċellata)",
+      "REVERSE": "Meħuda lura (oġġetti kkreditati)",
+      "EXPIRE": "Skadew"
+    },
+    "expires": "jiskadu fl-{date}",
+    "cartTitle": "Uża l-punti tiegħek",
+    "cartBalance": "Għandek {points} punt ({value})",
+    "cartHint": "minn {min} punt, sa {pct}% tal-oġġetti",
+    "cartUse": "Uża",
+    "cartMax": "Uża {points}",
+    "cartApplied": "{points} punt użati: −{amount}",
+    "cartNone": "L-ebda punt fuq din l-ordni",
+    "cartRemove": "Tużax punti",
+    "cartCapped": "Fuq din l-ordni jistgħu jintużaw biss {points} punt (sa {pct}% tal-oġġetti).",
+    "cartNotEnough": "Għandek inqas punti milli għażilt — ibdel in-numru.",
+    "cartBelowMin": "Uża mill-inqas {min} punt.",
+    "cartFew": "Għandek {points} punt — minn {min} tista' tużahom hawn.",
+    "cartLine": "Punti ({points})",
+    "cartFreeDelivery": "Kunsinna b'xejn — vantaġġ tal-livell tiegħek."
   }
 }
