@@ -62,7 +62,7 @@ export function BuyAgainButton({ sellerId, locale, label, done, cartHref, cartLa
 export function AiSettingsForm({ settings }: { settings: AiSettings }) {
   const { pending, msg, setMsg, router, start } = useRun();
   const [v, setV] = useState(settings);
-  const box = (k: "staff" | "buyers" | "suppliers", label: string) => <label className="flex items-center gap-2 text-sm"><input type="checkbox" name={k} checked={v[k]} onChange={(e) => setV({ ...v, [k]: e.target.checked })} /> {label}</label>;
+  const box = (k: "staff" | "buyers" | "suppliers" | "photos", label: string) => <label className="flex items-center gap-2 text-sm"><input type="checkbox" name={k} checked={v[k]} onChange={(e) => setV({ ...v, [k]: e.target.checked })} /> {label}</label>;
   return (
     <div className="space-y-3" data-testid="ai-settings">
       <div className="grid gap-3 sm:grid-cols-2">
@@ -73,7 +73,8 @@ export function AiSettingsForm({ settings }: { settings: AiSettings }) {
           <input id="ai-limit" type="number" min={1} max={500} value={v.hourlyLimit} onChange={(e) => setV({ ...v, hourlyLimit: Number(e.target.value) })} className="h-9 w-full rounded-md border bg-background px-3 text-sm" />
         </div>
       </div>
-      <fieldset className="flex flex-wrap gap-4"><legend className="mb-1 text-sm font-medium">Assistant available to</legend>{box("staff", "FIRINGI staff")}<p className="w-full text-xs text-muted-foreground">Suppliers and customers: switched on per company in Settings &rsaquo; Business Features (&ldquo;Assistant&rdquo;).</p></fieldset>
+      <fieldset className="flex flex-wrap gap-4"><legend className="mb-1 text-sm font-medium">Assistant available to</legend>{box("staff", "FIRINGI staff")}{box("buyers", "Customers")}{box("suppliers", "Suppliers")}<p className="w-full text-xs text-muted-foreground">Unticking Customers or Suppliers switches the Assistant off for all of them at once. When ticked, it is on per company unless switched off in Settings &rsaquo; Business Features (&ldquo;Assistant&rdquo;).</p></fieldset>
+      <fieldset className="flex flex-wrap gap-4"><legend className="mb-1 text-sm font-medium">Photos &amp; barcode scan</legend>{box("photos", "Customers and suppliers can send photos and scan barcodes in the Assistant")}<p className="w-full text-xs text-muted-foreground">Photos need the AI connected and cost a little more per question. Per company: Settings &rsaquo; Business Features (&ldquo;Photos&rdquo;).</p></fieldset>
       <div className="flex items-center gap-2">
         <Button disabled={pending} onClick={() => start(async () => { const r = await saveAiSettingsAction(v); setMsg(r.ok ? { ok: true, text: "Saved" } : { ok: false, text: r.error }); if (r.ok) router.refresh(); })}>Save AI settings</Button>
         <Msg msg={msg} />

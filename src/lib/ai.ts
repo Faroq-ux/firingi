@@ -2,8 +2,9 @@
 export const AI_MODELS = ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"] as const;
 export type AiModel = (typeof AI_MODELS)[number];
 export const AI_MODEL_LABEL: Record<AiModel, string> = { "claude-opus-5-5": "Claude Opus 5.5 (best answers)", "claude-sonnet-5-5": "Claude Sonnet 5.5 (faster, cheaper)", "claude-haiku-5-5": "Claude Haiku 5.5 (fastest, cheapest)" };
-export type AiSettings = { model: AiModel; staff: boolean; buyers: boolean; suppliers: boolean; hourlyLimit: number };
-export const DEFAULT_AI: AiSettings = { model: "claude-opus-5-5", staff: true, buyers: true, suppliers: true, hourlyLimit: 30 };
+/** buyers / suppliers: master switches for every customer / supplier (the per-company switch still applies); photos: photos & barcode scan in their Assistant. */
+export type AiSettings = { model: AiModel; staff: boolean; buyers: boolean; suppliers: boolean; photos: boolean; hourlyLimit: number };
+export const DEFAULT_AI: AiSettings = { model: "claude-opus-5-5", staff: true, buyers: true, suppliers: true, photos: true, hourlyLimit: 30 };
 
 export const REC_KINDS = ["REORDER_DUE", "STOCK_OUT", "LOW_COVER", "CHEAPER_SUPPLIER", "MARGIN_GAP", "DELIVERY_RISK", "DEMAND_SURGE"] as const;
 export type RecKind = (typeof REC_KINDS)[number];

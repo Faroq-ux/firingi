@@ -36,7 +36,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
       {header}
       <AssistantChat
         side="VENDOR" base="/vendor/assistant" locale={locale} l={l}
-        examples={[t("agent.vendorEx1"), t("agent.vendorEx2"), t("agent.vendorEx3"), t("agent.vendorEx4")]} agent={agent}
+        photos={status.photos} examples={[t("agent.vendorEx1"), t("agent.vendorEx2"), t("agent.vendorEx3"), t("agent.vendorEx4")]} agent={agent}
         toolLabel={{ ...Object.fromEntries(TOOL_KEYS.map((k) => [k, t(`tools.${k}`)])), ...Object.fromEntries(AGENT_TOOLS.map((k) => [k, t(`agent.tools.${k}`)])) }}
         conversations={conversations.map((x) => ({ id: x.id, title: x.title, updatedAt: x.updatedAt.toISOString() }))}
         active={active?.id ?? null}

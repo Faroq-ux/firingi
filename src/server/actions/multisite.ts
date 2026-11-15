@@ -28,4 +28,4 @@ export const saveBudgetAction = defineAction({
 export const deleteBudgetAction = defineAction({ permission: MANAGE, schema: z.object({ id }), handler: async (ctx, i) => { await deleteBudget(ctx, i.id); return true; } });
 export const budgetPreviewAction = defineAction({ permission: "buyer.orders.place", schema: z.object({ addressId: id }), handler: async (ctx, i) => budgetPreview(ctx, i.addressId) });
 
-export const setCompanyFeatureAction = defineAction({ permission: "admin.settings.manage", schema: z.object({ companyId: id, key: z.enum(["ACCOUNTING", "ASSISTANT"]), enabled: z.boolean() }), handler: async (ctx, i) => { await setCompanyFeature(ctx, i.companyId, i.key, i.enabled); return true; } });
+export const setCompanyFeatureAction = defineAction({ permission: "admin.settings.manage", schema: z.object({ companyId: id, key: z.enum(["ACCOUNTING", "ASSISTANT", "ASSISTANT_PHOTOS"]), enabled: z.boolean() }), handler: async (ctx, i) => { await setCompanyFeature(ctx, i.companyId, i.key, i.enabled); return true; } });

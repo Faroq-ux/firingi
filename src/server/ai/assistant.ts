@@ -56,8 +56,10 @@ export async function saveAiSettings(ctx: Ctx, input: Partial<AiSettings>) {
 export async function assistantStatus(side: Side, companyId?: string) {
   const s = await aiSettings();
   const configured = !!process.env.ANTHROPIC_API_KEY || !!transportOverride || simulating(side);
-  const on = side === "STAFF" ? s.staff : !!companyId && (await companyFeatureOn(companyId, "ASSISTANT"));
-  return { configured, enabled: configured && on, switchedOn: on, model: s.model };
+  const on = side === "STAFF" ? s.staff : (side === "BUYER" ? s.buyers : s.suppliers) && !!companyId && (await companyFeatureOn(companyId, "ASSISTANT"));
+  // Photos & barcode scan: FIRINGI's global switch and the company's own
+  const photos = side !== "STAFF" && on && s.photos && (await companyFeatureOn(companyId!, "ASSISTANT_PHOTOS"));
+  return { configured, enabled: configured && on, switchedOn: on, photos, model: s.model };
 }
 
 // ── transport (swappable in tests: no live API calls there) ─────────────────
@@ -141,7 +143,9 @@ function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
  */
 async function assertSide(ctx: Ctx, side: Side) {
   aiScope(ctx, side);
-  if (side !== "STAFF" && !(await companyFeatureOn(ctx.company.id, "ASSISTANT"))) throw new CompanyFeatureOffError();
+  if (side === "STAFF") return;
+  const s = await aiSettings();
+  if (!(side === "BUYER" ? s.buyers : s.suppliers) || !(await companyFeatureOn(ctx.company.id, "ASSISTANT"))) throw new CompanyFeatureOffError();
 }
 
 export async function listConversations(ctx: Ctx, side: Side) {
@@ -177,6 +181,7 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
   const status = await assistantStatus(side, ctx.company.id);
   if (!status.configured) throw new AppError("AI_NOT_CONFIGURED", "The AI assistant isn't set up yet (no Anthropic API key).", 503);
   if (!status.switchedOn) throw new ForbiddenError("The AI assistant is switched off.");
+  if (files.length && !status.photos) throw new ValidationError("Photos are switched off for the Assistant.");
   const settings = await aiSettings();
   const asked = await prisma.aiMessage.count({ where: { role: "user", at: { gt: new Date(Date.now() - 3600_000) }, conversation: { userId: ctx.user.id } } });
   if (asked >= settings.hourlyLimit) throw new AppError("AI_LIMIT", `You've reached ${settings.hourlyLimit} questions this hour — please try again later.`, 429);

@@ -8,7 +8,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { prisma } from "@/server/db";
 import { aiSettings, ask, assistantPhotoKey, assistantStatus, getConversation, handoverToSupport, listConversations, saveAiSettings, setAiTransportForTests, type AiTransport } from "@/server/ai/assistant";
-import { companyFeatureOn } from "@/server/accounting/features";
+import { companyFeatureOn, hiddenCompanyNav } from "@/server/accounting/features";
 import { searchAcrossSuppliers } from "@/server/data/catalogue-buyer";
 import { ticketPhotoKey } from "@/server/services/support";
 import { ctxFor, setAiRole } from "../helpers";
@@ -359,6 +359,48 @@ describe("AI assistant", () => {
     } finally {
       if (env.key) process.env.ANTHROPIC_API_KEY = env.key;
       if (env.sim) process.env.ASSISTANT_SIMULATE = env.sim; else delete process.env.ASSISTANT_SIMULATE;
+    }
+  });
+
+  it("FIRINGI's master switches (all customers / all suppliers) and the photo switches (global and per company)", async () => {
+    const sa = await ctxFor(SA), k = await ctxFor(KEBAB), lx = await ctxFor(LX_OWNER);
+    const before = await aiSettings();
+    const jpeg = () => new File([Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0xff, 0xd9])], "p.jpg", { type: "image/jpeg" });
+    try {
+      // all customers off: hidden and refused for customers, suppliers unaffected
+      await saveAiSettings(sa, { buyers: false });
+      expect((await assistantStatus("BUYER", k.company.id)).switchedOn).toBe(false);
+      await expect(ask(k, "BUYER", { text: "olá" })).rejects.toThrow(/switched this on/);
+      expect((await hiddenCompanyNav(k, "buy")).has("ASSISTANT")).toBe(true);
+      expect((await assistantStatus("VENDOR", lx.company.id)).switchedOn).toBe(true);
+      expect((await hiddenCompanyNav(lx, "vendor")).has("ASSISTANT")).toBe(false);
+      await saveAiSettings(sa, { buyers: true, suppliers: false });
+      expect((await assistantStatus("BUYER", k.company.id)).switchedOn).toBe(true);
+      await expect(listConversations(lx, "VENDOR")).rejects.toThrow(/switched this on/);
+      await saveAiSettings(sa, { suppliers: true });
+
+      // photos: on by default; off for everyone in AI settings
+      expect((await assistantStatus("BUYER", k.company.id)).photos).toBe(true);
+      await saveAiSettings(sa, { photos: false });
+      expect((await assistantStatus("BUYER", k.company.id)).photos).toBe(false);
+      script(() => msg([text("x")], "end_turn"));
+      await expect(ask(k, "BUYER", { text: "isto", photos: [jpeg()] })).rejects.toThrow(/Photos are switched off/);
+      script(() => msg([text("ok")], "end_turn"));
+      expect((await ask(k, "BUYER", { text: "sem foto" })).answer).toBe("ok"); // the chat itself still works
+      await saveAiSettings(sa, { photos: true });
+
+      // photos off for one company only (Business Features)
+      await setCompanyFeature(sa, k.company.id, "ASSISTANT_PHOTOS", false);
+      expect((await assistantStatus("BUYER", k.company.id)).photos).toBe(false);
+      expect((await assistantStatus("VENDOR", lx.company.id)).photos).toBe(true);
+      await expect(setCompanyFeature(await ctxFor(OPS), k.company.id, "ASSISTANT_PHOTOS", true)).rejects.toThrow(); // only settings managers
+      // Assistant off for the company → no photos either
+      await prisma.companyFeature.deleteMany({ where: { key: "ASSISTANT_PHOTOS", companyId: k.company.id } });
+      await assistantFor(KEBAB, false);
+      expect((await assistantStatus("BUYER", k.company.id)).photos).toBe(false);
+    } finally {
+      await saveAiSettings(sa, before);
+      await prisma.companyFeature.deleteMany({ where: { key: { in: ["ASSISTANT", "ASSISTANT_PHOTOS"] }, companyId: k.company.id } });
     }
   });
 

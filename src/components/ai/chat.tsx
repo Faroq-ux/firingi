@@ -30,9 +30,9 @@ export type AgentLabels = Record<"addedToCart" | "cartNow" | "openCart" | "hando
 type Msg = { id: string; role: "user" | "assistant"; text: string; tools?: ChatTool[]; model?: string | null; fellBack?: boolean; photos?: number; previews?: string[] };
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ""));
 
-export function AssistantChat({ side, base, conversations, active, initial, examples, l = EN_CHAT, locale, showModel = false, toolLabel = TOOL_LABEL, agent }: {
+export function AssistantChat({ side, base, conversations, active, initial, examples, l = EN_CHAT, locale, showModel = false, toolLabel = TOOL_LABEL, agent, photos: photosOn = false }: {
   side: "STAFF" | "VENDOR" | "BUYER"; base: string; conversations: { id: string; title: string; updatedAt: string }[]; active: string | null; initial: Msg[];
-  examples: string[]; l?: ChatLabels; locale: string; showModel?: boolean; toolLabel?: Record<string, string>; agent?: AgentLabels;
+  examples: string[]; l?: ChatLabels; locale: string; showModel?: boolean; toolLabel?: Record<string, string>; agent?: AgentLabels; photos?: boolean;
 }) {
   const router = useRouter();
   const [messages, setMessages] = useState<Msg[]>(initial);
@@ -46,7 +46,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
   useEffect(() => { setMessages(initial); setConversationId(active); }, [active, initial]);
   useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages.length, pending]);
 
-  const media = agent?.media;
+  const media = photosOn ? agent?.media : undefined; // photos & scan only where FIRINGI has them on
   const addPhotos = (files: File[]) => {
     setError(null);
     setPhotos((cur) => {

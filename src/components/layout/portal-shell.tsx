@@ -30,7 +30,7 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
   // Warehouse features FIRINGI switched off for this supplier are hidden (the scanner needs pick & pack or shelves)
   const off = portal === "vendor" ? await hiddenWarehouseNav(ctx) : new Set<string>();
   // Optional features FIRINGI hasn't switched on for this company (accounting) are hidden too
-  if (portal === "vendor" || portal === "buy") for (const k of await hiddenCompanyNav(ctx)) off.add(k);
+  if (portal === "vendor" || portal === "buy") for (const k of await hiddenCompanyNav(ctx, portal)) off.add(k);
   if (off.has("PICK_PACK") && off.has("BINS")) off.add("SCAN");
   const nav = resolveNav(NAV_BY_PORTAL[portal], ctx.permissions, locale, messages.navLabels, off);
   const cart = portal === "buy" && can(ctx, "buyer.orders.place") ? { count: await cartCount(ctx), label: messages.shell?.cart ?? "Cart" } : null;

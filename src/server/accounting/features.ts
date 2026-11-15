@@ -1,7 +1,8 @@
 /**
  * Optional features per company (Phase 27): Accounting — off until FIRINGI switches it on; and the
  * Assistant (the AI support & sales agent for customers and suppliers) — on for everyone unless FIRINGI
- * switches it off for a company. Switching a feature off hides it and keeps what was recorded.
+ * switches it off for a company — and photos & barcode scan in that Assistant (same default). Switching a
+ * feature off hides it and keeps what was recorded.
  */
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -9,10 +10,10 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "@/server/services/audit";
 
-export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT"] as const;
+export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT", "ASSISTANT_PHOTOS"] as const;
 export type CompanyFeatureKey = (typeof COMPANY_FEATURES)[number];
 /** On for every company unless FIRINGI switched it off (the Assistant is the support & sales channel). */
-const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true };
+const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true, ASSISTANT_PHOTOS: true };
 
 export async function companyFeatureOn(companyId: string, key: CompanyFeatureKey) {
   const row = await prisma.companyFeature.findUnique({ where: { companyId_key: { companyId, key } } });
@@ -23,11 +24,21 @@ export class CompanyFeatureOffError extends AppError {
   constructor() { super("FEATURE_OFF", "FIRINGI hasn't switched this on for your company. Contact FIRINGI to use it.", 403); }
 }
 
-/** Nav feature keys that are off for the caller's company (hidden from the menu). */
-export async function hiddenCompanyNav(ctx: Ctx): Promise<Set<string>> {
+/**
+ * Nav feature keys that are off for the caller's company (hidden from the menu). In the customer
+ * ("buy") and supplier ("vendor") portals the Assistant is also hidden when FIRINGI switched it off for
+ * all customers / all suppliers (AI settings).
+ */
+export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Promise<Set<string>> {
   if (ctx.company.type === "ADMIN") return new Set();
   const rows = await prisma.companyFeature.findMany({ where: { companyId: ctx.company.id } });
-  return new Set(COMPANY_FEATURES.filter((k) => !(rows.find((r) => r.key === k)?.enabled ?? DEFAULT_ON[k])));
+  const off = new Set<string>(COMPANY_FEATURES.filter((k) => !(rows.find((r) => r.key === k)?.enabled ?? DEFAULT_ON[k])));
+  if (portal) {
+    const { aiSettings } = await import("@/server/ai/assistant");
+    const s = await aiSettings();
+    if (!(portal === "buy" ? s.buyers : s.suppliers)) off.add("ASSISTANT");
+  }
+  return off;
 }
 
 function requireStaff(ctx: Ctx, manage: boolean) {
@@ -46,6 +57,7 @@ export async function companiesWithFeatures(ctx: Ctx) {
     id: c.id, name: c.tradeName ?? c.legalName, legalName: c.legalName, type: c.type, country: c.country.code, entries: c._count.accountingEntries,
     accounting: !!c.features.find((f) => f.key === "ACCOUNTING")?.enabled, updatedAt: c.features.find((f) => f.key === "ACCOUNTING")?.updatedAt ?? null,
     assistant: c.features.find((f) => f.key === "ASSISTANT")?.enabled ?? DEFAULT_ON.ASSISTANT,
+    photos: c.features.find((f) => f.key === "ASSISTANT_PHOTOS")?.enabled ?? DEFAULT_ON.ASSISTANT_PHOTOS,
   }));
 }
 

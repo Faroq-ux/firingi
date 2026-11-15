@@ -31,6 +31,6 @@ export const handoverAction = defineAction({
 export const deleteConversationAction = defineAction({ permission: null, schema: z.object({ side, id: z.string() }), handler: async (ctx, i) => done(await assistant.deleteConversation(ctx, i.side, i.id)) });
 export const saveAiSettingsAction = defineAction({
   permission: "admin.settings.manage",
-  schema: z.object({ model: z.enum(AI_MODELS), staff: z.boolean(), buyers: z.boolean(), suppliers: z.boolean(), hourlyLimit: z.coerce.number().int() }),
+  schema: z.object({ model: z.enum(AI_MODELS), staff: z.boolean(), buyers: z.boolean(), suppliers: z.boolean(), photos: z.boolean(), hourlyLimit: z.coerce.number().int() }),
   handler: async (ctx, i) => done(await assistant.saveAiSettings(ctx, i)),
 });

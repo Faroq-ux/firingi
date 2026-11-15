@@ -282,11 +282,11 @@ export function CheckoutBudgets({ addressId, locale }: { addressId: string; loca
 // ───────────────────────────── FIRINGI ─────────────────────────────
 
 /** FIRINGI back office (English): a company's optional feature on / off. */
-export function FeatureSwitch({ companyId, enabled, label, feature = "ACCOUNTING" }: { companyId: string; enabled: boolean; label: string; feature?: "ACCOUNTING" | "ASSISTANT" }) {
+export function FeatureSwitch({ companyId, enabled, label, feature = "ACCOUNTING" }: { companyId: string; enabled: boolean; label: string; feature?: "ACCOUNTING" | "ASSISTANT" | "ASSISTANT_PHOTOS" }) {
   const { pending, error, run } = useRun();
   return (
     <span className="inline-flex items-center gap-2">
-      <button type="button" role="switch" aria-checked={enabled} aria-label={label} disabled={pending} data-testid={feature === "ACCOUNTING" ? "feature-switch" : "assistant-switch"}
+      <button type="button" role="switch" aria-checked={enabled} aria-label={label} disabled={pending} data-testid={feature === "ACCOUNTING" ? "feature-switch" : feature === "ASSISTANT" ? "assistant-switch" : "photos-switch"}
         onClick={() => run(() => setCompanyFeatureAction({ companyId, key: feature, enabled: !enabled }))}
         className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors disabled:opacity-60 ${enabled ? "bg-[linear-gradient(90deg,var(--vivid-teal),var(--vivid-blue))]" : "bg-muted-foreground/30"}`}>
         <span className={`inline-block size-5 rounded-full bg-white shadow transition-transform ${enabled ? "translate-x-5" : "translate-x-0.5"}`} />

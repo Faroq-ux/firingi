@@ -195,6 +195,38 @@ check("supplier: Assistant gone", await until(async () => (await lx.request.get(
 await row.getByTestId("assistant-switch").click();
 await until(async () => (await row.getByTestId("assistant-switch").getAttribute("aria-checked")) === "true");
 
+// ── 6. Photos switch per company, and FIRINGI's master switches (AI settings) ──
+const kRow = sa.getByTestId("business-features").locator("tr", { hasText: "Kebab House" }).first();
+check("Business Features: Photos column, on by default", (await kRow.getByTestId("photos-switch").getAttribute("aria-checked")) === "true");
+await kRow.getByTestId("photos-switch").click();
+check("photos switched off for Kebab House", await until(async () => (await kRow.getByTestId("photos-switch").getAttribute("aria-checked")) === "false"));
+await shot(sa, "agent-10-business-features-photos", true);
+const kp2 = await login("owner@kebabhouse.test");
+await go(kp2, "/buy/assistant");
+check("customer: no photo button when photos are off (chat still there)", (await kp2.getByTestId("photo-btn").count()) === 0 && (await kp2.getByTestId("chat-input").count()) === 1);
+await kRow.getByTestId("photos-switch").click();
+await until(async () => (await kRow.getByTestId("photos-switch").getAttribute("aria-checked")) === "true");
+await go(kp2, "/buy/assistant");
+check("…and back when switched on", (await kp2.getByTestId("photo-btn").count()) === 1);
+
+const saveAi = async () => { await sa.getByRole("button", { name: "Save AI settings" }).click(); await until(async () => /Saved/.test(await sa.getByTestId("ai-settings").textContent())); };
+await go(sa, "/admin/ai/assistant");
+const aiBox = (name) => sa.getByTestId("ai-settings").getByLabel(name, { exact: false });
+check("AI settings: Customers, Suppliers and Photos switches", (await aiBox("Customers").count()) >= 1 && (await sa.getByTestId("ai-settings").getByLabel("Suppliers", { exact: true }).count()) === 1 && (await aiBox("send photos").count()) === 1);
+await aiBox("send photos").uncheck(); await saveAi();
+await go(kp2, "/buy/assistant");
+check("photos off for everyone → no photo button", (await kp2.getByTestId("photo-btn").count()) === 0);
+await go(sa, "/admin/settings/business-features");
+check("Business Features says photos are off for everyone", /Photos & barcode scan are switched off for everyone/.test(await sa.getByTestId("ai-global-off").textContent()));
+await go(sa, "/admin/ai/assistant");
+await aiBox("send photos").check();
+await sa.getByTestId("ai-settings").getByLabel("Customers", { exact: true }).uncheck(); await saveAi();
+check("Assistant off for all customers → gone from the menu and the page", await until(async () => (await kp2.request.get(`${BASE}/buy/assistant`)).status() === 404) && (await (async () => { await go(kp2, "/buy/dashboard/overview"); return (await kp2.locator("aside").getByText(/^Assistente$/).count()) === 0; })()));
+check("…suppliers still have it", (await lx.request.get(`${BASE}/vendor/assistant`)).status() === 200);
+await go(sa, "/admin/ai/assistant");
+await sa.getByTestId("ai-settings").getByLabel("Customers", { exact: true }).check(); await saveAi();
+check("customers have it again", await until(async () => (await kp2.request.get(`${BASE}/buy/assistant`)).status() === 200));
+
 check("no page errors", errors.length === 0, errors.slice(0, 3).join(" | "));
 await browser.close();
 console.log(failures ? `\n${failures} check(s) failed` : "\nall agent checks passed");

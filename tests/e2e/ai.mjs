@@ -122,7 +122,7 @@ await go(k, "/buy/assistant");
 check("customer: menu shows \"Assistente\" by default (not \"Assistente IA\")", (await k.locator("aside").getByText(/^Assistente$/).count()) > 0 && (await k.locator("aside").getByText(/Assistente IA/).count()) === 0);
 check("customer Assistant page in Portuguese", /Assistente/.test(await k.locator("h1").textContent()) && /assistente da FIRINGI/.test(await main(k)));
 await go(sa, "/admin/settings/business-features");
-check("Business Features: Assistant on by default", /the Assistant is on by default/.test(await main(sa)));
+check("Business Features: Assistant on by default", /the Assistant and its photos are on by default/.test(await main(sa)));
 const kRow = sa.getByTestId("business-features").locator("tr", { hasText: "Kebab House" }).first();
 check("Kebab House: Assistant on", (await kRow.getByTestId("assistant-switch").getAttribute("aria-checked")) === "true");
 await kRow.getByTestId("assistant-switch").click();

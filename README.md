@@ -637,6 +637,11 @@ Customers and suppliers chat with FIRINGI's AI in their own language — typed o
   FIRINGI (`/api/support/<ticket>/photos/…`). Earlier photos aren't sent to the AI again (cost) — the
   answer that followed them carries what they showed. Photos need the real AI; each costs a little more
   than a text question.
+- **Switches (FIRINGI admin)**: *AI Centre › Assistant › AI settings* — **Customers** / **Suppliers**
+  (the Assistant for all of them at once) and **Photos & barcode scan** (for everyone). *Settings ›
+  Business Features* — per company: **Assistant** and **Photos** (both on by default). A company has
+  photos only when both the global and its own switch are on; the page warns when a global switch is
+  off. Switching photos off keeps the chat (typed and spoken) working.
 - **Costs**: the real AI needs `ANTHROPIC_API_KEY` on the server; every question is billed by Anthropic
   (the hourly limit per person in AI settings caps it). Without a key the page says it isn't connected
   and points to Help & Support.
