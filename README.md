@@ -609,6 +609,18 @@ or a setting by itself. A person accepts or dismisses each suggestion.
   when something is due within 3 days.
 - Customer payments online (MB WAY, Multibanco, card, SEPA direct debit): see Phase 20.
 
+## Voice: speak instead of typing, read aloud
+
+For people who find writing hard: a 🎤 button next to the text box in the **Assistant**, **Help & Support**
+(new request and replies) and **quality claims** (description, supplier's answer, messages) — tap, speak in
+your own language, tap again; the words land in the box to check and send. A 🔊 **Read aloud** button on
+Assistant answers and on Support / claim messages reads them in the user's language. It uses the browser's
+own speech features (Chrome, Edge, Safari — phones and computers; nothing to pay, nothing extra on the
+server). Chrome and Edge send the audio to their online speech service to turn it into text (said in the
+button's hint); the browser asks for the microphone the first time. Where a browser can't (Firefox), the
+buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
+Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
+
 ## Quality claims & credits (Phase 31)
 
 Customers › Orders › **Quality Claims** (+ *Report a problem* on a delivered order); suppliers › Orders ›

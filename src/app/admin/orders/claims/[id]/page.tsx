@@ -78,7 +78,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               </CardContent>
             </Card>
           )}
-          <Conversation d={d} t={t} locale="en-GB">
+          <Conversation d={d} t={t} locale="en-GB" english>
             {d.can.message && <MessageForm claimId={d.id} allowInternal labels={{ placeholder: "Message to the customer and the supplier — or an internal note", send: "Send", internal: "FIRINGI only", photos: "Photos" }} />}
           </Conversation>
         </div>

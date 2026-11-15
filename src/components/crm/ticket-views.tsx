@@ -1,5 +1,6 @@
 /** Ticket conversation (company and staff). */
 import { formatDate } from "@/lib/utils";
+import { EN_VOICE, SpeakButton } from "@/components/voice/voice";
 
 type Msg = { id: string; body: string; createdAt: Date; internal: boolean; fromStaff: boolean; author: { name: string } };
 
@@ -15,6 +16,7 @@ export function Thread({ messages, locale, l, staff }: { messages: Msg[]; locale
                 {m.internal ? `${l.internalNote} · ` : ""}{m.fromStaff ? (staff ? m.author.name : `${l.firingi} · ${m.author.name}`) : staff ? m.author.name : `${l.you} · ${m.author.name}`} · {formatDate(m.createdAt, locale, true)}
               </div>
               <p className="whitespace-pre-line">{m.body}</p>
+              {!m.internal && <div className="mt-1 -ml-2"><SpeakButton text={m.body} labels={staff ? EN_VOICE : undefined} /></div>}
             </div>
           </li>
         );

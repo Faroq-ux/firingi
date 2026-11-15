@@ -5,6 +5,7 @@ import type { claimDetail } from "@/server/claims/service";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatMoney } from "@/lib/utils";
+import { EN_VOICE, SpeakButton } from "@/components/voice/voice";
 
 export type Detail = Awaited<ReturnType<typeof claimDetail>>;
 export type T = (key: string, vars?: Record<string, string | number>) => string;
@@ -148,7 +149,7 @@ export function DecisionCard({ d, t, locale, creditNoteHref }: { d: Detail; t: T
   );
 }
 
-export function Conversation({ d, t, locale, children }: { d: Detail; t: T; locale: string; children?: React.ReactNode }) {
+export function Conversation({ d, t, locale, children, english }: { d: Detail; t: T; locale: string; children?: React.ReactNode; english?: boolean }) {
   const tone = { CUSTOMER: "var(--vivid-blue)", SUPPLIER: "var(--vivid-orange)", FIRINGI: "var(--vivid-violet)" } as const;
   return (
     <Card className="mb-6">
@@ -163,6 +164,7 @@ export function Conversation({ d, t, locale, children }: { d: Detail; t: T; loca
                 {m.internal && <Badge variant="outline">{t("internal")}</Badge>}
               </div>
               <p className="mt-1 whitespace-pre-wrap break-words text-sm">{m.body}</p>
+              {!m.internal && <div className="mt-1 -ml-2"><SpeakButton text={m.body} labels={english ? EN_VOICE : undefined} /></div>}
               {m.photos > 0 && <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><Camera className="size-3" aria-hidden />{Array.from({ length: m.photos }, (_, n) => <a key={n} className="text-primary hover:underline" target="_blank" rel="noreferrer" href={`/api/claims/${d.id}/photos/m${m.id}/${n}`}>{t("photo")} {n + 1}</a>)}</p>}
             </li>
           ))}

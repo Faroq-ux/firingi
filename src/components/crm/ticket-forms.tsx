@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { openTicketAction, replyTicketAction } from "@/server/actions/crm";
+import { EN_VOICE, MicButton, appendSpoken } from "@/components/voice/voice";
 
 type L = Record<string, string>;
 
@@ -23,7 +24,10 @@ export function NewTicketForm({ l, categories, orders, base }: { l: L; categorie
       </label>
       <label className="space-y-1 sm:col-span-2"><span className="block text-xs text-muted-foreground">{l.subject}</span><Input name="subject" value={v.subject} onChange={(e) => setV({ ...v, subject: e.target.value })} /></label>
       <label className="space-y-1 sm:col-span-2"><span className="block text-xs text-muted-foreground">{l.message}</span>
-        <textarea name="body" className="min-h-28 w-full rounded-md border bg-background p-2" value={v.body} onChange={(e) => setV({ ...v, body: e.target.value })} />
+        <span className="flex items-start gap-2">
+          <textarea name="body" className="min-h-28 w-full rounded-md border bg-background p-2" value={v.body} onChange={(e) => setV({ ...v, body: e.target.value })} />
+          <MicButton onText={(s) => setV((x) => ({ ...x, body: appendSpoken(x.body, s) }))} testId="ticket-mic" />
+        </span>
       </label>
       <div className="flex items-center gap-3 sm:col-span-2">
         <Button disabled={pending} onClick={() => start(async () => {
@@ -51,7 +55,10 @@ export function ReplyForm({ id, l, staff }: { id: string; l: L; staff?: boolean 
   });
   return (
     <div className="space-y-2 text-sm" data-testid="reply-form">
-      <textarea name="reply" aria-label={l.reply} placeholder={l.replyPlaceholder} className={`min-h-24 w-full rounded-md border p-2 ${internal ? "bg-warning/10" : "bg-background"}`} value={body} onChange={(e) => setBody(e.target.value)} />
+      <div className="flex items-start gap-2">
+        <textarea name="reply" aria-label={l.reply} placeholder={l.replyPlaceholder} className={`min-h-24 w-full rounded-md border p-2 ${internal ? "bg-warning/10" : "bg-background"}`} value={body} onChange={(e) => setBody(e.target.value)} />
+        <MicButton onText={(s) => setBody((b) => appendSpoken(b, s))} labels={staff ? EN_VOICE : undefined} testId="reply-mic" />
+      </div>
       <div className="flex flex-wrap items-center gap-2">
         <Button disabled={pending || !body.trim()} onClick={() => send(false)}>{internal ? l.addNote : l.send}</Button>
         {staff && !internal && <Button variant="outline" disabled={pending || !body.trim()} onClick={() => send(true)}>{l.sendResolve}</Button>}

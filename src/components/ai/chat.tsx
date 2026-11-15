@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { askAssistantAction, deleteConversationAction } from "@/server/actions/ai";
 import { TOOL_LABEL } from "@/lib/ai";
 import { Markdown } from "./markdown";
+import { EN_VOICE, MicButton, SpeakButton, appendSpoken } from "@/components/voice/voice";
 
 export type ChatLabels = Record<"title" | "newChat" | "history" | "noHistory" | "placeholder" | "send" | "thinking" | "lookedAt" | "you" | "assistant" | "suggestOnly" | "delete" | "tryAsking", string>;
 export const EN_CHAT: ChatLabels = {
@@ -32,6 +33,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const end = useRef<HTMLDivElement>(null);
+  const voice = side === "STAFF" ? EN_VOICE : undefined; // staff pages are English; suppliers / customers in their language
   useEffect(() => { setMessages(initial); setConversationId(active); }, [active, initial]);
   useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages.length, pending]);
 
@@ -83,6 +85,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
               {m.role === "assistant" && <div className="grid size-8 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white"><Bot className="size-4" aria-label={l.assistant} /></div>}
               <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "border bg-background"}`}>
                 {m.role === "user" ? <p className="whitespace-pre-wrap text-sm">{m.text}</p> : <Markdown text={m.text} />}
+                {m.role === "assistant" && <div className="mt-1 -ml-2"><SpeakButton text={m.text} labels={voice} lang={locale} /></div>}
                 {m.role === "assistant" && (!!m.tools?.length || (showModel && m.model)) && (
                   <p className="mt-2 flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
                     {!!m.tools?.length && <>{l.lookedAt}: {[...new Set(m.tools.map((t) => toolLabel[t.name] ?? t.name))].map((n) => <span key={n} className="rounded-full bg-muted px-2 py-0.5">{n}</span>)}</>}
@@ -108,6 +111,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
             className="min-h-11 flex-1 resize-none rounded-xl border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
+          <MicButton onText={(s) => setText((t) => appendSpoken(t, s))} labels={voice} lang={locale} />
           <Button type="submit" disabled={pending || !text.trim()}><Send className="size-4" aria-hidden /> {l.send}</Button>
           {conversationId && (
             <Button type="button" variant="ghost" size="sm" aria-label={l.delete} title={l.delete} disabled={pending}

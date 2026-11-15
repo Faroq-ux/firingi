@@ -7,6 +7,7 @@ import { Camera, Check, Send, Truck, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
 import { shrink } from "@/components/delivery/delivery-forms";
+import { EN_VOICE, MicButton, appendSpoken } from "@/components/voice/voice";
 import type { ActionResult } from "@/server/actions/_action";
 import {
   acknowledgeAlertAction, addClaimMessageAction, claimPreviewAction, createClaimAction, decideClaimAction, disputeChargebackAction, markReplacementDoneAction,
@@ -95,7 +96,10 @@ export function NewClaimForm({ orderId, lines, photoReasons }: { orderId: string
       </div>
       <div className="grid gap-1.5">
         <Label htmlFor="claim-desc">{t("form.describe")}</Label>
-        <textarea id="claim-desc" className={area} value={description} onChange={(e) => setDescription(e.target.value)} placeholder={t("form.describeHint")} data-testid="claim-description" />
+        <div className="flex items-start gap-2">
+          <textarea id="claim-desc" className={area} value={description} onChange={(e) => setDescription(e.target.value)} placeholder={t("form.describeHint")} data-testid="claim-description" />
+          <MicButton onText={(s) => setDescription((d) => appendSpoken(d, s))} testId="claim-mic" />
+        </div>
       </div>
       <PhotoPicker files={photos} onChange={setPhotos} label={needPhoto ? t("form.photosNeeded") : t("form.photos")} testId="claim-photos" />
       <fieldset className="grid gap-2">
@@ -148,7 +152,10 @@ export function MessageForm({ claimId, allowInternal, labels }: { claimId: strin
   const [photos, setPhotos] = useState<File[]>([]);
   return (
     <div className="space-y-2">
-      <textarea className={area} value={body} onChange={(e) => setBody(e.target.value)} placeholder={labels.placeholder} aria-label={labels.placeholder} data-testid="claim-message" />
+      <div className="flex items-start gap-2">
+        <textarea className={area} value={body} onChange={(e) => setBody(e.target.value)} placeholder={labels.placeholder} aria-label={labels.placeholder} data-testid="claim-message" />
+        <MicButton onText={(s) => setBody((b) => appendSpoken(b, s))} labels={allowInternal ? EN_VOICE : undefined} testId="claim-message-mic" />
+      </div>
       <div className="flex flex-wrap items-center gap-3">
         <label className="flex cursor-pointer items-center gap-1.5 text-sm text-muted-foreground"><Camera className="size-4" aria-hidden />{photos.length ? `${photos.length} ×` : labels.photos}
           <input type="file" accept="image/*" multiple className="sr-only" onChange={(e) => setPhotos(Array.from(e.target.files ?? []).slice(0, 4))} />
@@ -196,7 +203,10 @@ export function SupplierResponseForm({ claimId, current }: { claimId: string; cu
           </label>
         ))}
       </div>
-      <textarea className={area} value={comment} onChange={(e) => setComment(e.target.value)} placeholder={response === "DISPUTED" ? t("respond.whyDispute") : t("respond.comment")} aria-label={t("respond.comment")} data-testid="supplier-comment" />
+      <div className="flex items-start gap-2">
+        <textarea className={area} value={comment} onChange={(e) => setComment(e.target.value)} placeholder={response === "DISPUTED" ? t("respond.whyDispute") : t("respond.comment")} aria-label={t("respond.comment")} data-testid="supplier-comment" />
+        <MicButton onText={(s) => setComment((c) => appendSpoken(c, s))} testId="supplier-mic" />
+      </div>
       <PhotoPicker files={photos} onChange={setPhotos} label={t("respond.photos")} max={4} />
       <div className="flex flex-wrap items-center gap-3">
         <Button disabled={pending || (response === "DISPUTED" && comment.trim().length < 5)} data-testid="supplier-respond"
