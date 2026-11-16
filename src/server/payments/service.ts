@@ -366,7 +366,7 @@ async function settle(requestId: string, providerKey: string, ev: ProviderEvent)
 }
 
 /** Pay-before-shipping: the order is paid → the supplier gets it (unless FIRINGI's risk check still holds it). */
-async function releasePaidOrder(tx: Tx, orderId: string) {
+export async function releasePaidOrder(tx: Tx, orderId: string) {
   const o = await tx.order.findUnique({ where: { id: orderId }, select: { status: true, risk: { select: { held: true, review: true } } } });
   if (!o) return false;
   const stillRiskHeld = !!o.risk?.held && o.risk.review === "OPEN";

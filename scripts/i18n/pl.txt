@@ -3654,3 +3654,187 @@ Wcześniejsza wypłata {number} odrzucona
 FIRINGI odrzuciło wcześniejszą wypłatę {number}: {reason}
 Prośba o wcześniejszą wypłatę: {company}
 {company} prosi o wcześniejszą wypłatę {amount} € ({number}).
+Bank
+Importuj wyciągi bankowe (lub połącz bank) i dopasuj każdą operację do tego, czym była: płatności i przelewy od FIRINGI, faktury, Twoja sprzedaż i wydatki. Tylko dla Twojej księgowości — w FIRINGI nic się nie zmienia.
+Importuj wyciągi bankowe lub połącz kanał bankowy. Każda operacja jest dopasowywana do wpłat klientów (faktury, nadpłata), wypłat dla dostawców, zarejestrowanych płatności, opłat bankowych… Pewne dopasowania mogą księgować się same (Ustawienia); reszta czeka tutaj.
+Operacje
+Konta i import
+Reguły
+Do sprawdzenia
+najstarsza z {date}
+Dopasowane (30 dni)
+{n} automatycznie
+Konta bankowe
+Saldo
+z najnowszych wyciągów
+Do sprawdzenia
+Dopasowane
+Pominięte
+Wszystkie
+Wszystkie konta
+Szukaj nazwy, tekstu lub IBAN
+Szukaj
+Najpierw dodaj konto bankowe:
+Nic do sprawdzenia — wszystkie operacje są dopasowane.
+Brak operacji.
+Bez nazwy
+Do dopasowania
+Propozycja
+Dopasowana
+Pominięta
+zaksięgowano automatycznie
+pewność {pct} %
+Wpłata klienta
+Wypłata dla dostawcy
+Zarejestrowana płatność
+Faktura FIRINGI
+Sprzedaż / wydatek
+Opłata bankowa
+Inne
+zamówienie {number}
+{amount} jako nadpłata
+Potwierdź
+Dopasuj ręcznie
+Pomiń
+Dlaczego (opcjonalnie)
+Cofnij
+Co to jest?
+Klient
+Dostawca
+Wpisz nazwę lub NIP
+Nie znaleziono nic otwartego.
+otwarte {amount}
+Kwota
+Kategoria
+Notatka
+Operacja: {amount}
+Wybrano: {amount}
+Różnica: {amount}
+Różnica staje się nadpłatą klienta i jest rozliczana z jego kolejnymi fakturami.
+Zaksięguj różnicę jako
+Zaksięguj
+Szukaj ponownie
+Gotowe — propozycje zaktualizowane.
+zarejestrowana płatność z tą samą kwotą i tytułem
+zarejestrowana płatność z tą samą kwotą i datą
+{n} płatności ma tę kwotę
+{n} płatności {provider} z {date} składa się na tę operację
+opłaca zamówienie {number} (przedpłata)
+faktura {docs} podana w przelewie
+kwota się zgadza
+{amount} więcej niż otwarte — zostaje jako nadpłata
+brakuje {amount} — w granicach tolerancji, zaksięgowano jako opłatę bankową
+płatność częściowa
+IBAN jest znany (zapamiętany)
+NIP jest w przelewie
+nazwa się zgadza
+nic otwartego — całość jest nadpłatą
+tylko {doc} ma tę kwotę — sprawdź płatnika
+faktura dostawcy {docs} podana
+faktura FIRINGI {docs} podana
+zapłacono FIRINGI
+wpis z tą samą kwotą i nazwą
+wpis z tą samą kwotą i datą
+kwota to dokładnie {doc}
+kwota to wszystkie {n} otwarte dokumenty
+kwota to {n} najstarsze otwarte dokumenty
+więcej niż otwarte — reszta staje się nadpłatą
+częściowa płatność najstarszych dokumentów
+reguła „{name}”
+Opłaty bankowe
+Podatki i opłaty
+Wynagrodzenia
+ZUS
+Czynsz
+Prąd, woda, gaz i telefon
+Ubezpieczenia
+Kredyt
+Przelew między własnymi kontami
+Rozliczenie kart / operatora płatności
+Zwrot
+Inne
+Nazwa
+np. Konto główne
+Spółka FIRINGI
+Zapisz
+Zapisano.
+Dodaj konto
+Każde konto bankowe, które chcesz uzgadniać. IBAN musi zgadzać się z importowanymi wyciągami.
+Zmień lub usuń
+Usuń
+Tak, usuń
+Wyłączone
+Saldo
+na {date}
+Ostatni import
+Dopasowane
+Importuj wyciąg
+wybierz kolumny ponownie
+CAMT.053 (XML), MT940, CSV lub Excel z Twojego banku, do 10 MB. Już zaimportowane operacje są pomijane.
+Odczytano {lines} operacji, {fresh} nowych, {dup} już zaimportowanych.
+{auto} dopasowano automatycznie, {suggested} z propozycją do potwierdzenia.
+Pominięto {n} wierszy bez daty lub kwoty (sumy, uwagi).
+Saldo początkowe + operacje ≠ saldo końcowe — plik może być niekompletny.
+Saldo początkowe i końcowe się zgadzają.
+salda się nie zgadzają
+Która kolumna jest czym? ({file})
+Zgadliśmy na podstawie nazw kolumn — sprawdź i zaimportuj. Wybór zostanie zapamiętany dla kolejnych plików tego konta.
+Wiersz z nazwami kolumn
+Data
+Data waluty
+Kwota (+ / −)
+Obciążenia
+Uznania
+Nazwa (płatnik / odbiorca)
+IBAN kontrahenta
+Tytuł
+Referencja
+Format daty
+Format liczb
+Importuj
+Importy
+{n} operacji · {fresh} nowych · {auto} automatycznie
+CAMT.053
+MT940
+CSV
+Excel
+Kanał bankowy
+Kanał bankowy
+Połącz konto raz: nowe operacje przychodzą same każdego dnia. Bank poprosi o zgodę na dostęp (90 dni, potem ponownie).
+Połączone
+dostęp do {date}
+Pobierz teraz
+Pobrano.
+Rozłącz
+Dostęp wygasł — połącz ponownie
+Czekamy na Twój bank
+Twój bank
+Kraj
+Znajdź mój bank
+Połącz kanał bankowy
+Kanał bankowy jest połączony. Nowe operacje będą przychodzić codziennie.
+Bank nie potwierdził połączenia. Spróbuj ponownie.
+Księguj pewne dopasowania automatycznie (od {pct} %)
+Reguły
+Operacje, których tekst zawiera te słowa, są księgowane od razu — opłaty bankowe, czynsz, wynagrodzenia…
+Brak reguł.
+Tekst zawiera
+np. OPLATA ZA PROWADZENIE
+Dla
+Uznania
+Obciążenia
+Oba
+Księguj jako
+Nazwa (opcjonalnie)
+Dodaj regułę
+użyta {n} razy
+Zapamiętane IBAN
+Po potwierdzeniu dopasowania IBAN jest zapamiętywany, aby rozpoznać kolejną płatność z niego.
+Jeszcze brak.
+Bank
+{count} operacji bankowych do sprawdzenia
+Operacje bankowe czekają na dopasowanie (najstarsza z {oldest}). Finanse › Uzgadnianie bankowe.
+Dostęp do banku wkrótce wygaśnie: {account}
+Zgoda Twojego banku dla {account} wygasa {date}. Połącz kanał bankowy ponownie w Finanse › Bank.
+Błąd kanału bankowego: {account}
+Nie udało się pobrać nowych operacji dla {account}: {reason}

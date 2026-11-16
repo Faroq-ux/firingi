@@ -1,0 +1,182 @@
+// ── Phase 37: bank reconciliation ────────────────────────────────────────────
+// Bank statements (CAMT.053, MT940, CSV / Excel, or a daily bank feed) are imported into bank
+// accounts. FIRINGI's finance team matches each line to customer payments (invoices, credit),
+// supplier payouts, early payouts, fees… Suppliers and customers do the same for their own books.
+// Matches carry signed amounts that add up to the line's amount.
+
+enum BankFormat {
+  CAMT053
+  MT940
+  CSV
+  XLSX
+  FEED
+}
+
+enum BankLineStatus {
+  OPEN // nothing found
+  SUGGESTED // a match is proposed, someone confirms
+  MATCHED
+  IGNORED // not for reconciliation (own transfers…)
+}
+
+enum BankMatchKind {
+  CUSTOMER_PAYMENT // FIRINGI: money from a customer → new payment on its invoices (leftover = credit)
+  VENDOR_PAYOUT // FIRINGI: money to a supplier → new payment of its approved invoices
+  PAYMENT // a payment already recorded (FIRINGI's own; a supplier's payout from FIRINGI; a customer's payment to FIRINGI)
+  FIRINGI_INVOICE // a customer's own books: this paid FIRINGI invoice X
+  ENTRY // own books: an accounting entry (a sale or an expense)
+  FEE // bank charges, or a small difference within the tolerance
+  OTHER // categorised by hand or by a rule
+}
+
+model BankAccount {
+  id               String    @id @default(cuid())
+  /// "FIRINGI" or the owning company's id (unique with the IBAN).
+  ownerKey         String
+  companyId        String?
+  legalEntityId    String?
+  name             String
+  iban             String
+  bic              String?
+  currencyCode     String    @default("EUR")
+  /// CSV / Excel column mapping saved for this bank (see src/lib/bank/csv.ts).
+  csvMapping       Json?
+  /// Daily bank feed (open banking): provider key, its account id, consent.
+  feedProvider     String?
+  feedAccountId    String?
+  feedRequisition  String?
+  feedStatus       String? // PENDING | LINKED | EXPIRED | ERROR
+  feedConsentUntil DateTime?
+  feedLastAt       DateTime?
+  feedError        String?
+  /// Suppliers and customers: book certain matches by themselves (when FIRINGI allows it).
+  autoBook         Boolean   @default(false)
+  balance          Decimal?  @db.Decimal(18, 2)
+  balanceAt        DateTime? @db.Date
+  active           Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  company    Company?        @relation("BankAccounts", fields: [companyId], references: [id], onDelete: Cascade)
+  statements BankStatement[]
+  lines      BankLine[]
+
+  @@unique([ownerKey, iban])
+  @@index([companyId])
+}
+
+model BankStatement {
+  id              String     @id @default(cuid())
+  accountId       String
+  format          BankFormat
+  fileName        String?
+  /// The bank's own statement id (CAMT <Stmt><Id>, MT940 :20:/:28C:).
+  bankStatementId String?
+  fromDate        DateTime?  @db.Date
+  toDate          DateTime?  @db.Date
+  openingBalance  Decimal?   @db.Decimal(18, 2)
+  closingBalance  Decimal?   @db.Decimal(18, 2)
+  /// opening + lines ≠ closing → the file is incomplete (shown as a warning)
+  balanceOk       Boolean?
+  lineCount       Int        @default(0)
+  newLines        Int        @default(0)
+  duplicates      Int        @default(0)
+  autoMatched     Int        @default(0)
+  importedById    String?
+  createdAt       DateTime   @default(now())
+
+  account BankAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  lines   BankLine[]
+
+  @@index([accountId, createdAt])
+}
+
+model BankLine {
+  id               String         @id @default(cuid())
+  accountId        String
+  statementId      String?
+  bookingDate      DateTime       @db.Date
+  valueDate        DateTime?      @db.Date
+  /// + money in, − money out
+  amount           Decimal        @db.Decimal(18, 2)
+  currencyCode     String         @default("EUR")
+  counterparty     String?
+  counterpartyIban String?
+  remittance       String?
+  endToEndId       String?
+  bankRef          String?
+  /// Same transaction imported twice (overlapping statements, feed + file) is kept once.
+  dedupeKey        String
+  status           BankLineStatus @default(OPEN)
+  /// What the engine proposes: {kind, companyId, items:[{id,amount}], fee, confidence, reasons[]}
+  suggestion       Json?
+  confidence       Int?
+  autoMatched      Boolean        @default(false)
+  note             String?
+  matchedById      String?
+  matchedAt        DateTime?
+  createdAt        DateTime       @default(now())
+
+  account   BankAccount    @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  statement BankStatement? @relation(fields: [statementId], references: [id], onDelete: SetNull)
+  matches   BankMatch[]
+
+  @@unique([accountId, dedupeKey])
+  @@index([accountId, status, bookingDate])
+}
+
+model BankMatch {
+  id                String        @id @default(cuid())
+  lineId            String
+  kind              BankMatchKind
+  /// signed like the line; the matches of a line add up to its amount
+  amount            Decimal       @db.Decimal(18, 2)
+  paymentId         String?
+  /// the payment was created by this match (undoing the match removes it)
+  createdPayment    Boolean       @default(false)
+  invoiceId         String?
+  accountingEntryId String?
+  companyId         String?
+  category          String?
+  label             String?
+  createdById       String?
+  createdAt         DateTime      @default(now())
+
+  line    BankLine @relation(fields: [lineId], references: [id], onDelete: Cascade)
+  payment Payment? @relation("BankMatches", fields: [paymentId], references: [id], onDelete: SetNull)
+
+  @@index([lineId])
+  @@index([paymentId])
+  @@index([invoiceId])
+  @@index([accountingEntryId])
+}
+
+/// "This IBAN is company X" — learnt when someone confirms a match, used to recognise the payer next time.
+model BankPayerLink {
+  id        String   @id @default(cuid())
+  ownerKey  String
+  iban      String
+  companyId String?
+  label     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([ownerKey, iban])
+}
+
+/// "Lines containing X are bank fees / rent / …" — applied when lines come in.
+model BankRule {
+  id        String        @id @default(cuid())
+  ownerKey  String
+  name      String
+  contains  String
+  /// IN | OUT | null (both)
+  direction String?
+  kind      BankMatchKind @default(OTHER)
+  category  String?
+  active    Boolean       @default(true)
+  hits      Int           @default(0)
+  createdAt DateTime      @default(now())
+
+  @@index([ownerKey])
+}

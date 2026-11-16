@@ -40,6 +40,8 @@ export function checkEnv(env: Record<string, string | undefined>): EnvFinding[] 
   if (env.STRIPE_SECRET_KEY && !/^sk_(live|test)_/.test(env.STRIPE_SECRET_KEY)) err("STRIPE_SECRET_KEY", "STRIPE_SECRET_KEY should start with sk_live_ or sk_test_.");
   if (env.STRIPE_SECRET_KEY?.startsWith("sk_test_")) warn("STRIPE_SECRET_KEY", "Stripe is in test mode — no real payments.");
   if (!env.STRIPE_SECRET_KEY && env.PAYMENTS_SIMULATE !== "1" && !env.PAYMENTS_PROVIDER) warn("STRIPE_SECRET_KEY", "No payment provider — customers can only pay by bank transfer / manual MB WAY.");
+  if (env.BANKFEED_SIMULATE === "1") err("BANKFEED_SIMULATE", "The simulated bank feed must not run in production (its transactions aren't real).");
+  if (!!env.GOCARDLESS_SECRET_ID !== !!env.GOCARDLESS_SECRET_KEY) err("GOCARDLESS_SECRET_KEY", "The bank feed needs both GOCARDLESS_SECRET_ID and GOCARDLESS_SECRET_KEY.");
   if (Number(env.AUTH_SIGNIN_RATE_LIMIT ?? 10) > 30) warn("AUTH_SIGNIN_RATE_LIMIT", "The sign-in limit is raised (testing value?) — keep it at 10 or so.");
   if (env.SEED_PASSWORD) warn("SEED_PASSWORD", "A seed password is set — demo accounts must not exist in production.");
   if (!env.SENTRY_DSN) warn("SENTRY_DSN", "No external error tracking (Sentry) — FIRINGI's own error log and alerts still work.");

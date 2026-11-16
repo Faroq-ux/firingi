@@ -287,6 +287,7 @@ export const ADMIN_NAV: NavSection[] = [
       fin("payouts-due", "Supplier Payouts Due", "Pagamentos a Fornecedores Pendentes", "P18", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
       fin("online-payments", "Online Payments", "Pagamentos Online", "P20", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
       fin("direct-debit", "Direct Debit", "Débito Direto", "P20", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
+      fin("bank", "Bank Reconciliation", "Reconciliação Bancária", "P37", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
       fin("accounting-export", "Accounting Export", "Exportação Contabilística", "P21", { live: true, perm: ["admin.finance.view", "admin.invoices.view"] }),
       fin("invoicing", "Certified Invoicing", "Faturação Certificada", "P18", { live: true, perm: ["admin.finance.view", "admin.tax.manage", "admin.settings.manage", "admin.invoices.view"] }),
     ],

@@ -3654,3 +3654,187 @@ Tidlig udbetaling {number} afvist
 FIRINGI har afvist tidlig udbetaling {number}: {reason}
 Tidlig udbetaling anmodet: {company}
 {company} beder om at få {amount} € udbetalt tidligt ({number}).
+Bank
+Importér dine kontoudtog (eller forbind din bank) og afstem hver post med det, den var: betalinger og overførsler fra FIRINGI, fakturaer, dit salg og dine udgifter. Kun til dit eget regnskab — intet ændres hos FIRINGI.
+Importér kontoudtog eller forbind bankfeedet. Hver post afstemmes med kundebetalinger (fakturaer, tilgodehavende), udbetalinger til leverandører, registrerede betalinger, bankgebyrer… Sikre afstemninger kan bogføres af sig selv (Indstillinger); resten venter her.
+Bankposter
+Konti og import
+Regler
+Til kontrol
+ældste fra {date}
+Afstemt (30 dage)
+{n} automatisk
+Bankkonti
+Saldo
+fra de seneste kontoudtog
+Til kontrol
+Afstemt
+Ignoreret
+Alle
+Alle konti
+Søg navn, tekst eller IBAN
+Søg
+Tilføj først en bankkonto:
+Intet at kontrollere — alle poster er afstemt.
+Ingen poster her.
+Uden navn
+Til afstemning
+Forslag
+Afstemt
+Ignoreret
+bogført automatisk
+{pct} % sikker
+Kundebetaling
+Udbetaling til leverandør
+Registreret betaling
+FIRINGI-faktura
+Salg / udgift
+Bankgebyr
+Andet
+ordre {number}
+{amount} som tilgodehavende
+Bekræft
+Afstem manuelt
+Ignorér
+Hvorfor (valgfrit)
+Fortryd
+Hvad er det?
+Kunde
+Leverandør
+Skriv et navn eller momsnummer
+Intet åbent fundet.
+åbent {amount}
+Beløb
+Kategori
+Note
+Post: {amount}
+Valgt: {amount}
+Forskel: {amount}
+Forskellen bliver kundens tilgodehavende og bruges på de næste fakturaer.
+Bogfør forskellen som
+Bogfør
+Søg igen
+Færdig — forslag opdateret.
+en registreret betaling med samme beløb og reference
+en registreret betaling med samme beløb og dato
+{n} betalinger har dette beløb
+{n} {provider}-betalinger fra {date} giver denne post
+betaler ordre {number} (forudbetalt)
+faktura {docs} nævnt i overførslen
+beløbet passer
+{amount} mere end åbent — bliver tilgodehavende
+{amount} for lidt — inden for tolerancen, bogført som bankgebyr
+en delbetaling
+IBAN'en er kendt (husket)
+momsnummeret står i overførslen
+navnet passer
+intet åbent — det hele bliver tilgodehavende
+kun {doc} har dette beløb — tjek hvem der betalte
+leverandørfaktura {docs} nævnt
+FIRINGI-faktura {docs} nævnt
+betalt til FIRINGI
+en postering med samme beløb og navn
+en postering med samme beløb og dato
+beløbet er præcis {doc}
+beløbet er alle {n} åbne bilag
+beløbet er de {n} ældste åbne bilag
+mere end åbent — resten bliver tilgodehavende
+en delbetaling af de ældste bilag
+regel “{name}”
+Bankgebyrer
+Skatter og afgifter
+Lønninger
+Sociale bidrag
+Husleje
+El, vand, gas og telefon
+Forsikringer
+Lån
+Overførsel mellem egne konti
+Afregning af kort / betalingsudbyder
+Refusion
+Andet
+Navn
+f.eks. Hovedkonto
+FIRINGI-selskab
+Gem
+Gemt.
+Tilføj konto
+Hver bankkonto, du vil afstemme. IBAN'en skal passe til de kontoudtog, du importerer.
+Ret eller fjern
+Fjern
+Ja, fjern
+Slået fra
+Saldo
+pr. {date}
+Seneste import
+Afstemt
+Importér kontoudtog
+vælg kolonnerne igen
+CAMT.053 (XML), MT940, CSV eller Excel fra din bank, op til 10 MB. Allerede importerede poster springes over.
+{lines} poster læst, {fresh} nye, {dup} allerede importeret.
+{auto} afstemt automatisk, {suggested} med forslag til bekræftelse.
+{n} rækker uden dato eller beløb blev sprunget over (totaler, noter).
+Primosaldo + poster ≠ ultimosaldo — filen er måske ufuldstændig.
+Primo- og ultimosaldo stemmer.
+saldi stemmer ikke
+Hvilken kolonne er hvad? ({file})
+Vi har gættet ud fra kolonnenavnene — tjek og importér. Valget gemmes til kontoens næste filer.
+Række med kolonnenavne
+Dato
+Valørdato
+Beløb (+ / −)
+Udbetalt
+Indbetalt
+Navn (betaler / modtager)
+Modpartens IBAN
+Tekst
+Reference
+Datoformat
+Talformat
+Importér
+Importer
+{n} poster · {fresh} nye · {auto} automatisk
+CAMT.053
+MT940
+CSV
+Excel
+Bankfeed
+Bankfeed
+Forbind kontoen én gang: nye poster kommer af sig selv hver dag. Din bank beder dig godkende adgangen (90 dage, derefter igen).
+Forbundet
+adgang til {date}
+Hent nu
+Hentet.
+Afbryd
+Adgangen er udløbet — forbind igen
+Venter på din bank
+Din bank
+Land
+Find min bank
+Forbind bankfeedet
+Bankfeedet er forbundet. Nye poster kommer hver dag.
+Banken bekræftede ikke forbindelsen. Prøv igen.
+Bogfør sikre afstemninger af sig selv ({pct} % eller mere)
+Regler
+Poster, hvis tekst indeholder disse ord, bogføres med det samme — bankgebyrer, husleje, lønninger…
+Ingen regler endnu.
+Teksten indeholder
+f.eks. KONTOGEBYR
+For
+Indbetalinger
+Udbetalinger
+Begge
+Bogfør som
+Navn (valgfrit)
+Tilføj regel
+brugt {n} gange
+Huskede IBAN'er
+Når du bekræfter en afstemning, huskes IBAN'en, så næste betaling derfra genkendes.
+Ingen endnu.
+Bank
+{count} bankposter til kontrol
+Bankposter venter på afstemning (ældste fra {oldest}). Økonomi › Bankafstemning.
+Bankadgangen udløber snart: {account}
+Din banks godkendelse for {account} udløber {date}. Forbind bankfeedet igen under Økonomi › Bank.
+Bankfeed fejlede: {account}
+Nye poster for {account} kunne ikke hentes: {reason}

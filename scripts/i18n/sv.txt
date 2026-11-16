@@ -3654,3 +3654,187 @@ Förtida utbetalning {number} avslagen
 FIRINGI har avslagit förtida utbetalning {number}: {reason}
 Förtida utbetalning begärd: {company}
 {company} vill få {amount} € utbetalt i förtid ({number}).
+Bank
+Importera dina kontoutdrag (eller koppla din bank) och stäm av varje post mot vad den var: betalningar och överföringar från FIRINGI, fakturor, din försäljning och dina utgifter. Bara för din egen bokföring — inget ändras hos FIRINGI.
+Importera kontoutdrag eller koppla bankflödet. Varje post stäms av mot kundbetalningar (fakturor, tillgodo), utbetalningar till leverantörer, registrerade betalningar, bankavgifter… Säkra avstämningar kan bokföras av sig själva (Inställningar); resten väntar här.
+Bankposter
+Konton och import
+Regler
+Att kontrollera
+äldsta från {date}
+Avstämda (30 dagar)
+{n} automatiskt
+Bankkonton
+Saldo
+från de senaste kontoutdragen
+Att kontrollera
+Avstämda
+Ignorerade
+Alla
+Alla konton
+Sök namn, text eller IBAN
+Sök
+Lägg först till ett bankkonto:
+Inget att kontrollera — alla poster är avstämda.
+Inga poster här.
+Utan namn
+Att stämma av
+Förslag
+Avstämd
+Ignorerad
+bokförd automatiskt
+{pct} % säker
+Kundbetalning
+Utbetalning till leverantör
+Registrerad betalning
+FIRINGI-faktura
+Försäljning / utgift
+Bankavgift
+Övrigt
+order {number}
+{amount} som tillgodo
+Bekräfta
+Stäm av manuellt
+Ignorera
+Varför (valfritt)
+Ångra
+Vad är det?
+Kund
+Leverantör
+Skriv namn eller momsnummer
+Inget öppet hittades.
+öppet {amount}
+Belopp
+Kategori
+Anteckning
+Post: {amount}
+Valt: {amount}
+Skillnad: {amount}
+Skillnaden blir kundens tillgodohavande och används på nästa fakturor.
+Bokför skillnaden som
+Bokför
+Sök igen
+Klart — förslagen uppdaterade.
+en registrerad betalning med samma belopp och referens
+en registrerad betalning med samma belopp och datum
+{n} betalningar har detta belopp
+{n} {provider}-betalningar från {date} utgör denna post
+betalar order {number} (förskottsbetald)
+faktura {docs} nämnd i överföringen
+beloppet stämmer
+{amount} mer än öppet — blir tillgodo
+{amount} för lite — inom toleransen, bokfört som bankavgift
+en delbetalning
+IBAN är känt (sparat)
+momsnumret står i överföringen
+namnet stämmer
+inget öppet — allt blir tillgodo
+bara {doc} har detta belopp — kontrollera vem som betalade
+leverantörsfaktura {docs} nämnd
+FIRINGI-faktura {docs} nämnd
+betalt till FIRINGI
+en post med samma belopp och namn
+en post med samma belopp och datum
+beloppet är exakt {doc}
+beloppet är alla {n} öppna verifikat
+beloppet är de {n} äldsta öppna verifikaten
+mer än öppet — resten blir tillgodo
+en delbetalning av de äldsta verifikaten
+regel ”{name}”
+Bankavgifter
+Skatter och avgifter
+Löner
+Arbetsgivaravgifter
+Hyra
+El, vatten, gas och telefon
+Försäkringar
+Lån
+Överföring mellan egna konton
+Avräkning kort / betalleverantör
+Återbetalning
+Övrigt
+Namn
+t.ex. Huvudkonto
+FIRINGI-bolag
+Spara
+Sparat.
+Lägg till konto
+Varje bankkonto du vill stämma av. IBAN måste stämma med kontoutdragen du importerar.
+Ändra eller ta bort
+Ta bort
+Ja, ta bort
+Avstängt
+Saldo
+per {date}
+Senaste import
+Avstämda
+Importera kontoutdrag
+välj kolumnerna igen
+CAMT.053 (XML), MT940, CSV eller Excel från din bank, upp till 10 MB. Redan importerade poster hoppas över.
+{lines} poster lästa, {fresh} nya, {dup} redan importerade.
+{auto} avstämda automatiskt, {suggested} med förslag att bekräfta.
+{n} rader utan datum eller belopp hoppades över (summor, anteckningar).
+Ingående saldo + poster ≠ utgående saldo — filen kan vara ofullständig.
+Ingående och utgående saldo stämmer.
+saldona stämmer inte
+Vilken kolumn är vad? ({file})
+Vi gissade utifrån kolumnnamnen — kontrollera och importera. Valet sparas för kontots nästa filer.
+Rad med kolumnnamn
+Datum
+Valutadatum
+Belopp (+ / −)
+Uttag
+Insättning
+Namn (betalare / mottagare)
+Motpartens IBAN
+Text
+Referens
+Datumformat
+Talformat
+Importera
+Importer
+{n} poster · {fresh} nya · {auto} automatiskt
+CAMT.053
+MT940
+CSV
+Excel
+Bankflöde
+Bankflöde
+Koppla kontot en gång: nya poster kommer av sig själva varje dag. Din bank ber dig godkänna åtkomsten (90 dagar, sedan igen).
+Kopplat
+åtkomst till {date}
+Hämta nu
+Hämtat.
+Koppla från
+Åtkomsten har gått ut — koppla igen
+Väntar på din bank
+Din bank
+Land
+Hitta min bank
+Koppla bankflödet
+Bankflödet är kopplat. Nya poster kommer varje dag.
+Banken bekräftade inte kopplingen. Försök igen.
+Bokför säkra avstämningar av sig själv ({pct} % eller mer)
+Regler
+Poster vars text innehåller dessa ord bokförs direkt — bankavgifter, hyra, löner…
+Inga regler ännu.
+Texten innehåller
+t.ex. KONTOAVGIFT
+För
+Insättningar
+Uttag
+Båda
+Bokför som
+Namn (valfritt)
+Lägg till regel
+använd {n} gånger
+Sparade IBAN
+När du bekräftar en avstämning sparas IBAN så att nästa betalning därifrån känns igen.
+Inga ännu.
+Bank
+{count} bankposter att kontrollera
+Bankposter väntar på avstämning (äldsta från {oldest}). Ekonomi › Bankavstämning.
+Bankåtkomsten går snart ut: {account}
+Din banks godkännande för {account} går ut {date}. Koppla bankflödet igen under Ekonomi › Bank.
+Bankflödet misslyckades: {account}
+Nya poster för {account} kunde inte hämtas: {reason}

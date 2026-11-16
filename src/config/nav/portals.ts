@@ -105,6 +105,7 @@ export const VENDOR_NAV: NavSection[] = [
       vf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "vendor.payments.view", es: "Pagos" }),
       vf("commission", "Commission", "Comissão", "P5", { live: true, perm: ["vendor.invoices.view", "vendor.payments.view"], es: "Comisión" }),
       vf("early-payout", "Early Payout", "Pagamento Antecipado", "P36", { live: true, perm: ["vendor.invoices.view", "vendor.payments.view"], es: "Pago anticipado" }),
+      vf("bank", "Bank", "Banco", "P37", { live: true, perm: ["company.bank.view", "company.bank.manage"], es: "Banco" }),
       vf("exports", "Exports", "Exportações", "P21", { live: true, feature: "INTEGRATIONS", perm: ["vendor.invoices.view", "vendor.invoices.submit", "vendor.payments.view"], es: "Exportaciones" }),
     ],
   },
@@ -183,6 +184,7 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bf("invoices", "Invoices", "Faturas", "P5", { live: true, es: "Facturas" }),
       bf("payments", "Payments", "Pagamentos", "P5", { live: true, perm: "buyer.payments.view", es: "Pagos" }),
+      bf("bank", "Bank", "Banco", "P37", { live: true, perm: ["company.bank.view", "company.bank.manage"], es: "Banco" }),
       bf("direct-debit", "Direct Debit", "Débito Direto", "P20", { live: true, perm: ["buyer.payments.make", "buyer.payments.view"], es: "Domiciliación bancaria" }),
       bf("exports", "Exports", "Exportações", "P21", { live: true, perm: ["buyer.invoices.view", "buyer.payments.view"], es: "Exportaciones" }),
     ],

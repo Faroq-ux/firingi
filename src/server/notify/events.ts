@@ -147,6 +147,10 @@ export const EVENTS: EventDef[] = [
   E("earlypay.paid", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "net"]),
   E("earlypay.rejected", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("earlypay.requested", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["company", "number", "amount"]),
+  // bank reconciliation (Phase 37)
+  E("bank.to_review", "finance", ["admin.finance.manage"], ["EMAIL"], ["count", "oldest"]),
+  E("bank.feed_expiring", "finance", ["company.bank.manage", "admin.finance.manage"], ["EMAIL", "PUSH"], ["account", "date"]),
+  E("bank.feed_failed", "finance", ["company.bank.manage", "admin.finance.manage"], ["EMAIL"], ["account", "reason"]),
   // order chat (Phase 35)
   E("chat.message", "orders", [...ORDERS, "admin.orders.manage", "admin.support.manage", "driver.deliveries.view"], ["EMAIL", "PUSH"], ["number", "from"]),
   // finance

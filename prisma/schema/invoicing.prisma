@@ -329,6 +329,7 @@ model Payment {
   company     Company             @relation(fields: [companyId], references: [id])
   allocations PaymentAllocation[]
   request     PaymentRequest?
+  bankMatches BankMatch[]         @relation("BankMatches")
 
   @@index([companyId])
 }

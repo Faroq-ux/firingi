@@ -662,6 +662,25 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Bank reconciliation (Phase 37)
+
+Code: `src/lib/bank/*` (statement parsers), `src/server/bank/*`; details `docs/bank.md`.
+- **Getting the lines in** — CAMT.053 (XML), MT940, CSV or Excel (columns guessed, mapping saved per account), or the
+  daily **bank feed** (GoCardless Bank Account Data; a simulated bank for tests). Lines already imported are skipped;
+  opening + lines ≠ closing balance is flagged.
+- **FIRINGI** (*Finance › Bank Reconciliation*, English) — each line is matched to customer payments (invoice
+  numbers in the transfer, remembered IBANs, names, amounts; several invoices in one transfer, part payments, the
+  rest as customer credit, a few cents short closed as a bank fee within the tolerance), payments already recorded
+  (online, direct debit, provider settlements — never recorded twice), supplier payouts and transfers, pay-before-
+  shipping orders, rules (“contains X → bank fees”). Each suggestion shows how sure it is and why. **The admin
+  chooses**: always confirmed by a person, or sure matches (≥ 95 % by default) booked by themselves. Undo, ignore,
+  match by hand.
+- **Suppliers and customers** (*Finance › Bank*, 25 languages) — the same for their own books: FIRINGI's payouts,
+  their payments to FIRINGI, FIRINGI invoices, their accounting entries, rules; auto-booking if FIRINGI allows it.
+- Daily job `/api/cron/bank`: feeds, matching what waits, consents ending, lines to check.
+- Tests: `tests/unit/bank-parse.test.ts`, `tests/integration/bank.test.ts`, browser `tests/e2e/bank.mjs`.
+  Screenshots `docs/screenshots/bank-0*.png`.
+
 ## Supplier plans & early payout (Phase 36)
 
 Code: `src/server/plans/service.ts`, `src/server/plans/early-pay.ts`; details `docs/plans.md`.

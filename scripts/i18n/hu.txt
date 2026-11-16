@@ -3654,3 +3654,187 @@ Előrehozott kifizetés elutasítva: {number}
 A FIRINGI elutasította a(z) {number} előrehozott kifizetést: {reason}
 Előrehozott kifizetési kérés: {company}
 {company} {amount} € előrehozott kifizetését kéri ({number}).
+Bank
+Töltse fel bankszámlakivonatait (vagy kapcsolja össze a bankját), és párosítson minden tételt azzal, ami volt: FIRINGI kifizetések és átutalások, számlák, az Ön bevételei és kiadásai. Csak a saját könyveléséhez — a FIRINGI-nél semmi sem változik.
+Töltsön fel bankszámlakivonatokat vagy kapcsolja össze a banki adatfolyamot. Minden tétel párosul vevői befizetésekkel (számlák, túlfizetés), szállítói kifizetésekkel, rögzített kifizetésekkel, banki díjakkal… A biztos párosítások maguktól is könyvelhetők (Beállítások); a többi itt vár.
+Tételek
+Számlák és feltöltés
+Szabályok
+Ellenőrizendő
+a legrégebbi: {date}
+Párosítva (30 nap)
+{n} automatikusan
+Bankszámlák
+Egyenleg
+a legutóbbi kivonatokból
+Ellenőrizendő
+Párosítva
+Kihagyva
+Mind
+Minden számla
+Név, szöveg vagy IBAN keresése
+Keresés
+Először adjon hozzá egy bankszámlát:
+Nincs mit ellenőrizni — minden tétel párosítva.
+Itt nincsenek tételek.
+Név nélkül
+Párosítandó
+Javaslat
+Párosítva
+Kihagyva
+automatikusan könyvelve
+{pct} % biztos
+Vevői befizetés
+Szállítói kifizetés
+Rögzített kifizetés
+FIRINGI számla
+Bevétel / kiadás
+Banki díj
+Egyéb
+rendelés {number}
+{amount} túlfizetésként
+Megerősítés
+Kézi párosítás
+Kihagyás
+Miért (nem kötelező)
+Visszavonás
+Mi ez?
+Vevő
+Szállító
+Írjon be nevet vagy adószámot
+Nincs nyitott tétel.
+nyitott {amount}
+Összeg
+Kategória
+Megjegyzés
+Tétel: {amount}
+Kiválasztva: {amount}
+Különbség: {amount}
+A különbség a vevő túlfizetése lesz, és a következő számláin használjuk fel.
+A különbség könyvelése mint
+Könyvelés
+Újrakeresés
+Kész — a javaslatok frissültek.
+rögzített kifizetés azonos összeggel és közleménnyel
+rögzített kifizetés azonos összeggel és dátummal
+{n} kifizetésnek ez az összege
+{n} db {provider} kifizetés ({date}) adja ki ezt a tételt
+a(z) {number} rendelést fizeti (előre fizetve)
+a(z) {docs} számla szerepel az átutalásban
+az összeg egyezik
+{amount} több a nyitottnál — túlfizetés marad
+{amount} hiányzik — tűréshatáron belül, banki díjként könyvelve
+részfizetés
+az IBAN ismert (megjegyezve)
+az adószám szerepel az átutalásban
+a név egyezik
+nincs nyitott tétel — minden túlfizetés lesz
+csak a(z) {doc} összege ennyi — ellenőrizze a fizetőt
+a(z) {docs} szállítói számla szerepel
+a(z) {docs} FIRINGI számla szerepel
+a FIRINGI-nek fizetve
+tétel azonos összeggel és névvel
+tétel azonos összeggel és dátummal
+az összeg pontosan {doc}
+az összeg mind a(z) {n} nyitott bizonylat
+az összeg a(z) {n} legrégebbi nyitott bizonylat
+több a nyitottnál — a maradék túlfizetés
+a legrégebbi bizonylatok részfizetése
+„{name}” szabály
+Banki díjak
+Adók és illetékek
+Bérek
+Járulékok
+Bérleti díj
+Áram, víz, gáz és telefon
+Biztosítások
+Hitel
+Átvezetés saját számlák között
+Kártya / fizetési szolgáltató elszámolása
+Visszatérítés
+Egyéb
+Név
+pl. Fő számla
+FIRINGI cég
+Mentés
+Mentve.
+Számla hozzáadása
+Minden bankszámla, amelyet egyeztetni szeretne. Az IBAN-nak egyeznie kell a feltöltött kivonatokkal.
+Módosítás vagy eltávolítás
+Eltávolítás
+Igen, eltávolítom
+Kikapcsolva
+Egyenleg
+{date}-i
+Utolsó feltöltés
+Párosítva
+Kivonat feltöltése
+oszlopok újbóli kiválasztása
+CAMT.053 (XML), MT940, CSV vagy Excel a bankjától, legfeljebb 10 MB. A már feltöltött tételek kimaradnak.
+{lines} tétel beolvasva, {fresh} új, {dup} már feltöltve.
+{auto} automatikusan párosítva, {suggested} megerősítendő javaslattal.
+{n} sor dátum vagy összeg nélkül kimaradt (összesítők, megjegyzések).
+Nyitó egyenleg + tételek ≠ záró egyenleg — a fájl hiányos lehet.
+A nyitó és záró egyenleg egyezik.
+az egyenlegek nem egyeznek
+Melyik oszlop mi? ({file})
+Az oszlopnevek alapján tippeltünk — ellenőrizze és töltse fel. A választás megmarad a számla következő fájljaihoz.
+Oszlopneveket tartalmazó sor
+Dátum
+Értéknap
+Összeg (+ / −)
+Terhelés
+Jóváírás
+Név (fizető / kedvezményezett)
+Partner IBAN
+Közlemény
+Hivatkozás
+Dátumformátum
+Számformátum
+Feltöltés
+Feltöltések
+{n} tétel · {fresh} új · {auto} automatikusan
+CAMT.053
+MT940
+CSV
+Excel
+Banki adatfolyam
+Banki adatfolyam
+Kapcsolja össze a számlát egyszer: az új tételek minden nap maguktól érkeznek. A bankja engedélyt kér a hozzáféréshez (90 nap, utána újra).
+Összekapcsolva
+hozzáférés eddig: {date}
+Letöltés most
+Letöltve.
+Leválasztás
+A hozzáférés lejárt — kapcsolja össze újra
+Várakozás a bankra
+Az Ön bankja
+Ország
+Bankom keresése
+Banki adatfolyam összekapcsolása
+A banki adatfolyam összekapcsolva. Az új tételek minden nap érkeznek.
+A bank nem erősítette meg a kapcsolatot. Próbálja újra.
+A biztos párosítások automatikus könyvelése ({pct} % felett)
+Szabályok
+Azok a tételek, amelyek szövege ezeket a szavakat tartalmazza, azonnal könyvelődnek — banki díjak, bérleti díj, bérek…
+Még nincsenek szabályok.
+A szöveg tartalmazza
+pl. SZÁMLAVEZETÉSI DÍJ
+Irány
+Jóváírások
+Terhelések
+Mindkettő
+Könyvelés mint
+Név (nem kötelező)
+Szabály hozzáadása
+{n} alkalommal használva
+Megjegyzett IBAN-ok
+Ha megerősít egy párosítást, az IBAN-t megjegyezzük, hogy a következő kifizetést felismerjük.
+Még nincs.
+Bank
+{count} ellenőrizendő banki tétel
+Banki tételek várnak párosításra (a legrégebbi: {oldest}). Pénzügy › Banki egyeztetés.
+Hamarosan lejár a banki hozzáférés: {account}
+A bankja engedélye ({account}) {date}-én lejár. Kapcsolja össze újra a banki adatfolyamot: Pénzügy › Bank.
+Sikertelen banki adatfolyam: {account}
+Nem sikerült letölteni az új tételeket ({account}): {reason}

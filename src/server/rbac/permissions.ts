@@ -112,6 +112,8 @@ const defs = {
   "company.integrations.manage": { audience: "COMPANY", module: "Integrations", description: "Create API keys and webhooks for the company's own systems" },
   "company.accounting.view": { audience: "COMPANY", module: "Accounting", description: "See the company's own accounting: sales, expenses, profit & loss (when FIRINGI switched it on)" },
   "company.accounting.manage": { audience: "COMPANY", module: "Accounting", description: "Enter daily sales and expenses (when FIRINGI switched it on)" },
+  "company.bank.view": { audience: "COMPANY", module: "Finance", description: "See the company's bank accounts and statement lines" },
+  "company.bank.manage": { audience: "COMPANY", module: "Finance", description: "Import bank statements, link the bank feed and match bank lines" },
   "team.users.view": { audience: "COMPANY", module: "Team", description: "View company users" },
   "team.users.manage": { audience: "COMPANY", module: "Team", description: "Create, disable and assign roles to company users" },
   "team.roles.manage": { audience: "COMPANY", module: "Team", description: "Create and edit company roles" },
