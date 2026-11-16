@@ -129,6 +129,7 @@ model Order {
   returns           ReturnRequest[]
   claims            QualityClaim[]           @relation("ClaimOrder")
   delivery          Delivery?
+  chatThreads       OrderThread[]
   allocations       AllocationEvent[]
   supportTickets    SupportTicket[]
   rating            OrderRating?

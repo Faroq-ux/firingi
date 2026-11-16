@@ -94,6 +94,7 @@ export const VENDOR_NAV: NavSection[] = [
       vo("returns", "Returns", "Devoluções", "P6", { live: true, es: "Devoluciones" }),
       vo("claims", "Quality Claims", "Reclamações de Qualidade", "P31", { live: true, perm: ["vendor.claims.respond", "vendor.orders.view"], es: "Reclamaciones de calidad" }),
       vo("claims/quality", "Quality Score", "Índice de Qualidade", "P31", { live: true, perm: ["vendor.claims.respond", "vendor.orders.view"], es: "Índice de calidad" }),
+      vo("messages", "Messages", "Mensagens", "P35", { live: true, perm: ["vendor.orders.view", "vendor.orders.manage"], es: "Mensajes", feature: "CHAT" }),
     ],
   },
   {
@@ -172,6 +173,7 @@ export const BUY_NAV: NavSection[] = [
       bo("approvals", "Approvals", "Aprovações", "P26", { live: true, perm: ["buyer.orders.place", "buyer.orders.view", "buyer.orders.approve"], es: "Aprobaciones" }),
       bo("returns", "Returns", "Devoluções", "P6", { live: true, perm: "buyer.orders.view", es: "Devoluciones" }),
       bo("claims", "Quality Claims", "Reclamações de Qualidade", "P31", { live: true, perm: ["buyer.claims.manage", "buyer.orders.view"], es: "Reclamaciones de calidad" }),
+      bo("messages", "Messages", "Mensagens", "P35", { live: true, perm: ["buyer.orders.view", "buyer.orders.place"], es: "Mensajes", feature: "CHAT" }),
     ],
   },
   {
@@ -218,6 +220,7 @@ export const DRIVER_NAV: NavSection[] = [
     items: [
       dr("today", "Today's Deliveries", "Entregas de Hoje", "P6", { live: true, es: "Entregas de hoy" }),
       dr("history", "History", "Histórico", "P6", { live: true, es: "Historial" }),
+      dr("messages", "Messages", "Mensagens", "P35", { live: true, es: "Mensajes" }),
     ],
   },
 ];

@@ -13,7 +13,16 @@ import {
 type Labels = Record<string, string>;
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ""));
 
-function useAct() {
+/** Server errors that have a translated text (the vendor portal is translated; FIRINGI's is English). */
+function errText(r: { code?: string; error: string }, l?: Labels) {
+  if (r.code === "DRIVER_FULL" && l?.driverFullOne) {
+    const m = /at most (\d+) orders.*already has (\d+)/.exec(r.error);
+    return m ? fill(l.driverFullMax, { max: m[1], open: m[2] }) : l.driverFullOne;
+  }
+  return r.error;
+}
+
+function useAct(l?: Labels) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +31,7 @@ function useAct() {
     start(async () => {
       setError(null); setMsg(null);
       const r = await fn();
-      if (r.ok) { setMsg(after?.(r.data) || null); router.refresh(); } else setError(r.error);
+      if (r.ok) { setMsg(after?.(r.data) || null); router.refresh(); } else setError(errText(r as { code?: string; error: string }, l));
     });
   return { pending, error, msg, run };
 }
@@ -33,7 +42,7 @@ export type WaitingRow = { id: string; number: string; buyer: string; supplier: 
 export function PlanRouteForm({ rows, drivers, vehicles, today, l, routeBase }: {
   rows: WaitingRow[]; drivers: { id: string; name: string; availability: string }[]; vehicles: { id: string; plate: string }[]; today: string; l: Labels; routeBase: string;
 }) {
-  const { pending, error, msg, run } = useAct();
+  const { pending, error, msg, run } = useAct(l);
   const [sel, setSel] = useState<Set<string>>(new Set());
   const [date, setDate] = useState(today);
   const [driverId, setDriverId] = useState(drivers[0]?.id ?? "");

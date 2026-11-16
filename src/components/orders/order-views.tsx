@@ -24,6 +24,7 @@ import { formatDate, formatMoney } from "@/lib/utils";
 import { ResolveException, StatusActions } from "./order-actions";
 import { DecisionPanel } from "./decision-panel";
 import { OrderProgress } from "./order-progress";
+import { OrderChatPanel } from "@/components/chat/order-chat-panel";
 import { openBuyerDecision } from "@/server/allocation/engine";
 import { allocationRules } from "@/server/allocation/rules";
 import { DeliveryPanel, OrderReturnsPanel } from "@/components/delivery/delivery-views";
@@ -248,6 +249,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
           </Card>
         </div>
       </div>
+      <OrderChatPanel ctx={ctx} orderId={o.id} portal={role === "BUYER" ? "buy" : role === "VENDOR" ? "vendor" : "admin"} />
     </>
   );
 }

@@ -662,6 +662,28 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Order chat (Phase 35)
+
+Conversations on each order. Code: `src/server/chat/service.ts`, filter `src/lib/chat.ts`; details `docs/chat.md`.
+- **Who talks — FIRINGI decides** (*Orders › Order Chat*, English): four conversations per order, each switched on
+  or off: **buyer ↔ supplier**, **buyer ↔ FIRINGI**, **supplier ↔ FIRINGI** (never shown to the buyer) and the
+  **driver** (the driver, the buyer and whoever runs the delivery — the supplier for its own fleet, otherwise
+  FIRINGI; open only while the delivery is on the road and a set number of hours after). FIRINGI staff read and
+  can write in every conversation. On orders FIRINGI routed there is no buyer ↔ supplier conversation, and a
+  supplier who writes elsewhere shows to the buyer as "FIRINGI" — the supplier stays hidden. No prices in the chat.
+- **Contact details hidden** — phone numbers, e-mails (also "name at gmail dot com"), IBANs and links become
+  `[•••]`; the sender is warned; the message is **flagged** for FIRINGI (*Order Chat › Flagged messages*: what was
+  typed, who, which order; mark reviewed). Order/route/invoice numbers, prices, dates and postcodes are left alone.
+  FIRINGI can switch hiding off for one company (*Business Features › Hide contacts*; still flagged) or the chat
+  off for a company (*Business Features › Order chat*).
+- **Translated with AI** — each reader sees messages in their own language with "show original" (made once per
+  language and kept). Uses the AI key (`ANTHROPIC_API_KEY`); model chosen in the settings (default Claude Haiku 5.5:
+  fast and cheap per message). Without a key messages show as written.
+- **Photos** (up to 3 per message), **unread badges**, **Messages** inbox for customers and suppliers (*Orders ›
+  Messages*) and drivers, a notice per burst of messages (in-app, push, e-mail — 25 languages), read-only after the
+  order has ended (default 30 days). Pages work on phones, day and night.
+- Tests: `tests/integration/chat.test.ts`, browser `tests/e2e/chat.mjs`. Screenshots `docs/screenshots/chat-0*.png`.
+
 ## Sponsored products (Phase 34)
 
 Suppliers (wholesalers, distributors) pay FIRINGI to show their products higher up. Code: `src/server/ads/service.ts`.

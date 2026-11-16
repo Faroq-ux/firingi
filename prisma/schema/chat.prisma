@@ -1,0 +1,84 @@
+// ── Phase 35: order chat ─────────────────────────────────────────────────────
+// Conversations on an order. Each order has up to four threads, one per channel; FIRINGI decides
+// which channels are open (chat.settings). FIRINGI staff see every thread.
+
+enum ChatChannel {
+  BUYER_SUPPLIER // the buyer and the supplier (not on orders FIRINGI routed)
+  BUYER_FIRINGI // the buyer and FIRINGI
+  SUPPLIER_FIRINGI // the supplier and FIRINGI — never shown to the buyer
+  DRIVER // the driver, the buyer and whoever runs the delivery — only while it is on the road
+}
+
+enum ChatSide {
+  BUYER
+  SUPPLIER
+  FIRINGI
+  DRIVER
+}
+
+model OrderThread {
+  id            String      @id @default(cuid())
+  orderId       String
+  channel       ChatChannel
+  lastMessageAt DateTime?
+  createdAt     DateTime    @default(now())
+
+  order    Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  messages OrderMessage[]
+  reads    OrderThreadRead[]
+
+  @@unique([orderId, channel])
+  @@index([lastMessageAt])
+}
+
+model OrderMessage {
+  id              String    @id @default(cuid())
+  threadId        String
+  authorUserId    String
+  authorCompanyId String
+  authorSide      ChatSide
+  authorName      String // first name at the time (never the company when it must stay hidden)
+  /// What participants see: contact details replaced by [•••] when masking applied.
+  body            String
+  /// The text as typed — FIRINGI staff only; null when nothing was hidden.
+  originalBody    String?
+  /// Language the author wrote in (their interface locale).
+  locale          String
+  /// PHONE | EMAIL | IBAN | LINK — what was found (hidden or not).
+  flags           String[]
+  /// FIRINGI reviewed a flagged message.
+  reviewedAt      DateTime?
+  reviewedById    String?
+  photoKeys       String[]
+  createdAt       DateTime  @default(now())
+
+  thread       OrderThread               @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  translations OrderMessageTranslation[]
+
+  @@index([threadId, createdAt])
+  @@index([createdAt])
+}
+
+/// Machine translation of a message into a reader's language (made once, reused).
+model OrderMessageTranslation {
+  messageId String
+  locale    String
+  body      String
+  model     String
+  createdAt DateTime @default(now())
+
+  message OrderMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@id([messageId, locale])
+}
+
+/// Up to when a user has read a thread (unread counts).
+model OrderThreadRead {
+  threadId   String
+  userId     String
+  lastReadAt DateTime
+
+  thread OrderThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@id([threadId, userId])
+}

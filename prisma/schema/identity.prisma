@@ -269,13 +269,13 @@ model Company {
   buyerApprovalRules     BuyerApprovalRule[]       @relation("BuyerApprovalRuleCompany")
   buyerApprovals         BuyerApproval[]           @relation("BuyerApprovalCompany")
   orderLists             OrderList[]               @relation("OrderListCompany")
+  loyalty                LoyaltyAccount?           @relation("LoyaltyAccount")
+  pilotInvite            PilotInvite?              @relation("PilotInviteUsed")
+  adCampaigns            AdCampaign[]              @relation("AdCampaigns")
+  adAccount              AdAccount?                @relation("AdAccount")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])
-  loyalty LoyaltyAccount? @relation("LoyaltyAccount")
-  pilotInvite PilotInvite? @relation("PilotInviteUsed")
-  adCampaigns AdCampaign[] @relation("AdCampaigns")
-  adAccount   AdAccount?   @relation("AdAccount")
 }
 
 model CompanyStatusHistory {

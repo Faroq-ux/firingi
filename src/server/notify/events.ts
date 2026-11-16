@@ -140,6 +140,8 @@ export const EVENTS: EventDef[] = [
   E("ads.rejected", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign", "reason"]),
   E("ads.stopped", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign", "reason"]),
   E("ads.low_balance", "account", ["vendor.promotions.manage", "vendor.invoices.view"], ["EMAIL"], ["balance"]),
+  // order chat (Phase 35)
+  E("chat.message", "orders", [...ORDERS, "admin.orders.manage", "admin.support.manage", "driver.deliveries.view"], ["EMAIL", "PUSH"], ["number", "from"]),
   // finance
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
   // online payments (Phase 20) — {total} is shown in the reader's currency format

@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DeliveryEvidence } from "@/components/delivery/delivery-views";
 import { DriverDeliveryCard, DriverItems } from "@/components/delivery/driver-views";
 import { CompleteDeliveryForm, FailDeliveryForm } from "@/components/delivery/delivery-forms";
+import { OrderChatPanel } from "@/components/chat/order-chat-panel";
 
 export const metadata = { title: "Delivery" };
 
@@ -29,6 +30,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       )}
       {driverActions.includes("FAIL") && <FailDeliveryForm deliveryId={d.id} reasons={[...FAILURE_REASONS]} />}
       <div className="space-y-3 text-sm"><DeliveryEvidence d={d} /></div>
+      <OrderChatPanel ctx={ctx} orderId={d.orderId} portal="driver" />
     </div>
   );
 }

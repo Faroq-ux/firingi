@@ -81,6 +81,7 @@ export const ADMIN_NAV: NavSection[] = [
       ord("claims/chargebacks", "Claim Charge-backs", "Débitos de Reclamações", "P31", { live: true, perm: ["admin.claims.manage", "admin.finance.view", "admin.fleet.view"] }),
       ord("claims/quality", "Quality & Alerts", "Qualidade e Alertas", "P31", { live: true, perm: ["admin.claims.manage", "admin.orders.view", "admin.orders.manage"] }),
       ord("claims/settings", "Claim Settings", "Definições de Reclamações", "P31", { live: true, perm: ["admin.claims.manage", "admin.orders.view", "admin.orders.manage"] }),
+      ord("chat", "Order Chat", "Conversas de Encomendas", "P35", { live: true, perm: ["admin.orders.view", "admin.orders.manage", "admin.support.manage"] }),
     ],
   },
   {
