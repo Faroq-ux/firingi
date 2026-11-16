@@ -846,7 +846,9 @@
     "My Ads": "Mainokseni",
     "New Ad": "Uusi Mainos",
     "Ad Billing": "Mainosten Laskutus",
-    "Messages": "Viestit"
+    "Messages": "Viestit",
+    "Plan & Billing": "Paketti ja laskutus",
+    "Early Payout": "Ennakkomaksu"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Uusi viesti tilauksesta {number}",
       "body": "{from} lähetti sinulle viestin tilauksesta {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Ilmainen kokeilusi päättyy {days} päivän kuluttua",
+      "body": "Paketin {plan} kokeilu päättyy {date}. Valitse pakettisi kohdassa Yritys › Paketti ja laskutus."
+    },
+    "plan_trial_ended": {
+      "title": "Pakettisi alkoi: {plan}",
+      "body": "Ilmainen kokeilusi päättyi. Sinulla on nyt paketti {plan}."
+    },
+    "plan_changed": {
+      "title": "Paketin vaihto: {plan}",
+      "body": "FIRINGI-pakettisi vaihtuu pakettiin {plan} {date}."
+    },
+    "earlypay_paid": {
+      "title": "Ennakkomaksu {number} maksettu",
+      "body": "FIRINGI lähetti sinulle {net} €. Palkkiolasku löytyy kohdasta Ennakkomaksu."
+    },
+    "earlypay_rejected": {
+      "title": "Ennakkomaksu {number} hylätty",
+      "body": "FIRINGI hylkäsi ennakkomaksun {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Ennakkomaksua pyydetty: {company}",
+      "body": "{company} pyytää {amount} € etuajassa ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Kaikki tilauksiasi koskevat keskustelut, uusimmat ensin.",
     "noThreads": "Ei vielä keskusteluja. Tilausta koskevat viestit näkyvät täällä.",
     "unread": "{n} uutta"
+  },
+  "plans": {
+    "title": "Paketti ja laskutus",
+    "intro": "FIRINGI-pakettisi: mitkä työkalut sinulla on, rajasi, välityspalkkiosi ja ennakkomaksu. Hinnat ilman arvonlisäveroa.",
+    "plansOff": "FIRINGI ei vielä käytä paketteja — sinulla on kaikki työkalut. Saat tiedon ennen kuin mikään muuttuu.",
+    "currentPlan": "Pakettisi",
+    "trialLeft": "Ilmainen kokeilu · {days} päivää jäljellä ({date} asti)",
+    "renews": "Uusiutuu",
+    "pendingPlan": "{plan} alkaa {date}",
+    "commission": "Välityspalkkio myynnistä",
+    "billing": "Miten maksat",
+    "billingKinds": {
+      "PAYOUT": "Vähennetään maksuistasi",
+      "INVOICE": "Laskulla"
+    },
+    "trialNote": "Ilmaisen kokeilun aikana sinulla on kaikki. Valitse pakettisi ennen kuin se päättyy — muuten siirryt pakettiin {plan}.",
+    "current": "Nykyinen",
+    "chosenBadge": "Valittu",
+    "freePrice": "Ilmainen",
+    "perMonth": "/ kk",
+    "commissionOwn": "Välityspalkkio: sovittu prosenttisi",
+    "commissionPlan": "Välityspalkkio: {pct} % myynnistä",
+    "features": {
+      "INVENTORY": "Varasto: erät, viimeiset käyttöpäivät, ostotilaukset, inventaariot, siirrot",
+      "PLANNING": "Kysynnän suunnittelu ja täydennys",
+      "WAREHOUSE": "Varastotoiminnot: keräily ja pakkaus, hyllyt, lukija, jäljitettävyys, takaisinvedot",
+      "PRICE_INSIGHTS": "Hintanäkymät",
+      "ADS": "Mainonta (sponsoroidut tuotteet)",
+      "INTEGRATIONS": "Integraatiot: tuonti ja synkronointi, API, viennit",
+      "ROUTES": "Reittisuunnittelu kuljettajillesi",
+      "ASSISTANT": "Tekoälyavustaja"
+    },
+    "lim": {
+      "products": "enintään {n} tuotetta",
+      "productsAny": "rajattomasti tuotteita",
+      "users": "{n} käyttäjää",
+      "usersAny": "rajattomasti käyttäjiä",
+      "warehouses": "{n} varastoa",
+      "warehousesAny": "rajattomasti varastoja",
+      "drivers": "{n} kuljettajaa",
+      "driversAny": "rajattomasti kuljettajia"
+    },
+    "earlyOff": "Ennakkomaksu ei sisälly",
+    "earlyPerDay": "Ennakkomaksu: {rate} % jokaiselta aiemmalta päivältä (vähintään {min})",
+    "earlyFlat": "Ennakkomaksu: {rate} % summasta (vähintään {min})",
+    "earlyFree": "{n} ilmaista kuukaudessa",
+    "chooseAfterTrial": "Valitse — alkaa kokeilun jälkeen",
+    "upgrade": "Päivitä nyt",
+    "switchAtEnd": "Vaihda kauden lopussa",
+    "chosen": "Valmis — pakettisi on päivitetty.",
+    "usage": "Käyttösi",
+    "limits": {
+      "products": "Aktiiviset tuotteet",
+      "users": "Käyttäjät",
+      "warehouses": "Varastot ja noutopisteet",
+      "drivers": "Kuljettajat"
+    },
+    "noLimit": "ei rajaa",
+    "invoices": "Pakettilaskut",
+    "noPlanInvoices": "Ei vielä pakettilaskuja.",
+    "upgradeInvoice": "Paketin vaihto",
+    "gateTitle": "{feature} ei sisälly pakettiisi",
+    "gateBody": "Päivitä FIRINGI-pakettisi käyttääksesi sitä. Tietosi säilyvät sillä välin.",
+    "seePlans": "Katso paketit",
+    "limitError": "Pakettisi {plan} sallii {max} ({kind}). Vaihda pakettia kohdassa Yritys › Paketti ja laskutus lisätäksesi enemmän.",
+    "earlyTitle": "Ennakkomaksu",
+    "earlyIntro": "Saat hyväksytyt laskut maksetuiksi jo ennen eräpäivää — jopa ennen kuin asiakas on maksanut. FIRINGI perii pienen palkkion, joka laskutetaan ja vähennetään samasta maksusta.",
+    "why": {
+      "PLANS_OFF": "Ennakkomaksu alkaa yhdessä FIRINGIn pakettien kanssa.",
+      "OFF": "FIRINGI ei tarjoa ennakkomaksua juuri nyt.",
+      "NOT_SUPPLIER": "Ennakkomaksu on toimittajille.",
+      "SUPPLIER_OFF": "Ennakkomaksu on poistettu käytöstä yrityksellesi. Ota yhteyttä FIRINGIin.",
+      "PLAN": "Pakettisi ei sisällä ennakkomaksua. Vaihda kohdassa Yritys › Paketti ja laskutus."
+    },
+    "terms": "Ehtosi",
+    "limit": "Rajasi",
+    "outstanding": "Maksettu etuajassa, ei vielä erääntynyt",
+    "room": "Voit pyytää",
+    "freeLeft": "Sinulla on tässä kuussa jäljellä {n} ilmaista ennakkomaksua.",
+    "chooseInvoices": "Valitse laskut, jotka haluat maksettavaksi nyt",
+    "howItWorks": "Vain laskut, jotka erääntyvät {days} päivän tai myöhemmin. FIRINGI tarkistaa pyynnön ja maksaa rahat tilisiirrolla; saat palkkiolaskun sen mukana.",
+    "history": "Ennakkomaksusi",
+    "noHistory": "Ei vielä yhtään.",
+    "status": {
+      "REQUESTED": "Odottaa FIRINGIä",
+      "PAID": "Maksettu",
+      "REJECTED": "Hylätty",
+      "CANCELLED": "Peruttu"
+    },
+    "rowAmount": "{amount} · palkkio {fee}",
+    "rowNet": "sait {net}",
+    "free": "ilmainen",
+    "noInvoices": "Ei hyväksyttyjä laskuja maksua odottamassa.",
+    "dueOn": "erääntyy {date}",
+    "daysEarly": "{days} päivää aiemmin",
+    "tooSoon": "erääntyy liian pian",
+    "quoteAmount": "Laskut",
+    "quoteFee": "Palkkio",
+    "plusVat": "+ alv",
+    "quoteNet": "Saat",
+    "netNote": "palkkion ja alv:n jälkeen",
+    "overLimit": "Se ylittää rajasi — voit nyt pyytää enintään {room}.",
+    "request": "Pyydä maksua nyt",
+    "requested": "Lähetetty — FIRINGI tarkistaa sen ja maksaa rahat.",
+    "cancel": "Peru"
   }
 }

@@ -140,6 +140,13 @@ export const EVENTS: EventDef[] = [
   E("ads.rejected", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign", "reason"]),
   E("ads.stopped", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign", "reason"]),
   E("ads.low_balance", "account", ["vendor.promotions.manage", "vendor.invoices.view"], ["EMAIL"], ["balance"]),
+  // supplier plans & early payout (Phase 36)
+  E("plan.trial_ending", "account", ["company.profile.manage", "vendor.invoices.view"], ["EMAIL", "PUSH"], ["plan", "days", "date"]),
+  E("plan.trial_ended", "account", ["company.profile.manage", "vendor.invoices.view"], ["EMAIL"], ["plan"]),
+  E("plan.changed", "account", ["company.profile.manage", "vendor.invoices.view"], ["EMAIL"], ["plan", "date"]),
+  E("earlypay.paid", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "net"]),
+  E("earlypay.rejected", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "reason"]),
+  E("earlypay.requested", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["company", "number", "amount"]),
   // order chat (Phase 35)
   E("chat.message", "orders", [...ORDERS, "admin.orders.manage", "admin.support.manage", "driver.deliveries.view"], ["EMAIL", "PUSH"], ["number", "from"]),
   // finance

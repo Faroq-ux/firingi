@@ -97,6 +97,8 @@ export const ADMIN_NAV: NavSection[] = [
           vm("documents", "Documents", "Documentos", "P2", { live: true, perm: ["admin.vendors.view", "admin.vendors.approve"] }),
           vm("approval", "Approval", "Aprovação", "P2", { live: true, perm: "admin.vendors.approve" }),
           vm("commission", "Commission", "Comissões", "P5", { live: true, perm: ["admin.vendors.commission", "admin.finance.view"] }),
+          vm("plans", "Supplier Plans", "Planos de Fornecedor", "P36", { live: true, href: `${A}/vendors/plans`, perm: ["admin.vendors.view", "admin.vendors.commission", "admin.finance.view", "admin.finance.manage"] }),
+          vm("early-payouts", "Early Payouts", "Pagamentos Antecipados", "P36", { live: true, href: `${A}/vendors/plans/early-payouts`, perm: ["admin.finance.view", "admin.finance.manage"] }),
           vm("service-areas", "Service Areas", "Áreas de Serviço", "P6", { live: true, href: `${A}/delivery/zones`, perm: ["admin.delivery.view", "admin.vendors.view"] }),
           vm("rules", "Rules", "Regras", "P6", { live: true, href: `${A}/delivery/minimum-order`, perm: ["admin.delivery.view", "admin.vendors.view"] }),
           vm("ratings", "Ratings", "Avaliações", "P14", { live: true, perm: ["admin.vendors.view", "admin.customers.view"] }),

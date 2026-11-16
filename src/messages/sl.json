@@ -846,7 +846,9 @@
     "My Ads": "Moji Oglasi",
     "New Ad": "Nov Oglas",
     "Ad Billing": "Obračun Oglasov",
-    "Messages": "Sporočila"
+    "Messages": "Sporočila",
+    "Plan & Billing": "Paket in obračun",
+    "Early Payout": "Predčasno izplačilo"
   },
   "delivery": {
     "title": "Dostava",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Novo sporočilo o naročilu {number}",
       "body": "{from} vam je poslal(a) sporočilo o naročilu {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Vaše brezplačno preizkusno obdobje se konča čez {days} dni",
+      "body": "Preizkus paketa {plan} se konča {date}. Izberite paket v Podjetje › Paket in obračun."
+    },
+    "plan_trial_ended": {
+      "title": "Vaš paket se je začel: {plan}",
+      "body": "Brezplačno preizkusno obdobje se je končalo. Zdaj imate paket {plan}."
+    },
+    "plan_changed": {
+      "title": "Menjava paketa: {plan}",
+      "body": "Vaš paket FIRINGI se {date} spremeni v {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Predčasno izplačilo {number} izplačano",
+      "body": "FIRINGI vam je nakazal {net} €. Račun za provizijo je v Predčasnem izplačilu."
+    },
+    "earlypay_rejected": {
+      "title": "Predčasno izplačilo {number} zavrnjeno",
+      "body": "FIRINGI je zavrnil predčasno izplačilo {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Zahteva za predčasno izplačilo: {company}",
+      "body": "{company} prosi za predčasno izplačilo {amount} € ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Vsi pogovori o vaših naročilih, najnovejši na vrhu.",
     "noThreads": "Še ni pogovorov. Sporočila o naročilu bodo prikazana tukaj.",
     "unread": "Novih: {n}"
+  },
+  "plans": {
+    "title": "Paket in obračun",
+    "intro": "Vaš paket FIRINGI: katera orodja imate, vaše omejitve, provizija in predčasno izplačilo. Cene brez DDV.",
+    "plansOff": "FIRINGI še ne uporablja paketov — imate vsa orodja. Pred kakršno koli spremembo boste obveščeni.",
+    "currentPlan": "Vaš paket",
+    "trialLeft": "Brezplačno preizkusno obdobje · še {days} dni (do {date})",
+    "renews": "Podaljša se",
+    "pendingPlan": "{plan} se začne {date}",
+    "commission": "Provizija od prodaje",
+    "billing": "Kako plačujete",
+    "billingKinds": {
+      "PAYOUT": "Odšteto od vaših izplačil",
+      "INVOICE": "Z računom"
+    },
+    "trialNote": "V brezplačnem preizkusnem obdobju imate vse. Izberite paket pred koncem — sicer preidete na {plan}.",
+    "current": "Trenutni",
+    "chosenBadge": "Izbran",
+    "freePrice": "Brezplačno",
+    "perMonth": "/ mesec",
+    "commissionOwn": "Provizija: vaša dogovorjena stopnja",
+    "commissionPlan": "Provizija: {pct} % od prodaje",
+    "features": {
+      "INVENTORY": "Zaloge: serije, roki uporabe, nabavna naročila, inventure, prenosi",
+      "PLANNING": "Načrtovanje povpraševanja in dopolnjevanje",
+      "WAREHOUSE": "Skladišče: komisioniranje in pakiranje, police, čitalnik, sledljivost, odpoklici",
+      "PRICE_INSIGHTS": "Vpogled v cene",
+      "ADS": "Oglaševanje (sponzorirani izdelki)",
+      "INTEGRATIONS": "Integracije: uvoz in sinhronizacija, API, izvozi",
+      "ROUTES": "Načrtovanje poti za vaše voznike",
+      "ASSISTANT": "Pomočnik UI"
+    },
+    "lim": {
+      "products": "do {n} izdelkov",
+      "productsAny": "neomejeno izdelkov",
+      "users": "{n} uporabnikov",
+      "usersAny": "neomejeno uporabnikov",
+      "warehouses": "{n} skladišč",
+      "warehousesAny": "neomejeno skladišč",
+      "drivers": "{n} voznikov",
+      "driversAny": "neomejeno voznikov"
+    },
+    "earlyOff": "Predčasno izplačilo ni vključeno",
+    "earlyPerDay": "Predčasno izplačilo: {rate} % za vsak dan prej (najmanj {min})",
+    "earlyFlat": "Predčasno izplačilo: {rate} % zneska (najmanj {min})",
+    "earlyFree": "{n} brezplačno na mesec",
+    "chooseAfterTrial": "Izberi — začne se po preizkusu",
+    "upgrade": "Nadgradi zdaj",
+    "switchAtEnd": "Zamenjaj ob koncu obdobja",
+    "chosen": "Končano — vaš paket je posodobljen.",
+    "usage": "Vaša poraba",
+    "limits": {
+      "products": "Aktivni izdelki",
+      "users": "Uporabniki",
+      "warehouses": "Skladišča in prevzemna mesta",
+      "drivers": "Vozniki"
+    },
+    "noLimit": "brez omejitve",
+    "invoices": "Računi za paket",
+    "noPlanInvoices": "Računov za paket še ni.",
+    "upgradeInvoice": "Menjava paketa",
+    "gateTitle": "{feature} ni v vašem paketu",
+    "gateBody": "Za uporabo nadgradite svoj paket FIRINGI. Vaši podatki se medtem ohranijo.",
+    "seePlans": "Oglejte si pakete",
+    "limitError": "Vaš paket {plan} dovoljuje {max} ({kind}). Za dodajanje več zamenjajte paket v Podjetje › Paket in obračun.",
+    "earlyTitle": "Predčasno izplačilo",
+    "earlyIntro": "Prejmite plačilo za odobrene račune še pred zapadlostjo — tudi preden kupec plača. FIRINGI zaračuna majhno provizijo, ki se obračuna in odšteje od istega plačila.",
+    "why": {
+      "PLANS_OFF": "Predčasno izplačilo začne skupaj s paketi FIRINGI.",
+      "OFF": "FIRINGI trenutno ne ponuja predčasnega izplačila.",
+      "NOT_SUPPLIER": "Predčasno izplačilo je namenjeno dobaviteljem.",
+      "SUPPLIER_OFF": "Predčasno izplačilo je za vaše podjetje izklopljeno. Obrnite se na FIRINGI.",
+      "PLAN": "Vaš paket ne vključuje predčasnega izplačila. Zamenjajte ga v Podjetje › Paket in obračun."
+    },
+    "terms": "Vaši pogoji",
+    "limit": "Vaša omejitev",
+    "outstanding": "Izplačano prej, še ne zapadlo",
+    "room": "Zaprosite lahko za",
+    "freeLeft": "Ta mesec imate še {n} brezplačnih predčasnih izplačil.",
+    "chooseInvoices": "Izberite račune za takojšnje izplačilo",
+    "howItWorks": "Samo računi z zapadlostjo čez {days} dni ali kasneje. FIRINGI preveri zahtevo in nakaže denar; zraven prejmete račun za provizijo.",
+    "history": "Vaša predčasna izplačila",
+    "noHistory": "Še nobenega.",
+    "status": {
+      "REQUESTED": "Čaka na FIRINGI",
+      "PAID": "Izplačano",
+      "REJECTED": "Zavrnjeno",
+      "CANCELLED": "Preklicano"
+    },
+    "rowAmount": "{amount} · provizija {fee}",
+    "rowNet": "prejeli ste {net}",
+    "free": "brezplačno",
+    "noInvoices": "Ni odobrenih računov, ki čakajo na plačilo.",
+    "dueOn": "zapade {date}",
+    "daysEarly": "{days} dni prej",
+    "tooSoon": "zapade prekmalu",
+    "quoteAmount": "Računi",
+    "quoteFee": "Provizija",
+    "plusVat": "+ DDV",
+    "quoteNet": "Prejmete",
+    "netNote": "po proviziji z DDV",
+    "overLimit": "To presega vašo omejitev — zdaj lahko zaprosite za največ {room}.",
+    "request": "Zaprosi za izplačilo zdaj",
+    "requested": "Poslano — FIRINGI bo preveril in nakazal denar.",
+    "cancel": "Prekliči"
   }
 }

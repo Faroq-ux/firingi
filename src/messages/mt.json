@@ -846,7 +846,9 @@
     "My Ads": "Ir-Reklami Tiegħi",
     "New Ad": "Reklam Ġdid",
     "Ad Billing": "Fatturazzjoni tar-Reklami",
-    "Messages": "Messaġġi"
+    "Messages": "Messaġġi",
+    "Plan & Billing": "Pjan u Kontijiet",
+    "Early Payout": "Ħlas Bikri"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Messaġġ ġdid dwar l-ordni {number}",
       "body": "{from} bagħatlek messaġġ dwar l-ordni {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Il-prova b'xejn tiegħek tispiċċa f'{days} jiem",
+      "body": "Il-prova ta' {plan} tispiċċa fil-{date}. Agħżel il-pjan tiegħek f'Kumpanija › Pjan u Kontijiet."
+    },
+    "plan_trial_ended": {
+      "title": "Il-pjan tiegħek beda: {plan}",
+      "body": "Il-prova b'xejn spiċċat. Issa qiegħed fuq il-pjan {plan}."
+    },
+    "plan_changed": {
+      "title": "Bidla fil-pjan: {plan}",
+      "body": "Il-pjan FIRINGI tiegħek jinbidel għal {plan} fil-{date}."
+    },
+    "earlypay_paid": {
+      "title": "Ħlas bikri {number} imħallas",
+      "body": "FIRINGI bagħtitlek {net} €. Il-fattura tat-tariffa tinsab f'Ħlas Bikri."
+    },
+    "earlypay_rejected": {
+      "title": "Ħlas bikri {number} miċħud",
+      "body": "FIRINGI ċaħdet il-ħlas bikri {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Talba għal ħlas bikri: {company}",
+      "body": "{company} qed titlob li titħallas {amount} € qabel ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Il-konversazzjonijiet kollha dwar l-ordnijiet tiegħek, l-aktar reċenti l-ewwel.",
     "noThreads": "Għad m'hemmx konversazzjonijiet. Il-messaġġi dwar ordni jidhru hawn.",
     "unread": "{n} ġodda"
+  },
+  "plans": {
+    "title": "Pjan u Kontijiet",
+    "intro": "Il-pjan FIRINGI tiegħek: liema għodod għandek, il-limiti tiegħek, il-kummissjoni u l-ħlas bikri. Prezzijiet mingħajr VAT.",
+    "plansOff": "FIRINGI għadha ma tużax pjanijiet — għandek l-għodod kollha. Tiġi infurmat qabel ma jinbidel xi ħaġa.",
+    "currentPlan": "Il-pjan tiegħek",
+    "trialLeft": "Prova b'xejn · fadal {days} jiem (sa {date})",
+    "renews": "Jiġġedded fil-",
+    "pendingPlan": "{plan} jibda fil-{date}",
+    "commission": "Kummissjoni fuq il-bejgħ",
+    "billing": "Kif tħallas",
+    "billingKinds": {
+      "PAYOUT": "Imnaqqas mill-ħlasijiet tiegħek",
+      "INVOICE": "B'fattura"
+    },
+    "trialNote": "Matul il-prova b'xejn għandek kollox. Agħżel il-pjan tiegħek qabel tispiċċa — inkella tgħaddi għal {plan}.",
+    "current": "Attwali",
+    "chosenBadge": "Magħżul",
+    "freePrice": "B'xejn",
+    "perMonth": "/ xahar",
+    "commissionOwn": "Kummissjoni: ir-rata miftiehma tiegħek",
+    "commissionPlan": "Kummissjoni: {pct} % fuq il-bejgħ",
+    "features": {
+      "INVENTORY": "Inventarju: lottijiet, skadenzi, ordnijiet ta' xiri, għadd, trasferimenti",
+      "PLANNING": "Ippjanar tad-domanda u rifornimenti",
+      "WAREHOUSE": "Maħżen: ġbir u ppakkjar, xkafef, skaner, traċċabbiltà, sejħiet lura",
+      "PRICE_INSIGHTS": "Analiżi tal-prezzijiet",
+      "ADS": "Reklamar (prodotti sponsorjati)",
+      "INTEGRATIONS": "Integrazzjonijiet: importazzjoni u sinkronizzazzjoni, API, esportazzjonijiet",
+      "ROUTES": "Ippjanar tar-rotot għas-sewwieqa tiegħek",
+      "ASSISTANT": "Assistent tal-IA"
+    },
+    "lim": {
+      "products": "sa {n} prodotti",
+      "productsAny": "prodotti bla limitu",
+      "users": "{n} utenti",
+      "usersAny": "utenti bla limitu",
+      "warehouses": "{n} imħażen",
+      "warehousesAny": "imħażen bla limitu",
+      "drivers": "{n} sewwieqa",
+      "driversAny": "sewwieqa bla limitu"
+    },
+    "earlyOff": "Ħlas bikri mhux inkluż",
+    "earlyPerDay": "Ħlas bikri: {rate} % għal kull jum qabel (minimu {min})",
+    "earlyFlat": "Ħlas bikri: {rate} % tal-ammont (minimu {min})",
+    "earlyFree": "{n} b'xejn fix-xahar",
+    "chooseAfterTrial": "Agħżel — jibda wara l-prova",
+    "upgrade": "Aġġorna issa",
+    "switchAtEnd": "Ibdel fl-aħħar tal-perjodu",
+    "chosen": "Lest — il-pjan tiegħek ġie aġġornat.",
+    "usage": "L-użu tiegħek",
+    "limits": {
+      "products": "Prodotti attivi",
+      "users": "Utenti",
+      "warehouses": "Imħażen u punti tal-ġbir",
+      "drivers": "Sewwieqa"
+    },
+    "noLimit": "bla limitu",
+    "invoices": "Fatturi tal-pjan",
+    "noPlanInvoices": "Għad m'hemmx fatturi tal-pjan.",
+    "upgradeInvoice": "Bidla fil-pjan",
+    "gateTitle": "{feature} mhux fil-pjan tiegħek",
+    "gateBody": "Aġġorna l-pjan FIRINGI tiegħek biex tużah. Id-dejta tiegħek tibqa' maħżuna sadanittant.",
+    "seePlans": "Ara l-pjanijiet",
+    "limitError": "Il-pjan {plan} tiegħek jippermetti {max} ({kind}). Biex iżżid aktar, ibdel il-pjan f'Kumpanija › Pjan u Kontijiet.",
+    "earlyTitle": "Ħlas Bikri",
+    "earlyIntro": "Irċievi l-ħlas issa għal fatturi approvati li għadhom mhumiex dovuti — anke qabel ma jħallas il-klijent. FIRINGI tieħu tariffa żgħira, iffatturata u mnaqqsa mill-istess ħlas.",
+    "why": {
+      "PLANS_OFF": "Il-ħlas bikri jibda flimkien mal-pjanijiet ta' FIRINGI.",
+      "OFF": "FIRINGI bħalissa mhix toffri ħlas bikri.",
+      "NOT_SUPPLIER": "Il-ħlas bikri huwa għall-fornituri.",
+      "SUPPLIER_OFF": "Il-ħlas bikri huwa mitfi għall-kumpanija tiegħek. Ikkuntattja lil FIRINGI.",
+      "PLAN": "Il-pjan tiegħek ma jinkludix ħlas bikri. Ibdel f'Kumpanija › Pjan u Kontijiet."
+    },
+    "terms": "It-termini tiegħek",
+    "limit": "Il-limitu tiegħek",
+    "outstanding": "Imħallas qabel, għadu mhux dovut",
+    "room": "Tista' titlob",
+    "freeLeft": "Għandek {n} ħlas/ijiet bikri b'xejn fadal dan ix-xahar.",
+    "chooseInvoices": "Agħżel il-fatturi li trid titħallas issa",
+    "howItWorks": "Fatturi dovuti fi żmien {days} jiem jew aktar biss. FIRINGI tiċċekkja t-talba u tibgħat il-flus bi trasferiment bankarju; tirċievi l-fattura tat-tariffa magħha.",
+    "history": "Il-ħlasijiet bikrija tiegħek",
+    "noHistory": "Għad m'hemmx.",
+    "status": {
+      "REQUESTED": "Qed jistenna lil FIRINGI",
+      "PAID": "Imħallas",
+      "REJECTED": "Miċħud",
+      "CANCELLED": "Ikkanċellat"
+    },
+    "rowAmount": "{amount} · tariffa {fee}",
+    "rowNet": "irċevejt {net}",
+    "free": "b'xejn",
+    "noInvoices": "M'hemmx fatturi approvati jistennew il-ħlas.",
+    "dueOn": "dovut fil-{date}",
+    "daysEarly": "{days} jiem qabel",
+    "tooSoon": "dovut wisq malajr",
+    "quoteAmount": "Fatturi",
+    "quoteFee": "Tariffa",
+    "plusVat": "+ VAT",
+    "quoteNet": "Tirċievi",
+    "netNote": "wara t-tariffa bil-VAT",
+    "overLimit": "Dan jaqbeż il-limitu tiegħek — issa tista' titlob sa {room}.",
+    "request": "Itlob li titħallas issa",
+    "requested": "Mibgħut — FIRINGI se tiċċekkja u tibgħat il-flus.",
+    "cancel": "Ikkanċella"
   }
 }

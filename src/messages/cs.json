@@ -846,7 +846,9 @@
     "My Ads": "Moje Reklamy",
     "New Ad": "Nová Reklama",
     "Ad Billing": "Fakturace Reklam",
-    "Messages": "Zprávy"
+    "Messages": "Zprávy",
+    "Plan & Billing": "Tarif a platby",
+    "Early Payout": "Předčasná výplata"
   },
   "delivery": {
     "title": "Doručení",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Nová zpráva k objednávce {number}",
       "body": "{from} vám poslal(a) zprávu k objednávce {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Vaše zkušební období končí za {days} dní",
+      "body": "Zkušební období tarifu {plan} končí {date}. Vyberte tarif v Firma › Tarif a platby."
+    },
+    "plan_trial_ended": {
+      "title": "Váš tarif začal: {plan}",
+      "body": "Zkušební období skončilo. Nyní máte tarif {plan}."
+    },
+    "plan_changed": {
+      "title": "Změna tarifu: {plan}",
+      "body": "Váš tarif FIRINGI se {date} mění na {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Předčasná výplata {number} vyplacena",
+      "body": "FIRINGI vám poslala {net} €. Faktura za poplatek je v Předčasné výplatě."
+    },
+    "earlypay_rejected": {
+      "title": "Předčasná výplata {number} zamítnuta",
+      "body": "FIRINGI zamítla předčasnou výplatu {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Žádost o předčasnou výplatu: {company}",
+      "body": "{company} žádá o předčasnou výplatu {amount} € ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Všechny konverzace k vašim objednávkám, nejnovější nahoře.",
     "noThreads": "Zatím žádné konverzace. Zprávy k objednávce se zobrazí zde.",
     "unread": "{n} nové"
+  },
+  "plans": {
+    "title": "Tarif a platby",
+    "intro": "Váš tarif FIRINGI: jaké nástroje máte, vaše limity, provize a předčasná výplata. Ceny bez DPH.",
+    "plansOff": "FIRINGI zatím tarify nepoužívá — máte všechny nástroje. Před jakoukoli změnou dostanete zprávu.",
+    "currentPlan": "Váš tarif",
+    "trialLeft": "Zkušební období zdarma · zbývá {days} dní (do {date})",
+    "renews": "Obnovuje se",
+    "pendingPlan": "{plan} začíná {date}",
+    "commission": "Provize z prodeje",
+    "billing": "Jak platíte",
+    "billingKinds": {
+      "PAYOUT": "Strženo z vašich výplat",
+      "INVOICE": "Fakturou"
+    },
+    "trialNote": "Během zkušebního období máte vše. Vyberte si tarif před jeho koncem — jinak přejdete na {plan}.",
+    "current": "Aktuální",
+    "chosenBadge": "Vybrán",
+    "freePrice": "Zdarma",
+    "perMonth": "/ měsíc",
+    "commissionOwn": "Provize: vaše sjednaná sazba",
+    "commissionPlan": "Provize: {pct} % z prodeje",
+    "features": {
+      "INVENTORY": "Zásoby: šarže, expirace, nákupní objednávky, inventury, převody",
+      "PLANNING": "Plánování poptávky a doplňování",
+      "WAREHOUSE": "Sklad: vychystávání a balení, regály, čtečka, sledovatelnost, stahování",
+      "PRICE_INSIGHTS": "Cenové přehledy",
+      "ADS": "Reklama (sponzorované produkty)",
+      "INTEGRATIONS": "Integrace: import a synchronizace, API, exporty",
+      "ROUTES": "Plánování tras pro vaše řidiče",
+      "ASSISTANT": "AI asistent"
+    },
+    "lim": {
+      "products": "až {n} produktů",
+      "productsAny": "neomezeně produktů",
+      "users": "{n} uživatelů",
+      "usersAny": "neomezeně uživatelů",
+      "warehouses": "{n} skladů",
+      "warehousesAny": "neomezeně skladů",
+      "drivers": "{n} řidičů",
+      "driversAny": "neomezeně řidičů"
+    },
+    "earlyOff": "Předčasná výplata není součástí",
+    "earlyPerDay": "Předčasná výplata: {rate} % za každý den dříve (minimum {min})",
+    "earlyFlat": "Předčasná výplata: {rate} % z částky (minimum {min})",
+    "earlyFree": "{n} zdarma měsíčně",
+    "chooseAfterTrial": "Vybrat — začne po zkušebním období",
+    "upgrade": "Přejít hned",
+    "switchAtEnd": "Změnit na konci období",
+    "chosen": "Hotovo — váš tarif je aktualizován.",
+    "usage": "Vaše využití",
+    "limits": {
+      "products": "Aktivní produkty",
+      "users": "Uživatelé",
+      "warehouses": "Sklady a výdejní místa",
+      "drivers": "Řidiči"
+    },
+    "noLimit": "bez limitu",
+    "invoices": "Faktury za tarif",
+    "noPlanInvoices": "Zatím žádné faktury za tarif.",
+    "upgradeInvoice": "Změna tarifu",
+    "gateTitle": "{feature} není ve vašem tarifu",
+    "gateBody": "Pro použití přejděte na vyšší tarif FIRINGI. Vaše data zůstávají mezitím uložena.",
+    "seePlans": "Zobrazit tarify",
+    "limitError": "Váš tarif {plan} umožňuje {max} ({kind}). Pro přidání dalších změňte tarif v Firma › Tarif a platby.",
+    "earlyTitle": "Předčasná výplata",
+    "earlyIntro": "Nechte si vyplatit schválené faktury už teď, před splatností — i dřív, než zákazník zaplatí. FIRINGI účtuje malý poplatek, fakturovaný a stržený ze stejné platby.",
+    "why": {
+      "PLANS_OFF": "Předčasná výplata začne spolu s tarify FIRINGI.",
+      "OFF": "FIRINGI teď předčasnou výplatu nenabízí.",
+      "NOT_SUPPLIER": "Předčasná výplata je pro dodavatele.",
+      "SUPPLIER_OFF": "Předčasná výplata je pro vaši firmu vypnutá. Kontaktujte FIRINGI.",
+      "PLAN": "Váš tarif nezahrnuje předčasnou výplatu. Změňte ho v Firma › Tarif a platby."
+    },
+    "terms": "Vaše podmínky",
+    "limit": "Váš limit",
+    "outstanding": "Vyplaceno předem, dosud nesplatné",
+    "room": "Můžete požádat o",
+    "freeLeft": "Tento měsíc vám zbývá {n} předčasných výplat zdarma.",
+    "chooseInvoices": "Vyberte faktury k okamžité výplatě",
+    "howItWorks": "Jen faktury se splatností za {days} dní a později. FIRINGI žádost zkontroluje a peníze pošle převodem; fakturu za poplatek dostanete s ní.",
+    "history": "Vaše předčasné výplaty",
+    "noHistory": "Zatím žádné.",
+    "status": {
+      "REQUESTED": "Čeká na FIRINGI",
+      "PAID": "Vyplaceno",
+      "REJECTED": "Zamítnuto",
+      "CANCELLED": "Zrušeno"
+    },
+    "rowAmount": "{amount} · poplatek {fee}",
+    "rowNet": "obdrželi jste {net}",
+    "free": "zdarma",
+    "noInvoices": "Žádné schválené faktury nečekají na zaplacení.",
+    "dueOn": "splatnost {date}",
+    "daysEarly": "o {days} dní dříve",
+    "tooSoon": "splatnost příliš brzy",
+    "quoteAmount": "Faktury",
+    "quoteFee": "Poplatek",
+    "plusVat": "+ DPH",
+    "quoteNet": "Obdržíte",
+    "netNote": "po poplatku vč. DPH",
+    "overLimit": "To je nad váš limit — teď můžete požádat až o {room}.",
+    "request": "Požádat o výplatu hned",
+    "requested": "Odesláno — FIRINGI to zkontroluje a pošle peníze.",
+    "cancel": "Zrušit"
   }
 }

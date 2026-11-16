@@ -846,7 +846,9 @@
     "My Ads": "Reclamele Mele",
     "New Ad": "Reclamă Nouă",
     "Ad Billing": "Facturarea Reclamelor",
-    "Messages": "Mesaje"
+    "Messages": "Mesaje",
+    "Plan & Billing": "Plan și facturare",
+    "Early Payout": "Plată anticipată"
   },
   "delivery": {
     "title": "Livrare",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Mesaj nou despre comanda {number}",
       "body": "{from} v-a trimis un mesaj despre comanda {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Perioada de probă gratuită se încheie în {days} zile",
+      "body": "Perioada de probă pentru {plan} se încheie pe {date}. Alegeți planul în Companie › Plan și facturare."
+    },
+    "plan_trial_ended": {
+      "title": "Planul dvs. a început: {plan}",
+      "body": "Perioada de probă gratuită s-a încheiat. Acum aveți planul {plan}."
+    },
+    "plan_changed": {
+      "title": "Schimbare de plan: {plan}",
+      "body": "Planul dvs. FIRINGI devine {plan} pe {date}."
+    },
+    "earlypay_paid": {
+      "title": "Plata anticipată {number} a fost efectuată",
+      "body": "FIRINGI v-a trimis {net} €. Factura taxei este în Plată anticipată."
+    },
+    "earlypay_rejected": {
+      "title": "Plata anticipată {number} a fost respinsă",
+      "body": "FIRINGI a respins plata anticipată {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Solicitare de plată anticipată: {company}",
+      "body": "{company} cere să primească {amount} € anticipat ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Toate conversațiile despre comenzile dvs., cele mai noi primele.",
     "noThreads": "Încă nu există conversații. Mesajele despre o comandă apar aici.",
     "unread": "{n} noi"
+  },
+  "plans": {
+    "title": "Plan și facturare",
+    "intro": "Planul dvs. FIRINGI: ce instrumente aveți, limitele, comisionul și plata anticipată. Prețuri fără TVA.",
+    "plansOff": "FIRINGI nu folosește încă planuri — aveți toate instrumentele. Veți fi anunțat înainte de orice schimbare.",
+    "currentPlan": "Planul dvs.",
+    "trialLeft": "Perioadă de probă gratuită · mai sunt {days} zile (până la {date})",
+    "renews": "Se reînnoiește pe",
+    "pendingPlan": "{plan} începe pe {date}",
+    "commission": "Comision din vânzări",
+    "billing": "Cum plătiți",
+    "billingKinds": {
+      "PAYOUT": "Dedus din plățile către dvs.",
+      "INVOICE": "Prin factură"
+    },
+    "trialNote": "În perioada de probă gratuită aveți totul. Alegeți planul înainte să se încheie — altfel treceți la {plan}.",
+    "current": "Actual",
+    "chosenBadge": "Ales",
+    "freePrice": "Gratuit",
+    "perMonth": "/ lună",
+    "commissionOwn": "Comision: rata convenită cu dvs.",
+    "commissionPlan": "Comision: {pct} % din vânzări",
+    "features": {
+      "INVENTORY": "Stocuri: loturi, termene de valabilitate, comenzi de achiziție, inventare, transferuri",
+      "PLANNING": "Planificarea cererii și reaprovizionare",
+      "WAREHOUSE": "Depozit: pregătire și ambalare, rafturi, scaner, trasabilitate, retrageri",
+      "PRICE_INSIGHTS": "Analiza prețurilor",
+      "ADS": "Publicitate (produse sponsorizate)",
+      "INTEGRATIONS": "Integrări: import și sincronizare, API, exporturi",
+      "ROUTES": "Planificarea rutelor pentru șoferii dvs.",
+      "ASSISTANT": "Asistent AI"
+    },
+    "lim": {
+      "products": "până la {n} produse",
+      "productsAny": "produse nelimitate",
+      "users": "{n} utilizatori",
+      "usersAny": "utilizatori nelimitați",
+      "warehouses": "{n} depozite",
+      "warehousesAny": "depozite nelimitate",
+      "drivers": "{n} șoferi",
+      "driversAny": "șoferi nelimitați"
+    },
+    "earlyOff": "Plata anticipată nu este inclusă",
+    "earlyPerDay": "Plată anticipată: {rate} % pe zi mai devreme (minimum {min})",
+    "earlyFlat": "Plată anticipată: {rate} % din sumă (minimum {min})",
+    "earlyFree": "{n} gratuite pe lună",
+    "chooseAfterTrial": "Alegeți — începe după perioada de probă",
+    "upgrade": "Treceți acum",
+    "switchAtEnd": "Schimbați la sfârșitul perioadei",
+    "chosen": "Gata — planul dvs. a fost actualizat.",
+    "usage": "Utilizarea dvs.",
+    "limits": {
+      "products": "Produse active",
+      "users": "Utilizatori",
+      "warehouses": "Depozite și puncte de ridicare",
+      "drivers": "Șoferi"
+    },
+    "noLimit": "fără limită",
+    "invoices": "Facturi pentru plan",
+    "noPlanInvoices": "Încă nu există facturi pentru plan.",
+    "upgradeInvoice": "Schimbare de plan",
+    "gateTitle": "{feature} nu este inclus în planul dvs.",
+    "gateBody": "Treceți la un plan FIRINGI superior pentru a-l folosi. Datele dvs. rămân păstrate între timp.",
+    "seePlans": "Vedeți planurile",
+    "limitError": "Planul dvs. {plan} permite {max} ({kind}). Pentru a adăuga mai multe, schimbați planul în Companie › Plan și facturare.",
+    "earlyTitle": "Plată anticipată",
+    "earlyIntro": "Primiți acum banii pentru facturile aprobate care nu au ajuns la scadență — chiar înainte ca clientul să plătească. FIRINGI percepe o mică taxă, facturată și dedusă din aceeași plată.",
+    "why": {
+      "PLANS_OFF": "Plata anticipată pornește odată cu planurile FIRINGI.",
+      "OFF": "FIRINGI nu oferă momentan plată anticipată.",
+      "NOT_SUPPLIER": "Plata anticipată este pentru furnizori.",
+      "SUPPLIER_OFF": "Plata anticipată este dezactivată pentru compania dvs. Contactați FIRINGI.",
+      "PLAN": "Planul dvs. nu include plata anticipată. Schimbați-l în Companie › Plan și facturare."
+    },
+    "terms": "Condițiile dvs.",
+    "limit": "Limita dvs.",
+    "outstanding": "Plătit anticipat, încă nescadent",
+    "room": "Puteți solicita",
+    "freeLeft": "Mai aveți {n} plăți anticipate gratuite luna aceasta.",
+    "chooseInvoices": "Alegeți facturile de încasat acum",
+    "howItWorks": "Doar facturi cu scadența peste {days} zile sau mai mult. FIRINGI verifică cererea și trimite banii prin transfer bancar; primiți și factura taxei.",
+    "history": "Plățile dvs. anticipate",
+    "noHistory": "Niciuna încă.",
+    "status": {
+      "REQUESTED": "Așteaptă FIRINGI",
+      "PAID": "Plătit",
+      "REJECTED": "Respins",
+      "CANCELLED": "Anulat"
+    },
+    "rowAmount": "{amount} · taxă {fee}",
+    "rowNet": "ați primit {net}",
+    "free": "gratuit",
+    "noInvoices": "Nu există facturi aprobate care așteaptă plata.",
+    "dueOn": "scadentă pe {date}",
+    "daysEarly": "cu {days} zile mai devreme",
+    "tooSoon": "scadență prea apropiată",
+    "quoteAmount": "Facturi",
+    "quoteFee": "Taxă",
+    "plusVat": "+ TVA",
+    "quoteNet": "Primiți",
+    "netNote": "după taxă cu TVA",
+    "overLimit": "Depășește limita dvs. — acum puteți solicita până la {room}.",
+    "request": "Solicitați plata acum",
+    "requested": "Trimis — FIRINGI va verifica și va trimite banii.",
+    "cancel": "Anulează"
   }
 }

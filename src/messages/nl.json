@@ -846,7 +846,9 @@
     "My Ads": "Mijn Advertenties",
     "New Ad": "Nieuwe Advertentie",
     "Ad Billing": "Advertentiefacturatie",
-    "Messages": "Berichten"
+    "Messages": "Berichten",
+    "Plan & Billing": "Abonnement & facturatie",
+    "Early Payout": "Vervroegde uitbetaling"
   },
   "delivery": {
     "title": "Levering",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Nieuw bericht over bestelling {number}",
       "body": "{from} heeft u een bericht gestuurd over bestelling {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Uw gratis proefperiode eindigt over {days} dagen",
+      "body": "Uw proefperiode voor {plan} eindigt op {date}. Kies uw abonnement via Bedrijf › Abonnement & facturatie."
+    },
+    "plan_trial_ended": {
+      "title": "Uw abonnement is gestart: {plan}",
+      "body": "Uw gratis proefperiode is voorbij. U heeft nu het abonnement {plan}."
+    },
+    "plan_changed": {
+      "title": "Abonnementswijziging: {plan}",
+      "body": "Uw FIRINGI-abonnement wordt op {date} {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Vervroegde uitbetaling {number} betaald",
+      "body": "FIRINGI heeft u {net} € overgemaakt. De factuur van de vergoeding staat bij Vervroegde uitbetaling."
+    },
+    "earlypay_rejected": {
+      "title": "Vervroegde uitbetaling {number} afgewezen",
+      "body": "FIRINGI heeft vervroegde uitbetaling {number} afgewezen: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Vervroegde uitbetaling aangevraagd: {company}",
+      "body": "{company} vraagt {amount} € vervroegd uit te betalen ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Alle gesprekken over uw bestellingen, nieuwste eerst.",
     "noThreads": "Nog geen gesprekken. Berichten over een bestelling verschijnen hier.",
     "unread": "{n} nieuw"
+  },
+  "plans": {
+    "title": "Abonnement & facturatie",
+    "intro": "Uw FIRINGI-abonnement: welke tools u heeft, uw limieten, uw commissie en vervroegde uitbetaling. Prijzen excl. btw.",
+    "plansOff": "FIRINGI gebruikt nog geen abonnementen — u heeft alle tools. U hoort het voordat er iets verandert.",
+    "currentPlan": "Uw abonnement",
+    "trialLeft": "Gratis proefperiode · nog {days} dagen (tot {date})",
+    "renews": "Verlengt op",
+    "pendingPlan": "{plan} start op {date}",
+    "commission": "Commissie op verkopen",
+    "billing": "Hoe u betaalt",
+    "billingKinds": {
+      "PAYOUT": "Ingehouden op uw uitbetalingen",
+      "INVOICE": "Per factuur"
+    },
+    "trialNote": "Tijdens de gratis proefperiode heeft u alles. Kies uw abonnement voor het einde — anders gaat u naar {plan}.",
+    "current": "Huidig",
+    "chosenBadge": "Gekozen",
+    "freePrice": "Gratis",
+    "perMonth": "/ maand",
+    "commissionOwn": "Commissie: uw afgesproken tarief",
+    "commissionPlan": "Commissie: {pct} % op verkopen",
+    "features": {
+      "INVENTORY": "Voorraad: partijen, houdbaarheid, inkooporders, tellingen, overboekingen",
+      "PLANNING": "Vraagplanning & aanvullen",
+      "WAREHOUSE": "Magazijn: orderpicken & inpakken, schappen, scanner, traceerbaarheid, terugroepacties",
+      "PRICE_INSIGHTS": "Prijsinzichten",
+      "ADS": "Advertenties (gesponsorde producten)",
+      "INTEGRATIONS": "Koppelingen: import & sync, API, exports",
+      "ROUTES": "Routeplanning voor uw chauffeurs",
+      "ASSISTANT": "AI-assistent"
+    },
+    "lim": {
+      "products": "tot {n} producten",
+      "productsAny": "onbeperkt producten",
+      "users": "{n} gebruikers",
+      "usersAny": "onbeperkt gebruikers",
+      "warehouses": "{n} magazijnen",
+      "warehousesAny": "onbeperkt magazijnen",
+      "drivers": "{n} chauffeurs",
+      "driversAny": "onbeperkt chauffeurs"
+    },
+    "earlyOff": "Vervroegde uitbetaling niet inbegrepen",
+    "earlyPerDay": "Vervroegde uitbetaling: {rate} % per dag eerder (minimaal {min})",
+    "earlyFlat": "Vervroegde uitbetaling: {rate} % van het bedrag (minimaal {min})",
+    "earlyFree": "{n} gratis per maand",
+    "chooseAfterTrial": "Kiezen — start na de proefperiode",
+    "upgrade": "Nu upgraden",
+    "switchAtEnd": "Wisselen aan het einde van de periode",
+    "chosen": "Klaar — uw abonnement is bijgewerkt.",
+    "usage": "Uw gebruik",
+    "limits": {
+      "products": "Actieve producten",
+      "users": "Gebruikers",
+      "warehouses": "Magazijnen & afhaalpunten",
+      "drivers": "Chauffeurs"
+    },
+    "noLimit": "geen limiet",
+    "invoices": "Abonnementsfacturen",
+    "noPlanInvoices": "Nog geen abonnementsfacturen.",
+    "upgradeInvoice": "Abonnementswijziging",
+    "gateTitle": "{feature} zit niet in uw abonnement",
+    "gateBody": "Upgrade uw FIRINGI-abonnement om het te gebruiken. Uw gegevens blijven intussen bewaard.",
+    "seePlans": "Abonnementen bekijken",
+    "limitError": "Uw abonnement {plan} staat {max} toe ({kind}). Wissel van abonnement via Bedrijf › Abonnement & facturatie om meer toe te voegen.",
+    "earlyTitle": "Vervroegde uitbetaling",
+    "earlyIntro": "Krijg goedgekeurde facturen nu al uitbetaald, nog voor de vervaldatum — ook voordat de klant heeft betaald. FIRINGI rekent een kleine vergoeding, gefactureerd en ingehouden op dezelfde betaling.",
+    "why": {
+      "PLANS_OFF": "Vervroegde uitbetaling start samen met de FIRINGI-abonnementen.",
+      "OFF": "FIRINGI biedt op dit moment geen vervroegde uitbetaling aan.",
+      "NOT_SUPPLIER": "Vervroegde uitbetaling is voor leveranciers.",
+      "SUPPLIER_OFF": "Vervroegde uitbetaling staat uit voor uw bedrijf. Neem contact op met FIRINGI.",
+      "PLAN": "Uw abonnement bevat geen vervroegde uitbetaling. Wissel via Bedrijf › Abonnement & facturatie."
+    },
+    "terms": "Uw voorwaarden",
+    "limit": "Uw limiet",
+    "outstanding": "Vervroegd betaald, nog niet vervallen",
+    "room": "U kunt aanvragen",
+    "freeLeft": "U heeft deze maand nog {n} gratis vervroegde uitbetaling(en).",
+    "chooseInvoices": "Kies de facturen die u nu wilt ontvangen",
+    "howItWorks": "Alleen facturen die over {days} dagen of later vervallen. FIRINGI controleert de aanvraag en maakt het geld over; de factuur van de vergoeding krijgt u erbij.",
+    "history": "Uw vervroegde uitbetalingen",
+    "noHistory": "Nog geen.",
+    "status": {
+      "REQUESTED": "Wacht op FIRINGI",
+      "PAID": "Betaald",
+      "REJECTED": "Afgewezen",
+      "CANCELLED": "Geannuleerd"
+    },
+    "rowAmount": "{amount} · vergoeding {fee}",
+    "rowNet": "u ontving {net}",
+    "free": "gratis",
+    "noInvoices": "Geen goedgekeurde facturen die op betaling wachten.",
+    "dueOn": "vervalt op {date}",
+    "daysEarly": "{days} dagen eerder",
+    "tooSoon": "vervalt te snel",
+    "quoteAmount": "Facturen",
+    "quoteFee": "Vergoeding",
+    "plusVat": "+ btw",
+    "quoteNet": "U ontvangt",
+    "netNote": "na de vergoeding incl. btw",
+    "overLimit": "Dat is boven uw limiet — u kunt nu tot {room} aanvragen.",
+    "request": "Nu laten uitbetalen",
+    "requested": "Verstuurd — FIRINGI controleert het en maakt het geld over.",
+    "cancel": "Annuleren"
   }
 }

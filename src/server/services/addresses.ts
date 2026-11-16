@@ -47,6 +47,11 @@ export async function saveAddress(ctx: Ctx, input: AddressInput) {
     countryId: country.id, cityId: input.cityId || null, cityName: input.cityName.trim(), contactName: input.contactName?.trim() || null,
     phone: input.phone?.trim() || null, latitude: lat, longitude: lng,
   };
+  // Phase 36: the plan's warehouse limit (a new warehouse / pickup point, or another address becoming one)
+  if (["WAREHOUSE", "PICKUP"].includes(input.kind)) {
+    const before = input.id ? await prisma.address.findFirst({ where: { id: input.id, companyId: ctx.company.id }, select: { kind: true } }) : null;
+    if (!before || !["WAREHOUSE", "PICKUP"].includes(before.kind)) await (await import("@/server/plans/service")).assertWithinLimit(ctx.company.id, "warehouses");
+  }
   return prisma.$transaction(async (tx) => {
     let existing = null;
     if (input.id) {

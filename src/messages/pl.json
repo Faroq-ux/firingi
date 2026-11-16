@@ -846,7 +846,9 @@
     "My Ads": "Moje Reklamy",
     "New Ad": "Nowa Reklama",
     "Ad Billing": "Rozliczenia Reklam",
-    "Messages": "Wiadomości"
+    "Messages": "Wiadomości",
+    "Plan & Billing": "Plan i płatności",
+    "Early Payout": "Wcześniejsza wypłata"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Nowa wiadomość o zamówieniu {number}",
       "body": "{from} wysłał(a) Ci wiadomość o zamówieniu {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Twój bezpłatny okres próbny kończy się za {days} dni",
+      "body": "Okres próbny planu {plan} kończy się {date}. Wybierz plan w Firma › Plan i płatności."
+    },
+    "plan_trial_ended": {
+      "title": "Twój plan się rozpoczął: {plan}",
+      "body": "Bezpłatny okres próbny dobiegł końca. Masz teraz plan {plan}."
+    },
+    "plan_changed": {
+      "title": "Zmiana planu: {plan}",
+      "body": "Twój plan FIRINGI zmieni się na {plan} dnia {date}."
+    },
+    "earlypay_paid": {
+      "title": "Wcześniejsza wypłata {number} zrealizowana",
+      "body": "FIRINGI wysłało Ci {net} €. Faktura za opłatę jest w zakładce Wcześniejsza wypłata."
+    },
+    "earlypay_rejected": {
+      "title": "Wcześniejsza wypłata {number} odrzucona",
+      "body": "FIRINGI odrzuciło wcześniejszą wypłatę {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Prośba o wcześniejszą wypłatę: {company}",
+      "body": "{company} prosi o wcześniejszą wypłatę {amount} € ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Wszystkie rozmowy o Twoich zamówieniach, najnowsze na górze.",
     "noThreads": "Nie ma jeszcze rozmów. Wiadomości o zamówieniu pojawią się tutaj.",
     "unread": "Nowe: {n}"
+  },
+  "plans": {
+    "title": "Plan i płatności",
+    "intro": "Twój plan FIRINGI: jakie masz narzędzia, limity, prowizję i wcześniejszą wypłatę. Ceny bez VAT.",
+    "plansOff": "FIRINGI jeszcze nie korzysta z planów — masz wszystkie narzędzia. Dostaniesz informację przed każdą zmianą.",
+    "currentPlan": "Twój plan",
+    "trialLeft": "Bezpłatny okres próbny · zostało {days} dni (do {date})",
+    "renews": "Odnawia się",
+    "pendingPlan": "{plan} zaczyna się {date}",
+    "commission": "Prowizja od sprzedaży",
+    "billing": "Jak płacisz",
+    "billingKinds": {
+      "PAYOUT": "Potrącane z Twoich wypłat",
+      "INVOICE": "Fakturą"
+    },
+    "trialNote": "W okresie próbnym masz wszystko. Wybierz plan przed jego końcem — inaczej przejdziesz na {plan}.",
+    "current": "Obecny",
+    "chosenBadge": "Wybrany",
+    "freePrice": "Za darmo",
+    "perMonth": "/ mies.",
+    "commissionOwn": "Prowizja: Twoja uzgodniona stawka",
+    "commissionPlan": "Prowizja: {pct} % od sprzedaży",
+    "features": {
+      "INVENTORY": "Magazyn: partie, daty ważności, zamówienia zakupu, inwentaryzacje, przesunięcia",
+      "PLANNING": "Planowanie popytu i uzupełnianie",
+      "WAREHOUSE": "Obsługa magazynu: kompletacja i pakowanie, regały, skaner, identyfikowalność, wycofania",
+      "PRICE_INSIGHTS": "Analiza cen",
+      "ADS": "Reklama (produkty sponsorowane)",
+      "INTEGRATIONS": "Integracje: import i synchronizacja, API, eksporty",
+      "ROUTES": "Planowanie tras dla Twoich kierowców",
+      "ASSISTANT": "Asystent AI"
+    },
+    "lim": {
+      "products": "do {n} produktów",
+      "productsAny": "bez limitu produktów",
+      "users": "{n} użytkowników",
+      "usersAny": "bez limitu użytkowników",
+      "warehouses": "{n} magazynów",
+      "warehousesAny": "bez limitu magazynów",
+      "drivers": "{n} kierowców",
+      "driversAny": "bez limitu kierowców"
+    },
+    "earlyOff": "Wcześniejsza wypłata niedostępna",
+    "earlyPerDay": "Wcześniejsza wypłata: {rate} % za każdy dzień wcześniej (minimum {min})",
+    "earlyFlat": "Wcześniejsza wypłata: {rate} % kwoty (minimum {min})",
+    "earlyFree": "{n} bezpłatnie w miesiącu",
+    "chooseAfterTrial": "Wybierz — zacznie się po okresie próbnym",
+    "upgrade": "Zmień teraz",
+    "switchAtEnd": "Zmień na koniec okresu",
+    "chosen": "Gotowe — plan został zaktualizowany.",
+    "usage": "Twoje wykorzystanie",
+    "limits": {
+      "products": "Aktywne produkty",
+      "users": "Użytkownicy",
+      "warehouses": "Magazyny i punkty odbioru",
+      "drivers": "Kierowcy"
+    },
+    "noLimit": "bez limitu",
+    "invoices": "Faktury za plan",
+    "noPlanInvoices": "Brak faktur za plan.",
+    "upgradeInvoice": "Zmiana planu",
+    "gateTitle": "{feature} nie wchodzi w skład Twojego planu",
+    "gateBody": "Zmień plan FIRINGI na wyższy, aby z tego korzystać. Twoje dane są w tym czasie zachowane.",
+    "seePlans": "Zobacz plany",
+    "limitError": "Twój plan {plan} pozwala na {max} ({kind}). Aby dodać więcej, zmień plan w Firma › Plan i płatności.",
+    "earlyTitle": "Wcześniejsza wypłata",
+    "earlyIntro": "Otrzymaj zapłatę za zatwierdzone faktury jeszcze przed terminem — nawet zanim zapłaci klient. FIRINGI pobiera niewielką opłatę, fakturowaną i potrącaną z tej samej wypłaty.",
+    "why": {
+      "PLANS_OFF": "Wcześniejsza wypłata rusza razem z planami FIRINGI.",
+      "OFF": "FIRINGI nie oferuje obecnie wcześniejszej wypłaty.",
+      "NOT_SUPPLIER": "Wcześniejsza wypłata jest dla dostawców.",
+      "SUPPLIER_OFF": "Wcześniejsza wypłata jest wyłączona dla Twojej firmy. Skontaktuj się z FIRINGI.",
+      "PLAN": "Twój plan nie obejmuje wcześniejszej wypłaty. Zmień go w Firma › Plan i płatności."
+    },
+    "terms": "Twoje warunki",
+    "limit": "Twój limit",
+    "outstanding": "Wypłacone wcześniej, jeszcze niewymagalne",
+    "room": "Możesz poprosić o",
+    "freeLeft": "Zostało Ci {n} bezpłatnych wcześniejszych wypłat w tym miesiącu.",
+    "chooseInvoices": "Wybierz faktury do wypłaty teraz",
+    "howItWorks": "Tylko faktury z terminem za {days} dni lub później. FIRINGI sprawdza prośbę i wysyła pieniądze przelewem; razem z nią otrzymujesz fakturę za opłatę.",
+    "history": "Twoje wcześniejsze wypłaty",
+    "noHistory": "Jeszcze żadnych.",
+    "status": {
+      "REQUESTED": "Czeka na FIRINGI",
+      "PAID": "Wypłacono",
+      "REJECTED": "Odrzucono",
+      "CANCELLED": "Anulowano"
+    },
+    "rowAmount": "{amount} · opłata {fee}",
+    "rowNet": "otrzymałeś {net}",
+    "free": "bezpłatnie",
+    "noInvoices": "Brak zatwierdzonych faktur czekających na zapłatę.",
+    "dueOn": "termin {date}",
+    "daysEarly": "{days} dni wcześniej",
+    "tooSoon": "termin zbyt bliski",
+    "quoteAmount": "Faktury",
+    "quoteFee": "Opłata",
+    "plusVat": "+ VAT",
+    "quoteNet": "Otrzymujesz",
+    "netNote": "po opłacie z VAT",
+    "overLimit": "To przekracza Twój limit — teraz możesz poprosić o maksymalnie {room}.",
+    "request": "Poproś o wypłatę teraz",
+    "requested": "Wysłano — FIRINGI sprawdzi i wyśle pieniądze.",
+    "cancel": "Anuluj"
   }
 }

@@ -846,7 +846,9 @@
     "My Ads": "Mes Annonces",
     "New Ad": "Nouvelle Annonce",
     "Ad Billing": "Facturation des Annonces",
-    "Messages": "Messages"
+    "Messages": "Messages",
+    "Plan & Billing": "Formule et facturation",
+    "Early Payout": "Paiement anticipé"
   },
   "delivery": {
     "title": "Livraison",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Nouveau message sur la commande {number}",
       "body": "{from} vous a envoyé un message sur la commande {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Votre essai gratuit se termine dans {days} jours",
+      "body": "Votre essai {plan} se termine le {date}. Choisissez votre formule dans Entreprise › Formule et facturation."
+    },
+    "plan_trial_ended": {
+      "title": "Votre formule a commencé : {plan}",
+      "body": "Votre essai gratuit est terminé. Vous êtes maintenant sur la formule {plan}."
+    },
+    "plan_changed": {
+      "title": "Changement de formule : {plan}",
+      "body": "Votre formule FIRINGI passe à {plan} le {date}."
+    },
+    "earlypay_paid": {
+      "title": "Paiement anticipé {number} payé",
+      "body": "FIRINGI vous a envoyé {net} €. La facture des frais est dans Paiement anticipé."
+    },
+    "earlypay_rejected": {
+      "title": "Paiement anticipé {number} refusé",
+      "body": "FIRINGI a refusé le paiement anticipé {number} : {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Paiement anticipé demandé : {company}",
+      "body": "{company} demande à recevoir {amount} € en avance ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Toutes les conversations sur vos commandes, les plus récentes d'abord.",
     "noThreads": "Pas encore de conversations. Les messages sur une commande apparaissent ici.",
     "unread": "{n} nouveaux"
+  },
+  "plans": {
+    "title": "Formule et facturation",
+    "intro": "Votre formule FIRINGI : vos outils, vos limites, votre commission et le paiement anticipé. Prix hors TVA.",
+    "plansOff": "FIRINGI n'utilise pas encore de formules — vous avez tous les outils. Vous serez prévenu avant tout changement.",
+    "currentPlan": "Votre formule",
+    "trialLeft": "Essai gratuit · encore {days} jours (jusqu'au {date})",
+    "renews": "Renouvellement le",
+    "pendingPlan": "{plan} commence le {date}",
+    "commission": "Commission sur les ventes",
+    "billing": "Mode de paiement",
+    "billingKinds": {
+      "PAYOUT": "Déduit de vos versements",
+      "INVOICE": "Par facture"
+    },
+    "trialNote": "Pendant l'essai gratuit, vous avez tout. Choisissez votre formule avant la fin — sinon, vous passez à {plan}.",
+    "current": "Actuelle",
+    "chosenBadge": "Choisie",
+    "freePrice": "Gratuit",
+    "perMonth": "/ mois",
+    "commissionOwn": "Commission : votre taux convenu",
+    "commissionPlan": "Commission : {pct} % des ventes",
+    "features": {
+      "INVENTORY": "Stock : lots, dates, bons de commande, inventaires, transferts",
+      "PLANNING": "Prévision de la demande et réassort",
+      "WAREHOUSE": "Entrepôt : préparation et emballage, emplacements, scanner, traçabilité, rappels",
+      "PRICE_INSIGHTS": "Analyse des prix",
+      "ADS": "Publicité (produits sponsorisés)",
+      "INTEGRATIONS": "Intégrations : import et synchro, API, exports",
+      "ROUTES": "Planification des tournées de vos chauffeurs",
+      "ASSISTANT": "Assistant IA"
+    },
+    "lim": {
+      "products": "jusqu'à {n} produits",
+      "productsAny": "produits illimités",
+      "users": "{n} utilisateurs",
+      "usersAny": "utilisateurs illimités",
+      "warehouses": "{n} entrepôts",
+      "warehousesAny": "entrepôts illimités",
+      "drivers": "{n} chauffeurs",
+      "driversAny": "chauffeurs illimités"
+    },
+    "earlyOff": "Paiement anticipé non inclus",
+    "earlyPerDay": "Paiement anticipé : {rate} % par jour d'avance (minimum {min})",
+    "earlyFlat": "Paiement anticipé : {rate} % du montant (minimum {min})",
+    "earlyFree": "{n} gratuits par mois",
+    "chooseAfterTrial": "Choisir — commence après l'essai",
+    "upgrade": "Passer à cette formule",
+    "switchAtEnd": "Changer en fin de période",
+    "chosen": "C'est fait — votre formule est mise à jour.",
+    "usage": "Votre utilisation",
+    "limits": {
+      "products": "Produits actifs",
+      "users": "Utilisateurs",
+      "warehouses": "Entrepôts et points de retrait",
+      "drivers": "Chauffeurs"
+    },
+    "noLimit": "sans limite",
+    "invoices": "Factures de la formule",
+    "noPlanInvoices": "Pas encore de factures de formule.",
+    "upgradeInvoice": "Changement de formule",
+    "gateTitle": "{feature} n'est pas inclus dans votre formule",
+    "gateBody": "Passez à une formule FIRINGI supérieure pour l'utiliser. Vos données sont conservées en attendant.",
+    "seePlans": "Voir les formules",
+    "limitError": "Votre formule {plan} permet {max} ({kind}). Changez de formule dans Entreprise › Formule et facturation pour en ajouter.",
+    "earlyTitle": "Paiement anticipé",
+    "earlyIntro": "Soyez payé dès maintenant pour les factures approuvées pas encore échues — même avant que le client ait payé. FIRINGI prend de petits frais, facturés et déduits du même paiement.",
+    "why": {
+      "PLANS_OFF": "Le paiement anticipé démarre avec les formules FIRINGI.",
+      "OFF": "FIRINGI ne propose pas le paiement anticipé pour le moment.",
+      "NOT_SUPPLIER": "Le paiement anticipé est réservé aux fournisseurs.",
+      "SUPPLIER_OFF": "Le paiement anticipé est désactivé pour votre entreprise. Contactez FIRINGI.",
+      "PLAN": "Votre formule n'inclut pas le paiement anticipé. Changez dans Entreprise › Formule et facturation."
+    },
+    "terms": "Vos conditions",
+    "limit": "Votre plafond",
+    "outstanding": "Payé en avance, pas encore échu",
+    "room": "Vous pouvez demander",
+    "freeLeft": "Il vous reste {n} paiement(s) anticipé(s) gratuit(s) ce mois-ci.",
+    "chooseInvoices": "Choisissez les factures à encaisser maintenant",
+    "howItWorks": "Seulement les factures échéant dans {days} jours ou plus. FIRINGI vérifie la demande et envoie l'argent par virement ; vous recevez la facture des frais avec.",
+    "history": "Vos paiements anticipés",
+    "noHistory": "Aucun pour l'instant.",
+    "status": {
+      "REQUESTED": "En attente de FIRINGI",
+      "PAID": "Payé",
+      "REJECTED": "Refusé",
+      "CANCELLED": "Annulé"
+    },
+    "rowAmount": "{amount} · frais {fee}",
+    "rowNet": "vous avez reçu {net}",
+    "free": "gratuit",
+    "noInvoices": "Aucune facture approuvée en attente de paiement.",
+    "dueOn": "échéance le {date}",
+    "daysEarly": "{days} jours d'avance",
+    "tooSoon": "échéance trop proche",
+    "quoteAmount": "Factures",
+    "quoteFee": "Frais",
+    "plusVat": "+ TVA",
+    "quoteNet": "Vous recevez",
+    "netNote": "après les frais TTC",
+    "overLimit": "C'est au-delà de votre plafond — vous pouvez demander jusqu'à {room} maintenant.",
+    "request": "Demander à être payé maintenant",
+    "requested": "Envoyé — FIRINGI va vérifier et envoyer l'argent.",
+    "cancel": "Annuler"
   }
 }

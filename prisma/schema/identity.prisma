@@ -273,6 +273,8 @@ model Company {
   pilotInvite            PilotInvite?              @relation("PilotInviteUsed")
   adCampaigns            AdCampaign[]              @relation("AdCampaigns")
   adAccount              AdAccount?                @relation("AdAccount")
+  planSubscription       PlanSubscription?         @relation("PlanSubscription")
+  earlyPayouts           EarlyPayout[]             @relation("EarlyPayouts")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

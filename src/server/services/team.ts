@@ -180,6 +180,7 @@ export async function createMember(
   const email = input.email.trim().toLowerCase();
   if (await prisma.user.findUnique({ where: { email } }))
     throw new AppError("EMAIL_TAKEN", "A user with this e-mail already exists.", 409);
+  await (await import("@/server/plans/service")).assertWithinLimit(ctx.company.id, "users"); // Phase 36: the plan's user limit (suppliers only)
 
   // FIRINGI staff: powerful roles wait for a second person; the member is created with the others.
   const powerful = await powerfulRoles(ctx, roles.map((r) => r.id));

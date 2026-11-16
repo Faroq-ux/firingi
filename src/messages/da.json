@@ -846,7 +846,9 @@
     "My Ads": "Mine Annoncer",
     "New Ad": "Ny Annonce",
     "Ad Billing": "Annoncefakturering",
-    "Messages": "Beskeder"
+    "Messages": "Beskeder",
+    "Plan & Billing": "Abonnement og betaling",
+    "Early Payout": "Tidlig udbetaling"
   },
   "delivery": {
     "title": "Levering",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Ny besked om ordre {number}",
       "body": "{from} har sendt dig en besked om ordre {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Din gratis prøveperiode slutter om {days} dage",
+      "body": "Din prøveperiode for {plan} slutter den {date}. Vælg dit abonnement under Virksomhed › Abonnement og betaling."
+    },
+    "plan_trial_ended": {
+      "title": "Dit abonnement er startet: {plan}",
+      "body": "Din gratis prøveperiode er slut. Du har nu abonnementet {plan}."
+    },
+    "plan_changed": {
+      "title": "Abonnementsskift: {plan}",
+      "body": "Dit FIRINGI-abonnement skifter til {plan} den {date}."
+    },
+    "earlypay_paid": {
+      "title": "Tidlig udbetaling {number} betalt",
+      "body": "FIRINGI har sendt dig {net} €. Gebyrfakturaen findes under Tidlig udbetaling."
+    },
+    "earlypay_rejected": {
+      "title": "Tidlig udbetaling {number} afvist",
+      "body": "FIRINGI har afvist tidlig udbetaling {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Tidlig udbetaling anmodet: {company}",
+      "body": "{company} beder om at få {amount} € udbetalt tidligt ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Alle samtaler om dine ordrer, nyeste først.",
     "noThreads": "Ingen samtaler endnu. Beskeder om en ordre vises her.",
     "unread": "{n} nye"
+  },
+  "plans": {
+    "title": "Abonnement og betaling",
+    "intro": "Dit FIRINGI-abonnement: hvilke værktøjer du har, dine grænser, din provision og tidlig udbetaling. Priser ekskl. moms.",
+    "plansOff": "FIRINGI bruger endnu ikke abonnementer — du har alle værktøjer. Du får besked, før noget ændres.",
+    "currentPlan": "Dit abonnement",
+    "trialLeft": "Gratis prøveperiode · {days} dage tilbage (til {date})",
+    "renews": "Fornyes den",
+    "pendingPlan": "{plan} starter den {date}",
+    "commission": "Provision på salg",
+    "billing": "Sådan betaler du",
+    "billingKinds": {
+      "PAYOUT": "Trækkes fra dine udbetalinger",
+      "INVOICE": "Via faktura"
+    },
+    "trialNote": "I den gratis prøveperiode har du alt. Vælg dit abonnement før den slutter — ellers skifter du til {plan}.",
+    "current": "Nuværende",
+    "chosenBadge": "Valgt",
+    "freePrice": "Gratis",
+    "perMonth": "/ måned",
+    "commissionOwn": "Provision: din aftalte sats",
+    "commissionPlan": "Provision: {pct} % af salget",
+    "features": {
+      "INVENTORY": "Lager: partier, holdbarhed, indkøbsordrer, optællinger, overførsler",
+      "PLANNING": "Behovsplanlægning og genopfyldning",
+      "WAREHOUSE": "Lagerdrift: plukning og pakning, hylder, scanner, sporbarhed, tilbagekaldelser",
+      "PRICE_INSIGHTS": "Prisindsigt",
+      "ADS": "Annoncering (sponsorerede produkter)",
+      "INTEGRATIONS": "Integrationer: import og synkronisering, API, eksport",
+      "ROUTES": "Ruteplanlægning til dine chauffører",
+      "ASSISTANT": "AI-assistent"
+    },
+    "lim": {
+      "products": "op til {n} produkter",
+      "productsAny": "ubegrænset produkter",
+      "users": "{n} brugere",
+      "usersAny": "ubegrænset brugere",
+      "warehouses": "{n} lagre",
+      "warehousesAny": "ubegrænset lagre",
+      "drivers": "{n} chauffører",
+      "driversAny": "ubegrænset chauffører"
+    },
+    "earlyOff": "Tidlig udbetaling ikke inkluderet",
+    "earlyPerDay": "Tidlig udbetaling: {rate} % pr. dag tidligere (mindst {min})",
+    "earlyFlat": "Tidlig udbetaling: {rate} % af beløbet (mindst {min})",
+    "earlyFree": "{n} gratis om måneden",
+    "chooseAfterTrial": "Vælg — starter efter prøveperioden",
+    "upgrade": "Opgrader nu",
+    "switchAtEnd": "Skift ved periodens slutning",
+    "chosen": "Færdig — dit abonnement er opdateret.",
+    "usage": "Dit forbrug",
+    "limits": {
+      "products": "Aktive produkter",
+      "users": "Brugere",
+      "warehouses": "Lagre og afhentningssteder",
+      "drivers": "Chauffører"
+    },
+    "noLimit": "ingen grænse",
+    "invoices": "Abonnementsfakturaer",
+    "noPlanInvoices": "Ingen abonnementsfakturaer endnu.",
+    "upgradeInvoice": "Abonnementsskift",
+    "gateTitle": "{feature} er ikke med i dit abonnement",
+    "gateBody": "Opgrader dit FIRINGI-abonnement for at bruge det. Dine data bevares imens.",
+    "seePlans": "Se abonnementer",
+    "limitError": "Dit abonnement {plan} tillader {max} ({kind}). Skift abonnement under Virksomhed › Abonnement og betaling for at tilføje flere.",
+    "earlyTitle": "Tidlig udbetaling",
+    "earlyIntro": "Få godkendte fakturaer udbetalt nu, før forfald — også før kunden har betalt. FIRINGI tager et lille gebyr, der faktureres og trækkes i samme betaling.",
+    "why": {
+      "PLANS_OFF": "Tidlig udbetaling starter sammen med FIRINGI's abonnementer.",
+      "OFF": "FIRINGI tilbyder ikke tidlig udbetaling lige nu.",
+      "NOT_SUPPLIER": "Tidlig udbetaling er for leverandører.",
+      "SUPPLIER_OFF": "Tidlig udbetaling er slået fra for din virksomhed. Kontakt FIRINGI.",
+      "PLAN": "Dit abonnement omfatter ikke tidlig udbetaling. Skift under Virksomhed › Abonnement og betaling."
+    },
+    "terms": "Dine vilkår",
+    "limit": "Din grænse",
+    "outstanding": "Udbetalt tidligt, ikke forfaldent endnu",
+    "room": "Du kan anmode om",
+    "freeLeft": "Du har {n} gratis tidlige udbetaling(er) tilbage denne måned.",
+    "chooseInvoices": "Vælg fakturaer, der skal udbetales nu",
+    "howItWorks": "Kun fakturaer, der forfalder om {days} dage eller mere. FIRINGI tjekker anmodningen og overfører pengene; du får gebyrfakturaen med.",
+    "history": "Dine tidlige udbetalinger",
+    "noHistory": "Ingen endnu.",
+    "status": {
+      "REQUESTED": "Venter på FIRINGI",
+      "PAID": "Betalt",
+      "REJECTED": "Afvist",
+      "CANCELLED": "Annulleret"
+    },
+    "rowAmount": "{amount} · gebyr {fee}",
+    "rowNet": "du modtog {net}",
+    "free": "gratis",
+    "noInvoices": "Ingen godkendte fakturaer venter på betaling.",
+    "dueOn": "forfalder {date}",
+    "daysEarly": "{days} dage tidligere",
+    "tooSoon": "forfalder for snart",
+    "quoteAmount": "Fakturaer",
+    "quoteFee": "Gebyr",
+    "plusVat": "+ moms",
+    "quoteNet": "Du modtager",
+    "netNote": "efter gebyr inkl. moms",
+    "overLimit": "Det er over din grænse — du kan anmode om op til {room} nu.",
+    "request": "Anmod om udbetaling nu",
+    "requested": "Sendt — FIRINGI tjekker det og overfører pengene.",
+    "cancel": "Annuller"
   }
 }

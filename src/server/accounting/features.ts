@@ -17,7 +17,12 @@ const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSI
 
 export async function companyFeatureOn(companyId: string, key: CompanyFeatureKey) {
   const row = await prisma.companyFeature.findUnique({ where: { companyId_key: { companyId, key } } });
-  return row ? row.enabled : DEFAULT_ON[key];
+  const on = row ? row.enabled : DEFAULT_ON[key];
+  if (!on) return false;
+  // Phase 36: advertising and the assistant also need the supplier's plan (always yes while plans are off)
+  const planKey = key === "ADS" ? "ADS" : key === "ASSISTANT" || key === "ASSISTANT_PHOTOS" ? "ASSISTANT" : null;
+  if (planKey) return (await import("@/server/plans/service")).planAllows(companyId, planKey);
+  return true;
 }
 
 export class CompanyFeatureOffError extends AppError {
@@ -40,6 +45,12 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     if (portal === "buy" && !(await (await import("@/server/loyalty/service")).loyaltySettings()).enabled) off.add("LOYALTY");
     if (portal === "vendor" && !(await (await import("@/server/ads/service")).adsSettings()).enabled) off.add("ADS");
     if (!(await (await import("@/server/chat/service")).chatSettings()).enabled) off.add("CHAT");
+    // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
+    if (portal === "vendor") {
+      const { planMissing } = await import("@/server/plans/service");
+      const { PLAN_NAV_KEYS } = await import("@/lib/plans");
+      for (const f of await planMissing(ctx.company.id)) for (const k of PLAN_NAV_KEYS[f]) off.add(k);
+    }
   }
   return off;
 }

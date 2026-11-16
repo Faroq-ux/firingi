@@ -102,8 +102,13 @@ const newPrice = (6 + (Date.now() % 90) / 100 + 0.01).toFixed(2); // a fresh pri
 await rowAzeite.locator("input[type=number]").fill(newPrice);
 await rowAzeite.getByRole("button", { name: /Guardar|Save/ }).click();
 await settle(vendor);
-const after = await (await customer.request.get(`${BASE}/api/catalogue/offers?q=azeite`)).json();
-check("vendor base-price change is visible to the customer", after.items.some((i) => i.packaging.unitsPerPack === 1 && i.price.listUnitNet === newPrice), newPrice);
+let seen = false; // the save is a server action: give it a moment to land before asking the catalogue
+for (let i = 0; i < 30 && !seen; i++) {
+  const after = await (await customer.request.get(`${BASE}/api/catalogue/offers?q=azeite`)).json();
+  seen = after.items.some((x) => x.packaging.unitsPerPack === 1 && x.price.listUnitNet === newPrice);
+  if (!seen) await new Promise((r) => setTimeout(r, 500));
+}
+check("vendor base-price change is visible to the customer", seen, newPrice);
 
 const productName = `Molho de alho ${Date.now()}`;
 await vendor.getByRole("button", { name: /Propor um novo produto|Propose a new product/ }).click();

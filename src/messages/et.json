@@ -846,7 +846,9 @@
     "My Ads": "Minu Reklaamid",
     "New Ad": "Uus Reklaam",
     "Ad Billing": "Reklaamide Arveldus",
-    "Messages": "Sõnumid"
+    "Messages": "Sõnumid",
+    "Plan & Billing": "Pakett ja arveldus",
+    "Early Payout": "Varajane väljamakse"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Uus sõnum tellimuse {number} kohta",
       "body": "{from} saatis teile sõnumi tellimuse {number} kohta."
+    },
+    "plan_trial_ending": {
+      "title": "Teie tasuta prooviperiood lõpeb {days} päeva pärast",
+      "body": "Paketi {plan} prooviperiood lõpeb {date}. Valige pakett: Ettevõte › Pakett ja arveldus."
+    },
+    "plan_trial_ended": {
+      "title": "Teie pakett algas: {plan}",
+      "body": "Tasuta prooviperiood on läbi. Teil on nüüd pakett {plan}."
+    },
+    "plan_changed": {
+      "title": "Paketi muutus: {plan}",
+      "body": "Teie FIRINGI pakett muutub {date} paketiks {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Varajane väljamakse {number} makstud",
+      "body": "FIRINGI saatis teile {net} €. Tasu arve on jaotises Varajane väljamakse."
+    },
+    "earlypay_rejected": {
+      "title": "Varajane väljamakse {number} lükati tagasi",
+      "body": "FIRINGI lükkas varajase väljamakse {number} tagasi: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Varajase väljamakse taotlus: {company}",
+      "body": "{company} soovib saada {amount} € varem ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Kõik vestlused teie tellimuste kohta, uusimad eespool.",
     "noThreads": "Vestlusi veel pole. Tellimuse sõnumid ilmuvad siia.",
     "unread": "{n} uut"
+  },
+  "plans": {
+    "title": "Pakett ja arveldus",
+    "intro": "Teie FIRINGI pakett: millised tööriistad teil on, teie piirangud, vahendustasu ja varajane väljamakse. Hinnad ilma käibemaksuta.",
+    "plansOff": "FIRINGI ei kasuta veel pakette — teil on kõik tööriistad. Teid teavitatakse enne mis tahes muudatust.",
+    "currentPlan": "Teie pakett",
+    "trialLeft": "Tasuta prooviperiood · jäänud {days} päeva (kuni {date})",
+    "renews": "Uueneb",
+    "pendingPlan": "{plan} algab {date}",
+    "commission": "Vahendustasu müügilt",
+    "billing": "Kuidas maksate",
+    "billingKinds": {
+      "PAYOUT": "Arvestatakse maha teie väljamaksetest",
+      "INVOICE": "Arvega"
+    },
+    "trialNote": "Tasuta prooviperioodil on teil kõik. Valige pakett enne selle lõppu — muidu lähete üle paketile {plan}.",
+    "current": "Praegune",
+    "chosenBadge": "Valitud",
+    "freePrice": "Tasuta",
+    "perMonth": "/ kuu",
+    "commissionOwn": "Vahendustasu: teiega kokku lepitud määr",
+    "commissionPlan": "Vahendustasu: {pct} % müügilt",
+    "features": {
+      "INVENTORY": "Laoseis: partiid, säilivusajad, ostutellimused, inventuurid, ümberpaigutused",
+      "PLANNING": "Nõudluse planeerimine ja täiendamine",
+      "WAREHOUSE": "Ladu: komplekteerimine ja pakkimine, riiulid, skanner, jälgitavus, tagasikutsumised",
+      "PRICE_INSIGHTS": "Hinnaülevaated",
+      "ADS": "Reklaam (sponsitud tooted)",
+      "INTEGRATIONS": "Liidesed: import ja sünkroonimine, API, ekspordid",
+      "ROUTES": "Marsruutide planeerimine teie juhtidele",
+      "ASSISTANT": "AI-assistent"
+    },
+    "lim": {
+      "products": "kuni {n} toodet",
+      "productsAny": "piiramatult tooteid",
+      "users": "{n} kasutajat",
+      "usersAny": "piiramatult kasutajaid",
+      "warehouses": "{n} ladu",
+      "warehousesAny": "piiramatult ladusid",
+      "drivers": "{n} juhti",
+      "driversAny": "piiramatult juhte"
+    },
+    "earlyOff": "Varajane väljamakse ei sisaldu",
+    "earlyPerDay": "Varajane väljamakse: {rate} % iga varasema päeva eest (vähemalt {min})",
+    "earlyFlat": "Varajane väljamakse: {rate} % summast (vähemalt {min})",
+    "earlyFree": "{n} tasuta kuus",
+    "chooseAfterTrial": "Vali — algab pärast prooviperioodi",
+    "upgrade": "Uuenda kohe",
+    "switchAtEnd": "Vaheta perioodi lõpus",
+    "chosen": "Valmis — teie pakett on uuendatud.",
+    "usage": "Teie kasutus",
+    "limits": {
+      "products": "Aktiivsed tooted",
+      "users": "Kasutajad",
+      "warehouses": "Laod ja väljastuspunktid",
+      "drivers": "Juhid"
+    },
+    "noLimit": "piiranguta",
+    "invoices": "Paketi arved",
+    "noPlanInvoices": "Paketi arveid veel pole.",
+    "upgradeInvoice": "Paketi muutus",
+    "gateTitle": "{feature} ei kuulu teie paketti",
+    "gateBody": "Selle kasutamiseks uuendage oma FIRINGI paketti. Teie andmed jäävad seniks alles.",
+    "seePlans": "Vaata pakette",
+    "limitError": "Teie pakett {plan} lubab {max} ({kind}). Rohkema lisamiseks vahetage paketti: Ettevõte › Pakett ja arveldus.",
+    "earlyTitle": "Varajane väljamakse",
+    "earlyIntro": "Saage heakskiidetud arvete eest raha kätte juba enne maksetähtaega — isegi enne, kui klient on maksnud. FIRINGI võtab väikese tasu, mis arveldatakse ja arvestatakse maha samast maksest.",
+    "why": {
+      "PLANS_OFF": "Varajane väljamakse algab koos FIRINGI pakettidega.",
+      "OFF": "FIRINGI ei paku praegu varajast väljamakset.",
+      "NOT_SUPPLIER": "Varajane väljamakse on tarnijatele.",
+      "SUPPLIER_OFF": "Varajane väljamakse on teie ettevõttele välja lülitatud. Võtke ühendust FIRINGIga.",
+      "PLAN": "Teie pakett ei sisalda varajast väljamakset. Vahetage: Ettevõte › Pakett ja arveldus."
+    },
+    "terms": "Teie tingimused",
+    "limit": "Teie limiit",
+    "outstanding": "Varem välja makstud, tähtaeg veel saabumata",
+    "room": "Saate taotleda",
+    "freeLeft": "Teil on sel kuul jäänud {n} tasuta varajast väljamakset.",
+    "chooseInvoices": "Valige arved, mille eest kohe raha saada",
+    "howItWorks": "Ainult arved, mille tähtaeg on {days} päeva või hiljem. FIRINGI kontrollib taotlust ja saadab raha pangaülekandega; tasu arve saate sellega koos.",
+    "history": "Teie varajased väljamaksed",
+    "noHistory": "Veel pole.",
+    "status": {
+      "REQUESTED": "Ootab FIRINGIt",
+      "PAID": "Makstud",
+      "REJECTED": "Tagasi lükatud",
+      "CANCELLED": "Tühistatud"
+    },
+    "rowAmount": "{amount} · tasu {fee}",
+    "rowNet": "saite {net}",
+    "free": "tasuta",
+    "noInvoices": "Makseootel heakskiidetud arveid pole.",
+    "dueOn": "tähtaeg {date}",
+    "daysEarly": "{days} päeva varem",
+    "tooSoon": "tähtaeg liiga lähedal",
+    "quoteAmount": "Arved",
+    "quoteFee": "Tasu",
+    "plusVat": "+ km",
+    "quoteNet": "Saate",
+    "netNote": "pärast tasu koos käibemaksuga",
+    "overLimit": "See ületab teie limiidi — praegu saate taotleda kuni {room}.",
+    "request": "Taotle väljamakset kohe",
+    "requested": "Saadetud — FIRINGI kontrollib ja saadab raha.",
+    "cancel": "Tühista"
   }
 }

@@ -58,6 +58,7 @@ export async function createOffer(ctx: Ctx, packagingUnitId: string, input: Offe
   if (await prisma.vendorOffer.findUnique({ where: { vendorCompanyId_packagingUnitId: { vendorCompanyId: ctx.company.id, packagingUnitId } } }))
     throw new AppError("DUPLICATE", "You already offer this product.", 409);
   const status = (await offerApprovalRequired()) ? "PENDING_APPROVAL" : "ACTIVE";
+  await (await import("@/server/plans/service")).assertWithinLimit(ctx.company.id, "products"); // Phase 36: the plan's product limit
   const offer = await prisma.vendorOffer.create({
     data: {
       vendorCompanyId: ctx.company.id, sellerType: ctx.company.type as "DISTRIBUTOR", packagingUnitId, countryId: ctx.company.countryId,
@@ -90,6 +91,7 @@ export async function setOwnOfferActive(ctx: Ctx, offerId: string, active: boole
   if (active && o.status !== "PAUSED") throw new AppError("BAD_STATUS", "Only paused offers can be resumed.");
   if (active && o.reviewedById && o.reviewNote) throw new AppError("BAD_STATUS", "This offer was suspended by FIRINGI. Contact support.");
   if (!active && o.status !== "ACTIVE") throw new AppError("BAD_STATUS", "Only active offers can be paused.");
+  if (active) await (await import("@/server/plans/service")).assertWithinLimit(ctx.company.id, "products");
   await prisma.vendorOffer.update({ where: { id: o.id }, data: { status: active ? "ACTIVE" : "PAUSED" } });
   await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: active ? "offer.resumed" : "offer.paused", entityType: "VendorOffer", entityId: o.id });
 }

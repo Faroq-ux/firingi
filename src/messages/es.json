@@ -1394,6 +1394,30 @@
     "chat_message": {
       "title": "Nuevo mensaje sobre el pedido {number}",
       "body": "{from} le ha enviado un mensaje sobre el pedido {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Su prueba gratuita termina en {days} días",
+      "body": "La prueba de {plan} termina el {date}. Elija su plan en Empresa › Plan y facturación."
+    },
+    "plan_trial_ended": {
+      "title": "Su plan ha empezado: {plan}",
+      "body": "Su prueba gratuita ha terminado. Ahora está en el plan {plan}."
+    },
+    "plan_changed": {
+      "title": "Cambio de plan: {plan}",
+      "body": "Su plan FIRINGI cambia a {plan} el {date}."
+    },
+    "earlypay_paid": {
+      "title": "Pago anticipado {number} pagado",
+      "body": "FIRINGI le ha enviado {net} €. La factura de la comisión está en Pago anticipado."
+    },
+    "earlypay_rejected": {
+      "title": "Pago anticipado {number} rechazado",
+      "body": "FIRINGI ha rechazado el pago anticipado {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Solicitud de pago anticipado: {company}",
+      "body": "{company} pide cobrar {amount} € por adelantado ({number})."
     }
   },
   "notifications": {
@@ -4105,5 +4129,110 @@
     "inboxIntro": "Todas las conversaciones sobre sus pedidos, las más recientes primero.",
     "noThreads": "Aún no hay conversaciones. Aquí aparecen los mensajes sobre un pedido.",
     "unread": "{n} nuevos"
+  },
+  "plans": {
+    "title": "Plan y facturación",
+    "intro": "Su plan FIRINGI: qué herramientas tiene, sus límites, su comisión y el pago anticipado. Precios sin IVA.",
+    "plansOff": "FIRINGI aún no usa planes: tiene todas las herramientas. Se le avisará antes de cualquier cambio.",
+    "currentPlan": "Su plan",
+    "trialLeft": "Prueba gratuita · quedan {days} días (hasta el {date})",
+    "renews": "Se renueva el",
+    "pendingPlan": "{plan} empieza el {date}",
+    "commission": "Comisión sobre ventas",
+    "billing": "Cómo paga",
+    "billingKinds": {
+      "PAYOUT": "Descontado de sus pagos",
+      "INVOICE": "Por factura"
+    },
+    "trialNote": "Durante la prueba gratuita lo tiene todo. Elija su plan antes de que termine; si no, pasará a {plan}.",
+    "current": "Actual",
+    "chosenBadge": "Elegido",
+    "freePrice": "Gratis",
+    "perMonth": "/ mes",
+    "commissionOwn": "Comisión: la tarifa acordada con usted",
+    "commissionPlan": "Comisión: {pct} % sobre ventas",
+    "features": {
+      "INVENTORY": "Inventario: lotes, caducidades, órdenes de compra, recuentos, transferencias",
+      "PLANNING": "Planificación de la demanda y reposición",
+      "WAREHOUSE": "Almacén: preparación y embalaje, estanterías, escáner, trazabilidad, retiradas",
+      "PRICE_INSIGHTS": "Análisis de precios",
+      "ADS": "Publicidad (productos patrocinados)",
+      "INTEGRATIONS": "Integraciones: importar y sincronizar, API, exportaciones",
+      "ROUTES": "Planificación de rutas para sus conductores",
+      "ASSISTANT": "Asistente de IA"
+    },
+    "lim": {
+      "products": "hasta {n} productos",
+      "productsAny": "productos ilimitados",
+      "users": "{n} usuarios",
+      "usersAny": "usuarios ilimitados",
+      "warehouses": "{n} almacenes",
+      "warehousesAny": "almacenes ilimitados",
+      "drivers": "{n} conductores",
+      "driversAny": "conductores ilimitados"
+    },
+    "earlyOff": "Pago anticipado no incluido",
+    "earlyPerDay": "Pago anticipado: {rate} % por día de adelanto (mínimo {min})",
+    "earlyFlat": "Pago anticipado: {rate} % del importe (mínimo {min})",
+    "earlyFree": "{n} gratis al mes",
+    "chooseAfterTrial": "Elegir: empieza tras la prueba",
+    "upgrade": "Mejorar ahora",
+    "switchAtEnd": "Cambiar al final del periodo",
+    "chosen": "Hecho: su plan se ha actualizado.",
+    "usage": "Su uso",
+    "limits": {
+      "products": "Productos activos",
+      "users": "Usuarios",
+      "warehouses": "Almacenes y puntos de recogida",
+      "drivers": "Conductores"
+    },
+    "noLimit": "sin límite",
+    "invoices": "Facturas del plan",
+    "noPlanInvoices": "Aún no hay facturas del plan.",
+    "upgradeInvoice": "Cambio de plan",
+    "gateTitle": "{feature} no está en su plan",
+    "gateBody": "Mejore su plan FIRINGI para usarlo. Sus datos se conservan mientras tanto.",
+    "seePlans": "Ver planes",
+    "limitError": "Su plan {plan} permite {max} ({kind}). Cambie de plan en Empresa › Plan y facturación para añadir más.",
+    "earlyTitle": "Pago anticipado",
+    "earlyIntro": "Cobre ya las facturas aprobadas que aún no han vencido, incluso antes de que pague el cliente. FIRINGI cobra una pequeña comisión, facturada y descontada del mismo pago.",
+    "why": {
+      "PLANS_OFF": "El pago anticipado empieza junto con los planes de FIRINGI.",
+      "OFF": "FIRINGI no ofrece pago anticipado en este momento.",
+      "NOT_SUPPLIER": "El pago anticipado es para proveedores.",
+      "SUPPLIER_OFF": "El pago anticipado está desactivado para su empresa. Contacte con FIRINGI.",
+      "PLAN": "Su plan no incluye pago anticipado. Cámbielo en Empresa › Plan y facturación."
+    },
+    "terms": "Sus condiciones",
+    "limit": "Su límite",
+    "outstanding": "Pagado por adelantado, aún no vencido",
+    "room": "Puede pedir",
+    "freeLeft": "Le quedan {n} pago(s) anticipado(s) gratis este mes.",
+    "chooseInvoices": "Elija las facturas que quiere cobrar ya",
+    "howItWorks": "Solo facturas que vencen dentro de {days} días o más. FIRINGI revisa la solicitud y envía el dinero por transferencia; recibe con él la factura de la comisión.",
+    "history": "Sus pagos anticipados",
+    "noHistory": "Ninguno todavía.",
+    "status": {
+      "REQUESTED": "Esperando a FIRINGI",
+      "PAID": "Pagado",
+      "REJECTED": "Rechazado",
+      "CANCELLED": "Cancelado"
+    },
+    "rowAmount": "{amount} · comisión {fee}",
+    "rowNet": "ha recibido {net}",
+    "free": "gratis",
+    "noInvoices": "No hay facturas aprobadas pendientes de pago.",
+    "dueOn": "vence el {date}",
+    "daysEarly": "{days} días antes",
+    "tooSoon": "vence demasiado pronto",
+    "quoteAmount": "Facturas",
+    "quoteFee": "Comisión",
+    "plusVat": "+ IVA",
+    "quoteNet": "Recibe",
+    "netNote": "tras la comisión con IVA",
+    "overLimit": "Supera su límite: ahora puede pedir hasta {room}.",
+    "request": "Pedir cobrar ya",
+    "requested": "Enviado: FIRINGI lo revisará y enviará el dinero.",
+    "cancel": "Cancelar"
   }
 }

@@ -846,7 +846,9 @@
     "My Ads": "Auglýsingarnar Mínar",
     "New Ad": "Ný Auglýsing",
     "Ad Billing": "Reikningar Auglýsinga",
-    "Messages": "Skilaboð"
+    "Messages": "Skilaboð",
+    "Plan & Billing": "Áskrift og greiðslur",
+    "Early Payout": "Flýtigreiðsla"
   },
   "delivery": {
     "title": "Afhending",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Ný skilaboð um pöntun {number}",
       "body": "{from} sendi þér skilaboð um pöntun {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Ókeypis prufutíminn þinn rennur út eftir {days} daga",
+      "body": "Prufutími {plan} rennur út {date}. Veldu áskrift í Fyrirtæki › Áskrift og greiðslur."
+    },
+    "plan_trial_ended": {
+      "title": "Áskriftin þín er hafin: {plan}",
+      "body": "Ókeypis prufutímanum er lokið. Þú ert nú með áskriftina {plan}."
+    },
+    "plan_changed": {
+      "title": "Áskriftarskipti: {plan}",
+      "body": "FIRINGI-áskriftin þín breytist í {plan} {date}."
+    },
+    "earlypay_paid": {
+      "title": "Flýtigreiðsla {number} greidd",
+      "body": "FIRINGI sendi þér {net} €. Gjaldreikningurinn er undir Flýtigreiðsla."
+    },
+    "earlypay_rejected": {
+      "title": "Flýtigreiðslu {number} hafnað",
+      "body": "FIRINGI hafnaði flýtigreiðslu {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Beðið um flýtigreiðslu: {company}",
+      "body": "{company} biður um að fá {amount} € greiddar fyrr ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Öll samtöl um pantanir þínar, nýjustu fyrst.",
     "noThreads": "Engin samtöl enn. Skilaboð um pöntun birtast hér.",
     "unread": "{n} ný"
+  },
+  "plans": {
+    "title": "Áskrift og greiðslur",
+    "intro": "FIRINGI-áskriftin þín: hvaða verkfæri þú hefur, mörkin þín, þóknunin og flýtigreiðsla. Verð án VSK.",
+    "plansOff": "FIRINGI notar enn ekki áskriftir — þú hefur öll verkfæri. Þú færð að vita áður en eitthvað breytist.",
+    "currentPlan": "Áskriftin þín",
+    "trialLeft": "Ókeypis prufutími · {days} dagar eftir (til {date})",
+    "renews": "Endurnýjast",
+    "pendingPlan": "{plan} hefst {date}",
+    "commission": "Þóknun af sölu",
+    "billing": "Hvernig þú greiðir",
+    "billingKinds": {
+      "PAYOUT": "Dregið af útgreiðslum þínum",
+      "INVOICE": "Með reikningi"
+    },
+    "trialNote": "Á ókeypis prufutímanum hefurðu allt. Veldu áskrift áður en hann rennur út — annars færist þú yfir í {plan}.",
+    "current": "Núverandi",
+    "chosenBadge": "Valin",
+    "freePrice": "Ókeypis",
+    "perMonth": "/ mánuð",
+    "commissionOwn": "Þóknun: umsamið hlutfall þitt",
+    "commissionPlan": "Þóknun: {pct} % af sölu",
+    "features": {
+      "INVENTORY": "Birgðir: lotur, gildistími, innkaupapantanir, talningar, flutningar",
+      "PLANNING": "Eftirspurnaráætlun og áfylling",
+      "WAREHOUSE": "Vöruhús: tínsla og pökkun, hillur, skanni, rekjanleiki, innkallanir",
+      "PRICE_INSIGHTS": "Verðgreining",
+      "ADS": "Auglýsingar (kostaðar vörur)",
+      "INTEGRATIONS": "Samþættingar: innflutningur og samstilling, API, útflutningur",
+      "ROUTES": "Leiðaáætlun fyrir bílstjórana þína",
+      "ASSISTANT": "Gervigreindaraðstoð"
+    },
+    "lim": {
+      "products": "allt að {n} vörur",
+      "productsAny": "ótakmarkaðar vörur",
+      "users": "{n} notendur",
+      "usersAny": "ótakmarkaðir notendur",
+      "warehouses": "{n} vöruhús",
+      "warehousesAny": "ótakmörkuð vöruhús",
+      "drivers": "{n} bílstjórar",
+      "driversAny": "ótakmarkaðir bílstjórar"
+    },
+    "earlyOff": "Flýtigreiðsla ekki innifalin",
+    "earlyPerDay": "Flýtigreiðsla: {rate} % fyrir hvern dag fyrr (lágmark {min})",
+    "earlyFlat": "Flýtigreiðsla: {rate} % af upphæðinni (lágmark {min})",
+    "earlyFree": "{n} ókeypis á mánuði",
+    "chooseAfterTrial": "Velja — hefst eftir prufutímann",
+    "upgrade": "Uppfæra núna",
+    "switchAtEnd": "Skipta í lok tímabils",
+    "chosen": "Lokið — áskriftin þín hefur verið uppfærð.",
+    "usage": "Notkun þín",
+    "limits": {
+      "products": "Virkar vörur",
+      "users": "Notendur",
+      "warehouses": "Vöruhús og afhendingarstaðir",
+      "drivers": "Bílstjórar"
+    },
+    "noLimit": "engin mörk",
+    "invoices": "Áskriftarreikningar",
+    "noPlanInvoices": "Engir áskriftarreikningar enn.",
+    "upgradeInvoice": "Áskriftarskipti",
+    "gateTitle": "{feature} er ekki í áskriftinni þinni",
+    "gateBody": "Uppfærðu FIRINGI-áskriftina þína til að nota þetta. Gögnin þín varðveitast á meðan.",
+    "seePlans": "Sjá áskriftir",
+    "limitError": "Áskriftin {plan} leyfir {max} ({kind}). Skiptu um áskrift í Fyrirtæki › Áskrift og greiðslur til að bæta við fleiri.",
+    "earlyTitle": "Flýtigreiðsla",
+    "earlyIntro": "Fáðu samþykkta reikninga greidda núna, fyrir gjalddaga — jafnvel áður en viðskiptavinurinn hefur greitt. FIRINGI tekur lítið gjald sem er reikningsfært og dregið af sömu greiðslu.",
+    "why": {
+      "PLANS_OFF": "Flýtigreiðsla hefst samhliða áskriftum FIRINGI.",
+      "OFF": "FIRINGI býður ekki upp á flýtigreiðslu eins og er.",
+      "NOT_SUPPLIER": "Flýtigreiðsla er fyrir birgja.",
+      "SUPPLIER_OFF": "Slökkt er á flýtigreiðslu fyrir fyrirtækið þitt. Hafðu samband við FIRINGI.",
+      "PLAN": "Áskriftin þín inniheldur ekki flýtigreiðslu. Skiptu í Fyrirtæki › Áskrift og greiðslur."
+    },
+    "terms": "Skilmálar þínir",
+    "limit": "Mörkin þín",
+    "outstanding": "Greitt fyrr, ekki enn á gjalddaga",
+    "room": "Þú getur beðið um",
+    "freeLeft": "Þú átt {n} ókeypis flýtigreiðslu(r) eftir í þessum mánuði.",
+    "chooseInvoices": "Veldu reikninga til að fá greidda núna",
+    "howItWorks": "Aðeins reikningar með gjalddaga eftir {days} daga eða meira. FIRINGI fer yfir beiðnina og sendir peningana með millifærslu; þú færð gjaldreikninginn með.",
+    "history": "Flýtigreiðslurnar þínar",
+    "noHistory": "Engar enn.",
+    "status": {
+      "REQUESTED": "Bíður FIRINGI",
+      "PAID": "Greitt",
+      "REJECTED": "Hafnað",
+      "CANCELLED": "Hætt við"
+    },
+    "rowAmount": "{amount} · gjald {fee}",
+    "rowNet": "þú fékkst {net}",
+    "free": "ókeypis",
+    "noInvoices": "Engir samþykktir reikningar bíða greiðslu.",
+    "dueOn": "gjalddagi {date}",
+    "daysEarly": "{days} dögum fyrr",
+    "tooSoon": "gjalddagi of fljótt",
+    "quoteAmount": "Reikningar",
+    "quoteFee": "Gjald",
+    "plusVat": "+ VSK",
+    "quoteNet": "Þú færð",
+    "netNote": "eftir gjald með VSK",
+    "overLimit": "Það er yfir mörkunum þínum — þú getur beðið um allt að {room} núna.",
+    "request": "Biðja um greiðslu núna",
+    "requested": "Sent — FIRINGI fer yfir þetta og sendir peningana.",
+    "cancel": "Hætta við"
   }
 }

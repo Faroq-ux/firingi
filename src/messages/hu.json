@@ -846,7 +846,9 @@
     "My Ads": "Hirdetéseim",
     "New Ad": "Új Hirdetés",
     "Ad Billing": "Hirdetések Számlázása",
-    "Messages": "Üzenetek"
+    "Messages": "Üzenetek",
+    "Plan & Billing": "Csomag és számlázás",
+    "Early Payout": "Előrehozott kifizetés"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Új üzenet a(z) {number} rendelésről",
       "body": "{from} üzenetet küldött Önnek a(z) {number} rendelésről."
+    },
+    "plan_trial_ending": {
+      "title": "Ingyenes próbaideje {days} nap múlva lejár",
+      "body": "A(z) {plan} próbaideje {date}-én lejár. Válasszon csomagot: Cég › Csomag és számlázás."
+    },
+    "plan_trial_ended": {
+      "title": "Elindult a csomagja: {plan}",
+      "body": "Az ingyenes próbaidő lejárt. Most a(z) {plan} csomagot használja."
+    },
+    "plan_changed": {
+      "title": "Csomagváltás: {plan}",
+      "body": "FIRINGI csomagja {date}-én {plan} lesz."
+    },
+    "earlypay_paid": {
+      "title": "Előrehozott kifizetés kifizetve: {number}",
+      "body": "A FIRINGI {net} €-t küldött Önnek. A díjszámla az Előrehozott kifizetés oldalon van."
+    },
+    "earlypay_rejected": {
+      "title": "Előrehozott kifizetés elutasítva: {number}",
+      "body": "A FIRINGI elutasította a(z) {number} előrehozott kifizetést: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Előrehozott kifizetési kérés: {company}",
+      "body": "{company} {amount} € előrehozott kifizetését kéri ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "A rendeléseivel kapcsolatos összes beszélgetés, a legújabbak elöl.",
     "noThreads": "Még nincsenek beszélgetések. A rendelésekkel kapcsolatos üzenetek itt jelennek meg.",
     "unread": "{n} új"
+  },
+  "plans": {
+    "title": "Csomag és számlázás",
+    "intro": "Az Ön FIRINGI csomagja: milyen eszközei vannak, a korlátai, a jutaléka és az előrehozott kifizetés. Az árak ÁFA nélkül értendők.",
+    "plansOff": "A FIRINGI még nem használ csomagokat — minden eszköz elérhető. Minden változás előtt értesítést kap.",
+    "currentPlan": "Az Ön csomagja",
+    "trialLeft": "Ingyenes próbaidő · még {days} nap ({date}-ig)",
+    "renews": "Megújul",
+    "pendingPlan": "A(z) {plan} {date}-én indul",
+    "commission": "Jutalék az eladások után",
+    "billing": "Hogyan fizet",
+    "billingKinds": {
+      "PAYOUT": "A kifizetéseiből levonva",
+      "INVOICE": "Számlával"
+    },
+    "trialNote": "Az ingyenes próbaidő alatt mindent használhat. Válasszon csomagot a végéig — különben a(z) {plan} csomagra kerül.",
+    "current": "Jelenlegi",
+    "chosenBadge": "Kiválasztva",
+    "freePrice": "Ingyenes",
+    "perMonth": "/ hó",
+    "commissionOwn": "Jutalék: az Önnel egyeztetett mérték",
+    "commissionPlan": "Jutalék: az eladások {pct} %-a",
+    "features": {
+      "INVENTORY": "Készlet: tételek, lejáratok, beszerzési rendelések, leltárak, áthelyezések",
+      "PLANNING": "Kereslettervezés és utántöltés",
+      "WAREHOUSE": "Raktár: komissiózás és csomagolás, polcok, olvasó, nyomonkövetés, visszahívások",
+      "PRICE_INSIGHTS": "Árelemzések",
+      "ADS": "Hirdetés (szponzorált termékek)",
+      "INTEGRATIONS": "Integrációk: import és szinkronizálás, API, exportok",
+      "ROUTES": "Útvonaltervezés a sofőrjeinek",
+      "ASSISTANT": "MI-asszisztens"
+    },
+    "lim": {
+      "products": "legfeljebb {n} termék",
+      "productsAny": "korlátlan termék",
+      "users": "{n} felhasználó",
+      "usersAny": "korlátlan felhasználó",
+      "warehouses": "{n} raktár",
+      "warehousesAny": "korlátlan raktár",
+      "drivers": "{n} sofőr",
+      "driversAny": "korlátlan sofőr"
+    },
+    "earlyOff": "Előrehozott kifizetés nem része",
+    "earlyPerDay": "Előrehozott kifizetés: korábbi naponként {rate} % (minimum {min})",
+    "earlyFlat": "Előrehozott kifizetés: az összeg {rate} %-a (minimum {min})",
+    "earlyFree": "havonta {n} ingyenes",
+    "chooseAfterTrial": "Kiválasztás — a próbaidő után indul",
+    "upgrade": "Váltás most",
+    "switchAtEnd": "Váltás az időszak végén",
+    "chosen": "Kész — a csomagja frissült.",
+    "usage": "Felhasználás",
+    "limits": {
+      "products": "Aktív termékek",
+      "users": "Felhasználók",
+      "warehouses": "Raktárak és átvételi pontok",
+      "drivers": "Sofőrök"
+    },
+    "noLimit": "nincs korlát",
+    "invoices": "Csomagszámlák",
+    "noPlanInvoices": "Még nincs csomagszámla.",
+    "upgradeInvoice": "Csomagváltás",
+    "gateTitle": "A(z) {feature} nem része a csomagjának",
+    "gateBody": "A használatához váltson nagyobb FIRINGI csomagra. Az adatai addig is megmaradnak.",
+    "seePlans": "Csomagok megtekintése",
+    "limitError": "A(z) {plan} csomag {max} ({kind}) engedélyez. Továbbiak hozzáadásához váltson csomagot: Cég › Csomag és számlázás.",
+    "earlyTitle": "Előrehozott kifizetés",
+    "earlyIntro": "Kapja meg most a még le nem járt, jóváhagyott számlák összegét — akár azelőtt, hogy a vevő fizetett. A FIRINGI kis díjat számol fel, amelyet számláz és ugyanabból a kifizetésből levon.",
+    "why": {
+      "PLANS_OFF": "Az előrehozott kifizetés a FIRINGI csomagjaival együtt indul.",
+      "OFF": "A FIRINGI jelenleg nem kínál előrehozott kifizetést.",
+      "NOT_SUPPLIER": "Az előrehozott kifizetés a beszállítóknak szól.",
+      "SUPPLIER_OFF": "Az előrehozott kifizetés ki van kapcsolva a cégénél. Forduljon a FIRINGI-hez.",
+      "PLAN": "A csomagja nem tartalmaz előrehozott kifizetést. Váltson: Cég › Csomag és számlázás."
+    },
+    "terms": "Az Ön feltételei",
+    "limit": "Az Ön kerete",
+    "outstanding": "Előre kifizetve, még nem esedékes",
+    "room": "Ennyit kérhet",
+    "freeLeft": "Ebben a hónapban még {n} ingyenes előrehozott kifizetése van.",
+    "chooseInvoices": "Válassza ki a most kifizetendő számlákat",
+    "howItWorks": "Csak a legalább {days} nap múlva esedékes számlák. A FIRINGI ellenőrzi a kérést és átutalással küldi a pénzt; a díjszámlát is megkapja.",
+    "history": "Előrehozott kifizetései",
+    "noHistory": "Még egy sincs.",
+    "status": {
+      "REQUESTED": "FIRINGI-re vár",
+      "PAID": "Kifizetve",
+      "REJECTED": "Elutasítva",
+      "CANCELLED": "Visszavonva"
+    },
+    "rowAmount": "{amount} · díj {fee}",
+    "rowNet": "Ön {net} összeget kapott",
+    "free": "ingyenes",
+    "noInvoices": "Nincs fizetésre váró jóváhagyott számla.",
+    "dueOn": "esedékes: {date}",
+    "daysEarly": "{days} nappal korábban",
+    "tooSoon": "túl hamar esedékes",
+    "quoteAmount": "Számlák",
+    "quoteFee": "Díj",
+    "plusVat": "+ ÁFA",
+    "quoteNet": "Ön kap",
+    "netNote": "a díj és ÁFA után",
+    "overLimit": "Ez meghaladja a keretét — most legfeljebb {room} összeget kérhet.",
+    "request": "Kifizetés kérése most",
+    "requested": "Elküldve — a FIRINGI ellenőrzi és elküldi a pénzt.",
+    "cancel": "Visszavonás"
   }
 }

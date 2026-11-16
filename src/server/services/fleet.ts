@@ -133,6 +133,7 @@ export async function addDriver(ctx: Ctx, input: DriverInput) {
   if (input.password.length < 10) throw new ValidationError("The password needs at least 10 characters.");
   const licence = input.licenceNumber.trim().toUpperCase();
   if (licence.length < 4) throw new ValidationError("Enter the driving licence number.");
+  await (await import("@/server/plans/service")).assertWithinLimit(ctx.company.id, "drivers"); // Phase 36: the plan's driver limit (suppliers only)
   if (input.licenceExpiry && input.licenceExpiry < new Date()) throw new ValidationError("This driving licence has expired.");
   if (await prisma.user.findUnique({ where: { email } })) throw new AppError("EMAIL_TAKEN", "A user with this e-mail already exists.", 409);
   const role = await prisma.role.findFirstOrThrow({ where: { companyId: null, key: isAdmin(ctx) ? "ADMIN_DRIVER" : "VENDOR_DRIVER" } });

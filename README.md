@@ -662,6 +662,30 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Supplier plans & early payout (Phase 36)
+
+Code: `src/server/plans/service.ts`, `src/server/plans/early-pay.ts`; details `docs/plans.md`.
+- **Plans** (*Vendors › Supplier Plans*, English) — FIRINGI edits plans (starting with Free, Pro 49 €, Business 149 € a month,
+  excl. VAT): which **features** they unlock (inventory, planning, warehouse, price insights, advertising, integrations/API,
+  routes, AI assistant), **limits** (active products, users, warehouses, drivers), the **commission** on sales (empty = each
+  supplier's agreed rate) and **early-payout terms** (off, % per day early or a flat %, minimum fee, free ones a month).
+  Changing a plan's commission needs a second person (four-eyes); FIRINGI can still keep a supplier's own commission.
+- **Nothing changes until FIRINGI switches plans on.** Then every supplier gets a **free trial** of the trial plan
+  (default Business, 60 days — everything it uses today keeps working), with reminders (14/7/1 days, 25 languages);
+  at the end the plan it chose starts, otherwise the default plan (Free).
+- **Supplier page** *Company › Plan & Billing* (25 languages): current plan, trial days left, plan cards to compare and
+  choose (upgrade now — the difference for the rest of the month is invoiced; cheaper plans from the next period),
+  usage against limits, plan invoices (PDF). Features outside the plan leave the menu and their pages show an upgrade
+  card; limits stop adding more (message in the supplier's language); the supplier API needs Integrations.
+- **Billing** — monthly in advance, FIRINGI service invoice; deducted from payouts ("Compensação") or by invoice,
+  per supplier. Daily job `/api/cron/plans`.
+- **Early payout** (*Finance › Early Payout*, 25 languages) — approved supplier invoices not yet due (at least 3 days)
+  can be paid now, whether or not the customer has paid. The page shows the fee and what the supplier receives; the
+  supplier asks, FIRINGI's finance team sends the transfer and marks it paid (or turns it down with a reason): a fee
+  invoice is issued and settled, the supplier's invoices end up fully paid. Limit per supplier on what is paid early at
+  once; switch per supplier; above the four-eyes threshold a second person approves (*Early Payouts* queue).
+- Tests: `tests/integration/plans.test.ts`, browser `tests/e2e/plans.mjs`. Screenshots `docs/screenshots/plans-0*.png`.
+
 ## Order chat (Phase 35)
 
 Conversations on each order. Code: `src/server/chat/service.ts`, filter `src/lib/chat.ts`; details `docs/chat.md`.

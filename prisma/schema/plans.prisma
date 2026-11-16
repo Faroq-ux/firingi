@@ -1,0 +1,142 @@
+// ── Phase 36: supplier plans & early payout ──────────────────────────────────
+// FIRINGI sells suppliers monthly plans (Free / Pro / Business, editable) that unlock ERP features, set
+// limits, can lower the commission and set early-payout terms. Suppliers can ask to be paid early for
+// approved invoices not yet due, for a fee.
+
+enum PlanStatus {
+  TRIAL // all features of the trial plan, free, until trialEndsAt
+  ACTIVE
+  CANCELLED // moves to the default plan at the end of the period
+}
+
+enum PlanBilling {
+  PAYOUT // deducted from what FIRINGI owes the supplier
+  INVOICE // a normal invoice with payment terms
+}
+
+enum EarlyPayStatus {
+  REQUESTED
+  PAID
+  REJECTED
+  CANCELLED
+}
+
+model SupplierPlan {
+  id             String   @id @default(cuid())
+  code           String   @unique // FREE, PRO, BUSINESS, or FIRINGI's own
+  name           String
+  description    String?
+  monthlyPrice   Decimal  @default(0) @db.Decimal(10, 2) // excl. VAT
+  /// Commission on sales for suppliers on this plan (null = keep each supplier's agreed rate).
+  commissionPct  Decimal? @db.Decimal(6, 3)
+  /// Features this plan unlocks (INVENTORY, PLANNING, WAREHOUSE, PRICE_INSIGHTS, ADS, INTEGRATIONS, ROUTES, ASSISTANT).
+  features       String[]
+  /// Limits (null = unlimited): products (active), users, warehouses, drivers.
+  maxProducts    Int?
+  maxUsers       Int?
+  maxWarehouses  Int?
+  maxDrivers     Int?
+  /// Early payout on this plan: off, % per day early, or a flat %.
+  earlyPayModel  String   @default("OFF") // OFF | PER_DAY | FLAT
+  earlyPayRate   Decimal  @default(0) @db.Decimal(8, 4) // % per day (PER_DAY) or % of the amount (FLAT)
+  earlyPayMinFee Decimal  @default(0) @db.Decimal(10, 2)
+  freeEarlyPays  Int      @default(0) // free early payouts per month
+  isDefault      Boolean  @default(false) // where suppliers land without a choice (Free)
+  active         Boolean  @default(true) // offered to suppliers
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  subscriptions PlanSubscription[] @relation("SubPlan")
+  pending       PlanSubscription[] @relation("SubPending")
+  invoices      PlanInvoice[]
+}
+
+model PlanSubscription {
+  id               String      @id @default(cuid())
+  companyId        String      @unique
+  planId           String
+  status           PlanStatus  @default(TRIAL)
+  trialEndsAt      DateTime?
+  /// Current paid period (ACTIVE): from … to (exclusive); the next invoice on periodEnd.
+  periodStart      DateTime?
+  periodEnd        DateTime?
+  /// A change that starts at the end of the period (downgrade / cancel), or the plan chosen during the trial.
+  pendingPlanId    String?
+  billing          PlanBilling @default(PAYOUT)
+  /// FIRINGI fixed this supplier's commission by hand: plan changes don't touch it.
+  commissionLocked Boolean     @default(false)
+  /// Early payout for this supplier: on/off and how much may be outstanding at once (null = FIRINGI's default).
+  earlyPayEnabled  Boolean     @default(true)
+  earlyPayLimit    Decimal?    @db.Decimal(12, 2)
+  /// Trial reminders already sent (days before the end).
+  remindersSent    Int[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  company Company       @relation("PlanSubscription", fields: [companyId], references: [id], onDelete: Cascade)
+  plan    SupplierPlan  @relation("SubPlan", fields: [planId], references: [id])
+  pending SupplierPlan? @relation("SubPending", fields: [pendingPlanId], references: [id])
+
+  @@index([status, trialEndsAt])
+  @@index([periodEnd])
+}
+
+/// FIRINGI's invoice for a plan period (or the difference when upgrading).
+model PlanInvoice {
+  id          String      @id @default(cuid())
+  companyId   String
+  planId      String
+  invoiceId   String      @unique
+  periodStart DateTime
+  periodEnd   DateTime
+  billing     PlanBilling
+  net         Decimal     @db.Decimal(10, 2)
+  gross       Decimal     @db.Decimal(10, 2)
+  kind        String      @default("PERIOD") // PERIOD | UPGRADE
+  createdAt   DateTime    @default(now())
+
+  plan SupplierPlan @relation(fields: [planId], references: [id])
+
+  @@index([companyId, createdAt])
+}
+
+model EarlyPayout {
+  id            String         @id @default(cuid())
+  number        String         @unique // EP-2026-000001
+  companyId     String
+  status        EarlyPayStatus @default(REQUESTED)
+  amount        Decimal        @db.Decimal(12, 2) // open amount of the invoices paid early
+  fee           Decimal        @db.Decimal(10, 2) // excl. VAT
+  feeGross      Decimal        @db.Decimal(10, 2)
+  net           Decimal        @db.Decimal(12, 2) // what the supplier receives (amount − feeGross)
+  model         String // PER_DAY | FLAT | FREE
+  rate          Decimal        @db.Decimal(8, 4)
+  feeInvoiceId  String?
+  reference     String? // bank transfer reference
+  requestedById String
+  decidedById   String?
+  decidedAt     DateTime?
+  reason        String?
+  createdAt     DateTime       @default(now())
+
+  company Company           @relation("EarlyPayouts", fields: [companyId], references: [id])
+  lines   EarlyPayoutLine[]
+
+  @@index([companyId, createdAt])
+  @@index([status])
+}
+
+model EarlyPayoutLine {
+  id              String   @id @default(cuid())
+  payoutId        String
+  vendorInvoiceId String
+  amount          Decimal  @db.Decimal(12, 2)
+  dueDate         DateTime @db.Date
+  days            Int
+  fee             Decimal  @db.Decimal(10, 2)
+
+  payout EarlyPayout @relation(fields: [payoutId], references: [id], onDelete: Cascade)
+
+  @@index([vendorInvoiceId])
+}

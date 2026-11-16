@@ -16,7 +16,7 @@ import { notify } from "@/server/notify/dispatch";
 import { writeAudit } from "@/server/services/audit";
 import type { PermissionCode } from "@/server/rbac/permissions";
 
-export type ApprovalKind = "CREDIT_NOTE" | "CLAIM" | "CUSTOMER_TERMS" | "COMMISSION" | "OFFER" | "BANK_DETAILS" | "STAFF_ROLE" | "PAYMENT";
+export type ApprovalKind = "CREDIT_NOTE" | "CLAIM" | "CUSTOMER_TERMS" | "COMMISSION" | "OFFER" | "BANK_DETAILS" | "STAFF_ROLE" | "PAYMENT" | "EARLY_PAYOUT";
 
 /** What an approver must be allowed to do (the same right the action needs). */
 export const APPROVAL_PERMISSION: Record<ApprovalKind, PermissionCode[]> = {
@@ -28,10 +28,11 @@ export const APPROVAL_PERMISSION: Record<ApprovalKind, PermissionCode[]> = {
   BANK_DETAILS: ["admin.settings.manage"],
   STAFF_ROLE: ["admin.users.manage"],
   PAYMENT: ["admin.finance.manage"],
+  EARLY_PAYOUT: ["admin.finance.manage"],
 };
 export const APPROVAL_LABEL: Record<ApprovalKind, string> = {
   CREDIT_NOTE: "Credit note", CLAIM: "Quality claim credit", CUSTOMER_TERMS: "Credit limit / payment terms", COMMISSION: "Commission change", OFFER: "Big offer / coupon",
-  BANK_DETAILS: "Bank details", STAFF_ROLE: "Powerful staff role", PAYMENT: "Payment",
+  BANK_DETAILS: "Bank details", STAFF_ROLE: "Powerful staff role", PAYMENT: "Payment", EARLY_PAYOUT: "Early payout to a supplier",
 };
 
 export type ApprovalSettings = {

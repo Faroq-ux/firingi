@@ -66,6 +66,11 @@ export function apiRoute(scope: Scope | null, fn: Handler) {
         const key = await prisma.apiKey.findUnique({ where: { id: keyId }, select: { scopes: true } });
         if (!key?.scopes.includes(scope)) throw new AppError("MISSING_SCOPE", `This key doesn't have the "${scope}" permission.`, 403);
       }
+      // Phase 36: suppliers use the API on plans with Integrations (a wholesaler buying through it is not limited)
+      if (keyId && (ctx.company.type === "DISTRIBUTOR" || (ctx.company.type === "WHOLESALER" && scope === "offers.write"))) {
+        const { planAllows } = await import("@/server/plans/service");
+        if (!(await planAllows(ctx.company.id, "INTEGRATIONS"))) throw new AppError("PLAN_FEATURE", "Your FIRINGI plan doesn't include the API. Upgrade your plan (Company › Plan & Billing).", 403);
+      }
       const out = await fn(ctx, req, ((await ctxArg?.params) ?? {}) as Params);
       res = out instanceof Response ? out : json(out, req.method === "POST" && (out as { created?: boolean })?.created ? 201 : 200, headers);
     } catch (e) {

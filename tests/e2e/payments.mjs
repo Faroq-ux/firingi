@@ -208,7 +208,7 @@ await settle(buyer);
 await go(buyer, "/buy/orders/cart");
 await buyer.getByRole("button", { name: /Fazer encomenda|Place order/ }).click();
 await buyer.waitForURL("**/buy/orders/**", { timeout: 15000 }); await settle(buyer);
-check("order waits for payment", await buyer.getByTestId("awaiting-payment").isVisible());
+check("order waits for payment", await buyer.getByTestId("awaiting-payment").waitFor({ state: "visible", timeout: 10000 }).then(() => true, () => false));
 await shot(buyer, "p20-09-order-awaiting-payment");
 const orderUrl = buyer.url();
 const orderNo = (await buyer.textContent("main")).match(/FO-\d{4}-\d{6}/)?.[0];

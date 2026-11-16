@@ -846,7 +846,9 @@
     "My Ads": "Mina Annonser",
     "New Ad": "Ny Annons",
     "Ad Billing": "Annonsfakturering",
-    "Messages": "Meddelanden"
+    "Messages": "Meddelanden",
+    "Plan & Billing": "Abonnemang och betalning",
+    "Early Payout": "Förtida utbetalning"
   },
   "delivery": {
     "title": "Leverans",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Nytt meddelande om order {number}",
       "body": "{from} har skickat ett meddelande om order {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Din gratis provperiod slutar om {days} dagar",
+      "body": "Provperioden för {plan} slutar {date}. Välj abonnemang under Företag › Abonnemang och betalning."
+    },
+    "plan_trial_ended": {
+      "title": "Ditt abonnemang har börjat: {plan}",
+      "body": "Din gratis provperiod är slut. Du har nu abonnemanget {plan}."
+    },
+    "plan_changed": {
+      "title": "Byte av abonnemang: {plan}",
+      "body": "Ditt FIRINGI-abonnemang byts till {plan} den {date}."
+    },
+    "earlypay_paid": {
+      "title": "Förtida utbetalning {number} betald",
+      "body": "FIRINGI har skickat {net} € till dig. Avgiftsfakturan finns under Förtida utbetalning."
+    },
+    "earlypay_rejected": {
+      "title": "Förtida utbetalning {number} avslagen",
+      "body": "FIRINGI har avslagit förtida utbetalning {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Förtida utbetalning begärd: {company}",
+      "body": "{company} vill få {amount} € utbetalt i förtid ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Alla samtal om dina ordrar, nyaste först.",
     "noThreads": "Inga samtal ännu. Meddelanden om en order visas här.",
     "unread": "{n} nya"
+  },
+  "plans": {
+    "title": "Abonnemang och betalning",
+    "intro": "Ditt FIRINGI-abonnemang: vilka verktyg du har, dina gränser, din provision och förtida utbetalning. Priser exkl. moms.",
+    "plansOff": "FIRINGI använder ännu inga abonnemang — du har alla verktyg. Du får besked innan något ändras.",
+    "currentPlan": "Ditt abonnemang",
+    "trialLeft": "Gratis provperiod · {days} dagar kvar (till {date})",
+    "renews": "Förnyas",
+    "pendingPlan": "{plan} börjar {date}",
+    "commission": "Provision på försäljning",
+    "billing": "Så betalar du",
+    "billingKinds": {
+      "PAYOUT": "Dras från dina utbetalningar",
+      "INVOICE": "Via faktura"
+    },
+    "trialNote": "Under den gratis provperioden har du allt. Välj abonnemang innan den tar slut — annars går du över till {plan}.",
+    "current": "Nuvarande",
+    "chosenBadge": "Valt",
+    "freePrice": "Gratis",
+    "perMonth": "/ månad",
+    "commissionOwn": "Provision: din avtalade sats",
+    "commissionPlan": "Provision: {pct} % av försäljningen",
+    "features": {
+      "INVENTORY": "Lager: batcher, bäst före, inköpsorder, inventeringar, flyttar",
+      "PLANNING": "Efterfrågeplanering och påfyllning",
+      "WAREHOUSE": "Lagerdrift: plock och pack, hyllor, skanner, spårbarhet, återkallelser",
+      "PRICE_INSIGHTS": "Prisinsikter",
+      "ADS": "Annonsering (sponsrade produkter)",
+      "INTEGRATIONS": "Integrationer: import och synk, API, exporter",
+      "ROUTES": "Ruttplanering för dina förare",
+      "ASSISTANT": "AI-assistent"
+    },
+    "lim": {
+      "products": "upp till {n} produkter",
+      "productsAny": "obegränsat med produkter",
+      "users": "{n} användare",
+      "usersAny": "obegränsat med användare",
+      "warehouses": "{n} lager",
+      "warehousesAny": "obegränsat med lager",
+      "drivers": "{n} förare",
+      "driversAny": "obegränsat med förare"
+    },
+    "earlyOff": "Förtida utbetalning ingår inte",
+    "earlyPerDay": "Förtida utbetalning: {rate} % per dag tidigare (minst {min})",
+    "earlyFlat": "Förtida utbetalning: {rate} % av beloppet (minst {min})",
+    "earlyFree": "{n} gratis per månad",
+    "chooseAfterTrial": "Välj — börjar efter provperioden",
+    "upgrade": "Uppgradera nu",
+    "switchAtEnd": "Byt vid periodens slut",
+    "chosen": "Klart — ditt abonnemang är uppdaterat.",
+    "usage": "Din användning",
+    "limits": {
+      "products": "Aktiva produkter",
+      "users": "Användare",
+      "warehouses": "Lager och utlämningsställen",
+      "drivers": "Förare"
+    },
+    "noLimit": "ingen gräns",
+    "invoices": "Abonnemangsfakturor",
+    "noPlanInvoices": "Inga abonnemangsfakturor ännu.",
+    "upgradeInvoice": "Byte av abonnemang",
+    "gateTitle": "{feature} ingår inte i ditt abonnemang",
+    "gateBody": "Uppgradera ditt FIRINGI-abonnemang för att använda det. Dina uppgifter sparas under tiden.",
+    "seePlans": "Se abonnemang",
+    "limitError": "Ditt abonnemang {plan} tillåter {max} ({kind}). Byt abonnemang under Företag › Abonnemang och betalning för att lägga till fler.",
+    "earlyTitle": "Förtida utbetalning",
+    "earlyIntro": "Få godkända fakturor utbetalda nu, före förfallodagen — även innan kunden har betalat. FIRINGI tar en liten avgift som faktureras och dras från samma betalning.",
+    "why": {
+      "PLANS_OFF": "Förtida utbetalning startar tillsammans med FIRINGI:s abonnemang.",
+      "OFF": "FIRINGI erbjuder inte förtida utbetalning just nu.",
+      "NOT_SUPPLIER": "Förtida utbetalning är för leverantörer.",
+      "SUPPLIER_OFF": "Förtida utbetalning är avstängd för ditt företag. Kontakta FIRINGI.",
+      "PLAN": "Ditt abonnemang omfattar inte förtida utbetalning. Byt under Företag › Abonnemang och betalning."
+    },
+    "terms": "Dina villkor",
+    "limit": "Din gräns",
+    "outstanding": "Utbetalt i förtid, ännu inte förfallet",
+    "room": "Du kan begära",
+    "freeLeft": "Du har {n} gratis förtida utbetalning(ar) kvar denna månad.",
+    "chooseInvoices": "Välj fakturor att få utbetalda nu",
+    "howItWorks": "Endast fakturor som förfaller om {days} dagar eller senare. FIRINGI kontrollerar begäran och överför pengarna; du får avgiftsfakturan med.",
+    "history": "Dina förtida utbetalningar",
+    "noHistory": "Inga ännu.",
+    "status": {
+      "REQUESTED": "Väntar på FIRINGI",
+      "PAID": "Betald",
+      "REJECTED": "Avslagen",
+      "CANCELLED": "Avbruten"
+    },
+    "rowAmount": "{amount} · avgift {fee}",
+    "rowNet": "du fick {net}",
+    "free": "gratis",
+    "noInvoices": "Inga godkända fakturor väntar på betalning.",
+    "dueOn": "förfaller {date}",
+    "daysEarly": "{days} dagar tidigare",
+    "tooSoon": "förfaller för snart",
+    "quoteAmount": "Fakturor",
+    "quoteFee": "Avgift",
+    "plusVat": "+ moms",
+    "quoteNet": "Du får",
+    "netNote": "efter avgift inkl. moms",
+    "overLimit": "Det är över din gräns — du kan begära upp till {room} nu.",
+    "request": "Begär utbetalning nu",
+    "requested": "Skickat — FIRINGI kontrollerar och överför pengarna.",
+    "cancel": "Avbryt"
   }
 }

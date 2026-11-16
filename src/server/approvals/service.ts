@@ -48,7 +48,17 @@ async function execute(ctx: Ctx, kind: ApprovalKind, p: Record<string, unknown>)
       await setCustomerTerms(ctx, p.companyId as string, p.paymentTermsDays as number, p.creditLimit as number | null);
       return null;
     }
+    case "EARLY_PAYOUT": {
+      const { payEarlyPayout } = await import("@/server/plans/early-pay");
+      const r = await payEarlyPayout(ctx, p.earlyPayoutId as string, { reference: (p.reference as string | null) ?? null });
+      return { earlyPayoutId: r.id };
+    }
     case "COMMISSION": {
+      if (p.plan) { // a plan's commission (Phase 36)
+        const { savePlan } = await import("@/server/plans/service");
+        const r = await savePlan(ctx, p.plan as Parameters<typeof savePlan>[1]);
+        return { planId: r.id };
+      }
       const { setCommissionRate } = await import("@/server/services/company");
       await setCommissionRate(ctx, p.vendorCompanyId as string, p.ratePercent as number, (p.note as string | null) ?? null);
       return null;

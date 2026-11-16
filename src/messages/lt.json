@@ -846,7 +846,9 @@
     "My Ads": "Mano Reklamos",
     "New Ad": "Nauja Reklama",
     "Ad Billing": "Reklamų Sąskaitos",
-    "Messages": "Žinutės"
+    "Messages": "Žinutės",
+    "Plan & Billing": "Planas ir atsiskaitymai",
+    "Early Payout": "Išankstinis išmokėjimas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Nauja žinutė apie užsakymą {number}",
       "body": "{from} atsiuntė jums žinutę apie užsakymą {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Jūsų nemokamas bandomasis laikotarpis baigsis po {days} d.",
+      "body": "Plano {plan} bandomasis laikotarpis baigsis {date}. Pasirinkite planą: Įmonė › Planas ir atsiskaitymai."
+    },
+    "plan_trial_ended": {
+      "title": "Jūsų planas prasidėjo: {plan}",
+      "body": "Nemokamas bandomasis laikotarpis baigėsi. Dabar turite planą {plan}."
+    },
+    "plan_changed": {
+      "title": "Plano keitimas: {plan}",
+      "body": "Jūsų FIRINGI planas {date} pasikeis į {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Išankstinis išmokėjimas {number} išmokėtas",
+      "body": "FIRINGI jums pervedė {net} €. Mokesčio sąskaita yra skiltyje Išankstinis išmokėjimas."
+    },
+    "earlypay_rejected": {
+      "title": "Išankstinis išmokėjimas {number} atmestas",
+      "body": "FIRINGI atmetė išankstinį išmokėjimą {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Prašomas išankstinis išmokėjimas: {company}",
+      "body": "{company} prašo išmokėti {amount} € anksčiau ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Visi pokalbiai apie jūsų užsakymus, naujausi viršuje.",
     "noThreads": "Pokalbių dar nėra. Žinutės apie užsakymą bus rodomos čia.",
     "unread": "{n} naujos"
+  },
+  "plans": {
+    "title": "Planas ir atsiskaitymai",
+    "intro": "Jūsų FIRINGI planas: kokius įrankius turite, jūsų limitai, komisinis ir išankstinis išmokėjimas. Kainos be PVM.",
+    "plansOff": "FIRINGI dar nenaudoja planų — turite visus įrankius. Būsite informuoti prieš bet kokį pakeitimą.",
+    "currentPlan": "Jūsų planas",
+    "trialLeft": "Nemokamas bandomasis laikotarpis · liko {days} d. (iki {date})",
+    "renews": "Atsinaujina",
+    "pendingPlan": "{plan} prasideda {date}",
+    "commission": "Komisinis nuo pardavimų",
+    "billing": "Kaip mokate",
+    "billingKinds": {
+      "PAYOUT": "Išskaičiuojama iš jūsų išmokų",
+      "INVOICE": "Pagal sąskaitą"
+    },
+    "trialNote": "Bandomuoju laikotarpiu turite viską. Pasirinkite planą iki pabaigos — kitaip pereisite į {plan}.",
+    "current": "Dabartinis",
+    "chosenBadge": "Pasirinktas",
+    "freePrice": "Nemokamai",
+    "perMonth": "/ mėn.",
+    "commissionOwn": "Komisinis: su jumis sutartas tarifas",
+    "commissionPlan": "Komisinis: {pct} % nuo pardavimų",
+    "features": {
+      "INVENTORY": "Atsargos: partijos, galiojimas, pirkimo užsakymai, inventorizacijos, perkėlimai",
+      "PLANNING": "Paklausos planavimas ir papildymas",
+      "WAREHOUSE": "Sandėlis: komplektavimas ir pakavimas, lentynos, skaitytuvas, atsekamumas, atšaukimai",
+      "PRICE_INSIGHTS": "Kainų įžvalgos",
+      "ADS": "Reklama (remiami produktai)",
+      "INTEGRATIONS": "Integracijos: importas ir sinchronizavimas, API, eksportas",
+      "ROUTES": "Maršrutų planavimas jūsų vairuotojams",
+      "ASSISTANT": "DI asistentas"
+    },
+    "lim": {
+      "products": "iki {n} produktų",
+      "productsAny": "neribotai produktų",
+      "users": "{n} naudotojai",
+      "usersAny": "neribotai naudotojų",
+      "warehouses": "{n} sandėliai",
+      "warehousesAny": "neribotai sandėlių",
+      "drivers": "{n} vairuotojai",
+      "driversAny": "neribotai vairuotojų"
+    },
+    "earlyOff": "Išankstinis išmokėjimas neįtrauktas",
+    "earlyPerDay": "Išankstinis išmokėjimas: {rate} % už kiekvieną dieną anksčiau (mažiausiai {min})",
+    "earlyFlat": "Išankstinis išmokėjimas: {rate} % sumos (mažiausiai {min})",
+    "earlyFree": "{n} nemokamai per mėnesį",
+    "chooseAfterTrial": "Pasirinkti — prasidės po bandomojo laikotarpio",
+    "upgrade": "Pakeisti dabar",
+    "switchAtEnd": "Keisti laikotarpio pabaigoje",
+    "chosen": "Atlikta — jūsų planas atnaujintas.",
+    "usage": "Jūsų naudojimas",
+    "limits": {
+      "products": "Aktyvūs produktai",
+      "users": "Naudotojai",
+      "warehouses": "Sandėliai ir atsiėmimo punktai",
+      "drivers": "Vairuotojai"
+    },
+    "noLimit": "be limito",
+    "invoices": "Plano sąskaitos",
+    "noPlanInvoices": "Plano sąskaitų dar nėra.",
+    "upgradeInvoice": "Plano keitimas",
+    "gateTitle": "{feature} nėra jūsų plane",
+    "gateBody": "Norėdami tai naudoti, pakeiskite FIRINGI planą. Jūsų duomenys kol kas išsaugomi.",
+    "seePlans": "Žiūrėti planus",
+    "limitError": "Jūsų planas {plan} leidžia {max} ({kind}). Norėdami pridėti daugiau, pakeiskite planą: Įmonė › Planas ir atsiskaitymai.",
+    "earlyTitle": "Išankstinis išmokėjimas",
+    "earlyIntro": "Gaukite apmokėjimą už patvirtintas sąskaitas dar nesuėjus terminui — net prieš klientui sumokant. FIRINGI ima nedidelį mokestį, kuris išrašomas sąskaitoje ir išskaičiuojamas iš to paties mokėjimo.",
+    "why": {
+      "PLANS_OFF": "Išankstinis išmokėjimas prasidės kartu su FIRINGI planais.",
+      "OFF": "FIRINGI šiuo metu nesiūlo išankstinio išmokėjimo.",
+      "NOT_SUPPLIER": "Išankstinis išmokėjimas skirtas tiekėjams.",
+      "SUPPLIER_OFF": "Jūsų įmonei išankstinis išmokėjimas išjungtas. Susisiekite su FIRINGI.",
+      "PLAN": "Jūsų planas neapima išankstinio išmokėjimo. Pakeiskite: Įmonė › Planas ir atsiskaitymai."
+    },
+    "terms": "Jūsų sąlygos",
+    "limit": "Jūsų limitas",
+    "outstanding": "Išmokėta anksčiau, terminas dar nesuėjo",
+    "room": "Galite prašyti",
+    "freeLeft": "Šį mėnesį jums liko {n} nemokamų išankstinių išmokėjimų.",
+    "chooseInvoices": "Pasirinkite sąskaitas, kurias apmokėti dabar",
+    "howItWorks": "Tik sąskaitos, kurių terminas po {days} d. ar vėliau. FIRINGI patikrina prašymą ir perveda pinigus; kartu gaunate mokesčio sąskaitą.",
+    "history": "Jūsų išankstiniai išmokėjimai",
+    "noHistory": "Kol kas nėra.",
+    "status": {
+      "REQUESTED": "Laukia FIRINGI",
+      "PAID": "Išmokėta",
+      "REJECTED": "Atmesta",
+      "CANCELLED": "Atšaukta"
+    },
+    "rowAmount": "{amount} · mokestis {fee}",
+    "rowNet": "gavote {net}",
+    "free": "nemokamai",
+    "noInvoices": "Nėra patvirtintų sąskaitų, laukiančių apmokėjimo.",
+    "dueOn": "terminas {date}",
+    "daysEarly": "{days} d. anksčiau",
+    "tooSoon": "terminas per greitai",
+    "quoteAmount": "Sąskaitos",
+    "quoteFee": "Mokestis",
+    "plusVat": "+ PVM",
+    "quoteNet": "Gausite",
+    "netNote": "atskaičius mokestį su PVM",
+    "overLimit": "Tai viršija jūsų limitą — dabar galite prašyti iki {room}.",
+    "request": "Prašyti išmokėti dabar",
+    "requested": "Išsiųsta — FIRINGI patikrins ir perves pinigus.",
+    "cancel": "Atšaukti"
   }
 }

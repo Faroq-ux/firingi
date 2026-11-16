@@ -846,7 +846,9 @@
     "My Ads": "Manas Reklāmas",
     "New Ad": "Jauna Reklāma",
     "Ad Billing": "Reklāmu Rēķini",
-    "Messages": "Ziņas"
+    "Messages": "Ziņas",
+    "Plan & Billing": "Plāns un norēķini",
+    "Early Payout": "Agrā izmaksa"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Jauna ziņa par pasūtījumu {number}",
       "body": "{from} jums nosūtīja ziņu par pasūtījumu {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Jūsu bezmaksas izmēģinājums beigsies pēc {days} dienām",
+      "body": "Plāna {plan} izmēģinājums beigsies {date}. Izvēlieties plānu: Uzņēmums › Plāns un norēķini."
+    },
+    "plan_trial_ended": {
+      "title": "Jūsu plāns ir sācies: {plan}",
+      "body": "Bezmaksas izmēģinājums ir beidzies. Tagad jums ir plāns {plan}."
+    },
+    "plan_changed": {
+      "title": "Plāna maiņa: {plan}",
+      "body": "Jūsu FIRINGI plāns {date} mainīsies uz {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Agrā izmaksa {number} izmaksāta",
+      "body": "FIRINGI jums pārskaitīja {net} €. Maksas rēķins ir sadaļā Agrā izmaksa."
+    },
+    "earlypay_rejected": {
+      "title": "Agrā izmaksa {number} noraidīta",
+      "body": "FIRINGI noraidīja agro izmaksu {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Pieprasīta agrā izmaksa: {company}",
+      "body": "{company} lūdz izmaksāt {amount} € agrāk ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Visas sarunas par jūsu pasūtījumiem, jaunākās vispirms.",
     "noThreads": "Vēl nav sarunu. Ziņas par pasūtījumu parādīsies šeit.",
     "unread": "{n} jaunas"
+  },
+  "plans": {
+    "title": "Plāns un norēķini",
+    "intro": "Jūsu FIRINGI plāns: kādi rīki jums ir, jūsu limiti, komisija un agrā izmaksa. Cenas bez PVN.",
+    "plansOff": "FIRINGI vēl neizmanto plānus — jums ir visi rīki. Jūs saņemsiet ziņu pirms jebkādām izmaiņām.",
+    "currentPlan": "Jūsu plāns",
+    "trialLeft": "Bezmaksas izmēģinājums · atlikušas {days} dienas (līdz {date})",
+    "renews": "Atjaunojas",
+    "pendingPlan": "{plan} sākas {date}",
+    "commission": "Komisija no pārdošanas",
+    "billing": "Kā maksājat",
+    "billingKinds": {
+      "PAYOUT": "Ieturēts no jūsu izmaksām",
+      "INVOICE": "Ar rēķinu"
+    },
+    "trialNote": "Bezmaksas izmēģinājuma laikā jums ir viss. Izvēlieties plānu pirms beigām — citādi pāriesiet uz {plan}.",
+    "current": "Pašreizējais",
+    "chosenBadge": "Izvēlēts",
+    "freePrice": "Bez maksas",
+    "perMonth": "/ mēnesī",
+    "commissionOwn": "Komisija: ar jums saskaņotā likme",
+    "commissionPlan": "Komisija: {pct} % no pārdošanas",
+    "features": {
+      "INVENTORY": "Krājumi: partijas, derīguma termiņi, pirkuma pasūtījumi, inventarizācijas, pārvietošana",
+      "PLANNING": "Pieprasījuma plānošana un papildināšana",
+      "WAREHOUSE": "Noliktava: komplektēšana un iepakošana, plaukti, skeneris, izsekojamība, atsaukšana",
+      "PRICE_INSIGHTS": "Cenu ieskati",
+      "ADS": "Reklāma (sponsorēti produkti)",
+      "INTEGRATIONS": "Integrācijas: imports un sinhronizācija, API, eksports",
+      "ROUTES": "Maršrutu plānošana jūsu vadītājiem",
+      "ASSISTANT": "MI asistents"
+    },
+    "lim": {
+      "products": "līdz {n} produktiem",
+      "productsAny": "neierobežoti produkti",
+      "users": "{n} lietotāji",
+      "usersAny": "neierobežoti lietotāji",
+      "warehouses": "{n} noliktavas",
+      "warehousesAny": "neierobežotas noliktavas",
+      "drivers": "{n} vadītāji",
+      "driversAny": "neierobežoti vadītāji"
+    },
+    "earlyOff": "Agrā izmaksa nav iekļauta",
+    "earlyPerDay": "Agrā izmaksa: {rate} % par katru dienu agrāk (vismaz {min})",
+    "earlyFlat": "Agrā izmaksa: {rate} % no summas (vismaz {min})",
+    "earlyFree": "{n} bez maksas mēnesī",
+    "chooseAfterTrial": "Izvēlēties — sāksies pēc izmēģinājuma",
+    "upgrade": "Uzlabot tagad",
+    "switchAtEnd": "Mainīt perioda beigās",
+    "chosen": "Gatavs — jūsu plāns ir atjaunināts.",
+    "usage": "Jūsu lietojums",
+    "limits": {
+      "products": "Aktīvie produkti",
+      "users": "Lietotāji",
+      "warehouses": "Noliktavas un saņemšanas punkti",
+      "drivers": "Vadītāji"
+    },
+    "noLimit": "bez limita",
+    "invoices": "Plāna rēķini",
+    "noPlanInvoices": "Plāna rēķinu vēl nav.",
+    "upgradeInvoice": "Plāna maiņa",
+    "gateTitle": "{feature} nav iekļauts jūsu plānā",
+    "gateBody": "Lai to izmantotu, uzlabojiet savu FIRINGI plānu. Jūsu dati pa to laiku tiek saglabāti.",
+    "seePlans": "Skatīt plānus",
+    "limitError": "Jūsu plāns {plan} atļauj {max} ({kind}). Lai pievienotu vairāk, mainiet plānu: Uzņēmums › Plāns un norēķini.",
+    "earlyTitle": "Agrā izmaksa",
+    "earlyIntro": "Saņemiet samaksu par apstiprinātiem rēķiniem jau pirms termiņa — pat pirms klients ir samaksājis. FIRINGI ietur nelielu maksu, kas tiek iekļauta rēķinā un ieturēta no tā paša maksājuma.",
+    "why": {
+      "PLANS_OFF": "Agrā izmaksa sāksies kopā ar FIRINGI plāniem.",
+      "OFF": "FIRINGI pašlaik nepiedāvā agro izmaksu.",
+      "NOT_SUPPLIER": "Agrā izmaksa ir paredzēta piegādātājiem.",
+      "SUPPLIER_OFF": "Jūsu uzņēmumam agrā izmaksa ir izslēgta. Sazinieties ar FIRINGI.",
+      "PLAN": "Jūsu plāns neietver agro izmaksu. Mainiet: Uzņēmums › Plāns un norēķini."
+    },
+    "terms": "Jūsu nosacījumi",
+    "limit": "Jūsu limits",
+    "outstanding": "Izmaksāts agrāk, termiņš vēl nav pienācis",
+    "room": "Varat pieprasīt",
+    "freeLeft": "Šomēnes jums atlikušas {n} bezmaksas agrās izmaksas.",
+    "chooseInvoices": "Izvēlieties rēķinus, ko saņemt tagad",
+    "howItWorks": "Tikai rēķini ar termiņu pēc {days} dienām vai vēlāk. FIRINGI pārbauda pieprasījumu un pārskaita naudu; maksas rēķinu saņemsiet kopā ar to.",
+    "history": "Jūsu agrās izmaksas",
+    "noHistory": "Vēl nav.",
+    "status": {
+      "REQUESTED": "Gaida FIRINGI",
+      "PAID": "Izmaksāts",
+      "REJECTED": "Noraidīts",
+      "CANCELLED": "Atcelts"
+    },
+    "rowAmount": "{amount} · maksa {fee}",
+    "rowNet": "jūs saņēmāt {net}",
+    "free": "bez maksas",
+    "noInvoices": "Nav apstiprinātu rēķinu, kas gaida apmaksu.",
+    "dueOn": "termiņš {date}",
+    "daysEarly": "{days} dienas agrāk",
+    "tooSoon": "termiņš pārāk drīz",
+    "quoteAmount": "Rēķini",
+    "quoteFee": "Maksa",
+    "plusVat": "+ PVN",
+    "quoteNet": "Jūs saņemat",
+    "netNote": "pēc maksas ar PVN",
+    "overLimit": "Tas pārsniedz jūsu limitu — tagad varat pieprasīt līdz {room}.",
+    "request": "Pieprasīt izmaksu tagad",
+    "requested": "Nosūtīts — FIRINGI pārbaudīs un pārskaitīs naudu.",
+    "cancel": "Atcelt"
   }
 }

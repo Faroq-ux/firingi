@@ -846,7 +846,9 @@
     "My Ads": "Meine Anzeigen",
     "New Ad": "Neue Anzeige",
     "Ad Billing": "Anzeigen-Abrechnung",
-    "Messages": "Nachrichten"
+    "Messages": "Nachrichten",
+    "Plan & Billing": "Tarif & Abrechnung",
+    "Early Payout": "Vorzeitige Auszahlung"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1500,6 +1502,30 @@
     "chat_message": {
       "title": "Neue Nachricht zur Bestellung {number}",
       "body": "{from} hat Ihnen eine Nachricht zur Bestellung {number} gesendet."
+    },
+    "plan_trial_ending": {
+      "title": "Ihre Testphase endet in {days} Tagen",
+      "body": "Ihre Testphase für {plan} endet am {date}. Wählen Sie Ihren Tarif unter Unternehmen › Tarif & Abrechnung."
+    },
+    "plan_trial_ended": {
+      "title": "Ihr Tarif hat begonnen: {plan}",
+      "body": "Ihre kostenlose Testphase ist beendet. Sie sind jetzt im Tarif {plan}."
+    },
+    "plan_changed": {
+      "title": "Tarifwechsel: {plan}",
+      "body": "Ihr FIRINGI-Tarif wechselt am {date} zu {plan}."
+    },
+    "earlypay_paid": {
+      "title": "Vorzeitige Auszahlung {number} bezahlt",
+      "body": "FIRINGI hat Ihnen {net} € überwiesen. Die Gebührenrechnung finden Sie unter Vorzeitige Auszahlung."
+    },
+    "earlypay_rejected": {
+      "title": "Vorzeitige Auszahlung {number} abgelehnt",
+      "body": "FIRINGI hat die vorzeitige Auszahlung {number} abgelehnt: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Vorzeitige Auszahlung angefragt: {company}",
+      "body": "{company} möchte {amount} € vorzeitig erhalten ({number})."
     }
   },
   "notifications": {
@@ -4199,5 +4225,110 @@
     "inboxIntro": "Alle Gespräche zu Ihren Bestellungen, die neuesten zuerst.",
     "noThreads": "Noch keine Gespräche. Nachrichten zu einer Bestellung erscheinen hier.",
     "unread": "{n} neu"
+  },
+  "plans": {
+    "title": "Tarif & Abrechnung",
+    "intro": "Ihr FIRINGI-Tarif: welche Werkzeuge Sie haben, Ihre Limits, Ihre Provision und die vorzeitige Auszahlung. Preise ohne MwSt.",
+    "plansOff": "FIRINGI nutzt noch keine Tarife – Sie haben alle Werkzeuge. Sie werden informiert, bevor sich etwas ändert.",
+    "currentPlan": "Ihr Tarif",
+    "trialLeft": "Kostenlose Testphase · noch {days} Tage (bis {date})",
+    "renews": "Verlängert sich am",
+    "pendingPlan": "{plan} beginnt am {date}",
+    "commission": "Provision auf Verkäufe",
+    "billing": "So zahlen Sie",
+    "billingKinds": {
+      "PAYOUT": "Von Ihren Auszahlungen abgezogen",
+      "INVOICE": "Per Rechnung"
+    },
+    "trialNote": "In der Testphase haben Sie alles. Wählen Sie Ihren Tarif vor dem Ende – sonst wechseln Sie zu {plan}.",
+    "current": "Aktuell",
+    "chosenBadge": "Gewählt",
+    "freePrice": "Kostenlos",
+    "perMonth": "/ Monat",
+    "commissionOwn": "Provision: Ihr vereinbarter Satz",
+    "commissionPlan": "Provision: {pct} % auf Verkäufe",
+    "features": {
+      "INVENTORY": "Bestand: Chargen, Haltbarkeit, Bestellungen, Inventuren, Umlagerungen",
+      "PLANNING": "Bedarfsplanung & Nachbestellung",
+      "WAREHOUSE": "Lager: Kommissionierung & Verpackung, Regale, Scanner, Rückverfolgung, Rückrufe",
+      "PRICE_INSIGHTS": "Preisanalysen",
+      "ADS": "Werbung (gesponserte Produkte)",
+      "INTEGRATIONS": "Integrationen: Import & Sync, API, Exporte",
+      "ROUTES": "Routenplanung für Ihre Fahrer",
+      "ASSISTANT": "KI-Assistent"
+    },
+    "lim": {
+      "products": "bis zu {n} Produkte",
+      "productsAny": "unbegrenzt Produkte",
+      "users": "{n} Benutzer",
+      "usersAny": "unbegrenzt Benutzer",
+      "warehouses": "{n} Lager",
+      "warehousesAny": "unbegrenzt Lager",
+      "drivers": "{n} Fahrer",
+      "driversAny": "unbegrenzt Fahrer"
+    },
+    "earlyOff": "Vorzeitige Auszahlung nicht enthalten",
+    "earlyPerDay": "Vorzeitige Auszahlung: {rate} % pro Tag früher (mindestens {min})",
+    "earlyFlat": "Vorzeitige Auszahlung: {rate} % des Betrags (mindestens {min})",
+    "earlyFree": "{n} kostenlos pro Monat",
+    "chooseAfterTrial": "Wählen – startet nach der Testphase",
+    "upgrade": "Jetzt upgraden",
+    "switchAtEnd": "Zum Ende des Zeitraums wechseln",
+    "chosen": "Erledigt – Ihr Tarif wurde aktualisiert.",
+    "usage": "Ihre Nutzung",
+    "limits": {
+      "products": "Aktive Produkte",
+      "users": "Benutzer",
+      "warehouses": "Lager & Abholstellen",
+      "drivers": "Fahrer"
+    },
+    "noLimit": "kein Limit",
+    "invoices": "Tarifrechnungen",
+    "noPlanInvoices": "Noch keine Tarifrechnungen.",
+    "upgradeInvoice": "Tarifwechsel",
+    "gateTitle": "{feature} ist nicht in Ihrem Tarif",
+    "gateBody": "Wechseln Sie Ihren FIRINGI-Tarif, um es zu nutzen. Ihre Daten bleiben solange erhalten.",
+    "seePlans": "Tarife ansehen",
+    "limitError": "Ihr Tarif {plan} erlaubt {max} ({kind}). Wechseln Sie den Tarif unter Unternehmen › Tarif & Abrechnung, um mehr hinzuzufügen.",
+    "earlyTitle": "Vorzeitige Auszahlung",
+    "earlyIntro": "Lassen Sie sich genehmigte Rechnungen schon vor Fälligkeit auszahlen – auch bevor der Kunde bezahlt hat. FIRINGI berechnet eine kleine Gebühr, die in Rechnung gestellt und von derselben Zahlung abgezogen wird.",
+    "why": {
+      "PLANS_OFF": "Die vorzeitige Auszahlung startet zusammen mit den FIRINGI-Tarifen.",
+      "OFF": "FIRINGI bietet derzeit keine vorzeitige Auszahlung an.",
+      "NOT_SUPPLIER": "Die vorzeitige Auszahlung ist für Lieferanten.",
+      "SUPPLIER_OFF": "Die vorzeitige Auszahlung ist für Ihr Unternehmen ausgeschaltet. Wenden Sie sich an FIRINGI.",
+      "PLAN": "Ihr Tarif enthält keine vorzeitige Auszahlung. Wechseln Sie unter Unternehmen › Tarif & Abrechnung."
+    },
+    "terms": "Ihre Konditionen",
+    "limit": "Ihr Limit",
+    "outstanding": "Vorzeitig ausgezahlt, noch nicht fällig",
+    "room": "Sie können anfragen",
+    "freeLeft": "Sie haben diesen Monat noch {n} kostenlose vorzeitige Auszahlung(en).",
+    "chooseInvoices": "Rechnungen für die sofortige Auszahlung wählen",
+    "howItWorks": "Nur Rechnungen, die in {days} Tagen oder später fällig sind. FIRINGI prüft die Anfrage und überweist das Geld; die Gebührenrechnung erhalten Sie dazu.",
+    "history": "Ihre vorzeitigen Auszahlungen",
+    "noHistory": "Noch keine.",
+    "status": {
+      "REQUESTED": "Wartet auf FIRINGI",
+      "PAID": "Bezahlt",
+      "REJECTED": "Abgelehnt",
+      "CANCELLED": "Storniert"
+    },
+    "rowAmount": "{amount} · Gebühr {fee}",
+    "rowNet": "Sie erhielten {net}",
+    "free": "kostenlos",
+    "noInvoices": "Keine genehmigten Rechnungen offen.",
+    "dueOn": "fällig am {date}",
+    "daysEarly": "{days} Tage früher",
+    "tooSoon": "zu bald fällig",
+    "quoteAmount": "Rechnungen",
+    "quoteFee": "Gebühr",
+    "plusVat": "+ MwSt.",
+    "quoteNet": "Sie erhalten",
+    "netNote": "nach Gebühr inkl. MwSt.",
+    "overLimit": "Das übersteigt Ihr Limit – Sie können jetzt bis zu {room} anfragen.",
+    "request": "Jetzt auszahlen lassen",
+    "requested": "Gesendet – FIRINGI prüft die Anfrage und überweist das Geld.",
+    "cancel": "Stornieren"
   }
 }

@@ -1394,6 +1394,30 @@
     "chat_message": {
       "title": "New message about order {number}",
       "body": "{from} sent you a message about order {number}."
+    },
+    "plan_trial_ending": {
+      "title": "Your free trial ends in {days} days",
+      "body": "Your {plan} trial ends on {date}. Choose your plan in Company › Plan & Billing."
+    },
+    "plan_trial_ended": {
+      "title": "Your plan has started: {plan}",
+      "body": "Your free trial has ended. You are now on the {plan} plan."
+    },
+    "plan_changed": {
+      "title": "Plan change: {plan}",
+      "body": "Your FIRINGI plan changes to {plan} on {date}."
+    },
+    "earlypay_paid": {
+      "title": "Early payout {number} paid",
+      "body": "FIRINGI sent you {net} €. The fee invoice is in Early Payout."
+    },
+    "earlypay_rejected": {
+      "title": "Early payout {number} turned down",
+      "body": "FIRINGI turned down early payout {number}: {reason}"
+    },
+    "earlypay_requested": {
+      "title": "Early payout asked: {company}",
+      "body": "{company} asks to be paid {amount} € early ({number})."
     }
   },
   "notifications": {
@@ -4093,5 +4117,110 @@
     "inboxIntro": "Every conversation about your orders, newest first.",
     "noThreads": "No conversations yet. Messages about an order appear here.",
     "unread": "{n} new"
+  },
+  "plans": {
+    "title": "Plan & Billing",
+    "intro": "Your FIRINGI plan: which tools you have, your limits, your commission and early payout. Prices exclude VAT.",
+    "plansOff": "FIRINGI doesn't use plans yet — you have every tool. You'll be told before anything changes.",
+    "currentPlan": "Your plan",
+    "trialLeft": "Free trial · {days} days left (until {date})",
+    "renews": "Renews on",
+    "pendingPlan": "{plan} starts on {date}",
+    "commission": "Commission on sales",
+    "billing": "How you pay",
+    "billingKinds": {
+      "PAYOUT": "Deducted from your payouts",
+      "INVOICE": "By invoice"
+    },
+    "trialNote": "During the free trial you have everything. Choose your plan before it ends — if you don't, you move to {plan}.",
+    "current": "Current",
+    "chosenBadge": "Chosen",
+    "freePrice": "Free",
+    "perMonth": "/ month",
+    "commissionOwn": "Commission: your agreed rate",
+    "commissionPlan": "Commission: {pct} % on sales",
+    "features": {
+      "INVENTORY": "Inventory: lots, expiry, purchase orders, counts, transfers",
+      "PLANNING": "Demand planning & restock",
+      "WAREHOUSE": "Warehouse: pick & pack, shelves, scanner, traceability, recalls",
+      "PRICE_INSIGHTS": "Price insights",
+      "ADS": "Advertising (sponsored products)",
+      "INTEGRATIONS": "Integrations: import & sync, API, exports",
+      "ROUTES": "Route planning for your drivers",
+      "ASSISTANT": "AI assistant"
+    },
+    "lim": {
+      "products": "up to {n} products",
+      "productsAny": "unlimited products",
+      "users": "{n} users",
+      "usersAny": "unlimited users",
+      "warehouses": "{n} warehouses",
+      "warehousesAny": "unlimited warehouses",
+      "drivers": "{n} drivers",
+      "driversAny": "unlimited drivers"
+    },
+    "earlyOff": "Early payout not included",
+    "earlyPerDay": "Early payout: {rate} % per day early (minimum {min})",
+    "earlyFlat": "Early payout: {rate} % of the amount (minimum {min})",
+    "earlyFree": "{n} free a month",
+    "chooseAfterTrial": "Choose — starts after the trial",
+    "upgrade": "Upgrade now",
+    "switchAtEnd": "Switch at the end of the period",
+    "chosen": "Done — your plan is updated.",
+    "usage": "Your usage",
+    "limits": {
+      "products": "Active products",
+      "users": "Users",
+      "warehouses": "Warehouses & pickup points",
+      "drivers": "Drivers"
+    },
+    "noLimit": "no limit",
+    "invoices": "Plan invoices",
+    "noPlanInvoices": "No plan invoices yet.",
+    "upgradeInvoice": "Plan change",
+    "gateTitle": "{feature} isn't in your plan",
+    "gateBody": "Upgrade your FIRINGI plan to use it. Your data stays safe in the meantime.",
+    "seePlans": "See plans",
+    "limitError": "Your {plan} plan allows {max} ({kind}). Upgrade your plan in Company › Plan & Billing to add more.",
+    "earlyTitle": "Early Payout",
+    "earlyIntro": "Get paid now for approved invoices that aren't due yet — even before the customer has paid. FIRINGI charges a small fee, invoiced and deducted from the same payment.",
+    "why": {
+      "PLANS_OFF": "Early payout starts together with FIRINGI's plans.",
+      "OFF": "FIRINGI isn't offering early payout right now.",
+      "NOT_SUPPLIER": "Early payout is for suppliers.",
+      "SUPPLIER_OFF": "Early payout is switched off for your company. Contact FIRINGI.",
+      "PLAN": "Your plan doesn't include early payout. Upgrade in Company › Plan & Billing."
+    },
+    "terms": "Your terms",
+    "limit": "Your limit",
+    "outstanding": "Paid early, not yet due",
+    "room": "You can ask for",
+    "freeLeft": "You have {n} free early payout(s) left this month.",
+    "chooseInvoices": "Choose invoices to be paid now",
+    "howItWorks": "Only invoices due in {days} days or more. FIRINGI checks the request and sends the money by bank transfer; you get the fee invoice with it.",
+    "history": "Your early payouts",
+    "noHistory": "None yet.",
+    "status": {
+      "REQUESTED": "Waiting for FIRINGI",
+      "PAID": "Paid",
+      "REJECTED": "Turned down",
+      "CANCELLED": "Cancelled"
+    },
+    "rowAmount": "{amount} · fee {fee}",
+    "rowNet": "you received {net}",
+    "free": "free",
+    "noInvoices": "No approved invoices waiting to be paid.",
+    "dueOn": "due {date}",
+    "daysEarly": "{days} days early",
+    "tooSoon": "due too soon",
+    "quoteAmount": "Invoices",
+    "quoteFee": "Fee",
+    "plusVat": "+ VAT",
+    "quoteNet": "You receive",
+    "netNote": "after the fee with VAT",
+    "overLimit": "That's over your limit — you can ask for up to {room} now.",
+    "request": "Ask to be paid now",
+    "requested": "Sent — FIRINGI will check it and send the money.",
+    "cancel": "Cancel"
   }
 }
