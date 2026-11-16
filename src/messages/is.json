@@ -841,7 +841,11 @@
     "Planning Settings": "Stillingar áætlunar",
     "Quality Claims": "Gæðakvartanir",
     "Quality Score": "Gæðaeinkunn",
-    "Rewards": "Umbun"
+    "Rewards": "Umbun",
+    "Advertising": "Auglýsingar",
+    "My Ads": "Auglýsingarnar Mínar",
+    "New Ad": "Ný Auglýsing",
+    "Ad Billing": "Reikningar Auglýsinga"
   },
   "delivery": {
     "title": "Afhending",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Tilvísunarbónus: +{points} punktar",
       "body": "Þökk sé tilvísuninni með {company} eru nú {points} punktar í Umbun þinni."
+    },
+    "ads_approved": {
+      "title": "Auglýsingin þín er samþykkt",
+      "body": "FIRINGI samþykkti auglýsinguna þína „{campaign}“. Hún hefst á upphafsdegi."
+    },
+    "ads_rejected": {
+      "title": "Auglýsingin þín var ekki samþykkt",
+      "body": "FIRINGI samþykkti ekki „{campaign}“: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Auglýsingin þín stöðvaðist",
+      "body": "„{campaign}“ stöðvaðist: fjárhagsáætlunin eða fyrirframgreidda innstæðan er búin. Bættu við til að hún keyri aftur."
+    },
+    "ads_low_balance": {
+      "title": "Auglýsingainnstæðan er lág",
+      "body": "Fyrirframgreidd auglýsingainnstæða þín er {balance} €. Fylltu á svo auglýsingarnar haldi áfram."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI býður {company} að taka þátt í B2B-markaðstorgi sínu fyrir matvæli og rekstrarvörur.",
     "inviteApply": "Sæktu um hér: {link}",
     "inviteValid": "Hlekkurinn gildir í {days} daga og má nota einu sinni. FIRINGI fer yfir hverja umsókn áður en aðgangurinn er opnaður."
+  },
+  "ads": {
+    "title": "Auglýsingarnar mínar",
+    "description": "Sýndu vörurnar þínar ofar á FIRINGI: í leitarniðurstöðum, á flokkasíðum, á forsíðu verslunarinnar og í körfunni. Kaupendur sjá þær merktar „Kostað“. FIRINGI yfirfer hverja auglýsingu áður en hún hefst.",
+    "newAd": "Ný auglýsing",
+    "spentMonth": "Eytt í þessum mánuði",
+    "running": "Í gangi",
+    "balance": "Fyrirframgreidd innstæða",
+    "billing": "Hvernig FIRINGI rukkar",
+    "billings": {
+      "PAYOUT": "Dregið frá útgreiðslum þínum",
+      "PREPAID": "Fyrirframgreidd innstæða",
+      "INVOICE": "Mánaðarreikningur"
+    },
+    "noAds": "Engar auglýsingar enn — búðu til þá fyrstu.",
+    "colAd": "Auglýsing",
+    "colWhere": "Hvar",
+    "colPrice": "Verð",
+    "colStatus": "Staða",
+    "colImpressions": "Birt",
+    "colClicks": "Smellir",
+    "colCtr": "Smellihlutfall",
+    "colSpent": "Eytt",
+    "colOrders": "Pantanir eftir smell",
+    "placements": {
+      "SEARCH": "Leitarniðurstöður",
+      "CATEGORY": "Flokkasíður",
+      "HOME": "Forsíða verslunar",
+      "CART": "Tillögur í körfu"
+    },
+    "statuses": {
+      "PENDING": "Bíður eftir FIRINGI",
+      "ACTIVE": "Í gangi",
+      "PAUSED": "Í hléi",
+      "REJECTED": "Ekki samþykkt",
+      "ENDED": "Lokið"
+    },
+    "reasons": {
+      "SUPPLIER": "sett í hlé af þér",
+      "BUDGET": "fjárhagsáætlun búin",
+      "BALANCE": "fyrirframgreidd innstæða búin",
+      "FIRINGI": "af FIRINGI"
+    },
+    "perClickBudget": "{price} á smell · {budget} á dag",
+    "perDay": "{price} á dag (bókað)",
+    "formTitle": "Ný auglýsing",
+    "formIntro": "Veldu hvar vörurnar þínar birtast, hvernig þú greiðir og hversu lengi. FIRINGI yfirfer auglýsinguna áður en hún hefst.",
+    "name": "Heiti (aðeins þú og FIRINGI sjáið það)",
+    "where": "Hvar hún birtist",
+    "whereHint": "frá {min} á smell · {day} á dag · {slots} pláss",
+    "noPlacements": "FIRINGI er ekki með opin auglýsingapláss núna.",
+    "howPay": "Hvernig þú greiðir",
+    "cpc": "Á smell",
+    "cpcHint": "Þú greiðir aðeins þegar kaupandi opnar vöruna þína, upp að dagsfjárhagsáætlun.",
+    "daily": "Á dag",
+    "dailyHint": "Fast verð fyrir hvern bókaðan dag; bókaðar auglýsingar birtast fyrst.",
+    "products": "Vörur til að auglýsa (allt að 20)",
+    "searchProducts": "Finna vöru",
+    "keywords": "Aukaleitarorð (valfrjálst, aðskilin með kommu)",
+    "keywordsHint": "Auglýsingin þín birtist líka þegar kaupendur leita að þessum orðum.",
+    "category": "Flokkasíða (valfrjálst)",
+    "categoryAny": "Eigin flokkar varanna",
+    "bid": "Verð á smell (€)",
+    "dailyBudget": "Dagsfjárhagsáætlun (€)",
+    "totalBudget": "Heildarfjárhagsáætlun (€, valfrjálst)",
+    "startsOn": "Frá",
+    "endsOn": "Til",
+    "endsOnOptional": "Til (valfrjálst)",
+    "dailyCost": "{days} dagar × {price} = {total}",
+    "formNote": "Verð án virðisaukaskatts. Ef kaupandi opnar auglýsinguna aftur skömmu síðar er ekki rukkað tvisvar.",
+    "submit": "Senda til FIRINGI",
+    "submitDirect": "Hefja auglýsingu",
+    "pause": "Gera hlé",
+    "resume": "Halda áfram",
+    "end": "Ljúka",
+    "changeBudget": "Verð og fjárhagsáætlanir",
+    "save": "Vista",
+    "saved": "Vistað",
+    "rejected": "FIRINGI samþykkti ekki þessa auglýsingu: {reason}",
+    "revenue": "Virði þessara pantana",
+    "productsTitle": "Vörur",
+    "colDay": "Dagur",
+    "noDays": "Ekki birt enn.",
+    "billingTitle": "Reikningar fyrir auglýsingar",
+    "billingIntro": "Hvernig FIRINGI rukkar fyrir auglýsingarnar þínar var samið við þig. Auglýsingaverð eru án virðisaukaskatts; reikningar FIRINGI bæta við virðisaukaskatti þar sem hann á við.",
+    "billingPAYOUT": "FIRINGI sendir reikning fyrir auglýsingarnar mánaðarlega og dregur upphæðina frá því sem það greiðir þér.",
+    "billingPREPAID": "Fylltu á innstæðuna með millifærslu; auglýsingarnar keyra á meðan innstæða er til. Hver áfylling fær reikning-kvittun.",
+    "billingINVOICE": "FIRINGI sendir reikning fyrir auglýsingarnar mánaðarlega; greiddu fyrir gjalddaga.",
+    "unbilled": "Ekki enn reikningsfært",
+    "topUpTitle": "Fylla á með millifærslu",
+    "topUpText": "Millifærðu á {iban} með tilvísuninni {reference}. FIRINGI bætir upphæðinni (án virðisaukaskatts) við innstæðuna þegar hún berst.",
+    "invoices": "Auglýsingareikningar FIRINGI",
+    "colInvoice": "Reikningur",
+    "colDate": "Dagsetning",
+    "colPeriod": "Tímabil",
+    "colTotal": "Samtals",
+    "colOpen": "Ógreitt",
+    "topup": "Áfylling",
+    "noInvoices": "Engir auglýsingareikningar enn.",
+    "sponsored": "Kostað",
+    "featured": "Í brennidepli",
+    "alsoNeed": "Þú gætir líka þurft"
   }
 }

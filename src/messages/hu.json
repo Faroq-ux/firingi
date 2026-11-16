@@ -841,7 +841,11 @@
     "Planning Settings": "Tervezési beállítások",
     "Quality Claims": "Minőségi reklamációk",
     "Quality Score": "Minőségi pontszám",
-    "Rewards": "Jutalmak"
+    "Rewards": "Jutalmak",
+    "Advertising": "Hirdetés",
+    "My Ads": "Hirdetéseim",
+    "New Ad": "Új Hirdetés",
+    "Ad Billing": "Hirdetések Számlázása"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Ajánlási bónusz: +{points} pont",
       "body": "A(z) {company} céggel kapcsolatos ajánlásának köszönhetően most {points} pont van a Jutalmai között."
+    },
+    "ads_approved": {
+      "title": "Hirdetését jóváhagyták",
+      "body": "A FIRINGI jóváhagyta a(z) „{campaign}” hirdetését. A kezdő dátumtól fut."
+    },
+    "ads_rejected": {
+      "title": "Hirdetését nem hagyták jóvá",
+      "body": "A FIRINGI nem hagyta jóvá: „{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Hirdetése leállt",
+      "body": "„{campaign}” leállt: elfogyott a keret vagy az előre fizetett egyenleg. Töltse fel, hogy újra fusson."
+    },
+    "ads_low_balance": {
+      "title": "Alacsony a hirdetési egyenleg",
+      "body": "Előre fizetett hirdetési egyenlege {balance} €. Töltse fel, hogy hirdetései tovább fussanak."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "A FIRINGI meghívja a(z) {company} vállalkozást élelmiszer- és kellékpiaci B2B platformjára.",
     "inviteApply": "Jelentkezzen itt: {link}",
     "inviteValid": "A link {days} napig érvényes, és egyszer használható. A FIRINGI minden jelentkezést ellenőriz, mielőtt megnyitja a fiókot."
+  },
+  "ads": {
+    "title": "Hirdetéseim",
+    "description": "Jelenítse meg termékeit feljebb a FIRINGI-n: a találati listában, a kategóriaoldalakon, a bolt kezdőlapján és a kosárban. A vevők „Szponzorált” jelöléssel látják őket. A FIRINGI minden hirdetést ellenőriz az indulás előtt.",
+    "newAd": "Új hirdetés",
+    "spentMonth": "Elköltve ebben a hónapban",
+    "running": "Futó",
+    "balance": "Előre fizetett egyenleg",
+    "billing": "Hogyan számláz a FIRINGI",
+    "billings": {
+      "PAYOUT": "A kifizetéseiből levonva",
+      "PREPAID": "Előre fizetett egyenleg",
+      "INVOICE": "Havi számla"
+    },
+    "noAds": "Még nincs hirdetés — hozza létre az elsőt.",
+    "colAd": "Hirdetés",
+    "colWhere": "Hol",
+    "colPrice": "Ár",
+    "colStatus": "Állapot",
+    "colImpressions": "Megjelenés",
+    "colClicks": "Kattintás",
+    "colCtr": "Átkattintási arány",
+    "colSpent": "Elköltve",
+    "colOrders": "Rendelések kattintás után",
+    "placements": {
+      "SEARCH": "Találati lista",
+      "CATEGORY": "Kategóriaoldalak",
+      "HOME": "Bolt kezdőlapja",
+      "CART": "Javaslatok a kosárban"
+    },
+    "statuses": {
+      "PENDING": "A FIRINGI-re vár",
+      "ACTIVE": "Fut",
+      "PAUSED": "Szünetel",
+      "REJECTED": "Nincs jóváhagyva",
+      "ENDED": "Lezárult"
+    },
+    "reasons": {
+      "SUPPLIER": "Ön szüneteltette",
+      "BUDGET": "elfogyott a keret",
+      "BALANCE": "elfogyott az előre fizetett egyenleg",
+      "FIRINGI": "a FIRINGI által"
+    },
+    "perClickBudget": "{price} kattintásonként · {budget} naponta",
+    "perDay": "{price} naponta (lefoglalva)",
+    "formTitle": "Új hirdetés",
+    "formIntro": "Válassza ki, hol jelenjenek meg termékei, hogyan fizet és mennyi ideig. A FIRINGI az indulás előtt ellenőrzi a hirdetést.",
+    "name": "Név (csak Ön és a FIRINGI látja)",
+    "where": "Hol jelenik meg",
+    "whereHint": "{min}-tól kattintásonként · {day} naponta · {slots} hely",
+    "noPlacements": "A FIRINGI-nek most nincs nyitott hirdetési helye.",
+    "howPay": "Hogyan fizet",
+    "cpc": "Kattintásonként",
+    "cpcHint": "Csak akkor fizet, ha egy vevő megnyitja a termékét, a napi keretéig.",
+    "daily": "Naponta",
+    "dailyHint": "Rögzített ár minden lefoglalt napra; a lefoglalt hirdetések jelennek meg először.",
+    "products": "Hirdetett termékek (legfeljebb 20)",
+    "searchProducts": "Termék keresése",
+    "keywords": "További keresőszavak (nem kötelező, vesszővel elválasztva)",
+    "keywordsHint": "A hirdetése akkor is megjelenik, ha a vevők ezekre a szavakra keresnek.",
+    "category": "Kategóriaoldal (nem kötelező)",
+    "categoryAny": "A termékek saját kategóriái",
+    "bid": "Ár kattintásonként (€)",
+    "dailyBudget": "Napi keret (€)",
+    "totalBudget": "Teljes keret (€, nem kötelező)",
+    "startsOn": "Ettől",
+    "endsOn": "Eddig",
+    "endsOnOptional": "Eddig (nem kötelező)",
+    "dailyCost": "{days} nap × {price} = {total}",
+    "formNote": "Az árak áfa nélkül értendők. Ha egy vevő nem sokkal később újra megnyitja a hirdetését, nem számolunk fel kétszer.",
+    "submit": "Küldés a FIRINGI-nek",
+    "submitDirect": "Hirdetés indítása",
+    "pause": "Szüneteltetés",
+    "resume": "Folytatás",
+    "end": "Lezárás",
+    "changeBudget": "Ár és keretek",
+    "save": "Mentés",
+    "saved": "Mentve",
+    "rejected": "A FIRINGI nem hagyta jóvá ezt a hirdetést: {reason}",
+    "revenue": "E rendelések értéke",
+    "productsTitle": "Termékek",
+    "colDay": "Nap",
+    "noDays": "Még nem jelent meg.",
+    "billingTitle": "Hirdetések számlázása",
+    "billingIntro": "Azt, hogyan számláz a FIRINGI a hirdetéseiért, Önnel egyeztettük. A hirdetési árak áfa nélküliek; a FIRINGI számláin áfa szerepel, ahol alkalmazandó.",
+    "billingPAYOUT": "A FIRINGI havonta kiszámlázza a hirdetéseit, és az összeget levonja az Önnek járó kifizetésekből.",
+    "billingPREPAID": "Töltse fel egyenlegét banki átutalással; a hirdetések addig futnak, amíg van egyenleg. Minden feltöltésről számla-nyugta készül.",
+    "billingINVOICE": "A FIRINGI havonta kiszámlázza a hirdetéseit; fizessen a határidőig.",
+    "unbilled": "Még nincs kiszámlázva",
+    "topUpTitle": "Feltöltés banki átutalással",
+    "topUpText": "Utaljon a(z) {iban} számlára {reference} közleménnyel. A FIRINGI beérkezéskor jóváírja az összeget (áfa nélkül) az egyenlegén.",
+    "invoices": "A FIRINGI hirdetési számlái",
+    "colInvoice": "Számla",
+    "colDate": "Dátum",
+    "colPeriod": "Időszak",
+    "colTotal": "Összesen",
+    "colOpen": "Nyitott",
+    "topup": "Feltöltés",
+    "noInvoices": "Még nincsenek hirdetési számlák.",
+    "sponsored": "Szponzorált",
+    "featured": "Kiemelt",
+    "alsoNeed": "Erre is szüksége lehet"
   }
 }

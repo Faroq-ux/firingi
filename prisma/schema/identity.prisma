@@ -274,6 +274,8 @@ model Company {
   @@index([type, status])
   loyalty LoyaltyAccount? @relation("LoyaltyAccount")
   pilotInvite PilotInvite? @relation("PilotInviteUsed")
+  adCampaigns AdCampaign[] @relation("AdCampaigns")
+  adAccount   AdAccount?   @relation("AdAccount")
 }
 
 model CompanyStatusHistory {

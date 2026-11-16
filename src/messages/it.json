@@ -841,7 +841,11 @@
     "Planning Settings": "Impostazioni di pianificazione",
     "Quality Claims": "Reclami qualità",
     "Quality Score": "Indice qualità",
-    "Rewards": "Premi"
+    "Rewards": "Premi",
+    "Advertising": "Pubblicità",
+    "My Ads": "I Miei Annunci",
+    "New Ad": "Nuovo Annuncio",
+    "Ad Billing": "Fatturazione Annunci"
   },
   "delivery": {
     "title": "Consegna",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus invito: +{points} punti",
       "body": "Grazie all'invito con {company}, ora hai {points} punti nei tuoi Premi."
+    },
+    "ads_approved": {
+      "title": "Il tuo annuncio è approvato",
+      "body": "FIRINGI ha approvato il tuo annuncio «{campaign}». Parte dalla data di inizio."
+    },
+    "ads_rejected": {
+      "title": "Il tuo annuncio non è stato approvato",
+      "body": "FIRINGI non ha approvato «{campaign}»: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Il tuo annuncio si è fermato",
+      "body": "«{campaign}» si è fermato: il budget o il saldo prepagato è esaurito. Aggiungine per riattivarlo."
+    },
+    "ads_low_balance": {
+      "title": "Saldo annunci basso",
+      "body": "Il tuo saldo prepagato per gli annunci è {balance} €. Ricaricalo perché gli annunci continuino."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI invita {company} a unirsi al suo marketplace B2B di alimentari e forniture.",
     "inviteApply": "Candidati qui: {link}",
     "inviteValid": "Il link è valido per {days} giorni e si può usare una sola volta. FIRINGI verifica ogni candidatura prima di aprire l'account."
+  },
+  "ads": {
+    "title": "I miei annunci",
+    "description": "Mostra i tuoi prodotti più in alto su FIRINGI: nei risultati di ricerca, nelle pagine di categoria, nella home del negozio e nel carrello. Gli acquirenti li vedono contrassegnati come «Sponsorizzato». FIRINGI controlla ogni annuncio prima che parta.",
+    "newAd": "Nuovo annuncio",
+    "spentMonth": "Speso questo mese",
+    "running": "Attivi",
+    "balance": "Saldo prepagato",
+    "billing": "Come incassa FIRINGI",
+    "billings": {
+      "PAYOUT": "Detratto dai tuoi pagamenti",
+      "PREPAID": "Saldo prepagato",
+      "INVOICE": "Fattura mensile"
+    },
+    "noAds": "Ancora nessun annuncio: crea il primo.",
+    "colAd": "Annuncio",
+    "colWhere": "Dove",
+    "colPrice": "Prezzo",
+    "colStatus": "Stato",
+    "colImpressions": "Mostrato",
+    "colClicks": "Clic",
+    "colCtr": "Tasso di clic",
+    "colSpent": "Speso",
+    "colOrders": "Ordini dopo un clic",
+    "placements": {
+      "SEARCH": "Risultati di ricerca",
+      "CATEGORY": "Pagine di categoria",
+      "HOME": "Home del negozio",
+      "CART": "Suggerimenti nel carrello"
+    },
+    "statuses": {
+      "PENDING": "In attesa di FIRINGI",
+      "ACTIVE": "Attivo",
+      "PAUSED": "In pausa",
+      "REJECTED": "Non approvato",
+      "ENDED": "Terminato"
+    },
+    "reasons": {
+      "SUPPLIER": "messo in pausa da te",
+      "BUDGET": "budget esaurito",
+      "BALANCE": "saldo prepagato esaurito",
+      "FIRINGI": "da FIRINGI"
+    },
+    "perClickBudget": "{price} per clic · {budget} al giorno",
+    "perDay": "{price} al giorno (prenotato)",
+    "formTitle": "Nuovo annuncio",
+    "formIntro": "Scegli dove compaiono i tuoi prodotti, come paghi e per quanto tempo. FIRINGI controlla l'annuncio prima che parta.",
+    "name": "Nome (lo vedete solo tu e FIRINGI)",
+    "where": "Dove compare",
+    "whereHint": "da {min} per clic · {day} al giorno · {slots} posti",
+    "noPlacements": "FIRINGI non ha spazi pubblicitari aperti in questo momento.",
+    "howPay": "Come paghi",
+    "cpc": "Per clic",
+    "cpcHint": "Paghi solo quando un acquirente apre il tuo prodotto, fino al tuo budget giornaliero.",
+    "daily": "Al giorno",
+    "dailyHint": "Un prezzo fisso per ogni giorno prenotato; gli annunci prenotati compaiono per primi.",
+    "products": "Prodotti da pubblicizzare (fino a 20)",
+    "searchProducts": "Cerca un prodotto",
+    "keywords": "Parole di ricerca extra (facoltative, separate da virgole)",
+    "keywordsHint": "Il tuo annuncio compare anche quando gli acquirenti cercano queste parole.",
+    "category": "Pagina di categoria (facoltativa)",
+    "categoryAny": "Le categorie dei prodotti stessi",
+    "bid": "Prezzo per clic (€)",
+    "dailyBudget": "Budget giornaliero (€)",
+    "totalBudget": "Budget totale (€, facoltativo)",
+    "startsOn": "Dal",
+    "endsOn": "Al",
+    "endsOnOptional": "Al (facoltativo)",
+    "dailyCost": "{days} giorni × {price} = {total}",
+    "formNote": "Prezzi IVA esclusa. Se un acquirente riapre il tuo annuncio poco dopo, non paghi due volte.",
+    "submit": "Invia a FIRINGI",
+    "submitDirect": "Avvia l'annuncio",
+    "pause": "Metti in pausa",
+    "resume": "Riprendi",
+    "end": "Termina",
+    "changeBudget": "Prezzo e budget",
+    "save": "Salva",
+    "saved": "Salvato",
+    "rejected": "FIRINGI non ha approvato questo annuncio: {reason}",
+    "revenue": "Valore di quegli ordini",
+    "productsTitle": "Prodotti",
+    "colDay": "Giorno",
+    "noDays": "Non ancora mostrato.",
+    "billingTitle": "Fatturazione annunci",
+    "billingIntro": "Il modo in cui FIRINGI incassa i tuoi annunci è stato concordato con te. I prezzi degli annunci sono IVA esclusa; le fatture di FIRINGI aggiungono l'IVA dove si applica.",
+    "billingPAYOUT": "Ogni mese FIRINGI fattura i tuoi annunci e detrae l'importo da quanto ti paga.",
+    "billingPREPAID": "Ricarica il saldo con bonifico; i tuoi annunci restano attivi finché c'è saldo. Ogni ricarica riceve una fattura-quietanza.",
+    "billingINVOICE": "Ogni mese FIRINGI fattura i tuoi annunci; paga entro la scadenza.",
+    "unbilled": "Non ancora fatturato",
+    "topUpTitle": "Ricarica con bonifico",
+    "topUpText": "Fai un bonifico a {iban} con la causale {reference}. FIRINGI aggiunge l'importo (IVA esclusa) al tuo saldo all'arrivo.",
+    "invoices": "Fatture annunci di FIRINGI",
+    "colInvoice": "Fattura",
+    "colDate": "Data",
+    "colPeriod": "Periodo",
+    "colTotal": "Totale",
+    "colOpen": "Da pagare",
+    "topup": "Ricarica",
+    "noInvoices": "Ancora nessuna fattura annunci.",
+    "sponsored": "Sponsorizzato",
+    "featured": "In evidenza",
+    "alsoNeed": "Potrebbe servirti anche"
   }
 }

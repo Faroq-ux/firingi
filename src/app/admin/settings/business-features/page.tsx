@@ -32,7 +32,7 @@ export default async function BusinessFeatures() {
       )}
       <Card className="mb-4"><CardContent className="flex flex-wrap gap-6 pt-6 text-sm"><span>Accounting on for <b>{on}</b> of {rows.length} companies</span><span>Assistant on for <b data-testid="assistant-on-count">{assistants}</b></span><span>Photos on for <b data-testid="photos-on-count">{photos}</b></span><span className="text-muted-foreground">Accounting is off by default; the Assistant and its photos are on by default. Switching off hides it; what the company recorded is kept.</span></CardContent></Card>
       <DataTable tableId="admin.business-features" testId="business-features" empty="No suppliers or customers yet."
-        columns={[{ key: "company", label: "Company" }, { key: "type", label: "Type", filter: true }, { key: "country", label: "Country", filter: true }, { key: "accounting", label: "Accounting", type: "badge", filter: true }, { key: "entries", label: "Entries", type: "number" }, { key: "switch", label: "Accounting switch" }, { key: "assistant", label: "Assistant", type: "badge", filter: true }, { key: "assistantSwitch", label: "Assistant switch" }, { key: "photos", label: "Photos", type: "badge", filter: true }, { key: "photosSwitch", label: "Photos switch" }, { key: "loyalty", label: "Loyalty", type: "badge", filter: true }, { key: "loyaltySwitch", label: "Loyalty switch" }]}
+        columns={[{ key: "company", label: "Company" }, { key: "type", label: "Type", filter: true }, { key: "country", label: "Country", filter: true }, { key: "accounting", label: "Accounting", type: "badge", filter: true }, { key: "entries", label: "Entries", type: "number" }, { key: "switch", label: "Accounting switch" }, { key: "assistant", label: "Assistant", type: "badge", filter: true }, { key: "assistantSwitch", label: "Assistant switch" }, { key: "photos", label: "Photos", type: "badge", filter: true }, { key: "photosSwitch", label: "Photos switch" }, { key: "loyalty", label: "Loyalty", type: "badge", filter: true }, { key: "loyaltySwitch", label: "Loyalty switch" }, { key: "ads", label: "Advertising", type: "badge", filter: true }, { key: "adsSwitch", label: "Advertising switch" }]}
         rows={rows.map((r) => ({
           id: r.id, href: `/admin/companies/${r.id}`,
           cells: {
@@ -45,6 +45,8 @@ export default async function BusinessFeatures() {
             photosSwitch: manage ? { t: r.photos ? "On" : "Off", node: <FeatureSwitch companyId={r.id} enabled={r.photos} feature="ASSISTANT_PHOTOS" label={`Photos & barcode scan for ${r.name}`} /> } : "—",
             loyalty: r.loyalty === null ? "—" : { t: r.loyalty ? "On" : "Off", tone: r.loyalty ? "success" : "outline" },
             loyaltySwitch: r.loyalty === null ? "—" : manage ? { t: r.loyalty ? "On" : "Off", node: <FeatureSwitch companyId={r.id} enabled={r.loyalty} feature="LOYALTY" label={`Loyalty for ${r.name}`} /> } : "—",
+            ads: r.ads === null ? "—" : { t: r.ads ? "On" : "Off", tone: r.ads ? "success" : "outline" },
+            adsSwitch: r.ads === null ? "—" : manage ? { t: r.ads ? "On" : "Off", node: <FeatureSwitch companyId={r.id} enabled={r.ads} feature="ADS" label={`Advertising for ${r.name}`} /> } : "—",
           },
         }))} />
     </>

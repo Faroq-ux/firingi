@@ -6,6 +6,7 @@ import { browseCatalogue, shopCategory, visibleSuppliers } from "@/server/data/c
 import { productsWithImages } from "@/server/data/catalogue-admin";
 import { orderingMode } from "@/server/allocation/mode";
 import { ProductCard } from "@/components/catalogue/product-card";
+import { SponsoredProducts } from "@/components/ads/sponsored";
 import { NotFoundError } from "@/server/errors";
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
@@ -33,6 +34,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
           {data.children.map((ch) => <Link key={ch.id} href={`/buy/catalogue/categories/${ch.id}`} className="rounded-full border bg-card px-3 py-1 text-sm hover:border-primary">{pickLocalized(ch.name, locale)}</Link>)}
         </div>
       )}
+      <SponsoredProducts ctx={ctx} placement="CATEGORY" categoryId={id} />
       {products ? (
         products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4" data-testid="firingi-products">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} />)}</div>

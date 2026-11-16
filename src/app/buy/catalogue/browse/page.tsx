@@ -12,6 +12,7 @@ import { SupplierCard } from "@/components/catalogue/supplier-card";
 import { BarcodeSearch } from "@/components/catalogue/barcode-search";
 import { BadgeFilter } from "@/components/compliance/badges";
 import { badgeTypes } from "@/server/compliance/service";
+import { SponsoredProducts } from "@/components/ads/sponsored";
 
 export const metadata = { title: "Shop" };
 const TONES = ["tone-blue", "tone-violet", "tone-teal", "tone-pink", "tone-orange", "tone-lime"];
@@ -37,6 +38,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <div className="glass mt-5 rounded-2xl p-2"><BarcodeSearch action="/buy/catalogue/search" /></div>
         </div>
       </Aurora>
+      <SponsoredProducts ctx={ctx} placement="HOME" title="featured" />
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold">{t("categories")}</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

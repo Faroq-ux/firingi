@@ -24,6 +24,7 @@ const vai = section(`${V}`, ["vendor.reports.view", "vendor.dashboard.view"]);
 const vac = section(`${V}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
+const vad = section(`${V}/ads`, "vendor.promotions.manage");
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
@@ -38,6 +39,14 @@ export const VENDOR_NAV: NavSection[] = [
       vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
       vp("promotions", "Promotions", "Promoções", "P5", { live: true, perm: "vendor.promotions.manage", es: "Promociones" }),
       vp("import", "Import & Sync", "Importar e Sincronizar", "P21", { live: true, perm: ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], es: "Importar y sincronizar" }),
+    ],
+  },
+  {
+    key: "ads", icon: "Megaphone", label: { en: "Advertising", pt: "Publicidade", es: "Publicidad" },
+    items: [
+      vad("", "My Ads", "Os Meus Anúncios", "P34", { live: true, href: `${V}/ads`, feature: "ADS", es: "Mis anuncios" }),
+      vad("new", "New Ad", "Novo Anúncio", "P34", { live: true, feature: "ADS", es: "Nuevo anuncio" }),
+      vad("billing", "Ad Billing", "Faturação de Anúncios", "P34", { live: true, feature: "ADS", es: "Facturación de anuncios" }),
     ],
   },
   {

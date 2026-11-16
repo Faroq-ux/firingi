@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { cartView } from "@/server/services/cart";
+import { SponsoredProducts } from "@/components/ads/sponsored";
 import { orderingSettings } from "@/server/multisite/branches";
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
@@ -106,6 +107,7 @@ export default async function CartPage() {
           </CardContent>
         </Card>
       </div>
+      {!cart.routed && <div className="mt-6"><SponsoredProducts ctx={ctx} placement="CART" title="alsoNeed" cartOfferIds={cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))} /></div>}
     </>
   );
 }

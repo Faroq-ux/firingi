@@ -305,3 +305,42 @@ export async function rebateCreditNote(tx: Tx, invoiceId: string, r: { gross: De
     lines, dueDays: 0, createdById: r.actorUserId,
   });
 }
+
+/**
+ * Phase 34: FIRINGI invoices a supplier for a service (advertising). B2B services are taxed where the
+ * supplier is: FIRINGI's entity in that country invoices with its standard VAT rate; with no entity
+ * there, the main entity invoices under the EU reverse charge (0 %, the supplier accounts for the VAT).
+ * Lines are net amounts. `docType` INVOICE_RECEIPT when it is already paid (prepaid top-up).
+ */
+export async function issueServiceInvoice(tx: Tx, s: {
+  recipientCompanyId: string; docType: "INVOICE" | "INVOICE_RECEIPT"; lines: { description: string; net: Decimal }[]; dueDays: number; actorUserId: string | null;
+}) {
+  const co = await tx.company.findUniqueOrThrow({ where: { id: s.recipientCompanyId }, include: { country: true } });
+  let le = await tx.legalEntity.findFirst({ where: { countryId: co.countryId, isActive: true } });
+  let regime: TaxRegime = "DOMESTIC";
+  if (!le) {
+    const def = (await tx.setting.findFirst({ where: { scope: "GLOBAL", scopeId: "", key: "marketplace.defaultCountry" } }))?.value as string | undefined;
+    le = await tx.legalEntity.findFirst({ where: { isActive: true, ...(def ? { country: { code: def } } : {}) } }) ?? await tx.legalEntity.findFirst({ where: { isActive: true } });
+    if (!le) throw new Error("No FIRINGI legal entity configured.");
+    if (!co.country.isEU) throw new Error(`NON_EU_RECIPIENT_NOT_SUPPORTED:${co.country.code}`);
+    regime = "INTRA_EU_REVERSE_CHARGE";
+  }
+  const leCountry = await tx.country.findUniqueOrThrow({ where: { id: le.countryId } });
+  let rate = new Decimal(0);
+  if (regime === "DOMESTIC") {
+    const r = await tx.taxRate.findFirst({ where: { countryId: le.countryId, regionId: null, taxCategory: { code: "STANDARD" }, validFrom: { lte: new Date() }, OR: [{ validTo: null }, { validTo: { gte: new Date() } }] }, orderBy: { validFrom: "desc" } });
+    rate = new Decimal(r?.rate.toString() ?? "0");
+  }
+  const lines: DraftLine[] = s.lines.filter((l) => l.net.gt(0)).map((l) => {
+    const net = r2(l.net);
+    return { description: l.description, qty: new Decimal(1), unitPriceNet: net, taxRate: rate, lineNet: net, lineVat: r2(net.mul(rate).div(100)) };
+  });
+  if (!lines.length) throw new Error("NOTHING_TO_INVOICE");
+  const addr = await billingAddress(tx, co.id);
+  return issueDocument(tx, {
+    legalEntityId: le.id, countryId: le.countryId, docType: s.docType, taxRegime: regime, recipientCompanyId: co.id, orderId: null,
+    issuerSnapshot: { name: le.legalName, taxId: le.taxId, vatNumber: le.vatNumber, address: `${le.addressLine}, ${le.postalCode} ${le.city}`, email: le.email, iban: le.iban, country: leCountry.code },
+    recipientSnapshot: { ...companySnapshot(co, addr), ...(regime === "INTRA_EU_REVERSE_CHARGE" ? { note: "Autoliquidação — reverse charge (art. 196.º Diretiva IVA)" } : {}) },
+    lines, dueDays: s.dueDays, createdById: s.actorUserId,
+  });
+}

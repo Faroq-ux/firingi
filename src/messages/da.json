@@ -841,7 +841,11 @@
     "Planning Settings": "Planlægningsindstillinger",
     "Quality Claims": "Kvalitetsreklamationer",
     "Quality Score": "Kvalitetsscore",
-    "Rewards": "Belønninger"
+    "Rewards": "Belønninger",
+    "Advertising": "Annoncering",
+    "My Ads": "Mine Annoncer",
+    "New Ad": "Ny Annonce",
+    "Ad Billing": "Annoncefakturering"
   },
   "delivery": {
     "title": "Levering",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Henvisningsbonus: +{points} point",
       "body": "Takket være din henvisning med {company} er der nu {points} point under dine Belønninger."
+    },
+    "ads_approved": {
+      "title": "Din annonce er godkendt",
+      "body": "FIRINGI har godkendt din annonce “{campaign}”. Den kører fra startdatoen."
+    },
+    "ads_rejected": {
+      "title": "Din annonce blev ikke godkendt",
+      "body": "FIRINGI godkendte ikke “{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Din annonce er stoppet",
+      "body": "“{campaign}” er stoppet: budgettet eller din forudbetalte saldo er brugt op. Tilføj mere for at køre den igen."
+    },
+    "ads_low_balance": {
+      "title": "Din annoncesaldo er lav",
+      "body": "Din forudbetalte annoncesaldo er {balance} €. Fyld den op, så dine annoncer bliver ved med at køre."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI inviterer {company} til at blive en del af sin B2B-markedsplads for fødevarer og forsyninger.",
     "inviteApply": "Ansøg her: {link}",
     "inviteValid": "Linket er gyldigt i {days} dage og kan bruges én gang. FIRINGI gennemgår hver ansøgning, før kontoen åbnes."
+  },
+  "ads": {
+    "title": "Mine annoncer",
+    "description": "Vis dine produkter højere oppe på FIRINGI: i søgeresultater, på kategorisider, på butikkens forside og i kurven. Købere ser dem markeret som “Sponsoreret”. FIRINGI tjekker hver annonce, før den starter.",
+    "newAd": "Ny annonce",
+    "spentMonth": "Brugt denne måned",
+    "running": "Aktive",
+    "balance": "Forudbetalt saldo",
+    "billing": "Sådan opkræver FIRINGI",
+    "billings": {
+      "PAYOUT": "Trækkes fra dine udbetalinger",
+      "PREPAID": "Forudbetalt saldo",
+      "INVOICE": "Månedlig faktura"
+    },
+    "noAds": "Ingen annoncer endnu — opret den første.",
+    "colAd": "Annonce",
+    "colWhere": "Hvor",
+    "colPrice": "Pris",
+    "colStatus": "Status",
+    "colImpressions": "Vist",
+    "colClicks": "Klik",
+    "colCtr": "Klikrate",
+    "colSpent": "Brugt",
+    "colOrders": "Ordrer efter et klik",
+    "placements": {
+      "SEARCH": "Søgeresultater",
+      "CATEGORY": "Kategorisider",
+      "HOME": "Butikkens forside",
+      "CART": "Forslag i kurven"
+    },
+    "statuses": {
+      "PENDING": "Venter på FIRINGI",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "På pause",
+      "REJECTED": "Ikke godkendt",
+      "ENDED": "Afsluttet"
+    },
+    "reasons": {
+      "SUPPLIER": "sat på pause af dig",
+      "BUDGET": "budget brugt op",
+      "BALANCE": "forudbetalt saldo brugt op",
+      "FIRINGI": "af FIRINGI"
+    },
+    "perClickBudget": "{price} pr. klik · {budget} om dagen",
+    "perDay": "{price} pr. dag (booket)",
+    "formTitle": "Ny annonce",
+    "formIntro": "Vælg, hvor dine produkter vises, hvordan du betaler og hvor længe. FIRINGI tjekker annoncen, før den starter.",
+    "name": "Navn (kun du og FIRINGI kan se det)",
+    "where": "Hvor den vises",
+    "whereHint": "fra {min} pr. klik · {day} pr. dag · {slots} pladser",
+    "noPlacements": "FIRINGI har ingen åbne annoncepladser lige nu.",
+    "howPay": "Sådan betaler du",
+    "cpc": "Pr. klik",
+    "cpcHint": "Du betaler kun, når en køber åbner dit produkt, op til dit dagsbudget.",
+    "daily": "Pr. dag",
+    "dailyHint": "En fast pris for hver booket dag; bookede annoncer vises først.",
+    "products": "Produkter, der annonceres (op til 20)",
+    "searchProducts": "Find et produkt",
+    "keywords": "Ekstra søgeord (valgfrit, adskilt med komma)",
+    "keywordsHint": "Din annonce vises også, når købere søger på disse ord.",
+    "category": "Kategoriside (valgfrit)",
+    "categoryAny": "Produkternes egne kategorier",
+    "bid": "Pris pr. klik (€)",
+    "dailyBudget": "Dagsbudget (€)",
+    "totalBudget": "Samlet budget (€, valgfrit)",
+    "startsOn": "Fra",
+    "endsOn": "Til",
+    "endsOnOptional": "Til (valgfrit)",
+    "dailyCost": "{days} dage × {price} = {total}",
+    "formNote": "Priser ekskl. moms. Åbner en køber din annonce igen kort efter, opkræves der ikke to gange.",
+    "submit": "Send til FIRINGI",
+    "submitDirect": "Start annoncen",
+    "pause": "Sæt på pause",
+    "resume": "Genoptag",
+    "end": "Afslut",
+    "changeBudget": "Pris og budgetter",
+    "save": "Gem",
+    "saved": "Gemt",
+    "rejected": "FIRINGI godkendte ikke denne annonce: {reason}",
+    "revenue": "Værdi af disse ordrer",
+    "productsTitle": "Produkter",
+    "colDay": "Dag",
+    "noDays": "Ikke vist endnu.",
+    "billingTitle": "Annoncefakturering",
+    "billingIntro": "Hvordan FIRINGI opkræver dine annoncer, er aftalt med dig. Annoncepriser er ekskl. moms; FIRINGI's fakturaer lægger moms til, hvor det gælder.",
+    "billingPAYOUT": "Hver måned fakturerer FIRINGI dine annoncer og trækker beløbet fra det, den betaler dig.",
+    "billingPREPAID": "Fyld din saldo op via bankoverførsel; dine annoncer kører, så længe der er saldo. Hver opfyldning får en faktura-kvittering.",
+    "billingINVOICE": "Hver måned fakturerer FIRINGI dine annoncer; betal inden forfaldsdatoen.",
+    "unbilled": "Ikke faktureret endnu",
+    "topUpTitle": "Fyld op via bankoverførsel",
+    "topUpText": "Overfør til {iban} med referencen {reference}. FIRINGI lægger beløbet (ekskl. moms) til din saldo, når det er modtaget.",
+    "invoices": "FIRINGI's annoncefakturaer",
+    "colInvoice": "Faktura",
+    "colDate": "Dato",
+    "colPeriod": "Periode",
+    "colTotal": "I alt",
+    "colOpen": "Åben",
+    "topup": "Opfyldning",
+    "noInvoices": "Ingen annoncefakturaer endnu.",
+    "sponsored": "Sponsoreret",
+    "featured": "Fremhævet",
+    "alsoNeed": "Du får måske også brug for"
   }
 }

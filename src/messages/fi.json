@@ -841,7 +841,11 @@
     "Planning Settings": "Suunnittelun asetukset",
     "Quality Claims": "Laatureklamaatiot",
     "Quality Score": "Laatupisteet",
-    "Rewards": "Palkinnot"
+    "Rewards": "Palkinnot",
+    "Advertising": "Mainonta",
+    "My Ads": "Mainokseni",
+    "New Ad": "Uusi Mainos",
+    "Ad Billing": "Mainosten Laskutus"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Suosittelubonus: +{points} pistettä",
       "body": "Kiitos suosittelusta yrityksen {company} kanssa — {points} pistettä on nyt Palkinnoissasi."
+    },
+    "ads_approved": {
+      "title": "Mainoksesi on hyväksytty",
+      "body": "FIRINGI hyväksyi mainoksesi ”{campaign}”. Se alkaa aloituspäivänä."
+    },
+    "ads_rejected": {
+      "title": "Mainostasi ei hyväksytty",
+      "body": "FIRINGI ei hyväksynyt mainosta ”{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Mainoksesi pysähtyi",
+      "body": "”{campaign}” pysähtyi: budjetti tai ennakkomaksusaldo on käytetty. Lisää, niin se jatkuu."
+    },
+    "ads_low_balance": {
+      "title": "Mainossaldosi on matala",
+      "body": "Ennakkomaksettu mainossaldosi on {balance} €. Lataa sitä, jotta mainoksesi jatkuvat."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI kutsuu yrityksen {company} mukaan elintarvikkeiden ja tarvikkeiden B2B-kauppapaikkaansa.",
     "inviteApply": "Hae tästä: {link}",
     "inviteValid": "Linkki on voimassa {days} päivää, ja sitä voi käyttää kerran. FIRINGI tarkistaa jokaisen hakemuksen ennen tilin avaamista."
+  },
+  "ads": {
+    "title": "Mainokseni",
+    "description": "Näytä tuotteesi korkeammalla FIRINGIssa: hakutuloksissa, kategoriasivuilla, kaupan etusivulla ja ostoskorissa. Ostajat näkevät ne merkinnällä ”Sponsoroitu”. FIRINGI tarkistaa jokaisen mainoksen ennen sen alkua.",
+    "newAd": "Uusi mainos",
+    "spentMonth": "Käytetty tässä kuussa",
+    "running": "Käynnissä",
+    "balance": "Ennakkomaksusaldo",
+    "billing": "Miten FIRINGI laskuttaa",
+    "billings": {
+      "PAYOUT": "Vähennetään tilityksistäsi",
+      "PREPAID": "Ennakkomaksusaldo",
+      "INVOICE": "Kuukausilasku"
+    },
+    "noAds": "Ei vielä mainoksia — luo ensimmäinen.",
+    "colAd": "Mainos",
+    "colWhere": "Missä",
+    "colPrice": "Hinta",
+    "colStatus": "Tila",
+    "colImpressions": "Näytetty",
+    "colClicks": "Klikkaukset",
+    "colCtr": "Klikkausprosentti",
+    "colSpent": "Käytetty",
+    "colOrders": "Tilaukset klikkauksen jälkeen",
+    "placements": {
+      "SEARCH": "Hakutulokset",
+      "CATEGORY": "Kategoriasivut",
+      "HOME": "Kaupan etusivu",
+      "CART": "Ehdotukset ostoskorissa"
+    },
+    "statuses": {
+      "PENDING": "Odottaa FIRINGIä",
+      "ACTIVE": "Käynnissä",
+      "PAUSED": "Tauolla",
+      "REJECTED": "Ei hyväksytty",
+      "ENDED": "Päättynyt"
+    },
+    "reasons": {
+      "SUPPLIER": "sinun keskeyttämäsi",
+      "BUDGET": "budjetti käytetty",
+      "BALANCE": "ennakkomaksusaldo käytetty",
+      "FIRINGI": "FIRINGIn toimesta"
+    },
+    "perClickBudget": "{price} per klikkaus · {budget} päivässä",
+    "perDay": "{price} päivässä (varattu)",
+    "formTitle": "Uusi mainos",
+    "formIntro": "Valitse, missä tuotteesi näkyvät, miten maksat ja kuinka kauan. FIRINGI tarkistaa mainoksen ennen sen alkua.",
+    "name": "Nimi (vain sinä ja FIRINGI näette sen)",
+    "where": "Missä se näkyy",
+    "whereHint": "alkaen {min} per klikkaus · {day} päivässä · {slots} paikkaa",
+    "noPlacements": "FIRINGIllä ei ole juuri nyt avoimia mainospaikkoja.",
+    "howPay": "Miten maksat",
+    "cpc": "Klikkauksittain",
+    "cpcHint": "Maksat vain, kun ostaja avaa tuotteesi, päiväbudjettiisi asti.",
+    "daily": "Päivittäin",
+    "dailyHint": "Kiinteä hinta jokaisesta varatusta päivästä; varatut mainokset näkyvät ensin.",
+    "products": "Mainostettavat tuotteet (enintään 20)",
+    "searchProducts": "Etsi tuote",
+    "keywords": "Lisähakusanat (valinnainen, pilkuilla erotettuna)",
+    "keywordsHint": "Mainoksesi näkyy myös, kun ostajat hakevat näillä sanoilla.",
+    "category": "Kategoriasivu (valinnainen)",
+    "categoryAny": "Tuotteiden omat kategoriat",
+    "bid": "Hinta per klikkaus (€)",
+    "dailyBudget": "Päiväbudjetti (€)",
+    "totalBudget": "Kokonaisbudjetti (€, valinnainen)",
+    "startsOn": "Alkaen",
+    "endsOn": "Asti",
+    "endsOnOptional": "Asti (valinnainen)",
+    "dailyCost": "{days} päivää × {price} = {total}",
+    "formNote": "Hinnat ilman arvonlisäveroa. Jos ostaja avaa mainoksesi pian uudelleen, siitä ei veloiteta kahdesti.",
+    "submit": "Lähetä FIRINGIlle",
+    "submitDirect": "Käynnistä mainos",
+    "pause": "Keskeytä",
+    "resume": "Jatka",
+    "end": "Lopeta",
+    "changeBudget": "Hinta ja budjetit",
+    "save": "Tallenna",
+    "saved": "Tallennettu",
+    "rejected": "FIRINGI ei hyväksynyt tätä mainosta: {reason}",
+    "revenue": "Näiden tilausten arvo",
+    "productsTitle": "Tuotteet",
+    "colDay": "Päivä",
+    "noDays": "Ei vielä näytetty.",
+    "billingTitle": "Mainosten laskutus",
+    "billingIntro": "Tavasta, jolla FIRINGI laskuttaa mainoksesi, on sovittu kanssasi. Mainoshinnat ovat ilman arvonlisäveroa; FIRINGIn laskuihin lisätään arvonlisävero, kun se koskee.",
+    "billingPAYOUT": "FIRINGI laskuttaa mainoksesi kuukausittain ja vähentää summan siitä, mitä se maksaa sinulle.",
+    "billingPREPAID": "Lataa saldoa tilisiirrolla; mainoksesi pyörivät niin kauan kuin saldoa riittää. Jokaisesta latauksesta saat laskun-kuitin.",
+    "billingINVOICE": "FIRINGI laskuttaa mainoksesi kuukausittain; maksa eräpäivään mennessä.",
+    "unbilled": "Ei vielä laskutettu",
+    "topUpTitle": "Lataa tilisiirrolla",
+    "topUpText": "Siirrä tilille {iban} viitteellä {reference}. FIRINGI lisää summan (ilman arvonlisäveroa) saldoosi, kun se saapuu.",
+    "invoices": "FIRINGIn mainoslaskut",
+    "colInvoice": "Lasku",
+    "colDate": "Päivämäärä",
+    "colPeriod": "Jakso",
+    "colTotal": "Yhteensä",
+    "colOpen": "Avoinna",
+    "topup": "Lataus",
+    "noInvoices": "Ei vielä mainoslaskuja.",
+    "sponsored": "Sponsoroitu",
+    "featured": "Nostot",
+    "alsoNeed": "Saatat tarvita myös"
   }
 }

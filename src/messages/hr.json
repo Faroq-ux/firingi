@@ -841,7 +841,11 @@
     "Planning Settings": "Postavke planiranja",
     "Quality Claims": "Reklamacije kvalitete",
     "Quality Score": "Ocjena kvalitete",
-    "Rewards": "Nagrade"
+    "Rewards": "Nagrade",
+    "Advertising": "Oglašavanje",
+    "My Ads": "Moji Oglasi",
+    "New Ad": "Novi Oglas",
+    "Ad Billing": "Naplata Oglasa"
   },
   "delivery": {
     "title": "Dostava",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus za preporuku: +{points} bodova",
       "body": "Zahvaljujući preporuci s tvrtkom {company} sada imate {points} bodova u Nagradama."
+    },
+    "ads_approved": {
+      "title": "Vaš oglas je odobren",
+      "body": "FIRINGI je odobrio vaš oglas „{campaign}”. Kreće od datuma početka."
+    },
+    "ads_rejected": {
+      "title": "Vaš oglas nije odobren",
+      "body": "FIRINGI nije odobrio „{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Vaš oglas je stao",
+      "body": "„{campaign}” je stao: potrošen je proračun ili unaprijed plaćeni saldo. Dodajte još da ponovno krene."
+    },
+    "ads_low_balance": {
+      "title": "Saldo za oglase je nizak",
+      "body": "Vaš unaprijed plaćeni saldo za oglase je {balance} €. Nadoplatite ga da oglasi nastave raditi."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI poziva {company} da se pridruži njegovoj B2B tržnici hrane i potrepština.",
     "inviteApply": "Prijavite se ovdje: {link}",
     "inviteValid": "Poveznica vrijedi {days} dana i može se iskoristiti jednom. FIRINGI provjerava svaku prijavu prije otvaranja računa."
+  },
+  "ads": {
+    "title": "Moji oglasi",
+    "description": "Prikažite svoje proizvode više na FIRINGI-ju: u rezultatima pretraživanja, na stranicama kategorija, na početnoj stranici trgovine i u košarici. Kupci ih vide označene kao „Sponzorirano”. FIRINGI provjerava svaki oglas prije početka.",
+    "newAd": "Novi oglas",
+    "spentMonth": "Potrošeno ovaj mjesec",
+    "running": "Aktivni",
+    "balance": "Unaprijed plaćeni saldo",
+    "billing": "Kako FIRINGI naplaćuje",
+    "billings": {
+      "PAYOUT": "Odbija se od vaših isplata",
+      "PREPAID": "Unaprijed plaćeni saldo",
+      "INVOICE": "Mjesečni račun"
+    },
+    "noAds": "Još nema oglasa — izradite prvi.",
+    "colAd": "Oglas",
+    "colWhere": "Gdje",
+    "colPrice": "Cijena",
+    "colStatus": "Status",
+    "colImpressions": "Prikazano",
+    "colClicks": "Klikovi",
+    "colCtr": "Stopa klikova",
+    "colSpent": "Potrošeno",
+    "colOrders": "Narudžbe nakon klika",
+    "placements": {
+      "SEARCH": "Rezultati pretraživanja",
+      "CATEGORY": "Stranice kategorija",
+      "HOME": "Početna stranica trgovine",
+      "CART": "Prijedlozi u košarici"
+    },
+    "statuses": {
+      "PENDING": "Čeka FIRINGI",
+      "ACTIVE": "Aktivan",
+      "PAUSED": "Pauziran",
+      "REJECTED": "Nije odobren",
+      "ENDED": "Završen"
+    },
+    "reasons": {
+      "SUPPLIER": "pauzirali ste ga vi",
+      "BUDGET": "proračun potrošen",
+      "BALANCE": "unaprijed plaćeni saldo potrošen",
+      "FIRINGI": "od strane FIRINGI-ja"
+    },
+    "perClickBudget": "{price} po kliku · {budget} dnevno",
+    "perDay": "{price} dnevno (rezervirano)",
+    "formTitle": "Novi oglas",
+    "formIntro": "Odaberite gdje se vaši proizvodi prikazuju, kako plaćate i koliko dugo. FIRINGI provjerava oglas prije početka.",
+    "name": "Naziv (vidite ga samo vi i FIRINGI)",
+    "where": "Gdje se prikazuje",
+    "whereHint": "od {min} po kliku · {day} dnevno · {slots} mjesta",
+    "noPlacements": "FIRINGI trenutačno nema otvorenih oglasnih mjesta.",
+    "howPay": "Kako plaćate",
+    "cpc": "Po kliku",
+    "cpcHint": "Plaćate samo kad kupac otvori vaš proizvod, do vašeg dnevnog proračuna.",
+    "daily": "Po danu",
+    "dailyHint": "Fiksna cijena za svaki rezervirani dan; rezervirani oglasi prikazuju se prvi.",
+    "products": "Proizvodi za oglašavanje (do 20)",
+    "searchProducts": "Pronađite proizvod",
+    "keywords": "Dodatne riječi za pretraživanje (neobavezno, odvojene zarezom)",
+    "keywordsHint": "Vaš se oglas prikazuje i kad kupci traže te riječi.",
+    "category": "Stranica kategorije (neobavezno)",
+    "categoryAny": "Vlastite kategorije proizvoda",
+    "bid": "Cijena po kliku (€)",
+    "dailyBudget": "Dnevni proračun (€)",
+    "totalBudget": "Ukupni proračun (€, neobavezno)",
+    "startsOn": "Od",
+    "endsOn": "Do",
+    "endsOnOptional": "Do (neobavezno)",
+    "dailyCost": "{days} dana × {price} = {total}",
+    "formNote": "Cijene bez PDV-a. Ako kupac ubrzo ponovno otvori vaš oglas, ne naplaćuje se dvaput.",
+    "submit": "Pošalji FIRINGI-ju",
+    "submitDirect": "Pokreni oglas",
+    "pause": "Pauziraj",
+    "resume": "Nastavi",
+    "end": "Završi",
+    "changeBudget": "Cijena i proračuni",
+    "save": "Spremi",
+    "saved": "Spremljeno",
+    "rejected": "FIRINGI nije odobrio ovaj oglas: {reason}",
+    "revenue": "Vrijednost tih narudžbi",
+    "productsTitle": "Proizvodi",
+    "colDay": "Dan",
+    "noDays": "Još nije prikazan.",
+    "billingTitle": "Naplata oglasa",
+    "billingIntro": "Način na koji FIRINGI naplaćuje vaše oglase dogovoren je s vama. Cijene oglasa su bez PDV-a; FIRINGI-jevi računi dodaju PDV gdje se primjenjuje.",
+    "billingPAYOUT": "FIRINGI svaki mjesec ispostavlja račun za vaše oglase i odbija iznos od onoga što vam plaća.",
+    "billingPREPAID": "Nadoplatite saldo bankovnim prijenosom; oglasi rade dok ima salda. Za svaku nadoplatu izdaje se račun-potvrda.",
+    "billingINVOICE": "FIRINGI svaki mjesec ispostavlja račun za vaše oglase; platite do dospijeća.",
+    "unbilled": "Još nije naplaćeno",
+    "topUpTitle": "Nadoplata bankovnim prijenosom",
+    "topUpText": "Uplatite na {iban} s pozivom na broj {reference}. FIRINGI dodaje iznos (bez PDV-a) vašem saldu kad stigne.",
+    "invoices": "FIRINGI-jevi računi za oglase",
+    "colInvoice": "Račun",
+    "colDate": "Datum",
+    "colPeriod": "Razdoblje",
+    "colTotal": "Ukupno",
+    "colOpen": "Otvoreno",
+    "topup": "Nadoplata",
+    "noInvoices": "Još nema računa za oglase.",
+    "sponsored": "Sponzorirano",
+    "featured": "Istaknuto",
+    "alsoNeed": "Možda vam treba i"
   }
 }

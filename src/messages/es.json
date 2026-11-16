@@ -1374,6 +1374,22 @@
     "loyalty_referral": {
       "title": "Bono por invitación: +{points} puntos",
       "body": "Gracias a la invitación con {company}, ya tienes {points} puntos en tus Recompensas."
+    },
+    "ads_approved": {
+      "title": "Tu anuncio está aprobado",
+      "body": "FIRINGI ha aprobado tu anuncio «{campaign}». Empieza en su fecha de inicio."
+    },
+    "ads_rejected": {
+      "title": "Tu anuncio no se ha aprobado",
+      "body": "FIRINGI no ha aprobado «{campaign}»: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Tu anuncio se ha detenido",
+      "body": "«{campaign}» se ha detenido: se agotó su presupuesto o tu saldo prepago. Añade más para reactivarlo."
+    },
+    "ads_low_balance": {
+      "title": "Tu saldo de anuncios es bajo",
+      "body": "Tu saldo prepago de anuncios es {balance} €. Recárgalo para que tus anuncios sigan activos."
     }
   },
   "notifications": {
@@ -3945,5 +3961,107 @@
     "inviteIntro": "FIRINGI invita a {company} a unirse a su marketplace B2B de alimentación y suministros.",
     "inviteApply": "Solicita el alta aquí: {link}",
     "inviteValid": "El enlace es válido durante {days} días y solo se puede usar una vez. FIRINGI revisa cada solicitud antes de abrir la cuenta."
+  },
+  "ads": {
+    "title": "Mis anuncios",
+    "description": "Muestra tus productos más arriba en FIRINGI: en los resultados de búsqueda, en las páginas de categoría, en la portada de la tienda y en el carrito. Los compradores los ven marcados como «Patrocinado». FIRINGI revisa cada anuncio antes de que empiece.",
+    "newAd": "Nuevo anuncio",
+    "spentMonth": "Gastado este mes",
+    "running": "Activos",
+    "balance": "Saldo prepago",
+    "billing": "Cómo cobra FIRINGI",
+    "billings": {
+      "PAYOUT": "Descontado de tus pagos",
+      "PREPAID": "Saldo prepago",
+      "INVOICE": "Factura mensual"
+    },
+    "noAds": "Aún no hay anuncios: crea el primero.",
+    "colAd": "Anuncio",
+    "colWhere": "Dónde",
+    "colPrice": "Precio",
+    "colStatus": "Estado",
+    "colImpressions": "Mostrado",
+    "colClicks": "Clics",
+    "colCtr": "Tasa de clics",
+    "colSpent": "Gastado",
+    "colOrders": "Pedidos tras un clic",
+    "placements": {
+      "SEARCH": "Resultados de búsqueda",
+      "CATEGORY": "Páginas de categoría",
+      "HOME": "Portada de la tienda",
+      "CART": "Sugerencias en el carrito"
+    },
+    "statuses": {
+      "PENDING": "Esperando a FIRINGI",
+      "ACTIVE": "Activo",
+      "PAUSED": "En pausa",
+      "REJECTED": "No aprobado",
+      "ENDED": "Terminado"
+    },
+    "reasons": {
+      "SUPPLIER": "pausado por ti",
+      "BUDGET": "presupuesto agotado",
+      "BALANCE": "saldo prepago agotado",
+      "FIRINGI": "por FIRINGI"
+    },
+    "perClickBudget": "{price} por clic · {budget} al día",
+    "perDay": "{price} al día (reservado)",
+    "formTitle": "Nuevo anuncio",
+    "formIntro": "Elige dónde aparecen tus productos, cómo pagas y durante cuánto tiempo. FIRINGI revisa el anuncio antes de que empiece.",
+    "name": "Nombre (solo lo ves tú y FIRINGI)",
+    "where": "Dónde aparece",
+    "whereHint": "desde {min} por clic · {day} al día · {slots} plazas",
+    "noPlacements": "FIRINGI no tiene espacios publicitarios abiertos ahora mismo.",
+    "howPay": "Cómo pagas",
+    "cpc": "Por clic",
+    "cpcHint": "Solo pagas cuando un comprador abre tu producto, hasta tu presupuesto diario.",
+    "daily": "Por día",
+    "dailyHint": "Un precio fijo por cada día reservado; los anuncios reservados salen primero.",
+    "products": "Productos que anunciar (hasta 20)",
+    "searchProducts": "Buscar un producto",
+    "keywords": "Palabras de búsqueda extra (opcional, separadas por comas)",
+    "keywordsHint": "Tu anuncio también aparece cuando los compradores buscan estas palabras.",
+    "category": "Página de categoría (opcional)",
+    "categoryAny": "Las categorías de los propios productos",
+    "bid": "Precio por clic (€)",
+    "dailyBudget": "Presupuesto diario (€)",
+    "totalBudget": "Presupuesto total (€, opcional)",
+    "startsOn": "Desde",
+    "endsOn": "Hasta",
+    "endsOnOptional": "Hasta (opcional)",
+    "dailyCost": "{days} días × {price} = {total}",
+    "formNote": "Precios sin IVA. Si un comprador vuelve a abrir tu anuncio poco después, no se cobra dos veces.",
+    "submit": "Enviar a FIRINGI",
+    "submitDirect": "Iniciar el anuncio",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "end": "Terminar",
+    "changeBudget": "Precio y presupuestos",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "rejected": "FIRINGI no ha aprobado este anuncio: {reason}",
+    "revenue": "Valor de esos pedidos",
+    "productsTitle": "Productos",
+    "colDay": "Día",
+    "noDays": "Aún no se ha mostrado.",
+    "billingTitle": "Facturación de anuncios",
+    "billingIntro": "La forma en que FIRINGI cobra tus anuncios se acordó contigo. Los precios de los anuncios no incluyen IVA; las facturas de FIRINGI añaden el IVA cuando corresponde.",
+    "billingPAYOUT": "Cada mes FIRINGI factura tus anuncios y descuenta el importe de lo que te paga.",
+    "billingPREPAID": "Recarga tu saldo por transferencia bancaria; tus anuncios funcionan mientras haya saldo. Cada recarga tiene una factura-recibo.",
+    "billingINVOICE": "Cada mes FIRINGI factura tus anuncios; paga antes del vencimiento.",
+    "unbilled": "Aún sin facturar",
+    "topUpTitle": "Recargar por transferencia bancaria",
+    "topUpText": "Transfiere a {iban} con la referencia {reference}. FIRINGI añade el importe (sin IVA) a tu saldo cuando llegue.",
+    "invoices": "Facturas de anuncios de FIRINGI",
+    "colInvoice": "Factura",
+    "colDate": "Fecha",
+    "colPeriod": "Periodo",
+    "colTotal": "Total",
+    "colOpen": "Pendiente",
+    "topup": "Recarga",
+    "noInvoices": "Aún no hay facturas de anuncios.",
+    "sponsored": "Patrocinado",
+    "featured": "Destacados",
+    "alsoNeed": "Quizá también necesites"
   }
 }

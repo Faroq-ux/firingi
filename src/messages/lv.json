@@ -841,7 +841,11 @@
     "Planning Settings": "Plānošanas iestatījumi",
     "Quality Claims": "Kvalitātes pretenzijas",
     "Quality Score": "Kvalitātes rādītājs",
-    "Rewards": "Balvas"
+    "Rewards": "Balvas",
+    "Advertising": "Reklāma",
+    "My Ads": "Manas Reklāmas",
+    "New Ad": "Jauna Reklāma",
+    "Ad Billing": "Reklāmu Rēķini"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Ieteikuma bonuss: +{points} punkti",
       "body": "Pateicoties ieteikumam ar {company}, jums tagad ir {points} punkti sadaļā Balvas."
+    },
+    "ads_approved": {
+      "title": "Jūsu reklāma ir apstiprināta",
+      "body": "FIRINGI apstiprināja jūsu reklāmu “{campaign}”. Tā sākas sākuma datumā."
+    },
+    "ads_rejected": {
+      "title": "Jūsu reklāma netika apstiprināta",
+      "body": "FIRINGI neapstiprināja “{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Jūsu reklāma ir apturēta",
+      "body": "“{campaign}” ir apturēta: izlietots budžets vai priekšapmaksas atlikums. Papildiniet, lai tā atsāktos."
+    },
+    "ads_low_balance": {
+      "title": "Reklāmu atlikums ir zems",
+      "body": "Jūsu priekšapmaksas reklāmu atlikums ir {balance} €. Papildiniet to, lai reklāmas turpinātos."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI aicina {company} pievienoties tā pārtikas un piederumu B2B tirdzniecības vietai.",
     "inviteApply": "Piesakieties šeit: {link}",
     "inviteValid": "Saite ir derīga {days} dienas, un to var izmantot vienu reizi. FIRINGI pārbauda katru pieteikumu, pirms konts tiek atvērts."
+  },
+  "ads": {
+    "title": "Manas reklāmas",
+    "description": "Rādiet savus produktus augstāk FIRINGI: meklēšanas rezultātos, kategoriju lapās, veikala sākumlapā un grozā. Pircēji tos redz ar atzīmi “Sponsorēts”. FIRINGI pārbauda katru reklāmu pirms tās sākuma.",
+    "newAd": "Jauna reklāma",
+    "spentMonth": "Iztērēts šomēnes",
+    "running": "Aktīvas",
+    "balance": "Priekšapmaksas atlikums",
+    "billing": "Kā FIRINGI iekasē",
+    "billings": {
+      "PAYOUT": "Atskaitīts no jūsu izmaksām",
+      "PREPAID": "Priekšapmaksas atlikums",
+      "INVOICE": "Ikmēneša rēķins"
+    },
+    "noAds": "Reklāmu vēl nav — izveidojiet pirmo.",
+    "colAd": "Reklāma",
+    "colWhere": "Kur",
+    "colPrice": "Cena",
+    "colStatus": "Statuss",
+    "colImpressions": "Parādīts",
+    "colClicks": "Klikšķi",
+    "colCtr": "Klikšķu īpatsvars",
+    "colSpent": "Iztērēts",
+    "colOrders": "Pasūtījumi pēc klikšķa",
+    "placements": {
+      "SEARCH": "Meklēšanas rezultāti",
+      "CATEGORY": "Kategoriju lapas",
+      "HOME": "Veikala sākumlapa",
+      "CART": "Ieteikumi grozā"
+    },
+    "statuses": {
+      "PENDING": "Gaida FIRINGI",
+      "ACTIVE": "Aktīva",
+      "PAUSED": "Apturēta",
+      "REJECTED": "Nav apstiprināta",
+      "ENDED": "Beigusies"
+    },
+    "reasons": {
+      "SUPPLIER": "apturējāt jūs",
+      "BUDGET": "budžets izlietots",
+      "BALANCE": "priekšapmaksas atlikums izlietots",
+      "FIRINGI": "FIRINGI apturēta"
+    },
+    "perClickBudget": "{price} par klikšķi · {budget} dienā",
+    "perDay": "{price} dienā (rezervēts)",
+    "formTitle": "Jauna reklāma",
+    "formIntro": "Izvēlieties, kur rādīt produktus, kā maksājat un cik ilgi. FIRINGI pārbauda reklāmu pirms tās sākuma.",
+    "name": "Nosaukums (redzat tikai jūs un FIRINGI)",
+    "where": "Kur tā tiek rādīta",
+    "whereHint": "no {min} par klikšķi · {day} dienā · {slots} vietas",
+    "noPlacements": "FIRINGI pašlaik nav atvērtu reklāmas vietu.",
+    "howPay": "Kā maksājat",
+    "cpc": "Par klikšķi",
+    "cpcHint": "Maksājat tikai tad, kad pircējs atver jūsu produktu, līdz jūsu dienas budžetam.",
+    "daily": "Par dienu",
+    "dailyHint": "Fiksēta cena par katru rezervēto dienu; rezervētās reklāmas tiek rādītas pirmās.",
+    "products": "Reklamējamie produkti (līdz 20)",
+    "searchProducts": "Meklēt produktu",
+    "keywords": "Papildu meklēšanas vārdi (nav obligāti, atdalīti ar komatu)",
+    "keywordsHint": "Jūsu reklāma tiek rādīta arī tad, kad pircēji meklē šos vārdus.",
+    "category": "Kategorijas lapa (nav obligāti)",
+    "categoryAny": "Pašu produktu kategorijas",
+    "bid": "Cena par klikšķi (€)",
+    "dailyBudget": "Dienas budžets (€)",
+    "totalBudget": "Kopējais budžets (€, nav obligāti)",
+    "startsOn": "No",
+    "endsOn": "Līdz",
+    "endsOnOptional": "Līdz (nav obligāti)",
+    "dailyCost": "{days} dienas × {price} = {total}",
+    "formNote": "Cenas bez PVN. Ja pircējs drīz atkal atver jūsu reklāmu, maksa netiek ņemta divreiz.",
+    "submit": "Sūtīt FIRINGI",
+    "submitDirect": "Sākt reklāmu",
+    "pause": "Apturēt",
+    "resume": "Atsākt",
+    "end": "Beigt",
+    "changeBudget": "Cena un budžeti",
+    "save": "Saglabāt",
+    "saved": "Saglabāts",
+    "rejected": "FIRINGI neapstiprināja šo reklāmu: {reason}",
+    "revenue": "Šo pasūtījumu vērtība",
+    "productsTitle": "Produkti",
+    "colDay": "Diena",
+    "noDays": "Vēl nav rādīta.",
+    "billingTitle": "Reklāmu rēķini",
+    "billingIntro": "Tas, kā FIRINGI iekasē maksu par jūsu reklāmām, tika saskaņots ar jums. Reklāmu cenas ir bez PVN; FIRINGI rēķinos PVN tiek pievienots, ja tas piemērojams.",
+    "billingPAYOUT": "Katru mēnesi FIRINGI izraksta rēķinu par jūsu reklāmām un atskaita summu no tā, ko jums maksā.",
+    "billingPREPAID": "Papildiniet atlikumu ar bankas pārskaitījumu; reklāmas darbojas, kamēr ir atlikums. Par katru papildinājumu tiek izrakstīts rēķins-kvīts.",
+    "billingINVOICE": "Katru mēnesi FIRINGI izraksta rēķinu par jūsu reklāmām; samaksājiet līdz termiņam.",
+    "unbilled": "Vēl nav iekļauts rēķinā",
+    "topUpTitle": "Papildināt ar bankas pārskaitījumu",
+    "topUpText": "Pārskaitiet uz {iban} ar mērķi {reference}. FIRINGI pievieno summu (bez PVN) jūsu atlikumam, kad tā pienāk.",
+    "invoices": "FIRINGI reklāmu rēķini",
+    "colInvoice": "Rēķins",
+    "colDate": "Datums",
+    "colPeriod": "Periods",
+    "colTotal": "Kopā",
+    "colOpen": "Neapmaksāts",
+    "topup": "Papildinājums",
+    "noInvoices": "Reklāmu rēķinu vēl nav.",
+    "sponsored": "Sponsorēts",
+    "featured": "Izcelts",
+    "alsoNeed": "Jums varētu noderēt arī"
   }
 }

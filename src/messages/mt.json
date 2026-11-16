@@ -841,7 +841,11 @@
     "Planning Settings": "Settings tal-ippjanar",
     "Quality Claims": "Ilmenti dwar il-kwalità",
     "Quality Score": "Punteġġ tal-kwalità",
-    "Rewards": "Premjijiet"
+    "Rewards": "Premjijiet",
+    "Advertising": "Reklamar",
+    "My Ads": "Ir-Reklami Tiegħi",
+    "New Ad": "Reklam Ġdid",
+    "Ad Billing": "Fatturazzjoni tar-Reklami"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus ta' riferiment: +{points} punt",
       "body": "Grazzi għar-riferiment ma' {company}, issa għandek {points} punt fil-Premjijiet tiegħek."
+    },
+    "ads_approved": {
+      "title": "Ir-reklam tiegħek ġie approvat",
+      "body": "FIRINGI approvat ir-reklam tiegħek “{campaign}”. Jibda mid-data tal-bidu."
+    },
+    "ads_rejected": {
+      "title": "Ir-reklam tiegħek ma ġiex approvat",
+      "body": "FIRINGI ma approvatx “{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Ir-reklam tiegħek waqaf",
+      "body": "“{campaign}” waqaf: il-baġit jew il-bilanċ imħallas minn qabel spiċċa. Żid aktar biex jerġa' jibda."
+    },
+    "ads_low_balance": {
+      "title": "Il-bilanċ tar-reklami huwa baxx",
+      "body": "Il-bilanċ imħallas minn qabel tar-reklami tiegħek huwa {balance} €. Żidu biex ir-reklami jibqgħu għaddejjin."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI tistieden lil {company} jingħaqad mas-suq B2B tagħha għall-ikel u l-provvisti.",
     "inviteApply": "Applika hawn: {link}",
     "inviteValid": "Il-link huwa validu għal {days} jiem u jista' jintuża darba. FIRINGI tiċċekkja kull applikazzjoni qabel ma jinfetaħ il-kont."
+  },
+  "ads": {
+    "title": "Ir-reklami tiegħi",
+    "description": "Uri l-prodotti tiegħek aktar 'il fuq fuq FIRINGI: fir-riżultati tat-tiftix, fil-paġni tal-kategoriji, fil-paġna ewlenija tal-ħanut u fil-karrettun. Ix-xerrejja jarawhom immarkati “Sponsorjat”. FIRINGI tiċċekkja kull reklam qabel ma jibda.",
+    "newAd": "Reklam ġdid",
+    "spentMonth": "Minfuq dan ix-xahar",
+    "running": "Attivi",
+    "balance": "Bilanċ imħallas minn qabel",
+    "billing": "Kif tiġbor FIRINGI",
+    "billings": {
+      "PAYOUT": "Imnaqqas mill-ħlasijiet tiegħek",
+      "PREPAID": "Bilanċ imħallas minn qabel",
+      "INVOICE": "Fattura ta' kull xahar"
+    },
+    "noAds": "Għad m'hemmx reklami — oħloq l-ewwel wieħed.",
+    "colAd": "Reklam",
+    "colWhere": "Fejn",
+    "colPrice": "Prezz",
+    "colStatus": "Status",
+    "colImpressions": "Muri",
+    "colClicks": "Klikks",
+    "colCtr": "Rata ta' klikks",
+    "colSpent": "Minfuq",
+    "colOrders": "Ordnijiet wara klikk",
+    "placements": {
+      "SEARCH": "Riżultati tat-tiftix",
+      "CATEGORY": "Paġni tal-kategoriji",
+      "HOME": "Paġna ewlenija tal-ħanut",
+      "CART": "Suġġerimenti fil-karrettun"
+    },
+    "statuses": {
+      "PENDING": "Qed jistenna lil FIRINGI",
+      "ACTIVE": "Attiv",
+      "PAUSED": "Fuq pawża",
+      "REJECTED": "Mhux approvat",
+      "ENDED": "Intemm"
+    },
+    "reasons": {
+      "SUPPLIER": "ippawżat minnek",
+      "BUDGET": "il-baġit spiċċa",
+      "BALANCE": "il-bilanċ imħallas minn qabel spiċċa",
+      "FIRINGI": "minn FIRINGI"
+    },
+    "perClickBudget": "{price} għal kull klikk · {budget} kuljum",
+    "perDay": "{price} kuljum (ibbukkjat)",
+    "formTitle": "Reklam ġdid",
+    "formIntro": "Agħżel fejn jidhru l-prodotti tiegħek, kif tħallas u għal kemm żmien. FIRINGI tiċċekkja r-reklam qabel ma jibda.",
+    "name": "Isem (tarah biss int u FIRINGI)",
+    "where": "Fejn jidher",
+    "whereHint": "minn {min} għal kull klikk · {day} kuljum · {slots} postijiet",
+    "noPlacements": "Bħalissa FIRINGI m'għandhiex postijiet tar-reklami miftuħa.",
+    "howPay": "Kif tħallas",
+    "cpc": "Għal kull klikk",
+    "cpcHint": "Tħallas biss meta xerrej jiftaħ il-prodott tiegħek, sal-baġit ta' kuljum.",
+    "daily": "Għal kull jum",
+    "dailyHint": "Prezz fiss għal kull jum ibbukkjat; ir-reklami bbukkjati jidhru l-ewwel.",
+    "products": "Prodotti biex tirreklama (sa 20)",
+    "searchProducts": "Fittex prodott",
+    "keywords": "Kliem tat-tiftix żejjed (mhux obbligatorju, b'virgola bejniethom)",
+    "keywordsHint": "Ir-reklam tiegħek jidher ukoll meta x-xerrejja jfittxu dan il-kliem.",
+    "category": "Paġna tal-kategorija (mhux obbligatorju)",
+    "categoryAny": "Il-kategoriji tal-prodotti nfushom",
+    "bid": "Prezz għal kull klikk (€)",
+    "dailyBudget": "Baġit ta' kuljum (€)",
+    "totalBudget": "Baġit totali (€, mhux obbligatorju)",
+    "startsOn": "Minn",
+    "endsOn": "Sa",
+    "endsOnOptional": "Sa (mhux obbligatorju)",
+    "dailyCost": "{days} jiem × {price} = {total}",
+    "formNote": "Prezzijiet mingħajr VAT. Jekk xerrej jerġa' jiftaħ ir-reklam tiegħek ftit wara, ma titħallasx darbtejn.",
+    "submit": "Ibgħat lil FIRINGI",
+    "submitDirect": "Ibda r-reklam",
+    "pause": "Ippawża",
+    "resume": "Kompli",
+    "end": "Temm",
+    "changeBudget": "Prezz u baġits",
+    "save": "Issejvja",
+    "saved": "Issejvjat",
+    "rejected": "FIRINGI ma approvatx dan ir-reklam: {reason}",
+    "revenue": "Il-valur ta' dawk l-ordnijiet",
+    "productsTitle": "Prodotti",
+    "colDay": "Jum",
+    "noDays": "Għadu ma ntweriex.",
+    "billingTitle": "Fatturazzjoni tar-reklami",
+    "billingIntro": "Kif FIRINGI tiġbor għar-reklami tiegħek ġie miftiehem miegħek. Il-prezzijiet tar-reklami huma mingħajr VAT; il-fatturi ta' FIRINGI jżidu l-VAT fejn japplika.",
+    "billingPAYOUT": "Kull xahar FIRINGI toħroġ fattura għar-reklami tiegħek u tnaqqas l-ammont minn dak li tħallaslek.",
+    "billingPREPAID": "Żid il-bilanċ b'trasferiment bankarju; ir-reklami jibqgħu għaddejjin sakemm ikun hemm bilanċ. Kull żieda tieħu fattura-irċevuta.",
+    "billingINVOICE": "Kull xahar FIRINGI toħroġ fattura għar-reklami tiegħek; ħallas sad-data tal-iskadenza.",
+    "unbilled": "Għadu ma ġiex iffatturat",
+    "topUpTitle": "Żid b'trasferiment bankarju",
+    "topUpText": "Ittrasferixxi lil {iban} bir-referenza {reference}. FIRINGI iżżid l-ammont (mingħajr VAT) mal-bilanċ tiegħek meta jasal.",
+    "invoices": "Il-fatturi tar-reklami ta' FIRINGI",
+    "colInvoice": "Fattura",
+    "colDate": "Data",
+    "colPeriod": "Perjodu",
+    "colTotal": "Total",
+    "colOpen": "Pendenti",
+    "topup": "Żieda",
+    "noInvoices": "Għad m'hemmx fatturi tar-reklami.",
+    "sponsored": "Sponsorjat",
+    "featured": "Fil-vetrina",
+    "alsoNeed": "Jista' jkollok bżonn ukoll"
   }
 }

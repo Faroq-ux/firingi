@@ -6,6 +6,7 @@ import { productsWithImages } from "@/server/data/catalogue-admin";
 import { PageHeader } from "@/components/layout/page-header";
 import { ProductCard } from "@/components/catalogue/product-card";
 import { BarcodeSearch } from "@/components/catalogue/barcode-search";
+import { SponsoredProducts } from "@/components/ads/sponsored";
 
 export const metadata = { title: "Search" };
 
@@ -24,6 +25,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         description={res.barcode ? t("barcodeResults", { code: res.barcode, count: res.items.length }) : t("oneSupplier")}
       />
       <div className="mb-6 max-w-2xl"><BarcodeSearch action="/buy/catalogue/search" defaultValue={q} /></div>
+      {q && <SponsoredProducts ctx={ctx} placement="SEARCH" q={q} />}
       {q && res.items.length === 0 && <p className="py-12 text-center text-muted-foreground">{t("noMatch", { q })}</p>}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
         {res.items.map((i) => (

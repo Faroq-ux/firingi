@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -37,6 +37,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P31: { en: "Phase 31 — Quality claims & credits", pt: "Fase 31 — Reclamações de qualidade e créditos" },
   P32: { en: "Phase 32 — Loyalty & rewards", pt: "Fase 32 — Fidelização e recompensas" },
   P33: { en: "Phase 33 — Launch readiness & pilot", pt: "Fase 33 — Preparação do lançamento e piloto" },
+  P34: { en: "Phase 34 — Sponsored products", pt: "Fase 34 — Produtos patrocinados" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

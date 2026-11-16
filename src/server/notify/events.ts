@@ -135,6 +135,11 @@ export const EVENTS: EventDef[] = [
   E("loyalty.tier_up", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["tier"]),
   E("loyalty.expiring", "account", BUYER_ORDERS, ["EMAIL"], ["points", "date"]),
   E("loyalty.referral", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["points", "company"]),
+  // advertising (Phase 34)
+  E("ads.approved", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign"]),
+  E("ads.rejected", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign", "reason"]),
+  E("ads.stopped", "account", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["campaign", "reason"]),
+  E("ads.low_balance", "account", ["vendor.promotions.manage", "vendor.invoices.view"], ["EMAIL"], ["balance"]),
   // finance
   E("invoice.credit_note", "finance", ["buyer.invoices.view", "buyer.orders.view"], ["EMAIL"], ["document"]),
   // online payments (Phase 20) — {total} is shown in the reader's currency format

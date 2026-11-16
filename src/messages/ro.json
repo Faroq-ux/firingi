@@ -841,7 +841,11 @@
     "Planning Settings": "Setări de planificare",
     "Quality Claims": "Reclamații de calitate",
     "Quality Score": "Scor de calitate",
-    "Rewards": "Recompense"
+    "Rewards": "Recompense",
+    "Advertising": "Publicitate",
+    "My Ads": "Reclamele Mele",
+    "New Ad": "Reclamă Nouă",
+    "Ad Billing": "Facturarea Reclamelor"
   },
   "delivery": {
     "title": "Livrare",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus de recomandare: +{points} puncte",
       "body": "Datorită recomandării cu {company}, aveți acum {points} puncte în Recompense."
+    },
+    "ads_approved": {
+      "title": "Reclama dvs. a fost aprobată",
+      "body": "FIRINGI a aprobat reclama dvs. „{campaign}”. Rulează de la data de început."
+    },
+    "ads_rejected": {
+      "title": "Reclama dvs. nu a fost aprobată",
+      "body": "FIRINGI nu a aprobat „{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Reclama dvs. s-a oprit",
+      "body": "„{campaign}” s-a oprit: bugetul sau soldul preplătit s-a epuizat. Adăugați mai mult ca să pornească din nou."
+    },
+    "ads_low_balance": {
+      "title": "Soldul pentru reclame este scăzut",
+      "body": "Soldul preplătit pentru reclame este {balance} €. Alimentați-l ca reclamele să continue."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI invită {company} să se alăture platformei sale B2B pentru alimente și consumabile.",
     "inviteApply": "Aplicați aici: {link}",
     "inviteValid": "Linkul este valabil {days} zile și poate fi folosit o singură dată. FIRINGI verifică fiecare cerere înainte de a deschide contul."
+  },
+  "ads": {
+    "title": "Reclamele mele",
+    "description": "Afișați-vă produsele mai sus pe FIRINGI: în rezultatele căutării, pe paginile de categorii, pe pagina principală a magazinului și în coș. Cumpărătorii le văd marcate „Sponsorizat”. FIRINGI verifică fiecare reclamă înainte să înceapă.",
+    "newAd": "Reclamă nouă",
+    "spentMonth": "Cheltuit luna aceasta",
+    "running": "Active",
+    "balance": "Sold preplătit",
+    "billing": "Cum încasează FIRINGI",
+    "billings": {
+      "PAYOUT": "Dedus din plățile către dvs.",
+      "PREPAID": "Sold preplătit",
+      "INVOICE": "Factură lunară"
+    },
+    "noAds": "Încă nu aveți reclame — creați-o pe prima.",
+    "colAd": "Reclamă",
+    "colWhere": "Unde",
+    "colPrice": "Preț",
+    "colStatus": "Stare",
+    "colImpressions": "Afișată",
+    "colClicks": "Clicuri",
+    "colCtr": "Rata de clic",
+    "colSpent": "Cheltuit",
+    "colOrders": "Comenzi după un clic",
+    "placements": {
+      "SEARCH": "Rezultatele căutării",
+      "CATEGORY": "Pagini de categorii",
+      "HOME": "Pagina principală a magazinului",
+      "CART": "Sugestii în coș"
+    },
+    "statuses": {
+      "PENDING": "Așteaptă FIRINGI",
+      "ACTIVE": "Activă",
+      "PAUSED": "În pauză",
+      "REJECTED": "Neaprobată",
+      "ENDED": "Încheiată"
+    },
+    "reasons": {
+      "SUPPLIER": "pusă pe pauză de dvs.",
+      "BUDGET": "buget epuizat",
+      "BALANCE": "sold preplătit epuizat",
+      "FIRINGI": "de FIRINGI"
+    },
+    "perClickBudget": "{price} pe clic · {budget} pe zi",
+    "perDay": "{price} pe zi (rezervat)",
+    "formTitle": "Reclamă nouă",
+    "formIntro": "Alegeți unde apar produsele dvs., cum plătiți și pentru cât timp. FIRINGI verifică reclama înainte să înceapă.",
+    "name": "Nume (îl vedeți doar dvs. și FIRINGI)",
+    "where": "Unde apare",
+    "whereHint": "de la {min} pe clic · {day} pe zi · {slots} locuri",
+    "noPlacements": "FIRINGI nu are acum locuri de reclamă deschise.",
+    "howPay": "Cum plătiți",
+    "cpc": "Pe clic",
+    "cpcHint": "Plătiți doar când un cumpărător vă deschide produsul, până la bugetul zilnic.",
+    "daily": "Pe zi",
+    "dailyHint": "Un preț fix pentru fiecare zi rezervată; reclamele rezervate apar primele.",
+    "products": "Produse de promovat (până la 20)",
+    "searchProducts": "Căutați un produs",
+    "keywords": "Cuvinte de căutare suplimentare (opțional, separate prin virgulă)",
+    "keywordsHint": "Reclama dvs. apare și când cumpărătorii caută aceste cuvinte.",
+    "category": "Pagină de categorie (opțional)",
+    "categoryAny": "Categoriile proprii ale produselor",
+    "bid": "Preț pe clic (€)",
+    "dailyBudget": "Buget zilnic (€)",
+    "totalBudget": "Buget total (€, opțional)",
+    "startsOn": "De la",
+    "endsOn": "Până la",
+    "endsOnOptional": "Până la (opțional)",
+    "dailyCost": "{days} zile × {price} = {total}",
+    "formNote": "Prețuri fără TVA. Dacă un cumpărător vă redeschide reclama la scurt timp, nu se taxează de două ori.",
+    "submit": "Trimiteți la FIRINGI",
+    "submitDirect": "Porniți reclama",
+    "pause": "Pauză",
+    "resume": "Reluați",
+    "end": "Încheiați",
+    "changeBudget": "Preț și bugete",
+    "save": "Salvați",
+    "saved": "Salvat",
+    "rejected": "FIRINGI nu a aprobat această reclamă: {reason}",
+    "revenue": "Valoarea acestor comenzi",
+    "productsTitle": "Produse",
+    "colDay": "Zi",
+    "noDays": "Încă neafișată.",
+    "billingTitle": "Facturarea reclamelor",
+    "billingIntro": "Modul în care FIRINGI încasează pentru reclamele dvs. a fost convenit cu dvs. Prețurile reclamelor sunt fără TVA; facturile FIRINGI adaugă TVA acolo unde se aplică.",
+    "billingPAYOUT": "În fiecare lună FIRINGI facturează reclamele dvs. și deduce suma din ce vă plătește.",
+    "billingPREPAID": "Alimentați soldul prin transfer bancar; reclamele rulează cât timp există sold. Pentru fiecare alimentare se emite o factură-chitanță.",
+    "billingINVOICE": "În fiecare lună FIRINGI facturează reclamele dvs.; plătiți până la scadență.",
+    "unbilled": "Încă nefacturat",
+    "topUpTitle": "Alimentare prin transfer bancar",
+    "topUpText": "Transferați în {iban} cu referința {reference}. FIRINGI adaugă suma (fără TVA) la soldul dvs. când ajunge.",
+    "invoices": "Facturile FIRINGI pentru reclame",
+    "colInvoice": "Factură",
+    "colDate": "Data",
+    "colPeriod": "Perioada",
+    "colTotal": "Total",
+    "colOpen": "Neachitat",
+    "topup": "Alimentare",
+    "noInvoices": "Încă nu există facturi pentru reclame.",
+    "sponsored": "Sponsorizat",
+    "featured": "Recomandate",
+    "alsoNeed": "S-ar putea să aveți nevoie și de"
   }
 }

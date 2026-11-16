@@ -841,7 +841,11 @@
     "Planning Settings": "Planningsinstellingen",
     "Quality Claims": "Kwaliteitsclaims",
     "Quality Score": "Kwaliteitsscore",
-    "Rewards": "Beloningen"
+    "Rewards": "Beloningen",
+    "Advertising": "Adverteren",
+    "My Ads": "Mijn Advertenties",
+    "New Ad": "Nieuwe Advertentie",
+    "Ad Billing": "Advertentiefacturatie"
   },
   "delivery": {
     "title": "Levering",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Uitnodigingsbonus: +{points} punten",
       "body": "Dankzij je uitnodiging met {company} staan er nu {points} punten in je Beloningen."
+    },
+    "ads_approved": {
+      "title": "Je advertentie is goedgekeurd",
+      "body": "FIRINGI heeft je advertentie ‘{campaign}’ goedgekeurd. Hij loopt vanaf de startdatum."
+    },
+    "ads_rejected": {
+      "title": "Je advertentie is niet goedgekeurd",
+      "body": "FIRINGI heeft ‘{campaign}’ niet goedgekeurd: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Je advertentie is gestopt",
+      "body": "‘{campaign}’ is gestopt: het budget of je prepaid tegoed is op. Vul aan om hem weer te laten lopen."
+    },
+    "ads_low_balance": {
+      "title": "Je advertentietegoed is laag",
+      "body": "Je prepaid advertentietegoed is {balance} €. Waardeer op zodat je advertenties blijven lopen."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI nodigt {company} uit voor zijn B2B-marktplaats voor voeding en benodigdheden.",
     "inviteApply": "Meld je hier aan: {link}",
     "inviteValid": "De link is {days} dagen geldig en kan één keer worden gebruikt. FIRINGI controleert elke aanmelding voordat het account opengaat."
+  },
+  "ads": {
+    "title": "Mijn advertenties",
+    "description": "Toon je producten hoger op FIRINGI: in zoekresultaten, op categoriepagina's, op de winkelstartpagina en in de winkelwagen. Kopers zien ze gemarkeerd als ‘Gesponsord’. FIRINGI controleert elke advertentie voordat die start.",
+    "newAd": "Nieuwe advertentie",
+    "spentMonth": "Deze maand uitgegeven",
+    "running": "Actief",
+    "balance": "Prepaid tegoed",
+    "billing": "Hoe FIRINGI int",
+    "billings": {
+      "PAYOUT": "Afgetrokken van je uitbetalingen",
+      "PREPAID": "Prepaid tegoed",
+      "INVOICE": "Maandfactuur"
+    },
+    "noAds": "Nog geen advertenties — maak de eerste.",
+    "colAd": "Advertentie",
+    "colWhere": "Waar",
+    "colPrice": "Prijs",
+    "colStatus": "Status",
+    "colImpressions": "Getoond",
+    "colClicks": "Klikken",
+    "colCtr": "Klikratio",
+    "colSpent": "Uitgegeven",
+    "colOrders": "Bestellingen na een klik",
+    "placements": {
+      "SEARCH": "Zoekresultaten",
+      "CATEGORY": "Categoriepagina's",
+      "HOME": "Winkelstartpagina",
+      "CART": "Suggesties in de winkelwagen"
+    },
+    "statuses": {
+      "PENDING": "Wacht op FIRINGI",
+      "ACTIVE": "Actief",
+      "PAUSED": "Gepauzeerd",
+      "REJECTED": "Niet goedgekeurd",
+      "ENDED": "Beëindigd"
+    },
+    "reasons": {
+      "SUPPLIER": "door jou gepauzeerd",
+      "BUDGET": "budget op",
+      "BALANCE": "prepaid tegoed op",
+      "FIRINGI": "door FIRINGI"
+    },
+    "perClickBudget": "{price} per klik · {budget} per dag",
+    "perDay": "{price} per dag (geboekt)",
+    "formTitle": "Nieuwe advertentie",
+    "formIntro": "Kies waar je producten verschijnen, hoe je betaalt en hoe lang. FIRINGI controleert de advertentie voordat die start.",
+    "name": "Naam (alleen jij en FIRINGI zien hem)",
+    "where": "Waar hij verschijnt",
+    "whereHint": "vanaf {min} per klik · {day} per dag · {slots} plekken",
+    "noPlacements": "FIRINGI heeft op dit moment geen advertentieplekken open.",
+    "howPay": "Hoe je betaalt",
+    "cpc": "Per klik",
+    "cpcHint": "Je betaalt alleen als een koper je product opent, tot je dagbudget.",
+    "daily": "Per dag",
+    "dailyHint": "Een vaste prijs per geboekte dag; geboekte advertenties staan eerst.",
+    "products": "Te adverteren producten (max. 20)",
+    "searchProducts": "Zoek een product",
+    "keywords": "Extra zoekwoorden (optioneel, met komma's)",
+    "keywordsHint": "Je advertentie verschijnt ook als kopers op deze woorden zoeken.",
+    "category": "Categoriepagina (optioneel)",
+    "categoryAny": "De eigen categorieën van de producten",
+    "bid": "Prijs per klik (€)",
+    "dailyBudget": "Dagbudget (€)",
+    "totalBudget": "Totaalbudget (€, optioneel)",
+    "startsOn": "Van",
+    "endsOn": "Tot",
+    "endsOnOptional": "Tot (optioneel)",
+    "dailyCost": "{days} dagen × {price} = {total}",
+    "formNote": "Prijzen excl. btw. Opent een koper je advertentie kort daarna opnieuw, dan betaal je niet dubbel.",
+    "submit": "Naar FIRINGI sturen",
+    "submitDirect": "Advertentie starten",
+    "pause": "Pauzeren",
+    "resume": "Hervatten",
+    "end": "Beëindigen",
+    "changeBudget": "Prijs en budgetten",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "rejected": "FIRINGI heeft deze advertentie niet goedgekeurd: {reason}",
+    "revenue": "Waarde van die bestellingen",
+    "productsTitle": "Producten",
+    "colDay": "Dag",
+    "noDays": "Nog niet getoond.",
+    "billingTitle": "Advertentiefacturatie",
+    "billingIntro": "Hoe FIRINGI voor je advertenties int, is met jou afgesproken. Advertentieprijzen zijn excl. btw; de facturen van FIRINGI rekenen btw waar die van toepassing is.",
+    "billingPAYOUT": "FIRINGI factureert je advertenties maandelijks en trekt het bedrag af van wat ze je uitbetaalt.",
+    "billingPREPAID": "Waardeer je tegoed op per bankoverschrijving; je advertenties lopen zolang er tegoed is. Elke opwaardering krijgt een factuur-kwitantie.",
+    "billingINVOICE": "FIRINGI factureert je advertenties maandelijks; betaal vóór de vervaldatum.",
+    "unbilled": "Nog niet gefactureerd",
+    "topUpTitle": "Opwaarderen per overschrijving",
+    "topUpText": "Maak over naar {iban} met kenmerk {reference}. FIRINGI zet het bedrag (excl. btw) op je tegoed zodra het binnen is.",
+    "invoices": "Advertentiefacturen van FIRINGI",
+    "colInvoice": "Factuur",
+    "colDate": "Datum",
+    "colPeriod": "Periode",
+    "colTotal": "Totaal",
+    "colOpen": "Openstaand",
+    "topup": "Opwaardering",
+    "noInvoices": "Nog geen advertentiefacturen.",
+    "sponsored": "Gesponsord",
+    "featured": "Uitgelicht",
+    "alsoNeed": "Misschien heb je ook nodig"
   }
 }

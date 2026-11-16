@@ -841,7 +841,11 @@
     "Planning Settings": "Planavimo nustatymai",
     "Quality Claims": "Kokybės pretenzijos",
     "Quality Score": "Kokybės balas",
-    "Rewards": "Prizai"
+    "Rewards": "Prizai",
+    "Advertising": "Reklama",
+    "My Ads": "Mano Reklamos",
+    "New Ad": "Nauja Reklama",
+    "Ad Billing": "Reklamų Sąskaitos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Rekomendavimo premija: +{points} taškų",
       "body": "Dėka rekomendacijos su {company} dabar turite {points} taškų skiltyje Prizai."
+    },
+    "ads_approved": {
+      "title": "Jūsų reklama patvirtinta",
+      "body": "FIRINGI patvirtino jūsų reklamą „{campaign}“. Ji rodoma nuo pradžios datos."
+    },
+    "ads_rejected": {
+      "title": "Jūsų reklama nepatvirtinta",
+      "body": "FIRINGI nepatvirtino „{campaign}“: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Jūsų reklama sustojo",
+      "body": "„{campaign}“ sustojo: išnaudotas biudžetas arba išankstinio mokėjimo likutis. Papildykite, kad vėl veiktų."
+    },
+    "ads_low_balance": {
+      "title": "Reklamų likutis mažas",
+      "body": "Jūsų išankstinio mokėjimo reklamų likutis yra {balance} €. Papildykite, kad reklamos būtų rodomos toliau."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI kviečia {company} prisijungti prie savo maisto ir reikmenų B2B prekyvietės.",
     "inviteApply": "Paraišką pateikite čia: {link}",
     "inviteValid": "Nuoroda galioja {days} d. ir gali būti panaudota vieną kartą. FIRINGI patikrina kiekvieną paraišką prieš atidarydama paskyrą."
+  },
+  "ads": {
+    "title": "Mano reklamos",
+    "description": "Rodykite savo produktus aukščiau FIRINGI: paieškos rezultatuose, kategorijų puslapiuose, parduotuvės pradžios puslapyje ir krepšelyje. Pirkėjai juos mato su žyma „Remiama“. FIRINGI patikrina kiekvieną reklamą prieš jai prasidedant.",
+    "newAd": "Nauja reklama",
+    "spentMonth": "Išleista šį mėnesį",
+    "running": "Aktyvios",
+    "balance": "Išankstinio mokėjimo likutis",
+    "billing": "Kaip FIRINGI apmokestina",
+    "billings": {
+      "PAYOUT": "Išskaičiuojama iš jūsų išmokų",
+      "PREPAID": "Išankstinio mokėjimo likutis",
+      "INVOICE": "Mėnesinė sąskaita"
+    },
+    "noAds": "Reklamų dar nėra — sukurkite pirmąją.",
+    "colAd": "Reklama",
+    "colWhere": "Kur",
+    "colPrice": "Kaina",
+    "colStatus": "Būsena",
+    "colImpressions": "Parodyta",
+    "colClicks": "Paspaudimai",
+    "colCtr": "Paspaudimų dažnis",
+    "colSpent": "Išleista",
+    "colOrders": "Užsakymai po paspaudimo",
+    "placements": {
+      "SEARCH": "Paieškos rezultatai",
+      "CATEGORY": "Kategorijų puslapiai",
+      "HOME": "Parduotuvės pradžios puslapis",
+      "CART": "Pasiūlymai krepšelyje"
+    },
+    "statuses": {
+      "PENDING": "Laukia FIRINGI",
+      "ACTIVE": "Aktyvi",
+      "PAUSED": "Pristabdyta",
+      "REJECTED": "Nepatvirtinta",
+      "ENDED": "Baigta"
+    },
+    "reasons": {
+      "SUPPLIER": "pristabdėte jūs",
+      "BUDGET": "biudžetas išnaudotas",
+      "BALANCE": "išankstinio mokėjimo likutis išnaudotas",
+      "FIRINGI": "FIRINGI sprendimu"
+    },
+    "perClickBudget": "{price} už paspaudimą · {budget} per dieną",
+    "perDay": "{price} per dieną (rezervuota)",
+    "formTitle": "Nauja reklama",
+    "formIntro": "Pasirinkite, kur rodomi jūsų produktai, kaip mokate ir kiek laiko. FIRINGI patikrina reklamą prieš jai prasidedant.",
+    "name": "Pavadinimas (mato tik jūs ir FIRINGI)",
+    "where": "Kur rodoma",
+    "whereHint": "nuo {min} už paspaudimą · {day} per dieną · {slots} vietos",
+    "noPlacements": "FIRINGI šiuo metu neturi atvirų reklamos vietų.",
+    "howPay": "Kaip mokate",
+    "cpc": "Už paspaudimą",
+    "cpcHint": "Mokate tik tada, kai pirkėjas atidaro jūsų produktą, iki dienos biudžeto.",
+    "daily": "Už dieną",
+    "dailyHint": "Fiksuota kaina už kiekvieną rezervuotą dieną; rezervuotos reklamos rodomos pirmos.",
+    "products": "Reklamuojami produktai (iki 20)",
+    "searchProducts": "Rasti produktą",
+    "keywords": "Papildomi paieškos žodžiai (neprivaloma, atskirti kableliais)",
+    "keywordsHint": "Jūsų reklama rodoma ir tada, kai pirkėjai ieško šių žodžių.",
+    "category": "Kategorijos puslapis (neprivaloma)",
+    "categoryAny": "Pačių produktų kategorijos",
+    "bid": "Kaina už paspaudimą (€)",
+    "dailyBudget": "Dienos biudžetas (€)",
+    "totalBudget": "Bendras biudžetas (€, neprivaloma)",
+    "startsOn": "Nuo",
+    "endsOn": "Iki",
+    "endsOnOptional": "Iki (neprivaloma)",
+    "dailyCost": "{days} d. × {price} = {total}",
+    "formNote": "Kainos be PVM. Jei pirkėjas netrukus vėl atidaro jūsų reklamą, du kartus neapmokestinama.",
+    "submit": "Siųsti FIRINGI",
+    "submitDirect": "Pradėti reklamą",
+    "pause": "Pristabdyti",
+    "resume": "Tęsti",
+    "end": "Baigti",
+    "changeBudget": "Kaina ir biudžetai",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota",
+    "rejected": "FIRINGI nepatvirtino šios reklamos: {reason}",
+    "revenue": "Tų užsakymų vertė",
+    "productsTitle": "Produktai",
+    "colDay": "Diena",
+    "noDays": "Dar nerodyta.",
+    "billingTitle": "Reklamų sąskaitos",
+    "billingIntro": "Kaip FIRINGI apmokestina jūsų reklamas, buvo suderinta su jumis. Reklamų kainos be PVM; FIRINGI sąskaitose PVM pridedamas, kai jis taikomas.",
+    "billingPAYOUT": "Kiekvieną mėnesį FIRINGI išrašo sąskaitą už jūsų reklamas ir išskaičiuoja sumą iš to, ką jums moka.",
+    "billingPREPAID": "Papildykite likutį banko pavedimu; reklamos rodomos, kol yra likučio. Už kiekvieną papildymą išrašoma sąskaita-kvitas.",
+    "billingINVOICE": "Kiekvieną mėnesį FIRINGI išrašo sąskaitą už jūsų reklamas; apmokėkite iki termino.",
+    "unbilled": "Dar neįtraukta į sąskaitą",
+    "topUpTitle": "Papildyti banko pavedimu",
+    "topUpText": "Perveskite į {iban} su paskirtimi {reference}. FIRINGI pridės sumą (be PVM) prie jūsų likučio, kai ji ateis.",
+    "invoices": "FIRINGI reklamų sąskaitos",
+    "colInvoice": "Sąskaita",
+    "colDate": "Data",
+    "colPeriod": "Laikotarpis",
+    "colTotal": "Iš viso",
+    "colOpen": "Neapmokėta",
+    "topup": "Papildymas",
+    "noInvoices": "Reklamų sąskaitų dar nėra.",
+    "sponsored": "Remiama",
+    "featured": "Išskirta",
+    "alsoNeed": "Jums taip pat gali prireikti"
   }
 }

@@ -841,7 +841,11 @@
     "Planning Settings": "Nastavitve načrtovanja",
     "Quality Claims": "Reklamacije kakovosti",
     "Quality Score": "Ocena kakovosti",
-    "Rewards": "Nagrade"
+    "Rewards": "Nagrade",
+    "Advertising": "Oglaševanje",
+    "My Ads": "Moji Oglasi",
+    "New Ad": "Nov Oglas",
+    "Ad Billing": "Obračun Oglasov"
   },
   "delivery": {
     "title": "Dostava",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus za priporočilo: +{points} točk",
       "body": "Zahvaljujoč priporočilu s podjetjem {company} imate v Nagradah zdaj {points} točk."
+    },
+    "ads_approved": {
+      "title": "Vaš oglas je odobren",
+      "body": "FIRINGI je odobril vaš oglas »{campaign}«. Začne se na začetni datum."
+    },
+    "ads_rejected": {
+      "title": "Vaš oglas ni bil odobren",
+      "body": "FIRINGI ni odobril »{campaign}«: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Vaš oglas se je ustavil",
+      "body": "»{campaign}« se je ustavil: proračun ali predplačano dobroimetje je porabljeno. Dodajte več, da se znova zažene."
+    },
+    "ads_low_balance": {
+      "title": "Dobroimetje za oglase je nizko",
+      "body": "Vaše predplačano dobroimetje za oglase je {balance} €. Napolnite ga, da se oglasi nadaljujejo."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI vabi {company}, da se pridruži njegovi B2B tržnici hrane in potrebščin.",
     "inviteApply": "Prijavite se tukaj: {link}",
     "inviteValid": "Povezava velja {days} dni in jo lahko uporabite enkrat. FIRINGI preveri vsako prijavo, preden odpre račun."
+  },
+  "ads": {
+    "title": "Moji oglasi",
+    "description": "Prikažite svoje izdelke višje na FIRINGI: v rezultatih iskanja, na straneh kategorij, na začetni strani trgovine in v košarici. Kupci jih vidijo z oznako »Sponzorirano«. FIRINGI preveri vsak oglas, preden se začne.",
+    "newAd": "Nov oglas",
+    "spentMonth": "Porabljeno ta mesec",
+    "running": "Aktivni",
+    "balance": "Predplačano dobroimetje",
+    "billing": "Kako FIRINGI zaračunava",
+    "billings": {
+      "PAYOUT": "Odšteto od vaših izplačil",
+      "PREPAID": "Predplačano dobroimetje",
+      "INVOICE": "Mesečni račun"
+    },
+    "noAds": "Oglasov še ni — ustvarite prvega.",
+    "colAd": "Oglas",
+    "colWhere": "Kje",
+    "colPrice": "Cena",
+    "colStatus": "Stanje",
+    "colImpressions": "Prikazano",
+    "colClicks": "Kliki",
+    "colCtr": "Delež klikov",
+    "colSpent": "Porabljeno",
+    "colOrders": "Naročila po kliku",
+    "placements": {
+      "SEARCH": "Rezultati iskanja",
+      "CATEGORY": "Strani kategorij",
+      "HOME": "Začetna stran trgovine",
+      "CART": "Predlogi v košarici"
+    },
+    "statuses": {
+      "PENDING": "Čaka na FIRINGI",
+      "ACTIVE": "Aktiven",
+      "PAUSED": "Zaustavljen",
+      "REJECTED": "Ni odobren",
+      "ENDED": "Končan"
+    },
+    "reasons": {
+      "SUPPLIER": "zaustavili ste ga vi",
+      "BUDGET": "proračun porabljen",
+      "BALANCE": "predplačano dobroimetje porabljeno",
+      "FIRINGI": "s strani FIRINGI"
+    },
+    "perClickBudget": "{price} na klik · {budget} na dan",
+    "perDay": "{price} na dan (rezervirano)",
+    "formTitle": "Nov oglas",
+    "formIntro": "Izberite, kje se prikazujejo vaši izdelki, kako plačate in kako dolgo. FIRINGI preveri oglas, preden se začne.",
+    "name": "Ime (vidite ga le vi in FIRINGI)",
+    "where": "Kje se prikazuje",
+    "whereHint": "od {min} na klik · {day} na dan · {slots} mest",
+    "noPlacements": "FIRINGI trenutno nima odprtih oglasnih mest.",
+    "howPay": "Kako plačate",
+    "cpc": "Na klik",
+    "cpcHint": "Plačate le, ko kupec odpre vaš izdelek, do vašega dnevnega proračuna.",
+    "daily": "Na dan",
+    "dailyHint": "Fiksna cena za vsak rezerviran dan; rezervirani oglasi se prikažejo prvi.",
+    "products": "Izdelki za oglaševanje (do 20)",
+    "searchProducts": "Poišči izdelek",
+    "keywords": "Dodatne iskalne besede (neobvezno, ločene z vejico)",
+    "keywordsHint": "Vaš oglas se prikaže tudi, ko kupci iščejo te besede.",
+    "category": "Stran kategorije (neobvezno)",
+    "categoryAny": "Lastne kategorije izdelkov",
+    "bid": "Cena na klik (€)",
+    "dailyBudget": "Dnevni proračun (€)",
+    "totalBudget": "Skupni proračun (€, neobvezno)",
+    "startsOn": "Od",
+    "endsOn": "Do",
+    "endsOnOptional": "Do (neobvezno)",
+    "dailyCost": "{days} dni × {price} = {total}",
+    "formNote": "Cene brez DDV. Če kupec kmalu znova odpre vaš oglas, se ne zaračuna dvakrat.",
+    "submit": "Pošlji FIRINGI",
+    "submitDirect": "Zaženi oglas",
+    "pause": "Zaustavi",
+    "resume": "Nadaljuj",
+    "end": "Končaj",
+    "changeBudget": "Cena in proračuni",
+    "save": "Shrani",
+    "saved": "Shranjeno",
+    "rejected": "FIRINGI tega oglasa ni odobril: {reason}",
+    "revenue": "Vrednost teh naročil",
+    "productsTitle": "Izdelki",
+    "colDay": "Dan",
+    "noDays": "Še ni prikazan.",
+    "billingTitle": "Obračun oglasov",
+    "billingIntro": "Način, kako FIRINGI zaračunava vaše oglase, je bil dogovorjen z vami. Cene oglasov so brez DDV; računi FIRINGI dodajo DDV, kjer velja.",
+    "billingPAYOUT": "FIRINGI vsak mesec izda račun za vaše oglase in znesek odšteje od tistega, kar vam izplača.",
+    "billingPREPAID": "Dobroimetje napolnite z bančnim nakazilom; oglasi tečejo, dokler je dobroimetje. Za vsako polnitev prejmete račun-potrdilo.",
+    "billingINVOICE": "FIRINGI vsak mesec izda račun za vaše oglase; plačajte do zapadlosti.",
+    "unbilled": "Še ni obračunano",
+    "topUpTitle": "Polnitev z bančnim nakazilom",
+    "topUpText": "Nakažite na {iban} s sklicem {reference}. FIRINGI doda znesek (brez DDV) k vašemu dobroimetju, ko prispe.",
+    "invoices": "Računi FIRINGI za oglase",
+    "colInvoice": "Račun",
+    "colDate": "Datum",
+    "colPeriod": "Obdobje",
+    "colTotal": "Skupaj",
+    "colOpen": "Odprto",
+    "topup": "Polnitev",
+    "noInvoices": "Računov za oglase še ni.",
+    "sponsored": "Sponzorirano",
+    "featured": "Izpostavljeno",
+    "alsoNeed": "Morda potrebujete tudi"
   }
 }

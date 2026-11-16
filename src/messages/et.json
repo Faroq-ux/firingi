@@ -841,7 +841,11 @@
     "Planning Settings": "Planeerimise seaded",
     "Quality Claims": "Kvaliteedipretensioonid",
     "Quality Score": "Kvaliteediskoor",
-    "Rewards": "Preemiad"
+    "Rewards": "Preemiad",
+    "Advertising": "Reklaam",
+    "My Ads": "Minu Reklaamid",
+    "New Ad": "Uus Reklaam",
+    "Ad Billing": "Reklaamide Arveldus"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Soovitusboonus: +{points} punkti",
       "body": "Tänu soovitusele ettevõttega {company} on sul nüüd Preemiates {points} punkti."
+    },
+    "ads_approved": {
+      "title": "Su reklaam on kinnitatud",
+      "body": "FIRINGI kinnitas su reklaami „{campaign}“. See algab alguskuupäeval."
+    },
+    "ads_rejected": {
+      "title": "Su reklaami ei kinnitatud",
+      "body": "FIRINGI ei kinnitanud reklaami „{campaign}“: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Su reklaam peatus",
+      "body": "„{campaign}“ peatus: eelarve või ettemakstud saldo on otsas. Lisa juurde, et see uuesti käivituks."
+    },
+    "ads_low_balance": {
+      "title": "Su reklaamisaldo on madal",
+      "body": "Su ettemakstud reklaamisaldo on {balance} €. Lae seda, et reklaamid jätkuksid."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI kutsub ettevõtet {company} liituma oma toidu- ja tarvikute B2B-turuplatsiga.",
     "inviteApply": "Taotlege siin: {link}",
     "inviteValid": "Link kehtib {days} päeva ja seda saab kasutada üks kord. FIRINGI kontrollib iga taotlust enne konto avamist."
+  },
+  "ads": {
+    "title": "Minu reklaamid",
+    "description": "Näita oma tooteid FIRINGI-s kõrgemal: otsingutulemustes, kategooriate lehtedel, poe avalehel ja ostukorvis. Ostjad näevad neid märgisega „Sponsitud“. FIRINGI kontrollib iga reklaami enne selle algust.",
+    "newAd": "Uus reklaam",
+    "spentMonth": "Sel kuul kulutatud",
+    "running": "Aktiivsed",
+    "balance": "Ettemakstud saldo",
+    "billing": "Kuidas FIRINGI arveldab",
+    "billings": {
+      "PAYOUT": "Arvatakse maha sinu väljamaksetest",
+      "PREPAID": "Ettemakstud saldo",
+      "INVOICE": "Igakuine arve"
+    },
+    "noAds": "Reklaame veel pole — loo esimene.",
+    "colAd": "Reklaam",
+    "colWhere": "Kus",
+    "colPrice": "Hind",
+    "colStatus": "Olek",
+    "colImpressions": "Näidatud",
+    "colClicks": "Klikid",
+    "colCtr": "Klikimäär",
+    "colSpent": "Kulutatud",
+    "colOrders": "Tellimused pärast klikki",
+    "placements": {
+      "SEARCH": "Otsingutulemused",
+      "CATEGORY": "Kategooriate lehed",
+      "HOME": "Poe avaleht",
+      "CART": "Soovitused ostukorvis"
+    },
+    "statuses": {
+      "PENDING": "Ootab FIRINGI-t",
+      "ACTIVE": "Aktiivne",
+      "PAUSED": "Peatatud",
+      "REJECTED": "Pole kinnitatud",
+      "ENDED": "Lõppenud"
+    },
+    "reasons": {
+      "SUPPLIER": "sinu poolt peatatud",
+      "BUDGET": "eelarve otsas",
+      "BALANCE": "ettemakstud saldo otsas",
+      "FIRINGI": "FIRINGI poolt"
+    },
+    "perClickBudget": "{price} kliki kohta · {budget} päevas",
+    "perDay": "{price} päevas (broneeritud)",
+    "formTitle": "Uus reklaam",
+    "formIntro": "Vali, kus su tooted ilmuvad, kuidas maksad ja kui kauaks. FIRINGI kontrollib reklaami enne selle algust.",
+    "name": "Nimi (näed seda ainult sina ja FIRINGI)",
+    "where": "Kus see ilmub",
+    "whereHint": "alates {min} kliki kohta · {day} päevas · {slots} kohta",
+    "noPlacements": "FIRINGI-l pole praegu avatud reklaamikohti.",
+    "howPay": "Kuidas maksad",
+    "cpc": "Kliki kohta",
+    "cpcHint": "Maksad ainult siis, kui ostja su toote avab, kuni su päevaeelarveni.",
+    "daily": "Päeva kohta",
+    "dailyHint": "Kindel hind iga broneeritud päeva eest; broneeritud reklaamid ilmuvad esimesena.",
+    "products": "Reklaamitavad tooted (kuni 20)",
+    "searchProducts": "Otsi toodet",
+    "keywords": "Lisaotsingusõnad (valikuline, komaga eraldatud)",
+    "keywordsHint": "Su reklaam ilmub ka siis, kui ostjad neid sõnu otsivad.",
+    "category": "Kategooria leht (valikuline)",
+    "categoryAny": "Toodete enda kategooriad",
+    "bid": "Hind kliki kohta (€)",
+    "dailyBudget": "Päevaeelarve (€)",
+    "totalBudget": "Koguelarve (€, valikuline)",
+    "startsOn": "Alates",
+    "endsOn": "Kuni",
+    "endsOnOptional": "Kuni (valikuline)",
+    "dailyCost": "{days} päeva × {price} = {total}",
+    "formNote": "Hinnad ilma käibemaksuta. Kui ostja avab su reklaami peagi uuesti, ei võeta tasu kaks korda.",
+    "submit": "Saada FIRINGI-le",
+    "submitDirect": "Käivita reklaam",
+    "pause": "Peata",
+    "resume": "Jätka",
+    "end": "Lõpeta",
+    "changeBudget": "Hind ja eelarved",
+    "save": "Salvesta",
+    "saved": "Salvestatud",
+    "rejected": "FIRINGI ei kinnitanud seda reklaami: {reason}",
+    "revenue": "Nende tellimuste väärtus",
+    "productsTitle": "Tooted",
+    "colDay": "Päev",
+    "noDays": "Veel pole näidatud.",
+    "billingTitle": "Reklaamide arveldus",
+    "billingIntro": "Kuidas FIRINGI sinu reklaamide eest arveldab, lepiti sinuga kokku. Reklaamihinnad on ilma käibemaksuta; FIRINGI arvetele lisandub käibemaks, kui see kehtib.",
+    "billingPAYOUT": "FIRINGI esitab igal kuul su reklaamide eest arve ja arvab summa maha sellest, mida sulle maksab.",
+    "billingPREPAID": "Lae saldot pangaülekandega; su reklaamid töötavad, kuni saldot jätkub. Iga laadimise kohta väljastatakse arve-kviitung.",
+    "billingINVOICE": "FIRINGI esitab igal kuul su reklaamide eest arve; maksa tähtajaks.",
+    "unbilled": "Veel arveldamata",
+    "topUpTitle": "Laadi pangaülekandega",
+    "topUpText": "Kanna summa kontole {iban} selgitusega {reference}. FIRINGI lisab summa (ilma käibemaksuta) su saldole, kui see laekub.",
+    "invoices": "FIRINGI reklaamiarved",
+    "colInvoice": "Arve",
+    "colDate": "Kuupäev",
+    "colPeriod": "Periood",
+    "colTotal": "Kokku",
+    "colOpen": "Tasumata",
+    "topup": "Laadimine",
+    "noInvoices": "Reklaamiarveid veel pole.",
+    "sponsored": "Sponsitud",
+    "featured": "Esiletõstetud",
+    "alsoNeed": "Võib-olla vajad ka"
   }
 }

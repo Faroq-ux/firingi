@@ -454,3 +454,26 @@ export async function visibleVendorIds(ctx: Ctx) {
   const scope = await buyerScope(ctx);
   return (await prisma.vendorOffer.groupBy({ by: ["vendorCompanyId"], where: visibleOfferWhere(scope) })).map((g) => g.vendorCompanyId);
 }
+
+/**
+ * Phase 34 (sponsored products): the given offers as this buyer would see them — only those visible to
+ * the buyer (market, supplier area, restrictions, active), priced for the buyer, with badges.
+ * `matching` keeps only offers that match a search text.
+ */
+export async function presentOffers(ctx: Ctx, offerIds: string[], opts: { matching?: string | null; categoryIds?: string[] | null } = {}) {
+  if (!offerIds.length) return [];
+  const scope = await buyerScope(ctx);
+  const categoryIds = opts.categoryIds ? opts.categoryIds.flatMap((c) => withDescendants(c, scope.info)) : null;
+  const rows = await prisma.vendorOffer.findMany({
+    where: {
+      AND: [
+        visibleOfferWhere(scope), { id: { in: offerIds } },
+        opts.matching ? productQueryWhere(opts.matching) : {},
+        categoryIds ? { packaging: { variant: { product: { categoryId: { in: categoryIds } } } } } : {},
+      ],
+    },
+    include: offerInclude(scope),
+  });
+  const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))]), promoMatcher(ctx, scope)]);
+  return withBadges(rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn)));
+}

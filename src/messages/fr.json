@@ -841,7 +841,11 @@
     "Planning Settings": "Paramètres de planification",
     "Quality Claims": "Réclamations qualité",
     "Quality Score": "Indice qualité",
-    "Rewards": "Récompenses"
+    "Rewards": "Récompenses",
+    "Advertising": "Publicité",
+    "My Ads": "Mes Annonces",
+    "New Ad": "Nouvelle Annonce",
+    "Ad Billing": "Facturation des Annonces"
   },
   "delivery": {
     "title": "Livraison",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus de parrainage : +{points} points",
       "body": "Grâce au parrainage avec {company}, {points} points sont maintenant dans vos Récompenses."
+    },
+    "ads_approved": {
+      "title": "Votre annonce est approuvée",
+      "body": "FIRINGI a approuvé votre annonce « {campaign} ». Elle démarre à sa date de début."
+    },
+    "ads_rejected": {
+      "title": "Votre annonce n'a pas été approuvée",
+      "body": "FIRINGI n'a pas approuvé « {campaign} » : {reason}"
+    },
+    "ads_stopped": {
+      "title": "Votre annonce s'est arrêtée",
+      "body": "« {campaign} » s'est arrêtée : son budget ou votre solde prépayé est épuisé. Ajoutez-en pour la relancer."
+    },
+    "ads_low_balance": {
+      "title": "Votre solde publicitaire est bas",
+      "body": "Votre solde publicitaire prépayé est de {balance} €. Rechargez-le pour que vos annonces continuent."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI invite {company} à rejoindre sa place de marché B2B pour l'alimentation et les fournitures.",
     "inviteApply": "Postulez ici : {link}",
     "inviteValid": "Le lien est valable {days} jours et ne peut servir qu'une fois. FIRINGI vérifie chaque candidature avant d'ouvrir le compte."
+  },
+  "ads": {
+    "title": "Mes annonces",
+    "description": "Placez vos produits plus haut sur FIRINGI : dans les résultats de recherche, sur les pages de catégorie, sur l'accueil de la boutique et dans le panier. Les acheteurs les voient marqués « Sponsorisé ». FIRINGI vérifie chaque annonce avant son lancement.",
+    "newAd": "Nouvelle annonce",
+    "spentMonth": "Dépensé ce mois-ci",
+    "running": "Actives",
+    "balance": "Solde prépayé",
+    "billing": "Mode de facturation FIRINGI",
+    "billings": {
+      "PAYOUT": "Déduit de vos versements",
+      "PREPAID": "Solde prépayé",
+      "INVOICE": "Facture mensuelle"
+    },
+    "noAds": "Pas encore d'annonces — créez la première.",
+    "colAd": "Annonce",
+    "colWhere": "Où",
+    "colPrice": "Prix",
+    "colStatus": "Statut",
+    "colImpressions": "Affichée",
+    "colClicks": "Clics",
+    "colCtr": "Taux de clics",
+    "colSpent": "Dépensé",
+    "colOrders": "Commandes après un clic",
+    "placements": {
+      "SEARCH": "Résultats de recherche",
+      "CATEGORY": "Pages de catégorie",
+      "HOME": "Accueil de la boutique",
+      "CART": "Suggestions du panier"
+    },
+    "statuses": {
+      "PENDING": "En attente de FIRINGI",
+      "ACTIVE": "Active",
+      "PAUSED": "En pause",
+      "REJECTED": "Non approuvée",
+      "ENDED": "Terminée"
+    },
+    "reasons": {
+      "SUPPLIER": "mise en pause par vous",
+      "BUDGET": "budget épuisé",
+      "BALANCE": "solde prépayé épuisé",
+      "FIRINGI": "par FIRINGI"
+    },
+    "perClickBudget": "{price} par clic · {budget} par jour",
+    "perDay": "{price} par jour (réservé)",
+    "formTitle": "Nouvelle annonce",
+    "formIntro": "Choisissez où vos produits apparaissent, comment vous payez et pour combien de temps. FIRINGI vérifie l'annonce avant son lancement.",
+    "name": "Nom (visible par vous et FIRINGI seulement)",
+    "where": "Où elle apparaît",
+    "whereHint": "à partir de {min} par clic · {day} par jour · {slots} emplacements",
+    "noPlacements": "FIRINGI n'a aucun emplacement publicitaire ouvert pour le moment.",
+    "howPay": "Comment vous payez",
+    "cpc": "Au clic",
+    "cpcHint": "Vous ne payez que lorsqu'un acheteur ouvre votre produit, dans la limite de votre budget quotidien.",
+    "daily": "À la journée",
+    "dailyHint": "Un prix fixe par jour réservé ; les annonces réservées apparaissent en premier.",
+    "products": "Produits à promouvoir (20 maximum)",
+    "searchProducts": "Chercher un produit",
+    "keywords": "Mots de recherche supplémentaires (facultatif, séparés par des virgules)",
+    "keywordsHint": "Votre annonce apparaît aussi quand les acheteurs cherchent ces mots.",
+    "category": "Page de catégorie (facultatif)",
+    "categoryAny": "Les catégories des produits eux-mêmes",
+    "bid": "Prix par clic (€)",
+    "dailyBudget": "Budget quotidien (€)",
+    "totalBudget": "Budget total (€, facultatif)",
+    "startsOn": "Du",
+    "endsOn": "Au",
+    "endsOnOptional": "Au (facultatif)",
+    "dailyCost": "{days} jours × {price} = {total}",
+    "formNote": "Prix hors TVA. Un acheteur qui rouvre votre annonce peu après n'est pas facturé deux fois.",
+    "submit": "Envoyer à FIRINGI",
+    "submitDirect": "Lancer l'annonce",
+    "pause": "Mettre en pause",
+    "resume": "Reprendre",
+    "end": "Terminer",
+    "changeBudget": "Prix et budgets",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "rejected": "FIRINGI n'a pas approuvé cette annonce : {reason}",
+    "revenue": "Valeur de ces commandes",
+    "productsTitle": "Produits",
+    "colDay": "Jour",
+    "noDays": "Pas encore affichée.",
+    "billingTitle": "Facturation des annonces",
+    "billingIntro": "Le mode de facturation de vos annonces a été convenu avec vous. Les prix des annonces sont hors TVA ; les factures de FIRINGI ajoutent la TVA lorsqu'elle s'applique.",
+    "billingPAYOUT": "Chaque mois, FIRINGI facture vos annonces et déduit le montant de ce qu'elle vous verse.",
+    "billingPREPAID": "Rechargez votre solde par virement ; vos annonces tournent tant qu'il reste du solde. Chaque recharge reçoit une facture-reçu.",
+    "billingINVOICE": "Chaque mois, FIRINGI facture vos annonces ; payez avant l'échéance.",
+    "unbilled": "Pas encore facturé",
+    "topUpTitle": "Recharger par virement",
+    "topUpText": "Virez sur {iban} avec la référence {reference}. FIRINGI ajoute le montant (hors TVA) à votre solde à réception.",
+    "invoices": "Factures d'annonces de FIRINGI",
+    "colInvoice": "Facture",
+    "colDate": "Date",
+    "colPeriod": "Période",
+    "colTotal": "Total",
+    "colOpen": "Restant dû",
+    "topup": "Recharge",
+    "noInvoices": "Pas encore de factures d'annonces.",
+    "sponsored": "Sponsorisé",
+    "featured": "À la une",
+    "alsoNeed": "Vous aurez peut-être aussi besoin de"
   }
 }

@@ -64,6 +64,9 @@ export async function invoiceForViewer(ctx: Ctx, id: string) {
   });
   if (!inv || inv.status === "DRAFT") throw new NotFoundError("Invoice");
   let mine = inv.recipientCompanyId === ctx.company.id && can(ctx, ["buyer.invoices.view", "buyer.payments.view"]);
+  // Phase 34: FIRINGI's service invoices to a supplier (advertising) — no order behind them.
+  const serviceToSupplier = inv.recipientCompanyId === ctx.company.id && !inv.orderId && can(ctx, ["vendor.invoices.view", "vendor.promotions.manage"]);
+  if (serviceToSupplier) return inv;
   if (mine) {
     const { branchScope } = await import("@/server/multisite/branches");
     const s = await branchScope(ctx);

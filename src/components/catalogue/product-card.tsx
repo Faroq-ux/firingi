@@ -21,12 +21,14 @@ export function ProductThumb({ productId, hasImage, className = "" }: { productI
   );
 }
 
-export async function ProductCard({ item, hasImage, showVendor = true }: { item: CatalogueItem; hasImage: boolean; showVendor?: boolean }) {
+/** `sponsored` (Phase 34): the "Sponsored" label and a link through the ad click counter. */
+export async function ProductCard({ item, hasImage, showVendor = true, sponsored }: { item: CatalogueItem; hasImage: boolean; showVendor?: boolean; sponsored?: { href: string; label: string } }) {
   const [t, locale] = await Promise.all([getTranslations("catalogue"), getLocale()]);
   return (
-    <Link href={`/buy/catalogue/offers/${item.offerId}`} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
+    <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
         <ProductThumb productId={item.productId} hasImage={hasImage} className="h-36 w-full transition-transform duration-500 group-hover:scale-105" />
+        {sponsored && <span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur" data-testid="sponsored-label">{sponsored.label}</span>}
       </div>
       <div className="flex flex-1 flex-col gap-1.5 p-3">
         <div className="text-xs text-muted-foreground">{item.brand ?? pickLocalized(item.category.name, locale)}</div>

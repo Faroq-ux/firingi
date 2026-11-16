@@ -10,10 +10,10 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "@/server/services/audit";
 
-export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT", "ASSISTANT_PHOTOS", "LOYALTY"] as const;
+export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT", "ASSISTANT_PHOTOS", "LOYALTY", "ADS"] as const;
 export type CompanyFeatureKey = (typeof COMPANY_FEATURES)[number];
 /** On for every company unless FIRINGI switched it off (the Assistant is the support & sales channel). */
-const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true, ASSISTANT_PHOTOS: true, LOYALTY: true };
+const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true, ASSISTANT_PHOTOS: true, LOYALTY: true, ADS: true };
 
 export async function companyFeatureOn(companyId: string, key: CompanyFeatureKey) {
   const row = await prisma.companyFeature.findUnique({ where: { companyId_key: { companyId, key } } });
@@ -38,6 +38,7 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     const s = await aiSettings();
     if (!(portal === "buy" ? s.buyers : s.suppliers)) off.add("ASSISTANT");
     if (portal === "buy" && !(await (await import("@/server/loyalty/service")).loyaltySettings()).enabled) off.add("LOYALTY");
+    if (portal === "vendor" && !(await (await import("@/server/ads/service")).adsSettings()).enabled) off.add("ADS");
   }
   return off;
 }
@@ -60,6 +61,7 @@ export async function companiesWithFeatures(ctx: Ctx) {
     assistant: c.features.find((f) => f.key === "ASSISTANT")?.enabled ?? DEFAULT_ON.ASSISTANT,
     photos: c.features.find((f) => f.key === "ASSISTANT_PHOTOS")?.enabled ?? DEFAULT_ON.ASSISTANT_PHOTOS,
     loyalty: c.type === "DISTRIBUTOR" ? null : c.features.find((f) => f.key === "LOYALTY")?.enabled ?? DEFAULT_ON.LOYALTY,
+    ads: c.type === "CUSTOMER" ? null : c.features.find((f) => f.key === "ADS")?.enabled ?? DEFAULT_ON.ADS,
   }));
 }
 

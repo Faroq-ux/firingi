@@ -841,7 +841,11 @@
     "Planning Settings": "Nastavení plánování",
     "Quality Claims": "Reklamace kvality",
     "Quality Score": "Skóre kvality",
-    "Rewards": "Odměny"
+    "Rewards": "Odměny",
+    "Advertising": "Reklama",
+    "My Ads": "Moje Reklamy",
+    "New Ad": "Nová Reklama",
+    "Ad Billing": "Fakturace Reklam"
   },
   "delivery": {
     "title": "Doručení",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus za doporučení: +{points} bodů",
       "body": "Díky doporučení s firmou {company} máte nyní v Odměnách {points} bodů."
+    },
+    "ads_approved": {
+      "title": "Vaše reklama je schválena",
+      "body": "FIRINGI schválila vaši reklamu „{campaign}“. Běží od data zahájení."
+    },
+    "ads_rejected": {
+      "title": "Vaše reklama nebyla schválena",
+      "body": "FIRINGI neschválila „{campaign}“: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Vaše reklama se zastavila",
+      "body": "„{campaign}“ se zastavila: rozpočet nebo předplacený zůstatek je vyčerpán. Doplňte ho a poběží znovu."
+    },
+    "ads_low_balance": {
+      "title": "Zůstatek na reklamy je nízký",
+      "body": "Váš předplacený zůstatek na reklamy je {balance} €. Dobijte ho, aby reklamy běžely dál."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI zve {company} do svého B2B tržiště potravin a spotřebního zboží.",
     "inviteApply": "Přihlaste se zde: {link}",
     "inviteValid": "Odkaz platí {days} dní a lze ho použít jednou. FIRINGI každou přihlášku zkontroluje, než účet otevře."
+  },
+  "ads": {
+    "title": "Moje reklamy",
+    "description": "Zobrazte své produkty výš na FIRINGI: ve výsledcích hledání, na stránkách kategorií, na úvodní stránce obchodu a v košíku. Kupující je vidí označené jako „Sponzorováno“. FIRINGI každou reklamu před spuštěním zkontroluje.",
+    "newAd": "Nová reklama",
+    "spentMonth": "Utraceno tento měsíc",
+    "running": "Aktivní",
+    "balance": "Předplacený zůstatek",
+    "billing": "Jak FIRINGI účtuje",
+    "billings": {
+      "PAYOUT": "Odečteno z vašich výplat",
+      "PREPAID": "Předplacený zůstatek",
+      "INVOICE": "Měsíční faktura"
+    },
+    "noAds": "Zatím žádné reklamy — vytvořte první.",
+    "colAd": "Reklama",
+    "colWhere": "Kde",
+    "colPrice": "Cena",
+    "colStatus": "Stav",
+    "colImpressions": "Zobrazeno",
+    "colClicks": "Kliknutí",
+    "colCtr": "Míra prokliku",
+    "colSpent": "Utraceno",
+    "colOrders": "Objednávky po kliknutí",
+    "placements": {
+      "SEARCH": "Výsledky hledání",
+      "CATEGORY": "Stránky kategorií",
+      "HOME": "Úvodní stránka obchodu",
+      "CART": "Návrhy v košíku"
+    },
+    "statuses": {
+      "PENDING": "Čeká na FIRINGI",
+      "ACTIVE": "Aktivní",
+      "PAUSED": "Pozastaveno",
+      "REJECTED": "Neschváleno",
+      "ENDED": "Ukončeno"
+    },
+    "reasons": {
+      "SUPPLIER": "pozastaveno vámi",
+      "BUDGET": "rozpočet vyčerpán",
+      "BALANCE": "předplacený zůstatek vyčerpán",
+      "FIRINGI": "ze strany FIRINGI"
+    },
+    "perClickBudget": "{price} za kliknutí · {budget} denně",
+    "perDay": "{price} za den (rezervováno)",
+    "formTitle": "Nová reklama",
+    "formIntro": "Zvolte, kde se vaše produkty zobrazí, jak platíte a na jak dlouho. FIRINGI reklamu před spuštěním zkontroluje.",
+    "name": "Název (vidíte ho jen vy a FIRINGI)",
+    "where": "Kde se zobrazí",
+    "whereHint": "od {min} za kliknutí · {day} za den · {slots} míst",
+    "noPlacements": "FIRINGI teď nemá otevřená žádná reklamní místa.",
+    "howPay": "Jak platíte",
+    "cpc": "Za kliknutí",
+    "cpcHint": "Platíte jen tehdy, když kupující otevře váš produkt, až do denního rozpočtu.",
+    "daily": "Za den",
+    "dailyHint": "Pevná cena za každý rezervovaný den; rezervované reklamy se zobrazují první.",
+    "products": "Propagované produkty (až 20)",
+    "searchProducts": "Hledat produkt",
+    "keywords": "Další hledaná slova (nepovinné, oddělená čárkou)",
+    "keywordsHint": "Vaše reklama se zobrazí i tehdy, když kupující hledají tato slova.",
+    "category": "Stránka kategorie (nepovinné)",
+    "categoryAny": "Vlastní kategorie produktů",
+    "bid": "Cena za kliknutí (€)",
+    "dailyBudget": "Denní rozpočet (€)",
+    "totalBudget": "Celkový rozpočet (€, nepovinné)",
+    "startsOn": "Od",
+    "endsOn": "Do",
+    "endsOnOptional": "Do (nepovinné)",
+    "dailyCost": "{days} dní × {price} = {total}",
+    "formNote": "Ceny bez DPH. Když kupující vaši reklamu krátce nato otevře znovu, neúčtuje se dvakrát.",
+    "submit": "Odeslat FIRINGI",
+    "submitDirect": "Spustit reklamu",
+    "pause": "Pozastavit",
+    "resume": "Pokračovat",
+    "end": "Ukončit",
+    "changeBudget": "Cena a rozpočty",
+    "save": "Uložit",
+    "saved": "Uloženo",
+    "rejected": "FIRINGI tuto reklamu neschválila: {reason}",
+    "revenue": "Hodnota těchto objednávek",
+    "productsTitle": "Produkty",
+    "colDay": "Den",
+    "noDays": "Zatím nezobrazeno.",
+    "billingTitle": "Fakturace reklam",
+    "billingIntro": "Způsob, jakým FIRINGI účtuje vaše reklamy, byl s vámi dohodnut. Ceny reklam jsou bez DPH; faktury FIRINGI připočítávají DPH tam, kde se uplatní.",
+    "billingPAYOUT": "FIRINGI každý měsíc vyfakturuje vaše reklamy a odečte částku z toho, co vám vyplácí.",
+    "billingPREPAID": "Dobijte zůstatek bankovním převodem; reklamy běží, dokud je zůstatek. Ke každému dobití se vystaví faktura s potvrzením o zaplacení.",
+    "billingINVOICE": "FIRINGI každý měsíc vyfakturuje vaše reklamy; zaplaťte do splatnosti.",
+    "unbilled": "Zatím nevyfakturováno",
+    "topUpTitle": "Dobití bankovním převodem",
+    "topUpText": "Pošlete převod na {iban} s variabilním údajem {reference}. FIRINGI připíše částku (bez DPH) k vašemu zůstatku, jakmile dorazí.",
+    "invoices": "Faktury za reklamy od FIRINGI",
+    "colInvoice": "Faktura",
+    "colDate": "Datum",
+    "colPeriod": "Období",
+    "colTotal": "Celkem",
+    "colOpen": "Nezaplaceno",
+    "topup": "Dobití",
+    "noInvoices": "Zatím žádné faktury za reklamy.",
+    "sponsored": "Sponzorováno",
+    "featured": "Doporučujeme",
+    "alsoNeed": "Mohlo by se vám hodit i"
   }
 }

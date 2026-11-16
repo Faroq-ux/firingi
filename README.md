@@ -662,6 +662,35 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Sponsored products (Phase 34)
+
+Suppliers (wholesalers, distributors) pay FIRINGI to show their products higher up. Code: `src/server/ads/service.ts`.
+- **Placements** — search results, category pages, shop home ("Featured"), cart suggestions ("You may also need").
+  FIRINGI switches each on or off and sets its slots, minimum price per click and price per day
+  (*Marketing › Sponsored Products*). Buyers see the products marked **"Sponsored"** (25 languages); no ads in
+  "order from FIRINGI" countries (suppliers aren't shown there) and never to the advertiser itself.
+- **Pricing, chosen per campaign** — *per click* (bid ≥ the minimum, daily budget, optional total budget; a buyer
+  clicking the same ad again within the repeat window — default 30 min — isn't charged again) or *per day*
+  (fixed price per booked day, start and end; a placement can't be booked by more campaigns than it has slots;
+  booked days are paid whether or not anyone clicks). Booked ads show first, then per-click ads by bid. Prices
+  exclude VAT. Search ads also show for the supplier's extra search words; category ads for a chosen category
+  (or the products' own); cart ads for products in the same category as something in the cart.
+- **FIRINGI approves** each campaign (can be switched off), can pause or end any; the supplier is notified
+  (approved / not approved / stopped / low balance — 25 languages).
+- **Billing — agreed per supplier, set by FIRINGI** (*Advertisers & billing*): **deducted from payouts** (a monthly ad
+  invoice, settled against FIRINGI's open payable to the supplier: a confirmed inbound payment to the ad invoice and
+  an outbound payment of the same amount to the supplier's invoices, reference "Compensação"), **prepaid balance**
+  (FIRINGI records each transfer → an invoice-receipt is issued and the net amount added; ads stop when it's used
+  up) or **monthly invoice** (normal terms). A remaining prepaid balance is always used first. Ad invoices are FIRINGI
+  service invoices (no order): the FIRINGI entity of the supplier's country with its standard VAT rate, or the main
+  entity under the EU reverse charge for a supplier in another EU country. Monthly invoices go out on the 1st
+  (hourly job `/api/cron/ads`) or with *Invoice ad costs now*.
+- **Supplier pages** (*Advertising*, 25 languages): my ads with results (shown, clicks, click rate, spent, orders by
+  buyers within 7 days after a click), new ad (cost of a booking shown before sending), ad page (pause / resume /
+  end, change price and budgets), ad billing (method, balance, how to top up, FIRINGI's ad invoices with PDF).
+- **Switches**: global + per placement (FIRINGI), per supplier (*Business Features › Advertising*).
+- Tests: `tests/integration/ads.test.ts`, browser `tests/e2e/ads.mjs`. Screenshots `docs/screenshots/ads-0*.png`.
+
 ## Launch readiness & pilot (Phase 33)
 
 Everything needed to go from this code to real customers. The step-by-step guide is **`docs/launch.md`**.

@@ -841,7 +841,11 @@
     "Planning Settings": "Planeringsinställningar",
     "Quality Claims": "Kvalitetsreklamationer",
     "Quality Score": "Kvalitetsbetyg",
-    "Rewards": "Belöningar"
+    "Rewards": "Belöningar",
+    "Advertising": "Annonsering",
+    "My Ads": "Mina Annonser",
+    "New Ad": "Ny Annons",
+    "Ad Billing": "Annonsfakturering"
   },
   "delivery": {
     "title": "Leverans",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Värvningsbonus: +{points} poäng",
       "body": "Tack vare din inbjudan med {company} finns nu {points} poäng under dina Belöningar."
+    },
+    "ads_approved": {
+      "title": "Din annons är godkänd",
+      "body": "FIRINGI har godkänt din annons ”{campaign}”. Den visas från startdatumet."
+    },
+    "ads_rejected": {
+      "title": "Din annons godkändes inte",
+      "body": "FIRINGI godkände inte ”{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Din annons har stoppats",
+      "body": "”{campaign}” har stoppats: budgeten eller ditt förbetalda saldo är slut. Fyll på för att starta den igen."
+    },
+    "ads_low_balance": {
+      "title": "Ditt annonssaldo är lågt",
+      "body": "Ditt förbetalda annonssaldo är {balance} €. Fyll på så att dina annonser fortsätter."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI bjuder in {company} till sin B2B-marknadsplats för livsmedel och förnödenheter.",
     "inviteApply": "Ansök här: {link}",
     "inviteValid": "Länken gäller i {days} dagar och kan användas en gång. FIRINGI granskar varje ansökan innan kontot öppnas."
+  },
+  "ads": {
+    "title": "Mina annonser",
+    "description": "Visa dina produkter högre upp på FIRINGI: i sökresultat, på kategorisidor, på butikens startsida och i varukorgen. Köpare ser dem märkta ”Sponsrad”. FIRINGI granskar varje annons innan den startar.",
+    "newAd": "Ny annons",
+    "spentMonth": "Spenderat denna månad",
+    "running": "Aktiva",
+    "balance": "Förbetalt saldo",
+    "billing": "Så tar FIRINGI betalt",
+    "billings": {
+      "PAYOUT": "Dras av från dina utbetalningar",
+      "PREPAID": "Förbetalt saldo",
+      "INVOICE": "Månadsfaktura"
+    },
+    "noAds": "Inga annonser ännu — skapa den första.",
+    "colAd": "Annons",
+    "colWhere": "Var",
+    "colPrice": "Pris",
+    "colStatus": "Status",
+    "colImpressions": "Visad",
+    "colClicks": "Klick",
+    "colCtr": "Klickfrekvens",
+    "colSpent": "Spenderat",
+    "colOrders": "Beställningar efter klick",
+    "placements": {
+      "SEARCH": "Sökresultat",
+      "CATEGORY": "Kategorisidor",
+      "HOME": "Butikens startsida",
+      "CART": "Förslag i varukorgen"
+    },
+    "statuses": {
+      "PENDING": "Väntar på FIRINGI",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "Pausad",
+      "REJECTED": "Inte godkänd",
+      "ENDED": "Avslutad"
+    },
+    "reasons": {
+      "SUPPLIER": "pausad av dig",
+      "BUDGET": "budgeten slut",
+      "BALANCE": "förbetalt saldo slut",
+      "FIRINGI": "av FIRINGI"
+    },
+    "perClickBudget": "{price} per klick · {budget} per dag",
+    "perDay": "{price} per dag (bokad)",
+    "formTitle": "Ny annons",
+    "formIntro": "Välj var dina produkter visas, hur du betalar och hur länge. FIRINGI granskar annonsen innan den startar.",
+    "name": "Namn (bara du och FIRINGI ser det)",
+    "where": "Var den visas",
+    "whereHint": "från {min} per klick · {day} per dag · {slots} platser",
+    "noPlacements": "FIRINGI har inga öppna annonsplatser just nu.",
+    "howPay": "Så betalar du",
+    "cpc": "Per klick",
+    "cpcHint": "Du betalar bara när en köpare öppnar din produkt, upp till din dagsbudget.",
+    "daily": "Per dag",
+    "dailyHint": "Ett fast pris för varje bokad dag; bokade annonser visas först.",
+    "products": "Produkter att annonsera (upp till 20)",
+    "searchProducts": "Hitta en produkt",
+    "keywords": "Extra sökord (valfritt, kommaseparerade)",
+    "keywordsHint": "Din annons visas också när köpare söker på dessa ord.",
+    "category": "Kategorisida (valfritt)",
+    "categoryAny": "Produkternas egna kategorier",
+    "bid": "Pris per klick (€)",
+    "dailyBudget": "Dagsbudget (€)",
+    "totalBudget": "Total budget (€, valfritt)",
+    "startsOn": "Från",
+    "endsOn": "Till",
+    "endsOnOptional": "Till (valfritt)",
+    "dailyCost": "{days} dagar × {price} = {total}",
+    "formNote": "Priser exkl. moms. Öppnar en köpare din annons igen strax efter debiteras du inte två gånger.",
+    "submit": "Skicka till FIRINGI",
+    "submitDirect": "Starta annonsen",
+    "pause": "Pausa",
+    "resume": "Återuppta",
+    "end": "Avsluta",
+    "changeBudget": "Pris och budgetar",
+    "save": "Spara",
+    "saved": "Sparat",
+    "rejected": "FIRINGI godkände inte den här annonsen: {reason}",
+    "revenue": "Värdet av dessa beställningar",
+    "productsTitle": "Produkter",
+    "colDay": "Dag",
+    "noDays": "Inte visad ännu.",
+    "billingTitle": "Annonsfakturering",
+    "billingIntro": "Hur FIRINGI tar betalt för dina annonser har avtalats med dig. Annonspriser är exkl. moms; FIRINGI:s fakturor lägger på moms där det gäller.",
+    "billingPAYOUT": "Varje månad fakturerar FIRINGI dina annonser och drar av beloppet från det den betalar dig.",
+    "billingPREPAID": "Fyll på saldot via banköverföring; dina annonser visas så länge det finns saldo. Varje påfyllning får en faktura-kvitto.",
+    "billingINVOICE": "Varje månad fakturerar FIRINGI dina annonser; betala senast förfallodagen.",
+    "unbilled": "Ännu inte fakturerat",
+    "topUpTitle": "Fyll på via banköverföring",
+    "topUpText": "För över till {iban} med referensen {reference}. FIRINGI lägger till beloppet (exkl. moms) på ditt saldo när det kommit in.",
+    "invoices": "FIRINGI:s annonsfakturor",
+    "colInvoice": "Faktura",
+    "colDate": "Datum",
+    "colPeriod": "Period",
+    "colTotal": "Totalt",
+    "colOpen": "Obetalt",
+    "topup": "Påfyllning",
+    "noInvoices": "Inga annonsfakturor ännu.",
+    "sponsored": "Sponsrad",
+    "featured": "Utvalt",
+    "alsoNeed": "Du kan också behöva"
   }
 }

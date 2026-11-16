@@ -841,7 +841,11 @@
     "Planning Settings": "Ustawienia planowania",
     "Quality Claims": "Reklamacje jakościowe",
     "Quality Score": "Wskaźnik jakości",
-    "Rewards": "Nagrody"
+    "Rewards": "Nagrody",
+    "Advertising": "Reklama",
+    "My Ads": "Moje Reklamy",
+    "New Ad": "Nowa Reklama",
+    "Ad Billing": "Rozliczenia Reklam"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Bonus za polecenie: +{points} punktów",
       "body": "Dzięki poleceniu z firmą {company} masz teraz {points} punktów w Nagrodach."
+    },
+    "ads_approved": {
+      "title": "Twoja reklama została zatwierdzona",
+      "body": "FIRINGI zatwierdziło Twoją reklamę „{campaign}”. Działa od daty rozpoczęcia."
+    },
+    "ads_rejected": {
+      "title": "Twoja reklama nie została zatwierdzona",
+      "body": "FIRINGI nie zatwierdziło „{campaign}”: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Twoja reklama została zatrzymana",
+      "body": "„{campaign}” zatrzymała się: wyczerpał się budżet lub saldo przedpłacone. Dodaj więcej, by znów działała."
+    },
+    "ads_low_balance": {
+      "title": "Niskie saldo reklam",
+      "body": "Twoje przedpłacone saldo reklam wynosi {balance} €. Doładuj je, by reklamy dalej działały."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI zaprasza {company} do swojej platformy B2B z żywnością i zaopatrzeniem.",
     "inviteApply": "Zgłoś się tutaj: {link}",
     "inviteValid": "Link jest ważny {days} dni i można go użyć raz. FIRINGI sprawdza każde zgłoszenie przed otwarciem konta."
+  },
+  "ads": {
+    "title": "Moje reklamy",
+    "description": "Pokazuj swoje produkty wyżej w FIRINGI: w wynikach wyszukiwania, na stronach kategorii, na stronie głównej sklepu i w koszyku. Kupujący widzą je z oznaczeniem „Sponsorowane”. FIRINGI sprawdza każdą reklamę przed jej uruchomieniem.",
+    "newAd": "Nowa reklama",
+    "spentMonth": "Wydano w tym miesiącu",
+    "running": "Aktywne",
+    "balance": "Saldo przedpłacone",
+    "billing": "Jak FIRINGI pobiera opłaty",
+    "billings": {
+      "PAYOUT": "Potrącane z Twoich wypłat",
+      "PREPAID": "Saldo przedpłacone",
+      "INVOICE": "Faktura miesięczna"
+    },
+    "noAds": "Nie ma jeszcze reklam — utwórz pierwszą.",
+    "colAd": "Reklama",
+    "colWhere": "Gdzie",
+    "colPrice": "Cena",
+    "colStatus": "Status",
+    "colImpressions": "Wyświetlenia",
+    "colClicks": "Kliknięcia",
+    "colCtr": "Współczynnik kliknięć",
+    "colSpent": "Wydano",
+    "colOrders": "Zamówienia po kliknięciu",
+    "placements": {
+      "SEARCH": "Wyniki wyszukiwania",
+      "CATEGORY": "Strony kategorii",
+      "HOME": "Strona główna sklepu",
+      "CART": "Propozycje w koszyku"
+    },
+    "statuses": {
+      "PENDING": "Czeka na FIRINGI",
+      "ACTIVE": "Aktywna",
+      "PAUSED": "Wstrzymana",
+      "REJECTED": "Nie zatwierdzona",
+      "ENDED": "Zakończona"
+    },
+    "reasons": {
+      "SUPPLIER": "wstrzymana przez Ciebie",
+      "BUDGET": "budżet wyczerpany",
+      "BALANCE": "saldo przedpłacone wyczerpane",
+      "FIRINGI": "przez FIRINGI"
+    },
+    "perClickBudget": "{price} za kliknięcie · {budget} dziennie",
+    "perDay": "{price} dziennie (zarezerwowane)",
+    "formTitle": "Nowa reklama",
+    "formIntro": "Wybierz, gdzie pojawiają się Twoje produkty, jak płacisz i jak długo. FIRINGI sprawdza reklamę przed jej uruchomieniem.",
+    "name": "Nazwa (widzisz ją tylko Ty i FIRINGI)",
+    "where": "Gdzie się wyświetla",
+    "whereHint": "od {min} za kliknięcie · {day} dziennie · {slots} miejsc",
+    "noPlacements": "FIRINGI nie ma teraz otwartych miejsc reklamowych.",
+    "howPay": "Jak płacisz",
+    "cpc": "Za kliknięcie",
+    "cpcHint": "Płacisz tylko wtedy, gdy kupujący otworzy Twój produkt, do wysokości budżetu dziennego.",
+    "daily": "Za dzień",
+    "dailyHint": "Stała cena za każdy zarezerwowany dzień; zarezerwowane reklamy wyświetlają się jako pierwsze.",
+    "products": "Reklamowane produkty (do 20)",
+    "searchProducts": "Znajdź produkt",
+    "keywords": "Dodatkowe słowa wyszukiwania (opcjonalnie, oddzielone przecinkami)",
+    "keywordsHint": "Twoja reklama pojawi się też, gdy kupujący szukają tych słów.",
+    "category": "Strona kategorii (opcjonalnie)",
+    "categoryAny": "Własne kategorie produktów",
+    "bid": "Cena za kliknięcie (€)",
+    "dailyBudget": "Budżet dzienny (€)",
+    "totalBudget": "Budżet całkowity (€, opcjonalnie)",
+    "startsOn": "Od",
+    "endsOn": "Do",
+    "endsOnOptional": "Do (opcjonalnie)",
+    "dailyCost": "{days} dni × {price} = {total}",
+    "formNote": "Ceny bez VAT. Jeśli kupujący wkrótce ponownie otworzy Twoją reklamę, nie zapłacisz dwa razy.",
+    "submit": "Wyślij do FIRINGI",
+    "submitDirect": "Uruchom reklamę",
+    "pause": "Wstrzymaj",
+    "resume": "Wznów",
+    "end": "Zakończ",
+    "changeBudget": "Cena i budżety",
+    "save": "Zapisz",
+    "saved": "Zapisano",
+    "rejected": "FIRINGI nie zatwierdziło tej reklamy: {reason}",
+    "revenue": "Wartość tych zamówień",
+    "productsTitle": "Produkty",
+    "colDay": "Dzień",
+    "noDays": "Jeszcze nie wyświetlono.",
+    "billingTitle": "Rozliczenia reklam",
+    "billingIntro": "Sposób, w jaki FIRINGI pobiera opłaty za Twoje reklamy, został z Tobą uzgodniony. Ceny reklam są bez VAT; faktury FIRINGI doliczają VAT, gdy ma zastosowanie.",
+    "billingPAYOUT": "Co miesiąc FIRINGI wystawia fakturę za Twoje reklamy i potrąca kwotę z tego, co Ci wypłaca.",
+    "billingPREPAID": "Doładuj saldo przelewem bankowym; reklamy działają, dopóki jest saldo. Każde doładowanie otrzymuje fakturę z potwierdzeniem zapłaty.",
+    "billingINVOICE": "Co miesiąc FIRINGI wystawia fakturę za Twoje reklamy; zapłać do terminu.",
+    "unbilled": "Jeszcze niezafakturowane",
+    "topUpTitle": "Doładuj przelewem bankowym",
+    "topUpText": "Przelej na {iban} z tytułem {reference}. FIRINGI doda kwotę (bez VAT) do Twojego salda po jej zaksięgowaniu.",
+    "invoices": "Faktury FIRINGI za reklamy",
+    "colInvoice": "Faktura",
+    "colDate": "Data",
+    "colPeriod": "Okres",
+    "colTotal": "Razem",
+    "colOpen": "Do zapłaty",
+    "topup": "Doładowanie",
+    "noInvoices": "Brak jeszcze faktur za reklamy.",
+    "sponsored": "Sponsorowane",
+    "featured": "Polecane",
+    "alsoNeed": "Może też potrzebujesz"
   }
 }

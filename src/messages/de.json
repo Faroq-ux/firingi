@@ -841,7 +841,11 @@
     "Planning Settings": "Planungseinstellungen",
     "Quality Claims": "Qualitätsreklamationen",
     "Quality Score": "Qualitätswert",
-    "Rewards": "Prämien"
+    "Rewards": "Prämien",
+    "Advertising": "Werbung",
+    "My Ads": "Meine Anzeigen",
+    "New Ad": "Neue Anzeige",
+    "Ad Billing": "Anzeigen-Abrechnung"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1475,6 +1479,22 @@
     "loyalty_referral": {
       "title": "Empfehlungsbonus: +{points} Punkte",
       "body": "Dank Ihrer Empfehlung mit {company} sind jetzt {points} Punkte in Ihren Prämien."
+    },
+    "ads_approved": {
+      "title": "Ihre Anzeige ist genehmigt",
+      "body": "FIRINGI hat Ihre Anzeige „{campaign}“ genehmigt. Sie läuft ab dem Startdatum."
+    },
+    "ads_rejected": {
+      "title": "Ihre Anzeige wurde nicht genehmigt",
+      "body": "FIRINGI hat „{campaign}“ nicht genehmigt: {reason}"
+    },
+    "ads_stopped": {
+      "title": "Ihre Anzeige wurde gestoppt",
+      "body": "„{campaign}“ wurde gestoppt: Budget oder Prepaid-Guthaben ist aufgebraucht. Stocken Sie auf, damit sie wieder läuft."
+    },
+    "ads_low_balance": {
+      "title": "Ihr Anzeigenguthaben ist niedrig",
+      "body": "Ihr Prepaid-Anzeigenguthaben beträgt {balance} €. Laden Sie es auf, damit Ihre Anzeigen weiterlaufen."
     }
   },
   "notifications": {
@@ -4034,5 +4054,107 @@
     "inviteIntro": "FIRINGI lädt {company} ein, seinem B2B-Marktplatz für Lebensmittel und Bedarf beizutreten.",
     "inviteApply": "Hier bewerben: {link}",
     "inviteValid": "Der Link ist {days} Tage gültig und kann einmal verwendet werden. FIRINGI prüft jede Bewerbung, bevor das Konto freigeschaltet wird."
+  },
+  "ads": {
+    "title": "Meine Anzeigen",
+    "description": "Zeigen Sie Ihre Produkte weiter oben auf FIRINGI: in Suchergebnissen, auf Kategorieseiten, auf der Shop-Startseite und im Warenkorb. Käufer sehen sie als „Gesponsert“ markiert. FIRINGI prüft jede Anzeige, bevor sie startet.",
+    "newAd": "Neue Anzeige",
+    "spentMonth": "Diesen Monat ausgegeben",
+    "running": "Aktiv",
+    "balance": "Prepaid-Guthaben",
+    "billing": "Wie FIRINGI abrechnet",
+    "billings": {
+      "PAYOUT": "Von Ihren Auszahlungen abgezogen",
+      "PREPAID": "Prepaid-Guthaben",
+      "INVOICE": "Monatliche Rechnung"
+    },
+    "noAds": "Noch keine Anzeigen – erstellen Sie die erste.",
+    "colAd": "Anzeige",
+    "colWhere": "Wo",
+    "colPrice": "Preis",
+    "colStatus": "Status",
+    "colImpressions": "Angezeigt",
+    "colClicks": "Klicks",
+    "colCtr": "Klickrate",
+    "colSpent": "Ausgegeben",
+    "colOrders": "Bestellungen nach Klick",
+    "placements": {
+      "SEARCH": "Suchergebnisse",
+      "CATEGORY": "Kategorieseiten",
+      "HOME": "Shop-Startseite",
+      "CART": "Vorschläge im Warenkorb"
+    },
+    "statuses": {
+      "PENDING": "Wartet auf FIRINGI",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "Pausiert",
+      "REJECTED": "Nicht genehmigt",
+      "ENDED": "Beendet"
+    },
+    "reasons": {
+      "SUPPLIER": "von Ihnen pausiert",
+      "BUDGET": "Budget aufgebraucht",
+      "BALANCE": "Prepaid-Guthaben aufgebraucht",
+      "FIRINGI": "durch FIRINGI"
+    },
+    "perClickBudget": "{price} pro Klick · {budget} pro Tag",
+    "perDay": "{price} pro Tag (gebucht)",
+    "formTitle": "Neue Anzeige",
+    "formIntro": "Wählen Sie, wo Ihre Produkte erscheinen, wie Sie zahlen und wie lange. FIRINGI prüft die Anzeige, bevor sie startet.",
+    "name": "Name (nur Sie und FIRINGI sehen ihn)",
+    "where": "Wo sie erscheint",
+    "whereHint": "ab {min} pro Klick · {day} pro Tag · {slots} Plätze",
+    "noPlacements": "FIRINGI hat derzeit keine Anzeigenplätze geöffnet.",
+    "howPay": "Wie Sie zahlen",
+    "cpc": "Pro Klick",
+    "cpcHint": "Sie zahlen nur, wenn ein Käufer Ihr Produkt öffnet – bis zu Ihrem Tagesbudget.",
+    "daily": "Pro Tag",
+    "dailyHint": "Ein fester Preis für jeden gebuchten Tag; gebuchte Anzeigen erscheinen zuerst.",
+    "products": "Beworbene Produkte (bis zu 20)",
+    "searchProducts": "Produkt suchen",
+    "keywords": "Zusätzliche Suchwörter (optional, mit Komma getrennt)",
+    "keywordsHint": "Ihre Anzeige erscheint auch, wenn Käufer nach diesen Wörtern suchen.",
+    "category": "Kategorieseite (optional)",
+    "categoryAny": "Die Kategorien der Produkte selbst",
+    "bid": "Preis pro Klick (€)",
+    "dailyBudget": "Tagesbudget (€)",
+    "totalBudget": "Gesamtbudget (€, optional)",
+    "startsOn": "Von",
+    "endsOn": "Bis",
+    "endsOnOptional": "Bis (optional)",
+    "dailyCost": "{days} Tage × {price} = {total}",
+    "formNote": "Preise ohne MwSt. Öffnet ein Käufer Ihre Anzeige kurz darauf erneut, wird nicht doppelt berechnet.",
+    "submit": "An FIRINGI senden",
+    "submitDirect": "Anzeige starten",
+    "pause": "Pausieren",
+    "resume": "Fortsetzen",
+    "end": "Beenden",
+    "changeBudget": "Preis und Budgets",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "rejected": "FIRINGI hat diese Anzeige nicht genehmigt: {reason}",
+    "revenue": "Wert dieser Bestellungen",
+    "productsTitle": "Produkte",
+    "colDay": "Tag",
+    "noDays": "Noch nicht angezeigt.",
+    "billingTitle": "Anzeigen-Abrechnung",
+    "billingIntro": "Wie FIRINGI Ihre Anzeigen abrechnet, wurde mit Ihnen vereinbart. Anzeigenpreise verstehen sich ohne MwSt.; die Rechnungen von FIRINGI enthalten die MwSt., wo sie anfällt.",
+    "billingPAYOUT": "FIRINGI stellt Ihre Anzeigen monatlich in Rechnung und zieht den Betrag von den Zahlungen an Sie ab.",
+    "billingPREPAID": "Laden Sie Ihr Guthaben per Überweisung auf; Ihre Anzeigen laufen, solange Guthaben vorhanden ist. Jede Aufladung erhält eine Rechnung mit Quittung.",
+    "billingINVOICE": "FIRINGI stellt Ihre Anzeigen monatlich in Rechnung; zahlen Sie bis zum Fälligkeitsdatum.",
+    "unbilled": "Noch nicht abgerechnet",
+    "topUpTitle": "Per Überweisung aufladen",
+    "topUpText": "Überweisen Sie an {iban} mit dem Verwendungszweck {reference}. FIRINGI schreibt den Betrag (ohne MwSt.) Ihrem Guthaben gut, sobald er eingeht.",
+    "invoices": "Anzeigenrechnungen von FIRINGI",
+    "colInvoice": "Rechnung",
+    "colDate": "Datum",
+    "colPeriod": "Zeitraum",
+    "colTotal": "Gesamt",
+    "colOpen": "Offen",
+    "topup": "Aufladung",
+    "noInvoices": "Noch keine Anzeigenrechnungen.",
+    "sponsored": "Gesponsert",
+    "featured": "Empfohlen",
+    "alsoNeed": "Das könnten Sie auch brauchen"
   }
 }
