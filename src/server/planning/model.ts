@@ -238,7 +238,9 @@ export function plan(i: PlanInput): Plan {
     if (i.usable <= 0 && dailyDemand > 0 && i.incoming <= 0) urgency = "OUT";
     else if (runsOutInDays !== null && runsOutInDays < L && position < Math.ceil(demandOver(i.weekly, L))) urgency = "LATE";
     else if (position <= reorderPoint) urgency = i.usable <= 0 && dailyDemand > 0 ? "OUT" : "ORDER_NOW";
-    else if (position - demandOver(i.weekly, R) <= reorderPoint) urgency = "SOON";
+    // "order soon" only when nothing is already on order: goods on the way cover the review period, and a
+    // small rise in the forecast right after ordering must not ask for a top-up (the next review checks again)
+    else if (i.incoming <= 0 && position - demandOver(i.weekly, R) <= reorderPoint) urgency = "SOON";
   }
   let qty = 0;
   if (urgency) {

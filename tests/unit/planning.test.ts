@@ -103,6 +103,14 @@ describe("restock plan", () => {
     expect(s.orderInDays).toBe(5);
   });
 
+  it("already on order: no 'order soon' top-up; still asks for more when the order isn't enough", () => {
+    // same position as the SOON case above, but part of it is an order on the way
+    expect(plan({ weekly, sigma: 10, leadTimeDays: 3, reviewDays: 7, serviceLevel: 95, usable: 40, incoming: 60 }).urgency).toBeNull();
+    const short = plan({ weekly, sigma: 10, leadTimeDays: 3, reviewDays: 7, serviceLevel: 95, usable: 5, incoming: 10 });
+    expect(["ORDER_NOW", "LATE"]).toContain(short.urgency);
+    expect(short.qty).toBeGreaterThan(0);
+  });
+
   it("a manual reorder point is a floor", () => {
     const p = plan({ weekly, sigma: 10, leadTimeDays: 3, reviewDays: 7, serviceLevel: 95, usable: 150, incoming: 0, manualReorderPoint: 200 });
     expect(p.reorderPoint).toBe(200);
