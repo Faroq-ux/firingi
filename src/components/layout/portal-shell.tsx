@@ -13,6 +13,7 @@ import { unreadCount } from "@/server/services/notifications";
 import { can } from "@/server/rbac/guard";
 import { hiddenWarehouseNav } from "@/server/warehouse/features";
 import { hiddenCompanyNav } from "@/server/accounting/features";
+import { pilotBanner } from "@/server/launch/service";
 import { AppShell } from "./app-shell";
 
 export async function PortalShell({ portal, children }: { portal: Portal; children: React.ReactNode }) {
@@ -37,6 +38,9 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
   const companyLabel = ctx.company.tradeName ?? ctx.company.legalName;
 
   const notice = (await platformSettings()).notice;
+  // Phase 33: during the pilot, customers and suppliers see who to tell what works and what doesn't
+  const pilot = portal === "buy" || portal === "vendor" ? await pilotBanner(ctx) : null;
+  const tl = pilot ? await getTranslations("launch") : null;
   return (
     <AppShell
       portal={portal}
@@ -66,6 +70,13 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
       }}
     >
       {notice && <p className="mb-4 rounded-md border border-warning/60 bg-warning/10 px-3 py-2 text-sm" role="status" data-testid="platform-notice">{notice}</p>}
+      {pilot && tl && (
+        <p className="mb-4 flex flex-wrap items-center gap-x-2 rounded-md border border-[color:color-mix(in_oklab,var(--vivid-teal)_45%,transparent)] bg-[color-mix(in_oklab,var(--vivid-teal)_10%,transparent)] px-3 py-2 text-sm" role="status" data-testid="pilot-banner">
+          <span>🚀 {tl("bannerText")}</span>
+          <a href={`/${portal}/support`} className="font-medium text-primary hover:underline">{tl("bannerLink")}</a>
+          {pilot.supportEmail && <span className="text-muted-foreground">· {pilot.supportEmail}</span>}
+        </p>
+      )}
       {children}
     </AppShell>
   );

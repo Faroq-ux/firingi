@@ -20,8 +20,24 @@ function Field({ id, label, errors, hint, children }: { id: string; label: strin
   );
 }
 
-export function CompanyRegistrationForm({ type, countries, referralCode = null }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[]; referralCode?: string | null }) {
+type Invite = { code: string; email: string; companyName: string } | null;
+type Legal = { termsUrl: string | null; privacyUrl: string | null };
+
+/** "I accept the terms of service and privacy policy" — links when FIRINGI has set them (Phase 33). */
+function TermsText({ legal }: { legal?: Legal }) {
   const t = useTranslations("onboarding");
+  const tl = useTranslations("launch");
+  if (!legal?.termsUrl && !legal?.privacyUrl) return <>{t("form.acceptTerms")}</>;
+  const a = (href: string | null) => {
+    const LegalLink = (chunks: React.ReactNode) => href ? <a href={href} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline">{chunks}</a> : <>{chunks}</>;
+    return LegalLink;
+  };
+  return <>{tl.rich("acceptTerms", { terms: a(legal.termsUrl), privacy: a(legal.privacyUrl) })}</>;
+}
+
+export function CompanyRegistrationForm({ type, countries, referralCode = null, invite = null, legal }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[]; referralCode?: string | null; invite?: Invite; legal?: Legal }) {
+  const t = useTranslations("onboarding");
+  const tl = useTranslations("launch");
   const router = useRouter();
   const [pending, start] = useTransition();
   const [country, setCountry] = useState(countries[0].code);
@@ -46,7 +62,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null }
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
             cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
-            referralCode: s(fd, "referralCode"),
+            referralCode: s(fd, "referralCode"), invite: invite?.code ?? null,
           } as Parameters<typeof registerCompanyAction>[0]);
           if (r.ok) { router.push(r.data.redirectTo); router.refresh(); }
           else { setError(r.error); setFe(r.fieldErrors ?? {}); window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -54,6 +70,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null }
       }}
     >
       {error && <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive">{error}</p>}
+      {invite && <p className="rounded-md bg-primary/10 p-2 text-sm font-medium text-primary" data-testid="invite-note">✉️ {tl("invited", { company: invite.companyName })}</p>}
       {referralCode && (
         <p className="rounded-md bg-[color-mix(in_oklab,var(--vivid-teal)_12%,transparent)] p-2 text-sm" data-testid="referral-note">
           <input type="hidden" name="referralCode" value={referralCode} />
@@ -67,7 +84,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null }
             {countries.map((x) => <option key={x.code} value={x.code}>{x.label}</option>)}
           </Select>
         </Field>
-        <Field id="legalName" label={t("form.legalName")} errors={fe.legalName}><Input id="legalName" name="legalName" required /></Field>
+        <Field id="legalName" label={t("form.legalName")} errors={fe.legalName}><Input id="legalName" name="legalName" required defaultValue={invite?.companyName} /></Field>
         <Field id="tradeName" label={t("form.tradeName")}><Input id="tradeName" name="tradeName" /></Field>
         <Field id="taxId" label={t("form.taxId")} errors={fe.taxId}>
           <Input id="taxId" name="taxId" required inputMode={country === "PT" ? "numeric" : undefined}
@@ -105,7 +122,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null }
       <fieldset className="grid gap-4 sm:grid-cols-2">
         <legend className="mb-2 text-sm font-semibold">{t("form.owner")}</legend>
         <Field id="ownerName" label={t("form.ownerName")} errors={fe.ownerName}><Input id="ownerName" name="ownerName" required autoComplete="name" /></Field>
-        <Field id="ownerEmail" label={t("form.ownerEmail")} errors={fe.ownerEmail}><Input id="ownerEmail" name="ownerEmail" type="email" required autoComplete="email" /></Field>
+        <Field id="ownerEmail" label={t("form.ownerEmail")} errors={fe.ownerEmail}><Input id="ownerEmail" name="ownerEmail" type="email" required autoComplete="email" defaultValue={invite?.email} /></Field>
         <Field id="password" label={t("form.password")} errors={fe.password} hint={t("form.passwordHint")}>
           <Input id="password" name="password" type="password" minLength={10} required autoComplete="new-password" />
         </Field>
@@ -116,7 +133,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null }
       </label>
       <FieldError messages={fe.businessDeclaration} />
       <label className="flex items-start gap-2 text-sm">
-        <input type="checkbox" name="acceptTerms" required className="mt-1" /> <span>{t("form.acceptTerms")}</span>
+        <input type="checkbox" name="acceptTerms" required className="mt-1" /> <span data-testid="terms-text"><TermsText legal={legal} /></span>
       </label>
       <FieldError messages={fe.acceptTerms} />
       <Button type="submit" className="w-full" disabled={pending}>{pending ? t("form.submitting") : t("form.submit")}</Button>
@@ -124,7 +141,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null }
   );
 }
 
-export function DriverRegistrationForm() {
+export function DriverRegistrationForm({ legal }: { legal?: Legal } = {}) {
   const t = useTranslations("onboarding");
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -155,7 +172,7 @@ export function DriverRegistrationForm() {
       <Field id="password" label={t("form.password")} errors={fe.password} hint={t("form.passwordHint")}>
         <Input id="password" name="password" type="password" minLength={10} required autoComplete="new-password" />
       </Field>
-      <label className="flex items-start gap-2 text-sm"><input type="checkbox" name="acceptTerms" required className="mt-1" /> <span>{t("form.acceptTerms")}</span></label>
+      <label className="flex items-start gap-2 text-sm"><input type="checkbox" name="acceptTerms" required className="mt-1" /> <span><TermsText legal={legal} /></span></label>
       <Button type="submit" className="w-full" disabled={pending}>{pending ? t("form.submitting") : t("form.submit")}</Button>
     </form>
   );

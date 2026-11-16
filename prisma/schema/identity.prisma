@@ -273,6 +273,7 @@ model Company {
   @@unique([countryId, taxId, type])
   @@index([type, status])
   loyalty LoyaltyAccount? @relation("LoyaltyAccount")
+  pilotInvite PilotInvite? @relation("PilotInviteUsed")
 }
 
 model CompanyStatusHistory {

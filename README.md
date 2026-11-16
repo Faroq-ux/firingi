@@ -662,6 +662,37 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Launch readiness & pilot (Phase 33)
+
+Everything needed to go from this code to real customers. The step-by-step guide is **`docs/launch.md`**.
+- **Launch Readiness** (*Settings › Launch Readiness*, `src/server/launch/service.ts`): one live checklist —
+  server settings (production mode, required secrets, no test shortcuts, storage, Sentry), security (staff
+  two-factor sign-in, two super admins, **no demo data**, sign-in limit), FIRINGI's invoicing entities
+  (one per country with buyers, real details, valid IBAN by check digits), certified invoicing (Moloni live
+  and mapped; internal invoicing fails in Portugal), payments (simulator = fail, Stripe test = warning,
+  none = warning: bank transfer is fine for a pilot), messages (SMTP required; SMS/WhatsApp, push, AI
+  optional), backups (nightly backup OK, encrypted, restore tested) and scheduled jobs, the marketplace
+  (open countries; per country delivery zones, VAT rates, approved suppliers, products on sale) and legal
+  links. Each item is OK / Warning / Must fix with a link to the page that fixes it. Any *Must fix* = not
+  ready; only warnings = ready for a pilot.
+- **FIRINGI's invoicing entities** are now added and edited in *Settings › Company Settings* (a production
+  start creates none). Tax number and country lock once an invoice was issued with them; one active entity
+  per country; the IBAN still goes through *Payment Settings* (four-eyes). Audited.
+- **Pilot mode** (*Settings › Pilot & Invites*): registration by invitation only. An invitation is for one
+  business, e-mail, account type and country; valid 1–180 days; used once (inside the registration
+  transaction); e-mailed in the country's language, or created as a link to send yourself; can be sent
+  again or revoked. Without a valid invitation the registration form isn't shown (told why, in the
+  visitor's language, with the support e-mail); with one, the business name and e-mail are filled in and
+  the country is fixed. Drivers and existing accounts aren't affected. Customers and suppliers see a
+  feedback banner (*Support*) while the pilot runs.
+- **Legal links**: the terms of service and privacy policy links (set in Launch settings) appear in the
+  "I accept…" line of every registration form (25 languages). FIRINGI links to your texts — they should be
+  written or checked by a lawyer.
+- **Demo data** is not wiped by a button: deleting across the whole database is riskier than starting
+  clean. Production starts from an empty database with `prisma/seed/bootstrap.ts`; the checklist fails
+  while any demo account exists.
+- Tests: `tests/integration/launch.test.ts`, browser `tests/e2e/launch.mjs`. Screenshots `docs/screenshots/launch-0*.png`.
+
 ## Loyalty & rewards (Phase 32)
 
 Customers and wholesalers earn points on delivered goods and spend them as a discount or as credit.

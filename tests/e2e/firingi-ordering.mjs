@@ -39,16 +39,16 @@ const lx = await login("owner@lisboacentral.test");
 const inHouse = await login("armazem@firingi.test");
 const cca = await login("owner@ccalmada.test");
 
-/** Other suites leave orders holding stock: top up single mozzarella blocks first. */
+/** Other suites leave orders holding stock (reserved): top up single mozzarella blocks well above that first. */
 async function topUpMozz(page) {
   await go(page, "/vendor/products/stock");
   for (const row of await page.locator("tbody tr", { hasText: "Mozzarella" }).all()) {
     const text = await row.textContent();
     if (/Caixa|Case/.test(text)) continue;
     const input = row.locator("input[type=number]").first();
-    await input.fill("500");
+    await input.fill("5000");
     const save = row.getByRole("button");
-    if (await save.count()) { await save.first().click(); await settle(page); } // no button = already 500
+    if (await save.count()) { await save.first().click(); await settle(page); } // no button = already 5000
   }
 }
 for (const p of [lx, cca, inHouse]) await topUpMozz(p);

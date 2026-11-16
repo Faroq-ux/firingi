@@ -2,8 +2,10 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Building2, Store, Truck, UserRound } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { publicLaunchInfo } from "@/server/launch/service";
 
 export const metadata = { title: "Apply" };
+export const dynamic = "force-dynamic";
 
 const TYPES = [
   { key: "CUSTOMER", href: "/register/customer", icon: Building2 },
@@ -13,13 +15,14 @@ const TYPES = [
 ] as const;
 
 export default async function RegisterChoosePage() {
-  const t = await getTranslations("onboarding.choose");
+  const [t, tl, info] = await Promise.all([getTranslations("onboarding.choose"), getTranslations("launch"), publicLaunchInfo()]);
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-xl">{t("title")}</CardTitle>
         <CardDescription>{t("subtitle")}</CardDescription>
         <p className="rounded-md bg-primary/10 p-2 text-sm font-medium text-primary">{t("b2bOnly")}</p>
+        {info.pilot && <p className="rounded-md border p-2 text-sm" data-testid="pilot-note">✉️ {tl("pilotNote")}{info.supportEmail && <> <a className="font-medium text-primary hover:underline" href={`mailto:${info.supportEmail}`}>{info.supportEmail}</a></>}</p>}
       </CardHeader>
       <CardContent className="space-y-2">
         {TYPES.map(({ key, href, icon: Icon }) => (

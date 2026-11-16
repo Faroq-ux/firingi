@@ -126,7 +126,8 @@ describe("demand planning", () => {
     const base = (await forecastDetail(atl, kebab, wh)).row.forecast[1];
     const d = (n: number) => new Date(Date.now() + n * DAY).toISOString().slice(0, 10);
     await expect(saveMyEvent(atl, { name: "Bad", startsOn: d(5), endsOn: d(1), upliftPct: 20 })).rejects.toThrow(/end/);
-    await saveMyEvent(atl, { name: "Kebab week", startsOn: d(-7), endsOn: d(60), upliftPct: 50, offerIds: [kebab] });
+    // starts today: an event over past weeks is taken out of the history (as it should), which would make this test depend on the weekday
+    await saveMyEvent(atl, { name: "Kebab week", startsOn: d(0), endsOn: d(60), upliftPct: 50, offerIds: [kebab] });
     const up = (await forecastDetail(atl, kebab, wh)).row.forecast[1];
     expect(up).toBeGreaterThan(base * 1.3);
     await prisma.planningEvent.deleteMany({ where: { companyId } });

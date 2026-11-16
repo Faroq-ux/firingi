@@ -1,0 +1,22 @@
+/// Phase 33 — launch: invitations for the pilot (invite-only registration).
+model PilotInvite {
+  id              String      @id @default(cuid())
+  code            String      @unique
+  email           String
+  companyName     String
+  type            CompanyType
+  countryCode     String
+  language        String      @default("en")
+  note            String?
+  createdById     String
+  createdAt       DateTime    @default(now())
+  expiresAt       DateTime
+  sentAt          DateTime?
+  usedAt          DateTime?
+  usedByCompanyId String?     @unique
+  revokedAt       DateTime?
+
+  usedBy Company? @relation("PilotInviteUsed", fields: [usedByCompanyId], references: [id], onDelete: SetNull)
+
+  @@index([email])
+}

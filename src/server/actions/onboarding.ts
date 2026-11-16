@@ -39,6 +39,8 @@ const companySchema = z.object({
   businessDeclaration: z.literal(true, { errorMap: () => ({ message: "FIRINGI is for businesses only" }) }),
   /** Phase 32: invitation code of the business that invited this one (loyalty referral bonus). */
   referralCode: z.string().trim().max(20).optional().nullable(),
+  /** Phase 33: pilot invitation code. */
+  invite: z.string().trim().max(20).optional().nullable(),
 });
 
 async function signInAfterRegistration(email: string, pw: string, locale: string) {
@@ -54,7 +56,7 @@ export async function registerCompanyAction(raw: z.input<typeof companySchema>):
   const i = parsed.data;
   try {
     const reg = await registerCompany({
-      type: i.type, countryCode: i.countryCode, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber,
+      type: i.type, countryCode: i.countryCode, invite: i.invite, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber,
       companyEmail: i.companyEmail, phone: i.phone, businessType: i.businessType,
       owner: { name: i.ownerName, email: i.ownerEmail, password: i.password },
       headOffice: { line1: i.line1, line2: i.line2, postalCode: i.postalCode, cityId: i.cityId, cityName: i.cityName },

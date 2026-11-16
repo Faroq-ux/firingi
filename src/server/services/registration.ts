@@ -10,10 +10,13 @@ import { AppError, ValidationError } from "@/server/errors";
 import { checkCompanyVat, isValidPtNif } from "@/lib/tax-id";
 import { writeAudit } from "./audit";
 import { sendMail } from "./mailer";
+import { consumeInvite, launchSettings } from "@/server/launch/service";
 
 export type CompanyRegistration = {
   type: Exclude<CompanyType, "ADMIN">;
   countryCode: string;
+  /** Phase 33: invitation code — required while FIRINGI runs as an invite-only pilot. */
+  invite?: string | null;
   legalName: string;
   tradeName?: string | null;
   taxId: string;
@@ -47,6 +50,8 @@ export function normaliseTaxId(countryCode: string, taxId: string) {
 export async function registerCompany(input: CompanyRegistration) {
   if (!(await platformSettings()).registrations[input.type as "CUSTOMER" | "WHOLESALER" | "DISTRIBUTOR"])
     throw new ValidationError("New applications for this account type are paused. Please try again later.");
+  const pilot = (await launchSettings()).pilot;
+  if (pilot && !input.invite) throw new ValidationError("FIRINGI is open by invitation only during the pilot.", { invite: ["Invitation needed"] });
   const country = await prisma.country.findUnique({ where: { code: input.countryCode } });
   if (!country || !country.isActive || !country[MARKET_FLAG[input.type]])
     throw new ValidationError("Registration for this account type is not open in the selected country yet.", { countryCode: ["Not available"] });
@@ -105,7 +110,8 @@ export async function registerCompany(input: CompanyRegistration) {
         countryId: country.id, isDefault: true,
       },
     });
-    await tx.companyStatusHistory.create({ data: { companyId: company.id, toStatus: "PENDING", reason: "Registration submitted", byUserId: user.id } });
+    if (pilot && input.invite) await consumeInvite(tx, input.invite, { type: input.type, countryCode: country.code, companyId: company.id });
+    await tx.companyStatusHistory.create({ data: { companyId: company.id, toStatus: "PENDING", reason: pilot ? "Registration submitted (pilot invitation)" : "Registration submitted", byUserId: user.id } });
     await writeAudit({ actorUserId: user.id, actorCompanyId: company.id, action: "company.registered", entityType: "Company", entityId: company.id, after: { type: input.type, legalName: company.legalName, country: country.code } }, tx);
     return { userId: user.id, companyId: company.id };
   });

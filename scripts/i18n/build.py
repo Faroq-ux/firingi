@@ -49,7 +49,7 @@ LATER = [("delivery", ["Returns"]), ("notify", []), ("notifications", []), ("rep
          ("priceIntel", ['Price Insights', 'Price Changes']), ("notify.price_change_requested", []), ("notify.price_change_approved", []), ("notify.price_change_rejected", []), ("notify.price_review_requested", []), ("notify.price_increase_notice", []), ("notify.price_alerts", []),
          ("planning", ["Planning", "Planning Overview", "Demand Forecast", "Restock", "Overstock & Expiry", "Lead Times", "Demand Events", "Planning Settings"]), ("notify.planning_restock", []), ("notify.planning_flagged", []),
          ("claims", ["Quality Claims", "Quality Score"]), ("notify.claim_opened", []), ("notify.claim_message", []), ("notify.claim_supplier_responded", []), ("notify.claim_answer_needed", []), ("notify.claim_decided", []), ("notify.claim_replaced", []), ("notify.claim_chargeback", []), ("notify.claim_chargeback_disputed", []), ("notify.claim_chargeback_resolved", []), ("notify.claim_overdue", []), ("notify.quality_alert", []),
-         ("voice", []), ("ai.agent", []), ("loyalty", ["Rewards"]), ("onboarding.form.referral", []), ("notify.loyalty_tier_up", []), ("notify.loyalty_expiring", []), ("notify.loyalty_referral", [])]
+         ("voice", []), ("ai.agent", []), ("loyalty", ["Rewards"]), ("onboarding.form.referral", []), ("notify.loyalty_tier_up", []), ("notify.loyalty_expiring", []), ("notify.loyalty_referral", []), ("launch", []), ("inventory.move.MOVE", []), ("inventory.move.RECALL", []), ("finance.beingIssued", [])]
 
 def get(path):
     d = EN

@@ -79,7 +79,8 @@ docker compose -f docker-compose.prod.yml --env-file production.env run --rm mig
 It uses `ADMIN_EMAIL`, `ADMIN_NAME`, `ADMIN_PASSWORD`, `COMPANY_LEGAL_NAME`, `COMPANY_TAX_ID`,
 `COMPANY_COUNTRY` from `production.env`, and does nothing when a super admin already exists.
 Then sign in, **turn on two-factor sign-in**, remove `ADMIN_PASSWORD` from the file, and add the
-team under *Users*.
+team under *Users*. Then add FIRINGI's invoicing details under *Settings › Company Settings* (the
+bootstrap creates none) and work through *Settings › Launch Readiness* — see `docs/launch.md`.
 
 Check: `https://<DOMAIN>/api/health` answers `{"status":"ok",…}`, `https://<DOMAIN>/status`
 shows all systems operational, and *Settings › System Health* lists every job with a recent run
