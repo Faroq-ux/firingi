@@ -198,6 +198,7 @@ model VendorOffer {
   priceAlerts         PriceAlert[]         @relation("PriceAlertOffer")
   planningItems       PlanningItem[]       @relation("PlanningItemOffer")
   restockSuggestions  RestockSuggestion[]  @relation("RestockSuggestionOffer")
+  clearanceDeals      ClearanceDeal[]      @relation("ClearanceOffer")
 
   @@unique([vendorCompanyId, packagingUnitId])
   @@index([sellerType, status, countryId])

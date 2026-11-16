@@ -849,7 +849,8 @@
     "Messages": "Viestit",
     "Plan & Billing": "Paketti ja laskutus",
     "Early Payout": "Ennakkomaksu",
-    "Bank": "Pankki"
+    "Bank": "Pankki",
+    "Clearance Deals": "Tyhjennystarjoukset"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Pankkiyhteys epäonnistui: {account}",
       "body": "Tilin {account} uusia tapahtumia ei saatu haettua: {reason}"
+    },
+    "deal_review": {
+      "title": "Tarkistettava tarjous: {number}",
+      "body": "{company} loi tarjouksen {number}. Se alkaa vasta, kun FIRINGI hyväksyy sen."
+    },
+    "deal_approved": {
+      "title": "Tarjous hyväksytty: {number}",
+      "body": "Tarjouksesi {number} on hyväksytty ja alkaa aloitusaikana."
+    },
+    "deal_rejected": {
+      "title": "Tarjous hylätty: {number}",
+      "body": "FIRINGI hylkäsi tarjouksesi {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Uusi hintatarjous: {number}",
+      "body": "Ostaja tarjoaa {price} € / kpl {qty} kappaleesta. Vastaa kohdassa Tuotteet › Tyhjennystarjoukset."
+    },
+    "deal_bid_accepted": {
+      "title": "Hintatarjous hyväksytty: {number}",
+      "body": "Tarjouksesi {price} € / kpl hyväksyttiin. Lisää se ostoskoriin ennen kuin se vanhenee."
+    },
+    "deal_bid_rejected": {
+      "title": "Hintatarjous hylätty: {number}",
+      "body": "Toimittaja hylkäsi tarjouksesi {price} € / kpl."
+    },
+    "deal_bid_countered": {
+      "title": "Vastatarjous: {number}",
+      "body": "Toimittaja ehdottaa {price} € / kpl. Hyväksy se Tyhjennystarjoukset-sivulla."
+    },
+    "deal_alert": {
+      "title": "Tarjous: {product} −{pct} %",
+      "body": "{supplier}: tarjous tuotteesta {product} {until} asti."
+    },
+    "deal_digest": {
+      "title": "{count} uutta tarjousta tänään",
+      "body": "Uudet tarjoukset: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Muistetut IBANit",
     "payersHint": "Kun vahvistat kohdistuksen, IBAN muistetaan, jotta sen seuraava maksu tunnistetaan.",
     "noPayers": "Ei vielä."
+  },
+  "deals": {
+    "title": "Tyhjennystarjoukset",
+    "intro": "Toimittajien määräaikaiset tarjoukset lyhyen päiväyksen tuotteista ja ylijäämävarastosta: salamahinnat, monipakkaukset, määräalennukset, kokonaiset erät ja hintatarjoukset. Tarjoushinta korvaa tuotteen muut alennukset.",
+    "badge": "Tarjous",
+    "all": "Kaikki",
+    "search": "Hae tarjouksia",
+    "searchBtn": "Hae",
+    "none": "Ei tarjouksia juuri nyt. Seuraa tuotteita tai toimittajia alla, niin kuulet seuraavista.",
+    "kind": {
+      "FLASH": "Salamahinta",
+      "BUNDLE": "Monipakkaus",
+      "VOLUME": "Määrähinta",
+      "LOT": "Koko erä",
+      "BEST_OFFER": "Tee hintatarjous"
+    },
+    "clearance": "Tyhjennys",
+    "endsSoon": "Päättyy pian",
+    "ended": "Päättynyt",
+    "endsInDays": "Päättyy {d} pv {h} h päästä",
+    "endsInHours": "Päättyy {h} h {m} min päästä",
+    "listNow": "Nyt {price}",
+    "exVat": "alv 0 %",
+    "left": "{n} jäljellä",
+    "perBuyer": "Enint. {n} ostajaa kohden",
+    "bestBefore": "Parasta ennen {date}",
+    "thisProduct": "tämä tuote",
+    "alertsTitle": "Tarjousilmoitukset",
+    "alertsHint": "Seuraa tuotteita tai toimittajia, niin kerromme, kun niillä on uusi tarjous. Kerromme myös tarjouksista tuotteisiin, joita olet ostanut aiemmin (ellet ole kytkenyt 'Tarjoukset ja uutiset' pois).",
+    "watchKind": {
+      "PRODUCT": "Tuote",
+      "SUPPLIER": "Toimittaja"
+    },
+    "noWatches": "Et seuraa vielä mitään.",
+    "myOffers": "Omat hintatarjoukseni",
+    "bidStatus": {
+      "PENDING": "Odottaa toimittajaa",
+      "ACCEPTED": "Hyväksytty",
+      "COUNTERED": "Vastatarjous",
+      "REJECTED": "Hylätty",
+      "EXPIRED": "Vanhentunut",
+      "WITHDRAWN": "Peruttu",
+      "ORDERED": "Tilattu"
+    },
+    "noOffers": "Et ole tehnyt hintatarjouksia.",
+    "qty": "Määrä",
+    "unitAt": "{price} / kpl",
+    "addToCart": "Lisää ostoskoriin",
+    "added": "Lisätty ostoskoriin tarjoushintaan.",
+    "addedLot": "Koko erä on ostoskorissasi.",
+    "buyLot": "Osta koko erä ({qty} kpl)",
+    "maxForYou": "Voit vielä ostaa {n}.",
+    "bid": {
+      "PENDING": "Tarjouksesi: {qty} × {price}. Toimittaja vastaa pian.",
+      "ACCEPTED": "Hyväksytty: {qty} × {price}. Tilaa ennen kuin aika loppuu.",
+      "COUNTERED": "Toimittaja ehdottaa {price} / kpl määrälle {qty} (tarjosit {mine})."
+    },
+    "addBidToCart": "Lisää {qty} ostoskoriin",
+    "takeCounter": "Hyväksy vastatarjous",
+    "withdraw": "Peru",
+    "bidSent": "Tarjous lähetetty.",
+    "yourPrice": "Hintasi / kpl (alv 0 %)",
+    "makeOffer": "Tee hintatarjous",
+    "message": "Viesti (valinnainen)",
+    "minBid": "Tarjoukset alkaen {n} kpl.",
+    "watch": "Seuraa: {what}",
+    "unwatch": "Lopeta seuraaminen: {what}",
+    "remove": "Poista",
+    "digest": "Lähettäkää minulle päivittäin sähköposti uusista tarjouksista",
+    "product": "Tuote",
+    "chooseProduct": "Valitse tuote",
+    "kindLabel": "Tarjouksen tyyppi",
+    "kindHint": {
+      "FLASH": "Alempi hinta lyhyeksi aikaa.",
+      "BUNDLE": "Usean kappaleen pakkaus yhteen hintaan (esim. 3 kahden hinnalla).",
+      "VOLUME": "Alemmat hinnat suuremmille määrille.",
+      "LOT": "Myy koko erä kerralla yhteen hintaan.",
+      "BEST_OFFER": "Ostajat tarjoavat hintaa; sinä hyväksyt, hylkäät tai teet vastatarjouksen."
+    },
+    "listPrice": "Listahinta: {price}",
+    "discount": "{pct} % alennus",
+    "clearanceWhy": {
+      "EXPIRY": "Tyhjennys: parasta ennen {date}.",
+      "OVERSTOCK": "Tyhjennys: enemmän varastoa kuin tavallisesti myyt."
+    },
+    "clearanceCommission": "FIRINGIn palkkio tästä tarjouksesta: {pct} % (yleensä {usual} %).",
+    "normalCommission": "FIRINGIn palkkio: {pct} % tarjoushinnasta.",
+    "minDiscount": "Tarjouksen on oltava vähintään {pct} % listahintaa alempi.",
+    "dealPrice": "Tarjoushinta / kpl (alv 0 %)",
+    "bundleQty": "Kappaletta pakkauksessa",
+    "bundlePrice": "Pakkauksen hinta (alv 0 %)",
+    "lotQty": "Kappaletta erässä",
+    "lotPrice": "Koko erän hinta (alv 0 %)",
+    "floorPrice": "Alin automaattisesti hyväksytty hinta (valinnainen)",
+    "minBidQty": "Pienin määrä tarjoukselle (valinnainen)",
+    "maxQty": "Kappaletta tarjouksessa (valinnainen)",
+    "perBuyerMax": "Enint. ostajaa kohden (valinnainen)",
+    "startsAt": "Alkaa",
+    "endsAt": "Päättyy",
+    "tiers": "Määrähinnat",
+    "fromQty": "Alkaen (kpl)",
+    "unitPrice": "Hinta / kpl",
+    "addTier": "Lisää porras",
+    "lot": "Erä",
+    "noLot": "Ei tiettyä erää",
+    "units": "{n} kpl",
+    "titleLabel": "Otsikko (valinnainen)",
+    "titleHint": "esim. Kauden lopun tyhjennys",
+    "noteLabel": "Huomautus ostajille (valinnainen)",
+    "noteHint": "esim. lyhyt päiväys, vaurioitunut ulkopakkaus",
+    "submit": "Luo tarjous",
+    "created": "Tarjous luotu.",
+    "accept": "Hyväksy",
+    "counter": "Vastatarjous",
+    "reject": "Hylkää",
+    "cancelDeal": "Lopeta tarjous",
+    "vendorTitle": "Tyhjennystarjoukset",
+    "vendorIntro": "Myy lyhyen päiväyksen tai ylijäämävarasto nopeasti: salamahinnat, monipakkaukset, määrähinnat, kokonaiset erät tai hintatarjoukset. Ostajat, jotka ovat ostaneet tuotetta aiemmin, ja sinua seuraavat saavat ilmoituksen. Sinä maksat alennuksen; tyhjennystarjouksista FIRINGI ottaa pienemmän palkkion.",
+    "newDeal": "Uusi tarjous",
+    "approvalAlways": "FIRINGI tarkistaa jokaisen tarjouksen ennen sen alkua.",
+    "approvalAuto": "Enintään {pct} % alennuksen ja {days} päivän tarjoukset alkavat itsestään; muut FIRINGI tarkistaa ensin.",
+    "noKinds": "FIRINGI ei tarjoa tarjouksia juuri nyt.",
+    "yourDeals": "Tarjouksesi",
+    "noDealsYet": "Ei vielä tarjouksia.",
+    "status": {
+      "DRAFT": "Luonnos",
+      "PENDING": "Odottaa FIRINGIä",
+      "APPROVED": "Hyväksytty",
+      "SCHEDULED": "Ajastettu",
+      "LIVE": "Voimassa",
+      "REJECTED": "Hylätty",
+      "ENDED": "Päättynyt",
+      "CANCELLED": "Lopetettu etuajassa",
+      "SOLD_OUT": "Loppuunmyyty"
+    },
+    "autoApproved": "alkoi itsestään",
+    "soldOf": "{sold} / {max} myyty",
+    "revenue": "Myynti {amount}",
+    "dealCommission": "palkkio {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} / kpl",
+      "BUNDLE": "{n} hintaan {price}",
+      "VOLUME": "alkaen {n}: {price}",
+      "LOT": "{n} kpl hintaan {price}",
+      "BEST_OFFER": "Tee toimittajalle hintatarjous",
+      "BEST_OFFER_FLOOR": "Tarjoukset alkaen {price} hyväksytään automaattisesti"
+    },
+    "cart": {
+      "applied": "Tarjoushinta",
+      "LEFT": "Tarjoushinta enintään {n} kpl:lle — pienennä määrää saadaksesi sen.",
+      "PER_BUYER": "Voit ostaa vielä {n} tarjoushintaan — pienennä määrää saadaksesi sen.",
+      "BID_QTY": "Hyväksytty tarjouksesi koskee {n} kpl — aseta määräksi {n} saadaksesi sen hinnan.",
+      "QTY_TIER": "Tilaa enemmän päästäksesi tarjoushintaan.",
+      "LOT_QTY": "Erähinta koskee vain koko erää.",
+      "BUNDLE_QTY": "Tilaa täysi pakkaus saadaksesi monipakkaushinnan.",
+      "BID": "Tähän tuotteeseen voi tehdä hintatarjouksen — katso Tyhjennystarjoukset."
+    }
   }
 }

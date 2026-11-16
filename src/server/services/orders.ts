@@ -216,11 +216,12 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
           data: {
             orderId: order.id, offerId: l.item.offerId, productName: l.item.name, sku: l.item.sku, packagingName: l.item.packaging.name, qtyOrdered: l.item.qty,
             unitListPriceNet: l.calc.unitListPriceNet.toFixed(4),
-            vendorDiscountNet: l.discounts.filter((x) => x.ownerType === "VENDOR").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
+            vendorDiscountNet: l.deal ? l.calc.vendorFundedDiscount.toFixed(4) : l.discounts.filter((x) => x.ownerType === "VENDOR").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
             adminDiscountNet: l.discounts.filter((x) => x.ownerType === "ADMIN").reduce((a, x) => a.plus(x.perUnit), new Decimal(0)).toFixed(4),
             firingiFundedDiscount: l.calc.firingiFundedDiscount.toFixed(4), vendorFundedDiscount: l.calc.vendorFundedDiscount.toFixed(4),
             unitSalePriceNet: l.calc.unitSalePriceNet.toFixed(4), taxRate: l.rate.toFixed(3), lineNet: l.calc.lineNet.toFixed(2), lineVat: l.calc.lineVat.toFixed(2),
-            commissionRuleId: commission.id, commissionType: commission.type, commissionRate: commission.rate, commissionBase: l.calc.commissionBase.toFixed(2),
+            commissionRuleId: commission.id, commissionType: commission.type, commissionRate: l.deal?.commissionPct != null ? l.deal.commissionPct.toFixed(3) : commission.rate, commissionBase: l.calc.commissionBase.toFixed(2),
+            dealId: l.deal?.dealId ?? null, dealBidId: l.deal?.bidId ?? null,
             commissionAmount: l.calc.commissionAmount.toFixed(2), vendorUnitCostNet: l.calc.vendorUnitCostNet.toFixed(4), vendorLineNet: l.calc.vendorLineNet.toFixed(2),
             // Who funded each discount (finance reporting).
             discounts: {
@@ -235,6 +236,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
         });
       }
       await recordRedemptions(tx, order.id, ctx.company.id, part.redemptions, checkoutId);
+      // Phase 38: lots sold out, accepted offers used
+      if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount
       if (pc.loyalty && pc.loyalty.used > 0) {
         const { LOYALTY_PROMOTION_ID } = await import("@/server/loyalty/service");
@@ -536,6 +539,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       const c = computeLine({
         qty, unitListPriceNet: line.unitListPriceNet.toString(), vatRatePercent: line.taxRate.toString(), commissionRatePercent: line.commissionRate?.toString() ?? 0,
         vendorFundedDiscountPerUnit: line.vendorFundedDiscount.toString(), firingiFundedDiscountPerUnit: line.firingiFundedDiscount.toString(),
+        commissionUnitBase: line.dealId ? line.unitListPriceNet.minus(line.vendorFundedDiscount).toString() : null,
       });
       calcLines.push({ ...c, qty });
       await tx.orderLine.update({

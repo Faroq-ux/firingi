@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -41,6 +41,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P35: { en: "Phase 35 — Order chat", pt: "Fase 35 — Conversas nas encomendas" },
   P36: { en: "Phase 36 — Supplier plans & early payout", pt: "Fase 36 — Planos de fornecedor e pagamento antecipado" },
   P37: { en: "Phase 37 — Bank reconciliation", pt: "Fase 37 — Reconciliação bancária" },
+  P38: { en: "Phase 38 — Clearance deals", pt: "Fase 38 — Oportunidades de escoamento" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

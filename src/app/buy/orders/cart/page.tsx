@@ -22,6 +22,7 @@ export default async function CartPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.orders.place");
   const [cart, t, tc, locale, ordering, tl, ls] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx), getTranslations("loyalty"), loyaltySettings()]);
+  const td = await getTranslations("deals");
   const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
   const L = (v: unknown) => pickLocalized(v, locale);
@@ -65,6 +66,8 @@ export default async function CartPage() {
                       <TD>
                         <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
                         <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
+                        {"deal" in l && l.deal && <span className="mt-1 inline-block rounded-full bg-destructive px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-deal">{td("cart.applied")}</span>}
+                        {"dealNote" in l && !l.deal && l.dealNote && td.has(`cart.${l.dealNote.why}`) && <div className="mt-1 text-xs text-amber-700 dark:text-amber-400" data-testid="cart-deal-note">{td(`cart.${l.dealNote.why}`, { n: l.dealNote.left ?? 0 })}</div>}
                       </TD>
                       <TD className="text-right text-sm tabular-nums">{formatMoney(l.price!.unitPriceGross, locale)}<div className="text-xs text-muted-foreground">{formatMoney(l.price!.unitPriceNet, locale)} s/ {tax}</div></TD>
                       <TD><CartQty offerId={l.offerId} qty={l.qty} min={l.minOrderQty} step={l.qtyStep} /></TD>

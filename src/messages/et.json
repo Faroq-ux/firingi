@@ -849,7 +849,8 @@
     "Messages": "Sõnumid",
     "Plan & Billing": "Pakett ja arveldus",
     "Early Payout": "Varajane väljamakse",
-    "Bank": "Pank"
+    "Bank": "Pank",
+    "Clearance Deals": "Väljamüügipakkumised"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Pangavoog ebaõnnestus: {account}",
       "body": "Konto {account} uusi kandeid ei õnnestunud laadida: {reason}"
+    },
+    "deal_review": {
+      "title": "Kontrollida pakkumine: {number}",
+      "body": "{company} lõi pakkumise {number}. See algab alles pärast FIRINGI kinnitust."
+    },
+    "deal_approved": {
+      "title": "Pakkumine kinnitatud: {number}",
+      "body": "Sinu pakkumine {number} on kinnitatud ja algab algusajal."
+    },
+    "deal_rejected": {
+      "title": "Pakkumine tagasi lükatud: {number}",
+      "body": "FIRINGI lükkas sinu pakkumise {number} tagasi: {reason}"
+    },
+    "deal_bid": {
+      "title": "Uus hinnapakkumine: {number}",
+      "body": "Ostja pakub {price} € tk eest {qty} tk kohta. Vasta: Tooted › Väljamüügipakkumised."
+    },
+    "deal_bid_accepted": {
+      "title": "Pakkumine vastu võetud: {number}",
+      "body": "Sinu pakkumine {price} € tk eest võeti vastu. Lisa see ostukorvi enne aegumist."
+    },
+    "deal_bid_rejected": {
+      "title": "Pakkumine tagasi lükatud: {number}",
+      "body": "Tarnija lükkas sinu pakkumise {price} € tk eest tagasi."
+    },
+    "deal_bid_countered": {
+      "title": "Vastupakkumine: {number}",
+      "body": "Tarnija pakub {price} € tk eest. Võta see vastu lehel Väljamüügipakkumised."
+    },
+    "deal_alert": {
+      "title": "Pakkumine: {product} −{pct} %",
+      "body": "{supplier} pakkumine tootele {product} kuni {until}."
+    },
+    "deal_digest": {
+      "title": "Täna {count} uut pakkumist",
+      "body": "Uued pakkumised: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Meelde jäetud IBANid",
     "payersHint": "Kui kinnitate sidumise, jäetakse IBAN meelde, et järgmine makse sealt ära tunda.",
     "noPayers": "Veel pole."
+  },
+  "deals": {
+    "title": "Väljamüügipakkumised",
+    "intro": "Tarnijate ajutised pakkumised lühikese säilivusajaga kaubale ja ülejääkidele: välkhinnad, mitme ostmine, kogusehinnad, terved partiid ja hinnapakkumine. Pakkumise hind asendab teised selle toote allahindlused.",
+    "badge": "Pakkumine",
+    "all": "Kõik",
+    "search": "Otsi pakkumisi",
+    "searchBtn": "Otsi",
+    "none": "Praegu pakkumisi pole. Jälgi allpool tooteid või tarnijaid, et kuulda järgmistest.",
+    "kind": {
+      "FLASH": "Välkhind",
+      "BUNDLE": "Mitu korraga",
+      "VOLUME": "Kogusehind",
+      "LOT": "Terve partii",
+      "BEST_OFFER": "Hinnapakkumine"
+    },
+    "clearance": "Väljamüük",
+    "endsSoon": "Lõpeb varsti",
+    "ended": "Lõppenud",
+    "endsInDays": "Lõpeb {d} p {h} t pärast",
+    "endsInHours": "Lõpeb {h} t {m} min pärast",
+    "listNow": "Nüüd {price}",
+    "exVat": "km-ta",
+    "left": "alles {n}",
+    "perBuyer": "Max {n} ostja kohta",
+    "bestBefore": "Parim enne {date}",
+    "thisProduct": "see toode",
+    "alertsTitle": "Pakkumiste teavitused",
+    "alertsHint": "Jälgi tooteid või tarnijaid ja anname teada, kui neil on uus pakkumine. Teavitame ka pakkumistest toodetele, mida oled varem ostnud (kui sa pole „Pakkumised ja uudised“ välja lülitanud).",
+    "watchKind": {
+      "PRODUCT": "Toode",
+      "SUPPLIER": "Tarnija"
+    },
+    "noWatches": "Sa ei jälgi veel midagi.",
+    "myOffers": "Minu hinnapakkumised",
+    "bidStatus": {
+      "PENDING": "Ootab tarnijat",
+      "ACCEPTED": "Vastu võetud",
+      "COUNTERED": "Vastupakkumine",
+      "REJECTED": "Tagasi lükatud",
+      "EXPIRED": "Aegunud",
+      "WITHDRAWN": "Tagasi võetud",
+      "ORDERED": "Tellitud"
+    },
+    "noOffers": "Sa pole hinnapakkumisi teinud.",
+    "qty": "Kogus",
+    "unitAt": "{price} tk",
+    "addToCart": "Lisa ostukorvi",
+    "added": "Lisatud ostukorvi pakkumise hinnaga.",
+    "addedLot": "Terve partii on sinu ostukorvis.",
+    "buyLot": "Osta terve partii ({qty} tk)",
+    "maxForYou": "Saad osta veel {n}.",
+    "bid": {
+      "PENDING": "Sinu pakkumine: {qty} × {price}. Tarnija vastab peagi.",
+      "ACCEPTED": "Vastu võetud: {qty} × {price}. Telli enne, kui aeg saab otsa.",
+      "COUNTERED": "Tarnija pakub {price} tk eest koguse {qty} puhul (sina pakkusid {mine})."
+    },
+    "addBidToCart": "Lisa {qty} ostukorvi",
+    "takeCounter": "Võta vastupakkumine vastu",
+    "withdraw": "Võta tagasi",
+    "bidSent": "Pakkumine saadetud.",
+    "yourPrice": "Sinu hind tk eest (km-ta)",
+    "makeOffer": "Tee pakkumine",
+    "message": "Sõnum (valikuline)",
+    "minBid": "Pakkumised alates {n} tk.",
+    "watch": "Jälgi: {what}",
+    "unwatch": "Lõpeta jälgimine: {what}",
+    "remove": "Eemalda",
+    "digest": "Saada mulle iga päev e-kiri uute pakkumistega",
+    "product": "Toode",
+    "chooseProduct": "Vali toode",
+    "kindLabel": "Pakkumise liik",
+    "kindHint": {
+      "FLASH": "Madalam hind lühikeseks ajaks.",
+      "BUNDLE": "Mitme tüki pakk ühe hinnaga (nt 3 kahe hinnaga).",
+      "VOLUME": "Madalamad hinnad suurematele kogustele.",
+      "LOT": "Müü terve partii korraga ühe hinnaga.",
+      "BEST_OFFER": "Ostjad pakuvad hinda; sina võtad vastu, lükkad tagasi või teed vastupakkumise."
+    },
+    "listPrice": "Hinnakirja hind: {price}",
+    "discount": "{pct} % soodsam",
+    "clearanceWhy": {
+      "EXPIRY": "Väljamüük: parim enne {date}.",
+      "OVERSTOCK": "Väljamüük: rohkem laoseisu, kui tavaliselt müüd."
+    },
+    "clearanceCommission": "FIRINGI vahendustasu sellelt pakkumiselt: {pct} % (tavaliselt {usual} %).",
+    "normalCommission": "FIRINGI vahendustasu: {pct} % pakkumise hinnast.",
+    "minDiscount": "Pakkumine peab olema vähemalt {pct} % alla hinnakirja hinna.",
+    "dealPrice": "Pakkumise hind tk eest (km-ta)",
+    "bundleQty": "Tükke pakis",
+    "bundlePrice": "Paki hind (km-ta)",
+    "lotQty": "Tükke partiis",
+    "lotPrice": "Terve partii hind (km-ta)",
+    "floorPrice": "Madalaim automaatselt vastu võetav hind (valikuline)",
+    "minBidQty": "Väikseim kogus pakkumiseks (valikuline)",
+    "maxQty": "Tükke pakkumisel (valikuline)",
+    "perBuyerMax": "Max ostja kohta (valikuline)",
+    "startsAt": "Algus",
+    "endsAt": "Lõpp",
+    "tiers": "Kogusehinnad",
+    "fromQty": "Alates (tk)",
+    "unitPrice": "Hind tk eest",
+    "addTier": "Lisa aste",
+    "lot": "Partii",
+    "noLot": "Kindel partii puudub",
+    "units": "{n} tk",
+    "titleLabel": "Pealkiri (valikuline)",
+    "titleHint": "nt Hooaja lõpu väljamüük",
+    "noteLabel": "Märkus ostjatele (valikuline)",
+    "noteHint": "nt lühike säilivus, kahjustatud väliskast",
+    "submit": "Loo pakkumine",
+    "created": "Pakkumine loodud.",
+    "accept": "Võta vastu",
+    "counter": "Vastupakkumine",
+    "reject": "Lükka tagasi",
+    "cancelDeal": "Lõpeta pakkumine",
+    "vendorTitle": "Väljamüügipakkumised",
+    "vendorIntro": "Müü lühikese säilivusajaga või ülejäävat kaupa kiiresti: välkhinnad, mitme ostmine, kogusehinnad, terved partiid või hinnapakkumine. Teavitatakse ostjaid, kes on toodet varem ostnud, ja neid, kes sind jälgivad. Allahindluse kannad sina; väljamüügipakkumistelt võtab FIRINGI väiksema vahendustasu.",
+    "newDeal": "Uus pakkumine",
+    "approvalAlways": "FIRINGI kontrollib iga pakkumist enne algust.",
+    "approvalAuto": "Pakkumised kuni {pct} % allahindlusega ja {days} päeva algavad ise; teised kontrollib enne FIRINGI.",
+    "noKinds": "FIRINGI ei paku praegu pakkumisi.",
+    "yourDeals": "Sinu pakkumised",
+    "noDealsYet": "Pakkumisi veel pole.",
+    "status": {
+      "DRAFT": "Mustand",
+      "PENDING": "Ootab FIRINGI-t",
+      "APPROVED": "Kinnitatud",
+      "SCHEDULED": "Ajastatud",
+      "LIVE": "Aktiivne",
+      "REJECTED": "Tagasi lükatud",
+      "ENDED": "Lõppenud",
+      "CANCELLED": "Lõpetatud varem",
+      "SOLD_OUT": "Välja müüdud"
+    },
+    "autoApproved": "algas ise",
+    "soldOf": "müüdud {sold} / {max}",
+    "revenue": "Müük {amount}",
+    "dealCommission": "vahendustasu {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} tk",
+      "BUNDLE": "{n} hinnaga {price}",
+      "VOLUME": "alates {n}: {price}",
+      "LOT": "{n} tk hinnaga {price}",
+      "BEST_OFFER": "Tee tarnijale pakkumine",
+      "BEST_OFFER_FLOOR": "Pakkumised alates {price} võetakse automaatselt vastu"
+    },
+    "cart": {
+      "applied": "Pakkumise hind",
+      "LEFT": "Pakkumise hind kuni {n} tk — vähenda kogust, et seda saada.",
+      "PER_BUYER": "Saad osta veel {n} pakkumise hinnaga — vähenda kogust, et seda saada.",
+      "BID_QTY": "Sinu vastuvõetud pakkumine on {n} tk kohta — määra koguseks {n}, et saada selle hind.",
+      "QTY_TIER": "Telli rohkem, et jõuda pakkumise hinnani.",
+      "LOT_QTY": "Partii hind kehtib ainult tervele partiile.",
+      "BUNDLE_QTY": "Telli terve pakk, et saada mitme ostmise hind.",
+      "BID": "Sellele tootele saab hinda pakkuda — vaata Väljamüügipakkumised."
+    }
   }
 }

@@ -849,7 +849,8 @@
     "Messages": "Ziņas",
     "Plan & Billing": "Plāns un norēķini",
     "Early Payout": "Agrā izmaksa",
-    "Bank": "Banka"
+    "Bank": "Banka",
+    "Clearance Deals": "Izpārdošanas piedāvājumi"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bankas plūsma neizdevās: {account}",
       "body": "Neizdevās iegūt jaunos {account} darījumus: {reason}"
+    },
+    "deal_review": {
+      "title": "Pārbaudāms piedāvājums: {number}",
+      "body": "{company} izveidoja piedāvājumu {number}. Tas sāksies tikai pēc FIRINGI apstiprinājuma."
+    },
+    "deal_approved": {
+      "title": "Piedāvājums apstiprināts: {number}",
+      "body": "Jūsu piedāvājums {number} ir apstiprināts un sāksies sākuma laikā."
+    },
+    "deal_rejected": {
+      "title": "Piedāvājums noraidīts: {number}",
+      "body": "FIRINGI noraidīja jūsu piedāvājumu {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Jauns cenas piedāvājums: {number}",
+      "body": "Pircējs piedāvā {price} € par gab. par {qty} gab. Atbildiet sadaļā Produkti › Izpārdošanas piedāvājumi."
+    },
+    "deal_bid_accepted": {
+      "title": "Cenas piedāvājums pieņemts: {number}",
+      "body": "Jūsu piedāvājums {price} € par gab. ir pieņemts. Ielieciet to grozā, pirms tas beidzas."
+    },
+    "deal_bid_rejected": {
+      "title": "Cenas piedāvājums noraidīts: {number}",
+      "body": "Piegādātājs noraidīja jūsu piedāvājumu {price} € par gab."
+    },
+    "deal_bid_countered": {
+      "title": "Pretpiedāvājums: {number}",
+      "body": "Piegādātājs piedāvā {price} € par gab. Pieņemiet to lapā Izpārdošanas piedāvājumi."
+    },
+    "deal_alert": {
+      "title": "Piedāvājums: {product} −{pct} %",
+      "body": "{supplier} piedāvājums produktam {product} līdz {until}."
+    },
+    "deal_digest": {
+      "title": "Šodien {count} jauni piedāvājumi",
+      "body": "Jauni piedāvājumi: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Atcerētie IBAN",
     "payersHint": "Kad apstiprināt sasaisti, IBAN tiek atcerēts, lai atpazītu nākamo maksājumu no tā.",
     "noPayers": "Vēl nav."
+  },
+  "deals": {
+    "title": "Izpārdošanas piedāvājumi",
+    "intro": "Piegādātāju laikā ierobežoti piedāvājumi precēm ar īsu derīgumu un pārpalikumiem: zibenscenas, vairāku iepakojumi, apjoma cenas, veselas partijas un cenas piedāvājums. Piedāvājuma cena aizstāj citas šī produkta atlaides.",
+    "badge": "Piedāvājums",
+    "all": "Visi",
+    "search": "Meklēt piedāvājumus",
+    "searchBtn": "Meklēt",
+    "none": "Pašlaik piedāvājumu nav. Sekojiet zemāk produktiem vai piegādātājiem, lai uzzinātu par nākamajiem.",
+    "kind": {
+      "FLASH": "Zibenscena",
+      "BUNDLE": "Vairāku iepakojums",
+      "VOLUME": "Apjoma cena",
+      "LOT": "Visa partija",
+      "BEST_OFFER": "Piedāvājiet cenu"
+    },
+    "clearance": "Izpārdošana",
+    "endsSoon": "Drīz beigsies",
+    "ended": "Beidzies",
+    "endsInDays": "Beigsies pēc {d} d {h} h",
+    "endsInHours": "Beigsies pēc {h} h {m} min",
+    "listNow": "Tagad {price}",
+    "exVat": "bez PVN",
+    "left": "atlikuši {n}",
+    "perBuyer": "Maks. {n} vienam pircējam",
+    "bestBefore": "Ieteicams līdz {date}",
+    "thisProduct": "šo produktu",
+    "alertsTitle": "Paziņojumi par piedāvājumiem",
+    "alertsHint": "Sekojiet produktiem vai piegādātājiem, un mēs paziņosim, kad tiem būs jauns piedāvājums. Paziņojam arī par piedāvājumiem produktiem, kurus esat pirkuši iepriekš (ja vien neesat izslēguši “Piedāvājumi un jaunumi”).",
+    "watchKind": {
+      "PRODUCT": "Produkts",
+      "SUPPLIER": "Piegādātājs"
+    },
+    "noWatches": "Jūs vēl nekam nesekojat.",
+    "myOffers": "Mani cenu piedāvājumi",
+    "bidStatus": {
+      "PENDING": "Gaida piegādātāju",
+      "ACCEPTED": "Pieņemts",
+      "COUNTERED": "Pretpiedāvājums",
+      "REJECTED": "Noraidīts",
+      "EXPIRED": "Beidzies",
+      "WITHDRAWN": "Atsaukts",
+      "ORDERED": "Pasūtīts"
+    },
+    "noOffers": "Jūs vēl neesat piedāvājuši cenu.",
+    "qty": "Daudzums",
+    "unitAt": "{price} gab.",
+    "addToCart": "Ielikt grozā",
+    "added": "Ielikts grozā par piedāvājuma cenu.",
+    "addedLot": "Visa partija ir jūsu grozā.",
+    "buyLot": "Pirkt visu partiju ({qty} gab.)",
+    "maxForYou": "Jūs vēl varat nopirkt {n}.",
+    "bid": {
+      "PENDING": "Jūsu piedāvājums: {qty} × {price}. Piegādātājs drīz atbildēs.",
+      "ACCEPTED": "Pieņemts: {qty} × {price}. Pasūtiet, pirms beidzas laiks.",
+      "COUNTERED": "Piegādātājs piedāvā {price} par gab. par {qty} (jūs piedāvājāt {mine})."
+    },
+    "addBidToCart": "Ielikt {qty} grozā",
+    "takeCounter": "Pieņemt pretpiedāvājumu",
+    "withdraw": "Atsaukt",
+    "bidSent": "Piedāvājums nosūtīts.",
+    "yourPrice": "Jūsu cena par gab. (bez PVN)",
+    "makeOffer": "Piedāvāt cenu",
+    "message": "Ziņa (nav obligāta)",
+    "minBid": "Piedāvājumi no {n} gab.",
+    "watch": "Sekot: {what}",
+    "unwatch": "Pārtraukt sekot: {what}",
+    "remove": "Noņemt",
+    "digest": "Sūtiet man katru dienu e-pastu ar jaunajiem piedāvājumiem",
+    "product": "Produkts",
+    "chooseProduct": "Izvēlieties produktu",
+    "kindLabel": "Piedāvājuma veids",
+    "kindHint": {
+      "FLASH": "Zemāka cena uz īsu laiku.",
+      "BUNDLE": "Vairāku gabalu iepakojums par vienu cenu (piem., 3 par 2 cenu).",
+      "VOLUME": "Zemākas cenas lielākiem daudzumiem.",
+      "LOT": "Pārdodiet visu partiju uzreiz par vienu cenu.",
+      "BEST_OFFER": "Pircēji piedāvā cenu; jūs pieņemat, noraidāt vai sniedzat pretpiedāvājumu."
+    },
+    "listPrice": "Cenrāža cena: {price}",
+    "discount": "{pct} % atlaide",
+    "clearanceWhy": {
+      "EXPIRY": "Izpārdošana: ieteicams līdz {date}.",
+      "OVERSTOCK": "Izpārdošana: vairāk krājumu, nekā parasti pārdodat."
+    },
+    "clearanceCommission": "FIRINGI komisija par šo piedāvājumu: {pct} % (parasti {usual} %).",
+    "normalCommission": "FIRINGI komisija: {pct} % no piedāvājuma cenas.",
+    "minDiscount": "Piedāvājumam jābūt vismaz par {pct} % zem cenrāža cenas.",
+    "dealPrice": "Piedāvājuma cena par gab. (bez PVN)",
+    "bundleQty": "Gabali iepakojumā",
+    "bundlePrice": "Iepakojuma cena (bez PVN)",
+    "lotQty": "Gabali partijā",
+    "lotPrice": "Visas partijas cena (bez PVN)",
+    "floorPrice": "Zemākā automātiski pieņemtā cena (nav obligāta)",
+    "minBidQty": "Mazākais daudzums piedāvājumam (nav obligāts)",
+    "maxQty": "Gabali piedāvājumā (nav obligāti)",
+    "perBuyerMax": "Maks. vienam pircējam (nav obligāts)",
+    "startsAt": "Sākums",
+    "endsAt": "Beigas",
+    "tiers": "Apjoma cenas",
+    "fromQty": "No (gab.)",
+    "unitPrice": "Cena par gab.",
+    "addTier": "Pievienot pakāpi",
+    "lot": "Partija",
+    "noLot": "Nav konkrētas partijas",
+    "units": "{n} gab.",
+    "titleLabel": "Nosaukums (nav obligāts)",
+    "titleHint": "piem., Sezonas beigu izpārdošana",
+    "noteLabel": "Piezīme pircējiem (nav obligāta)",
+    "noteHint": "piem., īss derīgums, bojāta ārējā kaste",
+    "submit": "Izveidot piedāvājumu",
+    "created": "Piedāvājums izveidots.",
+    "accept": "Pieņemt",
+    "counter": "Pretpiedāvājums",
+    "reject": "Noraidīt",
+    "cancelDeal": "Beigt piedāvājumu",
+    "vendorTitle": "Izpārdošanas piedāvājumi",
+    "vendorIntro": "Ātri pārdodiet preces ar īsu derīgumu vai pārpalikumus: zibenscenas, vairāku iepakojumi, apjoma cenas, veselas partijas vai cenas piedāvājums. Paziņojums tiek nosūtīts pircējiem, kas produktu pirkuši iepriekš, un tiem, kas jums seko. Atlaidi sedzat jūs; par izpārdošanas piedāvājumiem FIRINGI ņem mazāku komisiju.",
+    "newDeal": "Jauns piedāvājums",
+    "approvalAlways": "FIRINGI pārbauda katru piedāvājumu pirms tā sākuma.",
+    "approvalAuto": "Piedāvājumi līdz {pct} % atlaidei un {days} dienām sākas paši; pārējos vispirms pārbauda FIRINGI.",
+    "noKinds": "FIRINGI pašlaik nepiedāvā piedāvājumus.",
+    "yourDeals": "Jūsu piedāvājumi",
+    "noDealsYet": "Piedāvājumu vēl nav.",
+    "status": {
+      "DRAFT": "Melnraksts",
+      "PENDING": "Gaida FIRINGI",
+      "APPROVED": "Apstiprināts",
+      "SCHEDULED": "Ieplānots",
+      "LIVE": "Aktīvs",
+      "REJECTED": "Noraidīts",
+      "ENDED": "Beidzies",
+      "CANCELLED": "Beigts priekšlaicīgi",
+      "SOLD_OUT": "Izpārdots"
+    },
+    "autoApproved": "sākās automātiski",
+    "soldOf": "pārdoti {sold} no {max}",
+    "revenue": "Pārdošana {amount}",
+    "dealCommission": "komisija {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} gab.",
+      "BUNDLE": "{n} par {price}",
+      "VOLUME": "no {n}: {price}",
+      "LOT": "{n} gab. par {price}",
+      "BEST_OFFER": "Piedāvājiet piegādātājam cenu",
+      "BEST_OFFER_FLOOR": "Piedāvājumi no {price} tiek pieņemti automātiski"
+    },
+    "cart": {
+      "applied": "Piedāvājuma cena",
+      "LEFT": "Piedāvājuma cena līdz {n} gab. — samaziniet daudzumu, lai to saņemtu.",
+      "PER_BUYER": "Par piedāvājuma cenu varat nopirkt vēl {n} — samaziniet daudzumu, lai to saņemtu.",
+      "BID_QTY": "Jūsu pieņemtais piedāvājums ir par {n} gab. — iestatiet daudzumu {n}, lai saņemtu tā cenu.",
+      "QTY_TIER": "Pasūtiet vairāk, lai sasniegtu piedāvājuma cenu.",
+      "LOT_QTY": "Partijas cena attiecas tikai uz visu partiju.",
+      "BUNDLE_QTY": "Pasūtiet pilnu iepakojumu, lai saņemtu iepakojuma cenu.",
+      "BID": "Šim produktam var piedāvāt cenu — skatiet Izpārdošanas piedāvājumi."
+    }
   }
 }

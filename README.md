@@ -662,6 +662,30 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Clearance deals (Phase 38)
+
+Code: `src/lib/deals.ts` (pricing maths), `src/server/deals/service.ts`; details `docs/deals.md`.
+- **Five kinds**, each switched on or off by FIRINGI: **flash price**, **multi-buy** (e.g. 3 for the price of 2),
+  **volume prices** (tiers), **whole lot** (one price for the lot) and **best offer** (the buyer offers a price; the
+  supplier accepts, turns it down or counters; offers at or above the supplier's floor are accepted by themselves).
+- **Suppliers** (*Products › Clearance Deals*, 25 languages) — pick a product (and lot), the kind, prices, start/end,
+  units on the deal and per buyer; the form shows the list price, the discount and FIRINGI's commission first.
+  The supplier funds the discount.
+- **Approval — the admin chooses**: every deal waits for FIRINGI, or deals within limits (default ≤ 50 % off,
+  ≤ 14 days, optionally only trusted suppliers) start by themselves and the rest wait. FIRINGI approves (optionally
+  with its own commission on that deal), turns down with a reason, or stops a deal (*Pricing › Clearance Deals*, English).
+- **Lower commission on clearance** — a deal on a lot that expires within 21 days (or overstock: more than 60 days
+  of sales) is a clearance deal: FIRINGI's commission is the clearance rate (default 4 %, never above the supplier's
+  usual rate) on the deal price. Other deals: the usual rate on the deal price. Commission is never shown to buyers.
+- **Buyers** (*Catalogue › Clearance Deals*, 25 languages) — deals page with filters and countdowns, badges on product
+  cards, a deal panel on the product page, add to cart at the deal price, offers / counter-offers, “my offers”.
+  In the cart the deal price replaces promotions and coupons on that line; the cart says why a deal doesn't apply
+  yet (too few for the volume price, more than is left, per-buyer limit…). Order lines keep the deal.
+- **Telling buyers** — watchlist (products, suppliers), **smart alerts** to buyers who bought the product before
+  (not if they switched “Offers & news” off; at most 3 a day), and an opt-in **daily digest**. Hourly job
+  `/api/cron/deals` ends deals, expires offers, sends alerts and the digest.
+- Tests: `tests/integration/deals.test.ts`, browser `tests/e2e/deals.mjs`. Screenshots `docs/screenshots/deals-0*.png`.
+
 ## Bank reconciliation (Phase 37)
 
 Code: `src/lib/bank/*` (statement parsers), `src/server/bank/*`; details `docs/bank.md`.

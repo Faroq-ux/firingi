@@ -38,6 +38,7 @@ export const VENDOR_NAV: NavSection[] = [
       vp("price-insights", "Price Insights", "Análise de Preços", "P29", { live: true, feature: "PRICE_INSIGHTS", perm: ["vendor.pricing.manage", "vendor.products.view", "vendor.products.manage"], es: "Análisis de precios" }),
       vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
       vp("promotions", "Promotions", "Promoções", "P5", { live: true, perm: "vendor.promotions.manage", es: "Promociones" }),
+      vp("deals", "Clearance Deals", "Oportunidades", "P38", { live: true, perm: ["vendor.promotions.manage", "vendor.pricing.manage"], es: "Oportunidades" }),
       vp("import", "Import & Sync", "Importar e Sincronizar", "P21", { live: true, feature: "INTEGRATIONS", perm: ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], es: "Importar y sincronizar" }),
     ],
   },
@@ -158,6 +159,7 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bc("browse", "Shop", "Loja", "P3", { live: true, es: "Tienda" }),
       bc("suppliers", "Suppliers", "Fornecedores", "P3", { live: true, es: "Proveedores" }),
+      bc("clearance", "Clearance Deals", "Oportunidades", "P38", { live: true, es: "Oportunidades" }),
       bc("deals", "My Offers", "As Minhas Ofertas", "P15", { live: true, es: "Mis ofertas" }),
       bc("price-changes", "Price Changes", "Alterações de Preço", "P29", { live: true, es: "Cambios de precio" }),
     ],

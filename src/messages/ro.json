@@ -849,7 +849,8 @@
     "Messages": "Mesaje",
     "Plan & Billing": "Plan și facturare",
     "Early Payout": "Plată anticipată",
-    "Bank": "Bancă"
+    "Bank": "Bancă",
+    "Clearance Deals": "Oferte de lichidare"
   },
   "delivery": {
     "title": "Livrare",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Fluxul bancar a eșuat: {account}",
       "body": "Tranzacțiile noi pentru {account} nu au putut fi preluate: {reason}"
+    },
+    "deal_review": {
+      "title": "Ofertă de verificat: {number}",
+      "body": "{company} a creat oferta {number}. Pornește doar după aprobarea FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Ofertă aprobată: {number}",
+      "body": "Oferta dvs. {number} a fost aprobată și pornește la ora de început."
+    },
+    "deal_rejected": {
+      "title": "Ofertă respinsă: {number}",
+      "body": "FIRINGI a respins oferta dvs. {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Ofertă nouă de preț la {number}",
+      "body": "Un cumpărător oferă {price} € pe bucată pentru {qty} buc. Răspundeți în Produse › Oferte de lichidare."
+    },
+    "deal_bid_accepted": {
+      "title": "Ofertă de preț acceptată: {number}",
+      "body": "Oferta dvs. de {price} € pe bucată a fost acceptată. Adăugați-o în coș înainte să expire."
+    },
+    "deal_bid_rejected": {
+      "title": "Ofertă de preț respinsă: {number}",
+      "body": "Furnizorul a respins oferta dvs. de {price} € pe bucată."
+    },
+    "deal_bid_countered": {
+      "title": "Contraofertă: {number}",
+      "body": "Furnizorul propune {price} € pe bucată. Acceptați-o pe pagina Oferte de lichidare."
+    },
+    "deal_alert": {
+      "title": "Ofertă: {product} −{pct} %",
+      "body": "{supplier} are o ofertă la {product} până la {until}."
+    },
+    "deal_digest": {
+      "title": "{count} oferte noi azi",
+      "body": "Oferte noi: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "IBAN-uri memorate",
     "payersHint": "Când confirmați o potrivire, IBAN-ul este memorat pentru a recunoaște următoarea plată de la el.",
     "noPayers": "Niciunul încă."
+  },
+  "deals": {
+    "title": "Oferte de lichidare",
+    "intro": "Oferte limitate în timp ale furnizorilor pentru mărfuri cu termen scurt și stocuri în exces: prețuri flash, pachete multiple, prețuri pe cantitate, loturi întregi și cea mai bună ofertă. Prețul ofertei înlocuiește alte reduceri la acel produs.",
+    "badge": "Ofertă",
+    "all": "Toate",
+    "search": "Caută oferte",
+    "searchBtn": "Caută",
+    "none": "Nu există oferte acum. Urmăriți mai jos produse sau furnizori pentru a afla de următoarele.",
+    "kind": {
+      "FLASH": "Preț flash",
+      "BUNDLE": "Pachet multiplu",
+      "VOLUME": "Preț pe cantitate",
+      "LOT": "Lot întreg",
+      "BEST_OFFER": "Cea mai bună ofertă"
+    },
+    "clearance": "Lichidare",
+    "endsSoon": "Se încheie curând",
+    "ended": "Încheiată",
+    "endsInDays": "Se încheie în {d} z {h} h",
+    "endsInHours": "Se încheie în {h} h {m} min",
+    "listNow": "Acum {price}",
+    "exVat": "fără TVA",
+    "left": "au rămas {n}",
+    "perBuyer": "Max. {n} per cumpărător",
+    "bestBefore": "A se consuma de preferință înainte de {date}",
+    "thisProduct": "acest produs",
+    "alertsTitle": "Alerte de oferte",
+    "alertsHint": "Urmăriți produse sau furnizori și vă anunțăm când au o ofertă nouă. Vă anunțăm și despre oferte la produse pe care le-ați mai cumpărat (dacă nu ați dezactivat „Oferte și noutăți”).",
+    "watchKind": {
+      "PRODUCT": "Produs",
+      "SUPPLIER": "Furnizor"
+    },
+    "noWatches": "Încă nu urmăriți nimic.",
+    "myOffers": "Ofertele mele de preț",
+    "bidStatus": {
+      "PENDING": "Așteaptă furnizorul",
+      "ACCEPTED": "Acceptată",
+      "COUNTERED": "Contraofertă",
+      "REJECTED": "Respinsă",
+      "EXPIRED": "Expirată",
+      "WITHDRAWN": "Retrasă",
+      "ORDERED": "Comandată"
+    },
+    "noOffers": "Nu ați făcut nicio ofertă de preț.",
+    "qty": "Cantitate",
+    "unitAt": "{price} pe bucată",
+    "addToCart": "Adaugă în coș",
+    "added": "Adăugat în coș la prețul ofertei.",
+    "addedLot": "Tot lotul este în coșul dvs.",
+    "buyLot": "Cumpărați tot lotul ({qty} buc.)",
+    "maxForYou": "Mai puteți cumpăra {n}.",
+    "bid": {
+      "PENDING": "Oferta dvs.: {qty} × {price}. Furnizorul va răspunde în curând.",
+      "ACCEPTED": "Acceptată: {qty} × {price}. Comandați înainte să expire timpul.",
+      "COUNTERED": "Furnizorul propune {price} pe bucată pentru {qty} (ați oferit {mine})."
+    },
+    "addBidToCart": "Adaugă {qty} în coș",
+    "takeCounter": "Acceptă contraoferta",
+    "withdraw": "Retrage",
+    "bidSent": "Ofertă trimisă.",
+    "yourPrice": "Prețul dvs. pe bucată (fără TVA)",
+    "makeOffer": "Faceți o ofertă",
+    "message": "Mesaj (opțional)",
+    "minBid": "Oferte de la {n} buc.",
+    "watch": "Urmărește {what}",
+    "unwatch": "Nu mai urmări {what}",
+    "remove": "Elimină",
+    "digest": "Trimiteți-mi zilnic un e-mail cu ofertele noi",
+    "product": "Produs",
+    "chooseProduct": "Alegeți un produs",
+    "kindLabel": "Tipul ofertei",
+    "kindHint": {
+      "FLASH": "Un preț mai mic pentru scurt timp.",
+      "BUNDLE": "Un pachet de mai multe bucăți la un singur preț (ex. 3 la prețul a 2).",
+      "VOLUME": "Prețuri mai mici pentru cantități mai mari.",
+      "LOT": "Vindeți un lot întreg dintr-odată la un singur preț.",
+      "BEST_OFFER": "Cumpărătorii propun un preț; dvs. acceptați, respingeți sau faceți o contraofertă."
+    },
+    "listPrice": "Preț de listă: {price}",
+    "discount": "{pct} % reducere",
+    "clearanceWhy": {
+      "EXPIRY": "Lichidare: a se consuma de preferință înainte de {date}.",
+      "OVERSTOCK": "Lichidare: mai mult stoc decât vindeți de obicei."
+    },
+    "clearanceCommission": "Comisionul FIRINGI la această ofertă: {pct} % (de obicei {usual} %).",
+    "normalCommission": "Comisionul FIRINGI: {pct} % din prețul ofertei.",
+    "minDiscount": "O ofertă trebuie să fie cu cel puțin {pct} % sub prețul de listă.",
+    "dealPrice": "Prețul ofertei pe bucată (fără TVA)",
+    "bundleQty": "Bucăți într-un pachet",
+    "bundlePrice": "Prețul pachetului (fără TVA)",
+    "lotQty": "Bucăți în lot",
+    "lotPrice": "Prețul întregului lot (fără TVA)",
+    "floorPrice": "Cel mai mic preț acceptat automat (opțional)",
+    "minBidQty": "Cantitatea minimă pentru o ofertă (opțional)",
+    "maxQty": "Bucăți în ofertă (opțional)",
+    "perBuyerMax": "Max. per cumpărător (opțional)",
+    "startsAt": "Începe",
+    "endsAt": "Se termină",
+    "tiers": "Prețuri pe cantitate",
+    "fromQty": "De la (buc.)",
+    "unitPrice": "Preț pe bucată",
+    "addTier": "Adaugă prag",
+    "lot": "Lot",
+    "noLot": "Niciun lot anume",
+    "units": "{n} buc.",
+    "titleLabel": "Titlu (opțional)",
+    "titleHint": "ex. Lichidare de sfârșit de sezon",
+    "noteLabel": "Notă pentru cumpărători (opțional)",
+    "noteHint": "ex. termen scurt, cutie exterioară deteriorată",
+    "submit": "Creează oferta",
+    "created": "Oferta a fost creată.",
+    "accept": "Acceptă",
+    "counter": "Contraofertă",
+    "reject": "Respinge",
+    "cancelDeal": "Încheie oferta",
+    "vendorTitle": "Oferte de lichidare",
+    "vendorIntro": "Vindeți rapid mărfurile cu termen scurt sau stocul în exces: prețuri flash, pachete multiple, prețuri pe cantitate, loturi întregi sau cea mai bună ofertă. Sunt anunțați cumpărătorii care au mai cumpărat produsul și cei care vă urmăresc. Reducerea o suportați dvs.; la ofertele de lichidare FIRINGI ia un comision mai mic.",
+    "newDeal": "Ofertă nouă",
+    "approvalAlways": "FIRINGI verifică fiecare ofertă înainte să înceapă.",
+    "approvalAuto": "Ofertele de până la {pct} % reducere și {days} zile pornesc singure; pe celelalte le verifică întâi FIRINGI.",
+    "noKinds": "FIRINGI nu oferă oferte în acest moment.",
+    "yourDeals": "Ofertele dvs.",
+    "noDealsYet": "Încă nu există oferte.",
+    "status": {
+      "DRAFT": "Ciornă",
+      "PENDING": "Așteaptă FIRINGI",
+      "APPROVED": "Aprobată",
+      "SCHEDULED": "Programată",
+      "LIVE": "Activă",
+      "REJECTED": "Respinsă",
+      "ENDED": "Încheiată",
+      "CANCELLED": "Încheiată mai devreme",
+      "SOLD_OUT": "Epuizată"
+    },
+    "autoApproved": "a pornit singură",
+    "soldOf": "{sold} din {max} vândute",
+    "revenue": "Vânzări {amount}",
+    "dealCommission": "comision {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} pe bucată",
+      "BUNDLE": "{n} la {price}",
+      "VOLUME": "de la {n}: {price}",
+      "LOT": "{n} buc. la {price}",
+      "BEST_OFFER": "Faceți furnizorului o ofertă",
+      "BEST_OFFER_FLOOR": "Ofertele de la {price} sunt acceptate automat"
+    },
+    "cart": {
+      "applied": "Prețul ofertei",
+      "LEFT": "Prețul ofertei pentru până la {n} buc. — micșorați cantitatea ca să-l obțineți.",
+      "PER_BUYER": "Mai puteți cumpăra {n} la prețul ofertei — micșorați cantitatea ca să-l obțineți.",
+      "BID_QTY": "Oferta dvs. acceptată este pentru {n} buc. — setați cantitatea la {n} ca să obțineți prețul ei.",
+      "QTY_TIER": "Comandați mai mult ca să ajungeți la prețul ofertei.",
+      "LOT_QTY": "Prețul lotului este doar pentru tot lotul.",
+      "BUNDLE_QTY": "Comandați un pachet complet pentru prețul pachetului multiplu.",
+      "BID": "Acest produs acceptă oferte de preț — vedeți Oferte de lichidare."
+    }
   }
 }

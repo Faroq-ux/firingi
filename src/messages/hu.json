@@ -849,7 +849,8 @@
     "Messages": "Üzenetek",
     "Plan & Billing": "Csomag és számlázás",
     "Early Payout": "Előrehozott kifizetés",
-    "Bank": "Bank"
+    "Bank": "Bank",
+    "Clearance Deals": "Kiárusítási ajánlatok"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Sikertelen banki adatfolyam: {account}",
       "body": "Nem sikerült letölteni az új tételeket ({account}): {reason}"
+    },
+    "deal_review": {
+      "title": "Ellenőrizendő ajánlat: {number}",
+      "body": "{company} létrehozta a(z) {number} ajánlatot. Csak a FIRINGI jóváhagyása után indul."
+    },
+    "deal_approved": {
+      "title": "Ajánlat jóváhagyva: {number}",
+      "body": "A(z) {number} ajánlata jóvá lett hagyva, és a kezdési időpontban indul."
+    },
+    "deal_rejected": {
+      "title": "Ajánlat elutasítva: {number}",
+      "body": "A FIRINGI elutasította a(z) {number} ajánlatát: {reason}"
+    },
+    "deal_bid": {
+      "title": "Új árajánlat: {number}",
+      "body": "Egy vevő {price} € / db árat ajánl {qty} db-ra. Válaszoljon itt: Termékek › Kiárusítási ajánlatok."
+    },
+    "deal_bid_accepted": {
+      "title": "Árajánlat elfogadva: {number}",
+      "body": "A(z) {price} € / db ajánlatát elfogadták. Tegye a kosárba, mielőtt lejár."
+    },
+    "deal_bid_rejected": {
+      "title": "Árajánlat elutasítva: {number}",
+      "body": "A beszállító elutasította a(z) {price} € / db ajánlatát."
+    },
+    "deal_bid_countered": {
+      "title": "Ellenajánlat: {number}",
+      "body": "A beszállító {price} € / db árat javasol. Fogadja el a Kiárusítási ajánlatok oldalon."
+    },
+    "deal_alert": {
+      "title": "Ajánlat: {product} −{pct} %",
+      "body": "{supplier} ajánlata: {product}, {until}-ig."
+    },
+    "deal_digest": {
+      "title": "Ma {count} új ajánlat",
+      "body": "Új ajánlatok: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Megjegyzett IBAN-ok",
     "payersHint": "Ha megerősít egy párosítást, az IBAN-t megjegyezzük, hogy a következő kifizetést felismerjük.",
     "noPayers": "Még nincs."
+  },
+  "deals": {
+    "title": "Kiárusítási ajánlatok",
+    "intro": "A beszállítók időkorlátos ajánlatai rövid lejáratú és túlkészletes árura: villámárak, többes vásárlás, mennyiségi árak, teljes tételek és árajánlat. Az akciós ár felváltja a termék többi kedvezményét.",
+    "badge": "Ajánlat",
+    "all": "Mind",
+    "search": "Ajánlatok keresése",
+    "searchBtn": "Keresés",
+    "none": "Jelenleg nincs ajánlat. Kövessen lent termékeket vagy beszállítókat, hogy értesüljön a következőkről.",
+    "kind": {
+      "FLASH": "Villámár",
+      "BUNDLE": "Többes vásárlás",
+      "VOLUME": "Mennyiségi ár",
+      "LOT": "Teljes tétel",
+      "BEST_OFFER": "Árajánlat"
+    },
+    "clearance": "Kiárusítás",
+    "endsSoon": "Hamarosan lejár",
+    "ended": "Lejárt",
+    "endsInDays": "Lejár {d} n {h} ó múlva",
+    "endsInHours": "Lejár {h} ó {m} p múlva",
+    "listNow": "Most {price}",
+    "exVat": "nettó",
+    "left": "még {n}",
+    "perBuyer": "Max. {n} vevőnként",
+    "bestBefore": "Minőségét megőrzi: {date}",
+    "thisProduct": "ez a termék",
+    "alertsTitle": "Ajánlatértesítők",
+    "alertsHint": "Kövessen termékeket vagy beszállítókat, és szólunk, ha új ajánlatuk van. Azokról az ajánlatokról is értesítjük, amelyek korábban vásárolt termékeire szólnak (hacsak ki nem kapcsolta az „Ajánlatok és hírek” opciót).",
+    "watchKind": {
+      "PRODUCT": "Termék",
+      "SUPPLIER": "Beszállító"
+    },
+    "noWatches": "Még nem követ semmit.",
+    "myOffers": "Árajánlataim",
+    "bidStatus": {
+      "PENDING": "A beszállítóra vár",
+      "ACCEPTED": "Elfogadva",
+      "COUNTERED": "Ellenajánlat",
+      "REJECTED": "Elutasítva",
+      "EXPIRED": "Lejárt",
+      "WITHDRAWN": "Visszavonva",
+      "ORDERED": "Megrendelve"
+    },
+    "noOffers": "Még nem tett árajánlatot.",
+    "qty": "Mennyiség",
+    "unitAt": "{price} / db",
+    "addToCart": "Kosárba",
+    "added": "Akciós áron a kosárba téve.",
+    "addedLot": "A teljes tétel a kosarában van.",
+    "buyLot": "A teljes tétel megvásárlása ({qty} db)",
+    "maxForYou": "Még {n} db-ot vehet.",
+    "bid": {
+      "PENDING": "Ajánlata: {qty} × {price}. A beszállító hamarosan válaszol.",
+      "ACCEPTED": "Elfogadva: {qty} × {price}. Rendeljen, mielőtt lejár az idő.",
+      "COUNTERED": "A beszállító {price} / db árat javasol {qty} db-ra (Ön {mine} árat ajánlott)."
+    },
+    "addBidToCart": "{qty} db kosárba",
+    "takeCounter": "Ellenajánlat elfogadása",
+    "withdraw": "Visszavonás",
+    "bidSent": "Ajánlat elküldve.",
+    "yourPrice": "Az Ön ára / db (nettó)",
+    "makeOffer": "Árajánlat tétele",
+    "message": "Üzenet (nem kötelező)",
+    "minBid": "Ajánlat {n} db-tól.",
+    "watch": "{what} követése",
+    "unwatch": "{what} követésének leállítása",
+    "remove": "Eltávolítás",
+    "digest": "Küldjenek naponta e-mailt az új ajánlatokról",
+    "product": "Termék",
+    "chooseProduct": "Válasszon terméket",
+    "kindLabel": "Ajánlat típusa",
+    "kindHint": {
+      "FLASH": "Alacsonyabb ár rövid ideig.",
+      "BUNDLE": "Több darabos csomag egy áron (pl. 3 a 2 áráért).",
+      "VOLUME": "Alacsonyabb árak nagyobb mennyiségre.",
+      "LOT": "Teljes tétel egyszerre, egy áron.",
+      "BEST_OFFER": "A vevők árat ajánlanak; Ön elfogadja, elutasítja vagy ellenajánlatot tesz."
+    },
+    "listPrice": "Listaár: {price}",
+    "discount": "{pct} % kedvezmény",
+    "clearanceWhy": {
+      "EXPIRY": "Kiárusítás: minőségét megőrzi {date}.",
+      "OVERSTOCK": "Kiárusítás: több készlet, mint amennyit általában elad."
+    },
+    "clearanceCommission": "A FIRINGI jutaléka ezen az ajánlaton: {pct} % (általában {usual} %).",
+    "normalCommission": "A FIRINGI jutaléka: az akciós ár {pct} %-a.",
+    "minDiscount": "Az ajánlatnak legalább {pct} %-kal a listaár alatt kell lennie.",
+    "dealPrice": "Akciós ár / db (nettó)",
+    "bundleQty": "Darab egy csomagban",
+    "bundlePrice": "A csomag ára (nettó)",
+    "lotQty": "Darab a tételben",
+    "lotPrice": "A teljes tétel ára (nettó)",
+    "floorPrice": "Legalacsonyabb automatikusan elfogadott ár (nem kötelező)",
+    "minBidQty": "Legkisebb mennyiség ajánlathoz (nem kötelező)",
+    "maxQty": "Darab az ajánlatban (nem kötelező)",
+    "perBuyerMax": "Max. vevőnként (nem kötelező)",
+    "startsAt": "Kezdete",
+    "endsAt": "Vége",
+    "tiers": "Mennyiségi árak",
+    "fromQty": "Ettől (db)",
+    "unitPrice": "Ár / db",
+    "addTier": "Sáv hozzáadása",
+    "lot": "Tétel",
+    "noLot": "Nincs konkrét tétel",
+    "units": "{n} db",
+    "titleLabel": "Cím (nem kötelező)",
+    "titleHint": "pl. Szezonvégi kiárusítás",
+    "noteLabel": "Megjegyzés a vevőknek (nem kötelező)",
+    "noteHint": "pl. rövid lejárat, sérült gyűjtődoboz",
+    "submit": "Ajánlat létrehozása",
+    "created": "Ajánlat létrehozva.",
+    "accept": "Elfogadás",
+    "counter": "Ellenajánlat",
+    "reject": "Elutasítás",
+    "cancelDeal": "Ajánlat befejezése",
+    "vendorTitle": "Kiárusítási ajánlatok",
+    "vendorIntro": "Adja el gyorsan a rövid lejáratú vagy felesleges készletet: villámárak, többes vásárlás, mennyiségi árak, teljes tételek vagy árajánlat. A terméket korábban megvásárló és az Önt követő vevők értesítést kapnak. A kedvezményt Ön fizeti; kiárusítási ajánlatoknál a FIRINGI alacsonyabb jutalékot vesz fel.",
+    "newDeal": "Új ajánlat",
+    "approvalAlways": "A FIRINGI minden ajánlatot ellenőriz indulás előtt.",
+    "approvalAuto": "A legfeljebb {pct} % kedvezményű és {days} napos ajánlatok maguktól indulnak; a többit előbb a FIRINGI ellenőrzi.",
+    "noKinds": "A FIRINGI jelenleg nem kínál ajánlatokat.",
+    "yourDeals": "Az Ön ajánlatai",
+    "noDealsYet": "Még nincs ajánlat.",
+    "status": {
+      "DRAFT": "Piszkozat",
+      "PENDING": "A FIRINGI-re vár",
+      "APPROVED": "Jóváhagyva",
+      "SCHEDULED": "Ütemezve",
+      "LIVE": "Aktív",
+      "REJECTED": "Elutasítva",
+      "ENDED": "Befejezve",
+      "CANCELLED": "Korábban befejezve",
+      "SOLD_OUT": "Elfogyott"
+    },
+    "autoApproved": "magától indult",
+    "soldOf": "{sold} / {max} eladva",
+    "revenue": "Eladás {amount}",
+    "dealCommission": "jutalék {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} / db",
+      "BUNDLE": "{n} db {price}",
+      "VOLUME": "{n} db-tól: {price}",
+      "LOT": "{n} db {price} áron",
+      "BEST_OFFER": "Tegyen árajánlatot a beszállítónak",
+      "BEST_OFFER_FLOOR": "{price} feletti ajánlatokat automatikusan elfogadunk"
+    },
+    "cart": {
+      "applied": "Akciós ár",
+      "LEFT": "Akciós ár legfeljebb {n} db-ig — csökkentse a mennyiséget, hogy megkapja.",
+      "PER_BUYER": "Még {n} db-ot vehet akciós áron — csökkentse a mennyiséget, hogy megkapja.",
+      "BID_QTY": "Elfogadott ajánlata {n} db-ra szól — állítsa a mennyiséget {n} db-ra, hogy megkapja az árát.",
+      "QTY_TIER": "Rendeljen többet, hogy elérje az akciós árat.",
+      "LOT_QTY": "A tétel ára csak a teljes tételre érvényes.",
+      "BUNDLE_QTY": "Rendeljen teljes csomagot a többes vásárlási árért.",
+      "BID": "Erre a termékre árajánlatot tehet — lásd Kiárusítási ajánlatok."
+    }
   }
 }

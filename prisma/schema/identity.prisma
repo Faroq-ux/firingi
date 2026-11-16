@@ -276,6 +276,8 @@ model Company {
   planSubscription       PlanSubscription?         @relation("PlanSubscription")
   earlyPayouts           EarlyPayout[]             @relation("EarlyPayouts")
   bankAccounts           BankAccount[]             @relation("BankAccounts")
+  clearanceDeals         ClearanceDeal[]           @relation("ClearanceDeals")
+  clearanceBids          ClearanceBid[]            @relation("ClearanceBids")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

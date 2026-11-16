@@ -849,7 +849,8 @@
     "Messages": "Berichten",
     "Plan & Billing": "Abonnement & facturatie",
     "Early Payout": "Vervroegde uitbetaling",
-    "Bank": "Bank"
+    "Bank": "Bank",
+    "Clearance Deals": "Opruimingsdeals"
   },
   "delivery": {
     "title": "Levering",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bankfeed mislukt: {account}",
       "body": "Nieuwe regels voor {account} konden niet worden opgehaald: {reason}"
+    },
+    "deal_review": {
+      "title": "Deal te controleren: {number}",
+      "body": "{company} heeft deal {number} aangemaakt. Hij start pas nadat FIRINGI hem goedkeurt."
+    },
+    "deal_approved": {
+      "title": "Deal goedgekeurd: {number}",
+      "body": "Uw deal {number} is goedgekeurd en start op het begintijdstip."
+    },
+    "deal_rejected": {
+      "title": "Deal afgewezen: {number}",
+      "body": "FIRINGI heeft uw deal {number} afgewezen: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nieuw bod op deal {number}",
+      "body": "Een koper biedt {price} € per stuk voor {qty} stuks. Beantwoord het in Producten › Opruimingsdeals."
+    },
+    "deal_bid_accepted": {
+      "title": "Bod geaccepteerd: {number}",
+      "body": "Uw bod van {price} € per stuk is geaccepteerd. Zet het in uw winkelwagen voordat het verloopt."
+    },
+    "deal_bid_rejected": {
+      "title": "Bod afgewezen: {number}",
+      "body": "De leverancier heeft uw bod van {price} € per stuk afgewezen."
+    },
+    "deal_bid_countered": {
+      "title": "Tegenbod: {number}",
+      "body": "De leverancier stelt {price} € per stuk voor. Accepteer het op de pagina Opruimingsdeals."
+    },
+    "deal_alert": {
+      "title": "Deal: {product} −{pct} %",
+      "body": "{supplier} heeft tot {until} een deal op {product}."
+    },
+    "deal_digest": {
+      "title": "{count} nieuwe deals vandaag",
+      "body": "Nieuwe deals: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Onthouden IBAN's",
     "payersHint": "Als u een koppeling bevestigt, wordt de IBAN onthouden zodat de volgende betaling ervan wordt herkend.",
     "noPayers": "Nog geen."
+  },
+  "deals": {
+    "title": "Opruimingsdeals",
+    "intro": "Tijdelijke aanbiedingen van leveranciers op kort houdbare voorraad en overschotten: flitsprijzen, meer-kopen, staffelprijzen, hele partijen en bod uitbrengen. De dealprijs vervangt andere kortingen op dat product.",
+    "badge": "Deal",
+    "all": "Alle",
+    "search": "Deals zoeken",
+    "searchBtn": "Zoeken",
+    "none": "Op dit moment geen deals. Volg hieronder producten of leveranciers om over de volgende te horen.",
+    "kind": {
+      "FLASH": "Flitsprijs",
+      "BUNDLE": "Meer-kopen",
+      "VOLUME": "Staffelprijs",
+      "LOT": "Hele partij",
+      "BEST_OFFER": "Bod uitbrengen"
+    },
+    "clearance": "Opruiming",
+    "endsSoon": "Eindigt binnenkort",
+    "ended": "Afgelopen",
+    "endsInDays": "Eindigt over {d} d {h} u",
+    "endsInHours": "Eindigt over {h} u {m} min",
+    "listNow": "Nu {price}",
+    "exVat": "excl. btw",
+    "left": "nog {n}",
+    "perBuyer": "Max. {n} per koper",
+    "bestBefore": "Ten minste houdbaar tot {date}",
+    "thisProduct": "dit product",
+    "alertsTitle": "Dealmeldingen",
+    "alertsHint": "Volg producten of leveranciers en we laten het weten als ze een nieuwe deal hebben. We melden ook deals op producten die u eerder kocht (tenzij u 'Aanbiedingen & nieuws' hebt uitgezet).",
+    "watchKind": {
+      "PRODUCT": "Product",
+      "SUPPLIER": "Leverancier"
+    },
+    "noWatches": "U volgt nog niets.",
+    "myOffers": "Mijn biedingen",
+    "bidStatus": {
+      "PENDING": "Wacht op de leverancier",
+      "ACCEPTED": "Geaccepteerd",
+      "COUNTERED": "Tegenbod",
+      "REJECTED": "Afgewezen",
+      "EXPIRED": "Verlopen",
+      "WITHDRAWN": "Ingetrokken",
+      "ORDERED": "Besteld"
+    },
+    "noOffers": "U hebt nog geen biedingen gedaan.",
+    "qty": "Aantal",
+    "unitAt": "{price} per stuk",
+    "addToCart": "In winkelwagen",
+    "added": "Tegen de dealprijs in uw winkelwagen gezet.",
+    "addedLot": "De hele partij zit in uw winkelwagen.",
+    "buyLot": "De hele partij kopen ({qty} stuks)",
+    "maxForYou": "U kunt nog {n} kopen.",
+    "bid": {
+      "PENDING": "Uw bod: {qty} × {price}. De leverancier antwoordt binnenkort.",
+      "ACCEPTED": "Geaccepteerd: {qty} × {price}. Bestel voordat de tijd om is.",
+      "COUNTERED": "De leverancier stelt {price} per stuk voor voor {qty} (u bood {mine})."
+    },
+    "addBidToCart": "{qty} in winkelwagen",
+    "takeCounter": "Tegenbod accepteren",
+    "withdraw": "Intrekken",
+    "bidSent": "Bod verstuurd.",
+    "yourPrice": "Uw prijs per stuk (excl. btw)",
+    "makeOffer": "Bod uitbrengen",
+    "message": "Bericht (optioneel)",
+    "minBid": "Biedingen vanaf {n} stuks.",
+    "watch": "{what} volgen",
+    "unwatch": "{what} niet meer volgen",
+    "remove": "Verwijderen",
+    "digest": "Stuur me dagelijks een e-mail met nieuwe deals",
+    "product": "Product",
+    "chooseProduct": "Kies een product",
+    "kindLabel": "Soort deal",
+    "kindHint": {
+      "FLASH": "Een lagere prijs voor korte tijd.",
+      "BUNDLE": "Een pak van meerdere stuks voor één prijs (bijv. 3 voor de prijs van 2).",
+      "VOLUME": "Lagere prijzen voor grotere aantallen.",
+      "LOT": "Een hele partij in één keer voor één prijs verkopen.",
+      "BEST_OFFER": "Kopers bieden een prijs; u accepteert, wijst af of doet een tegenbod."
+    },
+    "listPrice": "Lijstprijs: {price}",
+    "discount": "{pct} % korting",
+    "clearanceWhy": {
+      "EXPIRY": "Opruiming: ten minste houdbaar tot {date}.",
+      "OVERSTOCK": "Opruiming: meer voorraad dan u gewoonlijk verkoopt."
+    },
+    "clearanceCommission": "Commissie van FIRINGI op deze deal: {pct} % (normaal {usual} %).",
+    "normalCommission": "Commissie van FIRINGI: {pct} % van de dealprijs.",
+    "minDiscount": "Een deal moet minstens {pct} % onder de lijstprijs liggen.",
+    "dealPrice": "Dealprijs per stuk (excl. btw)",
+    "bundleQty": "Stuks per pak",
+    "bundlePrice": "Prijs voor het pak (excl. btw)",
+    "lotQty": "Stuks in de partij",
+    "lotPrice": "Prijs voor de hele partij (excl. btw)",
+    "floorPrice": "Laagste prijs die vanzelf wordt geaccepteerd (optioneel)",
+    "minBidQty": "Kleinste aantal voor een bod (optioneel)",
+    "maxQty": "Stuks in de deal (optioneel)",
+    "perBuyerMax": "Max. per koper (optioneel)",
+    "startsAt": "Begint",
+    "endsAt": "Eindigt",
+    "tiers": "Staffelprijzen",
+    "fromQty": "Vanaf (stuks)",
+    "unitPrice": "Prijs per stuk",
+    "addTier": "Staffel toevoegen",
+    "lot": "Partij",
+    "noLot": "Geen bepaalde partij",
+    "units": "{n} stuks",
+    "titleLabel": "Titel (optioneel)",
+    "titleHint": "bijv. Opruiming einde seizoen",
+    "noteLabel": "Opmerking voor kopers (optioneel)",
+    "noteHint": "bijv. korte houdbaarheid, omdoos beschadigd",
+    "submit": "Deal aanmaken",
+    "created": "Deal aangemaakt.",
+    "accept": "Accepteren",
+    "counter": "Tegenbod",
+    "reject": "Afwijzen",
+    "cancelDeal": "Deal beëindigen",
+    "vendorTitle": "Opruimingsdeals",
+    "vendorIntro": "Verkoop kort houdbare of overtollige voorraad snel: flitsprijzen, meer-kopen, staffelprijzen, hele partijen of bod uitbrengen. Kopers die het product eerder kochten en wie u volgt, krijgen bericht. U betaalt de korting; bij opruimingsdeals rekent FIRINGI een lagere commissie.",
+    "newDeal": "Nieuwe deal",
+    "approvalAlways": "FIRINGI controleert elke deal voordat hij begint.",
+    "approvalAuto": "Deals tot {pct} % korting en {days} dagen starten vanzelf; andere controleert FIRINGI eerst.",
+    "noKinds": "FIRINGI biedt op dit moment geen deals aan.",
+    "yourDeals": "Uw deals",
+    "noDealsYet": "Nog geen deals.",
+    "status": {
+      "DRAFT": "Concept",
+      "PENDING": "Wacht op FIRINGI",
+      "APPROVED": "Goedgekeurd",
+      "SCHEDULED": "Gepland",
+      "LIVE": "Actief",
+      "REJECTED": "Afgewezen",
+      "ENDED": "Afgelopen",
+      "CANCELLED": "Vroegtijdig beëindigd",
+      "SOLD_OUT": "Uitverkocht"
+    },
+    "autoApproved": "vanzelf gestart",
+    "soldOf": "{sold} van {max} verkocht",
+    "revenue": "Verkoop {amount}",
+    "dealCommission": "commissie {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} per stuk",
+      "BUNDLE": "{n} voor {price}",
+      "VOLUME": "vanaf {n}: {price}",
+      "LOT": "{n} stuks voor {price}",
+      "BEST_OFFER": "Doe de leverancier een bod",
+      "BEST_OFFER_FLOOR": "Biedingen vanaf {price} worden vanzelf geaccepteerd"
+    },
+    "cart": {
+      "applied": "Dealprijs",
+      "LEFT": "Dealprijs voor maximaal {n} stuks — verlaag het aantal om hem te krijgen.",
+      "PER_BUYER": "U kunt nog {n} kopen tegen de dealprijs — verlaag het aantal om hem te krijgen.",
+      "BID_QTY": "Uw geaccepteerde bod geldt voor {n} stuks — zet het aantal op {n} voor die prijs.",
+      "QTY_TIER": "Bestel meer om de dealprijs te bereiken.",
+      "LOT_QTY": "De partijprijs geldt alleen voor de hele partij.",
+      "BUNDLE_QTY": "Bestel een vol pak voor de meer-kopen-prijs.",
+      "BID": "Op dit product kunt u bieden — zie Opruimingsdeals."
+    }
   }
 }

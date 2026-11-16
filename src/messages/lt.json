@@ -849,7 +849,8 @@
     "Messages": "Žinutės",
     "Plan & Billing": "Planas ir atsiskaitymai",
     "Early Payout": "Išankstinis išmokėjimas",
-    "Bank": "Bankas"
+    "Bank": "Bankas",
+    "Clearance Deals": "Išpardavimo pasiūlymai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Banko srautas nepavyko: {account}",
       "body": "Nepavyko gauti naujų {account} operacijų: {reason}"
+    },
+    "deal_review": {
+      "title": "Tikrintinas pasiūlymas: {number}",
+      "body": "{company} sukūrė pasiūlymą {number}. Jis prasidės tik FIRINGI patvirtinus."
+    },
+    "deal_approved": {
+      "title": "Pasiūlymas patvirtintas: {number}",
+      "body": "Jūsų pasiūlymas {number} patvirtintas ir prasidės pradžios metu."
+    },
+    "deal_rejected": {
+      "title": "Pasiūlymas atmestas: {number}",
+      "body": "FIRINGI atmetė jūsų pasiūlymą {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Naujas kainos pasiūlymas: {number}",
+      "body": "Pirkėjas siūlo {price} € už vnt. už {qty} vnt. Atsakykite skiltyje Produktai › Išpardavimo pasiūlymai."
+    },
+    "deal_bid_accepted": {
+      "title": "Kainos pasiūlymas priimtas: {number}",
+      "body": "Jūsų {price} € už vnt. pasiūlymas priimtas. Įdėkite jį į krepšelį, kol nebegalioja."
+    },
+    "deal_bid_rejected": {
+      "title": "Kainos pasiūlymas atmestas: {number}",
+      "body": "Tiekėjas atmetė jūsų {price} € už vnt. pasiūlymą."
+    },
+    "deal_bid_countered": {
+      "title": "Priešpriešinis pasiūlymas: {number}",
+      "body": "Tiekėjas siūlo {price} € už vnt. Priimkite jį puslapyje Išpardavimo pasiūlymai."
+    },
+    "deal_alert": {
+      "title": "Pasiūlymas: {product} −{pct} %",
+      "body": "{supplier} turi pasiūlymą {product} iki {until}."
+    },
+    "deal_digest": {
+      "title": "Šiandien {count} nauji pasiūlymai",
+      "body": "Nauji pasiūlymai: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Įsiminti IBAN",
     "payersHint": "Patvirtinus susiejimą, IBAN įsimenamas, kad kitas iš jo gautas mokėjimas būtų atpažintas.",
     "noPayers": "Dar nėra."
+  },
+  "deals": {
+    "title": "Išpardavimo pasiūlymai",
+    "intro": "Riboto laiko tiekėjų pasiūlymai trumpo galiojimo prekėms ir pertekliui: žaibiškos kainos, keli už vieną kainą, kiekio kainos, visos partijos ir kainos pasiūlymas. Pasiūlymo kaina pakeičia kitas šio produkto nuolaidas.",
+    "badge": "Pasiūlymas",
+    "all": "Visi",
+    "search": "Ieškoti pasiūlymų",
+    "searchBtn": "Ieškoti",
+    "none": "Šiuo metu pasiūlymų nėra. Sekite produktus ar tiekėjus žemiau ir sužinokite apie kitus.",
+    "kind": {
+      "FLASH": "Žaibiška kaina",
+      "BUNDLE": "Keli už vieną kainą",
+      "VOLUME": "Kiekio kaina",
+      "LOT": "Visa partija",
+      "BEST_OFFER": "Pasiūlykite kainą"
+    },
+    "clearance": "Išpardavimas",
+    "endsSoon": "Greitai baigsis",
+    "ended": "Baigėsi",
+    "endsInDays": "Baigsis po {d} d. {h} val.",
+    "endsInHours": "Baigsis po {h} val. {m} min.",
+    "listNow": "Dabar {price}",
+    "exVat": "be PVM",
+    "left": "liko {n}",
+    "perBuyer": "Daugiausia {n} vienam pirkėjui",
+    "bestBefore": "Geriausias iki {date}",
+    "thisProduct": "šį produktą",
+    "alertsTitle": "Pranešimai apie pasiūlymus",
+    "alertsHint": "Sekite produktus ar tiekėjus ir pranešime, kai jie turės naują pasiūlymą. Taip pat pranešame apie pasiūlymus produktams, kuriuos pirkote anksčiau (nebent išjungėte „Pasiūlymai ir naujienos“).",
+    "watchKind": {
+      "PRODUCT": "Produktas",
+      "SUPPLIER": "Tiekėjas"
+    },
+    "noWatches": "Dar nieko nesekate.",
+    "myOffers": "Mano kainų pasiūlymai",
+    "bidStatus": {
+      "PENDING": "Laukia tiekėjo",
+      "ACCEPTED": "Priimta",
+      "COUNTERED": "Priešpriešinis pasiūlymas",
+      "REJECTED": "Atmesta",
+      "EXPIRED": "Nebegalioja",
+      "WITHDRAWN": "Atšaukta",
+      "ORDERED": "Užsakyta"
+    },
+    "noOffers": "Dar nepasiūlėte kainos.",
+    "qty": "Kiekis",
+    "unitAt": "{price} už vnt.",
+    "addToCart": "Į krepšelį",
+    "added": "Įdėta į krepšelį pasiūlymo kaina.",
+    "addedLot": "Visa partija yra jūsų krepšelyje.",
+    "buyLot": "Pirkti visą partiją ({qty} vnt.)",
+    "maxForYou": "Dar galite pirkti {n}.",
+    "bid": {
+      "PENDING": "Jūsų pasiūlymas: {qty} × {price}. Tiekėjas greitai atsakys.",
+      "ACCEPTED": "Priimta: {qty} × {price}. Užsakykite, kol nesibaigė laikas.",
+      "COUNTERED": "Tiekėjas siūlo {price} už vnt. už {qty} (jūs siūlėte {mine})."
+    },
+    "addBidToCart": "Įdėti {qty} į krepšelį",
+    "takeCounter": "Priimti priešpriešinį pasiūlymą",
+    "withdraw": "Atšaukti",
+    "bidSent": "Pasiūlymas išsiųstas.",
+    "yourPrice": "Jūsų kaina už vnt. (be PVM)",
+    "makeOffer": "Pasiūlyti kainą",
+    "message": "Žinutė (neprivaloma)",
+    "minBid": "Pasiūlymai nuo {n} vnt.",
+    "watch": "Sekti: {what}",
+    "unwatch": "Nebesekti: {what}",
+    "remove": "Pašalinti",
+    "digest": "Siųskite man kasdienį el. laišką su naujais pasiūlymais",
+    "product": "Produktas",
+    "chooseProduct": "Pasirinkite produktą",
+    "kindLabel": "Pasiūlymo rūšis",
+    "kindHint": {
+      "FLASH": "Mažesnė kaina trumpam laikui.",
+      "BUNDLE": "Kelių vienetų pakuotė už vieną kainą (pvz., 3 už 2 kainą).",
+      "VOLUME": "Mažesnės kainos didesniems kiekiams.",
+      "LOT": "Parduokite visą partiją iš karto už vieną kainą.",
+      "BEST_OFFER": "Pirkėjai siūlo kainą; jūs priimate, atmetate arba pateikiate priešpriešinį pasiūlymą."
+    },
+    "listPrice": "Kainoraščio kaina: {price}",
+    "discount": "{pct} % nuolaida",
+    "clearanceWhy": {
+      "EXPIRY": "Išpardavimas: geriausias iki {date}.",
+      "OVERSTOCK": "Išpardavimas: daugiau atsargų, nei paprastai parduodate."
+    },
+    "clearanceCommission": "FIRINGI komisinis už šį pasiūlymą: {pct} % (paprastai {usual} %).",
+    "normalCommission": "FIRINGI komisinis: {pct} % pasiūlymo kainos.",
+    "minDiscount": "Pasiūlymas turi būti bent {pct} % mažesnis už kainoraščio kainą.",
+    "dealPrice": "Pasiūlymo kaina už vnt. (be PVM)",
+    "bundleQty": "Vienetų pakuotėje",
+    "bundlePrice": "Pakuotės kaina (be PVM)",
+    "lotQty": "Vienetų partijoje",
+    "lotPrice": "Visos partijos kaina (be PVM)",
+    "floorPrice": "Mažiausia automatiškai priimama kaina (neprivaloma)",
+    "minBidQty": "Mažiausias kiekis pasiūlymui (neprivaloma)",
+    "maxQty": "Vienetų pasiūlyme (neprivaloma)",
+    "perBuyerMax": "Daugiausia vienam pirkėjui (neprivaloma)",
+    "startsAt": "Pradžia",
+    "endsAt": "Pabaiga",
+    "tiers": "Kiekio kainos",
+    "fromQty": "Nuo (vnt.)",
+    "unitPrice": "Kaina už vnt.",
+    "addTier": "Pridėti pakopą",
+    "lot": "Partija",
+    "noLot": "Jokios konkrečios partijos",
+    "units": "{n} vnt.",
+    "titleLabel": "Pavadinimas (neprivaloma)",
+    "titleHint": "pvz., Sezono pabaigos išpardavimas",
+    "noteLabel": "Pastaba pirkėjams (neprivaloma)",
+    "noteHint": "pvz., trumpas galiojimas, pažeista išorinė dėžė",
+    "submit": "Sukurti pasiūlymą",
+    "created": "Pasiūlymas sukurtas.",
+    "accept": "Priimti",
+    "counter": "Priešpriešinis",
+    "reject": "Atmesti",
+    "cancelDeal": "Baigti pasiūlymą",
+    "vendorTitle": "Išpardavimo pasiūlymai",
+    "vendorIntro": "Greitai parduokite trumpo galiojimo prekes ar perteklių: žaibiškos kainos, keli už vieną kainą, kiekio kainos, visos partijos arba kainos pasiūlymas. Pranešama pirkėjams, kurie pirko produktą anksčiau, ir tiems, kurie jus seka. Nuolaidą finansuojate jūs; už išpardavimo pasiūlymus FIRINGI ima mažesnį komisinį.",
+    "newDeal": "Naujas pasiūlymas",
+    "approvalAlways": "FIRINGI patikrina kiekvieną pasiūlymą prieš jam prasidedant.",
+    "approvalAuto": "Pasiūlymai iki {pct} % nuolaidos ir {days} d. prasideda patys; kitus pirmiausia patikrina FIRINGI.",
+    "noKinds": "FIRINGI šiuo metu nesiūlo pasiūlymų.",
+    "yourDeals": "Jūsų pasiūlymai",
+    "noDealsYet": "Pasiūlymų dar nėra.",
+    "status": {
+      "DRAFT": "Juodraštis",
+      "PENDING": "Laukia FIRINGI",
+      "APPROVED": "Patvirtinta",
+      "SCHEDULED": "Suplanuota",
+      "LIVE": "Aktyvus",
+      "REJECTED": "Atmesta",
+      "ENDED": "Baigėsi",
+      "CANCELLED": "Baigta anksčiau",
+      "SOLD_OUT": "Išparduota"
+    },
+    "autoApproved": "prasidėjo automatiškai",
+    "soldOf": "parduota {sold} iš {max}",
+    "revenue": "Pardavimai {amount}",
+    "dealCommission": "komisinis {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} už vnt.",
+      "BUNDLE": "{n} už {price}",
+      "VOLUME": "nuo {n}: {price}",
+      "LOT": "{n} vnt. už {price}",
+      "BEST_OFFER": "Pasiūlykite tiekėjui kainą",
+      "BEST_OFFER_FLOOR": "Pasiūlymai nuo {price} priimami automatiškai"
+    },
+    "cart": {
+      "applied": "Pasiūlymo kaina",
+      "LEFT": "Pasiūlymo kaina iki {n} vnt. — sumažinkite kiekį, kad ją gautumėte.",
+      "PER_BUYER": "Pasiūlymo kaina dar galite pirkti {n} — sumažinkite kiekį, kad ją gautumėte.",
+      "BID_QTY": "Jūsų priimtas pasiūlymas yra {n} vnt. — nustatykite kiekį {n}, kad gautumėte jo kainą.",
+      "QTY_TIER": "Užsakykite daugiau, kad pasiektumėte pasiūlymo kainą.",
+      "LOT_QTY": "Partijos kaina taikoma tik visai partijai.",
+      "BUNDLE_QTY": "Užsakykite visą pakuotę, kad gautumėte pakuotės kainą.",
+      "BID": "Šiam produktui galima pasiūlyti kainą — žr. Išpardavimo pasiūlymai."
+    }
   }
 }

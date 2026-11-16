@@ -1,0 +1,155 @@
+// ── Phase 38: clearance deals ────────────────────────────────────────────────
+// Suppliers put short-dated or surplus stock on time-limited deals (flash price, multi-buy, volume
+// tiers, whole lot, best offer). FIRINGI turns each kind on or off, approves deals (always, or by
+// itself within limits) and takes a lower commission on clearance deals. Buyers find them on the
+// Deals page and badges, and hear about them (bought before, watchlist, daily digest).
+
+enum ClearanceKind {
+  FLASH // a lower price for a time and a quantity
+  BUNDLE // N units for a pack price (e.g. 3 for the price of 2)
+  VOLUME // tiers: the more you buy, the lower the price
+  LOT // the whole lot to one buyer at a fixed price
+  BEST_OFFER // buyers offer a price; the supplier accepts, refuses or counters
+}
+
+enum ClearanceStatus {
+  DRAFT
+  PENDING // waiting for FIRINGI
+  APPROVED // live between startsAt and endsAt
+  REJECTED
+  ENDED
+  CANCELLED
+  SOLD_OUT
+}
+
+enum ClearanceBidStatus {
+  PENDING
+  ACCEPTED // the price is the buyer's until expiresAt
+  COUNTERED // the supplier proposed counterPrice; the buyer accepts or not
+  REJECTED
+  EXPIRED
+  WITHDRAWN
+  ORDERED
+}
+
+model ClearanceDeal {
+  id              String          @id @default(cuid())
+  number          String          @unique // DL-2026-000001
+  vendorCompanyId String
+  offerId         String
+  kind            ClearanceKind
+  status          ClearanceStatus @default(PENDING)
+  title           String?
+  note            String? // to buyers (e.g. "best before 30/11")
+  startsAt        DateTime
+  endsAt          DateTime
+  /// FLASH / BUNDLE / VOLUME / BEST_OFFER: units on the deal (null = while stock lasts); LOT: the lot's units.
+  maxQty          Int?
+  perBuyerMax     Int?
+  /// FLASH: unit price (net)
+  dealPrice       Decimal?        @db.Decimal(18, 4)
+  /// BUNDLE: bundleQty units for bundlePrice (net)
+  bundleQty       Int?
+  bundlePrice     Decimal?        @db.Decimal(18, 4)
+  /// VOLUME: [{minQty, unitPrice}] ascending
+  tiers           Json?
+  /// LOT: the whole lot's price (net)
+  lotPrice        Decimal?        @db.Decimal(18, 4)
+  /// BEST_OFFER: the lowest unit price the supplier accepts by itself (hidden from buyers; null = always decide by hand)
+  floorPrice      Decimal?        @db.Decimal(18, 4)
+  minBidQty       Int?
+  /// The lot it clears (shown as best-before) — and why it is a clearance deal.
+  batchId         String?
+  bestBefore      DateTime?       @db.Date
+  clearance       Boolean         @default(false)
+  clearanceReason String? // EXPIRY | OVERSTOCK
+  /// FIRINGI's commission on this deal (on the deal price); null = the supplier's usual rate.
+  commissionPct   Decimal?        @db.Decimal(6, 3)
+  listPriceAt     Decimal?        @db.Decimal(18, 4) // the list price when submitted (the "was" price)
+  discountPct     Decimal?        @db.Decimal(6, 2) // vs the list price (for limits and the badge)
+  autoApproved    Boolean         @default(false)
+  reviewNote      String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  alertedAt       DateTime? // smart / watchlist alerts sent
+  createdById     String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  vendor Company        @relation("ClearanceDeals", fields: [vendorCompanyId], references: [id])
+  offer  VendorOffer    @relation("ClearanceOffer", fields: [offerId], references: [id])
+  bids   ClearanceBid[]
+  lines  OrderLine[]    @relation("ClearanceLines")
+
+  @@index([status, endsAt])
+  @@index([offerId, status])
+  @@index([vendorCompanyId, status])
+}
+
+model ClearanceBid {
+  id             String             @id @default(cuid())
+  dealId         String
+  buyerCompanyId String
+  userId         String
+  qty            Int
+  unitPrice      Decimal            @db.Decimal(18, 4)
+  counterPrice   Decimal?           @db.Decimal(18, 4)
+  status         ClearanceBidStatus @default(PENDING)
+  message        String?
+  /// PENDING: the supplier must answer by then; ACCEPTED / COUNTERED: the price holds until then.
+  expiresAt      DateTime
+  decidedAt      DateTime?
+  decidedById    String?
+  orderId        String?
+  createdAt      DateTime           @default(now())
+
+  deal  ClearanceDeal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  buyer Company       @relation("ClearanceBids", fields: [buyerCompanyId], references: [id], onDelete: Cascade)
+
+  @@index([dealId, status])
+  @@index([buyerCompanyId, status])
+}
+
+enum ClearanceWatchKind {
+  PRODUCT
+  CATEGORY
+  SUPPLIER
+}
+
+/// "Tell me when there is a deal on …" — per person.
+model ClearanceWatch {
+  id              String             @id @default(cuid())
+  userId          String
+  buyerCompanyId  String
+  kind            ClearanceWatchKind
+  productId       String?
+  categoryId      String?
+  vendorCompanyId String?
+  createdAt       DateTime           @default(now())
+
+  @@unique([userId, kind, productId, categoryId, vendorCompanyId])
+  @@index([kind, productId])
+  @@index([kind, categoryId])
+  @@index([kind, vendorCompanyId])
+}
+
+/// One alert per deal, person and reason (and the daily digest per person and day).
+model ClearanceAlert {
+  id        String   @id @default(cuid())
+  dealId    String?
+  userId    String
+  reason    String // SMART | WATCH | DIGEST
+  day       String? // YYYY-MM-DD for the digest
+  createdAt DateTime @default(now())
+
+  @@unique([dealId, userId, reason])
+  @@unique([userId, reason, day])
+  @@index([userId, createdAt])
+}
+
+/// Daily deals digest — people who asked for it.
+model ClearanceDigestOptIn {
+  userId         String   @id
+  buyerCompanyId String
+  createdAt      DateTime @default(now())
+}

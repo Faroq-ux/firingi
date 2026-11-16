@@ -849,7 +849,8 @@
     "Messages": "Správy",
     "Plan & Billing": "Tarif a platby",
     "Early Payout": "Predčasná výplata",
-    "Bank": "Banka"
+    "Bank": "Banka",
+    "Clearance Deals": "Výpredajové ponuky"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bankový kanál zlyhal: {account}",
       "body": "Nové pohyby pre {account} sa nepodarilo stiahnuť: {reason}"
+    },
+    "deal_review": {
+      "title": "Ponuka na kontrolu: {number}",
+      "body": "{company} vytvoril(a) ponuku {number}. Začne až po schválení FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Ponuka schválená: {number}",
+      "body": "Vaša ponuka {number} je schválená a spustí sa v čase začiatku."
+    },
+    "deal_rejected": {
+      "title": "Ponuka zamietnutá: {number}",
+      "body": "FIRINGI zamietla vašu ponuku {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nový cenový návrh k {number}",
+      "body": "Kupujúci navrhuje {price} € za kus za {qty} ks. Odpovedzte v Produkty › Výpredajové ponuky."
+    },
+    "deal_bid_accepted": {
+      "title": "Návrh prijatý: {number}",
+      "body": "Váš návrh {price} € za kus bol prijatý. Pridajte ho do košíka, kým nevyprší."
+    },
+    "deal_bid_rejected": {
+      "title": "Návrh zamietnutý: {number}",
+      "body": "Dodávateľ zamietol váš návrh {price} € za kus."
+    },
+    "deal_bid_countered": {
+      "title": "Protinávrh: {number}",
+      "body": "Dodávateľ navrhuje {price} € za kus. Prijmite ho na stránke Výpredajové ponuky."
+    },
+    "deal_alert": {
+      "title": "Ponuka: {product} −{pct} %",
+      "body": "{supplier} má ponuku na {product} do {until}."
+    },
+    "deal_digest": {
+      "title": "{count} nových ponúk dnes",
+      "body": "Nové ponuky: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Zapamätané IBAN",
     "payersHint": "Keď potvrdíte priradenie, IBAN sa zapamätá, aby sa rozpoznala jeho ďalšia platba.",
     "noPayers": "Zatiaľ žiadne."
+  },
+  "deals": {
+    "title": "Výpredajové ponuky",
+    "intro": "Časovo obmedzené ponuky dodávateľov na tovar s krátkou trvanlivosťou a prebytky: bleskové ceny, viackusové balenia, množstevné ceny, celé šarže a návrh ceny. Cena ponuky nahrádza iné zľavy na tento produkt.",
+    "badge": "Ponuka",
+    "all": "Všetky",
+    "search": "Hľadať ponuky",
+    "searchBtn": "Hľadať",
+    "none": "Momentálne žiadne ponuky. Sledujte nižšie produkty alebo dodávateľov a dozviete sa o ďalších.",
+    "kind": {
+      "FLASH": "Blesková cena",
+      "BUNDLE": "Viackusové balenie",
+      "VOLUME": "Množstevná cena",
+      "LOT": "Celá šarža",
+      "BEST_OFFER": "Navrhnite cenu"
+    },
+    "clearance": "Výpredaj",
+    "endsSoon": "Čoskoro končí",
+    "ended": "Skončená",
+    "endsInDays": "Končí o {d} d {h} h",
+    "endsInHours": "Končí o {h} h {m} min",
+    "listNow": "Teraz {price}",
+    "exVat": "bez DPH",
+    "left": "zostáva {n}",
+    "perBuyer": "Max. {n} na kupujúceho",
+    "bestBefore": "Minimálna trvanlivosť do {date}",
+    "thisProduct": "tento produkt",
+    "alertsTitle": "Upozornenia na ponuky",
+    "alertsHint": "Sledujte produkty alebo dodávateľov a dáme vám vedieť, keď budú mať novú ponuku. Upozorníme vás aj na ponuky produktov, ktoré ste už kúpili (ak ste nevypli „Ponuky a novinky“).",
+    "watchKind": {
+      "PRODUCT": "Produkt",
+      "SUPPLIER": "Dodávateľ"
+    },
+    "noWatches": "Zatiaľ nič nesledujete.",
+    "myOffers": "Moje cenové návrhy",
+    "bidStatus": {
+      "PENDING": "Čaká na dodávateľa",
+      "ACCEPTED": "Prijatý",
+      "COUNTERED": "Protinávrh",
+      "REJECTED": "Zamietnutý",
+      "EXPIRED": "Vypršal",
+      "WITHDRAWN": "Stiahnutý",
+      "ORDERED": "Objednaný"
+    },
+    "noOffers": "Zatiaľ ste nenavrhli žiadnu cenu.",
+    "qty": "Množstvo",
+    "unitAt": "{price} za kus",
+    "addToCart": "Do košíka",
+    "added": "Pridané do košíka za cenu ponuky.",
+    "addedLot": "Celá šarža je vo vašom košíku.",
+    "buyLot": "Kúpiť celú šaržu ({qty} ks)",
+    "maxForYou": "Môžete kúpiť ešte {n}.",
+    "bid": {
+      "PENDING": "Váš návrh: {qty} × {price}. Dodávateľ čoskoro odpovie.",
+      "ACCEPTED": "Prijatý: {qty} × {price}. Objednajte, kým neuplynie čas.",
+      "COUNTERED": "Dodávateľ navrhuje {price} za kus pre {qty} (navrhli ste {mine})."
+    },
+    "addBidToCart": "Pridať {qty} do košíka",
+    "takeCounter": "Prijať protinávrh",
+    "withdraw": "Stiahnuť",
+    "bidSent": "Návrh odoslaný.",
+    "yourPrice": "Vaša cena za kus (bez DPH)",
+    "makeOffer": "Navrhnúť cenu",
+    "message": "Správa (nepovinné)",
+    "minBid": "Návrhy od {n} ks.",
+    "watch": "Sledovať {what}",
+    "unwatch": "Prestať sledovať {what}",
+    "remove": "Odstrániť",
+    "digest": "Posielajte mi denne e-mail s novými ponukami",
+    "product": "Produkt",
+    "chooseProduct": "Vyberte produkt",
+    "kindLabel": "Druh ponuky",
+    "kindHint": {
+      "FLASH": "Nižšia cena na krátky čas.",
+      "BUNDLE": "Balenie niekoľkých kusov za jednu cenu (napr. 3 za cenu 2).",
+      "VOLUME": "Nižšie ceny pre väčšie množstvá.",
+      "LOT": "Predať celú šaržu naraz za jednu cenu.",
+      "BEST_OFFER": "Kupujúci navrhnú cenu; vy ju prijmete, zamietnete alebo dáte protinávrh."
+    },
+    "listPrice": "Cenníková cena: {price}",
+    "discount": "zľava {pct} %",
+    "clearanceWhy": {
+      "EXPIRY": "Výpredaj: minimálna trvanlivosť do {date}.",
+      "OVERSTOCK": "Výpredaj: viac zásob, než zvyčajne predáte."
+    },
+    "clearanceCommission": "Provízia FIRINGI z tejto ponuky: {pct} % (zvyčajne {usual} %).",
+    "normalCommission": "Provízia FIRINGI: {pct} % z ceny ponuky.",
+    "minDiscount": "Ponuka musí byť aspoň o {pct} % pod cenníkovou cenou.",
+    "dealPrice": "Cena ponuky za kus (bez DPH)",
+    "bundleQty": "Kusov v balení",
+    "bundlePrice": "Cena balenia (bez DPH)",
+    "lotQty": "Kusov v šarži",
+    "lotPrice": "Cena celej šarže (bez DPH)",
+    "floorPrice": "Najnižšia automaticky prijatá cena (nepovinné)",
+    "minBidQty": "Najmenšie množstvo pre návrh (nepovinné)",
+    "maxQty": "Kusov v ponuke (nepovinné)",
+    "perBuyerMax": "Max. na kupujúceho (nepovinné)",
+    "startsAt": "Začiatok",
+    "endsAt": "Koniec",
+    "tiers": "Množstevné ceny",
+    "fromQty": "Od (ks)",
+    "unitPrice": "Cena za kus",
+    "addTier": "Pridať stupeň",
+    "lot": "Šarža",
+    "noLot": "Žiadna konkrétna šarža",
+    "units": "{n} ks",
+    "titleLabel": "Názov (nepovinné)",
+    "titleHint": "napr. Výpredaj na konci sezóny",
+    "noteLabel": "Poznámka pre kupujúcich (nepovinné)",
+    "noteHint": "napr. krátka trvanlivosť, poškodený prepravný kartón",
+    "submit": "Vytvoriť ponuku",
+    "created": "Ponuka vytvorená.",
+    "accept": "Prijať",
+    "counter": "Protinávrh",
+    "reject": "Zamietnuť",
+    "cancelDeal": "Ukončiť ponuku",
+    "vendorTitle": "Výpredajové ponuky",
+    "vendorIntro": "Rýchlo predajte tovar s krátkou trvanlivosťou alebo prebytky: bleskové ceny, viackusové balenia, množstevné ceny, celé šarže alebo návrh ceny. Kupujúci, ktorí produkt už kúpili, a tí, čo vás sledujú, dostanú správu. Zľavu hradíte vy; pri výpredajových ponukách berie FIRINGI nižšiu províziu.",
+    "newDeal": "Nová ponuka",
+    "approvalAlways": "FIRINGI kontroluje každú ponuku pred začiatkom.",
+    "approvalAuto": "Ponuky do zľavy {pct} % a {days} dní začnú samy; ostatné najprv skontroluje FIRINGI.",
+    "noKinds": "FIRINGI momentálne neponúka ponuky.",
+    "yourDeals": "Vaše ponuky",
+    "noDealsYet": "Zatiaľ žiadne ponuky.",
+    "status": {
+      "DRAFT": "Koncept",
+      "PENDING": "Čaká na FIRINGI",
+      "APPROVED": "Schválená",
+      "SCHEDULED": "Naplánovaná",
+      "LIVE": "Aktívna",
+      "REJECTED": "Zamietnutá",
+      "ENDED": "Skončená",
+      "CANCELLED": "Ukončená predčasne",
+      "SOLD_OUT": "Vypredaná"
+    },
+    "autoApproved": "spustená automaticky",
+    "soldOf": "predané {sold} z {max}",
+    "revenue": "Tržby {amount}",
+    "dealCommission": "provízia {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} za kus",
+      "BUNDLE": "{n} za {price}",
+      "VOLUME": "od {n}: {price}",
+      "LOT": "{n} ks za {price}",
+      "BEST_OFFER": "Navrhnite dodávateľovi cenu",
+      "BEST_OFFER_FLOOR": "Návrhy od {price} sa prijímajú automaticky"
+    },
+    "cart": {
+      "applied": "Cena ponuky",
+      "LEFT": "Cena ponuky platí do {n} ks — znížte množstvo, aby ste ju získali.",
+      "PER_BUYER": "Za cenu ponuky môžete kúpiť ešte {n} — znížte množstvo, aby ste ju získali.",
+      "BID_QTY": "Váš prijatý návrh je na {n} ks — nastavte množstvo na {n}, aby ste získali jeho cenu.",
+      "QTY_TIER": "Objednajte viac, aby ste dosiahli cenu ponuky.",
+      "LOT_QTY": "Cena šarže platí len pre celú šaržu.",
+      "BUNDLE_QTY": "Objednajte celé balenie pre viackusovú cenu.",
+      "BID": "Pri tomto produkte môžete navrhnúť cenu — pozrite Výpredajové ponuky."
+    }
   }
 }

@@ -182,16 +182,21 @@ model OrderLine {
   commissionAmount  Decimal         @default(0) @db.Decimal(18, 2)
   vendorUnitCostNet Decimal         @db.Decimal(18, 4) // what FIRINGI pays the vendor per unit
   vendorLineNet     Decimal         @db.Decimal(18, 2)
+  /// Phase 38: sold on this deal (price and commission came from it)
+  dealId            String?
+  dealBidId         String?
 
   order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
   offer          VendorOffer         @relation(fields: [offerId], references: [id])
   commissionRule CommissionRule?     @relation(fields: [commissionRuleId], references: [id])
+  deal           ClearanceDeal?      @relation("ClearanceLines", fields: [dealId], references: [id])
   discounts      OrderLineDiscount[]
   invoiceLines   InvoiceLine[]
   returnLines    ReturnLine[]
   claimLines     QualityClaimLine[]  @relation("ClaimOrderLine")
 
   @@index([orderId])
+  @@index([dealId])
 }
 
 /// Who funded each discount on each line (finance reporting).

@@ -6,6 +6,7 @@ import { browseCatalogue, shopCategory, visibleSuppliers } from "@/server/data/c
 import { productsWithImages } from "@/server/data/catalogue-admin";
 import { orderingMode } from "@/server/allocation/mode";
 import { ProductCard } from "@/components/catalogue/product-card";
+import { dealBadges } from "@/server/deals/service";
 import { SponsoredProducts } from "@/components/ads/sponsored";
 import { NotFoundError } from "@/server/errors";
 import { pickLocalized } from "@/i18n/config";
@@ -21,6 +22,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
   const [suppliers, t, locale, mode] = await Promise.all([visibleSuppliers(ctx, { categoryId: id }), getTranslations("catalogue"), getLocale(), orderingMode(ctx)]);
   const products = mode === "FIRINGI" ? await browseCatalogue(ctx, { categoryId: id }) : null;
   const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
+  const dealMap = products ? await dealBadges(products.items.map((i) => i.offerId)) : new Map<string, { pct: number | null; endsAt: Date; kind: string }>();
   const name = pickLocalized(data.category.name, locale);
   return (
     <>
@@ -37,7 +39,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
       <SponsoredProducts ctx={ctx} placement="CATEGORY" categoryId={id} />
       {products ? (
         products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4" data-testid="firingi-products">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} />)}</div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4" data-testid="firingi-products">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} />)}</div>
         )
       ) : (
         <>

@@ -849,7 +849,8 @@
     "Messages": "Messaggi",
     "Plan & Billing": "Piano e fatturazione",
     "Early Payout": "Pagamento anticipato",
-    "Bank": "Banca"
+    "Bank": "Banca",
+    "Clearance Deals": "Offerte di smaltimento"
   },
   "delivery": {
     "title": "Consegna",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Flusso bancario non riuscito: {account}",
       "body": "Non è stato possibile scaricare i nuovi movimenti di {account}: {reason}"
+    },
+    "deal_review": {
+      "title": "Offerta da controllare: {number}",
+      "body": "{company} ha creato l'offerta {number}. Parte solo dopo l'approvazione di FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Offerta approvata: {number}",
+      "body": "La tua offerta {number} è approvata e parte all'ora di inizio."
+    },
+    "deal_rejected": {
+      "title": "Offerta rifiutata: {number}",
+      "body": "FIRINGI ha rifiutato la tua offerta {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nuova proposta sull'offerta {number}",
+      "body": "Un acquirente propone {price} € per unità per {qty} unità. Rispondi in Prodotti › Offerte di smaltimento."
+    },
+    "deal_bid_accepted": {
+      "title": "Proposta accettata: {number}",
+      "body": "La tua proposta di {price} € per unità è stata accettata. Aggiungila al carrello prima che scada."
+    },
+    "deal_bid_rejected": {
+      "title": "Proposta rifiutata: {number}",
+      "body": "Il fornitore ha rifiutato la tua proposta di {price} € per unità."
+    },
+    "deal_bid_countered": {
+      "title": "Controproposta: {number}",
+      "body": "Il fornitore propone {price} € per unità. Accettala nella pagina Offerte di smaltimento."
+    },
+    "deal_alert": {
+      "title": "Offerta: {product} −{pct} %",
+      "body": "{supplier} ha un'offerta su {product} fino al {until}."
+    },
+    "deal_digest": {
+      "title": "{count} nuove offerte oggi",
+      "body": "Nuove offerte: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "IBAN memorizzati",
     "payersHint": "Quando confermi un abbinamento, l'IBAN viene memorizzato per riconoscere il suo prossimo pagamento.",
     "noPayers": "Ancora nessuno."
+  },
+  "deals": {
+    "title": "Offerte di smaltimento",
+    "intro": "Offerte a tempo dei fornitori su merce a scadenza breve e in eccedenza: prezzi lampo, multi-acquisto, prezzi a volume, lotti interi e migliore offerta. Il prezzo dell'offerta sostituisce gli altri sconti su quel prodotto.",
+    "badge": "Offerta",
+    "all": "Tutte",
+    "search": "Cerca offerte",
+    "searchBtn": "Cerca",
+    "none": "Nessuna offerta al momento. Segui prodotti o fornitori qui sotto per sapere delle prossime.",
+    "kind": {
+      "FLASH": "Prezzo lampo",
+      "BUNDLE": "Multi-acquisto",
+      "VOLUME": "Prezzo a volume",
+      "LOT": "Lotto intero",
+      "BEST_OFFER": "Migliore offerta"
+    },
+    "clearance": "Smaltimento",
+    "endsSoon": "Termina presto",
+    "ended": "Terminata",
+    "endsInDays": "Termina tra {d} g {h} h",
+    "endsInHours": "Termina tra {h} h {m} min",
+    "listNow": "Ora {price}",
+    "exVat": "IVA esclusa",
+    "left": "ne restano {n}",
+    "perBuyer": "Max {n} per acquirente",
+    "bestBefore": "Da consumarsi preferibilmente entro il {date}",
+    "thisProduct": "questo prodotto",
+    "alertsTitle": "Avvisi offerte",
+    "alertsHint": "Segui prodotti o fornitori e ti avviseremo quando avranno una nuova offerta. Ti avvisiamo anche delle offerte sui prodotti che hai già acquistato (a meno che tu non abbia disattivato 'Offerte e novità').",
+    "watchKind": {
+      "PRODUCT": "Prodotto",
+      "SUPPLIER": "Fornitore"
+    },
+    "noWatches": "Non segui ancora nulla.",
+    "myOffers": "Le mie proposte",
+    "bidStatus": {
+      "PENDING": "In attesa del fornitore",
+      "ACCEPTED": "Accettata",
+      "COUNTERED": "Controproposta",
+      "REJECTED": "Rifiutata",
+      "EXPIRED": "Scaduta",
+      "WITHDRAWN": "Ritirata",
+      "ORDERED": "Ordinata"
+    },
+    "noOffers": "Non hai fatto nessuna proposta.",
+    "qty": "Quantità",
+    "unitAt": "{price} per unità",
+    "addToCart": "Aggiungi al carrello",
+    "added": "Aggiunto al carrello al prezzo dell'offerta.",
+    "addedLot": "L'intero lotto è nel tuo carrello.",
+    "buyLot": "Compra l'intero lotto ({qty} unità)",
+    "maxForYou": "Puoi ancora acquistarne {n}.",
+    "bid": {
+      "PENDING": "La tua proposta: {qty} × {price}. Il fornitore risponderà presto.",
+      "ACCEPTED": "Accettata: {qty} × {price}. Ordina prima che scada il tempo.",
+      "COUNTERED": "Il fornitore propone {price} per unità per {qty} (avevi proposto {mine})."
+    },
+    "addBidToCart": "Aggiungi {qty} al carrello",
+    "takeCounter": "Accetta la controproposta",
+    "withdraw": "Ritira",
+    "bidSent": "Proposta inviata.",
+    "yourPrice": "Il tuo prezzo per unità (IVA esclusa)",
+    "makeOffer": "Fai una proposta",
+    "message": "Messaggio (facoltativo)",
+    "minBid": "Proposte da {n} unità.",
+    "watch": "Segui {what}",
+    "unwatch": "Smetti di seguire {what}",
+    "remove": "Rimuovi",
+    "digest": "Inviatemi ogni giorno un'e-mail con le nuove offerte",
+    "product": "Prodotto",
+    "chooseProduct": "Scegli un prodotto",
+    "kindLabel": "Tipo di offerta",
+    "kindHint": {
+      "FLASH": "Un prezzo più basso per poco tempo.",
+      "BUNDLE": "Acquistare una confezione di più unità a un prezzo (es. 3 al prezzo di 2).",
+      "VOLUME": "Prezzi più bassi per quantità maggiori.",
+      "LOT": "Vendere un lotto intero in una volta a un prezzo.",
+      "BEST_OFFER": "Gli acquirenti propongono un prezzo; tu accetti, rifiuti o fai una controproposta."
+    },
+    "listPrice": "Prezzo di listino: {price}",
+    "discount": "{pct} % di sconto",
+    "clearanceWhy": {
+      "EXPIRY": "Smaltimento: da consumarsi preferibilmente entro il {date}.",
+      "OVERSTOCK": "Smaltimento: più scorte di quante ne vendi di solito."
+    },
+    "clearanceCommission": "Commissione di FIRINGI su questa offerta: {pct} % (di solito {usual} %).",
+    "normalCommission": "Commissione di FIRINGI: {pct} % del prezzo dell'offerta.",
+    "minDiscount": "Un'offerta deve essere almeno del {pct} % sotto il prezzo di listino.",
+    "dealPrice": "Prezzo dell'offerta per unità (IVA esclusa)",
+    "bundleQty": "Unità per confezione",
+    "bundlePrice": "Prezzo della confezione (IVA esclusa)",
+    "lotQty": "Unità nel lotto",
+    "lotPrice": "Prezzo dell'intero lotto (IVA esclusa)",
+    "floorPrice": "Prezzo più basso accettato automaticamente (facoltativo)",
+    "minBidQty": "Quantità minima per proposta (facoltativo)",
+    "maxQty": "Unità in offerta (facoltativo)",
+    "perBuyerMax": "Max per acquirente (facoltativo)",
+    "startsAt": "Inizio",
+    "endsAt": "Fine",
+    "tiers": "Prezzi per quantità",
+    "fromQty": "Da (unità)",
+    "unitPrice": "Prezzo per unità",
+    "addTier": "Aggiungi fascia",
+    "lot": "Lotto",
+    "noLot": "Nessun lotto in particolare",
+    "units": "{n} unità",
+    "titleLabel": "Titolo (facoltativo)",
+    "titleHint": "es. Smaltimento fine stagione",
+    "noteLabel": "Nota per gli acquirenti (facoltativo)",
+    "noteHint": "es. scadenza breve, scatola esterna danneggiata",
+    "submit": "Crea offerta",
+    "created": "Offerta creata.",
+    "accept": "Accetta",
+    "counter": "Controproponi",
+    "reject": "Rifiuta",
+    "cancelDeal": "Termina offerta",
+    "vendorTitle": "Offerte di smaltimento",
+    "vendorIntro": "Smaltisci in fretta merce a scadenza breve o in eccedenza: prezzi lampo, multi-acquisto, prezzi a volume, lotti interi o migliore offerta. Gli acquirenti che hanno già comprato il prodotto e quelli che ti seguono vengono avvisati. Lo sconto è a tuo carico; sulle offerte di smaltimento FIRINGI applica una commissione più bassa.",
+    "newDeal": "Nuova offerta",
+    "approvalAlways": "FIRINGI controlla ogni offerta prima che inizi.",
+    "approvalAuto": "Le offerte fino al {pct} % di sconto e {days} giorni partono da sole; le altre le controlla prima FIRINGI.",
+    "noKinds": "FIRINGI al momento non propone offerte.",
+    "yourDeals": "Le tue offerte",
+    "noDealsYet": "Nessuna offerta per ora.",
+    "status": {
+      "DRAFT": "Bozza",
+      "PENDING": "In attesa di FIRINGI",
+      "APPROVED": "Approvata",
+      "SCHEDULED": "Programmata",
+      "LIVE": "Attiva",
+      "REJECTED": "Rifiutata",
+      "ENDED": "Terminata",
+      "CANCELLED": "Terminata in anticipo",
+      "SOLD_OUT": "Esaurita"
+    },
+    "autoApproved": "partita da sola",
+    "soldOf": "{sold} di {max} vendute",
+    "revenue": "Vendite {amount}",
+    "dealCommission": "commissione {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} per unità",
+      "BUNDLE": "{n} a {price}",
+      "VOLUME": "da {n}: {price}",
+      "LOT": "{n} unità a {price}",
+      "BEST_OFFER": "Fai una proposta al fornitore",
+      "BEST_OFFER_FLOOR": "Le proposte da {price} sono accettate automaticamente"
+    },
+    "cart": {
+      "applied": "Prezzo offerta",
+      "LEFT": "Prezzo dell'offerta fino a {n} unità — riduci la quantità per ottenerlo.",
+      "PER_BUYER": "Puoi acquistarne ancora {n} al prezzo dell'offerta — riduci la quantità per ottenerlo.",
+      "BID_QTY": "La tua proposta accettata è per {n} unità — imposta la quantità a {n} per avere il suo prezzo.",
+      "QTY_TIER": "Ordina di più per raggiungere il prezzo dell'offerta.",
+      "LOT_QTY": "Il prezzo del lotto vale solo per il lotto intero.",
+      "BUNDLE_QTY": "Ordina una confezione completa per avere il prezzo multi-acquisto.",
+      "BID": "Questo prodotto accetta proposte — vedi Offerte di smaltimento."
+    }
   }
 }

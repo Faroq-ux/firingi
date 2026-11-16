@@ -147,6 +147,16 @@ export const EVENTS: EventDef[] = [
   E("earlypay.paid", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "net"]),
   E("earlypay.rejected", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("earlypay.requested", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["company", "number", "amount"]),
+  // clearance deals (Phase 38)
+  E("deal.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "number"]),
+  E("deal.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number"]),
+  E("deal.rejected", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),
+  E("deal.bid", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number", "qty", "price"]),
+  E("deal.bid_accepted", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "price"]),
+  E("deal.bid_rejected", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "price"]),
+  E("deal.bid_countered", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "price"]),
+  E("deal.alert", "catalogue", ["buyer.orders.place", "buyer.catalogue.view"], ["EMAIL", "PUSH"], ["product", "supplier", "pct", "until"]),
+  E("deal.digest", "catalogue", ["buyer.orders.place", "buyer.catalogue.view"], ["EMAIL"], ["count", "products"]),
   // bank reconciliation (Phase 37)
   E("bank.to_review", "finance", ["admin.finance.manage"], ["EMAIL"], ["count", "oldest"]),
   E("bank.feed_expiring", "finance", ["company.bank.manage", "admin.finance.manage"], ["EMAIL", "PUSH"], ["account", "date"]),

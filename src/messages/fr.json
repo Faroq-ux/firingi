@@ -849,7 +849,8 @@
     "Messages": "Messages",
     "Plan & Billing": "Formule et facturation",
     "Early Payout": "Paiement anticipé",
-    "Bank": "Banque"
+    "Bank": "Banque",
+    "Clearance Deals": "Bonnes affaires"
   },
   "delivery": {
     "title": "Livraison",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Échec du flux bancaire : {account}",
       "body": "Impossible de récupérer les nouvelles opérations de {account} : {reason}"
+    },
+    "deal_review": {
+      "title": "Offre à vérifier : {number}",
+      "body": "{company} a créé l'offre {number}. Elle ne démarre qu'après l'accord de FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Offre approuvée : {number}",
+      "body": "Votre offre {number} est approuvée et démarre à son heure de début."
+    },
+    "deal_rejected": {
+      "title": "Offre refusée : {number}",
+      "body": "FIRINGI a refusé votre offre {number} : {reason}"
+    },
+    "deal_bid": {
+      "title": "Nouvelle proposition sur l'offre {number}",
+      "body": "Un acheteur propose {price} € l'unité pour {qty} unités. Répondez dans Produits › Bonnes affaires."
+    },
+    "deal_bid_accepted": {
+      "title": "Proposition acceptée : {number}",
+      "body": "Votre proposition à {price} € l'unité a été acceptée. Ajoutez-la au panier avant qu'elle n'expire."
+    },
+    "deal_bid_rejected": {
+      "title": "Proposition refusée : {number}",
+      "body": "Le fournisseur a refusé votre proposition à {price} € l'unité."
+    },
+    "deal_bid_countered": {
+      "title": "Contre-proposition : {number}",
+      "body": "Le fournisseur propose {price} € l'unité. Acceptez-la sur la page Bonnes affaires déstockage."
+    },
+    "deal_alert": {
+      "title": "Bonne affaire : {product} −{pct} %",
+      "body": "{supplier} a une offre sur {product} jusqu'au {until}."
+    },
+    "deal_digest": {
+      "title": "{count} nouvelles offres aujourd'hui",
+      "body": "Nouvelles offres : {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "IBAN mémorisés",
     "payersHint": "Quand vous confirmez un rapprochement, l'IBAN est mémorisé pour reconnaître son prochain paiement.",
     "noPayers": "Aucun pour l'instant."
+  },
+  "deals": {
+    "title": "Bonnes affaires déstockage",
+    "intro": "Offres à durée limitée des fournisseurs sur le stock à date courte et les surplus : prix flash, lots multi-achat, prix par volume, lots entiers et meilleure offre. Le prix de l'offre remplace les autres remises sur ce produit.",
+    "badge": "Bonne affaire",
+    "all": "Toutes",
+    "search": "Chercher une offre",
+    "searchBtn": "Chercher",
+    "none": "Aucune offre pour le moment. Suivez des produits ou des fournisseurs ci-dessous pour être averti des prochaines.",
+    "kind": {
+      "FLASH": "Prix flash",
+      "BUNDLE": "Multi-achat",
+      "VOLUME": "Prix par volume",
+      "LOT": "Lot entier",
+      "BEST_OFFER": "Meilleure offre"
+    },
+    "clearance": "Déstockage",
+    "endsSoon": "Se termine bientôt",
+    "ended": "Terminée",
+    "endsInDays": "Se termine dans {d} j {h} h",
+    "endsInHours": "Se termine dans {h} h {m} min",
+    "listNow": "Maintenant {price}",
+    "exVat": "HT",
+    "left": "reste {n}",
+    "perBuyer": "Max. {n} par acheteur",
+    "bestBefore": "À consommer de préférence avant le {date}",
+    "thisProduct": "ce produit",
+    "alertsTitle": "Alertes bonnes affaires",
+    "alertsHint": "Suivez des produits ou des fournisseurs et nous vous prévenons dès qu'ils ont une nouvelle offre. Nous vous prévenons aussi des offres sur les produits que vous avez déjà achetés (sauf si vous avez désactivé « Offres et actualités »).",
+    "watchKind": {
+      "PRODUCT": "Produit",
+      "SUPPLIER": "Fournisseur"
+    },
+    "noWatches": "Vous ne suivez encore rien.",
+    "myOffers": "Mes propositions",
+    "bidStatus": {
+      "PENDING": "En attente du fournisseur",
+      "ACCEPTED": "Acceptée",
+      "COUNTERED": "Contre-proposition",
+      "REJECTED": "Refusée",
+      "EXPIRED": "Expirée",
+      "WITHDRAWN": "Retirée",
+      "ORDERED": "Commandée"
+    },
+    "noOffers": "Vous n'avez fait aucune proposition.",
+    "qty": "Quantité",
+    "unitAt": "{price} l'unité",
+    "addToCart": "Ajouter au panier",
+    "added": "Ajouté au panier au prix de l'offre.",
+    "addedLot": "Le lot entier est dans votre panier.",
+    "buyLot": "Acheter le lot entier ({qty} unités)",
+    "maxForYou": "Vous pouvez encore acheter {n}.",
+    "bid": {
+      "PENDING": "Votre proposition : {qty} × {price}. Le fournisseur répondra bientôt.",
+      "ACCEPTED": "Acceptée : {qty} × {price}. Commandez avant la fin du délai.",
+      "COUNTERED": "Le fournisseur propose {price} l'unité pour {qty} (vous aviez proposé {mine})."
+    },
+    "addBidToCart": "Ajouter {qty} au panier",
+    "takeCounter": "Accepter la contre-proposition",
+    "withdraw": "Retirer",
+    "bidSent": "Proposition envoyée.",
+    "yourPrice": "Votre prix unitaire (HT)",
+    "makeOffer": "Faire une proposition",
+    "message": "Message (facultatif)",
+    "minBid": "Propositions à partir de {n} unités.",
+    "watch": "Suivre {what}",
+    "unwatch": "Ne plus suivre {what}",
+    "remove": "Retirer",
+    "digest": "Envoyez-moi chaque jour un e-mail avec les nouvelles offres",
+    "product": "Produit",
+    "chooseProduct": "Choisissez un produit",
+    "kindLabel": "Type d'offre",
+    "kindHint": {
+      "FLASH": "Un prix plus bas pendant peu de temps.",
+      "BUNDLE": "Acheter un pack de plusieurs unités à un prix (ex. 3 pour le prix de 2).",
+      "VOLUME": "Des prix plus bas pour de plus grandes quantités.",
+      "LOT": "Vendre un lot entier d'un coup à un prix.",
+      "BEST_OFFER": "Les acheteurs proposent un prix ; vous acceptez, refusez ou faites une contre-proposition."
+    },
+    "listPrice": "Prix catalogue : {price}",
+    "discount": "{pct} % de remise",
+    "clearanceWhy": {
+      "EXPIRY": "Déstockage : à consommer de préférence avant le {date}.",
+      "OVERSTOCK": "Déstockage : plus de stock que vous n'en vendez habituellement."
+    },
+    "clearanceCommission": "Commission de FIRINGI sur cette offre : {pct} % (habituellement {usual} %).",
+    "normalCommission": "Commission de FIRINGI : {pct} % du prix de l'offre.",
+    "minDiscount": "Une offre doit être au moins {pct} % sous le prix catalogue.",
+    "dealPrice": "Prix unitaire de l'offre (HT)",
+    "bundleQty": "Unités par pack",
+    "bundlePrice": "Prix du pack (HT)",
+    "lotQty": "Unités dans le lot",
+    "lotPrice": "Prix du lot entier (HT)",
+    "floorPrice": "Prix le plus bas accepté automatiquement (facultatif)",
+    "minBidQty": "Quantité minimale par proposition (facultatif)",
+    "maxQty": "Unités dans l'offre (facultatif)",
+    "perBuyerMax": "Max. par acheteur (facultatif)",
+    "startsAt": "Début",
+    "endsAt": "Fin",
+    "tiers": "Prix par quantité",
+    "fromQty": "À partir de (unités)",
+    "unitPrice": "Prix unitaire",
+    "addTier": "Ajouter un palier",
+    "lot": "Lot",
+    "noLot": "Aucun lot en particulier",
+    "units": "{n} unités",
+    "titleLabel": "Titre (facultatif)",
+    "titleHint": "ex. Déstockage de fin de saison",
+    "noteLabel": "Note pour les acheteurs (facultatif)",
+    "noteHint": "ex. date courte, carton extérieur abîmé",
+    "submit": "Créer l'offre",
+    "created": "Offre créée.",
+    "accept": "Accepter",
+    "counter": "Contre-proposer",
+    "reject": "Refuser",
+    "cancelDeal": "Terminer l'offre",
+    "vendorTitle": "Bonnes affaires déstockage",
+    "vendorIntro": "Écoulez vite le stock à date courte ou en surplus : prix flash, multi-achat, prix par volume, lots entiers ou meilleure offre. Les acheteurs qui ont déjà acheté le produit et ceux qui vous suivent sont prévenus. Vous financez la remise ; sur les offres de déstockage, FIRINGI prend une commission plus basse.",
+    "newDeal": "Nouvelle offre",
+    "approvalAlways": "FIRINGI vérifie chaque offre avant son début.",
+    "approvalAuto": "Les offres jusqu'à {pct} % de remise et {days} jours démarrent seules ; les autres sont d'abord vérifiées par FIRINGI.",
+    "noKinds": "FIRINGI ne propose pas d'offres pour le moment.",
+    "yourDeals": "Vos offres",
+    "noDealsYet": "Aucune offre pour l'instant.",
+    "status": {
+      "DRAFT": "Brouillon",
+      "PENDING": "En attente de FIRINGI",
+      "APPROVED": "Approuvée",
+      "SCHEDULED": "Programmée",
+      "LIVE": "En cours",
+      "REJECTED": "Refusée",
+      "ENDED": "Terminée",
+      "CANCELLED": "Arrêtée plus tôt",
+      "SOLD_OUT": "Épuisée"
+    },
+    "autoApproved": "démarrée automatiquement",
+    "soldOf": "{sold} sur {max} vendues",
+    "revenue": "Ventes {amount}",
+    "dealCommission": "commission {pct} %",
+    "firingiNote": "FIRINGI : {note}",
+    "terms": {
+      "FLASH": "{price} l'unité",
+      "BUNDLE": "{n} pour {price}",
+      "VOLUME": "dès {n} : {price}",
+      "LOT": "{n} unités pour {price}",
+      "BEST_OFFER": "Faites une proposition au fournisseur",
+      "BEST_OFFER_FLOOR": "Les propositions dès {price} sont acceptées automatiquement"
+    },
+    "cart": {
+      "applied": "Prix de l'offre",
+      "LEFT": "Prix de l'offre jusqu'à {n} unités — baissez la quantité pour en profiter.",
+      "PER_BUYER": "Vous pouvez encore acheter {n} au prix de l'offre — baissez la quantité pour en profiter.",
+      "BID_QTY": "Votre proposition acceptée porte sur {n} unités — mettez la quantité à {n} pour avoir son prix.",
+      "QTY_TIER": "Commandez davantage pour atteindre le prix de l'offre.",
+      "LOT_QTY": "Le prix du lot ne vaut que pour le lot entier.",
+      "BUNDLE_QTY": "Commandez un pack complet pour avoir le prix multi-achat.",
+      "BID": "Ce produit accepte les propositions — voir Bonnes affaires déstockage."
+    }
   }
 }

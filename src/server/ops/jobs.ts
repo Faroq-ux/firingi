@@ -23,6 +23,7 @@ export const JOBS: JobDef[] = [
   { key: "planning", label: "Demand forecasts & restock suggestions", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/planning" },
   { key: "claims", label: "Quality claims (SLA, charge-backs, quality alerts)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/claims" },
   { key: "plans", label: "Supplier plans (trial reminders and endings, monthly plan invoices, plan changes, settling against payouts)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/plans" },
+  { key: "deals", label: "Clearance deals (ending deals, expiring offers, alerts for deals that start, daily digest)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/deals" },
   { key: "bank", label: "Bank reconciliation (bank feeds, matching new lines, consents ending)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/bank" },
   { key: "ads", label: "Advertising (booked days, budgets, low balances, monthly ad invoices, settling against payouts)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/ads" },
   { key: "loyalty", label: "Loyalty & rewards (points for delivered orders, expiry, reminders, tiers)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/loyalty" },

@@ -849,7 +849,8 @@
     "Messages": "Skilaboð",
     "Plan & Billing": "Áskrift og greiðslur",
     "Early Payout": "Flýtigreiðsla",
-    "Bank": "Banki"
+    "Bank": "Banki",
+    "Clearance Deals": "Rýmingartilboð"
   },
   "delivery": {
     "title": "Afhending",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bankastraumur mistókst: {account}",
       "body": "Ekki tókst að sækja nýjar færslur fyrir {account}: {reason}"
+    },
+    "deal_review": {
+      "title": "Tilboð til skoðunar: {number}",
+      "body": "{company} bjó til tilboð {number}. Það hefst ekki fyrr en FIRINGI samþykkir það."
+    },
+    "deal_approved": {
+      "title": "Tilboð samþykkt: {number}",
+      "body": "Tilboðið þitt {number} er samþykkt og hefst á upphafstíma."
+    },
+    "deal_rejected": {
+      "title": "Tilboði hafnað: {number}",
+      "body": "FIRINGI hafnaði tilboðinu þínu {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nýtt verðtilboð í {number}",
+      "body": "Kaupandi býður {price} € á stk. fyrir {qty} stk. Svaraðu í Vörur › Rýmingartilboð."
+    },
+    "deal_bid_accepted": {
+      "title": "Verðtilboð samþykkt: {number}",
+      "body": "Tilboð þitt upp á {price} € á stk. var samþykkt. Settu það í körfuna áður en það rennur út."
+    },
+    "deal_bid_rejected": {
+      "title": "Verðtilboði hafnað: {number}",
+      "body": "Birgirinn hafnaði tilboði þínu upp á {price} € á stk."
+    },
+    "deal_bid_countered": {
+      "title": "Gagntilboð: {number}",
+      "body": "Birgirinn leggur til {price} € á stk. Samþykktu það á síðunni Rýmingartilboð."
+    },
+    "deal_alert": {
+      "title": "Tilboð: {product} −{pct} %",
+      "body": "{supplier} er með tilboð á {product} til {until}."
+    },
+    "deal_digest": {
+      "title": "{count} ný tilboð í dag",
+      "body": "Ný tilboð: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Munuð IBAN",
     "payersHint": "Þegar þú staðfestir pörun er IBAN munað svo næsta greiðsla þaðan þekkist.",
     "noPayers": "Ekkert enn."
+  },
+  "deals": {
+    "title": "Rýmingartilboð",
+    "intro": "Tímabundin tilboð birgja á vörum með stuttan geymslutíma og umframbirgðum: leifturverð, fjölkaup, magnverð, heilar lotur og verðtilboð. Tilboðsverðið kemur í stað annarra afslátta af vörunni.",
+    "badge": "Tilboð",
+    "all": "Öll",
+    "search": "Leita í tilboðum",
+    "searchBtn": "Leita",
+    "none": "Engin tilboð núna. Fylgstu með vörum eða birgjum hér fyrir neðan til að heyra af þeim næstu.",
+    "kind": {
+      "FLASH": "Leifturverð",
+      "BUNDLE": "Fjölkaup",
+      "VOLUME": "Magnverð",
+      "LOT": "Heil lota",
+      "BEST_OFFER": "Gerðu verðtilboð"
+    },
+    "clearance": "Rýming",
+    "endsSoon": "Lýkur brátt",
+    "ended": "Lokið",
+    "endsInDays": "Lýkur eftir {d} d {h} klst",
+    "endsInHours": "Lýkur eftir {h} klst {m} mín",
+    "listNow": "Nú {price}",
+    "exVat": "án VSK",
+    "left": "{n} eftir",
+    "perBuyer": "Hám. {n} á kaupanda",
+    "bestBefore": "Best fyrir {date}",
+    "thisProduct": "þessa vöru",
+    "alertsTitle": "Tilboðstilkynningar",
+    "alertsHint": "Fylgstu með vörum eða birgjum og við látum þig vita þegar þeir eru með nýtt tilboð. Við segjum þér líka frá tilboðum á vörum sem þú hefur keypt áður (nema þú hafir slökkt á 'Tilboð og fréttir').",
+    "watchKind": {
+      "PRODUCT": "Vara",
+      "SUPPLIER": "Birgir"
+    },
+    "noWatches": "Þú fylgist ekki með neinu enn.",
+    "myOffers": "Verðtilboðin mín",
+    "bidStatus": {
+      "PENDING": "Bíður eftir birgja",
+      "ACCEPTED": "Samþykkt",
+      "COUNTERED": "Gagntilboð",
+      "REJECTED": "Hafnað",
+      "EXPIRED": "Útrunnið",
+      "WITHDRAWN": "Dregið til baka",
+      "ORDERED": "Pantað"
+    },
+    "noOffers": "Þú hefur ekki gert nein verðtilboð.",
+    "qty": "Magn",
+    "unitAt": "{price} stk.",
+    "addToCart": "Setja í körfu",
+    "added": "Sett í körfu á tilboðsverði.",
+    "addedLot": "Öll lotan er í körfunni þinni.",
+    "buyLot": "Kaupa alla lotuna ({qty} stk.)",
+    "maxForYou": "Þú getur enn keypt {n}.",
+    "bid": {
+      "PENDING": "Tilboðið þitt: {qty} × {price}. Birgirinn svarar fljótlega.",
+      "ACCEPTED": "Samþykkt: {qty} × {price}. Pantaðu áður en tíminn rennur út.",
+      "COUNTERED": "Birgirinn leggur til {price} á stk. fyrir {qty} (þú bauðst {mine})."
+    },
+    "addBidToCart": "Setja {qty} í körfu",
+    "takeCounter": "Samþykkja gagntilboð",
+    "withdraw": "Draga til baka",
+    "bidSent": "Tilboð sent.",
+    "yourPrice": "Þitt verð á stk. (án VSK)",
+    "makeOffer": "Gera verðtilboð",
+    "message": "Skilaboð (valfrjálst)",
+    "minBid": "Tilboð frá {n} stk.",
+    "watch": "Fylgjast með: {what}",
+    "unwatch": "Hætta að fylgjast með: {what}",
+    "remove": "Fjarlægja",
+    "digest": "Sendið mér daglegan tölvupóst með nýjum tilboðum",
+    "product": "Vara",
+    "chooseProduct": "Veldu vöru",
+    "kindLabel": "Tegund tilboðs",
+    "kindHint": {
+      "FLASH": "Lægra verð í stuttan tíma.",
+      "BUNDLE": "Pakki með nokkrum stk. á einu verði (t.d. 3 á verði 2).",
+      "VOLUME": "Lægra verð fyrir meira magn.",
+      "LOT": "Selja heila lotu í einu á einu verði.",
+      "BEST_OFFER": "Kaupendur bjóða verð; þú samþykkir, hafnar eða gerir gagntilboð."
+    },
+    "listPrice": "Listaverð: {price}",
+    "discount": "{pct} % afsláttur",
+    "clearanceWhy": {
+      "EXPIRY": "Rýming: best fyrir {date}.",
+      "OVERSTOCK": "Rýming: meiri birgðir en þú selur venjulega."
+    },
+    "clearanceCommission": "Þóknun FIRINGI af þessu tilboði: {pct} % (venjulega {usual} %).",
+    "normalCommission": "Þóknun FIRINGI: {pct} % af tilboðsverði.",
+    "minDiscount": "Tilboð þarf að vera a.m.k. {pct} % undir listaverði.",
+    "dealPrice": "Tilboðsverð á stk. (án VSK)",
+    "bundleQty": "Stk. í pakka",
+    "bundlePrice": "Verð pakkans (án VSK)",
+    "lotQty": "Stk. í lotunni",
+    "lotPrice": "Verð allrar lotunnar (án VSK)",
+    "floorPrice": "Lægsta verð sem er samþykkt sjálfkrafa (valfrjálst)",
+    "minBidQty": "Minnsta magn fyrir tilboð (valfrjálst)",
+    "maxQty": "Stk. í tilboðinu (valfrjálst)",
+    "perBuyerMax": "Hám. á kaupanda (valfrjálst)",
+    "startsAt": "Hefst",
+    "endsAt": "Lýkur",
+    "tiers": "Magnverð",
+    "fromQty": "Frá (stk.)",
+    "unitPrice": "Verð á stk.",
+    "addTier": "Bæta við þrepi",
+    "lot": "Lota",
+    "noLot": "Engin sérstök lota",
+    "units": "{n} stk.",
+    "titleLabel": "Titill (valfrjálst)",
+    "titleHint": "t.d. Rýmingarsala í lok tímabils",
+    "noteLabel": "Athugasemd til kaupenda (valfrjálst)",
+    "noteHint": "t.d. stuttur geymslutími, skemmdur ytri kassi",
+    "submit": "Búa til tilboð",
+    "created": "Tilboð búið til.",
+    "accept": "Samþykkja",
+    "counter": "Gagntilboð",
+    "reject": "Hafna",
+    "cancelDeal": "Ljúka tilboði",
+    "vendorTitle": "Rýmingartilboð",
+    "vendorIntro": "Seldu vörur með stuttan geymslutíma eða umframbirgðir hratt: leifturverð, fjölkaup, magnverð, heilar lotur eða verðtilboð. Kaupendur sem hafa keypt vöruna áður og þeir sem fylgja þér fá tilkynningu. Þú berð afsláttinn; af rýmingartilboðum tekur FIRINGI lægri þóknun.",
+    "newDeal": "Nýtt tilboð",
+    "approvalAlways": "FIRINGI fer yfir hvert tilboð áður en það hefst.",
+    "approvalAuto": "Tilboð með allt að {pct} % afslætti og {days} daga hefjast sjálfkrafa; önnur fer FIRINGI fyrst yfir.",
+    "noKinds": "FIRINGI býður ekki upp á tilboð núna.",
+    "yourDeals": "Tilboðin þín",
+    "noDealsYet": "Engin tilboð enn.",
+    "status": {
+      "DRAFT": "Drög",
+      "PENDING": "Bíður eftir FIRINGI",
+      "APPROVED": "Samþykkt",
+      "SCHEDULED": "Áætlað",
+      "LIVE": "Virkt",
+      "REJECTED": "Hafnað",
+      "ENDED": "Lokið",
+      "CANCELLED": "Lokið fyrr",
+      "SOLD_OUT": "Uppselt"
+    },
+    "autoApproved": "hófst sjálfkrafa",
+    "soldOf": "{sold} af {max} seld",
+    "revenue": "Sala {amount}",
+    "dealCommission": "þóknun {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} stk.",
+      "BUNDLE": "{n} fyrir {price}",
+      "VOLUME": "frá {n}: {price}",
+      "LOT": "{n} stk. fyrir {price}",
+      "BEST_OFFER": "Gerðu birgjanum verðtilboð",
+      "BEST_OFFER_FLOOR": "Tilboð frá {price} eru samþykkt sjálfkrafa"
+    },
+    "cart": {
+      "applied": "Tilboðsverð",
+      "LEFT": "Tilboðsverð fyrir allt að {n} stk. — lækkaðu magnið til að fá það.",
+      "PER_BUYER": "Þú getur keypt {n} í viðbót á tilboðsverði — lækkaðu magnið til að fá það.",
+      "BID_QTY": "Samþykkta tilboðið þitt er fyrir {n} stk. — stilltu magnið á {n} til að fá verðið.",
+      "QTY_TIER": "Pantaðu meira til að ná tilboðsverðinu.",
+      "LOT_QTY": "Lotuverðið gildir aðeins fyrir alla lotuna.",
+      "BUNDLE_QTY": "Pantaðu heilan pakka til að fá fjölkaupaverðið.",
+      "BID": "Hægt er að gera verðtilboð í þessa vöru — sjá Rýmingartilboð."
+    }
   }
 }

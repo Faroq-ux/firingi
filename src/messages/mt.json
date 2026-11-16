@@ -849,7 +849,8 @@
     "Messages": "Messaġġi",
     "Plan & Billing": "Pjan u Kontijiet",
     "Early Payout": "Ħlas Bikri",
-    "Bank": "Bank"
+    "Bank": "Bank",
+    "Clearance Deals": "Offerti ta' bejgħ ta' stokk"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Il-feed tal-bank falla: {account}",
       "body": "Ma setgħux jinġiebu tranżazzjonijiet ġodda għal {account}: {reason}"
+    },
+    "deal_review": {
+      "title": "Offerta biex tiġi ċċekkjata: {number}",
+      "body": "{company} ħolqot l-offerta {number}. Tibda biss wara li FIRINGI tapprovaha."
+    },
+    "deal_approved": {
+      "title": "Offerta approvata: {number}",
+      "body": "L-offerta tiegħek {number} ġiet approvata u tibda fil-ħin tal-bidu."
+    },
+    "deal_rejected": {
+      "title": "Offerta miċħuda: {number}",
+      "body": "FIRINGI ċaħdet l-offerta tiegħek {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Offerta ġdida fuq {number}",
+      "body": "Xerrej joffri {price} € kull unità għal {qty} unità. Wieġeb f'Prodotti › Offerti ta' bejgħ ta' stokk."
+    },
+    "deal_bid_accepted": {
+      "title": "Offerta aċċettata: {number}",
+      "body": "L-offerta tiegħek ta' {price} € kull unità ġiet aċċettata. Żidha mal-karrettun qabel tiskadi."
+    },
+    "deal_bid_rejected": {
+      "title": "Offerta miċħuda: {number}",
+      "body": "Il-fornitur ċaħad l-offerta tiegħek ta' {price} € kull unità."
+    },
+    "deal_bid_countered": {
+      "title": "Kontro-offerta: {number}",
+      "body": "Il-fornitur jipproponi {price} € kull unità. Aċċettaha fil-paġna Offerti ta' bejgħ ta' stokk."
+    },
+    "deal_alert": {
+      "title": "Offerta: {product} −{pct} %",
+      "body": "{supplier} għandu offerta fuq {product} sa {until}."
+    },
+    "deal_digest": {
+      "title": "{count} offerti ġodda llum",
+      "body": "Offerti ġodda: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "IBANs imfakkra",
     "payersHint": "Meta tikkonferma tqabbil, l-IBAN jiġi mfakkar biex il-pagament li jmiss minnu jingħaraf.",
     "noPayers": "Għad xejn."
+  },
+  "deals": {
+    "title": "Offerti ta' bejgħ ta' stokk",
+    "intro": "Offerti tal-fornituri għal żmien limitat fuq oġġetti b'data qasira u stokk żejjed: prezzijiet flash, xiri multiplu, prezzijiet skont il-kwantità, lottijiet sħaħ u l-aħjar offerta. Il-prezz tal-offerta jieħu post skontijiet oħra fuq dak il-prodott.",
+    "badge": "Offerta",
+    "all": "Kollha",
+    "search": "Fittex offerti",
+    "searchBtn": "Fittex",
+    "none": "M'hemm l-ebda offerta bħalissa. Segwi prodotti jew fornituri hawn taħt biex tisma' bl-offerti li jmiss.",
+    "kind": {
+      "FLASH": "Prezz flash",
+      "BUNDLE": "Xiri multiplu",
+      "VOLUME": "Prezz skont il-kwantità",
+      "LOT": "Lott sħiħ",
+      "BEST_OFFER": "Agħmel offerta"
+    },
+    "clearance": "Bejgħ ta' stokk",
+    "endsSoon": "Jintemm dalwaqt",
+    "ended": "Intemmet",
+    "endsInDays": "Tintemm fi {d} j {h} s",
+    "endsInHours": "Tintemm fi {h} s {m} min",
+    "listNow": "Issa {price}",
+    "exVat": "eskl. VAT",
+    "left": "fadal {n}",
+    "perBuyer": "Massimu {n} għal kull xerrej",
+    "bestBefore": "L-aħjar qabel {date}",
+    "thisProduct": "dan il-prodott",
+    "alertsTitle": "Avviżi ta' offerti",
+    "alertsHint": "Segwi prodotti jew fornituri u ngħarrfuk meta jkollhom offerta ġdida. Ngħarrfuk ukoll b'offerti fuq prodotti li xtrajt qabel (sakemm ma tfejtx 'Offerti u aħbarijiet').",
+    "watchKind": {
+      "PRODUCT": "Prodott",
+      "SUPPLIER": "Fornitur"
+    },
+    "noWatches": "Għadek ma qed issegwi xejn.",
+    "myOffers": "L-offerti tiegħi",
+    "bidStatus": {
+      "PENDING": "Qed tistenna lill-fornitur",
+      "ACCEPTED": "Aċċettata",
+      "COUNTERED": "Kontro-offerta",
+      "REJECTED": "Miċħuda",
+      "EXPIRED": "Skadiet",
+      "WITHDRAWN": "Irtirata",
+      "ORDERED": "Ordnata"
+    },
+    "noOffers": "Għadek ma għamilt l-ebda offerta.",
+    "qty": "Kwantità",
+    "unitAt": "{price} kull unità",
+    "addToCart": "Żid mal-karrettun",
+    "added": "Miżjud mal-karrettun bil-prezz tal-offerta.",
+    "addedLot": "Il-lott kollu qiegħed fil-karrettun tiegħek.",
+    "buyLot": "Ixtri l-lott kollu ({qty} unità)",
+    "maxForYou": "Għadek tista' tixtri {n}.",
+    "bid": {
+      "PENDING": "L-offerta tiegħek: {qty} × {price}. Il-fornitur iwieġeb dalwaqt.",
+      "ACCEPTED": "Aċċettata: {qty} × {price}. Ordna qabel jgħaddi l-ħin.",
+      "COUNTERED": "Il-fornitur jipproponi {price} kull unità għal {qty} (int offrejt {mine})."
+    },
+    "addBidToCart": "Żid {qty} mal-karrettun",
+    "takeCounter": "Aċċetta l-kontro-offerta",
+    "withdraw": "Irtira",
+    "bidSent": "Offerta mibgħuta.",
+    "yourPrice": "Il-prezz tiegħek kull unità (eskl. VAT)",
+    "makeOffer": "Agħmel offerta",
+    "message": "Messaġġ (mhux obbligatorju)",
+    "minBid": "Offerti minn {n} unità.",
+    "watch": "Segwi {what}",
+    "unwatch": "Tieqafx issegwi {what}",
+    "remove": "Neħħi",
+    "digest": "Ibagħtuli email kuljum b'offerti ġodda",
+    "product": "Prodott",
+    "chooseProduct": "Agħżel prodott",
+    "kindLabel": "Tip ta' offerta",
+    "kindHint": {
+      "FLASH": "Prezz aktar baxx għal ftit żmien.",
+      "BUNDLE": "Ixtri pakkett ta' diversi unitajiet bi prezz wieħed (eż. 3 bil-prezz ta' 2).",
+      "VOLUME": "Prezzijiet aktar baxxi għal kwantitajiet akbar.",
+      "LOT": "Biegħ lott sħiħ f'daqqa bi prezz wieħed.",
+      "BEST_OFFER": "Ix-xerrejja joffru prezz; int taċċetta, tiċħad jew tagħmel kontro-offerta."
+    },
+    "listPrice": "Prezz tal-lista: {price}",
+    "discount": "{pct} % skont",
+    "clearanceWhy": {
+      "EXPIRY": "Bejgħ ta' stokk: l-aħjar qabel {date}.",
+      "OVERSTOCK": "Bejgħ ta' stokk: aktar stokk milli normalment tbigħ."
+    },
+    "clearanceCommission": "Il-kummissjoni ta' FIRINGI fuq din l-offerta: {pct} % (normalment {usual} %).",
+    "normalCommission": "Il-kummissjoni ta' FIRINGI: {pct} % tal-prezz tal-offerta.",
+    "minDiscount": "Offerta trid tkun mill-inqas {pct} % taħt il-prezz tal-lista.",
+    "dealPrice": "Prezz tal-offerta kull unità (eskl. VAT)",
+    "bundleQty": "Unitajiet f'pakkett",
+    "bundlePrice": "Prezz tal-pakkett (eskl. VAT)",
+    "lotQty": "Unitajiet fil-lott",
+    "lotPrice": "Prezz tal-lott kollu (eskl. VAT)",
+    "floorPrice": "L-iktar prezz baxx aċċettat awtomatikament (mhux obbligatorju)",
+    "minBidQty": "L-iżgħar kwantità għal offerta (mhux obbligatorju)",
+    "maxQty": "Unitajiet fl-offerta (mhux obbligatorju)",
+    "perBuyerMax": "Massimu għal kull xerrej (mhux obbligatorju)",
+    "startsAt": "Tibda",
+    "endsAt": "Tintemm",
+    "tiers": "Prezzijiet skont il-kwantità",
+    "fromQty": "Minn (unitajiet)",
+    "unitPrice": "Prezz kull unità",
+    "addTier": "Żid livell",
+    "lot": "Lott",
+    "noLot": "L-ebda lott partikolari",
+    "units": "{n} unità",
+    "titleLabel": "Titlu (mhux obbligatorju)",
+    "titleHint": "eż. Bejgħ ta' tmiem l-istaġun",
+    "noteLabel": "Nota għax-xerrejja (mhux obbligatorja)",
+    "noteHint": "eż. data qasira, kaxxa ta' barra mħassra",
+    "submit": "Oħloq offerta",
+    "created": "Offerta maħluqa.",
+    "accept": "Aċċetta",
+    "counter": "Kontro-offerta",
+    "reject": "Iċħad",
+    "cancelDeal": "Temm l-offerta",
+    "vendorTitle": "Offerti ta' bejgħ ta' stokk",
+    "vendorIntro": "Biegħ malajr stokk b'data qasira jew żejjed: prezzijiet flash, xiri multiplu, prezzijiet skont il-kwantità, lottijiet sħaħ jew l-aħjar offerta. Ix-xerrejja li xtraw il-prodott qabel u dawk li jsegwuk jiġu mgħarrfa. Int tħallas l-iskont; fuq offerti ta' bejgħ ta' stokk FIRINGI tieħu kummissjoni aktar baxxa.",
+    "newDeal": "Offerta ġdida",
+    "approvalAlways": "FIRINGI tiċċekkja kull offerta qabel tibda.",
+    "approvalAuto": "Offerti sa {pct} % skont u {days} jiem jibdew waħedhom; l-oħrajn tiċċekkjahom l-ewwel FIRINGI.",
+    "noKinds": "FIRINGI ma toffrix offerti bħalissa.",
+    "yourDeals": "L-offerti tiegħek",
+    "noDealsYet": "Għad m'hemmx offerti.",
+    "status": {
+      "DRAFT": "Abbozz",
+      "PENDING": "Qed tistenna lil FIRINGI",
+      "APPROVED": "Approvata",
+      "SCHEDULED": "Skedata",
+      "LIVE": "Attiva",
+      "REJECTED": "Miċħuda",
+      "ENDED": "Intemmet",
+      "CANCELLED": "Intemmet qabel iż-żmien",
+      "SOLD_OUT": "Mibjugħa kollha"
+    },
+    "autoApproved": "bdiet waħedha",
+    "soldOf": "{sold} minn {max} mibjugħa",
+    "revenue": "Bejgħ {amount}",
+    "dealCommission": "kummissjoni {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} kull unità",
+      "BUNDLE": "{n} għal {price}",
+      "VOLUME": "minn {n}: {price}",
+      "LOT": "{n} unità għal {price}",
+      "BEST_OFFER": "Agħmel offerta lill-fornitur",
+      "BEST_OFFER_FLOOR": "Offerti minn {price} jiġu aċċettati awtomatikament"
+    },
+    "cart": {
+      "applied": "Prezz tal-offerta",
+      "LEFT": "Prezz tal-offerta sa {n} unità — naqqas il-kwantità biex tiksbu.",
+      "PER_BUYER": "Tista' tixtri {n} oħra bil-prezz tal-offerta — naqqas il-kwantità biex tiksbu.",
+      "BID_QTY": "L-offerta aċċettata tiegħek hija għal {n} unità — issettja l-kwantità għal {n} biex tikseb il-prezz tagħha.",
+      "QTY_TIER": "Ordna aktar biex tilħaq il-prezz tal-offerta.",
+      "LOT_QTY": "Il-prezz tal-lott japplika biss għal-lott kollu.",
+      "BUNDLE_QTY": "Ordna pakkett sħiħ biex tikseb il-prezz tax-xiri multiplu.",
+      "BID": "Dan il-prodott jaċċetta offerti — ara Offerti ta' bejgħ ta' stokk."
+    }
   }
 }

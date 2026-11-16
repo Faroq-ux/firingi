@@ -849,7 +849,8 @@
     "Messages": "Wiadomości",
     "Plan & Billing": "Plan i płatności",
     "Early Payout": "Wcześniejsza wypłata",
-    "Bank": "Bank"
+    "Bank": "Bank",
+    "Clearance Deals": "Okazje wyprzedażowe"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Błąd kanału bankowego: {account}",
       "body": "Nie udało się pobrać nowych operacji dla {account}: {reason}"
+    },
+    "deal_review": {
+      "title": "Okazja do sprawdzenia: {number}",
+      "body": "{company} utworzył(a) okazję {number}. Zacznie się dopiero po zatwierdzeniu przez FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Okazja zatwierdzona: {number}",
+      "body": "Twoja okazja {number} została zatwierdzona i zacznie się o czasie rozpoczęcia."
+    },
+    "deal_rejected": {
+      "title": "Okazja odrzucona: {number}",
+      "body": "FIRINGI odrzuciło twoją okazję {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nowa propozycja ceny: {number}",
+      "body": "Kupujący proponuje {price} € za szt. za {qty} szt. Odpowiedz w Produkty › Okazje wyprzedażowe."
+    },
+    "deal_bid_accepted": {
+      "title": "Propozycja przyjęta: {number}",
+      "body": "Twoja propozycja {price} € za szt. została przyjęta. Dodaj ją do koszyka, zanim wygaśnie."
+    },
+    "deal_bid_rejected": {
+      "title": "Propozycja odrzucona: {number}",
+      "body": "Dostawca odrzucił twoją propozycję {price} € za szt."
+    },
+    "deal_bid_countered": {
+      "title": "Kontroferta: {number}",
+      "body": "Dostawca proponuje {price} € za szt. Przyjmij ją na stronie Okazje wyprzedażowe."
+    },
+    "deal_alert": {
+      "title": "Okazja: {product} −{pct} %",
+      "body": "{supplier} ma okazję na {product} do {until}."
+    },
+    "deal_digest": {
+      "title": "{count} nowych okazji dzisiaj",
+      "body": "Nowe okazje: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Zapamiętane IBAN",
     "payersHint": "Po potwierdzeniu dopasowania IBAN jest zapamiętywany, aby rozpoznać kolejną płatność z niego.",
     "noPayers": "Jeszcze brak."
+  },
+  "deals": {
+    "title": "Okazje wyprzedażowe",
+    "intro": "Ograniczone czasowo oferty dostawców na towar z krótkim terminem i nadwyżki: ceny błyskawiczne, wielopaki, ceny ilościowe, całe partie i propozycja ceny. Cena okazji zastępuje inne rabaty na ten produkt.",
+    "badge": "Okazja",
+    "all": "Wszystkie",
+    "search": "Szukaj okazji",
+    "searchBtn": "Szukaj",
+    "none": "Obecnie brak okazji. Obserwuj poniżej produkty lub dostawców, aby dowiedzieć się o kolejnych.",
+    "kind": {
+      "FLASH": "Cena błyskawiczna",
+      "BUNDLE": "Wielopak",
+      "VOLUME": "Cena ilościowa",
+      "LOT": "Cała partia",
+      "BEST_OFFER": "Zaproponuj cenę"
+    },
+    "clearance": "Wyprzedaż",
+    "endsSoon": "Wkrótce się kończy",
+    "ended": "Zakończona",
+    "endsInDays": "Kończy się za {d} d {h} godz.",
+    "endsInHours": "Kończy się za {h} godz. {m} min",
+    "listNow": "Teraz {price}",
+    "exVat": "netto",
+    "left": "zostało {n}",
+    "perBuyer": "Maks. {n} na kupującego",
+    "bestBefore": "Najlepiej spożyć przed {date}",
+    "thisProduct": "ten produkt",
+    "alertsTitle": "Powiadomienia o okazjach",
+    "alertsHint": "Obserwuj produkty lub dostawców, a damy znać, gdy będą mieli nową okazję. Informujemy też o okazjach na produkty, które już kupowałeś (chyba że wyłączyłeś „Oferty i nowości”).",
+    "watchKind": {
+      "PRODUCT": "Produkt",
+      "SUPPLIER": "Dostawca"
+    },
+    "noWatches": "Jeszcze niczego nie obserwujesz.",
+    "myOffers": "Moje propozycje cen",
+    "bidStatus": {
+      "PENDING": "Czeka na dostawcę",
+      "ACCEPTED": "Przyjęta",
+      "COUNTERED": "Kontroferta",
+      "REJECTED": "Odrzucona",
+      "EXPIRED": "Wygasła",
+      "WITHDRAWN": "Wycofana",
+      "ORDERED": "Zamówiona"
+    },
+    "noOffers": "Nie złożyłeś jeszcze żadnej propozycji.",
+    "qty": "Ilość",
+    "unitAt": "{price} za szt.",
+    "addToCart": "Do koszyka",
+    "added": "Dodano do koszyka w cenie okazji.",
+    "addedLot": "Cała partia jest w koszyku.",
+    "buyLot": "Kup całą partię ({qty} szt.)",
+    "maxForYou": "Możesz kupić jeszcze {n}.",
+    "bid": {
+      "PENDING": "Twoja propozycja: {qty} × {price}. Dostawca wkrótce odpowie.",
+      "ACCEPTED": "Przyjęta: {qty} × {price}. Zamów, zanim minie czas.",
+      "COUNTERED": "Dostawca proponuje {price} za szt. przy {qty} (zaproponowałeś {mine})."
+    },
+    "addBidToCart": "Dodaj {qty} do koszyka",
+    "takeCounter": "Przyjmij kontrofertę",
+    "withdraw": "Wycofaj",
+    "bidSent": "Propozycja wysłana.",
+    "yourPrice": "Twoja cena za szt. (netto)",
+    "makeOffer": "Zaproponuj cenę",
+    "message": "Wiadomość (opcjonalnie)",
+    "minBid": "Propozycje od {n} szt.",
+    "watch": "Obserwuj {what}",
+    "unwatch": "Przestań obserwować {what}",
+    "remove": "Usuń",
+    "digest": "Wysyłajcie mi codziennie e-mail z nowymi okazjami",
+    "product": "Produkt",
+    "chooseProduct": "Wybierz produkt",
+    "kindLabel": "Rodzaj okazji",
+    "kindHint": {
+      "FLASH": "Niższa cena przez krótki czas.",
+      "BUNDLE": "Opakowanie kilku sztuk w jednej cenie (np. 3 w cenie 2).",
+      "VOLUME": "Niższe ceny przy większych ilościach.",
+      "LOT": "Sprzedaj całą partię naraz w jednej cenie.",
+      "BEST_OFFER": "Kupujący proponują cenę; ty przyjmujesz, odrzucasz lub składasz kontrofertę."
+    },
+    "listPrice": "Cena cennikowa: {price}",
+    "discount": "{pct} % taniej",
+    "clearanceWhy": {
+      "EXPIRY": "Wyprzedaż: najlepiej spożyć przed {date}.",
+      "OVERSTOCK": "Wyprzedaż: więcej zapasu, niż zwykle sprzedajesz."
+    },
+    "clearanceCommission": "Prowizja FIRINGI od tej okazji: {pct} % (zwykle {usual} %).",
+    "normalCommission": "Prowizja FIRINGI: {pct} % ceny okazji.",
+    "minDiscount": "Okazja musi być co najmniej {pct} % poniżej ceny cennikowej.",
+    "dealPrice": "Cena okazji za szt. (netto)",
+    "bundleQty": "Sztuk w opakowaniu",
+    "bundlePrice": "Cena opakowania (netto)",
+    "lotQty": "Sztuk w partii",
+    "lotPrice": "Cena całej partii (netto)",
+    "floorPrice": "Najniższa cena przyjmowana automatycznie (opcjonalnie)",
+    "minBidQty": "Najmniejsza ilość dla propozycji (opcjonalnie)",
+    "maxQty": "Sztuk w okazji (opcjonalnie)",
+    "perBuyerMax": "Maks. na kupującego (opcjonalnie)",
+    "startsAt": "Początek",
+    "endsAt": "Koniec",
+    "tiers": "Ceny ilościowe",
+    "fromQty": "Od (szt.)",
+    "unitPrice": "Cena za szt.",
+    "addTier": "Dodaj próg",
+    "lot": "Partia",
+    "noLot": "Bez konkretnej partii",
+    "units": "{n} szt.",
+    "titleLabel": "Tytuł (opcjonalnie)",
+    "titleHint": "np. Wyprzedaż końca sezonu",
+    "noteLabel": "Uwaga dla kupujących (opcjonalnie)",
+    "noteHint": "np. krótki termin, uszkodzony karton zbiorczy",
+    "submit": "Utwórz okazję",
+    "created": "Okazja utworzona.",
+    "accept": "Przyjmij",
+    "counter": "Kontroferta",
+    "reject": "Odrzuć",
+    "cancelDeal": "Zakończ okazję",
+    "vendorTitle": "Okazje wyprzedażowe",
+    "vendorIntro": "Szybko sprzedaj towar z krótkim terminem lub nadwyżki: ceny błyskawiczne, wielopaki, ceny ilościowe, całe partie lub propozycja ceny. Kupujący, którzy kupowali produkt, i ci, którzy cię obserwują, dostają powiadomienie. Rabat finansujesz ty; od okazji wyprzedażowych FIRINGI pobiera niższą prowizję.",
+    "newDeal": "Nowa okazja",
+    "approvalAlways": "FIRINGI sprawdza każdą okazję przed rozpoczęciem.",
+    "approvalAuto": "Okazje do {pct} % rabatu i {days} dni startują same; inne najpierw sprawdza FIRINGI.",
+    "noKinds": "FIRINGI obecnie nie oferuje okazji.",
+    "yourDeals": "Twoje okazje",
+    "noDealsYet": "Jeszcze brak okazji.",
+    "status": {
+      "DRAFT": "Szkic",
+      "PENDING": "Czeka na FIRINGI",
+      "APPROVED": "Zatwierdzona",
+      "SCHEDULED": "Zaplanowana",
+      "LIVE": "Aktywna",
+      "REJECTED": "Odrzucona",
+      "ENDED": "Zakończona",
+      "CANCELLED": "Zakończona wcześniej",
+      "SOLD_OUT": "Wyprzedana"
+    },
+    "autoApproved": "uruchomiona automatycznie",
+    "soldOf": "sprzedano {sold} z {max}",
+    "revenue": "Sprzedaż {amount}",
+    "dealCommission": "prowizja {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} za szt.",
+      "BUNDLE": "{n} za {price}",
+      "VOLUME": "od {n}: {price}",
+      "LOT": "{n} szt. za {price}",
+      "BEST_OFFER": "Zaproponuj dostawcy cenę",
+      "BEST_OFFER_FLOOR": "Propozycje od {price} są przyjmowane automatycznie"
+    },
+    "cart": {
+      "applied": "Cena okazji",
+      "LEFT": "Cena okazji do {n} szt. — zmniejsz ilość, aby ją otrzymać.",
+      "PER_BUYER": "W cenie okazji możesz kupić jeszcze {n} — zmniejsz ilość, aby ją otrzymać.",
+      "BID_QTY": "Twoja przyjęta propozycja dotyczy {n} szt. — ustaw ilość na {n}, aby otrzymać jej cenę.",
+      "QTY_TIER": "Zamów więcej, aby osiągnąć cenę okazji.",
+      "LOT_QTY": "Cena partii dotyczy tylko całej partii.",
+      "BUNDLE_QTY": "Zamów pełne opakowanie, aby otrzymać cenę wielopaku.",
+      "BID": "Na ten produkt można zaproponować cenę — zob. Okazje wyprzedażowe."
+    }
   }
 }

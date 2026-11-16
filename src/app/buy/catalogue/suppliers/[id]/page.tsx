@@ -9,6 +9,7 @@ import { NotFoundError } from "@/server/errors";
 import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
 import { ProductCard } from "@/components/catalogue/product-card";
+import { dealBadges } from "@/server/deals/service";
 import { buttonVariants } from "@/components/ui/button";
 import { BarcodeSearch } from "@/components/catalogue/barcode-search";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ export default async function StorePage({ params, searchParams }: { params: Prom
     getTranslations("catalogue"), getTranslations("common"), getLocale(),
   ]);
   const images = await productsWithImages(data.items.map((i) => i.productId));
+  const dealMap = data ? await dealBadges(data.items.map((i) => i.offerId)) : new Map<string, { pct: number | null; endsAt: Date; kind: string }>();
   const base = `/buy/catalogue/suppliers/${id}`;
   const qs = (o: Record<string, string | undefined>) => {
     const p = new URLSearchParams(Object.entries({ q: sp.q, category, ...o }).filter(([, v]) => v) as [string, string][]);
@@ -54,7 +56,7 @@ export default async function StorePage({ params, searchParams }: { params: Prom
           <div className="mb-4"><BarcodeSearch action={base} defaultValue={sp.q} hidden={category ? { category } : undefined} /></div>
           {data.items.length === 0 ? <p className="py-12 text-center text-muted-foreground">{t("noResults")}</p> : (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-              {data.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} showVendor={false} />)}
+              {data.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} showVendor={false} />)}
             </div>
           )}
           <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">

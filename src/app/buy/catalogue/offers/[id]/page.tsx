@@ -14,6 +14,9 @@ import { ProductThumb, StockBadge } from "@/components/catalogue/product-card";
 import { Codes, PriceBlock } from "@/components/catalogue/price";
 import { formatMoney } from "@/lib/utils";
 import { VerifiedPanel } from "@/components/compliance/badges";
+import { liveDeals } from "@/server/deals/service";
+import { DealBanner } from "@/components/deals/banner";
+import { dealLabels } from "@/components/deals/labels";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -21,7 +24,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const { id } = await params;
   const data = await catalogueItem(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
   const { item, alternatives } = data;
-  const [t, ti, locale, images, bestBefore] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id])]);
+  const [t, ti, locale, images, bestBefore, deals, dl] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id]), liveDeals(ctx, { offerIds: [id] }).catch(() => []), dealLabels()]);
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -44,6 +47,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
             </div>
             <div className="mt-2"><Codes item={item} full /></div>
           </div>
+          {deals.map((d) => <DealBanner key={d.id} d={d} l={dl.l} locale={locale} canBuy={can(ctx, "buyer.orders.place")} />)}
           <Card>
             <CardContent className="space-y-3 pt-5">
               <div className="flex flex-wrap items-start gap-3">

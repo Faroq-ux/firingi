@@ -1430,6 +1430,42 @@
     "bank_feed_failed": {
       "title": "Bank feed failed: {account}",
       "body": "New lines for {account} couldn't be fetched: {reason}"
+    },
+    "deal_review": {
+      "title": "Deal to check: {number}",
+      "body": "{company} created deal {number}. It starts only after FIRINGI approves it."
+    },
+    "deal_approved": {
+      "title": "Deal approved: {number}",
+      "body": "Your deal {number} is approved and goes live at its start time."
+    },
+    "deal_rejected": {
+      "title": "Deal turned down: {number}",
+      "body": "FIRINGI turned down your deal {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "New offer on deal {number}",
+      "body": "A buyer offers {price} € per unit for {qty} units. Answer it in Products › Clearance Deals."
+    },
+    "deal_bid_accepted": {
+      "title": "Offer accepted: {number}",
+      "body": "Your offer of {price} € per unit was accepted. Add it to your cart before it expires."
+    },
+    "deal_bid_rejected": {
+      "title": "Offer turned down: {number}",
+      "body": "The supplier turned down your offer of {price} € per unit."
+    },
+    "deal_bid_countered": {
+      "title": "Counter-offer: {number}",
+      "body": "The supplier proposes {price} € per unit. Accept it on the Clearance deals page."
+    },
+    "deal_alert": {
+      "title": "Deal: {product} −{pct} %",
+      "body": "{supplier} has a deal on {product} until {until}."
+    },
+    "deal_digest": {
+      "title": "{count} new deals today",
+      "body": "New deals: {products}."
     }
   },
   "notifications": {
@@ -4425,5 +4461,163 @@
     "payersTitle": "Remembered IBANs",
     "payersHint": "When you confirm a match, the IBAN is remembered so the next payment from it is recognised.",
     "noPayers": "None yet."
+  },
+  "deals": {
+    "title": "Clearance deals",
+    "intro": "Suppliers' time-limited deals on short-dated and surplus stock: flash prices, multi-buys, volume prices, whole lots and best offers. Deal prices replace other discounts on that product.",
+    "badge": "Deal",
+    "all": "All",
+    "search": "Search deals",
+    "searchBtn": "Search",
+    "none": "No deals right now. Watch products or suppliers below to hear about the next ones.",
+    "kind": {
+      "FLASH": "Flash price",
+      "BUNDLE": "Multi-buy",
+      "VOLUME": "Volume price",
+      "LOT": "Whole lot",
+      "BEST_OFFER": "Best offer"
+    },
+    "clearance": "Clearance",
+    "endsSoon": "Ends soon",
+    "ended": "Ended",
+    "endsInDays": "Ends in {d} d {h} h",
+    "endsInHours": "Ends in {h} h {m} min",
+    "listNow": "Now {price}",
+    "exVat": "excl. VAT",
+    "left": "{n} left",
+    "perBuyer": "Max {n} per buyer",
+    "bestBefore": "Best before {date}",
+    "thisProduct": "this product",
+    "alertsTitle": "Deal alerts",
+    "alertsHint": "Watch products or suppliers and we'll tell you when they have a new deal. We also tell you about deals on products you bought before (unless you switched 'Offers & news' off).",
+    "watchKind": {
+      "PRODUCT": "Product",
+      "SUPPLIER": "Supplier"
+    },
+    "noWatches": "You aren't watching anything yet.",
+    "myOffers": "My offers",
+    "bidStatus": {
+      "PENDING": "Waiting for the supplier",
+      "ACCEPTED": "Accepted",
+      "COUNTERED": "Counter-offer",
+      "REJECTED": "Turned down",
+      "EXPIRED": "Expired",
+      "WITHDRAWN": "Withdrawn",
+      "ORDERED": "Ordered"
+    },
+    "noOffers": "You haven't made any offers.",
+    "qty": "Quantity",
+    "unitAt": "{price} per unit",
+    "addToCart": "Add to cart",
+    "added": "Added to your cart at the deal price.",
+    "addedLot": "The whole lot is in your cart.",
+    "buyLot": "Buy the whole lot ({qty} units)",
+    "maxForYou": "You can still buy {n}.",
+    "bid": {
+      "PENDING": "Your offer: {qty} × {price}. The supplier will answer soon.",
+      "ACCEPTED": "Accepted: {qty} × {price}. Order before the time runs out.",
+      "COUNTERED": "The supplier proposes {price} per unit for {qty} (you offered {mine})."
+    },
+    "addBidToCart": "Add {qty} to cart",
+    "takeCounter": "Accept the counter-offer",
+    "withdraw": "Withdraw",
+    "bidSent": "Offer sent.",
+    "yourPrice": "Your price per unit (excl. VAT)",
+    "makeOffer": "Make an offer",
+    "message": "Message (optional)",
+    "minBid": "Offers from {n} units.",
+    "watch": "Watch {what}",
+    "unwatch": "Stop watching {what}",
+    "remove": "Remove",
+    "digest": "Send me a daily email with new deals",
+    "product": "Product",
+    "chooseProduct": "Choose a product",
+    "kindLabel": "Kind of deal",
+    "kindHint": {
+      "FLASH": "A lower price for a short time.",
+      "BUNDLE": "Buy a pack of several units for one price (e.g. 3 for the price of 2).",
+      "VOLUME": "Lower prices for larger quantities.",
+      "LOT": "Sell a whole lot at once for one price.",
+      "BEST_OFFER": "Buyers offer a price; you accept, turn it down or counter."
+    },
+    "listPrice": "List price: {price}",
+    "discount": "{pct} % off",
+    "clearanceWhy": {
+      "EXPIRY": "Clearance: best before {date}.",
+      "OVERSTOCK": "Clearance: more stock than you usually sell."
+    },
+    "clearanceCommission": "FIRINGI's commission on this deal: {pct} % (usually {usual} %).",
+    "normalCommission": "FIRINGI's commission: {pct} % of the deal price.",
+    "minDiscount": "A deal must be at least {pct} % below the list price.",
+    "dealPrice": "Deal price per unit (excl. VAT)",
+    "bundleQty": "Units in a pack",
+    "bundlePrice": "Price for the pack (excl. VAT)",
+    "lotQty": "Units in the lot",
+    "lotPrice": "Price for the whole lot (excl. VAT)",
+    "floorPrice": "Lowest price you accept by itself (optional)",
+    "minBidQty": "Smallest quantity for an offer (optional)",
+    "maxQty": "Units on the deal (optional)",
+    "perBuyerMax": "Max per buyer (optional)",
+    "startsAt": "Starts",
+    "endsAt": "Ends",
+    "tiers": "Quantity prices",
+    "fromQty": "From (units)",
+    "unitPrice": "Price per unit",
+    "addTier": "Add a tier",
+    "lot": "Lot",
+    "noLot": "No particular lot",
+    "units": "{n} units",
+    "titleLabel": "Title (optional)",
+    "titleHint": "e.g. End-of-season clearance",
+    "noteLabel": "Note for buyers (optional)",
+    "noteHint": "e.g. short date, damaged outer box",
+    "submit": "Create deal",
+    "created": "Deal created.",
+    "accept": "Accept",
+    "counter": "Counter",
+    "reject": "Turn down",
+    "cancelDeal": "End deal",
+    "vendorTitle": "Clearance deals",
+    "vendorIntro": "Move short-dated or surplus stock fast: flash prices, multi-buys, volume prices, whole lots or best offers. Buyers who bought the product before and those watching you are told. You fund the discount; on clearance deals FIRINGI takes a lower commission.",
+    "newDeal": "New deal",
+    "approvalAlways": "FIRINGI checks each deal before it starts.",
+    "approvalAuto": "Deals up to {pct} % off and {days} days start by themselves; others are checked by FIRINGI first.",
+    "noKinds": "FIRINGI doesn't offer deals right now.",
+    "yourDeals": "Your deals",
+    "noDealsYet": "No deals yet.",
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING": "Waiting for FIRINGI",
+      "APPROVED": "Approved",
+      "SCHEDULED": "Scheduled",
+      "LIVE": "Live",
+      "REJECTED": "Turned down",
+      "ENDED": "Ended",
+      "CANCELLED": "Ended early",
+      "SOLD_OUT": "Sold out"
+    },
+    "autoApproved": "started by itself",
+    "soldOf": "{sold} of {max} sold",
+    "revenue": "Sales {amount}",
+    "dealCommission": "commission {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} per unit",
+      "BUNDLE": "{n} for {price}",
+      "VOLUME": "from {n}: {price}",
+      "LOT": "{n} units for {price}",
+      "BEST_OFFER": "Make the supplier an offer",
+      "BEST_OFFER_FLOOR": "Offers from {price} are accepted by themselves"
+    },
+    "cart": {
+      "applied": "Deal price",
+      "LEFT": "Deal price for up to {n} units — lower the quantity to get it.",
+      "PER_BUYER": "You can buy {n} more at the deal price — lower the quantity to get it.",
+      "BID_QTY": "Your accepted offer is for {n} units — set the quantity to {n} to get its price.",
+      "QTY_TIER": "Order more to reach the deal price.",
+      "LOT_QTY": "The lot price is only for the whole lot.",
+      "BUNDLE_QTY": "Order a full pack to get the multi-buy price.",
+      "BID": "This product takes offers — see Clearance deals."
+    }
   }
 }

@@ -849,7 +849,8 @@
     "Messages": "Meldinger",
     "Plan & Billing": "Abonnement og betaling",
     "Early Payout": "Tidlig utbetaling",
-    "Bank": "Bank"
+    "Bank": "Bank",
+    "Clearance Deals": "Utsalgstilbud"
   },
   "delivery": {
     "title": "Levering",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bankfeed feilet: {account}",
       "body": "Nye poster for {account} kunne ikke hentes: {reason}"
+    },
+    "deal_review": {
+      "title": "Tilbud til kontroll: {number}",
+      "body": "{company} har opprettet tilbud {number}. Det starter først når FIRINGI har godkjent det."
+    },
+    "deal_approved": {
+      "title": "Tilbud godkjent: {number}",
+      "body": "Tilbudet ditt {number} er godkjent og starter på starttidspunktet."
+    },
+    "deal_rejected": {
+      "title": "Tilbud avslått: {number}",
+      "body": "FIRINGI har avslått tilbudet ditt {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nytt bud på tilbud {number}",
+      "body": "En kjøper byr {price} € per stk. for {qty} stk. Svar under Produkter › Utsalgstilbud."
+    },
+    "deal_bid_accepted": {
+      "title": "Bud godtatt: {number}",
+      "body": "Budet ditt på {price} € per stk. er godtatt. Legg det i handlekurven før det utløper."
+    },
+    "deal_bid_rejected": {
+      "title": "Bud avslått: {number}",
+      "body": "Leverandøren har avslått budet ditt på {price} € per stk."
+    },
+    "deal_bid_countered": {
+      "title": "Motbud: {number}",
+      "body": "Leverandøren foreslår {price} € per stk. Godta det på siden Utsalgstilbud."
+    },
+    "deal_alert": {
+      "title": "Tilbud: {product} −{pct} %",
+      "body": "{supplier} har et tilbud på {product} til {until}."
+    },
+    "deal_digest": {
+      "title": "{count} nye tilbud i dag",
+      "body": "Nye tilbud: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Husket IBAN-er",
     "payersHint": "Når du bekrefter en avstemming, huskes IBAN-en så neste betaling derfra gjenkjennes.",
     "noPayers": "Ingen ennå."
+  },
+  "deals": {
+    "title": "Utsalgstilbud",
+    "intro": "Leverandørenes tidsbegrensede tilbud på varer med kort holdbarhet og overskuddslager: lynpriser, flerkjøp, mengdepriser, hele partier og bud. Tilbudsprisen erstatter andre rabatter på produktet.",
+    "badge": "Tilbud",
+    "all": "Alle",
+    "search": "Søk i tilbud",
+    "searchBtn": "Søk",
+    "none": "Ingen tilbud akkurat nå. Følg produkter eller leverandører nedenfor for å høre om de neste.",
+    "kind": {
+      "FLASH": "Lynpris",
+      "BUNDLE": "Flerkjøp",
+      "VOLUME": "Mengdepris",
+      "LOT": "Helt parti",
+      "BEST_OFFER": "Gi et bud"
+    },
+    "clearance": "Utsalg",
+    "endsSoon": "Slutter snart",
+    "ended": "Avsluttet",
+    "endsInDays": "Slutter om {d} d {h} t",
+    "endsInHours": "Slutter om {h} t {m} min",
+    "listNow": "Nå {price}",
+    "exVat": "eks. mva.",
+    "left": "{n} igjen",
+    "perBuyer": "Maks. {n} per kjøper",
+    "bestBefore": "Best før {date}",
+    "thisProduct": "dette produktet",
+    "alertsTitle": "Tilbudsvarsler",
+    "alertsHint": "Følg produkter eller leverandører, så sier vi fra når de har et nytt tilbud. Vi varsler deg også om tilbud på produkter du har kjøpt før (med mindre du har slått av 'Tilbud og nyheter').",
+    "watchKind": {
+      "PRODUCT": "Produkt",
+      "SUPPLIER": "Leverandør"
+    },
+    "noWatches": "Du følger ikke noe ennå.",
+    "myOffers": "Mine bud",
+    "bidStatus": {
+      "PENDING": "Venter på leverandøren",
+      "ACCEPTED": "Godtatt",
+      "COUNTERED": "Motbud",
+      "REJECTED": "Avslått",
+      "EXPIRED": "Utløpt",
+      "WITHDRAWN": "Trukket tilbake",
+      "ORDERED": "Bestilt"
+    },
+    "noOffers": "Du har ikke gitt noen bud.",
+    "qty": "Antall",
+    "unitAt": "{price} per stk.",
+    "addToCart": "Legg i handlekurven",
+    "added": "Lagt i handlekurven til tilbudsprisen.",
+    "addedLot": "Hele partiet ligger i handlekurven din.",
+    "buyLot": "Kjøp hele partiet ({qty} stk.)",
+    "maxForYou": "Du kan fortsatt kjøpe {n}.",
+    "bid": {
+      "PENDING": "Budet ditt: {qty} × {price}. Leverandøren svarer snart.",
+      "ACCEPTED": "Godtatt: {qty} × {price}. Bestill før tiden går ut.",
+      "COUNTERED": "Leverandøren foreslår {price} per stk. for {qty} (du bød {mine})."
+    },
+    "addBidToCart": "Legg {qty} i handlekurven",
+    "takeCounter": "Godta motbudet",
+    "withdraw": "Trekk tilbake",
+    "bidSent": "Bud sendt.",
+    "yourPrice": "Din pris per stk. (eks. mva.)",
+    "makeOffer": "Gi et bud",
+    "message": "Melding (valgfritt)",
+    "minBid": "Bud fra {n} stk.",
+    "watch": "Følg {what}",
+    "unwatch": "Slutt å følge {what}",
+    "remove": "Fjern",
+    "digest": "Send meg en daglig e-post med nye tilbud",
+    "product": "Produkt",
+    "chooseProduct": "Velg et produkt",
+    "kindLabel": "Type tilbud",
+    "kindHint": {
+      "FLASH": "En lavere pris for en kort tid.",
+      "BUNDLE": "Kjøp en pakke med flere stk. til én pris (f.eks. 3 for 2).",
+      "VOLUME": "Lavere priser for større mengder.",
+      "LOT": "Selg et helt parti på én gang til én pris.",
+      "BEST_OFFER": "Kjøpere byr en pris; du godtar, avslår eller gir et motbud."
+    },
+    "listPrice": "Listepris: {price}",
+    "discount": "{pct} % rabatt",
+    "clearanceWhy": {
+      "EXPIRY": "Utsalg: best før {date}.",
+      "OVERSTOCK": "Utsalg: mer lager enn du vanligvis selger."
+    },
+    "clearanceCommission": "FIRINGIs provisjon på dette tilbudet: {pct} % (vanligvis {usual} %).",
+    "normalCommission": "FIRINGIs provisjon: {pct} % av tilbudsprisen.",
+    "minDiscount": "Et tilbud må være minst {pct} % under listeprisen.",
+    "dealPrice": "Tilbudspris per stk. (eks. mva.)",
+    "bundleQty": "Stk. i en pakke",
+    "bundlePrice": "Pris for pakken (eks. mva.)",
+    "lotQty": "Stk. i partiet",
+    "lotPrice": "Pris for hele partiet (eks. mva.)",
+    "floorPrice": "Laveste pris som godtas automatisk (valgfritt)",
+    "minBidQty": "Minste antall for et bud (valgfritt)",
+    "maxQty": "Stk. på tilbudet (valgfritt)",
+    "perBuyerMax": "Maks. per kjøper (valgfritt)",
+    "startsAt": "Starter",
+    "endsAt": "Slutter",
+    "tiers": "Mengdepriser",
+    "fromQty": "Fra (stk.)",
+    "unitPrice": "Pris per stk.",
+    "addTier": "Legg til trinn",
+    "lot": "Parti",
+    "noLot": "Ikke et bestemt parti",
+    "units": "{n} stk.",
+    "titleLabel": "Tittel (valgfritt)",
+    "titleHint": "f.eks. Sesongutsalg",
+    "noteLabel": "Merknad til kjøpere (valgfritt)",
+    "noteHint": "f.eks. kort holdbarhet, skadet ytterkartong",
+    "submit": "Opprett tilbud",
+    "created": "Tilbud opprettet.",
+    "accept": "Godta",
+    "counter": "Motbud",
+    "reject": "Avslå",
+    "cancelDeal": "Avslutt tilbud",
+    "vendorTitle": "Utsalgstilbud",
+    "vendorIntro": "Selg varer med kort holdbarhet eller overskuddslager raskt: lynpriser, flerkjøp, mengdepriser, hele partier eller bud. Kjøpere som har kjøpt produktet før og de som følger deg, får beskjed. Du betaler rabatten; på utsalgstilbud tar FIRINGI en lavere provisjon.",
+    "newDeal": "Nytt tilbud",
+    "approvalAlways": "FIRINGI sjekker hvert tilbud før det starter.",
+    "approvalAuto": "Tilbud med opptil {pct} % rabatt og {days} dager starter av seg selv; andre sjekker FIRINGI først.",
+    "noKinds": "FIRINGI tilbyr ikke tilbud akkurat nå.",
+    "yourDeals": "Dine tilbud",
+    "noDealsYet": "Ingen tilbud ennå.",
+    "status": {
+      "DRAFT": "Utkast",
+      "PENDING": "Venter på FIRINGI",
+      "APPROVED": "Godkjent",
+      "SCHEDULED": "Planlagt",
+      "LIVE": "Aktivt",
+      "REJECTED": "Avslått",
+      "ENDED": "Avsluttet",
+      "CANCELLED": "Avsluttet tidlig",
+      "SOLD_OUT": "Utsolgt"
+    },
+    "autoApproved": "startet av seg selv",
+    "soldOf": "{sold} av {max} solgt",
+    "revenue": "Salg {amount}",
+    "dealCommission": "provisjon {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} per stk.",
+      "BUNDLE": "{n} for {price}",
+      "VOLUME": "fra {n}: {price}",
+      "LOT": "{n} stk. for {price}",
+      "BEST_OFFER": "Gi leverandøren et bud",
+      "BEST_OFFER_FLOOR": "Bud fra {price} godtas automatisk"
+    },
+    "cart": {
+      "applied": "Tilbudspris",
+      "LEFT": "Tilbudspris for opptil {n} stk. — senk antallet for å få den.",
+      "PER_BUYER": "Du kan kjøpe {n} til til tilbudsprisen — senk antallet for å få den.",
+      "BID_QTY": "Det godtatte budet ditt gjelder {n} stk. — sett antallet til {n} for å få prisen.",
+      "QTY_TIER": "Bestill mer for å nå tilbudsprisen.",
+      "LOT_QTY": "Partiprisen gjelder bare hele partiet.",
+      "BUNDLE_QTY": "Bestill en hel pakke for å få flerkjøpsprisen.",
+      "BID": "Du kan by på dette produktet — se Utsalgstilbud."
+    }
   }
 }

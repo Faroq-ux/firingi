@@ -24,16 +24,20 @@ import { computeLine, computeTotals } from "./calc";
 import { decideDelivery, firingiInput, vendorInput } from "./delivery-rule";
 import { deliveryRulesFor } from "@/server/services/cart";
 import { vatRate } from "@/server/services/orders";
+import { grossOf } from "@/server/catalogue/pricing";
 import { candidateOf, loadActivePromotions, promoMatchesOffer } from "@/server/services/promotions";
 import { buyerPromoContext, couponEffect, couponError, findCoupon, orderPromotionsFor, type PricedLine, type RedemptionIn } from "@/server/marketing/offers";
 
 export type LineDiscount = { promotionId: string; ownerType: "VENDOR" | "ADMIN"; coupon: boolean; perUnit: Decimal; firingiPerUnit: Decimal; vendorPerUnit: Decimal };
-type Item = Awaited<ReturnType<typeof pricedOffers>>["items"][number];
+/** Phase 38: the line is on a deal (price, commission) — or a deal is there but doesn't apply (why). */
+export type DealHit = { dealId: string; bidId: string | null; kind: string; unit: number; commissionPct: number | null };
+export type DealNote = { dealId: string; why: string; left?: number | null };
+type Item = Awaited<ReturnType<typeof pricedOffers>>["items"][number] & { deal?: DealHit | null; dealNote?: DealNote | null };
 type Line = { item: Item; rate: Decimal; discounts: LineDiscount[]; unitSale: Decimal };
 
 export type SupplierPart = {
   sellerId: string;
-  lines: { item: Item; rate: Decimal; discounts: LineDiscount[]; calc: ReturnType<typeof computeLine> & { qty: number } }[];
+  lines: { item: Item; rate: Decimal; discounts: LineDiscount[]; calc: ReturnType<typeof computeLine> & { qty: number }; deal: DealHit | null }[];
   goodsNet: Decimal;
   decision: ReturnType<typeof decideDelivery>;
   normalFee: Decimal; chargedFee: Decimal; waived: Decimal; feeVatRate: Decimal; feeRuleId: string | null;
@@ -79,7 +83,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
 
   const { items: offered, unavailable } = await pricedOffers(ctx, cart.items, { couponId: coupon?.promo.id ?? null });
   const fixed = opts.fixedPrices;
-  const items = fixed
+  const itemsBase: Item[] = fixed
     ? offered.map((i) => {
         const v = fixed.get(i.offerId);
         if (v === undefined || !i.price) return i;
@@ -87,6 +91,20 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
         return { ...i, price: { ...i.price, listUnitNet: net.toFixed(4), unitPriceNet: net.toFixed(4), promotions: [], vendorFundedPerUnit: "0", firingiFundedPerUnit: "0" } };
       })
     : offered;
+  // Phase 38: clearance deals — the deal price replaces promotions and coupons on that line (supplier-funded)
+  let items: Item[] = itemsBase;
+  if (!fixed) {
+    const { dealPricing } = await import("@/server/deals/service");
+    const hits = await dealPricing(ctx.company.id, itemsBase.filter((i) => i.price).map((i) => ({ offerId: i.offerId, qty: i.qty, listUnit: Number(i.price!.listUnitNet) })));
+    items = itemsBase.map((i) => {
+      const h = hits.get(i.offerId);
+      if (!h || !i.price) return i;
+      if ("why" in h) return { ...i, dealNote: { dealId: h.dealId, why: h.why, left: h.left ?? null } };
+      const list = new Decimal(i.price.listUnitNet);
+      const unit = new Decimal(h.unit);
+      return { ...i, deal: { dealId: h.dealId, bidId: h.bidId, kind: h.kind, unit: h.unit, commissionPct: h.commissionPct }, price: { ...i.price, unitPriceNet: unit.toFixed(4), unitPriceGross: grossOf(unit, String(i.vatRate)).toFixed(2), promotions: [], vendorFundedPerUnit: list.minus(unit).toFixed(4), firingiFundedPerUnit: "0" } };
+    });
+  }
   const lines: Line[] = await Promise.all(items.filter((i) => i.price).map(async (i) => {
     const p = i.price!;
     return {
@@ -112,7 +130,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
   // 2. per supplier: automatic € off the order and free delivery
   const autoFree = new Map<string, FreeDelivery | null>();
   for (const g of fixed ? [] : groups) {
-    const r = orderPromotionsFor(promos, noCoupon, g.lines.map(pl));
+    const r = orderPromotionsFor(promos, noCoupon, g.lines.filter((l) => !l.item.deal).map(pl));
     r.discounts.forEach(take);
     autoFree.set(g.sellerId, r.freeDelivery);
   }
@@ -129,7 +147,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
   let couponFree: FreeDelivery | null = null;
   let orderCoupon = new Decimal(0);
   if (coupon && (coupon.promo.kind === "ORDER_AMOUNT" || coupon.promo.kind === "FREE_DELIVERY")) {
-    const all = lines.map(pl);
+    const all = lines.filter((l) => !l.item.deal).map(pl);
     const byKey = new Map(all.map((l) => [l.key, l]));
     const cand = { ...candidateOf(coupon.promo), minOrderValue: coupon.promo.minOrderValue?.toString() ?? null, matches: (k: string) => { const l = byKey.get(k)!; return promoMatchesOffer(coupon!.promo, { id: l.offerId, vendorCompanyId: l.vendorCompanyId, productId: l.productId, categoryIds: l.categoryIds }); } };
     const r = applyOrderPromotions(all, [cand]);
@@ -140,7 +158,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
   // the coupon must do something for this cart
   if (coupon) {
     const lineCoupon = lines.reduce((a, l) => a.plus(l.discounts.filter((d) => d.coupon && l.item.price!.promotions.some((p) => p.id === d.promotionId)).reduce((s, d) => s.plus(d.perUnit.mul(l.item.qty)), new Decimal(0))), new Decimal(0));
-    const effect = couponEffect(coupon.promo, items.filter((i) => i.price).map((i) => ({
+    const effect = couponEffect(coupon.promo, items.filter((i) => i.price && !i.deal).map((i) => ({
       key: i.offerId, offerId: i.offerId, vendorCompanyId: i.vendorCompanyId, productId: i.productId, categoryIds: i.categoryIds, qty: i.qty, unitSaleNet: i.price!.unitPriceNet, lineNet: new Decimal(i.price!.unitPriceNet).mul(i.qty).toDecimalPlaces(2),
     })), { lineCoupon, orderCoupon, freeDelivery: !!couponFree });
     if (!effect.ok) {
@@ -182,10 +200,12 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
       const firingi = l.discounts.reduce((a, d) => a.plus(d.firingiPerUnit), new Decimal(0));
       const vendor = l.discounts.reduce((a, d) => a.plus(d.vendorPerUnit), new Decimal(0));
       const calc = computeLine({
-        qty: l.item.qty, unitListPriceNet: l.item.price!.listUnitNet, vatRatePercent: l.rate, commissionRatePercent: opts.commissionRates?.get(g.sellerId) ?? 0,
-        vendorFundedDiscountPerUnit: vendor, firingiFundedDiscountPerUnit: firingi,
+        qty: l.item.qty, unitListPriceNet: l.item.price!.listUnitNet, vatRatePercent: l.rate,
+        commissionRatePercent: l.item.deal?.commissionPct ?? opts.commissionRates?.get(g.sellerId) ?? 0,
+        vendorFundedDiscountPerUnit: l.item.deal ? new Decimal(l.item.price!.vendorFundedPerUnit) : vendor, firingiFundedDiscountPerUnit: firingi,
+        commissionUnitBase: l.item.deal ? l.item.deal.unit : null,
       });
-      return { item: l.item, rate: l.rate, discounts: l.discounts, calc: { ...calc, qty: l.item.qty } };
+      return { item: l.item, rate: l.rate, discounts: l.discounts, calc: { ...calc, qty: l.item.qty }, deal: l.item.deal ?? null };
     });
     const goodsNet = calcLines.reduce((a, l) => a.plus(l.calc.lineNet), new Decimal(0));
     const seller = await prisma.company.findUniqueOrThrow({ where: { id: g.sellerId }, select: { countryId: true } });

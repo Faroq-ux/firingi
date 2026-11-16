@@ -849,7 +849,8 @@
     "Messages": "Nachrichten",
     "Plan & Billing": "Tarif & Abrechnung",
     "Early Payout": "Vorzeitige Auszahlung",
-    "Bank": "Bank"
+    "Bank": "Bank",
+    "Clearance Deals": "Restposten-Deals"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bank-Feed fehlgeschlagen: {account}",
       "body": "Neue Buchungen für {account} konnten nicht abgerufen werden: {reason}"
+    },
+    "deal_review": {
+      "title": "Deal zu prüfen: {number}",
+      "body": "{company} hat den Deal {number} erstellt. Er startet erst nach Freigabe durch FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Deal genehmigt: {number}",
+      "body": "Ihr Deal {number} ist genehmigt und startet zur Startzeit."
+    },
+    "deal_rejected": {
+      "title": "Deal abgelehnt: {number}",
+      "body": "FIRINGI hat Ihren Deal {number} abgelehnt: {reason}"
+    },
+    "deal_bid": {
+      "title": "Neuer Preisvorschlag zu Deal {number}",
+      "body": "Ein Käufer bietet {price} € pro Stück für {qty} Stück. Antworten Sie unter Produkte › Restposten-Deals."
+    },
+    "deal_bid_accepted": {
+      "title": "Vorschlag angenommen: {number}",
+      "body": "Ihr Vorschlag von {price} € pro Stück wurde angenommen. Legen Sie ihn in den Warenkorb, bevor er abläuft."
+    },
+    "deal_bid_rejected": {
+      "title": "Vorschlag abgelehnt: {number}",
+      "body": "Der Lieferant hat Ihren Vorschlag von {price} € pro Stück abgelehnt."
+    },
+    "deal_bid_countered": {
+      "title": "Gegenangebot: {number}",
+      "body": "Der Lieferant schlägt {price} € pro Stück vor. Nehmen Sie es auf der Seite Restposten-Deals an."
+    },
+    "deal_alert": {
+      "title": "Deal: {product} −{pct} %",
+      "body": "{supplier} hat bis {until} einen Deal auf {product}."
+    },
+    "deal_digest": {
+      "title": "{count} neue Deals heute",
+      "body": "Neue Deals: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Gespeicherte IBANs",
     "payersHint": "Wenn Sie eine Zuordnung bestätigen, wird die IBAN gespeichert, damit die nächste Zahlung davon erkannt wird.",
     "noPayers": "Noch keine."
+  },
+  "deals": {
+    "title": "Restposten-Deals",
+    "intro": "Zeitlich begrenzte Angebote der Lieferanten für kurz haltbare Ware und Überbestände: Blitzpreise, Mehrfachkauf, Mengenpreise, ganze Partien und Preisvorschläge. Der Deal-Preis ersetzt andere Rabatte auf dieses Produkt.",
+    "badge": "Deal",
+    "all": "Alle",
+    "search": "Deals suchen",
+    "searchBtn": "Suchen",
+    "none": "Gerade keine Deals. Folgen Sie unten Produkten oder Lieferanten, um von den nächsten zu erfahren.",
+    "kind": {
+      "FLASH": "Blitzpreis",
+      "BUNDLE": "Mehrfachkauf",
+      "VOLUME": "Mengenpreis",
+      "LOT": "Ganze Partie",
+      "BEST_OFFER": "Preisvorschlag"
+    },
+    "clearance": "Abverkauf",
+    "endsSoon": "Endet bald",
+    "ended": "Beendet",
+    "endsInDays": "Endet in {d} T {h} Std",
+    "endsInHours": "Endet in {h} Std {m} Min",
+    "listNow": "Jetzt {price}",
+    "exVat": "zzgl. MwSt.",
+    "left": "noch {n}",
+    "perBuyer": "Max. {n} pro Käufer",
+    "bestBefore": "Mindestens haltbar bis {date}",
+    "thisProduct": "dieses Produkt",
+    "alertsTitle": "Deal-Benachrichtigungen",
+    "alertsHint": "Folgen Sie Produkten oder Lieferanten, und wir melden uns, wenn es einen neuen Deal gibt. Wir informieren Sie auch über Deals für Produkte, die Sie schon gekauft haben (außer Sie haben 'Angebote & News' ausgeschaltet).",
+    "watchKind": {
+      "PRODUCT": "Produkt",
+      "SUPPLIER": "Lieferant"
+    },
+    "noWatches": "Sie folgen noch nichts.",
+    "myOffers": "Meine Preisvorschläge",
+    "bidStatus": {
+      "PENDING": "Wartet auf den Lieferanten",
+      "ACCEPTED": "Angenommen",
+      "COUNTERED": "Gegenangebot",
+      "REJECTED": "Abgelehnt",
+      "EXPIRED": "Abgelaufen",
+      "WITHDRAWN": "Zurückgezogen",
+      "ORDERED": "Bestellt"
+    },
+    "noOffers": "Sie haben noch keine Preisvorschläge gemacht.",
+    "qty": "Menge",
+    "unitAt": "{price} pro Stück",
+    "addToCart": "In den Warenkorb",
+    "added": "Zum Deal-Preis in den Warenkorb gelegt.",
+    "addedLot": "Die ganze Partie liegt in Ihrem Warenkorb.",
+    "buyLot": "Ganze Partie kaufen ({qty} Stück)",
+    "maxForYou": "Sie können noch {n} kaufen.",
+    "bid": {
+      "PENDING": "Ihr Vorschlag: {qty} × {price}. Der Lieferant antwortet bald.",
+      "ACCEPTED": "Angenommen: {qty} × {price}. Bestellen Sie, bevor die Zeit abläuft.",
+      "COUNTERED": "Der Lieferant schlägt {price} pro Stück für {qty} vor (Ihr Vorschlag: {mine})."
+    },
+    "addBidToCart": "{qty} in den Warenkorb",
+    "takeCounter": "Gegenangebot annehmen",
+    "withdraw": "Zurückziehen",
+    "bidSent": "Vorschlag gesendet.",
+    "yourPrice": "Ihr Preis pro Stück (zzgl. MwSt.)",
+    "makeOffer": "Preis vorschlagen",
+    "message": "Nachricht (optional)",
+    "minBid": "Vorschläge ab {n} Stück.",
+    "watch": "{what} folgen",
+    "unwatch": "{what} nicht mehr folgen",
+    "remove": "Entfernen",
+    "digest": "Schickt mir täglich eine E-Mail mit neuen Deals",
+    "product": "Produkt",
+    "chooseProduct": "Produkt wählen",
+    "kindLabel": "Art des Deals",
+    "kindHint": {
+      "FLASH": "Ein niedrigerer Preis für kurze Zeit.",
+      "BUNDLE": "Ein Paket aus mehreren Stück zu einem Preis (z. B. 3 zum Preis von 2).",
+      "VOLUME": "Niedrigere Preise für größere Mengen.",
+      "LOT": "Eine ganze Partie auf einmal zu einem Preis verkaufen.",
+      "BEST_OFFER": "Käufer schlagen einen Preis vor; Sie nehmen an, lehnen ab oder machen ein Gegenangebot."
+    },
+    "listPrice": "Listenpreis: {price}",
+    "discount": "{pct} % Rabatt",
+    "clearanceWhy": {
+      "EXPIRY": "Abverkauf: mindestens haltbar bis {date}.",
+      "OVERSTOCK": "Abverkauf: mehr Bestand, als Sie üblicherweise verkaufen."
+    },
+    "clearanceCommission": "Provision von FIRINGI auf diesen Deal: {pct} % (sonst {usual} %).",
+    "normalCommission": "Provision von FIRINGI: {pct} % des Deal-Preises.",
+    "minDiscount": "Ein Deal muss mindestens {pct} % unter dem Listenpreis liegen.",
+    "dealPrice": "Deal-Preis pro Stück (zzgl. MwSt.)",
+    "bundleQty": "Stück pro Paket",
+    "bundlePrice": "Preis für das Paket (zzgl. MwSt.)",
+    "lotQty": "Stück in der Partie",
+    "lotPrice": "Preis für die ganze Partie (zzgl. MwSt.)",
+    "floorPrice": "Niedrigster automatisch angenommener Preis (optional)",
+    "minBidQty": "Mindestmenge für einen Vorschlag (optional)",
+    "maxQty": "Stück im Deal (optional)",
+    "perBuyerMax": "Max. pro Käufer (optional)",
+    "startsAt": "Beginn",
+    "endsAt": "Ende",
+    "tiers": "Mengenpreise",
+    "fromQty": "Ab (Stück)",
+    "unitPrice": "Preis pro Stück",
+    "addTier": "Staffel hinzufügen",
+    "lot": "Charge",
+    "noLot": "Keine bestimmte Charge",
+    "units": "{n} Stück",
+    "titleLabel": "Titel (optional)",
+    "titleHint": "z. B. Saisonabverkauf",
+    "noteLabel": "Hinweis für Käufer (optional)",
+    "noteHint": "z. B. kurzes MHD, Umkarton beschädigt",
+    "submit": "Deal erstellen",
+    "created": "Deal erstellt.",
+    "accept": "Annehmen",
+    "counter": "Gegenangebot",
+    "reject": "Ablehnen",
+    "cancelDeal": "Deal beenden",
+    "vendorTitle": "Restposten-Deals",
+    "vendorIntro": "Kurz haltbare Ware oder Überbestände schnell verkaufen: Blitzpreise, Mehrfachkauf, Mengenpreise, ganze Partien oder Preisvorschläge. Käufer, die das Produkt schon gekauft haben oder Ihnen folgen, werden informiert. Sie tragen den Rabatt; bei Abverkaufs-Deals nimmt FIRINGI eine niedrigere Provision.",
+    "newDeal": "Neuer Deal",
+    "approvalAlways": "FIRINGI prüft jeden Deal vor dem Start.",
+    "approvalAuto": "Deals bis {pct} % Rabatt und {days} Tage starten von selbst; andere prüft zuerst FIRINGI.",
+    "noKinds": "FIRINGI bietet gerade keine Deals an.",
+    "yourDeals": "Ihre Deals",
+    "noDealsYet": "Noch keine Deals.",
+    "status": {
+      "DRAFT": "Entwurf",
+      "PENDING": "Wartet auf FIRINGI",
+      "APPROVED": "Genehmigt",
+      "SCHEDULED": "Geplant",
+      "LIVE": "Aktiv",
+      "REJECTED": "Abgelehnt",
+      "ENDED": "Beendet",
+      "CANCELLED": "Vorzeitig beendet",
+      "SOLD_OUT": "Ausverkauft"
+    },
+    "autoApproved": "automatisch gestartet",
+    "soldOf": "{sold} von {max} verkauft",
+    "revenue": "Umsatz {amount}",
+    "dealCommission": "Provision {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} pro Stück",
+      "BUNDLE": "{n} für {price}",
+      "VOLUME": "ab {n}: {price}",
+      "LOT": "{n} Stück für {price}",
+      "BEST_OFFER": "Machen Sie dem Lieferanten einen Preisvorschlag",
+      "BEST_OFFER_FLOOR": "Vorschläge ab {price} werden automatisch angenommen"
+    },
+    "cart": {
+      "applied": "Deal-Preis",
+      "LEFT": "Deal-Preis für bis zu {n} Stück – reduzieren Sie die Menge, um ihn zu erhalten.",
+      "PER_BUYER": "Sie können noch {n} zum Deal-Preis kaufen – reduzieren Sie die Menge, um ihn zu erhalten.",
+      "BID_QTY": "Ihr angenommener Vorschlag gilt für {n} Stück – setzen Sie die Menge auf {n}, um seinen Preis zu erhalten.",
+      "QTY_TIER": "Bestellen Sie mehr, um den Deal-Preis zu erreichen.",
+      "LOT_QTY": "Der Partiepreis gilt nur für die ganze Partie.",
+      "BUNDLE_QTY": "Bestellen Sie ein volles Paket für den Mehrfachkauf-Preis.",
+      "BID": "Für dieses Produkt sind Preisvorschläge möglich – siehe Restposten-Deals."
+    }
   }
 }

@@ -849,7 +849,8 @@
     "Messages": "Poruke",
     "Plan & Billing": "Paket i naplata",
     "Early Payout": "Prijevremena isplata",
-    "Bank": "Banka"
+    "Bank": "Banka",
+    "Clearance Deals": "Ponude rasprodaje"
   },
   "delivery": {
     "title": "Dostava",
@@ -1539,6 +1540,42 @@
     "bank_feed_failed": {
       "title": "Bankovni feed nije uspio: {account}",
       "body": "Nove stavke za {account} nije bilo moguće dohvatiti: {reason}"
+    },
+    "deal_review": {
+      "title": "Ponuda za provjeru: {number}",
+      "body": "{company} je izradio ponudu {number}. Počinje tek nakon odobrenja FIRINGI."
+    },
+    "deal_approved": {
+      "title": "Ponuda odobrena: {number}",
+      "body": "Vaša ponuda {number} je odobrena i počinje u vrijeme početka."
+    },
+    "deal_rejected": {
+      "title": "Ponuda odbijena: {number}",
+      "body": "FIRINGI je odbio vašu ponudu {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nova ponuda cijene za {number}",
+      "body": "Kupac nudi {price} € po komadu za {qty} kom. Odgovorite u Proizvodi › Ponude rasprodaje."
+    },
+    "deal_bid_accepted": {
+      "title": "Ponuda prihvaćena: {number}",
+      "body": "Vaša ponuda od {price} € po komadu je prihvaćena. Dodajte je u košaricu prije isteka."
+    },
+    "deal_bid_rejected": {
+      "title": "Ponuda odbijena: {number}",
+      "body": "Dobavljač je odbio vašu ponudu od {price} € po komadu."
+    },
+    "deal_bid_countered": {
+      "title": "Protuponuda: {number}",
+      "body": "Dobavljač predlaže {price} € po komadu. Prihvatite je na stranici Ponude rasprodaje."
+    },
+    "deal_alert": {
+      "title": "Ponuda: {product} −{pct} %",
+      "body": "{supplier} ima ponudu za {product} do {until}."
+    },
+    "deal_digest": {
+      "title": "{count} novih ponuda danas",
+      "body": "Nove ponude: {products}."
     }
   },
   "notifications": {
@@ -4534,5 +4571,163 @@
     "payersTitle": "Zapamćeni IBAN-ovi",
     "payersHint": "Kad potvrdite povezivanje, IBAN se pamti kako bi se prepoznalo sljedeće plaćanje s njega.",
     "noPayers": "Još nijedan."
+  },
+  "deals": {
+    "title": "Ponude rasprodaje",
+    "intro": "Vremenski ograničene ponude dobavljača za robu kratkog roka i viškove zaliha: munjevite cijene, pakiranja, cijene za količinu, cijele serije i najbolja ponuda. Cijena ponude zamjenjuje ostale popuste na taj proizvod.",
+    "badge": "Ponuda",
+    "all": "Sve",
+    "search": "Traži ponude",
+    "searchBtn": "Traži",
+    "none": "Trenutačno nema ponuda. Pratite proizvode ili dobavljače ispod da saznate za sljedeće.",
+    "kind": {
+      "FLASH": "Munjevita cijena",
+      "BUNDLE": "Pakiranje",
+      "VOLUME": "Cijena za količinu",
+      "LOT": "Cijela serija",
+      "BEST_OFFER": "Najbolja ponuda"
+    },
+    "clearance": "Rasprodaja",
+    "endsSoon": "Uskoro završava",
+    "ended": "Završeno",
+    "endsInDays": "Završava za {d} d {h} h",
+    "endsInHours": "Završava za {h} h {m} min",
+    "listNow": "Sada {price}",
+    "exVat": "bez PDV-a",
+    "left": "preostalo {n}",
+    "perBuyer": "Najviše {n} po kupcu",
+    "bestBefore": "Najbolje upotrijebiti do {date}",
+    "thisProduct": "ovaj proizvod",
+    "alertsTitle": "Obavijesti o ponudama",
+    "alertsHint": "Pratite proizvode ili dobavljače i javit ćemo vam kad imaju novu ponudu. Javljamo vam i ponude za proizvode koje ste već kupili (osim ako ste isključili 'Ponude i novosti').",
+    "watchKind": {
+      "PRODUCT": "Proizvod",
+      "SUPPLIER": "Dobavljač"
+    },
+    "noWatches": "Još ništa ne pratite.",
+    "myOffers": "Moje ponude cijene",
+    "bidStatus": {
+      "PENDING": "Čeka dobavljača",
+      "ACCEPTED": "Prihvaćeno",
+      "COUNTERED": "Protuponuda",
+      "REJECTED": "Odbijeno",
+      "EXPIRED": "Isteklo",
+      "WITHDRAWN": "Povučeno",
+      "ORDERED": "Naručeno"
+    },
+    "noOffers": "Niste dali nijednu ponudu cijene.",
+    "qty": "Količina",
+    "unitAt": "{price} po komadu",
+    "addToCart": "Dodaj u košaricu",
+    "added": "Dodano u košaricu po cijeni ponude.",
+    "addedLot": "Cijela serija je u vašoj košarici.",
+    "buyLot": "Kupi cijelu seriju ({qty} kom)",
+    "maxForYou": "Možete kupiti još {n}.",
+    "bid": {
+      "PENDING": "Vaša ponuda: {qty} × {price}. Dobavljač će uskoro odgovoriti.",
+      "ACCEPTED": "Prihvaćeno: {qty} × {price}. Naručite prije isteka vremena.",
+      "COUNTERED": "Dobavljač predlaže {price} po komadu za {qty} (ponudili ste {mine})."
+    },
+    "addBidToCart": "Dodaj {qty} u košaricu",
+    "takeCounter": "Prihvati protuponudu",
+    "withdraw": "Povuci",
+    "bidSent": "Ponuda poslana.",
+    "yourPrice": "Vaša cijena po komadu (bez PDV-a)",
+    "makeOffer": "Ponudite cijenu",
+    "message": "Poruka (neobavezno)",
+    "minBid": "Ponude od {n} kom.",
+    "watch": "Prati {what}",
+    "unwatch": "Prestani pratiti {what}",
+    "remove": "Ukloni",
+    "digest": "Šaljite mi dnevni e-mail s novim ponudama",
+    "product": "Proizvod",
+    "chooseProduct": "Odaberite proizvod",
+    "kindLabel": "Vrsta ponude",
+    "kindHint": {
+      "FLASH": "Niža cijena na kratko vrijeme.",
+      "BUNDLE": "Pakiranje od više komada po jednoj cijeni (npr. 3 po cijeni 2).",
+      "VOLUME": "Niže cijene za veće količine.",
+      "LOT": "Prodajte cijelu seriju odjednom po jednoj cijeni.",
+      "BEST_OFFER": "Kupci predlažu cijenu; vi prihvaćate, odbijate ili dajete protuponudu."
+    },
+    "listPrice": "Cjenička cijena: {price}",
+    "discount": "{pct} % popusta",
+    "clearanceWhy": {
+      "EXPIRY": "Rasprodaja: najbolje upotrijebiti do {date}.",
+      "OVERSTOCK": "Rasprodaja: više zaliha nego što obično prodate."
+    },
+    "clearanceCommission": "Provizija FIRINGI na ovu ponudu: {pct} % (obično {usual} %).",
+    "normalCommission": "Provizija FIRINGI: {pct} % cijene ponude.",
+    "minDiscount": "Ponuda mora biti barem {pct} % ispod cjeničke cijene.",
+    "dealPrice": "Cijena ponude po komadu (bez PDV-a)",
+    "bundleQty": "Komada u pakiranju",
+    "bundlePrice": "Cijena pakiranja (bez PDV-a)",
+    "lotQty": "Komada u seriji",
+    "lotPrice": "Cijena cijele serije (bez PDV-a)",
+    "floorPrice": "Najniža automatski prihvaćena cijena (neobavezno)",
+    "minBidQty": "Najmanja količina za ponudu (neobavezno)",
+    "maxQty": "Komada u ponudi (neobavezno)",
+    "perBuyerMax": "Najviše po kupcu (neobavezno)",
+    "startsAt": "Početak",
+    "endsAt": "Kraj",
+    "tiers": "Cijene za količinu",
+    "fromQty": "Od (kom)",
+    "unitPrice": "Cijena po komadu",
+    "addTier": "Dodaj razinu",
+    "lot": "Serija",
+    "noLot": "Bez određene serije",
+    "units": "{n} kom",
+    "titleLabel": "Naslov (neobavezno)",
+    "titleHint": "npr. Rasprodaja na kraju sezone",
+    "noteLabel": "Napomena za kupce (neobavezno)",
+    "noteHint": "npr. kratak rok, oštećena vanjska kutija",
+    "submit": "Izradi ponudu",
+    "created": "Ponuda izrađena.",
+    "accept": "Prihvati",
+    "counter": "Protuponuda",
+    "reject": "Odbij",
+    "cancelDeal": "Završi ponudu",
+    "vendorTitle": "Ponude rasprodaje",
+    "vendorIntro": "Brzo prodajte robu kratkog roka ili viškove: munjevite cijene, pakiranja, cijene za količinu, cijele serije ili najbolja ponuda. Obavještavaju se kupci koji su proizvod već kupili i oni koji vas prate. Popust snosite vi; na ponude rasprodaje FIRINGI uzima nižu proviziju.",
+    "newDeal": "Nova ponuda",
+    "approvalAlways": "FIRINGI provjerava svaku ponudu prije početka.",
+    "approvalAuto": "Ponude do {pct} % popusta i {days} dana počinju same; ostale prvo provjerava FIRINGI.",
+    "noKinds": "FIRINGI trenutačno ne nudi ponude.",
+    "yourDeals": "Vaše ponude",
+    "noDealsYet": "Još nema ponuda.",
+    "status": {
+      "DRAFT": "Nacrt",
+      "PENDING": "Čeka FIRINGI",
+      "APPROVED": "Odobreno",
+      "SCHEDULED": "Zakazano",
+      "LIVE": "Aktivno",
+      "REJECTED": "Odbijeno",
+      "ENDED": "Završeno",
+      "CANCELLED": "Završeno ranije",
+      "SOLD_OUT": "Rasprodano"
+    },
+    "autoApproved": "pokrenuto automatski",
+    "soldOf": "prodano {sold} od {max}",
+    "revenue": "Prodaja {amount}",
+    "dealCommission": "provizija {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} po komadu",
+      "BUNDLE": "{n} za {price}",
+      "VOLUME": "od {n}: {price}",
+      "LOT": "{n} kom za {price}",
+      "BEST_OFFER": "Ponudite dobavljaču cijenu",
+      "BEST_OFFER_FLOOR": "Ponude od {price} prihvaćaju se automatski"
+    },
+    "cart": {
+      "applied": "Cijena ponude",
+      "LEFT": "Cijena ponude do {n} kom — smanjite količinu da je dobijete.",
+      "PER_BUYER": "Po cijeni ponude možete kupiti još {n} — smanjite količinu da je dobijete.",
+      "BID_QTY": "Vaša prihvaćena ponuda je za {n} kom — postavite količinu na {n} da dobijete njezinu cijenu.",
+      "QTY_TIER": "Naručite više da dosegnete cijenu ponude.",
+      "LOT_QTY": "Cijena serije vrijedi samo za cijelu seriju.",
+      "BUNDLE_QTY": "Naručite cijelo pakiranje za cijenu pakiranja.",
+      "BID": "Za ovaj proizvod možete ponuditi cijenu — vidi Ponude rasprodaje."
+    }
   }
 }

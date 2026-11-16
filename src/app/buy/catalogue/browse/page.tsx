@@ -7,6 +7,7 @@ import { browseCatalogue, shopCategories, visibleSuppliers } from "@/server/data
 import { productsWithImages } from "@/server/data/catalogue-admin";
 import { orderingMode } from "@/server/allocation/mode";
 import { ProductCard } from "@/components/catalogue/product-card";
+import { dealBadges } from "@/server/deals/service";
 import { pickLocalized } from "@/i18n/config";
 import { SupplierCard } from "@/components/catalogue/supplier-card";
 import { BarcodeSearch } from "@/components/catalogue/barcode-search";
@@ -28,6 +29,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const firingi = mode === "FIRINGI";
   const products = firingi ? await browseCatalogue(ctx, { q, badge }) : null;
   const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
+  const dealMap = products ? await dealBadges(products.items.map((i) => i.offerId)) : new Map<string, { pct: number | null; endsAt: Date; kind: string }>();
   return (
     <>
       <Aurora className="mb-8">
@@ -59,7 +61,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         <section data-testid="firingi-products">
           <h2 className="mb-3 text-lg font-semibold">{t("allProducts")}</h2>
           {products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} />)}</div>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} />)}</div>
           )}
         </section>
       ) : (

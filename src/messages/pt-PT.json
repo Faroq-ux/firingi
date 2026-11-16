@@ -1430,6 +1430,42 @@
     "bank_feed_failed": {
       "title": "Falha no feed bancário: {account}",
       "body": "Não foi possível obter os novos movimentos de {account}: {reason}"
+    },
+    "deal_review": {
+      "title": "Oportunidade a verificar: {number}",
+      "body": "{company} criou a oportunidade {number}. Só começa depois de a FIRINGI a aprovar."
+    },
+    "deal_approved": {
+      "title": "Oportunidade aprovada: {number}",
+      "body": "A sua oportunidade {number} foi aprovada e fica ativa à hora de início."
+    },
+    "deal_rejected": {
+      "title": "Oportunidade recusada: {number}",
+      "body": "A FIRINGI recusou a sua oportunidade {number}: {reason}"
+    },
+    "deal_bid": {
+      "title": "Nova oferta na oportunidade {number}",
+      "body": "Um comprador oferece {price} € por unidade por {qty} unidades. Responda em Produtos › Oportunidades."
+    },
+    "deal_bid_accepted": {
+      "title": "Oferta aceite: {number}",
+      "body": "A sua oferta de {price} € por unidade foi aceite. Adicione-a ao carrinho antes de expirar."
+    },
+    "deal_bid_rejected": {
+      "title": "Oferta recusada: {number}",
+      "body": "O fornecedor recusou a sua oferta de {price} € por unidade."
+    },
+    "deal_bid_countered": {
+      "title": "Contraproposta: {number}",
+      "body": "O fornecedor propõe {price} € por unidade. Aceite-a na página Oportunidades de escoamento."
+    },
+    "deal_alert": {
+      "title": "Oportunidade: {product} −{pct} %",
+      "body": "{supplier} tem uma oportunidade em {product} até {until}."
+    },
+    "deal_digest": {
+      "title": "{count} novas oportunidades hoje",
+      "body": "Novas oportunidades: {products}."
     }
   },
   "notifications": {
@@ -4437,5 +4473,163 @@
     "payersTitle": "IBAN memorizados",
     "payersHint": "Quando confirma uma associação, o IBAN fica memorizado para reconhecer o próximo pagamento dele.",
     "noPayers": "Ainda nenhum."
+  },
+  "deals": {
+    "title": "Oportunidades de escoamento",
+    "intro": "Promoções por tempo limitado dos fornecedores em stock de validade curta e excedentes: preços relâmpago, packs, preços por volume, lotes inteiros e melhor oferta. O preço da oportunidade substitui outros descontos nesse produto.",
+    "badge": "Oportunidade",
+    "all": "Todas",
+    "search": "Procurar oportunidades",
+    "searchBtn": "Procurar",
+    "none": "Não há oportunidades de momento. Siga produtos ou fornecedores abaixo para saber das próximas.",
+    "kind": {
+      "FLASH": "Preço relâmpago",
+      "BUNDLE": "Pack",
+      "VOLUME": "Preço por volume",
+      "LOT": "Lote inteiro",
+      "BEST_OFFER": "Melhor oferta"
+    },
+    "clearance": "Escoamento",
+    "endsSoon": "Termina em breve",
+    "ended": "Terminou",
+    "endsInDays": "Termina em {d} d {h} h",
+    "endsInHours": "Termina em {h} h {m} min",
+    "listNow": "Agora {price}",
+    "exVat": "s/ IVA",
+    "left": "restam {n}",
+    "perBuyer": "Máx. {n} por comprador",
+    "bestBefore": "Consumir antes de {date}",
+    "thisProduct": "este produto",
+    "alertsTitle": "Alertas de oportunidades",
+    "alertsHint": "Siga produtos ou fornecedores e avisamos quando tiverem uma nova oportunidade. Também avisamos de oportunidades em produtos que já comprou (exceto se desligou 'Ofertas e novidades').",
+    "watchKind": {
+      "PRODUCT": "Produto",
+      "SUPPLIER": "Fornecedor"
+    },
+    "noWatches": "Ainda não segue nada.",
+    "myOffers": "As minhas ofertas",
+    "bidStatus": {
+      "PENDING": "À espera do fornecedor",
+      "ACCEPTED": "Aceite",
+      "COUNTERED": "Contraproposta",
+      "REJECTED": "Recusada",
+      "EXPIRED": "Expirada",
+      "WITHDRAWN": "Retirada",
+      "ORDERED": "Encomendada"
+    },
+    "noOffers": "Ainda não fez nenhuma oferta.",
+    "qty": "Quantidade",
+    "unitAt": "{price} por unidade",
+    "addToCart": "Adicionar ao carrinho",
+    "added": "Adicionado ao carrinho ao preço da oportunidade.",
+    "addedLot": "O lote inteiro está no seu carrinho.",
+    "buyLot": "Comprar o lote inteiro ({qty} unidades)",
+    "maxForYou": "Ainda pode comprar {n}.",
+    "bid": {
+      "PENDING": "A sua oferta: {qty} × {price}. O fornecedor responderá em breve.",
+      "ACCEPTED": "Aceite: {qty} × {price}. Encomende antes de o tempo acabar.",
+      "COUNTERED": "O fornecedor propõe {price} por unidade para {qty} (ofereceu {mine})."
+    },
+    "addBidToCart": "Adicionar {qty} ao carrinho",
+    "takeCounter": "Aceitar a contraproposta",
+    "withdraw": "Retirar",
+    "bidSent": "Oferta enviada.",
+    "yourPrice": "O seu preço por unidade (s/ IVA)",
+    "makeOffer": "Fazer uma oferta",
+    "message": "Mensagem (opcional)",
+    "minBid": "Ofertas a partir de {n} unidades.",
+    "watch": "Seguir {what}",
+    "unwatch": "Deixar de seguir {what}",
+    "remove": "Remover",
+    "digest": "Enviem-me um email diário com as novas oportunidades",
+    "product": "Produto",
+    "chooseProduct": "Escolha um produto",
+    "kindLabel": "Tipo de oportunidade",
+    "kindHint": {
+      "FLASH": "Um preço mais baixo por pouco tempo.",
+      "BUNDLE": "Comprar um pack de várias unidades por um preço (ex.: leve 3, pague 2).",
+      "VOLUME": "Preços mais baixos para quantidades maiores.",
+      "LOT": "Vender um lote inteiro de uma vez por um preço.",
+      "BEST_OFFER": "Os compradores propõem um preço; aceita, recusa ou faz uma contraproposta."
+    },
+    "listPrice": "Preço de tabela: {price}",
+    "discount": "{pct} % de desconto",
+    "clearanceWhy": {
+      "EXPIRY": "Escoamento: consumir antes de {date}.",
+      "OVERSTOCK": "Escoamento: mais stock do que costuma vender."
+    },
+    "clearanceCommission": "Comissão da FIRINGI nesta oportunidade: {pct} % (normalmente {usual} %).",
+    "normalCommission": "Comissão da FIRINGI: {pct} % do preço da oportunidade.",
+    "minDiscount": "Uma oportunidade tem de ficar pelo menos {pct} % abaixo do preço de tabela.",
+    "dealPrice": "Preço por unidade (s/ IVA)",
+    "bundleQty": "Unidades por pack",
+    "bundlePrice": "Preço do pack (s/ IVA)",
+    "lotQty": "Unidades no lote",
+    "lotPrice": "Preço do lote inteiro (s/ IVA)",
+    "floorPrice": "Preço mínimo aceite automaticamente (opcional)",
+    "minBidQty": "Quantidade mínima por oferta (opcional)",
+    "maxQty": "Unidades na oportunidade (opcional)",
+    "perBuyerMax": "Máx. por comprador (opcional)",
+    "startsAt": "Início",
+    "endsAt": "Fim",
+    "tiers": "Preços por quantidade",
+    "fromQty": "A partir de (unidades)",
+    "unitPrice": "Preço por unidade",
+    "addTier": "Adicionar escalão",
+    "lot": "Lote",
+    "noLot": "Nenhum lote em particular",
+    "units": "{n} unidades",
+    "titleLabel": "Título (opcional)",
+    "titleHint": "ex.: Escoamento de fim de época",
+    "noteLabel": "Nota para os compradores (opcional)",
+    "noteHint": "ex.: validade curta, caixa exterior danificada",
+    "submit": "Criar oportunidade",
+    "created": "Oportunidade criada.",
+    "accept": "Aceitar",
+    "counter": "Contrapropor",
+    "reject": "Recusar",
+    "cancelDeal": "Terminar oportunidade",
+    "vendorTitle": "Oportunidades de escoamento",
+    "vendorIntro": "Escoe depressa stock de validade curta ou excedente: preços relâmpago, packs, preços por volume, lotes inteiros ou melhor oferta. Os compradores que já compraram o produto e os que o seguem são avisados. O desconto é suportado por si; nas oportunidades de escoamento a FIRINGI cobra uma comissão mais baixa.",
+    "newDeal": "Nova oportunidade",
+    "approvalAlways": "A FIRINGI verifica cada oportunidade antes de começar.",
+    "approvalAuto": "Oportunidades até {pct} % de desconto e {days} dias começam sozinhas; as outras são verificadas primeiro pela FIRINGI.",
+    "noKinds": "A FIRINGI não oferece oportunidades de momento.",
+    "yourDeals": "As suas oportunidades",
+    "noDealsYet": "Ainda não há oportunidades.",
+    "status": {
+      "DRAFT": "Rascunho",
+      "PENDING": "À espera da FIRINGI",
+      "APPROVED": "Aprovada",
+      "SCHEDULED": "Agendada",
+      "LIVE": "Ativa",
+      "REJECTED": "Recusada",
+      "ENDED": "Terminada",
+      "CANCELLED": "Terminada antes do fim",
+      "SOLD_OUT": "Esgotada"
+    },
+    "autoApproved": "começou automaticamente",
+    "soldOf": "{sold} de {max} vendidas",
+    "revenue": "Vendas {amount}",
+    "dealCommission": "comissão {pct} %",
+    "firingiNote": "FIRINGI: {note}",
+    "terms": {
+      "FLASH": "{price} por unidade",
+      "BUNDLE": "{n} por {price}",
+      "VOLUME": "a partir de {n}: {price}",
+      "LOT": "{n} unidades por {price}",
+      "BEST_OFFER": "Faça uma oferta ao fornecedor",
+      "BEST_OFFER_FLOOR": "Ofertas a partir de {price} são aceites automaticamente"
+    },
+    "cart": {
+      "applied": "Preço de oportunidade",
+      "LEFT": "Preço de oportunidade até {n} unidades — reduza a quantidade para o obter.",
+      "PER_BUYER": "Pode comprar mais {n} ao preço da oportunidade — reduza a quantidade para o obter.",
+      "BID_QTY": "A sua oferta aceite é para {n} unidades — defina a quantidade para {n} para obter o preço.",
+      "QTY_TIER": "Encomende mais para chegar ao preço da oportunidade.",
+      "LOT_QTY": "O preço do lote é só para o lote inteiro.",
+      "BUNDLE_QTY": "Encomende um pack completo para ter o preço do pack.",
+      "BID": "Este produto aceita ofertas — veja Oportunidades de escoamento."
+    }
   }
 }

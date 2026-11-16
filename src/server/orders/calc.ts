@@ -15,6 +15,8 @@ export type LineInput = {
   commissionRatePercent: Decimal.Value | null; // null = no rule (vendor can't sell — guarded elsewhere)
   vendorFundedDiscountPerUnit?: Decimal.Value; // Phase 5
   firingiFundedDiscountPerUnit?: Decimal.Value; // Phase 5
+  /** Phase 38: on a deal, commission is on the deal price (per unit) instead of the list price. */
+  commissionUnitBase?: Decimal.Value | null;
 };
 
 export function computeLine(i: LineInput) {
@@ -25,7 +27,8 @@ export function computeLine(i: LineInput) {
   const unitSale = list.minus(vendorDisc).minus(firingiDisc);
   const lineNet = r2(unitSale.mul(qty));
   const lineVat = r2(lineNet.mul(new Decimal(i.vatRatePercent)).div(100));
-  const commissionBase = r2(list.mul(qty)); // pre-discount
+  // pre-discount list price — except deals (Phase 38): on the deal price, at the deal's rate
+  const commissionBase = r2((i.commissionUnitBase != null ? new Decimal(i.commissionUnitBase) : list).mul(qty));
   const commissionAmount = r2(commissionBase.mul(new Decimal(i.commissionRatePercent ?? 0)).div(100));
   // What FIRINGI pays the vendor: list − the vendor's own discount − commission.
   const vendorLineNet = r2(list.minus(vendorDisc).mul(qty).minus(commissionAmount));
@@ -36,6 +39,7 @@ export function computeLine(i: LineInput) {
     unitSalePriceNet: r4(unitSale),
     lineNet,
     lineVat,
+    listNet: r2(list.mul(qty)),
     commissionBase,
     commissionAmount,
     vendorLineNet,
@@ -53,7 +57,7 @@ export type ComputedLine = ReturnType<typeof computeLine> & { qty: number };
 export function computeTotals(lines: ComputedLine[], delivery: { feeNet: Decimal.Value; feeVatPercent: Decimal.Value; toVendor?: boolean; firingiPaysVendorFeeNet?: Decimal.Value }) {
   const sum = (f: (l: ComputedLine) => Decimal) => lines.reduce((a, l) => a.plus(f(l)), new Decimal(0));
   const goodsNet = sum((l) => l.lineNet);
-  const listNet = sum((l) => l.commissionBase);
+  const listNet = sum((l) => l.listNet);
   const feeNet = r2(new Decimal(delivery.feeNet));
   const feeVat = r2(feeNet.mul(new Decimal(delivery.feeVatPercent)).div(100));
   const vatTotal = sum((l) => l.lineVat).plus(feeVat);
