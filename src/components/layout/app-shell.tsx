@@ -10,10 +10,15 @@ import { CommandPalette } from "./command-palette";
 import { NavContext } from "./nav-context";
 import type { ResolvedSection } from "@/config/nav/resolve";
 import { cn } from "@/lib/utils";
+import { AppRuntime } from "@/components/app/runtime";
+import { BottomBar, type BarLink } from "@/components/app/bottom-bar";
+import type { AppPortal } from "@/lib/app";
+
+export type AppShellApp = { enabled: boolean; userId: string; installPrompt: boolean; unread: number; bar: BarLink[]; moreLabel: string };
 
 export function AppShell({
-  nav, title, subtitle, soonLabel, topbar, portal, children,
-}: { nav: ResolvedSection[]; title: string; subtitle: string; soonLabel: string; topbar: Omit<TopbarProps, "onMenu">; portal: string; children: React.ReactNode }) {
+  nav, title, subtitle, soonLabel, topbar, portal, app, children,
+}: { nav: ResolvedSection[]; title: string; subtitle: string; soonLabel: string; topbar: Omit<TopbarProps, "onMenu">; portal: string; app?: AppShellApp; children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   // Laptop and up (≥ 1024 px): the sidebar stays open and can fold; below that it's a drawer, so tablets get the full width.
   // Desktop: the sidebar can fold into an icon rail (remembered on this device).
@@ -43,8 +48,10 @@ export function AppShell({
       {mobileOpen && <div className="animate-fade fixed inset-0 z-30 bg-black/40 backdrop-blur-[1px] lg:hidden" onClick={() => setMobileOpen(false)} />}
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar {...topbar} onMenu={() => setMobileOpen(true)} />
-        <main key={pathname} className="animate-page mx-auto w-full min-w-0 max-w-7xl flex-1 p-4 md:p-6">{children}</main>
+        {app?.enabled && <div className="mx-auto w-full min-w-0 max-w-7xl px-4 pt-4 empty:hidden md:px-6 [&>*:last-child]:mb-0"><AppRuntime portal={portal as AppPortal} userId={app.userId} installPrompt={app.installPrompt} unread={app.unread} /></div>}
+        <main key={pathname} className={cn("animate-page mx-auto w-full min-w-0 max-w-7xl flex-1 p-4 md:p-6", app?.bar.length && "pb-24 lg:pb-6")}>{children}</main>
       </div>
+      {app && <BottomBar items={app.bar} moreLabel={app.moreLabel} onMore={() => setMobileOpen(true)} />}
     </div>
     </NavContext.Provider>
   );

@@ -662,6 +662,24 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Installable phone app & offline mode (Phase 39)
+
+Code: `public/sw.js`, `src/server/app/*`, `src/lib/offline/store.ts`, `src/components/app/*`; details `docs/app.md`.
+- **Install** FIRINGI on phones and computers like an app — every portal (buyers, suppliers, drivers, FIRINGI staff):
+  manifest per portal with icons and **home-screen shortcuts** in the person's language, an install card (iPhone gets the
+  Add-to-Home-Screen steps), the unread count on the **app icon**, and a thumb-friendly **bottom bar** on phones.
+- **Offline, the supply chain keeps going** — the phone keeps each person's data (buyers: usual products with their own
+  prices, orders, invoices + PDFs; drivers: today's route; suppliers: open pick lists). With no signal the saved
+  **offline mode** opens: buyers order, drivers deliver (signature / photo) or report a failed delivery, suppliers pick
+  with scan checks. An **outbox** sends everything when the signal returns — each action once, by its author, with the
+  server's checks.
+- **Price or stock changed meanwhile — the admin chooses**: always ask the buyer, or place by itself when prices moved at
+  most N %; unavailable products always go back to the buyer.
+- **Scan to reorder** — camera or scanner on a shelf barcode → the product goes in the cart with the usual quantity.
+- FIRINGI: *Settings › Phone App* (English) — portals, install card, price rule, what phones keep; installs and offline
+  actions. Sign-out clears the phone.
+- Tests: `tests/integration/app.test.ts`, browser `tests/e2e/app.mjs` (real offline). Screenshots `docs/screenshots/app-*.png`.
+
 ## Clearance deals (Phase 38)
 
 Code: `src/lib/deals.ts` (pricing maths), `src/server/deals/service.ts`; details `docs/deals.md`.

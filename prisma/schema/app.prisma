@@ -1,0 +1,46 @@
+// Phase 39: installable phone app — offline actions synced from phones, and installs.
+
+enum OfflineOpStatus {
+  PROCESSING
+  DONE
+  NEEDS_CONFIRM // an offline order whose prices / stock changed: the buyer decides
+  FAILED
+}
+
+/// One action done on a phone without signal (order, delivery step, proof of delivery, pick), sent when back online.
+/// `clientId` is made on the phone: the same action sent twice is only carried out once.
+model OfflineOp {
+  id        String          @id @default(cuid())
+  userId    String
+  companyId String
+  portal    String
+  clientId  String
+  kind      String // order.place · delivery.step · delivery.complete · delivery.fail · pick.scan · pick.confirm · pick.short
+  status    OfflineOpStatus @default(PROCESSING)
+  result    Json?
+  error     String?
+  /// When the action was done on the phone.
+  clientAt  DateTime?
+  attempts  Int             @default(1)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@unique([userId, clientId])
+  @@index([companyId, createdAt])
+  @@index([kind, status, createdAt])
+}
+
+/// The app installed on a phone / computer (one row per person and portal).
+model AppInstall {
+  id           String   @id @default(cuid())
+  userId       String
+  companyId    String
+  portal       String
+  platform     String? // android · ios · desktop
+  installedAt  DateTime @default(now())
+  lastOpenedAt DateTime @default(now())
+  opens        Int      @default(1)
+
+  @@unique([userId, portal])
+  @@index([portal, lastOpenedAt])
+}

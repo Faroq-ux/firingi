@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 import { EllipsisVertical, LogOut, Menu, Search, ShoppingCart } from "lucide-react";
 import { openPalette } from "./command-palette";
 import { authClient } from "@/lib/auth-client";
+import { forgetPhoneData } from "@/components/app/runtime";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
 import { ThemeToggle, type ThemeChoice } from "@/components/theme/theme";
 import { NotificationBell, type BellLabels } from "@/components/notifications/bell";
 
 export type TopbarProps = {
-  userName: string;
+  userId?: string; userName: string;
   userEmail: string;
   companyId: string;
   companyLabel: string;
@@ -121,7 +122,7 @@ export function Topbar(p: TopbarProps) {
           title={p.labels.signOut}
           aria-label={p.labels.signOut}
           className="flex items-center gap-2 rounded-md p-2 text-sm hover:bg-accent"
-          onClick={() => start(async () => { await authClient.signOut(); router.push("/login"); router.refresh(); })}
+          onClick={() => start(async () => { if (p.userId) await forgetPhoneData(p.userId); await authClient.signOut(); router.push("/login"); router.refresh(); })}
         >
           <LogOut className="size-4" />
           <span className="sm:hidden" aria-hidden>{p.labels.signOut}</span>

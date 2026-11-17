@@ -448,6 +448,7 @@ export const ADMIN_NAV: NavSection[] = [
       set("vendors", "Vendor Settings", "Definições de Fornecedores", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("customers", "Customer Settings", "Definições de Clientes", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("delivery", "Delivery Settings", "Definições de Entrega", "P6", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
+      set("app", "Phone App", "Aplicação Móvel", "P39", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("payment", "Payment Settings", "Definições de Pagamento", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage", "admin.finance.manage"] }),
       set("invoice", "Invoice Settings", "Definições de Faturação", "P5", { live: true, perm: ["admin.settings.view", "admin.tax.manage"] }),
       set("tax", "Tax Settings", "Definições Fiscais", "P5", { live: true, perm: ["admin.settings.view", "admin.tax.manage"] }),

@@ -28,6 +28,8 @@ export type OutgoingMessage = {
   waTemplate?: { name: string; language: string; params: string[] } | null;
   /** Web push subscription (PUSH). */
   push?: { endpoint: string; p256dh: string; auth: string } | null;
+  /** Phase 39: unread notifications — the number on the installed app's icon. */
+  badge?: number | null;
 };
 type Fetch = typeof fetch;
 
@@ -131,7 +133,7 @@ async function webpush(m: OutgoingMessage): Promise<SendResult> {
   try {
     const wp = (await import("web-push")).default;
     wp.setVapidDetails(process.env.VAPID_SUBJECT ?? "mailto:no-reply@firingi.test", process.env.VAPID_PUBLIC_KEY ?? "", process.env.VAPID_PRIVATE_KEY ?? "");
-    const r = await wp.sendNotification({ endpoint: m.push.endpoint, keys: { p256dh: m.push.p256dh, auth: m.push.auth } }, JSON.stringify({ title: m.subject, body: m.body, link: m.link }), { TTL: 3600 });
+    const r = await wp.sendNotification({ endpoint: m.push.endpoint, keys: { p256dh: m.push.p256dh, auth: m.push.auth } }, JSON.stringify({ title: m.subject, body: m.body, link: m.link, ...(m.badge != null ? { badge: m.badge } : {}) }), { TTL: 3600 });
     return { ok: true, id: r.headers?.location ?? `push-${Date.now()}` };
   } catch (e) {
     const status = (e as { statusCode?: number }).statusCode;

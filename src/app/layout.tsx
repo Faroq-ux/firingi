@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
@@ -11,6 +11,12 @@ const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" 
 export const metadata: Metadata = {
   title: { default: "FIRINGI — Wholesale made simple", template: "%s · FIRINGI" },
   description: "FIRINGI — Wholesale made simple. B2B marketplace and ERP for distributors, wholesalers and businesses",
+};
+
+/** Phase 39: the browser / app bar colour follows the light or dark look; content may use the full screen on phones with a notch. */
+export const viewport: Viewport = {
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#0b1020" }],
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
