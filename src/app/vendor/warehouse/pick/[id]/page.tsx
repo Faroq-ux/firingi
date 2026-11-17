@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CancelPickList, PackOrder, PickRunner } from "@/components/warehouse/controls";
+import { OrderWeightsCard } from "@/components/catchweight/views";
 
 export const metadata = { title: "Pick list" };
 
@@ -62,6 +63,8 @@ export default async function PickListPage({ params }: { params: Promise<{ id: s
           </CardContent>
         </Card>
       </div>
+      {/* Phase 41: products sold by weight on this pick list — scale labels scanned above count the piece and record its weight */}
+      {canPick && open && pl.orders.filter((o) => o.status !== "CANCELLED").map((o) => <OrderWeightsCard key={o.id} ctx={ctx} orderId={o.id} as="SUPPLIER" pickSource />)}
     </>
   );
 }

@@ -106,11 +106,11 @@ export async function createRequest(input: CreateInput) {
     let items: { invoiceId: string; amount: Decimal }[] = [];
     let amount = ZERO;
     if (input.orderId) {
-      const o = await tx.order.findUnique({ where: { id: input.orderId }, select: { buyerCompanyId: true, awaitingPayment: true, grandTotal: true, status: true } });
+      const o = await tx.order.findUnique({ where: { id: input.orderId }, select: { buyerCompanyId: true, awaitingPayment: true, grandTotal: true, prepayBuffer: true, status: true } });
       if (!o || o.buyerCompanyId !== input.companyId) throw new NotFoundError("Order");
       if (!o.awaitingPayment || o.status !== "ON_HOLD") throw new ValidationError("This order doesn't need a payment.");
       const paid = await tx.paymentRequest.aggregate({ where: { orderId: input.orderId, status: "PAID" }, _sum: { paidAmount: true } });
-      amount = D(o.grandTotal).minus(D(paid._sum.paidAmount));
+      amount = D(o.grandTotal).plus(D(o.prepayBuffer)).minus(D(paid._sum.paidAmount)); // Phase 41: + buffer on sold-by-weight lines
       const busy = await tx.paymentRequest.findFirst({ where: { orderId: input.orderId, status: "PROCESSING" } });
       if (busy) throw new AppError("PAYMENT_IN_PROGRESS", "A payment for this order is already in progress.", 409);
       await tx.paymentRequest.updateMany({ where: { orderId: input.orderId, status: "OPEN" }, data: { status: "CANCELLED" } });
@@ -350,9 +350,9 @@ async function settle(requestId: string, providerKey: string, ev: ProviderEvent)
     if (!r.orderId) await applyCustomerCredit(tx, r.companyId);
     let released = false;
     if (r.orderId) {
-      const o = await tx.order.findUniqueOrThrow({ where: { id: r.orderId }, select: { id: true, status: true, awaitingPayment: true, grandTotal: true } });
+      const o = await tx.order.findUniqueOrThrow({ where: { id: r.orderId }, select: { id: true, status: true, awaitingPayment: true, grandTotal: true, prepayBuffer: true } });
       const paidForOrder = await tx.paymentRequest.aggregate({ where: { orderId: o.id, status: "PAID" }, _sum: { paidAmount: true } });
-      if (o.awaitingPayment && D(paidForOrder._sum.paidAmount).gte(D(o.grandTotal).minus(0.004))) {
+      if (o.awaitingPayment && D(paidForOrder._sum.paidAmount).gte(D(o.grandTotal).plus(D(o.prepayBuffer)).minus(0.004))) {
         released = await releasePaidOrder(tx, o.id);
       }
     }

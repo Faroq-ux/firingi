@@ -853,7 +853,9 @@
     "Clearance Deals": "Tyhjennystarjoukset",
     "Scan to Reorder": "Skannaa ja tilaa uudelleen",
     "Returnables": "Palautuspakkaukset",
-    "Empties & Deposits": "Tyhjät & panttit"
+    "Empties & Deposits": "Tyhjät & panttit",
+    "Sold by Weight": "Myynti Painon Mukaan",
+    "Weighing": "Punnitus"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Pantti pidätetty palauttamattomista tyhjistä",
       "body": "{items} ({customer}, toimittajalta {supplier}) pidettiin yli {days} päivää: pantti jää hinnaksi."
+    },
+    "catchweight_over_limit": {
+      "title": "Painavampi kuin tilattu: {number}",
+      "body": "{product} painaa {weighed} kg (raja {max} kg). Maksat enintään rajan, ellet hyväksy lisäpainoa."
+    },
+    "catchweight_over_accepted": {
+      "title": "Lisäpaino hyväksytty: {number}",
+      "body": "Asiakas hyväksyi rajan ylittävän painon. Laskussa käytetään todellista painoa."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Alkusaldo",
     "saveCorrection": "Tallenna korjaus",
     "manageItems": "Palautusnimikkeet ja tuoteliitokset →"
+  },
+  "catchWeight": {
+    "saved": "Tallennettu",
+    "sellBy": "Myynti",
+    "modeNone": "Kappaleittain (ei painon mukaan)",
+    "modePiece": "Kappaleittain, kilohinta",
+    "modeKg": "Kiloittain",
+    "avgWeight": "Kappaleen keskipaino (kg)",
+    "unitWeight": "Yhden yksikön paino (kg)",
+    "yourLimit": "Ylipainorajasi (%, FIRINGIn raja on {pct})",
+    "minKg": "Kevyin kappale (kg)",
+    "maxKg": "Painavin kappale (kg)",
+    "plu": "Tuotekoodi vaa'an tarroissa",
+    "perKgHint": "Kilohinta: {price} (yksikköhinta ÷ paino).",
+    "keepPerKgNote": "Painon muuttaminen pitää kilohinnan: yksikköhinnat muuttuvat sen mukana.",
+    "save": "Tallenna",
+    "pieceN": "Kappale {n} (kg)",
+    "totalKg": "Kokonaispaino (kg)",
+    "remove": "Poista",
+    "addPiece": "Lisää kappale",
+    "addWeight": "Lisää paino",
+    "saveWeights": "Tallenna painot",
+    "totalIs": "Yhteensä: {kg} kg",
+    "scanLabel": "Skannaa vaa'an tarra",
+    "scanBtn": "Skannaa",
+    "scanOk": "+ {kg} kg — {pieces} kappaletta, yhteensä {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "Tämä ei ole painotiedon sisältävä vaa'an tarra.",
+      "WRONG_ITEM": "Tämä tarra kuuluu toiselle tuotteelle.",
+      "NOT_SOLD_BY_WEIGHT": "Tätä tuotetta ei myydä painon mukaan."
+    },
+    "weighed": "Painot tallennettu",
+    "acceptOver": "Hyväksy lisäpaino",
+    "stopTitle": "Myydään painon mukaan",
+    "weighedKg": "punnittu {kg} kg",
+    "estimatedKg": "noin {kg} kg",
+    "newWeightFor": "Uusi paino: {product} (kg)",
+    "customerAccepts": "Asiakas hyväksyy rajan ylittävän painon",
+    "badge": "Painon mukaan",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Myydään painon mukaan",
+    "incTax": "sis. {tax}",
+    "exTax": "ilman {tax}",
+    "range": "({min}–{max} kg)",
+    "pieceInfo": "Kukin kappale painaa noin {kg} kg{range}. Näytetty hinta on {kg} kg:lle.",
+    "kgInfo": "Myydään kiloittain: yksi yksikkö = {kg} kg.",
+    "howBilled": "Maksat todellisen painon, jonka toimittaja punnitsee. Jos se ylittää rajan, maksat enemmän vain hyväksymällä.",
+    "cartNote": "noin {kg} kg · lopullinen hinta painon mukaan",
+    "orderTitle": "Myydään painon mukaan",
+    "orderIntroBuyer": "Nämä tuotteet punnitaan ennen toimitusta. Maksat punnitun summan; rajan yli vain hyväksymällä.",
+    "bufferNote": "Ennakkomaksu sisältää {amount} painoeroa varten. Käyttämätön osa jää hyvitykseksi seuraaviin laskuihisi.",
+    "state": {
+      "estimate": "Ei vielä punnittu",
+      "weighed": "Punnittu",
+      "capped": "Yli rajan",
+      "accepted": "Lisäpaino hyväksytty"
+    },
+    "estimated": "Tilattu (noin)",
+    "weighedCol": "Punnittu",
+    "billed": "Laskutettu",
+    "perKgCol": "Hinta",
+    "overBuyer": "Painavampi kuin tilattu: maksat enintään {max} kg ({pct} % enemmän), ellet hyväksy lisäpainoa.",
+    "overSeller": "Yli {pct} %:n rajan: asiakas maksaa {max} kg, ellei hyväksy lisäpainoa.",
+    "piecesList": "Kappaleet: {list}",
+    "history": "Punnitukset",
+    "source": {
+      "PICK": "Keräily",
+      "SCAN": "Vaa'an tarra",
+      "SUPPLIER": "Tilaussivu",
+      "DRIVER": "Kuljettaja toimituksessa"
+    },
+    "productsTitle": "Myynti painon mukaan",
+    "productsIntro": "Liha, kala, juusto… myydään kilohinnalla. Valitse jokaiselle tuotteelle: kappaleittain (keskipainolla) tai kiloittain. Asiakas maksaa punnitsemasi todellisen painon.",
+    "productsLimit": "FIRINGIn ylipainoraja: {pct} %. Voit asettaa tiukemman tuotekohtaisesti.",
+    "labelsInfo": "Vaa'an tarrat: EAN-13, joka alkaa {prefixes} (tuotekoodi {digits} numeroa, sitten paino), tai GS1-tarrat nettopainolla.",
+    "noProducts": "Ei vielä tuotteita.",
+    "weighingTitle": "Punnitus",
+    "weighingIntro": "Tilaukset, joiden painon mukaan myytävät tuotteet on vielä punnittava, ja miten painosi vastaavat tilattua.",
+    "toWeighTitle": "Punnittavana",
+    "noneToWeigh": "Ei punnittavaa.",
+    "openOrder": "Avaa",
+    "reportTitle": "Painosi (viimeiset 90 päivää)",
+    "noReport": "Ei vielä punnittuja toimituksia.",
+    "col": {
+      "product": "Tuote",
+      "estimated": "Tilatut kg",
+      "weighed": "Punnitut kg",
+      "billed": "Laskutetut kg",
+      "lines": "Rivit",
+      "capped": "Rajattu",
+      "variance": "Ero",
+      "date": "Toimitus"
+    },
+    "cartTotalNote": "Sisältää painon mukaan myytäviä tuotteita: summa on arvio. Laskussa käytetään todellista painoa."
   }
 }

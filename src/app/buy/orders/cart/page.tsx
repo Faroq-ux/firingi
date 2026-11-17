@@ -5,6 +5,9 @@ import { cartView } from "@/server/services/cart";
 import { cartReturnables } from "@/server/returnables/service";
 import { CartReturnables } from "@/components/returnables/client";
 import { rtLabels } from "@/components/returnables/labels";
+import { offerCatchWeight } from "@/server/catchweight/service";
+import { CwCartNote } from "@/components/catchweight/views";
+import { cwLabels } from "@/components/catchweight/labels";
 import { SponsoredProducts } from "@/components/ads/sponsored";
 import { orderingSettings } from "@/server/multisite/branches";
 import { pickLocalized } from "@/i18n/config";
@@ -27,6 +30,8 @@ export default async function CartPage() {
   const [cart, t, tc, locale, ordering, tl, ls] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx), getTranslations("loyalty"), loyaltySettings()]);
   // Phase 40: deposits on returnables in the cart, empties to swap for refills
   const [rtCart, rl] = await Promise.all([cartReturnables(ctx, locale).catch(() => null), rtLabels()]);
+  // Phase 41: sold-by-weight lines (estimate until weighed)
+  const [cwm, cl] = await Promise.all([offerCatchWeight(cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))), cwLabels()]);
   const td = await getTranslations("deals");
   const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
@@ -71,6 +76,7 @@ export default async function CartPage() {
                       <TD>
                         <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
                         <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
+                        {cwm.get(l.offerId) && <div className="mt-1"><CwCartNote l={cl.l} locale={locale} cw={cwm.get(l.offerId)!} qty={l.qty} /></div>}
                         {"deal" in l && l.deal && <span className="mt-1 inline-block rounded-full bg-destructive px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-deal">{td("cart.applied")}</span>}
                         {"dealNote" in l && !l.deal && l.dealNote && td.has(`cart.${l.dealNote.why}`) && <div className="mt-1 text-xs text-amber-700 dark:text-amber-400" data-testid="cart-deal-note">{td(`cart.${l.dealNote.why}`, { n: l.dealNote.left ?? 0 })}</div>}
                       </TD>
@@ -102,6 +108,7 @@ export default async function CartPage() {
               <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(cart.totalVat, locale)}</dd>
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
             </dl>
+            {cwm.size > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-cw-note">{cl.l.cartTotalNote}</p>}
             {rtCart && rtCart.depositTotal > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-deposit-note">{rl.l.plusDeposits.replace("{amount}", formatMoney(rtCart.depositTotal, locale))}</p>}
             {cart.groups.length === 1 && deliveryNote(cart.groups[0])}
             {cart.groups.length > 1 && d && !d.ok && <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">{t("splitBlocked")}</p>}

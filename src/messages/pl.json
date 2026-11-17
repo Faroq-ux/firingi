@@ -853,7 +853,9 @@
     "Clearance Deals": "Okazje wyprzedażowe",
     "Scan to Reorder": "Zeskanuj i zamów ponownie",
     "Returnables": "Opakowania zwrotne",
-    "Empties & Deposits": "Opakowania i kaucje"
+    "Empties & Deposits": "Opakowania i kaucje",
+    "Sold by Weight": "Sprzedaż na Wagę",
+    "Weighing": "Ważenie"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Zatrzymano kaucję za niezwrócone opakowania",
       "body": "{items} ({customer}, od {supplier}) trzymano ponad {days} dni: kaucja zostaje zatrzymana jako cena."
+    },
+    "catchweight_over_limit": {
+      "title": "Cięższe niż zamówiono: {number}",
+      "body": "{product} waży {weighed} kg (limit {max} kg). Płacisz najwyżej za limit, chyba że zaakceptujesz dodatkową wagę."
+    },
+    "catchweight_over_accepted": {
+      "title": "Dodatkowa waga zaakceptowana: {number}",
+      "body": "Klient zaakceptował wagę powyżej limitu. Faktura użyje rzeczywistej wagi."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Saldo otwarcia",
     "saveCorrection": "Zapisz korektę",
     "manageItems": "Pozycje opakowań zwrotnych i powiązania z produktami →"
+  },
+  "catchWeight": {
+    "saved": "Zapisano",
+    "sellBy": "Sprzedaż",
+    "modeNone": "Na sztuki (nie na wagę)",
+    "modePiece": "Na sztuki, cena za kg",
+    "modeKg": "Na kilogramy",
+    "avgWeight": "Średnia waga sztuki (kg)",
+    "unitWeight": "Waga jednej jednostki (kg)",
+    "yourLimit": "Twój limit nadwagi (%, limit FIRINGI to {pct})",
+    "minKg": "Najlżejsza sztuka (kg)",
+    "maxKg": "Najcięższa sztuka (kg)",
+    "plu": "Kod towaru na etykietach Twojej wagi",
+    "perKgHint": "Cena za kg: {price} (cena jednostkowa ÷ waga).",
+    "keepPerKgNote": "Zmiana wagi zachowuje cenę za kg: ceny jednostkowe zmieniają się razem z nią.",
+    "save": "Zapisz",
+    "pieceN": "Sztuka {n} (kg)",
+    "totalKg": "Waga łączna (kg)",
+    "remove": "Usuń",
+    "addPiece": "Dodaj sztukę",
+    "addWeight": "Dodaj wagę",
+    "saveWeights": "Zapisz wagi",
+    "totalIs": "Razem: {kg} kg",
+    "scanLabel": "Zeskanuj etykietę z wagi",
+    "scanBtn": "Skanuj",
+    "scanOk": "+ {kg} kg — {pieces} szt., razem {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "To nie jest etykieta z wagi z masą.",
+      "WRONG_ITEM": "Ta etykieta należy do innego produktu.",
+      "NOT_SOLD_BY_WEIGHT": "Ten produkt nie jest sprzedawany na wagę."
+    },
+    "weighed": "Wagi zapisane",
+    "acceptOver": "Zaakceptuj dodatkową wagę",
+    "stopTitle": "Sprzedawane na wagę",
+    "weighedKg": "zważono {kg} kg",
+    "estimatedKg": "około {kg} kg",
+    "newWeightFor": "Nowa waga dla {product} (kg)",
+    "customerAccepts": "Klient akceptuje wagę powyżej limitu",
+    "badge": "Na wagę",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Sprzedawane na wagę",
+    "incTax": "z {tax}",
+    "exTax": "bez {tax}",
+    "range": "(od {min} do {max} kg)",
+    "pieceInfo": "Każda sztuka waży około {kg} kg{range}. Podana cena dotyczy {kg} kg.",
+    "kgInfo": "Sprzedaż na kilogramy: jedna jednostka = {kg} kg.",
+    "howBilled": "Płacisz za rzeczywistą wagę zważoną przez dostawcę. Jeśli przekracza limit, płacisz więcej tylko po akceptacji.",
+    "cartNote": "około {kg} kg · cena końcowa według wagi",
+    "orderTitle": "Sprzedawane na wagę",
+    "orderIntroBuyer": "Te produkty są ważone przed dostawą. Płacisz zważoną kwotę; powyżej limitu tylko po akceptacji.",
+    "bufferNote": "Przedpłata zawiera {amount} na różnicę wagi. Niewykorzystana część zostaje jako kredyt na kolejne faktury.",
+    "state": {
+      "estimate": "Jeszcze nie zważono",
+      "weighed": "Zważono",
+      "capped": "Powyżej limitu",
+      "accepted": "Nadwyżka zaakceptowana"
+    },
+    "estimated": "Zamówiono (około)",
+    "weighedCol": "Zważono",
+    "billed": "Zafakturowano",
+    "perKgCol": "Cena",
+    "overBuyer": "Cięższe niż zamówiono: płacisz najwyżej za {max} kg (o {pct} % więcej), chyba że zaakceptujesz dodatkową wagę.",
+    "overSeller": "Powyżej limitu {pct} %: klient płaci za {max} kg, chyba że zaakceptuje nadwyżkę.",
+    "piecesList": "Sztuki: {list}",
+    "history": "Ważenia",
+    "source": {
+      "PICK": "Kompletacja",
+      "SCAN": "Etykieta z wagi",
+      "SUPPLIER": "Strona zamówienia",
+      "DRIVER": "Kierowca przy dostawie"
+    },
+    "productsTitle": "Sprzedaż na wagę",
+    "productsIntro": "Mięso, ryby, ser… sprzedawane za kg. Wybierz, jak sprzedajesz każdy produkt: na sztuki (ze średnią wagą) albo na kilogramy. Klient płaci za rzeczywistą wagę, którą zważysz.",
+    "productsLimit": "Limit nadwagi FIRINGI: {pct} %. Dla każdego produktu możesz ustawić ostrzejszy.",
+    "labelsInfo": "Etykiety z wagi: EAN-13 zaczynające się od {prefixes} ({digits}-cyfrowy kod towaru, potem waga) lub etykiety GS1 z masą netto.",
+    "noProducts": "Brak produktów.",
+    "weighingTitle": "Ważenie",
+    "weighingIntro": "Zamówienia z produktami na wagę, które trzeba jeszcze zważyć, oraz porównanie Twoich wag z zamówieniami klientów.",
+    "toWeighTitle": "Do zważenia",
+    "noneToWeigh": "Nic do zważenia.",
+    "openOrder": "Otwórz",
+    "reportTitle": "Twoje wagi (ostatnie 90 dni)",
+    "noReport": "Brak zważonych dostaw.",
+    "col": {
+      "product": "Produkt",
+      "estimated": "Zamówione kg",
+      "weighed": "Zważone kg",
+      "billed": "Zafakturowane kg",
+      "lines": "Pozycje",
+      "capped": "Ograniczone",
+      "variance": "Różnica",
+      "date": "Dostawa"
+    },
+    "cartTotalNote": "Zawiera produkty na wagę: ta suma jest szacunkowa. Faktura użyje rzeczywistej wagi."
   }
 }

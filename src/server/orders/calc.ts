@@ -9,7 +9,8 @@ const r2 = (d: Decimal) => d.toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
 const r4 = (d: Decimal) => d.toDecimalPlaces(4, Decimal.ROUND_HALF_UP);
 
 export type LineInput = {
-  qty: number;
+  /** Phase 41: a sold-by-weight line is billed as a decimal number of units (billed kg ÷ nominal kg). */
+  qty: Decimal.Value;
   unitListPriceNet: Decimal.Value;
   vatRatePercent: Decimal.Value;
   commissionRatePercent: Decimal.Value | null; // null = no rule (vendor can't sell — guarded elsewhere)

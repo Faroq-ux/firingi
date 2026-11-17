@@ -159,24 +159,33 @@ model PackagingUnit {
 /// What a vendor actually sells. `sellerType` mirrors the vendor company's type and is
 /// kept in sync by a DB trigger — the visibility layer filters on it.
 model VendorOffer {
-  id                    String      @id @default(cuid())
+  id                    String           @id @default(cuid())
   vendorCompanyId       String
   sellerType            SellerType
   packagingUnitId       String
   countryId             String // country the offer is sold from
   vendorSku             String?
-  status                OfferStatus @default(PENDING_APPROVAL)
+  status                OfferStatus      @default(PENDING_APPROVAL)
   reviewNote            String?
   reviewedById          String?
   reviewedAt            DateTime?
-  minOrderQty           Int         @default(1)
-  qtyStep               Int         @default(1)
-  leadTimeDays          Int         @default(1)
+  minOrderQty           Int              @default(1)
+  qtyStep               Int              @default(1)
+  leadTimeDays          Int              @default(1)
   /// Phase 28: paused because a required certificate for its category is missing / expired
   compliancePausedAt    DateTime?
   compliancePauseReason String?
-  createdAt             DateTime    @default(now())
-  updatedAt             DateTime    @updatedAt
+  /// Phase 41: sold by weight (price per kg = unit price ÷ cwNominalKg). Null = normal product.
+  cwMode                CatchWeightMode?
+  cwNominalKg           Decimal?         @db.Decimal(10, 3)
+  cwMinKg               Decimal?         @db.Decimal(10, 3)
+  cwMaxKg               Decimal?         @db.Decimal(10, 3)
+  /// Supplier's own (tighter) over-weight limit, %; FIRINGI's limit applies when null or higher.
+  cwMaxOverPct          Decimal?         @db.Decimal(5, 2)
+  /// Item code on the supplier's scale labels (EAN-13 starting 2x).
+  cwPlu                 String?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
 
   vendor              Company              @relation(fields: [vendorCompanyId], references: [id])
   packaging           PackagingUnit        @relation(fields: [packagingUnitId], references: [id])

@@ -853,7 +853,9 @@
     "Clearance Deals": "Utsalgstilbud",
     "Scan to Reorder": "Skann og bestill på nytt",
     "Returnables": "Returemballasje",
-    "Empties & Deposits": "Tomgods og pant"
+    "Empties & Deposits": "Tomgods og pant",
+    "Sold by Weight": "Salg etter Vekt",
+    "Weighing": "Veiing"
   },
   "delivery": {
     "title": "Levering",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Pant beholdt for tomgods som ikke er levert",
       "body": "{items} ({customer}, fra {supplier}) ble holdt i over {days} dager: panten beholdes som pris."
+    },
+    "catchweight_over_limit": {
+      "title": "Tyngre enn bestilt: {number}",
+      "body": "{product} veier {weighed} kg (grense {max} kg). Du betaler maks grensen, med mindre du godtar ekstravekten."
+    },
+    "catchweight_over_accepted": {
+      "title": "Ekstravekt godtatt: {number}",
+      "body": "Kunden godtok vekten over grensen. Fakturaen bruker den faktiske vekten."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Inngående saldo",
     "saveCorrection": "Lagre retting",
     "manageItems": "Returvarer og produktkoblinger →"
+  },
+  "catchWeight": {
+    "saved": "Lagret",
+    "sellBy": "Salg",
+    "modeNone": "Per stykk (ikke etter vekt)",
+    "modePiece": "Per stykk, pris per kg",
+    "modeKg": "Per kilo",
+    "avgWeight": "Snittvekt per stykk (kg)",
+    "unitWeight": "Vekt per enhet (kg)",
+    "yourLimit": "Din grense for overvekt (%, FIRINGIs er {pct})",
+    "minKg": "Letteste stykk (kg)",
+    "maxKg": "Tyngste stykk (kg)",
+    "plu": "Varekode på vektetikettene dine",
+    "perKgHint": "Pris per kg: {price} (enhetsprisen ÷ vekten).",
+    "keepPerKgNote": "Endrer du vekten, beholdes kiloprisen: enhetsprisene endres med den.",
+    "save": "Lagre",
+    "pieceN": "Stykk {n} (kg)",
+    "totalKg": "Totalvekt (kg)",
+    "remove": "Fjern",
+    "addPiece": "Legg til et stykk",
+    "addWeight": "Legg til en vekt",
+    "saveWeights": "Lagre vektene",
+    "totalIs": "Totalt: {kg} kg",
+    "scanLabel": "Skann en vektetikett",
+    "scanBtn": "Skann",
+    "scanOk": "+ {kg} kg — {pieces} stykk, {total} kg totalt",
+    "scan": {
+      "NOT_A_LABEL": "Dette er ikke en vektetikett med vekt.",
+      "WRONG_ITEM": "Denne etiketten hører til et annet produkt.",
+      "NOT_SOLD_BY_WEIGHT": "Dette produktet selges ikke etter vekt."
+    },
+    "weighed": "Vekter lagret",
+    "acceptOver": "Godta ekstravekten",
+    "stopTitle": "Selges etter vekt",
+    "weighedKg": "veid {kg} kg",
+    "estimatedKg": "ca. {kg} kg",
+    "newWeightFor": "Ny vekt for {product} (kg)",
+    "customerAccepts": "Kunden godtar vekten over grensen",
+    "badge": "Etter vekt",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Selges etter vekt",
+    "incTax": "inkl. {tax}",
+    "exTax": "ekskl. {tax}",
+    "range": "(fra {min} til {max} kg)",
+    "pieceInfo": "Hvert stykk veier ca. {kg} kg{range}. Prisen som vises gjelder {kg} kg.",
+    "kgInfo": "Selges per kilo: én enhet = {kg} kg.",
+    "howBilled": "Du betaler den faktiske vekten, veid av leverandøren. Er den over grensen, betaler du bare mer hvis du godtar det.",
+    "cartNote": "ca. {kg} kg · endelig pris etter vekt",
+    "orderTitle": "Selges etter vekt",
+    "orderIntroBuyer": "Disse produktene veies før levering. Du betaler det veide beløpet; over grensen bare hvis du godtar det.",
+    "bufferNote": "Forskuddsbetalingen inkluderer {amount} for vektforskjellen. Det som ikke brukes, står som kreditt til de neste fakturaene dine.",
+    "state": {
+      "estimate": "Ikke veid ennå",
+      "weighed": "Veid",
+      "capped": "Over grensen",
+      "accepted": "Ekstra godtatt"
+    },
+    "estimated": "Bestilt (ca.)",
+    "weighedCol": "Veid",
+    "billed": "Fakturert",
+    "perKgCol": "Pris",
+    "overBuyer": "Tyngre enn bestilt: du betaler maks {max} kg ({pct} % mer), med mindre du godtar ekstravekten.",
+    "overSeller": "Over grensen på {pct} %: kunden betaler {max} kg, med mindre kunden godtar det ekstra.",
+    "piecesList": "Stykker: {list}",
+    "history": "Veiinger",
+    "source": {
+      "PICK": "Plukking",
+      "SCAN": "Vektetikett",
+      "SUPPLIER": "Ordreside",
+      "DRIVER": "Sjåfør ved levering"
+    },
+    "productsTitle": "Salg etter vekt",
+    "productsIntro": "Kjøtt, fisk, ost… solgt per kg. Velg hvordan hvert produkt selges: per stykk (med snittvekt) eller per kilo. Kunden betaler den faktiske vekten du veier.",
+    "productsLimit": "FIRINGIs grense for overvekt: {pct} %. Du kan sette en strengere per produkt.",
+    "labelsInfo": "Vektetiketter: EAN-13 som starter med {prefixes} (varekode på {digits} siffer, deretter vekten), eller GS1-etiketter med nettovekt.",
+    "noProducts": "Ingen produkter ennå.",
+    "weighingTitle": "Veiing",
+    "weighingIntro": "Ordrer med produkter etter vekt som fortsatt må veies, og hvordan vektene dine står seg mot det kundene bestiller.",
+    "toWeighTitle": "Skal veies",
+    "noneToWeigh": "Ingenting å veie.",
+    "openOrder": "Åpne",
+    "reportTitle": "Vektene dine (siste 90 dager)",
+    "noReport": "Ingen veide leveranser ennå.",
+    "col": {
+      "product": "Produkt",
+      "estimated": "Bestilte kg",
+      "weighed": "Veide kg",
+      "billed": "Fakturerte kg",
+      "lines": "Linjer",
+      "capped": "Begrenset",
+      "variance": "Differanse",
+      "date": "Levering"
+    },
+    "cartTotalNote": "Inneholder produkter etter vekt: totalen er et anslag. Fakturaen bruker den faktiske vekten."
   }
 }

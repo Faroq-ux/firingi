@@ -853,7 +853,9 @@
     "Clearance Deals": "Išpardavimo pasiūlymai",
     "Scan to Reorder": "Nuskaityti ir užsakyti vėl",
     "Returnables": "Grąžinama tara",
-    "Empties & Deposits": "Tara ir užstatas"
+    "Empties & Deposits": "Tara ir užstatas",
+    "Sold by Weight": "Pardavimas pagal Svorį",
+    "Weighing": "Svėrimas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Užstatas paliktas už negrąžintą tarą",
       "body": "{items} ({customer}, iš {supplier}) laikyta ilgiau nei {days} d.: užstatas paliekamas kaip kaina."
+    },
+    "catchweight_over_limit": {
+      "title": "Sunkiau nei užsakyta: {number}",
+      "body": "{product} sveria {weighed} kg (riba {max} kg). Mokate ne daugiau nei riba, nebent sutinkate su papildomu svoriu."
+    },
+    "catchweight_over_accepted": {
+      "title": "Papildomas svoris priimtas: {number}",
+      "body": "Klientas sutiko su svoriu virš ribos. Sąskaitoje naudojamas tikrasis svoris."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Pradinis likutis",
     "saveCorrection": "Išsaugoti pataisymą",
     "manageItems": "Grąžinamos taros elementai ir sąsajos su produktais →"
+  },
+  "catchWeight": {
+    "saved": "Išsaugota",
+    "sellBy": "Pardavimas",
+    "modeNone": "Vienetais (ne pagal svorį)",
+    "modePiece": "Vienetais, kaina už kg",
+    "modeKg": "Kilogramais",
+    "avgWeight": "Vidutinis gabalo svoris (kg)",
+    "unitWeight": "Vieno vieneto svoris (kg)",
+    "yourLimit": "Jūsų viršsvorio riba (%, FIRINGI riba – {pct})",
+    "minKg": "Lengviausias gabalas (kg)",
+    "maxKg": "Sunkiausias gabalas (kg)",
+    "plu": "Prekės kodas jūsų svarstyklių etiketėse",
+    "perKgHint": "Kaina už kg: {price} (jūsų vieneto kaina ÷ svoris).",
+    "keepPerKgNote": "Pakeitus svorį, kaina už kg išlieka: vienetų kainos keičiasi kartu.",
+    "save": "Išsaugoti",
+    "pieceN": "Gabalas {n} (kg)",
+    "totalKg": "Bendras svoris (kg)",
+    "remove": "Pašalinti",
+    "addPiece": "Pridėti gabalą",
+    "addWeight": "Pridėti svorį",
+    "saveWeights": "Išsaugoti svorius",
+    "totalIs": "Iš viso: {kg} kg",
+    "scanLabel": "Nuskaityti svarstyklių etiketę",
+    "scanBtn": "Nuskaityti",
+    "scanOk": "+ {kg} kg — {pieces} gab., iš viso {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "Tai ne svarstyklių etiketė su svoriu.",
+      "WRONG_ITEM": "Ši etiketė priklauso kitai prekei.",
+      "NOT_SOLD_BY_WEIGHT": "Ši prekė neparduodama pagal svorį."
+    },
+    "weighed": "Svoriai išsaugoti",
+    "acceptOver": "Priimti papildomą svorį",
+    "stopTitle": "Parduodama pagal svorį",
+    "weighedKg": "pasverta {kg} kg",
+    "estimatedKg": "apie {kg} kg",
+    "newWeightFor": "Naujas svoris: {product} (kg)",
+    "customerAccepts": "Klientas sutinka su svoriu virš ribos",
+    "badge": "Pagal svorį",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Parduodama pagal svorį",
+    "incTax": "su {tax}",
+    "exTax": "be {tax}",
+    "range": "(nuo {min} iki {max} kg)",
+    "pieceInfo": "Kiekvienas gabalas sveria apie {kg} kg{range}. Nurodyta kaina – už {kg} kg.",
+    "kgInfo": "Parduodama kilogramais: vienas vienetas = {kg} kg.",
+    "howBilled": "Mokate už tikrąjį svorį, kurį pasveria tiekėjas. Jei jis viršija ribą, mokate daugiau tik sutikę.",
+    "cartNote": "apie {kg} kg · galutinė kaina pagal svorį",
+    "orderTitle": "Parduodama pagal svorį",
+    "orderIntroBuyer": "Šios prekės pasveriamos prieš pristatymą. Mokate pasvertą sumą; virš ribos – tik sutikę.",
+    "bufferNote": "Išankstinis mokėjimas apima {amount} svorio skirtumui. Nepanaudota dalis lieka kaip kreditas kitoms sąskaitoms.",
+    "state": {
+      "estimate": "Dar nepasverta",
+      "weighed": "Pasverta",
+      "capped": "Virš ribos",
+      "accepted": "Perteklius priimtas"
+    },
+    "estimated": "Užsakyta (apie)",
+    "weighedCol": "Pasverta",
+    "billed": "Sąskaitoje",
+    "perKgCol": "Kaina",
+    "overBuyer": "Sunkiau nei užsakyta: mokate ne daugiau kaip {max} kg ({pct} % daugiau), nebent sutinkate su papildomu svoriu.",
+    "overSeller": "Virš {pct} % ribos: klientas moka už {max} kg, nebent sutinka su pertekliumi.",
+    "piecesList": "Gabalai: {list}",
+    "history": "Svėrimai",
+    "source": {
+      "PICK": "Komplektavimas",
+      "SCAN": "Svarstyklių etiketė",
+      "SUPPLIER": "Užsakymo puslapis",
+      "DRIVER": "Vairuotojas pristatant"
+    },
+    "productsTitle": "Pardavimas pagal svorį",
+    "productsIntro": "Mėsa, žuvis, sūris… parduodami už kg. Pasirinkite, kaip parduodate kiekvieną prekę: gabalais (su vidutiniu svoriu) ar kilogramais. Klientas moka už tikrąjį jūsų pasvertą svorį.",
+    "productsLimit": "FIRINGI viršsvorio riba: {pct} %. Kiekvienai prekei galite nustatyti griežtesnę.",
+    "labelsInfo": "Svarstyklių etiketės: EAN-13, prasidedantis {prefixes} ({digits} skaitmenų prekės kodas, tada svoris), arba GS1 etiketės su grynuoju svoriu.",
+    "noProducts": "Prekių dar nėra.",
+    "weighingTitle": "Svėrimas",
+    "weighingIntro": "Užsakymai su prekėmis pagal svorį, kurias dar reikia pasverti, ir kaip jūsų svoriai atitinka užsakytus.",
+    "toWeighTitle": "Pasverti",
+    "noneToWeigh": "Nėra ką sverti.",
+    "openOrder": "Atidaryti",
+    "reportTitle": "Jūsų svoriai (paskutinės 90 dienų)",
+    "noReport": "Pasvertų pristatymų dar nėra.",
+    "col": {
+      "product": "Prekė",
+      "estimated": "Užsakyta kg",
+      "weighed": "Pasverta kg",
+      "billed": "Sąskaitoje kg",
+      "lines": "Eilutės",
+      "capped": "Apribota",
+      "variance": "Skirtumas",
+      "date": "Pristatymas"
+    },
+    "cartTotalNote": "Apima prekes pagal svorį: ši suma yra apytikslė. Sąskaitoje naudojamas tikrasis svoris."
   }
 }

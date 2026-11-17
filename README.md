@@ -662,6 +662,28 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Sold by weight — catch-weight (Phase 41)
+
+Code: `src/lib/catch-weight.ts` (rules, scale-label parser), `src/server/catchweight/service.ts`; details `docs/catch-weight.md`.
+- **The supplier chooses per product** (*Products › Sold by Weight*): **by the piece, priced per kg** (a whole salmon ≈
+  3,5 kg, a 2 kg cheese block — with an average weight and optional lightest/heaviest piece) or **by the kilo**. Prices
+  stay per unit (the estimate), so the catalogue, promotions, deals and checkout work as before; the price per kg is
+  shown to customers on the product page, product cards and in the cart ("≈ 10 kg · final price by weight").
+- **Weighing — all four ways**: typed per piece at **picking** or on the **order page**, **scale labels** scanned
+  (EAN-13 starting 28/29 with the weight, GS1-128 / DataMatrix with AI 310n — at picking the scan also counts the
+  piece), and the **driver** can weigh again at the stop (online and offline). Every weighing is kept (history).
+- **Billed on the real weight**: lighter → the customer pays less; heavier → at most the **over-weight limit** (FIRINGI
+  per country, default 10 %; suppliers can only set a tighter one per product) unless the customer **accepts the extra**
+  (order page, or ticked by the driver at the stop). The customer is notified when a weighing goes over the limit.
+- **Money**: the order, FIRINGI's invoice (units kept, weight and €/kg in the line text, exact for Moloni) and the
+  supplier's statement all follow the billed weight; commission and the supplier's payout too. Credit notes, returns and
+  claims still work per unit.
+- **Pay before shipping — estimate + buffer**: these customers pay the total + a buffer % on sold-by-weight lines
+  (FIRINGI setting, default 10 %); the delivery invoice is paid from it and the unused part stays as credit.
+- **FIRINGI** (*Orders › Sold by Weight*, *Settings › Sold by Weight*): weights per supplier (real vs ordered, capped
+  lines), open orders, limits per country, the buffer, driver corrections, **weigh before dispatch**, scale-label format.
+- Tests: `tests/unit/catch-weight.test.ts`, `tests/integration/catch-weight.test.ts`, browser `tests/e2e/catch-weight.mjs`. Screenshots `docs/screenshots/cw-*.png`.
+
 ## Returnables & deposits (Phase 40)
 
 Code: `src/lib/returnables.ts` (rules), `src/server/returnables/service.ts`; details `docs/returnables.md`.

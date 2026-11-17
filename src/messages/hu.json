@@ -853,7 +853,9 @@
     "Clearance Deals": "Kiárusítási ajánlatok",
     "Scan to Reorder": "Beolvasás és újrarendelés",
     "Returnables": "Visszaváltható göngyöleg",
-    "Empties & Deposits": "Göngyöleg és betétdíj"
+    "Empties & Deposits": "Göngyöleg és betétdíj",
+    "Sold by Weight": "Súlyra Értékesítés",
+    "Weighing": "Mérés"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Betétdíj megtartva vissza nem adott göngyöleg miatt",
       "body": "{items} ({customer}, {supplier}) több mint {days} napig maradt: a betétdíj vételárként megmarad."
+    },
+    "catchweight_over_limit": {
+      "title": "Nehezebb a rendeltnél: {number}",
+      "body": "{product} súlya {weighed} kg (határ {max} kg). Legfeljebb a határt fizeti, hacsak el nem fogadja a többletsúlyt."
+    },
+    "catchweight_over_accepted": {
+      "title": "Többletsúly elfogadva: {number}",
+      "body": "A vevő elfogadta a határ feletti súlyt. A számla a valós súlyt használja."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Nyitó egyenleg",
     "saveCorrection": "Javítás mentése",
     "manageItems": "Göngyölegtételek és termékkapcsolatok →"
+  },
+  "catchWeight": {
+    "saved": "Mentve",
+    "sellBy": "Értékesítés",
+    "modeNone": "Darabra (nem súlyra)",
+    "modePiece": "Darabra, kilós áron",
+    "modeKg": "Kilóra",
+    "avgWeight": "Egy darab átlagsúlya (kg)",
+    "unitWeight": "Egy egység súlya (kg)",
+    "yourLimit": "Az Ön túlsúlyhatára (%, a FIRINGI-é {pct})",
+    "minKg": "Legkönnyebb darab (kg)",
+    "maxKg": "Legnehezebb darab (kg)",
+    "plu": "Cikkszám a mérlegcímkéken",
+    "perKgHint": "Kilóár: {price} (az egységár ÷ a súly).",
+    "keepPerKgNote": "A súly módosításakor a kilóár marad: az egységárak vele együtt változnak.",
+    "save": "Mentés",
+    "pieceN": "{n}. darab (kg)",
+    "totalKg": "Összsúly (kg)",
+    "remove": "Eltávolítás",
+    "addPiece": "Darab hozzáadása",
+    "addWeight": "Súly hozzáadása",
+    "saveWeights": "Súlyok mentése",
+    "totalIs": "Összesen: {kg} kg",
+    "scanLabel": "Mérlegcímke beolvasása",
+    "scanBtn": "Beolvasás",
+    "scanOk": "+ {kg} kg — {pieces} darab, összesen {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "Ez nem súlyt tartalmazó mérlegcímke.",
+      "WRONG_ITEM": "Ez a címke egy másik termékhez tartozik.",
+      "NOT_SOLD_BY_WEIGHT": "Ezt a terméket nem súlyra árusítják."
+    },
+    "weighed": "Súlyok mentve",
+    "acceptOver": "A többletsúly elfogadása",
+    "stopTitle": "Súlyra árusítva",
+    "weighedKg": "mért súly {kg} kg",
+    "estimatedKg": "kb. {kg} kg",
+    "newWeightFor": "{product} új súlya (kg)",
+    "customerAccepts": "A vevő elfogadja a határ feletti súlyt",
+    "badge": "Súlyra",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Súlyra árusítva",
+    "incTax": "{tax}-val",
+    "exTax": "{tax} nélkül",
+    "range": "({min}–{max} kg)",
+    "pieceInfo": "Minden darab kb. {kg} kg{range}. A feltüntetett ár {kg} kg-ra vonatkozik.",
+    "kgInfo": "Kilóra árusítva: egy egység = {kg} kg.",
+    "howBilled": "A valós, a szállító által mért súlyt fizeti. Ha meghaladja a határt, csak az Ön elfogadásával fizet többet.",
+    "cartNote": "kb. {kg} kg · végső ár a súly szerint",
+    "orderTitle": "Súlyra árusítva",
+    "orderIntroBuyer": "Ezeket a termékeket szállítás előtt mérik le. A mért összeget fizeti; a határ felett csak elfogadás esetén.",
+    "bufferNote": "Az előleg {amount} összeget tartalmaz a súlykülönbségre. A fel nem használt rész jóváírásként marad a következő számláihoz.",
+    "state": {
+      "estimate": "Még nincs lemérve",
+      "weighed": "Lemérve",
+      "capped": "A határ felett",
+      "accepted": "Többlet elfogadva"
+    },
+    "estimated": "Rendelt (kb.)",
+    "weighedCol": "Lemérve",
+    "billed": "Számlázva",
+    "perKgCol": "Ár",
+    "overBuyer": "Nehezebb a rendeltnél: legfeljebb {max} kg-ot fizet ({pct} %-kal többet), hacsak el nem fogadja a többletsúlyt.",
+    "overSeller": "A {pct} %-os határ felett: a vevő {max} kg-ot fizet, hacsak el nem fogadja a többletet.",
+    "piecesList": "Darabok: {list}",
+    "history": "Mérések",
+    "source": {
+      "PICK": "Komissiózás",
+      "SCAN": "Mérlegcímke",
+      "SUPPLIER": "Rendelés oldala",
+      "DRIVER": "Sofőr a kiszállításkor"
+    },
+    "productsTitle": "Súlyra értékesítés",
+    "productsIntro": "Hús, hal, sajt… kilós áron. Válassza ki, hogyan árusítja az egyes termékeket: darabra (átlagsúllyal) vagy kilóra. A vevő az Ön által mért valós súlyt fizeti.",
+    "productsLimit": "A FIRINGI túlsúlyhatára: {pct} %. Termékenként szigorúbbat is beállíthat.",
+    "labelsInfo": "Mérlegcímkék: {prefixes} kezdetű EAN-13 ({digits} jegyű cikkszám, majd a súly), vagy nettó súlyt tartalmazó GS1 címkék.",
+    "noProducts": "Még nincsenek termékek.",
+    "weighingTitle": "Mérés",
+    "weighingIntro": "Súlyra árusított termékeket tartalmazó, még lemérendő rendelések, és hogyan viszonyulnak súlyai a rendeltekhez.",
+    "toWeighTitle": "Lemérendő",
+    "noneToWeigh": "Nincs mit lemérni.",
+    "openOrder": "Megnyitás",
+    "reportTitle": "Az Ön súlyai (utolsó 90 nap)",
+    "noReport": "Még nincs lemért szállítás.",
+    "col": {
+      "product": "Termék",
+      "estimated": "Rendelt kg",
+      "weighed": "Mért kg",
+      "billed": "Számlázott kg",
+      "lines": "Tételek",
+      "capped": "Korlátozva",
+      "variance": "Eltérés",
+      "date": "Szállítás"
+    },
+    "cartTotalNote": "Súlyra árusított termékeket tartalmaz: ez az összeg becslés. A számla a valós súlyt használja."
   }
 }

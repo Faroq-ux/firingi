@@ -9,6 +9,9 @@ import { VerifiedBadges } from "@/components/compliance/badges";
 import { offerReturnables } from "@/server/returnables/service";
 import { ProductReturnables } from "@/components/returnables/views";
 import { rtLabels } from "@/components/returnables/labels";
+import { offerCatchWeight } from "@/server/catchweight/service";
+import { CwBadge } from "@/components/catchweight/views";
+import { cwLabels } from "@/components/catchweight/labels";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -30,6 +33,9 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
   // Phase 40: "+ deposit" / "refill" when the product comes with returnables
   const rt = (await offerReturnables([item.offerId], locale))[item.offerId] ?? [];
   const rl = rt.length ? (await rtLabels()).l : null;
+  // Phase 41: "By weight · 6,75 €/kg"
+  const cw = (await offerCatchWeight([item.offerId])).get(item.offerId) ?? null;
+  const cl = cw ? (await cwLabels()).l : null;
   return (
     <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
@@ -45,6 +51,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />
           {item.price && item.price.scope !== "BASE" && <Badge className="mt-1">{t(`priceScope.${item.price.scope}`)}</Badge>}
+          {cw && cl && <div className="mt-1"><CwBadge l={cl} locale={locale} cw={cw} unitGross={item.price ? Number(item.price.unitPriceGross) : null} /></div>}
           {rl && <div className="mt-1"><ProductReturnables l={rl} locale={locale} items={rt} compact /></div>}
           {showVendor && <VerifiedBadges badges={item.vendor.badges} max={2} className="mt-2" />}
           <div className="mt-2 flex items-center justify-between gap-2 text-xs">

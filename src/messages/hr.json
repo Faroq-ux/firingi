@@ -853,7 +853,9 @@
     "Clearance Deals": "Ponude rasprodaje",
     "Scan to Reorder": "Skeniraj i naruči ponovno",
     "Returnables": "Povratna ambalaža",
-    "Empties & Deposits": "Ambalaža i depoziti"
+    "Empties & Deposits": "Ambalaža i depoziti",
+    "Sold by Weight": "Prodaja po Težini",
+    "Weighing": "Vaganje"
   },
   "delivery": {
     "title": "Dostava",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Zadržan depozit za nevraćenu ambalažu",
       "body": "{items} ({customer}, od {supplier}) zadržano dulje od {days} dana: depozit se zadržava kao cijena."
+    },
+    "catchweight_over_limit": {
+      "title": "Teže od naručenog: {number}",
+      "body": "{product} teži {weighed} kg (granica {max} kg). Plaćate najviše granicu, osim ako prihvatite dodatnu težinu."
+    },
+    "catchweight_over_accepted": {
+      "title": "Dodatna težina prihvaćena: {number}",
+      "body": "Kupac je prihvatio težinu iznad granice. Račun koristi stvarnu težinu."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Početno stanje",
     "saveCorrection": "Spremi ispravak",
     "manageItems": "Artikli povratne ambalaže i veze s proizvodima →"
+  },
+  "catchWeight": {
+    "saved": "Spremljeno",
+    "sellBy": "Prodaja",
+    "modeNone": "Po komadu (ne po težini)",
+    "modePiece": "Po komadu, cijena po kg",
+    "modeKg": "Na kilogram",
+    "avgWeight": "Prosječna težina komada (kg)",
+    "unitWeight": "Težina jedne jedinice (kg)",
+    "yourLimit": "Vaša granica prekomjerne težine (%, FIRINGI-jeva je {pct})",
+    "minKg": "Najlakši komad (kg)",
+    "maxKg": "Najteži komad (kg)",
+    "plu": "Šifra artikla na naljepnicama vaše vage",
+    "perKgHint": "Cijena po kg: {price} (vaša jedinična cijena ÷ težina).",
+    "keepPerKgNote": "Promjena težine zadržava cijenu po kg: jedinične cijene mijenjaju se s njom.",
+    "save": "Spremi",
+    "pieceN": "Komad {n} (kg)",
+    "totalKg": "Ukupna težina (kg)",
+    "remove": "Ukloni",
+    "addPiece": "Dodaj komad",
+    "addWeight": "Dodaj težinu",
+    "saveWeights": "Spremi težine",
+    "totalIs": "Ukupno: {kg} kg",
+    "scanLabel": "Skeniraj naljepnicu vage",
+    "scanBtn": "Skeniraj",
+    "scanOk": "+ {kg} kg — {pieces} komada, ukupno {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "Ovo nije naljepnica vage s težinom.",
+      "WRONG_ITEM": "Ova naljepnica pripada drugom proizvodu.",
+      "NOT_SOLD_BY_WEIGHT": "Ovaj se proizvod ne prodaje po težini."
+    },
+    "weighed": "Težine spremljene",
+    "acceptOver": "Prihvati dodatnu težinu",
+    "stopTitle": "Prodaje se po težini",
+    "weighedKg": "izvagano {kg} kg",
+    "estimatedKg": "oko {kg} kg",
+    "newWeightFor": "Nova težina za {product} (kg)",
+    "customerAccepts": "Kupac prihvaća težinu iznad granice",
+    "badge": "Po težini",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Prodaje se po težini",
+    "incTax": "s {tax}",
+    "exTax": "bez {tax}",
+    "range": "(od {min} do {max} kg)",
+    "pieceInfo": "Svaki komad teži oko {kg} kg{range}. Prikazana cijena je za {kg} kg.",
+    "kgInfo": "Prodaje se na kilogram: jedna jedinica = {kg} kg.",
+    "howBilled": "Plaćate stvarnu težinu koju izvaže dobavljač. Ako je iznad granice, plaćate više samo ako prihvatite.",
+    "cartNote": "oko {kg} kg · konačna cijena po težini",
+    "orderTitle": "Prodaje se po težini",
+    "orderIntroBuyer": "Ovi se proizvodi važu prije isporuke. Plaćate izvagani iznos; iznad granice samo ako prihvatite.",
+    "bufferNote": "Plaćanje unaprijed uključuje {amount} za razliku u težini. Neiskorišteno ostaje kao kredit za vaše sljedeće račune.",
+    "state": {
+      "estimate": "Još nije izvagano",
+      "weighed": "Izvagano",
+      "capped": "Iznad granice",
+      "accepted": "Višak prihvaćen"
+    },
+    "estimated": "Naručeno (oko)",
+    "weighedCol": "Izvagano",
+    "billed": "Fakturirano",
+    "perKgCol": "Cijena",
+    "overBuyer": "Teže od naručenog: plaćate najviše {max} kg ({pct} % više), osim ako prihvatite dodatnu težinu.",
+    "overSeller": "Iznad granice od {pct} %: kupac plaća {max} kg, osim ako prihvati višak.",
+    "piecesList": "Komadi: {list}",
+    "history": "Vaganja",
+    "source": {
+      "PICK": "Komisioniranje",
+      "SCAN": "Naljepnica vage",
+      "SUPPLIER": "Stranica narudžbe",
+      "DRIVER": "Vozač pri isporuci"
+    },
+    "productsTitle": "Prodaja po težini",
+    "productsIntro": "Meso, riba, sir… prodaju se po kg. Odaberite kako prodajete svaki proizvod: po komadu (s prosječnom težinom) ili na kilogram. Kupac plaća stvarnu težinu koju izvažete.",
+    "productsLimit": "FIRINGI-jeva granica prekomjerne težine: {pct} %. Za svaki proizvod možete postaviti strožu.",
+    "labelsInfo": "Naljepnice vage: EAN-13 koji počinje s {prefixes} (šifra artikla od {digits} znamenki, zatim težina) ili GS1 naljepnice s neto težinom.",
+    "noProducts": "Još nema proizvoda.",
+    "weighingTitle": "Vaganje",
+    "weighingIntro": "Narudžbe s proizvodima po težini koje još treba izvagati i kako se vaše težine uspoređuju s naručenim.",
+    "toWeighTitle": "Za vaganje",
+    "noneToWeigh": "Ništa za vaganje.",
+    "openOrder": "Otvori",
+    "reportTitle": "Vaše težine (zadnjih 90 dana)",
+    "noReport": "Još nema izvaganih isporuka.",
+    "col": {
+      "product": "Proizvod",
+      "estimated": "Naručeni kg",
+      "weighed": "Izvagani kg",
+      "billed": "Fakturirani kg",
+      "lines": "Stavke",
+      "capped": "Ograničeno",
+      "variance": "Razlika",
+      "date": "Isporuka"
+    },
+    "cartTotalNote": "Uključuje proizvode po težini: ovaj je iznos procjena. Račun koristi stvarnu težinu."
   }
 }

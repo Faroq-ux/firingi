@@ -12,6 +12,7 @@ import {
 } from "@/server/actions/delivery";
 import type { ActionResult } from "@/server/actions/_action";
 import { EmptiesCounter, type StopItem } from "@/components/returnables/client";
+import { StopWeights, type StopWeightLine } from "@/components/catchweight/client";
 
 const sel = "h-9 rounded-md border border-input bg-background px-2 text-sm";
 
@@ -183,12 +184,17 @@ function SignaturePad({ onChange }: { onChange: (dataUrl: string | null) => void
   );
 }
 
-export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels }: { deliveryId: string; empties?: StopItem[]; emptiesLabels?: Record<string, string> }) {
+export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weights, weightLabels, locale }: {
+  deliveryId: string; empties?: StopItem[]; emptiesLabels?: Record<string, string>;
+  /** Phase 41: sold-by-weight lines the driver may weigh again */ weights?: { correction: boolean; lines: StopWeightLine[] }; weightLabels?: Record<string, string>; locale?: string;
+}) {
   const t = useTranslations("delivery");
   const { pending, error, run } = useAct();
   const [name, setName] = useState("");
   // Phase 40: empties taken back at the stop (refills: the empties swapped for the full ones)
   const [counted, setCounted] = useState<Record<string, number>>(Object.fromEntries((empties ?? []).map((i) => [i.typeId, i.kind === "EXCHANGE" ? Math.min(i.fullOut, i.held) : 0])));
+  const [kg, setKg] = useState<Record<string, string>>({});
+  const [acceptOver, setAcceptOver] = useState(false);
   const [sig, setSig] = useState<string | null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
   const { loc, ask } = useLocation();
@@ -200,6 +206,8 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels }: { d
       for (const p of photos) fd.append("photos", await shrink(p));
       if (loc) { fd.set("latitude", String(loc.lat)); fd.set("longitude", String(loc.lng)); }
       for (const i of empties ?? []) fd.set(`empty:${i.typeId}`, String(counted[i.typeId] ?? 0));
+      for (const [lineId, v] of Object.entries(kg)) if (v.trim()) fd.set(`weight:${lineId}`, v.trim());
+      if (acceptOver) fd.set("acceptOver", "true");
       return completeDeliveryAction(fd);
     });
   return (
@@ -207,6 +215,7 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels }: { d
       <div className="space-y-1"><Label htmlFor="recipientName">{t("recipientName")}</Label><Input id="recipientName" value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" /></div>
       <SignaturePad onChange={setSig} />
       {empties && empties.length > 0 && emptiesLabels && <EmptiesCounter l={emptiesLabels} items={empties} value={counted} onChange={setCounted} />}
+      {weights && weightLabels && <StopWeights l={weightLabels} locale={locale ?? "pt-PT"} lines={weights.lines} correction={weights.correction} value={kg} onChange={setKg} accept={acceptOver} onAccept={setAcceptOver} />}
       <div className="space-y-1"><Label htmlFor="photos">{t("addPhotos")}</Label><Input id="photos" type="file" accept="image/*" capture="environment" multiple onChange={(e) => setPhotos([...(e.target.files ?? [])].slice(0, 4))} /></div>
       <Button type="button" variant="outline" size="sm" onClick={ask} disabled={!!loc}>{loc ? t("locationAdded") : t("useLocation")}</Button>
       <Button className="h-12 w-full text-base" disabled={pending || name.trim().length < 2 || (!sig && !photos.length)} onClick={submit}>{t("confirmDelivery")}</Button>

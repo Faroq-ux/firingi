@@ -853,7 +853,9 @@
     "Clearance Deals": "Rýmingartilboð",
     "Scan to Reorder": "Skanna og panta aftur",
     "Returnables": "Skilaumbúðir",
-    "Empties & Deposits": "Umbúðir og skilagjald"
+    "Empties & Deposits": "Umbúðir og skilagjald",
+    "Sold by Weight": "Sala eftir Þyngd",
+    "Weighing": "Vigtun"
   },
   "delivery": {
     "title": "Afhending",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Skilagjaldi haldið fyrir óskilaðar umbúðir",
       "body": "{items} ({customer}, frá {supplier}) voru geymdar í meira en {days} daga: skilagjaldinu er haldið sem verði."
+    },
+    "catchweight_over_limit": {
+      "title": "Þyngra en pantað: {number}",
+      "body": "{product} vegur {weighed} kg (mörk {max} kg). Þú greiðir mest mörkin nema þú samþykkir aukaþyngdina."
+    },
+    "catchweight_over_accepted": {
+      "title": "Aukaþyngd samþykkt: {number}",
+      "body": "Viðskiptavinurinn samþykkti þyngd yfir mörkum. Reikningurinn notar raunþyngd."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Upphafsstaða",
     "saveCorrection": "Vista leiðréttingu",
     "manageItems": "Skilavörur og tengingar við vörur →"
+  },
+  "catchWeight": {
+    "saved": "Vistað",
+    "sellBy": "Sala",
+    "modeNone": "Í stykkjatali (ekki eftir þyngd)",
+    "modePiece": "Í stykkjum, verð á kg",
+    "modeKg": "Í kílóum",
+    "avgWeight": "Meðalþyngd stykkis (kg)",
+    "unitWeight": "Þyngd einnar einingar (kg)",
+    "yourLimit": "Þín yfirþyngdarmörk (%, mörk FIRINGI eru {pct})",
+    "minKg": "Léttasta stykki (kg)",
+    "maxKg": "Þyngsta stykki (kg)",
+    "plu": "Vörunúmer á vogarmiðum þínum",
+    "perKgHint": "Verð á kg: {price} (einingarverð ÷ þyngd).",
+    "keepPerKgNote": "Ef þú breytir þyngdinni helst kílóverðið: einingarverðin breytast með.",
+    "save": "Vista",
+    "pieceN": "Stykki {n} (kg)",
+    "totalKg": "Heildarþyngd (kg)",
+    "remove": "Fjarlægja",
+    "addPiece": "Bæta við stykki",
+    "addWeight": "Bæta við þyngd",
+    "saveWeights": "Vista þyngdir",
+    "totalIs": "Samtals: {kg} kg",
+    "scanLabel": "Skanna vogarmiða",
+    "scanBtn": "Skanna",
+    "scanOk": "+ {kg} kg — {pieces} stykki, {total} kg samtals",
+    "scan": {
+      "NOT_A_LABEL": "Þetta er ekki vogarmiði með þyngd.",
+      "WRONG_ITEM": "Þessi miði er fyrir aðra vöru.",
+      "NOT_SOLD_BY_WEIGHT": "Þessi vara er ekki seld eftir þyngd."
+    },
+    "weighed": "Þyngdir vistaðar",
+    "acceptOver": "Samþykkja aukaþyngdina",
+    "stopTitle": "Selt eftir þyngd",
+    "weighedKg": "vegið {kg} kg",
+    "estimatedKg": "um {kg} kg",
+    "newWeightFor": "Ný þyngd fyrir {product} (kg)",
+    "customerAccepts": "Viðskiptavinurinn samþykkir þyngd yfir mörkum",
+    "badge": "Eftir þyngd",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Selt eftir þyngd",
+    "incTax": "með {tax}",
+    "exTax": "án {tax}",
+    "range": "({min}–{max} kg)",
+    "pieceInfo": "Hvert stykki vegur um {kg} kg{range}. Verðið sem sýnt er miðast við {kg} kg.",
+    "kgInfo": "Selt í kílóum: ein eining = {kg} kg.",
+    "howBilled": "Þú greiðir raunþyngd sem birgirinn vigtar. Ef hún fer yfir mörkin greiðir þú aðeins meira ef þú samþykkir.",
+    "cartNote": "um {kg} kg · lokaverð eftir þyngd",
+    "orderTitle": "Selt eftir þyngd",
+    "orderIntroBuyer": "Þessar vörur eru vigtaðar fyrir afhendingu. Þú greiðir vigtaða upphæð; yfir mörkum aðeins ef þú samþykkir.",
+    "bufferNote": "Fyrirframgreiðslan inniheldur {amount} fyrir þyngdarmun. Það sem ekki er notað verður inneign á næstu reikninga.",
+    "state": {
+      "estimate": "Ekki vigtað enn",
+      "weighed": "Vigtað",
+      "capped": "Yfir mörkum",
+      "accepted": "Aukaþyngd samþykkt"
+    },
+    "estimated": "Pantað (um)",
+    "weighedCol": "Vigtað",
+    "billed": "Reikningsfært",
+    "perKgCol": "Verð",
+    "overBuyer": "Þyngra en pantað: þú greiðir mest {max} kg ({pct} % meira) nema þú samþykkir aukaþyngdina.",
+    "overSeller": "Yfir {pct} % mörkum: viðskiptavinurinn greiðir {max} kg nema hann samþykki aukann.",
+    "piecesList": "Stykki: {list}",
+    "history": "Vigtanir",
+    "source": {
+      "PICK": "Tínsla",
+      "SCAN": "Vogarmiði",
+      "SUPPLIER": "Pöntunarsíða",
+      "DRIVER": "Bílstjóri við afhendingu"
+    },
+    "productsTitle": "Sala eftir þyngd",
+    "productsIntro": "Kjöt, fiskur, ostur… seld á kílóverði. Veldu hvernig hver vara er seld: í stykkjum (með meðalþyngd) eða í kílóum. Viðskiptavinurinn greiðir raunþyngdina sem þú vigtar.",
+    "productsLimit": "Yfirþyngdarmörk FIRINGI: {pct} %. Þú getur sett strangari mörk fyrir hverja vöru.",
+    "labelsInfo": "Vogarmiðar: EAN-13 sem byrjar á {prefixes} (vörunúmer með {digits} tölustöfum, síðan þyngd) eða GS1 miðar með nettóþyngd.",
+    "noProducts": "Engar vörur enn.",
+    "weighingTitle": "Vigtun",
+    "weighingIntro": "Pantanir með vörum seldum eftir þyngd sem á eftir að vigta, og hvernig þyngdir þínar standast pantanir.",
+    "toWeighTitle": "Á eftir að vigta",
+    "noneToWeigh": "Ekkert að vigta.",
+    "openOrder": "Opna",
+    "reportTitle": "Þyngdir þínar (síðustu 90 dagar)",
+    "noReport": "Engar vigtaðar afhendingar enn.",
+    "col": {
+      "product": "Vara",
+      "estimated": "Pöntuð kg",
+      "weighed": "Vigtuð kg",
+      "billed": "Reikningsfærð kg",
+      "lines": "Línur",
+      "capped": "Takmarkað",
+      "variance": "Mismunur",
+      "date": "Afhending"
+    },
+    "cartTotalNote": "Inniheldur vörur seldar eftir þyngd: þessi upphæð er áætlun. Reikningurinn notar raunþyngd."
   }
 }

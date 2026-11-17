@@ -1498,6 +1498,14 @@
     "returnables_kept": {
       "title": "Deposit kept on empties not returned",
       "body": "{items} ({customer}, from {supplier}) were held more than {days} days: the deposit is kept as the price."
+    },
+    "catchweight_over_limit": {
+      "title": "Heavier than ordered: {number}",
+      "body": "{product} weighs {weighed} kg (limit {max} kg). You pay at most the limit unless you accept the extra weight."
+    },
+    "catchweight_over_accepted": {
+      "title": "Extra weight accepted: {number}",
+      "body": "The customer accepted the weight above the limit. The invoice uses the real weight."
     }
   },
   "notifications": {
@@ -4985,5 +4993,99 @@
     "openingBalance": "Opening balance",
     "saveCorrection": "Save correction",
     "manageItems": "Returnable items and product links →"
+  },
+  "catchWeight": {
+    "saved": "Saved",
+    "sellBy": "Sold",
+    "modeNone": "Per unit (not by weight)",
+    "modePiece": "By the piece, priced per kg",
+    "modeKg": "By the kilo",
+    "avgWeight": "Average weight of a piece (kg)",
+    "unitWeight": "Weight of one unit (kg)",
+    "yourLimit": "Your over-weight limit (%, FIRINGI's is {pct})",
+    "minKg": "Lightest piece (kg)",
+    "maxKg": "Heaviest piece (kg)",
+    "plu": "Item code on your scale labels",
+    "perKgHint": "Price per kg: {price} (your unit price ÷ the weight).",
+    "keepPerKgNote": "Changing the weight keeps your price per kg: your unit prices change with it.",
+    "save": "Save",
+    "pieceN": "Piece {n} (kg)",
+    "totalKg": "Total weight (kg)",
+    "remove": "Remove",
+    "addPiece": "Add a piece",
+    "addWeight": "Add a weight",
+    "saveWeights": "Save the weights",
+    "totalIs": "Total: {kg} kg",
+    "scanLabel": "Scan a scale label",
+    "scanBtn": "Scan",
+    "scanOk": "+ {kg} kg — {pieces} pieces, {total} kg in total",
+    "scan": {
+      "NOT_A_LABEL": "This isn't a scale label with a weight.",
+      "WRONG_ITEM": "This label is for another product.",
+      "NOT_SOLD_BY_WEIGHT": "This product isn't sold by weight."
+    },
+    "weighed": "Weights saved",
+    "acceptOver": "Accept the extra weight",
+    "stopTitle": "Sold by weight",
+    "weighedKg": "weighed {kg} kg",
+    "estimatedKg": "about {kg} kg",
+    "newWeightFor": "New weight for {product} (kg)",
+    "customerAccepts": "The customer accepts the weight above the limit",
+    "badge": "By weight",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Sold by weight",
+    "incTax": "incl. {tax}",
+    "exTax": "excl. {tax}",
+    "range": " (from {min} to {max} kg)",
+    "pieceInfo": "Each piece weighs about {kg} kg{range}. The price shown is for {kg} kg.",
+    "kgInfo": "Sold by the kilo: one unit = {kg} kg.",
+    "howBilled": "You pay the real weight, weighed by the supplier. If it is heavier than the limit, you only pay more if you accept.",
+    "cartNote": "about {kg} kg · final price by weight",
+    "orderTitle": "Sold by weight",
+    "orderIntroBuyer": "These products are weighed before delivery. You pay the weighed amount; above the limit, only if you accept.",
+    "bufferNote": "The advance payment includes {amount} for the weight difference. What isn't used stays as credit for your next invoices.",
+    "state": {
+      "estimate": "Not weighed yet",
+      "weighed": "Weighed",
+      "capped": "Above the limit",
+      "accepted": "Extra accepted"
+    },
+    "estimated": "Ordered (about)",
+    "weighedCol": "Weighed",
+    "billed": "Billed",
+    "perKgCol": "Price",
+    "overBuyer": "Heavier than ordered: you pay at most {max} kg ({pct} % more) unless you accept the extra weight.",
+    "overSeller": "Above the {pct} % limit: the customer pays {max} kg unless they accept the extra.",
+    "piecesList": "Pieces: {list}",
+    "history": "Weighings",
+    "source": {
+      "PICK": "Picking",
+      "SCAN": "Scale label",
+      "SUPPLIER": "Order page",
+      "DRIVER": "Driver at delivery"
+    },
+    "productsTitle": "Sold by weight",
+    "productsIntro": "Meat, fish, cheese… sold per kg. Choose how each product is sold: by the piece (with an average weight) or by the kilo. The customer pays the real weight you weigh.",
+    "productsLimit": "FIRINGI's over-weight limit: {pct} %. You can set a tighter one per product.",
+    "labelsInfo": "Scale labels: EAN-13 starting with {prefixes} (item code of {digits} digits, then the weight), or GS1 labels with the net weight.",
+    "noProducts": "No products yet.",
+    "weighingTitle": "Weighing",
+    "weighingIntro": "Orders with products sold by weight that still need weighing, and how your weights compare with what customers order.",
+    "toWeighTitle": "To weigh",
+    "noneToWeigh": "Nothing to weigh.",
+    "openOrder": "Open",
+    "reportTitle": "Your weights (last 90 days)",
+    "noReport": "No weighed deliveries yet.",
+    "col": {
+      "product": "Product",
+      "estimated": "Ordered kg",
+      "weighed": "Weighed kg",
+      "billed": "Billed kg",
+      "lines": "Lines",
+      "capped": "Capped",
+      "variance": "Difference",
+      "date": "Delivery"
+    },
+    "cartTotalNote": "Includes products sold by weight: this total is an estimate. The invoice uses the real weight."
   }
 }

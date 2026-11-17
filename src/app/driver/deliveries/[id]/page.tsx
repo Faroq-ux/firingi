@@ -12,6 +12,8 @@ import { CompleteDeliveryForm, FailDeliveryForm } from "@/components/delivery/de
 import { OrderChatPanel } from "@/components/chat/order-chat-panel";
 import { deliveryEmpties } from "@/server/returnables/service";
 import { rtLabels } from "@/components/returnables/labels";
+import { stopWeights } from "@/server/catchweight/service";
+import { cwLabels } from "@/components/catchweight/labels";
 
 export const metadata = { title: "Delivery" };
 
@@ -25,13 +27,16 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   // Phase 40: empties the driver can take back here (what the customer holds from this supplier + refills on the order)
   const rl = driverActions.includes("DELIVER") ? await rtLabels() : null;
   const empties = rl ? await deliveryEmpties(ctx, d.id, rl.locale) : [];
+  // Phase 41: products sold by weight — the driver can weigh again and note that the customer accepts extra weight
+  const cl = driverActions.includes("DELIVER") ? await cwLabels() : null;
+  const weights = cl ? await stopWeights(d.order.id, cl.locale) : null;
   return (
     <div className="mx-auto max-w-xl space-y-4">
       <Link href="/driver/deliveries/today" className="text-sm text-primary hover:underline">← {t("back")}</Link>
       <DriverDeliveryCard d={d} withActions={!driverActions.includes("DELIVER")} />
       <Card><CardHeader><CardTitle>{t("products")}</CardTitle></CardHeader><CardContent><DriverItems d={d} /></CardContent></Card>
       {driverActions.includes("DELIVER") && (
-        <Card><CardHeader><CardTitle>{t("proof")}</CardTitle></CardHeader><CardContent><CompleteDeliveryForm deliveryId={d.id} empties={empties} emptiesLabels={rl?.l} /></CardContent></Card>
+        <Card><CardHeader><CardTitle>{t("proof")}</CardTitle></CardHeader><CardContent><CompleteDeliveryForm deliveryId={d.id} empties={empties} emptiesLabels={rl?.l} weights={weights?.lines.length ? weights : undefined} weightLabels={cl?.l} locale={cl?.locale} /></CardContent></Card>
       )}
       {driverActions.includes("FAIL") && <FailDeliveryForm deliveryId={d.id} reasons={[...FAILURE_REASONS]} />}
       <div className="space-y-3 text-sm"><DeliveryEvidence d={d} /></div>

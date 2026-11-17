@@ -77,7 +77,8 @@ check("customer data kept on the phone", await until(async () => ((await kv(kb, 
 const snap = await kv(kb, "snap:buy");
 check("kept data has the customer's own prices, no commission", snap.buy.products.every((p) => typeof p.unitNet === "number") && !/commission|margin/i.test(JSON.stringify(snap)));
 await shot(kb, "app-01-buyer-bar");
-const gtin = sql(`select coalesce(pu.gtin, v.gtin) from "VendorOffer" o join "PackagingUnit" pu on pu.id=o."packagingUnitId" join "ProductVariant" v on v.id=pu."variantId" where o."vendorSku"='GRO-MOZZ2' and o.status='ACTIVE' limit 1`);
+// the offer the setup ordered: Lisboa Central's single 2 kg block (an unordered query could return another supplier's or the case)
+const gtin = sql(`select coalesce(pu.gtin, v.gtin) from "VendorOffer" o join "PackagingUnit" pu on pu.id=o."packagingUnitId" join "ProductVariant" v on v.id=pu."variantId" join "Membership" m on m."companyId"=o."vendorCompanyId" join "User" u on u.id=m."userId" where u.email='owner@lisboacentral.test' and v.sku='FIR-MOZZ2' and pu."unitsPerPack"=1 and o.status='ACTIVE' order by o."createdAt" limit 1`);
 const cartBefore = Number(sql(`select coalesce(sum(qty),0) from "CartItem" ci join "Cart" c on c.id=ci."cartId" where c."buyerCompanyId"='${kebab}'`));
 await go(kb, "/buy/orders/scan");
 await kb.getByTestId("reorder-scan").fill(gtin);

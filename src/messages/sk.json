@@ -853,7 +853,9 @@
     "Clearance Deals": "Výpredajové ponuky",
     "Scan to Reorder": "Naskenovať a objednať znova",
     "Returnables": "Vratné obaly",
-    "Empties & Deposits": "Obaly a zálohy"
+    "Empties & Deposits": "Obaly a zálohy",
+    "Sold by Weight": "Predaj na Váhu",
+    "Weighing": "Váženie"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Záloha prepadla za nevrátené obaly",
       "body": "{items} ({customer}, od {supplier}) držané dlhšie ako {days} dní: záloha prepadá ako cena."
+    },
+    "catchweight_over_limit": {
+      "title": "Ťažšie ako objednané: {number}",
+      "body": "{product} váži {weighed} kg (limit {max} kg). Zaplatíte najviac limit, ak neprijmete vyššiu hmotnosť."
+    },
+    "catchweight_over_accepted": {
+      "title": "Vyššia hmotnosť prijatá: {number}",
+      "body": "Zákazník prijal hmotnosť nad limit. Faktúra použije skutočnú hmotnosť."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Počiatočný zostatok",
     "saveCorrection": "Uložiť opravu",
     "manageItems": "Položky vratných obalov a prepojenia s produktmi →"
+  },
+  "catchWeight": {
+    "saved": "Uložené",
+    "sellBy": "Predaj",
+    "modeNone": "Na kusy (nie na váhu)",
+    "modePiece": "Na kusy, cena za kg",
+    "modeKg": "Na kilá",
+    "avgWeight": "Priemerná hmotnosť kusa (kg)",
+    "unitWeight": "Hmotnosť jednej jednotky (kg)",
+    "yourLimit": "Váš limit nadváhy (%, limit FIRINGI je {pct})",
+    "minKg": "Najľahší kus (kg)",
+    "maxKg": "Najťažší kus (kg)",
+    "plu": "Kód položky na etiketách vašej váhy",
+    "perKgHint": "Cena za kg: {price} (vaša jednotková cena ÷ hmotnosť).",
+    "keepPerKgNote": "Zmena hmotnosti zachová cenu za kg: jednotkové ceny sa zmenia s ňou.",
+    "save": "Uložiť",
+    "pieceN": "Kus {n} (kg)",
+    "totalKg": "Celková hmotnosť (kg)",
+    "remove": "Odstrániť",
+    "addPiece": "Pridať kus",
+    "addWeight": "Pridať hmotnosť",
+    "saveWeights": "Uložiť hmotnosti",
+    "totalIs": "Spolu: {kg} kg",
+    "scanLabel": "Naskenovať etiketu z váhy",
+    "scanBtn": "Skenovať",
+    "scanOk": "+ {kg} kg — {pieces} kusov, spolu {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "Toto nie je etiketa z váhy s hmotnosťou.",
+      "WRONG_ITEM": "Táto etiketa patrí inému výrobku.",
+      "NOT_SOLD_BY_WEIGHT": "Tento výrobok sa nepredáva na váhu."
+    },
+    "weighed": "Hmotnosti uložené",
+    "acceptOver": "Prijať vyššiu hmotnosť",
+    "stopTitle": "Predaj na váhu",
+    "weighedKg": "odvážené {kg} kg",
+    "estimatedKg": "asi {kg} kg",
+    "newWeightFor": "Nová hmotnosť pre {product} (kg)",
+    "customerAccepts": "Zákazník prijíma hmotnosť nad limit",
+    "badge": "Na váhu",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Predaj na váhu",
+    "incTax": "s {tax}",
+    "exTax": "bez {tax}",
+    "range": "(od {min} do {max} kg)",
+    "pieceInfo": "Každý kus váži asi {kg} kg{range}. Uvedená cena je za {kg} kg.",
+    "kgInfo": "Predaj na kilá: jedna jednotka = {kg} kg.",
+    "howBilled": "Platíte skutočnú hmotnosť odváženú dodávateľom. Ak je nad limitom, zaplatíte viac len so súhlasom.",
+    "cartNote": "asi {kg} kg · konečná cena podľa hmotnosti",
+    "orderTitle": "Predaj na váhu",
+    "orderIntroBuyer": "Tieto výrobky sa vážia pred doručením. Platíte odváženú sumu; nad limit len so súhlasom.",
+    "bufferNote": "Platba vopred obsahuje {amount} na rozdiel v hmotnosti. Nevyužitá časť zostane ako kredit na ďalšie faktúry.",
+    "state": {
+      "estimate": "Zatiaľ neodvážené",
+      "weighed": "Odvážené",
+      "capped": "Nad limitom",
+      "accepted": "Nadbytok prijatý"
+    },
+    "estimated": "Objednané (asi)",
+    "weighedCol": "Odvážené",
+    "billed": "Fakturované",
+    "perKgCol": "Cena",
+    "overBuyer": "Ťažšie ako objednané: zaplatíte najviac {max} kg (o {pct} % viac), ak neprijmete vyššiu hmotnosť.",
+    "overSeller": "Nad limitom {pct} %: zákazník platí {max} kg, ak neprijme nadbytok.",
+    "piecesList": "Kusy: {list}",
+    "history": "Váženia",
+    "source": {
+      "PICK": "Vychystávanie",
+      "SCAN": "Etiketa z váhy",
+      "SUPPLIER": "Stránka objednávky",
+      "DRIVER": "Vodič pri doručení"
+    },
+    "productsTitle": "Predaj na váhu",
+    "productsIntro": "Mäso, ryby, syry… predávané na kg. Zvoľte, ako predávate každý výrobok: na kusy (s priemernou hmotnosťou) alebo na kilá. Zákazník platí skutočnú hmotnosť, ktorú odvážite.",
+    "productsLimit": "Limit nadváhy FIRINGI: {pct} %. Pre každý výrobok môžete nastaviť prísnejší.",
+    "labelsInfo": "Etikety z váhy: EAN-13 začínajúce {prefixes} (kód položky s {digits} číslicami, potom hmotnosť), alebo etikety GS1 s čistou hmotnosťou.",
+    "noProducts": "Zatiaľ žiadne výrobky.",
+    "weighingTitle": "Váženie",
+    "weighingIntro": "Objednávky s výrobkami na váhu, ktoré treba ešte odvážiť, a porovnanie vašich hmotností s objednanými.",
+    "toWeighTitle": "Na odváženie",
+    "noneToWeigh": "Nič na odváženie.",
+    "openOrder": "Otvoriť",
+    "reportTitle": "Vaše hmotnosti (posledných 90 dní)",
+    "noReport": "Zatiaľ žiadne odvážené dodávky.",
+    "col": {
+      "product": "Výrobok",
+      "estimated": "Objednané kg",
+      "weighed": "Odvážené kg",
+      "billed": "Fakturované kg",
+      "lines": "Riadky",
+      "capped": "Obmedzené",
+      "variance": "Rozdiel",
+      "date": "Doručenie"
+    },
+    "cartTotalNote": "Obsahuje výrobky na váhu: tento súčet je odhad. Faktúra použije skutočnú hmotnosť."
   }
 }

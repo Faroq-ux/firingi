@@ -853,7 +853,9 @@
     "Clearance Deals": "Razprodajne ponudbe",
     "Scan to Reorder": "Skeniraj in znova naroči",
     "Returnables": "Povratna embalaža",
-    "Empties & Deposits": "Embalaža in kavcije"
+    "Empties & Deposits": "Embalaža in kavcije",
+    "Sold by Weight": "Prodaja po Teži",
+    "Weighing": "Tehtanje"
   },
   "delivery": {
     "title": "Dostava",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Kavcija zadržana za nevrnjeno embalažo",
       "body": "{items} ({customer}, od {supplier}) zadržano več kot {days} dni: kavcija se obdrži kot cena."
+    },
+    "catchweight_over_limit": {
+      "title": "Težje od naročenega: {number}",
+      "body": "{product} tehta {weighed} kg (meja {max} kg). Plačate največ mejo, razen če sprejmete dodatno težo."
+    },
+    "catchweight_over_accepted": {
+      "title": "Dodatna teža sprejeta: {number}",
+      "body": "Kupec je sprejel težo nad mejo. Račun uporabi dejansko težo."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Začetno stanje",
     "saveCorrection": "Shrani popravek",
     "manageItems": "Artikli povratne embalaže in povezave z izdelki →"
+  },
+  "catchWeight": {
+    "saved": "Shranjeno",
+    "sellBy": "Prodaja",
+    "modeNone": "Po kosih (ne po teži)",
+    "modePiece": "Po kosih, cena za kg",
+    "modeKg": "Na kilogram",
+    "avgWeight": "Povprečna teža kosa (kg)",
+    "unitWeight": "Teža ene enote (kg)",
+    "yourLimit": "Vaša meja prekomerne teže (%, FIRINGI-jeva je {pct})",
+    "minKg": "Najlažji kos (kg)",
+    "maxKg": "Najtežji kos (kg)",
+    "plu": "Šifra artikla na nalepkah vaše tehtnice",
+    "perKgHint": "Cena za kg: {price} (vaša cena na enoto ÷ teža).",
+    "keepPerKgNote": "Sprememba teže ohrani ceno za kg: cene na enoto se spremenijo z njo.",
+    "save": "Shrani",
+    "pieceN": "Kos {n} (kg)",
+    "totalKg": "Skupna teža (kg)",
+    "remove": "Odstrani",
+    "addPiece": "Dodaj kos",
+    "addWeight": "Dodaj težo",
+    "saveWeights": "Shrani teže",
+    "totalIs": "Skupaj: {kg} kg",
+    "scanLabel": "Skeniraj nalepko tehtnice",
+    "scanBtn": "Skeniraj",
+    "scanOk": "+ {kg} kg — {pieces} kosov, skupaj {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "To ni nalepka tehtnice s težo.",
+      "WRONG_ITEM": "Ta nalepka je za drug izdelek.",
+      "NOT_SOLD_BY_WEIGHT": "Ta izdelek se ne prodaja po teži."
+    },
+    "weighed": "Teže shranjene",
+    "acceptOver": "Sprejmi dodatno težo",
+    "stopTitle": "Prodaja po teži",
+    "weighedKg": "stehtano {kg} kg",
+    "estimatedKg": "približno {kg} kg",
+    "newWeightFor": "Nova teža za {product} (kg)",
+    "customerAccepts": "Kupec sprejme težo nad mejo",
+    "badge": "Po teži",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Prodaja po teži",
+    "incTax": "z {tax}",
+    "exTax": "brez {tax}",
+    "range": "(od {min} do {max} kg)",
+    "pieceInfo": "Vsak kos tehta približno {kg} kg{range}. Prikazana cena velja za {kg} kg.",
+    "kgInfo": "Prodaja na kilogram: ena enota = {kg} kg.",
+    "howBilled": "Plačate dejansko težo, ki jo stehta dobavitelj. Če preseže mejo, plačate več le, če se strinjate.",
+    "cartNote": "približno {kg} kg · končna cena po teži",
+    "orderTitle": "Prodaja po teži",
+    "orderIntroBuyer": "Ti izdelki se stehtajo pred dostavo. Plačate stehtani znesek; nad mejo le, če se strinjate.",
+    "bufferNote": "Predplačilo vključuje {amount} za razliko v teži. Neporabljeno ostane kot dobropis za naslednje račune.",
+    "state": {
+      "estimate": "Še ni stehtano",
+      "weighed": "Stehtano",
+      "capped": "Nad mejo",
+      "accepted": "Presežek sprejet"
+    },
+    "estimated": "Naročeno (približno)",
+    "weighedCol": "Stehtano",
+    "billed": "Zaračunano",
+    "perKgCol": "Cena",
+    "overBuyer": "Težje od naročenega: plačate največ {max} kg ({pct} % več), razen če sprejmete dodatno težo.",
+    "overSeller": "Nad mejo {pct} %: kupec plača {max} kg, razen če sprejme presežek.",
+    "piecesList": "Kosi: {list}",
+    "history": "Tehtanja",
+    "source": {
+      "PICK": "Komisioniranje",
+      "SCAN": "Nalepka tehtnice",
+      "SUPPLIER": "Stran naročila",
+      "DRIVER": "Voznik ob dostavi"
+    },
+    "productsTitle": "Prodaja po teži",
+    "productsIntro": "Meso, ribe, sir… prodani po kg. Izberite, kako prodajate vsak izdelek: po kosih (s povprečno težo) ali na kilogram. Kupec plača dejansko težo, ki jo stehtate.",
+    "productsLimit": "FIRINGI-jeva meja prekomerne teže: {pct} %. Za vsak izdelek lahko nastavite strožjo.",
+    "labelsInfo": "Nalepke tehtnice: EAN-13, ki se začne z {prefixes} ({digits}-mestna šifra artikla, nato teža), ali nalepke GS1 z neto težo.",
+    "noProducts": "Izdelkov še ni.",
+    "weighingTitle": "Tehtanje",
+    "weighingIntro": "Naročila z izdelki po teži, ki jih je treba še stehtati, in kako se vaše teže primerjajo z naročenimi.",
+    "toWeighTitle": "Za tehtanje",
+    "noneToWeigh": "Ničesar za tehtanje.",
+    "openOrder": "Odpri",
+    "reportTitle": "Vaše teže (zadnjih 90 dni)",
+    "noReport": "Stehtanih dostav še ni.",
+    "col": {
+      "product": "Izdelek",
+      "estimated": "Naročeni kg",
+      "weighed": "Stehtani kg",
+      "billed": "Zaračunani kg",
+      "lines": "Postavke",
+      "capped": "Omejeno",
+      "variance": "Razlika",
+      "date": "Dostava"
+    },
+    "cartTotalNote": "Vključuje izdelke po teži: ta znesek je ocena. Račun uporabi dejansko težo."
   }
 }

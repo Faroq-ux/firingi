@@ -853,7 +853,9 @@
     "Clearance Deals": "Bonnes affaires",
     "Scan to Reorder": "Scanner pour recommander",
     "Returnables": "Emballages consignés",
-    "Empties & Deposits": "Consignes et emballages"
+    "Empties & Deposits": "Consignes et emballages",
+    "Sold by Weight": "Vente au Poids",
+    "Weighing": "Pesée"
   },
   "delivery": {
     "title": "Livraison",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Consigne conservée sur des vides non rendus",
       "body": "{items} ({customer}, de {supplier}) gardés plus de {days} jours : la consigne est conservée comme prix."
+    },
+    "catchweight_over_limit": {
+      "title": "Plus lourd que commandé : {number}",
+      "body": "{product} pèse {weighed} kg (limite {max} kg). Vous payez au maximum la limite, sauf si vous acceptez le surpoids."
+    },
+    "catchweight_over_accepted": {
+      "title": "Surpoids accepté : {number}",
+      "body": "Le client a accepté le poids au-dessus de la limite. La facture utilise le poids réel."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Solde d’ouverture",
     "saveCorrection": "Enregistrer la correction",
     "manageItems": "Articles consignés et liens aux produits →"
+  },
+  "catchWeight": {
+    "saved": "Enregistré",
+    "sellBy": "Vente",
+    "modeNone": "À l'unité (pas au poids)",
+    "modePiece": "À la pièce, prix au kg",
+    "modeKg": "Au kilo",
+    "avgWeight": "Poids moyen d'une pièce (kg)",
+    "unitWeight": "Poids d'une unité (kg)",
+    "yourLimit": "Votre limite de surpoids (%, celle de FIRINGI est {pct})",
+    "minKg": "Pièce la plus légère (kg)",
+    "maxKg": "Pièce la plus lourde (kg)",
+    "plu": "Code article sur les étiquettes de votre balance",
+    "perKgHint": "Prix au kg : {price} (votre prix unitaire ÷ le poids).",
+    "keepPerKgNote": "Changer le poids garde votre prix au kg : vos prix unitaires changent avec lui.",
+    "save": "Enregistrer",
+    "pieceN": "Pièce {n} (kg)",
+    "totalKg": "Poids total (kg)",
+    "remove": "Retirer",
+    "addPiece": "Ajouter une pièce",
+    "addWeight": "Ajouter un poids",
+    "saveWeights": "Enregistrer les poids",
+    "totalIs": "Total : {kg} kg",
+    "scanLabel": "Scanner une étiquette de balance",
+    "scanBtn": "Scanner",
+    "scanOk": "+ {kg} kg — {pieces} pièces, {total} kg au total",
+    "scan": {
+      "NOT_A_LABEL": "Ce n'est pas une étiquette de balance avec un poids.",
+      "WRONG_ITEM": "Cette étiquette est celle d'un autre produit.",
+      "NOT_SOLD_BY_WEIGHT": "Ce produit n'est pas vendu au poids."
+    },
+    "weighed": "Poids enregistrés",
+    "acceptOver": "Accepter le surpoids",
+    "stopTitle": "Vendu au poids",
+    "weighedKg": "pesé {kg} kg",
+    "estimatedKg": "environ {kg} kg",
+    "newWeightFor": "Nouveau poids pour {product} (kg)",
+    "customerAccepts": "Le client accepte le poids au-dessus de la limite",
+    "badge": "Au poids",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Vendu au poids",
+    "incTax": "{tax} incl.",
+    "exTax": "hors {tax}",
+    "range": "(de {min} à {max} kg)",
+    "pieceInfo": "Chaque pièce pèse environ {kg} kg{range}. Le prix affiché correspond à {kg} kg.",
+    "kgInfo": "Vendu au kilo : une unité = {kg} kg.",
+    "howBilled": "Vous payez le poids réel, pesé par le fournisseur. S'il dépasse la limite, vous ne payez plus que si vous l'acceptez.",
+    "cartNote": "environ {kg} kg · prix final selon le poids",
+    "orderTitle": "Vendu au poids",
+    "orderIntroBuyer": "Ces produits sont pesés avant la livraison. Vous payez le montant pesé ; au-delà de la limite, seulement si vous l'acceptez.",
+    "bufferNote": "Le paiement anticipé comprend {amount} pour l'écart de poids. Ce qui n'est pas utilisé reste en crédit pour vos prochaines factures.",
+    "state": {
+      "estimate": "Pas encore pesé",
+      "weighed": "Pesé",
+      "capped": "Au-dessus de la limite",
+      "accepted": "Surpoids accepté"
+    },
+    "estimated": "Commandé (environ)",
+    "weighedCol": "Pesé",
+    "billed": "Facturé",
+    "perKgCol": "Prix",
+    "overBuyer": "Plus lourd que commandé : vous payez au maximum {max} kg ({pct} % de plus), sauf si vous acceptez le surpoids.",
+    "overSeller": "Au-dessus de la limite de {pct} % : le client paie {max} kg, sauf s'il accepte le surpoids.",
+    "piecesList": "Pièces : {list}",
+    "history": "Pesées",
+    "source": {
+      "PICK": "Préparation",
+      "SCAN": "Étiquette de balance",
+      "SUPPLIER": "Page de la commande",
+      "DRIVER": "Chauffeur à la livraison"
+    },
+    "productsTitle": "Vente au poids",
+    "productsIntro": "Viande, poisson, fromage… vendus au kg. Choisissez comment vendre chaque produit : à la pièce (avec un poids moyen) ou au kilo. Le client paie le poids réel que vous pesez.",
+    "productsLimit": "Limite de surpoids de FIRINGI : {pct} %. Vous pouvez en fixer une plus stricte par produit.",
+    "labelsInfo": "Étiquettes de balance : EAN-13 commençant par {prefixes} (code article de {digits} chiffres, puis le poids), ou étiquettes GS1 avec le poids net.",
+    "noProducts": "Pas encore de produits.",
+    "weighingTitle": "Pesée",
+    "weighingIntro": "Commandes avec des produits vendus au poids qui restent à peser, et comparaison de vos poids avec ce que commandent les clients.",
+    "toWeighTitle": "À peser",
+    "noneToWeigh": "Rien à peser.",
+    "openOrder": "Ouvrir",
+    "reportTitle": "Vos poids (90 derniers jours)",
+    "noReport": "Pas encore de livraisons pesées.",
+    "col": {
+      "product": "Produit",
+      "estimated": "kg commandés",
+      "weighed": "kg pesés",
+      "billed": "kg facturés",
+      "lines": "Lignes",
+      "capped": "Plafonnées",
+      "variance": "Écart",
+      "date": "Livraison"
+    },
+    "cartTotalNote": "Comprend des produits vendus au poids : ce total est une estimation. La facture utilise le poids réel."
   }
 }

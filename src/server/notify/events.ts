@@ -156,6 +156,9 @@ export const EVENTS: EventDef[] = [
   E("returnables.pickup_planned", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "date"]),
   E("returnables.overdue", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["supplier", "items", "days"]),
   E("returnables.kept", "orders", ["buyer.orders.view", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["customer", "supplier", "items", "days"]),
+  // sold by weight (Phase 41)
+  E("catchweight.over_limit", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "product", "weighed", "max"]),
+  E("catchweight.over_accepted", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number"]),
   // clearance deals (Phase 38)
   E("deal.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "number"]),
   E("deal.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number"]),

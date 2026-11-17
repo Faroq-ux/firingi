@@ -1,0 +1,32 @@
+// Phase 41 — catch-weight (sold by weight): meat, fish, cheese… priced per kg; the customer orders pieces with an
+// average weight or kilos; the supplier weighs (typed at picking, scale-label scan, order page) and the driver can
+// correct at the stop; the invoice uses the real weight, capped by the over-weight tolerance unless the customer accepts.
+
+enum CatchWeightMode {
+  PIECE // ordered by piece / pack, each ≈ cwNominalKg
+  KG // ordered by kilo (one unit = cwNominalKg, usually 1 kg)
+}
+
+enum CatchWeightSource {
+  PICK // typed at picking
+  SCAN // scale label scanned (EAN-13 2x / GS1 AI 310n)
+  SUPPLIER // order page
+  DRIVER // corrected at the stop
+}
+
+/// One weighing of an order line (the latest is the line's weight; earlier ones are the history).
+model CatchWeighing {
+  id          String            @id @default(cuid())
+  orderLineId String
+  pieces      Json // kg per piece / pack weighed, e.g. [3.62, 3.41]
+  totalKg     Decimal           @db.Decimal(12, 3)
+  source      CatchWeightSource
+  barcode     String?
+  note        String?
+  byUserId    String?
+  at          DateTime          @default(now())
+
+  orderLine OrderLine @relation(fields: [orderLineId], references: [id], onDelete: Cascade)
+
+  @@index([orderLineId, at])
+}

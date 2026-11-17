@@ -85,6 +85,8 @@ model Order {
   status                OrderStatus   @default(NEW)
   /// Held (ON_HOLD) until the buyer pays — pay-before-shipping buyers.
   awaitingPayment       Boolean       @default(false)
+  /// Phase 41: pay-before-shipping buffer on sold-by-weight lines (paid with the estimate; unused part stays as credit)
+  prepayBuffer          Decimal       @default(0) @db.Decimal(18, 2)
   deliveryMode          DeliveryMode?
   deliveryAddress       Json // snapshot
   sourceAddressId       String?
@@ -180,14 +182,23 @@ model OrderLine {
 
   commissionRuleId  String?
   commissionType    CommissionType?
-  commissionRate    Decimal?        @db.Decimal(10, 4)
-  commissionBase    Decimal         @default(0) @db.Decimal(18, 2) // always pre-discount list net
-  commissionAmount  Decimal         @default(0) @db.Decimal(18, 2)
-  vendorUnitCostNet Decimal         @db.Decimal(18, 4) // what FIRINGI pays the vendor per unit
-  vendorLineNet     Decimal         @db.Decimal(18, 2)
+  commissionRate    Decimal?         @db.Decimal(10, 4)
+  commissionBase    Decimal          @default(0) @db.Decimal(18, 2) // always pre-discount list net
+  commissionAmount  Decimal          @default(0) @db.Decimal(18, 2)
+  vendorUnitCostNet Decimal          @db.Decimal(18, 4) // what FIRINGI pays the vendor per unit
+  vendorLineNet     Decimal          @db.Decimal(18, 2)
   /// Phase 38: sold on this deal (price and commission came from it)
   dealId            String?
   dealBidId         String?
+  /// Phase 41: catch-weight snapshot; amounts follow cwBilledKg (≤ ordered × nominal × (1 + tolerance) unless accepted)
+  cwMode            CatchWeightMode?
+  cwNominalKg       Decimal?         @db.Decimal(10, 3)
+  cwMaxOverPct      Decimal?         @db.Decimal(5, 2)
+  cwActualKg        Decimal?         @db.Decimal(12, 3)
+  cwBilledKg        Decimal?         @db.Decimal(12, 3)
+  cwOverAccepted    Boolean          @default(false)
+  cwWeighedAt       DateTime?
+  weighings         CatchWeighing[]
 
   order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
   offer          VendorOffer         @relation(fields: [offerId], references: [id])

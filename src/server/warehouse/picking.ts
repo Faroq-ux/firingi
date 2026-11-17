@@ -172,12 +172,23 @@ export type ScanOutcome = "OK" | "DONE" | "WRONG_LOT" | "WRONG_ITEM" | "LOT_NEED
  * WRONG_ITEM, LOT_NEEDED (product barcode scanned but this lot has a number), SHELF (a shelf
  * label), BLOCKED (recalled lot).
  */
-export async function scanPick(ctx: Ctx, lineId: string, code: string, qty = 1): Promise<{ outcome: ScanOutcome; picked: number; qty: number }> {
+export async function scanPick(ctx: Ctx, lineId: string, code: string, qty = 1): Promise<{ outcome: ScanOutcome; picked: number; qty: number; kg?: number; totalKg?: number }> {
   requireInventory(ctx, [...PICK]);
   await requireWarehouseFeature(ctx, "PICK_PACK");
   const line = await openLine(ctx, lineId);
   const res = (outcome: ScanOutcome) => ({ outcome, picked: line.pickedQty, qty: line.qty });
   if (line.pickedQty >= line.qty || line.shortReason) return res("DONE");
+  // Phase 41: a scale label (EAN-13 2x / GS1 with weight) of a sold-by-weight product: counts one piece and records its weight
+  const cw = await (await import("@/server/catchweight/service")).pickLabel(ctx, line.orderId, line.offerId, code);
+  if (cw && !cw.ok) return res("WRONG_ITEM");
+  if (cw?.ok) {
+    const picked = line.pickedQty + 1;
+    await prisma.$transaction(async (tx) => {
+      await tx.pickLine.update({ where: { id: line.id }, data: { pickedQty: picked, verified: "SCAN", pickedById: ctx.user.id, ...(picked >= line.qty ? { pickedAt: new Date() } : {}) } });
+      await finishIfDone(tx, ctx, line.pickListId);
+    });
+    return { outcome: "OK", picked, qty: line.qty, kg: cw.kg, totalKg: cw.totalKg };
+  }
   const p = parseScan(code);
   let ok = false;
   if (p.kind === "BIN") return res("SHELF");

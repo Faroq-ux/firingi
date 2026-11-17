@@ -853,7 +853,9 @@
     "Clearance Deals": "Oferte de lichidare",
     "Scan to Reorder": "Scanează și comandă din nou",
     "Returnables": "Ambalaje returnabile",
-    "Empties & Deposits": "Ambalaje și garanții"
+    "Empties & Deposits": "Ambalaje și garanții",
+    "Sold by Weight": "Vânzare la Greutate",
+    "Weighing": "Cântărire"
   },
   "delivery": {
     "title": "Livrare",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Garanție reținută pentru ambalaje nereturnate",
       "body": "{items} ({customer}, de la {supplier}) au fost ținute peste {days} zile: garanția se reține drept preț."
+    },
+    "catchweight_over_limit": {
+      "title": "Mai greu decât s-a comandat: {number}",
+      "body": "{product} cântărește {weighed} kg (limită {max} kg). Plătiți cel mult limita, dacă nu acceptați greutatea în plus."
+    },
+    "catchweight_over_accepted": {
+      "title": "Greutate în plus acceptată: {number}",
+      "body": "Clientul a acceptat greutatea peste limită. Factura folosește greutatea reală."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Sold inițial",
     "saveCorrection": "Salvați corecția",
     "manageItems": "Articole returnabile și legături cu produsele →"
+  },
+  "catchWeight": {
+    "saved": "Salvat",
+    "sellBy": "Vânzare",
+    "modeNone": "La bucată (nu la greutate)",
+    "modePiece": "La bucată, preț pe kg",
+    "modeKg": "La kilogram",
+    "avgWeight": "Greutatea medie a unei bucăți (kg)",
+    "unitWeight": "Greutatea unei unități (kg)",
+    "yourLimit": "Limita dvs. de supragreutate (%, a FIRINGI este {pct})",
+    "minKg": "Cea mai ușoară bucată (kg)",
+    "maxKg": "Cea mai grea bucată (kg)",
+    "plu": "Codul articolului pe etichetele cântarului",
+    "perKgHint": "Preț pe kg: {price} (prețul unitar ÷ greutatea).",
+    "keepPerKgNote": "Schimbarea greutății păstrează prețul pe kg: prețurile unitare se schimbă odată cu ea.",
+    "save": "Salvează",
+    "pieceN": "Bucata {n} (kg)",
+    "totalKg": "Greutate totală (kg)",
+    "remove": "Elimină",
+    "addPiece": "Adaugă o bucată",
+    "addWeight": "Adaugă o greutate",
+    "saveWeights": "Salvează greutățile",
+    "totalIs": "Total: {kg} kg",
+    "scanLabel": "Scanează o etichetă de cântar",
+    "scanBtn": "Scanează",
+    "scanOk": "+ {kg} kg — {pieces} bucăți, {total} kg în total",
+    "scan": {
+      "NOT_A_LABEL": "Aceasta nu este o etichetă de cântar cu greutate.",
+      "WRONG_ITEM": "Această etichetă este a altui produs.",
+      "NOT_SOLD_BY_WEIGHT": "Acest produs nu se vinde la greutate."
+    },
+    "weighed": "Greutăți salvate",
+    "acceptOver": "Acceptă greutatea în plus",
+    "stopTitle": "Se vinde la greutate",
+    "weighedKg": "cântărit {kg} kg",
+    "estimatedKg": "circa {kg} kg",
+    "newWeightFor": "Greutate nouă pentru {product} (kg)",
+    "customerAccepts": "Clientul acceptă greutatea peste limită",
+    "badge": "La greutate",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Se vinde la greutate",
+    "incTax": "cu {tax}",
+    "exTax": "fără {tax}",
+    "range": "(de la {min} la {max} kg)",
+    "pieceInfo": "Fiecare bucată cântărește circa {kg} kg{range}. Prețul afișat este pentru {kg} kg.",
+    "kgInfo": "Se vinde la kilogram: o unitate = {kg} kg.",
+    "howBilled": "Plătiți greutatea reală, cântărită de furnizor. Dacă depășește limita, plătiți mai mult doar dacă acceptați.",
+    "cartNote": "circa {kg} kg · preț final după greutate",
+    "orderTitle": "Se vinde la greutate",
+    "orderIntroBuyer": "Aceste produse sunt cântărite înainte de livrare. Plătiți suma cântărită; peste limită, doar dacă acceptați.",
+    "bufferNote": "Plata în avans include {amount} pentru diferența de greutate. Ce nu se folosește rămâne credit pentru facturile următoare.",
+    "state": {
+      "estimate": "Încă necântărit",
+      "weighed": "Cântărit",
+      "capped": "Peste limită",
+      "accepted": "Surplus acceptat"
+    },
+    "estimated": "Comandat (circa)",
+    "weighedCol": "Cântărit",
+    "billed": "Facturat",
+    "perKgCol": "Preț",
+    "overBuyer": "Mai greu decât s-a comandat: plătiți cel mult {max} kg (cu {pct} % mai mult), dacă nu acceptați greutatea în plus.",
+    "overSeller": "Peste limita de {pct} %: clientul plătește {max} kg, dacă nu acceptă surplusul.",
+    "piecesList": "Bucăți: {list}",
+    "history": "Cântăriri",
+    "source": {
+      "PICK": "Pregătire comenzi",
+      "SCAN": "Etichetă de cântar",
+      "SUPPLIER": "Pagina comenzii",
+      "DRIVER": "Șofer la livrare"
+    },
+    "productsTitle": "Vânzare la greutate",
+    "productsIntro": "Carne, pește, brânză… vândute la kg. Alegeți cum vindeți fiecare produs: la bucată (cu o greutate medie) sau la kilogram. Clientul plătește greutatea reală pe care o cântăriți.",
+    "productsLimit": "Limita de supragreutate a FIRINGI: {pct} %. Puteți seta una mai strictă pe produs.",
+    "labelsInfo": "Etichete de cântar: EAN-13 care încep cu {prefixes} (cod articol de {digits} cifre, apoi greutatea) sau etichete GS1 cu greutatea netă.",
+    "noProducts": "Încă nu există produse.",
+    "weighingTitle": "Cântărire",
+    "weighingIntro": "Comenzi cu produse la greutate care trebuie încă cântărite și cum se compară greutățile dvs. cu ce comandă clienții.",
+    "toWeighTitle": "De cântărit",
+    "noneToWeigh": "Nimic de cântărit.",
+    "openOrder": "Deschide",
+    "reportTitle": "Greutățile dvs. (ultimele 90 de zile)",
+    "noReport": "Încă nu există livrări cântărite.",
+    "col": {
+      "product": "Produs",
+      "estimated": "kg comandate",
+      "weighed": "kg cântărite",
+      "billed": "kg facturate",
+      "lines": "Linii",
+      "capped": "Plafonate",
+      "variance": "Diferență",
+      "date": "Livrare"
+    },
+    "cartTotalNote": "Include produse la greutate: acest total este o estimare. Factura folosește greutatea reală."
   }
 }

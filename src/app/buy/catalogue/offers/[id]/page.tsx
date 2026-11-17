@@ -20,6 +20,9 @@ import { dealLabels } from "@/components/deals/labels";
 import { offerReturnables } from "@/server/returnables/service";
 import { ProductReturnables } from "@/components/returnables/views";
 import { rtLabels } from "@/components/returnables/labels";
+import { offerCatchWeight } from "@/server/catchweight/service";
+import { ProductCatchWeight } from "@/components/catchweight/views";
+import { cwLabels } from "@/components/catchweight/labels";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -28,7 +31,8 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const data = await catalogueItem(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
   const { item, alternatives } = data;
   const [t, ti, locale, images, bestBefore, deals, dl] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id]), liveDeals(ctx, { offerIds: [id] }).catch(() => []), dealLabels()]);
-  const [rt, rl] = await Promise.all([offerReturnables([id], locale), rtLabels()]);
+  const [rt, rl, cwm, cl] = await Promise.all([offerReturnables([id], locale), rtLabels(), offerCatchWeight([id]), cwLabels()]);
+  const cw = cwm.get(id) ?? null; // Phase 41: sold by weight
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -53,6 +57,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           </div>
           {deals.map((d) => <DealBanner key={d.id} d={d} l={dl.l} locale={locale} canBuy={can(ctx, "buyer.orders.place")} />)}
           <ProductReturnables l={rl.l} locale={locale} items={rt[id] ?? []} />
+          {cw && <ProductCatchWeight l={cl.l} locale={locale} cw={cw} unitGross={item.price ? Number(item.price.unitPriceGross) : null} unitNet={item.price ? Number(item.price.unitPriceNet) : null} taxLabel={item.taxLabel} />}
           <Card>
             <CardContent className="space-y-3 pt-5">
               <div className="flex flex-wrap items-start gap-3">

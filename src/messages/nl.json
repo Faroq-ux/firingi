@@ -853,7 +853,9 @@
     "Clearance Deals": "Opruimingsdeals",
     "Scan to Reorder": "Scannen en nabestellen",
     "Returnables": "Retourverpakkingen",
-    "Empties & Deposits": "Leeggoed & statiegeld"
+    "Empties & Deposits": "Leeggoed & statiegeld",
+    "Sold by Weight": "Verkoop op Gewicht",
+    "Weighing": "Wegen"
   },
   "delivery": {
     "title": "Levering",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Statiegeld gehouden op niet teruggebracht leeggoed",
       "body": "{items} ({customer}, van {supplier}) werden meer dan {days} dagen gehouden: het statiegeld wordt als prijs gehouden."
+    },
+    "catchweight_over_limit": {
+      "title": "Zwaarder dan besteld: {number}",
+      "body": "{product} weegt {weighed} kg (grens {max} kg). U betaalt maximaal de grens, tenzij u het extra gewicht accepteert."
+    },
+    "catchweight_over_accepted": {
+      "title": "Extra gewicht geaccepteerd: {number}",
+      "body": "De klant heeft het gewicht boven de grens geaccepteerd. De factuur gebruikt het werkelijke gewicht."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Beginsaldo",
     "saveCorrection": "Correctie opslaan",
     "manageItems": "Retourartikelen en productkoppelingen →"
+  },
+  "catchWeight": {
+    "saved": "Opgeslagen",
+    "sellBy": "Verkoop",
+    "modeNone": "Per stuk (niet op gewicht)",
+    "modePiece": "Per stuk, prijs per kg",
+    "modeKg": "Per kilo",
+    "avgWeight": "Gemiddeld gewicht van een stuk (kg)",
+    "unitWeight": "Gewicht van één eenheid (kg)",
+    "yourLimit": "Uw overgewichtsgrens (%, die van FIRINGI is {pct})",
+    "minKg": "Lichtste stuk (kg)",
+    "maxKg": "Zwaarste stuk (kg)",
+    "plu": "Artikelcode op uw weegschaaletiketten",
+    "perKgHint": "Prijs per kg: {price} (uw stukprijs ÷ het gewicht).",
+    "keepPerKgNote": "Als u het gewicht wijzigt, blijft uw prijs per kg gelijk: uw stukprijzen veranderen mee.",
+    "save": "Opslaan",
+    "pieceN": "Stuk {n} (kg)",
+    "totalKg": "Totaalgewicht (kg)",
+    "remove": "Verwijderen",
+    "addPiece": "Stuk toevoegen",
+    "addWeight": "Gewicht toevoegen",
+    "saveWeights": "Gewichten opslaan",
+    "totalIs": "Totaal: {kg} kg",
+    "scanLabel": "Weegschaaletiket scannen",
+    "scanBtn": "Scannen",
+    "scanOk": "+ {kg} kg — {pieces} stuks, {total} kg in totaal",
+    "scan": {
+      "NOT_A_LABEL": "Dit is geen weegschaaletiket met een gewicht.",
+      "WRONG_ITEM": "Dit etiket hoort bij een ander product.",
+      "NOT_SOLD_BY_WEIGHT": "Dit product wordt niet op gewicht verkocht."
+    },
+    "weighed": "Gewichten opgeslagen",
+    "acceptOver": "Extra gewicht accepteren",
+    "stopTitle": "Op gewicht verkocht",
+    "weighedKg": "gewogen {kg} kg",
+    "estimatedKg": "ongeveer {kg} kg",
+    "newWeightFor": "Nieuw gewicht voor {product} (kg)",
+    "customerAccepts": "De klant accepteert het gewicht boven de grens",
+    "badge": "Op gewicht",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Op gewicht verkocht",
+    "incTax": "incl. {tax}",
+    "exTax": "excl. {tax}",
+    "range": "(van {min} tot {max} kg)",
+    "pieceInfo": "Elk stuk weegt ongeveer {kg} kg{range}. De getoonde prijs geldt voor {kg} kg.",
+    "kgInfo": "Per kilo verkocht: één eenheid = {kg} kg.",
+    "howBilled": "U betaalt het werkelijke gewicht, gewogen door de leverancier. Is het zwaarder dan de grens, dan betaalt u alleen meer als u akkoord gaat.",
+    "cartNote": "ongeveer {kg} kg · eindprijs volgens gewicht",
+    "orderTitle": "Op gewicht verkocht",
+    "orderIntroBuyer": "Deze producten worden vóór levering gewogen. U betaalt het gewogen bedrag; boven de grens alleen als u akkoord gaat.",
+    "bufferNote": "De vooruitbetaling bevat {amount} voor het gewichtsverschil. Wat niet gebruikt wordt, blijft tegoed voor uw volgende facturen.",
+    "state": {
+      "estimate": "Nog niet gewogen",
+      "weighed": "Gewogen",
+      "capped": "Boven de grens",
+      "accepted": "Extra geaccepteerd"
+    },
+    "estimated": "Besteld (ongeveer)",
+    "weighedCol": "Gewogen",
+    "billed": "Gefactureerd",
+    "perKgCol": "Prijs",
+    "overBuyer": "Zwaarder dan besteld: u betaalt maximaal {max} kg ({pct} % meer), tenzij u het extra gewicht accepteert.",
+    "overSeller": "Boven de grens van {pct} %: de klant betaalt {max} kg, tenzij hij het extra gewicht accepteert.",
+    "piecesList": "Stuks: {list}",
+    "history": "Wegingen",
+    "source": {
+      "PICK": "Orderpicken",
+      "SCAN": "Weegschaaletiket",
+      "SUPPLIER": "Bestelpagina",
+      "DRIVER": "Chauffeur bij levering"
+    },
+    "productsTitle": "Verkoop op gewicht",
+    "productsIntro": "Vlees, vis, kaas… per kg verkocht. Kies per product: per stuk (met een gemiddeld gewicht) of per kilo. De klant betaalt het werkelijke gewicht dat u weegt.",
+    "productsLimit": "Overgewichtsgrens van FIRINGI: {pct} %. U kunt per product een strengere instellen.",
+    "labelsInfo": "Weegschaaletiketten: EAN-13 die begint met {prefixes} (artikelcode van {digits} cijfers, dan het gewicht), of GS1-etiketten met het nettogewicht.",
+    "noProducts": "Nog geen producten.",
+    "weighingTitle": "Wegen",
+    "weighingIntro": "Bestellingen met producten op gewicht die nog gewogen moeten worden, en hoe uw gewichten zich verhouden tot wat klanten bestellen.",
+    "toWeighTitle": "Te wegen",
+    "noneToWeigh": "Niets te wegen.",
+    "openOrder": "Openen",
+    "reportTitle": "Uw gewichten (laatste 90 dagen)",
+    "noReport": "Nog geen gewogen leveringen.",
+    "col": {
+      "product": "Product",
+      "estimated": "Bestelde kg",
+      "weighed": "Gewogen kg",
+      "billed": "Gefactureerde kg",
+      "lines": "Regels",
+      "capped": "Begrensd",
+      "variance": "Verschil",
+      "date": "Levering"
+    },
+    "cartTotalNote": "Bevat producten op gewicht: dit totaal is een schatting. De factuur gebruikt het werkelijke gewicht."
   }
 }

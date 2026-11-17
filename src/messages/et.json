@@ -853,7 +853,9 @@
     "Clearance Deals": "Väljamüügipakkumised",
     "Scan to Reorder": "Skanni ja telli uuesti",
     "Returnables": "Pandipakend",
-    "Empties & Deposits": "Tühi taara ja pant"
+    "Empties & Deposits": "Tühi taara ja pant",
+    "Sold by Weight": "Müük Kaalu Järgi",
+    "Weighing": "Kaalumine"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Tagastamata taara pant jäeti",
       "body": "{items} ({customer}, tarnijalt {supplier}) hoiti üle {days} päeva: pant jääb hinnaks."
+    },
+    "catchweight_over_limit": {
+      "title": "Raskem kui tellitud: {number}",
+      "body": "{product} kaalub {weighed} kg (piir {max} kg). Maksate kuni piirini, kui te ei nõustu lisakaaluga."
+    },
+    "catchweight_over_accepted": {
+      "title": "Lisakaal aktsepteeritud: {number}",
+      "body": "Klient nõustus piiri ületava kaaluga. Arvel kasutatakse tegelikku kaalu."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Algsaldo",
     "saveCorrection": "Salvesta parandus",
     "manageItems": "Pandiartiklid ja tootesidemed →"
+  },
+  "catchWeight": {
+    "saved": "Salvestatud",
+    "sellBy": "Müük",
+    "modeNone": "Tükikaupa (mitte kaalu järgi)",
+    "modePiece": "Tükikaupa, hind kg kohta",
+    "modeKg": "Kilo kaupa",
+    "avgWeight": "Tüki keskmine kaal (kg)",
+    "unitWeight": "Ühe ühiku kaal (kg)",
+    "yourLimit": "Teie ülekaalu piir (%, FIRINGI oma on {pct})",
+    "minKg": "Kergeim tükk (kg)",
+    "maxKg": "Raskeim tükk (kg)",
+    "plu": "Kaubakood teie kaalu siltidel",
+    "perKgHint": "Kilohind: {price} (teie ühikuhind ÷ kaal).",
+    "keepPerKgNote": "Kaalu muutmisel jääb kilohind samaks: teie ühikuhinnad muutuvad koos sellega.",
+    "save": "Salvesta",
+    "pieceN": "Tükk {n} (kg)",
+    "totalKg": "Kogukaal (kg)",
+    "remove": "Eemalda",
+    "addPiece": "Lisa tükk",
+    "addWeight": "Lisa kaal",
+    "saveWeights": "Salvesta kaalud",
+    "totalIs": "Kokku: {kg} kg",
+    "scanLabel": "Skanni kaalu silt",
+    "scanBtn": "Skanni",
+    "scanOk": "+ {kg} kg — {pieces} tükki, kokku {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "See ei ole kaaluga kaalusilt.",
+      "WRONG_ITEM": "See silt kuulub teisele tootele.",
+      "NOT_SOLD_BY_WEIGHT": "Seda toodet ei müüda kaalu järgi."
+    },
+    "weighed": "Kaalud salvestatud",
+    "acceptOver": "Nõustu lisakaaluga",
+    "stopTitle": "Müüakse kaalu järgi",
+    "weighedKg": "kaalutud {kg} kg",
+    "estimatedKg": "umbes {kg} kg",
+    "newWeightFor": "Uus kaal: {product} (kg)",
+    "customerAccepts": "Klient nõustub piiri ületava kaaluga",
+    "badge": "Kaalu järgi",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Müüakse kaalu järgi",
+    "incTax": "sh {tax}",
+    "exTax": "ilma {tax}",
+    "range": "({min}–{max} kg)",
+    "pieceInfo": "Iga tükk kaalub umbes {kg} kg{range}. Näidatud hind on {kg} kg eest.",
+    "kgInfo": "Müüakse kilo kaupa: üks ühik = {kg} kg.",
+    "howBilled": "Maksate tegeliku kaalu eest, mille kaalub tarnija. Kui see ületab piiri, maksate rohkem ainult nõustumisel.",
+    "cartNote": "umbes {kg} kg · lõplik hind kaalu järgi",
+    "orderTitle": "Müüakse kaalu järgi",
+    "orderIntroBuyer": "Need tooted kaalutakse enne tarnet. Maksate kaalutud summa; üle piiri ainult nõustumisel.",
+    "bufferNote": "Ettemaks sisaldab {amount} kaaluvahe jaoks. Kasutamata osa jääb krediidiks teie järgmistele arvetele.",
+    "state": {
+      "estimate": "Veel kaalumata",
+      "weighed": "Kaalutud",
+      "capped": "Üle piiri",
+      "accepted": "Lisakaal aktsepteeritud"
+    },
+    "estimated": "Tellitud (umbes)",
+    "weighedCol": "Kaalutud",
+    "billed": "Arveldatud",
+    "perKgCol": "Hind",
+    "overBuyer": "Raskem kui tellitud: maksate kuni {max} kg ({pct} % rohkem), kui te ei nõustu lisakaaluga.",
+    "overSeller": "Üle {pct} % piiri: klient maksab {max} kg, kui ta ei nõustu lisakaaluga.",
+    "piecesList": "Tükid: {list}",
+    "history": "Kaalumised",
+    "source": {
+      "PICK": "Komplekteerimine",
+      "SCAN": "Kaalusilt",
+      "SUPPLIER": "Tellimuse leht",
+      "DRIVER": "Juht tarnimisel"
+    },
+    "productsTitle": "Müük kaalu järgi",
+    "productsIntro": "Liha, kala, juust… müüakse kilo hinnaga. Valige iga toote jaoks: tükikaupa (keskmise kaaluga) või kilo kaupa. Klient maksab tegeliku kaalu eest, mille te kaalute.",
+    "productsLimit": "FIRINGI ülekaalu piir: {pct} %. Iga toote jaoks võite seada rangema.",
+    "labelsInfo": "Kaalusildid: EAN-13, mis algab {prefixes} (kaubakood {digits} numbrit, siis kaal), või GS1 sildid netokaaluga.",
+    "noProducts": "Tooteid veel pole.",
+    "weighingTitle": "Kaalumine",
+    "weighingIntro": "Kaalu järgi müüdavate toodetega tellimused, mis tuleb veel kaaluda, ja kuidas teie kaalud võrduvad tellitutega.",
+    "toWeighTitle": "Kaaluda",
+    "noneToWeigh": "Midagi pole kaaluda.",
+    "openOrder": "Ava",
+    "reportTitle": "Teie kaalud (viimased 90 päeva)",
+    "noReport": "Kaalutud tarneid veel pole.",
+    "col": {
+      "product": "Toode",
+      "estimated": "Tellitud kg",
+      "weighed": "Kaalutud kg",
+      "billed": "Arveldatud kg",
+      "lines": "Read",
+      "capped": "Piiratud",
+      "variance": "Vahe",
+      "date": "Tarne"
+    },
+    "cartTotalNote": "Sisaldab kaalu järgi müüdavaid tooteid: summa on hinnanguline. Arvel kasutatakse tegelikku kaalu."
   }
 }

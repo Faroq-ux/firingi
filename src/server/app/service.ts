@@ -151,6 +151,10 @@ async function driverData(ctx: Ctx, locale: string) {
   const { stopItems } = await import("@/server/returnables/service");
   const empties = new Map<string, Awaited<ReturnType<typeof stopItems>>>();
   for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") empties.set(d.id, await stopItems(d.order.buyerCompanyId, d.order.sellerCompanyId, locale, [], d.order.id));
+  // Phase 41: sold-by-weight lines the driver can correct at the stop
+  const { stopWeights } = await import("@/server/catchweight/service");
+  const weights = new Map<string, Awaited<ReturnType<typeof stopWeights>>>();
+  for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") weights.set(d.id, await stopWeights(d.order.id, locale));
   return {
     canPod: can(ctx, "driver.pod.capture"),
     reasons: [...FAILURE_REASONS],
@@ -167,6 +171,7 @@ async function driverData(ctx: Ctx, locale: string) {
           note: d.order.buyerNotes ?? d.notes ?? null, scheduledFor: d.scheduledFor?.toISOString() ?? null,
           items: d.order.lines.map((l) => ({ name: pickLocalized(l.productName, locale), packaging: pickLocalized(l.packagingName, locale), qty: l.qtyOrdered })),
           empties: empties.get(d.id) ?? [],
+          weights: weights.get(d.id) ?? { correction: false, lines: [] },
         };
       })
       .sort((x, y) => x.sequence - y.sequence),
@@ -268,6 +273,9 @@ async function run(ctx: Ctx, kind: OfflineKind, d: Record<string, unknown>, s: A
         latitude: typeof d.lat === "number" ? d.lat : null, longitude: typeof d.lng === "number" ? d.lng : null,
         // Phase 40: empties counted at the stop, offline
         empties: d.empties && typeof d.empties === "object" ? Object.fromEntries(Object.entries(d.empties as Record<string, unknown>).slice(0, 30).map(([k, v]) => [k.slice(0, 64), Math.max(0, Math.floor(Number(v) || 0))])) : null,
+        // Phase 41: weights corrected at the stop, offline
+        weights: d.weights && typeof d.weights === "object" ? Object.fromEntries(Object.entries(d.weights as Record<string, unknown>).slice(0, 100).map(([k, v]) => [k.slice(0, 64), Number(v)]).filter(([, v]) => Number.isFinite(v as number) && (v as number) > 0)) : null,
+        acceptOver: d.acceptOver === true,
       });
       return { status: "DONE", result: { deliveryId: id } };
     }

@@ -853,7 +853,9 @@
     "Clearance Deals": "Offerti ta' bejgħ ta' stokk",
     "Scan to Reorder": "Skennja u erġa' ordna",
     "Returnables": "Imballaġġ li jintradd",
-    "Empties & Deposits": "Vojt u depożiti"
+    "Empties & Deposits": "Vojt u depożiti",
+    "Sold by Weight": "Bejgħ bil-Piż",
+    "Weighing": "Użin"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Depożitu miżmum fuq vojt mhux ritornat",
       "body": "{items} ({customer}, minn {supplier}) inżammu għal aktar minn {days} jum: id-depożitu jinżamm bħala prezz."
+    },
+    "catchweight_over_limit": {
+      "title": "Itqal milli ordnat: {number}",
+      "body": "{product} jiżen {weighed} kg (limitu {max} kg). Tħallas l-aktar il-limitu, sakemm ma taċċettax il-piż żejjed."
+    },
+    "catchweight_over_accepted": {
+      "title": "Piż żejjed aċċettat: {number}",
+      "body": "Il-klijent aċċetta l-piż 'il fuq mil-limitu. Il-fattura tuża l-piż reali."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Bilanċ tal-ftuħ",
     "saveCorrection": "Issejvja l-korrezzjoni",
     "manageItems": "Oġġetti li jintraddu u rabtiet mal-prodotti →"
+  },
+  "catchWeight": {
+    "saved": "Issejvjat",
+    "sellBy": "Bejgħ",
+    "modeNone": "Bil-biċċa (mhux bil-piż)",
+    "modePiece": "Bil-biċċa, prezz għal kull kg",
+    "modeKg": "Bil-kilo",
+    "avgWeight": "Piż medju ta' biċċa (kg)",
+    "unitWeight": "Piż ta' unità waħda (kg)",
+    "yourLimit": "Il-limitu tiegħek ta' piż żejjed (%, dak ta' FIRINGI huwa {pct})",
+    "minKg": "L-eħfef biċċa (kg)",
+    "maxKg": "L-itqal biċċa (kg)",
+    "plu": "Kodiċi tal-oġġett fuq it-tikketti tal-miżien",
+    "perKgHint": "Prezz għal kull kg: {price} (il-prezz tal-unità ÷ il-piż).",
+    "keepPerKgNote": "Jekk tibdel il-piż, il-prezz għal kull kg jibqa': il-prezzijiet tal-unità jinbidlu miegħu.",
+    "save": "Issejvja",
+    "pieceN": "Biċċa {n} (kg)",
+    "totalKg": "Piż totali (kg)",
+    "remove": "Neħħi",
+    "addPiece": "Żid biċċa",
+    "addWeight": "Żid piż",
+    "saveWeights": "Issejvja l-piżijiet",
+    "totalIs": "Total: {kg} kg",
+    "scanLabel": "Skennja tikketta tal-miżien",
+    "scanBtn": "Skennja",
+    "scanOk": "+ {kg} kg — {pieces} biċċiet, {total} kg b'kollox",
+    "scan": {
+      "NOT_A_LABEL": "Din mhix tikketta tal-miżien bil-piż.",
+      "WRONG_ITEM": "Din it-tikketta hija ta' prodott ieħor.",
+      "NOT_SOLD_BY_WEIGHT": "Dan il-prodott mhux mibjugħ bil-piż."
+    },
+    "weighed": "Il-piżijiet ġew issejvjati",
+    "acceptOver": "Aċċetta l-piż żejjed",
+    "stopTitle": "Mibjugħ bil-piż",
+    "weighedKg": "miżun {kg} kg",
+    "estimatedKg": "madwar {kg} kg",
+    "newWeightFor": "Piż ġdid għal {product} (kg)",
+    "customerAccepts": "Il-klijent jaċċetta l-piż 'il fuq mil-limitu",
+    "badge": "Bil-piż",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Mibjugħ bil-piż",
+    "incTax": "inkl. {tax}",
+    "exTax": "eskl. {tax}",
+    "range": "(minn {min} sa {max} kg)",
+    "pieceInfo": "Kull biċċa tiżen madwar {kg} kg{range}. Il-prezz muri huwa għal {kg} kg.",
+    "kgInfo": "Mibjugħ bil-kilo: unità waħda = {kg} kg.",
+    "howBilled": "Tħallas il-piż reali, miżun mill-fornitur. Jekk jaqbeż il-limitu, tħallas aktar biss jekk taċċetta.",
+    "cartNote": "madwar {kg} kg · prezz finali skont il-piż",
+    "orderTitle": "Mibjugħ bil-piż",
+    "orderIntroBuyer": "Dawn il-prodotti jintiżnu qabel il-kunsinna. Tħallas l-ammont miżun; 'il fuq mil-limitu, biss jekk taċċetta.",
+    "bufferNote": "Il-ħlas bil-quddiem jinkludi {amount} għad-differenza fil-piż. Dak li ma jintużax jibqa' bħala kreditu għall-fatturi li jmiss.",
+    "state": {
+      "estimate": "Għadu mhux miżun",
+      "weighed": "Miżun",
+      "capped": "'Il fuq mil-limitu",
+      "accepted": "Żejjed aċċettat"
+    },
+    "estimated": "Ordnat (madwar)",
+    "weighedCol": "Miżun",
+    "billed": "Iffatturat",
+    "perKgCol": "Prezz",
+    "overBuyer": "Itqal milli ordnat: tħallas l-aktar {max} kg ({pct} % aktar), sakemm ma taċċettax il-piż żejjed.",
+    "overSeller": "'Il fuq mil-limitu ta' {pct} %: il-klijent iħallas {max} kg, sakemm ma jaċċettax iż-żejjed.",
+    "piecesList": "Biċċiet: {list}",
+    "history": "Użin",
+    "source": {
+      "PICK": "Ġbir",
+      "SCAN": "Tikketta tal-miżien",
+      "SUPPLIER": "Paġna tal-ordni",
+      "DRIVER": "Xufier fil-kunsinna"
+    },
+    "productsTitle": "Bejgħ bil-piż",
+    "productsIntro": "Laħam, ħut, ġobon… mibjugħa bil-kg. Agħżel kif tbigħ kull prodott: bil-biċċa (b'piż medju) jew bil-kilo. Il-klijent iħallas il-piż reali li tiżen int.",
+    "productsLimit": "Il-limitu ta' piż żejjed ta' FIRINGI: {pct} %. Tista' tissettja wieħed aktar strett għal kull prodott.",
+    "labelsInfo": "Tikketti tal-miżien: EAN-13 li jibda b'{prefixes} (kodiċi tal-oġġett ta' {digits} ċifri, imbagħad il-piż), jew tikketti GS1 bil-piż nett.",
+    "noProducts": "Għad m'hemmx prodotti.",
+    "weighingTitle": "Użin",
+    "weighingIntro": "Ordnijiet bi prodotti mibjugħa bil-piż li għad iridu jintiżnu, u kif il-piżijiet tiegħek iqabblu ma' dak li jordnaw il-klijenti.",
+    "toWeighTitle": "Biex jintiżnu",
+    "noneToWeigh": "Xejn biex jintiżen.",
+    "openOrder": "Iftaħ",
+    "reportTitle": "Il-piżijiet tiegħek (l-aħħar 90 jum)",
+    "noReport": "Għad m'hemmx kunsinni miżuna.",
+    "col": {
+      "product": "Prodott",
+      "estimated": "kg ordnati",
+      "weighed": "kg miżuna",
+      "billed": "kg iffatturati",
+      "lines": "Linji",
+      "capped": "Limitati",
+      "variance": "Differenza",
+      "date": "Kunsinna"
+    },
+    "cartTotalNote": "Jinkludi prodotti mibjugħa bil-piż: dan it-total huwa stima. Il-fattura tuża l-piż reali."
   }
 }

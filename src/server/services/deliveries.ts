@@ -263,7 +263,7 @@ async function moveAsDriver(ctx: Ctx, id: string, to: DeliveryStatus, effect?: (
 export const pickUp = (ctx: Ctx, id: string) => moveAsDriver(ctx, id, "PICKED_UP");
 export const startDelivery = (ctx: Ctx, id: string) => moveAsDriver(ctx, id, "OUT_FOR_DELIVERY");
 
-export async function completeDelivery(ctx: Ctx, id: string, input: Where & { recipientName: string; signature?: File | null; photos?: File[]; note?: string | null; empties?: Record<string, number> | null }) {
+export async function completeDelivery(ctx: Ctx, id: string, input: Where & { recipientName: string; signature?: File | null; photos?: File[]; note?: string | null; empties?: Record<string, number> | null; weights?: Record<string, number> | null; acceptOver?: boolean }) {
   const name = input.recipientName.trim();
   if (name.length < 2) throw new ValidationError("Enter the name of the person who received the goods.");
   const photos = (input.photos ?? []).filter(isImage);
@@ -280,6 +280,8 @@ export async function completeDelivery(ctx: Ctx, id: string, input: Where & { re
     await tx.proofOfDelivery.create({ data: { deliveryId: d.id, recipientName: name, signatureKey, photoKeys, latitude: lat, longitude: lng, byUserId: ctx.user.id } });
     // Phase 40: empties counted at the stop — swaps for refills go on this invoice, the rest waits for the supplier's check
     if (input.empties) emptiesReturnId = (await (await import("@/server/returnables/service")).recordStopEmpties(tx, d.id, input.empties, ctx.user.id)).ret?.id ?? null;
+    // Phase 41: weights corrected at the stop / extra weight accepted by the customer (before the order is invoiced)
+    if (input.weights || input.acceptOver) await (await import("@/server/catchweight/service")).recordStopWeights(tx, d.order.id, input.weights, !!input.acceptOver, ctx.user.id);
   });
   if (emptiesReturnId) await (await import("@/server/returnables/service")).afterCollected(emptiesReturnId);
   (await import("@/server/invoicing/fiscal")).kickFiscalQueue(); // the delivery invoiced the order: send it to Moloni

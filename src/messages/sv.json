@@ -853,7 +853,9 @@
     "Clearance Deals": "Utförsäljningserbjudanden",
     "Scan to Reorder": "Skanna och beställ igen",
     "Returnables": "Returemballage",
-    "Empties & Deposits": "Returemballage & pant"
+    "Empties & Deposits": "Returemballage & pant",
+    "Sold by Weight": "Försäljning efter Vikt",
+    "Weighing": "Vägning"
   },
   "delivery": {
     "title": "Leverans",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Pant behållen för tomgods som inte lämnats tillbaka",
       "body": "{items} ({customer}, från {supplier}) behölls i över {days} dagar: panten behålls som pris."
+    },
+    "catchweight_over_limit": {
+      "title": "Tyngre än beställt: {number}",
+      "body": "{product} väger {weighed} kg (gräns {max} kg). Du betalar högst gränsen, om du inte godkänner den extra vikten."
+    },
+    "catchweight_over_accepted": {
+      "title": "Extra vikt godkänd: {number}",
+      "body": "Kunden godkände vikten över gränsen. Fakturan använder den verkliga vikten."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Ingående saldo",
     "saveCorrection": "Spara rättelse",
     "manageItems": "Returartiklar och produktkopplingar →"
+  },
+  "catchWeight": {
+    "saved": "Sparat",
+    "sellBy": "Försäljning",
+    "modeNone": "Per styck (inte efter vikt)",
+    "modePiece": "Per styck, pris per kg",
+    "modeKg": "Per kilo",
+    "avgWeight": "Genomsnittsvikt per bit (kg)",
+    "unitWeight": "Vikt per enhet (kg)",
+    "yourLimit": "Din gräns för övervikt (%, FIRINGI:s är {pct})",
+    "minKg": "Lättaste biten (kg)",
+    "maxKg": "Tyngsta biten (kg)",
+    "plu": "Artikelkod på dina vågetiketter",
+    "perKgHint": "Pris per kg: {price} (ditt styckpris ÷ vikten).",
+    "keepPerKgNote": "Ändrar du vikten behålls kilopriset: dina styckpriser ändras med den.",
+    "save": "Spara",
+    "pieceN": "Bit {n} (kg)",
+    "totalKg": "Totalvikt (kg)",
+    "remove": "Ta bort",
+    "addPiece": "Lägg till en bit",
+    "addWeight": "Lägg till en vikt",
+    "saveWeights": "Spara vikterna",
+    "totalIs": "Totalt: {kg} kg",
+    "scanLabel": "Skanna en vågetikett",
+    "scanBtn": "Skanna",
+    "scanOk": "+ {kg} kg — {pieces} bitar, {total} kg totalt",
+    "scan": {
+      "NOT_A_LABEL": "Detta är ingen vågetikett med vikt.",
+      "WRONG_ITEM": "Den här etiketten hör till en annan produkt.",
+      "NOT_SOLD_BY_WEIGHT": "Den här produkten säljs inte efter vikt."
+    },
+    "weighed": "Vikter sparade",
+    "acceptOver": "Godkänn den extra vikten",
+    "stopTitle": "Säljs efter vikt",
+    "weighedKg": "vägd {kg} kg",
+    "estimatedKg": "cirka {kg} kg",
+    "newWeightFor": "Ny vikt för {product} (kg)",
+    "customerAccepts": "Kunden godkänner vikten över gränsen",
+    "badge": "Efter vikt",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Säljs efter vikt",
+    "incTax": "inkl. {tax}",
+    "exTax": "exkl. {tax}",
+    "range": "(från {min} till {max} kg)",
+    "pieceInfo": "Varje bit väger cirka {kg} kg{range}. Priset som visas gäller {kg} kg.",
+    "kgInfo": "Säljs per kilo: en enhet = {kg} kg.",
+    "howBilled": "Du betalar den verkliga vikten, vägd av leverantören. Är den över gränsen betalar du bara mer om du godkänner det.",
+    "cartNote": "cirka {kg} kg · slutpris efter vikt",
+    "orderTitle": "Säljs efter vikt",
+    "orderIntroBuyer": "Dessa produkter vägs före leverans. Du betalar det vägda beloppet; över gränsen bara om du godkänner.",
+    "bufferNote": "Förskottsbetalningen innehåller {amount} för viktskillnaden. Det som inte används blir en kredit på dina nästa fakturor.",
+    "state": {
+      "estimate": "Inte vägd än",
+      "weighed": "Vägd",
+      "capped": "Över gränsen",
+      "accepted": "Extra godkänt"
+    },
+    "estimated": "Beställt (cirka)",
+    "weighedCol": "Vägd",
+    "billed": "Fakturerat",
+    "perKgCol": "Pris",
+    "overBuyer": "Tyngre än beställt: du betalar högst {max} kg ({pct} % mer), om du inte godkänner den extra vikten.",
+    "overSeller": "Över gränsen på {pct} %: kunden betalar {max} kg, om kunden inte godkänner det extra.",
+    "piecesList": "Bitar: {list}",
+    "history": "Vägningar",
+    "source": {
+      "PICK": "Plockning",
+      "SCAN": "Vågetikett",
+      "SUPPLIER": "Ordersida",
+      "DRIVER": "Förare vid leverans"
+    },
+    "productsTitle": "Försäljning efter vikt",
+    "productsIntro": "Kött, fisk, ost… säljs per kg. Välj hur varje produkt säljs: per styck (med en genomsnittsvikt) eller per kilo. Kunden betalar den verkliga vikt du väger.",
+    "productsLimit": "FIRINGI:s gräns för övervikt: {pct} %. Du kan sätta en striktare per produkt.",
+    "labelsInfo": "Vågetiketter: EAN-13 som börjar med {prefixes} (artikelkod på {digits} siffror, sedan vikten), eller GS1-etiketter med nettovikt.",
+    "noProducts": "Inga produkter än.",
+    "weighingTitle": "Vägning",
+    "weighingIntro": "Ordrar med produkter efter vikt som fortfarande ska vägas, och hur dina vikter står sig mot det kunderna beställer.",
+    "toWeighTitle": "Att väga",
+    "noneToWeigh": "Inget att väga.",
+    "openOrder": "Öppna",
+    "reportTitle": "Dina vikter (senaste 90 dagarna)",
+    "noReport": "Inga vägda leveranser än.",
+    "col": {
+      "product": "Produkt",
+      "estimated": "Beställda kg",
+      "weighed": "Vägda kg",
+      "billed": "Fakturerade kg",
+      "lines": "Rader",
+      "capped": "Begränsade",
+      "variance": "Skillnad",
+      "date": "Leverans"
+    },
+    "cartTotalNote": "Innehåller produkter efter vikt: summan är en uppskattning. Fakturan använder den verkliga vikten."
   }
 }

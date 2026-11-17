@@ -116,8 +116,19 @@ export async function completeDeliveryAction(fd: FormData) {
       signature: dataUrlToFile(fd.get("signature"), "signature.png"), photos: files(fd, "photos"),
       latitude: num(fd.get("latitude")), longitude: num(fd.get("longitude")),
       empties: emptiesFrom(fd),
+      weights: weightsFrom(fd), acceptOver: fd.get("acceptOver") === "on" || fd.get("acceptOver") === "true",
     })),
   );
+}
+/** Phase 41: "weight:<orderLineId>" fields = kg weighed at the stop (empty = unchanged). */
+function weightsFrom(fd: FormData): Record<string, number> | null {
+  const out: Record<string, number> = {};
+  for (const [k, v] of fd.entries()) {
+    if (!k.startsWith("weight:") || typeof v !== "string" || !v.trim()) continue;
+    const kg = Number(v.replace(",", "."));
+    if (Number.isFinite(kg) && kg > 0) out[k.slice(7)] = kg;
+  }
+  return Object.keys(out).length ? out : null;
 }
 /** Phase 40: "empty:<typeId>" fields = empties counted at the stop (none sent = not counted). */
 function emptiesFrom(fd: FormData): Record<string, number> | null {

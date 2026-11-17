@@ -853,7 +853,9 @@
     "Clearance Deals": "Restposten-Deals",
     "Scan to Reorder": "Scannen & Nachbestellen",
     "Returnables": "Mehrweggebinde",
-    "Empties & Deposits": "Leergut & Pfand"
+    "Empties & Deposits": "Leergut & Pfand",
+    "Sold by Weight": "Verkauf nach Gewicht",
+    "Weighing": "Wiegen"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Pfand für nicht zurückgegebenes Leergut einbehalten",
       "body": "{items} ({customer}, von {supplier}) wurden über {days} Tage behalten: Das Pfand wird als Preis einbehalten."
+    },
+    "catchweight_over_limit": {
+      "title": "Schwerer als bestellt: {number}",
+      "body": "{product} wiegt {weighed} kg (Grenze {max} kg). Sie zahlen höchstens die Grenze, außer Sie akzeptieren das Mehrgewicht."
+    },
+    "catchweight_over_accepted": {
+      "title": "Mehrgewicht akzeptiert: {number}",
+      "body": "Der Kunde hat das Gewicht über der Grenze akzeptiert. Die Rechnung verwendet das tatsächliche Gewicht."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Anfangsbestand",
     "saveCorrection": "Korrektur speichern",
     "manageItems": "Leergutartikel und Produktverknüpfungen →"
+  },
+  "catchWeight": {
+    "saved": "Gespeichert",
+    "sellBy": "Verkauf",
+    "modeNone": "Pro Stück (nicht nach Gewicht)",
+    "modePiece": "Pro Stück, Preis pro kg",
+    "modeKg": "Pro Kilo",
+    "avgWeight": "Durchschnittsgewicht eines Stücks (kg)",
+    "unitWeight": "Gewicht einer Einheit (kg)",
+    "yourLimit": "Ihre Übergewichtsgrenze (%, die von FIRINGI liegt bei {pct})",
+    "minKg": "Leichtestes Stück (kg)",
+    "maxKg": "Schwerstes Stück (kg)",
+    "plu": "Artikelnummer auf Ihren Waagenetiketten",
+    "perKgHint": "Preis pro kg: {price} (Ihr Stückpreis ÷ Gewicht).",
+    "keepPerKgNote": "Wenn Sie das Gewicht ändern, bleibt der Preis pro kg gleich: Ihre Stückpreise ändern sich mit.",
+    "save": "Speichern",
+    "pieceN": "Stück {n} (kg)",
+    "totalKg": "Gesamtgewicht (kg)",
+    "remove": "Entfernen",
+    "addPiece": "Stück hinzufügen",
+    "addWeight": "Gewicht hinzufügen",
+    "saveWeights": "Gewichte speichern",
+    "totalIs": "Gesamt: {kg} kg",
+    "scanLabel": "Waagenetikett scannen",
+    "scanBtn": "Scannen",
+    "scanOk": "+ {kg} kg — {pieces} Stück, {total} kg insgesamt",
+    "scan": {
+      "NOT_A_LABEL": "Das ist kein Waagenetikett mit Gewicht.",
+      "WRONG_ITEM": "Dieses Etikett gehört zu einem anderen Produkt.",
+      "NOT_SOLD_BY_WEIGHT": "Dieses Produkt wird nicht nach Gewicht verkauft."
+    },
+    "weighed": "Gewichte gespeichert",
+    "acceptOver": "Mehrgewicht akzeptieren",
+    "stopTitle": "Nach Gewicht",
+    "weighedKg": "gewogen {kg} kg",
+    "estimatedKg": "etwa {kg} kg",
+    "newWeightFor": "Neues Gewicht für {product} (kg)",
+    "customerAccepts": "Der Kunde akzeptiert das Gewicht über der Grenze",
+    "badge": "Nach Gewicht",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Nach Gewicht verkauft",
+    "incTax": "inkl. {tax}",
+    "exTax": "zzgl. {tax}",
+    "range": "(von {min} bis {max} kg)",
+    "pieceInfo": "Jedes Stück wiegt etwa {kg} kg{range}. Der angezeigte Preis gilt für {kg} kg.",
+    "kgInfo": "Verkauf pro Kilo: eine Einheit = {kg} kg.",
+    "howBilled": "Sie zahlen das tatsächliche Gewicht, gewogen vom Lieferanten. Liegt es über der Grenze, zahlen Sie nur mehr, wenn Sie zustimmen.",
+    "cartNote": "etwa {kg} kg · Endpreis nach Gewicht",
+    "orderTitle": "Nach Gewicht verkauft",
+    "orderIntroBuyer": "Diese Produkte werden vor der Lieferung gewogen. Sie zahlen den gewogenen Betrag; über der Grenze nur, wenn Sie zustimmen.",
+    "bufferNote": "Die Vorauszahlung enthält {amount} für die Gewichtsdifferenz. Was nicht gebraucht wird, bleibt als Guthaben für Ihre nächsten Rechnungen.",
+    "state": {
+      "estimate": "Noch nicht gewogen",
+      "weighed": "Gewogen",
+      "capped": "Über der Grenze",
+      "accepted": "Mehrgewicht akzeptiert"
+    },
+    "estimated": "Bestellt (etwa)",
+    "weighedCol": "Gewogen",
+    "billed": "Berechnet",
+    "perKgCol": "Preis",
+    "overBuyer": "Schwerer als bestellt: Sie zahlen höchstens {max} kg ({pct} % mehr), außer Sie akzeptieren das Mehrgewicht.",
+    "overSeller": "Über der Grenze von {pct} %: Der Kunde zahlt {max} kg, außer er akzeptiert das Mehrgewicht.",
+    "piecesList": "Stücke: {list}",
+    "history": "Wägungen",
+    "source": {
+      "PICK": "Kommissionierung",
+      "SCAN": "Waagenetikett",
+      "SUPPLIER": "Bestellseite",
+      "DRIVER": "Fahrer bei der Lieferung"
+    },
+    "productsTitle": "Verkauf nach Gewicht",
+    "productsIntro": "Fleisch, Fisch, Käse… pro kg verkauft. Wählen Sie für jedes Produkt: pro Stück (mit Durchschnittsgewicht) oder pro Kilo. Der Kunde zahlt das tatsächliche Gewicht, das Sie wiegen.",
+    "productsLimit": "Übergewichtsgrenze von FIRINGI: {pct} %. Sie können pro Produkt eine strengere festlegen.",
+    "labelsInfo": "Waagenetiketten: EAN-13 beginnend mit {prefixes} (Artikelnummer mit {digits} Stellen, dann das Gewicht) oder GS1-Etiketten mit Nettogewicht.",
+    "noProducts": "Noch keine Produkte.",
+    "weighingTitle": "Wiegen",
+    "weighingIntro": "Bestellungen mit Produkten nach Gewicht, die noch gewogen werden müssen, und wie Ihre Gewichte im Vergleich zu den Bestellungen ausfallen.",
+    "toWeighTitle": "Zu wiegen",
+    "noneToWeigh": "Nichts zu wiegen.",
+    "openOrder": "Öffnen",
+    "reportTitle": "Ihre Gewichte (letzte 90 Tage)",
+    "noReport": "Noch keine gewogenen Lieferungen.",
+    "col": {
+      "product": "Produkt",
+      "estimated": "Bestellte kg",
+      "weighed": "Gewogene kg",
+      "billed": "Berechnete kg",
+      "lines": "Positionen",
+      "capped": "Begrenzt",
+      "variance": "Differenz",
+      "date": "Lieferung"
+    },
+    "cartTotalNote": "Enthält Produkte nach Gewicht: Diese Summe ist eine Schätzung. Die Rechnung verwendet das tatsächliche Gewicht."
   }
 }

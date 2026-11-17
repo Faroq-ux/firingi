@@ -113,7 +113,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
       {o.status === "ON_HOLD" && role === "BUYER" && o.awaitingPayment && (
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warning/40 bg-warning/10 p-4" data-testid="awaiting-payment">
           <div className="min-w-0 space-y-1 text-sm"><p className="font-semibold">{tPay("awaitingTitle")}</p><p>{tPay("awaitingBody", { days: payDays })}</p></div>
-          <PayOrderButton orderId={o.id} label={`${tPay("payOrder")} · ${formatMoney(o.grandTotal.toString(), locale)}`} />
+          <PayOrderButton orderId={o.id} label={`${tPay("payOrder")} · ${formatMoney(o.grandTotal.plus(o.prepayBuffer).toString(), locale)}`} />
         </div>
       )}
       {o.status === "ON_HOLD" && role === "BUYER" && !o.awaitingPayment && <p className="mb-4 rounded-md bg-warning/15 p-3 text-sm" data-testid="held-note">{t("heldNote")}</p>}

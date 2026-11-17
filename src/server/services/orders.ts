@@ -242,6 +242,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
         const plan = rt.swapPlanFor((cart as { emptySwaps?: unknown }).emptySwaps, sellerId) ?? (await rt.defaultSwaps(tx, ctx.company.id, sellerId));
         await rt.attachToOrder(tx, order.id, plan);
       }
+      // Phase 41: sold-by-weight lines keep their weight rules (nominal kg, over-weight limit)
+      await (await import("@/server/catchweight/service")).attachToOrder(tx, order.id);
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount
@@ -272,7 +274,9 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     const payFirst = (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;
     for (const o of out) {
       const to = held || payFirst ? "ON_HOLD" : "PENDING_CONFIRMATION";
-      await tx.order.update({ where: { id: o.id }, data: { status: to, awaitingPayment: payFirst } });
+      // Phase 41: pay-before-shipping buyers also pay a buffer on sold-by-weight lines (unused part stays as credit)
+      const buffer = payFirst ? await (await import("@/server/catchweight/service")).prepayBufferFor(tx, o.id) : new Decimal(0);
+      await tx.order.update({ where: { id: o.id }, data: { status: to, awaitingPayment: payFirst, prepayBuffer: buffer.toFixed(2) } });
       await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : payFirst ? "Waiting for payment" : "Sent to supplier" } });
       await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, o.id, { from: "NEW", to, placed: true });
     }
@@ -288,8 +292,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   await budgetAlertsAfterOrder(ctx.company.id, stamp.branchId).catch(() => null);
   if (payFirstOrders)
     for (const o of created) {
-      const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });
-      await notify("order.awaiting_payment", [{ companyId: ctx.company.id, link: `/buy/orders/${o.id}` }], { number: o.number, total: row.grandTotal.toNumber() }, { ref: { type: "Order", id: o.id } });
+      const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true, prepayBuffer: true } });
+      await notify("order.awaiting_payment", [{ companyId: ctx.company.id, link: `/buy/orders/${o.id}` }], { number: o.number, total: row.grandTotal.plus(row.prepayBuffer).toNumber() }, { ref: { type: "Order", id: o.id } });
     }
   if (risk.level === "HIGH" || payFirstOrders) return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })), payFirst: payFirstOrders };
   for (const o of created) {
@@ -475,10 +479,15 @@ export async function applyOrderTransition(
     await releaseStock(tx, order.id);
     await restockShipped(tx, order.id); // cancelled after dispatch: goods go back on hand
   }
-  if (to === "DISPATCHED") await shipStock(tx, order.id); // no-op when already shipped (retry after a failed attempt)
+  if (to === "DISPATCHED") {
+    await (await import("@/server/catchweight/service")).assertWeighedForDispatch(tx, order.id); // Phase 41 (when FIRINGI requires it)
+    await shipStock(tx, order.id); // no-op when already shipped (retry after a failed attempt)
+  }
   if (to === "DELIVERED") {
     // Delivered = what was confirmed. FIRINGI invoices the buyer and tells the vendor what to invoice.
     for (const l of order.lines) await tx.orderLine.update({ where: { id: l.id }, data: { qtyDelivered: l.qtyConfirmed ?? l.qtyOrdered } });
+    // Phase 41: sold-by-weight lines are billed on their weight (capped by the over-weight limit unless accepted)
+    await (await import("@/server/catchweight/service")).repriceOrder(tx, order.id);
     await invoiceDeliveredOrder(tx, order.id, by.userId);
     // goods bought on FIRINGI with a best-before date: the basis of the buyer's expiry alerts
     await recordPurchasedLots(tx, order.id);

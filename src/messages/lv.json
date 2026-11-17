@@ -853,7 +853,9 @@
     "Clearance Deals": "Izpārdošanas piedāvājumi",
     "Scan to Reorder": "Skenēt un pasūtīt vēlreiz",
     "Returnables": "Atgriežamā tara",
-    "Empties & Deposits": "Taras un depozīti"
+    "Empties & Deposits": "Taras un depozīti",
+    "Sold by Weight": "Pārdošana pēc Svara",
+    "Weighing": "Svēršana"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1611,6 +1613,14 @@
     "returnables_kept": {
       "title": "Depozīts paturēts par neatgrieztu taru",
       "body": "{items} ({customer}, no {supplier}) turēti ilgāk par {days} dienām: depozīts paliek kā cena."
+    },
+    "catchweight_over_limit": {
+      "title": "Smagāks nekā pasūtīts: {number}",
+      "body": "{product} sver {weighed} kg (robeža {max} kg). Maksājat ne vairāk kā robežu, ja vien nepieņemat papildu svaru."
+    },
+    "catchweight_over_accepted": {
+      "title": "Papildu svars pieņemts: {number}",
+      "body": "Klients piekrita svaram virs robežas. Rēķinā izmanto faktisko svaru."
     }
   },
   "notifications": {
@@ -5098,5 +5108,99 @@
     "openingBalance": "Sākuma atlikums",
     "saveCorrection": "Saglabāt labojumu",
     "manageItems": "Atgriežamās taras vienības un sasaiste ar produktiem →"
+  },
+  "catchWeight": {
+    "saved": "Saglabāts",
+    "sellBy": "Pārdošana",
+    "modeNone": "Pa gabalam (ne pēc svara)",
+    "modePiece": "Pa gabalam, cena par kg",
+    "modeKg": "Pa kilogramam",
+    "avgWeight": "Gabala vidējais svars (kg)",
+    "unitWeight": "Vienas vienības svars (kg)",
+    "yourLimit": "Jūsu pārsvara robeža (%, FIRINGI robeža ir {pct})",
+    "minKg": "Vieglākais gabals (kg)",
+    "maxKg": "Smagākais gabals (kg)",
+    "plu": "Preces kods jūsu svaru etiķetēs",
+    "perKgHint": "Cena par kg: {price} (jūsu vienības cena ÷ svars).",
+    "keepPerKgNote": "Mainot svaru, cena par kg paliek: vienību cenas mainās līdzi.",
+    "save": "Saglabāt",
+    "pieceN": "Gabals {n} (kg)",
+    "totalKg": "Kopējais svars (kg)",
+    "remove": "Noņemt",
+    "addPiece": "Pievienot gabalu",
+    "addWeight": "Pievienot svaru",
+    "saveWeights": "Saglabāt svarus",
+    "totalIs": "Kopā: {kg} kg",
+    "scanLabel": "Skenēt svaru etiķeti",
+    "scanBtn": "Skenēt",
+    "scanOk": "+ {kg} kg — {pieces} gab., kopā {total} kg",
+    "scan": {
+      "NOT_A_LABEL": "Šī nav svaru etiķete ar svaru.",
+      "WRONG_ITEM": "Šī etiķete ir citai precei.",
+      "NOT_SOLD_BY_WEIGHT": "Šī prece netiek pārdota pēc svara."
+    },
+    "weighed": "Svari saglabāti",
+    "acceptOver": "Pieņemt papildu svaru",
+    "stopTitle": "Pārdod pēc svara",
+    "weighedKg": "nosvērts {kg} kg",
+    "estimatedKg": "apmēram {kg} kg",
+    "newWeightFor": "Jauns svars: {product} (kg)",
+    "customerAccepts": "Klients piekrīt svaram virs robežas",
+    "badge": "Pēc svara",
+    "perKgShort": "{price}/kg",
+    "productTitle": "Pārdod pēc svara",
+    "incTax": "ar {tax}",
+    "exTax": "bez {tax}",
+    "range": "(no {min} līdz {max} kg)",
+    "pieceInfo": "Katrs gabals sver apmēram {kg} kg{range}. Norādītā cena ir par {kg} kg.",
+    "kgInfo": "Pārdod pa kilogramam: viena vienība = {kg} kg.",
+    "howBilled": "Jūs maksājat par faktisko svaru, ko nosver piegādātājs. Ja tas pārsniedz robežu, maksājat vairāk tikai ar jūsu piekrišanu.",
+    "cartNote": "apmēram {kg} kg · gala cena pēc svara",
+    "orderTitle": "Pārdod pēc svara",
+    "orderIntroBuyer": "Šīs preces nosver pirms piegādes. Jūs maksājat nosverto summu; virs robežas tikai ar piekrišanu.",
+    "bufferNote": "Priekšapmaksa ietver {amount} svara starpībai. Neizmantotā daļa paliek kā kredīts nākamajiem rēķiniem.",
+    "state": {
+      "estimate": "Vēl nav nosvērts",
+      "weighed": "Nosvērts",
+      "capped": "Virs robežas",
+      "accepted": "Pārpalikums pieņemts"
+    },
+    "estimated": "Pasūtīts (apm.)",
+    "weighedCol": "Nosvērts",
+    "billed": "Rēķinā",
+    "perKgCol": "Cena",
+    "overBuyer": "Smagāks nekā pasūtīts: maksājat ne vairāk kā {max} kg (par {pct} % vairāk), ja vien nepieņemat papildu svaru.",
+    "overSeller": "Virs {pct} % robežas: klients maksā par {max} kg, ja vien nepieņem pārpalikumu.",
+    "piecesList": "Gabali: {list}",
+    "history": "Svēršanas",
+    "source": {
+      "PICK": "Komplektēšana",
+      "SCAN": "Svaru etiķete",
+      "SUPPLIER": "Pasūtījuma lapa",
+      "DRIVER": "Vadītājs piegādē"
+    },
+    "productsTitle": "Pārdošana pēc svara",
+    "productsIntro": "Gaļa, zivis, siers… pārdod par kg. Izvēlieties, kā pārdodat katru preci: pa gabalam (ar vidējo svaru) vai pa kilogramam. Klients maksā par faktisko svaru, ko jūs nosverat.",
+    "productsLimit": "FIRINGI pārsvara robeža: {pct} %. Katrai precei varat iestatīt stingrāku.",
+    "labelsInfo": "Svaru etiķetes: EAN-13, kas sākas ar {prefixes} ({digits} ciparu preces kods, tad svars), vai GS1 etiķetes ar neto svaru.",
+    "noProducts": "Preču vēl nav.",
+    "weighingTitle": "Svēršana",
+    "weighingIntro": "Pasūtījumi ar precēm pēc svara, kas vēl jānosver, un kā jūsu svari salīdzināmi ar pasūtīto.",
+    "toWeighTitle": "Jānosver",
+    "noneToWeigh": "Nav ko svērt.",
+    "openOrder": "Atvērt",
+    "reportTitle": "Jūsu svari (pēdējās 90 dienas)",
+    "noReport": "Nosvērtu piegāžu vēl nav.",
+    "col": {
+      "product": "Prece",
+      "estimated": "Pasūtīti kg",
+      "weighed": "Nosvērti kg",
+      "billed": "Rēķinā kg",
+      "lines": "Rindas",
+      "capped": "Ierobežots",
+      "variance": "Starpība",
+      "date": "Piegāde"
+    },
+    "cartTotalNote": "Ietver preces pēc svara: šī summa ir aptuvena. Rēķinā izmanto faktisko svaru."
   }
 }

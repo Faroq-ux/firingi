@@ -10,6 +10,7 @@
  */
 import type { InvoiceDocType, Prisma, TaxRegime } from "@prisma/client";
 import Decimal from "decimal.js";
+import { invoiceWeightText } from "@/server/catchweight/service";
 import type { Tx } from "@/server/db";
 import { invoiceProvider } from "./provider";
 import { usesMoloni } from "./fiscal";
@@ -138,10 +139,15 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
   for (const l of order.lines) {
     const qty = l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered;
     if (qty <= 0) continue;
+    // Phase 41: a weighed line keeps its units; price per unit = its billed weight's share, weight and €/kg in the text
+    const f = l.cwBilledKg != null && l.cwNominalKg ? new Decimal(l.cwBilledKg.toString()).div(l.cwNominalKg.toString()).div(qty) : new Decimal(1);
+    const unitPriceNet = new Decimal(l.unitListPriceNet.toString()).mul(f).toDecimalPlaces(4);
+    const lineNet = new Decimal(l.lineNet.toString());
     lines.push({
-      orderLineId: l.id, description: `${pick(l.productName)} — ${pick(l.packagingName)} (SKU ${l.sku})`, qty: new Decimal(qty), unitPriceNet: new Decimal(l.unitListPriceNet.toString()),
-      discountNet: new Decimal(l.unitListPriceNet.toString()).minus(l.unitSalePriceNet.toString()).mul(qty), taxRate: new Decimal(l.taxRate.toString()),
-      lineNet: new Decimal(l.lineNet.toString()), lineVat: new Decimal(l.lineVat.toString()),
+      orderLineId: l.id, description: `${pick(l.productName)} — ${pick(l.packagingName)} (SKU ${l.sku})${invoiceWeightText(l)}`, qty: new Decimal(qty), unitPriceNet,
+      // weighed: the discount takes the rounding, so qty × price − discount is exactly the line (as the fiscal provider recomputes it)
+      discountNet: f.eq(1) ? new Decimal(l.unitListPriceNet.toString()).minus(l.unitSalePriceNet.toString()).mul(qty) : Decimal.max(0, r2(unitPriceNet.mul(qty).minus(lineNet))),
+      taxRate: new Decimal(l.taxRate.toString()), lineNet, lineVat: new Decimal(l.lineVat.toString()),
     });
   }
   const goodsVat = lines.reduce((a, l) => a.plus(l.lineVat), new Decimal(0));
@@ -185,7 +191,7 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
   const stLines = order.lines.filter((l) => (l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered) > 0).map((l) => {
     const net = new Decimal(l.vendorLineNet.toString());
     const rate = crossBorder ? new Decimal(0) : new Decimal(l.taxRate.toString());
-    return { orderLineId: l.id as string | null, sku: l.sku, description: `${pick(l.productName)} — ${pick(l.packagingName)}`, qty: l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered,
+    return { orderLineId: l.id as string | null, sku: l.sku, description: `${pick(l.productName)} — ${pick(l.packagingName)}${l.cwBilledKg != null ? ` · ${new Decimal(l.cwBilledKg.toString()).toFixed(3).replace(".", ",")} kg` : ""}`, qty: l.qtyDelivered ?? l.qtyConfirmed ?? l.qtyOrdered,
       unitCostNet: l.vendorUnitCostNet.toString(), lineNet: net.toFixed(2), taxRate: rate.toFixed(3), vat: r2(net.mul(rate).div(100)).toFixed(2), commission: l.commissionAmount.toString() };
   });
   // Supplier's own flat delivery rate (distributor → wholesaler): FIRINGI invoiced it to the buyer and pays it on

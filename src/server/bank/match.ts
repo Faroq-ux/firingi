@@ -136,14 +136,14 @@ async function know(owner: Owner): Promise<Knowledge> {
       prisma.invoice.findMany({ where: { docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" }, issuedAt: { gte: since } }, select: { id: true, fullNumber: true, providerNumber: true, recipientCompanyId: true, grossTotal: true, dueAt: true, creditNotes: { where: { status: { not: "DRAFT" } }, select: { grossTotal: true } }, allocations: { where: { payment: { status: { in: ["CONFIRMED", "REFUNDED"] } } }, select: { amount: true } } } }),
       prisma.payment.findMany({ where: { status: { in: ["CONFIRMED", "REFUNDED"] }, paidAt: { gte: since } }, select: paySelect }),
       prisma.vendorInvoice.findMany({ where: { status: "APPROVED", docType: { not: "CREDIT_NOTE" } }, select: { id: true, externalNumber: true, vendorCompanyId: true, grossTotal: true, issueDate: true, paymentAllocations: { where: { payment: { status: "CONFIRMED" } }, select: { amount: true } } } }),
-      prisma.order.findMany({ where: { awaitingPayment: true, status: "ON_HOLD" }, select: { id: true, number: true, buyerCompanyId: true, grandTotal: true } }),
+      prisma.order.findMany({ where: { awaitingPayment: true, status: "ON_HOLD" }, select: { id: true, number: true, buyerCompanyId: true, grandTotal: true, prepayBuffer: true } }),
     ]);
     const invoices = invRows.map((i) => {
       const open = round2(Number(i.grossTotal) - i.creditNotes.reduce((a, c) => a + Number(c.grossTotal), 0) - i.allocations.reduce((a, x) => a + Number(x.amount), 0));
       return { id: i.id, number: i.providerNumber ?? i.fullNumber ?? i.id, companyId: i.recipientCompanyId, open, gross: Number(i.grossTotal), dueAt: i.dueAt, keys: docKeys(i.fullNumber, i.providerNumber) };
     }).filter((i) => i.open > 0.004).sort((a, b) => (a.dueAt?.getTime() ?? 0) - (b.dueAt?.getTime() ?? 0));
     const vendorInvoices = vinvRows.map((v) => ({ id: v.id, number: v.externalNumber, companyId: v.vendorCompanyId, open: round2(Number(v.grossTotal) - v.paymentAllocations.reduce((a, x) => a + Number(x.amount), 0)), keys: docKeys(v.externalNumber), issueDate: v.issueDate })).filter((v) => v.open > 0.004).sort((a, b) => a.issueDate.getTime() - b.issueDate.getTime());
-    return { owner, settings, links, rules, companies, invoices, payments: await toPays(payRows), vendorInvoices, entries: [], orders: orderRows.map((o) => ({ id: o.id, number: o.number, companyId: o.buyerCompanyId, total: Number(o.grandTotal), keys: docKeys(o.number) })) };
+    return { owner, settings, links, rules, companies, invoices, payments: await toPays(payRows), vendorInvoices, entries: [], orders: orderRows.map((o) => ({ id: o.id, number: o.number, companyId: o.buyerCompanyId, total: Number(o.grandTotal) + Number(o.prepayBuffer), keys: docKeys(o.number) })) };
   }
 
   const cid = owner.companyId!;
@@ -447,8 +447,9 @@ export async function applyMatch(owner: Owner, lineId: string, p: Proposal, acto
           if (!o) throw new NotFoundError("Order");
           await tx.paymentRequest.create({ data: { token: `bank-${pay.id}`, companyId: cid, orderId: o.id, amount: amount.toFixed(2), status: "PAID", source: "ORDER", method: "BANK_TRANSFER", expiresAt: when, paidAt: when, paidAmount: amount.toFixed(2), paymentId: pay.id, createdById: actor.userId } });
           const st = await bankSettings();
-          const tol = Math.min(st.toleranceAmount, (st.tolerancePct / 100) * Number(o.grandTotal));
-          if (D(amount).gte(D(o.grandTotal).minus(tol + 0.004))) await releasePaidOrder(tx, o.id);
+          const due = D(o.grandTotal).plus(D(o.prepayBuffer)); // Phase 41: + buffer on sold-by-weight lines
+          const tol = Math.min(st.toleranceAmount, (st.tolerancePct / 100) * due.toNumber());
+          if (D(amount).gte(due.minus(tol + 0.004))) await releasePaidOrder(tx, o.id);
         } else if (credit > 0.004) await applyCustomerCredit(tx, cid);
         await tx.bankMatch.create({ data: { ...base, kind: "CUSTOMER_PAYMENT", amount: amount.toFixed(2), paymentId: pay.id, createdPayment: true } });
         await (await import("@/server/integrations/webhooks")).emitWebhook(tx, cid, "payment.received", { paymentId: pay.id, amount: amount.toFixed(2), method: "BANK_TRANSFER", reference: ref, paidAt: when.toISOString(), documents: items.map((i) => i.id) });
