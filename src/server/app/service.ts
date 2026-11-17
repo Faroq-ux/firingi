@@ -140,13 +140,17 @@ async function driverData(ctx: Ctx, locale: string) {
   const rows = await prisma.delivery.findMany({
     where: { driverId: ctx.driver.id, OR: [{ status: { in: ["ASSIGNED", "PICKED_UP", "OUT_FOR_DELIVERY", "FAILED"] } }, { status: "DELIVERED", completedAt: { gte: start } }] },
     include: {
-      order: { select: { number: true, status: true, deliveryAddress: true, buyerNotes: true, buyer: { select: { tradeName: true, legalName: true, phone: true } }, seller: { select: { tradeName: true, legalName: true } }, lines: { select: { productName: true, packagingName: true, qtyOrdered: true } } } },
+      order: { select: { id: true, buyerCompanyId: true, sellerCompanyId: true, number: true, status: true, deliveryAddress: true, buyerNotes: true, buyer: { select: { tradeName: true, legalName: true, phone: true } }, seller: { select: { tradeName: true, legalName: true } }, lines: { select: { productName: true, packagingName: true, qtyOrdered: true } } } },
       stops: { select: { sequence: true, kind: true, routeId: true } },
     },
     orderBy: [{ scheduledFor: "asc" }, { createdAt: "asc" }],
     take: 80,
   });
   const { FAILURE_REASONS } = await import("@/server/delivery/state");
+  // Phase 40: empties the driver can take back at each open stop (what the customer holds + refills on the order)
+  const { stopItems } = await import("@/server/returnables/service");
+  const empties = new Map<string, Awaited<ReturnType<typeof stopItems>>>();
+  for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") empties.set(d.id, await stopItems(d.order.buyerCompanyId, d.order.sellerCompanyId, locale, [], d.order.id));
   return {
     canPod: can(ctx, "driver.pod.capture"),
     reasons: [...FAILURE_REASONS],
@@ -162,6 +166,7 @@ async function driverData(ctx: Ctx, locale: string) {
           lat: a.latitude ? Number(a.latitude) : null, lng: a.longitude ? Number(a.longitude) : null,
           note: d.order.buyerNotes ?? d.notes ?? null, scheduledFor: d.scheduledFor?.toISOString() ?? null,
           items: d.order.lines.map((l) => ({ name: pickLocalized(l.productName, locale), packaging: pickLocalized(l.packagingName, locale), qty: l.qtyOrdered })),
+          empties: empties.get(d.id) ?? [],
         };
       })
       .sort((x, y) => x.sequence - y.sequence),
@@ -261,6 +266,8 @@ async function run(ctx: Ctx, kind: OfflineKind, d: Record<string, unknown>, s: A
       await deliveries.completeDelivery(ctx, id, {
         recipientName: str(d.recipientName, 120), note: str(d.note, 500) || null, signature: dataUrlFile(d.signature, "signature"), photos,
         latitude: typeof d.lat === "number" ? d.lat : null, longitude: typeof d.lng === "number" ? d.lng : null,
+        // Phase 40: empties counted at the stop, offline
+        empties: d.empties && typeof d.empties === "object" ? Object.fromEntries(Object.entries(d.empties as Record<string, unknown>).slice(0, 30).map(([k, v]) => [k.slice(0, 64), Math.max(0, Math.floor(Number(v) || 0))])) : null,
       });
       return { status: "DONE", result: { deliveryId: id } };
     }

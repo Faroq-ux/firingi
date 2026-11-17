@@ -38,6 +38,8 @@ model Cart {
   couponCode      String?
   /// Phase 32: loyalty points the buyer chose to spend at checkout.
   loyaltyPoints   Int      @default(0)
+  /// Phase 40: empties the buyer will hand back for refills ({ "supplierId:typeId": qty })
+  emptySwaps      Json?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -135,6 +137,7 @@ model Order {
   rating            OrderRating?
   redemptions       PromotionRedemption[]
   risk              RiskAssessment?
+  returnables       OrderReturnable[]
 
   purchaseOrder  PurchaseOrder?
   purchasedLots  PurchasedLot[]  @relation("PurchasedLotOrder")

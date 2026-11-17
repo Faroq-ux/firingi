@@ -199,6 +199,7 @@ model VendorOffer {
   planningItems       PlanningItem[]       @relation("PlanningItemOffer")
   restockSuggestions  RestockSuggestion[]  @relation("RestockSuggestionOffer")
   clearanceDeals      ClearanceDeal[]      @relation("ClearanceOffer")
+  returnables         OfferReturnable[]
 
   @@unique([vendorCompanyId, packagingUnitId])
   @@index([sellerType, status, countryId])

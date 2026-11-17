@@ -15,10 +15,11 @@ import { Scanner } from "@/components/warehouse/scanner";
 import { cachedDoc, flush, kvGet, kvSet, outbox, OUTBOX_EVENT, putEntry, queue, removeEntry, shrinkPhoto, type OutboxEntry } from "@/lib/offline/store";
 import type { AppPortal } from "@/lib/app";
 import { cn } from "@/lib/utils";
+import { EmptiesCounter, type StopItem } from "@/components/returnables/client";
 
 type Product = { offerId: string; name: string; packaging: string; brand: string | null; sku: string | null; gtin: string | null; unitGtin: string | null; supplier: string; unitNet: number; unitGross: number; minQty: number; step: number; available: number; stock: string; usualQty: number };
 type BuyerOrder = { id: string; number: string; status: string; placedAt: string; total: number; supplier: string; deliveryDate: string | null; eta: string | null; delivery: string | null; lines: { name: string; packaging: string; qty: number; net: number }[] };
-type Stop = { deliveryId: string; number: string; status: string; orderStatus: string; sequence: number; customer: string; phone: string | null; contact: string | null; supplier: string; address: string; lat: number | null; lng: number | null; note: string | null; scheduledFor: string | null; items: { name: string; packaging: string; qty: number }[] };
+type Stop = { deliveryId: string; number: string; status: string; orderStatus: string; sequence: number; customer: string; phone: string | null; contact: string | null; supplier: string; address: string; lat: number | null; lng: number | null; note: string | null; scheduledFor: string | null; items: { name: string; packaging: string; qty: number }[]; empties?: StopItem[] };
 type PickLine = { id: string; orderNumber: string; product: string; packaging: string; sku: string | null; gtin: string | null; batchId: string | null; lotCode: string | null; expiresOn: string | null; bin: string | null; qty: number; pickedQty: number; shortReason: string | null; blocked: boolean };
 type PickList = { id: string; number: string; warehouse: string; note: string | null; orders: { id: string; number: string; buyer: string }[]; lines: PickLine[] };
 type Snap = {
@@ -326,7 +327,7 @@ function RouteTab({ t, snap, since }: { t: T; snap: Snap; since: OutboxEntry[] }
                   {(s.status === "PICKED_UP" || s.status === "OUT_FOR_DELIVERY") && <Button variant="outline" onClick={() => setForm({ id: s.deliveryId, kind: "fail" })} data-testid="stop-failed"><AlertTriangle className="size-4" /> {t("couldntDeliver")}</Button>}
                 </div>
                 {form?.id === s.deliveryId && (form.kind === "done"
-                  ? <DeliveredForm t={t} onCancel={() => setForm(null)} onSave={async (v) => { await queue(snap.user.id, "driver", "delivery.complete", { deliveryId: s.deliveryId, ...v }, `${t("delivered")} · ${s.number}`); setForm(null); }} />
+                  ? <DeliveredForm t={t} items={s.empties ?? []} onCancel={() => setForm(null)} onSave={async (v) => { await queue(snap.user.id, "driver", "delivery.complete", { deliveryId: s.deliveryId, ...v }, `${t("delivered")} · ${s.number}`); setForm(null); }} />
                   : <FailedForm t={t} reasons={d.reasons} onCancel={() => setForm(null)} onSave={async (v) => { await queue(snap.user.id, "driver", "delivery.fail", { deliveryId: s.deliveryId, ...v }, `${t("couldntDeliver")} · ${s.number}`); setForm(null); }} />)}
               </div>
             )}
@@ -366,7 +367,11 @@ function SignaturePad({ onChange, label }: { onChange: (dataUrl: string | null) 
   );
 }
 
-function DeliveredForm({ t, onSave, onCancel }: { t: T; onSave: (v: Record<string, unknown>) => Promise<void>; onCancel: () => void }) {
+function DeliveredForm({ t, items, onSave, onCancel }: { t: T; items: StopItem[]; onSave: (v: Record<string, unknown>) => Promise<void>; onCancel: () => void }) {
+  const tr = useTranslations("returnables");
+  const el = { emptiesTaken: tr("emptiesTaken"), customerHolds: tr("customerHolds"), swapForFull: tr("swapForFull"), expectedBack: tr("expectedBack"), emptiesHint: tr("emptiesHint") };
+  // Phase 40: empties taken back at the stop, sent with the delivery
+  const [empties, setEmpties] = useState<Record<string, number>>(Object.fromEntries(items.map((i) => [i.typeId, i.kind === "EXCHANGE" ? Math.min(i.fullOut, i.held) : 0])));
   const [name, setName] = useState("");
   const [sig, setSig] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
@@ -379,12 +384,13 @@ function DeliveredForm({ t, onSave, onCancel }: { t: T; onSave: (v: Record<strin
       if (name.trim().length < 2) return setErr(t("needName"));
       if (!sig && !photo) return setErr(t("needProof"));
       setBusy(true);
-      await onSave({ recipientName: name.trim(), signature: sig, photos: photo ? [photo] : [], note: note || null, ...(await where()) });
+      await onSave({ recipientName: name.trim(), signature: sig, photos: photo ? [photo] : [], note: note || null, ...(items.length ? { empties } : {}), ...(await where()) });
       setBusy(false);
     }}>
       <div className="space-y-1"><Label htmlFor="pod-name">{t("recipient")}</Label><Input id="pod-name" value={name} onChange={(e) => setName(e.target.value)} data-testid="pod-name" /></div>
       <SignaturePad label={t("signature")} onChange={setSig} />
       <PhotoInput t={t} value={photo} onChange={setPhoto} />
+      <EmptiesCounter l={el} items={items} value={empties} onChange={setEmpties} />
       <Input value={note} onChange={(e) => setNote(e.target.value)} placeholder={t("noteOptional")} maxLength={500} />
       {err && <p className="text-sm text-destructive" role="alert">{err}</p>}
       <div className="flex gap-2"><Button type="submit" disabled={busy} data-testid="pod-save"><Check className="size-4" /> {t("saveDelivered")}</Button><Button type="button" variant="ghost" onClick={onCancel}>{t("cancel")}</Button></div>

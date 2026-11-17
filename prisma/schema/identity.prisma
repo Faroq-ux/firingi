@@ -277,6 +277,7 @@ model Company {
   earlyPayouts           EarlyPayout[]             @relation("EarlyPayouts")
   bankAccounts           BankAccount[]             @relation("BankAccounts")
   clearanceDeals         ClearanceDeal[]           @relation("ClearanceDeals")
+  returnableTypes        ReturnableType[]          @relation("ReturnableTypes")
   clearanceBids          ClearanceBid[]            @relation("ClearanceBids")
 
   @@unique([countryId, taxId, type])

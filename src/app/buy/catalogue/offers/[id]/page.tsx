@@ -17,6 +17,9 @@ import { VerifiedPanel } from "@/components/compliance/badges";
 import { liveDeals } from "@/server/deals/service";
 import { DealBanner } from "@/components/deals/banner";
 import { dealLabels } from "@/components/deals/labels";
+import { offerReturnables } from "@/server/returnables/service";
+import { ProductReturnables } from "@/components/returnables/views";
+import { rtLabels } from "@/components/returnables/labels";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -25,6 +28,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const data = await catalogueItem(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
   const { item, alternatives } = data;
   const [t, ti, locale, images, bestBefore, deals, dl] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id]), liveDeals(ctx, { offerIds: [id] }).catch(() => []), dealLabels()]);
+  const [rt, rl] = await Promise.all([offerReturnables([id], locale), rtLabels()]);
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -48,6 +52,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
             <div className="mt-2"><Codes item={item} full /></div>
           </div>
           {deals.map((d) => <DealBanner key={d.id} d={d} l={dl.l} locale={locale} canBuy={can(ctx, "buyer.orders.place")} />)}
+          <ProductReturnables l={rl.l} locale={locale} items={rt[id] ?? []} />
           <Card>
             <CardContent className="space-y-3 pt-5">
               <div className="flex flex-wrap items-start gap-3">

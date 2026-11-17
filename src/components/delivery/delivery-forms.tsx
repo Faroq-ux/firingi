@@ -11,6 +11,7 @@ import {
   setDriverActiveAction, setVehicleStatusAction, setVendorMultiOrderAction,
 } from "@/server/actions/delivery";
 import type { ActionResult } from "@/server/actions/_action";
+import { EmptiesCounter, type StopItem } from "@/components/returnables/client";
 
 const sel = "h-9 rounded-md border border-input bg-background px-2 text-sm";
 
@@ -182,10 +183,12 @@ function SignaturePad({ onChange }: { onChange: (dataUrl: string | null) => void
   );
 }
 
-export function CompleteDeliveryForm({ deliveryId }: { deliveryId: string }) {
+export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels }: { deliveryId: string; empties?: StopItem[]; emptiesLabels?: Record<string, string> }) {
   const t = useTranslations("delivery");
   const { pending, error, run } = useAct();
   const [name, setName] = useState("");
+  // Phase 40: empties taken back at the stop (refills: the empties swapped for the full ones)
+  const [counted, setCounted] = useState<Record<string, number>>(Object.fromEntries((empties ?? []).map((i) => [i.typeId, i.kind === "EXCHANGE" ? Math.min(i.fullOut, i.held) : 0])));
   const [sig, setSig] = useState<string | null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
   const { loc, ask } = useLocation();
@@ -196,12 +199,14 @@ export function CompleteDeliveryForm({ deliveryId }: { deliveryId: string }) {
       if (sig) fd.set("signature", sig);
       for (const p of photos) fd.append("photos", await shrink(p));
       if (loc) { fd.set("latitude", String(loc.lat)); fd.set("longitude", String(loc.lng)); }
+      for (const i of empties ?? []) fd.set(`empty:${i.typeId}`, String(counted[i.typeId] ?? 0));
       return completeDeliveryAction(fd);
     });
   return (
     <div className="space-y-3">
       <div className="space-y-1"><Label htmlFor="recipientName">{t("recipientName")}</Label><Input id="recipientName" value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" /></div>
       <SignaturePad onChange={setSig} />
+      {empties && empties.length > 0 && emptiesLabels && <EmptiesCounter l={emptiesLabels} items={empties} value={counted} onChange={setCounted} />}
       <div className="space-y-1"><Label htmlFor="photos">{t("addPhotos")}</Label><Input id="photos" type="file" accept="image/*" capture="environment" multiple onChange={(e) => setPhotos([...(e.target.files ?? [])].slice(0, 4))} /></div>
       <Button type="button" variant="outline" size="sm" onClick={ask} disabled={!!loc}>{loc ? t("locationAdded") : t("useLocation")}</Button>
       <Button className="h-12 w-full text-base" disabled={pending || name.trim().length < 2 || (!sig && !photos.length)} onClick={submit}>{t("confirmDelivery")}</Button>

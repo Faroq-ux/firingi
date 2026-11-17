@@ -5,7 +5,7 @@
  */
 import { releaseForOrder, reserveForOrder, restockForOrder, shipForOrder } from "@/server/inventory/ledger";
 import { recordPurchasedLots } from "@/server/inventory/purchased-core";
-import type { DeliveryMode, OrderFlow, OrderStatus, Prisma } from "@prisma/client";
+import { Prisma, type DeliveryMode, type OrderFlow, type OrderStatus } from "@prisma/client";
 import Decimal from "decimal.js";
 import { prisma, type Tx } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -236,6 +236,12 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
         });
       }
       await recordRedemptions(tx, order.id, ctx.company.id, part.redemptions, checkoutId);
+      // Phase 40: returnables on this order (deposits, empties to swap for refills)
+      {
+        const rt = await import("@/server/returnables/service");
+        const plan = rt.swapPlanFor((cart as { emptySwaps?: unknown }).emptySwaps, sellerId) ?? (await rt.defaultSwaps(tx, ctx.company.id, sellerId));
+        await rt.attachToOrder(tx, order.id, plan);
+      }
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount
@@ -273,7 +279,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     payFirstOrders = payFirst;
     if (!input.items) {
       await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
-      await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null, loyaltyPoints: 0 } });
+      await tx.cart.update({ where: { id: cart.id }, data: { couponCode: null, loyaltyPoints: 0, emptySwaps: Prisma.DbNull } });
     }
     return out;
   });
@@ -555,6 +561,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
         }
       }
     }
+    await (await import("@/server/returnables/service")).attachToOrder(tx, orderId); // Phase 40: confirmed quantities carry the returnables
     // Delivery fee VAT: rate of the fee's tax category in the buyer's (region of) country.
     let feeVatPercent: Decimal = new Decimal(0);
     if (order.deliveryFeeNet.gt(0) && order.deliveryRuleId) {

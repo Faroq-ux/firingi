@@ -6,6 +6,9 @@ import { pickLocalized } from "@/i18n/config";
 import { Badge } from "@/components/ui/badge";
 import { PriceBlock, Codes } from "./price";
 import { VerifiedBadges } from "@/components/compliance/badges";
+import { offerReturnables } from "@/server/returnables/service";
+import { ProductReturnables } from "@/components/returnables/views";
+import { rtLabels } from "@/components/returnables/labels";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -24,6 +27,9 @@ export function ProductThumb({ productId, hasImage, className = "" }: { productI
 /** `sponsored` (Phase 34): the "Sponsored" label and a link through the ad click counter. `deal` (Phase 38): a live clearance deal on this offer. */
 export async function ProductCard({ item, hasImage, showVendor = true, sponsored, deal }: { item: CatalogueItem; hasImage: boolean; showVendor?: boolean; sponsored?: { href: string; label: string }; deal?: { pct: number | null; endsAt: Date; kind: string } }) {
   const [t, td, locale] = await Promise.all([getTranslations("catalogue"), getTranslations("deals"), getLocale()]);
+  // Phase 40: "+ deposit" / "refill" when the product comes with returnables
+  const rt = (await offerReturnables([item.offerId], locale))[item.offerId] ?? [];
+  const rl = rt.length ? (await rtLabels()).l : null;
   return (
     <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
@@ -39,6 +45,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />
           {item.price && item.price.scope !== "BASE" && <Badge className="mt-1">{t(`priceScope.${item.price.scope}`)}</Badge>}
+          {rl && <div className="mt-1"><ProductReturnables l={rl} locale={locale} items={rt} compact /></div>}
           {showVendor && <VerifiedBadges badges={item.vendor.badges} max={2} className="mt-2" />}
           <div className="mt-2 flex items-center justify-between gap-2 text-xs">
             <span className="truncate text-muted-foreground">{showVendor ? `${item.vendor.country.flag ?? ""} ${item.vendor.name}` : ""}</span>

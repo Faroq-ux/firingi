@@ -13,6 +13,7 @@ import { SaveOrderAsList } from "@/components/buying/controls";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { CLAIM_STATUS_TONE } from "@/components/claims/views";
+import { OrderDepositsCard } from "@/components/returnables/views";
 
 export default async function Page({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ placed?: string }> }) {
   const ctx = await pagePortal("buy");
@@ -30,6 +31,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
     <>
       <OrderDetail ctx={ctx} id={id} placed={(await searchParams).placed === "1"} />
       <div className="mt-4 flex justify-end"><SaveOrderAsList orderId={id} number={order.order.number} /></div>
+      <OrderDepositsCard orderId={id} status={order.order.status} />
       {tc && (
         <Card className="mt-6" data-testid="order-claims">
           <CardHeader><CardTitle>{tc("orderCardTitle")}</CardTitle><CardDescription>{claimable?.open ? tc("orderCardHint", { hours: claimable.windowHours }) : tc("orderCardClosed")}</CardDescription></CardHeader>

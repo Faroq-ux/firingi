@@ -1,0 +1,199 @@
+// ───────────────────────── Returnables & deposits (Phase 40) ─────────────────────────
+// Crates, kegs, pallets, bottles, gas cylinders… that go back to the supplier.
+//   DEPOSIT  — a deposit is charged on every unit delivered and credited when the empty comes back
+//              (after the supplier confirms the count).
+//   EXCHANGE — refill / swap (gas cylinders, kegs): the customer hands back an empty for each full one;
+//              only units without an empty to swap carry a deposit. Extra empties are credited like deposits.
+// Balances live in a ledger per customer × supplier × type (ReturnableMovement); money lives in invoices:
+// deposit lines on FIRINGI's delivery invoice, refunds by credit note, and the matching lines on the
+// supplier's billing statement (deposits pass through FIRINGI with no commission or margin).
+
+enum ReturnableKind {
+  DEPOSIT
+  EXCHANGE
+}
+
+enum ReturnableCategory {
+  CRATE
+  KEG
+  PALLET
+  BOTTLE
+  CYLINDER
+  BOX
+  OTHER
+}
+
+enum ReturnableMoveKind {
+  OUT // delivered to the customer (+)
+  SWAP_IN // empty swapped for a full one at the delivery (−)
+  RETURN // empty brought back and accepted (−)
+  KEPT // held too long: the deposit is kept as the price (−)
+  ADJUST // supplier correction / opening balance (±)
+}
+
+enum EmptiesSource {
+  DELIVERY // the driver took empties back at a delivery stop
+  PICKUP // a collection the customer asked for
+  DROP_OFF // the customer brought them to the supplier
+}
+
+enum EmptiesReturnStatus {
+  COLLECTED // counted by the driver, waiting for the supplier's check
+  CONFIRMED // the supplier checked it: credited
+  DISPUTED // the customer contests the supplier's count: FIRINGI decides
+  RESOLVED // FIRINGI decided
+}
+
+enum EmptiesPickupStatus {
+  REQUESTED
+  PLANNED
+  COLLECTED
+  CANCELLED
+}
+
+/// A kind of returnable item. ownerCompanyId null = FIRINGI's shared list (any supplier can use it).
+model ReturnableType {
+  id             String             @id @default(cuid())
+  ownerCompanyId String?
+  code           String
+  name           Json
+  category       ReturnableCategory
+  kind           ReturnableKind
+  /// Deposit per unit (net of VAT).
+  depositNet     Decimal            @db.Decimal(18, 4)
+  active         Boolean            @default(true)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  owner  Company?          @relation("ReturnableTypes", fields: [ownerCompanyId], references: [id], onDelete: Cascade)
+  links  OfferReturnable[]
+  orders OrderReturnable[]
+
+  @@unique([ownerCompanyId, code])
+  @@index([active])
+}
+
+/// What comes with one unit of an offer (e.g. a crate of 24: 1 crate + 24 bottles).
+model OfferReturnable {
+  id         String @id @default(cuid())
+  offerId    String
+  typeId     String
+  qtyPerUnit Int    @default(1)
+
+  offer VendorOffer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  type  ReturnableType @relation(fields: [typeId], references: [id])
+
+  @@unique([offerId, typeId])
+  @@index([typeId])
+}
+
+/// Returnables on an order: full units going out, empties the buyer plans to swap, what the driver swapped.
+model OrderReturnable {
+  id             String  @id @default(cuid())
+  orderId        String
+  typeId         String
+  qtyOut         Int
+  swapPlanned    Int     @default(0)
+  /// recorded by the driver at the stop (null = not recorded: the planned swap is taken)
+  swapDone       Int?
+  depositUnitNet Decimal @db.Decimal(18, 4)
+  /// deposit units put on the invoice (after swaps)
+  invoicedQty    Int     @default(0)
+  vatRate        Decimal @default(0) @db.Decimal(6, 3)
+
+  order Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type  ReturnableType @relation(fields: [typeId], references: [id])
+
+  @@unique([orderId, typeId])
+}
+
+/// The ledger: how many units of a type a customer holds from a supplier (signed quantities).
+model ReturnableMovement {
+  id                String             @id @default(cuid())
+  customerCompanyId String
+  supplierCompanyId String
+  typeId            String
+  kind              ReturnableMoveKind
+  qty               Int
+  orderId           String?
+  returnId          String?
+  note              String?
+  byUserId          String?
+  at                DateTime           @default(now())
+
+  @@index([customerCompanyId, supplierCompanyId, typeId, at])
+  @@index([supplierCompanyId, at])
+  @@index([orderId])
+}
+
+/// Empties brought back (by the driver at a stop, on a pickup, or at the supplier) and their check.
+model EmptiesReturn {
+  id                String              @id @default(cuid())
+  number            String              @unique // ER-2026-000001
+  customerCompanyId String
+  supplierCompanyId String
+  source            EmptiesSource
+  status            EmptiesReturnStatus @default(COLLECTED)
+  deliveryId        String?
+  pickupId          String?
+  orderId           String?
+  collectedById     String?
+  collectedAt       DateTime            @default(now())
+  confirmedById     String?
+  confirmedAt       DateTime?
+  note              String?
+  /// the customer's reason when contesting the supplier's count, and FIRINGI's decision
+  disputeNote       String?
+  resolution        String?
+  resolvedById      String?
+  resolvedAt        DateTime?
+  /// deposits refunded (gross) and the credit notes that did it
+  creditGross       Decimal             @default(0) @db.Decimal(18, 2)
+  creditNoteIds     String[]            @default([])
+
+  lines EmptiesReturnLine[]
+
+  @@index([customerCompanyId, collectedAt])
+  @@index([supplierCompanyId, status])
+}
+
+model EmptiesReturnLine {
+  id       String @id @default(cuid())
+  returnId String
+  typeId   String
+  /// counted when collected
+  counted  Int
+  /// the supplier's check: accepted (in good order) and damaged (taken back, no refund)
+  accepted Int?
+  damaged  Int    @default(0)
+  /// deposit units refunded
+  credited Int    @default(0)
+
+  ret EmptiesReturn @relation(fields: [returnId], references: [id], onDelete: Cascade)
+
+  @@index([returnId])
+}
+
+/// A collection of empties the customer asked for (planned by the supplier like a delivery stop).
+model EmptiesPickup {
+  id                String              @id @default(cuid())
+  number            String              @unique // EP-2026-000001
+  customerCompanyId String
+  supplierCompanyId String
+  addressId         String
+  status            EmptiesPickupStatus @default(REQUESTED)
+  /// [{ typeId, qty }] the customer expects to hand over
+  lines             Json
+  note              String?
+  preferredDate     DateTime?
+  plannedDate       DateTime?
+  driverId          String?
+  requestedById     String
+  returnId          String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@index([supplierCompanyId, status])
+  @@index([customerCompanyId, createdAt])
+  @@index([driverId, status])
+}

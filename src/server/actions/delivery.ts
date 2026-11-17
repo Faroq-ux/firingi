@@ -115,8 +115,16 @@ export async function completeDeliveryAction(fd: FormData) {
       recipientName: str(fd.get("recipientName")), note: str(fd.get("note")) || null,
       signature: dataUrlToFile(fd.get("signature"), "signature.png"), photos: files(fd, "photos"),
       latitude: num(fd.get("latitude")), longitude: num(fd.get("longitude")),
+      empties: emptiesFrom(fd),
     })),
   );
+}
+/** Phase 40: "empty:<typeId>" fields = empties counted at the stop (none sent = not counted). */
+function emptiesFrom(fd: FormData): Record<string, number> | null {
+  const out: Record<string, number> = {};
+  let any = false;
+  for (const [k, v] of fd.entries()) if (k.startsWith("empty:")) { any = true; out[k.slice(6)] = Math.max(0, Math.floor(Number(v) || 0)); }
+  return any ? out : null;
 }
 export async function failDeliveryAction(fd: FormData) {
   return runAction(async (ctx) =>

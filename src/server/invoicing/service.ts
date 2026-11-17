@@ -158,6 +158,13 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     const feeVat = r2(new Decimal(order.vatTotal.toString()).minus(goodsVat)); // exactly what the buyer was charged
     lines.push({ description: order.deliveryMode === "FIRINGI_FLEET" ? "Entrega (FIRINGI)" : "Entrega (taxa fixa do fornecedor)", qty: new Decimal(1), unitPriceNet: fee, taxRate: await feeTaxRate(), lineNet: fee, lineVat: feeVat });
   }
+  // Phase 40: deposits on returnables (crates, kegs, gas cylinders…) — after the goods and the fee
+  const { invoiceDeposits } = await import("@/server/returnables/service");
+  const deposits = await invoiceDeposits(tx, orderId, {
+    buyerCompanyId: order.buyerCompanyId, sellerCompanyId: order.sellerCompanyId, countryCode: order.buyer.country.code,
+    crossBorder: order.seller.countryId !== le.countryId, goodsRates: order.lines.map((l) => Number(l.taxRate)), userId: actorUserId,
+  });
+  lines.push(...deposits.invoiceLines);
   const buyerAddr = await billingAddress(tx, order.buyerCompanyId);
   const invoice = await issueDocument(tx, {
     legalEntityId: le.id, countryId: le.countryId, docType: "INVOICE", taxRegime: "DOMESTIC", recipientCompanyId: order.buyerCompanyId, orderId,
@@ -194,6 +201,7 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
       ...(crossBorder ? { selfAssessRate: buyerRate.toFixed(3) } : {}),
     });
   }
+  stLines.push(...deposits.statementLines); // deposits pass through: the supplier charges FIRINGI the same
   const expNet = stLines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
   const expVat = stLines.reduce((a, l) => a.plus(l.vat), new Decimal(0));
   const year = new Date().getFullYear();

@@ -147,6 +147,15 @@ export const EVENTS: EventDef[] = [
   E("earlypay.paid", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "net"]),
   E("earlypay.rejected", "finance", ["vendor.invoices.view", "vendor.payments.view"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("earlypay.requested", "finance", ["admin.finance.manage"], ["EMAIL", "PUSH"], ["company", "number", "amount"]),
+  // returnables & deposits (Phase 40)
+  E("returnables.collected", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number", "customer", "units"]),
+  E("returnables.confirmed", "orders", ["buyer.orders.view", "buyer.invoices.view"], ["EMAIL", "PUSH"], ["number", "accepted", "damaged", "missing", "credit"]),
+  E("returnables.disputed", "orders", ["admin.orders.manage", "vendor.orders.manage"], ["EMAIL"], ["number", "customer"]),
+  E("returnables.resolved", "orders", ["buyer.orders.view", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["number", "note"]),
+  E("returnables.pickup_requested", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number", "customer", "units"]),
+  E("returnables.pickup_planned", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "date"]),
+  E("returnables.overdue", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["supplier", "items", "days"]),
+  E("returnables.kept", "orders", ["buyer.orders.view", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["customer", "supplier", "items", "days"]),
   // clearance deals (Phase 38)
   E("deal.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "number"]),
   E("deal.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number"]),

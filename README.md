@@ -662,6 +662,32 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Returnables & deposits (Phase 40)
+
+Code: `src/lib/returnables.ts` (rules), `src/server/returnables/service.ts`; details `docs/returnables.md`.
+- **Two kinds of returnable**: **deposit** items (crates, pallets, bottles, boxes) — every unit delivered carries a
+  deposit, refunded when the empty comes back — and **refill / swap** items (gas cylinders, kegs) — the customer hands
+  back an empty for each full one; only units without an empty to swap carry the deposit.
+- **Who defines them**: FIRINGI keeps a shared list (EUR pallet, beer crate, glass bottle, kegs, butane/propane
+  cylinders…); suppliers add their own items and link their products (*Products › Returnables*, e.g. 1 crate + 24
+  bottles per case).
+- **Customers see it before ordering**: deposit / refill panel on the product page, a badge on product cards, and in
+  the cart the estimated deposit plus the empties they will hand back (defaults to what they hold).
+- **Money**: deposits are separate lines on FIRINGI's delivery invoice and on the supplier's billing statement
+  (pass-through: no commission, no margin). Returned empties are refunded by credit note — newest deposit invoices
+  first, never more than the customer has paid in; the supplier gets the matching credit statement.
+- **VAT on deposits — the admin sets it per country** (no VAT / same as the goods / fixed rate); defaults: no VAT in
+  Portugal, the goods' rate elsewhere (*Settings › Returnables & Deposits*).
+- **Empties come back** at a delivery (the driver counts them on the proof-of-delivery form — online and in the
+  offline driver app), on a **pickup** the customer asks for (the supplier plans a driver and day), or brought to the
+  supplier (**drop-off**). The supplier **checks** them (accepted / damaged / missing); the customer is told and can
+  **contest**; FIRINGI decides (*Orders › Empties & Deposits*).
+- **Kept too long — the admin chooses**: after N days remind the customer (open balance), or keep the deposit as the
+  price; per-supplier exceptions. Daily job `/api/cron/returnables`.
+- **Statements & reports**: balances per customer / supplier / item, deposits paid in, overdue empties, movements CSV
+  (`/api/returnables/statement`). Deposit invoice lines and credit notes flow into the accounting exports as usual.
+- Tests: `tests/unit/returnables.test.ts`, `tests/integration/returnables.test.ts`, browser `tests/e2e/returnables.mjs`. Screenshots `docs/screenshots/rt-*.png`.
+
 ## Installable phone app & offline mode (Phase 39)
 
 Code: `public/sw.js`, `src/server/app/*`, `src/lib/offline/store.ts`, `src/components/app/*`; details `docs/app.md`.

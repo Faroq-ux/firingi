@@ -2,6 +2,9 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { cartView } from "@/server/services/cart";
+import { cartReturnables } from "@/server/returnables/service";
+import { CartReturnables } from "@/components/returnables/client";
+import { rtLabels } from "@/components/returnables/labels";
 import { SponsoredProducts } from "@/components/ads/sponsored";
 import { orderingSettings } from "@/server/multisite/branches";
 import { pickLocalized } from "@/i18n/config";
@@ -22,6 +25,8 @@ export default async function CartPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.orders.place");
   const [cart, t, tc, locale, ordering, tl, ls] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx), getTranslations("loyalty"), loyaltySettings()]);
+  // Phase 40: deposits on returnables in the cart, empties to swap for refills
+  const [rtCart, rl] = await Promise.all([cartReturnables(ctx, locale).catch(() => null), rtLabels()]);
   const td = await getTranslations("deals");
   const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
@@ -79,6 +84,12 @@ export default async function CartPage() {
               {cart.groups.length > 1 && deliveryNote(g)}
             </div>
           ))}
+          {rtCart && rtCart.lines.length > 0 && (
+            <Card>
+              <CardHeader><CardTitle>{rl.l.cartTitle}</CardTitle></CardHeader>
+              <CardContent><CartReturnables l={rl.l} locale={locale} total={rtCart.depositTotal} lines={rtCart.lines.map((x) => ({ ...x, supplier: cart.groups.find((g) => g.supplier.id === x.supplierId)?.supplier.name ?? "" }))} /></CardContent>
+            </Card>
+          )}
         </div>
         <Card>
           <CardHeader><CardTitle>{t("total")}</CardTitle></CardHeader>
@@ -91,6 +102,7 @@ export default async function CartPage() {
               <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(cart.totalVat, locale)}</dd>
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
             </dl>
+            {rtCart && rtCart.depositTotal > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-deposit-note">{rl.l.plusDeposits.replace("{amount}", formatMoney(rtCart.depositTotal, locale))}</p>}
             {cart.groups.length === 1 && deliveryNote(cart.groups[0])}
             {cart.groups.length > 1 && d && !d.ok && <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">{t("splitBlocked")}</p>}
             {cart.credit && (
