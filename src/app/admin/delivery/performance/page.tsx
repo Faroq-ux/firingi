@@ -7,7 +7,7 @@ import { BarList, ChartCard, TimeChart } from "@/components/analytics/charts";
 import { PeriodForm } from "@/components/routes/period-form";
 
 export const metadata = { title: "Delivery Performance" };
-const REASON: Record<string, string> = { CUSTOMER_ABSENT: "Customer not there", CLOSED: "Business closed", REFUSED: "Refused", WRONG_ADDRESS: "Wrong address", DAMAGED: "Goods damaged", NO_ACCESS: "No access", OTHER: "Other" };
+const REASON: Record<string, string> = { CUSTOMER_ABSENT: "Customer not there", CLOSED: "Business closed", REFUSED: "Refused", WRONG_ADDRESS: "Wrong address", DAMAGED: "Goods damaged", NO_ACCESS: "No access", TEMPERATURE: "Temperature out of range", OTHER: "Other" };
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ from?: string; to?: string; all?: string }> }) {
   const ctx = await pagePortal("admin");

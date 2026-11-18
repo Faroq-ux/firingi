@@ -60,7 +60,7 @@ export function deliveryStatusForOrder(order: OrderStatus, current: DeliveryStat
   }
 }
 
-export const FAILURE_REASONS = ["CUSTOMER_ABSENT", "CLOSED", "REFUSED", "WRONG_ADDRESS", "DAMAGED", "NO_ACCESS", "OTHER"] as const;
+export const FAILURE_REASONS = ["CUSTOMER_ABSENT", "CLOSED", "REFUSED", "WRONG_ADDRESS", "DAMAGED", "NO_ACCESS", "TEMPERATURE", "OTHER"] as const;
 export type FailureReason = (typeof FAILURE_REASONS)[number];
 
 /** Delivery statuses where the driver still has work. */

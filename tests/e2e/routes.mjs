@@ -133,6 +133,7 @@ async function deliver(o) {
   await driver.locator('[data-testid="driver-delivery"]', { hasText: o.number }).getByRole("link", { name: /^Entregue$|^Delivered$/ }).click();
   await settle(driver);
   await driver.fill("#recipientName", "Ahmed (Kebab House)");
+  await driver.locator('[data-testid="signature"]').first().scrollIntoViewIfNeeded(); // the pad can sit below the fold (e.g. temperatures above it)
   const box = await driver.locator('[data-testid="signature"]').boundingBox();
   await driver.mouse.move(box.x + 30, box.y + 100);
   await driver.mouse.down();

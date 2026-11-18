@@ -244,6 +244,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       }
       // Phase 41: sold-by-weight lines keep their weight rules (nominal kg, over-weight limit)
       await (await import("@/server/catchweight/service")).attachToOrder(tx, order.id);
+      // Phase 42: chilled / frozen lines keep their temperature class
+      await (await import("@/server/coldchain/service")).attachToOrder(tx, order.id);
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount

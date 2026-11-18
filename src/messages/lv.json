@@ -855,7 +855,10 @@
     "Returnables": "Atgriežamā tara",
     "Empties & Deposits": "Taras un depozīti",
     "Sold by Weight": "Pārdošana pēc Svara",
-    "Weighing": "Svēršana"
+    "Weighing": "Svēršana",
+    "Temperature": "Temperatūra",
+    "Cold Chain": "Aukstuma Ķēde",
+    "Receiving Log": "Pieņemšanas žurnāls"
   },
   "delivery": {
     "title": "Piegāde",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Nepareiza vai nepilnīga adrese",
       "DAMAGED": "Preces bojātas",
       "NO_ACCESS": "Nav piekļuves adresei",
-      "OTHER": "Cits"
+      "OTHER": "Cits",
+      "TEMPERATURE": "Temperatūra ārpus diapazona"
     },
     "fleetIntro": "Vadītāji un transportlīdzekļi pasūtījumiem, ko piegādājat paši (bezmaksas piegāde). Jūs par tiem atbildat.",
     "drivers": "Vadītāji",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Papildu svars pieņemts: {number}",
       "body": "Klients piekrita svaram virs robežas. Rēķinā izmanto faktisko svaru."
+    },
+    "coldchain_breach": {
+      "title": "Temperatūra ārpus diapazona: {number}",
+      "body": "{incident}: {temp} (atļauts {range}) posmā {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Reģistrators ārpus diapazona: {logger}",
+      "body": "{temp} {minutes} minūtes (atļauts {range}). Pārbaudiet saldēšanas iekārtu."
+    },
+    "coldchain_equipment_due": {
+      "title": "Iekārtas termiņš: {equipment}",
+      "body": "Paredzēts vai nokavēts: {tasks}. Reģistrējiet to sadaļā Aukstuma ķēde."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Nepareiza adrese",
       "DAMAGED": "Bojāta prece",
       "NO_ACCESS": "Nav piekļuves",
-      "OTHER": "Cits"
+      "OTHER": "Cits",
+      "TEMPERATURE": "Temperatūra ārpus diapazona"
     },
     "stopStatus": {
       "UNASSIGNED": "Nav piešķirts",
@@ -5202,5 +5219,131 @@
       "date": "Piegāde"
     },
     "cartTotalNote": "Ietver preces pēc svara: šī summa ir aptuvena. Rēķinā izmanto faktisko svaru."
+  },
+  "coldChain": {
+    "badTemp": "Tā nav temperatūra",
+    "status": {
+      "OK": "Diapazonā",
+      "WARN": "Pielaide",
+      "OUT": "Ārpus diapazona"
+    },
+    "atLoading": "{temp} °C iekraušanas laikā",
+    "tempFor": "{cls} temperatūra (°C)",
+    "record": {
+      "DISPATCH": "Temperatūra nosūtīšanas laikā",
+      "LOADING": "Temperatūra iekraušanas laikā",
+      "RECEIPT": "Temperatūra pieņemšanas laikā"
+    },
+    "probe": "Zonde / termometrs",
+    "goodsAccepted": "Preces pieņemtas",
+    "noteOptional": "Piezīme (nav obligāta)",
+    "saveTemps": "Saglabāt temperatūras",
+    "recorded": "Reģistrēts",
+    "handoverTitle": "Temperatūra nodošanas laikā",
+    "handoverRequired": "Temperatūra nodošanas laikā (obligāta)",
+    "blockedNote": "{cls}: ārpus diapazona — nevar nodot. Tas tiek atgriezts, un klientam tiek izrakstīts kredītrēķins.",
+    "refuseClass": "Klients atsakās no {cls} produktiem (kreditēts)",
+    "ambient": "Apkārtējā",
+    "classFor": "Temperatūras klase",
+    "fromCategory": "No kategorijas: {cls}",
+    "supplier": "Piegādātājs",
+    "product": "Produkts",
+    "tempClass": "Temperatūras klase",
+    "tempC": "Temperatūra (°C)",
+    "addEntry": "Pievienot žurnālam",
+    "kindLabel": "Iekārta",
+    "kind": {
+      "VEHICLE_UNIT": "Transportlīdzekļa saldēšanas iekārta",
+      "COLD_ROOM": "Aukstuma kamera",
+      "FREEZER": "Saldētava",
+      "PROBE": "Zonde / termometrs"
+    },
+    "name": "Nosaukums",
+    "serial": "Sērijas numurs",
+    "vehicle": "Transportlīdzeklis",
+    "checkEvery": "Pārbaudīt ik pēc (dienām)",
+    "cleanEvery": "Tīrīt ik pēc (dienām)",
+    "calibrateEvery": "Kalibrēt ik pēc (dienām)",
+    "addEquipment": "Pievienot iekārtu",
+    "saved": "Saglabāts",
+    "done": "Izdarīts",
+    "task": {
+      "CHECK": "Temperatūras pārbaude",
+      "CLEANING": "Tīrīšana",
+      "CALIBRATION": "Kalibrēšana",
+      "SERVICE": "Apkope / remonts"
+    },
+    "ok": "OK",
+    "logIt": "Reģistrēt",
+    "addLogger": "Pievienot datu reģistratoru",
+    "tokenOnce": "Reģistratora atslēga — nokopējiet to tagad, tā tiek parādīta tikai vienreiz:",
+    "tokenHow": "Ierīce sūta rādījumus uz /api/coldchain/readings ar galveni \"Authorization: Bearer\" un šo atslēgu.",
+    "deactivate": "Izslēgt",
+    "activate": "Ieslēgt",
+    "orderTitle": "Aukstuma ķēde",
+    "certificate": "Temperatūras sertifikāts (PDF)",
+    "noReadings": "Temperatūras vēl nav reģistrētas.",
+    "stage": {
+      "DISPATCH": "Nosūtīšana",
+      "LOADING": "Iekraušana",
+      "HANDOVER": "Nodošana",
+      "RECEIPT": "Pieņemšana",
+      "LOGGER": "Reģistrators"
+    },
+    "refusedBadge": "Atteikts",
+    "tripTitle": "Brauciena laikā ({logger})",
+    "tripStats": "Min {min} · maks {max} · vidēji {avg} · {out} min ārpus diapazona",
+    "decision": {
+      "NOTED": "Atzīmēts",
+      "ACCEPTED": "Tomēr pieņemts",
+      "REFUSED": "Atteikts — kreditēts",
+      "BLOCKED": "Bloķēts — kreditēts"
+    },
+    "fault": {
+      "SUPPLIER": "piegādātājs",
+      "DRIVER": "vadītājs",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Pretenzija {number}",
+    "productsTitle": "Temperatūra",
+    "productsIntro": "Atdzesētu un saldētu produktu temperatūra ir jāreģistrē ceļā. Katrs produkts saņem savas kategorijas klasi, ja vien neizvēlaties citu.",
+    "colProduct": "Produkts",
+    "colClass": "Temperatūras klase",
+    "noProducts": "Produktu vēl nav.",
+    "fleetTitle": "Aukstuma Ķēde",
+    "fleetIntro": "Jūsu saldēšanas iekārtas, aukstuma kameras, saldētavas un zondes ar pārbaudēm, tīrīšanu un kalibrēšanu; datu reģistratori; novirzes jūsu pasūtījumos; ikmēneša HACCP pārskats.",
+    "incidentsTitle": "Novirzes ārpus diapazona (30 dienas)",
+    "noIncidents": "Noviržu nav.",
+    "equipmentTitle": "Iekārtas",
+    "noEquipment": "Iekārtu vēl nav.",
+    "due": "{task} paredzēta {date}",
+    "overdue": "{task} nokavēta kopš {date}",
+    "lastLogs": "Pēdējie ieraksti",
+    "loggersTitle": "Datu reģistratori",
+    "noLoggers": "Reģistratoru vēl nav.",
+    "lastSeen": "Pēdējais rādījums {temp} · {date}",
+    "neverSeen": "Rādījumu vēl nav",
+    "reportTitle": "Ikmēneša HACCP pārskats",
+    "month": "Mēnesis",
+    "downloadPdf": "Lejupielādēt PDF",
+    "downloadCsv": "Lejupielādēt CSV",
+    "receivingTitle": "Pieņemšanas žurnāls",
+    "receivingIntro": "Jūsu HACCP pieņemšanas pārbaudes: FIRINGI piegādēs reģistrētās temperatūras un citu piegādātāju preces, ko pievienojat šeit.",
+    "addOutside": "Preces no cita piegādātāja",
+    "logTitle": "Šis mēnesis",
+    "noLog": "Šomēnes nekas nav reģistrēts.",
+    "colDate": "Datums",
+    "colSupplier": "Piegādātājs",
+    "colTemp": "Temperatūra",
+    "colStatus": "Statuss",
+    "colBy": "Kas",
+    "accepted": "Pieņemts",
+    "refused": "Atteikts",
+    "readingsTotal": "Rādījumi",
+    "outOfRange": "Ārpus diapazona",
+    "refusedCount": "Atteikts / bloķēts",
+    "equipmentOverdue": "Nokavētas iekārtas",
+    "loadingTitle": "Temperatūra iekraušanas laikā",
+    "breaches30": "Aukstuma ķēdes pārkāpumi jūsu pasūtījumos (30 dienas): {n}"
   }
 }

@@ -855,7 +855,10 @@
     "Returnables": "Imballaġġ li jintradd",
     "Empties & Deposits": "Vojt u depożiti",
     "Sold by Weight": "Bejgħ bil-Piż",
-    "Weighing": "Użin"
+    "Weighing": "Użin",
+    "Temperature": "Temperatura",
+    "Cold Chain": "Katina tal-Kesħa",
+    "Receiving Log": "Reġistru tal-Irċevuti"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Indirizz ħażin jew mhux komplut",
       "DAMAGED": "Merkanzija bil-ħsara",
       "NO_ACCESS": "L-ebda aċċess għall-indirizz",
-      "OTHER": "Oħrajn"
+      "OTHER": "Oħrajn",
+      "TEMPERATURE": "Temperatura barra mill-medda"
     },
     "fleetIntro": "Sewwieqa u vetturi għall-ordnijiet li tikkunsinna int (kunsinna b'xejn). Int responsabbli għalihom.",
     "drivers": "Sewwieqa",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Piż żejjed aċċettat: {number}",
       "body": "Il-klijent aċċetta l-piż 'il fuq mil-limitu. Il-fattura tuża l-piż reali."
+    },
+    "coldchain_breach": {
+      "title": "Temperatura barra mill-medda: {number}",
+      "body": "{incident}: {temp} (permess {range}) fi stadju {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logger barra mill-medda: {logger}",
+      "body": "{temp} għal {minutes} minuta (permess {range}). Iċċekkja l-unità tal-friġġ."
+    },
+    "coldchain_equipment_due": {
+      "title": "Tagħmir dovut: {equipment}",
+      "body": "Dovut jew skadut: {tasks}. Irreġistrah fil-Katina tal-Kesħa."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Indirizz ħażin",
       "DAMAGED": "Merkanzija bil-ħsara",
       "NO_ACCESS": "L-ebda aċċess",
-      "OTHER": "Oħra"
+      "OTHER": "Oħra",
+      "TEMPERATURE": "Temperatura barra mill-medda"
     },
     "stopStatus": {
       "UNASSIGNED": "Mhux assenjata",
@@ -5202,5 +5219,131 @@
       "date": "Kunsinna"
     },
     "cartTotalNote": "Jinkludi prodotti mibjugħa bil-piż: dan it-total huwa stima. Il-fattura tuża l-piż reali."
+  },
+  "coldChain": {
+    "badTemp": "Din mhix temperatura",
+    "status": {
+      "OK": "Fil-medda",
+      "WARN": "Tolleranza",
+      "OUT": "Barra mill-medda"
+    },
+    "atLoading": "{temp} °C fit-tagħbija",
+    "tempFor": "Temperatura ta' {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatura fil-bgħit",
+      "LOADING": "Temperatura fit-tagħbija",
+      "RECEIPT": "Temperatura fl-irċevuta"
+    },
+    "probe": "Sonda / termometru",
+    "goodsAccepted": "Merkanzija aċċettata",
+    "noteOptional": "Nota (mhux obbligatorja)",
+    "saveTemps": "Issejvja t-temperaturi",
+    "recorded": "Irreġistrat",
+    "handoverTitle": "Temperatura fil-konsenja",
+    "handoverRequired": "Temperatura fil-konsenja (obbligatorja)",
+    "blockedNote": "{cls}: barra mill-medda — ma jistax jiġi kkonsenjat. Jerġa' lura u jiġi kkreditat lill-klijent.",
+    "refuseClass": "Il-klijent jirrifjuta l-prodotti {cls} (ikkreditati)",
+    "ambient": "Ambjent",
+    "classFor": "Klassi tat-temperatura",
+    "fromCategory": "Mill-kategorija: {cls}",
+    "supplier": "Fornitur",
+    "product": "Prodott",
+    "tempClass": "Klassi tat-temperatura",
+    "tempC": "Temperatura (°C)",
+    "addEntry": "Żid mar-reġistru",
+    "kindLabel": "Tagħmir",
+    "kind": {
+      "VEHICLE_UNIT": "Unità tal-friġġ tal-vettura",
+      "COLD_ROOM": "Kamra kiesħa",
+      "FREEZER": "Friża",
+      "PROBE": "Sonda / termometru"
+    },
+    "name": "Isem",
+    "serial": "Numru tas-serje",
+    "vehicle": "Vettura",
+    "checkEvery": "Iċċekkja kull (jiem)",
+    "cleanEvery": "Naddaf kull (jiem)",
+    "calibrateEvery": "Ikkalibra kull (jiem)",
+    "addEquipment": "Żid tagħmir",
+    "saved": "Issejvjat",
+    "done": "Lest",
+    "task": {
+      "CHECK": "Kontroll tat-temperatura",
+      "CLEANING": "Tindif",
+      "CALIBRATION": "Kalibrazzjoni",
+      "SERVICE": "Servizz / tiswija"
+    },
+    "ok": "OK",
+    "logIt": "Irreġistra",
+    "addLogger": "Żid logger",
+    "tokenOnce": "Iċ-ċavetta tal-logger — ikkopjaha issa, tintwera darba biss:",
+    "tokenHow": "L-apparat jibgħat il-qari tiegħu lil /api/coldchain/readings bl-header \"Authorization: Bearer\" u b'din iċ-ċavetta.",
+    "deactivate": "Itfi",
+    "activate": "Ixgħel",
+    "orderTitle": "Katina tal-kesħa",
+    "certificate": "Ċertifikat tat-temperatura (PDF)",
+    "noReadings": "Għadha ma ġiet irreġistrata l-ebda temperatura.",
+    "stage": {
+      "DISPATCH": "Bgħit",
+      "LOADING": "Tagħbija",
+      "HANDOVER": "Konsenja",
+      "RECEIPT": "Irċevuta",
+      "LOGGER": "Logger"
+    },
+    "refusedBadge": "Rifjutat",
+    "tripTitle": "Matul il-vjaġġ ({logger})",
+    "tripStats": "Min {min} · mass {max} · medja {avg} · {out} min barra mill-medda",
+    "decision": {
+      "NOTED": "Innutat",
+      "ACCEPTED": "Aċċettat xorta waħda",
+      "REFUSED": "Rifjutat — ikkreditat",
+      "BLOCKED": "Imblukkat — ikkreditat"
+    },
+    "fault": {
+      "SUPPLIER": "fornitur",
+      "DRIVER": "xufier",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Ilment {number}",
+    "productsTitle": "Temperatura",
+    "productsIntro": "Il-prodotti mkessħa u ffriżati jeħtieġu li t-temperatura tagħhom tiġi rreġistrata matul it-triq. Kull prodott jieħu l-klassi tal-kategorija tiegħu sakemm ma tagħżilx oħra.",
+    "colProduct": "Prodott",
+    "colClass": "Klassi tat-temperatura",
+    "noProducts": "Għad m'hemmx prodotti.",
+    "fleetTitle": "Katina tal-Kesħa",
+    "fleetIntro": "L-unitajiet tal-friġġ, il-kmamar kesħin, il-friżers u s-sondi tiegħek bil-kontrolli, it-tindif u l-kalibrazzjoni; loggers tad-dejta; inċidenti barra mill-medda fuq l-ordnijiet tiegħek; ir-rapport HACCP ta' kull xahar.",
+    "incidentsTitle": "Inċidenti barra mill-medda (30 jum)",
+    "noIncidents": "L-ebda inċident.",
+    "equipmentTitle": "Tagħmir",
+    "noEquipment": "Għad m'hemmx tagħmir.",
+    "due": "{task} dovut fl-{date}",
+    "overdue": "{task} skadut mill-{date}",
+    "lastLogs": "L-aħħar reġistrazzjonijiet",
+    "loggersTitle": "Loggers tad-dejta",
+    "noLoggers": "Għad m'hemmx loggers.",
+    "lastSeen": "L-aħħar qari {temp} · {date}",
+    "neverSeen": "Għad m'hemmx qari",
+    "reportTitle": "Rapport HACCP ta' kull xahar",
+    "month": "Xahar",
+    "downloadPdf": "Niżżel PDF",
+    "downloadCsv": "Niżżel CSV",
+    "receivingTitle": "Reġistru tal-Irċevuti",
+    "receivingIntro": "Il-kontrolli HACCP tiegħek fl-irċevuta: temperaturi rreġistrati fuq il-konsenji ta' FIRINGI u merkanzija minn fornituri oħra li żżid hawn.",
+    "addOutside": "Merkanzija minn fornitur ieħor",
+    "logTitle": "Dan ix-xahar",
+    "noLog": "Xejn ma ġie rreġistrat dan ix-xahar.",
+    "colDate": "Data",
+    "colSupplier": "Fornitur",
+    "colTemp": "Temperatura",
+    "colStatus": "Status",
+    "colBy": "Minn",
+    "accepted": "Aċċettat",
+    "refused": "Rifjutat",
+    "readingsTotal": "Qari",
+    "outOfRange": "Barra mill-medda",
+    "refusedCount": "Rifjutati / imblukkati",
+    "equipmentOverdue": "Tagħmir skadut",
+    "loadingTitle": "Temperatura fit-tagħbija",
+    "breaches30": "Ksur tal-katina tal-kesħa fuq l-ordnijiet tiegħek (30 jum): {n}"
   }
 }

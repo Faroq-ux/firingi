@@ -855,7 +855,10 @@
     "Returnables": "Pandipakend",
     "Empties & Deposits": "Tühi taara ja pant",
     "Sold by Weight": "Müük Kaalu Järgi",
-    "Weighing": "Kaalumine"
+    "Weighing": "Kaalumine",
+    "Temperature": "Temperatuur",
+    "Cold Chain": "Külmaahel",
+    "Receiving Log": "Vastuvõtulogi"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Vale või puudulik aadress",
       "DAMAGED": "Kaup kahjustatud",
       "NO_ACCESS": "Aadressile pole juurdepääsu",
-      "OTHER": "Muu"
+      "OTHER": "Muu",
+      "TEMPERATURE": "Temperatuur vahemikust väljas"
     },
     "fleetIntro": "Juhid ja sõidukid tellimustele, mille toimetate ise (tasuta kohaletoimetamine). Vastutate nende eest.",
     "drivers": "Juhid",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Lisakaal aktsepteeritud: {number}",
       "body": "Klient nõustus piiri ületava kaaluga. Arvel kasutatakse tegelikku kaalu."
+    },
+    "coldchain_breach": {
+      "title": "Temperatuur vahemikust väljas: {number}",
+      "body": "{incident}: {temp} (lubatud {range}) etapis {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logija vahemikust väljas: {logger}",
+      "body": "{temp} {minutes} minutit (lubatud {range}). Kontrollige külmaseadet."
+    },
+    "coldchain_equipment_due": {
+      "title": "Seadme tähtaeg: {equipment}",
+      "body": "Tähtaeg või hilinenud: {tasks}. Salvestage see jaotises Külmaahel."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Vale aadress",
       "DAMAGED": "Kaup kahjustatud",
       "NO_ACCESS": "Ligipääs puudub",
-      "OTHER": "Muu"
+      "OTHER": "Muu",
+      "TEMPERATURE": "Temperatuur vahemikust väljas"
     },
     "stopStatus": {
       "UNASSIGNED": "Määramata",
@@ -5202,5 +5219,131 @@
       "date": "Tarne"
     },
     "cartTotalNote": "Sisaldab kaalu järgi müüdavaid tooteid: summa on hinnanguline. Arvel kasutatakse tegelikku kaalu."
+  },
+  "coldChain": {
+    "badTemp": "See ei ole temperatuur",
+    "status": {
+      "OK": "Vahemikus",
+      "WARN": "Lubatud kõrvalekalle",
+      "OUT": "Vahemikust väljas"
+    },
+    "atLoading": "{temp} °C laadimisel",
+    "tempFor": "{cls} temperatuur (°C)",
+    "record": {
+      "DISPATCH": "Temperatuur väljasaatmisel",
+      "LOADING": "Temperatuur laadimisel",
+      "RECEIPT": "Temperatuur vastuvõtul"
+    },
+    "probe": "Sond / termomeeter",
+    "goodsAccepted": "Kaup vastu võetud",
+    "noteOptional": "Märkus (valikuline)",
+    "saveTemps": "Salvesta temperatuurid",
+    "recorded": "Salvestatud",
+    "handoverTitle": "Temperatuur üleandmisel",
+    "handoverRequired": "Temperatuur üleandmisel (kohustuslik)",
+    "blockedNote": "{cls}: vahemikust väljas — ei saa üle anda. See läheb tagasi ja kliendile tehakse kreeditarve.",
+    "refuseClass": "Klient keeldub {cls} toodetest (kreeditarvega)",
+    "ambient": "Toatemperatuur",
+    "classFor": "Temperatuuriklass",
+    "fromCategory": "Kategooriast: {cls}",
+    "supplier": "Tarnija",
+    "product": "Toode",
+    "tempClass": "Temperatuuriklass",
+    "tempC": "Temperatuur (°C)",
+    "addEntry": "Lisa logisse",
+    "kindLabel": "Seade",
+    "kind": {
+      "VEHICLE_UNIT": "Sõiduki külmaseade",
+      "COLD_ROOM": "Külmruum",
+      "FREEZER": "Sügavkülmik",
+      "PROBE": "Sond / termomeeter"
+    },
+    "name": "Nimi",
+    "serial": "Seerianumber",
+    "vehicle": "Sõiduk",
+    "checkEvery": "Kontroll iga (päeva)",
+    "cleanEvery": "Puhastus iga (päeva)",
+    "calibrateEvery": "Kalibreerimine iga (päeva)",
+    "addEquipment": "Lisa seade",
+    "saved": "Salvestatud",
+    "done": "Tehtud",
+    "task": {
+      "CHECK": "Temperatuuri kontroll",
+      "CLEANING": "Puhastus",
+      "CALIBRATION": "Kalibreerimine",
+      "SERVICE": "Hooldus / remont"
+    },
+    "ok": "OK",
+    "logIt": "Kirjuta üles",
+    "addLogger": "Lisa andmelogija",
+    "tokenOnce": "Logija võti — kopeerige see kohe, seda näidatakse ainult üks kord:",
+    "tokenHow": "Seade saadab näidud aadressile /api/coldchain/readings päisega \"Authorization: Bearer\" ja selle võtmega.",
+    "deactivate": "Lülita välja",
+    "activate": "Lülita sisse",
+    "orderTitle": "Külmaahel",
+    "certificate": "Temperatuurisertifikaat (PDF)",
+    "noReadings": "Temperatuure pole veel salvestatud.",
+    "stage": {
+      "DISPATCH": "Väljasaatmine",
+      "LOADING": "Laadimine",
+      "HANDOVER": "Üleandmine",
+      "RECEIPT": "Vastuvõtt",
+      "LOGGER": "Logija"
+    },
+    "refusedBadge": "Keeldutud",
+    "tripTitle": "Sõidu ajal ({logger})",
+    "tripStats": "Min {min} · max {max} · keskmine {avg} · {out} min vahemikust väljas",
+    "decision": {
+      "NOTED": "Märgitud",
+      "ACCEPTED": "Siiski vastu võetud",
+      "REFUSED": "Keeldutud — kreediteeritud",
+      "BLOCKED": "Blokeeritud — kreediteeritud"
+    },
+    "fault": {
+      "SUPPLIER": "tarnija",
+      "DRIVER": "juht",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Pretensioon {number}",
+    "productsTitle": "Temperatuur",
+    "productsIntro": "Jahutatud ja külmutatud toodete temperatuur tuleb teel salvestada. Iga toode saab oma kategooria klassi, kui te ei vali teist.",
+    "colProduct": "Toode",
+    "colClass": "Temperatuuriklass",
+    "noProducts": "Tooteid veel pole.",
+    "fleetTitle": "Külmaahel",
+    "fleetIntro": "Teie külmaseadmed, külmruumid, sügavkülmikud ja sondid koos kontrollide, puhastuse ja kalibreerimisega; andmelogijad; vahemikust väljas juhtumid teie tellimustel; igakuine HACCP aruanne.",
+    "incidentsTitle": "Vahemikust väljas juhtumid (30 päeva)",
+    "noIncidents": "Juhtumeid pole.",
+    "equipmentTitle": "Seadmed",
+    "noEquipment": "Seadmeid veel pole.",
+    "due": "{task} tähtaeg {date}",
+    "overdue": "{task} hilinenud alates {date}",
+    "lastLogs": "Viimased kirjed",
+    "loggersTitle": "Andmelogijad",
+    "noLoggers": "Logijaid veel pole.",
+    "lastSeen": "Viimane näit {temp} · {date}",
+    "neverSeen": "Näite veel pole",
+    "reportTitle": "Igakuine HACCP aruanne",
+    "month": "Kuu",
+    "downloadPdf": "Laadi PDF alla",
+    "downloadCsv": "Laadi CSV alla",
+    "receivingTitle": "Vastuvõtulogi",
+    "receivingIntro": "Teie HACCP vastuvõtukontrollid: FIRINGI tarnetel salvestatud temperatuurid ja teiste tarnijate kaubad, mille siia lisate.",
+    "addOutside": "Kaup teiselt tarnijalt",
+    "logTitle": "See kuu",
+    "noLog": "Sel kuul pole midagi salvestatud.",
+    "colDate": "Kuupäev",
+    "colSupplier": "Tarnija",
+    "colTemp": "Temperatuur",
+    "colStatus": "Olek",
+    "colBy": "Kes",
+    "accepted": "Vastu võetud",
+    "refused": "Keeldutud",
+    "readingsTotal": "Näidud",
+    "outOfRange": "Vahemikust väljas",
+    "refusedCount": "Keeldutud / blokeeritud",
+    "equipmentOverdue": "Hilinenud seadmed",
+    "loadingTitle": "Temperatuur laadimisel",
+    "breaches30": "Külmaahela rikkumised teie tellimustel (30 päeva): {n}"
   }
 }

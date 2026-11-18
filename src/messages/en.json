@@ -782,7 +782,8 @@
       "WRONG_ADDRESS": "Wrong or incomplete address",
       "DAMAGED": "Goods damaged",
       "NO_ACCESS": "No access to the address",
-      "OTHER": "Other"
+      "OTHER": "Other",
+      "TEMPERATURE": "Temperature out of range"
     },
     "fleetIntro": "Drivers and vehicles for the orders you deliver yourself (free delivery). You are responsible for them.",
     "drivers": "Drivers",
@@ -1506,6 +1507,18 @@
     "catchweight_over_accepted": {
       "title": "Extra weight accepted: {number}",
       "body": "The customer accepted the weight above the limit. The invoice uses the real weight."
+    },
+    "coldchain_breach": {
+      "title": "Temperature out of range: {number}",
+      "body": "{incident}: {temp} (allowed {range}) at {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logger out of range: {logger}",
+      "body": "{temp} for {minutes} minutes (allowed {range}). Check the fridge unit."
+    },
+    "coldchain_equipment_due": {
+      "title": "Equipment due: {equipment}",
+      "body": "Due or overdue: {tasks}. Record it in Cold Chain."
     }
   },
   "notifications": {
@@ -4756,7 +4769,8 @@
       "WRONG_ADDRESS": "Wrong address",
       "DAMAGED": "Goods damaged",
       "NO_ACCESS": "No access",
-      "OTHER": "Other"
+      "OTHER": "Other",
+      "TEMPERATURE": "Temperature out of range"
     },
     "stopStatus": {
       "UNASSIGNED": "Not assigned",
@@ -5087,5 +5101,131 @@
       "date": "Delivery"
     },
     "cartTotalNote": "Includes products sold by weight: this total is an estimate. The invoice uses the real weight."
+  },
+  "coldChain": {
+    "badTemp": "Not a temperature",
+    "status": {
+      "OK": "In range",
+      "WARN": "Tolerance",
+      "OUT": "Out of range"
+    },
+    "atLoading": "{temp} °C at loading",
+    "tempFor": "Temperature of {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperature at dispatch",
+      "LOADING": "Temperature at loading",
+      "RECEIPT": "Temperature on receipt"
+    },
+    "probe": "Probe / thermometer",
+    "goodsAccepted": "Goods accepted",
+    "noteOptional": "Note (optional)",
+    "saveTemps": "Save temperatures",
+    "recorded": "Recorded",
+    "handoverTitle": "Temperature at the handover",
+    "handoverRequired": "Temperature at the handover (required)",
+    "blockedNote": "{cls}: out of range — can't be handed over. It goes back and is credited to the customer.",
+    "refuseClass": "The customer refuses the {cls} products (credited)",
+    "ambient": "Ambient",
+    "classFor": "Temperature class",
+    "fromCategory": "From the category: {cls}",
+    "supplier": "Supplier",
+    "product": "Product",
+    "tempClass": "Temperature class",
+    "tempC": "Temperature (°C)",
+    "addEntry": "Add to the log",
+    "kindLabel": "Equipment",
+    "kind": {
+      "VEHICLE_UNIT": "Vehicle fridge unit",
+      "COLD_ROOM": "Cold room",
+      "FREEZER": "Freezer",
+      "PROBE": "Probe / thermometer"
+    },
+    "name": "Name",
+    "serial": "Serial number",
+    "vehicle": "Vehicle",
+    "checkEvery": "Check every (days)",
+    "cleanEvery": "Clean every (days)",
+    "calibrateEvery": "Calibrate every (days)",
+    "addEquipment": "Add equipment",
+    "saved": "Saved",
+    "done": "Done",
+    "task": {
+      "CHECK": "Temperature check",
+      "CLEANING": "Cleaning",
+      "CALIBRATION": "Calibration",
+      "SERVICE": "Service / repair"
+    },
+    "ok": "OK",
+    "logIt": "Log it",
+    "addLogger": "Add a logger",
+    "tokenOnce": "The logger's key — copy it now, it is shown only once:",
+    "tokenHow": "The device sends its readings to /api/coldchain/readings with the header \"Authorization: Bearer\" and this key.",
+    "deactivate": "Switch off",
+    "activate": "Switch on",
+    "orderTitle": "Cold chain",
+    "certificate": "Temperature certificate (PDF)",
+    "noReadings": "No temperatures recorded yet.",
+    "stage": {
+      "DISPATCH": "Dispatch",
+      "LOADING": "Loading",
+      "HANDOVER": "Handover",
+      "RECEIPT": "Receipt",
+      "LOGGER": "Logger"
+    },
+    "refusedBadge": "Refused",
+    "tripTitle": "During the trip ({logger})",
+    "tripStats": "Min {min} · max {max} · average {avg} · {out} min out of range",
+    "decision": {
+      "NOTED": "Noted",
+      "ACCEPTED": "Accepted anyway",
+      "REFUSED": "Refused — credited",
+      "BLOCKED": "Blocked — credited"
+    },
+    "fault": {
+      "SUPPLIER": "supplier",
+      "DRIVER": "driver",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Claim {number}",
+    "productsTitle": "Temperature",
+    "productsIntro": "Chilled and frozen products need their temperature recorded along the way. Each product gets the class of its category unless you choose another.",
+    "colProduct": "Product",
+    "colClass": "Temperature class",
+    "noProducts": "No products yet.",
+    "fleetTitle": "Cold Chain",
+    "fleetIntro": "Your fridge units, cold rooms, freezers and probes with their checks, cleaning and calibration; data loggers; out-of-range incidents on your orders; the monthly HACCP report.",
+    "incidentsTitle": "Out-of-range incidents (30 days)",
+    "noIncidents": "No incidents.",
+    "equipmentTitle": "Equipment",
+    "noEquipment": "No equipment yet.",
+    "due": "{task} due {date}",
+    "overdue": "{task} overdue since {date}",
+    "lastLogs": "Last records",
+    "loggersTitle": "Data loggers",
+    "noLoggers": "No loggers yet.",
+    "lastSeen": "Last reading {temp} · {date}",
+    "neverSeen": "No readings yet",
+    "reportTitle": "Monthly HACCP report",
+    "month": "Month",
+    "downloadPdf": "Download PDF",
+    "downloadCsv": "Download CSV",
+    "receivingTitle": "Receiving Log",
+    "receivingIntro": "Your HACCP receiving checks: temperatures recorded on FIRINGI deliveries, and goods from other suppliers you add here.",
+    "addOutside": "Goods from another supplier",
+    "logTitle": "This month",
+    "noLog": "Nothing recorded this month.",
+    "colDate": "Date",
+    "colSupplier": "Supplier",
+    "colTemp": "Temperature",
+    "colStatus": "Status",
+    "colBy": "By",
+    "accepted": "Accepted",
+    "refused": "Refused",
+    "readingsTotal": "Readings",
+    "outOfRange": "Out of range",
+    "refusedCount": "Refused / blocked",
+    "equipmentOverdue": "Equipment overdue",
+    "loadingTitle": "Temperature at loading",
+    "breaches30": "Cold-chain breaches on your orders (30 days): {n}"
   }
 }

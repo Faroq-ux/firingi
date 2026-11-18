@@ -117,8 +117,15 @@ export async function completeDeliveryAction(fd: FormData) {
       latitude: num(fd.get("latitude")), longitude: num(fd.get("longitude")),
       empties: emptiesFrom(fd),
       weights: weightsFrom(fd), acceptOver: fd.get("acceptOver") === "on" || fd.get("acceptOver") === "true",
+      temps: tempsFrom(fd) as Record<string, number> | null, refuseClasses: fd.getAll("refuse").map(String).filter(Boolean),
     })),
   );
+}
+/** Phase 42: "temp:<classId>" fields = °C at the handover (as typed; checked in the service). */
+function tempsFrom(fd: FormData): Record<string, string> | null {
+  const out: Record<string, string> = {};
+  for (const [k, v] of fd.entries()) if (k.startsWith("temp:") && typeof v === "string" && v.trim()) out[k.slice(5)] = v.trim();
+  return Object.keys(out).length ? out : null;
 }
 /** Phase 41: "weight:<orderLineId>" fields = kg weighed at the stop (empty = unchanged). */
 function weightsFrom(fd: FormData): Record<string, number> | null {

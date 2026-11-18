@@ -12,6 +12,8 @@ import { rtLabels } from "@/components/returnables/labels";
 import { offerCatchWeight } from "@/server/catchweight/service";
 import { CwBadge } from "@/components/catchweight/views";
 import { cwLabels } from "@/components/catchweight/labels";
+import { offerColdBadges } from "@/server/coldchain/service";
+import { ColdBadge } from "@/components/coldchain/views";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -36,6 +38,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
   // Phase 41: "By weight · 6,75 €/kg"
   const cw = (await offerCatchWeight([item.offerId])).get(item.offerId) ?? null;
   const cl = cw ? (await cwLabels()).l : null;
+  const cold = (await offerColdBadges([item.offerId], locale)).get(item.offerId) ?? null; // Phase 42
   return (
     <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
@@ -47,6 +50,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="text-xs text-muted-foreground">{item.brand ?? pickLocalized(item.category.name, locale)}</div>
         <div className="line-clamp-2 font-semibold leading-snug group-hover:text-primary">{pickLocalized(item.name, locale)}</div>
         <div className="text-xs text-muted-foreground">{pickLocalized(item.packaging.name, locale)}</div>
+        {cold && <div><ColdBadge cls={cold} /></div>}
         <Codes item={item} />
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />

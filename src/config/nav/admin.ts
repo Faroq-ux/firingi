@@ -146,6 +146,7 @@ export const ADMIN_NAV: NavSection[] = [
       cat("variants", "Product Variants", "Variantes de Produto", "P3", { live: true }),
       cat("units", "Units & Packaging", "Unidades e Embalagens", "P3", { live: true }),
       cat("returnables", "Returnable Items", "Vasilhame e Tara", "P40", { live: true }),
+      cat("temperature-classes", "Temperature Classes", "Classes de Temperatura", "P42", { live: true }),
       cat("vendor-products", "Vendor Products", "Produtos de Fornecedores", "P3", { live: true }),
       cat("availability", "Product Availability", "Disponibilidade de Produtos", "P3", { live: true }),
       cat("stock", "Stock", "Stock", "P3", { live: true }),
@@ -220,6 +221,7 @@ export const ADMIN_NAV: NavSection[] = [
       del("failed", "Failed Deliveries", "Entregas Falhadas", "P6", { live: true, perm: ["admin.delivery.view", "admin.delivery.manage"] }),
       del("returns", "Returns", "Devoluções", "P6", { live: true, perm: ["admin.orders.view", "admin.orders.manage", "admin.delivery.view"] }),
       del("performance", "Delivery Performance", "Desempenho de Entregas", "P12", { live: true, perm: ["admin.delivery.view", "admin.delivery.manage", "admin.analytics.view"] }),
+      del("cold-chain", "Cold Chain", "Cadeia de Frio", "P42", { live: true, perm: ["admin.delivery.view", "admin.fleet.view", "admin.orders.view"] }),
     ],
   },
   {
@@ -454,6 +456,7 @@ export const ADMIN_NAV: NavSection[] = [
       set("app", "Phone App", "Aplicação Móvel", "P39", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("returnables", "Returnables & Deposits", "Vasilhame e Depósitos", "P40", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("catch-weight", "Sold by Weight", "Venda ao Peso", "P41", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
+      set("cold-chain", "Cold Chain & HACCP", "Cadeia de Frio e HACCP", "P42", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("payment", "Payment Settings", "Definições de Pagamento", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage", "admin.finance.manage"] }),
       set("invoice", "Invoice Settings", "Definições de Faturação", "P5", { live: true, perm: ["admin.settings.view", "admin.tax.manage"] }),
       set("tax", "Tax Settings", "Definições Fiscais", "P5", { live: true, perm: ["admin.settings.view", "admin.tax.manage"] }),

@@ -124,6 +124,8 @@ model Order {
   parentOrder       Order?                   @relation("OrderSplit", fields: [parentOrderId], references: [id])
   childOrders       Order[]                  @relation("OrderSplit")
   lines             OrderLine[]
+  tempReadings      TempReading[]            @relation("TempReadingOrder")
+  coldIncidents     ColdIncident[]           @relation("ColdIncidentOrder")
   statusHistory     OrderStatusHistory[]
   exceptions        OrderException[]
   stockMovements    StockMovement[]
@@ -199,6 +201,9 @@ model OrderLine {
   cwOverAccepted    Boolean          @default(false)
   cwWeighedAt       DateTime?
   weighings         CatchWeighing[]
+  /// Phase 42: temperature class at checkout (null = ambient)
+  tempClassId       String?
+  tempClass         TempClass?       @relation(fields: [tempClassId], references: [id])
 
   order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
   offer          VendorOffer         @relation(fields: [offerId], references: [id])

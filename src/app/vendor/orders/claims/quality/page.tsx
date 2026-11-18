@@ -18,6 +18,11 @@ export default async function Page() {
   pagePermission(ctx, ["vendor.claims.respond", "vendor.orders.view"]);
   const [q, cbs, t, locale] = await Promise.all([myQuality(ctx), listChargebacks(ctx, "VENDOR").catch(() => []), getTranslations("claims"), getLocale()]);
   const pct = (v: number | null) => (v === null ? "—" : new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 1 }).format(v));
+  const { breachCounts, coldChainSettings } = await import("@/server/coldchain/service");
+  const { ccLabels } = await import("@/components/coldchain/labels");
+  const ccs = await coldChainSettings();
+  const breaches = ccs.enabled && ccs.actions.score ? (await breachCounts(q.days, ctx.company.id)).bySeller.get(ctx.company.id) ?? 0 : null;
+  const ccl = breaches === null ? null : (await ccLabels()).l;
   const over = q.rate !== null && q.rate * 100 >= q.threshold;
   return (
     <>
@@ -34,6 +39,7 @@ export default async function Page() {
         <Tile icon={Layers} label={t("quality.delivered")} value={q.delivered} locale={locale} tone="tone-blue" i={2} />
         <Tile icon={ShieldAlert} label={t("kpi.chargebacksOpen")} value={cbs.filter((c) => c.status === "OPEN" || c.status === "DISPUTED").reduce((a, c) => a + c.amount, 0)} fmt="money" locale={locale} tone="tone-violet" i={3} />
       </div>
+      {ccl && <p className="mb-6 text-sm" data-testid="cold-breaches"><Link href="/vendor/fleet/cold-chain" className="text-primary hover:underline">{ccl.breaches30.replace("{n}", String(breaches))}</Link></p>}
       <div className="mb-6 grid gap-6 xl:grid-cols-2">
         <Card>
           <CardHeader><CardTitle>{t("quality.byProduct")}</CardTitle><CardDescription>{t("quality.byProductHint")}</CardDescription></CardHeader>

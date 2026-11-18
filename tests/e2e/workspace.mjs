@@ -129,7 +129,7 @@ await buyer.getByRole("button", { name: /Add to cart|Adicionar ao carrinho/i }).
 await buyer.waitForTimeout(800);
 await go(buyer, "/buy/orders/cart");
 await buyer.getByRole("button", { name: /Place order|Fazer encomenda|Encomendar/i }).first().click();
-await buyer.waitForURL("**/buy/orders/**", { timeout: 20000 }).catch(() => {});
+await buyer.waitForURL("**placed=1", { timeout: 20000 }).catch(() => {});
 await settle(buyer);
 const placedNumber = (await buyer.locator("h1").first().textContent()).match(/FO-\d{4}-\d+/)?.[0];
 check("customer placed an order", !!placedNumber, placedNumber);

@@ -855,7 +855,10 @@
     "Returnables": "Mehrweggebinde",
     "Empties & Deposits": "Leergut & Pfand",
     "Sold by Weight": "Verkauf nach Gewicht",
-    "Weighing": "Wiegen"
+    "Weighing": "Wiegen",
+    "Temperature": "Temperatur",
+    "Cold Chain": "Kühlkette",
+    "Receiving Log": "Wareneingangsprotokoll"
   },
   "delivery": {
     "title": "Lieferung",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Falsche oder unvollständige Adresse",
       "DAMAGED": "Ware beschädigt",
       "NO_ACCESS": "Kein Zugang zur Adresse",
-      "OTHER": "Sonstiges"
+      "OTHER": "Sonstiges",
+      "TEMPERATURE": "Temperatur außerhalb des Bereichs"
     },
     "fleetIntro": "Fahrer und Fahrzeuge für die Bestellungen, die Sie selbst liefern (kostenlose Lieferung). Sie sind dafür verantwortlich.",
     "drivers": "Fahrer",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Mehrgewicht akzeptiert: {number}",
       "body": "Der Kunde hat das Gewicht über der Grenze akzeptiert. Die Rechnung verwendet das tatsächliche Gewicht."
+    },
+    "coldchain_breach": {
+      "title": "Temperatur außerhalb des Bereichs: {number}",
+      "body": "{incident}: {temp} (erlaubt {range}) bei {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logger außerhalb des Bereichs: {logger}",
+      "body": "{temp} seit {minutes} Minuten (erlaubt {range}). Prüfen Sie das Kühlaggregat."
+    },
+    "coldchain_equipment_due": {
+      "title": "Gerät fällig: {equipment}",
+      "body": "Fällig oder überfällig: {tasks}. Tragen Sie es unter Kühlkette ein."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Falsche Adresse",
       "DAMAGED": "Ware beschädigt",
       "NO_ACCESS": "Kein Zugang",
-      "OTHER": "Sonstiges"
+      "OTHER": "Sonstiges",
+      "TEMPERATURE": "Temperatur außerhalb des Bereichs"
     },
     "stopStatus": {
       "UNASSIGNED": "Nicht zugewiesen",
@@ -5202,5 +5219,131 @@
       "date": "Lieferung"
     },
     "cartTotalNote": "Enthält Produkte nach Gewicht: Diese Summe ist eine Schätzung. Die Rechnung verwendet das tatsächliche Gewicht."
+  },
+  "coldChain": {
+    "badTemp": "Keine Temperatur",
+    "status": {
+      "OK": "Im Bereich",
+      "WARN": "Toleranz",
+      "OUT": "Außerhalb des Bereichs"
+    },
+    "atLoading": "{temp} °C beim Verladen",
+    "tempFor": "Temperatur von {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatur beim Versand",
+      "LOADING": "Temperatur beim Verladen",
+      "RECEIPT": "Temperatur beim Wareneingang"
+    },
+    "probe": "Fühler / Thermometer",
+    "goodsAccepted": "Ware angenommen",
+    "noteOptional": "Notiz (optional)",
+    "saveTemps": "Temperaturen speichern",
+    "recorded": "Erfasst",
+    "handoverTitle": "Temperatur bei der Übergabe",
+    "handoverRequired": "Temperatur bei der Übergabe (Pflicht)",
+    "blockedNote": "{cls}: außerhalb des Bereichs — kann nicht übergeben werden. Die Ware geht zurück und wird dem Kunden gutgeschrieben.",
+    "refuseClass": "Der Kunde lehnt die {cls}-Produkte ab (gutgeschrieben)",
+    "ambient": "Umgebungstemperatur",
+    "classFor": "Temperaturklasse",
+    "fromCategory": "Aus der Kategorie: {cls}",
+    "supplier": "Lieferant",
+    "product": "Produkt",
+    "tempClass": "Temperaturklasse",
+    "tempC": "Temperatur (°C)",
+    "addEntry": "Ins Protokoll eintragen",
+    "kindLabel": "Gerät",
+    "kind": {
+      "VEHICLE_UNIT": "Kühlaggregat des Fahrzeugs",
+      "COLD_ROOM": "Kühlraum",
+      "FREEZER": "Tiefkühler",
+      "PROBE": "Fühler / Thermometer"
+    },
+    "name": "Name",
+    "serial": "Seriennummer",
+    "vehicle": "Fahrzeug",
+    "checkEvery": "Prüfen alle (Tage)",
+    "cleanEvery": "Reinigen alle (Tage)",
+    "calibrateEvery": "Kalibrieren alle (Tage)",
+    "addEquipment": "Gerät hinzufügen",
+    "saved": "Gespeichert",
+    "done": "Erledigt",
+    "task": {
+      "CHECK": "Temperaturkontrolle",
+      "CLEANING": "Reinigung",
+      "CALIBRATION": "Kalibrierung",
+      "SERVICE": "Wartung / Reparatur"
+    },
+    "ok": "OK",
+    "logIt": "Eintragen",
+    "addLogger": "Datenlogger hinzufügen",
+    "tokenOnce": "Der Schlüssel des Loggers — jetzt kopieren, er wird nur einmal angezeigt:",
+    "tokenHow": "Das Gerät sendet seine Messwerte an /api/coldchain/readings mit dem Header \"Authorization: Bearer\" und diesem Schlüssel.",
+    "deactivate": "Ausschalten",
+    "activate": "Einschalten",
+    "orderTitle": "Kühlkette",
+    "certificate": "Temperaturzertifikat (PDF)",
+    "noReadings": "Noch keine Temperaturen erfasst.",
+    "stage": {
+      "DISPATCH": "Versand",
+      "LOADING": "Verladen",
+      "HANDOVER": "Übergabe",
+      "RECEIPT": "Wareneingang",
+      "LOGGER": "Logger"
+    },
+    "refusedBadge": "Abgelehnt",
+    "tripTitle": "Während der Fahrt ({logger})",
+    "tripStats": "Min {min} · Max {max} · Durchschnitt {avg} · {out} Min außerhalb des Bereichs",
+    "decision": {
+      "NOTED": "Notiert",
+      "ACCEPTED": "Trotzdem angenommen",
+      "REFUSED": "Abgelehnt — gutgeschrieben",
+      "BLOCKED": "Gesperrt — gutgeschrieben"
+    },
+    "fault": {
+      "SUPPLIER": "Lieferant",
+      "DRIVER": "Fahrer",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamation {number}",
+    "productsTitle": "Temperatur",
+    "productsIntro": "Für gekühlte und tiefgekühlte Produkte muss die Temperatur unterwegs erfasst werden. Jedes Produkt erhält die Klasse seiner Kategorie, sofern Sie keine andere wählen.",
+    "colProduct": "Produkt",
+    "colClass": "Temperaturklasse",
+    "noProducts": "Noch keine Produkte.",
+    "fleetTitle": "Kühlkette",
+    "fleetIntro": "Ihre Kühlaggregate, Kühlräume, Tiefkühler und Fühler mit Kontrollen, Reinigung und Kalibrierung; Datenlogger; Abweichungen bei Ihren Bestellungen; der monatliche HACCP-Bericht.",
+    "incidentsTitle": "Temperaturabweichungen (30 Tage)",
+    "noIncidents": "Keine Abweichungen.",
+    "equipmentTitle": "Geräte",
+    "noEquipment": "Noch keine Geräte.",
+    "due": "{task} fällig am {date}",
+    "overdue": "{task} überfällig seit {date}",
+    "lastLogs": "Letzte Einträge",
+    "loggersTitle": "Datenlogger",
+    "noLoggers": "Noch keine Logger.",
+    "lastSeen": "Letzter Messwert {temp} · {date}",
+    "neverSeen": "Noch keine Messwerte",
+    "reportTitle": "Monatlicher HACCP-Bericht",
+    "month": "Monat",
+    "downloadPdf": "PDF herunterladen",
+    "downloadCsv": "CSV herunterladen",
+    "receivingTitle": "Wareneingangsprotokoll",
+    "receivingIntro": "Ihre HACCP-Eingangskontrollen: bei FIRINGI-Lieferungen erfasste Temperaturen und Ware anderer Lieferanten, die Sie hier eintragen.",
+    "addOutside": "Ware eines anderen Lieferanten",
+    "logTitle": "Dieser Monat",
+    "noLog": "In diesem Monat nichts erfasst.",
+    "colDate": "Datum",
+    "colSupplier": "Lieferant",
+    "colTemp": "Temperatur",
+    "colStatus": "Status",
+    "colBy": "Von",
+    "accepted": "Angenommen",
+    "refused": "Abgelehnt",
+    "readingsTotal": "Messwerte",
+    "outOfRange": "Außerhalb des Bereichs",
+    "refusedCount": "Abgelehnt / gesperrt",
+    "equipmentOverdue": "Geräte überfällig",
+    "loadingTitle": "Temperatur beim Verladen",
+    "breaches30": "Kühlkettenverstöße bei Ihren Bestellungen (30 Tage): {n}"
   }
 }

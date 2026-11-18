@@ -266,5 +266,19 @@ export async function seedReference(db: PrismaClient) {
   }
   for (const [i, c] of CATEGORIES.entries()) await upsertCategory(c, null, i);
 
+  // Phase 42: temperature classes (same rows as the migration) and the category defaults
+  const TEMP_CLASSES = [
+    { id: "tc_ambient", code: "AMBIENT", name: { en: "Ambient", pt: "Ambiente" }, minC: null, maxC: 25, toleranceC: 0, coldChain: false, sortOrder: 0 },
+    { id: "tc_chilled", code: "CHILLED", name: { en: "Chilled (0–4 °C)", pt: "Refrigerado (0–4 °C)" }, minC: 0, maxC: 4, toleranceC: 1, coldChain: true, sortOrder: 10 },
+    { id: "tc_fresh_fish", code: "FRESH_FISH", name: { en: "Fresh fish (0–2 °C)", pt: "Peixe fresco (0–2 °C)" }, minC: 0, maxC: 2, toleranceC: 1, coldChain: true, sortOrder: 20 },
+    { id: "tc_frozen", code: "FROZEN", name: { en: "Frozen (≤ −18 °C)", pt: "Congelado (≤ −18 °C)" }, minC: null, maxC: -18, toleranceC: 3, coldChain: true, sortOrder: 30 },
+    { id: "tc_deep_frozen", code: "DEEP_FROZEN", name: { en: "Deep frozen (≤ −25 °C)", pt: "Ultracongelado (≤ −25 °C)" }, minC: null, maxC: -25, toleranceC: 3, coldChain: true, sortOrder: 40 },
+  ];
+  for (const t of TEMP_CLASSES) await db.tempClass.upsert({ where: { code: t.code }, update: {}, create: t });
+  for (const [slug, cls] of [["cheese-dairy", "tc_chilled"], ["kebab-meat", "tc_frozen"]] as const) {
+    const cat = await db.category.findUnique({ where: { slug }, select: { id: true, tempClassId: true } });
+    if (cat && !cat.tempClassId) await db.category.update({ where: { id: cat.id }, data: { tempClassId: cls } });
+  }
+
   return { countryIds, regionIds, taxCatIds };
 }

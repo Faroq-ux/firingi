@@ -855,7 +855,10 @@
     "Returnables": "Povratna embalaža",
     "Empties & Deposits": "Embalaža in kavcije",
     "Sold by Weight": "Prodaja po Teži",
-    "Weighing": "Tehtanje"
+    "Weighing": "Tehtanje",
+    "Temperature": "Temperatura",
+    "Cold Chain": "Hladna Veriga",
+    "Receiving Log": "Evidenca prevzema"
   },
   "delivery": {
     "title": "Dostava",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Napačen ali nepopoln naslov",
       "DAMAGED": "Blago poškodovano",
       "NO_ACCESS": "Ni dostopa do naslova",
-      "OTHER": "Drugo"
+      "OTHER": "Drugo",
+      "TEMPERATURE": "Temperatura zunaj območja"
     },
     "fleetIntro": "Vozniki in vozila za naročila, ki jih dostavite sami (brezplačna dostava). Zanje ste odgovorni vi.",
     "drivers": "Vozniki",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Dodatna teža sprejeta: {number}",
       "body": "Kupec je sprejel težo nad mejo. Račun uporabi dejansko težo."
+    },
+    "coldchain_breach": {
+      "title": "Temperatura zunaj območja: {number}",
+      "body": "{incident}: {temp} (dovoljeno {range}) v fazi {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Zapisovalnik zunaj območja: {logger}",
+      "body": "{temp} {minutes} minut (dovoljeno {range}). Preverite hladilno enoto."
+    },
+    "coldchain_equipment_due": {
+      "title": "Oprema zapade: {equipment}",
+      "body": "Zapade ali zamuja: {tasks}. Zabeležite to v Hladni verigi."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Napačen naslov",
       "DAMAGED": "Poškodovano blago",
       "NO_ACCESS": "Ni dostopa",
-      "OTHER": "Drugo"
+      "OTHER": "Drugo",
+      "TEMPERATURE": "Temperatura zunaj območja"
     },
     "stopStatus": {
       "UNASSIGNED": "Ni dodeljeno",
@@ -5202,5 +5219,131 @@
       "date": "Dostava"
     },
     "cartTotalNote": "Vključuje izdelke po teži: ta znesek je ocena. Račun uporabi dejansko težo."
+  },
+  "coldChain": {
+    "badTemp": "To ni temperatura",
+    "status": {
+      "OK": "V območju",
+      "WARN": "Toleranca",
+      "OUT": "Zunaj območja"
+    },
+    "atLoading": "{temp} °C pri nakladanju",
+    "tempFor": "Temperatura za {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatura pri odpremi",
+      "LOADING": "Temperatura pri nakladanju",
+      "RECEIPT": "Temperatura pri prevzemu"
+    },
+    "probe": "Sonda / termometer",
+    "goodsAccepted": "Blago prevzeto",
+    "noteOptional": "Opomba (neobvezno)",
+    "saveTemps": "Shrani temperature",
+    "recorded": "Zabeleženo",
+    "handoverTitle": "Temperatura pri predaji",
+    "handoverRequired": "Temperatura pri predaji (obvezna)",
+    "blockedNote": "{cls}: zunaj območja — ni mogoče predati. Gre nazaj in se kupcu dobropiše.",
+    "refuseClass": "Kupec zavrne izdelke {cls} (dobropisano)",
+    "ambient": "Sobna temperatura",
+    "classFor": "Temperaturni razred",
+    "fromCategory": "Iz kategorije: {cls}",
+    "supplier": "Dobavitelj",
+    "product": "Izdelek",
+    "tempClass": "Temperaturni razred",
+    "tempC": "Temperatura (°C)",
+    "addEntry": "Dodaj v evidenco",
+    "kindLabel": "Oprema",
+    "kind": {
+      "VEHICLE_UNIT": "Hladilna enota vozila",
+      "COLD_ROOM": "Hladilnica",
+      "FREEZER": "Zamrzovalnik",
+      "PROBE": "Sonda / termometer"
+    },
+    "name": "Ime",
+    "serial": "Serijska številka",
+    "vehicle": "Vozilo",
+    "checkEvery": "Preverjanje vsakih (dni)",
+    "cleanEvery": "Čiščenje vsakih (dni)",
+    "calibrateEvery": "Umerjanje vsakih (dni)",
+    "addEquipment": "Dodaj opremo",
+    "saved": "Shranjeno",
+    "done": "Opravljeno",
+    "task": {
+      "CHECK": "Preverjanje temperature",
+      "CLEANING": "Čiščenje",
+      "CALIBRATION": "Umerjanje",
+      "SERVICE": "Servis / popravilo"
+    },
+    "ok": "OK",
+    "logIt": "Zabeleži",
+    "addLogger": "Dodaj zapisovalnik",
+    "tokenOnce": "Ključ zapisovalnika — kopirajte ga zdaj, prikazan je samo enkrat:",
+    "tokenHow": "Naprava pošilja meritve na /api/coldchain/readings z glavo \"Authorization: Bearer\" in tem ključem.",
+    "deactivate": "Izklopi",
+    "activate": "Vklopi",
+    "orderTitle": "Hladna veriga",
+    "certificate": "Temperaturno potrdilo (PDF)",
+    "noReadings": "Zabeleženih temperatur še ni.",
+    "stage": {
+      "DISPATCH": "Odprema",
+      "LOADING": "Nakladanje",
+      "HANDOVER": "Predaja",
+      "RECEIPT": "Prevzem",
+      "LOGGER": "Zapisovalnik"
+    },
+    "refusedBadge": "Zavrnjeno",
+    "tripTitle": "Med vožnjo ({logger})",
+    "tripStats": "Min {min} · maks {max} · povprečje {avg} · {out} min zunaj območja",
+    "decision": {
+      "NOTED": "Zabeleženo",
+      "ACCEPTED": "Vseeno prevzeto",
+      "REFUSED": "Zavrnjeno — dobropisano",
+      "BLOCKED": "Blokirano — dobropisano"
+    },
+    "fault": {
+      "SUPPLIER": "dobavitelj",
+      "DRIVER": "voznik",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamacija {number}",
+    "productsTitle": "Temperatura",
+    "productsIntro": "Pri ohlajenih in zamrznjenih izdelkih je treba temperaturo beležiti med potjo. Vsak izdelek dobi razred svoje kategorije, razen če izberete drugega.",
+    "colProduct": "Izdelek",
+    "colClass": "Temperaturni razred",
+    "noProducts": "Izdelkov še ni.",
+    "fleetTitle": "Hladna Veriga",
+    "fleetIntro": "Vaše hladilne enote, hladilnice, zamrzovalniki in sonde s preverjanji, čiščenjem in umerjanjem; zapisovalniki podatkov; odstopanja pri vaših naročilih; mesečno poročilo HACCP.",
+    "incidentsTitle": "Odstopanja zunaj območja (30 dni)",
+    "noIncidents": "Ni odstopanj.",
+    "equipmentTitle": "Oprema",
+    "noEquipment": "Opreme še ni.",
+    "due": "{task} zapade {date}",
+    "overdue": "{task} zamuja od {date}",
+    "lastLogs": "Zadnji zapisi",
+    "loggersTitle": "Zapisovalniki podatkov",
+    "noLoggers": "Zapisovalnikov še ni.",
+    "lastSeen": "Zadnja meritev {temp} · {date}",
+    "neverSeen": "Meritev še ni",
+    "reportTitle": "Mesečno poročilo HACCP",
+    "month": "Mesec",
+    "downloadPdf": "Prenesi PDF",
+    "downloadCsv": "Prenesi CSV",
+    "receivingTitle": "Evidenca prevzema",
+    "receivingIntro": "Vaši pregledi HACCP ob prevzemu: temperature, zabeležene pri dostavah FIRINGI, in blago drugih dobaviteljev, ki ga dodate tukaj.",
+    "addOutside": "Blago drugega dobavitelja",
+    "logTitle": "Ta mesec",
+    "noLog": "Ta mesec ni zabeleženo nič.",
+    "colDate": "Datum",
+    "colSupplier": "Dobavitelj",
+    "colTemp": "Temperatura",
+    "colStatus": "Stanje",
+    "colBy": "Kdo",
+    "accepted": "Prevzeto",
+    "refused": "Zavrnjeno",
+    "readingsTotal": "Meritve",
+    "outOfRange": "Zunaj območja",
+    "refusedCount": "Zavrnjeno / blokirano",
+    "equipmentOverdue": "Oprema z zamudo",
+    "loadingTitle": "Temperatura pri nakladanju",
+    "breaches30": "Kršitve hladne verige pri vaših naročilih (30 dni): {n}"
   }
 }

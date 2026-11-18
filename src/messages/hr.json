@@ -855,7 +855,10 @@
     "Returnables": "Povratna ambalaža",
     "Empties & Deposits": "Ambalaža i depoziti",
     "Sold by Weight": "Prodaja po Težini",
-    "Weighing": "Vaganje"
+    "Weighing": "Vaganje",
+    "Temperature": "Temperatura",
+    "Cold Chain": "Hladni Lanac",
+    "Receiving Log": "Evidencija prijema"
   },
   "delivery": {
     "title": "Dostava",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Pogrešna ili nepotpuna adresa",
       "DAMAGED": "Roba oštećena",
       "NO_ACCESS": "Nema pristupa adresi",
-      "OTHER": "Ostalo"
+      "OTHER": "Ostalo",
+      "TEMPERATURE": "Temperatura izvan raspona"
     },
     "fleetIntro": "Vozači i vozila za narudžbe koje sami dostavljate (besplatna dostava). Vi ste odgovorni za njih.",
     "drivers": "Vozači",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Dodatna težina prihvaćena: {number}",
       "body": "Kupac je prihvatio težinu iznad granice. Račun koristi stvarnu težinu."
+    },
+    "coldchain_breach": {
+      "title": "Temperatura izvan raspona: {number}",
+      "body": "{incident}: {temp} (dopušteno {range}) u fazi {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Zapisivač izvan raspona: {logger}",
+      "body": "{temp} tijekom {minutes} minuta (dopušteno {range}). Provjerite rashladni uređaj."
+    },
+    "coldchain_equipment_due": {
+      "title": "Oprema dospijeva: {equipment}",
+      "body": "Dospijeva ili kasni: {tasks}. Zabilježite to u Hladnom lancu."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Pogrešna adresa",
       "DAMAGED": "Oštećena roba",
       "NO_ACCESS": "Nema pristupa",
-      "OTHER": "Ostalo"
+      "OTHER": "Ostalo",
+      "TEMPERATURE": "Temperatura izvan raspona"
     },
     "stopStatus": {
       "UNASSIGNED": "Nije dodijeljeno",
@@ -5202,5 +5219,131 @@
       "date": "Isporuka"
     },
     "cartTotalNote": "Uključuje proizvode po težini: ovaj je iznos procjena. Račun koristi stvarnu težinu."
+  },
+  "coldChain": {
+    "badTemp": "To nije temperatura",
+    "status": {
+      "OK": "U rasponu",
+      "WARN": "Tolerancija",
+      "OUT": "Izvan raspona"
+    },
+    "atLoading": "{temp} °C pri utovaru",
+    "tempFor": "Temperatura za {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatura pri otpremi",
+      "LOADING": "Temperatura pri utovaru",
+      "RECEIPT": "Temperatura pri prijemu"
+    },
+    "probe": "Sonda / termometar",
+    "goodsAccepted": "Roba prihvaćena",
+    "noteOptional": "Napomena (neobavezno)",
+    "saveTemps": "Spremi temperature",
+    "recorded": "Zabilježeno",
+    "handoverTitle": "Temperatura pri predaji",
+    "handoverRequired": "Temperatura pri predaji (obavezna)",
+    "blockedNote": "{cls}: izvan raspona — ne može se predati. Vraća se i odobrava kupcu.",
+    "refuseClass": "Kupac odbija proizvode {cls} (odobreno)",
+    "ambient": "Sobna temperatura",
+    "classFor": "Temperaturni razred",
+    "fromCategory": "Iz kategorije: {cls}",
+    "supplier": "Dobavljač",
+    "product": "Proizvod",
+    "tempClass": "Temperaturni razred",
+    "tempC": "Temperatura (°C)",
+    "addEntry": "Dodaj u evidenciju",
+    "kindLabel": "Oprema",
+    "kind": {
+      "VEHICLE_UNIT": "Rashladni uređaj vozila",
+      "COLD_ROOM": "Hladnjača",
+      "FREEZER": "Zamrzivač",
+      "PROBE": "Sonda / termometar"
+    },
+    "name": "Naziv",
+    "serial": "Serijski broj",
+    "vehicle": "Vozilo",
+    "checkEvery": "Provjera svakih (dana)",
+    "cleanEvery": "Čišćenje svakih (dana)",
+    "calibrateEvery": "Kalibracija svakih (dana)",
+    "addEquipment": "Dodaj opremu",
+    "saved": "Spremljeno",
+    "done": "Gotovo",
+    "task": {
+      "CHECK": "Provjera temperature",
+      "CLEANING": "Čišćenje",
+      "CALIBRATION": "Kalibracija",
+      "SERVICE": "Servis / popravak"
+    },
+    "ok": "OK",
+    "logIt": "Zabilježi",
+    "addLogger": "Dodaj zapisivač",
+    "tokenOnce": "Ključ zapisivača — kopirajte ga sada, prikazuje se samo jednom:",
+    "tokenHow": "Uređaj šalje očitanja na /api/coldchain/readings sa zaglavljem \"Authorization: Bearer\" i ovim ključem.",
+    "deactivate": "Isključi",
+    "activate": "Uključi",
+    "orderTitle": "Hladni lanac",
+    "certificate": "Temperaturni certifikat (PDF)",
+    "noReadings": "Još nema zabilježenih temperatura.",
+    "stage": {
+      "DISPATCH": "Otprema",
+      "LOADING": "Utovar",
+      "HANDOVER": "Predaja",
+      "RECEIPT": "Prijem",
+      "LOGGER": "Zapisivač"
+    },
+    "refusedBadge": "Odbijeno",
+    "tripTitle": "Tijekom vožnje ({logger})",
+    "tripStats": "Min {min} · maks {max} · prosjek {avg} · {out} min izvan raspona",
+    "decision": {
+      "NOTED": "Zabilježeno",
+      "ACCEPTED": "Ipak prihvaćeno",
+      "REFUSED": "Odbijeno — odobreno",
+      "BLOCKED": "Blokirano — odobreno"
+    },
+    "fault": {
+      "SUPPLIER": "dobavljač",
+      "DRIVER": "vozač",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamacija {number}",
+    "productsTitle": "Temperatura",
+    "productsIntro": "Za rashlađene i smrznute proizvode temperatura se mora bilježiti usput. Svaki proizvod dobiva razred svoje kategorije, osim ako ne odaberete drugi.",
+    "colProduct": "Proizvod",
+    "colClass": "Temperaturni razred",
+    "noProducts": "Još nema proizvoda.",
+    "fleetTitle": "Hladni Lanac",
+    "fleetIntro": "Vaši rashladni uređaji, hladnjače, zamrzivači i sonde s provjerama, čišćenjem i kalibracijom; zapisivači podataka; odstupanja na vašim narudžbama; mjesečno HACCP izvješće.",
+    "incidentsTitle": "Odstupanja izvan raspona (30 dana)",
+    "noIncidents": "Nema odstupanja.",
+    "equipmentTitle": "Oprema",
+    "noEquipment": "Još nema opreme.",
+    "due": "{task} dospijeva {date}",
+    "overdue": "{task} kasni od {date}",
+    "lastLogs": "Posljednji zapisi",
+    "loggersTitle": "Zapisivači podataka",
+    "noLoggers": "Još nema zapisivača.",
+    "lastSeen": "Posljednje očitanje {temp} · {date}",
+    "neverSeen": "Još nema očitanja",
+    "reportTitle": "Mjesečno HACCP izvješće",
+    "month": "Mjesec",
+    "downloadPdf": "Preuzmi PDF",
+    "downloadCsv": "Preuzmi CSV",
+    "receivingTitle": "Evidencija prijema",
+    "receivingIntro": "Vaše HACCP kontrole pri prijemu: temperature zabilježene na FIRINGI isporukama i roba drugih dobavljača koju ovdje dodate.",
+    "addOutside": "Roba drugog dobavljača",
+    "logTitle": "Ovaj mjesec",
+    "noLog": "Ovaj mjesec ništa nije zabilježeno.",
+    "colDate": "Datum",
+    "colSupplier": "Dobavljač",
+    "colTemp": "Temperatura",
+    "colStatus": "Status",
+    "colBy": "Tko",
+    "accepted": "Prihvaćeno",
+    "refused": "Odbijeno",
+    "readingsTotal": "Očitanja",
+    "outOfRange": "Izvan raspona",
+    "refusedCount": "Odbijeno / blokirano",
+    "equipmentOverdue": "Oprema kasni",
+    "loadingTitle": "Temperatura pri utovaru",
+    "breaches30": "Prekidi hladnog lanca na vašim narudžbama (30 dana): {n}"
   }
 }

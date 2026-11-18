@@ -855,7 +855,10 @@
     "Returnables": "Vratné obaly",
     "Empties & Deposits": "Obaly a zálohy",
     "Sold by Weight": "Predaj na Váhu",
-    "Weighing": "Váženie"
+    "Weighing": "Váženie",
+    "Temperature": "Teplota",
+    "Cold Chain": "Chladiaci Reťazec",
+    "Receiving Log": "Záznam príjmu"
   },
   "delivery": {
     "title": "Doručenie",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Nesprávna alebo neúplná adresa",
       "DAMAGED": "Tovar poškodený",
       "NO_ACCESS": "Adresa neprístupná",
-      "OTHER": "Iné"
+      "OTHER": "Iné",
+      "TEMPERATURE": "Teplota mimo rozsahu"
     },
     "fleetIntro": "Vodiči a vozidlá pre objednávky, ktoré doručujete sami (doprava zadarmo). Zodpovedáte za ne.",
     "drivers": "Vodiči",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Vyššia hmotnosť prijatá: {number}",
       "body": "Zákazník prijal hmotnosť nad limit. Faktúra použije skutočnú hmotnosť."
+    },
+    "coldchain_breach": {
+      "title": "Teplota mimo rozsahu: {number}",
+      "body": "{incident}: {temp} (povolené {range}) vo fáze {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Záznamník mimo rozsahu: {logger}",
+      "body": "{temp} počas {minutes} minút (povolené {range}). Skontrolujte chladiacu jednotku."
+    },
+    "coldchain_equipment_due": {
+      "title": "Zariadenie na údržbu: {equipment}",
+      "body": "Naplánované alebo po termíne: {tasks}. Zaznamenajte to v Chladiacom reťazci."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Nesprávna adresa",
       "DAMAGED": "Poškodený tovar",
       "NO_ACCESS": "Bez prístupu",
-      "OTHER": "Iné"
+      "OTHER": "Iné",
+      "TEMPERATURE": "Teplota mimo rozsahu"
     },
     "stopStatus": {
       "UNASSIGNED": "Nepridelené",
@@ -5202,5 +5219,131 @@
       "date": "Doručenie"
     },
     "cartTotalNote": "Obsahuje výrobky na váhu: tento súčet je odhad. Faktúra použije skutočnú hmotnosť."
+  },
+  "coldChain": {
+    "badTemp": "To nie je teplota",
+    "status": {
+      "OK": "V rozsahu",
+      "WARN": "Tolerancia",
+      "OUT": "Mimo rozsahu"
+    },
+    "atLoading": "{temp} °C pri nakládke",
+    "tempFor": "Teplota {cls} (°C)",
+    "record": {
+      "DISPATCH": "Teplota pri expedícii",
+      "LOADING": "Teplota pri nakládke",
+      "RECEIPT": "Teplota pri príjme"
+    },
+    "probe": "Sonda / teplomer",
+    "goodsAccepted": "Tovar prijatý",
+    "noteOptional": "Poznámka (nepovinné)",
+    "saveTemps": "Uložiť teploty",
+    "recorded": "Zaznamenané",
+    "handoverTitle": "Teplota pri odovzdaní",
+    "handoverRequired": "Teplota pri odovzdaní (povinná)",
+    "blockedNote": "{cls}: mimo rozsahu — nedá sa odovzdať. Vracia sa späť a zákazníkovi sa dobropisuje.",
+    "refuseClass": "Zákazník odmieta produkty {cls} (dobropisované)",
+    "ambient": "Okolitá teplota",
+    "classFor": "Teplotná trieda",
+    "fromCategory": "Z kategórie: {cls}",
+    "supplier": "Dodávateľ",
+    "product": "Produkt",
+    "tempClass": "Teplotná trieda",
+    "tempC": "Teplota (°C)",
+    "addEntry": "Pridať do záznamu",
+    "kindLabel": "Zariadenie",
+    "kind": {
+      "VEHICLE_UNIT": "Chladiaca jednotka vozidla",
+      "COLD_ROOM": "Chladiaca miestnosť",
+      "FREEZER": "Mraznička",
+      "PROBE": "Sonda / teplomer"
+    },
+    "name": "Názov",
+    "serial": "Sériové číslo",
+    "vehicle": "Vozidlo",
+    "checkEvery": "Kontrola každých (dní)",
+    "cleanEvery": "Čistenie každých (dní)",
+    "calibrateEvery": "Kalibrácia každých (dní)",
+    "addEquipment": "Pridať zariadenie",
+    "saved": "Uložené",
+    "done": "Hotovo",
+    "task": {
+      "CHECK": "Kontrola teploty",
+      "CLEANING": "Čistenie",
+      "CALIBRATION": "Kalibrácia",
+      "SERVICE": "Servis / oprava"
+    },
+    "ok": "OK",
+    "logIt": "Zaznamenať",
+    "addLogger": "Pridať záznamník",
+    "tokenOnce": "Kľúč záznamníka — skopírujte si ho teraz, zobrazí sa len raz:",
+    "tokenHow": "Zariadenie posiela namerané hodnoty na /api/coldchain/readings s hlavičkou \"Authorization: Bearer\" a týmto kľúčom.",
+    "deactivate": "Vypnúť",
+    "activate": "Zapnúť",
+    "orderTitle": "Chladiaci reťazec",
+    "certificate": "Teplotný certifikát (PDF)",
+    "noReadings": "Zatiaľ nie sú zaznamenané žiadne teploty.",
+    "stage": {
+      "DISPATCH": "Expedícia",
+      "LOADING": "Nakládka",
+      "HANDOVER": "Odovzdanie",
+      "RECEIPT": "Príjem",
+      "LOGGER": "Záznamník"
+    },
+    "refusedBadge": "Odmietnuté",
+    "tripTitle": "Počas jazdy ({logger})",
+    "tripStats": "Min {min} · max {max} · priemer {avg} · {out} min mimo rozsahu",
+    "decision": {
+      "NOTED": "Zaznamenané",
+      "ACCEPTED": "Napriek tomu prijaté",
+      "REFUSED": "Odmietnuté — dobropisované",
+      "BLOCKED": "Zablokované — dobropisované"
+    },
+    "fault": {
+      "SUPPLIER": "dodávateľ",
+      "DRIVER": "vodič",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamácia {number}",
+    "productsTitle": "Teplota",
+    "productsIntro": "Pri chladených a mrazených produktoch sa musí teplota zaznamenávať po ceste. Každý produkt dostane triedu svojej kategórie, ak nezvolíte inú.",
+    "colProduct": "Produkt",
+    "colClass": "Teplotná trieda",
+    "noProducts": "Zatiaľ žiadne produkty.",
+    "fleetTitle": "Chladiaci Reťazec",
+    "fleetIntro": "Vaše chladiace jednotky, chladiarne, mrazničky a sondy s kontrolami, čistením a kalibráciou; záznamníky údajov; incidenty mimo rozsahu na vašich objednávkach; mesačná správa HACCP.",
+    "incidentsTitle": "Incidenty mimo rozsahu (30 dní)",
+    "noIncidents": "Žiadne incidenty.",
+    "equipmentTitle": "Zariadenia",
+    "noEquipment": "Zatiaľ žiadne zariadenia.",
+    "due": "{task} naplánované na {date}",
+    "overdue": "{task} po termíne od {date}",
+    "lastLogs": "Posledné záznamy",
+    "loggersTitle": "Záznamníky údajov",
+    "noLoggers": "Zatiaľ žiadne záznamníky.",
+    "lastSeen": "Posledné meranie {temp} · {date}",
+    "neverSeen": "Zatiaľ žiadne merania",
+    "reportTitle": "Mesačná správa HACCP",
+    "month": "Mesiac",
+    "downloadPdf": "Stiahnuť PDF",
+    "downloadCsv": "Stiahnuť CSV",
+    "receivingTitle": "Záznam príjmu",
+    "receivingIntro": "Vaše kontroly HACCP pri príjme: teploty zaznamenané pri dodávkach FIRINGI a tovar od iných dodávateľov, ktorý pridáte tu.",
+    "addOutside": "Tovar od iného dodávateľa",
+    "logTitle": "Tento mesiac",
+    "noLog": "Tento mesiac nič nezaznamenané.",
+    "colDate": "Dátum",
+    "colSupplier": "Dodávateľ",
+    "colTemp": "Teplota",
+    "colStatus": "Stav",
+    "colBy": "Kto",
+    "accepted": "Prijaté",
+    "refused": "Odmietnuté",
+    "readingsTotal": "Merania",
+    "outOfRange": "Mimo rozsahu",
+    "refusedCount": "Odmietnuté / zablokované",
+    "equipmentOverdue": "Zariadenia po termíne",
+    "loadingTitle": "Teplota pri nakládke",
+    "breaches30": "Porušenia chladiaceho reťazca na vašich objednávkach (30 dní): {n}"
   }
 }

@@ -139,6 +139,7 @@ await go(driver, `/driver/deliveries/${deliveryId}`);
 check("driver sees the sold-by-weight line", (await driver.getByTestId("stop-weights").count()) === 1 && /10,550/.test(await driver.getByTestId("stop-weights").textContent()));
 await driver.getByTestId("stop-weight").first().fill("10,40");
 await driver.fill("#recipientName", "Karim Kebab");
+await driver.locator("canvas").first().scrollIntoViewIfNeeded(); // the pad can sit below the fold (e.g. temperatures above it)
 const pad = await driver.locator("canvas").first().boundingBox();
 await driver.mouse.move(pad.x + 20, pad.y + 30); await driver.mouse.down();
 for (let i = 1; i < 10; i++) await driver.mouse.move(pad.x + 20 + i * 18, pad.y + 30 + (i % 2 ? 25 : -5));

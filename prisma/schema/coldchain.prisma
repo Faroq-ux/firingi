@@ -1,0 +1,189 @@
+// Phase 42 — cold chain & HACCP: temperature classes, readings along the way (supplier at dispatch, driver at
+// loading and handover, customer at receipt, vehicle data loggers), out-of-range incidents (customer refuses →
+// temperature claim with credit, or handover blocked), equipment checks / cleaning / probe calibration, and the
+// customer's own HACCP receiving log. Each recording method and each reaction is switched on/off by FIRINGI.
+
+enum TempStage {
+  DISPATCH // supplier, when the goods leave the warehouse
+  LOADING // driver, when loading
+  HANDOVER // driver, at the customer
+  RECEIPT // customer, receiving check (also goods from outside FIRINGI)
+  LOGGER // vehicle data logger (summary of a trip)
+}
+
+enum TempStatus {
+  OK
+  WARN // within the class's tolerance
+  OUT // out of range
+}
+
+enum ColdIncidentDecision {
+  NOTED // recorded (supplier dispatch / loading / logger)
+  ACCEPTED // the customer took the goods anyway
+  REFUSED // the customer refused those lines → temperature claim with credit
+  BLOCKED // FIRINGI's rule: out of range can't be handed over → refused automatically
+}
+
+enum ColdEquipmentKind {
+  VEHICLE_UNIT
+  COLD_ROOM
+  FREEZER
+  PROBE
+}
+
+enum EquipmentLogKind {
+  CHECK
+  CLEANING
+  CALIBRATION
+  SERVICE
+}
+
+/// Ambient, chilled 0–4 °C, fresh fish 0–2 °C, frozen ≤ −18 °C… (FIRINGI's list; seeded by the migration).
+model TempClass {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  name       Json
+  minC       Decimal? @db.Decimal(5, 1)
+  maxC       Decimal? @db.Decimal(5, 1)
+  /// Readings up to this far outside the range are a warning, not a breach (e.g. frozen up to −15 °C briefly).
+  toleranceC Decimal  @default(0) @db.Decimal(4, 1)
+  /// false = ambient: no temperature recorded.
+  coldChain  Boolean  @default(true)
+  sortOrder  Int      @default(0)
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  categories Category[]
+  offers     VendorOffer[]
+  orderLines OrderLine[]
+  readings   TempReading[]
+  incidents  ColdIncident[]
+  loggers    TempLogger[]
+  equipment  ColdEquipment[]
+}
+
+/// One temperature reading. Orders: per order × class × stage. Receiving log: companyId + free text (supplier, product).
+model TempReading {
+  id           String     @id @default(cuid())
+  orderId      String?
+  deliveryId   String?
+  /// whose HACCP record (the customer for RECEIPT, the supplier for DISPATCH…)
+  companyId    String
+  tempClassId  String?
+  stage        TempStage
+  valueC       Decimal    @db.Decimal(5, 1)
+  status       TempStatus
+  probe        String?
+  supplierName String? // receiving log: goods from outside FIRINGI
+  product      String?
+  accepted     Boolean? // receiving / handover: the goods were taken despite the reading
+  note         String?
+  vehicleId    String?
+  byUserId     String?
+  at           DateTime   @default(now())
+
+  order     Order?     @relation("TempReadingOrder", fields: [orderId], references: [id], onDelete: Cascade)
+  tempClass TempClass? @relation(fields: [tempClassId], references: [id])
+
+  @@index([orderId, stage])
+  @@index([companyId, at])
+}
+
+/// Out of range on an order: what happened (noted / accepted / refused / blocked), whose fault, the claim that credited it.
+model ColdIncident {
+  id          String               @id @default(cuid())
+  number      String               @unique // CC-2026-000001
+  orderId     String
+  deliveryId  String?
+  readingId   String?
+  tempClassId String
+  stage       TempStage
+  valueC      Decimal              @db.Decimal(5, 1)
+  decision    ColdIncidentDecision
+  fault       String? // SUPPLIER / DRIVER / FIRINGI (refused / blocked)
+  claimId     String?
+  lines       Json? // [{ orderLineId, qty }] refused
+  sellerId    String
+  buyerId     String
+  driverId    String?
+  createdAt   DateTime             @default(now())
+
+  order     Order     @relation("ColdIncidentOrder", fields: [orderId], references: [id], onDelete: Cascade)
+  tempClass TempClass @relation(fields: [tempClassId], references: [id])
+
+  @@index([sellerId, createdAt])
+  @@index([createdAt])
+}
+
+/// A vehicle / cold-room data logger that pushes readings (POST /api/coldchain/readings, Bearer token).
+model TempLogger {
+  id             String    @id @default(cuid())
+  ownerCompanyId String
+  vehicleId      String?
+  equipmentId    String?
+  tempClassId    String?
+  name           String
+  serial         String?
+  tokenHash      String    @unique
+  tokenHint      String
+  active         Boolean   @default(true)
+  lastSeenAt     DateTime?
+  lastValueC     Decimal?  @db.Decimal(5, 1)
+  alertedAt      DateTime?
+  createdAt      DateTime  @default(now())
+
+  tempClass TempClass?          @relation(fields: [tempClassId], references: [id])
+  readings  TempLoggerReading[]
+
+  @@index([ownerCompanyId])
+  @@index([vehicleId])
+}
+
+model TempLoggerReading {
+  id       String   @id @default(cuid())
+  loggerId String
+  at       DateTime
+  valueC   Decimal  @db.Decimal(5, 1)
+
+  logger TempLogger @relation(fields: [loggerId], references: [id], onDelete: Cascade)
+
+  @@unique([loggerId, at])
+  @@index([loggerId, at])
+}
+
+/// Fridge units, cold rooms, freezers and probes, with how often they are checked, cleaned and calibrated.
+model ColdEquipment {
+  id                 String            @id @default(cuid())
+  ownerCompanyId     String
+  kind               ColdEquipmentKind
+  name               String
+  vehicleId          String?
+  tempClassId        String?
+  serial             String?
+  checkEveryDays     Int?
+  cleanEveryDays     Int?
+  calibrateEveryDays Int?
+  active             Boolean           @default(true)
+  remindedAt         DateTime?
+  createdAt          DateTime          @default(now())
+
+  tempClass TempClass?     @relation(fields: [tempClassId], references: [id])
+  logs      EquipmentLog[]
+
+  @@index([ownerCompanyId])
+}
+
+model EquipmentLog {
+  id          String           @id @default(cuid())
+  equipmentId String
+  kind        EquipmentLogKind
+  ok          Boolean          @default(true)
+  valueC      Decimal?         @db.Decimal(5, 1)
+  note        String?
+  byUserId    String?
+  doneAt      DateTime         @default(now())
+
+  equipment ColdEquipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+
+  @@index([equipmentId, kind, doneAt])
+}

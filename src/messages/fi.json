@@ -855,7 +855,10 @@
     "Returnables": "Palautuspakkaukset",
     "Empties & Deposits": "Tyhjät & panttit",
     "Sold by Weight": "Myynti Painon Mukaan",
-    "Weighing": "Punnitus"
+    "Weighing": "Punnitus",
+    "Temperature": "Lämpötila",
+    "Cold Chain": "Kylmäketju",
+    "Receiving Log": "Vastaanottoloki"
   },
   "delivery": {
     "title": "Toimitus",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Väärä tai puutteellinen osoite",
       "DAMAGED": "Tavarat vahingoittuneet",
       "NO_ACCESS": "Osoitteeseen ei pääsyä",
-      "OTHER": "Muu"
+      "OTHER": "Muu",
+      "TEMPERATURE": "Lämpötila rajojen ulkopuolella"
     },
     "fleetIntro": "Kuljettajat ja ajoneuvot tilauksiin, jotka toimitat itse (ilmainen toimitus). Olet vastuussa niistä.",
     "drivers": "Kuljettajat",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Lisäpaino hyväksytty: {number}",
       "body": "Asiakas hyväksyi rajan ylittävän painon. Laskussa käytetään todellista painoa."
+    },
+    "coldchain_breach": {
+      "title": "Lämpötila rajojen ulkopuolella: {number}",
+      "body": "{incident}: {temp} (sallittu {range}) vaiheessa {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Tiedonkeruulaite rajojen ulkopuolella: {logger}",
+      "body": "{temp} {minutes} minuutin ajan (sallittu {range}). Tarkista kylmäkone."
+    },
+    "coldchain_equipment_due": {
+      "title": "Laitteen huolto erääntyy: {equipment}",
+      "body": "Erääntyy tai myöhässä: {tasks}. Kirjaa se kohtaan Kylmäketju."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Väärä osoite",
       "DAMAGED": "Tavara vahingoittunut",
       "NO_ACCESS": "Ei pääsyä",
-      "OTHER": "Muu"
+      "OTHER": "Muu",
+      "TEMPERATURE": "Lämpötila rajojen ulkopuolella"
     },
     "stopStatus": {
       "UNASSIGNED": "Ei osoitettu",
@@ -5202,5 +5219,131 @@
       "date": "Toimitus"
     },
     "cartTotalNote": "Sisältää painon mukaan myytäviä tuotteita: summa on arvio. Laskussa käytetään todellista painoa."
+  },
+  "coldChain": {
+    "badTemp": "Ei lämpötila",
+    "status": {
+      "OK": "Rajoissa",
+      "WARN": "Toleranssi",
+      "OUT": "Rajojen ulkopuolella"
+    },
+    "atLoading": "{temp} °C lastauksessa",
+    "tempFor": "Tuotteiden {cls} lämpötila (°C)",
+    "record": {
+      "DISPATCH": "Lämpötila lähetyksessä",
+      "LOADING": "Lämpötila lastauksessa",
+      "RECEIPT": "Lämpötila vastaanotossa"
+    },
+    "probe": "Anturi / lämpömittari",
+    "goodsAccepted": "Tavarat hyväksytty",
+    "noteOptional": "Huomautus (valinnainen)",
+    "saveTemps": "Tallenna lämpötilat",
+    "recorded": "Kirjattu",
+    "handoverTitle": "Lämpötila luovutuksessa",
+    "handoverRequired": "Lämpötila luovutuksessa (pakollinen)",
+    "blockedNote": "{cls}: rajojen ulkopuolella — ei voi luovuttaa. Se palautetaan ja hyvitetään asiakkaalle.",
+    "refuseClass": "Asiakas hylkää tuotteet {cls} (hyvitetty)",
+    "ambient": "Huoneenlämpö",
+    "classFor": "Lämpötilaluokka",
+    "fromCategory": "Kategoriasta: {cls}",
+    "supplier": "Toimittaja",
+    "product": "Tuote",
+    "tempClass": "Lämpötilaluokka",
+    "tempC": "Lämpötila (°C)",
+    "addEntry": "Lisää lokiin",
+    "kindLabel": "Laite",
+    "kind": {
+      "VEHICLE_UNIT": "Ajoneuvon kylmäkone",
+      "COLD_ROOM": "Kylmähuone",
+      "FREEZER": "Pakastin",
+      "PROBE": "Anturi / lämpömittari"
+    },
+    "name": "Nimi",
+    "serial": "Sarjanumero",
+    "vehicle": "Ajoneuvo",
+    "checkEvery": "Tarkastus joka (päivä)",
+    "cleanEvery": "Puhdistus joka (päivä)",
+    "calibrateEvery": "Kalibrointi joka (päivä)",
+    "addEquipment": "Lisää laite",
+    "saved": "Tallennettu",
+    "done": "Tehty",
+    "task": {
+      "CHECK": "Lämpötilatarkastus",
+      "CLEANING": "Puhdistus",
+      "CALIBRATION": "Kalibrointi",
+      "SERVICE": "Huolto / korjaus"
+    },
+    "ok": "OK",
+    "logIt": "Kirjaa",
+    "addLogger": "Lisää tiedonkeruulaite",
+    "tokenOnce": "Laitteen avain — kopioi se nyt, se näytetään vain kerran:",
+    "tokenHow": "Laite lähettää lukemansa osoitteeseen /api/coldchain/readings otsakkeella \"Authorization: Bearer\" ja tällä avaimella.",
+    "deactivate": "Poista käytöstä",
+    "activate": "Ota käyttöön",
+    "orderTitle": "Kylmäketju",
+    "certificate": "Lämpötilatodistus (PDF)",
+    "noReadings": "Lämpötiloja ei ole vielä kirjattu.",
+    "stage": {
+      "DISPATCH": "Lähetys",
+      "LOADING": "Lastaus",
+      "HANDOVER": "Luovutus",
+      "RECEIPT": "Vastaanotto",
+      "LOGGER": "Tiedonkeruulaite"
+    },
+    "refusedBadge": "Hylätty",
+    "tripTitle": "Matkan aikana ({logger})",
+    "tripStats": "Min {min} · max {max} · keskiarvo {avg} · {out} min rajojen ulkopuolella",
+    "decision": {
+      "NOTED": "Kirjattu",
+      "ACCEPTED": "Hyväksytty silti",
+      "REFUSED": "Hylätty — hyvitetty",
+      "BLOCKED": "Estetty — hyvitetty"
+    },
+    "fault": {
+      "SUPPLIER": "toimittaja",
+      "DRIVER": "kuljettaja",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamaatio {number}",
+    "productsTitle": "Lämpötila",
+    "productsIntro": "Kylmä- ja pakastetuotteiden lämpötila on kirjattava matkan varrella. Jokainen tuote saa kategoriansa luokan, ellet valitse toista.",
+    "colProduct": "Tuote",
+    "colClass": "Lämpötilaluokka",
+    "noProducts": "Ei vielä tuotteita.",
+    "fleetTitle": "Kylmäketju",
+    "fleetIntro": "Kylmäkoneesi, kylmähuoneesi, pakastimesi ja anturisi tarkastuksineen, puhdistuksineen ja kalibrointeineen; tiedonkeruulaitteet; rajojen ylitykset tilauksissasi; kuukausittainen HACCP-raportti.",
+    "incidentsTitle": "Rajojen ylitykset (30 päivää)",
+    "noIncidents": "Ei poikkeamia.",
+    "equipmentTitle": "Laitteet",
+    "noEquipment": "Ei vielä laitteita.",
+    "due": "{task} erääntyy {date}",
+    "overdue": "{task} myöhässä {date} alkaen",
+    "lastLogs": "Viimeisimmät kirjaukset",
+    "loggersTitle": "Tiedonkeruulaitteet",
+    "noLoggers": "Ei vielä tiedonkeruulaitteita.",
+    "lastSeen": "Viimeisin lukema {temp} · {date}",
+    "neverSeen": "Ei vielä lukemia",
+    "reportTitle": "Kuukausittainen HACCP-raportti",
+    "month": "Kuukausi",
+    "downloadPdf": "Lataa PDF",
+    "downloadCsv": "Lataa CSV",
+    "receivingTitle": "Vastaanottoloki",
+    "receivingIntro": "HACCP-vastaanottotarkastuksesi: FIRINGI-toimituksissa kirjatut lämpötilat ja muiden toimittajien tavarat, jotka lisäät tähän.",
+    "addOutside": "Tavaraa toiselta toimittajalta",
+    "logTitle": "Tämä kuukausi",
+    "noLog": "Tässä kuussa ei kirjauksia.",
+    "colDate": "Päivämäärä",
+    "colSupplier": "Toimittaja",
+    "colTemp": "Lämpötila",
+    "colStatus": "Tila",
+    "colBy": "Kirjaaja",
+    "accepted": "Hyväksytty",
+    "refused": "Hylätty",
+    "readingsTotal": "Lukemat",
+    "outOfRange": "Rajojen ulkopuolella",
+    "refusedCount": "Hylätty / estetty",
+    "equipmentOverdue": "Myöhässä olevat laitteet",
+    "loadingTitle": "Lämpötila lastauksessa",
+    "breaches30": "Kylmäketjun katkokset tilauksissasi (30 päivää): {n}"
   }
 }

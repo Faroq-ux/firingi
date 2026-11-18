@@ -855,7 +855,10 @@
     "Returnables": "Returemballasje",
     "Empties & Deposits": "Tomgods og pant",
     "Sold by Weight": "Salg etter Vekt",
-    "Weighing": "Veiing"
+    "Weighing": "Veiing",
+    "Temperature": "Temperatur",
+    "Cold Chain": "Kjølekjede",
+    "Receiving Log": "Mottakslogg"
   },
   "delivery": {
     "title": "Levering",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Feil eller ufullstendig adresse",
       "DAMAGED": "Varene er skadet",
       "NO_ACCESS": "Ingen tilgang til adressen",
-      "OTHER": "Annet"
+      "OTHER": "Annet",
+      "TEMPERATURE": "Temperatur utenfor området"
     },
     "fleetIntro": "Sjåfører og kjøretøy for bestillingene du leverer selv (gratis levering). Du er ansvarlig for dem.",
     "drivers": "Sjåfører",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Ekstravekt godtatt: {number}",
       "body": "Kunden godtok vekten over grensen. Fakturaen bruker den faktiske vekten."
+    },
+    "coldchain_breach": {
+      "title": "Temperatur utenfor området: {number}",
+      "body": "{incident}: {temp} (tillatt {range}) ved {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logger utenfor området: {logger}",
+      "body": "{temp} i {minutes} minutter (tillatt {range}). Sjekk kjøleaggregatet."
+    },
+    "coldchain_equipment_due": {
+      "title": "Utstyr forfaller: {equipment}",
+      "body": "Forfaller eller forfalt: {tasks}. Registrer det under Kjølekjede."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Feil adresse",
       "DAMAGED": "Varer skadet",
       "NO_ACCESS": "Ingen tilgang",
-      "OTHER": "Annet"
+      "OTHER": "Annet",
+      "TEMPERATURE": "Temperatur utenfor området"
     },
     "stopStatus": {
       "UNASSIGNED": "Ikke tildelt",
@@ -5202,5 +5219,131 @@
       "date": "Levering"
     },
     "cartTotalNote": "Inneholder produkter etter vekt: totalen er et anslag. Fakturaen bruker den faktiske vekten."
+  },
+  "coldChain": {
+    "badTemp": "Ikke en temperatur",
+    "status": {
+      "OK": "Innenfor området",
+      "WARN": "Toleranse",
+      "OUT": "Utenfor området"
+    },
+    "atLoading": "{temp} °C ved lasting",
+    "tempFor": "Temperatur for {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatur ved utsending",
+      "LOADING": "Temperatur ved lasting",
+      "RECEIPT": "Temperatur ved mottak"
+    },
+    "probe": "Føler / termometer",
+    "goodsAccepted": "Varer mottatt",
+    "noteOptional": "Notat (valgfritt)",
+    "saveTemps": "Lagre temperaturer",
+    "recorded": "Registrert",
+    "handoverTitle": "Temperatur ved overlevering",
+    "handoverRequired": "Temperatur ved overlevering (påkrevd)",
+    "blockedNote": "{cls}: utenfor området — kan ikke overleveres. Det går i retur og krediteres kunden.",
+    "refuseClass": "Kunden avviser {cls}-varene (kreditert)",
+    "ambient": "Romtemperatur",
+    "classFor": "Temperaturklasse",
+    "fromCategory": "Fra kategorien: {cls}",
+    "supplier": "Leverandør",
+    "product": "Produkt",
+    "tempClass": "Temperaturklasse",
+    "tempC": "Temperatur (°C)",
+    "addEntry": "Legg til i loggen",
+    "kindLabel": "Utstyr",
+    "kind": {
+      "VEHICLE_UNIT": "Kjøleaggregat i kjøretøyet",
+      "COLD_ROOM": "Kjølerom",
+      "FREEZER": "Fryser",
+      "PROBE": "Føler / termometer"
+    },
+    "name": "Navn",
+    "serial": "Serienummer",
+    "vehicle": "Kjøretøy",
+    "checkEvery": "Kontroll hver (dager)",
+    "cleanEvery": "Rengjøring hver (dager)",
+    "calibrateEvery": "Kalibrering hver (dager)",
+    "addEquipment": "Legg til utstyr",
+    "saved": "Lagret",
+    "done": "Utført",
+    "task": {
+      "CHECK": "Temperaturkontroll",
+      "CLEANING": "Rengjøring",
+      "CALIBRATION": "Kalibrering",
+      "SERVICE": "Service / reparasjon"
+    },
+    "ok": "OK",
+    "logIt": "Registrer",
+    "addLogger": "Legg til datalogger",
+    "tokenOnce": "Loggerens nøkkel — kopier den nå, den vises bare én gang:",
+    "tokenHow": "Enheten sender målingene sine til /api/coldchain/readings med headeren \"Authorization: Bearer\" og denne nøkkelen.",
+    "deactivate": "Slå av",
+    "activate": "Slå på",
+    "orderTitle": "Kjølekjede",
+    "certificate": "Temperatursertifikat (PDF)",
+    "noReadings": "Ingen temperaturer registrert ennå.",
+    "stage": {
+      "DISPATCH": "Utsending",
+      "LOADING": "Lasting",
+      "HANDOVER": "Overlevering",
+      "RECEIPT": "Mottak",
+      "LOGGER": "Logger"
+    },
+    "refusedBadge": "Avvist",
+    "tripTitle": "Under turen ({logger})",
+    "tripStats": "Min {min} · maks {max} · snitt {avg} · {out} min utenfor området",
+    "decision": {
+      "NOTED": "Notert",
+      "ACCEPTED": "Mottatt likevel",
+      "REFUSED": "Avvist — kreditert",
+      "BLOCKED": "Blokkert — kreditert"
+    },
+    "fault": {
+      "SUPPLIER": "leverandør",
+      "DRIVER": "sjåfør",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamasjon {number}",
+    "productsTitle": "Temperatur",
+    "productsIntro": "Kjølte og frosne varer må få temperaturen registrert underveis. Hvert produkt får klassen til kategorien sin, med mindre du velger en annen.",
+    "colProduct": "Produkt",
+    "colClass": "Temperaturklasse",
+    "noProducts": "Ingen produkter ennå.",
+    "fleetTitle": "Kjølekjede",
+    "fleetIntro": "Kjøleaggregater, kjølerom, frysere og følere med kontroll, rengjøring og kalibrering; dataloggere; avvik på bestillingene dine; den månedlige HACCP-rapporten.",
+    "incidentsTitle": "Avvik utenfor området (30 dager)",
+    "noIncidents": "Ingen avvik.",
+    "equipmentTitle": "Utstyr",
+    "noEquipment": "Ikke noe utstyr ennå.",
+    "due": "{task} forfaller {date}",
+    "overdue": "{task} forfalt siden {date}",
+    "lastLogs": "Siste registreringer",
+    "loggersTitle": "Dataloggere",
+    "noLoggers": "Ingen loggere ennå.",
+    "lastSeen": "Siste måling {temp} · {date}",
+    "neverSeen": "Ingen målinger ennå",
+    "reportTitle": "Månedlig HACCP-rapport",
+    "month": "Måned",
+    "downloadPdf": "Last ned PDF",
+    "downloadCsv": "Last ned CSV",
+    "receivingTitle": "Mottakslogg",
+    "receivingIntro": "Dine HACCP-mottakskontroller: temperaturer registrert ved FIRINGI-leveranser og varer fra andre leverandører som du legger til her.",
+    "addOutside": "Varer fra en annen leverandør",
+    "logTitle": "Denne måneden",
+    "noLog": "Ingenting registrert denne måneden.",
+    "colDate": "Dato",
+    "colSupplier": "Leverandør",
+    "colTemp": "Temperatur",
+    "colStatus": "Status",
+    "colBy": "Av",
+    "accepted": "Mottatt",
+    "refused": "Avvist",
+    "readingsTotal": "Målinger",
+    "outOfRange": "Utenfor området",
+    "refusedCount": "Avvist / blokkert",
+    "equipmentOverdue": "Utstyr forfalt",
+    "loadingTitle": "Temperatur ved lasting",
+    "breaches30": "Brudd på kjølekjeden på bestillingene dine (30 dager): {n}"
   }
 }

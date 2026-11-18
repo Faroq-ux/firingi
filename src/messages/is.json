@@ -855,7 +855,10 @@
     "Returnables": "Skilaumbúðir",
     "Empties & Deposits": "Umbúðir og skilagjald",
     "Sold by Weight": "Sala eftir Þyngd",
-    "Weighing": "Vigtun"
+    "Weighing": "Vigtun",
+    "Temperature": "Hitastig",
+    "Cold Chain": "Kælikeðja",
+    "Receiving Log": "Móttökuskrá"
   },
   "delivery": {
     "title": "Afhending",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Rangt eða ófullnægjandi heimilisfang",
       "DAMAGED": "Vörur skemmdar",
       "NO_ACCESS": "Enginn aðgangur að heimilisfanginu",
-      "OTHER": "Annað"
+      "OTHER": "Annað",
+      "TEMPERATURE": "Hitastig utan marka"
     },
     "fleetIntro": "Bílstjórar og ökutæki fyrir pantanir sem þú afhendir sjálf(ur) (frí afhending). Þú berð ábyrgð á þeim.",
     "drivers": "Bílstjórar",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Aukaþyngd samþykkt: {number}",
       "body": "Viðskiptavinurinn samþykkti þyngd yfir mörkum. Reikningurinn notar raunþyngd."
+    },
+    "coldchain_breach": {
+      "title": "Hitastig utan marka: {number}",
+      "body": "{incident}: {temp} (leyft {range}) við {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Skráningartæki utan marka: {logger}",
+      "body": "{temp} í {minutes} mínútur (leyft {range}). Athugaðu kælibúnaðinn."
+    },
+    "coldchain_equipment_due": {
+      "title": "Búnaður á gjalddaga: {equipment}",
+      "body": "Á gjalddaga eða kominn fram yfir: {tasks}. Skráðu það í Kælikeðju."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Rangt heimilisfang",
       "DAMAGED": "Skemmd vara",
       "NO_ACCESS": "Enginn aðgangur",
-      "OTHER": "Annað"
+      "OTHER": "Annað",
+      "TEMPERATURE": "Hitastig utan marka"
     },
     "stopStatus": {
       "UNASSIGNED": "Ekki úthlutað",
@@ -5202,5 +5219,131 @@
       "date": "Afhending"
     },
     "cartTotalNote": "Inniheldur vörur seldar eftir þyngd: þessi upphæð er áætlun. Reikningurinn notar raunþyngd."
+  },
+  "coldChain": {
+    "badTemp": "Þetta er ekki hitastig",
+    "status": {
+      "OK": "Innan marka",
+      "WARN": "Vikmörk",
+      "OUT": "Utan marka"
+    },
+    "atLoading": "{temp} °C við lestun",
+    "tempFor": "Hitastig {cls} (°C)",
+    "record": {
+      "DISPATCH": "Hitastig við sendingu",
+      "LOADING": "Hitastig við lestun",
+      "RECEIPT": "Hitastig við móttöku"
+    },
+    "probe": "Mælir / hitamælir",
+    "goodsAccepted": "Vörur samþykktar",
+    "noteOptional": "Athugasemd (valfrjálst)",
+    "saveTemps": "Vista hitastig",
+    "recorded": "Skráð",
+    "handoverTitle": "Hitastig við afhendingu",
+    "handoverRequired": "Hitastig við afhendingu (skylda)",
+    "blockedNote": "{cls}: utan marka — ekki hægt að afhenda. Það fer til baka og er endurgreitt viðskiptavininum.",
+    "refuseClass": "Viðskiptavinurinn hafnar {cls}-vörunum (endurgreitt)",
+    "ambient": "Stofuhiti",
+    "classFor": "Hitaflokkur",
+    "fromCategory": "Úr flokknum: {cls}",
+    "supplier": "Birgir",
+    "product": "Vara",
+    "tempClass": "Hitaflokkur",
+    "tempC": "Hitastig (°C)",
+    "addEntry": "Bæta í skrána",
+    "kindLabel": "Búnaður",
+    "kind": {
+      "VEHICLE_UNIT": "Kælibúnaður ökutækis",
+      "COLD_ROOM": "Kæliklefi",
+      "FREEZER": "Frystir",
+      "PROBE": "Mælir / hitamælir"
+    },
+    "name": "Heiti",
+    "serial": "Raðnúmer",
+    "vehicle": "Ökutæki",
+    "checkEvery": "Athuga á (daga) fresti",
+    "cleanEvery": "Þrífa á (daga) fresti",
+    "calibrateEvery": "Kvarða á (daga) fresti",
+    "addEquipment": "Bæta við búnaði",
+    "saved": "Vistað",
+    "done": "Lokið",
+    "task": {
+      "CHECK": "Hitastigsathugun",
+      "CLEANING": "Þrif",
+      "CALIBRATION": "Kvörðun",
+      "SERVICE": "Þjónusta / viðgerð"
+    },
+    "ok": "OK",
+    "logIt": "Skrá",
+    "addLogger": "Bæta við gagnaskráningartæki",
+    "tokenOnce": "Lykill tækisins — afritaðu hann núna, hann er aðeins sýndur einu sinni:",
+    "tokenHow": "Tækið sendir mælingar sínar á /api/coldchain/readings með hausnum \"Authorization: Bearer\" og þessum lykli.",
+    "deactivate": "Slökkva",
+    "activate": "Kveikja",
+    "orderTitle": "Kælikeðja",
+    "certificate": "Hitastigsvottorð (PDF)",
+    "noReadings": "Ekkert hitastig skráð enn.",
+    "stage": {
+      "DISPATCH": "Sending",
+      "LOADING": "Lestun",
+      "HANDOVER": "Afhending",
+      "RECEIPT": "Móttaka",
+      "LOGGER": "Skráningartæki"
+    },
+    "refusedBadge": "Hafnað",
+    "tripTitle": "Á leiðinni ({logger})",
+    "tripStats": "Lágm. {min} · hám. {max} · meðaltal {avg} · {out} mín utan marka",
+    "decision": {
+      "NOTED": "Skráð",
+      "ACCEPTED": "Samþykkt engu að síður",
+      "REFUSED": "Hafnað — endurgreitt",
+      "BLOCKED": "Lokað — endurgreitt"
+    },
+    "fault": {
+      "SUPPLIER": "birgir",
+      "DRIVER": "bílstjóri",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Kvörtun {number}",
+    "productsTitle": "Hitastig",
+    "productsIntro": "Skrá þarf hitastig kældra og frystra vara á leiðinni. Hver vara fær flokk síns vöruflokks nema þú veljir annan.",
+    "colProduct": "Vara",
+    "colClass": "Hitaflokkur",
+    "noProducts": "Engar vörur enn.",
+    "fleetTitle": "Kælikeðja",
+    "fleetIntro": "Kælibúnaður, kæliklefar, frystar og mælar með athugunum, þrifum og kvörðun; gagnaskráningartæki; frávik á pöntunum þínum; mánaðarleg HACCP-skýrsla.",
+    "incidentsTitle": "Frávik utan marka (30 dagar)",
+    "noIncidents": "Engin frávik.",
+    "equipmentTitle": "Búnaður",
+    "noEquipment": "Enginn búnaður enn.",
+    "due": "{task} á gjalddaga {date}",
+    "overdue": "{task} komið fram yfir síðan {date}",
+    "lastLogs": "Nýjustu skráningar",
+    "loggersTitle": "Gagnaskráningartæki",
+    "noLoggers": "Engin skráningartæki enn.",
+    "lastSeen": "Síðasta mæling {temp} · {date}",
+    "neverSeen": "Engar mælingar enn",
+    "reportTitle": "Mánaðarleg HACCP-skýrsla",
+    "month": "Mánuður",
+    "downloadPdf": "Sækja PDF",
+    "downloadCsv": "Sækja CSV",
+    "receivingTitle": "Móttökuskrá",
+    "receivingIntro": "HACCP-móttökueftirlitið þitt: hitastig skráð við afhendingar FIRINGI og vörur frá öðrum birgjum sem þú bætir við hér.",
+    "addOutside": "Vörur frá öðrum birgi",
+    "logTitle": "Þessi mánuður",
+    "noLog": "Ekkert skráð í þessum mánuði.",
+    "colDate": "Dagsetning",
+    "colSupplier": "Birgir",
+    "colTemp": "Hitastig",
+    "colStatus": "Staða",
+    "colBy": "Skráð af",
+    "accepted": "Samþykkt",
+    "refused": "Hafnað",
+    "readingsTotal": "Mælingar",
+    "outOfRange": "Utan marka",
+    "refusedCount": "Hafnað / lokað",
+    "equipmentOverdue": "Búnaður kominn fram yfir",
+    "loadingTitle": "Hitastig við lestun",
+    "breaches30": "Rof á kælikeðju á pöntunum þínum (30 dagar): {n}"
   }
 }

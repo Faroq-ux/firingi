@@ -855,7 +855,10 @@
     "Returnables": "Emballages consignés",
     "Empties & Deposits": "Consignes et emballages",
     "Sold by Weight": "Vente au Poids",
-    "Weighing": "Pesée"
+    "Weighing": "Pesée",
+    "Temperature": "Température",
+    "Cold Chain": "Chaîne du Froid",
+    "Receiving Log": "Registre de Réception"
   },
   "delivery": {
     "title": "Livraison",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Adresse erronée ou incomplète",
       "DAMAGED": "Marchandise endommagée",
       "NO_ACCESS": "Pas d'accès à l'adresse",
-      "OTHER": "Autre"
+      "OTHER": "Autre",
+      "TEMPERATURE": "Température hors plage"
     },
     "fleetIntro": "Chauffeurs et véhicules pour les commandes que vous livrez vous-même (livraison gratuite). Vous en êtes responsable.",
     "drivers": "Chauffeurs",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Surpoids accepté : {number}",
       "body": "Le client a accepté le poids au-dessus de la limite. La facture utilise le poids réel."
+    },
+    "coldchain_breach": {
+      "title": "Température hors plage : {number}",
+      "body": "{incident} : {temp} (autorisé {range}) à l'étape {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Enregistreur hors plage : {logger}",
+      "body": "{temp} pendant {minutes} minutes (autorisé {range}). Vérifiez le groupe froid."
+    },
+    "coldchain_equipment_due": {
+      "title": "Équipement à contrôler : {equipment}",
+      "body": "Prévu ou en retard : {tasks}. Enregistrez-le dans Chaîne du Froid."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Mauvaise adresse",
       "DAMAGED": "Marchandise abîmée",
       "NO_ACCESS": "Pas d'accès",
-      "OTHER": "Autre"
+      "OTHER": "Autre",
+      "TEMPERATURE": "Température hors plage"
     },
     "stopStatus": {
       "UNASSIGNED": "Non attribuée",
@@ -5202,5 +5219,131 @@
       "date": "Livraison"
     },
     "cartTotalNote": "Comprend des produits vendus au poids : ce total est une estimation. La facture utilise le poids réel."
+  },
+  "coldChain": {
+    "badTemp": "Ce n'est pas une température",
+    "status": {
+      "OK": "Dans la plage",
+      "WARN": "Tolérance",
+      "OUT": "Hors plage"
+    },
+    "atLoading": "{temp} °C au chargement",
+    "tempFor": "Température de {cls} (°C)",
+    "record": {
+      "DISPATCH": "Température à l'expédition",
+      "LOADING": "Température au chargement",
+      "RECEIPT": "Température à la réception"
+    },
+    "probe": "Sonde / thermomètre",
+    "goodsAccepted": "Marchandise acceptée",
+    "noteOptional": "Note (facultatif)",
+    "saveTemps": "Enregistrer les températures",
+    "recorded": "Enregistré",
+    "handoverTitle": "Température à la remise",
+    "handoverRequired": "Température à la remise (obligatoire)",
+    "blockedNote": "{cls} : hors plage — ne peut pas être remis. Il repart et est crédité au client.",
+    "refuseClass": "Le client refuse les produits {cls} (crédités)",
+    "ambient": "Ambiant",
+    "classFor": "Classe de température",
+    "fromCategory": "De la catégorie : {cls}",
+    "supplier": "Fournisseur",
+    "product": "Produit",
+    "tempClass": "Classe de température",
+    "tempC": "Température (°C)",
+    "addEntry": "Ajouter au registre",
+    "kindLabel": "Équipement",
+    "kind": {
+      "VEHICLE_UNIT": "Groupe froid du véhicule",
+      "COLD_ROOM": "Chambre froide",
+      "FREEZER": "Congélateur",
+      "PROBE": "Sonde / thermomètre"
+    },
+    "name": "Nom",
+    "serial": "Numéro de série",
+    "vehicle": "Véhicule",
+    "checkEvery": "Contrôler tous les (jours)",
+    "cleanEvery": "Nettoyer tous les (jours)",
+    "calibrateEvery": "Étalonner tous les (jours)",
+    "addEquipment": "Ajouter un équipement",
+    "saved": "Enregistré",
+    "done": "Fait",
+    "task": {
+      "CHECK": "Contrôle de température",
+      "CLEANING": "Nettoyage",
+      "CALIBRATION": "Étalonnage",
+      "SERVICE": "Entretien / réparation"
+    },
+    "ok": "OK",
+    "logIt": "Enregistrer",
+    "addLogger": "Ajouter un enregistreur",
+    "tokenOnce": "La clé de l'enregistreur — copiez-la maintenant, elle n'est affichée qu'une fois :",
+    "tokenHow": "L'appareil envoie ses relevés à /api/coldchain/readings avec l'en-tête \"Authorization: Bearer\" et cette clé.",
+    "deactivate": "Désactiver",
+    "activate": "Activer",
+    "orderTitle": "Chaîne du froid",
+    "certificate": "Certificat de température (PDF)",
+    "noReadings": "Aucune température enregistrée pour l'instant.",
+    "stage": {
+      "DISPATCH": "Expédition",
+      "LOADING": "Chargement",
+      "HANDOVER": "Remise",
+      "RECEIPT": "Réception",
+      "LOGGER": "Enregistreur"
+    },
+    "refusedBadge": "Refusé",
+    "tripTitle": "Pendant le trajet ({logger})",
+    "tripStats": "Min {min} · max {max} · moyenne {avg} · {out} min hors plage",
+    "decision": {
+      "NOTED": "Noté",
+      "ACCEPTED": "Accepté malgré tout",
+      "REFUSED": "Refusé — crédité",
+      "BLOCKED": "Bloqué — crédité"
+    },
+    "fault": {
+      "SUPPLIER": "fournisseur",
+      "DRIVER": "chauffeur",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Réclamation {number}",
+    "productsTitle": "Température",
+    "productsIntro": "Les produits frais et surgelés doivent avoir leur température enregistrée tout au long du trajet. Chaque produit reçoit la classe de sa catégorie, sauf si vous en choisissez une autre.",
+    "colProduct": "Produit",
+    "colClass": "Classe de température",
+    "noProducts": "Aucun produit pour l'instant.",
+    "fleetTitle": "Chaîne du Froid",
+    "fleetIntro": "Vos groupes froids, chambres froides, congélateurs et sondes avec leurs contrôles, nettoyages et étalonnages ; enregistreurs de données ; incidents hors plage sur vos commandes ; le rapport HACCP mensuel.",
+    "incidentsTitle": "Incidents hors plage (30 jours)",
+    "noIncidents": "Aucun incident.",
+    "equipmentTitle": "Équipements",
+    "noEquipment": "Aucun équipement pour l'instant.",
+    "due": "{task} prévu le {date}",
+    "overdue": "{task} en retard depuis le {date}",
+    "lastLogs": "Derniers relevés",
+    "loggersTitle": "Enregistreurs de données",
+    "noLoggers": "Aucun enregistreur pour l'instant.",
+    "lastSeen": "Dernier relevé {temp} · {date}",
+    "neverSeen": "Aucun relevé pour l'instant",
+    "reportTitle": "Rapport HACCP mensuel",
+    "month": "Mois",
+    "downloadPdf": "Télécharger le PDF",
+    "downloadCsv": "Télécharger le CSV",
+    "receivingTitle": "Registre de Réception",
+    "receivingIntro": "Vos contrôles HACCP à réception : températures enregistrées sur les livraisons FIRINGI et marchandises d'autres fournisseurs que vous ajoutez ici.",
+    "addOutside": "Marchandise d'un autre fournisseur",
+    "logTitle": "Ce mois-ci",
+    "noLog": "Rien d'enregistré ce mois-ci.",
+    "colDate": "Date",
+    "colSupplier": "Fournisseur",
+    "colTemp": "Température",
+    "colStatus": "Statut",
+    "colBy": "Par",
+    "accepted": "Accepté",
+    "refused": "Refusé",
+    "readingsTotal": "Relevés",
+    "outOfRange": "Hors plage",
+    "refusedCount": "Refusés / bloqués",
+    "equipmentOverdue": "Équipements en retard",
+    "loadingTitle": "Température au chargement",
+    "breaches30": "Ruptures de la chaîne du froid sur vos commandes (30 jours) : {n}"
   }
 }

@@ -855,7 +855,10 @@
     "Returnables": "Opakowania zwrotne",
     "Empties & Deposits": "Opakowania i kaucje",
     "Sold by Weight": "Sprzedaż na Wagę",
-    "Weighing": "Ważenie"
+    "Weighing": "Ważenie",
+    "Temperature": "Temperatura",
+    "Cold Chain": "Łańcuch Chłodniczy",
+    "Receiving Log": "Rejestr Przyjęć"
   },
   "delivery": {
     "title": "Dostawa",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Błędny lub niepełny adres",
       "DAMAGED": "Towar uszkodzony",
       "NO_ACCESS": "Brak dostępu do adresu",
-      "OTHER": "Inne"
+      "OTHER": "Inne",
+      "TEMPERATURE": "Temperatura poza zakresem"
     },
     "fleetIntro": "Kierowcy i pojazdy do zamówień, które dostarczasz sam (darmowa dostawa). Odpowiadasz za nich.",
     "drivers": "Kierowcy",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Dodatkowa waga zaakceptowana: {number}",
       "body": "Klient zaakceptował wagę powyżej limitu. Faktura użyje rzeczywistej wagi."
+    },
+    "coldchain_breach": {
+      "title": "Temperatura poza zakresem: {number}",
+      "body": "{incident}: {temp} (dozwolone {range}) na etapie {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Rejestrator poza zakresem: {logger}",
+      "body": "{temp} przez {minutes} minut (dozwolone {range}). Sprawdź agregat chłodniczy."
+    },
+    "coldchain_equipment_due": {
+      "title": "Termin urządzenia: {equipment}",
+      "body": "W terminie lub zaległe: {tasks}. Zapisz to w Łańcuchu chłodniczym."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Zły adres",
       "DAMAGED": "Uszkodzony towar",
       "NO_ACCESS": "Brak dostępu",
-      "OTHER": "Inne"
+      "OTHER": "Inne",
+      "TEMPERATURE": "Temperatura poza zakresem"
     },
     "stopStatus": {
       "UNASSIGNED": "Nieprzydzielona",
@@ -5202,5 +5219,131 @@
       "date": "Dostawa"
     },
     "cartTotalNote": "Zawiera produkty na wagę: ta suma jest szacunkowa. Faktura użyje rzeczywistej wagi."
+  },
+  "coldChain": {
+    "badTemp": "To nie jest temperatura",
+    "status": {
+      "OK": "W zakresie",
+      "WARN": "Tolerancja",
+      "OUT": "Poza zakresem"
+    },
+    "atLoading": "{temp} °C przy załadunku",
+    "tempFor": "Temperatura {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatura przy wysyłce",
+      "LOADING": "Temperatura przy załadunku",
+      "RECEIPT": "Temperatura przy przyjęciu"
+    },
+    "probe": "Sonda / termometr",
+    "goodsAccepted": "Towar przyjęty",
+    "noteOptional": "Uwaga (opcjonalnie)",
+    "saveTemps": "Zapisz temperatury",
+    "recorded": "Zapisano",
+    "handoverTitle": "Temperatura przy przekazaniu",
+    "handoverRequired": "Temperatura przy przekazaniu (wymagana)",
+    "blockedNote": "{cls}: poza zakresem — nie można przekazać. Wraca i jest korygowane na rzecz klienta.",
+    "refuseClass": "Klient odmawia przyjęcia produktów {cls} (korekta)",
+    "ambient": "Temperatura otoczenia",
+    "classFor": "Klasa temperatury",
+    "fromCategory": "Z kategorii: {cls}",
+    "supplier": "Dostawca",
+    "product": "Produkt",
+    "tempClass": "Klasa temperatury",
+    "tempC": "Temperatura (°C)",
+    "addEntry": "Dodaj do rejestru",
+    "kindLabel": "Urządzenie",
+    "kind": {
+      "VEHICLE_UNIT": "Agregat chłodniczy pojazdu",
+      "COLD_ROOM": "Chłodnia",
+      "FREEZER": "Zamrażarka",
+      "PROBE": "Sonda / termometr"
+    },
+    "name": "Nazwa",
+    "serial": "Numer seryjny",
+    "vehicle": "Pojazd",
+    "checkEvery": "Kontrola co (dni)",
+    "cleanEvery": "Mycie co (dni)",
+    "calibrateEvery": "Kalibracja co (dni)",
+    "addEquipment": "Dodaj urządzenie",
+    "saved": "Zapisano",
+    "done": "Gotowe",
+    "task": {
+      "CHECK": "Kontrola temperatury",
+      "CLEANING": "Mycie",
+      "CALIBRATION": "Kalibracja",
+      "SERVICE": "Serwis / naprawa"
+    },
+    "ok": "OK",
+    "logIt": "Zapisz",
+    "addLogger": "Dodaj rejestrator",
+    "tokenOnce": "Klucz rejestratora — skopiuj go teraz, jest pokazywany tylko raz:",
+    "tokenHow": "Urządzenie wysyła odczyty na /api/coldchain/readings z nagłówkiem \"Authorization: Bearer\" i tym kluczem.",
+    "deactivate": "Wyłącz",
+    "activate": "Włącz",
+    "orderTitle": "Łańcuch chłodniczy",
+    "certificate": "Świadectwo temperatury (PDF)",
+    "noReadings": "Nie zapisano jeszcze temperatur.",
+    "stage": {
+      "DISPATCH": "Wysyłka",
+      "LOADING": "Załadunek",
+      "HANDOVER": "Przekazanie",
+      "RECEIPT": "Przyjęcie",
+      "LOGGER": "Rejestrator"
+    },
+    "refusedBadge": "Odmowa",
+    "tripTitle": "W trakcie przejazdu ({logger})",
+    "tripStats": "Min {min} · maks {max} · średnio {avg} · {out} min poza zakresem",
+    "decision": {
+      "NOTED": "Odnotowano",
+      "ACCEPTED": "Przyjęto mimo to",
+      "REFUSED": "Odmowa — korekta",
+      "BLOCKED": "Zablokowano — korekta"
+    },
+    "fault": {
+      "SUPPLIER": "dostawca",
+      "DRIVER": "kierowca",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamacja {number}",
+    "productsTitle": "Temperatura",
+    "productsIntro": "Produkty chłodzone i mrożone wymagają zapisywania temperatury po drodze. Każdy produkt otrzymuje klasę swojej kategorii, chyba że wybierzesz inną.",
+    "colProduct": "Produkt",
+    "colClass": "Klasa temperatury",
+    "noProducts": "Brak produktów.",
+    "fleetTitle": "Łańcuch Chłodniczy",
+    "fleetIntro": "Twoje agregaty, chłodnie, zamrażarki i sondy wraz z kontrolami, myciem i kalibracją; rejestratory danych; incydenty poza zakresem w Twoich zamówieniach; miesięczny raport HACCP.",
+    "incidentsTitle": "Incydenty poza zakresem (30 dni)",
+    "noIncidents": "Brak incydentów.",
+    "equipmentTitle": "Urządzenia",
+    "noEquipment": "Brak urządzeń.",
+    "due": "{task} w terminie {date}",
+    "overdue": "{task} zaległe od {date}",
+    "lastLogs": "Ostatnie wpisy",
+    "loggersTitle": "Rejestratory danych",
+    "noLoggers": "Brak rejestratorów.",
+    "lastSeen": "Ostatni odczyt {temp} · {date}",
+    "neverSeen": "Brak odczytów",
+    "reportTitle": "Miesięczny raport HACCP",
+    "month": "Miesiąc",
+    "downloadPdf": "Pobierz PDF",
+    "downloadCsv": "Pobierz CSV",
+    "receivingTitle": "Rejestr Przyjęć",
+    "receivingIntro": "Twoje kontrole HACCP przy przyjęciu: temperatury zapisane przy dostawach FIRINGI oraz towary od innych dostawców, które tu dodasz.",
+    "addOutside": "Towar od innego dostawcy",
+    "logTitle": "Ten miesiąc",
+    "noLog": "W tym miesiącu nic nie zapisano.",
+    "colDate": "Data",
+    "colSupplier": "Dostawca",
+    "colTemp": "Temperatura",
+    "colStatus": "Status",
+    "colBy": "Przez",
+    "accepted": "Przyjęto",
+    "refused": "Odmowa",
+    "readingsTotal": "Odczyty",
+    "outOfRange": "Poza zakresem",
+    "refusedCount": "Odmowy / blokady",
+    "equipmentOverdue": "Zaległe urządzenia",
+    "loadingTitle": "Temperatura przy załadunku",
+    "breaches30": "Naruszenia łańcucha chłodniczego w Twoich zamówieniach (30 dni): {n}"
   }
 }

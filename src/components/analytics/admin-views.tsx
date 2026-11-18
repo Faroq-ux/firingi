@@ -144,7 +144,7 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
   if (kind === "delivery") {
     const d = await deliveryStats(f);
     const done = d.delivered + d.failed + d.returned;
-    const reasonLabels: Record<string, string> = { CUSTOMER_ABSENT: "Nobody there", CLOSED: "Business closed", REFUSED: "Refused", WRONG_ADDRESS: "Wrong address", DAMAGED: "Damaged", NO_ACCESS: "No access", OTHER: "Other" };
+    const reasonLabels: Record<string, string> = { CUSTOMER_ABSENT: "Nobody there", CLOSED: "Business closed", REFUSED: "Refused", WRONG_ADDRESS: "Wrong address", DAMAGED: "Damaged", NO_ACCESS: "No access", TEMPERATURE: "Temperature", OTHER: "Other" };
     const bars = (rows: { key: string; delivered: number; failed: number }[]) => rows.map((r) => ({ key: r.key, label: ADMIN_ENUMS.deliveryMode[r.key] ?? r.key, value: r.delivered, hint: r.failed ? `${r.failed} failed / returned` : undefined }));
     return (
       <>

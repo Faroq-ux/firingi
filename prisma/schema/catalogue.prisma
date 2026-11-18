@@ -56,6 +56,8 @@ model Category {
   restriction          Restriction?
   defaultTaxCategoryId String?
   imageKey             String?
+  /// Phase 42: default temperature class of the products in this category (children inherit)
+  tempClassId          String?
   isActive             Boolean      @default(true)
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
@@ -63,6 +65,7 @@ model Category {
   parent             Category?         @relation("CategoryTree", fields: [parentId], references: [id])
   children           Category[]        @relation("CategoryTree")
   defaultTaxCategory TaxCategory?      @relation(fields: [defaultTaxCategoryId], references: [id])
+  tempClass          TempClass?        @relation(fields: [tempClassId], references: [id])
   products           Product[]
   commissionRules    CommissionRule[]
   promotionTargets   PromotionTarget[]
@@ -184,6 +187,9 @@ model VendorOffer {
   cwMaxOverPct          Decimal?         @db.Decimal(5, 2)
   /// Item code on the supplier's scale labels (EAN-13 starting 2x).
   cwPlu                 String?
+  /// Phase 42: temperature class chosen by the supplier (null = the category's)
+  tempClassId           String?
+  tempClass             TempClass?       @relation(fields: [tempClassId], references: [id])
   createdAt             DateTime         @default(now())
   updatedAt             DateTime         @updatedAt
 

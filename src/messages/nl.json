@@ -855,7 +855,10 @@
     "Returnables": "Retourverpakkingen",
     "Empties & Deposits": "Leeggoed & statiegeld",
     "Sold by Weight": "Verkoop op Gewicht",
-    "Weighing": "Wegen"
+    "Weighing": "Wegen",
+    "Temperature": "Temperatuur",
+    "Cold Chain": "Koudeketen",
+    "Receiving Log": "Ontvangstlogboek"
   },
   "delivery": {
     "title": "Levering",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Onjuist of onvolledig adres",
       "DAMAGED": "Goederen beschadigd",
       "NO_ACCESS": "Geen toegang tot het adres",
-      "OTHER": "Overig"
+      "OTHER": "Overig",
+      "TEMPERATURE": "Temperatuur buiten bereik"
     },
     "fleetIntro": "Chauffeurs en voertuigen voor de bestellingen die u zelf levert (gratis levering). U bent er verantwoordelijk voor.",
     "drivers": "Chauffeurs",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Extra gewicht geaccepteerd: {number}",
       "body": "De klant heeft het gewicht boven de grens geaccepteerd. De factuur gebruikt het werkelijke gewicht."
+    },
+    "coldchain_breach": {
+      "title": "Temperatuur buiten bereik: {number}",
+      "body": "{incident}: {temp} (toegestaan {range}) bij {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logger buiten bereik: {logger}",
+      "body": "{temp} gedurende {minutes} minuten (toegestaan {range}). Controleer de koelunit."
+    },
+    "coldchain_equipment_due": {
+      "title": "Apparatuur verloopt: {equipment}",
+      "body": "Gepland of achterstallig: {tasks}. Leg het vast in Koudeketen."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Verkeerd adres",
       "DAMAGED": "Goederen beschadigd",
       "NO_ACCESS": "Geen toegang",
-      "OTHER": "Overig"
+      "OTHER": "Overig",
+      "TEMPERATURE": "Temperatuur buiten bereik"
     },
     "stopStatus": {
       "UNASSIGNED": "Niet toegewezen",
@@ -5202,5 +5219,131 @@
       "date": "Levering"
     },
     "cartTotalNote": "Bevat producten op gewicht: dit totaal is een schatting. De factuur gebruikt het werkelijke gewicht."
+  },
+  "coldChain": {
+    "badTemp": "Geen temperatuur",
+    "status": {
+      "OK": "Binnen bereik",
+      "WARN": "Tolerantie",
+      "OUT": "Buiten bereik"
+    },
+    "atLoading": "{temp} °C bij het laden",
+    "tempFor": "Temperatuur van {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatuur bij verzending",
+      "LOADING": "Temperatuur bij het laden",
+      "RECEIPT": "Temperatuur bij ontvangst"
+    },
+    "probe": "Sonde / thermometer",
+    "goodsAccepted": "Goederen geaccepteerd",
+    "noteOptional": "Notitie (optioneel)",
+    "saveTemps": "Temperaturen opslaan",
+    "recorded": "Vastgelegd",
+    "handoverTitle": "Temperatuur bij overdracht",
+    "handoverRequired": "Temperatuur bij overdracht (verplicht)",
+    "blockedNote": "{cls}: buiten bereik — kan niet worden overgedragen. Het gaat terug en wordt aan de klant gecrediteerd.",
+    "refuseClass": "De klant weigert de {cls}-producten (gecrediteerd)",
+    "ambient": "Omgevingstemperatuur",
+    "classFor": "Temperatuurklasse",
+    "fromCategory": "Uit de categorie: {cls}",
+    "supplier": "Leverancier",
+    "product": "Product",
+    "tempClass": "Temperatuurklasse",
+    "tempC": "Temperatuur (°C)",
+    "addEntry": "Aan het logboek toevoegen",
+    "kindLabel": "Apparatuur",
+    "kind": {
+      "VEHICLE_UNIT": "Koelunit van het voertuig",
+      "COLD_ROOM": "Koelcel",
+      "FREEZER": "Vriezer",
+      "PROBE": "Sonde / thermometer"
+    },
+    "name": "Naam",
+    "serial": "Serienummer",
+    "vehicle": "Voertuig",
+    "checkEvery": "Controleren elke (dagen)",
+    "cleanEvery": "Reinigen elke (dagen)",
+    "calibrateEvery": "Kalibreren elke (dagen)",
+    "addEquipment": "Apparatuur toevoegen",
+    "saved": "Opgeslagen",
+    "done": "Klaar",
+    "task": {
+      "CHECK": "Temperatuurcontrole",
+      "CLEANING": "Reiniging",
+      "CALIBRATION": "Kalibratie",
+      "SERVICE": "Onderhoud / reparatie"
+    },
+    "ok": "OK",
+    "logIt": "Vastleggen",
+    "addLogger": "Logger toevoegen",
+    "tokenOnce": "De sleutel van de logger — kopieer hem nu, hij wordt maar één keer getoond:",
+    "tokenHow": "Het apparaat stuurt zijn metingen naar /api/coldchain/readings met de header \"Authorization: Bearer\" en deze sleutel.",
+    "deactivate": "Uitschakelen",
+    "activate": "Inschakelen",
+    "orderTitle": "Koudeketen",
+    "certificate": "Temperatuurcertificaat (PDF)",
+    "noReadings": "Nog geen temperaturen vastgelegd.",
+    "stage": {
+      "DISPATCH": "Verzending",
+      "LOADING": "Laden",
+      "HANDOVER": "Overdracht",
+      "RECEIPT": "Ontvangst",
+      "LOGGER": "Logger"
+    },
+    "refusedBadge": "Geweigerd",
+    "tripTitle": "Tijdens de rit ({logger})",
+    "tripStats": "Min {min} · max {max} · gemiddeld {avg} · {out} min buiten bereik",
+    "decision": {
+      "NOTED": "Genoteerd",
+      "ACCEPTED": "Toch geaccepteerd",
+      "REFUSED": "Geweigerd — gecrediteerd",
+      "BLOCKED": "Geblokkeerd — gecrediteerd"
+    },
+    "fault": {
+      "SUPPLIER": "leverancier",
+      "DRIVER": "chauffeur",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Klacht {number}",
+    "productsTitle": "Temperatuur",
+    "productsIntro": "Van gekoelde en diepgevroren producten moet onderweg de temperatuur worden vastgelegd. Elk product krijgt de klasse van zijn categorie, tenzij u een andere kiest.",
+    "colProduct": "Product",
+    "colClass": "Temperatuurklasse",
+    "noProducts": "Nog geen producten.",
+    "fleetTitle": "Koudeketen",
+    "fleetIntro": "Uw koelunits, koelcellen, vriezers en sondes met controles, reiniging en kalibratie; dataloggers; afwijkingen op uw bestellingen; het maandelijkse HACCP-rapport.",
+    "incidentsTitle": "Afwijkingen buiten bereik (30 dagen)",
+    "noIncidents": "Geen afwijkingen.",
+    "equipmentTitle": "Apparatuur",
+    "noEquipment": "Nog geen apparatuur.",
+    "due": "{task} gepland op {date}",
+    "overdue": "{task} achterstallig sinds {date}",
+    "lastLogs": "Laatste registraties",
+    "loggersTitle": "Dataloggers",
+    "noLoggers": "Nog geen loggers.",
+    "lastSeen": "Laatste meting {temp} · {date}",
+    "neverSeen": "Nog geen metingen",
+    "reportTitle": "Maandelijks HACCP-rapport",
+    "month": "Maand",
+    "downloadPdf": "PDF downloaden",
+    "downloadCsv": "CSV downloaden",
+    "receivingTitle": "Ontvangstlogboek",
+    "receivingIntro": "Uw HACCP-ontvangstcontroles: temperaturen vastgelegd bij FIRINGI-leveringen en goederen van andere leveranciers die u hier toevoegt.",
+    "addOutside": "Goederen van een andere leverancier",
+    "logTitle": "Deze maand",
+    "noLog": "Deze maand niets vastgelegd.",
+    "colDate": "Datum",
+    "colSupplier": "Leverancier",
+    "colTemp": "Temperatuur",
+    "colStatus": "Status",
+    "colBy": "Door",
+    "accepted": "Geaccepteerd",
+    "refused": "Geweigerd",
+    "readingsTotal": "Metingen",
+    "outOfRange": "Buiten bereik",
+    "refusedCount": "Geweigerd / geblokkeerd",
+    "equipmentOverdue": "Apparatuur achterstallig",
+    "loadingTitle": "Temperatuur bij het laden",
+    "breaches30": "Onderbrekingen van de koudeketen op uw bestellingen (30 dagen): {n}"
   }
 }

@@ -155,6 +155,10 @@ async function driverData(ctx: Ctx, locale: string) {
   const { stopWeights } = await import("@/server/catchweight/service");
   const weights = new Map<string, Awaited<ReturnType<typeof stopWeights>>>();
   for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") weights.set(d.id, await stopWeights(d.order.id, locale));
+  // Phase 42: cold-chain classes to record at the stop
+  const { stopClasses } = await import("@/server/coldchain/service");
+  const cold = new Map<string, Awaited<ReturnType<typeof stopClasses>>>();
+  for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") cold.set(d.id, await stopClasses(d.order.id, locale));
   return {
     canPod: can(ctx, "driver.pod.capture"),
     reasons: [...FAILURE_REASONS],
@@ -172,6 +176,7 @@ async function driverData(ctx: Ctx, locale: string) {
           items: d.order.lines.map((l) => ({ name: pickLocalized(l.productName, locale), packaging: pickLocalized(l.packagingName, locale), qty: l.qtyOrdered })),
           empties: empties.get(d.id) ?? [],
           weights: weights.get(d.id) ?? { correction: false, lines: [] },
+          cold: cold.get(d.id) ?? null,
         };
       })
       .sort((x, y) => x.sequence - y.sequence),
@@ -276,6 +281,9 @@ async function run(ctx: Ctx, kind: OfflineKind, d: Record<string, unknown>, s: A
         // Phase 41: weights corrected at the stop, offline
         weights: d.weights && typeof d.weights === "object" ? Object.fromEntries(Object.entries(d.weights as Record<string, unknown>).slice(0, 100).map(([k, v]) => [k.slice(0, 64), Number(v)]).filter(([, v]) => Number.isFinite(v as number) && (v as number) > 0)) : null,
         acceptOver: d.acceptOver === true,
+        // Phase 42: temperatures at the handover, classes refused, offline
+        temps: d.temps && typeof d.temps === "object" ? Object.fromEntries(Object.entries(d.temps as Record<string, unknown>).slice(0, 20).map(([k, v]) => [k.slice(0, 64), v as number])) : null,
+        refuseClasses: Array.isArray(d.refuse) ? (d.refuse as unknown[]).slice(0, 20).map((x) => String(x).slice(0, 64)) : null,
       });
       return { status: "DONE", result: { deliveryId: id } };
     }

@@ -855,7 +855,10 @@
     "Returnables": "Ambalaje returnabile",
     "Empties & Deposits": "Ambalaje și garanții",
     "Sold by Weight": "Vânzare la Greutate",
-    "Weighing": "Cântărire"
+    "Weighing": "Cântărire",
+    "Temperature": "Temperatură",
+    "Cold Chain": "Lanț Frigorific",
+    "Receiving Log": "Registru de Recepție"
   },
   "delivery": {
     "title": "Livrare",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Adresă greșită sau incompletă",
       "DAMAGED": "Marfă deteriorată",
       "NO_ACCESS": "Fără acces la adresă",
-      "OTHER": "Altele"
+      "OTHER": "Altele",
+      "TEMPERATURE": "Temperatură în afara intervalului"
     },
     "fleetIntro": "Șoferi și vehicule pentru comenzile pe care le livrezi singur (livrare gratuită). Ești responsabil pentru ei.",
     "drivers": "Șoferi",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Greutate în plus acceptată: {number}",
       "body": "Clientul a acceptat greutatea peste limită. Factura folosește greutatea reală."
+    },
+    "coldchain_breach": {
+      "title": "Temperatură în afara intervalului: {number}",
+      "body": "{incident}: {temp} (permis {range}) la etapa {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Înregistrator în afara intervalului: {logger}",
+      "body": "{temp} timp de {minutes} minute (permis {range}). Verificați agregatul frigorific."
+    },
+    "coldchain_equipment_due": {
+      "title": "Echipament scadent: {equipment}",
+      "body": "Scadent sau restant: {tasks}. Înregistrați-l în Lanț frigorific."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Adresă greșită",
       "DAMAGED": "Marfă deteriorată",
       "NO_ACCESS": "Fără acces",
-      "OTHER": "Altul"
+      "OTHER": "Altul",
+      "TEMPERATURE": "Temperatură în afara intervalului"
     },
     "stopStatus": {
       "UNASSIGNED": "Nealocată",
@@ -5202,5 +5219,131 @@
       "date": "Livrare"
     },
     "cartTotalNote": "Include produse la greutate: acest total este o estimare. Factura folosește greutatea reală."
+  },
+  "coldChain": {
+    "badTemp": "Nu este o temperatură",
+    "status": {
+      "OK": "În interval",
+      "WARN": "Toleranță",
+      "OUT": "În afara intervalului"
+    },
+    "atLoading": "{temp} °C la încărcare",
+    "tempFor": "Temperatura pentru {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatura la expediere",
+      "LOADING": "Temperatura la încărcare",
+      "RECEIPT": "Temperatura la recepție"
+    },
+    "probe": "Sondă / termometru",
+    "goodsAccepted": "Marfă acceptată",
+    "noteOptional": "Notă (opțional)",
+    "saveTemps": "Salvează temperaturile",
+    "recorded": "Înregistrat",
+    "handoverTitle": "Temperatura la predare",
+    "handoverRequired": "Temperatura la predare (obligatorie)",
+    "blockedNote": "{cls}: în afara intervalului — nu poate fi predat. Se întoarce și se creditează clientului.",
+    "refuseClass": "Clientul refuză produsele {cls} (creditate)",
+    "ambient": "Ambiant",
+    "classFor": "Clasă de temperatură",
+    "fromCategory": "Din categorie: {cls}",
+    "supplier": "Furnizor",
+    "product": "Produs",
+    "tempClass": "Clasă de temperatură",
+    "tempC": "Temperatură (°C)",
+    "addEntry": "Adaugă în registru",
+    "kindLabel": "Echipament",
+    "kind": {
+      "VEHICLE_UNIT": "Agregat frigorific al vehiculului",
+      "COLD_ROOM": "Cameră frigorifică",
+      "FREEZER": "Congelator",
+      "PROBE": "Sondă / termometru"
+    },
+    "name": "Nume",
+    "serial": "Număr de serie",
+    "vehicle": "Vehicul",
+    "checkEvery": "Verificare la fiecare (zile)",
+    "cleanEvery": "Curățare la fiecare (zile)",
+    "calibrateEvery": "Calibrare la fiecare (zile)",
+    "addEquipment": "Adaugă echipament",
+    "saved": "Salvat",
+    "done": "Gata",
+    "task": {
+      "CHECK": "Verificarea temperaturii",
+      "CLEANING": "Curățare",
+      "CALIBRATION": "Calibrare",
+      "SERVICE": "Service / reparație"
+    },
+    "ok": "OK",
+    "logIt": "Înregistrează",
+    "addLogger": "Adaugă înregistrator",
+    "tokenOnce": "Cheia înregistratorului — copiați-o acum, se afișează o singură dată:",
+    "tokenHow": "Dispozitivul trimite citirile la /api/coldchain/readings cu antetul \"Authorization: Bearer\" și această cheie.",
+    "deactivate": "Dezactivează",
+    "activate": "Activează",
+    "orderTitle": "Lanț frigorific",
+    "certificate": "Certificat de temperatură (PDF)",
+    "noReadings": "Nu s-au înregistrat încă temperaturi.",
+    "stage": {
+      "DISPATCH": "Expediere",
+      "LOADING": "Încărcare",
+      "HANDOVER": "Predare",
+      "RECEIPT": "Recepție",
+      "LOGGER": "Înregistrator"
+    },
+    "refusedBadge": "Refuzat",
+    "tripTitle": "În timpul cursei ({logger})",
+    "tripStats": "Min {min} · max {max} · medie {avg} · {out} min în afara intervalului",
+    "decision": {
+      "NOTED": "Notat",
+      "ACCEPTED": "Acceptat totuși",
+      "REFUSED": "Refuzat — creditat",
+      "BLOCKED": "Blocat — creditat"
+    },
+    "fault": {
+      "SUPPLIER": "furnizor",
+      "DRIVER": "șofer",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reclamație {number}",
+    "productsTitle": "Temperatură",
+    "productsIntro": "Produsele refrigerate și congelate necesită înregistrarea temperaturii pe parcurs. Fiecare produs primește clasa categoriei sale, dacă nu alegeți alta.",
+    "colProduct": "Produs",
+    "colClass": "Clasă de temperatură",
+    "noProducts": "Încă nu există produse.",
+    "fleetTitle": "Lanț Frigorific",
+    "fleetIntro": "Agregatele frigorifice, camerele frigorifice, congelatoarele și sondele dvs. cu verificări, curățare și calibrare; înregistratoare de date; incidente în afara intervalului la comenzile dvs.; raportul HACCP lunar.",
+    "incidentsTitle": "Incidente în afara intervalului (30 de zile)",
+    "noIncidents": "Niciun incident.",
+    "equipmentTitle": "Echipamente",
+    "noEquipment": "Încă nu există echipamente.",
+    "due": "{task} scadentă pe {date}",
+    "overdue": "{task} restantă din {date}",
+    "lastLogs": "Ultimele înregistrări",
+    "loggersTitle": "Înregistratoare de date",
+    "noLoggers": "Încă nu există înregistratoare.",
+    "lastSeen": "Ultima citire {temp} · {date}",
+    "neverSeen": "Încă nu există citiri",
+    "reportTitle": "Raport HACCP lunar",
+    "month": "Lună",
+    "downloadPdf": "Descarcă PDF",
+    "downloadCsv": "Descarcă CSV",
+    "receivingTitle": "Registru de Recepție",
+    "receivingIntro": "Controalele dvs. HACCP la recepție: temperaturi înregistrate la livrările FIRINGI și mărfuri de la alți furnizori pe care le adăugați aici.",
+    "addOutside": "Marfă de la alt furnizor",
+    "logTitle": "Luna aceasta",
+    "noLog": "Nimic înregistrat luna aceasta.",
+    "colDate": "Dată",
+    "colSupplier": "Furnizor",
+    "colTemp": "Temperatură",
+    "colStatus": "Stare",
+    "colBy": "De",
+    "accepted": "Acceptat",
+    "refused": "Refuzat",
+    "readingsTotal": "Citiri",
+    "outOfRange": "În afara intervalului",
+    "refusedCount": "Refuzate / blocate",
+    "equipmentOverdue": "Echipamente restante",
+    "loadingTitle": "Temperatura la încărcare",
+    "breaches30": "Încălcări ale lanțului frigorific la comenzile dvs. (30 de zile): {n}"
   }
 }

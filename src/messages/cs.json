@@ -855,7 +855,10 @@
     "Returnables": "Vratné obaly",
     "Empties & Deposits": "Obaly a zálohy",
     "Sold by Weight": "Prodej na váhu",
-    "Weighing": "Vážení"
+    "Weighing": "Vážení",
+    "Temperature": "Teplota",
+    "Cold Chain": "Chladicí Řetězec",
+    "Receiving Log": "Záznam příjmu"
   },
   "delivery": {
     "title": "Doručení",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Chybná nebo neúplná adresa",
       "DAMAGED": "Zboží poškozeno",
       "NO_ACCESS": "Adresa nepřístupná",
-      "OTHER": "Jiné"
+      "OTHER": "Jiné",
+      "TEMPERATURE": "Teplota mimo rozsah"
     },
     "fleetIntro": "Řidiči a vozidla pro objednávky, které doručujete sami (doprava zdarma). Odpovídáte za ně.",
     "drivers": "Řidiči",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Vyšší hmotnost přijata: {number}",
       "body": "Zákazník přijal hmotnost nad limit. Faktura použije skutečnou hmotnost."
+    },
+    "coldchain_breach": {
+      "title": "Teplota mimo rozsah: {number}",
+      "body": "{incident}: {temp} (povoleno {range}) ve fázi {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Záznamník mimo rozsah: {logger}",
+      "body": "{temp} po dobu {minutes} minut (povoleno {range}). Zkontrolujte chladicí jednotku."
+    },
+    "coldchain_equipment_due": {
+      "title": "Zařízení k údržbě: {equipment}",
+      "body": "Naplánováno nebo po termínu: {tasks}. Zaznamenejte to v Chladicím řetězci."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Špatná adresa",
       "DAMAGED": "Poškozené zboží",
       "NO_ACCESS": "Bez přístupu",
-      "OTHER": "Jiné"
+      "OTHER": "Jiné",
+      "TEMPERATURE": "Teplota mimo rozsah"
     },
     "stopStatus": {
       "UNASSIGNED": "Nepřiřazeno",
@@ -5202,5 +5219,131 @@
       "date": "Doručení"
     },
     "cartTotalNote": "Obsahuje výrobky na váhu: tento součet je odhad. Faktura použije skutečnou hmotnost."
+  },
+  "coldChain": {
+    "badTemp": "To není teplota",
+    "status": {
+      "OK": "V rozsahu",
+      "WARN": "Tolerance",
+      "OUT": "Mimo rozsah"
+    },
+    "atLoading": "{temp} °C při nakládce",
+    "tempFor": "Teplota {cls} (°C)",
+    "record": {
+      "DISPATCH": "Teplota při expedici",
+      "LOADING": "Teplota při nakládce",
+      "RECEIPT": "Teplota při příjmu"
+    },
+    "probe": "Sonda / teploměr",
+    "goodsAccepted": "Zboží přijato",
+    "noteOptional": "Poznámka (nepovinné)",
+    "saveTemps": "Uložit teploty",
+    "recorded": "Zaznamenáno",
+    "handoverTitle": "Teplota při předání",
+    "handoverRequired": "Teplota při předání (povinná)",
+    "blockedNote": "{cls}: mimo rozsah — nelze předat. Vrací se zpět a zákazníkovi se dobropisuje.",
+    "refuseClass": "Zákazník odmítá produkty {cls} (dobropisováno)",
+    "ambient": "Okolní teplota",
+    "classFor": "Teplotní třída",
+    "fromCategory": "Z kategorie: {cls}",
+    "supplier": "Dodavatel",
+    "product": "Produkt",
+    "tempClass": "Teplotní třída",
+    "tempC": "Teplota (°C)",
+    "addEntry": "Přidat do záznamu",
+    "kindLabel": "Zařízení",
+    "kind": {
+      "VEHICLE_UNIT": "Chladicí jednotka vozidla",
+      "COLD_ROOM": "Chladicí místnost",
+      "FREEZER": "Mraznička",
+      "PROBE": "Sonda / teploměr"
+    },
+    "name": "Název",
+    "serial": "Sériové číslo",
+    "vehicle": "Vozidlo",
+    "checkEvery": "Kontrola každých (dní)",
+    "cleanEvery": "Čištění každých (dní)",
+    "calibrateEvery": "Kalibrace každých (dní)",
+    "addEquipment": "Přidat zařízení",
+    "saved": "Uloženo",
+    "done": "Hotovo",
+    "task": {
+      "CHECK": "Kontrola teploty",
+      "CLEANING": "Čištění",
+      "CALIBRATION": "Kalibrace",
+      "SERVICE": "Servis / oprava"
+    },
+    "ok": "OK",
+    "logIt": "Zaznamenat",
+    "addLogger": "Přidat záznamník",
+    "tokenOnce": "Klíč záznamníku — zkopírujte si ho hned, zobrazí se jen jednou:",
+    "tokenHow": "Zařízení posílá naměřené hodnoty na /api/coldchain/readings s hlavičkou \"Authorization: Bearer\" a tímto klíčem.",
+    "deactivate": "Vypnout",
+    "activate": "Zapnout",
+    "orderTitle": "Chladicí řetězec",
+    "certificate": "Teplotní certifikát (PDF)",
+    "noReadings": "Zatím nejsou zaznamenány žádné teploty.",
+    "stage": {
+      "DISPATCH": "Expedice",
+      "LOADING": "Nakládka",
+      "HANDOVER": "Předání",
+      "RECEIPT": "Příjem",
+      "LOGGER": "Záznamník"
+    },
+    "refusedBadge": "Odmítnuto",
+    "tripTitle": "Během jízdy ({logger})",
+    "tripStats": "Min {min} · max {max} · průměr {avg} · {out} min mimo rozsah",
+    "decision": {
+      "NOTED": "Zaznamenáno",
+      "ACCEPTED": "Přesto přijato",
+      "REFUSED": "Odmítnuto — dobropisováno",
+      "BLOCKED": "Zablokováno — dobropisováno"
+    },
+    "fault": {
+      "SUPPLIER": "dodavatel",
+      "DRIVER": "řidič",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamace {number}",
+    "productsTitle": "Teplota",
+    "productsIntro": "U chlazených a mražených produktů je nutné zaznamenávat teplotu po cestě. Každý produkt dostane třídu své kategorie, pokud nezvolíte jinou.",
+    "colProduct": "Produkt",
+    "colClass": "Teplotní třída",
+    "noProducts": "Zatím žádné produkty.",
+    "fleetTitle": "Chladicí Řetězec",
+    "fleetIntro": "Vaše chladicí jednotky, chladírny, mrazničky a sondy s kontrolami, čištěním a kalibrací; záznamníky dat; incidenty mimo rozsah u vašich objednávek; měsíční zpráva HACCP.",
+    "incidentsTitle": "Incidenty mimo rozsah (30 dní)",
+    "noIncidents": "Žádné incidenty.",
+    "equipmentTitle": "Zařízení",
+    "noEquipment": "Zatím žádné zařízení.",
+    "due": "{task} naplánováno na {date}",
+    "overdue": "{task} po termínu od {date}",
+    "lastLogs": "Poslední záznamy",
+    "loggersTitle": "Záznamníky dat",
+    "noLoggers": "Zatím žádné záznamníky.",
+    "lastSeen": "Poslední měření {temp} · {date}",
+    "neverSeen": "Zatím žádná měření",
+    "reportTitle": "Měsíční zpráva HACCP",
+    "month": "Měsíc",
+    "downloadPdf": "Stáhnout PDF",
+    "downloadCsv": "Stáhnout CSV",
+    "receivingTitle": "Záznam příjmu",
+    "receivingIntro": "Vaše kontroly HACCP při příjmu: teploty zaznamenané u dodávek FIRINGI a zboží od jiných dodavatelů, které přidáte zde.",
+    "addOutside": "Zboží od jiného dodavatele",
+    "logTitle": "Tento měsíc",
+    "noLog": "Tento měsíc nic nezaznamenáno.",
+    "colDate": "Datum",
+    "colSupplier": "Dodavatel",
+    "colTemp": "Teplota",
+    "colStatus": "Stav",
+    "colBy": "Kdo",
+    "accepted": "Přijato",
+    "refused": "Odmítnuto",
+    "readingsTotal": "Měření",
+    "outOfRange": "Mimo rozsah",
+    "refusedCount": "Odmítnuto / zablokováno",
+    "equipmentOverdue": "Zařízení po termínu",
+    "loadingTitle": "Teplota při nakládce",
+    "breaches30": "Porušení chladicího řetězce u vašich objednávek (30 dní): {n}"
   }
 }

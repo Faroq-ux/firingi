@@ -855,7 +855,10 @@
     "Returnables": "Grąžinama tara",
     "Empties & Deposits": "Tara ir užstatas",
     "Sold by Weight": "Pardavimas pagal Svorį",
-    "Weighing": "Svėrimas"
+    "Weighing": "Svėrimas",
+    "Temperature": "Temperatūra",
+    "Cold Chain": "Šaldymo Grandinė",
+    "Receiving Log": "Priėmimo žurnalas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Neteisingas ar neišsamus adresas",
       "DAMAGED": "Prekės sugadintos",
       "NO_ACCESS": "Nėra prieigos prie adreso",
-      "OTHER": "Kita"
+      "OTHER": "Kita",
+      "TEMPERATURE": "Temperatūra už ribų"
     },
     "fleetIntro": "Vairuotojai ir transporto priemonės užsakymams, kuriuos pristatote patys (nemokamas pristatymas). Jūs už juos atsakote.",
     "drivers": "Vairuotojai",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Papildomas svoris priimtas: {number}",
       "body": "Klientas sutiko su svoriu virš ribos. Sąskaitoje naudojamas tikrasis svoris."
+    },
+    "coldchain_breach": {
+      "title": "Temperatūra už ribų: {number}",
+      "body": "{incident}: {temp} (leidžiama {range}) etape {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Registratorius už ribų: {logger}",
+      "body": "{temp} {minutes} min. (leidžiama {range}). Patikrinkite šaldymo įrenginį."
+    },
+    "coldchain_equipment_due": {
+      "title": "Įrangos terminas: {equipment}",
+      "body": "Numatyta arba vėluoja: {tasks}. Užregistruokite tai Šaldymo grandinėje."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Neteisingas adresas",
       "DAMAGED": "Pažeistos prekės",
       "NO_ACCESS": "Nėra prieigos",
-      "OTHER": "Kita"
+      "OTHER": "Kita",
+      "TEMPERATURE": "Temperatūra už ribų"
     },
     "stopStatus": {
       "UNASSIGNED": "Nepriskirta",
@@ -5202,5 +5219,131 @@
       "date": "Pristatymas"
     },
     "cartTotalNote": "Apima prekes pagal svorį: ši suma yra apytikslė. Sąskaitoje naudojamas tikrasis svoris."
+  },
+  "coldChain": {
+    "badTemp": "Tai ne temperatūra",
+    "status": {
+      "OK": "Ribose",
+      "WARN": "Leistinas nuokrypis",
+      "OUT": "Už ribų"
+    },
+    "atLoading": "{temp} °C pakrovimo metu",
+    "tempFor": "{cls} temperatūra (°C)",
+    "record": {
+      "DISPATCH": "Temperatūra išsiuntimo metu",
+      "LOADING": "Temperatūra pakrovimo metu",
+      "RECEIPT": "Temperatūra priėmimo metu"
+    },
+    "probe": "Zondas / termometras",
+    "goodsAccepted": "Prekės priimtos",
+    "noteOptional": "Pastaba (neprivaloma)",
+    "saveTemps": "Išsaugoti temperatūras",
+    "recorded": "Užregistruota",
+    "handoverTitle": "Temperatūra perdavimo metu",
+    "handoverRequired": "Temperatūra perdavimo metu (privaloma)",
+    "blockedNote": "{cls}: už ribų — negalima perduoti. Grąžinama, o klientui išrašoma kreditinė sąskaita.",
+    "refuseClass": "Klientas atsisako {cls} produktų (kredituota)",
+    "ambient": "Aplinkos",
+    "classFor": "Temperatūros klasė",
+    "fromCategory": "Iš kategorijos: {cls}",
+    "supplier": "Tiekėjas",
+    "product": "Produktas",
+    "tempClass": "Temperatūros klasė",
+    "tempC": "Temperatūra (°C)",
+    "addEntry": "Pridėti į žurnalą",
+    "kindLabel": "Įranga",
+    "kind": {
+      "VEHICLE_UNIT": "Transporto priemonės šaldymo įrenginys",
+      "COLD_ROOM": "Šaldymo kamera",
+      "FREEZER": "Šaldiklis",
+      "PROBE": "Zondas / termometras"
+    },
+    "name": "Pavadinimas",
+    "serial": "Serijos numeris",
+    "vehicle": "Transporto priemonė",
+    "checkEvery": "Tikrinti kas (dienų)",
+    "cleanEvery": "Valyti kas (dienų)",
+    "calibrateEvery": "Kalibruoti kas (dienų)",
+    "addEquipment": "Pridėti įrangą",
+    "saved": "Išsaugota",
+    "done": "Atlikta",
+    "task": {
+      "CHECK": "Temperatūros patikra",
+      "CLEANING": "Valymas",
+      "CALIBRATION": "Kalibravimas",
+      "SERVICE": "Aptarnavimas / remontas"
+    },
+    "ok": "OK",
+    "logIt": "Užregistruoti",
+    "addLogger": "Pridėti registratorių",
+    "tokenOnce": "Registratoriaus raktas — nukopijuokite dabar, jis rodomas tik vieną kartą:",
+    "tokenHow": "Įrenginys siunčia rodmenis į /api/coldchain/readings su antrašte \"Authorization: Bearer\" ir šiuo raktu.",
+    "deactivate": "Išjungti",
+    "activate": "Įjungti",
+    "orderTitle": "Šaldymo grandinė",
+    "certificate": "Temperatūros sertifikatas (PDF)",
+    "noReadings": "Temperatūrų dar neužregistruota.",
+    "stage": {
+      "DISPATCH": "Išsiuntimas",
+      "LOADING": "Pakrovimas",
+      "HANDOVER": "Perdavimas",
+      "RECEIPT": "Priėmimas",
+      "LOGGER": "Registratorius"
+    },
+    "refusedBadge": "Atsisakyta",
+    "tripTitle": "Kelionės metu ({logger})",
+    "tripStats": "Min {min} · maks {max} · vidurkis {avg} · {out} min už ribų",
+    "decision": {
+      "NOTED": "Pažymėta",
+      "ACCEPTED": "Vis tiek priimta",
+      "REFUSED": "Atsisakyta — kredituota",
+      "BLOCKED": "Užblokuota — kredituota"
+    },
+    "fault": {
+      "SUPPLIER": "tiekėjas",
+      "DRIVER": "vairuotojas",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Pretenzija {number}",
+    "productsTitle": "Temperatūra",
+    "productsIntro": "Atšaldytų ir užšaldytų produktų temperatūrą reikia registruoti kelyje. Kiekvienas produktas gauna savo kategorijos klasę, nebent pasirinksite kitą.",
+    "colProduct": "Produktas",
+    "colClass": "Temperatūros klasė",
+    "noProducts": "Produktų dar nėra.",
+    "fleetTitle": "Šaldymo Grandinė",
+    "fleetIntro": "Jūsų šaldymo įrenginiai, kameros, šaldikliai ir zondai su patikromis, valymu ir kalibravimu; duomenų registratoriai; nuokrypiai jūsų užsakymuose; mėnesinė HACCP ataskaita.",
+    "incidentsTitle": "Nuokrypiai už ribų (30 dienų)",
+    "noIncidents": "Nuokrypių nėra.",
+    "equipmentTitle": "Įranga",
+    "noEquipment": "Įrangos dar nėra.",
+    "due": "{task} numatyta {date}",
+    "overdue": "{task} vėluoja nuo {date}",
+    "lastLogs": "Paskutiniai įrašai",
+    "loggersTitle": "Duomenų registratoriai",
+    "noLoggers": "Registratorių dar nėra.",
+    "lastSeen": "Paskutinis rodmuo {temp} · {date}",
+    "neverSeen": "Rodmenų dar nėra",
+    "reportTitle": "Mėnesinė HACCP ataskaita",
+    "month": "Mėnuo",
+    "downloadPdf": "Atsisiųsti PDF",
+    "downloadCsv": "Atsisiųsti CSV",
+    "receivingTitle": "Priėmimo žurnalas",
+    "receivingIntro": "Jūsų HACCP priėmimo patikros: FIRINGI pristatymų metu užregistruotos temperatūros ir kitų tiekėjų prekės, kurias pridedate čia.",
+    "addOutside": "Prekės iš kito tiekėjo",
+    "logTitle": "Šis mėnuo",
+    "noLog": "Šį mėnesį nieko neužregistruota.",
+    "colDate": "Data",
+    "colSupplier": "Tiekėjas",
+    "colTemp": "Temperatūra",
+    "colStatus": "Būsena",
+    "colBy": "Kas",
+    "accepted": "Priimta",
+    "refused": "Atsisakyta",
+    "readingsTotal": "Rodmenys",
+    "outOfRange": "Už ribų",
+    "refusedCount": "Atsisakyta / užblokuota",
+    "equipmentOverdue": "Vėluojanti įranga",
+    "loadingTitle": "Temperatūra pakrovimo metu",
+    "breaches30": "Šaldymo grandinės pažeidimai jūsų užsakymuose (30 dienų): {n}"
   }
 }

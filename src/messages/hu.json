@@ -855,7 +855,10 @@
     "Returnables": "Visszaváltható göngyöleg",
     "Empties & Deposits": "Göngyöleg és betétdíj",
     "Sold by Weight": "Súlyra Értékesítés",
-    "Weighing": "Mérés"
+    "Weighing": "Mérés",
+    "Temperature": "Hőmérséklet",
+    "Cold Chain": "Hűtőlánc",
+    "Receiving Log": "Átvételi napló"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Hibás vagy hiányos cím",
       "DAMAGED": "Sérült áru",
       "NO_ACCESS": "A cím nem megközelíthető",
-      "OTHER": "Egyéb"
+      "OTHER": "Egyéb",
+      "TEMPERATURE": "Hőmérséklet tartományon kívül"
     },
     "fleetIntro": "Sofőrök és járművek a saját maga által kiszállított rendelésekhez (ingyenes szállítás). Ön felel értük.",
     "drivers": "Sofőrök",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Többletsúly elfogadva: {number}",
       "body": "A vevő elfogadta a határ feletti súlyt. A számla a valós súlyt használja."
+    },
+    "coldchain_breach": {
+      "title": "Hőmérséklet tartományon kívül: {number}",
+      "body": "{incident}: {temp} (megengedett {range}) – {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Adatgyűjtő tartományon kívül: {logger}",
+      "body": "{temp} {minutes} percig (megengedett {range}). Ellenőrizze a hűtőegységet."
+    },
+    "coldchain_equipment_due": {
+      "title": "Esedékes berendezés: {equipment}",
+      "body": "Esedékes vagy lejárt: {tasks}. Rögzítse a Hűtőlánc oldalon."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Rossz cím",
       "DAMAGED": "Sérült áru",
       "NO_ACCESS": "Nincs bejutás",
-      "OTHER": "Egyéb"
+      "OTHER": "Egyéb",
+      "TEMPERATURE": "Hőmérséklet tartományon kívül"
     },
     "stopStatus": {
       "UNASSIGNED": "Nincs kiosztva",
@@ -5202,5 +5219,131 @@
       "date": "Szállítás"
     },
     "cartTotalNote": "Súlyra árusított termékeket tartalmaz: ez az összeg becslés. A számla a valós súlyt használja."
+  },
+  "coldChain": {
+    "badTemp": "Ez nem hőmérséklet",
+    "status": {
+      "OK": "Tartományon belül",
+      "WARN": "Tűréshatár",
+      "OUT": "Tartományon kívül"
+    },
+    "atLoading": "{temp} °C rakodáskor",
+    "tempFor": "{cls} hőmérséklete (°C)",
+    "record": {
+      "DISPATCH": "Hőmérséklet feladáskor",
+      "LOADING": "Hőmérséklet rakodáskor",
+      "RECEIPT": "Hőmérséklet átvételkor"
+    },
+    "probe": "Szonda / hőmérő",
+    "goodsAccepted": "Áru átvéve",
+    "noteOptional": "Megjegyzés (nem kötelező)",
+    "saveTemps": "Hőmérsékletek mentése",
+    "recorded": "Rögzítve",
+    "handoverTitle": "Hőmérséklet átadáskor",
+    "handoverRequired": "Hőmérséklet átadáskor (kötelező)",
+    "blockedNote": "{cls}: tartományon kívül — nem adható át. Visszamegy, és jóváírjuk a vevőnek.",
+    "refuseClass": "A vevő visszautasítja a(z) {cls} termékeket (jóváírva)",
+    "ambient": "Környezeti",
+    "classFor": "Hőmérsékleti osztály",
+    "fromCategory": "A kategóriából: {cls}",
+    "supplier": "Szállító",
+    "product": "Termék",
+    "tempClass": "Hőmérsékleti osztály",
+    "tempC": "Hőmérséklet (°C)",
+    "addEntry": "Hozzáadás a naplóhoz",
+    "kindLabel": "Berendezés",
+    "kind": {
+      "VEHICLE_UNIT": "Jármű hűtőegysége",
+      "COLD_ROOM": "Hűtőkamra",
+      "FREEZER": "Fagyasztó",
+      "PROBE": "Szonda / hőmérő"
+    },
+    "name": "Név",
+    "serial": "Sorozatszám",
+    "vehicle": "Jármű",
+    "checkEvery": "Ellenőrzés (naponta)",
+    "cleanEvery": "Tisztítás (naponta)",
+    "calibrateEvery": "Kalibrálás (naponta)",
+    "addEquipment": "Berendezés hozzáadása",
+    "saved": "Mentve",
+    "done": "Kész",
+    "task": {
+      "CHECK": "Hőmérséklet-ellenőrzés",
+      "CLEANING": "Tisztítás",
+      "CALIBRATION": "Kalibrálás",
+      "SERVICE": "Szerviz / javítás"
+    },
+    "ok": "OK",
+    "logIt": "Rögzítés",
+    "addLogger": "Adatgyűjtő hozzáadása",
+    "tokenOnce": "Az adatgyűjtő kulcsa — másolja ki most, csak egyszer jelenik meg:",
+    "tokenHow": "Az eszköz a méréseit a /api/coldchain/readings címre küldi az \"Authorization: Bearer\" fejléccel és ezzel a kulccsal.",
+    "deactivate": "Kikapcsolás",
+    "activate": "Bekapcsolás",
+    "orderTitle": "Hűtőlánc",
+    "certificate": "Hőmérsékleti tanúsítvány (PDF)",
+    "noReadings": "Még nincs rögzített hőmérséklet.",
+    "stage": {
+      "DISPATCH": "Feladás",
+      "LOADING": "Rakodás",
+      "HANDOVER": "Átadás",
+      "RECEIPT": "Átvétel",
+      "LOGGER": "Adatgyűjtő"
+    },
+    "refusedBadge": "Visszautasítva",
+    "tripTitle": "Az út során ({logger})",
+    "tripStats": "Min {min} · max {max} · átlag {avg} · {out} perc tartományon kívül",
+    "decision": {
+      "NOTED": "Feljegyezve",
+      "ACCEPTED": "Ennek ellenére átvéve",
+      "REFUSED": "Visszautasítva — jóváírva",
+      "BLOCKED": "Letiltva — jóváírva"
+    },
+    "fault": {
+      "SUPPLIER": "szállító",
+      "DRIVER": "sofőr",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamáció {number}",
+    "productsTitle": "Hőmérséklet",
+    "productsIntro": "A hűtött és fagyasztott termékek hőmérsékletét útközben rögzíteni kell. Minden termék a kategóriája osztályát kapja, hacsak nem választ másikat.",
+    "colProduct": "Termék",
+    "colClass": "Hőmérsékleti osztály",
+    "noProducts": "Még nincsenek termékek.",
+    "fleetTitle": "Hűtőlánc",
+    "fleetIntro": "Hűtőegységei, hűtőkamrái, fagyasztói és szondái az ellenőrzésekkel, tisztítással és kalibrálással; adatgyűjtők; tartományon kívüli esetek a rendelésein; a havi HACCP-jelentés.",
+    "incidentsTitle": "Tartományon kívüli esetek (30 nap)",
+    "noIncidents": "Nincs eset.",
+    "equipmentTitle": "Berendezések",
+    "noEquipment": "Még nincs berendezés.",
+    "due": "{task} esedékes: {date}",
+    "overdue": "{task} lejárt {date} óta",
+    "lastLogs": "Legutóbbi bejegyzések",
+    "loggersTitle": "Adatgyűjtők",
+    "noLoggers": "Még nincs adatgyűjtő.",
+    "lastSeen": "Utolsó mérés {temp} · {date}",
+    "neverSeen": "Még nincs mérés",
+    "reportTitle": "Havi HACCP-jelentés",
+    "month": "Hónap",
+    "downloadPdf": "PDF letöltése",
+    "downloadCsv": "CSV letöltése",
+    "receivingTitle": "Átvételi napló",
+    "receivingIntro": "HACCP átvételi ellenőrzései: a FIRINGI-szállításoknál rögzített hőmérsékletek és az itt hozzáadott, más szállítóktól érkező áruk.",
+    "addOutside": "Áru más szállítótól",
+    "logTitle": "Ebben a hónapban",
+    "noLog": "Ebben a hónapban nincs bejegyzés.",
+    "colDate": "Dátum",
+    "colSupplier": "Szállító",
+    "colTemp": "Hőmérséklet",
+    "colStatus": "Állapot",
+    "colBy": "Rögzítette",
+    "accepted": "Átvéve",
+    "refused": "Visszautasítva",
+    "readingsTotal": "Mérések",
+    "outOfRange": "Tartományon kívül",
+    "refusedCount": "Visszautasítva / letiltva",
+    "equipmentOverdue": "Lejárt berendezések",
+    "loadingTitle": "Hőmérséklet rakodáskor",
+    "breaches30": "Hűtőlánc-sérülések a rendelésein (30 nap): {n}"
   }
 }

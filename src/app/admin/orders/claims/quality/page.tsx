@@ -21,6 +21,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ d
   pagePermission(ctx, ["admin.claims.manage", "admin.orders.view", "admin.orders.manage"]);
   const days = [30, 90, 365].includes(Number((await searchParams).days)) ? Number((await searchParams).days) : 30;
   const q = await qualityOverview(ctx, days);
+  // Phase 42: cold-chain breaches count in the scores (when FIRINGI says so)
+  const { breachCounts, coldChainSettings } = await import("@/server/coldchain/service");
+  const ccs = await coldChainSettings();
+  const cold = ccs.enabled && ccs.actions.score ? await breachCounts(q.days) : null;
   const manage = can(ctx, "admin.claims.manage");
   const maxReason = Math.max(1, ...q.byReason.map((r) => r.count));
   const tones = ["var(--vivid-pink)", "var(--vivid-orange)", "var(--vivid-violet)", "var(--vivid-blue)", "var(--vivid-teal)", "var(--vivid-lime)"];
@@ -70,7 +74,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ d
           <CardHeader><CardTitle>Suppliers</CardTitle><CardDescription>Upheld supplier-fault claims per delivered order</CardDescription></CardHeader>
           <CardContent>
             <Table data-testid="quality-suppliers">
-              <THead><TR><TH>Supplier</TH><TH className="text-right">Delivered</TH><TH className="text-right">Claims</TH><TH className="text-right">Upheld</TH><TH className="text-right">Rate</TH><TH className="text-right">Credited</TH></TR></THead>
+              <THead><TR><TH>Supplier</TH><TH className="text-right">Delivered</TH><TH className="text-right">Claims</TH><TH className="text-right">Upheld</TH><TH className="text-right">Rate</TH><TH className="text-right">Credited</TH>{cold && <TH className="text-right">Cold-chain breaches</TH>}</TR></THead>
               <TBody>
                 {q.suppliers.map((s) => (
                   <TR key={s.id}>
@@ -78,6 +82,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ d
                     <TD className="text-right tabular-nums">{s.delivered}</TD><TD className="text-right tabular-nums">{s.claims}</TD><TD className="text-right tabular-nums">{s.upheld}</TD>
                     <TD className="text-right tabular-nums">{s.rate !== null && s.rate * 100 >= q.settings.supplierRatePct ? <Badge variant="destructive">{pct(s.rate)}</Badge> : pct(s.rate)}</TD>
                     <TD className="text-right tabular-nums">{formatMoney(s.credited, "pt-PT")}</TD>
+                    {cold && <TD className="text-right tabular-nums" data-testid="cold-breaches">{cold.bySeller.get(s.id) ?? 0}</TD>}
                   </TR>
                 ))}
                 {!q.suppliers.length && <EmptyRow colSpan={6}>No data.</EmptyRow>}
@@ -113,7 +118,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ d
             <CardHeader><CardTitle>FIRINGI drivers</CardTitle><CardDescription>Upheld driver-fault claims and charge-backs</CardDescription></CardHeader>
             <CardContent>
               <ul className="divide-y text-sm" data-testid="quality-drivers">
-                {q.drivers.map((d) => <li key={d.id} className="flex flex-wrap items-center gap-2 py-2"><span className="min-w-0 flex-1 break-words">{d.name}</span><span className="text-muted-foreground">{d.delivered} delivered</span><Badge variant={d.claims >= q.settings.driverClaims ? "destructive" : "secondary"}>{d.claims} claims</Badge>{d.charged > 0 && <span className="tabular-nums text-destructive">−{formatMoney(d.charged, "pt-PT")}</span>}</li>)}
+                {q.drivers.map((d) => <li key={d.id} className="flex flex-wrap items-center gap-2 py-2"><span className="min-w-0 flex-1 break-words">{d.name}</span><span className="text-muted-foreground">{d.delivered} delivered</span><Badge variant={d.claims >= q.settings.driverClaims ? "destructive" : "secondary"}>{d.claims} claims</Badge>{d.charged > 0 && <span className="tabular-nums text-destructive">−{formatMoney(d.charged, "pt-PT")}</span>}{cold && (cold.byDriver.get(d.id) ?? 0) > 0 && <Badge variant="warning">{cold.byDriver.get(d.id)} cold-chain</Badge>}</li>)}
                 {!q.drivers.length && <li className="py-2 text-muted-foreground">No data.</li>}
               </ul>
             </CardContent>

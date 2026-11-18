@@ -777,3 +777,45 @@ export async function claimsForOrder(orderId: string) {
 }
 
 export const CLAIM_DECISION_FAULTS: ClaimFault[] = ["SUPPLIER", "DRIVER", "FIRINGI"];
+
+// ── system claims (Phase 42) ────────────────────────────────────────────────
+
+/**
+ * A temperature claim opened and credited by the platform itself: goods refused at the door because their
+ * temperature was out of range (cold chain). Opened and approved at once — the refusal is the evidence (the
+ * readings are on the order) — with the fault worked out from the readings. No four-eyes step: the amount is
+ * what the customer didn't take. Returns the claim, or null when the order has no invoice to credit.
+ */
+export async function systemTemperatureClaim(i: { orderId: string; lines: { orderLineId: string; qty: number }[]; fault: ClaimFault; description: string; actorUserId: string }) {
+  const wanted = i.lines.filter((l) => l.qty > 0);
+  if (!wanted.length) return null;
+  const inv = await invoiceFacts(i.orderId);
+  if (!inv) return null;
+  const order = await prisma.order.findUniqueOrThrow({ where: { id: i.orderId }, select: { id: true, number: true, buyerCompanyId: true, sellerCompanyId: true } });
+  const offers = await prisma.orderLine.findMany({ where: { id: { in: wanted.map((w) => w.orderLineId) } }, select: { id: true, offerId: true } });
+  const sel = wanted.filter((w) => inv.unit.has(w.orderLineId)).map((w) => ({ invoiceLineId: inv.unit.get(w.orderLineId)!.lineId, qty: w.qty }));
+  if (!sel.length) return null;
+  const s = await claimSettings();
+  const created = await prisma.$transaction(async (tx) => {
+    const number = await nextNumber(tx);
+    const cn = await creditInvoice(tx, inv.id, { lines: sel, reason: `Reclamação ${number} — temperatura`, actorUserId: i.actorUserId, chargeVendor: i.fault === "SUPPLIER" });
+    const cl = await tx.qualityClaim.create({
+      data: {
+        number, orderId: order.id, buyerCompanyId: order.buyerCompanyId, sellerCompanyId: order.sellerCompanyId, reason: "TEMPERATURE", description: i.description, photoKeys: [],
+        preferredOutcome: "CREDIT", status: "APPROVED", outcome: "CREDIT", fault: i.fault, decisionNote: i.description, decidedById: i.actorUserId, decidedAt: new Date(),
+        dueBy: new Date(Date.now() + s.slaHours * HOUR), createdById: i.actorUserId, creditNoteId: cn.id, creditGross: Number(cn.grossTotal).toFixed(2),
+        lines: { create: wanted.map((w) => ({ orderLineId: w.orderLineId, offerId: offers.find((o) => o.id === w.orderLineId)!.offerId, qty: w.qty, approvedQty: w.qty })) },
+      },
+    });
+    if (i.fault === "SUPPLIER" && cn.creditStatementId) {
+      const st = await tx.vendorBillingStatement.findUniqueOrThrow({ where: { id: cn.creditStatementId } });
+      await tx.claimChargeback.create({ data: { claimId: cl.id, target: "SUPPLIER", vendorCompanyId: order.sellerCompanyId, amount: st.expectedGross, statementId: st.id } });
+    }
+    await writeAudit({ actorUserId: i.actorUserId, actorCompanyId: null, action: "claim.temperature_refused", entityType: "QualityClaim", entityId: cl.id, after: { number, orderId: order.id, lines: wanted, fault: i.fault, creditNote: cn.fullNumber } }, tx);
+    return cl;
+  });
+  (await import("@/server/invoicing/fiscal")).kickFiscalQueue();
+  await notify("claim.decided", [{ companyId: order.buyerCompanyId, link: `/buy/orders/claims/${created.id}` }, { companyId: order.sellerCompanyId, link: `/vendor/orders/claims/${created.id}` }],
+    { number: created.number, decision: "CREDIT", note: i.description }, { ref: { type: "QualityClaim", id: created.id } });
+  return created;
+}

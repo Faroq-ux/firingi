@@ -13,6 +13,7 @@ import {
 import type { ActionResult } from "@/server/actions/_action";
 import { EmptiesCounter, type StopItem } from "@/components/returnables/client";
 import { StopWeights, type StopWeightLine } from "@/components/catchweight/client";
+import { HandoverTemps, type Cls } from "@/components/coldchain/client";
 
 const sel = "h-9 rounded-md border border-input bg-background px-2 text-sm";
 
@@ -184,9 +185,10 @@ function SignaturePad({ onChange }: { onChange: (dataUrl: string | null) => void
   );
 }
 
-export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weights, weightLabels, locale }: {
+export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weights, weightLabels, locale, cold, coldLabels }: {
   deliveryId: string; empties?: StopItem[]; emptiesLabels?: Record<string, string>;
   /** Phase 41: sold-by-weight lines the driver may weigh again */ weights?: { correction: boolean; lines: StopWeightLine[] }; weightLabels?: Record<string, string>; locale?: string;
+  /** Phase 42: cold classes to record at the handover */ cold?: { refuse: boolean; block: boolean; required: boolean; classes: Cls[] }; coldLabels?: Record<string, string>;
 }) {
   const t = useTranslations("delivery");
   const { pending, error, run } = useAct();
@@ -195,6 +197,8 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weigh
   const [counted, setCounted] = useState<Record<string, number>>(Object.fromEntries((empties ?? []).map((i) => [i.typeId, i.kind === "EXCHANGE" ? Math.min(i.fullOut, i.held) : 0])));
   const [kg, setKg] = useState<Record<string, string>>({});
   const [acceptOver, setAcceptOver] = useState(false);
+  const [temps, setTemps] = useState<Record<string, string>>({});
+  const [refused, setRefused] = useState<string[]>([]);
   const [sig, setSig] = useState<string | null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
   const { loc, ask } = useLocation();
@@ -208,6 +212,8 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weigh
       for (const i of empties ?? []) fd.set(`empty:${i.typeId}`, String(counted[i.typeId] ?? 0));
       for (const [lineId, v] of Object.entries(kg)) if (v.trim()) fd.set(`weight:${lineId}`, v.trim());
       if (acceptOver) fd.set("acceptOver", "true");
+      for (const [cid, v] of Object.entries(temps)) if (v.trim()) fd.set(`temp:${cid}`, v.trim());
+      for (const cid of refused) fd.append("refuse", cid);
       return completeDeliveryAction(fd);
     });
   return (
@@ -215,6 +221,7 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weigh
       <div className="space-y-1"><Label htmlFor="recipientName">{t("recipientName")}</Label><Input id="recipientName" value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" /></div>
       <SignaturePad onChange={setSig} />
       {empties && empties.length > 0 && emptiesLabels && <EmptiesCounter l={emptiesLabels} items={empties} value={counted} onChange={setCounted} />}
+      {cold && coldLabels && <HandoverTemps l={coldLabels} classes={cold.classes} value={temps} onChange={setTemps} refused={refused} onRefuse={setRefused} refuse={cold.refuse} block={cold.block} required={cold.required} />}
       {weights && weightLabels && <StopWeights l={weightLabels} locale={locale ?? "pt-PT"} lines={weights.lines} correction={weights.correction} value={kg} onChange={setKg} accept={acceptOver} onAccept={setAcceptOver} />}
       <div className="space-y-1"><Label htmlFor="photos">{t("addPhotos")}</Label><Input id="photos" type="file" accept="image/*" capture="environment" multiple onChange={(e) => setPhotos([...(e.target.files ?? [])].slice(0, 4))} /></div>
       <Button type="button" variant="outline" size="sm" onClick={ask} disabled={!!loc}>{loc ? t("locationAdded") : t("useLocation")}</Button>

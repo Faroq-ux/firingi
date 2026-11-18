@@ -31,7 +31,7 @@ afterAll(async () => { await wipe(); await prisma.$disconnect(); });
 
 async function offersOf(email: string, sku: RegExp) {
   const c = await ctxFor(email);
-  const rows = await prisma.vendorOffer.findMany({ where: { vendorCompanyId: c.company.id, status: "ACTIVE" }, include: { packaging: { include: { variant: { include: { product: true } } } } } });
+  const rows = await prisma.vendorOffer.findMany({ where: { vendorCompanyId: c.company.id, status: "ACTIVE" }, orderBy: { createdAt: "asc" }, include: { packaging: { include: { variant: { include: { product: true } } } } } });
   return rows.filter((r) => sku.test(r.packaging.variant.sku));
 }
 async function approved(email: string, input: A.CampaignInput) {

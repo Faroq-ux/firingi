@@ -23,6 +23,8 @@ import { rtLabels } from "@/components/returnables/labels";
 import { offerCatchWeight } from "@/server/catchweight/service";
 import { ProductCatchWeight } from "@/components/catchweight/views";
 import { cwLabels } from "@/components/catchweight/labels";
+import { offerColdBadges } from "@/server/coldchain/service";
+import { ColdBadge } from "@/components/coldchain/views";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -33,6 +35,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const [t, ti, locale, images, bestBefore, deals, dl] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id]), liveDeals(ctx, { offerIds: [id] }).catch(() => []), dealLabels()]);
   const [rt, rl, cwm, cl] = await Promise.all([offerReturnables([id], locale), rtLabels(), offerCatchWeight([id]), cwLabels()]);
   const cw = cwm.get(id) ?? null; // Phase 41: sold by weight
+  const cold = (await offerColdBadges([id], locale)).get(id) ?? null; // Phase 42: chilled / frozen
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -49,6 +52,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
             <h1 className="text-2xl font-semibold">{name}</h1>
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
               <Badge variant="secondary">{pickLocalized(item.packaging.name, locale)}</Badge>
+              {cold && <ColdBadge cls={cold} />}
               {bb && <Badge variant="warning" data-testid="best-before">{ti("bestBeforeDate", { date: new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(bb) })}</Badge>}
 
               {item.restriction && <Badge variant="warning">{t(`restricted.${item.restriction}`)}</Badge>}

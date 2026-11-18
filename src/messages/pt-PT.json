@@ -782,7 +782,8 @@
       "WRONG_ADDRESS": "Morada errada ou incompleta",
       "DAMAGED": "Mercadoria danificada",
       "NO_ACCESS": "Sem acesso à morada",
-      "OTHER": "Outro"
+      "OTHER": "Outro",
+      "TEMPERATURE": "Temperatura fora dos limites"
     },
     "fleetIntro": "Motoristas e veículos para as encomendas que entrega você mesmo (entrega gratuita). É responsável por eles.",
     "drivers": "Motoristas",
@@ -1506,6 +1507,18 @@
     "catchweight_over_accepted": {
       "title": "Peso a mais aceite: {number}",
       "body": "O cliente aceitou o peso acima do limite. A fatura usa o peso real."
+    },
+    "coldchain_breach": {
+      "title": "Temperatura fora dos limites: {number}",
+      "body": "{incident}: {temp} (permitido {range}) em {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Registador fora dos limites: {logger}",
+      "body": "{temp} durante {minutes} minutos (permitido {range}). Verifique a unidade de frio."
+    },
+    "coldchain_equipment_due": {
+      "title": "Equipamento a vencer: {equipment}",
+      "body": "Previsto ou em atraso: {tasks}. Registe-o na Cadeia de Frio."
     }
   },
   "notifications": {
@@ -4768,7 +4781,8 @@
       "WRONG_ADDRESS": "Morada errada",
       "DAMAGED": "Mercadoria danificada",
       "NO_ACCESS": "Sem acesso",
-      "OTHER": "Outro"
+      "OTHER": "Outro",
+      "TEMPERATURE": "Temperatura fora dos limites"
     },
     "stopStatus": {
       "UNASSIGNED": "Não atribuída",
@@ -5099,5 +5113,131 @@
       "date": "Entrega"
     },
     "cartTotalNote": "Inclui produtos vendidos ao peso: este total é uma estimativa. A fatura usa o peso real."
+  },
+  "coldChain": {
+    "badTemp": "Não é uma temperatura",
+    "status": {
+      "OK": "Dentro dos limites",
+      "WARN": "Tolerância",
+      "OUT": "Fora dos limites"
+    },
+    "atLoading": "{temp} °C no carregamento",
+    "tempFor": "Temperatura de {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatura na expedição",
+      "LOADING": "Temperatura no carregamento",
+      "RECEIPT": "Temperatura na receção"
+    },
+    "probe": "Sonda / termómetro",
+    "goodsAccepted": "Mercadoria aceite",
+    "noteOptional": "Nota (opcional)",
+    "saveTemps": "Guardar temperaturas",
+    "recorded": "Registado",
+    "handoverTitle": "Temperatura na entrega",
+    "handoverRequired": "Temperatura na entrega (obrigatória)",
+    "blockedNote": "{cls}: fora dos limites — não pode ser entregue. Volta para trás e é creditado ao cliente.",
+    "refuseClass": "O cliente recusa os produtos {cls} (creditados)",
+    "ambient": "Ambiente",
+    "classFor": "Classe de temperatura",
+    "fromCategory": "Da categoria: {cls}",
+    "supplier": "Fornecedor",
+    "product": "Produto",
+    "tempClass": "Classe de temperatura",
+    "tempC": "Temperatura (°C)",
+    "addEntry": "Adicionar ao registo",
+    "kindLabel": "Equipamento",
+    "kind": {
+      "VEHICLE_UNIT": "Unidade de frio do veículo",
+      "COLD_ROOM": "Câmara frigorífica",
+      "FREEZER": "Congelador",
+      "PROBE": "Sonda / termómetro"
+    },
+    "name": "Nome",
+    "serial": "Número de série",
+    "vehicle": "Veículo",
+    "checkEvery": "Verificar a cada (dias)",
+    "cleanEvery": "Limpar a cada (dias)",
+    "calibrateEvery": "Calibrar a cada (dias)",
+    "addEquipment": "Adicionar equipamento",
+    "saved": "Guardado",
+    "done": "Feito",
+    "task": {
+      "CHECK": "Verificação de temperatura",
+      "CLEANING": "Limpeza",
+      "CALIBRATION": "Calibração",
+      "SERVICE": "Assistência / reparação"
+    },
+    "ok": "OK",
+    "logIt": "Registar",
+    "addLogger": "Adicionar registador",
+    "tokenOnce": "A chave do registador — copie-a agora, só é mostrada uma vez:",
+    "tokenHow": "O dispositivo envia as leituras para /api/coldchain/readings com o cabeçalho \"Authorization: Bearer\" e esta chave.",
+    "deactivate": "Desligar",
+    "activate": "Ligar",
+    "orderTitle": "Cadeia de frio",
+    "certificate": "Certificado de temperatura (PDF)",
+    "noReadings": "Ainda não há temperaturas registadas.",
+    "stage": {
+      "DISPATCH": "Expedição",
+      "LOADING": "Carregamento",
+      "HANDOVER": "Entrega",
+      "RECEIPT": "Receção",
+      "LOGGER": "Registador"
+    },
+    "refusedBadge": "Recusado",
+    "tripTitle": "Durante a viagem ({logger})",
+    "tripStats": "Mín {min} · máx {max} · média {avg} · {out} min fora dos limites",
+    "decision": {
+      "NOTED": "Registado",
+      "ACCEPTED": "Aceite mesmo assim",
+      "REFUSED": "Recusado — creditado",
+      "BLOCKED": "Bloqueado — creditado"
+    },
+    "fault": {
+      "SUPPLIER": "fornecedor",
+      "DRIVER": "motorista",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reclamação {number}",
+    "productsTitle": "Temperatura",
+    "productsIntro": "Os produtos refrigerados e congelados precisam de registo de temperatura ao longo do percurso. Cada produto fica com a classe da sua categoria, salvo se escolher outra.",
+    "colProduct": "Produto",
+    "colClass": "Classe de temperatura",
+    "noProducts": "Ainda não há produtos.",
+    "fleetTitle": "Cadeia de Frio",
+    "fleetIntro": "As suas unidades de frio, câmaras frigoríficas, congeladores e sondas com verificações, limpezas e calibrações; registadores de dados; incidentes fora dos limites nas suas encomendas; o relatório HACCP mensal.",
+    "incidentsTitle": "Incidentes fora dos limites (30 dias)",
+    "noIncidents": "Sem incidentes.",
+    "equipmentTitle": "Equipamento",
+    "noEquipment": "Ainda não há equipamento.",
+    "due": "{task} prevista a {date}",
+    "overdue": "{task} em atraso desde {date}",
+    "lastLogs": "Últimos registos",
+    "loggersTitle": "Registadores de dados",
+    "noLoggers": "Ainda não há registadores.",
+    "lastSeen": "Última leitura {temp} · {date}",
+    "neverSeen": "Ainda sem leituras",
+    "reportTitle": "Relatório HACCP mensal",
+    "month": "Mês",
+    "downloadPdf": "Descarregar PDF",
+    "downloadCsv": "Descarregar CSV",
+    "receivingTitle": "Registo de Receção",
+    "receivingIntro": "Os seus controlos HACCP à receção: temperaturas registadas nas entregas FIRINGI e mercadoria de outros fornecedores que adicione aqui.",
+    "addOutside": "Mercadoria de outro fornecedor",
+    "logTitle": "Este mês",
+    "noLog": "Nada registado este mês.",
+    "colDate": "Data",
+    "colSupplier": "Fornecedor",
+    "colTemp": "Temperatura",
+    "colStatus": "Estado",
+    "colBy": "Por",
+    "accepted": "Aceite",
+    "refused": "Recusado",
+    "readingsTotal": "Leituras",
+    "outOfRange": "Fora dos limites",
+    "refusedCount": "Recusados / bloqueados",
+    "equipmentOverdue": "Equipamento em atraso",
+    "loadingTitle": "Temperatura no carregamento",
+    "breaches30": "Falhas da cadeia de frio nas suas encomendas (30 dias): {n}"
   }
 }

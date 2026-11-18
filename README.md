@@ -662,6 +662,29 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Cold chain & HACCP (Phase 42)
+
+Code: `src/lib/cold-chain.ts` (rules), `src/server/coldchain/service.ts`; details `docs/cold-chain.md`.
+- **Temperature classes** (FIRINGI, *Catalogue › Temperature Classes*): Ambient, Chilled 0–4 °C, Fresh fish 0–2 °C,
+  Frozen ≤ −18 °C, Deep frozen ≤ −25 °C, each with a tolerance. Categories carry a default class; **the supplier can pick
+  another per product** (*Products › Temperature*). Customers see a badge on the product page and cards.
+- **Who records — each switchable by FIRINGI** (*Settings › Cold Chain*): the **supplier at dispatch**, the **driver at
+  loading and at the handover** (online and offline; the handover reading can be made required), the **customer on
+  receipt**, and **vehicle / cold-room data loggers** over an API (`POST /api/coldchain/readings`, key shown once).
+- **Out of range — each switchable**: the **customer can refuse** the warm products (the rest is delivered; an
+  approved temperature claim with its credit note is created at once, fault worked out from the readings: supplier,
+  FIRINGI driver or FIRINGI), **alerts** to the supplier and FIRINGI, **block the handover** (off by default), and
+  breaches **counted in supplier / driver quality scores**.
+- **HACCP records**: a **temperature certificate PDF** per delivery, a **monthly HACCP report** (PDF / CSV),
+  **vehicle & equipment logs** (fridge units, cold rooms, freezers, probes — checks, cleaning, calibration with due
+  dates and reminders) and the **customer receiving log** (FIRINGI deliveries + goods from other suppliers).
+- **FIRINGI** (*Delivery › Cold Chain*): incidents, per-supplier and per-driver counts, FIRINGI's own equipment and
+  loggers, the logger trip on each order (min / max / minutes out of range).
+- Refused goods are not put back into stock (they must be disposed of). Supplier and customer pages in 25 languages;
+  FIRINGI's in English.
+- Tests: `tests/unit/cold-chain.test.ts`, `tests/integration/cold-chain.test.ts`, browser `tests/e2e/cold-chain.mjs`.
+  Screenshots `docs/screenshots/cc-*.png`.
+
 ## Sold by weight — catch-weight (Phase 41)
 
 Code: `src/lib/catch-weight.ts` (rules, scale-label parser), `src/server/catchweight/service.ts`; details `docs/catch-weight.md`.

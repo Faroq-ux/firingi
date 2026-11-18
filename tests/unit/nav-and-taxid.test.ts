@@ -27,8 +27,8 @@ describe("admin sidebar", () => {
     const nav = resolveNav(ADMIN_NAV, support, "en");
     // Order lists also appear under Vendors / Customers for people with order access.
     expect(nav.map((s) => s.key)).toEqual(["dashboard", "orders", "vendors", "customers", "delivery"]);
-    // …and returns (order-related) under Delivery — nothing else from Delivery.
-    expect(nav.find((s) => s.key === "delivery")!.items.map((i) => i.key)).toEqual(["/admin/delivery/returns"]);
+    // …and returns + cold chain (order-related) under Delivery — nothing else from Delivery.
+    expect(nav.find((s) => s.key === "delivery")!.items.map((i) => i.key)).toEqual(["/admin/delivery/returns", "/admin/delivery/cold-chain"]);
     expect(nav.find((s) => s.key === "vendors")!.groups.flatMap((g) => g.items).every((i) => i.key.endsWith("/orders"))).toBe(true);
     expect(nav[1].items.find((i) => i.key.endsWith("/split"))).toBeTruthy(); // order split is read-only: order viewers see it
   });

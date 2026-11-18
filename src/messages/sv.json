@@ -855,7 +855,10 @@
     "Returnables": "Returemballage",
     "Empties & Deposits": "Returemballage & pant",
     "Sold by Weight": "Försäljning efter Vikt",
-    "Weighing": "Vägning"
+    "Weighing": "Vägning",
+    "Temperature": "Temperatur",
+    "Cold Chain": "Kylkedja",
+    "Receiving Log": "Mottagningslogg"
   },
   "delivery": {
     "title": "Leverans",
@@ -897,7 +900,8 @@
       "WRONG_ADDRESS": "Fel eller ofullständig adress",
       "DAMAGED": "Varorna skadade",
       "NO_ACCESS": "Ingen åtkomst till adressen",
-      "OTHER": "Övrigt"
+      "OTHER": "Övrigt",
+      "TEMPERATURE": "Temperatur utanför intervallet"
     },
     "fleetIntro": "Förare och fordon för de beställningar du själv levererar (fri leverans). Du ansvarar för dem.",
     "drivers": "Förare",
@@ -1621,6 +1625,18 @@
     "catchweight_over_accepted": {
       "title": "Extra vikt godkänd: {number}",
       "body": "Kunden godkände vikten över gränsen. Fakturan använder den verkliga vikten."
+    },
+    "coldchain_breach": {
+      "title": "Temperatur utanför intervallet: {number}",
+      "body": "{incident}: {temp} (tillåtet {range}) vid {stage} — {decision}."
+    },
+    "coldchain_logger_alert": {
+      "title": "Logger utanför intervallet: {logger}",
+      "body": "{temp} i {minutes} minuter (tillåtet {range}). Kontrollera kylaggregatet."
+    },
+    "coldchain_equipment_due": {
+      "title": "Utrustning förfaller: {equipment}",
+      "body": "Förfaller eller försenad: {tasks}. Registrera det under Kylkedja."
     }
   },
   "notifications": {
@@ -4871,7 +4887,8 @@
       "WRONG_ADDRESS": "Fel adress",
       "DAMAGED": "Skadade varor",
       "NO_ACCESS": "Ingen åtkomst",
-      "OTHER": "Annat"
+      "OTHER": "Annat",
+      "TEMPERATURE": "Temperatur utanför intervallet"
     },
     "stopStatus": {
       "UNASSIGNED": "Inte tilldelad",
@@ -5202,5 +5219,131 @@
       "date": "Leverans"
     },
     "cartTotalNote": "Innehåller produkter efter vikt: summan är en uppskattning. Fakturan använder den verkliga vikten."
+  },
+  "coldChain": {
+    "badTemp": "Inte en temperatur",
+    "status": {
+      "OK": "Inom intervallet",
+      "WARN": "Tolerans",
+      "OUT": "Utanför intervallet"
+    },
+    "atLoading": "{temp} °C vid lastning",
+    "tempFor": "Temperatur för {cls} (°C)",
+    "record": {
+      "DISPATCH": "Temperatur vid avsändning",
+      "LOADING": "Temperatur vid lastning",
+      "RECEIPT": "Temperatur vid mottagning"
+    },
+    "probe": "Givare / termometer",
+    "goodsAccepted": "Varor mottagna",
+    "noteOptional": "Anteckning (valfritt)",
+    "saveTemps": "Spara temperaturer",
+    "recorded": "Registrerat",
+    "handoverTitle": "Temperatur vid överlämning",
+    "handoverRequired": "Temperatur vid överlämning (obligatorisk)",
+    "blockedNote": "{cls}: utanför intervallet — kan inte lämnas över. Det går tillbaka och krediteras kunden.",
+    "refuseClass": "Kunden nekar {cls}-varorna (krediterade)",
+    "ambient": "Rumstemperatur",
+    "classFor": "Temperaturklass",
+    "fromCategory": "Från kategorin: {cls}",
+    "supplier": "Leverantör",
+    "product": "Produkt",
+    "tempClass": "Temperaturklass",
+    "tempC": "Temperatur (°C)",
+    "addEntry": "Lägg till i loggen",
+    "kindLabel": "Utrustning",
+    "kind": {
+      "VEHICLE_UNIT": "Fordonets kylaggregat",
+      "COLD_ROOM": "Kylrum",
+      "FREEZER": "Frys",
+      "PROBE": "Givare / termometer"
+    },
+    "name": "Namn",
+    "serial": "Serienummer",
+    "vehicle": "Fordon",
+    "checkEvery": "Kontroll var (dagar)",
+    "cleanEvery": "Rengöring var (dagar)",
+    "calibrateEvery": "Kalibrering var (dagar)",
+    "addEquipment": "Lägg till utrustning",
+    "saved": "Sparat",
+    "done": "Klart",
+    "task": {
+      "CHECK": "Temperaturkontroll",
+      "CLEANING": "Rengöring",
+      "CALIBRATION": "Kalibrering",
+      "SERVICE": "Service / reparation"
+    },
+    "ok": "OK",
+    "logIt": "Registrera",
+    "addLogger": "Lägg till datalogger",
+    "tokenOnce": "Loggerns nyckel — kopiera den nu, den visas bara en gång:",
+    "tokenHow": "Enheten skickar sina mätvärden till /api/coldchain/readings med headern \"Authorization: Bearer\" och denna nyckel.",
+    "deactivate": "Stäng av",
+    "activate": "Slå på",
+    "orderTitle": "Kylkedja",
+    "certificate": "Temperaturintyg (PDF)",
+    "noReadings": "Inga temperaturer registrerade ännu.",
+    "stage": {
+      "DISPATCH": "Avsändning",
+      "LOADING": "Lastning",
+      "HANDOVER": "Överlämning",
+      "RECEIPT": "Mottagning",
+      "LOGGER": "Logger"
+    },
+    "refusedBadge": "Nekad",
+    "tripTitle": "Under resan ({logger})",
+    "tripStats": "Min {min} · max {max} · medel {avg} · {out} min utanför intervallet",
+    "decision": {
+      "NOTED": "Noterat",
+      "ACCEPTED": "Mottaget ändå",
+      "REFUSED": "Nekad — krediterad",
+      "BLOCKED": "Blockerad — krediterad"
+    },
+    "fault": {
+      "SUPPLIER": "leverantör",
+      "DRIVER": "förare",
+      "FIRINGI": "FIRINGI"
+    },
+    "claimLink": "Reklamation {number}",
+    "productsTitle": "Temperatur",
+    "productsIntro": "Kylda och frysta varor behöver få sin temperatur registrerad längs vägen. Varje produkt får sin kategoris klass om du inte väljer en annan.",
+    "colProduct": "Produkt",
+    "colClass": "Temperaturklass",
+    "noProducts": "Inga produkter ännu.",
+    "fleetTitle": "Kylkedja",
+    "fleetIntro": "Dina kylaggregat, kylrum, frysar och givare med kontroller, rengöring och kalibrering; dataloggrar; avvikelser på dina beställningar; den månatliga HACCP-rapporten.",
+    "incidentsTitle": "Avvikelser utanför intervallet (30 dagar)",
+    "noIncidents": "Inga avvikelser.",
+    "equipmentTitle": "Utrustning",
+    "noEquipment": "Ingen utrustning ännu.",
+    "due": "{task} förfaller {date}",
+    "overdue": "{task} försenad sedan {date}",
+    "lastLogs": "Senaste registreringar",
+    "loggersTitle": "Dataloggrar",
+    "noLoggers": "Inga loggrar ännu.",
+    "lastSeen": "Senaste mätning {temp} · {date}",
+    "neverSeen": "Inga mätningar ännu",
+    "reportTitle": "Månatlig HACCP-rapport",
+    "month": "Månad",
+    "downloadPdf": "Ladda ner PDF",
+    "downloadCsv": "Ladda ner CSV",
+    "receivingTitle": "Mottagningslogg",
+    "receivingIntro": "Dina HACCP-mottagningskontroller: temperaturer registrerade vid FIRINGI-leveranser och varor från andra leverantörer som du lägger till här.",
+    "addOutside": "Varor från en annan leverantör",
+    "logTitle": "Denna månad",
+    "noLog": "Inget registrerat denna månad.",
+    "colDate": "Datum",
+    "colSupplier": "Leverantör",
+    "colTemp": "Temperatur",
+    "colStatus": "Status",
+    "colBy": "Av",
+    "accepted": "Mottaget",
+    "refused": "Nekad",
+    "readingsTotal": "Mätningar",
+    "outOfRange": "Utanför intervallet",
+    "refusedCount": "Nekade / blockerade",
+    "equipmentOverdue": "Utrustning försenad",
+    "loadingTitle": "Temperatur vid lastning",
+    "breaches30": "Brott i kylkedjan på dina beställningar (30 dagar): {n}"
   }
 }
