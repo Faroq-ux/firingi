@@ -129,8 +129,15 @@ export async function createRequest(input: CreateInput) {
       await tx.paymentRequest.updateMany({ where: { status: "OPEN", items: { some: { invoiceId: { in: ids } } } }, data: { status: "CANCELLED" } });
     }
     if (amount.lte(0.004)) throw new ValidationError("Nothing left to pay.");
+    // Phase 45: charged in the documents' currency (one currency per payment)
+    const { requestCurrency } = await import("@/server/currency/payments");
+    const cur = await requestCurrency(tx, { orderId: input.orderId, amountEur: amount, items }).catch((e) => {
+      if (e instanceof Error && e.message === "MIXED_CURRENCIES") throw new ValidationError("These invoices are in different currencies — pay them separately.");
+      throw e;
+    });
     return tx.paymentRequest.create({
       data: {
+        currencyCode: cur.currencyCode, amountLocal: cur.amountLocal,
         token: newToken(), companyId: input.companyId, orderId: input.orderId ?? null, amount: amount.toFixed(2), source: input.source,
         expiresAt: new Date(Date.now() + hours * 3600_000), createdById: input.createdById ?? null,
         items: { create: items.map((i) => ({ invoiceId: i.invoiceId, amount: i.amount.toFixed(2) })) },
@@ -230,7 +237,7 @@ export async function startPayment(requestId: string, method: OnlineMethod, opts
       if (!m) throw new ValidationError("Set up a direct debit first.");
       return await collectWithMandate(r.id, m, description, payer);
     }
-    const res = await provider.start({ requestId: r.id, amount: D(r.amount).toFixed(2), currency: r.currencyCode, method, payer, description, returnUrl: `${back}?return=1`, cancelUrl: back, phone: opts.phone });
+    const res = await provider.start({ requestId: r.id, amount: D(r.amountLocal ?? r.amount).toFixed(2), currency: r.currencyCode, method, payer, description, returnUrl: `${back}?return=1`, cancelUrl: back, phone: opts.phone });
     await prisma.paymentRequest.update({
       where: { id: r.id },
       data: { provider: provider.key, method: method as PaymentMethod, providerRef: res.providerRef, action: res.action as Prisma.InputJsonValue, status: res.status, ...(res.expiresAt && res.expiresAt < r.expiresAt ? { expiresAt: res.expiresAt } : {}) },
@@ -246,7 +253,7 @@ async function collectWithMandate(requestId: string, m: { id: string; provider: 
   const provider = providerByKey(m.provider);
   if (!provider) throw new ValidationError("The direct debit provider isn't configured.");
   const r = await prisma.paymentRequest.findUniqueOrThrow({ where: { id: requestId } });
-  const res = await provider.collect({ requestId, amount: D(r.amount).toFixed(2), currency: r.currencyCode, description, payer, mandate: { customerRef: m.providerCustomerRef, paymentMethodRef: m.providerPaymentMethodRef, mandateRef: m.providerMandateRef } });
+  const res = await provider.collect({ requestId, amount: D(r.amountLocal ?? r.amount).toFixed(2), currency: r.currencyCode, description, payer, mandate: { customerRef: m.providerCustomerRef, paymentMethodRef: m.providerPaymentMethodRef, mandateRef: m.providerMandateRef } });
   await prisma.paymentRequest.update({ where: { id: requestId }, data: { provider: provider.key, method: "DIRECT_DEBIT", providerRef: res.providerRef, mandateId: m.id, action: { type: "none" }, status: res.status === "PAID" ? "PROCESSING" : res.status, failureReason: res.failureReason ?? null } });
   if (res.status === "PAID") await applyEvent(provider.key, { eventId: `collect_${res.providerRef}`, type: "collect", kind: "payment.succeeded", requestId, providerRef: res.providerRef, providerPaymentRef: res.providerRef, payload: { collect: true } });
   if (res.status === "FAILED") await applyEvent(provider.key, { eventId: `collect_${res.providerRef}`, type: "collect", kind: "payment.failed", requestId, providerRef: res.providerRef, failureReason: res.failureReason, payload: { collect: true } });
@@ -324,17 +331,25 @@ async function settle(requestId: string, providerKey: string, ev: ProviderEvent)
     await tx.$queryRaw`SELECT id FROM "PaymentRequest" WHERE id = ${requestId} FOR UPDATE`;
     const r = await tx.paymentRequest.findUniqueOrThrow({ where: { id: requestId }, include: { items: true } });
     if (r.status === "PAID") return null;
-    const paid = ev.amount ? D(ev.amount) : D(r.amount);
-    const payment = await tx.payment.create({
-      data: {
-        companyId: r.companyId, direction: "INBOUND", method: (r.method ?? "OTHER") as PaymentMethod, amount: paid.toFixed(2), currencyCode: r.currencyCode,
-        reference: ev.providerPaymentRef ?? r.providerRef ?? ev.providerRef ?? null, status: "CONFIRMED", paidAt: new Date(), provider: providerKey,
-      },
-    });
+    const foreign = r.currencyCode !== "EUR";
+    // Phase 45: money in another currency — allocated in it, booked in EUR at the documents' rates (+ FX difference)
+    const payment = foreign
+      ? await (await import("@/server/currency/payments")).receiveForeign(tx, {
+          companyId: r.companyId, code: r.currencyCode, amountLocal: ev.amount ? D(ev.amount) : D(r.amountLocal ?? r.amount), method: (r.method ?? "OTHER") as PaymentMethod,
+          reference: ev.providerPaymentRef ?? r.providerRef ?? ev.providerRef ?? null, provider: providerKey,
+          targets: r.items.map((i) => ({ invoiceId: i.invoiceId, maxEur: D(i.amount) })), orderId: r.orderId, openEur: await openAmounts(r.items.map((i) => i.invoiceId), tx),
+        })
+      : await tx.payment.create({
+          data: {
+            companyId: r.companyId, direction: "INBOUND", method: (r.method ?? "OTHER") as PaymentMethod, amount: (ev.amount ? D(ev.amount) : D(r.amount)).toFixed(2), currencyCode: r.currencyCode,
+            reference: ev.providerPaymentRef ?? r.providerRef ?? ev.providerRef ?? null, status: "CONFIRMED", paidAt: new Date(), provider: providerKey,
+          },
+        });
+    const paid = D(payment.amount);
     await (await import("@/server/integrations/webhooks")).emitWebhook(tx, r.companyId, "payment.received", { paymentId: payment.id, amount: payment.amount.toString(), method: payment.method, reference: payment.reference, paidAt: payment.paidAt?.toISOString() ?? null, documents: r.items.map((i) => i.invoiceId) });
     // Allocate to the request's invoices — never more than what is still open now.
     const open = await openAmounts(r.items.map((i) => i.invoiceId), tx);
-    let free = paid;
+    let free = foreign ? ZERO : paid;
     for (const it of r.items) {
       if (free.lte(0.004)) break;
       const amt = Decimal.min(free, open.get(it.invoiceId) ?? ZERO, D(it.amount));
@@ -522,8 +537,10 @@ export async function buyerPaymentOverview(ctx: Ctx) {
   if (!can(ctx, ["buyer.invoices.view", "buyer.payments.view", "buyer.payments.make"])) throw new ForbiddenError();
   const invoices = await prisma.invoice.findMany({
     where: { recipientCompanyId: ctx.company.id, docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" } },
-    select: { id: true, fullNumber: true, providerNumber: true, dueAt: true, issuedAt: true }, orderBy: [{ dueAt: "asc" }, { issuedAt: "asc" }], take: 500,
+    select: { id: true, fullNumber: true, providerNumber: true, dueAt: true, issuedAt: true, currencyCode: true, grossTotal: true, grossTotalLocal: true }, orderBy: [{ dueAt: "asc" }, { issuedAt: "asc" }], take: 500,
   });
+  // Phase 45: open amounts in the invoice's own currency (what the customer pays)
+  const localOpen = (i: (typeof invoices)[number], eur: Decimal) => (i.currencyCode !== "EUR" && i.grossTotalLocal && !D(i.grossTotal).isZero() ? eur.mul(D(i.grossTotalLocal)).div(D(i.grossTotal)).toFixed(i.currencyCode === "ISK" ? 0 : 2) : eur.toFixed(2));
   const open = await openAmounts(invoices.map((i) => i.id));
   const openInvoices = invoices.filter((i) => (open.get(i.id) ?? ZERO).gt(0.004));
   const [busyItems, credit, mandate, inProgress, methods] = await Promise.all([
@@ -537,9 +554,9 @@ export async function buyerPaymentOverview(ctx: Ctx) {
   const now = new Date();
   return {
     canPay: can(ctx, "buyer.payments.make") && methods.methods.length > 0,
-    invoices: openInvoices.map((i) => ({ id: i.id, number: i.providerNumber ?? i.fullNumber ?? "?", dueAt: i.dueAt?.toISOString() ?? null, overdue: !!i.dueAt && i.dueAt < now, open: open.get(i.id)!.toFixed(2), busy: busy.has(i.id) })),
+    invoices: openInvoices.map((i) => ({ id: i.id, number: i.providerNumber ?? i.fullNumber ?? "?", dueAt: i.dueAt?.toISOString() ?? null, overdue: !!i.dueAt && i.dueAt < now, open: localOpen(i, open.get(i.id)!), currency: i.currencyCode, busy: busy.has(i.id) })),
     credit: credit.filter((c) => !c.orderId || c.orderStatus === "CANCELLED" || c.orderStatus === "RETURNED").reduce((a, c) => a.plus(c.free), ZERO).toFixed(2),
     mandate: mandate ? { id: mandate.id, ibanLast4: mandate.ibanLast4, autoCollect: mandate.autoCollect } : null,
-    inProgress: inProgress.map((r) => ({ id: r.id, method: r.method, amount: r.amount.toFixed(2), action: r.action as PayAction | null, docs: r.order ? r.order.number : r.items.map((i) => i.invoice.providerNumber ?? i.invoice.fullNumber ?? "?").join(", ") })),
+    inProgress: inProgress.map((r) => ({ id: r.id, method: r.method, amount: (r.amountLocal ?? r.amount).toFixed(2), currency: r.currencyCode, action: r.action as PayAction | null, docs: r.order ? r.order.number : r.items.map((i) => i.invoice.providerNumber ?? i.invoice.fullNumber ?? "?").join(", ") })),
   };
 }

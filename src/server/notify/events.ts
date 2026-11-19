@@ -163,6 +163,8 @@ export const EVENTS: EventDef[] = [
   E("excise.licence_review", "account", ["admin.customers.manage", "admin.vendors.approve"], ["EMAIL", "PUSH"], ["company", "licence"]),
   E("excise.licence_decided", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "status", "note"]),
   E("excise.licence_expiring", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "date", "days"]),
+  // multi-currency (Phase 45)
+  E("fx.alert", "account", ["admin.settings.manage", "admin.finance.manage"], ["EMAIL", "PUSH"], ["message"]),
   // food information & allergens (Phase 44)
   E("food.review", "catalogue", ["admin.catalogue.approve"], ["EMAIL"], ["company", "product"]),
   E("food.decided", "catalogue", ["vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "status", "note"]),

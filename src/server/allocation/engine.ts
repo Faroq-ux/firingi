@@ -354,6 +354,9 @@ export async function createAllocatedOrder(tx: Tx, original: OrderBase, vendorId
       },
     });
   }
+  // Phase 45: a moved order keeps the customer's rate of the original; a new FIRINGI order locks today's
+  const { lockOrderCurrency } = await import("@/server/currency/documents");
+  await lockOrderCurrency(tx, order.id, undefined, (original as { id?: string }).id ?? null);
   await tx.orderStatusHistory.create({ data: { orderId: order.id, toStatus: "NEW", byUserId, reason: why } });
   await tx.order.update({ where: { id: order.id }, data: { status: "PENDING_CONFIRMATION" } });
   await tx.orderStatusHistory.create({ data: { orderId: order.id, fromStatus: "NEW", toStatus: "PENDING_CONFIRMATION", reason: "Sent to supplier" } });

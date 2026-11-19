@@ -29,7 +29,9 @@ async function takeNumber(tx: Tx, legalEntityId: string, countryId: string, docT
   const year = new Date().getFullYear();
   // Documents issued at Moloni get Moloni's legal number; FIRINGI then only needs its own
   // reference, from a separate series so its fiscal series stays gap-free and hash-chained.
-  const prefix = `${PREFIX[docType]}${reference ? "-REF" : ""} FIR${year}`;
+  // Another country's FIRINGI entity numbers its own series (invoice numbers are unique across entities): "FT FIRPL2026/1"
+  const cc = (await tx.country.findUnique({ where: { id: countryId }, select: { code: true } }))?.code;
+  const prefix = `${PREFIX[docType]}${reference ? "-REF" : ""} FIR${cc && cc !== "PT" ? cc : ""}${year}`;
   await tx.invoiceSeries.upsert({
     where: { legalEntityId_docType_prefix_year: { legalEntityId, docType, prefix, year } },
     update: {},
@@ -56,8 +58,13 @@ async function issueDocument(tx: Tx, d: {
 }) {
   const net = r2(d.lines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0)));
   const vat = r2(d.lines.reduce((a, l) => a.plus(l.lineVat), new Decimal(0)));
+  // Phase 45: an order in the customer's currency gets its invoice / credit notes in it too (the order's locked rate)
+  const { invoiceCurrency, invoiceLocal } = await import("@/server/currency/documents");
+  const fx = await invoiceCurrency(tx, { orderId: d.orderId, originalInvoiceId: d.originalInvoiceId });
+  const loc = fx ? invoiceLocal(fx, d.lines, net, vat) : null;
   const draft = await tx.invoice.create({
     data: {
+      ...(fx && loc ? { currencyCode: fx.code, eurRate: fx.eurRate.toString(), midRate: fx.midRate.toString(), netTotalLocal: loc.net.toString(), vatTotalLocal: loc.vat.toString(), grossTotalLocal: loc.grand.toString() } : {}),
       legalEntityId: d.legalEntityId, docType: d.docType, status: "DRAFT", taxRegime: d.taxRegime, recipientCompanyId: d.recipientCompanyId, orderId: d.orderId,
       originalInvoiceId: d.originalInvoiceId ?? null, issuerSnapshot: d.issuerSnapshot, recipientSnapshot: d.recipientSnapshot,
       netTotal: net.toFixed(2), vatTotal: vat.toFixed(2), grossTotal: net.plus(vat).toFixed(2), createdById: d.createdById,
@@ -67,6 +74,7 @@ async function issueDocument(tx: Tx, d: {
     data: d.lines.map((l, i) => ({
       invoiceId: draft.id, orderLineId: l.orderLineId ?? null, position: i + 1, description: l.description, qty: l.qty.toFixed(3), unitPriceNet: l.unitPriceNet.toFixed(4),
       discountNet: (l.discountNet ?? new Decimal(0)).toFixed(2), taxRate: l.taxRate.toFixed(3), saftTaxCode: l.saftTaxCode ?? null, lineNet: l.lineNet.toFixed(2), lineVat: l.lineVat.toFixed(2), exciseNet: (l.exciseNet ?? new Decimal(0)).toFixed(2),
+      ...(loc ? { unitPriceLocal: loc.lines[i].unitLocal.toString(), lineNetLocal: loc.lines[i].netLocal.toString(), lineVatLocal: loc.lines[i].vatLocal.toString() } : {}),
     })),
   });
   const byRate = new Map<string, { base: Decimal; vat: Decimal }>();
@@ -222,6 +230,7 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     data: {
       number: `VBS-${year}-${String(seq[0].n).padStart(6, "0")}`, vendorCompanyId: order.sellerCompanyId, orderId, salesInvoiceId: invoice.id, taxRegime: regime,
       expectedNet: expNet.toFixed(2), expectedVat: expVat.toFixed(2), expectedGross: expNet.plus(expVat).toFixed(2), commissionTotal: order.commissionTotal.toString(), lines: stLines,
+      ...(await (await import("@/server/currency/documents")).statementLocal(tx, orderId, { net: expNet, vat: expVat, gross: expNet.plus(expVat) })),
     },
   });
   return { invoice, statement };
@@ -302,6 +311,7 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
       data: {
         number: `VBS-${year}-${String(seq[0].n).padStart(6, "0")}`, vendorCompanyId: inv.order.sellerCompanyId, orderId: inv.orderId!, salesInvoiceId: cn.id, isCreditStatement: true,
         taxRegime: orig?.taxRegime ?? "DOMESTIC", expectedNet: n.toFixed(2), expectedVat: v.toFixed(2), expectedGross: n.plus(v).toFixed(2), commissionTotal: 0, lines: stLines,
+        ...(await (await import("@/server/currency/documents")).statementLocal(tx, inv.orderId!, { net: n, vat: v, gross: n.plus(v) })),
       },
     })).id;
   }

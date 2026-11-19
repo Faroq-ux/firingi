@@ -30,7 +30,20 @@ export type Filters = {
   buyerId?: string | null;
   buyerIds?: string[] | null; // regional scope
   categoryId?: string | null; // line level: this category and below
+  /**
+   * Phase 45: money in another currency. `col` = the order's own locked rate when the order is in that currency
+   * (customers: eurRate, suppliers: vendorRate), else `rate` (today's); FIRINGI's currency switch: `rate` only.
+   */
+  fx?: { code: string; rate: number; col?: "eurRate" | "vendorRate" } | null;
 };
+
+/** The factor money is multiplied by (1 = EUR). */
+function fxFactor(f: Filters): Prisma.Sql {
+  if (!f.fx || f.fx.code === "EUR") return Prisma.sql`1`;
+  if (!f.fx.col) return Prisma.sql`${f.fx.rate}::numeric`;
+  const codeCol = f.fx.col === "eurRate" ? Prisma.raw(`o."currencyCode"`) : Prisma.raw(`o."vendorCurrencyCode"`);
+  return Prisma.sql`(CASE WHEN ${codeCol} = ${f.fx.code} THEN o.${Prisma.raw(`"${f.fx.col}"`)} ELSE ${f.fx.rate}::numeric END)`;
+}
 
 export const DIMENSIONS = ["day", "week", "month", "vendor", "buyer", "country", "sellerCountry", "flow", "deliveryMode", "region", "product", "category", "categoryRoot"] as const;
 export type Dim = (typeof DIMENSIONS)[number];
@@ -58,17 +71,17 @@ const DIM_SQL: Record<Dim, Prisma.Sql> = {
 };
 
 const qty = Prisma.sql`coalesce(l."qtyDelivered", l."qtyConfirmed", l."qtyOrdered")`;
-function metricSql(m: Metric, line: boolean): Prisma.Sql {
+function metricSql(m: Metric, line: boolean, k: Prisma.Sql = Prisma.sql`1`): Prisma.Sql {
   if (line) {
     switch (m) {
       case "orders": return Prisma.sql`count(DISTINCT o.id)::float8`;
       case "buyers": return Prisma.sql`count(DISTINCT o."buyerCompanyId")::float8`;
       case "units": return Prisma.sql`sum(${qty})::float8`;
-      case "net": return Prisma.sql`sum(l."lineNet")::float8`;
-      case "commission": return Prisma.sql`sum(l."commissionAmount")::float8`;
-      case "margin": return Prisma.sql`sum(l."lineNet" - l."vendorLineNet")::float8`;
-      case "payout": return Prisma.sql`sum(l."vendorLineNet")::float8`;
-      case "aov": return Prisma.sql`(sum(l."lineNet") / nullif(count(DISTINCT o.id), 0))::float8`;
+      case "net": return Prisma.sql`sum(l."lineNet" * ${k})::float8`;
+      case "commission": return Prisma.sql`sum(l."commissionAmount" * ${k})::float8`;
+      case "margin": return Prisma.sql`sum((l."lineNet" - l."vendorLineNet") * ${k})::float8`;
+      case "payout": return Prisma.sql`sum(l."vendorLineNet" * ${k})::float8`;
+      case "aov": return Prisma.sql`(sum(l."lineNet" * ${k}) / nullif(count(DISTINCT o.id), 0))::float8`;
       default: throw new ValidationError(`"${m}" is not available per product or category.`);
     }
   }
@@ -76,18 +89,18 @@ function metricSql(m: Metric, line: boolean): Prisma.Sql {
     case "orders": return Prisma.sql`count(*)::float8`;
     case "buyers": return Prisma.sql`count(DISTINCT o."buyerCompanyId")::float8`;
     case "units": throw new ValidationError("Units are counted per product line — add a product or category dimension.");
-    case "net": return Prisma.sql`sum(o."netTotal")::float8`;
-    case "goodsNet": return Prisma.sql`sum(o."netTotal" - o."deliveryFeeNet")::float8`;
-    case "gross": return Prisma.sql`sum(o."grandTotal")::float8`;
-    case "vat": return Prisma.sql`sum(o."vatTotal")::float8`;
-    case "commission": return Prisma.sql`sum(o."commissionTotal")::float8`;
-    case "margin": return Prisma.sql`sum(o."firingiMarginNet")::float8`;
-    case "fees": return Prisma.sql`sum(o."deliveryFeeNet")::float8`;
+    case "net": return Prisma.sql`sum(o."netTotal" * ${k})::float8`;
+    case "goodsNet": return Prisma.sql`sum((o."netTotal" - o."deliveryFeeNet") * ${k})::float8`;
+    case "gross": return Prisma.sql`sum(o."grandTotal" * ${k})::float8`;
+    case "vat": return Prisma.sql`sum(o."vatTotal" * ${k})::float8`;
+    case "commission": return Prisma.sql`sum(o."commissionTotal" * ${k})::float8`;
+    case "margin": return Prisma.sql`sum(o."firingiMarginNet" * ${k})::float8`;
+    case "fees": return Prisma.sql`sum(o."deliveryFeeNet" * ${k})::float8`;
     // FIRINGI's own income: goods margin + the fees of FIRINGI's fleet (a supplier's flat rate is passed on).
-    case "revenue": return Prisma.sql`sum(o."firingiMarginNet" + CASE WHEN o."deliveryMode" = 'FIRINGI_FLEET' THEN o."deliveryFeeNet" ELSE 0 END)::float8`;
-    case "discount": return Prisma.sql`sum(o."discountTotal")::float8`;
-    case "payout": return Prisma.sql`sum(o."vendorPayableNet")::float8`;
-    case "aov": return Prisma.sql`(sum(o."netTotal") / nullif(count(*), 0))::float8`;
+    case "revenue": return Prisma.sql`sum((o."firingiMarginNet" + CASE WHEN o."deliveryMode" = 'FIRINGI_FLEET' THEN o."deliveryFeeNet" ELSE 0 END) * ${k})::float8`;
+    case "discount": return Prisma.sql`sum(o."discountTotal" * ${k})::float8`;
+    case "payout": return Prisma.sql`sum(o."vendorPayableNet" * ${k})::float8`;
+    case "aov": return Prisma.sql`(sum(o."netTotal" * ${k}) / nullif(count(*), 0))::float8`;
   }
 }
 
@@ -128,7 +141,7 @@ export async function report(f: Filters, dims: Dim[], metrics: Metric[], opts: {
   }
   const cols = [
     ...dims.map((d, i) => Prisma.sql`${DIM_SQL[d]}::text AS ${Prisma.raw(`"d${i}"`)}`),
-    ...metrics.map((m, i) => Prisma.sql`${metricSql(m, line)} AS ${Prisma.raw(`"m${i}"`)}`),
+    ...metrics.map((m, i) => Prisma.sql`${metricSql(m, line, fxFactor(f))} AS ${Prisma.raw(`"m${i}"`)}`),
   ];
   const catFilter = f.categoryId
     ? Prisma.sql`AND c.path LIKE (SELECT path FROM "Category" WHERE id = ${f.categoryId}) || '%'`
@@ -176,7 +189,7 @@ export async function kpis(f: Filters): Promise<Kpis> {
     ${scope.buyerIds ? (scope.buyerIds.length ? Prisma.sql`AND ord."buyerCompanyId" IN (${Prisma.join(scope.buyerIds)})` : Prisma.sql`AND false`) : Prisma.empty}
     ${scope.sellerType ? Prisma.sql`AND ord.flow = ${scope.sellerType === "WHOLESALER" ? "CUSTOMER_FROM_WHOLESALER" : "WHOLESALER_FROM_DISTRIBUTOR"}::"OrderFlow"` : Prisma.empty}`;
   const [credited] = await prisma.$queryRaw<{ n: number }[]>`
-    SELECT coalesce(sum(i."netTotal"), 0)::float8 AS n FROM "Invoice" i JOIN "Order" ord ON ord.id = i."orderId"
+    SELECT coalesce(sum(i."netTotal" * ${f.fx && f.fx.code !== "EUR" ? (f.fx.col === "eurRate" ? Prisma.sql`(CASE WHEN i."currencyCode" = ${f.fx.code} THEN i."eurRate" ELSE ${f.fx.rate}::numeric END)` : Prisma.sql`${f.fx.rate}::numeric`) : Prisma.sql`1`}), 0)::float8 AS n FROM "Invoice" i JOIN "Order" ord ON ord.id = i."orderId"
     WHERE i."docType" = 'CREDIT_NOTE' AND i."issuedAt" >= ${f.from} AND i."issuedAt" < ${f.to}
     ${f.countryId ? Prisma.sql`AND ord."countryId" = ${f.countryId}` : Prisma.empty}
     ${f.vendorId ? Prisma.sql`AND ord."sellerCompanyId" = ${f.vendorId}` : Prisma.empty}

@@ -89,11 +89,15 @@ const eq = (a: number, b: number) => Math.abs(a - b) < 0.005;
 
 // ── what the engine knows (loaded once per run) ─────────────────────────────
 
-type Inv = { id: string; number: string; companyId: string; open: number; gross: number; dueAt: Date | null; keys: string[] };
-type Pay = { id: string; companyId: string; company: string; direction: "INBOUND" | "OUTBOUND"; amount: number; left: number; paidAt: Date | null; reference: string | null; method: string; provider: string | null; keys: string[]; docs: string[] };
-type VInv = { id: string; number: string; companyId: string; open: number; keys: string[]; issueDate: Date };
+/** Phase 45: units of the document's currency per € (1 for EUR documents). */
+const ratioOf = (eur: unknown, local: unknown) => (local != null && Number(eur) ? Number(local) / Number(eur) : 1);
+
+/** Phase 45: `code` = the document's currency; FIRINGI's open amounts are in EUR and `ratio` turns them into it. */
+type Inv = { id: string; number: string; companyId: string; open: number; gross: number; dueAt: Date | null; keys: string[]; code: string; ratio: number };
+type Pay = { id: string; companyId: string; company: string; direction: "INBOUND" | "OUTBOUND"; amount: number; left: number; paidAt: Date | null; reference: string | null; method: string; provider: string | null; keys: string[]; docs: string[]; code: string };
+type VInv = { id: string; number: string; companyId: string; open: number; keys: string[]; issueDate: Date; code: string; ratio: number };
 type Entry = { id: string; kind: "SALE" | "EXPENSE"; date: Date; amount: number; payee: string | null; description: string | null };
-type Order = { id: string; number: string; companyId: string; total: number; keys: string[] };
+type Order = { id: string; number: string; companyId: string; total: number; keys: string[]; code: string; ratio: number };
 type Co = { id: string; legalName: string; tradeName: string | null; vatNumber: string | null; taxId: string };
 
 type Knowledge = {
@@ -121,29 +125,30 @@ async function know(owner: Owner): Promise<Knowledge> {
     const rows = await prisma.bankMatch.groupBy({ by: ["paymentId"], where: { paymentId: { in: paymentIds }, line: { account: { ownerKey: owner.key } } }, _sum: { amount: true } });
     return new Map(rows.map((r) => [r.paymentId!, Math.abs(Number(r._sum.amount ?? 0))]));
   };
-  const toPays = async (rows: { id: string; companyId: string; direction: "INBOUND" | "OUTBOUND"; amount: Prisma.Decimal; refundedAmount: Prisma.Decimal; paidAt: Date | null; reference: string | null; method: string; provider: string | null; company: { legalName: string }; allocations: { invoice: { fullNumber: string | null; providerNumber: string | null } | null; vendorInvoice: { externalNumber: string } | null }[] }[]) => {
+  const toPays = async (rows: { id: string; companyId: string; direction: "INBOUND" | "OUTBOUND"; amount: Prisma.Decimal; amountLocal: Prisma.Decimal | null; currencyCode: string; refundedAmount: Prisma.Decimal; paidAt: Date | null; reference: string | null; method: string; provider: string | null; company: { legalName: string }; allocations: { invoice: { fullNumber: string | null; providerNumber: string | null } | null; vendorInvoice: { externalNumber: string } | null }[] }[]) => {
     const done = await reconciled(rows.map((r) => r.id));
     return rows.map((p) => {
-      const amount = Number(p.amount);
-      return { id: p.id, companyId: p.companyId, company: p.company.legalName, direction: p.direction, amount, left: round2(amount - (done.get(p.id) ?? 0)), paidAt: p.paidAt, reference: p.reference, method: p.method, provider: p.provider, keys: p.allocations.flatMap((a) => docKeys(a.invoice?.fullNumber, a.invoice?.providerNumber, a.vendorInvoice?.externalNumber)), docs: p.allocations.map((a) => a.invoice?.providerNumber ?? a.invoice?.fullNumber ?? a.vendorInvoice?.externalNumber).filter((x): x is string => !!x) };
+      // a payment in another currency is matched to the bank in that currency
+      const amount = p.currencyCode !== "EUR" && p.amountLocal != null ? Number(p.amountLocal) : Number(p.amount);
+      return { code: p.currencyCode, id: p.id, companyId: p.companyId, company: p.company.legalName, direction: p.direction, amount, left: round2(amount - (done.get(p.id) ?? 0)), paidAt: p.paidAt, reference: p.reference, method: p.method, provider: p.provider, keys: p.allocations.flatMap((a) => docKeys(a.invoice?.fullNumber, a.invoice?.providerNumber, a.vendorInvoice?.externalNumber)), docs: p.allocations.map((a) => a.invoice?.providerNumber ?? a.invoice?.fullNumber ?? a.vendorInvoice?.externalNumber).filter((x): x is string => !!x) };
     }).filter((p) => p.left > 0.004);
   };
-  const paySelect = { id: true, companyId: true, direction: true, amount: true, refundedAmount: true, paidAt: true, reference: true, method: true, provider: true, company: { select: { legalName: true } }, allocations: { select: { invoice: { select: { fullNumber: true, providerNumber: true } }, vendorInvoice: { select: { externalNumber: true } } } } } as const;
+  const paySelect = { id: true, companyId: true, direction: true, amount: true, amountLocal: true, currencyCode: true, refundedAmount: true, paidAt: true, reference: true, method: true, provider: true, company: { select: { legalName: true } }, allocations: { select: { invoice: { select: { fullNumber: true, providerNumber: true } }, vendorInvoice: { select: { externalNumber: true } } } } } as const;
 
   if (owner.side === "FIRINGI") {
     const [companies, invRows, payRows, vinvRows, orderRows] = await Promise.all([
       prisma.company.findMany({ where: { type: { not: "ADMIN" } }, select: { id: true, legalName: true, tradeName: true, vatNumber: true, taxId: true } }),
-      prisma.invoice.findMany({ where: { docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" }, issuedAt: { gte: since } }, select: { id: true, fullNumber: true, providerNumber: true, recipientCompanyId: true, grossTotal: true, dueAt: true, creditNotes: { where: { status: { not: "DRAFT" } }, select: { grossTotal: true } }, allocations: { where: { payment: { status: { in: ["CONFIRMED", "REFUNDED"] } } }, select: { amount: true } } } }),
+      prisma.invoice.findMany({ where: { docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" }, issuedAt: { gte: since } }, select: { id: true, fullNumber: true, providerNumber: true, recipientCompanyId: true, grossTotal: true, grossTotalLocal: true, currencyCode: true, dueAt: true, creditNotes: { where: { status: { not: "DRAFT" } }, select: { grossTotal: true } }, allocations: { where: { payment: { status: { in: ["CONFIRMED", "REFUNDED"] } } }, select: { amount: true } } } }),
       prisma.payment.findMany({ where: { status: { in: ["CONFIRMED", "REFUNDED"] }, paidAt: { gte: since } }, select: paySelect }),
-      prisma.vendorInvoice.findMany({ where: { status: "APPROVED", docType: { not: "CREDIT_NOTE" } }, select: { id: true, externalNumber: true, vendorCompanyId: true, grossTotal: true, issueDate: true, paymentAllocations: { where: { payment: { status: "CONFIRMED" } }, select: { amount: true } } } }),
-      prisma.order.findMany({ where: { awaitingPayment: true, status: "ON_HOLD" }, select: { id: true, number: true, buyerCompanyId: true, grandTotal: true, prepayBuffer: true } }),
+      prisma.vendorInvoice.findMany({ where: { status: "APPROVED", docType: { not: "CREDIT_NOTE" } }, select: { id: true, externalNumber: true, vendorCompanyId: true, grossTotal: true, grossTotalLocal: true, currencyCode: true, issueDate: true, paymentAllocations: { where: { payment: { status: "CONFIRMED" } }, select: { amount: true } } } }),
+      prisma.order.findMany({ where: { awaitingPayment: true, status: "ON_HOLD" }, select: { id: true, number: true, buyerCompanyId: true, grandTotal: true, grandTotalLocal: true, currencyCode: true, prepayBuffer: true } }),
     ]);
     const invoices = invRows.map((i) => {
       const open = round2(Number(i.grossTotal) - i.creditNotes.reduce((a, c) => a + Number(c.grossTotal), 0) - i.allocations.reduce((a, x) => a + Number(x.amount), 0));
-      return { id: i.id, number: i.providerNumber ?? i.fullNumber ?? i.id, companyId: i.recipientCompanyId, open, gross: Number(i.grossTotal), dueAt: i.dueAt, keys: docKeys(i.fullNumber, i.providerNumber) };
+      return { id: i.id, number: i.providerNumber ?? i.fullNumber ?? i.id, companyId: i.recipientCompanyId, open, gross: Number(i.grossTotal), dueAt: i.dueAt, keys: docKeys(i.fullNumber, i.providerNumber), code: i.currencyCode, ratio: ratioOf(i.grossTotal, i.grossTotalLocal) };
     }).filter((i) => i.open > 0.004).sort((a, b) => (a.dueAt?.getTime() ?? 0) - (b.dueAt?.getTime() ?? 0));
-    const vendorInvoices = vinvRows.map((v) => ({ id: v.id, number: v.externalNumber, companyId: v.vendorCompanyId, open: round2(Number(v.grossTotal) - v.paymentAllocations.reduce((a, x) => a + Number(x.amount), 0)), keys: docKeys(v.externalNumber), issueDate: v.issueDate })).filter((v) => v.open > 0.004).sort((a, b) => a.issueDate.getTime() - b.issueDate.getTime());
-    return { owner, settings, links, rules, companies, invoices, payments: await toPays(payRows), vendorInvoices, entries: [], orders: orderRows.map((o) => ({ id: o.id, number: o.number, companyId: o.buyerCompanyId, total: Number(o.grandTotal) + Number(o.prepayBuffer), keys: docKeys(o.number) })) };
+    const vendorInvoices = vinvRows.map((v) => ({ id: v.id, number: v.externalNumber, companyId: v.vendorCompanyId, open: round2(Number(v.grossTotal) - v.paymentAllocations.reduce((a, x) => a + Number(x.amount), 0)), keys: docKeys(v.externalNumber), issueDate: v.issueDate, code: v.currencyCode, ratio: ratioOf(v.grossTotal, v.grossTotalLocal) })).filter((v) => v.open > 0.004).sort((a, b) => a.issueDate.getTime() - b.issueDate.getTime());
+    return { owner, settings, links, rules, companies, invoices, payments: await toPays(payRows), vendorInvoices, entries: [], orders: orderRows.map((o) => ({ id: o.id, number: o.number, companyId: o.buyerCompanyId, total: Number(o.grandTotal) + Number(o.prepayBuffer), keys: docKeys(o.number), code: o.currencyCode, ratio: ratioOf(o.grandTotal, o.grandTotalLocal) })) };
   }
 
   const cid = owner.companyId!;
@@ -152,7 +157,7 @@ async function know(owner: Owner): Promise<Knowledge> {
     prisma.payment.findMany({ where: { companyId: cid, status: { in: ["CONFIRMED", "REFUNDED"] }, paidAt: { gte: since }, direction: owner.side === "VENDOR" ? "OUTBOUND" : "INBOUND" }, select: paySelect }),
     accountingOn ? prisma.accountingEntry.findMany({ where: { companyId: cid, date: { gte: since } }, select: { id: true, kind: true, date: true, amount: true, payee: true, description: true } }) : Promise.resolve([]),
     prisma.bankMatch.findMany({ where: { accountingEntryId: { not: null }, line: { account: { ownerKey: owner.key } } }, select: { accountingEntryId: true } }),
-    owner.side === "BUYER" ? prisma.invoice.findMany({ where: { recipientCompanyId: cid, docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" }, issuedAt: { gte: since } }, select: { id: true, fullNumber: true, providerNumber: true, grossTotal: true, dueAt: true } }) : Promise.resolve([]),
+    owner.side === "BUYER" ? prisma.invoice.findMany({ where: { recipientCompanyId: cid, docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" }, issuedAt: { gte: since } }, select: { id: true, fullNumber: true, providerNumber: true, grossTotal: true, grossTotalLocal: true, currencyCode: true, dueAt: true } }) : Promise.resolve([]),
     prisma.bankMatch.findMany({ where: { invoiceId: { not: null }, line: { account: { ownerKey: owner.key } } }, select: { invoiceId: true, amount: true } }),
     Promise.resolve({ id: "FIRINGI", legalName: "FIRINGI", tradeName: null, vatNumber: null, taxId: "" }),
   ]);
@@ -162,7 +167,11 @@ async function know(owner: Owner): Promise<Knowledge> {
   return {
     owner, settings, links, rules, companies: [firingi], payments: await toPays(payRows), vendorInvoices: [], orders: [],
     entries: entryRows.filter((e) => !usedEntries.has(e.id)).map((e) => ({ id: e.id, kind: e.kind, date: e.date, amount: Number(e.amount), payee: e.payee, description: e.description })),
-    invoices: invRows.map((i) => ({ id: i.id, number: i.providerNumber ?? i.fullNumber ?? i.id, companyId: cid, gross: Number(i.grossTotal), open: round2(Number(i.grossTotal) - (paidInBooks.get(i.id) ?? 0)), dueAt: i.dueAt, keys: docKeys(i.fullNumber, i.providerNumber) })).filter((i) => i.open > 0.004),
+    // the customer's own books: its invoices in their own currency (ratio 1)
+    invoices: invRows.map((i) => {
+      const gross = Number(i.grossTotalLocal ?? i.grossTotal);
+      return { id: i.id, number: i.providerNumber ?? i.fullNumber ?? i.id, companyId: cid, gross, open: round2(gross - (paidInBooks.get(i.id) ?? 0)), dueAt: i.dueAt, keys: docKeys(i.fullNumber, i.providerNumber), code: i.currencyCode, ratio: 1 };
+    }).filter((i) => i.open > 0.004),
   };
 }
 
@@ -214,7 +223,21 @@ function ruleFor(k: Knowledge, line: BankLine, text: string): Proposal | null {
   return null;
 }
 
-export function proposalsFor(k: Knowledge, line: BankLine): Proposal[] {
+/** Phase 45: a bank line only meets documents and payments in its own currency, with their amounts in it. */
+function inCurrency(k: Knowledge, code: string): Knowledge {
+  const loc = (eur: number, ratio: number) => (code === "EUR" ? eur : round2(eur * ratio));
+  return {
+    ...k,
+    invoices: k.invoices.filter((i) => i.code === code).map((i) => ({ ...i, open: loc(i.open, i.ratio), gross: loc(i.gross, i.ratio) })),
+    vendorInvoices: k.vendorInvoices.filter((v) => v.code === code).map((v) => ({ ...v, open: loc(v.open, v.ratio) })),
+    payments: k.payments.filter((p) => p.code === code),
+    orders: k.orders.filter((o) => o.code === code).map((o) => ({ ...o, total: loc(o.total, o.ratio) })),
+    entries: k.entries,
+  };
+}
+
+export function proposalsFor(k0: Knowledge, line: BankLine): Proposal[] {
+  const k = inCurrency(k0, line.currencyCode);
   const L = Number(line.amount);
   const A = Math.abs(L);
   const inbound = L > 0;
@@ -380,7 +403,7 @@ export async function matchOptions(ctx: Ctx, lineId: string, f: { kind: BankMatc
   const owner = ownerOf(ctx);
   const line = await prisma.bankLine.findFirst({ where: { id: lineId, account: { ownerKey: owner.key } } });
   if (!line) throw new NotFoundError("Bank line");
-  const k = await know(owner);
+  const k = inCurrency(await know(owner), line.currencyCode);
   const q = norm(f.q ?? "");
   const match = (s: string) => q.trim() === "" || norm(s).includes(q.trim());
   const L = Number(line.amount);
@@ -435,6 +458,30 @@ export async function applyMatch(owner: Owner, lineId: string, p: Proposal, acto
         if (!cid) throw new ValidationError("Choose the customer.");
         const { openAmounts, applyCustomerCredit, releasePaidOrder } = await import("@/server/payments/service");
         const open = await openAmounts(items.map((i) => i.id), tx);
+        if (line.currencyCode !== "EUR") {
+          // Phase 45: money in the customer's currency — allocated in it, booked in EUR at the invoices' rates (+ FX)
+          const { receiveForeign, invoiceRatios } = await import("@/server/currency/payments");
+          const ratios = await invoiceRatios(tx, items.map((i) => i.id));
+          const invs = await tx.invoice.findMany({ where: { id: { in: items.map((i) => i.id) } }, select: { id: true, recipientCompanyId: true } });
+          for (const i of items) {
+            const r = ratios.get(i.id);
+            if (invs.find((x) => x.id === i.id)?.recipientCompanyId !== cid || r?.code !== line.currencyCode) throw new ValidationError("An invoice belongs to another customer or is in another currency.");
+            if (i.amount > round2(Number(open.get(i.id) ?? 0) * Number(r.ratio)) + 0.004) throw new ValidationError(`More than what is open on ${i.label ?? "an invoice"}.`);
+          }
+          const amountLocal = round2(itemSum + credit);
+          const pay = await receiveForeign(tx, { companyId: cid, code: line.currencyCode, amountLocal: D(amountLocal), method: "BANK_TRANSFER", reference: ref, recordedById: actor.userId, targets: items.map((i) => ({ invoiceId: i.id })), openEur: open, orderId: p.orderId ?? null });
+          await tx.payment.update({ where: { id: pay.id }, data: { paidAt: when } });
+          if (p.orderId) {
+            const o = await tx.order.findUnique({ where: { id: p.orderId }, select: { id: true, buyerCompanyId: true, awaitingPayment: true, grandTotal: true, prepayBuffer: true } });
+            if (o && o.buyerCompanyId === cid) {
+              await tx.paymentRequest.create({ data: { token: `bank-${pay.id}`, companyId: cid, orderId: o.id, amount: pay.amount, currencyCode: line.currencyCode, amountLocal: amountLocal.toFixed(2), status: "PAID", source: "ORDER", method: "BANK_TRANSFER", expiresAt: when, paidAt: when, paidAmount: pay.amount, paymentId: pay.id, createdById: actor.userId } });
+              if (o.awaitingPayment && D(pay.amount).gte(D(o.grandTotal).plus(D(o.prepayBuffer)).minus(0.02))) await releasePaidOrder(tx, o.id);
+            }
+          } else await applyCustomerCredit(tx, cid);
+          await tx.bankMatch.create({ data: { ...base, kind: "CUSTOMER_PAYMENT", amount: amountLocal.toFixed(2), paymentId: pay.id, createdPayment: true } });
+          learnCompany = cid;
+          break;
+        }
         const invs = await tx.invoice.findMany({ where: { id: { in: items.map((i) => i.id) } }, select: { id: true, recipientCompanyId: true } });
         for (const i of items) {
           if (invs.find((x) => x.id === i.id)?.recipientCompanyId !== cid) throw new ValidationError("An invoice belongs to another customer.");
@@ -467,9 +514,23 @@ export async function applyMatch(owner: Owner, lineId: string, p: Proposal, acto
         for (const i of items) {
           const o = open.find((x) => x.id === i.id);
           if (!o) throw new ValidationError("Only this supplier's approved, unpaid invoices can be paid.");
-          if (i.amount > o.open.toNumber() + 0.004) throw new ValidationError(`More than what is open on ${o.number}.`);
+          if (line.currencyCode === "EUR" && i.amount > o.open.toNumber() + 0.004) throw new ValidationError(`More than what is open on ${o.number}.`);
         }
-        const pay = await tx.payment.create({ data: { companyId: cid, direction: "OUTBOUND", method: "BANK_TRANSFER", amount: itemSum.toFixed(2), reference: ref, status: "CONFIRMED", paidAt: when, recordedById: actor.userId, allocations: { create: items.map((i) => ({ vendorInvoiceId: i.id, amount: i.amount.toFixed(2) })) } } });
+        // Phase 45: a payout in the supplier's currency — the line's amounts are in it; booked in EUR at the invoices' rates
+        const foreign = line.currencyCode !== "EUR";
+        const vis = foreign ? await tx.vendorInvoice.findMany({ where: { id: { in: items.map((i) => i.id) } }, select: { id: true, currencyCode: true, grossTotal: true, grossTotalLocal: true } }) : [];
+        const eurOf = (i: { id: string; amount: number }) => {
+          if (!foreign) return i.amount;
+          const v = vis.find((x) => x.id === i.id);
+          if (!v || v.currencyCode !== line.currencyCode) throw new ValidationError("That supplier invoice is in another currency.");
+          const r = ratioOf(v.grossTotal, v.grossTotalLocal);
+          const o = open.find((x) => x.id === i.id)!;
+          return Math.abs(i.amount - round2(o.open.toNumber() * r)) < 0.005 ? o.open.toNumber() : round2(i.amount / r);
+        };
+        const alloc = items.map((i) => ({ id: i.id, eur: eurOf(i) }));
+        const payEur = round2(alloc.reduce((a, x) => a + x.eur, 0));
+        const pay = await tx.payment.create({ data: { companyId: cid, direction: "OUTBOUND", method: "BANK_TRANSFER", amount: payEur.toFixed(2), reference: ref, status: "CONFIRMED", paidAt: when, recordedById: actor.userId, allocations: { create: alloc.map((a) => ({ vendorInvoiceId: a.id, amount: a.eur.toFixed(2) })) } } });
+        if (foreign) await (await import("@/server/currency/payments")).payableFx(tx, { paymentId: pay.id, companyId: cid, code: line.currencyCode, allocations: alloc.map((a) => ({ vendorInvoiceId: a.id, amountEur: D(a.eur) })) });
         await markVendorInvoicesPaid(tx, items.map((i) => i.id));
         await tx.bankMatch.create({ data: { ...base, kind: "VENDOR_PAYOUT", amount: (-itemSum).toFixed(2), paymentId: pay.id, createdPayment: true } });
         await (await import("@/server/integrations/webhooks")).emitWebhook(tx, cid, "payout.sent", { paymentId: pay.id, amount: itemSum.toFixed(2), method: "BANK_TRANSFER", reference: ref, paidAt: when.toISOString(), documents: items.map((i) => i.id) });
@@ -482,7 +543,8 @@ export async function applyMatch(owner: Owner, lineId: string, p: Proposal, acto
         for (const i of items) {
           const pay = pays.find((x) => x.id === i.id);
           if (!pay || pay.direction !== wantDir || (owner.companyId && pay.companyId !== owner.companyId)) throw new ValidationError("That payment can't be matched to this line.");
-          const left = Number(pay.amount) - pay.bankMatches.reduce((a, m) => a + Math.abs(Number(m.amount)), 0);
+          if (pay.currencyCode !== line.currencyCode) throw new ValidationError("That payment is in another currency.");
+          const left = Number(pay.currencyCode !== "EUR" && pay.amountLocal != null ? pay.amountLocal : pay.amount) - pay.bankMatches.reduce((a, m) => a + Math.abs(Number(m.amount)), 0);
           if (i.amount > left + 0.004) throw new ValidationError("More than what is left of that payment.");
           await tx.bankMatch.create({ data: { ...base, kind: "PAYMENT", amount: (sign * i.amount).toFixed(2), paymentId: pay.id, companyId: pay.companyId } });
         }

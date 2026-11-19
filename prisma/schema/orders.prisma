@@ -80,6 +80,16 @@ model Order {
   currencyCode          String        @default("EUR")
   vendorCurrencyCode    String        @default("EUR")
   fxRate                Decimal       @default(1) @db.Decimal(18, 8) // vendor → buyer currency at order time
+  /// Phase 45: locked at placement. Amounts are kept in EUR (FIRINGI's books); the customer's currency is
+  /// eurRate units per € (the reference rate + the FX margin), midRate the reference rate that day, vendorRate
+  /// the supplier's currency per € (reference). The *Local totals are what the customer sees and pays (null = EUR).
+  eurRate               Decimal       @default(1) @db.Decimal(18, 8)
+  midRate               Decimal       @default(1) @db.Decimal(18, 8)
+  fxMarginPct           Decimal       @default(0) @db.Decimal(6, 3)
+  vendorRate            Decimal       @default(1) @db.Decimal(18, 8)
+  netTotalLocal         Decimal?      @db.Decimal(18, 2)
+  vatTotalLocal         Decimal?      @db.Decimal(18, 2)
+  grandTotalLocal       Decimal?      @db.Decimal(18, 2)
   couponCode            String?
   /// Orders placed in one checkout (a cart from several suppliers, or one FIRINGI picked) share it.
   checkoutId            String?
@@ -181,6 +191,10 @@ model OrderLine {
   firingiFundedDiscount Decimal @default(0) @db.Decimal(18, 4) // per unit, paid by FIRINGI
   vendorFundedDiscount  Decimal @default(0) @db.Decimal(18, 4) // per unit, paid by vendor
   unitSalePriceNet      Decimal @db.Decimal(18, 4) // what the buyer pays per unit (net)
+  /// Phase 45: in the order's currency (null = EUR order); a fixed local price list's price is kept exactly
+  unitPriceLocal        Decimal? @db.Decimal(18, 4)
+  lineNetLocal          Decimal? @db.Decimal(18, 2)
+  lineVatLocal          Decimal? @db.Decimal(18, 2)
 
   taxRate Decimal @db.Decimal(6, 3)
   lineNet Decimal @db.Decimal(18, 2)

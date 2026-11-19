@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
-import { deleteGroupAction, removePriceAction, saveGroupAction, savePriceListAction, setGroupMemberAction, setPriceAction } from "@/server/actions/catalogue";
+import { convertPriceListCurrencyAction, deleteGroupAction, removePriceAction, saveGroupAction, savePriceListAction, setGroupMemberAction, setPriceAction } from "@/server/actions/catalogue";
 
 function useRun() {
   const router = useRouter();
@@ -16,8 +16,9 @@ function useRun() {
 }
 type Opt = { id: string; label: string };
 
-export function NewPriceListForm({ groups, customers }: { groups: Opt[]; customers: Opt[] }) {
+export function NewPriceListForm({ groups, customers, currencies = ["EUR"], own = "EUR" }: { groups: Opt[]; customers: Opt[]; currencies?: string[]; own?: string }) {
   const t = useTranslations("catalogue.vendor");
+  const tc = useTranslations("currency");
   const router = useRouter();
   const { pending, error, run } = useRun();
   const [scope, setScope] = useState<"CUSTOMER_GROUP" | "CUSTOMER" | "CONTRACT">("CUSTOMER_GROUP");
@@ -33,6 +34,7 @@ export function NewPriceListForm({ groups, customers }: { groups: Opt[]; custome
           name: String(fd.get("name")), scope, targetGroupId: scope === "CUSTOMER_GROUP" ? String(fd.get("target")) : null,
           targetCompanyId: scope !== "CUSTOMER_GROUP" ? String(fd.get("target")) : null, priority: Number(fd.get("priority") || 0),
           validFrom: String(fd.get("validFrom") || "") || null, validTo: String(fd.get("validTo") || "") || null,
+          currencyCode: String(fd.get("currency") || own),
         }), (d) => router.push(`/vendor/products/price-lists/${(d as { id: string }).id}`));
       }}
     >
@@ -49,6 +51,10 @@ export function NewPriceListForm({ groups, customers }: { groups: Opt[]; custome
       <div className="space-y-1"><Label htmlFor="pl-prio">{t("priority")}</Label><Input id="pl-prio" name="priority" type="number" min={0} max={100} defaultValue={0} /></div>
       <div className="space-y-1"><Label htmlFor="pl-from">{t("validFrom")}</Label><Input id="pl-from" name="validFrom" type="date" /></div>
       <div className="space-y-1"><Label htmlFor="pl-to">{t("validTo")}</Label><Input id="pl-to" name="validTo" type="date" /></div>
+      {currencies.length > 1 && (
+        <div className="space-y-1"><Label htmlFor="pl-ccy">{tc("currency")}</Label>
+          <Select id="pl-ccy" name="currency" defaultValue={own}>{currencies.map((c) => <option key={c} value={c}>{c}</option>)}</Select></div>
+      )}
       <div className="flex items-end gap-2 sm:col-span-2">
         <Button type="submit" disabled={pending}>{t("save")}</Button>
         <Button type="button" variant="outline" onClick={() => setOpen(false)}>{t("cancel")}</Button>
@@ -58,8 +64,9 @@ export function NewPriceListForm({ groups, customers }: { groups: Opt[]; custome
   );
 }
 
-export function AddPriceForm({ priceListId, offers }: { priceListId: string; offers: Opt[] }) {
+export function AddPriceForm({ priceListId, offers, currency = "EUR" }: { priceListId: string; offers: Opt[]; currency?: string }) {
   const t = useTranslations("catalogue.vendor");
+  const tc = useTranslations("currency");
   const tp = useTranslations("priceIntel");
   const { pending, error, run } = useRun();
   const [held, setHeld] = useState(false);
@@ -77,7 +84,7 @@ export function AddPriceForm({ priceListId, offers }: { priceListId: string; off
       <div className="min-w-64 flex-1 space-y-1"><Label htmlFor="ap-offer">{t("product")}</Label>
         <Select id="ap-offer" name="offerId" required>{offers.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}</Select></div>
       <div className="space-y-1"><Label htmlFor="ap-min">{t("minQty")}</Label><Input id="ap-min" name="minQty" type="number" min={1} defaultValue={1} className="w-24" /></div>
-      <div className="space-y-1"><Label htmlFor="ap-price">{t("price")}</Label><Input id="ap-price" name="price" type="number" min="0.01" step="0.01" required className="w-28" /></div>
+      <div className="space-y-1"><Label htmlFor="ap-price">{currency === "EUR" ? t("price") : tc("priceIn", { code: currency })}</Label><Input id="ap-price" name="price" type="number" min={currency === "ISK" ? "1" : "0.01"} step={currency === "ISK" ? "1" : "0.01"} required className="w-28" /></div>
       <Button type="submit" disabled={pending}>{t("addPrice")}</Button>
       {error && <p className="w-full text-sm text-destructive">{error}</p>}
       {held && <p className="w-full text-sm text-amber-700 dark:text-warning" data-testid="price-held">{tp("held")}</p>}
@@ -129,6 +136,23 @@ export function GroupMembers({ groupId, members, candidates }: { groupId: string
         <Button size="sm" variant="ghost" className="ml-auto text-destructive" disabled={pending} onClick={() => confirm("?") && run(() => deleteGroupAction({ groupId }))}>{t("delete")}</Button>
       </div>
       {error && <p className="text-sm text-destructive">{error}</p>}
+    </div>
+  );
+}
+
+/** Phase 45: move the list to another currency (prices converted at today's reference rate). */
+export function ConvertCurrency({ id, current, currencies }: { id: string; current: string; currencies: string[] }) {
+  const tc = useTranslations("currency");
+  const { pending, error, run } = useRun();
+  const others = currencies.filter((c) => c !== current);
+  if (!others.length) return null;
+  return (
+    <div className="flex min-w-0 flex-wrap items-center gap-2 text-sm" data-testid="convert-currency">
+      {others.map((c) => (
+        <Button key={c} size="sm" variant="outline" disabled={pending} onClick={() => { if (confirm(tc("convertHint"))) run(() => convertPriceListCurrencyAction({ id, code: c })); }}>{tc("convertTo", { code: c })}</Button>
+      ))}
+      <span className="text-xs text-muted-foreground">{tc("convertHint")}</span>
+      {error && <p className="w-full text-sm text-destructive">{error}</p>}
     </div>
   );
 }

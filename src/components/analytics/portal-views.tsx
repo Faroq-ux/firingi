@@ -77,18 +77,18 @@ export async function VendorSalesReport({ ctx, searchParams }: { ctx: Ctx; searc
         actions={<Exports t={t} audience="VENDOR" params={q.params} dims={[q.grain]} metrics={["orders", "buyers", "goodsNet", "commission", "payout"]} />} />
       <FilterBar labels={filterLabels(t)} />
       <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Kpi label={t("sales")} value={g.goodsNet} prev={pg.goodsNet} fmt="money" locale={locale} vsLabel={vs} testId="kpi-sales" />
+        <Kpi label={t("sales")} value={g.goodsNet} prev={pg.goodsNet} fmt={q.money} locale={locale} vsLabel={vs} testId="kpi-sales" />
         <Kpi label={t("orders")} value={k.orders} prev={p.orders} fmt="number" locale={locale} vsLabel={vs} testId="kpi-orders" />
-        <Kpi label={t("avgOrder")} value={avg(g)} prev={avg(pg)} fmt="money" locale={locale} vsLabel={vs} />
-        <Kpi label={t("payout")} value={k.payout} prev={p.payout} fmt="money" locale={locale} vsLabel={vs} hint={`${t("commission")}: ${fmtValue(k.commission, "money", locale)}`} />
+        <Kpi label={t("avgOrder")} value={avg(g)} prev={avg(pg)} fmt={q.money} locale={locale} vsLabel={vs} />
+        <Kpi label={t("payout")} value={k.payout} prev={p.payout} fmt={q.money} locale={locale} vsLabel={vs} hint={`${t("commission")}: ${fmtValue(k.commission, q.money, locale)}`} />
       </div>
       <div className="grid gap-4">
-        <Trend t={t} f={f} grain={q.grain} locale={locale} title={t("salesOverTime")} metric="goodsNet" fmt="money" kind="line" />
+        <Trend t={t} f={f} grain={q.grain} locale={locale} title={t("salesOverTime")} metric="goodsNet" fmt={q.money} kind="line" />
         <div className="grid gap-4 lg:grid-cols-2">
-          <Rank t={t} f={f} dim="product" metric="net" fmt="money" locale={locale} title={t("topProducts")} />
-          <Rank t={t} f={f} dim="buyer" metric="goodsNet" fmt="money" locale={locale} title={t("topCustomers")} />
-          <Rank t={t} f={f} dim="categoryRoot" metric="net" fmt="money" locale={locale} title={t("byCategory")} />
-          <Rank t={t} f={f} dim="region" metric="goodsNet" fmt="money" locale={locale} title={t("byRegion")} />
+          <Rank t={t} f={f} dim="product" metric="net" fmt={q.money} locale={locale} title={t("topProducts")} />
+          <Rank t={t} f={f} dim="buyer" metric="goodsNet" fmt={q.money} locale={locale} title={t("topCustomers")} />
+          <Rank t={t} f={f} dim="categoryRoot" metric="net" fmt={q.money} locale={locale} title={t("byCategory")} />
+          <Rank t={t} f={f} dim="region" metric="goodsNet" fmt={q.money} locale={locale} title={t("byRegion")} />
         </div>
       </div>
     </>
@@ -107,17 +107,17 @@ export async function BuyerSpendingReport({ ctx, searchParams }: { ctx: Ctx; sea
         actions={<Exports t={t} audience="BUYER" params={q.params} dims={[q.grain]} metrics={["orders", "net", "vat", "gross", "discount"]} />} />
       <FilterBar labels={filterLabels(t)} />
       <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Kpi label={t("spend")} value={k.gross} prev={p.gross} fmt="money" locale={locale} vsLabel={vs} hint={t("spendHint")} testId="kpi-spend" />
-        <Kpi label={t("spendNet")} value={k.net} prev={p.net} fmt="money" locale={locale} vsLabel={vs} />
+        <Kpi label={t("spend")} value={k.gross} prev={p.gross} fmt={q.money} locale={locale} vsLabel={vs} hint={t("spendHint")} testId="kpi-spend" />
+        <Kpi label={t("spendNet")} value={k.net} prev={p.net} fmt={q.money} locale={locale} vsLabel={vs} />
         <Kpi label={t("orders")} value={k.orders} prev={p.orders} fmt="number" locale={locale} vsLabel={vs} testId="kpi-orders" />
-        <Kpi label={t("saved")} value={d[0]?.values.discount ?? 0} prev={pd[0]?.values.discount ?? 0} fmt="money" locale={locale} vsLabel={vs} />
+        <Kpi label={t("saved")} value={d[0]?.values.discount ?? 0} prev={pd[0]?.values.discount ?? 0} fmt={q.money} locale={locale} vsLabel={vs} />
       </div>
       <div className="grid gap-4">
-        <Trend t={t} f={f} grain={q.grain} locale={locale} title={t("spendOverTime")} metric="gross" fmt="money" kind="bar" />
+        <Trend t={t} f={f} grain={q.grain} locale={locale} title={t("spendOverTime")} metric="gross" fmt={q.money} kind="bar" />
         <div className="grid gap-4 lg:grid-cols-2">
-          <Rank t={t} f={f} dim="vendor" metric="gross" fmt="money" locale={locale} title={t("bySupplier")} />
-          <Rank t={t} f={f} dim="product" metric="net" fmt="money" locale={locale} title={t("topProducts")} />
-          <Rank t={t} f={f} dim="categoryRoot" metric="net" fmt="money" locale={locale} title={t("byCategory")} />
+          <Rank t={t} f={f} dim="vendor" metric="gross" fmt={q.money} locale={locale} title={t("bySupplier")} />
+          <Rank t={t} f={f} dim="product" metric="net" fmt={q.money} locale={locale} title={t("topProducts")} />
+          <Rank t={t} f={f} dim="categoryRoot" metric="net" fmt={q.money} locale={locale} title={t("byCategory")} />
           <Rank t={t} f={f} dim="deliveryMode" metric="orders" fmt="number" locale={locale} title={t("byDeliveryMode")} enumLabels={modeLabels(t)} />
         </div>
       </div>

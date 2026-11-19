@@ -150,8 +150,15 @@ export const savePriceListAction = defineAction({
     id: z.string().optional(), name: z.string().trim().min(2).max(80), scope: z.enum(["CUSTOMER_GROUP", "CUSTOMER", "CONTRACT"]),
     targetGroupId: optId, targetCompanyId: optId, priority: z.coerce.number().int().min(0).max(100).optional(),
     validFrom: z.string().optional().nullable(), validTo: z.string().optional().nullable(), isActive: z.boolean().optional(),
+    currencyCode: z.string().length(3).optional().nullable(),
   }),
   handler: async (ctx, i) => done({ id: (await pricing.savePriceList(ctx, { ...i, validFrom: i.validFrom ? new Date(i.validFrom) : null, validTo: i.validTo ? new Date(i.validTo) : null })).id }),
+});
+/** Phase 45: move a price list to another currency (prices converted at today's reference rates). */
+export const convertPriceListCurrencyAction = defineAction({
+  permission: "vendor.pricing.manage",
+  schema: z.object({ id: z.string(), code: z.string().length(3) }),
+  handler: async (ctx, i) => done(await pricing.convertPriceListCurrency(ctx, i.id, i.code)),
 });
 export const saveGroupAction = defineAction({
   permission: "vendor.pricing.manage",

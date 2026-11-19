@@ -19,7 +19,7 @@ const CURRENCIES = [
   { code: "SEK", name: "Swedish krona", symbol: "kr" },
   { code: "NOK", name: "Norwegian krone", symbol: "kr" },
   { code: "CHF", name: "Swiss franc", symbol: "CHF" },
-  { code: "ISK", name: "Icelandic króna", symbol: "kr" },
+  { code: "ISK", name: "Icelandic króna", symbol: "kr", decimals: 0 },
 ];
 
 /** Approximate EUR rates for development only — replace with an ECB feed. */

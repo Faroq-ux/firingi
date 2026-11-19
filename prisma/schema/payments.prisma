@@ -36,6 +36,8 @@ model PaymentRequest {
   orderId            String?
   amount             Decimal              @db.Decimal(18, 2)
   currencyCode       String               @default("EUR")
+  /// Phase 45: what is charged in `currencyCode` (null = EUR, charge `amount`)
+  amountLocal        Decimal?             @db.Decimal(18, 2)
   status             PaymentRequestStatus @default(OPEN)
   source             PaymentRequestSource
   provider           String?

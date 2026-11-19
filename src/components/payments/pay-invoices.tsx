@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { payInvoicesAction } from "@/server/actions/payments";
 
-type Inv = { id: string; number: string; dueAt: string | null; overdue: boolean; open: string; busy: boolean };
+type Inv = { id: string; number: string; dueAt: string | null; overdue: boolean; open: string; busy: boolean; currency?: string };
 
 /** Customer: tick open invoices and pay them together. */
 export function PayInvoicesForm({ invoices }: { invoices: Inv[] }) {
@@ -18,8 +18,10 @@ export function PayInvoicesForm({ invoices }: { invoices: Inv[] }) {
   const [picked, setPicked] = useState<Set<string>>(() => new Set(payable.filter((i) => i.overdue).map((i) => i.id).concat(payable.some((i) => i.overdue) ? [] : payable.slice(0, 1).map((i) => i.id))));
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  const money = (v: number | string) => new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(Number(v));
-  const total = useMemo(() => invoices.filter((i) => picked.has(i.id)).reduce((a, i) => a + Number(i.open), 0), [invoices, picked]);
+  // Phase 45: invoices in the customer's currency (one payment = one currency)
+  const currency = invoices.find((i) => picked.has(i.id))?.currency ?? invoices[0]?.currency ?? "EUR";
+  const money = (v: number | string) => new Intl.NumberFormat(locale, { style: "currency", currency }).format(Number(v));
+  const total = useMemo(() => invoices.filter((i) => picked.has(i.id) && (i.currency ?? "EUR") === currency).reduce((a, i) => a + Number(i.open), 0), [invoices, picked, currency]);
   const toggle = (id: string) => setPicked((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   return (
     <div className="space-y-3" data-testid="pay-invoices">

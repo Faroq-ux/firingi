@@ -16,6 +16,17 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate, formatMoney } from "@/lib/utils";
+
+/** Phase 45: a document's amount in its own currency (from its EUR amount and its local total). */
+const inDoc = (eur: unknown, d: { currencyCode?: string | null; grossTotal?: unknown; grossTotalLocal?: unknown }) => {
+  if (!d.currencyCode || d.currencyCode === "EUR" || d.grossTotalLocal == null || !Number(d.grossTotal)) return null;
+  return { code: d.currencyCode, v: Number(eur) * (Number(d.grossTotalLocal) / Number(d.grossTotal)) };
+};
+const money2 = (eur: unknown, locale: string, d: Parameters<typeof inDoc>[1], viewer: "OWN" | "ADMIN") => {
+  const l = inDoc(eur, d);
+  if (!l) return { t: formatMoney(String(eur), locale), v: Number(eur), sub: null as string | null };
+  return viewer === "OWN" ? { t: formatMoney(l.v, locale, l.code), v: l.v, sub: null } : { t: formatMoney(String(eur), locale), v: Number(eur), sub: formatMoney(l.v, locale, l.code) };
+};
 import { pickLocalized } from "@/i18n/config";
 import { paymentInstructions } from "@/server/services/payments";
 import { AcceptButtons, PaymentForm, PromotionStatusButtons, VendorInvoiceReview, VendorInvoiceUpload } from "./controls";
@@ -40,7 +51,11 @@ const PAGE = 300;
 
 export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, unpaidOnly, page = 1, basePath, before }: { ctx: Ctx; as: "BUYER" | "ADMIN"; title: string; docType?: "INVOICE" | "CREDIT_NOTE"; buyerType?: "CUSTOMER" | "WHOLESALER"; unpaidOnly?: boolean; page?: number; basePath?: string; before?: React.ReactNode }) {
   const [all, t, locale] = await Promise.all([listSalesInvoices(ctx, { as, docType, buyerType, unpaidOnly }), getTranslations("finance"), getLocale()]);
-  const open = all.reduce((a, r) => a + Number(r.open), 0);
+  const viewer = as === "BUYER" ? "OWN" : "ADMIN";
+  const codes = [...new Set(all.map((r) => r.currencyCode))];
+  // a customer billed in one currency sees its balance in it
+  const balanceCode = as === "BUYER" && codes.length === 1 ? codes[0] : "EUR";
+  const open = all.reduce((a, r) => a + (balanceCode !== "EUR" ? inDoc(r.open, r)?.v ?? Number(r.open) : Number(r.open)), 0);
   // The balance covers every open invoice; the table shows 50 at a time.
   const pageCount = Math.max(1, Math.ceil(all.length / PAGE));
   const current = Math.min(Math.max(1, page), pageCount);
@@ -48,7 +63,7 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
   const howToPay = as === "BUYER" ? await paymentInstructions(ctx.company.countryId) : null;
   return (
     <>
-      <PageHeader title={title} description={`${all.length} · ${t("balance")}: ${formatMoney(open, locale)}`} />
+      <PageHeader title={title} description={`${all.length} · ${t("balance")}: ${formatMoney(open, locale, balanceCode)}`} />
       {before}
       {howToPay && (howToPay.bankTransfer || howToPay.mbWay || howToPay.cashOnDelivery) && (
         <Card className="mb-4" data-testid="how-to-pay">
@@ -82,8 +97,8 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
               date: { t: formatDate(r.issuedAt, locale), v: r.issuedAt?.getTime() ?? 0, node: <span className="text-xs">{formatDate(r.issuedAt, locale)}{r.dueAt && r.docType !== "CREDIT_NOTE" && <span className={`block ${r.overdue ? "text-destructive" : "text-muted-foreground"}`}>{t("due")} {formatDate(r.dueAt, locale)}</span>}</span> },
               customer: r.recipient.legalName,
               order: { t: r.order?.number ?? "", mono: true },
-              total: { t: `${r.docType === "CREDIT_NOTE" ? "−" : ""}${formatMoney(r.grossTotal.toString(), locale)}`, v: Number(r.grossTotal) * (r.docType === "CREDIT_NOTE" ? -1 : 1) },
-              open: { t: Number(r.open) > 0 ? formatMoney(r.open, locale) : "—", v: Number(r.open) },
+              total: (() => { const m = money2(r.grossTotal, locale, r, viewer); const sign = r.docType === "CREDIT_NOTE" ? -1 : 1; return { t: `${sign < 0 ? "−" : ""}${m.t}`, v: m.v * sign, ...(m.sub ? { sub: `${sign < 0 ? "−" : ""}${m.sub}` } : {}) }; })(),
+              open: (() => { if (!(Number(r.open) > 0)) return { t: "—", v: 0 }; const m = money2(r.open, locale, r, viewer); return { t: m.t, v: m.v, ...(m.sub ? { sub: m.sub } : {}) }; })(),
               status: { t: status, node: r.overdue ? <Badge variant="destructive">{t("overdue")}</Badge> : Number(r.open) === 0 && r.docType === "INVOICE" ? <StatusBadge status="PAID" /> : <StatusBadge status={r.status} /> },
               pdf: { t: "", node: pendingFiscal(r) ? null : pdfLink(`/api/invoices/${r.id}/pdf`) },
             },
@@ -96,10 +111,10 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
 
 export async function PaymentsView({ ctx, as, title, direction, vendorType, withForm, before }: { ctx: Ctx; as: "BUYER" | "VENDOR" | "ADMIN"; title: string; direction?: "INBOUND" | "OUTBOUND"; vendorType?: "DISTRIBUTOR" | "WHOLESALER"; withForm?: boolean; before?: React.ReactNode }) {
   const [rows, t, locale] = await Promise.all([listPayments(ctx, as, { direction, vendorType }), getTranslations("finance"), getLocale()]);
-  let docs: { id: string; companyId: string; company: string; label: string; open: string }[] = [];
+  let docs: { id: string; companyId: string; company: string; label: string; open: string; currency?: string; openLocal?: string | null }[] = [];
   if (withForm && as === "ADMIN" && can(ctx, "admin.finance.manage")) {
     if (direction === "INBOUND")
-      docs = (await listSalesInvoices(ctx, { as: "ADMIN", docType: "INVOICE", unpaidOnly: true })).map((i) => ({ id: i.id, companyId: i.recipientCompanyId, company: i.recipient.legalName, label: `${i.fullNumber} · ${i.order?.number ?? ""}`, open: i.open }));
+      docs = (await listSalesInvoices(ctx, { as: "ADMIN", docType: "INVOICE", unpaidOnly: true })).map((i) => ({ id: i.id, companyId: i.recipientCompanyId, company: i.recipient.legalName, label: `${i.fullNumber} · ${i.order?.number ?? ""}`, open: i.open, currency: i.currencyCode, openLocal: inDoc(i.open, i)?.v.toFixed(2) ?? null }));
     else
       docs = (await listVendorInvoices(ctx, "ADMIN", { vendorType, statuses: ["APPROVED"] })).filter((v) => Number(v.open) > 0).map((v) => ({ id: v.id, companyId: v.vendorCompanyId, company: v.vendor.legalName, label: `${v.externalNumber}`, open: v.open }));
   }
@@ -121,7 +136,9 @@ export async function PaymentsView({ ctx, as, title, direction, vendorType, with
               <TD className="text-xs">{p.method.replace("_", " ").toLowerCase()}</TD>
               <TD className="text-xs">{p.reference ?? "—"}</TD>
               <TD className="font-mono text-xs">{p.allocations.map((a) => a.invoice?.fullNumber ?? a.vendorInvoice?.externalNumber).join(", ")}</TD>
-              <TD className="text-right tabular-nums">{formatMoney(p.amount.toString(), locale)}</TD>
+              <TD className="text-right tabular-nums">{p.currencyCode !== "EUR" && p.amountLocal != null
+                ? (as === "ADMIN" ? <>{formatMoney(p.amount.toString(), locale)}<div className="text-xs text-muted-foreground">{formatMoney(p.amountLocal.toString(), locale, p.currencyCode)}</div></> : formatMoney(p.amountLocal.toString(), locale, p.currencyCode))
+                : formatMoney(p.amount.toString(), locale)}</TD>
             </TR>
           ))}
         </TBody>
@@ -138,7 +155,11 @@ export async function StatementsView({ ctx, as, title }: { ctx: Ctx; as: "VENDOR
       <PageHeader title={title} description={as === "VENDOR" ? t("statementsIntro") : undefined} />
       {as === "VENDOR" && can(ctx, "vendor.invoices.submit") && open.length > 0 && (
         <Card className="mb-4"><CardHeader><CardTitle>{t("uploadInvoice")}</CardTitle></CardHeader><CardContent>
-          <VendorInvoiceUpload statements={open.map((s) => ({ id: s.id, label: `${s.number} · ${s.order.number}${s.isCreditStatement ? ` (${t("creditNote")})` : ""}`, net: s.expectedNet.toFixed(2), vat: s.expectedVat.toFixed(2), credit: s.isCreditStatement }))} />
+          <VendorInvoiceUpload statements={open.map((s) => {
+            // Phase 45: a statement in the supplier's currency is invoiced in it
+            const loc = s.currencyCode !== "EUR" && s.expectedNetLocal != null;
+            return { id: s.id, label: `${s.number} · ${s.order.number}${s.isCreditStatement ? ` (${t("creditNote")})` : ""}${loc ? ` · ${s.currencyCode}` : ""}`, net: loc ? Number(s.expectedNetLocal).toFixed(2) : s.expectedNet.toFixed(2), vat: loc ? Number(s.expectedVatLocal).toFixed(2) : s.expectedVat.toFixed(2), credit: s.isCreditStatement };
+          })} />
         </CardContent></Card>
       )}
       <Table>
@@ -151,9 +172,16 @@ export async function StatementsView({ ctx, as, title }: { ctx: Ctx; as: "VENDOR
               <TD className="text-xs">{formatDate(s.createdAt, locale)}</TD>
               {as === "ADMIN" && <TD>{s.vendor.legalName}</TD>}
               <TD className="font-mono text-xs">{s.order.number}</TD>
-              <TD className="text-right tabular-nums">{formatMoney(s.expectedNet.toString(), locale)}</TD>
-              <TD className="text-right tabular-nums">{formatMoney(s.expectedVat.toString(), locale)}</TD>
-              <TD className="text-right tabular-nums text-muted-foreground">{formatMoney(s.commissionTotal.toString(), locale)}</TD>
+              {(() => {
+                // Phase 45: the supplier sees its statements in its currency; FIRINGI in EUR with the supplier's amount below
+                const loc = s.currencyCode !== "EUR" && s.expectedNetLocal != null;
+                const own = (eur: unknown, local: unknown) => (loc ? (as === "VENDOR" ? formatMoney(String(local), locale, s.currencyCode) : <>{formatMoney(String(eur), locale)}<div className="text-xs text-muted-foreground">{formatMoney(String(local), locale, s.currencyCode)}</div></>) : formatMoney(String(eur), locale));
+                return <>
+                  <TD className="text-right tabular-nums">{own(s.expectedNet, s.expectedNetLocal)}</TD>
+                  <TD className="text-right tabular-nums">{own(s.expectedVat, s.expectedVatLocal)}</TD>
+                  <TD className="text-right tabular-nums text-muted-foreground">{loc && as === "VENDOR" ? formatMoney(Number(s.commissionTotal) * Number(s.rate), locale, s.currencyCode) : formatMoney(s.commissionTotal.toString(), locale)}</TD>
+                </>;
+              })()}
               <TD><StatusBadge status={s.status} />{s.allocations[0] && <div className="text-xs text-muted-foreground">{s.allocations[0].vendorInvoice.externalNumber}</div>}</TD>
               <TD>{pdfLink(`/api/statements/${s.id}/pdf`)}</TD>
             </TR>
@@ -180,8 +208,8 @@ export async function VendorInvoicesView({ ctx, as, title, vendorType }: { ctx: 
               {as === "ADMIN" && <TD>{v.vendor.legalName}</TD>}
               <TD className="text-xs">{formatDate(v.issueDate, locale)}</TD>
               <TD className="font-mono text-xs">{v.allocations.map((a) => a.statement.number).join(", ")}</TD>
-              <TD className="text-right tabular-nums">{formatMoney(v.netTotal.toString(), locale)}</TD>
-              <TD className="text-right tabular-nums">{formatMoney(v.vatTotal.toString(), locale)}{Number(v.selfAssessedVat) > 0 && <div className="text-xs text-muted-foreground">RC {formatMoney(v.selfAssessedVat.toString(), locale)}</div>}</TD>
+              <TD className="text-right tabular-nums">{v.currencyCode !== "EUR" && v.netTotalLocal != null ? (as === "VENDOR" ? formatMoney(v.netTotalLocal.toString(), locale, v.currencyCode) : <>{formatMoney(v.netTotal.toString(), locale)}<div className="text-xs text-muted-foreground">{formatMoney(v.netTotalLocal.toString(), locale, v.currencyCode)}</div></>) : formatMoney(v.netTotal.toString(), locale)}</TD>
+              <TD className="text-right tabular-nums">{v.currencyCode !== "EUR" && v.vatTotalLocal != null && as === "VENDOR" ? formatMoney(v.vatTotalLocal.toString(), locale, v.currencyCode) : formatMoney(v.vatTotal.toString(), locale)}{Number(v.selfAssessedVat) > 0 && <div className="text-xs text-muted-foreground">RC {formatMoney(v.selfAssessedVat.toString(), locale)}</div>}</TD>
               <TD><StatusBadge status={v.status} />{v.status === "DISPUTED" && <div className="text-xs text-destructive">{Object.values((v.matchResult ?? {}) as Record<string, string>).filter((x) => typeof x === "string").join("; ")}</div>}</TD>
               {review && <TD>{(v.status === "MATCHED" || v.status === "DISPUTED") && <VendorInvoiceReview id={v.id} disputed={v.status === "DISPUTED"} />}</TD>}
             </TR>

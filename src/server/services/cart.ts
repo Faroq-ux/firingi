@@ -195,7 +195,28 @@ export async function cartView(ctx: Ctx) {
   const waived = groups.reduce((a, g) => a.plus(g.freeDelivery?.amount ?? 0), new Decimal(0));
   const firstBad = groups.find((g) => !g.delivery.ok)?.delivery;
   const credit = await creditBlock(ctx.company.id, pc.grandTotal);
+  // Phase 45: the cart in the customer's currency, worked out like the order will be (a fixed local price exactly)
+  const { viewerFx } = await import("@/server/currency/service");
+  const { localAmounts, roundMoney, toLocal } = await import("@/lib/currency");
+  const fx = await viewerFx(ctx, "BUYER");
+  let local: { code: string; net: string; vat: string; gross: string; shownNet: string; fee: string; lines: Record<string, { net: string; gross: string }> } | null = null;
+  if (fx.code !== "EUR") {
+    const all = pc.parts.flatMap((p) => p.lines);
+    const r = localAmounts(all.map((l) => {
+      const f = l.item.price?.fixedLocal;
+      const listEur = new Decimal(l.calc.unitListPriceNet.toString());
+      return { lineNet: l.calc.lineNet, lineVat: l.calc.lineVat, taxRate: l.rate, unitSaleEur: l.calc.unitSalePriceNet, unitLocal: f && f.code === fx.code && !listEur.isZero() ? new Decimal(l.calc.unitSalePriceNet.toString()).mul(f.unitNet).div(listEur).toDecimalPlaces(4) : null };
+    }), { net: pc.netTotal, vat: pc.vatTotal, grand: pc.grandTotal }, fx.rate, fx.code);
+    const shownLines = Object.fromEntries(lines.map((l) => {
+      const unit = new Decimal(l.price?.local?.unitPriceNet ?? 0);
+      const net = roundMoney(unit.mul(l.qty), fx.code);
+      return [l.offerId, { net: net.toString(), gross: roundMoney(net.mul(new Decimal(l.vatRate).div(100).plus(1)), fx.code).toString() }];
+    }));
+    const shownNet = Object.values(shownLines).reduce((a, x) => a.plus(x.net), new Decimal(0));
+    local = { code: fx.code, net: r.net.toString(), vat: r.vat.toString(), gross: r.grand.toString(), shownNet: shownNet.toString(), fee: toLocal(feeNet, fx.rate, fx.code).toString(), lines: shownLines };
+  }
   return {
+    local,
     credit,
     routed: false as const,
     groups,

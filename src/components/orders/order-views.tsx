@@ -21,6 +21,7 @@ import { listViews } from "@/server/services/workspace";
 import { can } from "@/server/rbac/guard";
 import { bulkConfirmOrdersAction } from "@/server/actions/orders";
 import { formatDate, formatMoney } from "@/lib/utils";
+import { docFx, EUR_FX } from "@/lib/currency";
 import { ResolveException, StatusActions } from "./order-actions";
 import { DecisionPanel } from "./decision-panel";
 import { OrderProgress } from "./order-progress";
@@ -59,7 +60,13 @@ export async function OrderList({ ctx, as, title, description, statuses, since, 
       supplier: o.seller.tradeName ?? o.seller.legalName,
       delivery: o.deliveryMode ? t(`modes.${o.deliveryMode}`) : "—",
       lines: o._count.lines,
-      total: { t: formatMoney(o.grandTotal.toString(), locale), v: Number(o.grandTotal) },
+      total: (() => {
+        // Phase 45: customers see their own currency, suppliers theirs (each order's locked rate)
+        const x = o as typeof o & { currencyCode: string; grandTotalLocal?: unknown; vendorCurrencyCode?: string; vendorRate?: unknown };
+        if (as === "BUYER" && x.currencyCode !== "EUR" && x.grandTotalLocal != null) return { t: formatMoney(String(x.grandTotalLocal), locale, x.currencyCode), v: Number(x.grandTotalLocal) };
+        if (as === "VENDOR" && x.vendorCurrencyCode && x.vendorCurrencyCode !== "EUR") { const f = docFx({ currencyCode: x.vendorCurrencyCode, eurRate: String(x.vendorRate ?? 1) }); return { t: formatMoney(o.grandTotal.toString(), locale, f), v: Number(o.grandTotal) }; }
+        return { t: formatMoney(o.grandTotal.toString(), locale), v: Number(o.grandTotal) };
+      })(),
       status: { t: ts(o.status), tone: STATUS_VARIANT[o.status] },
     },
   }));
@@ -96,6 +103,12 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
   const addr = o.deliveryAddress as { label?: string; line1?: string; line2?: string; postalCode?: string; city?: string; country?: string };
   const goodsNet = o.lines.reduce((a, l) => a + Number(l.lineNet), 0);
   const L = (v: unknown) => pickLocalized(v, locale);
+  // Phase 45: the customer sees the order in its currency (its locked rate, exact local amounts); the supplier in its own
+  const oo = o as typeof o & { currencyCode: string; eurRate?: unknown; midRate?: unknown; fxMarginPct?: unknown; vendorCurrencyCode?: string; vendorRate?: unknown; netTotalLocal?: unknown; vatTotalLocal?: unknown; grandTotalLocal?: unknown };
+  const ofx = role === "BUYER" ? docFx({ currencyCode: oo.currencyCode, eurRate: String(oo.eurRate ?? 1) }) : role === "VENDOR" ? docFx({ currencyCode: oo.vendorCurrencyCode ?? "EUR", eurRate: String(oo.vendorRate ?? 1) }) : EUR_FX;
+  const tcur = await getTranslations("currency");
+  const M = (eur: unknown, local?: unknown) => (role === "BUYER" && local != null ? formatMoney(String(local), locale, oo.currencyCode) : formatMoney(String(eur), locale, ofx));
+  const goodsLocal = role === "BUYER" && oo.currencyCode !== "EUR" && o.lines.every((l) => (l as { lineNetLocal?: unknown }).lineNetLocal != null) ? o.lines.reduce((a, l) => a + Number((l as { lineNetLocal?: unknown }).lineNetLocal), 0) : null;
   return (
     <>
       <Link href={BASE[role]} className="text-sm text-primary hover:underline">← {role === "BUYER" ? t("myOrders") : t("vendor.all")}</Link>
@@ -113,7 +126,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
       {o.status === "ON_HOLD" && role === "BUYER" && o.awaitingPayment && (
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warning/40 bg-warning/10 p-4" data-testid="awaiting-payment">
           <div className="min-w-0 space-y-1 text-sm"><p className="font-semibold">{tPay("awaitingTitle")}</p><p>{tPay("awaitingBody", { days: payDays })}</p></div>
-          <PayOrderButton orderId={o.id} label={`${tPay("payOrder")} · ${formatMoney(o.grandTotal.plus(o.prepayBuffer).toString(), locale)}`} />
+          <PayOrderButton orderId={o.id} label={`${tPay("payOrder")} · ${M(o.grandTotal.plus(o.prepayBuffer), oo.grandTotalLocal != null ? Number(oo.grandTotalLocal) + Number(o.prepayBuffer) * Number(oo.eurRate ?? 1) : null)}`} />
         </div>
       )}
       {o.status === "ON_HOLD" && role === "BUYER" && !o.awaitingPayment && <p className="mb-4 rounded-md bg-warning/15 p-3 text-sm" data-testid="held-note">{t("heldNote")}</p>}
@@ -165,23 +178,25 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
                       <TD><div className="font-medium">{L(l.productName)}</div><div className="text-xs text-muted-foreground">{L(l.packagingName)} · SKU {l.sku}</div></TD>
                       <TD className="text-right tabular-nums">{l.qtyOrdered}</TD>
                       <TD className="text-right tabular-nums">{l.qtyConfirmed ?? "—"}</TD>
-                      <TD className="text-right tabular-nums">{formatMoney(l.unitSalePriceNet.toString(), locale)}</TD>
+                      <TD className="text-right tabular-nums">{M(l.unitSalePriceNet, (l as { unitPriceLocal?: unknown }).unitPriceLocal)}</TD>
                       <TD className="text-right tabular-nums">{Number(l.taxRate)}%</TD>
-                      <TD className="text-right tabular-nums">{formatMoney(l.lineNet.toString(), locale)}</TD>
+                      <TD className="text-right tabular-nums">{M(l.lineNet, (l as { lineNetLocal?: unknown }).lineNetLocal)}</TD>
                     </TR>
                   ))}
                 </TBody>
               </Table>
               <dl className="ml-auto mt-4 grid max-w-xs grid-cols-2 gap-y-1 text-sm">
-                <dt className="text-muted-foreground">{t("subtotal")}</dt><dd className="text-right tabular-nums">{formatMoney(goodsNet, locale)}</dd>
-                <dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{formatMoney(o.deliveryFeeNet.toString(), locale)}</dd>
-                {o.deliveryDiscountNet.gt(0) && <><dt className="text-xs text-muted-foreground">{tOffers("orderFreeDelivery")}</dt><dd className="text-right text-xs tabular-nums text-muted-foreground"><s>{formatMoney(o.deliveryDiscountNet.toString(), locale)}</s></dd></>}
+                <dt className="text-muted-foreground">{t("subtotal")}</dt><dd className="text-right tabular-nums">{M(goodsNet, goodsLocal)}</dd>
+                <dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{M(o.deliveryFeeNet)}</dd>
+                {o.deliveryDiscountNet.gt(0) && <><dt className="text-xs text-muted-foreground">{tOffers("orderFreeDelivery")}</dt><dd className="text-right text-xs tabular-nums text-muted-foreground"><s>{M(o.deliveryDiscountNet)}</s></dd></>}
                 {o.couponCode && <><dt className="text-xs text-muted-foreground">{tOffers("orderCoupon", { code: "" }).trim()}</dt><dd className="text-right font-mono text-xs" data-testid="order-coupon">{o.couponCode}</dd></>}
-                <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(o.vatTotal.toString(), locale)}</dd>
-                <dt className="font-semibold">{t("total")} ({t("vatIncluded", { tax })})</dt><dd className="text-right font-semibold tabular-nums">{formatMoney(o.grandTotal.toString(), locale)}</dd>
+                <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{M(o.vatTotal, oo.vatTotalLocal)}</dd>
+                <dt className="font-semibold">{t("total")} ({t("vatIncluded", { tax })})</dt><dd className="text-right font-semibold tabular-nums" data-testid="order-total" data-currency={role === "BUYER" ? oo.currencyCode : ofx.code}>{M(o.grandTotal, oo.grandTotalLocal)}</dd>
+                {role === "BUYER" && oo.currencyCode !== "EUR" && <p className="col-span-2 text-xs text-muted-foreground" data-testid="order-rate">{tcur("rateLocked", { code: oo.currencyCode, rate: Number(oo.eurRate ?? 1).toLocaleString(locale, { maximumFractionDigits: 4 }) })}</p>}
+                {role === "ADMIN" && oo.currencyCode !== "EUR" && <p className="col-span-2 text-xs text-muted-foreground" data-testid="order-rate">Customer pays {formatMoney(String(oo.grandTotalLocal ?? 0), locale, oo.currencyCode)} · rate {Number(oo.eurRate ?? 1).toFixed(4)} (reference {Number(oo.midRate ?? 1).toFixed(4)} + FX margin {Number(oo.fxMarginPct ?? 0)} %)</p>}
                 {role !== "BUYER" && (<>
-                  <dt className="pt-2 text-muted-foreground">{t("vendor.commission")}</dt><dd className="pt-2 text-right tabular-nums">{formatMoney(o.commissionTotal.toString(), locale)}</dd>
-                  <dt className="text-muted-foreground">{t("vendor.yourPayout")}</dt><dd className="text-right tabular-nums">{formatMoney(o.vendorPayableNet.toString(), locale)}</dd>
+                  <dt className="pt-2 text-muted-foreground">{t("vendor.commission")}</dt><dd className="pt-2 text-right tabular-nums">{M(o.commissionTotal)}</dd>
+                  <dt className="text-muted-foreground">{t("vendor.yourPayout")}</dt><dd className="text-right tabular-nums">{M(o.vendorPayableNet)}</dd>
                 </>)}
               </dl>
             </CardContent>

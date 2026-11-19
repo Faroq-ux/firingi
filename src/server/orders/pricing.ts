@@ -88,7 +88,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
         const v = fixed.get(i.offerId);
         if (v === undefined || !i.price) return i;
         const net = new Decimal(v);
-        return { ...i, price: { ...i.price, listUnitNet: net.toFixed(4), unitPriceNet: net.toFixed(4), promotions: [], vendorFundedPerUnit: "0", firingiFundedPerUnit: "0" } };
+        return { ...i, price: { ...i.price, listUnitNet: net.toFixed(4), unitPriceNet: net.toFixed(4), promotions: [], vendorFundedPerUnit: "0", firingiFundedPerUnit: "0", fixedLocal: null, local: null } };
       })
     : offered;
   // Phase 38: clearance deals — the deal price replaces promotions and coupons on that line (supplier-funded)

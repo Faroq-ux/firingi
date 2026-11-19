@@ -45,11 +45,13 @@ export type AccountMap = {
   customers: string; suppliers: string; sales: string; purchases: string; bank: string; cash: string; cardClearing: string;
   /** Phase 43: excise duty in sales (its own account; empty = stays in sales) */
   excise: string;
+  /** Phase 45: realised exchange gains / losses */
+  fxGain: string; fxLoss: string;
   vatOutput: Record<string, string>; vatInput: Record<string, string>; perPartner: boolean;
   journals: Record<Journal, string>; decimal: "comma" | "dot";
 };
 export const DEFAULT_ACCOUNTS: AccountMap = {
-  customers: "211", suppliers: "221", sales: "711", purchases: "312", bank: "12", cash: "11", cardClearing: "278", excise: "7118",
+  customers: "211", suppliers: "221", sales: "711", purchases: "312", bank: "12", cash: "11", cardClearing: "278", excise: "7118", fxGain: "7861", fxLoss: "6863",
   vatOutput: { "23": "243311", "13": "243312", "6": "243313", "0": "2433", other: "2433" },
   vatInput: { "23": "243211", "13": "243212", "6": "243213", "0": "2432", other: "2432" },
   perPartner: false,
@@ -74,6 +76,7 @@ export async function saveAccountMap(ctx: Ctx, input: AccountMap) {
   const accounts = ["customers", "suppliers", "sales", "purchases", "bank", "cash", "cardClearing"] as const;
   for (const a of accounts) if (!ACCOUNT.test(String(input[a] ?? ""))) throw new ValidationError(`Account for ${a} should be digits only.`);
   if (input.excise && !ACCOUNT.test(String(input.excise))) throw new ValidationError("Account for excise should be digits only.");
+  for (const a of ["fxGain", "fxLoss"] as const) if (input[a] && !ACCOUNT.test(String(input[a]))) throw new ValidationError(`Account for ${a === "fxGain" ? "exchange gains" : "exchange losses"} should be digits only.`);
   for (const [r, a] of [...Object.entries(input.vatOutput ?? {}), ...Object.entries(input.vatInput ?? {})]) if (!ACCOUNT.test(a)) throw new ValidationError(`VAT account for ${r} % should be digits only.`);
   for (const j of JOURNALS) if (!/^[\w-]{1,10}$/.test(input.journals?.[j] ?? "")) throw new ValidationError(`Journal code for ${JOURNAL_LABEL[j]} is missing.`);
   const value: AccountMap = { ...DEFAULT_ACCOUNTS, ...input, perPartner: !!input.perPartner, decimal: input.decimal === "dot" ? "dot" : "comma" };
@@ -95,6 +98,8 @@ export type Doc = {
   /** Phase 43: excise duty inside the net (sales and credit notes) */
   excise?: Decimal;
   dueDate: Date | null; reference: string; method?: string; status: string;
+  /** Phase 45: the document's own currency, its amount in it and the rate (units per €); a payment's realised FX gain (+) / loss (−) in EUR */
+  currency?: string; amountLocal?: Decimal | null; rate?: Decimal | null; fx?: Decimal;
 };
 
 const D = (v: { toString(): string } | number | null | undefined) => new Decimal(v == null ? 0 : v.toString());
@@ -126,6 +131,7 @@ async function collect(journals: Journal[], from: Date, toExclusive: Date, only?
         byRate: r.taxSummary.length ? r.taxSummary.map((t) => ({ rate: rateKey(t.taxRate), base: D(t.base), vat: D(t.vat) })) : [{ rate: "other", base: D(r.netTotal), vat: D(r.vatTotal) }],
         dueDate: r.dueAt, reference: r.docType === "CREDIT_NOTE" ? (r.originalInvoice?.providerNumber ?? r.originalInvoice?.fullNumber ?? "") : (r.order?.number ?? ""), status: r.status,
         excise: r.lines.reduce((a, l) => a.plus(D(l.exciseNet)), new Decimal(0)),
+        currency: r.currencyCode, amountLocal: r.grossTotalLocal ? D(r.grossTotalLocal) : null, rate: r.currencyCode !== "EUR" ? D(r.eurRate) : null,
       });
     }
   }
@@ -140,6 +146,7 @@ async function collect(journals: Journal[], from: Date, toExclusive: Date, only?
         journal: "SUPPLIER_INVOICES", date: r.issueDate, number: r.externalNumber, kind: r.docType, partner: r.vendor.legalName, taxId: r.vendor.taxId, country: r.vendor.country.code,
         net: D(r.netTotal), vat: D(r.vatTotal), gross: D(r.grossTotal), byRate: [{ rate: guessRate(D(r.netTotal), D(r.vatTotal)), base: D(r.netTotal), vat: D(r.vatTotal) }],
         selfAssessedVat: D(r.selfAssessedVat), dueDate: r.dueDate, reference: "", status: r.status,
+        currency: r.currencyCode, amountLocal: r.grossTotalLocal ? D(r.grossTotalLocal) : null, rate: r.currencyCode !== "EUR" ? D(r.rate) : null,
       });
   }
   if (want.has("RECEIPTS") || want.has("PAYOUTS")) {
@@ -153,8 +160,11 @@ async function collect(journals: Journal[], from: Date, toExclusive: Date, only?
       },
       orderBy: { paidAt: "asc" },
     });
+    const fxRows = rows.length ? await prisma.fxEntry.groupBy({ by: ["paymentId"], where: { paymentId: { in: rows.map((r) => r.id) } }, _sum: { gainLossEur: true } }) : [];
+    const fxOf = new Map(fxRows.map((r) => [r.paymentId, D(r._sum.gainLossEur)]));
     for (const p of rows)
       docs.push({
+        currency: p.currencyCode, amountLocal: p.amountLocal ? D(p.amountLocal) : null, rate: p.currencyCode !== "EUR" ? D(p.rate) : null, fx: fxOf.get(p.id) ?? new Decimal(0),
         journal: p.direction === "INBOUND" ? "RECEIPTS" : "PAYOUTS", date: p.paidAt!, number: p.reference || `PAY-${p.id.slice(-8).toUpperCase()}`, kind: p.direction === "INBOUND" ? "RECEIPT" : "PAYOUT",
         partner: p.company.legalName, taxId: p.company.taxId, country: p.company.country.code, net: D(p.amount), vat: D(0), gross: D(p.amount), byRate: [],
         dueDate: null, reference: p.allocations.map((a) => a.invoice?.providerNumber ?? a.invoice?.fullNumber ?? a.vendorInvoice?.externalNumber).filter(Boolean).join(" "), method: p.method, status: p.status,
@@ -202,10 +212,15 @@ export function toEntries(docs: Doc[], m: AccountMap): Entry[] {
         for (const r of d.byRate) { const part = Decimal.min(ex, r.base); ex = ex.minus(part); add(m.sales, r.base.minus(part), zero, "Sales returned"); if (part.gt(0)) add(m.excise, part, zero, "Excise duty"); add(vatAccount(m.vatOutput, r.rate), r.vat, zero, `VAT ${r.rate}%`); }
         break;
       }
-      case "RECEIPTS":
-        add(cashAccount(m, d.method), d.gross, zero, "Received");
+      case "RECEIPTS": {
+        // Phase 45: money in another currency is worth gross + FX on the day; the difference is an exchange gain / loss
+        const fx = d.fx ?? zero;
+        add(cashAccount(m, d.method), d.gross.plus(fx), zero, "Received");
         add(customer, zero, d.gross, "Received");
+        if (fx.gt(0)) add(m.fxGain, zero, fx, "Exchange gain");
+        if (fx.lt(0)) add(m.fxLoss, fx.abs(), zero, "Exchange loss");
         break;
+      }
       case "SUPPLIER_INVOICES": {
         const credit = d.kind === "CREDIT_NOTE";
         for (const r of d.byRate) {
@@ -219,10 +234,14 @@ export function toEntries(docs: Doc[], m: AccountMap): Entry[] {
         }
         break;
       }
-      case "PAYOUTS":
+      case "PAYOUTS": {
+        const fx = d.fx ?? zero;
         add(supplier, d.gross, zero, "Paid");
-        add(cashAccount(m, d.method), zero, d.gross, "Paid");
+        add(cashAccount(m, d.method), zero, d.gross.minus(fx), "Paid");
+        if (fx.gt(0)) add(m.fxGain, zero, fx, "Exchange gain");
+        if (fx.lt(0)) add(m.fxLoss, fx.abs(), zero, "Exchange loss");
         break;
+      }
     }
   }
   return out;
@@ -239,12 +258,13 @@ const n2 = (v: Decimal) => Number(v.toFixed(2));
 export function documentsTable(docs: Doc[]): Table {
   return {
     name: "Documents",
-    headers: ["Journal", "Date", "Document", "Type", "Partner", "Tax ID", "Country", "Net", "VAT", "Gross", "VAT detail", "Due date", "Reference", "Method", "Status", "Excise"],
+    headers: ["Journal", "Date", "Document", "Type", "Partner", "Tax ID", "Country", "Net", "VAT", "Gross", "VAT detail", "Due date", "Reference", "Method", "Status", "Excise", "Currency", "Amount in currency", "Rate", "FX gain/loss"],
     rows: docs.map((d) => [
       JOURNAL_LABEL[d.journal], ymd(d.date), d.number, d.kind, d.partner, d.taxId, d.country, n2(d.net), n2(d.vat), n2(d.gross),
       d.byRate.map((r) => `${r.rate}%: ${r.base.toFixed(2)} + ${r.vat.toFixed(2)}`).join(" | "), ymd(d.dueDate), d.reference, d.method ?? "", d.status, n2(d.excise ?? new Decimal(0)),
+      d.currency ?? "EUR", d.amountLocal ? n2(d.amountLocal) : n2(d.gross), d.rate ? d.rate.toDecimalPlaces(6).toString() : "1", n2(d.fx ?? new Decimal(0)),
     ]),
-    money: [7, 8, 9, 15],
+    money: [7, 8, 9, 15, 17, 19],
   };
 }
 
@@ -374,3 +394,6 @@ export async function exportCompany(ctx: Ctx, input: { from: string; to: string;
   if (input.file === "xlsx" || tables.length > 1) return { body: await toXlsx(tables, base), fileName: `${base}.xlsx`, contentType: CT.xlsx, rows: tables.reduce((a, t) => a + t.rows.length, 0) };
   return { body: toCsv(tables[0], "comma"), fileName: `${base}.csv`, contentType: CT.csv, rows: tables[0].rows.length };
 }
+
+/** Tests / tools: the documents of a period as the export reads them. */
+export const collectDocuments = collect;

@@ -63,7 +63,7 @@ const Code = z.string().min(1).max(10);
 export const saveAccountMapAction = defineAction({
   permission: "admin.finance.manage",
   schema: z.object({
-    customers: Acc, suppliers: Acc, sales: Acc, purchases: Acc, bank: Acc, cash: Acc, cardClearing: Acc, excise: z.string().max(12).regex(/^\d*$/).default(""),
+    customers: Acc, suppliers: Acc, sales: Acc, purchases: Acc, bank: Acc, cash: Acc, cardClearing: Acc, excise: z.string().max(12).regex(/^\d*$/).default(""), fxGain: z.string().max(12).regex(/^\d*$/).default("7861"), fxLoss: z.string().max(12).regex(/^\d*$/).default("6863"),
     vatOutput: z.record(z.string().max(8), Acc), vatInput: z.record(z.string().max(8), Acc), perPartner: z.boolean(),
     journals: z.object({ SALES: Code, CREDIT_NOTES: Code, RECEIPTS: Code, SUPPLIER_INVOICES: Code, PAYOUTS: Code }),
     decimal: z.enum(["comma", "dot"]),

@@ -147,12 +147,22 @@ export async function submitVendorInvoice(ctx: Ctx, input: {
   if (await prisma.vendorInvoice.findUnique({ where: { vendorCompanyId_externalNumber: { vendorCompanyId: ctx.company.id, externalNumber: input.externalNumber.trim() } } }))
     throw new AppError("DUPLICATE", "You already submitted a document with this number.", 409);
 
+  // Phase 45: statements in the supplier's currency are invoiced in it (amounts typed in that currency)
+  const codes = [...new Set(statements.map((s) => s.currencyCode))];
+  if (codes.length > 1) throw new ValidationError("Statements in different currencies must be invoiced separately.");
+  const code = codes[0] ?? "EUR";
+  const local = code !== "EUR";
   const net = new Decimal(input.netTotal), vat = new Decimal(input.vatTotal);
-  const expNet = statements.reduce((a, s) => a.plus(s.expectedNet.toString()), new Decimal(0));
-  const expVat = statements.reduce((a, s) => a.plus(s.expectedVat.toString()), new Decimal(0));
+  const expNet = statements.reduce((a, s) => a.plus((local ? s.expectedNetLocal ?? 0 : s.expectedNet).toString()), new Decimal(0));
+  const expVat = statements.reduce((a, s) => a.plus((local ? s.expectedVatLocal ?? 0 : s.expectedVat).toString()), new Decimal(0));
+  const tol = local ? TOLERANCE.mul(statements[0].rate.toString()) : TOLERANCE;
   const diffs: Record<string, string> = {};
-  if (net.minus(expNet).abs().gt(TOLERANCE)) diffs.net = `${net.toFixed(2)} ≠ expected ${expNet.toFixed(2)}`;
-  if (vat.minus(expVat).abs().gt(TOLERANCE)) diffs.vat = `${vat.toFixed(2)} ≠ expected ${expVat.toFixed(2)}`;
+  if (net.minus(expNet).abs().gt(tol)) diffs.net = `${net.toFixed(2)} ≠ expected ${expNet.toFixed(2)}${local ? ` ${code}` : ""}`;
+  if (vat.minus(expVat).abs().gt(tol)) diffs.vat = `${vat.toFixed(2)} ≠ expected ${expVat.toFixed(2)}${local ? ` ${code}` : ""}`;
+  // in EUR: the statements' EUR amounts when it matches, else the supplier's amounts at the statements' rate
+  const rate = local ? new Decimal(statements[0].rate.toString()) : new Decimal(1);
+  const eurNet = !local ? net : !diffs.net ? statements.reduce((a, s) => a.plus(s.expectedNet.toString()), new Decimal(0)) : net.div(rate).toDecimalPlaces(2);
+  const eurVat = !local ? vat : !diffs.vat ? statements.reduce((a, s) => a.plus(s.expectedVat.toString()), new Decimal(0)) : vat.div(rate).toDecimalPlaces(2);
   const matched = Object.keys(diffs).length === 0;
   const regime = statements[0].taxRegime;
   // Reverse charge: FIRINGI self-assesses Portuguese VAT on the purchase (for the VAT return).
@@ -170,7 +180,8 @@ export async function submitVendorInvoice(ctx: Ctx, input: {
     const created = await tx.vendorInvoice.create({
       data: {
         vendorCompanyId: ctx.company.id, docType: input.docType, externalNumber: input.externalNumber.trim(), issueDate: input.issueDate, taxRegime: regime,
-        netTotal: net.toFixed(2), vatTotal: vat.toFixed(2), grossTotal: net.plus(vat).toFixed(2), selfAssessedVat: selfAssessed.toDecimalPlaces(2).toFixed(2),
+        netTotal: eurNet.toFixed(2), vatTotal: eurVat.toFixed(2), grossTotal: eurNet.plus(eurVat).toFixed(2), selfAssessedVat: selfAssessed.toDecimalPlaces(2).toFixed(2),
+        ...(local ? { currencyCode: code, rate: rate.toString(), netTotalLocal: net.toFixed(2), vatTotalLocal: vat.toFixed(2), grossTotalLocal: net.plus(vat).toFixed(2) } : {}),
         fileKey: stored.key, status: matched ? "MATCHED" : "DISPUTED", matchResult: matched ? { ok: true } : diffs, submittedById: ctx.user.id,
         allocations: { create: statements.map((s) => ({ statementId: s.id, amountNet: s.expectedNet })) },
       },
@@ -220,6 +231,8 @@ export async function reviewVendorInvoice(ctx: Ctx, id: string, decision: "APPRO
 export async function recordPayment(ctx: Ctx, input: {
   direction: "INBOUND" | "OUTBOUND"; companyId: string; method: PaymentMethod; amount: number; reference?: string | null; paidAt: Date;
   allocations: { documentId: string; amount: number }[];
+  /** Phase 45: money received in another currency (the amount in it; allocations then in EUR as usual are ignored) */
+  currencyCode?: string | null; amountLocal?: number | null;
 }) {
   if (!isAdmin(ctx, "admin.finance.manage")) throw new ForbiddenError();
   const amount = new Decimal(input.amount);
@@ -245,6 +258,21 @@ export async function recordPayment(ctx: Ctx, input: {
     if (input.direction === "OUTBOUND" && doc.status !== "APPROVED") throw new ValidationError("Only approved vendor invoices can be paid.");
     if (new Decimal(a.amount).gt(doc.open)) throw new ValidationError(`Allocation is more than the open amount (${doc.open}).`);
   }
+  if (input.direction === "INBOUND" && input.currencyCode && input.currencyCode !== "EUR") {
+    if (!(Number(input.amountLocal) > 0)) throw new ValidationError("Enter the amount received in the currency.");
+    const { receiveForeign } = await import("@/server/currency/payments");
+    const { openAmounts } = await import("@/server/payments/service");
+    return prisma.$transaction(async (tx) => {
+      const ids = input.allocations.map((a) => a.documentId);
+      const p = await receiveForeign(tx, {
+        companyId: input.companyId, code: input.currencyCode!, amountLocal: new Decimal(input.amountLocal!), method: input.method, reference: input.reference ?? null, recordedById: ctx.user.id,
+        targets: ids.map((invoiceId) => ({ invoiceId })), openEur: await openAmounts(ids, tx),
+      });
+      await tx.payment.update({ where: { id: p.id }, data: { paidAt: input.paidAt } });
+      await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "payment.inbound", entityType: "Payment", entityId: p.id, after: { ...input, paidAt: input.paidAt.toISOString() } }, tx);
+      return p;
+    });
+  }
   const payment = await prisma.$transaction(async (tx) => {
     const p = await tx.payment.create({
       data: {
@@ -253,6 +281,13 @@ export async function recordPayment(ctx: Ctx, input: {
         allocations: { create: input.allocations.map((a) => (input.direction === "INBOUND" ? { invoiceId: a.documentId, amount: a.amount } : { vendorInvoiceId: a.documentId, amount: a.amount })) },
       },
     });
+    // Phase 45: paying a supplier in its currency — the money in it and the FX difference against today's rate
+    if (input.direction === "OUTBOUND") {
+      const co = await tx.vendorInvoice.findMany({ where: { id: { in: input.allocations.map((a) => a.documentId) } }, select: { currencyCode: true } });
+      const code = co[0]?.currencyCode ?? "EUR";
+      if (code !== "EUR" && co.every((c) => c.currencyCode === code))
+        await (await import("@/server/currency/payments")).payableFx(tx, { paymentId: p.id, companyId: input.companyId, code, allocations: input.allocations.map((a) => ({ vendorInvoiceId: a.documentId, amountEur: new Decimal(a.amount) })) });
+    }
     if (input.direction === "OUTBOUND")
       for (const a of input.allocations) {
         const vi = await tx.vendorInvoice.findUniqueOrThrow({ where: { id: a.documentId }, include: { paymentAllocations: { where: { payment: { status: "CONFIRMED" } } } } });

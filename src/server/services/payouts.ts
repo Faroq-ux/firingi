@@ -15,7 +15,8 @@ import { paymentPolicy } from "./payments";
 const DAY = 86400_000;
 const REMIND_KEY = "payouts.reminded";
 
-export type DuePayout = { id: string; vendorId: string; vendor: string; vendorType: string; number: string; issueDate: string; dueDate: string; daysLeft: number; open: number; gross: number };
+/** Phase 45: `currency` / `openLocal` = what the supplier is paid in its own currency (at its invoice's rate). */
+export type DuePayout = { id: string; vendorId: string; vendor: string; vendorType: string; number: string; issueDate: string; dueDate: string; daysLeft: number; open: number; gross: number; currency: string; openLocal: number | null };
 
 async function dueRows(now: Date): Promise<DuePayout[]> {
   const days = (await paymentPolicy()).supplierPayoutDays;
@@ -33,6 +34,7 @@ async function dueRows(now: Date): Promise<DuePayout[]> {
     return {
       id: r.id, vendorId: r.vendor.id, vendor: r.vendor.tradeName ?? r.vendor.legalName, vendorType: r.vendor.type, number: r.externalNumber,
       issueDate: r.issueDate.toISOString().slice(0, 10), dueDate: due.toISOString().slice(0, 10), daysLeft: Math.round((due.getTime() - today) / DAY), open: open.toNumber(), gross: Number(r.grossTotal),
+      currency: r.currencyCode, openLocal: r.currencyCode !== "EUR" && r.grossTotalLocal && Number(r.grossTotal) ? Math.round(open.toNumber() * (Number(r.grossTotalLocal) / Number(r.grossTotal)) * 100) / 100 : null,
     };
   }).filter((r) => r.open > 0.004).sort((a, b) => a.daysLeft - b.daysLeft);
 }
@@ -65,8 +67,8 @@ export async function duePayoutsCsv(ctx: Ctx, withinDays = 7) {
   const esc = (v: string | number) => (/[;"\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v));
   const vendorIds = [...new Set([...d.overdue, ...d.soon].map((r) => r.vendorId))];
   const nif = new Map((await prisma.company.findMany({ where: { id: { in: vendorIds } }, select: { id: true, taxId: true, legalName: true } })).map((c) => [c.id, c]));
-  const lines = [["Supplier", "NIF / VAT", "Invoice", "Invoice date", "Due date", "Days", "Open amount (EUR)"].join(";")];
-  for (const r of [...d.overdue, ...d.soon]) lines.push([esc(nif.get(r.vendorId)?.legalName ?? r.vendor), esc(nif.get(r.vendorId)?.taxId ?? ""), esc(r.number), r.issueDate, r.dueDate, String(r.daysLeft), r.open.toFixed(2).replace(".", ",")].join(";"));
+  const lines = [["Supplier", "NIF / VAT", "Invoice", "Invoice date", "Due date", "Days", "Open amount (EUR)", "Currency", "Open in currency"].join(";")];
+  for (const r of [...d.overdue, ...d.soon]) lines.push([esc(nif.get(r.vendorId)?.legalName ?? r.vendor), esc(nif.get(r.vendorId)?.taxId ?? ""), esc(r.number), r.issueDate, r.dueDate, String(r.daysLeft), r.open.toFixed(2).replace(".", ","), r.currency, (r.openLocal ?? r.open).toFixed(2).replace(".", ",")].join(";"));
   return lines.join("\n") + "\n";
 }
 

@@ -61,6 +61,7 @@ export const recordPaymentAction = defineAction({
     direction: z.enum(["INBOUND", "OUTBOUND"]), companyId: z.string(), method: z.enum(["BANK_TRANSFER", "CASH", "CARD", "MB_WAY", "MULTIBANCO", "DIRECT_DEBIT", "OTHER"]),
     amount: z.coerce.number().positive(), reference: z.string().max(80).optional().nullable(), paidAt: z.string(),
     allocations: z.array(z.object({ documentId: z.string(), amount: z.coerce.number().positive() })),
+    currencyCode: z.string().length(3).optional().nullable(), amountLocal: z.coerce.number().positive().optional().nullable(),
   }),
   handler: async (ctx, i) => done({ id: (await fin.recordPayment(ctx, { ...i, paidAt: new Date(i.paidAt) })).id }),
 });

@@ -116,6 +116,13 @@ model Invoice {
   netTotal           Decimal        @db.Decimal(18, 2)
   vatTotal           Decimal        @db.Decimal(18, 2)
   grossTotal         Decimal        @db.Decimal(18, 2)
+  /// Phase 45: the invoice's currency (amounts above stay in EUR): eurRate = units per € used for the
+  /// amounts (order's locked rate), midRate = reference rate (EUR equivalent of VAT); *Local null = EUR invoice
+  eurRate            Decimal        @default(1) @db.Decimal(18, 8)
+  midRate            Decimal        @default(1) @db.Decimal(18, 8)
+  netTotalLocal      Decimal?       @db.Decimal(18, 2)
+  vatTotalLocal      Decimal?       @db.Decimal(18, 2)
+  grossTotalLocal    Decimal?       @db.Decimal(18, 2)
   issuedAt           DateTime?
   dueAt              DateTime?
   // Portuguese fiscal fields (filled by the certified provider adapter)
@@ -185,6 +192,10 @@ model InvoiceLine {
   lineVat           Decimal @db.Decimal(18, 2)
   /// Phase 43: excise in this line (in the price for PAID goods; the whole line for an added-duty line)
   exciseNet         Decimal @default(0) @db.Decimal(18, 2)
+  /// Phase 45: in the invoice's currency (null = EUR invoice)
+  unitPriceLocal    Decimal? @db.Decimal(18, 4)
+  lineNetLocal      Decimal? @db.Decimal(18, 2)
+  lineVatLocal      Decimal? @db.Decimal(18, 2)
 
   invoice         Invoice             @relation(fields: [invoiceId], references: [id])
   orderLine       OrderLine?          @relation(fields: [orderLineId], references: [id])
@@ -219,6 +230,11 @@ model VendorBillingStatement {
   expectedVat       Decimal                @db.Decimal(18, 2)
   expectedGross     Decimal                @db.Decimal(18, 2)
   commissionTotal   Decimal                @db.Decimal(18, 2)
+  /// Phase 45: the supplier's currency per € (locked with the order); *Local = what the supplier is owed in it
+  rate              Decimal                @default(1) @db.Decimal(18, 8)
+  expectedNetLocal  Decimal?               @db.Decimal(18, 2)
+  expectedVatLocal  Decimal?               @db.Decimal(18, 2)
+  expectedGrossLocal Decimal?              @db.Decimal(18, 2)
   lines             Json // snapshot of the expected lines
   status            BillingStatementStatus @default(OPEN)
   createdAt         DateTime               @default(now())
@@ -249,6 +265,11 @@ model VendorInvoice {
   grossTotal      Decimal             @db.Decimal(18, 2)
   /// FIRINGI self-assessed VAT for intra-EU reverse-charge purchases
   selfAssessedVat Decimal             @default(0) @db.Decimal(18, 2)
+  /// Phase 45: the supplier's currency per € (from its statements); *Local = the invoice as the supplier wrote it
+  rate            Decimal             @default(1) @db.Decimal(18, 8)
+  netTotalLocal   Decimal?            @db.Decimal(18, 2)
+  vatTotalLocal   Decimal?            @db.Decimal(18, 2)
+  grossTotalLocal Decimal?            @db.Decimal(18, 2)
   fileKey         String
   structuredData  Json? // UBL / Peppol payload if provided
   status          VendorInvoiceStatus @default(SUBMITTED)
@@ -319,6 +340,9 @@ model Payment {
   method         PaymentMethod
   amount         Decimal          @db.Decimal(18, 2)
   currencyCode   String           @default("EUR")
+  /// Phase 45: a payment in another currency — the money that moved (amount = its EUR value at `rate`, the day's reference rate)
+  amountLocal    Decimal?         @db.Decimal(18, 2)
+  rate           Decimal          @default(1) @db.Decimal(18, 8)
   reference      String?
   status         PaymentStatus    @default(PENDING)
   paidAt         DateTime?

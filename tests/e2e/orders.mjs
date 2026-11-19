@@ -125,9 +125,9 @@ check("customer sees the full status history", ["Nova|New", "Em preparação|Sup
 await ops.goto(`${BASE}/admin/delivery/minimum-order`); await ops.waitForLoadState("networkidle"); await ops.waitForTimeout(400);
 await settle(ops);
 await shot(ops, "p4-07-admin-minimums");
-const minInput = ops.locator('input[type="number"]').first();
-await minInput.fill("60");
-await ops.getByRole("button", { name: "Save" }).first().click();
+const ptRule = ops.getByTestId("country-rule-PT"); // one card per country (PT, PL …)
+await ptRule.locator('input[type="number"]').first().fill("60");
+await ptRule.getByRole("button", { name: "Save" }).click();
 await settle(ops);
 await customer.goto(`${BASE}/buy/catalogue/offers/${mozz}`); await customer.waitForLoadState("networkidle"); await customer.waitForFunction(() => !document.querySelector("[aria-busy=true]"), null, { timeout: 15000 }).catch(() => {}); await customer.waitForTimeout(400);
 await settle(customer);
@@ -138,8 +138,8 @@ await settle(customer);
 check("customer cart uses the new FIRINGI minimum (60 €)", /60,00/.test(await customer.textContent("main")));
 await ops.goto(`${BASE}/admin/delivery/minimum-order`); await ops.waitForLoadState("networkidle"); await ops.waitForTimeout(400);
 await settle(ops);
-await ops.locator('input[type="number"]').first().fill("50");
-await ops.getByRole("button", { name: "Save" }).first().click();
+await ops.getByTestId("country-rule-PT").locator('input[type="number"]').first().fill("50");
+await ops.getByTestId("country-rule-PT").getByRole("button", { name: "Save" }).click();
 await settle(ops);
 await customer.getByRole("button", { name: /Esvaziar carrinho|Clear cart/ }).click();
 

@@ -6,29 +6,29 @@ import { fill } from "./labels";
 
 type L = Record<string, string>;
 export type CwInfo = { mode: "PIECE" | "KG"; nominalKg: number; minKg: number | null; maxKg: number | null };
-const money = (n: number, locale: string) => new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(n);
+const money = (n: number, locale: string, currency = "EUR") => new Intl.NumberFormat(locale, { style: "currency", currency }).format(n);
 const kg = (n: number, locale: string, d = 2) => new Intl.NumberFormat(locale, { maximumFractionDigits: d }).format(n);
 const kg3 = (n: number, locale: string) => new Intl.NumberFormat(locale, { minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(n);
 
 /** Product cards: "Sold by weight · 6,75 €/kg". */
-export function CwBadge({ l, locale, cw, unitGross }: { l: L; locale: string; cw: CwInfo; unitGross: number | null }) {
+export function CwBadge({ l, locale, cw, unitGross, currency = "EUR" }: { l: L; locale: string; cw: CwInfo; unitGross: number | null; currency?: string }) {
   return (
     <Badge variant="outline" className="gap-1" data-testid="cw-badge">
-      <Scale className="size-3" /> {l.badge}{unitGross != null ? ` · ${fill(l.perKgShort, { price: money(unitGross / cw.nominalKg, locale) })}` : ""}
+      <Scale className="size-3" /> {l.badge}{unitGross != null ? ` · ${fill(l.perKgShort, { price: money(unitGross / cw.nominalKg, locale, currency) })}` : ""}
     </Badge>
   );
 }
 
 /** Product page: price per kg, how much a piece weighs, how the final price is worked out. */
-export function ProductCatchWeight({ l, locale, cw, unitGross, unitNet, taxLabel }: { l: L; locale: string; cw: CwInfo; unitGross: number | null; unitNet: number | null; taxLabel: string }) {
+export function ProductCatchWeight({ l, locale, cw, unitGross, unitNet, taxLabel, currency = "EUR" }: { l: L; locale: string; cw: CwInfo; unitGross: number | null; unitNet: number | null; taxLabel: string; currency?: string }) {
   const range = cw.minKg != null && cw.maxKg != null ? fill(l.range, { min: kg(cw.minKg, locale), max: kg(cw.maxKg, locale) }) : "";
   return (
     <div className="space-y-1.5 rounded-xl border border-dashed p-3 text-sm" data-testid="product-cw">
       <p className="flex items-center gap-2 font-medium"><Scale className="size-4" /> {l.productTitle}</p>
       {unitGross != null && unitNet != null && (
         <p data-testid="cw-perkg-buyer">
-          <b>{fill(l.perKgShort, { price: money(unitGross / cw.nominalKg, locale) })}</b> {fill(l.incTax, { tax: taxLabel })}
-          <span className="text-xs text-muted-foreground"> ({fill(l.perKgShort, { price: money(unitNet / cw.nominalKg, locale) })} {fill(l.exTax, { tax: taxLabel })})</span>
+          <b>{fill(l.perKgShort, { price: money(unitGross / cw.nominalKg, locale, currency) })}</b> {fill(l.incTax, { tax: taxLabel })}
+          <span className="text-xs text-muted-foreground"> ({fill(l.perKgShort, { price: money(unitNet / cw.nominalKg, locale, currency) })} {fill(l.exTax, { tax: taxLabel })})</span>
         </p>
       )}
       <p>{cw.mode === "PIECE" ? fill(l.pieceInfo, { kg: kg(cw.nominalKg, locale), range }) : fill(l.kgInfo, { kg: kg(cw.nominalKg, locale) })}</p>

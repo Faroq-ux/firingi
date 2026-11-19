@@ -284,6 +284,7 @@ export const ADMIN_NAV: NavSection[] = [
     items: [
       fin("overview", "Financial Overview", "Visão Financeira", "P5", { live: true }),
       fin("excise", "Excise", "IEC", "P43", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
+      fin("fx", "Exchange Gains & Losses", "Diferenças de Câmbio", "P45", { live: true, perm: ["admin.finance.view", "admin.finance.manage"] }),
       fin("customer-payments", "Customer Payments", "Pagamentos de Clientes", "P5", { live: true }),
       fin("vendor-payments", "Vendor Payments", "Pagamentos a Fornecedores", "P5", { live: true }),
       fin("distributor-payments", "Distributor Payments", "Pagamentos a Distribuidores", "P5", { live: true }),
@@ -378,6 +379,7 @@ export const ADMIN_NAV: NavSection[] = [
       intl("cities", "Cities", "Cidades", "P1", { live: true }),
       intl("currency", "Currency", "Moeda", "P1", { live: true }),
       intl("exchange-rates", "Exchange Rates", "Taxas de Câmbio", "P1", { live: true }),
+      intl("currency-alerts", "Rate Alerts", "Alertas de Câmbio", "P45", { live: true, href: `${A}/international/currency/alerts` }),
       intl("languages", "Languages", "Idiomas", "P1", { live: true }),
       intl("tax-rules", "Tax Rules", "Regras Fiscais", "P1", { live: true }),
       intl("vat-gst", "VAT/GST", "IVA/GST", "P1", { live: true, href: `${A}/international/tax-rules?view=vat` }),

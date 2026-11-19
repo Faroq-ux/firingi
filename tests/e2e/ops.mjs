@@ -109,6 +109,8 @@ check("phone: table header hidden, rows are cards", await phone.evaluate(() => g
 check("phone: cells carry their column name", (await phone.locator("table.ft-stack td[data-label]").count()) > 0);
 await shot(phone, "ops-phone-orders");
 const pager = phone.getByTestId("pager");
+// the iPhone "add to home screen" card floats above the page bottom — close it first
+if (await phone.getByTestId("install-dismiss").isVisible().catch(() => false)) await phone.getByTestId("install-dismiss").click();
 if (await pager.locator('a[rel="next"]').count()) {
   await pager.locator('a[rel="next"]').click();
   await settle(phone);

@@ -106,6 +106,8 @@ async function driverPayByMonth(months: Date[]) {
 export type PnlMonth = {
   month: string; goods: number; firingiFees: number; supplierFees: number; revenue: number; cogs: number; credits: number; vendorCredits: number;
   gross: number; marginPct: number | null; commission: number; driverPay: number; absorbed: number; costs: Record<string, number>; costTotal: number; net: number; orders: number;
+  /** Phase 45: realised exchange gains (+) / losses (−); of which the FX margin on invoices in other currencies (at the reference rate) */
+  fx: number; fxMargin: number;
 };
 
 export async function profitAndLoss(ctx: Ctx, opts: { months?: number; countryId?: string | null } = {}) {
@@ -118,7 +120,7 @@ export async function computePnl(opts: { months?: number; countryId?: string | n
   const months = lastMonths(Math.min(Math.max(opts.months ?? 12, 1), 24));
   const from = months[0];
   const cf = countryFilter(opts.countryId);
-  const [sales, credits, vcredits, absorbed, costs, drivers] = await Promise.all([
+  const [sales, credits, vcredits, absorbed, costs, drivers, fxRows, fxMarginRows] = await Promise.all([
     prisma.$queryRaw<{ m: Date; goods: number; ffee: number; sfee: number; cogs: number; commission: number; n: number }[]>`
       SELECT date_trunc('month', i."issuedAt") AS m,
         sum(o."netTotal" - o."deliveryFeeNet")::float8 AS goods,
@@ -140,9 +142,16 @@ export async function computePnl(opts: { months?: number; countryId?: string | n
       WHERE e.status IN ('MOVED', 'PARTIAL') AND e."createdAt" >= ${from} ${cf} GROUP BY 1`,
     costsByMonth(months, opts.countryId),
     opts.countryId ? Promise.resolve(new Map<string, number>()) : driverPayByMonth(months),
+    prisma.$queryRaw<{ m: Date; net: number }[]>`
+      SELECT date_trunc('month', f."date") AS m, sum(f."gainLossEur")::float8 AS net FROM "FxEntry" f JOIN "Company" c ON c.id = f."companyId"
+      WHERE f."date" >= ${from} ${countryFilter(opts.countryId, Prisma.sql`c."countryId"`)} GROUP BY 1`,
+    prisma.$queryRaw<{ m: Date; net: number }[]>`
+      SELECT date_trunc('month', i."issuedAt") AS m, sum(CASE WHEN i."docType" = 'CREDIT_NOTE' THEN -1 ELSE 1 END * (i."netTotalLocal" / NULLIF(i."midRate", 0) - i."netTotal"))::float8 AS net
+      FROM "Invoice" i LEFT JOIN "Order" o ON o.id = i."orderId"
+      WHERE i."currencyCode" <> 'EUR' AND i."netTotalLocal" IS NOT NULL AND i.status <> 'DRAFT' AND i."issuedAt" >= ${from} ${cf} GROUP BY 1`,
   ]);
   const by = <T extends { m: Date }>(rows: T[]) => new Map(rows.map((r) => [key(r.m), r]));
-  const S = by(sales), C = by(credits), V = by(vcredits), A = by(absorbed);
+  const S = by(sales), C = by(credits), V = by(vcredits), A = by(absorbed), FX = by(fxRows), FM = by(fxMarginRows);
   const rows: PnlMonth[] = months.map((m) => {
     const k = key(m), s = S.get(k);
     const goods = s?.goods ?? 0, firingiFees = s?.ffee ?? 0, supplierFees = s?.sfee ?? 0, cogs = (s?.cogs ?? 0) + supplierFees;
@@ -152,10 +161,12 @@ export async function computePnl(opts: { months?: number; countryId?: string | n
     const cm = costs.get(k) ?? {};
     const driverPay = drivers.get(k) ?? 0, abs = A.get(k)?.net ?? 0;
     const costTotal = Object.values(cm).reduce((a, x) => a + x, 0);
+    const fx = FX.get(k)?.net ?? 0;
     return {
+      fx: r2(fx), fxMargin: r2(FM.get(k)?.net ?? 0),
       month: k, goods: r2(goods), firingiFees: r2(firingiFees), supplierFees: r2(supplierFees), revenue: r2(revenue), cogs: r2(cogs), credits: r2(cr), vendorCredits: r2(vcr),
       gross: r2(gross), marginPct: revenue - cr > 0 ? gross / (revenue - cr) : null, commission: r2(s?.commission ?? 0), driverPay, absorbed: r2(abs),
-      costs: cm, costTotal: r2(costTotal), net: r2(gross - driverPay - abs - costTotal), orders: s?.n ?? 0,
+      costs: cm, costTotal: r2(costTotal), net: r2(gross - driverPay - abs - costTotal + fx), orders: s?.n ?? 0,
     };
   });
   const sum = (f: (x: PnlMonth) => number) => r2(rows.reduce((a, x) => a + f(x), 0));
@@ -163,6 +174,7 @@ export async function computePnl(opts: { months?: number; countryId?: string | n
     revenue: sum((x) => x.revenue), goods: sum((x) => x.goods), firingiFees: sum((x) => x.firingiFees), supplierFees: sum((x) => x.supplierFees), cogs: sum((x) => x.cogs),
     credits: sum((x) => x.credits), vendorCredits: sum((x) => x.vendorCredits), gross: sum((x) => x.gross), commission: sum((x) => x.commission), driverPay: sum((x) => x.driverPay),
     absorbed: sum((x) => x.absorbed), costTotal: sum((x) => x.costTotal), net: sum((x) => x.net), orders: rows.reduce((a, x) => a + x.orders, 0),
+    fx: sum((x) => x.fx), fxMargin: sum((x) => x.fxMargin),
     costs: Object.fromEntries(COST_CATEGORIES.map((c) => [c, sum((x) => x.costs[c] ?? 0)])) as Record<string, number>,
   };
   return { rows, total: { ...total, marginPct: total.revenue - total.credits > 0 ? total.gross / (total.revenue - total.credits) : null } };

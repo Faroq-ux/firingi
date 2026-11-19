@@ -40,7 +40,38 @@ export async function ensureBaseList(ctx: Ctx) {
   requirePricing(ctx);
   const existing = await prisma.priceList.findFirst({ where: { vendorCompanyId: ctx.company.id, scope: "BASE", countryId: ctx.company.countryId } });
   if (existing) return existing;
-  return prisma.priceList.create({ data: { vendorCompanyId: ctx.company.id, name: "Base prices", scope: "BASE", countryId: ctx.company.countryId, currencyCode: "EUR" } });
+  return prisma.priceList.create({ data: { vendorCompanyId: ctx.company.id, name: "Base prices", scope: "BASE", countryId: ctx.company.countryId, currencyCode: (await listCurrencies(ctx)).own } });
+}
+
+/**
+ * Phase 45: the currencies a supplier may price in — EUR, its own (when FIRINGI lets suppliers price in their
+ * currency) and, for fixed local price lists, the currencies of the countries FIRINGI bills locally.
+ */
+export async function listCurrencies(ctx: Ctx) {
+  const { currencySettings, viewerFx } = await import("@/server/currency/service");
+  const { NON_EURO_COUNTRIES } = await import("@/lib/currency");
+  const [s, fx] = await Promise.all([currencySettings(), viewerFx(ctx, "SUPPLIER")]);
+  const local = s.enabled && s.localPriceLists ? Object.entries(s.countries).filter(([, on]) => on).map(([c]) => NON_EURO_COUNTRIES[c as keyof typeof NON_EURO_COUNTRIES]) : [];
+  return { own: fx.code, allowed: [...new Set(["EUR", fx.code, ...local])] };
+}
+
+/** Phase 45: move a price list to another currency — every price converted at today's reference rates. */
+export async function convertPriceListCurrency(ctx: Ctx, id: string, code: string) {
+  requirePricing(ctx);
+  const pl = await prisma.priceList.findFirst({ where: { id, vendorCompanyId: ctx.company.id }, include: { items: true } });
+  if (!pl) throw new NotFoundError("Price list");
+  if (pl.currencyCode === code) return pl;
+  if (!(await listCurrencies(ctx)).allowed.includes(code)) throw new ValidationError("You can't price in that currency.");
+  const { midRate } = await import("@/server/currency/service");
+  const [from, to] = await Promise.all([midRate(pl.currencyCode), midRate(code)]);
+  if (!from || !to) throw new ValidationError("There is no exchange rate for that currency yet.");
+  const k = to.div(from);
+  await prisma.$transaction(async (tx) => {
+    for (const it of pl.items) await tx.priceListItem.update({ where: { id: it.id }, data: { unitPriceNet: it.unitPriceNet.mul(k).toDecimalPlaces(code === "ISK" ? 0 : 4).toString() } });
+    await tx.priceList.update({ where: { id: pl.id }, data: { currencyCode: code } });
+  });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "pricelist.currency", entityType: "PriceList", entityId: pl.id, before: { currency: pl.currencyCode }, after: { currency: code, factor: k.toString() } });
+  return { id: pl.id };
 }
 
 export async function listOwnPriceLists(ctx: Ctx) {
@@ -54,9 +85,12 @@ export async function listOwnPriceLists(ctx: Ctx) {
 
 export async function savePriceList(
   ctx: Ctx,
-  input: { id?: string; name: string; scope: Exclude<PriceListScope, "BASE">; targetGroupId?: string | null; targetCompanyId?: string | null; priority?: number; validFrom?: Date | null; validTo?: Date | null; isActive?: boolean },
+  input: { id?: string; name: string; scope: Exclude<PriceListScope, "BASE">; targetGroupId?: string | null; targetCompanyId?: string | null; priority?: number; validFrom?: Date | null; validTo?: Date | null; isActive?: boolean; currencyCode?: string | null },
 ) {
   requirePricing(ctx);
+  const cur = await listCurrencies(ctx);
+  const currencyCode = input.currencyCode ?? cur.own;
+  if (!input.id && !cur.allowed.includes(currencyCode)) throw new ValidationError("You can't price in that currency.");
   if (input.scope === "CUSTOMER_GROUP") {
     if (!input.targetGroupId || !(await prisma.customerGroup.findFirst({ where: { id: input.targetGroupId, ownerCompanyId: ctx.company.id } }))) throw new ValidationError("Choose one of your customer groups.");
   } else {
@@ -77,7 +111,7 @@ export async function savePriceList(
   }
   const pl = input.id
     ? { id: input.id }
-    : await prisma.priceList.create({ data: { ...data, vendorCompanyId: ctx.company.id, countryId: ctx.company.countryId, currencyCode: "EUR" } });
+    : await prisma.priceList.create({ data: { ...data, vendorCompanyId: ctx.company.id, countryId: ctx.company.countryId, currencyCode } });
   await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: input.id ? "pricelist.updated" : "pricelist.created", entityType: "PriceList", entityId: pl.id, after: data });
   return pl;
 }

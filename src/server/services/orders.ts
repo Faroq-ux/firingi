@@ -250,6 +250,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       await (await import("@/server/coldchain/service")).attachToOrder(tx, order.id);
       // Phase 43: excise category, mode and duty per unit on each line; the order's excise totals
       await (await import("@/server/excise/service")).attachToOrder(tx, order.id);
+      // Phase 45: the customer's currency and rate are locked now (a fixed local price list's price is kept exactly)
+      await (await import("@/server/currency/documents")).lockOrderCurrency(tx, order.id, new Map(part.lines.filter((l) => l.item.price?.fixedLocal).map((l) => [l.item.offerId, { code: l.item.price!.fixedLocal!.code, listEur: l.calc.unitListPriceNet.toFixed(4), listLocal: l.item.price!.fixedLocal!.unitNet }])));
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount
@@ -353,6 +355,10 @@ export async function getOrder(ctx: Ctx, id: string) {
   const actors = new Map((await prisma.user.findMany({ where: { id: { in: order.statusHistory.map((h) => h.byUserId).filter(Boolean) as string[] } }, select: { id: true, name: true } })).map((u) => [u.id, u.name]));
   const settings = await platformSettings();
   const allowed = allowedTransitions(ctx, role, order.status, order.deliveryMode).filter((s) => !(role === "BUYER" && s === "CANCELLED" && !settings.buyerCanCancel));
+  // Phase 45: the customer doesn't see the reference rate / FX margin / the supplier's rate; the supplier not the customer's
+  const hide = role === "BUYER" ? ["midRate", "fxMarginPct", "vendorRate", "vendorCurrencyCode", "fxRate"] : role === "VENDOR" ? ["eurRate", "midRate", "fxMarginPct", "fxRate", "netTotalLocal", "vatTotalLocal", "grandTotalLocal"] : [];
+  for (const k of hide) delete (order as Record<string, unknown>)[k];
+  if (role === "VENDOR") for (const l of order.lines) for (const k of ["unitPriceLocal", "lineNetLocal", "lineVatLocal"]) delete (l as Record<string, unknown>)[k];
   return { order, role, actors, allowed };
 }
 
@@ -415,8 +421,10 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
 
 /** Order fields a buyer must not see (FIRINGI's commission, the supplier's payout and currency, FIRINGI's margin). */
 /** Order fields a supplier must not see (FIRINGI's margin). */
-const VENDOR_HIDDEN = { firingiMarginNet: true } as const;
-const BUYER_HIDDEN = { commissionTotal: true, vendorPayableNet: true, firingiMarginNet: true, vendorCurrencyCode: true, fxRate: true, deliveryRuleId: true, sourceAddressId: true } as const;
+/** Phase 45: nor the customer's rate, FX margin and local totals (FIRINGI's margin on the conversion). */
+const VENDOR_HIDDEN = { firingiMarginNet: true, eurRate: true, midRate: true, fxMarginPct: true, fxRate: true, netTotalLocal: true, vatTotalLocal: true, grandTotalLocal: true } as const;
+/** Phase 45: a buyer sees its own rate (eurRate) but not the reference rate / FX margin behind it, nor the supplier's. */
+const BUYER_HIDDEN = { commissionTotal: true, vendorPayableNet: true, firingiMarginNet: true, vendorCurrencyCode: true, fxRate: true, deliveryRuleId: true, sourceAddressId: true, midRate: true, fxMarginPct: true, vendorRate: true } as const;
 
 // ── changes ─────────────────────────────────────────────────────────────────
 
@@ -596,6 +604,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       },
     });
     if (res.count !== 1) throw new AppError("CONFLICT", "The order was changed by someone else. Please reload.", 409);
+    await (await import("@/server/currency/documents")).syncOrderLocal(tx, orderId);
     await syncRedemptions(tx, orderId);
     await ensureDelivery(tx, orderId);
     const short = confirmed.filter((c) => c.qty < c.line.qtyOrdered).length;

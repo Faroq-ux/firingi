@@ -248,6 +248,7 @@ export async function repriceOrder(tx: Tx, orderId: string) {
       commissionTotal: t.commissionTotal.toFixed(2), vendorPayableNet: t.vendorPayableNet.toFixed(2), firingiMarginNet: t.firingiMarginNet.toFixed(2),
     },
   });
+  await (await import("@/server/currency/documents")).syncOrderLocal(tx, orderId);
   const { syncRedemptions } = await import("@/server/marketing/offers");
   await syncRedemptions(tx, orderId);
   return true;

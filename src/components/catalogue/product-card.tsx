@@ -69,7 +69,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />
           {item.price && item.price.scope !== "BASE" && <Badge className="mt-1">{t(`priceScope.${item.price.scope}`)}</Badge>}
-          {cw && cl && <div className="mt-1"><CwBadge l={cl} locale={locale} cw={cw} unitGross={item.price ? Number(item.price.unitPriceGross) : null} /></div>}
+          {cw && cl && <div className="mt-1"><CwBadge l={cl} locale={locale} cw={cw} unitGross={item.price ? Number(item.price.local?.unitPriceGross ?? item.price.unitPriceGross) : null} currency={item.price?.local?.code ?? "EUR"} /></div>}
           {rl && <div className="mt-1"><ProductReturnables l={rl} locale={locale} items={rt} compact /></div>}
           {showVendor && <VerifiedBadges badges={item.vendor.badges} max={2} className="mt-2" />}
           <div className="mt-2 flex items-center justify-between gap-2 text-xs">

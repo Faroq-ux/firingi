@@ -39,7 +39,7 @@ export async function BuyerPaymentsInProgress({ ctx }: { ctx: Ctx }) {
               <span><span className="font-medium">{r.method ? t(`methods.${r.method}`) : ""}</span> · <span className="font-mono text-xs">{r.docs}</span></span>
               <span className="flex items-center gap-3">
                 {r.action?.type === "multibanco" && <span className="font-mono text-xs">{t("entity")} {r.action.entity} · {t("reference")} {r.action.reference}</span>}
-                <span className="tabular-nums">{money(r.amount)}</span>
+                <span className="tabular-nums">{new Intl.NumberFormat(locale, { style: "currency", currency: r.currency ?? "EUR" }).format(Number(r.amount))}</span>
                 <Link href={`/buy/finance/pay/${r.id}`} className="text-primary underline">{t("open")}</Link>
               </span>
             </li>

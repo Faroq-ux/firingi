@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
   // A self-contained server (.next/standalone) for the Docker image — runs on any host with Node or Docker.
   output: "standalone",
   // Document uploads go through server actions (max file size is enforced again in the storage service).
-  experimental: { serverActions: { bodySizeLimit: "12mb" } },
+  // webpackMemoryOptimizations: lower peak memory while building (the build box has ~10 GB)
+  experimental: { serverActions: { bodySizeLimit: "12mb" }, webpackMemoryOptimizations: true },
   poweredByHeader: false,
   // API answers (the middleware covers pages): never sniffed, never framed, never cached by proxies.
   async headers() {

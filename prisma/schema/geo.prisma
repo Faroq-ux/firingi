@@ -19,6 +19,10 @@ model ExchangeRate {
   rate      Decimal  @db.Decimal(18, 8)
   date      DateTime @db.Date
   source    String   @default("manual")
+  /// Phase 45: a manual override keeps the feed's own rate here (null = not overridden / no feed value)
+  feedRate    Decimal? @db.Decimal(18, 8)
+  note        String?
+  createdById String?
   createdAt DateTime @default(now())
 
   base  Currency @relation("RateBase", fields: [baseCode], references: [code])

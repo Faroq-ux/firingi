@@ -77,7 +77,7 @@ export function VendorInvoiceReview({ id, disputed }: { id: string; disputed: bo
   );
 }
 
-type OpenDoc = { id: string; companyId: string; company: string; label: string; open: string };
+type OpenDoc = { id: string; companyId: string; company: string; label: string; open: string; currency?: string; openLocal?: string | null };
 export function PaymentForm({ direction, docs }: { direction: "INBOUND" | "OUTBOUND"; docs: OpenDoc[] }) {
   const { pending, error, run } = useRun();
   const companies = [...new Map(docs.map((d) => [d.companyId, d.company])).entries()];
@@ -85,6 +85,8 @@ export function PaymentForm({ direction, docs }: { direction: "INBOUND" | "OUTBO
   const [alloc, setAlloc] = useState<Record<string, string>>({});
   const mine = docs.filter((d) => d.companyId === company);
   const total = Object.entries(alloc).filter(([k]) => mine.some((d) => d.id === k)).reduce((a, [, v]) => a + (Number(v) || 0), 0);
+  // Phase 45: this customer's invoices are in another currency → the money received is entered in it
+  const code = direction === "INBOUND" ? mine.find((d) => d.currency && d.currency !== "EUR")?.currency ?? null : null;
   if (!docs.length) return <p className="text-sm text-muted-foreground">Nothing open to {direction === "INBOUND" ? "collect" : "pay"}.</p>;
   return (
     <form className="space-y-3" onSubmit={(e) => {
@@ -93,6 +95,7 @@ export function PaymentForm({ direction, docs }: { direction: "INBOUND" | "OUTBO
       run(() => recordPaymentAction({
         direction, companyId: company, method: String(fd.get("method")) as "BANK_TRANSFER", amount: Number(fd.get("amount") || total), reference: String(fd.get("reference") || "") || null,
         paidAt: String(fd.get("paidAt")), allocations: mine.filter((d) => Number(alloc[d.id]) > 0).map((d) => ({ documentId: d.id, amount: Number(alloc[d.id]) })),
+        ...(code ? { currencyCode: code, amountLocal: Number(String(fd.get("amountLocal") || "0").replace(",", ".")) } : {}),
       }), () => setAlloc({}));
     }}>
       <div className="grid gap-3 sm:grid-cols-5">
@@ -105,14 +108,15 @@ export function PaymentForm({ direction, docs }: { direction: "INBOUND" | "OUTBO
       <div className="space-y-1.5">
         {mine.map((d) => (
           <div key={d.id} className="flex items-center gap-2 text-sm">
-            <span className="flex-1">{d.label}</span><span className="tabular-nums text-muted-foreground">open {d.open} €</span>
+            <span className="flex-1">{d.label}</span><span className="tabular-nums text-muted-foreground">open {d.open} €{d.currency && d.currency !== "EUR" && d.openLocal ? ` · ${d.openLocal} ${d.currency}` : ""}</span>
             <Button type="button" size="sm" variant="ghost" onClick={() => setAlloc({ ...alloc, [d.id]: d.open })}>full</Button>
             <Input className="h-8 w-28 text-right" inputMode="decimal" value={alloc[d.id] ?? ""} onChange={(e) => setAlloc({ ...alloc, [d.id]: e.target.value })} />
           </div>
         ))}
       </div>
       <div className="flex flex-wrap items-end gap-3">
-        <div className="space-y-1"><Label>Amount received / paid</Label><Input name="amount" inputMode="decimal" className="w-36" placeholder={total.toFixed(2)} /></div>
+        <div className="space-y-1"><Label>Amount received / paid (€)</Label><Input name="amount" inputMode="decimal" className="w-36" placeholder={total.toFixed(2)} /></div>
+        {code && <div className="space-y-1"><Label>Amount received ({code})</Label><Input name="amountLocal" inputMode="decimal" className="w-36" required data-testid="amount-local" /></div>}
         <Button type="submit" disabled={pending || total <= 0}>Record payment ({total.toFixed(2)} €)</Button>
       </div>
       <Err e={error} />

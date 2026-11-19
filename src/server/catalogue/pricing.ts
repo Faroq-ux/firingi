@@ -61,3 +61,38 @@ export function resolvePrice(candidates: PriceCandidate[], qty = 1): ResolvedPri
 export function grossOf(net: Decimal, vatPercent: Decimal.Value) {
   return net.mul(new Decimal(vatPercent).div(100).plus(1)).toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
 }
+
+// ── Phase 45: price lists in other currencies ───────────────────────────────
+
+export type FxCandidate = PriceCandidate & { currencyCode: string };
+export type PriceFxRules = {
+  /** the buyer's billing currency */ buyerCode: string;
+  /** reference rates, units per € */ mids: Record<string, string>;
+  /** fixed local price lists (in the buyer's currency) are used exactly */ localLists: boolean;
+  /** suppliers' price lists in their own currency */ supplierCurrency: boolean;
+};
+
+/**
+ * Price-list prices in EUR so they can be compared and priced as before. A list in the buyer's own currency
+ * (fixed local price) is preferred and kept exactly (`fixed`: list → its prices by tier); a supplier's list in
+ * its own currency is converted at the reference rate. Lists that can't be used (switched off / no rate) drop out.
+ */
+export function candidatesInEur(cands: FxCandidate[], r: PriceFxRules) {
+  const out: PriceCandidate[] = [];
+  const fixed = new Map<string, { code: string; byMinQty: Map<number, string> }>();
+  for (const c of cands) {
+    const code = c.currencyCode || "EUR";
+    if (code === "EUR") { out.push(c); continue; }
+    const mid = r.mids[code];
+    if (!mid) continue;
+    const local = code === r.buyerCode;
+    if (local ? !r.localLists : !r.supplierCurrency) continue;
+    out.push({ ...c, priority: local ? c.priority + 1000 : c.priority, unitPriceNet: new Decimal(c.unitPriceNet.toString()).div(mid).toDecimalPlaces(4, Decimal.ROUND_HALF_UP) });
+    if (local) {
+      const f = fixed.get(c.priceListId) ?? { code, byMinQty: new Map() };
+      f.byMinQty.set(c.minQty, new Decimal(c.unitPriceNet.toString()).toFixed(4));
+      fixed.set(c.priceListId, f);
+    }
+  }
+  return { candidates: out, fixed };
+}

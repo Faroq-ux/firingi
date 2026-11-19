@@ -39,7 +39,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ w
                   <TD className="font-medium">{r.vendor}<div className="text-xs font-normal text-muted-foreground">{r.vendorType.toLowerCase()}</div></TD>
                   <TD className="font-mono text-xs">{r.number}<div className="text-muted-foreground">{r.issueDate}</div></TD>
                   <TD className="text-xs">{r.dueDate} {label(r.daysLeft)}</TD>
-                  <TD className="text-right font-semibold tabular-nums">{eur(r.open)}</TD>
+                  <TD className="text-right font-semibold tabular-nums">{eur(r.open)}{r.openLocal != null && <div className="text-xs font-normal text-muted-foreground" data-testid="payout-local">{new Intl.NumberFormat("en-GB", { style: "currency", currency: r.currency }).format(r.openLocal)}</div>}</TD>
                   <TD>{canPay && <PayVendorInvoice vendorInvoiceId={r.id} vendorId={r.vendorId} amount={r.open} />}</TD>
                 </TR>
               ))}

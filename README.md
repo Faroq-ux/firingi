@@ -662,6 +662,30 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Multi-currency (Phase 45)
+
+Code: `src/lib/currency.ts` (rules), `src/server/currency/service.ts` (settings, rates, feed, alerts), `documents.ts`
+(orders / invoices / statements), `payments.ts` (payments, FX); details `docs/multi-currency.md`.
+- **FIRINGI's books stay in EUR.** Customers in the non-euro Schengen countries FIRINGI switches on (CH, LI, NO, IS, DK,
+  SE, PL, CZ, HU, RO) see prices, order, get invoices and pay **in their own currency**; the rate is **locked on the
+  order** (customer rate = reference × (1 + FX margin per currency)). Suppliers there **price and are paid in theirs**.
+- **Rates**: ECB daily reference rates (daily job `fx`, "Fetch now"), **set by hand** for a day (the feed's value is
+  kept beside it), 45-day history; **alerts** for big moves, a feed that fails and stale rates.
+- **Prices**: a **fixed local price list** (in the customer's currency) is used exactly, without margin; a supplier's
+  list in its own currency converts at the reference rate; everything else at the customer rate. Suppliers can
+  convert a list to another currency. **EUR shown alongside** (switch).
+- **Money**: invoices / credit notes in the customer's currency with the **EUR equivalent of VAT and totals** (PDF,
+  SAF-T `Currency` block); payment requests charge that currency; **bank lines only meet documents in their
+  currency**; supplier statements, invoices and payouts in the supplier's currency; **realised exchange gains /
+  losses** booked when money settles (P&L line, accounting export accounts 7861 / 6863, *Finance › Exchange Gains &
+  Losses* with unrealised exposure).
+- **Reports**: FIRINGI's in EUR with a **currency switch**; customers' and suppliers' in their own currency at each
+  order's locked rate.
+- Every part is a FIRINGI switch (*International › Currency*). Supplier and customer texts in 25 languages; FIRINGI's
+  pages in English. Swiss / Norwegian **customs** (non-EU) are not part of this phase.
+- Tests: `tests/unit/currency.test.ts`, `tests/integration/currency.test.ts`, browser `tests/e2e/currency.mjs`.
+  Screenshots `docs/screenshots/fx-*.png`.
+
 ## Food information & allergens (Phase 44)
 
 Code: `src/lib/food.ts` (rules), `src/server/food/service.ts`, `import.ts`, `label-ai.ts`; details `docs/food-info.md`.

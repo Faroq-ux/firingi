@@ -21,6 +21,8 @@ const s = StyleSheet.create({
   footer: { position: "absolute", bottom: 24, left: 36, right: 36, fontSize: 7, color: "#6b7280" },
 });
 const eur = (v: string | number) => `${Number(v).toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+/** Phase 45: amounts in another currency carry its ISO code (Helvetica has no "zł", "Kč" …). */
+const inCode = (code: string) => (v: string | number) => (code === "EUR" ? eur(v) : `${Number(v).toLocaleString("pt-PT", { minimumFractionDigits: code === "ISK" ? 0 : 2, maximumFractionDigits: code === "ISK" ? 0 : 2 })} ${code}`);
 const qtyFmt = (v: string | number) => Number(v).toLocaleString("pt-PT", { maximumFractionDigits: 3 });
 
 type Party = { name?: string; taxId?: string; vatNumber?: string | null; address?: string | null; email?: string; iban?: string | null; country?: string };
@@ -35,6 +37,8 @@ export type InvoicePdfData = {
   lines: { description: string; qty: string; unitPriceNet: string; discountNet: string; taxRate: string; lineNet: string; exciseNet?: string }[];
   taxSummary: { taxRate: string; base: string; vat: string }[];
   netTotal: string; vatTotal: string; grossTotal: string; taxLabel: string;
+  /** Phase 45: the document's currency (lines and totals above are in it) and the EUR equivalent at the reference rate */
+  currency?: { code: string; rate: string; date: string | null; eur: { net: string; vat: string; gross: string } | null } | null;
 };
 
 /** Invoice labels per issuing country. Add a country here when FIRINGI issues from it. */
@@ -66,6 +70,8 @@ function PartyBox({ title, p, nif = "NIF", vat = "VAT" }: { title: string; p: Pa
 function InvoiceDoc({ d }: { d: InvoicePdfData }) {
   const cols = [44, 8, 12, 10, 10, 16]; // widths % (sum 100)
   const L = invoiceLabels(d.issuer.country);
+  const eur = inCode(d.currency?.code ?? "EUR");
+  const realEur = inCode("EUR");
   return (
     <Document title={d.fullNumber} author="FIRINGI">
       <Page size="A4" style={s.page}>
@@ -121,6 +127,14 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
             <View style={[s.between, { marginTop: 4, paddingTop: 4, borderTopWidth: 1, borderColor: "#111827" }]}>
               <Text style={{ fontFamily: "Helvetica-Bold", fontSize: 11 }}>Total</Text><Text style={{ fontFamily: "Helvetica-Bold", fontSize: 11 }}>{eur(d.grossTotal)}</Text>
             </View>
+            {d.currency?.eur && (
+              <View style={{ marginTop: 6, paddingTop: 4, borderTopWidth: 0.5, borderColor: "#e5e7eb" }}>
+                <Text style={s.muted}>Contravalor em EUR / EUR equivalent — 1 EUR = {Number(d.currency.rate).toLocaleString("pt-PT", { maximumFractionDigits: 6 })} {d.currency.code}{d.currency.date ? ` (BCE ${d.currency.date})` : ""}</Text>
+                <View style={s.between}><Text>{L.totalExcl} {d.taxLabel}</Text><Text>{realEur(d.currency.eur.net)}</Text></View>
+                <View style={s.between}><Text>{d.taxLabel}</Text><Text>{realEur(d.currency.eur.vat)}</Text></View>
+                <View style={s.between}><Text>Total</Text><Text>{realEur(d.currency.eur.gross)}</Text></View>
+              </View>
+            )}
           </View>
         </View>
         <Text style={s.footer} fixed>
@@ -136,9 +150,12 @@ export type StatementPdfData = {
   number: string; createdAt: Date; isCredit: boolean; orderNumber: string; vendor: Party; firingi: Party; taxRegime: string;
   lines: { sku: string; description: string; qty: number; unitCostNet: string; lineNet: string; taxRate: string; vat: string }[];
   expectedNet: string; expectedVat: string; expectedGross: string; commissionTotal: string;
+  /** Phase 45: the supplier's currency (amounts above are in it) */
+  currencyCode?: string;
 };
 
 function StatementDoc({ d }: { d: StatementPdfData }) {
+  const eur = inCode(d.currencyCode ?? "EUR");
   return (
     <Document title={d.number} author="FIRINGI">
       <Page size="A4" style={s.page}>

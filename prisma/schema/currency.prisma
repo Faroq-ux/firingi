@@ -1,0 +1,51 @@
+// ───────────────────────── Phase 45: multi-currency ─────────────────────────
+// Settings (switches, countries, FX margins, alerts) live in Setting "currency.settings".
+// Rates are ExchangeRate rows (EUR → quote, per day; source ECB | MANUAL | seed).
+
+enum FxEventKind {
+  MOVE // a rate moved more than the alert threshold since the last rate
+  FEED_FAILED // the daily feed could not be read
+  STALE // no new rate for too many days (conversion uses the last one)
+  OVERRIDE // FIRINGI set a rate by hand
+}
+
+/// Rate alerts and the feed log (FIRINGI → International → Currencies → Alerts).
+model FxEvent {
+  id           String      @id @default(cuid())
+  kind         FxEventKind
+  currencyCode String?
+  message      String
+  data         Json?
+  ackAt        DateTime?
+  ackById      String?
+  createdAt    DateTime    @default(now())
+
+  @@index([kind, createdAt])
+  @@index([ackAt])
+}
+
+enum FxEntryKind {
+  RECEIVABLE // customer payment in its currency vs the invoice's rate
+  PAYABLE // payout to a supplier in its currency vs the statement's rate
+}
+
+/// Realised exchange gain (+) / loss (−) in EUR, booked when money in another currency settles a document.
+model FxEntry {
+  id              String      @id @default(cuid())
+  kind            FxEntryKind
+  companyId       String
+  paymentId       String
+  invoiceId       String?
+  vendorInvoiceId String?
+  currencyCode    String
+  amountLocal     Decimal     @db.Decimal(18, 2)
+  docRate         Decimal     @db.Decimal(18, 8)
+  settleRate      Decimal     @db.Decimal(18, 8)
+  gainLossEur     Decimal     @db.Decimal(18, 2)
+  date            DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+
+  @@index([date])
+  @@index([companyId])
+  @@index([paymentId])
+}

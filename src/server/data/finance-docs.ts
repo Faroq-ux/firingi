@@ -11,7 +11,7 @@ export async function invoicePdfData(ctx: Ctx, id: string): Promise<InvoicePdfDa
   const inv = await invoiceForViewer(ctx, id);
   const issuer = inv.issuerSnapshot as InvoicePdfData["issuer"];
   const recipient = inv.recipientSnapshot as InvoicePdfData["recipient"] & { reason?: string };
-  return {
+  const base: InvoicePdfData = {
     // A document issued at Moloni carries Moloni's legal number; only live Moloni is certified.
     docType: inv.docType, fullNumber: inv.providerNumber ?? inv.fullNumber!, issuedAt: inv.issuedAt!, dueAt: inv.dueAt, atcud: inv.atcud, hash: inv.hash,
     certified: inv.fiscalStatus === "DONE" && inv.externalProvider === "moloni", orderNumber: inv.order?.number ?? null,
@@ -20,6 +20,30 @@ export async function invoicePdfData(ctx: Ctx, id: string): Promise<InvoicePdfDa
     lines: inv.lines.map((l) => ({ description: l.description, qty: l.qty.toString(), unitPriceNet: l.unitPriceNet.toString(), discountNet: l.discountNet.toString(), taxRate: l.taxRate.toString(), lineNet: l.lineNet.toString(), exciseNet: l.exciseNet.toString() })),
     taxSummary: inv.taxSummary.map((t) => ({ taxRate: t.taxRate.toString(), base: t.base.toString(), vat: t.vat.toString() })),
     netTotal: inv.netTotal.toString(), vatTotal: inv.vatTotal.toString(), grossTotal: inv.grossTotal.toString(),
+  };
+  if (inv.currencyCode === "EUR" || inv.grossTotalLocal == null) return base;
+  // Phase 45: the invoice in the customer's currency — lines, VAT summary and totals in it; the EUR equivalent at the reference rate
+  const { invoiceEurEquivalent } = await (await import("@/server/currency/service")).currencySettings();
+  const dp = inv.currencyCode === "ISK" ? 0 : 2;
+  const n = (v: unknown) => Number(v ?? 0);
+  const lines = inv.lines.map((l) => {
+    const unit = l.unitPriceLocal != null ? n(l.unitPriceLocal) : n(l.unitPriceNet) * n(inv.eurRate);
+    const net = l.lineNetLocal != null ? n(l.lineNetLocal) : n(l.lineNet) * n(inv.eurRate);
+    const disc = Math.max(0, unit * n(l.qty) - net);
+    return { description: l.description, qty: l.qty.toString(), unitPriceNet: unit.toFixed(4), discountNet: disc.toFixed(dp), taxRate: l.taxRate.toString(), lineNet: net.toFixed(dp), exciseNet: (n(l.exciseNet) * n(inv.eurRate)).toFixed(dp), vat: n(l.lineVatLocal ?? n(l.lineVat) * n(inv.eurRate)) };
+  });
+  const byRate = new Map<string, { base: number; vat: number }>();
+  for (const l of lines) { const c = byRate.get(l.taxRate) ?? { base: 0, vat: 0 }; byRate.set(l.taxRate, { base: c.base + Number(l.lineNet), vat: c.vat + l.vat }); }
+  const mid = n(inv.midRate) || n(inv.eurRate) || 1;
+  const midRow = await prisma.exchangeRate.findFirst({ where: { quoteCode: inv.currencyCode, date: { lte: inv.issuedAt ?? new Date() } }, orderBy: { date: "desc" }, select: { date: true } });
+  return {
+    ...base, lines: lines.map(({ vat: _v, ...l }) => l),
+    taxSummary: [...byRate].map(([taxRate, v]) => ({ taxRate, base: v.base.toFixed(dp), vat: v.vat.toFixed(dp) })),
+    netTotal: n(inv.netTotalLocal).toFixed(dp), vatTotal: n(inv.vatTotalLocal).toFixed(dp), grossTotal: n(inv.grossTotalLocal).toFixed(dp),
+    currency: {
+      code: inv.currencyCode, rate: String(mid), date: midRow?.date.toISOString().slice(0, 10) ?? null,
+      eur: invoiceEurEquivalent ? { net: (n(inv.netTotalLocal) / mid).toFixed(2), vat: (n(inv.vatTotalLocal) / mid).toFixed(2), gross: (n(inv.grossTotalLocal) / mid).toFixed(2) } : null,
+    },
   };
 }
 
@@ -34,6 +58,16 @@ export async function statementPdfData(ctx: Ctx, id: string): Promise<StatementP
     firingi: { name: le.legalName, taxId: le.taxId, vatNumber: le.vatNumber, address: `${le.addressLine}, ${le.postalCode} ${le.city}`, email: le.email },
     lines: st.lines as StatementPdfData["lines"],
     expectedNet: st.expectedNet.toString(), expectedVat: st.expectedVat.toString(), expectedGross: st.expectedGross.toString(), commissionTotal: st.commissionTotal.toString(),
+    // Phase 45: a statement in the supplier's currency — every amount in it (the statement's locked rate)
+    ...(st.currencyCode !== "EUR" && st.expectedNetLocal != null ? (() => {
+      const k = Number(st.rate);
+      const c = (v: unknown) => (Number(v) * k).toFixed(st.currencyCode === "ISK" ? 0 : 2);
+      return {
+        currencyCode: st.currencyCode,
+        lines: (st.lines as StatementPdfData["lines"]).map((l) => ({ ...l, unitCostNet: (Number(l.unitCostNet) * k).toFixed(4), lineNet: c(l.lineNet), vat: c(l.vat) })),
+        expectedNet: String(st.expectedNetLocal), expectedVat: String(st.expectedVatLocal), expectedGross: String(st.expectedGrossLocal), commissionTotal: c(st.commissionTotal),
+      };
+    })() : {}),
   };
 }
 

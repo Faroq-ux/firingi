@@ -51,7 +51,7 @@ describe("profit & loss, costs, cash flow", () => {
     expect(now.orders).toBeGreaterThan(0);
     for (const r of before.rows) {
       expect(r.gross).toBeCloseTo(r.revenue - r.cogs - r.credits + r.vendorCredits, 1);
-      expect(r.net).toBeCloseTo(r.gross - r.driverPay - r.absorbed - r.costTotal, 1);
+      expect(r.net).toBeCloseTo(r.gross - r.driverPay - r.absorbed - r.costTotal + r.fx, 1); // + realised FX gain / − loss (Phase 45)
     }
     const twoMonthsAgo = new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 2, 5));
     const rent = await saveCost(fin, null, { date: twoMonthsAgo, monthly: true, category: "WAREHOUSE", description: "Armazém rent", amountNet: 1000, vatAmount: 230 });

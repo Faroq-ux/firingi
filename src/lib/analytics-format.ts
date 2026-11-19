@@ -1,11 +1,15 @@
 /** Number and period formatting shared by charts, tables and exports (no React). */
-export type Fmt = "money" | "number" | "percent";
+/** "money" = EUR; Phase 45: "money:PLN" = amounts already in that currency. */
+export type Fmt = "money" | "number" | "percent" | `money:${string}`;
 
 export function fmtValue(v: number, fmt: Fmt, locale: string, compact = false) {
   if (!Number.isFinite(v)) return "—";
   if (fmt === "percent") return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 1 }).format(v);
-  if (fmt === "money")
-    return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR", ...(compact ? { notation: "compact", maximumFractionDigits: 1 } : { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }).format(v);
+  if (fmt === "money" || fmt.startsWith("money:")) {
+    const currency = fmt === "money" ? "EUR" : fmt.slice(6);
+    const dp = currency === "ISK" ? 0 : 2;
+    return new Intl.NumberFormat(locale, { style: "currency", currency, ...(compact ? { notation: "compact", maximumFractionDigits: 1 } : { minimumFractionDigits: dp, maximumFractionDigits: dp }) }).format(v);
+  }
   return new Intl.NumberFormat(locale, compact ? { notation: "compact", maximumFractionDigits: 1 } : { maximumFractionDigits: 2 }).format(v);
 }
 

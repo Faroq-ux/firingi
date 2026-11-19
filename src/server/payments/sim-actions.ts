@@ -24,7 +24,7 @@ export async function simCheckout(providerRef: string, outcome: "succeeded" | "f
   const r = await prisma.paymentRequest.findUnique({ where: { provider_providerRef: { provider: "sim", providerRef } } });
   if (!r) throw new NotFoundError("Checkout");
   await deliver(simEvent(outcome === "succeeded" ? "payment.succeeded" : "payment.failed", {
-    requestId: r.id, providerRef, providerPaymentRef: `${providerRef}_pi`, amount: r.amount.toString(), failureReason: outcome === "failed" ? "Card declined (simulated)" : null,
+    requestId: r.id, providerRef, providerPaymentRef: `${providerRef}_pi`, amount: (r.amountLocal ?? r.amount).toString(), failureReason: outcome === "failed" ? "Card declined (simulated)" : null,
   }));
   return r;
 }
@@ -34,7 +34,7 @@ export async function simMultibancoPaid(requestId: string, amount?: string) {
   assertSim();
   const r = await prisma.paymentRequest.findUnique({ where: { id: requestId } });
   if (!r || r.method !== "MULTIBANCO" || r.status !== "PROCESSING") throw new ValidationError("Not a Multibanco reference waiting for payment.");
-  await deliver(simEvent("payment.succeeded", { requestId: r.id, providerRef: r.providerRef, providerPaymentRef: `${r.providerRef}_paid`, amount: amount ?? r.amount.toString() }));
+  await deliver(simEvent("payment.succeeded", { requestId: r.id, providerRef: r.providerRef, providerPaymentRef: `${r.providerRef}_paid`, amount: amount ?? (r.amountLocal ?? r.amount).toString() }));
 }
 
 /** The hosted mandate page: the customer signs with their IBAN. */

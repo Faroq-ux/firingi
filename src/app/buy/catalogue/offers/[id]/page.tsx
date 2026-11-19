@@ -72,7 +72,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           </div>
           {deals.map((d) => <DealBanner key={d.id} d={d} l={dl.l} locale={locale} canBuy={can(ctx, "buyer.orders.place")} />)}
           <ProductReturnables l={rl.l} locale={locale} items={rt[id] ?? []} />
-          {cw && <ProductCatchWeight l={cl.l} locale={locale} cw={cw} unitGross={item.price ? Number(item.price.unitPriceGross) : null} unitNet={item.price ? Number(item.price.unitPriceNet) : null} taxLabel={item.taxLabel} />}
+          {cw && <ProductCatchWeight l={cl.l} locale={locale} cw={cw} unitGross={item.price ? Number(item.price.local?.unitPriceGross ?? item.price.unitPriceGross) : null} unitNet={item.price ? Number(item.price.local?.unitPriceNet ?? item.price.unitPriceNet) : null} taxLabel={item.taxLabel} currency={item.price?.local?.code ?? "EUR"} />}
           <Card>
             <CardContent className="space-y-3 pt-5">
               <div className="flex flex-wrap items-start gap-3">
@@ -84,10 +84,10 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
                 <div>
                   <div className="mb-1 text-sm font-medium">{t("tiers")}</div>
                   <div className="flex flex-wrap gap-2">
-                    {item.price.tiers.map((tier) => (
+                    {(item.price.local?.tiers ?? item.price.tiers).map((tier) => (
                       <span key={tier.minQty} className="rounded-md border px-2 py-1 text-sm">
-                        {t("from", { qty: tier.minQty })}: <b>{formatMoney(tier.unitPriceGross, locale)}</b> {t("incTax", { tax: item.taxLabel })}
-                        <span className="text-xs text-muted-foreground"> ({formatMoney(tier.unitPriceNet, locale)} {t("exTax", { tax: item.taxLabel })})</span>
+                        {t("from", { qty: tier.minQty })}: <b>{formatMoney(tier.unitPriceGross, locale, item.price!.local?.code ?? "EUR")}</b> {t("incTax", { tax: item.taxLabel })}
+                        <span className="text-xs text-muted-foreground"> ({formatMoney(tier.unitPriceNet, locale, item.price!.local?.code ?? "EUR")} {t("exTax", { tax: item.taxLabel })})</span>
                       </span>
                     ))}
                   </div>
@@ -126,7 +126,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
                 {alternatives.map((a) => (
                   <li key={a.offerId} className="flex items-center justify-between gap-2 p-3 text-sm">
                     <Link href={`/buy/catalogue/offers/${a.offerId}`} className="text-primary hover:underline">{pickLocalized(a.packaging.name, locale)} · {a.vendor.name}</Link>
-                    <span className="tabular-nums">{a.price ? `${formatMoney(a.price.unitPriceGross, locale)} ${t("incTax", { tax: a.taxLabel })}` : "—"}</span>
+                    <span className="tabular-nums">{a.price ? `${formatMoney(a.price.local?.unitPriceGross ?? a.price.unitPriceGross, locale, a.price.local?.code ?? "EUR")} ${t("incTax", { tax: a.taxLabel })}` : "—"}</span>
                   </li>
                 ))}
               </ul>

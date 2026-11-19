@@ -80,6 +80,17 @@ export const DEMO_COMPANIES: CompanyDef[] = [
       { email: "buyer@kebabhouse.test", name: "Bruno Compras", roles: ["BUYER_PURCHASER"], jobTitle: "Purchaser" },
     ],
   },
+  // Phase 45: a Polish wholesaler pricing in PLN and a Polish customer billed in PLN (multi-currency demo)
+  {
+    key: "whs-krakow", type: "WHOLESALER", status: "APPROVED", country: "PL", legalName: "Hurtownia Kraków Sp. z o.o.", tradeName: "Hurtownia Kraków",
+    taxId: "6762495634", vatNumber: "PL6762495634", email: "biuro@hurtownia.test",
+    users: [{ email: "owner@hurtownia.test", name: "Piotr Hurtowy", roles: ["COMPANY_ADMIN"], owner: true }],
+  },
+  {
+    key: "cust-krakow", type: "CUSTOMER", status: "APPROVED", country: "PL", legalName: "Kebab Kraków Sp. z o.o.", tradeName: "Kebab Kraków", businessType: "kebab_pizza",
+    taxId: "6793108059", vatNumber: "PL6793108059", email: "biuro@kebabkrakow.test",
+    users: [{ email: "owner@kebabkrakow.test", name: "Kasia Kebab", roles: ["COMPANY_ADMIN"], owner: true }],
+  },
   {
     key: "cust-minimercado", type: "CUSTOMER", status: "PENDING", country: "PT", legalName: "Mini-Mercado Sol, Unipessoal Lda",
     taxId: makePtNif("51633333"), vatNumber: `PT${makePtNif("51633333")}`, email: "geral@minimercadosol.test", businessType: "mini_market",

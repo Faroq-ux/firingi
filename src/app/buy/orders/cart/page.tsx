@@ -26,13 +26,16 @@ import { CartPoints } from "@/components/loyalty/controls";
 import { loyaltySettings } from "@/server/loyalty/service";
 import { CartExtras } from "@/components/buying/controls";
 import { formatMoney } from "@/lib/utils";
+import { viewerFx } from "@/server/currency/service";
 
 export const metadata = { title: "Cart" };
 
 export default async function CartPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.orders.place");
-  const [cart, t, tc, locale, ordering, tl, ls] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx), getTranslations("loyalty"), loyaltySettings()]);
+  const [cart, t, tc, locale, ordering, tl, ls, fx, tcur] = await Promise.all([cartView(ctx), getTranslations("orders"), getTranslations("coupons"), getLocale(), orderingSettings(ctx), getTranslations("loyalty"), loyaltySettings(), viewerFx(ctx, "BUYER"), getTranslations("currency")]);
+  // Phase 45: totals in the customer's currency, worked out like the order (fixed local prices exactly)
+  const lc = "local" in cart ? cart.local : null;
   // Phase 40: deposits on returnables in the cart, empties to swap for refills
   const [rtCart, rl] = await Promise.all([cartReturnables(ctx, locale).catch(() => null), rtLabels()]);
   // Phase 41: sold-by-weight lines (estimate until weighed)
@@ -66,11 +69,11 @@ export default async function CartPage() {
     return gd.ok ? (
       <p className="rounded-md bg-muted p-2 text-sm" data-testid="group-delivery">
         {gd.mode === "FIRINGI_FLEET" ? t("deliveryFirINGI") : gd.mode === "CARRIER" ? t("deliveryCarrier") : t("deliveryVendor")}
-        {g.freeDelivery ? <> · <b data-testid="free-delivery">{tc("freeDelivery")}</b></> : Number(gd.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : <> · {t("fee")} {formatMoney(gd.feeNet, locale)}{gd.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}</>}
+        {g.freeDelivery ? <> · <b data-testid="free-delivery">{tc("freeDelivery")}</b></> : Number(gd.feeNet) === 0 ? <> · <b data-testid="free-delivery">{t("freeDelivery")}</b></> : <> · {t("fee")} {formatMoney(gd.feeNet, locale, fx)}{gd.mode !== "FIRINGI_FLEET" ? <> · {t("supplierFlatRate")}</> : null}</>}
       </p>
     ) : (
       <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm" data-testid="group-delivery">
-        {gd.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : "unit" in gd && gd.unit === "UNITS" ? t("belowSupplierUnits", { min: gd.minimum, missing: gd.missing }) : t(gd.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(gd.minimum, locale), missing: formatMoney(gd.missing, locale), tax })}
+        {gd.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : "unit" in gd && gd.unit === "UNITS" ? t("belowSupplierUnits", { min: gd.minimum, missing: gd.missing }) : t(gd.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(gd.minimum, locale, fx), missing: formatMoney(gd.missing, locale, fx), tax })}
       </p>
     );
   };
@@ -95,9 +98,9 @@ export default async function CartPage() {
                         {"deal" in l && l.deal && <span className="mt-1 inline-block rounded-full bg-destructive px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-deal">{td("cart.applied")}</span>}
                         {"dealNote" in l && !l.deal && l.dealNote && td.has(`cart.${l.dealNote.why}`) && <div className="mt-1 text-xs text-amber-700 dark:text-amber-400" data-testid="cart-deal-note">{td(`cart.${l.dealNote.why}`, { n: l.dealNote.left ?? 0 })}</div>}
                       </TD>
-                      <TD className="text-right text-sm tabular-nums">{formatMoney(l.price!.unitPriceGross, locale)}<div className="text-xs text-muted-foreground">{formatMoney(l.price!.unitPriceNet, locale)} s/ {tax}</div></TD>
+                      <TD className="text-right text-sm tabular-nums">{formatMoney(l.price!.local?.unitPriceGross ?? l.price!.unitPriceGross, locale, l.price!.local?.code ?? "EUR")}<div className="text-xs text-muted-foreground">{formatMoney(l.price!.local?.unitPriceNet ?? l.price!.unitPriceNet, locale, l.price!.local?.code ?? "EUR")} s/ {tax}</div></TD>
                       <TD><CartQty offerId={l.offerId} qty={l.qty} min={l.minOrderQty} step={l.qtyStep} /></TD>
-                      <TD className="text-right tabular-nums">{formatMoney(l.lineGross, locale)}<div className="text-xs text-muted-foreground">{tax} {Number(l.vatRate)}%</div></TD>
+                      <TD className="text-right tabular-nums">{lc?.lines[l.offerId] ? formatMoney(lc.lines[l.offerId].gross, locale, lc.code) : formatMoney(l.lineGross, locale, fx)}<div className="text-xs text-muted-foreground">{tax} {Number(l.vatRate)}%</div></TD>
                     </TR>
                   ))}
                 </TBody>
@@ -127,29 +130,30 @@ export default async function CartPage() {
           <CardHeader><CardTitle>{t("total")}</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <dl className="grid grid-cols-2 gap-y-1 text-sm">
-              <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{formatMoney(Number(cart.goodsNet) + Number(cart.offerDiscount) + Number(cart.loyalty?.euros ?? 0), locale)}</dd>
-              {Number(cart.offerDiscount) > 0 && <><dt className="text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]">{tc("offerDiscount")}</dt><dd className="text-right tabular-nums text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]" data-testid="offer-discount">−{formatMoney(cart.offerDiscount, locale)}</dd></>}
-              {cart.loyalty && cart.loyalty.used > 0 && <><dt className="text-[color:var(--vivid-violet)]">{tl("cartLine", { points: cart.loyalty.used.toLocaleString(locale) })}</dt><dd className="text-right tabular-nums text-[color:var(--vivid-violet)]" data-testid="points-discount">−{formatMoney(cart.loyalty.euros, locale)}</dd></>}
-              {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{cart.freeDelivery ? <><s className="text-muted-foreground">{formatMoney(cart.freeDelivery.amount, locale)}</s> {formatMoney(d.feeNet, locale)}</> : formatMoney(d.feeNet, locale)}</dd></>}
-              <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{formatMoney(cart.totalVat, locale)}</dd>
-              <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
+              <dt className="text-muted-foreground">{t("subtotal")} (s/ {tax})</dt><dd className="text-right tabular-nums">{lc ? formatMoney(lc.shownNet, locale, lc.code) : formatMoney(Number(cart.goodsNet) + Number(cart.offerDiscount) + Number(cart.loyalty?.euros ?? 0), locale, fx)}</dd>
+              {Number(cart.offerDiscount) > 0 && <><dt className="text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]">{tc("offerDiscount")}</dt><dd className="text-right tabular-nums text-[color:color-mix(in_oklch,var(--vivid-pink)_80%,var(--foreground))]" data-testid="offer-discount">−{formatMoney(cart.offerDiscount, locale, fx)}</dd></>}
+              {cart.loyalty && cart.loyalty.used > 0 && <><dt className="text-[color:var(--vivid-violet)]">{tl("cartLine", { points: cart.loyalty.used.toLocaleString(locale) })}</dt><dd className="text-right tabular-nums text-[color:var(--vivid-violet)]" data-testid="points-discount">−{formatMoney(cart.loyalty.euros, locale, fx)}</dd></>}
+              {d?.ok && <><dt className="text-muted-foreground">{t("fee")}</dt><dd className="text-right tabular-nums">{cart.freeDelivery ? <><s className="text-muted-foreground">{formatMoney(cart.freeDelivery.amount, locale, fx)}</s> {formatMoney(d.feeNet, locale, fx)}</> : lc ? formatMoney(lc.fee, locale, lc.code) : formatMoney(d.feeNet, locale, fx)}</dd></>}
+              <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{lc ? formatMoney(lc.vat, locale, lc.code) : formatMoney(cart.totalVat, locale, fx)}</dd>
+              <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums" data-testid="cart-total" data-currency={fx.code}>{lc ? formatMoney(lc.gross, locale, lc.code) : formatMoney(cart.totalGross, locale, fx)}{fx.code !== "EUR" && fx.showEur && <div className="text-xs font-normal text-muted-foreground">{tcur("approxEur", { amount: formatMoney(cart.totalGross, locale) })}</div>}</dd>
             </dl>
             {cwm.size > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-cw-note">{cl.l.cartTotalNote}</p>}
-            {exCart && exCart.addedNet > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-excise-note">{exl.l.dutyAdded.replace("{amount}", formatMoney(exCart.addedNet + exCart.addedVat, locale))} ({exl.l["mode.ADDED"]})</p>}
-            {rtCart && rtCart.depositTotal > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-deposit-note">{rl.l.plusDeposits.replace("{amount}", formatMoney(rtCart.depositTotal, locale))}</p>}
+            {exCart && exCart.addedNet > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-excise-note">{exl.l.dutyAdded.replace("{amount}", formatMoney(exCart.addedNet + exCart.addedVat, locale, fx))} ({exl.l["mode.ADDED"]})</p>}
+            {rtCart && rtCart.depositTotal > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-deposit-note">{rl.l.plusDeposits.replace("{amount}", formatMoney(rtCart.depositTotal, locale, fx))}</p>}
+            {fx.code !== "EUR" && <p className="text-xs text-muted-foreground" data-testid="fx-note">{tcur("rateNote", { code: fx.code, rate: Number(fx.rate).toLocaleString(locale, { maximumFractionDigits: 4 }) })}</p>}
             {cart.groups.length === 1 && deliveryNote(cart.groups[0])}
             {cart.groups.length > 1 && d && !d.ok && <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">{t("splitBlocked")}</p>}
             {cart.credit && (
               <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive" data-testid="credit-block">
-                {cart.credit.code === "PAYMENT_OVERDUE" ? t("creditOverdue", { days: cart.credit.days ?? 0 }) : t("creditLimit", { available: formatMoney(cart.credit.available ?? 0, locale), limit: formatMoney(cart.credit.limit ?? 0, locale) })}{" "}
+                {cart.credit.code === "PAYMENT_OVERDUE" ? t("creditOverdue", { days: cart.credit.days ?? 0 }) : t("creditLimit", { available: formatMoney(cart.credit.available ?? 0, locale, fx), limit: formatMoney(cart.credit.limit ?? 0, locale, fx) })}{" "}
                 <Link href="/buy/finance/invoices" className="underline">{t("openInvoices")}</Link>
               </p>
             )}
             <CouponBox coupon={cart.coupon && {
-              code: cart.coupon.code, ok: cart.coupon.ok, savings: cart.coupon.savings, savingsText: tc("saves", { amount: formatMoney(cart.coupon.savings, locale) }),
-              errorText: cart.coupon.error ? ((COUPON_ERRORS as readonly string[]).includes(cart.coupon.error.code) ? tc(`errors.${cart.coupon.error.code}`, { missing: formatMoney(cart.coupon.error.details?.missing ?? 0, locale), min: formatMoney(cart.coupon.error.details?.minimum ?? 0, locale) }) : cart.coupon.error.message) : null,
+              code: cart.coupon.code, ok: cart.coupon.ok, savings: cart.coupon.savings, savingsText: tc("saves", { amount: formatMoney(cart.coupon.savings, locale, fx) }),
+              errorText: cart.coupon.error ? ((COUPON_ERRORS as readonly string[]).includes(cart.coupon.error.code) ? tc(`errors.${cart.coupon.error.code}`, { missing: formatMoney(cart.coupon.error.details?.missing ?? 0, locale, fx), min: formatMoney(cart.coupon.error.details?.minimum ?? 0, locale, fx) }) : cart.coupon.error.message) : null,
             }} />
-            {cart.loyalty && <CartPoints l={cart.loyalty} min={ls.minRedeem} maxPct={ls.maxRedeemPct} valueText={formatMoney(cart.loyalty.balance * ls.pointValue, locale)} eurosText={formatMoney(cart.loyalty.euros, locale)} />}
+            {cart.loyalty && <CartPoints l={cart.loyalty} min={ls.minRedeem} maxPct={ls.maxRedeemPct} valueText={formatMoney(cart.loyalty.balance * ls.pointValue, locale, fx)} eurosText={formatMoney(cart.loyalty.euros, locale, fx)} />}
             {cart.loyalty?.freeDelivery && cart.freeDelivery && <p className="text-xs text-[color:var(--vivid-violet)]" data-testid="tier-free-delivery">{tl("cartFreeDelivery")}</p>}
             <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok) || cart.loyalty?.reason === "NOT_ENOUGH" || cart.loyalty?.reason === "BELOW_MIN"} poRequired={poRequired} locale={locale} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}${(a as { branch?: { name: string } | null }).branch ? ` · ${(a as { branch?: { name: string } | null }).branch!.name}` : ""}` }))} />
             <CartExtras canQuote={!cart.routed} />

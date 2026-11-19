@@ -12,6 +12,8 @@ import { refreshLinkPaymentAction, refreshPaymentAction, renewLinkAction, startL
 export type PayMethod = "CARD" | "MB_WAY" | "MULTIBANCO" | "DIRECT_DEBIT";
 type Action = { type: "redirect"; url: string } | { type: "multibanco"; entity: string; reference: string; amount: string; expiresAt: string } | { type: "mbway"; phone: string; expiresAt: string } | { type: "none" };
 export type PayRequestView = {
+  /** Phase 45: the currency the amounts are in */
+  currency?: string;
   id: string; token: string; amount: string; status: "OPEN" | "PROCESSING" | "PAID" | "FAILED" | "EXPIRED" | "CANCELLED";
   method: PayMethod | null; action: Action | null; failureReason: string | null; paidAmount: string | null;
   docs: { number: string; amount: string }[]; orderNumber: string | null; company: string;
@@ -26,7 +28,7 @@ export function PayPanel({ request, methods, mandateLast4, providerLabel, via, b
   const t = useTranslations("pay");
   const locale = useLocale();
   const router = useRouter();
-  const money = (v: string | number) => new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(Number(v));
+  const money = (v: string | number) => new Intl.NumberFormat(locale, { style: "currency", currency: request.currency ?? "EUR" }).format(Number(v));
   const usable = methods.filter((m) => via === "portal" || m !== "DIRECT_DEBIT");
   const [method, setMethod] = useState<PayMethod | null>(usable[0] ?? null);
   const [phone, setPhone] = useState("");

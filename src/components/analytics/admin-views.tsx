@@ -8,6 +8,7 @@ import {
   type Dim, type Filters, type Metric,
 } from "@/server/analytics/engine";
 import { fillSeries, qs, readQuery, type SearchParams } from "@/server/analytics/params";
+import { CurrencySwitch } from "@/components/currency/switch";
 import { PageHeader } from "@/components/layout/page-header";
 import { BarList, ChartCard, TimeChart } from "./charts";
 import { fmtPeriod, fmtValue, type Fmt } from "@/lib/analytics-format";
@@ -129,6 +130,7 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
       <PageHeader title={title} description={description} actions={spec ? <ExportButtons params={q.params} dims={spec[0]} metrics={spec[1]} /> : undefined} />
       <FilterBar labels={ADMIN_FILTER_LABELS} countries={countries} showType={kind !== "distributors" && kind !== "wholesalers"} showBasis={kind !== "delivery"} defaultBasis={q.filters.basis} />
       {ctx.scopes.length > 0 && <p className="-mt-3 mb-4 text-xs text-muted-foreground">Showing your regions only.</p>}
+      {q.switchable && kind !== "delivery" && <CurrencySwitch current={q.currency} params={q.params} note={q.currency !== "EUR" ? "at today's reference rate — the books are in EUR" : null} />}
     </>
   );
 
@@ -175,16 +177,16 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
 
   const [k, p] = await Promise.all([kpis(f), kpis(previousPeriod(f))]);
   const tiles = {
-    net: <Kpi key="net" label="Net sales" value={k.net} prev={p.net} fmt="money" locale={locale} hint={`Gross ${fmtValue(k.gross, "money", locale)}`} testId="kpi-net" />,
+    net: <Kpi key="net" label="Net sales" value={k.net} prev={p.net} fmt={q.money} locale={locale} hint={`Gross ${fmtValue(k.gross, q.money, locale)}`} testId="kpi-net" />,
     orders: <Kpi key="orders" label="Orders" value={k.orders} prev={p.orders} fmt="number" locale={locale} hint={`${k.cancelled} cancelled`} testId="kpi-orders" />,
-    aov: <Kpi key="aov" label="Average order" value={k.aov} prev={p.aov} fmt="money" locale={locale} />,
+    aov: <Kpi key="aov" label="Average order" value={k.aov} prev={p.aov} fmt={q.money} locale={locale} />,
     buyers: <Kpi key="buyers" label="Active buyers" value={k.buyers} prev={p.buyers} fmt="number" locale={locale} />,
-    revenue: <Kpi key="revenue" label="FIRINGI revenue" value={k.revenue} prev={p.revenue} fmt="money" locale={locale} hint="margin + delivery fees" testId="kpi-revenue" />,
-    margin: <Kpi key="margin" label="Goods margin" value={k.margin} prev={p.margin} fmt="money" locale={locale} hint={`${fmtValue(k.net - k.fees ? k.margin / (k.net - k.fees) : 0, "percent", locale)} of goods`} />,
-    fees: <Kpi key="fees" label="Delivery fees" value={k.fees} prev={p.fees} fmt="money" locale={locale} />,
-    commission: <Kpi key="commission" label="Commission" value={k.commission} prev={p.commission} fmt="money" locale={locale} />,
-    credited: <Kpi key="credited" label="Credit notes" value={k.credited} prev={p.credited} fmt="money" locale={locale} hint="issued in the period (net)" />,
-    payout: <Kpi key="payout" label="Owed to vendors" value={k.payout} prev={p.payout} fmt="money" locale={locale} />,
+    revenue: <Kpi key="revenue" label="FIRINGI revenue" value={k.revenue} prev={p.revenue} fmt={q.money} locale={locale} hint="margin + delivery fees" testId="kpi-revenue" />,
+    margin: <Kpi key="margin" label="Goods margin" value={k.margin} prev={p.margin} fmt={q.money} locale={locale} hint={`${fmtValue(k.net - k.fees ? k.margin / (k.net - k.fees) : 0, "percent", locale)} of goods`} />,
+    fees: <Kpi key="fees" label="Delivery fees" value={k.fees} prev={p.fees} fmt={q.money} locale={locale} />,
+    commission: <Kpi key="commission" label="Commission" value={k.commission} prev={p.commission} fmt={q.money} locale={locale} />,
+    credited: <Kpi key="credited" label="Credit notes" value={k.credited} prev={p.credited} fmt={q.money} locale={locale} hint="issued in the period (net)" />,
+    payout: <Kpi key="payout" label="Owed to vendors" value={k.payout} prev={p.payout} fmt={q.money} locale={locale} />,
   };
   const row = (...xs: (keyof typeof tiles)[]) => <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{xs.map((x) => tiles[x])}</div>;
   const g = q.grain;
@@ -196,12 +198,12 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {header}
           {row("net", "orders", "aov", "buyers")}
           <div className="grid gap-4">
-            <TimeCard f={f} grain={g} locale={locale} title="Net sales" metrics={[{ m: "net", label: "This period" }]} fmt="money" compare />
+            <TimeCard f={f} grain={g} locale={locale} title="Net sales" metrics={[{ m: "net", label: "This period" }]} fmt={q.money} compare />
             <div className="grid gap-4 lg:grid-cols-2">
-              <RankCard f={f} dim="vendor" metric="net" locale={locale} title="Top vendors" fmt="money" href={company} />
-              <RankCard f={f} dim="product" metric="net" locale={locale} title="Top products" fmt="money" />
-              <RankCard f={f} dim="country" metric="net" locale={locale} title="By country" fmt="money" />
-              <RankCard f={f} dim="flow" metric="net" locale={locale} title="By marketplace" fmt="money" enumLabels={ADMIN_ENUMS.flow} />
+              <RankCard f={f} dim="vendor" metric="net" locale={locale} title="Top vendors" fmt={q.money} href={company} />
+              <RankCard f={f} dim="product" metric="net" locale={locale} title="Top products" fmt={q.money} />
+              <RankCard f={f} dim="country" metric="net" locale={locale} title="By country" fmt={q.money} />
+              <RankCard f={f} dim="flow" metric="net" locale={locale} title="By marketplace" fmt={q.money} enumLabels={ADMIN_ENUMS.flow} />
             </div>
           </div>
         </>
@@ -215,7 +217,7 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {header}
           {row("revenue", "margin", "fees", "credited")}
           <div className="grid gap-4">
-            <TimeCard f={f} grain={g} locale={locale} title="Revenue over time" description="Goods margin and delivery fees per period." metrics={[{ m: "margin", label: "Goods margin" }, { m: "fees", label: "Delivery fees" }]} fmt="money" kind="bar" />
+            <TimeCard f={f} grain={g} locale={locale} title="Revenue over time" description="Goods margin and delivery fees per period." metrics={[{ m: "margin", label: "Goods margin" }, { m: "fees", label: "Delivery fees" }]} fmt={q.money} kind="bar" />
             <section className="overflow-x-auto rounded-xl border bg-card">
               <h2 className="border-b px-4 py-3 text-sm font-semibold">Revenue by month</h2>
               <table className="w-full text-sm" data-testid="table-revenue-month">
@@ -223,10 +225,10 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
                 <tbody>{points.map((pt, i) => (
                   <tr key={pt} className="border-b last:border-0">
                     <td className="px-3 py-2">{fmtPeriod(pt, "month", locale)}</td>
-                    <td className="px-3 py-2 text-right tabular-nums">{fmtValue(values.margin[i], "money", locale)}</td>
-                    <td className="px-3 py-2 text-right tabular-nums">{fmtValue(values.fees[i], "money", locale)}</td>
-                    <td className="px-3 py-2 text-right font-medium tabular-nums">{fmtValue(values.revenue[i], "money", locale)}</td>
-                    <td className="px-3 py-2 text-right tabular-nums text-muted-foreground">{cn.get(pt) ? fmtValue(cn.get(pt)!, "money", locale) : "—"}</td>
+                    <td className="px-3 py-2 text-right tabular-nums">{fmtValue(values.margin[i], q.money, locale)}</td>
+                    <td className="px-3 py-2 text-right tabular-nums">{fmtValue(values.fees[i], q.money, locale)}</td>
+                    <td className="px-3 py-2 text-right font-medium tabular-nums">{fmtValue(values.revenue[i], q.money, locale)}</td>
+                    <td className="px-3 py-2 text-right tabular-nums text-muted-foreground">{cn.get(pt) ? fmtValue(cn.get(pt)!, q.money, locale) : "—"}</td>
                   </tr>
                 ))}</tbody>
               </table>
@@ -241,13 +243,13 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {header}
           {row("margin", "commission", "payout", "net")}
           <div className="grid gap-4">
-            <TimeCard f={f} grain={g} locale={locale} title="Goods margin" metrics={[{ m: "margin", label: "This period" }]} fmt="money" compare />
+            <TimeCard f={f} grain={g} locale={locale} title="Goods margin" metrics={[{ m: "margin", label: "This period" }]} fmt={q.money} compare />
             <div className="grid gap-4 lg:grid-cols-2">
-              <RankCard f={f} dim="categoryRoot" metric="margin" locale={locale} title="Margin by category" fmt="money" />
-              <RankCard f={f} dim="flow" metric="margin" locale={locale} title="Margin by marketplace" fmt="money" enumLabels={ADMIN_ENUMS.flow} />
+              <RankCard f={f} dim="categoryRoot" metric="margin" locale={locale} title="Margin by category" fmt={q.money} />
+              <RankCard f={f} dim="flow" metric="margin" locale={locale} title="Margin by marketplace" fmt={q.money} enumLabels={ADMIN_ENUMS.flow} />
             </div>
             <BreakdownTable f={f} dim="vendor" locale={locale} title="Margin by vendor" href={company}
-              metrics={[{ m: "goodsNet", label: "Goods sold", fmt: "money" }, { m: "payout", label: "Owed to vendor", fmt: "money" }, { m: "commission", label: "Commission", fmt: "money" }, { m: "margin", label: "Margin", fmt: "money" }]} />
+              metrics={[{ m: "goodsNet", label: "Goods sold", fmt: q.money }, { m: "payout", label: "Owed to vendor", fmt: q.money }, { m: "commission", label: "Commission", fmt: q.money }, { m: "margin", label: "Margin", fmt: q.money }]} />
           </div>
         </>
       );
@@ -261,7 +263,7 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
             <TimeCard f={f} grain={g} locale={locale} title="Orders" metrics={[{ m: "orders", label: "This period" }]} fmt="number" kind="bar" compare />
             <div className="grid gap-4 lg:grid-cols-2">
               <ChartCard title="Where orders are now" description="Orders placed in the period, by current status (including cancelled)."
-                table={{ head: ["Status", "Orders", "Net"], align: ["left", "right", "right"], rows: funnel.map((r) => [ADMIN_ENUMS.status[r.status] ?? r.status, String(r.n), fmtValue(r.net, "money", locale)]) }}>
+                table={{ head: ["Status", "Orders", "Net"], align: ["left", "right", "right"], rows: funnel.map((r) => [ADMIN_ENUMS.status[r.status] ?? r.status, String(r.n), fmtValue(r.net, q.money, locale)]) }}>
                 <BarList rows={funnel.map((r) => ({ key: r.status, label: ADMIN_ENUMS.status[r.status] ?? r.status, value: r.n }))} fmt="number" locale={locale} emptyText="No orders in this period." testId="bars-status" />
               </ChartCard>
               <RankCard f={f} dim="deliveryMode" metric="orders" locale={locale} title="By delivery mode" fmt="number" enumLabels={ADMIN_ENUMS.deliveryMode} />
@@ -288,7 +290,7 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
               <RankCard f={f} dim="region" metric="buyers" locale={locale} title="Buyers by delivery region" fmt="number" />
             </div>
             <BreakdownTable f={f} dim="buyer" locale={locale} title="Top buyers" href={company}
-              metrics={[{ m: "orders", label: "Orders", fmt: "number" }, { m: "net", label: "Net", fmt: "money" }, { m: "aov", label: "Average order", fmt: "money" }]} />
+              metrics={[{ m: "orders", label: "Orders", fmt: "number" }, { m: "net", label: "Net", fmt: q.money }, { m: "aov", label: "Average order", fmt: q.money }]} />
           </div>
         </>
       );
@@ -301,9 +303,9 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {header}
           {row("net", "orders", "commission", "margin")}
           <div className="grid gap-4">
-            <RankCard f={f} dim="vendor" metric="net" locale={locale} title="Sales by vendor" fmt="money" limit={15} href={company} />
+            <RankCard f={f} dim="vendor" metric="net" locale={locale} title="Sales by vendor" fmt={q.money} limit={15} href={company} />
             <BreakdownTable f={f} dim="vendor" locale={locale} title="All vendors" href={company}
-              metrics={[{ m: "orders", label: "Orders", fmt: "number" }, { m: "buyers", label: "Buyers", fmt: "number" }, { m: "net", label: "Net", fmt: "money" }, { m: "commission", label: "Commission", fmt: "money" }, { m: "margin", label: "Margin", fmt: "money" }, { m: "payout", label: "Owed", fmt: "money" }]} />
+              metrics={[{ m: "orders", label: "Orders", fmt: "number" }, { m: "buyers", label: "Buyers", fmt: "number" }, { m: "net", label: "Net", fmt: q.money }, { m: "commission", label: "Commission", fmt: q.money }, { m: "margin", label: "Margin", fmt: q.money }, { m: "payout", label: "Owed", fmt: q.money }]} />
           </div>
         </>
       );
@@ -313,13 +315,13 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {header}
           <div className="grid gap-4">
             <div className="grid gap-4 lg:grid-cols-2">
-              <RankCard f={f} dim="product" metric="net" locale={locale} title="Top products by value" fmt="money" />
+              <RankCard f={f} dim="product" metric="net" locale={locale} title="Top products by value" fmt={q.money} />
               <RankCard f={f} dim="product" metric="units" locale={locale} title="Top products by units" fmt="number" />
-              <RankCard f={f} dim="categoryRoot" metric="net" locale={locale} title="Sales by category" fmt="money" />
-              <RankCard f={f} dim="category" metric="net" locale={locale} title="Sales by sub-category" fmt="money" />
+              <RankCard f={f} dim="categoryRoot" metric="net" locale={locale} title="Sales by category" fmt={q.money} />
+              <RankCard f={f} dim="category" metric="net" locale={locale} title="Sales by sub-category" fmt={q.money} />
             </div>
             <BreakdownTable f={f} dim="product" locale={locale} title="Products"
-              metrics={[{ m: "units", label: "Units", fmt: "number" }, { m: "orders", label: "Orders", fmt: "number" }, { m: "net", label: "Net", fmt: "money" }, { m: "margin", label: "Margin", fmt: "money" }]} />
+              metrics={[{ m: "units", label: "Units", fmt: "number" }, { m: "orders", label: "Orders", fmt: "number" }, { m: "net", label: "Net", fmt: q.money }, { m: "margin", label: "Margin", fmt: q.money }]} />
           </div>
         </>
       );
@@ -330,11 +332,11 @@ export async function AdminAnalyticsView({ ctx, kind, searchParams }: { ctx: Ctx
           {row("net", "revenue", "orders", "buyers")}
           <div className="grid gap-4">
             <div className="grid gap-4 lg:grid-cols-2">
-              <RankCard f={f} dim="country" metric="net" locale={locale} title="Net sales by buyer country" fmt="money" />
-              <RankCard f={f} dim="sellerCountry" metric="net" locale={locale} title="Net sales by seller country" description="Cross-border supply shows here." fmt="money" />
+              <RankCard f={f} dim="country" metric="net" locale={locale} title="Net sales by buyer country" fmt={q.money} />
+              <RankCard f={f} dim="sellerCountry" metric="net" locale={locale} title="Net sales by seller country" description="Cross-border supply shows here." fmt={q.money} />
             </div>
             <BreakdownTable f={f} dim="country" locale={locale} title="Markets"
-              metrics={[{ m: "orders", label: "Orders", fmt: "number" }, { m: "buyers", label: "Buyers", fmt: "number" }, { m: "net", label: "Net", fmt: "money" }, { m: "revenue", label: "FIRINGI revenue", fmt: "money" }, { m: "aov", label: "Average order", fmt: "money" }]} />
+              metrics={[{ m: "orders", label: "Orders", fmt: "number" }, { m: "buyers", label: "Buyers", fmt: "number" }, { m: "net", label: "Net", fmt: q.money }, { m: "revenue", label: "FIRINGI revenue", fmt: q.money }, { m: "aov", label: "Average order", fmt: q.money }]} />
           </div>
         </>
       );
