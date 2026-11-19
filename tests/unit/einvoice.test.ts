@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { XMLParser } from "fast-xml-parser";
-import { DEFAULT_EINVOICE_SETTINGS, documentLanguages, mergeEInvoiceSettings, providerFits } from "@/lib/einvoice";
+import { DEFAULT_EINVOICE_SETTINGS, PERIOD, documentLanguages, mergeEInvoiceSettings, periodRange, previousPeriod, providerFits } from "@/lib/einvoice";
 import { renderXml, splitPeppol, toKsef, toUbl, toVerifactu, verifactuHuella } from "@/server/einvoice/formats";
 import { parseEInvoice } from "@/server/einvoice/parse";
 import { hasErrors, validateEDoc } from "@/server/einvoice/validate";
@@ -28,6 +28,17 @@ describe("e-invoice settings and languages", () => {
     expect(s.countries.PL).toMatchObject({ format: "PEPPOL_BIS3", provider: "eu-hub" });
     expect(s.countries.DE.format).toBe("XRECHNUNG");
     expect(s.retention.PT).toBe(30);
+    expect(s.emailXml).toBe(true);
+    expect(mergeEInvoiceSettings({ emailXml: false }).emailXml).toBe(false);
+    expect(s.monthlyPack).toEqual({ enabled: true, day: 1, includeXml: true, includeSummary: true, includeInvoicePdfs: false });
+    expect(mergeEInvoiceSettings({ monthlyPack: { day: 40 } }).monthlyPack.day).toBe(28);
+    expect(mergeEInvoiceSettings({ monthlyPack: { day: 0, enabled: false } }).monthlyPack).toMatchObject({ day: 1, enabled: false, includeXml: true });
+    expect(previousPeriod(new Date(Date.UTC(2027, 0, 3)))).toBe("2026-12");
+    expect(previousPeriod(new Date(Date.UTC(2026, 10, 19)))).toBe("2026-10");
+    const r = periodRange("2026-12");
+    expect(r.from.toISOString()).toBe("2026-12-01T00:00:00.000Z");
+    expect(r.to.toISOString()).toBe("2027-01-01T00:00:00.000Z");
+    expect(PERIOD.test("2026-13")).toBe(false);
     expect(s.languagePriority).toEqual(["CUSTOMER_COUNTRY", "CUSTOMER_CHOICE", "ENTITY"]);
     expect(providerFits("ksef", "KSEF_FA3", "PL")).toBe(true);
     expect(providerFits("ksef", "KSEF_FA3", "DE")).toBe(false);

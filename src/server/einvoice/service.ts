@@ -290,12 +290,24 @@ export async function processDocument(id: string): Promise<EInvoiceStatus | null
       data: { ...base, status: r.status, externalId: r.externalId, networkRef: r.networkRef ?? null, attempts: d.attempts + 1, nextAt: null, lastError: null, sentAt: at, ...(done ? { deliveredAt: at } : {}), responseNote: r.note ?? null },
     });
     await event(prisma, id, r.status, `${r.status === "SENT" ? "Sent" : r.status === "ACCEPTED" ? "Sent and accepted" : "Delivered"} via ${PROVIDER_INFO[provider].label}${r.networkRef ? ` — ref. ${r.networkRef}` : ""}.`, { externalId: r.externalId, sha256: base.sha256 });
-    // a copy by e-mail with the PDF, when FIRINGI chose so for the country
-    if (provider !== "email" && s.countries[d.countryCode]?.emailCopy && pdf && profile?.delivery !== "EINVOICE") {
+    // a copy by e-mail (the PDF, and the XML when FIRINGI chose so), when FIRINGI chose so for the country
+    if (provider !== "email" && s.countries[d.countryCode]?.emailCopy && (pdf || s.emailXml) && profile?.delivery !== "EINVOICE") {
       const to = profile?.invoiceEmail ?? d.counterparty?.email;
       if (to) {
         const { sendMail } = await import("@/server/services/mailer");
-        await sendMail({ to, subject: `${edoc.seller.name} — ${edoc.number}`, text: `${edoc.number}`, attachments: [{ filename: `${edoc.number.replace(/[^\w.-]+/g, "_")}.pdf`, content: pdf }] });
+        const { docTexts } = await import("./doc-i18n");
+        const t = docTexts(edoc.language);
+        const title = edoc.kind === "CREDIT_NOTE" ? t.title_CREDIT_NOTE : edoc.kind.startsWith("SELF_BILLED") ? t.title_SELF_BILLED : t.title_INVOICE;
+        const safe = edoc.number.replace(/[^\w.-]+/g, "_");
+        await sendMail({
+          to, subject: `${edoc.seller.name} — ${title} ${edoc.number}`,
+          text: [`${title} ${edoc.number}`, `${t.eInvoice}: ${format}${r.networkRef ? ` · ${t.networkRef}: ${r.networkRef}` : ""}`, "", edoc.seller.name].join("\n"),
+          attachments: [
+            ...(pdf ? [{ filename: `${safe}.pdf`, content: pdf }] : []),
+            ...(s.emailXml ? [{ filename: xmlFileName(format, edoc.number, edoc.seller.vatId).replace(/^factur-x\.xml$/, `${safe}.xml`), content: xmlBuf }] : []),
+          ],
+        });
+        await event(prisma, id, r.status, `Copy e-mailed to ${to} (${[pdf ? "PDF" : null, s.emailXml ? "XML" : null].filter(Boolean).join(" + ")}).`);
       }
     }
     return r.status;
@@ -353,7 +365,9 @@ export async function processEInvoiceQueue(limit = 25) {
   }
   const statusChanges = await pollStatuses();
   const received = await pullInboxes();
-  return { processed: due.length, ...out, statusChanges, received };
+  // the accountants' monthly packs, from FIRINGI's day of the month on (each company once a month)
+  const packs = await (await import("./monthly")).runMonthlyPacks().catch((e) => ({ error: e instanceof Error ? e.message : String(e) }));
+  return { processed: due.length, ...out, statusChanges, received, packs };
 }
 
 /** After a transaction that queued documents: try them now (best effort; the cron retries). */
@@ -528,6 +542,7 @@ export async function simulateSupplierEInvoice(ctx: Ctx | null, statementId: str
 export type ProfileInput = {
   delivery: "EINVOICE" | "EMAIL" | "BOTH"; peppolId: string | null; invoiceLanguage: string | null; secondLanguage: string | null;
   ksefNip: string | null; sdiCode: string | null; pecEmail: string | null; leitwegId: string | null; invoiceEmail: string | null;
+  accountantEmail?: string | null;
   selfBilling?: boolean; selfBillingAgreement?: string | null;
 };
 
@@ -543,7 +558,8 @@ export async function getProfile(ctx: Ctx, companyId = ctx.company.id) {
   const route = s.countries[co.country.code];
   const docs = await prisma.eInvoiceDocument.findMany({ where: { counterpartyId: companyId }, orderBy: { createdAt: "desc" }, take: 50, select: { id: true, number: true, kind: true, direction: true, status: true, format: true, networkRef: true, createdAt: true, invoiceId: true, sentAt: true, deliveredAt: true } });
   return {
-    company: co, profile: co.einvoiceProfile, route: s.enabled && route?.enabled ? route : null, settings: { allowCustomerLanguage: s.allowCustomerLanguage, allowBilingual: s.allowBilingual, selfBilling: s.enabled && s.documents.selfBilling },
+    company: co, profile: co.einvoiceProfile, route: s.enabled && route?.enabled ? route : null,
+    settings: { allowCustomerLanguage: s.allowCustomerLanguage, allowBilingual: s.allowBilingual, selfBilling: s.enabled && s.documents.selfBilling, monthlyPack: s.monthlyPack.enabled, packDay: s.monthlyPack.day },
     documents: docs, canEdit: canEditProfile(ctx, companyId),
   };
 }
@@ -564,12 +580,15 @@ export async function saveProfile(ctx: Ctx, input: ProfileInput, companyId = ctx
   if ((lang && !isDocLanguage(lang)) || (second && !isDocLanguage(second))) throw new ValidationError("Choose a language from the list.");
   const email = clean(input.invoiceEmail);
   if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new ValidationError("Enter a valid e-mail address.");
+  const accountant = clean(input.accountantEmail);
+  if (accountant && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(accountant)) throw new ValidationError("Enter a valid e-mail address for your accountant.");
   const vendor = co.type === "DISTRIBUTOR" || co.type === "WHOLESALER";
   const before = await prisma.eInvoiceProfile.findUnique({ where: { companyId } });
   const selfBilling = vendor && s.documents.selfBilling ? !!input.selfBilling : false;
   const data = {
     delivery: ["EINVOICE", "EMAIL", "BOTH"].includes(input.delivery) ? input.delivery : "BOTH", peppolId, invoiceLanguage: lang, secondLanguage: second && second !== lang ? second : null,
     ksefNip: nip, sdiCode: sdi, pecEmail: clean(input.pecEmail), leitwegId: clean(input.leitwegId), invoiceEmail: email,
+    ...(input.accountantEmail !== undefined ? { accountantEmail: accountant } : {}),
     selfBilling, selfBillingSince: selfBilling ? (before?.selfBilling ? before.selfBillingSince : new Date()) : null,
     selfBillingAgreement: selfBilling ? (clean(input.selfBillingAgreement) ?? before?.selfBillingAgreement ?? `SB-${companyId.slice(-6).toUpperCase()}-${new Date().getFullYear()}`) : null,
     updatedById: ctx.user.id,

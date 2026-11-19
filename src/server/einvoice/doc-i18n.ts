@@ -58,6 +58,14 @@ export const DOC_EN = {
   sentVia: "Sent electronically",
   networkRef: "Network reference",
   agreement: "Self-billing agreement",
+  monthlySummary: "Monthly summary",
+  period: "Period",
+  documents: "Documents",
+  count: "Number of documents",
+  totalsByVat: "Totals by VAT rate",
+  monthTotal: "Total for the month",
+  attachedXml: "The documents are attached as XML (e-invoices) for your accounting software.",
+  packIntro: "Your monthly invoice pack from FIRINGI",
 } as const;
 
 export type DocKey = keyof typeof DOC_EN;

@@ -671,7 +671,8 @@ with SHA-256, sent with retries, followed until accepted. Self-billing for suppl
 received and matched to statements; documents in the customer's country language first, bilingual on request, with EU
 and country legal texts (25 languages, DejaVu Sans). Admin: *Invoices & Tax › E-Invoicing* (+ Settings, Archive with
 auditor ZIP, Supplier E-Invoices); customers / suppliers: *Company › E-Invoicing*. Cron `/api/cron/einvoice` (every
-10 minutes). Details: [docs/e-invoicing.md](docs/e-invoicing.md).
+10 minutes). The e-mail copy can carry the XML too, and a **monthly pack** (last month's XML + a PDF of the
+month's totals) goes to a company's accountant on the day the admin chooses. Details: [docs/e-invoicing.md](docs/e-invoicing.md).
 
 ## Multi-currency (Phase 45)
 

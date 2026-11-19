@@ -64,6 +64,10 @@ export type EInvoiceSettings = {
   validateBeforeSend: boolean;
   /** warnings (not errors) also stop the document */
   blockOnWarnings: boolean;
+  /** the e-mail copy also carries the XML (for the recipient's accountant / accounting software) */
+  emailXml: boolean;
+  /** each month, on this day, the previous month's documents go to each company's accountant (if it gave one) */
+  monthlyPack: { enabled: boolean; day: number; includeXml: boolean; includeSummary: boolean; includeInvoicePdfs: boolean };
   /** years each country keeps documents (archive) */
   retention: Record<string, number>;
   /** document language: the first source that gives one wins */
@@ -104,6 +108,8 @@ export const DEFAULT_EINVOICE_SETTINGS: EInvoiceSettings = {
   countries: Object.fromEntries(SCHENGEN.map((c) => [c, defaultRoute(c)])),
   validateBeforeSend: true,
   blockOnWarnings: false,
+  emailXml: true,
+  monthlyPack: { enabled: true, day: 1, includeXml: true, includeSummary: true, includeInvoicePdfs: false },
   retention: { ...DEFAULT_RETENTION },
   languagePriority: ["CUSTOMER_COUNTRY", "CUSTOMER_CHOICE", "ENTITY"],
   allowCustomerLanguage: true,
@@ -146,6 +152,12 @@ export function mergeEInvoiceSettings(raw: unknown): EInvoiceSettings {
     })),
     validateBeforeSend: b(r.validateBeforeSend, d.validateBeforeSend),
     blockOnWarnings: b(r.blockOnWarnings, d.blockOnWarnings),
+    emailXml: b(r.emailXml, d.emailXml),
+    monthlyPack: (() => {
+      const m = (r.monthlyPack ?? {}) as Partial<EInvoiceSettings["monthlyPack"]>;
+      const dm = d.monthlyPack;
+      return { enabled: b(m.enabled, dm.enabled), day: Math.round(num(m.day, dm.day, 1, 28)), includeXml: b(m.includeXml, dm.includeXml), includeSummary: b(m.includeSummary, dm.includeSummary), includeInvoicePdfs: b(m.includeInvoicePdfs, dm.includeInvoicePdfs) };
+    })(),
     retention: Object.fromEntries(SCHENGEN.map((c) => [c, Math.round(num(ret[c], DEFAULT_RETENTION[c] ?? 10, 1, 30))])),
     languagePriority: [...new Set([...prio, ...d.languagePriority])],
     allowCustomerLanguage: b(r.allowCustomerLanguage, d.allowCustomerLanguage),
@@ -199,3 +211,14 @@ export const STATUS_TONE: Record<string, "success" | "warning" | "destructive" |
 
 /** Peppol participant id: "scheme:identifier" with a 4-digit ICD scheme. */
 export const PEPPOL_ID = /^\d{4}:[A-Za-z0-9.\-_]{2,50}$/;
+
+/** "2026-10" for the month before `now` (the month a pack on day N covers). */
+export function previousPeriod(now = new Date()) {
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+export function periodRange(period: string) {
+  const [y, m] = period.split("-").map(Number);
+  return { from: new Date(Date.UTC(y, m - 1, 1)), to: new Date(Date.UTC(y, m, 1)) };
+}
+export const PERIOD = /^\d{4}-(0[1-9]|1[0-2])$/;

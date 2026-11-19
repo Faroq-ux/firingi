@@ -51,7 +51,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Fatura eletrónica",
   "sentVia": "Enviada eletronicamente",
   "networkRef": "Referência da rede",
-  "agreement": "Acordo de autofaturação"
+  "agreement": "Acordo de autofaturação",
+  "monthlySummary": "Resumo mensal",
+  "period": "Período",
+  "documents": "Documentos",
+  "count": "Número de documentos",
+  "totalsByVat": "Totais por taxa de IVA",
+  "monthTotal": "Total do mês",
+  "attachedXml": "Os documentos seguem em anexo em XML (faturas eletrónicas) para o seu programa de contabilidade.",
+  "packIntro": "O seu resumo mensal de faturas da FIRINGI"
  },
  "es": {
   "title_INVOICE": "Factura",
@@ -104,7 +112,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Factura electrónica",
   "sentVia": "Enviada electrónicamente",
   "networkRef": "Referencia de la red",
-  "agreement": "Acuerdo de facturación por el destinatario"
+  "agreement": "Acuerdo de facturación por el destinatario",
+  "monthlySummary": "Resumen mensual",
+  "period": "Periodo",
+  "documents": "Documentos",
+  "count": "Número de documentos",
+  "totalsByVat": "Totales por tipo de IVA",
+  "monthTotal": "Total del mes",
+  "attachedXml": "Los documentos se adjuntan en XML (facturas electrónicas) para su programa de contabilidad.",
+  "packIntro": "Su resumen mensual de facturas de FIRINGI"
  },
  "fr": {
   "title_INVOICE": "Facture",
@@ -157,7 +173,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Facture électronique",
   "sentVia": "Envoyée par voie électronique",
   "networkRef": "Référence réseau",
-  "agreement": "Mandat d'autofacturation"
+  "agreement": "Mandat d'autofacturation",
+  "monthlySummary": "Récapitulatif mensuel",
+  "period": "Période",
+  "documents": "Documents",
+  "count": "Nombre de documents",
+  "totalsByVat": "Totaux par taux de TVA",
+  "monthTotal": "Total du mois",
+  "attachedXml": "Les documents sont joints en XML (factures électroniques) pour votre logiciel comptable.",
+  "packIntro": "Votre récapitulatif mensuel de factures FIRINGI"
  },
  "de": {
   "title_INVOICE": "Rechnung",
@@ -210,7 +234,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronische Rechnung",
   "sentVia": "Elektronisch versendet",
   "networkRef": "Netzwerk-Referenz",
-  "agreement": "Gutschriftsvereinbarung"
+  "agreement": "Gutschriftsvereinbarung",
+  "monthlySummary": "Monatsübersicht",
+  "period": "Zeitraum",
+  "documents": "Belege",
+  "count": "Anzahl der Belege",
+  "totalsByVat": "Summen nach USt.-Satz",
+  "monthTotal": "Summe des Monats",
+  "attachedXml": "Die Belege sind als XML (E-Rechnungen) für Ihre Buchhaltungssoftware angehängt.",
+  "packIntro": "Ihre monatliche Rechnungsübersicht von FIRINGI"
  },
  "it": {
   "title_INVOICE": "Fattura",
@@ -263,7 +295,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Fattura elettronica",
   "sentVia": "Inviata elettronicamente",
   "networkRef": "Riferimento di rete",
-  "agreement": "Accordo di autofatturazione"
+  "agreement": "Accordo di autofatturazione",
+  "monthlySummary": "Riepilogo mensile",
+  "period": "Periodo",
+  "documents": "Documenti",
+  "count": "Numero di documenti",
+  "totalsByVat": "Totali per aliquota IVA",
+  "monthTotal": "Totale del mese",
+  "attachedXml": "I documenti sono allegati in XML (fatture elettroniche) per il tuo software di contabilità.",
+  "packIntro": "Il tuo riepilogo mensile delle fatture FIRINGI"
  },
  "nl": {
   "title_INVOICE": "Factuur",
@@ -316,7 +356,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronische factuur",
   "sentVia": "Elektronisch verzonden",
   "networkRef": "Netwerkreferentie",
-  "agreement": "Self-billing-overeenkomst"
+  "agreement": "Self-billing-overeenkomst",
+  "monthlySummary": "Maandoverzicht",
+  "period": "Periode",
+  "documents": "Documenten",
+  "count": "Aantal documenten",
+  "totalsByVat": "Totalen per btw-tarief",
+  "monthTotal": "Totaal van de maand",
+  "attachedXml": "De documenten zijn als XML (e-facturen) bijgevoegd voor uw boekhoudpakket.",
+  "packIntro": "Uw maandelijkse factuuroverzicht van FIRINGI"
  },
  "pl": {
   "title_INVOICE": "Faktura",
@@ -369,7 +417,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Faktura elektroniczna",
   "sentVia": "Wysłano elektronicznie",
   "networkRef": "Numer w sieci",
-  "agreement": "Umowa o samofakturowanie"
+  "agreement": "Umowa o samofakturowanie",
+  "monthlySummary": "Zestawienie miesięczne",
+  "period": "Okres",
+  "documents": "Dokumenty",
+  "count": "Liczba dokumentów",
+  "totalsByVat": "Sumy według stawek VAT",
+  "monthTotal": "Razem za miesiąc",
+  "attachedXml": "Dokumenty są załączone jako XML (faktury elektroniczne) dla Twojego programu księgowego.",
+  "packIntro": "Twoje miesięczne zestawienie faktur od FIRINGI"
  },
  "ro": {
   "title_INVOICE": "Factură",
@@ -422,7 +478,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Factură electronică",
   "sentVia": "Trimisă electronic",
   "networkRef": "Referință rețea",
-  "agreement": "Acord de autofacturare"
+  "agreement": "Acord de autofacturare",
+  "monthlySummary": "Rezumat lunar",
+  "period": "Perioada",
+  "documents": "Documente",
+  "count": "Număr de documente",
+  "totalsByVat": "Totaluri pe cote de TVA",
+  "monthTotal": "Total lună",
+  "attachedXml": "Documentele sunt atașate în XML (facturi electronice) pentru programul dvs. de contabilitate.",
+  "packIntro": "Rezumatul lunar al facturilor dvs. de la FIRINGI"
  },
  "cs": {
   "title_INVOICE": "Faktura",
@@ -475,7 +539,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronická faktura",
   "sentVia": "Odesláno elektronicky",
   "networkRef": "Reference v síti",
-  "agreement": "Dohoda o vystavování faktur odběratelem"
+  "agreement": "Dohoda o vystavování faktur odběratelem",
+  "monthlySummary": "Měsíční přehled",
+  "period": "Období",
+  "documents": "Doklady",
+  "count": "Počet dokladů",
+  "totalsByVat": "Součty podle sazeb DPH",
+  "monthTotal": "Celkem za měsíc",
+  "attachedXml": "Doklady jsou přiloženy jako XML (e-faktury) pro váš účetní program.",
+  "packIntro": "Váš měsíční přehled faktur od FIRINGI"
  },
  "sk": {
   "title_INVOICE": "Faktúra",
@@ -528,7 +600,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronická faktúra",
   "sentVia": "Odoslané elektronicky",
   "networkRef": "Referencia v sieti",
-  "agreement": "Dohoda o vyhotovovaní faktúr odberateľom"
+  "agreement": "Dohoda o vyhotovovaní faktúr odberateľom",
+  "monthlySummary": "Mesačný prehľad",
+  "period": "Obdobie",
+  "documents": "Doklady",
+  "count": "Počet dokladov",
+  "totalsByVat": "Súčty podľa sadzieb DPH",
+  "monthTotal": "Spolu za mesiac",
+  "attachedXml": "Doklady sú priložené ako XML (e-faktúry) pre váš účtovný program.",
+  "packIntro": "Váš mesačný prehľad faktúr od FIRINGI"
  },
  "hu": {
   "title_INVOICE": "Számla",
@@ -581,7 +661,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronikus számla",
   "sentVia": "Elektronikusan elküldve",
   "networkRef": "Hálózati azonosító",
-  "agreement": "Önszámlázási megállapodás"
+  "agreement": "Önszámlázási megállapodás",
+  "monthlySummary": "Havi összesítő",
+  "period": "Időszak",
+  "documents": "Bizonylatok",
+  "count": "Bizonylatok száma",
+  "totalsByVat": "Összesítés ÁFA-kulcsonként",
+  "monthTotal": "A hónap összesen",
+  "attachedXml": "A bizonylatok XML-ben (e-számla) vannak csatolva a könyvelőprogramjához.",
+  "packIntro": "Az Ön havi számlaösszesítője a FIRINGI-től"
  },
  "hr": {
   "title_INVOICE": "Račun",
@@ -634,7 +722,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronički račun",
   "sentVia": "Poslano elektronički",
   "networkRef": "Mrežna referenca",
-  "agreement": "Sporazum o samofakturiranju"
+  "agreement": "Sporazum o samofakturiranju",
+  "monthlySummary": "Mjesečni pregled",
+  "period": "Razdoblje",
+  "documents": "Dokumenti",
+  "count": "Broj dokumenata",
+  "totalsByVat": "Iznosi po stopama PDV-a",
+  "monthTotal": "Ukupno za mjesec",
+  "attachedXml": "Dokumenti su priloženi kao XML (e-računi) za vaš računovodstveni program.",
+  "packIntro": "Vaš mjesečni pregled računa od FIRINGI-ja"
  },
  "sl": {
   "title_INVOICE": "Račun",
@@ -687,7 +783,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronski račun",
   "sentVia": "Poslano elektronsko",
   "networkRef": "Omrežna referenca",
-  "agreement": "Dogovor o samofakturiranju"
+  "agreement": "Dogovor o samofakturiranju",
+  "monthlySummary": "Mesečni povzetek",
+  "period": "Obdobje",
+  "documents": "Dokumenti",
+  "count": "Število dokumentov",
+  "totalsByVat": "Zneski po stopnjah DDV",
+  "monthTotal": "Skupaj za mesec",
+  "attachedXml": "Dokumenti so priloženi kot XML (e-računi) za vaš računovodski program.",
+  "packIntro": "Vaš mesečni povzetek računov od FIRINGI"
  },
  "bg": {
   "title_INVOICE": "Фактура",
@@ -740,7 +844,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Електронна фактура",
   "sentVia": "Изпратена електронно",
   "networkRef": "Референция в мрежата",
-  "agreement": "Споразумение за самофактуриране"
+  "agreement": "Споразумение за самофактуриране",
+  "monthlySummary": "Месечно обобщение",
+  "period": "Период",
+  "documents": "Документи",
+  "count": "Брой документи",
+  "totalsByVat": "Суми по ставки на ДДС",
+  "monthTotal": "Общо за месеца",
+  "attachedXml": "Документите са приложени като XML (е-фактури) за вашия счетоводен софтуер.",
+  "packIntro": "Вашето месечно обобщение на фактурите от FIRINGI"
  },
  "el": {
   "title_INVOICE": "Τιμολόγιο",
@@ -793,7 +905,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Ηλεκτρονικό τιμολόγιο",
   "sentVia": "Στάλθηκε ηλεκτρονικά",
   "networkRef": "Αναφορά δικτύου",
-  "agreement": "Συμφωνία αυτοτιμολόγησης"
+  "agreement": "Συμφωνία αυτοτιμολόγησης",
+  "monthlySummary": "Μηνιαία σύνοψη",
+  "period": "Περίοδος",
+  "documents": "Έγγραφα",
+  "count": "Αριθμός εγγράφων",
+  "totalsByVat": "Σύνολα ανά συντελεστή ΦΠΑ",
+  "monthTotal": "Σύνολο μήνα",
+  "attachedXml": "Τα έγγραφα επισυνάπτονται σε XML (ηλεκτρονικά τιμολόγια) για το λογιστικό σας πρόγραμμα.",
+  "packIntro": "Η μηνιαία σύνοψη τιμολογίων σας από τη FIRINGI"
  },
  "da": {
   "title_INVOICE": "Faktura",
@@ -846,7 +966,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronisk faktura",
   "sentVia": "Sendt elektronisk",
   "networkRef": "Netværksreference",
-  "agreement": "Aftale om selvfakturering"
+  "agreement": "Aftale om selvfakturering",
+  "monthlySummary": "Månedsoversigt",
+  "period": "Periode",
+  "documents": "Dokumenter",
+  "count": "Antal dokumenter",
+  "totalsByVat": "Beløb pr. momssats",
+  "monthTotal": "I alt for måneden",
+  "attachedXml": "Dokumenterne er vedhæftet som XML (e-fakturaer) til dit regnskabsprogram.",
+  "packIntro": "Din månedlige fakturaoversigt fra FIRINGI"
  },
  "sv": {
   "title_INVOICE": "Faktura",
@@ -899,7 +1027,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronisk faktura",
   "sentVia": "Skickad elektroniskt",
   "networkRef": "Nätverksreferens",
-  "agreement": "Avtal om självfakturering"
+  "agreement": "Avtal om självfakturering",
+  "monthlySummary": "Månadssammanställning",
+  "period": "Period",
+  "documents": "Dokument",
+  "count": "Antal dokument",
+  "totalsByVat": "Summor per momssats",
+  "monthTotal": "Summa för månaden",
+  "attachedXml": "Dokumenten bifogas som XML (e-fakturor) för ditt bokföringsprogram.",
+  "packIntro": "Din månatliga fakturasammanställning från FIRINGI"
  },
  "fi": {
   "title_INVOICE": "Lasku",
@@ -952,7 +1088,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Sähköinen lasku",
   "sentVia": "Lähetetty sähköisesti",
   "networkRef": "Verkkoviite",
-  "agreement": "Itselaskutussopimus"
+  "agreement": "Itselaskutussopimus",
+  "monthlySummary": "Kuukausiyhteenveto",
+  "period": "Jakso",
+  "documents": "Asiakirjat",
+  "count": "Asiakirjojen määrä",
+  "totalsByVat": "Summat ALV-kannoittain",
+  "monthTotal": "Kuukausi yhteensä",
+  "attachedXml": "Asiakirjat on liitetty XML-muodossa (verkkolaskut) kirjanpito-ohjelmaasi varten.",
+  "packIntro": "Kuukausittainen laskuyhteenvetosi FIRINGIltä"
  },
  "et": {
   "title_INVOICE": "Arve",
@@ -1005,7 +1149,15 @@ export const DOC_TEXTS = {
   "eInvoice": "E-arve",
   "sentVia": "Saadetud elektrooniliselt",
   "networkRef": "Võrguviide",
-  "agreement": "Enesearvelduse kokkulepe"
+  "agreement": "Enesearvelduse kokkulepe",
+  "monthlySummary": "Kuu kokkuvõte",
+  "period": "Periood",
+  "documents": "Dokumendid",
+  "count": "Dokumentide arv",
+  "totalsByVat": "Summad käibemaksumäärade kaupa",
+  "monthTotal": "Kuu kokku",
+  "attachedXml": "Dokumendid on lisatud XML-ina (e-arved) teie raamatupidamistarkvara jaoks.",
+  "packIntro": "Teie FIRINGI kuu arvete kokkuvõte"
  },
  "lv": {
   "title_INVOICE": "Rēķins",
@@ -1058,7 +1210,15 @@ export const DOC_TEXTS = {
   "eInvoice": "E-rēķins",
   "sentVia": "Nosūtīts elektroniski",
   "networkRef": "Tīkla atsauce",
-  "agreement": "Vienošanās par pašrēķinu sagatavošanu"
+  "agreement": "Vienošanās par pašrēķinu sagatavošanu",
+  "monthlySummary": "Mēneša kopsavilkums",
+  "period": "Periods",
+  "documents": "Dokumenti",
+  "count": "Dokumentu skaits",
+  "totalsByVat": "Summas pa PVN likmēm",
+  "monthTotal": "Kopā par mēnesi",
+  "attachedXml": "Dokumenti pievienoti kā XML (e-rēķini) jūsu grāmatvedības programmai.",
+  "packIntro": "Jūsu mēneša rēķinu kopsavilkums no FIRINGI"
  },
  "lt": {
   "title_INVOICE": "Sąskaita faktūra",
@@ -1111,7 +1271,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektroninė sąskaita",
   "sentVia": "Išsiųsta elektroniniu būdu",
   "networkRef": "Tinklo nuoroda",
-  "agreement": "Susitarimas dėl sąskaitų išrašymo pirkėjo"
+  "agreement": "Susitarimas dėl sąskaitų išrašymo pirkėjo",
+  "monthlySummary": "Mėnesio suvestinė",
+  "period": "Laikotarpis",
+  "documents": "Dokumentai",
+  "count": "Dokumentų skaičius",
+  "totalsByVat": "Sumos pagal PVM tarifus",
+  "monthTotal": "Iš viso per mėnesį",
+  "attachedXml": "Dokumentai pridėti kaip XML (e. sąskaitos) jūsų apskaitos programai.",
+  "packIntro": "Jūsų mėnesio sąskaitų suvestinė iš FIRINGI"
  },
  "mt": {
   "title_INVOICE": "Fattura",
@@ -1164,7 +1332,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Fattura elettronika",
   "sentVia": "Mibgħuta elettronikament",
   "networkRef": "Referenza tan-netwerk",
-  "agreement": "Ftehim ta' self-billing"
+  "agreement": "Ftehim ta' self-billing",
+  "monthlySummary": "Sommarju ta' kull xahar",
+  "period": "Perjodu",
+  "documents": "Dokumenti",
+  "count": "Numru ta' dokumenti",
+  "totalsByVat": "Totali skont ir-rata tal-VAT",
+  "monthTotal": "Total tax-xahar",
+  "attachedXml": "Id-dokumenti huma mehmuża bħala XML (fatturi elettroniċi) għas-software tal-kontabilità tiegħek.",
+  "packIntro": "Is-sommarju ta' kull xahar tal-fatturi tiegħek minn FIRINGI"
  },
  "nb": {
   "title_INVOICE": "Faktura",
@@ -1217,7 +1393,15 @@ export const DOC_TEXTS = {
   "eInvoice": "Elektronisk faktura",
   "sentVia": "Sendt elektronisk",
   "networkRef": "Nettverksreferanse",
-  "agreement": "Avtale om selvfakturering"
+  "agreement": "Avtale om selvfakturering",
+  "monthlySummary": "Månedsoversikt",
+  "period": "Periode",
+  "documents": "Dokumenter",
+  "count": "Antall dokumenter",
+  "totalsByVat": "Beløp per MVA-sats",
+  "monthTotal": "Sum for måneden",
+  "attachedXml": "Dokumentene er vedlagt som XML (e-fakturaer) for regnskapsprogrammet ditt.",
+  "packIntro": "Din månedlige fakturaoversikt fra FIRINGI"
  },
  "is": {
   "title_INVOICE": "Reikningur",
@@ -1270,6 +1454,14 @@ export const DOC_TEXTS = {
   "eInvoice": "Rafrænn reikningur",
   "sentVia": "Sent rafrænt",
   "networkRef": "Tilvísun nets",
-  "agreement": "Samningur um sjálfsreikningagerð"
+  "agreement": "Samningur um sjálfsreikningagerð",
+  "monthlySummary": "Mánaðaryfirlit",
+  "period": "Tímabil",
+  "documents": "Skjöl",
+  "count": "Fjöldi skjala",
+  "totalsByVat": "Samtölur eftir VSK-þrepi",
+  "monthTotal": "Samtals fyrir mánuðinn",
+  "attachedXml": "Skjölin fylgja sem XML (rafrænir reikningar) fyrir bókhaldskerfið þitt.",
+  "packIntro": "Mánaðarlegt reikningayfirlit þitt frá FIRINGI"
  }
 } as const;

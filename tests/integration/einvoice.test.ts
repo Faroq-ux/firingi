@@ -7,12 +7,15 @@
  */
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { unzipSync, strFromU8 } from "fflate";
+import path from "node:path";
+import { readdir, readFile } from "node:fs/promises";
 import Decimal from "decimal.js";
 import { prisma } from "@/server/db";
 import { changeOrderStatus, confirmOrder, placeOrder } from "@/server/services/orders";
 import { addToCart, clearCart } from "@/server/services/cart";
 import { issueServiceInvoice } from "@/server/invoicing/service";
 import * as E from "@/server/einvoice/service";
+import * as M from "@/server/einvoice/monthly";
 import { invoicePdfData } from "@/server/data/finance-docs";
 import { renderInvoicePdf } from "@/server/pdf/documents";
 import { selfBilledPdfData } from "@/server/einvoice/pdf";
@@ -83,6 +86,7 @@ beforeAll(async () => {
 afterAll(async () => {
   const sa = await ctxFor(SA);
   for (const id of placed) await changeOrderStatus(sa, id, "CANCELLED", "test clean-up").catch(() => null);
+  await prisma.eInvoiceMonthlyPack.deleteMany({ where: { companyId: { in: profiles } } });
   await prisma.eInvoiceProfile.deleteMany({ where: { companyId: { in: profiles } } });
   await prisma.legalEntity.updateMany({ data: { language: null, secondLanguage: null, requireOwnLanguage: true } });
   for (const e of savedEntities) await prisma.legalEntity.update({ where: { id: e.id }, data: { peppolId: e.peppolId } });
@@ -122,6 +126,8 @@ describe("Poland: KSeF, languages, PDF", () => {
     expect(d.status).toBe("ACCEPTED");
     const ev = await prisma.eInvoiceEvent.findMany({ where: { documentId: d.id } });
     expect(ev.map((e) => e.status)).toEqual(expect.arrayContaining(["QUEUED", "SENT", "ACCEPTED"]));
+    // the e-mail copy carries the PDF and the XML (for the customer's accountant)
+    expect(ev.some((e) => /Copy e-mailed to .+ \(PDF \+ XML\)/.test(e.message))).toBe(true);
   });
 
   it("the invoice PDF is in Polish with English beside it, carries the KSeF reference, and renders", async () => {
@@ -269,6 +275,16 @@ describe("Peppol on request, checks, outages, rejections", () => {
 });
 
 describe("switches, archive, rights", () => {
+  it("the XML can be left out of the e-mail copy", async () => {
+    await settings({ emailXml: false });
+    const { invoice } = await deliverPl([["FIR-COLA33", 6]]);
+    const d = await settle(() => docOf(invoice.id));
+    expect(["SENT", "ACCEPTED"]).toContain(d.status);
+    const ev = await prisma.eInvoiceEvent.findMany({ where: { documentId: d.id } });
+    expect(ev.some((e) => /Copy e-mailed to .+ \(PDF\)$/.test(e.message.replace(/\.$/, "")))).toBe(true);
+    await settings();
+  });
+
   it("master switch, per-document and per-country switches stop queuing", async () => {
     const kk = await ctxFor(KK);
     await settings({ enabled: false });
@@ -313,5 +329,93 @@ describe("switches, archive, rights", () => {
     const ov = await E.einvoiceOverview(await ctxFor(SA));
     expect(ov.providers.find((p) => p.key === "ksef")?.mode).toBe("simulated");
     expect(ov.byStatus.length).toBeGreaterThan(0);
+  });
+});
+
+describe("monthly pack for the accountant", () => {
+  const period = new Date().toISOString().slice(0, 7);
+  const nextMonth = (day: number) => { const n = new Date(); return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth() + 1, day, 6)); };
+
+  it("holds the month's documents as XML with a PDF of the totals, in the company's language", async () => {
+    const kk = await ctxFor(KK);
+    await deliverPl([["FIR-COLA33", 6]]);
+    const p = await M.buildMonthlyPack(kk.company.id, period);
+    expect(p.rows.length).toBeGreaterThan(0);
+    expect(p.language).toBe("pl");
+    expect(strFromU8(unzipSync(new Uint8Array(p.zip))["README.txt"])).toContain("Kebab");
+    expect(p.summary!.subarray(0, 4).toString()).toBe("%PDF");
+    const files = unzipSync(new Uint8Array(p.zip));
+    const xml = Object.keys(files).filter((k) => k.startsWith("xml/"));
+    expect(xml.length).toBe(p.rows.length);
+    expect(strFromU8(files[xml[0]])).toMatch(/<\?xml|<Faktura|<Invoice/);
+    expect(files[`summary-${period}.pdf`]).toBeDefined();
+    expect(Object.keys(files).some((k) => k.startsWith("pdf/"))).toBe(false);
+    await expect(M.buildMonthlyPack(kk.company.id, "2026-13")).rejects.toThrow(/month/);
+  });
+
+  it("FIRINGI's options decide what goes in: invoice PDFs on, XML off", async () => {
+    const kk = await ctxFor(KK);
+    await settings({ monthlyPack: { ...DEFAULT_EINVOICE_SETTINGS.monthlyPack, includeXml: false, includeInvoicePdfs: true } });
+    const files = unzipSync(new Uint8Array((await M.buildMonthlyPack(kk.company.id, period)).zip));
+    expect(Object.keys(files).some((k) => k.startsWith("xml/"))).toBe(false);
+    const pdfs = Object.keys(files).filter((k) => k.startsWith("pdf/"));
+    expect(pdfs.length).toBeGreaterThan(0);
+    expect(strFromU8(files[pdfs[0]].subarray(0, 4))).toBe("%PDF");
+    await settings();
+  });
+
+  it("is sent once a month from FIRINGI's day on, only to companies with an accountant e-mail", async () => {
+    const kk = await ctxFor(KK);
+    await settings({ monthlyPack: { ...DEFAULT_EINVOICE_SETTINGS.monthlyPack, day: 5 } });
+    await M.runMonthlyPacks(nextMonth(6), true); // other companies of earlier runs are done; none of ours has an e-mail yet
+    expect(await prisma.eInvoiceMonthlyPack.findFirst({ where: { companyId: kk.company.id, period } })).toBeNull();
+    await expect(M.sendPackNow(kk, period)).rejects.toThrow(/accountant/);
+    await profile(KK, { accountantEmail: "biuro@ksiegowa-test.pl" });
+    expect((await M.runMonthlyPacks(nextMonth(3))).skipped).toBe("waits for day 5");
+    const r = await M.runMonthlyPacks(nextMonth(5));
+    expect(r).toMatchObject({ period, failed: 0 });
+    const pack = await prisma.eInvoiceMonthlyPack.findUniqueOrThrow({ where: { companyId_period: { companyId: kk.company.id, period } } });
+    expect(pack).toMatchObject({ status: "SENT", sentTo: "biuro@ksiegowa-test.pl" });
+    expect(pack.documentCount).toBeGreaterThan(0);
+    // the next run of the cron doesn't send it again
+    const again = await M.runMonthlyPacks(nextMonth(9));
+    expect(again.sent).toBe(0);
+    expect((await prisma.eInvoiceMonthlyPack.findUniqueOrThrow({ where: { id: pack.id } })).sentAt).toEqual(pack.sentAt);
+    // the mail: summary PDF + ZIP, in Polish
+    const outbox = path.resolve(process.env.STORAGE_DIR ?? "./storage", "mail-outbox");
+    const mails = (await readdir(outbox)).filter((f) => f.endsWith(".json")).sort().slice(-20);
+    const mail = (await Promise.all(mails.map(async (f) => JSON.parse(await readFile(path.join(outbox, f), "utf8"))))).reverse().find((m) => m.to === "biuro@ksiegowa-test.pl");
+    expect(mail.attachments.map((a: { filename: string }) => a.filename)).toEqual(expect.arrayContaining([`FIRINGI-${period}-summary.pdf`, expect.stringMatching(/\.zip$/)]));
+    expect(mail.subject).toContain(period);
+    await settings();
+  });
+
+  it("is off when FIRINGI turns it off; an empty month is recorded without a mail; the company can send a month by hand", async () => {
+    const kk = await ctxFor(KK);
+    await settings({ monthlyPack: { ...DEFAULT_EINVOICE_SETTINGS.monthlyPack, enabled: false } });
+    expect((await M.runMonthlyPacks(nextMonth(20))).skipped).toBe("off");
+    await settings();
+    const empty = await M.sendPackNow(kk, "2019-01");
+    expect(empty).toMatchObject({ status: "EMPTY", documentCount: 0 });
+    const again = await M.sendPackNow(kk, period);
+    expect(again.status).toBe("SENT");
+    const mine = await M.myPacks(kk);
+    expect(mine.map((p) => p.period)).toEqual(expect.arrayContaining([period, "2019-01"]));
+    const forced = await M.runPacksNow(await ctxFor(SA));
+    expect(forced.failed).toBe(0);
+    const recent = await M.recentPacks(await ctxFor(SA));
+    expect(recent.withAccountant).toBeGreaterThan(0);
+    expect(recent.packs.some((p) => p.companyId === kk.company.id)).toBe(true);
+  });
+
+  it("only the company itself and FIRINGI finance get a company's pack", async () => {
+    const kk = await ctxFor(KK), hk = await ctxFor(HK);
+    await expect(M.downloadPack(hk, period, kk.company.id)).rejects.toThrow();
+    await expect(M.myPacks(hk, kk.company.id)).rejects.toThrow();
+    await expect(M.sendPackNow(hk, period, kk.company.id)).rejects.toThrow();
+    await expect(M.recentPacks(kk)).rejects.toThrow();
+    await expect(M.runPacksNow(kk)).rejects.toThrow();
+    expect((await M.downloadPack(await ctxFor(SA), period, kk.company.id)).rows.length).toBeGreaterThan(0);
+    await expect(profile(KK, { accountantEmail: "not-an-email" })).rejects.toThrow();
   });
 });

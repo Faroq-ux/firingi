@@ -2,12 +2,13 @@ import Link from "next/link";
 import { FileCode2 } from "lucide-react";
 import { can, pagePermission, pagePortal } from "@/server/rbac/guard";
 import { einvoiceOverview } from "@/server/einvoice/service";
+import { recentPacks } from "@/server/einvoice/monthly";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { EStatus } from "@/components/einvoice/status";
-import { RunQueueButton } from "@/components/einvoice/admin";
+import { RunPacksButton, RunQueueButton } from "@/components/einvoice/admin";
 import { FORMAT_LABEL, type EFormat } from "@/lib/einvoice";
 import { formatDate } from "@/lib/utils";
 
@@ -20,7 +21,7 @@ const MODE: Record<string, { label: string; v: "success" | "warning" | "destruct
 export default async function EInvoicingPage() {
   const ctx = await pagePortal("admin");
   pagePermission(ctx, ["admin.finance.view", "admin.invoices.view", "admin.tax.manage", "admin.settings.manage"]);
-  const o = await einvoiceOverview(ctx);
+  const [o, packs] = await Promise.all([einvoiceOverview(ctx), recentPacks(ctx)]);
   const manage = can(ctx, ["admin.finance.manage", "admin.settings.manage", "admin.tax.manage"]);
   const count = (dir: string, st: string[]) => o.byStatus.filter((b) => b.direction === dir && st.includes(b.status)).reduce((a, b) => a + b._count._all, 0);
   const tiles = [
@@ -59,6 +60,20 @@ export default async function EInvoicingPage() {
                 <TD><EStatus status={d.status} /></TD>
                 <TD className="min-w-0 max-w-md break-words text-xs">{d.lastError ?? d.responseNote ?? (Array.isArray(d.validation) ? (d.validation as { message: string }[])[0]?.message : "") ?? ""}</TD>
               </TR>
+            ))}
+          </TBody>
+        </Table>
+      </CardContent></Card>
+      <Card className="mt-4"><CardHeader><CardTitle>Monthly packs for accountants</CardTitle></CardHeader><CardContent className="space-y-3 overflow-x-auto">
+        <p className="text-sm text-muted-foreground">{o.settings.monthlyPack.enabled ? `Sent on day ${o.settings.monthlyPack.day} of each month` : "Switched off"} · {packs.withAccountant} compan{packs.withAccountant === 1 ? "y has" : "ies have"} an accountant e-mail.</p>
+        {manage && <RunPacksButton />}
+        <Table data-testid="packs-recent">
+          <THead><TR><TH>Month</TH><TH>Company</TH><TH>Sent to</TH><TH>Documents</TH><TH>Status</TH></TR></THead>
+          <TBody>
+            {packs.packs.length === 0 && <EmptyRow colSpan={5}>No packs yet.</EmptyRow>}
+            {packs.packs.map((p) => (
+              <TR key={p.id}><TD>{p.period}</TD><TD className="min-w-0">{p.company.legalName}</TD><TD className="break-all text-xs">{p.sentTo ?? "—"}</TD><TD>{p.documentCount}</TD>
+                <TD><Badge variant={p.status === "SENT" ? "success" : p.status === "FAILED" ? "destructive" : "secondary"}>{p.status === "EMPTY" ? "Nothing that month" : p.status.toLowerCase()}</Badge>{p.error && <div className="text-xs text-destructive">{p.error}</div>}</TD></TR>
             ))}
           </TBody>
         </Table>

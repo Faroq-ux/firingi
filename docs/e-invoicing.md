@@ -15,7 +15,7 @@ country route says so, receives **suppliers' e-invoices** and matches them, prin
 | Format | Peppol BIS Billing 3.0 (UBL), XRechnung 3.0, Factur-X / ZUGFeRD (PDF + CII XML), KSeF FA(3), FatturaPA 1.2, Verifactu |
 | Service | who carries it — the **EU-wide e-invoicing service** (any country, any format), a **Peppol access point**, **KSeF**, **SDI**, **AEAT** (direct), or **e-mail** (XRechnung / Factur-X files) |
 | Mandatory | every B2B document goes this way (clearance / reporting countries). Off = only recipients who gave a Peppol id or chose e-invoices |
-| E-mail copy | also e-mail the PDF |
+| E-mail copy | also e-mail the PDF — and the XML, unless "the e-mail copy also carries the XML" is switched off |
 | Keep (years) | archive period for documents of this country |
 
 Defaults: **Poland KSeF (mandatory)**, **Italy SDI (mandatory)**, **Spain Verifactu (mandatory)**, Germany XRechnung via
@@ -26,6 +26,22 @@ for FIRINGI's own company there — for other issuers a recipient with a Peppol 
 Every switch is the admin's: master switch, per document type (customer invoices, credit notes, service invoices,
 self-billing, receiving supplier e-invoices), per country, checks before sending (and whether warnings stop a
 document), the match tolerance for received invoices, Poland's split-payment threshold.
+
+## Monthly pack for the accountant
+
+A customer or supplier can give **its accountant's e-mail** (*Company › E-Invoicing*). On the **day of the month the
+admin chooses** (1–28, *E-Invoicing Settings › Monthly pack for accountants*), the e-invoice cron e-mails that address
+last month's pack — once per company and month:
+
+- **XML** of every document FIRINGI issued to the company that month (invoices, credit notes, service invoices,
+  self-billed invoices): the e-invoice exactly as it was sent, or a Peppol BIS 3 file made for the accountant;
+- a **PDF summary** of the month: every document, totals by VAT rate per currency, in the language the invoices use
+  (the admin's language priority);
+- optionally the documents as **PDF** too.
+
+Admin switches: on/off, the day, XML / summary / invoice PDFs in the pack, *Send last month's packs now*. A month with
+no documents is recorded as *Nothing that month* without a mail. The company sees the months sent, downloads any month
+as a ZIP, and can send a month to its accountant by hand. The overview page lists the latest packs.
 
 ## How a document goes out
 

@@ -14,11 +14,12 @@ const settingsSchema = z.object({
   enabled: z.boolean(),
   documents: z.object({ customerInvoices: z.boolean(), creditNotes: z.boolean(), serviceInvoices: z.boolean(), selfBilling: z.boolean(), receiveSupplier: z.boolean() }),
   countries: z.object(Object.fromEntries(SCHENGEN.map((c) => [c, routeSchema])) as Record<string, typeof routeSchema>),
-  validateBeforeSend: z.boolean(), blockOnWarnings: z.boolean(),
+  validateBeforeSend: z.boolean(), blockOnWarnings: z.boolean(), emailXml: z.boolean(),
   retention: z.object(Object.fromEntries(SCHENGEN.map((c) => [c, z.number().int().min(1).max(30)])) as Record<string, z.ZodNumber>),
   languagePriority: z.array(z.enum(["CUSTOMER_COUNTRY", "CUSTOMER_CHOICE", "ENTITY"])).min(1).max(3),
   allowCustomerLanguage: z.boolean(), allowBilingual: z.boolean(),
   plSplitPaymentFrom: z.number().int().min(0).max(10_000_000), autoMatchTolerance: z.number().min(0).max(100),
+  monthlyPack: z.object({ enabled: z.boolean(), day: z.number().int().min(1).max(28), includeXml: z.boolean(), includeSummary: z.boolean(), includeInvoicePdfs: z.boolean() }),
 });
 const idSchema = z.object({ id: z.string().min(1).max(64) });
 const invoiceSchema = z.object({ invoiceId: z.string().min(1).max(64) });
@@ -26,11 +27,13 @@ const profileSchema = z.object({
   companyId: z.string().min(1).max(64).optional(),
   delivery: z.enum(["EINVOICE", "EMAIL", "BOTH"]), peppolId: z.string().max(80).nullable(), invoiceLanguage: z.string().max(8).nullable(), secondLanguage: z.string().max(8).nullable(),
   ksefNip: z.string().max(20).nullable(), sdiCode: z.string().max(10).nullable(), pecEmail: z.string().max(200).nullable(), leitwegId: z.string().max(60).nullable(), invoiceEmail: z.string().max(200).nullable(),
+  accountantEmail: z.string().max(200).nullable().optional(),
   selfBilling: z.boolean().optional(), selfBillingAgreement: z.string().max(80).nullable().optional(),
 });
 const simSchema = z.object({ statementId: z.string().min(1).max(64), netDelta: z.number().min(-100000).max(100000).optional() });
 const entitySchema = z.object({ id: z.string().min(1).max(64), language: z.string().max(8).nullable(), secondLanguage: z.string().max(8).nullable(), requireOwnLanguage: z.boolean(), peppolId: z.string().max(80).nullable() });
 const emptySchema = z.object({});
+const packSchema = z.object({ period: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/), companyId: z.string().min(1).max(64).optional() });
 
 export const saveEInvoiceSettingsAction = defineAction({
   permission: ["admin.settings.manage", "admin.tax.manage"],
@@ -89,4 +92,21 @@ export const saveEntityEInvoiceAction = defineAction({
   permission: ["admin.settings.manage", "admin.tax.manage"],
   schema: entitySchema,
   handler: async (ctx, i) => { const { id, ...rest } = i; await S.saveEntityEInvoice(ctx, id, rest); return done(); },
+});
+
+export const sendPackNowAction = defineAction({
+  permission: null, // own company (settings / accounting rights) or FIRINGI finance — checked in the service
+  schema: packSchema,
+  handler: async (ctx, i) => {
+    const { sendPackNow } = await import("@/server/einvoice/monthly");
+    const r = await sendPackNow(ctx, i.period, i.companyId ?? ctx.company.id);
+    for (const p of ["/buy/company/e-invoicing", "/vendor/company/e-invoicing", ADMIN]) revalidatePath(p);
+    return { status: r.status, documents: r.documentCount };
+  },
+});
+
+export const runPacksNowAction = defineAction({
+  permission: ["admin.finance.manage", "admin.settings.manage"],
+  schema: emptySchema,
+  handler: async (ctx) => { const { runPacksNow } = await import("@/server/einvoice/monthly"); const r = await runPacksNow(ctx); done(); return r; },
 });

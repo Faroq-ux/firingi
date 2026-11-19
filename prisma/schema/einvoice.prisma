@@ -123,6 +123,8 @@ model EInvoiceProfile {
   leitwegId            String?
   /// where invoice e-mails go (default: the company e-mail)
   invoiceEmail         String?
+  /// the company's accountant: gets the monthly pack (the month's XML + a PDF of the month's totals)
+  accountantEmail      String?
   /// supplier: agrees that FIRINGI issues its invoices for it (self-billing)
   selfBilling          Boolean   @default(false)
   selfBillingSince     DateTime?
@@ -131,4 +133,24 @@ model EInvoiceProfile {
   updatedAt            DateTime  @updatedAt
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+/// Phase 46: the monthly pack sent to a company's accountant (the month's documents as XML + a PDF of the totals).
+model EInvoiceMonthlyPack {
+  id            String    @id @default(cuid())
+  companyId     String
+  /// "2026-10"
+  period        String
+  sentTo        String?
+  documentCount Int       @default(0)
+  /// SENT | EMPTY (nothing that month, not sent) | FAILED
+  status        String
+  error         String?
+  sentAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  company Company @relation("EInvoiceMonthlyPacks", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, period])
 }

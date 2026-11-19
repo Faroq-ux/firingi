@@ -284,6 +284,7 @@ model Company {
   clearanceBids          ClearanceBid[]            @relation("ClearanceBids")
   einvoiceDocs           EInvoiceDocument[]        @relation("EInvoiceCounterparty")
   einvoiceProfile        EInvoiceProfile?
+  einvoicePacks          EInvoiceMonthlyPack[]     @relation("EInvoiceMonthlyPacks")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
 import { Msg, Spin, useRun } from "@/components/shared/run";
 import {
-  checkEInvoiceAction, resendEInvoiceAction, runEInvoiceQueueAction, saveEInvoiceSettingsAction, saveEntityEInvoiceAction, sendExistingInvoiceAction,
+  checkEInvoiceAction, resendEInvoiceAction, runEInvoiceQueueAction, runPacksNowAction, saveEInvoiceSettingsAction, saveEntityEInvoiceAction, sendExistingInvoiceAction,
   simulateSupplierEInvoiceAction, verifyArchiveAction,
 } from "@/server/actions/einvoice";
 import { DOC_LANGUAGES, FORMAT_LABEL, FORMATS, PROVIDER_INFO, PROVIDERS, providerFits, type EInvoiceSettings, type LanguageSource } from "@/lib/einvoice";
@@ -94,10 +94,25 @@ export function EInvoiceSettingsForm({ initial, countries }: { initial: EInvoice
           <p className="text-sm font-medium">Checks, matching & country rules</p>
           {box("Check every document against its format's rules before sending (errors stop it)", x.validateBeforeSend, (v) => setX({ ...x, validateBeforeSend: v }))}
           {box("Warnings also stop a document", x.blockOnWarnings, (v) => setX({ ...x, blockOnWarnings: v }))}
+          {box("The e-mail copy also carries the XML (for the recipient's accountant or accounting software)", x.emailXml, (v) => setX({ ...x, emailXml: v }), "es-emailXml")}
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1"><Label htmlFor="es-tol">Received e-invoices: match tolerance (EUR)</Label><Input id="es-tol" inputMode="decimal" value={String(x.autoMatchTolerance)} onChange={(e) => setX({ ...x, autoMatchTolerance: Number(e.target.value.replace(",", ".")) || 0 })} /></div>
             <div className="space-y-1"><Label htmlFor="es-mpp">Poland: split-payment text from (PLN, 0 = off)</Label><Input id="es-mpp" inputMode="numeric" value={String(x.plSplitPaymentFrom)} onChange={(e) => setX({ ...x, plSplitPaymentFrom: Number(e.target.value.replace(/\D/g, "")) || 0 })} /></div>
           </div>
+        </div>
+      </div>
+      <div className="space-y-2" data-testid="es-monthly">
+        <p className="text-sm font-medium">Monthly pack for accountants</p>
+        <p className="text-xs text-muted-foreground">On this day each month, every company that gave its accountant&apos;s e-mail gets last month&apos;s documents (invoices, credit notes, service and self-billed invoices) as XML with a PDF of the month&apos;s totals. Companies can also download it themselves.</p>
+        <div className="grid gap-3 sm:grid-cols-[auto_10rem] sm:items-end">
+          {box("Send the monthly pack", x.monthlyPack.enabled, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, enabled: v } }), "es-pack-enabled")}
+          <div className="space-y-1"><Label htmlFor="es-pack-day">Day of the month (1–28)</Label>
+            <Input id="es-pack-day" inputMode="numeric" value={String(x.monthlyPack.day)} onChange={(e) => setX({ ...x, monthlyPack: { ...x.monthlyPack, day: Math.min(28, Math.max(1, Number(e.target.value.replace(/\D/g, "")) || 1)) } })} data-testid="es-pack-day" /></div>
+        </div>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {box("The XML of every document", x.monthlyPack.includeXml, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeXml: v } }))}
+          {box("A PDF with the month's totals", x.monthlyPack.includeSummary, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeSummary: v } }))}
+          {box("Each document's PDF too", x.monthlyPack.includeInvoicePdfs, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeInvoicePdfs: v } }))}
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-2">
@@ -199,5 +214,17 @@ export function SimulateInboundForm({ statements }: { statements: { id: string; 
       <Button disabled={pending || !id} data-testid="einv-sim-send" onClick={() => run(() => simulateSupplierEInvoiceAction({ statementId: id, netDelta: Number(delta.replace(",", ".")) || 0 }), undefined, "Received")}><Spin on={pending} icon={Wand2} /> Receive test e-invoice</Button>
       <div className="sm:col-span-3"><Msg error={error} done={done} /></div>
     </div>
+  );
+}
+
+export function RunPacksButton() {
+  const { pending, error, run } = useRun();
+  const [r, setR] = useState<string | null>(null);
+  return (
+    <span className="inline-flex flex-wrap items-center gap-2">
+      <Button variant="outline" size="sm" disabled={pending} data-testid="packs-run" onClick={() => run(() => runPacksNowAction({}), (d) => { const x = d as { period?: string; sent?: number; empty?: number; failed?: number }; setR(`${x.period}: ${x.sent ?? 0} sent, ${x.empty ?? 0} with nothing, ${x.failed ?? 0} failed`); })}><Spin on={pending} icon={Send} /> Send last month&apos;s packs now</Button>
+      {r && <span className="text-xs" data-testid="packs-run-result">{r}</span>}
+      {error && <span className="text-xs text-destructive">{error}</span>}
+    </span>
   );
 }

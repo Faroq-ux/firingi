@@ -57,6 +57,7 @@ const placed = [];
 const cleanup = () => {
   for (const id of placed) sql(`update "Order" set status='CANCELLED' where id='${id}' and status in ('NEW','PENDING_CONFIRMATION','ON_HOLD')`);
   sql(`delete from "CartItem" where "cartId" in (select id from "Cart" where "buyerCompanyId"='${KK}')`);
+  sql(`delete from "EInvoiceMonthlyPack" where "companyId" in ('${KK}', '${HK}')`);
   sql(`delete from "EInvoiceProfile" where "companyId" in ('${KK}', '${HK}')`);
   sql(`delete from "Setting" where key='einvoice.settings'`);
 };
@@ -206,6 +207,49 @@ try {
   await shot(sa, "ein-09-admin-archive", true);
   await go(sa, "/admin/invoices/e-invoicing");
   check("overview: sent documents counted", Number(await text(sa.getByTestId("kpi-sent"))) >= 2);
+
+  // ── 6b. Monthly pack for the accountant ──
+  await go(sa, "/admin/invoices/e-invoicing/settings");
+  check("settings: the e-mail copy carries the XML (on by default)", await sa.getByTestId("es-emailXml").isChecked());
+  check("settings: monthly pack on, day 1 by default", (await sa.getByTestId("es-pack-enabled").isChecked()) && (await sa.getByTestId("es-pack-day").inputValue()) === "1");
+  await sa.getByTestId("es-pack-day").fill("5");
+  await sa.getByTestId("es-save").click();
+  await settle(sa);
+  check("settings: FIRINGI's pack day saved", sql(`select value->'monthlyPack'->>'day' from "Setting" where key='einvoice.settings'`) === "5");
+  await sa.getByTestId("es-monthly").scrollIntoViewIfNeeded();
+  await shot(sa, "ein-12-admin-monthly-pack");
+  await go(buyer, "/buy/company/e-invoicing");
+  const askText = await text(buyer.getByTestId("pack-text"));
+  check("customer: the pack card asks for the accountant's e-mail, day 5, in Polish", /księgow/i.test(askText) && /\b5\b/.test(askText), askText);
+  check("customer: no send button without an accountant e-mail", (await buyer.getByTestId("pack-send").count()) === 0);
+  await buyer.getByTestId("ep-accountantEmail").fill("biuro@ksiegowa-e2e.pl");
+  await buyer.getByTestId("ep-save").click();
+  await settle(buyer);
+  await go(buyer, "/buy/company/e-invoicing");
+  check("customer: the accountant's e-mail saved and named on the card", sql(`select "accountantEmail" from "EInvoiceProfile" where "companyId"='${KK}'`) === "biuro@ksiegowa-e2e.pl" && /biuro@ksiegowa-e2e\.pl/.test(await text(buyer.getByTestId("pack-text"))));
+  const month = await buyer.getByTestId("pack-month").inputValue();
+  const dl = await buyer.request.get(`${BASE}${await buyer.getByTestId("pack-download").getAttribute("href")}`);
+  check("customer: last month downloads as a ZIP", dl.ok() && (await dl.body()).subarray(0, 2).toString() === "PK" && /attachment/.test(dl.headers()["content-disposition"] ?? ""));
+  const thisMonth = new Date().toISOString().slice(0, 7);
+  const cur = await buyer.request.get(`${BASE}/api/einvoice/monthly?period=${thisMonth}`);
+  const curZip = await cur.body();
+  check("customer: this month's ZIP holds the XML and the PDF summary", cur.ok() && curZip.includes(Buffer.from("xml/")) && curZip.includes(Buffer.from(`summary-${thisMonth}.pdf`)));
+  check("customer: another company's pack is refused", (await buyer.request.get(`${BASE}/api/einvoice/monthly?period=${thisMonth}&companyId=${HK}`)).status() === 403);
+  check("customer: a bad month is refused", (await buyer.request.get(`${BASE}/api/einvoice/monthly?period=2026-13`)).status() >= 400);
+  await buyer.getByTestId("pack-send").click();
+  await settle(buyer);
+  await go(buyer, "/buy/company/e-invoicing");
+  const sent = sql(`select status from "EInvoiceMonthlyPack" where "companyId"='${KK}' and period='${month}'`);
+  check("customer: the month sent to the accountant and listed", /^(SENT|EMPTY)$/.test(sent) && /biuro@ksiegowa-e2e\.pl/.test(await text(buyer.getByTestId("pack-list"))), sent);
+  await shot(buyer, "ein-13-customer-monthly-pack", true);
+  await go(sa, "/admin/invoices/e-invoicing");
+  await sa.getByTestId("packs-run").click();
+  await settle(sa);
+  check("overview: 'send last month's packs now' runs", /sent|nothing|0/i.test(await text(sa.getByTestId("packs-run-result"))), await text(sa.getByTestId("packs-run-result")));
+  await go(sa, "/admin/invoices/e-invoicing");
+  check("overview: the latest packs listed", /biuro@ksiegowa-e2e\.pl/.test(await text(sa.getByTestId("packs-recent"))));
+  await sa.getByTestId("packs-recent").scrollIntoViewIfNeeded();
+  await shot(sa, "ein-14-admin-packs");
 
   // ── 7. Phone, dark mode ──
   const phone = await login("owner@kebabkrakow.test", { viewport: PHONE, colorScheme: "dark" });

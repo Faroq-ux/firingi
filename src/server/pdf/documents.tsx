@@ -11,7 +11,7 @@ import { docTexts, numberLocale } from "@/server/einvoice/doc-i18n";
 
 /** Phase 46: DejaVu Sans has every letter of the 25 languages (ł, ř, ő, Greek, Cyrillic …); Helvetica has not. */
 let fonts = false;
-function registerFonts() {
+export function registerFonts() {
   if (fonts) return;
   const dir = path.join(process.cwd(), "public", "fonts");
   Font.register({ family: "DejaVu", fonts: [{ src: path.join(dir, "DejaVuSans.ttf") }, { src: path.join(dir, "DejaVuSans-Bold.ttf"), fontWeight: "bold" }] });

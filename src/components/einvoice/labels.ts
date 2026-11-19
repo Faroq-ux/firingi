@@ -8,6 +8,10 @@ export const fill = (s: string | undefined, v: Record<string, string | number> =
 
 export async function einLabels() {
   const [m, locale] = await Promise.all([getMessages(), getLocale()]);
-  const base = (en as unknown as { einvoice: Record<string, unknown> }).einvoice;
-  return { l: { ...flat(base), ...flat(((m as { einvoice?: object }).einvoice ?? {}) as Record<string, unknown>) }, locale };
+  const E = en as unknown as { einvoice: Record<string, unknown>; einvoicePack: Record<string, unknown> };
+  const M = m as { einvoice?: object; einvoicePack?: object };
+  return {
+    l: { ...flat(E.einvoice), ...flat(E.einvoicePack), ...flat((M.einvoice ?? {}) as Record<string, unknown>), ...flat((M.einvoicePack ?? {}) as Record<string, unknown>) },
+    locale,
+  };
 }
