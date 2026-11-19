@@ -33,10 +33,17 @@ A customer or supplier can give **its accountant's e-mail** (*Company › E-Invo
 admin chooses** (1–28, *E-Invoicing Settings › Monthly pack for accountants*), the e-invoice cron e-mails that address
 last month's pack — once per company and month:
 
-- **XML** of every document FIRINGI issued to the company that month (invoices, credit notes, service invoices,
-  self-billed invoices): the e-invoice exactly as it was sent, or a Peppol BIS 3 file made for the accountant;
-- a **PDF summary** of the month: every document, totals by VAT rate per currency, in the language the invoices use
-  (the admin's language priority);
+- FIRINGI invoices every buyer itself, and suppliers invoice FIRINGI. So the pack has **two sides, never added together**:
+  - **Invoices from FIRINGI to you** (`from-firingi/`) — the company's purchases on FIRINGI and FIRINGI's services
+    (ads, plan, early-payout fees), credit notes included: costs for the company;
+  - **Your invoices to FIRINGI** (`to-firingi/`) — what a supplier sold through FIRINGI: the self-billed invoices
+    FIRINGI issued in its name, and the invoices it sent FIRINGI itself (its received e-invoice XML, or the file it
+    uploaded): income for the company. A buyer's FIRINGI invoices never appear in a supplier's pack, and a buyer never
+    sees a supplier's side.
+- **XML** of each document: the e-invoice exactly as it was sent, or a Peppol BIS 3 file made for the accountant;
+- a **PDF summary** with one section per side: every document, totals by VAT rate (for a supplier's own uploaded
+  invoices: "rate as on the invoice") and in total, per currency, in the language the invoices use (the admin's
+  language priority), naming the FIRINGI company that issued them;
 - optionally the documents as **PDF** too.
 
 Admin switches: on/off, the day, XML / summary / invoice PDFs in the pack, *Send last month's packs now*. A month with

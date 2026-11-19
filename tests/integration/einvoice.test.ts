@@ -334,6 +334,7 @@ describe("switches, archive, rights", () => {
 
 describe("monthly pack for the accountant", () => {
   const period = new Date().toISOString().slice(0, 7);
+  const periodStart = () => { const n = new Date(); return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), 1)); };
   const nextMonth = (day: number) => { const n = new Date(); return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth() + 1, day, 6)); };
 
   it("holds the month's documents as XML with a PDF of the totals, in the company's language", async () => {
@@ -348,9 +349,32 @@ describe("monthly pack for the accountant", () => {
     const xml = Object.keys(files).filter((k) => k.startsWith("xml/"));
     expect(xml.length).toBe(p.rows.length);
     expect(strFromU8(files[xml[0]])).toMatch(/<\?xml|<Faktura|<Invoice/);
+    expect(xml.every((k) => k.startsWith("xml/from-firingi/"))).toBe(true);
+    expect(p.rows.every((r) => r.side === "IN")).toBe(true);
     expect(files[`summary-${period}.pdf`]).toBeDefined();
     expect(Object.keys(files).some((k) => k.startsWith("pdf/"))).toBe(false);
     await expect(M.buildMonthlyPack(kk.company.id, "2026-13")).rejects.toThrow(/month/);
+  });
+
+  it("a supplier's pack keeps FIRINGI's invoices to it (costs) apart from its own invoices to FIRINGI (sales)", async () => {
+    const hk = await ctxFor(HK);
+    await serviceInvoice(hk.company.id, 40); // e.g. ads: FIRINGI invoices the supplier
+    const p = await M.buildMonthlyPack(hk.company.id, period);
+    const inn = p.rows.filter((r) => r.side === "IN"), out = p.rows.filter((r) => r.side === "OUT");
+    expect(inn.length).toBeGreaterThan(0);
+    expect(inn.every((r) => r.kind === "INVOICE" || r.kind === "CREDIT_NOTE" || r.kind === "INVOICE_RECEIPT")).toBe(true);
+    // self-billed by FIRINGI in the supplier's name, and the supplier's own e-invoice to FIRINGI: both are its sales
+    expect(out.some((r) => r.kind === "SELF_BILLED")).toBe(true);
+    const sent = await prisma.vendorInvoice.findFirst({ where: { vendorCompanyId: hk.company.id, source: { not: "SELF_BILLED" }, status: { not: "REJECTED" }, issueDate: { gte: periodStart() } } });
+    if (sent) expect(out.some((r) => r.number === sent.externalNumber)).toBe(true);
+    // no FIRINGI invoice to a buyer ever lands in a supplier's pack
+    const buyerInvoices = await prisma.invoice.findMany({ where: { recipientCompanyId: { not: hk.company.id }, issuedAt: { gte: periodStart() } }, select: { fullNumber: true }, take: 50 });
+    expect(p.rows.some((r) => buyerInvoices.some((b) => b.fullNumber === r.number))).toBe(false);
+    const files = Object.keys(unzipSync(new Uint8Array(p.zip)));
+    expect(files.some((k) => k.startsWith("xml/from-firingi/"))).toBe(true);
+    expect(files.some((k) => k.startsWith("xml/to-firingi/"))).toBe(true);
+    // the summary shows the two sides apart
+    expect(p.summary!.length).toBeGreaterThan(1000);
   });
 
   it("FIRINGI's options decide what goes in: invoice PDFs on, XML off", async () => {
@@ -358,7 +382,7 @@ describe("monthly pack for the accountant", () => {
     await settings({ monthlyPack: { ...DEFAULT_EINVOICE_SETTINGS.monthlyPack, includeXml: false, includeInvoicePdfs: true } });
     const files = unzipSync(new Uint8Array((await M.buildMonthlyPack(kk.company.id, period)).zip));
     expect(Object.keys(files).some((k) => k.startsWith("xml/"))).toBe(false);
-    const pdfs = Object.keys(files).filter((k) => k.startsWith("pdf/"));
+    const pdfs = Object.keys(files).filter((k) => k.startsWith("pdf/from-firingi/"));
     expect(pdfs.length).toBeGreaterThan(0);
     expect(strFromU8(files[pdfs[0]].subarray(0, 4))).toBe("%PDF");
     await settings();

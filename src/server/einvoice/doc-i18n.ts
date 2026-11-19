@@ -66,6 +66,10 @@ export const DOC_EN = {
   monthTotal: "Total for the month",
   attachedXml: "The documents are attached as XML (e-invoices) for your accounting software.",
   packIntro: "Your monthly invoice pack from FIRINGI",
+  fromFiringi: "Invoices from FIRINGI to you (purchases and services)",
+  toFiringi: "Your invoices to FIRINGI (sales, incl. self-billing)",
+  rateAsInvoice: "rate as on the invoice",
+  noDocs: "No documents",
 } as const;
 
 export type DocKey = keyof typeof DOC_EN;

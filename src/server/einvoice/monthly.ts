@@ -19,7 +19,12 @@ import type { MonthlyRow } from "@/server/pdf/monthly";
 
 const safe = (n: string) => n.replace(/[^\w.-]+/g, "_");
 
-/** The documents of a company's month, their XML and the summary rows. */
+/**
+ * The documents of a company's month, their XML and the summary rows — in two sides that are never added together:
+ * IN  = invoices FIRINGI issued to the company (its purchases on FIRINGI, ads, plans, fees: costs for the company);
+ * OUT = the company's own invoices to FIRINGI for what it sold through FIRINGI (income): the self-billed invoices
+ *       FIRINGI issued in its name, and the invoices it sent FIRINGI itself (uploaded or as an e-invoice).
+ */
 async function collect(companyId: string, period: string, withInvoicePdfs: boolean) {
   const { from, to } = periodRange(period);
   const invoices = await prisma.invoice.findMany({
@@ -27,39 +32,53 @@ async function collect(companyId: string, period: string, withInvoicePdfs: boole
     orderBy: { issuedAt: "asc" }, include: { lines: true },
   });
   const statements = await prisma.vendorBillingStatement.findMany({ where: { vendorCompanyId: companyId, selfBilledNumber: { not: null }, selfBilledAt: { gte: from, lt: to } }, orderBy: { selfBilledAt: "asc" } });
+  const own = await prisma.vendorInvoice.findMany({
+    where: { vendorCompanyId: companyId, source: { not: "SELF_BILLED" }, status: { not: "REJECTED" }, issueDate: { gte: from, lt: to } },
+    orderBy: { issueDate: "asc" }, include: { einvoices: { where: { direction: "INBOUND", xmlKey: { not: null } }, select: { xmlKey: true }, take: 1 } },
+  });
   const files: Record<string, Uint8Array> = {};
   const rows: MonthlyRow[] = [];
   const sentXml = async (where: { invoiceId?: string; statementId?: string }) => {
     const d = await prisma.eInvoiceDocument.findFirst({ where: { ...where, direction: "OUTBOUND", status: { in: ["SENT", "DELIVERED", "ACCEPTED"] }, xmlKey: { not: null } }, orderBy: { createdAt: "desc" }, select: { xmlKey: true } });
     return d?.xmlKey ? readStored(d.xmlKey).catch(() => null) : null;
   };
+  const rates = (doc: { taxes: { rate: string; base: string; vat: string }[] }) => doc.taxes.map((t) => ({ rate: Number(t.rate), base: Number(t.base), vat: Number(t.vat) }));
   for (const inv of invoices) {
     const { doc } = await invoiceEDoc(inv.id);
     const xml = (await sentXml({ invoiceId: inv.id })) ?? Buffer.from(toUbl(doc, "PEPPOL_BIS3"), "utf8");
-    files[`xml/${safe(doc.number)}.xml`] = new Uint8Array(xml);
+    files[`xml/from-firingi/${safe(doc.number)}.xml`] = new Uint8Array(xml);
     if (withInvoicePdfs) {
       const { invoicePdfData } = await import("@/server/data/finance-docs");
       const { renderInvoicePdf } = await import("@/server/pdf/documents");
-      files[`pdf/${safe(doc.number)}.pdf`] = new Uint8Array(await renderInvoicePdf(await invoicePdfData(null, inv.id)));
+      files[`pdf/from-firingi/${safe(doc.number)}.pdf`] = new Uint8Array(await renderInvoicePdf(await invoicePdfData(null, inv.id)));
     }
-    rows.push({
-      date: doc.issueDate, number: doc.number, kind: inv.docType, currency: doc.currency,
-      net: Number(doc.totals.net), vat: Number(doc.totals.vat), gross: Number(doc.totals.gross),
-      rates: doc.taxes.map((t) => ({ rate: Number(t.rate), base: Number(t.base), vat: Number(t.vat) })),
-    });
+    rows.push({ side: "IN", date: doc.issueDate, number: doc.number, kind: inv.docType, currency: doc.currency, net: Number(doc.totals.net), vat: Number(doc.totals.vat), gross: Number(doc.totals.gross), rates: rates(doc) });
   }
   for (const st of statements) {
     const { doc } = await statementEDoc(st.id);
     const xml = (await sentXml({ statementId: st.id })) ?? Buffer.from(toUbl(doc, "PEPPOL_BIS3"), "utf8");
-    files[`xml/${safe(doc.number)}.xml`] = new Uint8Array(xml);
+    files[`xml/to-firingi/${safe(doc.number)}.xml`] = new Uint8Array(xml);
     if (withInvoicePdfs) {
       const { selfBilledPdf } = await import("./pdf");
-      files[`pdf/${safe(doc.number)}.pdf`] = new Uint8Array(await selfBilledPdf(st.id));
+      files[`pdf/to-firingi/${safe(doc.number)}.pdf`] = new Uint8Array(await selfBilledPdf(st.id));
     }
+    rows.push({ side: "OUT", date: doc.issueDate, number: doc.number, kind: st.isCreditStatement ? "SELF_BILLED_CREDIT" : "SELF_BILLED", currency: doc.currency, net: Number(doc.totals.net), vat: Number(doc.totals.vat), gross: Number(doc.totals.gross), rates: rates(doc) });
+  }
+  for (const v of own) {
+    // the company's own invoice to FIRINGI, as it sent it: the e-invoice XML, and the file it uploaded
+    const key = v.einvoices[0]?.xmlKey;
+    const xml = key ? await readStored(key).catch(() => null) : null;
+    if (xml) files[`xml/to-firingi/${safe(v.externalNumber)}.xml`] = new Uint8Array(xml);
+    const original = await readStored(v.fileKey).catch(() => null);
+    if (original) {
+      const ext = (v.fileKey.match(/\.(\w{2,5})$/)?.[1] ?? (original.subarray(0, 4).toString() === "%PDF" ? "pdf" : "bin")).toLowerCase();
+      if (!(xml && ext === "xml")) files[`${ext === "xml" ? "xml" : "pdf"}/to-firingi/${safe(v.externalNumber)}.${ext}`] = new Uint8Array(original);
+    }
+    const local = v.currencyCode !== "EUR" && v.grossTotalLocal != null;
+    const net = Number(local ? v.netTotalLocal : v.netTotal), vat = Number(local ? v.vatTotalLocal : v.vatTotal), gross = Number(local ? v.grossTotalLocal : v.grossTotal);
     rows.push({
-      date: doc.issueDate, number: doc.number, kind: st.isCreditStatement ? "SELF_BILLED_CREDIT" : "SELF_BILLED", currency: doc.currency,
-      net: Number(doc.totals.net), vat: Number(doc.totals.vat), gross: Number(doc.totals.gross),
-      rates: doc.taxes.map((t) => ({ rate: Number(t.rate), base: Number(t.base), vat: Number(t.vat) })),
+      side: "OUT", date: v.issueDate.toISOString().slice(0, 10), number: v.externalNumber, kind: v.docType === "CREDIT_NOTE" ? "CREDIT_NOTE" : "INVOICE",
+      currency: local ? v.currencyCode : "EUR", net, vat, gross, rates: [{ rate: -1, base: net, vat }],
     });
   }
   return { files, rows: rows.sort((a, b) => a.date.localeCompare(b.date)) };
@@ -88,10 +107,12 @@ export async function buildMonthlyPack(companyId: string, period: string) {
   const { renderMonthlyPdf } = await import("@/server/pdf/monthly");
   const summary = s.includeSummary ? Buffer.from(await renderMonthlyPdf({ language, period, company: { name: co.legalName, taxId: co.taxId, vatId: co.vatNumber }, issuer, rows, withXml: s.includeXml })) : null;
   const zipFiles: Record<string, Uint8Array> = {};
-  if (s.includeXml) for (const [k, v] of Object.entries(files)) if (k.startsWith("xml/")) zipFiles[k] = v;
-  for (const [k, v] of Object.entries(files)) if (k.startsWith("pdf/")) zipFiles[k] = v;
+  // the company's own uploaded PDFs to FIRINGI come too when FIRINGI chose PDFs, or when there is no XML of them
+  for (const [k, v] of Object.entries(files)) {
+    if (k.startsWith("xml/") ? s.includeXml : (s.includeInvoicePdfs || (k.startsWith("pdf/to-firingi/") && !files[k.replace(/^pdf\//, "xml/").replace(/\.\w+$/, ".xml")]))) zipFiles[k] = v;
+  }
   if (summary) zipFiles[`summary-${period}.pdf`] = new Uint8Array(summary);
-  zipFiles["README.txt"] = strToU8(`FIRINGI — ${co.legalName} — ${period}\nDocuments: ${rows.length}\nxml/: e-invoices (as sent, or Peppol BIS 3)${s.includeInvoicePdfs ? "\npdf/: the documents as PDF" : ""}\n`);
+  zipFiles["README.txt"] = strToU8(`FIRINGI — ${co.legalName} — ${period}\nDocuments: ${rows.length}\nfrom-firingi/: invoices FIRINGI issued to you (your purchases and services)\nto-firingi/: your invoices to FIRINGI (your sales: self-billed by FIRINGI in your name, or sent by you)\nxml/: e-invoices (as sent, or Peppol BIS 3)${s.includeInvoicePdfs ? "\npdf/: the documents as PDF" : ""}\n`);
   return { rows, summary, zip: Buffer.from(zipSync(zipFiles, { level: 6 })), language, name: co.legalName };
 }
 
