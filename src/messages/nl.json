@@ -253,7 +253,10 @@
       "certificateCode": "Code van het handelsregisteruittreksel",
       "certificateCodeHint": "Het handelsregisternummer van uw bedrijf. Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig.",
       "certificateCodeHintPt": "Toegangscode van de certidão permanente (12 cijfers, 0000-0000-0000). Leveranciers die een vennootschap zijn geven het op; eenmanszaken hebben het niet nodig.",
-      "referral": "Je bent uitgenodigd met code {code} — na je eerste geleverde bestelling krijg je bonuspunten."
+      "referral": "Je bent uitgenodigd met code {code} — na je eerste geleverde bestelling krijg je bonuspunten.",
+      "activityCode": "code van de economische activiteit",
+      "activityCodeHint": "Uw hoofdactiviteitscode, bijv. {example}.",
+      "activityCodeOnce": "Eén keer invullen — daarna kan alleen FIRINGI hem wijzigen."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Wijzigingen opslaan",
       "saved": "Opgeslagen.",
       "locked": "Na indiening kunnen de statutaire naam en het btw-nummer alleen door FIRINGI-support worden gewijzigd.",
-      "website": "Website"
+      "website": "Website",
+      "registrationLocked": "Uw fiscaal nummer, btw-nummer, bedrijfsnaam, rechtsvorm en activiteitscode zijn uw registratiegegevens — die kunnen hier niet worden gewijzigd. Klopt er iets niet, neem dan contact op met FIRINGI-support."
     },
     "restricted": {
       "title": "Toegang tot tabak & alcohol",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Uw kassa {till}: {decision}",
       "body": "Besluit van FIRINGI over uw kassa {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adres ter goedkeuring: {company}",
+      "body": "{company} vraagt een adreswijziging aan: {change}. Keur goed of weiger onder Adresgoedkeuringen."
+    },
+    "address_change_decided": {
+      "title": "Uw adres {address}: {decision}",
+      "body": "Besluit van FIRINGI over uw adres {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Totaal btw",
     "lineVat": "Btw {rate}%",
     "lineVatAmount": "waarvan btw {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Een nieuw adres — of een adres verhuizen naar een andere plek — wordt eerst door FIRINGI gecontroleerd en geldt na goedkeuring. Wijzigingen van naam, contact en telefoon gelden meteen.",
+    "sent": "Naar FIRINGI gestuurd ter goedkeuring. Het adres geldt na goedkeuring.",
+    "sentShop": "Het adres van de winkel is ter goedkeuring naar FIRINGI gestuurd. U kunt een recente kassabon toevoegen onder Bedrijf › Adressen.",
+    "requestsTitle": "Adresaanvragen",
+    "actionCREATE": "Nieuw adres",
+    "actionUPDATE": "Verhuizing",
+    "actionREMOVE": "Verwijdering",
+    "statusPENDING": "Wacht op FIRINGI",
+    "statusAPPROVED": "Goedgekeurd",
+    "statusREJECTED": "Geweigerd",
+    "statusCANCELLED": "Ingetrokken",
+    "withdraw": "Intrekken",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Op kassabonnen — vast",
+    "pendingBadge": "Wijziging wacht op goedkeuring",
+    "proofTitle": "Recente factuur van uw kassa op dit adres",
+    "proofHint": "Een foto of scan van een recente factuur (maximaal 90 dagen oud) van uw eigen kassa daar helpt FIRINGI het adres snel goed te keuren.",
+    "proofFile": "Foto of scan (PDF, JPG, PNG)",
+    "proofDate": "Datum op de factuur",
+    "proofAttached": "Kassabon toegevoegd.",
+    "proofMissing": "Nog geen kassabon — voeg er een toe zodat FIRINGI kan goedkeuren.",
+    "attach": "Toevoegen"
   }
 }

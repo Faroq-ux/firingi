@@ -253,7 +253,10 @@
       "certificateCode": "Kode til registreringsattest",
       "certificateCodeHint": "Din virksomheds registreringsnummer i erhvervsregistret. Leverandører, der er selskaber, oplyser det; enkeltmandsvirksomheder behøver det ikke.",
       "certificateCodeHintPt": "Adgangskode til certidão permanente (12 cifre, 0000-0000-0000). Leverandører, der er selskaber, oplyser den; enkeltmandsvirksomheder behøver den ikke.",
-      "referral": "Du blev inviteret med koden {code} — du får bonuspoint efter din første leverede ordre."
+      "referral": "Du blev inviteret med koden {code} — du får bonuspoint efter din første leverede ordre.",
+      "activityCode": "branchekode",
+      "activityCodeHint": "Din hovedbranchekode, f.eks. {example}.",
+      "activityCodeOnce": "Indtast den én gang — derefter kan kun FIRINGI ændre den."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Gem ændringer",
       "saved": "Gemt.",
       "locked": "Efter indsendelse kan det juridiske navn og momsnummeret kun ændres af FIRINGI-support.",
-      "website": "Hjemmeside"
+      "website": "Hjemmeside",
+      "registrationLocked": "Dit CVR-nr., momsnummer, firmanavn, selskabsform og branchekode er dine registreringsoplysninger — de kan ikke ændres her. Er noget forkert, så kontakt FIRINGI-support."
     },
     "restricted": {
       "title": "Adgang til tobak og alkohol",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Din kasse {till}: {decision}",
       "body": "FIRINGI's afgørelse om din kasse {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresse til godkendelse: {company}",
+      "body": "{company} beder om en adresseændring: {change}. Godkend eller afvis under Adressegodkendelser."
+    },
+    "address_change_decided": {
+      "title": "Din adresse {address}: {decision}",
+      "body": "FIRINGI's afgørelse om din adresse {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Moms i alt",
     "lineVat": "Moms {rate}%",
     "lineVatAmount": "heraf moms {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "En ny adresse — eller flytning af en adresse — kontrolleres først af FIRINGI og gælder efter godkendelse. Ændringer af navn, kontakt og telefon gælder med det samme.",
+    "sent": "Sendt til FIRINGI til godkendelse. Adressen gælder efter godkendelse.",
+    "sentShop": "Butikkens adresse er sendt til FIRINGI til godkendelse. Du kan vedhæfte en nylig kassebon under Virksomhed › Adresser.",
+    "requestsTitle": "Adresseanmodninger",
+    "actionCREATE": "Ny adresse",
+    "actionUPDATE": "Flytning",
+    "actionREMOVE": "Fjernelse",
+    "statusPENDING": "Venter på FIRINGI",
+    "statusAPPROVED": "Godkendt",
+    "statusREJECTED": "Afvist",
+    "statusCANCELLED": "Trukket tilbage",
+    "withdraw": "Træk tilbage",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "På kassebonner — fast",
+    "pendingBadge": "Ændring venter på godkendelse",
+    "proofTitle": "Nylig faktura fra din kasse på denne adresse",
+    "proofHint": "Et foto eller en scanning af en nylig faktura (højst 90 dage gammel) udskrevet af din egen kasse der hjælper FIRINGI med at godkende adressen hurtigt.",
+    "proofFile": "Foto eller scanning (PDF, JPG, PNG)",
+    "proofDate": "Dato på fakturaen",
+    "proofAttached": "Kassebon vedhæftet.",
+    "proofMissing": "Ingen kassebon endnu — vedhæft én, så FIRINGI kan godkende.",
+    "attach": "Vedhæft"
   }
 }

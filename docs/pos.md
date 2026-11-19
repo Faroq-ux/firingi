@@ -57,6 +57,9 @@ Suppliers sell from *Sell › Till (POS)* (`/vendor/pos`), wholesale customers f
 - **Revenue at all times**: the owner and shop managers see on the till overview the **revenue of the tills they
   manage** — today, last 7 days, this month, this year and **all time** (sales minus refunds, VAT included, since the
   first sale) — in total and **per till / shop**. Cashiers don't see it.
+- **The receipt address is fixed**: a till prints its own address (else the head office). Once it has issued a
+  receipt, that address can't be edited or removed and the till's address can't change — a new address means a new
+  till (Phase 47d).
 - **Items per till**: an item can be sold at chosen tills only (the grocery's bread, the restaurant's dishes) or at
   all of them.
 - **Accounting per shop and till**: each day's sales go into Accounting per till — and so per shop — as cash, card

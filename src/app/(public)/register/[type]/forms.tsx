@@ -1,4 +1,5 @@
 "use client";
+import { activityScheme } from "@/lib/activity-code";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -58,7 +59,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
         start(async () => {
           const r = await registerCompanyAction({
             type, countryCode: country, legalName: s(fd, "legalName") ?? "", tradeName: s(fd, "tradeName"), taxId: s(fd, "taxId") ?? "",
-            vatNumber: s(fd, "vatNumber"), companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", businessType: s(fd, "businessType"),
+            vatNumber: s(fd, "vatNumber"), activityCode: s(fd, "activityCode"), companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", businessType: s(fd, "businessType"),
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
             cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
@@ -92,6 +93,9 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
         </Field>
         <Field id="vatNumber" label={t("form.vatNumber")} errors={fe.vatNumber} hint={t("form.vatHint")}>
           <Input id="vatNumber" name="vatNumber" required value={vat} onChange={(e) => setVat(e.target.value)} readOnly={country === "PT"} placeholder={`${c.vatPrefix}…`} />
+        </Field>
+        <Field id="activityCode" label={`${activityScheme(country).name} — ${t("form.activityCode")}`} errors={fe.activityCode} hint={t("form.activityCodeHint", { example: activityScheme(country).example })}>
+          <Input id="activityCode" name="activityCode" required={type === "CUSTOMER"} autoComplete="off" placeholder={activityScheme(country).example} data-testid="reg-activity-code" />
         </Field>
         <Field id="companyEmail" label={t("form.companyEmail")} errors={fe.companyEmail}><Input id="companyEmail" name="companyEmail" type="email" required /></Field>
         <Field id="phone" label={t("form.phone")} errors={fe.phone}><Input id="phone" name="phone" type="tel" required /></Field>

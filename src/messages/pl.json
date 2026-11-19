@@ -253,7 +253,10 @@
       "certificateCode": "Kod odpisu z rejestru",
       "certificateCodeHint": "Numer Twojej firmy w rejestrze przedsiębiorców. Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują.",
       "certificateCodeHintPt": "Kod dostępu do certidão permanente (12 cyfr, 0000-0000-0000). Dostawcy będący spółkami go podają; jednoosobowe działalności go nie potrzebują.",
-      "referral": "Zostałeś zaproszony kodem {code} — po pierwszym dostarczonym zamówieniu otrzymasz punkty bonusowe."
+      "referral": "Zostałeś zaproszony kodem {code} — po pierwszym dostarczonym zamówieniu otrzymasz punkty bonusowe.",
+      "activityCode": "kod działalności gospodarczej",
+      "activityCodeHint": "Twój główny kod działalności, np. {example}.",
+      "activityCodeOnce": "Wpisz go raz — potem może go zmienić tylko FIRINGI."
     },
     "businessTypes": {
       "restaurant": "Restauracja",
@@ -349,7 +352,8 @@
       "save": "Zapisz zmiany",
       "saved": "Zapisano.",
       "locked": "Po wysłaniu nazwę firmy i numer VAT może zmienić tylko pomoc FIRINGI.",
-      "website": "Strona internetowa"
+      "website": "Strona internetowa",
+      "registrationLocked": "Twój NIP, numer VAT, nazwa firmy, forma prawna i kod PKD to dane rejestracyjne — nie można ich tu zmienić. Jeśli coś jest nie tak, skontaktuj się z pomocą FIRINGI."
     },
     "restricted": {
       "title": "Dostęp do tytoniu i alkoholu",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Twoja kasa {till}: {decision}",
       "body": "Decyzja FIRINGI w sprawie Twojej kasy {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adres do zatwierdzenia: {company}",
+      "body": "{company} prosi o zmianę adresu: {change}. Zatwierdź lub odrzuć w Zatwierdzanie adresów."
+    },
+    "address_change_decided": {
+      "title": "Twój adres {address}: {decision}",
+      "body": "Decyzja FIRINGI w sprawie Twojego adresu {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "VAT razem",
     "lineVat": "VAT {rate}%",
     "lineVatAmount": "w tym VAT {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Nowy adres — lub przeniesienie adresu w inne miejsce — FIRINGI najpierw sprawdza i obowiązuje on po zatwierdzeniu. Zmiany nazwy, kontaktu i telefonu obowiązują od razu.",
+    "sent": "Wysłano do FIRINGI do zatwierdzenia. Adres będzie obowiązywał po zatwierdzeniu.",
+    "sentShop": "Adres sklepu wysłano do FIRINGI do zatwierdzenia. Aktualny paragon z kasy możesz dołączyć w Firma › Adresy.",
+    "requestsTitle": "Wnioski o adres",
+    "actionCREATE": "Nowy adres",
+    "actionUPDATE": "Przeniesienie",
+    "actionREMOVE": "Usunięcie",
+    "statusPENDING": "Czeka na FIRINGI",
+    "statusAPPROVED": "Zatwierdzony",
+    "statusREJECTED": "Odrzucony",
+    "statusCANCELLED": "Wycofany",
+    "withdraw": "Wycofaj",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Na paragonach z kasy — stały",
+    "pendingBadge": "Zmiana czeka na zatwierdzenie",
+    "proofTitle": "Aktualna faktura z Twojej kasy pod tym adresem",
+    "proofHint": "Zdjęcie lub skan aktualnej faktury (najwyżej 90 dni) wydrukowanej przez Twoją kasę w tym miejscu pomaga FIRINGI szybko zatwierdzić adres.",
+    "proofFile": "Zdjęcie lub skan (PDF, JPG, PNG)",
+    "proofDate": "Data na fakturze",
+    "proofAttached": "Dołączono paragon z kasy.",
+    "proofMissing": "Brak paragonu z kasy — dołącz go, aby FIRINGI mogło zatwierdzić.",
+    "attach": "Dołącz"
   }
 }

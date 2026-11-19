@@ -52,14 +52,18 @@ export type ProfileInput = {
   legalName?: string; vatNumber?: string | null;
   /** Phase 28 — legal form is locked after submission; the certificate code can be renewed any time. */
   legalForm?: "COMPANY" | "SOLE_TRADER"; certificateCode?: string | null;
+  /** economic activity code (CAE…): entered once if missing, then fixed (FIRINGI corrects it) */
+  activityCode?: string | null;
 };
 
 export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
   if (!can(ctx, "company.profile.manage")) throw new ForbiddenError();
   const before = await prisma.company.findUniqueOrThrow({ where: { id: ctx.company.id } });
-  const locked = before.status === "APPROVED" || before.status === "SUSPENDED" || before.status === "UNDER_REVIEW";
-  if (locked && ((input.legalName && input.legalName !== before.legalName) || (input.vatNumber !== undefined && (input.vatNumber || null) !== before.vatNumber)))
-    throw new ValidationError("Legal name and VAT number can't be changed after submission. Contact FIRINGI support.");
+  // Registration details (NIF, VAT number, legal name, legal form) are fixed: one company, one NIF. Only FIRINGI
+  // corrects them (adminCorrectRegistration, with a reason). Addresses go through FIRINGI's approval instead.
+  const locked = true;
+  if ((input.legalName && input.legalName.trim() !== before.legalName) || (input.vatNumber !== undefined && (input.vatNumber?.replace(/[\s.-]/g, "").toUpperCase() || null) !== before.vatNumber))
+    throw new ValidationError("Your registration details (NIF, VAT number, legal name) can't be changed. If something is wrong, contact FIRINGI support — FIRINGI corrects it.");
   const data: Prisma.CompanyUpdateInput = {
     tradeName: input.tradeName?.trim() || null,
     email: input.email.trim().toLowerCase(),
@@ -70,8 +74,16 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
     ...(!locked && input.vatNumber !== undefined ? { vatNumber: input.vatNumber?.replace(/[\s.-]/g, "").toUpperCase() || null } : {}),
   };
   if (input.legalForm && input.legalForm !== before.legalForm) {
-    if (locked) throw new ValidationError("The legal form can't be changed after submission. Contact FIRINGI support.");
+    if (locked) throw new ValidationError("The legal form is part of your registration and can't be changed. Contact FIRINGI support.");
     data.legalForm = input.legalForm;
+  }
+  if (input.activityCode?.trim()) {
+    const country = await prisma.country.findUniqueOrThrow({ where: { id: before.countryId }, select: { code: true } });
+    const { activityScheme, checkActivityCode } = await import("@/lib/activity-code");
+    const a = checkActivityCode(input.activityCode, country.code);
+    if (!a.ok) throw new ValidationError(`Enter your ${activityScheme(country.code).name} code (e.g. ${activityScheme(country.code).example}).`);
+    if (before.activityCode && before.activityCode !== a.value) throw new ValidationError("Your activity code is part of your registration and can't be changed. Contact FIRINGI support.");
+    data.activityCode = a.value;
   }
   if (input.certificateCode !== undefined) {
     const raw = input.certificateCode?.trim() ?? "";
@@ -92,8 +104,8 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
   const after = await prisma.company.update({ where: { id: ctx.company.id }, data });
   await writeAudit({
     actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.profile_updated", entityType: "Company", entityId: ctx.company.id,
-    before: { tradeName: before.tradeName, email: before.email, phone: before.phone, legalName: before.legalName, vatNumber: before.vatNumber, legalForm: before.legalForm, certificateCode: before.registryCertificateCode },
-    after: { tradeName: after.tradeName, email: after.email, phone: after.phone, legalName: after.legalName, vatNumber: after.vatNumber, legalForm: after.legalForm, certificateCode: after.registryCertificateCode },
+    before: { tradeName: before.tradeName, email: before.email, phone: before.phone, legalName: before.legalName, vatNumber: before.vatNumber, legalForm: before.legalForm, certificateCode: before.registryCertificateCode, activityCode: before.activityCode },
+    after: { tradeName: after.tradeName, email: after.email, phone: after.phone, legalName: after.legalName, vatNumber: after.vatNumber, legalForm: after.legalForm, certificateCode: after.registryCertificateCode, activityCode: after.activityCode },
   });
 }
 
@@ -219,4 +231,39 @@ export async function setCommissionRate(ctx: Ctx, vendorCompanyId: string, rateP
     await tx.commissionRule.create({ data: { vendorCompanyId, type: "PERCENT", rate: ratePercent, validFrom: now, note: note ?? null, createdById: ctx.user.id } });
     await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "vendor.commission_set", entityType: "Company", entityId: vendorCompanyId, before: current ? { rate: current.rate.toString() } : null, after: { rate: ratePercent, note } }, tx);
   });
+}
+
+/**
+ * FIRINGI corrects a company's registration details (a typo at sign-up, a change of legal form…). Users can't.
+ * One company per NIF in a country and per VAT number; a Portuguese VAT number is PT + the NIF. Audited with the reason.
+ */
+export async function adminCorrectRegistration(ctx: Ctx, companyId: string, input: { legalName: string; taxId: string; vatNumber: string; legalForm: "COMPANY" | "SOLE_TRADER"; activityCode?: string | null; reason: string }) {
+  if (ctx.company.type !== "ADMIN") throw new ForbiddenError();
+  const before = await prisma.company.findUniqueOrThrow({ where: { id: companyId }, include: { country: true } });
+  const { canDecideType } = await import("./admin-access");
+  if (!canDecideType(ctx, before.type)) throw new ForbiddenError();
+  if (input.reason.trim().length < 10) throw new ValidationError("Give the reason for the correction (at least 10 characters).");
+  if (input.legalName.trim().length < 2) throw new ValidationError("Enter the legal name.");
+  const { normaliseTaxId } = await import("./registration");
+  const { isValidPtNif } = await import("@/lib/tax-id");
+  const taxId = normaliseTaxId(before.country.code, input.taxId);
+  if (before.country.code === "PT" && !isValidPtNif(taxId)) throw new ValidationError("Invalid Portuguese NIF.");
+  if (taxId.length < 5) throw new ValidationError("Invalid tax ID.");
+  const v = checkCompanyVat(input.vatNumber, before.country, taxId);
+  if (!v.ok) throw new ValidationError(v.error);
+  let activityCode = before.activityCode;
+  if (input.activityCode !== undefined) {
+    const { checkActivityCode } = await import("@/lib/activity-code");
+    if (!input.activityCode?.trim()) activityCode = null;
+    else { const a = checkActivityCode(input.activityCode, before.country.code); if (!a.ok) throw new ValidationError("Check the activity code's format for this country."); activityCode = a.value; }
+  }
+  const clash = await prisma.company.findFirst({ where: { id: { not: companyId }, OR: [{ countryId: before.countryId, taxId }, { vatNumber: v.vat }] }, select: { legalName: true } });
+  if (clash) throw new ValidationError(`Another company already has this NIF / VAT number (${clash.legalName}) — one company, one NIF.`);
+  const after = await prisma.company.update({ where: { id: companyId }, data: { legalName: input.legalName.trim(), taxId, vatNumber: v.vat, legalForm: input.legalForm, activityCode } });
+  await writeAudit({
+    actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.registration_corrected", entityType: "Company", entityId: companyId,
+    before: { legalName: before.legalName, taxId: before.taxId, vatNumber: before.vatNumber, legalForm: before.legalForm, activityCode: before.activityCode },
+    after: { legalName: after.legalName, taxId: after.taxId, vatNumber: after.vatNumber, legalForm: after.legalForm, activityCode: after.activityCode, reason: input.reason.trim() },
+  });
+  return { id: after.id };
 }

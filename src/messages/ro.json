@@ -253,7 +253,10 @@
       "certificateCode": "Codul certificatului de la registrul comerțului",
       "certificateCodeHint": "Numărul companiei în registrul comerțului. Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el.",
       "certificateCodeHintPt": "Codul de acces al certidão permanente (12 cifre, 0000-0000-0000). Furnizorii care sunt societăți îl indică; PFA-urile nu au nevoie de el.",
-      "referral": "Ați fost invitat cu codul {code} — primiți puncte bonus după prima comandă livrată."
+      "referral": "Ați fost invitat cu codul {code} — primiți puncte bonus după prima comandă livrată.",
+      "activityCode": "cod de activitate economică",
+      "activityCodeHint": "Codul activității principale, de ex. {example}.",
+      "activityCodeOnce": "Introduceți-l o dată — apoi doar FIRINGI îl poate modifica."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Salvează modificările",
       "saved": "Salvat.",
       "locked": "După trimitere, denumirea legală și codul de TVA pot fi schimbate doar de asistența FIRINGI.",
-      "website": "Site web"
+      "website": "Site web",
+      "registrationLocked": "CIF-ul, codul de TVA, denumirea, forma juridică și codul CAEN sunt datele de înregistrare — nu pot fi modificate aici. Dacă ceva este greșit, contactați asistența FIRINGI."
     },
     "restricted": {
       "title": "Acces la tutun și alcool",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Casa dumneavoastră {till}: {decision}",
       "body": "Decizia FIRINGI pentru casa dumneavoastră {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresă de aprobat: {company}",
+      "body": "{company} cere o modificare de adresă: {change}. Aprobați sau refuzați în Aprobarea adreselor."
+    },
+    "address_change_decided": {
+      "title": "Adresa dvs. {address}: {decision}",
+      "body": "Decizia FIRINGI privind adresa dvs. {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Total TVA",
     "lineVat": "TVA {rate}%",
     "lineVatAmount": "din care TVA {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "O adresă nouă — sau mutarea unei adrese în alt loc — este verificată mai întâi de FIRINGI și se aplică după aprobare. Modificările de nume, contact și telefon se aplică imediat.",
+    "sent": "Trimis la FIRINGI pentru aprobare. Adresa se aplică după aprobare.",
+    "sentShop": "Adresa magazinului a fost trimisă la FIRINGI pentru aprobare. Puteți atașa un bon recent de la casă în Companie › Adrese.",
+    "requestsTitle": "Cereri de adresă",
+    "actionCREATE": "Adresă nouă",
+    "actionUPDATE": "Mutare",
+    "actionREMOVE": "Eliminare",
+    "statusPENDING": "Așteaptă FIRINGI",
+    "statusAPPROVED": "Aprobată",
+    "statusREJECTED": "Refuzată",
+    "statusCANCELLED": "Retrasă",
+    "withdraw": "Retrage",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Pe bonurile de casă — fixă",
+    "pendingBadge": "Modificare în așteptarea aprobării",
+    "proofTitle": "Factură recentă de la casa dvs. la această adresă",
+    "proofHint": "O fotografie sau o scanare a unei facturi recente (cel mult 90 de zile) emise de casa dvs. acolo ajută FIRINGI să aprobe rapid adresa.",
+    "proofFile": "Fotografie sau scanare (PDF, JPG, PNG)",
+    "proofDate": "Data facturii",
+    "proofAttached": "Bon de casă atașat.",
+    "proofMissing": "Încă nu există bon de casă — atașați unul ca FIRINGI să poată aproba.",
+    "attach": "Atașează"
   }
 }

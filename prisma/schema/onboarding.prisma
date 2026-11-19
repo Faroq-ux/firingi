@@ -157,3 +157,49 @@ model VatValidation {
 
   @@index([companyId, checkedAt])
 }
+
+enum AddressChangeAction {
+  CREATE
+  UPDATE
+  REMOVE
+}
+
+enum AddressChangeStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+/// Phase 47d — after a company has submitted its registration, a new / changed / removed address (head office,
+/// billing, warehouse, pickup, delivery, a shop's address) waits for FIRINGI's approval. `data` holds the proposed
+/// address (AddressInput, normalised); FIRINGI decides with a note; on approval it is applied and the company told.
+model AddressChangeRequest {
+  id               String              @id @default(cuid())
+  companyId        String
+  addressId        String?
+  action           AddressChangeAction
+  kind             AddressKind
+  data             Json
+  /// the shop the new address belongs to (Phase 27 branches)
+  branchId         String?
+  status           AddressChangeStatus @default(PENDING)
+  requestedById    String
+  decidedById      String?
+  decidedAt        DateTime?
+  decisionNote     String?
+  appliedAddressId String?
+  /// a scan / photo of a recent invoice from the company's own till at this address (proof the address is real)
+  proofKey         String?
+  proofName        String?
+  proofMime        String?
+  proofIssuedOn    DateTime?
+  /// FIRINGI approved without the till invoice (bypass)
+  proofBypassed    Boolean             @default(false)
+  createdAt        DateTime            @default(now())
+
+  company Company @relation("AddressChangeRequests", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([companyId, status])
+}

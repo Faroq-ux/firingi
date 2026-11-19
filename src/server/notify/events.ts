@@ -170,6 +170,8 @@ export const EVENTS: EventDef[] = [
   E("pos.fiscal_failed", "finance", ["company.pos.manage"], ["EMAIL", "PUSH"], ["number", "error"]),
   E("pos.till_requested", "account", ["admin.settings.manage"], ["EMAIL", "PUSH"], ["company", "till"]),
   E("pos.till_decided", "account", ["company.pos.manage"], ["EMAIL", "PUSH"], ["till", "decision", "note"]),
+  E("address.change_requested", "account", ["admin.customers.approve", "admin.vendors.approve"], ["EMAIL", "PUSH"], ["company", "change"]),
+  E("address.change_decided", "account", ["company.addresses.manage", "company.profile.manage"], ["EMAIL", "PUSH"], ["address", "decision", "note"]),
   E("einvoice.failed", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("einvoice.rejected", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("einvoice.invalid", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL"], ["number", "reason"]),

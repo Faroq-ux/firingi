@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import {
-  manualVatAction, reviewDocumentAction, reviewDriverAction, reviewRestrictionAction, runViesAction, setCommissionAction, setCompanyStatusAction,
+  correctRegistrationAction, manualVatAction, reviewDocumentAction, reviewDriverAction, reviewRestrictionAction, runViesAction, setCommissionAction, setCompanyStatusAction,
 } from "@/server/actions/admin-review";
 
 type Result = { ok: boolean; error?: string };
@@ -152,6 +152,32 @@ export function DriverReview({ driverId, status }: { driverId: string; status: s
         </Button>
       ))}
       {error && <span className="w-full text-right text-xs text-destructive">{error}</span>}
+    </div>
+  );
+}
+
+/** FIRINGI corrects a company's registration details (users can't): legal name, NIF, VAT number, legal form — with a reason. */
+export function RegistrationCorrection({ company, activityName }: { company: { id: string; legalName: string; taxId: string; vatNumber: string | null; legalForm: "COMPANY" | "SOLE_TRADER"; activityCode: string | null }; activityName: string }) {
+  const { pending, error, run } = useRun();
+  const [open, setOpen] = useState(false);
+  const [x, setX] = useState({ legalName: company.legalName, taxId: company.taxId, vatNumber: company.vatNumber ?? "", legalForm: company.legalForm, activityCode: company.activityCode ?? "", reason: "" });
+  if (!open) return <Button size="sm" variant="outline" onClick={() => setOpen(true)} data-testid="reg-correct-open">Correct registration details</Button>;
+  return (
+    <div className="space-y-2" data-testid="reg-correct">
+      <div className="grid gap-2 sm:grid-cols-2">
+        <div><Label htmlFor="rc-name">Legal name</Label><Input id="rc-name" value={x.legalName} onChange={(e) => setX({ ...x, legalName: e.target.value })} data-testid="rc-name" /></div>
+        <div><Label htmlFor="rc-form">Legal form</Label><select id="rc-form" className="h-9 w-full rounded-md border bg-background px-2 text-sm" value={x.legalForm} onChange={(e) => setX({ ...x, legalForm: e.target.value as "COMPANY" | "SOLE_TRADER" })}><option value="COMPANY">Company</option><option value="SOLE_TRADER">Sole trader</option></select></div>
+        <div><Label htmlFor="rc-nif">NIF / tax id</Label><Input id="rc-nif" value={x.taxId} onChange={(e) => setX({ ...x, taxId: e.target.value })} data-testid="rc-nif" /></div>
+        <div><Label htmlFor="rc-vat">VAT number</Label><Input id="rc-vat" value={x.vatNumber} onChange={(e) => setX({ ...x, vatNumber: e.target.value })} data-testid="rc-vat" /></div>
+        <div><Label htmlFor="rc-cae">Activity code ({activityName})</Label><Input id="rc-cae" value={x.activityCode} onChange={(e) => setX({ ...x, activityCode: e.target.value })} data-testid="rc-cae" /></div>
+      </div>
+      <Input placeholder="Reason (e.g. typo in the NIF at sign-up, checked against the certificate)" value={x.reason} onChange={(e) => setX({ ...x, reason: e.target.value })} data-testid="rc-reason" />
+      <div className="flex flex-wrap gap-2">
+        <Button size="sm" disabled={pending || x.reason.trim().length < 10} onClick={() => run(() => correctRegistrationAction({ companyId: company.id, ...x }), () => setOpen(false))} data-testid="rc-save">Save correction</Button>
+        <Button size="sm" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+      </div>
+      <p className="text-xs text-muted-foreground">One company per NIF and per VAT number. The change and its reason go into the audit log.</p>
+      {error && <p className="text-xs text-destructive" role="alert">{error}</p>}
     </div>
   );
 }

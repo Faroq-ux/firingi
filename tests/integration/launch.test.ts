@@ -147,7 +147,7 @@ describe("pilot: invitation-only registration", () => {
   const reg = async (email: string, invite?: string | null) => {
     const nif = await freshNif();
     return registerCompany({
-      type: "CUSTOMER", countryCode: "PT", invite, legalName: `Tasca ${email}`, taxId: nif, vatNumber: `PT${nif}`, companyEmail: email, phone: "+351910000000",
+      type: "CUSTOMER", countryCode: "PT", activityCode: "56101", invite, legalName: `Tasca ${email}`, taxId: nif, vatNumber: `PT${nif}`, companyEmail: email, phone: "+351910000000",
       businessType: "restaurant", owner: { name: "Ana Piloto", email, password: "Pilot!2026xyz" },
       headOffice: { line1: "Rua B 2", postalCode: "1000-002", cityId: await lisbon(), cityName: "Lisboa" },
     });
@@ -169,7 +169,7 @@ describe("pilot: invitation-only registration", () => {
     await expect(L.createInvite(sa, { email: KEBAB, companyName: "Kebab", type: "CUSTOMER", countryCode: "PT" })).rejects.toThrow(/already has an account/);
     await expect(L.createInvite(await ctxFor(KEBAB), { email, companyName: "x", type: "CUSTOMER", countryCode: "PT" })).rejects.toThrow();
     const before = new Set(await readdir(outbox).catch(() => [] as string[]));
-    const inv = await L.createInvite(sa, { email, companyName: "Tasca do Zé", type: "CUSTOMER", countryCode: "PT", days: 14 });
+    const inv = await L.createInvite(sa, { email, companyName: "Tasca do Zé", type: "CUSTOMER", countryCode: "PT", activityCode: "56101", days: 14 });
     expect(inv.link).toMatch(new RegExp(`/register/customer\\?invite=${inv.code}$`));
     expect(inv.sentAt).not.toBeNull();
     await expect(L.createInvite(sa, { email, companyName: "Tasca do Zé", type: "CUSTOMER", countryCode: "PT" })).rejects.toThrow(/open invitation/);
@@ -197,7 +197,7 @@ describe("pilot: invitation-only registration", () => {
 
   it("revoked and expired invitations are refused; the list shows each state", async () => {
     const sa = await ctxFor(SA);
-    const a = await L.createInvite(sa, { email: `rev${Date.now()}@pilot.pt`, companyName: "Café Revogado", type: "CUSTOMER", countryCode: "PT", send: false });
+    const a = await L.createInvite(sa, { email: `rev${Date.now()}@pilot.pt`, companyName: "Café Revogado", type: "CUSTOMER", countryCode: "PT", activityCode: "56101", send: false });
     expect(a.sentAt).toBeNull();
     await L.revokeInvite(sa, a.id);
     expect(await L.checkInvite(a.code, "CUSTOMER")).toMatchObject({ ok: false, reason: "revoked" });

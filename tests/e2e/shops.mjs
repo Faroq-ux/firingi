@@ -13,7 +13,15 @@ import { createRequire } from "node:module";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { execFileSync } from "node:child_process";
 const { chromium, devices } = createRequire(import.meta.url)("playwright");
+// this test is about shops, not FIRINGI's address approval (tests/e2e/registration.mjs covers that): approval off meanwhile
+const DB = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi";
+const sql = (q) => execFileSync("psql", ["-At", DB, "-c", q], { encoding: "utf8" }).trim();
+const savedApproval = sql(`select value::text from "Setting" where key='address.approval'`);
+sql(`insert into "Setting" (id, scope, "scopeId", key, value, "updatedAt") values ('e2e-shops-addr', 'GLOBAL', '', 'address.approval', '{"enabled": false}'::jsonb, now()) on conflict (scope, "scopeId", key) do update set value='{"enabled": false}'::jsonb`);
+const restoreApproval = () => { sql(`delete from "Setting" where key='address.approval'`); if (savedApproval) sql(`insert into "Setting" (id, scope, "scopeId", key, value, "updatedAt") values ('e2e-shops-addr', 'GLOBAL', '', 'address.approval', '${savedApproval.replace(/'/g, "''")}'::jsonb, now())`); };
+process.on("exit", restoreApproval);
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const SHOTS = process.argv[3] ?? null;

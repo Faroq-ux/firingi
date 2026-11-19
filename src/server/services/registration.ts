@@ -21,6 +21,8 @@ export type CompanyRegistration = {
   tradeName?: string | null;
   taxId: string;
   vatNumber?: string | null;
+  /** economic activity code (CAE in Portugal…) — required for wholesale customers */
+  activityCode?: string | null;
   companyEmail: string;
   phone: string;
   businessType?: string | null;
@@ -64,6 +66,14 @@ export async function registerCompany(input: CompanyRegistration) {
   const vatCheck = checkCompanyVat(input.vatNumber, country, taxId);
   if (!vatCheck.ok) throw new ValidationError(vatCheck.error, { vatNumber: [vatCheck.error] });
   const vat = vatCheck.vat;
+  let activityCode: string | null = null;
+  if (input.activityCode?.trim() || input.type === "CUSTOMER") {
+    const { activityScheme, checkActivityCode } = await import("@/lib/activity-code");
+    const a = checkActivityCode(input.activityCode, country.code);
+    const sc = activityScheme(country.code);
+    if (!a.ok) throw new ValidationError(`Enter your ${sc.name} code (e.g. ${sc.example}).`, { activityCode: [`${sc.name} e.g. ${sc.example}`] });
+    activityCode = a.value;
+  }
 
   if (input.headOffice.cityId) {
     const city = await prisma.city.findFirst({ where: { id: input.headOffice.cityId, countryId: country.id } });
@@ -73,8 +83,9 @@ export async function registerCompany(input: CompanyRegistration) {
   const ownerEmail = input.owner.email.trim().toLowerCase();
   if (await prisma.user.findUnique({ where: { email: ownerEmail } }))
     throw new AppError("EMAIL_TAKEN", "An account with this e-mail already exists. Please sign in.", 409);
-  if (await prisma.company.findFirst({ where: { countryId: country.id, taxId, type: input.type } }))
-    throw new AppError("COMPANY_EXISTS", "This company is already registered for this account type. Contact FIRINGI support.", 409);
+  // One company, one NIF / VAT number: whatever the account type, a tax id is registered once.
+  if (await prisma.company.findFirst({ where: { OR: [{ countryId: country.id, taxId }, { vatNumber: vat }] }, select: { id: true } }))
+    throw new AppError("COMPANY_EXISTS", "A company with this NIF / VAT number is already registered on FIRINGI — one company, one NIF. Sign in to that account or contact FIRINGI support.", 409);
 
   const role = await prisma.role.findFirstOrThrow({ where: { companyId: null, key: "COMPANY_ADMIN" } });
   const passwordHash = await hashPassword(input.owner.password);
@@ -90,6 +101,7 @@ export async function registerCompany(input: CompanyRegistration) {
         tradeName: input.tradeName?.trim() || null,
         taxId,
         vatNumber: vat,
+        activityCode,
         countryId: country.id,
         email: input.companyEmail.trim().toLowerCase(),
         phone: input.phone,
@@ -114,6 +126,10 @@ export async function registerCompany(input: CompanyRegistration) {
     await tx.companyStatusHistory.create({ data: { companyId: company.id, toStatus: "PENDING", reason: pilot ? "Registration submitted (pilot invitation)" : "Registration submitted", byUserId: user.id } });
     await writeAudit({ actorUserId: user.id, actorCompanyId: company.id, action: "company.registered", entityType: "Company", entityId: company.id, after: { type: input.type, legalName: company.legalName, country: country.code } }, tx);
     return { userId: user.id, companyId: company.id };
+  }).catch((e: unknown) => {
+    // two sign-ups with the same NIF / VAT number at the same moment: the database keeps one company per tax id
+    if ((e as { code?: string })?.code === "P2002") throw new AppError("COMPANY_EXISTS", "A company with this NIF / VAT number is already registered on FIRINGI — one company, one NIF. Sign in to that account or contact FIRINGI support.", 409);
+    throw e;
   });
 
   await sendMail({

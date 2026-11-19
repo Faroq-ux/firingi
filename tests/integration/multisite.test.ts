@@ -34,7 +34,11 @@ async function order(email: string, address: string, qty = 6, extra: Partial<Par
   return placeOrder(c, { deliveryAddressId: address, ...extra });
 }
 
+let savedApproval: unknown = null;
 beforeAll(async () => {
+  // these tests are about shops, not FIRINGI's address approval (tested in addresses.test.ts): approval off here
+  savedApproval = (await prisma.setting.findFirst({ where: { key: "address.approval" } }))?.value ?? null;
+  await prisma.setting.upsert({ where: { scope_scopeId_key: { scope: "GLOBAL", scopeId: "", key: "address.approval" } }, update: { value: { enabled: false } }, create: { scope: "GLOBAL", scopeId: "", key: "address.approval", value: { enabled: false } } });
   const lx = await ctxFor(LX), kebab = await ctxFor(KEBAB);
   kebabId = kebab.company.id;
   mozz = (await prisma.vendorOffer.findFirstOrThrow({ where: { vendorCompanyId: lx.company.id, vendorSku: "GRO-MOZZ2", packaging: { unitsPerPack: 1 } } })).id;
@@ -44,6 +48,8 @@ beforeAll(async () => {
   await prisma.buyerApprovalRule.deleteMany({ where: { companyId: kebabId } });
 });
 afterAll(async () => {
+  await prisma.setting.deleteMany({ where: { key: "address.approval" } });
+  if (savedApproval) await prisma.setting.create({ data: { scope: "GLOBAL", scopeId: "", key: "address.approval", value: savedApproval as never } });
   await prisma.budget.deleteMany({ where: { companyId: kebabId } });
   await prisma.branchMember.deleteMany({ where: { branch: { companyId: kebabId } } });
   await prisma.address.updateMany({ where: { companyId: kebabId }, data: { branchId: null } });

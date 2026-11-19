@@ -117,6 +117,7 @@ check("good invitation → form, business and e-mail filled in", (await v.getByT
 const terms = v.getByTestId("terms-text").locator("a");
 check("terms and privacy links on the form", (await terms.count()) === 2 && (await terms.first().getAttribute("href")) === "https://firingi.pt/termos");
 await v.fill("#taxId", nif);
+await v.fill("#activityCode", "56101");
 await v.fill("#companyEmail", invitedEmail);
 await v.fill("#phone", "+351 912 345 678");
 await v.fill("#line1", "Rua dos Fanqueiros 12");

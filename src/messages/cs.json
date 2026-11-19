@@ -253,7 +253,10 @@
       "certificateCode": "Kód výpisu z obchodního rejstříku",
       "certificateCodeHint": "Číslo vaší firmy v obchodním rejstříku. Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují.",
       "certificateCodeHintPt": "Přístupový kód certidão permanente (12 číslic, 0000-0000-0000). Dodavatelé, kteří jsou společnostmi, jej uvádějí; OSVČ jej nepotřebují.",
-      "referral": "Byli jste pozváni kódem {code} — po první doručené objednávce získáte bonusové body."
+      "referral": "Byli jste pozváni kódem {code} — po první doručené objednávce získáte bonusové body.",
+      "activityCode": "kód ekonomické činnosti",
+      "activityCodeHint": "Váš hlavní kód činnosti, např. {example}.",
+      "activityCodeOnce": "Zadejte jej jednou — poté jej může změnit jen FIRINGI."
     },
     "businessTypes": {
       "restaurant": "Restaurace",
@@ -349,7 +352,8 @@
       "save": "Uložit změny",
       "saved": "Uloženo.",
       "locked": "Po odeslání může právní název a DIČ pro DPH změnit pouze podpora FIRINGI.",
-      "website": "Web"
+      "website": "Web",
+      "registrationLocked": "Vaše DIČ, číslo DPH, obchodní název, právní forma a kód činnosti jsou údaje z registrace — zde je nelze změnit. Pokud je něco špatně, kontaktujte podporu FIRINGI."
     },
     "restricted": {
       "title": "Přístup k tabáku a alkoholu",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Vaše pokladna {till}: {decision}",
       "body": "Rozhodnutí FIRINGI o vaší pokladně {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresa ke schválení: {company}",
+      "body": "{company} žádá o změnu adresy: {change}. Schvalte nebo zamítněte ve Schvalování adres."
+    },
+    "address_change_decided": {
+      "title": "Vaše adresa {address}: {decision}",
+      "body": "Rozhodnutí FIRINGI k vaší adrese {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "DPH celkem",
     "lineVat": "DPH {rate}%",
     "lineVatAmount": "z toho DPH {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Novou adresu — nebo přesun adresy jinam — nejprve zkontroluje FIRINGI a platí po schválení. Změny názvu, kontaktu a telefonu platí hned.",
+    "sent": "Odesláno FIRINGI ke schválení. Adresa bude platit po schválení.",
+    "sentShop": "Adresa prodejny byla odeslána FIRINGI ke schválení. Aktuální účtenku z pokladny můžete přiložit v Firma › Adresy.",
+    "requestsTitle": "Žádosti o adresu",
+    "actionCREATE": "Nová adresa",
+    "actionUPDATE": "Přesun",
+    "actionREMOVE": "Odebrání",
+    "statusPENDING": "Čeká na FIRINGI",
+    "statusAPPROVED": "Schváleno",
+    "statusREJECTED": "Zamítnuto",
+    "statusCANCELLED": "Staženo",
+    "withdraw": "Stáhnout",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Na účtenkách z pokladny — pevná",
+    "pendingBadge": "Změna čeká na schválení",
+    "proofTitle": "Aktuální faktura z vaší pokladny na této adrese",
+    "proofHint": "Fotka nebo sken aktuální faktury (nejvýše 90 dní) vytištěné vaší pokladnou na tom místě pomůže FIRINGI adresu rychle schválit.",
+    "proofFile": "Fotka nebo sken (PDF, JPG, PNG)",
+    "proofDate": "Datum na faktuře",
+    "proofAttached": "Účtenka z pokladny přiložena.",
+    "proofMissing": "Zatím bez účtenky z pokladny — přiložte ji, aby FIRINGI mohlo schválit.",
+    "attach": "Přiložit"
   }
 }

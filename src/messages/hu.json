@@ -253,7 +253,10 @@
       "certificateCode": "Cégkivonat kódja",
       "certificateCodeHint": "Cége cégjegyzékszáma. A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell.",
       "certificateCodeHintPt": "A certidão permanente hozzáférési kódja (12 számjegy, 0000-0000-0000). A társaság formájú beszállítók megadják; az egyéni vállalkozóknak nem kell.",
-      "referral": "A(z) {code} kóddal hívták meg — az első kiszállított rendelése után bónuszpontokat kap."
+      "referral": "A(z) {code} kóddal hívták meg — az első kiszállított rendelése után bónuszpontokat kap.",
+      "activityCode": "gazdasági tevékenység kódja",
+      "activityCodeHint": "Fő tevékenységi kódja, pl. {example}.",
+      "activityCodeOnce": "Egyszer adja meg — utána csak a FIRINGI módosíthatja."
     },
     "businessTypes": {
       "restaurant": "Étterem",
@@ -349,7 +352,8 @@
       "save": "Módosítások mentése",
       "saved": "Mentve.",
       "locked": "Beküldés után a hivatalos cégnevet és a közösségi adószámot csak a FIRINGI ügyfélszolgálata módosíthatja.",
-      "website": "Weboldal"
+      "website": "Weboldal",
+      "registrationLocked": "Adószáma, közösségi adószáma, cégneve, jogi formája és tevékenységi kódja regisztrációs adat — itt nem módosítható. Ha valami hibás, forduljon a FIRINGI ügyfélszolgálatához."
     },
     "restricted": {
       "title": "Hozzáférés dohány- és alkoholtermékekhez",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Az Ön pénztára ({till}): {decision}",
       "body": "A FIRINGI döntése a(z) {till} pénztárról: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Jóváhagyandó cím: {company}",
+      "body": "{company} címváltozást kér: {change}. Hagyja jóvá vagy utasítsa el a Címjóváhagyások alatt."
+    },
+    "address_change_decided": {
+      "title": "Az Ön címe ({address}): {decision}",
+      "body": "A FIRINGI döntése az Ön címéről ({address}): {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "ÁFA összesen",
     "lineVat": "ÁFA {rate}%",
     "lineVatAmount": "ebből ÁFA {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Az új címet — vagy egy cím áthelyezését — először a FIRINGI ellenőrzi, és jóváhagyás után érvényes. A név, a kapcsolattartó és a telefon módosítása azonnal érvényes.",
+    "sent": "Elküldve a FIRINGI-nek jóváhagyásra. A cím a jóváhagyás után lép érvénybe.",
+    "sentShop": "Az üzlet címét elküldtük a FIRINGI-nek jóváhagyásra. Friss pénztári nyugtát a Cég › Címek alatt csatolhat.",
+    "requestsTitle": "Címkérelmek",
+    "actionCREATE": "Új cím",
+    "actionUPDATE": "Áthelyezés",
+    "actionREMOVE": "Eltávolítás",
+    "statusPENDING": "A FIRINGI-re vár",
+    "statusAPPROVED": "Jóváhagyva",
+    "statusREJECTED": "Elutasítva",
+    "statusCANCELLED": "Visszavonva",
+    "withdraw": "Visszavonás",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Pénztári nyugtákon — rögzített",
+    "pendingBadge": "A módosítás jóváhagyásra vár",
+    "proofTitle": "Friss számla a pénztárából ezen a címen",
+    "proofHint": "Egy ott, a saját pénztára által nyomtatott friss (legfeljebb 90 napos) számla fotója vagy szkennelt képe segít a FIRINGI-nek gyorsan jóváhagyni a címet.",
+    "proofFile": "Fotó vagy szkennelt kép (PDF, JPG, PNG)",
+    "proofDate": "A számla dátuma",
+    "proofAttached": "Pénztári nyugta csatolva.",
+    "proofMissing": "Még nincs pénztári nyugta — csatoljon egyet, hogy a FIRINGI jóváhagyhassa.",
+    "attach": "Csatolás"
   }
 }

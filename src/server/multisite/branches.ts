@@ -149,8 +149,8 @@ export async function addShopAddress(ctx: Ctx, branchId: string, a: ShopAddress,
   if (!b) throw new NotFoundError("Branch");
   if (!a.line1?.trim() || !a.postalCode?.trim() || !a.cityName?.trim()) throw new ValidationError("Enter the shop's street, postal code and city.");
   const { saveAddress } = await import("@/server/services/addresses");
-  const row = await saveAddress(ctx, { ...a, kind: "DELIVERY", label: a.label?.trim() || fallbackLabel || b.name });
-  await prisma.address.update({ where: { id: row.id }, data: { branchId } });
+  // after registration a shop's new address waits for FIRINGI's approval (it joins the shop once approved)
+  const row = await saveAddress(ctx, { ...a, kind: "DELIVERY", label: a.label?.trim() || fallbackLabel || b.name }, { branchId });
   return row.id;
 }
 

@@ -22,7 +22,7 @@ async function main() {
     const countryId = refs.countryIds[country];
     if (!countryId) throw new Error(`Unknown or non-Schengen country ${country}`);
     const company = await db.company.upsert({
-      where: { countryId_taxId_type: { countryId, taxId: need("COMPANY_TAX_ID"), type: "ADMIN" } },
+      where: { countryId_taxId: { countryId, taxId: need("COMPANY_TAX_ID") } },
       update: {},
       create: { type: "ADMIN", status: "APPROVED", approvedAt: new Date(), countryId, taxId: need("COMPANY_TAX_ID"), legalName: need("COMPANY_LEGAL_NAME"), tradeName: "FIRINGI", email },
     });

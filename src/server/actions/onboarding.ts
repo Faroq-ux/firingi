@@ -23,6 +23,7 @@ const companySchema = z.object({
   tradeName: z.string().trim().max(200).optional().nullable(),
   taxId: z.string().trim().min(5).max(20),
   vatNumber: z.string().trim().max(20).optional().nullable(),
+  activityCode: z.string().trim().max(12).optional().nullable(),
   companyEmail: z.string().trim().email(),
   phone,
   businessType: z.string().max(40).optional().nullable(),
@@ -56,7 +57,7 @@ export async function registerCompanyAction(raw: z.input<typeof companySchema>):
   const i = parsed.data;
   try {
     const reg = await registerCompany({
-      type: i.type, countryCode: i.countryCode, invite: i.invite, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber,
+      type: i.type, countryCode: i.countryCode, invite: i.invite, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber, activityCode: i.activityCode,
       companyEmail: i.companyEmail, phone: i.phone, businessType: i.businessType,
       owner: { name: i.ownerName, email: i.ownerEmail, password: i.password },
       headOffice: { line1: i.line1, line2: i.line2, postalCode: i.postalCode, cityId: i.cityId, cityName: i.cityName },
@@ -101,6 +102,7 @@ export const updateProfileAction = defineAction({
     legalName: z.string().trim().min(2).max(200).optional(),
     tradeName: z.string().trim().max(200).optional().nullable(),
     vatNumber: z.string().trim().max(20).optional().nullable(),
+    activityCode: z.string().trim().max(12).optional().nullable(),
     email: z.string().trim().email(),
     phone: z.string().trim().max(30).optional().nullable(),
     website: z.string().trim().max(200).optional().nullable(),
@@ -115,9 +117,7 @@ export const updateProfileAction = defineAction({
   },
 });
 
-export const saveAddressAction = defineAction({
-  permission: null, // checked per address kind in the service
-  schema: z.object({
+const addressSchema = z.object({
     id: z.string().optional(),
     kind: z.enum(["HEAD_OFFICE", "BILLING", "WAREHOUSE", "PICKUP", "DELIVERY"]),
     label: z.string().trim().min(1).max(80),
@@ -130,11 +130,15 @@ export const saveAddressAction = defineAction({
     contactName: z.string().trim().max(120).optional().nullable(),
     phone: z.string().trim().max(30).optional().nullable(),
     isDefault: z.boolean().optional(),
-  }),
+});
+
+export const saveAddressAction = defineAction({
+  permission: null, // checked per address kind in the service
+  schema: addressSchema,
   handler: async (ctx, input) => {
     const a = await saveAddress(ctx, input);
     revalidatePath("/", "layout");
-    return { id: a.id };
+    return { id: a.id, pending: a.pending };
   },
 });
 
@@ -142,9 +146,9 @@ export const removeAddressAction = defineAction({
   permission: null,
   schema: z.object({ id: z.string() }),
   handler: async (ctx, { id }) => {
-    await removeAddress(ctx, id);
+    const r = await removeAddress(ctx, id);
     revalidatePath("/", "layout");
-    return null;
+    return { pending: r.pending };
   },
 });
 
@@ -198,5 +202,35 @@ export async function requestRestrictionAction(fd: FormData) {
     const a = await requestRestrictionAccess(ctx, { ...input, validUntil: optDate(fd.get("validUntil")), file: fd.get("file") as File });
     revalidatePath("/", "layout");
     return { id: a.id };
+  });
+}
+
+export const cancelAddressRequestAction = defineAction({
+  permission: null, // checked per address kind in the service
+  schema: z.object({ id: z.string() }),
+  handler: async (ctx, { id }) => { const { cancelAddressRequest } = await import("@/server/services/addresses"); await cancelAddressRequest(ctx, id); revalidatePath("/", "layout"); return null; },
+});
+
+const optDay = (v: FormDataEntryValue | null) => (typeof v === "string" && v ? new Date(`${v}T00:00:00Z`) : null);
+
+/** The address form with the till invoice (photo / scan) attached: JSON fields + the file. */
+export async function saveAddressWithProofAction(fd: FormData) {
+  return runAction(async (ctx) => {
+    const input = addressSchema.parse(JSON.parse(String(fd.get("json") ?? "{}")));
+    const file = fd.get("proof");
+    const a = await saveAddress(ctx, input, { proof: file instanceof File && file.size > 0 ? { file, issuedOn: optDay(fd.get("proofIssuedOn")) } : null });
+    revalidatePath("/", "layout");
+    return { id: a.id, pending: a.pending };
+  });
+}
+
+export async function attachAddressProofAction(fd: FormData) {
+  return runAction(async (ctx) => {
+    const { attachAddressProof } = await import("@/server/services/addresses");
+    const file = fd.get("proof");
+    if (!(file instanceof File) || !file.size) throw new (await import("@/server/errors")).ValidationError("Please choose a file.");
+    await attachAddressProof(ctx, String(fd.get("id") ?? ""), { file, issuedOn: optDay(fd.get("proofIssuedOn")) });
+    revalidatePath("/", "layout");
+    return null;
   });
 }

@@ -125,7 +125,7 @@ export async function seedDemo(
       approvedAt: def.status === "APPROVED" ? new Date() : null,
     };
     const company = await db.company.upsert({
-      where: { countryId_taxId_type: { countryId, taxId: def.taxId, type: def.type } },
+      where: { countryId_taxId: { countryId, taxId: def.taxId } },
       update: data,
       create: { ...data, taxId: def.taxId, countryId },
     });

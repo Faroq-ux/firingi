@@ -253,7 +253,10 @@
       "certificateCode": "Äriregistri tõendi kood",
       "certificateCodeHint": "Teie ettevõtte äriregistri number. Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda.",
       "certificateCodeHintPt": "certidão permanente juurdepääsukood (12 numbrit, 0000-0000-0000). Äriühingutest tarnijad esitavad selle; FIE-d ei vaja seda.",
-      "referral": "Sind kutsuti koodiga {code} — pärast esimest tarnitud tellimust saad boonuspunkte."
+      "referral": "Sind kutsuti koodiga {code} — pärast esimest tarnitud tellimust saad boonuspunkte.",
+      "activityCode": "majandustegevuse kood",
+      "activityCodeHint": "Teie põhitegevusala kood, nt {example}.",
+      "activityCodeOnce": "Sisestage see üks kord — pärast seda saab seda muuta ainult FIRINGI."
     },
     "businessTypes": {
       "restaurant": "Restoran",
@@ -349,7 +352,8 @@
       "save": "Salvesta muudatused",
       "saved": "Salvestatud.",
       "locked": "Pärast esitamist saab ärinime ja KMKR numbrit muuta ainult FIRINGI tugi.",
-      "website": "Veebisait"
+      "website": "Veebisait",
+      "registrationLocked": "Teie registrikood, KMKR number, ärinimi, õiguslik vorm ja tegevusala kood on registreerimisandmed — neid ei saa siin muuta. Kui midagi on valesti, võtke ühendust FIRINGI toega."
     },
     "restricted": {
       "title": "Juurdepääs tubakale ja alkoholile",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Teie kassa {till}: {decision}",
       "body": "FIRINGI otsus teie kassa {till} kohta: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Kinnitamist ootav aadress: {company}",
+      "body": "{company} taotleb aadressi muutmist: {change}. Kinnitage või lükake tagasi jaotises Aadresside kinnitamine."
+    },
+    "address_change_decided": {
+      "title": "Teie aadress {address}: {decision}",
+      "body": "FIRINGI otsus teie aadressi {address} kohta: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "KM kokku",
     "lineVat": "KM {rate}%",
     "lineVatAmount": "sh KM {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Uue aadressi — või aadressi kolimise teise kohta — kontrollib esmalt FIRINGI ja see kehtib pärast kinnitamist. Nime, kontakti ja telefoni muudatused kehtivad kohe.",
+    "sent": "Saadetud FIRINGI-le kinnitamiseks. Aadress kehtib pärast kinnitamist.",
+    "sentShop": "Poe aadress saadeti FIRINGI-le kinnitamiseks. Hiljutise kassatšeki saate lisada jaotises Ettevõte › Aadressid.",
+    "requestsTitle": "Aadressitaotlused",
+    "actionCREATE": "Uus aadress",
+    "actionUPDATE": "Kolimine",
+    "actionREMOVE": "Eemaldamine",
+    "statusPENDING": "Ootab FIRINGI-t",
+    "statusAPPROVED": "Kinnitatud",
+    "statusREJECTED": "Tagasi lükatud",
+    "statusCANCELLED": "Tagasi võetud",
+    "withdraw": "Võta tagasi",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Kassatšekkidel — fikseeritud",
+    "pendingBadge": "Muudatus ootab kinnitamist",
+    "proofTitle": "Hiljutine arve teie kassast sellel aadressil",
+    "proofHint": "Foto või skaneering hiljutisest (kuni 90 päeva vanusest) arvest, mille teie kassa seal trükkis, aitab FIRINGI-l aadressi kiiresti kinnitada.",
+    "proofFile": "Foto või skaneering (PDF, JPG, PNG)",
+    "proofDate": "Arve kuupäev",
+    "proofAttached": "Kassatšekk lisatud.",
+    "proofMissing": "Kassatšekki veel pole — lisage see, et FIRINGI saaks kinnitada.",
+    "attach": "Lisa"
   }
 }

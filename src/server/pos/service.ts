@@ -103,6 +103,11 @@ export async function saveRegister(ctx: Ctx, i: { id?: string | null; name: stri
     const a = await prisma.address.findFirst({ where: { id: i.addressId, companyId: ctx.company.id, isActive: true } });
     if (!a) throw new ValidationError("Choose one of your warehouses.");
   }
+  if (i.id) {
+    // a till that has issued receipts keeps the address it issues them from
+    const before = await prisma.posRegister.findFirst({ where: { id: i.id, companyId: ctx.company.id }, select: { addressId: true, _count: { select: { sales: true } } } });
+    if (before && before._count.sales > 0 && (before.addressId ?? null) !== (i.addressId || null)) throw new ValidationError("This till has issued receipts from its address, so the address can't change. Open a new till for the new address.");
+  }
   if (i.branchId) {
     const b = await prisma.branch.findFirst({ where: { id: i.branchId, companyId: ctx.company.id, isActive: true } });
     if (!b) throw new ValidationError("Choose one of your shops.");
@@ -614,7 +619,7 @@ export async function tillSnapshot(ctx: Ctx, registerId?: string | null) {
     access.company?.loyaltyOn && access.settings.features.loyalty ? prisma.posMember.findMany({ where: { companyId: ctx.company.id }, select: { id: true, code: true, name: true, phone: true, points: true }, take: 3000, orderBy: { createdAt: "desc" } }) : [],
     prisma.posPin.findMany({ where: { companyId: ctx.company.id } }),
     cashiers(ctx.company.id),
-    prisma.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { legalName: true, tradeName: true, taxId: true, vatNumber: true, addresses: { where: { isActive: true }, take: 1, orderBy: { createdAt: "asc" }, select: { line1: true, cityName: true, postalCode: true } } } }),
+    prisma.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { legalName: true, tradeName: true, taxId: true, vatNumber: true, addresses: { where: register?.addressId ? { id: register.addressId } : { isActive: true, kind: "HEAD_OFFICE" }, take: 1, orderBy: { createdAt: "asc" }, select: { line1: true, cityName: true, postalCode: true } } } }),
     register && access.settings.features.tables ? prisma.posOpenTicket.findMany({ where: { registerId: register.id }, orderBy: { createdAt: "asc" } }) : [],
   ]);
   const sold = shift ? await prisma.posSale.count({ where: { shiftId: shift.id } }) : 0;

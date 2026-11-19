@@ -232,7 +232,10 @@
       "certificateCode": "Código del certificado del registro mercantil",
       "certificateCodeHint": "Número de registro mercantil de su empresa. Lo indican los proveedores que son sociedades; los autónomos no lo necesitan.",
       "certificateCodeHintPt": "Código de acceso de la certidão permanente (12 dígitos, 0000-0000-0000). Lo indican los proveedores que son sociedades; los autónomos no lo necesitan.",
-      "referral": "Te invitaron con el código {code}: recibirás puntos extra tras tu primer pedido entregado."
+      "referral": "Te invitaron con el código {code}: recibirás puntos extra tras tu primer pedido entregado.",
+      "activityCode": "código de actividad económica",
+      "activityCodeHint": "Su código de actividad principal, p. ej. {example}.",
+      "activityCodeOnce": "Introdúzcalo una vez: después solo FIRINGI puede cambiarlo."
     },
     "hub": {
       "checklist": "Para completar su solicitud",
@@ -328,7 +331,8 @@
       "save": "Guardar cambios",
       "saved": "Guardado.",
       "locked": "Tras el envío, la razón social y el NIF-IVA solo los puede cambiar el soporte de FIRINGI.",
-      "website": "Sitio web"
+      "website": "Sitio web",
+      "registrationLocked": "Su NIF, número de IVA, razón social, forma jurídica y código de actividad son los datos de su registro: no se pueden cambiar aquí. Si algo es incorrecto, contacte con el soporte de FIRINGI."
     },
     "restricted": {
       "title": "Acceso a tabaco y alcohol",
@@ -1583,6 +1587,14 @@
     "pos_till_decided": {
       "title": "Su caja {till}: {decision}",
       "body": "Decisión de FIRINGI sobre su caja {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Dirección por aprobar: {company}",
+      "body": "{company} solicita un cambio de dirección: {change}. Apruébelo o recházelo en Aprobación de direcciones."
+    },
+    "address_change_decided": {
+      "title": "Su dirección {address} fue {decision}",
+      "body": "FIRINGI {decision} su dirección {address}. {note}"
     }
   },
   "notifications": {
@@ -6080,5 +6092,29 @@
     "totalVat": "Total IVA",
     "lineVat": "IVA {rate}%",
     "lineVatAmount": "de los cuales IVA {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Una dirección nueva —o trasladar una a otro lugar— la revisa primero FIRINGI y se aplica una vez aprobada. Los cambios de nombre, contacto y teléfono se aplican al instante.",
+    "sent": "Enviado a FIRINGI para su aprobación. La dirección se aplica una vez aprobada.",
+    "sentShop": "La dirección de la tienda se envió a FIRINGI para su aprobación. Puede adjuntar una factura reciente de su caja en Empresa › Direcciones.",
+    "requestsTitle": "Solicitudes de dirección",
+    "actionCREATE": "Dirección nueva",
+    "actionUPDATE": "Traslado",
+    "actionREMOVE": "Eliminación",
+    "statusPENDING": "Esperando a FIRINGI",
+    "statusAPPROVED": "Aprobada",
+    "statusREJECTED": "Rechazada",
+    "statusCANCELLED": "Retirada",
+    "withdraw": "Retirar",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "En los tickets de caja — fija",
+    "pendingBadge": "Cambio pendiente de aprobación",
+    "proofTitle": "Factura reciente de su caja en esta dirección",
+    "proofHint": "Una foto o escaneo de una factura reciente (de 90 días como máximo) emitida por su propia caja allí ayuda a FIRINGI a aprobar la dirección rápidamente.",
+    "proofFile": "Foto o escaneo (PDF, JPG, PNG)",
+    "proofDate": "Fecha de la factura",
+    "proofAttached": "Factura de caja adjunta.",
+    "proofMissing": "Aún no hay factura de caja: adjunte una para que FIRINGI pueda aprobar.",
+    "attach": "Adjuntar"
   }
 }

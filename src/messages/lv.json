@@ -253,7 +253,10 @@
       "certificateCode": "Uzņēmumu reģistra izziņas kods",
       "certificateCodeHint": "Jūsu uzņēmuma numurs komercreģistrā. Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs.",
       "certificateCodeHintPt": "certidão permanente piekļuves kods (12 cipari, 0000-0000-0000). Piegādātāji, kas ir sabiedrības, to norāda; individuālajiem komersantiem tas nav vajadzīgs.",
-      "referral": "Jūs uzaicināja ar kodu {code} — pēc pirmā piegādātā pasūtījuma saņemsiet bonusa punktus."
+      "referral": "Jūs uzaicināja ar kodu {code} — pēc pirmā piegādātā pasūtījuma saņemsiet bonusa punktus.",
+      "activityCode": "saimnieciskās darbības kods",
+      "activityCodeHint": "Jūsu galvenās darbības kods, piem., {example}.",
+      "activityCodeOnce": "Ievadiet to vienreiz — pēc tam to var mainīt tikai FIRINGI."
     },
     "businessTypes": {
       "restaurant": "Restorāns",
@@ -349,7 +352,8 @@
       "save": "Saglabāt izmaiņas",
       "saved": "Saglabāts.",
       "locked": "Pēc iesniegšanas juridisko nosaukumu un PVN numuru var mainīt tikai FIRINGI atbalsts.",
-      "website": "Tīmekļa vietne"
+      "website": "Tīmekļa vietne",
+      "registrationLocked": "Jūsu reģistrācijas numurs, PVN numurs, nosaukums, juridiskā forma un darbības kods ir reģistrācijas dati — tos šeit nevar mainīt. Ja kaut kas nav pareizi, sazinieties ar FIRINGI atbalstu."
     },
     "restricted": {
       "title": "Piekļuve tabakai un alkoholam",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Jūsu kase {till}: {decision}",
       "body": "FIRINGI lēmums par jūsu kasi {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Apstiprināmā adrese: {company}",
+      "body": "{company} lūdz mainīt adresi: {change}. Apstipriniet vai noraidiet sadaļā Adrešu apstiprināšana."
+    },
+    "address_change_decided": {
+      "title": "Jūsu adrese {address}: {decision}",
+      "body": "FIRINGI lēmums par jūsu adresi {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "PVN kopā",
     "lineVat": "PVN {rate}%",
     "lineVatAmount": "t.sk. PVN {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Jaunu adresi — vai adreses pārcelšanu uz citu vietu — vispirms pārbauda FIRINGI, un tā stājas spēkā pēc apstiprināšanas. Nosaukuma, kontaktpersonas un tālruņa izmaiņas stājas spēkā uzreiz.",
+    "sent": "Nosūtīts FIRINGI apstiprināšanai. Adrese stāsies spēkā pēc apstiprināšanas.",
+    "sentShop": "Veikala adrese nosūtīta FIRINGI apstiprināšanai. Neseno kases čeku varat pievienot sadaļā Uzņēmums › Adreses.",
+    "requestsTitle": "Adreses pieprasījumi",
+    "actionCREATE": "Jauna adrese",
+    "actionUPDATE": "Pārcelšana",
+    "actionREMOVE": "Noņemšana",
+    "statusPENDING": "Gaida FIRINGI",
+    "statusAPPROVED": "Apstiprināts",
+    "statusREJECTED": "Noraidīts",
+    "statusCANCELLED": "Atsaukts",
+    "withdraw": "Atsaukt",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Uz kases čekiem — fiksēta",
+    "pendingBadge": "Izmaiņas gaida apstiprinājumu",
+    "proofTitle": "Nesens rēķins no jūsu kases šajā adresē",
+    "proofHint": "Nesena (ne vecāka par 90 dienām) jūsu kases tur izdrukāta rēķina foto vai skenējums palīdz FIRINGI ātri apstiprināt adresi.",
+    "proofFile": "Foto vai skenējums (PDF, JPG, PNG)",
+    "proofDate": "Rēķina datums",
+    "proofAttached": "Kases čeks pievienots.",
+    "proofMissing": "Vēl nav kases čeka — pievienojiet to, lai FIRINGI varētu apstiprināt.",
+    "attach": "Pievienot"
   }
 }

@@ -253,7 +253,10 @@
       "certificateCode": "Kod för registreringsbevis",
       "certificateCodeHint": "Ditt företags nummer i handelsregistret. Leverantörer som är bolag anger det; enskilda näringsidkare behöver det inte.",
       "certificateCodeHintPt": "Åtkomstkod till certidão permanente (12 siffror, 0000-0000-0000). Leverantörer som är bolag anger den; enskilda näringsidkare behöver den inte.",
-      "referral": "Du bjöds in med koden {code} — du får bonuspoäng efter din första levererade beställning."
+      "referral": "Du bjöds in med koden {code} — du får bonuspoäng efter din första levererade beställning.",
+      "activityCode": "näringsgrenskod",
+      "activityCodeHint": "Din huvudsakliga verksamhetskod, t.ex. {example}.",
+      "activityCodeOnce": "Ange den en gång — därefter kan bara FIRINGI ändra den."
     },
     "businessTypes": {
       "restaurant": "Restaurang",
@@ -349,7 +352,8 @@
       "save": "Spara ändringar",
       "saved": "Sparat.",
       "locked": "Efter inskickning kan juridiskt namn och momsregistreringsnummer bara ändras av FIRINGI:s support.",
-      "website": "Webbplats"
+      "website": "Webbplats",
+      "registrationLocked": "Ditt org.nr, momsnummer, företagsnamn, företagsform och SNI-kod är dina registreringsuppgifter — de kan inte ändras här. Om något är fel, kontakta FIRINGI-supporten."
     },
     "restricted": {
       "title": "Tillgång till tobak och alkohol",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Din kassa {till}: {decision}",
       "body": "FIRINGI:s beslut om din kassa {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adress att godkänna: {company}",
+      "body": "{company} begär en adressändring: {change}. Godkänn eller avslå under Adressgodkännanden."
+    },
+    "address_change_decided": {
+      "title": "Din adress {address}: {decision}",
+      "body": "FIRINGI:s beslut om din adress {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Moms totalt",
     "lineVat": "Moms {rate}%",
     "lineVatAmount": "varav moms {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "En ny adress — eller att flytta en adress — granskas först av FIRINGI och gäller efter godkännande. Ändringar av namn, kontakt och telefon gäller direkt.",
+    "sent": "Skickat till FIRINGI för godkännande. Adressen gäller efter godkännande.",
+    "sentShop": "Butikens adress har skickats till FIRINGI för godkännande. Du kan bifoga ett aktuellt kassakvitto under Företag › Adresser.",
+    "requestsTitle": "Adressförfrågningar",
+    "actionCREATE": "Ny adress",
+    "actionUPDATE": "Flytt",
+    "actionREMOVE": "Borttagning",
+    "statusPENDING": "Väntar på FIRINGI",
+    "statusAPPROVED": "Godkänd",
+    "statusREJECTED": "Avslagen",
+    "statusCANCELLED": "Återkallad",
+    "withdraw": "Återkalla",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "På kassakvitton — fast",
+    "pendingBadge": "Ändring väntar på godkännande",
+    "proofTitle": "Aktuell faktura från din kassa på den här adressen",
+    "proofHint": "Ett foto eller en skanning av en aktuell faktura (högst 90 dagar gammal) från din egen kassa där hjälper FIRINGI att snabbt godkänna adressen.",
+    "proofFile": "Foto eller skanning (PDF, JPG, PNG)",
+    "proofDate": "Datum på fakturan",
+    "proofAttached": "Kassakvitto bifogat.",
+    "proofMissing": "Inget kassakvitto ännu — bifoga ett så att FIRINGI kan godkänna.",
+    "attach": "Bifoga"
   }
 }

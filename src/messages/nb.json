@@ -253,7 +253,10 @@
       "certificateCode": "Kode for firmaattest",
       "certificateCodeHint": "Bedriftens nummer i Foretaksregisteret. Leverandører som er selskaper oppgir det; enkeltpersonforetak trenger det ikke.",
       "certificateCodeHintPt": "Tilgangskode til certidão permanente (12 sifre, 0000-0000-0000). Leverandører som er selskaper oppgir den; enkeltpersonforetak trenger den ikke.",
-      "referral": "Du ble invitert med koden {code} — du får bonuspoeng etter din første leverte bestilling."
+      "referral": "Du ble invitert med koden {code} — du får bonuspoeng etter din første leverte bestilling.",
+      "activityCode": "næringskode",
+      "activityCodeHint": "Din hovednæringskode, f.eks. {example}.",
+      "activityCodeOnce": "Skriv den inn én gang — etterpå kan bare FIRINGI endre den."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Lagre endringer",
       "saved": "Lagret.",
       "locked": "Etter innsending kan juridisk navn og MVA-nummer bare endres av FIRINGI-support.",
-      "website": "Nettsted"
+      "website": "Nettsted",
+      "registrationLocked": "Org.nr., mva-nummer, firmanavn, selskapsform og næringskode er registreringsopplysningene dine — de kan ikke endres her. Er noe feil, kontakt FIRINGI-support."
     },
     "restricted": {
       "title": "Tilgang til tobakk og alkohol",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Din kasse {till}: {decision}",
       "body": "FIRINGIs avgjørelse om kassen din {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresse til godkjenning: {company}",
+      "body": "{company} ber om en adresseendring: {change}. Godkjenn eller avslå under Adressegodkjenninger."
+    },
+    "address_change_decided": {
+      "title": "Adressen din {address}: {decision}",
+      "body": "FIRINGIs avgjørelse om adressen din {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Mva. totalt",
     "lineVat": "Mva. {rate}%",
     "lineVatAmount": "herav mva. {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "En ny adresse — eller flytting av en adresse — kontrolleres først av FIRINGI og gjelder etter godkjenning. Endringer av navn, kontakt og telefon gjelder med en gang.",
+    "sent": "Sendt til FIRINGI for godkjenning. Adressen gjelder etter godkjenning.",
+    "sentShop": "Butikkens adresse er sendt til FIRINGI for godkjenning. Du kan legge ved en nylig kassalapp under Bedrift › Adresser.",
+    "requestsTitle": "Adresseforespørsler",
+    "actionCREATE": "Ny adresse",
+    "actionUPDATE": "Flytting",
+    "actionREMOVE": "Fjerning",
+    "statusPENDING": "Venter på FIRINGI",
+    "statusAPPROVED": "Godkjent",
+    "statusREJECTED": "Avslått",
+    "statusCANCELLED": "Trukket tilbake",
+    "withdraw": "Trekk tilbake",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "På kassalapper — fast",
+    "pendingBadge": "Endring venter på godkjenning",
+    "proofTitle": "Nylig faktura fra kassen din på denne adressen",
+    "proofHint": "Et bilde eller en skanning av en nylig faktura (høyst 90 dager gammel) skrevet ut av din egen kasse der hjelper FIRINGI å godkjenne adressen raskt.",
+    "proofFile": "Bilde eller skanning (PDF, JPG, PNG)",
+    "proofDate": "Dato på fakturaen",
+    "proofAttached": "Kassalapp lagt ved.",
+    "proofMissing": "Ingen kassalapp ennå — legg ved en så FIRINGI kan godkjenne.",
+    "attach": "Legg ved"
   }
 }

@@ -8,9 +8,10 @@ import { PageHeader } from "@/components/layout/page-header";
 import { AccountStatusBadge } from "@/components/layout/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CommissionForm, CompanyStatusActions, DocumentReview, RestrictionReview, ViesPanel } from "@/components/admin/review-actions";
+import { CommissionForm, CompanyStatusActions, DocumentReview, RegistrationCorrection, RestrictionReview, ViesPanel } from "@/components/admin/review-actions";
 import { formatDate } from "@/lib/utils";
 import { isIndividualPtNif } from "@/lib/tax-id";
+import { activityScheme } from "@/lib/activity-code";
 
 export const metadata = { title: "Company" };
 
@@ -153,6 +154,13 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
               </dl>
             </CardContent>
           </Card>
+
+          {can.decide && (
+            <Card>
+              <CardHeader><CardTitle>Registration details</CardTitle><CardDescription>NIF {c.taxId} · VAT {c.vatNumber ?? "—"} · {activityScheme(c.country.code).name} {c.activityCode ?? "—"} · {c.legalForm === "SOLE_TRADER" ? "sole trader" : "company"}. The company can&apos;t change these — only FIRINGI corrects them.</CardDescription></CardHeader>
+              <CardContent><RegistrationCorrection company={{ id: c.id, legalName: c.legalName, taxId: c.taxId, vatNumber: c.vatNumber, legalForm: c.legalForm, activityCode: c.activityCode }} activityName={activityScheme(c.country.code).name} /></CardContent>
+            </Card>
+          )}
 
           {c.vatNumber && (
             <Card>

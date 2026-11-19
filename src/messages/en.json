@@ -253,7 +253,10 @@
       "certificateCode": "Permanent certificate code",
       "certificateCodeHint": "Your company's commercial-registry number. Suppliers that are companies give it; sole traders don't need it.",
       "certificateCodeHintPt": "Access code of the certidão permanente (12 digits, 0000-0000-0000). Suppliers that are companies give it; sole traders don't need it.",
-      "referral": "You were invited with code {code} — you get bonus points after your first delivered order."
+      "referral": "You were invited with code {code} — you get bonus points after your first delivered order.",
+      "activityCode": "economic activity code",
+      "activityCodeHint": "Your main activity code, e.g. {example}.",
+      "activityCodeOnce": "Enter it once — after that only FIRINGI can change it."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Save changes",
       "saved": "Saved.",
       "locked": "Legal name and VAT number can only be changed by FIRINGI support after submission.",
-      "website": "Website"
+      "website": "Website",
+      "registrationLocked": "Your NIF, VAT number, legal name, legal form and activity code are your registration details — they can't be changed here. If something is wrong, contact FIRINGI support."
     },
     "restricted": {
       "title": "Tobacco & alcohol access",
@@ -1583,6 +1587,14 @@
     "pos_till_decided": {
       "title": "Your till {till} was {decision}",
       "body": "FIRINGI {decision} your till {till}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Address to approve: {company}",
+      "body": "{company} asks for an address change: {change}. Approve or refuse it under Address Approvals."
+    },
+    "address_change_decided": {
+      "title": "Your address {address} was {decision}",
+      "body": "FIRINGI {decision} your address {address}. {note}"
     }
   },
   "notifications": {
@@ -6068,5 +6080,29 @@
     "totalVat": "Total VAT",
     "lineVat": "VAT {rate}%",
     "lineVatAmount": "of which VAT {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "A new address — or moving one to another place — is checked by FIRINGI first and applies once approved. Name, contact and phone changes apply at once.",
+    "sent": "Sent to FIRINGI for approval. The address applies once approved.",
+    "sentShop": "The shop's address was sent to FIRINGI for approval. You can attach a recent till invoice under Company › Addresses.",
+    "requestsTitle": "Address requests",
+    "actionCREATE": "New address",
+    "actionUPDATE": "Move",
+    "actionREMOVE": "Removal",
+    "statusPENDING": "Waiting for FIRINGI",
+    "statusAPPROVED": "Approved",
+    "statusREJECTED": "Refused",
+    "statusCANCELLED": "Withdrawn",
+    "withdraw": "Withdraw",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "On till receipts — fixed",
+    "pendingBadge": "Change waiting for approval",
+    "proofTitle": "Recent invoice from your till at this address",
+    "proofHint": "A photo or scan of a recent invoice (at most 90 days old) printed by your own till there helps FIRINGI approve the address quickly.",
+    "proofFile": "Photo or scan (PDF, JPG, PNG)",
+    "proofDate": "Date on the invoice",
+    "proofAttached": "Till invoice attached.",
+    "proofMissing": "No till invoice yet — attach one so FIRINGI can approve.",
+    "attach": "Attach"
   }
 }

@@ -253,7 +253,10 @@
       "certificateCode": "Codice della visura camerale",
       "certificateCodeHint": "Numero di iscrizione al registro delle imprese. I fornitori che sono società lo indicano; le ditte individuali non ne hanno bisogno.",
       "certificateCodeHintPt": "Codice di accesso della certidão permanente (12 cifre, 0000-0000-0000). I fornitori che sono società lo indicano; le ditte individuali non ne hanno bisogno.",
-      "referral": "Sei stato invitato con il codice {code}: riceverai punti bonus dopo il tuo primo ordine consegnato."
+      "referral": "Sei stato invitato con il codice {code}: riceverai punti bonus dopo il tuo primo ordine consegnato.",
+      "activityCode": "codice di attività economica",
+      "activityCodeHint": "Il tuo codice di attività principale, ad es. {example}.",
+      "activityCodeOnce": "Inseriscilo una volta — dopo solo FIRINGI può modificarlo."
     },
     "businessTypes": {
       "restaurant": "Ristorante",
@@ -349,7 +352,8 @@
       "save": "Salva modifiche",
       "saved": "Salvato.",
       "locked": "Dopo l'invio, ragione sociale e partita IVA possono essere modificate solo dall'assistenza FIRINGI.",
-      "website": "Sito web"
+      "website": "Sito web",
+      "registrationLocked": "Il tuo codice fiscale, partita IVA, ragione sociale, forma giuridica e codice ATECO sono i dati della registrazione — non possono essere modificati qui. Se qualcosa è sbagliato, contatta il supporto FIRINGI."
     },
     "restricted": {
       "title": "Accesso a tabacco e alcolici",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "La tua cassa {till}: {decision}",
       "body": "Decisione di FIRINGI sulla tua cassa {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Indirizzo da approvare: {company}",
+      "body": "{company} chiede una modifica di indirizzo: {change}. Approva o rifiuta in Approvazione indirizzi."
+    },
+    "address_change_decided": {
+      "title": "Il tuo indirizzo {address}: {decision}",
+      "body": "Decisione di FIRINGI sul tuo indirizzo {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Totale IVA",
     "lineVat": "IVA {rate}%",
     "lineVatAmount": "di cui IVA {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Un nuovo indirizzo — o il trasferimento di un indirizzo in un altro luogo — viene prima verificato da FIRINGI e vale una volta approvato. Le modifiche a nome, contatto e telefono valgono subito.",
+    "sent": "Inviato a FIRINGI per l'approvazione. L'indirizzo vale una volta approvato.",
+    "sentShop": "L'indirizzo del negozio è stato inviato a FIRINGI per l'approvazione. Puoi allegare uno scontrino recente in Azienda › Indirizzi.",
+    "requestsTitle": "Richieste di indirizzo",
+    "actionCREATE": "Nuovo indirizzo",
+    "actionUPDATE": "Trasferimento",
+    "actionREMOVE": "Rimozione",
+    "statusPENDING": "In attesa di FIRINGI",
+    "statusAPPROVED": "Approvato",
+    "statusREJECTED": "Rifiutato",
+    "statusCANCELLED": "Ritirato",
+    "withdraw": "Ritira",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Sugli scontrini di cassa — fisso",
+    "pendingBadge": "Modifica in attesa di approvazione",
+    "proofTitle": "Fattura recente della tua cassa a questo indirizzo",
+    "proofHint": "Una foto o scansione di una fattura recente (al massimo 90 giorni) stampata dalla tua cassa in quel luogo aiuta FIRINGI ad approvare l'indirizzo rapidamente.",
+    "proofFile": "Foto o scansione (PDF, JPG, PNG)",
+    "proofDate": "Data della fattura",
+    "proofAttached": "Scontrino di cassa allegato.",
+    "proofMissing": "Ancora nessuno scontrino — allegane uno perché FIRINGI possa approvare.",
+    "attach": "Allega"
   }
 }

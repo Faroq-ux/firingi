@@ -253,7 +253,10 @@
       "certificateCode": "Kodiċi taċ-ċertifikat tar-reġistru",
       "certificateCodeHint": "In-numru tar-reġistru tal-kumpaniji tiegħek. Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu.",
       "certificateCodeHintPt": "Kodiċi ta' aċċess taċ-certidão permanente (12-il ċifra, 0000-0000-0000). Il-fornituri li huma kumpaniji jagħtuh; is-sole traders m'għandhomx bżonnu.",
-      "referral": "Ġejt mistieden bil-kodiċi {code} — tirċievi punti bonus wara l-ewwel ordni kkonsenjata."
+      "referral": "Ġejt mistieden bil-kodiċi {code} — tirċievi punti bonus wara l-ewwel ordni kkonsenjata.",
+      "activityCode": "kodiċi tal-attività ekonomika",
+      "activityCodeHint": "Il-kodiċi tal-attività prinċipali tiegħek, eż. {example}.",
+      "activityCodeOnce": "Daħħlu darba — wara dan FIRINGI biss jista' jibdlu."
     },
     "businessTypes": {
       "restaurant": "Ristorant",
@@ -349,7 +352,8 @@
       "save": "Issejvja l-bidliet",
       "saved": "Issejvjat.",
       "locked": "Wara li tibgħat, l-isem legali u n-numru tal-VAT jistgħu jinbidlu biss mis-support ta' FIRINGI.",
-      "website": "Websajt"
+      "website": "Websajt",
+      "registrationLocked": "In-numru tat-taxxa, in-numru tal-VAT, l-isem legali, il-forma legali u l-kodiċi tal-attività huma d-dettalji tar-reġistrazzjoni tiegħek — ma jistgħux jinbidlu hawn. Jekk xi ħaġa mhix tajba, ikkuntattja l-appoġġ ta' FIRINGI."
     },
     "restricted": {
       "title": "Aċċess għat-tabakk u l-alkoħol",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Il-kaxxa tiegħek {till}: {decision}",
       "body": "Id-deċiżjoni ta' FIRINGI dwar il-kaxxa tiegħek {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Indirizz għall-approvazzjoni: {company}",
+      "body": "{company} titlob bidla fl-indirizz: {change}. Approva jew iċħad taħt Approvazzjoni tal-Indirizzi."
+    },
+    "address_change_decided": {
+      "title": "L-indirizz tiegħek {address}: {decision}",
+      "body": "Id-deċiżjoni ta' FIRINGI dwar l-indirizz tiegħek {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Total VAT",
     "lineVat": "VAT {rate}%",
     "lineVatAmount": "li minnhom VAT {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Indirizz ġdid — jew iċ-ċaqliq ta' indirizz post ieħor — FIRINGI jiċċekkjah l-ewwel u jgħodd ladarba jiġi approvat. Bidliet fl-isem, kuntatt u telefon jgħoddu mill-ewwel.",
+    "sent": "Mibgħut lil FIRINGI għall-approvazzjoni. L-indirizz jgħodd ladarba jiġi approvat.",
+    "sentShop": "L-indirizz tal-ħanut intbagħat lil FIRINGI għall-approvazzjoni. Tista' tehmeż riċevuta reċenti tal-kaxxa taħt Kumpanija › Indirizzi.",
+    "requestsTitle": "Talbiet għal indirizz",
+    "actionCREATE": "Indirizz ġdid",
+    "actionUPDATE": "Ċaqliq",
+    "actionREMOVE": "Tneħħija",
+    "statusPENDING": "Qed jistenna lil FIRINGI",
+    "statusAPPROVED": "Approvat",
+    "statusREJECTED": "Miċħud",
+    "statusCANCELLED": "Irtirat",
+    "withdraw": "Irtira",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Fuq ir-riċevuti tal-kaxxa — fiss",
+    "pendingBadge": "Bidla qed tistenna l-approvazzjoni",
+    "proofTitle": "Fattura reċenti mill-kaxxa tiegħek f'dan l-indirizz",
+    "proofHint": "Ritratt jew skan ta' fattura reċenti (mhux aktar minn 90 jum) stampata mill-kaxxa tiegħek hemmhekk jgħin lil FIRINGI japprova l-indirizz malajr.",
+    "proofFile": "Ritratt jew skan (PDF, JPG, PNG)",
+    "proofDate": "Data tal-fattura",
+    "proofAttached": "Riċevuta tal-kaxxa mehmuża.",
+    "proofMissing": "Għad m'hemmx riċevuta tal-kaxxa — ehmeż waħda biex FIRINGI jkun jista' japprova.",
+    "attach": "Ehmeż"
   }
 }

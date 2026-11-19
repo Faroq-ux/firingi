@@ -253,7 +253,10 @@
       "certificateCode": "Code des Handelsregisterauszugs",
       "certificateCodeHint": "Handelsregisternummer Ihres Unternehmens. Lieferanten, die Gesellschaften sind, geben sie an; Einzelunternehmer brauchen sie nicht.",
       "certificateCodeHintPt": "Zugangscode der certidão permanente (12 Ziffern, 0000-0000-0000). Lieferanten, die Gesellschaften sind, geben ihn an; Einzelunternehmer brauchen ihn nicht.",
-      "referral": "Sie wurden mit dem Code {code} eingeladen — nach Ihrer ersten gelieferten Bestellung erhalten Sie Bonuspunkte."
+      "referral": "Sie wurden mit dem Code {code} eingeladen — nach Ihrer ersten gelieferten Bestellung erhalten Sie Bonuspunkte.",
+      "activityCode": "Wirtschaftszweig-Code",
+      "activityCodeHint": "Ihr Haupttätigkeitscode, z. B. {example}.",
+      "activityCodeOnce": "Einmal eingeben — danach kann ihn nur FIRINGI ändern."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Änderungen speichern",
       "saved": "Gespeichert.",
       "locked": "Firmenname und USt-IdNr. können nach dem Einreichen nur vom FIRINGI-Support geändert werden.",
-      "website": "Website"
+      "website": "Website",
+      "registrationLocked": "Ihre Steuernummer, USt-IdNr., Ihr Firmenname, Ihre Rechtsform und Ihr Wirtschaftszweig-Code sind Ihre Registrierungsdaten — sie können hier nicht geändert werden. Wenn etwas falsch ist, wenden Sie sich an den FIRINGI-Support."
     },
     "restricted": {
       "title": "Zugang zu Tabak & Alkohol",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Ihre Kasse {till}: {decision}",
       "body": "Entscheidung von FIRINGI zu Ihrer Kasse {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresse zur Freigabe: {company}",
+      "body": "{company} beantragt eine Adressänderung: {change}. Freigeben oder ablehnen unter Adressfreigaben."
+    },
+    "address_change_decided": {
+      "title": "Ihre Adresse {address}: {decision}",
+      "body": "Entscheidung von FIRINGI zu Ihrer Adresse {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "MwSt. gesamt",
     "lineVat": "MwSt. {rate}%",
     "lineVatAmount": "darin MwSt. {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Eine neue Adresse — oder der Umzug an einen anderen Ort — wird zuerst von FIRINGI geprüft und gilt nach der Freigabe. Änderungen von Name, Kontakt und Telefon gelten sofort.",
+    "sent": "An FIRINGI zur Freigabe gesendet. Die Adresse gilt nach der Freigabe.",
+    "sentShop": "Die Adresse der Filiale wurde FIRINGI zur Freigabe gesendet. Unter Unternehmen › Adressen können Sie einen aktuellen Kassenbeleg anhängen.",
+    "requestsTitle": "Adressanfragen",
+    "actionCREATE": "Neue Adresse",
+    "actionUPDATE": "Umzug",
+    "actionREMOVE": "Entfernung",
+    "statusPENDING": "Wartet auf FIRINGI",
+    "statusAPPROVED": "Freigegeben",
+    "statusREJECTED": "Abgelehnt",
+    "statusCANCELLED": "Zurückgezogen",
+    "withdraw": "Zurückziehen",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Auf Kassenbelegen — fest",
+    "pendingBadge": "Änderung wartet auf Freigabe",
+    "proofTitle": "Aktueller Beleg Ihrer Kasse an dieser Adresse",
+    "proofHint": "Ein Foto oder Scan eines aktuellen Belegs (höchstens 90 Tage alt), den Ihre eigene Kasse dort gedruckt hat, hilft FIRINGI, die Adresse schnell freizugeben.",
+    "proofFile": "Foto oder Scan (PDF, JPG, PNG)",
+    "proofDate": "Datum auf dem Beleg",
+    "proofAttached": "Kassenbeleg angehängt.",
+    "proofMissing": "Noch kein Kassenbeleg — hängen Sie einen an, damit FIRINGI freigeben kann.",
+    "attach": "Anhängen"
   }
 }

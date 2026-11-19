@@ -253,7 +253,10 @@
       "certificateCode": "Kod izvatka iz sudskog registra",
       "certificateCodeHint": "Broj vaše tvrtke u sudskom registru. Dobavljači koji su trgovačka društva ga navode; obrtnici ga ne trebaju.",
       "certificateCodeHintPt": "Pristupni kod certidão permanente (12 znamenki, 0000-0000-0000). Dobavljači koji su trgovačka društva ga navode; obrtnici ga ne trebaju.",
-      "referral": "Pozvani ste kodom {code} — nakon prve isporučene narudžbe dobivate bonus bodove."
+      "referral": "Pozvani ste kodom {code} — nakon prve isporučene narudžbe dobivate bonus bodove.",
+      "activityCode": "šifra gospodarske djelatnosti",
+      "activityCodeHint": "Vaša glavna šifra djelatnosti, npr. {example}.",
+      "activityCodeOnce": "Unesite je jednom — nakon toga može je promijeniti samo FIRINGI."
     },
     "businessTypes": {
       "restaurant": "Restoran",
@@ -349,7 +352,8 @@
       "save": "Spremi promjene",
       "saved": "Spremljeno.",
       "locked": "Nakon slanja pravni naziv i PDV ID broj može promijeniti samo podrška FIRINGI-ja.",
-      "website": "Web stranica"
+      "website": "Web stranica",
+      "registrationLocked": "Vaš OIB, PDV broj, naziv tvrtke, pravni oblik i šifra djelatnosti podaci su registracije — ovdje se ne mogu mijenjati. Ako nešto nije u redu, obratite se podršci FIRINGI."
     },
     "restricted": {
       "title": "Pristup duhanu i alkoholu",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Vaša blagajna {till}: {decision}",
       "body": "Odluka FIRINGI o vašoj blagajni {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresa za odobrenje: {company}",
+      "body": "{company} traži promjenu adrese: {change}. Odobrite ili odbijte u Odobrenju adresa."
+    },
+    "address_change_decided": {
+      "title": "Vaša adresa {address}: {decision}",
+      "body": "Odluka FIRINGI-ja o vašoj adresi {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Ukupno PDV",
     "lineVat": "PDV {rate}%",
     "lineVatAmount": "od toga PDV {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Novu adresu — ili premještanje adrese na drugo mjesto — FIRINGI najprije provjerava i vrijedi nakon odobrenja. Promjene naziva, kontakta i telefona vrijede odmah.",
+    "sent": "Poslano FIRINGI-ju na odobrenje. Adresa vrijedi nakon odobrenja.",
+    "sentShop": "Adresa trgovine poslana je FIRINGI-ju na odobrenje. Nedavni račun s blagajne možete priložiti u Tvrtka › Adrese.",
+    "requestsTitle": "Zahtjevi za adresu",
+    "actionCREATE": "Nova adresa",
+    "actionUPDATE": "Preseljenje",
+    "actionREMOVE": "Uklanjanje",
+    "statusPENDING": "Čeka FIRINGI",
+    "statusAPPROVED": "Odobreno",
+    "statusREJECTED": "Odbijeno",
+    "statusCANCELLED": "Povučeno",
+    "withdraw": "Povuci",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Na računima s blagajne — fiksna",
+    "pendingBadge": "Promjena čeka odobrenje",
+    "proofTitle": "Nedavni račun vaše blagajne na ovoj adresi",
+    "proofHint": "Fotografija ili sken nedavnog računa (najviše 90 dana) koji je ondje izdala vaša blagajna pomaže FIRINGI-ju brzo odobriti adresu.",
+    "proofFile": "Fotografija ili sken (PDF, JPG, PNG)",
+    "proofDate": "Datum na računu",
+    "proofAttached": "Račun s blagajne priložen.",
+    "proofMissing": "Još nema računa s blagajne — priložite ga kako bi FIRINGI mogao odobriti.",
+    "attach": "Priloži"
   }
 }

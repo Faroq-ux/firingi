@@ -253,7 +253,10 @@
       "certificateCode": "Code du certificat d'immatriculation",
       "certificateCodeHint": "Numéro d'immatriculation au registre du commerce. Les fournisseurs constitués en société l'indiquent ; les entrepreneurs individuels n'en ont pas besoin.",
       "certificateCodeHintPt": "Code d'accès de la certidão permanente (12 chiffres, 0000-0000-0000). Les fournisseurs constitués en société l'indiquent ; les entrepreneurs individuels n'en ont pas besoin.",
-      "referral": "Vous avez été invité avec le code {code} — vous recevrez des points bonus après votre première commande livrée."
+      "referral": "Vous avez été invité avec le code {code} — vous recevrez des points bonus après votre première commande livrée.",
+      "activityCode": "code d'activité économique",
+      "activityCodeHint": "Votre code d'activité principal, par ex. {example}.",
+      "activityCodeOnce": "Saisissez-le une fois — ensuite seul FIRINGI peut le modifier."
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -349,7 +352,8 @@
       "save": "Enregistrer les modifications",
       "saved": "Enregistré.",
       "locked": "Après l'envoi, la raison sociale et le n° de TVA ne peuvent être modifiés que par le support FIRINGI.",
-      "website": "Site web"
+      "website": "Site web",
+      "registrationLocked": "Votre numéro fiscal, numéro de TVA, dénomination sociale, forme juridique et code d'activité sont vos données d'inscription — ils ne peuvent pas être modifiés ici. En cas d'erreur, contactez le support FIRINGI."
     },
     "restricted": {
       "title": "Accès tabac et alcool",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Votre caisse {till} : {decision}",
       "body": "Décision de FIRINGI pour votre caisse {till} : {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Adresse à approuver : {company}",
+      "body": "{company} demande un changement d'adresse : {change}. Approuvez ou refusez dans Approbation des adresses."
+    },
+    "address_change_decided": {
+      "title": "Votre adresse {address} : {decision}",
+      "body": "Décision de FIRINGI pour votre adresse {address} : {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "Total TVA",
     "lineVat": "TVA {rate}%",
     "lineVatAmount": "dont TVA {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Une nouvelle adresse — ou le déplacement d'une adresse — est d'abord vérifiée par FIRINGI et s'applique une fois approuvée. Les changements de nom, de contact et de téléphone s'appliquent tout de suite.",
+    "sent": "Envoyé à FIRINGI pour approbation. L'adresse s'applique une fois approuvée.",
+    "sentShop": "L'adresse du magasin a été envoyée à FIRINGI pour approbation. Vous pouvez joindre un ticket de caisse récent dans Entreprise › Adresses.",
+    "requestsTitle": "Demandes d'adresse",
+    "actionCREATE": "Nouvelle adresse",
+    "actionUPDATE": "Déménagement",
+    "actionREMOVE": "Suppression",
+    "statusPENDING": "En attente de FIRINGI",
+    "statusAPPROVED": "Approuvée",
+    "statusREJECTED": "Refusée",
+    "statusCANCELLED": "Retirée",
+    "withdraw": "Retirer",
+    "note": "FIRINGI : {note}",
+    "tillLocked": "Sur les tickets de caisse — fixe",
+    "pendingBadge": "Changement en attente d'approbation",
+    "proofTitle": "Facture récente de votre caisse à cette adresse",
+    "proofHint": "Une photo ou un scan d'une facture récente (90 jours maximum) imprimée par votre propre caisse à cet endroit aide FIRINGI à approuver l'adresse rapidement.",
+    "proofFile": "Photo ou scan (PDF, JPG, PNG)",
+    "proofDate": "Date de la facture",
+    "proofAttached": "Ticket de caisse joint.",
+    "proofMissing": "Pas encore de ticket de caisse — joignez-en un pour que FIRINGI puisse approuver.",
+    "attach": "Joindre"
   }
 }

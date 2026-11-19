@@ -93,13 +93,15 @@ export function ShopForm({ initial, team, cities, countryCode, onDone }: { initi
 /** Another delivery address for a shop. */
 export function ShopAddressForm({ branchId, cities, countryCode }: { branchId: string; cities: City[]; countryCode: string }) {
   const t = useTranslations("multisite");
+  const ta = useTranslations("addressRequests");
   const { pending, error, run } = useRun();
   const [open, setOpen] = useState(false);
+  const [sent, setSent] = useState(false);
   const [label, setLabel] = useState("");
   const [a, setA] = useState<AddrState>(emptyAddr);
-  if (!open) return <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)} data-testid="add-shop-address"><MapPinPlus className="size-4" />{t("addAddress")}</Button>;
+  if (!open) return <div className="space-y-1">{sent && <p className="text-xs" role="status" data-testid="shop-address-sent">{ta("sentShop")}</p>}<Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)} data-testid="add-shop-address"><MapPinPlus className="size-4" />{t("addAddress")}</Button></div>;
   return (
-    <form className="grid gap-3 rounded-xl border p-3 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); run(() => addShopAddressAction({ branchId, address: toAddress(a, countryCode, cities, label || null) }), () => { setOpen(false); setA(emptyAddr); setLabel(""); }); }}>
+    <form className="grid gap-3 rounded-xl border p-3 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); run(() => addShopAddressAction({ branchId, address: toAddress(a, countryCode, cities, label || null) }), (d) => { setSent(!d); setOpen(false); setA(emptyAddr); setLabel(""); }); }}>
       <div className="space-y-1 sm:col-span-2"><Label htmlFor="sa-lb">{t("addressLabel")}</Label><Input id="sa-lb" maxLength={80} value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t("addressLabelHint")} /></div>
       <AddressFields a={a} set={setA} cities={cities} idp="sa" />
       <div className="flex flex-wrap items-center gap-2 sm:col-span-2">

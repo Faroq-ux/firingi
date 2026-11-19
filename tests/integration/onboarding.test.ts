@@ -25,7 +25,7 @@ async function newCustomer(opts: { cityId?: string } = {}) {
   const email = `cust.${Date.now()}.${Math.random().toString(36).slice(2, 6)}@test.pt`;
   const nif = await freshNif();
   const { companyId } = await registerCompany({
-    type: "CUSTOMER", countryCode: "PT", legalName: `Restaurante ${email}`, taxId: nif, vatNumber: `PT${nif}`, companyEmail: email, phone: "+351910000000",
+    type: "CUSTOMER", countryCode: "PT", activityCode: "56101", legalName: `Restaurante ${email}`, taxId: nif, vatNumber: `PT${nif}`, companyEmail: email, phone: "+351910000000",
     businessType: "restaurant", owner: { name: "Rui Teste", email, password: PW },
     headOffice: { line1: "Rua A 1", postalCode: "1000-001", cityId: opts.cityId ?? (await lisbon()), cityName: "Lisboa" },
   });
@@ -48,7 +48,7 @@ describe("registration", () => {
 
   it("rejects invalid NIF, duplicate company, duplicate e-mail and closed markets", async () => {
     const base = {
-      type: "CUSTOMER" as const, countryCode: "PT", legalName: "X", companyEmail: "x@x.pt", phone: "+351910000000",
+      type: "CUSTOMER" as const, countryCode: "PT", activityCode: "56101", legalName: "X", companyEmail: "x@x.pt", phone: "+351910000000",
       owner: { name: "X", email: `dup.${Date.now()}@x.pt`, password: PW }, headOffice: { line1: "Rua", postalCode: "1000-001", cityName: "Lisboa" },
     };
     await expect(registerCompany({ ...base, taxId: "123456780" })).rejects.toThrow(/Invalid Portuguese NIF/);

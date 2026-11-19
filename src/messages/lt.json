@@ -253,7 +253,10 @@
       "certificateCode": "Registrų centro išrašo kodas",
       "certificateCodeHint": "Jūsų įmonės kodas juridinių asmenų registre. Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia.",
       "certificateCodeHintPt": "certidão permanente prieigos kodas (12 skaitmenų, 0000-0000-0000). Tiekėjai, kurie yra bendrovės, jį nurodo; individualios veiklos vykdytojams jo nereikia.",
-      "referral": "Buvote pakviesti kodu {code} — po pirmojo pristatyto užsakymo gausite premijinių taškų."
+      "referral": "Buvote pakviesti kodu {code} — po pirmojo pristatyto užsakymo gausite premijinių taškų.",
+      "activityCode": "ekonominės veiklos kodas",
+      "activityCodeHint": "Jūsų pagrindinės veiklos kodas, pvz., {example}.",
+      "activityCodeOnce": "Įveskite jį vieną kartą — vėliau jį gali pakeisti tik FIRINGI."
     },
     "businessTypes": {
       "restaurant": "Restoranas",
@@ -349,7 +352,8 @@
       "save": "Išsaugoti pakeitimus",
       "saved": "Išsaugota.",
       "locked": "Pateikus paraišką, teisinį pavadinimą ir PVM mokėtojo kodą gali pakeisti tik FIRINGI pagalba.",
-      "website": "Svetainė"
+      "website": "Svetainė",
+      "registrationLocked": "Jūsų įmonės kodas, PVM kodas, pavadinimas, teisinė forma ir veiklos kodas yra registracijos duomenys — jų čia keisti negalima. Jei kas nors neteisinga, kreipkitės į FIRINGI pagalbą."
     },
     "restricted": {
       "title": "Prieiga prie tabako ir alkoholio",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Jūsų kasa {till}: {decision}",
       "body": "FIRINGI sprendimas dėl jūsų kasos {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Tvirtintinas adresas: {company}",
+      "body": "{company} prašo pakeisti adresą: {change}. Patvirtinkite arba atmeskite skiltyje Adresų tvirtinimas."
+    },
+    "address_change_decided": {
+      "title": "Jūsų adresas {address}: {decision}",
+      "body": "FIRINGI sprendimas dėl jūsų adreso {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "PVM iš viso",
     "lineVat": "PVM {rate}%",
     "lineVatAmount": "iš jų PVM {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Naują adresą — ar adreso perkėlimą kitur — pirmiausia patikrina FIRINGI, ir jis galioja po patvirtinimo. Pavadinimo, kontakto ir telefono pakeitimai galioja iš karto.",
+    "sent": "Išsiųsta FIRINGI patvirtinti. Adresas galios po patvirtinimo.",
+    "sentShop": "Parduotuvės adresas išsiųstas FIRINGI patvirtinti. Naujausią kasos kvitą galite pridėti skiltyje Įmonė › Adresai.",
+    "requestsTitle": "Adreso prašymai",
+    "actionCREATE": "Naujas adresas",
+    "actionUPDATE": "Perkėlimas",
+    "actionREMOVE": "Pašalinimas",
+    "statusPENDING": "Laukia FIRINGI",
+    "statusAPPROVED": "Patvirtinta",
+    "statusREJECTED": "Atmesta",
+    "statusCANCELLED": "Atšaukta",
+    "withdraw": "Atšaukti",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Ant kasos kvitų — fiksuotas",
+    "pendingBadge": "Pakeitimas laukia patvirtinimo",
+    "proofTitle": "Naujausia sąskaita iš jūsų kasos šiuo adresu",
+    "proofHint": "Naujausios (ne senesnės nei 90 dienų) jūsų kasos ten išspausdintos sąskaitos nuotrauka ar skenuota kopija padeda FIRINGI greitai patvirtinti adresą.",
+    "proofFile": "Nuotrauka ar skenuota kopija (PDF, JPG, PNG)",
+    "proofDate": "Sąskaitos data",
+    "proofAttached": "Kasos kvitas pridėtas.",
+    "proofMissing": "Kasos kvito dar nėra — pridėkite, kad FIRINGI galėtų patvirtinti.",
+    "attach": "Pridėti"
   }
 }

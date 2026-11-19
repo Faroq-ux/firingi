@@ -136,6 +136,25 @@ tests/
 4. **Tobacco and alcohol:** approved buyers request access with a licence (Buy › Company). Admin approves it with an expiry date at Risk & Compliance › Compliance.
 5. **Drivers** upload their ID and driving licence. Admin approves both documents and the driver at Drivers & Fleet › Driver Applications.
 
+6. **Registration details are fixed (Phase 47d)** for every distributor, wholesaler and wholesale customer: the
+   **NIF**, **VAT number**, **legal name**, **legal form** and **activity code** can't be changed by the company — only
+   FIRINGI corrects them (company page › *Registration details*, with a reason, audited). **One company per NIF**
+   (per country, whatever the account type) **and per VAT number** — enforced in the database too.
+7. **Activity code**: wholesale customers give theirs at registration under the country's own name — **CAE** in
+   Portugal, CNAE in Spain, NAF/APE in France, ATECO in Italy, WZ in Germany, PKD in Poland, NACE elsewhere
+   (`src/lib/activity-code.ts`, checked per country); suppliers may. Companies registered before can enter it once.
+8. **Addresses (Phase 47d)**: before the registration is sent, addresses are edited freely. Afterwards, **the first
+   time an address is used** — a new head office, billing, warehouse / distribution centre, pickup or delivery /
+   shop address, or an address moved to another street, postal code or city — it waits for FIRINGI (*Customers* /
+   *Vendor Management › Address Approvals*). The company can attach a **photo or scan of a recent invoice from its
+   own till at that address** (at most 90 days old, also later on the waiting request); FIRINGI approves with it or
+   **bypasses** it (recorded), or refuses with a reason; the company is notified and can withdraw its request. Name,
+   contact, phone and "default" changes and removals apply at once. Companies can keep adding several warehouses /
+   distribution centres and shops this way. FIRINGI switches approval on/off per address kind and whether the till
+   invoice is asked for. **An address printed on till receipts** (the till's address, else the head office) **can't
+   be changed or removed once the till has issued a receipt**, nor can that till's address — a new address means a
+   new till.
+
 Requirements and transitions are defined in one place: `src/server/onboarding/rules.ts`.
 
 | Variable | Default | Purpose |

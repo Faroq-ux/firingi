@@ -9,7 +9,7 @@ import { updateProfileAction } from "@/server/actions/onboarding";
 export type ProfileData = {
   type: string; legalName: string; tradeName: string | null; taxId: string; vatNumber: string | null; email: string;
   phone: string | null; website: string | null; businessType: string | null; locked: boolean; countryLabel: string;
-  legalForm: "COMPANY" | "SOLE_TRADER"; certificateCode: string | null; countryCode: string;
+  legalForm: "COMPANY" | "SOLE_TRADER"; certificateCode: string | null; countryCode: string; activityCode: string | null; activityName: string; activityExample: string;
 };
 const BUSINESS_TYPES = ["restaurant", "kebab_pizza", "mini_market", "cafe_bar", "hotel", "catering", "retail", "other"];
 
@@ -30,6 +30,7 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
             ...(data.locked ? {} : { legalName: s(fd, "legalName") ?? data.legalName, vatNumber: s(fd, "vatNumber") }),
             ...(data.locked ? {} : { legalForm: (s(fd, "legalForm") ?? data.legalForm) as ProfileData["legalForm"] }),
             certificateCode: s(fd, "certificateCode"),
+            ...(data.activityCode ? {} : { activityCode: s(fd, "activityCode") }),
             tradeName: s(fd, "tradeName"), email: s(fd, "email") ?? "", phone: s(fd, "phone"), website: s(fd, "website"), businessType: s(fd, "businessType"),
           });
           setMsg(r.ok ? { ok: true, text: t("profile.saved") } : { ok: false, text: r.error });
@@ -50,6 +51,11 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
           </Select>
         </div>
         <div className="space-y-1.5">
+          <Label htmlFor="activityCode">{data.activityName} — {t("form.activityCode")}</Label>
+          <Input id="activityCode" name="activityCode" defaultValue={data.activityCode ?? ""} disabled={!!data.activityCode} placeholder={data.activityExample} data-testid="profile-activity-code" />
+          {!data.activityCode && <p className="text-xs text-muted-foreground">{t("form.activityCodeOnce")}</p>}
+        </div>
+        <div className="space-y-1.5">
           <Label htmlFor="certificateCode">{t("form.certificateCode")}</Label>
           <Input id="certificateCode" name="certificateCode" defaultValue={data.certificateCode ?? ""} placeholder={data.countryCode === "PT" ? "0000-0000-0000" : ""} />
           <p className="text-xs text-muted-foreground">{data.countryCode === "PT" ? t("form.certificateCodeHintPt") : t("form.certificateCodeHint")}</p>
@@ -66,7 +72,7 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
           </div>
         )}
       </fieldset>
-      {data.locked && <p className="text-xs text-muted-foreground">{t("profile.locked")}</p>}
+      {data.locked && <p className="text-xs text-muted-foreground" data-testid="profile-registration-locked">{t("profile.registrationLocked")}</p>}
       {msg && <p className={msg.ok ? "text-sm text-success" : "text-sm text-destructive"} role="status">{msg.text}</p>}
       {canEdit && <Button type="submit" disabled={pending}>{t("profile.save")}</Button>}
     </form>

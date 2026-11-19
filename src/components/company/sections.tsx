@@ -5,12 +5,13 @@
 import { getLocale } from "next-intl/server";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
-import { listOwnAddresses } from "@/server/services/addresses";
+import { addressApprovalSettings, listOwnAddresses, lockedTillAddressIds, ownAddressRequests } from "@/server/services/addresses";
 import { listOwnCompanyDocuments, ownCompanyProfile, euCountryOptions } from "@/server/data/self-service";
 import { listOwnRestrictionApprovals } from "@/server/services/restrictions";
 import { uploadableCompanyDocTypes } from "@/server/services/documents";
 import { ADDRESS_KINDS } from "@/server/onboarding/rules";
 import { pickLocalized } from "@/i18n/config";
+import { activityScheme } from "@/lib/activity-code";
 import { ProfileForm } from "./profile-form";
 import { AddressesManager } from "./addresses-manager";
 import { DocumentsManager } from "./documents-manager";
@@ -23,9 +24,10 @@ export async function ProfileSection({ ctx }: { ctx: Ctx }) {
       canEdit={can(ctx, "company.profile.manage")}
       data={{
         type: c.type, legalName: c.legalName, tradeName: c.tradeName, taxId: c.taxId, vatNumber: c.vatNumber, email: c.email, phone: c.phone,
-        website: c.website, businessType: c.businessType, locked: c.status !== "PENDING" && c.status !== "REJECTED",
+        website: c.website, businessType: c.businessType, locked: true,
         countryLabel: `${c.country.flag ?? ""} ${pickLocalized(c.country.name, locale)}`,
         legalForm: c.legalForm, certificateCode: c.registryCertificateCode, countryCode: c.country.code,
+        activityCode: c.activityCode, activityName: activityScheme(c.country.code).name, activityExample: activityScheme(c.country.code).example,
       }}
     />
   );
@@ -33,7 +35,7 @@ export async function ProfileSection({ ctx }: { ctx: Ctx }) {
 
 export async function AddressesSection({ ctx, kinds }: { ctx: Ctx; kinds?: string[] }) {
   if (ctx.company.type === "ADMIN") return null;
-  const [rows, countries] = await Promise.all([listOwnAddresses(ctx), euCountryOptions()]);
+  const [rows, countries, requests, locked, approval] = await Promise.all([listOwnAddresses(ctx), euCountryOptions(), ownAddressRequests(ctx), lockedTillAddressIds(ctx.company.id), addressApprovalSettings()]);
   const allowed = kinds ?? ADDRESS_KINDS[ctx.company.type];
   const fullEdit = can(ctx, "company.addresses.manage");
   return (
@@ -41,10 +43,16 @@ export async function AddressesSection({ ctx, kinds }: { ctx: Ctx; kinds?: strin
       canEdit={fullEdit || can(ctx, "buyer.addresses.manage")}
       kinds={fullEdit ? allowed : allowed.filter((k) => k === "DELIVERY")}
       defaultCountry={ctx.company.countryCode}
+      approvalOn={approval.enabled && ["UNDER_REVIEW", "APPROVED", "SUSPENDED"].includes(ctx.company.status)}
+      requests={requests.filter((r) => allowed.includes(r.kind)).map((r) => {
+        const d = r.data as { label?: string; line1?: string; postalCode?: string; cityName?: string };
+        const cur = r.addressId ? rows.find((a) => a.id === r.addressId) : null;
+        return { id: r.id, action: r.action, status: r.status, kind: r.kind, label: d.label ?? cur?.label ?? "", line: d.line1 ? `${d.line1}, ${d.postalCode ?? ""} ${d.cityName ?? ""}` : cur ? `${cur.line1}, ${cur.postalCode} ${cur.cityName}` : "", note: r.decisionNote, addressId: r.addressId, hasProof: !!r.proofKey };
+      })}
       countries={countries}
       rows={rows.filter((a) => allowed.includes(a.kind)).map((a) => ({
         id: a.id, kind: a.kind, label: a.label, line1: a.line1, line2: a.line2, postalCode: a.postalCode, cityId: a.cityId, cityName: a.cityName,
-        countryCode: a.country.code, countryFlag: a.country.flag, contactName: a.contactName, phone: a.phone, isDefault: a.isDefault,
+        countryCode: a.country.code, countryFlag: a.country.flag, contactName: a.contactName, phone: a.phone, isDefault: a.isDefault, tillLocked: locked.has(a.id),
       }))}
     />
   );

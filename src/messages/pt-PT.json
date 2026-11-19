@@ -253,7 +253,10 @@
       "certificateCode": "Código da certidão permanente",
       "certificateCodeHint": "Número de registo comercial da sua empresa. Os fornecedores que são sociedades indicam-no; os empresários em nome individual não precisam.",
       "certificateCodeHintPt": "Código de acesso da certidão permanente (12 dígitos, 0000-0000-0000). Os fornecedores que são sociedades indicam-no; os empresários em nome individual não precisam.",
-      "referral": "Foi convidado com o código {code} — recebe pontos de bónus após a sua primeira encomenda entregue."
+      "referral": "Foi convidado com o código {code} — recebe pontos de bónus após a sua primeira encomenda entregue.",
+      "activityCode": "código de atividade económica",
+      "activityCodeHint": "O seu código de atividade principal, p. ex. {example}.",
+      "activityCodeOnce": "Introduza-o uma vez — depois disso só a FIRINGI o pode alterar."
     },
     "businessTypes": {
       "restaurant": "Restaurante",
@@ -349,7 +352,8 @@
       "save": "Guardar alterações",
       "saved": "Guardado.",
       "locked": "Após o envio, a denominação social e o n.º IVA só podem ser alterados pelo apoio FIRINGI.",
-      "website": "Website"
+      "website": "Website",
+      "registrationLocked": "O seu NIF, n.º IVA, denominação social, forma jurídica e CAE são os dados do registo — não podem ser alterados aqui. Se algo estiver errado, contacte o apoio FIRINGI."
     },
     "restricted": {
       "title": "Acesso a tabaco e álcool",
@@ -1583,6 +1587,14 @@
     "pos_till_decided": {
       "title": "A sua caixa {till}: {decision}",
       "body": "Decisão da FIRINGI sobre a sua caixa {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Morada para aprovar: {company}",
+      "body": "{company} pede uma alteração de morada: {change}. Aprove ou recuse em Aprovação de Moradas."
+    },
+    "address_change_decided": {
+      "title": "A sua morada {address} foi {decision}",
+      "body": "A FIRINGI {decision} a sua morada {address}. {note}"
     }
   },
   "notifications": {
@@ -6080,5 +6092,29 @@
     "totalVat": "Total do IVA",
     "lineVat": "IVA {rate}%",
     "lineVatAmount": "dos quais IVA {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "Uma morada nova — ou a mudança de uma morada para outro local — é verificada primeiro pela FIRINGI e só se aplica depois de aprovada. Alterações de nome, contacto e telefone aplicam-se de imediato.",
+    "sent": "Enviado à FIRINGI para aprovação. A morada aplica-se depois de aprovada.",
+    "sentShop": "A morada da loja foi enviada à FIRINGI para aprovação. Pode anexar uma fatura recente da sua caixa em Empresa › Moradas.",
+    "requestsTitle": "Pedidos de morada",
+    "actionCREATE": "Morada nova",
+    "actionUPDATE": "Mudança",
+    "actionREMOVE": "Remoção",
+    "statusPENDING": "À espera da FIRINGI",
+    "statusAPPROVED": "Aprovado",
+    "statusREJECTED": "Recusado",
+    "statusCANCELLED": "Retirado",
+    "withdraw": "Retirar",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Nos talões da caixa — fixa",
+    "pendingBadge": "Alteração à espera de aprovação",
+    "proofTitle": "Fatura recente da sua caixa nesta morada",
+    "proofHint": "Uma foto ou digitalização de uma fatura recente (até 90 dias) emitida pela sua própria caixa nesse local ajuda a FIRINGI a aprovar a morada depressa.",
+    "proofFile": "Foto ou digitalização (PDF, JPG, PNG)",
+    "proofDate": "Data da fatura",
+    "proofAttached": "Fatura da caixa anexada.",
+    "proofMissing": "Ainda sem fatura da caixa — anexe uma para a FIRINGI poder aprovar.",
+    "attach": "Anexar"
   }
 }

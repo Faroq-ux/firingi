@@ -253,7 +253,10 @@
       "certificateCode": "Kóði fyrirtækjaskrárvottorðs",
       "certificateCodeHint": "Skráningarnúmer fyrirtækisins í fyrirtækjaskrá. Birgjar sem eru félög gefa það upp; einstaklingar í rekstri þurfa það ekki.",
       "certificateCodeHintPt": "Aðgangskóði certidão permanente (12 tölustafir, 0000-0000-0000). Birgjar sem eru félög gefa hann upp; einstaklingar í rekstri þurfa hann ekki.",
-      "referral": "Þér var boðið með kóðanum {code} — þú færð bónuspunkta eftir fyrstu afhentu pöntunina."
+      "referral": "Þér var boðið með kóðanum {code} — þú færð bónuspunkta eftir fyrstu afhentu pöntunina.",
+      "activityCode": "atvinnugreinarnúmer",
+      "activityCodeHint": "Aðalatvinnugreinarnúmer þitt, t.d. {example}.",
+      "activityCodeOnce": "Sláðu það inn einu sinni — eftir það getur aðeins FIRINGI breytt því."
     },
     "businessTypes": {
       "restaurant": "Veitingastaður",
@@ -349,7 +352,8 @@
       "save": "Vista breytingar",
       "saved": "Vistað.",
       "locked": "Eftir innsendingu getur aðeins þjónusta FIRINGI breytt lögheiti og VSK-númeri.",
-      "website": "Vefsíða"
+      "website": "Vefsíða",
+      "registrationLocked": "Kennitala, VSK-númer, heiti, rekstrarform og atvinnugreinarnúmer eru skráningarupplýsingar þínar — þeim er ekki hægt að breyta hér. Ef eitthvað er rangt skaltu hafa samband við þjónustu FIRINGI."
     },
     "restricted": {
       "title": "Aðgangur að tóbaki og áfengi",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Kassinn þinn {till}: {decision}",
       "body": "Ákvörðun FIRINGI um kassann þinn {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Heimilisfang til samþykktar: {company}",
+      "body": "{company} biður um breytingu á heimilisfangi: {change}. Samþykktu eða hafnaðu undir Samþykki heimilisfanga."
+    },
+    "address_change_decided": {
+      "title": "Heimilisfangið þitt {address}: {decision}",
+      "body": "Ákvörðun FIRINGI um heimilisfangið þitt {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "VSK samtals",
     "lineVat": "VSK {rate}%",
     "lineVatAmount": "þar af VSK {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "FIRINGI fer fyrst yfir nýtt heimilisfang — eða flutning heimilisfangs — og það gildir eftir samþykki. Breytingar á nafni, tengilið og síma gilda strax.",
+    "sent": "Sent til FIRINGI til samþykktar. Heimilisfangið gildir eftir samþykki.",
+    "sentShop": "Heimilisfang verslunarinnar var sent til FIRINGI til samþykktar. Þú getur hengt við nýlega kassakvittun undir Fyrirtæki › Heimilisföng.",
+    "requestsTitle": "Beiðnir um heimilisfang",
+    "actionCREATE": "Nýtt heimilisfang",
+    "actionUPDATE": "Flutningur",
+    "actionREMOVE": "Fjarlæging",
+    "statusPENDING": "Bíður eftir FIRINGI",
+    "statusAPPROVED": "Samþykkt",
+    "statusREJECTED": "Hafnað",
+    "statusCANCELLED": "Dregið til baka",
+    "withdraw": "Draga til baka",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Á kassakvittunum — fast",
+    "pendingBadge": "Breyting bíður samþykkis",
+    "proofTitle": "Nýlegur reikningur úr kassanum þínum á þessu heimilisfangi",
+    "proofHint": "Mynd eða skönnun af nýlegum reikningi (í mesta lagi 90 daga gömlum) úr þínum eigin kassa þar hjálpar FIRINGI að samþykkja heimilisfangið fljótt.",
+    "proofFile": "Mynd eða skönnun (PDF, JPG, PNG)",
+    "proofDate": "Dagsetning reiknings",
+    "proofAttached": "Kassakvittun hengd við.",
+    "proofMissing": "Engin kassakvittun enn — hengdu eina við svo FIRINGI geti samþykkt.",
+    "attach": "Hengja við"
   }
 }

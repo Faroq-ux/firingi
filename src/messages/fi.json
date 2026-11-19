@@ -253,7 +253,10 @@
       "certificateCode": "Kaupparekisteriotteen koodi",
       "certificateCodeHint": "Yrityksesi kaupparekisterinumero. Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä.",
       "certificateCodeHintPt": "certidão permanente -todistuksen käyttökoodi (12 numeroa, 0000-0000-0000). Yhtiömuotoiset toimittajat antavat sen; toiminimet eivät tarvitse sitä.",
-      "referral": "Sinut kutsuttiin koodilla {code} — saat bonuspisteitä ensimmäisen toimitetun tilauksesi jälkeen."
+      "referral": "Sinut kutsuttiin koodilla {code} — saat bonuspisteitä ensimmäisen toimitetun tilauksesi jälkeen.",
+      "activityCode": "toimialakoodi",
+      "activityCodeHint": "Päätoimialakoodisi, esim. {example}.",
+      "activityCodeOnce": "Anna se kerran — sen jälkeen vain FIRINGI voi muuttaa sitä."
     },
     "businessTypes": {
       "restaurant": "Ravintola",
@@ -349,7 +352,8 @@
       "save": "Tallenna muutokset",
       "saved": "Tallennettu.",
       "locked": "Lähettämisen jälkeen virallisen nimen ja ALV-tunnisteen voi muuttaa vain FIRINGIn tuki.",
-      "website": "Verkkosivusto"
+      "website": "Verkkosivusto",
+      "registrationLocked": "Y-tunnuksesi, ALV-numerosi, toiminimesi, yritysmuotosi ja toimialakoodisi ovat rekisteröintitietoja — niitä ei voi muuttaa täällä. Jos jokin on väärin, ota yhteyttä FIRINGIn tukeen."
     },
     "restricted": {
       "title": "Tupakka- ja alkoholituotteiden käyttöoikeus",
@@ -1719,6 +1723,14 @@
     "pos_till_decided": {
       "title": "Kassasi {till}: {decision}",
       "body": "FIRINGIn päätös kassastasi {till}: {decision}. {note}"
+    },
+    "address_change_requested": {
+      "title": "Hyväksyttävä osoite: {company}",
+      "body": "{company} pyytää osoitemuutosta: {change}. Hyväksy tai hylkää kohdassa Osoitehyväksynnät."
+    },
+    "address_change_decided": {
+      "title": "Osoitteesi {address}: {decision}",
+      "body": "FIRINGIn päätös osoitteestasi {address}: {decision}. {note}"
     }
   },
   "notifications": {
@@ -6204,5 +6216,29 @@
     "totalVat": "ALV yhteensä",
     "lineVat": "ALV {rate}%",
     "lineVatAmount": "josta ALV {amount}"
+  },
+  "addressRequests": {
+    "approvalNote": "FIRINGI tarkistaa ensin uuden osoitteen — tai osoitteen siirron toiseen paikkaan — ja se tulee voimaan hyväksynnän jälkeen. Nimen, yhteyshenkilön ja puhelimen muutokset tulevat voimaan heti.",
+    "sent": "Lähetetty FIRINGIlle hyväksyttäväksi. Osoite tulee voimaan hyväksynnän jälkeen.",
+    "sentShop": "Myymälän osoite lähetettiin FIRINGIlle hyväksyttäväksi. Voit liittää tuoreen kassakuitin kohdassa Yritys › Osoitteet.",
+    "requestsTitle": "Osoitepyynnöt",
+    "actionCREATE": "Uusi osoite",
+    "actionUPDATE": "Siirto",
+    "actionREMOVE": "Poisto",
+    "statusPENDING": "Odottaa FIRINGIä",
+    "statusAPPROVED": "Hyväksytty",
+    "statusREJECTED": "Hylätty",
+    "statusCANCELLED": "Peruttu",
+    "withdraw": "Peru",
+    "note": "FIRINGI: {note}",
+    "tillLocked": "Kassakuiteissa — kiinteä",
+    "pendingBadge": "Muutos odottaa hyväksyntää",
+    "proofTitle": "Tuore lasku kassastasi tässä osoitteessa",
+    "proofHint": "Valokuva tai skannaus tuoreesta (enintään 90 päivää vanhasta) laskusta, jonka oma kassasi siellä on tulostanut, auttaa FIRINGIä hyväksymään osoitteen nopeasti.",
+    "proofFile": "Valokuva tai skannaus (PDF, JPG, PNG)",
+    "proofDate": "Laskun päivämäärä",
+    "proofAttached": "Kassakuitti liitetty.",
+    "proofMissing": "Ei vielä kassakuittia — liitä sellainen, jotta FIRINGI voi hyväksyä.",
+    "attach": "Liitä"
   }
 }
