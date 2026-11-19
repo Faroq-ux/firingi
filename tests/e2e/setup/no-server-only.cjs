@@ -1,4 +1,5 @@
 // Lets e2e setup scripts (run with tsx, outside Next.js) import server modules: `server-only` becomes an empty module.
+/* eslint-disable @typescript-eslint/no-require-imports -- a CommonJS preload for the test helpers */
 const Module = require("node:module");
 const original = Module._resolveFilename;
 Module._resolveFilename = function (request, ...rest) {

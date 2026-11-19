@@ -251,11 +251,54 @@ try {
   check("…ready to use: no waiting badge", (await kh.getByTestId("pos-till-status").count()) === 0 && (await kh.getByTestId(`preg-people-${e1}`).count()) === 1);
   await go(kh, "/buy/pos/reports");
   check("reports by shop / till", (await kh.getByTestId("pos-report-tills").count()) === 1);
+  // ── 5c. The owner adds a shop manager for the new till; the manager adds a cashier and sees the revenue ──
+  sql(`delete from "User" where email like '%.e2e@kebabhouse.test'`);
+  await go(kh, "/buy/pos/staff");
+  check("staff page for the owner: add form, both roles offered", (await kh.getByTestId("pos-staff-form").count()) === 1 && (await kh.locator('[data-testid=ps-role] option[value=MANAGE]').count()) === 1);
+  await kh.getByTestId("ps-name").fill("Sofia Gerente"); await kh.getByTestId("ps-email").fill("sofia.e2e@kebabhouse.test"); await kh.getByTestId("ps-pass").fill(PASSWORD);
+  await kh.getByTestId("ps-role").selectOption("MANAGE"); await kh.getByTestId("ps-till-E1").check();
+  await kh.getByTestId("ps-add").click(); await settle(kh);
+  check("owner added a shop manager for till E1", sql(`select ru.role from "PosRegisterUser" ru join "User" u on u.id=ru."userId" where u.email='sofia.e2e@kebabhouse.test' and ru."registerId"='${e1}'`) === "MANAGE");
+  check("…listed on the staff page", /Sofia Gerente/.test(await text(kh.getByTestId("pos-staff"))));
+  await shot(kh, "pos-21-staff-owner", true);
+  const sofia = await login("sofia.e2e@kebabhouse.test", { locale: "pt-PT" });
+  await go(sofia, "/buy/pos/staff");
+  check("shop manager: only their till, cashier role only", (await sofia.getByTestId("ps-till-E1").count()) === 1 && (await sofia.getByTestId("ps-till-C1").count()) === 0 && (await sofia.locator('[data-testid=ps-role] option[value=MANAGE]').count()) === 0);
+  await sofia.getByTestId("ps-name").fill("Tiago Caixa"); await sofia.getByTestId("ps-email").fill("tiago.e2e@kebabhouse.test"); await sofia.getByTestId("ps-pass").fill(PASSWORD);
+  await sofia.getByTestId("ps-add").click(); await settle(sofia);
+  check("shop manager added a cashier for E1", sql(`select ru.role from "PosRegisterUser" ru join "User" u on u.id=ru."userId" where u.email='tiago.e2e@kebabhouse.test' and ru."registerId"='${e1}'`) === "SELL");
+  // the manager rings up a sale at E1 (2 kebabs, 15.00 €)
+  await go(sofia, `/buy/pos/till?register=${e1}`);
+  await sofia.getByTestId("till-float").fill("0"); await sofia.getByTestId("till-open-btn").click(); await settle(sofia);
+  await tapItem(sofia, "Kebab no pão"); await tapItem(sofia, "Kebab no pão");
+  await sofia.getByTestId("till-pay").click(); await sofia.getByTestId("till-amount").fill("20"); await sofia.getByTestId("till-pay-CASH").click();
+  await sofia.getByTestId("till-complete").click(); await settle(sofia);
+  check("shop manager sold at their till", sql(`select gross from "PosSale" where "registerId"='${e1}' and kind='SALE'`) === "15.00");
+  await go(sofia, "/buy/pos");
+  check("shop manager sees the revenue: today and all time (their till only)", /15,00/.test(await text(sofia.getByTestId("rev-today"))) && /15,00/.test(await text(sofia.getByTestId("rev-all"))), await text(sofia.getByTestId("rev-all")));
+  await shot(sofia, "pos-22-manager-revenue", true);
+  const tiago = await login("tiago.e2e@kebabhouse.test", { locale: "pt-PT" });
+  await go(tiago, "/buy/pos");
+  check("a cashier sees no revenue", (await tiago.getByTestId("pos-revenue").count()) === 0);
+  await go(tiago, "/buy/pos/staff");
+  check("…and no staff page", (await tiago.getByTestId("pos-staff-denied").count()) === 1);
+  await go(kh, "/buy/pos");
+  check("owner sees the revenue of every till, per till", (await kh.getByTestId("rev-all").count()) === 1 && /Caixa esplanada/.test(await text(kh.getByTestId("pos-revenue-tills"))));
+  await shot(kh, "pos-23-owner-revenue", true);
+  await go(sofia, "/buy/pos/staff");
+  await sofia.getByTestId("ps-remove-E1").first().click(); await settle(sofia);
+  check("shop manager takes the cashier off the till", sql(`select count(*) from "PosRegisterUser" ru join "User" u on u.id=ru."userId" where u.email='tiago.e2e@kebabhouse.test'`) === "0");
+  const sphone = await login("sofia.e2e@kebabhouse.test", { viewport: PHONE, colorScheme: "dark", locale: "pt-PT" });
+  for (const u of ["/buy/pos", "/buy/pos/staff"]) { await go(sphone, u); await noSideways(sphone, u); }
+  await go(sphone, "/buy/pos"); await shot(sphone, "pos-24-manager-revenue-phone-dark", true);
+  await Promise.all([sofia, tiago, sphone].map((p) => p.context().close()));
+  sql(`delete from "PosSale" where "registerId"='${e1}'`);
   sql(`delete from "PosRegister" where id='${e1}'`);
+  sql(`delete from "User" where email like '%.e2e@kebabhouse.test'`);
 
   // ── 6. Phone, dark ──
   const phone = await login("owner@kebabhouse.test", { viewport: PHONE, colorScheme: "dark", locale: "pt-PT" });
-  for (const u of ["/buy/pos", "/buy/pos/till", "/buy/pos/items", "/buy/pos/sales", "/buy/pos/shifts", "/buy/pos/settings"]) { await go(phone, u); await noSideways(phone, u); }
+  for (const u of ["/buy/pos", "/buy/pos/till", "/buy/pos/items", "/buy/pos/sales", "/buy/pos/shifts", "/buy/pos/staff", "/buy/pos/settings"]) { await go(phone, u); await noSideways(phone, u); }
   await go(phone, "/buy/pos/till");
   await tapItem(phone, "Kebab no pão");
   await shot(phone, "pos-18-till-phone-dark", true);

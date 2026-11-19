@@ -15,7 +15,9 @@ import { Till } from "./till";
 import { Aurora, Sparkline } from "@/components/motion/shapes";
 import { Tile } from "@/components/motion/dashboard-kit";
 import { CountUp } from "@/components/motion/count-up";
-import { Banknote, ShoppingBag, TrendingUp } from "lucide-react";
+import { Banknote, CalendarDays, CalendarRange, History, ShoppingBag, Sun, TrendingUp, UserCog } from "lucide-react";
+import { tillRevenue, tillStaff } from "@/server/pos/staff";
+import { RemoveFromTill, StaffForm } from "./staff-forms";
 import { CompanyForm, FiscalForm, GuestForm, ImportButton, ItemForm, PinForm, RecipeForm, RefundForm, RegisterForm, RegisterPeople, ReorderButton, RetryButton, type ItemRow } from "./forms";
 
 type Portal = "vendor" | "buy";
@@ -38,6 +40,8 @@ export async function PosOverviewPage({ ctx, portal }: { ctx: Ctx; portal: Porta
   const off = await gate(ctx); if (off) return off;
   const [t, locale] = await Promise.all([getTranslations("pos"), getLocale()]);
   const o = await P.posOverview(ctx);
+  const rev = o.managesTills ? await tillRevenue(ctx) : null;
+  const ts = await getTranslations("posStaff");
   const m = (v: number) => formatMoney(v, locale, o.access.currency);
   const money$ = `money:${o.access.currency}` as const;
   return (
@@ -53,6 +57,7 @@ export async function PosOverviewPage({ ctx, portal }: { ctx: Ctx; portal: Porta
         <Tile icon={TrendingUp} label={t("average")} value={o.today.average} fmt={money$} locale={locale} tone="tone-violet" i={2} testId="kpi-avg" />
         <Tile icon={Package} label={t("items")} value={o.items} locale={locale} tone="tone-orange" i={3} testId="kpi-items" />
       </div>
+      {rev && <RevenueBlock rev={rev} t={ts} locale={locale} money={money$} m={m} portal={portal} />}
       {(o.pending > 0 || o.failed > 0) && <Card className="mb-4 border-amber-500/40"><CardContent className="pt-5 text-sm" data-testid="pos-fiscal-waiting">{t("fiscalWaiting", { pending: o.pending, failed: o.failed })} <Link className="text-primary hover:underline" href={`${base(portal)}/sales?fiscal=1`}>{t("seeReceipts")}</Link></CardContent></Card>}
       <Card><CardHeader><CardTitle>{t("tills")}</CardTitle></CardHeader><CardContent className="overflow-x-auto">
         <Table data-testid="pos-registers">
@@ -62,6 +67,55 @@ export async function PosOverviewPage({ ctx, portal }: { ctx: Ctx; portal: Porta
             {o.registers.map((r) => <TR key={r.id}><TD>{r.name}</TD><TD>{r.code}</TD><TD>{r.shifts[0] ? <Badge variant="success">{t("shiftOpenSince", { n: r.shifts[0].number, time: new Intl.DateTimeFormat(locale, { timeStyle: "short" }).format(r.shifts[0].openedAt) })}</Badge> : <Badge variant="secondary">{t("closed")}</Badge>}</TD><TD><Link className="text-primary hover:underline" href={`${base(portal)}/till?register=${r.id}`} data-testid="pos-open-till">{t("openTill")}</Link></TD></TR>)}
           </TBody>
         </Table>
+      </CardContent></Card>
+    </>
+  );
+}
+
+type Rev = NonNullable<Awaited<ReturnType<typeof tillRevenue>>>;
+const PERIODS = [["today", Sun, "tone-blue"], ["week", CalendarDays, "tone-teal"], ["month", CalendarRange, "tone-violet"], ["year", TrendingUp, "tone-orange"], ["all", History, "tone-pink"]] as const;
+
+/** The owner's and shop managers' takings — today up to all time, in total and per till. */
+function RevenueBlock({ rev, t, locale, money, m, portal }: { rev: Rev; t: Awaited<ReturnType<typeof getTranslations>>; locale: string; money: `money:${string}`; m: (v: number) => string; portal: Portal }) {
+  return (
+    <section className="mb-4" data-testid="pos-revenue" aria-labelledby="pos-rev-h">
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 id="pos-rev-h" className="text-base font-semibold">{t("revenue")}</h2>
+        <p className="text-xs text-muted-foreground">{t("revenueIntro")}{rev.since && <> · {t("since", { date: new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(rev.since) })}</>}</p>
+      </div>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {PERIODS.map(([k, Icon, tone], i) => <div key={k} className={k === "all" ? "col-span-2 sm:col-span-1" : ""}><Tile icon={Icon} label={t(k)} value={rev.total[k]} fmt={money} locale={locale} tone={tone} i={i} testId={`rev-${k}`} /></div>)}
+      </div>
+      {rev.tills.length > 1 && <Card className="mt-3"><CardHeader><CardTitle>{t("perTill")}</CardTitle></CardHeader><CardContent className="overflow-x-auto">
+        <Table data-testid="pos-revenue-tills"><THead><TR><TH>{t("till")}</TH><TH>{t("shop")}</TH>{PERIODS.map(([k]) => <TH key={k} className="text-right">{t(k)}</TH>)}</TR></THead>
+          <TBody>{rev.tills.map((r) => <TR key={r.id}><TD><Link className="text-primary hover:underline" href={`${base(portal)}/reports?register=${r.id}`}>{r.name}</Link> <span className="text-xs text-muted-foreground">{r.code}</span></TD><TD className="text-xs">{r.shop ?? "—"}</TD>{PERIODS.map(([k]) => <TD key={k} className="text-right tabular-nums">{m(r[k])}</TD>)}</TR>)}</TBody>
+        </Table>
+      </CardContent></Card>}
+    </section>
+  );
+}
+
+export async function PosStaffPage({ ctx }: { ctx: Ctx }) {
+  const off = await gate(ctx); if (off) return off;
+  const t = await getTranslations("posStaff");
+  const a = await (await import("@/server/pos/access")).tillAccess(ctx.company.id, ctx.user.id);
+  if (!a.manage.size) return (<><PageHeader title={t("title")} icon={UserCog} /><Card><CardContent className="pt-5 text-sm" data-testid="pos-staff-denied">{t("forManagers")}</CardContent></Card></>);
+  const s = await tillStaff(ctx);
+  return (
+    <>
+      <PageHeader title={t("title")} icon={UserCog} description={t("intro")} />
+      <Card className="mb-4"><CardHeader><CardTitle>{t("addTitle")}</CardTitle></CardHeader><CardContent><StaffForm tills={s.tills} owner={s.owner} /></CardContent></Card>
+      <Card><CardHeader><CardTitle>{t("people")}</CardTitle></CardHeader><CardContent className="overflow-x-auto">
+        <Table data-testid="pos-staff">
+          <THead><TR><TH>{t("employee")}</TH><TH>{t("tills")}</TH><TH>{t("status")}</TH></TR></THead>
+          <TBody>
+            {s.people.length === 0 && <EmptyRow colSpan={3}>{t("none")}</EmptyRow>}
+            {s.people.map((p) => <TR key={p.userId} data-testid="pos-staff-row"><TD><div className="font-medium">{p.name}</div><div className="break-all text-xs text-muted-foreground">{p.email}</div></TD>
+              <TD><ul className="space-y-1">{p.tills.map((r) => <li key={r.id} className="flex flex-wrap items-center gap-2"><Badge variant={r.role === "MANAGE" ? "default" : "secondary"}>{r.code} · {t(r.role === "MANAGE" ? "roleManagerShort" : "roleCashierShort")}</Badge>{p.userId !== ctx.user.id && (r.role === "SELL" || s.owner) && <RemoveFromTill registerId={r.id} userId={p.userId} code={r.code} />}</li>)}</ul></TD>
+              <TD>{p.active ? <Badge variant="success">{t("active")}</Badge> : <Badge variant="secondary">{t("inactive")}</Badge>}</TD></TR>)}
+          </TBody>
+        </Table>
+        {s.owner && <p className="mt-3 text-xs text-muted-foreground">{t("ownerNote")}</p>}
       </CardContent></Card>
     </>
   );

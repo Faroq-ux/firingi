@@ -47,6 +47,16 @@ Suppliers sell from *Sell › Till (POS)* (`/vendor/pos`), wholesale customers f
   chosen is open to everyone with the till right (staff limited to some shops only in their shops); someone given
   particular tills uses only those. A shop manager approves that till's refunds, discounts and cash out (their PIN
   works only on the tills they manage) and sees that till's sales and reports; the owner sees everything.
+- **Adding staff** (*Till Staff*): the **owner** and each **shop manager** add employees themselves — name, e-mail,
+  a first password (at least 10 characters, changed after signing in) and the tills. A shop manager adds **cashiers**
+  for the tills they manage only; the owner adds cashiers or **shop managers** for any till. The new login gets the
+  system role **Cashier**; being shop manager is per till, so a shop manager never manages the other shops' tills. The
+  plan's user limit applies; an e-mail already in the company is only put on the tills (an e-mail of another company
+  is refused). A shop manager takes cashiers off their tills; only the owner changes shop managers; removing someone
+  from the company stays under *Team*. Everything is in the audit log (`pos.staff.add`, `pos.staff.remove`).
+- **Revenue at all times**: the owner and shop managers see on the till overview the **revenue of the tills they
+  manage** — today, last 7 days, this month, this year and **all time** (sales minus refunds, VAT included, since the
+  first sale) — in total and **per till / shop**. Cashiers don't see it.
 - **Items per till**: an item can be sold at chosen tills only (the grocery's bread, the restaurant's dishes) or at
   all of them.
 - **Accounting per shop and till**: each day's sales go into Accounting per till — and so per shop — as cash, card

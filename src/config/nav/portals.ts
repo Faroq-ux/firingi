@@ -23,6 +23,7 @@ function POS_ITEMS(s: ReturnType<typeof section>, customer: boolean) {
     s("reports", "Till Reports", "Relatórios da Caixa", "P47", { live: true, feature: "POS", perm: [...sell], es: "Informes de caja" }),
     ...(customer ? [s("stock", "Ingredient Stock", "Stock de Ingredientes", "P47", { live: true, feature: "POS", perm: "company.pos.manage", es: "Stock de ingredientes" })] : []),
     s("guests", "Guests & Loyalty", "Clientes e Fidelização", "P47", { live: true, feature: "POS", perm: [...sell], es: "Clientes y fidelización" }),
+    s("staff", "Till Staff", "Equipa da Caixa", "P47", { live: true, feature: "POS", perm: [...sell], es: "Personal de caja" }),
     s("settings", "Till Settings", "Definições da Caixa", "P47", { live: true, feature: "POS", perm: "company.pos.manage", es: "Ajustes de caja" }),
   ];
 }

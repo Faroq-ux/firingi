@@ -15,6 +15,7 @@ import { processPosFiscalQueue } from "@/server/pos/fiscal";
 import { posAccess, savePosSettings } from "@/server/pos/settings";
 import { syncOp } from "@/server/app/service";
 import { DEFAULT_POS_SETTINGS, type PosSettings } from "@/lib/pos";
+import { addTillEmployee, removeFromTill, tillRevenue, tillStaff } from "@/server/pos/staff";
 import { ctxFor } from "../helpers";
 
 const SA = "superadmin@firingi.test", ATL = "owner@atlantico.test", KH = "owner@kebabhouse.test", HK = "owner@hurtownia.test";
@@ -431,5 +432,83 @@ describe("each shop / warehouse its own tills and people; extra tills approved b
     await prisma.posSale.deleteMany({ where: { registerId: { in: [g.id, r.id] } } });
     await prisma.posRegister.deleteMany({ where: { id: { in: [g.id, r.id, refused.id] } } });
     await prisma.branch.deleteMany({ where: { id: { in: [grocery.id, resto.id] } } });
+  });
+});
+
+describe("the owner and shop managers add their till staff and see the revenue", () => {
+  it("owner adds a shop manager; the manager adds cashiers for their own till only; revenue today … all time, per till", async () => {
+    const kh = await ctxFor(KH), sa = await ctxFor(SA);
+    const stamp = Date.now().toString(36);
+    const shop = await prisma.branch.create({ data: { companyId: kh.company.id, name: "Mercearia Graça", code: "MG" } });
+    const g = await P.saveRegister(kh, { name: "Caixa Graça", code: "G2", branchId: shop.id });
+    const r = await P.saveRegister(kh, { name: "Caixa Bar", code: "B2" });
+    for (const t of [g, r]) if (t.approval === "PENDING") await P.decideTill(sa, t.id, true);
+    // the owner adds a shop manager for the grocery till — a login with the cashier role, manager of that till only
+    const mgrEmail = `manager.${stamp}@kebabhouse.test`;
+    const { userId: mgrId } = await addTillEmployee(kh, { name: "Marta Gerente", email: mgrEmail, password: "ManagerPass1", registerIds: [g.id], role: "MANAGE" });
+    created.users.push(mgrId);
+    const acc = await prisma.account.findFirstOrThrow({ where: { userId: mgrId, providerId: "credential" } });
+    expect(acc.password).toBeTruthy();
+    expect(acc.password).not.toContain("ManagerPass1");
+    const mgr = await ctxFor(mgrEmail);
+    expect(mgr.permissions).toContain("company.pos.sell");
+    expect(mgr.permissions).not.toContain("company.pos.manage");
+    // the manager adds a cashier for their own till; not for another till, and no managers
+    const cashier = `kasa.${stamp}@kebabhouse.test`;
+    await expect(addTillEmployee(mgr, { name: "Rui", email: cashier, password: "CashierPass1", registerIds: [r.id], role: "SELL" })).rejects.toThrow(/tills you manage/);
+    await expect(addTillEmployee(mgr, { name: "Rui", email: cashier, password: "CashierPass1", registerIds: [g.id], role: "MANAGE" })).rejects.toThrow(/Only the owner/);
+    await expect(addTillEmployee(mgr, { name: "Rui", email: cashier, password: "short", registerIds: [g.id], role: "SELL" })).rejects.toThrow(/10 characters/);
+    await expect(addTillEmployee(mgr, { name: "Rui", email: ATL, password: "CashierPass1", registerIds: [g.id], role: "SELL" })).rejects.toThrow(/already exists/);
+    const { userId: cashId } = await addTillEmployee(mgr, { name: "Rui Caixa", email: cashier, password: "CashierPass1", registerIds: [g.id], role: "SELL" });
+    created.users.push(cashId);
+    const rui = await ctxFor(cashier);
+    expect((await P.tillSnapshot(rui)).registers.map((x) => x.id)).toEqual([g.id]);
+    // the manager's staff page: their till, the two people; a cashier has no staff page and no revenue
+    const st = await tillStaff(mgr);
+    expect(st.owner).toBe(false);
+    expect(st.tills.map((x) => x.id)).toEqual([g.id]);
+    expect(st.people.map((p) => p.email).sort()).toEqual([cashier, mgrEmail].sort());
+    await expect(tillStaff(rui)).rejects.toThrow(/managers/);
+    expect(await tillRevenue(rui)).toBeNull();
+    // sales at both tills, and a refund at the grocery
+    const bread = await P.saveItem(kh, { name: "Broa", price: 3, vatRate: 6, registerIds: [g.id, r.id] });
+    const gs = await P.openShift(rui, g.id, 20);
+    const s1 = await recordSale(rui, sale(g.id, gs.id, [{ itemId: bread.id, qty: 4, unitPrice: 3 }], [{ method: "CASH", amount: 12, tendered: 20 }]));
+    await recordSale(mgr, sale(g.id, gs.id, [{ itemId: bread.id, qty: 1, unitPrice: 3 }], [{ method: "CARD", amount: 3 }]));
+    const line = (await prisma.posSaleLine.findFirstOrThrow({ where: { saleId: s1.id } })).id;
+    await refundSale(mgr, { clientId: cid(), saleId: s1.id, registerId: g.id, shiftId: gs.id, n: ++n, lines: [{ lineId: line, qty: 1 }], method: "CASH", reason: "Partida", restock: false });
+    // a sale last year at the grocery: in "all time", not in "this year"
+    const old = await recordSale(rui, sale(g.id, gs.id, [{ itemId: bread.id, qty: 2, unitPrice: 3 }], [{ method: "CASH", amount: 6 }]));
+    await prisma.posSale.update({ where: { id: old.id }, data: { soldAt: new Date(new Date().getFullYear() - 1, 5, 1) } });
+    const bs = await P.openShift(kh, r.id, 0);
+    await recordSale(kh, sale(r.id, bs.id, [{ itemId: bread.id, qty: 10, unitPrice: 3 }], [{ method: "CARD", amount: 30 }]));
+    // the shop manager: the grocery till only — sales minus the refund
+    const mr = (await tillRevenue(mgr))!;
+    expect(mr.tills.map((x) => x.id)).toEqual([g.id]);
+    expect(mr.total.today).toBeCloseTo(12, 2);
+    expect(mr.total.week).toBeCloseTo(12, 2);
+    expect(mr.total.year).toBeCloseTo(12, 2);
+    expect(mr.total.all).toBeCloseTo(18, 2);
+    expect(mr.since!.getFullYear()).toBe(new Date().getFullYear() - 1);
+    // the owner: every till, per till and in total
+    const or = (await tillRevenue(kh))!;
+    expect(or.tills.find((x) => x.id === g.id)).toMatchObject({ shop: "Mercearia Graça", today: 12, all: 18 });
+    expect(or.tills.find((x) => x.id === r.id)).toMatchObject({ today: 30, all: 30 });
+    expect(or.total.all).toBeGreaterThanOrEqual(48);
+    expect(or.total.today).toBeGreaterThanOrEqual(42);
+    // removing: the manager takes the cashier off; only the owner changes shop managers
+    await expect(removeFromTill(mgr, g.id, mgrId)).rejects.toThrow(/Only the owner/);
+    await removeFromTill(mgr, g.id, cashId);
+    expect((await tillStaff(mgr)).people.map((p) => p.email)).toEqual([mgrEmail]);
+    await expect(removeFromTill(mgr, r.id, cashId)).rejects.toThrow();
+    // adding someone already in the company only puts them on the till
+    await addTillEmployee(kh, { name: "x", email: cashier, password: "Whatever123", registerIds: [r.id], role: "SELL" });
+    expect(await prisma.user.count({ where: { email: cashier } })).toBe(1);
+    expect((await P.tillSnapshot(rui)).registers.map((x) => x.id)).toEqual([r.id]);
+    await prisma.posSale.deleteMany({ where: { registerId: { in: [g.id, r.id] }, refundOfId: { not: null } } });
+    await prisma.posSale.deleteMany({ where: { registerId: { in: [g.id, r.id] } } });
+    await prisma.posRegister.deleteMany({ where: { id: { in: [g.id, r.id] } } });
+    await prisma.posItem.deleteMany({ where: { id: bread.id } });
+    await prisma.branch.deleteMany({ where: { id: shop.id } });
   });
 });

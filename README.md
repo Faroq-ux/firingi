@@ -682,7 +682,8 @@ restaurants (menu, recipes using what they bought on FIRINGI, tables, kitchen ti
 own loyalty card, e-mail / QR receipts, offline selling (sent once when back online). The admin switches it per
 company type, per country (non-fiscal, or a certified provider per country — simulated until live agreements) and per
 company. Each day's sales go into the company's Accounting as cash / card; the accountant's monthly pack carries
-every receipt. Details: [docs/pos.md](docs/pos.md).
+every receipt. The owner and shop managers add their own till staff (cashiers; the owner also shop managers) and
+see the revenue of their tills from today to all time. Details: [docs/pos.md](docs/pos.md).
 
 ## Multi-currency (Phase 45)
 
