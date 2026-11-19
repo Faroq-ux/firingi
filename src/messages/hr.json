@@ -863,7 +863,8 @@
     "Excise Report": "Izvješće o trošarinama",
     "Licences": "Dozvole",
     "Food Information": "Informacije o hrani",
-    "Allergens & Food Info": "Alergeni i info o hrani"
+    "Allergens & Food Info": "Alergeni i info o hrani",
+    "E-Invoicing": "E-računi"
   },
   "delivery": {
     "title": "Dostava",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Upozorenje o tečaju",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-račun nije poslan: {number}",
+      "body": "{number} nije moguće poslati elektronički: {reason}. Otvorite ga u Računi › E-računi."
+    },
+    "einvoice_rejected": {
+      "title": "E-račun odbijen: {number}",
+      "body": "{number} je odbio primatelj ili porezna uprava: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E-račun zaustavljen provjerama: {number}",
+      "body": "{number} nije poslan jer provjera nije uspjela: {reason}. Ispravite podatke i pošaljite ponovno."
+    },
+    "einvoice_received": {
+      "title": "E-račun dobavljača za provjeru: {number}",
+      "body": "Stigao je e-račun dobavljača ({number}) koji nije bilo moguće upariti: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Račun izdan umjesto vas: {number}",
+      "body": "FIRINGI je izdao vaš račun {number} za obračun {statement} prema vašem sporazumu o samofakturiranju. Pronađite ga u Moji računi FIRINGI-ju."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Cijene u {code} po današnjem tečaju: 1 € = {rate} {code}. Tečaj se fiksira pri narudžbi.",
     "rateLocked": "U {code} po tečaju fiksiranom pri narudžbi: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E-računi",
+    "intro": "Kako primate račune od FIRINGI-ja — elektronički (Peppol, KSeF, SDI …), kao PDF e-poštom ili oboje — i na kojem jeziku.",
+    "introVendor": "Kako vam FIRINGI šalje račune i prima vaše — elektronički ili e-poštom, na kojem jeziku — te izdaje li FIRINGI račune umjesto vas (samofakturiranje).",
+    "routeMandatory": "U zemlji {country} računi idu putem {format} — zakonom obvezno za svaki račun.",
+    "routeOnRequest": "U zemlji {country} FIRINGI vam može slati račune kao {format}. Unesite svoj Peppol ID ili ispod odaberite e-račune.",
+    "routeOff": "E-računi se za zemlju {country} još ne koriste; račune primate kao PDF e-poštom.",
+    "delivery": "Kako primate račune",
+    "deliveryBoth": "E-račun i PDF e-poštom",
+    "deliveryEinvoice": "Samo e-račun",
+    "deliveryEmail": "Samo PDF e-poštom",
+    "mandatoryNote": "Gdje zakon zahtijeva e-račune, uvijek se šalju; ovaj izbor mijenja samo PDF kopiju.",
+    "peppolId": "Peppol ID",
+    "peppolHelp": "Vaš Peppol ID sudionika, npr. 0208:0123456789 — pitajte svoj računovodstveni program ili pružatelja e-računa.",
+    "invoiceEmail": "E-pošta za račune",
+    "invoiceEmailHelp": "Ostavite prazno za e-poštu tvrtke.",
+    "language": "Jezik računa",
+    "languageDefault": "Jezik vaše zemlje ({lang})",
+    "secondLanguage": "Drugi jezik na računima",
+    "none": "Nijedan",
+    "ksefNip": "NIP za KSeF",
+    "sdiCode": "SDI kod primatelja",
+    "pec": "PEC e-pošta",
+    "leitwegId": "Leitweg-ID (referenca kupca)",
+    "selfBilling": "Samofakturiranje",
+    "selfBillingText": "FIRINGI za svaki obračun izdaje vaš račun FIRINGI-ju u vaše ime i za vaš račun, numeriran u vašoj vlastitoj seriji samofakturiranja. Više ne učitavate račune; svaki možete vidjeti i preuzeti ovdje i u Mojim računima. Možete prestati u bilo kojem trenutku.",
+    "selfBillingAgree": "Slažem se da FIRINGI izdaje moje račune umjesto mene (sporazum o samofakturiranju)",
+    "selfBillingSince": "Sporazum {number} od {date}",
+    "save": "Spremi",
+    "saved": "Spremljeno",
+    "readOnly": "Ove postavke mogu mijenjati samo korisnici koji upravljaju profilom tvrtke.",
+    "docsTitle": "Vaši e-računi",
+    "docsEmpty": "Još nema e-računa.",
+    "colDocument": "Dokument",
+    "colDate": "Datum",
+    "colFormat": "Format",
+    "colStatus": "Status",
+    "colRef": "Mrežna referenca",
+    "download": "XML",
+    "einvoiceCol": "E-račun",
+    "selfBilledBadge": "Samofakturirano",
+    "viaEinvoice": "Primljeno elektronički",
+    "status": {
+      "INVALID": "U pripremi",
+      "QUEUED": "Šalje se",
+      "SENT": "Poslano",
+      "DELIVERED": "Isporučeno",
+      "ACCEPTED": "Prihvaćeno",
+      "REJECTED": "Odbijeno",
+      "FAILED": "Još nije poslano",
+      "RECEIVED": "Primljeno",
+      "MATCHED": "Upareno"
+    },
+    "kind": {
+      "INVOICE": "Račun",
+      "CREDIT_NOTE": "Odobrenje",
+      "SERVICE_INVOICE": "Račun",
+      "SELF_BILLED": "Račun u samofakturiranju",
+      "SELF_BILLED_CREDIT": "Odobrenje u samofakturiranju",
+      "SUPPLIER_INVOICE": "Vaš račun"
+    }
   }
 }

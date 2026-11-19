@@ -662,6 +662,17 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## E-invoicing (Phase 46)
+
+FIRINGI's documents go out electronically per the recipient's country — format (Peppol BIS 3, XRechnung, Factur-X,
+KSeF FA(3), FatturaPA, Verifactu) and service (one EU-wide e-invoicing service, a Peppol access point, KSeF, SDI, AEAT,
+or e-mail) chosen by FIRINGI per country, mandatory or on request; checked first (EN 16931 + network rules), archived
+with SHA-256, sent with retries, followed until accepted. Self-billing for suppliers who agree; supplier e-invoices
+received and matched to statements; documents in the customer's country language first, bilingual on request, with EU
+and country legal texts (25 languages, DejaVu Sans). Admin: *Invoices & Tax › E-Invoicing* (+ Settings, Archive with
+auditor ZIP, Supplier E-Invoices); customers / suppliers: *Company › E-Invoicing*. Cron `/api/cron/einvoice` (every
+10 minutes). Details: [docs/e-invoicing.md](docs/e-invoicing.md).
+
 ## Multi-currency (Phase 45)
 
 Code: `src/lib/currency.ts` (rules), `src/server/currency/service.ts` (settings, rates, feed, alerts), `documents.ts`

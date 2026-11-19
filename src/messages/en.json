@@ -1551,6 +1551,26 @@
     "fx_alert": {
       "title": "Exchange rate alert",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-invoice not sent: {number}",
+      "body": "{number} could not be sent electronically: {reason}. Open it under Invoices › E-Invoicing."
+    },
+    "einvoice_rejected": {
+      "title": "E-invoice rejected: {number}",
+      "body": "{number} was rejected by the recipient or the tax system: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E-invoice stopped by the checks: {number}",
+      "body": "{number} was not sent because a check failed: {reason}. Fix the data and send it again."
+    },
+    "einvoice_received": {
+      "title": "Supplier e-invoice to review: {number}",
+      "body": "A supplier e-invoice ({number}) arrived but could not be matched: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Invoice issued for you: {number}",
+      "body": "FIRINGI issued your invoice {number} for statement {statement} under your self-billing agreement. See it under My Invoices to FIRINGI."
     }
   },
   "notifications": {
@@ -5597,5 +5617,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Prices in {code} at today's rate: 1 € = {rate} {code}. The rate is fixed when you order.",
     "rateLocked": "In {code} at the rate fixed when you ordered: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E-Invoicing",
+    "intro": "How you receive invoices from FIRINGI — electronically (Peppol, KSeF, SDI …), as a PDF by e-mail, or both — and in which language.",
+    "introVendor": "How FIRINGI sends you its invoices and receives yours — electronically or by e-mail, in which language — and whether FIRINGI issues your invoices for you (self-billing).",
+    "routeMandatory": "In {country}, invoices go through {format} — required by law for every invoice.",
+    "routeOnRequest": "In {country}, FIRINGI can send your invoices as {format}. Give your Peppol id or choose e-invoices below.",
+    "routeOff": "E-invoices are not used for {country} yet; you get your invoices as a PDF by e-mail.",
+    "delivery": "How you receive invoices",
+    "deliveryBoth": "E-invoice and PDF by e-mail",
+    "deliveryEinvoice": "E-invoice only",
+    "deliveryEmail": "PDF by e-mail only",
+    "mandatoryNote": "Where the law requires e-invoices they are always sent; this choice only changes the PDF copy.",
+    "peppolId": "Peppol id",
+    "peppolHelp": "Your Peppol participant id, e.g. 0208:0123456789 — ask your accounting software or e-invoicing provider.",
+    "invoiceEmail": "E-mail for invoices",
+    "invoiceEmailHelp": "Leave empty to use your company e-mail.",
+    "language": "Invoice language",
+    "languageDefault": "Your country's language ({lang})",
+    "secondLanguage": "Second language on invoices",
+    "none": "None",
+    "ksefNip": "NIP for KSeF",
+    "sdiCode": "SDI recipient code",
+    "pec": "PEC e-mail",
+    "leitwegId": "Leitweg-ID (buyer reference)",
+    "selfBilling": "Self-billing",
+    "selfBillingText": "FIRINGI issues your invoice to FIRINGI for every billing statement, in your name and on your behalf, numbered in your own self-billing series. You no longer upload invoices; you can see and download each one here and under My Invoices. You can stop at any time.",
+    "selfBillingAgree": "I agree that FIRINGI issues my invoices for me (self-billing agreement)",
+    "selfBillingSince": "Agreement {number} since {date}",
+    "save": "Save",
+    "saved": "Saved",
+    "readOnly": "Only users who manage the company profile can change these settings.",
+    "docsTitle": "Your e-invoices",
+    "docsEmpty": "No e-invoices yet.",
+    "colDocument": "Document",
+    "colDate": "Date",
+    "colFormat": "Format",
+    "colStatus": "Status",
+    "colRef": "Network reference",
+    "download": "XML",
+    "einvoiceCol": "E-invoice",
+    "selfBilledBadge": "Self-billed",
+    "viaEinvoice": "Received electronically",
+    "status": {
+      "INVALID": "Being prepared",
+      "QUEUED": "Being sent",
+      "SENT": "Sent",
+      "DELIVERED": "Delivered",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected",
+      "FAILED": "Not sent yet",
+      "RECEIVED": "Received",
+      "MATCHED": "Matched"
+    },
+    "kind": {
+      "INVOICE": "Invoice",
+      "CREDIT_NOTE": "Credit note",
+      "SERVICE_INVOICE": "Invoice",
+      "SELF_BILLED": "Self-billed invoice",
+      "SELF_BILLED_CREDIT": "Self-billed credit note",
+      "SUPPLIER_INVOICE": "Your invoice"
+    }
   }
 }

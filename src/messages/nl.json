@@ -863,7 +863,8 @@
     "Excise Report": "Accijnsrapport",
     "Licences": "Vergunningen",
     "Food Information": "Voedselinformatie",
-    "Allergens & Food Info": "Allergenen & Voedselinfo"
+    "Allergens & Food Info": "Allergenen & Voedselinfo",
+    "E-Invoicing": "E-facturatie"
   },
   "delivery": {
     "title": "Levering",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Wisselkoerswaarschuwing",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-factuur niet verzonden: {number}",
+      "body": "{number} kon niet elektronisch worden verzonden: {reason}. Open hem onder Facturen › E-facturatie."
+    },
+    "einvoice_rejected": {
+      "title": "E-factuur afgewezen: {number}",
+      "body": "{number} is afgewezen door de ontvanger of de belastingdienst: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E-factuur tegengehouden door de controles: {number}",
+      "body": "{number} is niet verzonden omdat een controle mislukte: {reason}. Corrigeer de gegevens en verzend opnieuw."
+    },
+    "einvoice_received": {
+      "title": "E-factuur van leverancier te controleren: {number}",
+      "body": "Er kwam een e-factuur van een leverancier binnen ({number}) die niet gekoppeld kon worden: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Factuur voor u opgemaakt: {number}",
+      "body": "FIRINGI heeft uw factuur {number} voor overzicht {statement} opgemaakt onder uw self-billingovereenkomst. U vindt hem onder Mijn facturen aan FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Prijzen in {code} tegen de koers van vandaag: 1 € = {rate} {code}. De koers wordt vastgelegd bij uw bestelling.",
     "rateLocked": "In {code} tegen de koers vastgelegd bij de bestelling: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E-facturatie",
+    "intro": "Hoe u facturen van FIRINGI ontvangt — elektronisch (Peppol, KSeF, SDI …), als pdf per e-mail of beide — en in welke taal.",
+    "introVendor": "Hoe FIRINGI u facturen stuurt en de uwe ontvangt — elektronisch of per e-mail, in welke taal — en of FIRINGI uw facturen voor u opmaakt (self-billing).",
+    "routeMandatory": "In {country} gaan facturen via {format} — wettelijk verplicht voor elke factuur.",
+    "routeOnRequest": "In {country} kan FIRINGI uw facturen als {format} sturen. Geef uw Peppol-ID op of kies hieronder voor e-facturen.",
+    "routeOff": "E-facturen worden voor {country} nog niet gebruikt; u krijgt uw facturen als pdf per e-mail.",
+    "delivery": "Hoe u facturen ontvangt",
+    "deliveryBoth": "E-factuur en pdf per e-mail",
+    "deliveryEinvoice": "Alleen e-factuur",
+    "deliveryEmail": "Alleen pdf per e-mail",
+    "mandatoryNote": "Waar de wet e-facturen verplicht, worden ze altijd verstuurd; deze keuze wijzigt alleen de pdf-kopie.",
+    "peppolId": "Peppol-ID",
+    "peppolHelp": "Uw Peppol-deelnemer-ID, bv. 0208:0123456789 — vraag het aan uw boekhoudpakket of e-facturatieprovider.",
+    "invoiceEmail": "E-mail voor facturen",
+    "invoiceEmailHelp": "Leeg laten om het e-mailadres van het bedrijf te gebruiken.",
+    "language": "Factuurtaal",
+    "languageDefault": "Taal van uw land ({lang})",
+    "secondLanguage": "Tweede taal op facturen",
+    "none": "Geen",
+    "ksefNip": "NIP voor KSeF",
+    "sdiCode": "SDI-ontvangerscode",
+    "pec": "PEC-e-mail",
+    "leitwegId": "Leitweg-ID (kopersreferentie)",
+    "selfBilling": "Self-billing",
+    "selfBillingText": "FIRINGI maakt voor elk facturatieoverzicht uw factuur aan FIRINGI op, in uw naam en voor uw rekening, genummerd in uw eigen self-billingreeks. U hoeft geen facturen meer te uploaden; u kunt elke factuur hier en onder Mijn facturen bekijken en downloaden. U kunt op elk moment stoppen.",
+    "selfBillingAgree": "Ik ga ermee akkoord dat FIRINGI mijn facturen voor mij opmaakt (self-billingovereenkomst)",
+    "selfBillingSince": "Overeenkomst {number} sinds {date}",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "readOnly": "Alleen gebruikers die het bedrijfsprofiel beheren, kunnen deze instellingen wijzigen.",
+    "docsTitle": "Uw e-facturen",
+    "docsEmpty": "Nog geen e-facturen.",
+    "colDocument": "Document",
+    "colDate": "Datum",
+    "colFormat": "Formaat",
+    "colStatus": "Status",
+    "colRef": "Netwerkreferentie",
+    "download": "XML",
+    "einvoiceCol": "E-factuur",
+    "selfBilledBadge": "Self-billing",
+    "viaEinvoice": "Elektronisch ontvangen",
+    "status": {
+      "INVALID": "In voorbereiding",
+      "QUEUED": "Wordt verzonden",
+      "SENT": "Verzonden",
+      "DELIVERED": "Afgeleverd",
+      "ACCEPTED": "Geaccepteerd",
+      "REJECTED": "Afgewezen",
+      "FAILED": "Nog niet verzonden",
+      "RECEIVED": "Ontvangen",
+      "MATCHED": "Gekoppeld"
+    },
+    "kind": {
+      "INVOICE": "Factuur",
+      "CREDIT_NOTE": "Creditnota",
+      "SERVICE_INVOICE": "Factuur",
+      "SELF_BILLED": "Factuur door afnemer",
+      "SELF_BILLED_CREDIT": "Creditnota door afnemer",
+      "SUPPLIER_INVOICE": "Uw factuur"
+    }
   }
 }

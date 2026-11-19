@@ -145,6 +145,7 @@ export const VENDOR_NAV: NavSection[] = [
       vc("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       vc("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
       vc("integrations", "Integrations", "Integrações", "P21", { live: true, feature: "INTEGRATIONS", perm: "company.integrations.manage", es: "Integraciones" }),
+      vc("e-invoicing", "E-Invoicing", "Faturação Eletrónica", "P46", { live: true, perm: ["company.profile.manage", "company.accounting.manage", "vendor.invoices.view", "vendor.invoices.submit"], es: "Facturación electrónica" }),
     ],
   },
 ];
@@ -228,6 +229,7 @@ export const BUY_NAV: NavSection[] = [
       bco("users", "Users", "Utilizadores", "P1", { live: true, perm: ["team.users.view", "team.users.manage"], es: "Usuarios" }),
       bco("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
       bco("integrations", "Integrations", "Integrações", "P21", { live: true, perm: "company.integrations.manage", es: "Integraciones" }),
+      bco("e-invoicing", "E-Invoicing", "Faturação Eletrónica", "P46", { live: true, perm: ["company.profile.manage", "company.accounting.manage", "buyer.invoices.view"], es: "Facturación electrónica" }),
     ],
   },
 ];

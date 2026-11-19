@@ -863,7 +863,8 @@
     "Excise Report": "Raport akcyzowy",
     "Licences": "Koncesje",
     "Food Information": "Informacje o żywności",
-    "Allergens & Food Info": "Alergeny i info o żywności"
+    "Allergens & Food Info": "Alergeny i info o żywności",
+    "E-Invoicing": "Faktury elektroniczne"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Alert kursu walut",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-faktura niewysłana: {number}",
+      "body": "Nie udało się wysłać {number} elektronicznie: {reason}. Otwórz ją w Faktury › Faktury elektroniczne."
+    },
+    "einvoice_rejected": {
+      "title": "E-faktura odrzucona: {number}",
+      "body": "{number} została odrzucona przez odbiorcę lub administrację podatkową: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E-faktura zatrzymana przez kontrole: {number}",
+      "body": "{number} nie została wysłana, bo kontrola się nie powiodła: {reason}. Popraw dane i wyślij ponownie."
+    },
+    "einvoice_received": {
+      "title": "E-faktura dostawcy do sprawdzenia: {number}",
+      "body": "Wpłynęła e-faktura dostawcy ({number}), której nie udało się dopasować: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Faktura wystawiona za Ciebie: {number}",
+      "body": "FIRINGI wystawiło Twoją fakturę {number} do zestawienia {statement} w ramach umowy o samofakturowanie. Znajdziesz ją w Moje faktury dla FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Ceny w {code} po dzisiejszym kursie: 1 € = {rate} {code}. Kurs zostaje ustalony w chwili zamówienia.",
     "rateLocked": "W {code} po kursie ustalonym przy zamówieniu: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Faktury elektroniczne",
+    "intro": "Jak otrzymujesz faktury od FIRINGI — elektronicznie (Peppol, KSeF, SDI …), jako PDF e-mailem lub oba — i w jakim języku.",
+    "introVendor": "Jak FIRINGI wysyła Ci faktury i odbiera Twoje — elektronicznie lub e-mailem, w jakim języku — oraz czy FIRINGI wystawia faktury za Ciebie (samofakturowanie).",
+    "routeMandatory": "W kraju {country} faktury trafiają do {format} — wymagane prawem dla każdej faktury.",
+    "routeOnRequest": "W kraju {country} FIRINGI może wysyłać Twoje faktury jako {format}. Podaj swój identyfikator Peppol lub wybierz poniżej faktury elektroniczne.",
+    "routeOff": "Faktury elektroniczne nie są jeszcze używane w kraju {country}; otrzymujesz faktury jako PDF e-mailem.",
+    "delivery": "Jak otrzymujesz faktury",
+    "deliveryBoth": "Faktura elektroniczna i PDF e-mailem",
+    "deliveryEinvoice": "Tylko faktura elektroniczna",
+    "deliveryEmail": "Tylko PDF e-mailem",
+    "mandatoryNote": "Tam, gdzie prawo wymaga faktur elektronicznych, są one zawsze wysyłane; ten wybór zmienia tylko kopię PDF.",
+    "peppolId": "Identyfikator Peppol",
+    "peppolHelp": "Twój identyfikator uczestnika Peppol, np. 0208:0123456789 — zapytaj swój program księgowy lub dostawcę e-faktur.",
+    "invoiceEmail": "E-mail do faktur",
+    "invoiceEmailHelp": "Pozostaw puste, aby użyć e-maila firmy.",
+    "language": "Język faktur",
+    "languageDefault": "Język Twojego kraju ({lang})",
+    "secondLanguage": "Drugi język na fakturach",
+    "none": "Brak",
+    "ksefNip": "NIP do KSeF",
+    "sdiCode": "Kod odbiorcy SDI",
+    "pec": "E-mail PEC",
+    "leitwegId": "Leitweg-ID (numer referencyjny nabywcy)",
+    "selfBilling": "Samofakturowanie",
+    "selfBillingText": "FIRINGI wystawia Twoją fakturę dla FIRINGI do każdego zestawienia rozliczeniowego, w Twoim imieniu i na Twoją rzecz, numerowaną w Twojej własnej serii samofakturowania. Nie musisz już przesyłać faktur; każdą możesz zobaczyć i pobrać tutaj oraz w Moich fakturach. Możesz zrezygnować w każdej chwili.",
+    "selfBillingAgree": "Zgadzam się, aby FIRINGI wystawiało moje faktury za mnie (umowa o samofakturowanie)",
+    "selfBillingSince": "Umowa {number} od {date}",
+    "save": "Zapisz",
+    "saved": "Zapisano",
+    "readOnly": "Tylko użytkownicy zarządzający profilem firmy mogą zmieniać te ustawienia.",
+    "docsTitle": "Twoje faktury elektroniczne",
+    "docsEmpty": "Brak faktur elektronicznych.",
+    "colDocument": "Dokument",
+    "colDate": "Data",
+    "colFormat": "Format",
+    "colStatus": "Status",
+    "colRef": "Numer w sieci",
+    "download": "XML",
+    "einvoiceCol": "E-faktura",
+    "selfBilledBadge": "Samofakturowanie",
+    "viaEinvoice": "Otrzymana elektronicznie",
+    "status": {
+      "INVALID": "W przygotowaniu",
+      "QUEUED": "Wysyłanie",
+      "SENT": "Wysłana",
+      "DELIVERED": "Dostarczona",
+      "ACCEPTED": "Przyjęta",
+      "REJECTED": "Odrzucona",
+      "FAILED": "Jeszcze nie wysłana",
+      "RECEIVED": "Otrzymana",
+      "MATCHED": "Dopasowana"
+    },
+    "kind": {
+      "INVOICE": "Faktura",
+      "CREDIT_NOTE": "Faktura korygująca",
+      "SERVICE_INVOICE": "Faktura",
+      "SELF_BILLED": "Faktura w samofakturowaniu",
+      "SELF_BILLED_CREDIT": "Korekta w samofakturowaniu",
+      "SUPPLIER_INVOICE": "Twoja faktura"
+    }
   }
 }

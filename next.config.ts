@@ -5,13 +5,14 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   // Prisma + better-auth must run on the Node runtime, never bundled for the edge.
-  serverExternalPackages: ["@prisma/client", ".prisma/client", "@react-pdf/renderer"],
+  serverExternalPackages: ["@prisma/client", ".prisma/client", "@react-pdf/renderer", "pdf-lib", "fast-xml-parser", "fflate"],
   typedRoutes: false,
   // A self-contained server (.next/standalone) for the Docker image — runs on any host with Node or Docker.
   output: "standalone",
   // Document uploads go through server actions (max file size is enforced again in the storage service).
-  // webpackMemoryOptimizations: lower peak memory while building (the build box has ~10 GB)
-  experimental: { serverActions: { bodySizeLimit: "12mb" }, webpackMemoryOptimizations: true },
+  // webpackMemoryOptimizations + webpackBuildWorker: lower peak memory while building (the build box has ~10 GB;
+  // each compiler runs in its own worker process instead of all in one heap)
+  experimental: { serverActions: { bodySizeLimit: "12mb" }, webpackMemoryOptimizations: true, webpackBuildWorker: true },
   poweredByHeader: false,
   // API answers (the middleware covers pages): never sniffed, never framed, never cached by proxies.
   async headers() {

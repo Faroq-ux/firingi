@@ -1551,6 +1551,26 @@
     "fx_alert": {
       "title": "Alerta de taxa de câmbio",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "Fatura eletrónica não enviada: {number}",
+      "body": "{number} não pôde ser enviada eletronicamente: {reason}. Abra-a em Faturas › Faturação Eletrónica."
+    },
+    "einvoice_rejected": {
+      "title": "Fatura eletrónica rejeitada: {number}",
+      "body": "{number} foi rejeitada pelo destinatário ou pela autoridade tributária: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Fatura eletrónica parada pelas verificações: {number}",
+      "body": "{number} não foi enviada porque uma verificação falhou: {reason}. Corrija os dados e envie de novo."
+    },
+    "einvoice_received": {
+      "title": "Fatura eletrónica de fornecedor a rever: {number}",
+      "body": "Chegou uma fatura eletrónica de fornecedor ({number}) que não foi possível conciliar: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Fatura emitida por si: {number}",
+      "body": "A FIRINGI emitiu a sua fatura {number} para o extrato {statement} ao abrigo do seu acordo de autofaturação. Veja-a em As Minhas Faturas à FIRINGI."
     }
   },
   "notifications": {
@@ -5609,5 +5629,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Preços em {code} à taxa de hoje: 1 € = {rate} {code}. A taxa fica fixada quando encomenda.",
     "rateLocked": "Em {code} à taxa fixada na encomenda: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Faturação Eletrónica",
+    "intro": "Como recebe as faturas da FIRINGI — em formato eletrónico (Peppol, KSeF, SDI …), em PDF por e-mail, ou ambos — e em que língua.",
+    "introVendor": "Como a FIRINGI lhe envia as faturas e recebe as suas — em formato eletrónico ou por e-mail, em que língua — e se a FIRINGI emite as suas faturas por si (autofaturação).",
+    "routeMandatory": "Em {country}, as faturas seguem por {format} — obrigatório por lei para todas as faturas.",
+    "routeOnRequest": "Em {country}, a FIRINGI pode enviar as suas faturas como {format}. Indique o seu identificador Peppol ou escolha faturas eletrónicas abaixo.",
+    "routeOff": "As faturas eletrónicas ainda não são usadas em {country}; recebe as faturas em PDF por e-mail.",
+    "delivery": "Como recebe as faturas",
+    "deliveryBoth": "Fatura eletrónica e PDF por e-mail",
+    "deliveryEinvoice": "Só fatura eletrónica",
+    "deliveryEmail": "Só PDF por e-mail",
+    "mandatoryNote": "Onde a lei exige faturas eletrónicas, são sempre enviadas; esta escolha só altera a cópia em PDF.",
+    "peppolId": "Identificador Peppol",
+    "peppolHelp": "O seu identificador de participante Peppol, p. ex. 0208:0123456789 — peça-o ao seu programa de contabilidade ou fornecedor de faturação eletrónica.",
+    "invoiceEmail": "E-mail para faturas",
+    "invoiceEmailHelp": "Deixe vazio para usar o e-mail da empresa.",
+    "language": "Língua das faturas",
+    "languageDefault": "Língua do seu país ({lang})",
+    "secondLanguage": "Segunda língua nas faturas",
+    "none": "Nenhuma",
+    "ksefNip": "NIP para o KSeF",
+    "sdiCode": "Código de destinatário SDI",
+    "pec": "E-mail PEC",
+    "leitwegId": "Leitweg-ID (referência do comprador)",
+    "selfBilling": "Autofaturação",
+    "selfBillingText": "A FIRINGI emite a sua fatura à FIRINGI para cada extrato de faturação, em seu nome e por sua conta, numerada na sua própria série de autofaturação. Deixa de carregar faturas; pode ver e descarregar cada uma aqui e em As Minhas Faturas. Pode parar a qualquer momento.",
+    "selfBillingAgree": "Aceito que a FIRINGI emita as minhas faturas por mim (acordo de autofaturação)",
+    "selfBillingSince": "Acordo {number} desde {date}",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "readOnly": "Só os utilizadores que gerem o perfil da empresa podem alterar estas definições.",
+    "docsTitle": "As suas faturas eletrónicas",
+    "docsEmpty": "Ainda não há faturas eletrónicas.",
+    "colDocument": "Documento",
+    "colDate": "Data",
+    "colFormat": "Formato",
+    "colStatus": "Estado",
+    "colRef": "Referência da rede",
+    "download": "XML",
+    "einvoiceCol": "Fatura eletrónica",
+    "selfBilledBadge": "Autofaturação",
+    "viaEinvoice": "Recebida eletronicamente",
+    "status": {
+      "INVALID": "Em preparação",
+      "QUEUED": "A enviar",
+      "SENT": "Enviada",
+      "DELIVERED": "Entregue",
+      "ACCEPTED": "Aceite",
+      "REJECTED": "Rejeitada",
+      "FAILED": "Ainda não enviada",
+      "RECEIVED": "Recebida",
+      "MATCHED": "Conciliada"
+    },
+    "kind": {
+      "INVOICE": "Fatura",
+      "CREDIT_NOTE": "Nota de crédito",
+      "SERVICE_INVOICE": "Fatura",
+      "SELF_BILLED": "Fatura em autofaturação",
+      "SELF_BILLED_CREDIT": "Nota de crédito em autofaturação",
+      "SUPPLIER_INVOICE": "A sua fatura"
+    }
   }
 }

@@ -863,7 +863,8 @@
     "Excise Report": "Akcizų ataskaita",
     "Licences": "Licencijos",
     "Food Information": "Maisto informacija",
-    "Allergens & Food Info": "Alergenai ir maisto informacija"
+    "Allergens & Food Info": "Alergenai ir maisto informacija",
+    "E-Invoicing": "E. sąskaitos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Valiutos kurso įspėjimas",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E. sąskaita neišsiųsta: {number}",
+      "body": "{number} nepavyko išsiųsti elektroniniu būdu: {reason}. Atidarykite ją skiltyje Sąskaitos › E. sąskaitos."
+    },
+    "einvoice_rejected": {
+      "title": "E. sąskaita atmesta: {number}",
+      "body": "{number} atmetė gavėjas arba mokesčių administratorius: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E. sąskaitą sustabdė patikros: {number}",
+      "body": "{number} neišsiųsta, nes nepavyko patikra: {reason}. Pataisykite duomenis ir siųskite dar kartą."
+    },
+    "einvoice_received": {
+      "title": "Tiekėjo e. sąskaita peržiūrai: {number}",
+      "body": "Gauta tiekėjo e. sąskaita ({number}), kurios nepavyko susieti: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Už jus išrašyta sąskaita: {number}",
+      "body": "FIRINGI išrašė jūsų sąskaitą {number} ataskaitai {statement} pagal jūsų susitarimą. Ją rasite skiltyje Mano sąskaitos FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Kainos {code} šiandienos kursu: 1 € = {rate} {code}. Kursas užfiksuojamas užsakant.",
     "rateLocked": "{code} užsakant užfiksuotu kursu: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E. sąskaitos",
+    "intro": "Kaip gaunate FIRINGI sąskaitas — elektroniniu būdu (Peppol, KSeF, SDI …), kaip PDF el. paštu ar abiem būdais — ir kokia kalba.",
+    "introVendor": "Kaip FIRINGI siunčia jums sąskaitas ir priima jūsiškes — elektroniniu būdu ar el. paštu, kokia kalba — ir ar FIRINGI išrašo sąskaitas už jus (pirkėjo išrašomos sąskaitos).",
+    "routeMandatory": "Šalyje {country} sąskaitos keliauja per {format} — įstatymu privaloma kiekvienai sąskaitai.",
+    "routeOnRequest": "Šalyje {country} FIRINGI gali siųsti jūsų sąskaitas kaip {format}. Nurodykite savo Peppol ID arba žemiau pasirinkite e. sąskaitas.",
+    "routeOff": "Šalyje {country} e. sąskaitos dar nenaudojamos; sąskaitas gaunate kaip PDF el. paštu.",
+    "delivery": "Kaip gaunate sąskaitas",
+    "deliveryBoth": "E. sąskaita ir PDF el. paštu",
+    "deliveryEinvoice": "Tik e. sąskaita",
+    "deliveryEmail": "Tik PDF el. paštu",
+    "mandatoryNote": "Kur įstatymas reikalauja e. sąskaitų, jos siunčiamos visada; šis pasirinkimas keičia tik PDF kopiją.",
+    "peppolId": "Peppol ID",
+    "peppolHelp": "Jūsų Peppol dalyvio ID, pvz., 0208:0123456789 — paklauskite savo apskaitos programos ar e. sąskaitų paslaugų teikėjo.",
+    "invoiceEmail": "El. paštas sąskaitoms",
+    "invoiceEmailHelp": "Palikite tuščią, kad būtų naudojamas įmonės el. paštas.",
+    "language": "Sąskaitų kalba",
+    "languageDefault": "Jūsų šalies kalba ({lang})",
+    "secondLanguage": "Antroji kalba sąskaitose",
+    "none": "Nėra",
+    "ksefNip": "NIP KSeF sistemai",
+    "sdiCode": "SDI gavėjo kodas",
+    "pec": "PEC el. paštas",
+    "leitwegId": "Leitweg-ID (pirkėjo nuoroda)",
+    "selfBilling": "Sąskaitų išrašymas pirkėjo",
+    "selfBillingText": "FIRINGI kiekvienai atsiskaitymo ataskaitai išrašo jūsų sąskaitą FIRINGI jūsų vardu ir jūsų sąskaita, sunumeruotą jūsų pačių serijoje. Nebereikia įkelti sąskaitų; kiekvieną galite peržiūrėti ir atsisiųsti čia ir skiltyje Mano sąskaitos. Galite bet kada nutraukti.",
+    "selfBillingAgree": "Sutinku, kad FIRINGI išrašytų mano sąskaitas už mane (susitarimas dėl sąskaitų išrašymo pirkėjo)",
+    "selfBillingSince": "Susitarimas {number} nuo {date}",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota",
+    "readOnly": "Šiuos nustatymus gali keisti tik įmonės profilį tvarkantys naudotojai.",
+    "docsTitle": "Jūsų e. sąskaitos",
+    "docsEmpty": "E. sąskaitų dar nėra.",
+    "colDocument": "Dokumentas",
+    "colDate": "Data",
+    "colFormat": "Formatas",
+    "colStatus": "Būsena",
+    "colRef": "Tinklo nuoroda",
+    "download": "XML",
+    "einvoiceCol": "E. sąskaita",
+    "selfBilledBadge": "Išrašyta pirkėjo",
+    "viaEinvoice": "Gauta elektroniniu būdu",
+    "status": {
+      "INVALID": "Ruošiama",
+      "QUEUED": "Siunčiama",
+      "SENT": "Išsiųsta",
+      "DELIVERED": "Pristatyta",
+      "ACCEPTED": "Priimta",
+      "REJECTED": "Atmesta",
+      "FAILED": "Dar neišsiųsta",
+      "RECEIVED": "Gauta",
+      "MATCHED": "Susieta"
+    },
+    "kind": {
+      "INVOICE": "Sąskaita",
+      "CREDIT_NOTE": "Kreditinė sąskaita",
+      "SERVICE_INVOICE": "Sąskaita",
+      "SELF_BILLED": "Pirkėjo išrašyta sąskaita",
+      "SELF_BILLED_CREDIT": "Pirkėjo išrašyta kreditinė sąskaita",
+      "SUPPLIER_INVOICE": "Jūsų sąskaita"
+    }
   }
 }

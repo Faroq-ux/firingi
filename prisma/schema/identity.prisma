@@ -282,6 +282,8 @@ model Company {
   clearanceDeals         ClearanceDeal[]           @relation("ClearanceDeals")
   returnableTypes        ReturnableType[]          @relation("ReturnableTypes")
   clearanceBids          ClearanceBid[]            @relation("ClearanceBids")
+  einvoiceDocs           EInvoiceDocument[]        @relation("EInvoiceCounterparty")
+  einvoiceProfile        EInvoiceProfile?
 
   @@unique([countryId, taxId, type])
   @@index([type, status])
@@ -303,21 +305,27 @@ model CompanyStatusHistory {
 
 /// FIRINGI's own invoicing entity per country (Portugal at launch). Issuer of every sales invoice.
 model LegalEntity {
-  id          String   @id @default(cuid())
-  countryId   String
-  legalName   String
-  taxId       String
-  vatNumber   String
-  addressLine String
-  postalCode  String
-  city        String
-  email       String
-  phone       String?
-  iban        String?
-  logoKey     String?
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  countryId          String
+  legalName          String
+  taxId              String
+  vatNumber          String
+  addressLine        String
+  postalCode         String
+  city               String
+  email              String
+  phone              String?
+  iban               String?
+  logoKey            String?
+  /// Phase 46: the entity's document language (default: its country's), an optional second language,
+  /// whether its own language must always be on its documents, and its Peppol participant id
+  language           String?
+  secondLanguage     String?
+  requireOwnLanguage Boolean  @default(true)
+  peppolId           String?
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   country       Country         @relation(fields: [countryId], references: [id])
   invoiceSeries InvoiceSeries[]

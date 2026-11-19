@@ -863,7 +863,8 @@
     "Excise Report": "Aktsiisiaruanne",
     "Licences": "Litsentsid",
     "Food Information": "Toiduteave",
-    "Allergens & Food Info": "Allergeenid ja toiduteave"
+    "Allergens & Food Info": "Allergeenid ja toiduteave",
+    "E-Invoicing": "E-arveldus"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Valuutakursi hoiatus",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-arve saatmata: {number}",
+      "body": "{number} ei õnnestunud elektrooniliselt saata: {reason}. Avage see jaotises Arved › E-arveldus."
+    },
+    "einvoice_rejected": {
+      "title": "E-arve tagasi lükatud: {number}",
+      "body": "Saaja või maksuhaldur lükkas arve {number} tagasi: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Kontrollid peatasid e-arve: {number}",
+      "body": "{number} jäi saatmata, sest kontroll ebaõnnestus: {reason}. Parandage andmed ja saatke uuesti."
+    },
+    "einvoice_received": {
+      "title": "Kontrollimist vajav tarnija e-arve: {number}",
+      "body": "Saabus tarnija e-arve ({number}), mida ei õnnestunud sobitada: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Teie eest koostatud arve: {number}",
+      "body": "FIRINGI koostas teie arve {number} aruande {statement} kohta teie enesearvelduse kokkuleppe alusel. Leiate selle jaotisest Minu arved FIRINGI-le."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Hinnad valuutas {code} tänase kursiga: 1 € = {rate} {code}. Kurss lukustub tellimisel.",
     "rateLocked": "Valuutas {code} tellimisel lukustatud kursiga: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E-arveldus",
+    "intro": "Kuidas saate FIRINGI arveid — elektrooniliselt (Peppol, KSeF, SDI …), PDF-ina e-postiga või mõlemat — ja mis keeles.",
+    "introVendor": "Kuidas FIRINGI saadab teile arveid ja võtab teie omad vastu — elektrooniliselt või e-postiga, mis keeles — ja kas FIRINGI koostab arved teie eest (enesearveldus).",
+    "routeMandatory": "Riigis {country} liiguvad arved {format} kaudu — seadusega kohustuslik iga arve puhul.",
+    "routeOnRequest": "Riigis {country} saab FIRINGI saata teie arved kujul {format}. Sisestage oma Peppoli ID või valige allpool e-arved.",
+    "routeOff": "Riigis {country} e-arveid veel ei kasutata; saate arved PDF-ina e-postiga.",
+    "delivery": "Kuidas saate arveid",
+    "deliveryBoth": "E-arve ja PDF e-postiga",
+    "deliveryEinvoice": "Ainult e-arve",
+    "deliveryEmail": "Ainult PDF e-postiga",
+    "mandatoryNote": "Kus seadus nõuab e-arvet, saadetakse see alati; see valik muudab ainult PDF-koopiat.",
+    "peppolId": "Peppoli ID",
+    "peppolHelp": "Teie Peppoli osaleja ID, nt 0208:0123456789 — küsige oma raamatupidamistarkvaralt või e-arve teenusepakkujalt.",
+    "invoiceEmail": "Arvete e-post",
+    "invoiceEmailHelp": "Jätke tühjaks, et kasutada ettevõtte e-posti.",
+    "language": "Arve keel",
+    "languageDefault": "Teie riigi keel ({lang})",
+    "secondLanguage": "Teine keel arvetel",
+    "none": "Puudub",
+    "ksefNip": "NIP KSeF-i jaoks",
+    "sdiCode": "SDI saaja kood",
+    "pec": "PEC e-post",
+    "leitwegId": "Leitweg-ID (ostja viide)",
+    "selfBilling": "Enesearveldus",
+    "selfBillingText": "FIRINGI koostab iga arveldusaruande kohta teie arve FIRINGI-le teie nimel ja teie arvel, nummerdatuna teie oma enesearvelduse seerias. Te ei pea enam arveid üles laadima; igaüht saate vaadata ja alla laadida siin ja jaotises Minu arved. Võite igal ajal lõpetada.",
+    "selfBillingAgree": "Nõustun, et FIRINGI koostab minu arved minu eest (enesearvelduse kokkulepe)",
+    "selfBillingSince": "Kokkulepe {number} alates {date}",
+    "save": "Salvesta",
+    "saved": "Salvestatud",
+    "readOnly": "Neid seadeid saavad muuta ainult ettevõtte profiili haldavad kasutajad.",
+    "docsTitle": "Teie e-arved",
+    "docsEmpty": "E-arveid veel pole.",
+    "colDocument": "Dokument",
+    "colDate": "Kuupäev",
+    "colFormat": "Vorming",
+    "colStatus": "Olek",
+    "colRef": "Võrguviide",
+    "download": "XML",
+    "einvoiceCol": "E-arve",
+    "selfBilledBadge": "Enesearveldus",
+    "viaEinvoice": "Saabunud elektrooniliselt",
+    "status": {
+      "INVALID": "Ettevalmistamisel",
+      "QUEUED": "Saatmisel",
+      "SENT": "Saadetud",
+      "DELIVERED": "Kohale toimetatud",
+      "ACCEPTED": "Vastu võetud",
+      "REJECTED": "Tagasi lükatud",
+      "FAILED": "Veel saatmata",
+      "RECEIVED": "Saabunud",
+      "MATCHED": "Sobitatud"
+    },
+    "kind": {
+      "INVOICE": "Arve",
+      "CREDIT_NOTE": "Kreeditarve",
+      "SERVICE_INVOICE": "Arve",
+      "SELF_BILLED": "Enesearveldusarve",
+      "SELF_BILLED_CREDIT": "Enesearvelduse kreeditarve",
+      "SUPPLIER_INVOICE": "Teie arve"
+    }
   }
 }

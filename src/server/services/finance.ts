@@ -137,19 +137,39 @@ export async function submitVendorInvoice(ctx: Ctx, input: {
   statementIds: string[]; docType: "INVOICE" | "CREDIT_NOTE"; externalNumber: string; issueDate: Date; netTotal: string; vatTotal: string; file: File;
 }) {
   if (!isVendor(ctx) || !can(ctx, "vendor.invoices.submit")) throw new ForbiddenError();
+  await checkVendorInvoice(ctx.company.id, input);
+  const stored = await storeUpload(input.file, `vendor-invoices/${ctx.company.id}`);
+  return recordVendorInvoice({ ...input, vendorCompanyId: ctx.company.id, fileKey: stored.key, source: "UPLOAD", actorUserId: ctx.user.id, actorCompanyId: ctx.company.id });
+}
+
+/** The checks before a supplier invoice is recorded (statements, credit vs invoice, VAT treatment, duplicate number). */
+export async function checkVendorInvoice(vendorCompanyId: string, input: { statementIds: string[]; docType: "INVOICE" | "CREDIT_NOTE"; externalNumber: string }) {
   if (!input.statementIds.length) throw new ValidationError("Choose the statement(s) this invoice covers.");
-  const statements = await prisma.vendorBillingStatement.findMany({ where: { id: { in: input.statementIds }, vendorCompanyId: ctx.company.id } });
+  const statements = await prisma.vendorBillingStatement.findMany({ where: { id: { in: input.statementIds }, vendorCompanyId } });
   if (statements.length !== input.statementIds.length) throw new NotFoundError("Statement");
   if (statements.some((s) => s.status !== "OPEN" && s.status !== "DISPUTED")) throw new ValidationError("One of the statements already has an invoice.");
   const isCredit = input.docType === "CREDIT_NOTE";
   if (statements.some((s) => s.isCreditStatement !== isCredit)) throw new ValidationError(isCredit ? "Credit notes go against credit statements." : "Invoices go against normal statements (use a credit note for credit statements).");
   if (new Set(statements.map((s) => s.taxRegime)).size > 1) throw new ValidationError("Statements with different VAT treatment must be invoiced separately.");
-  if (await prisma.vendorInvoice.findUnique({ where: { vendorCompanyId_externalNumber: { vendorCompanyId: ctx.company.id, externalNumber: input.externalNumber.trim() } } }))
+  if (await prisma.vendorInvoice.findUnique({ where: { vendorCompanyId_externalNumber: { vendorCompanyId, externalNumber: input.externalNumber.trim() } } }))
     throw new AppError("DUPLICATE", "You already submitted a document with this number.", 409);
+  if (new Set(statements.map((s) => s.currencyCode)).size > 1) throw new ValidationError("Statements in different currencies must be invoiced separately.");
+  return statements;
+}
 
+/**
+ * Record a supplier invoice against its statements and match the amounts (in the statements' currency).
+ * Used for uploads, Phase 46 e-invoices received through a network, and self-billed invoices.
+ * `tx` given: runs inside the caller's transaction (self-billing at delivery).
+ */
+export async function recordVendorInvoice(input: {
+  vendorCompanyId: string; statementIds: string[]; docType: "INVOICE" | "CREDIT_NOTE"; externalNumber: string; issueDate: Date; netTotal: string; vatTotal: string;
+  fileKey: string; source: "UPLOAD" | "SELF_BILLED" | "EINVOICE"; structuredData?: Prisma.InputJsonValue | null; actorUserId: string | null; actorCompanyId: string | null;
+}, tx?: Prisma.TransactionClient) {
+  const db = tx ?? prisma;
+  const statements = await db.vendorBillingStatement.findMany({ where: { id: { in: input.statementIds }, vendorCompanyId: input.vendorCompanyId } });
   // Phase 45: statements in the supplier's currency are invoiced in it (amounts typed in that currency)
   const codes = [...new Set(statements.map((s) => s.currencyCode))];
-  if (codes.length > 1) throw new ValidationError("Statements in different currencies must be invoiced separately.");
   const code = codes[0] ?? "EUR";
   const local = code !== "EUR";
   const net = new Decimal(input.netTotal), vat = new Decimal(input.vatTotal);
@@ -170,27 +190,27 @@ export async function submitVendorInvoice(ctx: Ctx, input: {
   if (regime === "INTRA_EU_REVERSE_CHARGE")
     for (const s of statements) {
       const lines = s.lines as { orderLineId: string | null; lineNet: string; selfAssessRate?: string }[];
-      const ols = await prisma.orderLine.findMany({ where: { id: { in: lines.map((l) => l.orderLineId).filter((x): x is string => !!x) } }, select: { id: true, taxRate: true } });
+      const ols = await db.orderLine.findMany({ where: { id: { in: lines.map((l) => l.orderLineId).filter((x): x is string => !!x) } }, select: { id: true, taxRate: true } });
       // Goods: the order line's rate; the supplier's delivery fee: the rate FIRINGI charged on it.
       for (const l of lines) selfAssessed = selfAssessed.plus(new Decimal(l.lineNet).mul(l.selfAssessRate ?? ols.find((o) => o.id === l.orderLineId)?.taxRate.toString() ?? 0).div(100));
     }
-  const stored = await storeUpload(input.file, `vendor-invoices/${ctx.company.id}`);
 
-  const vi = await prisma.$transaction(async (tx) => {
-    const created = await tx.vendorInvoice.create({
+  const run = async (t: Prisma.TransactionClient) => {
+    const created = await t.vendorInvoice.create({
       data: {
-        vendorCompanyId: ctx.company.id, docType: input.docType, externalNumber: input.externalNumber.trim(), issueDate: input.issueDate, taxRegime: regime,
+        vendorCompanyId: input.vendorCompanyId, docType: input.docType, externalNumber: input.externalNumber.trim(), issueDate: input.issueDate, taxRegime: regime,
         netTotal: eurNet.toFixed(2), vatTotal: eurVat.toFixed(2), grossTotal: eurNet.plus(eurVat).toFixed(2), selfAssessedVat: selfAssessed.toDecimalPlaces(2).toFixed(2),
         ...(local ? { currencyCode: code, rate: rate.toString(), netTotalLocal: net.toFixed(2), vatTotalLocal: vat.toFixed(2), grossTotalLocal: net.plus(vat).toFixed(2) } : {}),
-        fileKey: stored.key, status: matched ? "MATCHED" : "DISPUTED", matchResult: matched ? { ok: true } : diffs, submittedById: ctx.user.id,
+        fileKey: input.fileKey, source: input.source, ...(input.structuredData ? { structuredData: input.structuredData } : {}),
+        status: matched ? "MATCHED" : "DISPUTED", matchResult: matched ? { ok: true } : diffs, submittedById: input.actorUserId,
         allocations: { create: statements.map((s) => ({ statementId: s.id, amountNet: s.expectedNet })) },
       },
     });
-    await tx.vendorBillingStatement.updateMany({ where: { id: { in: input.statementIds } }, data: { status: matched ? "MATCHED" : "DISPUTED" } });
-    await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "vendor_invoice.submitted", entityType: "VendorInvoice", entityId: created.id, after: { number: input.externalNumber, net: net.toFixed(2), vat: vat.toFixed(2), matched, diffs } }, tx);
+    await t.vendorBillingStatement.updateMany({ where: { id: { in: input.statementIds } }, data: { status: matched ? "MATCHED" : "DISPUTED" } });
+    await writeAudit({ actorUserId: input.actorUserId, actorCompanyId: input.actorCompanyId, action: "vendor_invoice.submitted", entityType: "VendorInvoice", entityId: created.id, after: { number: input.externalNumber, net: net.toFixed(2), vat: vat.toFixed(2), matched, diffs, source: input.source } }, t);
     return created;
-  });
-  return vi;
+  };
+  return tx ? run(tx) : prisma.$transaction(run);
 }
 
 export async function listVendorInvoices(ctx: Ctx, as: "VENDOR" | "ADMIN", f: { vendorType?: "DISTRIBUTOR" | "WHOLESALER"; statuses?: string[] } = {}) {

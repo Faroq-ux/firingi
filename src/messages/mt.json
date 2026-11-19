@@ -863,7 +863,8 @@
     "Excise Report": "Rapport tas-Sisa",
     "Licences": "Liċenzji",
     "Food Information": "Informazzjoni dwar l-Ikel",
-    "Allergens & Food Info": "Allerġeni u Info dwar l-Ikel"
+    "Allergens & Food Info": "Allerġeni u Info dwar l-Ikel",
+    "E-Invoicing": "Fatturazzjoni elettronika"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Twissija dwar ir-rata tal-kambju",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "Fattura elettronika mhux mibgħuta: {number}",
+      "body": "{number} ma setgħetx tintbagħat elettronikament: {reason}. Iftaħha taħt Fatturi › Fatturazzjoni elettronika."
+    },
+    "einvoice_rejected": {
+      "title": "Fattura elettronika miċħuda: {number}",
+      "body": "{number} ġiet miċħuda mid-destinatarju jew mill-awtorità tat-taxxa: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Fattura elettronika mwaqqfa mill-kontrolli: {number}",
+      "body": "{number} ma ntbagħtitx għax kontroll falla: {reason}. Ikkoreġi d-dejta u erġa' ibgħatha."
+    },
+    "einvoice_received": {
+      "title": "Fattura elettronika ta' fornitur biex tiġi rieżaminata: {number}",
+      "body": "Waslet fattura elettronika ta' fornitur ({number}) li ma setgħetx titqabbel: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Fattura maħruġa għalik: {number}",
+      "body": "FIRINGI ħarġet il-fattura tiegħek {number} għad-dikjarazzjoni {statement} taħt il-ftehim ta' self-billing tiegħek. Araha taħt Il-Fatturi Tiegħi lil FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Prezzijiet f'{code} bir-rata tal-lum: 1 € = {rate} {code}. Ir-rata tiġi ffissata meta tordna.",
     "rateLocked": "F'{code} bir-rata ffissata meta ordnajt: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Fatturazzjoni elettronika",
+    "intro": "Kif tirċievi l-fatturi minn FIRINGI — elettronikament (Peppol, KSeF, SDI …), bħala PDF bl-email, jew it-tnejn — u b'liema lingwa.",
+    "introVendor": "Kif FIRINGI tibagħtlek il-fatturi tagħha u tirċievi tiegħek — elettronikament jew bl-email, b'liema lingwa — u jekk FIRINGI toħroġ il-fatturi tiegħek għalik (self-billing).",
+    "routeMandatory": "F'{country}, il-fatturi jgħaddu minn {format} — meħtieġ bil-liġi għal kull fattura.",
+    "routeOnRequest": "F'{country}, FIRINGI tista' tibgħat il-fatturi tiegħek bħala {format}. Daħħal l-ID Peppol tiegħek jew agħżel fatturi elettroniċi hawn taħt.",
+    "routeOff": "Il-fatturi elettroniċi għadhom mhumiex użati għal {country}; tirċievi l-fatturi bħala PDF bl-email.",
+    "delivery": "Kif tirċievi l-fatturi",
+    "deliveryBoth": "Fattura elettronika u PDF bl-email",
+    "deliveryEinvoice": "Fattura elettronika biss",
+    "deliveryEmail": "PDF bl-email biss",
+    "mandatoryNote": "Fejn il-liġi titlob fatturi elettroniċi, dawn jintbagħtu dejjem; din l-għażla tbiddel biss il-kopja PDF.",
+    "peppolId": "ID Peppol",
+    "peppolHelp": "L-ID tal-parteċipant Peppol tiegħek, eż. 0208:0123456789 — staqsi lis-software tal-kontabilità jew lill-fornitur tal-fatturazzjoni elettronika.",
+    "invoiceEmail": "Email għall-fatturi",
+    "invoiceEmailHelp": "Ħallih vojt biex tintuża l-email tal-kumpanija.",
+    "language": "Lingwa tal-fatturi",
+    "languageDefault": "Il-lingwa ta' pajjiżek ({lang})",
+    "secondLanguage": "It-tieni lingwa fuq il-fatturi",
+    "none": "Xejn",
+    "ksefNip": "NIP għal KSeF",
+    "sdiCode": "Kodiċi tad-destinatarju SDI",
+    "pec": "Email PEC",
+    "leitwegId": "Leitweg-ID (referenza tax-xerrej)",
+    "selfBilling": "Self-billing",
+    "selfBillingText": "FIRINGI toħroġ il-fattura tiegħek lil FIRINGI għal kull dikjarazzjoni tal-kontijiet, f'ismek u għan-nom tiegħek, innumerata fis-serje tiegħek stess. M'għadekx ittella' fatturi; tista' tara u tniżżel kull waħda hawn u taħt Il-Fatturi Tiegħi. Tista' tieqaf meta trid.",
+    "selfBillingAgree": "Naqbel li FIRINGI toħroġ il-fatturi tiegħi għalija (ftehim ta' self-billing)",
+    "selfBillingSince": "Ftehim {number} minn {date}",
+    "save": "Issejvja",
+    "saved": "Issejvjat",
+    "readOnly": "Dawn is-settings jistgħu jinbidlu biss minn utenti li jimmaniġġjaw il-profil tal-kumpanija.",
+    "docsTitle": "Il-fatturi elettroniċi tiegħek",
+    "docsEmpty": "Għad m'hemmx fatturi elettroniċi.",
+    "colDocument": "Dokument",
+    "colDate": "Data",
+    "colFormat": "Format",
+    "colStatus": "Status",
+    "colRef": "Referenza tan-netwerk",
+    "download": "XML",
+    "einvoiceCol": "Fattura elettronika",
+    "selfBilledBadge": "Self-billing",
+    "viaEinvoice": "Riċevuta elettronikament",
+    "status": {
+      "INVALID": "Qed titħejja",
+      "QUEUED": "Qed tintbagħat",
+      "SENT": "Mibgħuta",
+      "DELIVERED": "Ikkonsenjata",
+      "ACCEPTED": "Aċċettata",
+      "REJECTED": "Miċħuda",
+      "FAILED": "Għadha ma ntbagħtitx",
+      "RECEIVED": "Riċevuta",
+      "MATCHED": "Imqabbla"
+    },
+    "kind": {
+      "INVOICE": "Fattura",
+      "CREDIT_NOTE": "Nota ta' kreditu",
+      "SERVICE_INVOICE": "Fattura",
+      "SELF_BILLED": "Fattura self-billing",
+      "SELF_BILLED_CREDIT": "Nota ta' kreditu self-billing",
+      "SUPPLIER_INVOICE": "Il-fattura tiegħek"
+    }
   }
 }

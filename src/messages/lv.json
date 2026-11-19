@@ -863,7 +863,8 @@
     "Excise Report": "Akcīzes pārskats",
     "Licences": "Licences",
     "Food Information": "Pārtikas informācija",
-    "Allergens & Food Info": "Alergēni un pārtikas info"
+    "Allergens & Food Info": "Alergēni un pārtikas info",
+    "E-Invoicing": "E-rēķini"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Valūtas kursa brīdinājums",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-rēķins nav nosūtīts: {number}",
+      "body": "{number} neizdevās nosūtīt elektroniski: {reason}. Atveriet to sadaļā Rēķini › E-rēķini."
+    },
+    "einvoice_rejected": {
+      "title": "E-rēķins noraidīts: {number}",
+      "body": "{number} noraidīja saņēmējs vai nodokļu iestāde: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Pārbaudes apturēja e-rēķinu: {number}",
+      "body": "{number} netika nosūtīts, jo neizdevās pārbaude: {reason}. Izlabojiet datus un nosūtiet vēlreiz."
+    },
+    "einvoice_received": {
+      "title": "Pārbaudāms piegādātāja e-rēķins: {number}",
+      "body": "Pienāca piegādātāja e-rēķins ({number}), ko neizdevās sasaistīt: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Jūsu vietā sagatavots rēķins: {number}",
+      "body": "FIRINGI sagatavoja jūsu rēķinu {number} pārskatam {statement} saskaņā ar jūsu pašrēķinu vienošanos. Skatiet to sadaļā Mani rēķini FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Cenas {code} pēc šodienas kursa: 1 € = {rate} {code}. Kurss tiek fiksēts, kad pasūtāt.",
     "rateLocked": "{code} pēc pasūtījumā fiksētā kursa: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E-rēķini",
+    "intro": "Kā saņemat rēķinus no FIRINGI — elektroniski (Peppol, KSeF, SDI …), kā PDF e-pastā vai abējādi — un kādā valodā.",
+    "introVendor": "Kā FIRINGI jums sūta rēķinus un saņem jūsējos — elektroniski vai e-pastā, kādā valodā — un vai FIRINGI sagatavo rēķinus jūsu vietā (pašrēķinu sagatavošana).",
+    "routeMandatory": "Valstī {country} rēķini iet caur {format} — likumā noteikts katram rēķinam.",
+    "routeOnRequest": "Valstī {country} FIRINGI var sūtīt jūsu rēķinus kā {format}. Norādiet savu Peppol ID vai zemāk izvēlieties e-rēķinus.",
+    "routeOff": "Valstī {country} e-rēķinus vēl neizmanto; rēķinus saņemat kā PDF e-pastā.",
+    "delivery": "Kā saņemat rēķinus",
+    "deliveryBoth": "E-rēķins un PDF e-pastā",
+    "deliveryEinvoice": "Tikai e-rēķins",
+    "deliveryEmail": "Tikai PDF e-pastā",
+    "mandatoryNote": "Kur likums prasa e-rēķinus, tos vienmēr nosūta; šī izvēle maina tikai PDF kopiju.",
+    "peppolId": "Peppol ID",
+    "peppolHelp": "Jūsu Peppol dalībnieka ID, piem., 0208:0123456789 — jautājiet grāmatvedības programmai vai e-rēķinu pakalpojuma sniedzējam.",
+    "invoiceEmail": "E-pasts rēķiniem",
+    "invoiceEmailHelp": "Atstājiet tukšu, lai izmantotu uzņēmuma e-pastu.",
+    "language": "Rēķinu valoda",
+    "languageDefault": "Jūsu valsts valoda ({lang})",
+    "secondLanguage": "Otrā valoda rēķinos",
+    "none": "Nav",
+    "ksefNip": "NIP KSeF vajadzībām",
+    "sdiCode": "SDI saņēmēja kods",
+    "pec": "PEC e-pasts",
+    "leitwegId": "Leitweg-ID (pircēja atsauce)",
+    "selfBilling": "Pašrēķinu sagatavošana",
+    "selfBillingText": "FIRINGI katram norēķinu pārskatam sagatavo jūsu rēķinu FIRINGI jūsu vārdā un uzdevumā, numurētu jūsu pašrēķinu sērijā. Jums vairs nav jāaugšupielādē rēķini; katru varat skatīt un lejupielādēt šeit un sadaļā Mani rēķini. Varat pārtraukt jebkurā laikā.",
+    "selfBillingAgree": "Piekrītu, ka FIRINGI sagatavo manus rēķinus manā vietā (vienošanās par pašrēķinu sagatavošanu)",
+    "selfBillingSince": "Vienošanās {number} kopš {date}",
+    "save": "Saglabāt",
+    "saved": "Saglabāts",
+    "readOnly": "Šos iestatījumus var mainīt tikai lietotāji, kas pārvalda uzņēmuma profilu.",
+    "docsTitle": "Jūsu e-rēķini",
+    "docsEmpty": "Vēl nav e-rēķinu.",
+    "colDocument": "Dokuments",
+    "colDate": "Datums",
+    "colFormat": "Formāts",
+    "colStatus": "Statuss",
+    "colRef": "Tīkla atsauce",
+    "download": "XML",
+    "einvoiceCol": "E-rēķins",
+    "selfBilledBadge": "Pašrēķins",
+    "viaEinvoice": "Saņemts elektroniski",
+    "status": {
+      "INVALID": "Tiek sagatavots",
+      "QUEUED": "Tiek sūtīts",
+      "SENT": "Nosūtīts",
+      "DELIVERED": "Piegādāts",
+      "ACCEPTED": "Pieņemts",
+      "REJECTED": "Noraidīts",
+      "FAILED": "Vēl nav nosūtīts",
+      "RECEIVED": "Saņemts",
+      "MATCHED": "Sasaistīts"
+    },
+    "kind": {
+      "INVOICE": "Rēķins",
+      "CREDIT_NOTE": "Kredītrēķins",
+      "SERVICE_INVOICE": "Rēķins",
+      "SELF_BILLED": "Pašrēķins",
+      "SELF_BILLED_CREDIT": "Pašrēķina kredītrēķins",
+      "SUPPLIER_INVOICE": "Jūsu rēķins"
+    }
   }
 }

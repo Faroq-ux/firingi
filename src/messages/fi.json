@@ -863,7 +863,8 @@
     "Excise Report": "Valmisteveroraportti",
     "Licences": "Luvat",
     "Food Information": "Elintarviketiedot",
-    "Allergens & Food Info": "Allergeenit ja elintarvikeinfo"
+    "Allergens & Food Info": "Allergeenit ja elintarvikeinfo",
+    "E-Invoicing": "Verkkolaskutus"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Valuuttakurssihälytys",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "Verkkolaskua ei lähetetty: {number}",
+      "body": "{number} ei voitu lähettää sähköisesti: {reason}. Avaa se kohdasta Laskut › Verkkolaskutus."
+    },
+    "einvoice_rejected": {
+      "title": "Verkkolasku hylätty: {number}",
+      "body": "Vastaanottaja tai veroviranomainen hylkäsi laskun {number}: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Tarkistukset pysäyttivät verkkolaskun: {number}",
+      "body": "{number} jäi lähettämättä, koska tarkistus epäonnistui: {reason}. Korjaa tiedot ja lähetä uudelleen."
+    },
+    "einvoice_received": {
+      "title": "Tarkistettava toimittajan verkkolasku: {number}",
+      "body": "Saapui toimittajan verkkolasku ({number}), jota ei voitu täsmätä: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Puolestasi laadittu lasku: {number}",
+      "body": "FIRINGI laati laskusi {number} yhteenvedolle {statement} itselaskutussopimuksesi mukaisesti. Löydät sen kohdasta Omat laskut FIRINGIlle."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Hinnat valuuttana {code} tämän päivän kurssilla: 1 € = {rate} {code}. Kurssi lukitaan tilauksen yhteydessä.",
     "rateLocked": "Valuuttana {code} tilauksessa lukitulla kurssilla: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Verkkolaskutus",
+    "intro": "Miten saat laskut FIRINGIltä — sähköisesti (Peppol, KSeF, SDI …), PDF:nä sähköpostilla vai molemmin — ja millä kielellä.",
+    "introVendor": "Miten FIRINGI lähettää laskunsa sinulle ja vastaanottaa omasi — sähköisesti tai sähköpostilla, millä kielellä — ja laatiiko FIRINGI laskusi puolestasi (itselaskutus).",
+    "routeMandatory": "Maassa {country} laskut kulkevat {format}-järjestelmän kautta — lakisääteinen jokaiselle laskulle.",
+    "routeOnRequest": "Maassa {country} FIRINGI voi lähettää laskusi muodossa {format}. Anna Peppol-tunnuksesi tai valitse verkkolaskut alta.",
+    "routeOff": "Verkkolaskuja ei vielä käytetä maassa {country}; saat laskut PDF:nä sähköpostilla.",
+    "delivery": "Miten saat laskut",
+    "deliveryBoth": "Verkkolasku ja PDF sähköpostilla",
+    "deliveryEinvoice": "Vain verkkolasku",
+    "deliveryEmail": "Vain PDF sähköpostilla",
+    "mandatoryNote": "Kun laki vaatii verkkolaskun, se lähetetään aina; tämä valinta muuttaa vain PDF-kopiota.",
+    "peppolId": "Peppol-tunnus",
+    "peppolHelp": "Peppol-osallistujatunnuksesi, esim. 0208:0123456789 — kysy kirjanpito-ohjelmaltasi tai verkkolaskuoperaattoriltasi.",
+    "invoiceEmail": "Laskujen sähköposti",
+    "invoiceEmailHelp": "Jätä tyhjäksi, niin käytetään yrityksen sähköpostia.",
+    "language": "Laskun kieli",
+    "languageDefault": "Maasi kieli ({lang})",
+    "secondLanguage": "Toinen kieli laskuissa",
+    "none": "Ei mitään",
+    "ksefNip": "NIP KSeF:iä varten",
+    "sdiCode": "SDI-vastaanottajakoodi",
+    "pec": "PEC-sähköposti",
+    "leitwegId": "Leitweg-ID (ostajan viite)",
+    "selfBilling": "Itselaskutus",
+    "selfBillingText": "FIRINGI laatii jokaisesta laskutusyhteenvedosta laskusi FIRINGIlle sinun nimissäsi ja lukuusi, numeroituna omaan itselaskutussarjaasi. Et enää lataa laskuja; voit katsoa ja ladata jokaisen täällä ja kohdassa Omat laskut. Voit lopettaa milloin tahansa.",
+    "selfBillingAgree": "Hyväksyn, että FIRINGI laatii laskuni puolestani (itselaskutussopimus)",
+    "selfBillingSince": "Sopimus {number} alkaen {date}",
+    "save": "Tallenna",
+    "saved": "Tallennettu",
+    "readOnly": "Vain yritysprofiilia hallinnoivat käyttäjät voivat muuttaa näitä asetuksia.",
+    "docsTitle": "Verkkolaskusi",
+    "docsEmpty": "Ei vielä verkkolaskuja.",
+    "colDocument": "Asiakirja",
+    "colDate": "Päivä",
+    "colFormat": "Muoto",
+    "colStatus": "Tila",
+    "colRef": "Verkkoviite",
+    "download": "XML",
+    "einvoiceCol": "Verkkolasku",
+    "selfBilledBadge": "Itselaskutettu",
+    "viaEinvoice": "Vastaanotettu sähköisesti",
+    "status": {
+      "INVALID": "Valmistellaan",
+      "QUEUED": "Lähetetään",
+      "SENT": "Lähetetty",
+      "DELIVERED": "Toimitettu",
+      "ACCEPTED": "Hyväksytty",
+      "REJECTED": "Hylätty",
+      "FAILED": "Ei vielä lähetetty",
+      "RECEIVED": "Vastaanotettu",
+      "MATCHED": "Täsmätty"
+    },
+    "kind": {
+      "INVOICE": "Lasku",
+      "CREDIT_NOTE": "Hyvityslasku",
+      "SERVICE_INVOICE": "Lasku",
+      "SELF_BILLED": "Itselaskutettu lasku",
+      "SELF_BILLED_CREDIT": "Itselaskutettu hyvitys",
+      "SUPPLIER_INVOICE": "Laskusi"
+    }
   }
 }

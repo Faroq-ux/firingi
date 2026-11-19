@@ -141,10 +141,14 @@ model Invoice {
   fiscalNextAt       DateTime?
   fiscalError        String?
   pdfKey             String?
+  /// Phase 46: the document's language and optional second language (bilingual print), fixed when issued
+  language           String?
+  secondLanguage     String?
   createdById        String?
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
 
+  einvoices         EInvoiceDocument[]
   legalEntity       LegalEntity              @relation(fields: [legalEntityId], references: [id])
   series            InvoiceSeries?           @relation(fields: [seriesId], references: [id])
   recipient         Company                  @relation("InvoiceRecipient", fields: [recipientCompanyId], references: [id])
@@ -177,21 +181,21 @@ model ProviderEntityMap {
 }
 
 model InvoiceLine {
-  id                String  @id @default(cuid())
+  id                String   @id @default(cuid())
   invoiceId         String
   orderLineId       String?
   position          Int
   description       String
-  qty               Decimal @db.Decimal(18, 3)
-  unitPriceNet      Decimal @db.Decimal(18, 4)
-  discountNet       Decimal @default(0) @db.Decimal(18, 2)
-  taxRate           Decimal @db.Decimal(6, 3)
+  qty               Decimal  @db.Decimal(18, 3)
+  unitPriceNet      Decimal  @db.Decimal(18, 4)
+  discountNet       Decimal  @default(0) @db.Decimal(18, 2)
+  taxRate           Decimal  @db.Decimal(6, 3)
   saftTaxCode       String?
   exemptionReasonId String?
-  lineNet           Decimal @db.Decimal(18, 2)
-  lineVat           Decimal @db.Decimal(18, 2)
+  lineNet           Decimal  @db.Decimal(18, 2)
+  lineVat           Decimal  @db.Decimal(18, 2)
   /// Phase 43: excise in this line (in the price for PAID goods; the whole line for an added-duty line)
-  exciseNet         Decimal @default(0) @db.Decimal(18, 2)
+  exciseNet         Decimal  @default(0) @db.Decimal(18, 2)
   /// Phase 45: in the invoice's currency (null = EUR invoice)
   unitPriceLocal    Decimal? @db.Decimal(18, 4)
   lineNetLocal      Decimal? @db.Decimal(18, 2)
@@ -218,28 +222,32 @@ model InvoiceTaxSummary {
 
 /// What FIRINGI expects the vendor to invoice for an order (net of commission).
 model VendorBillingStatement {
-  id                String                 @id @default(cuid())
-  number            String                 @unique // VBS-2026-000001
-  vendorCompanyId   String
-  orderId           String
-  salesInvoiceId    String? // the paired FIRINGI sales invoice
-  isCreditStatement Boolean                @default(false) // for returns
-  taxRegime         TaxRegime              @default(DOMESTIC)
-  currencyCode      String                 @default("EUR")
-  expectedNet       Decimal                @db.Decimal(18, 2)
-  expectedVat       Decimal                @db.Decimal(18, 2)
-  expectedGross     Decimal                @db.Decimal(18, 2)
-  commissionTotal   Decimal                @db.Decimal(18, 2)
+  id                 String                 @id @default(cuid())
+  number             String                 @unique // VBS-2026-000001
+  vendorCompanyId    String
+  orderId            String
+  salesInvoiceId     String? // the paired FIRINGI sales invoice
+  isCreditStatement  Boolean                @default(false) // for returns
+  taxRegime          TaxRegime              @default(DOMESTIC)
+  currencyCode       String                 @default("EUR")
+  expectedNet        Decimal                @db.Decimal(18, 2)
+  expectedVat        Decimal                @db.Decimal(18, 2)
+  expectedGross      Decimal                @db.Decimal(18, 2)
+  commissionTotal    Decimal                @db.Decimal(18, 2)
   /// Phase 45: the supplier's currency per € (locked with the order); *Local = what the supplier is owed in it
-  rate              Decimal                @default(1) @db.Decimal(18, 8)
-  expectedNetLocal  Decimal?               @db.Decimal(18, 2)
-  expectedVatLocal  Decimal?               @db.Decimal(18, 2)
-  expectedGrossLocal Decimal?              @db.Decimal(18, 2)
-  lines             Json // snapshot of the expected lines
-  status            BillingStatementStatus @default(OPEN)
-  createdAt         DateTime               @default(now())
-  updatedAt         DateTime               @updatedAt
+  rate               Decimal                @default(1) @db.Decimal(18, 8)
+  expectedNetLocal   Decimal?               @db.Decimal(18, 2)
+  expectedVatLocal   Decimal?               @db.Decimal(18, 2)
+  expectedGrossLocal Decimal?               @db.Decimal(18, 2)
+  lines              Json // snapshot of the expected lines
+  status             BillingStatementStatus @default(OPEN)
+  /// Phase 46: self-billing — FIRINGI issued the supplier's invoice for it (number in the supplier's self-billing series)
+  selfBilledNumber   String?                @unique
+  selfBilledAt       DateTime?
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
 
+  einvoices    EInvoiceDocument[]
   vendor       Company                   @relation(fields: [vendorCompanyId], references: [id])
   order        Order                     @relation(fields: [orderId], references: [id])
   salesInvoice Invoice?                  @relation(fields: [salesInvoiceId], references: [id])
@@ -272,6 +280,8 @@ model VendorInvoice {
   grossTotalLocal Decimal?            @db.Decimal(18, 2)
   fileKey         String
   structuredData  Json? // UBL / Peppol payload if provided
+  /// Phase 46: UPLOAD (the supplier's file) | SELF_BILLED (issued by FIRINGI for the supplier) | EINVOICE (received through a network)
+  source          String              @default("UPLOAD")
   status          VendorInvoiceStatus @default(SUBMITTED)
   matchResult     Json? // differences found by the matcher
   submittedById   String?
@@ -283,6 +293,7 @@ model VendorInvoice {
   vendor             Company                   @relation(fields: [vendorCompanyId], references: [id])
   allocations        VendorInvoiceAllocation[]
   paymentAllocations PaymentAllocation[]
+  einvoices          EInvoiceDocument[]
 
   @@unique([vendorCompanyId, externalNumber])
 }

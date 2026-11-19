@@ -863,7 +863,8 @@
     "Excise Report": "Raport de accize",
     "Licences": "Licențe",
     "Food Information": "Informații Alimentare",
-    "Allergens & Food Info": "Alergeni și Info Alimentare"
+    "Allergens & Food Info": "Alergeni și Info Alimentare",
+    "E-Invoicing": "Facturare electronică"
   },
   "delivery": {
     "title": "Livrare",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Alertă de curs valutar",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "Factură electronică netrimisă: {number}",
+      "body": "{number} nu a putut fi trimisă electronic: {reason}. Deschideți-o în Facturi › Facturare electronică."
+    },
+    "einvoice_rejected": {
+      "title": "Factură electronică respinsă: {number}",
+      "body": "{number} a fost respinsă de destinatar sau de autoritatea fiscală: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Factură electronică oprită de verificări: {number}",
+      "body": "{number} nu a fost trimisă deoarece o verificare a eșuat: {reason}. Corectați datele și trimiteți din nou."
+    },
+    "einvoice_received": {
+      "title": "Factură electronică de la furnizor de verificat: {number}",
+      "body": "A sosit o factură electronică de la furnizor ({number}) care nu a putut fi potrivită: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Factură emisă în locul dvs.: {number}",
+      "body": "FIRINGI a emis factura dvs. {number} pentru extrasul {statement} conform acordului de autofacturare. O găsiți în Facturile mele către FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Prețuri în {code} la cursul de azi: 1 € = {rate} {code}. Cursul se fixează la comandă.",
     "rateLocked": "În {code} la cursul fixat la comandă: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Facturare electronică",
+    "intro": "Cum primiți facturile de la FIRINGI — electronic (Peppol, KSeF, SDI …), ca PDF pe e-mail sau ambele — și în ce limbă.",
+    "introVendor": "Cum vă trimite FIRINGI facturile și le primește pe ale dvs. — electronic sau pe e-mail, în ce limbă — și dacă FIRINGI emite facturile în locul dvs. (autofacturare).",
+    "routeMandatory": "În {country}, facturile trec prin {format} — obligatoriu prin lege pentru fiecare factură.",
+    "routeOnRequest": "În {country}, FIRINGI vă poate trimite facturile ca {format}. Indicați identificatorul Peppol sau alegeți mai jos facturile electronice.",
+    "routeOff": "Facturile electronice nu sunt încă folosite în {country}; primiți facturile ca PDF pe e-mail.",
+    "delivery": "Cum primiți facturile",
+    "deliveryBoth": "Factură electronică și PDF pe e-mail",
+    "deliveryEinvoice": "Doar factură electronică",
+    "deliveryEmail": "Doar PDF pe e-mail",
+    "mandatoryNote": "Acolo unde legea cere facturi electronice, acestea se trimit întotdeauna; această alegere schimbă doar copia PDF.",
+    "peppolId": "Identificator Peppol",
+    "peppolHelp": "Identificatorul dvs. de participant Peppol, de ex. 0208:0123456789 — cereți-l programului de contabilitate sau furnizorului de facturare electronică.",
+    "invoiceEmail": "E-mail pentru facturi",
+    "invoiceEmailHelp": "Lăsați gol pentru a folosi e-mailul companiei.",
+    "language": "Limba facturilor",
+    "languageDefault": "Limba țării dvs. ({lang})",
+    "secondLanguage": "A doua limbă pe facturi",
+    "none": "Niciuna",
+    "ksefNip": "NIP pentru KSeF",
+    "sdiCode": "Cod destinatar SDI",
+    "pec": "E-mail PEC",
+    "leitwegId": "Leitweg-ID (referința cumpărătorului)",
+    "selfBilling": "Autofacturare",
+    "selfBillingText": "FIRINGI emite factura dvs. către FIRINGI pentru fiecare extras de facturare, în numele și în contul dvs., numerotată în propria serie de autofacturare. Nu mai încărcați facturi; le puteți vedea și descărca aici și în Facturile mele. Puteți renunța oricând.",
+    "selfBillingAgree": "Sunt de acord ca FIRINGI să emită facturile mele în locul meu (acord de autofacturare)",
+    "selfBillingSince": "Acord {number} din {date}",
+    "save": "Salvează",
+    "saved": "Salvat",
+    "readOnly": "Doar utilizatorii care gestionează profilul companiei pot modifica aceste setări.",
+    "docsTitle": "Facturile dvs. electronice",
+    "docsEmpty": "Încă nu există facturi electronice.",
+    "colDocument": "Document",
+    "colDate": "Data",
+    "colFormat": "Format",
+    "colStatus": "Stare",
+    "colRef": "Referință rețea",
+    "download": "XML",
+    "einvoiceCol": "Factură electronică",
+    "selfBilledBadge": "Autofacturată",
+    "viaEinvoice": "Primită electronic",
+    "status": {
+      "INVALID": "În pregătire",
+      "QUEUED": "Se trimite",
+      "SENT": "Trimisă",
+      "DELIVERED": "Livrată",
+      "ACCEPTED": "Acceptată",
+      "REJECTED": "Respinsă",
+      "FAILED": "Încă netrimisă",
+      "RECEIVED": "Primită",
+      "MATCHED": "Potrivită"
+    },
+    "kind": {
+      "INVOICE": "Factură",
+      "CREDIT_NOTE": "Factură de stornare",
+      "SERVICE_INVOICE": "Factură",
+      "SELF_BILLED": "Autofactură",
+      "SELF_BILLED_CREDIT": "Stornare în autofacturare",
+      "SUPPLIER_INVOICE": "Factura dvs."
+    }
   }
 }

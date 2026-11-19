@@ -5,7 +5,19 @@
  * with English as the second language for every vendor.
  */
 import React from "react";
-import { Document, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
+import path from "node:path";
+import { Document, Font, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
+import { docTexts, numberLocale } from "@/server/einvoice/doc-i18n";
+
+/** Phase 46: DejaVu Sans has every letter of the 25 languages (ł, ř, ő, Greek, Cyrillic …); Helvetica has not. */
+let fonts = false;
+function registerFonts() {
+  if (fonts) return;
+  const dir = path.join(process.cwd(), "public", "fonts");
+  Font.register({ family: "DejaVu", fonts: [{ src: path.join(dir, "DejaVuSans.ttf") }, { src: path.join(dir, "DejaVuSans-Bold.ttf"), fontWeight: "bold" }] });
+  Font.registerHyphenationCallback((w) => [w]);
+  fonts = true;
+}
 
 const s = StyleSheet.create({
   page: { padding: 36, fontSize: 9, fontFamily: "Helvetica", color: "#1f2937" },
@@ -34,32 +46,23 @@ export type InvoicePdfData = {
   /** Phase 27: the buyer's branch, cost centre and PO reference */
   branch?: string | null; costCentre?: string | null; poReference?: string | null;
   issuer: Party; recipient: Party;
-  lines: { description: string; qty: string; unitPriceNet: string; discountNet: string; taxRate: string; lineNet: string; exciseNet?: string }[];
+  lines: { description: string; description2?: string | null; qty: string; unitPriceNet: string; discountNet: string; taxRate: string; lineNet: string; exciseNet?: string }[];
   taxSummary: { taxRate: string; base: string; vat: string }[];
   netTotal: string; vatTotal: string; grossTotal: string; taxLabel: string;
+  /** Phase 46: document language, optional second language, legal mentions, self-billing, e-invoice reference */
+  language?: string; secondLanguage?: string | null; legalTexts?: string[]; selfBilled?: boolean; agreement?: string | null;
+  einvoice?: { format: string; networkRef: string | null; status: string } | null;
   /** Phase 45: the document's currency (lines and totals above are in it) and the EUR equivalent at the reference rate */
   currency?: { code: string; rate: string; date: string | null; eur: { net: string; vat: string; gross: string } | null } | null;
 };
 
-/** Invoice labels per issuing country. Add a country here when FIRINGI issues from it. */
-const INVOICE_LABELS = {
-  PT: {
-    title: { INVOICE: "Fatura", INVOICE_RECEIPT: "Fatura-Recibo", CREDIT_NOTE: "Nota de Crédito" },
-    date: "Data", due: "Vencimento", seller: "Vendedor", customer: "Cliente", vat: "NIF-IVA", nif: "NIF",
-    order: "Encomenda", branch: "Loja / filial", costCentre: "Centro de custo", po: "Vossa referência (PO)", original: "Documento de origem", reason: "Motivo", reverseCharge: "IVA — autoliquidação",
-    description: "Descrição", qty: "Qtd.", unitPrice: "Preço unit.", discount: "Desconto", totalExcl: "Total s/", summary: "Resumo de",
-    notFiscal: "DOCUMENTO NÃO FISCAL — ambiente de testes, não emitido por programa certificado pela AT",
-    certified: "Processado por programa certificado", notCertified: "Processado por FIRINGI (ambiente de testes, programa não certificado)",
-  },
-};
-type InvoiceLabels = (typeof INVOICE_LABELS)["PT"];
-const invoiceLabels = (country?: string): InvoiceLabels => INVOICE_LABELS[(country ?? "PT") as keyof typeof INVOICE_LABELS] ?? INVOICE_LABELS.PT;
+const B = { fontFamily: "DejaVu", fontWeight: "bold" as const };
 
 function PartyBox({ title, p, nif = "NIF", vat = "VAT" }: { title: string; p: Party; nif?: string; vat?: string }) {
   return (
     <View style={s.box}>
       <Text style={[s.muted, { marginBottom: 3 }]}>{title}</Text>
-      <Text style={{ fontFamily: "Helvetica-Bold" }}>{p.name}</Text>
+      <Text style={B}>{p.name}</Text>
       {p.address && <Text>{p.address}</Text>}
       <Text>{nif}: {p.taxId}{p.vatNumber ? `   ${vat}: ${p.vatNumber}` : ""}</Text>
       {p.email && <Text>{p.email}</Text>}
@@ -67,47 +70,69 @@ function PartyBox({ title, p, nif = "NIF", vat = "VAT" }: { title: string; p: Pa
   );
 }
 
+/**
+ * Phase 46: invoices, credit notes and self-billed invoices in the document's language (and an optional second
+ * language under each label / line), with the EU and country legal mentions and the e-invoice reference.
+ */
 function InvoiceDoc({ d }: { d: InvoicePdfData }) {
   const cols = [44, 8, 12, 10, 10, 16]; // widths % (sum 100)
-  const L = invoiceLabels(d.issuer.country);
-  const eur = inCode(d.currency?.code ?? "EUR");
-  const realEur = inCode("EUR");
+  const lang = d.language ?? (d.issuer.country === "PT" || !d.issuer.country ? "pt-PT" : "en");
+  const t = docTexts(lang);
+  const t2 = d.secondLanguage ? docTexts(d.secondLanguage) : null;
+  const L = (k: keyof typeof t) => (t2 && t2[k] !== t[k] ? `${t[k]} / ${t2[k]}` : t[k]);
+  const loc = numberLocale(lang);
+  const code = d.currency?.code ?? "EUR";
+  const money = (c: string) => (v: string | number) => `${Number(v).toLocaleString(loc, { minimumFractionDigits: c === "ISK" ? 0 : 2, maximumFractionDigits: c === "ISK" ? 0 : 2 })} ${c === "EUR" ? "€" : c}`;
+  const eur = money(code);
+  const realEur = money("EUR");
+  const qty = (v: string | number) => Number(v).toLocaleString(loc, { maximumFractionDigits: 3 });
+  const vatL = d.issuer.country === "PT" && lang === "pt-PT" ? d.taxLabel : t.vat;
+  const title = d.selfBilled ? (d.docType === "CREDIT_NOTE" ? L("title_SELF_BILLED_CREDIT") : L("title_SELF_BILLED")) : L(`title_${d.docType}` as keyof typeof t);
+  const ptCert = d.issuer.country === "PT" || !d.issuer.country;
+  const mentions = [
+    ...(d.taxRegime === "INTRA_EU_REVERSE_CHARGE" ? [t.reverseCharge, ...(t2 ? [t2.reverseCharge] : [])] : []),
+    ...(d.selfBilled ? [t.selfBilling, ...(t2 ? [t2.selfBilling] : []), ...(d.agreement ? [`${L("agreement")}: ${d.agreement}`] : [])] : []),
+    ...(d.legalTexts ?? []),
+  ];
   return (
-    <Document title={d.fullNumber} author="FIRINGI">
-      <Page size="A4" style={s.page}>
+    <Document title={d.fullNumber} author="FIRINGI" language={lang}>
+      <Page size="A4" style={[s.page, { fontFamily: "DejaVu", fontSize: 8.5 }]}>
         <View style={s.between}>
-          <View><Text style={s.brand}>FIRINGI</Text><Text style={s.muted}>WHOLESALE MADE SIMPLE</Text></View>
-          <View style={{ alignItems: "flex-end" }}>
-            <Text style={s.h1}>{L.title[d.docType]}</Text>
-            <Text style={{ fontFamily: "Helvetica-Bold" }}>{d.fullNumber}</Text>
-            <Text>{L.date}: {d.issuedAt.toISOString().slice(0, 10)}</Text>
-            {d.dueAt && d.docType !== "CREDIT_NOTE" && <Text>{L.due}: {d.dueAt.toISOString().slice(0, 10)}</Text>}
+          <View><Text style={[s.brand, B]}>FIRINGI</Text><Text style={s.muted}>WHOLESALE MADE SIMPLE</Text></View>
+          <View style={{ alignItems: "flex-end", maxWidth: "60%" }}>
+            <Text style={[s.h1, B, { textAlign: "right" }]}>{title}</Text>
+            <Text style={B}>{d.fullNumber}</Text>
+            <Text>{L("date")}: {d.issuedAt.toISOString().slice(0, 10)}</Text>
+            {d.dueAt && d.docType !== "CREDIT_NOTE" && <Text>{L("due")}: {d.dueAt.toISOString().slice(0, 10)}</Text>}
             {d.atcud && <Text>ATCUD: {d.atcud}</Text>}
           </View>
         </View>
-        {!d.certified && <Text style={s.warn}>{L.notFiscal}</Text>}
+        {!d.certified && ptCert && !d.selfBilled && <Text style={[s.warn, B]}>{t.notFiscal}</Text>}
         <View style={[s.between, { marginTop: 12 }]}>
-          <PartyBox title={L.seller} p={d.issuer} nif={L.nif} vat={L.vat} />
-          <PartyBox title={L.customer} p={d.recipient} nif={L.nif} vat={L.vat} />
+          <PartyBox title={d.selfBilled ? L("supplier") : L("seller")} p={d.issuer} nif={L("taxId")} vat={L("vatId")} />
+          <PartyBox title={L("customer")} p={d.recipient} nif={L("taxId")} vat={L("vatId")} />
         </View>
         <View style={{ marginTop: 8 }}>
-          {d.orderNumber && <Text>{L.order}: {d.orderNumber}</Text>}
-          {d.poReference && <Text>{L.po}: {d.poReference}</Text>}
-          {(d.branch || d.costCentre) && <Text>{[d.branch ? `${L.branch}: ${d.branch}` : null, d.costCentre ? `${L.costCentre}: ${d.costCentre}` : null].filter(Boolean).join("   ")}</Text>}
-          {d.originalNumber && <Text>{L.original}: {d.originalNumber}</Text>}
-          {d.reason && <Text>{L.reason}: {d.reason}</Text>}
-          {d.taxRegime === "INTRA_EU_REVERSE_CHARGE" && <Text>{L.reverseCharge}</Text>}
+          {d.orderNumber && <Text>{L("order")}: {d.orderNumber}</Text>}
+          {d.poReference && <Text>{L("po")}: {d.poReference}</Text>}
+          {(d.branch || d.costCentre) && <Text>{[d.branch ? `${L("branch")}: ${d.branch}` : null, d.costCentre ? `${L("costCentre")}: ${d.costCentre}` : null].filter(Boolean).join("   ")}</Text>}
+          {d.originalNumber && <Text>{L("original")}: {d.originalNumber}</Text>}
+          {d.reason && <Text>{L("reason")}: {d.reason}</Text>}
         </View>
         <View style={{ marginTop: 10 }}>
           <View style={s.row}>
-            {[L.description, L.qty, L.unitPrice, L.discount, d.taxLabel, `${L.totalExcl} ${d.taxLabel}`].map((h, i) => (
-              <Text key={h} style={[s.th, { width: `${cols[i]}%`, textAlign: i ? "right" : "left" }]}>{h}</Text>
+            {[L("description"), L("qty"), L("unitPrice"), L("discount"), vatL, L("netAmount")].map((h, i) => (
+              <Text key={`${h}-${i}`} style={[s.th, B, { width: `${cols[i]}%`, textAlign: i ? "right" : "left" }]}>{h}</Text>
             ))}
           </View>
           {d.lines.map((l, k) => (
             <View key={k} style={s.row} wrap={false}>
-              <Text style={[s.td, { width: `${cols[0]}%` }]}>{l.description}{Number(l.exciseNet ?? 0) > 0 && !l.description.startsWith("Imposto especial de consumo") ? `\nInclui IEC / incl. excise duty: ${eur(l.exciseNet!)}` : ""}</Text>
-              <Text style={[s.td, { width: `${cols[1]}%`, textAlign: "right" }]}>{qtyFmt(l.qty)}</Text>
+              <Text style={[s.td, { width: `${cols[0]}%` }]}>
+                {l.description}
+                {l.description2 && l.description2 !== l.description ? `\n${l.description2}` : ""}
+                {Number(l.exciseNet ?? 0) > 0 && !l.description.startsWith(t.excise) ? `\n${t.includesExcise}: ${eur(l.exciseNet!)}` : ""}
+              </Text>
+              <Text style={[s.td, { width: `${cols[1]}%`, textAlign: "right" }]}>{qty(l.qty)}</Text>
               <Text style={[s.td, { width: `${cols[2]}%`, textAlign: "right" }]}>{eur(l.unitPriceNet)}</Text>
               <Text style={[s.td, { width: `${cols[3]}%`, textAlign: "right" }]}>{Number(l.discountNet) ? eur(l.discountNet) : "—"}</Text>
               <Text style={[s.td, { width: `${cols[4]}%`, textAlign: "right" }]}>{Number(l.taxRate)}%</Text>
@@ -116,30 +141,41 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
           ))}
         </View>
         <View style={[s.between, { marginTop: 12 }]}>
-          <View style={{ width: "48%" }}>
-            <Text style={{ fontFamily: "Helvetica-Bold", marginBottom: 3 }}>{L.summary} {d.taxLabel}</Text>
-            {d.taxSummary.map((t) => <Text key={t.taxRate}>{Number(t.taxRate)}% — base {eur(t.base)} — {d.taxLabel} {eur(t.vat)}</Text>)}
-            {d.issuer.iban && d.docType !== "CREDIT_NOTE" && <Text style={{ marginTop: 6 }}>IBAN: {d.issuer.iban}</Text>}
+          <View style={{ width: "52%" }}>
+            <Text style={[B, { marginBottom: 3 }]}>{L("vatSummary")}</Text>
+            {d.taxSummary.map((x) => <Text key={x.taxRate}>{Number(x.taxRate)}% — {t.base} {eur(x.base)} — {vatL} {eur(x.vat)}</Text>)}
+            {d.issuer.iban && d.docType !== "CREDIT_NOTE" && !d.selfBilled && <Text style={{ marginTop: 6 }}>IBAN: {d.issuer.iban}</Text>}
+            {d.issuer.iban && d.docType !== "CREDIT_NOTE" && !d.selfBilled && <Text>{L("paymentRef")}: {d.fullNumber}</Text>}
           </View>
           <View style={{ width: "40%" }}>
-            <View style={s.between}><Text>{L.totalExcl} {d.taxLabel}</Text><Text>{eur(d.netTotal)}</Text></View>
-            <View style={s.between}><Text>{d.taxLabel}</Text><Text>{eur(d.vatTotal)}</Text></View>
+            <View style={s.between}><Text>{L("totalNet")}</Text><Text>{eur(d.netTotal)}</Text></View>
+            <View style={s.between}><Text>{vatL}</Text><Text>{eur(d.vatTotal)}</Text></View>
             <View style={[s.between, { marginTop: 4, paddingTop: 4, borderTopWidth: 1, borderColor: "#111827" }]}>
-              <Text style={{ fontFamily: "Helvetica-Bold", fontSize: 11 }}>Total</Text><Text style={{ fontFamily: "Helvetica-Bold", fontSize: 11 }}>{eur(d.grossTotal)}</Text>
+              <Text style={[B, { fontSize: 11 }]}>{L("total")}</Text><Text style={[B, { fontSize: 11 }]}>{eur(d.grossTotal)}</Text>
             </View>
             {d.currency?.eur && (
               <View style={{ marginTop: 6, paddingTop: 4, borderTopWidth: 0.5, borderColor: "#e5e7eb" }}>
-                <Text style={s.muted}>Contravalor em EUR / EUR equivalent — 1 EUR = {Number(d.currency.rate).toLocaleString("pt-PT", { maximumFractionDigits: 6 })} {d.currency.code}{d.currency.date ? ` (BCE ${d.currency.date})` : ""}</Text>
-                <View style={s.between}><Text>{L.totalExcl} {d.taxLabel}</Text><Text>{realEur(d.currency.eur.net)}</Text></View>
-                <View style={s.between}><Text>{d.taxLabel}</Text><Text>{realEur(d.currency.eur.vat)}</Text></View>
-                <View style={s.between}><Text>Total</Text><Text>{realEur(d.currency.eur.gross)}</Text></View>
+                <Text style={s.muted}>{L("eurEquivalent")} — 1 EUR = {Number(d.currency.rate).toLocaleString(loc, { maximumFractionDigits: 6 })} {d.currency.code}{d.currency.date ? ` (ECB ${d.currency.date})` : ""}</Text>
+                <View style={s.between}><Text>{L("totalNet")}</Text><Text>{realEur(d.currency.eur.net)}</Text></View>
+                <View style={s.between}><Text>{vatL}</Text><Text>{realEur(d.currency.eur.vat)}</Text></View>
+                <View style={s.between}><Text>{L("total")}</Text><Text>{realEur(d.currency.eur.gross)}</Text></View>
               </View>
             )}
           </View>
         </View>
+        {mentions.length > 0 && (
+          <View style={{ marginTop: 10, padding: 6, borderWidth: 0.5, borderColor: "#e5e7eb", borderRadius: 3 }}>
+            {mentions.map((m, i) => <Text key={i} style={{ fontSize: 7.5 }}>{m}</Text>)}
+          </View>
+        )}
+        {d.einvoice && (
+          <Text style={{ marginTop: 6, fontSize: 7.5, color: "#1e3a8a" }}>
+            {L("eInvoice")} — {L("sentVia")}: {d.einvoice.format}{d.einvoice.networkRef ? ` · ${L("networkRef")}: ${d.einvoice.networkRef}` : ""}
+          </Text>
+        )}
         <Text style={s.footer} fixed>
           {d.hash ? `${d.hash.slice(0, 1)}${d.hash.slice(10, 11)}${d.hash.slice(20, 21)}${d.hash.slice(30, 31)} - ` : ""}
-          {d.certified ? L.certified : L.notCertified} · {d.issuer.name} · NIF {d.issuer.taxId}
+          {ptCert && !d.selfBilled ? `${d.certified ? t.certified : t.notCertified} · ` : ""}{d.issuer.name} · {L("taxId")} {d.issuer.taxId}
         </Text>
       </Page>
     </Document>
@@ -257,6 +293,6 @@ function PurchaseOrderDoc({ d }: { d: PurchaseOrderPdfData }) {
   );
 }
 
-export const renderInvoicePdf = (d: InvoicePdfData) => renderToBuffer(<InvoiceDoc d={d} />);
-export const renderStatementPdf = (d: StatementPdfData) => renderToBuffer(<StatementDoc d={d} />);
-export const renderPurchaseOrderPdf = (d: PurchaseOrderPdfData) => renderToBuffer(<PurchaseOrderDoc d={d} />);
+export const renderInvoicePdf = (d: InvoicePdfData) => { registerFonts(); return renderToBuffer(<InvoiceDoc d={d} />); };
+export const renderStatementPdf = (d: StatementPdfData) => { registerFonts(); return renderToBuffer(<StatementDoc d={d} />); };
+export const renderPurchaseOrderPdf = (d: PurchaseOrderPdfData) => { registerFonts(); return renderToBuffer(<PurchaseOrderDoc d={d} />); };

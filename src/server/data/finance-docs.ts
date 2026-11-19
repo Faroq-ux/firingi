@@ -7,17 +7,37 @@ import { can } from "@/server/rbac/guard";
 import { taxLabel } from "@/lib/tax-label";
 import type { InvoicePdfData, StatementPdfData } from "@/server/pdf/documents";
 
-export async function invoicePdfData(ctx: Ctx, id: string): Promise<InvoicePdfData> {
-  const inv = await invoiceForViewer(ctx, id);
+const VIEW_INCLUDE = { lines: { orderBy: { position: "asc" as const } }, taxSummary: true, order: { select: { number: true, branchId: true, costCentre: true, poReference: true, branch: { select: { name: true } } } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } }, recipient: { select: { type: true } } };
+
+/** `ctx` null = FIRINGI's own system (e-invoice queue, e-mail copies): no viewer check. */
+export async function invoicePdfData(ctx: Ctx | null, id: string): Promise<InvoicePdfData> {
+  const inv = ctx ? await invoiceForViewer(ctx, id) : await prisma.invoice.findUniqueOrThrow({ where: { id }, include: VIEW_INCLUDE });
   const issuer = inv.issuerSnapshot as InvoicePdfData["issuer"];
   const recipient = inv.recipientSnapshot as InvoicePdfData["recipient"] & { reason?: string };
+  // Phase 46: the document's language(s); line texts translated from the stored (legal-record) text
+  const lang = inv.language ?? (issuer.country && issuer.country !== "PT" ? "en" : "pt-PT");
+  const second = inv.secondLanguage;
+  const { localizeLine, countryLegalTexts } = await import("@/server/einvoice/doc-i18n");
+  const ols = await prisma.orderLine.findMany({ where: { id: { in: inv.lines.map((l) => l.orderLineId).filter((x): x is string => !!x) } }, select: { id: true, productName: true, packagingName: true, sku: true } });
+  const olMap = new Map(ols.map((o) => [o.id, o]));
+  const desc = (l: { description: string; orderLineId: string | null }, lg: string) => localizeLine({ description: l.description, orderLine: l.orderLineId ? olMap.get(l.orderLineId) ?? null : null }, lg);
+  const ed = await prisma.eInvoiceDocument.findFirst({ where: { invoiceId: inv.id, direction: "OUTBOUND", status: { in: ["SENT", "DELIVERED", "ACCEPTED"] } }, orderBy: { createdAt: "desc" }, select: { format: true, networkRef: true, status: true } });
+  const { einvoiceSettings } = await import("@/server/einvoice/service");
+  const es = await einvoiceSettings();
+  let plGross = Number(inv.currencyCode === "PLN" ? inv.grossTotalLocal ?? 0 : 0);
+  if (issuer.country === "PL" && inv.currencyCode !== "PLN") {
+    const r = await prisma.exchangeRate.findFirst({ where: { baseCode: "EUR", quoteCode: "PLN" }, orderBy: { date: "desc" }, select: { rate: true } });
+    plGross = Number(inv.grossTotal) * Number(r?.rate ?? 4.3);
+  }
+  const legalTexts = countryLegalTexts(issuer.country ?? "PT", { splitPayment: es.plSplitPaymentFrom > 0 && plGross >= es.plSplitPaymentFrom, verifactu: ed?.format === "VERIFACTU", lang, selfBilled: false });
   const base: InvoicePdfData = {
+    language: lang, secondLanguage: second, legalTexts, einvoice: ed ? { format: ed.format, networkRef: ed.networkRef, status: ed.status } : null,
     // A document issued at Moloni carries Moloni's legal number; only live Moloni is certified.
     docType: inv.docType, fullNumber: inv.providerNumber ?? inv.fullNumber!, issuedAt: inv.issuedAt!, dueAt: inv.dueAt, atcud: inv.atcud, hash: inv.hash,
     certified: inv.fiscalStatus === "DONE" && inv.externalProvider === "moloni", orderNumber: inv.order?.number ?? null,
     branch: inv.order?.branch?.name ?? null, costCentre: inv.order?.costCentre ?? null, poReference: inv.order?.poReference ?? null, originalNumber: inv.originalInvoice?.providerNumber ?? inv.originalInvoice?.fullNumber ?? null,
     reason: recipient.reason ?? null, taxRegime: inv.taxRegime, issuer, recipient, taxLabel: taxLabel(issuer.country ?? "PT"),
-    lines: inv.lines.map((l) => ({ description: l.description, qty: l.qty.toString(), unitPriceNet: l.unitPriceNet.toString(), discountNet: l.discountNet.toString(), taxRate: l.taxRate.toString(), lineNet: l.lineNet.toString(), exciseNet: l.exciseNet.toString() })),
+    lines: inv.lines.map((l) => ({ description: desc(l, lang), description2: second ? desc(l, second) : null, qty: l.qty.toString(), unitPriceNet: l.unitPriceNet.toString(), discountNet: l.discountNet.toString(), taxRate: l.taxRate.toString(), lineNet: l.lineNet.toString(), exciseNet: l.exciseNet.toString() })),
     taxSummary: inv.taxSummary.map((t) => ({ taxRate: t.taxRate.toString(), base: t.base.toString(), vat: t.vat.toString() })),
     netTotal: inv.netTotal.toString(), vatTotal: inv.vatTotal.toString(), grossTotal: inv.grossTotal.toString(),
   };
@@ -30,7 +50,7 @@ export async function invoicePdfData(ctx: Ctx, id: string): Promise<InvoicePdfDa
     const unit = l.unitPriceLocal != null ? n(l.unitPriceLocal) : n(l.unitPriceNet) * n(inv.eurRate);
     const net = l.lineNetLocal != null ? n(l.lineNetLocal) : n(l.lineNet) * n(inv.eurRate);
     const disc = Math.max(0, unit * n(l.qty) - net);
-    return { description: l.description, qty: l.qty.toString(), unitPriceNet: unit.toFixed(4), discountNet: disc.toFixed(dp), taxRate: l.taxRate.toString(), lineNet: net.toFixed(dp), exciseNet: (n(l.exciseNet) * n(inv.eurRate)).toFixed(dp), vat: n(l.lineVatLocal ?? n(l.lineVat) * n(inv.eurRate)) };
+    return { description: desc(l, lang), description2: second ? desc(l, second) : null, qty: l.qty.toString(), unitPriceNet: unit.toFixed(4), discountNet: disc.toFixed(dp), taxRate: l.taxRate.toString(), lineNet: net.toFixed(dp), exciseNet: (n(l.exciseNet) * n(inv.eurRate)).toFixed(dp), vat: n(l.lineVatLocal ?? n(l.lineVat) * n(inv.eurRate)) };
   });
   const byRate = new Map<string, { base: number; vat: number }>();
   for (const l of lines) { const c = byRate.get(l.taxRate) ?? { base: 0, vat: 0 }; byRate.set(l.taxRate, { base: c.base + Number(l.lineNet), vat: c.vat + l.vat }); }

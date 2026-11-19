@@ -1551,6 +1551,26 @@
     "fx_alert": {
       "title": "Alerta de tipo de cambio",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "Factura electrónica no enviada: {number}",
+      "body": "{number} no se pudo enviar electrónicamente: {reason}. Ábrala en Facturas › Facturación electrónica."
+    },
+    "einvoice_rejected": {
+      "title": "Factura electrónica rechazada: {number}",
+      "body": "{number} fue rechazada por el destinatario o la administración tributaria: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Factura electrónica detenida por las comprobaciones: {number}",
+      "body": "{number} no se envió porque falló una comprobación: {reason}. Corrija los datos y envíela de nuevo."
+    },
+    "einvoice_received": {
+      "title": "Factura electrónica de proveedor por revisar: {number}",
+      "body": "Llegó una factura electrónica de proveedor ({number}) que no se pudo conciliar: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Factura emitida por usted: {number}",
+      "body": "FIRINGI emitió su factura {number} para el extracto {statement} según su acuerdo de facturación por el destinatario. Véala en Mis facturas a FIRINGI."
     }
   },
   "notifications": {
@@ -5609,5 +5629,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Precios en {code} al tipo de hoy: 1 € = {rate} {code}. El tipo se fija al hacer el pedido.",
     "rateLocked": "En {code} al tipo fijado en el pedido: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Facturación electrónica",
+    "intro": "Cómo recibe las facturas de FIRINGI — en formato electrónico (Peppol, KSeF, SDI …), en PDF por correo electrónico o ambos — y en qué idioma.",
+    "introVendor": "Cómo FIRINGI le envía sus facturas y recibe las suyas — en formato electrónico o por correo, en qué idioma — y si FIRINGI emite sus facturas por usted (facturación por el destinatario).",
+    "routeMandatory": "En {country}, las facturas se envían por {format}, obligatorio por ley para todas las facturas.",
+    "routeOnRequest": "En {country}, FIRINGI puede enviar sus facturas como {format}. Indique su identificador Peppol o elija facturas electrónicas abajo.",
+    "routeOff": "Las facturas electrónicas aún no se usan en {country}; recibe sus facturas en PDF por correo electrónico.",
+    "delivery": "Cómo recibe las facturas",
+    "deliveryBoth": "Factura electrónica y PDF por correo",
+    "deliveryEinvoice": "Solo factura electrónica",
+    "deliveryEmail": "Solo PDF por correo",
+    "mandatoryNote": "Donde la ley exige facturas electrónicas se envían siempre; esta opción solo cambia la copia en PDF.",
+    "peppolId": "Identificador Peppol",
+    "peppolHelp": "Su identificador de participante Peppol, p. ej. 0208:0123456789 — pídalo a su programa de contabilidad o proveedor de facturación electrónica.",
+    "invoiceEmail": "Correo para facturas",
+    "invoiceEmailHelp": "Déjelo vacío para usar el correo de la empresa.",
+    "language": "Idioma de las facturas",
+    "languageDefault": "Idioma de su país ({lang})",
+    "secondLanguage": "Segundo idioma en las facturas",
+    "none": "Ninguno",
+    "ksefNip": "NIP para KSeF",
+    "sdiCode": "Código de destinatario SDI",
+    "pec": "Correo PEC",
+    "leitwegId": "Leitweg-ID (referencia del comprador)",
+    "selfBilling": "Facturación por el destinatario",
+    "selfBillingText": "FIRINGI emite su factura a FIRINGI para cada extracto de facturación, en su nombre y por su cuenta, numerada en su propia serie. Ya no tiene que subir facturas; puede verlas y descargarlas aquí y en Mis facturas. Puede dejarlo en cualquier momento.",
+    "selfBillingAgree": "Acepto que FIRINGI emita mis facturas por mí (acuerdo de facturación por el destinatario)",
+    "selfBillingSince": "Acuerdo {number} desde el {date}",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "readOnly": "Solo los usuarios que gestionan el perfil de la empresa pueden cambiar estos ajustes.",
+    "docsTitle": "Sus facturas electrónicas",
+    "docsEmpty": "Aún no hay facturas electrónicas.",
+    "colDocument": "Documento",
+    "colDate": "Fecha",
+    "colFormat": "Formato",
+    "colStatus": "Estado",
+    "colRef": "Referencia de la red",
+    "download": "XML",
+    "einvoiceCol": "Factura electrónica",
+    "selfBilledBadge": "Emitida por el destinatario",
+    "viaEinvoice": "Recibida electrónicamente",
+    "status": {
+      "INVALID": "En preparación",
+      "QUEUED": "Enviándose",
+      "SENT": "Enviada",
+      "DELIVERED": "Entregada",
+      "ACCEPTED": "Aceptada",
+      "REJECTED": "Rechazada",
+      "FAILED": "Aún no enviada",
+      "RECEIVED": "Recibida",
+      "MATCHED": "Conciliada"
+    },
+    "kind": {
+      "INVOICE": "Factura",
+      "CREDIT_NOTE": "Factura rectificativa",
+      "SERVICE_INVOICE": "Factura",
+      "SELF_BILLED": "Factura emitida por el destinatario",
+      "SELF_BILLED_CREDIT": "Rectificativa emitida por el destinatario",
+      "SUPPLIER_INVOICE": "Su factura"
+    }
   }
 }

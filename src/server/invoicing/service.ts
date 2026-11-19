@@ -62,8 +62,12 @@ async function issueDocument(tx: Tx, d: {
   const { invoiceCurrency, invoiceLocal } = await import("@/server/currency/documents");
   const fx = await invoiceCurrency(tx, { orderId: d.orderId, originalInvoiceId: d.originalInvoiceId });
   const loc = fx ? invoiceLocal(fx, d.lines, net, vat) : null;
+  // Phase 46: the document's language(s) — fixed when issued (customer's country first, see e-invoice settings)
+  const { languagesFor } = await import("@/server/einvoice/service");
+  const langs = await languagesFor(tx, d.recipientCompanyId, d.legalEntityId);
   const draft = await tx.invoice.create({
     data: {
+      language: langs.primary, secondLanguage: langs.second,
       ...(fx && loc ? { currencyCode: fx.code, eurRate: fx.eurRate.toString(), midRate: fx.midRate.toString(), netTotalLocal: loc.net.toString(), vatTotalLocal: loc.vat.toString(), grossTotalLocal: loc.grand.toString() } : {}),
       legalEntityId: d.legalEntityId, docType: d.docType, status: "DRAFT", taxRegime: d.taxRegime, recipientCompanyId: d.recipientCompanyId, orderId: d.orderId,
       originalInvoiceId: d.originalInvoiceId ?? null, issuerSnapshot: d.issuerSnapshot, recipientSnapshot: d.recipientSnapshot,
@@ -111,8 +115,9 @@ async function issueDocument(tx: Tx, d: {
   }));
 }
 
-/** Webhook "invoice.issued" for the recipient (same transaction). */
+/** Webhook "invoice.issued" for the recipient (same transaction); Phase 46: queued as an e-invoice when its route says so. */
 async function issued<T extends { id: string; recipientCompanyId: string; fullNumber: string | null; docType: string; orderId: string | null; grossTotal: { toString(): string }; dueAt: Date | null }>(tx: Tx, inv: T): Promise<T> {
+  await (await import("@/server/einvoice/service")).queueForInvoice(tx, inv.id);
   const { emitWebhook } = await import("@/server/integrations/webhooks");
   await emitWebhook(tx, inv.recipientCompanyId, "invoice.issued", { invoiceId: inv.id, number: inv.fullNumber, docType: inv.docType, orderId: inv.orderId, total: inv.grossTotal.toString(), dueAt: inv.dueAt?.toISOString() ?? null });
   return inv;
@@ -233,6 +238,8 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
       ...(await (await import("@/server/currency/documents")).statementLocal(tx, orderId, { net: expNet, vat: expVat, gross: expNet.plus(expVat) })),
     },
   });
+  // Phase 46: a supplier with a self-billing agreement — FIRINGI issues its invoice for it now
+  await (await import("@/server/einvoice/service")).selfBillStatement(tx, statement.id, actorUserId);
   return { invoice, statement };
 }
 
@@ -314,6 +321,7 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
         ...(await (await import("@/server/currency/documents")).statementLocal(tx, inv.orderId!, { net: n, vat: v, gross: n.plus(v) })),
       },
     })).id;
+    await (await import("@/server/einvoice/service")).selfBillStatement(tx, creditStatementId, sel.actorUserId);
   }
   return Object.assign(cn, { creditStatementId });
 }

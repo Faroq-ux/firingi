@@ -21,6 +21,9 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
+# The build needs a large JS heap (about 9.5 GB at the moment); give the build machine ≥ 12 GB of memory.
+ARG BUILD_HEAP_MB=9728
+ENV NODE_OPTIONS=--max-old-space-size=${BUILD_HEAP_MB}
 COPY . .
 RUN pnpm prisma generate && pnpm build
 

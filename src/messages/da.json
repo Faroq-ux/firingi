@@ -863,7 +863,8 @@
     "Excise Report": "Punktafgiftsrapport",
     "Licences": "Licenser",
     "Food Information": "Fødevareinformation",
-    "Allergens & Food Info": "Allergener & fødevareinfo"
+    "Allergens & Food Info": "Allergener & fødevareinfo",
+    "E-Invoicing": "E-fakturering"
   },
   "delivery": {
     "title": "Levering",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Valutakursadvarsel",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-faktura ikke sendt: {number}",
+      "body": "{number} kunne ikke sendes elektronisk: {reason}. Åbn den under Fakturaer › E-fakturering."
+    },
+    "einvoice_rejected": {
+      "title": "E-faktura afvist: {number}",
+      "body": "{number} blev afvist af modtageren eller skattemyndigheden: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E-faktura stoppet af kontrollerne: {number}",
+      "body": "{number} blev ikke sendt, fordi en kontrol fejlede: {reason}. Ret oplysningerne, og send igen."
+    },
+    "einvoice_received": {
+      "title": "Leverandør-e-faktura til gennemsyn: {number}",
+      "body": "Der er kommet en leverandør-e-faktura ({number}), som ikke kunne afstemmes: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Faktura udstedt for dig: {number}",
+      "body": "FIRINGI har udstedt din faktura {number} for afregning {statement} under din selvfaktureringsaftale. Se den under Mine fakturaer til FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Priser i {code} til dagens kurs: 1 € = {rate} {code}. Kursen låses, når du bestiller.",
     "rateLocked": "I {code} til kursen låst ved bestillingen: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "E-fakturering",
+    "intro": "Hvordan du modtager fakturaer fra FIRINGI — elektronisk (Peppol, KSeF, SDI …), som PDF på e-mail eller begge — og på hvilket sprog.",
+    "introVendor": "Hvordan FIRINGI sender dig sine fakturaer og modtager dine — elektronisk eller på e-mail, på hvilket sprog — og om FIRINGI udsteder dine fakturaer for dig (selvfakturering).",
+    "routeMandatory": "I {country} sendes fakturaer via {format} — lovpligtigt for alle fakturaer.",
+    "routeOnRequest": "I {country} kan FIRINGI sende dine fakturaer som {format}. Angiv dit Peppol-ID, eller vælg e-fakturaer nedenfor.",
+    "routeOff": "E-fakturaer bruges endnu ikke for {country}; du får dine fakturaer som PDF på e-mail.",
+    "delivery": "Sådan modtager du fakturaer",
+    "deliveryBoth": "E-faktura og PDF på e-mail",
+    "deliveryEinvoice": "Kun e-faktura",
+    "deliveryEmail": "Kun PDF på e-mail",
+    "mandatoryNote": "Hvor loven kræver e-fakturaer, sendes de altid; dette valg ændrer kun PDF-kopien.",
+    "peppolId": "Peppol-ID",
+    "peppolHelp": "Dit Peppol-deltager-ID, f.eks. 0208:0123456789 — spørg dit regnskabsprogram eller din e-fakturaudbyder.",
+    "invoiceEmail": "E-mail til fakturaer",
+    "invoiceEmailHelp": "Lad stå tomt for at bruge virksomhedens e-mail.",
+    "language": "Fakturasprog",
+    "languageDefault": "Dit lands sprog ({lang})",
+    "secondLanguage": "Andet sprog på fakturaer",
+    "none": "Ingen",
+    "ksefNip": "NIP til KSeF",
+    "sdiCode": "SDI-modtagerkode",
+    "pec": "PEC-e-mail",
+    "leitwegId": "Leitweg-ID (køberreference)",
+    "selfBilling": "Selvfakturering",
+    "selfBillingText": "FIRINGI udsteder din faktura til FIRINGI for hver afregning, i dit navn og for din regning, nummereret i din egen selvfaktureringsserie. Du uploader ikke længere fakturaer; du kan se og hente hver enkelt her og under Mine fakturaer. Du kan stoppe når som helst.",
+    "selfBillingAgree": "Jeg accepterer, at FIRINGI udsteder mine fakturaer for mig (aftale om selvfakturering)",
+    "selfBillingSince": "Aftale {number} siden {date}",
+    "save": "Gem",
+    "saved": "Gemt",
+    "readOnly": "Kun brugere, der administrerer virksomhedsprofilen, kan ændre disse indstillinger.",
+    "docsTitle": "Dine e-fakturaer",
+    "docsEmpty": "Ingen e-fakturaer endnu.",
+    "colDocument": "Dokument",
+    "colDate": "Dato",
+    "colFormat": "Format",
+    "colStatus": "Status",
+    "colRef": "Netværksreference",
+    "download": "XML",
+    "einvoiceCol": "E-faktura",
+    "selfBilledBadge": "Selvfaktureret",
+    "viaEinvoice": "Modtaget elektronisk",
+    "status": {
+      "INVALID": "Forberedes",
+      "QUEUED": "Sendes",
+      "SENT": "Sendt",
+      "DELIVERED": "Leveret",
+      "ACCEPTED": "Accepteret",
+      "REJECTED": "Afvist",
+      "FAILED": "Ikke sendt endnu",
+      "RECEIVED": "Modtaget",
+      "MATCHED": "Afstemt"
+    },
+    "kind": {
+      "INVOICE": "Faktura",
+      "CREDIT_NOTE": "Kreditnota",
+      "SERVICE_INVOICE": "Faktura",
+      "SELF_BILLED": "Selvfaktura",
+      "SELF_BILLED_CREDIT": "Kreditnota ved selvfakturering",
+      "SUPPLIER_INVOICE": "Din faktura"
+    }
   }
 }

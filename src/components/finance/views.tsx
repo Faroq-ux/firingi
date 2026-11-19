@@ -3,6 +3,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { listViews } from "@/server/services/workspace";
 import { Pager } from "@/components/ui/pager";
 import Link from "next/link";
+import { EStatus } from "@/components/einvoice/status";
+import { FORMAT_SHORT, type EFormat } from "@/lib/einvoice";
 import { getLocale, getTranslations } from "next-intl/server";
 import { FileText } from "lucide-react";
 import type { Ctx } from "@/server/context";
@@ -61,6 +63,9 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
   const current = Math.min(Math.max(1, page), pageCount);
   const rows = all.slice((current - 1) * PAGE, current * PAGE);
   const howToPay = as === "BUYER" ? await paymentInstructions(ctx.company.countryId) : null;
+  // Phase 46: each document's e-invoice status (when one went out electronically)
+  const te = await getTranslations("einvoice");
+  const einv = await (await import("@/server/einvoice/service")).einvoiceStatusFor(ctx, rows.map((r) => r.id), as);
   return (
     <>
       <PageHeader title={title} description={`${all.length} · ${t("balance")}: ${formatMoney(open, locale, balanceCode)}`} />
@@ -80,7 +85,7 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
         columns={[
           { key: "number", label: t("number") }, { key: "date", label: t("date"), type: "date" }, ...(as === "ADMIN" ? [{ key: "customer", label: "Customer" }] : []),
           { key: "order", label: t("order") }, { key: "total", label: t("total"), type: "money" as const }, { key: "open", label: t("open"), type: "money" as const },
-          { key: "status", label: t("status"), type: "badge" as const }, { key: "pdf", label: "PDF", filter: false },
+          { key: "status", label: t("status"), type: "badge" as const }, { key: "einv", label: te("einvoiceCol"), type: "badge" as const }, { key: "pdf", label: "PDF", filter: false },
         ]}
         rows={rows.map((r) => {
           const status = r.overdue ? t("overdue") : Number(r.open) === 0 && r.docType === "INVOICE" ? "PAID" : r.status;
@@ -100,6 +105,17 @@ export async function SalesInvoicesView({ ctx, as, title, docType, buyerType, un
               total: (() => { const m = money2(r.grossTotal, locale, r, viewer); const sign = r.docType === "CREDIT_NOTE" ? -1 : 1; return { t: `${sign < 0 ? "−" : ""}${m.t}`, v: m.v * sign, ...(m.sub ? { sub: `${sign < 0 ? "−" : ""}${m.sub}` } : {}) }; })(),
               open: (() => { if (!(Number(r.open) > 0)) return { t: "—", v: 0 }; const m = money2(r.open, locale, r, viewer); return { t: m.t, v: m.v, ...(m.sub ? { sub: m.sub } : {}) }; })(),
               status: { t: status, node: r.overdue ? <Badge variant="destructive">{t("overdue")}</Badge> : Number(r.open) === 0 && r.docType === "INVOICE" ? <StatusBadge status="PAID" /> : <StatusBadge status={r.status} /> },
+              einv: (() => {
+                const e = einv.get(r.id);
+                if (!e) return { t: "—" };
+                const label = te(`status.${e.status}`);
+                return { t: label, node: (
+                  <span className="text-xs">
+                    {as === "ADMIN" ? <Link href={`/admin/invoices/e-invoicing/${e.id}`}><EStatus status={e.status} label={label} /></Link> : <EStatus status={e.status} label={label} />}
+                    <span className="block text-muted-foreground">{FORMAT_SHORT[e.format as EFormat] ?? e.format}{as === "BUYER" && ["SENT", "DELIVERED", "ACCEPTED"].includes(e.status) ? <> · <a className="text-primary hover:underline" href={`/api/einvoice/${e.id}/xml`}>XML</a></> : null}</span>
+                  </span>
+                ) };
+              })(),
               pdf: { t: "", node: pendingFiscal(r) ? null : pdfLink(`/api/invoices/${r.id}/pdf`) },
             },
           };
@@ -193,7 +209,7 @@ export async function StatementsView({ ctx, as, title }: { ctx: Ctx; as: "VENDOR
 }
 
 export async function VendorInvoicesView({ ctx, as, title, vendorType }: { ctx: Ctx; as: "VENDOR" | "ADMIN"; title: string; vendorType?: "DISTRIBUTOR" | "WHOLESALER" }) {
-  const [rows, t, locale] = await Promise.all([listVendorInvoices(ctx, as, { vendorType }), getTranslations("finance"), getLocale()]);
+  const [rows, t, locale, te] = await Promise.all([listVendorInvoices(ctx, as, { vendorType }), getTranslations("finance"), getLocale(), getTranslations("einvoice")]);
   const review = as === "ADMIN" && can(ctx, "admin.finance.manage");
   return (
     <>
@@ -204,7 +220,9 @@ export async function VendorInvoicesView({ ctx, as, title, vendorType }: { ctx: 
           {rows.length === 0 && <EmptyRow colSpan={8}>—</EmptyRow>}
           {rows.map((v) => (
             <TR key={v.id} className="align-top">
-              <TD className="font-mono text-xs">{pdfLink(`/api/vendor-invoices/${v.id}/file`, v.externalNumber)}{v.docType === "CREDIT_NOTE" && <div className="text-muted-foreground">{t("creditNote")}</div>}</TD>
+              <TD className="font-mono text-xs">{pdfLink(`/api/vendor-invoices/${v.id}/file`, v.externalNumber)}{v.docType === "CREDIT_NOTE" && <div className="text-muted-foreground">{t("creditNote")}</div>}
+                {v.source === "SELF_BILLED" && <div><Badge variant="default" data-testid="selfbilled-badge">{te("selfBilledBadge")}</Badge></div>}
+                {v.source === "EINVOICE" && <div><Badge variant="secondary">{te("viaEinvoice")}</Badge></div>}</TD>
               {as === "ADMIN" && <TD>{v.vendor.legalName}</TD>}
               <TD className="text-xs">{formatDate(v.issueDate, locale)}</TD>
               <TD className="font-mono text-xs">{v.allocations.map((a) => a.statement.number).join(", ")}</TD>

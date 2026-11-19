@@ -863,7 +863,8 @@
     "Excise Report": "Přehled spotřební daně",
     "Licences": "Licence",
     "Food Information": "Informace o potravinách",
-    "Allergens & Food Info": "Alergeny a info o potravinách"
+    "Allergens & Food Info": "Alergeny a info o potravinách",
+    "E-Invoicing": "Elektronická fakturace"
   },
   "delivery": {
     "title": "Doručení",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Upozornění na směnný kurz",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "E-faktura neodeslána: {number}",
+      "body": "{number} se nepodařilo odeslat elektronicky: {reason}. Otevřete ji v Faktury › Elektronická fakturace."
+    },
+    "einvoice_rejected": {
+      "title": "E-faktura zamítnuta: {number}",
+      "body": "{number} zamítl příjemce nebo daňová správa: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "E-faktura zastavena kontrolami: {number}",
+      "body": "{number} nebyla odeslána, protože selhala kontrola: {reason}. Opravte údaje a odešlete znovu."
+    },
+    "einvoice_received": {
+      "title": "E-faktura dodavatele ke kontrole: {number}",
+      "body": "Přišla e-faktura dodavatele ({number}), kterou se nepodařilo spárovat: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Faktura vystavená za vás: {number}",
+      "body": "FIRINGI vystavilo vaši fakturu {number} k vyúčtování {statement} podle vaší dohody. Najdete ji v Mé faktury pro FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Ceny v {code} podle dnešního kurzu: 1 € = {rate} {code}. Kurz se zafixuje při objednávce.",
     "rateLocked": "V {code} podle kurzu zafixovaného při objednávce: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Elektronická fakturace",
+    "intro": "Jak dostáváte faktury od FIRINGI — elektronicky (Peppol, KSeF, SDI …), jako PDF e-mailem nebo obojí — a v jakém jazyce.",
+    "introVendor": "Jak vám FIRINGI posílá faktury a přijímá ty vaše — elektronicky nebo e-mailem, v jakém jazyce — a zda FIRINGI vystavuje faktury za vás (vystavování odběratelem).",
+    "routeMandatory": "V zemi {country} jdou faktury přes {format} — ze zákona povinné pro každou fakturu.",
+    "routeOnRequest": "V zemi {country} vám FIRINGI může posílat faktury jako {format}. Zadejte své Peppol ID nebo níže zvolte elektronické faktury.",
+    "routeOff": "Pro zemi {country} se elektronické faktury zatím nepoužívají; faktury dostáváte jako PDF e-mailem.",
+    "delivery": "Jak dostáváte faktury",
+    "deliveryBoth": "E-faktura a PDF e-mailem",
+    "deliveryEinvoice": "Pouze e-faktura",
+    "deliveryEmail": "Pouze PDF e-mailem",
+    "mandatoryNote": "Kde zákon vyžaduje e-faktury, odesílají se vždy; tato volba mění jen kopii v PDF.",
+    "peppolId": "Peppol ID",
+    "peppolHelp": "Vaše ID účastníka Peppol, např. 0208:0123456789 — zeptejte se svého účetního programu nebo poskytovatele e-fakturace.",
+    "invoiceEmail": "E-mail pro faktury",
+    "invoiceEmailHelp": "Ponechte prázdné pro e-mail firmy.",
+    "language": "Jazyk faktur",
+    "languageDefault": "Jazyk vaší země ({lang})",
+    "secondLanguage": "Druhý jazyk na fakturách",
+    "none": "Žádný",
+    "ksefNip": "NIP pro KSeF",
+    "sdiCode": "Kód příjemce SDI",
+    "pec": "E-mail PEC",
+    "leitwegId": "Leitweg-ID (reference kupujícího)",
+    "selfBilling": "Vystavování faktur odběratelem",
+    "selfBillingText": "FIRINGI vystaví ke každému vyúčtování vaši fakturu pro FIRINGI vaším jménem a na váš účet, očíslovanou ve vaší vlastní řadě. Faktury už nenahráváte; každou můžete zobrazit a stáhnout zde i v Mých fakturách. Můžete kdykoli skončit.",
+    "selfBillingAgree": "Souhlasím, aby FIRINGI vystavovalo mé faktury za mě (dohoda o vystavování faktur odběratelem)",
+    "selfBillingSince": "Dohoda {number} od {date}",
+    "save": "Uložit",
+    "saved": "Uloženo",
+    "readOnly": "Tato nastavení mohou měnit jen uživatelé, kteří spravují profil firmy.",
+    "docsTitle": "Vaše e-faktury",
+    "docsEmpty": "Zatím žádné e-faktury.",
+    "colDocument": "Doklad",
+    "colDate": "Datum",
+    "colFormat": "Formát",
+    "colStatus": "Stav",
+    "colRef": "Reference v síti",
+    "download": "XML",
+    "einvoiceCol": "E-faktura",
+    "selfBilledBadge": "Vystaveno odběratelem",
+    "viaEinvoice": "Přijato elektronicky",
+    "status": {
+      "INVALID": "Připravuje se",
+      "QUEUED": "Odesílá se",
+      "SENT": "Odesláno",
+      "DELIVERED": "Doručeno",
+      "ACCEPTED": "Přijato",
+      "REJECTED": "Zamítnuto",
+      "FAILED": "Zatím neodesláno",
+      "RECEIVED": "Přijato",
+      "MATCHED": "Spárováno"
+    },
+    "kind": {
+      "INVOICE": "Faktura",
+      "CREDIT_NOTE": "Opravný doklad",
+      "SERVICE_INVOICE": "Faktura",
+      "SELF_BILLED": "Faktura vystavená odběratelem",
+      "SELF_BILLED_CREDIT": "Opravný doklad vystavený odběratelem",
+      "SUPPLIER_INVOICE": "Vaše faktura"
+    }
   }
 }

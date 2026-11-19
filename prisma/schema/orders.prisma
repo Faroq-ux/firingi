@@ -185,12 +185,12 @@ model OrderLine {
   qtyConfirmed  Int?
   qtyDelivered  Int?
 
-  unitListPriceNet      Decimal @db.Decimal(18, 4) // vendor price before any discount
-  vendorDiscountNet     Decimal @default(0) @db.Decimal(18, 4) // per unit, from vendor promotions
-  adminDiscountNet      Decimal @default(0) @db.Decimal(18, 4) // per unit, from admin promotions
-  firingiFundedDiscount Decimal @default(0) @db.Decimal(18, 4) // per unit, paid by FIRINGI
-  vendorFundedDiscount  Decimal @default(0) @db.Decimal(18, 4) // per unit, paid by vendor
-  unitSalePriceNet      Decimal @db.Decimal(18, 4) // what the buyer pays per unit (net)
+  unitListPriceNet      Decimal  @db.Decimal(18, 4) // vendor price before any discount
+  vendorDiscountNet     Decimal  @default(0) @db.Decimal(18, 4) // per unit, from vendor promotions
+  adminDiscountNet      Decimal  @default(0) @db.Decimal(18, 4) // per unit, from admin promotions
+  firingiFundedDiscount Decimal  @default(0) @db.Decimal(18, 4) // per unit, paid by FIRINGI
+  vendorFundedDiscount  Decimal  @default(0) @db.Decimal(18, 4) // per unit, paid by vendor
+  unitSalePriceNet      Decimal  @db.Decimal(18, 4) // what the buyer pays per unit (net)
   /// Phase 45: in the order's currency (null = EUR order); a fixed local price list's price is kept exactly
   unitPriceLocal        Decimal? @db.Decimal(18, 4)
   lineNetLocal          Decimal? @db.Decimal(18, 2)

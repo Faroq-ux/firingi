@@ -863,7 +863,8 @@
     "Excise Report": "Rapporto Accise",
     "Licences": "Licenze",
     "Food Information": "Informazioni Alimentari",
-    "Allergens & Food Info": "Allergeni e Info Alimentari"
+    "Allergens & Food Info": "Allergeni e Info Alimentari",
+    "E-Invoicing": "Fatturazione elettronica"
   },
   "delivery": {
     "title": "Consegna",
@@ -1674,6 +1675,26 @@
     "fx_alert": {
       "title": "Avviso tasso di cambio",
       "body": "{message}"
+    },
+    "einvoice_failed": {
+      "title": "Fattura elettronica non inviata: {number}",
+      "body": "{number} non è stata inviata elettronicamente: {reason}. Aprila in Fatture › Fatturazione elettronica."
+    },
+    "einvoice_rejected": {
+      "title": "Fattura elettronica rifiutata: {number}",
+      "body": "{number} è stata rifiutata dal destinatario o dall'amministrazione fiscale: {reason}."
+    },
+    "einvoice_invalid": {
+      "title": "Fattura elettronica fermata dai controlli: {number}",
+      "body": "{number} non è stata inviata perché un controllo non è riuscito: {reason}. Correggi i dati e inviala di nuovo."
+    },
+    "einvoice_received": {
+      "title": "Fattura elettronica del fornitore da verificare: {number}",
+      "body": "È arrivata una fattura elettronica del fornitore ({number}) che non è stato possibile abbinare: {reason}."
+    },
+    "einvoice_selfbilled": {
+      "title": "Fattura emessa per te: {number}",
+      "body": "FIRINGI ha emesso la tua fattura {number} per l'estratto {statement} in base al tuo accordo di autofatturazione. La trovi in Le mie fatture a FIRINGI."
     }
   },
   "notifications": {
@@ -5720,5 +5741,67 @@
     "approxEur": "≈ {amount}",
     "rateNote": "Prezzi in {code} al tasso di oggi: 1 € = {rate} {code}. Il tasso viene fissato all'ordine.",
     "rateLocked": "In {code} al tasso fissato all'ordine: 1 € = {rate} {code}."
+  },
+  "einvoice": {
+    "title": "Fatturazione elettronica",
+    "intro": "Come ricevi le fatture di FIRINGI — in formato elettronico (Peppol, KSeF, SDI …), in PDF via e-mail o entrambi — e in quale lingua.",
+    "introVendor": "Come FIRINGI ti invia le sue fatture e riceve le tue — in formato elettronico o via e-mail, in quale lingua — e se FIRINGI emette le tue fatture per te (autofatturazione).",
+    "routeMandatory": "In {country} le fatture passano da {format}: obbligatorio per legge per ogni fattura.",
+    "routeOnRequest": "In {country} FIRINGI può inviare le tue fatture come {format}. Indica il tuo identificativo Peppol o scegli le fatture elettroniche qui sotto.",
+    "routeOff": "Le fatture elettroniche non sono ancora usate per {country}; ricevi le fatture in PDF via e-mail.",
+    "delivery": "Come ricevi le fatture",
+    "deliveryBoth": "Fattura elettronica e PDF via e-mail",
+    "deliveryEinvoice": "Solo fattura elettronica",
+    "deliveryEmail": "Solo PDF via e-mail",
+    "mandatoryNote": "Dove la legge richiede la fattura elettronica, viene sempre inviata; questa scelta cambia solo la copia PDF.",
+    "peppolId": "Identificativo Peppol",
+    "peppolHelp": "Il tuo identificativo di partecipante Peppol, ad es. 0208:0123456789 — chiedilo al tuo software di contabilità o fornitore di fatturazione elettronica.",
+    "invoiceEmail": "E-mail per le fatture",
+    "invoiceEmailHelp": "Lascia vuoto per usare l'e-mail dell'azienda.",
+    "language": "Lingua delle fatture",
+    "languageDefault": "Lingua del tuo paese ({lang})",
+    "secondLanguage": "Seconda lingua sulle fatture",
+    "none": "Nessuna",
+    "ksefNip": "NIP per KSeF",
+    "sdiCode": "Codice destinatario SDI",
+    "pec": "PEC",
+    "leitwegId": "Leitweg-ID (riferimento acquirente)",
+    "selfBilling": "Autofatturazione",
+    "selfBillingText": "FIRINGI emette la tua fattura a FIRINGI per ogni estratto di fatturazione, in tuo nome e per tuo conto, numerata nella tua serie di autofatturazione. Non devi più caricare fatture; puoi vederle e scaricarle qui e in Le mie fatture. Puoi smettere in qualsiasi momento.",
+    "selfBillingAgree": "Accetto che FIRINGI emetta le mie fatture per me (accordo di autofatturazione)",
+    "selfBillingSince": "Accordo {number} dal {date}",
+    "save": "Salva",
+    "saved": "Salvato",
+    "readOnly": "Solo gli utenti che gestiscono il profilo aziendale possono modificare queste impostazioni.",
+    "docsTitle": "Le tue fatture elettroniche",
+    "docsEmpty": "Ancora nessuna fattura elettronica.",
+    "colDocument": "Documento",
+    "colDate": "Data",
+    "colFormat": "Formato",
+    "colStatus": "Stato",
+    "colRef": "Riferimento di rete",
+    "download": "XML",
+    "einvoiceCol": "Fattura elettronica",
+    "selfBilledBadge": "Autofattura",
+    "viaEinvoice": "Ricevuta elettronicamente",
+    "status": {
+      "INVALID": "In preparazione",
+      "QUEUED": "In invio",
+      "SENT": "Inviata",
+      "DELIVERED": "Consegnata",
+      "ACCEPTED": "Accettata",
+      "REJECTED": "Rifiutata",
+      "FAILED": "Non ancora inviata",
+      "RECEIVED": "Ricevuta",
+      "MATCHED": "Abbinata"
+    },
+    "kind": {
+      "INVOICE": "Fattura",
+      "CREDIT_NOTE": "Nota di credito",
+      "SERVICE_INVOICE": "Fattura",
+      "SELF_BILLED": "Autofattura",
+      "SELF_BILLED_CREDIT": "Nota di credito in autofatturazione",
+      "SUPPLIER_INVOICE": "La tua fattura"
+    }
   }
 }

@@ -1,0 +1,134 @@
+// ───────────────────────── Phase 46 — E-invoicing ─────────────────────────
+// Every document FIRINGI issues (customer invoices and credit notes, service invoices, self-billed
+// supplier invoices) can also go out as a structured e-invoice through the channel FIRINGI chose for
+// the recipient's country (Peppol, Poland's KSeF, Italy's SDI, Spain's Verifactu, XRechnung, Factur-X,
+// or an EU-wide e-invoicing service). Supplier e-invoices come in the same way and are matched.
+// Each sent / received document is archived with its hash for the legal retention period.
+
+enum EInvoiceDirection {
+  OUTBOUND
+  INBOUND
+}
+
+enum EInvoiceKind {
+  INVOICE // customer invoice (goods)
+  CREDIT_NOTE
+  SERVICE_INVOICE // ads, plans, early payout fees (to suppliers)
+  SELF_BILLED // FIRINGI issues the supplier's invoice to itself (self-billing agreement)
+  SELF_BILLED_CREDIT
+  SUPPLIER_INVOICE // received from a supplier
+}
+
+enum EInvoiceStatus {
+  INVALID // failed the checks before sending — fix the data, then validate again
+  QUEUED // waiting to be sent (or retried)
+  SENT // handed to the network / service
+  DELIVERED // the recipient's access point / the tax system has it
+  ACCEPTED // accepted by the recipient or cleared by the tax system
+  REJECTED // refused by the recipient or the tax system
+  FAILED // could not be sent after the retries — finance must look
+  RECEIVED // inbound, read
+  MATCHED // inbound, matched to a supplier statement
+}
+
+model EInvoiceDocument {
+  id              String            @id @default(cuid())
+  direction       EInvoiceDirection
+  kind            EInvoiceKind
+  status          EInvoiceStatus    @default(QUEUED)
+  invoiceId       String?
+  statementId     String?
+  vendorInvoiceId String?
+  /// the other party: customer / supplier company
+  counterpartyId  String?
+  legalEntityId   String?
+  /// the country whose route was used (the recipient's country; the sender's for inbound)
+  countryCode     String
+  /// PEPPOL_BIS3 | XRECHNUNG | FACTURX | KSEF_FA3 | FATTURAPA | VERIFACTU
+  format          String
+  /// PEPPOL | KSEF | SDI | VERIFACTU | EMAIL | HUB
+  channel         String
+  /// adapter key: eu-hub | peppol-ap | ksef | sdi | aeat | email
+  provider        String
+  number          String
+  language        String?
+  /// [{ code, severity: "error" | "warning", message, field? }]
+  validation      Json?
+  xmlKey          String?
+  pdfKey          String?
+  /// SHA-256 of the XML as sent / received (archive integrity)
+  sha256          String?
+  externalId      String?
+  /// the network's own reference: KSeF number, SDI id, Verifactu CSV, Peppol message id
+  networkRef      String?
+  attempts        Int               @default(0)
+  nextAt          DateTime?
+  lastError       String?
+  sentAt          DateTime?
+  deliveredAt     DateTime?
+  respondedAt     DateTime?
+  responseNote    String?
+  /// kept (not deletable) until this date — the country's retention period
+  archiveUntil    DateTime?
+  /// inbound: what the sender put in (parsed), for matching and review
+  parsed          Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  invoice       Invoice?                @relation(fields: [invoiceId], references: [id])
+  statement     VendorBillingStatement? @relation(fields: [statementId], references: [id])
+  vendorInvoice VendorInvoice?          @relation(fields: [vendorInvoiceId], references: [id])
+  counterparty  Company?                @relation("EInvoiceCounterparty", fields: [counterpartyId], references: [id])
+  events        EInvoiceEvent[]
+
+  @@index([status, nextAt])
+  @@index([invoiceId])
+  @@index([statementId])
+  @@index([counterpartyId, createdAt])
+  @@index([direction, createdAt])
+  @@index([externalId])
+}
+
+model EInvoiceEvent {
+  id          String         @id @default(cuid())
+  documentId  String
+  status      EInvoiceStatus
+  message     String
+  data        Json?
+  actorUserId String?
+  at          DateTime       @default(now())
+
+  document EInvoiceDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId, at])
+}
+
+/// How a customer / supplier receives and sends invoices (set by the company, overridable by FIRINGI).
+model EInvoiceProfile {
+  companyId            String    @id
+  /// EINVOICE | EMAIL | BOTH
+  delivery             String    @default("BOTH")
+  /// Peppol participant id "scheme:identifier", e.g. "0208:0123456789", "9925:BE0123456789"
+  peppolId             String?
+  /// invoice language chosen by the company (null = by its country)
+  invoiceLanguage      String?
+  /// optional second language printed on its documents
+  secondLanguage       String?
+  /// Poland: NIP for KSeF (defaults to the tax id)
+  ksefNip              String?
+  /// Italy: SDI recipient code (7 characters) or certified e-mail (PEC)
+  sdiCode              String?
+  pecEmail             String?
+  /// Germany: Leitweg-ID / buyer reference for XRechnung
+  leitwegId            String?
+  /// where invoice e-mails go (default: the company e-mail)
+  invoiceEmail         String?
+  /// supplier: agrees that FIRINGI issues its invoices for it (self-billing)
+  selfBilling          Boolean   @default(false)
+  selfBillingSince     DateTime?
+  selfBillingAgreement String?
+  updatedById          String?
+  updatedAt            DateTime  @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}

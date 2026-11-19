@@ -292,7 +292,10 @@ export async function processFiscalQueue(limit = 25) {
 
 /** After a transaction that booked documents: try them now (best effort; the cron retries). */
 export function kickFiscalQueue() {
-  void processFiscalQueue().catch(() => {});
+  void processFiscalQueue().catch(() => {}).finally(async () => {
+    // Phase 46: then the e-invoices queued by the same transaction
+    (await import("@/server/einvoice/service")).kickEInvoiceQueue();
+  });
 }
 
 /** Finance retries a failed document after fixing the cause (e.g. settings or customer data). */

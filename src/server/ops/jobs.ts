@@ -26,6 +26,7 @@ export const JOBS: JobDef[] = [
   { key: "coldchain", label: "Cold chain (equipment checks due, loggers out of range)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/coldchain" },
   { key: "excise", label: "Licensed goods (licence expiry reminders, expired licences)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/excise" },
   { key: "fx", label: "Exchange rates (ECB daily rates, rate alerts)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/fx" },
+  { key: "einvoice", label: "E-invoicing (send queued e-invoices with retries, follow statuses, receive supplier e-invoices)", every: "every 10 minutes", staleAfterMin: 60, critical: false, path: "/api/cron/einvoice" },
   { key: "food", label: "Food information (diet certificate reminders, required-to-sell check)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/food" },
   { key: "returnables", label: "Returnables (empties held too long: reminders, or the deposit kept)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/returnables" },
   { key: "deals", label: "Clearance deals (ending deals, expiring offers, alerts for deals that start, daily digest)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/deals" },

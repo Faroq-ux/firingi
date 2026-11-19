@@ -165,6 +165,12 @@ export const EVENTS: EventDef[] = [
   E("excise.licence_expiring", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "date", "days"]),
   // multi-currency (Phase 45)
   E("fx.alert", "account", ["admin.settings.manage", "admin.finance.manage"], ["EMAIL", "PUSH"], ["message"]),
+  // e-invoicing (Phase 46)
+  E("einvoice.failed", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
+  E("einvoice.rejected", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
+  E("einvoice.invalid", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL"], ["number", "reason"]),
+  E("einvoice.received", "account", ["admin.finance.manage", "admin.invoices.view"], ["EMAIL"], ["number", "reason"]),
+  E("einvoice.selfbilled", "account", ["vendor.invoices.view", "vendor.invoices.submit"], ["EMAIL", "PUSH"], ["number", "statement"]),
   // food information & allergens (Phase 44)
   E("food.review", "catalogue", ["admin.catalogue.approve"], ["EMAIL"], ["company", "product"]),
   E("food.decided", "catalogue", ["vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "status", "note"]),
