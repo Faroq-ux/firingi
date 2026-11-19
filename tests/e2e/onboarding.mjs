@@ -42,6 +42,7 @@ await settle(applicant);
 await applicant.fill("#legalName", legalName);
 await applicant.fill("#taxId", "123456780"); // invalid check digit first
 await applicant.fill("#activityCode", "56101");
+await applicant.check('[data-testid="reg-sells-TOBACCO"]'); // a restaurant that sells tobacco (asked at registration)
 await applicant.fill("#companyEmail", email);
 await applicant.fill("#phone", "+351 912 345 678");
 await applicant.fill("#line1", "Rua Augusta 10");

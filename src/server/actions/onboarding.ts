@@ -24,6 +24,9 @@ const companySchema = z.object({
   taxId: z.string().trim().min(5).max(20),
   vatNumber: z.string().trim().max(20).optional().nullable(),
   activityCode: z.string().trim().max(12).optional().nullable(),
+  activityCodes: z.string().trim().max(400).optional().nullable(),
+  /** Phase 47e — special goods the business sells (wholesale customers / wholesalers) */
+  sellsRestricted: z.array(z.enum(["TOBACCO", "ALCOHOL", "VAPING"])).max(3).optional(),
   companyEmail: z.string().trim().email(),
   phone,
   businessType: z.string().max(40).optional().nullable(),
@@ -57,7 +60,7 @@ export async function registerCompanyAction(raw: z.input<typeof companySchema>):
   const i = parsed.data;
   try {
     const reg = await registerCompany({
-      type: i.type, countryCode: i.countryCode, invite: i.invite, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber, activityCode: i.activityCode,
+      type: i.type, countryCode: i.countryCode, invite: i.invite, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber, activityCode: i.activityCode, activityCodes: i.activityCodes, sellsRestricted: i.sellsRestricted,
       companyEmail: i.companyEmail, phone: i.phone, businessType: i.businessType,
       owner: { name: i.ownerName, email: i.ownerEmail, password: i.password },
       headOffice: { line1: i.line1, line2: i.line2, postalCode: i.postalCode, cityId: i.cityId, cityName: i.cityName },
@@ -103,6 +106,7 @@ export const updateProfileAction = defineAction({
     tradeName: z.string().trim().max(200).optional().nullable(),
     vatNumber: z.string().trim().max(20).optional().nullable(),
     activityCode: z.string().trim().max(12).optional().nullable(),
+    addActivityCodes: z.string().trim().max(400).optional().nullable(),
     email: z.string().trim().email(),
     phone: z.string().trim().max(30).optional().nullable(),
     website: z.string().trim().max(200).optional().nullable(),
@@ -234,3 +238,9 @@ export async function attachAddressProofAction(fd: FormData) {
     return null;
   });
 }
+
+export const setOwnSpecialGoodsAction = defineAction({
+  permission: "company.profile.manage",
+  schema: z.object({ kinds: z.array(z.enum(["TOBACCO", "ALCOHOL", "VAPING"])).max(3) }),
+  handler: async (ctx, i) => { const { setOwnSpecialGoods } = await import("@/server/special/service"); const r = await setOwnSpecialGoods(ctx, i.kinds); revalidatePath("/", "layout"); return r; },
+});

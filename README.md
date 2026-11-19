@@ -143,6 +143,16 @@ tests/
 7. **Activity code**: wholesale customers give theirs at registration under the country's own name — **CAE** in
    Portugal, CNAE in Spain, NAF/APE in France, ATECO in Italy, WZ in Germany, PKD in Poland, NACE elsewhere
    (`src/lib/activity-code.ts`, checked per country); suppliers may. Companies registered before can enter it once.
+7b. **Secondary activity codes and special goods (Phase 47e)**: besides the main code, a business may give up to 20
+   secondary codes (at registration, or added later in the profile; only FIRINGI removes or changes them). Wholesale
+   customers and wholesalers tick at registration whether they sell **tobacco, alcoholic drinks or vaping products**
+   (one or more; changeable in Company › Tobacco & Alcohol). These goods — and any catalogue category FIRINGI marks
+   as special — are then shown and sold only to businesses that **declared them and whose main or secondary activity
+   code starts with a code FIRINGI allows** for them (Customers › Special Goods; defaults use the EU NACE classes,
+   e.g. 4726 tobacco shops, 5630 bars, 5610 restaurants, 4711 supermarkets, 4634 / 4635 wholesale). Hidden in the
+   catalogue and refused in the cart and at checkout; FIRINGI can warn instead of block, limit a rule to some
+   countries, switch it all off, and let one company through (exception with a reason, on the company page). Older
+   accounts that never answered keep their access until they do. Licences and approvals still apply on top.
 8. **Addresses (Phase 47d)**: before the registration is sent, addresses are edited freely. Afterwards, **the first
    time an address is used** — a new head office, billing, warehouse / distribution centre, pickup or delivery /
    shop address, or an address moved to another street, postal code or city — it waits for FIRINGI (*Customers* /

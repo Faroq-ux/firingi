@@ -53,7 +53,7 @@ export const manualVatAction = defineAction({
 
 export const correctRegistrationAction = defineAction({
   permission: ["admin.vendors.approve", "admin.customers.approve"],
-  schema: z.object({ companyId: z.string(), legalName: z.string().trim().min(2).max(200), taxId: z.string().trim().min(3).max(30), vatNumber: z.string().trim().min(3).max(20), legalForm: z.enum(["COMPANY", "SOLE_TRADER"]), activityCode: z.string().trim().max(12).nullable().optional(), reason: z.string().trim().min(10).max(300) }),
+  schema: z.object({ companyId: z.string(), legalName: z.string().trim().min(2).max(200), taxId: z.string().trim().min(3).max(30), vatNumber: z.string().trim().min(3).max(20), legalForm: z.enum(["COMPANY", "SOLE_TRADER"]), activityCode: z.string().trim().max(12).nullable().optional(), activityCodes: z.string().trim().max(400).nullable().optional(), reason: z.string().trim().min(10).max(300) }),
   handler: async (ctx, i) => { const { adminCorrectRegistration } = await import("@/server/services/company"); await adminCorrectRegistration(ctx, i.companyId, i); return done(); },
 });
 
@@ -67,6 +67,18 @@ export const saveAddressApprovalSettingsAction = defineAction({
   permission: "admin.settings.manage",
   schema: z.object({ enabled: z.boolean(), proofRequired: z.boolean(), kinds: z.object({ HEAD_OFFICE: z.boolean(), BILLING: z.boolean(), WAREHOUSE: z.boolean(), PICKUP: z.boolean(), DELIVERY: z.boolean() }) }),
   handler: async (ctx, i) => { const { saveAddressApprovalSettings } = await import("@/server/services/addresses"); await saveAddressApprovalSettings(ctx, i); return done(); },
+});
+
+export const saveSpecialSettingsAction = defineAction({
+  permission: "admin.settings.manage",
+  schema: z.object({ enabled: z.boolean(), askDeclaration: z.boolean(), noCode: z.enum(["ALLOW", "BLOCK"]), rules: z.array(z.object({ id: z.string().max(40), target: z.string().max(60), label: z.string().max(80), codes: z.array(z.string().max(10)).max(60), countries: z.array(z.string().max(2)).max(40), mode: z.enum(["BLOCK", "WARN"]), active: z.boolean() })).max(60) }),
+  handler: async (ctx, i) => { const { saveSpecialSettings } = await import("@/server/special/service"); await saveSpecialSettings(ctx, i); return done(); },
+});
+
+export const setSpecialExceptionAction = defineAction({
+  permission: ["admin.customers.approve", "admin.vendors.approve", "admin.risk.manage"],
+  schema: z.object({ companyId: z.string(), target: z.string().max(60), on: z.boolean(), note: z.string().trim().max(300).nullable().optional() }),
+  handler: async (ctx, i) => { const { setSpecialException } = await import("@/server/special/service"); await setSpecialException(ctx, i.companyId, i.target as never, i.on, i.note); return done(); },
 });
 
 export const setCommissionAction = defineAction({

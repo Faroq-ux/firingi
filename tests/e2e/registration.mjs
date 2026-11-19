@@ -65,6 +65,8 @@ try {
   await go(anon, "/register/customer");
   const caeLabel = await text(anon.locator('label[for="activityCode"]'));
   check("registration form: CAE field for a Portuguese wholesale customer, required", /CAE/.test(caeLabel) && (await anon.locator("#activityCode").getAttribute("required")) !== null, caeLabel);
+  check("…secondary codes and 'do you sell tobacco / alcohol / vaping?' (tick one or more)", (await anon.getByTestId("reg-activity-codes").count()) === 1 && (await anon.locator('[data-testid^="reg-sells-"]').count()) === 3);
+  await anon.getByTestId("reg-sells-TOBACCO").check(); await anon.getByTestId("reg-sells-ALCOHOL").check();
   await shot(anon, "reg-01-register-cae");
   await anon.selectOption("#country", "ES").catch(() => null);
   await settle(anon);
@@ -78,6 +80,31 @@ try {
   check("profile: legal name and VAT number can't be edited; the reason is shown", await kh.locator("#legalName").isDisabled() && await kh.locator("#vatNumber").isDisabled() && (await kh.getByTestId("profile-registration-locked").count()) === 1);
   check("profile: the CAE field (enter once)", (await kh.getByTestId("profile-activity-code").count()) === 1);
   await shot(kh, "reg-02-profile-locked");
+
+  check("profile: secondary activity codes can be added", (await kh.getByTestId("profile-add-activity-codes").count()) === 1);
+
+  // ── 2b. Special goods: the business says what it sells; what it may buy and why ──
+  const khSaved = sql(`select coalesce(array_to_string("sellsRestricted", ','), '') || '|' || "restrictedDeclared" from "Company" where id='${KH}'`);
+  sql(`delete from "Setting" where key='special.access'`);
+  await go(kh, "/buy/company/restricted-products");
+  check("special goods card: the question and what it can buy", (await kh.getByTestId("special-goods").count()) === 1 && (await kh.getByTestId("special-row-TOBACCO").count()) === 1);
+  await kh.getByTestId("sg-ALCOHOL").check(); if (await kh.getByTestId("sg-TOBACCO").isChecked()) await kh.getByTestId("sg-TOBACCO").uncheck();
+  await kh.getByTestId("sg-save").click(); await settle(kh); await kh.reload(); await settle(kh);
+  check("declared alcohol only: tobacco closed (not declared), alcohol open", /Não indicou|didn't say/.test(await text(kh.getByTestId("special-row-TOBACCO"))) && !/Não pode|Can't/.test(await text(kh.getByTestId("special-row-ALCOHOL"))), await text(kh.getByTestId("special-status")));
+  await shot(kh, "reg-08-special-goods-buyer");
+  const saAdm = await login("superadmin@firingi.test");
+  await go(saAdm, "/admin/customers/special-goods");
+  check("FIRINGI: special goods rules (tobacco, alcohol, vaping) with activity-code prefixes", (await saAdm.getByTestId("special-rule").count()) >= 3 && /4726/.test(await saAdm.getByTestId("ss-codes-TOBACCO").inputValue()));
+  await shot(saAdm, "reg-09-admin-special-goods");
+  await go(saAdm, `/admin/companies/${KH}`);
+  await saAdm.getByTestId("special-note").fill("E2E: licence shown at the counter");
+  await saAdm.getByTestId("special-allow-TOBACCO").click(); await settle(saAdm);
+  check("FIRINGI lets the company buy tobacco anyway (exception, with the reason)", sql(`select count(*) from "SpecialAccessException" where "companyId"='${KH}' and target='TOBACCO'`) === "1" && /exception/.test(await text(saAdm.getByTestId("special-company-TOBACCO"))));
+  await shot(saAdm, "reg-10-admin-company-special");
+  sql(`delete from "SpecialAccessException" where "companyId"='${KH}'`);
+  const [ks, kd] = khSaved.split("|");
+  sql(`update "Company" set "sellsRestricted"='{${ks}}', "restrictedDeclared"=${kd === "t" ? "true" : "false"} where id='${KH}'`);
+  await saAdm.context().close();
 
   // ── 3. A new shop address: sent to FIRINGI with a photo of a till invoice ──
   await go(kh, "/buy/company/addresses");

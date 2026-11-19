@@ -183,6 +183,8 @@ describe("a restaurant: menu, recipes from what it bought on FIRINGI, guests, ca
     const line = order.lines[0];
     khOffer = line.offerId;
     const offer = await prisma.vendorOffer.findUniqueOrThrow({ where: { id: khOffer } });
+    // packs of this product Kebab House already holds from other tests (the order line depends on what is in stock)
+    const others = (await prisma.purchasedLot.findMany({ where: { buyerCompanyId: kh.company.id, offerId: khOffer }, select: { qty: true, usedQty: true } })).reduce((a, l) => a + Math.max(0, l.qty - l.usedQty), 0);
     const soon = new Date(Date.now() + 5 * 86_400_000), later = new Date(Date.now() + 40 * 86_400_000);
     await prisma.purchasedLot.createMany({ data: [
       { buyerCompanyId: kh.company.id, orderId: order.id, offerId: khOffer, packagingUnitId: offer.packagingUnitId, sellerBatchId: "pos-test-late", lotCode: "LATE", expiresOn: later, qty: 3 },
@@ -205,7 +207,7 @@ describe("a restaurant: menu, recipes from what it bought on FIRINGI, guests, ca
     expect(Number(acc.pending)).toBeCloseTo(0.25, 6);
     const stock = await P.ingredientStock(kh, "pt");
     const row = stock.find((x) => x.offerId === khOffer)!;
-    expect(row.left).toBe(4);
+    expect(row.left).toBe(4 + others);
     expect(row.dishes).toContain("Kebab no pão");
     expect(row.usedPerDay).toBeGreaterThan(0);
   });

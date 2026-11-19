@@ -268,6 +268,8 @@ const MESSAGES: Record<Issue["code"], (i: Issue) => string> = {
 
 /** Throws on the first blocking issue (cart and checkout). */
 export async function assertItems(companyId: string, items: { offerId: string; qty: number }[], db: Tx | typeof prisma = prisma) {
+  // Phase 47e: special goods only for businesses that sell them and have a matching activity code
+  await (await import("@/server/special/service")).assertSpecialItems(companyId, [...new Set(items.map((i) => i.offerId))], db);
   const block = (await checkItems(companyId, items, db)).find((i) => i.block);
   if (block) throw new AppError(`EXCISE_${block.code}`, MESSAGES[block.code](block), 422, { offerId: block.offerId, kind: block.kind });
 }

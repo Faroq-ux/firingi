@@ -9,7 +9,7 @@ import { updateProfileAction } from "@/server/actions/onboarding";
 export type ProfileData = {
   type: string; legalName: string; tradeName: string | null; taxId: string; vatNumber: string | null; email: string;
   phone: string | null; website: string | null; businessType: string | null; locked: boolean; countryLabel: string;
-  legalForm: "COMPANY" | "SOLE_TRADER"; certificateCode: string | null; countryCode: string; activityCode: string | null; activityName: string; activityExample: string;
+  legalForm: "COMPANY" | "SOLE_TRADER"; certificateCode: string | null; countryCode: string; activityCode: string | null; activityCodes: string[]; activityName: string; activityExample: string;
 };
 const BUSINESS_TYPES = ["restaurant", "kebab_pizza", "mini_market", "cafe_bar", "hotel", "catering", "retail", "other"];
 
@@ -31,6 +31,7 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
             ...(data.locked ? {} : { legalForm: (s(fd, "legalForm") ?? data.legalForm) as ProfileData["legalForm"] }),
             certificateCode: s(fd, "certificateCode"),
             ...(data.activityCode ? {} : { activityCode: s(fd, "activityCode") }),
+            addActivityCodes: s(fd, "addActivityCodes"),
             tradeName: s(fd, "tradeName"), email: s(fd, "email") ?? "", phone: s(fd, "phone"), website: s(fd, "website"), businessType: s(fd, "businessType"),
           });
           setMsg(r.ok ? { ok: true, text: t("profile.saved") } : { ok: false, text: r.error });
@@ -54,6 +55,12 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
           <Label htmlFor="activityCode">{data.activityName} — {t("form.activityCode")}</Label>
           <Input id="activityCode" name="activityCode" defaultValue={data.activityCode ?? ""} disabled={!!data.activityCode} placeholder={data.activityExample} data-testid="profile-activity-code" />
           {!data.activityCode && <p className="text-xs text-muted-foreground">{t("form.activityCodeOnce")}</p>}
+        </div>
+        <div className="space-y-1.5" data-testid="profile-activity-codes">
+          <Label htmlFor="addActivityCodes">{t("form.activityCodesSecondary", { scheme: data.activityName })}</Label>
+          {data.activityCodes.length > 0 && <div className="flex flex-wrap gap-1">{data.activityCodes.map((c) => <span key={c} className="rounded border bg-muted/50 px-1.5 py-0.5 font-mono text-xs">{c}</span>)}</div>}
+          <Input id="addActivityCodes" name="addActivityCodes" placeholder={`+ ${data.activityExample}, …`} autoComplete="off" data-testid="profile-add-activity-codes" />
+          <p className="text-xs text-muted-foreground">{t("form.activityCodesAdd")}</p>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="certificateCode">{t("form.certificateCode")}</Label>

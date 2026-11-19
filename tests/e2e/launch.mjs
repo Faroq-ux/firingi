@@ -48,6 +48,12 @@ const nif = base8 + ((11 - (sum % 11)) >= 10 ? 0 : 11 - (sum % 11));
 const stamp = Date.now();
 const invitedEmail = `piloto.${stamp}@tasca.pt`, invitedName = `Tasca Piloto ${stamp}`;
 
+// a run leaves the legal links saved (step 2): start from "no links", so the "not ready" check means the same each run
+{
+  const { execFileSync } = await import("node:child_process");
+  const DB = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi";
+  execFileSync("psql", ["-At", DB, "-c", `update "Setting" set value = value - 'termsUrl' - 'privacyUrl' where key='launch.settings'`]);
+}
 const sa = await login("superadmin@firingi.test");
 
 // ── 1. Launch Readiness ──

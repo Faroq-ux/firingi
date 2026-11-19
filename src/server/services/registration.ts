@@ -23,6 +23,10 @@ export type CompanyRegistration = {
   vatNumber?: string | null;
   /** economic activity code (CAE in Portugal…) — required for wholesale customers */
   activityCode?: string | null;
+  /** secondary activity codes (optional, up to 20) */
+  activityCodes?: string | string[] | null;
+  /** Phase 47e — special goods it sells (buyers): asked on the form, saved as its declaration */
+  sellsRestricted?: string[] | null;
   companyEmail: string;
   phone: string;
   businessType?: string | null;
@@ -74,6 +78,13 @@ export async function registerCompany(input: CompanyRegistration) {
     if (!a.ok) throw new ValidationError(`Enter your ${sc.name} code (e.g. ${sc.example}).`, { activityCode: [`${sc.name} e.g. ${sc.example}`] });
     activityCode = a.value;
   }
+  let activityCodes: string[] = [];
+  if (input.activityCodes && (Array.isArray(input.activityCodes) ? input.activityCodes.length : input.activityCodes.trim())) {
+    const { activityScheme, parseActivityCodes, MAX_SECONDARY_ACTIVITY_CODES } = await import("@/lib/activity-code");
+    const p = parseActivityCodes(input.activityCodes, country.code, activityCode);
+    if (!p.ok) throw new ValidationError(`Check the secondary ${activityScheme(country.code).name} codes (${p.bad}) — up to ${MAX_SECONDARY_ACTIVITY_CODES}.`, { activityCodes: [p.bad] });
+    activityCodes = p.values;
+  }
 
   if (input.headOffice.cityId) {
     const city = await prisma.city.findFirst({ where: { id: input.headOffice.cityId, countryId: country.id } });
@@ -102,6 +113,8 @@ export async function registerCompany(input: CompanyRegistration) {
         taxId,
         vatNumber: vat,
         activityCode,
+        activityCodes,
+        ...(input.type !== "DISTRIBUTOR" ? { sellsRestricted: [...new Set((input.sellsRestricted ?? []).filter((k) => ["TOBACCO", "ALCOHOL", "VAPING"].includes(k)))], restrictedDeclared: true } : {}),
         countryId: country.id,
         email: input.companyEmail.trim().toLowerCase(),
         phone: input.phone,

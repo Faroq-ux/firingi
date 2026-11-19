@@ -203,3 +203,18 @@ model AddressChangeRequest {
   @@index([status, createdAt])
   @@index([companyId, status])
 }
+
+/// Phase 47e — FIRINGI lets one company buy special goods although its activity codes / declaration don't match
+/// (target: TOBACCO, ALCOHOL, VAPING or "cat:<categoryId>"), with the reason.
+model SpecialAccessException {
+  id          String   @id @default(cuid())
+  companyId   String
+  target      String
+  note        String
+  createdById String
+  createdAt   DateTime @default(now())
+
+  company Company @relation("SpecialAccessExceptions", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, target])
+}

@@ -37,13 +37,16 @@ async function loadCategoryInfo() {
 export const buyerScope = cache(async (ctx: Ctx): Promise<BuyerScope & { info: Awaited<ReturnType<typeof loadCategoryInfo>> }> => {
   if ((ctx.company.type !== "CUSTOMER" && ctx.company.type !== "WHOLESALER") || ctx.company.status !== "APPROVED" || !can(ctx, "buyer.catalogue.view"))
     throw new ForbiddenError();
-  const [allowed, info, addressId] = await Promise.all([allowedRestrictions(ctx.company.id), loadCategoryInfo(), buyerAddressId(ctx.company.id)]);
+  const [allowedRaw, info, addressId] = await Promise.all([allowedRestrictions(ctx.company.id), loadCategoryInfo(), buyerAddressId(ctx.company.id)]);
+  // Phase 47e: special goods also need the declaration + a matching activity code (or FIRINGI's exception)
+  const special = await (await import("@/server/special/service")).specialBlocks(ctx.company.id, info);
+  const allowed = allowedRaw.filter((r) => !special.kinds.has(r));
   return {
     buyerCompanyId: ctx.company.id,
     buyerType: ctx.company.type,
     buyerCountryId: ctx.company.countryId,
     allowedRestrictions: allowed,
-    browsableCategoryIds: browsableCategoryIds(info, allowed),
+    browsableCategoryIds: browsableCategoryIds(info, allowed).filter((id) => !special.cats.has(id)),
     excludedVendorIds: await excludedVendorIds(addressId),
     info,
   };

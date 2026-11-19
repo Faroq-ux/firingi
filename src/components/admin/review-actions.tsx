@@ -157,10 +157,10 @@ export function DriverReview({ driverId, status }: { driverId: string; status: s
 }
 
 /** FIRINGI corrects a company's registration details (users can't): legal name, NIF, VAT number, legal form — with a reason. */
-export function RegistrationCorrection({ company, activityName }: { company: { id: string; legalName: string; taxId: string; vatNumber: string | null; legalForm: "COMPANY" | "SOLE_TRADER"; activityCode: string | null }; activityName: string }) {
+export function RegistrationCorrection({ company, activityName }: { company: { id: string; legalName: string; taxId: string; vatNumber: string | null; legalForm: "COMPANY" | "SOLE_TRADER"; activityCode: string | null; activityCodes: string[] }; activityName: string }) {
   const { pending, error, run } = useRun();
   const [open, setOpen] = useState(false);
-  const [x, setX] = useState({ legalName: company.legalName, taxId: company.taxId, vatNumber: company.vatNumber ?? "", legalForm: company.legalForm, activityCode: company.activityCode ?? "", reason: "" });
+  const [x, setX] = useState({ legalName: company.legalName, taxId: company.taxId, vatNumber: company.vatNumber ?? "", legalForm: company.legalForm, activityCode: company.activityCode ?? "", activityCodes: company.activityCodes.join(", "), reason: "" });
   if (!open) return <Button size="sm" variant="outline" onClick={() => setOpen(true)} data-testid="reg-correct-open">Correct registration details</Button>;
   return (
     <div className="space-y-2" data-testid="reg-correct">
@@ -169,7 +169,8 @@ export function RegistrationCorrection({ company, activityName }: { company: { i
         <div><Label htmlFor="rc-form">Legal form</Label><select id="rc-form" className="h-9 w-full rounded-md border bg-background px-2 text-sm" value={x.legalForm} onChange={(e) => setX({ ...x, legalForm: e.target.value as "COMPANY" | "SOLE_TRADER" })}><option value="COMPANY">Company</option><option value="SOLE_TRADER">Sole trader</option></select></div>
         <div><Label htmlFor="rc-nif">NIF / tax id</Label><Input id="rc-nif" value={x.taxId} onChange={(e) => setX({ ...x, taxId: e.target.value })} data-testid="rc-nif" /></div>
         <div><Label htmlFor="rc-vat">VAT number</Label><Input id="rc-vat" value={x.vatNumber} onChange={(e) => setX({ ...x, vatNumber: e.target.value })} data-testid="rc-vat" /></div>
-        <div><Label htmlFor="rc-cae">Activity code ({activityName})</Label><Input id="rc-cae" value={x.activityCode} onChange={(e) => setX({ ...x, activityCode: e.target.value })} data-testid="rc-cae" /></div>
+        <div><Label htmlFor="rc-cae">Main activity code ({activityName})</Label><Input id="rc-cae" value={x.activityCode} onChange={(e) => setX({ ...x, activityCode: e.target.value })} data-testid="rc-cae" /></div>
+        <div className="sm:col-span-2"><Label htmlFor="rc-caes">Secondary codes (comma-separated)</Label><Input id="rc-caes" value={x.activityCodes} onChange={(e) => setX({ ...x, activityCodes: e.target.value })} data-testid="rc-caes" /></div>
       </div>
       <Input placeholder="Reason (e.g. typo in the NIF at sign-up, checked against the certificate)" value={x.reason} onChange={(e) => setX({ ...x, reason: e.target.value })} data-testid="rc-reason" />
       <div className="flex flex-wrap gap-2">

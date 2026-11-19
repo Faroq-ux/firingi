@@ -12,6 +12,8 @@ import { CommissionForm, CompanyStatusActions, DocumentReview, RegistrationCorre
 import { formatDate } from "@/lib/utils";
 import { isIndividualPtNif } from "@/lib/tax-id";
 import { activityScheme } from "@/lib/activity-code";
+import { SpecialCompanyCard } from "@/components/admin/special-goods";
+import { specialOverview } from "@/server/special/service";
 
 export const metadata = { title: "Company" };
 
@@ -30,6 +32,7 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
   const companyDocs = c.documents.filter((d) => !d.restrictionApprovalId);
   const lastVies = c.vatValidations[0];
   const currentCommission = c.commissionRules.find((r) => !r.validTo);
+  const special = c.type !== "DISTRIBUTOR" ? await specialOverview(c.id) : null;
   const back = isVendorType(c.type) ? `/admin/vendors/${c.type === "DISTRIBUTOR" ? "distributors" : "wholesalers"}/all` : "/admin/customers/all";
 
   return (
@@ -157,8 +160,15 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
 
           {can.decide && (
             <Card>
-              <CardHeader><CardTitle>Registration details</CardTitle><CardDescription>NIF {c.taxId} · VAT {c.vatNumber ?? "—"} · {activityScheme(c.country.code).name} {c.activityCode ?? "—"} · {c.legalForm === "SOLE_TRADER" ? "sole trader" : "company"}. The company can&apos;t change these — only FIRINGI corrects them.</CardDescription></CardHeader>
-              <CardContent><RegistrationCorrection company={{ id: c.id, legalName: c.legalName, taxId: c.taxId, vatNumber: c.vatNumber, legalForm: c.legalForm, activityCode: c.activityCode }} activityName={activityScheme(c.country.code).name} /></CardContent>
+              <CardHeader><CardTitle>Registration details</CardTitle><CardDescription>NIF {c.taxId} · VAT {c.vatNumber ?? "—"} · {activityScheme(c.country.code).name} {c.activityCode ?? "—"}{c.activityCodes.length ? ` (+ ${c.activityCodes.join(", ")})` : ""} · {c.legalForm === "SOLE_TRADER" ? "sole trader" : "company"}. The company can&apos;t change these — only FIRINGI corrects them.</CardDescription></CardHeader>
+              <CardContent><RegistrationCorrection company={{ id: c.id, legalName: c.legalName, taxId: c.taxId, vatNumber: c.vatNumber, legalForm: c.legalForm, activityCode: c.activityCode, activityCodes: c.activityCodes }} activityName={activityScheme(c.country.code).name} /></CardContent>
+            </Card>
+          )}
+
+          {special?.enabled && (
+            <Card>
+              <CardHeader><CardTitle>Special goods</CardTitle><CardDescription>Tobacco, alcohol, vaping and special categories: declaration + activity code. Licences still apply.</CardDescription></CardHeader>
+              <CardContent><SpecialCompanyCard companyId={c.id} codes={special.codes} declared={special.declared} sells={special.sells} rows={special.rows.map((r) => ({ target: r.target, label: r.label, category: r.category ? (typeof r.category === "string" ? r.category : ((r.category as Record<string, string>).en ?? "")) : null, open: r.open, warn: r.warn, reason: r.reason, exception: r.exception ? { note: r.exception.note } : null }))} /></CardContent>
             </Card>
           )}
 

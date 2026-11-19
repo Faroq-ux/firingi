@@ -16,6 +16,7 @@ import { ProfileForm } from "./profile-form";
 import { AddressesManager } from "./addresses-manager";
 import { DocumentsManager } from "./documents-manager";
 import { RestrictedAccess } from "./restricted-access";
+import { SpecialGoods } from "./special-goods";
 
 export async function ProfileSection({ ctx }: { ctx: Ctx }) {
   const [c, locale] = await Promise.all([ownCompanyProfile(ctx), getLocale()]);
@@ -27,7 +28,7 @@ export async function ProfileSection({ ctx }: { ctx: Ctx }) {
         website: c.website, businessType: c.businessType, locked: true,
         countryLabel: `${c.country.flag ?? ""} ${pickLocalized(c.country.name, locale)}`,
         legalForm: c.legalForm, certificateCode: c.registryCertificateCode, countryCode: c.country.code,
-        activityCode: c.activityCode, activityName: activityScheme(c.country.code).name, activityExample: activityScheme(c.country.code).example,
+        activityCode: c.activityCode, activityCodes: c.activityCodes, activityName: activityScheme(c.country.code).name, activityExample: activityScheme(c.country.code).example,
       }}
     />
   );
@@ -82,3 +83,13 @@ export async function RestrictedSection({ ctx }: { ctx: Ctx }) {
     />
   );
 }
+
+/** Phase 47e — which special goods the business sells, and what it may buy. */
+export async function SpecialGoodsSection({ ctx }: { ctx: Ctx }) {
+  if (ctx.company.type === "ADMIN" || ctx.company.type === "DISTRIBUTOR") return null;
+  const { specialOverview } = await import("@/server/special/service");
+  const o = await specialOverview(ctx.company.id);
+  if (!o.enabled) return null;
+  return <SpecialGoods sells={o.sells} declared={o.declared} codes={o.codes} canEdit={can(ctx, "company.profile.manage")} rows={o.rows.map((r) => ({ target: r.target, open: r.open, warn: r.warn, reason: r.reason, label: r.label, category: r.category ? pickLocalizedName(r.category) : null }))} />;
+}
+const pickLocalizedName = (n: unknown) => (typeof n === "string" ? n : (n as Record<string, string> | null)?.en ?? Object.values((n as Record<string, string>) ?? {})[0] ?? "");

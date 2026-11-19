@@ -131,3 +131,31 @@ describe("the customer's NIF on a receipt", () => {
     expect(checkTaxId("abc", "DE").ok).toBe(false);
   });
 });
+
+describe("special goods: declaration + activity code (CAE / NACE)", () => {
+  it("open only when declared and a code matches the rule's prefixes; exceptions, missing codes, warn mode", async () => {
+    const { DEFAULT_SPECIAL_SETTINGS: S, verdict, mergeSpecialSettings } = await import("@/lib/special-access");
+    const base = { country: "PT", codes: ["56101"], declared: true, sells: ["TOBACCO", "ALCOHOL"], exceptions: [] as string[] };
+    expect(verdict(S, base, "ALCOHOL")).toMatchObject({ open: true, reason: "OK" }); // restaurant 5610
+    expect(verdict(S, { ...base, sells: ["TOBACCO"] }, "ALCOHOL")).toMatchObject({ open: false, reason: "NOT_DECLARED" });
+    expect(verdict(S, { ...base, codes: ["62010"] }, "TOBACCO")).toMatchObject({ open: false, reason: "CODE" }); // IT services
+    expect(verdict(S, { ...base, codes: ["62010", "47260"] }, "TOBACCO").open).toBe(true); // a secondary code counts
+    expect(verdict(S, { ...base, codes: ["62010"], exceptions: ["TOBACCO"] }, "TOBACCO")).toMatchObject({ open: true, reason: "EXCEPTION" });
+    expect(verdict(S, { ...base, declared: false, sells: [], codes: [] }, "TOBACCO").open).toBe(true); // older account, no code: kept
+    expect(verdict({ ...S, noCode: "BLOCK" }, { ...base, codes: [] }, "TOBACCO")).toMatchObject({ open: false, reason: "NO_CODE" });
+    const warn = mergeSpecialSettings({ ...S, rules: S.rules.map((r) => ({ ...r, mode: "WARN" })) });
+    expect(verdict(warn, { ...base, codes: ["62010"] }, "TOBACCO")).toMatchObject({ open: true, warn: true });
+    expect(verdict({ ...S, enabled: false }, { ...base, sells: [] }, "TOBACCO").open).toBe(true);
+    // a category rule (special items) and country-specific rules
+    const cat = mergeSpecialSettings({ ...S, rules: [...S.rules, { id: "pharma", target: "cat:abc", label: "Pharmacy", codes: ["4773"], countries: ["PT"], mode: "BLOCK", active: true }] });
+    expect(verdict(cat, base, "cat:abc").open).toBe(false);
+    expect(verdict(cat, { ...base, country: "ES" }, "cat:abc").open).toBe(true);
+    expect(verdict(cat, { ...base, codes: ["47730"] }, "cat:abc").open).toBe(true);
+  });
+  it("secondary codes: list parsing, duplicates and the main code dropped, the country's format", async () => {
+    const { parseActivityCodes } = await import("@/lib/activity-code");
+    expect(parseActivityCodes("56102, 47111 47112,56101", "PT", "56101")).toEqual({ ok: true, values: ["56102", "47111", "47112"] });
+    expect(parseActivityCodes("561", "PT")).toEqual({ ok: false, bad: "561" });
+    expect(parseActivityCodes(Array.from({ length: 21 }, (_, i) => String(10000 + i)), "PT").ok).toBe(false);
+  });
+});

@@ -153,6 +153,12 @@ model Company {
   vatNumber               String?       @unique // EU VAT number incl. prefix (validated with VIES) — one company per VAT number
   /// Phase 47d — economic activity code (CAE in PT, CNAE in ES, NAF in FR … see src/lib/activity-code.ts)
   activityCode            String?
+  /// Phase 47e — secondary activity codes (Portugal: up to 20 secondary CAE); the company may add, only FIRINGI removes
+  activityCodes           String[]      @default([])
+  /// Phase 47e — special goods the business says it sells (TOBACCO / ALCOHOL / VAPING); asked at registration
+  sellsRestricted         String[]      @default([])
+  /// false for companies registered before the question was asked (their access stays as it was)
+  restrictedDeclared      Boolean       @default(false)
   countryId               String
   email                   String
   phone                   String?
@@ -210,6 +216,7 @@ model Company {
   statusHistory            CompanyStatusHistory[]
   addresses                Address[]
   addressChangeRequests    AddressChangeRequest[]      @relation("AddressChangeRequests")
+  specialAccessExceptions  SpecialAccessException[]    @relation("SpecialAccessExceptions")
   documents                Document[]
   restrictionApprovals     RestrictionApproval[]
   vatValidations           VatValidation[]

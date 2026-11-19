@@ -54,6 +54,8 @@ export type ProfileInput = {
   legalForm?: "COMPANY" | "SOLE_TRADER"; certificateCode?: string | null;
   /** economic activity code (CAE…): entered once if missing, then fixed (FIRINGI corrects it) */
   activityCode?: string | null;
+  /** secondary activity codes to add (existing ones stay — only FIRINGI removes) */
+  addActivityCodes?: string | null;
 };
 
 export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
@@ -85,6 +87,14 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
     if (before.activityCode && before.activityCode !== a.value) throw new ValidationError("Your activity code is part of your registration and can't be changed. Contact FIRINGI support.");
     data.activityCode = a.value;
   }
+  if (input.addActivityCodes?.trim()) {
+    const country = await prisma.country.findUniqueOrThrow({ where: { id: before.countryId }, select: { code: true } });
+    const { activityScheme, parseActivityCodes, MAX_SECONDARY_ACTIVITY_CODES } = await import("@/lib/activity-code");
+    const main = (data.activityCode as string | undefined) ?? before.activityCode;
+    const p = parseActivityCodes([...before.activityCodes, ...input.addActivityCodes.split(/[,;\s]+/)], country.code, main);
+    if (!p.ok) throw new ValidationError(`Check the secondary ${activityScheme(country.code).name} codes (${p.bad}) — up to ${MAX_SECONDARY_ACTIVITY_CODES}.`);
+    data.activityCodes = p.values;
+  }
   if (input.certificateCode !== undefined) {
     const raw = input.certificateCode?.trim() ?? "";
     if (!raw) data.registryCertificateCode = null;
@@ -104,8 +114,8 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
   const after = await prisma.company.update({ where: { id: ctx.company.id }, data });
   await writeAudit({
     actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.profile_updated", entityType: "Company", entityId: ctx.company.id,
-    before: { tradeName: before.tradeName, email: before.email, phone: before.phone, legalName: before.legalName, vatNumber: before.vatNumber, legalForm: before.legalForm, certificateCode: before.registryCertificateCode, activityCode: before.activityCode },
-    after: { tradeName: after.tradeName, email: after.email, phone: after.phone, legalName: after.legalName, vatNumber: after.vatNumber, legalForm: after.legalForm, certificateCode: after.registryCertificateCode, activityCode: after.activityCode },
+    before: { tradeName: before.tradeName, email: before.email, phone: before.phone, legalName: before.legalName, vatNumber: before.vatNumber, legalForm: before.legalForm, certificateCode: before.registryCertificateCode, activityCode: before.activityCode, activityCodes: before.activityCodes },
+    after: { tradeName: after.tradeName, email: after.email, phone: after.phone, legalName: after.legalName, vatNumber: after.vatNumber, legalForm: after.legalForm, certificateCode: after.registryCertificateCode, activityCode: after.activityCode, activityCodes: after.activityCodes },
   });
 }
 
@@ -237,7 +247,7 @@ export async function setCommissionRate(ctx: Ctx, vendorCompanyId: string, rateP
  * FIRINGI corrects a company's registration details (a typo at sign-up, a change of legal form…). Users can't.
  * One company per NIF in a country and per VAT number; a Portuguese VAT number is PT + the NIF. Audited with the reason.
  */
-export async function adminCorrectRegistration(ctx: Ctx, companyId: string, input: { legalName: string; taxId: string; vatNumber: string; legalForm: "COMPANY" | "SOLE_TRADER"; activityCode?: string | null; reason: string }) {
+export async function adminCorrectRegistration(ctx: Ctx, companyId: string, input: { legalName: string; taxId: string; vatNumber: string; legalForm: "COMPANY" | "SOLE_TRADER"; activityCode?: string | null; activityCodes?: string | null; reason: string }) {
   if (ctx.company.type !== "ADMIN") throw new ForbiddenError();
   const before = await prisma.company.findUniqueOrThrow({ where: { id: companyId }, include: { country: true } });
   const { canDecideType } = await import("./admin-access");
@@ -257,13 +267,20 @@ export async function adminCorrectRegistration(ctx: Ctx, companyId: string, inpu
     if (!input.activityCode?.trim()) activityCode = null;
     else { const a = checkActivityCode(input.activityCode, before.country.code); if (!a.ok) throw new ValidationError("Check the activity code's format for this country."); activityCode = a.value; }
   }
+  let activityCodes = before.activityCodes;
+  if (input.activityCodes !== undefined) {
+    const { parseActivityCodes } = await import("@/lib/activity-code");
+    const p = parseActivityCodes(input.activityCodes, before.country.code, activityCode);
+    if (!p.ok) throw new ValidationError(`Check the secondary activity codes (${p.bad}).`);
+    activityCodes = p.values;
+  }
   const clash = await prisma.company.findFirst({ where: { id: { not: companyId }, OR: [{ countryId: before.countryId, taxId }, { vatNumber: v.vat }] }, select: { legalName: true } });
   if (clash) throw new ValidationError(`Another company already has this NIF / VAT number (${clash.legalName}) — one company, one NIF.`);
-  const after = await prisma.company.update({ where: { id: companyId }, data: { legalName: input.legalName.trim(), taxId, vatNumber: v.vat, legalForm: input.legalForm, activityCode } });
+  const after = await prisma.company.update({ where: { id: companyId }, data: { legalName: input.legalName.trim(), taxId, vatNumber: v.vat, legalForm: input.legalForm, activityCode, activityCodes } });
   await writeAudit({
     actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "company.registration_corrected", entityType: "Company", entityId: companyId,
-    before: { legalName: before.legalName, taxId: before.taxId, vatNumber: before.vatNumber, legalForm: before.legalForm, activityCode: before.activityCode },
-    after: { legalName: after.legalName, taxId: after.taxId, vatNumber: after.vatNumber, legalForm: after.legalForm, activityCode: after.activityCode, reason: input.reason.trim() },
+    before: { legalName: before.legalName, taxId: before.taxId, vatNumber: before.vatNumber, legalForm: before.legalForm, activityCode: before.activityCode, activityCodes: before.activityCodes },
+    after: { legalName: after.legalName, taxId: after.taxId, vatNumber: after.vatNumber, legalForm: after.legalForm, activityCode: after.activityCode, activityCodes: after.activityCodes, reason: input.reason.trim() },
   });
   return { id: after.id };
 }

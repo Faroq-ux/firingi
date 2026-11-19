@@ -37,3 +37,21 @@ export function checkActivityCode(raw: string | null | undefined, country: strin
   const v = (raw ?? "").toUpperCase().replace(/[\s.\-]/g, "");
   return activityScheme(country).pattern.test(v) ? { ok: true, value: v } : { ok: false };
 }
+
+/** Up to this many secondary codes (Portugal allows 20 secondary CAE). */
+export const MAX_SECONDARY_ACTIVITY_CODES = 20;
+
+/**
+ * A list of secondary codes typed as "56102, 47111 47112" (commas, spaces or new lines): each checked for the
+ * country; duplicates and the main code are dropped. Returns the codes or the first one that is wrong.
+ */
+export function parseActivityCodes(raw: string | string[] | null | undefined, country: string, main?: string | null): { ok: true; values: string[] } | { ok: false; bad: string } {
+  const parts = (Array.isArray(raw) ? raw : (raw ?? "").split(/[,;\n]+|\s{1,}(?=\d)/)).map((s) => s.trim()).filter(Boolean);
+  const out: string[] = [];
+  for (const p of parts) {
+    const c = checkActivityCode(p, country);
+    if (!c.ok) return { ok: false, bad: p };
+    if (c.value !== main && !out.includes(c.value)) out.push(c.value);
+  }
+  return out.length > MAX_SECONDARY_ACTIVITY_CODES ? { ok: false, bad: `> ${MAX_SECONDARY_ACTIVITY_CODES}` } : { ok: true, values: out };
+}

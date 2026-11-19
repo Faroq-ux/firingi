@@ -1,5 +1,5 @@
 "use client";
-import { activityScheme } from "@/lib/activity-code";
+import { activityScheme, MAX_SECONDARY_ACTIVITY_CODES } from "@/lib/activity-code";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -38,6 +38,7 @@ function TermsText({ legal }: { legal?: Legal }) {
 
 export function CompanyRegistrationForm({ type, countries, referralCode = null, invite = null, legal }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[]; referralCode?: string | null; invite?: Invite; legal?: Legal }) {
   const t = useTranslations("onboarding");
+  const tsa = useTranslations("specialAccess");
   const tl = useTranslations("launch");
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -59,7 +60,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
         start(async () => {
           const r = await registerCompanyAction({
             type, countryCode: country, legalName: s(fd, "legalName") ?? "", tradeName: s(fd, "tradeName"), taxId: s(fd, "taxId") ?? "",
-            vatNumber: s(fd, "vatNumber"), activityCode: s(fd, "activityCode"), companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", businessType: s(fd, "businessType"),
+            vatNumber: s(fd, "vatNumber"), activityCode: s(fd, "activityCode"), activityCodes: s(fd, "activityCodes"), sellsRestricted: fd.getAll("sellsRestricted").map(String) as ("TOBACCO" | "ALCOHOL" | "VAPING")[], companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", businessType: s(fd, "businessType"),
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
             cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
@@ -97,6 +98,9 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
         <Field id="activityCode" label={`${activityScheme(country).name} — ${t("form.activityCode")}`} errors={fe.activityCode} hint={t("form.activityCodeHint", { example: activityScheme(country).example })}>
           <Input id="activityCode" name="activityCode" required={type === "CUSTOMER"} autoComplete="off" placeholder={activityScheme(country).example} data-testid="reg-activity-code" />
         </Field>
+        <Field id="activityCodes" label={t("form.activityCodesSecondary", { scheme: activityScheme(country).name })} errors={fe.activityCodes} hint={t("form.activityCodesHint", { max: MAX_SECONDARY_ACTIVITY_CODES })}>
+          <Input id="activityCodes" name="activityCodes" autoComplete="off" placeholder={`${activityScheme(country).example}, …`} data-testid="reg-activity-codes" />
+        </Field>
         <Field id="companyEmail" label={t("form.companyEmail")} errors={fe.companyEmail}><Input id="companyEmail" name="companyEmail" type="email" required /></Field>
         <Field id="phone" label={t("form.phone")} errors={fe.phone}><Input id="phone" name="phone" type="tel" required /></Field>
         {type === "CUSTOMER" && (
@@ -105,6 +109,15 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
               {BUSINESS_TYPES.map((b) => <option key={b} value={b}>{t(`businessTypes.${b}`)}</option>)}
             </Select>
           </Field>
+        )}
+        {type !== "DISTRIBUTOR" && (
+          <fieldset className="space-y-1.5 sm:col-span-2" data-testid="reg-sells">
+            <legend className="text-sm font-medium">{tsa("question")}</legend>
+            <div className="flex flex-wrap gap-x-5 gap-y-1">
+              {(["TOBACCO", "ALCOHOL", "VAPING"] as const).map((k) => <label key={k} className="flex items-center gap-2 text-sm"><input type="checkbox" name="sellsRestricted" value={k} data-testid={`reg-sells-${k}`} /> {tsa(`kind${k}`)}</label>)}
+            </div>
+            <p className="text-xs text-muted-foreground">{tsa("questionHint")}</p>
+          </fieldset>
         )}
       </fieldset>
 
