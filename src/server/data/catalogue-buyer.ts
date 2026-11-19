@@ -24,6 +24,7 @@ import { taxLabel } from "@/lib/tax-label";
 import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance";
 import { excludedVendorIds } from "@/server/delivery/coverage";
 import { badgesFor, vendorsWithBadge, type Badge } from "@/server/compliance/service";
+import { buyerFoodWhere } from "@/server/food/service";
 
 async function loadCategoryInfo() {
   const cats = await prisma.category.findMany({ select: { id: true, parentId: true, restriction: true, isActive: true } });
@@ -102,6 +103,8 @@ function present(o: OfferRow, vat: VatMap, countryCode: string, qty = 1, promoFn
     brand: product.brand?.name ?? null,
     category: { id: product.category.id, name: product.category.name as Record<string, string> },
     restriction: product.restriction,
+    /** Phase 44: allergens / diets from the approved food information (badges; empty when none) */
+    food: { approved: !!product.foodInfoId, contain: product.allergensContain, mayContain: product.allergensMayContain, diets: product.diets },
     sku: o.packaging.variant.sku,
     vendorSku: o.vendorSku,
     /** Barcode of the packaging sold (case / pack) and of the single unit inside. */
@@ -210,7 +213,7 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string 
   return { items: await withBadges(items), barcode: asBarcode(q) };
 }
 
-export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null } = {}) {
+export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null; free?: string[]; diet?: string | null } = {}) {
   const scope = await buyerScope(ctx);
   const pageSize = 24;
   const page = Math.max(1, f.page ?? 1);
@@ -222,6 +225,7 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
       categoryIds ? { packaging: { variant: { product: { categoryId: { in: categoryIds } } } } } : {},
       f.vendorId ? { vendorCompanyId: f.vendorId } : {},
       await badgeWhere(f.badge),
+      await buyerFoodWhere(ctx, { free: f.free, diet: f.diet }),
     ],
   };
   if (!f.vendorId && (await orderingMode(ctx)) === "FIRINGI") {

@@ -78,6 +78,12 @@ const liveTransport: AiTransport = async (params) => {
   return client.beta.messages.stream(params).finalMessage();
 };
 
+/** One call outside the chat (Phase 44: reading a food label) — the same live transport and test override; null = no AI connected. */
+export function aiTransport(): AiTransport | null {
+  if (transportOverride) return transportOverride;
+  return process.env.ANTHROPIC_API_KEY ? liveTransport : null;
+}
+
 // ── prompt ──────────────────────────────────────────────────────────────────
 
 function languageName(locale: string) {

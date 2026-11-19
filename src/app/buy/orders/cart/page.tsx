@@ -6,6 +6,8 @@ import { cartReturnables } from "@/server/returnables/service";
 import { cartExcise } from "@/server/excise/service";
 import { CartExcise } from "@/components/excise/views";
 import { exLabels } from "@/components/excise/labels";
+import { cartFoodWarnings } from "@/server/food/service";
+import { foodLabels, fill as ffill } from "@/components/food/labels";
 import { CartReturnables } from "@/components/returnables/client";
 import { rtLabels } from "@/components/returnables/labels";
 import { offerCatchWeight } from "@/server/catchweight/service";
@@ -36,6 +38,11 @@ export default async function CartPage() {
   // Phase 41: sold-by-weight lines (estimate until weighed)
   const [cwm, cl] = await Promise.all([offerCatchWeight(cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))), cwLabels()]);
   const td = await getTranslations("deals");
+  // Phase 44: products on the kitchen's allergen avoid list (when FIRINGI has the profile on)
+  const [foodWarn, fdl] = await Promise.all([
+    cartFoodWarnings(ctx, cart.lines.map((x) => ({ offerId: x.offerId, name: pickLocalized(x.name, locale) }))).catch(() => []),
+    foodLabels(),
+  ]);
   // Phase 43: excise duty (added by FIRINGI / already in the prices) and what stops the checkout (licence, country, cap)
   const [exCart, exl] = await Promise.all([
     cartExcise(ctx, cart.lines.map((x) => ({ offerId: x.offerId, qty: (x as { qty?: number }).qty ?? 1, unitPriceNet: Number(x.price?.unitPriceNet ?? 0), taxRate: Number(x.lineNet) ? (Number(x.lineVat) / Number(x.lineNet)) * 100 : 0, name: pickLocalized(x.name, locale) })), locale).catch(() => null),
@@ -98,6 +105,11 @@ export default async function CartPage() {
               {cart.groups.length > 1 && deliveryNote(g)}
             </div>
           ))}
+          {foodWarn.length > 0 && (
+            <div className="space-y-1 rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive" role="alert" data-testid="cart-food-warn">
+              {foodWarn.map((w) => <p key={w.offerId}>{ffill(fdl.l.cartWarn, { name: w.name, allergens: w.hits.map((a) => fdl.l[`a.${a}`] ?? a).join(", ").toLowerCase() })}</p>)}
+            </div>
+          )}
           {exCart && (exCart.issues.length > 0 || exCart.lines.length > 0) && (
             <Card>
               <CardHeader><CardTitle>{exl.l.cartTitle}</CardTitle></CardHeader>

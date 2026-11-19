@@ -193,6 +193,8 @@ model Company {
   features                 CompanyFeature[]
   certificates             Certificate[]               @relation("CompanyCertificates")
   licences                 CustomerLicence[]           @relation("CompanyLicences")
+  foodInfosSubmitted       FoodInfo[]                  @relation("FoodInfoSubmitter")
+  foodProfile              FoodProfile?                @relation("CompanyFoodProfile")
   priceChangeRequests      PriceChangeRequest[]        @relation("PriceChangeVendor")
   priceAlerts              PriceAlert[]                @relation("PriceAlertVendor")
   planningSettings         PlanningSettings?           @relation("PlanningSettingsCompany")

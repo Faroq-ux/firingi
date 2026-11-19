@@ -8,7 +8,9 @@
  *   • only approved vendors / products and active offers are visible,
  *   • tobacco / alcohol products are hidden unless the buyer holds a valid approval,
  *   • an offer is only visible if the buyer has a price for it,
- *   • offers paused for compliance (a required certificate missing / expired — Phase 28) are hidden.
+ *   • offers paused for compliance (a required certificate missing / expired — Phase 28) are hidden,
+ *   • food products whose required food information is missing / not approved are hidden while FIRINGI's
+ *     "required to sell" switch is on (Product.foodBlockedAt — Phase 44).
  */
 import type { CompanyType, Prisma, Restriction, SellerType } from "@prisma/client";
 
@@ -65,6 +67,7 @@ export function visibleOfferWhere(s: BuyerScope): Prisma.VendorOfferWhereInput {
         isActive: true,
         product: {
           status: "APPROVED",
+          foodBlockedAt: null,
           categoryId: { in: s.browsableCategoryIds },
           // Product-level restriction (added on top of the category's).
           OR: [{ restriction: null }, { restriction: { in: s.allowedRestrictions } }],

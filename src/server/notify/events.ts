@@ -163,6 +163,11 @@ export const EVENTS: EventDef[] = [
   E("excise.licence_review", "account", ["admin.customers.manage", "admin.vendors.approve"], ["EMAIL", "PUSH"], ["company", "licence"]),
   E("excise.licence_decided", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "status", "note"]),
   E("excise.licence_expiring", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "date", "days"]),
+  // food information & allergens (Phase 44)
+  E("food.review", "catalogue", ["admin.catalogue.approve"], ["EMAIL"], ["company", "product"]),
+  E("food.decided", "catalogue", ["vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "status", "note"]),
+  E("food.recipe_changed", "catalogue", ["buyer.orders.place", "buyer.catalogue.view"], ["EMAIL", "PUSH"], ["product", "allergens"]),
+  E("food.cert_expiring", "catalogue", ["vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "claim", "date", "days"]),
   // sold by weight (Phase 41)
   E("catchweight.over_limit", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "product", "weighed", "max"]),
   E("catchweight.over_accepted", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number"]),

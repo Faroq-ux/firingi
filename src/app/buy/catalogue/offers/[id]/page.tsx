@@ -28,6 +28,9 @@ import { ColdBadge } from "@/components/coldchain/views";
 import { offerBadges as exciseBadges } from "@/server/excise/service";
 import { ExciseBadge } from "@/components/excise/views";
 import { exLabels } from "@/components/excise/labels";
+import { buyerProductFood } from "@/server/food/service";
+import { FoodPanel } from "@/components/food/views";
+import { foodLabels } from "@/components/food/labels";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -41,6 +44,8 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const cold = (await offerColdBadges([id], locale)).get(id) ?? null; // Phase 42: chilled / frozen
   const ex = (await exciseBadges(ctx, [{ offerId: id, unitPriceNet: item.price ? Number(item.price.unitPriceNet) : null }], locale)).get(id) ?? null; // Phase 43: licensed / excise goods
   const exl = ex ? (await exLabels()).l : null;
+  const food = await buyerProductFood(ctx, item.productId, locale).catch(() => null); // Phase 44: allergens, ingredients, nutrition
+  const fl = food ? (await foodLabels()).l : null;
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -106,6 +111,14 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           </div>
           {item.vendor.badges.length > 0 && <VerifiedPanel badges={item.vendor.badges} />}
           {item.description && <p className="whitespace-pre-line text-sm text-muted-foreground">{pickLocalized(item.description, locale)}</p>}
+          {food && fl && (
+            <Card id="food" data-testid="product-food">
+              <CardContent className="space-y-2 pt-5">
+                <h2 className="font-semibold">{fl.panelTitle}</h2>
+                {food.approved ? <FoodPanel f={food} l={fl} locale={locale} labelHref={null} /> : <p className="text-sm text-muted-foreground">{fl.noInfo}</p>}
+              </CardContent>
+            </Card>
+          )}
           {alternatives.length > 0 && (
             <div>
               <h2 className="mb-2 font-semibold">{t("otherOffers")}</h2>

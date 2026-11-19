@@ -60,6 +60,9 @@ model Category {
   tempClassId          String?
   /// Phase 43: excise category of the products in this category (children inherit)
   exciseCategoryId     String?
+  /// Phase 44: food information this category's products need — { "fields": ["ALLERGENS", …] };
+  /// null = inherit from the parent (a root with null = not food); fields [] = not food
+  foodRequirements     Json?
   isActive             Boolean      @default(true)
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
@@ -108,9 +111,21 @@ model Product {
   /// Lower-cased names (all languages) + brand + SKUs + GTINs, maintained by the
   /// product service — used for fast case-insensitive search.
   searchText          String        @default("")
+  /// Phase 44: the current approved food information, and what buyers filter on (copied from it)
+  foodInfoId          String?       @unique
+  allergensContain    String[]
+  allergensMayContain String[]
+  allergensFree       String[]
+  diets               String[]
+  /// set while buyers can't see the product: food information required and missing / not approved
+  foodBlockedAt       DateTime?
+  foodBlockReason     String?
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
 
+  foodInfo         FoodInfo?         @relation("CurrentFoodInfo", fields: [foodInfoId], references: [id], onDelete: SetNull)
+  foodVersions     FoodInfo[]        @relation("FoodVersions")
+  foodChanges      FoodChange[]
   category         Category          @relation(fields: [categoryId], references: [id])
   brand            Brand?            @relation(fields: [brandId], references: [id])
   taxCategory      TaxCategory       @relation(fields: [taxCategoryId], references: [id])
@@ -120,6 +135,7 @@ model Product {
 
   @@index([categoryId, status])
   @@index([searchText])
+  @@index([foodBlockedAt])
 }
 
 model ProductVariant {

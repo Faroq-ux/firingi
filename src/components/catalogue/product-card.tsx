@@ -18,6 +18,9 @@ import { getContext } from "@/server/context";
 import { offerBadges as exciseBadges } from "@/server/excise/service";
 import { ExciseBadge } from "@/components/excise/views";
 import { exLabels } from "@/components/excise/labels";
+import { foodBadges } from "@/server/food/service";
+import { FoodCardBadges } from "@/components/food/views";
+import { foodLabels } from "@/components/food/labels";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -46,6 +49,8 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
   const cctx = await getContext();
   const ex = cctx ? (await exciseBadges(cctx, [{ offerId: item.offerId, unitPriceNet: item.price ? Number(item.price.unitPriceNet) : null }], locale)).get(item.offerId) ?? null : null; // Phase 43
   const exl = ex ? (await exLabels()).l : null;
+  const fb = cctx ? (await foodBadges(cctx, [item.productId])).get(item.productId) ?? null : null; // Phase 44
+  const fl = fb && (fb.contain.length || fb.diets.length || fb.hits.length) ? (await foodLabels()).l : null;
   return (
     <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
@@ -59,6 +64,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="text-xs text-muted-foreground">{pickLocalized(item.packaging.name, locale)}</div>
         {cold && <div><ColdBadge cls={cold} /></div>}
         {ex && exl && <div><ExciseBadge b={ex} l={exl} locale={locale} /></div>}
+        {fb && fl && <FoodCardBadges food={{ ...item.food, contain: fb.contain, diets: fb.diets }} hits={fb.hits} l={fl} />}
         <Codes item={item} />
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />

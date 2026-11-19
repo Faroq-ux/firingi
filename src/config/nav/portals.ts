@@ -43,6 +43,7 @@ export const VENDOR_NAV: NavSection[] = [
       vp("weights", "Sold by Weight", "Venda ao Peso", "P41", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Venta al peso" }),
       vp("temperature", "Temperature", "Temperatura", "P42", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Temperatura" }),
       vp("excise", "Licensed Goods", "Produtos Licenciados", "P43", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Productos con licencia" }),
+      vp("food", "Food Information", "Informação Alimentar", "P44", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Información alimentaria" }),
       vp("import", "Import & Sync", "Importar e Sincronizar", "P21", { live: true, feature: "INTEGRATIONS", perm: ["vendor.products.manage", "vendor.pricing.manage", "vendor.stock.manage"], es: "Importar y sincronizar" }),
     ],
   },
@@ -170,6 +171,7 @@ export const BUY_NAV: NavSection[] = [
       bc("clearance", "Clearance Deals", "Oportunidades", "P38", { live: true, es: "Oportunidades" }),
       bc("deals", "My Offers", "As Minhas Ofertas", "P15", { live: true, es: "Mis ofertas" }),
       bc("price-changes", "Price Changes", "Alterações de Preço", "P29", { live: true, es: "Cambios de precio" }),
+      bc("allergens", "Allergens & Food Info", "Alergénios e Info Alimentar", "P44", { live: true, es: "Alérgenos e info alimentaria" }),
     ],
   },
   {

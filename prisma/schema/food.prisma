@@ -1,0 +1,122 @@
+// ───────────────── Food information & allergens (Phase 44, EU 1169/2011) ─────────────────
+
+enum FoodInfoStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  SUPERSEDED
+}
+
+enum FoodInfoSource {
+  MANUAL
+  IMPORT
+  AI
+}
+
+/// One version of a product's food information. Products are shared (master catalogue), so any supplier
+/// selling the product can submit a version; FIRINGI approves it (when review is on) and it becomes the
+/// product's current information (Product.foodInfoId) — the previous approved version is SUPERSEDED.
+model FoodInfo {
+  id                   String         @id @default(cuid())
+  productId            String
+  version              Int
+  status               FoodInfoStatus @default(DRAFT)
+  source               FoodInfoSource @default(MANUAL)
+  /// { "GLUTEN": "CONTAINS" | "MAY_CONTAIN" | "FREE", … } — a missing key = not stated (incomplete)
+  allergens            Json           @default("{}")
+  /// which cereals / nuts / fish …: { "GLUTEN": "wheat, barley" }
+  allergenDetail       Json           @default("{}")
+  /// per language: { "pt": "Farinha de *trigo*, água, …" } — allergens between * * are emphasised
+  ingredients          Json           @default("{}")
+  /// { basis: "100g" | "100ml", energyKj, energyKcal, fat, saturates, carbohydrate, sugars, fibre, protein, salt }
+  nutrition            Json?
+  diets                String[]
+  originCountryCode    String?
+  /// per language: { "pt": "Conservar em local fresco e seco" }
+  storage              Json           @default("{}")
+  shelfLifeDays        Int?
+  afterOpeningDays     Int?
+  labelKey             String?
+  labelName            String?
+  labelMime            String?
+  specKey              String?
+  specName             String?
+  specMime             String?
+  submittedByCompanyId String?
+  submittedById        String?
+  submittedAt          DateTime?
+  reviewedById         String?
+  reviewedAt           DateTime?
+  reviewNote           String?
+  /// what changed against the previous approved version (see lib/food.ts diffFood)
+  changes              Json?
+  /// the AI's remarks when it read the label (what it was unsure about)
+  aiNote               String?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  product      Product           @relation("FoodVersions", fields: [productId], references: [id], onDelete: Cascade)
+  current      Product?          @relation("CurrentFoodInfo")
+  submittedBy  Company?          @relation("FoodInfoSubmitter", fields: [submittedByCompanyId], references: [id], onDelete: SetNull)
+  certificates FoodCertificate[]
+
+  @@unique([productId, version])
+  @@index([status, submittedAt])
+  @@index([productId, status])
+}
+
+/// Diet / quality certificate behind a claim (halal, kosher, organic, vegan…) — copied to new versions.
+model FoodCertificate {
+  id           String    @id @default(cuid())
+  foodInfoId   String
+  diet         String
+  number       String?
+  issuer       String?
+  expiresOn    DateTime? @db.Date
+  fileKey      String?
+  fileName     String?
+  mimeType     String?
+  /// days-before-expiry reminders already sent
+  remindedDays Int[]
+  createdAt    DateTime  @default(now())
+
+  foodInfo FoodInfo @relation(fields: [foodInfoId], references: [id], onDelete: Cascade)
+
+  @@index([expiresOn])
+  @@index([foodInfoId])
+}
+
+/// A recipe change (allergens / ingredients / nutrition / diets) told to the customers who buy the product.
+model FoodChange {
+  id                String   @id @default(cuid())
+  productId         String
+  foodInfoId        String
+  previousId        String?
+  /// lib/food.ts FoodDiff
+  summary           Json
+  /// at least one allergen added (contains or may contain)
+  allergenAdded     Boolean  @default(false)
+  notifiedCompanies Int      @default(0)
+  createdAt         DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, createdAt])
+  @@index([createdAt])
+}
+
+/// A customer's kitchen allergen profile (optional — FIRINGI switches the feature on).
+model FoodProfile {
+  companyId       String   @id
+  /// allergens the kitchen must avoid
+  avoid           String[]
+  /// "may contain traces" counts as a hit too
+  includeTraces   Boolean  @default(true)
+  /// hide products with a hit from the catalogue (otherwise flagged only)
+  hideInCatalogue Boolean  @default(false)
+  updatedById     String?
+  updatedAt       DateTime @updatedAt
+
+  company Company @relation("CompanyFoodProfile", fields: [companyId], references: [id], onDelete: Cascade)
+}

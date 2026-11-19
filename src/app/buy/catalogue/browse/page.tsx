@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { FoodFilter, foodParams } from "@/components/food/views";
+import { foodLabels } from "@/components/food/labels";
+import { foodSettings } from "@/server/food/service";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight, ShoppingBasket, Sparkles } from "lucide-react";
 import { Aurora } from "@/components/motion/shapes";
@@ -19,15 +22,18 @@ export const metadata = { title: "Shop" };
 const TONES = ["tone-blue", "tone-violet", "tone-teal", "tone-pink", "tone-orange", "tone-lime"];
 
 /** Shop home: categories + nearest suppliers (wholesalers for customers, distributors for wholesalers). */
-export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; badge?: string }> }) {
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; badge?: string; free?: string | string[]; diet?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
-  const { q, badge } = await searchParams;
+  const sp = await searchParams;
+  const { q, badge } = sp;
+  const fp = foodParams(sp); // Phase 44: allergen / diet filter
   const [categories, suppliers, t, locale, mode, badges] = await Promise.all([
     shopCategories(ctx), visibleSuppliers(ctx, { q, badge }), getTranslations("catalogue"), getLocale(), orderingMode(ctx), badgeTypes(),
   ]);
   const firingi = mode === "FIRINGI";
-  const products = firingi ? await browseCatalogue(ctx, { q, badge }) : null;
+  const products = firingi ? await browseCatalogue(ctx, { q, badge, ...fp }) : null;
+  const [fs, fl] = await Promise.all([foodSettings(), foodLabels()]);
   const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
   const dealMap = products ? await dealBadges(products.items.map((i) => i.offerId)) : new Map<string, { pct: number | null; endsAt: Date; kind: string }>();
   return (
@@ -59,6 +65,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       <BadgeFilter types={badges} active={badge} base="/buy/catalogue/browse" params={{ q }} />
       {products ? (
         <section data-testid="firingi-products">
+          {fs.enabled && fs.filter && <FoodFilter base="/buy/catalogue/browse" params={{ q, badge }} free={fp.free} diet={fp.diet} l={fl.l} />}
           <h2 className="mb-3 text-lg font-semibold">{t("allProducts")}</h2>
           {products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} />)}</div>

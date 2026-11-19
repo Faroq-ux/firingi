@@ -11,15 +11,18 @@ import { seedCatalogue } from "./catalogue";
 import { establishDemoAccounts } from "./establish";
 import { seedInventory } from "./inventory";
 import { seedExciseDemo, seedExciseReference } from "./excise";
+import { seedFoodDemo, seedFoodReference } from "./food";
 
 export async function runSeed(db: PrismaClient, opts: { demo?: boolean } = {}) {
   const refs = await seedReference(db);
   await seedExciseReference(db);
+  await seedFoodReference(db);
   const { roleIds } = await seedRbac(db);
   const demo = opts.demo === false ? null : await seedDemo(db, refs, roleIds);
   if (opts.demo !== false) await seedCatalogue(db);
   if (opts.demo !== false) await establishDemoAccounts(db);
   if (opts.demo !== false) await seedExciseDemo(db);
+  if (opts.demo !== false) await seedFoodDemo(db);
   if (opts.demo !== false) await seedInventory(db);
   return { refs, roleIds, demo };
 }

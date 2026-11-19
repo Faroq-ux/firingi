@@ -662,6 +662,28 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Food information & allergens (Phase 44)
+
+Code: `src/lib/food.ts` (rules), `src/server/food/service.ts`, `import.ts`, `label-ai.ts`; details `docs/food-info.md`.
+- **EU 1169/2011 data per product** (versions; the approved one is what customers see): the **14 allergens**
+  (contains / may contain / free from), **ingredients** per language with allergens in bold, **nutrition** per
+  100 g / ml (checked: saturates ≤ fat, kJ ≈ 4.184 × kcal …), **diets & certificates** (vegan, halal, organic …),
+  origin, storage, shelf life, label photo and spec sheet. FIRINGI sets **what each category needs**.
+- **Supplier** (*Products › Food Information*): fill in by hand, **import a spreadsheet** (FIRINGI template or
+  GS1 / GDSN headers) or let the **AI read the label photo** into a draft; send to FIRINGI.
+- **FIRINGI**: review queue with the version side by side with the current one and **new allergens flagged**;
+  approve / send back; start an **allergen recall** of a lot; **data-quality** page (per supplier / category,
+  missing, certificates expiring, recipe changes); **required to sell** (hide food without approved data — off by
+  default, the page shows how many it would hide).
+- **Customers**: allergen / diet **badges**, **"free from" filter**, full panel on the product page, **recipe-change
+  alerts**, optional **kitchen allergen profile** (warnings on the product page and in the cart).
+- **Resellers → their own customers**: **allergen book** (PDF), **shelf labels with QR** to a public product page (no
+  login, no prices, the shopper's language) and a **CSV export** for their webshop / till.
+- Every part is a FIRINGI switch (*Settings › Food Information*). Supplier and customer pages in 25 languages;
+  FIRINGI's in English.
+- Tests: `tests/unit/food.test.ts`, `tests/integration/food.test.ts`, browser `tests/e2e/food-info.mjs`.
+  Screenshots `docs/screenshots/fi-*.png`.
+
 ## Licensed & excise goods (Phase 43)
 
 Code: `src/lib/excise.ts` (rules, duty maths), `src/server/excise/service.ts`; details `docs/excise.md`.

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { FoodFilter, foodParams } from "@/components/food/views";
+import { foodLabels } from "@/components/food/labels";
+import { foodSettings } from "@/server/food/service";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
@@ -14,13 +17,15 @@ import { PageHeader } from "@/components/layout/page-header";
 import { SupplierCard } from "@/components/catalogue/supplier-card";
 
 /** A category: its sub-categories and the suppliers carrying it, nearest first. */
-export default async function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function CategoryPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ free?: string | string[]; diet?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
   const { id } = await params;
   const data = await shopCategory(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
   const [suppliers, t, locale, mode] = await Promise.all([visibleSuppliers(ctx, { categoryId: id }), getTranslations("catalogue"), getLocale(), orderingMode(ctx)]);
-  const products = mode === "FIRINGI" ? await browseCatalogue(ctx, { categoryId: id }) : null;
+  const fp = foodParams(await searchParams); // Phase 44: allergen / diet filter
+  const products = mode === "FIRINGI" ? await browseCatalogue(ctx, { categoryId: id, ...fp }) : null;
+  const [fs, fl] = await Promise.all([foodSettings(), foodLabels()]);
   const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
   const dealMap = products ? await dealBadges(products.items.map((i) => i.offerId)) : new Map<string, { pct: number | null; endsAt: Date; kind: string }>();
   const name = pickLocalized(data.category.name, locale);
@@ -37,6 +42,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
         </div>
       )}
       <SponsoredProducts ctx={ctx} placement="CATEGORY" categoryId={id} />
+      {products && fs.enabled && fs.filter && <FoodFilter base={`/buy/catalogue/categories/${id}`} params={{}} free={fp.free} diet={fp.diet} l={fl.l} />}
       {products ? (
         products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4" data-testid="firingi-products">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} />)}</div>
