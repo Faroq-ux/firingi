@@ -8,9 +8,10 @@ import { Input, Label, Select } from "@/components/ui/input";
 import { Msg, Spin, useRun } from "@/components/shared/run";
 import { ALLERGENS } from "@/lib/food";
 import { newClientId } from "@/lib/offline/store";
+import { checkTaxId } from "@/lib/tax-id";
 import {
   importCatalogueAction, posRefundAction, reorderAction, retryPosFiscalAction, saveFiscalConnectionAction, saveItemAction, saveMemberAction, savePosCompanyAction,
-  saveRecipeAction, saveRegisterAction, setPinAction, setRegisterUsersAction, testFiscalAction,
+  saveRecipeAction, saveRegisterAction, setPinAction, setRegisterUsersAction, setSaleTaxIdAction, testFiscalAction,
 } from "@/server/actions/pos";
 
 const num = (v: string) => Number(String(v).replace(",", ".")) || 0;
@@ -273,5 +274,24 @@ export function ReorderButton({ offerId, qty }: { offerId: string; qty: number }
       <Button size="sm" variant="outline" disabled={pending || !Number(n)} onClick={() => run(() => reorderAction({ offerId, qty: Number(n) }), undefined, t("addedToCart"))} data-testid="pst-reorder"><Spin on={pending} icon={ShoppingCart} /> {t("addToCart")}</Button>
       <Msg error={error} done={done} />
     </span>
+  );
+}
+
+/** Add the customer's NIF to a receipt that isn't certified yet (the customer asked after paying). */
+export function SaleNifForm({ saleId, country }: { saleId: string; country: string }) {
+  const tr = useTranslations("posReceipt");
+  const { pending, error, done, run } = useRun();
+  const [v, setV] = useState("");
+  const [n, setN] = useState("");
+  const c = v.trim() ? checkTaxId(v, country) : null;
+  return (
+    <form className="space-y-2" data-testid="pos-sale-nif" onSubmit={(e) => { e.preventDefault(); run(() => setSaleTaxIdAction({ saleId, taxId: v, name: n || null }), () => { setV(""); setN(""); }, tr("nifAdded")); }}>
+      <div className="grid gap-2 sm:grid-cols-2">
+        <div><Label htmlFor="psn-nif">{tr("nif")}</Label><Input id="psn-nif" value={v} onChange={(e) => setV(e.target.value)} aria-invalid={c ? !c.ok : undefined} data-testid="psn-nif" />
+          {c && !c.ok && <p className="mt-1 text-xs text-destructive" role="alert">{c.reason === "checksum" ? tr("nifInvalid") : tr("nifFormat")}</p>}</div>
+        <div><Label htmlFor="psn-name">{tr("nifName")}</Label><Input id="psn-name" value={n} onChange={(e) => setN(e.target.value)} data-testid="psn-name" /></div>
+      </div>
+      <div className="flex flex-wrap items-center gap-3"><Button type="submit" variant="outline" disabled={pending || !c?.ok} data-testid="psn-save"><Spin on={pending} icon={Save} /> {tr("nifAdd")}</Button><Msg error={error} done={done} /></div>
+    </form>
   );
 }

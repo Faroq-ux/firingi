@@ -4,7 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { defineAction } from "./_action";
 import * as S from "@/server/pos/service";
-import { emailReceipt, recordSale, refundSale } from "@/server/pos/sales";
+import { emailReceipt, recordSale, refundSale, setSaleTaxId } from "@/server/pos/sales";
 import { retryFiscal } from "@/server/pos/fiscal";
 import { savePosSettings } from "@/server/pos/settings";
 import { POS_FEATURES, POS_PROVIDERS, RECIPE_UNITS } from "@/lib/pos";
@@ -84,6 +84,7 @@ export const setPinAction = defineAction({ permission: [...SELL], schema: pinSch
 export const saveTicketAction = defineAction({ permission: [...SELL], schema: ticketSchema, handler: async (ctx, i) => S.saveTicket(ctx, i) });
 export const deleteTicketAction = defineAction({ permission: [...SELL], schema: idSchema, handler: async (ctx, i) => S.deleteTicket(ctx, i.id) });
 export const saveMemberAction = defineAction({ permission: [...SELL], schema: memberSchema, handler: async (ctx, i) => { const r = await S.saveMember(ctx, i); paths("guests"); return r; } });
+export const setSaleTaxIdAction = defineAction({ permission: [...SELL], schema: z.object({ saleId: id, taxId: z.string().min(1).max(40), name: z.string().max(120).nullable().optional() }), handler: async (ctx, i) => { const r = await setSaleTaxId(ctx, i.saleId, i.taxId, i.name); paths("sales"); return r; } });
 export const emailReceiptAction = defineAction({ permission: [...SELL], schema: emailSchema, handler: async (ctx, i) => { await S.saleDetail(ctx, i.saleId); return emailReceipt(i.saleId, i.email.trim()); } });
 export const tillSnapshotAction = defineAction({ permission: [...SELL], schema: z.object({ registerId: id.nullable().optional() }), handler: async (ctx, i) => S.tillSnapshot(ctx, i.registerId ?? null) });
 export const saleDetailAction = defineAction({ permission: [...SELL], schema: idSchema, handler: async (ctx, i) => S.saleDetail(ctx, i.id) });

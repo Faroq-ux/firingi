@@ -106,7 +106,29 @@ try {
   await shot(kh, "pos-07-till-receipt");
   const sale1 = sql(`select id || '|' || "receiptToken" || '|' || gross from "PosSale" where "companyId"='${KH}' order by "createdAt" desc limit 1`).split("|");
   check("sale stored once, 20.25 €, 1 receipt", sale1[2] === "20.25");
+  // VAT per item and a VAT summary on the receipt
+  const lineVats = await kh.getByTestId("till-receipt-line-vat").allInnerTexts();
+  check("receipt: the VAT rate on every item line", lineVats.length === 3 && lineVats.every((v) => /^\d+(,\d+)?%$/.test(v.trim())), lineVats.join(" "));
+  check("receipt: VAT summary by rate and the VAT total", (await kh.getByTestId("till-receipt-vat-row").count()) >= 1 && /\d,\d\d/.test(await text(kh.getByTestId("till-receipt-vat-total"))));
+  // the customer asks for the NIF after paying: added to the (non-certified) receipt
+  await kh.getByTestId("till-nif-after").click();
+  await kh.getByTestId("till-nif-after-input").fill("123456780");
+  check("a wrong NIF is caught as it is typed", (await kh.getByTestId("till-nif-after-input-error").count()) === 1 && await kh.getByTestId("till-nif-after-save").isDisabled());
+  await kh.getByTestId("till-nif-after-input").fill("123 456 789");
+  await kh.getByTestId("till-nif-after-save").click(); await kh.waitForTimeout(800);
+  check("NIF added after the sale: on the receipt and stored", /123456789/.test(await text(kh.getByTestId("till-receipt-nif"))) && sql(`select "customerTaxId" from "PosSale" where id='${sale1[0]}'`) === "123456789");
+  await shot(kh, "pos-25-receipt-vat-nif", true);
   await kh.getByTestId("till-new-sale").click();
+  // the NIF button on the ticket, before paying
+  await tapItem(kh, "Kebab no pão");
+  await kh.getByTestId("till-nif-btn").click();
+  await kh.getByTestId("till-nif-input").fill("504 426 290"); await kh.getByTestId("till-nif-name").fill("Restaurante Sol, Lda");
+  await shot(kh, "pos-26-till-nif");
+  await kh.getByTestId("till-nif-save").click();
+  check("ticket shows the customer's NIF", /504426290/.test(await text(kh.getByTestId("till-nif-btn"))));
+  await kh.getByTestId("till-nif-btn").click(); await kh.getByTestId("till-nif-clear").click();
+  check("…and it can be removed again", !/504426290/.test(await text(kh.getByTestId("till-nif-btn"))));
+  await kh.getByTestId("till-clear").click();
 
   // offline sale
   await kh.context().setOffline(true);
@@ -141,6 +163,7 @@ try {
   const pub = await browser.newPage();
   await pub.goto(`${BASE}/r/${sale1[1]}`); await settle(pub);
   check("receipt page (QR) opens without login, total 20.25", /20,25|20\.25/.test(await text(pub.getByTestId("public-receipt-total"))));
+  check("receipt page: VAT per item, the VAT table and the customer's NIF", (await pub.getByTestId("public-receipt-line-vat").count()) === 3 && (await pub.getByTestId("public-receipt-vat").count()) === 1 && /123456789/.test(await text(pub.getByTestId("public-receipt-nif"))));
   await pub.screenshot(SHOTS ? { path: `${SHOTS}/pos-09-public-receipt.png`, fullPage: true } : {}).catch(() => null);
   await pub.close();
 

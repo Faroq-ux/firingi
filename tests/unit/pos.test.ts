@@ -113,3 +113,21 @@ describe("X / Z report", () => {
     expect(z.byCashier.a).toEqual({ count: 1, gross: 5 });
   });
 });
+
+describe("the customer's NIF on a receipt", () => {
+  it("Portugal: check digit, spaces and the PT prefix; the final-consumer number", async () => {
+    const { checkTaxId, PT_FINAL_CONSUMER } = await import("@/lib/tax-id");
+    expect(checkTaxId("123 456 789", "PT")).toEqual({ ok: true, value: "123456789" });
+    expect(checkTaxId("123456780", "PT")).toEqual({ ok: false, reason: "checksum" });
+    expect(checkTaxId("PT 504.426.290", "PT")).toEqual({ ok: true, value: "PT504426290" });
+    expect(checkTaxId("12345", "PT")).toEqual({ ok: false, reason: "format" });
+    expect(checkTaxId(PT_FINAL_CONSUMER, "PT").ok).toBe(true);
+  });
+  it("other countries: their prefix or a light format check", async () => {
+    const { checkTaxId } = await import("@/lib/tax-id");
+    expect(checkTaxId("B12345678", "ES").ok).toBe(true);
+    expect(checkTaxId("DE 123456789", "PT")).toEqual({ ok: true, value: "DE123456789" });
+    expect(checkTaxId("1234567890", "PL").ok).toBe(true);
+    expect(checkTaxId("abc", "DE").ok).toBe(false);
+  });
+});

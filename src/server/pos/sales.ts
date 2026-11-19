@@ -18,6 +18,8 @@ import { accrue, hashInput, packsOf, pointsFor, pointsValue, receiptNumber, sale
 import { requirePos, type PosAccess } from "./settings";
 import { fiscalize, kickPosQueue } from "./fiscal";
 import { tillAccess } from "./access";
+import { writeAudit } from "@/server/services/audit";
+import { checkTaxId, PT_FINAL_CONSUMER } from "@/lib/tax-id";
 
 export type SaleLineInput = { itemId?: string | null; name?: string | null; qty: number; unitPrice: number; discountPct?: number; vatRate?: number | null };
 export type SaleInput = {
@@ -108,6 +110,7 @@ export async function recordSale(ctx: Ctx, input: SaleInput, opts: { offline?: b
   const register = await ownRegister(ctx, input.registerId);
   const done = await prisma.posSale.findUnique({ where: { registerId_clientId: { registerId: register.id, clientId: input.clientId } }, select: { id: true } });
   if (done) return saleForReceipt(done.id);
+  const taxId = customerTaxIdFor(input.customerTaxId, access.countryCode, offline);
   if (!register.active && !offline) throw new ValidationError("This till is switched off.");
   if (access.blocked && !offline) throw new ValidationError("Your country's receipts must go through your certified provider: connect your account in the till settings first.");
   const shift = await prisma.posShift.findUnique({ where: { id: input.shiftId } });
@@ -183,7 +186,7 @@ export async function recordSale(ctx: Ctx, input: SaleInput, opts: { offline?: b
       data: {
         companyId: ctx.company.id, registerId: register.id, shiftId: shift.id, clientId: input.clientId, number, kind: "SALE", currency: access.currency,
         net: totals.net, vat: totals.vat, gross: totals.gross, discount: totals.discount, cashierId: ctx.user.id, approvedById: approved ? input.approvedById : null,
-        soldAt, offline, ageChecked: !!input.ageChecked, customerTaxId: input.customerTaxId?.trim().slice(0, 32) || null, customerName: input.customerName?.trim().slice(0, 120) || null,
+        soldAt, offline, ageChecked: !!input.ageChecked, customerTaxId: taxId, customerName: input.customerName?.trim().slice(0, 120) || null,
         customerEmail: input.customerEmail?.trim().slice(0, 200) || null, memberId: member?.id ?? null, pointsEarned: earned, pointsUsed,
         tableRef: input.tableRef?.slice(0, 40) || null, note: notes.filter(Boolean).join(" ") || null,
         fiscalStage: stage, fiscalStatus: stage === "PROVIDER" ? "PENDING" : "NOT_REQUIRED", fiscalProvider: stage === "PROVIDER" ? access.provider : null,
@@ -242,16 +245,52 @@ export async function emailReceipt(saleId: string, to?: string) {
   const s = await saleForReceipt(saleId);
   const addr = to ?? s.customerEmail;
   if (!addr || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(addr)) throw new ValidationError("Enter a valid e-mail address.");
-  const co = await prisma.company.findUniqueOrThrow({ where: { id: s.companyId }, select: { tradeName: true, legalName: true } });
+  const co = await prisma.company.findUniqueOrThrow({ where: { id: s.companyId }, select: { tradeName: true, legalName: true, country: { select: { code: true } } } });
   const base = process.env.APP_URL ?? process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+  const vatWord = ({ PT: "IVA", ES: "IVA", IT: "IVA", FR: "TVA", BE: "TVA", LU: "TVA", DE: "MwSt.", AT: "USt.", NL: "btw", PL: "VAT" } as Record<string, string>)[co.country?.code ?? ""] ?? "VAT";
   const { sendMail } = await import("@/server/services/mailer");
   await sendMail({
     to: addr, subject: `${co.tradeName ?? co.legalName} — ${s.fiscalNumber ?? s.number}`,
     text: [`${co.tradeName ?? co.legalName}`, `${s.fiscalNumber ?? s.number} · ${s.soldAt.toISOString().slice(0, 16).replace("T", " ")}`, "",
-      ...s.lines.map((l) => `${l.qty} × ${l.name}  ${l.gross.toFixed(2)} ${s.currency}`), "", `TOTAL ${s.gross.toFixed(2)} ${s.currency}`, "", `${base}/r/${s.receiptToken}`].join("\n"),
+      ...(s.customerTaxId ? [`NIF: ${s.customerTaxId}${s.customerName ? ` · ${s.customerName}` : ""}`, ""] : []),
+      ...s.lines.map((l) => `${l.qty} × ${l.name}  (${vatWord} ${Number(l.vatRate)}%)  ${l.gross.toFixed(2)} ${s.currency}`), "",
+      ...vatRows(s.lines).map((r) => `${vatWord} ${r.rate}%: ${r.net.toFixed(2)} + ${r.vat.toFixed(2)} = ${r.gross.toFixed(2)} ${s.currency}`),
+      `${s.net.toFixed(2)} + ${vatWord} ${s.vat.toFixed(2)}`, `TOTAL ${s.gross.toFixed(2)} ${s.currency}`, "", `${base}/r/${s.receiptToken}`].join("\n"),
   });
   if (to && to !== s.customerEmail) await prisma.posSale.update({ where: { id: s.id }, data: { customerEmail: to } });
   return { ok: true };
+}
+
+/** The customer's NIF on a receipt: checked (Portugal's digits), stored normalised; the final-consumer number = none. */
+function customerTaxIdFor(raw: string | null | undefined, country: string, offline: boolean) {
+  const v = raw?.trim();
+  if (!v) return null;
+  const c = checkTaxId(v, country);
+  if (c.ok) return c.value === PT_FINAL_CONSUMER ? null : c.value;
+  if (offline) return v.slice(0, 32); // already on the customer's paper receipt — keep what was printed
+  throw new ValidationError(c.reason === "checksum" ? "This NIF isn't valid — check the digits." : "Check the customer's tax number (NIF).");
+}
+
+/** VAT by rate from a receipt's lines (net + VAT = gross). */
+function vatRows(lines: { vatRate: Decimal.Value; net: Decimal.Value; vat: Decimal.Value; gross: Decimal.Value }[]) {
+  const m = new Map<string, { rate: string; net: Decimal; vat: Decimal; gross: Decimal }>();
+  for (const l of lines) { const k = new Decimal(l.vatRate).toString(); const x = m.get(k) ?? { rate: k, net: new Decimal(0), vat: new Decimal(0), gross: new Decimal(0) }; m.set(k, { rate: k, net: x.net.plus(l.net), vat: x.vat.plus(l.vat), gross: x.gross.plus(l.gross) }); }
+  return [...m.values()].sort((a, b) => Number(b.rate) - Number(a.rate));
+}
+
+/** Put the customer's NIF (and name) on a receipt after the sale — only while it isn't certified yet. */
+export async function setSaleTaxId(ctx: Ctx, saleId: string, raw: string, name?: string | null) {
+  const access = await requirePos(ctx, "sell");
+  const sale = await prisma.posSale.findUnique({ where: { id: saleId }, select: { id: true, companyId: true, registerId: true, kind: true, fiscalNumber: true, fiscalStatus: true, customerTaxId: true } });
+  if (!sale || sale.companyId !== ctx.company.id) throw new NotFoundError("Sale not found.");
+  await ownRegister(ctx, sale.registerId);
+  if (sale.kind !== "SALE") throw new ValidationError("Add the NIF on the sale, not on a refund.");
+  if (sale.fiscalNumber || sale.fiscalStatus === "DONE") throw new ValidationError("This receipt is already certified — the NIF can't be added any more. Refund it and sell again with the NIF.");
+  const taxId = customerTaxIdFor(raw, access.countryCode, false);
+  if (!taxId) throw new ValidationError("Enter the customer's NIF.");
+  const updated = await prisma.posSale.update({ where: { id: sale.id }, data: { customerTaxId: taxId, customerName: name?.trim().slice(0, 120) || undefined } });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "pos.sale.tax_id", entityType: "PosSale", entityId: sale.id, before: { customerTaxId: sale.customerTaxId }, after: { customerTaxId: taxId } });
+  return { id: updated.id, customerTaxId: updated.customerTaxId, customerName: updated.customerName };
 }
 
 export type RefundInput = { clientId: string; saleId: string; registerId: string; shiftId: string; n: number; lines: { lineId: string; qty: number }[]; method: PosPaymentMethod; reason: string; restock?: boolean; approvedById?: string | null };

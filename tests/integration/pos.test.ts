@@ -10,7 +10,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { unzipSync, strFromU8 } from "fflate";
 import { prisma } from "@/server/db";
 import * as P from "@/server/pos/service";
-import { recordSale, refundSale, type SaleInput } from "@/server/pos/sales";
+import { emailReceipt, recordSale, refundSale, setSaleTaxId, type SaleInput } from "@/server/pos/sales";
 import { processPosFiscalQueue } from "@/server/pos/fiscal";
 import { posAccess, savePosSettings } from "@/server/pos/settings";
 import { syncOp } from "@/server/app/service";
@@ -510,5 +510,53 @@ describe("the owner and shop managers add their till staff and see the revenue",
     await prisma.posRegister.deleteMany({ where: { id: { in: [g.id, r.id] } } });
     await prisma.posItem.deleteMany({ where: { id: bread.id } });
     await prisma.branch.deleteMany({ where: { id: shop.id } });
+  });
+});
+
+describe("the customer's NIF and VAT per item on receipts", () => {
+  it("a wrong NIF is refused at the till, the final-consumer number means none, an offline one is kept; added later while not certified", async () => {
+    const kh = await ctxFor(KH);
+    const t = await P.saveRegister(kh, { name: "Caixa NIF", code: "N1" });
+    if (t.approval === "PENDING") await P.decideTill(await ctxFor(SA), t.id, true);
+    const sh = await P.openShift(kh, t.id, 0);
+    const beer = await P.saveItem(kh, { name: "Imperial NIF", price: 2, vatRate: 23 });
+    const soup = await P.saveItem(kh, { name: "Sopa NIF", price: 3, vatRate: 13 });
+    const lines = [{ itemId: beer.id, qty: 2, unitPrice: 2 }, { itemId: soup.id, qty: 1, unitPrice: 3 }];
+    const pay = [{ method: "CARD" as const, amount: 7 }];
+    await expect(recordSale(kh, sale(t.id, sh.id, lines, pay, { customerTaxId: "123456780" }))).rejects.toThrow(/NIF isn't valid/);
+    const a = await recordSale(kh, sale(t.id, sh.id, lines, pay, { customerTaxId: "123 456 789", customerName: "Ana Lopes" }));
+    expect((await prisma.posSale.findUniqueOrThrow({ where: { id: a.id } })).customerTaxId).toBe("123456789");
+    const b = await recordSale(kh, sale(t.id, sh.id, lines, pay, { customerTaxId: "999999990" }));
+    expect((await prisma.posSale.findUniqueOrThrow({ where: { id: b.id } })).customerTaxId).toBeNull();
+    const off = await recordSale(kh, sale(t.id, sh.id, lines, pay, { customerTaxId: "12345" }), { offline: true });
+    expect((await prisma.posSale.findUniqueOrThrow({ where: { id: off.id } })).customerTaxId).toBe("12345");
+    // each line keeps its own VAT rate and amount; per rate they add up to the receipt
+    const ls = await prisma.posSaleLine.findMany({ where: { saleId: b.id }, orderBy: { name: "asc" } });
+    expect(ls.map((l) => [l.name, Number(l.vatRate), Number(l.vat)])).toEqual([["Imperial NIF", 23, 0.75], ["Sopa NIF", 13, 0.35]]);
+    const sb = await prisma.posSale.findUniqueOrThrow({ where: { id: b.id } });
+    expect(Number(sb.vat)).toBeCloseTo(1.1, 2);
+    // the customer asks for the NIF after paying: added (non-fiscal receipt), checked, audited
+    await expect(setSaleTaxId(kh, b.id, "123456780")).rejects.toThrow(/NIF isn't valid/);
+    expect((await setSaleTaxId(kh, b.id, "504426290", "Restaurante X")).customerTaxId).toBe("504426290");
+    expect(await prisma.auditLog.count({ where: { action: "pos.sale.tax_id", entityId: b.id } })).toBe(1);
+    // a certified receipt can't change any more
+    await prisma.posSale.update({ where: { id: a.id }, data: { fiscalStatus: "DONE", fiscalNumber: "FS POS/1" } });
+    await expect(setSaleTaxId(kh, a.id, "504426290")).rejects.toThrow(/already certified/);
+    // the e-mailed receipt shows the VAT of each item and per rate
+    const { mkdtemp, readdir, readFile } = await import("node:fs/promises");
+    const dir = await mkdtemp((await import("node:path")).join((await import("node:os")).tmpdir(), "pos-mail-"));
+    const prev = process.env.STORAGE_DIR; process.env.STORAGE_DIR = dir;
+    try {
+      await emailReceipt(b.id, "ana.lopes@example.test");
+      const files = (await readdir(`${dir}/mail-outbox`)).filter((f) => f.endsWith(".json"));
+      const text = (JSON.parse(await readFile(`${dir}/mail-outbox/${files[0]}`, "utf8")) as { text: string }).text;
+      expect(text).toMatch(/Imperial NIF {2}\(IVA 23%\)/);
+      expect(text).toMatch(/IVA 23%: 3\.25 \+ 0\.75 = 4\.00/);
+      expect(text).toMatch(/IVA 13%: 2\.65 \+ 0\.35 = 3\.00/);
+      expect(text).toMatch(/NIF: 504426290 · Restaurante X/);
+    } finally { process.env.STORAGE_DIR = prev; }
+    await prisma.posSale.deleteMany({ where: { registerId: t.id } });
+    await prisma.posRegister.deleteMany({ where: { id: t.id } });
+    await prisma.posItem.deleteMany({ where: { id: { in: [beer.id, soup.id] } } });
   });
 });

@@ -18,7 +18,7 @@ import { CountUp } from "@/components/motion/count-up";
 import { Banknote, CalendarDays, CalendarRange, History, ShoppingBag, Sun, TrendingUp, UserCog } from "lucide-react";
 import { tillRevenue, tillStaff } from "@/server/pos/staff";
 import { RemoveFromTill, StaffForm } from "./staff-forms";
-import { CompanyForm, FiscalForm, GuestForm, ImportButton, ItemForm, PinForm, RecipeForm, RefundForm, RegisterForm, RegisterPeople, ReorderButton, RetryButton, type ItemRow } from "./forms";
+import { CompanyForm, FiscalForm, GuestForm, SaleNifForm, ImportButton, ItemForm, PinForm, RecipeForm, RefundForm, RegisterForm, RegisterPeople, ReorderButton, RetryButton, type ItemRow } from "./forms";
 
 type Portal = "vendor" | "buy";
 const base = (p: Portal) => `/${p}/pos`;
@@ -217,8 +217,9 @@ function FiscalBadge({ t, status }: { t: Awaited<ReturnType<typeof getTranslatio
 
 export async function PosSaleDetailPage({ ctx, portal, id }: { ctx: Ctx; portal: Portal; id: string }) {
   const off = await gate(ctx); if (off) return off;
-  const [t, locale] = await Promise.all([getTranslations("pos"), getLocale()]);
+  const [t, tr, locale] = await Promise.all([getTranslations("pos"), getTranslations("posReceipt"), getLocale()]);
   const s = await P.saleDetail(ctx, id);
+  const country = (await posAccess(ctx.company.id)).countryCode;
   const money = (v: unknown) => formatMoney(Number(v), locale, s.currency);
   const back = new Map<string, number>();
   for (const r of s.refunds) for (const l of r.lines) { const src = (l.lots as { from?: string } | null)?.from; if (src) back.set(src, (back.get(src) ?? 0) + Number(l.qty)); }
@@ -231,10 +232,15 @@ export async function PosSaleDetailPage({ ctx, portal, id }: { ctx: Ctx; portal:
         <Card><CardContent className="space-y-3 overflow-x-auto pt-5 text-sm">
           <div className="flex flex-wrap gap-2"><FiscalBadge t={t} status={s.fiscalStatus} />{s.fiscalStatus === "FAILED" || s.fiscalStatus === "PENDING" ? manage && <RetryButton id={s.id} /> : null}{s.fiscalError && <span className="text-xs text-destructive">{s.fiscalError}</span>}</div>
           <p className="text-xs text-muted-foreground">{new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(s.soldAt)} · {s.register.name} · {s.number}{s.refundOf ? ` · ${t("refundOf", { n: s.refundOf.number })}` : ""}</p>
-          <Table data-testid="pos-sale-lines"><THead><TR><TH>{t("item")}</TH><TH className="text-right">{t("qty")}</TH><TH className="text-right">{t("price")}</TH><TH>{t("vatRate")}</TH><TH className="text-right">{t("total")}</TH></TR></THead>
-            <TBody>{s.lines.map((l) => <TR key={l.id}><TD className="break-words">{l.name}{Number(l.discountPct) ? ` (−${Number(l.discountPct)}%)` : ""}</TD><TD className="text-right">{l.qty.toString()}</TD><TD className="text-right">{money(l.unitPrice)}</TD><TD>{Number(l.vatRate)}%</TD><TD className="text-right">{money(l.gross)}</TD></TR>)}</TBody></Table>
+          <Table data-testid="pos-sale-lines"><THead><TR><TH>{t("item")}</TH><TH className="text-right">{t("qty")}</TH><TH className="text-right">{t("price")}</TH><TH>{t("vatRate")}</TH><TH className="text-right">{tr("colVat")}</TH><TH className="text-right">{t("total")}</TH></TR></THead>
+            <TBody>{s.lines.map((l) => <TR key={l.id}><TD className="break-words">{l.name}{Number(l.discountPct) ? ` (−${Number(l.discountPct)}%)` : ""}</TD><TD className="text-right">{l.qty.toString()}</TD><TD className="text-right">{money(l.unitPrice)}</TD><TD>{Number(l.vatRate)}%</TD><TD className="text-right">{money(l.vat)}</TD><TD className="text-right">{money(l.gross)}</TD></TR>)}</TBody></Table>
           <div className="text-right"><div>{t("netTotal")}: {money(s.net)} · {t("vat")}: {money(s.vat)}</div><div className="text-lg font-semibold" data-testid="pos-sale-total">{t("total")}: {money(s.gross)}</div></div>
           <div className="text-xs">{s.payments.map((p) => `${p.method} ${money(p.amount)}${p.change && Number(p.change) ? ` (${t("change")} ${money(p.change)})` : ""}`).join(" · ")}</div>
+          <div className="rounded-lg border p-3" data-testid="pos-sale-customer">
+            {s.customerTaxId ? <p>{t("customerTaxId")}: <b data-testid="pos-sale-nif-value">{s.customerTaxId}</b>{s.customerName ? ` · ${s.customerName}` : ""}</p>
+              : s.kind === "SALE" && !s.fiscalNumber && s.fiscalStatus !== "DONE" ? <SaleNifForm saleId={s.id} country={country} />
+              : <p className="text-xs text-muted-foreground">{s.kind === "SALE" ? tr("nifLocked") : tr("noNif")}</p>}
+          </div>
           {s.member && <p className="text-xs">{t("pointsLine", { name: s.member.name, n: s.pointsEarned })}</p>}
           <p className="break-all text-[11px] text-muted-foreground">#{s.hash.slice(0, 32)}…</p>
           <a className="text-primary hover:underline" href={`/r/${s.receiptToken}`} target="_blank" rel="noreferrer" data-testid="pos-receipt-link">{t("openReceiptPage")}</a>

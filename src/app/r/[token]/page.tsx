@@ -14,11 +14,12 @@ export const dynamic = "force-dynamic";
 export default async function ReceiptPage({ params }: { params: Promise<{ token: string }> }) {
   const r = await publicReceipt((await params).token);
   if (!r) notFound();
-  const [t, locale] = await Promise.all([getTranslations("pos"), getLocale()]);
+  const [t, tr, locale] = await Promise.all([getTranslations("pos"), getTranslations("posReceipt"), getLocale()]);
   const { sale: s, company: c } = r;
   const m = (v: unknown) => formatMoney(Number(v), locale, s.currency);
-  const rates = new Map<string, { net: number; vat: number }>();
-  for (const l of s.lines) { const k = l.vatRate.toString(); const x = rates.get(k) ?? { net: 0, vat: 0 }; rates.set(k, { net: x.net + Number(l.net), vat: x.vat + Number(l.vat) }); }
+  const rates = new Map<string, { net: number; vat: number; gross: number }>();
+  for (const l of s.lines) { const k = String(Number(l.vatRate)); const x = rates.get(k) ?? { net: 0, vat: 0, gross: 0 }; rates.set(k, { net: x.net + Number(l.net), vat: x.vat + Number(l.vat), gross: x.gross + Number(l.gross) }); }
+  const pct = (r: unknown) => `${String(Number(r)).replace(".", locale.startsWith("en") ? "." : ",")}%`;
   return (
     <main className="mx-auto min-h-dvh max-w-md bg-background px-4 py-8 text-foreground" data-testid="public-receipt">
       <div className="space-y-2 rounded-xl border bg-card p-5 font-mono text-sm">
@@ -31,13 +32,20 @@ export default async function ReceiptPage({ params }: { params: Promise<{ token:
         <div className="font-semibold" data-testid="public-receipt-number">{s.kind === "REFUND" ? `${t("refund")} · ` : ""}{s.fiscalNumber ?? s.number}</div>
         <div>{new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(s.soldAt)} · {s.register.code}</div>
         {s.refundOf && <div>{t("refundOf", { n: s.refundOf.fiscalNumber ?? s.refundOf.number })}</div>}
-        {s.customerTaxId && <div>{t("customerTaxId")}: {s.customerTaxId}</div>}
+        {s.customerTaxId && <div data-testid="public-receipt-nif">{t("customerTaxId")}: {s.customerTaxId}</div>}
+        {s.customerName && <div>{tr("customer")}: {s.customerName}</div>}
         <hr className="border-dashed" />
+        <div className="flex gap-2 text-xs font-semibold"><span className="flex-1">{tr("colQty")}</span><span className="w-12 text-right">{tr("colVat")}</span><span className="w-20 text-right">{tr("colTotal")}</span></div>
         {s.lines.map((l) => (
-          <div key={l.id}><div className="break-words">{l.name}</div><div className="flex justify-between"><span>{l.byWeight ? `${Number(l.qty).toFixed(3)} kg` : l.qty.toString()} × {m(l.unitPrice)}{Number(l.discountPct) ? ` −${Number(l.discountPct)}%` : ""}</span><span>{m(l.gross)}</span></div></div>
+          <div key={l.id} data-testid="public-receipt-line"><div className="break-words">{l.name}</div><div className="flex gap-2"><span className="flex-1">{l.byWeight ? `${Number(l.qty).toFixed(3)} kg` : l.qty.toString()} × {m(l.unitPrice)}{Number(l.discountPct) ? ` −${Number(l.discountPct)}%` : ""}</span><span className="w-12 text-right" data-testid="public-receipt-line-vat">{pct(l.vatRate)}</span><span className="w-20 text-right">{m(l.gross)}</span></div><div className="text-right text-[11px] text-muted-foreground">{tr("lineVatAmount", { amount: m(l.vat) })}</div></div>
         ))}
         <hr className="border-dashed" />
-        {[...rates].map(([rate, v]) => <div key={rate} className="flex justify-between"><span>{t("vatAt", { rate })} ({m(v.net)})</span><span>{m(v.vat)}</span></div>)}
+        <div className="font-semibold">{tr("vatSummary")}</div>
+        <table className="w-full text-right text-xs" data-testid="public-receipt-vat"><thead><tr><th className="text-left font-semibold">{tr("colRate")}</th><th className="font-semibold">{tr("colBase")}</th><th className="font-semibold">{tr("colVat")}</th><th className="font-semibold">{tr("colTotal")}</th></tr></thead>
+          <tbody>{[...rates].sort((a, b) => Number(b[0]) - Number(a[0])).map(([rate, v]) => <tr key={rate}><td className="text-left">{pct(rate)}</td><td>{m(v.net)}</td><td>{m(v.vat)}</td><td>{m(v.gross)}</td></tr>)}</tbody></table>
+        <hr className="border-dashed" />
+        <div className="flex justify-between"><span>{tr("totalNet")}</span><span>{m(s.net)}</span></div>
+        <div className="flex justify-between"><span>{tr("totalVat")}</span><span>{m(s.vat)}</span></div>
         <div className="flex justify-between text-base font-bold"><span>{t("total")}</span><span data-testid="public-receipt-total">{m(s.gross)}</span></div>
         {s.payments.map((p) => <div key={p.id} className="flex justify-between"><span>{p.method}</span><span>{m(p.tendered ?? p.amount)}</span></div>)}
         {s.payments.some((p) => p.change && Number(p.change)) && <div className="flex justify-between"><span>{t("change")}</span><span>{m(s.payments.find((p) => p.change)?.change)}</span></div>}

@@ -62,3 +62,24 @@ export function checkCompanyVat(raw: string | null | undefined, country: { code:
 export function isIndividualPtNif(nif: string) {
   return /^[123]/.test(nif.replace(/\D/g, ""));
 }
+
+/** Portugal's "final consumer" NIF — the same as no number on a receipt. */
+export const PT_FINAL_CONSUMER = "999999990";
+
+const RECEIPT_PREFIX = /^(AT|BE|BG|CY|CZ|DE|DK|EE|EL|ES|FI|FR|HR|HU|IE|IT|LT|LU|LV|MT|NL|PL|PT|RO|SE|SI|SK|XI|CHE|NO|IS|LI)/;
+
+/**
+ * The customer's tax number on a till receipt (only when the customer asks). A Portuguese NIF is checked digit by
+ * digit; a number with an EU / Schengen VAT prefix is accepted for that country; others get a light format check so a
+ * typo is caught without refusing a valid foreign number. Returns the number normalised (no spaces or dots).
+ */
+export function checkTaxId(raw: string, country: string): { ok: true; value: string } | { ok: false; reason: "format" | "checksum" } {
+  const v = raw.toUpperCase().replace(/[\s.\-/]/g, "");
+  if (!v) return { ok: false, reason: "format" };
+  const prefix = v.match(RECEIPT_PREFIX)?.[1];
+  const cc = prefix ?? (country === "GR" ? "EL" : country);
+  const body = prefix ? v.slice(prefix.length) : v;
+  if (cc === "PT") return /^\d{9}$/.test(body) ? (isValidPtNif(body) ? { ok: true, value: prefix ? v : body } : { ok: false, reason: "checksum" }) : { ok: false, reason: "format" };
+  if (cc === "ES") return /^[0-9A-Z]\d{7}[0-9A-Z]$/.test(body) ? { ok: true, value: v } : { ok: false, reason: "format" };
+  return /^[0-9A-Z]{4,15}$/.test(body) && /\d/.test(body) ? { ok: true, value: v } : { ok: false, reason: "format" };
+}

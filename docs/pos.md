@@ -69,7 +69,17 @@ Suppliers sell from *Sell › Till (POS)* (`/vendor/pos`), wholesale customers f
   (checked on the device, so it also works offline).
 - **Payments**: cash (tendered, change), card (terminal reference), MB WAY (Portugal), loyalty points, other; split
   payments. Alcohol / tobacco asks for the **age check**.
-- The guest's **tax number** on the receipt; **e-mail** receipt; **QR** to the receipt page (`/r/<token>`, no login).
+- **VAT per item**: every receipt (printed, on screen, the QR page and the e-mail) shows each line's VAT rate (the QR
+  page and the sale also its VAT amount), a **VAT summary** per rate (base, VAT, total), *Total excl. VAT*, *Total VAT*
+  and the total — so the customer sees exactly which VAT each item carries.
+- **The customer's NIF, when the customer asks**: the cashier taps **Customer NIF** on the ticket (or types it when
+  paying) — with the customer's name if wanted. A Portuguese NIF is checked digit by digit as it is typed; other
+  countries' numbers (with or without their VAT prefix) get a format check; `999999990` (final consumer) means no NIF.
+  A wrong NIF can't be used online; a sale made offline keeps what was printed. **After paying**, the NIF can still
+  be added — on the receipt screen or the sale's page — while the receipt **isn't certified yet** (non-fiscal stage,
+  or not yet accepted by the provider); a certified receipt is refunded and sold again with the NIF. Audited
+  (`pos.sale.tax_id`).
+- **E-mail** receipt; **QR** to the receipt page (`/r/<token>`, no login).
 - **Tables / tabs** kept open across devices, **kitchen tickets** for new kitchen items.
 - **Shifts**: open with the cash float, **X report** any time, cash in / out (out needs a manager), open drawer,
   **close with the counted cash → Z report** (sales minus refunds by payment, VAT rate and cashier; cash expected,

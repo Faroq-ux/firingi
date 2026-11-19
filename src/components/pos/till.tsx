@@ -9,7 +9,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import QRCode from "qrcode";
-import { AlertTriangle, Banknote, ChefHat, CloudOff, CreditCard, LockKeyhole, Mail, Minus, Plus, Printer, RefreshCw, Scale, Search, ShoppingCart, Smartphone, Star, Trash2, User, UtensilsCrossed, Wallet, X } from "lucide-react";
+import { AlertTriangle, Banknote, ChefHat, CloudOff, CreditCard, LockKeyhole, IdCard, Mail, Minus, Plus, Printer, RefreshCw, Scale, Search, ShoppingCart, Smartphone, Star, Trash2, User, UtensilsCrossed, Wallet, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -19,15 +19,16 @@ import { CountUp } from "@/components/motion/count-up";
 import { LiveDot } from "@/components/motion/shapes";
 import { parseWeightLabel } from "@/lib/catch-weight";
 import { pointsFor, pointsValue, receiptNumber, saleTotals, settle } from "@/lib/pos";
+import { checkTaxId, PT_FINAL_CONSUMER } from "@/lib/tax-id";
 import { flush, kvGet, kvSet, newClientId, outbox, OUTBOX_EVENT, queue } from "@/lib/offline/store";
 import type { TillSnapshot } from "@/server/pos/service";
-import { cashMoveAction, closeShiftAction, deleteTicketAction, emailReceiptAction, openShiftAction, posSaleAction, saveTicketAction, shiftReportAction, tillSnapshotAction } from "@/server/actions/pos";
+import { cashMoveAction, closeShiftAction, deleteTicketAction, emailReceiptAction, openShiftAction, setSaleTaxIdAction, posSaleAction, saveTicketAction, shiftReportAction, tillSnapshotAction } from "@/server/actions/pos";
 
 type Item = TillSnapshot["items"][number];
 type Line = { key: string; itemId: string | null; name: string; qty: number; unitPrice: number; vatRate: number; discountPct: number; byWeight: boolean; restriction: string | null; kitchen: boolean };
 type Pay = { method: "CASH" | "CARD" | "MBWAY" | "POINTS" | "OTHER"; amount: number; tendered?: number; ref?: string };
 type Member = TillSnapshot["members"][number];
-type Done = { saleId: string | null; number: string; fiscalNumber: string | null; fiscalStatus: string; token: string | null; offline: boolean; lines: Line[]; payments: Pay[]; totals: ReturnType<typeof saleTotals>; change: string; at: string; member: Member | null; pointsEarned: number; taxId: string; email: string; table: string | null };
+type Done = { saleId: string | null; number: string; fiscalNumber: string | null; fiscalStatus: string; token: string | null; offline: boolean; lines: Line[]; payments: Pay[]; totals: ReturnType<typeof saleTotals>; change: string; at: string; member: Member | null; pointsEarned: number; taxId: string; custName: string; email: string; table: string | null };
 
 const snapKey = (portal: string) => `pos:snap:${portal}`;
 const nKey = (shiftId: string) => `pos:n:${shiftId}`;
@@ -36,17 +37,19 @@ const isNetwork = (e: unknown) => e instanceof TypeError || (e instanceof Error 
 
 export function Till({ portal, initial, locale }: { portal: "vendor" | "buy"; initial: TillSnapshot | null; locale: string }) {
   const t = useTranslations("pos");
+  const tr = useTranslations("posReceipt");
   const [snap, setSnap] = useState<TillSnapshot | null>(initial);
   const [online, setOnline] = useState(true);
   const [lines, setLines] = useState<Line[]>([]);
   const [saleDisc, setSaleDisc] = useState(0);
   const [member, setMember] = useState<Member | null>(null);
   const [taxId, setTaxId] = useState("");
+  const [custName, setCustName] = useState("");
   const [email, setEmail] = useState("");
   const [table, setTable] = useState<{ id: string | null; label: string; sentLines: number } | null>(null);
   const [cat, setCat] = useState<string>("");
   const [q, setQ] = useState("");
-  const [modal, setModal] = useState<null | { kind: "pay" } | { kind: "weigh"; item: Item } | { kind: "line"; key: string } | { kind: "pin"; reason: string; then: (userId: string) => void } | { kind: "receipt"; done: Done } | { kind: "report"; report: Record<string, unknown>; z: boolean } | { kind: "cash"; mode: "PAY_IN" | "PAY_OUT" | "NO_SALE" } | { kind: "close" } | { kind: "tables" } | { kind: "free" } | { kind: "guest" }>(null);
+  const [modal, setModal] = useState<null | { kind: "pay" } | { kind: "weigh"; item: Item } | { kind: "line"; key: string } | { kind: "pin"; reason: string; then: (userId: string) => void } | { kind: "receipt"; done: Done } | { kind: "report"; report: Record<string, unknown>; z: boolean } | { kind: "cash"; mode: "PAY_IN" | "PAY_OUT" | "NO_SALE" } | { kind: "close" } | { kind: "tables" } | { kind: "free" } | { kind: "guest" } | { kind: "nif" }>(null);
   const [approvedBy, setApprovedBy] = useState<string | null>(null);
   const [msg, setMsg] = useState<{ tone: "ok" | "err"; text: string } | null>(null);
   const [waiting, setWaiting] = useState(0);
@@ -118,7 +121,7 @@ export function Till({ portal, initial, locale }: { portal: "vendor" | "buy"; in
     if (m) { setMember(m); flash("ok", t("memberAdded", { name: m.name })); return; }
     flash("err", t("notFound", { code }));
   };
-  const clear = () => { setLines([]); setSaleDisc(0); setMember(null); setTaxId(""); setEmail(""); setTable(null); setApprovedBy(null); };
+  const clear = () => { setLines([]); setSaleDisc(0); setMember(null); setTaxId(""); setCustName(""); setEmail(""); setTable(null); setApprovedBy(null); };
   const ageNeeded = !!s?.features.ageCheck && lines.some((l) => l.restriction);
   const needsManager = Math.max(saleDisc, ...lines.map((l) => l.discountPct), 0) > (s?.discountLimit ?? 10) && !snap?.user.manager && !approvedBy;
 
@@ -142,10 +145,10 @@ export function Till({ portal, initial, locale }: { portal: "vendor" | "buy"; in
       clientId: newClientId(), registerId: snap.register.id, shiftId: snap.shift.id, n, soldAt: new Date().toISOString(),
       lines: lines.map((l) => ({ itemId: l.itemId, name: l.name, qty: l.qty, unitPrice: l.unitPrice, discountPct: l.discountPct, vatRate: l.vatRate })),
       saleDiscountPct: saleDisc, payments: pays.map((p) => ({ method: p.method, amount: p.amount, tendered: p.tendered ?? null, ref: p.ref ?? null })),
-      customerTaxId: taxId || null, customerEmail: email || null, memberId: member?.id ?? null, pointsUsed, ageChecked, tableRef: table?.label ?? null, approvedById: approvedBy, ticketId: table?.id ?? null,
+      customerTaxId: taxId || null, customerName: custName || null, customerEmail: email || null, memberId: member?.id ?? null, pointsUsed, ageChecked, tableRef: table?.label ?? null, approvedById: approvedBy, ticketId: table?.id ?? null,
     };
     const st = settle(totals.gross, pays, dec);
-    const base: Done = { saleId: null, number: receiptNumber(snap.register.code, snap.shift.number, n), fiscalNumber: null, fiscalStatus: s!.stage === "PROVIDER" ? "PENDING" : "NOT_REQUIRED", token: null, offline: true, lines, payments: pays, totals, change: st.change, at: input.soldAt, member, pointsEarned: member && s!.loyaltyOn ? pointsFor(Number(totals.gross) - pointsUsed * s!.pointValue, s!.pointsPerUnit) : 0, taxId, email, table: table?.label ?? null };
+    const base: Done = { saleId: null, number: receiptNumber(snap.register.code, snap.shift.number, n), fiscalNumber: null, fiscalStatus: s!.stage === "PROVIDER" ? "PENDING" : "NOT_REQUIRED", token: null, offline: true, lines, payments: pays, totals, change: st.change, at: input.soldAt, member, pointsEarned: member && s!.loyaltyOn ? pointsFor(Number(totals.gross) - pointsUsed * s!.pointValue, s!.pointsPerUnit) : 0, taxId, custName, email, table: table?.label ?? null };
     let done = base;
     try {
       if (!navigator.onLine) throw new TypeError("offline");
@@ -265,6 +268,7 @@ export function Till({ portal, initial, locale }: { portal: "vendor" | "buy"; in
           <ShoppingCart className="size-4" /><span className="font-semibold">{table ? table.label : t("ticket")}</span>
           {member && <Badge variant="secondary" className="ml-auto" data-testid="till-member"><Star className="mr-1 size-3" />{member.name} · {member.points}</Badge>}
           <span className={cn(!member && "ml-auto", "flex gap-1")}>
+            <Button size="sm" variant={taxId ? "secondary" : "ghost"} onClick={() => setModal({ kind: "nif" })} title={tr("nifButton")} data-testid="till-nif-btn"><IdCard className="size-4" /><span className={cn(!taxId && "sr-only")}>{taxId ? `${tr("nif")} ${taxId}` : tr("nifButton")}</span></Button>
             {s?.loyaltyOn && <Button size="sm" variant="ghost" onClick={() => setModal({ kind: "guest" })} aria-label={t("guest")} data-testid="till-guest-btn"><User className="size-4" /></Button>}
             {lines.length > 0 && <Button size="sm" variant="ghost" onClick={clear} aria-label={t("clear")} data-testid="till-clear"><Trash2 className="size-4" /></Button>}
           </span>
@@ -277,7 +281,7 @@ export function Till({ portal, initial, locale }: { portal: "vendor" | "buy"; in
               <li key={l.key} className="animate-page flex items-center gap-2 px-3 py-2 text-sm" data-testid="till-line">
                 <button className="min-w-0 flex-1 text-left" onClick={() => setModal({ kind: "line", key: l.key })}>
                   <span className="block break-words font-medium">{l.name}</span>
-                  <span className="text-xs text-muted-foreground">{l.byWeight ? `${l.qty.toFixed(3)} kg × ${money(l.unitPrice)}` : `${l.qty} × ${money(l.unitPrice)}`}{l.discountPct ? ` · −${l.discountPct}%` : ""}</span>
+                  <span className="text-xs text-muted-foreground">{l.byWeight ? `${l.qty.toFixed(3)} kg × ${money(l.unitPrice)}` : `${l.qty} × ${money(l.unitPrice)}`}{l.discountPct ? ` · −${l.discountPct}%` : ""} · {tr("lineVat", { rate: fmtRate(l.vatRate) })}</span>
                 </button>
                 {!l.byWeight && <span className="flex shrink-0 items-center gap-1">
                   <Button size="icon" variant="outline" className="size-7" onClick={() => setLines((ls) => ls.flatMap((x) => (x.key !== l.key ? [x] : x.qty > 1 ? [{ ...x, qty: x.qty - 1 }] : [])))} aria-label="−"><Minus className="size-3" /></Button>
@@ -312,6 +316,7 @@ export function Till({ portal, initial, locale }: { portal: "vendor" | "buy"; in
       })()}
       {modal?.kind === "pin" && <PinModal t={t} reason={modal.reason} companyId={snap.company.id} pins={snap.pins} onClose={() => setModal(null)} onOk={(u) => { const then = modal.then; setModal(null); then(u); }} />}
       {modal?.kind === "pay" && <PayModal t={t} snap={snap} gross={Number(totals.gross)} money={money} member={member} ageNeeded={ageNeeded} busy={busy} taxId={taxId} setTaxId={setTaxId} email={email} setEmail={setEmail} onClose={() => setModal(null)} onDone={(p, age) => void complete(p, age)} />}
+      {modal?.kind === "nif" && <NifModal tr={tr} country={snap.company.countryCode} taxId={taxId} name={custName} onSave={(v, n) => { setTaxId(v); setCustName(n); setModal(null); }} onClose={() => setModal(null)} />}
       {modal?.kind === "receipt" && <ReceiptModal t={t} snap={snap} done={modal.done} money={money} locale={locale} online={online} onClose={() => setModal(null)} />}
       {modal?.kind === "report" && <ReportModal t={t} report={modal.report} money={money} z={modal.z} onClose={() => setModal(null)} />}
       {modal?.kind === "cash" && snap.shift && <CashModal t={t} shiftId={snap.shift.id} manager={snap.user.manager} askManager={askManager} onClose={() => setModal(null)} onDone={(m) => { setModal(null); flash("ok", m); }} />}
@@ -409,6 +414,7 @@ function PayModal({ t, snap, gross, money, member, ageNeeded, busy, taxId, setTa
   t: T; snap: TillSnapshot; gross: number; money: (n: number | string) => string; member: Member | null; ageNeeded: boolean; busy: boolean;
   taxId: string; setTaxId: (v: string) => void; email: string; setEmail: (v: string) => void; onDone: (p: Pay[], age: boolean) => void; onClose: () => void;
 }) {
+  const nifBad = !!taxId.trim() && !checkTaxId(taxId, snap.company.countryCode).ok;
   const s = snap.settings;
   const [pays, setPays] = useState<Pay[]>([]);
   const [entry, setEntry] = useState("");
@@ -456,17 +462,19 @@ function PayModal({ t, snap, gross, money, member, ageNeeded, busy, taxId, setTa
             {pays.map((p, i) => <li key={i} className="flex items-center justify-between gap-2 p-2"><span>{p.method === "CASH" ? `${t("payCash")} (${money(p.tendered ?? p.amount)})` : p.method === "POINTS" ? t("payPointsShort") : p.method}</span><span className="flex items-center gap-1 tabular-nums">{money(p.amount)}<Button size="icon" variant="ghost" className="size-7" onClick={() => setPays((x) => x.filter((_, j) => j !== i))} aria-label={t("remove")}><X className="size-3" /></Button></span></li>)}
           </ul>
           {Number(st.change) > 0 && <p key={st.change} className="animate-pop rounded-lg bg-[color:var(--success,#16a34a)]/10 p-3 text-lg font-semibold" data-testid="till-change">{t("change")}: {money(st.change)}</p>}
-          <div><Label htmlFor="tax">{t("taxId")}</Label><Input id="tax" value={taxId} onChange={(e) => setTaxId(e.target.value)} data-testid="till-taxid" /></div>
+          <NifField country={snap.company.countryCode} value={taxId} onChange={setTaxId} label={t("taxId")} />
           {s.emailReceipts && s.features.emailReceipt && <div><Label htmlFor="em">{t("receiptEmail")}</Label><Input id="em" type="email" value={email} onChange={(e) => setEmail(e.target.value)} data-testid="till-email" /></div>}
           {ageNeeded && <label className="flex items-start gap-2 rounded-lg border border-amber-500/50 bg-amber-500/10 p-2"><input type="checkbox" checked={age} onChange={(e) => setAge(e.target.checked)} data-testid="till-age" /> <span>{t("ageCheck")}</span></label>}
-          <Button className="h-12 w-full text-base" disabled={due > 0 || busy || (ageNeeded && !age)} onClick={() => onDone(pays, age)} data-testid="till-complete">{busy ? <RefreshCw className="size-4 animate-spin" /> : null}{t("complete")}</Button>
+          <Button className="h-12 w-full text-base" disabled={due > 0 || busy || nifBad || (ageNeeded && !age)} onClick={() => onDone(pays, age)} data-testid="till-complete">{busy ? <RefreshCw className="size-4 animate-spin" /> : null}{t("complete")}</Button>
         </div>
       </div>
     </Modal>
   );
 }
 
-function ReceiptModal({ t, snap, done, money, locale, online, onClose }: { t: T; snap: TillSnapshot; done: Done; money: (n: number | string) => string; locale: string; online: boolean; onClose: () => void }) {
+function ReceiptModal({ t, snap, done: initialDone, money, locale, online, onClose }: { t: T; snap: TillSnapshot; done: Done; money: (n: number | string) => string; locale: string; online: boolean; onClose: () => void }) {
+  const tr = useTranslations("posReceipt");
+  const [done, setDone] = useState(initialDone);
   const [qr, setQr] = useState<string | null>(null);
   const [mail, setMail] = useState(done.email);
   const [sent, setSent] = useState<string | null>(null);
@@ -490,13 +498,20 @@ function ReceiptModal({ t, snap, done, money, locale, online, onClose }: { t: T;
         <div style={{ borderTop: "1px dashed #000", margin: "6px 0" }} />
         <div>{done.fiscalNumber ?? done.number}</div>
         <div>{new Date(done.at).toLocaleString(locale)}{done.table ? ` · ${done.table}` : ""}</div>
-        {done.taxId && <div>{t("customerTaxId")}: {done.taxId}</div>}
+        {done.taxId && <div data-testid="till-receipt-nif">{t("customerTaxId")}: {done.taxId}</div>}
+        {done.custName && <div>{tr("customer")}: {done.custName}</div>}
         <div style={{ borderTop: "1px dashed #000", margin: "6px 0" }} />
+        <div style={{ display: "flex", gap: 4, fontWeight: 700 }}><span style={{ flex: 1 }}>{tr("colQty")}</span><span style={{ width: 34, textAlign: "right" }}>{tr("colVat")}</span><span style={{ width: 72, textAlign: "right" }}>{tr("colTotal")}</span></div>
         {done.lines.map((l, i) => (
-          <div key={i}><div>{l.name}</div><div style={{ display: "flex", justifyContent: "space-between" }}><span>{l.byWeight ? `${l.qty.toFixed(3)}kg` : l.qty} x {money(l.unitPrice)}{l.discountPct ? ` -${l.discountPct}%` : ""}</span><span>{money(done.totals.lines[i].gross)}</span></div></div>
+          <div key={i} data-testid="till-receipt-line"><div>{l.name}</div><div style={{ display: "flex", gap: 4 }}><span style={{ flex: 1 }}>{l.byWeight ? `${l.qty.toFixed(3)}kg` : l.qty} x {money(l.unitPrice)}{l.discountPct ? ` -${l.discountPct}%` : ""}</span><span style={{ width: 34, textAlign: "right" }} data-testid="till-receipt-line-vat">{fmtRate(l.vatRate)}%</span><span style={{ width: 72, textAlign: "right" }}>{money(done.totals.lines[i].gross)}</span></div></div>
         ))}
         <div style={{ borderTop: "1px dashed #000", margin: "6px 0" }} />
-        {done.totals.byRate.map((r) => <div key={r.rate} style={{ display: "flex", justifyContent: "space-between" }}><span>{t("vatAt", { rate: r.rate })} ({money(r.net)})</span><span>{money(r.vat)}</span></div>)}
+        <div style={{ fontWeight: 700 }}>{tr("vatSummary")}</div>
+        <div style={{ display: "flex", gap: 4 }}><span style={{ width: 40 }}>{tr("colRate")}</span><span style={{ flex: 1, textAlign: "right" }}>{tr("colBase")}</span><span style={{ flex: 1, textAlign: "right" }}>{tr("colVat")}</span><span style={{ flex: 1, textAlign: "right" }}>{tr("colTotal")}</span></div>
+        {done.totals.byRate.map((r) => <div key={r.rate} style={{ display: "flex", gap: 4 }} data-testid="till-receipt-vat-row"><span style={{ width: 40 }}>{fmtRate(r.rate)}%</span><span style={{ flex: 1, textAlign: "right" }}>{money(r.net)}</span><span style={{ flex: 1, textAlign: "right" }}>{money(r.vat)}</span><span style={{ flex: 1, textAlign: "right" }}>{money(r.gross)}</span></div>)}
+        <div style={{ borderTop: "1px dashed #000", margin: "6px 0" }} />
+        <div style={{ display: "flex", justifyContent: "space-between" }}><span>{tr("totalNet")}</span><span>{money(done.totals.net)}</span></div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}><span>{tr("totalVat")}</span><span data-testid="till-receipt-vat-total">{money(done.totals.vat)}</span></div>
         <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 700, fontSize: 14 }}><span>{t("total")}</span><span data-testid="till-receipt-total">{money(done.totals.gross)}</span></div>
         {done.payments.map((p, i) => <div key={i} style={{ display: "flex", justifyContent: "space-between" }}><span>{p.method === "CASH" ? t("payCash") : p.method === "POINTS" ? t("payPointsShort") : p.method}</span><span>{money(p.method === "CASH" ? p.tendered ?? p.amount : p.amount)}</span></div>)}
         {Number(done.change) > 0 && <div style={{ display: "flex", justifyContent: "space-between" }}><span>{t("change")}</span><span>{money(done.change)}</span></div>}
@@ -508,6 +523,7 @@ function ReceiptModal({ t, snap, done, money, locale, online, onClose }: { t: T;
         {s.receiptFooter && <div style={{ textAlign: "center", whiteSpace: "pre-wrap" }}>{s.receiptFooter}</div>}
       </div>
       {done.offline && <p className="mt-2 text-xs text-muted-foreground" data-testid="till-receipt-offline">{t("savedOffline")}</p>}
+      {!done.taxId && <AddNifAfter tr={tr} done={done} online={online} country={snap.company.countryCode} onAdded={(taxId, custName) => setDone({ ...done, taxId, custName })} />}
       <div className="mt-3 flex flex-wrap gap-2">
         <Button onClick={print} data-testid="till-print"><Printer className="size-4" /> {t("print")}</Button>
         {done.saleId && online && s.features.emailReceipt && <>
@@ -612,5 +628,60 @@ function GuestModal({ t, members, onPick, onClose }: { t: T; members: Member[]; 
       <ul className="mt-2 divide-y">{list.map((m) => <li key={m.id}><button className="flex w-full justify-between gap-2 py-2 text-left text-sm" onClick={() => onPick(m)} data-testid="till-guest-row"><span>{m.name} <span className="text-xs text-muted-foreground">{m.code}</span></span><span>★ {m.points}</span></button></li>)}</ul>
       {list.length === 0 && <p className="mt-2 text-sm text-muted-foreground">{t("guestNone")}</p>}
     </Modal>
+  );
+}
+
+const fmtRate = (r: number | string) => String(Number(r)).replace(".", ",");
+type TR = ReturnType<typeof useTranslations<"posReceipt">>;
+
+/** The customer's NIF, checked as it is typed (Portugal: the check digit); empty = no NIF. */
+function NifField({ country, value, onChange, label, testId = "till-taxid" }: { country: string; value: string; onChange: (v: string) => void; label: string; testId?: string }) {
+  const tr = useTranslations("posReceipt");
+  const c = value.trim() ? checkTaxId(value, country) : null;
+  return (
+    <div>
+      <Label htmlFor={testId}>{label}</Label>
+      <Input id={testId} inputMode="text" autoComplete="off" value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={c ? !c.ok : undefined} data-testid={testId} />
+      {c && !c.ok && <p className="mt-1 text-xs text-destructive" role="alert" data-testid={`${testId}-error`}>{c.reason === "checksum" ? tr("nifInvalid") : tr("nifFormat")}</p>}
+      {c?.ok && c.value === PT_FINAL_CONSUMER && <p className="mt-1 text-xs text-muted-foreground">{tr("nifFinalConsumer")}</p>}
+    </div>
+  );
+}
+
+function NifModal({ tr, country, taxId, name, onSave, onClose }: { tr: TR; country: string; taxId: string; name: string; onSave: (taxId: string, name: string) => void; onClose: () => void }) {
+  const [v, setV] = useState(taxId);
+  const [n, setN] = useState(name);
+  const c = v.trim() ? checkTaxId(v, country) : null;
+  return (
+    <Modal title={tr("nifTitle")} onClose={onClose} testId="till-nif">
+      <p className="mb-2 text-sm text-muted-foreground">{tr("nifHint")}</p>
+      <div className="space-y-2">
+        <NifField country={country} value={v} onChange={setV} label={tr("nif")} testId="till-nif-input" />
+        <div><Label htmlFor="till-nif-name">{tr("nifName")}</Label><Input id="till-nif-name" value={n} onChange={(e) => setN(e.target.value)} data-testid="till-nif-name" /></div>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Button disabled={!c?.ok} onClick={() => c?.ok && onSave(c.value === PT_FINAL_CONSUMER ? "" : c.value, n.trim())} data-testid="till-nif-save"><IdCard className="size-4" /> {tr("nifSave")}</Button>
+        {taxId && <Button variant="outline" onClick={() => onSave("", "")} data-testid="till-nif-clear">{tr("nifClear")}</Button>}
+      </div>
+    </Modal>
+  );
+}
+
+/** The customer asks for their NIF after paying: added while the receipt isn't certified yet (online only). */
+function AddNifAfter({ tr, done, online, country, onAdded }: { tr: TR; done: Done; online: boolean; country: string; onAdded: (taxId: string, name: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const [v, setV] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  if (done.fiscalNumber || done.fiscalStatus === "DONE") return <p className="mt-2 text-xs text-muted-foreground" data-testid="till-nif-locked">{tr("nifLocked")}</p>;
+  if (!done.saleId || !online) return <p className="mt-2 text-xs text-muted-foreground">{tr("nifOffline")}</p>;
+  if (!open) return <Button variant="ghost" size="sm" className="mt-2" onClick={() => setOpen(true)} data-testid="till-nif-after"><IdCard className="size-4" /> {tr("nifAdd")}</Button>;
+  const c = v.trim() ? checkTaxId(v, country) : null;
+  return (
+    <div className="mt-2 flex flex-wrap items-end gap-2 rounded-lg border p-2" data-testid="till-nif-after-form">
+      <div className="min-w-0 flex-1"><NifField country={country} value={v} onChange={setV} label={tr("nif")} testId="till-nif-after-input" /></div>
+      <Button disabled={!c?.ok || busy} onClick={async () => { setBusy(true); setErr(null); const r = await setSaleTaxIdAction({ saleId: done.saleId!, taxId: v }).catch(() => null); setBusy(false); if (r?.ok) { const d = r.data as { customerTaxId: string; customerName: string | null }; onAdded(d.customerTaxId, d.customerName ?? ""); } else setErr(r?.error ?? tr("nifOffline")); }} data-testid="till-nif-after-save">{busy ? <RefreshCw className="size-4 animate-spin" /> : null}{tr("nifSave")}</Button>
+      {err && <p className="w-full text-xs text-destructive" role="alert">{err}</p>}
+    </div>
   );
 }
