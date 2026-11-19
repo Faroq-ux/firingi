@@ -858,7 +858,10 @@
     "Weighing": "Cântărire",
     "Temperature": "Temperatură",
     "Cold Chain": "Lanț Frigorific",
-    "Receiving Log": "Registru de Recepție"
+    "Receiving Log": "Registru de Recepție",
+    "Licensed Goods": "Produse cu licență",
+    "Excise Report": "Raport de accize",
+    "Licences": "Licențe"
   },
   "delivery": {
     "title": "Livrare",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Echipament scadent: {equipment}",
       "body": "Scadent sau restant: {tasks}. Înregistrați-l în Lanț frigorific."
+    },
+    "excise_licence_review": {
+      "title": "Licență de verificat: {company}",
+      "body": "{company} a încărcat „{licence}”. Verificați-o în Clienți › Licențe."
+    },
+    "excise_licence_decided": {
+      "title": "Licența dvs.: {status}",
+      "body": "„{licence}” — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Licența dvs. expiră la {date}",
+      "body": "„{licence}” expiră în {days} zile. Încărcați-o pe cea nouă în Companie › Licențe pentru a putea comanda în continuare."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Anulată",
       "RETURNED": "Returnată",
       "EXCEPTION": "Problemă"
-    }
+    },
+    "licenceCheck": "Am verificat licența / actul clientului (alcool, tutun)"
   },
   "returnables": {
     "emptiesTitle": "Ambalaje și garanții",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Echipamente restante",
     "loadingTitle": "Temperatura la încărcare",
     "breaches30": "Încălcări ale lanțului frigorific la comenzile dvs. (30 de zile): {n}"
+  },
+  "excise": {
+    "productsTitle": "Produse cu licență",
+    "productsIntro": "Alcoolul, tutunul, produsele de vaping și băuturile îndulcite sunt supuse accizelor. Indicați pentru fiecare produs datele de care are nevoie FIRINGI și dacă acciza este deja inclusă în prețul dvs.",
+    "colProduct": "Produs",
+    "colCategory": "Categorie de accize",
+    "fromCategory": "Din categoria: {cat}",
+    "abv": "Alcool (% vol)",
+    "volumeL": "Litri pe unitate",
+    "exciseUnits": "Bucăți pe unitate",
+    "netKg": "Tutun (kg pe unitate)",
+    "sugarGPerL": "Zahăr (g pe litru)",
+    "dutyMode": "Acciză",
+    "mode": {
+      "PAID": "În preț",
+      "ADDED": "Adăugată de FIRINGI"
+    },
+    "countries": "Doar către aceste țări",
+    "countriesHint": "Coduri de țară, ex. PT ES — gol = toate",
+    "save": "Salvează",
+    "saved": "Salvat",
+    "missing": "Lipsește: {fields}",
+    "dutyUnit": "Acciză pe unitate: {amount}",
+    "noRate": "Încă nu există cotă pentru țara dvs.",
+    "noProducts": "Niciunul dintre produsele dvs. nu necesită licență sau accize.",
+    "calcOff": "Prețurile dvs. trebuie să includă acciza.",
+    "authTitle": "Autorizația dvs. de accize",
+    "authIntro": "Pentru a vinde alcool, tutun sau produse de vaping, mențineți la zi autorizația de accize (antrepozit fiscal sau destinatar înregistrat).",
+    "authLink": "Încărcați-o în Companie › Conformitate",
+    "field": {
+      "abv": "% alcool",
+      "volumeL": "litri",
+      "exciseUnits": "bucăți",
+      "netKg": "kg",
+      "sugarGPerL": "zahăr"
+    },
+    "kind": {
+      "ALCOHOL": "Alcool",
+      "TOBACCO": "Tutun",
+      "VAPING": "Vaping",
+      "SUGAR": "Băuturi îndulcite"
+    },
+    "reportTitle": "Raport de accize",
+    "reportIntro": "Produse cu licență livrate în fiecare lună: cantități, litri de alcool pur, bucăți, kg și acciză — pentru declarațiile dvs. de accize.",
+    "month": "Lună",
+    "downloadPdf": "Descarcă PDF",
+    "downloadCsv": "Descarcă CSV",
+    "colCountry": "Țară",
+    "colUnits": "Unități",
+    "colLitres": "Litri",
+    "colLpa": "Litri de alcool pur",
+    "colPieces": "Bucăți",
+    "colKg": "kg",
+    "colDutyAdded": "Acciză adăugată",
+    "colDutyIncluded": "Acciză în prețuri",
+    "colOrders": "Comenzi",
+    "noRows": "Nimic livrat luna aceasta.",
+    "total": "Total",
+    "licencesTitle": "Licențe",
+    "licencesIntro": "Pentru a cumpăra alcool, tutun sau produse de vaping aveți nevoie de o licență valabilă. Încărcați-o aici și FIRINGI o va verifica.",
+    "covered": "Acoperit",
+    "notCovered": "Lipsește",
+    "notNeeded": "În țara dvs. nu este necesară o licență.",
+    "warnOnly": "Fără licență puteți comanda în continuare, dar FIRINGI o poate solicita.",
+    "blockInfo": "Fără o licență valabilă, aceste produse sunt ascunse și nu pot fi comandate.",
+    "upload": "Încarcă licența",
+    "licenceType": "Licență",
+    "number": "Număr licență",
+    "issuer": "Emisă de",
+    "issuedOn": "Emisă la",
+    "expiresOn": "Valabilă până la",
+    "file": "Fișier (PDF sau fotografie)",
+    "send": "Trimite spre verificare",
+    "sent": "Trimisă — FIRINGI o va verifica",
+    "withdraw": "Retrage",
+    "yourLicences": "Licențele dvs.",
+    "none": "Încă nu există licențe.",
+    "status": {
+      "PENDING": "Așteaptă FIRINGI",
+      "APPROVED": "Aprobată",
+      "REJECTED": "Respinsă",
+      "EXPIRED": "Expirată",
+      "REVOKED": "Revocată"
+    },
+    "superseded": "Înlocuită",
+    "daysLeft": "Mai sunt {days} zile",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fișier",
+    "dutyAdded": "+ {amount} acciză",
+    "dutyIncluded": "incl. {amount} acciză",
+    "licenceWarn": "Nu aveți licență pentru acest produs",
+    "restricted": "Nu se vinde în țara dvs.",
+    "maxPerOrder": "Maximum {n} pe comandă",
+    "cartTitle": "Acciză",
+    "cartAdded": "Adăugată de FIRINGI (+ TVA)",
+    "cartIncluded": "Deja în prețuri",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Adaugă licență",
+    "issue": {
+      "LICENCE": "Aveți nevoie de o licență aprobată pentru a cumpăra {category}.",
+      "COUNTRY": "{category}: acest produs nu poate fi vândut în țara dvs.",
+      "QTY_CAP": "{category}: maximum {max} pe comandă."
+    },
+    "orderTitle": "Produse cu licență și accize",
+    "perUnit": "pe unitate",
+    "checked": "Licență / act verificate de șofer: {by} · {date}",
+    "notChecked": "Licența / actul încă neverificate",
+    "docTitle": "Document de însoțire",
+    "docType": "Tip",
+    "docRef": "Referință",
+    "doc": {
+      "E_DA": "e-DA",
+      "E_SAD": "e-DAS",
+      "SAAD": "DAS",
+      "DSA": "Document simplificat",
+      "OTHER": "Altul"
+    },
+    "noDoc": "Niciun document înregistrat",
+    "checkLicence": "Am verificat licența / actul clientului (alcool, tutun)"
   }
 }

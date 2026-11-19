@@ -46,7 +46,7 @@ async function previousHash(tx: Tx, seriesId: string) {
   return (await tx.invoice.findFirst({ where: { seriesId, status: { not: "DRAFT" } }, orderBy: { number: "desc" }, select: { hash: true } }))?.hash ?? null;
 }
 
-type DraftLine = { orderLineId?: string | null; description: string; qty: Decimal; unitPriceNet: Decimal; discountNet?: Decimal; taxRate: Decimal; saftTaxCode?: string | null; lineNet: Decimal; lineVat: Decimal };
+type DraftLine = { orderLineId?: string | null; description: string; qty: Decimal; unitPriceNet: Decimal; discountNet?: Decimal; taxRate: Decimal; saftTaxCode?: string | null; lineNet: Decimal; lineVat: Decimal; exciseNet?: Decimal };
 
 /** Create the document as DRAFT, add lines + tax summary, then issue it (number, hash, ATCUD). */
 async function issueDocument(tx: Tx, d: {
@@ -66,7 +66,7 @@ async function issueDocument(tx: Tx, d: {
   await tx.invoiceLine.createMany({
     data: d.lines.map((l, i) => ({
       invoiceId: draft.id, orderLineId: l.orderLineId ?? null, position: i + 1, description: l.description, qty: l.qty.toFixed(3), unitPriceNet: l.unitPriceNet.toFixed(4),
-      discountNet: (l.discountNet ?? new Decimal(0)).toFixed(2), taxRate: l.taxRate.toFixed(3), saftTaxCode: l.saftTaxCode ?? null, lineNet: l.lineNet.toFixed(2), lineVat: l.lineVat.toFixed(2),
+      discountNet: (l.discountNet ?? new Decimal(0)).toFixed(2), taxRate: l.taxRate.toFixed(3), saftTaxCode: l.saftTaxCode ?? null, lineNet: l.lineNet.toFixed(2), lineVat: l.lineVat.toFixed(2), exciseNet: (l.exciseNet ?? new Decimal(0)).toFixed(2),
     })),
   });
   const byRate = new Map<string, { base: Decimal; vat: Decimal }>();
@@ -171,6 +171,10 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     crossBorder: order.seller.countryId !== le.countryId, goodsRates: order.lines.map((l) => Number(l.taxRate)), userId: actorUserId,
   });
   lines.push(...deposits.invoiceLines);
+  // Phase 43: excise — the duty already in each goods line (shown), duty FIRINGI adds (own lines, VAT at the goods' rate)
+  const excise = await (await import("@/server/excise/service")).invoiceExcise(tx, orderId, { crossBorder: order.seller.countryId !== le.countryId });
+  for (const l of lines) if (l.orderLineId && excise.included.has(l.orderLineId)) l.exciseNet = excise.included.get(l.orderLineId);
+  lines.push(...excise.invoiceLines);
   const buyerAddr = await billingAddress(tx, order.buyerCompanyId);
   const invoice = await issueDocument(tx, {
     legalEntityId: le.id, countryId: le.countryId, docType: "INVOICE", taxRegime: "DOMESTIC", recipientCompanyId: order.buyerCompanyId, orderId,
@@ -208,6 +212,7 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     });
   }
   stLines.push(...deposits.statementLines); // deposits pass through: the supplier charges FIRINGI the same
+  stLines.push(...excise.statementLines); // added excise passes through: the supplier pays the duty
   const expNet = stLines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
   const expVat = stLines.reduce((a, l) => a.plus(l.vat), new Decimal(0));
   const year = new Date().getFullYear();
@@ -232,9 +237,21 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
   if (inv.docType === "CREDIT_NOTE" || inv.status === "DRAFT" || inv.status === "CREDITED") throw new Error("NOT_CREDITABLE");
   const credited = new Map<string, Decimal>(); // invoice line position → qty already credited
   for (const cn of inv.creditNotes) for (const l of cn.lines) if (!l.description.startsWith(REBATE_PREFIX)) credited.set(l.description, (credited.get(l.description) ?? new Decimal(0)).plus(l.qty.toString()));
-  const wanted = sel.lines === "ALL" ? inv.lines.map((l) => ({ invoiceLineId: l.id, qty: Number(l.qty) - Number(credited.get(l.description) ?? 0) })) : sel.lines;
+  let wanted = sel.lines === "ALL" ? inv.lines.map((l) => ({ invoiceLineId: l.id, qty: Number(l.qty) - Number(credited.get(l.description) ?? 0) })) : sel.lines;
+  // Phase 43: crediting goods also credits the excise FIRINGI added on them (same order line, same share)
+  if (sel.lines !== "ALL") {
+    const extra: { invoiceLineId: string; qty: number }[] = [];
+    for (const w of wanted) {
+      const g = inv.lines.find((x) => x.id === w.invoiceLineId);
+      if (!g?.orderLineId || g.description.startsWith(EXCISE_PREFIX)) continue;
+      const ex = inv.lines.find((x) => x.orderLineId === g.orderLineId && x.description.startsWith(EXCISE_PREFIX));
+      if (ex && !wanted.some((x) => x.invoiceLineId === ex.id)) extra.push({ invoiceLineId: ex.id, qty: Math.min(w.qty, Number(ex.qty) - Number(credited.get(ex.description) ?? 0)) });
+    }
+    wanted = [...wanted, ...extra];
+  }
   const lines: DraftLine[] = [];
   const vendorLines: { orderLineId: string; qty: number }[] = [];
+  const vendorExcise: { orderLineId: string; qty: number; net: Decimal; description: string; unit: string }[] = [];
   for (const w of wanted) {
     const l = inv.lines.find((x) => x.id === w.invoiceLineId);
     if (!l) throw new Error("UNKNOWN_LINE");
@@ -243,8 +260,9 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
     if (remaining.lt(w.qty)) throw new Error(`QTY_TOO_HIGH:${l.description}`);
     const f = new Decimal(w.qty).div(l.qty.toString());
     lines.push({ orderLineId: l.orderLineId, description: l.description, qty: new Decimal(w.qty), unitPriceNet: new Decimal(l.unitPriceNet.toString()), discountNet: r2(new Decimal(l.discountNet.toString()).mul(f)),
-      taxRate: new Decimal(l.taxRate.toString()), lineNet: r2(new Decimal(l.lineNet.toString()).mul(f)), lineVat: r2(new Decimal(l.lineVat.toString()).mul(f)) });
-    if (l.orderLineId) vendorLines.push({ orderLineId: l.orderLineId, qty: w.qty });
+      taxRate: new Decimal(l.taxRate.toString()), lineNet: r2(new Decimal(l.lineNet.toString()).mul(f)), lineVat: r2(new Decimal(l.lineVat.toString()).mul(f)), exciseNet: r2(new Decimal(l.exciseNet.toString()).mul(f)) });
+    if (l.orderLineId && l.description.startsWith(EXCISE_PREFIX)) vendorExcise.push({ orderLineId: l.orderLineId, qty: w.qty, net: r2(new Decimal(l.lineNet.toString()).mul(f)), description: l.description, unit: l.unitPriceNet.toString() });
+    else if (l.orderLineId) vendorLines.push({ orderLineId: l.orderLineId, qty: w.qty });
   }
   if (!lines.length) throw new Error("NOTHING_TO_CREDIT");
   const cn = await issueDocument(tx, {
@@ -260,7 +278,7 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
 
   let creditStatementId: string | null = null;
   // Vendor side: credit statement for the goods returned (not when FIRINGI carries the cost, e.g. a claim for a FIRINGI delivery fault).
-  if (inv.order && vendorLines.length && sel.chargeVendor !== false) {
+  if (inv.order && (vendorLines.length || vendorExcise.length) && sel.chargeVendor !== false) {
     const stLines = vendorLines.map((v) => {
       const ol = inv.order!.lines.find((x) => x.id === v.orderLineId)!;
       const delivered = ol.qtyDelivered ?? ol.qtyConfirmed ?? ol.qtyOrdered;
@@ -268,6 +286,12 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
       const st = inv.taxRegime === "DOMESTIC" && inv.order!.seller.countryId === inv.order!.countryId ? new Decimal(ol.taxRate.toString()) : new Decimal(0);
       return { orderLineId: ol.id, sku: ol.sku, description: `${pick(ol.productName)} — ${pick(ol.packagingName)}`, qty: v.qty, unitCostNet: ol.vendorUnitCostNet.toString(), lineNet: net.toFixed(2), taxRate: st.toFixed(3), vat: r2(net.mul(st).div(100)).toFixed(2) };
     });
+    // Phase 43: the excise passed on to the supplier comes back the same way
+    for (const v of vendorExcise) {
+      const ol = inv.order!.lines.find((x) => x.id === v.orderLineId)!;
+      const st = inv.taxRegime === "DOMESTIC" && inv.order!.seller.countryId === inv.order!.countryId ? new Decimal(ol.taxRate.toString()) : new Decimal(0);
+      stLines.push({ orderLineId: ol.id, sku: `EXCISE-${ol.sku}`, description: v.description, qty: v.qty, unitCostNet: v.unit, lineNet: v.net.toFixed(2), taxRate: st.toFixed(3), vat: r2(v.net.mul(st).div(100)).toFixed(2) });
+    }
     const n = stLines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));
     const v = stLines.reduce((a, l) => a.plus(l.vat), new Decimal(0));
     const year = new Date().getFullYear();
@@ -284,6 +308,9 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
   return Object.assign(cn, { creditStatementId });
 }
 
+
+/** Phase 43: invoice lines of excise duty FIRINGI adds start with this. */
+export const EXCISE_PREFIX = "Imposto especial de consumo";
 
 /** Lines of loyalty rebate credit notes start with this (they credit money, not goods). */
 export const REBATE_PREFIX = "Desconto por pontos de fidelização";

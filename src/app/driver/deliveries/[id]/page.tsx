@@ -17,6 +17,8 @@ import { cwLabels } from "@/components/catchweight/labels";
 import { stopClasses } from "@/server/coldchain/service";
 import { ccLabels } from "@/components/coldchain/labels";
 import { RecordTempsForm } from "@/components/coldchain/client";
+import { stopCheck } from "@/server/excise/service";
+import { exLabels } from "@/components/excise/labels";
 
 export const metadata = { title: "Delivery" };
 
@@ -37,6 +39,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const open = !["DELIVERED", "FAILED", "CANCELLED", "RETURNED"].includes(d.status);
   const cc = open ? await ccLabels() : null;
   const cold = cc ? await stopClasses(d.order.id, cc.locale) : null;
+  const licence = (await stopCheck(d.order.id)).required ? (await exLabels()).l.checkLicence : undefined; // Phase 43
   return (
     <div className="mx-auto max-w-xl space-y-4">
       <Link href="/driver/deliveries/today" className="text-sm text-primary hover:underline">← {t("back")}</Link>
@@ -44,7 +47,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <Card><CardHeader><CardTitle>{t("products")}</CardTitle></CardHeader><CardContent><DriverItems d={d} /></CardContent></Card>
       {cold && cc && cold.record.loading && cold.classes.length > 0 && <RecordTempsForm l={cc.l} mode="LOADING" targetId={d.id} classes={cold.classes} />}
       {driverActions.includes("DELIVER") && (
-        <Card><CardHeader><CardTitle>{t("proof")}</CardTitle></CardHeader><CardContent><CompleteDeliveryForm deliveryId={d.id} empties={empties} emptiesLabels={rl?.l} weights={weights?.lines.length ? weights : undefined} weightLabels={cl?.l} locale={cl?.locale} cold={cold && cold.record.handover && cold.classes.length ? cold : undefined} coldLabels={cc?.l} /></CardContent></Card>
+        <Card><CardHeader><CardTitle>{t("proof")}</CardTitle></CardHeader><CardContent><CompleteDeliveryForm deliveryId={d.id} empties={empties} emptiesLabels={rl?.l} weights={weights?.lines.length ? weights : undefined} weightLabels={cl?.l} locale={cl?.locale} cold={cold && cold.record.handover && cold.classes.length ? cold : undefined} coldLabels={cc?.l} licenceCheck={licence} /></CardContent></Card>
       )}
       {driverActions.includes("FAIL") && <FailDeliveryForm deliveryId={d.id} reasons={[...FAILURE_REASONS]} />}
       <div className="space-y-3 text-sm"><DeliveryEvidence d={d} /></div>

@@ -263,7 +263,7 @@ async function moveAsDriver(ctx: Ctx, id: string, to: DeliveryStatus, effect?: (
 export const pickUp = (ctx: Ctx, id: string) => moveAsDriver(ctx, id, "PICKED_UP");
 export const startDelivery = (ctx: Ctx, id: string) => moveAsDriver(ctx, id, "OUT_FOR_DELIVERY");
 
-export async function completeDelivery(ctx: Ctx, id: string, input: Where & { recipientName: string; signature?: File | null; photos?: File[]; note?: string | null; empties?: Record<string, number> | null; weights?: Record<string, number> | null; acceptOver?: boolean; temps?: Record<string, number> | null; refuseClasses?: string[] | null }) {
+export async function completeDelivery(ctx: Ctx, id: string, input: Where & { recipientName: string; signature?: File | null; photos?: File[]; note?: string | null; empties?: Record<string, number> | null; weights?: Record<string, number> | null; acceptOver?: boolean; temps?: Record<string, number> | null; refuseClasses?: string[] | null; licenceChecked?: boolean }) {
   const name = input.recipientName.trim();
   if (name.length < 2) throw new ValidationError("Enter the name of the person who received the goods.");
   const photos = (input.photos ?? []).filter(isImage);
@@ -279,6 +279,8 @@ export async function completeDelivery(ctx: Ctx, id: string, input: Where & { re
   await moveAsDriver(ctx, id, "DELIVERED", async (tx, d) => {
     // Phase 42: temperatures at the handover; classes refused by the customer (or blocked by FIRINGI's rule)
     cold = await (await import("@/server/coldchain/service")).recordHandoverTx(tx, d.id, input.temps, input.refuseClasses, ctx.user.id);
+    // Phase 43: licensed goods — the driver checked the customer's licence / ID (when FIRINGI asks for it)
+    await (await import("@/server/excise/service")).recordHandoverCheckTx(tx, d.id, input.licenceChecked, ctx.user.id);
     await tx.deliveryAttempt.create({ data: { deliveryId: d.id, succeeded: true, failureReason: input.note?.trim() || null, latitude: lat, longitude: lng, byUserId: ctx.user.id } });
     await tx.proofOfDelivery.create({ data: { deliveryId: d.id, recipientName: name, signatureKey, photoKeys, latitude: lat, longitude: lng, byUserId: ctx.user.id } });
     // Phase 40: empties counted at the stop — swaps for refills go on this invoice, the rest waits for the supplier's check

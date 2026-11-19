@@ -52,6 +52,7 @@ export async function addToCart(ctx: Ctx, offerId: string, qty: number) {
   const total = (existing?.qty ?? 0) + qty;
   const err = checkQty(total, item.minOrderQty, item.qtyStep);
   if (err) throw new ValidationError(`${QTY_MESSAGES[err]} (min ${item.minOrderQty}, step ${item.qtyStep})`);
+  await (await import("@/server/excise/service")).assertItems(ctx.company.id, [{ offerId, qty: total }]); // Phase 43: licence, country, cap
   if (existing) await prisma.cartItem.update({ where: { id: existing.id }, data: { qty: total } });
   else await prisma.cartItem.create({ data: { cartId: cart.id, offerId, qty } });
   return { qty: total };
@@ -66,6 +67,7 @@ export async function setCartQty(ctx: Ctx, offerId: string, qty: number) {
   const { item } = await catalogueItem(ctx, offerId);
   const err = checkQty(qty, item.minOrderQty, item.qtyStep);
   if (err) throw new ValidationError(`${QTY_MESSAGES[err]} (min ${item.minOrderQty}, step ${item.qtyStep})`);
+  await (await import("@/server/excise/service")).assertItems(ctx.company.id, [{ offerId, qty }]); // Phase 43
   await prisma.cartItem.update({ where: { id: line.id }, data: { qty } });
 }
 

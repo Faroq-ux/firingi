@@ -858,7 +858,10 @@
     "Weighing": "Wegen",
     "Temperature": "Temperatuur",
     "Cold Chain": "Koudeketen",
-    "Receiving Log": "Ontvangstlogboek"
+    "Receiving Log": "Ontvangstlogboek",
+    "Licensed Goods": "Vergunningsgoederen",
+    "Excise Report": "Accijnsrapport",
+    "Licences": "Vergunningen"
   },
   "delivery": {
     "title": "Levering",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Apparatuur verloopt: {equipment}",
       "body": "Gepland of achterstallig: {tasks}. Leg het vast in Koudeketen."
+    },
+    "excise_licence_review": {
+      "title": "Vergunning te controleren: {company}",
+      "body": "{company} heeft \"{licence}\" geüpload. Controleer ze onder Klanten › Vergunningen."
+    },
+    "excise_licence_decided": {
+      "title": "Uw vergunning: {status}",
+      "body": "\"{licence}\" — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Uw vergunning eindigt op {date}",
+      "body": "\"{licence}\" eindigt over {days} dagen. Upload de nieuwe onder Bedrijf › Vergunningen om te kunnen blijven bestellen."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Geannuleerd",
       "RETURNED": "Geretourneerd",
       "EXCEPTION": "Probleem"
-    }
+    },
+    "licenceCheck": "Ik heb de vergunning / het ID van de klant gecontroleerd (alcohol, tabak)"
   },
   "returnables": {
     "emptiesTitle": "Leeggoed & statiegeld",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Apparatuur achterstallig",
     "loadingTitle": "Temperatuur bij het laden",
     "breaches30": "Onderbrekingen van de koudeketen op uw bestellingen (30 dagen): {n}"
+  },
+  "excise": {
+    "productsTitle": "Vergunningsgoederen",
+    "productsIntro": "Alcohol, tabak, vapeproducten en suikerhoudende dranken zijn accijnsplichtig. Geef per product de gegevens die FIRINGI nodig heeft en of de accijns al in uw prijs zit.",
+    "colProduct": "Product",
+    "colCategory": "Accijnscategorie",
+    "fromCategory": "Uit de categorie: {cat}",
+    "abv": "Alcohol (% vol)",
+    "volumeL": "Liter per eenheid",
+    "exciseUnits": "Stuks per eenheid",
+    "netKg": "Tabak (kg per eenheid)",
+    "sugarGPerL": "Suiker (g per liter)",
+    "dutyMode": "Accijns",
+    "mode": {
+      "PAID": "In de prijs",
+      "ADDED": "Toegevoegd door FIRINGI"
+    },
+    "countries": "Alleen naar deze landen",
+    "countriesHint": "Landcodes, bv. PT ES — leeg = alle",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "missing": "Ontbreekt: {fields}",
+    "dutyUnit": "Accijns per eenheid: {amount}",
+    "noRate": "Nog geen tarief voor uw land",
+    "noProducts": "Geen van uw producten is vergunnings- of accijnsplichtig.",
+    "calcOff": "Uw prijzen moeten de accijns bevatten.",
+    "authTitle": "Uw accijnsvergunning",
+    "authIntro": "Om alcohol, tabak of vapeproducten te verkopen, houdt u uw accijnsvergunning (accijnsgoederenplaats of geregistreerde geadresseerde) actueel.",
+    "authLink": "Upload ze onder Bedrijf › Compliance",
+    "field": {
+      "abv": "alcohol %",
+      "volumeL": "liter",
+      "exciseUnits": "stuks",
+      "netKg": "kg",
+      "sugarGPerL": "suiker"
+    },
+    "kind": {
+      "ALCOHOL": "Alcohol",
+      "TOBACCO": "Tabak",
+      "VAPING": "Vapen",
+      "SUGAR": "Suikerhoudende dranken"
+    },
+    "reportTitle": "Accijnsrapport",
+    "reportIntro": "Elke maand geleverde vergunningsgoederen: hoeveelheden, liter zuivere alcohol, stuks, kg en accijns — voor uw accijnsaangiften.",
+    "month": "Maand",
+    "downloadPdf": "PDF downloaden",
+    "downloadCsv": "CSV downloaden",
+    "colCountry": "Land",
+    "colUnits": "Eenheden",
+    "colLitres": "Liter",
+    "colLpa": "Liter zuivere alcohol",
+    "colPieces": "Stuks",
+    "colKg": "kg",
+    "colDutyAdded": "Accijns toegevoegd",
+    "colDutyIncluded": "Accijns in prijzen",
+    "colOrders": "Bestellingen",
+    "noRows": "Deze maand niets geleverd.",
+    "total": "Totaal",
+    "licencesTitle": "Vergunningen",
+    "licencesIntro": "Om alcohol, tabak of vapeproducten te kopen heeft u een geldige vergunning nodig. Upload ze hier en FIRINGI controleert ze.",
+    "covered": "Gedekt",
+    "notCovered": "Ontbreekt",
+    "notNeeded": "In uw land is geen vergunning nodig.",
+    "warnOnly": "Zonder vergunning kunt u nog bestellen, maar FIRINGI kan erom vragen.",
+    "blockInfo": "Zonder geldige vergunning zijn deze producten verborgen en niet te bestellen.",
+    "upload": "Vergunning uploaden",
+    "licenceType": "Vergunning",
+    "number": "Vergunningsnummer",
+    "issuer": "Afgegeven door",
+    "issuedOn": "Afgegeven op",
+    "expiresOn": "Geldig tot",
+    "file": "Bestand (pdf of foto)",
+    "send": "Ter controle versturen",
+    "sent": "Verstuurd — FIRINGI controleert ze",
+    "withdraw": "Intrekken",
+    "yourLicences": "Uw vergunningen",
+    "none": "Nog geen vergunningen.",
+    "status": {
+      "PENDING": "Wacht op FIRINGI",
+      "APPROVED": "Goedgekeurd",
+      "REJECTED": "Afgewezen",
+      "EXPIRED": "Verlopen",
+      "REVOKED": "Ingetrokken"
+    },
+    "superseded": "Vervangen",
+    "daysLeft": "Nog {days} dagen",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Bestand",
+    "dutyAdded": "+ {amount} accijns",
+    "dutyIncluded": "incl. {amount} accijns",
+    "licenceWarn": "U heeft hiervoor geen vergunning",
+    "restricted": "Niet verkocht naar uw land",
+    "maxPerOrder": "Maximaal {n} per bestelling",
+    "cartTitle": "Accijns",
+    "cartAdded": "Toegevoegd door FIRINGI (+ btw)",
+    "cartIncluded": "Al in de prijzen",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Vergunning toevoegen",
+    "issue": {
+      "LICENCE": "U heeft een goedgekeurde vergunning nodig om {category} te kopen.",
+      "COUNTRY": "{category}: dit product kan niet naar uw land worden verkocht.",
+      "QTY_CAP": "{category}: maximaal {max} per bestelling."
+    },
+    "orderTitle": "Vergunningsgoederen & accijns",
+    "perUnit": "per eenheid",
+    "checked": "Vergunning / ID gecontroleerd door de chauffeur: {by} · {date}",
+    "notChecked": "Vergunning / ID nog niet gecontroleerd",
+    "docTitle": "Geleidedocument",
+    "docType": "Soort",
+    "docRef": "Referentie",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-ED",
+      "SAAD": "VGD",
+      "DSA": "Vereenvoudigd VGD",
+      "OTHER": "Overig"
+    },
+    "noDoc": "Geen document geregistreerd",
+    "checkLicence": "Ik heb de vergunning / het ID van de klant gecontroleerd (alcohol, tabak)"
   }
 }

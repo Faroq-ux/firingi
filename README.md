@@ -662,6 +662,30 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Licensed & excise goods (Phase 43)
+
+Code: `src/lib/excise.ts` (rules, duty maths), `src/server/excise/service.ts`; details `docs/excise.md`.
+- **Excise categories** (FIRINGI, *Catalogue › Licensed Goods*): beer, wine, intermediate, spirits, cigarettes, cigars,
+  rolling tobacco, e-liquid, sugary drinks — with dated **rates per country** (example PT / ES rates to be checked),
+  maximum per order and blocked countries. Shop categories carry a default; the **supplier** gives the measures per
+  product (% vol, litres, pieces, kg, sugar) in *Products › Licensed Goods* and chooses **duty in my price** or
+  **added by FIRINGI**, plus the countries it sells to.
+- **Licences**: the customer uploads its alcohol / tobacco licence (*Company › Licences*), **FIRINGI approves**
+  (*Customers › Licences*, the licence register; also record a licence seen on paper), expiry reminders. Without a
+  valid licence the products are hidden and checkout is blocked — or only a warning, per country. Optional
+  **supplier excise authorisation** through supplier compliance. Every rule can be switched on or off
+  (*Settings › Licensed Goods*).
+- **Duty**: shown on product pages, cards, cart and order; duty added by FIRINGI is a **separate invoice line** (+ VAT)
+  passed through to the supplier's statement; duty already in prices is shown on the invoice line. Country
+  restrictions and quantity caps at cart and checkout.
+- **Delivery**: accompanying document (e-AD / SAAD reference) on the order; optional **driver licence / ID check**
+  before confirming (also offline).
+- **Reports**: supplier **monthly excise report** (PDF / CSV: litres, pure alcohol, pieces, kg, duty), FIRINGI
+  *Finance › Excise*, and excise split out of sales in the **accounting export**.
+- Supplier and customer pages in 25 languages; FIRINGI's in English.
+- Tests: `tests/unit/excise.test.ts`, `tests/integration/excise.test.ts`, browser `tests/e2e/excise.mjs`.
+  Screenshots `docs/screenshots/ex-*.png`.
+
 ## Cold chain & HACCP (Phase 42)
 
 Code: `src/lib/cold-chain.ts` (rules), `src/server/coldchain/service.ts`; details `docs/cold-chain.md`.

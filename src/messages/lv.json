@@ -858,7 +858,10 @@
     "Weighing": "Svēršana",
     "Temperature": "Temperatūra",
     "Cold Chain": "Aukstuma Ķēde",
-    "Receiving Log": "Pieņemšanas žurnāls"
+    "Receiving Log": "Pieņemšanas žurnāls",
+    "Licensed Goods": "Licencējamās preces",
+    "Excise Report": "Akcīzes pārskats",
+    "Licences": "Licences"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Iekārtas termiņš: {equipment}",
       "body": "Paredzēts vai nokavēts: {tasks}. Reģistrējiet to sadaļā Aukstuma ķēde."
+    },
+    "excise_licence_review": {
+      "title": "Pārbaudāma licence: {company}",
+      "body": "{company} augšupielādēja “{licence}”. Pārbaudiet to sadaļā Klienti › Licences."
+    },
+    "excise_licence_decided": {
+      "title": "Jūsu licence: {status}",
+      "body": "“{licence}” — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Jūsu licence beidzas {date}",
+      "body": "“{licence}” beidzas pēc {days} dienām. Augšupielādējiet jauno sadaļā Uzņēmums › Licences, lai varētu turpināt pasūtīt."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Atcelts",
       "RETURNED": "Atgriezts",
       "EXCEPTION": "Problēma"
-    }
+    },
+    "licenceCheck": "Pārbaudīju klienta licenci / dokumentu (alkohols, tabaka)"
   },
   "returnables": {
     "emptiesTitle": "Taras un depozīti",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Nokavētas iekārtas",
     "loadingTitle": "Temperatūra iekraušanas laikā",
     "breaches30": "Aukstuma ķēdes pārkāpumi jūsu pasūtījumos (30 dienas): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licencējamās preces",
+    "productsIntro": "Alkoholam, tabakai, vaipošanas produktiem un saldinātiem dzērieniem piemēro akcīzes nodokli. Norādiet katram produktam datus, kas vajadzīgi FIRINGI, un vai nodoklis jau ir jūsu cenā.",
+    "colProduct": "Produkts",
+    "colCategory": "Akcīzes kategorija",
+    "fromCategory": "No kategorijas: {cat}",
+    "abv": "Alkohols (% tilp.)",
+    "volumeL": "Litri vienībā",
+    "exciseUnits": "Gabali vienībā",
+    "netKg": "Tabaka (kg vienībā)",
+    "sugarGPerL": "Cukurs (g litrā)",
+    "dutyMode": "Nodoklis",
+    "mode": {
+      "PAID": "Cenā",
+      "ADDED": "Pievieno FIRINGI"
+    },
+    "countries": "Tikai uz šīm valstīm",
+    "countriesHint": "Valstu kodi, piem., PT ES — tukšs = visas",
+    "save": "Saglabāt",
+    "saved": "Saglabāts",
+    "missing": "Trūkst: {fields}",
+    "dutyUnit": "Nodoklis vienībai: {amount}",
+    "noRate": "Jūsu valstij likmes vēl nav",
+    "noProducts": "Neviens jūsu produkts nav licencējams vai akcīzes prece.",
+    "calcOff": "Jūsu cenās jābūt iekļautam nodoklim.",
+    "authTitle": "Jūsu akcīzes atļauja",
+    "authIntro": "Lai pārdotu alkoholu, tabaku vai vaipošanas produktus, uzturiet aktuālu savu akcīzes atļauju (akcīzes noliktava vai reģistrēts saņēmējs).",
+    "authLink": "Augšupielādējiet to sadaļā Uzņēmums › Atbilstība",
+    "field": {
+      "abv": "alkohola %",
+      "volumeL": "litri",
+      "exciseUnits": "gabali",
+      "netKg": "kg",
+      "sugarGPerL": "cukurs"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohols",
+      "TOBACCO": "Tabaka",
+      "VAPING": "Vaipošana",
+      "SUGAR": "Saldināti dzērieni"
+    },
+    "reportTitle": "Akcīzes pārskats",
+    "reportIntro": "Katru mēnesi piegādātās licencējamās preces: daudzumi, absolūtā alkohola litri, gabali, kg un nodoklis — jūsu akcīzes deklarācijām.",
+    "month": "Mēnesis",
+    "downloadPdf": "Lejupielādēt PDF",
+    "downloadCsv": "Lejupielādēt CSV",
+    "colCountry": "Valsts",
+    "colUnits": "Vienības",
+    "colLitres": "Litri",
+    "colLpa": "Absolūtā alkohola litri",
+    "colPieces": "Gabali",
+    "colKg": "kg",
+    "colDutyAdded": "Pievienotais nodoklis",
+    "colDutyIncluded": "Nodoklis cenās",
+    "colOrders": "Pasūtījumi",
+    "noRows": "Šomēnes nekas nav piegādāts.",
+    "total": "Kopā",
+    "licencesTitle": "Licences",
+    "licencesIntro": "Lai pirktu alkoholu, tabaku vai vaipošanas produktus, nepieciešama derīga licence. Augšupielādējiet to šeit, un FIRINGI to pārbaudīs.",
+    "covered": "Nosegts",
+    "notCovered": "Trūkst",
+    "notNeeded": "Jūsu valstī licence nav vajadzīga.",
+    "warnOnly": "Bez licences varat turpināt pasūtīt, bet FIRINGI to var pieprasīt.",
+    "blockInfo": "Bez derīgas licences šie produkti ir paslēpti un tos nevar pasūtīt.",
+    "upload": "Augšupielādēt licenci",
+    "licenceType": "Licence",
+    "number": "Licences numurs",
+    "issuer": "Izsniedza",
+    "issuedOn": "Izsniegta",
+    "expiresOn": "Derīga līdz",
+    "file": "Fails (PDF vai foto)",
+    "send": "Nosūtīt pārbaudei",
+    "sent": "Nosūtīta — FIRINGI to pārbaudīs",
+    "withdraw": "Atsaukt",
+    "yourLicences": "Jūsu licences",
+    "none": "Licenču vēl nav.",
+    "status": {
+      "PENDING": "Gaida FIRINGI",
+      "APPROVED": "Apstiprināta",
+      "REJECTED": "Noraidīta",
+      "EXPIRED": "Beigusies",
+      "REVOKED": "Atsaukta"
+    },
+    "superseded": "Aizstāta",
+    "daysLeft": "Atlikušas {days} dienas",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fails",
+    "dutyAdded": "+ {amount} akcīzes",
+    "dutyIncluded": "t. sk. {amount} akcīzes",
+    "licenceWarn": "Jums nav licences šim",
+    "restricted": "Netiek pārdots uz jūsu valsti",
+    "maxPerOrder": "Ne vairāk kā {n} pasūtījumā",
+    "cartTitle": "Akcīzes nodoklis",
+    "cartAdded": "Pievieno FIRINGI (+ PVN)",
+    "cartIncluded": "Jau cenās",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Pievienot licenci",
+    "issue": {
+      "LICENCE": "Lai pirktu {category}, nepieciešama apstiprināta licence.",
+      "COUNTRY": "{category}: šo produktu nevar pārdot uz jūsu valsti.",
+      "QTY_CAP": "{category}: ne vairāk kā {max} pasūtījumā."
+    },
+    "orderTitle": "Licencējamās preces un akcīze",
+    "perUnit": "vienībai",
+    "checked": "Licenci / dokumentu pārbaudīja vadītājs: {by} · {date}",
+    "notChecked": "Licence / dokuments vēl nav pārbaudīts",
+    "docTitle": "Pavaddokuments",
+    "docType": "Veids",
+    "docRef": "Atsauce",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-VAD",
+      "SAAD": "VPD",
+      "DSA": "Vienkāršots dokuments",
+      "OTHER": "Cits"
+    },
+    "noDoc": "Nav reģistrēta dokumenta",
+    "checkLicence": "Pārbaudīju klienta licenci / dokumentu (alkohols, tabaka)"
   }
 }

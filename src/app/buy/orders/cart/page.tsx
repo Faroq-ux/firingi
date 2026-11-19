@@ -3,6 +3,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { cartView } from "@/server/services/cart";
 import { cartReturnables } from "@/server/returnables/service";
+import { cartExcise } from "@/server/excise/service";
+import { CartExcise } from "@/components/excise/views";
+import { exLabels } from "@/components/excise/labels";
 import { CartReturnables } from "@/components/returnables/client";
 import { rtLabels } from "@/components/returnables/labels";
 import { offerCatchWeight } from "@/server/catchweight/service";
@@ -33,6 +36,11 @@ export default async function CartPage() {
   // Phase 41: sold-by-weight lines (estimate until weighed)
   const [cwm, cl] = await Promise.all([offerCatchWeight(cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))), cwLabels()]);
   const td = await getTranslations("deals");
+  // Phase 43: excise duty (added by FIRINGI / already in the prices) and what stops the checkout (licence, country, cap)
+  const [exCart, exl] = await Promise.all([
+    cartExcise(ctx, cart.lines.map((x) => ({ offerId: x.offerId, qty: (x as { qty?: number }).qty ?? 1, unitPriceNet: Number(x.price?.unitPriceNet ?? 0), taxRate: Number(x.lineNet) ? (Number(x.lineVat) / Number(x.lineNet)) * 100 : 0, name: pickLocalized(x.name, locale) })), locale).catch(() => null),
+    exLabels(),
+  ]);
   const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
   const L = (v: unknown) => pickLocalized(v, locale);
@@ -90,6 +98,12 @@ export default async function CartPage() {
               {cart.groups.length > 1 && deliveryNote(g)}
             </div>
           ))}
+          {exCart && (exCart.issues.length > 0 || exCart.lines.length > 0) && (
+            <Card>
+              <CardHeader><CardTitle>{exl.l.cartTitle}</CardTitle></CardHeader>
+              <CardContent><CartExcise l={exl.l} locale={locale} data={exCart} /></CardContent>
+            </Card>
+          )}
           {rtCart && rtCart.lines.length > 0 && (
             <Card>
               <CardHeader><CardTitle>{rl.l.cartTitle}</CardTitle></CardHeader>
@@ -109,6 +123,7 @@ export default async function CartPage() {
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums">{formatMoney(cart.totalGross, locale)}</dd>
             </dl>
             {cwm.size > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-cw-note">{cl.l.cartTotalNote}</p>}
+            {exCart && exCart.addedNet > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-excise-note">{exl.l.dutyAdded.replace("{amount}", formatMoney(exCart.addedNet + exCart.addedVat, locale))} ({exl.l["mode.ADDED"]})</p>}
             {rtCart && rtCart.depositTotal > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-deposit-note">{rl.l.plusDeposits.replace("{amount}", formatMoney(rtCart.depositTotal, locale))}</p>}
             {cart.groups.length === 1 && deliveryNote(cart.groups[0])}
             {cart.groups.length > 1 && d && !d.ok && <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm">{t("splitBlocked")}</p>}

@@ -118,6 +118,7 @@ export async function completeDeliveryAction(fd: FormData) {
       empties: emptiesFrom(fd),
       weights: weightsFrom(fd), acceptOver: fd.get("acceptOver") === "on" || fd.get("acceptOver") === "true",
       temps: tempsFrom(fd) as Record<string, number> | null, refuseClasses: fd.getAll("refuse").map(String).filter(Boolean),
+      licenceChecked: fd.get("licenceChecked") === "on" || fd.get("licenceChecked") === "true",
     })),
   );
 }

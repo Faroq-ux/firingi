@@ -858,7 +858,10 @@
     "Weighing": "Veiing",
     "Temperature": "Temperatur",
     "Cold Chain": "Kjølekjede",
-    "Receiving Log": "Mottakslogg"
+    "Receiving Log": "Mottakslogg",
+    "Licensed Goods": "Lisensvarer",
+    "Excise Report": "Avgiftsrapport",
+    "Licences": "Lisenser"
   },
   "delivery": {
     "title": "Levering",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Utstyr forfaller: {equipment}",
       "body": "Forfaller eller forfalt: {tasks}. Registrer det under Kjølekjede."
+    },
+    "excise_licence_review": {
+      "title": "Lisens til kontroll: {company}",
+      "body": "{company} lastet opp «{licence}». Kontroller den under Kunder › Lisenser."
+    },
+    "excise_licence_decided": {
+      "title": "Lisensen din: {status}",
+      "body": "«{licence}» — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Lisensen din utløper {date}",
+      "body": "«{licence}» utløper om {days} dager. Last opp den nye under Firma › Lisenser for å kunne fortsette å bestille."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Kansellert",
       "RETURNED": "Returnert",
       "EXCEPTION": "Problem"
-    }
+    },
+    "licenceCheck": "Jeg har kontrollert kundens lisens / ID (alkohol, tobakk)"
   },
   "returnables": {
     "emptiesTitle": "Tomgods og pant",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Utstyr forfalt",
     "loadingTitle": "Temperatur ved lasting",
     "breaches30": "Brudd på kjølekjeden på bestillingene dine (30 dager): {n}"
+  },
+  "excise": {
+    "productsTitle": "Lisensvarer",
+    "productsIntro": "Alkohol, tobakk, dampeprodukter og søte drikker har særavgift. Oppgi for hvert produkt opplysningene FIRINGI trenger, og om avgiften allerede er i prisen din.",
+    "colProduct": "Produkt",
+    "colCategory": "Avgiftskategori",
+    "fromCategory": "Fra kategorien: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Liter per enhet",
+    "exciseUnits": "Stykk per enhet",
+    "netKg": "Tobakk (kg per enhet)",
+    "sugarGPerL": "Sukker (g per liter)",
+    "dutyMode": "Avgift",
+    "mode": {
+      "PAID": "I prisen",
+      "ADDED": "Legges til av FIRINGI"
+    },
+    "countries": "Bare til disse landene",
+    "countriesHint": "Landkoder, f.eks. PT ES — tomt = alle",
+    "save": "Lagre",
+    "saved": "Lagret",
+    "missing": "Mangler: {fields}",
+    "dutyUnit": "Avgift per enhet: {amount}",
+    "noRate": "Ingen sats for landet ditt ennå",
+    "noProducts": "Ingen av produktene dine er lisens- eller avgiftspliktige.",
+    "calcOff": "Prisene dine må inkludere avgiften.",
+    "authTitle": "Din avgiftsbevilling",
+    "authIntro": "For å selge alkohol, tobakk eller dampeprodukter må avgiftsbevillingen din (avgiftslager eller registrert mottaker) være oppdatert.",
+    "authLink": "Last den opp under Firma › Samsvar",
+    "field": {
+      "abv": "alkohol %",
+      "volumeL": "liter",
+      "exciseUnits": "stykk",
+      "netKg": "kg",
+      "sugarGPerL": "sukker"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tobakk",
+      "VAPING": "Damp",
+      "SUGAR": "Søte drikker"
+    },
+    "reportTitle": "Avgiftsrapport",
+    "reportIntro": "Lisensvarer levert hver måned: mengder, liter ren alkohol, stykk, kg og avgift — til avgiftsoppgavene dine.",
+    "month": "Måned",
+    "downloadPdf": "Last ned PDF",
+    "downloadCsv": "Last ned CSV",
+    "colCountry": "Land",
+    "colUnits": "Enheter",
+    "colLitres": "Liter",
+    "colLpa": "Liter ren alkohol",
+    "colPieces": "Stykk",
+    "colKg": "kg",
+    "colDutyAdded": "Avgift lagt til",
+    "colDutyIncluded": "Avgift i prisene",
+    "colOrders": "Bestillinger",
+    "noRows": "Ingenting levert denne måneden.",
+    "total": "Totalt",
+    "licencesTitle": "Lisenser",
+    "licencesIntro": "For å kjøpe alkohol, tobakk eller dampeprodukter trenger du en gyldig lisens. Last den opp her, så kontrollerer FIRINGI den.",
+    "covered": "Dekket",
+    "notCovered": "Mangler",
+    "notNeeded": "I landet ditt trengs ingen lisens.",
+    "warnOnly": "Uten lisens kan du fortsatt bestille, men FIRINGI kan be om den.",
+    "blockInfo": "Uten gyldig lisens er disse produktene skjult og kan ikke bestilles.",
+    "upload": "Last opp lisens",
+    "licenceType": "Lisens",
+    "number": "Lisensnummer",
+    "issuer": "Utstedt av",
+    "issuedOn": "Utstedt",
+    "expiresOn": "Gyldig til",
+    "file": "Fil (PDF eller bilde)",
+    "send": "Send til kontroll",
+    "sent": "Sendt — FIRINGI kontrollerer den",
+    "withdraw": "Trekk tilbake",
+    "yourLicences": "Dine lisenser",
+    "none": "Ingen lisenser ennå.",
+    "status": {
+      "PENDING": "Venter på FIRINGI",
+      "APPROVED": "Godkjent",
+      "REJECTED": "Avvist",
+      "EXPIRED": "Utløpt",
+      "REVOKED": "Tilbakekalt"
+    },
+    "superseded": "Erstattet",
+    "daysLeft": "{days} dager igjen",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fil",
+    "dutyAdded": "+ {amount} i særavgift",
+    "dutyIncluded": "inkl. {amount} i særavgift",
+    "licenceWarn": "Du har ikke lisens for dette",
+    "restricted": "Selges ikke til landet ditt",
+    "maxPerOrder": "Maks {n} per bestilling",
+    "cartTitle": "Særavgift",
+    "cartAdded": "Legges til av FIRINGI (+ mva.)",
+    "cartIncluded": "Allerede i prisene",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Legg til lisens",
+    "issue": {
+      "LICENCE": "Du trenger en godkjent lisens for å kjøpe {category}.",
+      "COUNTRY": "{category}: dette produktet kan ikke selges til landet ditt.",
+      "QTY_CAP": "{category}: maks {max} per bestilling."
+    },
+    "orderTitle": "Lisensvarer og særavgift",
+    "perUnit": "per enhet",
+    "checked": "Lisens / ID kontrollert av sjåføren: {by} · {date}",
+    "notChecked": "Lisens / ID ikke kontrollert ennå",
+    "docTitle": "Følgedokument",
+    "docType": "Type",
+    "docRef": "Referanse",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-SAD",
+      "SAAD": "SAAD",
+      "DSA": "Forenklet dokument",
+      "OTHER": "Annet"
+    },
+    "noDoc": "Ingen dokument registrert",
+    "checkLicence": "Jeg har kontrollert kundens lisens / ID (alkohol, tobakk)"
   }
 }

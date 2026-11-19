@@ -858,7 +858,10 @@
     "Weighing": "Svėrimas",
     "Temperature": "Temperatūra",
     "Cold Chain": "Šaldymo Grandinė",
-    "Receiving Log": "Priėmimo žurnalas"
+    "Receiving Log": "Priėmimo žurnalas",
+    "Licensed Goods": "Licencijuojamos prekės",
+    "Excise Report": "Akcizų ataskaita",
+    "Licences": "Licencijos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Įrangos terminas: {equipment}",
       "body": "Numatyta arba vėluoja: {tasks}. Užregistruokite tai Šaldymo grandinėje."
+    },
+    "excise_licence_review": {
+      "title": "Tikrintina licencija: {company}",
+      "body": "{company} įkėlė „{licence}“. Patikrinkite ją skiltyje Klientai › Licencijos."
+    },
+    "excise_licence_decided": {
+      "title": "Jūsų licencija: {status}",
+      "body": "„{licence}“ — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Jūsų licencija baigiasi {date}",
+      "body": "„{licence}“ baigiasi po {days} d. Įkelkite naują skiltyje Įmonė › Licencijos, kad galėtumėte toliau užsakyti."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Atšauktas",
       "RETURNED": "Grąžintas",
       "EXCEPTION": "Problema"
-    }
+    },
+    "licenceCheck": "Patikrinau kliento licenciją / dokumentą (alkoholis, tabakas)"
   },
   "returnables": {
     "emptiesTitle": "Tara ir užstatas",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Vėluojanti įranga",
     "loadingTitle": "Temperatūra pakrovimo metu",
     "breaches30": "Šaldymo grandinės pažeidimai jūsų užsakymuose (30 dienų): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licencijuojamos prekės",
+    "productsIntro": "Alkoholiui, tabakui, garinimo produktams ir saldintiems gėrimams taikomas akcizas. Nurodykite kiekvieno produkto duomenis, kurių reikia FIRINGI, ir ar akcizas jau įskaičiuotas į jūsų kainą.",
+    "colProduct": "Produktas",
+    "colCategory": "Akcizo kategorija",
+    "fromCategory": "Iš kategorijos: {cat}",
+    "abv": "Alkoholis (% tūrio)",
+    "volumeL": "Litrai vienetui",
+    "exciseUnits": "Vienetų pakuotėje",
+    "netKg": "Tabakas (kg vienetui)",
+    "sugarGPerL": "Cukrus (g litre)",
+    "dutyMode": "Akcizas",
+    "mode": {
+      "PAID": "Kainoje",
+      "ADDED": "Prideda FIRINGI"
+    },
+    "countries": "Tik į šias šalis",
+    "countriesHint": "Šalių kodai, pvz., PT ES — tuščia = visos",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota",
+    "missing": "Trūksta: {fields}",
+    "dutyUnit": "Akcizas vienetui: {amount}",
+    "noRate": "Jūsų šaliai tarifo dar nėra",
+    "noProducts": "Nė vienas jūsų produktas nėra licencijuojamas ar akcizinis.",
+    "calcOff": "Jūsų kainose turi būti akcizas.",
+    "authTitle": "Jūsų akcizo leidimas",
+    "authIntro": "Norėdami parduoti alkoholį, tabaką ar garinimo produktus, nuolat atnaujinkite akcizo leidimą (akcizų sandėlis ar registruotas gavėjas).",
+    "authLink": "Įkelkite jį skiltyje Įmonė › Atitiktis",
+    "field": {
+      "abv": "alkoholio %",
+      "volumeL": "litrai",
+      "exciseUnits": "vienetai",
+      "netKg": "kg",
+      "sugarGPerL": "cukrus"
+    },
+    "kind": {
+      "ALCOHOL": "Alkoholis",
+      "TOBACCO": "Tabakas",
+      "VAPING": "Garinimas",
+      "SUGAR": "Saldinti gėrimai"
+    },
+    "reportTitle": "Akcizų ataskaita",
+    "reportIntro": "Kiekvieną mėnesį pristatytos licencijuojamos prekės: kiekiai, absoliutaus alkoholio litrai, vienetai, kg ir akcizas — jūsų akcizų deklaracijoms.",
+    "month": "Mėnuo",
+    "downloadPdf": "Atsisiųsti PDF",
+    "downloadCsv": "Atsisiųsti CSV",
+    "colCountry": "Šalis",
+    "colUnits": "Vienetai",
+    "colLitres": "Litrai",
+    "colLpa": "Absoliutaus alkoholio litrai",
+    "colPieces": "Vienetai",
+    "colKg": "kg",
+    "colDutyAdded": "Pridėtas akcizas",
+    "colDutyIncluded": "Akcizas kainose",
+    "colOrders": "Užsakymai",
+    "noRows": "Šį mėnesį nieko nepristatyta.",
+    "total": "Iš viso",
+    "licencesTitle": "Licencijos",
+    "licencesIntro": "Norint pirkti alkoholį, tabaką ar garinimo produktus reikia galiojančios licencijos. Įkelkite ją čia, o FIRINGI ją patikrins.",
+    "covered": "Padengta",
+    "notCovered": "Trūksta",
+    "notNeeded": "Jūsų šalyje licencija nereikalinga.",
+    "warnOnly": "Be licencijos galite toliau užsakyti, bet FIRINGI gali jos paprašyti.",
+    "blockInfo": "Be galiojančios licencijos šie produktai paslėpti ir jų užsakyti negalima.",
+    "upload": "Įkelti licenciją",
+    "licenceType": "Licencija",
+    "number": "Licencijos numeris",
+    "issuer": "Išdavė",
+    "issuedOn": "Išduota",
+    "expiresOn": "Galioja iki",
+    "file": "Failas (PDF ar nuotrauka)",
+    "send": "Siųsti patikrinti",
+    "sent": "Išsiųsta — FIRINGI patikrins",
+    "withdraw": "Atšaukti",
+    "yourLicences": "Jūsų licencijos",
+    "none": "Licencijų dar nėra.",
+    "status": {
+      "PENDING": "Laukiama FIRINGI",
+      "APPROVED": "Patvirtinta",
+      "REJECTED": "Atmesta",
+      "EXPIRED": "Nebegalioja",
+      "REVOKED": "Panaikinta"
+    },
+    "superseded": "Pakeista",
+    "daysLeft": "Liko {days} d.",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Failas",
+    "dutyAdded": "+ {amount} akcizo",
+    "dutyIncluded": "įsk. {amount} akcizo",
+    "licenceWarn": "Neturite tam licencijos",
+    "restricted": "Neparduodama į jūsų šalį",
+    "maxPerOrder": "Ne daugiau kaip {n} užsakyme",
+    "cartTitle": "Akcizas",
+    "cartAdded": "Prideda FIRINGI (+ PVM)",
+    "cartIncluded": "Jau kainose",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Pridėti licenciją",
+    "issue": {
+      "LICENCE": "Norint pirkti {category}, reikia patvirtintos licencijos.",
+      "COUNTRY": "{category}: šio produkto negalima parduoti į jūsų šalį.",
+      "QTY_CAP": "{category}: ne daugiau kaip {max} užsakyme."
+    },
+    "orderTitle": "Licencijuojamos prekės ir akcizas",
+    "perUnit": "vienetui",
+    "checked": "Vairuotojas patikrino licenciją / dokumentą: {by} · {date}",
+    "notChecked": "Licencija / dokumentas dar nepatikrinti",
+    "docTitle": "Lydimasis dokumentas",
+    "docType": "Rūšis",
+    "docRef": "Nuoroda",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-EAD",
+      "SAAD": "SLD",
+      "DSA": "Supaprastintas dokumentas",
+      "OTHER": "Kita"
+    },
+    "noDoc": "Dokumentas neužregistruotas",
+    "checkLicence": "Patikrinau kliento licenciją / dokumentą (alkoholis, tabakas)"
   }
 }

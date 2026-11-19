@@ -1519,6 +1519,18 @@
     "coldchain_equipment_due": {
       "title": "Equipo pendiente: {equipment}",
       "body": "Pendiente o vencido: {tasks}. Regístrelo en Cadena de Frío."
+    },
+    "excise_licence_review": {
+      "title": "Licencia para revisar: {company}",
+      "body": "{company} ha subido \"{licence}\". Revísela en Clientes › Licencias."
+    },
+    "excise_licence_decided": {
+      "title": "Su licencia: {status}",
+      "body": "\"{licence}\" — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Su licencia termina el {date}",
+      "body": "\"{licence}\" termina dentro de {days} días. Suba la nueva en Empresa › Licencias para seguir pidiendo."
     }
   },
   "notifications": {
@@ -4852,7 +4864,8 @@
       "CANCELLED": "Cancelado",
       "RETURNED": "Devuelto",
       "EXCEPTION": "Incidencia"
-    }
+    },
+    "licenceCheck": "He comprobado la licencia / identidad del cliente (alcohol, tabaco)"
   },
   "returnables": {
     "emptiesTitle": "Envases y depósitos",
@@ -5239,5 +5252,124 @@
     "equipmentOverdue": "Equipos vencidos",
     "loadingTitle": "Temperatura en la carga",
     "breaches30": "Roturas de la cadena de frío en sus pedidos (30 días): {n}"
+  },
+  "excise": {
+    "productsTitle": "Productos con Licencia",
+    "productsIntro": "Las bebidas alcohólicas, el tabaco, los productos de vapeo y las bebidas azucaradas pagan impuestos especiales. Indique las medidas que FIRINGI necesita en cada producto y si el impuesto ya está en su precio.",
+    "colProduct": "Producto",
+    "colCategory": "Categoría de impuesto especial",
+    "fromCategory": "De la categoría: {cat}",
+    "abv": "Alcohol (% vol)",
+    "volumeL": "Litros por unidad",
+    "exciseUnits": "Piezas por unidad",
+    "netKg": "Tabaco (kg por unidad)",
+    "sugarGPerL": "Azúcar (g por litro)",
+    "dutyMode": "Impuesto",
+    "mode": {
+      "PAID": "Incluido en el precio",
+      "ADDED": "Añadido por FIRINGI"
+    },
+    "countries": "Solo a estos países",
+    "countriesHint": "Códigos de país, p. ej. PT ES — vacío = todos",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "missing": "Falta: {fields}",
+    "dutyUnit": "Impuesto por unidad: {amount}",
+    "noRate": "Aún no hay tipo para su país",
+    "noProducts": "Ninguno de sus productos tiene licencia ni impuestos especiales.",
+    "calcOff": "Sus precios deben incluir el impuesto.",
+    "authTitle": "Su autorización de impuestos especiales",
+    "authIntro": "Para vender bebidas alcohólicas, tabaco o productos de vapeo, mantenga al día su autorización (depósito fiscal o destinatario registrado).",
+    "authLink": "Súbala en Empresa › Cumplimiento",
+    "field": {
+      "abv": "% de alcohol",
+      "volumeL": "litros",
+      "exciseUnits": "piezas",
+      "netKg": "kg",
+      "sugarGPerL": "azúcar"
+    },
+    "kind": {
+      "ALCOHOL": "Alcohol",
+      "TOBACCO": "Tabaco",
+      "VAPING": "Vapeo",
+      "SUGAR": "Bebidas azucaradas"
+    },
+    "reportTitle": "Informe de impuestos especiales",
+    "reportIntro": "Productos con licencia entregados cada mes: cantidades, litros de alcohol puro, piezas, kg e impuesto — para sus declaraciones.",
+    "month": "Mes",
+    "downloadPdf": "Descargar PDF",
+    "downloadCsv": "Descargar CSV",
+    "colCountry": "País",
+    "colUnits": "Unidades",
+    "colLitres": "Litros",
+    "colLpa": "Litros de alcohol puro",
+    "colPieces": "Piezas",
+    "colKg": "kg",
+    "colDutyAdded": "Impuesto añadido",
+    "colDutyIncluded": "Impuesto en precios",
+    "colOrders": "Pedidos",
+    "noRows": "Nada entregado este mes.",
+    "total": "Total",
+    "licencesTitle": "Licencias",
+    "licencesIntro": "Para comprar bebidas alcohólicas, tabaco o productos de vapeo necesita una licencia válida. Súbala aquí y FIRINGI la comprueba.",
+    "covered": "Cubierto",
+    "notCovered": "Falta",
+    "notNeeded": "En su país no se necesita licencia.",
+    "warnOnly": "Sin licencia puede seguir pidiendo, pero FIRINGI puede solicitarla.",
+    "blockInfo": "Sin una licencia válida estos productos están ocultos y no se pueden pedir.",
+    "upload": "Subir una licencia",
+    "licenceType": "Licencia",
+    "number": "Número de licencia",
+    "issuer": "Expedida por",
+    "issuedOn": "Expedida el",
+    "expiresOn": "Válida hasta",
+    "file": "Archivo (PDF o foto)",
+    "send": "Enviar para revisión",
+    "sent": "Enviada — FIRINGI la comprobará",
+    "withdraw": "Retirar",
+    "yourLicences": "Sus licencias",
+    "none": "Aún no hay licencias.",
+    "status": {
+      "PENDING": "Esperando a FIRINGI",
+      "APPROVED": "Aprobada",
+      "REJECTED": "Rechazada",
+      "EXPIRED": "Caducada",
+      "REVOKED": "Revocada"
+    },
+    "superseded": "Sustituida",
+    "daysLeft": "Quedan {days} días",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Archivo",
+    "dutyAdded": "+ {amount} de impuestos especiales",
+    "dutyIncluded": "incl. {amount} de impuestos especiales",
+    "licenceWarn": "No tiene licencia para esto",
+    "restricted": "No se vende a su país",
+    "maxPerOrder": "Como máximo {n} por pedido",
+    "cartTitle": "Impuestos especiales",
+    "cartAdded": "Añadido por FIRINGI (+ IVA)",
+    "cartIncluded": "Ya incluido en los precios",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Añadir una licencia",
+    "issue": {
+      "LICENCE": "Necesita una licencia aprobada para comprar {category}.",
+      "COUNTRY": "{category}: este producto no se puede vender a su país.",
+      "QTY_CAP": "{category}: como máximo {max} por pedido."
+    },
+    "orderTitle": "Productos con licencia e impuestos especiales",
+    "perUnit": "por unidad",
+    "checked": "Licencia / identidad comprobada por el conductor: {by} · {date}",
+    "notChecked": "Licencia / identidad aún no comprobada",
+    "docTitle": "Documento de acompañamiento",
+    "docType": "Tipo",
+    "docRef": "Referencia",
+    "doc": {
+      "E_DA": "e-DA",
+      "E_SAD": "e-DAU",
+      "SAAD": "DSA",
+      "DSA": "DSA simplificado",
+      "OTHER": "Otro"
+    },
+    "noDoc": "Ningún documento registrado",
+    "checkLicence": "He comprobado la licencia / identidad del cliente (alcohol, tabaco)"
   }
 }

@@ -858,7 +858,10 @@
     "Weighing": "Vägning",
     "Temperature": "Temperatur",
     "Cold Chain": "Kylkedja",
-    "Receiving Log": "Mottagningslogg"
+    "Receiving Log": "Mottagningslogg",
+    "Licensed Goods": "Licensvaror",
+    "Excise Report": "Punktskatterapport",
+    "Licences": "Licenser"
   },
   "delivery": {
     "title": "Leverans",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Utrustning förfaller: {equipment}",
       "body": "Förfaller eller försenad: {tasks}. Registrera det under Kylkedja."
+    },
+    "excise_licence_review": {
+      "title": "Licens att granska: {company}",
+      "body": "{company} laddade upp ”{licence}”. Granska den under Kunder › Licenser."
+    },
+    "excise_licence_decided": {
+      "title": "Din licens: {status}",
+      "body": "”{licence}” — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Din licens går ut {date}",
+      "body": "”{licence}” går ut om {days} dagar. Ladda upp den nya under Företag › Licenser för att kunna fortsätta beställa."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Avbruten",
       "RETURNED": "Returnerad",
       "EXCEPTION": "Problem"
-    }
+    },
+    "licenceCheck": "Jag har kontrollerat kundens licens / ID (alkohol, tobak)"
   },
   "returnables": {
     "emptiesTitle": "Returemballage & pant",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Utrustning försenad",
     "loadingTitle": "Temperatur vid lastning",
     "breaches30": "Brott i kylkedjan på dina beställningar (30 dagar): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licensvaror",
+    "productsIntro": "Alkohol, tobak, vejpprodukter och sötade drycker är punktskattepliktiga. Ange för varje produkt de uppgifter FIRINGI behöver och om skatten redan ingår i ditt pris.",
+    "colProduct": "Produkt",
+    "colCategory": "Punktskattekategori",
+    "fromCategory": "Från kategorin: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Liter per enhet",
+    "exciseUnits": "Styck per enhet",
+    "netKg": "Tobak (kg per enhet)",
+    "sugarGPerL": "Socker (g per liter)",
+    "dutyMode": "Skatt",
+    "mode": {
+      "PAID": "I priset",
+      "ADDED": "Läggs till av FIRINGI"
+    },
+    "countries": "Endast till dessa länder",
+    "countriesHint": "Landskoder, t.ex. PT ES — tomt = alla",
+    "save": "Spara",
+    "saved": "Sparat",
+    "missing": "Saknas: {fields}",
+    "dutyUnit": "Skatt per enhet: {amount}",
+    "noRate": "Ingen skattesats för ditt land ännu",
+    "noProducts": "Ingen av dina produkter är licens- eller punktskattepliktig.",
+    "calcOff": "Dina priser måste inkludera skatten.",
+    "authTitle": "Ditt punktskattetillstånd",
+    "authIntro": "För att sälja alkohol, tobak eller vejpprodukter, håll ditt punktskattetillstånd (skatteupplag eller registrerad mottagare) uppdaterat.",
+    "authLink": "Ladda upp det under Företag › Efterlevnad",
+    "field": {
+      "abv": "alkohol %",
+      "volumeL": "liter",
+      "exciseUnits": "styck",
+      "netKg": "kg",
+      "sugarGPerL": "socker"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tobak",
+      "VAPING": "Vejp",
+      "SUGAR": "Sötade drycker"
+    },
+    "reportTitle": "Punktskatterapport",
+    "reportIntro": "Licensvaror levererade varje månad: mängder, liter ren alkohol, styck, kg och skatt — till dina punktskattedeklarationer.",
+    "month": "Månad",
+    "downloadPdf": "Ladda ner PDF",
+    "downloadCsv": "Ladda ner CSV",
+    "colCountry": "Land",
+    "colUnits": "Enheter",
+    "colLitres": "Liter",
+    "colLpa": "Liter ren alkohol",
+    "colPieces": "Styck",
+    "colKg": "kg",
+    "colDutyAdded": "Tillagd skatt",
+    "colDutyIncluded": "Skatt i priserna",
+    "colOrders": "Beställningar",
+    "noRows": "Inget levererat denna månad.",
+    "total": "Totalt",
+    "licencesTitle": "Licenser",
+    "licencesIntro": "För att köpa alkohol, tobak eller vejpprodukter behöver du en giltig licens. Ladda upp den här så granskar FIRINGI den.",
+    "covered": "Täckt",
+    "notCovered": "Saknas",
+    "notNeeded": "I ditt land behövs ingen licens.",
+    "warnOnly": "Utan licens kan du fortfarande beställa, men FIRINGI kan begära den.",
+    "blockInfo": "Utan giltig licens är dessa produkter dolda och kan inte beställas.",
+    "upload": "Ladda upp licens",
+    "licenceType": "Licens",
+    "number": "Licensnummer",
+    "issuer": "Utfärdad av",
+    "issuedOn": "Utfärdad",
+    "expiresOn": "Giltig till",
+    "file": "Fil (PDF eller foto)",
+    "send": "Skicka för granskning",
+    "sent": "Skickad — FIRINGI granskar den",
+    "withdraw": "Dra tillbaka",
+    "yourLicences": "Dina licenser",
+    "none": "Inga licenser ännu.",
+    "status": {
+      "PENDING": "Väntar på FIRINGI",
+      "APPROVED": "Godkänd",
+      "REJECTED": "Avvisad",
+      "EXPIRED": "Utgången",
+      "REVOKED": "Återkallad"
+    },
+    "superseded": "Ersatt",
+    "daysLeft": "{days} dagar kvar",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fil",
+    "dutyAdded": "+ {amount} i punktskatt",
+    "dutyIncluded": "inkl. {amount} i punktskatt",
+    "licenceWarn": "Du har ingen licens för detta",
+    "restricted": "Säljs inte till ditt land",
+    "maxPerOrder": "Högst {n} per beställning",
+    "cartTitle": "Punktskatt",
+    "cartAdded": "Läggs till av FIRINGI (+ moms)",
+    "cartIncluded": "Redan i priserna",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Lägg till licens",
+    "issue": {
+      "LICENCE": "Du behöver en godkänd licens för att köpa {category}.",
+      "COUNTRY": "{category}: denna produkt kan inte säljas till ditt land.",
+      "QTY_CAP": "{category}: högst {max} per beställning."
+    },
+    "orderTitle": "Licensvaror och punktskatt",
+    "perUnit": "per enhet",
+    "checked": "Licens / ID kontrollerad av föraren: {by} · {date}",
+    "notChecked": "Licens / ID ännu inte kontrollerad",
+    "docTitle": "Ledsagardokument",
+    "docType": "Typ",
+    "docRef": "Referens",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-SAD",
+      "SAAD": "FLD",
+      "DSA": "Förenklat dokument",
+      "OTHER": "Annat"
+    },
+    "noDoc": "Inget dokument registrerat",
+    "checkLicence": "Jag har kontrollerat kundens licens / ID (alkohol, tobak)"
   }
 }

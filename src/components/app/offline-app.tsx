@@ -21,7 +21,7 @@ import { HandoverTemps, type Cls } from "@/components/coldchain/client";
 
 type Product = { offerId: string; name: string; packaging: string; brand: string | null; sku: string | null; gtin: string | null; unitGtin: string | null; supplier: string; unitNet: number; unitGross: number; minQty: number; step: number; available: number; stock: string; usualQty: number };
 type BuyerOrder = { id: string; number: string; status: string; placedAt: string; total: number; supplier: string; deliveryDate: string | null; eta: string | null; delivery: string | null; lines: { name: string; packaging: string; qty: number; net: number }[] };
-type Stop = { deliveryId: string; number: string; status: string; orderStatus: string; sequence: number; customer: string; phone: string | null; contact: string | null; supplier: string; address: string; lat: number | null; lng: number | null; note: string | null; scheduledFor: string | null; items: { name: string; packaging: string; qty: number }[]; empties?: StopItem[]; weights?: { correction: boolean; lines: StopWeightLine[] }; cold?: { record: { handover: boolean }; refuse: boolean; block: boolean; required: boolean; classes: Cls[] } | null };
+type Stop = { deliveryId: string; number: string; status: string; orderStatus: string; sequence: number; customer: string; phone: string | null; contact: string | null; supplier: string; address: string; lat: number | null; lng: number | null; note: string | null; scheduledFor: string | null; items: { name: string; packaging: string; qty: number }[]; empties?: StopItem[]; weights?: { correction: boolean; lines: StopWeightLine[] }; cold?: { record: { handover: boolean }; refuse: boolean; block: boolean; required: boolean; classes: Cls[] } | null; licenceCheck?: boolean };
 type PickLine = { id: string; orderNumber: string; product: string; packaging: string; sku: string | null; gtin: string | null; batchId: string | null; lotCode: string | null; expiresOn: string | null; bin: string | null; qty: number; pickedQty: number; shortReason: string | null; blocked: boolean };
 type PickList = { id: string; number: string; warehouse: string; note: string | null; orders: { id: string; number: string; buyer: string }[]; lines: PickLine[] };
 type Snap = {
@@ -329,7 +329,7 @@ function RouteTab({ t, snap, since }: { t: T; snap: Snap; since: OutboxEntry[] }
                   {(s.status === "PICKED_UP" || s.status === "OUT_FOR_DELIVERY") && <Button variant="outline" onClick={() => setForm({ id: s.deliveryId, kind: "fail" })} data-testid="stop-failed"><AlertTriangle className="size-4" /> {t("couldntDeliver")}</Button>}
                 </div>
                 {form?.id === s.deliveryId && (form.kind === "done"
-                  ? <DeliveredForm t={t} items={s.empties ?? []} weights={s.weights} cold={s.cold} onCancel={() => setForm(null)} onSave={async (v) => { await queue(snap.user.id, "driver", "delivery.complete", { deliveryId: s.deliveryId, ...v }, `${t("delivered")} · ${s.number}`); setForm(null); }} />
+                  ? <DeliveredForm t={t} items={s.empties ?? []} weights={s.weights} cold={s.cold} licence={s.licenceCheck} onCancel={() => setForm(null)} onSave={async (v) => { await queue(snap.user.id, "driver", "delivery.complete", { deliveryId: s.deliveryId, ...v }, `${t("delivered")} · ${s.number}`); setForm(null); }} />
                   : <FailedForm t={t} reasons={d.reasons} onCancel={() => setForm(null)} onSave={async (v) => { await queue(snap.user.id, "driver", "delivery.fail", { deliveryId: s.deliveryId, ...v }, `${t("couldntDeliver")} · ${s.number}`); setForm(null); }} />)}
               </div>
             )}
@@ -369,7 +369,7 @@ function SignaturePad({ onChange, label }: { onChange: (dataUrl: string | null) 
   );
 }
 
-function DeliveredForm({ t, items, weights, cold, onSave, onCancel }: { t: T; items: StopItem[]; weights?: { correction: boolean; lines: StopWeightLine[] }; cold?: Stop["cold"]; onSave: (v: Record<string, unknown>) => Promise<void>; onCancel: () => void }) {
+function DeliveredForm({ t, items, weights, cold, licence, onSave, onCancel }: { t: T; items: StopItem[]; weights?: { correction: boolean; lines: StopWeightLine[] }; cold?: Stop["cold"]; licence?: boolean; onSave: (v: Record<string, unknown>) => Promise<void>; onCancel: () => void }) {
   const tr = useTranslations("returnables");
   const tw = useTranslations("catchWeight");
   const wl = { stopTitle: tw("stopTitle"), weighedKg: tw.raw("weighedKg") as string, estimatedKg: tw.raw("estimatedKg") as string, newWeightFor: tw.raw("newWeightFor") as string, customerAccepts: tw("customerAccepts") };
@@ -382,6 +382,9 @@ function DeliveredForm({ t, items, weights, cold, onSave, onCancel }: { t: T; it
   const [temps, setTemps] = useState<Record<string, string>>({});
   const [refused, setRefused] = useState<string[]>([]);
   const coldOn = !!cold && cold.record.handover && cold.classes.length > 0;
+  // Phase 43: licensed goods — the driver confirms the licence / ID check
+  const ta = useTranslations("app");
+  const [checked, setChecked] = useState(false);
   const el = { emptiesTaken: tr("emptiesTaken"), customerHolds: tr("customerHolds"), swapForFull: tr("swapForFull"), expectedBack: tr("expectedBack"), emptiesHint: tr("emptiesHint") };
   // Phase 40: empties taken back at the stop, sent with the delivery
   const [empties, setEmpties] = useState<Record<string, number>>(Object.fromEntries(items.map((i) => [i.typeId, i.kind === "EXCHANGE" ? Math.min(i.fullOut, i.held) : 0])));
@@ -396,9 +399,11 @@ function DeliveredForm({ t, items, weights, cold, onSave, onCancel }: { t: T; it
       e.preventDefault();
       if (name.trim().length < 2) return setErr(t("needName"));
       if (!sig && !photo) return setErr(t("needProof"));
+      if (licence && !checked) return setErr(ta("licenceCheck"));
       setBusy(true);
       await onSave({ recipientName: name.trim(), signature: sig, photos: photo ? [photo] : [], note: note || null, ...(items.length ? { empties } : {}),
         ...(coldOn ? { temps: Object.fromEntries(Object.entries(temps).filter(([, v]) => v.trim())), refuse: refused } : {}),
+        ...(licence ? { licenceChecked: checked } : {}),
         ...(weights?.lines.length ? { weights: Object.fromEntries(Object.entries(kg).filter(([, v]) => v.trim()).map(([k, v]) => [k, Number(v.replace(",", "."))])), acceptOver } : {}), ...(await where()) });
       setBusy(false);
     }}>
@@ -407,6 +412,7 @@ function DeliveredForm({ t, items, weights, cold, onSave, onCancel }: { t: T; it
       <PhotoInput t={t} value={photo} onChange={setPhoto} />
       <EmptiesCounter l={el} items={items} value={empties} onChange={setEmpties} />
       {coldOn && cold && <HandoverTemps l={cl} classes={cold.classes} value={temps} onChange={setTemps} refused={refused} onRefuse={setRefused} refuse={cold.refuse} block={cold.block} required={cold.required} />}
+      {licence && <label className="flex items-start gap-2 rounded-lg border p-2 text-sm" data-testid="licence-check"><input type="checkbox" className="mt-0.5 size-5" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> {ta("licenceCheck")}</label>}
       {weights && weights.lines.length > 0 && <StopWeights l={wl} locale={typeof navigator !== "undefined" ? navigator.language : "pt-PT"} lines={weights.lines} correction={weights.correction} value={kg} onChange={setKg} accept={acceptOver} onAccept={setAcceptOver} />}
       <Input value={note} onChange={(e) => setNote(e.target.value)} placeholder={t("noteOptional")} maxLength={500} />
       {err && <p className="text-sm text-destructive" role="alert">{err}</p>}

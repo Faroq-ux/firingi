@@ -1519,6 +1519,18 @@
     "coldchain_equipment_due": {
       "title": "Equipment due: {equipment}",
       "body": "Due or overdue: {tasks}. Record it in Cold Chain."
+    },
+    "excise_licence_review": {
+      "title": "Licence to check: {company}",
+      "body": "{company} uploaded \"{licence}\". Check it in Customers › Licences."
+    },
+    "excise_licence_decided": {
+      "title": "Your licence: {status}",
+      "body": "\"{licence}\" — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Your licence ends on {date}",
+      "body": "\"{licence}\" ends in {days} days. Upload the new one under Company › Licences so you can keep ordering."
     }
   },
   "notifications": {
@@ -4840,7 +4852,8 @@
       "CANCELLED": "Cancelled",
       "RETURNED": "Returned",
       "EXCEPTION": "Problem"
-    }
+    },
+    "licenceCheck": "I checked the customer's licence / ID (alcohol, tobacco)"
   },
   "returnables": {
     "emptiesTitle": "Empties & deposits",
@@ -5227,5 +5240,124 @@
     "equipmentOverdue": "Equipment overdue",
     "loadingTitle": "Temperature at loading",
     "breaches30": "Cold-chain breaches on your orders (30 days): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licensed Goods",
+    "productsIntro": "Alcohol, tobacco, vaping products and sugary drinks pay excise duty. Give the measures FIRINGI needs for each product and say whether the duty is already in your price.",
+    "colProduct": "Product",
+    "colCategory": "Excise category",
+    "fromCategory": "From the category: {cat}",
+    "abv": "Alcohol (% vol)",
+    "volumeL": "Litres per unit",
+    "exciseUnits": "Pieces per unit",
+    "netKg": "Tobacco (kg per unit)",
+    "sugarGPerL": "Sugar (g per litre)",
+    "dutyMode": "Duty",
+    "mode": {
+      "PAID": "In the price",
+      "ADDED": "Added by FIRINGI"
+    },
+    "countries": "Only to these countries",
+    "countriesHint": "Country codes, e.g. PT ES — empty = all",
+    "save": "Save",
+    "saved": "Saved",
+    "missing": "Missing: {fields}",
+    "dutyUnit": "Duty per unit: {amount}",
+    "noRate": "No rate for your country yet",
+    "noProducts": "None of your products is licensed or taxed.",
+    "calcOff": "Your prices must include the duty.",
+    "authTitle": "Your excise authorisation",
+    "authIntro": "To sell alcohol, tobacco or vaping products, keep your excise authorisation (tax warehouse or registered consignee number) up to date.",
+    "authLink": "Upload it under Company › Compliance",
+    "field": {
+      "abv": "alcohol %",
+      "volumeL": "litres",
+      "exciseUnits": "pieces",
+      "netKg": "kg",
+      "sugarGPerL": "sugar"
+    },
+    "kind": {
+      "ALCOHOL": "Alcohol",
+      "TOBACCO": "Tobacco",
+      "VAPING": "Vaping",
+      "SUGAR": "Sugary drinks"
+    },
+    "reportTitle": "Excise Report",
+    "reportIntro": "Licensed goods delivered each month: quantities, litres of pure alcohol, pieces, kg and duty — for your excise declarations.",
+    "month": "Month",
+    "downloadPdf": "Download PDF",
+    "downloadCsv": "Download CSV",
+    "colCountry": "Country",
+    "colUnits": "Units",
+    "colLitres": "Litres",
+    "colLpa": "Litres of pure alcohol",
+    "colPieces": "Pieces",
+    "colKg": "kg",
+    "colDutyAdded": "Duty added",
+    "colDutyIncluded": "Duty in prices",
+    "colOrders": "Orders",
+    "noRows": "Nothing delivered this month.",
+    "total": "Total",
+    "licencesTitle": "Licences",
+    "licencesIntro": "To buy alcohol, tobacco or vaping products you need a valid licence. Upload it here and FIRINGI checks it.",
+    "covered": "Covered",
+    "notCovered": "Missing",
+    "notNeeded": "No licence is needed in your country.",
+    "warnOnly": "Without a licence you can still order, but FIRINGI may ask for it.",
+    "blockInfo": "Without a valid licence these products are hidden and can't be ordered.",
+    "upload": "Upload a licence",
+    "licenceType": "Licence",
+    "number": "Licence number",
+    "issuer": "Issued by",
+    "issuedOn": "Issued on",
+    "expiresOn": "Valid until",
+    "file": "File (PDF or photo)",
+    "send": "Send for review",
+    "sent": "Sent — FIRINGI will check it",
+    "withdraw": "Withdraw",
+    "yourLicences": "Your licences",
+    "none": "No licences yet.",
+    "status": {
+      "PENDING": "Waiting for FIRINGI",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "EXPIRED": "Expired",
+      "REVOKED": "Revoked"
+    },
+    "superseded": "Replaced",
+    "daysLeft": "{days} days left",
+    "fbNote": "FIRINGI: {note}",
+    "download": "File",
+    "dutyAdded": "+ {amount} excise duty",
+    "dutyIncluded": "incl. {amount} excise duty",
+    "licenceWarn": "You have no licence for this",
+    "restricted": "Not sold to your country",
+    "maxPerOrder": "At most {n} per order",
+    "cartTitle": "Excise duty",
+    "cartAdded": "Added by FIRINGI (+ VAT)",
+    "cartIncluded": "Already in the prices",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Add a licence",
+    "issue": {
+      "LICENCE": "You need an approved licence to buy {category}.",
+      "COUNTRY": "{category}: this product can't be sold to your country.",
+      "QTY_CAP": "{category}: at most {max} per order."
+    },
+    "orderTitle": "Licensed goods & excise",
+    "perUnit": "per unit",
+    "checked": "Licence / ID checked by the driver: {by} · {date}",
+    "notChecked": "Licence / ID not checked yet",
+    "docTitle": "Accompanying document",
+    "docType": "Type",
+    "docRef": "Reference",
+    "doc": {
+      "E_DA": "e-DA",
+      "E_SAD": "e-SAD",
+      "SAAD": "SAAD",
+      "DSA": "DSA",
+      "OTHER": "Other"
+    },
+    "noDoc": "No document recorded",
+    "checkLicence": "I checked the customer's licence / ID (alcohol, tobacco)"
   }
 }

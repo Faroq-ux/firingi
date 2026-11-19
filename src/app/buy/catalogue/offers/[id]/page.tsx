@@ -25,6 +25,9 @@ import { ProductCatchWeight } from "@/components/catchweight/views";
 import { cwLabels } from "@/components/catchweight/labels";
 import { offerColdBadges } from "@/server/coldchain/service";
 import { ColdBadge } from "@/components/coldchain/views";
+import { offerBadges as exciseBadges } from "@/server/excise/service";
+import { ExciseBadge } from "@/components/excise/views";
+import { exLabels } from "@/components/excise/labels";
 
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await pagePortal("buy");
@@ -36,6 +39,8 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const [rt, rl, cwm, cl] = await Promise.all([offerReturnables([id], locale), rtLabels(), offerCatchWeight([id]), cwLabels()]);
   const cw = cwm.get(id) ?? null; // Phase 41: sold by weight
   const cold = (await offerColdBadges([id], locale)).get(id) ?? null; // Phase 42: chilled / frozen
+  const ex = (await exciseBadges(ctx, [{ offerId: id, unitPriceNet: item.price ? Number(item.price.unitPriceNet) : null }], locale)).get(id) ?? null; // Phase 43: licensed / excise goods
+  const exl = ex ? (await exLabels()).l : null;
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -53,6 +58,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
               <Badge variant="secondary">{pickLocalized(item.packaging.name, locale)}</Badge>
               {cold && <ColdBadge cls={cold} />}
+              {ex && exl && <ExciseBadge b={ex} l={exl} locale={locale} full />}
               {bb && <Badge variant="warning" data-testid="best-before">{ti("bestBeforeDate", { date: new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(bb) })}</Badge>}
 
               {item.restriction && <Badge variant="warning">{t(`restricted.${item.restriction}`)}</Badge>}

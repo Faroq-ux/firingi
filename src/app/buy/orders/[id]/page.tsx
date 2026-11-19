@@ -16,6 +16,7 @@ import { CLAIM_STATUS_TONE } from "@/components/claims/views";
 import { OrderDepositsCard } from "@/components/returnables/views";
 import { OrderWeightsCard } from "@/components/catchweight/views";
 import { OrderColdCard } from "@/components/coldchain/views";
+import { OrderExciseCard } from "@/components/excise/views";
 
 export default async function Page({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ placed?: string }> }) {
   const ctx = await pagePortal("buy");
@@ -33,7 +34,7 @@ export default async function Page({ params, searchParams }: { params: Promise<{
     <>
       <OrderDetail ctx={ctx} id={id} placed={(await searchParams).placed === "1"} />
       <div className="mt-4 flex justify-end"><SaveOrderAsList orderId={id} number={order.order.number} /></div>
-      <div id="weights"><OrderWeightsCard ctx={ctx} orderId={id} as="BUYER" /></div><OrderColdCard ctx={ctx} orderId={id} as="BUYER" />
+      <div id="weights"><OrderWeightsCard ctx={ctx} orderId={id} as="BUYER" /></div><OrderColdCard ctx={ctx} orderId={id} as="BUYER" /><OrderExciseCard ctx={ctx} orderId={id} as="BUYER" />
       <OrderDepositsCard orderId={id} status={order.order.status} />
       {tc && (
         <Card className="mt-6" data-testid="order-claims">

@@ -858,7 +858,10 @@
     "Weighing": "Wiegen",
     "Temperature": "Temperatur",
     "Cold Chain": "Kühlkette",
-    "Receiving Log": "Wareneingangsprotokoll"
+    "Receiving Log": "Wareneingangsprotokoll",
+    "Licensed Goods": "Lizenzpflichtige Waren",
+    "Excise Report": "Verbrauchsteuer-Bericht",
+    "Licences": "Lizenzen"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Gerät fällig: {equipment}",
       "body": "Fällig oder überfällig: {tasks}. Tragen Sie es unter Kühlkette ein."
+    },
+    "excise_licence_review": {
+      "title": "Lizenz zu prüfen: {company}",
+      "body": "{company} hat „{licence}“ hochgeladen. Prüfen Sie sie unter Kunden › Lizenzen."
+    },
+    "excise_licence_decided": {
+      "title": "Ihre Lizenz: {status}",
+      "body": "„{licence}“ — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Ihre Lizenz endet am {date}",
+      "body": "„{licence}“ endet in {days} Tagen. Laden Sie die neue unter Unternehmen › Lizenzen hoch, um weiter bestellen zu können."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Storniert",
       "RETURNED": "Retourniert",
       "EXCEPTION": "Problem"
-    }
+    },
+    "licenceCheck": "Ich habe die Lizenz / den Ausweis des Kunden geprüft (Alkohol, Tabak)"
   },
   "returnables": {
     "emptiesTitle": "Leergut & Pfand",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Geräte überfällig",
     "loadingTitle": "Temperatur beim Verladen",
     "breaches30": "Kühlkettenverstöße bei Ihren Bestellungen (30 Tage): {n}"
+  },
+  "excise": {
+    "productsTitle": "Lizenzpflichtige Waren",
+    "productsIntro": "Alkohol, Tabak, Dampferprodukte und zuckerhaltige Getränke unterliegen Verbrauchsteuern. Geben Sie die Angaben an, die FIRINGI für jedes Produkt braucht, und ob die Steuer bereits in Ihrem Preis enthalten ist.",
+    "colProduct": "Produkt",
+    "colCategory": "Verbrauchsteuer-Kategorie",
+    "fromCategory": "Aus der Kategorie: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Liter pro Einheit",
+    "exciseUnits": "Stück pro Einheit",
+    "netKg": "Tabak (kg pro Einheit)",
+    "sugarGPerL": "Zucker (g pro Liter)",
+    "dutyMode": "Steuer",
+    "mode": {
+      "PAID": "Im Preis enthalten",
+      "ADDED": "Von FIRINGI aufgeschlagen"
+    },
+    "countries": "Nur in diese Länder",
+    "countriesHint": "Ländercodes, z. B. PT ES — leer = alle",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "missing": "Fehlt: {fields}",
+    "dutyUnit": "Steuer pro Einheit: {amount}",
+    "noRate": "Noch kein Steuersatz für Ihr Land",
+    "noProducts": "Keines Ihrer Produkte ist lizenzpflichtig oder verbrauchsteuerpflichtig.",
+    "calcOff": "Ihre Preise müssen die Steuer enthalten.",
+    "authTitle": "Ihre Verbrauchsteuer-Erlaubnis",
+    "authIntro": "Um Alkohol, Tabak oder Dampferprodukte zu verkaufen, halten Sie Ihre Verbrauchsteuer-Erlaubnis (Steuerlager oder registrierter Empfänger) aktuell.",
+    "authLink": "Laden Sie sie unter Unternehmen › Compliance hoch",
+    "field": {
+      "abv": "Alkohol %",
+      "volumeL": "Liter",
+      "exciseUnits": "Stück",
+      "netKg": "kg",
+      "sugarGPerL": "Zucker"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tabak",
+      "VAPING": "Dampfen",
+      "SUGAR": "Zuckerhaltige Getränke"
+    },
+    "reportTitle": "Verbrauchsteuer-Bericht",
+    "reportIntro": "Jeden Monat gelieferte lizenzpflichtige Waren: Mengen, Liter reiner Alkohol, Stück, kg und Steuer — für Ihre Verbrauchsteuer-Erklärungen.",
+    "month": "Monat",
+    "downloadPdf": "PDF herunterladen",
+    "downloadCsv": "CSV herunterladen",
+    "colCountry": "Land",
+    "colUnits": "Einheiten",
+    "colLitres": "Liter",
+    "colLpa": "Liter reiner Alkohol",
+    "colPieces": "Stück",
+    "colKg": "kg",
+    "colDutyAdded": "Steuer aufgeschlagen",
+    "colDutyIncluded": "Steuer in Preisen",
+    "colOrders": "Bestellungen",
+    "noRows": "Diesen Monat nichts geliefert.",
+    "total": "Summe",
+    "licencesTitle": "Lizenzen",
+    "licencesIntro": "Um Alkohol, Tabak oder Dampferprodukte zu kaufen, brauchen Sie eine gültige Lizenz. Laden Sie sie hier hoch, FIRINGI prüft sie.",
+    "covered": "Abgedeckt",
+    "notCovered": "Fehlt",
+    "notNeeded": "In Ihrem Land ist keine Lizenz nötig.",
+    "warnOnly": "Ohne Lizenz können Sie weiter bestellen, aber FIRINGI kann sie verlangen.",
+    "blockInfo": "Ohne gültige Lizenz sind diese Produkte ausgeblendet und können nicht bestellt werden.",
+    "upload": "Lizenz hochladen",
+    "licenceType": "Lizenz",
+    "number": "Lizenznummer",
+    "issuer": "Ausgestellt von",
+    "issuedOn": "Ausgestellt am",
+    "expiresOn": "Gültig bis",
+    "file": "Datei (PDF oder Foto)",
+    "send": "Zur Prüfung senden",
+    "sent": "Gesendet — FIRINGI prüft sie",
+    "withdraw": "Zurückziehen",
+    "yourLicences": "Ihre Lizenzen",
+    "none": "Noch keine Lizenzen.",
+    "status": {
+      "PENDING": "Wartet auf FIRINGI",
+      "APPROVED": "Genehmigt",
+      "REJECTED": "Abgelehnt",
+      "EXPIRED": "Abgelaufen",
+      "REVOKED": "Widerrufen"
+    },
+    "superseded": "Ersetzt",
+    "daysLeft": "Noch {days} Tage",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Datei",
+    "dutyAdded": "+ {amount} Verbrauchsteuer",
+    "dutyIncluded": "inkl. {amount} Verbrauchsteuer",
+    "licenceWarn": "Sie haben dafür keine Lizenz",
+    "restricted": "Nicht in Ihr Land verkauft",
+    "maxPerOrder": "Höchstens {n} pro Bestellung",
+    "cartTitle": "Verbrauchsteuer",
+    "cartAdded": "Von FIRINGI aufgeschlagen (+ MwSt.)",
+    "cartIncluded": "Bereits in den Preisen enthalten",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Lizenz hinzufügen",
+    "issue": {
+      "LICENCE": "Sie brauchen eine genehmigte Lizenz, um {category} zu kaufen.",
+      "COUNTRY": "{category}: Dieses Produkt kann nicht in Ihr Land verkauft werden.",
+      "QTY_CAP": "{category}: höchstens {max} pro Bestellung."
+    },
+    "orderTitle": "Lizenzpflichtige Waren & Verbrauchsteuer",
+    "perUnit": "pro Einheit",
+    "checked": "Lizenz / Ausweis vom Fahrer geprüft: {by} · {date}",
+    "notChecked": "Lizenz / Ausweis noch nicht geprüft",
+    "docTitle": "Begleitdokument",
+    "docType": "Art",
+    "docRef": "Referenz",
+    "doc": {
+      "E_DA": "e-VD",
+      "E_SAD": "e-DAU",
+      "SAAD": "VVD",
+      "DSA": "Vereinfachtes VD",
+      "OTHER": "Sonstiges"
+    },
+    "noDoc": "Kein Dokument erfasst",
+    "checkLicence": "Ich habe die Lizenz / den Ausweis des Kunden geprüft (Alkohol, Tabak)"
   }
 }

@@ -58,6 +58,8 @@ model Category {
   imageKey             String?
   /// Phase 42: default temperature class of the products in this category (children inherit)
   tempClassId          String?
+  /// Phase 43: excise category of the products in this category (children inherit)
+  exciseCategoryId     String?
   isActive             Boolean      @default(true)
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
@@ -66,6 +68,7 @@ model Category {
   children           Category[]        @relation("CategoryTree")
   defaultTaxCategory TaxCategory?      @relation(fields: [defaultTaxCategoryId], references: [id])
   tempClass          TempClass?        @relation(fields: [tempClassId], references: [id])
+  exciseCategory     ExciseCategory?   @relation(fields: [exciseCategoryId], references: [id])
   products           Product[]
   commissionRules    CommissionRule[]
   promotionTargets   PromotionTarget[]
@@ -190,6 +193,22 @@ model VendorOffer {
   /// Phase 42: temperature class chosen by the supplier (null = the category's)
   tempClassId           String?
   tempClass             TempClass?       @relation(fields: [tempClassId], references: [id])
+  /// Phase 43: excise — category (null = the shop category's), measures per sold unit, duty mode
+  exciseCategoryId      String?
+  exciseCategory        ExciseCategory?  @relation(fields: [exciseCategoryId], references: [id])
+  /// alcohol % vol
+  abv                   Decimal?         @db.Decimal(5, 2)
+  /// litres of product in one sold unit (a 24 × 33 cl pack = 7.92)
+  volumeL               Decimal?         @db.Decimal(10, 3)
+  /// cigarettes / cigars in one sold unit
+  exciseUnits           Int?
+  /// kg of tobacco in one sold unit
+  netKg                 Decimal?         @db.Decimal(10, 3)
+  /// sugar, g per litre
+  sugarGPerL            Decimal?         @db.Decimal(7, 2)
+  dutyMode              DutyMode         @default(PAID)
+  /// buyer countries this product may be sold to (empty = no restriction)
+  exciseCountries       String[]
   createdAt             DateTime         @default(now())
   updatedAt             DateTime         @updatedAt
 

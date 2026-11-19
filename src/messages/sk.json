@@ -858,7 +858,10 @@
     "Weighing": "Váženie",
     "Temperature": "Teplota",
     "Cold Chain": "Chladiaci Reťazec",
-    "Receiving Log": "Záznam príjmu"
+    "Receiving Log": "Záznam príjmu",
+    "Licensed Goods": "Licencovaný tovar",
+    "Excise Report": "Prehľad spotrebnej dane",
+    "Licences": "Licencie"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Zariadenie na údržbu: {equipment}",
       "body": "Naplánované alebo po termíne: {tasks}. Zaznamenajte to v Chladiacom reťazci."
+    },
+    "excise_licence_review": {
+      "title": "Licencia na kontrolu: {company}",
+      "body": "{company} nahral(a) „{licence}“. Skontrolujte ju v Zákazníci › Licencie."
+    },
+    "excise_licence_decided": {
+      "title": "Vaša licencia: {status}",
+      "body": "„{licence}“ — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Vaša licencia vyprší {date}",
+      "body": "„{licence}“ vyprší o {days} dní. Nahrajte novú v Firma › Licencie, aby ste mohli ďalej objednávať."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Zrušená",
       "RETURNED": "Vrátená",
       "EXCEPTION": "Problém"
-    }
+    },
+    "licenceCheck": "Skontroloval/a som licenciu / doklad zákazníka (alkohol, tabak)"
   },
   "returnables": {
     "emptiesTitle": "Obaly a zálohy",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Zariadenia po termíne",
     "loadingTitle": "Teplota pri nakládke",
     "breaches30": "Porušenia chladiaceho reťazca na vašich objednávkach (30 dní): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licencovaný tovar",
+    "productsIntro": "Alkohol, tabak, produkty na vapovanie a sladené nápoje podliehajú spotrebnej dani. Pri každom produkte uveďte údaje, ktoré FIRINGI potrebuje, a či je daň už vo vašej cene.",
+    "colProduct": "Produkt",
+    "colCategory": "Kategória spotrebnej dane",
+    "fromCategory": "Z kategórie: {cat}",
+    "abv": "Alkohol (% obj.)",
+    "volumeL": "Litre na jednotku",
+    "exciseUnits": "Kusy na jednotku",
+    "netKg": "Tabak (kg na jednotku)",
+    "sugarGPerL": "Cukor (g na liter)",
+    "dutyMode": "Daň",
+    "mode": {
+      "PAID": "V cene",
+      "ADDED": "Pripočíta FIRINGI"
+    },
+    "countries": "Len do týchto krajín",
+    "countriesHint": "Kódy krajín, napr. PT ES — prázdne = všetky",
+    "save": "Uložiť",
+    "saved": "Uložené",
+    "missing": "Chýba: {fields}",
+    "dutyUnit": "Daň za jednotku: {amount}",
+    "noRate": "Pre vašu krajinu zatiaľ nie je sadzba",
+    "noProducts": "Žiadny z vašich produktov nie je licencovaný ani spotrebný.",
+    "calcOff": "Vaše ceny musia obsahovať daň.",
+    "authTitle": "Vaše povolenie na spotrebnú daň",
+    "authIntro": "Na predaj alkoholu, tabaku či produktov na vapovanie udržiavajte aktuálne povolenie (daňový sklad alebo registrovaný príjemca).",
+    "authLink": "Nahrajte ho v Firma › Súlad",
+    "field": {
+      "abv": "% alkoholu",
+      "volumeL": "litre",
+      "exciseUnits": "kusy",
+      "netKg": "kg",
+      "sugarGPerL": "cukor"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tabak",
+      "VAPING": "Vapovanie",
+      "SUGAR": "Sladené nápoje"
+    },
+    "reportTitle": "Prehľad spotrebnej dane",
+    "reportIntro": "Licencovaný tovar dodaný každý mesiac: množstvá, litre čistého alkoholu, kusy, kg a daň — pre vaše daňové priznania.",
+    "month": "Mesiac",
+    "downloadPdf": "Stiahnuť PDF",
+    "downloadCsv": "Stiahnuť CSV",
+    "colCountry": "Krajina",
+    "colUnits": "Jednotky",
+    "colLitres": "Litre",
+    "colLpa": "Litre čistého alkoholu",
+    "colPieces": "Kusy",
+    "colKg": "kg",
+    "colDutyAdded": "Pripočítaná daň",
+    "colDutyIncluded": "Daň v cenách",
+    "colOrders": "Objednávky",
+    "noRows": "Tento mesiac sa nič nedodalo.",
+    "total": "Spolu",
+    "licencesTitle": "Licencie",
+    "licencesIntro": "Na nákup alkoholu, tabaku či produktov na vapovanie potrebujete platnú licenciu. Nahrajte ju sem a FIRINGI ju skontroluje.",
+    "covered": "Pokryté",
+    "notCovered": "Chýba",
+    "notNeeded": "Vo vašej krajine licencia nie je potrebná.",
+    "warnOnly": "Bez licencie môžete naďalej objednávať, ale FIRINGI si ju môže vyžiadať.",
+    "blockInfo": "Bez platnej licencie sú tieto produkty skryté a nedajú sa objednať.",
+    "upload": "Nahrať licenciu",
+    "licenceType": "Licencia",
+    "number": "Číslo licencie",
+    "issuer": "Vydal",
+    "issuedOn": "Vydaná",
+    "expiresOn": "Platná do",
+    "file": "Súbor (PDF alebo fotka)",
+    "send": "Odoslať na kontrolu",
+    "sent": "Odoslané — FIRINGI ju skontroluje",
+    "withdraw": "Stiahnuť späť",
+    "yourLicences": "Vaše licencie",
+    "none": "Zatiaľ žiadne licencie.",
+    "status": {
+      "PENDING": "Čaká na FIRINGI",
+      "APPROVED": "Schválená",
+      "REJECTED": "Zamietnutá",
+      "EXPIRED": "Platnosť skončila",
+      "REVOKED": "Zrušená"
+    },
+    "superseded": "Nahradená",
+    "daysLeft": "Zostáva {days} dní",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Súbor",
+    "dutyAdded": "+ {amount} spotrebnej dane",
+    "dutyIncluded": "vrátane {amount} spotrebnej dane",
+    "licenceWarn": "Na toto nemáte licenciu",
+    "restricted": "Do vašej krajiny sa nepredáva",
+    "maxPerOrder": "Najviac {n} na objednávku",
+    "cartTitle": "Spotrebná daň",
+    "cartAdded": "Pripočíta FIRINGI (+ DPH)",
+    "cartIncluded": "Už v cenách",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Pridať licenciu",
+    "issue": {
+      "LICENCE": "Na nákup kategórie {category} potrebujete schválenú licenciu.",
+      "COUNTRY": "{category}: tento produkt nemožno predať do vašej krajiny.",
+      "QTY_CAP": "{category}: najviac {max} na objednávku."
+    },
+    "orderTitle": "Licencovaný tovar a spotrebná daň",
+    "perUnit": "za jednotku",
+    "checked": "Licenciu / doklad skontroloval vodič: {by} · {date}",
+    "notChecked": "Licencia / doklad zatiaľ neskontrolované",
+    "docTitle": "Sprievodný doklad",
+    "docType": "Druh",
+    "docRef": "Číslo",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-SAD",
+      "SAAD": "ZSD",
+      "DSA": "Zjednodušený doklad",
+      "OTHER": "Iné"
+    },
+    "noDoc": "Žiadny zaznamenaný doklad",
+    "checkLicence": "Skontroloval/a som licenciu / doklad zákazníka (alkohol, tabak)"
   }
 }

@@ -858,7 +858,10 @@
     "Weighing": "Vigtun",
     "Temperature": "Hitastig",
     "Cold Chain": "Kælikeðja",
-    "Receiving Log": "Móttökuskrá"
+    "Receiving Log": "Móttökuskrá",
+    "Licensed Goods": "Leyfisvörur",
+    "Excise Report": "Vörugjaldaskýrsla",
+    "Licences": "Leyfi"
   },
   "delivery": {
     "title": "Afhending",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Búnaður á gjalddaga: {equipment}",
       "body": "Á gjalddaga eða kominn fram yfir: {tasks}. Skráðu það í Kælikeðju."
+    },
+    "excise_licence_review": {
+      "title": "Leyfi til yfirferðar: {company}",
+      "body": "{company} hlóð upp „{licence}“. Farðu yfir það undir Viðskiptavinir › Leyfi."
+    },
+    "excise_licence_decided": {
+      "title": "Leyfið þitt: {status}",
+      "body": "„{licence}“ — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Leyfið þitt rennur út {date}",
+      "body": "„{licence}“ rennur út eftir {days} daga. Hladdu upp nýja leyfinu undir Fyrirtæki › Leyfi til að geta haldið áfram að panta."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Hætt við",
       "RETURNED": "Skilað",
       "EXCEPTION": "Vandamál"
-    }
+    },
+    "licenceCheck": "Ég athugaði leyfi / skilríki viðskiptavinarins (áfengi, tóbak)"
   },
   "returnables": {
     "emptiesTitle": "Umbúðir og skilagjald",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Búnaður kominn fram yfir",
     "loadingTitle": "Hitastig við lestun",
     "breaches30": "Rof á kælikeðju á pöntunum þínum (30 dagar): {n}"
+  },
+  "excise": {
+    "productsTitle": "Leyfisvörur",
+    "productsIntro": "Áfengi, tóbak, gufuvörur og sykraðir drykkir bera vörugjöld. Gefðu upp þær upplýsingar sem FIRINGI þarf um hverja vöru og hvort gjaldið sé þegar í verðinu.",
+    "colProduct": "Vara",
+    "colCategory": "Gjaldflokkur",
+    "fromCategory": "Úr flokknum: {cat}",
+    "abv": "Áfengi (% vol)",
+    "volumeL": "Lítrar á einingu",
+    "exciseUnits": "Stykki á einingu",
+    "netKg": "Tóbak (kg á einingu)",
+    "sugarGPerL": "Sykur (g á lítra)",
+    "dutyMode": "Gjald",
+    "mode": {
+      "PAID": "Í verðinu",
+      "ADDED": "FIRINGI bætir við"
+    },
+    "countries": "Aðeins til þessara landa",
+    "countriesHint": "Landskóðar, t.d. PT ES — autt = öll",
+    "save": "Vista",
+    "saved": "Vistað",
+    "missing": "Vantar: {fields}",
+    "dutyUnit": "Gjald á einingu: {amount}",
+    "noRate": "Ekkert gjald enn fyrir þitt land",
+    "noProducts": "Engin af vörunum þínum er leyfis- eða gjaldskyld.",
+    "calcOff": "Verðin þín verða að innihalda gjaldið.",
+    "authTitle": "Vörugjaldsleyfið þitt",
+    "authIntro": "Til að selja áfengi, tóbak eða gufuvörur skaltu halda vörugjaldsleyfinu þínu (tollvörugeymsla eða skráður viðtakandi) uppfærðu.",
+    "authLink": "Hladdu því upp undir Fyrirtæki › Regluvarsla",
+    "field": {
+      "abv": "áfengi %",
+      "volumeL": "lítrar",
+      "exciseUnits": "stykki",
+      "netKg": "kg",
+      "sugarGPerL": "sykur"
+    },
+    "kind": {
+      "ALCOHOL": "Áfengi",
+      "TOBACCO": "Tóbak",
+      "VAPING": "Gufa",
+      "SUGAR": "Sykraðir drykkir"
+    },
+    "reportTitle": "Vörugjaldaskýrsla",
+    "reportIntro": "Leyfisvörur afhentar í hverjum mánuði: magn, lítrar af hreinu áfengi, stykki, kg og gjald — fyrir vörugjaldaskýrslurnar þínar.",
+    "month": "Mánuður",
+    "downloadPdf": "Sækja PDF",
+    "downloadCsv": "Sækja CSV",
+    "colCountry": "Land",
+    "colUnits": "Einingar",
+    "colLitres": "Lítrar",
+    "colLpa": "Lítrar af hreinu áfengi",
+    "colPieces": "Stykki",
+    "colKg": "kg",
+    "colDutyAdded": "Gjald bætt við",
+    "colDutyIncluded": "Gjald í verðum",
+    "colOrders": "Pantanir",
+    "noRows": "Ekkert afhent í þessum mánuði.",
+    "total": "Samtals",
+    "licencesTitle": "Leyfi",
+    "licencesIntro": "Til að kaupa áfengi, tóbak eða gufuvörur þarftu gilt leyfi. Hladdu því upp hér og FIRINGI fer yfir það.",
+    "covered": "Uppfyllt",
+    "notCovered": "Vantar",
+    "notNeeded": "Í þínu landi þarf ekkert leyfi.",
+    "warnOnly": "Án leyfis geturðu enn pantað, en FIRINGI getur beðið um það.",
+    "blockInfo": "Án gilds leyfis eru þessar vörur faldar og ekki hægt að panta þær.",
+    "upload": "Hlaða upp leyfi",
+    "licenceType": "Leyfi",
+    "number": "Leyfisnúmer",
+    "issuer": "Útgefið af",
+    "issuedOn": "Útgefið",
+    "expiresOn": "Gildir til",
+    "file": "Skrá (PDF eða mynd)",
+    "send": "Senda til yfirferðar",
+    "sent": "Sent — FIRINGI fer yfir það",
+    "withdraw": "Draga til baka",
+    "yourLicences": "Leyfin þín",
+    "none": "Engin leyfi enn.",
+    "status": {
+      "PENDING": "Bíður eftir FIRINGI",
+      "APPROVED": "Samþykkt",
+      "REJECTED": "Hafnað",
+      "EXPIRED": "Útrunnið",
+      "REVOKED": "Afturkallað"
+    },
+    "superseded": "Skipt út",
+    "daysLeft": "{days} dagar eftir",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Skrá",
+    "dutyAdded": "+ {amount} í vörugjöld",
+    "dutyIncluded": "þar af {amount} í vörugjöld",
+    "licenceWarn": "Þú ert ekki með leyfi fyrir þessu",
+    "restricted": "Ekki selt til þíns lands",
+    "maxPerOrder": "Í mesta lagi {n} í pöntun",
+    "cartTitle": "Vörugjöld",
+    "cartAdded": "FIRINGI bætir við (+ VSK)",
+    "cartIncluded": "Þegar í verðunum",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Bæta við leyfi",
+    "issue": {
+      "LICENCE": "Þú þarft samþykkt leyfi til að kaupa {category}.",
+      "COUNTRY": "{category}: þessa vöru má ekki selja til þíns lands.",
+      "QTY_CAP": "{category}: í mesta lagi {max} í pöntun."
+    },
+    "orderTitle": "Leyfisvörur og vörugjöld",
+    "perUnit": "á einingu",
+    "checked": "Bílstjórinn athugaði leyfi / skilríki: {by} · {date}",
+    "notChecked": "Leyfi / skilríki ekki enn athuguð",
+    "docTitle": "Fylgiskjal",
+    "docType": "Tegund",
+    "docRef": "Tilvísun",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-SAD",
+      "SAAD": "SAAD",
+      "DSA": "Einfaldað fylgiskjal",
+      "OTHER": "Annað"
+    },
+    "noDoc": "Ekkert skjal skráð",
+    "checkLicence": "Ég athugaði leyfi / skilríki viðskiptavinarins (áfengi, tóbak)"
   }
 }

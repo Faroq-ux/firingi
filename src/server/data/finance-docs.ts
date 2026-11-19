@@ -17,7 +17,7 @@ export async function invoicePdfData(ctx: Ctx, id: string): Promise<InvoicePdfDa
     certified: inv.fiscalStatus === "DONE" && inv.externalProvider === "moloni", orderNumber: inv.order?.number ?? null,
     branch: inv.order?.branch?.name ?? null, costCentre: inv.order?.costCentre ?? null, poReference: inv.order?.poReference ?? null, originalNumber: inv.originalInvoice?.providerNumber ?? inv.originalInvoice?.fullNumber ?? null,
     reason: recipient.reason ?? null, taxRegime: inv.taxRegime, issuer, recipient, taxLabel: taxLabel(issuer.country ?? "PT"),
-    lines: inv.lines.map((l) => ({ description: l.description, qty: l.qty.toString(), unitPriceNet: l.unitPriceNet.toString(), discountNet: l.discountNet.toString(), taxRate: l.taxRate.toString(), lineNet: l.lineNet.toString() })),
+    lines: inv.lines.map((l) => ({ description: l.description, qty: l.qty.toString(), unitPriceNet: l.unitPriceNet.toString(), discountNet: l.discountNet.toString(), taxRate: l.taxRate.toString(), lineNet: l.lineNet.toString(), exciseNet: l.exciseNet.toString() })),
     taxSummary: inv.taxSummary.map((t) => ({ taxRate: t.taxRate.toString(), base: t.base.toString(), vat: t.vat.toString() })),
     netTotal: inv.netTotal.toString(), vatTotal: inv.vatTotal.toString(), grossTotal: inv.grossTotal.toString(),
   };

@@ -14,6 +14,10 @@ import { CwBadge } from "@/components/catchweight/views";
 import { cwLabels } from "@/components/catchweight/labels";
 import { offerColdBadges } from "@/server/coldchain/service";
 import { ColdBadge } from "@/components/coldchain/views";
+import { getContext } from "@/server/context";
+import { offerBadges as exciseBadges } from "@/server/excise/service";
+import { ExciseBadge } from "@/components/excise/views";
+import { exLabels } from "@/components/excise/labels";
 
 export async function StockBadge({ status }: { status: CatalogueItem["stockStatus"] }) {
   const t = await getTranslations("catalogue");
@@ -39,6 +43,9 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
   const cw = (await offerCatchWeight([item.offerId])).get(item.offerId) ?? null;
   const cl = cw ? (await cwLabels()).l : null;
   const cold = (await offerColdBadges([item.offerId], locale)).get(item.offerId) ?? null; // Phase 42
+  const cctx = await getContext();
+  const ex = cctx ? (await exciseBadges(cctx, [{ offerId: item.offerId, unitPriceNet: item.price ? Number(item.price.unitPriceNet) : null }], locale)).get(item.offerId) ?? null : null; // Phase 43
+  const exl = ex ? (await exLabels()).l : null;
   return (
     <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
@@ -51,6 +58,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="line-clamp-2 font-semibold leading-snug group-hover:text-primary">{pickLocalized(item.name, locale)}</div>
         <div className="text-xs text-muted-foreground">{pickLocalized(item.packaging.name, locale)}</div>
         {cold && <div><ColdBadge cls={cold} /></div>}
+        {ex && exl && <div><ExciseBadge b={ex} l={exl} locale={locale} /></div>}
         <Codes item={item} />
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />

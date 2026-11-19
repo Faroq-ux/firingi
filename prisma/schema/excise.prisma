@@ -1,0 +1,121 @@
+// Phase 43 — licensed & excise goods: alcohol (beer, wine, spirits…), tobacco, vaping and sugary drinks.
+// FIRINGI keeps the excise categories (switchable per kind), the rates per country and the licence types;
+// suppliers give the excise details per product; customers (and suppliers, through Phase 28 certificates)
+// hold licences that FIRINGI reviews. Duty is either already in the supplier's price (PAID — shown on the
+// invoice) or calculated by FIRINGI and added as its own line (ADDED).
+
+enum ExciseKind {
+  ALCOHOL
+  TOBACCO
+  VAPING
+  SUGAR
+}
+
+/// How the duty of one sold unit is measured.
+enum ExciseBasis {
+  HL_PURE_ALCOHOL // € per hectolitre of pure alcohol (spirits)
+  HL_PER_ABV // € per hectolitre per % vol (beer)
+  HL_PRODUCT // € per hectolitre of product (wine, intermediate products)
+  THOUSAND_UNITS // € per 1000 units (cigarettes, cigars) + optional % of the price
+  KG // € per kg (rolling tobacco) + optional % of the price
+  ML // € per ml of liquid (e-liquids)
+  HL_SUGAR_BAND // € per hectolitre by sugar band (soft drinks)
+}
+
+enum DutyMode {
+  PAID // duty already in the supplier's price; shown on the invoice
+  ADDED // FIRINGI calculates the duty and adds it as its own line
+}
+
+/// An excise category FIRINGI keeps (beer, spirits, cigarettes…). Shop categories point to one.
+model ExciseCategory {
+  id               String      @id
+  code             String      @unique
+  name             Json
+  kind             ExciseKind
+  basis            ExciseBasis
+  /// most units of this category per order line (null = no cap)
+  maxPerOrder      Int?
+  /// buyer countries it can't be sold to (ISO codes)
+  blockedCountries String[]
+  active           Boolean     @default(true)
+  sortOrder        Int         @default(0)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  rates      ExciseRate[]
+  categories Category[]
+  offers     VendorOffer[]
+  orderLines OrderLine[]
+}
+
+/// A duty rate per buyer country (valid from a date; the newest valid one applies).
+model ExciseRate {
+  id           String    @id @default(cuid())
+  categoryId   String
+  countryCode  String
+  /// € per basis unit (per hl, per 1000 units, per kg, per ml); ignored for sugar bands
+  rate         Decimal   @db.Decimal(18, 6)
+  /// tobacco: % of the unit price on top of the specific duty
+  adValoremPct Decimal?  @db.Decimal(6, 3)
+  /// sugar: [{ "maxGPerL": 25, "perHl": 1.13 }, …, { "maxGPerL": null, "perHl": 22.76 }]
+  bands        Json?
+  validFrom    DateTime  @db.Date
+  validTo      DateTime? @db.Date
+  note         String?
+  createdAt    DateTime  @default(now())
+
+  category ExciseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId, countryCode, validFrom])
+}
+
+/// A kind of licence customers need (alcohol sale, tobacco sale…), for some kinds and countries.
+model LicenceType {
+  id          String       @id
+  code        String       @unique
+  name        Json
+  kinds       ExciseKind[]
+  /// buyer countries it is asked in (empty = all)
+  countries   String[]
+  needsNumber Boolean      @default(true)
+  hasExpiry   Boolean      @default(true)
+  active      Boolean      @default(true)
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  licences CustomerLicence[]
+}
+
+/// A licence a customer uploaded (or FIRINGI recorded). Counts once approved and until it expires.
+model CustomerLicence {
+  id           String       @id @default(cuid())
+  companyId    String
+  typeId       String
+  number       String?
+  issuer       String?
+  countryCode  String
+  issuedOn     DateTime?    @db.Date
+  expiresOn    DateTime?    @db.Date
+  fileKey      String?
+  fileName     String?
+  mimeType     String?
+  sizeBytes    Int?
+  status       ReviewStatus @default(PENDING)
+  reviewNote   String?
+  reviewedById String?
+  reviewedAt   DateTime?
+  /// days-before-expiry reminders already sent (30 / 14 / 7)
+  remindedDays Int[]
+  supersededAt DateTime?
+  uploadedById String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  company Company     @relation("CompanyLicences", fields: [companyId], references: [id], onDelete: Cascade)
+  type    LicenceType @relation(fields: [typeId], references: [id], onDelete: Restrict)
+
+  @@index([companyId, typeId])
+  @@index([status, expiresOn])
+}

@@ -160,6 +160,9 @@ export const EVENTS: EventDef[] = [
   E("coldchain.breach", "orders", ["vendor.orders.manage", "admin.orders.manage"], ["EMAIL", "PUSH"], ["number", "incident", "temp", "range", "stage", "decision"]),
   E("coldchain.logger_alert", "deliveries", ["vendor.vehicles.manage", "vendor.inventory.manage", "admin.fleet.manage"], ["EMAIL", "PUSH", "SMS"], ["logger", "minutes", "temp", "range"]),
   E("coldchain.equipment_due", "deliveries", ["vendor.vehicles.manage", "vendor.inventory.manage", "admin.fleet.manage"], ["EMAIL", "PUSH"], ["equipment", "tasks"]),
+  E("excise.licence_review", "account", ["admin.customers.manage", "admin.vendors.approve"], ["EMAIL", "PUSH"], ["company", "licence"]),
+  E("excise.licence_decided", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "status", "note"]),
+  E("excise.licence_expiring", "account", ["company.documents.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["licence", "date", "days"]),
   // sold by weight (Phase 41)
   E("catchweight.over_limit", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "product", "weighed", "max"]),
   E("catchweight.over_accepted", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number"]),

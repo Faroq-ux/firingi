@@ -858,7 +858,10 @@
     "Weighing": "Punnitus",
     "Temperature": "Lämpötila",
     "Cold Chain": "Kylmäketju",
-    "Receiving Log": "Vastaanottoloki"
+    "Receiving Log": "Vastaanottoloki",
+    "Licensed Goods": "Lupatuotteet",
+    "Excise Report": "Valmisteveroraportti",
+    "Licences": "Luvat"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Laitteen huolto erääntyy: {equipment}",
       "body": "Erääntyy tai myöhässä: {tasks}. Kirjaa se kohtaan Kylmäketju."
+    },
+    "excise_licence_review": {
+      "title": "Tarkistettava lupa: {company}",
+      "body": "{company} latasi \"{licence}\". Tarkista se kohdassa Asiakkaat › Luvat."
+    },
+    "excise_licence_decided": {
+      "title": "Lupasi: {status}",
+      "body": "\"{licence}\" — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Lupasi päättyy {date}",
+      "body": "\"{licence}\" päättyy {days} päivän päästä. Lataa uusi kohdassa Yritys › Luvat, jotta voit jatkaa tilaamista."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Peruttu",
       "RETURNED": "Palautettu",
       "EXCEPTION": "Ongelma"
-    }
+    },
+    "licenceCheck": "Tarkistin asiakkaan luvan / henkilöllisyyden (alkoholi, tupakka)"
   },
   "returnables": {
     "emptiesTitle": "Tyhjät & panttit",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Myöhässä olevat laitteet",
     "loadingTitle": "Lämpötila lastauksessa",
     "breaches30": "Kylmäketjun katkokset tilauksissasi (30 päivää): {n}"
+  },
+  "excise": {
+    "productsTitle": "Lupatuotteet",
+    "productsIntro": "Alkoholista, tupakasta, höyrytystuotteista ja sokeripitoisista juomista maksetaan valmisteveroa. Anna kustakin tuotteesta tiedot, joita FIRINGI tarvitsee, ja kerro, sisältyykö vero jo hintaasi.",
+    "colProduct": "Tuote",
+    "colCategory": "Valmisteveroluokka",
+    "fromCategory": "Luokasta: {cat}",
+    "abv": "Alkoholi (til-%)",
+    "volumeL": "Litraa yksikköä kohden",
+    "exciseUnits": "Kappaletta yksikköä kohden",
+    "netKg": "Tupakka (kg yksikköä kohden)",
+    "sugarGPerL": "Sokeri (g litrassa)",
+    "dutyMode": "Vero",
+    "mode": {
+      "PAID": "Hinnassa",
+      "ADDED": "FIRINGI lisää"
+    },
+    "countries": "Vain näihin maihin",
+    "countriesHint": "Maakoodit, esim. PT ES — tyhjä = kaikki",
+    "save": "Tallenna",
+    "saved": "Tallennettu",
+    "missing": "Puuttuu: {fields}",
+    "dutyUnit": "Vero yksikköä kohden: {amount}",
+    "noRate": "Maallesi ei vielä ole veroa",
+    "noProducts": "Mikään tuotteistasi ei ole luvanvarainen tai valmisteveron alainen.",
+    "calcOff": "Hintojesi on sisällettävä vero.",
+    "authTitle": "Valmistevero-lupasi",
+    "authIntro": "Myydäksesi alkoholia, tupakkaa tai höyrytystuotteita pidä valmistevero-lupasi (verovarasto tai rekisteröity vastaanottaja) ajan tasalla.",
+    "authLink": "Lataa se kohdassa Yritys › Vaatimustenmukaisuus",
+    "field": {
+      "abv": "alkoholi-%",
+      "volumeL": "litrat",
+      "exciseUnits": "kappaleet",
+      "netKg": "kg",
+      "sugarGPerL": "sokeri"
+    },
+    "kind": {
+      "ALCOHOL": "Alkoholi",
+      "TOBACCO": "Tupakka",
+      "VAPING": "Höyrytys",
+      "SUGAR": "Sokerijuomat"
+    },
+    "reportTitle": "Valmisteveroraportti",
+    "reportIntro": "Kunakin kuukautena toimitetut lupatuotteet: määrät, puhtaan alkoholin litrat, kappaleet, kg ja vero — valmisteveroilmoituksiasi varten.",
+    "month": "Kuukausi",
+    "downloadPdf": "Lataa PDF",
+    "downloadCsv": "Lataa CSV",
+    "colCountry": "Maa",
+    "colUnits": "Yksiköt",
+    "colLitres": "Litrat",
+    "colLpa": "Puhtaan alkoholin litrat",
+    "colPieces": "Kappaleet",
+    "colKg": "kg",
+    "colDutyAdded": "Lisätty vero",
+    "colDutyIncluded": "Vero hinnoissa",
+    "colOrders": "Tilaukset",
+    "noRows": "Tässä kuussa ei toimituksia.",
+    "total": "Yhteensä",
+    "licencesTitle": "Luvat",
+    "licencesIntro": "Alkoholin, tupakan tai höyrytystuotteiden ostamiseen tarvitset voimassa olevan luvan. Lataa se tähän, niin FIRINGI tarkistaa sen.",
+    "covered": "Katettu",
+    "notCovered": "Puuttuu",
+    "notNeeded": "Maassasi ei tarvita lupaa.",
+    "warnOnly": "Ilman lupaa voit edelleen tilata, mutta FIRINGI voi pyytää sitä.",
+    "blockInfo": "Ilman voimassa olevaa lupaa nämä tuotteet ovat piilossa eikä niitä voi tilata.",
+    "upload": "Lataa lupa",
+    "licenceType": "Lupa",
+    "number": "Luvan numero",
+    "issuer": "Myöntäjä",
+    "issuedOn": "Myönnetty",
+    "expiresOn": "Voimassa asti",
+    "file": "Tiedosto (PDF tai kuva)",
+    "send": "Lähetä tarkistettavaksi",
+    "sent": "Lähetetty — FIRINGI tarkistaa sen",
+    "withdraw": "Peru",
+    "yourLicences": "Lupasi",
+    "none": "Ei vielä lupia.",
+    "status": {
+      "PENDING": "Odottaa FIRINGIä",
+      "APPROVED": "Hyväksytty",
+      "REJECTED": "Hylätty",
+      "EXPIRED": "Vanhentunut",
+      "REVOKED": "Peruttu"
+    },
+    "superseded": "Korvattu",
+    "daysLeft": "{days} päivää jäljellä",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Tiedosto",
+    "dutyAdded": "+ {amount} valmisteveroa",
+    "dutyIncluded": "sis. {amount} valmisteveroa",
+    "licenceWarn": "Sinulla ei ole tähän lupaa",
+    "restricted": "Ei myydä maahasi",
+    "maxPerOrder": "Enintään {n} tilausta kohden",
+    "cartTitle": "Valmistevero",
+    "cartAdded": "FIRINGI lisää (+ ALV)",
+    "cartIncluded": "Sisältyy jo hintoihin",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Lisää lupa",
+    "issue": {
+      "LICENCE": "Tarvitset hyväksytyn luvan ostaaksesi: {category}.",
+      "COUNTRY": "{category}: tätä tuotetta ei voi myydä maahasi.",
+      "QTY_CAP": "{category}: enintään {max} tilausta kohden."
+    },
+    "orderTitle": "Lupatuotteet ja valmistevero",
+    "perUnit": "yksikköä kohden",
+    "checked": "Kuljettaja tarkisti luvan / henkilöllisyyden: {by} · {date}",
+    "notChecked": "Lupaa / henkilöllisyyttä ei ole vielä tarkistettu",
+    "docTitle": "Saateasiakirja",
+    "docType": "Tyyppi",
+    "docRef": "Viite",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-SAD",
+      "SAAD": "YSA",
+      "DSA": "Yksinkertaistettu saateasiakirja",
+      "OTHER": "Muu"
+    },
+    "noDoc": "Asiakirjaa ei ole kirjattu",
+    "checkLicence": "Tarkistin asiakkaan luvan / henkilöllisyyden (alkoholi, tupakka)"
   }
 }

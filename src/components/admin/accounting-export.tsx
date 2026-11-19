@@ -8,7 +8,7 @@ import { CountUp } from "@/components/motion/count-up";
 import { accountingPreviewAction, saveAccountMapAction } from "@/server/actions/integrations";
 
 type Journal = "SALES" | "CREDIT_NOTES" | "RECEIPTS" | "SUPPLIER_INVOICES" | "PAYOUTS";
-type Map = { customers: string; suppliers: string; sales: string; purchases: string; bank: string; cash: string; cardClearing: string; vatOutput: Record<string, string>; vatInput: Record<string, string>; perPartner: boolean; journals: Record<Journal, string>; decimal: "comma" | "dot" };
+type Map = { customers: string; suppliers: string; sales: string; purchases: string; bank: string; cash: string; cardClearing: string; excise: string; vatOutput: Record<string, string>; vatInput: Record<string, string>; perPartner: boolean; journals: Record<Journal, string>; decimal: "comma" | "dot" };
 type Preview = { byJournal: { journal: Journal; label: string; count: number; net: string; vat: string; gross: string }[]; documents: number; entries: number; debit: string; credit: string; balanced: boolean; sample: { headers: string[]; rows: (string | number | null)[][] } };
 
 const TONES: Record<Journal, string> = { SALES: "tone-blue", CREDIT_NOTES: "tone-pink", RECEIPTS: "tone-teal", SUPPLIER_INVOICES: "tone-violet", PAYOUTS: "tone-orange" };
@@ -84,7 +84,7 @@ export function AccountingExport({ journals, formats, mapping }: { journals: { k
       <details className="rounded-2xl border bg-card p-4">
         <summary className="flex cursor-pointer items-center gap-2 font-semibold"><Settings2 className="size-4" aria-hidden />Chart of accounts (SNC defaults — confirm with your accountant)</summary>
         <div className="mt-4 grid gap-3 sm:grid-cols-4 lg:grid-cols-7">
-          {acc("customers", "Customers")}{acc("suppliers", "Suppliers")}{acc("sales", "Sales")}{acc("purchases", "Purchases")}{acc("bank", "Bank")}{acc("cash", "Cash")}{acc("cardClearing", "Card / MB WAY clearing")}
+          {acc("customers", "Customers")}{acc("suppliers", "Suppliers")}{acc("sales", "Sales")}{acc("purchases", "Purchases")}{acc("bank", "Bank")}{acc("cash", "Cash")}{acc("cardClearing", "Card / MB WAY clearing")}{acc("excise", "Excise duty (empty = in sales)")}
         </div>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {(["vatOutput", "vatInput"] as const).map((k) => (

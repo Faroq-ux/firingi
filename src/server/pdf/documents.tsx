@@ -32,7 +32,7 @@ export type InvoicePdfData = {
   /** Phase 27: the buyer's branch, cost centre and PO reference */
   branch?: string | null; costCentre?: string | null; poReference?: string | null;
   issuer: Party; recipient: Party;
-  lines: { description: string; qty: string; unitPriceNet: string; discountNet: string; taxRate: string; lineNet: string }[];
+  lines: { description: string; qty: string; unitPriceNet: string; discountNet: string; taxRate: string; lineNet: string; exciseNet?: string }[];
   taxSummary: { taxRate: string; base: string; vat: string }[];
   netTotal: string; vatTotal: string; grossTotal: string; taxLabel: string;
 };
@@ -100,7 +100,7 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
           </View>
           {d.lines.map((l, k) => (
             <View key={k} style={s.row} wrap={false}>
-              <Text style={[s.td, { width: `${cols[0]}%` }]}>{l.description}</Text>
+              <Text style={[s.td, { width: `${cols[0]}%` }]}>{l.description}{Number(l.exciseNet ?? 0) > 0 && !l.description.startsWith("Imposto especial de consumo") ? `\nInclui IEC / incl. excise duty: ${eur(l.exciseNet!)}` : ""}</Text>
               <Text style={[s.td, { width: `${cols[1]}%`, textAlign: "right" }]}>{qtyFmt(l.qty)}</Text>
               <Text style={[s.td, { width: `${cols[2]}%`, textAlign: "right" }]}>{eur(l.unitPriceNet)}</Text>
               <Text style={[s.td, { width: `${cols[3]}%`, textAlign: "right" }]}>{Number(l.discountNet) ? eur(l.discountNet) : "—"}</Text>

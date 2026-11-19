@@ -858,7 +858,10 @@
     "Weighing": "Pesatura",
     "Temperature": "Temperatura",
     "Cold Chain": "Catena del Freddo",
-    "Receiving Log": "Registro Ricevimento"
+    "Receiving Log": "Registro Ricevimento",
+    "Licensed Goods": "Prodotti con Licenza",
+    "Excise Report": "Rapporto Accise",
+    "Licences": "Licenze"
   },
   "delivery": {
     "title": "Consegna",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Attrezzatura in scadenza: {equipment}",
       "body": "In scadenza o scaduto: {tasks}. Registralo in Catena del Freddo."
+    },
+    "excise_licence_review": {
+      "title": "Licenza da verificare: {company}",
+      "body": "{company} ha caricato \"{licence}\". Verificala in Clienti › Licenze."
+    },
+    "excise_licence_decided": {
+      "title": "La tua licenza: {status}",
+      "body": "\"{licence}\" — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "La tua licenza scade il {date}",
+      "body": "\"{licence}\" scade tra {days} giorni. Carica quella nuova in Azienda › Licenze per continuare a ordinare."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Annullato",
       "RETURNED": "Reso",
       "EXCEPTION": "Problema"
-    }
+    },
+    "licenceCheck": "Ho verificato la licenza / il documento del cliente (alcol, tabacco)"
   },
   "returnables": {
     "emptiesTitle": "Vuoti e cauzioni",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Attrezzature scadute",
     "loadingTitle": "Temperatura al carico",
     "breaches30": "Interruzioni della catena del freddo sui tuoi ordini (30 giorni): {n}"
+  },
+  "excise": {
+    "productsTitle": "Prodotti con Licenza",
+    "productsIntro": "Alcolici, tabacco, prodotti da svapo e bevande zuccherate pagano le accise. Indica le misure di cui FIRINGI ha bisogno per ogni prodotto e se l'accisa è già nel tuo prezzo.",
+    "colProduct": "Prodotto",
+    "colCategory": "Categoria di accisa",
+    "fromCategory": "Dalla categoria: {cat}",
+    "abv": "Alcol (% vol)",
+    "volumeL": "Litri per unità",
+    "exciseUnits": "Pezzi per unità",
+    "netKg": "Tabacco (kg per unità)",
+    "sugarGPerL": "Zucchero (g per litro)",
+    "dutyMode": "Accisa",
+    "mode": {
+      "PAID": "Inclusa nel prezzo",
+      "ADDED": "Aggiunta da FIRINGI"
+    },
+    "countries": "Solo verso questi paesi",
+    "countriesHint": "Codici paese, es. PT ES — vuoto = tutti",
+    "save": "Salva",
+    "saved": "Salvato",
+    "missing": "Mancano: {fields}",
+    "dutyUnit": "Accisa per unità: {amount}",
+    "noRate": "Ancora nessuna aliquota per il tuo paese",
+    "noProducts": "Nessuno dei tuoi prodotti è soggetto a licenza o accisa.",
+    "calcOff": "I tuoi prezzi devono includere l'accisa.",
+    "authTitle": "La tua autorizzazione accise",
+    "authIntro": "Per vendere alcolici, tabacco o prodotti da svapo, mantieni aggiornata la tua autorizzazione accise (deposito fiscale o destinatario registrato).",
+    "authLink": "Caricala in Azienda › Conformità",
+    "field": {
+      "abv": "% di alcol",
+      "volumeL": "litri",
+      "exciseUnits": "pezzi",
+      "netKg": "kg",
+      "sugarGPerL": "zucchero"
+    },
+    "kind": {
+      "ALCOHOL": "Alcol",
+      "TOBACCO": "Tabacco",
+      "VAPING": "Svapo",
+      "SUGAR": "Bevande zuccherate"
+    },
+    "reportTitle": "Rapporto Accise",
+    "reportIntro": "Prodotti con licenza consegnati ogni mese: quantità, litri di alcol puro, pezzi, kg e accisa — per le tue dichiarazioni.",
+    "month": "Mese",
+    "downloadPdf": "Scarica PDF",
+    "downloadCsv": "Scarica CSV",
+    "colCountry": "Paese",
+    "colUnits": "Unità",
+    "colLitres": "Litri",
+    "colLpa": "Litri di alcol puro",
+    "colPieces": "Pezzi",
+    "colKg": "kg",
+    "colDutyAdded": "Accisa aggiunta",
+    "colDutyIncluded": "Accisa nei prezzi",
+    "colOrders": "Ordini",
+    "noRows": "Niente consegnato questo mese.",
+    "total": "Totale",
+    "licencesTitle": "Licenze",
+    "licencesIntro": "Per acquistare alcolici, tabacco o prodotti da svapo serve una licenza valida. Caricala qui e FIRINGI la verifica.",
+    "covered": "Coperto",
+    "notCovered": "Mancante",
+    "notNeeded": "Nel tuo paese non serve una licenza.",
+    "warnOnly": "Senza licenza puoi ancora ordinare, ma FIRINGI può chiederla.",
+    "blockInfo": "Senza una licenza valida questi prodotti sono nascosti e non si possono ordinare.",
+    "upload": "Carica una licenza",
+    "licenceType": "Licenza",
+    "number": "Numero di licenza",
+    "issuer": "Rilasciata da",
+    "issuedOn": "Rilasciata il",
+    "expiresOn": "Valida fino al",
+    "file": "File (PDF o foto)",
+    "send": "Invia per verifica",
+    "sent": "Inviata — FIRINGI la verificherà",
+    "withdraw": "Ritira",
+    "yourLicences": "Le tue licenze",
+    "none": "Ancora nessuna licenza.",
+    "status": {
+      "PENDING": "In attesa di FIRINGI",
+      "APPROVED": "Approvata",
+      "REJECTED": "Respinta",
+      "EXPIRED": "Scaduta",
+      "REVOKED": "Revocata"
+    },
+    "superseded": "Sostituita",
+    "daysLeft": "Mancano {days} giorni",
+    "fbNote": "FIRINGI: {note}",
+    "download": "File",
+    "dutyAdded": "+ {amount} di accisa",
+    "dutyIncluded": "incl. {amount} di accisa",
+    "licenceWarn": "Non hai una licenza per questo",
+    "restricted": "Non venduto nel tuo paese",
+    "maxPerOrder": "Al massimo {n} per ordine",
+    "cartTitle": "Accisa",
+    "cartAdded": "Aggiunta da FIRINGI (+ IVA)",
+    "cartIncluded": "Già inclusa nei prezzi",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Aggiungi una licenza",
+    "issue": {
+      "LICENCE": "Ti serve una licenza approvata per acquistare {category}.",
+      "COUNTRY": "{category}: questo prodotto non può essere venduto nel tuo paese.",
+      "QTY_CAP": "{category}: al massimo {max} per ordine."
+    },
+    "orderTitle": "Prodotti con licenza e accise",
+    "perUnit": "per unità",
+    "checked": "Licenza / documento verificato dall'autista: {by} · {date}",
+    "notChecked": "Licenza / documento non ancora verificato",
+    "docTitle": "Documento di accompagnamento",
+    "docType": "Tipo",
+    "docRef": "Riferimento",
+    "doc": {
+      "E_DA": "e-DA",
+      "E_SAD": "e-DAU",
+      "SAAD": "DAS",
+      "DSA": "DAS semplificato",
+      "OTHER": "Altro"
+    },
+    "noDoc": "Nessun documento registrato",
+    "checkLicence": "Ho verificato la licenza / il documento del cliente (alcol, tabacco)"
   }
 }

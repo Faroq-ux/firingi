@@ -858,7 +858,10 @@
     "Weighing": "Kaalumine",
     "Temperature": "Temperatuur",
     "Cold Chain": "Külmaahel",
-    "Receiving Log": "Vastuvõtulogi"
+    "Receiving Log": "Vastuvõtulogi",
+    "Licensed Goods": "Litsentsikaubad",
+    "Excise Report": "Aktsiisiaruanne",
+    "Licences": "Litsentsid"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Seadme tähtaeg: {equipment}",
       "body": "Tähtaeg või hilinenud: {tasks}. Salvestage see jaotises Külmaahel."
+    },
+    "excise_licence_review": {
+      "title": "Kontrollitav litsents: {company}",
+      "body": "{company} laadis üles „{licence}“. Kontrollige seda: Kliendid › Litsentsid."
+    },
+    "excise_licence_decided": {
+      "title": "Teie litsents: {status}",
+      "body": "„{licence}“ — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Teie litsents lõpeb {date}",
+      "body": "„{licence}“ lõpeb {days} päeva pärast. Laadige uus üles: Ettevõte › Litsentsid, et saaksite edasi tellida."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Tühistatud",
       "RETURNED": "Tagastatud",
       "EXCEPTION": "Probleem"
-    }
+    },
+    "licenceCheck": "Kontrollisin kliendi litsentsi / dokumenti (alkohol, tubakas)"
   },
   "returnables": {
     "emptiesTitle": "Tühi taara ja pant",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Hilinenud seadmed",
     "loadingTitle": "Temperatuur laadimisel",
     "breaches30": "Külmaahela rikkumised teie tellimustel (30 päeva): {n}"
+  },
+  "excise": {
+    "productsTitle": "Litsentsikaubad",
+    "productsIntro": "Alkohol, tubakas, aurutamistooted ja suhkrujoogid kuuluvad aktsiisi alla. Märkige iga toote kohta andmed, mida FIRINGI vajab, ja kas aktsiis on juba teie hinnas.",
+    "colProduct": "Toode",
+    "colCategory": "Aktsiisikategooria",
+    "fromCategory": "Kategooriast: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Liitrit ühiku kohta",
+    "exciseUnits": "Tükki ühiku kohta",
+    "netKg": "Tubakas (kg ühiku kohta)",
+    "sugarGPerL": "Suhkur (g liitri kohta)",
+    "dutyMode": "Aktsiis",
+    "mode": {
+      "PAID": "Hinnas",
+      "ADDED": "FIRINGI lisab"
+    },
+    "countries": "Ainult nendesse riikidesse",
+    "countriesHint": "Riigikoodid, nt PT ES — tühi = kõik",
+    "save": "Salvesta",
+    "saved": "Salvestatud",
+    "missing": "Puudu: {fields}",
+    "dutyUnit": "Aktsiis ühiku kohta: {amount}",
+    "noRate": "Teie riigile pole veel määra",
+    "noProducts": "Ükski teie toode pole litsentsi- ega aktsiisikohustuslik.",
+    "calcOff": "Teie hinnad peavad aktsiisi sisaldama.",
+    "authTitle": "Teie aktsiisiluba",
+    "authIntro": "Alkoholi, tubaka või aurutamistoodete müümiseks hoidke oma aktsiisiluba (aktsiisiladu või registreeritud kaubasaaja) ajakohasena.",
+    "authLink": "Laadige see üles: Ettevõte › Vastavus",
+    "field": {
+      "abv": "alkoholi %",
+      "volumeL": "liitrid",
+      "exciseUnits": "tükid",
+      "netKg": "kg",
+      "sugarGPerL": "suhkur"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tubakas",
+      "VAPING": "Aurutamine",
+      "SUGAR": "Suhkrujoogid"
+    },
+    "reportTitle": "Aktsiisiaruanne",
+    "reportIntro": "Igal kuul tarnitud litsentsikaubad: kogused, absoluutalkoholi liitrid, tükid, kg ja aktsiis — teie aktsiisideklaratsioonide jaoks.",
+    "month": "Kuu",
+    "downloadPdf": "Laadi PDF alla",
+    "downloadCsv": "Laadi CSV alla",
+    "colCountry": "Riik",
+    "colUnits": "Ühikud",
+    "colLitres": "Liitrid",
+    "colLpa": "Absoluutalkoholi liitrid",
+    "colPieces": "Tükid",
+    "colKg": "kg",
+    "colDutyAdded": "Lisatud aktsiis",
+    "colDutyIncluded": "Aktsiis hindades",
+    "colOrders": "Tellimused",
+    "noRows": "Sel kuul ei tarnitud midagi.",
+    "total": "Kokku",
+    "licencesTitle": "Litsentsid",
+    "licencesIntro": "Alkoholi, tubaka või aurutamistoodete ostmiseks on vaja kehtivat litsentsi. Laadige see siia üles ja FIRINGI kontrollib seda.",
+    "covered": "Kaetud",
+    "notCovered": "Puudub",
+    "notNeeded": "Teie riigis pole litsentsi vaja.",
+    "warnOnly": "Litsentsita saate edasi tellida, kuid FIRINGI võib seda küsida.",
+    "blockInfo": "Kehtiva litsentsita on need tooted peidetud ja neid ei saa tellida.",
+    "upload": "Laadi litsents üles",
+    "licenceType": "Litsents",
+    "number": "Litsentsi number",
+    "issuer": "Väljaandja",
+    "issuedOn": "Välja antud",
+    "expiresOn": "Kehtib kuni",
+    "file": "Fail (PDF või foto)",
+    "send": "Saada kontrolli",
+    "sent": "Saadetud — FIRINGI kontrollib seda",
+    "withdraw": "Võta tagasi",
+    "yourLicences": "Teie litsentsid",
+    "none": "Litsentse veel pole.",
+    "status": {
+      "PENDING": "Ootab FIRINGI-t",
+      "APPROVED": "Kinnitatud",
+      "REJECTED": "Tagasi lükatud",
+      "EXPIRED": "Aegunud",
+      "REVOKED": "Tühistatud"
+    },
+    "superseded": "Asendatud",
+    "daysLeft": "{days} päeva jäänud",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fail",
+    "dutyAdded": "+ {amount} aktsiisi",
+    "dutyIncluded": "sh {amount} aktsiisi",
+    "licenceWarn": "Teil pole selleks litsentsi",
+    "restricted": "Teie riiki ei müüda",
+    "maxPerOrder": "Kuni {n} tellimuse kohta",
+    "cartTitle": "Aktsiis",
+    "cartAdded": "FIRINGI lisab (+ käibemaks)",
+    "cartIncluded": "Juba hindades",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Lisa litsents",
+    "issue": {
+      "LICENCE": "Kategooria {category} ostmiseks on vaja kinnitatud litsentsi.",
+      "COUNTRY": "{category}: seda toodet ei saa teie riiki müüa.",
+      "QTY_CAP": "{category}: kuni {max} tellimuse kohta."
+    },
+    "orderTitle": "Litsentsikaubad ja aktsiis",
+    "perUnit": "ühiku kohta",
+    "checked": "Juht kontrollis litsentsi / isikut tõendavat dokumenti: {by} · {date}",
+    "notChecked": "Litsentsi / dokumenti pole veel kontrollitud",
+    "docTitle": "Saatedokument",
+    "docType": "Liik",
+    "docRef": "Viide",
+    "doc": {
+      "E_DA": "e-HD",
+      "E_SAD": "e-ED",
+      "SAAD": "LSD",
+      "DSA": "Lihtsustatud saatedokument",
+      "OTHER": "Muu"
+    },
+    "noDoc": "Dokumenti pole registreeritud",
+    "checkLicence": "Kontrollisin kliendi litsentsi / dokumenti (alkohol, tubakas)"
   }
 }

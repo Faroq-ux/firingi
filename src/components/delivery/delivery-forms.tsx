@@ -185,10 +185,11 @@ function SignaturePad({ onChange }: { onChange: (dataUrl: string | null) => void
   );
 }
 
-export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weights, weightLabels, locale, cold, coldLabels }: {
+export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weights, weightLabels, locale, cold, coldLabels, licenceCheck }: {
   deliveryId: string; empties?: StopItem[]; emptiesLabels?: Record<string, string>;
   /** Phase 41: sold-by-weight lines the driver may weigh again */ weights?: { correction: boolean; lines: StopWeightLine[] }; weightLabels?: Record<string, string>; locale?: string;
   /** Phase 42: cold classes to record at the handover */ cold?: { refuse: boolean; block: boolean; required: boolean; classes: Cls[] }; coldLabels?: Record<string, string>;
+  /** Phase 43: licensed goods — the driver confirms the licence / ID check (label in the driver's language) */ licenceCheck?: string;
 }) {
   const t = useTranslations("delivery");
   const { pending, error, run } = useAct();
@@ -199,6 +200,7 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weigh
   const [acceptOver, setAcceptOver] = useState(false);
   const [temps, setTemps] = useState<Record<string, string>>({});
   const [refused, setRefused] = useState<string[]>([]);
+  const [checked, setChecked] = useState(false);
   const [sig, setSig] = useState<string | null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
   const { loc, ask } = useLocation();
@@ -214,6 +216,7 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weigh
       if (acceptOver) fd.set("acceptOver", "true");
       for (const [cid, v] of Object.entries(temps)) if (v.trim()) fd.set(`temp:${cid}`, v.trim());
       for (const cid of refused) fd.append("refuse", cid);
+      if (checked) fd.set("licenceChecked", "true");
       return completeDeliveryAction(fd);
     });
   return (
@@ -222,10 +225,11 @@ export function CompleteDeliveryForm({ deliveryId, empties, emptiesLabels, weigh
       <SignaturePad onChange={setSig} />
       {empties && empties.length > 0 && emptiesLabels && <EmptiesCounter l={emptiesLabels} items={empties} value={counted} onChange={setCounted} />}
       {cold && coldLabels && <HandoverTemps l={coldLabels} classes={cold.classes} value={temps} onChange={setTemps} refused={refused} onRefuse={setRefused} refuse={cold.refuse} block={cold.block} required={cold.required} />}
+      {licenceCheck && <label className="flex items-start gap-2 rounded-xl border p-3 text-sm" data-testid="licence-check"><input type="checkbox" className="mt-0.5 size-5" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> {licenceCheck}</label>}
       {weights && weightLabels && <StopWeights l={weightLabels} locale={locale ?? "pt-PT"} lines={weights.lines} correction={weights.correction} value={kg} onChange={setKg} accept={acceptOver} onAccept={setAcceptOver} />}
       <div className="space-y-1"><Label htmlFor="photos">{t("addPhotos")}</Label><Input id="photos" type="file" accept="image/*" capture="environment" multiple onChange={(e) => setPhotos([...(e.target.files ?? [])].slice(0, 4))} /></div>
       <Button type="button" variant="outline" size="sm" onClick={ask} disabled={!!loc}>{loc ? t("locationAdded") : t("useLocation")}</Button>
-      <Button className="h-12 w-full text-base" disabled={pending || name.trim().length < 2 || (!sig && !photos.length)} onClick={submit}>{t("confirmDelivery")}</Button>
+      <Button className="h-12 w-full text-base" disabled={pending || name.trim().length < 2 || (!sig && !photos.length) || (!!licenceCheck && !checked)} onClick={submit}>{t("confirmDelivery")}</Button>
       <Err e={error} />
     </div>
   );

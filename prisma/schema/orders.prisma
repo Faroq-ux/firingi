@@ -68,6 +68,10 @@ model CartItem {
 model Order {
   id                    String        @id @default(cuid())
   number                String        @unique // FO-2026-000001
+  /// Phase 43: excise added by FIRINGI (own lines, VAT at the goods rate) and excise already in the prices
+  exciseAddedNet        Decimal       @default(0) @db.Decimal(18, 2)
+  exciseAddedVat        Decimal       @default(0) @db.Decimal(18, 2)
+  exciseIncludedNet     Decimal       @default(0) @db.Decimal(18, 2)
   flow                  OrderFlow
   buyerCompanyId        String
   sellerCompanyId       String
@@ -204,6 +208,13 @@ model OrderLine {
   /// Phase 42: temperature class at checkout (null = ambient)
   tempClassId       String?
   tempClass         TempClass?       @relation(fields: [tempClassId], references: [id])
+  /// Phase 43: excise at checkout — category, mode, duty per unit and on the line, measures per unit
+  exciseCategoryId  String?
+  exciseCategory    ExciseCategory?  @relation(fields: [exciseCategoryId], references: [id])
+  exciseMode        DutyMode?
+  exciseUnitNet     Decimal?         @db.Decimal(18, 4)
+  exciseNet         Decimal          @default(0) @db.Decimal(18, 2)
+  exciseMeasure     Json?
 
   order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
   offer          VendorOffer         @relation(fields: [offerId], references: [id])

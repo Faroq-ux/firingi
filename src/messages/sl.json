@@ -858,7 +858,10 @@
     "Weighing": "Tehtanje",
     "Temperature": "Temperatura",
     "Cold Chain": "Hladna Veriga",
-    "Receiving Log": "Evidenca prevzema"
+    "Receiving Log": "Evidenca prevzema",
+    "Licensed Goods": "Licencirano blago",
+    "Excise Report": "Poročilo o trošarinah",
+    "Licences": "Licence"
   },
   "delivery": {
     "title": "Dostava",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Oprema zapade: {equipment}",
       "body": "Zapade ali zamuja: {tasks}. Zabeležite to v Hladni verigi."
+    },
+    "excise_licence_review": {
+      "title": "Licenca za pregled: {company}",
+      "body": "{company} je naložil(a) »{licence}«. Preverite jo v Stranke › Licence."
+    },
+    "excise_licence_decided": {
+      "title": "Vaša licenca: {status}",
+      "body": "»{licence}« — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Vaša licenca poteče {date}",
+      "body": "»{licence}« poteče čez {days} dni. Naložite novo v Podjetje › Licence, da boste lahko še naprej naročali."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Preklicano",
       "RETURNED": "Vrnjeno",
       "EXCEPTION": "Težava"
-    }
+    },
+    "licenceCheck": "Preveril/a sem licenco / dokument stranke (alkohol, tobak)"
   },
   "returnables": {
     "emptiesTitle": "Embalaža in kavcije",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Oprema z zamudo",
     "loadingTitle": "Temperatura pri nakladanju",
     "breaches30": "Kršitve hladne verige pri vaših naročilih (30 dni): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licencirano blago",
+    "productsIntro": "Alkohol, tobak, izdelki za vejpanje in sladkane pijače so obdavčeni s trošarino. Za vsak izdelek navedite podatke, ki jih FIRINGI potrebuje, in ali je trošarina že v vaši ceni.",
+    "colProduct": "Izdelek",
+    "colCategory": "Kategorija trošarine",
+    "fromCategory": "Iz kategorije: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Litri na enoto",
+    "exciseUnits": "Kosi na enoto",
+    "netKg": "Tobak (kg na enoto)",
+    "sugarGPerL": "Sladkor (g na liter)",
+    "dutyMode": "Trošarina",
+    "mode": {
+      "PAID": "V ceni",
+      "ADDED": "Doda FIRINGI"
+    },
+    "countries": "Samo v te države",
+    "countriesHint": "Kode držav, npr. PT ES — prazno = vse",
+    "save": "Shrani",
+    "saved": "Shranjeno",
+    "missing": "Manjka: {fields}",
+    "dutyUnit": "Trošarina na enoto: {amount}",
+    "noRate": "Za vašo državo še ni stopnje",
+    "noProducts": "Noben vaš izdelek ni licenciran ali trošarinski.",
+    "calcOff": "Vaše cene morajo vključevati trošarino.",
+    "authTitle": "Vaše trošarinsko dovoljenje",
+    "authIntro": "Za prodajo alkohola, tobaka ali izdelkov za vejpanje imejte posodobljeno trošarinsko dovoljenje (trošarinsko skladišče ali registrirani prejemnik).",
+    "authLink": "Naložite ga v Podjetje › Skladnost",
+    "field": {
+      "abv": "% alkohola",
+      "volumeL": "litri",
+      "exciseUnits": "kosi",
+      "netKg": "kg",
+      "sugarGPerL": "sladkor"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tobak",
+      "VAPING": "Vejpanje",
+      "SUGAR": "Sladkane pijače"
+    },
+    "reportTitle": "Poročilo o trošarinah",
+    "reportIntro": "Licencirano blago, dobavljeno vsak mesec: količine, litri čistega alkohola, kosi, kg in trošarina — za vaše trošarinske obračune.",
+    "month": "Mesec",
+    "downloadPdf": "Prenesi PDF",
+    "downloadCsv": "Prenesi CSV",
+    "colCountry": "Država",
+    "colUnits": "Enote",
+    "colLitres": "Litri",
+    "colLpa": "Litri čistega alkohola",
+    "colPieces": "Kosi",
+    "colKg": "kg",
+    "colDutyAdded": "Dodana trošarina",
+    "colDutyIncluded": "Trošarina v cenah",
+    "colOrders": "Naročila",
+    "noRows": "Ta mesec ni bilo dobav.",
+    "total": "Skupaj",
+    "licencesTitle": "Licence",
+    "licencesIntro": "Za nakup alkohola, tobaka ali izdelkov za vejpanje potrebujete veljavno licenco. Naložite jo tukaj in FIRINGI jo bo preveril.",
+    "covered": "Pokrito",
+    "notCovered": "Manjka",
+    "notNeeded": "V vaši državi licenca ni potrebna.",
+    "warnOnly": "Brez licence lahko še naprej naročate, vendar jo FIRINGI lahko zahteva.",
+    "blockInfo": "Brez veljavne licence so ti izdelki skriti in jih ni mogoče naročiti.",
+    "upload": "Naloži licenco",
+    "licenceType": "Licenca",
+    "number": "Številka licence",
+    "issuer": "Izdajatelj",
+    "issuedOn": "Izdana",
+    "expiresOn": "Velja do",
+    "file": "Datoteka (PDF ali fotografija)",
+    "send": "Pošlji v pregled",
+    "sent": "Poslano — FIRINGI jo bo preveril",
+    "withdraw": "Umakni",
+    "yourLicences": "Vaše licence",
+    "none": "Še ni licenc.",
+    "status": {
+      "PENDING": "Čaka na FIRINGI",
+      "APPROVED": "Odobrena",
+      "REJECTED": "Zavrnjena",
+      "EXPIRED": "Potekla",
+      "REVOKED": "Preklicana"
+    },
+    "superseded": "Nadomeščena",
+    "daysLeft": "Še {days} dni",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Datoteka",
+    "dutyAdded": "+ {amount} trošarine",
+    "dutyIncluded": "vklj. {amount} trošarine",
+    "licenceWarn": "Za to nimate licence",
+    "restricted": "Ne prodajamo v vašo državo",
+    "maxPerOrder": "Največ {n} na naročilo",
+    "cartTitle": "Trošarina",
+    "cartAdded": "Doda FIRINGI (+ DDV)",
+    "cartIncluded": "Že v cenah",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Dodaj licenco",
+    "issue": {
+      "LICENCE": "Za nakup kategorije {category} potrebujete odobreno licenco.",
+      "COUNTRY": "{category}: tega izdelka ni mogoče prodati v vašo državo.",
+      "QTY_CAP": "{category}: največ {max} na naročilo."
+    },
+    "orderTitle": "Licencirano blago in trošarina",
+    "perUnit": "na enoto",
+    "checked": "Licenco / dokument je preveril voznik: {by} · {date}",
+    "notChecked": "Licenca / dokument še nista preverjena",
+    "docTitle": "Spremni dokument",
+    "docType": "Vrsta",
+    "docRef": "Sklic",
+    "doc": {
+      "E_DA": "e-TD",
+      "E_SAD": "e-PTD",
+      "SAAD": "PSD",
+      "DSA": "Poenostavljen dokument",
+      "OTHER": "Drugo"
+    },
+    "noDoc": "Ni zabeleženega dokumenta",
+    "checkLicence": "Preveril/a sem licenco / dokument stranke (alkohol, tobak)"
   }
 }

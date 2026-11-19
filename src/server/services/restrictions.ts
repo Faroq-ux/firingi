@@ -21,7 +21,12 @@ export async function allowedRestrictions(companyId: string, now = new Date()): 
     where: { companyId, status: "APPROVED", OR: [{ validUntil: null }, { validUntil: { gt: now } }] },
     select: { restriction: true },
   });
-  return rows.map((r) => r.restriction);
+  const out = new Set<Restriction>(rows.map((r) => r.restriction));
+  // Phase 43: a licence approved under Company › Licences opens the same categories; where FIRINGI doesn't ask
+  // for a licence (or only warns), the products stay visible and the checkout decides.
+  const { licenceAccess } = await import("@/server/excise/service");
+  for (const r of await licenceAccess(companyId, now)) out.add(r);
+  return (["TOBACCO", "ALCOHOL"] as Restriction[]).filter((r) => out.has(r));
 }
 
 export async function listOwnRestrictionApprovals(ctx: Ctx) {

@@ -159,6 +159,10 @@ async function driverData(ctx: Ctx, locale: string) {
   const { stopClasses } = await import("@/server/coldchain/service");
   const cold = new Map<string, Awaited<ReturnType<typeof stopClasses>>>();
   for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") cold.set(d.id, await stopClasses(d.order.id, locale));
+  // Phase 43: licensed goods — the driver checks the customer's licence / ID at the stop
+  const { stopCheck } = await import("@/server/excise/service");
+  const licence = new Map<string, boolean>();
+  for (const d of rows) if (d.status !== "DELIVERED" && d.status !== "FAILED") licence.set(d.id, (await stopCheck(d.order.id)).required);
   return {
     canPod: can(ctx, "driver.pod.capture"),
     reasons: [...FAILURE_REASONS],
@@ -177,6 +181,7 @@ async function driverData(ctx: Ctx, locale: string) {
           empties: empties.get(d.id) ?? [],
           weights: weights.get(d.id) ?? { correction: false, lines: [] },
           cold: cold.get(d.id) ?? null,
+          licenceCheck: licence.get(d.id) ?? false,
         };
       })
       .sort((x, y) => x.sequence - y.sequence),
@@ -284,6 +289,8 @@ async function run(ctx: Ctx, kind: OfflineKind, d: Record<string, unknown>, s: A
         // Phase 42: temperatures at the handover, classes refused, offline
         temps: d.temps && typeof d.temps === "object" ? Object.fromEntries(Object.entries(d.temps as Record<string, unknown>).slice(0, 20).map(([k, v]) => [k.slice(0, 64), v as number])) : null,
         refuseClasses: Array.isArray(d.refuse) ? (d.refuse as unknown[]).slice(0, 20).map((x) => String(x).slice(0, 64)) : null,
+        // Phase 43: the driver checked the licence / ID, offline
+        licenceChecked: d.licenceChecked === true,
       });
       return { status: "DONE", result: { deliveryId: id } };
     }

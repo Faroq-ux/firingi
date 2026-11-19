@@ -189,6 +189,11 @@ model Delivery {
   assignedById       String?
   pickedUpAt         DateTime?
   completedAt        DateTime?
+  /// Phase 43: licensed goods — the driver checked the customer's licence / ID; accompanying excise document
+  exciseCheckedAt    DateTime?
+  exciseCheckedById  String?
+  exciseDocType      String?
+  exciseDocRef       String?
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
 

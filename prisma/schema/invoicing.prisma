@@ -183,6 +183,8 @@ model InvoiceLine {
   exemptionReasonId String?
   lineNet           Decimal @db.Decimal(18, 2)
   lineVat           Decimal @db.Decimal(18, 2)
+  /// Phase 43: excise in this line (in the price for PAID goods; the whole line for an added-duty line)
+  exciseNet         Decimal @default(0) @db.Decimal(18, 2)
 
   invoice         Invoice             @relation(fields: [invoiceId], references: [id])
   orderLine       OrderLine?          @relation(fields: [orderLineId], references: [id])

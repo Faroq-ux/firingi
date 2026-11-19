@@ -43,11 +43,13 @@ export const FORMAT_LABEL: Record<Format, string> = {
 
 export type AccountMap = {
   customers: string; suppliers: string; sales: string; purchases: string; bank: string; cash: string; cardClearing: string;
+  /** Phase 43: excise duty in sales (its own account; empty = stays in sales) */
+  excise: string;
   vatOutput: Record<string, string>; vatInput: Record<string, string>; perPartner: boolean;
   journals: Record<Journal, string>; decimal: "comma" | "dot";
 };
 export const DEFAULT_ACCOUNTS: AccountMap = {
-  customers: "211", suppliers: "221", sales: "711", purchases: "312", bank: "12", cash: "11", cardClearing: "278",
+  customers: "211", suppliers: "221", sales: "711", purchases: "312", bank: "12", cash: "11", cardClearing: "278", excise: "7118",
   vatOutput: { "23": "243311", "13": "243312", "6": "243313", "0": "2433", other: "2433" },
   vatInput: { "23": "243211", "13": "243212", "6": "243213", "0": "2432", other: "2432" },
   perPartner: false,
@@ -71,6 +73,7 @@ export async function saveAccountMap(ctx: Ctx, input: AccountMap) {
   requireStaff(ctx, true);
   const accounts = ["customers", "suppliers", "sales", "purchases", "bank", "cash", "cardClearing"] as const;
   for (const a of accounts) if (!ACCOUNT.test(String(input[a] ?? ""))) throw new ValidationError(`Account for ${a} should be digits only.`);
+  if (input.excise && !ACCOUNT.test(String(input.excise))) throw new ValidationError("Account for excise should be digits only.");
   for (const [r, a] of [...Object.entries(input.vatOutput ?? {}), ...Object.entries(input.vatInput ?? {})]) if (!ACCOUNT.test(a)) throw new ValidationError(`VAT account for ${r} % should be digits only.`);
   for (const j of JOURNALS) if (!/^[\w-]{1,10}$/.test(input.journals?.[j] ?? "")) throw new ValidationError(`Journal code for ${JOURNAL_LABEL[j]} is missing.`);
   const value: AccountMap = { ...DEFAULT_ACCOUNTS, ...input, perPartner: !!input.perPartner, decimal: input.decimal === "dot" ? "dot" : "comma" };
@@ -89,6 +92,8 @@ export async function saveAccountMap(ctx: Ctx, input: AccountMap) {
 export type Doc = {
   journal: Journal; date: Date; number: string; kind: string; partner: string; taxId: string; country: string;
   net: Decimal; vat: Decimal; gross: Decimal; byRate: { rate: string; base: Decimal; vat: Decimal }[]; selfAssessedVat?: Decimal;
+  /** Phase 43: excise duty inside the net (sales and credit notes) */
+  excise?: Decimal;
   dueDate: Date | null; reference: string; method?: string; status: string;
 };
 
@@ -110,7 +115,7 @@ async function collect(journals: Journal[], from: Date, toExclusive: Date, only?
     const types = [...(want.has("SALES") ? (["INVOICE", "INVOICE_RECEIPT"] as const) : []), ...(want.has("CREDIT_NOTES") ? (["CREDIT_NOTE"] as const) : [])];
     const rows = await prisma.invoice.findMany({
       where: { status: { not: "DRAFT" }, docType: { in: [...types] }, issuedAt: { gte: from, lt: toExclusive }, ...(only?.recipientCompanyId ? { recipientCompanyId: only.recipientCompanyId } : {}) },
-      include: { taxSummary: true, order: { select: { number: true } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } } },
+      include: { taxSummary: true, lines: { select: { exciseNet: true } }, order: { select: { number: true } }, originalInvoice: { select: { fullNumber: true, providerNumber: true } } },
       orderBy: [{ issuedAt: "asc" }, { number: "asc" }],
     });
     for (const r of rows) {
@@ -120,6 +125,7 @@ async function collect(journals: Journal[], from: Date, toExclusive: Date, only?
         partner: snap.name ?? "", taxId: snap.taxId ?? "", country: snap.country ?? "", net: D(r.netTotal), vat: D(r.vatTotal), gross: D(r.grossTotal),
         byRate: r.taxSummary.length ? r.taxSummary.map((t) => ({ rate: rateKey(t.taxRate), base: D(t.base), vat: D(t.vat) })) : [{ rate: "other", base: D(r.netTotal), vat: D(r.vatTotal) }],
         dueDate: r.dueAt, reference: r.docType === "CREDIT_NOTE" ? (r.originalInvoice?.providerNumber ?? r.originalInvoice?.fullNumber ?? "") : (r.order?.number ?? ""), status: r.status,
+        excise: r.lines.reduce((a, l) => a.plus(D(l.exciseNet)), new Decimal(0)),
       });
     }
   }
@@ -184,14 +190,18 @@ export function toEntries(docs: Doc[], m: AccountMap): Entry[] {
     };
     const customer = partnerAccount(m.customers, m, d.taxId), supplier = partnerAccount(m.suppliers, m, d.taxId);
     switch (d.journal) {
-      case "SALES":
+      case "SALES": {
         add(customer, d.gross, zero, "Invoice");
-        for (const r of d.byRate) { add(m.sales, zero, r.base, "Sales"); add(vatAccount(m.vatOutput, r.rate), zero, r.vat, `VAT ${r.rate}%`); }
+        let ex = m.excise && d.excise ? d.excise : zero; // Phase 43: the excise part of the sales goes to its own account
+        for (const r of d.byRate) { const part = Decimal.min(ex, r.base); ex = ex.minus(part); add(m.sales, zero, r.base.minus(part), "Sales"); if (part.gt(0)) add(m.excise, zero, part, "Excise duty"); add(vatAccount(m.vatOutput, r.rate), zero, r.vat, `VAT ${r.rate}%`); }
         break;
-      case "CREDIT_NOTES":
+      }
+      case "CREDIT_NOTES": {
         add(customer, zero, d.gross, "Credit note");
-        for (const r of d.byRate) { add(m.sales, r.base, zero, "Sales returned"); add(vatAccount(m.vatOutput, r.rate), r.vat, zero, `VAT ${r.rate}%`); }
+        let ex = m.excise && d.excise ? d.excise : zero;
+        for (const r of d.byRate) { const part = Decimal.min(ex, r.base); ex = ex.minus(part); add(m.sales, r.base.minus(part), zero, "Sales returned"); if (part.gt(0)) add(m.excise, part, zero, "Excise duty"); add(vatAccount(m.vatOutput, r.rate), r.vat, zero, `VAT ${r.rate}%`); }
         break;
+      }
       case "RECEIPTS":
         add(cashAccount(m, d.method), d.gross, zero, "Received");
         add(customer, zero, d.gross, "Received");
@@ -229,12 +239,12 @@ const n2 = (v: Decimal) => Number(v.toFixed(2));
 export function documentsTable(docs: Doc[]): Table {
   return {
     name: "Documents",
-    headers: ["Journal", "Date", "Document", "Type", "Partner", "Tax ID", "Country", "Net", "VAT", "Gross", "VAT detail", "Due date", "Reference", "Method", "Status"],
+    headers: ["Journal", "Date", "Document", "Type", "Partner", "Tax ID", "Country", "Net", "VAT", "Gross", "VAT detail", "Due date", "Reference", "Method", "Status", "Excise"],
     rows: docs.map((d) => [
       JOURNAL_LABEL[d.journal], ymd(d.date), d.number, d.kind, d.partner, d.taxId, d.country, n2(d.net), n2(d.vat), n2(d.gross),
-      d.byRate.map((r) => `${r.rate}%: ${r.base.toFixed(2)} + ${r.vat.toFixed(2)}`).join(" | "), ymd(d.dueDate), d.reference, d.method ?? "", d.status,
+      d.byRate.map((r) => `${r.rate}%: ${r.base.toFixed(2)} + ${r.vat.toFixed(2)}`).join(" | "), ymd(d.dueDate), d.reference, d.method ?? "", d.status, n2(d.excise ?? new Decimal(0)),
     ]),
-    money: [7, 8, 9],
+    money: [7, 8, 9, 15],
   };
 }
 

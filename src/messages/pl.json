@@ -858,7 +858,10 @@
     "Weighing": "Ważenie",
     "Temperature": "Temperatura",
     "Cold Chain": "Łańcuch Chłodniczy",
-    "Receiving Log": "Rejestr Przyjęć"
+    "Receiving Log": "Rejestr Przyjęć",
+    "Licensed Goods": "Towary koncesjonowane",
+    "Excise Report": "Raport akcyzowy",
+    "Licences": "Koncesje"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Termin urządzenia: {equipment}",
       "body": "W terminie lub zaległe: {tasks}. Zapisz to w Łańcuchu chłodniczym."
+    },
+    "excise_licence_review": {
+      "title": "Koncesja do sprawdzenia: {company}",
+      "body": "{company} przesłał(a) „{licence}”. Sprawdź ją w Klienci › Koncesje."
+    },
+    "excise_licence_decided": {
+      "title": "Twoja koncesja: {status}",
+      "body": "„{licence}” — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Twoja koncesja wygasa {date}",
+      "body": "„{licence}” wygasa za {days} dni. Prześlij nową w Firma › Koncesje, aby móc dalej zamawiać."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Anulowane",
       "RETURNED": "Zwrócone",
       "EXCEPTION": "Problem"
-    }
+    },
+    "licenceCheck": "Sprawdziłem/am koncesję / dokument klienta (alkohol, tytoń)"
   },
   "returnables": {
     "emptiesTitle": "Opakowania i kaucje",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Zaległe urządzenia",
     "loadingTitle": "Temperatura przy załadunku",
     "breaches30": "Naruszenia łańcucha chłodniczego w Twoich zamówieniach (30 dni): {n}"
+  },
+  "excise": {
+    "productsTitle": "Towary koncesjonowane",
+    "productsIntro": "Alkohol, tytoń, produkty do wapowania i napoje słodzone podlegają akcyzie. Podaj dla każdego produktu dane potrzebne FIRINGI oraz czy akcyza jest już w Twojej cenie.",
+    "colProduct": "Produkt",
+    "colCategory": "Kategoria akcyzy",
+    "fromCategory": "Z kategorii: {cat}",
+    "abv": "Alkohol (% obj.)",
+    "volumeL": "Litry na jednostkę",
+    "exciseUnits": "Sztuki na jednostkę",
+    "netKg": "Tytoń (kg na jednostkę)",
+    "sugarGPerL": "Cukier (g na litr)",
+    "dutyMode": "Akcyza",
+    "mode": {
+      "PAID": "W cenie",
+      "ADDED": "Doliczana przez FIRINGI"
+    },
+    "countries": "Tylko do tych krajów",
+    "countriesHint": "Kody krajów, np. PT ES — puste = wszystkie",
+    "save": "Zapisz",
+    "saved": "Zapisano",
+    "missing": "Brakuje: {fields}",
+    "dutyUnit": "Akcyza na jednostkę: {amount}",
+    "noRate": "Brak jeszcze stawki dla Twojego kraju",
+    "noProducts": "Żaden z Twoich produktów nie jest koncesjonowany ani akcyzowy.",
+    "calcOff": "Twoje ceny muszą zawierać akcyzę.",
+    "authTitle": "Twoje zezwolenie akcyzowe",
+    "authIntro": "Aby sprzedawać alkohol, tytoń lub produkty do wapowania, utrzymuj aktualne zezwolenie akcyzowe (skład podatkowy lub zarejestrowany odbiorca).",
+    "authLink": "Prześlij je w Firma › Zgodność",
+    "field": {
+      "abv": "% alkoholu",
+      "volumeL": "litry",
+      "exciseUnits": "sztuki",
+      "netKg": "kg",
+      "sugarGPerL": "cukier"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Tytoń",
+      "VAPING": "Wapowanie",
+      "SUGAR": "Napoje słodzone"
+    },
+    "reportTitle": "Raport akcyzowy",
+    "reportIntro": "Towary koncesjonowane dostarczone w każdym miesiącu: ilości, litry 100% alkoholu, sztuki, kg i akcyza — do Twoich deklaracji akcyzowych.",
+    "month": "Miesiąc",
+    "downloadPdf": "Pobierz PDF",
+    "downloadCsv": "Pobierz CSV",
+    "colCountry": "Kraj",
+    "colUnits": "Jednostki",
+    "colLitres": "Litry",
+    "colLpa": "Litry 100% alkoholu",
+    "colPieces": "Sztuki",
+    "colKg": "kg",
+    "colDutyAdded": "Doliczona akcyza",
+    "colDutyIncluded": "Akcyza w cenach",
+    "colOrders": "Zamówienia",
+    "noRows": "W tym miesiącu nic nie dostarczono.",
+    "total": "Razem",
+    "licencesTitle": "Koncesje",
+    "licencesIntro": "Aby kupować alkohol, tytoń lub produkty do wapowania, potrzebujesz ważnej koncesji. Prześlij ją tutaj, a FIRINGI ją sprawdzi.",
+    "covered": "Objęte",
+    "notCovered": "Brakuje",
+    "notNeeded": "W Twoim kraju koncesja nie jest wymagana.",
+    "warnOnly": "Bez koncesji nadal możesz zamawiać, ale FIRINGI może o nią poprosić.",
+    "blockInfo": "Bez ważnej koncesji te produkty są ukryte i nie można ich zamówić.",
+    "upload": "Prześlij koncesję",
+    "licenceType": "Koncesja",
+    "number": "Numer koncesji",
+    "issuer": "Wydana przez",
+    "issuedOn": "Data wydania",
+    "expiresOn": "Ważna do",
+    "file": "Plik (PDF lub zdjęcie)",
+    "send": "Wyślij do sprawdzenia",
+    "sent": "Wysłano — FIRINGI ją sprawdzi",
+    "withdraw": "Wycofaj",
+    "yourLicences": "Twoje koncesje",
+    "none": "Brak koncesji.",
+    "status": {
+      "PENDING": "Czeka na FIRINGI",
+      "APPROVED": "Zatwierdzona",
+      "REJECTED": "Odrzucona",
+      "EXPIRED": "Wygasła",
+      "REVOKED": "Cofnięta"
+    },
+    "superseded": "Zastąpiona",
+    "daysLeft": "Pozostało {days} dni",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Plik",
+    "dutyAdded": "+ {amount} akcyzy",
+    "dutyIncluded": "w tym {amount} akcyzy",
+    "licenceWarn": "Nie masz na to koncesji",
+    "restricted": "Nie sprzedajemy do Twojego kraju",
+    "maxPerOrder": "Maks. {n} na zamówienie",
+    "cartTitle": "Akcyza",
+    "cartAdded": "Doliczana przez FIRINGI (+ VAT)",
+    "cartIncluded": "Już w cenach",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Dodaj koncesję",
+    "issue": {
+      "LICENCE": "Aby kupić {category}, potrzebujesz zatwierdzonej koncesji.",
+      "COUNTRY": "{category}: tego produktu nie można sprzedać do Twojego kraju.",
+      "QTY_CAP": "{category}: maks. {max} na zamówienie."
+    },
+    "orderTitle": "Towary koncesjonowane i akcyza",
+    "perUnit": "na jednostkę",
+    "checked": "Koncesję / dokument sprawdził kierowca: {by} · {date}",
+    "notChecked": "Koncesja / dokument jeszcze niesprawdzone",
+    "docTitle": "Dokument towarzyszący",
+    "docType": "Rodzaj",
+    "docRef": "Numer",
+    "doc": {
+      "E_DA": "e-DD",
+      "E_SAD": "e-DDU",
+      "SAAD": "UDT",
+      "DSA": "Dokument uproszczony",
+      "OTHER": "Inny"
+    },
+    "noDoc": "Brak zapisanego dokumentu",
+    "checkLicence": "Sprawdziłem/am koncesję / dokument klienta (alkohol, tytoń)"
   }
 }

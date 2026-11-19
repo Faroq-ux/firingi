@@ -170,6 +170,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     if (!can(ctx, APPROVE)) for (const b of budgets.filter((x) => x.exceeded && x.action === "APPROVAL")) reasons.push(`Budget: ${b.name} (${b.projected} € / ${b.amount} €)`);
     if (reasons.length) return requestApproval(ctx, { input: { ...input, poReference }, cart, gross: pc.grandTotal, reasons });
   }
+  // Phase 43: licensed goods — licence, country restriction, quantity cap (checked again here: the cart may be old)
+  await (await import("@/server/excise/service")).assertItems(ctx.company.id, pc.parts.flatMap((p) => p.lines.map((l) => ({ offerId: l.item.offerId, qty: l.item.qty }))));
   const checkoutId = randomUUID();
   // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.
   const { assessCheckout, recordRisk, afterCheckout } = await import("@/server/risk/service");
@@ -246,6 +248,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       await (await import("@/server/catchweight/service")).attachToOrder(tx, order.id);
       // Phase 42: chilled / frozen lines keep their temperature class
       await (await import("@/server/coldchain/service")).attachToOrder(tx, order.id);
+      // Phase 43: excise category, mode and duty per unit on each line; the order's excise totals
+      await (await import("@/server/excise/service")).attachToOrder(tx, order.id);
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount
@@ -573,6 +577,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
       }
     }
     await (await import("@/server/returnables/service")).attachToOrder(tx, orderId); // Phase 40: confirmed quantities carry the returnables
+    await (await import("@/server/excise/service")).refreshOrder(tx, orderId); // Phase 43: excise follows the confirmed quantities
     // Delivery fee VAT: rate of the fee's tax category in the buyer's (region of) country.
     let feeVatPercent: Decimal = new Decimal(0);
     if (order.deliveryFeeNet.gt(0) && order.deliveryRuleId) {

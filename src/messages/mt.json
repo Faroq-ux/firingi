@@ -858,7 +858,10 @@
     "Weighing": "Użin",
     "Temperature": "Temperatura",
     "Cold Chain": "Katina tal-Kesħa",
-    "Receiving Log": "Reġistru tal-Irċevuti"
+    "Receiving Log": "Reġistru tal-Irċevuti",
+    "Licensed Goods": "Prodotti b'Liċenzja",
+    "Excise Report": "Rapport tas-Sisa",
+    "Licences": "Liċenzji"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Tagħmir dovut: {equipment}",
       "body": "Dovut jew skadut: {tasks}. Irreġistrah fil-Katina tal-Kesħa."
+    },
+    "excise_licence_review": {
+      "title": "Liċenzja biex tiġi ċċekkjata: {company}",
+      "body": "{company} tella' \"{licence}\". Iċċekkjaha f'Klijenti › Liċenzji."
+    },
+    "excise_licence_decided": {
+      "title": "Il-liċenzja tiegħek: {status}",
+      "body": "\"{licence}\" — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Il-liċenzja tiegħek tiskadi fl-{date}",
+      "body": "\"{licence}\" tiskadi fi {days} jiem. Tella' l-ġdida f'Kumpanija › Liċenzji biex tkompli tordna."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Ikkanċellata",
       "RETURNED": "Irritornata",
       "EXCEPTION": "Problema"
-    }
+    },
+    "licenceCheck": "Iċċekkjajt il-liċenzja / l-ID tal-klijent (alkoħol, tabakk)"
   },
   "returnables": {
     "emptiesTitle": "Vojt u depożiti",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Tagħmir skadut",
     "loadingTitle": "Temperatura fit-tagħbija",
     "breaches30": "Ksur tal-katina tal-kesħa fuq l-ordnijiet tiegħek (30 jum): {n}"
+  },
+  "excise": {
+    "productsTitle": "Prodotti b'Liċenzja",
+    "productsIntro": "L-alkoħol, it-tabakk, il-prodotti tal-vaping u x-xorb biz-zokkor iħallsu d-dazju tas-sisa. Agħti d-dettalji li għandha bżonn FIRINGI għal kull prodott u jekk id-dazju diġà huwiex fil-prezz tiegħek.",
+    "colProduct": "Prodott",
+    "colCategory": "Kategorija tas-sisa",
+    "fromCategory": "Mill-kategorija: {cat}",
+    "abv": "Alkoħol (% vol)",
+    "volumeL": "Litri kull unità",
+    "exciseUnits": "Biċċiet kull unità",
+    "netKg": "Tabakk (kg kull unità)",
+    "sugarGPerL": "Zokkor (g kull litru)",
+    "dutyMode": "Dazju",
+    "mode": {
+      "PAID": "Fil-prezz",
+      "ADDED": "Miżjud minn FIRINGI"
+    },
+    "countries": "Biss għal dawn il-pajjiżi",
+    "countriesHint": "Kodiċi tal-pajjiżi, eż. PT ES — vojt = kollha",
+    "save": "Issejvja",
+    "saved": "Issejvjat",
+    "missing": "Nieqes: {fields}",
+    "dutyUnit": "Dazju kull unità: {amount}",
+    "noRate": "Għad m'hemmx rata għall-pajjiż tiegħek",
+    "noProducts": "L-ebda wieħed mill-prodotti tiegħek m'għandu bżonn liċenzja jew sisa.",
+    "calcOff": "Il-prezzijiet tiegħek iridu jinkludu d-dazju.",
+    "authTitle": "L-awtorizzazzjoni tas-sisa tiegħek",
+    "authIntro": "Biex tbigħ alkoħol, tabakk jew prodotti tal-vaping, żomm aġġornata l-awtorizzazzjoni tas-sisa tiegħek (maħżen tat-taxxa jew destinatarju reġistrat).",
+    "authLink": "Tellagħha f'Kumpanija › Konformità",
+    "field": {
+      "abv": "% alkoħol",
+      "volumeL": "litri",
+      "exciseUnits": "biċċiet",
+      "netKg": "kg",
+      "sugarGPerL": "zokkor"
+    },
+    "kind": {
+      "ALCOHOL": "Alkoħol",
+      "TOBACCO": "Tabakk",
+      "VAPING": "Vaping",
+      "SUGAR": "Xorb biz-zokkor"
+    },
+    "reportTitle": "Rapport tas-Sisa",
+    "reportIntro": "Prodotti b'liċenzja kkonsenjati kull xahar: kwantitajiet, litri ta' alkoħol pur, biċċiet, kg u dazju — għad-dikjarazzjonijiet tas-sisa tiegħek.",
+    "month": "Xahar",
+    "downloadPdf": "Niżżel PDF",
+    "downloadCsv": "Niżżel CSV",
+    "colCountry": "Pajjiż",
+    "colUnits": "Unitajiet",
+    "colLitres": "Litri",
+    "colLpa": "Litri ta' alkoħol pur",
+    "colPieces": "Biċċiet",
+    "colKg": "kg",
+    "colDutyAdded": "Dazju miżjud",
+    "colDutyIncluded": "Dazju fil-prezzijiet",
+    "colOrders": "Ordnijiet",
+    "noRows": "Xejn ma ġie kkonsenjat dan ix-xahar.",
+    "total": "Total",
+    "licencesTitle": "Liċenzji",
+    "licencesIntro": "Biex tixtri alkoħol, tabakk jew prodotti tal-vaping għandek bżonn liċenzja valida. Tellagħha hawn u FIRINGI tiċċekkjaha.",
+    "covered": "Kopert",
+    "notCovered": "Nieqes",
+    "notNeeded": "Fil-pajjiż tiegħek m'hemmx bżonn liċenzja.",
+    "warnOnly": "Mingħajr liċenzja tista' tibqa' tordna, iżda FIRINGI tista' titlobha.",
+    "blockInfo": "Mingħajr liċenzja valida dawn il-prodotti huma moħbija u ma jistgħux jiġu ordnati.",
+    "upload": "Tella' liċenzja",
+    "licenceType": "Liċenzja",
+    "number": "Numru tal-liċenzja",
+    "issuer": "Maħruġa minn",
+    "issuedOn": "Maħruġa fl-",
+    "expiresOn": "Valida sa",
+    "file": "Fajl (PDF jew ritratt)",
+    "send": "Ibgħat għall-verifika",
+    "sent": "Mibgħuta — FIRINGI se tiċċekkjaha",
+    "withdraw": "Irtira",
+    "yourLicences": "Il-liċenzji tiegħek",
+    "none": "Għad m'hemmx liċenzji.",
+    "status": {
+      "PENDING": "Qed tistenna lil FIRINGI",
+      "APPROVED": "Approvata",
+      "REJECTED": "Miċħuda",
+      "EXPIRED": "Skaduta",
+      "REVOKED": "Revokata"
+    },
+    "superseded": "Mibdula",
+    "daysLeft": "Fadal {days} jiem",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fajl",
+    "dutyAdded": "+ {amount} dazju tas-sisa",
+    "dutyIncluded": "inkl. {amount} dazju tas-sisa",
+    "licenceWarn": "M'għandekx liċenzja għal dan",
+    "restricted": "Mhux mibjugħ lejn il-pajjiż tiegħek",
+    "maxPerOrder": "L-aktar {n} kull ordni",
+    "cartTitle": "Dazju tas-sisa",
+    "cartAdded": "Miżjud minn FIRINGI (+ VAT)",
+    "cartIncluded": "Diġà fil-prezzijiet",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Żid liċenzja",
+    "issue": {
+      "LICENCE": "Għandek bżonn liċenzja approvata biex tixtri {category}.",
+      "COUNTRY": "{category}: dan il-prodott ma jistax jinbiegħ lejn il-pajjiż tiegħek.",
+      "QTY_CAP": "{category}: l-aktar {max} kull ordni."
+    },
+    "orderTitle": "Prodotti b'liċenzja u sisa",
+    "perUnit": "kull unità",
+    "checked": "Liċenzja / ID iċċekkjati mix-xufier: {by} · {date}",
+    "notChecked": "Liċenzja / ID għadhom ma ġewx iċċekkjati",
+    "docTitle": "Dokument ta' akkumpanjament",
+    "docType": "Tip",
+    "docRef": "Referenza",
+    "doc": {
+      "E_DA": "e-AD",
+      "E_SAD": "e-SAD",
+      "SAAD": "SAAD",
+      "DSA": "Dokument issimplifikat",
+      "OTHER": "Ieħor"
+    },
+    "noDoc": "L-ebda dokument irreġistrat",
+    "checkLicence": "Iċċekkjajt il-liċenzja / l-ID tal-klijent (alkoħol, tabakk)"
   }
 }

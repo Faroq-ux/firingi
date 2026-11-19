@@ -858,7 +858,10 @@
     "Weighing": "Vaganje",
     "Temperature": "Temperatura",
     "Cold Chain": "Hladni Lanac",
-    "Receiving Log": "Evidencija prijema"
+    "Receiving Log": "Evidencija prijema",
+    "Licensed Goods": "Licencirana roba",
+    "Excise Report": "Izvješće o trošarinama",
+    "Licences": "Dozvole"
   },
   "delivery": {
     "title": "Dostava",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Oprema dospijeva: {equipment}",
       "body": "Dospijeva ili kasni: {tasks}. Zabilježite to u Hladnom lancu."
+    },
+    "excise_licence_review": {
+      "title": "Dozvola za provjeru: {company}",
+      "body": "{company} je učitao/la „{licence}”. Provjerite je u Kupci › Dozvole."
+    },
+    "excise_licence_decided": {
+      "title": "Vaša dozvola: {status}",
+      "body": "„{licence}” — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Vaša dozvola istječe {date}",
+      "body": "„{licence}” istječe za {days} dana. Učitajte novu u Tvrtka › Dozvole kako biste mogli nastaviti naručivati."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Otkazano",
       "RETURNED": "Vraćeno",
       "EXCEPTION": "Problem"
-    }
+    },
+    "licenceCheck": "Provjerio/la sam dozvolu / ispravu kupca (alkohol, duhan)"
   },
   "returnables": {
     "emptiesTitle": "Ambalaža i depoziti",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Oprema kasni",
     "loadingTitle": "Temperatura pri utovaru",
     "breaches30": "Prekidi hladnog lanca na vašim narudžbama (30 dana): {n}"
+  },
+  "excise": {
+    "productsTitle": "Licencirana roba",
+    "productsIntro": "Alkohol, duhan, proizvodi za vejpanje i zaslađena pića podliježu trošarini. Navedite podatke koje FIRINGI treba za svaki proizvod i je li trošarina već u vašoj cijeni.",
+    "colProduct": "Proizvod",
+    "colCategory": "Kategorija trošarine",
+    "fromCategory": "Iz kategorije: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Litara po jedinici",
+    "exciseUnits": "Komada po jedinici",
+    "netKg": "Duhan (kg po jedinici)",
+    "sugarGPerL": "Šećer (g po litri)",
+    "dutyMode": "Trošarina",
+    "mode": {
+      "PAID": "U cijeni",
+      "ADDED": "Dodaje FIRINGI"
+    },
+    "countries": "Samo u ove zemlje",
+    "countriesHint": "Oznake zemalja, npr. PT ES — prazno = sve",
+    "save": "Spremi",
+    "saved": "Spremljeno",
+    "missing": "Nedostaje: {fields}",
+    "dutyUnit": "Trošarina po jedinici: {amount}",
+    "noRate": "Još nema stope za vašu zemlju",
+    "noProducts": "Nijedan vaš proizvod nije licenciran ni trošarinski.",
+    "calcOff": "Vaše cijene moraju uključivati trošarinu.",
+    "authTitle": "Vaše trošarinsko odobrenje",
+    "authIntro": "Za prodaju alkohola, duhana ili proizvoda za vejpanje održavajte ažurnim svoje trošarinsko odobrenje (porezno skladište ili registrirani primatelj).",
+    "authLink": "Učitajte ga u Tvrtka › Usklađenost",
+    "field": {
+      "abv": "% alkohola",
+      "volumeL": "litre",
+      "exciseUnits": "komadi",
+      "netKg": "kg",
+      "sugarGPerL": "šećer"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Duhan",
+      "VAPING": "Vejpanje",
+      "SUGAR": "Zaslađena pića"
+    },
+    "reportTitle": "Izvješće o trošarinama",
+    "reportIntro": "Licencirana roba isporučena svaki mjesec: količine, litre čistog alkohola, komadi, kg i trošarina — za vaše trošarinske prijave.",
+    "month": "Mjesec",
+    "downloadPdf": "Preuzmi PDF",
+    "downloadCsv": "Preuzmi CSV",
+    "colCountry": "Zemlja",
+    "colUnits": "Jedinice",
+    "colLitres": "Litre",
+    "colLpa": "Litre čistog alkohola",
+    "colPieces": "Komadi",
+    "colKg": "kg",
+    "colDutyAdded": "Dodana trošarina",
+    "colDutyIncluded": "Trošarina u cijenama",
+    "colOrders": "Narudžbe",
+    "noRows": "Ovaj mjesec ništa isporučeno.",
+    "total": "Ukupno",
+    "licencesTitle": "Dozvole",
+    "licencesIntro": "Za kupnju alkohola, duhana ili proizvoda za vejpanje trebate valjanu dozvolu. Učitajte je ovdje i FIRINGI će je provjeriti.",
+    "covered": "Pokriveno",
+    "notCovered": "Nedostaje",
+    "notNeeded": "U vašoj zemlji dozvola nije potrebna.",
+    "warnOnly": "Bez dozvole i dalje možete naručivati, ali FIRINGI je može zatražiti.",
+    "blockInfo": "Bez valjane dozvole ovi su proizvodi skriveni i ne mogu se naručiti.",
+    "upload": "Učitaj dozvolu",
+    "licenceType": "Dozvola",
+    "number": "Broj dozvole",
+    "issuer": "Izdao",
+    "issuedOn": "Izdano",
+    "expiresOn": "Vrijedi do",
+    "file": "Datoteka (PDF ili fotografija)",
+    "send": "Pošalji na provjeru",
+    "sent": "Poslano — FIRINGI će je provjeriti",
+    "withdraw": "Povuci",
+    "yourLicences": "Vaše dozvole",
+    "none": "Još nema dozvola.",
+    "status": {
+      "PENDING": "Čeka FIRINGI",
+      "APPROVED": "Odobreno",
+      "REJECTED": "Odbijeno",
+      "EXPIRED": "Isteklo",
+      "REVOKED": "Opozvano"
+    },
+    "superseded": "Zamijenjeno",
+    "daysLeft": "Još {days} dana",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Datoteka",
+    "dutyAdded": "+ {amount} trošarine",
+    "dutyIncluded": "uklj. {amount} trošarine",
+    "licenceWarn": "Za ovo nemate dozvolu",
+    "restricted": "Ne prodaje se u vašu zemlju",
+    "maxPerOrder": "Najviše {n} po narudžbi",
+    "cartTitle": "Trošarina",
+    "cartAdded": "Dodaje FIRINGI (+ PDV)",
+    "cartIncluded": "Već u cijenama",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Dodaj dozvolu",
+    "issue": {
+      "LICENCE": "Za kupnju kategorije {category} trebate odobrenu dozvolu.",
+      "COUNTRY": "{category}: ovaj se proizvod ne može prodati u vašu zemlju.",
+      "QTY_CAP": "{category}: najviše {max} po narudžbi."
+    },
+    "orderTitle": "Licencirana roba i trošarine",
+    "perUnit": "po jedinici",
+    "checked": "Dozvolu / ispravu provjerio je vozač: {by} · {date}",
+    "notChecked": "Dozvola / isprava još nije provjerena",
+    "docTitle": "Prateći dokument",
+    "docType": "Vrsta",
+    "docRef": "Broj",
+    "doc": {
+      "E_DA": "e-TD",
+      "E_SAD": "e-JTD",
+      "SAAD": "PPD",
+      "DSA": "Pojednostavljeni dokument",
+      "OTHER": "Ostalo"
+    },
+    "noDoc": "Nema zabilježenog dokumenta",
+    "checkLicence": "Provjerio/la sam dozvolu / ispravu kupca (alkohol, duhan)"
   }
 }

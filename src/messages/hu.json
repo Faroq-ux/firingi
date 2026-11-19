@@ -858,7 +858,10 @@
     "Weighing": "Mérés",
     "Temperature": "Hőmérséklet",
     "Cold Chain": "Hűtőlánc",
-    "Receiving Log": "Átvételi napló"
+    "Receiving Log": "Átvételi napló",
+    "Licensed Goods": "Engedélyköteles termékek",
+    "Excise Report": "Jövedéki jelentés",
+    "Licences": "Engedélyek"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1637,6 +1640,18 @@
     "coldchain_equipment_due": {
       "title": "Esedékes berendezés: {equipment}",
       "body": "Esedékes vagy lejárt: {tasks}. Rögzítse a Hűtőlánc oldalon."
+    },
+    "excise_licence_review": {
+      "title": "Ellenőrizendő engedély: {company}",
+      "body": "{company} feltöltötte: „{licence}”. Ellenőrizze itt: Ügyfelek › Engedélyek."
+    },
+    "excise_licence_decided": {
+      "title": "Az Ön engedélye: {status}",
+      "body": "„{licence}” — {status}. {note}"
+    },
+    "excise_licence_expiring": {
+      "title": "Az Ön engedélye lejár: {date}",
+      "body": "„{licence}” {days} nap múlva lejár. Töltse fel az újat itt: Cég › Engedélyek, hogy továbbra is rendelhessen."
     }
   },
   "notifications": {
@@ -4958,7 +4973,8 @@
       "CANCELLED": "Törölve",
       "RETURNED": "Visszaküldve",
       "EXCEPTION": "Probléma"
-    }
+    },
+    "licenceCheck": "Ellenőriztem az ügyfél engedélyét / igazolványát (alkohol, dohány)"
   },
   "returnables": {
     "emptiesTitle": "Göngyöleg és betétdíj",
@@ -5345,5 +5361,124 @@
     "equipmentOverdue": "Lejárt berendezések",
     "loadingTitle": "Hőmérséklet rakodáskor",
     "breaches30": "Hűtőlánc-sérülések a rendelésein (30 nap): {n}"
+  },
+  "excise": {
+    "productsTitle": "Engedélyköteles termékek",
+    "productsIntro": "Az alkohol, a dohány, a gőzölős termékek és a cukros italok jövedéki adó alá esnek. Adja meg termékenként a FIRINGI által kért adatokat, és hogy az adó már benne van-e az árában.",
+    "colProduct": "Termék",
+    "colCategory": "Jövedéki kategória",
+    "fromCategory": "A kategóriából: {cat}",
+    "abv": "Alkohol (% vol)",
+    "volumeL": "Liter egységenként",
+    "exciseUnits": "Darab egységenként",
+    "netKg": "Dohány (kg egységenként)",
+    "sugarGPerL": "Cukor (g literenként)",
+    "dutyMode": "Adó",
+    "mode": {
+      "PAID": "Az árban",
+      "ADDED": "A FIRINGI hozzáadja"
+    },
+    "countries": "Csak ezekbe az országokba",
+    "countriesHint": "Országkódok, pl. PT ES — üres = mind",
+    "save": "Mentés",
+    "saved": "Mentve",
+    "missing": "Hiányzik: {fields}",
+    "dutyUnit": "Adó egységenként: {amount}",
+    "noRate": "Az Ön országára még nincs adókulcs",
+    "noProducts": "Egyik terméke sem engedélyköteles vagy jövedéki.",
+    "calcOff": "Az árainak tartalmazniuk kell az adót.",
+    "authTitle": "Az Ön jövedéki engedélye",
+    "authIntro": "Alkohol, dohány vagy gőzölős termékek értékesítéséhez tartsa naprakészen jövedéki engedélyét (adóraktár vagy bejegyzett címzett).",
+    "authLink": "Töltse fel itt: Cég › Megfelelőség",
+    "field": {
+      "abv": "alkohol %",
+      "volumeL": "liter",
+      "exciseUnits": "darab",
+      "netKg": "kg",
+      "sugarGPerL": "cukor"
+    },
+    "kind": {
+      "ALCOHOL": "Alkohol",
+      "TOBACCO": "Dohány",
+      "VAPING": "Gőzölés",
+      "SUGAR": "Cukros italok"
+    },
+    "reportTitle": "Jövedéki jelentés",
+    "reportIntro": "Havonta kiszállított engedélyköteles termékek: mennyiségek, tiszta alkohol literben, darabok, kg és adó — jövedéki bevallásaihoz.",
+    "month": "Hónap",
+    "downloadPdf": "PDF letöltése",
+    "downloadCsv": "CSV letöltése",
+    "colCountry": "Ország",
+    "colUnits": "Egységek",
+    "colLitres": "Liter",
+    "colLpa": "Tiszta alkohol (liter)",
+    "colPieces": "Darab",
+    "colKg": "kg",
+    "colDutyAdded": "Hozzáadott adó",
+    "colDutyIncluded": "Adó az árakban",
+    "colOrders": "Rendelések",
+    "noRows": "Ebben a hónapban nem volt kiszállítás.",
+    "total": "Összesen",
+    "licencesTitle": "Engedélyek",
+    "licencesIntro": "Alkohol, dohány vagy gőzölős termékek vásárlásához érvényes engedély kell. Töltse fel ide, és a FIRINGI ellenőrzi.",
+    "covered": "Lefedve",
+    "notCovered": "Hiányzik",
+    "notNeeded": "Az Ön országában nem kell engedély.",
+    "warnOnly": "Engedély nélkül is rendelhet, de a FIRINGI kérheti.",
+    "blockInfo": "Érvényes engedély nélkül ezek a termékek rejtve vannak és nem rendelhetők.",
+    "upload": "Engedély feltöltése",
+    "licenceType": "Engedély",
+    "number": "Engedélyszám",
+    "issuer": "Kiállító",
+    "issuedOn": "Kiállítás napja",
+    "expiresOn": "Érvényes eddig",
+    "file": "Fájl (PDF vagy fotó)",
+    "send": "Küldés ellenőrzésre",
+    "sent": "Elküldve — a FIRINGI ellenőrzi",
+    "withdraw": "Visszavonás",
+    "yourLicences": "Az Ön engedélyei",
+    "none": "Még nincsenek engedélyek.",
+    "status": {
+      "PENDING": "A FIRINGI-re vár",
+      "APPROVED": "Jóváhagyva",
+      "REJECTED": "Elutasítva",
+      "EXPIRED": "Lejárt",
+      "REVOKED": "Visszavonva"
+    },
+    "superseded": "Lecserélve",
+    "daysLeft": "Még {days} nap",
+    "fbNote": "FIRINGI: {note}",
+    "download": "Fájl",
+    "dutyAdded": "+ {amount} jövedéki adó",
+    "dutyIncluded": "benne {amount} jövedéki adó",
+    "licenceWarn": "Ehhez nincs engedélye",
+    "restricted": "Az Ön országába nem értékesítjük",
+    "maxPerOrder": "Legfeljebb {n} rendelésenként",
+    "cartTitle": "Jövedéki adó",
+    "cartAdded": "A FIRINGI hozzáadja (+ ÁFA)",
+    "cartIncluded": "Már benne van az árakban",
+    "cartLine": "{name} · {category}: {qty} × {unit} = {total}",
+    "addLicence": "Engedély hozzáadása",
+    "issue": {
+      "LICENCE": "Jóváhagyott engedély kell ennek megvásárlásához: {category}.",
+      "COUNTRY": "{category}: ez a termék nem értékesíthető az Ön országába.",
+      "QTY_CAP": "{category}: legfeljebb {max} rendelésenként."
+    },
+    "orderTitle": "Engedélyköteles termékek és jövedéki adó",
+    "perUnit": "egységenként",
+    "checked": "Az engedélyt / igazolványt a sofőr ellenőrizte: {by} · {date}",
+    "notChecked": "Az engedély / igazolvány még nincs ellenőrizve",
+    "docTitle": "Kísérőokmány",
+    "docType": "Típus",
+    "docRef": "Hivatkozás",
+    "doc": {
+      "E_DA": "e-TO",
+      "E_SAD": "e-EKO",
+      "SAAD": "EKO",
+      "DSA": "Egyszerűsített okmány",
+      "OTHER": "Egyéb"
+    },
+    "noDoc": "Nincs rögzített okmány",
+    "checkLicence": "Ellenőriztem az ügyfél engedélyét / igazolványát (alkohol, dohány)"
   }
 }
