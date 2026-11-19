@@ -674,6 +674,16 @@ auditor ZIP, Supplier E-Invoices); customers / suppliers: *Company › E-Invoici
 10 minutes). The e-mail copy can carry the XML too, and a **monthly pack** (last month's XML + a PDF of the
 month's totals) goes to a company's accountant on the day the admin chooses. Details: [docs/e-invoicing.md](docs/e-invoicing.md).
 
+## Till / POS (Phase 47)
+
+A till for suppliers' counters (cash & carry from their own stock, FEFO) and wholesale customers' own shops and
+restaurants (menu, recipes using what they bought on FIRINGI, tables, kitchen tickets). Phone / tablet / POS terminal
+/ PC; scan, scale labels, weighed items, cash / card / MB WAY / points, change, X/Z shifts, refunds, the business's
+own loyalty card, e-mail / QR receipts, offline selling (sent once when back online). The admin switches it per
+company type, per country (non-fiscal, or a certified provider per country — simulated until live agreements) and per
+company. Each day's sales go into the company's Accounting as cash / card; the accountant's monthly pack carries
+every receipt. Details: [docs/pos.md](docs/pos.md).
+
 ## Multi-currency (Phase 45)
 
 Code: `src/lib/currency.ts` (rules), `src/server/currency/service.ts` (settings, rates, feed, alerts), `documents.ts`

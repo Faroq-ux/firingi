@@ -6,8 +6,8 @@ import { ALL_PERMISSION_CODES, type PermissionCode } from "@/server/rbac/permiss
 import { checkCompanyVat, isValidPtNif, makePtNif } from "@/lib/tax-id";
 
 describe("admin sidebar", () => {
-  it("has all 21 sections (Inventory & Warehouses added in Phase 24)", () => {
-    expect(ADMIN_NAV).toHaveLength(21);
+  it("has all 22 sections (Inventory & Warehouses added in Phase 24, Till (POS) in Phase 47)", () => {
+    expect(ADMIN_NAV).toHaveLength(22);
   });
   it("vendors section has Distributors, Wholesalers, Vendor Management (Plans + Early Payouts, Phase 36) and Supplier Compliance (Phase 28) groups", () => {
     const vendors = ADMIN_NAV.find((s) => s.key === "vendors")!;

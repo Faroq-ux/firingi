@@ -11,6 +11,22 @@ function ACCOUNTING_ITEMS(s: ReturnType<typeof section>) {
   ];
 }
 
+/** The till (Phase 47) — same pages in both portals; FIRINGI switches it on per company type, country and company. */
+function POS_ITEMS(s: ReturnType<typeof section>, customer: boolean) {
+  const sell = ["company.pos.sell", "company.pos.manage"] as const;
+  return [
+    s("till", "Till", "Caixa", "P47", { live: true, feature: "POS", perm: [...sell], es: "Caja" }),
+    s("", "Till Overview", "Resumo da Caixa", "P47", { live: true, feature: "POS", perm: [...sell], href: `${s("", "", "", "P47").href.replace(/\/$/, "")}`, es: "Resumen de caja" }),
+    s("items", customer ? "Menu & Recipes" : "Till Items", customer ? "Menu e Receitas" : "Artigos da Caixa", "P47", { live: true, feature: "POS", perm: [...sell], es: customer ? "Menú y recetas" : "Artículos de caja" }),
+    s("sales", "Till Sales", "Vendas da Caixa", "P47", { live: true, feature: "POS", perm: [...sell], es: "Ventas de caja" }),
+    s("shifts", "Shifts (X/Z)", "Turnos (X/Z)", "P47", { live: true, feature: "POS", perm: [...sell], es: "Turnos (X/Z)" }),
+    s("reports", "Till Reports", "Relatórios da Caixa", "P47", { live: true, feature: "POS", perm: [...sell], es: "Informes de caja" }),
+    ...(customer ? [s("stock", "Ingredient Stock", "Stock de Ingredientes", "P47", { live: true, feature: "POS", perm: "company.pos.manage", es: "Stock de ingredientes" })] : []),
+    s("guests", "Guests & Loyalty", "Clientes e Fidelização", "P47", { live: true, feature: "POS", perm: [...sell], es: "Clientes y fidelización" }),
+    s("settings", "Till Settings", "Definições da Caixa", "P47", { live: true, feature: "POS", perm: "company.pos.manage", es: "Ajustes de caja" }),
+  ];
+}
+
 const V = "/vendor";
 const vd = section(`${V}/dashboard`, "vendor.dashboard.view");
 const vp = section(`${V}/products`, "vendor.products.view");
@@ -25,6 +41,7 @@ const vac = section(`${V}/accounting`, ["company.accounting.view", "company.acco
 const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vad = section(`${V}/ads`, "vendor.promotions.manage");
+const vpos = section(`${V}/pos`, ["company.pos.sell", "company.pos.manage"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
@@ -131,6 +148,7 @@ export const VENDOR_NAV: NavSection[] = [
     ],
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" })] },
+  { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(vpos, false) },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(vac) },
   { key: "assistant", icon: "Bot", label: { en: "Assistant", pt: "Assistente", es: "Asistente" }, items: [vai("assistant", "Assistant", "Assistente", "P17", { live: true, feature: "ASSISTANT", es: "Asistente" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [vs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
@@ -161,6 +179,7 @@ const bs = section(`${B}`, "company.support.use");
 const bai = section(`${B}`, ["buyer.orders.view", "buyer.orders.place"]);
 const bsh = section(`${B}/branches`, ["buyer.branches.manage", "buyer.orders.view", "buyer.orders.place", "buyer.reports.view"]);
 const bac = section(`${B}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
+const bpos = section(`${B}/pos`, ["company.pos.sell", "company.pos.manage"]);
 
 export const BUY_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [bd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -213,6 +232,7 @@ export const BUY_NAV: NavSection[] = [
       bsh("reports", "Shop Reports", "Relatórios por Loja", "P27", { live: true, perm: ["buyer.reports.view", "buyer.branches.manage"], es: "Informes por tienda" }),
     ],
   },
+  { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(bpos, true) },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(bac) },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
   { key: "rewards", icon: "Gift", label: { en: "Rewards", pt: "Recompensas", es: "Recompensas" }, items: [bai("rewards", "Rewards", "Recompensas", "P32", { live: true, feature: "LOYALTY", es: "Recompensas" })] },

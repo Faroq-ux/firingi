@@ -19,7 +19,7 @@ const settingsSchema = z.object({
   languagePriority: z.array(z.enum(["CUSTOMER_COUNTRY", "CUSTOMER_CHOICE", "ENTITY"])).min(1).max(3),
   allowCustomerLanguage: z.boolean(), allowBilingual: z.boolean(),
   plSplitPaymentFrom: z.number().int().min(0).max(10_000_000), autoMatchTolerance: z.number().min(0).max(100),
-  monthlyPack: z.object({ enabled: z.boolean(), day: z.number().int().min(1).max(28), includeXml: z.boolean(), includeSummary: z.boolean(), includeInvoicePdfs: z.boolean() }),
+  monthlyPack: z.object({ enabled: z.boolean(), day: z.number().int().min(1).max(28), includeXml: z.boolean(), includeSummary: z.boolean(), includeInvoicePdfs: z.boolean(), includeTillSales: z.boolean() }),
 });
 const idSchema = z.object({ id: z.string().min(1).max(64) });
 const invoiceSchema = z.object({ invoiceId: z.string().min(1).max(64) });

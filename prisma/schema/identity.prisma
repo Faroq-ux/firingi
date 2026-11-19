@@ -285,6 +285,10 @@ model Company {
   einvoiceDocs           EInvoiceDocument[]        @relation("EInvoiceCounterparty")
   einvoiceProfile        EInvoiceProfile?
   einvoicePacks          EInvoiceMonthlyPack[]     @relation("EInvoiceMonthlyPacks")
+  posCompany             PosCompany?               @relation("PosCompany")
+  posRegisters           PosRegister[]             @relation("PosRegisters")
+  posItems               PosItem[]                 @relation("PosItems")
+  posMembers             PosMember[]               @relation("PosMembers")
 
   @@unique([countryId, taxId, type])
   @@index([type, status])

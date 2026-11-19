@@ -67,7 +67,7 @@ export type EInvoiceSettings = {
   /** the e-mail copy also carries the XML (for the recipient's accountant / accounting software) */
   emailXml: boolean;
   /** each month, on this day, the previous month's documents go to each company's accountant (if it gave one) */
-  monthlyPack: { enabled: boolean; day: number; includeXml: boolean; includeSummary: boolean; includeInvoicePdfs: boolean };
+  monthlyPack: { enabled: boolean; day: number; includeXml: boolean; includeSummary: boolean; includeInvoicePdfs: boolean; includeTillSales: boolean };
   /** years each country keeps documents (archive) */
   retention: Record<string, number>;
   /** document language: the first source that gives one wins */
@@ -109,7 +109,7 @@ export const DEFAULT_EINVOICE_SETTINGS: EInvoiceSettings = {
   validateBeforeSend: true,
   blockOnWarnings: false,
   emailXml: true,
-  monthlyPack: { enabled: true, day: 1, includeXml: true, includeSummary: true, includeInvoicePdfs: false },
+  monthlyPack: { enabled: true, day: 1, includeXml: true, includeSummary: true, includeInvoicePdfs: false, includeTillSales: true },
   retention: { ...DEFAULT_RETENTION },
   languagePriority: ["CUSTOMER_COUNTRY", "CUSTOMER_CHOICE", "ENTITY"],
   allowCustomerLanguage: true,
@@ -156,7 +156,7 @@ export function mergeEInvoiceSettings(raw: unknown): EInvoiceSettings {
     monthlyPack: (() => {
       const m = (r.monthlyPack ?? {}) as Partial<EInvoiceSettings["monthlyPack"]>;
       const dm = d.monthlyPack;
-      return { enabled: b(m.enabled, dm.enabled), day: Math.round(num(m.day, dm.day, 1, 28)), includeXml: b(m.includeXml, dm.includeXml), includeSummary: b(m.includeSummary, dm.includeSummary), includeInvoicePdfs: b(m.includeInvoicePdfs, dm.includeInvoicePdfs) };
+      return { enabled: b(m.enabled, dm.enabled), day: Math.round(num(m.day, dm.day, 1, 28)), includeXml: b(m.includeXml, dm.includeXml), includeSummary: b(m.includeSummary, dm.includeSummary), includeInvoicePdfs: b(m.includeInvoicePdfs, dm.includeInvoicePdfs), includeTillSales: b(m.includeTillSales, dm.includeTillSales) };
     })(),
     retention: Object.fromEntries(SCHENGEN.map((c) => [c, Math.round(num(ret[c], DEFAULT_RETENTION[c] ?? 10, 1, 30))])),
     languagePriority: [...new Set([...prio, ...d.languagePriority])],

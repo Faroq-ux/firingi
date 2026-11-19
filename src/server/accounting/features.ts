@@ -45,6 +45,9 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     if (portal === "buy" && !(await (await import("@/server/loyalty/service")).loyaltySettings()).enabled) off.add("LOYALTY");
     if (portal === "vendor" && !(await (await import("@/server/ads/service")).adsSettings()).enabled) off.add("ADS");
     if (!(await (await import("@/server/chat/service")).chatSettings()).enabled) off.add("CHAT");
+    // Phase 47: the till, where FIRINGI switched it on — suppliers sell from /vendor, wholesale customers from /buy
+    const { posAccess, posPortal } = await import("@/server/pos/settings");
+    if (posPortal(ctx.company.type) !== portal || !(await posAccess(ctx.company.id)).on) off.add("POS");
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

@@ -166,6 +166,10 @@ export const EVENTS: EventDef[] = [
   // multi-currency (Phase 45)
   E("fx.alert", "account", ["admin.settings.manage", "admin.finance.manage"], ["EMAIL", "PUSH"], ["message"]),
   // e-invoicing (Phase 46)
+  // till (Phase 47)
+  E("pos.fiscal_failed", "finance", ["company.pos.manage"], ["EMAIL", "PUSH"], ["number", "error"]),
+  E("pos.till_requested", "account", ["admin.settings.manage"], ["EMAIL", "PUSH"], ["company", "till"]),
+  E("pos.till_decided", "account", ["company.pos.manage"], ["EMAIL", "PUSH"], ["till", "decision", "note"]),
   E("einvoice.failed", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("einvoice.rejected", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("einvoice.invalid", "account", ["admin.finance.manage", "admin.invoices.issue"], ["EMAIL"], ["number", "reason"]),

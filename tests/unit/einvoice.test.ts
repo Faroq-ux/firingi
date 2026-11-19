@@ -30,7 +30,7 @@ describe("e-invoice settings and languages", () => {
     expect(s.retention.PT).toBe(30);
     expect(s.emailXml).toBe(true);
     expect(mergeEInvoiceSettings({ emailXml: false }).emailXml).toBe(false);
-    expect(s.monthlyPack).toEqual({ enabled: true, day: 1, includeXml: true, includeSummary: true, includeInvoicePdfs: false });
+    expect(s.monthlyPack).toEqual({ enabled: true, day: 1, includeXml: true, includeSummary: true, includeInvoicePdfs: false, includeTillSales: true });
     expect(mergeEInvoiceSettings({ monthlyPack: { day: 40 } }).monthlyPack.day).toBe(28);
     expect(mergeEInvoiceSettings({ monthlyPack: { day: 0, enabled: false } }).monthlyPack).toMatchObject({ day: 1, enabled: false, includeXml: true });
     expect(previousPeriod(new Date(Date.UTC(2027, 0, 3)))).toBe("2026-12");

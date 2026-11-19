@@ -23,6 +23,7 @@ model Branch {
   company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
   manager           Membership?        @relation("BranchManager", fields: [managerMembershipId], references: [id], onDelete: SetNull)
   members           BranchMember[]
+  posRegisters      PosRegister[]      @relation("PosRegisterBranch")
   addresses         Address[]          @relation("BranchAddresses")
   orders            Order[]            @relation("BranchOrders")
   budgets           Budget[]

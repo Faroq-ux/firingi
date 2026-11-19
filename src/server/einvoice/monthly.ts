@@ -25,7 +25,7 @@ const safe = (n: string) => n.replace(/[^\w.-]+/g, "_");
  * OUT = the company's own invoices to FIRINGI for what it sold through FIRINGI (income): the self-billed invoices
  *       FIRINGI issued in its name, and the invoices it sent FIRINGI itself (uploaded or as an e-invoice).
  */
-async function collect(companyId: string, period: string, withInvoicePdfs: boolean) {
+async function collect(companyId: string, period: string, withInvoicePdfs: boolean, withTill = true) {
   const { from, to } = periodRange(period);
   const invoices = await prisma.invoice.findMany({
     where: { recipientCompanyId: companyId, status: { not: "DRAFT" }, issuedAt: { gte: from, lt: to } },
@@ -81,7 +81,46 @@ async function collect(companyId: string, period: string, withInvoicePdfs: boole
       currency: local ? v.currencyCode : "EUR", net, vat, gross, rates: [{ rate: -1, base: net, vat }],
     });
   }
+  if (withTill) await tillSales(companyId, from, to, period, files, rows);
   return { files, rows: rows.sort((a, b) => a.date.localeCompare(b.date)) };
+}
+
+const esc = (v: unknown) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * Phase 47 — the company's own till sales (its sales to guests at its counter): every receipt as XML for the
+ * accountant, and one summary row per day. A third side: never added to FIRINGI's invoices.
+ */
+async function tillSales(companyId: string, from: Date, to: Date, period: string, files: Record<string, Uint8Array>, rows: MonthlyRow[]) {
+  const sales = await prisma.posSale.findMany({ where: { companyId, status: "COMPLETED", soldAt: { gte: from, lt: to } }, orderBy: { soldAt: "asc" }, include: { lines: true, payments: true, register: { select: { code: true } }, refundOf: { select: { number: true, fiscalNumber: true } } } });
+  if (!sales.length) return;
+  const co = await prisma.company.findUniqueOrThrow({ where: { id: companyId }, select: { legalName: true, taxId: true, vatNumber: true, country: { select: { code: true } } } });
+  const xml = [`<?xml version="1.0" encoding="UTF-8"?>`, `<TillSales xmlns="urn:firingi:pos:1" period="${period}" generated="${new Date().toISOString()}">`,
+    `  <Business name="${esc(co.legalName)}" taxId="${esc(co.taxId)}" vatId="${esc(co.vatNumber)}" country="${co.country.code}"/>`];
+  for (const s of sales) {
+    xml.push(`  <Receipt number="${esc(s.number)}" kind="${s.kind}" till="${esc(s.register.code)}" date="${s.soldAt.toISOString()}" currency="${s.currency}" net="${s.net.toFixed(2)}" vat="${s.vat.toFixed(2)}" gross="${s.gross.toFixed(2)}"${s.fiscalNumber ? ` fiscalNumber="${esc(s.fiscalNumber)}" fiscalProvider="${esc(s.fiscalProvider)}"` : ""} fiscalStatus="${s.fiscalStatus}"${s.refundOf ? ` refundOf="${esc(s.refundOf.fiscalNumber ?? s.refundOf.number)}"` : ""}${s.customerTaxId ? ` customerTaxId="${esc(s.customerTaxId)}"` : ""} hash="${s.hash}">`);
+    for (const l of s.lines) xml.push(`    <Line name="${esc(l.name)}" qty="${l.qty.toString()}" unitPrice="${l.unitPrice.toString()}" discountPct="${l.discountPct.toString()}" vatRate="${l.vatRate.toString()}" net="${l.net.toFixed(2)}" vat="${l.vat.toFixed(2)}" gross="${l.gross.toFixed(2)}"/>`);
+    for (const p of s.payments) xml.push(`    <Payment method="${p.method}" amount="${p.amount.toFixed(2)}"/>`);
+    xml.push(`  </Receipt>`);
+  }
+  xml.push(`</TillSales>`, "");
+  files[`xml/till/till-sales-${period}.xml`] = new Uint8Array(Buffer.from(xml.join("\n"), "utf8"));
+  // one row per day and currency (refunds taken off), with its VAT rates
+  const days = new Map<string, MonthlyRow & { count: number }>();
+  for (const s of sales) {
+    const key = `${s.soldAt.toISOString().slice(0, 10)}|${s.currency}`;
+    const sign = s.kind === "REFUND" ? -1 : 1;
+    const d = days.get(key) ?? { side: "TILL", date: key.slice(0, 10), number: "", kind: "TILL_DAY", currency: s.currency, net: 0, vat: 0, gross: 0, rates: [], count: 0 };
+    d.net += sign * Number(s.net); d.vat += sign * Number(s.vat); d.gross += sign * Number(s.gross);
+    if (s.kind === "SALE") d.count++;
+    for (const l of s.lines) {
+      const r = d.rates.find((x) => x.rate === Number(l.vatRate)) ?? (d.rates.push({ rate: Number(l.vatRate), base: 0, vat: 0 }), d.rates[d.rates.length - 1]);
+      r.base += sign * Number(l.net); r.vat += sign * Number(l.vat);
+    }
+    days.set(key, d);
+  }
+  const r2 = (n: number) => Math.round(n * 100) / 100;
+  for (const d of days.values()) rows.push({ ...d, number: String(d.count), net: r2(d.net), vat: r2(d.vat), gross: r2(d.gross), rates: d.rates.map((x) => ({ rate: x.rate, base: r2(x.base), vat: r2(x.vat) })) });
 }
 
 /** The pack itself: the summary PDF and a ZIP of the XML (and the PDFs when FIRINGI chose so). */
@@ -102,17 +141,17 @@ export async function buildMonthlyPack(companyId: string, period: string) {
     customerCountryLanguage: co.country.defaultLanguageCode, customerChoice: co.einvoiceProfile?.invoiceLanguage ?? null, customerSecond: null,
     entityLanguage: le?.language ?? le?.country.defaultLanguageCode ?? "en", entitySecond: null, requireOwnLanguage: false,
   }).primary;
-  const { files, rows } = await collect(companyId, period, s.includeInvoicePdfs);
+  const { files, rows } = await collect(companyId, period, s.includeInvoicePdfs, s.includeTillSales);
   const issuer = le?.legalName ?? "FIRINGI";
   const { renderMonthlyPdf } = await import("@/server/pdf/monthly");
   const summary = s.includeSummary ? Buffer.from(await renderMonthlyPdf({ language, period, company: { name: co.legalName, taxId: co.taxId, vatId: co.vatNumber }, issuer, rows, withXml: s.includeXml })) : null;
   const zipFiles: Record<string, Uint8Array> = {};
   // the company's own uploaded PDFs to FIRINGI come too when FIRINGI chose PDFs, or when there is no XML of them
   for (const [k, v] of Object.entries(files)) {
-    if (k.startsWith("xml/") ? s.includeXml : (s.includeInvoicePdfs || (k.startsWith("pdf/to-firingi/") && !files[k.replace(/^pdf\//, "xml/").replace(/\.\w+$/, ".xml")]))) zipFiles[k] = v;
+    if (k.startsWith("xml/till/") ? true : k.startsWith("xml/") ? s.includeXml : (s.includeInvoicePdfs || (k.startsWith("pdf/to-firingi/") && !files[k.replace(/^pdf\//, "xml/").replace(/\.\w+$/, ".xml")]))) zipFiles[k] = v;
   }
   if (summary) zipFiles[`summary-${period}.pdf`] = new Uint8Array(summary);
-  zipFiles["README.txt"] = strToU8(`FIRINGI — ${co.legalName} — ${period}\nDocuments: ${rows.length}\nfrom-firingi/: invoices FIRINGI issued to you (your purchases and services)\nto-firingi/: your invoices to FIRINGI (your sales: self-billed by FIRINGI in your name, or sent by you)\nxml/: e-invoices (as sent, or Peppol BIS 3)${s.includeInvoicePdfs ? "\npdf/: the documents as PDF" : ""}\n`);
+  zipFiles["README.txt"] = strToU8(`FIRINGI — ${co.legalName} — ${period}\nDocuments: ${rows.length}\nfrom-firingi/: invoices FIRINGI issued to you (your purchases and services)\nto-firingi/: your invoices to FIRINGI (your sales: self-billed by FIRINGI in your name, or sent by you)\ntill/: your own till sales (every receipt)\nxml/: e-invoices (as sent, or Peppol BIS 3)${s.includeInvoicePdfs ? "\npdf/: the documents as PDF" : ""}\n`);
   return { rows, summary, zip: Buffer.from(zipSync(zipFiles, { level: 6 })), language, name: co.legalName };
 }
 

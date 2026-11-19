@@ -70,6 +70,9 @@ export const DOC_EN = {
   toFiringi: "Your invoices to FIRINGI (sales, incl. self-billing)",
   rateAsInvoice: "rate as on the invoice",
   noDocs: "No documents",
+  tillSales: "Your till sales (sales to your guests at the counter)",
+  tillDay: "Till sales of the day",
+  receipts: "receipts",
 } as const;
 
 export type DocKey = keyof typeof DOC_EN;

@@ -112,6 +112,8 @@ const defs = {
   "company.integrations.manage": { audience: "COMPANY", module: "Integrations", description: "Create API keys and webhooks for the company's own systems" },
   "company.accounting.view": { audience: "COMPANY", module: "Accounting", description: "See the company's own accounting: sales, expenses, profit & loss (when FIRINGI switched it on)" },
   "company.accounting.manage": { audience: "COMPANY", module: "Accounting", description: "Enter daily sales and expenses (when FIRINGI switched it on)" },
+  "company.pos.sell": { audience: "COMPANY", module: "Till (POS)", description: "Sell at the company's till: open/close a shift, take payments, print receipts (when FIRINGI switched the till on)" },
+  "company.pos.manage": { audience: "COMPANY", module: "Till (POS)", description: "Set up the till: items, prices, recipes, tills, loyalty, the certified provider; refunds, discounts and reports" },
   "company.bank.view": { audience: "COMPANY", module: "Finance", description: "See the company's bank accounts and statement lines" },
   "company.bank.manage": { audience: "COMPANY", module: "Finance", description: "Import bank statements, link the bank feed and match bank lines" },
   "team.users.view": { audience: "COMPANY", module: "Team", description: "View company users" },

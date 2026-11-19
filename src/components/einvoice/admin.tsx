@@ -113,6 +113,7 @@ export function EInvoiceSettingsForm({ initial, countries }: { initial: EInvoice
           {box("The XML of every document", x.monthlyPack.includeXml, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeXml: v } }))}
           {box("A PDF with the month's totals", x.monthlyPack.includeSummary, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeSummary: v } }))}
           {box("Each document's PDF too", x.monthlyPack.includeInvoicePdfs, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeInvoicePdfs: v } }))}
+          {box("Till sales (POS): every receipt as XML + day and VAT totals", x.monthlyPack.includeTillSales, (v) => setX({ ...x, monthlyPack: { ...x.monthlyPack, includeTillSales: v } }), "es-pack-till")}
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-2">

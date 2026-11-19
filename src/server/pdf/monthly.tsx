@@ -9,7 +9,7 @@ import { Document, Page, StyleSheet, Text, View, renderToBuffer } from "@react-p
 import { docTexts, numberLocale } from "@/server/einvoice/doc-i18n";
 import { registerFonts } from "./documents";
 
-export type MonthlyRow = { side: "IN" | "OUT"; date: string; number: string; kind: "INVOICE" | "INVOICE_RECEIPT" | "CREDIT_NOTE" | "SELF_BILLED" | "SELF_BILLED_CREDIT"; currency: string; net: number; vat: number; gross: number; rates: { rate: number; base: number; vat: number }[] };
+export type MonthlyRow = { side: "IN" | "OUT" | "TILL"; date: string; number: string; kind: "INVOICE" | "INVOICE_RECEIPT" | "CREDIT_NOTE" | "SELF_BILLED" | "SELF_BILLED_CREDIT" | "TILL_DAY"; currency: string; net: number; vat: number; gross: number; rates: { rate: number; base: number; vat: number }[] };
 export type MonthlyPdfData = { language: string; period: string; company: { name: string; taxId: string; vatId: string | null }; issuer: string; rows: MonthlyRow[]; withXml: boolean };
 
 const s = StyleSheet.create({
@@ -26,7 +26,7 @@ function MonthlyDoc({ d }: { d: MonthlyPdfData }) {
   const loc = numberLocale(d.language);
   const money = (v: number, c: string) => `${v.toLocaleString(loc, { minimumFractionDigits: c === "ISK" ? 0 : 2, maximumFractionDigits: c === "ISK" ? 0 : 2 })} ${c === "EUR" ? "€" : c}`;
   const sign = (k: MonthlyRow["kind"]) => (k === "CREDIT_NOTE" || k === "SELF_BILLED_CREDIT" ? -1 : 1);
-  const title = (k: MonthlyRow["kind"]) => ({ INVOICE: t.title_INVOICE, INVOICE_RECEIPT: t.title_INVOICE_RECEIPT, CREDIT_NOTE: t.title_CREDIT_NOTE, SELF_BILLED: t.title_SELF_BILLED, SELF_BILLED_CREDIT: t.title_SELF_BILLED_CREDIT })[k];
+  const title = (k: MonthlyRow["kind"]) => ({ INVOICE: t.title_INVOICE, INVOICE_RECEIPT: t.title_INVOICE_RECEIPT, CREDIT_NOTE: t.title_CREDIT_NOTE, SELF_BILLED: t.title_SELF_BILLED, SELF_BILLED_CREDIT: t.title_SELF_BILLED_CREDIT, TILL_DAY: t.tillDay })[k];
   const cols = [14, 26, 24, 12, 12, 12];
   return (
     <Document title={`${t.monthlySummary} ${d.period}`} author="FIRINGI" language={d.language}>
@@ -43,13 +43,13 @@ function MonthlyDoc({ d }: { d: MonthlyPdfData }) {
           <Text>{t.taxId}: {d.company.taxId}{d.company.vatId ? `   ${t.vatId}: ${d.company.vatId}` : ""}</Text>
           <Text>{t.count}: {d.rows.length}</Text>
         </View>
-        {(["IN", "OUT"] as const).map((side) => {
+        {(["IN", "OUT", "TILL"] as const).map((side) => {
           const list = d.rows.filter((r) => r.side === side);
-          if (!list.length && d.rows.length) return null;
+          if (!list.length && (d.rows.length || side === "TILL")) return null;
           const currencies = [...new Set(list.map((r) => r.currency))];
           return (
             <View key={side} style={{ marginTop: 14 }}>
-              <Text style={[s.b, { fontSize: 10.5, color: "#1e3a8a", marginBottom: 4 }]}>{side === "IN" ? t.fromFiringi : t.toFiringi}</Text>
+              <Text style={[s.b, { fontSize: 10.5, color: "#1e3a8a", marginBottom: 4 }]}>{side === "IN" ? t.fromFiringi : side === "OUT" ? t.toFiringi : t.tillSales}</Text>
               <View style={s.row}>
                 {[t.date, t.documents, "", t.totalNet, t.vat, t.total].map((h, i) => <Text key={i} style={[s.th, { width: `${cols[i]}%`, textAlign: i >= 3 ? "right" : "left" }]}>{h}</Text>)}
               </View>
@@ -57,7 +57,7 @@ function MonthlyDoc({ d }: { d: MonthlyPdfData }) {
               {list.map((r, i) => (
                 <View key={i} style={s.row} wrap={false}>
                   <Text style={[s.td, { width: `${cols[0]}%` }]}>{r.date}</Text>
-                  <Text style={[s.td, { width: `${cols[1]}%` }]}>{r.number}</Text>
+                  <Text style={[s.td, { width: `${cols[1]}%` }]}>{r.kind === "TILL_DAY" ? `${r.number} ${t.receipts}` : r.number}</Text>
                   <Text style={[s.td, { width: `${cols[2]}%` }]}>{title(r.kind)}</Text>
                   <Text style={[s.td, { width: `${cols[3]}%`, textAlign: "right" }]}>{money(sign(r.kind) * r.net, r.currency)}</Text>
                   <Text style={[s.td, { width: `${cols[4]}%`, textAlign: "right" }]}>{money(sign(r.kind) * r.vat, r.currency)}</Text>

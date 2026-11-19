@@ -266,6 +266,13 @@ function dataUrlFile(v: unknown, name: string): File | null {
 async function run(ctx: Ctx, kind: OfflineKind, d: Record<string, unknown>, s: AppSettings): Promise<SyncResult> {
   switch (kind) {
     case "order.place": return placeOffline(ctx, d, s);
+    case "pos.sale":
+    case "pos.sale.buy": {
+      // a till sale made without internet (stored once: the till's own id for the sale)
+      const { recordSale } = await import("@/server/pos/sales");
+      const sale = await recordSale(ctx, d as never, { offline: true });
+      return { status: "DONE", result: { saleId: sale.id, number: sale.number, fiscalNumber: sale.fiscalNumber, receiptToken: sale.receiptToken } };
+    }
     case "delivery.step": {
       const deliveries = await import("@/server/services/deliveries");
       const id = str(d.deliveryId, 64);

@@ -8,6 +8,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Till } from "@/components/pos/till";
 import { AlertTriangle, Camera, Check, CheckCircle2, ChevronDown, CloudOff, FileText, MapPin, Minus, Package, Phone, Plus, RefreshCw, Search, Send, Trash2, Truck, Wifi, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
@@ -38,6 +39,7 @@ const TABS: Record<AppPortal, string[]> = { buy: ["order", "orders", "invoices",
 
 export function OfflineApp() {
   const t = useTranslations("app");
+  const [hasTill, setHasTill] = useState(false);
   const [snap, setSnap] = useState<Snap | null | undefined>(undefined);
   const [portals, setPortals] = useState<AppPortal[]>([]);
   const [online, setOnline] = useState(true);
@@ -61,8 +63,12 @@ export function OfflineApp() {
     if (s) {
       userRef.current = s.user.id;
       await kvSet("lastPortal", s.portal);
+      // Phase 47: a till opened on this device once keeps selling here without signal
+      const till = (s.portal === "buy" || s.portal === "vendor") && !!(await kvGet(`pos:snap:${s.portal}`).catch(() => null));
+      setHasTill(till);
+      const tabs = till ? ["till", ...TABS[s.portal]] : TABS[s.portal];
       const q = new URLSearchParams(location.search).get("tab");
-      setTab((cur) => (q && TABS[s.portal].includes(q) ? q : TABS[s.portal].includes(cur) ? cur : TABS[s.portal][0]));
+      setTab((cur) => (q && tabs.includes(q) ? q : tabs.includes(cur) ? cur : tabs[0]));
       await loadEntries(s.user.id);
     }
   }, [loadEntries]);
@@ -105,13 +111,14 @@ export function OfflineApp() {
     <Shell t={t} online={online} portal={snap.portal} portals={portals} onPortal={(p) => void load(p)} savedAt={fmtDate(snap.at, true)} company={snap.company.name}>
       {notice && <p className="mb-3 flex items-center gap-2 rounded-lg border border-[color:var(--success,#16a34a)]/40 bg-[color:var(--success,#16a34a)]/10 px-3 py-2 text-sm" role="status" data-testid="offline-notice"><CheckCircle2 className="size-4" />{notice}<button className="ml-auto" onClick={() => setNotice(null)} aria-label={t("close")}><X className="size-4" /></button></p>}
       <nav className="mb-4 flex gap-1 rounded-xl border bg-card p-1" role="tablist">
-        {TABS[snap.portal].map((k) => (
+        {(hasTill ? ["till", ...TABS[snap.portal]] : TABS[snap.portal]).map((k) => (
           <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={cn("relative flex-auto break-normal rounded-lg px-2 py-2 text-xs font-medium leading-tight [hyphens:none] sm:px-3 sm:text-sm", tab === k ? "bg-primary text-primary-foreground" : "hover:bg-accent")} data-testid={`tab-${k}`}>
             {t(`tab.${k}`)}
             {k === "outbox" && (attention || waiting) ? <span className={cn("ml-1.5 rounded-full px-1.5 text-xs", attention ? "bg-destructive text-white" : "bg-muted text-foreground")}>{attention || waiting}</span> : null}
           </button>
         ))}
       </nav>
+      {tab === "till" && (snap.portal === "buy" || snap.portal === "vendor") && <Till portal={snap.portal} initial={null} locale={snap.locale} />}
       {tab === "order" && snap.buy && <OrderTab t={t} snap={snap} money={fmtMoney} onPlaced={(msg) => { setNotice(msg); setTab("outbox"); }} />}
       {tab === "orders" && snap.buy && <BuyerOrders t={t} orders={snap.buy.orders} money={fmtMoney} date={fmtDate} />}
       {tab === "invoices" && snap.buy && <Invoices t={t} invoices={snap.buy.invoices} money={fmtMoney} date={fmtDate} online={online} />}

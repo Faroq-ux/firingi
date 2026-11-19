@@ -23,6 +23,7 @@ const prc = section(`${A}/pricing`, "admin.pricing.view");
 const pin = section(`${A}/pricing/intelligence`, ["admin.pricing.view", "admin.pricing.manage"]);
 const fin = section(`${A}/finance`, "admin.finance.view");
 const inv = section(`${A}/invoices`, "admin.invoices.view");
+const pos = section(`${A}/pos`, ["admin.settings.manage", "admin.vendors.view", "admin.customers.view", "admin.finance.view"]);
 const ana = section(`${A}/analytics`, "admin.analytics.view");
 const ai = section(`${A}/ai`, "admin.ai.view");
 const crm = section(`${A}/crm`, "admin.crm.view");
@@ -323,6 +324,15 @@ export const ADMIN_NAV: NavSection[] = [
       inv("e-invoicing-archive", "E-Invoice Archive", "Arquivo de Faturas Eletrónicas", "P46", { live: true, href: `${A}/invoices/e-invoicing/archive`, perm: ["admin.finance.view", "admin.invoices.view", "admin.tax.manage"] }),
       inv("e-invoicing-settings", "E-Invoicing Settings", "Definições de Faturação Eletrónica", "P46", { live: true, href: `${A}/invoices/e-invoicing/settings`, perm: ["admin.settings.manage", "admin.tax.manage"] }),
       inv("country-tax-rules", "Country Tax Rules", "Regras Fiscais por País", "P1", { live: true, href: `${A}/international/tax-rules` }),
+    ],
+  },
+  {
+    key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" },
+    items: [
+      pos("", "Till Overview", "Resumo das Caixas", "P47", { live: true, href: `${A}/pos` }),
+      pos("companies", "Till per Company", "Caixa por Empresa", "P47", { live: true }),
+      pos("fiscal", "Till Receipts Queue", "Fila de Talões", "P47", { live: true, perm: ["admin.settings.manage", "admin.finance.view", "admin.finance.manage"] }),
+      pos("settings", "Till Settings", "Definições da Caixa", "P47", { live: true, perm: "admin.settings.manage" }),
     ],
   },
   {

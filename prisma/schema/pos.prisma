@@ -1,0 +1,364 @@
+/// Phase 47 — POS (shop till) for suppliers (cash & carry counter) and customers (restaurants, shops).
+/// A till sale is the business's own sale: the business issues the receipt, not FIRINGI. Each country is
+/// either NON-FISCAL (the legal receipt comes from the business's own certified till) or goes through a
+/// certified provider (admin decides per country, and which provider).
+
+enum PosSaleKind {
+  SALE
+  REFUND
+}
+
+enum PosSaleStatus {
+  COMPLETED
+  VOIDED
+}
+
+enum PosFiscalStatus {
+  NOT_REQUIRED // non-fiscal stage: the business's own certified till issues the legal receipt
+  PENDING // waiting for the certified provider (offline, outage …)
+  DONE
+  FAILED
+}
+
+enum PosPaymentMethod {
+  CASH
+  CARD
+  MBWAY
+  VOUCHER
+  POINTS
+  OTHER
+}
+
+enum PosShiftStatus {
+  OPEN
+  CLOSED
+}
+
+enum PosCashKind {
+  PAY_IN
+  PAY_OUT
+  NO_SALE
+}
+
+/// The business's POS set-up (one row per company). `adminState`: FIRINGI's own switch for this company.
+model PosCompany {
+  companyId        String    @id
+  /// DEFAULT = follows the switch for its company type; ON / OFF = FIRINGI decided for this company
+  adminState       String    @default("DEFAULT")
+  receiptHeader    String?
+  receiptFooter    String?
+  /// loyalty for the business's own guests
+  loyaltyOn        Boolean   @default(false)
+  pointsPerUnit    Decimal   @default(1) @db.Decimal(10, 4)
+  pointValue       Decimal   @default(0.01) @db.Decimal(10, 4)
+  minRedeem        Int       @default(100)
+  /// cashier may give up to this discount (%) without a manager's PIN
+  discountLimit    Decimal   @default(10) @db.Decimal(5, 2)
+  /// days within which a sale can be refunded
+  refundDays       Int       @default(30)
+  emailReceipts    Boolean   @default(true)
+  postToAccounting Boolean   @default(true)
+  /// the business's account with its certified provider (secret encrypted)
+  fiscalProvider   String?
+  fiscalAccount    String?
+  fiscalSecretEnc  String?
+  fiscalSecretHint String?
+  fiscalTestedAt   DateTime?
+  fiscalTestOk     Boolean?
+  updatedAt        DateTime  @updatedAt
+
+  company Company @relation("PosCompany", fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model PosRegister {
+  id            String    @id @default(cuid())
+  companyId     String
+  name          String
+  /// short code printed on receipts ("C1")
+  code          String
+  /// the warehouse its sales take stock from (suppliers)
+  addressId     String?
+  branchId      String?
+  active        Boolean   @default(true)
+  /// APPROVED | PENDING (an extra till waits for FIRINGI) | REJECTED
+  approval      String    @default("APPROVED")
+  requestedById String?
+  decidedById   String?
+  decidedAt     DateTime?
+  decisionNote  String?
+  shiftCount    Int       @default(0)
+  /// hash of the last sale (each receipt carries the chain)
+  lastHash      String?
+  createdAt     DateTime  @default(now())
+
+  company Company           @relation("PosRegisters", fields: [companyId], references: [id], onDelete: Cascade)
+  branch  Branch?           @relation("PosRegisterBranch", fields: [branchId], references: [id], onDelete: SetNull)
+  shifts  PosShift[]
+  sales   PosSale[]
+  tickets PosOpenTicket[]
+  users   PosRegisterUser[]
+
+  @@unique([companyId, code])
+}
+
+/// Who may use a till (each shop / warehouse its own people). A till with nobody listed is open to everyone with
+/// the till right (in its shop, for staff limited to shops); once people are listed, only they — and the owner.
+/// MANAGE = shop manager of this till (approves its refunds, discounts, cash out; sees its sales and reports).
+model PosRegisterUser {
+  registerId String
+  userId     String
+  role       String   @default("SELL")
+  createdAt  DateTime @default(now())
+
+  register PosRegister @relation(fields: [registerId], references: [id], onDelete: Cascade)
+
+  @@id([registerId, userId])
+  @@index([userId])
+}
+
+model PosShift {
+  id           String         @id @default(cuid())
+  registerId   String
+  number       Int
+  status       PosShiftStatus @default(OPEN)
+  openedById   String
+  openedAt     DateTime       @default(now())
+  openingFloat Decimal        @default(0) @db.Decimal(14, 2)
+  closedById   String?
+  closedAt     DateTime?
+  countedCash  Decimal?       @db.Decimal(14, 2)
+  expectedCash Decimal?       @db.Decimal(14, 2)
+  difference   Decimal?       @db.Decimal(14, 2)
+  /// the Z report as closed (totals by payment, VAT, cashier, refunds …)
+  zReport      Json?
+  note         String?
+
+  register PosRegister   @relation(fields: [registerId], references: [id], onDelete: Cascade)
+  sales    PosSale[]
+  cash     PosCashMove[]
+
+  @@unique([registerId, number])
+  @@index([status])
+}
+
+model PosCashMove {
+  id           String      @id @default(cuid())
+  shiftId      String
+  kind         PosCashKind
+  amount       Decimal     @default(0) @db.Decimal(14, 2)
+  reason       String?
+  byUserId     String
+  approvedById String?
+  at           DateTime    @default(now())
+
+  shift PosShift @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+}
+
+/// What the till sells: a supplier's own products (linked to its stock) or a restaurant's menu (with a recipe).
+model PosItem {
+  id           String   @id @default(cuid())
+  companyId    String
+  name         String
+  category     String?
+  barcode      String?
+  /// item code on scale labels (weight-embedded EAN-13)
+  plu          String?
+  /// price incl. VAT, in the till's currency, per piece or per kg
+  price        Decimal  @db.Decimal(14, 4)
+  vatRate      Decimal  @db.Decimal(5, 2)
+  byWeight     Boolean  @default(false)
+  /// a supplier's own offer: each sale takes `stockPerUnit` of it from the register's warehouse
+  offerId      String?
+  stockPerUnit Decimal  @default(1) @db.Decimal(12, 4)
+  /// ALCOHOL / TOBACCO: the till asks to check the guest's age
+  restriction  String?
+  allergens    String[] @default([])
+  color        String?
+  sortOrder    Int      @default(0)
+  quick        Boolean  @default(true)
+  /// goes on the kitchen ticket
+  kitchen      Boolean  @default(false)
+  /// the tills (shops) that sell it — empty = every till (a grocery and a restaurant each sell their own)
+  registerIds  String[] @default([])
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  company Company         @relation("PosItems", fields: [companyId], references: [id], onDelete: Cascade)
+  recipe  PosRecipeLine[]
+
+  @@index([companyId, active])
+  @@index([companyId, barcode])
+}
+
+/// A dish's ingredients bought on FIRINGI: selling one takes `qty` (`unit`) of that purchase from stock.
+model PosRecipeLine {
+  id      String  @id @default(cuid())
+  itemId  String
+  /// the offer the business buys on FIRINGI
+  offerId String
+  qty     Decimal @db.Decimal(12, 4)
+  /// KG, PCS (units in a pack) or PACK
+  unit    String  @default("PACK")
+
+  item PosItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, offerId])
+}
+
+/// Fractions of a pack used so far (a kebab uses 0.15 kg of a 10 kg box): whole packs are taken from stock.
+model PosStockAccrual {
+  companyId String
+  offerId   String
+  /// "" = the business's purchased stock; else the supplier's warehouse address
+  addressId String   @default("")
+  pending   Decimal  @default(0) @db.Decimal(14, 6)
+  usedTotal Decimal  @default(0) @db.Decimal(14, 6)
+  updatedAt DateTime @updatedAt
+
+  @@id([companyId, offerId, addressId])
+}
+
+model PosSale {
+  id             String          @id @default(cuid())
+  companyId      String
+  registerId     String
+  shiftId        String
+  /// the till's id for the sale (offline sales are sent again until stored: once only)
+  clientId       String
+  /// "C1-0012-0034": register, shift, sale in shift
+  number         String
+  kind           PosSaleKind     @default(SALE)
+  status         PosSaleStatus   @default(COMPLETED)
+  refundOfId     String?
+  currency       String          @default("EUR")
+  net            Decimal         @db.Decimal(14, 2)
+  vat            Decimal         @db.Decimal(14, 2)
+  gross          Decimal         @db.Decimal(14, 2)
+  discount       Decimal         @default(0) @db.Decimal(14, 2)
+  cashierId      String
+  approvedById   String?
+  soldAt         DateTime
+  offline        Boolean         @default(false)
+  ageChecked     Boolean         @default(false)
+  customerTaxId  String?
+  customerName   String?
+  customerEmail  String?
+  memberId       String?
+  pointsEarned   Int             @default(0)
+  pointsUsed     Int             @default(0)
+  tableRef       String?
+  note           String?
+  /// NONFISCAL or PROVIDER at the time of the sale
+  fiscalStage    String          @default("NONFISCAL")
+  fiscalStatus   PosFiscalStatus @default(NOT_REQUIRED)
+  fiscalProvider String?
+  fiscalNumber   String?
+  fiscalRef      String?
+  fiscalQr       String?
+  fiscalAttempts Int             @default(0)
+  fiscalNextAt   DateTime?
+  fiscalError    String?
+  prevHash       String?
+  hash           String
+  receiptToken   String          @unique
+  createdAt      DateTime        @default(now())
+
+  register PosRegister   @relation(fields: [registerId], references: [id])
+  shift    PosShift      @relation(fields: [shiftId], references: [id])
+  lines    PosSaleLine[]
+  payments PosPayment[]
+  refundOf PosSale?      @relation("PosRefunds", fields: [refundOfId], references: [id])
+  refunds  PosSale[]     @relation("PosRefunds")
+  member   PosMember?    @relation(fields: [memberId], references: [id])
+
+  @@unique([registerId, clientId])
+  @@unique([registerId, number])
+  @@index([companyId, soldAt])
+  @@index([fiscalStatus, fiscalNextAt])
+}
+
+model PosSaleLine {
+  id          String  @id @default(cuid())
+  saleId      String
+  itemId      String?
+  name        String
+  qty         Decimal @db.Decimal(12, 3)
+  byWeight    Boolean @default(false)
+  unitPrice   Decimal @db.Decimal(14, 4)
+  discountPct Decimal @default(0) @db.Decimal(5, 2)
+  vatRate     Decimal @db.Decimal(5, 2)
+  net         Decimal @db.Decimal(14, 2)
+  vat         Decimal @db.Decimal(14, 2)
+  gross       Decimal @db.Decimal(14, 2)
+  /// lots taken from stock (FEFO)
+  lots        Json?
+
+  sale PosSale @relation(fields: [saleId], references: [id], onDelete: Cascade)
+}
+
+model PosPayment {
+  id       String           @id @default(cuid())
+  saleId   String
+  method   PosPaymentMethod
+  amount   Decimal          @db.Decimal(14, 2)
+  tendered Decimal?         @db.Decimal(14, 2)
+  change   Decimal?         @db.Decimal(14, 2)
+  ref      String?
+
+  sale PosSale @relation(fields: [saleId], references: [id], onDelete: Cascade)
+}
+
+/// A table or tab kept open across devices (restaurants), before it is paid.
+model PosOpenTicket {
+  id         String   @id @default(cuid())
+  registerId String
+  label      String
+  lines      Json
+  sentLines  Int      @default(0)
+  byUserId   String
+  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+
+  register PosRegister @relation(fields: [registerId], references: [id], onDelete: Cascade)
+}
+
+/// The business's own loyalty card for its guests (not FIRINGI's loyalty).
+model PosMember {
+  id        String    @id @default(cuid())
+  companyId String
+  code      String
+  name      String
+  phone     String?
+  email     String?
+  points    Int       @default(0)
+  consentAt DateTime?
+  createdAt DateTime  @default(now())
+
+  company Company          @relation("PosMembers", fields: [companyId], references: [id], onDelete: Cascade)
+  sales   PosSale[]
+  entries PosPointsEntry[]
+
+  @@unique([companyId, code])
+}
+
+model PosPointsEntry {
+  id       String   @id @default(cuid())
+  memberId String
+  saleId   String?
+  points   Int
+  reason   String
+  at       DateTime @default(now())
+
+  member PosMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+/// Cashier PINs for switching cashier and for a manager's approval at the till.
+model PosPin {
+  companyId String
+  userId    String
+  pinHash   String
+  updatedAt DateTime @updatedAt
+
+  @@id([companyId, userId])
+}
