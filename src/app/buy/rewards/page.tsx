@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Gift, Hourglass, Sparkles, Trophy, Users } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { myRewards } from "@/server/loyalty/service";
+import { buyerRewardsAccess } from "@/server/rewards/service";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditForm, InviteLink } from "@/components/loyalty/controls";
@@ -19,7 +20,7 @@ const TIER_STYLE: Record<string, string> = {
 export default async function RewardsPage() {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, ["buyer.orders.view", "buyer.orders.place", "buyer.invoices.view"]);
-  const [r, t, locale] = await Promise.all([myRewards(ctx), getTranslations("loyalty"), getLocale()]);
+  const [r, t, locale, tr, shop] = await Promise.all([myRewards(ctx), getTranslations("loyalty"), getLocale(), getTranslations("rewardsShop"), buyerRewardsAccess(ctx.company)]);
   if (!r.on) notFound();
   const s = r.settings;
   const money = (v: string | number) => formatMoney(v, locale);
@@ -27,7 +28,7 @@ export default async function RewardsPage() {
   const perUnit = Math.round(1 / s.pointValue);
   return (
     <>
-      <PageHeader title={t("title")} description={t("description")} />
+      <PageHeader title={t("title")} description={t("description")} actions={shop.on ? <Link href="/buy/rewards/shop" className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:opacity-90" data-testid="to-shop"><Gift className="size-4" aria-hidden /> {tr("shopLink")}</Link> : undefined} />
       <div className="grid gap-4 lg:grid-cols-3">
         {/* balance */}
         <Card className="relative overflow-hidden lg:col-span-2" data-testid="rewards-balance">

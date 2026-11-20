@@ -260,8 +260,12 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       await (await import("@/server/currency/documents")).lockOrderCurrency(tx, order.id, new Map(part.lines.filter((l) => l.item.price?.fixedLocal).map((l) => [l.item.offerId, { code: l.item.price!.fixedLocal!.code, listEur: l.calc.unitListPriceNet.toFixed(4), listLocal: l.item.price!.fixedLocal!.unitNet }])));
       // Phase 48: free goods from rebate & bonus deals are used up
       {
-        const grants = part.lines.flatMap((l) => l.item.freeGoods?.grants ?? []);
+        const all = part.lines.flatMap((l) => l.item.freeGoods?.grants ?? []);
+        const { isRewardGrant, consumeRewardGoods } = await import("@/server/rewards/service");
+        const grants = all.filter((g) => !isRewardGrant(g.id)), rewards = all.filter((g) => isRewardGrant(g.id));
         if (grants.length) await (await import("@/server/rebates/service")).consumeFreeGoods(tx, order.id, grants);
+        // Phase 55: reward products redeemed in the rewards shop are used up
+        if (rewards.length) await consumeRewardGoods(tx, order.id, rewards);
       }
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
@@ -476,6 +480,7 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   if (to === "DELIVERED") await (await import("@/server/loyalty/service")).earnForOrder(orderId).catch(() => null); // Phase 32: loyalty points (the job retries)
   if (to === "CANCELLED") await (await import("@/server/loyalty/service")).refundForOrder(orderId).catch(() => null); // Phase 32: points spent on it go back
   if (to === "CANCELLED") await (await import("@/server/rebates/service")).restoreFreeGoods(orderId).catch(() => null); // Phase 48: free goods taken on it go back
+  if (to === "CANCELLED") await (await import("@/server/rewards/service")).restoreRewardGoods(orderId).catch(() => null); // Phase 55: reward products taken on it go back
   // Cancelled before delivery: a prepayment paid online goes back to the customer.
   if (to === "CANCELLED") await (await import("@/server/payments/service")).refundOrderPrepayment(orderId).catch(() => null);
   if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);

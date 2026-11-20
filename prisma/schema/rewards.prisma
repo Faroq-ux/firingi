@@ -1,0 +1,141 @@
+// ── Phase 55: rewards shop ────────────────────────────────────────────────────
+// Buyers spend loyalty points (Phase 32) in a rewards shop: FIRINGI-funded vouchers and free delivery (issued as a
+// single-use coupon for that business), suppliers' own products (supplier-funded, approved by FIRINGI, free in the
+// cart on the buyer's next order from that supplier), gifts & merchandise with a stock count (FIRINGI ships them) and
+// partner offers (a code from a pool, shown after redeeming). Cancelled or expired rewards give the points back.
+// FIRINGI switches every kind on / off, per business type and per business.
+
+enum RewardKind {
+  VOUCHER // € off an order (FIRINGI-funded coupon)
+  FREE_DELIVERY // delivery fee waived (FIRINGI-funded coupon)
+  SUPPLIER_PRODUCT // a supplier's product, supplier-funded, free on the next order from that supplier
+  GIFT // merchandise / gift FIRINGI sends
+  PARTNER // a partner's offer: a code from a pool
+}
+
+enum RewardStatus {
+  DRAFT
+  PENDING // a supplier's reward waiting for FIRINGI
+  ACTIVE
+  PAUSED
+  REJECTED
+  ENDED
+}
+
+enum RedemptionStatus {
+  ISSUED // voucher / partner code given
+  PENDING // supplier product / gift still to be handed over
+  SHIPPED // gift on its way; supplier product on an order
+  DELIVERED
+  USED // the voucher was used on an order
+  CANCELLED // points given back
+  EXPIRED // not used / not ordered in time (points given back where FIRINGI says so)
+}
+
+model RewardItem {
+  id                String       @id @default(cuid())
+  kind              RewardKind
+  status            RewardStatus @default(DRAFT)
+  /// per language { en, pt, … } (falls back to English)
+  title             Json
+  description       Json?
+  terms             Json?
+  points            Int
+  /// null = unlimited (vouchers); gifts / supplier products count down; partner offers: the unused codes
+  stock             Int?
+  perBuyerLimit     Int?
+  /// BRONZE / SILVER / GOLD — the lowest loyalty tier that may redeem it
+  minTier           String?
+  /// empty = every buyer type / country
+  buyerTypes        String[]     @default([])
+  countryCodes      String[]     @default([])
+  validFrom         DateTime     @default(now())
+  validTo           DateTime?
+  featured          Boolean      @default(false)
+  sortOrder         Int          @default(0)
+  imageKey          String?
+  /// low-stock alert sent (cleared when restocked)
+  lowStockSentAt    DateTime?
+  // VOUCHER (and FREE_DELIVERY: min order + days)
+  voucherAmount     Decimal?     @db.Decimal(10, 2)
+  voucherMinOrder   Decimal?     @db.Decimal(10, 2)
+  voucherDays       Int?
+  // SUPPLIER_PRODUCT
+  supplierCompanyId String?
+  offerId           String?
+  qty               Int?
+  // GIFT: what it costs FIRINGI (reports)
+  giftCost          Decimal?     @db.Decimal(10, 2)
+  // PARTNER
+  partnerName       String?
+  partnerUrl        String?
+  reviewNote        String?
+  reviewedById      String?
+  reviewedAt        DateTime?
+  createdById       String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  codes       RewardPartnerCode[]
+  redemptions RewardRedemption[]
+
+  @@index([status, kind])
+  @@index([supplierCompanyId])
+}
+
+/// A partner offer's code pool: one code per redemption.
+model RewardPartnerCode {
+  id           String   @id @default(cuid())
+  rewardId     String
+  code         String
+  redemptionId String?  @unique
+  createdAt    DateTime @default(now())
+
+  reward RewardItem @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+
+  @@unique([rewardId, code])
+  @@index([rewardId, redemptionId])
+}
+
+model RewardRedemption {
+  id                String           @id @default(cuid())
+  rewardId          String
+  companyId         String
+  userId            String
+  points            Int
+  status            RedemptionStatus
+  /// VOUCHER / FREE_DELIVERY: the coupon made for this business
+  promotionId       String?          @unique
+  couponCode        String?
+  /// voucher valid until / supplier product to be ordered by
+  expiresAt         DateTime?
+  /// PARTNER
+  partnerCode       String?
+  /// SUPPLIER_PRODUCT: units free on the next order(s) from the supplier
+  supplierCompanyId String?
+  offerId           String?
+  qty               Int              @default(1)
+  usedQty           Int              @default(0)
+  /// [{ orderId, qty, at, restored? }]
+  uses              Json             @default("[]")
+  /// the order it went with (supplier product) / where the voucher was used
+  orderId           String?
+  /// GIFT: where it goes
+  addressId         String?
+  tracking          String?
+  note              String?
+  cancelReason      String?
+  /// "expires soon" reminder sent (vouchers)
+  remindedAt        DateTime?
+  fulfilledById     String?
+  fulfilledAt       DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  reward RewardItem @relation(fields: [rewardId], references: [id])
+
+  @@index([companyId, createdAt])
+  @@index([status, rewardId])
+  @@index([supplierCompanyId, status])
+  @@index([companyId, offerId, status])
+}

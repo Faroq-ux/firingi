@@ -1810,6 +1810,42 @@
     "kitchen_use_first": {
       "title": "Use first today",
       "body": "{count} lot(s) you bought are at or near their date. Use them first."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "A customer redeemed your reward",
+      "body": "{company} redeemed “{reward}”. It will be free on their next order from you."
+    },
+    "rewards_to_review": {
+      "title": "Supplier reward to check",
+      "body": "{company} offers “{reward}” in the rewards shop. Accept it or say why not."
+    },
+    "rewards_approved": {
+      "title": "Your reward is in the shop",
+      "body": "FIRINGI accepted “{reward}”. Customers can redeem it now."
+    },
+    "rewards_rejected": {
+      "title": "Your reward was not accepted",
+      "body": "FIRINGI did not accept “{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Gift to send",
+      "body": "{company} redeemed “{reward}”. Send it and add the tracking."
+    },
+    "rewards_gift_shipped": {
+      "title": "Your gift is on its way",
+      "body": "“{reward}” has been sent. Tracking: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Your voucher expires soon",
+      "body": "“{reward}” (code {code}) can be used until {date}."
+    },
+    "rewards_refunded": {
+      "title": "Points given back",
+      "body": "{points} points for “{reward}” are back in your account ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Reward running out",
+      "body": "Only {left} left of “{reward}”."
     }
   },
   "notifications": {
@@ -4335,7 +4371,8 @@
       "REDEEM_CREDIT": "Turned into credit",
       "REFUND": "Given back (order cancelled)",
       "REVERSE": "Taken back (goods credited)",
-      "EXPIRE": "Expired"
+      "EXPIRE": "Expired",
+      "REDEEM_REWARD": "Spent in the rewards shop"
     },
     "expires": "expires {date}",
     "cartTitle": "Use your points",
@@ -7543,5 +7580,170 @@
     "wastedTimes": "wasted {n}× ({qty} {unit})",
     "cutBy": "order about {pct} % less",
     "unitLabel": "Unit"
+  },
+  "rewardsShop": {
+    "title": "Rewards Shop",
+    "description": "Spend your points on vouchers, free delivery, products from your suppliers, gifts and partner offers.",
+    "mineTitle": "My Rewards",
+    "mineDescription": "What you redeemed: codes to use, products waiting for your next order and gifts on their way.",
+    "closed": "The rewards shop is not available for your business.",
+    "balance": "Your points",
+    "worth": "worth {value} at checkout",
+    "monthlyLeft": "{points} points left to spend this month",
+    "all": "All",
+    "kind": {
+      "VOUCHER": "Vouchers",
+      "FREE_DELIVERY": "Free delivery",
+      "SUPPLIER_PRODUCT": "Supplier products",
+      "GIFT": "Gifts",
+      "PARTNER": "Partner offers"
+    },
+    "kindOne": {
+      "VOUCHER": "Voucher",
+      "FREE_DELIVERY": "Free delivery",
+      "SUPPLIER_PRODUCT": "Supplier product",
+      "GIFT": "Gift",
+      "PARTNER": "Partner offer"
+    },
+    "pts": "{points} pts",
+    "left": "{n} left",
+    "soldOut": "Sold out",
+    "from": "from {supplier}",
+    "voucherWorth": "{amount} off your order",
+    "freeDeliveryText": "No delivery fee on one order",
+    "minOrder": "Orders from {amount}",
+    "validDays": "Valid {days} days after redeeming",
+    "freeUnits": "{qty} × {product}, free with your next order from {supplier}",
+    "minTier": "{tier} and up",
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Silver",
+      "GOLD": "Gold"
+    },
+    "blocked": {
+      "KIND_OFF": "Not available now",
+      "NOT_ACTIVE": "Not available now",
+      "NOT_YET": "Not available yet",
+      "ENDED": "Ended",
+      "TYPE": "Not for your type of business",
+      "COUNTRY": "Not available in your country",
+      "TIER": "For {tier} and up",
+      "LIMIT": "Already redeemed as often as allowed",
+      "SOLD_OUT": "Sold out",
+      "MONTHLY": "Over this month's points limit",
+      "POINTS": "{missing} more points needed"
+    },
+    "redeem": "Redeem",
+    "redeemFor": "Redeem for {points} points",
+    "confirm": "Spend {points} points on this reward?",
+    "saveFor": "Save for this",
+    "saving": "You are saving for this",
+    "stopSaving": "Stop saving",
+    "goalTitle": "Saving for",
+    "goalMissing": "{missing} points to go",
+    "goalReady": "You have enough points — redeem it now.",
+    "noGoal": "Pick a reward to save for and watch your progress here.",
+    "empty": "No rewards right now. Check back soon.",
+    "details": "Details",
+    "back": "Back to the shop",
+    "terms": "Terms",
+    "sendTo": "Send to",
+    "note": "Note for FIRINGI (optional)",
+    "done": {
+      "coupon": "Your code is {code}. Use it in your cart by {date}.",
+      "partner": "Your code is {code}.",
+      "product": "Done. Add it to your cart with your next order from {supplier} — it will be free.",
+      "gift": "Done. FIRINGI will send it to you and tell you when it's on its way."
+    },
+    "useInCart": "Use in cart",
+    "addToCart": "Add to cart",
+    "openPartner": "Open the partner's site",
+    "copy": "Copy",
+    "copied": "Copied",
+    "cancel": "Cancel — points back",
+    "cancelConfirm": "Cancel this reward? Your points come back.",
+    "status": {
+      "ISSUED": "Ready to use",
+      "PENDING": "Waiting",
+      "SHIPPED": "On its way",
+      "DELIVERED": "Delivered",
+      "USED": "Used",
+      "CANCELLED": "Cancelled",
+      "EXPIRED": "Expired"
+    },
+    "productWaiting": "Waiting for your next order",
+    "onOrder": "On order {number}",
+    "useBy": "Use by {date}",
+    "orderBy": "Order by {date}",
+    "tracking": "Tracking: {tracking}",
+    "redeemedOn": "Redeemed {date}",
+    "cancelReason": "Reason: {reason}",
+    "noRedemptions": "You haven't redeemed anything yet.",
+    "toShop": "Go to the rewards shop",
+    "toMine": "My rewards",
+    "shopLink": "Spend your points in the rewards shop",
+    "cartFree": "{qty} free (reward)",
+    "col": {
+      "reward": "Reward",
+      "points": "Points",
+      "status": "Status",
+      "date": "Date",
+      "customer": "Customer",
+      "product": "Product",
+      "qty": "Qty",
+      "order": "Order"
+    },
+    "v": {
+      "title": "Reward Products",
+      "description": "Offer your own products as rewards. Customers spend their FIRINGI points; the product is free on their next order from you, and you pay for it.",
+      "handoverTitle": "Rewards to Hand Over",
+      "handoverDescription": "Customers who redeemed your products. The product is free on the customer's next order from you — pick and deliver it as usual.",
+      "closed": "Offering rewards is not available for your business.",
+      "new": "New reward",
+      "edit": "Edit",
+      "product": "Product",
+      "qty": "Quantity given",
+      "points": "Points it costs",
+      "pointsHint": "{min} to {max} points",
+      "stock": "How many you give away",
+      "perBuyer": "Per customer (empty = no limit)",
+      "minTier": "Lowest loyalty tier",
+      "anyTier": "Any tier",
+      "name": "Name customers see",
+      "descr": "Description (optional)",
+      "until": "Until (optional)",
+      "save": "Save",
+      "saved": "Saved.",
+      "approvalNote": "FIRINGI checks new rewards, and changes of product, quantity or points, before they are in the shop.",
+      "cost": "You pay for these products: they are free for the customer on an order from you, and your payout for it is lower.",
+      "status": {
+        "DRAFT": "Draft",
+        "PENDING": "Waiting for FIRINGI",
+        "ACTIVE": "In the shop",
+        "PAUSED": "Paused",
+        "REJECTED": "Not accepted",
+        "ENDED": "Ended"
+      },
+      "pause": "Pause",
+      "resume": "Resume",
+      "end": "End",
+      "endConfirm": "End this reward? Customers who already redeemed it still get it.",
+      "redeemed": "{n} redeemed",
+      "toHand": "{n} to hand over",
+      "note": "FIRINGI's note: {note}",
+      "empty": "You don't offer any rewards yet.",
+      "cantGive": "Can't give it",
+      "reason": "Why? (the customer sees this)",
+      "confirmCancel": "Give the customer the points back?",
+      "hand": {
+        "PENDING": "Waiting for an order",
+        "SHIPPED": "On an order",
+        "DELIVERED": "Delivered",
+        "CANCELLED": "Cancelled",
+        "EXPIRED": "Not ordered in time"
+      },
+      "noHandovers": "No customer has redeemed your products yet.",
+      "orderBy": "Order by {date}"
+    }
   }
 }

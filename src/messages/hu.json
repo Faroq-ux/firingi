@@ -912,7 +912,11 @@
     "Waste Log": "Hulladéknapló",
     "Waste Reports": "Hulladékjelentések",
     "Use First": "Először felhasználandó",
-    "Donations": "Adományok"
+    "Donations": "Adományok",
+    "Rewards Shop": "Jutalombolt",
+    "My Rewards": "Jutalmaim",
+    "Reward Products": "Jutalomtermékek",
+    "Rewards to Hand Over": "Átadandó jutalmak"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Ma először felhasználandó",
       "body": "Vásárolt tételek a lejárati dátumon vagy ahhoz közel: {count}. Használja fel őket először."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Egy vevő beváltotta az Ön jutalmát",
+      "body": "{company} beváltotta ezt: „{reward}”. A következő Öntől leadott rendelésében ingyenes lesz."
+    },
+    "rewards_to_review": {
+      "title": "Ellenőrizendő szállítói jutalom",
+      "body": "{company} ezt kínálja a jutalomboltban: „{reward}”. Fogadja el, vagy írja meg, miért nem."
+    },
+    "rewards_approved": {
+      "title": "Jutalma a boltban van",
+      "body": "A FIRINGI elfogadta ezt: „{reward}”. A vevők most már beválthatják."
+    },
+    "rewards_rejected": {
+      "title": "Jutalmát nem fogadták el",
+      "body": "A FIRINGI nem fogadta el ezt: „{reward}”. Indok: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Elküldendő ajándék",
+      "body": "{company} beváltotta ezt: „{reward}”. Küldje el, és adja meg a nyomkövetési adatokat."
+    },
+    "rewards_gift_shipped": {
+      "title": "Ajándéka úton van",
+      "body": "„{reward}” elküldve. Nyomkövetés: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Utalványa hamarosan lejár",
+      "body": "„{reward}” (kód: {code}) eddig használható: {date}."
+    },
+    "rewards_refunded": {
+      "title": "Pontok visszaadva",
+      "body": "A(z) „{reward}” {points} pontja visszakerült a fiókjába ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Fogyóban a jutalom",
+      "body": "A(z) „{reward}” jutalomból már csak {left} maradt."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Jóváírássá alakítva",
       "REFUND": "Visszaadva (rendelés törölve)",
       "REVERSE": "Visszavonva (áru jóváírva)",
-      "EXPIRE": "Lejárt"
+      "EXPIRE": "Lejárt",
+      "REDEEM_REWARD": "Elköltve a jutalomboltban"
     },
     "expires": "lejár: {date}",
     "cartTitle": "Pontok felhasználása",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "kidobva {n}× ({qty} {unit})",
     "cutBy": "rendeljen kb. {pct} %-kal kevesebbet",
     "unitLabel": "Egység"
+  },
+  "rewardsShop": {
+    "title": "Jutalombolt",
+    "description": "Váltsa be pontjait utalványokra, ingyenes szállításra, szállítóinak termékeire, ajándékokra és partnerajánlatokra.",
+    "mineTitle": "Jutalmaim",
+    "mineDescription": "Amit beváltott: felhasználható kódok, a következő rendelésére váró termékek és úton lévő ajándékok.",
+    "closed": "A jutalombolt nem érhető el az Ön cége számára.",
+    "balance": "Az Ön pontjai",
+    "worth": "{value} értékben a fizetésnél",
+    "monthlyLeft": "Ebben a hónapban még {points} pontot költhet el",
+    "all": "Mind",
+    "kind": {
+      "VOUCHER": "Utalványok",
+      "FREE_DELIVERY": "Ingyenes szállítás",
+      "SUPPLIER_PRODUCT": "Szállítói termékek",
+      "GIFT": "Ajándékok",
+      "PARTNER": "Partnerajánlatok"
+    },
+    "kindOne": {
+      "VOUCHER": "Utalvány",
+      "FREE_DELIVERY": "Ingyenes szállítás",
+      "SUPPLIER_PRODUCT": "Szállítói termék",
+      "GIFT": "Ajándék",
+      "PARTNER": "Partnerajánlat"
+    },
+    "pts": "{points} p",
+    "left": "Még {n} db",
+    "soldOut": "Elfogyott",
+    "from": "{supplier} kínálatából",
+    "voucherWorth": "{amount} kedvezmény a rendeléséből",
+    "freeDeliveryText": "Egy rendelés szállítási díj nélkül",
+    "minOrder": "{amount} összegű rendeléstől",
+    "validDays": "A beváltástól számítva {days} napig érvényes",
+    "freeUnits": "{qty} × {product}, ingyen a következő rendelésével innen: {supplier}",
+    "minTier": "{tier} vagy magasabb",
+    "tiers": {
+      "BRONZE": "Bronz",
+      "SILVER": "Ezüst",
+      "GOLD": "Arany"
+    },
+    "blocked": {
+      "KIND_OFF": "Most nem érhető el",
+      "NOT_ACTIVE": "Most nem érhető el",
+      "NOT_YET": "Még nem érhető el",
+      "ENDED": "Befejeződött",
+      "TYPE": "Nem az Ön cégtípusának szól",
+      "COUNTRY": "Az Ön országában nem érhető el",
+      "TIER": "{tier} szinttől érhető el",
+      "LIMIT": "Már a megengedett számú alkalommal beváltotta",
+      "SOLD_OUT": "Elfogyott",
+      "MONTHLY": "Túllépi az e havi pontkeretet",
+      "POINTS": "Még {missing} pont szükséges"
+    },
+    "redeem": "Beváltás",
+    "redeemFor": "Beváltás {points} pontért",
+    "confirm": "Elkölt {points} pontot erre a jutalomra?",
+    "saveFor": "Gyűjtés erre",
+    "saving": "Erre gyűjt",
+    "stopSaving": "Gyűjtés leállítása",
+    "goalTitle": "Gyűjtési cél",
+    "goalMissing": "Még {missing} pont",
+    "goalReady": "Elég pontja van — váltsa be most.",
+    "noGoal": "Válasszon egy jutalmat, amire gyűjt, és itt követheti a haladást.",
+    "empty": "Jelenleg nincs jutalom. Nézzen vissza hamarosan.",
+    "details": "Részletek",
+    "back": "Vissza a boltba",
+    "terms": "Feltételek",
+    "sendTo": "Címzett",
+    "note": "Megjegyzés a FIRINGI-nek (opcionális)",
+    "done": {
+      "coupon": "Az Ön kódja: {code}. Használja fel a kosárban eddig: {date}.",
+      "partner": "Az Ön kódja: {code}.",
+      "product": "Kész. Tegye a kosárba a következő rendelésével innen: {supplier} — ingyenes lesz.",
+      "gift": "Kész. A FIRINGI elküldi Önnek, és szól, amikor úton van."
+    },
+    "useInCart": "Felhasználás a kosárban",
+    "addToCart": "Kosárba",
+    "openPartner": "Partner oldalának megnyitása",
+    "copy": "Másolás",
+    "copied": "Másolva",
+    "cancel": "Lemondás — pontok vissza",
+    "cancelConfirm": "Lemondja ezt a jutalmat? A pontjait visszakapja.",
+    "status": {
+      "ISSUED": "Felhasználható",
+      "PENDING": "Várakozik",
+      "SHIPPED": "Úton",
+      "DELIVERED": "Kiszállítva",
+      "USED": "Felhasználva",
+      "CANCELLED": "Lemondva",
+      "EXPIRED": "Lejárt"
+    },
+    "productWaiting": "A következő rendelésére vár",
+    "onOrder": "A(z) {number} rendelésen",
+    "useBy": "Felhasználható eddig: {date}",
+    "orderBy": "Rendelés eddig: {date}",
+    "tracking": "Nyomkövetés: {tracking}",
+    "redeemedOn": "Beváltva: {date}",
+    "cancelReason": "Indok: {reason}",
+    "noRedemptions": "Még nem váltott be semmit.",
+    "toShop": "Tovább a jutalomboltba",
+    "toMine": "Jutalmaim",
+    "shopLink": "Váltsa be pontjait a jutalomboltban",
+    "cartFree": "{qty} ingyen (jutalom)",
+    "col": {
+      "reward": "Jutalom",
+      "points": "Pontok",
+      "status": "Állapot",
+      "date": "Dátum",
+      "customer": "Vevő",
+      "product": "Termék",
+      "qty": "Menny.",
+      "order": "Rendelés"
+    },
+    "v": {
+      "title": "Jutalomtermékek",
+      "description": "Kínálja saját termékeit jutalomként. A vevők FIRINGI-pontjaikat költik el; a termék ingyenes a következő Öntől leadott rendelésükben, és az árát Ön fizeti.",
+      "handoverTitle": "Átadandó jutalmak",
+      "handoverDescription": "Vevők, akik beváltották az Ön termékeit. A termék ingyenes a vevő következő Öntől leadott rendelésében — szedje össze és szállítsa ki a szokásos módon.",
+      "closed": "A jutalmak kínálása nem érhető el az Ön cége számára.",
+      "new": "Új jutalom",
+      "edit": "Szerkesztés",
+      "product": "Termék",
+      "qty": "Adott mennyiség",
+      "points": "Ára pontban",
+      "pointsHint": "{min}–{max} pont",
+      "stock": "Összesen hány darabot ad",
+      "perBuyer": "Vevőnként (üres = nincs korlát)",
+      "minTier": "Legalacsonyabb hűségszint",
+      "anyTier": "Bármely szint",
+      "name": "A vevők által látott név",
+      "descr": "Leírás (opcionális)",
+      "until": "Érvényes eddig (opcionális)",
+      "save": "Mentés",
+      "saved": "Mentve.",
+      "approvalNote": "A FIRINGI ellenőrzi az új jutalmakat, valamint a termék, a mennyiség vagy a pontok módosítását, mielőtt a boltba kerülnek.",
+      "cost": "Ezeket a termékeket Ön fizeti: a vevőnek ingyenesek egy Öntől leadott rendelésben, és az Ön kifizetése ennyivel kevesebb.",
+      "status": {
+        "DRAFT": "Piszkozat",
+        "PENDING": "FIRINGI-re vár",
+        "ACTIVE": "A boltban",
+        "PAUSED": "Szüneteltetve",
+        "REJECTED": "Nem elfogadva",
+        "ENDED": "Befejezve"
+      },
+      "pause": "Szüneteltetés",
+      "resume": "Folytatás",
+      "end": "Befejezés",
+      "endConfirm": "Befejezi ezt a jutalmat? Azok a vevők, akik már beváltották, továbbra is megkapják.",
+      "redeemed": "{n} beváltva",
+      "toHand": "{n} átadandó",
+      "note": "A FIRINGI megjegyzése: {note}",
+      "empty": "Még nem kínál jutalmat.",
+      "cantGive": "Nem adható át",
+      "reason": "Miért? (a vevő látja)",
+      "confirmCancel": "Visszaadja a pontokat a vevőnek?",
+      "hand": {
+        "PENDING": "Rendelésre vár",
+        "SHIPPED": "Rendelésen",
+        "DELIVERED": "Kiszállítva",
+        "CANCELLED": "Lemondva",
+        "EXPIRED": "Nem rendelték meg időben"
+      },
+      "noHandovers": "Még egy vevő sem váltotta be az Ön termékeit.",
+      "orderBy": "Rendelés eddig: {date}"
+    }
   }
 }

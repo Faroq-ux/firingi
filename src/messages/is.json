@@ -912,7 +912,11 @@
     "Waste Log": "Sóunarskrá",
     "Waste Reports": "Sóunarskýrslur",
     "Use First": "Nota fyrst",
-    "Donations": "Matargjafir"
+    "Donations": "Matargjafir",
+    "Rewards Shop": "Umbunarbúð",
+    "My Rewards": "Umbunin mín",
+    "Reward Products": "Umbunarvörur",
+    "Rewards to Hand Over": "Umbun til afhendingar"
   },
   "delivery": {
     "title": "Afhending",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Nota fyrst í dag",
       "body": "Keyptar lotur á eða nálægt dagsetningu: {count}. Notaðu þær fyrst."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Viðskiptavinur innleysti umbunina þína",
+      "body": "{company} innleysti „{reward}“. Varan verður frí í næstu pöntun fyrirtækisins hjá þér."
+    },
+    "rewards_to_review": {
+      "title": "Umbun birgis til yfirferðar",
+      "body": "{company} býður „{reward}“ í umbunarbúðinni. Samþykktu hana eða segðu af hverju ekki."
+    },
+    "rewards_approved": {
+      "title": "Umbunin þín er komin í búðina",
+      "body": "FIRINGI samþykkti „{reward}“. Viðskiptavinir geta innleyst hana núna."
+    },
+    "rewards_rejected": {
+      "title": "Umbunin þín var ekki samþykkt",
+      "body": "FIRINGI samþykkti ekki „{reward}“: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Gjöf til að senda",
+      "body": "{company} innleysti „{reward}“. Sendu gjöfina og bættu við rakningu."
+    },
+    "rewards_gift_shipped": {
+      "title": "Gjöfin þín er á leiðinni",
+      "body": "„{reward}“ hefur verið send. Rakning: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Afsláttarmiðinn þinn rennur brátt út",
+      "body": "„{reward}“ (kóði {code}) gildir til {date}."
+    },
+    "rewards_refunded": {
+      "title": "Punktum skilað",
+      "body": "{points} punktar fyrir „{reward}“ eru komnir aftur á reikninginn þinn ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Umbun að klárast",
+      "body": "Aðeins {left} eftir af „{reward}“."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Breytt í inneign",
       "REFUND": "Skilað (pöntun hætt við)",
       "REVERSE": "Teknir til baka (vörur kreditfærðar)",
-      "EXPIRE": "Útrunnir"
+      "EXPIRE": "Útrunnir",
+      "REDEEM_REWARD": "Notað í umbunarbúðinni"
     },
     "expires": "renna út {date}",
     "cartTitle": "Notaðu punktana",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "sóað {n}× ({qty} {unit})",
     "cutBy": "pantaðu um {pct} % minna",
     "unitLabel": "Eining"
+  },
+  "rewardsShop": {
+    "title": "Umbunarbúð",
+    "description": "Notaðu punktana þína í afsláttarmiða, fría afhendingu, vörur frá birgjunum þínum, gjafir og tilboð samstarfsaðila.",
+    "mineTitle": "Umbunin mín",
+    "mineDescription": "Það sem þú hefur innleyst: kóðar til að nota, vörur sem bíða næstu pöntunar og gjafir á leiðinni.",
+    "closed": "Umbunarbúðin er ekki í boði fyrir fyrirtækið þitt.",
+    "balance": "Punktarnir þínir",
+    "worth": "jafngilda {value} við greiðslu",
+    "monthlyLeft": "Þú getur enn notað {points} punkta í þessum mánuði",
+    "all": "Allt",
+    "kind": {
+      "VOUCHER": "Afsláttarmiðar",
+      "FREE_DELIVERY": "Frí afhending",
+      "SUPPLIER_PRODUCT": "Vörur birgja",
+      "GIFT": "Gjafir",
+      "PARTNER": "Tilboð samstarfsaðila"
+    },
+    "kindOne": {
+      "VOUCHER": "Afsláttarmiði",
+      "FREE_DELIVERY": "Frí afhending",
+      "SUPPLIER_PRODUCT": "Vara birgis",
+      "GIFT": "Gjöf",
+      "PARTNER": "Tilboð samstarfsaðila"
+    },
+    "pts": "{points} pkt.",
+    "left": "{n} eftir",
+    "soldOut": "Uppselt",
+    "from": "frá {supplier}",
+    "voucherWorth": "{amount} afsláttur af pöntuninni",
+    "freeDeliveryText": "Ekkert afhendingargjald á einni pöntun",
+    "minOrder": "Pantanir frá {amount}",
+    "validDays": "Gildir í {days} daga eftir innlausn",
+    "freeUnits": "{qty} × {product}, frítt með næstu pöntun þinni frá {supplier}",
+    "minTier": "{tier} og ofar",
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Silfur",
+      "GOLD": "Gull"
+    },
+    "blocked": {
+      "KIND_OFF": "Ekki í boði núna",
+      "NOT_ACTIVE": "Ekki í boði núna",
+      "NOT_YET": "Ekki í boði enn",
+      "ENDED": "Lokið",
+      "TYPE": "Ekki fyrir þína tegund fyrirtækis",
+      "COUNTRY": "Ekki í boði í þínu landi",
+      "TIER": "Fyrir {tier} og ofar",
+      "LIMIT": "Þegar innleyst eins oft og leyfilegt er",
+      "SOLD_OUT": "Uppselt",
+      "MONTHLY": "Yfir punktahámarki þessa mánaðar",
+      "POINTS": "Vantar {missing} punkta í viðbót"
+    },
+    "redeem": "Innleysa",
+    "redeemFor": "Innleysa fyrir {points} punkta",
+    "confirm": "Nota {points} punkta í þessa umbun?",
+    "saveFor": "Safna fyrir þessu",
+    "saving": "Þú ert að safna fyrir þessu",
+    "stopSaving": "Hætta að safna",
+    "goalTitle": "Þú safnar fyrir",
+    "goalMissing": "{missing} punktar eftir",
+    "goalReady": "Þú átt nógu marga punkta — innleystu núna.",
+    "noGoal": "Veldu umbun til að safna fyrir og fylgstu með framvindunni hér.",
+    "empty": "Engin umbun í boði núna. Kíktu aftur fljótlega.",
+    "details": "Nánar",
+    "back": "Aftur í búðina",
+    "terms": "Skilmálar",
+    "sendTo": "Senda til",
+    "note": "Athugasemd til FIRINGI (valfrjálst)",
+    "done": {
+      "coupon": "Kóðinn þinn er {code}. Notaðu hann í körfunni í síðasta lagi {date}.",
+      "partner": "Kóðinn þinn er {code}.",
+      "product": "Búið. Settu hana í körfuna með næstu pöntun frá {supplier} — hún verður frí.",
+      "gift": "Búið. FIRINGI sendir þér hana og lætur þig vita þegar hún er á leiðinni."
+    },
+    "useInCart": "Nota í körfu",
+    "addToCart": "Setja í körfu",
+    "openPartner": "Opna vef samstarfsaðilans",
+    "copy": "Afrita",
+    "copied": "Afritað",
+    "cancel": "Hætta við — punktar til baka",
+    "cancelConfirm": "Hætta við þessa umbun? Þú færð punktana aftur.",
+    "status": {
+      "ISSUED": "Tilbúið til notkunar",
+      "PENDING": "Í bið",
+      "SHIPPED": "Á leiðinni",
+      "DELIVERED": "Afhent",
+      "USED": "Notað",
+      "CANCELLED": "Hætt við",
+      "EXPIRED": "Útrunnið"
+    },
+    "productWaiting": "Bíður næstu pöntunar",
+    "onOrder": "Í pöntun {number}",
+    "useBy": "Nota í síðasta lagi {date}",
+    "orderBy": "Panta í síðasta lagi {date}",
+    "tracking": "Rakning: {tracking}",
+    "redeemedOn": "Innleyst {date}",
+    "cancelReason": "Ástæða: {reason}",
+    "noRedemptions": "Þú hefur ekki innleyst neitt enn.",
+    "toShop": "Fara í umbunarbúðina",
+    "toMine": "Umbunin mín",
+    "shopLink": "Notaðu punktana þína í umbunarbúðinni",
+    "cartFree": "{qty} frítt (umbun)",
+    "col": {
+      "reward": "Umbun",
+      "points": "Punktar",
+      "status": "Staða",
+      "date": "Dagsetning",
+      "customer": "Viðskiptavinur",
+      "product": "Vara",
+      "qty": "Magn",
+      "order": "Pöntun"
+    },
+    "v": {
+      "title": "Umbunarvörur",
+      "description": "Bjóddu eigin vörur sem umbun. Viðskiptavinir nota FIRINGI-punktana sína; varan er frí í næstu pöntun þeirra hjá þér og þú greiðir fyrir hana.",
+      "handoverTitle": "Umbun til afhendingar",
+      "handoverDescription": "Viðskiptavinir sem innleystu vörurnar þínar. Varan er frí í næstu pöntun viðskiptavinarins hjá þér — taktu hana til og afhentu eins og venjulega.",
+      "closed": "Að bjóða umbun er ekki í boði fyrir fyrirtækið þitt.",
+      "new": "Ný umbun",
+      "edit": "Breyta",
+      "product": "Vara",
+      "qty": "Magn sem gefið er",
+      "points": "Kostnaður í punktum",
+      "pointsHint": "{min} til {max} punktar",
+      "stock": "Hversu mörg þú gefur alls",
+      "perBuyer": "Á viðskiptavin (autt = ekkert hámark)",
+      "minTier": "Lægsta vildarstig",
+      "anyTier": "Öll stig",
+      "name": "Heiti sem viðskiptavinir sjá",
+      "descr": "Lýsing (valfrjálst)",
+      "until": "Gildir til (valfrjálst)",
+      "save": "Vista",
+      "saved": "Vistað.",
+      "approvalNote": "FIRINGI yfirfer nýja umbun og breytingar á vöru, magni eða punktum áður en hún birtist í búðinni.",
+      "cost": "Þú greiðir fyrir þessar vörur: þær eru fríar fyrir viðskiptavininn í pöntun hjá þér og útborgun þín lækkar sem því nemur.",
+      "status": {
+        "DRAFT": "Drög",
+        "PENDING": "Bíður eftir FIRINGI",
+        "ACTIVE": "Í búðinni",
+        "PAUSED": "Í hléi",
+        "REJECTED": "Ekki samþykkt",
+        "ENDED": "Lokið"
+      },
+      "pause": "Gera hlé",
+      "resume": "Halda áfram",
+      "end": "Ljúka",
+      "endConfirm": "Ljúka þessari umbun? Viðskiptavinir sem hafa þegar innleyst hana fá hana samt.",
+      "redeemed": "{n} innleyst",
+      "toHand": "{n} til afhendingar",
+      "note": "Athugasemd FIRINGI: {note}",
+      "empty": "Þú býður enga umbun enn.",
+      "cantGive": "Get ekki afhent",
+      "reason": "Af hverju? (viðskiptavinurinn sér þetta)",
+      "confirmCancel": "Skila punktunum til viðskiptavinarins?",
+      "hand": {
+        "PENDING": "Bíður pöntunar",
+        "SHIPPED": "Í pöntun",
+        "DELIVERED": "Afhent",
+        "CANCELLED": "Hætt við",
+        "EXPIRED": "Ekki pantað í tæka tíð"
+      },
+      "noHandovers": "Enginn viðskiptavinur hefur enn innleyst vörurnar þínar.",
+      "orderBy": "Panta í síðasta lagi {date}"
+    }
   }
 }

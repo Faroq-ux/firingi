@@ -60,6 +60,12 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       if (!ka.on) { off.add("KITCHEN"); off.add("KITCHEN_MGR"); }
       else if (!can(ctx, "buyer.kitchen.manage")) off.add("KITCHEN_MGR");
     }
+    // Phase 55: rewards shop — buyers redeem in /buy, suppliers offer products in /vendor
+    {
+      const rw = await import("@/server/rewards/service");
+      if (portal !== "buy" || !(await rw.buyerRewardsAccess(ctx.company)).on) off.add("REWARDS_SHOP");
+      if (portal !== "vendor" || !(await rw.supplierRewardsAccess(ctx.company)).on) off.add("REWARDS_SUPPLIER");
+    }
     // Phase 53: reviews — buyers who may write; suppliers whose products show reviews
     const rv = await import("@/server/reviews/service");
     const rs = await rv.reviewSettings();

@@ -912,7 +912,11 @@
     "Waste Log": "Abfallprotokoll",
     "Waste Reports": "Abfallberichte",
     "Use First": "Zuerst verbrauchen",
-    "Donations": "Spenden"
+    "Donations": "Spenden",
+    "Rewards Shop": "Prämienshop",
+    "My Rewards": "Meine Prämien",
+    "Reward Products": "Prämienprodukte",
+    "Rewards to Hand Over": "Zu übergebende Prämien"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Heute zuerst verbrauchen",
       "body": "{count} gekaufte Charge(n) haben ihr Datum erreicht oder fast erreicht. Verbrauchen Sie sie zuerst."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Ein Kunde hat Ihre Prämie eingelöst",
+      "body": "{company} hat “{reward}” eingelöst. Das Produkt ist bei der nächsten Bestellung bei Ihnen kostenlos."
+    },
+    "rewards_to_review": {
+      "title": "Lieferantenprämie zu prüfen",
+      "body": "{company} bietet “{reward}” im Prämienshop an. Nehmen Sie die Prämie an oder nennen Sie den Grund für die Ablehnung."
+    },
+    "rewards_approved": {
+      "title": "Ihre Prämie ist im Shop",
+      "body": "FIRINGI hat “{reward}” angenommen. Kunden können die Prämie jetzt einlösen."
+    },
+    "rewards_rejected": {
+      "title": "Ihre Prämie wurde nicht angenommen",
+      "body": "FIRINGI hat “{reward}” nicht angenommen: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Geschenk zu versenden",
+      "body": "{company} hat “{reward}” eingelöst. Versenden Sie es und tragen Sie die Sendungsnummer ein."
+    },
+    "rewards_gift_shipped": {
+      "title": "Ihr Geschenk ist unterwegs",
+      "body": "“{reward}” wurde versendet. Sendungsverfolgung: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Ihr Gutschein läuft bald ab",
+      "body": "“{reward}” (Code {code}) kann bis {date} verwendet werden."
+    },
+    "rewards_refunded": {
+      "title": "Punkte zurückgebucht",
+      "body": "{points} Punkte für “{reward}” sind wieder auf Ihrem Konto ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Prämie bald vergriffen",
+      "body": "Nur noch {left} von “{reward}” übrig."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "In Gutschrift umgewandelt",
       "REFUND": "Zurückgegeben (Bestellung storniert)",
       "REVERSE": "Zurückgenommen (Ware gutgeschrieben)",
-      "EXPIRE": "Verfallen"
+      "EXPIRE": "Verfallen",
+      "REDEEM_REWARD": "Im Prämienshop eingelöst"
     },
     "expires": "verfallen am {date}",
     "cartTitle": "Punkte einlösen",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "{n}× weggeworfen ({qty} {unit})",
     "cutBy": "etwa {pct} % weniger bestellen",
     "unitLabel": "Einheit"
+  },
+  "rewardsShop": {
+    "title": "Prämienshop",
+    "description": "Lösen Sie Ihre Punkte für Gutscheine, kostenlose Lieferung, Produkte Ihrer Lieferanten, Geschenke und Partnerangebote ein.",
+    "mineTitle": "Meine Prämien",
+    "mineDescription": "Ihre eingelösten Prämien: Codes zum Verwenden, Produkte für Ihre nächste Bestellung und Geschenke, die unterwegs sind.",
+    "closed": "Der Prämienshop ist für Ihr Unternehmen nicht verfügbar.",
+    "balance": "Ihre Punkte",
+    "worth": "beim Bestellabschluss {value} wert",
+    "monthlyLeft": "Diesen Monat noch {points} Punkte einlösbar",
+    "all": "Alle",
+    "kind": {
+      "VOUCHER": "Gutscheine",
+      "FREE_DELIVERY": "Kostenlose Lieferung",
+      "SUPPLIER_PRODUCT": "Lieferantenprodukte",
+      "GIFT": "Geschenke",
+      "PARTNER": "Partnerangebote"
+    },
+    "kindOne": {
+      "VOUCHER": "Gutschein",
+      "FREE_DELIVERY": "Kostenlose Lieferung",
+      "SUPPLIER_PRODUCT": "Lieferantenprodukt",
+      "GIFT": "Geschenk",
+      "PARTNER": "Partnerangebot"
+    },
+    "pts": "{points} Pkt.",
+    "left": "Noch {n}",
+    "soldOut": "Ausverkauft",
+    "from": "von {supplier}",
+    "voucherWorth": "{amount} Rabatt auf Ihre Bestellung",
+    "freeDeliveryText": "Keine Liefergebühr für eine Bestellung",
+    "minOrder": "Bestellungen ab {amount}",
+    "validDays": "Gültig {days} Tage nach dem Einlösen",
+    "freeUnits": "{qty} × {product}, kostenlos bei Ihrer nächsten Bestellung bei {supplier}",
+    "minTier": "Ab {tier}",
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Silber",
+      "GOLD": "Gold"
+    },
+    "blocked": {
+      "KIND_OFF": "Derzeit nicht verfügbar",
+      "NOT_ACTIVE": "Derzeit nicht verfügbar",
+      "NOT_YET": "Noch nicht verfügbar",
+      "ENDED": "Beendet",
+      "TYPE": "Nicht für Ihre Unternehmensart",
+      "COUNTRY": "In Ihrem Land nicht verfügbar",
+      "TIER": "Ab {tier}",
+      "LIMIT": "Bereits so oft wie erlaubt eingelöst",
+      "SOLD_OUT": "Ausverkauft",
+      "MONTHLY": "Über dem Punktelimit dieses Monats",
+      "POINTS": "Noch {missing} Punkte nötig"
+    },
+    "redeem": "Einlösen",
+    "redeemFor": "Für {points} Punkte einlösen",
+    "confirm": "{points} Punkte für diese Prämie einlösen?",
+    "saveFor": "Darauf sparen",
+    "saving": "Sie sparen darauf",
+    "stopSaving": "Nicht mehr sparen",
+    "goalTitle": "Sparziel",
+    "goalMissing": "Noch {missing} Punkte",
+    "goalReady": "Sie haben genug Punkte — lösen Sie die Prämie jetzt ein.",
+    "noGoal": "Wählen Sie eine Prämie als Sparziel und verfolgen Sie hier Ihren Fortschritt.",
+    "empty": "Derzeit keine Prämien. Schauen Sie bald wieder vorbei.",
+    "details": "Details",
+    "back": "Zurück zum Shop",
+    "terms": "Bedingungen",
+    "sendTo": "Senden an",
+    "note": "Hinweis für FIRINGI (optional)",
+    "done": {
+      "coupon": "Ihr Code lautet {code}. Verwenden Sie ihn bis {date} im Warenkorb.",
+      "partner": "Ihr Code lautet {code}.",
+      "product": "Erledigt. Legen Sie das Produkt bei Ihrer nächsten Bestellung bei {supplier} in den Warenkorb — es ist dann kostenlos.",
+      "gift": "Erledigt. FIRINGI sendet es Ihnen zu und informiert Sie, sobald es unterwegs ist."
+    },
+    "useInCart": "Im Warenkorb verwenden",
+    "addToCart": "In den Warenkorb",
+    "openPartner": "Zur Website des Partners",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "cancel": "Stornieren — Punkte zurück",
+    "cancelConfirm": "Diese Prämie stornieren? Sie erhalten Ihre Punkte zurück.",
+    "status": {
+      "ISSUED": "Bereit zur Nutzung",
+      "PENDING": "Wartet",
+      "SHIPPED": "Unterwegs",
+      "DELIVERED": "Zugestellt",
+      "USED": "Verwendet",
+      "CANCELLED": "Storniert",
+      "EXPIRED": "Abgelaufen"
+    },
+    "productWaiting": "Wartet auf Ihre nächste Bestellung",
+    "onOrder": "In Bestellung {number}",
+    "useBy": "Verwenden bis {date}",
+    "orderBy": "Bestellen bis {date}",
+    "tracking": "Sendungsverfolgung: {tracking}",
+    "redeemedOn": "Eingelöst am {date}",
+    "cancelReason": "Grund: {reason}",
+    "noRedemptions": "Sie haben noch nichts eingelöst.",
+    "toShop": "Zum Prämienshop",
+    "toMine": "Meine Prämien",
+    "shopLink": "Lösen Sie Ihre Punkte im Prämienshop ein",
+    "cartFree": "{qty} kostenlos (Prämie)",
+    "col": {
+      "reward": "Prämie",
+      "points": "Punkte",
+      "status": "Status",
+      "date": "Datum",
+      "customer": "Kunde",
+      "product": "Produkt",
+      "qty": "Menge",
+      "order": "Bestellung"
+    },
+    "v": {
+      "title": "Prämienprodukte",
+      "description": "Bieten Sie Ihre eigenen Produkte als Prämien an. Kunden lösen dafür ihre FIRINGI-Punkte ein; das Produkt ist bei ihrer nächsten Bestellung bei Ihnen kostenlos, und Sie tragen die Kosten.",
+      "handoverTitle": "Zu übergebende Prämien",
+      "handoverDescription": "Kunden, die Ihre Produkte eingelöst haben. Das Produkt ist bei der nächsten Bestellung des Kunden bei Ihnen kostenlos — kommissionieren und liefern Sie es wie gewohnt.",
+      "closed": "Das Anbieten von Prämien ist für Ihr Unternehmen nicht verfügbar.",
+      "new": "Neue Prämie",
+      "edit": "Bearbeiten",
+      "product": "Produkt",
+      "qty": "Abgegebene Menge",
+      "points": "Kosten in Punkten",
+      "pointsHint": "{min} bis {max} Punkte",
+      "stock": "Wie viele Sie abgeben",
+      "perBuyer": "Pro Kunde (leer = unbegrenzt)",
+      "minTier": "Mindeststufe",
+      "anyTier": "Jede Stufe",
+      "name": "Name für Kunden",
+      "descr": "Beschreibung (optional)",
+      "until": "Bis (optional)",
+      "save": "Speichern",
+      "saved": "Gespeichert.",
+      "approvalNote": "FIRINGI prüft neue Prämien sowie Änderungen an Produkt, Menge oder Punkten, bevor sie im Shop erscheinen.",
+      "cost": "Sie tragen die Kosten dieser Produkte: Für den Kunden sind sie bei einer Bestellung bei Ihnen kostenlos, und Ihre Auszahlung dafür fällt geringer aus.",
+      "status": {
+        "DRAFT": "Entwurf",
+        "PENDING": "Wartet auf FIRINGI",
+        "ACTIVE": "Im Shop",
+        "PAUSED": "Pausiert",
+        "REJECTED": "Nicht akzeptiert",
+        "ENDED": "Beendet"
+      },
+      "pause": "Pausieren",
+      "resume": "Fortsetzen",
+      "end": "Beenden",
+      "endConfirm": "Diese Prämie beenden? Kunden, die sie bereits eingelöst haben, erhalten sie trotzdem.",
+      "redeemed": "{n} eingelöst",
+      "toHand": "{n} zu übergeben",
+      "note": "Hinweis von FIRINGI: {note}",
+      "empty": "Sie bieten noch keine Prämien an.",
+      "cantGive": "Nicht lieferbar",
+      "reason": "Warum? (Der Kunde sieht das)",
+      "confirmCancel": "Dem Kunden die Punkte zurückgeben?",
+      "hand": {
+        "PENDING": "Wartet auf Bestellung",
+        "SHIPPED": "In einer Bestellung",
+        "DELIVERED": "Zugestellt",
+        "CANCELLED": "Storniert",
+        "EXPIRED": "Nicht rechtzeitig bestellt"
+      },
+      "noHandovers": "Noch kein Kunde hat Ihre Produkte eingelöst.",
+      "orderBy": "Bestellen bis {date}"
+    }
   }
 }

@@ -912,7 +912,11 @@
     "Waste Log": "Hävikkikirjaukset",
     "Waste Reports": "Hävikkiraportit",
     "Use First": "Käytä ensin",
-    "Donations": "Lahjoitukset"
+    "Donations": "Lahjoitukset",
+    "Rewards Shop": "Palkintokauppa",
+    "My Rewards": "Omat palkinnot",
+    "Reward Products": "Palkintotuotteet",
+    "Rewards to Hand Over": "Luovutettavat palkinnot"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Käytä ensin tänään",
       "body": "Ostettuja eriä päiväyksessä tai lähellä sitä: {count}. Käyttäkää ne ensin."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Asiakas lunasti palkintosi",
+      "body": "{company} lunasti palkinnon ”{reward}”. Se on ilmainen asiakkaan seuraavassa tilauksessa sinulta."
+    },
+    "rewards_to_review": {
+      "title": "Tarkistettava toimittajan palkinto",
+      "body": "{company} tarjoaa palkintoa ”{reward}” palkintokaupassa. Hyväksy se tai kerro, miksi ei."
+    },
+    "rewards_approved": {
+      "title": "Palkintosi on kaupassa",
+      "body": "FIRINGI hyväksyi palkinnon ”{reward}”. Asiakkaat voivat nyt lunastaa sen."
+    },
+    "rewards_rejected": {
+      "title": "Palkintoasi ei hyväksytty",
+      "body": "FIRINGI ei hyväksynyt palkintoa ”{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Lähetettävä lahja",
+      "body": "{company} lunasti palkinnon ”{reward}”. Lähetä se ja lisää seurantatiedot."
+    },
+    "rewards_gift_shipped": {
+      "title": "Lahjasi on matkalla",
+      "body": "”{reward}” on lähetetty. Seuranta: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Arvosetelisi vanhenee pian",
+      "body": "”{reward}” (koodi {code}) on käytettävissä {date} asti."
+    },
+    "rewards_refunded": {
+      "title": "Pisteet palautettu",
+      "body": "{points} pistettä palkinnosta ”{reward}” on palautettu tilillesi ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Palkinto on loppumassa",
+      "body": "Palkintoa ”{reward}” on jäljellä enää {left}."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Muutettu hyvitykseksi",
       "REFUND": "Palautettu (tilaus peruttu)",
       "REVERSE": "Peruttu (tuotteet hyvitetty)",
-      "EXPIRE": "Vanhentunut"
+      "EXPIRE": "Vanhentunut",
+      "REDEEM_REWARD": "Käytetty palkintokaupassa"
     },
     "expires": "vanhenee {date}",
     "cartTitle": "Käytä pisteesi",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "hävikkiin {n}× ({qty} {unit})",
     "cutBy": "tilatkaa noin {pct} % vähemmän",
     "unitLabel": "Yksikkö"
+  },
+  "rewardsShop": {
+    "title": "Palkintokauppa",
+    "description": "Käytä pisteesi arvoseteleihin, ilmaisiin toimituksiin, toimittajiesi tuotteisiin, lahjoihin ja kumppanitarjouksiin.",
+    "mineTitle": "Omat palkinnot",
+    "mineDescription": "Mitä olet lunastanut: käytettävät koodit, seuraavaa tilaustasi odottavat tuotteet ja matkalla olevat lahjat.",
+    "closed": "Palkintokauppa ei ole käytettävissä yrityksellesi.",
+    "balance": "Pisteesi",
+    "worth": "arvoltaan {value} kassalla",
+    "monthlyLeft": "Voit vielä käyttää {points} pistettä tässä kuussa",
+    "all": "Kaikki",
+    "kind": {
+      "VOUCHER": "Arvosetelit",
+      "FREE_DELIVERY": "Ilmainen toimitus",
+      "SUPPLIER_PRODUCT": "Toimittajien tuotteet",
+      "GIFT": "Lahjat",
+      "PARTNER": "Kumppanitarjoukset"
+    },
+    "kindOne": {
+      "VOUCHER": "Arvoseteli",
+      "FREE_DELIVERY": "Ilmainen toimitus",
+      "SUPPLIER_PRODUCT": "Toimittajan tuote",
+      "GIFT": "Lahja",
+      "PARTNER": "Kumppanitarjous"
+    },
+    "pts": "{points} p",
+    "left": "{n} jäljellä",
+    "soldOut": "Loppuunmyyty",
+    "from": "toimittajalta {supplier}",
+    "voucherWorth": "{amount} alennus tilauksesta",
+    "freeDeliveryText": "Ei toimitusmaksua yhdestä tilauksesta",
+    "minOrder": "Tilaukset alkaen {amount}",
+    "validDays": "Voimassa {days} päivää lunastuksesta",
+    "freeUnits": "{qty} × {product}, ilmaiseksi seuraavassa tilauksessasi toimittajalta {supplier}",
+    "minTier": "{tier} tai ylempi",
+    "tiers": {
+      "BRONZE": "Pronssi",
+      "SILVER": "Hopea",
+      "GOLD": "Kulta"
+    },
+    "blocked": {
+      "KIND_OFF": "Ei saatavilla nyt",
+      "NOT_ACTIVE": "Ei saatavilla nyt",
+      "NOT_YET": "Ei vielä saatavilla",
+      "ENDED": "Päättynyt",
+      "TYPE": "Ei yritystyypillesi",
+      "COUNTRY": "Ei saatavilla maassasi",
+      "TIER": "Tasolle {tier} tai ylemmälle",
+      "LIMIT": "Lunastettu jo niin monta kertaa kuin sallitaan",
+      "SOLD_OUT": "Loppuunmyyty",
+      "MONTHLY": "Ylittää tämän kuun pisterajan",
+      "POINTS": "Tarvitset vielä {missing} pistettä"
+    },
+    "redeem": "Lunasta",
+    "redeemFor": "Lunasta {points} pisteellä",
+    "confirm": "Käytetäänkö {points} pistettä tähän palkintoon?",
+    "saveFor": "Säästä tähän",
+    "saving": "Säästät tähän",
+    "stopSaving": "Lopeta säästäminen",
+    "goalTitle": "Säästötavoite",
+    "goalMissing": "Vielä {missing} pistettä",
+    "goalReady": "Sinulla on tarpeeksi pisteitä — lunasta se nyt.",
+    "noGoal": "Valitse palkinto, johon säästät, ja seuraa edistymistäsi täällä.",
+    "empty": "Ei palkintoja juuri nyt. Palaa pian uudelleen.",
+    "details": "Tiedot",
+    "back": "Takaisin kauppaan",
+    "terms": "Ehdot",
+    "sendTo": "Lähetä osoitteeseen",
+    "note": "Viesti FIRINGIlle (valinnainen)",
+    "done": {
+      "coupon": "Koodisi on {code}. Käytä se ostoskorissa viimeistään {date}.",
+      "partner": "Koodisi on {code}.",
+      "product": "Valmis. Lisää se ostoskoriin seuraavassa tilauksessasi toimittajalta {supplier} — se on ilmainen.",
+      "gift": "Valmis. FIRINGI lähettää sen sinulle ja ilmoittaa, kun se on matkalla."
+    },
+    "useInCart": "Käytä ostoskorissa",
+    "addToCart": "Lisää ostoskoriin",
+    "openPartner": "Avaa kumppanin sivusto",
+    "copy": "Kopioi",
+    "copied": "Kopioitu",
+    "cancel": "Peru — pisteet takaisin",
+    "cancelConfirm": "Perutaanko palkinto? Saat pisteesi takaisin.",
+    "status": {
+      "ISSUED": "Käyttövalmis",
+      "PENDING": "Odottaa",
+      "SHIPPED": "Matkalla",
+      "DELIVERED": "Toimitettu",
+      "USED": "Käytetty",
+      "CANCELLED": "Peruttu",
+      "EXPIRED": "Vanhentunut"
+    },
+    "productWaiting": "Odottaa seuraavaa tilaustasi",
+    "onOrder": "Tilauksessa {number}",
+    "useBy": "Käytä viimeistään {date}",
+    "orderBy": "Tilaa viimeistään {date}",
+    "tracking": "Seuranta: {tracking}",
+    "redeemedOn": "Lunastettu {date}",
+    "cancelReason": "Syy: {reason}",
+    "noRedemptions": "Et ole vielä lunastanut mitään.",
+    "toShop": "Siirry palkintokauppaan",
+    "toMine": "Omat palkinnot",
+    "shopLink": "Käytä pisteesi palkintokaupassa",
+    "cartFree": "{qty} ilmaiseksi (palkinto)",
+    "col": {
+      "reward": "Palkinto",
+      "points": "Pisteet",
+      "status": "Tila",
+      "date": "Päivämäärä",
+      "customer": "Asiakas",
+      "product": "Tuote",
+      "qty": "Määrä",
+      "order": "Tilaus"
+    },
+    "v": {
+      "title": "Palkintotuotteet",
+      "description": "Tarjoa omia tuotteitasi palkintoina. Asiakkaat käyttävät FIRINGI-pisteitään; tuote on ilmainen heidän seuraavassa tilauksessaan sinulta, ja sinä maksat sen.",
+      "handoverTitle": "Luovutettavat palkinnot",
+      "handoverDescription": "Asiakkaat, jotka ovat lunastaneet tuotteitasi. Tuote on ilmainen asiakkaan seuraavassa tilauksessa sinulta — keräile ja toimita se tavalliseen tapaan.",
+      "closed": "Palkintojen tarjoaminen ei ole käytettävissä yrityksellesi.",
+      "new": "Uusi palkinto",
+      "edit": "Muokkaa",
+      "product": "Tuote",
+      "qty": "Annettava määrä",
+      "points": "Hinta pisteinä",
+      "pointsHint": "{min}–{max} pistettä",
+      "stock": "Montako annat yhteensä",
+      "perBuyer": "Asiakasta kohden (tyhjä = ei rajaa)",
+      "minTier": "Alin kanta-asiakastaso",
+      "anyTier": "Mikä tahansa taso",
+      "name": "Asiakkaille näkyvä nimi",
+      "descr": "Kuvaus (valinnainen)",
+      "until": "Voimassa asti (valinnainen)",
+      "save": "Tallenna",
+      "saved": "Tallennettu.",
+      "approvalNote": "FIRINGI tarkistaa uudet palkinnot sekä tuotteen, määrän tai pisteiden muutokset ennen kuin ne tulevat kauppaan.",
+      "cost": "Maksat nämä tuotteet itse: ne ovat asiakkaalle ilmaisia sinulta tehdyssä tilauksessa, ja tilityksesi siitä on pienempi.",
+      "status": {
+        "DRAFT": "Luonnos",
+        "PENDING": "Odottaa FIRINGIä",
+        "ACTIVE": "Kaupassa",
+        "PAUSED": "Keskeytetty",
+        "REJECTED": "Ei hyväksytty",
+        "ENDED": "Päättynyt"
+      },
+      "pause": "Keskeytä",
+      "resume": "Jatka",
+      "end": "Päätä",
+      "endConfirm": "Päätetäänkö palkinto? Asiakkaat, jotka ovat jo lunastaneet sen, saavat sen silti.",
+      "redeemed": "{n} lunastettu",
+      "toHand": "{n} luovutettavana",
+      "note": "FIRINGIn huomautus: {note}",
+      "empty": "Et tarjoa vielä palkintoja.",
+      "cantGive": "Ei voi antaa",
+      "reason": "Miksi? (asiakas näkee tämän)",
+      "confirmCancel": "Palautetaanko pisteet asiakkaalle?",
+      "hand": {
+        "PENDING": "Odottaa tilausta",
+        "SHIPPED": "Tilauksessa",
+        "DELIVERED": "Toimitettu",
+        "CANCELLED": "Peruttu",
+        "EXPIRED": "Ei tilattu ajoissa"
+      },
+      "noHandovers": "Yksikään asiakas ei ole vielä lunastanut tuotteitasi.",
+      "orderBy": "Tilaa viimeistään {date}"
+    }
   }
 }

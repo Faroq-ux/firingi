@@ -912,7 +912,11 @@
     "Waste Log": "Evidence odpadu",
     "Waste Reports": "Přehledy odpadu",
     "Use First": "Spotřebovat přednostně",
-    "Donations": "Dary"
+    "Donations": "Dary",
+    "Rewards Shop": "Obchod s odměnami",
+    "My Rewards": "Moje odměny",
+    "Reward Products": "Produkty jako odměny",
+    "Rewards to Hand Over": "Odměny k předání"
   },
   "delivery": {
     "title": "Doručení",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Dnes spotřebovat přednostně",
       "body": "Nakoupené šarže na datu nebo těsně před ním: {count}. Spotřebujte je přednostně."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Zákazník uplatnil vaši odměnu",
+      "body": "Firma {company} uplatnila “{reward}”. Při příští objednávce u vás ji dostane zdarma."
+    },
+    "rewards_to_review": {
+      "title": "Odměna dodavatele ke kontrole",
+      "body": "Firma {company} nabízí “{reward}” v obchodě s odměnami. Přijměte ji, nebo uveďte důvod zamítnutí."
+    },
+    "rewards_approved": {
+      "title": "Vaše odměna je v obchodě",
+      "body": "FIRINGI přijal “{reward}”. Zákazníci ji nyní mohou uplatnit."
+    },
+    "rewards_rejected": {
+      "title": "Vaše odměna nebyla přijata",
+      "body": "FIRINGI nepřijal “{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Dárek k odeslání",
+      "body": "Firma {company} uplatnila “{reward}”. Odešlete dárek a doplňte sledovací číslo."
+    },
+    "rewards_gift_shipped": {
+      "title": "Váš dárek je na cestě",
+      "body": "Dárek “{reward}” byl odeslán. Sledování: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Platnost vašeho kupónu brzy vyprší",
+      "body": "“{reward}” (kód {code}) lze použít do {date}."
+    },
+    "rewards_refunded": {
+      "title": "Body vráceny",
+      "body": "{points} bodů za “{reward}” je zpět na vašem účtu ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Odměna dochází",
+      "body": "Z “{reward}” zbývá už jen {left}."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Proměněno v kredit",
       "REFUND": "Vráceno (objednávka zrušena)",
       "REVERSE": "Odebráno (zboží dobropisováno)",
-      "EXPIRE": "Vypršelo"
+      "EXPIRE": "Vypršelo",
+      "REDEEM_REWARD": "Utraceno v obchodě s odměnami"
     },
     "expires": "vyprší {date}",
     "cartTitle": "Využijte body",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "vyhozeno {n}× ({qty} {unit})",
     "cutBy": "objednávejte asi o {pct} % méně",
     "unitLabel": "Jednotka"
+  },
+  "rewardsShop": {
+    "title": "Obchod s odměnami",
+    "description": "Utraťte své body za kupóny, dopravu zdarma, produkty od svých dodavatelů, dárky a nabídky partnerů.",
+    "mineTitle": "Moje odměny",
+    "mineDescription": "Co jste uplatnili: kódy k použití, produkty čekající na vaši příští objednávku a dárky na cestě.",
+    "closed": "Obchod s odměnami není pro vaši firmu dostupný.",
+    "balance": "Vaše body",
+    "worth": "v hodnotě {value} při nákupu",
+    "monthlyLeft": "Tento měsíc můžete utratit ještě {points} bodů",
+    "all": "Vše",
+    "kind": {
+      "VOUCHER": "Kupóny",
+      "FREE_DELIVERY": "Doprava zdarma",
+      "SUPPLIER_PRODUCT": "Produkty dodavatelů",
+      "GIFT": "Dárky",
+      "PARTNER": "Nabídky partnerů"
+    },
+    "kindOne": {
+      "VOUCHER": "Kupón",
+      "FREE_DELIVERY": "Doprava zdarma",
+      "SUPPLIER_PRODUCT": "Produkt dodavatele",
+      "GIFT": "Dárek",
+      "PARTNER": "Nabídka partnera"
+    },
+    "pts": "{points} b.",
+    "left": "Zbývá {n}",
+    "soldOut": "Vyprodáno",
+    "from": "od {supplier}",
+    "voucherWorth": "Sleva {amount} na objednávku",
+    "freeDeliveryText": "Bez poplatku za doručení u jedné objednávky",
+    "minOrder": "Objednávky od {amount}",
+    "validDays": "Platí {days} dní od uplatnění",
+    "freeUnits": "{qty} × {product} zdarma k vaší příští objednávce od {supplier}",
+    "minTier": "{tier} a vyšší",
+    "tiers": {
+      "BRONZE": "Bronz",
+      "SILVER": "Stříbro",
+      "GOLD": "Zlato"
+    },
+    "blocked": {
+      "KIND_OFF": "Momentálně nedostupné",
+      "NOT_ACTIVE": "Momentálně nedostupné",
+      "NOT_YET": "Zatím nedostupné",
+      "ENDED": "Ukončeno",
+      "TYPE": "Ne pro váš typ firmy",
+      "COUNTRY": "Ve vaší zemi nedostupné",
+      "TIER": "Pro {tier} a vyšší",
+      "LIMIT": "Už uplatněno, kolikrát je povoleno",
+      "SOLD_OUT": "Vyprodáno",
+      "MONTHLY": "Nad měsíčním limitem bodů",
+      "POINTS": "Chybí ještě {missing} bodů"
+    },
+    "redeem": "Uplatnit",
+    "redeemFor": "Uplatnit za {points} bodů",
+    "confirm": "Utratit {points} bodů za tuto odměnu?",
+    "saveFor": "Šetřit na tuto odměnu",
+    "saving": "Šetříte na tuto odměnu",
+    "stopSaving": "Přestat šetřit",
+    "goalTitle": "Šetříte na",
+    "goalMissing": "Ještě {missing} bodů",
+    "goalReady": "Máte dost bodů — uplatněte odměnu hned.",
+    "noGoal": "Vyberte odměnu, na kterou chcete šetřit, a sledujte zde svůj postup.",
+    "empty": "Momentálně žádné odměny. Podívejte se brzy znovu.",
+    "details": "Podrobnosti",
+    "back": "Zpět do obchodu",
+    "terms": "Podmínky",
+    "sendTo": "Poslat na",
+    "note": "Poznámka pro FIRINGI (nepovinné)",
+    "done": {
+      "coupon": "Váš kód je {code}. Použijte ho v košíku do {date}.",
+      "partner": "Váš kód je {code}.",
+      "product": "Hotovo. Přidejte produkt do košíku při příští objednávce od {supplier} — bude zdarma.",
+      "gift": "Hotovo. FIRINGI vám dárek pošle a dá vám vědět, až bude na cestě."
+    },
+    "useInCart": "Použít v košíku",
+    "addToCart": "Přidat do košíku",
+    "openPartner": "Otevřít web partnera",
+    "copy": "Kopírovat",
+    "copied": "Zkopírováno",
+    "cancel": "Zrušit — body zpět",
+    "cancelConfirm": "Zrušit tuto odměnu? Body se vám vrátí.",
+    "status": {
+      "ISSUED": "Připraveno k použití",
+      "PENDING": "Čeká",
+      "SHIPPED": "Na cestě",
+      "DELIVERED": "Doručeno",
+      "USED": "Použito",
+      "CANCELLED": "Zrušeno",
+      "EXPIRED": "Vypršelo"
+    },
+    "productWaiting": "Čeká na vaši příští objednávku",
+    "onOrder": "V objednávce {number}",
+    "useBy": "Použijte do {date}",
+    "orderBy": "Objednejte do {date}",
+    "tracking": "Sledování: {tracking}",
+    "redeemedOn": "Uplatněno {date}",
+    "cancelReason": "Důvod: {reason}",
+    "noRedemptions": "Zatím jste nic neuplatnili.",
+    "toShop": "Přejít do obchodu s odměnami",
+    "toMine": "Moje odměny",
+    "shopLink": "Utraťte své body v obchodě s odměnami",
+    "cartFree": "{qty} zdarma (odměna)",
+    "col": {
+      "reward": "Odměna",
+      "points": "Body",
+      "status": "Stav",
+      "date": "Datum",
+      "customer": "Zákazník",
+      "product": "Produkt",
+      "qty": "Množ.",
+      "order": "Objednávka"
+    },
+    "v": {
+      "title": "Produkty jako odměny",
+      "description": "Nabídněte své vlastní produkty jako odměny. Zákazníci za ně utratí své body FIRINGI; produkt dostanou zdarma k příští objednávce u vás a vy ho zaplatíte.",
+      "handoverTitle": "Odměny k předání",
+      "handoverDescription": "Zákazníci, kteří uplatnili vaše produkty. Produkt je zdarma k příští objednávce zákazníka u vás — vychystejte a doručte ho jako obvykle.",
+      "closed": "Nabízení odměn není pro vaši firmu dostupné.",
+      "new": "Nová odměna",
+      "edit": "Upravit",
+      "product": "Produkt",
+      "qty": "Poskytované množství",
+      "points": "Cena v bodech",
+      "pointsHint": "{min} až {max} bodů",
+      "stock": "Kolik kusů rozdáte",
+      "perBuyer": "Na zákazníka (prázdné = bez limitu)",
+      "minTier": "Nejnižší úroveň",
+      "anyTier": "Jakákoli úroveň",
+      "name": "Název pro zákazníky",
+      "descr": "Popis (nepovinné)",
+      "until": "Do (nepovinné)",
+      "save": "Uložit",
+      "saved": "Uloženo.",
+      "approvalNote": "FIRINGI kontroluje nové odměny a změny produktu, množství nebo bodů dříve, než se objeví v obchodě.",
+      "cost": "Tyto produkty platíte vy: zákazník je dostane zdarma k objednávce u vás a vaše výplata za ni bude nižší.",
+      "status": {
+        "DRAFT": "Koncept",
+        "PENDING": "Čeká na FIRINGI",
+        "ACTIVE": "V obchodě",
+        "PAUSED": "Pozastaveno",
+        "REJECTED": "Nepřijato",
+        "ENDED": "Ukončeno"
+      },
+      "pause": "Pozastavit",
+      "resume": "Obnovit",
+      "end": "Ukončit",
+      "endConfirm": "Ukončit tuto odměnu? Zákazníci, kteří ji už uplatnili, ji přesto dostanou.",
+      "redeemed": "Uplatněno: {n}",
+      "toHand": "K předání: {n}",
+      "note": "Poznámka FIRINGI: {note}",
+      "empty": "Zatím nenabízíte žádné odměny.",
+      "cantGive": "Nelze poskytnout",
+      "reason": "Proč? (zákazník to uvidí)",
+      "confirmCancel": "Vrátit zákazníkovi body?",
+      "hand": {
+        "PENDING": "Čeká na objednávku",
+        "SHIPPED": "V objednávce",
+        "DELIVERED": "Doručeno",
+        "CANCELLED": "Zrušeno",
+        "EXPIRED": "Neobjednáno včas"
+      },
+      "noHandovers": "Vaše produkty zatím žádný zákazník neuplatnil.",
+      "orderBy": "Objednat do {date}"
+    }
   }
 }

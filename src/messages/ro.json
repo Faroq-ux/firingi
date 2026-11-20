@@ -912,7 +912,11 @@
     "Waste Log": "Registru de risipă",
     "Waste Reports": "Rapoarte de risipă",
     "Use First": "De folosit întâi",
-    "Donations": "Donații"
+    "Donations": "Donații",
+    "Rewards Shop": "Magazinul de recompense",
+    "My Rewards": "Recompensele mele",
+    "Reward Products": "Produse ca recompense",
+    "Rewards to Hand Over": "Recompense de predat"
   },
   "delivery": {
     "title": "Livrare",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "De folosit întâi azi",
       "body": "{count} lot(uri) cumpărate sunt la data limită sau aproape de ea. Folosiți-le întâi."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Un client a revendicat recompensa dvs.",
+      "body": "{company} a revendicat „{reward}”. Va fi gratuit la următoarea sa comandă de la dvs."
+    },
+    "rewards_to_review": {
+      "title": "Recompensă de la furnizor de verificat",
+      "body": "{company} oferă „{reward}” în magazinul de recompense. Acceptați-o sau spuneți de ce nu."
+    },
+    "rewards_approved": {
+      "title": "Recompensa dvs. este în magazin",
+      "body": "FIRINGI a acceptat „{reward}”. Clienții o pot revendica acum."
+    },
+    "rewards_rejected": {
+      "title": "Recompensa dvs. nu a fost acceptată",
+      "body": "FIRINGI nu a acceptat „{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Cadou de trimis",
+      "body": "{company} a revendicat „{reward}”. Trimiteți-l și adăugați numărul de urmărire."
+    },
+    "rewards_gift_shipped": {
+      "title": "Cadoul dvs. este pe drum",
+      "body": "„{reward}” a fost trimis. Urmărire: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Voucherul dvs. expiră curând",
+      "body": "„{reward}” (codul {code}) poate fi folosit până la {date}."
+    },
+    "rewards_refunded": {
+      "title": "Puncte returnate",
+      "body": "{points} puncte pentru „{reward}” au revenit în contul dvs. ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Recompensa se epuizează",
+      "body": "Au mai rămas doar {left} din „{reward}”."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Transformate în credit",
       "REFUND": "Returnate (comandă anulată)",
       "REVERSE": "Retrase (marfă creditată)",
-      "EXPIRE": "Expirate"
+      "EXPIRE": "Expirate",
+      "REDEEM_REWARD": "Cheltuite în magazinul de recompense"
     },
     "expires": "expiră pe {date}",
     "cartTitle": "Folosiți punctele",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "risipit de {n}× ({qty} {unit})",
     "cutBy": "comandați cu aprox. {pct} % mai puțin",
     "unitLabel": "Unitate"
+  },
+  "rewardsShop": {
+    "title": "Magazinul de recompense",
+    "description": "Folosiți-vă punctele pentru vouchere, livrare gratuită, produse de la furnizorii dvs., cadouri și oferte de la parteneri.",
+    "mineTitle": "Recompensele mele",
+    "mineDescription": "Ce ați revendicat: coduri de folosit, produse care așteaptă următoarea comandă și cadouri pe drum.",
+    "closed": "Magazinul de recompense nu este disponibil pentru firma dvs.",
+    "balance": "Punctele dvs.",
+    "worth": "valorează {value} la finalizarea comenzii",
+    "monthlyLeft": "Mai puteți cheltui {points} puncte luna aceasta",
+    "all": "Toate",
+    "kind": {
+      "VOUCHER": "Vouchere",
+      "FREE_DELIVERY": "Livrare gratuită",
+      "SUPPLIER_PRODUCT": "Produse de la furnizori",
+      "GIFT": "Cadouri",
+      "PARTNER": "Oferte de la parteneri"
+    },
+    "kindOne": {
+      "VOUCHER": "Voucher",
+      "FREE_DELIVERY": "Livrare gratuită",
+      "SUPPLIER_PRODUCT": "Produs de la furnizor",
+      "GIFT": "Cadou",
+      "PARTNER": "Ofertă de la partener"
+    },
+    "pts": "{points} pct.",
+    "left": "Au rămas {n}",
+    "soldOut": "Epuizat",
+    "from": "de la {supplier}",
+    "voucherWorth": "Reducere de {amount} la comandă",
+    "freeDeliveryText": "Fără taxă de livrare la o comandă",
+    "minOrder": "La comenzi de la {amount}",
+    "validDays": "Valabil {days} zile după revendicare",
+    "freeUnits": "{qty} × {product}, gratuit la următoarea comandă de la {supplier}",
+    "minTier": "{tier} și peste",
+    "tiers": {
+      "BRONZE": "Bronz",
+      "SILVER": "Argint",
+      "GOLD": "Aur"
+    },
+    "blocked": {
+      "KIND_OFF": "Indisponibil momentan",
+      "NOT_ACTIVE": "Indisponibil momentan",
+      "NOT_YET": "Încă indisponibil",
+      "ENDED": "Încheiat",
+      "TYPE": "Nu pentru tipul dvs. de afacere",
+      "COUNTRY": "Indisponibil în țara dvs.",
+      "TIER": "Pentru {tier} și peste",
+      "LIMIT": "Deja revendicat de numărul maxim de ori permis",
+      "SOLD_OUT": "Epuizat",
+      "MONTHLY": "Depășește limita lunară de puncte",
+      "POINTS": "Mai sunt necesare {missing} puncte"
+    },
+    "redeem": "Revendică",
+    "redeemFor": "Revendică pentru {points} puncte",
+    "confirm": "Cheltuiți {points} puncte pe această recompensă?",
+    "saveFor": "Setează ca obiectiv",
+    "saving": "Este obiectivul dvs.",
+    "stopSaving": "Renunță la obiectiv",
+    "goalTitle": "Obiectivul dvs.",
+    "goalMissing": "Mai aveți nevoie de {missing} puncte",
+    "goalReady": "Aveți destule puncte — revendicați-o acum.",
+    "noGoal": "Alegeți o recompensă ca obiectiv și urmăriți-vă progresul aici.",
+    "empty": "Momentan nu există recompense. Reveniți în curând.",
+    "details": "Detalii",
+    "back": "Înapoi la magazin",
+    "terms": "Condiții",
+    "sendTo": "Trimite la",
+    "note": "Notă pentru FIRINGI (opțional)",
+    "done": {
+      "coupon": "Codul dvs. este {code}. Folosiți-l în coș până la {date}.",
+      "partner": "Codul dvs. este {code}.",
+      "product": "Gata. Adăugați-l în coș la următoarea comandă de la {supplier} — va fi gratuit.",
+      "gift": "Gata. FIRINGI vi-l va trimite și vă va anunța când este pe drum."
+    },
+    "useInCart": "Folosește în coș",
+    "addToCart": "Adaugă în coș",
+    "openPartner": "Deschide site-ul partenerului",
+    "copy": "Copiază",
+    "copied": "Copiat",
+    "cancel": "Anulează — punctele revin",
+    "cancelConfirm": "Anulați această recompensă? Punctele vă revin.",
+    "status": {
+      "ISSUED": "Gata de folosit",
+      "PENDING": "În așteptare",
+      "SHIPPED": "Pe drum",
+      "DELIVERED": "Livrat",
+      "USED": "Folosit",
+      "CANCELLED": "Anulat",
+      "EXPIRED": "Expirat"
+    },
+    "productWaiting": "Așteaptă următoarea comandă",
+    "onOrder": "În comanda {number}",
+    "useBy": "Folosiți până la {date}",
+    "orderBy": "Comandați până la {date}",
+    "tracking": "Urmărire: {tracking}",
+    "redeemedOn": "Revendicat pe {date}",
+    "cancelReason": "Motiv: {reason}",
+    "noRedemptions": "Nu ați revendicat încă nimic.",
+    "toShop": "Mergeți la magazinul de recompense",
+    "toMine": "Recompensele mele",
+    "shopLink": "Folosiți-vă punctele în magazinul de recompense",
+    "cartFree": "{qty} gratuit (recompensă)",
+    "col": {
+      "reward": "Recompensă",
+      "points": "Puncte",
+      "status": "Stare",
+      "date": "Data",
+      "customer": "Client",
+      "product": "Produs",
+      "qty": "Cant.",
+      "order": "Comandă"
+    },
+    "v": {
+      "title": "Produse ca recompense",
+      "description": "Oferiți propriile produse ca recompense. Clienții își folosesc punctele FIRINGI; produsul este gratuit la următoarea lor comandă de la dvs., iar costul îl suportați dvs.",
+      "handoverTitle": "Recompense de predat",
+      "handoverDescription": "Clienți care au revendicat produsele dvs. Produsul este gratuit la următoarea comandă a clientului de la dvs. — pregătiți-l și livrați-l ca de obicei.",
+      "closed": "Oferirea de recompense nu este disponibilă pentru firma dvs.",
+      "new": "Recompensă nouă",
+      "edit": "Editează",
+      "product": "Produs",
+      "qty": "Cantitate oferită",
+      "points": "Cost în puncte",
+      "pointsHint": "Între {min} și {max} puncte",
+      "stock": "Câte oferiți în total",
+      "perBuyer": "Per client (gol = fără limită)",
+      "minTier": "Nivelul minim de fidelitate",
+      "anyTier": "Orice nivel",
+      "name": "Numele afișat clienților",
+      "descr": "Descriere (opțional)",
+      "until": "Până la (opțional)",
+      "save": "Salvează",
+      "saved": "Salvat.",
+      "approvalNote": "FIRINGI verifică recompensele noi și modificările de produs, cantitate sau puncte înainte ca acestea să apară în magazin.",
+      "cost": "Aceste produse le plătiți dvs.: sunt gratuite pentru client într-o comandă de la dvs., iar plata pe care o primiți pentru acea comandă este mai mică.",
+      "status": {
+        "DRAFT": "Ciornă",
+        "PENDING": "Așteaptă FIRINGI",
+        "ACTIVE": "În magazin",
+        "PAUSED": "Pe pauză",
+        "REJECTED": "Neacceptată",
+        "ENDED": "Încheiată"
+      },
+      "pause": "Pune pe pauză",
+      "resume": "Reia",
+      "end": "Încheie",
+      "endConfirm": "Încheiați această recompensă? Clienții care au revendicat-o deja o vor primi în continuare.",
+      "redeemed": "{n} revendicate",
+      "toHand": "{n} de predat",
+      "note": "Nota FIRINGI: {note}",
+      "empty": "Nu oferiți încă nicio recompensă.",
+      "cantGive": "Nu se poate oferi",
+      "reason": "De ce? (clientul vede acest mesaj)",
+      "confirmCancel": "Returnați punctele clientului?",
+      "hand": {
+        "PENDING": "Așteaptă o comandă",
+        "SHIPPED": "Într-o comandă",
+        "DELIVERED": "Livrată",
+        "CANCELLED": "Anulată",
+        "EXPIRED": "Necomandată la timp"
+      },
+      "noHandovers": "Niciun client nu a revendicat încă produsele dvs.",
+      "orderBy": "Termen de comandă: {date}"
+    }
   }
 }

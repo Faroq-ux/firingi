@@ -691,6 +691,20 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Rewards shop (Phase 55)
+
+Businesses spend their **loyalty points** on **vouchers** and **free delivery** (FIRINGI-funded single-use coupons only
+they can use), **suppliers' own products** (supplier-funded, accepted by FIRINGI, **free in the cart on the next
+order** from that supplier), **gifts & merchandise** with a stock count (FIRINGI ships them, with tracking) and
+**partner offers** (a code from a pool, shown at once). **Saving for** a reward with a progress bar; **My Rewards**
+with codes, "use in cart", status and cancel (**points back**). Suppliers offer products and see what to hand over;
+FIRINGI runs the shop (numbers, texts in 3 languages, pictures, partner codes, accept / reject, gifts to send,
+redemptions). Cancelled or expired rewards give the points back; a daily job keeps statuses right, reminds and warns
+about low stock. **Every kind, buyer and supplier type and business is FIRINGI's switch** (*Settings › Rewards Shop*),
+plus limits per business, per month and per tier. 25 languages; FIRINGI's pages in English.
+Details: [docs/rewards.md](docs/rewards.md).
+Tests: `tests/unit/rewards.test.ts`, `tests/integration/rewards.test.ts`, `node tests/e2e/rewards.mjs`.
+
 ## Menu costing & food waste (Phase 54)
 
 For restaurants and shops in the buyer portal (**Kitchen**): **ingredients** costed per kg / litre / piece from what

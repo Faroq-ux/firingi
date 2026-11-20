@@ -912,7 +912,11 @@
     "Waste Log": "Evidenca odpadkov",
     "Waste Reports": "Poročila o odpadkih",
     "Use First": "Najprej porabi",
-    "Donations": "Donacije"
+    "Donations": "Donacije",
+    "Rewards Shop": "Trgovina z nagradami",
+    "My Rewards": "Moje nagrade",
+    "Reward Products": "Izdelki kot nagrade",
+    "Rewards to Hand Over": "Nagrade za izročitev"
   },
   "delivery": {
     "title": "Dostava",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Danes najprej porabi",
       "body": "Kupljene serije z rokom danes ali kmalu: {count}. Porabite jih najprej."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Stranka je unovčila vašo nagrado",
+      "body": "Podjetje {company} je unovčilo »{reward}«. Ob naslednjem naročilu pri vas jo bo dobilo brezplačno."
+    },
+    "rewards_to_review": {
+      "title": "Nagrada dobavitelja za pregled",
+      "body": "Podjetje {company} ponuja »{reward}« v trgovini z nagradami. Sprejmite jo ali navedite razlog."
+    },
+    "rewards_approved": {
+      "title": "Vaša nagrada je v trgovini",
+      "body": "FIRINGI je sprejel »{reward}«. Stranke jo lahko zdaj unovčijo."
+    },
+    "rewards_rejected": {
+      "title": "Vaša nagrada ni bila sprejeta",
+      "body": "FIRINGI ni sprejel »{reward}«: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Darilo za pošiljanje",
+      "body": "Podjetje {company} je unovčilo »{reward}«. Pošljite darilo in dodajte številko za sledenje."
+    },
+    "rewards_gift_shipped": {
+      "title": "Vaše darilo je na poti",
+      "body": "Poslali smo »{reward}«. Sledenje: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Vaš bon kmalu poteče",
+      "body": "»{reward}« (koda {code}) lahko uporabite do {date}."
+    },
+    "rewards_refunded": {
+      "title": "Točke vrnjene",
+      "body": "{points} točk za »{reward}« je spet na vašem računu ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Nagrade zmanjkuje",
+      "body": "Na voljo je le še {left} × »{reward}«."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Pretvorjeno v dobroimetje",
       "REFUND": "Vrnjeno (naročilo preklicano)",
       "REVERSE": "Odvzeto (blago dobropisano)",
-      "EXPIRE": "Poteklo"
+      "EXPIRE": "Poteklo",
+      "REDEEM_REWARD": "Porabljeno v trgovini z nagradami"
     },
     "expires": "poteče {date}",
     "cartTitle": "Uporabite točke",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "zavrženo {n}× ({qty} {unit})",
     "cutBy": "naročite približno {pct} % manj",
     "unitLabel": "Enota"
+  },
+  "rewardsShop": {
+    "title": "Trgovina z nagradami",
+    "description": "Točke zamenjajte za bone, brezplačno dostavo, izdelke vaših dobaviteljev, darila in ponudbe partnerjev.",
+    "mineTitle": "Moje nagrade",
+    "mineDescription": "Kar ste unovčili: kode za uporabo, izdelki, ki čakajo na vaše naslednje naročilo, in darila na poti.",
+    "closed": "Trgovina z nagradami za vaše podjetje ni na voljo.",
+    "balance": "Vaše točke",
+    "worth": "vredno {value} ob zaključku nakupa",
+    "monthlyLeft": "Ta mesec lahko porabite še {points} točk",
+    "all": "Vse",
+    "kind": {
+      "VOUCHER": "Boni",
+      "FREE_DELIVERY": "Brezplačna dostava",
+      "SUPPLIER_PRODUCT": "Izdelki dobaviteljev",
+      "GIFT": "Darila",
+      "PARTNER": "Ponudbe partnerjev"
+    },
+    "kindOne": {
+      "VOUCHER": "Bon",
+      "FREE_DELIVERY": "Brezplačna dostava",
+      "SUPPLIER_PRODUCT": "Izdelek dobavitelja",
+      "GIFT": "Darilo",
+      "PARTNER": "Ponudba partnerja"
+    },
+    "pts": "{points} toč.",
+    "left": "Še {n}",
+    "soldOut": "Razprodano",
+    "from": "od {supplier}",
+    "voucherWorth": "{amount} popusta na naročilo",
+    "freeDeliveryText": "Brez stroškov dostave za eno naročilo",
+    "minOrder": "Za naročila od {amount}",
+    "validDays": "Velja {days} dni po unovčenju",
+    "freeUnits": "{qty} × {product}, brezplačno ob naslednjem naročilu pri {supplier}",
+    "minTier": "{tier} in višje",
+    "tiers": {
+      "BRONZE": "Bron",
+      "SILVER": "Srebro",
+      "GOLD": "Zlato"
+    },
+    "blocked": {
+      "KIND_OFF": "Trenutno ni na voljo",
+      "NOT_ACTIVE": "Trenutno ni na voljo",
+      "NOT_YET": "Še ni na voljo",
+      "ENDED": "Končano",
+      "TYPE": "Ni za vašo vrsto dejavnosti",
+      "COUNTRY": "Ni na voljo v vaši državi",
+      "TIER": "Za raven {tier} in višje",
+      "LIMIT": "Že unovčeno tolikokrat, kot je dovoljeno",
+      "SOLD_OUT": "Razprodano",
+      "MONTHLY": "Presega mesečno omejitev točk",
+      "POINTS": "Manjka še {missing} točk"
+    },
+    "redeem": "Unovči",
+    "redeemFor": "Unovči za {points} točk",
+    "confirm": "Porabiti {points} točk za to nagrado?",
+    "saveFor": "Varčuj zanjo",
+    "saving": "Varčujete za to nagrado",
+    "stopSaving": "Prenehaj varčevati",
+    "goalTitle": "Varčujete za",
+    "goalMissing": "Še {missing} točk",
+    "goalReady": "Imate dovolj točk — unovčite jo zdaj.",
+    "noGoal": "Izberite nagrado, za katero želite varčevati, in tukaj spremljajte napredek.",
+    "empty": "Trenutno ni nagrad. Kmalu spet preverite.",
+    "details": "Podrobnosti",
+    "back": "Nazaj v trgovino",
+    "terms": "Pogoji",
+    "sendTo": "Pošlji na",
+    "note": "Opomba za FIRINGI (neobvezno)",
+    "done": {
+      "coupon": "Vaša koda je {code}. Uporabite jo v košarici do {date}.",
+      "partner": "Vaša koda je {code}.",
+      "product": "Končano. Ob naslednjem naročilu pri {supplier} ga dodajte v košarico — bo brezplačen.",
+      "gift": "Končano. FIRINGI vam ga bo poslal in vas obvestil, ko bo na poti."
+    },
+    "useInCart": "Uporabi v košarici",
+    "addToCart": "Dodaj v košarico",
+    "openPartner": "Odpri spletno mesto partnerja",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "cancel": "Prekliči — točke nazaj",
+    "cancelConfirm": "Preklicati to nagrado? Točke dobite nazaj.",
+    "status": {
+      "ISSUED": "Pripravljeno za uporabo",
+      "PENDING": "Čaka",
+      "SHIPPED": "Na poti",
+      "DELIVERED": "Dostavljeno",
+      "USED": "Uporabljeno",
+      "CANCELLED": "Preklicano",
+      "EXPIRED": "Poteklo"
+    },
+    "productWaiting": "Čaka na vaše naslednje naročilo",
+    "onOrder": "Na naročilu {number}",
+    "useBy": "Uporabite do {date}",
+    "orderBy": "Naročite do {date}",
+    "tracking": "Sledenje: {tracking}",
+    "redeemedOn": "Unovčeno {date}",
+    "cancelReason": "Razlog: {reason}",
+    "noRedemptions": "Ničesar še niste unovčili.",
+    "toShop": "Pojdi v trgovino z nagradami",
+    "toMine": "Moje nagrade",
+    "shopLink": "Porabite točke v trgovini z nagradami",
+    "cartFree": "{qty} brezplačno (nagrada)",
+    "col": {
+      "reward": "Nagrada",
+      "points": "Točke",
+      "status": "Stanje",
+      "date": "Datum",
+      "customer": "Stranka",
+      "product": "Izdelek",
+      "qty": "Kol.",
+      "order": "Naročilo"
+    },
+    "v": {
+      "title": "Izdelki kot nagrade",
+      "description": "Svoje izdelke ponudite kot nagrade. Stranke porabijo svoje točke FIRINGI; izdelek dobijo brezplačno ob naslednjem naročilu pri vas, plačate pa ga vi.",
+      "handoverTitle": "Nagrade za izročitev",
+      "handoverDescription": "Stranke, ki so unovčile vaše izdelke. Izdelek je brezplačen ob naslednjem naročilu stranke pri vas — pripravite in dostavite ga kot običajno.",
+      "closed": "Ponujanje nagrad za vaše podjetje ni na voljo.",
+      "new": "Nova nagrada",
+      "edit": "Uredi",
+      "product": "Izdelek",
+      "qty": "Podarjena količina",
+      "points": "Cena v točkah",
+      "pointsHint": "Od {min} do {max} točk",
+      "stock": "Koliko jih podarite",
+      "perBuyer": "Na stranko (prazno = brez omejitve)",
+      "minTier": "Najnižja raven zvestobe",
+      "anyTier": "Katera koli raven",
+      "name": "Ime, ki ga vidijo stranke",
+      "descr": "Opis (neobvezno)",
+      "until": "Do (neobvezno)",
+      "save": "Shrani",
+      "saved": "Shranjeno.",
+      "approvalNote": "FIRINGI preveri nove nagrade ter spremembe izdelka, količine ali točk, preden se pojavijo v trgovini.",
+      "cost": "Te izdelke plačate vi: za stranko so brezplačni pri naročilu pri vas, vaše izplačilo za to naročilo pa je nižje.",
+      "status": {
+        "DRAFT": "Osnutek",
+        "PENDING": "Čaka na FIRINGI",
+        "ACTIVE": "V trgovini",
+        "PAUSED": "Začasno ustavljena",
+        "REJECTED": "Ni sprejeta",
+        "ENDED": "Končana"
+      },
+      "pause": "Začasno ustavi",
+      "resume": "Nadaljuj",
+      "end": "Končaj",
+      "endConfirm": "Končati to nagrado? Stranke, ki so jo že unovčile, jo bodo vseeno prejele.",
+      "redeemed": "Unovčeno: {n}",
+      "toHand": "Za izročitev: {n}",
+      "note": "Opomba FIRINGI: {note}",
+      "empty": "Ne ponujate še nobene nagrade.",
+      "cantGive": "Izročitev ni mogoča",
+      "reason": "Zakaj? (stranka to vidi)",
+      "confirmCancel": "Vrniti stranki točke?",
+      "hand": {
+        "PENDING": "Čaka na naročilo",
+        "SHIPPED": "Na naročilu",
+        "DELIVERED": "Dostavljeno",
+        "CANCELLED": "Preklicano",
+        "EXPIRED": "Ni bilo naročeno pravočasno"
+      },
+      "noHandovers": "Nobena stranka še ni unovčila vaših izdelkov.",
+      "orderBy": "Rok za naročilo: {date}"
+    }
   }
 }

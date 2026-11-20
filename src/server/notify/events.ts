@@ -233,6 +233,16 @@ export const EVENTS: EventDef[] = [
   E("review.reminder", "orders", null, ["EMAIL", "PUSH"], ["product"]),
   E("review.hidden", "catalogue", null, ["EMAIL"], ["product", "reason"]),
   E("review.to_moderate", "catalogue", ["admin.reviews.moderate"], ["PUSH"], ["kind", "reason"]),
+  // Phase 55: rewards shop
+  E("rewards.supplier_redeemed", "orders", ["vendor.promotions.manage", "vendor.orders.view"], ["EMAIL", "PUSH"], ["reward", "company"]),
+  E("rewards.to_review", "catalogue", ["admin.marketing.manage"], ["EMAIL"], ["company", "reward"]),
+  E("rewards.approved", "catalogue", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["reward"]),
+  E("rewards.rejected", "catalogue", ["vendor.promotions.manage"], ["EMAIL", "PUSH"], ["reward", "reason"]),
+  E("rewards.gift_to_send", "orders", ["admin.marketing.manage"], ["EMAIL"], ["reward", "company"]),
+  E("rewards.gift_shipped", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["reward", "tracking"]),
+  E("rewards.voucher_expiring", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["reward", "code", "date"]),
+  E("rewards.refunded", "account", BUYER_ORDERS, ["EMAIL", "PUSH"], ["reward", "points", "reason"]),
+  E("rewards.low_stock", "catalogue", ["admin.marketing.manage", "vendor.promotions.manage"], ["EMAIL"], ["reward", "left"]),
   // Phase 54: menu costing & food waste
   E("kitchen.cost_rise", "account", ["buyer.kitchen.manage"], ["EMAIL", "PUSH"], ["ingredient", "pct", "count"]),
   E("kitchen.waste_over", "account", ["buyer.kitchen.manage"], ["EMAIL", "PUSH"], ["pct", "target"]),

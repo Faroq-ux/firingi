@@ -36,6 +36,7 @@ export const JOBS: JobDef[] = [
   { key: "paylater", label: "Pay later (partner pays invoiced plans, own-credit instalments: paid, reminders, overdue)", every: "every 15 minutes", staleAfterMin: 90, critical: true, path: "/api/cron/paylater" },
   { key: "tenders", label: "Open tenders (close bidding at the deadline, expire unawarded tenders)", every: "every 15 minutes", staleAfterMin: 90, critical: false, path: "/api/cron/tenders" },
   { key: "kitchen", label: "Menu costing & waste (ingredient costs, price-rise and waste alerts, use-first reminders)", every: "daily", staleAfterMin: 1560, critical: false, path: "/api/cron/kitchen" },
+  { key: "rewards", label: "Rewards shop (voucher used / expired, supplier products delivered / expired, points back, reminders, low stock)", every: "daily", staleAfterMin: 1560, critical: false, path: "/api/cron/rewards" },
   { key: "reviews", label: "Product reviews (\"How was …?\" reminders after delivery)", every: "daily", staleAfterMin: 1560, critical: false, path: "/api/cron/reviews" },
   { key: "staff", label: "Staff & time (shift reminders, forgotten clock-outs, no-shows, old records removed)", every: "every 15 minutes", staleAfterMin: 90, critical: false, path: "/api/cron/staff" },
   { key: "rebates", label: "Rebates & bonuses (settle ended periods with credit notes / free goods, end finished deals, reminders)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/rebates" },

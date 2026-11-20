@@ -12,7 +12,7 @@ import { formatDate, formatMoney } from "@/lib/utils";
 export const metadata = { title: "Loyalty member" };
 const KIND: Record<string, string> = {
   EARN: "Delivered order", REFERRAL: "Referral bonus", BONUS: "Bonus from FIRINGI", ADJUST: "Correction by FIRINGI", REDEEM_ORDER: "Used on an order",
-  REDEEM_CREDIT: "Turned into a credit note", REFUND: "Given back (order cancelled)", REVERSE: "Taken back (goods credited)", EXPIRE: "Expired",
+  REDEEM_CREDIT: "Turned into a credit note", REDEEM_REWARD: "Spent in the rewards shop", REFUND: "Given back (order cancelled)", REVERSE: "Taken back (goods credited)", EXPIRE: "Expired",
 };
 
 export default async function Member({ params }: { params: Promise<{ companyId: string }> }) {

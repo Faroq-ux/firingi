@@ -46,6 +46,7 @@ export default async function CartPage() {
   const payLaterChoice = !cart.routed && cart.groups.length && ctx.permissions.has("buyer.orders.place") ? await payLaterChoiceFor(ctx, Number(cart.totalGross), locale) : null;
   const td = await getTranslations("deals");
   const trb = await getTranslations("rebates"); // Phase 48: free goods from a bonus
+  const trw = await getTranslations("rewardsShop"); // Phase 55: reward products free in the cart
   // Phase 44: products on the kitchen's allergen avoid list (when FIRINGI has the profile on)
   const [foodWarn, fdl] = await Promise.all([
     cartFoodWarnings(ctx, cart.lines.map((x) => ({ offerId: x.offerId, name: pickLocalized(x.name, locale) }))).catch(() => []),
@@ -100,7 +101,14 @@ export default async function CartPage() {
                         <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
                         <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
                         {cwm.get(l.offerId) && <div className="mt-1"><CwCartNote l={cl.l} locale={locale} cw={cwm.get(l.offerId)!} qty={l.qty} /></div>}
-                        {"freeGoods" in l && l.freeGoods && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--success,#16a34a)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-goods">{trb("freeInCart", { n: l.freeGoods.qty })}</span>}
+                        {"freeGoods" in l && l.freeGoods && (() => {
+                          // Phase 48 bonus units and Phase 55 reward units ("rw:" grants) shown apart
+                          const reward = l.freeGoods.grants.filter((x) => x.id.startsWith("rw:")).reduce((a, x) => a + x.qty, 0), bonus = l.freeGoods.qty - reward;
+                          return <>
+                            {bonus > 0 && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--success,#16a34a)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-goods">{trb("freeInCart", { n: bonus })}</span>}
+                            {reward > 0 && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--vivid-violet)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-reward">{trw("cartFree", { qty: reward })}</span>}
+                          </>;
+                        })()}
                         {"deal" in l && l.deal && <span className="mt-1 inline-block rounded-full bg-destructive px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-deal">{td("cart.applied")}</span>}
                         {"dealNote" in l && !l.deal && l.dealNote && td.has(`cart.${l.dealNote.why}`) && <div className="mt-1 text-xs text-amber-700 dark:text-amber-400" data-testid="cart-deal-note">{td(`cart.${l.dealNote.why}`, { n: l.dealNote.left ?? 0 })}</div>}
                       </TD>

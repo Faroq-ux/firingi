@@ -1810,6 +1810,42 @@
     "kitchen_use_first": {
       "title": "Usar primero hoy",
       "body": "{count} lote(s) que compró están en su fecha o cerca. Úselos primero."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Un cliente canjeó su recompensa",
+      "body": "{company} canjeó “{reward}”. Será gratis en su próximo pedido a usted."
+    },
+    "rewards_to_review": {
+      "title": "Recompensa de proveedor por revisar",
+      "body": "{company} ofrece “{reward}” en la tienda de recompensas. Acéptela o indique por qué no."
+    },
+    "rewards_approved": {
+      "title": "Su recompensa está en la tienda",
+      "body": "FIRINGI aceptó “{reward}”. Los clientes ya pueden canjearla."
+    },
+    "rewards_rejected": {
+      "title": "Su recompensa no fue aceptada",
+      "body": "FIRINGI no aceptó “{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Regalo por enviar",
+      "body": "{company} canjeó “{reward}”. Envíelo e indique el seguimiento."
+    },
+    "rewards_gift_shipped": {
+      "title": "Su regalo está en camino",
+      "body": "“{reward}” se ha enviado. Seguimiento: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Su vale caduca pronto",
+      "body": "“{reward}” (código {code}) se puede usar hasta el {date}."
+    },
+    "rewards_refunded": {
+      "title": "Puntos devueltos",
+      "body": "{points} puntos de “{reward}” han vuelto a su cuenta ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Recompensa agotándose",
+      "body": "Solo quedan {left} de “{reward}”."
     }
   },
   "notifications": {
@@ -4347,7 +4383,8 @@
       "REDEEM_CREDIT": "Convertidos en crédito",
       "REFUND": "Devueltos (pedido cancelado)",
       "REVERSE": "Retirados (productos abonados)",
-      "EXPIRE": "Caducados"
+      "EXPIRE": "Caducados",
+      "REDEEM_REWARD": "Gastados en la tienda de recompensas"
     },
     "expires": "caducan el {date}",
     "cartTitle": "Usa tus puntos",
@@ -7555,5 +7592,170 @@
     "wastedTimes": "desperdiciado {n}× ({qty} {unit})",
     "cutBy": "pedir aprox. un {pct} % menos",
     "unitLabel": "Unidad"
+  },
+  "rewardsShop": {
+    "title": "Tienda de Recompensas",
+    "description": "Gaste sus puntos en vales, envíos gratis, productos de sus proveedores, regalos y ofertas de socios.",
+    "mineTitle": "Mis Recompensas",
+    "mineDescription": "Lo que ha canjeado: códigos para usar, productos que esperan su próximo pedido y regalos en camino.",
+    "closed": "La tienda de recompensas no está disponible para su empresa.",
+    "balance": "Sus puntos",
+    "worth": "valen {value} al pagar",
+    "monthlyLeft": "Le quedan {points} puntos para gastar este mes",
+    "all": "Todas",
+    "kind": {
+      "VOUCHER": "Vales",
+      "FREE_DELIVERY": "Envío gratis",
+      "SUPPLIER_PRODUCT": "Productos de proveedores",
+      "GIFT": "Regalos",
+      "PARTNER": "Ofertas de socios"
+    },
+    "kindOne": {
+      "VOUCHER": "Vale",
+      "FREE_DELIVERY": "Envío gratis",
+      "SUPPLIER_PRODUCT": "Producto de proveedor",
+      "GIFT": "Regalo",
+      "PARTNER": "Oferta de socio"
+    },
+    "pts": "{points} pts",
+    "left": "Quedan {n}",
+    "soldOut": "Agotado",
+    "from": "de {supplier}",
+    "voucherWorth": "{amount} de descuento en su pedido",
+    "freeDeliveryText": "Sin gastos de envío en un pedido",
+    "minOrder": "Pedidos desde {amount}",
+    "validDays": "Válido {days} días tras el canje",
+    "freeUnits": "{qty} × {product}, gratis en su próximo pedido a {supplier}",
+    "minTier": "{tier} o superior",
+    "tiers": {
+      "BRONZE": "Bronce",
+      "SILVER": "Plata",
+      "GOLD": "Oro"
+    },
+    "blocked": {
+      "KIND_OFF": "No disponible ahora",
+      "NOT_ACTIVE": "No disponible ahora",
+      "NOT_YET": "Aún no disponible",
+      "ENDED": "Finalizada",
+      "TYPE": "No es para su tipo de empresa",
+      "COUNTRY": "No disponible en su país",
+      "TIER": "Para {tier} o superior",
+      "LIMIT": "Ya la ha canjeado las veces permitidas",
+      "SOLD_OUT": "Agotado",
+      "MONTHLY": "Supera el límite de puntos de este mes",
+      "POINTS": "Faltan {missing} puntos"
+    },
+    "redeem": "Canjear",
+    "redeemFor": "Canjear por {points} puntos",
+    "confirm": "¿Gastar {points} puntos en esta recompensa?",
+    "saveFor": "Ahorrar para esta",
+    "saving": "Está ahorrando para esta",
+    "stopSaving": "Dejar de ahorrar",
+    "goalTitle": "Ahorrando para",
+    "goalMissing": "Faltan {missing} puntos",
+    "goalReady": "Ya tiene puntos suficientes: canjéela ahora.",
+    "noGoal": "Elija una recompensa como objetivo y siga aquí su progreso.",
+    "empty": "No hay recompensas ahora. Vuelva pronto.",
+    "details": "Detalles",
+    "back": "Volver a la tienda",
+    "terms": "Condiciones",
+    "sendTo": "Enviar a",
+    "note": "Nota para FIRINGI (opcional)",
+    "done": {
+      "coupon": "Su código es {code}. Úselo en el carrito antes del {date}.",
+      "partner": "Su código es {code}.",
+      "product": "Hecho. Añádalo al carrito en su próximo pedido a {supplier}: será gratis.",
+      "gift": "Hecho. FIRINGI se lo enviará y le avisará cuando esté en camino."
+    },
+    "useInCart": "Usar en el carrito",
+    "addToCart": "Añadir al carrito",
+    "openPartner": "Abrir la web del socio",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "cancel": "Cancelar — devolver puntos",
+    "cancelConfirm": "¿Cancelar esta recompensa? Se le devuelven los puntos.",
+    "status": {
+      "ISSUED": "Listo para usar",
+      "PENDING": "En espera",
+      "SHIPPED": "En camino",
+      "DELIVERED": "Entregado",
+      "USED": "Usado",
+      "CANCELLED": "Cancelado",
+      "EXPIRED": "Caducado"
+    },
+    "productWaiting": "Esperando su próximo pedido",
+    "onOrder": "En el pedido {number}",
+    "useBy": "Usar antes del {date}",
+    "orderBy": "Pedir antes del {date}",
+    "tracking": "Seguimiento: {tracking}",
+    "redeemedOn": "Canjeado el {date}",
+    "cancelReason": "Motivo: {reason}",
+    "noRedemptions": "Aún no ha canjeado nada.",
+    "toShop": "Ir a la tienda de recompensas",
+    "toMine": "Mis recompensas",
+    "shopLink": "Gaste sus puntos en la tienda de recompensas",
+    "cartFree": "{qty} gratis (recompensa)",
+    "col": {
+      "reward": "Recompensa",
+      "points": "Puntos",
+      "status": "Estado",
+      "date": "Fecha",
+      "customer": "Cliente",
+      "product": "Producto",
+      "qty": "Cant.",
+      "order": "Pedido"
+    },
+    "v": {
+      "title": "Productos de Recompensa",
+      "description": "Ofrezca sus propios productos como recompensa. Los clientes gastan puntos FIRINGI; el producto es gratis en su próximo pedido a usted, y el coste es suyo.",
+      "handoverTitle": "Recompensas por Entregar",
+      "handoverDescription": "Clientes que han canjeado sus productos. El producto es gratis en el próximo pedido del cliente: prepárelo y entréguelo como siempre.",
+      "closed": "Ofrecer recompensas no está disponible para su empresa.",
+      "new": "Nueva recompensa",
+      "edit": "Editar",
+      "product": "Producto",
+      "qty": "Cantidad regalada",
+      "points": "Puntos que cuesta",
+      "pointsHint": "De {min} a {max} puntos",
+      "stock": "Cuántas regala",
+      "perBuyer": "Por cliente (vacío = sin límite)",
+      "minTier": "Nivel de fidelidad mínimo",
+      "anyTier": "Cualquier nivel",
+      "name": "Nombre que ven los clientes",
+      "descr": "Descripción (opcional)",
+      "until": "Hasta (opcional)",
+      "save": "Guardar",
+      "saved": "Guardado.",
+      "approvalNote": "FIRINGI revisa las recompensas nuevas, y los cambios de producto, cantidad o puntos, antes de que entren en la tienda.",
+      "cost": "El coste de estos productos es suyo: son gratis para el cliente en un pedido a usted, y su pago por él es menor.",
+      "status": {
+        "DRAFT": "Borrador",
+        "PENDING": "Esperando a FIRINGI",
+        "ACTIVE": "En la tienda",
+        "PAUSED": "En pausa",
+        "REJECTED": "No aceptada",
+        "ENDED": "Finalizada"
+      },
+      "pause": "Pausar",
+      "resume": "Reanudar",
+      "end": "Finalizar",
+      "endConfirm": "¿Finalizar esta recompensa? Quien ya la canjeó la seguirá recibiendo.",
+      "redeemed": "{n} canjeadas",
+      "toHand": "{n} por entregar",
+      "note": "Nota de FIRINGI: {note}",
+      "empty": "Aún no ofrece recompensas.",
+      "cantGive": "No puedo darla",
+      "reason": "¿Por qué? (el cliente lo verá)",
+      "confirmCancel": "¿Devolver los puntos al cliente?",
+      "hand": {
+        "PENDING": "Esperando un pedido",
+        "SHIPPED": "En un pedido",
+        "DELIVERED": "Entregado",
+        "CANCELLED": "Cancelada",
+        "EXPIRED": "No pedida a tiempo"
+      },
+      "noHandovers": "Ningún cliente ha canjeado aún sus productos.",
+      "orderBy": "Pedir antes del {date}"
+    }
   }
 }

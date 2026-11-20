@@ -912,7 +912,11 @@
     "Waste Log": "Atkritumu žurnāls",
     "Waste Reports": "Atkritumu pārskati",
     "Use First": "Izlietot vispirms",
-    "Donations": "Ziedojumi"
+    "Donations": "Ziedojumi",
+    "Rewards Shop": "Balvu veikals",
+    "My Rewards": "Manas balvas",
+    "Reward Products": "Balvu produkti",
+    "Rewards to Hand Over": "Nododamās balvas"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Šodien izlietot vispirms",
       "body": "Jūsu pirktās partijas, kurām termiņš beidzies vai tuvojas: {count}. Izlietojiet tās vispirms."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Klients apmainīja jūsu balvu",
+      "body": "{company} apmainīja „{reward}”. Tā būs bez maksas viņu nākamajā pasūtījumā no jums."
+    },
+    "rewards_to_review": {
+      "title": "Pārbaudāma piegādātāja balva",
+      "body": "{company} piedāvā „{reward}” balvu veikalā. Pieņemiet to vai norādiet, kāpēc ne."
+    },
+    "rewards_approved": {
+      "title": "Jūsu balva ir veikalā",
+      "body": "FIRINGI pieņēma „{reward}”. Klienti to tagad var apmainīt."
+    },
+    "rewards_rejected": {
+      "title": "Jūsu balva netika pieņemta",
+      "body": "FIRINGI nepieņēma „{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Nosūtāma dāvana",
+      "body": "{company} apmainīja „{reward}”. Nosūtiet to un pievienojiet izsekošanas numuru."
+    },
+    "rewards_gift_shipped": {
+      "title": "Jūsu dāvana ir ceļā",
+      "body": "„{reward}” ir nosūtīta. Izsekošana: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Jūsu vaučera derīgums drīz beigsies",
+      "body": "„{reward}” (kods {code}) var izmantot līdz {date}."
+    },
+    "rewards_refunded": {
+      "title": "Punkti atgriezti",
+      "body": "{points} punkti par „{reward}” ir atgriezti jūsu kontā ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Balva drīz beigsies",
+      "body": "No „{reward}” atlikuši tikai {left}."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Pārvērsti kredītā",
       "REFUND": "Atdoti atpakaļ (pasūtījums atcelts)",
       "REVERSE": "Atņemti (preces kreditētas)",
-      "EXPIRE": "Beidzies derīgums"
+      "EXPIRE": "Beidzies derīgums",
+      "REDEEM_REWARD": "Iztērēti balvu veikalā"
     },
     "expires": "derīgi līdz {date}",
     "cartTitle": "Izmantojiet punktus",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "izmests {n}× ({qty} {unit})",
     "cutBy": "pasūtiet apmēram par {pct} % mazāk",
     "unitLabel": "Mērvienība"
+  },
+  "rewardsShop": {
+    "title": "Balvu veikals",
+    "description": "Tērējiet punktus atlaižu vaučeriem, bezmaksas piegādei, savu piegādātāju produktiem, dāvanām un partneru piedāvājumiem.",
+    "mineTitle": "Manas balvas",
+    "mineDescription": "Ko esat apmainījuši: izmantojami kodi, produkti, kas gaida jūsu nākamo pasūtījumu, un dāvanas ceļā.",
+    "closed": "Balvu veikals jūsu uzņēmumam nav pieejams.",
+    "balance": "Jūsu punkti",
+    "worth": "vērtība norēķinoties: {value}",
+    "monthlyLeft": "Šomēnes vēl varat iztērēt {points} punktus",
+    "all": "Visas",
+    "kind": {
+      "VOUCHER": "Atlaižu vaučeri",
+      "FREE_DELIVERY": "Bezmaksas piegāde",
+      "SUPPLIER_PRODUCT": "Piegādātāju produkti",
+      "GIFT": "Dāvanas",
+      "PARTNER": "Partneru piedāvājumi"
+    },
+    "kindOne": {
+      "VOUCHER": "Atlaižu vaučers",
+      "FREE_DELIVERY": "Bezmaksas piegāde",
+      "SUPPLIER_PRODUCT": "Piegādātāja produkts",
+      "GIFT": "Dāvana",
+      "PARTNER": "Partnera piedāvājums"
+    },
+    "pts": "{points} p.",
+    "left": "Atlikuši {n}",
+    "soldOut": "Izpārdots",
+    "from": "piegādātājs {supplier}",
+    "voucherWorth": "{amount} atlaide pasūtījumam",
+    "freeDeliveryText": "Bez piegādes maksas vienam pasūtījumam",
+    "minOrder": "Pasūtījumiem no {amount}",
+    "validDays": "Derīgs {days} dienas pēc apmaiņas",
+    "freeUnits": "{qty} × {product} bez maksas nākamajā pasūtījumā (piegādātājs {supplier})",
+    "minTier": "{tier} un augstāk",
+    "tiers": {
+      "BRONZE": "Bronza",
+      "SILVER": "Sudrabs",
+      "GOLD": "Zelts"
+    },
+    "blocked": {
+      "KIND_OFF": "Pašlaik nav pieejams",
+      "NOT_ACTIVE": "Pašlaik nav pieejams",
+      "NOT_YET": "Vēl nav pieejams",
+      "ENDED": "Beidzies",
+      "TYPE": "Nav jūsu uzņēmuma veidam",
+      "COUNTRY": "Nav pieejams jūsu valstī",
+      "TIER": "Līmenim {tier} un augstāk",
+      "LIMIT": "Jau apmainīts atļauto reižu skaitu",
+      "SOLD_OUT": "Izpārdots",
+      "MONTHLY": "Pārsniegts šī mēneša punktu limits",
+      "POINTS": "Vajag vēl {missing} punktus"
+    },
+    "redeem": "Apmainīt",
+    "redeemFor": "Apmainīt pret {points} punktiem",
+    "confirm": "Iztērēt {points} punktus šai balvai?",
+    "saveFor": "Krāt šai balvai",
+    "saving": "Jūs krājat šai balvai",
+    "stopSaving": "Pārtraukt krāšanu",
+    "goalTitle": "Krāšanas mērķis",
+    "goalMissing": "Vēl {missing} punkti",
+    "goalReady": "Jums pietiek punktu — apmainiet tagad.",
+    "noGoal": "Izvēlieties balvu, kurai krāt, un sekojiet progresam šeit.",
+    "empty": "Pašlaik balvu nav. Ieskatieties drīz atkal.",
+    "details": "Sīkāk",
+    "back": "Atpakaļ uz veikalu",
+    "terms": "Noteikumi",
+    "sendTo": "Sūtīt uz",
+    "note": "Piezīme FIRINGI (nav obligāta)",
+    "done": {
+      "coupon": "Jūsu kods ir {code}. Izmantojiet to grozā līdz {date}.",
+      "partner": "Jūsu kods ir {code}.",
+      "product": "Gatavs. Pievienojiet to grozam nākamajā pasūtījumā no piegādātāja {supplier} — tas būs bez maksas.",
+      "gift": "Gatavs. FIRINGI to jums nosūtīs un paziņos, kad tā būs ceļā."
+    },
+    "useInCart": "Izmantot grozā",
+    "addToCart": "Pievienot grozam",
+    "openPartner": "Atvērt partnera vietni",
+    "copy": "Kopēt",
+    "copied": "Nokopēts",
+    "cancel": "Atcelt — punkti atpakaļ",
+    "cancelConfirm": "Atcelt šo balvu? Punkti tiks atgriezti.",
+    "status": {
+      "ISSUED": "Gatavs lietošanai",
+      "PENDING": "Gaida",
+      "SHIPPED": "Ceļā",
+      "DELIVERED": "Piegādāts",
+      "USED": "Izmantots",
+      "CANCELLED": "Atcelts",
+      "EXPIRED": "Beidzies derīgums"
+    },
+    "productWaiting": "Gaida jūsu nākamo pasūtījumu",
+    "onOrder": "Pasūtījumā {number}",
+    "useBy": "Izmantot līdz {date}",
+    "orderBy": "Pasūtīt līdz {date}",
+    "tracking": "Izsekošana: {tracking}",
+    "redeemedOn": "Apmainīts {date}",
+    "cancelReason": "Iemesls: {reason}",
+    "noRedemptions": "Jūs vēl neko neesat apmainījuši.",
+    "toShop": "Uz balvu veikalu",
+    "toMine": "Manas balvas",
+    "shopLink": "Tērējiet punktus balvu veikalā",
+    "cartFree": "{qty} bez maksas (balva)",
+    "col": {
+      "reward": "Balva",
+      "points": "Punkti",
+      "status": "Statuss",
+      "date": "Datums",
+      "customer": "Klients",
+      "product": "Produkts",
+      "qty": "Daudz.",
+      "order": "Pasūtījums"
+    },
+    "v": {
+      "title": "Balvu produkti",
+      "description": "Piedāvājiet savus produktus kā balvas. Klienti tērē savus FIRINGI punktus; produkts viņiem ir bez maksas nākamajā pasūtījumā no jums, un par to maksājat jūs.",
+      "handoverTitle": "Nododamās balvas",
+      "handoverDescription": "Klienti, kuri apmainīja punktus pret jūsu produktiem. Produkts ir bez maksas klienta nākamajā pasūtījumā no jums — komplektējiet un piegādājiet to kā parasti.",
+      "closed": "Balvu piedāvāšana jūsu uzņēmumam nav pieejama.",
+      "new": "Jauna balva",
+      "edit": "Rediģēt",
+      "product": "Produkts",
+      "qty": "Daudzums balvā",
+      "points": "Cena punktos",
+      "pointsHint": "No {min} līdz {max} punktiem",
+      "stock": "Cik jūs atdodat kopā",
+      "perBuyer": "Vienam klientam (tukšs = bez limita)",
+      "minTier": "Zemākais lojalitātes līmenis",
+      "anyTier": "Jebkurš līmenis",
+      "name": "Klientiem redzamais nosaukums",
+      "descr": "Apraksts (nav obligāts)",
+      "until": "Līdz (nav obligāts)",
+      "save": "Saglabāt",
+      "saved": "Saglabāts.",
+      "approvalNote": "FIRINGI pārbauda jaunas balvas un produkta, daudzuma vai punktu izmaiņas, pirms tās parādās veikalā.",
+      "cost": "Par šiem produktiem maksājat jūs: klientam tie ir bez maksas pasūtījumā no jums, un jūsu izmaksa par šo pasūtījumu ir mazāka.",
+      "status": {
+        "DRAFT": "Melnraksts",
+        "PENDING": "Gaida FIRINGI",
+        "ACTIVE": "Veikalā",
+        "PAUSED": "Apturēta",
+        "REJECTED": "Nav pieņemta",
+        "ENDED": "Beigusies"
+      },
+      "pause": "Apturēt",
+      "resume": "Atsākt",
+      "end": "Beigt",
+      "endConfirm": "Beigt šo balvu? Klienti, kuri to jau apmainīja, to joprojām saņems.",
+      "redeemed": "Apmainīti: {n}",
+      "toHand": "Jānodod: {n}",
+      "note": "FIRINGI piezīme: {note}",
+      "empty": "Jūs vēl nepiedāvājat nevienu balvu.",
+      "cantGive": "Nevar nodot",
+      "reason": "Kāpēc? (klients to redz)",
+      "confirmCancel": "Atgriezt klientam punktus?",
+      "hand": {
+        "PENDING": "Gaida pasūtījumu",
+        "SHIPPED": "Pasūtījumā",
+        "DELIVERED": "Piegādāts",
+        "CANCELLED": "Atcelts",
+        "EXPIRED": "Nav pasūtīts laikā"
+      },
+      "noHandovers": "Neviens klients vēl nav apmainījis punktus pret jūsu produktiem.",
+      "orderBy": "Pasūtīt līdz {date}"
+    }
   }
 }

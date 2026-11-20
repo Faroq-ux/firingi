@@ -912,7 +912,11 @@
     "Waste Log": "Atliekų žurnalas",
     "Waste Reports": "Atliekų ataskaitos",
     "Use First": "Sunaudoti pirmiausia",
-    "Donations": "Aukojimai"
+    "Donations": "Aukojimai",
+    "Rewards Shop": "Prizų parduotuvė",
+    "My Rewards": "Mano prizai",
+    "Reward Products": "Prizų produktai",
+    "Rewards to Hand Over": "Perduotini prizai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Šiandien sunaudoti pirmiausia",
       "body": "Jūsų pirktų partijų, kurių data jau atėjo ar artėja: {count}. Sunaudokite jas pirmiausia."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Klientas iškeitė jūsų prizą",
+      "body": "{company} iškeitė „{reward}“. Jis bus nemokamas kitame jų užsakyme iš jūsų."
+    },
+    "rewards_to_review": {
+      "title": "Tikrintinas tiekėjo prizas",
+      "body": "{company} siūlo „{reward}“ prizų parduotuvėje. Priimkite arba nurodykite, kodėl ne."
+    },
+    "rewards_approved": {
+      "title": "Jūsų prizas parduotuvėje",
+      "body": "FIRINGI priėmė „{reward}“. Klientai jau gali jį iškeisti."
+    },
+    "rewards_rejected": {
+      "title": "Jūsų prizas nepriimtas",
+      "body": "FIRINGI nepriėmė „{reward}“: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Siųstina dovana",
+      "body": "{company} iškeitė „{reward}“. Išsiųskite ir įrašykite siuntos sekimo numerį."
+    },
+    "rewards_gift_shipped": {
+      "title": "Jūsų dovana pakeliui",
+      "body": "„{reward}“ išsiųsta. Siuntos sekimas: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Jūsų nuolaidos čekis netrukus nustos galioti",
+      "body": "„{reward}“ (kodas {code}) galioja iki {date}."
+    },
+    "rewards_refunded": {
+      "title": "Taškai grąžinti",
+      "body": "{points} taškų už „{reward}“ grąžinta į jūsų paskyrą ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Prizų lieka nedaug",
+      "body": "„{reward}“ liko tik {left}."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Paversta kreditu",
       "REFUND": "Grąžinta (užsakymas atšauktas)",
       "REVERSE": "Atimta (prekės kredituotos)",
-      "EXPIRE": "Nebegalioja"
+      "EXPIRE": "Nebegalioja",
+      "REDEEM_REWARD": "Išleista prizų parduotuvėje"
     },
     "expires": "galioja iki {date}",
     "cartTitle": "Panaudokite taškus",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "išmesta {n}× ({qty} {unit})",
     "cutBy": "užsakykite apie {pct} % mažiau",
     "unitLabel": "Matavimo vienetas"
+  },
+  "rewardsShop": {
+    "title": "Prizų parduotuvė",
+    "description": "Iškeiskite taškus į nuolaidų čekius, nemokamą pristatymą, savo tiekėjų produktus, dovanas ir partnerių pasiūlymus.",
+    "mineTitle": "Mano prizai",
+    "mineDescription": "Ką iškeitėte: naudotini kodai, kito užsakymo laukiantys produktai ir pakeliui esančios dovanos.",
+    "closed": "Prizų parduotuvė jūsų įmonei nepasiekiama.",
+    "balance": "Jūsų taškai",
+    "worth": "atsiskaitant verti {value}",
+    "monthlyLeft": "Šį mėnesį dar galite išleisti {points} taškų",
+    "all": "Visi",
+    "kind": {
+      "VOUCHER": "Nuolaidų čekiai",
+      "FREE_DELIVERY": "Nemokamas pristatymas",
+      "SUPPLIER_PRODUCT": "Tiekėjų produktai",
+      "GIFT": "Dovanos",
+      "PARTNER": "Partnerių pasiūlymai"
+    },
+    "kindOne": {
+      "VOUCHER": "Nuolaidos čekis",
+      "FREE_DELIVERY": "Nemokamas pristatymas",
+      "SUPPLIER_PRODUCT": "Tiekėjo produktas",
+      "GIFT": "Dovana",
+      "PARTNER": "Partnerio pasiūlymas"
+    },
+    "pts": "{points} tšk.",
+    "left": "Liko {n}",
+    "soldOut": "Išparduota",
+    "from": "tiekėjas {supplier}",
+    "voucherWorth": "{amount} nuolaida užsakymui",
+    "freeDeliveryText": "Be pristatymo mokesčio vienam užsakymui",
+    "minOrder": "Užsakymams nuo {amount}",
+    "validDays": "Galioja {days} d. po iškeitimo",
+    "freeUnits": "{qty} × {product} nemokamai kitame užsakyme (tiekėjas {supplier})",
+    "minTier": "Nuo lygio {tier}",
+    "tiers": {
+      "BRONZE": "Bronzinis",
+      "SILVER": "Sidabrinis",
+      "GOLD": "Auksinis"
+    },
+    "blocked": {
+      "KIND_OFF": "Šiuo metu nepasiekiama",
+      "NOT_ACTIVE": "Šiuo metu nepasiekiama",
+      "NOT_YET": "Dar nepasiekiama",
+      "ENDED": "Baigta",
+      "TYPE": "Ne jūsų verslo tipui",
+      "COUNTRY": "Nepasiekiama jūsų šalyje",
+      "TIER": "Tik nuo lygio {tier}",
+      "LIMIT": "Jau iškeista leistiną kartų skaičių",
+      "SOLD_OUT": "Išparduota",
+      "MONTHLY": "Viršytas šio mėnesio taškų limitas",
+      "POINTS": "Trūksta {missing} taškų"
+    },
+    "redeem": "Iškeisti",
+    "redeemFor": "Iškeisti už {points} taškų",
+    "confirm": "Išleisti {points} taškų šiam prizui?",
+    "saveFor": "Kaupti šiam prizui",
+    "saving": "Kaupiate šiam prizui",
+    "stopSaving": "Nebekaupti",
+    "goalTitle": "Kaupimo tikslas",
+    "goalMissing": "Liko surinkti {missing} taškų",
+    "goalReady": "Turite pakankamai taškų — iškeiskite dabar.",
+    "noGoal": "Pasirinkite prizą, kuriam kaupsite, ir stebėkite pažangą čia.",
+    "empty": "Šiuo metu prizų nėra. Užsukite netrukus.",
+    "details": "Išsamiau",
+    "back": "Atgal į parduotuvę",
+    "terms": "Sąlygos",
+    "sendTo": "Siųsti adresu",
+    "note": "Pastaba FIRINGI (neprivaloma)",
+    "done": {
+      "coupon": "Jūsų kodas: {code}. Panaudokite jį krepšelyje iki {date}.",
+      "partner": "Jūsų kodas: {code}.",
+      "product": "Atlikta. Įdėkite jį į krepšelį su kitu užsakymu iš tiekėjo {supplier} — jis bus nemokamas.",
+      "gift": "Atlikta. FIRINGI jums ją išsiųs ir praneš, kai ji bus pakeliui."
+    },
+    "useInCart": "Naudoti krepšelyje",
+    "addToCart": "Į krepšelį",
+    "openPartner": "Atidaryti partnerio svetainę",
+    "copy": "Kopijuoti",
+    "copied": "Nukopijuota",
+    "cancel": "Atšaukti — taškai grąžinami",
+    "cancelConfirm": "Atšaukti šį prizą? Taškai bus grąžinti.",
+    "status": {
+      "ISSUED": "Paruošta naudoti",
+      "PENDING": "Laukiama",
+      "SHIPPED": "Pakeliui",
+      "DELIVERED": "Pristatyta",
+      "USED": "Panaudota",
+      "CANCELLED": "Atšaukta",
+      "EXPIRED": "Nebegalioja"
+    },
+    "productWaiting": "Laukia kito užsakymo",
+    "onOrder": "Užsakyme {number}",
+    "useBy": "Panaudoti iki {date}",
+    "orderBy": "Užsakyti iki {date}",
+    "tracking": "Siuntos sekimas: {tracking}",
+    "redeemedOn": "Iškeista {date}",
+    "cancelReason": "Priežastis: {reason}",
+    "noRedemptions": "Dar nieko neiškeitėte.",
+    "toShop": "Eiti į prizų parduotuvę",
+    "toMine": "Mano prizai",
+    "shopLink": "Išleiskite taškus prizų parduotuvėje",
+    "cartFree": "{qty} nemokamai (prizas)",
+    "col": {
+      "reward": "Prizas",
+      "points": "Taškai",
+      "status": "Būsena",
+      "date": "Data",
+      "customer": "Klientas",
+      "product": "Produktas",
+      "qty": "Kiekis",
+      "order": "Užsakymas"
+    },
+    "v": {
+      "title": "Prizų produktai",
+      "description": "Siūlykite savo produktus kaip prizus. Klientai išleidžia savo FIRINGI taškus; produktas jiems nemokamas kitame užsakyme iš jūsų, o už jį sumokate jūs.",
+      "handoverTitle": "Perduotini prizai",
+      "handoverDescription": "Klientai, iškeitę taškus į jūsų produktus. Produktas klientui nemokamas kitame jo užsakyme iš jūsų — surinkite ir pristatykite jį kaip įprasta.",
+      "closed": "Prizų siūlymas jūsų įmonei nepasiekiamas.",
+      "new": "Naujas prizas",
+      "edit": "Redaguoti",
+      "product": "Produktas",
+      "qty": "Kiekis prizui",
+      "points": "Kaina taškais",
+      "pointsHint": "Nuo {min} iki {max} taškų",
+      "stock": "Kiek iš viso dovanojate",
+      "perBuyer": "Vienam klientui (tuščia = be ribos)",
+      "minTier": "Žemiausias lojalumo lygis",
+      "anyTier": "Bet koks lygis",
+      "name": "Klientams rodomas pavadinimas",
+      "descr": "Aprašymas (neprivaloma)",
+      "until": "Iki (neprivaloma)",
+      "save": "Išsaugoti",
+      "saved": "Išsaugota.",
+      "approvalNote": "FIRINGI patikrina naujus prizus ir produkto, kiekio ar taškų pakeitimus, prieš jiems pasirodant parduotuvėje.",
+      "cost": "Už šiuos produktus mokate jūs: klientui jie nemokami užsakyme iš jūsų, o jūsų išmoka už tą užsakymą mažesnė.",
+      "status": {
+        "DRAFT": "Juodraštis",
+        "PENDING": "Laukiama FIRINGI",
+        "ACTIVE": "Parduotuvėje",
+        "PAUSED": "Pristabdyta",
+        "REJECTED": "Nepriimta",
+        "ENDED": "Baigta"
+      },
+      "pause": "Pristabdyti",
+      "resume": "Tęsti",
+      "end": "Baigti",
+      "endConfirm": "Baigti šį prizą? Klientai, kurie jį jau iškeitė, vis tiek jį gaus.",
+      "redeemed": "Iškeista: {n}",
+      "toHand": "Perduotina: {n}",
+      "note": "FIRINGI pastaba: {note}",
+      "empty": "Dar nesiūlote jokių prizų.",
+      "cantGive": "Negalima suteikti",
+      "reason": "Kodėl? (klientas tai matys)",
+      "confirmCancel": "Grąžinti klientui taškus?",
+      "hand": {
+        "PENDING": "Laukia užsakymo",
+        "SHIPPED": "Užsakyme",
+        "DELIVERED": "Pristatyta",
+        "CANCELLED": "Atšaukta",
+        "EXPIRED": "Neužsakyta laiku"
+      },
+      "noHandovers": "Dar nė vienas klientas neiškeitė taškų į jūsų produktus.",
+      "orderBy": "Užsakyti iki {date}"
+    }
   }
 }

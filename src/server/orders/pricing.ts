@@ -144,6 +144,31 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
       l.item = { ...l.item, freeGoods: { qty: free, vendorQty, grants: used } };
     }
   }
+  // Phase 55: supplier products redeemed with points in the rewards shop — free on the order, the supplier pays
+  if (!fixed) {
+    const { rewardGrantsFor, REWARD_PROMOTION_ID } = await import("@/server/rewards/service");
+    const grants = await rewardGrantsFor(ctx.company.id, lines.filter((l) => !l.item.deal).map((l) => l.item.offerId));
+    for (const l of lines) {
+      const gs = l.item.deal ? null : grants.get(l.item.offerId);
+      if (!gs || l.unitSale.lte(0)) continue;
+      const already = l.item.freeGoods?.qty ?? 0;
+      let left = l.item.qty - already;
+      const used: { id: string; qty: number }[] = [];
+      for (const g of gs) {
+        const q = Math.min(left, g.qty);
+        if (q <= 0) break;
+        used.push({ id: g.id, qty: q }); left -= q;
+      }
+      const free = used.reduce((a, u) => a + u.qty, 0);
+      if (!free) continue;
+      // unitSale is already spread over the units still paid (qty − already): `free` more of them cost nothing
+      const vendorPer = l.unitSale.mul(free).div(l.item.qty - already).toDecimalPlaces(4);
+      l.discounts.push({ promotionId: REWARD_PROMOTION_ID, ownerType: "VENDOR", coupon: false, perUnit: vendorPer, firingiPerUnit: new Decimal(0), vendorPerUnit: vendorPer });
+      l.unitSale = l.unitSale.minus(vendorPer);
+      const prev = l.item.freeGoods;
+      l.item = { ...l.item, freeGoods: { qty: already + free, vendorQty: (prev?.vendorQty ?? 0) + free, grants: [...(prev?.grants ?? []), ...used] } };
+    }
+  }
   const take = (d: OrderDiscount) => {
     for (const l of lines) {
       const x = d.perLine.get(l.item.offerId);

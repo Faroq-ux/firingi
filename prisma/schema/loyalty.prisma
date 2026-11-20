@@ -15,6 +15,7 @@ enum LoyaltyEntryKind {
   ADJUST // FIRINGI correction (+ or −)
   REDEEM_ORDER // spent as a checkout discount (−)
   REDEEM_CREDIT // turned into a credit note (−)
+  REDEEM_REWARD // spent in the rewards shop (−, Phase 55)
   REFUND // points given back (cancelled order)
   REVERSE // earned points taken back (goods credited / returned)
   EXPIRE // expired (−)
@@ -36,6 +37,8 @@ model LoyaltyAccount {
   referralRewardedAt DateTime?
   /// Last "points expiring soon" reminder.
   expiryRemindedAt   DateTime?
+  /// Phase 55: the reward the business is saving for (shown with its progress)
+  goalRewardId       String?
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
 

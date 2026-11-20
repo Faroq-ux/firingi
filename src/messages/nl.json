@@ -912,7 +912,11 @@
     "Waste Log": "Verspillingslog",
     "Waste Reports": "Verspillingsrapporten",
     "Use First": "Eerst gebruiken",
-    "Donations": "Donaties"
+    "Donations": "Donaties",
+    "Rewards Shop": "Beloningsshop",
+    "My Rewards": "Mijn beloningen",
+    "Reward Products": "Beloningsproducten",
+    "Rewards to Hand Over": "Te leveren beloningen"
   },
   "delivery": {
     "title": "Levering",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Vandaag eerst gebruiken",
       "body": "{count} partij(en) die u hebt gekocht zijn (bijna) over datum. Gebruik ze eerst."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Een klant heeft uw beloning ingewisseld",
+      "body": "{company} heeft “{reward}” ingewisseld. Het is gratis bij hun volgende bestelling bij u."
+    },
+    "rewards_to_review": {
+      "title": "Leveranciersbeloning te controleren",
+      "body": "{company} biedt “{reward}” aan in de beloningsshop. Accepteer het of geef aan waarom niet."
+    },
+    "rewards_approved": {
+      "title": "Uw beloning staat in de shop",
+      "body": "FIRINGI heeft “{reward}” geaccepteerd. Klanten kunnen het nu inwisselen."
+    },
+    "rewards_rejected": {
+      "title": "Uw beloning is niet geaccepteerd",
+      "body": "FIRINGI heeft “{reward}” niet geaccepteerd: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Cadeau te verzenden",
+      "body": "{company} heeft “{reward}” ingewisseld. Verzend het en voeg het trackingnummer toe."
+    },
+    "rewards_gift_shipped": {
+      "title": "Uw cadeau is onderweg",
+      "body": "“{reward}” is verzonden. Tracking: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Uw waardebon verloopt binnenkort",
+      "body": "“{reward}” (code {code}) is te gebruiken tot {date}."
+    },
+    "rewards_refunded": {
+      "title": "Punten teruggegeven",
+      "body": "{points} punten voor “{reward}” staan weer op uw account ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Beloning raakt op",
+      "body": "Nog maar {left} over van “{reward}”."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Omgezet in tegoed",
       "REFUND": "Teruggegeven (bestelling geannuleerd)",
       "REVERSE": "Teruggenomen (goederen gecrediteerd)",
-      "EXPIRE": "Vervallen"
+      "EXPIRE": "Vervallen",
+      "REDEEM_REWARD": "Besteed in de beloningsshop"
     },
     "expires": "vervallen op {date}",
     "cartTitle": "Je punten gebruiken",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "{n}× verspild ({qty} {unit})",
     "cutBy": "bestel ongeveer {pct} % minder",
     "unitLabel": "Eenheid"
+  },
+  "rewardsShop": {
+    "title": "Beloningsshop",
+    "description": "Besteed uw punten aan waardebonnen, gratis levering, producten van uw leveranciers, cadeaus en partneraanbiedingen.",
+    "mineTitle": "Mijn beloningen",
+    "mineDescription": "Wat u hebt ingewisseld: codes om te gebruiken, producten die wachten op uw volgende bestelling en cadeaus die onderweg zijn.",
+    "closed": "De beloningsshop is niet beschikbaar voor uw bedrijf.",
+    "balance": "Uw punten",
+    "worth": "waard {value} bij het afrekenen",
+    "monthlyLeft": "Deze maand kunt u nog {points} punten besteden",
+    "all": "Alle",
+    "kind": {
+      "VOUCHER": "Waardebonnen",
+      "FREE_DELIVERY": "Gratis levering",
+      "SUPPLIER_PRODUCT": "Leveranciersproducten",
+      "GIFT": "Cadeaus",
+      "PARTNER": "Partneraanbiedingen"
+    },
+    "kindOne": {
+      "VOUCHER": "Waardebon",
+      "FREE_DELIVERY": "Gratis levering",
+      "SUPPLIER_PRODUCT": "Leveranciersproduct",
+      "GIFT": "Cadeau",
+      "PARTNER": "Partneraanbieding"
+    },
+    "pts": "{points} ptn",
+    "left": "Nog {n} over",
+    "soldOut": "Uitverkocht",
+    "from": "van {supplier}",
+    "voucherWorth": "{amount} korting op uw bestelling",
+    "freeDeliveryText": "Geen leveringskosten op één bestelling",
+    "minOrder": "Bestellingen vanaf {amount}",
+    "validDays": "Geldig tot {days} dagen na inwisselen",
+    "freeUnits": "{qty} × {product}, gratis bij uw volgende bestelling bij {supplier}",
+    "minTier": "{tier} en hoger",
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Zilver",
+      "GOLD": "Goud"
+    },
+    "blocked": {
+      "KIND_OFF": "Nu niet beschikbaar",
+      "NOT_ACTIVE": "Nu niet beschikbaar",
+      "NOT_YET": "Nog niet beschikbaar",
+      "ENDED": "Beëindigd",
+      "TYPE": "Niet voor uw type bedrijf",
+      "COUNTRY": "Niet beschikbaar in uw land",
+      "TIER": "Voor {tier} en hoger",
+      "LIMIT": "Al zo vaak ingewisseld als toegestaan",
+      "SOLD_OUT": "Uitverkocht",
+      "MONTHLY": "Boven de puntenlimiet van deze maand",
+      "POINTS": "Nog {missing} punten nodig"
+    },
+    "redeem": "Inwisselen",
+    "redeemFor": "Inwisselen voor {points} punten",
+    "confirm": "{points} punten aan deze beloning besteden?",
+    "saveFor": "Hiervoor sparen",
+    "saving": "U spaart hiervoor",
+    "stopSaving": "Stoppen met sparen",
+    "goalTitle": "Sparen voor",
+    "goalMissing": "Nog {missing} punten te gaan",
+    "goalReady": "U hebt genoeg punten — wissel nu in.",
+    "noGoal": "Kies een beloning om voor te sparen en volg hier uw voortgang.",
+    "empty": "Op dit moment geen beloningen. Kijk binnenkort nog eens.",
+    "details": "Details",
+    "back": "Terug naar de shop",
+    "terms": "Voorwaarden",
+    "sendTo": "Verzenden naar",
+    "note": "Opmerking voor FIRINGI (optioneel)",
+    "done": {
+      "coupon": "Uw code is {code}. Gebruik hem uiterlijk {date} in uw winkelwagen.",
+      "partner": "Uw code is {code}.",
+      "product": "Gelukt. Voeg het toe aan uw winkelwagen bij uw volgende bestelling bij {supplier} — het is dan gratis.",
+      "gift": "Gelukt. FIRINGI stuurt het naar u op en laat u weten wanneer het onderweg is."
+    },
+    "useInCart": "Gebruiken in winkelwagen",
+    "addToCart": "In winkelwagen",
+    "openPartner": "Naar de site van de partner",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd",
+    "cancel": "Annuleren — punten terug",
+    "cancelConfirm": "Deze beloning annuleren? U krijgt uw punten terug.",
+    "status": {
+      "ISSUED": "Klaar voor gebruik",
+      "PENDING": "In afwachting",
+      "SHIPPED": "Onderweg",
+      "DELIVERED": "Geleverd",
+      "USED": "Gebruikt",
+      "CANCELLED": "Geannuleerd",
+      "EXPIRED": "Verlopen"
+    },
+    "productWaiting": "Wacht op uw volgende bestelling",
+    "onOrder": "Op bestelling {number}",
+    "useBy": "Te gebruiken tot {date}",
+    "orderBy": "Bestel uiterlijk {date}",
+    "tracking": "Tracking: {tracking}",
+    "redeemedOn": "Ingewisseld op {date}",
+    "cancelReason": "Reden: {reason}",
+    "noRedemptions": "U hebt nog niets ingewisseld.",
+    "toShop": "Naar de beloningsshop",
+    "toMine": "Mijn beloningen",
+    "shopLink": "Besteed uw punten in de beloningsshop",
+    "cartFree": "{qty} gratis (beloning)",
+    "col": {
+      "reward": "Beloning",
+      "points": "Punten",
+      "status": "Status",
+      "date": "Datum",
+      "customer": "Klant",
+      "product": "Product",
+      "qty": "Aantal",
+      "order": "Bestelling"
+    },
+    "v": {
+      "title": "Beloningsproducten",
+      "description": "Bied uw eigen producten aan als beloning. Klanten besteden hun FIRINGI-punten; het product is gratis bij hun volgende bestelling bij u, en u betaalt het.",
+      "handoverTitle": "Te leveren beloningen",
+      "handoverDescription": "Klanten die uw producten hebben ingewisseld. Het product is gratis bij de volgende bestelling van de klant bij u — pick en lever het zoals gewoonlijk.",
+      "closed": "Beloningen aanbieden is niet beschikbaar voor uw bedrijf.",
+      "new": "Nieuwe beloning",
+      "edit": "Bewerken",
+      "product": "Product",
+      "qty": "Aantal per beloning",
+      "points": "Kosten in punten",
+      "pointsHint": "{min} tot {max} punten",
+      "stock": "Hoeveel u weggeeft",
+      "perBuyer": "Per klant (leeg = geen limiet)",
+      "minTier": "Laagste loyaliteitsniveau",
+      "anyTier": "Elk niveau",
+      "name": "Naam die klanten zien",
+      "descr": "Beschrijving (optioneel)",
+      "until": "Tot (optioneel)",
+      "save": "Opslaan",
+      "saved": "Opgeslagen.",
+      "approvalNote": "FIRINGI controleert nieuwe beloningen, en wijzigingen van product, aantal of punten, voordat ze in de shop staan.",
+      "cost": "U betaalt voor deze producten: ze zijn gratis voor de klant bij een bestelling bij u, en uw uitbetaling daarvoor is lager.",
+      "status": {
+        "DRAFT": "Concept",
+        "PENDING": "Wacht op FIRINGI",
+        "ACTIVE": "In de shop",
+        "PAUSED": "Gepauzeerd",
+        "REJECTED": "Niet geaccepteerd",
+        "ENDED": "Beëindigd"
+      },
+      "pause": "Pauzeren",
+      "resume": "Hervatten",
+      "end": "Beëindigen",
+      "endConfirm": "Deze beloning beëindigen? Klanten die haar al hebben ingewisseld, krijgen haar nog wel.",
+      "redeemed": "{n} ingewisseld",
+      "toHand": "{n} te leveren",
+      "note": "Opmerking van FIRINGI: {note}",
+      "empty": "U biedt nog geen beloningen aan.",
+      "cantGive": "Kan niet leveren",
+      "reason": "Waarom? (de klant ziet dit)",
+      "confirmCancel": "De klant de punten teruggeven?",
+      "hand": {
+        "PENDING": "Wacht op een bestelling",
+        "SHIPPED": "Op een bestelling",
+        "DELIVERED": "Geleverd",
+        "CANCELLED": "Geannuleerd",
+        "EXPIRED": "Niet op tijd besteld"
+      },
+      "noHandovers": "Nog geen klant heeft uw producten ingewisseld.",
+      "orderBy": "Te bestellen uiterlijk {date}"
+    }
   }
 }

@@ -912,7 +912,11 @@
     "Waste Log": "Jäätmepäevik",
     "Waste Reports": "Jäätmearuanded",
     "Use First": "Kasutage esmalt",
-    "Donations": "Annetused"
+    "Donations": "Annetused",
+    "Rewards Shop": "Preemiapood",
+    "My Rewards": "Minu preemiad",
+    "Reward Products": "Preemiatooted",
+    "Rewards to Hand Over": "Üleandmist ootavad preemiad"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Kasutage täna esmalt",
       "body": "Teie ostetud partiisid, mille kuupäev on käes või lähedal: {count}. Kasutage need esmalt."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Klient lunastas teie preemia",
+      "body": "{company} lunastas “{reward}”. See on tema järgmisel tellimusel teilt tasuta."
+    },
+    "rewards_to_review": {
+      "title": "Kontrollimist ootav tarnija preemia",
+      "body": "{company} pakub preemiapoes “{reward}”. Kinnitage see või põhjendage keeldumist."
+    },
+    "rewards_approved": {
+      "title": "Teie preemia on poes",
+      "body": "FIRINGI kinnitas “{reward}”. Kliendid saavad selle nüüd lunastada."
+    },
+    "rewards_rejected": {
+      "title": "Teie preemiat ei kinnitatud",
+      "body": "FIRINGI ei kinnitanud “{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Saatmist ootav kingitus",
+      "body": "{company} lunastas “{reward}”. Saatke see ära ja lisage jälgimisnumber."
+    },
+    "rewards_gift_shipped": {
+      "title": "Teie kingitus on teel",
+      "body": "“{reward}” on saadetud. Jälgimine: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Teie kupong aegub peagi",
+      "body": "“{reward}” (kood {code}) on kasutatav kuni {date}."
+    },
+    "rewards_refunded": {
+      "title": "Punktid tagastatud",
+      "body": "{points} punkti “{reward}” eest on tagasi teie kontol ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Preemia saab otsa",
+      "body": "“{reward}” on järel vaid {left}."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Muudetud krediidiks",
       "REFUND": "Tagastatud (tellimus tühistatud)",
       "REVERSE": "Tagasi võetud (kaup krediteeritud)",
-      "EXPIRE": "Aegunud"
+      "EXPIRE": "Aegunud",
+      "REDEEM_REWARD": "Kasutatud preemiapoes"
     },
     "expires": "aegub {date}",
     "cartTitle": "Kasuta oma punkte",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "ära visatud {n}× ({qty} {unit})",
     "cutBy": "tellige umbes {pct} % vähem",
     "unitLabel": "Ühik"
+  },
+  "rewardsShop": {
+    "title": "Preemiapood",
+    "description": "Kasutage oma punkte kupongide, tasuta tarne, tarnijate toodete, kingituste ja partnerpakkumiste jaoks.",
+    "mineTitle": "Minu preemiad",
+    "mineDescription": "Mida olete lunastanud: kasutamiseks koodid, järgmist tellimust ootavad tooted ja teel olevad kingitused.",
+    "closed": "Preemiapood pole teie ettevõttele saadaval.",
+    "balance": "Teie punktid",
+    "worth": "väärtusega {value} ostu vormistamisel",
+    "monthlyLeft": "Sel kuul saab veel kasutada {points} punkti",
+    "all": "Kõik",
+    "kind": {
+      "VOUCHER": "Kupongid",
+      "FREE_DELIVERY": "Tasuta tarne",
+      "SUPPLIER_PRODUCT": "Tarnijate tooted",
+      "GIFT": "Kingitused",
+      "PARTNER": "Partnerpakkumised"
+    },
+    "kindOne": {
+      "VOUCHER": "Kupong",
+      "FREE_DELIVERY": "Tasuta tarne",
+      "SUPPLIER_PRODUCT": "Tarnija toode",
+      "GIFT": "Kingitus",
+      "PARTNER": "Partnerpakkumine"
+    },
+    "pts": "{points} p",
+    "left": "Alles {n}",
+    "soldOut": "Välja müüdud",
+    "from": "tarnijalt {supplier}",
+    "voucherWorth": "{amount} allahindlust tellimuselt",
+    "freeDeliveryText": "Ühe tellimuse kohaletoimetamine tasuta",
+    "minOrder": "Tellimustele alates {amount}",
+    "validDays": "Kehtib {days} päeva pärast lunastamist",
+    "freeUnits": "{qty} × {product} tasuta teie järgmise tellimusega tarnijalt {supplier}",
+    "minTier": "{tier} ja kõrgem",
+    "tiers": {
+      "BRONZE": "Pronks",
+      "SILVER": "Hõbe",
+      "GOLD": "Kuld"
+    },
+    "blocked": {
+      "KIND_OFF": "Praegu pole saadaval",
+      "NOT_ACTIVE": "Praegu pole saadaval",
+      "NOT_YET": "Veel pole saadaval",
+      "ENDED": "Lõppenud",
+      "TYPE": "Pole teie ettevõtte tüübile",
+      "COUNTRY": "Pole teie riigis saadaval",
+      "TIER": "Tasemele {tier} ja kõrgemale",
+      "LIMIT": "Juba lunastatud lubatud arv kordi",
+      "SOLD_OUT": "Välja müüdud",
+      "MONTHLY": "Ületab selle kuu punktilimiidi",
+      "POINTS": "Vaja on veel {missing} punkti"
+    },
+    "redeem": "Lunasta",
+    "redeemFor": "Lunasta {points} punkti eest",
+    "confirm": "Kas kasutada sellele preemiale {points} punkti?",
+    "saveFor": "Kogu selle jaoks",
+    "saving": "Kogute selle jaoks",
+    "stopSaving": "Lõpeta kogumine",
+    "goalTitle": "Kogumise eesmärk",
+    "goalMissing": "Veel {missing} punkti",
+    "goalReady": "Teil on piisavalt punkte — lunastage see kohe.",
+    "noGoal": "Valige preemia, mille jaoks koguda, ja jälgige siin oma edenemist.",
+    "empty": "Praegu preemiaid pole. Vaadake varsti uuesti.",
+    "details": "Üksikasjad",
+    "back": "Tagasi poodi",
+    "terms": "Tingimused",
+    "sendTo": "Saaja",
+    "note": "Märkus FIRINGI-le (valikuline)",
+    "done": {
+      "coupon": "Teie kood on {code}. Kasutage seda ostukorvis kuni {date}.",
+      "partner": "Teie kood on {code}.",
+      "product": "Valmis. Lisage see ostukorvi oma järgmise tellimusega tarnijalt {supplier} — see on tasuta.",
+      "gift": "Valmis. FIRINGI saadab selle teile ja annab teada, kui see on teel."
+    },
+    "useInCart": "Kasuta ostukorvis",
+    "addToCart": "Lisa ostukorvi",
+    "openPartner": "Ava partneri veebisait",
+    "copy": "Kopeeri",
+    "copied": "Kopeeritud",
+    "cancel": "Tühista — punktid tagasi",
+    "cancelConfirm": "Kas tühistada see preemia? Punktid tulevad teile tagasi.",
+    "status": {
+      "ISSUED": "Kasutamiseks valmis",
+      "PENDING": "Ootel",
+      "SHIPPED": "Teel",
+      "DELIVERED": "Kohale toimetatud",
+      "USED": "Kasutatud",
+      "CANCELLED": "Tühistatud",
+      "EXPIRED": "Aegunud"
+    },
+    "productWaiting": "Ootab teie järgmist tellimust",
+    "onOrder": "Tellimusel {number}",
+    "useBy": "Kasutage kuni {date}",
+    "orderBy": "Tellige kuni {date}",
+    "tracking": "Jälgimine: {tracking}",
+    "redeemedOn": "Lunastatud {date}",
+    "cancelReason": "Põhjus: {reason}",
+    "noRedemptions": "Te pole veel midagi lunastanud.",
+    "toShop": "Mine preemiapoodi",
+    "toMine": "Minu preemiad",
+    "shopLink": "Kasutage oma punkte preemiapoes",
+    "cartFree": "{qty} tasuta (preemia)",
+    "col": {
+      "reward": "Preemia",
+      "points": "Punktid",
+      "status": "Olek",
+      "date": "Kuupäev",
+      "customer": "Klient",
+      "product": "Toode",
+      "qty": "Kogus",
+      "order": "Tellimus"
+    },
+    "v": {
+      "title": "Preemiatooted",
+      "description": "Pakkuge oma tooteid preemiatena. Kliendid kasutavad oma FIRINGI punkte; toode on nende järgmisel tellimusel teilt tasuta ja selle eest maksate teie.",
+      "handoverTitle": "Üleandmist ootavad preemiad",
+      "handoverDescription": "Kliendid, kes lunastasid teie tooteid. Toode on kliendi järgmisel tellimusel teilt tasuta — komplekteerige ja tarnige see nagu tavaliselt.",
+      "closed": "Preemiate pakkumine pole teie ettevõttele saadaval.",
+      "new": "Uus preemia",
+      "edit": "Muuda",
+      "product": "Toode",
+      "qty": "Antav kogus",
+      "points": "Hind punktides",
+      "pointsHint": "{min} kuni {max} punkti",
+      "stock": "Mitu tükki välja annate",
+      "perBuyer": "Kliendi kohta (tühi = piiranguta)",
+      "minTier": "Madalaim tase",
+      "anyTier": "Iga tase",
+      "name": "Klientidele nähtav nimi",
+      "descr": "Kirjeldus (valikuline)",
+      "until": "Kuni (valikuline)",
+      "save": "Salvesta",
+      "saved": "Salvestatud.",
+      "approvalNote": "FIRINGI kontrollib uusi preemiaid ning toote, koguse või punktide muudatusi enne, kui need poodi jõuavad.",
+      "cost": "Nende toodete eest maksate teie: kliendile on need teilt tellides tasuta ja teie väljamakse selle tellimuse eest on väiksem.",
+      "status": {
+        "DRAFT": "Mustand",
+        "PENDING": "Ootab FIRINGI-t",
+        "ACTIVE": "Poes",
+        "PAUSED": "Peatatud",
+        "REJECTED": "Tagasi lükatud",
+        "ENDED": "Lõppenud"
+      },
+      "pause": "Peata",
+      "resume": "Jätka",
+      "end": "Lõpeta",
+      "endConfirm": "Kas lõpetada see preemia? Kliendid, kes on selle juba lunastanud, saavad selle siiski.",
+      "redeemed": "{n} lunastatud",
+      "toHand": "{n} üle anda",
+      "note": "FIRINGI märkus: {note}",
+      "empty": "Te ei paku veel ühtegi preemiat.",
+      "cantGive": "Ei saa anda",
+      "reason": "Miks? (klient näeb seda)",
+      "confirmCancel": "Kas anda kliendile punktid tagasi?",
+      "hand": {
+        "PENDING": "Ootab tellimust",
+        "SHIPPED": "Tellimusel",
+        "DELIVERED": "Kohale toimetatud",
+        "CANCELLED": "Tühistatud",
+        "EXPIRED": "Ei tellitud õigeks ajaks"
+      },
+      "noHandovers": "Ükski klient pole veel teie tooteid lunastanud.",
+      "orderBy": "Tellida kuni {date}"
+    }
   }
 }

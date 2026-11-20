@@ -912,7 +912,11 @@
     "Waste Log": "Svinnlogg",
     "Waste Reports": "Svinnrapporter",
     "Use First": "Bruk først",
-    "Donations": "Donasjoner"
+    "Donations": "Donasjoner",
+    "Rewards Shop": "Belønningsbutikk",
+    "My Rewards": "Mine belønninger",
+    "Reward Products": "Belønningsprodukter",
+    "Rewards to Hand Over": "Belønninger å levere"
   },
   "delivery": {
     "title": "Levering",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Bruk først i dag",
       "body": "{count} parti(er) du har kjøpt, er på eller nær datoen. Bruk dem først."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "En kunde har løst inn belønningen din",
+      "body": "{company} har løst inn «{reward}». Den blir gratis på deres neste bestilling fra deg."
+    },
+    "rewards_to_review": {
+      "title": "Leverandørbelønning til kontroll",
+      "body": "{company} tilbyr «{reward}» i belønningsbutikken. Godta den eller si hvorfor ikke."
+    },
+    "rewards_approved": {
+      "title": "Belønningen din er i butikken",
+      "body": "FIRINGI har godtatt «{reward}». Kundene kan løse den inn nå."
+    },
+    "rewards_rejected": {
+      "title": "Belønningen din ble ikke godtatt",
+      "body": "FIRINGI godtok ikke «{reward}»: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Gave å sende",
+      "body": "{company} har løst inn «{reward}». Send den og legg inn sporingsnummeret."
+    },
+    "rewards_gift_shipped": {
+      "title": "Gaven din er på vei",
+      "body": "«{reward}» er sendt. Sporing: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Verdikupongen din utløper snart",
+      "body": "«{reward}» (kode {code}) kan brukes til {date}."
+    },
+    "rewards_refunded": {
+      "title": "Poeng gitt tilbake",
+      "body": "{points} poeng for «{reward}» er tilbake på kontoen din ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Belønningen er snart tom",
+      "body": "Bare {left} igjen av «{reward}»."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Gjort om til tilgodehavende",
       "REFUND": "Gitt tilbake (bestilling kansellert)",
       "REVERSE": "Tatt tilbake (varer kreditert)",
-      "EXPIRE": "Utløpt"
+      "EXPIRE": "Utløpt",
+      "REDEEM_REWARD": "Brukt i belønningsbutikken"
     },
     "expires": "utløper {date}",
     "cartTitle": "Bruk poengene dine",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "kastet {n}× ({qty} {unit})",
     "cutBy": "bestill ca. {pct} % mindre",
     "unitLabel": "Enhet"
+  },
+  "rewardsShop": {
+    "title": "Belønningsbutikk",
+    "description": "Bruk poengene dine på verdikuponger, gratis levering, produkter fra leverandørene dine, gaver og partnertilbud.",
+    "mineTitle": "Mine belønninger",
+    "mineDescription": "Det du har løst inn: koder du kan bruke, produkter som venter på neste bestilling, og gaver som er på vei.",
+    "closed": "Belønningsbutikken er ikke tilgjengelig for bedriften din.",
+    "balance": "Dine poeng",
+    "worth": "verdt {value} i kassen",
+    "monthlyLeft": "{points} poeng igjen å bruke denne måneden",
+    "all": "Alle",
+    "kind": {
+      "VOUCHER": "Verdikuponger",
+      "FREE_DELIVERY": "Gratis levering",
+      "SUPPLIER_PRODUCT": "Leverandørprodukter",
+      "GIFT": "Gaver",
+      "PARTNER": "Partnertilbud"
+    },
+    "kindOne": {
+      "VOUCHER": "Verdikupong",
+      "FREE_DELIVERY": "Gratis levering",
+      "SUPPLIER_PRODUCT": "Leverandørprodukt",
+      "GIFT": "Gave",
+      "PARTNER": "Partnertilbud"
+    },
+    "pts": "{points} p",
+    "left": "{n} igjen",
+    "soldOut": "Utsolgt",
+    "from": "fra {supplier}",
+    "voucherWorth": "{amount} rabatt på bestillingen",
+    "freeDeliveryText": "Ingen leveringsgebyr på én bestilling",
+    "minOrder": "Bestillinger fra {amount}",
+    "validDays": "Gyldig i {days} dager etter innløsning",
+    "freeUnits": "{qty} × {product}, gratis på neste bestilling fra {supplier}",
+    "minTier": "{tier} og høyere",
+    "tiers": {
+      "BRONZE": "Bronse",
+      "SILVER": "Sølv",
+      "GOLD": "Gull"
+    },
+    "blocked": {
+      "KIND_OFF": "Ikke tilgjengelig nå",
+      "NOT_ACTIVE": "Ikke tilgjengelig nå",
+      "NOT_YET": "Ikke tilgjengelig ennå",
+      "ENDED": "Avsluttet",
+      "TYPE": "Ikke for din bedriftstype",
+      "COUNTRY": "Ikke tilgjengelig i ditt land",
+      "TIER": "For {tier} og høyere",
+      "LIMIT": "Allerede løst inn så mange ganger som tillatt",
+      "SOLD_OUT": "Utsolgt",
+      "MONTHLY": "Over månedens poenggrense",
+      "POINTS": "{missing} poeng til trengs"
+    },
+    "redeem": "Løs inn",
+    "redeemFor": "Løs inn for {points} poeng",
+    "confirm": "Bruke {points} poeng på denne belønningen?",
+    "saveFor": "Spar til denne",
+    "saving": "Du sparer til denne",
+    "stopSaving": "Slutt å spare",
+    "goalTitle": "Sparer til",
+    "goalMissing": "{missing} poeng igjen",
+    "goalReady": "Du har nok poeng — løs den inn nå.",
+    "noGoal": "Velg en belønning å spare til, og følg fremgangen her.",
+    "empty": "Ingen belønninger akkurat nå. Se innom igjen snart.",
+    "details": "Detaljer",
+    "back": "Tilbake til butikken",
+    "terms": "Vilkår",
+    "sendTo": "Send til",
+    "note": "Merknad til FIRINGI (valgfritt)",
+    "done": {
+      "coupon": "Koden din er {code}. Bruk den i handlekurven innen {date}.",
+      "partner": "Koden din er {code}.",
+      "product": "Ferdig. Legg den i handlekurven ved neste bestilling fra {supplier} — den blir gratis.",
+      "gift": "Ferdig. FIRINGI sender den til deg og gir beskjed når den er på vei."
+    },
+    "useInCart": "Bruk i handlekurven",
+    "addToCart": "Legg i handlekurven",
+    "openPartner": "Åpne partnerens nettside",
+    "copy": "Kopier",
+    "copied": "Kopiert",
+    "cancel": "Avbryt — poeng tilbake",
+    "cancelConfirm": "Avbryte denne belønningen? Du får poengene tilbake.",
+    "status": {
+      "ISSUED": "Klar til bruk",
+      "PENDING": "Venter",
+      "SHIPPED": "På vei",
+      "DELIVERED": "Levert",
+      "USED": "Brukt",
+      "CANCELLED": "Kansellert",
+      "EXPIRED": "Utløpt"
+    },
+    "productWaiting": "Venter på neste bestilling",
+    "onOrder": "På bestilling {number}",
+    "useBy": "Bruk innen {date}",
+    "orderBy": "Bestill innen {date}",
+    "tracking": "Sporing: {tracking}",
+    "redeemedOn": "Løst inn {date}",
+    "cancelReason": "Årsak: {reason}",
+    "noRedemptions": "Du har ikke løst inn noe ennå.",
+    "toShop": "Gå til belønningsbutikken",
+    "toMine": "Mine belønninger",
+    "shopLink": "Bruk poengene dine i belønningsbutikken",
+    "cartFree": "{qty} gratis (belønning)",
+    "col": {
+      "reward": "Belønning",
+      "points": "Poeng",
+      "status": "Status",
+      "date": "Dato",
+      "customer": "Kunde",
+      "product": "Produkt",
+      "qty": "Antall",
+      "order": "Bestilling"
+    },
+    "v": {
+      "title": "Belønningsprodukter",
+      "description": "Tilby dine egne produkter som belønninger. Kundene bruker FIRINGI-poengene sine; produktet er gratis på deres neste bestilling fra deg, og du betaler for det.",
+      "handoverTitle": "Belønninger å levere",
+      "handoverDescription": "Kunder som har løst inn produktene dine. Produktet er gratis på kundens neste bestilling fra deg — plukk og lever det som vanlig.",
+      "closed": "Å tilby belønninger er ikke tilgjengelig for bedriften din.",
+      "new": "Ny belønning",
+      "edit": "Rediger",
+      "product": "Produkt",
+      "qty": "Antall per belønning",
+      "points": "Pris i poeng",
+      "pointsHint": "{min} til {max} poeng",
+      "stock": "Hvor mange du gir bort",
+      "perBuyer": "Per kunde (tomt = ingen grense)",
+      "minTier": "Laveste lojalitetsnivå",
+      "anyTier": "Alle nivåer",
+      "name": "Navn kundene ser",
+      "descr": "Beskrivelse (valgfritt)",
+      "until": "Til (valgfritt)",
+      "save": "Lagre",
+      "saved": "Lagret.",
+      "approvalNote": "FIRINGI sjekker nye belønninger, og endringer i produkt, antall eller poeng, før de kommer i butikken.",
+      "cost": "Du betaler for disse produktene: de er gratis for kunden på en bestilling fra deg, og utbetalingen din for den blir lavere.",
+      "status": {
+        "DRAFT": "Utkast",
+        "PENDING": "Venter på FIRINGI",
+        "ACTIVE": "I butikken",
+        "PAUSED": "På pause",
+        "REJECTED": "Ikke godtatt",
+        "ENDED": "Avsluttet"
+      },
+      "pause": "Sett på pause",
+      "resume": "Fortsett",
+      "end": "Avslutt",
+      "endConfirm": "Avslutte denne belønningen? Kunder som allerede har løst den inn, får den fortsatt.",
+      "redeemed": "{n} løst inn",
+      "toHand": "{n} å levere",
+      "note": "Merknad fra FIRINGI: {note}",
+      "empty": "Du tilbyr ingen belønninger ennå.",
+      "cantGive": "Kan ikke gi den",
+      "reason": "Hvorfor? (kunden ser dette)",
+      "confirmCancel": "Gi kunden poengene tilbake?",
+      "hand": {
+        "PENDING": "Venter på en bestilling",
+        "SHIPPED": "På en bestilling",
+        "DELIVERED": "Levert",
+        "CANCELLED": "Kansellert",
+        "EXPIRED": "Ikke bestilt i tide"
+      },
+      "noHandovers": "Ingen kunder har løst inn produktene dine ennå.",
+      "orderBy": "Bestilles innen {date}"
+    }
   }
 }

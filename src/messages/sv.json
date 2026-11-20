@@ -912,7 +912,11 @@
     "Waste Log": "Svinnlogg",
     "Waste Reports": "Svinnrapporter",
     "Use First": "Använd först",
-    "Donations": "Donationer"
+    "Donations": "Donationer",
+    "Rewards Shop": "Belöningsbutik",
+    "My Rewards": "Mina belöningar",
+    "Reward Products": "Belöningsprodukter",
+    "Rewards to Hand Over": "Belöningar att lämna ut"
   },
   "delivery": {
     "title": "Leverans",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Använd först i dag",
       "body": "{count} batch(er) du köpt har nått eller närmar sig sitt datum. Använd dem först."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "En kund har löst in din belöning",
+      "body": "{company} har löst in ”{reward}”. Den blir gratis på deras nästa beställning från dig."
+    },
+    "rewards_to_review": {
+      "title": "Leverantörsbelöning att granska",
+      "body": "{company} erbjuder ”{reward}” i belöningsbutiken. Godkänn den eller ange varför inte."
+    },
+    "rewards_approved": {
+      "title": "Din belöning finns i butiken",
+      "body": "FIRINGI har godkänt ”{reward}”. Kunderna kan lösa in den nu."
+    },
+    "rewards_rejected": {
+      "title": "Din belöning godkändes inte",
+      "body": "FIRINGI godkände inte ”{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Present att skicka",
+      "body": "{company} har löst in ”{reward}”. Skicka den och lägg till spårningsnumret."
+    },
+    "rewards_gift_shipped": {
+      "title": "Din present är på väg",
+      "body": "”{reward}” har skickats. Spårning: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Din värdecheck går snart ut",
+      "body": "”{reward}” (kod {code}) kan användas till och med {date}."
+    },
+    "rewards_refunded": {
+      "title": "Poäng återförda",
+      "body": "{points} poäng för ”{reward}” är tillbaka på ditt konto ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Belöningen håller på att ta slut",
+      "body": "Bara {left} kvar av ”{reward}”."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Omgjorda till tillgodohavande",
       "REFUND": "Återgivna (beställning avbruten)",
       "REVERSE": "Återtagna (varor krediterade)",
-      "EXPIRE": "Utgångna"
+      "EXPIRE": "Utgångna",
+      "REDEEM_REWARD": "Använt i belöningsbutiken"
     },
     "expires": "går ut den {date}",
     "cartTitle": "Använd dina poäng",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "slängt {n}× ({qty} {unit})",
     "cutBy": "beställ cirka {pct} % mindre",
     "unitLabel": "Enhet"
+  },
+  "rewardsShop": {
+    "title": "Belöningsbutik",
+    "description": "Använd dina poäng till värdecheckar, fri leverans, produkter från dina leverantörer, presenter och partnererbjudanden.",
+    "mineTitle": "Mina belöningar",
+    "mineDescription": "Det du har löst in: koder att använda, produkter som väntar på din nästa beställning och presenter på väg.",
+    "closed": "Belöningsbutiken är inte tillgänglig för ditt företag.",
+    "balance": "Dina poäng",
+    "worth": "värda {value} i kassan",
+    "monthlyLeft": "{points} poäng kvar att använda den här månaden",
+    "all": "Alla",
+    "kind": {
+      "VOUCHER": "Värdecheckar",
+      "FREE_DELIVERY": "Fri leverans",
+      "SUPPLIER_PRODUCT": "Leverantörsprodukter",
+      "GIFT": "Presenter",
+      "PARTNER": "Partnererbjudanden"
+    },
+    "kindOne": {
+      "VOUCHER": "Värdecheck",
+      "FREE_DELIVERY": "Fri leverans",
+      "SUPPLIER_PRODUCT": "Leverantörsprodukt",
+      "GIFT": "Present",
+      "PARTNER": "Partnererbjudande"
+    },
+    "pts": "{points} p",
+    "left": "{n} kvar",
+    "soldOut": "Slutsåld",
+    "from": "från {supplier}",
+    "voucherWorth": "{amount} rabatt på beställningen",
+    "freeDeliveryText": "Ingen leveransavgift på en beställning",
+    "minOrder": "Beställningar från {amount}",
+    "validDays": "Giltig {days} dagar efter inlösen",
+    "freeUnits": "{qty} × {product}, gratis med din nästa beställning från {supplier}",
+    "minTier": "{tier} och uppåt",
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Silver",
+      "GOLD": "Guld"
+    },
+    "blocked": {
+      "KIND_OFF": "Inte tillgänglig nu",
+      "NOT_ACTIVE": "Inte tillgänglig nu",
+      "NOT_YET": "Inte tillgänglig än",
+      "ENDED": "Avslutad",
+      "TYPE": "Inte för din typ av verksamhet",
+      "COUNTRY": "Inte tillgänglig i ditt land",
+      "TIER": "För {tier} och uppåt",
+      "LIMIT": "Redan inlöst så många gånger som tillåts",
+      "SOLD_OUT": "Slutsåld",
+      "MONTHLY": "Över månadens poänggräns",
+      "POINTS": "{missing} poäng till behövs"
+    },
+    "redeem": "Lös in",
+    "redeemFor": "Lös in för {points} poäng",
+    "confirm": "Använda {points} poäng på den här belöningen?",
+    "saveFor": "Spara till den",
+    "saving": "Du sparar till den här",
+    "stopSaving": "Sluta spara",
+    "goalTitle": "Sparar till",
+    "goalMissing": "{missing} poäng kvar",
+    "goalReady": "Du har tillräckligt med poäng — lös in den nu.",
+    "noGoal": "Välj en belöning att spara till och följ dina framsteg här.",
+    "empty": "Inga belöningar just nu. Titta in snart igen.",
+    "details": "Detaljer",
+    "back": "Tillbaka till butiken",
+    "terms": "Villkor",
+    "sendTo": "Skicka till",
+    "note": "Meddelande till FIRINGI (valfritt)",
+    "done": {
+      "coupon": "Din kod är {code}. Använd den i varukorgen senast {date}.",
+      "partner": "Din kod är {code}.",
+      "product": "Klart. Lägg den i varukorgen med din nästa beställning från {supplier} — den blir gratis.",
+      "gift": "Klart. FIRINGI skickar den till dig och meddelar när den är på väg."
+    },
+    "useInCart": "Använd i varukorgen",
+    "addToCart": "Lägg i varukorgen",
+    "openPartner": "Öppna partnerns webbplats",
+    "copy": "Kopiera",
+    "copied": "Kopierat",
+    "cancel": "Avbryt — poängen tillbaka",
+    "cancelConfirm": "Avbryta den här belöningen? Du får tillbaka dina poäng.",
+    "status": {
+      "ISSUED": "Redo att använda",
+      "PENDING": "Väntar",
+      "SHIPPED": "På väg",
+      "DELIVERED": "Levererad",
+      "USED": "Använd",
+      "CANCELLED": "Avbruten",
+      "EXPIRED": "Utgången"
+    },
+    "productWaiting": "Väntar på din nästa beställning",
+    "onOrder": "På beställning {number}",
+    "useBy": "Använd senast {date}",
+    "orderBy": "Beställ senast {date}",
+    "tracking": "Spårning: {tracking}",
+    "redeemedOn": "Inlöst {date}",
+    "cancelReason": "Orsak: {reason}",
+    "noRedemptions": "Du har inte löst in något än.",
+    "toShop": "Gå till belöningsbutiken",
+    "toMine": "Mina belöningar",
+    "shopLink": "Använd dina poäng i belöningsbutiken",
+    "cartFree": "{qty} gratis (belöning)",
+    "col": {
+      "reward": "Belöning",
+      "points": "Poäng",
+      "status": "Status",
+      "date": "Datum",
+      "customer": "Kund",
+      "product": "Produkt",
+      "qty": "Antal",
+      "order": "Beställning"
+    },
+    "v": {
+      "title": "Belöningsprodukter",
+      "description": "Erbjud dina egna produkter som belöningar. Kunderna använder sina FIRINGI-poäng; produkten är gratis på deras nästa beställning från dig, och du betalar för den.",
+      "handoverTitle": "Belöningar att lämna ut",
+      "handoverDescription": "Kunder som har löst in dina produkter. Produkten är gratis på kundens nästa beställning från dig — plocka och leverera den som vanligt.",
+      "closed": "Att erbjuda belöningar är inte tillgängligt för ditt företag.",
+      "new": "Ny belöning",
+      "edit": "Redigera",
+      "product": "Produkt",
+      "qty": "Antal som ges",
+      "points": "Kostnad i poäng",
+      "pointsHint": "{min} till {max} poäng",
+      "stock": "Hur många du delar ut",
+      "perBuyer": "Per kund (tomt = ingen gräns)",
+      "minTier": "Lägsta lojalitetsnivå",
+      "anyTier": "Alla nivåer",
+      "name": "Namn som kunderna ser",
+      "descr": "Beskrivning (valfritt)",
+      "until": "Till och med (valfritt)",
+      "save": "Spara",
+      "saved": "Sparat.",
+      "approvalNote": "FIRINGI granskar nya belöningar och ändringar av produkt, antal eller poäng innan de visas i butiken.",
+      "cost": "Du betalar för de här produkterna: de är gratis för kunden på en beställning från dig, och din utbetalning för den beställningen blir lägre.",
+      "status": {
+        "DRAFT": "Utkast",
+        "PENDING": "Väntar på FIRINGI",
+        "ACTIVE": "I butiken",
+        "PAUSED": "Pausad",
+        "REJECTED": "Inte godkänd",
+        "ENDED": "Avslutad"
+      },
+      "pause": "Pausa",
+      "resume": "Återuppta",
+      "end": "Avsluta",
+      "endConfirm": "Avsluta den här belöningen? Kunder som redan har löst in den får den ändå.",
+      "redeemed": "{n} inlösta",
+      "toHand": "{n} att lämna ut",
+      "note": "FIRINGI:s anteckning: {note}",
+      "empty": "Du erbjuder inga belöningar än.",
+      "cantGive": "Kan inte lämna ut",
+      "reason": "Varför? (kunden ser detta)",
+      "confirmCancel": "Ge tillbaka poängen till kunden?",
+      "hand": {
+        "PENDING": "Väntar på en beställning",
+        "SHIPPED": "På en beställning",
+        "DELIVERED": "Levererad",
+        "CANCELLED": "Avbruten",
+        "EXPIRED": "Inte beställd i tid"
+      },
+      "noHandovers": "Ingen kund har löst in dina produkter än.",
+      "orderBy": "Beställ senast {date}"
+    }
   }
 }

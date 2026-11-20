@@ -21,7 +21,7 @@ export default async function LoyaltyAdmin() {
     ["Value outstanding (FIRINGI owes)", formatMoney(o.liability, "en-GB"), "kpi-liability"],
     ["Paid with points so far", formatMoney(o.redeemedEuros, "en-GB"), "kpi-redeemed"],
     ["Earned this month", n((o.month.EARN ?? 0) + (o.month.REFERRAL ?? 0) + (o.month.BONUS ?? 0)), "kpi-earned"],
-    ["Spent this month", n(-((o.month.REDEEM_ORDER ?? 0) + (o.month.REDEEM_CREDIT ?? 0))), "kpi-spent"],
+    ["Spent this month", n(-((o.month.REDEEM_ORDER ?? 0) + (o.month.REDEEM_CREDIT ?? 0) + (o.month.REDEEM_REWARD ?? 0))), "kpi-spent"],
     ["Expired this month", n(-(o.month.EXPIRE ?? 0)), "kpi-expired"],
   ];
   return (

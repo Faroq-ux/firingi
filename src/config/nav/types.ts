@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P47" | "P48" | "P49" | "P50" | "P51" | "P52" | "P53" | "P54" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P47" | "P48" | "P49" | "P50" | "P51" | "P52" | "P53" | "P54" | "P55" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -58,6 +58,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P52: { en: "Phase 52 — Staff Shifts & Time", pt: "Fase 52 — Turnos e Horários do Pessoal" },
   P53: { en: "Phase 53 — Product Reviews & Questions", pt: "Fase 53 — Avaliações e Perguntas sobre Produtos" },
   P54: { en: "Phase 54 — Menu Costing & Food Waste", pt: "Fase 54 — Custos de Menu e Desperdício Alimentar" },
+  P55: { en: "Phase 55 — Rewards Shop", pt: "Fase 55 — Loja de Recompensas" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

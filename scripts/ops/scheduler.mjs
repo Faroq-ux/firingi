@@ -26,6 +26,7 @@ const SCHEDULE = [
   { job: "paylater", due: (m) => m % 15 === 9 }, // every 15 min (+9) — pay later: partner capture, instalments, reminders
   { job: "tenders", due: (m) => m % 15 === 11 }, // every 15 min (+11) — tenders closing at their deadline
   { job: "kitchen", due: (m) => m % 1440 === 5 * 60 + 23 }, // daily 05:23 UTC — ingredient costs, price-rise / waste alerts, use-first
+  { job: "rewards", due: (m) => m % 1440 === 4 * 60 + 47 }, // daily 04:47 UTC — rewards shop statuses, points back, reminders, low stock
   { job: "reviews", due: (m) => m % 1440 === 10 * 60 + 17 }, // daily 10:17 UTC — "How was …?" review reminders after delivery
   { job: "staff", due: (m) => m % 15 === 13 }, // every 15 min (+13) — staff shift reminders, forgotten clock-outs, no-shows
   { job: "rebates", due: (m) => m % 1440 === 3 * 60 + 29 }, // daily 03:29 UTC — rebates & bonuses settled

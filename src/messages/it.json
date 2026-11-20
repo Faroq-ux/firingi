@@ -912,7 +912,11 @@
     "Waste Log": "Registro sprechi",
     "Waste Reports": "Report sprechi",
     "Use First": "Da usare prima",
-    "Donations": "Donazioni"
+    "Donations": "Donazioni",
+    "Rewards Shop": "Negozio premi",
+    "My Rewards": "I miei premi",
+    "Reward Products": "Prodotti premio",
+    "Rewards to Hand Over": "Premi da consegnare"
   },
   "delivery": {
     "title": "Consegna",
@@ -1975,6 +1979,42 @@
     "kitchen_use_first": {
       "title": "Da usare prima oggi",
       "body": "Lotti acquistati alla scadenza o vicini: {count}. Li usi per primi."
+    },
+    "rewards_supplier_redeemed": {
+      "title": "Un cliente ha riscattato il tuo premio",
+      "body": "{company} ha riscattato “{reward}”. Sarà gratis nel suo prossimo ordine da te."
+    },
+    "rewards_to_review": {
+      "title": "Premio di un fornitore da verificare",
+      "body": "{company} offre “{reward}” nel negozio premi. Accettalo o spiega perché no."
+    },
+    "rewards_approved": {
+      "title": "Il tuo premio è nel negozio",
+      "body": "FIRINGI ha accettato “{reward}”. I clienti possono riscattarlo da ora."
+    },
+    "rewards_rejected": {
+      "title": "Il tuo premio non è stato accettato",
+      "body": "FIRINGI non ha accettato “{reward}”: {reason}"
+    },
+    "rewards_gift_to_send": {
+      "title": "Regalo da spedire",
+      "body": "{company} ha riscattato “{reward}”. Spediscilo e aggiungi il tracciamento."
+    },
+    "rewards_gift_shipped": {
+      "title": "Il tuo regalo è in arrivo",
+      "body": "“{reward}” è stato spedito. Tracciamento: {tracking}"
+    },
+    "rewards_voucher_expiring": {
+      "title": "Il tuo buono sconto scade presto",
+      "body": "“{reward}” (codice {code}) è utilizzabile fino al {date}."
+    },
+    "rewards_refunded": {
+      "title": "Punti restituiti",
+      "body": "{points} punti per “{reward}” sono tornati sul tuo account ({reason})."
+    },
+    "rewards_low_stock": {
+      "title": "Premio in esaurimento",
+      "body": "Restano solo {left} di “{reward}”."
     }
   },
   "notifications": {
@@ -4500,7 +4540,8 @@
       "REDEEM_CREDIT": "Trasformati in credito",
       "REFUND": "Restituiti (ordine annullato)",
       "REVERSE": "Ripresi (merce accreditata)",
-      "EXPIRE": "Scaduti"
+      "EXPIRE": "Scaduti",
+      "REDEEM_REWARD": "Spesi nel negozio premi"
     },
     "expires": "scadono il {date}",
     "cartTitle": "Usa i tuoi punti",
@@ -7712,5 +7753,170 @@
     "wastedTimes": "sprecato {n}× ({qty} {unit})",
     "cutBy": "ordini circa il {pct} % in meno",
     "unitLabel": "Unità"
+  },
+  "rewardsShop": {
+    "title": "Negozio premi",
+    "description": "Usa i tuoi punti per buoni sconto, consegna gratuita, prodotti dei tuoi fornitori, regali e offerte dei partner.",
+    "mineTitle": "I miei premi",
+    "mineDescription": "Cosa hai riscattato: codici da usare, prodotti in attesa del tuo prossimo ordine e regali in arrivo.",
+    "closed": "Il negozio premi non è disponibile per la tua azienda.",
+    "balance": "I tuoi punti",
+    "worth": "pari a {value} alla cassa",
+    "monthlyLeft": "Puoi ancora spendere {points} punti questo mese",
+    "all": "Tutti",
+    "kind": {
+      "VOUCHER": "Buoni sconto",
+      "FREE_DELIVERY": "Consegna gratuita",
+      "SUPPLIER_PRODUCT": "Prodotti dei fornitori",
+      "GIFT": "Regali",
+      "PARTNER": "Offerte partner"
+    },
+    "kindOne": {
+      "VOUCHER": "Buono sconto",
+      "FREE_DELIVERY": "Consegna gratuita",
+      "SUPPLIER_PRODUCT": "Prodotto del fornitore",
+      "GIFT": "Regalo",
+      "PARTNER": "Offerta partner"
+    },
+    "pts": "{points} pt",
+    "left": "Ne restano {n}",
+    "soldOut": "Esaurito",
+    "from": "da {supplier}",
+    "voucherWorth": "{amount} di sconto sull'ordine",
+    "freeDeliveryText": "Nessuna spesa di consegna su un ordine",
+    "minOrder": "Ordini da {amount}",
+    "validDays": "Valido {days} giorni dal riscatto",
+    "freeUnits": "{qty} × {product}, gratis con il tuo prossimo ordine da {supplier}",
+    "minTier": "{tier} e superiori",
+    "tiers": {
+      "BRONZE": "Bronzo",
+      "SILVER": "Argento",
+      "GOLD": "Oro"
+    },
+    "blocked": {
+      "KIND_OFF": "Non disponibile ora",
+      "NOT_ACTIVE": "Non disponibile ora",
+      "NOT_YET": "Non ancora disponibile",
+      "ENDED": "Terminato",
+      "TYPE": "Non per il tuo tipo di attività",
+      "COUNTRY": "Non disponibile nel tuo paese",
+      "TIER": "Per {tier} e superiori",
+      "LIMIT": "Già riscattato il numero massimo di volte",
+      "SOLD_OUT": "Esaurito",
+      "MONTHLY": "Oltre il limite di punti di questo mese",
+      "POINTS": "Servono altri {missing} punti"
+    },
+    "redeem": "Riscatta",
+    "redeemFor": "Riscatta per {points} punti",
+    "confirm": "Spendere {points} punti per questo premio?",
+    "saveFor": "Risparmia per questo",
+    "saving": "Stai risparmiando per questo",
+    "stopSaving": "Smetti di risparmiare",
+    "goalTitle": "Il tuo obiettivo",
+    "goalMissing": "Mancano {missing} punti",
+    "goalReady": "Hai abbastanza punti: riscattalo ora.",
+    "noGoal": "Scegli un premio come obiettivo e segui qui i tuoi progressi.",
+    "empty": "Nessun premio al momento. Torna presto.",
+    "details": "Dettagli",
+    "back": "Torna al negozio",
+    "terms": "Condizioni",
+    "sendTo": "Invia a",
+    "note": "Nota per FIRINGI (facoltativa)",
+    "done": {
+      "coupon": "Il tuo codice è {code}. Usalo nel carrello entro il {date}.",
+      "partner": "Il tuo codice è {code}.",
+      "product": "Fatto. Aggiungilo al carrello con il tuo prossimo ordine da {supplier}: sarà gratis.",
+      "gift": "Fatto. FIRINGI te lo spedirà e ti avviserà quando sarà in arrivo."
+    },
+    "useInCart": "Usa nel carrello",
+    "addToCart": "Aggiungi al carrello",
+    "openPartner": "Apri il sito del partner",
+    "copy": "Copia",
+    "copied": "Copiato",
+    "cancel": "Annulla — punti restituiti",
+    "cancelConfirm": "Annullare questo premio? I punti ti vengono restituiti.",
+    "status": {
+      "ISSUED": "Pronto all'uso",
+      "PENDING": "In attesa",
+      "SHIPPED": "In arrivo",
+      "DELIVERED": "Consegnato",
+      "USED": "Usato",
+      "CANCELLED": "Annullato",
+      "EXPIRED": "Scaduto"
+    },
+    "productWaiting": "In attesa del tuo prossimo ordine",
+    "onOrder": "Nell'ordine {number}",
+    "useBy": "Da usare entro il {date}",
+    "orderBy": "Da ordinare entro il {date}",
+    "tracking": "Tracciamento: {tracking}",
+    "redeemedOn": "Riscattato il {date}",
+    "cancelReason": "Motivo: {reason}",
+    "noRedemptions": "Non hai ancora riscattato nulla.",
+    "toShop": "Vai al negozio premi",
+    "toMine": "I miei premi",
+    "shopLink": "Spendi i tuoi punti nel negozio premi",
+    "cartFree": "{qty} gratis (premio)",
+    "col": {
+      "reward": "Premio",
+      "points": "Punti",
+      "status": "Stato",
+      "date": "Data",
+      "customer": "Cliente",
+      "product": "Prodotto",
+      "qty": "Qtà",
+      "order": "Ordine"
+    },
+    "v": {
+      "title": "Prodotti premio",
+      "description": "Offri i tuoi prodotti come premi. I clienti spendono i loro punti FIRINGI; il prodotto è gratis nel loro prossimo ordine da te, e lo paghi tu.",
+      "handoverTitle": "Premi da consegnare",
+      "handoverDescription": "Clienti che hanno riscattato i tuoi prodotti. Il prodotto è gratis nel prossimo ordine del cliente da te: preparalo e consegnalo come al solito.",
+      "closed": "L'offerta di premi non è disponibile per la tua azienda.",
+      "new": "Nuovo premio",
+      "edit": "Modifica",
+      "product": "Prodotto",
+      "qty": "Quantità regalata",
+      "points": "Costo in punti",
+      "pointsHint": "Da {min} a {max} punti",
+      "stock": "Quanti ne regali in totale",
+      "perBuyer": "Per cliente (vuoto = nessun limite)",
+      "minTier": "Livello fedeltà minimo",
+      "anyTier": "Qualsiasi livello",
+      "name": "Nome visto dai clienti",
+      "descr": "Descrizione (facoltativa)",
+      "until": "Valido fino al (facoltativo)",
+      "save": "Salva",
+      "saved": "Salvato.",
+      "approvalNote": "FIRINGI verifica i nuovi premi e le modifiche a prodotto, quantità o punti prima che entrino nel negozio.",
+      "cost": "Questi prodotti li paghi tu: sono gratis per il cliente su un ordine da te, e il tuo incasso per quell'ordine è più basso.",
+      "status": {
+        "DRAFT": "Bozza",
+        "PENDING": "In attesa di FIRINGI",
+        "ACTIVE": "Nel negozio",
+        "PAUSED": "Sospeso",
+        "REJECTED": "Non accettato",
+        "ENDED": "Terminato"
+      },
+      "pause": "Sospendi",
+      "resume": "Riprendi",
+      "end": "Termina",
+      "endConfirm": "Terminare questo premio? I clienti che l'hanno già riscattato lo ricevono comunque.",
+      "redeemed": "{n} riscattati",
+      "toHand": "{n} da consegnare",
+      "note": "Nota di FIRINGI: {note}",
+      "empty": "Non offri ancora nessun premio.",
+      "cantGive": "Impossibile consegnarlo",
+      "reason": "Perché? (il cliente lo vede)",
+      "confirmCancel": "Restituire i punti al cliente?",
+      "hand": {
+        "PENDING": "In attesa di un ordine",
+        "SHIPPED": "In un ordine",
+        "DELIVERED": "Consegnato",
+        "CANCELLED": "Annullato",
+        "EXPIRED": "Non ordinato in tempo"
+      },
+      "noHandovers": "Nessun cliente ha ancora riscattato i tuoi prodotti.",
+      "orderBy": "Da ordinare entro il {date}"
+    }
   }
 }
