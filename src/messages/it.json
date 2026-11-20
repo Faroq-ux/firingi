@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Chiosco di timbratura",
     "Timesheets": "Fogli presenze",
     "Leave & Swaps": "Assenze e scambi",
-    "Staff": "Personale"
+    "Staff": "Personale",
+    "My Reviews": "Le mie recensioni",
+    "Reviews": "Recensioni",
+    "Product Questions": "Domande sui prodotti",
+    "Review Insights": "Analisi recensioni"
   },
   "delivery": {
     "title": "Consegna",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Foglio presenze inviato: {name}",
       "body": "{name} ha inviato le ore della settimana del {week}."
+    },
+    "review_received": {
+      "title": "Nuova recensione: {product}",
+      "body": "Un acquirente ha valutato «{product}» {stars}★. La legga e risponda in Recensioni."
+    },
+    "review_question": {
+      "title": "Nuova domanda: {product}",
+      "body": "Un acquirente ha fatto una domanda su «{product}». Risponda in Domande sui prodotti."
+    },
+    "review_reply": {
+      "title": "Il fornitore ha risposto alla Sua recensione",
+      "body": "Il fornitore ha risposto alla Sua recensione di «{product}»."
+    },
+    "review_answered": {
+      "title": "La Sua domanda ha ricevuto risposta",
+      "body": "C'è una risposta alla Sua domanda su «{product}»."
+    },
+    "review_reminder": {
+      "title": "Com'era {product}?",
+      "body": "Il Suo ordine è arrivato qualche giorno fa. Valuti «{product}» e aiuti le altre aziende ad acquistare bene — ci vuole un minuto."
+    },
+    "review_hidden": {
+      "title": "FIRINGI ha nascosto il Suo contenuto",
+      "body": "Il Suo contenuto su «{product}» è stato nascosto: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "In attesa di FIRINGI: {kind}",
+      "body": "Trattenuto o segnalato ({reason}). Lo controlli in Moderazione recensioni."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Questa sezione è disattivata.",
       "KIOSK_OFF": "Il chiosco è disattivato — timbri dal telefono."
     }
+  },
+  "reviews": {
+    "title": "Recensioni",
+    "qaTitle": "Domande e risposte",
+    "basedOn": "Recensioni: {count}",
+    "noReviews": "Ancora nessuna recensione.",
+    "ratingAria": "Valutazione {avg} su 5 da {count} recensioni",
+    "detail": {
+      "quality": "Qualità",
+      "value": "Rapporto qualità-prezzo",
+      "packaging": "Confezione",
+      "freshness": "Freschezza e conservabilità"
+    },
+    "sortLabel": "Ordina recensioni",
+    "sort": {
+      "recent": "Più recenti",
+      "helpful": "Più utili",
+      "high": "Valutazione più alta",
+      "low": "Valutazione più bassa"
+    },
+    "withPhotos": "Con foto",
+    "filterAll": "Mostra tutte",
+    "verifiedBuyer": "Acquirente verificato",
+    "type": {
+      "CUSTOMER": "Ristorante / negozio",
+      "WHOLESALER": "Grossista"
+    },
+    "edited": "modificata",
+    "supplierReply": "Risposta del fornitore",
+    "helpful": "Utile ({count})",
+    "helpfulCount": "{count} l'hanno trovata utile",
+    "report": "Segnala",
+    "reported": "Segnalata — grazie",
+    "reportTitle": "Perché segnala questo contenuto?",
+    "reason": {
+      "CONTACT": "Contatti o pubblicità",
+      "OFFENSIVE": "Offensivo",
+      "FALSE": "Falso o fuorviante",
+      "NOT_ABOUT_PRODUCT": "Non riguarda il prodotto",
+      "SPAM": "Spam",
+      "OTHER": "Altro"
+    },
+    "reportNote": "Qualcosa da aggiungere? (facoltativo)",
+    "send": "Invia",
+    "cancel": "Annulla",
+    "reportThanks": "Grazie — FIRINGI lo verificherà.",
+    "write": "Scrivi una recensione",
+    "edit": "Modifica la Sua recensione",
+    "yourRating": "La Sua valutazione",
+    "pickStars": "Scelga da 1 a 5 stelle.",
+    "detailsOptional": "Dettagli (facoltativo)",
+    "clear": "Cancella",
+    "bodyLabel": "La Sua recensione",
+    "bodyHint": "Cosa è andato bene o no — qualità, confezione, freschezza, rapporto qualità-prezzo…",
+    "rules": "Solo sul prodotto. Niente contatti, link o nomi di altre aziende — questi contenuti attendono la verifica di FIRINGI.",
+    "photos": "Foto (fino a {max})",
+    "addPhotos": "Aggiungi foto",
+    "keepPhoto": "Mantieni",
+    "showName": "Mostra il nome della nostra azienda (altrimenti «Acquirente verificato» e il tipo di attività)",
+    "save": "Pubblica",
+    "saved": "Grazie — la Sua recensione è stata salvata.",
+    "delete": "Elimina",
+    "deleteConfirm": "Eliminare la Sua recensione?",
+    "deletePostConfirm": "Eliminare questo contenuto?",
+    "onlyVerified": "Solo le aziende che hanno ricevuto questo prodotto possono recensirlo.",
+    "yourReview": "La Sua recensione",
+    "status": {
+      "PUBLISHED": "Pubblicata",
+      "HELD": "In attesa di FIRINGI",
+      "HIDDEN": "Nascosta da FIRINGI"
+    },
+    "heldBecause": "FIRINGI la verifica prima della pubblicazione ({reasons}).",
+    "hiddenBecause": "Nascosta da FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "dati di contatto",
+      "LINK": "un link",
+      "INSULT": "parole offensive",
+      "COMPETITOR": "il nome di un'altra azienda",
+      "WORD": "una parola bloccata",
+      "REPORTS": "segnalazioni di altre aziende"
+    },
+    "locked": "Questa recensione non può più essere modificata.",
+    "aiTitle": "Riepilogo delle recensioni",
+    "aiNote": "Scritto dall'IA in base a {count} recensioni",
+    "aiSimulated": "simulato — nessuna IA collegata",
+    "aiLoading": "Riepilogo in corso…",
+    "q": "D:",
+    "ask": "Ponga una domanda",
+    "askPlaceholder": "es. È adatto alla frittura? Quanto si conserva dopo l'apertura?",
+    "askSend": "Chiedi",
+    "asked": "La Sua domanda è stata salvata — il fornitore e le aziende che hanno acquistato il prodotto possono rispondere.",
+    "noQuestions": "Ancora nessuna domanda.",
+    "answer": "Rispondi",
+    "answerPlaceholder": "La Sua risposta",
+    "answerSend": "Pubblica risposta",
+    "answered": "Grazie per la risposta.",
+    "role": {
+      "SUPPLIER": "Fornitore",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Acquirente verificato"
+    },
+    "official": "Risposta ufficiale",
+    "noAnswerYet": "Nessuna risposta per ora.",
+    "pageOf": "Pagina {page} di {pages}",
+    "prev": "Precedente",
+    "next": "Successivo",
+    "myTitle": "Le mie recensioni",
+    "myIntro": "Recensisca ciò che ha ricevuto e aiuti le altre aziende ad acquistare bene. I fornitori vedono la Sua recensione; FIRINGI verifica i contenuti con dati di contatto o link.",
+    "todo": "Da recensire",
+    "todoEmpty": "Niente da recensire — i prodotti compaiono qui dopo la consegna.",
+    "deliveredIn": "Ordine {order}",
+    "reviewIt": "Recensisci",
+    "myReviews": "Le nostre recensioni",
+    "myQuestions": "Le nostre domande",
+    "noMine": "Ancora nessuna recensione.",
+    "openProduct": "Apri il prodotto",
+    "off": "Le recensioni sono disattivate per la Sua azienda.",
+    "vendorOff": "Le recensioni sono disattivate per i Suoi prodotti.",
+    "minStars": "4★ e oltre",
+    "sortRating": "Più votati",
+    "vTitle": "Recensioni",
+    "vIntro": "Cosa dicono gli acquirenti dei Suoi prodotti. Può rispondere una volta a ogni recensione, in pubblico — con cortesia e senza dati di contatto.",
+    "filter": {
+      "all": "Tutte",
+      "unreplied": "Senza risposta",
+      "low": "1–2★",
+      "held": "In attesa di FIRINGI"
+    },
+    "reply": "Rispondi",
+    "editReply": "Modifica risposta",
+    "yourReply": "La Sua risposta",
+    "replyPlaceholder": "Ringrazi l'acquirente, spieghi e indichi cosa ha cambiato.",
+    "replyRules": "Tutti vedono la Sua risposta. Niente contatti, link o offerte — questi contenuti attendono la verifica di FIRINGI.",
+    "replySend": "Pubblica risposta",
+    "replyDone": "Risposta salvata.",
+    "replyStatus": {
+      "HELD": "In attesa di FIRINGI",
+      "HIDDEN": "Nascosta da FIRINGI"
+    },
+    "vqTitle": "Domande sui prodotti",
+    "vqIntro": "Le domande degli acquirenti sui Suoi prodotti. Le Sue risposte appaiono come ufficiali.",
+    "openOnly": "Senza nostra risposta",
+    "allQ": "Tutte le domande",
+    "youAnswered": "La Sua risposta",
+    "insTitle": "Analisi recensioni",
+    "insIntro": "Valutazioni per prodotto, andamento su 12 mesi e motivi di lamentela degli acquirenti.",
+    "avgRating": "Valutazione media",
+    "reviewsCount": "Recensioni",
+    "last90": "Ultimi 90 giorni",
+    "replyRate": "Con risposta",
+    "openQuestions": "Domande aperte",
+    "trend": "Media stelle al mese",
+    "complaints": "Lamentele frequenti (3★ e meno)",
+    "noComplaints": "Nessuna lamentela trovata.",
+    "theme": {
+      "DAMAGED": "Danneggiato",
+      "EXPIRY": "Scadenza breve o scaduto",
+      "TASTE": "Gusto",
+      "SIZE": "Formato o peso",
+      "PACKAGING": "Confezione",
+      "PRICE": "Prezzo o rapporto qualità-prezzo",
+      "TEMPERATURE": "Temperatura",
+      "MISSING": "Articoli mancanti"
+    },
+    "perProduct": "Per prodotto",
+    "change": "rispetto a prima",
+    "mentions": "{count}×",
+    "noInsights": "Ancora nessuna recensione dei Suoi prodotti."
   }
 }

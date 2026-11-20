@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CardStars } from "@/components/reviews/views";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Package } from "lucide-react";
 import type { CatalogueItem } from "@/server/data/catalogue-buyer";
@@ -71,6 +72,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         {ex && exl && <div><ExciseBadge b={ex} l={exl} locale={locale} /></div>}
         {co2 && c2 && (co2.badges.length > 0 || co2.kg > 0) && <Co2Chips badges={co2.badges} l={c2.l} kgText={co2.kg > 0 ? `${kgText(co2.kg, c2.locale)} / ${c2.l.perPack}` : null} />}
         {fb && fl && <FoodCardBadges food={{ ...item.food, contain: fb.contain, diets: fb.diets }} hits={fb.hits} l={fl} />}
+        <CardStars productId={item.productId} sellerId={item.vendor.id || null} />
         <Codes item={item} />
         <div className="mt-auto pt-2">
           <PriceBlock item={item} />

@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Chioșc de pontaj",
     "Timesheets": "Foi de pontaj",
     "Leave & Swaps": "Concedii și schimburi",
-    "Staff": "Personal"
+    "Staff": "Personal",
+    "My Reviews": "Recenziile mele",
+    "Reviews": "Recenzii",
+    "Product Questions": "Întrebări despre produse",
+    "Review Insights": "Analiza recenziilor"
   },
   "delivery": {
     "title": "Livrare",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Foaie de pontaj trimisă: {name}",
       "body": "{name} a trimis orele pentru săptămâna {week}."
+    },
+    "review_received": {
+      "title": "Recenzie nouă: {product}",
+      "body": "Un cumpărător a evaluat „{product}” cu {stars}★. Citiți-o și răspundeți în Recenzii."
+    },
+    "review_question": {
+      "title": "Întrebare nouă: {product}",
+      "body": "Un cumpărător a pus o întrebare despre „{product}”. Răspundeți în Întrebări despre produse."
+    },
+    "review_reply": {
+      "title": "Furnizorul a răspuns la recenzia dvs.",
+      "body": "Furnizorul a răspuns la recenzia dvs. despre „{product}”."
+    },
+    "review_answered": {
+      "title": "Întrebarea dvs. a primit răspuns",
+      "body": "Există un răspuns la întrebarea dvs. despre „{product}”."
+    },
+    "review_reminder": {
+      "title": "Cum a fost {product}?",
+      "body": "Comanda dvs. a sosit acum câteva zile. Evaluați „{product}” și ajutați alte firme să cumpere bine — durează un minut."
+    },
+    "review_hidden": {
+      "title": "FIRINGI v-a ascuns postarea",
+      "body": "Postarea dvs. despre „{product}” a fost ascunsă: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Așteaptă FIRINGI: {kind}",
+      "body": "Reținut sau raportat ({reason}). Verificați în Moderarea recenziilor."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Această secțiune este dezactivată.",
       "KIOSK_OFF": "Chioșcul este dezactivat — pontați din telefon."
     }
+  },
+  "reviews": {
+    "title": "Recenzii",
+    "qaTitle": "Întrebări și răspunsuri",
+    "basedOn": "Recenzii: {count}",
+    "noReviews": "Încă nu există recenzii.",
+    "ratingAria": "Evaluat cu {avg} din 5 pe baza a {count} recenzii",
+    "detail": {
+      "quality": "Calitate",
+      "value": "Raport calitate-preț",
+      "packaging": "Ambalaj",
+      "freshness": "Prospețime și termen de valabilitate"
+    },
+    "sortLabel": "Sortați recenziile",
+    "sort": {
+      "recent": "Cele mai noi",
+      "helpful": "Cele mai utile",
+      "high": "Cele mai bine evaluate",
+      "low": "Cele mai slab evaluate"
+    },
+    "withPhotos": "Cu fotografii",
+    "filterAll": "Afișați tot",
+    "verifiedBuyer": "Cumpărător verificat",
+    "type": {
+      "CUSTOMER": "Restaurant / magazin",
+      "WHOLESALER": "Angrosist"
+    },
+    "edited": "editat",
+    "supplierReply": "Răspunsul furnizorului",
+    "helpful": "Util ({count})",
+    "helpfulCount": "Utilă pentru {count}",
+    "report": "Raportați",
+    "reported": "Raportat — vă mulțumim",
+    "reportTitle": "De ce raportați acest conținut?",
+    "reason": {
+      "CONTACT": "Date de contact sau publicitate",
+      "OFFENSIVE": "Ofensator",
+      "FALSE": "Neadevărat sau înșelător",
+      "NOT_ABOUT_PRODUCT": "Nu se referă la produs",
+      "SPAM": "Spam",
+      "OTHER": "Altceva"
+    },
+    "reportNote": "Doriți să adăugați ceva? (opțional)",
+    "send": "Trimite",
+    "cancel": "Anulează",
+    "reportThanks": "Vă mulțumim — FIRINGI va verifica.",
+    "write": "Scrieți o recenzie",
+    "edit": "Editați recenzia dvs.",
+    "yourRating": "Evaluarea dvs.",
+    "pickStars": "Alegeți între 1 și 5 stele.",
+    "detailsOptional": "Detalii (opțional)",
+    "clear": "Șterge",
+    "bodyLabel": "Recenzia dvs.",
+    "bodyHint": "Ce a fost bun sau nu — calitate, ambalaj, prospețime, raport calitate-preț…",
+    "rules": "Doar despre produs. Fără date de contact, linkuri sau nume ale altor firme — acestea așteaptă verificarea FIRINGI.",
+    "photos": "Fotografii (maximum {max})",
+    "addPhotos": "Adăugați fotografii",
+    "keepPhoto": "Păstrați",
+    "showName": "Afișați numele firmei noastre (altfel „Cumpărător verificat” și tipul de activitate)",
+    "save": "Publicați",
+    "saved": "Vă mulțumim — recenzia dvs. a fost salvată.",
+    "delete": "Șterge",
+    "deleteConfirm": "Ștergeți recenzia dvs.?",
+    "deletePostConfirm": "Ștergeți acest conținut?",
+    "onlyVerified": "Doar firmele care au primit acest produs îl pot evalua.",
+    "yourReview": "Recenzia dvs.",
+    "status": {
+      "PUBLISHED": "Publicată",
+      "HELD": "Așteaptă FIRINGI",
+      "HIDDEN": "Ascunsă de FIRINGI"
+    },
+    "heldBecause": "FIRINGI o verifică înainte de publicare ({reasons}).",
+    "hiddenBecause": "Ascunsă de FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "date de contact",
+      "LINK": "un link",
+      "INSULT": "cuvinte jignitoare",
+      "COMPETITOR": "numele altei firme",
+      "WORD": "un cuvânt blocat",
+      "REPORTS": "raportări de la alte firme"
+    },
+    "locked": "Această recenzie nu mai poate fi modificată.",
+    "aiTitle": "Rezumatul recenziilor",
+    "aiNote": "Scris de AI pe baza a {count} recenzii",
+    "aiSimulated": "simulat — nicio AI conectată",
+    "aiLoading": "Se rezumă…",
+    "q": "Î:",
+    "ask": "Puneți o întrebare",
+    "askPlaceholder": "de ex. Este potrivit pentru prăjit? Cât timp se păstrează după deschidere?",
+    "askSend": "Întrebați",
+    "asked": "Întrebarea dvs. a fost salvată — furnizorul și firmele care au cumpărat produsul pot răspunde.",
+    "noQuestions": "Încă nu există întrebări.",
+    "answer": "Răspundeți",
+    "answerPlaceholder": "Răspunsul dvs.",
+    "answerSend": "Publicați răspunsul",
+    "answered": "Vă mulțumim pentru răspuns.",
+    "role": {
+      "SUPPLIER": "Furnizor",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Cumpărător verificat"
+    },
+    "official": "Răspuns oficial",
+    "noAnswerYet": "Încă fără răspuns.",
+    "pageOf": "Pagina {page} din {pages}",
+    "prev": "Anterioara",
+    "next": "Următoarea",
+    "myTitle": "Recenziile mele",
+    "myIntro": "Evaluați ce ați primit și ajutați alte firme să cumpere bine. Furnizorii vă văd recenzia; FIRINGI verifică postările cu date de contact sau linkuri.",
+    "todo": "De evaluat",
+    "todoEmpty": "Nimic de evaluat — produsele apar aici după ce sunt livrate.",
+    "deliveredIn": "Comanda {order}",
+    "reviewIt": "Evaluați",
+    "myReviews": "Recenziile noastre",
+    "myQuestions": "Întrebările noastre",
+    "noMine": "Încă nu există recenzii.",
+    "openProduct": "Deschideți produsul",
+    "off": "Recenziile sunt dezactivate pentru firma dvs.",
+    "vendorOff": "Recenziile sunt dezactivate pentru produsele dvs.",
+    "minStars": "4★ și peste",
+    "sortRating": "Cele mai bine evaluate",
+    "vTitle": "Recenzii",
+    "vIntro": "Ce spun cumpărătorii despre produsele dvs. Puteți răspunde o singură dată la fiecare recenzie, public — politicos și fără date de contact.",
+    "filter": {
+      "all": "Toate",
+      "unreplied": "Fără răspuns",
+      "low": "1–2★",
+      "held": "Așteaptă FIRINGI"
+    },
+    "reply": "Răspundeți",
+    "editReply": "Editați răspunsul",
+    "yourReply": "Răspunsul dvs.",
+    "replyPlaceholder": "Mulțumiți cumpărătorului, explicați și spuneți ce ați schimbat.",
+    "replyRules": "Răspunsul dvs. este vizibil pentru toți. Fără date de contact, linkuri sau oferte — acestea așteaptă verificarea FIRINGI.",
+    "replySend": "Publicați răspunsul",
+    "replyDone": "Răspuns salvat.",
+    "replyStatus": {
+      "HELD": "Așteaptă FIRINGI",
+      "HIDDEN": "Ascuns de FIRINGI"
+    },
+    "vqTitle": "Întrebări despre produse",
+    "vqIntro": "Întrebările cumpărătorilor despre produsele dvs. Răspunsurile dvs. sunt afișate ca oficiale.",
+    "openOnly": "Fără răspunsul nostru",
+    "allQ": "Toate întrebările",
+    "youAnswered": "Răspunsul dvs.",
+    "insTitle": "Analiza recenziilor",
+    "insIntro": "Evaluări pe produs, tendința pe 12 luni și de ce se plâng cumpărătorii.",
+    "avgRating": "Evaluare medie",
+    "reviewsCount": "Recenzii",
+    "last90": "Ultimele 90 de zile",
+    "replyRate": "Cu răspuns",
+    "openQuestions": "Întrebări deschise",
+    "trend": "Media stelelor pe lună",
+    "complaints": "Reclamații frecvente (3★ și mai puțin)",
+    "noComplaints": "Nu s-au găsit reclamații.",
+    "theme": {
+      "DAMAGED": "Deteriorat",
+      "EXPIRY": "Termen scurt sau expirat",
+      "TASTE": "Gust",
+      "SIZE": "Mărime sau greutate",
+      "PACKAGING": "Ambalaj",
+      "PRICE": "Preț sau raport calitate-preț",
+      "TEMPERATURE": "Temperatură",
+      "MISSING": "Articole lipsă"
+    },
+    "perProduct": "Pe produs",
+    "change": "față de perioada anterioară",
+    "mentions": "{count}×",
+    "noInsights": "Încă nu există recenzii ale produselor dvs."
   }
 }

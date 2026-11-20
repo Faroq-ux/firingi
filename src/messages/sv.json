@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Stämpelkiosk",
     "Timesheets": "Tidrapporter",
     "Leave & Swaps": "Ledighet och byten",
-    "Staff": "Personal"
+    "Staff": "Personal",
+    "My Reviews": "Mina omdömen",
+    "Reviews": "Omdömen",
+    "Product Questions": "Produktfrågor",
+    "Review Insights": "Omdömesanalys"
   },
   "delivery": {
     "title": "Leverans",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Tidrapport skickad: {name}",
       "body": "{name} skickade timmarna för veckan {week}."
+    },
+    "review_received": {
+      "title": "Nytt omdöme: {product}",
+      "body": "En köpare gav ”{product}” {stars}★. Läs det och svara under Omdömen."
+    },
+    "review_question": {
+      "title": "Ny fråga: {product}",
+      "body": "En köpare ställde en fråga om ”{product}”. Svara under Produktfrågor."
+    },
+    "review_reply": {
+      "title": "Leverantören har svarat på ditt omdöme",
+      "body": "Leverantören har svarat på ditt omdöme om ”{product}”."
+    },
+    "review_answered": {
+      "title": "Din fråga har besvarats",
+      "body": "Det finns ett svar på din fråga om ”{product}”."
+    },
+    "review_reminder": {
+      "title": "Hur var {product}?",
+      "body": "Din order kom fram för några dagar sedan. Betygsätt ”{product}” och hjälp andra företag att handla rätt — det tar en minut."
+    },
+    "review_hidden": {
+      "title": "FIRINGI har dolt ditt inlägg",
+      "body": "Ditt inlägg om ”{product}” har dolts: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Väntar på FIRINGI: {kind}",
+      "body": "Spärrat eller anmält ({reason}). Kontrollera det under Moderering av omdömen."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Den här delen är avstängd.",
       "KIOSK_OFF": "Kiosken är avstängd — stämpla in från telefonen."
     }
+  },
+  "reviews": {
+    "title": "Omdömen",
+    "qaTitle": "Frågor och svar",
+    "basedOn": "Omdömen: {count}",
+    "noReviews": "Inga omdömen ännu.",
+    "ratingAria": "Betyg {avg} av 5 baserat på {count} omdömen",
+    "detail": {
+      "quality": "Kvalitet",
+      "value": "Prisvärdhet",
+      "packaging": "Förpackning",
+      "freshness": "Färskhet och hållbarhet"
+    },
+    "sortLabel": "Sortera omdömen",
+    "sort": {
+      "recent": "Senaste",
+      "helpful": "Mest hjälpsamma",
+      "high": "Högst betyg",
+      "low": "Lägst betyg"
+    },
+    "withPhotos": "Med foton",
+    "filterAll": "Visa alla",
+    "verifiedBuyer": "Verifierad köpare",
+    "type": {
+      "CUSTOMER": "Restaurang / butik",
+      "WHOLESALER": "Grossist"
+    },
+    "edited": "redigerat",
+    "supplierReply": "Svar från leverantören",
+    "helpful": "Hjälpsamt ({count})",
+    "helpfulCount": "{count} tyckte att detta var hjälpsamt",
+    "report": "Anmäl",
+    "reported": "Anmält — tack",
+    "reportTitle": "Varför anmäler du detta?",
+    "reason": {
+      "CONTACT": "Kontaktuppgifter eller reklam",
+      "OFFENSIVE": "Stötande",
+      "FALSE": "Osant eller vilseledande",
+      "NOT_ABOUT_PRODUCT": "Handlar inte om produkten",
+      "SPAM": "Skräppost",
+      "OTHER": "Något annat"
+    },
+    "reportNote": "Något att tillägga? (valfritt)",
+    "send": "Skicka",
+    "cancel": "Avbryt",
+    "reportThanks": "Tack — FIRINGI tittar på det.",
+    "write": "Skriv ett omdöme",
+    "edit": "Redigera ditt omdöme",
+    "yourRating": "Ditt betyg",
+    "pickStars": "Välj 1 till 5 stjärnor.",
+    "detailsOptional": "Detaljer (valfritt)",
+    "clear": "Rensa",
+    "bodyLabel": "Ditt omdöme",
+    "bodyHint": "Vad var bra eller inte — kvalitet, förpackning, färskhet, prisvärdhet…",
+    "rules": "Endast om produkten. Inga kontaktuppgifter, länkar eller namn på andra företag — sådant väntar på granskning av FIRINGI.",
+    "photos": "Foton (högst {max})",
+    "addPhotos": "Lägg till foton",
+    "keepPhoto": "Behåll",
+    "showName": "Visa vårt företagsnamn (annars ”Verifierad köpare” och verksamhetstyp)",
+    "save": "Publicera",
+    "saved": "Tack — ditt omdöme är sparat.",
+    "delete": "Ta bort",
+    "deleteConfirm": "Ta bort ditt omdöme?",
+    "deletePostConfirm": "Ta bort detta?",
+    "onlyVerified": "Endast företag som har tagit emot produkten kan lämna omdöme om den.",
+    "yourReview": "Ditt omdöme",
+    "status": {
+      "PUBLISHED": "Publicerat",
+      "HELD": "Väntar på FIRINGI",
+      "HIDDEN": "Dolt av FIRINGI"
+    },
+    "heldBecause": "FIRINGI granskar det innan det visas ({reasons}).",
+    "hiddenBecause": "Dolt av FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktuppgifter",
+      "LINK": "en länk",
+      "INSULT": "kränkande ord",
+      "COMPETITOR": "ett annat företags namn",
+      "WORD": "ett blockerat ord",
+      "REPORTS": "anmälningar från andra företag"
+    },
+    "locked": "Det här omdömet kan inte längre ändras.",
+    "aiTitle": "Sammanfattning av omdömena",
+    "aiNote": "Skriven av AI utifrån {count} omdömen",
+    "aiSimulated": "simulerad — ingen AI ansluten",
+    "aiLoading": "Sammanfattar…",
+    "q": "F:",
+    "ask": "Ställ en fråga",
+    "askPlaceholder": "t.ex. Passar den för fritering? Hur länge håller den efter öppning?",
+    "askSend": "Fråga",
+    "asked": "Din fråga är sparad — leverantören och företag som har köpt produkten kan svara.",
+    "noQuestions": "Inga frågor ännu.",
+    "answer": "Svara",
+    "answerPlaceholder": "Ditt svar",
+    "answerSend": "Publicera svar",
+    "answered": "Tack för ditt svar.",
+    "role": {
+      "SUPPLIER": "Leverantör",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Verifierad köpare"
+    },
+    "official": "Officiellt svar",
+    "noAnswerYet": "Inte besvarad ännu.",
+    "pageOf": "Sida {page} av {pages}",
+    "prev": "Föregående",
+    "next": "Nästa",
+    "myTitle": "Mina omdömen",
+    "myIntro": "Betygsätt det du har fått och hjälp andra företag att handla rätt. Leverantörerna ser ditt omdöme; FIRINGI granskar inlägg med kontaktuppgifter eller länkar.",
+    "todo": "Att betygsätta",
+    "todoEmpty": "Inget att betygsätta — produkter visas här när de har levererats.",
+    "deliveredIn": "Order {order}",
+    "reviewIt": "Betygsätt",
+    "myReviews": "Våra omdömen",
+    "myQuestions": "Våra frågor",
+    "noMine": "Inga omdömen ännu.",
+    "openProduct": "Öppna produkten",
+    "off": "Omdömen är avstängda för ditt företag.",
+    "vendorOff": "Omdömen är avstängda för dina produkter.",
+    "minStars": "4★ och uppåt",
+    "sortRating": "Högst betyg",
+    "vTitle": "Omdömen",
+    "vIntro": "Vad köpare säger om dina produkter. Du kan svara en gång på varje omdöme, offentligt — artigt och utan kontaktuppgifter.",
+    "filter": {
+      "all": "Alla",
+      "unreplied": "Ej besvarade",
+      "low": "1–2★",
+      "held": "Väntar på FIRINGI"
+    },
+    "reply": "Svara",
+    "editReply": "Redigera svar",
+    "yourReply": "Ditt svar",
+    "replyPlaceholder": "Tacka köparen, förklara och berätta vad du har ändrat.",
+    "replyRules": "Alla ser ditt svar. Inga kontaktuppgifter, länkar eller erbjudanden — sådant väntar på granskning av FIRINGI.",
+    "replySend": "Publicera svar",
+    "replyDone": "Svaret är sparat.",
+    "replyStatus": {
+      "HELD": "Väntar på FIRINGI",
+      "HIDDEN": "Dolt av FIRINGI"
+    },
+    "vqTitle": "Produktfrågor",
+    "vqIntro": "Köparnas frågor om dina produkter. Dina svar visas som officiella.",
+    "openOnly": "Ej besvarade av oss",
+    "allQ": "Alla frågor",
+    "youAnswered": "Ditt svar",
+    "insTitle": "Omdömesanalys",
+    "insIntro": "Betyg per produkt, trenden över 12 månader och vad köparna klagar på.",
+    "avgRating": "Genomsnittligt betyg",
+    "reviewsCount": "Omdömen",
+    "last90": "Senaste 90 dagarna",
+    "replyRate": "Besvarade",
+    "openQuestions": "Öppna frågor",
+    "trend": "Genomsnittligt antal stjärnor per månad",
+    "complaints": "Vanliga klagomål (3★ och lägre)",
+    "noComplaints": "Inga klagomål hittades.",
+    "theme": {
+      "DAMAGED": "Skadat",
+      "EXPIRY": "Kort datum eller utgånget",
+      "TASTE": "Smak",
+      "SIZE": "Storlek eller vikt",
+      "PACKAGING": "Förpackning",
+      "PRICE": "Pris eller prisvärdhet",
+      "TEMPERATURE": "Temperatur",
+      "MISSING": "Saknade artiklar"
+    },
+    "perProduct": "Per produkt",
+    "change": "jämfört med tidigare",
+    "mentions": "{count}×",
+    "noInsights": "Inga omdömen om dina produkter ännu."
   }
 }

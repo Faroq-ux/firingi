@@ -133,6 +133,8 @@ model Product {
   proposedBy       Company?          @relation(fields: [proposedByCompanyId], references: [id])
   variants         ProductVariant[]
   promotionTargets PromotionTarget[]
+  reviews          ProductReview[]
+  questions        ProductQuestion[]
 
   @@index([categoryId, status])
   @@index([searchText])

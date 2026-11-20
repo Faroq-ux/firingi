@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Žymėjimo kioskas",
     "Timesheets": "Žiniaraščiai",
     "Leave & Swaps": "Atostogos ir keitimai",
-    "Staff": "Darbuotojai"
+    "Staff": "Darbuotojai",
+    "My Reviews": "Mano atsiliepimai",
+    "Reviews": "Atsiliepimai",
+    "Product Questions": "Klausimai apie produktus",
+    "Review Insights": "Atsiliepimų įžvalgos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Žiniaraštis išsiųstas: {name}",
       "body": "{name} išsiuntė {week} savaitės valandas."
+    },
+    "review_received": {
+      "title": "Naujas atsiliepimas: {product}",
+      "body": "Pirkėjas įvertino „{product}“ {stars}★. Perskaitykite ir atsakykite skiltyje Atsiliepimai."
+    },
+    "review_question": {
+      "title": "Naujas klausimas: {product}",
+      "body": "Pirkėjas uždavė klausimą apie „{product}“. Atsakykite skiltyje Klausimai apie produktus."
+    },
+    "review_reply": {
+      "title": "Tiekėjas atsakė į jūsų atsiliepimą",
+      "body": "Tiekėjas atsakė į jūsų atsiliepimą apie „{product}“."
+    },
+    "review_answered": {
+      "title": "Į jūsų klausimą atsakyta",
+      "body": "Į jūsų klausimą apie „{product}“ gautas atsakymas."
+    },
+    "review_reminder": {
+      "title": "Kaip vertinate {product}?",
+      "body": "Jūsų užsakymas atkeliavo prieš kelias dienas. Įvertinkite „{product}“ ir padėkite kitoms įmonėms pirkti protingai — tai užtruks minutę."
+    },
+    "review_hidden": {
+      "title": "FIRINGI paslėpė jūsų įrašą",
+      "body": "Jūsų įrašas apie „{product}“ paslėptas: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Laukia FIRINGI patikros: {kind}",
+      "body": "Sulaikyta arba gauta pranešimų ({reason}). Patikrinkite skiltyje Atsiliepimų moderavimas."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Ši dalis išjungta.",
       "KIOSK_OFF": "Kioskas išjungtas — pažymėkite atvykimą telefonu."
     }
+  },
+  "reviews": {
+    "title": "Atsiliepimai",
+    "qaTitle": "Klausimai ir atsakymai",
+    "basedOn": "Atsiliepimai: {count}",
+    "noReviews": "Atsiliepimų dar nėra.",
+    "ratingAria": "Vidutinis įvertinimas {avg} iš 5 (atsiliepimų: {count})",
+    "detail": {
+      "quality": "Kokybė",
+      "value": "Kainos ir kokybės santykis",
+      "packaging": "Pakuotė",
+      "freshness": "Šviežumas ir galiojimo laikas"
+    },
+    "sortLabel": "Rūšiuoti atsiliepimus",
+    "sort": {
+      "recent": "Naujausi",
+      "helpful": "Naudingiausi",
+      "high": "Geriausiai įvertinti",
+      "low": "Prasčiausiai įvertinti"
+    },
+    "withPhotos": "Su nuotraukomis",
+    "filterAll": "Rodyti visus",
+    "verifiedBuyer": "Patvirtintas pirkėjas",
+    "type": {
+      "CUSTOMER": "Restoranas / parduotuvė",
+      "WHOLESALER": "Didmenininkas"
+    },
+    "edited": "redaguota",
+    "supplierReply": "Tiekėjo atsakymas",
+    "helpful": "Naudinga ({count})",
+    "helpfulCount": "Naudingu pažymėjo: {count}",
+    "report": "Pranešti",
+    "reported": "Pranešta — ačiū",
+    "reportTitle": "Kodėl apie tai pranešate?",
+    "reason": {
+      "CONTACT": "Kontaktiniai duomenys arba reklama",
+      "OFFENSIVE": "Įžeidžiantis turinys",
+      "FALSE": "Netiesa arba klaidinantis turinys",
+      "NOT_ABOUT_PRODUCT": "Ne apie produktą",
+      "SPAM": "Šlamštas",
+      "OTHER": "Kita"
+    },
+    "reportNote": "Ką nors pridurti? (neprivaloma)",
+    "send": "Siųsti",
+    "cancel": "Atšaukti",
+    "reportThanks": "Ačiū — FIRINGI tai peržiūrės.",
+    "write": "Rašyti atsiliepimą",
+    "edit": "Redaguoti savo atsiliepimą",
+    "yourRating": "Jūsų įvertinimas",
+    "pickStars": "Pasirinkite nuo 1 iki 5 žvaigždučių.",
+    "detailsOptional": "Išsamiau (neprivaloma)",
+    "clear": "Išvalyti",
+    "bodyLabel": "Jūsų atsiliepimas",
+    "bodyHint": "Kas buvo gerai, o kas ne — kokybė, pakuotė, šviežumas, kaina…",
+    "rules": "Tik apie produktą. Jokių kontaktinių duomenų, nuorodų ar kitų įmonių pavadinimų — tokius įrašus pirmiausia patikrina FIRINGI.",
+    "photos": "Nuotraukos (iki {max})",
+    "addPhotos": "Pridėti nuotraukų",
+    "keepPhoto": "Palikti",
+    "showName": "Rodyti mūsų įmonės pavadinimą (kitaip – „Patvirtintas pirkėjas“ ir įmonės tipas)",
+    "save": "Paskelbti",
+    "saved": "Ačiū — jūsų atsiliepimas išsaugotas.",
+    "delete": "Ištrinti",
+    "deleteConfirm": "Ištrinti jūsų atsiliepimą?",
+    "deletePostConfirm": "Ištrinti tai?",
+    "onlyVerified": "Įvertinti šį produktą gali tik jį gavusios įmonės.",
+    "yourReview": "Jūsų atsiliepimas",
+    "status": {
+      "PUBLISHED": "Paskelbta",
+      "HELD": "Laukia FIRINGI patikros",
+      "HIDDEN": "Paslėpė FIRINGI"
+    },
+    "heldBecause": "FIRINGI patikrina prieš paskelbiant ({reasons}).",
+    "hiddenBecause": "Paslėpė FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktiniai duomenys",
+      "LINK": "nuoroda",
+      "INSULT": "įžeidžiantys žodžiai",
+      "COMPETITOR": "kitos įmonės pavadinimas",
+      "WORD": "draudžiamas žodis",
+      "REPORTS": "kitų įmonių pranešimai"
+    },
+    "locked": "Šio atsiliepimo nebegalima keisti.",
+    "aiTitle": "Atsiliepimų santrauka",
+    "aiNote": "Parengė DI pagal atsiliepimus ({count})",
+    "aiSimulated": "imitacija — DI neprijungtas",
+    "aiLoading": "Apibendrinama…",
+    "q": "K:",
+    "ask": "Užduoti klausimą",
+    "askPlaceholder": "pvz., Ar tinka kepti? Kiek laiko išsilaiko atidarius?",
+    "askSend": "Klausti",
+    "asked": "Jūsų klausimas išsaugotas — atsakyti gali tiekėjas ir jį pirkusios įmonės.",
+    "noQuestions": "Klausimų dar nėra.",
+    "answer": "Atsakyti",
+    "answerPlaceholder": "Jūsų atsakymas",
+    "answerSend": "Paskelbti atsakymą",
+    "answered": "Ačiū, kad atsakėte.",
+    "role": {
+      "SUPPLIER": "Tiekėjas",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Patvirtintas pirkėjas"
+    },
+    "official": "Oficialus atsakymas",
+    "noAnswerYet": "Dar neatsakyta.",
+    "pageOf": "{page} puslapis iš {pages}",
+    "prev": "Ankstesnis",
+    "next": "Kitas",
+    "myTitle": "Mano atsiliepimai",
+    "myIntro": "Įvertinkite, ką gavote, ir padėkite kitoms įmonėms pirkti protingai. Tiekėjai mato jūsų atsiliepimą; FIRINGI tikrina įrašus su kontaktiniais duomenimis ar nuorodomis.",
+    "todo": "Reikia įvertinti",
+    "todoEmpty": "Nėra ką vertinti — produktai čia atsiras, kai bus pristatyti.",
+    "deliveredIn": "Užsakymas {order}",
+    "reviewIt": "Įvertinti",
+    "myReviews": "Mūsų atsiliepimai",
+    "myQuestions": "Mūsų klausimai",
+    "noMine": "Atsiliepimų dar nėra.",
+    "openProduct": "Atidaryti produktą",
+    "off": "Atsiliepimai jūsų įmonei išjungti.",
+    "vendorOff": "Atsiliepimai jūsų produktams išjungti.",
+    "minStars": "4★ ir daugiau",
+    "sortRating": "Geriausiai įvertinti",
+    "vTitle": "Atsiliepimai",
+    "vIntro": "Ką pirkėjai sako apie jūsų produktus. Į kiekvieną atsiliepimą galite viešai atsakyti vieną kartą — mandagiai ir be kontaktinių duomenų.",
+    "filter": {
+      "all": "Visi",
+      "unreplied": "Neatsakyti",
+      "low": "1–2★",
+      "held": "Laukia FIRINGI patikros"
+    },
+    "reply": "Atsakyti",
+    "editReply": "Redaguoti atsakymą",
+    "yourReply": "Jūsų atsakymas",
+    "replyPlaceholder": "Padėkokite pirkėjui, paaiškinkite ir nurodykite, ką pakeitėte.",
+    "replyRules": "Jūsų atsakymą mato visi. Jokių kontaktinių duomenų, nuorodų ar pasiūlymų — tokius atsakymus pirmiausia patikrina FIRINGI.",
+    "replySend": "Paskelbti atsakymą",
+    "replyDone": "Atsakymas išsaugotas.",
+    "replyStatus": {
+      "HELD": "Laukia FIRINGI patikros",
+      "HIDDEN": "Paslėpė FIRINGI"
+    },
+    "vqTitle": "Klausimai apie produktus",
+    "vqIntro": "Pirkėjų klausimai apie jūsų produktus. Jūsų atsakymai rodomi kaip oficialūs.",
+    "openOnly": "Mūsų neatsakyti",
+    "allQ": "Visi klausimai",
+    "youAnswered": "Jūsų atsakymas",
+    "insTitle": "Atsiliepimų įžvalgos",
+    "insIntro": "Kiekvieno produkto įvertinimai, 12 mėnesių tendencija ir dėl ko skundžiasi pirkėjai.",
+    "avgRating": "Vidutinis įvertinimas",
+    "reviewsCount": "Atsiliepimai",
+    "last90": "Paskutinės 90 dienų",
+    "replyRate": "Atsakyta",
+    "openQuestions": "Neatsakyti klausimai",
+    "trend": "Vidutinis žvaigždučių skaičius per mėnesį",
+    "complaints": "Dažni nusiskundimai (3★ ir mažiau)",
+    "noComplaints": "Nusiskundimų nerasta.",
+    "theme": {
+      "DAMAGED": "Pažeista",
+      "EXPIRY": "Trumpas arba pasibaigęs galiojimas",
+      "TASTE": "Skonis",
+      "SIZE": "Dydis arba svoris",
+      "PACKAGING": "Pakuotė",
+      "PRICE": "Kaina arba vertė",
+      "TEMPERATURE": "Temperatūra",
+      "MISSING": "Trūkstamos prekės"
+    },
+    "perProduct": "Pagal produktą",
+    "change": "palyginti su ankstesniu laikotarpiu",
+    "mentions": "{count}×",
+    "noInsights": "Jūsų produktų atsiliepimų dar nėra."
   }
 }

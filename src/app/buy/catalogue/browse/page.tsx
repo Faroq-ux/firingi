@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RatingFilter } from "@/components/reviews/views";
 import { EcoFilter } from "@/components/co2/views";
 import { co2Filter } from "@/components/co2/filter";
 import { FoodFilter, foodParams } from "@/components/food/views";
@@ -24,7 +25,7 @@ export const metadata = { title: "Shop" };
 const TONES = ["tone-blue", "tone-violet", "tone-teal", "tone-pink", "tone-orange", "tone-lime"];
 
 /** Shop home: categories + nearest suppliers (wholesalers for customers, distributors for wholesalers). */
-export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; badge?: string; free?: string | string[]; diet?: string; eco?: string }> }) {
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; badge?: string; free?: string | string[]; diet?: string; eco?: string; stars?: string; sort?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
   const sp = await searchParams;
@@ -35,7 +36,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   ]);
   const firingi = mode === "FIRINGI";
   const eco = sp.eco ?? null;
-  const products = firingi ? await browseCatalogue(ctx, { q, badge, ...fp, eco }) : null;
+  const products = firingi ? await browseCatalogue(ctx, { q, badge, ...fp, eco, stars: Number(sp.stars) || null, sort: sp.sort ?? null }) : null;
   const c2 = products ? await co2Filter(ctx) : null;
   const [fs, fl] = await Promise.all([foodSettings(), foodLabels()]);
   const images = products ? await productsWithImages(products.items.map((i) => i.productId)) : new Set<string>();
@@ -70,7 +71,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       {products ? (
         <section data-testid="firingi-products">
           {fs.enabled && fs.filter && <FoodFilter base="/buy/catalogue/browse" params={{ q, badge }} free={fp.free} diet={fp.diet} l={fl.l} />}
-          {c2 && <EcoFilter base="/buy/catalogue/browse" params={{ q, badge, free: fp.free, diet: fp.diet }} active={eco} l={c2} />}
+          {c2 && <EcoFilter base="/buy/catalogue/browse" params={{ q, badge, free: fp.free, diet: fp.diet, stars: sp.stars, sort: sp.sort }} active={eco} l={c2} />}
+          <RatingFilter base="/buy/catalogue/browse" params={{ q, badge, free: fp.free, diet: fp.diet, eco }} minStars={Number(sp.stars) || null} sort={sp.sort ?? null} />
           <h2 className="mb-3 text-lg font-semibold">{t("allProducts")}</h2>
           {products.items.length === 0 ? <p className="py-8 text-center text-muted-foreground">{t("noResults")}</p> : (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">{products.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} />)}</div>

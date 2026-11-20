@@ -183,6 +183,12 @@ await until(async () => (await kb.locator("[data-testid=my-bid] [role=status]").
 await go(kb, "/buy/orders/cart");
 check("cart: accepted offer at its price", (await kb.textContent("main")).includes(pt(COUNTER)) && (await kb.getByTestId("cart-deal").count()) >= 2);
 await shot(kb, "deals-06-cart", true);
+// Prices drift with other suites' data: if the cart ends up just under the delivery minimum, add one more mozzarella
+// (the unit prices checked below don't change).
+if (await kb.getByRole("button", { name: /Fazer encomenda|Place order/ }).isDisabled()) {
+  sql(`update "CartItem" set qty = qty + 1 where "offerId"='${MOZZ}' and "cartId" in (select id from "Cart" where "buyerCompanyId"='${kebab}')`);
+  await go(kb, "/buy/orders/cart");
+}
 await kb.getByRole("button", { name: /Fazer encomenda|Place order/ }).click();
 await kb.waitForURL("**/buy/orders/**placed=1", { timeout: 20000 }).catch(() => {});
 const lines = sql(`select l."offerId" || ':' || l."unitSalePriceNet" || ':' || l."commissionRate" from "OrderLine" l join "Order" o on o.id=l."orderId" where o."buyerCompanyId"='${kebab}' and l."dealId" is not null and o."placedAt" > now() - interval '5 minutes'`).split("\n").filter(Boolean);

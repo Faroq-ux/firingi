@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Kiosk za evidenco",
     "Timesheets": "Evidence ur",
     "Leave & Swaps": "Odsotnosti in menjave",
-    "Staff": "Zaposleni"
+    "Staff": "Zaposleni",
+    "My Reviews": "Moja mnenja",
+    "Reviews": "Mnenja",
+    "Product Questions": "Vprašanja o izdelkih",
+    "Review Insights": "Analiza mnenj"
   },
   "delivery": {
     "title": "Dostava",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Evidenca ur poslana: {name}",
       "body": "{name} je poslal(a) ure za teden {week}."
+    },
+    "review_received": {
+      "title": "Novo mnenje: {product}",
+      "body": "Kupec je ocenil »{product}« z {stars}★. Preberite mnenje in odgovorite v razdelku Mnenja."
+    },
+    "review_question": {
+      "title": "Novo vprašanje: {product}",
+      "body": "Kupec je zastavil vprašanje o »{product}«. Odgovorite v razdelku Vprašanja o izdelkih."
+    },
+    "review_reply": {
+      "title": "Dobavitelj je odgovoril na vaše mnenje",
+      "body": "Dobavitelj je odgovoril na vaše mnenje o »{product}«."
+    },
+    "review_answered": {
+      "title": "Na vaše vprašanje je prispel odgovor",
+      "body": "Na vaše vprašanje o »{product}« je prispel odgovor."
+    },
+    "review_reminder": {
+      "title": "Kako ste zadovoljni z izdelkom »{product}«?",
+      "body": "Vaše naročilo je prispelo pred nekaj dnevi. Ocenite »{product}« in pomagajte drugim podjetjem pri dobrih nakupih — vzame le minuto."
+    },
+    "review_hidden": {
+      "title": "FIRINGI je skril vašo objavo",
+      "body": "Vaša objava o »{product}« je bila skrita: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Čaka na FIRINGI: {kind}",
+      "body": "Zadržano ali prijavljeno ({reason}). Preverite v razdelku Moderiranje mnenj."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Ta del je izklopljen.",
       "KIOSK_OFF": "Kiosk je izklopljen — prihod evidentirajte s telefonom."
     }
+  },
+  "reviews": {
+    "title": "Mnenja",
+    "qaTitle": "Vprašanja in odgovori",
+    "basedOn": "Mnenja: {count}",
+    "noReviews": "Še ni mnenj.",
+    "ratingAria": "Povprečna ocena {avg} od 5 (število mnenj: {count})",
+    "detail": {
+      "quality": "Kakovost",
+      "value": "Razmerje med ceno in kakovostjo",
+      "packaging": "Embalaža",
+      "freshness": "Svežina in rok uporabe"
+    },
+    "sortLabel": "Razvrsti mnenja",
+    "sort": {
+      "recent": "Najnovejša",
+      "helpful": "Najbolj koristna",
+      "high": "Najbolje ocenjena",
+      "low": "Najslabše ocenjena"
+    },
+    "withPhotos": "S fotografijami",
+    "filterAll": "Prikaži vse",
+    "verifiedBuyer": "Preverjen kupec",
+    "type": {
+      "CUSTOMER": "Restavracija / trgovina",
+      "WHOLESALER": "Veletrgovec"
+    },
+    "edited": "urejeno",
+    "supplierReply": "Odgovor dobavitelja",
+    "helpful": "Koristno ({count})",
+    "helpfulCount": "Koristno za: {count}",
+    "report": "Prijavi",
+    "reported": "Prijavljeno — hvala",
+    "reportTitle": "Zakaj to prijavljate?",
+    "reason": {
+      "CONTACT": "Kontaktni podatki ali oglaševanje",
+      "OFFENSIVE": "Žaljivo",
+      "FALSE": "Neresnično ali zavajajoče",
+      "NOT_ABOUT_PRODUCT": "Ne gre za izdelek",
+      "SPAM": "Neželena vsebina",
+      "OTHER": "Drugo"
+    },
+    "reportNote": "Želite kaj dodati? (neobvezno)",
+    "send": "Pošlji",
+    "cancel": "Prekliči",
+    "reportThanks": "Hvala — FIRINGI bo to preveril.",
+    "write": "Napišite mnenje",
+    "edit": "Uredite svoje mnenje",
+    "yourRating": "Vaša ocena",
+    "pickStars": "Izberite od 1 do 5 zvezdic.",
+    "detailsOptional": "Podrobnosti (neobvezno)",
+    "clear": "Počisti",
+    "bodyLabel": "Vaše mnenje",
+    "bodyHint": "Kaj je bilo dobro in kaj ne — kakovost, embalaža, svežina, razmerje med ceno in kakovostjo…",
+    "rules": "Samo o izdelku. Brez kontaktnih podatkov, povezav ali imen drugih podjetij — taka mnenja počakajo na pregled FIRINGI.",
+    "photos": "Fotografije (največ {max})",
+    "addPhotos": "Dodaj fotografije",
+    "keepPhoto": "Obdrži",
+    "showName": "Prikaži ime našega podjetja (sicer »Preverjen kupec« in vrsta dejavnosti)",
+    "save": "Objavi",
+    "saved": "Hvala — vaše mnenje je shranjeno.",
+    "delete": "Izbriši",
+    "deleteConfirm": "Želite izbrisati svoje mnenje?",
+    "deletePostConfirm": "Želite to izbrisati?",
+    "onlyVerified": "Ta izdelek lahko ocenijo samo podjetja, ki so ga prejela.",
+    "yourReview": "Vaše mnenje",
+    "status": {
+      "PUBLISHED": "Objavljeno",
+      "HELD": "Čaka na FIRINGI",
+      "HIDDEN": "Skril FIRINGI"
+    },
+    "heldBecause": "FIRINGI ga preveri pred objavo ({reasons}).",
+    "hiddenBecause": "Skril FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktni podatki",
+      "LINK": "povezava",
+      "INSULT": "žaljive besede",
+      "COMPETITOR": "ime drugega podjetja",
+      "WORD": "blokirana beseda",
+      "REPORTS": "prijave drugih podjetij"
+    },
+    "locked": "Tega mnenja ni več mogoče spremeniti.",
+    "aiTitle": "Povzetek mnenj",
+    "aiNote": "Napisala UI na podlagi mnenj (število: {count})",
+    "aiSimulated": "simulirano — UI ni povezana",
+    "aiLoading": "Povzemanje…",
+    "q": "V:",
+    "ask": "Zastavite vprašanje",
+    "askPlaceholder": "npr. Ali je primerno za cvrtje? Kako dolgo zdrži po odprtju?",
+    "askSend": "Vprašaj",
+    "asked": "Vaše vprašanje je shranjeno — odgovorijo lahko dobavitelj in podjetja, ki so izdelek kupila.",
+    "noQuestions": "Še ni vprašanj.",
+    "answer": "Odgovori",
+    "answerPlaceholder": "Vaš odgovor",
+    "answerSend": "Objavi odgovor",
+    "answered": "Hvala za odgovor.",
+    "role": {
+      "SUPPLIER": "Dobavitelj",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Preverjen kupec"
+    },
+    "official": "Uradni odgovor",
+    "noAnswerYet": "Še brez odgovora.",
+    "pageOf": "Stran {page} od {pages}",
+    "prev": "Prejšnja",
+    "next": "Naslednja",
+    "myTitle": "Moja mnenja",
+    "myIntro": "Ocenite, kar ste prejeli, in pomagajte drugim podjetjem pri dobrih nakupih. Dobavitelji vidijo vaše mnenje; FIRINGI preveri objave s kontaktnimi podatki ali povezavami.",
+    "todo": "Za oceno",
+    "todoEmpty": "Ničesar ni za oceniti — izdelki se tukaj prikažejo po dostavi.",
+    "deliveredIn": "Naročilo {order}",
+    "reviewIt": "Oceni",
+    "myReviews": "Naša mnenja",
+    "myQuestions": "Naša vprašanja",
+    "noMine": "Še ni mnenj.",
+    "openProduct": "Odpri izdelek",
+    "off": "Mnenja so za vaše podjetje izklopljena.",
+    "vendorOff": "Mnenja so za vaše izdelke izklopljena.",
+    "minStars": "4★ in več",
+    "sortRating": "Najbolje ocenjeni",
+    "vTitle": "Mnenja",
+    "vIntro": "Kaj kupci pravijo o vaših izdelkih. Na vsako mnenje lahko odgovorite enkrat, javno — vljudno in brez kontaktnih podatkov.",
+    "filter": {
+      "all": "Vsa",
+      "unreplied": "Brez odgovora",
+      "low": "1–2★",
+      "held": "Čaka na FIRINGI"
+    },
+    "reply": "Odgovori",
+    "editReply": "Uredi odgovor",
+    "yourReply": "Vaš odgovor",
+    "replyPlaceholder": "Zahvalite se kupcu, pojasnite in navedite, kaj ste spremenili.",
+    "replyRules": "Vaš odgovor vidijo vsi. Brez kontaktnih podatkov, povezav ali ponudb — taki odgovori počakajo na pregled FIRINGI.",
+    "replySend": "Objavi odgovor",
+    "replyDone": "Odgovor je shranjen.",
+    "replyStatus": {
+      "HELD": "Čaka na FIRINGI",
+      "HIDDEN": "Skril FIRINGI"
+    },
+    "vqTitle": "Vprašanja o izdelkih",
+    "vqIntro": "Vprašanja kupcev o vaših izdelkih. Vaši odgovori so prikazani kot uradni.",
+    "openOnly": "Brez našega odgovora",
+    "allQ": "Vsa vprašanja",
+    "youAnswered": "Vaš odgovor",
+    "insTitle": "Analiza mnenj",
+    "insIntro": "Ocene po izdelkih, gibanje v 12 mesecih in na kaj se kupci pritožujejo.",
+    "avgRating": "Povprečna ocena",
+    "reviewsCount": "Mnenja",
+    "last90": "Zadnjih 90 dni",
+    "replyRate": "Z odgovorom",
+    "openQuestions": "Odprta vprašanja",
+    "trend": "Povprečno število zvezdic na mesec",
+    "complaints": "Pogoste pritožbe (3★ in manj)",
+    "noComplaints": "Ni najdenih pritožb.",
+    "theme": {
+      "DAMAGED": "Poškodovano",
+      "EXPIRY": "Kratek ali pretečen rok uporabe",
+      "TASTE": "Okus",
+      "SIZE": "Velikost ali teža",
+      "PACKAGING": "Embalaža",
+      "PRICE": "Cena ali vrednost",
+      "TEMPERATURE": "Temperatura",
+      "MISSING": "Manjkajoči artikli"
+    },
+    "perProduct": "Po izdelkih",
+    "change": "v primerjavi s prej",
+    "mentions": "{count}×",
+    "noInsights": "O vaših izdelkih še ni mnenj."
   }
 }

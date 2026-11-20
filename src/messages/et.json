@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Registreerimisterminal",
     "Timesheets": "Tööajatabelid",
     "Leave & Swaps": "Puudumised ja vahetused",
-    "Staff": "Töötajad"
+    "Staff": "Töötajad",
+    "My Reviews": "Minu arvustused",
+    "Reviews": "Arvustused",
+    "Product Questions": "Tooteküsimused",
+    "Review Insights": "Arvustuste ülevaade"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Tööajatabel saadetud: {name}",
       "body": "{name} saatis nädala {week} tunnid."
+    },
+    "review_received": {
+      "title": "Uus arvustus: {product}",
+      "body": "Ostja hindas toodet „{product}” {stars}★. Lugege arvustust ja vastake jaotises Arvustused."
+    },
+    "review_question": {
+      "title": "Uus küsimus: {product}",
+      "body": "Ostja esitas küsimuse toote „{product}” kohta. Vastake jaotises Tooteküsimused."
+    },
+    "review_reply": {
+      "title": "Tarnija vastas teie arvustusele",
+      "body": "Tarnija vastas teie arvustusele toote „{product}” kohta."
+    },
+    "review_answered": {
+      "title": "Teie küsimusele vastati",
+      "body": "Teie küsimusele toote „{product}” kohta on vastus."
+    },
+    "review_reminder": {
+      "title": "Kuidas {product} teile sobis?",
+      "body": "Teie tellimus saabus paar päeva tagasi. Hinnake toodet „{product}” ja aidake teistel ettevõtetel hästi osta — see võtab vaid minuti."
+    },
+    "review_hidden": {
+      "title": "FIRINGI peitis teie postituse",
+      "body": "Teie postitus toote „{product}” kohta peideti: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Ootab FIRINGI-t: {kind}",
+      "body": "Kinni peetud või teatatud ({reason}). Kontrollige seda jaotises Arvustuste modereerimine."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "See osa on välja lülitatud.",
       "KIOSK_OFF": "Terminal on välja lülitatud — registreerige saabumine telefonist."
     }
+  },
+  "reviews": {
+    "title": "Arvustused",
+    "qaTitle": "Küsimused ja vastused",
+    "basedOn": "Arvustusi: {count}",
+    "noReviews": "Arvustusi veel pole.",
+    "ratingAria": "Hinnang {avg} 5-st {count} arvustuse põhjal",
+    "detail": {
+      "quality": "Kvaliteet",
+      "value": "Hinna ja kvaliteedi suhe",
+      "packaging": "Pakend",
+      "freshness": "Värskus ja säilivus"
+    },
+    "sortLabel": "Sorteeri arvustusi",
+    "sort": {
+      "recent": "Uusimad",
+      "helpful": "Kõige kasulikumad",
+      "high": "Kõrgeima hinnanguga",
+      "low": "Madalaima hinnanguga"
+    },
+    "withPhotos": "Fotodega",
+    "filterAll": "Näita kõiki",
+    "verifiedBuyer": "Kontrollitud ostja",
+    "type": {
+      "CUSTOMER": "Restoran / pood",
+      "WHOLESALER": "Hulgimüüja"
+    },
+    "edited": "muudetud",
+    "supplierReply": "Tarnija vastus",
+    "helpful": "Kasulik ({count})",
+    "helpfulCount": "Kasulikuks pidanud: {count}",
+    "report": "Teata",
+    "reported": "Teatatud — aitäh",
+    "reportTitle": "Miks te sellest teatate?",
+    "reason": {
+      "CONTACT": "Kontaktandmed või reklaam",
+      "OFFENSIVE": "Solvav",
+      "FALSE": "Vale või eksitav",
+      "NOT_ABOUT_PRODUCT": "Ei puuduta toodet",
+      "SPAM": "Rämpspost",
+      "OTHER": "Midagi muud"
+    },
+    "reportNote": "Kas soovite midagi lisada? (valikuline)",
+    "send": "Saada",
+    "cancel": "Tühista",
+    "reportThanks": "Aitäh — FIRINGI vaatab selle üle.",
+    "write": "Kirjuta arvustus",
+    "edit": "Muuda oma arvustust",
+    "yourRating": "Teie hinnang",
+    "pickStars": "Valige 1 kuni 5 tärni.",
+    "detailsOptional": "Üksikasjad (valikuline)",
+    "clear": "Tühjenda",
+    "bodyLabel": "Teie arvustus",
+    "bodyHint": "Mis oli hea või mitte — kvaliteet, pakend, värskus, hind…",
+    "rules": "Ainult toote kohta. Ilma kontaktandmete, linkide ja teiste ettevõtete nimedeta — sellised postitused ootavad FIRINGI kontrolli.",
+    "photos": "Fotod (kuni {max})",
+    "addPhotos": "Lisa fotod",
+    "keepPhoto": "Jäta alles",
+    "showName": "Näita meie ettevõtte nime (muidu „Kontrollitud ostja” ja ettevõtte tüüp)",
+    "save": "Avalda",
+    "saved": "Aitäh — teie arvustus on salvestatud.",
+    "delete": "Kustuta",
+    "deleteConfirm": "Kas kustutada oma arvustus?",
+    "deletePostConfirm": "Kas kustutada?",
+    "onlyVerified": "Seda toodet saavad arvustada ainult ettevõtted, kes on selle kätte saanud.",
+    "yourReview": "Teie arvustus",
+    "status": {
+      "PUBLISHED": "Avaldatud",
+      "HELD": "Ootab FIRINGI-t",
+      "HIDDEN": "FIRINGI peitis"
+    },
+    "heldBecause": "FIRINGI kontrollib postitust enne selle ilmumist ({reasons}).",
+    "hiddenBecause": "FIRINGI peitis: {reason}",
+    "hold": {
+      "CONTACT": "kontaktandmed",
+      "LINK": "link",
+      "INSULT": "solvavad sõnad",
+      "COMPETITOR": "teise ettevõtte nimi",
+      "WORD": "keelatud sõna",
+      "REPORTS": "teiste ettevõtete teated"
+    },
+    "locked": "Seda arvustust ei saa enam muuta.",
+    "aiTitle": "Arvustuste kokkuvõte",
+    "aiNote": "Tehisintellekti koostatud {count} arvustuse põhjal",
+    "aiSimulated": "simuleeritud — tehisintellekt pole ühendatud",
+    "aiLoading": "Koostan kokkuvõtet…",
+    "q": "K:",
+    "ask": "Esita küsimus",
+    "askPlaceholder": "nt Kas see sobib praadimiseks? Kui kaua see pärast avamist säilib?",
+    "askSend": "Küsi",
+    "asked": "Teie küsimus on salvestatud — vastata saavad tarnija ja ettevõtted, kes on toodet ostnud.",
+    "noQuestions": "Küsimusi veel pole.",
+    "answer": "Vasta",
+    "answerPlaceholder": "Teie vastus",
+    "answerSend": "Avalda vastus",
+    "answered": "Aitäh vastamast.",
+    "role": {
+      "SUPPLIER": "Tarnija",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Kontrollitud ostja"
+    },
+    "official": "Ametlik vastus",
+    "noAnswerYet": "Veel vastamata.",
+    "pageOf": "Leht {page}/{pages}",
+    "prev": "Eelmine",
+    "next": "Järgmine",
+    "myTitle": "Minu arvustused",
+    "myIntro": "Arvustage, mida saite, ja aidake teistel ettevõtetel hästi osta. Tarnijad näevad teie arvustust; FIRINGI kontrollib kontaktandmete või linkidega postitusi.",
+    "todo": "Arvustamiseks",
+    "todoEmpty": "Pole midagi arvustada — tooted ilmuvad siia, kui need on kohale toimetatud.",
+    "deliveredIn": "Tellimus {order}",
+    "reviewIt": "Arvusta",
+    "myReviews": "Meie arvustused",
+    "myQuestions": "Meie küsimused",
+    "noMine": "Arvustusi veel pole.",
+    "openProduct": "Ava toode",
+    "off": "Arvustused on teie ettevõtte jaoks välja lülitatud.",
+    "vendorOff": "Arvustused on teie toodete jaoks välja lülitatud.",
+    "minStars": "4★ ja rohkem",
+    "sortRating": "Parima hinnanguga",
+    "vTitle": "Arvustused",
+    "vIntro": "Mida ostjad teie toodete kohta ütlevad. Igale arvustusele saate vastata üks kord, avalikult — viisakalt ja ilma kontaktandmeteta.",
+    "filter": {
+      "all": "Kõik",
+      "unreplied": "Vastamata",
+      "low": "1–2★",
+      "held": "Ootab FIRINGI-t"
+    },
+    "reply": "Vasta",
+    "editReply": "Muuda vastust",
+    "yourReply": "Teie vastus",
+    "replyPlaceholder": "Tänage ostjat, selgitage ja öelge, mida muutsite.",
+    "replyRules": "Teie vastust näevad kõik. Ilma kontaktandmete, linkide ja pakkumisteta — sellised vastused ootavad FIRINGI kontrolli.",
+    "replySend": "Avalda vastus",
+    "replyDone": "Vastus salvestatud.",
+    "replyStatus": {
+      "HELD": "Ootab FIRINGI-t",
+      "HIDDEN": "FIRINGI peitis"
+    },
+    "vqTitle": "Tooteküsimused",
+    "vqIntro": "Ostjate küsimused teie toodete kohta. Teie vastuseid näidatakse ametlikena.",
+    "openOnly": "Meie poolt vastamata",
+    "allQ": "Kõik küsimused",
+    "youAnswered": "Teie vastus",
+    "insTitle": "Arvustuste ülevaade",
+    "insIntro": "Hinnangud toodete kaupa, 12 kuu trend ja see, mille üle ostjad kurdavad.",
+    "avgRating": "Keskmine hinnang",
+    "reviewsCount": "Arvustused",
+    "last90": "Viimased 90 päeva",
+    "replyRate": "Vastatud",
+    "openQuestions": "Avatud küsimused",
+    "trend": "Keskmine tärnide arv kuus",
+    "complaints": "Sagedased kaebused (3★ ja vähem)",
+    "noComplaints": "Kaebusi ei leitud.",
+    "theme": {
+      "DAMAGED": "Kahjustatud",
+      "EXPIRY": "Lühike säilivusaeg või aegunud",
+      "TASTE": "Maitse",
+      "SIZE": "Suurus või kaal",
+      "PACKAGING": "Pakend",
+      "PRICE": "Hind või väärtus",
+      "TEMPERATURE": "Temperatuur",
+      "MISSING": "Puuduvad kaubad"
+    },
+    "perProduct": "Toodete kaupa",
+    "change": "vs. varem",
+    "mentions": "{count}×",
+    "noInsights": "Teie toodetel pole veel arvustusi."
   }
 }

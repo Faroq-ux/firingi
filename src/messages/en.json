@@ -1770,6 +1770,34 @@
     "staff_timesheet_submitted": {
       "title": "Timesheet sent: {name}",
       "body": "{name} sent the hours for the week of {week}."
+    },
+    "review_received": {
+      "title": "New review: {product}",
+      "body": "A buyer rated \"{product}\" {stars}★. Read it and reply in Reviews."
+    },
+    "review_question": {
+      "title": "New question: {product}",
+      "body": "A buyer asked a question about \"{product}\". Answer it in Product Questions."
+    },
+    "review_reply": {
+      "title": "The supplier replied to your review",
+      "body": "The supplier replied to your review of \"{product}\"."
+    },
+    "review_answered": {
+      "title": "Your question was answered",
+      "body": "There is an answer to your question about \"{product}\"."
+    },
+    "review_reminder": {
+      "title": "How was {product}?",
+      "body": "Your order arrived a few days ago. Rate \"{product}\" and help other businesses buy well — it takes a minute."
+    },
+    "review_hidden": {
+      "title": "FIRINGI hid your post",
+      "body": "Your post about \"{product}\" was hidden: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "A {kind} is waiting for FIRINGI",
+      "body": "Held or reported ({reason}). Check it in Review Moderation."
     }
   },
   "notifications": {
@@ -7106,5 +7134,173 @@
       "PART_OFF": "This part is switched off.",
       "KIOSK_OFF": "The kiosk is switched off — clock in from your phone."
     }
+  },
+  "reviews": {
+    "title": "Reviews",
+    "qaTitle": "Questions & answers",
+    "basedOn": "Reviews: {count}",
+    "noReviews": "No reviews yet.",
+    "ratingAria": "Rated {avg} out of 5 from {count} reviews",
+    "detail": {
+      "quality": "Quality",
+      "value": "Value for money",
+      "packaging": "Packaging",
+      "freshness": "Freshness & shelf life"
+    },
+    "sortLabel": "Sort reviews",
+    "sort": {
+      "recent": "Newest",
+      "helpful": "Most helpful",
+      "high": "Highest rated",
+      "low": "Lowest rated"
+    },
+    "withPhotos": "With photos",
+    "filterAll": "Show all",
+    "verifiedBuyer": "Verified buyer",
+    "type": {
+      "CUSTOMER": "Restaurant / shop",
+      "WHOLESALER": "Wholesaler"
+    },
+    "edited": "edited",
+    "supplierReply": "Reply from the supplier",
+    "helpful": "Helpful ({count})",
+    "helpfulCount": "{count} found this helpful",
+    "report": "Report",
+    "reported": "Reported — thank you",
+    "reportTitle": "Why are you reporting this?",
+    "reason": {
+      "CONTACT": "Contact details or advertising",
+      "OFFENSIVE": "Offensive",
+      "FALSE": "Not true or misleading",
+      "NOT_ABOUT_PRODUCT": "Not about the product",
+      "SPAM": "Spam",
+      "OTHER": "Something else"
+    },
+    "reportNote": "Anything to add? (optional)",
+    "send": "Send",
+    "cancel": "Cancel",
+    "reportThanks": "Thank you — FIRINGI will look at it.",
+    "write": "Write a review",
+    "edit": "Edit your review",
+    "yourRating": "Your rating",
+    "pickStars": "Choose 1 to 5 stars.",
+    "detailsOptional": "Details (optional)",
+    "clear": "Clear",
+    "bodyLabel": "Your review",
+    "bodyHint": "What was good or not — quality, packaging, freshness, value…",
+    "rules": "Only about the product. No contact details, links or names of other companies — those wait for FIRINGI to check.",
+    "photos": "Photos (up to {max})",
+    "addPhotos": "Add photos",
+    "keepPhoto": "Keep",
+    "showName": "Show our business name (otherwise “Verified buyer” and the type of business)",
+    "save": "Publish",
+    "saved": "Thank you — your review is saved.",
+    "delete": "Delete",
+    "deleteConfirm": "Delete your review?",
+    "deletePostConfirm": "Delete this?",
+    "onlyVerified": "Only businesses that received this product can review it.",
+    "yourReview": "Your review",
+    "status": {
+      "PUBLISHED": "Published",
+      "HELD": "Waiting for FIRINGI",
+      "HIDDEN": "Hidden by FIRINGI"
+    },
+    "heldBecause": "FIRINGI checks it before it appears ({reasons}).",
+    "hiddenBecause": "Hidden by FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "contact details",
+      "LINK": "a link",
+      "INSULT": "insulting words",
+      "COMPETITOR": "another company's name",
+      "WORD": "a blocked word",
+      "REPORTS": "reports from other businesses"
+    },
+    "locked": "This review can no longer be changed.",
+    "aiTitle": "Summary of the reviews",
+    "aiNote": "Written by AI from {count} reviews",
+    "aiSimulated": "simulated — no AI connected",
+    "aiLoading": "Summarising…",
+    "q": "Q:",
+    "ask": "Ask a question",
+    "askPlaceholder": "e.g. Is it suitable for frying? How long does it keep after opening?",
+    "askSend": "Ask",
+    "asked": "Your question is saved — the supplier and businesses that bought it can answer.",
+    "noQuestions": "No questions yet.",
+    "answer": "Answer",
+    "answerPlaceholder": "Your answer",
+    "answerSend": "Publish answer",
+    "answered": "Thank you for answering.",
+    "role": {
+      "SUPPLIER": "Supplier",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Verified buyer"
+    },
+    "official": "Official answer",
+    "noAnswerYet": "Not answered yet.",
+    "pageOf": "Page {page} of {pages}",
+    "prev": "Previous",
+    "next": "Next",
+    "myTitle": "My Reviews",
+    "myIntro": "Review what you received and help other businesses buy well. Suppliers see your review; FIRINGI checks posts with contact details or links.",
+    "todo": "To review",
+    "todoEmpty": "Nothing to review — products appear here once they are delivered.",
+    "deliveredIn": "Order {order}",
+    "reviewIt": "Review",
+    "myReviews": "Our reviews",
+    "myQuestions": "Our questions",
+    "noMine": "No reviews yet.",
+    "openProduct": "Open the product",
+    "off": "Reviews are switched off for your business.",
+    "vendorOff": "Reviews are switched off for your products.",
+    "minStars": "4★ and up",
+    "sortRating": "Best rated",
+    "vTitle": "Reviews",
+    "vIntro": "What buyers say about your products. You can reply once to each review, in public — politely and without contact details.",
+    "filter": {
+      "all": "All",
+      "unreplied": "Not replied",
+      "low": "1–2★",
+      "held": "Waiting for FIRINGI"
+    },
+    "reply": "Reply",
+    "editReply": "Edit reply",
+    "yourReply": "Your reply",
+    "replyPlaceholder": "Thank the buyer, explain, and say what you changed.",
+    "replyRules": "Everyone sees your reply. No contact details, links or offers — those wait for FIRINGI to check.",
+    "replySend": "Publish reply",
+    "replyDone": "Reply saved.",
+    "replyStatus": {
+      "HELD": "Waiting for FIRINGI",
+      "HIDDEN": "Hidden by FIRINGI"
+    },
+    "vqTitle": "Product Questions",
+    "vqIntro": "Buyers' questions about your products. Your answers are shown as official.",
+    "openOnly": "Not answered by us",
+    "allQ": "All questions",
+    "youAnswered": "Your answer",
+    "insTitle": "Review Insights",
+    "insIntro": "Ratings per product, the trend over 12 months and what buyers complain about.",
+    "avgRating": "Average rating",
+    "reviewsCount": "Reviews",
+    "last90": "Last 90 days",
+    "replyRate": "Replied",
+    "openQuestions": "Open questions",
+    "trend": "Average stars per month",
+    "complaints": "Common complaints (3★ and below)",
+    "noComplaints": "No complaints found.",
+    "theme": {
+      "DAMAGED": "Damaged",
+      "EXPIRY": "Short date or expired",
+      "TASTE": "Taste",
+      "SIZE": "Size or weight",
+      "PACKAGING": "Packaging",
+      "PRICE": "Price or value",
+      "TEMPERATURE": "Temperature",
+      "MISSING": "Missing items"
+    },
+    "perProduct": "Per product",
+    "change": "vs. before",
+    "mentions": "{count}×",
+    "noInsights": "No reviews of your products yet."
   }
 }

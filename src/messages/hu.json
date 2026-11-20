@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Blokkoló kioszk",
     "Timesheets": "Jelenléti ívek",
     "Leave & Swaps": "Szabadság és cserék",
-    "Staff": "Munkatársak"
+    "Staff": "Munkatársak",
+    "My Reviews": "Értékeléseim",
+    "Reviews": "Értékelések",
+    "Product Questions": "Termékkérdések",
+    "Review Insights": "Értékelési elemzés"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Jelenléti ív elküldve: {name}",
       "body": "{name} elküldte a(z) {week} kezdetű hét óráit."
+    },
+    "review_received": {
+      "title": "Új értékelés: {product}",
+      "body": "Egy vevő {stars}★ értékelést adott erre: „{product}”. Olvassa el, és válaszoljon az Értékelések oldalon."
+    },
+    "review_question": {
+      "title": "Új kérdés: {product}",
+      "body": "Egy vevő kérdést tett fel erről: „{product}”. Válaszoljon a Termékkérdések oldalon."
+    },
+    "review_reply": {
+      "title": "A beszállító válaszolt az értékelésére",
+      "body": "A beszállító válaszolt a(z) „{product}” termékről írt értékelésére."
+    },
+    "review_answered": {
+      "title": "Kérdésére válasz érkezett",
+      "body": "Válasz érkezett a(z) „{product}” termékkel kapcsolatos kérdésére."
+    },
+    "review_reminder": {
+      "title": "Milyen volt: {product}?",
+      "body": "Rendelése néhány napja megérkezett. Értékelje ezt: „{product}”, és segítsen más vállalkozásoknak jól vásárolni — csak egy perc."
+    },
+    "review_hidden": {
+      "title": "A FIRINGI elrejtette a bejegyzését",
+      "body": "A(z) „{product}” termékről írt bejegyzését elrejtettük: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "A FIRINGI-re vár: {kind}",
+      "body": "Visszatartva vagy bejelentve ({reason}). Ellenőrizze az Értékelések moderálása oldalon."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Ez a rész ki van kapcsolva.",
       "KIOSK_OFF": "A kioszk ki van kapcsolva — blokkoljon telefonról."
     }
+  },
+  "reviews": {
+    "title": "Értékelések",
+    "qaTitle": "Kérdések és válaszok",
+    "basedOn": "Értékelések: {count}",
+    "noReviews": "Még nincs értékelés.",
+    "ratingAria": "{avg}/5 átlag {count} értékelés alapján",
+    "detail": {
+      "quality": "Minőség",
+      "value": "Ár-érték arány",
+      "packaging": "Csomagolás",
+      "freshness": "Frissesség és eltarthatóság"
+    },
+    "sortLabel": "Értékelések rendezése",
+    "sort": {
+      "recent": "Legújabb",
+      "helpful": "Leghasznosabb",
+      "high": "Legjobbra értékelt",
+      "low": "Leggyengébbre értékelt"
+    },
+    "withPhotos": "Fotóval",
+    "filterAll": "Összes megjelenítése",
+    "verifiedBuyer": "Ellenőrzött vevő",
+    "type": {
+      "CUSTOMER": "Étterem / üzlet",
+      "WHOLESALER": "Nagykereskedő"
+    },
+    "edited": "szerkesztve",
+    "supplierReply": "A beszállító válasza",
+    "helpful": "Hasznos ({count})",
+    "helpfulCount": "{count} hasznosnak találta",
+    "report": "Bejelentés",
+    "reported": "Bejelentve — köszönjük",
+    "reportTitle": "Miért jelenti be ezt?",
+    "reason": {
+      "CONTACT": "Elérhetőség vagy reklám",
+      "OFFENSIVE": "Sértő",
+      "FALSE": "Valótlan vagy félrevezető",
+      "NOT_ABOUT_PRODUCT": "Nem a termékről szól",
+      "SPAM": "Spam",
+      "OTHER": "Egyéb"
+    },
+    "reportNote": "Szeretne még valamit hozzáfűzni? (nem kötelező)",
+    "send": "Küldés",
+    "cancel": "Mégse",
+    "reportThanks": "Köszönjük — a FIRINGI megvizsgálja.",
+    "write": "Értékelés írása",
+    "edit": "Értékelése szerkesztése",
+    "yourRating": "Az Ön értékelése",
+    "pickStars": "Válasszon 1–5 csillagot.",
+    "detailsOptional": "Részletek (nem kötelező)",
+    "clear": "Törlés",
+    "bodyLabel": "Az Ön véleménye",
+    "bodyHint": "Mi volt jó vagy nem — minőség, csomagolás, frissesség, ár-érték arány…",
+    "rules": "Csak a termékről. Elérhetőség, link vagy más cégek neve nélkül — ezek a FIRINGI ellenőrzésére várnak.",
+    "photos": "Fotók (legfeljebb {max})",
+    "addPhotos": "Fotók hozzáadása",
+    "keepPhoto": "Megtartás",
+    "showName": "Cégünk nevének megjelenítése (egyébként „Ellenőrzött vevő” és a vállalkozás típusa)",
+    "save": "Közzététel",
+    "saved": "Köszönjük — értékelését elmentettük.",
+    "delete": "Törlés",
+    "deleteConfirm": "Törli az értékelését?",
+    "deletePostConfirm": "Törli ezt?",
+    "onlyVerified": "Csak azok a vállalkozások értékelhetik, amelyek megkapták ezt a terméket.",
+    "yourReview": "Az Ön értékelése",
+    "status": {
+      "PUBLISHED": "Közzétéve",
+      "HELD": "A FIRINGI-re vár",
+      "HIDDEN": "A FIRINGI elrejtette"
+    },
+    "heldBecause": "A FIRINGI a megjelenés előtt ellenőrzi ({reasons}).",
+    "hiddenBecause": "A FIRINGI elrejtette: {reason}",
+    "hold": {
+      "CONTACT": "elérhetőség",
+      "LINK": "link",
+      "INSULT": "sértő szavak",
+      "COMPETITOR": "más cég neve",
+      "WORD": "tiltott szó",
+      "REPORTS": "más vállalkozások bejelentései"
+    },
+    "locked": "Ez az értékelés már nem módosítható.",
+    "aiTitle": "Az értékelések összefoglalója",
+    "aiNote": "Az MI írta {count} értékelés alapján",
+    "aiSimulated": "szimulált — nincs MI csatlakoztatva",
+    "aiLoading": "Összefoglalás…",
+    "q": "K:",
+    "ask": "Kérdés feltevése",
+    "askPlaceholder": "pl. Alkalmas sütésre? Mennyi ideig áll el felbontás után?",
+    "askSend": "Kérdezek",
+    "asked": "Kérdését elmentettük — a beszállító és a terméket megvásárló vállalkozások válaszolhatnak rá.",
+    "noQuestions": "Még nincs kérdés.",
+    "answer": "Válasz",
+    "answerPlaceholder": "Az Ön válasza",
+    "answerSend": "Válasz közzététele",
+    "answered": "Köszönjük a válaszát.",
+    "role": {
+      "SUPPLIER": "Beszállító",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Ellenőrzött vevő"
+    },
+    "official": "Hivatalos válasz",
+    "noAnswerYet": "Még nincs válasz.",
+    "pageOf": "{page}. oldal / {pages}",
+    "prev": "Előző",
+    "next": "Következő",
+    "myTitle": "Értékeléseim",
+    "myIntro": "Értékelje, amit kapott, és segítsen más vállalkozásoknak jól vásárolni. A beszállítók látják az értékelését; a FIRINGI ellenőrzi az elérhetőséget vagy linket tartalmazó bejegyzéseket.",
+    "todo": "Értékelendő",
+    "todoEmpty": "Nincs mit értékelni — a termékek kiszállítás után jelennek meg itt.",
+    "deliveredIn": "{order} rendelés",
+    "reviewIt": "Értékelés",
+    "myReviews": "Értékeléseink",
+    "myQuestions": "Kérdéseink",
+    "noMine": "Még nincs értékelés.",
+    "openProduct": "Termék megnyitása",
+    "off": "Az értékelések ki vannak kapcsolva az Ön vállalkozásánál.",
+    "vendorOff": "Az értékelések ki vannak kapcsolva az Ön termékeinél.",
+    "minStars": "4★ vagy több",
+    "sortRating": "Legjobbra értékelt",
+    "vTitle": "Értékelések",
+    "vIntro": "Mit mondanak a vevők az Ön termékeiről. Minden értékelésre egyszer, nyilvánosan válaszolhat — udvariasan és elérhetőség nélkül.",
+    "filter": {
+      "all": "Mind",
+      "unreplied": "Megválaszolatlan",
+      "low": "1–2★",
+      "held": "A FIRINGI-re vár"
+    },
+    "reply": "Válasz",
+    "editReply": "Válasz szerkesztése",
+    "yourReply": "Az Ön válasza",
+    "replyPlaceholder": "Köszönje meg a vevőnek, magyarázza el a helyzetet, és írja meg, min változtatott.",
+    "replyRules": "Válaszát mindenki látja. Elérhetőség, link vagy ajánlat nélkül — ezek a FIRINGI ellenőrzésére várnak.",
+    "replySend": "Válasz közzététele",
+    "replyDone": "Válasz mentve.",
+    "replyStatus": {
+      "HELD": "A FIRINGI-re vár",
+      "HIDDEN": "A FIRINGI elrejtette"
+    },
+    "vqTitle": "Termékkérdések",
+    "vqIntro": "A vevők kérdései az Ön termékeiről. Válaszai hivatalos válaszként jelennek meg.",
+    "openOnly": "Még nem válaszoltunk",
+    "allQ": "Összes kérdés",
+    "youAnswered": "Az Ön válasza",
+    "insTitle": "Értékelési elemzés",
+    "insIntro": "Termékenkénti értékelések, a 12 havi trend és amire a vevők panaszkodnak.",
+    "avgRating": "Átlagos értékelés",
+    "reviewsCount": "Értékelések",
+    "last90": "Utolsó 90 nap",
+    "replyRate": "Megválaszolva",
+    "openQuestions": "Nyitott kérdések",
+    "trend": "Átlagos csillagszám havonta",
+    "complaints": "Gyakori panaszok (3★ vagy kevesebb)",
+    "noComplaints": "Nincs panasz.",
+    "theme": {
+      "DAMAGED": "Sérült",
+      "EXPIRY": "Rövid lejárat vagy lejárt",
+      "TASTE": "Íz",
+      "SIZE": "Méret vagy tömeg",
+      "PACKAGING": "Csomagolás",
+      "PRICE": "Ár vagy ár-érték",
+      "TEMPERATURE": "Hőmérséklet",
+      "MISSING": "Hiányzó tételek"
+    },
+    "perProduct": "Termékenként",
+    "change": "vs. korábban",
+    "mentions": "{count}×",
+    "noInsights": "Termékeiről még nincs értékelés."
   }
 }

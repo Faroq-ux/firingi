@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Kiosk za evidenciju",
     "Timesheets": "Evidencija sati",
     "Leave & Swaps": "Dopusti i zamjene",
-    "Staff": "Zaposlenici"
+    "Staff": "Zaposlenici",
+    "My Reviews": "Moje recenzije",
+    "Reviews": "Recenzije",
+    "Product Questions": "Pitanja o proizvodima",
+    "Review Insights": "Analiza recenzija"
   },
   "delivery": {
     "title": "Dostava",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Evidencija sati poslana: {name}",
       "body": "Osoba {name} poslala je sate za tjedan {week}."
+    },
+    "review_received": {
+      "title": "Nova recenzija: {product}",
+      "body": "Kupac je ocijenio „{product}” s {stars}★. Pročitajte recenziju i odgovorite u odjeljku Recenzije."
+    },
+    "review_question": {
+      "title": "Novo pitanje: {product}",
+      "body": "Kupac je postavio pitanje o proizvodu „{product}”. Odgovorite u odjeljku Pitanja o proizvodima."
+    },
+    "review_reply": {
+      "title": "Dobavljač je odgovorio na vašu recenziju",
+      "body": "Dobavljač je odgovorio na vašu recenziju proizvoda „{product}”."
+    },
+    "review_answered": {
+      "title": "Vaše pitanje ima odgovor",
+      "body": "Stigao je odgovor na vaše pitanje o proizvodu „{product}”."
+    },
+    "review_reminder": {
+      "title": "Kako ste zadovoljni proizvodom {product}?",
+      "body": "Vaša je narudžba stigla prije nekoliko dana. Ocijenite „{product}” i pomozite drugim tvrtkama da dobro kupuju — traje samo minutu."
+    },
+    "review_hidden": {
+      "title": "FIRINGI je sakrio vašu objavu",
+      "body": "Vaša objava o proizvodu „{product}” je skrivena: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Čeka FIRINGI: {kind}",
+      "body": "Zadržano ili prijavljeno ({reason}). Provjerite u odjeljku Moderiranje recenzija."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Ovaj dio je isključen.",
       "KIOSK_OFF": "Kiosk je isključen — prijavite se putem telefona."
     }
+  },
+  "reviews": {
+    "title": "Recenzije",
+    "qaTitle": "Pitanja i odgovori",
+    "basedOn": "Recenzije: {count}",
+    "noReviews": "Još nema recenzija.",
+    "ratingAria": "Ocjena {avg} od 5 na temelju {count} recenzija",
+    "detail": {
+      "quality": "Kvaliteta",
+      "value": "Omjer cijene i kvalitete",
+      "packaging": "Pakiranje",
+      "freshness": "Svježina i rok trajanja"
+    },
+    "sortLabel": "Poredaj recenzije",
+    "sort": {
+      "recent": "Najnovije",
+      "helpful": "Najkorisnije",
+      "high": "Najbolje ocijenjene",
+      "low": "Najlošije ocijenjene"
+    },
+    "withPhotos": "S fotografijama",
+    "filterAll": "Prikaži sve",
+    "verifiedBuyer": "Provjereni kupac",
+    "type": {
+      "CUSTOMER": "Restoran / trgovina",
+      "WHOLESALER": "Veletrgovac"
+    },
+    "edited": "uređeno",
+    "supplierReply": "Odgovor dobavljača",
+    "helpful": "Korisno ({count})",
+    "helpfulCount": "{count} smatra ovo korisnim",
+    "report": "Prijavi",
+    "reported": "Prijavljeno — hvala",
+    "reportTitle": "Zašto ovo prijavljujete?",
+    "reason": {
+      "CONTACT": "Kontaktni podaci ili oglašavanje",
+      "OFFENSIVE": "Uvredljivo",
+      "FALSE": "Netočno ili obmanjujuće",
+      "NOT_ABOUT_PRODUCT": "Ne odnosi se na proizvod",
+      "SPAM": "Neželjeni sadržaj",
+      "OTHER": "Nešto drugo"
+    },
+    "reportNote": "Želite li nešto dodati? (neobavezno)",
+    "send": "Pošalji",
+    "cancel": "Odustani",
+    "reportThanks": "Hvala — FIRINGI će to pregledati.",
+    "write": "Napišite recenziju",
+    "edit": "Uredite svoju recenziju",
+    "yourRating": "Vaša ocjena",
+    "pickStars": "Odaberite od 1 do 5 zvjezdica.",
+    "detailsOptional": "Pojedinosti (neobavezno)",
+    "clear": "Očisti",
+    "bodyLabel": "Vaša recenzija",
+    "bodyHint": "Što je bilo dobro, a što ne — kvaliteta, pakiranje, svježina, omjer cijene i kvalitete…",
+    "rules": "Samo o proizvodu. Bez kontaktnih podataka, poveznica ili naziva drugih tvrtki — takve objave čekaju provjeru FIRINGI-ja.",
+    "photos": "Fotografije (najviše {max})",
+    "addPhotos": "Dodaj fotografije",
+    "keepPhoto": "Zadrži",
+    "showName": "Prikaži naziv naše tvrtke (inače „Provjereni kupac” i vrsta djelatnosti)",
+    "save": "Objavi",
+    "saved": "Hvala — vaša je recenzija spremljena.",
+    "delete": "Izbriši",
+    "deleteConfirm": "Izbrisati vašu recenziju?",
+    "deletePostConfirm": "Izbrisati ovo?",
+    "onlyVerified": "Recenziju mogu napisati samo tvrtke koje su primile ovaj proizvod.",
+    "yourReview": "Vaša recenzija",
+    "status": {
+      "PUBLISHED": "Objavljeno",
+      "HELD": "Čeka FIRINGI",
+      "HIDDEN": "Sakrio FIRINGI"
+    },
+    "heldBecause": "FIRINGI to provjerava prije objave ({reasons}).",
+    "hiddenBecause": "Sakrio FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktni podaci",
+      "LINK": "poveznica",
+      "INSULT": "uvredljive riječi",
+      "COMPETITOR": "naziv druge tvrtke",
+      "WORD": "blokirana riječ",
+      "REPORTS": "prijave drugih tvrtki"
+    },
+    "locked": "Ova se recenzija više ne može mijenjati.",
+    "aiTitle": "Sažetak recenzija",
+    "aiNote": "Sažetak izradio AI na temelju {count} recenzija",
+    "aiSimulated": "simulirano — AI nije povezan",
+    "aiLoading": "Izrada sažetka…",
+    "q": "P:",
+    "ask": "Postavite pitanje",
+    "askPlaceholder": "npr. Je li prikladno za prženje? Koliko dugo traje nakon otvaranja?",
+    "askSend": "Pitaj",
+    "asked": "Vaše je pitanje spremljeno — dobavljač i tvrtke koje su kupile proizvod mogu odgovoriti.",
+    "noQuestions": "Još nema pitanja.",
+    "answer": "Odgovori",
+    "answerPlaceholder": "Vaš odgovor",
+    "answerSend": "Objavi odgovor",
+    "answered": "Hvala na odgovoru.",
+    "role": {
+      "SUPPLIER": "Dobavljač",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Provjereni kupac"
+    },
+    "official": "Službeni odgovor",
+    "noAnswerYet": "Još bez odgovora.",
+    "pageOf": "Stranica {page} od {pages}",
+    "prev": "Prethodna",
+    "next": "Sljedeća",
+    "myTitle": "Moje recenzije",
+    "myIntro": "Ocijenite ono što ste primili i pomozite drugim tvrtkama da dobro kupuju. Dobavljači vide vašu recenziju; FIRINGI provjerava objave s kontaktnim podacima ili poveznicama.",
+    "todo": "Za ocjenu",
+    "todoEmpty": "Nema ništa za ocjenu — proizvodi se ovdje pojavljuju nakon isporuke.",
+    "deliveredIn": "Narudžba {order}",
+    "reviewIt": "Ocijeni",
+    "myReviews": "Naše recenzije",
+    "myQuestions": "Naša pitanja",
+    "noMine": "Još nema recenzija.",
+    "openProduct": "Otvori proizvod",
+    "off": "Recenzije su isključene za vašu tvrtku.",
+    "vendorOff": "Recenzije su isključene za vaše proizvode.",
+    "minStars": "4★ i više",
+    "sortRating": "Najbolje ocijenjeni",
+    "vTitle": "Recenzije",
+    "vIntro": "Što kupci govore o vašim proizvodima. Na svaku recenziju možete odgovoriti jednom, javno — pristojno i bez kontaktnih podataka.",
+    "filter": {
+      "all": "Sve",
+      "unreplied": "Bez odgovora",
+      "low": "1–2★",
+      "held": "Čeka FIRINGI"
+    },
+    "reply": "Odgovori",
+    "editReply": "Uredi odgovor",
+    "yourReply": "Vaš odgovor",
+    "replyPlaceholder": "Zahvalite kupcu, objasnite i navedite što ste promijenili.",
+    "replyRules": "Vaš odgovor vide svi. Bez kontaktnih podataka, poveznica ili ponuda — takvi odgovori čekaju provjeru FIRINGI-ja.",
+    "replySend": "Objavi odgovor",
+    "replyDone": "Odgovor je spremljen.",
+    "replyStatus": {
+      "HELD": "Čeka FIRINGI",
+      "HIDDEN": "Sakrio FIRINGI"
+    },
+    "vqTitle": "Pitanja o proizvodima",
+    "vqIntro": "Pitanja kupaca o vašim proizvodima. Vaši se odgovori prikazuju kao službeni.",
+    "openOnly": "Nismo odgovorili",
+    "allQ": "Sva pitanja",
+    "youAnswered": "Vaš odgovor",
+    "insTitle": "Analiza recenzija",
+    "insIntro": "Ocjene po proizvodu, kretanje kroz 12 mjeseci i na što se kupci žale.",
+    "avgRating": "Prosječna ocjena",
+    "reviewsCount": "Recenzije",
+    "last90": "Zadnjih 90 dana",
+    "replyRate": "Odgovoreno",
+    "openQuestions": "Otvorena pitanja",
+    "trend": "Prosječan broj zvjezdica po mjesecu",
+    "complaints": "Česte pritužbe (3★ i niže)",
+    "noComplaints": "Nema pritužbi.",
+    "theme": {
+      "DAMAGED": "Oštećeno",
+      "EXPIRY": "Kratak rok ili istekao rok",
+      "TASTE": "Okus",
+      "SIZE": "Veličina ili težina",
+      "PACKAGING": "Pakiranje",
+      "PRICE": "Cijena ili vrijednost",
+      "TEMPERATURE": "Temperatura",
+      "MISSING": "Nedostaju artikli"
+    },
+    "perProduct": "Po proizvodu",
+    "change": "u odnosu na prije",
+    "mentions": "{count}×",
+    "noInsights": "Još nema recenzija vaših proizvoda."
   }
 }

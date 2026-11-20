@@ -691,6 +691,21 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Product reviews & questions (Phase 53)
+
+Businesses that **received** a product review it — **stars, detail scores** (quality, value for money, packaging,
+freshness & shelf life), **text and up to 3 photos**; one review per product, supplier and business, editable.
+Others vote **helpful** and **report**. The supplier **replies once, in public**, answers **questions** officially and
+sees **insights** (ratings per product, 12-month trend, common complaints, reply rate). FIRINGI answers officially too,
+and buyers who bought the product can answer. Posts publish at once; an **automatic filter** (contact details, links,
+insults, competitor names, FIRINGI's words) and reports send posts to FIRINGI's **moderation queue** — publish, or
+hide with a reason the author is told. **Stars on product cards, "4★ and up" and "Best rated"** in the shop;
+**"How was …?" reminders** a few days after delivery (once per product); an **AI summary** of the reviews when the
+Anthropic key is set (off without it). In FIRINGI ordering mode the supplier is never named. **Every part is FIRINGI's
+switch** (*Settings › Reviews & Questions*) — per buyer type, per supplier type and per business.
+Details: [docs/reviews.md](docs/reviews.md).
+Tests: `tests/unit/reviews.test.ts`, `tests/integration/reviews.test.ts`, `node tests/e2e/reviews.mjs`.
+
 ## Staff shifts & time (Phase 52)
 
 For the staff of customers (buyer portal), suppliers (supplier portal) and FIRINGI (back office): a **rota** (weekly

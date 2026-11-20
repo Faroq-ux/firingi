@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Docházkový terminál",
     "Timesheets": "Výkazy hodin",
     "Leave & Swaps": "Volno a výměny",
-    "Staff": "Zaměstnanci"
+    "Staff": "Zaměstnanci",
+    "My Reviews": "Moje recenze",
+    "Reviews": "Recenze",
+    "Product Questions": "Dotazy k produktům",
+    "Review Insights": "Přehled recenzí"
   },
   "delivery": {
     "title": "Doručení",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Výkaz hodin odeslán: {name}",
       "body": "{name} odeslal(a) hodiny za týden {week}."
+    },
+    "review_received": {
+      "title": "Nová recenze: {product}",
+      "body": "Kupující ohodnotil „{product}“ {stars}★. Přečtěte si recenzi a odpovězte v sekci Recenze."
+    },
+    "review_question": {
+      "title": "Nová otázka: {product}",
+      "body": "Kupující položil otázku k „{product}“. Odpovězte v sekci Dotazy k produktům."
+    },
+    "review_reply": {
+      "title": "Dodavatel odpověděl na vaši recenzi",
+      "body": "Dodavatel odpověděl na vaši recenzi produktu „{product}“."
+    },
+    "review_answered": {
+      "title": "Vaše otázka má odpověď",
+      "body": "Na vaši otázku k „{product}“ přišla odpověď."
+    },
+    "review_reminder": {
+      "title": "Jak hodnotíte produkt {product}?",
+      "body": "Vaše objednávka dorazila před několika dny. Ohodnoťte „{product}“ a pomozte ostatním firmám dobře nakupovat — zabere to jen minutu."
+    },
+    "review_hidden": {
+      "title": "FIRINGI skrylo váš příspěvek",
+      "body": "Váš příspěvek k „{product}“ byl skryt: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Čeká na FIRINGI: {kind}",
+      "body": "Zadrženo nebo nahlášeno ({reason}). Zkontrolujte to v sekci Moderování recenzí."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Tato část je vypnutá.",
       "KIOSK_OFF": "Docházkový terminál je vypnutý — zaznamenejte příchod z telefonu."
     }
+  },
+  "reviews": {
+    "title": "Recenze",
+    "qaTitle": "Otázky a odpovědi",
+    "basedOn": "Recenze: {count}",
+    "noReviews": "Zatím žádné recenze.",
+    "ratingAria": "Hodnocení {avg} z 5 podle {count} recenzí",
+    "detail": {
+      "quality": "Kvalita",
+      "value": "Poměr cena/výkon",
+      "packaging": "Balení",
+      "freshness": "Čerstvost a trvanlivost"
+    },
+    "sortLabel": "Řadit recenze",
+    "sort": {
+      "recent": "Nejnovější",
+      "helpful": "Nejužitečnější",
+      "high": "Nejlépe hodnocené",
+      "low": "Nejhůře hodnocené"
+    },
+    "withPhotos": "S fotkami",
+    "filterAll": "Zobrazit vše",
+    "verifiedBuyer": "Ověřený kupující",
+    "type": {
+      "CUSTOMER": "Restaurace / obchod",
+      "WHOLESALER": "Velkoobchod"
+    },
+    "edited": "upraveno",
+    "supplierReply": "Odpověď dodavatele",
+    "helpful": "Užitečné ({count})",
+    "helpfulCount": "Užitečné pro: {count}",
+    "report": "Nahlásit",
+    "reported": "Nahlášeno — děkujeme",
+    "reportTitle": "Proč to nahlašujete?",
+    "reason": {
+      "CONTACT": "Kontaktní údaje nebo reklama",
+      "OFFENSIVE": "Urážlivé",
+      "FALSE": "Nepravdivé nebo zavádějící",
+      "NOT_ABOUT_PRODUCT": "Netýká se produktu",
+      "SPAM": "Spam",
+      "OTHER": "Něco jiného"
+    },
+    "reportNote": "Chcete něco doplnit? (nepovinné)",
+    "send": "Odeslat",
+    "cancel": "Zrušit",
+    "reportThanks": "Děkujeme — FIRINGI se na to podívá.",
+    "write": "Napsat recenzi",
+    "edit": "Upravit recenzi",
+    "yourRating": "Vaše hodnocení",
+    "pickStars": "Zvolte 1 až 5 hvězdiček.",
+    "detailsOptional": "Podrobnosti (nepovinné)",
+    "clear": "Vymazat",
+    "bodyLabel": "Vaše recenze",
+    "bodyHint": "Co bylo dobré a co ne — kvalita, balení, čerstvost, cena…",
+    "rules": "Pouze o produktu. Žádné kontaktní údaje, odkazy ani názvy jiných firem — takové příspěvky čekají na kontrolu FIRINGI.",
+    "photos": "Fotky (nejvýše {max})",
+    "addPhotos": "Přidat fotky",
+    "keepPhoto": "Ponechat",
+    "showName": "Zobrazit název naší firmy (jinak „Ověřený kupující“ a typ podniku)",
+    "save": "Zveřejnit",
+    "saved": "Děkujeme — vaše recenze je uložena.",
+    "delete": "Smazat",
+    "deleteConfirm": "Smazat vaši recenzi?",
+    "deletePostConfirm": "Smazat?",
+    "onlyVerified": "Hodnotit tento produkt mohou jen firmy, které ho obdržely.",
+    "yourReview": "Vaše recenze",
+    "status": {
+      "PUBLISHED": "Zveřejněno",
+      "HELD": "Čeká na FIRINGI",
+      "HIDDEN": "Skryto FIRINGI"
+    },
+    "heldBecause": "FIRINGI příspěvek před zveřejněním zkontroluje ({reasons}).",
+    "hiddenBecause": "Skryto FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktní údaje",
+      "LINK": "odkaz",
+      "INSULT": "urážlivá slova",
+      "COMPETITOR": "název jiné firmy",
+      "WORD": "zakázané slovo",
+      "REPORTS": "nahlášení od jiných firem"
+    },
+    "locked": "Tuto recenzi již nelze změnit.",
+    "aiTitle": "Shrnutí recenzí",
+    "aiNote": "Napsala AI z {count} recenzí",
+    "aiSimulated": "simulace — AI není připojena",
+    "aiLoading": "Shrnuji…",
+    "q": "O:",
+    "ask": "Položit otázku",
+    "askPlaceholder": "např. Hodí se na smažení? Jak dlouho vydrží po otevření?",
+    "askSend": "Zeptat se",
+    "asked": "Vaše otázka je uložena — odpovědět může dodavatel i firmy, které produkt koupily.",
+    "noQuestions": "Zatím žádné otázky.",
+    "answer": "Odpovědět",
+    "answerPlaceholder": "Vaše odpověď",
+    "answerSend": "Zveřejnit odpověď",
+    "answered": "Děkujeme za odpověď.",
+    "role": {
+      "SUPPLIER": "Dodavatel",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Ověřený kupující"
+    },
+    "official": "Oficiální odpověď",
+    "noAnswerYet": "Zatím bez odpovědi.",
+    "pageOf": "Strana {page} z {pages}",
+    "prev": "Předchozí",
+    "next": "Další",
+    "myTitle": "Moje recenze",
+    "myIntro": "Ohodnoťte, co jste obdrželi, a pomozte ostatním firmám dobře nakupovat. Dodavatelé vaši recenzi uvidí; FIRINGI kontroluje příspěvky s kontaktními údaji nebo odkazy.",
+    "todo": "K hodnocení",
+    "todoEmpty": "Není co hodnotit — produkty se zde zobrazí, jakmile budou doručeny.",
+    "deliveredIn": "Objednávka {order}",
+    "reviewIt": "Ohodnotit",
+    "myReviews": "Naše recenze",
+    "myQuestions": "Naše otázky",
+    "noMine": "Zatím žádné recenze.",
+    "openProduct": "Otevřít produkt",
+    "off": "Recenze jsou pro vaši firmu vypnuté.",
+    "vendorOff": "Recenze jsou pro vaše produkty vypnuté.",
+    "minStars": "4★ a více",
+    "sortRating": "Nejlépe hodnocené",
+    "vTitle": "Recenze",
+    "vIntro": "Co kupující říkají o vašich produktech. Na každou recenzi můžete jednou veřejně odpovědět — zdvořile a bez kontaktních údajů.",
+    "filter": {
+      "all": "Vše",
+      "unreplied": "Bez odpovědi",
+      "low": "1–2★",
+      "held": "Čeká na FIRINGI"
+    },
+    "reply": "Odpovědět",
+    "editReply": "Upravit odpověď",
+    "yourReply": "Vaše odpověď",
+    "replyPlaceholder": "Poděkujte kupujícímu, vysvětlete a uveďte, co jste změnili.",
+    "replyRules": "Vaši odpověď uvidí všichni. Žádné kontaktní údaje, odkazy ani nabídky — takové odpovědi čekají na kontrolu FIRINGI.",
+    "replySend": "Zveřejnit odpověď",
+    "replyDone": "Odpověď uložena.",
+    "replyStatus": {
+      "HELD": "Čeká na FIRINGI",
+      "HIDDEN": "Skryto FIRINGI"
+    },
+    "vqTitle": "Dotazy k produktům",
+    "vqIntro": "Otázky kupujících k vašim produktům. Vaše odpovědi se zobrazují jako oficiální.",
+    "openOnly": "Bez naší odpovědi",
+    "allQ": "Všechny otázky",
+    "youAnswered": "Vaše odpověď",
+    "insTitle": "Přehled recenzí",
+    "insIntro": "Hodnocení podle produktů, vývoj za 12 měsíců a na co si kupující stěžují.",
+    "avgRating": "Průměrné hodnocení",
+    "reviewsCount": "Recenze",
+    "last90": "Posledních 90 dní",
+    "replyRate": "Zodpovězeno",
+    "openQuestions": "Otevřené otázky",
+    "trend": "Průměrný počet hvězdiček za měsíc",
+    "complaints": "Časté stížnosti (3★ a méně)",
+    "noComplaints": "Žádné stížnosti nenalezeny.",
+    "theme": {
+      "DAMAGED": "Poškozené",
+      "EXPIRY": "Krátká trvanlivost nebo prošlé",
+      "TASTE": "Chuť",
+      "SIZE": "Velikost nebo hmotnost",
+      "PACKAGING": "Balení",
+      "PRICE": "Cena nebo hodnota",
+      "TEMPERATURE": "Teplota",
+      "MISSING": "Chybějící položky"
+    },
+    "perProduct": "Podle produktu",
+    "change": "vs. dříve",
+    "mentions": "{count}×",
+    "noInsights": "Zatím žádné recenze vašich produktů."
   }
 }

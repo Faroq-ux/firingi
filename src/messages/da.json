@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Stempelterminal",
     "Timesheets": "Timesedler",
     "Leave & Swaps": "Fravær & bytter",
-    "Staff": "Personale"
+    "Staff": "Personale",
+    "My Reviews": "Mine anmeldelser",
+    "Reviews": "Anmeldelser",
+    "Product Questions": "Produktspørgsmål",
+    "Review Insights": "Indsigt i anmeldelser"
   },
   "delivery": {
     "title": "Levering",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Timeseddel sendt: {name}",
       "body": "{name} har sendt timerne for ugen {week}."
+    },
+    "review_received": {
+      "title": "Ny anmeldelse: {product}",
+      "body": "En køber gav \"{product}\" {stars}★. Læs anmeldelsen, og svar under Anmeldelser."
+    },
+    "review_question": {
+      "title": "Nyt spørgsmål: {product}",
+      "body": "En køber har stillet et spørgsmål om \"{product}\". Svar under Produktspørgsmål."
+    },
+    "review_reply": {
+      "title": "Leverandøren har svaret på din anmeldelse",
+      "body": "Leverandøren har svaret på din anmeldelse af \"{product}\"."
+    },
+    "review_answered": {
+      "title": "Dit spørgsmål er besvaret",
+      "body": "Der er et svar på dit spørgsmål om \"{product}\"."
+    },
+    "review_reminder": {
+      "title": "Hvordan var {product}?",
+      "body": "Din ordre ankom for nogle dage siden. Bedøm \"{product}\", og hjælp andre virksomheder med at købe godt — det tager kun et minut."
+    },
+    "review_hidden": {
+      "title": "FIRINGI har skjult dit indlæg",
+      "body": "Dit indlæg om \"{product}\" er skjult: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Afventer FIRINGI: {kind}",
+      "body": "Tilbageholdt eller rapporteret ({reason}). Tjek det under Moderering af anmeldelser."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Denne del er slået fra.",
       "KIOSK_OFF": "Stempelterminalen er slået fra — stempl ind fra din telefon."
     }
+  },
+  "reviews": {
+    "title": "Anmeldelser",
+    "qaTitle": "Spørgsmål & svar",
+    "basedOn": "Anmeldelser: {count}",
+    "noReviews": "Ingen anmeldelser endnu.",
+    "ratingAria": "Bedømt {avg} ud af 5 ud fra {count} anmeldelser",
+    "detail": {
+      "quality": "Kvalitet",
+      "value": "Pris i forhold til kvalitet",
+      "packaging": "Emballage",
+      "freshness": "Friskhed & holdbarhed"
+    },
+    "sortLabel": "Sortér anmeldelser",
+    "sort": {
+      "recent": "Nyeste",
+      "helpful": "Mest nyttige",
+      "high": "Højest bedømt",
+      "low": "Lavest bedømt"
+    },
+    "withPhotos": "Med billeder",
+    "filterAll": "Vis alle",
+    "verifiedBuyer": "Verificeret køber",
+    "type": {
+      "CUSTOMER": "Restaurant / butik",
+      "WHOLESALER": "Grossist"
+    },
+    "edited": "redigeret",
+    "supplierReply": "Svar fra leverandøren",
+    "helpful": "Nyttig ({count})",
+    "helpfulCount": "{count} fandt dette nyttigt",
+    "report": "Rapportér",
+    "reported": "Rapporteret — tak",
+    "reportTitle": "Hvorfor rapporterer du dette?",
+    "reason": {
+      "CONTACT": "Kontaktoplysninger eller reklame",
+      "OFFENSIVE": "Stødende",
+      "FALSE": "Usandt eller vildledende",
+      "NOT_ABOUT_PRODUCT": "Handler ikke om produktet",
+      "SPAM": "Spam",
+      "OTHER": "Noget andet"
+    },
+    "reportNote": "Noget at tilføje? (valgfrit)",
+    "send": "Send",
+    "cancel": "Annuller",
+    "reportThanks": "Tak — FIRINGI kigger på det.",
+    "write": "Skriv en anmeldelse",
+    "edit": "Redigér din anmeldelse",
+    "yourRating": "Din bedømmelse",
+    "pickStars": "Vælg 1 til 5 stjerner.",
+    "detailsOptional": "Detaljer (valgfrit)",
+    "clear": "Nulstil",
+    "bodyLabel": "Din anmeldelse",
+    "bodyHint": "Hvad var godt eller ikke — kvalitet, emballage, friskhed, pris…",
+    "rules": "Kun om produktet. Ingen kontaktoplysninger, links eller navne på andre virksomheder — sådanne indlæg venter på, at FIRINGI tjekker dem.",
+    "photos": "Billeder (op til {max})",
+    "addPhotos": "Tilføj billeder",
+    "keepPhoto": "Behold",
+    "showName": "Vis vores firmanavn (ellers \"Verificeret køber\" og virksomhedstypen)",
+    "save": "Offentliggør",
+    "saved": "Tak — din anmeldelse er gemt.",
+    "delete": "Slet",
+    "deleteConfirm": "Slet din anmeldelse?",
+    "deletePostConfirm": "Slet dette?",
+    "onlyVerified": "Kun virksomheder, der har modtaget dette produkt, kan anmelde det.",
+    "yourReview": "Din anmeldelse",
+    "status": {
+      "PUBLISHED": "Offentliggjort",
+      "HELD": "Afventer FIRINGI",
+      "HIDDEN": "Skjult af FIRINGI"
+    },
+    "heldBecause": "FIRINGI tjekker indlægget, før det vises ({reasons}).",
+    "hiddenBecause": "Skjult af FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktoplysninger",
+      "LINK": "et link",
+      "INSULT": "krænkende ord",
+      "COMPETITOR": "en anden virksomheds navn",
+      "WORD": "et blokeret ord",
+      "REPORTS": "rapporteringer fra andre virksomheder"
+    },
+    "locked": "Denne anmeldelse kan ikke længere ændres.",
+    "aiTitle": "Opsummering af anmeldelserne",
+    "aiNote": "Skrevet af AI ud fra {count} anmeldelser",
+    "aiSimulated": "simuleret — ingen AI tilsluttet",
+    "aiLoading": "Opsummerer…",
+    "q": "S:",
+    "ask": "Stil et spørgsmål",
+    "askPlaceholder": "f.eks. Egner det sig til stegning? Hvor længe holder det efter åbning?",
+    "askSend": "Spørg",
+    "asked": "Dit spørgsmål er gemt — leverandøren og virksomheder, der har købt produktet, kan svare.",
+    "noQuestions": "Ingen spørgsmål endnu.",
+    "answer": "Svar",
+    "answerPlaceholder": "Dit svar",
+    "answerSend": "Offentliggør svar",
+    "answered": "Tak for dit svar.",
+    "role": {
+      "SUPPLIER": "Leverandør",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Verificeret køber"
+    },
+    "official": "Officielt svar",
+    "noAnswerYet": "Ikke besvaret endnu.",
+    "pageOf": "Side {page} af {pages}",
+    "prev": "Forrige",
+    "next": "Næste",
+    "myTitle": "Mine anmeldelser",
+    "myIntro": "Anmeld det, du har modtaget, og hjælp andre virksomheder med at købe godt. Leverandører ser din anmeldelse; FIRINGI tjekker indlæg med kontaktoplysninger eller links.",
+    "todo": "Til anmeldelse",
+    "todoEmpty": "Intet at anmelde — produkter vises her, når de er leveret.",
+    "deliveredIn": "Ordre {order}",
+    "reviewIt": "Anmeld",
+    "myReviews": "Vores anmeldelser",
+    "myQuestions": "Vores spørgsmål",
+    "noMine": "Ingen anmeldelser endnu.",
+    "openProduct": "Åbn produktet",
+    "off": "Anmeldelser er slået fra for din virksomhed.",
+    "vendorOff": "Anmeldelser er slået fra for dine produkter.",
+    "minStars": "4★ og derover",
+    "sortRating": "Bedst bedømt",
+    "vTitle": "Anmeldelser",
+    "vIntro": "Hvad købere siger om dine produkter. Du kan svare én gang på hver anmeldelse, offentligt — høfligt og uden kontaktoplysninger.",
+    "filter": {
+      "all": "Alle",
+      "unreplied": "Ikke besvaret",
+      "low": "1–2★",
+      "held": "Afventer FIRINGI"
+    },
+    "reply": "Svar",
+    "editReply": "Redigér svar",
+    "yourReply": "Dit svar",
+    "replyPlaceholder": "Tak køberen, forklar, og fortæl, hvad du har ændret.",
+    "replyRules": "Alle kan se dit svar. Ingen kontaktoplysninger, links eller tilbud — sådanne svar venter på, at FIRINGI tjekker dem.",
+    "replySend": "Offentliggør svar",
+    "replyDone": "Svar gemt.",
+    "replyStatus": {
+      "HELD": "Afventer FIRINGI",
+      "HIDDEN": "Skjult af FIRINGI"
+    },
+    "vqTitle": "Produktspørgsmål",
+    "vqIntro": "Købernes spørgsmål om dine produkter. Dine svar vises som officielle.",
+    "openOnly": "Ikke besvaret af os",
+    "allQ": "Alle spørgsmål",
+    "youAnswered": "Dit svar",
+    "insTitle": "Indsigt i anmeldelser",
+    "insIntro": "Bedømmelser pr. produkt, udviklingen over 12 måneder og hvad købere klager over.",
+    "avgRating": "Gennemsnitlig bedømmelse",
+    "reviewsCount": "Anmeldelser",
+    "last90": "Seneste 90 dage",
+    "replyRate": "Besvaret",
+    "openQuestions": "Åbne spørgsmål",
+    "trend": "Gennemsnitlige stjerner pr. måned",
+    "complaints": "Hyppige klager (3★ og derunder)",
+    "noComplaints": "Ingen klager fundet.",
+    "theme": {
+      "DAMAGED": "Beskadiget",
+      "EXPIRY": "Kort holdbarhed eller udløbet",
+      "TASTE": "Smag",
+      "SIZE": "Størrelse eller vægt",
+      "PACKAGING": "Emballage",
+      "PRICE": "Pris eller værdi",
+      "TEMPERATURE": "Temperatur",
+      "MISSING": "Manglende varer"
+    },
+    "perProduct": "Pr. produkt",
+    "change": "ift. før",
+    "mentions": "{count}×",
+    "noInsights": "Ingen anmeldelser af dine produkter endnu."
   }
 }

@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Leimauspääte",
     "Timesheets": "Tuntilistat",
     "Leave & Swaps": "Lomat ja vaihdot",
-    "Staff": "Henkilöstö"
+    "Staff": "Henkilöstö",
+    "My Reviews": "Omat arviot",
+    "Reviews": "Arviot",
+    "Product Questions": "Tuotekysymykset",
+    "Review Insights": "Arvioiden analyysi"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Tuntilista lähetetty: {name}",
       "body": "{name} lähetti tunnit viikolta {week}."
+    },
+    "review_received": {
+      "title": "Uusi arvio: {product}",
+      "body": "Ostaja antoi tuotteelle ”{product}” {stars}★. Lukekaa arvio ja vastatkaa kohdassa Arviot."
+    },
+    "review_question": {
+      "title": "Uusi kysymys: {product}",
+      "body": "Ostaja kysyi tuotteesta ”{product}”. Vastatkaa kohdassa Tuotekysymykset."
+    },
+    "review_reply": {
+      "title": "Toimittaja vastasi arvioonne",
+      "body": "Toimittaja vastasi arvioonne tuotteesta ”{product}”."
+    },
+    "review_answered": {
+      "title": "Kysymykseenne vastattiin",
+      "body": "Kysymykseenne tuotteesta ”{product}” on vastattu."
+    },
+    "review_reminder": {
+      "title": "Millainen oli {product}?",
+      "body": "Tilauksenne saapui muutama päivä sitten. Arvioikaa ”{product}” ja auttakaa muita yrityksiä ostamaan hyvin — se vie vain minuutin."
+    },
+    "review_hidden": {
+      "title": "FIRINGI piilotti julkaisunne",
+      "body": "Julkaisunne tuotteesta ”{product}” piilotettiin: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Odottaa FIRINGIä: {kind}",
+      "body": "Pidätetty tai ilmoitettu ({reason}). Tarkistakaa se kohdassa Arvioiden moderointi."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Tämä osio on poistettu käytöstä.",
       "KIOSK_OFF": "Leimauspääte on poistettu käytöstä — leimaus tehdään puhelimella."
     }
+  },
+  "reviews": {
+    "title": "Arviot",
+    "qaTitle": "Kysymykset ja vastaukset",
+    "basedOn": "Arvioita: {count}",
+    "noReviews": "Ei vielä arvioita.",
+    "ratingAria": "Keskiarvo {avg}/5, {count} arviota",
+    "detail": {
+      "quality": "Laatu",
+      "value": "Hinta-laatusuhde",
+      "packaging": "Pakkaus",
+      "freshness": "Tuoreus ja säilyvyys"
+    },
+    "sortLabel": "Järjestä arviot",
+    "sort": {
+      "recent": "Uusimmat",
+      "helpful": "Hyödyllisimmät",
+      "high": "Parhaiten arvioidut",
+      "low": "Heikoimmin arvioidut"
+    },
+    "withPhotos": "Kuvalliset",
+    "filterAll": "Näytä kaikki",
+    "verifiedBuyer": "Vahvistettu ostaja",
+    "type": {
+      "CUSTOMER": "Ravintola / kauppa",
+      "WHOLESALER": "Tukkuri"
+    },
+    "edited": "muokattu",
+    "supplierReply": "Toimittajan vastaus",
+    "helpful": "Hyödyllinen ({count})",
+    "helpfulCount": "{count} piti tätä hyödyllisenä",
+    "report": "Ilmoita",
+    "reported": "Ilmoitettu — kiitos",
+    "reportTitle": "Miksi ilmoitatte tästä?",
+    "reason": {
+      "CONTACT": "Yhteystietoja tai mainontaa",
+      "OFFENSIVE": "Loukkaava",
+      "FALSE": "Paikkansapitämätön tai harhaanjohtava",
+      "NOT_ABOUT_PRODUCT": "Ei koske tuotetta",
+      "SPAM": "Roskaposti",
+      "OTHER": "Jokin muu"
+    },
+    "reportNote": "Lisättävää? (valinnainen)",
+    "send": "Lähetä",
+    "cancel": "Peruuta",
+    "reportThanks": "Kiitos — FIRINGI tarkistaa asian.",
+    "write": "Kirjoita arvio",
+    "edit": "Muokkaa arviotanne",
+    "yourRating": "Arvosananne",
+    "pickStars": "Valitkaa 1–5 tähteä.",
+    "detailsOptional": "Tarkemmat arviot (valinnainen)",
+    "clear": "Tyhjennä",
+    "bodyLabel": "Arvionne",
+    "bodyHint": "Mikä oli hyvää tai huonoa — laatu, pakkaus, tuoreus, hinta-laatusuhde…",
+    "rules": "Vain tuotteesta. Ei yhteystietoja, linkkejä tai muiden yritysten nimiä — ne odottavat FIRINGIn tarkistusta.",
+    "photos": "Kuvat (enintään {max})",
+    "addPhotos": "Lisää kuvia",
+    "keepPhoto": "Säilytä",
+    "showName": "Näytä yrityksemme nimi (muuten ”Vahvistettu ostaja” ja yritystyyppi)",
+    "save": "Julkaise",
+    "saved": "Kiitos — arvionne on tallennettu.",
+    "delete": "Poista",
+    "deleteConfirm": "Poistetaanko arvionne?",
+    "deletePostConfirm": "Poistetaanko tämä?",
+    "onlyVerified": "Vain tämän tuotteen vastaanottaneet yritykset voivat arvioida sen.",
+    "yourReview": "Arvionne",
+    "status": {
+      "PUBLISHED": "Julkaistu",
+      "HELD": "Odottaa FIRINGIä",
+      "HIDDEN": "FIRINGIn piilottama"
+    },
+    "heldBecause": "FIRINGI tarkistaa sen ennen julkaisua ({reasons}).",
+    "hiddenBecause": "FIRINGIn piilottama: {reason}",
+    "hold": {
+      "CONTACT": "yhteystietoja",
+      "LINK": "linkki",
+      "INSULT": "loukkaavia sanoja",
+      "COMPETITOR": "toisen yrityksen nimi",
+      "WORD": "estetty sana",
+      "REPORTS": "muiden yritysten ilmoituksia"
+    },
+    "locked": "Tätä arviota ei voi enää muuttaa.",
+    "aiTitle": "Yhteenveto arvioista",
+    "aiNote": "Tekoälyn kirjoittama {count} arvion perusteella",
+    "aiSimulated": "simuloitu — tekoälyä ei ole yhdistetty",
+    "aiLoading": "Tehdään yhteenvetoa…",
+    "q": "K:",
+    "ask": "Esitä kysymys",
+    "askPlaceholder": "esim. Sopiiko se paistamiseen? Kuinka kauan se säilyy avaamisen jälkeen?",
+    "askSend": "Kysy",
+    "asked": "Kysymyksenne on tallennettu — toimittaja ja tuotetta ostaneet yritykset voivat vastata.",
+    "noQuestions": "Ei vielä kysymyksiä.",
+    "answer": "Vastaa",
+    "answerPlaceholder": "Vastauksenne",
+    "answerSend": "Julkaise vastaus",
+    "answered": "Kiitos vastauksestanne.",
+    "role": {
+      "SUPPLIER": "Toimittaja",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Vahvistettu ostaja"
+    },
+    "official": "Virallinen vastaus",
+    "noAnswerYet": "Ei vielä vastattu.",
+    "pageOf": "Sivu {page}/{pages}",
+    "prev": "Edellinen",
+    "next": "Seuraava",
+    "myTitle": "Omat arviot",
+    "myIntro": "Arvioikaa vastaanottamanne tuotteet ja auttakaa muita yrityksiä ostamaan hyvin. Toimittajat näkevät arvionne; FIRINGI tarkistaa julkaisut, joissa on yhteystietoja tai linkkejä.",
+    "todo": "Arvioitavat",
+    "todoEmpty": "Ei arvioitavaa — tuotteet näkyvät täällä, kun ne on toimitettu.",
+    "deliveredIn": "Tilaus {order}",
+    "reviewIt": "Arvioi",
+    "myReviews": "Arviomme",
+    "myQuestions": "Kysymyksemme",
+    "noMine": "Ei vielä arvioita.",
+    "openProduct": "Avaa tuote",
+    "off": "Arviot on poistettu käytöstä yrityksellenne.",
+    "vendorOff": "Arviot on poistettu käytöstä tuotteillenne.",
+    "minStars": "4★ ja yli",
+    "sortRating": "Parhaiten arvioidut",
+    "vTitle": "Arviot",
+    "vIntro": "Mitä ostajat sanovat tuotteistanne. Voitte vastata kuhunkin arvioon kerran julkisesti — kohteliaasti ja ilman yhteystietoja.",
+    "filter": {
+      "all": "Kaikki",
+      "unreplied": "Vastaamatta",
+      "low": "1–2★",
+      "held": "Odottaa FIRINGIä"
+    },
+    "reply": "Vastaa",
+    "editReply": "Muokkaa vastausta",
+    "yourReply": "Vastauksenne",
+    "replyPlaceholder": "Kiittäkää ostajaa, selittäkää ja kertokaa, mitä muutitte.",
+    "replyRules": "Kaikki näkevät vastauksenne. Ei yhteystietoja, linkkejä tai tarjouksia — ne odottavat FIRINGIn tarkistusta.",
+    "replySend": "Julkaise vastaus",
+    "replyDone": "Vastaus tallennettu.",
+    "replyStatus": {
+      "HELD": "Odottaa FIRINGIä",
+      "HIDDEN": "FIRINGIn piilottama"
+    },
+    "vqTitle": "Tuotekysymykset",
+    "vqIntro": "Ostajien kysymykset tuotteistanne. Vastauksenne näytetään virallisina.",
+    "openOnly": "Emme ole vastanneet",
+    "allQ": "Kaikki kysymykset",
+    "youAnswered": "Vastauksenne",
+    "insTitle": "Arvioiden analyysi",
+    "insIntro": "Arviot tuotteittain, 12 kuukauden kehitys ja mistä ostajat valittavat.",
+    "avgRating": "Keskiarvosana",
+    "reviewsCount": "Arviot",
+    "last90": "Viimeiset 90 päivää",
+    "replyRate": "Vastattu",
+    "openQuestions": "Avoimet kysymykset",
+    "trend": "Tähtien keskiarvo kuukausittain",
+    "complaints": "Yleisimmät valitukset (3★ ja alle)",
+    "noComplaints": "Valituksia ei löytynyt.",
+    "theme": {
+      "DAMAGED": "Vaurioitunut",
+      "EXPIRY": "Lyhyt päiväys tai vanhentunut",
+      "TASTE": "Maku",
+      "SIZE": "Koko tai paino",
+      "PACKAGING": "Pakkaus",
+      "PRICE": "Hinta tai hinta-laatusuhde",
+      "TEMPERATURE": "Lämpötila",
+      "MISSING": "Puuttuvat tuotteet"
+    },
+    "perProduct": "Tuotteittain",
+    "change": "vs. aiempi",
+    "mentions": "{count}×",
+    "noInsights": "Tuotteistanne ei ole vielä arvioita."
   }
 }

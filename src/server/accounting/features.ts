@@ -52,6 +52,12 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     const st = await import("@/server/staff/service");
     if (st.portalOf(ctx.company.type) !== `/${portal}` || !(await st.staffAccess(ctx.company)).on) { off.add("STAFF"); off.add("STAFF_MGR"); }
     else if (!st.isManager(ctx)) off.add("STAFF_MGR");
+    // Phase 53: reviews — buyers who may write; suppliers whose products show reviews
+    const rv = await import("@/server/reviews/service");
+    const rs = await rv.reviewSettings();
+    if (!rs.enabled || !rs.parts.reviews) off.add("REVIEWS");
+    else if (portal === "buy" && !(await rv.buyerAccess(ctx.company, rs)).on) off.add("REVIEWS");
+    else if (portal === "vendor" && !(await rv.showingSellers([ctx.company.id], rs)).has(ctx.company.id)) off.add("REVIEWS");
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

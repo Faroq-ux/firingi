@@ -1770,6 +1770,34 @@
     "staff_timesheet_submitted": {
       "title": "Hoja de horas enviada: {name}",
       "body": "{name} envió las horas de la semana del {week}."
+    },
+    "review_received": {
+      "title": "Nueva valoración: {product}",
+      "body": "Un comprador valoró \"{product}\" con {stars}★. Léala y responda en Valoraciones."
+    },
+    "review_question": {
+      "title": "Nueva pregunta: {product}",
+      "body": "Un comprador hizo una pregunta sobre \"{product}\". Respóndala en Preguntas sobre productos."
+    },
+    "review_reply": {
+      "title": "El proveedor respondió a su valoración",
+      "body": "El proveedor respondió a su valoración de \"{product}\"."
+    },
+    "review_answered": {
+      "title": "Su pregunta tiene respuesta",
+      "body": "Hay una respuesta a su pregunta sobre \"{product}\"."
+    },
+    "review_reminder": {
+      "title": "¿Qué tal {product}?",
+      "body": "Su pedido llegó hace unos días. Valore \"{product}\" y ayude a otras empresas a comprar bien — lleva un minuto."
+    },
+    "review_hidden": {
+      "title": "FIRINGI ocultó su publicación",
+      "body": "Su publicación sobre \"{product}\" se ocultó: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Un(a) {kind} espera a FIRINGI",
+      "body": "Retenido o denunciado ({reason}). Revíselo en Moderación de valoraciones."
     }
   },
   "notifications": {
@@ -7118,5 +7146,173 @@
       "PART_OFF": "Esta parte está desactivada.",
       "KIOSK_OFF": "El quiosco está desactivado — fiche desde el móvil."
     }
+  },
+  "reviews": {
+    "title": "Valoraciones",
+    "qaTitle": "Preguntas y respuestas",
+    "basedOn": "Valoraciones: {count}",
+    "noReviews": "Todavía no hay valoraciones.",
+    "ratingAria": "Valorado con {avg} de 5 en {count} valoraciones",
+    "detail": {
+      "quality": "Calidad",
+      "value": "Relación calidad-precio",
+      "packaging": "Embalaje",
+      "freshness": "Frescura y caducidad"
+    },
+    "sortLabel": "Ordenar valoraciones",
+    "sort": {
+      "recent": "Más recientes",
+      "helpful": "Más útiles",
+      "high": "Mejor valoradas",
+      "low": "Peor valoradas"
+    },
+    "withPhotos": "Con fotos",
+    "filterAll": "Ver todas",
+    "verifiedBuyer": "Comprador verificado",
+    "type": {
+      "CUSTOMER": "Restaurante / tienda",
+      "WHOLESALER": "Mayorista"
+    },
+    "edited": "editada",
+    "supplierReply": "Respuesta del proveedor",
+    "helpful": "Útil ({count})",
+    "helpfulCount": "A {count} les resultó útil",
+    "report": "Denunciar",
+    "reported": "Denunciado — gracias",
+    "reportTitle": "¿Por qué lo denuncia?",
+    "reason": {
+      "CONTACT": "Datos de contacto o publicidad",
+      "OFFENSIVE": "Ofensivo",
+      "FALSE": "Falso o engañoso",
+      "NOT_ABOUT_PRODUCT": "No trata del producto",
+      "SPAM": "Spam",
+      "OTHER": "Otro motivo"
+    },
+    "reportNote": "¿Algo que añadir? (opcional)",
+    "send": "Enviar",
+    "cancel": "Cancelar",
+    "reportThanks": "Gracias — FIRINGI lo revisará.",
+    "write": "Escribir una valoración",
+    "edit": "Editar su valoración",
+    "yourRating": "Su valoración",
+    "pickStars": "Elija de 1 a 5 estrellas.",
+    "detailsOptional": "Detalles (opcional)",
+    "clear": "Borrar",
+    "bodyLabel": "Su opinión",
+    "bodyHint": "Qué fue bien o mal — calidad, embalaje, frescura, precio…",
+    "rules": "Solo sobre el producto. Sin datos de contacto, enlaces ni nombres de otras empresas — esos esperan la revisión de FIRINGI.",
+    "photos": "Fotos (hasta {max})",
+    "addPhotos": "Añadir fotos",
+    "keepPhoto": "Mantener",
+    "showName": "Mostrar el nombre de nuestra empresa (si no, «Comprador verificado» y el tipo de negocio)",
+    "save": "Publicar",
+    "saved": "Gracias — su valoración se ha guardado.",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Eliminar su valoración?",
+    "deletePostConfirm": "¿Eliminar esto?",
+    "onlyVerified": "Solo las empresas que recibieron este producto pueden valorarlo.",
+    "yourReview": "Su valoración",
+    "status": {
+      "PUBLISHED": "Publicada",
+      "HELD": "Esperando a FIRINGI",
+      "HIDDEN": "Ocultada por FIRINGI"
+    },
+    "heldBecause": "FIRINGI la revisa antes de mostrarla ({reasons}).",
+    "hiddenBecause": "Ocultada por FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "datos de contacto",
+      "LINK": "un enlace",
+      "INSULT": "palabras insultantes",
+      "COMPETITOR": "el nombre de otra empresa",
+      "WORD": "una palabra bloqueada",
+      "REPORTS": "denuncias de otras empresas"
+    },
+    "locked": "Esta valoración ya no se puede cambiar.",
+    "aiTitle": "Resumen de las valoraciones",
+    "aiNote": "Escrito por IA a partir de {count} valoraciones",
+    "aiSimulated": "simulado — sin IA conectada",
+    "aiLoading": "Resumiendo…",
+    "q": "P:",
+    "ask": "Hacer una pregunta",
+    "askPlaceholder": "p. ej.: ¿Sirve para freír? ¿Cuánto dura una vez abierto?",
+    "askSend": "Preguntar",
+    "asked": "Su pregunta se ha guardado — el proveedor y las empresas que lo compraron pueden responder.",
+    "noQuestions": "Todavía no hay preguntas.",
+    "answer": "Responder",
+    "answerPlaceholder": "Su respuesta",
+    "answerSend": "Publicar respuesta",
+    "answered": "Gracias por responder.",
+    "role": {
+      "SUPPLIER": "Proveedor",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Comprador verificado"
+    },
+    "official": "Respuesta oficial",
+    "noAnswerYet": "Todavía sin respuesta.",
+    "pageOf": "Página {page} de {pages}",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "myTitle": "Mis valoraciones",
+    "myIntro": "Valore lo que recibió y ayude a otras empresas a comprar bien. Los proveedores ven su valoración; FIRINGI revisa las publicaciones con datos de contacto o enlaces.",
+    "todo": "Por valorar",
+    "todoEmpty": "Nada por valorar — los productos aparecen aquí una vez entregados.",
+    "deliveredIn": "Pedido {order}",
+    "reviewIt": "Valorar",
+    "myReviews": "Nuestras valoraciones",
+    "myQuestions": "Nuestras preguntas",
+    "noMine": "Todavía sin valoraciones.",
+    "openProduct": "Abrir el producto",
+    "off": "Las valoraciones están desactivadas para su empresa.",
+    "vendorOff": "Las valoraciones están desactivadas para sus productos.",
+    "minStars": "4★ o más",
+    "sortRating": "Mejor valorados",
+    "vTitle": "Valoraciones",
+    "vIntro": "Lo que dicen los compradores de sus productos. Puede responder una vez a cada valoración, en público — con educación y sin datos de contacto.",
+    "filter": {
+      "all": "Todas",
+      "unreplied": "Sin responder",
+      "low": "1–2★",
+      "held": "Esperando a FIRINGI"
+    },
+    "reply": "Responder",
+    "editReply": "Editar respuesta",
+    "yourReply": "Su respuesta",
+    "replyPlaceholder": "Agradezca al comprador, explique y diga qué ha cambiado.",
+    "replyRules": "Todos ven su respuesta. Sin datos de contacto, enlaces ni ofertas — esos esperan la revisión de FIRINGI.",
+    "replySend": "Publicar respuesta",
+    "replyDone": "Respuesta guardada.",
+    "replyStatus": {
+      "HELD": "Esperando a FIRINGI",
+      "HIDDEN": "Ocultada por FIRINGI"
+    },
+    "vqTitle": "Preguntas sobre productos",
+    "vqIntro": "Preguntas de los compradores sobre sus productos. Sus respuestas aparecen como oficiales.",
+    "openOnly": "Sin nuestra respuesta",
+    "allQ": "Todas las preguntas",
+    "youAnswered": "Su respuesta",
+    "insTitle": "Análisis de valoraciones",
+    "insIntro": "Valoraciones por producto, la evolución en 12 meses y de qué se quejan los compradores.",
+    "avgRating": "Valoración media",
+    "reviewsCount": "Valoraciones",
+    "last90": "Últimos 90 días",
+    "replyRate": "Respondidas",
+    "openQuestions": "Preguntas abiertas",
+    "trend": "Media de estrellas por mes",
+    "complaints": "Quejas más comunes (3★ o menos)",
+    "noComplaints": "Sin quejas.",
+    "theme": {
+      "DAMAGED": "Dañado",
+      "EXPIRY": "Caducidad corta o caducado",
+      "TASTE": "Sabor",
+      "SIZE": "Tamaño o peso",
+      "PACKAGING": "Embalaje",
+      "PRICE": "Precio o valor",
+      "TEMPERATURE": "Temperatura",
+      "MISSING": "Artículos que faltan"
+    },
+    "perProduct": "Por producto",
+    "change": "vs. antes",
+    "mentions": "{count}×",
+    "noInsights": "Todavía no hay valoraciones de sus productos."
   }
 }

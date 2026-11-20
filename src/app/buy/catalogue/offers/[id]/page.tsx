@@ -34,11 +34,13 @@ import { exLabels } from "@/components/excise/labels";
 import { buyerProductFood } from "@/server/food/service";
 import { FoodPanel } from "@/components/food/views";
 import { foodLabels } from "@/components/food/labels";
+import { ProductReviewsSection, CardStars } from "@/components/reviews/views";
 
-export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function OfferPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ rsort?: string; rstars?: string; rphotos?: string; rpage?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
   const { id } = await params;
+  const rsp = await searchParams; // Phase 53: review sort / filter / page
   const data = await catalogueItem(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
   const { item, alternatives } = data;
   const [t, ti, locale, images, bestBefore, deals, dl] = await Promise.all([getTranslations("catalogue"), getTranslations("inventory"), getLocale(), productsWithImages([item.productId]), bestBeforeFor([id]), liveDeals(ctx, { offerIds: [id] }).catch(() => []), dealLabels()]);
@@ -65,6 +67,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           <div>
             <div className="text-sm text-muted-foreground">{item.brand ?? ""} {item.brand ? "·" : ""} {pickLocalized(item.category.name, locale)}</div>
             <h1 className="text-2xl font-semibold">{name}</h1>
+            <a href="#reviews" className="mt-1 inline-block"><CardStars productId={item.productId} sellerId={item.vendor.id || null} /></a>
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
               <Badge variant="secondary">{pickLocalized(item.packaging.name, locale)}</Badge>
               {cold && <ColdBadge cls={cold} />}
@@ -159,6 +162,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           )}
         </div>
       </div>
+      <ProductReviewsSection ctx={ctx} offerId={id} sp={rsp} />
     </>
   );
 }

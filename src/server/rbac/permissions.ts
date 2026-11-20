@@ -64,12 +64,14 @@ const defs = {
   "admin.messages.manage": { audience: "ADMIN", module: "Notifications", description: "Reply to customer, vendor and driver messages" },
   "admin.settings.view": { audience: "ADMIN", module: "Settings", description: "View settings" },
   "admin.settings.manage": { audience: "ADMIN", module: "Settings", description: "Change platform settings" },
+  "admin.reviews.moderate": { audience: "ADMIN", module: "Reviews", description: "Moderate product reviews and questions: held posts, reports, hide with a reason" },
   "admin.staff.manage": { audience: "ADMIN", module: "Staff & Time", description: "FIRINGI's own staff: rota, clock entries, timesheets, leave, payroll export" },
 
   // ── VENDOR (sell portal) ─────────────────────────────────────────────────
   "vendor.dashboard.view": { audience: "VENDOR", module: "Dashboard", description: "View the sales dashboard" },
   "vendor.products.view": { audience: "VENDOR", module: "Products", description: "View own products and offers" },
   "vendor.products.manage": { audience: "VENDOR", module: "Products", description: "Create and edit products and offers" },
+  "vendor.reviews.manage": { audience: "VENDOR", module: "Reviews", description: "Reply to reviews, answer questions about own products, see review insights" },
   "vendor.stock.manage": { audience: "VENDOR", module: "Products", description: "Update stock levels" },
   "vendor.inventory.view": { audience: "VENDOR", module: "Inventory", description: "View stock, batches, expiry, movements and valuation" },
   "vendor.inventory.manage": { audience: "VENDOR", module: "Inventory", description: "Receive stock, counts, transfers, write-offs, reorder points" },
@@ -97,6 +99,7 @@ const defs = {
   "buyer.orders.view": { audience: "BUYER", module: "Orders", description: "View orders" },
   "buyer.claims.manage": { audience: "BUYER", module: "Orders", description: "Report problems with delivered goods (damaged, missing, wrong, quality) and follow the claims" },
   "buyer.orders.approve": { audience: "BUYER", module: "Orders", description: "Approve the team's orders and set the approval rules" },
+  "buyer.reviews.write": { audience: "BUYER", module: "Reviews", description: "Review products the business received, ask and answer questions" },
   "buyer.invoices.view": { audience: "BUYER", module: "Finance", description: "View and download invoices" },
   "buyer.payments.view": { audience: "BUYER", module: "Finance", description: "View payments and balance" },
   "buyer.payments.make": { audience: "BUYER", module: "Finance", description: "Pay invoices online and manage direct debit" },

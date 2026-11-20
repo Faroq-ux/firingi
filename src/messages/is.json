@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Stimpilstöð",
     "Timesheets": "Tímaskýrslur",
     "Leave & Swaps": "Leyfi og vaktaskipti",
-    "Staff": "Starfsfólk"
+    "Staff": "Starfsfólk",
+    "My Reviews": "Umsagnirnar mínar",
+    "Reviews": "Umsagnir",
+    "Product Questions": "Vöruspurningar",
+    "Review Insights": "Greining umsagna"
   },
   "delivery": {
     "title": "Afhending",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Tímaskýrsla send: {name}",
       "body": "{name} sendi tímana fyrir vikuna {week}."
+    },
+    "review_received": {
+      "title": "Ný umsögn: {product}",
+      "body": "Kaupandi gaf „{product}“ {stars}★. Lestu umsögnina og svaraðu undir Umsagnir."
+    },
+    "review_question": {
+      "title": "Ný spurning: {product}",
+      "body": "Kaupandi spurði um „{product}“. Svaraðu undir Vöruspurningar."
+    },
+    "review_reply": {
+      "title": "Birgirinn svaraði umsögninni þinni",
+      "body": "Birgirinn svaraði umsögn þinni um „{product}“."
+    },
+    "review_answered": {
+      "title": "Spurningunni þinni var svarað",
+      "body": "Komið er svar við spurningu þinni um „{product}“."
+    },
+    "review_reminder": {
+      "title": "Hvernig líkaði þér {product}?",
+      "body": "Pöntunin þín barst fyrir nokkrum dögum. Gefðu „{product}“ einkunn og hjálpaðu öðrum fyrirtækjum að kaupa vel — það tekur bara mínútu."
+    },
+    "review_hidden": {
+      "title": "FIRINGI faldi færsluna þína",
+      "body": "Færslan þín um „{product}“ var falin: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Bíður eftir FIRINGI: {kind}",
+      "body": "Haldið eftir eða tilkynnt ({reason}). Skoðaðu það í Umsagnastjórnun."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Slökkt er á þessum hluta.",
       "KIOSK_OFF": "Slökkt er á stimpilstöðinni — stimplaðu þig inn úr símanum."
     }
+  },
+  "reviews": {
+    "title": "Umsagnir",
+    "qaTitle": "Spurningar og svör",
+    "basedOn": "Umsagnir: {count}",
+    "noReviews": "Engar umsagnir enn.",
+    "ratingAria": "Einkunn {avg} af 5 út frá {count} umsögnum",
+    "detail": {
+      "quality": "Gæði",
+      "value": "Verð miðað við gæði",
+      "packaging": "Umbúðir",
+      "freshness": "Ferskleiki og geymsluþol"
+    },
+    "sortLabel": "Raða umsögnum",
+    "sort": {
+      "recent": "Nýjustu",
+      "helpful": "Gagnlegustu",
+      "high": "Hæsta einkunn",
+      "low": "Lægsta einkunn"
+    },
+    "withPhotos": "Með myndum",
+    "filterAll": "Sýna allt",
+    "verifiedBuyer": "Staðfestur kaupandi",
+    "type": {
+      "CUSTOMER": "Veitingastaður / verslun",
+      "WHOLESALER": "Heildsali"
+    },
+    "edited": "breytt",
+    "supplierReply": "Svar birgis",
+    "helpful": "Gagnlegt ({count})",
+    "helpfulCount": "{count} fannst þetta gagnlegt",
+    "report": "Tilkynna",
+    "reported": "Tilkynnt — takk",
+    "reportTitle": "Hvers vegna tilkynnir þú þetta?",
+    "reason": {
+      "CONTACT": "Tengiliðaupplýsingar eða auglýsingar",
+      "OFFENSIVE": "Móðgandi",
+      "FALSE": "Ósatt eða villandi",
+      "NOT_ABOUT_PRODUCT": "Ekki um vöruna",
+      "SPAM": "Ruslpóstur",
+      "OTHER": "Annað"
+    },
+    "reportNote": "Viltu bæta einhverju við? (valfrjálst)",
+    "send": "Senda",
+    "cancel": "Hætta við",
+    "reportThanks": "Takk — FIRINGI skoðar þetta.",
+    "write": "Skrifa umsögn",
+    "edit": "Breyta umsögninni",
+    "yourRating": "Þín einkunn",
+    "pickStars": "Veldu 1 til 5 stjörnur.",
+    "detailsOptional": "Nánar (valfrjálst)",
+    "clear": "Hreinsa",
+    "bodyLabel": "Þín umsögn",
+    "bodyHint": "Hvað var gott eða ekki — gæði, umbúðir, ferskleiki, verð…",
+    "rules": "Aðeins um vöruna. Engar tengiliðaupplýsingar, tenglar eða nöfn annarra fyrirtækja — slíkt bíður yfirferðar FIRINGI.",
+    "photos": "Myndir (allt að {max})",
+    "addPhotos": "Bæta við myndum",
+    "keepPhoto": "Halda",
+    "showName": "Sýna nafn fyrirtækisins okkar (annars „Staðfestur kaupandi“ og tegund rekstrar)",
+    "save": "Birta",
+    "saved": "Takk — umsögnin þín er vistuð.",
+    "delete": "Eyða",
+    "deleteConfirm": "Eyða umsögninni þinni?",
+    "deletePostConfirm": "Eyða þessu?",
+    "onlyVerified": "Aðeins fyrirtæki sem fengu þessa vöru geta skrifað umsögn um hana.",
+    "yourReview": "Þín umsögn",
+    "status": {
+      "PUBLISHED": "Birt",
+      "HELD": "Bíður eftir FIRINGI",
+      "HIDDEN": "Falið af FIRINGI"
+    },
+    "heldBecause": "FIRINGI fer yfir þetta áður en það birtist ({reasons}).",
+    "hiddenBecause": "Falið af FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "tengiliðaupplýsingar",
+      "LINK": "tengill",
+      "INSULT": "móðgandi orð",
+      "COMPETITOR": "nafn annars fyrirtækis",
+      "WORD": "bannað orð",
+      "REPORTS": "tilkynningar frá öðrum fyrirtækjum"
+    },
+    "locked": "Ekki er lengur hægt að breyta þessari umsögn.",
+    "aiTitle": "Samantekt umsagna",
+    "aiNote": "Skrifað af gervigreind út frá {count} umsögnum",
+    "aiSimulated": "hermt — engin gervigreind tengd",
+    "aiLoading": "Tek saman…",
+    "q": "S:",
+    "ask": "Spyrja spurningar",
+    "askPlaceholder": "t.d. Hentar þetta til steikingar? Hve lengi geymist það eftir opnun?",
+    "askSend": "Spyrja",
+    "asked": "Spurningin þín er vistuð — birgirinn og fyrirtæki sem keyptu vöruna geta svarað.",
+    "noQuestions": "Engar spurningar enn.",
+    "answer": "Svara",
+    "answerPlaceholder": "Þitt svar",
+    "answerSend": "Birta svar",
+    "answered": "Takk fyrir svarið.",
+    "role": {
+      "SUPPLIER": "Birgir",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Staðfestur kaupandi"
+    },
+    "official": "Opinbert svar",
+    "noAnswerYet": "Ekki svarað enn.",
+    "pageOf": "Síða {page} af {pages}",
+    "prev": "Fyrri",
+    "next": "Næsta",
+    "myTitle": "Umsagnirnar mínar",
+    "myIntro": "Gefðu umsögn um það sem þú fékkst og hjálpaðu öðrum fyrirtækjum að kaupa vel. Birgjar sjá umsögnina þína; FIRINGI fer yfir færslur með tengiliðaupplýsingum eða tenglum.",
+    "todo": "Til umsagnar",
+    "todoEmpty": "Ekkert til umsagnar — vörur birtast hér þegar þær hafa verið afhentar.",
+    "deliveredIn": "Pöntun {order}",
+    "reviewIt": "Gefa umsögn",
+    "myReviews": "Umsagnir okkar",
+    "myQuestions": "Spurningar okkar",
+    "noMine": "Engar umsagnir enn.",
+    "openProduct": "Opna vöruna",
+    "off": "Slökkt er á umsögnum fyrir fyrirtækið þitt.",
+    "vendorOff": "Slökkt er á umsögnum fyrir vörurnar þínar.",
+    "minStars": "4★ og hærra",
+    "sortRating": "Hæsta einkunn",
+    "vTitle": "Umsagnir",
+    "vIntro": "Hvað kaupendur segja um vörurnar þínar. Þú getur svarað hverri umsögn einu sinni, opinberlega — kurteislega og án tengiliðaupplýsinga.",
+    "filter": {
+      "all": "Allar",
+      "unreplied": "Ósvarað",
+      "low": "1–2★",
+      "held": "Bíður eftir FIRINGI"
+    },
+    "reply": "Svara",
+    "editReply": "Breyta svari",
+    "yourReply": "Þitt svar",
+    "replyPlaceholder": "Þakkaðu kaupandanum, útskýrðu og segðu frá því sem þú breyttir.",
+    "replyRules": "Allir sjá svarið þitt. Engar tengiliðaupplýsingar, tenglar eða tilboð — slíkt bíður yfirferðar FIRINGI.",
+    "replySend": "Birta svar",
+    "replyDone": "Svar vistað.",
+    "replyStatus": {
+      "HELD": "Bíður eftir FIRINGI",
+      "HIDDEN": "Falið af FIRINGI"
+    },
+    "vqTitle": "Vöruspurningar",
+    "vqIntro": "Spurningar kaupenda um vörurnar þínar. Svörin þín birtast sem opinber svör.",
+    "openOnly": "Ósvarað af okkur",
+    "allQ": "Allar spurningar",
+    "youAnswered": "Þitt svar",
+    "insTitle": "Greining umsagna",
+    "insIntro": "Einkunnir eftir vörum, þróunin síðustu 12 mánuði og það sem kaupendur kvarta yfir.",
+    "avgRating": "Meðaleinkunn",
+    "reviewsCount": "Umsagnir",
+    "last90": "Síðustu 90 dagar",
+    "replyRate": "Svarað",
+    "openQuestions": "Opnar spurningar",
+    "trend": "Meðalfjöldi stjarna á mánuði",
+    "complaints": "Algengar kvartanir (3★ og lægra)",
+    "noComplaints": "Engar kvartanir fundust.",
+    "theme": {
+      "DAMAGED": "Skemmt",
+      "EXPIRY": "Stutt geymsluþol eða útrunnið",
+      "TASTE": "Bragð",
+      "SIZE": "Stærð eða þyngd",
+      "PACKAGING": "Umbúðir",
+      "PRICE": "Verð eða virði",
+      "TEMPERATURE": "Hitastig",
+      "MISSING": "Vörur vantar"
+    },
+    "perProduct": "Eftir vörum",
+    "change": "miðað við áður",
+    "mentions": "{count}×",
+    "noInsights": "Engar umsagnir um vörurnar þínar enn."
   }
 }

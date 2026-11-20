@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Laika uzskaites kiosks",
     "Timesheets": "Darba laika tabulas",
     "Leave & Swaps": "Atvaļinājumi un apmaiņas",
-    "Staff": "Darbinieki"
+    "Staff": "Darbinieki",
+    "My Reviews": "Manas atsauksmes",
+    "Reviews": "Atsauksmes",
+    "Product Questions": "Jautājumi par produktiem",
+    "Review Insights": "Atsauksmju analīze"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Darba laika tabula nosūtīta: {name}",
       "body": "{name} nosūtīja stundas par nedēļu {week}."
+    },
+    "review_received": {
+      "title": "Jauna atsauksme: {product}",
+      "body": "Pircējs novērtēja “{product}” ar {stars}★. Izlasiet un atbildiet sadaļā Atsauksmes."
+    },
+    "review_question": {
+      "title": "Jauns jautājums: {product}",
+      "body": "Pircējs uzdeva jautājumu par “{product}”. Atbildiet sadaļā Jautājumi par produktiem."
+    },
+    "review_reply": {
+      "title": "Piegādātājs atbildēja uz jūsu atsauksmi",
+      "body": "Piegādātājs atbildēja uz jūsu atsauksmi par “{product}”."
+    },
+    "review_answered": {
+      "title": "Uz jūsu jautājumu ir atbildēts",
+      "body": "Uz jūsu jautājumu par “{product}” ir saņemta atbilde."
+    },
+    "review_reminder": {
+      "title": "Kā jums patika {product}?",
+      "body": "Jūsu pasūtījums tika piegādāts pirms dažām dienām. Novērtējiet “{product}” un palīdziet citiem uzņēmumiem iepirkties pārdomāti — tas aizņem tikai minūti."
+    },
+    "review_hidden": {
+      "title": "FIRINGI paslēpa jūsu ierakstu",
+      "body": "Jūsu ieraksts par “{product}” tika paslēpts: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Gaida FIRINGI pārbaudi: {kind}",
+      "body": "Aizturēts vai saņemti ziņojumi ({reason}). Pārbaudiet sadaļā Atsauksmju moderācija."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Šī sadaļa ir izslēgta.",
       "KIOSK_OFF": "Kiosks ir izslēgts — atzīmējiet ierašanos no tālruņa."
     }
+  },
+  "reviews": {
+    "title": "Atsauksmes",
+    "qaTitle": "Jautājumi un atbildes",
+    "basedOn": "Atsauksmes: {count}",
+    "noReviews": "Atsauksmju vēl nav.",
+    "ratingAria": "Vidējais vērtējums {avg} no 5 (atsauksmes: {count})",
+    "detail": {
+      "quality": "Kvalitāte",
+      "value": "Cenas un kvalitātes attiecība",
+      "packaging": "Iepakojums",
+      "freshness": "Svaigums un derīguma termiņš"
+    },
+    "sortLabel": "Kārtot atsauksmes",
+    "sort": {
+      "recent": "Jaunākās",
+      "helpful": "Noderīgākās",
+      "high": "Augstāk novērtētās",
+      "low": "Zemāk novērtētās"
+    },
+    "withPhotos": "Ar fotogrāfijām",
+    "filterAll": "Rādīt visas",
+    "verifiedBuyer": "Pārbaudīts pircējs",
+    "type": {
+      "CUSTOMER": "Restorāns / veikals",
+      "WHOLESALER": "Vairumtirgotājs"
+    },
+    "edited": "rediģēts",
+    "supplierReply": "Piegādātāja atbilde",
+    "helpful": "Noderīgi ({count})",
+    "helpfulCount": "Noderīgi atzinuši: {count}",
+    "report": "Ziņot",
+    "reported": "Paziņots — paldies",
+    "reportTitle": "Kāpēc jūs par to ziņojat?",
+    "reason": {
+      "CONTACT": "Kontaktinformācija vai reklāma",
+      "OFFENSIVE": "Aizskarošs saturs",
+      "FALSE": "Nepatiess vai maldinošs",
+      "NOT_ABOUT_PRODUCT": "Nav par produktu",
+      "SPAM": "Surogātpasts",
+      "OTHER": "Kas cits"
+    },
+    "reportNote": "Vai vēlaties ko piebilst? (neobligāti)",
+    "send": "Sūtīt",
+    "cancel": "Atcelt",
+    "reportThanks": "Paldies — FIRINGI to izskatīs.",
+    "write": "Rakstīt atsauksmi",
+    "edit": "Rediģēt savu atsauksmi",
+    "yourRating": "Jūsu vērtējums",
+    "pickStars": "Izvēlieties no 1 līdz 5 zvaigznēm.",
+    "detailsOptional": "Sīkāk (neobligāti)",
+    "clear": "Notīrīt",
+    "bodyLabel": "Jūsu atsauksme",
+    "bodyHint": "Kas bija labi un kas ne — kvalitāte, iepakojums, svaigums, cena…",
+    "rules": "Tikai par produktu. Bez kontaktinformācijas, saitēm vai citu uzņēmumu nosaukumiem — šādus ierakstus vispirms pārbauda FIRINGI.",
+    "photos": "Fotogrāfijas (līdz {max})",
+    "addPhotos": "Pievienot fotogrāfijas",
+    "keepPhoto": "Paturēt",
+    "showName": "Rādīt mūsu uzņēmuma nosaukumu (citādi “Pārbaudīts pircējs” un uzņēmuma veids)",
+    "save": "Publicēt",
+    "saved": "Paldies — jūsu atsauksme ir saglabāta.",
+    "delete": "Dzēst",
+    "deleteConfirm": "Dzēst jūsu atsauksmi?",
+    "deletePostConfirm": "Dzēst šo?",
+    "onlyVerified": "Šo produktu var novērtēt tikai uzņēmumi, kas to ir saņēmuši.",
+    "yourReview": "Jūsu atsauksme",
+    "status": {
+      "PUBLISHED": "Publicēta",
+      "HELD": "Gaida FIRINGI pārbaudi",
+      "HIDDEN": "Paslēpis FIRINGI"
+    },
+    "heldBecause": "FIRINGI to pārbauda pirms publicēšanas ({reasons}).",
+    "hiddenBecause": "Paslēpis FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "kontaktinformācija",
+      "LINK": "saite",
+      "INSULT": "aizskaroši vārdi",
+      "COMPETITOR": "cita uzņēmuma nosaukums",
+      "WORD": "aizliegts vārds",
+      "REPORTS": "citu uzņēmumu ziņojumi"
+    },
+    "locked": "Šo atsauksmi vairs nevar mainīt.",
+    "aiTitle": "Atsauksmju kopsavilkums",
+    "aiNote": "MI sagatavots no atsauksmēm ({count})",
+    "aiSimulated": "simulācija — MI nav pievienots",
+    "aiLoading": "Apkopo…",
+    "q": "J:",
+    "ask": "Uzdot jautājumu",
+    "askPlaceholder": "piem., Vai der cepšanai? Cik ilgi glabājas pēc atvēršanas?",
+    "askSend": "Jautāt",
+    "asked": "Jūsu jautājums ir saglabāts — atbildēt var piegādātājs un uzņēmumi, kas to iegādājušies.",
+    "noQuestions": "Jautājumu vēl nav.",
+    "answer": "Atbildēt",
+    "answerPlaceholder": "Jūsu atbilde",
+    "answerSend": "Publicēt atbildi",
+    "answered": "Paldies par atbildi.",
+    "role": {
+      "SUPPLIER": "Piegādātājs",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Pārbaudīts pircējs"
+    },
+    "official": "Oficiālā atbilde",
+    "noAnswerYet": "Vēl nav atbildēts.",
+    "pageOf": "{page}. lapa no {pages}",
+    "prev": "Iepriekšējā",
+    "next": "Nākamā",
+    "myTitle": "Manas atsauksmes",
+    "myIntro": "Novērtējiet saņemto un palīdziet citiem uzņēmumiem iepirkties pārdomāti. Piegādātāji redz jūsu atsauksmi; FIRINGI pārbauda ierakstus ar kontaktinformāciju vai saitēm.",
+    "todo": "Jānovērtē",
+    "todoEmpty": "Nav ko novērtēt — produkti šeit parādās pēc piegādes.",
+    "deliveredIn": "Pasūtījums {order}",
+    "reviewIt": "Novērtēt",
+    "myReviews": "Mūsu atsauksmes",
+    "myQuestions": "Mūsu jautājumi",
+    "noMine": "Atsauksmju vēl nav.",
+    "openProduct": "Atvērt produktu",
+    "off": "Atsauksmes jūsu uzņēmumam ir izslēgtas.",
+    "vendorOff": "Atsauksmes jūsu produktiem ir izslēgtas.",
+    "minStars": "4★ un vairāk",
+    "sortRating": "Labāk novērtētie",
+    "vTitle": "Atsauksmes",
+    "vIntro": "Ko pircēji saka par jūsu produktiem. Uz katru atsauksmi varat publiski atbildēt vienu reizi — pieklājīgi un bez kontaktinformācijas.",
+    "filter": {
+      "all": "Visas",
+      "unreplied": "Bez atbildes",
+      "low": "1–2★",
+      "held": "Gaida FIRINGI pārbaudi"
+    },
+    "reply": "Atbildēt",
+    "editReply": "Rediģēt atbildi",
+    "yourReply": "Jūsu atbilde",
+    "replyPlaceholder": "Pateicieties pircējam, paskaidrojiet un pastāstiet, ko mainījāt.",
+    "replyRules": "Jūsu atbildi redz visi. Bez kontaktinformācijas, saitēm vai piedāvājumiem — šādas atbildes vispirms pārbauda FIRINGI.",
+    "replySend": "Publicēt atbildi",
+    "replyDone": "Atbilde saglabāta.",
+    "replyStatus": {
+      "HELD": "Gaida FIRINGI pārbaudi",
+      "HIDDEN": "Paslēpis FIRINGI"
+    },
+    "vqTitle": "Jautājumi par produktiem",
+    "vqIntro": "Pircēju jautājumi par jūsu produktiem. Jūsu atbildes tiek rādītas kā oficiālas.",
+    "openOnly": "Mēs neesam atbildējuši",
+    "allQ": "Visi jautājumi",
+    "youAnswered": "Jūsu atbilde",
+    "insTitle": "Atsauksmju analīze",
+    "insIntro": "Vērtējumi pa produktiem, 12 mēnešu tendence un par ko sūdzas pircēji.",
+    "avgRating": "Vidējais vērtējums",
+    "reviewsCount": "Atsauksmes",
+    "last90": "Pēdējās 90 dienas",
+    "replyRate": "Atbildētas",
+    "openQuestions": "Neatbildēti jautājumi",
+    "trend": "Vidējais zvaigžņu skaits mēnesī",
+    "complaints": "Biežākās sūdzības (3★ un zemāk)",
+    "noComplaints": "Sūdzības nav atrastas.",
+    "theme": {
+      "DAMAGED": "Bojāts",
+      "EXPIRY": "Īss vai beidzies derīguma termiņš",
+      "TASTE": "Garša",
+      "SIZE": "Izmērs vai svars",
+      "PACKAGING": "Iepakojums",
+      "PRICE": "Cena vai vērtība",
+      "TEMPERATURE": "Temperatūra",
+      "MISSING": "Trūkstošas preces"
+    },
+    "perProduct": "Pa produktiem",
+    "change": "salīdzinot ar iepriekšējo periodu",
+    "mentions": "{count}×",
+    "noInsights": "Par jūsu produktiem vēl nav atsauksmju."
   }
 }

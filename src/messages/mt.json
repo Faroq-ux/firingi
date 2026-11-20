@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Kiosk tal-Ħin",
     "Timesheets": "Skedi tal-ħin",
     "Leave & Swaps": "Liv u Skambji",
-    "Staff": "Ħaddiema"
+    "Staff": "Ħaddiema",
+    "My Reviews": "Ir-reviżjonijiet tiegħi",
+    "Reviews": "Reviżjonijiet",
+    "Product Questions": "Mistoqsijiet dwar il-prodotti",
+    "Review Insights": "Analiżi tar-reviżjonijiet"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Skeda tal-ħin mibgħuta: {name}",
       "body": "{name} bagħat is-sigħat għall-ġimgħa ta' {week}."
+    },
+    "review_received": {
+      "title": "Reviżjoni ġdida: {product}",
+      "body": "Xerrej ta {stars}★ lil \"{product}\". Aqraha u wieġeb f'Reviżjonijiet."
+    },
+    "review_question": {
+      "title": "Mistoqsija ġdida: {product}",
+      "body": "Xerrej staqsa mistoqsija dwar \"{product}\". Wieġeb f'Mistoqsijiet dwar il-prodotti."
+    },
+    "review_reply": {
+      "title": "Il-fornitur wieġeb għar-reviżjoni tiegħek",
+      "body": "Il-fornitur wieġeb għar-reviżjoni tiegħek ta' \"{product}\"."
+    },
+    "review_answered": {
+      "title": "Il-mistoqsija tiegħek ġiet imwieġba",
+      "body": "Hemm tweġiba għall-mistoqsija tiegħek dwar \"{product}\"."
+    },
+    "review_reminder": {
+      "title": "Kif sibt {product}?",
+      "body": "L-ordni tiegħek waslet ftit jiem ilu. Ikklassifika \"{product}\" u għin lil negozji oħra jixtru tajjeb — tieħu minuta biss."
+    },
+    "review_hidden": {
+      "title": "FIRINGI ħbiet il-messaġġ tiegħek",
+      "body": "Il-messaġġ tiegħek dwar \"{product}\" inħeba: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Qed jistenna lil FIRINGI: {kind}",
+      "body": "Miżmum jew irrapportat ({reason}). Iċċekkjah f'Moderazzjoni tar-reviżjonijiet."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Din il-parti hija mitfija.",
       "KIOSK_OFF": "Il-kiosk huwa mitfi — irreġistra d-dħul mit-telefon."
     }
+  },
+  "reviews": {
+    "title": "Reviżjonijiet",
+    "qaTitle": "Mistoqsijiet u tweġibiet",
+    "basedOn": "Reviżjonijiet: {count}",
+    "noReviews": "Għad m'hemmx reviżjonijiet.",
+    "ratingAria": "Medja ta' {avg} minn 5 minn {count} reviżjonijiet",
+    "detail": {
+      "quality": "Kwalità",
+      "value": "Valur għall-flus",
+      "packaging": "Ippakkjar",
+      "freshness": "Freskezza u żmien ta' konservazzjoni"
+    },
+    "sortLabel": "Issortja r-reviżjonijiet",
+    "sort": {
+      "recent": "L-aktar ġodda",
+      "helpful": "L-aktar utli",
+      "high": "L-ogħla klassifikati",
+      "low": "L-inqas klassifikati"
+    },
+    "withPhotos": "B'ritratti",
+    "filterAll": "Uri kollox",
+    "verifiedBuyer": "Xerrej ivverifikat",
+    "type": {
+      "CUSTOMER": "Ristorant / ħanut",
+      "WHOLESALER": "Grossist"
+    },
+    "edited": "editjata",
+    "supplierReply": "Tweġiba mill-fornitur",
+    "helpful": "Utli ({count})",
+    "helpfulCount": "{count} sabuha utli",
+    "report": "Irrapporta",
+    "reported": "Irrapportat — grazzi",
+    "reportTitle": "Għaliex qed tirrapporta dan?",
+    "reason": {
+      "CONTACT": "Dettalji ta' kuntatt jew reklamar",
+      "OFFENSIVE": "Offensiv",
+      "FALSE": "Mhux veru jew qarrieqi",
+      "NOT_ABOUT_PRODUCT": "Mhux dwar il-prodott",
+      "SPAM": "Spam",
+      "OTHER": "Xi ħaġa oħra"
+    },
+    "reportNote": "Trid iżżid xi ħaġa? (mhux obbligatorju)",
+    "send": "Ibgħat",
+    "cancel": "Ikkanċella",
+    "reportThanks": "Grazzi — FIRINGI se tħares lejh.",
+    "write": "Ikteb reviżjoni",
+    "edit": "Editja r-reviżjoni tiegħek",
+    "yourRating": "L-evalwazzjoni tiegħek",
+    "pickStars": "Agħżel minn 1 sa 5 stilel.",
+    "detailsOptional": "Dettalji (mhux obbligatorju)",
+    "clear": "Naddaf",
+    "bodyLabel": "Ir-reviżjoni tiegħek",
+    "bodyHint": "X'kien tajjeb jew le — kwalità, ippakkjar, freskezza, valur…",
+    "rules": "Dwar il-prodott biss. L-ebda dettalji ta' kuntatt, links jew ismijiet ta' kumpaniji oħra — dawn jistennew li FIRINGI tiċċekkjahom.",
+    "photos": "Ritratti (sa {max})",
+    "addPhotos": "Żid ritratti",
+    "keepPhoto": "Żomm",
+    "showName": "Uri l-isem tan-negozju tagħna (inkella “Xerrej ivverifikat” u t-tip ta' negozju)",
+    "save": "Ippubblika",
+    "saved": "Grazzi — ir-reviżjoni tiegħek ġiet issejvjata.",
+    "delete": "Ħassar",
+    "deleteConfirm": "Tħassar ir-reviżjoni tiegħek?",
+    "deletePostConfirm": "Tħassar dan?",
+    "onlyVerified": "Dan il-prodott jistgħu jirrevedu biss in-negozji li rċevewh.",
+    "yourReview": "Ir-reviżjoni tiegħek",
+    "status": {
+      "PUBLISHED": "Ippubblikata",
+      "HELD": "Qed tistenna lil FIRINGI",
+      "HIDDEN": "Moħbija minn FIRINGI"
+    },
+    "heldBecause": "FIRINGI tiċċekkjaha qabel ma tidher ({reasons}).",
+    "hiddenBecause": "Moħbija minn FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "dettalji ta' kuntatt",
+      "LINK": "link",
+      "INSULT": "kliem offensiv",
+      "COMPETITOR": "isem ta' kumpanija oħra",
+      "WORD": "kelma pprojbita",
+      "REPORTS": "rapporti minn negozji oħra"
+    },
+    "locked": "Din ir-reviżjoni ma tistax tinbidel aktar.",
+    "aiTitle": "Sommarju tar-reviżjonijiet",
+    "aiNote": "Miktub mill-IA minn {count} reviżjonijiet",
+    "aiSimulated": "simulat — l-ebda IA mqabbda",
+    "aiLoading": "Qed nagħmlu sommarju…",
+    "q": "M:",
+    "ask": "Staqsi mistoqsija",
+    "askPlaceholder": "eż. Tajjeb għall-qali? Kemm idum wara li jinfetaħ?",
+    "askSend": "Staqsi",
+    "asked": "Il-mistoqsija tiegħek ġiet issejvjata — il-fornitur u n-negozji li xtrawh jistgħu jwieġbu.",
+    "noQuestions": "Għad m'hemmx mistoqsijiet.",
+    "answer": "Wieġeb",
+    "answerPlaceholder": "It-tweġiba tiegħek",
+    "answerSend": "Ippubblika t-tweġiba",
+    "answered": "Grazzi talli wieġbt.",
+    "role": {
+      "SUPPLIER": "Fornitur",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Xerrej ivverifikat"
+    },
+    "official": "Tweġiba uffiċjali",
+    "noAnswerYet": "Għadha mhix imwieġba.",
+    "pageOf": "Paġna {page} minn {pages}",
+    "prev": "Ta' qabel",
+    "next": "Li jmiss",
+    "myTitle": "Ir-reviżjonijiet tiegħi",
+    "myIntro": "Agħmel reviżjoni ta' dak li rċevejt u għin lil negozji oħra jixtru tajjeb. Il-fornituri jaraw ir-reviżjoni tiegħek; FIRINGI tiċċekkja l-messaġġi b'dettalji ta' kuntatt jew links.",
+    "todo": "Biex tirrevedi",
+    "todoEmpty": "Xejn x'tirrevedi — il-prodotti jidhru hawn ladarba jiġu kkunsinnati.",
+    "deliveredIn": "Ordni {order}",
+    "reviewIt": "Agħmel reviżjoni",
+    "myReviews": "Ir-reviżjonijiet tagħna",
+    "myQuestions": "Il-mistoqsijiet tagħna",
+    "noMine": "Għad m'hemmx reviżjonijiet.",
+    "openProduct": "Iftaħ il-prodott",
+    "off": "Ir-reviżjonijiet huma mitfija għan-negozju tiegħek.",
+    "vendorOff": "Ir-reviżjonijiet huma mitfija għall-prodotti tiegħek.",
+    "minStars": "4★ u 'l fuq",
+    "sortRating": "L-aħjar klassifikati",
+    "vTitle": "Reviżjonijiet",
+    "vIntro": "X'jgħidu x-xerrejja dwar il-prodotti tiegħek. Tista' twieġeb darba għal kull reviżjoni, pubblikament — b'mod edukat u mingħajr dettalji ta' kuntatt.",
+    "filter": {
+      "all": "Kollha",
+      "unreplied": "Mhux imwieġba",
+      "low": "1–2★",
+      "held": "Qed tistenna lil FIRINGI"
+    },
+    "reply": "Wieġeb",
+    "editReply": "Editja t-tweġiba",
+    "yourReply": "It-tweġiba tiegħek",
+    "replyPlaceholder": "Irringrazzja lix-xerrej, spjega, u għid x'biddilt.",
+    "replyRules": "Kulħadd jara t-tweġiba tiegħek. L-ebda dettalji ta' kuntatt, links jew offerti — dawn jistennew li FIRINGI tiċċekkjahom.",
+    "replySend": "Ippubblika t-tweġiba",
+    "replyDone": "It-tweġiba ġiet issejvjata.",
+    "replyStatus": {
+      "HELD": "Qed tistenna lil FIRINGI",
+      "HIDDEN": "Moħbija minn FIRINGI"
+    },
+    "vqTitle": "Mistoqsijiet dwar il-prodotti",
+    "vqIntro": "Mistoqsijiet tax-xerrejja dwar il-prodotti tiegħek. It-tweġibiet tiegħek jidhru bħala uffiċjali.",
+    "openOnly": "Mhux imwieġba minna",
+    "allQ": "Il-mistoqsijiet kollha",
+    "youAnswered": "It-tweġiba tiegħek",
+    "insTitle": "Analiżi tar-reviżjonijiet",
+    "insIntro": "Klassifikazzjonijiet għal kull prodott, ix-xejra fuq 12-il xahar u dwar xiex jilmentaw ix-xerrejja.",
+    "avgRating": "Klassifikazzjoni medja",
+    "reviewsCount": "Reviżjonijiet",
+    "last90": "L-aħħar 90 jum",
+    "replyRate": "Imwieġba",
+    "openQuestions": "Mistoqsijiet miftuħa",
+    "trend": "Medja ta' stilel kull xahar",
+    "complaints": "Ilmenti komuni (3★ jew inqas)",
+    "noComplaints": "Ma nstabu l-ebda lmenti.",
+    "theme": {
+      "DAMAGED": "Bil-ħsara",
+      "EXPIRY": "Data qasira jew skaduta",
+      "TASTE": "Togħma",
+      "SIZE": "Daqs jew piż",
+      "PACKAGING": "Ippakkjar",
+      "PRICE": "Prezz jew valur",
+      "TEMPERATURE": "Temperatura",
+      "MISSING": "Oġġetti neqsin"
+    },
+    "perProduct": "Għal kull prodott",
+    "change": "meta mqabbel ma' qabel",
+    "mentions": "{count}×",
+    "noInsights": "Għad m'hemmx reviżjonijiet tal-prodotti tiegħek."
   }
 }

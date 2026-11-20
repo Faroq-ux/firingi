@@ -899,7 +899,11 @@
     "Clock-in Kiosk": "Inklokkiosk",
     "Timesheets": "Urenstaten",
     "Leave & Swaps": "Verlof & ruilen",
-    "Staff": "Personeel"
+    "Staff": "Personeel",
+    "My Reviews": "Mijn reviews",
+    "Reviews": "Reviews",
+    "Product Questions": "Productvragen",
+    "Review Insights": "Review-inzichten"
   },
   "delivery": {
     "title": "Levering",
@@ -1922,6 +1926,34 @@
     "staff_timesheet_submitted": {
       "title": "Urenstaat verstuurd: {name}",
       "body": "{name} heeft de uren voor de week van {week} verstuurd."
+    },
+    "review_received": {
+      "title": "Nieuwe review: {product}",
+      "body": "Een koper gaf ‘{product}’ {stars}★. Lees de review en reageer bij Reviews."
+    },
+    "review_question": {
+      "title": "Nieuwe vraag: {product}",
+      "body": "Een koper stelde een vraag over ‘{product}’. Beantwoord deze bij Productvragen."
+    },
+    "review_reply": {
+      "title": "De leverancier heeft op uw review gereageerd",
+      "body": "De leverancier heeft gereageerd op uw review van ‘{product}’."
+    },
+    "review_answered": {
+      "title": "Uw vraag is beantwoord",
+      "body": "Er is een antwoord op uw vraag over ‘{product}’."
+    },
+    "review_reminder": {
+      "title": "Hoe was {product}?",
+      "body": "Uw bestelling is een paar dagen geleden aangekomen. Beoordeel ‘{product}’ en help andere bedrijven goed in te kopen — het kost maar een minuut."
+    },
+    "review_hidden": {
+      "title": "FIRINGI heeft uw bericht verborgen",
+      "body": "Uw bericht over ‘{product}’ is verborgen: {reason}"
+    },
+    "review_to_moderate": {
+      "title": "Wacht op FIRINGI: {kind}",
+      "body": "Vastgehouden of gemeld ({reason}). Controleer het bij Reviewmoderatie."
     }
   },
   "notifications": {
@@ -7258,5 +7290,173 @@
       "PART_OFF": "Dit onderdeel is uitgeschakeld.",
       "KIOSK_OFF": "De kiosk is uitgeschakeld — klok in met uw telefoon."
     }
+  },
+  "reviews": {
+    "title": "Reviews",
+    "qaTitle": "Vragen en antwoorden",
+    "basedOn": "Reviews: {count}",
+    "noReviews": "Nog geen reviews.",
+    "ratingAria": "Gemiddeld {avg} van 5 op basis van {count} reviews",
+    "detail": {
+      "quality": "Kwaliteit",
+      "value": "Prijs-kwaliteitverhouding",
+      "packaging": "Verpakking",
+      "freshness": "Versheid en houdbaarheid"
+    },
+    "sortLabel": "Reviews sorteren",
+    "sort": {
+      "recent": "Nieuwste",
+      "helpful": "Meest nuttig",
+      "high": "Hoogst beoordeeld",
+      "low": "Laagst beoordeeld"
+    },
+    "withPhotos": "Met foto's",
+    "filterAll": "Alles tonen",
+    "verifiedBuyer": "Geverifieerde koper",
+    "type": {
+      "CUSTOMER": "Restaurant / winkel",
+      "WHOLESALER": "Groothandel"
+    },
+    "edited": "bewerkt",
+    "supplierReply": "Reactie van de leverancier",
+    "helpful": "Nuttig ({count})",
+    "helpfulCount": "{count} vonden dit nuttig",
+    "report": "Melden",
+    "reported": "Gemeld — bedankt",
+    "reportTitle": "Waarom meldt u dit?",
+    "reason": {
+      "CONTACT": "Contactgegevens of reclame",
+      "OFFENSIVE": "Beledigend",
+      "FALSE": "Onwaar of misleidend",
+      "NOT_ABOUT_PRODUCT": "Gaat niet over het product",
+      "SPAM": "Spam",
+      "OTHER": "Iets anders"
+    },
+    "reportNote": "Nog iets toe te voegen? (optioneel)",
+    "send": "Versturen",
+    "cancel": "Annuleren",
+    "reportThanks": "Bedankt — FIRINGI bekijkt het.",
+    "write": "Review schrijven",
+    "edit": "Uw review bewerken",
+    "yourRating": "Uw beoordeling",
+    "pickStars": "Kies 1 tot 5 sterren.",
+    "detailsOptional": "Details (optioneel)",
+    "clear": "Wissen",
+    "bodyLabel": "Uw review",
+    "bodyHint": "Wat was goed of niet — kwaliteit, verpakking, versheid, prijs…",
+    "rules": "Alleen over het product. Geen contactgegevens, links of namen van andere bedrijven — die worden eerst door FIRINGI gecontroleerd.",
+    "photos": "Foto's (max. {max})",
+    "addPhotos": "Foto's toevoegen",
+    "keepPhoto": "Behouden",
+    "showName": "Onze bedrijfsnaam tonen (anders ‘Geverifieerde koper’ en het type bedrijf)",
+    "save": "Publiceren",
+    "saved": "Bedankt — uw review is opgeslagen.",
+    "delete": "Verwijderen",
+    "deleteConfirm": "Uw review verwijderen?",
+    "deletePostConfirm": "Dit verwijderen?",
+    "onlyVerified": "Alleen bedrijven die dit product hebben ontvangen, kunnen het beoordelen.",
+    "yourReview": "Uw review",
+    "status": {
+      "PUBLISHED": "Gepubliceerd",
+      "HELD": "Wacht op FIRINGI",
+      "HIDDEN": "Verborgen door FIRINGI"
+    },
+    "heldBecause": "FIRINGI controleert dit voordat het verschijnt ({reasons}).",
+    "hiddenBecause": "Verborgen door FIRINGI: {reason}",
+    "hold": {
+      "CONTACT": "contactgegevens",
+      "LINK": "een link",
+      "INSULT": "beledigende woorden",
+      "COMPETITOR": "de naam van een ander bedrijf",
+      "WORD": "een geblokkeerd woord",
+      "REPORTS": "meldingen van andere bedrijven"
+    },
+    "locked": "Deze review kan niet meer worden gewijzigd.",
+    "aiTitle": "Samenvatting van de reviews",
+    "aiNote": "Door AI geschreven op basis van {count} reviews",
+    "aiSimulated": "gesimuleerd — geen AI gekoppeld",
+    "aiLoading": "Samenvatten…",
+    "q": "V:",
+    "ask": "Een vraag stellen",
+    "askPlaceholder": "bijv. Is het geschikt om te frituren? Hoe lang blijft het goed na opening?",
+    "askSend": "Vragen",
+    "asked": "Uw vraag is opgeslagen — de leverancier en bedrijven die het product kochten, kunnen antwoorden.",
+    "noQuestions": "Nog geen vragen.",
+    "answer": "Antwoorden",
+    "answerPlaceholder": "Uw antwoord",
+    "answerSend": "Antwoord publiceren",
+    "answered": "Bedankt voor uw antwoord.",
+    "role": {
+      "SUPPLIER": "Leverancier",
+      "FIRINGI": "FIRINGI",
+      "BUYER": "Geverifieerde koper"
+    },
+    "official": "Officieel antwoord",
+    "noAnswerYet": "Nog niet beantwoord.",
+    "pageOf": "Pagina {page} van {pages}",
+    "prev": "Vorige",
+    "next": "Volgende",
+    "myTitle": "Mijn reviews",
+    "myIntro": "Beoordeel wat u hebt ontvangen en help andere bedrijven goed in te kopen. Leveranciers zien uw review; FIRINGI controleert berichten met contactgegevens of links.",
+    "todo": "Te beoordelen",
+    "todoEmpty": "Niets te beoordelen — producten verschijnen hier zodra ze zijn geleverd.",
+    "deliveredIn": "Bestelling {order}",
+    "reviewIt": "Beoordelen",
+    "myReviews": "Onze reviews",
+    "myQuestions": "Onze vragen",
+    "noMine": "Nog geen reviews.",
+    "openProduct": "Product openen",
+    "off": "Reviews zijn uitgeschakeld voor uw bedrijf.",
+    "vendorOff": "Reviews zijn uitgeschakeld voor uw producten.",
+    "minStars": "4★ en hoger",
+    "sortRating": "Best beoordeeld",
+    "vTitle": "Reviews",
+    "vIntro": "Wat kopers over uw producten zeggen. U kunt één keer openbaar op elke review reageren — beleefd en zonder contactgegevens.",
+    "filter": {
+      "all": "Alle",
+      "unreplied": "Niet gereageerd",
+      "low": "1–2★",
+      "held": "Wacht op FIRINGI"
+    },
+    "reply": "Reageren",
+    "editReply": "Reactie bewerken",
+    "yourReply": "Uw reactie",
+    "replyPlaceholder": "Bedank de koper, leg uit en vertel wat u hebt veranderd.",
+    "replyRules": "Iedereen ziet uw reactie. Geen contactgegevens, links of aanbiedingen — die worden eerst door FIRINGI gecontroleerd.",
+    "replySend": "Reactie publiceren",
+    "replyDone": "Reactie opgeslagen.",
+    "replyStatus": {
+      "HELD": "Wacht op FIRINGI",
+      "HIDDEN": "Verborgen door FIRINGI"
+    },
+    "vqTitle": "Productvragen",
+    "vqIntro": "Vragen van kopers over uw producten. Uw antwoorden worden als officieel getoond.",
+    "openOnly": "Niet door ons beantwoord",
+    "allQ": "Alle vragen",
+    "youAnswered": "Uw antwoord",
+    "insTitle": "Review-inzichten",
+    "insIntro": "Beoordelingen per product, de trend over 12 maanden en waarover kopers klagen.",
+    "avgRating": "Gemiddelde beoordeling",
+    "reviewsCount": "Reviews",
+    "last90": "Laatste 90 dagen",
+    "replyRate": "Gereageerd",
+    "openQuestions": "Open vragen",
+    "trend": "Gemiddeld aantal sterren per maand",
+    "complaints": "Veelvoorkomende klachten (3★ en lager)",
+    "noComplaints": "Geen klachten gevonden.",
+    "theme": {
+      "DAMAGED": "Beschadigd",
+      "EXPIRY": "Korte houdbaarheid of over datum",
+      "TASTE": "Smaak",
+      "SIZE": "Formaat of gewicht",
+      "PACKAGING": "Verpakking",
+      "PRICE": "Prijs of waarde",
+      "TEMPERATURE": "Temperatuur",
+      "MISSING": "Ontbrekende artikelen"
+    },
+    "perProduct": "Per product",
+    "change": "t.o.v. eerder",
+    "mentions": "{count}×",
+    "noInsights": "Nog geen reviews van uw producten."
   }
 }

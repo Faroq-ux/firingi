@@ -251,7 +251,7 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string 
   return { items: await withBadges(items), barcode: asBarcode(q) };
 }
 
-export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null; free?: string[]; diet?: string | null; eco?: string | null } = {}) {
+export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null; free?: string[]; diet?: string | null; eco?: string | null; stars?: number | null; sort?: string | null } = {}) {
   const scope = await buyerScope(ctx);
   const pageSize = 24;
   const page = Math.max(1, f.page ?? 1);
@@ -265,14 +265,28 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
       await badgeWhere(f.badge),
       await buyerFoodWhere(ctx, { free: f.free, diet: f.diet }),
       f.eco ? await (await import("@/server/co2/service")).ecoWhere(ctx, f.eco) : {}, // Phase 51: low CO₂ / local / eco packaging
+      f.stars ? await (await import("@/server/reviews/service")).ratingWhere(ctx, f.stars) : {}, // Phase 53: "4★ and up"
     ],
+  };
+  // Phase 53: best rated first (then by the usual order); unrated products last.
+  const byRating = async (items: CatalogueItem[]) => {
+    if (f.sort !== "rating") return items;
+    const m = await (await import("@/server/reviews/service")).cardRatings(items.map((i) => ({ productId: i.productId, sellerId: i.vendor.id || null })));
+    const r = (i: CatalogueItem) => m.get(`${i.productId}:${i.vendor.id || ""}`);
+    return items.map((i, n) => ({ i, n })).sort((a, b) => (r(b.i)?.avg ?? 0) - (r(a.i)?.avg ?? 0) || (r(b.i)?.count ?? 0) - (r(a.i)?.count ?? 0) || a.n - b.n).map((x) => x.i);
   };
   if (!f.vendorId && (await orderingMode(ctx)) === "FIRINGI") {
     // One FIRINGI offer per packaging: pick across all suppliers, then page.
     const all = await prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }] });
     const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(all.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope)]);
-    const picked = (await firingiPicks(ctx, all.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn))))!;
+    const picked = await byRating((await firingiPicks(ctx, all.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn))))!);
     return { items: picked.slice((page - 1) * pageSize, page * pageSize), total: picked.length, page, pageCount: Math.max(1, Math.ceil(picked.length / pageSize)) };
+  }
+  if (f.sort === "rating") {
+    const all = await prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }], take: 2000 });
+    const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(all.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope)]);
+    const sorted = await byRating(all.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn)));
+    return { items: await withBadges(sorted.slice((page - 1) * pageSize, page * pageSize)), total: sorted.length, page, pageCount: Math.max(1, Math.ceil(sorted.length / pageSize)) };
   }
   const [rows, total] = await Promise.all([
     prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }], skip: (page - 1) * pageSize, take: pageSize }),

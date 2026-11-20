@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RatingFilter } from "@/components/reviews/views";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin } from "lucide-react";
@@ -21,7 +22,7 @@ import { EcoFilter } from "@/components/co2/views";
 import { co2Filter } from "@/components/co2/filter";
 
 /** A supplier's store: every product that supplier offers to this buyer. */
-export default async function StorePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; category?: string; page?: string; free?: string | string[]; diet?: string; eco?: string }> }) {
+export default async function StorePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; category?: string; page?: string; free?: string | string[]; diet?: string; eco?: string; stars?: string; sort?: string }> }) {
   const ctx = await pagePortal("buy");
   pagePermission(ctx, "buyer.catalogue.view");
   const [{ id }, sp] = await Promise.all([params, searchParams]);
@@ -29,7 +30,7 @@ export default async function StorePage({ params, searchParams }: { params: Prom
   const category = store.categories.some((c) => c.id === sp.category) ? sp.category : undefined;
   const eco = sp.eco ?? null; // Phase 51: low CO₂ / local / eco packaging
   const [data, t, c, locale] = await Promise.all([
-    browseCatalogue(ctx, { vendorId: id, categoryId: category, q: sp.q, page: Number(sp.page) || 1, ...foodParams(sp), eco }),
+    browseCatalogue(ctx, { vendorId: id, categoryId: category, q: sp.q, page: Number(sp.page) || 1, ...foodParams(sp), eco, stars: Number(sp.stars) || null, sort: sp.sort ?? null }),
     getTranslations("catalogue"), getTranslations("common"), getLocale(),
   ]);
   const fp = foodParams(sp); // Phase 44: allergen / diet filter
@@ -38,7 +39,7 @@ export default async function StorePage({ params, searchParams }: { params: Prom
   const dealMap = data ? await dealBadges(data.items.map((i) => i.offerId)) : new Map<string, { pct: number | null; endsAt: Date; kind: string }>();
   const base = `/buy/catalogue/suppliers/${id}`;
   const qs = (o: Record<string, string | undefined>) => {
-    const p = new URLSearchParams(Object.entries({ q: sp.q, category, free: fp.free.join(",") || undefined, diet: fp.diet ?? undefined, eco: eco ?? undefined, ...o }).filter(([, v]) => v) as [string, string][]);
+    const p = new URLSearchParams(Object.entries({ q: sp.q, category, free: fp.free.join(",") || undefined, diet: fp.diet ?? undefined, eco: eco ?? undefined, stars: sp.stars, sort: sp.sort, ...o }).filter(([, v]) => v) as [string, string][]);
     return p.toString() ? `${base}?${p}` : base;
   };
   const s = store.supplier;
@@ -63,7 +64,8 @@ export default async function StorePage({ params, searchParams }: { params: Prom
         <div>
           <div className="mb-4"><BarcodeSearch action={base} defaultValue={sp.q} hidden={category ? { category } : undefined} /></div>
           {fs.enabled && fs.filter && <FoodFilter base={base} params={{ q: sp.q, category }} free={fp.free} diet={fp.diet} l={fl.l} />}
-          {c2 && <EcoFilter base={base} params={{ q: sp.q, category, free: fp.free, diet: fp.diet }} active={eco} l={c2} showAll={false} />}
+          {c2 && <EcoFilter base={base} params={{ q: sp.q, category, free: fp.free, diet: fp.diet, stars: sp.stars, sort: sp.sort }} active={eco} l={c2} showAll={false} />}
+          <RatingFilter base={base} params={{ q: sp.q, category, free: fp.free, diet: fp.diet, eco }} minStars={Number(sp.stars) || null} sort={sp.sort ?? null} />
           {data.items.length === 0 ? <p className="py-12 text-center text-muted-foreground">{t("noResults")}</p> : (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
               {data.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} showVendor={false} />)}

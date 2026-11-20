@@ -1,0 +1,185 @@
+// ── Phase 53: product reviews & questions ─────────────────────────────────────
+// Verified buyers review a product they received from a supplier (one review per product, supplier and business —
+// editable): stars, detail scores, text, up to 3 photos. Others vote "helpful" and can report. The supplier may reply
+// once, in public. Questions are answered by the supplier and FIRINGI (official) and by buyers who bought the product.
+// Posts publish at once; an automatic filter holds those with contact details, links, insults or competitor names for
+// FIRINGI, who can hide anything with a reason. FIRINGI switches every part on / off, per business type and per business.
+
+enum PostStatus {
+  PUBLISHED
+  HELD // the filter or reports held it for FIRINGI
+  HIDDEN // FIRINGI hid it (with a reason)
+}
+
+enum AnswerRole {
+  SUPPLIER
+  FIRINGI
+  BUYER
+}
+
+enum ReportKind {
+  REVIEW
+  REPLY
+  QUESTION
+  ANSWER
+}
+
+enum ReportStatus {
+  OPEN
+  HIDDEN // FIRINGI agreed and hid it
+  DISMISSED
+}
+
+model ProductReview {
+  id              String      @id @default(cuid())
+  productId       String
+  sellerCompanyId String
+  buyerCompanyId  String
+  byUserId        String
+  offerId         String?
+  orderId         String? // the delivered order that verified the purchase
+  stars           Int
+  quality         Int?
+  value           Int?
+  packaging       Int?
+  freshness       Int?
+  body            String?
+  language        String?
+  photos          String[]
+  showName        Boolean     @default(false) // show the business's trade name (else "Verified buyer · type")
+  status          PostStatus  @default(PUBLISHED)
+  holdReasons     String[]
+  hiddenReason    String?
+  moderatedById   String?
+  moderatedAt     DateTime?
+  reply           String?
+  replyStatus     PostStatus?
+  replyHold       String[]
+  replyById       String?
+  repliedAt       DateTime?
+  helpfulCount    Int         @default(0)
+  reportCount     Int         @default(0)
+  editedAt        DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  product Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  seller  Company      @relation("ReviewSeller", fields: [sellerCompanyId], references: [id], onDelete: Cascade)
+  buyer   Company      @relation("ReviewBuyer", fields: [buyerCompanyId], references: [id], onDelete: Cascade)
+  byUser  User         @relation("ReviewAuthor", fields: [byUserId], references: [id])
+  votes   ReviewVote[]
+
+  @@unique([productId, sellerCompanyId, buyerCompanyId])
+  @@index([productId, status])
+  @@index([sellerCompanyId, status, createdAt])
+  @@index([status, createdAt])
+}
+
+model ReviewVote {
+  reviewId  String
+  companyId String
+  userId    String
+  createdAt DateTime @default(now())
+
+  review ProductReview @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@id([reviewId, companyId])
+}
+
+model ContentReport {
+  id           String       @id @default(cuid())
+  kind         ReportKind
+  targetId     String
+  byCompanyId  String
+  byUserId     String
+  reason       String // CONTACT, OFFENSIVE, FALSE, NOT_ABOUT_PRODUCT, SPAM, OTHER
+  note         String?
+  status       ReportStatus @default(OPEN)
+  resolvedById String?
+  resolvedAt   DateTime?
+  createdAt    DateTime     @default(now())
+
+  @@unique([kind, targetId, byCompanyId])
+  @@index([status, createdAt])
+}
+
+model ProductQuestion {
+  id              String     @id @default(cuid())
+  productId       String
+  sellerCompanyId String? // the supplier of the offer it was asked on (null: about the product in general)
+  buyerCompanyId  String
+  byUserId        String
+  body            String
+  language        String?
+  status          PostStatus @default(PUBLISHED)
+  holdReasons     String[]
+  hiddenReason    String?
+  moderatedById   String?
+  moderatedAt     DateTime?
+  answerCount     Int        @default(0)
+  createdAt       DateTime   @default(now())
+
+  product Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  answers ProductAnswer[]
+
+  @@index([productId, status, createdAt])
+  @@index([sellerCompanyId, answerCount])
+}
+
+model ProductAnswer {
+  id            String     @id @default(cuid())
+  questionId    String
+  companyId     String
+  byUserId      String
+  role          AnswerRole
+  body          String
+  status        PostStatus @default(PUBLISHED)
+  holdReasons   String[]
+  hiddenReason  String?
+  moderatedById String?
+  moderatedAt   DateTime?
+  createdAt     DateTime   @default(now())
+
+  question ProductQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId, status])
+}
+
+/// "How was …?" — sent once per product, supplier and business, a few days after delivery.
+model ReviewReminder {
+  buyerCompanyId  String
+  productId       String
+  sellerCompanyId String
+  orderId         String
+  sentAt          DateTime @default(now())
+
+  @@id([buyerCompanyId, productId, sellerCompanyId])
+}
+
+/// Totals for cards, filters and sorting — recomputed whenever a review changes. Published reviews only.
+model ProductRatingStat {
+  productId       String
+  sellerCompanyId String
+  count           Int
+  sum             Int
+  avg             Decimal  @db.Decimal(3, 2)
+  dist            Int[] // count of 1★ … 5★
+  details         Json // { quality: [sum, count], value: …, packaging: …, freshness: … }
+  updatedAt       DateTime @updatedAt
+
+  @@id([productId, sellerCompanyId])
+  @@index([avg])
+}
+
+/// The AI summary of a product's reviews, per language (sellerCompanyId "" = across all suppliers).
+model ReviewSummary {
+  productId       String
+  sellerCompanyId String
+  locale          String
+  text            String
+  basedOn         Int
+  simulated       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@id([productId, sellerCompanyId, locale])
+}

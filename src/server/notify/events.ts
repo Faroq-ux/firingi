@@ -225,6 +225,14 @@ export const EVENTS: EventDef[] = [
   E("staff.timesheet_submitted", "account", ["company.staff.manage", "admin.staff.manage"], ["EMAIL"], ["name", "week"]),
   E("co2.review", "catalogue", ["admin.catalogue.manage", "admin.catalogue.approve"], ["EMAIL"], ["company"]),
   E("co2.decided", "catalogue", ["vendor.products.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["product", "decision", "reason"]),
+  // Phase 53: product reviews & questions
+  E("review.received", "catalogue", ["vendor.reviews.manage"], ["EMAIL", "PUSH"], ["product", "stars"]),
+  E("review.question", "catalogue", ["vendor.reviews.manage"], ["EMAIL", "PUSH"], ["product"]),
+  E("review.reply", "catalogue", null, ["PUSH", "EMAIL"], ["product"]),
+  E("review.answered", "catalogue", null, ["PUSH", "EMAIL"], ["product"]),
+  E("review.reminder", "orders", null, ["EMAIL", "PUSH"], ["product"]),
+  E("review.hidden", "catalogue", null, ["EMAIL"], ["product", "reason"]),
+  E("review.to_moderate", "catalogue", ["admin.reviews.moderate"], ["PUSH"], ["kind", "reason"]),
   // Phase 48 — rebates & bonuses
   E("rebate.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "name"]),
   E("rebate.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name"]),
