@@ -63,7 +63,7 @@ export default async function StorePage({ params, searchParams }: { params: Prom
         <div>
           <div className="mb-4"><BarcodeSearch action={base} defaultValue={sp.q} hidden={category ? { category } : undefined} /></div>
           {fs.enabled && fs.filter && <FoodFilter base={base} params={{ q: sp.q, category }} free={fp.free} diet={fp.diet} l={fl.l} />}
-          {c2 && <EcoFilter base={base} params={{ q: sp.q, category, free: fp.free, diet: fp.diet }} active={eco} l={c2} />}
+          {c2 && <EcoFilter base={base} params={{ q: sp.q, category, free: fp.free, diet: fp.diet }} active={eco} l={c2} showAll={false} />}
           {data.items.length === 0 ? <p className="py-12 text-center text-muted-foreground">{t("noResults")}</p> : (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
               {data.items.map((i) => <ProductCard key={i.offerId} item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} showVendor={false} />)}

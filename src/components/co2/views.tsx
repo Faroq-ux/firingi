@@ -15,8 +15,11 @@ export function Co2Chips({ badges, l, kgText }: { badges: string[]; l: Record<st
   );
 }
 
-/** Shop filter chips: all / low CO₂ / local / eco packaging (keeps the other filters in the link). */
-export function EcoFilter({ base, params, active, l }: { base: string; params: Record<string, string | string[] | null | undefined>; active: string | null; l: Record<string, string> }) {
+/**
+ * Shop filter chips: all / low CO₂ / local / eco packaging (keeps the other filters in the link). Without the "all"
+ * chip (a page that already has an "all products" link), an active chip clears the filter when clicked again.
+ */
+export function EcoFilter({ base, params, active, l, showAll = true }: { base: string; params: Record<string, string | string[] | null | undefined>; active: string | null; l: Record<string, string>; showAll?: boolean }) {
   const href = (eco: string | null) => {
     const q = new URLSearchParams();
     for (const [k, v] of Object.entries(params)) for (const x of Array.isArray(v) ? v : v ? [v] : []) q.append(k, x);
@@ -24,11 +27,11 @@ export function EcoFilter({ base, params, active, l }: { base: string; params: R
     const s = q.toString();
     return s ? `${base}?${s}` : base;
   };
-  const opts: [string | null, string][] = [[null, l.filterAll], ["LOW_CO2", l["badge.LOW_CO2"]], ["LOCAL", l["badge.LOCAL"]], ["ECO_PACKAGING", l["badge.ECO_PACKAGING"]]];
+  const opts: [string | null, string][] = [...(showAll ? [[null, l.filterAll] as [null, string]] : []), ["LOW_CO2", l["badge.LOW_CO2"]], ["LOCAL", l["badge.LOCAL"]], ["ECO_PACKAGING", l["badge.ECO_PACKAGING"]]];
   return (
     <nav className="mb-3 flex flex-wrap items-center gap-1.5 text-xs" aria-label={l.filterLabel} data-testid="eco-filter">
       <span className="text-muted-foreground">{l.filterLabel}:</span>
-      {opts.map(([v, label]) => <a key={v ?? "all"} href={href(v)} className={`rounded-full border px-2.5 py-1 ${active === v ? "border-[color:var(--vivid-teal)] bg-[color-mix(in_oklch,var(--vivid-teal)_14%,transparent)]" : "hover:bg-muted"}`} data-testid={`eco-${v ?? "all"}`}>{label}</a>)}
+      {opts.map(([v, label]) => <a key={v ?? "all"} href={href(!showAll && v === active ? null : v)} aria-pressed={active === v} className={`rounded-full border px-2.5 py-1 ${active === v ? "border-[color:var(--vivid-teal)] bg-[color-mix(in_oklch,var(--vivid-teal)_14%,transparent)]" : "hover:bg-muted"}`} data-testid={`eco-${v ?? "all"}`}>{label}</a>)}
     </nav>
   );
 }
