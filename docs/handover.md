@@ -27,7 +27,7 @@ Five portals, one app:
 | FIRINGI back office | `/admin` | FIRINGI staff | English |
 | Public | `/`, `/login`, `/register`, `/pay/…`, `/status` | everyone | 25 languages |
 
-Size at handover: **636 pages** (372 back office, 128 supplier, 91 buyer, 8 driver, the rest public), **54 schema
+Size at handover: **636 pages** (380 back office, 135 supplier, 98 buyer, 8 driver, the rest public), **54 schema
 files / 76 migrations**, **211 notification events**, **31 scheduled job routes**, **25 languages** (6,190 texts each).
 Bangla and Hindi are handled by the AI customer-service assistant, not as interface languages.
 
