@@ -33,13 +33,17 @@ export function ClearCartButton() {
   return <Button variant="ghost" size="sm" disabled={pending} onClick={() => start(async () => { await clearCartAction({}); router.refresh(); })}>{t("clear")}</Button>;
 }
 
-export function CheckoutForm({ addresses, disabled, poRequired = false, locale = "pt-PT" }: { addresses: { id: string; label: string }[]; disabled: boolean; poRequired?: boolean; locale?: string }) {
+/** Phase 50: pay later at checkout — the options with their fee and schedule (texts from the server). */
+export type PayLaterChoice = { title: string; payNow: string; note: string; options: { id: string; label: string; detail: string }[] };
+
+export function CheckoutForm({ addresses, disabled, poRequired = false, locale = "pt-PT", payLater = null }: { addresses: { id: string; label: string }[]; disabled: boolean; poRequired?: boolean; locale?: string; payLater?: PayLaterChoice | null }) {
   const t = useTranslations("orders");
   const tm = useTranslations("multisite");
   const router = useRouter();
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [addressId, setAddressId] = useState(addresses[0]?.id ?? "");
+  const [termId, setTermId] = useState("");
   if (addresses.length === 0) return <p className="text-sm text-warning">{t("noDeliveryAddress")}</p>;
   return (
     <form
@@ -48,7 +52,7 @@ export function CheckoutForm({ addresses, disabled, poRequired = false, locale =
         e.preventDefault();
         const fd = new FormData(e.currentTarget);
         start(async () => {
-          const r = await placeOrderAction({ deliveryAddressId: String(fd.get("address")), notes: String(fd.get("notes") || "") || null, requestedDeliveryDate: String(fd.get("date") || "") || null, poReference: String(fd.get("po") || "") || null });
+          const r = await placeOrderAction({ deliveryAddressId: String(fd.get("address")), notes: String(fd.get("notes") || "") || null, requestedDeliveryDate: String(fd.get("date") || "") || null, poReference: String(fd.get("po") || "") || null, payLaterTermId: termId || null });
           if (r.ok) router.push(r.data.approval ? `/buy/orders/approvals/${r.data.approval.id}?sent=1` : `/buy/orders/${r.data.id}?placed=1`);
           else setError(r.error);
         });
@@ -59,6 +63,19 @@ export function CheckoutForm({ addresses, disabled, poRequired = false, locale =
       <CheckoutBudgets addressId={addressId} locale={locale} />
       <div className="space-y-1"><Label htmlFor="po">{tm("poReference")}{!poRequired && <span className="text-muted-foreground"> ({tm("optional")})</span>}</Label><Input id="po" name="po" maxLength={60} required={poRequired} placeholder="PO-1234" /></div>
       <div className="space-y-1"><Label htmlFor="date">{t("requestedDate")}</Label><Input id="date" name="date" type="date" /></div>
+      {payLater && payLater.options.length > 0 && (
+        <fieldset className="space-y-1.5 rounded-lg border p-3" data-testid="paylater-choice">
+          <legend className="px-1 text-sm font-medium">{payLater.title}</legend>
+          <label className="flex items-start gap-2 text-sm"><input type="radio" name="paylater" className="mt-0.5" checked={!termId} onChange={() => setTermId("")} /> {payLater.payNow}</label>
+          {payLater.options.map((o) => (
+            <label key={o.id} className="flex items-start gap-2 text-sm" data-testid="paylater-option">
+              <input type="radio" name="paylater" className="mt-0.5" value={o.id} checked={termId === o.id} onChange={() => setTermId(o.id)} />
+              <span className="min-w-0"><span className="font-medium">{o.label}</span><span className="block break-words text-xs text-muted-foreground">{o.detail}</span></span>
+            </label>
+          ))}
+          <p className="text-xs text-muted-foreground">{payLater.note}</p>
+        </fieldset>
+      )}
       <div className="space-y-1"><Label htmlFor="notes">{t("notes")}</Label><textarea id="notes" name="notes" maxLength={500} className="min-h-16 w-full rounded-md border bg-card p-2 text-sm" /></div>
       {error && <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm text-destructive">{error}</p>}
       <Button type="submit" size="lg" className="w-full" disabled={disabled || pending}>{pending ? t("placing") : t("placeOrder")}</Button>

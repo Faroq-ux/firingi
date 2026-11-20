@@ -886,7 +886,9 @@
     "Till Staff": "Kassahenkilöstö",
     "Rebates & Bonuses": "Hyvitykset ja bonukset",
     "My Bonuses": "Omat bonukset",
-    "Buying Groups": "Ostoryhmät"
+    "Buying Groups": "Ostoryhmät",
+    "Pay Later": "Maksa myöhemmin",
+    "Tenders": "Tarjouskilpailut"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Ryhmätilaus: {orders} tilausta",
       "body": "Ostoryhmä ”{name}” teki yhdessä {orders} tilausta (”{title}”), toimitus {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Maksa myöhemmin: maksu erääntyy {date}",
+      "body": "Tilauksen {number} erä {n} ({amount} €) erääntyy {date}."
+    },
+    "paylater_overdue": {
+      "title": "Maksa myöhemmin: maksu erääntynyt",
+      "body": "Tilauksen {number} erä {n} ({amount} €) erääntyi {date}. Maksa se — Maksa myöhemmin on keskeytetty siihen asti."
+    },
+    "tender_review": {
+      "title": "Tarkistettava tarjouskilpailu: {number}",
+      "body": "{company} julkaisi tarjouskilpailun ”{title}”. Se avautuu tarjouksille, kun FIRINGI hyväksyy sen."
+    },
+    "tender_decided": {
+      "title": "Tarjouskilpailusi {number}: {decision}",
+      "body": "FIRINGIn päätös tarjouskilpailusta ”{title}”: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Uusi tarjouskilpailu: {title}",
+      "body": "Ostaja pyytää hintoja ({lines} riviä, tarjouskilpailu {number}). Tarjousaika päättyy {date}."
+    },
+    "tender_bid": {
+      "title": "Uusi tarjous: {number}",
+      "body": "Tarjouskilpailuusi ”{title}” on tullut uusi tarjous (tähän mennessä {bids})."
+    },
+    "tender_closed": {
+      "title": "Tarjousaika päättynyt: {number}",
+      "body": "Tarjousaika kilpailussa ”{title}” on päättynyt, tarjouksia {bids}. Valitse parhaat ja tee tilauksesi."
+    },
+    "tender_awarded": {
+      "title": "Voitit tarjouskilpailun {number}",
+      "body": "Ostaja valitsi tarjouksesi {lines} riville kilpailussa ”{title}” — tilaus {order} odottaa sinua."
+    },
+    "tender_lost": {
+      "title": "Tarjouskilpailu {number} ratkaistu",
+      "body": "Ostaja valitsi tällä kertaa muut tarjoukset kilpailussa ”{title}”."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Lopeta ryhmähinnat",
     "vStopped": "Ryhmähinnat lopetettu.",
     "notForYou": "Tämä toimittaja ei myy yrityksesi tyyppisille yrityksille, joten et voi lisätä tähän ryhmätilaukseen."
+  },
+  "payLater": {
+    "choose": "Miten haluat maksaa?",
+    "payNow": "Tavalliseen tapaan (normaalit maksuehtosi)",
+    "checkNote": "Maksa myöhemmin -vaihtoehto tarkistetaan, kun teet tilauksen — sen tarkistaa maksukumppanimme tai FIRINGI.",
+    "termDays": "Maksa {days} päivässä",
+    "termInstalments": "{count} kuukausierää",
+    "fee": "Palkkio {amount}",
+    "noFee": "Ei palkkiota",
+    "payBy": "maksa viimeistään {date}",
+    "eachMonth": "{count} × noin {amount}, ensimmäinen {date}",
+    "title": "Maksa myöhemmin",
+    "intro": "Tilaa nyt ja maksa lasku myöhemmin — tietyn ajan kuluessa tai kuukausierissä.",
+    "closed": {
+      "OFF": "Maksa myöhemmin -vaihtoehto ei ole tällä hetkellä käytettävissä.",
+      "COMPANY_OFF": "Maksa myöhemmin -vaihtoehto ei ole yrityksesi käytettävissä. Ota yhteyttä FIRINGIin.",
+      "TYPE_OFF": "Maksa myöhemmin -vaihtoehto ei ole vielä käytettävissä yritystyypillesi.",
+      "OVERDUE": "Maksa myöhemmin -maksu on erääntynyt — maksa se, niin voit taas maksaa myöhemmin."
+    },
+    "howTitle": "Näin se toimii",
+    "howIntro": "Valitse kassalla Maksa myöhemmin. Lasku tulee edelleen FIRINGIltä; mahdollinen palkkio on siinä omana rivinään.",
+    "limit": "FIRINGIn luotto",
+    "used": "Käytössä",
+    "left": "Käytettävissä",
+    "partnerOn": "Kassalla voit myös maksaa myöhemmin maksukumppanimme kautta (kumppani tarkistaa tilauksesi).",
+    "ownNote": "Maksa myöhemmin -tilausten maksamaton osuus vähentää luottoasi; se vapautuu taas, kun maksat.",
+    "optionsTitle": "Vaihtoehdot",
+    "optionsIntro": "Palkkiot 1 000 €:n tilaukselle (sis. alv).",
+    "feeExample": "palkkio {amount}",
+    "plansTitle": "Maksa myöhemmin -tilauksesi",
+    "noPlans": "Ei vielä Maksa myöhemmin -tilauksia.",
+    "status": {
+      "ACTIVE": "Odottaa laskua",
+      "INVOICED": "Maksu käynnissä",
+      "PAID": "Maksettu",
+      "OVERDUE": "Erääntynyt",
+      "CANCELLED": "Peruttu"
+    },
+    "feeIncl": "sis. palkkion {amount}",
+    "invoice": "Lasku",
+    "partnerNote": "Maksukumppanimme on maksanut FIRINGIlle — sinä maksat kumppanille tämän aikataulun mukaan.",
+    "payment": "Erä {n}",
+    "paid": "maksettu",
+    "overdueOn": "myöhässä {date} alkaen",
+    "dueOn": "erääntyy {date}",
+    "payNowLink": "Maksa laskusi"
+  },
+  "tenders": {
+    "title": "Tarjouskilpailut",
+    "intro": "Kerro toimittajille, mitä tarvitset, ja anna heidän kilpailla: he lähettävät suljetut tarjoukset kustakin rivistä, sinä valitset parhaat — kunkin toimittajan riveistä tulee tilaus.",
+    "newTender": "Uusi tarjouskilpailu",
+    "newIntro": "Kuvaa, mitä tarvitset. Toimittajat, jotka voivat toimittaa sinulle, lähettävät hintansa tarjousajan loppuun asti.",
+    "closed": {
+      "OFF": "Tarjouskilpailut ovat tällä hetkellä pois käytöstä.",
+      "COMPANY_OFF": "Tarjouskilpailut eivät ole yrityksesi käytettävissä. Ota yhteyttä FIRINGIin.",
+      "TYPE_OFF": "Tarjouskilpailut eivät ole vielä käytettävissä yritystyypillesi."
+    },
+    "noTenders": "Ei vielä tarjouskilpailuja.",
+    "status": {
+      "PENDING": "Odottaa FIRINGIä",
+      "OPEN": "Avoinna tarjouksille",
+      "CLOSED": "Tarjousaika päättynyt",
+      "AWARDED": "Ratkaistu",
+      "CANCELLED": "Peruttu",
+      "REJECTED": "Hylätty"
+    },
+    "linesBids": "Rivejä: {lines} · Tarjouksia: {bids}",
+    "closesOn": "Sulkeutuu {date}",
+    "closedOn": "Suljettu {date}",
+    "deliveryOn": "Toimitus {date}",
+    "suppliersBid": "Tarjoavia toimittajia: {n}",
+    "invitedOnly": "Vain kutsutut toimittajat",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Otsikko",
+    "titlePh": "esim. Joulukuun juomat",
+    "deliverTo": "Toimitusosoite",
+    "deliveryDate": "Toimituspäivä",
+    "closesAt": "Tarjousaika päättyy",
+    "closesHint": "Vähintään {hours} tunnin, enintään {days} päivän päästä.",
+    "noteLabel": "Viesti toimittajille (valinnainen)",
+    "linesTitle": "Mitä tarvitset",
+    "lineN": "Rivi {n}",
+    "remove": "Poista",
+    "change": "Vaihda",
+    "findProduct": "Etsi tuote luettelosta (valinnainen)…",
+    "detailsPh": "Lisätiedot (valinnainen)",
+    "describePh": "Tai kuvaa, mitä tarvitset",
+    "qty": "Määrä",
+    "unitNote": "Yksikkö",
+    "unitNotePh": "esim. 24 kpl:n laatikko",
+    "target": "Tavoitehinta (€, alv 0 %)",
+    "addLine": "Lisää rivi",
+    "whoBids": "Kuka voi tehdä tarjouksen",
+    "allSuppliers": "Kaikki toimittajat, jotka voivat toimittaa sinulle ({n})",
+    "onlyInvited": "Vain valitsemani toimittajat",
+    "publish": "Julkaise tarjouskilpailu",
+    "closeNow": "Päätä tarjousaika nyt",
+    "closeConfirm": "Päätetäänkö tarjousaika nyt? Uusia tarjouksia ei voi enää lähettää.",
+    "cancel": "Peru tarjouskilpailu",
+    "cancelConfirm": "Perutaanko tämä tarjouskilpailu? Toimittajien tarjoukset raukeavat.",
+    "bidsTitle": "Tarjoukset",
+    "awardIntro": "Valitse tarjous kullekin riville — halvin on valmiiksi valittuna. Kunkin toimittajan riveistä tulee yksi tilaus.",
+    "awardEarly": "Tarjousaika on vielä käynnissä; voit silti jo valita voittajat (tarjousaika päättyy silloin).",
+    "waitingBids": "Odotetaan tarjouksia — saat ilmoituksen, kun tarjous saapuu.",
+    "bidsN": "Tarjouksia: {n}",
+    "noBids": "Tälle riville ei ole tarjouksia.",
+    "best": "Paras hinta",
+    "belowTarget": "{amount} alle tavoitteesi",
+    "dontAward": "Jätä tämä rivi tilaamatta",
+    "awardTotal": "Yhteensä",
+    "exclVat": "alv 0 %",
+    "payment": "Maksu",
+    "payUsual": "Tavalliseen tapaan",
+    "award": "Valitse voittajat ja tee tilaukset",
+    "awardConfirm": "Tehdäänkö tilaukset valituista tarjouksista nyt?",
+    "awarded": "Tilauksia tehty: {orders}.",
+    "someFailed": "Joitakin ei voitu tehdä: {reason}",
+    "vTitle": "Tarjouskilpailut",
+    "vIntro": "Ostajien tarjouskilpailut, joihin voit tehdä tarjouksen. Tarjoukset ovat suljettuja: muut toimittajat eivät koskaan näe hintojasi. Antamasi hinta on se, jonka ostaja maksaa (alv 0 %); FIRINGIn tavanomainen palkkio vähennetään saamastasi summasta.",
+    "vOpen": "Avoimet tarjouskilpailut",
+    "vNoOpen": "Sinulle ei ole nyt avoimia tarjouskilpailuja.",
+    "invitedYou": "Sinut on kutsuttu",
+    "vMyBids": "Omat tarjoukset",
+    "vNoBids": "Ei vielä tarjouksia.",
+    "linesN": "{n} riviä",
+    "bidStatus": {
+      "SUBMITTED": "Tarjous lähetetty",
+      "WITHDRAWN": "Peruttu",
+      "WON": "Voitettu",
+      "LOST": "Ei valittu"
+    },
+    "yourBid": "Tarjouksesi",
+    "makeBid": "Tee tarjous",
+    "bidIntro": "Tarjoa niille riveille, jotka voit toimittaa — yksi tuotteistasi ja hintasi yksikköä kohden.",
+    "biddingClosed": "Tarjousaika on päättynyt.",
+    "buyerTarget": "Ostajan tavoite: {price}",
+    "noMatchingOffer": "Sinulla ei ole tätä tuotetta aktiivisena myynnissä.",
+    "yourProduct": "Tuotteesi",
+    "yourPrice": "Hinta yksikköä kohden (€)",
+    "skipLine": "Älä tarjoa tälle riville",
+    "yourBase": "listahintasi {price}",
+    "lineTotal": "rivi {amount}",
+    "youReceive": "saat noin {amount}",
+    "bidNote": "Viesti ostajalle (valinnainen)",
+    "sendBid": "Lähetä tarjous",
+    "updateBid": "Päivitä tarjous",
+    "bidSent": "Tarjous tallennettu.",
+    "withdraw": "Peru tarjous",
+    "withdrawConfirm": "Perutaanko tarjouksesi?",
+    "sealedNote": "Muut toimittajat eivät koskaan näe tarjoustasi. Voit muuttaa sitä tarjousajan loppuun asti.",
+    "lineWon": "voitettu",
+    "lineLost": "ei valittu",
+    "waiting": "odottaa ostajaa",
+    "noBidLine": "ei tarjousta"
   }
 }

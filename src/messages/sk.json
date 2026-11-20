@@ -886,7 +886,9 @@
     "Till Staff": "Personál pokladne",
     "Rebates & Bonuses": "Zľavy a bonusy",
     "My Bonuses": "Moje bonusy",
-    "Buying Groups": "Nákupné skupiny"
+    "Buying Groups": "Nákupné skupiny",
+    "Pay Later": "Odložená platba",
+    "Tenders": "Tendre"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Skupinová objednávka: objednávky ({orders})",
       "body": "Nákupná skupina „{name}“ spoločne zadala objednávky „{title}“ (počet: {orders}) s doručením {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Odložená platba: splatnosť {date}",
+      "body": "Platba {n} vo výške {amount} € za objednávku {number} je splatná {date}."
+    },
+    "paylater_overdue": {
+      "title": "Odložená platba: platba po splatnosti",
+      "body": "Platba {n} vo výške {amount} € za objednávku {number} bola splatná {date}. Uhraďte ju, prosím — dovtedy je odložená platba pozastavená."
+    },
+    "tender_review": {
+      "title": "Tender na kontrolu: {number}",
+      "body": "Spoločnosť {company} zverejnila tender „{title}“. Ponuky bude prijímať po schválení FIRINGI."
+    },
+    "tender_decided": {
+      "title": "Váš tender {number}: {decision}",
+      "body": "Rozhodnutie FIRINGI o „{title}“: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nový tender: {title}",
+      "body": "Kupujúci žiada o ceny (položky: {lines}, tender {number}). Uzávierka ponúk {date}."
+    },
+    "tender_bid": {
+      "title": "Nová ponuka v tendri {number}",
+      "body": "Váš tender „{title}“ má novú ponuku (zatiaľ spolu: {bids})."
+    },
+    "tender_closed": {
+      "title": "Ponuky uzavreté: {number}",
+      "body": "Príjem ponúk na „{title}“ sa skončil (počet ponúk: {bids}). Vyberte najlepšie a zadajte objednávky."
+    },
+    "tender_awarded": {
+      "title": "Vyhrali ste tender {number}",
+      "body": "Kupujúci vybral Vašu ponuku na položky z „{title}“ (počet: {lines}) — čaká na Vás objednávka {order}."
+    },
+    "tender_lost": {
+      "title": "Tender {number} vyhodnotený",
+      "body": "Kupujúci tentoraz v „{title}“ vybral iné ponuky."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Zrušiť skupinové ceny",
     "vStopped": "Skupinové ceny boli zrušené.",
     "notForYou": "Tento dodávateľ nepredáva Vášmu typu podniku, preto do tejto skupinovej objednávky nemôžete pridávať."
+  },
+  "payLater": {
+    "choose": "Ako chcete zaplatiť?",
+    "payNow": "Ako zvyčajne (Vaše bežné platobné podmienky)",
+    "checkNote": "Odloženú platbu overí pri odoslaní objednávky náš platobný partner alebo FIRINGI.",
+    "termDays": "Zaplatiť do {days} dní",
+    "termInstalments": "Mesačné splátky: {count}",
+    "fee": "Poplatok {amount}",
+    "noFee": "Bez poplatku",
+    "payBy": "zaplatiť do {date}",
+    "eachMonth": "{count} × približne {amount}, prvá {date}",
+    "title": "Odložená platba",
+    "intro": "Objednajte teraz a faktúru zaplaťte neskôr — o niekoľko dní alebo v mesačných splátkach.",
+    "closed": {
+      "OFF": "Odložená platba momentálne nie je k dispozícii.",
+      "COMPANY_OFF": "Odložená platba nie je pre Vašu firmu k dispozícii. Kontaktujte FIRINGI.",
+      "TYPE_OFF": "Odložená platba zatiaľ nie je k dispozícii pre Váš typ podniku.",
+      "OVERDUE": "Jedna odložená platba je po splatnosti — uhraďte ju, aby ste mohli odloženú platbu znova používať."
+    },
+    "howTitle": "Ako to funguje",
+    "howIntro": "Odloženú platbu zvoľte pri dokončení objednávky. Faktúru Vám aj naďalej vystaví FIRINGI; prípadný poplatok je na nej samostatnou položkou.",
+    "limit": "Úver od FIRINGI",
+    "used": "Využité",
+    "left": "K dispozícii",
+    "partnerOn": "Pri dokončení objednávky je k dispozícii aj odložená platba cez nášho platobného partnera (partner Vašu objednávku overí).",
+    "ownNote": "Čo ešte dlhujete za objednávky s odloženou platbou, sa započítava do Vášho úveru; s každou úhradou sa znova uvoľňuje.",
+    "optionsTitle": "Možnosti",
+    "optionsIntro": "Poplatky platia pre objednávku za 1 000 € (s DPH).",
+    "feeExample": "poplatok {amount}",
+    "plansTitle": "Vaše objednávky s odloženou platbou",
+    "noPlans": "Zatiaľ žiadne objednávky s odloženou platbou.",
+    "status": {
+      "ACTIVE": "Čaká na faktúru",
+      "INVOICED": "Spláca sa",
+      "PAID": "Zaplatené",
+      "OVERDUE": "Po splatnosti",
+      "CANCELLED": "Zrušené"
+    },
+    "feeIncl": "vrátane poplatku {amount}",
+    "invoice": "Faktúra",
+    "partnerNote": "FIRINGI už dostala zaplatené od nášho platobného partnera — partnerovi platíte podľa tohto harmonogramu.",
+    "payment": "Platba {n}",
+    "paid": "zaplatené",
+    "overdueOn": "po splatnosti od {date}",
+    "dueOn": "splatné {date}",
+    "payNowLink": "Zaplatiť faktúry"
+  },
+  "tenders": {
+    "title": "Tendre",
+    "intro": "Povedzte dodávateľom, čo potrebujete, a nechajte ich súťažiť: na každú položku pošlú neverejné ponuky, Vy vyberiete najlepšie — položky každého dodávateľa sa stanú objednávkou.",
+    "newTender": "Nový tender",
+    "newIntro": "Opíšte, čo potrebujete. Dodávatelia, ktorí Vám môžu doručiť, posielajú ceny až do uzávierky ponúk.",
+    "closed": {
+      "OFF": "Tendre sú momentálne vypnuté.",
+      "COMPANY_OFF": "Tendre nie sú pre Vašu firmu dostupné. Kontaktujte FIRINGI.",
+      "TYPE_OFF": "Tendre zatiaľ nie sú dostupné pre Váš typ podniku."
+    },
+    "noTenders": "Zatiaľ žiadne tendre.",
+    "status": {
+      "PENDING": "Čaká na FIRINGI",
+      "OPEN": "Otvorený pre ponuky",
+      "CLOSED": "Ponuky uzavreté",
+      "AWARDED": "Vyhodnotený",
+      "CANCELLED": "Zrušený",
+      "REJECTED": "Zamietnutý"
+    },
+    "linesBids": "Položky: {lines} · Ponuky: {bids}",
+    "closesOn": "Uzávierka {date}",
+    "closedOn": "Uzavretý {date}",
+    "deliveryOn": "Doručenie {date}",
+    "suppliersBid": "Ponúkajúci dodávatelia: {n}",
+    "invitedOnly": "Len pozvaní dodávatelia",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Názov",
+    "titlePh": "napr. Nápoje na december",
+    "deliverTo": "Doručiť na",
+    "deliveryDate": "Deň doručenia",
+    "closesAt": "Uzávierka ponúk",
+    "closesHint": "Najmenej {hours} hodín, najviac {days} dní odteraz.",
+    "noteLabel": "Poznámka pre dodávateľov (nepovinné)",
+    "linesTitle": "Čo potrebujete",
+    "lineN": "Položka {n}",
+    "remove": "Odstrániť",
+    "change": "Zmeniť",
+    "findProduct": "Hľadať produkt v katalógu (nepovinné)…",
+    "detailsPh": "Podrobnosti (nepovinné)",
+    "describePh": "Alebo opíšte, čo potrebujete",
+    "qty": "Množstvo",
+    "unitNote": "Jednotka",
+    "unitNotePh": "napr. balenia po 24",
+    "target": "Cieľová cena (€, bez DPH)",
+    "addLine": "Pridať položku",
+    "whoBids": "Kto môže ponúkať",
+    "allSuppliers": "Každý dodávateľ, ktorý Vám môže doručiť ({n})",
+    "onlyInvited": "Len dodávatelia, ktorých vyberiem",
+    "publish": "Zverejniť tender",
+    "closeNow": "Uzavrieť ponuky teraz",
+    "closeConfirm": "Uzavrieť ponuky teraz? Ďalšie ponuky už nebude možné poslať.",
+    "cancel": "Zrušiť tender",
+    "cancelConfirm": "Zrušiť tento tender? Ponuky dodávateľov prepadnú.",
+    "bidsTitle": "Ponuky",
+    "awardIntro": "Vyberte ponuku pre každú položku — predvolene je vybraná najlacnejšia. Položky každého dodávateľa tvoria jednu objednávku.",
+    "awardEarly": "Ponuky sú stále otvorené; položky už môžete prideliť (príjem ponúk sa tým uzavrie).",
+    "waitingBids": "Čaká sa na ponuky — keď nejaká príde, dáme Vám vedieť.",
+    "bidsN": "Ponuky: {n}",
+    "noBids": "Na túto položku nie sú žiadne ponuky.",
+    "best": "Najlepšia cena",
+    "belowTarget": "o {amount} pod Vašou cieľovou cenou",
+    "dontAward": "Túto položku neprideliť",
+    "awardTotal": "Spolu",
+    "exclVat": "bez DPH",
+    "payment": "Platba",
+    "payUsual": "Ako zvyčajne",
+    "award": "Prideliť a zadať objednávky",
+    "awardConfirm": "Zadať teraz objednávky pre vybrané ponuky?",
+    "awarded": "Zadané objednávky: {orders}.",
+    "someFailed": "Niektoré sa nepodarilo zadať: {reason}",
+    "vTitle": "Tendre",
+    "vIntro": "Tendre kupujúcich, do ktorých môžete poslať ponuku. Ponuky sú neverejné: ostatní dodávatelia Vaše ceny nikdy neuvidia. Zadaná cena je to, čo zaplatí kupujúci (bez DPH); bežná provízia FIRINGI sa odpočíta z toho, čo dostanete.",
+    "vOpen": "Otvorené tendre",
+    "vNoOpen": "Momentálne pre Vás nie sú žiadne otvorené tendre.",
+    "invitedYou": "Ste pozvaní",
+    "vMyBids": "Moje ponuky",
+    "vNoBids": "Zatiaľ žiadne ponuky.",
+    "linesN": "Položky: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Ponuka odoslaná",
+      "WITHDRAWN": "Stiahnutá",
+      "WON": "Vyhraná",
+      "LOST": "Nevybraná"
+    },
+    "yourBid": "Vaša ponuka",
+    "makeBid": "Podať ponuku",
+    "bidIntro": "Ponúknite na položky, ktoré môžete dodať — jeden z Vašich produktov a Vašu cenu za jednotku.",
+    "biddingClosed": "Príjem ponúk je uzavretý.",
+    "buyerTarget": "Cieľ kupujúceho: {price}",
+    "noMatchingOffer": "Na tento produkt nemáte aktívnu ponuku.",
+    "yourProduct": "Váš produkt",
+    "yourPrice": "Cena za jednotku (€)",
+    "skipLine": "Na túto položku neponúkať",
+    "yourBase": "Vaša cenníková cena {price}",
+    "lineTotal": "položka {amount}",
+    "youReceive": "dostanete približne {amount}",
+    "bidNote": "Poznámka pre kupujúceho (nepovinné)",
+    "sendBid": "Odoslať ponuku",
+    "updateBid": "Aktualizovať ponuku",
+    "bidSent": "Ponuka uložená.",
+    "withdraw": "Stiahnuť ponuku",
+    "withdrawConfirm": "Stiahnuť Vašu ponuku?",
+    "sealedNote": "Ostatní dodávatelia Vašu ponuku nikdy neuvidia. Môžete ju meniť až do uzávierky ponúk.",
+    "lineWon": "vyhraná",
+    "lineLost": "nevybraná",
+    "waiting": "čaká na kupujúceho",
+    "noBidLine": "bez ponuky"
   }
 }

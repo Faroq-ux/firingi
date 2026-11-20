@@ -1,0 +1,74 @@
+// Phase 50: pay later (trade credit) — buyers pay an order's invoice in N days or in monthly instalments,
+// financed by a partner (who pays FIRINGI at once and collects from the buyer) or by FIRINGI's own credit.
+
+enum PayLaterModel {
+  PARTNER
+  OWN
+}
+
+enum PayLaterStatus {
+  ACTIVE // order placed, waiting for its invoice
+  INVOICED // invoice issued; the buyer pays the schedule (partner: partner paid FIRINGI)
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+/// One per order paid later.
+model PayLaterPlan {
+  id          String         @id @default(cuid())
+  orderId     String         @unique
+  companyId   String
+  model       PayLaterModel
+  /// the term as chosen (snapshot): {id, kind DAYS|INSTALMENTS, days, count, label, feePct, feeFixed, feePayer, buyerSharePct}
+  term        Json
+  partnerKey  String?
+  partnerRef  String?
+  /// order gross at checkout, then the invoice gross
+  amount      Decimal        @db.Decimal(18, 2)
+  /// the part of the fee the buyer pays (on its invoice) and the part FIRINGI pays
+  buyerFee    Decimal        @default(0) @db.Decimal(18, 2)
+  firingiFee  Decimal        @default(0) @db.Decimal(18, 2)
+  status      PayLaterStatus @default(ACTIVE)
+  invoiceId   String?
+  createdById String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  order       Order                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  company     Company              @relation("PayLaterPlans", fields: [companyId], references: [id], onDelete: Cascade)
+  instalments PayLaterInstalment[]
+
+  @@index([companyId, status])
+  @@index([status])
+}
+
+model PayLaterInstalment {
+  id         String    @id @default(cuid())
+  planId     String
+  n          Int
+  dueAt      DateTime
+  amount     Decimal   @db.Decimal(18, 2)
+  paidAt     DateTime?
+  remindedAt DateTime?
+  overdueAt  DateTime?
+
+  plan PayLaterPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, n])
+  @@index([dueAt])
+}
+
+/// A buyer's pay-later standing: FIRINGI's own credit limit (null = the default for its type) and the partner's check.
+model PayLaterAccount {
+  companyId     String    @id
+  ownLimit      Decimal?  @db.Decimal(18, 2)
+  partnerKey    String?
+  partnerStatus String? // APPROVED | DECLINED
+  partnerLimit  Decimal?  @db.Decimal(18, 2)
+  partnerRef    String?
+  checkedAt     DateTime?
+  updatedAt     DateTime  @updatedAt
+
+  company Company @relation("PayLaterAccount", fields: [companyId], references: [id], onDelete: Cascade)
+}

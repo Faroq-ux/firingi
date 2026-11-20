@@ -886,7 +886,9 @@
     "Till Staff": "Kassepersonale",
     "Rebates & Bonuses": "Rabatter og bonuser",
     "My Bonuses": "Mine bonuser",
-    "Buying Groups": "Innkjøpsgrupper"
+    "Buying Groups": "Innkjøpsgrupper",
+    "Pay Later": "Betal senere",
+    "Tenders": "Anbud"
   },
   "delivery": {
     "title": "Levering",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Gruppebestilling: {orders} bestillinger",
       "body": "Innkjøpsgruppen «{name}» la inn {orders} bestillinger sammen («{title}»), for levering {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Betal senere: betaling forfaller {date}",
+      "body": "Betaling {n} på {amount} € for bestilling {number} forfaller {date}."
+    },
+    "paylater_overdue": {
+      "title": "Betal senere: betaling forfalt",
+      "body": "Betaling {n} på {amount} € for bestilling {number} forfalt {date}. Betal den — Betal senere er satt på pause til da."
+    },
+    "tender_review": {
+      "title": "Anbud til kontroll: {number}",
+      "body": "{company} har lagt ut anbudet «{title}». Det åpner for bud når FIRINGI har godkjent det."
+    },
+    "tender_decided": {
+      "title": "Anbudet ditt {number}: {decision}",
+      "body": "FIRINGIs avgjørelse om «{title}»: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nytt anbud: {title}",
+      "body": "En kjøper ber om priser ({lines} linjer, anbud {number}). Budfrist {date}."
+    },
+    "tender_bid": {
+      "title": "Nytt bud på {number}",
+      "body": "Anbudet ditt «{title}» har fått et nytt bud ({bids} hittil)."
+    },
+    "tender_closed": {
+      "title": "Budgivning avsluttet: {number}",
+      "body": "Budgivningen på «{title}» er avsluttet med {bids} bud. Velg de beste for å legge inn bestillingene dine."
+    },
+    "tender_awarded": {
+      "title": "Du vant anbud {number}",
+      "body": "Kjøperen valgte budet ditt for {lines} linjer i «{title}» — bestilling {order} venter på deg."
+    },
+    "tender_lost": {
+      "title": "Anbud {number} er tildelt",
+      "body": "Kjøperen tildelte «{title}» til andre bud denne gangen."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Stopp gruppepriser",
     "vStopped": "Gruppepriser stoppet.",
     "notForYou": "Denne leverandøren selger ikke til din type virksomhet, så du kan ikke legge til i denne gruppebestillingen."
+  },
+  "payLater": {
+    "choose": "Hvordan vil du betale?",
+    "payNow": "Som vanlig (dine vanlige betalingsvilkår)",
+    "checkNote": "Betal senere sjekkes når du legger inn bestillingen — av betalingspartneren vår eller av FIRINGI.",
+    "termDays": "Betal om {days} dager",
+    "termInstalments": "{count} månedlige avdrag",
+    "fee": "Gebyr {amount}",
+    "noFee": "Uten gebyr",
+    "payBy": "betal innen {date}",
+    "eachMonth": "{count} × ca. {amount}, første {date}",
+    "title": "Betal senere",
+    "intro": "Bestill nå og betal fakturaen senere — om et antall dager eller i månedlige avdrag.",
+    "closed": {
+      "OFF": "Betal senere er ikke tilgjengelig for øyeblikket.",
+      "COMPANY_OFF": "Betal senere er ikke tilgjengelig for bedriften din. Kontakt FIRINGI.",
+      "TYPE_OFF": "Betal senere er ikke tilgjengelig for din bedriftstype ennå.",
+      "OVERDUE": "Du har en forfalt betal senere-betaling — betal den for å kunne bruke Betal senere igjen."
+    },
+    "howTitle": "Slik fungerer det",
+    "howIntro": "Velg Betal senere i kassen. Fakturaen kommer fortsatt fra FIRINGI; gebyret (hvis det er noe) står på en egen linje på den.",
+    "limit": "Kreditt hos FIRINGI",
+    "used": "I bruk",
+    "left": "Tilgjengelig",
+    "partnerOn": "Betal senere via betalingspartneren vår er også tilgjengelig i kassen (partneren vurderer bestillingen din).",
+    "ownNote": "Det du fortsatt skylder på betal senere-bestillinger trekkes fra kreditten din; den frigjøres igjen etter hvert som du betaler.",
+    "optionsTitle": "Alternativer",
+    "optionsIntro": "Gebyrene gjelder for en bestilling på 1 000 € (inkl. mva.).",
+    "feeExample": "gebyr {amount}",
+    "plansTitle": "Dine betal senere-bestillinger",
+    "noPlans": "Ingen betal senere-bestillinger ennå.",
+    "status": {
+      "ACTIVE": "Venter på faktura",
+      "INVOICED": "Betales",
+      "PAID": "Betalt",
+      "OVERDUE": "Forfalt",
+      "CANCELLED": "Kansellert"
+    },
+    "feeIncl": "inkl. gebyr {amount}",
+    "invoice": "Faktura",
+    "partnerNote": "Betalingspartneren vår har betalt FIRINGI — du betaler partneren etter denne planen.",
+    "payment": "Betaling {n}",
+    "paid": "betalt",
+    "overdueOn": "forfalt siden {date}",
+    "dueOn": "forfaller {date}",
+    "payNowLink": "Betal fakturaene dine"
+  },
+  "tenders": {
+    "title": "Anbud",
+    "intro": "Fortell leverandørene hva du trenger, og la dem konkurrere: de gir lukkede bud per linje, du velger det beste — hver leverandørs linjer blir en bestilling.",
+    "newTender": "Nytt anbud",
+    "newIntro": "Beskriv hva du trenger. Leverandører som kan levere til deg, gir sine priser frem til budfristen.",
+    "closed": {
+      "OFF": "Anbud er slått av for øyeblikket.",
+      "COMPANY_OFF": "Anbud er ikke tilgjengelig for bedriften din. Kontakt FIRINGI.",
+      "TYPE_OFF": "Anbud er ikke tilgjengelig for din bedriftstype ennå."
+    },
+    "noTenders": "Ingen anbud ennå.",
+    "status": {
+      "PENDING": "Venter på FIRINGI",
+      "OPEN": "Åpent for bud",
+      "CLOSED": "Budgivning avsluttet",
+      "AWARDED": "Tildelt",
+      "CANCELLED": "Kansellert",
+      "REJECTED": "Avvist"
+    },
+    "linesBids": "Linjer: {lines} · Bud: {bids}",
+    "closesOn": "Budfrist {date}",
+    "closedOn": "Avsluttet {date}",
+    "deliveryOn": "Levering {date}",
+    "suppliersBid": "Leverandører som byr: {n}",
+    "invitedOnly": "Bare inviterte leverandører",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Tittel",
+    "titlePh": "f.eks. Drikke til desember",
+    "deliverTo": "Lever til",
+    "deliveryDate": "Leveringsdag",
+    "closesAt": "Budfrist",
+    "closesHint": "Minst {hours} timer, høyst {days} dager fra nå.",
+    "noteLabel": "Merknad til leverandørene (valgfritt)",
+    "linesTitle": "Hva du trenger",
+    "lineN": "Linje {n}",
+    "remove": "Fjern",
+    "change": "Endre",
+    "findProduct": "Finn et produkt i katalogen (valgfritt)…",
+    "detailsPh": "Detaljer (valgfritt)",
+    "describePh": "Eller beskriv hva du trenger",
+    "qty": "Antall",
+    "unitNote": "Enhet",
+    "unitNotePh": "f.eks. kartonger à 24",
+    "target": "Målpris (€, ekskl. mva.)",
+    "addLine": "Legg til en linje",
+    "whoBids": "Hvem kan by",
+    "allSuppliers": "Alle leverandører som kan levere til deg ({n})",
+    "onlyInvited": "Bare leverandørene jeg velger",
+    "publish": "Publiser anbud",
+    "closeNow": "Avslutt budgivningen nå",
+    "closeConfirm": "Avslutte budgivningen nå? Det kan ikke gis flere bud.",
+    "cancel": "Kanseller anbudet",
+    "cancelConfirm": "Kansellere dette anbudet? Leverandørenes bud forkastes.",
+    "bidsTitle": "Bud",
+    "awardIntro": "Velg et bud for hver linje — det billigste er valgt. Hver leverandørs linjer blir én bestilling.",
+    "awardEarly": "Budgivningen er fortsatt åpen; du kan allerede tildele (da avsluttes budgivningen).",
+    "waitingBids": "Venter på bud — du får beskjed når det kommer et.",
+    "bidsN": "Bud: {n}",
+    "noBids": "Ingen bud på denne linjen.",
+    "best": "Beste pris",
+    "belowTarget": "{amount} under målet ditt",
+    "dontAward": "Ikke tildel denne linjen",
+    "awardTotal": "Totalt",
+    "exclVat": "ekskl. mva.",
+    "payment": "Betaling",
+    "payUsual": "Som vanlig",
+    "award": "Tildel og legg inn bestillinger",
+    "awardConfirm": "Legge inn bestillingene for de valgte budene nå?",
+    "awarded": "Bestillinger lagt inn: {orders}.",
+    "someFailed": "Noen kunne ikke legges inn: {reason}",
+    "vTitle": "Anbud",
+    "vIntro": "Kjøpernes anbud du kan by på. Budene er lukkede: andre leverandører ser aldri prisene dine. Prisen du oppgir, er det kjøperen betaler (ekskl. mva.); FIRINGIs vanlige provisjon trekkes fra det du mottar.",
+    "vOpen": "Åpne anbud",
+    "vNoOpen": "Ingen åpne anbud for deg akkurat nå.",
+    "invitedYou": "Du er invitert",
+    "vMyBids": "Mine bud",
+    "vNoBids": "Ingen bud ennå.",
+    "linesN": "Linjer: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Bud sendt",
+      "WITHDRAWN": "Trukket tilbake",
+      "WON": "Vunnet",
+      "LOST": "Ikke valgt"
+    },
+    "yourBid": "Ditt bud",
+    "makeBid": "Gi bud",
+    "bidIntro": "By på linjene du kan levere — ett av produktene dine og din pris per enhet.",
+    "biddingClosed": "Budgivningen er avsluttet.",
+    "buyerTarget": "Kjøperens mål: {price}",
+    "noMatchingOffer": "Du har ikke noe aktivt tilbud på dette produktet.",
+    "yourProduct": "Ditt produkt",
+    "yourPrice": "Pris per enhet (€)",
+    "skipLine": "Ikke by på denne linjen",
+    "yourBase": "listeprisen din {price}",
+    "lineTotal": "linje {amount}",
+    "youReceive": "du mottar ca. {amount}",
+    "bidNote": "Merknad til kjøperen (valgfritt)",
+    "sendBid": "Send bud",
+    "updateBid": "Oppdater bud",
+    "bidSent": "Budet er lagret.",
+    "withdraw": "Trekk tilbake bud",
+    "withdrawConfirm": "Trekke tilbake budet ditt?",
+    "sealedNote": "Andre leverandører ser aldri budet ditt. Du kan endre det frem til budfristen.",
+    "lineWon": "vunnet",
+    "lineLost": "ikke valgt",
+    "waiting": "venter på kjøperen",
+    "noBidLine": "ingen bud"
   }
 }

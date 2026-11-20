@@ -886,7 +886,9 @@
     "Till Staff": "Personál pokladny",
     "Rebates & Bonuses": "Rabaty a bonusy",
     "My Bonuses": "Moje bonusy",
-    "Buying Groups": "Nákupní skupiny"
+    "Buying Groups": "Nákupní skupiny",
+    "Pay Later": "Odložená platba",
+    "Tenders": "Výběrová řízení"
   },
   "delivery": {
     "title": "Doručení",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Společná objednávka – objednávek: {orders}",
       "body": "Nákupní skupina „{name}“ společně zadala objednávky („{title}“), celkem {orders}, s doručením {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Odložená platba: splatnost {date}",
+      "body": "Platba {n} ve výši {amount} € za objednávku {number} je splatná {date}."
+    },
+    "paylater_overdue": {
+      "title": "Odložená platba: platba po splatnosti",
+      "body": "Platba {n} ve výši {amount} € za objednávku {number} byla splatná {date}. Uhraďte ji prosím — do té doby je odložená platba pozastavena."
+    },
+    "tender_review": {
+      "title": "Výběrové řízení ke kontrole: {number}",
+      "body": "Firma {company} vytvořila výběrové řízení „{title}“. Pro nabídky se otevře, až ho FIRINGI schválí."
+    },
+    "tender_decided": {
+      "title": "Vaše výběrové řízení {number}: {decision}",
+      "body": "Rozhodnutí FIRINGI o „{title}“: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nové výběrové řízení: {title}",
+      "body": "Kupující poptává ceny (výběrové řízení {number}, položek: {lines}). Uzávěrka nabídek {date}."
+    },
+    "tender_bid": {
+      "title": "Nová nabídka k {number}",
+      "body": "Vaše výběrové řízení „{title}“ má novou nabídku (celkem {bids})."
+    },
+    "tender_closed": {
+      "title": "Příjem nabídek ukončen: {number}",
+      "body": "Příjem nabídek do „{title}“ skončil, nabídek: {bids}. Vyberte ty nejlepší a zadejte objednávky."
+    },
+    "tender_awarded": {
+      "title": "Vyhráli jste výběrové řízení {number}",
+      "body": "Kupující vybral vaši nabídku na položky z „{title}“ (počet: {lines}) — čeká na vás objednávka {order}."
+    },
+    "tender_lost": {
+      "title": "Výběrové řízení {number} je rozhodnuto",
+      "body": "Kupující tentokrát přidělil „{title}“ jiným nabídkám."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Ukončit skupinové ceny",
     "vStopped": "Skupinové ceny ukončeny.",
     "notForYou": "Tento dodavatel neprodává vašemu typu podniku, proto do této společné objednávky nemůžete přidávat."
+  },
+  "payLater": {
+    "choose": "Jak chcete zaplatit?",
+    "payNow": "Jako obvykle (vaše běžné platební podmínky)",
+    "checkNote": "Odložená platba se ověřuje při odeslání objednávky — naším platebním partnerem nebo FIRINGI.",
+    "termDays": "Zaplatit do {days} dnů",
+    "termInstalments": "Měsíční splátky: {count}",
+    "fee": "Poplatek {amount}",
+    "noFee": "Bez poplatku",
+    "payBy": "zaplatit do {date}",
+    "eachMonth": "{count} × přibližně {amount}, první {date}",
+    "title": "Odložená platba",
+    "intro": "Objednejte hned a fakturu zaplaťte později — za několik dní nebo v měsíčních splátkách.",
+    "closed": {
+      "OFF": "Odložená platba momentálně není k dispozici.",
+      "COMPANY_OFF": "Odložená platba není pro vaši firmu k dispozici. Kontaktujte prosím FIRINGI.",
+      "TYPE_OFF": "Odložená platba zatím není pro váš typ firmy k dispozici.",
+      "OVERDUE": "Platba z odložené platby je po splatnosti — uhraďte ji, abyste mohli odloženou platbu znovu používat."
+    },
+    "howTitle": "Jak to funguje",
+    "howIntro": "Odloženou platbu zvolte při dokončení objednávky. Fakturu vám dál vystavuje FIRINGI; případný poplatek je na ní samostatnou položkou.",
+    "limit": "Úvěr u FIRINGI",
+    "used": "Čerpáno",
+    "left": "K dispozici",
+    "partnerOn": "Odložená platba přes našeho platebního partnera je při dokončení objednávky také k dispozici (partner vaši objednávku posoudí).",
+    "ownNote": "Co ještě dlužíte za objednávky s odloženou platbou, se odečítá z vašeho úvěru; s každou platbou se opět uvolní.",
+    "optionsTitle": "Možnosti",
+    "optionsIntro": "Poplatky pro objednávku za 1 000 € (vč. DPH).",
+    "feeExample": "poplatek {amount}",
+    "plansTitle": "Vaše objednávky s odloženou platbou",
+    "noPlans": "Zatím žádné objednávky s odloženou platbou.",
+    "status": {
+      "ACTIVE": "Čeká na fakturu",
+      "INVOICED": "Splácí se",
+      "PAID": "Zaplaceno",
+      "OVERDUE": "Po splatnosti",
+      "CANCELLED": "Zrušeno"
+    },
+    "feeIncl": "vč. poplatku {amount}",
+    "invoice": "Faktura",
+    "partnerNote": "Náš platební partner už FIRINGI zaplatil — vy platíte partnerovi podle tohoto rozpisu.",
+    "payment": "Platba {n}",
+    "paid": "zaplaceno",
+    "overdueOn": "po splatnosti od {date}",
+    "dueOn": "splatné {date}",
+    "payNowLink": "Zaplaťte své faktury"
+  },
+  "tenders": {
+    "title": "Výběrová řízení",
+    "intro": "Řekněte dodavatelům, co potřebujete, a nechte je soutěžit: pošlou skryté nabídky na každou položku, vy vyberete tu nejlepší — položky každého dodavatele se stanou objednávkou.",
+    "newTender": "Nové výběrové řízení",
+    "newIntro": "Popište, co potřebujete. Dodavatelé, kteří vám mohou doručit, posílají své ceny až do uzávěrky nabídek.",
+    "closed": {
+      "OFF": "Výběrová řízení jsou momentálně vypnutá.",
+      "COMPANY_OFF": "Výběrová řízení nejsou pro vaši firmu dostupná. Kontaktujte prosím FIRINGI.",
+      "TYPE_OFF": "Výběrová řízení zatím nejsou pro váš typ firmy dostupná."
+    },
+    "noTenders": "Zatím žádná výběrová řízení.",
+    "status": {
+      "PENDING": "Čeká na FIRINGI",
+      "OPEN": "Otevřeno pro nabídky",
+      "CLOSED": "Příjem nabídek ukončen",
+      "AWARDED": "Přiděleno",
+      "CANCELLED": "Zrušeno",
+      "REJECTED": "Zamítnuto"
+    },
+    "linesBids": "Položek: {lines} · Nabídek: {bids}",
+    "closesOn": "Uzávěrka {date}",
+    "closedOn": "Uzavřeno {date}",
+    "deliveryOn": "Doručení {date}",
+    "suppliersBid": "Nabízejících dodavatelů: {n}",
+    "invitedOnly": "Jen pozvaní dodavatelé",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Název",
+    "titlePh": "např. Nápoje na prosinec",
+    "deliverTo": "Doručit na",
+    "deliveryDate": "Den doručení",
+    "closesAt": "Uzávěrka nabídek",
+    "closesHint": "Nejméně {hours} hodin, nejvýše {days} dní od teď.",
+    "noteLabel": "Poznámka pro dodavatele (nepovinné)",
+    "linesTitle": "Co potřebujete",
+    "lineN": "Položka {n}",
+    "remove": "Odebrat",
+    "change": "Změnit",
+    "findProduct": "Najít produkt v katalogu (nepovinné)…",
+    "detailsPh": "Podrobnosti (nepovinné)",
+    "describePh": "Nebo popište, co potřebujete",
+    "qty": "Množství",
+    "unitNote": "Jednotka",
+    "unitNotePh": "např. kartony po 24",
+    "target": "Cílová cena (€, bez DPH)",
+    "addLine": "Přidat položku",
+    "whoBids": "Kdo může podávat nabídky",
+    "allSuppliers": "Každý dodavatel, který vám může doručit ({n})",
+    "onlyInvited": "Jen dodavatelé, které vyberu",
+    "publish": "Zveřejnit výběrové řízení",
+    "closeNow": "Ukončit příjem nabídek",
+    "closeConfirm": "Ukončit příjem nabídek? Další nabídky už nepůjde poslat.",
+    "cancel": "Zrušit výběrové řízení",
+    "cancelConfirm": "Zrušit toto výběrové řízení? Nabídky dodavatelů propadnou.",
+    "bidsTitle": "Nabídky",
+    "awardIntro": "Vyberte nabídku pro každou položku — nejlevnější je předvybraná. Položky každého dodavatele se stanou jednou objednávkou.",
+    "awardEarly": "Příjem nabídek ještě běží; přidělit už můžete (příjem nabídek se tím ukončí).",
+    "waitingBids": "Čeká se na nabídky — dáme vám vědět, až nějaká přijde.",
+    "bidsN": "Nabídek: {n}",
+    "noBids": "Na tuto položku nejsou žádné nabídky.",
+    "best": "Nejlepší cena",
+    "belowTarget": "o {amount} pod vaší cílovou cenou",
+    "dontAward": "Tuto položku nepřidělovat",
+    "awardTotal": "Celkem",
+    "exclVat": "bez DPH",
+    "payment": "Platba",
+    "payUsual": "Jako obvykle",
+    "award": "Přidělit a objednat",
+    "awardConfirm": "Zadat teď objednávky na vybrané nabídky?",
+    "awarded": "Zadané objednávky: {orders}.",
+    "someFailed": "Některé se nepodařilo zadat: {reason}",
+    "vTitle": "Výběrová řízení",
+    "vIntro": "Výběrová řízení kupujících, do kterých můžete podat nabídku. Nabídky jsou skryté: ostatní dodavatelé vaše ceny nikdy neuvidí. Zadaná cena je to, co kupující zaplatí (bez DPH); obvyklá provize FIRINGI se odečte z částky, kterou obdržíte.",
+    "vOpen": "Otevřená výběrová řízení",
+    "vNoOpen": "Momentálně pro vás nejsou žádná otevřená výběrová řízení.",
+    "invitedYou": "Jste pozváni",
+    "vMyBids": "Moje nabídky",
+    "vNoBids": "Zatím žádné nabídky.",
+    "linesN": "Položek: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Nabídka odeslána",
+      "WITHDRAWN": "Stažena",
+      "WON": "Vyhrála",
+      "LOST": "Nevybrána"
+    },
+    "yourBid": "Vaše nabídka",
+    "makeBid": "Podat nabídku",
+    "bidIntro": "Nabídněte na položky, které můžete dodat — jeden z vašich produktů a vaši cenu za jednotku.",
+    "biddingClosed": "Příjem nabídek je ukončen.",
+    "buyerTarget": "Cílová cena kupujícího: {price}",
+    "noMatchingOffer": "Tento produkt momentálně aktivně nenabízíte.",
+    "yourProduct": "Váš produkt",
+    "yourPrice": "Cena za jednotku (€)",
+    "skipLine": "Na tuto položku nenabízet",
+    "yourBase": "vaše ceníková cena {price}",
+    "lineTotal": "položka celkem {amount}",
+    "youReceive": "obdržíte přibližně {amount}",
+    "bidNote": "Poznámka pro kupujícího (nepovinné)",
+    "sendBid": "Odeslat nabídku",
+    "updateBid": "Aktualizovat nabídku",
+    "bidSent": "Nabídka uložena.",
+    "withdraw": "Stáhnout nabídku",
+    "withdrawConfirm": "Stáhnout vaši nabídku?",
+    "sealedNote": "Ostatní dodavatelé vaši nabídku nikdy neuvidí. Můžete ji měnit až do uzávěrky nabídek.",
+    "lineWon": "vyhrála",
+    "lineLost": "nevybrána",
+    "waiting": "čeká na kupujícího",
+    "noBidLine": "bez nabídky"
   }
 }

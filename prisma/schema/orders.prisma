@@ -164,6 +164,7 @@ model Order {
   pickLists      PickListOrder[] @relation("PickListOrderOrder")
   /// a wholesaler put this delivered order into its own stock (Phase 24)
   buyerStockedAt DateTime?
+  payLater       PayLaterPlan?
 
   @@index([buyerCompanyId, placedAt])
   @@index([sellerCompanyId, placedAt])

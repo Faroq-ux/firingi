@@ -89,6 +89,8 @@ export type PlaceOrderInput = {
   poReference?: string | null;
   /** Phase 49: placed from a buying group's group order round. */
   groupRoundId?: string | null;
+  /** Phase 50: pay later with this term (FIRINGI's settings; partner or own credit is picked per country). */
+  payLater?: { termId: string } | null;
 };
 
 export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<import("@/server/buying/approvals").PlacedOrPending> {
@@ -184,6 +186,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     latitude: address.latitude?.toString() ?? null, longitude: address.longitude?.toString() ?? null,
   };
 
+  // Phase 50: pay later — the model (gateway partner / FIRINGI's own credit) is decided before anything is created
+  const payLater = input.payLater?.termId ? await (await import("@/server/pay-later/service")).preparePayLater(ctx, input.payLater.termId, pc.grandTotal.toNumber()) : null;
   let payFirstOrders = false;
   const loyaltyShares: { orderId: string; number: string; euros: Decimal; points: number }[] = [];
   const created = await prisma.$transaction(async (tx) => {
@@ -285,8 +289,10 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     }
     // The orders go to the suppliers for confirmation — unless FIRINGI's risk check holds them, or
     // this buyer pays before shipping (then they wait, unseen by the supplier, until paid).
+    if (payLater) await (await import("@/server/pay-later/service")).createPlans(tx, ctx, payLater, out.map((o) => o.id));
     const held = await recordRisk(tx, risk, out.map((o) => ({ id: o.id, buyerCompanyId: ctx.company.id })), pc.parts.length > 1 ? checkoutId : null);
-    const payFirst = (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;
+    // paying later (partner pays FIRINGI / FIRINGI's credit) replaces paying before shipping
+    const payFirst = !payLater && (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;
     for (const o of out) {
       const to = held || payFirst ? "ON_HOLD" : "PENDING_CONFIRMATION";
       // Phase 41: pay-before-shipping buyers also pay a buffer on sold-by-weight lines (unused part stays as credit)

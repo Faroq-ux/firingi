@@ -886,7 +886,9 @@
     "Till Staff": "Kassenpersonal",
     "Rebates & Bonuses": "Rückvergütungen & Boni",
     "My Bonuses": "Meine Boni",
-    "Buying Groups": "Einkaufsgemeinschaften"
+    "Buying Groups": "Einkaufsgemeinschaften",
+    "Pay Later": "Später bezahlen",
+    "Tenders": "Ausschreibungen"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Sammelbestellung: {orders} Bestellungen",
       "body": "Die Einkaufsgemeinschaft „{name}“ hat gemeinsam {orders} Bestellungen aufgegeben („{title}“), Lieferung am {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Später bezahlen: Zahlung fällig am {date}",
+      "body": "Zahlung {n} über {amount} € für Bestellung {number} ist am {date} fällig."
+    },
+    "paylater_overdue": {
+      "title": "Später bezahlen: Zahlung überfällig",
+      "body": "Zahlung {n} über {amount} € für Bestellung {number} war am {date} fällig. Bitte bezahlen Sie sie — bis dahin bleibt „Später bezahlen“ pausiert."
+    },
+    "tender_review": {
+      "title": "Ausschreibung zur Prüfung: {number}",
+      "body": "{company} hat die Ausschreibung „{title}“ eingestellt. Sie ist für Angebote offen, sobald FIRINGI sie freigibt."
+    },
+    "tender_decided": {
+      "title": "Ihre Ausschreibung {number}: {decision}",
+      "body": "Entscheidung von FIRINGI zu „{title}“: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Neue Ausschreibung: {title}",
+      "body": "Ein Käufer fragt Preise an ({lines} Positionen, Ausschreibung {number}). Die Angebotsfrist endet am {date}."
+    },
+    "tender_bid": {
+      "title": "Neues Angebot zu {number}",
+      "body": "Ihre Ausschreibung „{title}“ hat ein neues Angebot (bisher {bids})."
+    },
+    "tender_closed": {
+      "title": "Angebotsfrist beendet: {number}",
+      "body": "Die Angebotsfrist für „{title}“ ist mit {bids} Angeboten abgelaufen. Wählen Sie die besten aus, um Ihre Bestellungen aufzugeben."
+    },
+    "tender_awarded": {
+      "title": "Sie haben die Ausschreibung {number} gewonnen",
+      "body": "Der Käufer hat Ihr Angebot für {lines} Positionen von „{title}“ gewählt — Bestellung {order} wartet auf Sie."
+    },
+    "tender_lost": {
+      "title": "Ausschreibung {number} vergeben",
+      "body": "Der Käufer hat „{title}“ diesmal an andere Angebote vergeben."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Gruppenpreise beenden",
     "vStopped": "Gruppenpreise beendet.",
     "notForYou": "Dieser Lieferant verkauft nicht an Ihre Art von Unternehmen, daher können Sie dieser Sammelbestellung nichts hinzufügen."
+  },
+  "payLater": {
+    "choose": "Wie möchten Sie bezahlen?",
+    "payNow": "Wie üblich (Ihre normalen Zahlungsbedingungen)",
+    "checkNote": "„Später bezahlen“ wird bei der Bestellung geprüft — von unserem Zahlungspartner oder von FIRINGI.",
+    "termDays": "In {days} Tagen bezahlen",
+    "termInstalments": "{count} Monatsraten",
+    "fee": "Gebühr {amount}",
+    "noFee": "Keine Gebühr",
+    "payBy": "zahlbar bis {date}",
+    "eachMonth": "{count} × ca. {amount}, die erste am {date}",
+    "title": "Später bezahlen",
+    "intro": "Jetzt bestellen und die Rechnung später bezahlen — nach einigen Tagen oder in Monatsraten.",
+    "closed": {
+      "OFF": "„Später bezahlen“ ist derzeit nicht verfügbar.",
+      "COMPANY_OFF": "„Später bezahlen“ ist für Ihr Unternehmen nicht verfügbar. Bitte wenden Sie sich an FIRINGI.",
+      "TYPE_OFF": "„Später bezahlen“ ist für Ihre Unternehmensart noch nicht verfügbar.",
+      "OVERDUE": "Eine Zahlung aus „Später bezahlen“ ist überfällig — bezahlen Sie sie, um die Option wieder zu nutzen."
+    },
+    "howTitle": "So funktioniert es",
+    "howIntro": "Wählen Sie „Später bezahlen“ beim Bestellabschluss. Ihre Rechnung kommt weiterhin von FIRINGI; die Gebühr (falls vorhanden) steht als eigene Position darauf.",
+    "limit": "Kredit bei FIRINGI",
+    "used": "Genutzt",
+    "left": "Verfügbar",
+    "partnerOn": "„Später bezahlen“ über unseren Zahlungspartner ist beim Bestellabschluss ebenfalls möglich (der Partner prüft Ihre Bestellung).",
+    "ownNote": "Was Sie für Bestellungen mit „Später bezahlen“ noch schulden, wird auf Ihren Kredit angerechnet; mit jeder Zahlung wird er wieder frei.",
+    "optionsTitle": "Optionen",
+    "optionsIntro": "Gebühren für eine Bestellung über 1.000 € (inkl. MwSt.).",
+    "feeExample": "Gebühr {amount}",
+    "plansTitle": "Ihre Bestellungen mit „Später bezahlen“",
+    "noPlans": "Noch keine Bestellungen mit „Später bezahlen“.",
+    "status": {
+      "ACTIVE": "Wartet auf Rechnung",
+      "INVOICED": "Wird bezahlt",
+      "PAID": "Bezahlt",
+      "OVERDUE": "Überfällig",
+      "CANCELLED": "Storniert"
+    },
+    "feeIncl": "inkl. Gebühr {amount}",
+    "invoice": "Rechnung",
+    "partnerNote": "FIRINGI wurde von unserem Zahlungspartner bezahlt — Sie zahlen an den Partner nach diesem Plan.",
+    "payment": "Zahlung {n}",
+    "paid": "bezahlt",
+    "overdueOn": "überfällig seit {date}",
+    "dueOn": "fällig am {date}",
+    "payNowLink": "Ihre Rechnungen bezahlen"
+  },
+  "tenders": {
+    "title": "Ausschreibungen",
+    "intro": "Teilen Sie Lieferanten mit, was Sie brauchen, und lassen Sie sie konkurrieren: Diese geben verdeckte Angebote je Position ab, Sie wählen das beste — aus den Positionen jedes Lieferanten wird eine Bestellung.",
+    "newTender": "Neue Ausschreibung",
+    "newIntro": "Beschreiben Sie, was Sie brauchen. Lieferanten, die an Sie liefern können, senden ihre Preise bis zum Ende der Angebotsfrist.",
+    "closed": {
+      "OFF": "Ausschreibungen sind derzeit deaktiviert.",
+      "COMPANY_OFF": "Ausschreibungen sind für Ihr Unternehmen nicht freigeschaltet. Bitte wenden Sie sich an FIRINGI.",
+      "TYPE_OFF": "Ausschreibungen sind für Ihre Unternehmensart noch nicht verfügbar."
+    },
+    "noTenders": "Noch keine Ausschreibungen.",
+    "status": {
+      "PENDING": "Wartet auf FIRINGI",
+      "OPEN": "Offen für Angebote",
+      "CLOSED": "Angebotsfrist beendet",
+      "AWARDED": "Zuschlag erteilt",
+      "CANCELLED": "Abgebrochen",
+      "REJECTED": "Abgelehnt"
+    },
+    "linesBids": "Positionen: {lines} · Angebote: {bids}",
+    "closesOn": "Endet am {date}",
+    "closedOn": "Beendet am {date}",
+    "deliveryOn": "Lieferung am {date}",
+    "suppliersBid": "Bietende Lieferanten: {n}",
+    "invitedOnly": "Nur eingeladene Lieferanten",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Titel",
+    "titlePh": "z. B. Getränke für Dezember",
+    "deliverTo": "Liefern an",
+    "deliveryDate": "Liefertag",
+    "closesAt": "Angebotsfrist endet",
+    "closesHint": "Mindestens {hours} Stunden, höchstens {days} Tage ab jetzt.",
+    "noteLabel": "Hinweis für Lieferanten (optional)",
+    "linesTitle": "Was Sie brauchen",
+    "lineN": "Position {n}",
+    "remove": "Entfernen",
+    "change": "Ändern",
+    "findProduct": "Produkt im Katalog suchen (optional)…",
+    "detailsPh": "Details (optional)",
+    "describePh": "Oder beschreiben Sie, was Sie brauchen",
+    "qty": "Menge",
+    "unitNote": "Einheit",
+    "unitNotePh": "z. B. Kisten zu 24",
+    "target": "Zielpreis (€, zzgl. MwSt.)",
+    "addLine": "Position hinzufügen",
+    "whoBids": "Wer bieten kann",
+    "allSuppliers": "Jeder Lieferant, der an Sie liefern kann ({n})",
+    "onlyInvited": "Nur von mir ausgewählte Lieferanten",
+    "publish": "Ausschreibung veröffentlichen",
+    "closeNow": "Angebotsfrist jetzt beenden",
+    "closeConfirm": "Angebotsfrist jetzt beenden? Es können keine Angebote mehr gesendet werden.",
+    "cancel": "Ausschreibung abbrechen",
+    "cancelConfirm": "Diese Ausschreibung abbrechen? Die Angebote der Lieferanten verfallen.",
+    "bidsTitle": "Angebote",
+    "awardIntro": "Wählen Sie für jede Position ein Angebot — das günstigste ist vorausgewählt. Aus den Positionen jedes Lieferanten wird eine Bestellung.",
+    "awardEarly": "Die Angebotsfrist läuft noch; Sie können den Zuschlag schon jetzt erteilen (die Frist endet dann).",
+    "waitingBids": "Warten auf Angebote — Sie werden benachrichtigt, sobald eines eingeht.",
+    "bidsN": "Angebote: {n}",
+    "noBids": "Keine Angebote für diese Position.",
+    "best": "Bester Preis",
+    "belowTarget": "{amount} unter Ihrem Zielpreis",
+    "dontAward": "Für diese Position keinen Zuschlag erteilen",
+    "awardTotal": "Gesamt",
+    "exclVat": "zzgl. MwSt.",
+    "payment": "Zahlung",
+    "payUsual": "Wie üblich",
+    "award": "Zuschlag erteilen und bestellen",
+    "awardConfirm": "Jetzt die Bestellungen für die gewählten Angebote aufgeben?",
+    "awarded": "Aufgegebene Bestellungen: {orders}.",
+    "someFailed": "Einige konnten nicht aufgegeben werden: {reason}",
+    "vTitle": "Ausschreibungen",
+    "vIntro": "Ausschreibungen von Käufern, auf die Sie bieten können. Angebote sind verdeckt: Andere Lieferanten sehen Ihre Preise nie. Der eingegebene Preis ist das, was der Käufer zahlt (zzgl. MwSt.); die übliche FIRINGI-Provision wird von Ihrem Erlös abgezogen.",
+    "vOpen": "Offene Ausschreibungen",
+    "vNoOpen": "Derzeit keine offenen Ausschreibungen für Sie.",
+    "invitedYou": "Sie sind eingeladen",
+    "vMyBids": "Meine Angebote",
+    "vNoBids": "Noch keine Angebote.",
+    "linesN": "Positionen: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Angebot gesendet",
+      "WITHDRAWN": "Zurückgezogen",
+      "WON": "Gewonnen",
+      "LOST": "Nicht ausgewählt"
+    },
+    "yourBid": "Ihr Angebot",
+    "makeBid": "Angebot abgeben",
+    "bidIntro": "Bieten Sie auf die Positionen, die Sie liefern können — mit einem Ihrer Produkte und Ihrem Preis pro Einheit.",
+    "biddingClosed": "Die Angebotsfrist ist beendet.",
+    "buyerTarget": "Zielpreis des Käufers: {price}",
+    "noMatchingOffer": "Sie bieten dieses Produkt derzeit nicht aktiv an.",
+    "yourProduct": "Ihr Produkt",
+    "yourPrice": "Preis pro Einheit (€)",
+    "skipLine": "Auf diese Position nicht bieten",
+    "yourBase": "Ihr Listenpreis {price}",
+    "lineTotal": "Positionssumme {amount}",
+    "youReceive": "Sie erhalten ca. {amount}",
+    "bidNote": "Hinweis für den Käufer (optional)",
+    "sendBid": "Angebot senden",
+    "updateBid": "Angebot aktualisieren",
+    "bidSent": "Angebot gespeichert.",
+    "withdraw": "Angebot zurückziehen",
+    "withdrawConfirm": "Ihr Angebot zurückziehen?",
+    "sealedNote": "Andere Lieferanten sehen Ihr Angebot nie. Sie können es bis zum Ende der Angebotsfrist ändern.",
+    "lineWon": "gewonnen",
+    "lineLost": "nicht ausgewählt",
+    "waiting": "wartet auf den Käufer",
+    "noBidLine": "kein Angebot"
   }
 }

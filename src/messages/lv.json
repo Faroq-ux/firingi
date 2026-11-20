@@ -886,7 +886,9 @@
     "Till Staff": "Kases personāls",
     "Rebates & Bonuses": "Atlaides un bonusi",
     "My Bonuses": "Mani bonusi",
-    "Buying Groups": "Iepirkumu grupas"
+    "Buying Groups": "Iepirkumu grupas",
+    "Pay Later": "Maksāt vēlāk",
+    "Tenders": "Konkursi"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Grupas pasūtījums: {orders} pasūtījumi",
       "body": "Iepirkumu grupa \"{name}\" kopā veica {orders} pasūtījumus (\"{title}\") ar piegādi {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Maksāt vēlāk: maksājuma termiņš {date}",
+      "body": "Pasūtījuma {number} maksājuma Nr. {n} ({amount} €) termiņš ir {date}."
+    },
+    "paylater_overdue": {
+      "title": "Maksāt vēlāk: maksājums kavēts",
+      "body": "Pasūtījuma {number} maksājuma Nr. {n} ({amount} €) termiņš bija {date}. Lūdzu, samaksājiet to — līdz tam iespēja maksāt vēlāk ir apturēta."
+    },
+    "tender_review": {
+      "title": "Konkurss pārbaudei: {number}",
+      "body": "{company} publicēja konkursu \"{title}\". Piedāvājumus varēs iesniegt pēc FIRINGI apstiprinājuma."
+    },
+    "tender_decided": {
+      "title": "Jūsu konkurss {number}: {decision}",
+      "body": "FIRINGI lēmums par \"{title}\": {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Jauns konkurss: {title}",
+      "body": "Pircējs lūdz cenas (rindas: {lines}, konkurss {number}). Piedāvājumu iesniegšana tiek slēgta {date}."
+    },
+    "tender_bid": {
+      "title": "Jauns piedāvājums konkursam {number}",
+      "body": "Jūsu konkursam \"{title}\" ir jauns piedāvājums (kopā: {bids})."
+    },
+    "tender_closed": {
+      "title": "Piedāvājumu iesniegšana slēgta: {number}",
+      "body": "Konkursā \"{title}\" piedāvājumu iesniegšana ir slēgta, saņemti piedāvājumi: {bids}. Izvēlieties labākos, lai veiktu pasūtījumus."
+    },
+    "tender_awarded": {
+      "title": "Jūs uzvarējāt konkursā {number}",
+      "body": "Pircējs izvēlējās Jūsu piedāvājumu konkursa \"{title}\" rindām (kopā: {lines}) — Jūs gaida pasūtījums {order}."
+    },
+    "tender_lost": {
+      "title": "Konkursā {number} izvēlēti uzvarētāji",
+      "body": "Šoreiz pircējs konkursā \"{title}\" izvēlējās citus piedāvājumus."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Pārtraukt grupas cenas",
     "vStopped": "Grupas cenas pārtrauktas.",
     "notForYou": "Šis piegādātājs nepārdod Jūsu uzņēmuma veidam, tāpēc Jūs nevarat pievienot šim grupas pasūtījumam."
+  },
+  "payLater": {
+    "choose": "Kā vēlaties maksāt?",
+    "payNow": "Kā parasti (Jūsu parastie apmaksas nosacījumi)",
+    "checkNote": "Iespēju maksāt vēlāk pārbauda, kad veicat pasūtījumu, — to dara mūsu maksājumu partneris vai FIRINGI.",
+    "termDays": "Samaksāt {days} dienu laikā",
+    "termInstalments": "Ikmēneša maksājumi: {count}",
+    "fee": "Maksa {amount}",
+    "noFee": "Bez maksas",
+    "payBy": "samaksāt līdz {date}",
+    "eachMonth": "{count} × aptuveni {amount}, pirmais {date}",
+    "title": "Maksāt vēlāk",
+    "intro": "Pasūtiet tagad un apmaksājiet rēķinu vēlāk — pēc noteikta dienu skaita vai ikmēneša maksājumos.",
+    "closed": {
+      "OFF": "Iespēja maksāt vēlāk pašlaik nav pieejama.",
+      "COMPANY_OFF": "Iespēja maksāt vēlāk Jūsu uzņēmumam nav pieejama. Lūdzu, sazinieties ar FIRINGI.",
+      "TYPE_OFF": "Iespēja maksāt vēlāk Jūsu tipa uzņēmumiem vēl nav pieejama.",
+      "OVERDUE": "Jums ir kavēts atliktais maksājums — samaksājiet to, lai atkal varētu maksāt vēlāk."
+    },
+    "howTitle": "Kā tas darbojas",
+    "howIntro": "Pasūtījuma noformēšanā izvēlieties \"Maksāt vēlāk\". Rēķinu joprojām izraksta FIRINGI; maksa (ja tāda ir) tajā ir norādīta atsevišķā rindā.",
+    "limit": "FIRINGI kredīts",
+    "used": "Izmantots",
+    "left": "Pieejams",
+    "partnerOn": "Maksāt vēlāk ar mūsu maksājumu partnera starpniecību var arī pasūtījuma noformēšanā (partneris pārbauda Jūsu pasūtījumu).",
+    "ownNote": "Tas, ko vēl esat parādā par pasūtījumiem ar atlikto maksājumu, samazina Jūsu kredītu; tas atkal atbrīvojas, kad maksājat.",
+    "optionsTitle": "Iespējas",
+    "optionsIntro": "Maksa norādīta 1 000 € pasūtījumam (ar PVN).",
+    "feeExample": "maksa {amount}",
+    "plansTitle": "Jūsu pasūtījumi ar atlikto maksājumu",
+    "noPlans": "Vēl nav pasūtījumu ar atlikto maksājumu.",
+    "status": {
+      "ACTIVE": "Gaida rēķinu",
+      "INVOICED": "Tiek maksāts",
+      "PAID": "Samaksāts",
+      "OVERDUE": "Kavēts",
+      "CANCELLED": "Atcelts"
+    },
+    "feeIncl": "ieskaitot maksu {amount}",
+    "invoice": "Rēķins",
+    "partnerNote": "Mūsu maksājumu partneris jau ir samaksājis FIRINGI — Jūs maksājat partnerim saskaņā ar šo grafiku.",
+    "payment": "Maksājums {n}",
+    "paid": "samaksāts",
+    "overdueOn": "kavēts kopš {date}",
+    "dueOn": "termiņš {date}",
+    "payNowLink": "Apmaksāt rēķinus"
+  },
+  "tenders": {
+    "title": "Konkursi",
+    "intro": "Pastāstiet piegādātājiem, kas Jums vajadzīgs, un ļaujiet viņiem konkurēt: viņi iesniedz slēgtus piedāvājumus katrai rindai, Jūs izvēlaties labākos — katra piegādātāja rindas kļūst par pasūtījumu.",
+    "newTender": "Jauns konkurss",
+    "newIntro": "Aprakstiet, kas Jums vajadzīgs. Piegādātāji, kas var Jums piegādāt, iesniedz savas cenas, līdz piedāvājumu iesniegšana tiek slēgta.",
+    "closed": {
+      "OFF": "Konkursi pašlaik ir izslēgti.",
+      "COMPANY_OFF": "Konkursi Jūsu uzņēmumam nav pieejami. Lūdzu, sazinieties ar FIRINGI.",
+      "TYPE_OFF": "Konkursi Jūsu tipa uzņēmumiem vēl nav pieejami."
+    },
+    "noTenders": "Konkursu vēl nav.",
+    "status": {
+      "PENDING": "Gaida FIRINGI",
+      "OPEN": "Pieņem piedāvājumus",
+      "CLOSED": "Piedāvājumu iesniegšana slēgta",
+      "AWARDED": "Uzvarētāji izvēlēti",
+      "CANCELLED": "Atcelts",
+      "REJECTED": "Noraidīts"
+    },
+    "linesBids": "Rindas: {lines} · Piedāvājumi: {bids}",
+    "closesOn": "Slēdzas {date}",
+    "closedOn": "Slēgts {date}",
+    "deliveryOn": "Piegāde {date}",
+    "suppliersBid": "Piedāvājumus iesniedz piegādātāji: {n}",
+    "invitedOnly": "Tikai uzaicināti piegādātāji",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Nosaukums",
+    "titlePh": "piem. Dzērieni decembrim",
+    "deliverTo": "Piegādāt uz",
+    "deliveryDate": "Piegādes diena",
+    "closesAt": "Piedāvājumu iesniegšanas beigas",
+    "closesHint": "Ne ātrāk kā pēc {hours} stundām, ne vēlāk kā pēc {days} dienām.",
+    "noteLabel": "Piezīme piegādātājiem (neobligāti)",
+    "linesTitle": "Kas Jums vajadzīgs",
+    "lineN": "Rinda {n}",
+    "remove": "Noņemt",
+    "change": "Mainīt",
+    "findProduct": "Atrodiet produktu katalogā (neobligāti)…",
+    "detailsPh": "Sīkāka informācija (neobligāti)",
+    "describePh": "Vai aprakstiet, kas Jums vajadzīgs",
+    "qty": "Daudzums",
+    "unitNote": "Mērvienība",
+    "unitNotePh": "piem. kastes pa 24",
+    "target": "Mērķa cena (€, bez PVN)",
+    "addLine": "Pievienot rindu",
+    "whoBids": "Kas var iesniegt piedāvājumus",
+    "allSuppliers": "Visi piegādātāji, kas var Jums piegādāt ({n})",
+    "onlyInvited": "Tikai manis izvēlēti piegādātāji",
+    "publish": "Publicēt konkursu",
+    "closeNow": "Slēgt piedāvājumu iesniegšanu tagad",
+    "closeConfirm": "Slēgt piedāvājumu iesniegšanu tagad? Vairs nevarēs iesniegt piedāvājumus.",
+    "cancel": "Atcelt konkursu",
+    "cancelConfirm": "Atcelt šo konkursu? Piegādātāju piedāvājumi tiks anulēti.",
+    "bidsTitle": "Piedāvājumi",
+    "awardIntro": "Izvēlieties piedāvājumu katrai rindai — lētākais ir atzīmēts. Katra piegādātāja rindas kļūst par vienu pasūtījumu.",
+    "awardEarly": "Piedāvājumu iesniegšana vēl turpinās; uzvarētājus varat izvēlēties jau tagad (tad iesniegšana tiek slēgta).",
+    "waitingBids": "Gaida piedāvājumus — Jums paziņos, kad tāds pienāks.",
+    "bidsN": "Piedāvājumi: {n}",
+    "noBids": "Šai rindai nav piedāvājumu.",
+    "best": "Labākā cena",
+    "belowTarget": "Par {amount} zem Jūsu mērķa cenas",
+    "dontAward": "Nepiešķirt šo rindu",
+    "awardTotal": "Kopā",
+    "exclVat": "bez PVN",
+    "payment": "Maksājums",
+    "payUsual": "Kā parasti",
+    "award": "Apstiprināt uzvarētājus un veikt pasūtījumus",
+    "awardConfirm": "Veikt pasūtījumus par izvēlētajiem piedāvājumiem tagad?",
+    "awarded": "Veikti pasūtījumi: {orders}.",
+    "someFailed": "Dažus neizdevās veikt: {reason}",
+    "vTitle": "Konkursi",
+    "vIntro": "Pircēju konkursi, kuros varat iesniegt piedāvājumus. Piedāvājumi ir slēgti: citi piegādātāji nekad neredz Jūsu cenas. Jūsu norādītā cena ir tā, ko maksā pircējs (bez PVN); FIRINGI parastā komisija tiek ieturēta no summas, ko saņemat.",
+    "vOpen": "Atvērtie konkursi",
+    "vNoOpen": "Pašlaik Jums nav atvērtu konkursu.",
+    "invitedYou": "Jūs esat uzaicināts",
+    "vMyBids": "Mani iesniegtie piedāvājumi",
+    "vNoBids": "Vēl nav piedāvājumu.",
+    "linesN": "Rindas: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Piedāvājums nosūtīts",
+      "WITHDRAWN": "Atsaukts",
+      "WON": "Uzvarēts",
+      "LOST": "Nav izvēlēts"
+    },
+    "yourBid": "Jūsu piedāvājums",
+    "makeBid": "Iesniegt piedāvājumu",
+    "bidIntro": "Iesniedziet piedāvājumus rindām, kuras varat piegādāt, — vienu no saviem produktiem un savu cenu par vienību.",
+    "biddingClosed": "Piedāvājumu iesniegšana ir slēgta.",
+    "buyerTarget": "Pircēja mērķa cena: {price}",
+    "noMatchingOffer": "Jums nav aktīva šī produkta piedāvājuma.",
+    "yourProduct": "Jūsu produkts",
+    "yourPrice": "Cena par vienību (€)",
+    "skipLine": "Neiesniegt piedāvājumu šai rindai",
+    "yourBase": "Jūsu cenrāža cena {price}",
+    "lineTotal": "rinda {amount}",
+    "youReceive": "Jūs saņemsiet aptuveni {amount}",
+    "bidNote": "Piezīme pircējam (neobligāti)",
+    "sendBid": "Sūtīt piedāvājumu",
+    "updateBid": "Atjaunināt piedāvājumu",
+    "bidSent": "Piedāvājums saglabāts.",
+    "withdraw": "Atsaukt piedāvājumu",
+    "withdrawConfirm": "Atsaukt savu piedāvājumu?",
+    "sealedNote": "Citi piegādātāji nekad neredz Jūsu piedāvājumu. Varat to mainīt, līdz piedāvājumu iesniegšana tiek slēgta.",
+    "lineWon": "uzvarēts",
+    "lineLost": "nav izvēlēts",
+    "waiting": "gaida pircēju",
+    "noBidLine": "nav piedāvājuma"
   }
 }

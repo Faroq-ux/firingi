@@ -886,7 +886,9 @@
     "Till Staff": "Personnel de caisse",
     "Rebates & Bonuses": "Remises et bonus",
     "My Bonuses": "Mes bonus",
-    "Buying Groups": "Groupements d'achat"
+    "Buying Groups": "Groupements d'achat",
+    "Pay Later": "Payer plus tard",
+    "Tenders": "Appels d'offres"
   },
   "delivery": {
     "title": "Livraison",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Commande groupée : {orders} commandes",
       "body": "Le groupement d'achat « {name} » a passé {orders} commandes ensemble (« {title} »), pour une livraison le {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Payer plus tard : paiement à régler le {date}",
+      "body": "L'échéance {n} de {amount} € pour la commande {number} est à régler le {date}."
+    },
+    "paylater_overdue": {
+      "title": "Payer plus tard : paiement en retard",
+      "body": "L'échéance {n} de {amount} € pour la commande {number} était à régler le {date}. Veuillez la payer — le paiement différé reste suspendu jusque-là."
+    },
+    "tender_review": {
+      "title": "Appel d'offres à vérifier : {number}",
+      "body": "{company} a publié l'appel d'offres « {title} ». Il s'ouvre aux offres après approbation de FIRINGI."
+    },
+    "tender_decided": {
+      "title": "Votre appel d'offres {number} : {decision}",
+      "body": "Décision de FIRINGI sur « {title} » : {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nouvel appel d'offres : {title}",
+      "body": "Un acheteur demande des prix ({lines} lignes, appel d'offres {number}). Clôture des offres le {date}."
+    },
+    "tender_bid": {
+      "title": "Nouvelle offre sur {number}",
+      "body": "Votre appel d'offres « {title} » a reçu une nouvelle offre ({bids} au total)."
+    },
+    "tender_closed": {
+      "title": "Offres closes : {number}",
+      "body": "Les offres sur « {title} » sont closes : {bids} offres reçues. Choisissez les meilleures pour passer vos commandes."
+    },
+    "tender_awarded": {
+      "title": "Vous avez remporté l'appel d'offres {number}",
+      "body": "L'acheteur a retenu votre offre pour {lines} lignes de « {title} » — la commande {order} vous attend."
+    },
+    "tender_lost": {
+      "title": "Appel d'offres {number} attribué",
+      "body": "Cette fois, l'acheteur a attribué « {title} » à d'autres offres."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Arrêter les prix de groupement",
     "vStopped": "Prix de groupement arrêtés.",
     "notForYou": "Ce fournisseur ne vend pas à votre type d'entreprise ; vous ne pouvez donc rien ajouter à cette commande groupée."
+  },
+  "payLater": {
+    "choose": "Comment voulez-vous payer ?",
+    "payNow": "Comme d'habitude (vos conditions de paiement habituelles)",
+    "checkNote": "Le paiement différé est vérifié au moment de la commande — par notre partenaire de paiement ou par FIRINGI.",
+    "termDays": "Payer sous {days} jours",
+    "termInstalments": "{count} mensualités",
+    "fee": "Frais {amount}",
+    "noFee": "Sans frais",
+    "payBy": "à payer avant le {date}",
+    "eachMonth": "{count} × environ {amount}, la première le {date}",
+    "title": "Payer plus tard",
+    "intro": "Commandez maintenant et payez la facture plus tard — sous un certain nombre de jours ou en mensualités.",
+    "closed": {
+      "OFF": "Le paiement différé n'est pas disponible pour le moment.",
+      "COMPANY_OFF": "Le paiement différé n'est pas disponible pour votre entreprise. Veuillez contacter FIRINGI.",
+      "TYPE_OFF": "Le paiement différé n'est pas encore disponible pour votre type d'entreprise.",
+      "OVERDUE": "Un paiement différé est en retard — réglez-le pour pouvoir de nouveau payer plus tard."
+    },
+    "howTitle": "Comment ça marche",
+    "howIntro": "Choisissez Payer plus tard lors de la validation de la commande. Votre facture vient toujours de FIRINGI ; les frais éventuels y figurent sur une ligne à part.",
+    "limit": "Crédit chez FIRINGI",
+    "used": "Utilisé",
+    "left": "Disponible",
+    "partnerOn": "Le paiement différé via notre partenaire de paiement est aussi proposé lors de la validation de la commande (le partenaire vérifie votre commande).",
+    "ownNote": "Ce que vous devez encore sur vos commandes en paiement différé est déduit de votre crédit ; il se libère à mesure que vous payez.",
+    "optionsTitle": "Options",
+    "optionsIntro": "Frais indiqués pour une commande de 1 000 € (TTC).",
+    "feeExample": "frais {amount}",
+    "plansTitle": "Vos commandes en paiement différé",
+    "noPlans": "Aucune commande en paiement différé pour le moment.",
+    "status": {
+      "ACTIVE": "En attente de facture",
+      "INVOICED": "En cours de paiement",
+      "PAID": "Payée",
+      "OVERDUE": "En retard",
+      "CANCELLED": "Annulée"
+    },
+    "feeIncl": "dont frais {amount}",
+    "invoice": "Facture",
+    "partnerNote": "Notre partenaire de paiement a payé FIRINGI — vous remboursez le partenaire selon cet échéancier.",
+    "payment": "Échéance {n}",
+    "paid": "payée",
+    "overdueOn": "en retard depuis le {date}",
+    "dueOn": "échéance le {date}",
+    "payNowLink": "Payer vos factures"
+  },
+  "tenders": {
+    "title": "Appels d'offres",
+    "intro": "Dites aux fournisseurs ce dont vous avez besoin et mettez-les en concurrence : ils envoient des offres sous pli fermé pour chaque ligne, vous choisissez la meilleure — les lignes de chaque fournisseur deviennent une commande.",
+    "newTender": "Nouvel appel d'offres",
+    "newIntro": "Décrivez ce dont vous avez besoin. Les fournisseurs qui peuvent vous livrer envoient leurs prix jusqu'à la clôture des offres.",
+    "closed": {
+      "OFF": "Les appels d'offres sont désactivés pour le moment.",
+      "COMPANY_OFF": "Les appels d'offres ne sont pas ouverts à votre entreprise. Veuillez contacter FIRINGI.",
+      "TYPE_OFF": "Les appels d'offres ne sont pas encore ouverts à votre type d'entreprise."
+    },
+    "noTenders": "Aucun appel d'offres pour le moment.",
+    "status": {
+      "PENDING": "En attente de FIRINGI",
+      "OPEN": "Ouvert aux offres",
+      "CLOSED": "Offres closes",
+      "AWARDED": "Attribué",
+      "CANCELLED": "Annulé",
+      "REJECTED": "Refusé"
+    },
+    "linesBids": "Lignes : {lines} · Offres : {bids}",
+    "closesOn": "Clôture le {date}",
+    "closedOn": "Clos le {date}",
+    "deliveryOn": "Livraison le {date}",
+    "suppliersBid": "Fournisseurs participants : {n}",
+    "invitedOnly": "Fournisseurs invités uniquement",
+    "firingiNote": "FIRINGI : {note}",
+    "titleLabel": "Titre",
+    "titlePh": "ex. Boissons pour décembre",
+    "deliverTo": "Livrer à",
+    "deliveryDate": "Jour de livraison",
+    "closesAt": "Clôture des offres",
+    "closesHint": "Au moins {hours} heures et au plus {days} jours à partir de maintenant.",
+    "noteLabel": "Note aux fournisseurs (facultatif)",
+    "linesTitle": "Ce dont vous avez besoin",
+    "lineN": "Ligne {n}",
+    "remove": "Retirer",
+    "change": "Changer",
+    "findProduct": "Trouver un produit dans le catalogue (facultatif)…",
+    "detailsPh": "Détails (facultatif)",
+    "describePh": "Ou décrivez ce dont vous avez besoin",
+    "qty": "Quantité",
+    "unitNote": "Unité",
+    "unitNotePh": "ex. cartons de 24",
+    "target": "Prix cible (€, HT)",
+    "addLine": "Ajouter une ligne",
+    "whoBids": "Qui peut faire une offre",
+    "allSuppliers": "Tous les fournisseurs qui peuvent vous livrer ({n})",
+    "onlyInvited": "Seulement les fournisseurs que je choisis",
+    "publish": "Publier l'appel d'offres",
+    "closeNow": "Clore les offres maintenant",
+    "closeConfirm": "Clore les offres maintenant ? Plus aucune offre ne pourra être envoyée.",
+    "cancel": "Annuler l'appel d'offres",
+    "cancelConfirm": "Annuler cet appel d'offres ? Les offres des fournisseurs seront abandonnées.",
+    "bidsTitle": "Offres",
+    "awardIntro": "Choisissez une offre pour chaque ligne — la moins chère est présélectionnée. Les lignes de chaque fournisseur deviennent une seule commande.",
+    "awardEarly": "Les offres sont encore ouvertes ; vous pouvez déjà attribuer (les offres sont alors closes).",
+    "waitingBids": "En attente d'offres — vous serez prévenu dès qu'une offre arrive.",
+    "bidsN": "Offres : {n}",
+    "noBids": "Aucune offre sur cette ligne.",
+    "best": "Meilleur prix",
+    "belowTarget": "{amount} sous votre prix cible",
+    "dontAward": "Ne pas attribuer cette ligne",
+    "awardTotal": "Total",
+    "exclVat": "HT",
+    "payment": "Paiement",
+    "payUsual": "Comme d'habitude",
+    "award": "Attribuer et passer les commandes",
+    "awardConfirm": "Passer maintenant les commandes pour les offres choisies ?",
+    "awarded": "Commandes passées : {orders}.",
+    "someFailed": "Certaines n'ont pas pu être passées : {reason}",
+    "vTitle": "Appels d'offres",
+    "vIntro": "Les appels d'offres des acheteurs auxquels vous pouvez répondre. Les offres sont sous pli fermé : les autres fournisseurs ne voient jamais vos prix. Le prix saisi est celui que paie l'acheteur (HT) ; la commission habituelle de FIRINGI est déduite de ce que vous recevez.",
+    "vOpen": "Appels d'offres ouverts",
+    "vNoOpen": "Aucun appel d'offres ouvert pour vous en ce moment.",
+    "invitedYou": "Vous êtes invité",
+    "vMyBids": "Mes offres",
+    "vNoBids": "Aucune offre pour le moment.",
+    "linesN": "{n} lignes",
+    "bidStatus": {
+      "SUBMITTED": "Offre envoyée",
+      "WITHDRAWN": "Retirée",
+      "WON": "Gagnée",
+      "LOST": "Non retenue"
+    },
+    "yourBid": "Votre offre",
+    "makeBid": "Faire une offre",
+    "bidIntro": "Faites une offre sur les lignes que vous pouvez fournir — un de vos produits et votre prix unitaire.",
+    "biddingClosed": "Les offres sont closes.",
+    "buyerTarget": "Prix cible de l'acheteur : {price}",
+    "noMatchingOffer": "Ce produit n'est pas actuellement en vente chez vous.",
+    "yourProduct": "Votre produit",
+    "yourPrice": "Prix unitaire (€)",
+    "skipLine": "Pas d'offre sur cette ligne",
+    "yourBase": "votre prix catalogue {price}",
+    "lineTotal": "ligne {amount}",
+    "youReceive": "vous recevez environ {amount}",
+    "bidNote": "Note pour l'acheteur (facultatif)",
+    "sendBid": "Envoyer l'offre",
+    "updateBid": "Mettre à jour l'offre",
+    "bidSent": "Offre enregistrée.",
+    "withdraw": "Retirer l'offre",
+    "withdrawConfirm": "Retirer votre offre ?",
+    "sealedNote": "Les autres fournisseurs ne voient jamais votre offre. Vous pouvez la modifier jusqu'à la clôture des offres.",
+    "lineWon": "gagnée",
+    "lineLost": "non retenue",
+    "waiting": "en attente de l'acheteur",
+    "noBidLine": "pas d'offre"
   }
 }

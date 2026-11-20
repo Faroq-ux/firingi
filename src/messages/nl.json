@@ -886,7 +886,9 @@
     "Till Staff": "Kassapersoneel",
     "Rebates & Bonuses": "Kortingen & bonussen",
     "My Bonuses": "Mijn bonussen",
-    "Buying Groups": "Inkoopgroepen"
+    "Buying Groups": "Inkoopgroepen",
+    "Pay Later": "Achteraf betalen",
+    "Tenders": "Tenders"
   },
   "delivery": {
     "title": "Levering",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Groepsbestelling: {orders} bestellingen",
       "body": "De inkoopgroep \"{name}\" heeft samen {orders} bestellingen geplaatst (\"{title}\"), voor levering op {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Achteraf betalen: betaling vervalt op {date}",
+      "body": "Betaling {n} van {amount} € voor bestelling {number} vervalt op {date}."
+    },
+    "paylater_overdue": {
+      "title": "Achteraf betalen: betaling te laat",
+      "body": "Betaling {n} van {amount} € voor bestelling {number} verviel op {date}. Betaal deze alstublieft — tot die tijd is achteraf betalen gepauzeerd."
+    },
+    "tender_review": {
+      "title": "Tender te controleren: {number}",
+      "body": "{company} heeft de tender \"{title}\" geplaatst. Er kan pas op worden geboden nadat FIRINGI deze heeft goedgekeurd."
+    },
+    "tender_decided": {
+      "title": "Uw tender {number}: {decision}",
+      "body": "Beslissing van FIRINGI over \"{title}\": {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nieuwe tender: {title}",
+      "body": "Een koper vraagt om prijzen ({lines} regels, tender {number}). Bieden sluit op {date}."
+    },
+    "tender_bid": {
+      "title": "Nieuw bod op {number}",
+      "body": "Uw tender \"{title}\" heeft een nieuw bod ({bids} tot nu toe)."
+    },
+    "tender_closed": {
+      "title": "Bieden gesloten: {number}",
+      "body": "Het bieden op \"{title}\" is gesloten met {bids} biedingen. Kies de beste om uw bestellingen te plaatsen."
+    },
+    "tender_awarded": {
+      "title": "U hebt tender {number} gewonnen",
+      "body": "De koper heeft uw bod gekozen voor {lines} regels van \"{title}\" — bestelling {order} staat voor u klaar."
+    },
+    "tender_lost": {
+      "title": "Tender {number} gegund",
+      "body": "De koper heeft \"{title}\" deze keer aan andere biedingen gegund."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Groepsprijzen stoppen",
     "vStopped": "Groepsprijzen gestopt.",
     "notForYou": "Deze leverancier verkoopt niet aan uw type bedrijf, dus u kunt niets toevoegen aan deze groepsbestelling."
+  },
+  "payLater": {
+    "choose": "Hoe wilt u betalen?",
+    "payNow": "Zoals gewoonlijk (uw normale betalingstermijn)",
+    "checkNote": "Achteraf betalen wordt gecontroleerd wanneer u de bestelling plaatst — door onze betaalpartner of door FIRINGI.",
+    "termDays": "Betalen binnen {days} dagen",
+    "termInstalments": "{count} maandelijkse termijnen",
+    "fee": "Kosten {amount}",
+    "noFee": "Geen kosten",
+    "payBy": "betalen vóór {date}",
+    "eachMonth": "{count} × ongeveer {amount}, de eerste op {date}",
+    "title": "Achteraf betalen",
+    "intro": "Bestel nu en betaal de factuur later — na een aantal dagen of in maandelijkse termijnen.",
+    "closed": {
+      "OFF": "Achteraf betalen is momenteel niet beschikbaar.",
+      "COMPANY_OFF": "Achteraf betalen is niet beschikbaar voor uw bedrijf. Neem contact op met FIRINGI.",
+      "TYPE_OFF": "Achteraf betalen is nog niet beschikbaar voor uw type bedrijf.",
+      "OVERDUE": "Een betaling voor achteraf betalen is te laat — betaal die om weer achteraf te kunnen betalen."
+    },
+    "howTitle": "Zo werkt het",
+    "howIntro": "Kies achteraf betalen bij het afrekenen. Uw factuur komt nog steeds van FIRINGI; de kosten (indien van toepassing) staan er als aparte regel op.",
+    "limit": "Krediet bij FIRINGI",
+    "used": "In gebruik",
+    "left": "Beschikbaar",
+    "partnerOn": "Achteraf betalen via onze betaalpartner is ook beschikbaar bij het afrekenen (de partner beoordeelt uw bestelling).",
+    "ownNote": "Wat u nog verschuldigd bent op bestellingen met achteraf betalen gaat van uw krediet af; het komt weer vrij naarmate u betaalt.",
+    "optionsTitle": "Opties",
+    "optionsIntro": "Kosten getoond voor een bestelling van 1.000 € (incl. btw).",
+    "feeExample": "kosten {amount}",
+    "plansTitle": "Uw bestellingen met achteraf betalen",
+    "noPlans": "Nog geen bestellingen met achteraf betalen.",
+    "status": {
+      "ACTIVE": "Wacht op factuur",
+      "INVOICED": "Wordt betaald",
+      "PAID": "Betaald",
+      "OVERDUE": "Achterstallig",
+      "CANCELLED": "Geannuleerd"
+    },
+    "feeIncl": "incl. kosten {amount}",
+    "invoice": "Factuur",
+    "partnerNote": "FIRINGI is betaald door onze betaalpartner — u betaalt de partner volgens dit schema.",
+    "payment": "Betaling {n}",
+    "paid": "betaald",
+    "overdueOn": "achterstallig sinds {date}",
+    "dueOn": "vervalt op {date}",
+    "payNowLink": "Uw facturen betalen"
+  },
+  "tenders": {
+    "title": "Tenders",
+    "intro": "Vertel leveranciers wat u nodig hebt en laat ze concurreren: ze doen per regel een gesloten bod, u kiest het beste — de regels van elke leverancier worden een bestelling.",
+    "newTender": "Nieuwe tender",
+    "newIntro": "Beschrijf wat u nodig hebt. Leveranciers die aan u kunnen leveren, sturen hun prijzen tot het bieden sluit.",
+    "closed": {
+      "OFF": "Tenders zijn momenteel uitgeschakeld.",
+      "COMPANY_OFF": "Tenders zijn niet beschikbaar voor uw bedrijf. Neem contact op met FIRINGI.",
+      "TYPE_OFF": "Tenders zijn nog niet beschikbaar voor uw type bedrijf."
+    },
+    "noTenders": "Nog geen tenders.",
+    "status": {
+      "PENDING": "Wacht op FIRINGI",
+      "OPEN": "Open voor biedingen",
+      "CLOSED": "Bieden gesloten",
+      "AWARDED": "Gegund",
+      "CANCELLED": "Geannuleerd",
+      "REJECTED": "Afgewezen"
+    },
+    "linesBids": "Regels: {lines} · Biedingen: {bids}",
+    "closesOn": "Sluit {date}",
+    "closedOn": "Gesloten {date}",
+    "deliveryOn": "Levering {date}",
+    "suppliersBid": "Bieders: {n}",
+    "invitedOnly": "Alleen uitgenodigde leveranciers",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Titel",
+    "titlePh": "bijv. Dranken voor december",
+    "deliverTo": "Leveren aan",
+    "deliveryDate": "Leverdag",
+    "closesAt": "Bieden sluit",
+    "closesHint": "Minstens {hours} uur en hoogstens {days} dagen vanaf nu.",
+    "noteLabel": "Opmerking voor leveranciers (optioneel)",
+    "linesTitle": "Wat u nodig hebt",
+    "lineN": "Regel {n}",
+    "remove": "Verwijderen",
+    "change": "Wijzigen",
+    "findProduct": "Zoek een product in de catalogus (optioneel)…",
+    "detailsPh": "Details (optioneel)",
+    "describePh": "Of beschrijf wat u nodig hebt",
+    "qty": "Aantal",
+    "unitNote": "Eenheid",
+    "unitNotePh": "bijv. dozen van 24",
+    "target": "Doelprijs (€, excl. btw)",
+    "addLine": "Regel toevoegen",
+    "whoBids": "Wie mag bieden",
+    "allSuppliers": "Elke leverancier die aan u kan leveren ({n})",
+    "onlyInvited": "Alleen de leveranciers die ik kies",
+    "publish": "Tender publiceren",
+    "closeNow": "Bieden nu sluiten",
+    "closeConfirm": "Bieden nu sluiten? Er kunnen geen biedingen meer worden gedaan.",
+    "cancel": "Tender annuleren",
+    "cancelConfirm": "Deze tender annuleren? De biedingen van leveranciers vervallen.",
+    "bidsTitle": "Biedingen",
+    "awardIntro": "Kies per regel een bod — het goedkoopste is geselecteerd. De regels van elke leverancier worden één bestelling.",
+    "awardEarly": "Bieden is nog open; u kunt al gunnen (het bieden sluit dan).",
+    "waitingBids": "Wacht op biedingen — u krijgt bericht zodra er een binnenkomt.",
+    "bidsN": "Biedingen: {n}",
+    "noBids": "Geen biedingen op deze regel.",
+    "best": "Beste prijs",
+    "belowTarget": "{amount} onder uw doelprijs",
+    "dontAward": "Deze regel niet gunnen",
+    "awardTotal": "Totaal",
+    "exclVat": "excl. btw",
+    "payment": "Betaling",
+    "payUsual": "Zoals gewoonlijk",
+    "award": "Gunnen en bestellingen plaatsen",
+    "awardConfirm": "De bestellingen voor de gekozen biedingen nu plaatsen?",
+    "awarded": "Bestellingen geplaatst: {orders}.",
+    "someFailed": "Sommige konden niet worden geplaatst: {reason}",
+    "vTitle": "Tenders",
+    "vIntro": "Tenders van kopers waarop u kunt bieden. Biedingen zijn gesloten: andere leveranciers zien uw prijzen nooit. De prijs die u invult, is wat de koper betaalt (excl. btw); de gebruikelijke FIRINGI-commissie gaat af van wat u ontvangt.",
+    "vOpen": "Open tenders",
+    "vNoOpen": "Er zijn nu geen open tenders voor u.",
+    "invitedYou": "U bent uitgenodigd",
+    "vMyBids": "Mijn biedingen",
+    "vNoBids": "Nog geen biedingen.",
+    "linesN": "Regels: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Bod verstuurd",
+      "WITHDRAWN": "Ingetrokken",
+      "WON": "Gewonnen",
+      "LOST": "Niet gekozen"
+    },
+    "yourBid": "Uw bod",
+    "makeBid": "Bod uitbrengen",
+    "bidIntro": "Bied op de regels die u kunt leveren — een van uw producten en uw prijs per eenheid.",
+    "biddingClosed": "Bieden is gesloten.",
+    "buyerTarget": "Doelprijs van de koper: {price}",
+    "noMatchingOffer": "U hebt geen actief aanbod van dit product.",
+    "yourProduct": "Uw product",
+    "yourPrice": "Prijs per eenheid (€)",
+    "skipLine": "Niet bieden op deze regel",
+    "yourBase": "uw lijstprijs {price}",
+    "lineTotal": "regel {amount}",
+    "youReceive": "u ontvangt ongeveer {amount}",
+    "bidNote": "Opmerking voor de koper (optioneel)",
+    "sendBid": "Bod versturen",
+    "updateBid": "Bod bijwerken",
+    "bidSent": "Bod opgeslagen.",
+    "withdraw": "Bod intrekken",
+    "withdrawConfirm": "Uw bod intrekken?",
+    "sealedNote": "Andere leveranciers zien uw bod nooit. U kunt het wijzigen tot het bieden sluit.",
+    "lineWon": "gewonnen",
+    "lineLost": "niet gekozen",
+    "waiting": "wacht op de koper",
+    "noBidLine": "geen bod"
   }
 }

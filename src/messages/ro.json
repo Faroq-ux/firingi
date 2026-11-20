@@ -886,7 +886,9 @@
     "Till Staff": "Personalul casei",
     "Rebates & Bonuses": "Rabaturi și bonusuri",
     "My Bonuses": "Bonusurile mele",
-    "Buying Groups": "Grupuri de achiziții"
+    "Buying Groups": "Grupuri de achiziții",
+    "Pay Later": "Plată amânată",
+    "Tenders": "Licitații"
   },
   "delivery": {
     "title": "Livrare",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Comandă de grup: {orders} comenzi",
       "body": "Grupul de achiziții „{name}” a plasat împreună {orders} comenzi („{title}”), cu livrare pe {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Plată amânată: plată scadentă pe {date}",
+      "body": "Plata {n} de {amount} € pentru comanda {number} este scadentă pe {date}."
+    },
+    "paylater_overdue": {
+      "title": "Plată amânată: plată restantă",
+      "body": "Plata {n} de {amount} € pentru comanda {number} era scadentă pe {date}. Vă rugăm să o achitați — până atunci plata amânată rămâne suspendată."
+    },
+    "tender_review": {
+      "title": "Licitație de verificat: {number}",
+      "body": "{company} a publicat licitația „{title}”. Aceasta se deschide pentru oferte după aprobarea FIRINGI."
+    },
+    "tender_decided": {
+      "title": "Licitația dvs. {number}: {decision}",
+      "body": "Decizia FIRINGI privind „{title}”: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Licitație nouă: {title}",
+      "body": "Un cumpărător cere prețuri ({lines} poziții, licitația {number}). Ofertarea se închide pe {date}."
+    },
+    "tender_bid": {
+      "title": "Ofertă nouă la {number}",
+      "body": "Licitația dvs. „{title}” are o ofertă nouă ({bids} până acum)."
+    },
+    "tender_closed": {
+      "title": "Ofertare închisă: {number}",
+      "body": "Ofertarea pentru „{title}” s-a închis cu {bids} oferte. Alegeți-le pe cele mai bune pentru a plasa comenzile."
+    },
+    "tender_awarded": {
+      "title": "Ați câștigat licitația {number}",
+      "body": "Cumpărătorul v-a ales oferta pentru {lines} poziții din „{title}” — comanda {order} vă așteaptă."
+    },
+    "tender_lost": {
+      "title": "Licitația {number} a fost atribuită",
+      "body": "De data aceasta, cumpărătorul a atribuit „{title}” altor oferte."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Oprește prețurile de grup",
     "vStopped": "Prețurile de grup au fost oprite.",
     "notForYou": "Acest furnizor nu vinde tipului dvs. de afacere, așa că nu puteți adăuga la această comandă de grup."
+  },
+  "payLater": {
+    "choose": "Cum doriți să plătiți?",
+    "payNow": "Ca de obicei (termenele dvs. obișnuite de plată)",
+    "checkNote": "Plata amânată se verifică la plasarea comenzii — de partenerul nostru de plăți sau de FIRINGI.",
+    "termDays": "Plată în {days} zile",
+    "termInstalments": "{count} rate lunare",
+    "fee": "Taxă {amount}",
+    "noFee": "Fără taxă",
+    "payBy": "plată până la {date}",
+    "eachMonth": "{count} × aprox. {amount}, prima pe {date}",
+    "title": "Plată amânată",
+    "intro": "Comandați acum și plătiți factura mai târziu — după un număr de zile sau în rate lunare.",
+    "closed": {
+      "OFF": "Plata amânată nu este disponibilă momentan.",
+      "COMPANY_OFF": "Plata amânată nu este disponibilă pentru firma dvs. Contactați FIRINGI.",
+      "TYPE_OFF": "Plata amânată nu este încă disponibilă pentru tipul dvs. de afacere.",
+      "OVERDUE": "O plată amânată este restantă — achitați-o pentru a putea folosi din nou plata amânată."
+    },
+    "howTitle": "Cum funcționează",
+    "howIntro": "Alegeți plata amânată la finalizarea comenzii. Factura vine tot de la FIRINGI; taxa (dacă există) apare pe un rând separat.",
+    "limit": "Credit la FIRINGI",
+    "used": "Utilizat",
+    "left": "Disponibil",
+    "partnerOn": "La finalizarea comenzii este disponibilă și plata amânată prin partenerul nostru de plăți (partenerul vă verifică comanda).",
+    "ownNote": "Ce mai datorați pentru comenzile cu plată amânată se scade din creditul dvs.; se eliberează pe măsură ce plătiți.",
+    "optionsTitle": "Opțiuni",
+    "optionsIntro": "Taxe afișate pentru o comandă de 1.000 € (cu TVA).",
+    "feeExample": "taxă {amount}",
+    "plansTitle": "Comenzile dvs. cu plată amânată",
+    "noPlans": "Încă nu există comenzi cu plată amânată.",
+    "status": {
+      "ACTIVE": "Așteaptă factura",
+      "INVOICED": "În curs de plată",
+      "PAID": "Plătită",
+      "OVERDUE": "Restantă",
+      "CANCELLED": "Anulată"
+    },
+    "feeIncl": "inclusiv taxa {amount}",
+    "invoice": "Factură",
+    "partnerNote": "Partenerul nostru de plăți a plătit FIRINGI — dvs. plătiți partenerului după acest calendar.",
+    "payment": "Plata {n}",
+    "paid": "plătită",
+    "overdueOn": "restantă din {date}",
+    "dueOn": "scadentă pe {date}",
+    "payNowLink": "Plătiți facturile"
+  },
+  "tenders": {
+    "title": "Licitații",
+    "intro": "Spuneți furnizorilor de ce aveți nevoie și lăsați-i să concureze: trimit oferte sigilate pentru fiecare poziție, iar dvs. alegeți cele mai bune — pozițiile fiecărui furnizor devin o comandă.",
+    "newTender": "Licitație nouă",
+    "newIntro": "Descrieți de ce aveți nevoie. Furnizorii care vă pot livra trimit prețuri până la închiderea ofertării.",
+    "closed": {
+      "OFF": "Licitațiile sunt dezactivate momentan.",
+      "COMPANY_OFF": "Licitațiile nu sunt deschise pentru firma dvs. Contactați FIRINGI.",
+      "TYPE_OFF": "Licitațiile nu sunt încă deschise pentru tipul dvs. de afacere."
+    },
+    "noTenders": "Încă nu există licitații.",
+    "status": {
+      "PENDING": "Așteaptă FIRINGI",
+      "OPEN": "Deschisă pentru oferte",
+      "CLOSED": "Ofertare închisă",
+      "AWARDED": "Atribuită",
+      "CANCELLED": "Anulată",
+      "REJECTED": "Refuzată"
+    },
+    "linesBids": "Poziții: {lines} · Oferte: {bids}",
+    "closesOn": "Se închide {date}",
+    "closedOn": "Închisă {date}",
+    "deliveryOn": "Livrare {date}",
+    "suppliersBid": "Furnizori ofertanți: {n}",
+    "invitedOnly": "Doar furnizori invitați",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Titlu",
+    "titlePh": "ex. Băuturi pentru decembrie",
+    "deliverTo": "Livrare la",
+    "deliveryDate": "Ziua livrării",
+    "closesAt": "Termen pentru oferte",
+    "closesHint": "Cel puțin {hours} ore, cel mult {days} zile de acum.",
+    "noteLabel": "Notă pentru furnizori (opțional)",
+    "linesTitle": "De ce aveți nevoie",
+    "lineN": "Poziția {n}",
+    "remove": "Elimină",
+    "change": "Schimbă",
+    "findProduct": "Căutați un produs în catalog (opțional)…",
+    "detailsPh": "Detalii (opțional)",
+    "describePh": "Sau descrieți de ce aveți nevoie",
+    "qty": "Cantitate",
+    "unitNote": "Unitate",
+    "unitNotePh": "ex. baxuri de 24",
+    "target": "Preț țintă (€, fără TVA)",
+    "addLine": "Adaugă o poziție",
+    "whoBids": "Cine poate oferta",
+    "allSuppliers": "Orice furnizor care vă poate livra ({n})",
+    "onlyInvited": "Doar furnizorii aleși de mine",
+    "publish": "Publică licitația",
+    "closeNow": "Închide ofertarea acum",
+    "closeConfirm": "Închideți ofertarea acum? Nu se mai pot trimite oferte.",
+    "cancel": "Anulează licitația",
+    "cancelConfirm": "Anulați această licitație? Ofertele furnizorilor sunt eliminate.",
+    "bidsTitle": "Oferte",
+    "awardIntro": "Alegeți o ofertă pentru fiecare poziție — cea mai ieftină este preselectată. Pozițiile fiecărui furnizor devin o singură comandă.",
+    "awardEarly": "Ofertarea este încă deschisă; puteți atribui deja (ofertarea se închide atunci).",
+    "waitingBids": "Se așteaptă oferte — veți fi anunțat când sosește una.",
+    "bidsN": "Oferte: {n}",
+    "noBids": "Nicio ofertă pentru această poziție.",
+    "best": "Cel mai bun preț",
+    "belowTarget": "cu {amount} sub ținta dvs.",
+    "dontAward": "Nu atribui această poziție",
+    "awardTotal": "Total",
+    "exclVat": "fără TVA",
+    "payment": "Plată",
+    "payUsual": "Ca de obicei",
+    "award": "Atribuie și plasează comenzile",
+    "awardConfirm": "Plasați acum comenzile pentru ofertele alese?",
+    "awarded": "Comenzi plasate: {orders}.",
+    "someFailed": "Unele nu au putut fi plasate: {reason}",
+    "vTitle": "Licitații",
+    "vIntro": "Licitațiile cumpărătorilor la care puteți oferta. Ofertele sunt sigilate: ceilalți furnizori nu vă văd niciodată prețurile. Prețul introdus este cel plătit de cumpărător (fără TVA); comisionul obișnuit FIRINGI se scade din suma pe care o primiți.",
+    "vOpen": "Licitații deschise",
+    "vNoOpen": "Momentan nu există licitații deschise pentru dvs.",
+    "invitedYou": "Sunteți invitat",
+    "vMyBids": "Ofertele mele",
+    "vNoBids": "Încă nu există oferte.",
+    "linesN": "{n} poziții",
+    "bidStatus": {
+      "SUBMITTED": "Ofertă trimisă",
+      "WITHDRAWN": "Retrasă",
+      "WON": "Câștigată",
+      "LOST": "Nealeasă"
+    },
+    "yourBid": "Oferta dvs.",
+    "makeBid": "Faceți o ofertă",
+    "bidIntro": "Ofertați pentru pozițiile pe care le puteți livra — unul dintre produsele dvs. și prețul pe unitate.",
+    "biddingClosed": "Ofertarea este închisă.",
+    "buyerTarget": "Ținta cumpărătorului: {price}",
+    "noMatchingOffer": "Nu aveți o ofertă activă pentru acest produs.",
+    "yourProduct": "Produsul dvs.",
+    "yourPrice": "Preț pe unitate (€)",
+    "skipLine": "Fără ofertă pentru această poziție",
+    "yourBase": "prețul dvs. de listă {price}",
+    "lineTotal": "poziție {amount}",
+    "youReceive": "primiți aprox. {amount}",
+    "bidNote": "Notă pentru cumpărător (opțional)",
+    "sendBid": "Trimite oferta",
+    "updateBid": "Actualizează oferta",
+    "bidSent": "Oferta a fost salvată.",
+    "withdraw": "Retrage oferta",
+    "withdrawConfirm": "Retrageți oferta?",
+    "sealedNote": "Ceilalți furnizori nu vă văd niciodată oferta. O puteți modifica până la închiderea ofertării.",
+    "lineWon": "câștigată",
+    "lineLost": "nealeasă",
+    "waiting": "așteaptă cumpărătorul",
+    "noBidLine": "fără ofertă"
   }
 }

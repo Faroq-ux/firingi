@@ -886,7 +886,9 @@
     "Till Staff": "Kasos personalas",
     "Rebates & Bonuses": "Nuolaidos ir premijos",
     "My Bonuses": "Mano premijos",
-    "Buying Groups": "Pirkimo grupės"
+    "Buying Groups": "Pirkimo grupės",
+    "Pay Later": "Mokėti vėliau",
+    "Tenders": "Konkursai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Grupės užsakymas: užsakymų {orders}",
       "body": "Pirkimo grupė „{name}“ kartu pateikė užsakymų: {orders} („{title}“), pristatymas {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Mokėti vėliau: mokėjimo terminas {date}",
+      "body": "Užsakymo {number} mokėjimas Nr. {n} ({amount} €) turi būti atliktas iki {date}."
+    },
+    "paylater_overdue": {
+      "title": "Mokėti vėliau: mokėjimas pradelstas",
+      "body": "Užsakymo {number} mokėjimas Nr. {n} ({amount} €) turėjo būti atliktas iki {date}. Prašome jį sumokėti — iki tol mokėti vėliau negalėsite."
+    },
+    "tender_review": {
+      "title": "Konkursas patikrinimui: {number}",
+      "body": "{company} paskelbė konkursą „{title}“. Pasiūlymus bus galima teikti FIRINGI jį patvirtinus."
+    },
+    "tender_decided": {
+      "title": "Jūsų konkursas {number}: {decision}",
+      "body": "FIRINGI sprendimas dėl „{title}“: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Naujas konkursas: {title}",
+      "body": "Pirkėjas prašo kainų (eilučių: {lines}, konkursas {number}). Pasiūlymų teikimas baigiasi {date}."
+    },
+    "tender_bid": {
+      "title": "Naujas pasiūlymas konkursui {number}",
+      "body": "Jūsų konkursas „{title}“ gavo naują pasiūlymą (iš viso: {bids})."
+    },
+    "tender_closed": {
+      "title": "Pasiūlymų teikimas baigtas: {number}",
+      "body": "Pasiūlymų teikimas konkurse „{title}“ baigtas, gauta pasiūlymų: {bids}. Pasirinkite geriausius ir pateikite užsakymus."
+    },
+    "tender_awarded": {
+      "title": "Laimėjote konkursą {number}",
+      "body": "Pirkėjas pasirinko Jūsų pasiūlymą konkurso „{title}“ eilutėms (iš viso: {lines}) — Jūsų laukia užsakymas {order}."
+    },
+    "tender_lost": {
+      "title": "Konkurso {number} laimėtojai išrinkti",
+      "body": "Šį kartą pirkėjas konkurse „{title}“ pasirinko kitus pasiūlymus."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Nutraukti grupės kainas",
     "vStopped": "Grupės kainos nutrauktos.",
     "notForYou": "Šis tiekėjas neparduoda Jūsų verslo tipui, todėl negalite nieko pridėti prie šio grupės užsakymo."
+  },
+  "payLater": {
+    "choose": "Kaip norite mokėti?",
+    "payNow": "Kaip įprasta (Jūsų įprastos mokėjimo sąlygos)",
+    "checkNote": "Galimybė mokėti vėliau tikrinama pateikiant užsakymą — tai daro mūsų mokėjimų partneris arba FIRINGI.",
+    "termDays": "Sumokėti per {days} d.",
+    "termInstalments": "Mėnesinių įmokų: {count}",
+    "fee": "Mokestis {amount}",
+    "noFee": "Be mokesčio",
+    "payBy": "sumokėti iki {date}",
+    "eachMonth": "{count} × apie {amount}, pirmoji {date}",
+    "title": "Mokėti vėliau",
+    "intro": "Užsakykite dabar, o sąskaitą apmokėkite vėliau — po tam tikro dienų skaičiaus arba mėnesinėmis įmokomis.",
+    "closed": {
+      "OFF": "Mokėti vėliau šiuo metu negalima.",
+      "COMPANY_OFF": "Mokėti vėliau Jūsų įmonei negalima. Susisiekite su FIRINGI.",
+      "TYPE_OFF": "Mokėti vėliau Jūsų tipo įmonėms dar negalima.",
+      "OVERDUE": "Vėluoja atidėtas mokėjimas — sumokėkite jį, kad vėl galėtumėte mokėti vėliau."
+    },
+    "howTitle": "Kaip tai veikia",
+    "howIntro": "Pateikdami užsakymą pasirinkite „Mokėti vėliau“. Sąskaitą faktūrą vis tiek išrašo FIRINGI; mokestis (jei taikomas) joje nurodomas atskira eilute.",
+    "limit": "FIRINGI kreditas",
+    "used": "Naudojama",
+    "left": "Laisva",
+    "partnerOn": "Mokėti vėliau per mūsų mokėjimų partnerį taip pat galima pateikiant užsakymą (partneris patikrina Jūsų užsakymą).",
+    "ownNote": "Tai, ką dar esate skolingi už užsakymus su atidėtu mokėjimu, mažina Jūsų kreditą; jis vėl atsilaisvina, kai mokate.",
+    "optionsTitle": "Galimybės",
+    "optionsIntro": "Mokesčiai nurodyti 1 000 € užsakymui (su PVM).",
+    "feeExample": "mokestis {amount}",
+    "plansTitle": "Jūsų užsakymai su atidėtu mokėjimu",
+    "noPlans": "Užsakymų su atidėtu mokėjimu dar nėra.",
+    "status": {
+      "ACTIVE": "Laukiama sąskaitos",
+      "INVOICED": "Mokama",
+      "PAID": "Apmokėta",
+      "OVERDUE": "Pradelsta",
+      "CANCELLED": "Atšaukta"
+    },
+    "feeIncl": "įskaitant mokestį {amount}",
+    "invoice": "Sąskaita faktūra",
+    "partnerNote": "Mūsų mokėjimų partneris jau sumokėjo FIRINGI — Jūs mokate partneriui pagal šį grafiką.",
+    "payment": "Mokėjimas {n}",
+    "paid": "apmokėta",
+    "overdueOn": "pradelsta nuo {date}",
+    "dueOn": "terminas {date}",
+    "payNowLink": "Apmokėkite sąskaitas"
+  },
+  "tenders": {
+    "title": "Konkursai",
+    "intro": "Praneškite tiekėjams, ko Jums reikia, ir leiskite jiems konkuruoti: jie teikia slaptus pasiūlymus kiekvienai eilutei, o Jūs pasirenkate geriausius — kiekvieno tiekėjo eilutės tampa užsakymu.",
+    "newTender": "Naujas konkursas",
+    "newIntro": "Aprašykite, ko Jums reikia. Tiekėjai, galintys Jums pristatyti, teikia savo kainas, kol baigsis pasiūlymų teikimas.",
+    "closed": {
+      "OFF": "Konkursai šiuo metu išjungti.",
+      "COMPANY_OFF": "Konkursai Jūsų įmonei neprieinami. Susisiekite su FIRINGI.",
+      "TYPE_OFF": "Konkursai Jūsų tipo įmonėms dar neprieinami."
+    },
+    "noTenders": "Konkursų dar nėra.",
+    "status": {
+      "PENDING": "Laukiama FIRINGI",
+      "OPEN": "Priimami pasiūlymai",
+      "CLOSED": "Pasiūlymų teikimas baigtas",
+      "AWARDED": "Laimėtojai išrinkti",
+      "CANCELLED": "Atšauktas",
+      "REJECTED": "Atmestas"
+    },
+    "linesBids": "Eilučių: {lines} · Pasiūlymų: {bids}",
+    "closesOn": "Pasiūlymai iki {date}",
+    "closedOn": "Baigėsi {date}",
+    "deliveryOn": "Pristatymas {date}",
+    "suppliersBid": "Pasiūlymus teikiančių tiekėjų: {n}",
+    "invitedOnly": "Tik pakviesti tiekėjai",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Pavadinimas",
+    "titlePh": "pvz., Gėrimai gruodžiui",
+    "deliverTo": "Pristatyti į",
+    "deliveryDate": "Pristatymo diena",
+    "closesAt": "Pasiūlymų teikimo pabaiga",
+    "closesHint": "Ne anksčiau kaip po {hours} val. ir ne vėliau kaip po {days} d.",
+    "noteLabel": "Pastaba tiekėjams (neprivaloma)",
+    "linesTitle": "Ko Jums reikia",
+    "lineN": "Eilutė {n}",
+    "remove": "Pašalinti",
+    "change": "Keisti",
+    "findProduct": "Raskite produktą kataloge (neprivaloma)…",
+    "detailsPh": "Papildoma informacija (neprivaloma)",
+    "describePh": "Arba aprašykite, ko Jums reikia",
+    "qty": "Kiekis",
+    "unitNote": "Matavimo vienetas",
+    "unitNotePh": "pvz., dėžės po 24",
+    "target": "Tikslinė kaina (€, be PVM)",
+    "addLine": "Pridėti eilutę",
+    "whoBids": "Kas gali teikti pasiūlymus",
+    "allSuppliers": "Visi tiekėjai, galintys Jums pristatyti ({n})",
+    "onlyInvited": "Tik mano pasirinkti tiekėjai",
+    "publish": "Paskelbti konkursą",
+    "closeNow": "Baigti pasiūlymų teikimą dabar",
+    "closeConfirm": "Baigti pasiūlymų teikimą dabar? Daugiau pasiūlymų pateikti nebus galima.",
+    "cancel": "Atšaukti konkursą",
+    "cancelConfirm": "Atšaukti šį konkursą? Tiekėjų pasiūlymai bus panaikinti.",
+    "bidsTitle": "Pasiūlymai",
+    "awardIntro": "Kiekvienai eilutei pasirinkite pasiūlymą — pažymėtas pigiausias. Kiekvieno tiekėjo eilutės tampa vienu užsakymu.",
+    "awardEarly": "Pasiūlymai dar priimami; laimėtojus galite išrinkti jau dabar (tada pasiūlymų teikimas baigsis).",
+    "waitingBids": "Laukiama pasiūlymų — gavus pasiūlymą, Jums bus pranešta.",
+    "bidsN": "Pasiūlymų: {n}",
+    "noBids": "Šiai eilutei pasiūlymų nėra.",
+    "best": "Geriausia kaina",
+    "belowTarget": "{amount} mažiau už Jūsų tikslinę kainą",
+    "dontAward": "Neskirti šios eilutės",
+    "awardTotal": "Iš viso",
+    "exclVat": "be PVM",
+    "payment": "Mokėjimas",
+    "payUsual": "Kaip įprasta",
+    "award": "Išrinkti laimėtojus ir pateikti užsakymus",
+    "awardConfirm": "Pateikti užsakymus pagal pasirinktus pasiūlymus dabar?",
+    "awarded": "Pateikta užsakymų: {orders}.",
+    "someFailed": "Kai kurių pateikti nepavyko: {reason}",
+    "vTitle": "Konkursai",
+    "vIntro": "Pirkėjų konkursai, kuriuose galite teikti pasiūlymus. Pasiūlymai slapti: kiti tiekėjai niekada nemato Jūsų kainų. Jūsų nurodyta kaina yra tai, ką moka pirkėjas (be PVM); įprastas FIRINGI komisinis mokestis išskaičiuojamas iš to, ką gaunate.",
+    "vOpen": "Atviri konkursai",
+    "vNoOpen": "Šiuo metu atvirų konkursų Jums nėra.",
+    "invitedYou": "Esate pakviesti",
+    "vMyBids": "Mano pateikti pasiūlymai",
+    "vNoBids": "Pasiūlymų dar nėra.",
+    "linesN": "Eilučių: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Pasiūlymas išsiųstas",
+      "WITHDRAWN": "Atšauktas",
+      "WON": "Laimėtas",
+      "LOST": "Nepasirinktas"
+    },
+    "yourBid": "Jūsų pasiūlymas",
+    "makeBid": "Teikti pasiūlymą",
+    "bidIntro": "Teikite pasiūlymus eilutėms, kurias galite tiekti — nurodykite vieną iš savo produktų ir savo kainą už vienetą.",
+    "biddingClosed": "Pasiūlymų teikimas baigtas.",
+    "buyerTarget": "Pirkėjo tikslinė kaina: {price}",
+    "noMatchingOffer": "Neturite aktyvaus šio produkto pasiūlymo.",
+    "yourProduct": "Jūsų produktas",
+    "yourPrice": "Kaina už vienetą (€)",
+    "skipLine": "Neteikti pasiūlymo šiai eilutei",
+    "yourBase": "Jūsų kainoraščio kaina {price}",
+    "lineTotal": "eilutė {amount}",
+    "youReceive": "gausite apie {amount}",
+    "bidNote": "Pastaba pirkėjui (neprivaloma)",
+    "sendBid": "Siųsti pasiūlymą",
+    "updateBid": "Atnaujinti pasiūlymą",
+    "bidSent": "Pasiūlymas išsaugotas.",
+    "withdraw": "Atšaukti pasiūlymą",
+    "withdrawConfirm": "Atšaukti savo pasiūlymą?",
+    "sealedNote": "Kiti tiekėjai niekada nemato Jūsų pasiūlymo. Galite jį keisti, kol baigsis pasiūlymų teikimas.",
+    "lineWon": "laimėta",
+    "lineLost": "nepasirinkta",
+    "waiting": "laukiama pirkėjo",
+    "noBidLine": "nėra pasiūlymo"
   }
 }

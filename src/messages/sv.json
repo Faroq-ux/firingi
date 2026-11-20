@@ -886,7 +886,9 @@
     "Till Staff": "Kassapersonal",
     "Rebates & Bonuses": "Rabatter och bonusar",
     "My Bonuses": "Mina bonusar",
-    "Buying Groups": "Inköpsgrupper"
+    "Buying Groups": "Inköpsgrupper",
+    "Pay Later": "Betala senare",
+    "Tenders": "Upphandlingar"
   },
   "delivery": {
     "title": "Leverans",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Gruppbeställning: {orders} beställningar",
       "body": "Inköpsgruppen ”{name}” lade {orders} beställningar tillsammans (”{title}”) för leverans {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Betala senare: betalning förfaller {date}",
+      "body": "Betalning {n} på {amount} € för beställning {number} förfaller den {date}."
+    },
+    "paylater_overdue": {
+      "title": "Betala senare: betalning förfallen",
+      "body": "Betalning {n} på {amount} € för beställning {number} förföll den {date}. Betala den — tills dess är Betala senare pausat."
+    },
+    "tender_review": {
+      "title": "Upphandling att granska: {number}",
+      "body": "{company} har publicerat upphandlingen ”{title}”. Den öppnar för anbud när FIRINGI har godkänt den."
+    },
+    "tender_decided": {
+      "title": "Er upphandling {number}: {decision}",
+      "body": "FIRINGI:s beslut om ”{title}”: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Ny upphandling: {title}",
+      "body": "En köpare efterfrågar priser ({lines} rader, upphandling {number}). Anbudstiden går ut {date}."
+    },
+    "tender_bid": {
+      "title": "Nytt anbud på {number}",
+      "body": "Er upphandling ”{title}” har fått ett nytt anbud ({bids} hittills)."
+    },
+    "tender_closed": {
+      "title": "Anbudstiden har gått ut: {number}",
+      "body": "Anbudstiden för ”{title}” har gått ut med {bids} anbud. Välj de bästa för att lägga era beställningar."
+    },
+    "tender_awarded": {
+      "title": "Ni vann upphandling {number}",
+      "body": "Köparen valde ert anbud för {lines} rader i ”{title}” — order {order} väntar på er."
+    },
+    "tender_lost": {
+      "title": "Upphandling {number} tilldelad",
+      "body": "Köparen tilldelade ”{title}” andra anbud den här gången."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Stoppa grupppriser",
     "vStopped": "Grupppriserna har stoppats.",
     "notForYou": "Den här leverantören säljer inte till er typ av företag, så ni kan inte lägga till i den här gruppbeställningen."
+  },
+  "payLater": {
+    "choose": "Hur vill ni betala?",
+    "payNow": "Som vanligt (era vanliga betalningsvillkor)",
+    "checkNote": "Betala senare kontrolleras när ni lägger beställningen — av vår betalpartner eller av FIRINGI.",
+    "termDays": "Betala inom {days} dagar",
+    "termInstalments": "{count} månatliga delbetalningar",
+    "fee": "Avgift {amount}",
+    "noFee": "Ingen avgift",
+    "payBy": "betala senast {date}",
+    "eachMonth": "{count} × cirka {amount}, den första {date}",
+    "title": "Betala senare",
+    "intro": "Beställ nu och betala fakturan senare — efter ett antal dagar eller i månatliga delbetalningar.",
+    "closed": {
+      "OFF": "Betala senare är inte tillgängligt just nu.",
+      "COMPANY_OFF": "Betala senare är inte tillgängligt för ert företag. Kontakta FIRINGI.",
+      "TYPE_OFF": "Betala senare är inte tillgängligt för er typ av företag ännu.",
+      "OVERDUE": "En betalning med Betala senare är förfallen — betala den för att kunna använda Betala senare igen."
+    },
+    "howTitle": "Så fungerar det",
+    "howIntro": "Välj Betala senare i kassan. Fakturan kommer fortfarande från FIRINGI; en eventuell avgift står på en egen rad.",
+    "limit": "Kredit hos FIRINGI",
+    "used": "Använd",
+    "left": "Tillgänglig",
+    "partnerOn": "Betala senare via vår betalpartner finns också i kassan (partnern kontrollerar er beställning).",
+    "ownNote": "Det ni fortfarande är skyldiga för beställningar med Betala senare räknas mot er kredit; det frigörs igen när ni betalar.",
+    "optionsTitle": "Alternativ",
+    "optionsIntro": "Avgifterna gäller en beställning på 1 000 € (inkl. moms).",
+    "feeExample": "avgift {amount}",
+    "plansTitle": "Era beställningar med Betala senare",
+    "noPlans": "Inga beställningar med Betala senare än.",
+    "status": {
+      "ACTIVE": "Väntar på faktura",
+      "INVOICED": "Betalas",
+      "PAID": "Betald",
+      "OVERDUE": "Förfallen",
+      "CANCELLED": "Avbruten"
+    },
+    "feeIncl": "inkl. avgift {amount}",
+    "invoice": "Faktura",
+    "partnerNote": "Vår betalpartner har betalat FIRINGI — ni betalar partnern enligt den här planen.",
+    "payment": "Betalning {n}",
+    "paid": "betald",
+    "overdueOn": "förfallen sedan {date}",
+    "dueOn": "förfaller {date}",
+    "payNowLink": "Betala era fakturor"
+  },
+  "tenders": {
+    "title": "Upphandlingar",
+    "intro": "Berätta för leverantörerna vad ni behöver och låt dem konkurrera: de skickar slutna anbud per rad, ni väljer de bästa — varje leverantörs rader blir en beställning.",
+    "newTender": "Ny upphandling",
+    "newIntro": "Beskriv vad ni behöver. Leverantörer som kan leverera till er skickar sina priser tills anbudstiden går ut.",
+    "closed": {
+      "OFF": "Upphandlingar är avstängda just nu.",
+      "COMPANY_OFF": "Upphandlingar är inte öppna för ert företag. Kontakta FIRINGI.",
+      "TYPE_OFF": "Upphandlingar är inte öppna för er typ av företag ännu."
+    },
+    "noTenders": "Inga upphandlingar än.",
+    "status": {
+      "PENDING": "Väntar på FIRINGI",
+      "OPEN": "Öppen för anbud",
+      "CLOSED": "Anbudstiden har gått ut",
+      "AWARDED": "Tilldelad",
+      "CANCELLED": "Avbruten",
+      "REJECTED": "Avslagen"
+    },
+    "linesBids": "Rader: {lines} · Anbud: {bids}",
+    "closesOn": "Stänger {date}",
+    "closedOn": "Stängde {date}",
+    "deliveryOn": "Leverans {date}",
+    "suppliersBid": "Leverantörer som lämnar anbud: {n}",
+    "invitedOnly": "Endast inbjudna leverantörer",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Rubrik",
+    "titlePh": "t.ex. Drycker till december",
+    "deliverTo": "Leverera till",
+    "deliveryDate": "Leveransdag",
+    "closesAt": "Anbudstiden går ut",
+    "closesHint": "Minst {hours} timmar, högst {days} dagar från nu.",
+    "noteLabel": "Meddelande till leverantörerna (valfritt)",
+    "linesTitle": "Vad ni behöver",
+    "lineN": "Rad {n}",
+    "remove": "Ta bort",
+    "change": "Ändra",
+    "findProduct": "Hitta en produkt i katalogen (valfritt)…",
+    "detailsPh": "Detaljer (valfritt)",
+    "describePh": "Eller beskriv vad ni behöver",
+    "qty": "Antal",
+    "unitNote": "Enhet",
+    "unitNotePh": "t.ex. kartonger à 24",
+    "target": "Målpris (€, exkl. moms)",
+    "addLine": "Lägg till en rad",
+    "whoBids": "Vem kan lämna anbud",
+    "allSuppliers": "Alla leverantörer som kan leverera till er ({n})",
+    "onlyInvited": "Bara leverantörer jag väljer",
+    "publish": "Publicera upphandling",
+    "closeNow": "Stäng anbudstiden nu",
+    "closeConfirm": "Stänga anbudstiden nu? Inga fler anbud kan skickas.",
+    "cancel": "Avbryt upphandlingen",
+    "cancelConfirm": "Avbryta den här upphandlingen? Leverantörernas anbud stryks.",
+    "bidsTitle": "Anbud",
+    "awardIntro": "Välj ett anbud för varje rad — det billigaste är förvalt. Varje leverantörs rader blir en beställning.",
+    "awardEarly": "Anbudstiden är fortfarande öppen; ni kan redan tilldela (anbudstiden stänger då).",
+    "waitingBids": "Väntar på anbud — ni får besked när ett kommer in.",
+    "bidsN": "Anbud: {n}",
+    "noBids": "Inga anbud på den här raden.",
+    "best": "Bästa pris",
+    "belowTarget": "{amount} under ert målpris",
+    "dontAward": "Tilldela inte den här raden",
+    "awardTotal": "Totalt",
+    "exclVat": "exkl. moms",
+    "payment": "Betalning",
+    "payUsual": "Som vanligt",
+    "award": "Tilldela och lägg beställningar",
+    "awardConfirm": "Lägga beställningarna för de valda anbuden nu?",
+    "awarded": "Lagda beställningar: {orders}.",
+    "someFailed": "Vissa kunde inte läggas: {reason}",
+    "vTitle": "Upphandlingar",
+    "vIntro": "Köpares upphandlingar som ni kan lämna anbud på. Anbuden är slutna: andra leverantörer ser aldrig era priser. Priset ni anger är vad köparen betalar (exkl. moms); FIRINGI:s vanliga provision dras från det ni får.",
+    "vOpen": "Öppna upphandlingar",
+    "vNoOpen": "Inga öppna upphandlingar för er just nu.",
+    "invitedYou": "Ni är inbjudna",
+    "vMyBids": "Mina anbud",
+    "vNoBids": "Inga anbud än.",
+    "linesN": "{n} rader",
+    "bidStatus": {
+      "SUBMITTED": "Anbud skickat",
+      "WITHDRAWN": "Återkallat",
+      "WON": "Vunnet",
+      "LOST": "Inte valt"
+    },
+    "yourBid": "Ert anbud",
+    "makeBid": "Lämna anbud",
+    "bidIntro": "Lämna anbud på de rader ni kan leverera — en av era produkter och ert pris per enhet.",
+    "biddingClosed": "Anbudstiden har gått ut.",
+    "buyerTarget": "Köparens målpris: {price}",
+    "noMatchingOffer": "Ni har inget aktivt erbjudande för den här produkten.",
+    "yourProduct": "Er produkt",
+    "yourPrice": "Pris per enhet (€)",
+    "skipLine": "Lämna inget anbud på den här raden",
+    "yourBase": "ert listpris {price}",
+    "lineTotal": "rad {amount}",
+    "youReceive": "ni får cirka {amount}",
+    "bidNote": "Meddelande till köparen (valfritt)",
+    "sendBid": "Skicka anbud",
+    "updateBid": "Uppdatera anbud",
+    "bidSent": "Anbudet har sparats.",
+    "withdraw": "Återkalla anbud",
+    "withdrawConfirm": "Återkalla ert anbud?",
+    "sealedNote": "Andra leverantörer ser aldrig ert anbud. Ni kan ändra det tills anbudstiden går ut.",
+    "lineWon": "vunnet",
+    "lineLost": "inte valt",
+    "waiting": "väntar på köparen",
+    "noBidLine": "inget anbud"
   }
 }

@@ -301,6 +301,10 @@ model Company {
   posRegisters           PosRegister[]             @relation("PosRegisters")
   posItems               PosItem[]                 @relation("PosItems")
   posMembers             PosMember[]               @relation("PosMembers")
+  payLaterPlans          PayLaterPlan[]            @relation("PayLaterPlans")
+  payLaterAccount        PayLaterAccount?          @relation("PayLaterAccount")
+  tendersPosted          Tender[]                  @relation("TendersPosted")
+  tenderBids             TenderBid[]               @relation("TenderBids")
 
   /// one company per NIF / tax id in a country, whatever its type (registration details are fixed; FIRINGI corrects them)
   @@unique([countryId, taxId])

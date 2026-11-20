@@ -1670,6 +1670,42 @@
     "group_round_supplier": {
       "title": "Encomenda de grupo: {orders} encomendas",
       "body": "O grupo de compra \"{name}\" fez {orders} encomendas em conjunto (\"{title}\"), para entrega a {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Pagamento a prazo: vence a {date}",
+      "body": "O pagamento {n} de {amount} € da encomenda {number} vence a {date}."
+    },
+    "paylater_overdue": {
+      "title": "Pagamento a prazo em atraso",
+      "body": "O pagamento {n} de {amount} € da encomenda {number} venceu a {date}. Por favor pague-o — o pagamento a prazo fica suspenso até lá."
+    },
+    "tender_review": {
+      "title": "Concurso para verificar: {number}",
+      "body": "{company} publicou o concurso \"{title}\". Abre a propostas depois de a FIRINGI o aprovar."
+    },
+    "tender_decided": {
+      "title": "O seu concurso {number}: {decision}",
+      "body": "Decisão da FIRINGI sobre \"{title}\": {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Novo concurso: {title}",
+      "body": "Um comprador pede preços ({lines} linhas, concurso {number}). As propostas fecham a {date}."
+    },
+    "tender_bid": {
+      "title": "Nova proposta em {number}",
+      "body": "O seu concurso \"{title}\" tem uma nova proposta ({bids} até agora)."
+    },
+    "tender_closed": {
+      "title": "Propostas fechadas: {number}",
+      "body": "As propostas para \"{title}\" fecharam com {bids} propostas. Escolha as melhores para fazer as encomendas."
+    },
+    "tender_awarded": {
+      "title": "Ganhou o concurso {number}",
+      "body": "O comprador escolheu a sua proposta para {lines} linhas de \"{title}\" — a encomenda {order} aguarda por si."
+    },
+    "tender_lost": {
+      "title": "Concurso {number} adjudicado",
+      "body": "Desta vez o comprador adjudicou \"{title}\" a outras propostas."
     }
   },
   "notifications": {
@@ -6573,5 +6609,159 @@
     "vStop": "Terminar preços de grupo",
     "vStopped": "Preços de grupo terminados.",
     "notForYou": "Este fornecedor não vende ao seu tipo de empresa, por isso não pode adicionar a esta encomenda de grupo."
+  },
+  "payLater": {
+    "choose": "Como quer pagar?",
+    "payNow": "Como habitualmente (as suas condições de pagamento)",
+    "checkNote": "O pagamento a prazo é verificado quando faz a encomenda — pelo nosso parceiro de pagamentos ou pela FIRINGI.",
+    "termDays": "Pagar em {days} dias",
+    "termInstalments": "{count} prestações mensais",
+    "fee": "Taxa {amount}",
+    "noFee": "Sem taxa",
+    "payBy": "pagar até {date}",
+    "eachMonth": "{count} × cerca de {amount}, a primeira a {date}",
+    "title": "Pagar Mais Tarde",
+    "intro": "Encomende agora e pague a fatura mais tarde — num número de dias ou em prestações mensais.",
+    "closed": {
+      "OFF": "O pagamento a prazo não está disponível de momento.",
+      "COMPANY_OFF": "O pagamento a prazo não está disponível para a sua empresa. Contacte a FIRINGI.",
+      "TYPE_OFF": "O pagamento a prazo ainda não está disponível para o seu tipo de empresa.",
+      "OVERDUE": "Há um pagamento a prazo em atraso — pague-o para voltar a usar o pagamento a prazo."
+    },
+    "howTitle": "Como funciona",
+    "howIntro": "Escolha pagar mais tarde no checkout. A fatura continua a ser da FIRINGI; a taxa (se houver) é uma linha à parte.",
+    "limit": "Crédito com a FIRINGI",
+    "used": "Em uso",
+    "left": "Disponível",
+    "partnerOn": "O pagamento a prazo através do nosso parceiro de pagamentos também está disponível no checkout (o parceiro verifica a encomenda).",
+    "ownNote": "O que ainda deve em encomendas a prazo conta para o seu crédito; volta a ficar livre à medida que paga.",
+    "optionsTitle": "Opções",
+    "optionsIntro": "Taxas para uma encomenda de 1 000 € (com IVA).",
+    "feeExample": "taxa {amount}",
+    "plansTitle": "As suas encomendas a prazo",
+    "noPlans": "Ainda não há encomendas a prazo.",
+    "status": {
+      "ACTIVE": "A aguardar fatura",
+      "INVOICED": "Em pagamento",
+      "PAID": "Paga",
+      "OVERDUE": "Em atraso",
+      "CANCELLED": "Cancelada"
+    },
+    "feeIncl": "inclui taxa {amount}",
+    "invoice": "Fatura",
+    "partnerNote": "A FIRINGI já foi paga pelo nosso parceiro de pagamentos — paga ao parceiro segundo este calendário.",
+    "payment": "Pagamento {n}",
+    "paid": "pago",
+    "overdueOn": "em atraso desde {date}",
+    "dueOn": "vence a {date}",
+    "payNowLink": "Pagar as suas faturas"
+  },
+  "tenders": {
+    "title": "Concursos",
+    "intro": "Diga aos fornecedores o que precisa e deixe-os competir: enviam propostas fechadas por linha, escolhe as melhores — as linhas de cada fornecedor tornam-se uma encomenda.",
+    "newTender": "Novo concurso",
+    "newIntro": "Descreva o que precisa. Os fornecedores que lhe podem entregar enviam os seus preços até ao fecho.",
+    "closed": {
+      "OFF": "Os concursos estão desligados de momento.",
+      "COMPANY_OFF": "Os concursos não estão abertos para a sua empresa. Contacte a FIRINGI.",
+      "TYPE_OFF": "Os concursos ainda não estão abertos para o seu tipo de empresa."
+    },
+    "noTenders": "Ainda não há concursos.",
+    "status": {
+      "PENDING": "A aguardar a FIRINGI",
+      "OPEN": "Aberto a propostas",
+      "CLOSED": "Propostas fechadas",
+      "AWARDED": "Adjudicado",
+      "CANCELLED": "Cancelado",
+      "REJECTED": "Recusado"
+    },
+    "linesBids": "Linhas: {lines} · Propostas: {bids}",
+    "closesOn": "Fecha a {date}",
+    "closedOn": "Fechou a {date}",
+    "deliveryOn": "Entrega a {date}",
+    "suppliersBid": "Fornecedores com proposta: {n}",
+    "invitedOnly": "Só fornecedores convidados",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Título",
+    "titlePh": "p. ex. Bebidas para dezembro",
+    "deliverTo": "Entregar em",
+    "deliveryDate": "Dia de entrega",
+    "closesAt": "Fecho das propostas",
+    "closesHint": "Pelo menos {hours} horas, no máximo {days} dias a partir de agora.",
+    "noteLabel": "Nota para os fornecedores (opcional)",
+    "linesTitle": "O que precisa",
+    "lineN": "Linha {n}",
+    "remove": "Remover",
+    "change": "Mudar",
+    "findProduct": "Procurar um produto no catálogo (opcional)…",
+    "detailsPh": "Detalhes (opcional)",
+    "describePh": "Ou descreva o que precisa",
+    "qty": "Quantidade",
+    "unitNote": "Unidade",
+    "unitNotePh": "p. ex. caixas de 24",
+    "target": "Preço-alvo (€, sem IVA)",
+    "addLine": "Adicionar linha",
+    "whoBids": "Quem pode propor",
+    "allSuppliers": "Todos os fornecedores que lhe podem entregar ({n})",
+    "onlyInvited": "Só os fornecedores que eu escolher",
+    "publish": "Publicar concurso",
+    "closeNow": "Fechar propostas agora",
+    "closeConfirm": "Fechar as propostas agora? Não podem ser enviadas mais propostas.",
+    "cancel": "Cancelar concurso",
+    "cancelConfirm": "Cancelar este concurso? As propostas dos fornecedores são descartadas.",
+    "bidsTitle": "Propostas",
+    "awardIntro": "Escolha uma proposta para cada linha — a mais barata está selecionada. As linhas de cada fornecedor tornam-se uma encomenda.",
+    "awardEarly": "As propostas ainda estão abertas; já pode adjudicar (as propostas fecham).",
+    "waitingBids": "A aguardar propostas — será avisado quando chegar uma.",
+    "bidsN": "Propostas: {n}",
+    "noBids": "Sem propostas nesta linha.",
+    "best": "Melhor preço",
+    "belowTarget": "{amount} abaixo do seu alvo",
+    "dontAward": "Não adjudicar esta linha",
+    "awardTotal": "Total",
+    "exclVat": "sem IVA",
+    "payment": "Pagamento",
+    "payUsual": "Como habitualmente",
+    "award": "Adjudicar e encomendar",
+    "awardConfirm": "Fazer já as encomendas das propostas escolhidas?",
+    "awarded": "Encomendas feitas: {orders}.",
+    "someFailed": "Algumas não puderam ser feitas: {reason}",
+    "vTitle": "Concursos",
+    "vIntro": "Concursos de compradores a que pode concorrer. As propostas são fechadas: os outros fornecedores nunca veem os seus preços. O preço que indica é o que o comprador paga (sem IVA); a comissão habitual da FIRINGI sai do que recebe.",
+    "vOpen": "Concursos abertos",
+    "vNoOpen": "Não há concursos abertos para si de momento.",
+    "invitedYou": "Foi convidado",
+    "vMyBids": "As minhas propostas",
+    "vNoBids": "Ainda sem propostas.",
+    "linesN": "Linhas: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Proposta enviada",
+      "WITHDRAWN": "Retirada",
+      "WON": "Ganha",
+      "LOST": "Não escolhida"
+    },
+    "yourBid": "A sua proposta",
+    "makeBid": "Fazer uma proposta",
+    "bidIntro": "Proponha nas linhas que pode fornecer — um dos seus produtos e o seu preço por unidade.",
+    "biddingClosed": "As propostas estão fechadas.",
+    "buyerTarget": "Alvo do comprador: {price}",
+    "noMatchingOffer": "Não tem nenhuma oferta ativa deste produto.",
+    "yourProduct": "O seu produto",
+    "yourPrice": "Preço por unidade (€)",
+    "skipLine": "Não propor nesta linha",
+    "yourBase": "o seu preço de tabela {price}",
+    "lineTotal": "linha {amount}",
+    "youReceive": "recebe cerca de {amount}",
+    "bidNote": "Nota para o comprador (opcional)",
+    "sendBid": "Enviar proposta",
+    "updateBid": "Atualizar proposta",
+    "bidSent": "Proposta guardada.",
+    "withdraw": "Retirar proposta",
+    "withdrawConfirm": "Retirar a sua proposta?",
+    "sealedNote": "Os outros fornecedores nunca veem a sua proposta. Pode alterá-la até ao fecho.",
+    "lineWon": "ganha",
+    "lineLost": "não escolhida",
+    "waiting": "a aguardar o comprador",
+    "noBidLine": "sem proposta"
   }
 }

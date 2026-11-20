@@ -886,7 +886,9 @@
     "Till Staff": "Osebje blagajne",
     "Rebates & Bonuses": "Rabati in bonusi",
     "My Bonuses": "Moji bonusi",
-    "Buying Groups": "Nabavne skupine"
+    "Buying Groups": "Nabavne skupine",
+    "Pay Later": "Odloženo plačilo",
+    "Tenders": "Razpisi"
   },
   "delivery": {
     "title": "Dostava",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Skupinsko naročilo: naročila ({orders})",
       "body": "Nabavna skupina »{name}« je skupaj oddala naročila »{title}« (število: {orders}) z dostavo {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Odloženo plačilo: plačilo zapade {date}",
+      "body": "Plačilo {n} v znesku {amount} € za naročilo {number} zapade {date}."
+    },
+    "paylater_overdue": {
+      "title": "Odloženo plačilo: plačilo je zapadlo",
+      "body": "Plačilo {n} v znesku {amount} € za naročilo {number} je zapadlo {date}. Prosimo, poravnajte ga — do takrat je odloženo plačilo začasno ustavljeno."
+    },
+    "tender_review": {
+      "title": "Razpis za preverjanje: {number}",
+      "body": "Podjetje {company} je objavilo razpis »{title}«. Zbiranje ponudb se začne, ko ga FIRINGI odobri."
+    },
+    "tender_decided": {
+      "title": "Vaš razpis {number}: {decision}",
+      "body": "Odločitev FIRINGI o »{title}«: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nov razpis: {title}",
+      "body": "Kupec zbira cene (postavke: {lines}, razpis {number}). Zbiranje ponudb se zaključi {date}."
+    },
+    "tender_bid": {
+      "title": "Nova ponudba za {number}",
+      "body": "Vaš razpis »{title}« ima novo ponudbo (doslej skupaj: {bids})."
+    },
+    "tender_closed": {
+      "title": "Zbiranje ponudb zaključeno: {number}",
+      "body": "Zbiranje ponudb za »{title}« je zaključeno (ponudbe: {bids}). Izberite najboljše in oddajte naročila."
+    },
+    "tender_awarded": {
+      "title": "Dobili ste razpis {number}",
+      "body": "Kupec je izbral vašo ponudbo za postavke iz »{title}« (število: {lines}) — naročilo {order} vas čaka."
+    },
+    "tender_lost": {
+      "title": "Razpis {number} dodeljen",
+      "body": "Kupec je tokrat »{title}« dodelil drugim ponudbam."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Ustavi skupinske cene",
     "vStopped": "Skupinske cene so ustavljene.",
     "notForYou": "Ta dobavitelj ne prodaja vaši vrsti podjetja, zato ne morete dodajati v to skupinsko naročilo."
+  },
+  "payLater": {
+    "choose": "Kako želite plačati?",
+    "payNow": "Kot običajno (vaši običajni plačilni pogoji)",
+    "checkNote": "Odloženo plačilo se preveri ob oddaji naročila — preveri ga naš plačilni partner ali FIRINGI.",
+    "termDays": "Plačilo v {days} dneh",
+    "termInstalments": "Mesečni obroki: {count}",
+    "fee": "Provizija {amount}",
+    "noFee": "Brez provizije",
+    "payBy": "plačilo do {date}",
+    "eachMonth": "{count} × približno {amount}, prvi {date}",
+    "title": "Odloženo plačilo",
+    "intro": "Naročite zdaj, račun pa plačajte pozneje — v nekaj dneh ali v mesečnih obrokih.",
+    "closed": {
+      "OFF": "Odloženo plačilo trenutno ni na voljo.",
+      "COMPANY_OFF": "Odloženo plačilo za vaše podjetje ni na voljo. Obrnite se na FIRINGI.",
+      "TYPE_OFF": "Odloženo plačilo za vašo vrsto podjetja še ni na voljo.",
+      "OVERDUE": "Eno od odloženih plačil je zapadlo — poravnajte ga, da boste lahko spet uporabljali odloženo plačilo."
+    },
+    "howTitle": "Kako deluje",
+    "howIntro": "Odloženo plačilo izberite ob zaključku nakupa. Račun še vedno prejmete od FIRINGI; morebitna provizija je na njem ločena postavka.",
+    "limit": "Kredit pri FIRINGI",
+    "used": "Porabljeno",
+    "left": "Na voljo",
+    "partnerOn": "Ob zaključku nakupa je na voljo tudi odloženo plačilo prek našega plačilnega partnerja (partner preveri vaše naročilo).",
+    "ownNote": "Kar še dolgujete za naročila z odloženim plačilom, se šteje v vaš kredit; s plačili se spet sprosti.",
+    "optionsTitle": "Možnosti",
+    "optionsIntro": "Provizije so prikazane za naročilo v vrednosti 1.000 € (z DDV).",
+    "feeExample": "provizija {amount}",
+    "plansTitle": "Vaša naročila z odloženim plačilom",
+    "noPlans": "Naročil z odloženim plačilom še ni.",
+    "status": {
+      "ACTIVE": "Čaka na račun",
+      "INVOICED": "V odplačevanju",
+      "PAID": "Plačano",
+      "OVERDUE": "Zapadlo",
+      "CANCELLED": "Preklicano"
+    },
+    "feeIncl": "vključno s provizijo {amount}",
+    "invoice": "Račun",
+    "partnerNote": "Naš plačilni partner je plačal FIRINGI — partnerju plačujete po tem razporedu.",
+    "payment": "Plačilo {n}",
+    "paid": "plačano",
+    "overdueOn": "zapadlo od {date}",
+    "dueOn": "zapade {date}",
+    "payNowLink": "Plačajte račune"
+  },
+  "tenders": {
+    "title": "Razpisi",
+    "intro": "Dobaviteljem povejte, kaj potrebujete, in naj tekmujejo: za vsako postavko pošljejo zaprte ponudbe, vi pa izberete najboljše — postavke vsakega dobavitelja postanejo naročilo.",
+    "newTender": "Nov razpis",
+    "newIntro": "Opišite, kaj potrebujete. Dobavitelji, ki vam lahko dostavijo, pošiljajo cene do zaključka zbiranja ponudb.",
+    "closed": {
+      "OFF": "Razpisi so trenutno izklopljeni.",
+      "COMPANY_OFF": "Razpisi za vaše podjetje niso odprti. Obrnite se na FIRINGI.",
+      "TYPE_OFF": "Razpisi za vašo vrsto podjetja še niso odprti."
+    },
+    "noTenders": "Razpisov še ni.",
+    "status": {
+      "PENDING": "Čaka na FIRINGI",
+      "OPEN": "Zbiranje ponudb",
+      "CLOSED": "Zbiranje ponudb zaključeno",
+      "AWARDED": "Dodeljeno",
+      "CANCELLED": "Preklicano",
+      "REJECTED": "Zavrnjeno"
+    },
+    "linesBids": "Postavke: {lines} · Ponudbe: {bids}",
+    "closesOn": "Zaključek {date}",
+    "closedOn": "Zaključeno {date}",
+    "deliveryOn": "Dostava {date}",
+    "suppliersBid": "Dobavitelji s ponudbo: {n}",
+    "invitedOnly": "Samo povabljeni dobavitelji",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Naslov",
+    "titlePh": "npr. Pijače za december",
+    "deliverTo": "Dostava na",
+    "deliveryDate": "Dan dostave",
+    "closesAt": "Zaključek zbiranja ponudb",
+    "closesHint": "Najmanj {hours} ur in največ {days} dni od zdaj.",
+    "noteLabel": "Opomba za dobavitelje (neobvezno)",
+    "linesTitle": "Kaj potrebujete",
+    "lineN": "Postavka {n}",
+    "remove": "Odstrani",
+    "change": "Spremeni",
+    "findProduct": "Poiščite izdelek v katalogu (neobvezno)…",
+    "detailsPh": "Podrobnosti (neobvezno)",
+    "describePh": "Ali opišite, kaj potrebujete",
+    "qty": "Količina",
+    "unitNote": "Enota",
+    "unitNotePh": "npr. zaboji po 24",
+    "target": "Ciljna cena (€, brez DDV)",
+    "addLine": "Dodaj postavko",
+    "whoBids": "Kdo lahko odda ponudbo",
+    "allSuppliers": "Vsak dobavitelj, ki vam lahko dostavi ({n})",
+    "onlyInvited": "Samo dobavitelji, ki jih izberem",
+    "publish": "Objavi razpis",
+    "closeNow": "Zaključi zbiranje ponudb zdaj",
+    "closeConfirm": "Želite zdaj zaključiti zbiranje ponudb? Novih ponudb ne bo več mogoče poslati.",
+    "cancel": "Prekliči razpis",
+    "cancelConfirm": "Želite preklicati ta razpis? Ponudbe dobaviteljev bodo zavržene.",
+    "bidsTitle": "Ponudbe",
+    "awardIntro": "Za vsako postavko izberite ponudbo — izbrana je najcenejša. Postavke vsakega dobavitelja postanejo eno naročilo.",
+    "awardEarly": "Zbiranje ponudb je še odprto; dodelite lahko že zdaj (zbiranje ponudb se takrat zaključi).",
+    "waitingBids": "Čakamo na ponudbe — obvestili vas bomo, ko bo prispela kakšna.",
+    "bidsN": "Ponudbe: {n}",
+    "noBids": "Za to postavko ni ponudb.",
+    "best": "Najboljša cena",
+    "belowTarget": "{amount} pod vašo ciljno ceno",
+    "dontAward": "Te postavke ne dodeli",
+    "awardTotal": "Skupaj",
+    "exclVat": "brez DDV",
+    "payment": "Plačilo",
+    "payUsual": "Kot običajno",
+    "award": "Dodeli in oddaj naročila",
+    "awardConfirm": "Želite zdaj oddati naročila za izbrane ponudbe?",
+    "awarded": "Oddana naročila: {orders}.",
+    "someFailed": "Nekaterih ni bilo mogoče oddati: {reason}",
+    "vTitle": "Razpisi",
+    "vIntro": "Razpisi kupcev, na katere lahko oddate ponudbo. Ponudbe so zaprte: drugi dobavitelji nikoli ne vidijo vaših cen. Cena, ki jo vnesete, je znesek, ki ga plača kupec (brez DDV); običajna provizija FIRINGI se odšteje od zneska, ki ga prejmete.",
+    "vOpen": "Odprti razpisi",
+    "vNoOpen": "Trenutno za vas ni odprtih razpisov.",
+    "invitedYou": "Povabljeni ste",
+    "vMyBids": "Moje ponudbe",
+    "vNoBids": "Ponudb še ni.",
+    "linesN": "Postavke: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Ponudba poslana",
+      "WITHDRAWN": "Umaknjeno",
+      "WON": "Dobljeno",
+      "LOST": "Ni izbrano"
+    },
+    "yourBid": "Vaša ponudba",
+    "makeBid": "Oddaj ponudbo",
+    "bidIntro": "Ponudite za postavke, ki jih lahko dobavite — enega od svojih izdelkov in svojo ceno na enoto.",
+    "biddingClosed": "Zbiranje ponudb je zaključeno.",
+    "buyerTarget": "Cilj kupca: {price}",
+    "noMatchingOffer": "Za ta izdelek nimate aktivne ponudbe.",
+    "yourProduct": "Vaš izdelek",
+    "yourPrice": "Cena na enoto (€)",
+    "skipLine": "Brez ponudbe za to postavko",
+    "yourBase": "vaša cenikovna cena {price}",
+    "lineTotal": "postavka {amount}",
+    "youReceive": "prejmete približno {amount}",
+    "bidNote": "Opomba za kupca (neobvezno)",
+    "sendBid": "Pošlji ponudbo",
+    "updateBid": "Posodobi ponudbo",
+    "bidSent": "Ponudba je shranjena.",
+    "withdraw": "Umakni ponudbo",
+    "withdrawConfirm": "Želite umakniti ponudbo?",
+    "sealedNote": "Drugi dobavitelji vaše ponudbe nikoli ne vidijo. Spremenite jo lahko do zaključka zbiranja ponudb.",
+    "lineWon": "dobljeno",
+    "lineLost": "ni izbrano",
+    "waiting": "čaka na kupca",
+    "noBidLine": "brez ponudbe"
   }
 }

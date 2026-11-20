@@ -23,6 +23,8 @@ const SCHEDULE = [
   { job: "claims", due: (m) => m % 1440 === 7 * 60 + 19 }, // daily 07:19 UTC — claim SLA, supplier reminders, charge-backs, quality alerts
   { job: "buying", due: (m) => m % 15 === 11 }, // recurring orders & quotes, every 15 min (+11)
   { job: "groups", due: (m) => m % 15 === 7 }, // every 15 min (+7) — buying groups' group orders placed at their close
+  { job: "paylater", due: (m) => m % 15 === 9 }, // every 15 min (+9) — pay later: partner capture, instalments, reminders
+  { job: "tenders", due: (m) => m % 15 === 11 }, // every 15 min (+11) — tenders closing at their deadline
   { job: "rebates", due: (m) => m % 1440 === 3 * 60 + 29 }, // daily 03:29 UTC — rebates & bonuses settled
 ];
 const running = new Set();

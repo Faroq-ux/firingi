@@ -886,7 +886,9 @@
     "Till Staff": "Pénztári személyzet",
     "Rebates & Bonuses": "Visszatérítések és bónuszok",
     "My Bonuses": "Bónuszaim",
-    "Buying Groups": "Beszerzési csoportok"
+    "Buying Groups": "Beszerzési csoportok",
+    "Pay Later": "Halasztott fizetés",
+    "Tenders": "Tenderek"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Csoportos rendelés: {orders} rendelés",
       "body": "A(z) „{name}” beszerzési csoport közösen {orders} rendelést adott le („{title}”), szállítás: {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Halasztott fizetés: esedékes részlet ({date})",
+      "body": "A(z) {number} rendelés {n}. részlete ({amount} €) esedékes: {date}."
+    },
+    "paylater_overdue": {
+      "title": "Halasztott fizetés: lejárt részlet",
+      "body": "A(z) {number} rendelés {n}. részletének ({amount} €) esedékessége {date} volt. Kérjük, fizesse ki — addig a halasztott fizetés szünetel."
+    },
+    "tender_review": {
+      "title": "Ellenőrizendő tender: {number}",
+      "body": "{company} közzétette a(z) „{title}” tendert. A FIRINGI jóváhagyása után nyílik meg az ajánlattételre."
+    },
+    "tender_decided": {
+      "title": "Az Ön {number} tendere: {decision}",
+      "body": "A FIRINGI döntése a(z) „{title}” tenderről: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Új tender: {title}",
+      "body": "Egy vevő árakat kér ({lines} tétel, {number} tender). Az ajánlattétel lezárása: {date}."
+    },
+    "tender_bid": {
+      "title": "Új ajánlat: {number}",
+      "body": "A(z) „{title}” tenderére új ajánlat érkezett (eddig {bids})."
+    },
+    "tender_closed": {
+      "title": "Ajánlattétel lezárva: {number}",
+      "body": "A(z) „{title}” tender ajánlattétele lezárult, {bids} ajánlat érkezett. Válassza ki a legjobbakat a rendelések leadásához."
+    },
+    "tender_awarded": {
+      "title": "Megnyerte a(z) {number} tendert",
+      "body": "A vevő az Ön ajánlatát választotta a(z) „{title}” tender {lines} tételére — a(z) {order} rendelés Önre vár."
+    },
+    "tender_lost": {
+      "title": "{number} tender odaítélve",
+      "body": "A vevő ezúttal más ajánlatoknak ítélte oda a(z) „{title}” tendert."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Csoportárak megszüntetése",
     "vStopped": "Csoportárak megszüntetve.",
     "notForYou": "Ez a beszállító nem értékesít az Ön vállalkozástípusának, ezért nem adhat hozzá ehhez a csoportos rendeléshez."
+  },
+  "payLater": {
+    "choose": "Hogyan szeretne fizetni?",
+    "payNow": "A szokásos módon (az Ön szokásos fizetési feltételeivel)",
+    "checkNote": "A halasztott fizetést a rendelés leadásakor ellenőrzi fizetési partnerünk vagy a FIRINGI.",
+    "termDays": "Fizetés {days} napon belül",
+    "termInstalments": "{count} havi részlet",
+    "fee": "Díj: {amount}",
+    "noFee": "Díjmentes",
+    "payBy": "fizetendő: {date}",
+    "eachMonth": "{count} × kb. {amount}, az első: {date}",
+    "title": "Halasztott fizetés",
+    "intro": "Rendeljen most, és fizesse ki a számlát később — adott számú napon belül vagy havi részletekben.",
+    "closed": {
+      "OFF": "A halasztott fizetés jelenleg nem érhető el.",
+      "COMPANY_OFF": "A halasztott fizetés nem érhető el cége számára. Kérjük, forduljon a FIRINGI-hez.",
+      "TYPE_OFF": "A halasztott fizetés még nem érhető el az Ön vállalkozástípusa számára.",
+      "OVERDUE": "Egy halasztott fizetésű részlet lejárt — fizesse ki, hogy újra használhassa a halasztott fizetést."
+    },
+    "howTitle": "Hogyan működik",
+    "howIntro": "Válassza a halasztott fizetést a pénztárban. A számlát továbbra is a FIRINGI állítja ki; az esetleges díj külön tételként szerepel rajta.",
+    "limit": "Hitelkeret a FIRINGI-nél",
+    "used": "Felhasználva",
+    "left": "Elérhető",
+    "partnerOn": "A pénztárban fizetési partnerünkön keresztül is választhat halasztott fizetést (a partner ellenőrzi a rendelését).",
+    "ownNote": "A halasztott fizetésű rendelésekből még fennálló tartozása csökkenti a hitelkeretét; ahogy fizet, újra felszabadul.",
+    "optionsTitle": "Lehetőségek",
+    "optionsIntro": "A díjak egy 1 000 €-s (áfával) rendelésre vonatkoznak.",
+    "feeExample": "díj: {amount}",
+    "plansTitle": "Halasztott fizetésű rendelései",
+    "noPlans": "Még nincs halasztott fizetésű rendelése.",
+    "status": {
+      "ACTIVE": "Számlára vár",
+      "INVOICED": "Fizetés folyamatban",
+      "PAID": "Kifizetve",
+      "OVERDUE": "Lejárt",
+      "CANCELLED": "Lemondva"
+    },
+    "feeIncl": "ebből díj: {amount}",
+    "invoice": "Számla",
+    "partnerNote": "Fizetési partnerünk kifizette a FIRINGI-t — Ön ezen ütemezés szerint fizet a partnernek.",
+    "payment": "{n}. részlet",
+    "paid": "kifizetve",
+    "overdueOn": "lejárt {date} óta",
+    "dueOn": "esedékes: {date}",
+    "payNowLink": "Számlái kifizetése"
+  },
+  "tenders": {
+    "title": "Tenderek",
+    "intro": "Mondja el a szállítóknak, mire van szüksége, és hagyja őket versenyezni: minden tételre zárt ajánlatot küldenek, Ön kiválasztja a legjobbat — minden szállító tételeiből egy rendelés lesz.",
+    "newTender": "Új tender",
+    "newIntro": "Írja le, mire van szüksége. Az Önhöz szállítani tudó szállítók az ajánlattétel lezárásáig küldhetik áraikat.",
+    "closed": {
+      "OFF": "A tenderek jelenleg ki vannak kapcsolva.",
+      "COMPANY_OFF": "A tenderek nem érhetők el cége számára. Kérjük, forduljon a FIRINGI-hez.",
+      "TYPE_OFF": "A tenderek még nem érhetők el az Ön vállalkozástípusa számára."
+    },
+    "noTenders": "Még nincs tender.",
+    "status": {
+      "PENDING": "FIRINGI-re vár",
+      "OPEN": "Ajánlattétel nyitva",
+      "CLOSED": "Ajánlattétel lezárva",
+      "AWARDED": "Odaítélve",
+      "CANCELLED": "Lemondva",
+      "REJECTED": "Elutasítva"
+    },
+    "linesBids": "Tételek: {lines} · Ajánlatok: {bids}",
+    "closesOn": "Lezárás: {date}",
+    "closedOn": "Lezárva: {date}",
+    "deliveryOn": "Szállítás: {date}",
+    "suppliersBid": "Ajánlatot tevő szállítók: {n}",
+    "invitedOnly": "Csak meghívott szállítók",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Cím",
+    "titlePh": "pl. Italok decemberre",
+    "deliverTo": "Szállítási cím",
+    "deliveryDate": "Szállítási nap",
+    "closesAt": "Ajánlattétel vége",
+    "closesHint": "Legalább {hours} óra, legfeljebb {days} nap múlva.",
+    "noteLabel": "Megjegyzés a szállítóknak (nem kötelező)",
+    "linesTitle": "Mire van szüksége",
+    "lineN": "{n}. tétel",
+    "remove": "Eltávolítás",
+    "change": "Módosítás",
+    "findProduct": "Termék keresése a katalógusban (nem kötelező)…",
+    "detailsPh": "Részletek (nem kötelező)",
+    "describePh": "Vagy írja le, mire van szüksége",
+    "qty": "Mennyiség",
+    "unitNote": "Egység",
+    "unitNotePh": "pl. 24 db-os karton",
+    "target": "Célár (€, nettó)",
+    "addLine": "Tétel hozzáadása",
+    "whoBids": "Ki tehet ajánlatot",
+    "allSuppliers": "Minden szállító, amely Önhöz szállítani tud ({n})",
+    "onlyInvited": "Csak az általam kiválasztott szállítók",
+    "publish": "Tender közzététele",
+    "closeNow": "Ajánlattétel lezárása most",
+    "closeConfirm": "Most lezárja az ajánlattételt? Több ajánlat nem küldhető.",
+    "cancel": "Tender lemondása",
+    "cancelConfirm": "Lemondja ezt a tendert? A szállítók ajánlatai elvesznek.",
+    "bidsTitle": "Ajánlatok",
+    "awardIntro": "Válasszon ajánlatot minden tételhez — a legolcsóbb van kiválasztva. Minden szállító tételeiből egy rendelés lesz.",
+    "awardEarly": "Az ajánlattétel még nyitva van; már most odaítélheti (ekkor az ajánlattétel lezárul).",
+    "waitingBids": "Ajánlatokra vár — értesítjük, amint érkezik egy.",
+    "bidsN": "Ajánlatok: {n}",
+    "noBids": "Erre a tételre nincs ajánlat.",
+    "best": "Legjobb ár",
+    "belowTarget": "Célár alatt: {amount}",
+    "dontAward": "Ne ítélje oda ezt a tételt",
+    "awardTotal": "Összesen",
+    "exclVat": "nettó",
+    "payment": "Fizetés",
+    "payUsual": "A szokásos módon",
+    "award": "Odaítélés és rendelések leadása",
+    "awardConfirm": "Leadja most a rendeléseket a kiválasztott ajánlatokra?",
+    "awarded": "Leadott rendelések: {orders}.",
+    "someFailed": "Néhányat nem sikerült leadni: {reason}",
+    "vTitle": "Tenderek",
+    "vIntro": "Vevők tenderei, amelyekre ajánlatot tehet. Az ajánlatok zártak: más szállítók soha nem látják az árait. A megadott ár az, amit a vevő fizet (nettó); a FIRINGI szokásos jutalékát a kapott összegből vonjuk le.",
+    "vOpen": "Nyitott tenderek",
+    "vNoOpen": "Jelenleg nincs nyitott tender az Ön számára.",
+    "invitedYou": "Meghívást kapott",
+    "vMyBids": "Ajánlataim",
+    "vNoBids": "Még nincs ajánlat.",
+    "linesN": "{n} tétel",
+    "bidStatus": {
+      "SUBMITTED": "Ajánlat elküldve",
+      "WITHDRAWN": "Visszavonva",
+      "WON": "Megnyert",
+      "LOST": "Nem nyert"
+    },
+    "yourBid": "Az Ön ajánlata",
+    "makeBid": "Ajánlattétel",
+    "bidIntro": "Tegyen ajánlatot azokra a tételekre, amelyeket szállítani tud — az egyik termékével és egységárával.",
+    "biddingClosed": "Az ajánlattétel lezárult.",
+    "buyerTarget": "A vevő célára: {price}",
+    "noMatchingOffer": "Ezt a terméket jelenleg nem árusítja.",
+    "yourProduct": "Az Ön terméke",
+    "yourPrice": "Egységár (€)",
+    "skipLine": "Erre a tételre nem teszek ajánlatot",
+    "yourBase": "az Ön listaára: {price}",
+    "lineTotal": "tétel: {amount}",
+    "youReceive": "Ön kb. ennyit kap: {amount}",
+    "bidNote": "Megjegyzés a vevőnek (nem kötelező)",
+    "sendBid": "Ajánlat küldése",
+    "updateBid": "Ajánlat frissítése",
+    "bidSent": "Ajánlat mentve.",
+    "withdraw": "Ajánlat visszavonása",
+    "withdrawConfirm": "Visszavonja ajánlatát?",
+    "sealedNote": "Más szállítók soha nem látják az ajánlatát. Az ajánlattétel lezárásáig módosíthatja.",
+    "lineWon": "megnyert",
+    "lineLost": "nem nyert",
+    "waiting": "a vevőre vár",
+    "noBidLine": "nincs ajánlat"
   }
 }

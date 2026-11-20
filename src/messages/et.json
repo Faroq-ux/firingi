@@ -886,7 +886,9 @@
     "Till Staff": "Kassapersonal",
     "Rebates & Bonuses": "Tagasimaksed ja boonused",
     "My Bonuses": "Minu boonused",
-    "Buying Groups": "Ostugrupid"
+    "Buying Groups": "Ostugrupid",
+    "Pay Later": "Maksa hiljem",
+    "Tenders": "Hanked"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Ühistellimus: tellimusi {orders}",
       "body": "Ostugrupp „{name}“ esitas koos {orders} tellimust („{title}“), tarne {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Maksa hiljem: makse tähtaeg {date}",
+      "body": "Tellimuse {number} makse {n} summas {amount} € tuleb tasuda {date}."
+    },
+    "paylater_overdue": {
+      "title": "Maksa hiljem: makse tähtaeg ületatud",
+      "body": "Tellimuse {number} makse {n} summas {amount} € tähtaeg oli {date}. Palun tasuge see — seni on hiljem maksmine peatatud."
+    },
+    "tender_review": {
+      "title": "Kontrollimist ootav hange: {number}",
+      "body": "{company} avaldas hanke „{title}“. Pakkumusi saab esitada pärast seda, kui FIRINGI on selle heaks kiitnud."
+    },
+    "tender_decided": {
+      "title": "Teie hange {number}: {decision}",
+      "body": "FIRINGI otsus hanke „{title}“ kohta: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Uus hange: {title}",
+      "body": "Ostja küsib hindu ({lines} rida, hange {number}). Pakkumuste tähtaeg on {date}."
+    },
+    "tender_bid": {
+      "title": "Uus pakkumus hankele {number}",
+      "body": "Teie hankele „{title}“ saabus uus pakkumus (kokku {bids})."
+    },
+    "tender_closed": {
+      "title": "Pakkumuste vastuvõtt lõppenud: {number}",
+      "body": "Hanke „{title}“ pakkumuste vastuvõtt lõppes, pakkumusi {bids}. Valige parimad, et oma tellimused esitada."
+    },
+    "tender_awarded": {
+      "title": "Võitsite hanke {number}",
+      "body": "Ostja valis teie pakkumuse hanke „{title}“ {lines} reale — tellimus {order} ootab teid."
+    },
+    "tender_lost": {
+      "title": "Hange {number} on otsustatud",
+      "body": "Ostja valis seekord hankes „{title}“ teised pakkumused."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Lõpeta grupihinnad",
     "vStopped": "Grupihinnad on lõpetatud.",
     "notForYou": "See tarnija ei müü teie ettevõtte tüübile, seega ei saa te sellele ühistellimusele midagi lisada."
+  },
+  "payLater": {
+    "choose": "Kuidas soovite maksta?",
+    "payNow": "Nagu tavaliselt (teie tavalised maksetingimused)",
+    "checkNote": "Hiljem maksmise võimalust kontrollib tellimuse esitamisel meie maksepartner või FIRINGI.",
+    "termDays": "Maksa {days} päeva jooksul",
+    "termInstalments": "{count} kuumakset",
+    "fee": "Tasu {amount}",
+    "noFee": "Tasuta",
+    "payBy": "maksta hiljemalt {date}",
+    "eachMonth": "{count} × umbes {amount}, esimene {date}",
+    "title": "Maksa hiljem",
+    "intro": "Tellige kohe ja makske arve hiljem — mõne päeva pärast või igakuiste osamaksetena.",
+    "closed": {
+      "OFF": "Hiljem maksmine ei ole praegu saadaval.",
+      "COMPANY_OFF": "Hiljem maksmine ei ole teie ettevõttele saadaval. Palun võtke ühendust FIRINGI-ga.",
+      "TYPE_OFF": "Hiljem maksmine ei ole teie ettevõtte tüübile veel saadaval.",
+      "OVERDUE": "Üks hiljem maksmise makse on tähtaja ületanud — tasuge see, et hiljem maksmist uuesti kasutada."
+    },
+    "howTitle": "Kuidas see töötab",
+    "howIntro": "Valige ostu vormistamisel „Maksa hiljem“. Arve tuleb endiselt FIRINGI-lt; tasu (kui on) on sellel eraldi real.",
+    "limit": "Krediit FIRINGI-lt",
+    "used": "Kasutusel",
+    "left": "Saadaval",
+    "partnerOn": "Hiljem maksmine meie maksepartneri kaudu on ostu vormistamisel samuti saadaval (partner kontrollib teie tellimust).",
+    "ownNote": "Hiljem makstavate tellimuste eest veel tasumata summa vähendab teie krediiti; makstes vabaneb see uuesti.",
+    "optionsTitle": "Valikud",
+    "optionsIntro": "Tasud on näidatud 1000 € tellimuse kohta (koos km-ga).",
+    "feeExample": "tasu {amount}",
+    "plansTitle": "Teie hiljem makstavad tellimused",
+    "noPlans": "Hiljem makstavaid tellimusi veel ei ole.",
+    "status": {
+      "ACTIVE": "Ootab arvet",
+      "INVOICED": "Tasumisel",
+      "PAID": "Makstud",
+      "OVERDUE": "Tähtaeg ületatud",
+      "CANCELLED": "Tühistatud"
+    },
+    "feeIncl": "sh tasu {amount}",
+    "invoice": "Arve",
+    "partnerNote": "Meie maksepartner on FIRINGI-le juba maksnud — teie maksate partnerile selle graafiku järgi.",
+    "payment": "Makse {n}",
+    "paid": "makstud",
+    "overdueOn": "tähtaeg ületatud alates {date}",
+    "dueOn": "tähtaeg {date}",
+    "payNowLink": "Makske oma arved"
+  },
+  "tenders": {
+    "title": "Hanked",
+    "intro": "Öelge tarnijatele, mida vajate, ja laske neil konkureerida: nad saadavad igale reale suletud pakkumuse, teie valite parima — iga tarnija read muutuvad tellimuseks.",
+    "newTender": "Uus hange",
+    "newIntro": "Kirjeldage, mida vajate. Tarnijad, kes saavad teile tarnida, saadavad oma hinnad kuni pakkumuste tähtajani.",
+    "closed": {
+      "OFF": "Hanked on praegu välja lülitatud.",
+      "COMPANY_OFF": "Hanked ei ole teie ettevõttele avatud. Palun võtke ühendust FIRINGI-ga.",
+      "TYPE_OFF": "Hanked ei ole teie ettevõtte tüübile veel avatud."
+    },
+    "noTenders": "Hankeid veel ei ole.",
+    "status": {
+      "PENDING": "Ootab FIRINGI-t",
+      "OPEN": "Pakkumusteks avatud",
+      "CLOSED": "Pakkumuste esitamine lõppenud",
+      "AWARDED": "Võitjad valitud",
+      "CANCELLED": "Tühistatud",
+      "REJECTED": "Tagasi lükatud"
+    },
+    "linesBids": "Ridu: {lines} · Pakkumusi: {bids}",
+    "closesOn": "Sulgub {date}",
+    "closedOn": "Suletud {date}",
+    "deliveryOn": "Tarne {date}",
+    "suppliersBid": "Pakkujaid: {n}",
+    "invitedOnly": "Ainult kutsutud tarnijad",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Pealkiri",
+    "titlePh": "nt Joogid detsembriks",
+    "deliverTo": "Toimetada aadressile",
+    "deliveryDate": "Tarnepäev",
+    "closesAt": "Pakkumuste tähtaeg",
+    "closesHint": "Vähemalt {hours} tundi, kõige rohkem {days} päeva alates praegusest.",
+    "noteLabel": "Märkus tarnijatele (valikuline)",
+    "linesTitle": "Mida vajate",
+    "lineN": "Rida {n}",
+    "remove": "Eemalda",
+    "change": "Muuda",
+    "findProduct": "Leia toode kataloogist (valikuline)…",
+    "detailsPh": "Üksikasjad (valikuline)",
+    "describePh": "Või kirjeldage, mida vajate",
+    "qty": "Kogus",
+    "unitNote": "Ühik",
+    "unitNotePh": "nt kastid à 24",
+    "target": "Sihthind (€, km-ta)",
+    "addLine": "Lisa rida",
+    "whoBids": "Kes saavad pakkuda",
+    "allSuppliers": "Kõik tarnijad, kes saavad teile tarnida ({n})",
+    "onlyInvited": "Ainult minu valitud tarnijad",
+    "publish": "Avalda hange",
+    "closeNow": "Lõpeta pakkumuste vastuvõtt kohe",
+    "closeConfirm": "Kas lõpetada pakkumuste vastuvõtt kohe? Rohkem pakkumusi saata ei saa.",
+    "cancel": "Tühista hange",
+    "cancelConfirm": "Kas tühistada see hange? Tarnijate pakkumused tühistatakse.",
+    "bidsTitle": "Pakkumused",
+    "awardIntro": "Valige igale reale pakkumus — odavaim on eelvalitud. Iga tarnija read moodustavad ühe tellimuse.",
+    "awardEarly": "Pakkumuste vastuvõtt on veel avatud; võitjad saate valida juba praegu (siis vastuvõtt lõpeb).",
+    "waitingBids": "Ootame pakkumusi — anname teada, kui mõni saabub.",
+    "bidsN": "Pakkumusi: {n}",
+    "noBids": "Sellele reale pakkumusi ei ole.",
+    "best": "Parim hind",
+    "belowTarget": "{amount} alla teie sihthinna",
+    "dontAward": "Ära vali sellele reale võitjat",
+    "awardTotal": "Kokku",
+    "exclVat": "km-ta",
+    "payment": "Makse",
+    "payUsual": "Nagu tavaliselt",
+    "award": "Kinnita võitjad ja esita tellimused",
+    "awardConfirm": "Kas esitada nüüd valitud pakkumuste tellimused?",
+    "awarded": "Esitatud tellimused: {orders}.",
+    "someFailed": "Mõnda ei õnnestunud esitada: {reason}",
+    "vTitle": "Hanked",
+    "vIntro": "Ostjate hanked, kus saate pakkuda. Pakkumused on suletud: teised tarnijad ei näe kunagi teie hindu. Sisestatud hind on see, mille ostja maksab (km-ta); FIRINGI tavaline vahendustasu arvestatakse maha summast, mille saate.",
+    "vOpen": "Avatud hanked",
+    "vNoOpen": "Teile ei ole praegu avatud hankeid.",
+    "invitedYou": "Teid on kutsutud",
+    "vMyBids": "Minu pakkumused",
+    "vNoBids": "Pakkumusi veel ei ole.",
+    "linesN": "Ridu: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Pakkumus saadetud",
+      "WITHDRAWN": "Tagasi võetud",
+      "WON": "Võitis",
+      "LOST": "Ei valitud"
+    },
+    "yourBid": "Teie pakkumus",
+    "makeBid": "Tee pakkumus",
+    "bidIntro": "Pakkuge ridadele, mida saate tarnida — üks teie toodetest ja teie ühikuhind.",
+    "biddingClosed": "Pakkumuste vastuvõtt on lõppenud.",
+    "buyerTarget": "Ostja sihthind: {price}",
+    "noMatchingOffer": "Te ei paku seda toodet praegu aktiivselt.",
+    "yourProduct": "Teie toode",
+    "yourPrice": "Ühikuhind (€)",
+    "skipLine": "Ära paku sellele reale",
+    "yourBase": "teie hinnakirja hind {price}",
+    "lineTotal": "rida kokku {amount}",
+    "youReceive": "saate umbes {amount}",
+    "bidNote": "Märkus ostjale (valikuline)",
+    "sendBid": "Saada pakkumus",
+    "updateBid": "Uuenda pakkumust",
+    "bidSent": "Pakkumus salvestatud.",
+    "withdraw": "Võta pakkumus tagasi",
+    "withdrawConfirm": "Kas võtta pakkumus tagasi?",
+    "sealedNote": "Teised tarnijad ei näe kunagi teie pakkumust. Saate seda muuta kuni pakkumuste tähtajani.",
+    "lineWon": "võitis",
+    "lineLost": "ei valitud",
+    "waiting": "ootab ostjat",
+    "noBidLine": "pakkumust pole"
   }
 }

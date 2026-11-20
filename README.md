@@ -691,6 +691,34 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Pay later & open tenders (Phase 50)
+
+**Pay later (trade credit).** At checkout a buyer can pay an order's invoice **in N days** (30 / 60 / 90 on by
+default; 14 and 45 ready to switch on; FIRINGI can add any number of days) or in **monthly instalments** (3 on; 6 ready;
+2–12 possible). Two ways to finance it, chosen **per country** (each on / off, and which is tried first; when the first
+declines the other is tried): the **payment gateway's "buy now, pay later" partner** — it checks the buyer, pays FIRINGI
+when the invoice is issued and collects from the buyer (a provider layer; a simulated partner for tests, a real gateway
+connects with its API key) — or **FIRINGI's own credit** (FIRINGI waits for the buyer's payments, within a limit per
+buyer type or per business). Each term has a **fee** (% + fixed) that the **buyer pays** (a VAT-exempt line on its
+invoice), **FIRINGI absorbs**, or they **share**. FIRINGI still invoices the buyer; the invoice is due on the last
+payment. The job (`/api/cron/paylater`, every 15 min) has the partner pay invoiced plans, marks own-credit instalments
+paid as money comes in, reminds before each one is due and flags overdue ones (overdue → no new pay later until paid).
+Buyers see their limit, options and schedules on *Invoices & Payments › Pay Later*; FIRINGI on *Finance › Pay Later*.
+Suppliers are paid as usual. **Every option is FIRINGI's switch**: the feature, buyer types, each term and its fee,
+models per country, limits, smallest order, reminder days — and each business on / off with its own limit.
+
+**Open tenders.** A buyer posts what it needs (*Orders › Tenders*): lines with a catalogue product or a description,
+quantities, an optional target price, a delivery day and a closing time — to every eligible supplier or only invited
+ones (customers' tenders go to wholesalers in their country, wholesalers' to distributors). Suppliers send **sealed
+bids per line** with their own offer of the product (*Orders › Tenders*; they never see other bids; the price is what
+the buyer pays, and they see what they receive after FIRINGI's commission). The buyer sees the bids **ranked** (best
+price, saving against the target) and **awards each line** — each supplier's awarded lines become **one order** at the
+bid prices (pay later can be chosen); bids become won / lost and suppliers are told. The job (`/api/cron/tenders`)
+closes bidding at the deadline and ends tenders not awarded in time. **Every option is FIRINGI's switch**: the feature,
+who posts, who bids, FIRINGI's approval of new tenders, invitations, target prices, pay later at the award, limits —
+and each business on its own. Details: [docs/pay-later.md](docs/pay-later.md), [docs/tenders.md](docs/tenders.md).
+Tests: `tests/unit/pay-later-tenders.test.ts`, `tests/integration/pay-later-tenders.test.ts`, `node tests/e2e/pay-later-tenders.mjs`.
+
 ## Buying groups (Phase 49)
 
 Restaurants, shops and wholesalers **buy together**. A business starts a group (*Buying Groups* in the buyer portal)

@@ -886,7 +886,9 @@
     "Till Staff": "Personel kasy",
     "Rebates & Bonuses": "Rabaty i bonusy",
     "My Bonuses": "Moje bonusy",
-    "Buying Groups": "Grupy zakupowe"
+    "Buying Groups": "Grupy zakupowe",
+    "Pay Later": "Płatność odroczona",
+    "Tenders": "Przetargi"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Zamówienie grupowe: zamówienia ({orders})",
       "body": "Grupa zakupowa „{name}” złożyła wspólnie zamówienia „{title}” (liczba: {orders}) z dostawą {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Płatność odroczona: termin płatności {date}",
+      "body": "Płatność {n} w kwocie {amount} € za zamówienie {number} należy uregulować do {date}."
+    },
+    "paylater_overdue": {
+      "title": "Płatność odroczona: płatność po terminie",
+      "body": "Termin płatności {n} w kwocie {amount} € za zamówienie {number} minął {date}. Prosimy o jej uregulowanie — do tego czasu płatność odroczona jest wstrzymana."
+    },
+    "tender_review": {
+      "title": "Przetarg do sprawdzenia: {number}",
+      "body": "Firma {company} opublikowała przetarg „{title}”. Składanie ofert rozpocznie się po zatwierdzeniu przez FIRINGI."
+    },
+    "tender_decided": {
+      "title": "Państwa przetarg {number}: {decision}",
+      "body": "Decyzja FIRINGI w sprawie „{title}”: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Nowy przetarg: {title}",
+      "body": "Kupujący prosi o ceny (pozycje: {lines}, przetarg {number}). Składanie ofert kończy się {date}."
+    },
+    "tender_bid": {
+      "title": "Nowa oferta w przetargu {number}",
+      "body": "Państwa przetarg „{title}” ma nową ofertę (łącznie: {bids})."
+    },
+    "tender_closed": {
+      "title": "Składanie ofert zakończone: {number}",
+      "body": "Składanie ofert w przetargu „{title}” zakończyło się (liczba ofert: {bids}). Prosimy wybrać najlepsze i złożyć zamówienia."
+    },
+    "tender_awarded": {
+      "title": "Wygrali Państwo przetarg {number}",
+      "body": "Kupujący wybrał Państwa ofertę na pozycje przetargu „{title}” (liczba: {lines}) — czeka na Państwa zamówienie {order}."
+    },
+    "tender_lost": {
+      "title": "Przetarg {number} rozstrzygnięty",
+      "body": "Tym razem kupujący wybrał w przetargu „{title}” inne oferty."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Wyłącz ceny grupowe",
     "vStopped": "Ceny grupowe wyłączone.",
     "notForYou": "Ten dostawca nie sprzedaje firmom Państwa typu, więc nie mogą Państwo dodawać produktów do tego zamówienia grupowego."
+  },
+  "payLater": {
+    "choose": "Jak chcą Państwo zapłacić?",
+    "payNow": "Jak zwykle (Państwa standardowe warunki płatności)",
+    "checkNote": "Płatność odroczona jest sprawdzana przy składaniu zamówienia — przez naszego partnera płatniczego lub przez FIRINGI.",
+    "termDays": "Płatność w ciągu {days} dni",
+    "termInstalments": "Raty miesięczne: {count}",
+    "fee": "Opłata {amount}",
+    "noFee": "Bez opłaty",
+    "payBy": "zapłata do {date}",
+    "eachMonth": "{count} × ok. {amount}, pierwsza rata {date}",
+    "title": "Płatność odroczona",
+    "intro": "Zamawiają Państwo teraz, a fakturę płacą później — po określonej liczbie dni lub w miesięcznych ratach.",
+    "closed": {
+      "OFF": "Płatność odroczona jest obecnie niedostępna.",
+      "COMPANY_OFF": "Płatność odroczona nie jest dostępna dla Państwa firmy. Prosimy o kontakt z FIRINGI.",
+      "TYPE_OFF": "Płatność odroczona nie jest jeszcze dostępna dla Państwa rodzaju działalności.",
+      "OVERDUE": "Jedna z płatności odroczonych jest po terminie — po jej uregulowaniu znów będą mogli Państwo korzystać z płatności odroczonej."
+    },
+    "howTitle": "Jak to działa",
+    "howIntro": "Płatność odroczoną wybierają Państwo przy składaniu zamówienia. Fakturę nadal wystawia FIRINGI; ewentualna opłata jest na niej osobną pozycją.",
+    "limit": "Kredyt kupiecki w FIRINGI",
+    "used": "Wykorzystany",
+    "left": "Dostępny",
+    "partnerOn": "Przy składaniu zamówienia dostępna jest też płatność odroczona przez naszego partnera płatniczego (partner sprawdza zamówienie).",
+    "ownNote": "Niespłacona kwota zamówień z płatnością odroczoną pomniejsza dostępny kredyt; zwalnia się on w miarę spłaty.",
+    "optionsTitle": "Opcje",
+    "optionsIntro": "Opłaty podane dla zamówienia o wartości 1000 € (z VAT).",
+    "feeExample": "opłata {amount}",
+    "plansTitle": "Państwa zamówienia z płatnością odroczoną",
+    "noPlans": "Brak zamówień z płatnością odroczoną.",
+    "status": {
+      "ACTIVE": "Czeka na fakturę",
+      "INVOICED": "W trakcie spłaty",
+      "PAID": "Zapłacone",
+      "OVERDUE": "Po terminie",
+      "CANCELLED": "Anulowane"
+    },
+    "feeIncl": "w tym opłata {amount}",
+    "invoice": "Faktura",
+    "partnerNote": "Nasz partner płatniczy zapłacił FIRINGI — Państwo spłacają partnera według tego harmonogramu.",
+    "payment": "Płatność {n}",
+    "paid": "zapłacona",
+    "overdueOn": "po terminie od {date}",
+    "dueOn": "płatna {date}",
+    "payNowLink": "Opłać faktury"
+  },
+  "tenders": {
+    "title": "Przetargi",
+    "intro": "Prosimy napisać dostawcom, czego Państwo potrzebują, i pozwolić im konkurować: wysyłają niejawne oferty na każdą pozycję, a Państwo wybierają najlepsze — pozycje każdego dostawcy stają się zamówieniem.",
+    "newTender": "Nowy przetarg",
+    "newIntro": "Prosimy opisać, czego Państwo potrzebują. Dostawcy, którzy mogą do Państwa dostarczać, przesyłają ceny do zakończenia składania ofert.",
+    "closed": {
+      "OFF": "Przetargi są obecnie wyłączone.",
+      "COMPANY_OFF": "Przetargi nie są dostępne dla Państwa firmy. Prosimy o kontakt z FIRINGI.",
+      "TYPE_OFF": "Przetargi nie są jeszcze dostępne dla Państwa rodzaju działalności."
+    },
+    "noTenders": "Brak przetargów.",
+    "status": {
+      "PENDING": "Czeka na FIRINGI",
+      "OPEN": "Przyjmuje oferty",
+      "CLOSED": "Składanie ofert zakończone",
+      "AWARDED": "Rozstrzygnięty",
+      "CANCELLED": "Anulowany",
+      "REJECTED": "Odrzucony"
+    },
+    "linesBids": "Pozycje: {lines} · Oferty: {bids}",
+    "closesOn": "Zamknięcie {date}",
+    "closedOn": "Zamknięty {date}",
+    "deliveryOn": "Dostawa {date}",
+    "suppliersBid": "Dostawcy składający oferty: {n}",
+    "invitedOnly": "Tylko zaproszeni dostawcy",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Tytuł",
+    "titlePh": "np. Napoje na grudzień",
+    "deliverTo": "Dostawa do",
+    "deliveryDate": "Dzień dostawy",
+    "closesAt": "Koniec składania ofert",
+    "closesHint": "Co najmniej {hours} godz., najwyżej {days} dni od teraz.",
+    "noteLabel": "Uwaga dla dostawców (opcjonalnie)",
+    "linesTitle": "Czego Państwo potrzebują",
+    "lineN": "Pozycja {n}",
+    "remove": "Usuń",
+    "change": "Zmień",
+    "findProduct": "Znajdź produkt w katalogu (opcjonalnie)…",
+    "detailsPh": "Szczegóły (opcjonalnie)",
+    "describePh": "Lub opis tego, czego Państwo potrzebują",
+    "qty": "Ilość",
+    "unitNote": "Jednostka",
+    "unitNotePh": "np. skrzynki po 24 szt.",
+    "target": "Cena docelowa (€, netto)",
+    "addLine": "Dodaj pozycję",
+    "whoBids": "Kto może składać oferty",
+    "allSuppliers": "Każdy dostawca, który może do Państwa dostarczać ({n})",
+    "onlyInvited": "Tylko wybrani przeze mnie dostawcy",
+    "publish": "Opublikuj przetarg",
+    "closeNow": "Zakończ składanie ofert teraz",
+    "closeConfirm": "Zakończyć składanie ofert teraz? Nie będzie można wysłać kolejnych ofert.",
+    "cancel": "Anuluj przetarg",
+    "cancelConfirm": "Anulować ten przetarg? Oferty dostawców zostaną usunięte.",
+    "bidsTitle": "Oferty",
+    "awardIntro": "Prosimy wybrać ofertę dla każdej pozycji — zaznaczona jest najtańsza. Pozycje każdego dostawcy tworzą jedno zamówienie.",
+    "awardEarly": "Składanie ofert nadal trwa; mogą Państwo już rozstrzygnąć przetarg (składanie ofert zostanie wtedy zakończone).",
+    "waitingBids": "Czekamy na oferty — powiadomimy Państwa, gdy jakaś wpłynie.",
+    "bidsN": "Oferty: {n}",
+    "noBids": "Brak ofert na tę pozycję.",
+    "best": "Najlepsza cena",
+    "belowTarget": "{amount} poniżej Państwa ceny docelowej",
+    "dontAward": "Nie przyznawaj tej pozycji",
+    "awardTotal": "Razem",
+    "exclVat": "netto",
+    "payment": "Płatność",
+    "payUsual": "Jak zwykle",
+    "award": "Rozstrzygnij i złóż zamówienia",
+    "awardConfirm": "Złożyć teraz zamówienia na wybrane oferty?",
+    "awarded": "Złożone zamówienia: {orders}.",
+    "someFailed": "Części nie udało się złożyć: {reason}",
+    "vTitle": "Przetargi",
+    "vIntro": "Przetargi kupujących, w których mogą Państwo złożyć ofertę. Oferty są niejawne: inni dostawcy nigdy nie widzą Państwa cen. Wpisana cena to kwota, którą zapłaci kupujący (netto); standardowa prowizja FIRINGI jest potrącana z kwoty, którą Państwo otrzymają.",
+    "vOpen": "Otwarte przetargi",
+    "vNoOpen": "Obecnie brak otwartych przetargów dla Państwa.",
+    "invitedYou": "Zaproszono Państwa",
+    "vMyBids": "Moje oferty",
+    "vNoBids": "Brak ofert.",
+    "linesN": "Pozycje: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Oferta wysłana",
+      "WITHDRAWN": "Wycofana",
+      "WON": "Wygrana",
+      "LOST": "Niewybrana"
+    },
+    "yourBid": "Państwa oferta",
+    "makeBid": "Złóż ofertę",
+    "bidIntro": "Prosimy złożyć ofertę na pozycje, które mogą Państwo dostarczyć — jeden z Państwa produktów i cenę za jednostkę.",
+    "biddingClosed": "Składanie ofert jest zakończone.",
+    "buyerTarget": "Cena docelowa kupującego: {price}",
+    "noMatchingOffer": "Nie mają Państwo aktywnej oferty tego produktu.",
+    "yourProduct": "Państwa produkt",
+    "yourPrice": "Cena za jednostkę (€)",
+    "skipLine": "Nie składaj oferty na tę pozycję",
+    "yourBase": "Państwa cena katalogowa {price}",
+    "lineTotal": "pozycja {amount}",
+    "youReceive": "otrzymają Państwo ok. {amount}",
+    "bidNote": "Uwaga dla kupującego (opcjonalnie)",
+    "sendBid": "Wyślij ofertę",
+    "updateBid": "Zaktualizuj ofertę",
+    "bidSent": "Oferta zapisana.",
+    "withdraw": "Wycofaj ofertę",
+    "withdrawConfirm": "Wycofać ofertę?",
+    "sealedNote": "Inni dostawcy nigdy nie widzą Państwa oferty. Można ją zmieniać do zakończenia składania ofert.",
+    "lineWon": "wygrana",
+    "lineLost": "niewybrana",
+    "waiting": "czeka na kupującego",
+    "noBidLine": "brak oferty"
   }
 }

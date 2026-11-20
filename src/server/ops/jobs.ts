@@ -33,6 +33,8 @@ export const JOBS: JobDef[] = [
   { key: "returnables", label: "Returnables (empties held too long: reminders, or the deposit kept)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/returnables" },
   { key: "deals", label: "Clearance deals (ending deals, expiring offers, alerts for deals that start, daily digest)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/deals" },
   { key: "groups", label: "Buying groups (place the members' orders of group orders that have closed)", every: "every 15 minutes", staleAfterMin: 90, critical: false, path: "/api/cron/groups" },
+  { key: "paylater", label: "Pay later (partner pays invoiced plans, own-credit instalments: paid, reminders, overdue)", every: "every 15 minutes", staleAfterMin: 90, critical: true, path: "/api/cron/paylater" },
+  { key: "tenders", label: "Open tenders (close bidding at the deadline, expire unawarded tenders)", every: "every 15 minutes", staleAfterMin: 90, critical: false, path: "/api/cron/tenders" },
   { key: "rebates", label: "Rebates & bonuses (settle ended periods with credit notes / free goods, end finished deals, reminders)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/rebates" },
   { key: "bank", label: "Bank reconciliation (bank feeds, matching new lines, consents ending)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/bank" },
   { key: "ads", label: "Advertising (booked days, budgets, low balances, monthly ad invoices, settling against payouts)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/ads" },

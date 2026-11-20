@@ -197,6 +197,16 @@ export const EVENTS: EventDef[] = [
   E("group.round_placed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "reason"]),
   E("group.round_failed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "reason"]),
   E("group.round_supplier", "orders", VENDOR_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "orders", "date"]),
+  // Phase 50: pay later & open tenders
+  E("paylater.due_soon", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH"], ["number", "n", "amount", "date"]),
+  E("paylater.overdue", "finance", ["buyer.invoices.view", "buyer.payments.view"], ["EMAIL", "PUSH", "WHATSAPP"], ["number", "n", "amount", "date"]),
+  E("tender.review", "orders", ["admin.orders.manage", "admin.orders.view"], ["EMAIL"], ["number", "company", "title"]),
+  E("tender.decided", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "decision", "reason"]),
+  E("tender.opened", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "date"]),
+  E("tender.bid", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
+  E("tender.closed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
+  E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
+  E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
   // Phase 48 — rebates & bonuses
   E("rebate.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "name"]),
   E("rebate.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name"]),

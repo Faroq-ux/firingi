@@ -21,6 +21,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { CartQty, CheckoutForm, ClearCartButton, CouponBox } from "@/components/orders/cart-controls";
+import { payLaterChoiceFor } from "@/components/pay-later/choice";
 import { COUPON_ERRORS } from "@/lib/coupons";
 import { CartPoints } from "@/components/loyalty/controls";
 import { loyaltySettings } from "@/server/loyalty/service";
@@ -40,6 +41,8 @@ export default async function CartPage() {
   const [rtCart, rl] = await Promise.all([cartReturnables(ctx, locale).catch(() => null), rtLabels()]);
   // Phase 41: sold-by-weight lines (estimate until weighed)
   const [cwm, cl] = await Promise.all([offerCatchWeight(cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))), cwLabels()]);
+  // Phase 50: pay later options (not for routed carts — FIRINGI picks the suppliers there)
+  const payLaterChoice = !cart.routed && cart.groups.length && ctx.permissions.has("buyer.orders.place") ? await payLaterChoiceFor(ctx, Number(cart.totalGross), locale) : null;
   const td = await getTranslations("deals");
   const trb = await getTranslations("rebates"); // Phase 48: free goods from a bonus
   // Phase 44: products on the kitchen's allergen avoid list (when FIRINGI has the profile on)
@@ -157,7 +160,7 @@ export default async function CartPage() {
             }} />
             {cart.loyalty && <CartPoints l={cart.loyalty} min={ls.minRedeem} maxPct={ls.maxRedeemPct} valueText={formatMoney(cart.loyalty.balance * ls.pointValue, locale, fx)} eurosText={formatMoney(cart.loyalty.euros, locale, fx)} />}
             {cart.loyalty?.freeDelivery && cart.freeDelivery && <p className="text-xs text-[color:var(--vivid-violet)]" data-testid="tier-free-delivery">{tl("cartFreeDelivery")}</p>}
-            <CheckoutForm disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok) || cart.loyalty?.reason === "NOT_ENOUGH" || cart.loyalty?.reason === "BELOW_MIN"} poRequired={poRequired} locale={locale} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}${(a as { branch?: { name: string } | null }).branch ? ` · ${(a as { branch?: { name: string } | null }).branch!.name}` : ""}` }))} />
+            <CheckoutForm payLater={payLaterChoice} disabled={!d?.ok || !!cart.credit || (!!cart.coupon && !cart.coupon.ok) || cart.loyalty?.reason === "NOT_ENOUGH" || cart.loyalty?.reason === "BELOW_MIN"} poRequired={poRequired} locale={locale} addresses={cart.addresses.map((a) => ({ id: a.id, label: `${a.label} — ${a.line1}, ${a.cityName}${(a as { branch?: { name: string } | null }).branch ? ` · ${(a as { branch?: { name: string } | null }).branch!.name}` : ""}` }))} />
             <CartExtras canQuote={!cart.routed} />
           </CardContent>
         </Card>

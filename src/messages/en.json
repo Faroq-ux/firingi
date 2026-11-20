@@ -1670,6 +1670,42 @@
     "group_round_supplier": {
       "title": "Group order: {orders} orders",
       "body": "The buying group \"{name}\" placed {orders} orders together (\"{title}\"), for delivery on {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Pay later: payment due {date}",
+      "body": "Payment {n} of {amount} € for order {number} is due on {date}."
+    },
+    "paylater_overdue": {
+      "title": "Pay later: payment overdue",
+      "body": "Payment {n} of {amount} € for order {number} was due on {date}. Please pay it — pay later stays paused until then."
+    },
+    "tender_review": {
+      "title": "Tender to check: {number}",
+      "body": "{company} posted the tender \"{title}\". It opens for bids after FIRINGI approves it."
+    },
+    "tender_decided": {
+      "title": "Your tender {number}: {decision}",
+      "body": "FIRINGI's decision on \"{title}\": {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "New tender: {title}",
+      "body": "A buyer is asking for prices ({lines} lines, tender {number}). Bidding closes {date}."
+    },
+    "tender_bid": {
+      "title": "New bid on {number}",
+      "body": "Your tender \"{title}\" has a new bid ({bids} so far)."
+    },
+    "tender_closed": {
+      "title": "Bidding closed: {number}",
+      "body": "Bidding on \"{title}\" has closed with {bids} bids. Choose the best ones to place your orders."
+    },
+    "tender_awarded": {
+      "title": "You won tender {number}",
+      "body": "The buyer chose your bid for {lines} lines of \"{title}\" — order {order} is waiting for you."
+    },
+    "tender_lost": {
+      "title": "Tender {number} awarded",
+      "body": "The buyer awarded \"{title}\" to other bids this time."
     }
   },
   "notifications": {
@@ -6561,5 +6597,159 @@
     "vStop": "Stop group prices",
     "vStopped": "Group prices stopped.",
     "notForYou": "This supplier doesn't sell to your type of business, so you can't add to this group order."
+  },
+  "payLater": {
+    "choose": "How do you want to pay?",
+    "payNow": "As usual (your normal payment terms)",
+    "checkNote": "Pay later is checked when you place the order — by our payment partner or by FIRINGI.",
+    "termDays": "Pay in {days} days",
+    "termInstalments": "{count} monthly instalments",
+    "fee": "Fee {amount}",
+    "noFee": "No fee",
+    "payBy": "pay by {date}",
+    "eachMonth": "{count} × about {amount}, the first on {date}",
+    "title": "Pay Later",
+    "intro": "Order now and pay the invoice later — in a number of days or in monthly instalments.",
+    "closed": {
+      "OFF": "Pay later isn't available at the moment.",
+      "COMPANY_OFF": "Pay later isn't available for your business. Please contact FIRINGI.",
+      "TYPE_OFF": "Pay later isn't available for your type of business yet.",
+      "OVERDUE": "A pay-later payment is overdue — pay it to use pay later again."
+    },
+    "howTitle": "How it works",
+    "howIntro": "Choose pay later at checkout. Your invoice still comes from FIRINGI; the fee (if any) is a separate line on it.",
+    "limit": "Credit with FIRINGI",
+    "used": "In use",
+    "left": "Available",
+    "partnerOn": "Pay later through our payment partner is also available at checkout (the partner checks your order).",
+    "ownNote": "What you still owe on pay-later orders counts against your credit; it's free again as you pay.",
+    "optionsTitle": "Options",
+    "optionsIntro": "Fees shown for an order of 1 000 € (incl. VAT).",
+    "feeExample": "fee {amount}",
+    "plansTitle": "Your pay-later orders",
+    "noPlans": "No pay-later orders yet.",
+    "status": {
+      "ACTIVE": "Waiting for invoice",
+      "INVOICED": "Paying",
+      "PAID": "Paid",
+      "OVERDUE": "Overdue",
+      "CANCELLED": "Cancelled"
+    },
+    "feeIncl": "incl. fee {amount}",
+    "invoice": "Invoice",
+    "partnerNote": "FIRINGI has been paid by our payment partner — you pay the partner on this schedule.",
+    "payment": "Payment {n}",
+    "paid": "paid",
+    "overdueOn": "overdue since {date}",
+    "dueOn": "due {date}",
+    "payNowLink": "Pay your invoices"
+  },
+  "tenders": {
+    "title": "Tenders",
+    "intro": "Tell suppliers what you need and let them compete: they send sealed bids for each line, you choose the best — each supplier's lines become an order.",
+    "newTender": "New tender",
+    "newIntro": "Describe what you need. Suppliers that can deliver to you send their prices until bidding closes.",
+    "closed": {
+      "OFF": "Tenders are switched off at the moment.",
+      "COMPANY_OFF": "Tenders aren't open for your business. Please contact FIRINGI.",
+      "TYPE_OFF": "Tenders aren't open for your type of business yet."
+    },
+    "noTenders": "No tenders yet.",
+    "status": {
+      "PENDING": "Waiting for FIRINGI",
+      "OPEN": "Open for bids",
+      "CLOSED": "Bidding closed",
+      "AWARDED": "Awarded",
+      "CANCELLED": "Cancelled",
+      "REJECTED": "Refused"
+    },
+    "linesBids": "Lines: {lines} · Bids: {bids}",
+    "closesOn": "Closes {date}",
+    "closedOn": "Closed {date}",
+    "deliveryOn": "Delivery {date}",
+    "suppliersBid": "Suppliers bidding: {n}",
+    "invitedOnly": "Invited suppliers only",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Title",
+    "titlePh": "e.g. Drinks for December",
+    "deliverTo": "Deliver to",
+    "deliveryDate": "Delivery day",
+    "closesAt": "Bidding closes",
+    "closesHint": "At least {hours} hours, at most {days} days from now.",
+    "noteLabel": "Note for suppliers (optional)",
+    "linesTitle": "What you need",
+    "lineN": "Line {n}",
+    "remove": "Remove",
+    "change": "Change",
+    "findProduct": "Find a product in the catalogue (optional)…",
+    "detailsPh": "Details (optional)",
+    "describePh": "Or describe what you need",
+    "qty": "Quantity",
+    "unitNote": "Unit",
+    "unitNotePh": "e.g. cases of 24",
+    "target": "Target price (€, excl. VAT)",
+    "addLine": "Add a line",
+    "whoBids": "Who can bid",
+    "allSuppliers": "Every supplier that can deliver to you ({n})",
+    "onlyInvited": "Only the suppliers I choose",
+    "publish": "Publish tender",
+    "closeNow": "Close bidding now",
+    "closeConfirm": "Close bidding now? No more bids can be sent.",
+    "cancel": "Cancel tender",
+    "cancelConfirm": "Cancel this tender? Suppliers' bids are dropped.",
+    "bidsTitle": "Bids",
+    "awardIntro": "Choose a bid for each line — the cheapest is selected. Each supplier's lines become one order.",
+    "awardEarly": "Bidding is still open; you can already award (bidding then closes).",
+    "waitingBids": "Waiting for bids — you'll be told when one arrives.",
+    "bidsN": "Bids: {n}",
+    "noBids": "No bids on this line.",
+    "best": "Best price",
+    "belowTarget": "{amount} below your target",
+    "dontAward": "Don't award this line",
+    "awardTotal": "Total",
+    "exclVat": "excl. VAT",
+    "payment": "Payment",
+    "payUsual": "As usual",
+    "award": "Award and place orders",
+    "awardConfirm": "Place the orders for the chosen bids now?",
+    "awarded": "Orders placed: {orders}.",
+    "someFailed": "Some couldn't be placed: {reason}",
+    "vTitle": "Tenders",
+    "vIntro": "Buyers' tenders you can bid on. Bids are sealed: other suppliers never see your prices. The price you enter is what the buyer pays (excl. VAT); FIRINGI's usual commission comes off what you receive.",
+    "vOpen": "Open tenders",
+    "vNoOpen": "No open tenders for you right now.",
+    "invitedYou": "You're invited",
+    "vMyBids": "My bids",
+    "vNoBids": "No bids yet.",
+    "linesN": "Lines: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Bid sent",
+      "WITHDRAWN": "Withdrawn",
+      "WON": "Won",
+      "LOST": "Not chosen"
+    },
+    "yourBid": "Your bid",
+    "makeBid": "Make a bid",
+    "bidIntro": "Bid on the lines you can supply — one of your products and your price per unit.",
+    "biddingClosed": "Bidding is closed.",
+    "buyerTarget": "Buyer's target: {price}",
+    "noMatchingOffer": "You have no active offer of this product.",
+    "yourProduct": "Your product",
+    "yourPrice": "Price per unit (€)",
+    "skipLine": "Don't bid on this line",
+    "yourBase": "your list price {price}",
+    "lineTotal": "line {amount}",
+    "youReceive": "you receive about {amount}",
+    "bidNote": "Note for the buyer (optional)",
+    "sendBid": "Send bid",
+    "updateBid": "Update bid",
+    "bidSent": "Bid saved.",
+    "withdraw": "Withdraw bid",
+    "withdrawConfirm": "Withdraw your bid?",
+    "sealedNote": "Other suppliers never see your bid. You can change it until bidding closes.",
+    "lineWon": "won",
+    "lineLost": "not chosen",
+    "waiting": "waiting for the buyer",
+    "noBidLine": "no bid"
   }
 }

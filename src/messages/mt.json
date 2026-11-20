@@ -886,7 +886,9 @@
     "Till Staff": "Persunal tal-kaxxa",
     "Rebates & Bonuses": "Skontijiet u Bonusijiet",
     "My Bonuses": "Il-Bonusijiet Tiegħi",
-    "Buying Groups": "Gruppi tax-Xiri"
+    "Buying Groups": "Gruppi tax-Xiri",
+    "Pay Later": "Ħallas Aktar Tard",
+    "Tenders": "Tenders"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Ordni tal-grupp: {orders} ordnijiet",
       "body": "Il-grupp tax-xiri \"{name}\" qiegħed {orders} ordnijiet flimkien (\"{title}\"), għall-kunsinna fil-{date}."
+    },
+    "paylater_due_soon": {
+      "title": "Ħallas aktar tard: ħlas dovut fil-{date}",
+      "body": "Il-ħlas {n} ta' {amount} € għall-ordni {number} huwa dovut fil-{date}."
+    },
+    "paylater_overdue": {
+      "title": "Ħallas aktar tard: ħlas skadut",
+      "body": "Il-ħlas {n} ta' {amount} € għall-ordni {number} kien dovut fil-{date}. Jekk jogħġbok ħallsu — sa dakinhar il-ħlas aktar tard jibqa' sospiż."
+    },
+    "tender_review": {
+      "title": "Tender għall-verifika: {number}",
+      "body": "{company} ippubblika t-tender \"{title}\". Jinfetaħ għall-offerti wara li FIRINGI japprovah."
+    },
+    "tender_decided": {
+      "title": "It-tender tiegħek {number}: {decision}",
+      "body": "Id-deċiżjoni ta' FIRINGI dwar \"{title}\": {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Tender ġdid: {title}",
+      "body": "Xerrej qed jitlob prezzijiet ({lines} linji, tender {number}). L-offerti jagħlqu {date}."
+    },
+    "tender_bid": {
+      "title": "Offerta ġdida fuq {number}",
+      "body": "It-tender tiegħek \"{title}\" għandu offerta ġdida ({bids} s'issa)."
+    },
+    "tender_closed": {
+      "title": "L-offerti għalqu: {number}",
+      "body": "L-offerti fuq \"{title}\" għalqu b'{bids} offerti. Agħżel l-aħjar biex tagħmel l-ordnijiet tiegħek."
+    },
+    "tender_awarded": {
+      "title": "Rbaħt it-tender {number}",
+      "body": "Ix-xerrej għażel l-offerta tiegħek għal {lines} linji ta' \"{title}\" — l-ordni {order} qed tistennik."
+    },
+    "tender_lost": {
+      "title": "It-tender {number} ġie aġġudikat",
+      "body": "Din id-darba x-xerrej aġġudika \"{title}\" lil offerti oħra."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Waqqaf il-prezzijiet tal-grupp",
     "vStopped": "Il-prezzijiet tal-grupp twaqqfu.",
     "notForYou": "Dan il-fornitur ma jbigħx lit-tip ta' negozju tiegħek, għalhekk ma tistax iżżid ma' din l-ordni tal-grupp."
+  },
+  "payLater": {
+    "choose": "Kif trid tħallas?",
+    "payNow": "Bħas-soltu (it-termini normali tal-ħlas tiegħek)",
+    "checkNote": "Il-ħlas aktar tard jiġi ċċekkjat meta tagħmel l-ordni — mis-sieħeb tal-ħlas tagħna jew minn FIRINGI.",
+    "termDays": "Ħallas fi żmien {days} jiem",
+    "termInstalments": "{count} rati fix-xahar",
+    "fee": "Tariffa {amount}",
+    "noFee": "L-ebda tariffa",
+    "payBy": "ħallas sa {date}",
+    "eachMonth": "{count} × madwar {amount}, l-ewwel waħda fil-{date}",
+    "title": "Ħallas Aktar Tard",
+    "intro": "Ordna issa u ħallas il-fattura aktar tard — wara numru ta' jiem jew f'rati kull xahar.",
+    "closed": {
+      "OFF": "Il-ħlas aktar tard mhuwiex disponibbli bħalissa.",
+      "COMPANY_OFF": "Il-ħlas aktar tard mhuwiex disponibbli għan-negozju tiegħek. Jekk jogħġbok ikkuntattja lil FIRINGI.",
+      "TYPE_OFF": "Il-ħlas aktar tard għadu mhuwiex disponibbli għat-tip ta' negozju tiegħek.",
+      "OVERDUE": "Hemm ħlas aktar tard li skada — ħallsu biex terġa' tkun tista' tħallas aktar tard."
+    },
+    "howTitle": "Kif jaħdem",
+    "howIntro": "Agħżel il-ħlas aktar tard meta tagħmel l-ordni. Il-fattura tiegħek xorta tiġi minn FIRINGI; it-tariffa (jekk hemm) tidher fuqha f'linja separata.",
+    "limit": "Kreditu ma' FIRINGI",
+    "used": "Qed jintuża",
+    "left": "Disponibbli",
+    "partnerOn": "Il-ħlas aktar tard permezz tas-sieħeb tal-ħlas tagħna huwa disponibbli wkoll meta tagħmel l-ordni (is-sieħeb jiċċekkja l-ordni tiegħek).",
+    "ownNote": "Dak li għadek trid tħallas fuq ordnijiet bi ħlas aktar tard jitnaqqas mill-kreditu tiegħek; jerġa' jinħeles hekk kif tħallas.",
+    "optionsTitle": "Għażliet",
+    "optionsIntro": "Tariffi murija għal ordni ta' 1,000 € (bil-VAT).",
+    "feeExample": "tariffa {amount}",
+    "plansTitle": "L-ordnijiet tiegħek bi ħlas aktar tard",
+    "noPlans": "Għad m'hemm l-ebda ordni bi ħlas aktar tard.",
+    "status": {
+      "ACTIVE": "Qed tistenna l-fattura",
+      "INVOICED": "Qed titħallas",
+      "PAID": "Imħallsa",
+      "OVERDUE": "Skaduta",
+      "CANCELLED": "Ikkanċellata"
+    },
+    "feeIncl": "inkluża tariffa ta' {amount}",
+    "invoice": "Fattura",
+    "partnerNote": "Is-sieħeb tal-ħlas tagħna diġà ħallas lil FIRINGI — int tħallas lis-sieħeb skont din l-iskeda.",
+    "payment": "Ħlas {n}",
+    "paid": "imħallas",
+    "overdueOn": "skadut minn {date}",
+    "dueOn": "jiskadi fil-{date}",
+    "payNowLink": "Ħallas il-fatturi tiegħek"
+  },
+  "tenders": {
+    "title": "Tenders",
+    "intro": "Għid lill-fornituri x'għandek bżonn u ħallihom jikkompetu: jibagħtu offerti sigillati għal kull linja, u int tagħżel l-aħjar — il-linji ta' kull fornitur isiru ordni.",
+    "newTender": "Tender ġdid",
+    "newIntro": "Iddeskrivi x'għandek bżonn. Il-fornituri li jistgħu jikkunsinnawlek jibagħtu l-prezzijiet tagħhom sakemm jagħlqu l-offerti.",
+    "closed": {
+      "OFF": "It-tenders huma mitfija bħalissa.",
+      "COMPANY_OFF": "It-tenders mhumiex disponibbli għan-negozju tiegħek. Jekk jogħġbok ikkuntattja lil FIRINGI.",
+      "TYPE_OFF": "It-tenders għadhom mhumiex disponibbli għat-tip ta' negozju tiegħek."
+    },
+    "noTenders": "Għad m'hemm l-ebda tender.",
+    "status": {
+      "PENDING": "Qed jistenna lil FIRINGI",
+      "OPEN": "Miftuħ għall-offerti",
+      "CLOSED": "L-offerti għalqu",
+      "AWARDED": "Aġġudikat",
+      "CANCELLED": "Ikkanċellat",
+      "REJECTED": "Miċħud"
+    },
+    "linesBids": "Linji: {lines} · Offerti: {bids}",
+    "closesOn": "Jagħlaq {date}",
+    "closedOn": "Għalaq {date}",
+    "deliveryOn": "Kunsinna {date}",
+    "suppliersBid": "Fornituri li qed joffru: {n}",
+    "invitedOnly": "Fornituri mistiedna biss",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Titlu",
+    "titlePh": "eż. Xorb għal Diċembru",
+    "deliverTo": "Ikkunsinna lil",
+    "deliveryDate": "Jum tal-kunsinna",
+    "closesAt": "L-offerti jagħlqu",
+    "closesHint": "Mill-inqas {hours} sigħat, l-aktar {days} jiem minn issa.",
+    "noteLabel": "Nota għall-fornituri (mhux obbligatorju)",
+    "linesTitle": "X'għandek bżonn",
+    "lineN": "Linja {n}",
+    "remove": "Neħħi",
+    "change": "Biddel",
+    "findProduct": "Sib prodott fil-katalgu (mhux obbligatorju)…",
+    "detailsPh": "Dettalji (mhux obbligatorju)",
+    "describePh": "Jew iddeskrivi x'għandek bżonn",
+    "qty": "Kwantità",
+    "unitNote": "Unità",
+    "unitNotePh": "eż. kaxxi ta' 24",
+    "target": "Prezz immirat (€, mingħajr VAT)",
+    "addLine": "Żid linja",
+    "whoBids": "Min jista' jagħmel offerta",
+    "allSuppliers": "Kull fornitur li jista' jikkunsinnalek ({n})",
+    "onlyInvited": "Il-fornituri li nagħżel jien biss",
+    "publish": "Ippubblika t-tender",
+    "closeNow": "Agħlaq l-offerti issa",
+    "closeConfirm": "Tagħlaq l-offerti issa? Ma jkunux jistgħu jintbagħtu aktar offerti.",
+    "cancel": "Ikkanċella t-tender",
+    "cancelConfirm": "Tikkanċella dan it-tender? L-offerti tal-fornituri jitwarrbu.",
+    "bidsTitle": "Offerti",
+    "awardIntro": "Agħżel offerta għal kull linja — l-orħos tkun magħżula. Il-linji ta' kull fornitur isiru ordni waħda.",
+    "awardEarly": "L-offerti għadhom miftuħa; tista' diġà taġġudika (imbagħad l-offerti jagħlqu).",
+    "waitingBids": "Qed nistennew l-offerti — tiġi infurmat meta tasal waħda.",
+    "bidsN": "Offerti: {n}",
+    "noBids": "L-ebda offerta fuq din il-linja.",
+    "best": "L-aħjar prezz",
+    "belowTarget": "{amount} inqas mill-mira tiegħek",
+    "dontAward": "Taġġudikax din il-linja",
+    "awardTotal": "Total",
+    "exclVat": "mingħajr VAT",
+    "payment": "Ħlas",
+    "payUsual": "Bħas-soltu",
+    "award": "Aġġudika u agħmel l-ordnijiet",
+    "awardConfirm": "Tagħmel l-ordnijiet għall-offerti magħżula issa?",
+    "awarded": "Ordnijiet imqiegħda: {orders}.",
+    "someFailed": "Xi wħud ma setgħux jitqiegħdu: {reason}",
+    "vTitle": "Tenders",
+    "vIntro": "Tenders tax-xerrejja li tista' tagħmel offerta fuqhom. L-offerti huma sigillati: fornituri oħra qatt ma jaraw il-prezzijiet tiegħek. Il-prezz li ddaħħal huwa dak li jħallas ix-xerrej (mingħajr VAT); il-kummissjoni tas-soltu ta' FIRINGI titnaqqas minn dak li tirċievi.",
+    "vOpen": "Tenders miftuħa",
+    "vNoOpen": "Bħalissa m'hemm l-ebda tender miftuħ għalik.",
+    "invitedYou": "Int mistieden",
+    "vMyBids": "L-offerti li bgħatt",
+    "vNoBids": "Għad m'hemm l-ebda offerta.",
+    "linesN": "Linji: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Offerta mibgħuta",
+      "WITHDRAWN": "Irtirata",
+      "WON": "Rebħet",
+      "LOST": "Mhux magħżula"
+    },
+    "yourBid": "L-offerta tiegħek",
+    "makeBid": "Agħmel offerta",
+    "bidIntro": "Agħmel offerta fuq il-linji li tista' tforni — wieħed mill-prodotti tiegħek u l-prezz tiegħek għal kull unità.",
+    "biddingClosed": "L-offerti għalqu.",
+    "buyerTarget": "Il-mira tax-xerrej: {price}",
+    "noMatchingOffer": "M'għandekx offerta attiva ta' dan il-prodott.",
+    "yourProduct": "Il-prodott tiegħek",
+    "yourPrice": "Prezz għal kull unità (€)",
+    "skipLine": "Tagħmilx offerta fuq din il-linja",
+    "yourBase": "il-prezz tal-lista tiegħek {price}",
+    "lineTotal": "linja {amount}",
+    "youReceive": "tirċievi madwar {amount}",
+    "bidNote": "Nota għax-xerrej (mhux obbligatorju)",
+    "sendBid": "Ibgħat l-offerta",
+    "updateBid": "Aġġorna l-offerta",
+    "bidSent": "Offerta ssejvjata.",
+    "withdraw": "Irtira l-offerta",
+    "withdrawConfirm": "Tirtira l-offerta tiegħek?",
+    "sealedNote": "Fornituri oħra qatt ma jaraw l-offerta tiegħek. Tista' tibdilha sakemm jagħlqu l-offerti.",
+    "lineWon": "rebħet",
+    "lineLost": "mhux magħżula",
+    "waiting": "qed tistenna lix-xerrej",
+    "noBidLine": "l-ebda offerta"
   }
 }

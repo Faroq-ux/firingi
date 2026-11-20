@@ -1,0 +1,100 @@
+// Phase 50: open tenders — a buyer posts what it needs, suppliers send sealed bids per line, the buyer awards
+// each line to a bid; each supplier's awarded lines become an order (FIRINGI invoices the buyer as usual).
+
+enum TenderStatus {
+  PENDING // waiting for FIRINGI (when FIRINGI checks tenders)
+  OPEN
+  CLOSED // bidding over, the buyer awards
+  AWARDED
+  CANCELLED
+  REJECTED
+}
+
+enum TenderBidStatus {
+  SUBMITTED
+  WITHDRAWN
+  WON // at least one line awarded
+  LOST
+}
+
+model Tender {
+  id             String       @id @default(cuid())
+  number         String       @unique
+  buyerCompanyId String
+  countryId      String
+  title          String
+  note           String?
+  addressId      String
+  deliveryDate   DateTime?
+  closesAt       DateTime
+  status         TenderStatus @default(OPEN)
+  /// empty = every eligible supplier may bid; otherwise only these
+  invitedIds     String[]
+  reviewNote     String?
+  reviewedById   String?
+  awardedAt      DateTime?
+  createdById    String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  buyer   Company      @relation("TendersPosted", fields: [buyerCompanyId], references: [id], onDelete: Cascade)
+  country Country      @relation(fields: [countryId], references: [id])
+  lines   TenderLine[]
+  bids    TenderBid[]
+
+  @@index([status, closesAt])
+  @@index([buyerCompanyId])
+}
+
+model TenderLine {
+  id               String   @id @default(cuid())
+  tenderId         String
+  n                Int
+  /// a catalogue product (suppliers bid with their offer of it) or only a description
+  productId        String?
+  description      String
+  qty              Int
+  unitNote         String?
+  targetUnitNet    Decimal? @db.Decimal(18, 4)
+  awardedBidLineId String?  @unique
+  orderId          String?
+
+  tender   Tender          @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+  bidLines TenderBidLine[] @relation("BidLineFor")
+  awarded  TenderBidLine?  @relation("AwardedBidLine", fields: [awardedBidLineId], references: [id])
+
+  @@unique([tenderId, n])
+}
+
+model TenderBid {
+  id                String          @id @default(cuid())
+  tenderId          String
+  supplierCompanyId String
+  status            TenderBidStatus @default(SUBMITTED)
+  note              String?
+  createdById       String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  tender   Tender          @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+  supplier Company         @relation("TenderBids", fields: [supplierCompanyId], references: [id], onDelete: Cascade)
+  lines    TenderBidLine[]
+
+  @@unique([tenderId, supplierCompanyId])
+}
+
+model TenderBidLine {
+  id      String  @id @default(cuid())
+  bidId   String
+  lineId  String
+  offerId String
+  /// the selling price (excl. VAT) the buyer pays; FIRINGI's commission comes off what the supplier receives
+  unitNet Decimal @db.Decimal(18, 4)
+
+  bid       TenderBid   @relation(fields: [bidId], references: [id], onDelete: Cascade)
+  line      TenderLine  @relation("BidLineFor", fields: [lineId], references: [id], onDelete: Cascade)
+  offer     VendorOffer @relation(fields: [offerId], references: [id])
+  awardedTo TenderLine? @relation("AwardedBidLine")
+
+  @@unique([bidId, lineId])
+}

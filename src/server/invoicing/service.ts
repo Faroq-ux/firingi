@@ -188,13 +188,17 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
   const excise = await (await import("@/server/excise/service")).invoiceExcise(tx, orderId, { crossBorder: order.seller.countryId !== le.countryId });
   for (const l of lines) if (l.orderLineId && excise.included.has(l.orderLineId)) l.exciseNet = excise.included.get(l.orderLineId);
   lines.push(...excise.invoiceLines);
+  // Phase 50: pay later — the buyer's fee (financing, VAT exempt) and the due date of the last payment
+  const payLater = await (await import("@/server/pay-later/service")).invoicePart(tx, orderId);
+  if (payLater?.feeLine) lines.push(payLater.feeLine);
   const buyerAddr = await billingAddress(tx, order.buyerCompanyId);
   const invoice = await issueDocument(tx, {
     legalEntityId: le.id, countryId: le.countryId, docType: "INVOICE", taxRegime: "DOMESTIC", recipientCompanyId: order.buyerCompanyId, orderId,
     issuerSnapshot: { name: le.legalName, taxId: le.taxId, vatNumber: le.vatNumber, address: `${le.addressLine}, ${le.postalCode} ${le.city}`, email: le.email, iban: le.iban, country: leCountry.code },
     recipientSnapshot: companySnapshot(order.buyer, buyerAddr),
-    lines, dueDays: order.buyer.paymentTermsDays, createdById: actorUserId,
+    lines, dueDays: payLater ? payLater.dueDays : order.buyer.paymentTermsDays, createdById: actorUserId,
   });
+  if (payLater) await (await import("@/server/pay-later/service")).afterInvoice(tx, payLater.plan.id, invoice);
 
   // What the vendor must invoice FIRINGI.
   const crossBorder = order.seller.countryId !== le.countryId;

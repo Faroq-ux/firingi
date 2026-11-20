@@ -886,7 +886,9 @@
     "Till Staff": "Osoblje blagajne",
     "Rebates & Bonuses": "Rabati i bonusi",
     "My Bonuses": "Moji bonusi",
-    "Buying Groups": "Nabavne grupe"
+    "Buying Groups": "Nabavne grupe",
+    "Pay Later": "Plati kasnije",
+    "Tenders": "Natječaji"
   },
   "delivery": {
     "title": "Dostava",
@@ -1809,6 +1811,42 @@
     "group_round_supplier": {
       "title": "Grupna narudžba: {orders} narudžbi",
       "body": "Nabavna grupa „{name}” zajedno je poslala {orders} narudžbi („{title}”), za dostavu {date}."
+    },
+    "paylater_due_soon": {
+      "title": "Plati kasnije: rata dospijeva {date}",
+      "body": "Rata {n} od {amount} € za narudžbu {number} dospijeva {date}."
+    },
+    "paylater_overdue": {
+      "title": "Plati kasnije: rata kasni",
+      "body": "Rata {n} od {amount} € za narudžbu {number} dospjela je {date}. Platite je — do tada je odgođeno plaćanje pauzirano."
+    },
+    "tender_review": {
+      "title": "Natječaj za provjeru: {number}",
+      "body": "{company} je objavio natječaj „{title}”. Otvara se za ponude nakon odobrenja FIRINGI-ja."
+    },
+    "tender_decided": {
+      "title": "Vaš natječaj {number}: {decision}",
+      "body": "Odluka FIRINGI-ja o natječaju „{title}”: {decision}. {reason}"
+    },
+    "tender_opened": {
+      "title": "Novi natječaj: {title}",
+      "body": "Kupac traži cijene (stavke: {lines}, natječaj {number}). Ponude se zatvaraju {date}."
+    },
+    "tender_bid": {
+      "title": "Nova ponuda za {number}",
+      "body": "Vaš natječaj „{title}” ima novu ponudu (ukupno: {bids})."
+    },
+    "tender_closed": {
+      "title": "Ponude zatvorene: {number}",
+      "body": "Ponude za „{title}” su zatvorene (ukupno: {bids}). Odaberite najbolje i pošaljite narudžbe."
+    },
+    "tender_awarded": {
+      "title": "Dobili ste natječaj {number}",
+      "body": "Kupac je odabrao vašu ponudu za stavke natječaja „{title}” (stavke: {lines}) — narudžba {order} vas čeka."
+    },
+    "tender_lost": {
+      "title": "Natječaj {number} je dodijeljen",
+      "body": "Kupac je ovaj put natječaj „{title}” dodijelio drugim ponudama."
     }
   },
   "notifications": {
@@ -6700,5 +6738,159 @@
     "vStop": "Ukini grupne cijene",
     "vStopped": "Grupne cijene su ukinute.",
     "notForYou": "Ovaj dobavljač ne prodaje vašoj vrsti poslovanja pa ne možete dodavati u ovu grupnu narudžbu."
+  },
+  "payLater": {
+    "choose": "Kako želite platiti?",
+    "payNow": "Kao i obično (vaši uobičajeni uvjeti plaćanja)",
+    "checkNote": "Mogućnost odgođenog plaćanja provjerava se kad naručite — to čini naš partner za plaćanje ili FIRINGI.",
+    "termDays": "Plaćanje za {days} dana",
+    "termInstalments": "Mjesečne rate: {count}",
+    "fee": "Naknada {amount}",
+    "noFee": "Bez naknade",
+    "payBy": "platiti do {date}",
+    "eachMonth": "{count} × oko {amount}, prva {date}",
+    "title": "Plati kasnije",
+    "intro": "Naručite sada, a račun platite kasnije — za određeni broj dana ili u mjesečnim ratama.",
+    "closed": {
+      "OFF": "Odgođeno plaćanje trenutačno nije dostupno.",
+      "COMPANY_OFF": "Odgođeno plaćanje nije dostupno vašoj tvrtki. Obratite se FIRINGI-ju.",
+      "TYPE_OFF": "Odgođeno plaćanje još nije dostupno za vašu vrstu djelatnosti.",
+      "OVERDUE": "Jedna uplata odgođenog plaćanja kasni — platite je kako biste ponovno mogli plaćati kasnije."
+    },
+    "howTitle": "Kako funkcionira",
+    "howIntro": "Odaberite Plati kasnije pri završetku kupnje. Račun vam i dalje šalje FIRINGI; naknada (ako je ima) na njemu je zasebna stavka.",
+    "limit": "Kredit kod FIRINGI-ja",
+    "used": "Iskorišteno",
+    "left": "Dostupno",
+    "partnerOn": "Pri završetku kupnje dostupno je i odgođeno plaćanje preko našeg partnera za plaćanje (partner provjerava vašu narudžbu).",
+    "ownNote": "Ono što još dugujete za narudžbe s odgođenim plaćanjem umanjuje vaš kredit; on se ponovno oslobađa kako plaćate.",
+    "optionsTitle": "Mogućnosti",
+    "optionsIntro": "Naknade su prikazane za narudžbu od 1.000 € (s PDV-om).",
+    "feeExample": "naknada {amount}",
+    "plansTitle": "Vaše narudžbe s odgođenim plaćanjem",
+    "noPlans": "Još nema narudžbi s odgođenim plaćanjem.",
+    "status": {
+      "ACTIVE": "Čeka račun",
+      "INVOICED": "U otplati",
+      "PAID": "Plaćeno",
+      "OVERDUE": "Kasni",
+      "CANCELLED": "Otkazano"
+    },
+    "feeIncl": "uklj. naknadu {amount}",
+    "invoice": "Račun",
+    "partnerNote": "Naš partner za plaćanje platio je FIRINGI-ju — vi plaćate partneru prema ovom rasporedu.",
+    "payment": "Rata {n}",
+    "paid": "plaćeno",
+    "overdueOn": "kasni od {date}",
+    "dueOn": "dospijeva {date}",
+    "payNowLink": "Platite svoje račune"
+  },
+  "tenders": {
+    "title": "Natječaji",
+    "intro": "Recite dobavljačima što vam treba i neka se natječu: šalju zatvorene ponude za svaku stavku, a vi birate najbolju — stavke svakog dobavljača postaju jedna narudžba.",
+    "newTender": "Novi natječaj",
+    "newIntro": "Opišite što vam treba. Dobavljači koji vam mogu dostaviti šalju svoje cijene dok se ponude ne zatvore.",
+    "closed": {
+      "OFF": "Natječaji su trenutačno isključeni.",
+      "COMPANY_OFF": "Natječaji nisu dostupni vašoj tvrtki. Obratite se FIRINGI-ju.",
+      "TYPE_OFF": "Natječaji još nisu dostupni za vašu vrstu djelatnosti."
+    },
+    "noTenders": "Još nema natječaja.",
+    "status": {
+      "PENDING": "Čeka FIRINGI",
+      "OPEN": "Otvoren za ponude",
+      "CLOSED": "Ponude zatvorene",
+      "AWARDED": "Dodijeljen",
+      "CANCELLED": "Otkazan",
+      "REJECTED": "Odbijen"
+    },
+    "linesBids": "Stavke: {lines} · Ponude: {bids}",
+    "closesOn": "Zatvara se {date}",
+    "closedOn": "Zatvoren {date}",
+    "deliveryOn": "Dostava {date}",
+    "suppliersBid": "Dobavljači s ponudom: {n}",
+    "invitedOnly": "Samo pozvani dobavljači",
+    "firingiNote": "FIRINGI: {note}",
+    "titleLabel": "Naslov",
+    "titlePh": "npr. Pića za prosinac",
+    "deliverTo": "Dostava na",
+    "deliveryDate": "Dan dostave",
+    "closesAt": "Rok za ponude",
+    "closesHint": "Najmanje {hours} sati, a najviše {days} dana od sada.",
+    "noteLabel": "Napomena za dobavljače (neobavezno)",
+    "linesTitle": "Što vam treba",
+    "lineN": "Stavka {n}",
+    "remove": "Ukloni",
+    "change": "Promijeni",
+    "findProduct": "Pronađite proizvod u katalogu (neobavezno)…",
+    "detailsPh": "Pojedinosti (neobavezno)",
+    "describePh": "Ili opišite što vam treba",
+    "qty": "Količina",
+    "unitNote": "Jedinica",
+    "unitNotePh": "npr. kutije od 24 kom",
+    "target": "Ciljna cijena (€, bez PDV-a)",
+    "addLine": "Dodaj stavku",
+    "whoBids": "Tko može dati ponudu",
+    "allSuppliers": "Svi dobavljači koji vam mogu dostaviti ({n})",
+    "onlyInvited": "Samo dobavljači koje odaberem",
+    "publish": "Objavi natječaj",
+    "closeNow": "Zatvori ponude sada",
+    "closeConfirm": "Zatvoriti ponude sada? Nove ponude više se ne mogu slati.",
+    "cancel": "Otkaži natječaj",
+    "cancelConfirm": "Otkazati ovaj natječaj? Ponude dobavljača se odbacuju.",
+    "bidsTitle": "Ponude",
+    "awardIntro": "Odaberite ponudu za svaku stavku — najjeftinija je već odabrana. Stavke svakog dobavljača postaju jedna narudžba.",
+    "awardEarly": "Ponude su još otvorene; već možete dodijeliti (tada se ponude zatvaraju).",
+    "waitingBids": "Čekaju se ponude — obavijestit ćemo vas kad neka stigne.",
+    "bidsN": "Ponude: {n}",
+    "noBids": "Nema ponuda za ovu stavku.",
+    "best": "Najbolja cijena",
+    "belowTarget": "{amount} ispod vaše ciljne cijene",
+    "dontAward": "Ne dodjeljuj ovu stavku",
+    "awardTotal": "Ukupno",
+    "exclVat": "bez PDV-a",
+    "payment": "Plaćanje",
+    "payUsual": "Kao i obično",
+    "award": "Dodijeli i pošalji narudžbe",
+    "awardConfirm": "Poslati sada narudžbe za odabrane ponude?",
+    "awarded": "Poslane narudžbe: {orders}.",
+    "someFailed": "Neke nije bilo moguće poslati: {reason}",
+    "vTitle": "Natječaji",
+    "vIntro": "Natječaji kupaca na koje možete dati ponudu. Ponude su zatvorene: drugi dobavljači nikad ne vide vaše cijene. Cijena koju unesete je ono što kupac plaća (bez PDV-a); uobičajena FIRINGI provizija oduzima se od iznosa koji primate.",
+    "vOpen": "Otvoreni natječaji",
+    "vNoOpen": "Trenutačno nema otvorenih natječaja za vas.",
+    "invitedYou": "Pozvani ste",
+    "vMyBids": "Moje ponude",
+    "vNoBids": "Još nema ponuda.",
+    "linesN": "Stavke: {n}",
+    "bidStatus": {
+      "SUBMITTED": "Ponuda poslana",
+      "WITHDRAWN": "Povučena",
+      "WON": "Dobivena",
+      "LOST": "Nije odabrana"
+    },
+    "yourBid": "Vaša ponuda",
+    "makeBid": "Dajte ponudu",
+    "bidIntro": "Dajte ponudu za stavke koje možete isporučiti — jedan od svojih proizvoda i svoju cijenu po jedinici.",
+    "biddingClosed": "Ponude su zatvorene.",
+    "buyerTarget": "Ciljna cijena kupca: {price}",
+    "noMatchingOffer": "Ovaj proizvod trenutačno ne prodajete.",
+    "yourProduct": "Vaš proizvod",
+    "yourPrice": "Cijena po jedinici (€)",
+    "skipLine": "Bez ponude za ovu stavku",
+    "yourBase": "vaša cjenička cijena {price}",
+    "lineTotal": "stavka {amount}",
+    "youReceive": "primate oko {amount}",
+    "bidNote": "Napomena za kupca (neobavezno)",
+    "sendBid": "Pošalji ponudu",
+    "updateBid": "Ažuriraj ponudu",
+    "bidSent": "Ponuda je spremljena.",
+    "withdraw": "Povuci ponudu",
+    "withdrawConfirm": "Povući vašu ponudu?",
+    "sealedNote": "Drugi dobavljači nikad ne vide vašu ponudu. Možete je mijenjati dok se ponude ne zatvore.",
+    "lineWon": "dobivena",
+    "lineLost": "nije odabrana",
+    "waiting": "čeka kupca",
+    "noBidLine": "bez ponude"
   }
 }

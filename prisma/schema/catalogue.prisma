@@ -250,6 +250,7 @@ model VendorOffer {
   restockSuggestions  RestockSuggestion[]  @relation("RestockSuggestionOffer")
   clearanceDeals      ClearanceDeal[]      @relation("ClearanceOffer")
   returnables         OfferReturnable[]
+  tenderBidLines      TenderBidLine[]
 
   @@unique([vendorCompanyId, packagingUnitId])
   @@index([sellerType, status, countryId])
