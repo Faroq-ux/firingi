@@ -885,7 +885,8 @@
     "Till Settings": "Kasseindstillinger",
     "Till Staff": "Kassepersonale",
     "Rebates & Bonuses": "Rabatter & bonusser",
-    "My Bonuses": "Mine bonusser"
+    "My Bonuses": "Mine bonusser",
+    "Buying Groups": "Indkøbsfællesskaber"
   },
   "delivery": {
     "title": "Levering",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Gratisvarer til dig",
       "body": "»{name}« fra {supplier}: {qty} × {product} gratis på din næste ordre. Hent dem senest {date}."
+    },
+    "group_review": {
+      "title": "Indkøbsfællesskab til godkendelse",
+      "body": "{company} har startet indkøbsfællesskabet \"{name}\". Det starter først, når FIRINGI har godkendt det."
+    },
+    "group_decided": {
+      "title": "Dit indkøbsfællesskab: {decision}",
+      "body": "FIRINGI's afgørelse om \"{name}\": {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Invitation til et indkøbsfællesskab",
+      "body": "{company} inviterer din virksomhed til at blive medlem af indkøbsfællesskabet \"{name}\"."
+    },
+    "group_join_request": {
+      "title": "Anmodning om optagelse i \"{name}\"",
+      "body": "{company} anmoder om optagelse i dit indkøbsfællesskab \"{name}\"."
+    },
+    "group_join_decided": {
+      "title": "Indkøbsfællesskabet \"{name}\"",
+      "body": "Din anmodning om optagelse i \"{name}\": {decision}."
+    },
+    "group_prices": {
+      "title": "Gruppepriser fra {supplier}",
+      "body": "{supplier} giver nu indkøbsfællesskabet \"{name}\" egne priser."
+    },
+    "group_round_opened": {
+      "title": "Fællesordre: {title}",
+      "body": "\"{name}\" har åbnet en fællesordre hos {supplier}. Tilføj det, du har brug for, inden {date}."
+    },
+    "group_round_placed": {
+      "title": "Fællesordre afgivet: {title}",
+      "body": "Din ordre fra fællesordren \"{title}\" ({name}) er afgivet."
+    },
+    "group_round_failed": {
+      "title": "Fællesordre ikke afgivet: {title}",
+      "body": "Din del af fællesordren \"{title}\" ({name}) kunne ikke afgives: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Fællesordre: {orders} ordrer",
+      "body": "Indkøbsfællesskabet \"{name}\" har afgivet {orders} ordrer sammen (\"{title}\") til levering den {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Start aftale",
       "saved": "Gemt.",
       "sent": "Sendt til FIRINGI.",
-      "started": "Aftalen kører."
+      "started": "Aftalen kører.",
+      "buyingGroup": "Indkøbsfællesskab",
+      "buyingGroupHint": "Alles køb tæller sammen; hvert medlem får en andel af bonussen efter, hvad det har købt."
     },
     "audience": {
       "ALL": "Alle kunder",
       "SEGMENT": "Et segment",
       "GROUP": "En kundegruppe",
-      "COMPANIES": "Valgte kunder"
+      "COMPANIES": "Valgte kunder",
+      "BUYING_GROUP": "Et indkøbsfællesskab"
     },
     "end": "Afslut aftale",
     "endConfirm": "Afslut denne aftale? Kunderne beholder det, de optjener i den aktuelle periode.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Det har du optjent",
     "noEarned": "Intet optjent endnu.",
     "creditNote": "Kreditnota",
-    "freeInCart": "{n} gratis (bonus)"
+    "freeInCart": "{n} gratis (bonus)",
+    "groupProgress": "Gruppen {name}: {amount} købt af {n} medlemmer"
+  },
+  "groups": {
+    "title": "Indkøbsfællesskaber",
+    "intro": "Gå sammen med andre restauranter og butikker: køb ind sammen til gruppepriser hos leverandører, nå bonusmål sammen (hvert medlem får en andel af bonussen efter, hvad det har købt) og bestil sammen til samme leveringsdag.",
+    "closed": {
+      "OFF": "Indkøbsfællesskaber er slået fra i øjeblikket.",
+      "COMPANY_OFF": "Indkøbsfællesskaber er ikke åbne for din virksomhed. Kontakt venligst FIRINGI.",
+      "TYPE_OFF": "Indkøbsfællesskaber er endnu ikke åbne for din virksomhedstype."
+    },
+    "invitations": "Invitationer",
+    "invitedTo": "Du er inviteret til at blive medlem af {name}.",
+    "join": "Bliv medlem",
+    "decline": "Afslå",
+    "myGroups": "Mine grupper",
+    "noGroups": "Du er ikke med i et indkøbsfællesskab endnu.",
+    "membersN": "{n} medlemmer",
+    "status": {
+      "PENDING": "Afventer FIRINGI",
+      "APPROVED": "Aktiv",
+      "REJECTED": "Afvist",
+      "CLOSED": "Lukket"
+    },
+    "memberStatus": {
+      "INVITED": "Inviteret",
+      "REQUESTED": "Har anmodet om optagelse",
+      "ACTIVE": "Medlem",
+      "DECLINED": "Afslået",
+      "LEFT": "Udmeldt",
+      "REMOVED": "Fjernet"
+    },
+    "role": {
+      "ADMIN": "Administrator",
+      "MEMBER": "Medlem"
+    },
+    "create": "Start en gruppe",
+    "createHint": "FIRINGI tjekker en ny gruppe, før den starter. Du bliver dens administrator og kan invitere andre virksomheder.",
+    "createHintAuto": "Gruppen starter med det samme. Du bliver dens administrator og kan invitere andre virksomheder.",
+    "name": "Gruppens navn",
+    "namePh": "f.eks. Restauranter i Alfama",
+    "description": "Hvad gruppen handler om (valgfrit)",
+    "openLabel": "Andre virksomheder kan finde gruppen og anmode om optagelse",
+    "createBtn": "Start gruppen",
+    "created": "Gruppen er startet.",
+    "findTitle": "Find en gruppe at blive medlem af",
+    "search": "Søg efter navn…",
+    "noOpen": "Ingen åbne grupper fundet.",
+    "askJoin": "Anmod om optagelse",
+    "message": "Besked til gruppen (valgfrit)",
+    "asked": "Anmodning sendt.",
+    "membersTitle": "Medlemmer",
+    "invite": "Invitér en virksomhed",
+    "taxId": "NIF eller momsnummer",
+    "inviteBtn": "Invitér",
+    "invitedOk": "Invitation sendt til {company}.",
+    "requests": "Anmodninger om optagelse",
+    "accept": "Accepter",
+    "makeAdmin": "Gør til administrator",
+    "makeMember": "Gør til medlem",
+    "remove": "Fjern",
+    "removeConfirm": "Fjern denne virksomhed fra gruppen?",
+    "leave": "Forlad gruppen",
+    "leaveConfirm": "Forlad denne gruppe? Gruppepriser og fælles bonusser ophører for din virksomhed.",
+    "closeGroup": "Luk gruppen",
+    "closeConfirm": "Luk denne gruppe for alle? Åbne fællesordrer annulleres, og gruppepriserne ophører.",
+    "you": "dig",
+    "since": "Medlem siden {date}",
+    "edit": "Gruppeoplysninger",
+    "save": "Gem",
+    "saved": "Gemt.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Gruppepriser",
+    "pricesIntro": "Leverandører, der giver denne gruppe egne priser — medlemmerne ser dem i butikken og i kurven.",
+    "noPrices": "Ingen leverandør giver gruppen egne priser endnu.",
+    "priceRow": "{supplier}: {n} produkter",
+    "until": "indtil {date}",
+    "dealsTitle": "Gruppeaftaler",
+    "dealsIntro": "Bonusaftaler, hvor alles køb tæller sammen; hvert medlem får en andel af bonussen efter, hvad det har købt.",
+    "noDeals": "Ingen aktive gruppeaftaler.",
+    "seeBonuses": "Se fremskridt under Mine bonusser",
+    "roundsTitle": "Fællesordrer",
+    "roundsIntro": "Medlemmerne tilføjer varer til en fælles ordre hos én leverandør, indtil den lukker; hver virksomhed får sin egen ordre og faktura, og alt leveres samme dag.",
+    "noRounds": "Ingen fællesordrer endnu.",
+    "newRound": "Ny fællesordre",
+    "supplier": "Leverandør",
+    "roundTitle": "Navn",
+    "roundTitlePh": "f.eks. Fredagslevering",
+    "closesAt": "Lukker",
+    "deliveryDate": "Leveringsdag",
+    "note": "Besked til medlemmerne (valgfrit)",
+    "openRoundBtn": "Åbn fællesordre",
+    "roundOpened": "Fællesordren er åbnet — medlemmerne har fået besked.",
+    "roundStatus": {
+      "OPEN": "Åben",
+      "PLACED": "Afgivet",
+      "CANCELLED": "Annulleret"
+    },
+    "closes": "Lukker {date}",
+    "deliveredOn": "Levering {date}",
+    "linesN": "{n} linjer",
+    "addProduct": "Tilføj et produkt",
+    "searchProduct": "Søg i leverandørens produkter…",
+    "qty": "Antal",
+    "add": "Tilføj",
+    "myLines": "Mine linjer",
+    "noLines": "Du har ikke tilføjet noget endnu.",
+    "address": "Levér til",
+    "totals": "Gruppens ordre",
+    "totalsHint": "Alt, hvad medlemmerne har tilføjet indtil nu.",
+    "product": "Produkt",
+    "units": "Enheder",
+    "membersCol": "Medlemmer",
+    "placeNow": "Afgiv ordrer nu",
+    "placeConfirm": "Luk fællesordren og afgiv alle medlemmers ordrer nu?",
+    "cancelRound": "Annuller fællesordre",
+    "cancelConfirm": "Annuller denne fællesordre? Der bliver ikke bestilt noget.",
+    "placed": "Afgivne ordrer: {placed}. Ikke afgivet: {failed}.",
+    "closedNote": "Denne fællesordre er lukket.",
+    "memberOrders": "Medlemmernes ordrer",
+    "order": "Ordre",
+    "failed": "Ikke afgivet: {reason}",
+    "back": "Tilbage til gruppen",
+    "reportTitle": "Gruppens køb",
+    "period": {
+      "MONTH": "Denne måned",
+      "QUARTER": "Dette kvartal",
+      "YEAR": "I år"
+    },
+    "total": "Gruppen i alt",
+    "myShare": "Dine køb",
+    "share": "{pct} % af gruppen",
+    "bonusEarned": "Bonusser optjent sammen",
+    "freeUnits": "{n} gratis enheder",
+    "byMember": "Pr. medlem",
+    "bySupplier": "Pr. leverandør",
+    "orders": "Ordrer",
+    "net": "Købt (ekskl. moms)",
+    "noPurchases": "Ingen køb i denne periode endnu.",
+    "vTitle": "Indkøbsfællesskaber",
+    "vIntro": "Restauranter og butikker, der køber ind sammen. Giv en gruppe egne priser (medlemmerne ser dem i butikken og i kurven), eller kør en bonusaftale for en gruppe, hvor alles køb tæller med i målene (Rabatter & bonusser).",
+    "vNoGroups": "Ingen indkøbsfællesskaber endnu.",
+    "vMembers": "{n} medlemmer ({buyers} kan købe hos dig)",
+    "vCurrent": "Gruppepriser: {n} produkter",
+    "vNone": "Ingen gruppepriser",
+    "vSet": "Fastsæt gruppepriser",
+    "vModePct": "En % rabat på alt",
+    "vModeItems": "Valgte produkter",
+    "vPct": "% rabat på mine grundpriser",
+    "vPctHint": "For alle produkter med en grundpris.",
+    "vPrice": "Gruppepris (€, ekskl. moms)",
+    "vBase": "Grundpris {price}",
+    "vValidTo": "Indtil (valgfrit)",
+    "vSave": "Giv disse priser",
+    "vSaved": "Gruppens medlemmer ser nu disse priser.",
+    "vStop": "Stop gruppepriser",
+    "vStopped": "Gruppepriserne er stoppet.",
+    "notForYou": "Denne leverandør sælger ikke til din type virksomhed, så du kan ikke tilføje til denne fællesordre."
   }
 }

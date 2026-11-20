@@ -218,6 +218,7 @@ model Company {
   addressChangeRequests    AddressChangeRequest[]      @relation("AddressChangeRequests")
   specialAccessExceptions  SpecialAccessException[]    @relation("SpecialAccessExceptions")
   tradeBonuses             TradeBonus[]                @relation("TradeBonusSeller")
+  buyingGroupMemberships   BuyingGroupMember[]         @relation("BuyingGroupMembers")
   documents                Document[]
   restrictionApprovals     RestrictionApproval[]
   vatValidations           VatValidation[]

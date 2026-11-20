@@ -885,7 +885,8 @@
     "Till Settings": "Pénztár beállításai",
     "Till Staff": "Pénztári személyzet",
     "Rebates & Bonuses": "Visszatérítések és bónuszok",
-    "My Bonuses": "Bónuszaim"
+    "My Bonuses": "Bónuszaim",
+    "Buying Groups": "Beszerzési csoportok"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Ingyenes áru az Ön számára",
       "body": "„{name}” ({supplier}): {qty} × {product} ingyen a következő rendeléséhez. Felhasználható eddig: {date}."
+    },
+    "group_review": {
+      "title": "Ellenőrizendő beszerzési csoport",
+      "body": "{company} elindította a(z) „{name}” beszerzési csoportot. Csak a FIRINGI jóváhagyása után indul."
+    },
+    "group_decided": {
+      "title": "Az Ön beszerzési csoportja: {decision}",
+      "body": "A FIRINGI döntése a(z) „{name}” csoportról: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Meghívás beszerzési csoportba",
+      "body": "{company} meghívja vállalkozását a(z) „{name}” beszerzési csoportba."
+    },
+    "group_join_request": {
+      "title": "Csatlakozási kérés: „{name}”",
+      "body": "{company} csatlakozni szeretne az Ön „{name}” beszerzési csoportjához."
+    },
+    "group_join_decided": {
+      "title": "„{name}” beszerzési csoport",
+      "body": "Csatlakozási kérése a(z) „{name}” csoporthoz: {decision}."
+    },
+    "group_prices": {
+      "title": "Csoportárak a szállítótól: {supplier}",
+      "body": "{supplier} mostantól saját árakat ad a(z) „{name}” beszerzési csoportnak."
+    },
+    "group_round_opened": {
+      "title": "Csoportos rendelés: {title}",
+      "body": "A(z) „{name}” csoport csoportos rendelést nyitott a(z) {supplier} szállítónál. Adja hozzá, amire szüksége van, {date} előtt."
+    },
+    "group_round_placed": {
+      "title": "Csoportos rendelés leadva: {title}",
+      "body": "A(z) „{title}” ({name}) csoportos rendelésből származó rendelése le lett adva."
+    },
+    "group_round_failed": {
+      "title": "Csoportos rendelés nincs leadva: {title}",
+      "body": "Az Ön részét a(z) „{title}” ({name}) csoportos rendelésből nem sikerült leadni: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Csoportos rendelés: {orders} rendelés",
+      "body": "A(z) „{name}” beszerzési csoport közösen {orders} rendelést adott le („{title}”), szállítás: {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Megállapodás indítása",
       "saved": "Mentve.",
       "sent": "Elküldve a FIRINGI-nek.",
-      "started": "A megállapodás fut."
+      "started": "A megállapodás fut.",
+      "buyingGroup": "Beszerzési csoport",
+      "buyingGroupHint": "Mindenki vásárlása összeadódik; minden tag a vásárlása arányában részesül a bónuszból."
     },
     "audience": {
       "ALL": "Minden vevő",
       "SEGMENT": "Egy szegmens",
       "GROUP": "Egy vevőcsoport",
-      "COMPANIES": "Kiválasztott vevők"
+      "COMPANIES": "Kiválasztott vevők",
+      "BUYING_GROUP": "Egy beszerzési csoport"
     },
     "end": "Megállapodás befejezése",
     "endConfirm": "Befejezi ezt a megállapodást? A vevők megtartják, amit az aktuális időszakban szereztek.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Amit szerzett",
     "noEarned": "Még nincs szerzett bónusz.",
     "creditNote": "Jóváíró számla",
-    "freeInCart": "{n} ingyen (bónusz)"
+    "freeInCart": "{n} ingyen (bónusz)",
+    "groupProgress": "{name} csoport: {amount} vásárlás, {n} tag"
+  },
+  "groups": {
+    "title": "Beszerzési csoportok",
+    "intro": "Fogjon össze más éttermekkel és üzletekkel: vásároljanak együtt a szállítók csoportáraival, érjék el közösen a visszatérítési célokat (mindenki a vásárlása arányában részesül a bónuszból), és rendeljenek együtt ugyanarra a szállítási napra.",
+    "closed": {
+      "OFF": "A beszerzési csoportok jelenleg ki vannak kapcsolva.",
+      "COMPANY_OFF": "A beszerzési csoportok nem érhetők el cége számára. Kérjük, forduljon a FIRINGI-hez.",
+      "TYPE_OFF": "A beszerzési csoportok még nem érhetők el az Ön vállalkozástípusa számára."
+    },
+    "invitations": "Meghívások",
+    "invitedTo": "Meghívást kapott a(z) {name} csoportba.",
+    "join": "Csatlakozás",
+    "decline": "Elutasítás",
+    "myGroups": "Csoportjaim",
+    "noGroups": "Még nem tagja egyetlen beszerzési csoportnak sem.",
+    "membersN": "{n} tag",
+    "status": {
+      "PENDING": "FIRINGI-re vár",
+      "APPROVED": "Aktív",
+      "REJECTED": "Elutasítva",
+      "CLOSED": "Lezárva"
+    },
+    "memberStatus": {
+      "INVITED": "Meghívva",
+      "REQUESTED": "Csatlakozást kért",
+      "ACTIVE": "Tag",
+      "DECLINED": "Elutasította",
+      "LEFT": "Kilépett",
+      "REMOVED": "Eltávolítva"
+    },
+    "role": {
+      "ADMIN": "Adminisztrátor",
+      "MEMBER": "Tag"
+    },
+    "create": "Csoport indítása",
+    "createHint": "A FIRINGI indulás előtt ellenőrzi az új csoportot. Ön lesz az adminisztrátora, és más vállalkozásokat is meghívhat.",
+    "createHintAuto": "A csoport azonnal indul. Ön lesz az adminisztrátora, és más vállalkozásokat is meghívhat.",
+    "name": "Csoport neve",
+    "namePh": "pl. Alfama éttermei",
+    "description": "Miről szól a csoport (nem kötelező)",
+    "openLabel": "Más vállalkozások megtalálhatják a csoportot, és kérhetik a csatlakozást",
+    "createBtn": "Csoport indítása",
+    "created": "A csoport elindult.",
+    "findTitle": "Csoport keresése a csatlakozáshoz",
+    "search": "Keresés név szerint…",
+    "noOpen": "Nincs nyitott csoport.",
+    "askJoin": "Csatlakozás kérése",
+    "message": "Üzenet a csoportnak (nem kötelező)",
+    "asked": "Kérés elküldve.",
+    "membersTitle": "Tagok",
+    "invite": "Hívjon meg egy céget",
+    "taxId": "Adószám vagy közösségi adószám",
+    "inviteBtn": "Meghívás",
+    "invitedOk": "Meghívó elküldve: {company}.",
+    "requests": "Csatlakozási kérések",
+    "accept": "Elfogadás",
+    "makeAdmin": "Legyen adminisztrátor",
+    "makeMember": "Legyen tag",
+    "remove": "Eltávolítás",
+    "removeConfirm": "Eltávolítja ezt a vállalkozást a csoportból?",
+    "leave": "Kilépés a csoportból",
+    "leaveConfirm": "Kilép ebből a csoportból? A csoportárak és a közös bónuszok megszűnnek a vállalkozása számára.",
+    "closeGroup": "Csoport lezárása",
+    "closeConfirm": "Mindenki számára lezárja ezt a csoportot? A nyitott csoportos rendelések törlődnek, és a csoportárak megszűnnek.",
+    "you": "Ön",
+    "since": "Tag {date} óta",
+    "edit": "Csoport adatai",
+    "save": "Mentés",
+    "saved": "Mentve.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Csoportárak",
+    "pricesIntro": "Szállítók, amelyek saját árakat adnak ennek a csoportnak — a tagok a webáruházban és a kosárban látják őket.",
+    "noPrices": "Még egyetlen szállító sem ad saját árakat a csoportnak.",
+    "priceRow": "{supplier}: {n} termék",
+    "until": "{date}-ig",
+    "dealsTitle": "Csoportos megállapodások",
+    "dealsIntro": "Visszatérítési megállapodások, amelyekben mindenki vásárlása összeadódik; minden tag a vásárlása arányában részesül a bónuszból.",
+    "noDeals": "Nincs futó csoportos megállapodás.",
+    "seeBonuses": "Előrehaladás a Bónuszaim menüben",
+    "roundsTitle": "Csoportos rendelések",
+    "roundsIntro": "A tagok egy szállítóhoz szóló közös rendeléshez adnak tételeket a lezárásig; minden vállalkozás saját rendelést és számlát kap, és mindent ugyanazon a napon szállítanak ki.",
+    "noRounds": "Még nincs csoportos rendelés.",
+    "newRound": "Új csoportos rendelés",
+    "supplier": "Szállító",
+    "roundTitle": "Név",
+    "roundTitlePh": "pl. Pénteki szállítás",
+    "closesAt": "Lezárás",
+    "deliveryDate": "Szállítási nap",
+    "note": "Megjegyzés a tagoknak (nem kötelező)",
+    "openRoundBtn": "Csoportos rendelés megnyitása",
+    "roundOpened": "Csoportos rendelés megnyitva — a tagok értesítést kaptak.",
+    "roundStatus": {
+      "OPEN": "Nyitott",
+      "PLACED": "Leadva",
+      "CANCELLED": "Lemondva"
+    },
+    "closes": "Lezárás: {date}",
+    "deliveredOn": "Szállítás: {date}",
+    "linesN": "{n} tétel",
+    "addProduct": "Termék hozzáadása",
+    "searchProduct": "Keresés a szállító termékei között…",
+    "qty": "Menny.",
+    "add": "Hozzáadás",
+    "myLines": "Tételeim",
+    "noLines": "Még nem adott hozzá semmit.",
+    "address": "Szállítási cím",
+    "totals": "A csoport rendelése",
+    "totalsHint": "Minden, amit a tagok eddig hozzáadtak.",
+    "product": "Termék",
+    "units": "Darab",
+    "membersCol": "Tagok",
+    "placeNow": "Rendelések leadása most",
+    "placeConfirm": "Lezárja a csoportos rendelést, és most leadja minden tag rendelését?",
+    "cancelRound": "Csoportos rendelés lemondása",
+    "cancelConfirm": "Lemondja ezt a csoportos rendelést? Semmi sem lesz megrendelve.",
+    "placed": "Leadott rendelések: {placed}. Le nem adott: {failed}.",
+    "closedNote": "Ez a csoportos rendelés lezárult.",
+    "memberOrders": "A tagok rendelései",
+    "order": "Rendelés",
+    "failed": "Nincs leadva: {reason}",
+    "back": "Vissza a csoporthoz",
+    "reportTitle": "A csoport vásárlásai",
+    "period": {
+      "MONTH": "Ez a hónap",
+      "QUARTER": "Ez a negyedév",
+      "YEAR": "Ez az év"
+    },
+    "total": "Csoport összesen",
+    "myShare": "Az Ön vásárlásai",
+    "share": "A csoport {pct} %-a",
+    "bonusEarned": "Közösen szerzett bónuszok",
+    "freeUnits": "{n} ingyenes egység",
+    "byMember": "Tagonként",
+    "bySupplier": "Szállítónként",
+    "orders": "Rendelések",
+    "net": "Vásárolt (nettó)",
+    "noPurchases": "Ebben az időszakban még nincs vásárlás.",
+    "vTitle": "Beszerzési csoportok",
+    "vIntro": "Együtt vásárló éttermek és üzletek. Adjon egy csoportnak saját árakat (a tagok a webáruházban és a kosárban látják őket), vagy indítson a csoportnak visszatérítési megállapodást, amelynek céljaiba mindenki vásárlása beszámít (Visszatérítések és bónuszok).",
+    "vNoGroups": "Még nincs beszerzési csoport.",
+    "vMembers": "{n} tag ({buyers} vásárolhat Öntől)",
+    "vCurrent": "Csoportárak: {n} termék",
+    "vNone": "Nincs csoportár",
+    "vSet": "Csoportárak megadása",
+    "vModePct": "%-os kedvezmény mindenre",
+    "vModeItems": "Kiválasztott termékek",
+    "vPct": "% kedvezmény az alapáraimból",
+    "vPctHint": "Minden alapárral rendelkező termékre.",
+    "vPrice": "Csoportár (€, nettó)",
+    "vBase": "Alapár: {price}",
+    "vValidTo": "Érvényes eddig (nem kötelező)",
+    "vSave": "Árak megadása",
+    "vSaved": "A csoport tagjai mostantól látják ezeket az árakat.",
+    "vStop": "Csoportárak megszüntetése",
+    "vStopped": "Csoportárak megszüntetve.",
+    "notForYou": "Ez a beszállító nem értékesít az Ön vállalkozástípusának, ezért nem adhat hozzá ehhez a csoportos rendeléshez."
   }
 }

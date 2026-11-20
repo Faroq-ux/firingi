@@ -885,7 +885,8 @@
     "Till Settings": "Kasseneinstellungen",
     "Till Staff": "Kassenpersonal",
     "Rebates & Bonuses": "Rückvergütungen & Boni",
-    "My Bonuses": "Meine Boni"
+    "My Bonuses": "Meine Boni",
+    "Buying Groups": "Einkaufsgemeinschaften"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Gratisware für Sie",
       "body": "„{name}“ von {supplier}: {qty} × {product} gratis bei Ihrer nächsten Bestellung. Lösen Sie sie bis {date} ein."
+    },
+    "group_review": {
+      "title": "Einkaufsgemeinschaft zur Prüfung",
+      "body": "{company} hat die Einkaufsgemeinschaft „{name}“ gegründet. Sie startet erst nach Freigabe durch FIRINGI."
+    },
+    "group_decided": {
+      "title": "Ihre Einkaufsgemeinschaft: {decision}",
+      "body": "Entscheidung von FIRINGI zu „{name}“: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Einladung in eine Einkaufsgemeinschaft",
+      "body": "{company} lädt Ihr Unternehmen ein, der Einkaufsgemeinschaft „{name}“ beizutreten."
+    },
+    "group_join_request": {
+      "title": "Beitrittsanfrage für „{name}“",
+      "body": "{company} möchte Ihrer Einkaufsgemeinschaft „{name}“ beitreten."
+    },
+    "group_join_decided": {
+      "title": "Einkaufsgemeinschaft „{name}“",
+      "body": "Ihre Beitrittsanfrage für „{name}“: {decision}."
+    },
+    "group_prices": {
+      "title": "Gruppenpreise von {supplier}",
+      "body": "{supplier} gibt der Einkaufsgemeinschaft „{name}“ jetzt eigene Preise."
+    },
+    "group_round_opened": {
+      "title": "Sammelbestellung: {title}",
+      "body": "„{name}“ hat eine Sammelbestellung bei {supplier} eröffnet. Fügen Sie bis {date} hinzu, was Sie brauchen."
+    },
+    "group_round_placed": {
+      "title": "Sammelbestellung aufgegeben: {title}",
+      "body": "Ihre Bestellung aus der Sammelbestellung „{title}“ ({name}) wurde aufgegeben."
+    },
+    "group_round_failed": {
+      "title": "Sammelbestellung nicht aufgegeben: {title}",
+      "body": "Ihr Teil der Sammelbestellung „{title}“ ({name}) konnte nicht aufgegeben werden: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Sammelbestellung: {orders} Bestellungen",
+      "body": "Die Einkaufsgemeinschaft „{name}“ hat gemeinsam {orders} Bestellungen aufgegeben („{title}“), Lieferung am {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Vereinbarung starten",
       "saved": "Gespeichert.",
       "sent": "An FIRINGI gesendet.",
-      "started": "Die Vereinbarung läuft."
+      "started": "Die Vereinbarung läuft.",
+      "buyingGroup": "Einkaufsgemeinschaft",
+      "buyingGroupHint": "Die Einkäufe aller zählen zusammen; jedes Mitglied erhält einen Anteil am Bonus entsprechend seinen Einkäufen."
     },
     "audience": {
       "ALL": "Alle Kunden",
       "SEGMENT": "Ein Segment",
       "GROUP": "Eine Kundengruppe",
-      "COMPANIES": "Ausgewählte Kunden"
+      "COMPANIES": "Ausgewählte Kunden",
+      "BUYING_GROUP": "Eine Einkaufsgemeinschaft"
     },
     "end": "Vereinbarung beenden",
     "endConfirm": "Diese Vereinbarung beenden? Kunden behalten, was sie im laufenden Zeitraum verdienen.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Was Sie verdient haben",
     "noEarned": "Noch nichts verdient.",
     "creditNote": "Gutschrift",
-    "freeInCart": "{n} gratis (Bonus)"
+    "freeInCart": "{n} gratis (Bonus)",
+    "groupProgress": "Gruppe {name}: {amount} gekauft von {n} Mitgliedern"
+  },
+  "groups": {
+    "title": "Einkaufsgemeinschaften",
+    "intro": "Schließen Sie sich mit anderen Restaurants und Geschäften zusammen: Kaufen Sie gemeinsam zu Gruppenpreisen bei Lieferanten ein, erreichen Sie gemeinsam Bonusziele (jedes Mitglied erhält einen Anteil am Bonus entsprechend seinen Einkäufen) und bestellen Sie gemeinsam für denselben Liefertag.",
+    "closed": {
+      "OFF": "Einkaufsgemeinschaften sind derzeit deaktiviert.",
+      "COMPANY_OFF": "Einkaufsgemeinschaften sind für Ihr Unternehmen nicht freigeschaltet. Bitte wenden Sie sich an FIRINGI.",
+      "TYPE_OFF": "Einkaufsgemeinschaften sind für Ihre Unternehmensart noch nicht verfügbar."
+    },
+    "invitations": "Einladungen",
+    "invitedTo": "Sie sind eingeladen, {name} beizutreten.",
+    "join": "Beitreten",
+    "decline": "Ablehnen",
+    "myGroups": "Meine Gruppen",
+    "noGroups": "Sie sind noch in keiner Einkaufsgemeinschaft.",
+    "membersN": "{n} Mitglieder",
+    "status": {
+      "PENDING": "Wartet auf FIRINGI",
+      "APPROVED": "Aktiv",
+      "REJECTED": "Abgelehnt",
+      "CLOSED": "Geschlossen"
+    },
+    "memberStatus": {
+      "INVITED": "Eingeladen",
+      "REQUESTED": "Beitritt angefragt",
+      "ACTIVE": "Mitglied",
+      "DECLINED": "Abgelehnt",
+      "LEFT": "Ausgetreten",
+      "REMOVED": "Entfernt"
+    },
+    "role": {
+      "ADMIN": "Admin",
+      "MEMBER": "Mitglied"
+    },
+    "create": "Gruppe gründen",
+    "createHint": "FIRINGI prüft eine neue Gruppe vor dem Start. Sie werden ihr Admin und können andere Unternehmen einladen.",
+    "createHintAuto": "Die Gruppe startet sofort. Sie werden ihr Admin und können andere Unternehmen einladen.",
+    "name": "Gruppenname",
+    "namePh": "z. B. Restaurants der Alfama",
+    "description": "Worum es in der Gruppe geht (optional)",
+    "openLabel": "Andere Unternehmen können die Gruppe finden und um Beitritt bitten",
+    "createBtn": "Gruppe gründen",
+    "created": "Gruppe gegründet.",
+    "findTitle": "Gruppe zum Beitreten finden",
+    "search": "Nach Name suchen…",
+    "noOpen": "Keine offenen Gruppen gefunden.",
+    "askJoin": "Beitritt anfragen",
+    "message": "Nachricht an die Gruppe (optional)",
+    "asked": "Anfrage gesendet.",
+    "membersTitle": "Mitglieder",
+    "invite": "Unternehmen einladen",
+    "taxId": "NIF oder USt-IdNr.",
+    "inviteBtn": "Einladen",
+    "invitedOk": "Einladung an {company} gesendet.",
+    "requests": "Beitrittsanfragen",
+    "accept": "Annehmen",
+    "makeAdmin": "Zum Admin machen",
+    "makeMember": "Zum Mitglied machen",
+    "remove": "Entfernen",
+    "removeConfirm": "Dieses Unternehmen aus der Gruppe entfernen?",
+    "leave": "Gruppe verlassen",
+    "leaveConfirm": "Diese Gruppe verlassen? Gruppenpreise und gemeinsame Boni enden für Ihr Unternehmen.",
+    "closeGroup": "Gruppe schließen",
+    "closeConfirm": "Diese Gruppe für alle schließen? Offene Sammelbestellungen werden storniert und Gruppenpreise enden.",
+    "you": "Sie",
+    "since": "Mitglied seit {date}",
+    "edit": "Gruppendetails",
+    "save": "Speichern",
+    "saved": "Gespeichert.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Gruppenpreise",
+    "pricesIntro": "Lieferanten, die dieser Gruppe eigene Preise geben — Mitglieder sehen sie im Shop und im Warenkorb.",
+    "noPrices": "Noch kein Lieferant gibt der Gruppe eigene Preise.",
+    "priceRow": "{supplier}: {n} Produkte",
+    "until": "bis {date}",
+    "dealsTitle": "Gruppenvereinbarungen",
+    "dealsIntro": "Bonusvereinbarungen, bei denen die Einkäufe aller zusammen zählen; jedes Mitglied erhält einen Anteil am Bonus entsprechend seinen Einkäufen.",
+    "noDeals": "Keine laufenden Gruppenvereinbarungen.",
+    "seeBonuses": "Fortschritt unter „Meine Boni“ ansehen",
+    "roundsTitle": "Sammelbestellungen",
+    "roundsIntro": "Mitglieder ergänzen eine gemeinsame Bestellung bei einem Lieferanten, bis sie schließt; jedes Unternehmen erhält eine eigene Bestellung und Rechnung, alles wird am selben Tag geliefert.",
+    "noRounds": "Noch keine Sammelbestellungen.",
+    "newRound": "Neue Sammelbestellung",
+    "supplier": "Lieferant",
+    "roundTitle": "Name",
+    "roundTitlePh": "z. B. Lieferung am Freitag",
+    "closesAt": "Schließt",
+    "deliveryDate": "Liefertag",
+    "note": "Hinweis für Mitglieder (optional)",
+    "openRoundBtn": "Sammelbestellung eröffnen",
+    "roundOpened": "Sammelbestellung eröffnet — die Mitglieder wurden benachrichtigt.",
+    "roundStatus": {
+      "OPEN": "Offen",
+      "PLACED": "Aufgegeben",
+      "CANCELLED": "Storniert"
+    },
+    "closes": "Schließt am {date}",
+    "deliveredOn": "Lieferung am {date}",
+    "linesN": "{n} Positionen",
+    "addProduct": "Produkt hinzufügen",
+    "searchProduct": "Produkte des Lieferanten suchen…",
+    "qty": "Menge",
+    "add": "Hinzufügen",
+    "myLines": "Meine Positionen",
+    "noLines": "Sie haben noch nichts hinzugefügt.",
+    "address": "Liefern an",
+    "totals": "Bestellung der Gruppe",
+    "totalsHint": "Alles, was die Mitglieder bisher hinzugefügt haben.",
+    "product": "Produkt",
+    "units": "Einheiten",
+    "membersCol": "Mitglieder",
+    "placeNow": "Jetzt bestellen",
+    "placeConfirm": "Sammelbestellung schließen und jetzt die Bestellungen aller Mitglieder aufgeben?",
+    "cancelRound": "Sammelbestellung stornieren",
+    "cancelConfirm": "Diese Sammelbestellung stornieren? Es wird nichts bestellt.",
+    "placed": "Aufgegebene Bestellungen: {placed}. Nicht aufgegeben: {failed}.",
+    "closedNote": "Diese Sammelbestellung ist geschlossen.",
+    "memberOrders": "Bestellungen der Mitglieder",
+    "order": "Bestellung",
+    "failed": "Nicht aufgegeben: {reason}",
+    "back": "Zurück zur Gruppe",
+    "reportTitle": "Gruppeneinkäufe",
+    "period": {
+      "MONTH": "Dieser Monat",
+      "QUARTER": "Dieses Quartal",
+      "YEAR": "Dieses Jahr"
+    },
+    "total": "Gruppe gesamt",
+    "myShare": "Ihre Einkäufe",
+    "share": "{pct} % der Gruppe",
+    "bonusEarned": "Gemeinsam verdiente Boni",
+    "freeUnits": "{n} Gratiseinheiten",
+    "byMember": "Nach Mitglied",
+    "bySupplier": "Nach Lieferant",
+    "orders": "Bestellungen",
+    "net": "Gekauft (zzgl. MwSt.)",
+    "noPurchases": "Noch keine Einkäufe in diesem Zeitraum.",
+    "vTitle": "Einkaufsgemeinschaften",
+    "vIntro": "Restaurants und Geschäfte, die gemeinsam einkaufen. Geben Sie einer Gruppe eigene Preise (Mitglieder sehen sie im Shop und im Warenkorb) oder führen Sie eine Bonusvereinbarung für eine Gruppe, bei der die Einkäufe aller für die Ziele zählen (Rückvergütungen & Boni).",
+    "vNoGroups": "Noch keine Einkaufsgemeinschaften.",
+    "vMembers": "{n} Mitglieder ({buyers} können bei Ihnen kaufen)",
+    "vCurrent": "Gruppenpreise: {n} Produkte",
+    "vNone": "Keine Gruppenpreise",
+    "vSet": "Gruppenpreise festlegen",
+    "vModePct": "Rabatt in % auf alles",
+    "vModeItems": "Ausgewählte Produkte",
+    "vPct": "% Rabatt auf meine Grundpreise",
+    "vPctHint": "Für jedes Produkt mit Grundpreis.",
+    "vPrice": "Gruppenpreis (€, zzgl. MwSt.)",
+    "vBase": "Grundpreis {price}",
+    "vValidTo": "Bis (optional)",
+    "vSave": "Preise gewähren",
+    "vSaved": "Die Mitglieder der Gruppe sehen jetzt diese Preise.",
+    "vStop": "Gruppenpreise beenden",
+    "vStopped": "Gruppenpreise beendet.",
+    "notForYou": "Dieser Lieferant verkauft nicht an Ihre Art von Unternehmen, daher können Sie dieser Sammelbestellung nichts hinzufügen."
   }
 }

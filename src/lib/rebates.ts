@@ -170,7 +170,7 @@ export function cleanRules(raw: unknown): RebateRules {
 
 // ── FIRINGI's switches (Admin › Pricing › Rebates & Bonuses) ────────────────
 
-export const REBATE_AUDIENCES = ["ALL", "SEGMENT", "GROUP", "COMPANIES"] as const;
+export const REBATE_AUDIENCES = ["ALL", "SEGMENT", "GROUP", "COMPANIES", "BUYING_GROUP"] as const;
 export type RebateAudience = (typeof REBATE_AUDIENCES)[number];
 
 export type RebateSettings = {
@@ -205,7 +205,7 @@ export const DEFAULT_REBATE_SETTINGS: RebateSettings = {
   enabled: true,
   kinds: { VOLUME: true, FREE_GOODS: true, GROWTH: true, MIX: true },
   periods: { MONTH: true, QUARTER: true, HALF_YEAR: true, YEAR: true },
-  audiences: { ALL: true, SEGMENT: true, GROUP: true, COMPANIES: true, COUNTRY: true, PER_SHOP: true },
+  audiences: { ALL: true, SEGMENT: true, GROUP: true, COMPANIES: true, BUYING_GROUP: true, COUNTRY: true, PER_SHOP: true },
   creators: { DISTRIBUTOR: true, WHOLESALER: true },
   buyers: { CUSTOMER: true, WHOLESALER: true },
   approval: "ALWAYS",

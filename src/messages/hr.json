@@ -885,7 +885,8 @@
     "Till Settings": "Postavke blagajne",
     "Till Staff": "Osoblje blagajne",
     "Rebates & Bonuses": "Rabati i bonusi",
-    "My Bonuses": "Moji bonusi"
+    "My Bonuses": "Moji bonusi",
+    "Buying Groups": "Nabavne grupe"
   },
   "delivery": {
     "title": "Dostava",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Besplatna roba za vas",
       "body": "„{name}” dobavljača {supplier}: {qty} × {product} besplatno uz vašu sljedeću narudžbu. Preuzmite do {date}."
+    },
+    "group_review": {
+      "title": "Nabavna grupa za provjeru",
+      "body": "{company} je osnovao nabavnu grupu „{name}”. Počinje tek nakon odobrenja FIRINGI-ja."
+    },
+    "group_decided": {
+      "title": "Vaša nabavna grupa: {decision}",
+      "body": "Odluka FIRINGI-ja o grupi „{name}”: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Pozivnica u nabavnu grupu",
+      "body": "{company} poziva vašu tvrtku da se pridruži nabavnoj grupi „{name}”."
+    },
+    "group_join_request": {
+      "title": "Zahtjev za pridruživanje grupi „{name}”",
+      "body": "{company} traži pridruživanje vašoj nabavnoj grupi „{name}”."
+    },
+    "group_join_decided": {
+      "title": "Nabavna grupa „{name}”",
+      "body": "Vaš zahtjev za pridruživanje grupi „{name}”: {decision}."
+    },
+    "group_prices": {
+      "title": "Grupne cijene od {supplier}",
+      "body": "{supplier} sada daje nabavnoj grupi „{name}” posebne cijene."
+    },
+    "group_round_opened": {
+      "title": "Grupna narudžba: {title}",
+      "body": "Grupa „{name}” otvorila je grupnu narudžbu kod dobavljača {supplier}. Dodajte što vam treba prije {date}."
+    },
+    "group_round_placed": {
+      "title": "Grupna narudžba poslana: {title}",
+      "body": "Vaša narudžba iz grupne narudžbe „{title}” ({name}) je poslana."
+    },
+    "group_round_failed": {
+      "title": "Grupna narudžba nije poslana: {title}",
+      "body": "Vaš dio grupne narudžbe „{title}” ({name}) nije bilo moguće poslati: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Grupna narudžba: {orders} narudžbi",
+      "body": "Nabavna grupa „{name}” zajedno je poslala {orders} narudžbi („{title}”), za dostavu {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Pokreni dogovor",
       "saved": "Spremljeno.",
       "sent": "Poslano FIRINGI-ju.",
-      "started": "Dogovor je aktivan."
+      "started": "Dogovor je aktivan.",
+      "buyingGroup": "Nabavna grupa",
+      "buyingGroupHint": "Kupnja svih se zbraja; svaki član dobiva udio bonusa prema svojoj kupnji."
     },
     "audience": {
       "ALL": "Svi kupci",
       "SEGMENT": "Segment",
       "GROUP": "Grupa kupaca",
-      "COMPANIES": "Odabrani kupci"
+      "COMPANIES": "Odabrani kupci",
+      "BUYING_GROUP": "Nabavna grupa"
     },
     "end": "Završi dogovor",
     "endConfirm": "Završiti ovaj dogovor? Kupci zadržavaju ono što zarade u tekućem razdoblju.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Što ste zaradili",
     "noEarned": "Još ništa nije zarađeno.",
     "creditNote": "Knjižno odobrenje",
-    "freeInCart": "{n} besplatno (bonus)"
+    "freeInCart": "{n} besplatno (bonus)",
+    "groupProgress": "Grupa {name}: kupljeno {amount}, članova: {n}"
+  },
+  "groups": {
+    "title": "Nabavne grupe",
+    "intro": "Udružite snage s drugim restoranima i trgovinama: kupujte zajedno po grupnim cijenama dobavljača, zajedno dosegnite ciljeve rabata (svatko dobiva udio bonusa prema svojoj kupnji) i naručujte zajedno za isti dan dostave.",
+    "closed": {
+      "OFF": "Nabavne grupe trenutačno su isključene.",
+      "COMPANY_OFF": "Nabavne grupe nisu dostupne vašoj tvrtki. Obratite se FIRINGI-ju.",
+      "TYPE_OFF": "Nabavne grupe još nisu dostupne za vašu vrstu djelatnosti."
+    },
+    "invitations": "Pozivnice",
+    "invitedTo": "Pozvani ste da se pridružite grupi {name}.",
+    "join": "Pridruži se",
+    "decline": "Odbij",
+    "myGroups": "Moje grupe",
+    "noGroups": "Još niste ni u jednoj nabavnoj grupi.",
+    "membersN": "Članovi: {n}",
+    "status": {
+      "PENDING": "Čeka FIRINGI",
+      "APPROVED": "Aktivna",
+      "REJECTED": "Odbijena",
+      "CLOSED": "Zatvorena"
+    },
+    "memberStatus": {
+      "INVITED": "Pozvana",
+      "REQUESTED": "Zatražila pridruživanje",
+      "ACTIVE": "Član",
+      "DECLINED": "Odbila",
+      "LEFT": "Napustila grupu",
+      "REMOVED": "Uklonjena"
+    },
+    "role": {
+      "ADMIN": "Administrator",
+      "MEMBER": "Član"
+    },
+    "create": "Osnujte grupu",
+    "createHint": "FIRINGI provjerava novu grupu prije nego što počne s radom. Bit ćete njezin administrator i moći ćete pozivati druge tvrtke.",
+    "createHintAuto": "Grupa odmah počinje s radom. Bit ćete njezin administrator i moći ćete pozivati druge tvrtke.",
+    "name": "Naziv grupe",
+    "namePh": "npr. Restorani Alfame",
+    "description": "O čemu je grupa (neobavezno)",
+    "openLabel": "Druge tvrtke mogu pronaći grupu i zatražiti pridruživanje",
+    "createBtn": "Osnuj grupu",
+    "created": "Grupa je osnovana.",
+    "findTitle": "Pronađite grupu kojoj se želite pridružiti",
+    "search": "Pretraži po nazivu…",
+    "noOpen": "Nema otvorenih grupa.",
+    "askJoin": "Zatraži pridruživanje",
+    "message": "Poruka grupi (neobavezno)",
+    "asked": "Zahtjev je poslan.",
+    "membersTitle": "Članovi",
+    "invite": "Pozovite tvrtku",
+    "taxId": "OIB ili PDV ID broj",
+    "inviteBtn": "Pozovi",
+    "invitedOk": "Pozivnica je poslana tvrtki {company}.",
+    "requests": "Zahtjevi za pridruživanje",
+    "accept": "Prihvati",
+    "makeAdmin": "Postavi za administratora",
+    "makeMember": "Postavi za člana",
+    "remove": "Ukloni",
+    "removeConfirm": "Ukloniti ovu tvrtku iz grupe?",
+    "leave": "Napusti grupu",
+    "leaveConfirm": "Napustiti ovu grupu? Grupne cijene i zajednički bonusi prestaju vrijediti za vašu tvrtku.",
+    "closeGroup": "Zatvori grupu",
+    "closeConfirm": "Zatvoriti ovu grupu za sve? Otvorene grupne narudžbe bit će otkazane, a grupne cijene prestaju vrijediti.",
+    "you": "vi",
+    "since": "Član od {date}",
+    "edit": "Podaci o grupi",
+    "save": "Spremi",
+    "saved": "Spremljeno.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Grupne cijene",
+    "pricesIntro": "Dobavljači koji ovoj grupi daju posebne cijene — članovi ih vide u trgovini i košarici.",
+    "noPrices": "Još nijedan dobavljač ne daje grupi posebne cijene.",
+    "priceRow": "{supplier}: {n} proizvoda",
+    "until": "do {date}",
+    "dealsTitle": "Grupni dogovori",
+    "dealsIntro": "Rabatni dogovori u kojima se kupnja svih zbraja; svaki član dobiva udio bonusa prema svojoj kupnji.",
+    "noDeals": "Nema aktivnih grupnih dogovora.",
+    "seeBonuses": "Pogledajte napredak u Mojim bonusima",
+    "roundsTitle": "Grupne narudžbe",
+    "roundsIntro": "Članovi dodaju stavke u zajedničku narudžbu kod jednog dobavljača dok se ne zatvori; svaka tvrtka dobiva svoju narudžbu i račun, a sve se dostavlja istog dana.",
+    "noRounds": "Još nema grupnih narudžbi.",
+    "newRound": "Nova grupna narudžba",
+    "supplier": "Dobavljač",
+    "roundTitle": "Naziv",
+    "roundTitlePh": "npr. Petkova dostava",
+    "closesAt": "Zatvara se",
+    "deliveryDate": "Dan dostave",
+    "note": "Napomena za članove (neobavezno)",
+    "openRoundBtn": "Otvori grupnu narudžbu",
+    "roundOpened": "Grupna narudžba je otvorena — članovi su obaviješteni.",
+    "roundStatus": {
+      "OPEN": "Otvorena",
+      "PLACED": "Poslana",
+      "CANCELLED": "Otkazana"
+    },
+    "closes": "Zatvara se {date}",
+    "deliveredOn": "Dostava {date}",
+    "linesN": "Stavke: {n}",
+    "addProduct": "Dodaj proizvod",
+    "searchProduct": "Pretraži proizvode dobavljača…",
+    "qty": "Kol.",
+    "add": "Dodaj",
+    "myLines": "Moje stavke",
+    "noLines": "Još niste ništa dodali.",
+    "address": "Dostava na",
+    "totals": "Narudžba grupe",
+    "totalsHint": "Sve što su članovi dosad dodali.",
+    "product": "Proizvod",
+    "units": "Jedinice",
+    "membersCol": "Članovi",
+    "placeNow": "Pošalji narudžbe sada",
+    "placeConfirm": "Zatvoriti grupnu narudžbu i sada poslati narudžbe svih članova?",
+    "cancelRound": "Otkaži grupnu narudžbu",
+    "cancelConfirm": "Otkazati ovu grupnu narudžbu? Ništa neće biti naručeno.",
+    "placed": "Poslane narudžbe: {placed}. Neposlane: {failed}.",
+    "closedNote": "Ova grupna narudžba je zatvorena.",
+    "memberOrders": "Narudžbe članova",
+    "order": "Narudžba",
+    "failed": "Nije poslana: {reason}",
+    "back": "Natrag na grupu",
+    "reportTitle": "Kupnja grupe",
+    "period": {
+      "MONTH": "Ovaj mjesec",
+      "QUARTER": "Ovo tromjesečje",
+      "YEAR": "Ova godina"
+    },
+    "total": "Ukupno za grupu",
+    "myShare": "Vaša kupnja",
+    "share": "{pct} % grupe",
+    "bonusEarned": "Zajedno zarađeni bonusi",
+    "freeUnits": "Besplatne jedinice: {n}",
+    "byMember": "Po članu",
+    "bySupplier": "Po dobavljaču",
+    "orders": "Narudžbe",
+    "net": "Kupljeno (bez PDV-a)",
+    "noPurchases": "Još nema kupnje u ovom razdoblju.",
+    "vTitle": "Nabavne grupe",
+    "vIntro": "Restorani i trgovine koji kupuju zajedno. Dajte grupi posebne cijene (članovi ih vide u trgovini i košarici) ili pokrenite za grupu rabatni dogovor čiji ciljevi uračunavaju kupnju svih članova (Rabati i bonusi).",
+    "vNoGroups": "Još nema nabavnih grupa.",
+    "vMembers": "Članovi: {n} (od vas mogu kupovati: {buyers})",
+    "vCurrent": "Grupne cijene: {n} proizvoda",
+    "vNone": "Nema grupnih cijena",
+    "vSet": "Postavi grupne cijene",
+    "vModePct": "Popust u % na sve",
+    "vModeItems": "Odabrani proizvodi",
+    "vPct": "% popusta na moje osnovne cijene",
+    "vPctHint": "Za svaki proizvod s osnovnom cijenom.",
+    "vPrice": "Grupna cijena (€, bez PDV-a)",
+    "vBase": "Osnovna {price}",
+    "vValidTo": "Do (neobavezno)",
+    "vSave": "Dodijeli ove cijene",
+    "vSaved": "Članovi grupe sada vide ove cijene.",
+    "vStop": "Ukini grupne cijene",
+    "vStopped": "Grupne cijene su ukinute.",
+    "notForYou": "Ovaj dobavljač ne prodaje vašoj vrsti poslovanja pa ne možete dodavati u ovu grupnu narudžbu."
   }
 }

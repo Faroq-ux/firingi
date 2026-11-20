@@ -885,7 +885,8 @@
     "Till Settings": "Kassa-instellingen",
     "Till Staff": "Kassapersoneel",
     "Rebates & Bonuses": "Kortingen & bonussen",
-    "My Bonuses": "Mijn bonussen"
+    "My Bonuses": "Mijn bonussen",
+    "Buying Groups": "Inkoopgroepen"
   },
   "delivery": {
     "title": "Levering",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Gratis goederen voor u",
       "body": "\"{name}\" van {supplier}: {qty} × {product} gratis bij uw volgende bestelling. Neem ze af vóór {date}."
+    },
+    "group_review": {
+      "title": "Inkoopgroep te controleren",
+      "body": "{company} heeft de inkoopgroep \"{name}\" gestart. De groep start pas na goedkeuring door FIRINGI."
+    },
+    "group_decided": {
+      "title": "Uw inkoopgroep: {decision}",
+      "body": "Beslissing van FIRINGI over \"{name}\": {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Uitnodiging voor een inkoopgroep",
+      "body": "{company} nodigt uw bedrijf uit om lid te worden van de inkoopgroep \"{name}\"."
+    },
+    "group_join_request": {
+      "title": "Aanvraag om lid te worden van \"{name}\"",
+      "body": "{company} vraagt om lid te worden van uw inkoopgroep \"{name}\"."
+    },
+    "group_join_decided": {
+      "title": "Inkoopgroep \"{name}\"",
+      "body": "Uw aanvraag om lid te worden van \"{name}\": {decision}."
+    },
+    "group_prices": {
+      "title": "Groepsprijzen van {supplier}",
+      "body": "{supplier} geeft de inkoopgroep \"{name}\" nu eigen prijzen."
+    },
+    "group_round_opened": {
+      "title": "Groepsbestelling: {title}",
+      "body": "\"{name}\" heeft een groepsbestelling geopend bij {supplier}. Voeg toe wat u nodig hebt vóór {date}."
+    },
+    "group_round_placed": {
+      "title": "Groepsbestelling geplaatst: {title}",
+      "body": "Uw bestelling uit de groepsbestelling \"{title}\" ({name}) is geplaatst."
+    },
+    "group_round_failed": {
+      "title": "Groepsbestelling niet geplaatst: {title}",
+      "body": "Uw deel van de groepsbestelling \"{title}\" ({name}) kon niet worden geplaatst: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Groepsbestelling: {orders} bestellingen",
+      "body": "De inkoopgroep \"{name}\" heeft samen {orders} bestellingen geplaatst (\"{title}\"), voor levering op {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Afspraak starten",
       "saved": "Opgeslagen.",
       "sent": "Naar FIRINGI gestuurd.",
-      "started": "De afspraak is actief."
+      "started": "De afspraak is actief.",
+      "buyingGroup": "Inkoopgroep",
+      "buyingGroupHint": "De inkopen van iedereen tellen samen; elk lid krijgt een deel van de bonus naar wat het heeft ingekocht."
     },
     "audience": {
       "ALL": "Alle klanten",
       "SEGMENT": "Een segment",
       "GROUP": "Een klantgroep",
-      "COMPANIES": "Gekozen klanten"
+      "COMPANIES": "Gekozen klanten",
+      "BUYING_GROUP": "Een inkoopgroep"
     },
     "end": "Afspraak beëindigen",
     "endConfirm": "Deze afspraak beëindigen? Klanten behouden wat ze in de huidige periode verdienen.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Wat u hebt verdiend",
     "noEarned": "Nog niets verdiend.",
     "creditNote": "Creditnota",
-    "freeInCart": "{n} gratis (bonus)"
+    "freeInCart": "{n} gratis (bonus)",
+    "groupProgress": "Groep {name}: {amount} ingekocht door {n} leden"
+  },
+  "groups": {
+    "title": "Inkoopgroepen",
+    "intro": "Sla de handen ineen met andere restaurants en winkels: koop samen in tegen groepsprijzen van leveranciers, haal samen bonusdoelen (elk krijgt een deel van de bonus naar wat het heeft ingekocht) en bestel samen voor dezelfde leverdag.",
+    "closed": {
+      "OFF": "Inkoopgroepen zijn momenteel uitgeschakeld.",
+      "COMPANY_OFF": "Inkoopgroepen zijn niet beschikbaar voor uw bedrijf. Neem contact op met FIRINGI.",
+      "TYPE_OFF": "Inkoopgroepen zijn nog niet beschikbaar voor uw type bedrijf."
+    },
+    "invitations": "Uitnodigingen",
+    "invitedTo": "U bent uitgenodigd om lid te worden van {name}.",
+    "join": "Lid worden",
+    "decline": "Weigeren",
+    "myGroups": "Mijn groepen",
+    "noGroups": "U zit nog niet in een inkoopgroep.",
+    "membersN": "{n} leden",
+    "status": {
+      "PENDING": "Wacht op FIRINGI",
+      "APPROVED": "Actief",
+      "REJECTED": "Afgewezen",
+      "CLOSED": "Gesloten"
+    },
+    "memberStatus": {
+      "INVITED": "Uitgenodigd",
+      "REQUESTED": "Lidmaatschap aangevraagd",
+      "ACTIVE": "Lid",
+      "DECLINED": "Geweigerd",
+      "LEFT": "Vertrokken",
+      "REMOVED": "Verwijderd"
+    },
+    "role": {
+      "ADMIN": "Beheerder",
+      "MEMBER": "Lid"
+    },
+    "create": "Een groep starten",
+    "createHint": "FIRINGI controleert een nieuwe groep voordat deze start. U wordt de beheerder en kunt andere bedrijven uitnodigen.",
+    "createHintAuto": "De groep start meteen. U wordt de beheerder en kunt andere bedrijven uitnodigen.",
+    "name": "Groepsnaam",
+    "namePh": "bijv. Restaurants van Alfama",
+    "description": "Waar de groep over gaat (optioneel)",
+    "openLabel": "Andere bedrijven kunnen de groep vinden en vragen om lid te worden",
+    "createBtn": "Groep starten",
+    "created": "Groep gestart.",
+    "findTitle": "Zoek een groep om lid van te worden",
+    "search": "Zoeken op naam…",
+    "noOpen": "Geen open groepen gevonden.",
+    "askJoin": "Vragen om lid te worden",
+    "message": "Bericht aan de groep (optioneel)",
+    "asked": "Aanvraag verzonden.",
+    "membersTitle": "Leden",
+    "invite": "Nodig een bedrijf uit",
+    "taxId": "NIF- of btw-nummer",
+    "inviteBtn": "Uitnodigen",
+    "invitedOk": "Uitnodiging verzonden naar {company}.",
+    "requests": "Lidmaatschapsaanvragen",
+    "accept": "Accepteren",
+    "makeAdmin": "Beheerder maken",
+    "makeMember": "Lid maken",
+    "remove": "Verwijderen",
+    "removeConfirm": "Dit bedrijf uit de groep verwijderen?",
+    "leave": "Groep verlaten",
+    "leaveConfirm": "Deze groep verlaten? Groepsprijzen en gedeelde bonussen stoppen voor uw bedrijf.",
+    "closeGroup": "Groep sluiten",
+    "closeConfirm": "Deze groep voor iedereen sluiten? Open groepsbestellingen worden geannuleerd en groepsprijzen stoppen.",
+    "you": "u",
+    "since": "Lid sinds {date}",
+    "edit": "Groepsgegevens",
+    "save": "Opslaan",
+    "saved": "Opgeslagen.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Groepsprijzen",
+    "pricesIntro": "Leveranciers die deze groep eigen prijzen geven — leden zien ze in de winkel en de winkelwagen.",
+    "noPrices": "Nog geen leverancier geeft de groep eigen prijzen.",
+    "priceRow": "{supplier}: {n} producten",
+    "until": "tot {date}",
+    "dealsTitle": "Groepsafspraken",
+    "dealsIntro": "Bonusafspraken waarbij de inkopen van iedereen samen tellen; elk lid krijgt een deel van de bonus naar wat het heeft ingekocht.",
+    "noDeals": "Geen lopende groepsafspraken.",
+    "seeBonuses": "Bekijk de voortgang in Mijn bonussen",
+    "roundsTitle": "Groepsbestellingen",
+    "roundsIntro": "Leden vullen een gedeelde bestelling bij één leverancier aan tot deze sluit; elk bedrijf krijgt een eigen bestelling en factuur, alles geleverd op dezelfde dag.",
+    "noRounds": "Nog geen groepsbestellingen.",
+    "newRound": "Nieuwe groepsbestelling",
+    "supplier": "Leverancier",
+    "roundTitle": "Naam",
+    "roundTitlePh": "bijv. Levering vrijdag",
+    "closesAt": "Sluit",
+    "deliveryDate": "Leverdag",
+    "note": "Opmerking voor leden (optioneel)",
+    "openRoundBtn": "Groepsbestelling openen",
+    "roundOpened": "Groepsbestelling geopend — de leden zijn op de hoogte gebracht.",
+    "roundStatus": {
+      "OPEN": "Open",
+      "PLACED": "Geplaatst",
+      "CANCELLED": "Geannuleerd"
+    },
+    "closes": "Sluit {date}",
+    "deliveredOn": "Levering {date}",
+    "linesN": "{n} regels",
+    "addProduct": "Product toevoegen",
+    "searchProduct": "Zoek in de producten van de leverancier…",
+    "qty": "Aantal",
+    "add": "Toevoegen",
+    "myLines": "Mijn regels",
+    "noLines": "U hebt nog niets toegevoegd.",
+    "address": "Leveren aan",
+    "totals": "De bestelling van de groep",
+    "totalsHint": "Alles wat de leden tot nu toe hebben toegevoegd.",
+    "product": "Product",
+    "units": "Eenheden",
+    "membersCol": "Leden",
+    "placeNow": "Bestellingen nu plaatsen",
+    "placeConfirm": "De groepsbestelling sluiten en de bestelling van elk lid nu plaatsen?",
+    "cancelRound": "Groepsbestelling annuleren",
+    "cancelConfirm": "Deze groepsbestelling annuleren? Er wordt niets besteld.",
+    "placed": "Bestellingen geplaatst: {placed}. Niet geplaatst: {failed}.",
+    "closedNote": "Deze groepsbestelling is gesloten.",
+    "memberOrders": "Bestellingen van de leden",
+    "order": "Bestelling",
+    "failed": "Niet geplaatst: {reason}",
+    "back": "Terug naar de groep",
+    "reportTitle": "Groepsinkopen",
+    "period": {
+      "MONTH": "Deze maand",
+      "QUARTER": "Dit kwartaal",
+      "YEAR": "Dit jaar"
+    },
+    "total": "Groepstotaal",
+    "myShare": "Uw inkopen",
+    "share": "{pct} % van de groep",
+    "bonusEarned": "Samen verdiende bonussen",
+    "freeUnits": "{n} gratis eenheden",
+    "byMember": "Per lid",
+    "bySupplier": "Per leverancier",
+    "orders": "Bestellingen",
+    "net": "Ingekocht (excl. btw)",
+    "noPurchases": "Nog geen inkopen in deze periode.",
+    "vTitle": "Inkoopgroepen",
+    "vIntro": "Restaurants en winkels die samen inkopen. Geef een groep eigen prijzen (leden zien ze in de winkel en de winkelwagen), of start een bonusafspraak voor een groep waarbij de inkopen van iedereen meetellen voor de doelen (Kortingen & bonussen).",
+    "vNoGroups": "Nog geen inkoopgroepen.",
+    "vMembers": "{n} leden ({buyers} kunnen bij u kopen)",
+    "vCurrent": "Groepsprijzen: {n} producten",
+    "vNone": "Geen groepsprijzen",
+    "vSet": "Groepsprijzen instellen",
+    "vModePct": "Een % korting op alles",
+    "vModeItems": "Gekozen producten",
+    "vPct": "% korting op mijn basisprijzen",
+    "vPctHint": "Voor elk product met een basisprijs.",
+    "vPrice": "Groepsprijs (€, excl. btw)",
+    "vBase": "Basis {price}",
+    "vValidTo": "Tot (optioneel)",
+    "vSave": "Deze prijzen geven",
+    "vSaved": "De leden van de groep zien deze prijzen nu.",
+    "vStop": "Groepsprijzen stoppen",
+    "vStopped": "Groepsprijzen gestopt.",
+    "notForYou": "Deze leverancier verkoopt niet aan uw type bedrijf, dus u kunt niets toevoegen aan deze groepsbestelling."
   }
 }

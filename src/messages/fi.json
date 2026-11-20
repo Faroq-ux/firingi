@@ -885,7 +885,8 @@
     "Till Settings": "Kassan asetukset",
     "Till Staff": "Kassahenkilöstö",
     "Rebates & Bonuses": "Hyvitykset ja bonukset",
-    "My Bonuses": "Omat bonukset"
+    "My Bonuses": "Omat bonukset",
+    "Buying Groups": "Ostoryhmät"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Ilmaistuotteita sinulle",
       "body": "”{name}” ({supplier}): {qty} × {product} ilmaiseksi seuraavaan tilaukseesi. Lunasta ne viimeistään {date}."
+    },
+    "group_review": {
+      "title": "Tarkistettava ostoryhmä",
+      "body": "{company} perusti ostoryhmän ”{name}”. Se käynnistyy vasta, kun FIRINGI hyväksyy sen."
+    },
+    "group_decided": {
+      "title": "Ostoryhmäsi: {decision}",
+      "body": "FIRINGIn päätös ryhmästä ”{name}”: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Kutsu ostoryhmään",
+      "body": "{company} kutsuu yrityksesi liittymään ostoryhmään ”{name}”."
+    },
+    "group_join_request": {
+      "title": "Liittymispyyntö: ”{name}”",
+      "body": "{company} pyytää liittyä ostoryhmääsi ”{name}”."
+    },
+    "group_join_decided": {
+      "title": "Ostoryhmä ”{name}”",
+      "body": "Liittymispyyntösi ryhmään ”{name}”: {decision}."
+    },
+    "group_prices": {
+      "title": "Ryhmähinnat toimittajalta {supplier}",
+      "body": "{supplier} antaa nyt ostoryhmälle ”{name}” omat hinnat."
+    },
+    "group_round_opened": {
+      "title": "Ryhmätilaus: {title}",
+      "body": "”{name}” avasi ryhmätilauksen toimittajalle {supplier}. Lisää tarvitsemasi ennen {date}."
+    },
+    "group_round_placed": {
+      "title": "Ryhmätilaus tehty: {title}",
+      "body": "Tilauksesi ryhmätilauksesta ”{title}” ({name}) on tehty."
+    },
+    "group_round_failed": {
+      "title": "Ryhmätilausta ei tehty: {title}",
+      "body": "Osuuttasi ryhmätilauksesta ”{title}” ({name}) ei voitu tehdä: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Ryhmätilaus: {orders} tilausta",
+      "body": "Ostoryhmä ”{name}” teki yhdessä {orders} tilausta (”{title}”), toimitus {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Aloita sopimus",
       "saved": "Tallennettu.",
       "sent": "Lähetetty FIRINGIlle.",
-      "started": "Sopimus on käynnissä."
+      "started": "Sopimus on käynnissä.",
+      "buyingGroup": "Ostoryhmä",
+      "buyingGroupHint": "Kaikkien ostot lasketaan yhteen; kukin jäsen saa osuuden bonuksesta ostojensa mukaan."
     },
     "audience": {
       "ALL": "Kaikki asiakkaat",
       "SEGMENT": "Segmentti",
       "GROUP": "Asiakasryhmä",
-      "COMPANIES": "Valitut asiakkaat"
+      "COMPANIES": "Valitut asiakkaat",
+      "BUYING_GROUP": "Ostoryhmä"
     },
     "end": "Päätä sopimus",
     "endConfirm": "Päätetäänkö sopimus? Asiakkaat saavat pitää nykyisellä kaudella ansaitsemansa.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Ansaitsemasi",
     "noEarned": "Ei vielä ansaittua.",
     "creditNote": "Hyvityslasku",
-    "freeInCart": "{n} ilmaiseksi (bonus)"
+    "freeInCart": "{n} ilmaiseksi (bonus)",
+    "groupProgress": "Ryhmä {name}: {amount} ostettu, {n} jäsentä"
+  },
+  "groups": {
+    "title": "Ostoryhmät",
+    "intro": "Yhdistä voimat muiden ravintoloiden ja kauppojen kanssa: yhteisillä ostoilla saatte toimittajilta ryhmähinnat, saavutatte hyvitystavoitteet yhdessä (kukin saa osuuden bonuksesta ostojensa mukaan) ja voitte tilata yhdessä samalle toimituspäivälle.",
+    "closed": {
+      "OFF": "Ostoryhmät ovat tällä hetkellä pois käytöstä.",
+      "COMPANY_OFF": "Ostoryhmät eivät ole yrityksesi käytettävissä. Ota yhteyttä FIRINGIin.",
+      "TYPE_OFF": "Ostoryhmät eivät ole vielä käytettävissä yritystyypillesi."
+    },
+    "invitations": "Kutsut",
+    "invitedTo": "Sinut on kutsuttu liittymään ryhmään {name}.",
+    "join": "Liity",
+    "decline": "Kieltäydy",
+    "myGroups": "Omat ryhmät",
+    "noGroups": "Et ole vielä missään ostoryhmässä.",
+    "membersN": "{n} jäsentä",
+    "status": {
+      "PENDING": "Odottaa FIRINGIä",
+      "APPROVED": "Aktiivinen",
+      "REJECTED": "Hylätty",
+      "CLOSED": "Suljettu"
+    },
+    "memberStatus": {
+      "INVITED": "Kutsuttu",
+      "REQUESTED": "Pyytänyt liittyä",
+      "ACTIVE": "Jäsen",
+      "DECLINED": "Kieltäytynyt",
+      "LEFT": "Eronnut",
+      "REMOVED": "Poistettu"
+    },
+    "role": {
+      "ADMIN": "Ylläpitäjä",
+      "MEMBER": "Jäsen"
+    },
+    "create": "Perusta ryhmä",
+    "createHint": "FIRINGI tarkistaa uuden ryhmän ennen sen käynnistymistä. Sinusta tulee sen ylläpitäjä, ja voit kutsua muita yrityksiä.",
+    "createHintAuto": "Ryhmä käynnistyy heti. Sinusta tulee sen ylläpitäjä, ja voit kutsua muita yrityksiä.",
+    "name": "Ryhmän nimi",
+    "namePh": "esim. Alfaman ravintolat",
+    "description": "Mistä ryhmässä on kyse (valinnainen)",
+    "openLabel": "Muut yritykset voivat löytää ryhmän ja pyytää liittyä siihen",
+    "createBtn": "Perusta ryhmä",
+    "created": "Ryhmä perustettu.",
+    "findTitle": "Etsi ryhmä, johon liittyä",
+    "search": "Hae nimellä…",
+    "noOpen": "Avoimia ryhmiä ei löytynyt.",
+    "askJoin": "Pyydä liittyä",
+    "message": "Viesti ryhmälle (valinnainen)",
+    "asked": "Pyyntö lähetetty.",
+    "membersTitle": "Jäsenet",
+    "invite": "Kutsu yritys",
+    "taxId": "Y-tunnus tai ALV-tunniste",
+    "inviteBtn": "Kutsu",
+    "invitedOk": "Kutsu lähetetty yritykselle {company}.",
+    "requests": "Liittymispyynnöt",
+    "accept": "Hyväksy",
+    "makeAdmin": "Tee ylläpitäjäksi",
+    "makeMember": "Tee jäseneksi",
+    "remove": "Poista",
+    "removeConfirm": "Poistetaanko tämä yritys ryhmästä?",
+    "leave": "Eroa ryhmästä",
+    "leaveConfirm": "Erotaanko tästä ryhmästä? Ryhmähinnat ja yhteiset bonukset päättyvät yrityksesi osalta.",
+    "closeGroup": "Sulje ryhmä",
+    "closeConfirm": "Suljetaanko ryhmä kaikilta? Avoimet ryhmätilaukset perutaan ja ryhmähinnat päättyvät.",
+    "you": "sinä",
+    "since": "Jäsen {date} alkaen",
+    "edit": "Ryhmän tiedot",
+    "save": "Tallenna",
+    "saved": "Tallennettu.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Ryhmähinnat",
+    "pricesIntro": "Toimittajat, jotka antavat tälle ryhmälle omat hinnat — jäsenet näkevät ne kaupassa ja ostoskorissa.",
+    "noPrices": "Mikään toimittaja ei vielä anna ryhmälle omia hintoja.",
+    "priceRow": "{supplier}: {n} tuotetta",
+    "until": "{date} asti",
+    "dealsTitle": "Ryhmäsopimukset",
+    "dealsIntro": "Hyvityssopimukset, joissa kaikkien ostot lasketaan yhteen; kukin jäsen saa osuuden bonuksesta ostojensa mukaan.",
+    "noDeals": "Ei käynnissä olevia ryhmäsopimuksia.",
+    "seeBonuses": "Katso edistyminen kohdasta Omat bonukset",
+    "roundsTitle": "Ryhmätilaukset",
+    "roundsIntro": "Jäsenet lisäävät tuotteita yhteiseen tilaukseen yhdeltä toimittajalta, kunnes se sulkeutuu; jokainen yritys saa oman tilauksensa ja laskunsa, ja kaikki toimitetaan samana päivänä.",
+    "noRounds": "Ei vielä ryhmätilauksia.",
+    "newRound": "Uusi ryhmätilaus",
+    "supplier": "Toimittaja",
+    "roundTitle": "Nimi",
+    "roundTitlePh": "esim. Perjantain toimitus",
+    "closesAt": "Sulkeutuu",
+    "deliveryDate": "Toimituspäivä",
+    "note": "Viesti jäsenille (valinnainen)",
+    "openRoundBtn": "Avaa ryhmätilaus",
+    "roundOpened": "Ryhmätilaus avattu — jäsenille on ilmoitettu.",
+    "roundStatus": {
+      "OPEN": "Avoin",
+      "PLACED": "Tehty",
+      "CANCELLED": "Peruttu"
+    },
+    "closes": "Sulkeutuu {date}",
+    "deliveredOn": "Toimitus {date}",
+    "linesN": "{n} riviä",
+    "addProduct": "Lisää tuote",
+    "searchProduct": "Hae toimittajan tuotteita…",
+    "qty": "Määrä",
+    "add": "Lisää",
+    "myLines": "Omat rivit",
+    "noLines": "Et ole vielä lisännyt mitään.",
+    "address": "Toimitusosoite",
+    "totals": "Ryhmän tilaus",
+    "totalsHint": "Kaikki, mitä jäsenet ovat tähän mennessä lisänneet.",
+    "product": "Tuote",
+    "units": "Yksiköt",
+    "membersCol": "Jäsenet",
+    "placeNow": "Tee tilaukset nyt",
+    "placeConfirm": "Suljetaanko ryhmätilaus ja tehdäänkö kaikkien jäsenten tilaukset nyt?",
+    "cancelRound": "Peru ryhmätilaus",
+    "cancelConfirm": "Perutaanko tämä ryhmätilaus? Mitään ei tilata.",
+    "placed": "Tilauksia tehty: {placed}. Tekemättä: {failed}.",
+    "closedNote": "Tämä ryhmätilaus on suljettu.",
+    "memberOrders": "Jäsenten tilaukset",
+    "order": "Tilaus",
+    "failed": "Ei tehty: {reason}",
+    "back": "Takaisin ryhmään",
+    "reportTitle": "Ryhmän ostot",
+    "period": {
+      "MONTH": "Tämä kuukausi",
+      "QUARTER": "Tämä vuosineljännes",
+      "YEAR": "Tämä vuosi"
+    },
+    "total": "Ryhmä yhteensä",
+    "myShare": "Omat ostosi",
+    "share": "{pct} % ryhmästä",
+    "bonusEarned": "Yhdessä ansaitut bonukset",
+    "freeUnits": "{n} ilmaisyksikköä",
+    "byMember": "Jäsenittäin",
+    "bySupplier": "Toimittajittain",
+    "orders": "Tilaukset",
+    "net": "Ostettu (alv 0 %)",
+    "noPurchases": "Tältä kaudelta ei vielä ole ostoja.",
+    "vTitle": "Ostoryhmät",
+    "vIntro": "Ravintolat ja kaupat, jotka ostavat yhdessä. Anna ryhmälle omat hinnat (jäsenet näkevät ne kaupassa ja ostoskorissa) tai tee ryhmälle hyvityssopimus, jonka tavoitteisiin lasketaan kaikkien ostot (Hyvitykset ja bonukset).",
+    "vNoGroups": "Ei vielä ostoryhmiä.",
+    "vMembers": "{n} jäsentä ({buyers} voi ostaa sinulta)",
+    "vCurrent": "Ryhmähinnat: {n} tuotetta",
+    "vNone": "Ei ryhmähintoja",
+    "vSet": "Aseta ryhmähinnat",
+    "vModePct": "%-alennus kaikesta",
+    "vModeItems": "Valitut tuotteet",
+    "vPct": "% alennus perushinnoistani",
+    "vPctHint": "Kaikille tuotteille, joilla on perushinta.",
+    "vPrice": "Ryhmähinta (€, alv 0 %)",
+    "vBase": "Perushinta {price}",
+    "vValidTo": "Voimassa asti (valinnainen)",
+    "vSave": "Anna nämä hinnat",
+    "vSaved": "Ryhmän jäsenet näkevät nyt nämä hinnat.",
+    "vStop": "Lopeta ryhmähinnat",
+    "vStopped": "Ryhmähinnat lopetettu.",
+    "notForYou": "Tämä toimittaja ei myy yrityksesi tyyppisille yrityksille, joten et voi lisätä tähän ryhmätilaukseen."
   }
 }

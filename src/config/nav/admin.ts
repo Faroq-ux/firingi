@@ -136,6 +136,7 @@ export const ADMIN_NAV: NavSection[] = [
       cus("addresses", "Customer Addresses", "Moradas de Clientes", "P2", { live: true, perm: ["admin.customers.view", "admin.customers.approve"] }),
       cus("shops", "Customer Shops", "Lojas de Clientes", "P27", { live: true, perm: ["admin.customers.view", "admin.customers.approve"] }),
       cus("address-requests", "Address Approvals", "Aprovação de Moradas", "P47", { live: true, perm: ["admin.customers.view", "admin.customers.approve", "admin.settings.manage"] }),
+      cus("buying-groups", "Buying Groups", "Grupos de Compra", "P49", { live: true, perm: ["admin.customers.view", "admin.customers.manage", "admin.customers.approve", "admin.settings.manage"] }),
       cus("purchase-history", "Purchase History", "Histórico de Compras", "P4", { live: true, perm: ["admin.orders.view", "admin.orders.manage"] }),
       cus("activity", "Customer Activity", "Atividade de Clientes", "P13", { live: true, perm: ["admin.customers.view", "admin.crm.view", "admin.crm.manage"] }),
       cus("support", "Customer Support", "Apoio ao Cliente", "P13", { live: true, perm: ["admin.support.manage", "admin.crm.view", "admin.customers.view"] }),

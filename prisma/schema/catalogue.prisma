@@ -258,6 +258,8 @@ model VendorOffer {
 model CustomerGroup {
   id             String   @id @default(cuid())
   ownerCompanyId String? // null = FIRINGI-owned group (promotions); set = vendor-owned (pricing)
+  /// Phase 49: the supplier's group for a buying group's prices (members kept in step with the buying group)
+  buyingGroupId  String?
   name           String
   description    String?
   createdAt      DateTime @default(now())

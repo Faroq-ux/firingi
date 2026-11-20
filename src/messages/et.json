@@ -885,7 +885,8 @@
     "Till Settings": "Kassa seaded",
     "Till Staff": "Kassapersonal",
     "Rebates & Bonuses": "Tagasimaksed ja boonused",
-    "My Bonuses": "Minu boonused"
+    "My Bonuses": "Minu boonused",
+    "Buying Groups": "Ostugrupid"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Tasuta kaup teile",
       "body": "„{name}“ tarnijalt {supplier}: {qty} × {product} tasuta teie järgmise tellimusega. Kasutage hiljemalt {date}."
+    },
+    "group_review": {
+      "title": "Kontrollimist ootav ostugrupp",
+      "body": "{company} lõi ostugrupi „{name}“. See käivitub alles pärast FIRINGI kinnitust."
+    },
+    "group_decided": {
+      "title": "Teie ostugrupp: {decision}",
+      "body": "FIRINGI otsus „{name}“ kohta: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Kutse ostugruppi",
+      "body": "{company} kutsub teie ettevõtet liituma ostugrupiga „{name}“."
+    },
+    "group_join_request": {
+      "title": "Liitumistaotlus: „{name}“",
+      "body": "{company} soovib liituda teie ostugrupiga „{name}“."
+    },
+    "group_join_decided": {
+      "title": "Ostugrupp „{name}“",
+      "body": "Teie liitumistaotlus „{name}“: {decision}."
+    },
+    "group_prices": {
+      "title": "Grupihinnad tarnijalt {supplier}",
+      "body": "{supplier} annab nüüd ostugrupile „{name}“ oma hinnad."
+    },
+    "group_round_opened": {
+      "title": "Ühistellimus: {title}",
+      "body": "„{name}“ avas ühistellimuse tarnijalt {supplier}. Lisage vajalik enne {date}."
+    },
+    "group_round_placed": {
+      "title": "Ühistellimus esitatud: {title}",
+      "body": "Teie tellimus ühistellimusest „{title}“ ({name}) on esitatud."
+    },
+    "group_round_failed": {
+      "title": "Ühistellimus esitamata: {title}",
+      "body": "Teie osa ühistellimusest „{title}“ ({name}) ei õnnestunud esitada: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Ühistellimus: tellimusi {orders}",
+      "body": "Ostugrupp „{name}“ esitas koos {orders} tellimust („{title}“), tarne {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Alusta kokkulepet",
       "saved": "Salvestatud.",
       "sent": "Saadetud FIRINGI-le.",
-      "started": "Kokkulepe on käimas."
+      "started": "Kokkulepe on käimas.",
+      "buyingGroup": "Ostugrupp",
+      "buyingGroupHint": "Kõigi ostud loetakse kokku; iga liige saab osa boonusest vastavalt oma ostudele."
     },
     "audience": {
       "ALL": "Kõik kliendid",
       "SEGMENT": "Segment",
       "GROUP": "Kliendigrupp",
-      "COMPANIES": "Valitud kliendid"
+      "COMPANIES": "Valitud kliendid",
+      "BUYING_GROUP": "Ostugrupp"
     },
     "end": "Lõpeta kokkulepe",
     "endConfirm": "Kas lõpetada see kokkulepe? Kliendid saavad jooksva perioodi teenitu endale.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Teie teenitu",
     "noEarned": "Veel midagi teenitud pole.",
     "creditNote": "Kreeditarve",
-    "freeInCart": "{n} tasuta (boonus)"
+    "freeInCart": "{n} tasuta (boonus)",
+    "groupProgress": "Grupp {name}: {amount} ostetud, liikmeid {n}"
+  },
+  "groups": {
+    "title": "Ostugrupid",
+    "intro": "Ühendage jõud teiste restoranide ja kauplustega: ostke koos tarnijatelt grupihindadega, saavutage koos boonuste eesmärgid (iga liige saab osa boonusest vastavalt oma ostudele) ja tellige koos sama tarnepäeva jaoks.",
+    "closed": {
+      "OFF": "Ostugrupid on praegu välja lülitatud.",
+      "COMPANY_OFF": "Ostugrupid ei ole teie ettevõttele avatud. Palun võtke ühendust FIRINGI-ga.",
+      "TYPE_OFF": "Ostugrupid ei ole teie ettevõtte tüübile veel avatud."
+    },
+    "invitations": "Kutsed",
+    "invitedTo": "Teid on kutsutud liituma grupiga {name}.",
+    "join": "Liitu",
+    "decline": "Keeldu",
+    "myGroups": "Minu grupid",
+    "noGroups": "Te ei ole veel üheski ostugrupis.",
+    "membersN": "Liikmeid: {n}",
+    "status": {
+      "PENDING": "Ootab FIRINGI-t",
+      "APPROVED": "Aktiivne",
+      "REJECTED": "Tagasi lükatud",
+      "CLOSED": "Suletud"
+    },
+    "memberStatus": {
+      "INVITED": "Kutsutud",
+      "REQUESTED": "Soovib liituda",
+      "ACTIVE": "Liige",
+      "DECLINED": "Keeldus",
+      "LEFT": "Lahkus",
+      "REMOVED": "Eemaldatud"
+    },
+    "role": {
+      "ADMIN": "Administraator",
+      "MEMBER": "Liige"
+    },
+    "create": "Loo grupp",
+    "createHint": "FIRINGI kontrollib uut gruppi enne selle käivitamist. Teist saab grupi administraator ja saate kutsuda teisi ettevõtteid.",
+    "createHintAuto": "Grupp käivitub kohe. Teist saab grupi administraator ja saate kutsuda teisi ettevõtteid.",
+    "name": "Grupi nimi",
+    "namePh": "nt Alfama restoranid",
+    "description": "Millega grupp tegeleb (valikuline)",
+    "openLabel": "Teised ettevõtted saavad grupi leida ja liitumist taotleda",
+    "createBtn": "Loo grupp",
+    "created": "Grupp on loodud.",
+    "findTitle": "Leidke grupp, millega liituda",
+    "search": "Otsi nime järgi…",
+    "noOpen": "Avatud gruppe ei leitud.",
+    "askJoin": "Taotle liitumist",
+    "message": "Sõnum grupile (valikuline)",
+    "asked": "Taotlus saadetud.",
+    "membersTitle": "Liikmed",
+    "invite": "Kutsu ettevõte",
+    "taxId": "NIF või KMKR number",
+    "inviteBtn": "Kutsu",
+    "invitedOk": "Kutse saadetud: {company}.",
+    "requests": "Liitumistaotlused",
+    "accept": "Nõustu",
+    "makeAdmin": "Määra administraatoriks",
+    "makeMember": "Määra liikmeks",
+    "remove": "Eemalda",
+    "removeConfirm": "Kas eemaldada see ettevõte grupist?",
+    "leave": "Lahku grupist",
+    "leaveConfirm": "Kas lahkuda sellest grupist? Grupihinnad ja ühised boonused lõpevad teie ettevõtte jaoks.",
+    "closeGroup": "Sulge grupp",
+    "closeConfirm": "Kas sulgeda see grupp kõigi jaoks? Avatud ühistellimused tühistatakse ja grupihinnad lõpevad.",
+    "you": "teie",
+    "since": "Liige alates {date}",
+    "edit": "Grupi andmed",
+    "save": "Salvesta",
+    "saved": "Salvestatud.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Grupihinnad",
+    "pricesIntro": "Tarnijad, kes annavad sellele grupile oma hinnad — liikmed näevad neid poes ja ostukorvis.",
+    "noPrices": "Ükski tarnija ei anna grupile veel oma hindu.",
+    "priceRow": "{supplier}: tooteid {n}",
+    "until": "kuni {date}",
+    "dealsTitle": "Grupikokkulepped",
+    "dealsIntro": "Boonuskokkulepped, kus kõigi ostud loetakse kokku; iga liige saab osa boonusest vastavalt oma ostudele.",
+    "noDeals": "Käimasolevaid grupikokkuleppeid ei ole.",
+    "seeBonuses": "Vaadake edenemist jaotises Minu boonused",
+    "roundsTitle": "Ühistellimused",
+    "roundsIntro": "Liikmed lisavad kaupa ühe tarnija ühisesse tellimusse, kuni see sulgub; iga ettevõte saab oma tellimuse ja arve ning kõik tarnitakse samal päeval.",
+    "noRounds": "Ühistellimusi veel ei ole.",
+    "newRound": "Uus ühistellimus",
+    "supplier": "Tarnija",
+    "roundTitle": "Nimi",
+    "roundTitlePh": "nt Reedene tarne",
+    "closesAt": "Sulgub",
+    "deliveryDate": "Tarnepäev",
+    "note": "Märkus liikmetele (valikuline)",
+    "openRoundBtn": "Ava ühistellimus",
+    "roundOpened": "Ühistellimus on avatud — liikmeid on teavitatud.",
+    "roundStatus": {
+      "OPEN": "Avatud",
+      "PLACED": "Esitatud",
+      "CANCELLED": "Tühistatud"
+    },
+    "closes": "Sulgub {date}",
+    "deliveredOn": "Tarne {date}",
+    "linesN": "Ridu: {n}",
+    "addProduct": "Lisa toode",
+    "searchProduct": "Otsi tarnija tooteid…",
+    "qty": "Kogus",
+    "add": "Lisa",
+    "myLines": "Minu read",
+    "noLines": "Te ei ole veel midagi lisanud.",
+    "address": "Toimetada aadressile",
+    "totals": "Grupi tellimus",
+    "totalsHint": "Kõik, mida liikmed on seni lisanud.",
+    "product": "Toode",
+    "units": "Ühikud",
+    "membersCol": "Liikmed",
+    "placeNow": "Esita tellimused kohe",
+    "placeConfirm": "Kas sulgeda ühistellimus ja esitada kõigi liikmete tellimused kohe?",
+    "cancelRound": "Tühista ühistellimus",
+    "cancelConfirm": "Kas tühistada see ühistellimus? Midagi ei tellita.",
+    "placed": "Esitatud tellimusi: {placed}. Esitamata: {failed}.",
+    "closedNote": "See ühistellimus on suletud.",
+    "memberOrders": "Liikmete tellimused",
+    "order": "Tellimus",
+    "failed": "Esitamata: {reason}",
+    "back": "Tagasi gruppi",
+    "reportTitle": "Grupi ostud",
+    "period": {
+      "MONTH": "See kuu",
+      "QUARTER": "See kvartal",
+      "YEAR": "See aasta"
+    },
+    "total": "Grupp kokku",
+    "myShare": "Teie ostud",
+    "share": "{pct} % grupist",
+    "bonusEarned": "Koos teenitud boonused",
+    "freeUnits": "Tasuta ühikuid: {n}",
+    "byMember": "Liikmete kaupa",
+    "bySupplier": "Tarnijate kaupa",
+    "orders": "Tellimused",
+    "net": "Ostetud (km-ta)",
+    "noPurchases": "Selles perioodis ei ole veel oste.",
+    "vTitle": "Ostugrupid",
+    "vIntro": "Restoranid ja kauplused, kes ostavad koos. Andke grupile oma hinnad (liikmed näevad neid poes ja ostukorvis) või käivitage grupile boonuskokkulepe, mille eesmärkidesse loetakse kõigi ostud (Tagasimaksed ja boonused).",
+    "vNoGroups": "Ostugruppe veel ei ole.",
+    "vMembers": "Liikmeid: {n} ({buyers} saavad teilt osta)",
+    "vCurrent": "Grupihinnad: tooteid {n}",
+    "vNone": "Grupihindu ei ole",
+    "vSet": "Määra grupihinnad",
+    "vModePct": "Allahindlus % kõigele",
+    "vModeItems": "Valitud tooted",
+    "vPct": "% allahindlust minu baashindadest",
+    "vPctHint": "Igale tootele, millel on baashind.",
+    "vPrice": "Grupihind (€, km-ta)",
+    "vBase": "Baashind {price}",
+    "vValidTo": "Kuni (valikuline)",
+    "vSave": "Anna need hinnad",
+    "vSaved": "Grupi liikmed näevad nüüd neid hindu.",
+    "vStop": "Lõpeta grupihinnad",
+    "vStopped": "Grupihinnad on lõpetatud.",
+    "notForYou": "See tarnija ei müü teie ettevõtte tüübile, seega ei saa te sellele ühistellimusele midagi lisada."
   }
 }

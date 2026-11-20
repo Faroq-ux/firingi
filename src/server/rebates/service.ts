@@ -99,6 +99,8 @@ export type BonusInput = {
   kind: TradeBonusKind; period: TradeBonusPeriod; rules: unknown;
   validFrom: string; validTo?: string | null;
   audience: TradeBonusAudience; segmentId?: string | null; groupId?: string | null; companyIds?: string[];
+  /** Phase 49: a buying group (pooled targets) */
+  buyingGroupId?: string | null;
   countries?: string[]; perShop?: boolean;
   offerIds?: string[]; categoryIds?: string[]; brandIds?: string[];
   rewardOfferId?: string | null; freeGoodsDays?: number | null;
@@ -141,6 +143,12 @@ async function cleanInput(sellerId: string, input: BonusInput, s: RebateSettings
     if (!g || (g.ownerCompanyId && g.ownerCompanyId !== sellerId)) throw new ValidationError("Choose one of your customer groups.");
   }
   if (input.audience === "SEGMENT" && !(input.segmentId && (await prisma.crmSegment.count({ where: { id: input.segmentId } })))) throw new ValidationError("Choose a segment.");
+  if (input.audience === "BUYING_GROUP") {
+    const { groupSettings } = await import("@/server/buying-groups/service");
+    const gs = await groupSettings();
+    if (!gs.enabled || !gs.features.pooledRebates) throw new ValidationError("FIRINGI has switched off deals for buying groups.");
+    if (!(input.buyingGroupId && (await prisma.buyingGroup.count({ where: { id: input.buyingGroupId, status: "APPROVED" } })))) throw new ValidationError("Choose a buying group.");
+  }
   const offerIds = [...new Set(input.offerIds ?? [])];
   if (offerIds.length && (await prisma.vendorOffer.count({ where: { id: { in: offerIds }, vendorCompanyId: sellerId } })) !== offerIds.length) throw new ValidationError("Only your own products can be in a deal.");
   let rewardOfferId: string | null = null;
@@ -156,7 +164,9 @@ async function cleanInput(sellerId: string, input: BonusInput, s: RebateSettings
     name: nm, description: input.description?.trim() || null, kind: input.kind, period: input.period, rules: rules as unknown as Prisma.InputJsonValue,
     validFrom, validTo, audience: input.audience,
     segmentId: input.audience === "SEGMENT" ? input.segmentId! : null, groupId: input.audience === "GROUP" ? input.groupId! : null, companyIds: input.audience === "COMPANIES" ? companyIds : [],
-    countries, perShop: !!input.perShop, offerIds, categoryIds: [...new Set(input.categoryIds ?? [])], brandIds: [...new Set(input.brandIds ?? [])],
+    buyingGroupId: input.audience === "BUYING_GROUP" ? input.buyingGroupId! : null,
+    // a buying group's purchases count together (never per shop)
+    countries, perShop: input.audience === "BUYING_GROUP" ? false : !!input.perShop, offerIds, categoryIds: [...new Set(input.categoryIds ?? [])], brandIds: [...new Set(input.brandIds ?? [])],
     rewardOfferId, freeGoodsDays: days,
   };
 }
@@ -252,6 +262,7 @@ export async function endBonus(ctx: Ctx, id: string) {
 async function audienceIds(b: TradeBonus): Promise<Set<string> | null> {
   if (b.audience === "ALL") return null;
   if (b.audience === "COMPANIES") return new Set(b.companyIds);
+  if (b.audience === "BUYING_GROUP") return new Set((await prisma.buyingGroupMember.findMany({ where: { groupId: b.buyingGroupId ?? "", status: "ACTIVE" }, select: { companyId: true } })).map((m) => m.companyId));
   if (b.audience === "GROUP") return new Set((await prisma.customerGroupMember.findMany({ where: { groupId: b.groupId ?? "" }, select: { companyId: true } })).map((m) => m.companyId));
   const { audienceCompanies } = await import("@/server/marketing/campaigns");
   return new Set((await audienceCompanies({ segmentId: b.segmentId ?? "" } as Parameters<typeof audienceCompanies>[0]).catch(() => [])).map((c) => c.id));
@@ -325,6 +336,7 @@ function statsOf(rows: Row[], perShop: boolean) {
 
 /** Results of a deal for one period: every customer (or shop) that bought, with what it earns. */
 export async function periodResults(b: TradeBonus, period: { start: Date; end: Date }, s: RebateSettings, companyIds?: string[]) {
+  if (b.audience === "BUYING_GROUP") return pooledResults(b, period, s, companyIds);
   const rows = await purchaseRows(b, period.start, period.end, companyIds);
   const prev = b.kind === "GROWTH" ? statsOf(await purchaseRows(b, previousYear(period).start, previousYear(period).end, companyIds), b.perShop) : null;
   const cur = statsOf(rows, b.perShop);
@@ -338,6 +350,36 @@ export async function periodResults(b: TradeBonus, period: { start: Date; end: D
     out.push({ companyId: x.companyId, branchId: x.branchId, stats, result: evaluate(rules, stats) });
   }
   return out;
+}
+
+/**
+ * Phase 49 — a buying group's deal: the members' purchases count together (members during the period); the group's
+ * bonus is shared by what each member bought (amount; units for free goods). `companyIds` only narrows what is returned.
+ */
+async function pooledResults(b: TradeBonus, period: { start: Date; end: Date }, s: RebateSettings, only?: string[]) {
+  const { membersDuring } = await import("@/server/buying-groups/service");
+  const { shareMoney, shareUnits } = await import("@/lib/buying-groups");
+  const all = await membersDuring(b.buyingGroupId ?? "", period.start, period.end);
+  const members = [...(await forBonus({ ...b, audience: "ALL" } as TradeBonus, all, s))];
+  if (!members.length) return [];
+  const cur = statsOf(await purchaseRows(b, period.start, period.end, members), false);
+  const prev = b.kind === "GROWTH" ? statsOf(await purchaseRows(b, previousYear(period).start, previousYear(period).end, members), false) : null;
+  const per: Record<string, number> = {};
+  let amount = 0, units = 0, previous = 0;
+  for (const x of cur.values()) { amount += x.amount; units += x.units; for (const [o, u] of Object.entries(x.per)) per[o] = (per[o] ?? 0) + u; }
+  for (const x of prev?.values() ?? []) previous += x.amount;
+  const perPos = Object.fromEntries(Object.entries(per).filter(([, u]) => u > 0));
+  const group: Stats = { amount: r2(amount), units: Math.round(units * 1000) / 1000, previousAmount: r2(previous), distinct: Object.keys(perPos).length, perProductUnits: perPos };
+  const result = evaluate(b.rules as RebateRules, group);
+  const buyers = members.filter((id) => cur.has(id));
+  const weights = buyers.map((id) => (b.kind === "FREE_GOODS" ? cur.get(id)!.units : cur.get(id)!.amount));
+  const money = shareMoney(result.value, weights), free = shareUnits(result.freeUnits, weights);
+  return buyers.map((id, i) => {
+    const x = cur.get(id)!;
+    const own = Object.fromEntries(Object.entries(x.per).filter(([, u]) => u > 0));
+    const stats: Stats = { amount: r2(x.amount), units: Math.round(x.units * 1000) / 1000, previousAmount: r2(prev?.get(id)?.amount ?? 0), distinct: Object.keys(own).length, perProductUnits: own };
+    return { companyId: id, branchId: "", stats, result: { ...result, value: money[i], freeUnits: free[i] }, group };
+  }).filter((r) => !only || only.includes(r.companyId));
 }
 
 // ── settling a period ───────────────────────────────────────────────────────
@@ -487,8 +529,11 @@ async function announce(b: TradeBonus) {
   if (b.validTo && b.validTo <= new Date()) return;
   const s = await rebateSettings();
   const since = new Date(Date.now() - 365 * DAY);
-  const buyers = await prisma.order.findMany({ where: { sellerCompanyId: b.sellerCompanyId, placedAt: { gte: since }, status: { notIn: ["CANCELLED"] } }, select: { buyerCompanyId: true }, distinct: ["buyerCompanyId"], take: 2000 });
-  const ok = [...(await forBonus(b, buyers.map((x) => x.buyerCompanyId), s))].slice(0, 500);
+  // a buying group's deal goes to all its members; otherwise to the supplier's customers of the last year
+  const candidates = b.audience === "BUYING_GROUP"
+    ? (await prisma.buyingGroupMember.findMany({ where: { groupId: b.buyingGroupId ?? "", status: "ACTIVE" }, select: { companyId: true } })).map((m) => m.companyId)
+    : (await prisma.order.findMany({ where: { sellerCompanyId: b.sellerCompanyId, placedAt: { gte: since }, status: { notIn: ["CANCELLED"] } }, select: { buyerCompanyId: true }, distinct: ["buyerCompanyId"], take: 2000 })).map((x) => x.buyerCompanyId);
+  const ok = [...(await forBonus(b, candidates, s))].slice(0, 500);
   const seller = await prisma.company.findUniqueOrThrow({ where: { id: b.sellerCompanyId }, select: { legalName: true, tradeName: true } });
   for (const id of ok) await notify("rebate.available", [{ companyId: id, link: "/buy/rewards/bonuses" }], { name: b.name, supplier: name(seller) }).catch(() => null);
 }
@@ -640,7 +685,7 @@ export async function formOptions(ctx: Ctx, sellerId?: string) {
   const seller = admin ? sellerId ?? null : ctx.company.id;
   const [offers, groups, segments, categories, brands, countries, suppliers] = await Promise.all([
     seller ? prisma.vendorOffer.findMany({ where: { vendorCompanyId: seller, status: "ACTIVE" }, select: { id: true, packaging: { select: { name: true, variant: { select: { sku: true, product: { select: { name: true, brandId: true, categoryId: true } } } } } } }, take: 2000 }) : Promise.resolve([]),
-    prisma.customerGroup.findMany({ where: { OR: [{ ownerCompanyId: seller ?? undefined }, { ownerCompanyId: null }] }, select: { id: true, name: true, ownerCompanyId: true }, orderBy: { name: "asc" } }),
+    prisma.customerGroup.findMany({ where: { buyingGroupId: null, OR: [{ ownerCompanyId: seller ?? undefined }, { ownerCompanyId: null }] }, select: { id: true, name: true, ownerCompanyId: true }, orderBy: { name: "asc" } }),
     prisma.crmSegment.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
     prisma.category.findMany({ select: { id: true, name: true, depth: true, path: true }, orderBy: { path: "asc" } }),
     prisma.brand.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
@@ -653,6 +698,8 @@ export async function formOptions(ctx: Ctx, sellerId?: string) {
     categories: categories.map((c) => ({ id: c.id, name: pickName(c.name), depth: c.depth })),
     brands, countries: countries.map((c) => ({ code: c.code, name: pickName(c.name), flag: c.flag })),
     suppliers: suppliers.map((x) => ({ id: x.id, name: name(x) })),
+    // Phase 49: approved buying groups (their members' purchases count together); not the supplier's own customer groups for group prices
+    buyingGroups: (await prisma.buyingGroup.findMany({ where: { status: "APPROVED" }, select: { id: true, name: true, country: { select: { code: true } }, _count: { select: { members: { where: { status: "ACTIVE" } } } } }, orderBy: { name: "asc" }, take: 500 })).map((g) => ({ id: g.id, name: `${g.name} (${g.country.code}, ${g._count.members})` })),
   };
 }
 
@@ -734,9 +781,20 @@ export async function myBonuses(ctx: Ctx) {
   for (const b of mine) {
     const p = periodOf(now, b.period as RebatePeriod);
     const started = b.validFrom <= now;
-    const res = started ? await periodResults(b, { start: b.validFrom > p.start ? b.validFrom : p.start, end: now }, s, [ctx.company.id]) : [];
     const rules = b.rules as RebateRules;
     const zero: Stats = { amount: 0, units: 0, previousAmount: 0, distinct: 0, perProductUnits: {} };
+    const span = { start: b.validFrom > p.start ? b.validFrom : p.start, end: now };
+    // Phase 49: a buying group's deal — the whole group's progress, this business's share
+    let group: { name: string; stats: Stats; members: number } | null = null;
+    let res: { companyId: string; branchId: string; stats: Stats; result: Result }[];
+    if (b.audience === "BUYING_GROUP") {
+      const all = started ? await pooledResults(b, span, s) : [];
+      const gStats = all[0]?.group ?? zero;
+      const g = await prisma.buyingGroup.findUnique({ where: { id: b.buyingGroupId ?? "" }, select: { name: true } });
+      group = { name: g?.name ?? "", stats: gStats, members: all.length };
+      const own = all.find((r) => r.companyId === ctx.company.id);
+      res = [own ?? { companyId: ctx.company.id, branchId: "", stats: zero, result: { ...evaluate(rules, gStats), value: 0, freeUnits: 0 } }];
+    } else res = started ? await periodResults(b, span, s, [ctx.company.id]) : [];
     let rows = res.length ? res : [{ companyId: ctx.company.id, branchId: "", stats: zero, result: evaluate(rules, zero) }];
     if (b.kind === "GROWTH" && !res.length) {
       const prev = statsOf(await purchaseRows(b, previousYear(p).start, previousYear(p).end, [ctx.company.id]), b.perShop);
@@ -744,7 +802,7 @@ export async function myBonuses(ctx: Ctx) {
       if (!rows.length) rows = [{ companyId: ctx.company.id, branchId: "", stats: zero, result: evaluate(rules, zero) }];
     }
     if (scope) rows = rows.filter((r) => !r.branchId || scope.includes(r.branchId));
-    running.push({ id: b.id, name: b.name, description: b.description, kind: b.kind, period: b.period, periodKey: p.key, periodEnd: p.end, startsAt: started ? null : b.validFrom, validTo: b.validTo, supplier: name(b.seller), rules, perShop: b.perShop, rewardOfferId: b.rewardOfferId, offerIds: b.offerIds, categoryIds: b.categoryIds, brandIds: b.brandIds, rows });
+    running.push({ id: b.id, name: b.name, description: b.description, kind: b.kind, period: b.period, periodKey: p.key, periodEnd: p.end, startsAt: started ? null : b.validFrom, validTo: b.validTo, supplier: name(b.seller), rules, perShop: b.perShop, rewardOfferId: b.rewardOfferId, offerIds: b.offerIds, categoryIds: b.categoryIds, brandIds: b.brandIds, rows, group });
   }
   const [earned, goods] = await Promise.all([
     prisma.tradeBonusSettlement.findMany({ where: { companyId: ctx.company.id, status: "SETTLED" }, include: { bonus: { select: { name: true, kind: true, seller: { select: { legalName: true, tradeName: true } } } } }, orderBy: { createdAt: "desc" }, take: 100 }),

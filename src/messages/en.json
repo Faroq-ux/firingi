@@ -1630,6 +1630,46 @@
     "rebate_free_goods": {
       "title": "Free goods for you",
       "body": "\"{name}\" from {supplier}: {qty} × {product} free on your next order. Take them by {date}."
+    },
+    "group_review": {
+      "title": "Buying group to check",
+      "body": "{company} started the buying group \"{name}\". It starts only after FIRINGI approves it."
+    },
+    "group_decided": {
+      "title": "Your buying group: {decision}",
+      "body": "FIRINGI's decision on \"{name}\": {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Invitation to a buying group",
+      "body": "{company} invites your business to join the buying group \"{name}\"."
+    },
+    "group_join_request": {
+      "title": "Request to join \"{name}\"",
+      "body": "{company} asks to join your buying group \"{name}\"."
+    },
+    "group_join_decided": {
+      "title": "Buying group \"{name}\"",
+      "body": "Your request to join \"{name}\": {decision}."
+    },
+    "group_prices": {
+      "title": "Group prices from {supplier}",
+      "body": "{supplier} now gives the buying group \"{name}\" its own prices."
+    },
+    "group_round_opened": {
+      "title": "Group order: {title}",
+      "body": "\"{name}\" opened a group order with {supplier}. Add what you need before {date}."
+    },
+    "group_round_placed": {
+      "title": "Group order placed: {title}",
+      "body": "Your order from the group order \"{title}\" ({name}) has been placed."
+    },
+    "group_round_failed": {
+      "title": "Group order not placed: {title}",
+      "body": "Your part of the group order \"{title}\" ({name}) couldn't be placed: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Group order: {orders} orders",
+      "body": "The buying group \"{name}\" placed {orders} orders together (\"{title}\"), for delivery on {date}."
     }
   },
   "notifications": {
@@ -6262,13 +6302,16 @@
       "start": "Start deal",
       "saved": "Saved.",
       "sent": "Sent to FIRINGI.",
-      "started": "The deal is running."
+      "started": "The deal is running.",
+      "buyingGroup": "Buying group",
+      "buyingGroupHint": "Everyone's purchases count together; each member gets a share of the bonus for what it bought."
     },
     "audience": {
       "ALL": "All customers",
       "SEGMENT": "A segment",
       "GROUP": "A customer group",
-      "COMPANIES": "Chosen customers"
+      "COMPANIES": "Chosen customers",
+      "BUYING_GROUP": "A buying group"
     },
     "end": "End deal",
     "endConfirm": "End this deal? Customers keep what they earn in the current period.",
@@ -6360,6 +6403,163 @@
     "earnedTitle": "What you earned",
     "noEarned": "Nothing earned yet.",
     "creditNote": "Credit note",
-    "freeInCart": "{n} free (bonus)"
+    "freeInCart": "{n} free (bonus)",
+    "groupProgress": "Group {name}: {amount} bought by {n} members"
+  },
+  "groups": {
+    "title": "Buying Groups",
+    "intro": "Join forces with other restaurants and shops: buy together for group prices from suppliers, reach rebate targets together (each gets a share of the bonus for what it bought) and order together for the same delivery day.",
+    "closed": {
+      "OFF": "Buying groups are switched off at the moment.",
+      "COMPANY_OFF": "Buying groups aren't open for your business. Please contact FIRINGI.",
+      "TYPE_OFF": "Buying groups aren't open for your type of business yet."
+    },
+    "invitations": "Invitations",
+    "invitedTo": "You're invited to join {name}.",
+    "join": "Join",
+    "decline": "Decline",
+    "myGroups": "My groups",
+    "noGroups": "You're not in a buying group yet.",
+    "membersN": "Members: {n}",
+    "status": {
+      "PENDING": "Waiting for FIRINGI",
+      "APPROVED": "Active",
+      "REJECTED": "Refused",
+      "CLOSED": "Closed"
+    },
+    "memberStatus": {
+      "INVITED": "Invited",
+      "REQUESTED": "Asked to join",
+      "ACTIVE": "Member",
+      "DECLINED": "Declined",
+      "LEFT": "Left",
+      "REMOVED": "Removed"
+    },
+    "role": {
+      "ADMIN": "Admin",
+      "MEMBER": "Member"
+    },
+    "create": "Start a group",
+    "createHint": "FIRINGI checks a new group before it starts. You'll be its admin and can invite other businesses.",
+    "createHintAuto": "The group starts at once. You'll be its admin and can invite other businesses.",
+    "name": "Group name",
+    "namePh": "e.g. Restaurants of Alfama",
+    "description": "What the group is about (optional)",
+    "openLabel": "Other businesses can find the group and ask to join",
+    "createBtn": "Start the group",
+    "created": "Group started.",
+    "findTitle": "Find a group to join",
+    "search": "Search by name…",
+    "noOpen": "No open groups found.",
+    "askJoin": "Ask to join",
+    "message": "Message to the group (optional)",
+    "asked": "Request sent.",
+    "membersTitle": "Members",
+    "invite": "Invite a business",
+    "taxId": "NIF or VAT number",
+    "inviteBtn": "Invite",
+    "invitedOk": "Invitation sent to {company}.",
+    "requests": "Join requests",
+    "accept": "Accept",
+    "makeAdmin": "Make admin",
+    "makeMember": "Make member",
+    "remove": "Remove",
+    "removeConfirm": "Remove this business from the group?",
+    "leave": "Leave group",
+    "leaveConfirm": "Leave this group? Group prices and shared bonuses stop for your business.",
+    "closeGroup": "Close group",
+    "closeConfirm": "Close this group for everyone? Open group orders are cancelled and group prices stop.",
+    "you": "you",
+    "since": "Member since {date}",
+    "edit": "Group details",
+    "save": "Save",
+    "saved": "Saved.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Group prices",
+    "pricesIntro": "Suppliers that give this group its own prices — members see them in the shop and the cart.",
+    "noPrices": "No supplier gives the group its own prices yet.",
+    "priceRow": "{supplier}: {n} products",
+    "until": "until {date}",
+    "dealsTitle": "Group deals",
+    "dealsIntro": "Rebate deals where everyone's purchases count together; each member gets a share of the bonus for what it bought.",
+    "noDeals": "No group deals running.",
+    "seeBonuses": "See progress in My Bonuses",
+    "roundsTitle": "Group orders",
+    "roundsIntro": "Members add to a shared order with one supplier until it closes; each business gets its own order and invoice, all delivered on the same day.",
+    "noRounds": "No group orders yet.",
+    "newRound": "New group order",
+    "supplier": "Supplier",
+    "roundTitle": "Name",
+    "roundTitlePh": "e.g. Friday delivery",
+    "closesAt": "Closes",
+    "deliveryDate": "Delivery day",
+    "note": "Note for members (optional)",
+    "openRoundBtn": "Open group order",
+    "roundOpened": "Group order opened — members have been told.",
+    "roundStatus": {
+      "OPEN": "Open",
+      "PLACED": "Placed",
+      "CANCELLED": "Cancelled"
+    },
+    "closes": "Closes {date}",
+    "deliveredOn": "Delivery {date}",
+    "linesN": "Lines: {n}",
+    "addProduct": "Add a product",
+    "searchProduct": "Search the supplier's products…",
+    "qty": "Qty",
+    "add": "Add",
+    "myLines": "My lines",
+    "noLines": "You haven't added anything yet.",
+    "address": "Deliver to",
+    "totals": "The group's order",
+    "totalsHint": "Everything members have added so far.",
+    "product": "Product",
+    "units": "Units",
+    "membersCol": "Members",
+    "placeNow": "Place orders now",
+    "placeConfirm": "Close the group order and place every member's order now?",
+    "cancelRound": "Cancel group order",
+    "cancelConfirm": "Cancel this group order? Nothing will be ordered.",
+    "placed": "Orders placed: {placed}. Not placed: {failed}.",
+    "closedNote": "This group order is closed.",
+    "memberOrders": "Members' orders",
+    "order": "Order",
+    "failed": "Not placed: {reason}",
+    "back": "Back to the group",
+    "reportTitle": "Group purchases",
+    "period": {
+      "MONTH": "This month",
+      "QUARTER": "This quarter",
+      "YEAR": "This year"
+    },
+    "total": "Group total",
+    "myShare": "Your purchases",
+    "share": "{pct} % of the group",
+    "bonusEarned": "Bonuses earned together",
+    "freeUnits": "{n} free units",
+    "byMember": "By member",
+    "bySupplier": "By supplier",
+    "orders": "Orders",
+    "net": "Bought (excl. VAT)",
+    "noPurchases": "No purchases in this period yet.",
+    "vTitle": "Buying Groups",
+    "vIntro": "Restaurants and shops that buy together. Give a group its own prices (members see them in the shop and the cart), or run a rebate deal for a group whose targets count everyone's purchases (Rebates & Bonuses).",
+    "vNoGroups": "No buying groups yet.",
+    "vMembers": "{n} members ({buyers} can buy from you)",
+    "vCurrent": "Group prices: {n} products",
+    "vNone": "No group prices",
+    "vSet": "Set group prices",
+    "vModePct": "A % off everything",
+    "vModeItems": "Chosen products",
+    "vPct": "% off my base prices",
+    "vPctHint": "For every product with a base price.",
+    "vPrice": "Group price (€, excl. VAT)",
+    "vBase": "Base {price}",
+    "vValidTo": "Until (optional)",
+    "vSave": "Give these prices",
+    "vSaved": "The group's members now see these prices.",
+    "vStop": "Stop group prices",
+    "vStopped": "Group prices stopped.",
+    "notForYou": "This supplier doesn't sell to your type of business, so you can't add to this group order."
   }
 }

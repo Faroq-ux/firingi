@@ -885,7 +885,8 @@
     "Till Settings": "Kassainställningar",
     "Till Staff": "Kassapersonal",
     "Rebates & Bonuses": "Rabatter och bonusar",
-    "My Bonuses": "Mina bonusar"
+    "My Bonuses": "Mina bonusar",
+    "Buying Groups": "Inköpsgrupper"
   },
   "delivery": {
     "title": "Leverans",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Gratisvaror till er",
       "body": "”{name}” från {supplier}: {qty} × {product} gratis på er nästa order. Hämta ut dem senast {date}."
+    },
+    "group_review": {
+      "title": "Inköpsgrupp att granska",
+      "body": "{company} har startat inköpsgruppen ”{name}”. Den startar först när FIRINGI har godkänt den."
+    },
+    "group_decided": {
+      "title": "Er inköpsgrupp: {decision}",
+      "body": "FIRINGI:s beslut om ”{name}”: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Inbjudan till en inköpsgrupp",
+      "body": "{company} bjuder in ert företag till inköpsgruppen ”{name}”."
+    },
+    "group_join_request": {
+      "title": "Förfrågan om att gå med i ”{name}”",
+      "body": "{company} vill gå med i er inköpsgrupp ”{name}”."
+    },
+    "group_join_decided": {
+      "title": "Inköpsgruppen ”{name}”",
+      "body": "Er förfrågan om att gå med i ”{name}”: {decision}."
+    },
+    "group_prices": {
+      "title": "Grupppriser från {supplier}",
+      "body": "{supplier} ger nu inköpsgruppen ”{name}” egna priser."
+    },
+    "group_round_opened": {
+      "title": "Gruppbeställning: {title}",
+      "body": "”{name}” har öppnat en gruppbeställning hos {supplier}. Lägg till det ni behöver före {date}."
+    },
+    "group_round_placed": {
+      "title": "Gruppbeställning lagd: {title}",
+      "body": "Er beställning från gruppbeställningen ”{title}” ({name}) har lagts."
+    },
+    "group_round_failed": {
+      "title": "Gruppbeställning inte lagd: {title}",
+      "body": "Er del av gruppbeställningen ”{title}” ({name}) kunde inte läggas: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Gruppbeställning: {orders} beställningar",
+      "body": "Inköpsgruppen ”{name}” lade {orders} beställningar tillsammans (”{title}”) för leverans {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Starta avtal",
       "saved": "Sparat.",
       "sent": "Skickat till FIRINGI.",
-      "started": "Avtalet är aktivt."
+      "started": "Avtalet är aktivt.",
+      "buyingGroup": "Inköpsgrupp",
+      "buyingGroupHint": "Allas inköp räknas samman; varje medlem får en del av bonusen efter vad den har köpt."
     },
     "audience": {
       "ALL": "Alla kunder",
       "SEGMENT": "Ett segment",
       "GROUP": "En kundgrupp",
-      "COMPANIES": "Valda kunder"
+      "COMPANIES": "Valda kunder",
+      "BUYING_GROUP": "En inköpsgrupp"
     },
     "end": "Avsluta avtal",
     "endConfirm": "Avsluta detta avtal? Kunderna behåller det de tjänar in under innevarande period.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Det ni har tjänat in",
     "noEarned": "Inget intjänat ännu.",
     "creditNote": "Kreditfaktura",
-    "freeInCart": "{n} gratis (bonus)"
+    "freeInCart": "{n} gratis (bonus)",
+    "groupProgress": "Grupp {name}: {amount} köpt av {n} medlemmar"
+  },
+  "groups": {
+    "title": "Inköpsgrupper",
+    "intro": "Gå samman med andra restauranger och butiker: köp tillsammans till grupppriser från leverantörer, nå rabattmål tillsammans (var och en får en del av bonusen efter vad den har köpt) och beställ tillsammans för samma leveransdag.",
+    "closed": {
+      "OFF": "Inköpsgrupper är avstängda för tillfället.",
+      "COMPANY_OFF": "Inköpsgrupper är inte tillgängliga för ert företag. Kontakta FIRINGI.",
+      "TYPE_OFF": "Inköpsgrupper är ännu inte tillgängliga för er typ av företag."
+    },
+    "invitations": "Inbjudningar",
+    "invitedTo": "Ni är inbjudna att gå med i {name}.",
+    "join": "Gå med",
+    "decline": "Avböj",
+    "myGroups": "Mina grupper",
+    "noGroups": "Ni är inte med i någon inköpsgrupp än.",
+    "membersN": "{n} medlemmar",
+    "status": {
+      "PENDING": "Väntar på FIRINGI",
+      "APPROVED": "Aktiv",
+      "REJECTED": "Avslagen",
+      "CLOSED": "Stängd"
+    },
+    "memberStatus": {
+      "INVITED": "Inbjuden",
+      "REQUESTED": "Vill gå med",
+      "ACTIVE": "Medlem",
+      "DECLINED": "Avböjde",
+      "LEFT": "Lämnade",
+      "REMOVED": "Borttagen"
+    },
+    "role": {
+      "ADMIN": "Administratör",
+      "MEMBER": "Medlem"
+    },
+    "create": "Starta en grupp",
+    "createHint": "FIRINGI granskar en ny grupp innan den startar. Ni blir dess administratör och kan bjuda in andra företag.",
+    "createHintAuto": "Gruppen startar direkt. Ni blir dess administratör och kan bjuda in andra företag.",
+    "name": "Gruppnamn",
+    "namePh": "t.ex. Restauranger i Alfama",
+    "description": "Vad gruppen handlar om (valfritt)",
+    "openLabel": "Andra företag kan hitta gruppen och be att få gå med",
+    "createBtn": "Starta gruppen",
+    "created": "Gruppen har startats.",
+    "findTitle": "Hitta en grupp att gå med i",
+    "search": "Sök på namn…",
+    "noOpen": "Inga öppna grupper hittades.",
+    "askJoin": "Be att få gå med",
+    "message": "Meddelande till gruppen (valfritt)",
+    "asked": "Förfrågan skickad.",
+    "membersTitle": "Medlemmar",
+    "invite": "Bjud in ett företag",
+    "taxId": "NIF eller momsregistreringsnummer",
+    "inviteBtn": "Bjud in",
+    "invitedOk": "Inbjudan skickad till {company}.",
+    "requests": "Förfrågningar om att gå med",
+    "accept": "Acceptera",
+    "makeAdmin": "Gör till administratör",
+    "makeMember": "Gör till medlem",
+    "remove": "Ta bort",
+    "removeConfirm": "Ta bort det här företaget från gruppen?",
+    "leave": "Lämna gruppen",
+    "leaveConfirm": "Lämna den här gruppen? Grupppriser och gemensamma bonusar upphör för ert företag.",
+    "closeGroup": "Stäng gruppen",
+    "closeConfirm": "Stänga den här gruppen för alla? Öppna gruppbeställningar avbryts och grupppriserna upphör.",
+    "you": "ni",
+    "since": "Medlem sedan {date}",
+    "edit": "Gruppuppgifter",
+    "save": "Spara",
+    "saved": "Sparat.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Grupppriser",
+    "pricesIntro": "Leverantörer som ger den här gruppen egna priser — medlemmarna ser dem i butiken och varukorgen.",
+    "noPrices": "Ingen leverantör ger gruppen egna priser än.",
+    "priceRow": "{supplier}: {n} produkter",
+    "until": "till {date}",
+    "dealsTitle": "Gruppavtal",
+    "dealsIntro": "Rabattavtal där allas inköp räknas samman; varje medlem får en del av bonusen efter vad den har köpt.",
+    "noDeals": "Inga gruppavtal pågår.",
+    "seeBonuses": "Se utvecklingen under Mina bonusar",
+    "roundsTitle": "Gruppbeställningar",
+    "roundsIntro": "Medlemmarna lägger till i en gemensam beställning hos en leverantör tills den stänger; varje företag får en egen order och faktura, och allt levereras samma dag.",
+    "noRounds": "Inga gruppbeställningar än.",
+    "newRound": "Ny gruppbeställning",
+    "supplier": "Leverantör",
+    "roundTitle": "Namn",
+    "roundTitlePh": "t.ex. Fredagsleverans",
+    "closesAt": "Stänger",
+    "deliveryDate": "Leveransdag",
+    "note": "Meddelande till medlemmarna (valfritt)",
+    "openRoundBtn": "Öppna gruppbeställning",
+    "roundOpened": "Gruppbeställningen är öppnad — medlemmarna har meddelats.",
+    "roundStatus": {
+      "OPEN": "Öppen",
+      "PLACED": "Lagd",
+      "CANCELLED": "Avbruten"
+    },
+    "closes": "Stänger {date}",
+    "deliveredOn": "Leverans {date}",
+    "linesN": "{n} rader",
+    "addProduct": "Lägg till en produkt",
+    "searchProduct": "Sök bland leverantörens produkter…",
+    "qty": "Antal",
+    "add": "Lägg till",
+    "myLines": "Mina rader",
+    "noLines": "Ni har inte lagt till något än.",
+    "address": "Leverera till",
+    "totals": "Gruppens beställning",
+    "totalsHint": "Allt som medlemmarna har lagt till hittills.",
+    "product": "Produkt",
+    "units": "Enheter",
+    "membersCol": "Medlemmar",
+    "placeNow": "Lägg beställningarna nu",
+    "placeConfirm": "Stänga gruppbeställningen och lägga alla medlemmars beställningar nu?",
+    "cancelRound": "Avbryt gruppbeställningen",
+    "cancelConfirm": "Avbryta den här gruppbeställningen? Ingenting beställs.",
+    "placed": "Lagda beställningar: {placed}. Ej lagda: {failed}.",
+    "closedNote": "Den här gruppbeställningen är stängd.",
+    "memberOrders": "Medlemmarnas beställningar",
+    "order": "Beställning",
+    "failed": "Ej lagd: {reason}",
+    "back": "Tillbaka till gruppen",
+    "reportTitle": "Gruppens inköp",
+    "period": {
+      "MONTH": "Denna månad",
+      "QUARTER": "Detta kvartal",
+      "YEAR": "I år"
+    },
+    "total": "Gruppen totalt",
+    "myShare": "Era inköp",
+    "share": "{pct} % av gruppen",
+    "bonusEarned": "Bonusar intjänade tillsammans",
+    "freeUnits": "{n} gratisenheter",
+    "byMember": "Per medlem",
+    "bySupplier": "Per leverantör",
+    "orders": "Beställningar",
+    "net": "Köpt (exkl. moms)",
+    "noPurchases": "Inga inköp under perioden än.",
+    "vTitle": "Inköpsgrupper",
+    "vIntro": "Restauranger och butiker som köper tillsammans. Ge en grupp egna priser (medlemmarna ser dem i butiken och varukorgen) eller kör ett rabattavtal för en grupp där allas inköp räknas mot målen (Rabatter och bonusar).",
+    "vNoGroups": "Inga inköpsgrupper än.",
+    "vMembers": "{n} medlemmar ({buyers} kan köpa från er)",
+    "vCurrent": "Grupppriser: {n} produkter",
+    "vNone": "Inga grupppriser",
+    "vSet": "Ange grupppriser",
+    "vModePct": "En % rabatt på allt",
+    "vModeItems": "Valda produkter",
+    "vPct": "% rabatt på mina grundpriser",
+    "vPctHint": "För varje produkt med grundpris.",
+    "vPrice": "Grupppris (€, exkl. moms)",
+    "vBase": "Grundpris {price}",
+    "vValidTo": "Till och med (valfritt)",
+    "vSave": "Ge dessa priser",
+    "vSaved": "Gruppens medlemmar ser nu dessa priser.",
+    "vStop": "Stoppa grupppriser",
+    "vStopped": "Grupppriserna har stoppats.",
+    "notForYou": "Den här leverantören säljer inte till er typ av företag, så ni kan inte lägga till i den här gruppbeställningen."
   }
 }

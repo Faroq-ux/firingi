@@ -885,7 +885,8 @@
     "Till Settings": "Kases iestatījumi",
     "Till Staff": "Kases personāls",
     "Rebates & Bonuses": "Atlaides un bonusi",
-    "My Bonuses": "Mani bonusi"
+    "My Bonuses": "Mani bonusi",
+    "Buying Groups": "Iepirkumu grupas"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Bezmaksas preces Jums",
       "body": "\"{name}\" (piegādātājs {supplier}): {qty} × {product} bez maksas nākamajā pasūtījumā. Saņemiet līdz {date}."
+    },
+    "group_review": {
+      "title": "Iepirkumu grupa pārbaudei",
+      "body": "{company} izveidoja iepirkumu grupu \"{name}\". Tā sāks darboties tikai pēc FIRINGI apstiprinājuma."
+    },
+    "group_decided": {
+      "title": "Jūsu iepirkumu grupa: {decision}",
+      "body": "FIRINGI lēmums par \"{name}\": {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Uzaicinājums uz iepirkumu grupu",
+      "body": "{company} aicina Jūsu uzņēmumu pievienoties iepirkumu grupai \"{name}\"."
+    },
+    "group_join_request": {
+      "title": "Pieprasījums pievienoties grupai \"{name}\"",
+      "body": "{company} lūdz pievienoties Jūsu iepirkumu grupai \"{name}\"."
+    },
+    "group_join_decided": {
+      "title": "Iepirkumu grupa \"{name}\"",
+      "body": "Jūsu pieprasījums pievienoties grupai \"{name}\": {decision}."
+    },
+    "group_prices": {
+      "title": "Grupas cenas no {supplier}",
+      "body": "{supplier} tagad piedāvā iepirkumu grupai \"{name}\" savas cenas."
+    },
+    "group_round_opened": {
+      "title": "Grupas pasūtījums: {title}",
+      "body": "\"{name}\" atvēra grupas pasūtījumu pie {supplier}. Pievienojiet vajadzīgo līdz {date}."
+    },
+    "group_round_placed": {
+      "title": "Grupas pasūtījums veikts: {title}",
+      "body": "Jūsu pasūtījums no grupas pasūtījuma \"{title}\" ({name}) ir veikts."
+    },
+    "group_round_failed": {
+      "title": "Grupas pasūtījums nav veikts: {title}",
+      "body": "Jūsu daļu grupas pasūtījumā \"{title}\" ({name}) neizdevās veikt: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Grupas pasūtījums: {orders} pasūtījumi",
+      "body": "Iepirkumu grupa \"{name}\" kopā veica {orders} pasūtījumus (\"{title}\") ar piegādi {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Sākt vienošanos",
       "saved": "Saglabāts.",
       "sent": "Nosūtīts FIRINGI.",
-      "started": "Vienošanās darbojas."
+      "started": "Vienošanās darbojas.",
+      "buyingGroup": "Iepirkumu grupa",
+      "buyingGroupHint": "Visu iepirkumi tiek skaitīti kopā; katrs dalībnieks saņem bonusa daļu atbilstoši tam, ko iepircis."
     },
     "audience": {
       "ALL": "Visi klienti",
       "SEGMENT": "Segments",
       "GROUP": "Klientu grupa",
-      "COMPANIES": "Izvēlētie klienti"
+      "COMPANIES": "Izvēlētie klienti",
+      "BUYING_GROUP": "Iepirkumu grupa"
     },
     "end": "Izbeigt vienošanos",
     "endConfirm": "Izbeigt šo vienošanos? Klienti saglabā to, ko nopelna pašreizējā periodā.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Jūsu nopelnītais",
     "noEarned": "Vēl nekas nav nopelnīts.",
     "creditNote": "Kredītrēķins",
-    "freeInCart": "{n} bez maksas (bonuss)"
+    "freeInCart": "{n} bez maksas (bonuss)",
+    "groupProgress": "Grupa {name}: {amount}, iepirkuši dalībnieki: {n}"
+  },
+  "groups": {
+    "title": "Iepirkumu grupas",
+    "intro": "Apvienojieties ar citiem restorāniem un veikaliem: pērciet kopā par grupas cenām no piegādātājiem, kopā sasniedziet atlaižu mērķus (katrs saņem bonusa daļu atbilstoši tam, ko iepircis) un pasūtiet kopā uz to pašu piegādes dienu.",
+    "closed": {
+      "OFF": "Iepirkumu grupas pašlaik ir izslēgtas.",
+      "COMPANY_OFF": "Iepirkumu grupas Jūsu uzņēmumam nav pieejamas. Lūdzu, sazinieties ar FIRINGI.",
+      "TYPE_OFF": "Iepirkumu grupas Jūsu tipa uzņēmumiem vēl nav pieejamas."
+    },
+    "invitations": "Uzaicinājumi",
+    "invitedTo": "Jūs esat uzaicināts pievienoties grupai {name}.",
+    "join": "Pievienoties",
+    "decline": "Noraidīt",
+    "myGroups": "Manas grupas",
+    "noGroups": "Jūs vēl neesat nevienā iepirkumu grupā.",
+    "membersN": "Dalībnieki: {n}",
+    "status": {
+      "PENDING": "Gaida FIRINGI",
+      "APPROVED": "Aktīva",
+      "REJECTED": "Atteikta",
+      "CLOSED": "Slēgta"
+    },
+    "memberStatus": {
+      "INVITED": "Uzaicināts",
+      "REQUESTED": "Lūdza pievienoties",
+      "ACTIVE": "Dalībnieks",
+      "DECLINED": "Noraidīja",
+      "LEFT": "Izstājies",
+      "REMOVED": "Izslēgts"
+    },
+    "role": {
+      "ADMIN": "Administrators",
+      "MEMBER": "Dalībnieks"
+    },
+    "create": "Izveidot grupu",
+    "createHint": "FIRINGI pārbauda jaunu grupu, pirms tā sāk darboties. Jūs būsiet tās administrators un varēsiet uzaicināt citus uzņēmumus.",
+    "createHintAuto": "Grupa sāk darboties uzreiz. Jūs būsiet tās administrators un varēsiet uzaicināt citus uzņēmumus.",
+    "name": "Grupas nosaukums",
+    "namePh": "piem. Alfamas restorāni",
+    "description": "Par ko ir grupa (neobligāti)",
+    "openLabel": "Citi uzņēmumi var atrast grupu un lūgt pievienoties",
+    "createBtn": "Izveidot grupu",
+    "created": "Grupa izveidota.",
+    "findTitle": "Atrodiet grupu, kurai pievienoties",
+    "search": "Meklēt pēc nosaukuma…",
+    "noOpen": "Atvērtas grupas nav atrastas.",
+    "askJoin": "Lūgt pievienoties",
+    "message": "Ziņa grupai (neobligāti)",
+    "asked": "Pieprasījums nosūtīts.",
+    "membersTitle": "Dalībnieki",
+    "invite": "Uzaiciniet uzņēmumu",
+    "taxId": "NIF vai PVN numurs",
+    "inviteBtn": "Uzaicināt",
+    "invitedOk": "Uzaicinājums nosūtīts: {company}.",
+    "requests": "Pievienošanās pieprasījumi",
+    "accept": "Pieņemt",
+    "makeAdmin": "Iecelt par administratoru",
+    "makeMember": "Iecelt par dalībnieku",
+    "remove": "Noņemt",
+    "removeConfirm": "Izslēgt šo uzņēmumu no grupas?",
+    "leave": "Izstāties no grupas",
+    "leaveConfirm": "Izstāties no šīs grupas? Grupas cenas un kopīgie bonusi Jūsu uzņēmumam vairs nebūs spēkā.",
+    "closeGroup": "Slēgt grupu",
+    "closeConfirm": "Slēgt šo grupu visiem? Atvērtie grupas pasūtījumi tiks atcelti, un grupas cenas vairs nebūs spēkā.",
+    "you": "jūs",
+    "since": "Dalībnieks kopš {date}",
+    "edit": "Grupas informācija",
+    "save": "Saglabāt",
+    "saved": "Saglabāts.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Grupas cenas",
+    "pricesIntro": "Piegādātāji, kas šai grupai piedāvā savas cenas — dalībnieki tās redz veikalā un grozā.",
+    "noPrices": "Neviens piegādātājs vēl nepiedāvā grupai savas cenas.",
+    "priceRow": "{supplier}: {n} produkti",
+    "until": "līdz {date}",
+    "dealsTitle": "Grupas vienošanās",
+    "dealsIntro": "Atlaižu vienošanās, kurās visu iepirkumi tiek skaitīti kopā; katrs dalībnieks saņem bonusa daļu atbilstoši tam, ko iepircis.",
+    "noDeals": "Nav aktīvu grupas vienošanos.",
+    "seeBonuses": "Skatīt progresu sadaļā Mani bonusi",
+    "roundsTitle": "Grupas pasūtījumi",
+    "roundsIntro": "Dalībnieki papildina kopīgu pasūtījumu pie viena piegādātāja, līdz tas tiek slēgts; katrs uzņēmums saņem savu pasūtījumu un rēķinu, viss tiek piegādāts tajā pašā dienā.",
+    "noRounds": "Grupas pasūtījumu vēl nav.",
+    "newRound": "Jauns grupas pasūtījums",
+    "supplier": "Piegādātājs",
+    "roundTitle": "Nosaukums",
+    "roundTitlePh": "piem. Piektdienas piegāde",
+    "closesAt": "Slēdzas",
+    "deliveryDate": "Piegādes diena",
+    "note": "Piezīme dalībniekiem (neobligāti)",
+    "openRoundBtn": "Atvērt grupas pasūtījumu",
+    "roundOpened": "Grupas pasūtījums atvērts — dalībnieki ir informēti.",
+    "roundStatus": {
+      "OPEN": "Atvērts",
+      "PLACED": "Veikts",
+      "CANCELLED": "Atcelts"
+    },
+    "closes": "Slēdzas {date}",
+    "deliveredOn": "Piegāde {date}",
+    "linesN": "Rindas: {n}",
+    "addProduct": "Pievienot produktu",
+    "searchProduct": "Meklēt piegādātāja produktus…",
+    "qty": "Daudz.",
+    "add": "Pievienot",
+    "myLines": "Manas rindas",
+    "noLines": "Jūs vēl neesat neko pievienojis.",
+    "address": "Piegādāt uz",
+    "totals": "Grupas pasūtījums",
+    "totalsHint": "Viss, ko dalībnieki līdz šim pievienojuši.",
+    "product": "Produkts",
+    "units": "Vienības",
+    "membersCol": "Dalībnieki",
+    "placeNow": "Veikt pasūtījumus tagad",
+    "placeConfirm": "Slēgt grupas pasūtījumu un tagad veikt katra dalībnieka pasūtījumu?",
+    "cancelRound": "Atcelt grupas pasūtījumu",
+    "cancelConfirm": "Atcelt šo grupas pasūtījumu? Nekas netiks pasūtīts.",
+    "placed": "Veikti pasūtījumi: {placed}. Neveikti: {failed}.",
+    "closedNote": "Šis grupas pasūtījums ir slēgts.",
+    "memberOrders": "Dalībnieku pasūtījumi",
+    "order": "Pasūtījums",
+    "failed": "Nav veikts: {reason}",
+    "back": "Atpakaļ uz grupu",
+    "reportTitle": "Grupas iepirkumi",
+    "period": {
+      "MONTH": "Šis mēnesis",
+      "QUARTER": "Šis ceturksnis",
+      "YEAR": "Šis gads"
+    },
+    "total": "Grupas kopsumma",
+    "myShare": "Jūsu iepirkumi",
+    "share": "{pct} % no grupas",
+    "bonusEarned": "Kopā nopelnītie bonusi",
+    "freeUnits": "Bezmaksas vienības: {n}",
+    "byMember": "Pēc dalībnieka",
+    "bySupplier": "Pēc piegādātāja",
+    "orders": "Pasūtījumi",
+    "net": "Iepirkts (bez PVN)",
+    "noPurchases": "Šajā periodā vēl nav iepirkumu.",
+    "vTitle": "Iepirkumu grupas",
+    "vIntro": "Restorāni un veikali, kas iepērkas kopā. Piedāvājiet grupai savas cenas (dalībnieki tās redz veikalā un grozā) vai izveidojiet atlaižu vienošanos grupai, kuras mērķos skaitās visu dalībnieku iepirkumi (Atlaides un bonusi).",
+    "vNoGroups": "Iepirkumu grupu vēl nav.",
+    "vMembers": "Dalībnieki: {n} ({buyers} var pirkt no Jums)",
+    "vCurrent": "Grupas cenas: {n} produkti",
+    "vNone": "Nav grupas cenu",
+    "vSet": "Iestatīt grupas cenas",
+    "vModePct": "% atlaide visam",
+    "vModeItems": "Izvēlēti produkti",
+    "vPct": "% atlaide no manām pamatcenām",
+    "vPctHint": "Katram produktam ar pamatcenu.",
+    "vPrice": "Grupas cena (€, bez PVN)",
+    "vBase": "Pamatcena {price}",
+    "vValidTo": "Līdz (neobligāti)",
+    "vSave": "Piedāvāt šīs cenas",
+    "vSaved": "Grupas dalībnieki tagad redz šīs cenas.",
+    "vStop": "Pārtraukt grupas cenas",
+    "vStopped": "Grupas cenas pārtrauktas.",
+    "notForYou": "Šis piegādātājs nepārdod Jūsu uzņēmuma veidam, tāpēc Jūs nevarat pievienot šim grupas pasūtījumam."
   }
 }

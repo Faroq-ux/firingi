@@ -885,7 +885,8 @@
     "Till Settings": "Paramètres de la caisse",
     "Till Staff": "Personnel de caisse",
     "Rebates & Bonuses": "Remises et bonus",
-    "My Bonuses": "Mes bonus"
+    "My Bonuses": "Mes bonus",
+    "Buying Groups": "Groupements d'achat"
   },
   "delivery": {
     "title": "Livraison",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Des produits gratuits pour vous",
       "body": "« {name} » de {supplier} : {qty} × {product} offerts sur votre prochaine commande. À récupérer avant le {date}."
+    },
+    "group_review": {
+      "title": "Groupement d'achat à vérifier",
+      "body": "{company} a créé le groupement d'achat « {name} ». Il ne démarre qu'après approbation de FIRINGI."
+    },
+    "group_decided": {
+      "title": "Votre groupement d'achat : {decision}",
+      "body": "Décision de FIRINGI sur « {name} » : {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Invitation à un groupement d'achat",
+      "body": "{company} invite votre entreprise à rejoindre le groupement d'achat « {name} »."
+    },
+    "group_join_request": {
+      "title": "Demande d'adhésion à « {name} »",
+      "body": "{company} demande à rejoindre votre groupement d'achat « {name} »."
+    },
+    "group_join_decided": {
+      "title": "Groupement d'achat « {name} »",
+      "body": "Votre demande d'adhésion à « {name} » : {decision}."
+    },
+    "group_prices": {
+      "title": "Prix de groupement de {supplier}",
+      "body": "{supplier} accorde désormais ses propres prix au groupement d'achat « {name} »."
+    },
+    "group_round_opened": {
+      "title": "Commande groupée : {title}",
+      "body": "« {name} » a ouvert une commande groupée avec {supplier}. Ajoutez ce dont vous avez besoin avant le {date}."
+    },
+    "group_round_placed": {
+      "title": "Commande groupée passée : {title}",
+      "body": "Votre commande issue de la commande groupée « {title} » ({name}) a été passée."
+    },
+    "group_round_failed": {
+      "title": "Commande groupée non passée : {title}",
+      "body": "Votre part de la commande groupée « {title} » ({name}) n'a pas pu être passée : {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Commande groupée : {orders} commandes",
+      "body": "Le groupement d'achat « {name} » a passé {orders} commandes ensemble (« {title} »), pour une livraison le {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Lancer l'accord",
       "saved": "Enregistré.",
       "sent": "Envoyé à FIRINGI.",
-      "started": "L'accord est en cours."
+      "started": "L'accord est en cours.",
+      "buyingGroup": "Groupement d'achat",
+      "buyingGroupHint": "Les achats de tous comptent ensemble ; chaque membre reçoit une part du bonus selon ses achats."
     },
     "audience": {
       "ALL": "Tous les clients",
       "SEGMENT": "Un segment",
       "GROUP": "Un groupe de clients",
-      "COMPANIES": "Clients choisis"
+      "COMPANIES": "Clients choisis",
+      "BUYING_GROUP": "Un groupement d'achat"
     },
     "end": "Terminer l'accord",
     "endConfirm": "Terminer cet accord ? Les clients conservent ce qu'ils ont gagné sur la période en cours.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Vos gains",
     "noEarned": "Aucun gain pour le moment.",
     "creditNote": "Avoir",
-    "freeInCart": "{n} offert(s) (bonus)"
+    "freeInCart": "{n} offert(s) (bonus)",
+    "groupProgress": "Groupement {name} : {amount} achetés par {n} membres"
+  },
+  "groups": {
+    "title": "Groupements d'achat",
+    "intro": "Unissez vos forces avec d'autres restaurants et commerces : achetez ensemble aux prix de groupement des fournisseurs, atteignez ensemble les objectifs de remise (chacun reçoit une part du bonus selon ses achats) et commandez ensemble pour le même jour de livraison.",
+    "closed": {
+      "OFF": "Les groupements d'achat sont désactivés pour le moment.",
+      "COMPANY_OFF": "Les groupements d'achat ne sont pas ouverts à votre entreprise. Veuillez contacter FIRINGI.",
+      "TYPE_OFF": "Les groupements d'achat ne sont pas encore ouverts à votre type d'entreprise."
+    },
+    "invitations": "Invitations",
+    "invitedTo": "Vous êtes invité à rejoindre {name}.",
+    "join": "Rejoindre",
+    "decline": "Refuser",
+    "myGroups": "Mes groupements",
+    "noGroups": "Vous ne faites encore partie d'aucun groupement d'achat.",
+    "membersN": "{n} membres",
+    "status": {
+      "PENDING": "En attente de FIRINGI",
+      "APPROVED": "Actif",
+      "REJECTED": "Refusé",
+      "CLOSED": "Fermé"
+    },
+    "memberStatus": {
+      "INVITED": "Invité",
+      "REQUESTED": "Demande envoyée",
+      "ACTIVE": "Membre",
+      "DECLINED": "A refusé",
+      "LEFT": "Parti",
+      "REMOVED": "Retiré"
+    },
+    "role": {
+      "ADMIN": "Administrateur",
+      "MEMBER": "Membre"
+    },
+    "create": "Créer un groupement",
+    "createHint": "FIRINGI vérifie chaque nouveau groupement avant son lancement. Vous en serez l'administrateur et pourrez inviter d'autres entreprises.",
+    "createHintAuto": "Le groupement démarre immédiatement. Vous en serez l'administrateur et pourrez inviter d'autres entreprises.",
+    "name": "Nom du groupement",
+    "namePh": "ex. Restaurants de l'Alfama",
+    "description": "Objet du groupement (facultatif)",
+    "openLabel": "Les autres entreprises peuvent trouver le groupement et demander à le rejoindre",
+    "createBtn": "Créer le groupement",
+    "created": "Groupement créé.",
+    "findTitle": "Trouver un groupement à rejoindre",
+    "search": "Rechercher par nom…",
+    "noOpen": "Aucun groupement ouvert trouvé.",
+    "askJoin": "Demander à rejoindre",
+    "message": "Message au groupement (facultatif)",
+    "asked": "Demande envoyée.",
+    "membersTitle": "Membres",
+    "invite": "Inviter une entreprise",
+    "taxId": "NIF ou n° de TVA",
+    "inviteBtn": "Inviter",
+    "invitedOk": "Invitation envoyée à {company}.",
+    "requests": "Demandes d'adhésion",
+    "accept": "Accepter",
+    "makeAdmin": "Définir comme administrateur",
+    "makeMember": "Définir comme membre",
+    "remove": "Retirer",
+    "removeConfirm": "Retirer cette entreprise du groupement ?",
+    "leave": "Quitter le groupement",
+    "leaveConfirm": "Quitter ce groupement ? Les prix de groupement et les bonus partagés s'arrêtent pour votre entreprise.",
+    "closeGroup": "Fermer le groupement",
+    "closeConfirm": "Fermer ce groupement pour tous ? Les commandes groupées en cours sont annulées et les prix de groupement s'arrêtent.",
+    "you": "vous",
+    "since": "Membre depuis le {date}",
+    "edit": "Détails du groupement",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "firingiNote": "FIRINGI : {note}",
+    "pricesTitle": "Prix de groupement",
+    "pricesIntro": "Fournisseurs qui accordent des prix propres à ce groupement — les membres les voient dans la boutique et le panier.",
+    "noPrices": "Aucun fournisseur n'accorde encore de prix propres au groupement.",
+    "priceRow": "{supplier} : {n} produits",
+    "until": "jusqu'au {date}",
+    "dealsTitle": "Accords de groupement",
+    "dealsIntro": "Accords de remise où les achats de tous comptent ensemble ; chaque membre reçoit une part du bonus selon ses achats.",
+    "noDeals": "Aucun accord de groupement en cours.",
+    "seeBonuses": "Voir la progression dans Mes bonus",
+    "roundsTitle": "Commandes groupées",
+    "roundsIntro": "Les membres complètent une commande commune auprès d'un seul fournisseur jusqu'à sa clôture ; chaque entreprise reçoit sa propre commande et sa propre facture, le tout livré le même jour.",
+    "noRounds": "Aucune commande groupée pour le moment.",
+    "newRound": "Nouvelle commande groupée",
+    "supplier": "Fournisseur",
+    "roundTitle": "Nom",
+    "roundTitlePh": "ex. Livraison du vendredi",
+    "closesAt": "Clôture",
+    "deliveryDate": "Jour de livraison",
+    "note": "Note aux membres (facultatif)",
+    "openRoundBtn": "Ouvrir la commande groupée",
+    "roundOpened": "Commande groupée ouverte — les membres ont été prévenus.",
+    "roundStatus": {
+      "OPEN": "Ouverte",
+      "PLACED": "Passée",
+      "CANCELLED": "Annulée"
+    },
+    "closes": "Clôture le {date}",
+    "deliveredOn": "Livraison le {date}",
+    "linesN": "{n} lignes",
+    "addProduct": "Ajouter un produit",
+    "searchProduct": "Rechercher dans les produits du fournisseur…",
+    "qty": "Qté",
+    "add": "Ajouter",
+    "myLines": "Mes lignes",
+    "noLines": "Vous n'avez encore rien ajouté.",
+    "address": "Livrer à",
+    "totals": "La commande du groupement",
+    "totalsHint": "Tout ce que les membres ont ajouté jusqu'à présent.",
+    "product": "Produit",
+    "units": "Unités",
+    "membersCol": "Membres",
+    "placeNow": "Passer les commandes maintenant",
+    "placeConfirm": "Clôturer la commande groupée et passer maintenant la commande de chaque membre ?",
+    "cancelRound": "Annuler la commande groupée",
+    "cancelConfirm": "Annuler cette commande groupée ? Rien ne sera commandé.",
+    "placed": "Commandes passées : {placed}. Non passées : {failed}.",
+    "closedNote": "Cette commande groupée est clôturée.",
+    "memberOrders": "Commandes des membres",
+    "order": "Commande",
+    "failed": "Non passée : {reason}",
+    "back": "Retour au groupement",
+    "reportTitle": "Achats du groupement",
+    "period": {
+      "MONTH": "Ce mois-ci",
+      "QUARTER": "Ce trimestre",
+      "YEAR": "Cette année"
+    },
+    "total": "Total du groupement",
+    "myShare": "Vos achats",
+    "share": "{pct} % du groupement",
+    "bonusEarned": "Bonus gagnés ensemble",
+    "freeUnits": "{n} unités gratuites",
+    "byMember": "Par membre",
+    "bySupplier": "Par fournisseur",
+    "orders": "Commandes",
+    "net": "Acheté (HT)",
+    "noPurchases": "Aucun achat sur cette période pour le moment.",
+    "vTitle": "Groupements d'achat",
+    "vIntro": "Des restaurants et commerces qui achètent ensemble. Accordez à un groupement ses propres prix (les membres les voient dans la boutique et le panier) ou proposez-lui un accord de remise dont les objectifs cumulent les achats de tous (Remises et bonus).",
+    "vNoGroups": "Aucun groupement d'achat pour le moment.",
+    "vMembers": "{n} membres ({buyers} peuvent acheter chez vous)",
+    "vCurrent": "Prix de groupement : {n} produits",
+    "vNone": "Aucun prix de groupement",
+    "vSet": "Définir les prix de groupement",
+    "vModePct": "Un % de remise sur tout",
+    "vModeItems": "Produits choisis",
+    "vPct": "% de remise sur mes prix de base",
+    "vPctHint": "Pour chaque produit ayant un prix de base.",
+    "vPrice": "Prix de groupement (€, HT)",
+    "vBase": "Base {price}",
+    "vValidTo": "Jusqu'au (facultatif)",
+    "vSave": "Accorder ces prix",
+    "vSaved": "Les membres du groupement voient désormais ces prix.",
+    "vStop": "Arrêter les prix de groupement",
+    "vStopped": "Prix de groupement arrêtés.",
+    "notForYou": "Ce fournisseur ne vend pas à votre type d'entreprise ; vous ne pouvez donc rien ajouter à cette commande groupée."
   }
 }

@@ -885,7 +885,8 @@
     "Till Settings": "Nastavení pokladny",
     "Till Staff": "Personál pokladny",
     "Rebates & Bonuses": "Rabaty a bonusy",
-    "My Bonuses": "Moje bonusy"
+    "My Bonuses": "Moje bonusy",
+    "Buying Groups": "Nákupní skupiny"
   },
   "delivery": {
     "title": "Doručení",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Zboží zdarma pro vás",
       "body": "„{name}“ od {supplier}: {qty} × {product} zdarma k vaší příští objednávce. Uplatněte do {date}."
+    },
+    "group_review": {
+      "title": "Nákupní skupina ke kontrole",
+      "body": "{company} zakládá nákupní skupinu „{name}“. Začne fungovat až po schválení platformou FIRINGI."
+    },
+    "group_decided": {
+      "title": "Vaše nákupní skupina: {decision}",
+      "body": "Rozhodnutí FIRINGI o „{name}“: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Pozvánka do nákupní skupiny",
+      "body": "{company} zve vaši firmu do nákupní skupiny „{name}“."
+    },
+    "group_join_request": {
+      "title": "Žádost o vstup do „{name}“",
+      "body": "{company} žádá o vstup do vaší nákupní skupiny „{name}“."
+    },
+    "group_join_decided": {
+      "title": "Nákupní skupina „{name}“",
+      "body": "Vaše žádost o vstup do „{name}“: {decision}."
+    },
+    "group_prices": {
+      "title": "Skupinové ceny od {supplier}",
+      "body": "{supplier} nyní dává nákupní skupině „{name}“ vlastní ceny."
+    },
+    "group_round_opened": {
+      "title": "Společná objednávka: {title}",
+      "body": "„{name}“ otevírá společnou objednávku u dodavatele {supplier}. Přidejte, co potřebujete, do {date}."
+    },
+    "group_round_placed": {
+      "title": "Společná objednávka zadána: {title}",
+      "body": "Vaše objednávka ze společné objednávky „{title}“ ({name}) byla zadána."
+    },
+    "group_round_failed": {
+      "title": "Společná objednávka nezadána: {title}",
+      "body": "Vaši část společné objednávky „{title}“ ({name}) se nepodařilo zadat: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Společná objednávka – objednávek: {orders}",
+      "body": "Nákupní skupina „{name}“ společně zadala objednávky („{title}“), celkem {orders}, s doručením {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Spustit dohodu",
       "saved": "Uloženo.",
       "sent": "Odesláno do FIRINGI.",
-      "started": "Dohoda běží."
+      "started": "Dohoda běží.",
+      "buyingGroup": "Nákupní skupina",
+      "buyingGroupHint": "Nákupy všech se sčítají; každý člen dostane podíl z bonusu podle toho, co nakoupil."
     },
     "audience": {
       "ALL": "Všichni zákazníci",
       "SEGMENT": "Segment",
       "GROUP": "Skupina zákazníků",
-      "COMPANIES": "Vybraní zákazníci"
+      "COMPANIES": "Vybraní zákazníci",
+      "BUYING_GROUP": "Nákupní skupina"
     },
     "end": "Ukončit dohodu",
     "endConfirm": "Ukončit tuto dohodu? Zákazníkům zůstane, co získají v aktuálním období.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Co jste získali",
     "noEarned": "Zatím nic nezískáno.",
     "creditNote": "Dobropis",
-    "freeInCart": "{n} zdarma (bonus)"
+    "freeInCart": "{n} zdarma (bonus)",
+    "groupProgress": "Skupina {name}: nakoupeno {amount}, členů: {n}"
+  },
+  "groups": {
+    "title": "Nákupní skupiny",
+    "intro": "Spojte se s dalšími restauracemi a obchody: nakupujte společně za skupinové ceny od dodavatelů, plňte společně bonusové cíle (každý člen dostane podíl z bonusu podle toho, co nakoupil) a objednávejte společně na stejný den doručení.",
+    "closed": {
+      "OFF": "Nákupní skupiny jsou momentálně vypnuté.",
+      "COMPANY_OFF": "Nákupní skupiny nejsou pro vaši firmu dostupné. Kontaktujte prosím FIRINGI.",
+      "TYPE_OFF": "Nákupní skupiny zatím nejsou pro váš typ firmy dostupné."
+    },
+    "invitations": "Pozvánky",
+    "invitedTo": "Jste pozváni do skupiny {name}.",
+    "join": "Připojit se",
+    "decline": "Odmítnout",
+    "myGroups": "Moje skupiny",
+    "noGroups": "Zatím nejste v žádné nákupní skupině.",
+    "membersN": "Členů: {n}",
+    "status": {
+      "PENDING": "Čeká na FIRINGI",
+      "APPROVED": "Aktivní",
+      "REJECTED": "Zamítnuta",
+      "CLOSED": "Uzavřena"
+    },
+    "memberStatus": {
+      "INVITED": "Pozván",
+      "REQUESTED": "Žádá o vstup",
+      "ACTIVE": "Člen",
+      "DECLINED": "Odmítl",
+      "LEFT": "Opustil skupinu",
+      "REMOVED": "Odebrán"
+    },
+    "role": {
+      "ADMIN": "Správce",
+      "MEMBER": "Člen"
+    },
+    "create": "Založit skupinu",
+    "createHint": "FIRINGI novou skupinu před spuštěním zkontroluje. Budete jejím správcem a můžete zvát další firmy.",
+    "createHintAuto": "Skupina začne fungovat ihned. Budete jejím správcem a můžete zvát další firmy.",
+    "name": "Název skupiny",
+    "namePh": "např. Restaurace z Alfamy",
+    "description": "O čem skupina je (nepovinné)",
+    "openLabel": "Ostatní firmy mohou skupinu najít a požádat o vstup",
+    "createBtn": "Založit skupinu",
+    "created": "Skupina založena.",
+    "findTitle": "Najít skupinu, ke které se připojit",
+    "search": "Hledat podle názvu…",
+    "noOpen": "Nenalezeny žádné otevřené skupiny.",
+    "askJoin": "Požádat o vstup",
+    "message": "Zpráva pro skupinu (nepovinné)",
+    "asked": "Žádost odeslána.",
+    "membersTitle": "Členové",
+    "invite": "Pozvat firmu",
+    "taxId": "NIF nebo DIČ pro DPH",
+    "inviteBtn": "Pozvat",
+    "invitedOk": "Pozvánka odeslána firmě {company}.",
+    "requests": "Žádosti o vstup",
+    "accept": "Přijmout",
+    "makeAdmin": "Nastavit jako správce",
+    "makeMember": "Nastavit jako člena",
+    "remove": "Odebrat",
+    "removeConfirm": "Odebrat tuto firmu ze skupiny?",
+    "leave": "Opustit skupinu",
+    "leaveConfirm": "Opustit tuto skupinu? Skupinové ceny a společné bonusy pro vaši firmu skončí.",
+    "closeGroup": "Uzavřít skupinu",
+    "closeConfirm": "Uzavřít tuto skupinu pro všechny? Otevřené společné objednávky budou zrušeny a skupinové ceny skončí.",
+    "you": "vy",
+    "since": "Členem od {date}",
+    "edit": "Údaje o skupině",
+    "save": "Uložit",
+    "saved": "Uloženo.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Skupinové ceny",
+    "pricesIntro": "Dodavatelé, kteří této skupině dávají vlastní ceny — členové je vidí v obchodě a v košíku.",
+    "noPrices": "Žádný dodavatel zatím skupině nedává vlastní ceny.",
+    "priceRow": "{supplier}: produktů {n}",
+    "until": "do {date}",
+    "dealsTitle": "Skupinové dohody",
+    "dealsIntro": "Bonusové dohody, u kterých se nákupy všech sčítají; každý člen dostane podíl z bonusu podle toho, co nakoupil.",
+    "noDeals": "Žádné probíhající skupinové dohody.",
+    "seeBonuses": "Zobrazit průběh v sekci Moje bonusy",
+    "roundsTitle": "Společné objednávky",
+    "roundsIntro": "Členové přidávají zboží do společné objednávky u jednoho dodavatele, dokud se neuzavře; každá firma dostane vlastní objednávku a fakturu a vše se doručí ve stejný den.",
+    "noRounds": "Zatím žádné společné objednávky.",
+    "newRound": "Nová společná objednávka",
+    "supplier": "Dodavatel",
+    "roundTitle": "Název",
+    "roundTitlePh": "např. Páteční doručení",
+    "closesAt": "Uzávěrka",
+    "deliveryDate": "Den doručení",
+    "note": "Poznámka pro členy (nepovinné)",
+    "openRoundBtn": "Otevřít společnou objednávku",
+    "roundOpened": "Společná objednávka otevřena — členové byli informováni.",
+    "roundStatus": {
+      "OPEN": "Otevřená",
+      "PLACED": "Zadaná",
+      "CANCELLED": "Zrušená"
+    },
+    "closes": "Uzávěrka {date}",
+    "deliveredOn": "Doručení {date}",
+    "linesN": "Položek: {n}",
+    "addProduct": "Přidat produkt",
+    "searchProduct": "Hledat v produktech dodavatele…",
+    "qty": "Množ.",
+    "add": "Přidat",
+    "myLines": "Moje položky",
+    "noLines": "Zatím jste nic nepřidali.",
+    "address": "Doručit na",
+    "totals": "Objednávka skupiny",
+    "totalsHint": "Vše, co členové zatím přidali.",
+    "product": "Produkt",
+    "units": "Kusy",
+    "membersCol": "Členové",
+    "placeNow": "Zadat objednávky",
+    "placeConfirm": "Uzavřít společnou objednávku a hned zadat objednávky všech členů?",
+    "cancelRound": "Zrušit společnou objednávku",
+    "cancelConfirm": "Zrušit tuto společnou objednávku? Nic se neobjedná.",
+    "placed": "Zadané objednávky: {placed}. Nezadané: {failed}.",
+    "closedNote": "Tato společná objednávka je uzavřena.",
+    "memberOrders": "Objednávky členů",
+    "order": "Objednávka",
+    "failed": "Nezadáno: {reason}",
+    "back": "Zpět do skupiny",
+    "reportTitle": "Nákupy skupiny",
+    "period": {
+      "MONTH": "Tento měsíc",
+      "QUARTER": "Toto čtvrtletí",
+      "YEAR": "Tento rok"
+    },
+    "total": "Skupina celkem",
+    "myShare": "Vaše nákupy",
+    "share": "{pct} % skupiny",
+    "bonusEarned": "Společně získané bonusy",
+    "freeUnits": "Kusy zdarma: {n}",
+    "byMember": "Podle člena",
+    "bySupplier": "Podle dodavatele",
+    "orders": "Objednávky",
+    "net": "Nakoupeno (bez DPH)",
+    "noPurchases": "V tomto období zatím žádné nákupy.",
+    "vTitle": "Nákupní skupiny",
+    "vIntro": "Restaurace a obchody, které nakupují společně. Dejte skupině vlastní ceny (členové je vidí v obchodě a v košíku) nebo spusťte bonusovou dohodu pro skupinu, u které se do cílů počítají nákupy všech (Rabaty a bonusy).",
+    "vNoGroups": "Zatím žádné nákupní skupiny.",
+    "vMembers": "Členů: {n} (u vás může nakupovat {buyers})",
+    "vCurrent": "Skupinové ceny: produktů {n}",
+    "vNone": "Žádné skupinové ceny",
+    "vSet": "Nastavit skupinové ceny",
+    "vModePct": "Sleva v % na vše",
+    "vModeItems": "Vybrané produkty",
+    "vPct": "Sleva v % z mých základních cen",
+    "vPctHint": "Pro každý produkt se základní cenou.",
+    "vPrice": "Skupinová cena (€, bez DPH)",
+    "vBase": "Základní {price}",
+    "vValidTo": "Do (nepovinné)",
+    "vSave": "Poskytnout tyto ceny",
+    "vSaved": "Členové skupiny nyní vidí tyto ceny.",
+    "vStop": "Ukončit skupinové ceny",
+    "vStopped": "Skupinové ceny ukončeny.",
+    "notForYou": "Tento dodavatel neprodává vašemu typu podniku, proto do této společné objednávky nemůžete přidávat."
   }
 }

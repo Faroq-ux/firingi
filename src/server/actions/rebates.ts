@@ -16,7 +16,7 @@ const bonus = z.object({
   name: z.string().max(120), description: z.string().max(500).nullable().optional(),
   kind: z.enum(REBATE_KINDS), period: z.enum(REBATE_PERIODS), rules: z.record(z.unknown()),
   validFrom: z.string().regex(/^\d{4}-\d{2}-\d{2}/), validTo: z.string().regex(/^\d{4}-\d{2}-\d{2}/).nullable().optional(),
-  audience: z.enum(REBATE_AUDIENCES), segmentId: id.nullable().optional(), groupId: id.nullable().optional(), companyIds: ids.optional(),
+  audience: z.enum(REBATE_AUDIENCES), segmentId: id.nullable().optional(), groupId: id.nullable().optional(), buyingGroupId: id.nullable().optional(), companyIds: ids.optional(),
   countries: z.array(z.string().length(2)).max(40).optional(), perShop: z.boolean().optional(),
   offerIds: ids.optional(), categoryIds: ids.optional(), brandIds: ids.optional(),
   rewardOfferId: id.nullable().optional(), freeGoodsDays: z.number().int().min(1).max(1000).nullable().optional(),

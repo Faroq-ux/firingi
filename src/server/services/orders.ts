@@ -87,6 +87,8 @@ export type PlaceOrderInput = {
   couponCode?: string | null; fixedPrices?: Map<string, Decimal.Value>; approved?: boolean; source?: { type: "QUOTE" | "RECURRING" | "APPROVAL"; id: string };
   /** Phase 27: the buyer's purchase-order reference (required when the company says so). */
   poReference?: string | null;
+  /** Phase 49: placed from a buying group's group order round. */
+  groupRoundId?: string | null;
 };
 
 export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<import("@/server/buying/approvals").PlacedOrPending> {
@@ -197,7 +199,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       const number = await nextNumber(tx, "order", "FO");
       const order = await tx.order.create({
         data: {
-          number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId,
+          number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId, groupRoundId: input.groupRoundId ?? null,
           status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId, checkoutId: pc.parts.length > 1 ? checkoutId : null,
           couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: part.waived.toFixed(2), deliveryPromotionId: part.deliveryPromotionId,
           deliveryAddress, requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null,

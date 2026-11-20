@@ -10,7 +10,7 @@ import { REBATE_KINDS, REBATE_PERIODS, type RebateSettings } from "@/lib/rebates
 
 const KIND: Record<string, string> = { VOLUME: "Volume rebate (tiers)", FREE_GOODS: "Free goods (buy X get Y)", GROWTH: "Growth bonus (vs last year)", MIX: "Product mix / listing bonus" };
 const PERIOD: Record<string, string> = { MONTH: "Monthly", QUARTER: "Quarterly", HALF_YEAR: "Half-yearly", YEAR: "Yearly" };
-const AUD: Record<string, string> = { ALL: "All customers", SEGMENT: "CRM segments", GROUP: "Customer groups", COMPANIES: "Chosen customers", COUNTRY: "Limit to countries", PER_SHOP: "Count each shop on its own" };
+const AUD: Record<string, string> = { ALL: "All customers", SEGMENT: "CRM segments", GROUP: "Customer groups", COMPANIES: "Chosen customers", BUYING_GROUP: "Buying groups (purchases count together)", COUNTRY: "Limit to countries", PER_SHOP: "Count each shop on its own" };
 
 export function ReviewBonus({ id }: { id: string }) {
   const { pending, error, run } = useRun();

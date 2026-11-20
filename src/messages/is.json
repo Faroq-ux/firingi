@@ -885,7 +885,8 @@
     "Till Settings": "Stillingar kassa",
     "Till Staff": "Starfsfólk kassa",
     "Rebates & Bonuses": "Afslættir og bónusar",
-    "My Bonuses": "Bónusarnir mínir"
+    "My Bonuses": "Bónusarnir mínir",
+    "Buying Groups": "Innkaupahópar"
   },
   "delivery": {
     "title": "Afhending",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Fríar vörur fyrir þig",
       "body": "„{name}“ frá {supplier}: {qty} × {product} frítt í næstu pöntun þinni. Nýttu þær fyrir {date}."
+    },
+    "group_review": {
+      "title": "Innkaupahópur til yfirferðar",
+      "body": "{company} stofnaði innkaupahópinn „{name}“. Hann hefst aðeins eftir samþykki FIRINGI."
+    },
+    "group_decided": {
+      "title": "Innkaupahópurinn þinn: {decision}",
+      "body": "Ákvörðun FIRINGI um „{name}“: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Boð í innkaupahóp",
+      "body": "{company} býður fyrirtækinu þínu að ganga í innkaupahópinn „{name}“."
+    },
+    "group_join_request": {
+      "title": "Beiðni um aðild að „{name}“",
+      "body": "{company} biður um aðild að innkaupahópnum þínum „{name}“."
+    },
+    "group_join_decided": {
+      "title": "Innkaupahópur „{name}“",
+      "body": "Beiðni þín um aðild að „{name}“: {decision}."
+    },
+    "group_prices": {
+      "title": "Hópverð frá {supplier}",
+      "body": "{supplier} veitir nú innkaupahópnum „{name}“ eigin verð."
+    },
+    "group_round_opened": {
+      "title": "Hóppöntun: {title}",
+      "body": "„{name}“ opnaði hóppöntun hjá {supplier}. Bættu við því sem þú þarft fyrir {date}."
+    },
+    "group_round_placed": {
+      "title": "Hóppöntun lögð inn: {title}",
+      "body": "Pöntun þín úr hóppöntuninni „{title}“ ({name}) hefur verið lögð inn."
+    },
+    "group_round_failed": {
+      "title": "Hóppöntun ekki lögð inn: {title}",
+      "body": "Ekki tókst að leggja inn þinn hluta af hóppöntuninni „{title}“ ({name}): {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Hóppöntun: {orders} pantanir",
+      "body": "Innkaupahópurinn „{name}“ lagði inn {orders} pantanir saman („{title}“) til afhendingar {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Hefja samning",
       "saved": "Vistað.",
       "sent": "Sent til FIRINGI.",
-      "started": "Samningurinn er í gangi."
+      "started": "Samningurinn er í gangi.",
+      "buyingGroup": "Innkaupahópur",
+      "buyingGroupHint": "Kaup allra teljast saman; hver meðlimur fær hlut í bónusnum eftir því sem hann keypti."
     },
     "audience": {
       "ALL": "Allir viðskiptavinir",
       "SEGMENT": "Markhópur",
       "GROUP": "Viðskiptavinahópur",
-      "COMPANIES": "Valdir viðskiptavinir"
+      "COMPANIES": "Valdir viðskiptavinir",
+      "BUYING_GROUP": "Innkaupahópur"
     },
     "end": "Ljúka samningi",
     "endConfirm": "Ljúka þessum samningi? Viðskiptavinir halda því sem þeir vinna sér inn á yfirstandandi tímabili.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Það sem þú hefur unnið þér inn",
     "noEarned": "Ekkert áunnið enn.",
     "creditNote": "Kreditreikningur",
-    "freeInCart": "{n} frítt (bónus)"
+    "freeInCart": "{n} frítt (bónus)",
+    "groupProgress": "Hópur {name}: {amount} keypt af {n} meðlimum"
+  },
+  "groups": {
+    "title": "Innkaupahópar",
+    "intro": "Taktu höndum saman við aðra veitingastaði og verslanir: keyptu með þeim á hópverði frá birgjum, náðu afsláttarmarkmiðum í sameiningu (hver fær hlut í bónusnum eftir því sem hann keypti) og pantaðu með þeim fyrir sama afhendingardag.",
+    "closed": {
+      "OFF": "Slökkt er á innkaupahópum í augnablikinu.",
+      "COMPANY_OFF": "Innkaupahópar eru ekki opnir fyrir fyrirtækið þitt. Vinsamlegast hafðu samband við FIRINGI.",
+      "TYPE_OFF": "Innkaupahópar eru ekki enn opnir fyrir þína tegund fyrirtækis."
+    },
+    "invitations": "Boð",
+    "invitedTo": "Þér er boðið að ganga í {name}.",
+    "join": "Ganga í hópinn",
+    "decline": "Hafna",
+    "myGroups": "Hóparnir mínir",
+    "noGroups": "Þú ert ekki enn í neinum innkaupahópi.",
+    "membersN": "{n} meðlimir",
+    "status": {
+      "PENDING": "Bíður eftir FIRINGI",
+      "APPROVED": "Virkur",
+      "REJECTED": "Hafnað",
+      "CLOSED": "Lokaður"
+    },
+    "memberStatus": {
+      "INVITED": "Boðið",
+      "REQUESTED": "Bað um aðild",
+      "ACTIVE": "Meðlimur",
+      "DECLINED": "Afþakkaði",
+      "LEFT": "Hætti",
+      "REMOVED": "Fjarlægður"
+    },
+    "role": {
+      "ADMIN": "Stjórnandi",
+      "MEMBER": "Meðlimur"
+    },
+    "create": "Stofna hóp",
+    "createHint": "FIRINGI yfirfer nýjan hóp áður en hann hefst. Þú verður stjórnandi hans og getur boðið öðrum fyrirtækjum.",
+    "createHintAuto": "Hópurinn hefst strax. Þú verður stjórnandi hans og getur boðið öðrum fyrirtækjum.",
+    "name": "Heiti hóps",
+    "namePh": "t.d. Veitingastaðir í Alfama",
+    "description": "Um hvað hópurinn snýst (valfrjálst)",
+    "openLabel": "Önnur fyrirtæki geta fundið hópinn og beðið um aðild",
+    "createBtn": "Stofna hópinn",
+    "created": "Hópur stofnaður.",
+    "findTitle": "Finna hóp til að ganga í",
+    "search": "Leita eftir heiti…",
+    "noOpen": "Engir opnir hópar fundust.",
+    "askJoin": "Biðja um aðild",
+    "message": "Skilaboð til hópsins (valfrjálst)",
+    "asked": "Beiðni send.",
+    "membersTitle": "Meðlimir",
+    "invite": "Bjóða fyrirtæki",
+    "taxId": "Kennitala eða VSK-númer",
+    "inviteBtn": "Bjóða",
+    "invitedOk": "Boð sent til {company}.",
+    "requests": "Aðildarbeiðnir",
+    "accept": "Samþykkja",
+    "makeAdmin": "Gera að stjórnanda",
+    "makeMember": "Gera að meðlimi",
+    "remove": "Fjarlægja",
+    "removeConfirm": "Fjarlægja þetta fyrirtæki úr hópnum?",
+    "leave": "Hætta í hópnum",
+    "leaveConfirm": "Hætta í þessum hópi? Hópverð og sameiginlegir bónusar falla niður fyrir fyrirtækið þitt.",
+    "closeGroup": "Loka hópnum",
+    "closeConfirm": "Loka þessum hópi fyrir alla? Opnum hóppöntunum er aflýst og hópverð falla niður.",
+    "you": "þú",
+    "since": "Meðlimur frá {date}",
+    "edit": "Upplýsingar um hópinn",
+    "save": "Vista",
+    "saved": "Vistað.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Hópverð",
+    "pricesIntro": "Birgjar sem veita þessum hópi eigin verð — meðlimir sjá þau í versluninni og körfunni.",
+    "noPrices": "Enginn birgir veitir hópnum eigin verð enn.",
+    "priceRow": "{supplier}: {n} vörur",
+    "until": "til {date}",
+    "dealsTitle": "Hópsamningar",
+    "dealsIntro": "Afsláttarsamningar þar sem kaup allra teljast saman; hver meðlimur fær hlut í bónusnum eftir því sem hann keypti.",
+    "noDeals": "Engir hópsamningar í gangi.",
+    "seeBonuses": "Sjá framvindu undir Bónusarnir mínir",
+    "roundsTitle": "Hóppantanir",
+    "roundsIntro": "Meðlimir bæta við sameiginlega pöntun hjá einum birgi þar til henni er lokað; hvert fyrirtæki fær sína eigin pöntun og reikning og allt er afhent sama dag.",
+    "noRounds": "Engar hóppantanir enn.",
+    "newRound": "Ný hóppöntun",
+    "supplier": "Birgir",
+    "roundTitle": "Heiti",
+    "roundTitlePh": "t.d. Afhending á föstudegi",
+    "closesAt": "Lokast",
+    "deliveryDate": "Afhendingardagur",
+    "note": "Athugasemd til meðlima (valfrjálst)",
+    "openRoundBtn": "Opna hóppöntun",
+    "roundOpened": "Hóppöntun opnuð — meðlimum hefur verið tilkynnt.",
+    "roundStatus": {
+      "OPEN": "Opin",
+      "PLACED": "Lögð inn",
+      "CANCELLED": "Afpöntuð"
+    },
+    "closes": "Lokast {date}",
+    "deliveredOn": "Afhending {date}",
+    "linesN": "{n} línur",
+    "addProduct": "Bæta við vöru",
+    "searchProduct": "Leita í vörum birgisins…",
+    "qty": "Magn",
+    "add": "Bæta við",
+    "myLines": "Mínar línur",
+    "noLines": "Þú hefur ekki bætt neinu við enn.",
+    "address": "Afhenda til",
+    "totals": "Pöntun hópsins",
+    "totalsHint": "Allt sem meðlimir hafa bætt við hingað til.",
+    "product": "Vara",
+    "units": "Einingar",
+    "membersCol": "Meðlimir",
+    "placeNow": "Leggja inn pantanir núna",
+    "placeConfirm": "Loka hóppöntuninni og leggja inn pantanir allra meðlima núna?",
+    "cancelRound": "Hætta við hóppöntun",
+    "cancelConfirm": "Hætta við þessa hóppöntun? Ekkert verður pantað.",
+    "placed": "Pantanir lagðar inn: {placed}. Ekki lagðar inn: {failed}.",
+    "closedNote": "Þessari hóppöntun hefur verið lokað.",
+    "memberOrders": "Pantanir meðlima",
+    "order": "Pöntun",
+    "failed": "Ekki lögð inn: {reason}",
+    "back": "Aftur í hópinn",
+    "reportTitle": "Innkaup hópsins",
+    "period": {
+      "MONTH": "Þessi mánuður",
+      "QUARTER": "Þessi ársfjórðungur",
+      "YEAR": "Þetta ár"
+    },
+    "total": "Samtals hjá hópnum",
+    "myShare": "Þín innkaup",
+    "share": "{pct} % af hópnum",
+    "bonusEarned": "Bónusar unnir saman",
+    "freeUnits": "{n} fríar einingar",
+    "byMember": "Eftir meðlimum",
+    "bySupplier": "Eftir birgjum",
+    "orders": "Pantanir",
+    "net": "Keypt (án VSK)",
+    "noPurchases": "Engin innkaup á þessu tímabili enn.",
+    "vTitle": "Innkaupahópar",
+    "vIntro": "Veitingastaðir og verslanir sem kaupa saman. Gefðu hópi eigin verð (meðlimir sjá þau í versluninni og körfunni) eða bjóddu hópi afsláttarsamning þar sem kaup allra teljast upp í markmiðin (Afslættir og bónusar).",
+    "vNoGroups": "Engir innkaupahópar enn.",
+    "vMembers": "{n} meðlimir ({buyers} geta keypt af þér)",
+    "vCurrent": "Hópverð: {n} vörur",
+    "vNone": "Engin hópverð",
+    "vSet": "Setja hópverð",
+    "vModePct": "% afsláttur af öllu",
+    "vModeItems": "Valdar vörur",
+    "vPct": "% afsláttur af grunnverði mínu",
+    "vPctHint": "Fyrir allar vörur með grunnverð.",
+    "vPrice": "Hópverð (€, án VSK)",
+    "vBase": "Grunnverð {price}",
+    "vValidTo": "Til (valfrjálst)",
+    "vSave": "Veita þessi verð",
+    "vSaved": "Meðlimir hópsins sjá nú þessi verð.",
+    "vStop": "Stöðva hópverð",
+    "vStopped": "Hópverð stöðvuð.",
+    "notForYou": "Þessi birgir selur ekki þinni tegund fyrirtækis, svo þú getur ekki bætt við þessa hóppöntun."
   }
 }

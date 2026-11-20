@@ -66,6 +66,8 @@ model CartItem {
 }
 
 model Order {
+  /// Phase 49: placed from a buying group's group order round
+  groupRoundId          String?
   id                    String        @id @default(cuid())
   number                String        @unique // FO-2026-000001
   /// Phase 43: excise added by FIRINGI (own lines, VAT at the goods rate) and excise already in the prices

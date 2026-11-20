@@ -16,11 +16,12 @@ const money = (n: number, locale: string) => new Intl.NumberFormat(locale, { sty
 export type FormOptions = {
   offers: { id: string; label: string; sku: string }[]; groups: { id: string; name: string; own: boolean }[]; segments: { id: string; name: string }[];
   categories: { id: string; name: string; depth: number }[]; brands: { id: string; name: string }[]; countries: { code: string; name: string; flag: string | null }[];
+  buyingGroups?: { id: string; name: string }[];
 };
 export type Allowed = { kinds: string[]; periods: string[]; audiences: string[]; country: boolean; perShop: boolean; maxPct: number; freeGoodsDays: number; auto: boolean };
 export type Initial = {
   id: string; sellerCompanyId: string; name: string; description: string | null; kind: string; period: string; rules: Record<string, unknown>; validFrom: string; validTo: string | null;
-  audience: string; segmentId: string | null; groupId: string | null; companies: { id: string; name: string }[]; countries: string[]; perShop: boolean;
+  audience: string; segmentId: string | null; groupId: string | null; buyingGroupId?: string | null; companies: { id: string; name: string }[]; countries: string[]; perShop: boolean;
   offerIds: string[]; categoryIds: string[]; brandIds: string[]; rewardOfferId: string | null; freeGoodsDays: number;
 };
 
@@ -128,6 +129,7 @@ export function RebateForm({ l, locale, allowed, options: initialOptions, initia
   const [audience, setAudience] = useState(initial?.audience ?? allowed.audiences[0] ?? "ALL");
   const [segmentId, setSegmentId] = useState(initial?.segmentId ?? "");
   const [groupId, setGroupId] = useState(initial?.groupId ?? "");
+  const [buyingGroupId, setBuyingGroupId] = useState(initial?.buyingGroupId ?? "");
   const [companies, setCompanies] = useState(initial?.companies ?? []);
   const [countries, setCountries] = useState(initial?.countries ?? []);
   const [perShop, setPerShop] = useState(initial?.perShop ?? false);
@@ -157,7 +159,7 @@ export function RebateForm({ l, locale, allowed, options: initialOptions, initia
   const save = (submit: boolean) => run(
     () => saveBonusAction({
       id: initial?.id ?? null, sellerCompanyId: suppliers ? seller : null, name, description: description || null, kind: kind as "VOLUME", period: period as "MONTH", rules,
-      validFrom, validTo: validTo || null, audience: audience as "ALL", segmentId: segmentId || null, groupId: groupId || null, companyIds: companies.map((c) => c.id),
+      validFrom, validTo: validTo || null, audience: audience as "ALL", segmentId: segmentId || null, groupId: groupId || null, buyingGroupId: buyingGroupId || null, companyIds: companies.map((c) => c.id),
       countries, perShop, offerIds: some ? offerIds : [], categoryIds: some ? categoryIds : [], brandIds: some ? brandIds : [],
       rewardOfferId: kind === "FREE_GOODS" ? rewardOfferId || null : null, freeGoodsDays: Number(freeDays) || null, submit,
     }),
@@ -273,6 +275,12 @@ export function RebateForm({ l, locale, allowed, options: initialOptions, initia
         {audience === "SEGMENT" && <div className="max-w-md"><Label htmlFor="rb-seg">{l["f.segment"]}</Label><Select id="rb-seg" value={segmentId} onChange={(e) => setSegmentId(e.target.value)}><option value="">{l["f.chooseOne"]}</option>{options.segments.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</Select></div>}
         {audience === "GROUP" && <div className="max-w-md"><Label htmlFor="rb-grp">{l["f.group"]}</Label><Select id="rb-grp" value={groupId} onChange={(e) => setGroupId(e.target.value)}><option value="">{l["f.chooseOne"]}</option>{options.groups.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}</Select></div>}
         {audience === "COMPANIES" && <CustomerPicker l={l} value={companies} onChange={setCompanies} />}
+        {audience === "BUYING_GROUP" && (
+          <div className="max-w-md"><Label htmlFor="rb-bg">{l["f.buyingGroup"]}</Label>
+            <Select id="rb-bg" value={buyingGroupId} onChange={(e) => setBuyingGroupId(e.target.value)} data-testid="rb-buying-group"><option value="">{l["f.chooseOne"]}</option>{(options.buyingGroups ?? []).map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}</Select>
+            <p className="mt-1 text-xs text-muted-foreground">{l["f.buyingGroupHint"]}</p>
+          </div>
+        )}
         {allowed.country && (
           <div>
             <Label>{l["f.countries"]}</Label>
@@ -285,7 +293,7 @@ export function RebateForm({ l, locale, allowed, options: initialOptions, initia
             {!countries.length && <p className="mt-1 text-xs text-muted-foreground">{l["f.allCountries"]}</p>}
           </div>
         )}
-        {allowed.perShop && <label className="flex items-start gap-2 text-sm"><input type="checkbox" className="mt-0.5" checked={perShop} onChange={(e) => setPerShop(e.target.checked)} /><span>{l["f.perShop"]}<span className="block text-xs text-muted-foreground">{l["f.perShopHint"]}</span></span></label>}
+        {allowed.perShop && audience !== "BUYING_GROUP" && <label className="flex items-start gap-2 text-sm"><input type="checkbox" className="mt-0.5" checked={perShop} onChange={(e) => setPerShop(e.target.checked)} /><span>{l["f.perShop"]}<span className="block text-xs text-muted-foreground">{l["f.perShopHint"]}</span></span></label>}
       </fieldset>
 
       <div className="flex flex-wrap gap-2">

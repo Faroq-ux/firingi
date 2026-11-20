@@ -885,7 +885,8 @@
     "Till Settings": "Impostazioni cassa",
     "Till Staff": "Personale di cassa",
     "Rebates & Bonuses": "Premi e bonus",
-    "My Bonuses": "I miei bonus"
+    "My Bonuses": "I miei bonus",
+    "Buying Groups": "Gruppi d'acquisto"
   },
   "delivery": {
     "title": "Consegna",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Merce omaggio per Lei",
       "body": "\"{name}\" di {supplier}: {qty} × {product} in omaggio sul Suo prossimo ordine. Da utilizzare entro il {date}."
+    },
+    "group_review": {
+      "title": "Gruppo d'acquisto da verificare",
+      "body": "{company} ha creato il gruppo d'acquisto \"{name}\". Partirà solo dopo l'approvazione di FIRINGI."
+    },
+    "group_decided": {
+      "title": "Il tuo gruppo d'acquisto: {decision}",
+      "body": "Decisione di FIRINGI su \"{name}\": {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Invito a un gruppo d'acquisto",
+      "body": "{company} invita la tua azienda a unirsi al gruppo d'acquisto \"{name}\"."
+    },
+    "group_join_request": {
+      "title": "Richiesta di adesione a \"{name}\"",
+      "body": "{company} chiede di unirsi al tuo gruppo d'acquisto \"{name}\"."
+    },
+    "group_join_decided": {
+      "title": "Gruppo d'acquisto \"{name}\"",
+      "body": "La tua richiesta di adesione a \"{name}\": {decision}."
+    },
+    "group_prices": {
+      "title": "Prezzi di gruppo da {supplier}",
+      "body": "{supplier} ora applica prezzi dedicati al gruppo d'acquisto \"{name}\"."
+    },
+    "group_round_opened": {
+      "title": "Ordine di gruppo: {title}",
+      "body": "\"{name}\" ha aperto un ordine di gruppo con {supplier}. Aggiungi ciò che ti serve entro il {date}."
+    },
+    "group_round_placed": {
+      "title": "Ordine di gruppo inviato: {title}",
+      "body": "Il tuo ordine dall'ordine di gruppo \"{title}\" ({name}) è stato inviato."
+    },
+    "group_round_failed": {
+      "title": "Ordine di gruppo non inviato: {title}",
+      "body": "La tua parte dell'ordine di gruppo \"{title}\" ({name}) non è stata inviata: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Ordine di gruppo: {orders} ordini",
+      "body": "Il gruppo d'acquisto \"{name}\" ha inviato insieme {orders} ordini (\"{title}\"), con consegna il {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Avvia accordo",
       "saved": "Salvato.",
       "sent": "Inviato a FIRINGI.",
-      "started": "L'accordo è attivo."
+      "started": "L'accordo è attivo.",
+      "buyingGroup": "Gruppo d'acquisto",
+      "buyingGroupHint": "Gli acquisti di tutti contano insieme; ogni membro riceve una quota del bonus in base a quanto ha acquistato."
     },
     "audience": {
       "ALL": "Tutti i clienti",
       "SEGMENT": "Un segmento",
       "GROUP": "Un gruppo clienti",
-      "COMPANIES": "Clienti scelti"
+      "COMPANIES": "Clienti scelti",
+      "BUYING_GROUP": "Un gruppo d'acquisto"
     },
     "end": "Termina accordo",
     "endConfirm": "Terminare questo accordo? I clienti mantengono quanto maturato nel periodo in corso.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Quanto ha maturato",
     "noEarned": "Nessun importo ancora maturato.",
     "creditNote": "Nota di credito",
-    "freeInCart": "{n} in omaggio (bonus)"
+    "freeInCart": "{n} in omaggio (bonus)",
+    "groupProgress": "Gruppo {name}: {amount} acquistati da {n} membri"
+  },
+  "groups": {
+    "title": "Gruppi d'acquisto",
+    "intro": "Unisciti ad altri ristoranti e negozi: acquista insieme a loro a prezzi di gruppo dai fornitori, raggiungi insieme gli obiettivi premio (ognuno riceve una quota del bonus in base a quanto ha acquistato) e ordina insieme per lo stesso giorno di consegna.",
+    "closed": {
+      "OFF": "I gruppi d'acquisto sono al momento disattivati.",
+      "COMPANY_OFF": "I gruppi d'acquisto non sono disponibili per la tua azienda. Contatta FIRINGI.",
+      "TYPE_OFF": "I gruppi d'acquisto non sono ancora disponibili per il tuo tipo di attività."
+    },
+    "invitations": "Inviti",
+    "invitedTo": "Sei invitato a unirti a {name}.",
+    "join": "Unisciti",
+    "decline": "Rifiuta",
+    "myGroups": "I miei gruppi",
+    "noGroups": "Non fai ancora parte di un gruppo d'acquisto.",
+    "membersN": "{n} membri",
+    "status": {
+      "PENDING": "In attesa di FIRINGI",
+      "APPROVED": "Attivo",
+      "REJECTED": "Rifiutato",
+      "CLOSED": "Chiuso"
+    },
+    "memberStatus": {
+      "INVITED": "Invitato",
+      "REQUESTED": "Richiesta inviata",
+      "ACTIVE": "Membro",
+      "DECLINED": "Ha rifiutato",
+      "LEFT": "Uscito",
+      "REMOVED": "Rimosso"
+    },
+    "role": {
+      "ADMIN": "Amministratore",
+      "MEMBER": "Membro"
+    },
+    "create": "Crea un gruppo",
+    "createHint": "FIRINGI verifica ogni nuovo gruppo prima che parta. Ne sarai l'amministratore e potrai invitare altre aziende.",
+    "createHintAuto": "Il gruppo parte subito. Ne sarai l'amministratore e potrai invitare altre aziende.",
+    "name": "Nome del gruppo",
+    "namePh": "es. Ristoranti dell'Alfama",
+    "description": "Di cosa si occupa il gruppo (facoltativo)",
+    "openLabel": "Le altre aziende possono trovare il gruppo e chiedere di unirsi",
+    "createBtn": "Crea il gruppo",
+    "created": "Gruppo creato.",
+    "findTitle": "Trova un gruppo a cui unirti",
+    "search": "Cerca per nome…",
+    "noOpen": "Nessun gruppo aperto trovato.",
+    "askJoin": "Chiedi di unirti",
+    "message": "Messaggio al gruppo (facoltativo)",
+    "asked": "Richiesta inviata.",
+    "membersTitle": "Membri",
+    "invite": "Invita un'azienda",
+    "taxId": "NIF o partita IVA",
+    "inviteBtn": "Invita",
+    "invitedOk": "Invito inviato a {company}.",
+    "requests": "Richieste di adesione",
+    "accept": "Accetta",
+    "makeAdmin": "Rendi amministratore",
+    "makeMember": "Rendi membro",
+    "remove": "Rimuovi",
+    "removeConfirm": "Rimuovere questa azienda dal gruppo?",
+    "leave": "Lascia il gruppo",
+    "leaveConfirm": "Vuoi lasciare questo gruppo? I prezzi di gruppo e i bonus condivisi terminano per la tua azienda.",
+    "closeGroup": "Chiudi il gruppo",
+    "closeConfirm": "Chiudere il gruppo per tutti? Gli ordini di gruppo aperti vengono annullati e i prezzi di gruppo terminano.",
+    "you": "tu",
+    "since": "Membro dal {date}",
+    "edit": "Dettagli del gruppo",
+    "save": "Salva",
+    "saved": "Salvato.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Prezzi di gruppo",
+    "pricesIntro": "Fornitori che applicano a questo gruppo prezzi dedicati — i membri li vedono nel negozio e nel carrello.",
+    "noPrices": "Nessun fornitore applica ancora prezzi dedicati al gruppo.",
+    "priceRow": "{supplier}: {n} prodotti",
+    "until": "fino al {date}",
+    "dealsTitle": "Accordi di gruppo",
+    "dealsIntro": "Accordi premio in cui gli acquisti di tutti contano insieme; ogni membro riceve una quota del bonus in base a quanto ha acquistato.",
+    "noDeals": "Nessun accordo di gruppo attivo.",
+    "seeBonuses": "Vedi i progressi in I miei bonus",
+    "roundsTitle": "Ordini di gruppo",
+    "roundsIntro": "I membri aggiungono articoli a un ordine comune con un solo fornitore fino alla chiusura; ogni azienda riceve il proprio ordine e la propria fattura, tutto consegnato lo stesso giorno.",
+    "noRounds": "Ancora nessun ordine di gruppo.",
+    "newRound": "Nuovo ordine di gruppo",
+    "supplier": "Fornitore",
+    "roundTitle": "Nome",
+    "roundTitlePh": "es. Consegna del venerdì",
+    "closesAt": "Chiusura",
+    "deliveryDate": "Giorno di consegna",
+    "note": "Nota per i membri (facoltativo)",
+    "openRoundBtn": "Apri l'ordine di gruppo",
+    "roundOpened": "Ordine di gruppo aperto — i membri sono stati avvisati.",
+    "roundStatus": {
+      "OPEN": "Aperto",
+      "PLACED": "Inviato",
+      "CANCELLED": "Annullato"
+    },
+    "closes": "Chiude il {date}",
+    "deliveredOn": "Consegna il {date}",
+    "linesN": "{n} righe",
+    "addProduct": "Aggiungi un prodotto",
+    "searchProduct": "Cerca tra i prodotti del fornitore…",
+    "qty": "Qtà",
+    "add": "Aggiungi",
+    "myLines": "Le mie righe",
+    "noLines": "Non hai ancora aggiunto nulla.",
+    "address": "Consegna a",
+    "totals": "L'ordine del gruppo",
+    "totalsHint": "Tutto ciò che i membri hanno aggiunto finora.",
+    "product": "Prodotto",
+    "units": "Unità",
+    "membersCol": "Membri",
+    "placeNow": "Invia gli ordini ora",
+    "placeConfirm": "Chiudere l'ordine di gruppo e inviare ora gli ordini di tutti i membri?",
+    "cancelRound": "Annulla l'ordine di gruppo",
+    "cancelConfirm": "Annullare questo ordine di gruppo? Non verrà ordinato nulla.",
+    "placed": "Ordini inviati: {placed}. Non inviati: {failed}.",
+    "closedNote": "Questo ordine di gruppo è chiuso.",
+    "memberOrders": "Ordini dei membri",
+    "order": "Ordine",
+    "failed": "Non inviato: {reason}",
+    "back": "Torna al gruppo",
+    "reportTitle": "Acquisti del gruppo",
+    "period": {
+      "MONTH": "Questo mese",
+      "QUARTER": "Questo trimestre",
+      "YEAR": "Quest'anno"
+    },
+    "total": "Totale del gruppo",
+    "myShare": "I tuoi acquisti",
+    "share": "{pct} % del gruppo",
+    "bonusEarned": "Bonus maturati insieme",
+    "freeUnits": "{n} unità omaggio",
+    "byMember": "Per membro",
+    "bySupplier": "Per fornitore",
+    "orders": "Ordini",
+    "net": "Acquistato (IVA esclusa)",
+    "noPurchases": "Ancora nessun acquisto in questo periodo.",
+    "vTitle": "Gruppi d'acquisto",
+    "vIntro": "Ristoranti e negozi che acquistano insieme. Applica a un gruppo prezzi dedicati (i membri li vedono nel negozio e nel carrello) oppure attiva per un gruppo un accordo premio i cui obiettivi contano gli acquisti di tutti (Premi e bonus).",
+    "vNoGroups": "Ancora nessun gruppo d'acquisto.",
+    "vMembers": "{n} membri ({buyers} possono acquistare da te)",
+    "vCurrent": "Prezzi di gruppo: {n} prodotti",
+    "vNone": "Nessun prezzo di gruppo",
+    "vSet": "Imposta prezzi di gruppo",
+    "vModePct": "Uno sconto % su tutto",
+    "vModeItems": "Prodotti scelti",
+    "vPct": "% di sconto sui miei prezzi base",
+    "vPctHint": "Per ogni prodotto con un prezzo base.",
+    "vPrice": "Prezzo di gruppo (€, IVA esclusa)",
+    "vBase": "Base {price}",
+    "vValidTo": "Fino al (facoltativo)",
+    "vSave": "Applica questi prezzi",
+    "vSaved": "Ora i membri del gruppo vedono questi prezzi.",
+    "vStop": "Interrompi i prezzi di gruppo",
+    "vStopped": "Prezzi di gruppo interrotti.",
+    "notForYou": "Questo fornitore non vende al tuo tipo di attività, quindi non puoi aggiungere prodotti a questo ordine di gruppo."
   }
 }

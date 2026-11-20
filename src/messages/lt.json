@@ -885,7 +885,8 @@
     "Till Settings": "Kasos nustatymai",
     "Till Staff": "Kasos personalas",
     "Rebates & Bonuses": "Nuolaidos ir premijos",
-    "My Bonuses": "Mano premijos"
+    "My Bonuses": "Mano premijos",
+    "Buying Groups": "Pirkimo grupės"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Nemokamos prekės Jums",
       "body": "„{name}“ (tiekėjas {supplier}): {qty} × {product} nemokamai kitame užsakyme. Atsiimkite iki {date}."
+    },
+    "group_review": {
+      "title": "Pirkimo grupė patikrinimui",
+      "body": "{company} sukūrė pirkimo grupę „{name}“. Ji pradės veikti tik FIRINGI ją patvirtinus."
+    },
+    "group_decided": {
+      "title": "Jūsų pirkimo grupė: {decision}",
+      "body": "FIRINGI sprendimas dėl „{name}“: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Kvietimas į pirkimo grupę",
+      "body": "{company} kviečia Jūsų įmonę prisijungti prie pirkimo grupės „{name}“."
+    },
+    "group_join_request": {
+      "title": "Prašymas prisijungti prie „{name}“",
+      "body": "{company} prašo prisijungti prie Jūsų pirkimo grupės „{name}“."
+    },
+    "group_join_decided": {
+      "title": "Pirkimo grupė „{name}“",
+      "body": "Jūsų prašymas prisijungti prie „{name}“: {decision}."
+    },
+    "group_prices": {
+      "title": "Grupės kainos iš {supplier}",
+      "body": "{supplier} dabar taiko pirkimo grupei „{name}“ savo kainas."
+    },
+    "group_round_opened": {
+      "title": "Grupės užsakymas: {title}",
+      "body": "„{name}“ atidarė grupės užsakymą iš {supplier}. Pridėkite, ko reikia, iki {date}."
+    },
+    "group_round_placed": {
+      "title": "Grupės užsakymas pateiktas: {title}",
+      "body": "Jūsų užsakymas iš grupės užsakymo „{title}“ ({name}) pateiktas."
+    },
+    "group_round_failed": {
+      "title": "Grupės užsakymas nepateiktas: {title}",
+      "body": "Jūsų dalies grupės užsakyme „{title}“ ({name}) pateikti nepavyko: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Grupės užsakymas: užsakymų {orders}",
+      "body": "Pirkimo grupė „{name}“ kartu pateikė užsakymų: {orders} („{title}“), pristatymas {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Pradėti susitarimą",
       "saved": "Išsaugota.",
       "sent": "Išsiųsta FIRINGI.",
-      "started": "Susitarimas galioja."
+      "started": "Susitarimas galioja.",
+      "buyingGroup": "Pirkimo grupė",
+      "buyingGroupHint": "Visų pirkiniai skaičiuojami kartu; kiekvienas narys gauna premijos dalį pagal tai, ką nupirko."
     },
     "audience": {
       "ALL": "Visi klientai",
       "SEGMENT": "Segmentas",
       "GROUP": "Klientų grupė",
-      "COMPANIES": "Pasirinkti klientai"
+      "COMPANIES": "Pasirinkti klientai",
+      "BUYING_GROUP": "Pirkimo grupė"
     },
     "end": "Nutraukti susitarimą",
     "endConfirm": "Nutraukti šį susitarimą? Klientai išsaugo tai, ką uždirba einamuoju laikotarpiu.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Ką uždirbote",
     "noEarned": "Dar nieko neuždirbta.",
     "creditNote": "Kreditinė sąskaita faktūra",
-    "freeInCart": "{n} nemokamai (premija)"
+    "freeInCart": "{n} nemokamai (premija)",
+    "groupProgress": "Grupė {name}: nupirkta už {amount}, narių: {n}"
+  },
+  "groups": {
+    "title": "Pirkimo grupės",
+    "intro": "Junkitės su kitais restoranais ir parduotuvėmis: pirkite kartu grupės kainomis iš tiekėjų, kartu pasiekite nuolaidų tikslus (kiekvienas gauna premijos dalį pagal tai, ką nupirko) ir užsakykite kartu tai pačiai pristatymo dienai.",
+    "closed": {
+      "OFF": "Pirkimo grupės šiuo metu išjungtos.",
+      "COMPANY_OFF": "Pirkimo grupės Jūsų įmonei neprieinamos. Susisiekite su FIRINGI.",
+      "TYPE_OFF": "Pirkimo grupės Jūsų tipo įmonėms dar neprieinamos."
+    },
+    "invitations": "Kvietimai",
+    "invitedTo": "Esate kviečiami prisijungti prie {name}.",
+    "join": "Prisijungti",
+    "decline": "Atmesti",
+    "myGroups": "Mano grupės",
+    "noGroups": "Dar nepriklausote jokiai pirkimo grupei.",
+    "membersN": "Narių: {n}",
+    "status": {
+      "PENDING": "Laukiama FIRINGI",
+      "APPROVED": "Aktyvi",
+      "REJECTED": "Atmesta",
+      "CLOSED": "Uždaryta"
+    },
+    "memberStatus": {
+      "INVITED": "Pakviesta",
+      "REQUESTED": "Paprašė prisijungti",
+      "ACTIVE": "Narys",
+      "DECLINED": "Atsisakė",
+      "LEFT": "Išstojo",
+      "REMOVED": "Pašalinta"
+    },
+    "role": {
+      "ADMIN": "Administratorius",
+      "MEMBER": "Narys"
+    },
+    "create": "Kurti grupę",
+    "createHint": "FIRINGI patikrina naują grupę prieš jai pradedant veikti. Būsite jos administratorius ir galėsite kviesti kitas įmones.",
+    "createHintAuto": "Grupė pradeda veikti iš karto. Būsite jos administratorius ir galėsite kviesti kitas įmones.",
+    "name": "Grupės pavadinimas",
+    "namePh": "pvz. Alfamos restoranai",
+    "description": "Apie ką ši grupė (neprivaloma)",
+    "openLabel": "Kitos įmonės gali rasti grupę ir paprašyti prisijungti",
+    "createBtn": "Sukurti grupę",
+    "created": "Grupė sukurta.",
+    "findTitle": "Raskite grupę, prie kurios prisijungti",
+    "search": "Ieškoti pagal pavadinimą…",
+    "noOpen": "Atvirų grupių nerasta.",
+    "askJoin": "Paprašyti prisijungti",
+    "message": "Žinutė grupei (neprivaloma)",
+    "asked": "Prašymas išsiųstas.",
+    "membersTitle": "Nariai",
+    "invite": "Pakvieskite įmonę",
+    "taxId": "NIF arba PVM mokėtojo kodas",
+    "inviteBtn": "Pakviesti",
+    "invitedOk": "Kvietimas išsiųstas: {company}.",
+    "requests": "Prašymai prisijungti",
+    "accept": "Priimti",
+    "makeAdmin": "Skirti administratoriumi",
+    "makeMember": "Skirti nariu",
+    "remove": "Pašalinti",
+    "removeConfirm": "Pašalinti šią įmonę iš grupės?",
+    "leave": "Išeiti iš grupės",
+    "leaveConfirm": "Išeiti iš šios grupės? Grupės kainos ir bendros premijos Jūsų įmonei nebegalios.",
+    "closeGroup": "Uždaryti grupę",
+    "closeConfirm": "Uždaryti šią grupę visiems? Atviri grupės užsakymai bus atšaukti, o grupės kainos nebegalios.",
+    "you": "jūs",
+    "since": "Narys nuo {date}",
+    "edit": "Grupės duomenys",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Grupės kainos",
+    "pricesIntro": "Tiekėjai, kurie šiai grupei taiko savo kainas — nariai jas mato parduotuvėje ir krepšelyje.",
+    "noPrices": "Dar nė vienas tiekėjas netaiko grupei savo kainų.",
+    "priceRow": "{supplier}: produktų {n}",
+    "until": "iki {date}",
+    "dealsTitle": "Grupės susitarimai",
+    "dealsIntro": "Nuolaidų susitarimai, kuriuose visų pirkiniai skaičiuojami kartu; kiekvienas narys gauna premijos dalį pagal tai, ką nupirko.",
+    "noDeals": "Vykdomų grupės susitarimų nėra.",
+    "seeBonuses": "Pažangą matysite skiltyje Mano premijos",
+    "roundsTitle": "Grupės užsakymai",
+    "roundsIntro": "Nariai pildo bendrą užsakymą iš vieno tiekėjo, kol jis uždaromas; kiekviena įmonė gauna savo užsakymą ir sąskaitą faktūrą, viskas pristatoma tą pačią dieną.",
+    "noRounds": "Grupės užsakymų dar nėra.",
+    "newRound": "Naujas grupės užsakymas",
+    "supplier": "Tiekėjas",
+    "roundTitle": "Pavadinimas",
+    "roundTitlePh": "pvz. Penktadienio pristatymas",
+    "closesAt": "Uždaromas",
+    "deliveryDate": "Pristatymo diena",
+    "note": "Pastaba nariams (neprivaloma)",
+    "openRoundBtn": "Atidaryti grupės užsakymą",
+    "roundOpened": "Grupės užsakymas atidarytas — nariai informuoti.",
+    "roundStatus": {
+      "OPEN": "Atidarytas",
+      "PLACED": "Pateiktas",
+      "CANCELLED": "Atšauktas"
+    },
+    "closes": "Uždaromas {date}",
+    "deliveredOn": "Pristatymas {date}",
+    "linesN": "Eilučių: {n}",
+    "addProduct": "Pridėti produktą",
+    "searchProduct": "Ieškoti tiekėjo produktų…",
+    "qty": "Kiekis",
+    "add": "Pridėti",
+    "myLines": "Mano eilutės",
+    "noLines": "Dar nieko nepridėjote.",
+    "address": "Pristatyti į",
+    "totals": "Grupės užsakymas",
+    "totalsHint": "Viskas, ką nariai iki šiol pridėjo.",
+    "product": "Produktas",
+    "units": "Vienetai",
+    "membersCol": "Nariai",
+    "placeNow": "Pateikti užsakymus dabar",
+    "placeConfirm": "Uždaryti grupės užsakymą ir dabar pateikti kiekvieno nario užsakymą?",
+    "cancelRound": "Atšaukti grupės užsakymą",
+    "cancelConfirm": "Atšaukti šį grupės užsakymą? Niekas nebus užsakyta.",
+    "placed": "Pateikta užsakymų: {placed}. Nepateikta: {failed}.",
+    "closedNote": "Šis grupės užsakymas uždarytas.",
+    "memberOrders": "Narių užsakymai",
+    "order": "Užsakymas",
+    "failed": "Nepateiktas: {reason}",
+    "back": "Atgal į grupę",
+    "reportTitle": "Grupės pirkimai",
+    "period": {
+      "MONTH": "Šis mėnuo",
+      "QUARTER": "Šis ketvirtis",
+      "YEAR": "Šie metai"
+    },
+    "total": "Grupės suma",
+    "myShare": "Jūsų pirkimai",
+    "share": "{pct} % grupės",
+    "bonusEarned": "Kartu uždirbtos premijos",
+    "freeUnits": "Nemokamų vienetų: {n}",
+    "byMember": "Pagal narį",
+    "bySupplier": "Pagal tiekėją",
+    "orders": "Užsakymai",
+    "net": "Nupirkta (be PVM)",
+    "noPurchases": "Šiuo laikotarpiu pirkimų dar nėra.",
+    "vTitle": "Pirkimo grupės",
+    "vIntro": "Restoranai ir parduotuvės, perkantys kartu. Taikykite grupei savo kainas (nariai jas mato parduotuvėje ir krepšelyje) arba sukurkite nuolaidų susitarimą grupei, kurios tikslams skaičiuojami visų pirkiniai (Nuolaidos ir premijos).",
+    "vNoGroups": "Pirkimo grupių dar nėra.",
+    "vMembers": "Narių: {n} (iš jų {buyers} gali pirkti iš Jūsų)",
+    "vCurrent": "Grupės kainos: produktų {n}",
+    "vNone": "Grupės kainų nėra",
+    "vSet": "Nustatyti grupės kainas",
+    "vModePct": "% nuolaida viskam",
+    "vModeItems": "Pasirinkti produktai",
+    "vPct": "% nuolaida nuo mano bazinių kainų",
+    "vPctHint": "Kiekvienam produktui, turinčiam bazinę kainą.",
+    "vPrice": "Grupės kaina (€, be PVM)",
+    "vBase": "Bazinė {price}",
+    "vValidTo": "Iki (neprivaloma)",
+    "vSave": "Taikyti šias kainas",
+    "vSaved": "Grupės nariai dabar mato šias kainas.",
+    "vStop": "Nutraukti grupės kainas",
+    "vStopped": "Grupės kainos nutrauktos.",
+    "notForYou": "Šis tiekėjas neparduoda Jūsų verslo tipui, todėl negalite nieko pridėti prie šio grupės užsakymo."
   }
 }

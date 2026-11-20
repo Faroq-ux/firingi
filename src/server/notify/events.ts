@@ -186,6 +186,17 @@ export const EVENTS: EventDef[] = [
   E("catchweight.over_limit", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "product", "weighed", "max"]),
   E("catchweight.over_accepted", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number"]),
   // clearance deals (Phase 38)
+  // Phase 49 — buying groups
+  E("group.review", "account", ["admin.customers.manage", "admin.customers.approve"], ["EMAIL"], ["company", "name"]),
+  E("group.decided", "account", ["company.profile.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["name", "decision", "reason"]),
+  E("group.invited", "account", ["company.profile.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["name", "company"]),
+  E("group.join_request", "account", ["company.profile.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["name", "company"]),
+  E("group.join_decided", "account", ["company.profile.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["name", "decision"]),
+  E("group.prices", "catalogue", ["company.profile.manage", "buyer.orders.place"], ["EMAIL", "PUSH"], ["name", "supplier"]),
+  E("group.round_opened", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "supplier", "date"]),
+  E("group.round_placed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "reason"]),
+  E("group.round_failed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "reason"]),
+  E("group.round_supplier", "orders", VENDOR_ORDERS, ["EMAIL", "PUSH"], ["name", "title", "orders", "date"]),
   // Phase 48 — rebates & bonuses
   E("rebate.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "name"]),
   E("rebate.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name"]),

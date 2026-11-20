@@ -691,6 +691,28 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Buying groups (Phase 49)
+
+Restaurants, shops and wholesalers **buy together**. A business starts a group (*Buying Groups* in the buyer portal)
+and becomes its admin; **FIRINGI approves** new groups (or, with approval AUTO, they start at once). Members join by
+**invitation by NIF / VAT number** (the business accepts or declines) or, for open groups, by **asking to join** (a
+group admin accepts); a business can be in **several groups** when FIRINGI allows it. What a group gets:
+**group prices** — a supplier gives the group a % off its base prices or chosen products at chosen prices
+(*Products › Buying Groups*); members see them in the shop and the cart through the normal price lists;
+**pooled rebate targets** — a rebate deal (Phase 48) for a buying group counts **everyone's purchases together**, and
+when a period is settled the bonus (or the free units) is **shared by what each member bought**, each member getting
+its own credit note from FIRINGI; **group orders** — a group admin opens a shared order with one supplier until a
+closing time; members add their lines (each sees the group's totals), and at the close (or "place now") **each
+member's own order is placed** for the same delivery day — FIRINGI still invoices every member itself; a member that
+can't buy from that supplier (customers buy from wholesalers, wholesalers from distributors) is told so;
+**group reports** — the group's purchases this month / quarter / year, by supplier, each member's share and the
+bonuses earned together (group admins see every member; members see their own share). **Every option is FIRINGI's
+switch** (*Customers › Buying Groups › Settings*): the feature, which buyer types (wholesale customers, wholesalers)
+join and which start groups, approval, each of the four features, join requests, several groups per business, members
+per group, how long a group order stays open — and **each business on / off** on its own. Commission and margins stay
+hidden. Details: [docs/buying-groups.md](docs/buying-groups.md).
+Tests: `tests/unit/buying-groups.test.ts`, `tests/integration/buying-groups.test.ts`, `node tests/e2e/buying-groups.mjs`.
+
 ## Rebates & bonuses (Phase 48)
 
 Suppliers (distributors, wholesalers) reward customers for what they buy over a **month, quarter, half-year or year**:

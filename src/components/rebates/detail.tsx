@@ -13,7 +13,7 @@ export const TONE = { DRAFT: "outline", PENDING: "warning", APPROVED: "success",
 export function allowedFrom(s: RebateSettings, admin: boolean): Allowed {
   const on = <K extends string>(o: Record<K, boolean>) => (Object.keys(o) as K[]).filter((k) => o[k]);
   return {
-    kinds: on(s.kinds), periods: on(s.periods), audiences: on({ ALL: s.audiences.ALL, SEGMENT: s.audiences.SEGMENT, GROUP: s.audiences.GROUP, COMPANIES: s.audiences.COMPANIES }),
+    kinds: on(s.kinds), periods: on(s.periods), audiences: on({ ALL: s.audiences.ALL, SEGMENT: s.audiences.SEGMENT, GROUP: s.audiences.GROUP, COMPANIES: s.audiences.COMPANIES, BUYING_GROUP: s.audiences.BUYING_GROUP }),
     country: s.audiences.COUNTRY, perShop: s.audiences.PER_SHOP, maxPct: s.maxPct, freeGoodsDays: s.freeGoodsDays, auto: admin || s.approval === "AUTO",
   };
 }
@@ -30,7 +30,7 @@ export function toInitial(b: TradeBonus, companies: { id: string; name: string }
   return {
     id: b.id, sellerCompanyId: b.sellerCompanyId, name: b.name, description: b.description, kind: b.kind, period: b.period, rules: b.rules as Record<string, unknown>,
     validFrom: b.validFrom.toISOString().slice(0, 10), validTo: b.validTo ? new Date(b.validTo.getTime() - 86_400_000).toISOString().slice(0, 10) : null,
-    audience: b.audience, segmentId: b.segmentId, groupId: b.groupId, companies, countries: b.countries, perShop: b.perShop,
+    audience: b.audience, segmentId: b.segmentId, groupId: b.groupId, buyingGroupId: b.buyingGroupId, companies, countries: b.countries, perShop: b.perShop,
     offerIds: b.offerIds, categoryIds: b.categoryIds, brandIds: b.brandIds, rewardOfferId: b.rewardOfferId, freeGoodsDays: b.freeGoodsDays,
   };
 }

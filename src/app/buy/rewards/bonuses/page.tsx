@@ -52,6 +52,7 @@ export default async function MyBonusesPage() {
               <CardContent className="space-y-3 text-sm">
                 <p className="break-words">{rulesText(l, b.rules, locale)}{b.kind === "FREE_GOODS" && b.rewardOfferId ? ` — ${m.labels[b.rewardOfferId] ?? ""}` : ""}</p>
                 {b.description && <p className="break-words text-muted-foreground">{b.description}</p>}
+                {b.group && <p className="rounded-lg bg-muted/50 px-3 py-2 text-xs" data-testid="rb-group">{fill(l.groupProgress, { name: b.group.name, amount: money(b.group.stats.amount), n: b.group.members })}</p>}
                 {b.rows.map((r) => (
                   <div key={r.branchId || "all"} className="space-y-1.5 rounded-lg border p-3">
                     {b.perShop && r.branchId && <p className="text-xs font-medium">{m.branches[r.branchId] ?? ""}</p>}

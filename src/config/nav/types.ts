@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P47" | "P48" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P47" | "P48" | "P49" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -52,6 +52,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P46: { en: "Phase 46 — E-invoicing", pt: "Fase 46 — Faturação eletrónica" },
   P47: { en: "Phase 47 — Till (POS)", pt: "Fase 47 — Caixa (POS)" },
   P48: { en: "Phase 48 — Rebates & Bonuses", pt: "Fase 48 — Rappel e Bónus" },
+  P49: { en: "Phase 49 — Buying Groups", pt: "Fase 49 — Grupos de Compra" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

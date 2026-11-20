@@ -885,7 +885,8 @@
     "Till Settings": "Setări casă",
     "Till Staff": "Personalul casei",
     "Rebates & Bonuses": "Rabaturi și bonusuri",
-    "My Bonuses": "Bonusurile mele"
+    "My Bonuses": "Bonusurile mele",
+    "Buying Groups": "Grupuri de achiziții"
   },
   "delivery": {
     "title": "Livrare",
@@ -1768,6 +1769,46 @@
     "rebate_free_goods": {
       "title": "Produse gratuite pentru dumneavoastră",
       "body": "„{name}” de la {supplier}: {qty} × {product} gratuit la următoarea comandă. Ridicați-le până la {date}."
+    },
+    "group_review": {
+      "title": "Grup de achiziții de verificat",
+      "body": "{company} a creat grupul de achiziții „{name}”. Acesta pornește doar după aprobarea FIRINGI."
+    },
+    "group_decided": {
+      "title": "Grupul dumneavoastră de achiziții: {decision}",
+      "body": "Decizia FIRINGI privind „{name}”: {decision}. {reason}"
+    },
+    "group_invited": {
+      "title": "Invitație într-un grup de achiziții",
+      "body": "{company} invită firma dumneavoastră să se alăture grupului de achiziții „{name}”."
+    },
+    "group_join_request": {
+      "title": "Cerere de aderare la „{name}”",
+      "body": "{company} cere să se alăture grupului dumneavoastră de achiziții „{name}”."
+    },
+    "group_join_decided": {
+      "title": "Grupul de achiziții „{name}”",
+      "body": "Cererea dumneavoastră de aderare la „{name}”: {decision}."
+    },
+    "group_prices": {
+      "title": "Prețuri de grup de la {supplier}",
+      "body": "{supplier} oferă acum grupului de achiziții „{name}” prețuri proprii."
+    },
+    "group_round_opened": {
+      "title": "Comandă de grup: {title}",
+      "body": "„{name}” a deschis o comandă de grup la {supplier}. Adăugați ce vă trebuie până la {date}."
+    },
+    "group_round_placed": {
+      "title": "Comandă de grup plasată: {title}",
+      "body": "Comanda dumneavoastră din comanda de grup „{title}” ({name}) a fost plasată."
+    },
+    "group_round_failed": {
+      "title": "Comandă de grup neplasată: {title}",
+      "body": "Partea dumneavoastră din comanda de grup „{title}” ({name}) nu a putut fi plasată: {reason}"
+    },
+    "group_round_supplier": {
+      "title": "Comandă de grup: {orders} comenzi",
+      "body": "Grupul de achiziții „{name}” a plasat împreună {orders} comenzi („{title}”), cu livrare pe {date}."
     }
   },
   "notifications": {
@@ -6400,13 +6441,16 @@
       "start": "Porniți acordul",
       "saved": "Salvat.",
       "sent": "Trimis la FIRINGI.",
-      "started": "Acordul este activ."
+      "started": "Acordul este activ.",
+      "buyingGroup": "Grup de achiziții",
+      "buyingGroupHint": "Achizițiile tuturor se adună; fiecare membru primește o parte din bonus după cât a cumpărat."
     },
     "audience": {
       "ALL": "Toți clienții",
       "SEGMENT": "Un segment",
       "GROUP": "Un grup de clienți",
-      "COMPANIES": "Clienți aleși"
+      "COMPANIES": "Clienți aleși",
+      "BUYING_GROUP": "Un grup de achiziții"
     },
     "end": "Încheiați acordul",
     "endConfirm": "Încheiați acest acord? Clienții păstrează ce au câștigat în perioada curentă.",
@@ -6498,6 +6542,163 @@
     "earnedTitle": "Ce ați câștigat",
     "noEarned": "Nimic câștigat încă.",
     "creditNote": "Factură de stornare",
-    "freeInCart": "{n} gratuit (bonus)"
+    "freeInCart": "{n} gratuit (bonus)",
+    "groupProgress": "Grupul {name}: {amount} cumpărat de {n} membri"
+  },
+  "groups": {
+    "title": "Grupuri de achiziții",
+    "intro": "Uniți-vă forțele cu alte restaurante și magazine: cumpărați împreună la prețuri de grup de la furnizori, atingeți împreună pragurile de rabat (fiecare primește o parte din bonus după cât a cumpărat) și comandați împreună pentru aceeași zi de livrare.",
+    "closed": {
+      "OFF": "Grupurile de achiziții sunt dezactivate momentan.",
+      "COMPANY_OFF": "Grupurile de achiziții nu sunt disponibile pentru firma dumneavoastră. Vă rugăm să contactați FIRINGI.",
+      "TYPE_OFF": "Grupurile de achiziții nu sunt încă disponibile pentru tipul dumneavoastră de firmă."
+    },
+    "invitations": "Invitații",
+    "invitedTo": "Sunteți invitat să vă alăturați grupului {name}.",
+    "join": "Intră în grup",
+    "decline": "Refuză",
+    "myGroups": "Grupurile mele",
+    "noGroups": "Nu faceți încă parte dintr-un grup de achiziții.",
+    "membersN": "{n} membri",
+    "status": {
+      "PENDING": "În așteptarea FIRINGI",
+      "APPROVED": "Activ",
+      "REJECTED": "Refuzat",
+      "CLOSED": "Închis"
+    },
+    "memberStatus": {
+      "INVITED": "Invitat",
+      "REQUESTED": "Cerere de aderare",
+      "ACTIVE": "Membru",
+      "DECLINED": "A refuzat",
+      "LEFT": "A părăsit grupul",
+      "REMOVED": "Eliminat"
+    },
+    "role": {
+      "ADMIN": "Administrator",
+      "MEMBER": "Membru"
+    },
+    "create": "Creează un grup",
+    "createHint": "FIRINGI verifică un grup nou înainte să pornească. Veți fi administratorul lui și puteți invita alte firme.",
+    "createHintAuto": "Grupul pornește imediat. Veți fi administratorul lui și puteți invita alte firme.",
+    "name": "Numele grupului",
+    "namePh": "ex. Restaurantele din Alfama",
+    "description": "Despre ce este grupul (opțional)",
+    "openLabel": "Alte firme pot găsi grupul și pot cere să se alăture",
+    "createBtn": "Creează grupul",
+    "created": "Grup creat.",
+    "findTitle": "Găsiți un grup căruia să vă alăturați",
+    "search": "Căutați după nume…",
+    "noOpen": "Nu s-au găsit grupuri deschise.",
+    "askJoin": "Solicită aderarea",
+    "message": "Mesaj pentru grup (opțional)",
+    "asked": "Cerere trimisă.",
+    "membersTitle": "Membri",
+    "invite": "Invitați o firmă",
+    "taxId": "NIF sau cod de TVA",
+    "inviteBtn": "Invită",
+    "invitedOk": "Invitație trimisă către {company}.",
+    "requests": "Cereri de aderare",
+    "accept": "Acceptă",
+    "makeAdmin": "Fă administrator",
+    "makeMember": "Fă membru",
+    "remove": "Elimină",
+    "removeConfirm": "Eliminați această firmă din grup?",
+    "leave": "Părăsește grupul",
+    "leaveConfirm": "Părăsiți acest grup? Prețurile de grup și bonusurile comune încetează pentru firma dumneavoastră.",
+    "closeGroup": "Închide grupul",
+    "closeConfirm": "Închideți acest grup pentru toți? Comenzile de grup deschise se anulează, iar prețurile de grup încetează.",
+    "you": "dumneavoastră",
+    "since": "Membru din {date}",
+    "edit": "Detaliile grupului",
+    "save": "Salvează",
+    "saved": "Salvat.",
+    "firingiNote": "FIRINGI: {note}",
+    "pricesTitle": "Prețuri de grup",
+    "pricesIntro": "Furnizori care oferă acestui grup prețuri proprii — membrii le văd în magazin și în coș.",
+    "noPrices": "Niciun furnizor nu oferă încă prețuri proprii grupului.",
+    "priceRow": "{supplier}: {n} produse",
+    "until": "până la {date}",
+    "dealsTitle": "Acorduri de grup",
+    "dealsIntro": "Acorduri de rabat în care achizițiile tuturor se adună; fiecare membru primește o parte din bonus după cât a cumpărat.",
+    "noDeals": "Niciun acord de grup în desfășurare.",
+    "seeBonuses": "Vedeți progresul în Bonusurile mele",
+    "roundsTitle": "Comenzi de grup",
+    "roundsIntro": "Membrii adaugă produse într-o comandă comună la un singur furnizor până la închiderea ei; fiecare firmă primește propria comandă și factură, toate livrate în aceeași zi.",
+    "noRounds": "Încă nu există comenzi de grup.",
+    "newRound": "Comandă de grup nouă",
+    "supplier": "Furnizor",
+    "roundTitle": "Nume",
+    "roundTitlePh": "ex. Livrarea de vineri",
+    "closesAt": "Se închide",
+    "deliveryDate": "Ziua livrării",
+    "note": "Notă pentru membri (opțional)",
+    "openRoundBtn": "Deschide comanda de grup",
+    "roundOpened": "Comanda de grup a fost deschisă — membrii au fost anunțați.",
+    "roundStatus": {
+      "OPEN": "Deschisă",
+      "PLACED": "Plasată",
+      "CANCELLED": "Anulată"
+    },
+    "closes": "Se închide {date}",
+    "deliveredOn": "Livrare {date}",
+    "linesN": "{n} poziții",
+    "addProduct": "Adaugă un produs",
+    "searchProduct": "Căutați în produsele furnizorului…",
+    "qty": "Cant.",
+    "add": "Adaugă",
+    "myLines": "Pozițiile mele",
+    "noLines": "Nu ați adăugat încă nimic.",
+    "address": "Livrare la",
+    "totals": "Comanda grupului",
+    "totalsHint": "Tot ce au adăugat membrii până acum.",
+    "product": "Produs",
+    "units": "Unități",
+    "membersCol": "Membri",
+    "placeNow": "Plasează comenzile acum",
+    "placeConfirm": "Închideți comanda de grup și plasați acum comenzile tuturor membrilor?",
+    "cancelRound": "Anulează comanda de grup",
+    "cancelConfirm": "Anulați această comandă de grup? Nu se va comanda nimic.",
+    "placed": "Comenzi plasate: {placed}. Neplasate: {failed}.",
+    "closedNote": "Această comandă de grup este închisă.",
+    "memberOrders": "Comenzile membrilor",
+    "order": "Comandă",
+    "failed": "Neplasată: {reason}",
+    "back": "Înapoi la grup",
+    "reportTitle": "Achizițiile grupului",
+    "period": {
+      "MONTH": "Luna aceasta",
+      "QUARTER": "Trimestrul acesta",
+      "YEAR": "Anul acesta"
+    },
+    "total": "Total grup",
+    "myShare": "Achizițiile dumneavoastră",
+    "share": "{pct} % din grup",
+    "bonusEarned": "Bonusuri câștigate împreună",
+    "freeUnits": "{n} unități gratuite",
+    "byMember": "După membru",
+    "bySupplier": "După furnizor",
+    "orders": "Comenzi",
+    "net": "Cumpărat (fără TVA)",
+    "noPurchases": "Încă nu există achiziții în această perioadă.",
+    "vTitle": "Grupuri de achiziții",
+    "vIntro": "Restaurante și magazine care cumpără împreună. Oferiți unui grup prețuri proprii (membrii le văd în magazin și în coș) sau derulați pentru un grup un acord de rabat ale cărui praguri adună achizițiile tuturor (Rabaturi și bonusuri).",
+    "vNoGroups": "Încă nu există grupuri de achiziții.",
+    "vMembers": "{n} membri ({buyers} pot cumpăra de la dumneavoastră)",
+    "vCurrent": "Prețuri de grup: {n} produse",
+    "vNone": "Fără prețuri de grup",
+    "vSet": "Stabiliți prețuri de grup",
+    "vModePct": "Un % reducere la tot",
+    "vModeItems": "Produse alese",
+    "vPct": "% reducere din prețurile mele de bază",
+    "vPctHint": "Pentru fiecare produs cu preț de bază.",
+    "vPrice": "Preț de grup (€, fără TVA)",
+    "vBase": "Bază {price}",
+    "vValidTo": "Până la (opțional)",
+    "vSave": "Aplică aceste prețuri",
+    "vSaved": "Membrii grupului văd acum aceste prețuri.",
+    "vStop": "Oprește prețurile de grup",
+    "vStopped": "Prețurile de grup au fost oprite.",
+    "notForYou": "Acest furnizor nu vinde tipului dvs. de afacere, așa că nu puteți adăuga la această comandă de grup."
   }
 }

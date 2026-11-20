@@ -1,0 +1,114 @@
+// Phase 49 — buying groups: small restaurants and shops (customers, wholesalers buying from distributors) pool their
+// purchases. A business starts a group and FIRINGI approves it; members join by invitation or by asking. Suppliers give
+// a group its own prices (a supplier-owned customer group kept in step with the members) and rebate deals whose targets
+// count the whole group's purchases (the bonus is shared by what each member bought). Group order rounds: members add
+// to a shared order with one supplier before a deadline; each member's order is placed at the close, delivered together.
+
+enum BuyingGroupStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CLOSED
+}
+
+enum BuyingGroupRole {
+  ADMIN
+  MEMBER
+}
+
+enum BuyingGroupMemberStatus {
+  INVITED
+  REQUESTED
+  ACTIVE
+  DECLINED
+  LEFT
+  REMOVED
+}
+
+enum GroupRoundStatus {
+  OPEN
+  PLACED
+  CANCELLED
+}
+
+model BuyingGroup {
+  id                 String            @id @default(cuid())
+  name               String
+  description        String?
+  countryId          String
+  /// listed for businesses to ask to join
+  open               Boolean           @default(true)
+  status             BuyingGroupStatus @default(PENDING)
+  reviewNote         String?
+  reviewedById       String?
+  reviewedAt         DateTime?
+  createdByCompanyId String
+  createdById        String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  country Country             @relation(fields: [countryId], references: [id])
+  members BuyingGroupMember[]
+  rounds  GroupOrderRound[]
+
+  @@index([status])
+}
+
+model BuyingGroupMember {
+  id          String                  @id @default(cuid())
+  groupId     String
+  companyId   String
+  role        BuyingGroupRole         @default(MEMBER)
+  status      BuyingGroupMemberStatus
+  /// who invited / the business's note with its request
+  invitedById String?
+  message     String?
+  joinedAt    DateTime?
+  leftAt      DateTime?
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+
+  group   BuyingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  company Company     @relation("BuyingGroupMembers", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, companyId])
+  @@index([companyId, status])
+}
+
+/// A shared order with one supplier: members add lines until it closes; each member's own order is placed then.
+model GroupOrderRound {
+  id              String           @id @default(cuid())
+  groupId         String
+  sellerCompanyId String
+  title           String
+  note            String?
+  closesAt        DateTime
+  deliveryDate    DateTime
+  status          GroupRoundStatus @default(OPEN)
+  placedAt        DateTime?
+  createdById     String
+  createdAt       DateTime         @default(now())
+
+  group BuyingGroup      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  lines GroupOrderLine[]
+
+  @@index([status, closesAt])
+}
+
+model GroupOrderLine {
+  id        String   @id @default(cuid())
+  roundId   String
+  companyId String
+  /// the person who added it (the order is placed in their name)
+  userId    String
+  offerId   String
+  qty       Int
+  addressId String?
+  orderId   String?
+  error     String?
+  updatedAt DateTime @updatedAt
+
+  round GroupOrderRound @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  @@unique([roundId, companyId, offerId])
+}
