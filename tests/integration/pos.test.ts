@@ -186,6 +186,8 @@ describe("a restaurant: menu, recipes from what it bought on FIRINGI, guests, ca
     // packs of this product Kebab House already holds from other tests (the order line depends on what is in stock)
     const others = (await prisma.purchasedLot.findMany({ where: { buyerCompanyId: kh.company.id, offerId: khOffer }, select: { qty: true, usedQty: true } })).reduce((a, l) => a + Math.max(0, l.qty - l.usedQty), 0);
     const soon = new Date(Date.now() + 5 * 86_400_000), later = new Date(Date.now() + 40 * 86_400_000);
+    // packs left by other tests expire after this test's two lots, so oldest-expiry-first picks "SOON"
+    await prisma.purchasedLot.updateMany({ where: { buyerCompanyId: kh.company.id, offerId: khOffer }, data: { expiresOn: new Date(Date.now() + 400 * 86_400_000) } });
     await prisma.purchasedLot.createMany({ data: [
       { buyerCompanyId: kh.company.id, orderId: order.id, offerId: khOffer, packagingUnitId: offer.packagingUnitId, sellerBatchId: "pos-test-late", lotCode: "LATE", expiresOn: later, qty: 3 },
       { buyerCompanyId: kh.company.id, orderId: order.id, offerId: khOffer, packagingUnitId: offer.packagingUnitId, sellerBatchId: "pos-test-soon", lotCode: "SOON", expiresOn: soon, qty: 2 },
