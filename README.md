@@ -691,6 +691,21 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Menu costing & food waste (Phase 54)
+
+For restaurants and shops in the buyer portal (**Kitchen**): **ingredients** costed per kg / litre / piece from what
+the business **paid on FIRINGI** (last or average price; one click from its purchases) or entered **by hand**, with
+**yield / prep loss**; **dishes and sub-recipes** costed per portion with **food cost %, margin and a target**, the
+**suggested price** (rounded to the house style, usable on the till item), **allergens per dish** from the products'
+food information (copied to the till), CO₂e per portion; dishes **imported from the till**; **menu engineering**
+(stars, plough-horses, puzzles, dogs) from till sales; **"what if an ingredient gets dearer"**. A **phone-first waste
+log** (from delivered lots, ingredients, dishes or anything; reason; cost, kg and CO₂e worked out), **waste reports
+and targets** (% of purchases), **use-first** list of lots near their date, **order-less** suggestions and
+**donations** kept apart. A daily job recomputes costs and sends price-rise, waste-over-target and use-first alerts.
+**Every part is FIRINGI's switch** (*Settings › Menu Costing & Waste*) — per business type and per business.
+Details: [docs/kitchen.md](docs/kitchen.md).
+Tests: `tests/unit/kitchen.test.ts`, `tests/integration/kitchen.test.ts`, `node tests/e2e/kitchen.mjs`.
+
 ## Product reviews & questions (Phase 53)
 
 Businesses that **received** a product review it — **stars, detail scores** (quality, value for money, packaging,

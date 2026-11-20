@@ -99,6 +99,8 @@ const defs = {
   "buyer.orders.view": { audience: "BUYER", module: "Orders", description: "View orders" },
   "buyer.claims.manage": { audience: "BUYER", module: "Orders", description: "Report problems with delivered goods (damaged, missing, wrong, quality) and follow the claims" },
   "buyer.orders.approve": { audience: "BUYER", module: "Orders", description: "Approve the team's orders and set the approval rules" },
+  "buyer.kitchen.manage": { audience: "BUYER", module: "Kitchen", description: "Menu costing: ingredients, recipes, prices, menu engineering; waste reports, targets and suggestions" },
+  "buyer.kitchen.waste": { audience: "BUYER", module: "Kitchen", description: "Log food waste and donations" },
   "buyer.reviews.write": { audience: "BUYER", module: "Reviews", description: "Review products the business received, ask and answer questions" },
   "buyer.invoices.view": { audience: "BUYER", module: "Finance", description: "View and download invoices" },
   "buyer.payments.view": { audience: "BUYER", module: "Finance", description: "View payments and balance" },

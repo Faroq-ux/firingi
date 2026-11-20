@@ -1,0 +1,167 @@
+// ── Phase 54: menu costing & food waste ───────────────────────────────────────
+// A kitchen's ingredients (bought on FIRINGI — cost from what it paid — or entered by hand), with yield / prep loss;
+// recipes (dishes and sub-recipes such as sauces and doughs) costed per portion, food cost % and margin against a
+// target, price suggestions, allergens and CO₂ per dish, menu engineering from till sales. A phone-friendly waste log
+// (reason, quantity, cost, CO₂ — from purchased lots where possible), waste reports and targets, suggestions (order
+// less of what is often wasted, use-first list of lots near expiry) and donations logged apart from waste.
+// FIRINGI switches every part on / off, per business type and per business.
+
+enum KitchenUnit {
+  KG
+  L
+  PCS
+}
+
+enum IngredientSource {
+  FIRINGI // bought on FIRINGI: the cost follows what the business paid
+  MANUAL // bought elsewhere: the business enters the cost
+}
+
+enum KitchenRecipeKind {
+  DISH // sold: has a price (its own or the till item's)
+  SUB // a sub-recipe (sauce, dough, stock…) used in other recipes, costed per unit it makes
+}
+
+enum WasteReason {
+  EXPIRED
+  SPOILED
+  OVERPRODUCTION
+  PLATE_WASTE
+  DAMAGED
+  PREP_LOSS
+  OTHER
+}
+
+enum WasteKind {
+  WASTE
+  DONATION
+}
+
+model KitchenIngredient {
+  id           String           @id @default(cuid())
+  companyId    String
+  name         String
+  source       IngredientSource
+  /// FIRINGI: the product bought (any supplier's offer of it counts); the offer last bought
+  productId    String?
+  offerId      String?
+  unit         KitchenUnit
+  /// FIRINGI: base units in one purchased pack (10 kg box = 10)
+  packSize     Decimal?         @db.Decimal(12, 4)
+  /// MANUAL: net cost per unit (ex VAT)
+  manualCost   Decimal?         @db.Decimal(14, 4)
+  supplierName String?
+  /// usable share after trimming / peeling / cooking loss
+  yieldPct     Decimal          @default(100) @db.Decimal(5, 2)
+  /// MANUAL, or FIRINGI when `allergensOwn`: EU allergen codes it contains
+  allergens    String[]         @default([])
+  allergensOwn Boolean          @default(false)
+  /// kg CO₂e per unit (FIRINGI: from the product's footprint; MANUAL: optional)
+  co2PerUnit   Decimal?         @db.Decimal(12, 4)
+  /// cost per unit as last computed, and before — for price-rise alerts
+  cost         Decimal?         @db.Decimal(14, 4)
+  costAt       DateTime?
+  costBasis    String? // LAST / AVERAGE / CATALOGUE / MANUAL
+  prevCost     Decimal?         @db.Decimal(14, 4)
+  active       Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  lines KitchenRecipeLine[]
+  waste KitchenWaste[]
+
+  @@index([companyId, active])
+  @@index([companyId, productId])
+}
+
+model KitchenRecipe {
+  id          String            @id @default(cuid())
+  companyId   String
+  name        String
+  kind        KitchenRecipeKind @default(DISH)
+  category    String?
+  /// the till item it is sold as (price and sales come from the till)
+  posItemId   String?           @unique
+  /// what one batch makes (DISH: portions; SUB: kg / l / pieces)
+  yieldQty    Decimal           @default(1) @db.Decimal(12, 4)
+  yieldUnit   KitchenUnit?
+  /// DISH without a till item: price incl. VAT
+  priceGross  Decimal?          @db.Decimal(14, 4)
+  vatRate     Decimal           @default(13) @db.Decimal(5, 2)
+  /// overrides the business's target food cost %
+  targetPct   Decimal?          @db.Decimal(5, 2)
+  /// sales when there is no till: portions a week (menu engineering)
+  soldPerWeek Int?
+  notes       String?
+  active      Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  lines  KitchenRecipeLine[] @relation("RecipeLines")
+  usedIn KitchenRecipeLine[] @relation("SubRecipeUse")
+  waste  KitchenWaste[]
+
+  @@index([companyId, kind, active])
+}
+
+model KitchenRecipeLine {
+  id           String  @id @default(cuid())
+  recipeId     String
+  ingredientId String?
+  subRecipeId  String?
+  qty          Decimal @db.Decimal(12, 4)
+  /// G, KG, ML, L, PCS
+  unit         String
+  sortOrder    Int     @default(0)
+
+  recipe     KitchenRecipe      @relation("RecipeLines", fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient KitchenIngredient? @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+  subRecipe  KitchenRecipe?     @relation("SubRecipeUse", fields: [subRecipeId], references: [id], onDelete: Restrict)
+
+  @@index([recipeId])
+}
+
+model KitchenWaste {
+  id           String       @id @default(cuid())
+  companyId    String
+  kind         WasteKind    @default(WASTE)
+  at           DateTime     @default(now())
+  reason       WasteReason?
+  ingredientId String?
+  recipeId     String?
+  /// a lot the business bought on FIRINGI (its used quantity goes up)
+  lotId        String?
+  /// what it was, as written then
+  label        String
+  qty          Decimal      @db.Decimal(12, 4)
+  /// G, KG, ML, L, PCS, PACK, PORTION
+  unit         String
+  cost         Decimal      @default(0) @db.Decimal(14, 2)
+  kgWeight     Decimal?     @db.Decimal(12, 3)
+  co2Kg        Decimal?     @db.Decimal(12, 3)
+  /// DONATION: who received it, their receipt number
+  recipient    String?
+  receiptRef   String?
+  note         String?
+  byUserId     String
+  createdAt    DateTime     @default(now())
+
+  ingredient KitchenIngredient? @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+  recipe     KitchenRecipe?     @relation(fields: [recipeId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, kind, at])
+}
+
+/// The business's own targets (empty = FIRINGI's defaults).
+model KitchenProfile {
+  companyId         String   @id
+  targetFoodCostPct Decimal? @db.Decimal(5, 2)
+  wasteTargetPct    Decimal? @db.Decimal(5, 2)
+  costBasis         String? // LAST / AVERAGE
+  rounding          String? // NONE / 0.05 / 0.10 / 0.50 / X.90
+  /// "2026-11": the month the "waste over target" alert went out
+  wasteAlertMonth   String?
+  /// the day the use-first reminder went out
+  useFirstSentOn    String?
+  updatedAt         DateTime @updatedAt
+}

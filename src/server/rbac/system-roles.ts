@@ -90,14 +90,15 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,
-    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.claims.manage", "buyer.addresses.manage", "buyer.reports.view", "buyer.reviews.write"],
+    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.claims.manage", "buyer.addresses.manage", "buyer.reports.view", "buyer.reviews.write", "buyer.kitchen.waste"],
   },
   {
     key: "BUYER_ACCOUNTANT", name: "Accountant (purchases)", description: "Invoices and payments", appliesTo: BUYER_TYPES,
     permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.payments.make", "buyer.reports.view", "company.accounting.view", "company.accounting.manage", "company.bank.view", "company.bank.manage"],
   },
-  { key: "POS_CASHIER", name: "Cashier", description: "Sells at the company's till (shifts, payments, receipts)", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.staff.kiosk"] },
-  { key: "POS_MANAGER", name: "Shop Manager", description: "Runs the till: items, prices, refunds, discounts, shifts and reports", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.pos.manage", "company.staff.kiosk"] },
+  { key: "POS_CASHIER", name: "Cashier", description: "Sells at the company's till (shifts, payments, receipts)", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.staff.kiosk", "buyer.kitchen.waste"] },
+  { key: "POS_MANAGER", name: "Shop Manager", description: "Runs the till: items, prices, refunds, discounts, shifts and reports", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.pos.manage", "company.staff.kiosk", "buyer.kitchen.waste"] },
+  { key: "KITCHEN_MANAGER", name: "Kitchen Manager", description: "Ingredients, recipes and menu costing; logs and reviews food waste and donations", appliesTo: BUYER_TYPES, permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.kitchen.manage", "buyer.kitchen.waste"] },
   { key: "STAFF_MANAGER", name: "Staff & Rota Manager", description: "Plans shifts, keeps clock entries and timesheets, approves leave and swaps, exports payroll", appliesTo: COMPANY_TYPES, permissions: ["company.support.use", "company.staff.manage", "company.staff.kiosk"] },
   { key: "VENDOR_DRIVER", name: "Driver", description: "Driver in the company's own fleet", appliesTo: VENDOR_TYPES, permissions: ["driver.deliveries.view", "driver.deliveries.update", "driver.pod.capture"] },
 ];

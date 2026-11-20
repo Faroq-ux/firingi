@@ -8,7 +8,7 @@ system is, where everything lives, how to run and test it, and what is still lef
 | [README.md](../README.md) | Every feature, phase by phase, with the rules it enforces |
 | [docs/operations.md](operations.md) | Servers, Docker, HTTPS, backups, monitoring, updates, incidents |
 | [docs/launch.md](launch.md) | Accounts, keys and back-office steps to reach "Ready for a pilot" / "Ready to launch" |
-| `docs/<feature>.md` | Deep dives: bank, deals, pay later, tenders, CO₂, staff & time, reviews, POS, e-invoicing, … |
+| `docs/<feature>.md` | Deep dives: bank, deals, pay later, tenders, CO₂, staff & time, reviews, kitchen, POS, e-invoicing, … |
 
 ## 1. What FIRINGI is
 
@@ -27,8 +27,8 @@ Five portals, one app:
 | FIRINGI back office | `/admin` | FIRINGI staff | English |
 | Public | `/`, `/login`, `/register`, `/pay/…`, `/status` | everyone | 25 languages |
 
-Size at handover: **643 pages** (383 back office, 138 supplier, 99 buyer, 8 driver, the rest public), **55 schema
-files / 77 migrations**, **218 notification events**, **32 scheduled job routes**, **25 languages** (6,354 texts each).
+Size at handover: **654 pages** (385 back office, 138 supplier, 108 buyer, 8 driver, the rest public), **56 schema
+files / 78 migrations**, **221 notification events**, **33 scheduled job routes**, **25 languages** (6,576 texts each).
 Bangla and Hindi are handled by the AI customer-service assistant, not as interface languages.
 
 ## 2. Technology

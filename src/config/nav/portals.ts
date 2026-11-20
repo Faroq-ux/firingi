@@ -204,6 +204,7 @@ const bai = section(`${B}`, ["buyer.orders.view", "buyer.orders.place"]);
 const bsh = section(`${B}/branches`, ["buyer.branches.manage", "buyer.orders.view", "buyer.orders.place", "buyer.reports.view"]);
 const bac = section(`${B}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 const bpos = section(`${B}/pos`, ["company.pos.sell", "company.pos.manage"]);
+const bk = section(`${B}/kitchen`, ["buyer.kitchen.manage", "buyer.kitchen.waste"]);
 const bst = section(`${B}/staff`, ["buyer.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 
 export const BUY_NAV: NavSection[] = [
@@ -261,6 +262,19 @@ export const BUY_NAV: NavSection[] = [
     ],
   },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(bpos, true) },
+  {
+    key: "kitchen", icon: "ChefHat", label: { en: "Kitchen", pt: "Cozinha", es: "Cocina" },
+    items: [
+      bk("", "Kitchen Overview", "Resumo da Cozinha", "P54", { live: true, href: `${B}/kitchen`, feature: "KITCHEN", es: "Resumen de cocina" }),
+      bk("recipes", "Recipes & Costing", "Receitas e Custos", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Recetas y costes" }),
+      bk("ingredients", "Ingredients", "Ingredientes", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Ingredientes" }),
+      bk("engineering", "Menu Engineering", "Engenharia de Menu", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Ingeniería de menú" }),
+      bk("waste", "Waste Log", "Registo de Desperdício", "P54", { live: true, feature: "KITCHEN", es: "Registro de desperdicio" }),
+      bk("waste/reports", "Waste Reports", "Relatórios de Desperdício", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Informes de desperdicio" }),
+      bk("use-first", "Use First", "Usar Primeiro", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Usar primero" }),
+      bk("donations", "Donations", "Doações", "P54", { live: true, feature: "KITCHEN", es: "Donaciones" }),
+    ],
+  },
   { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(bst) },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(bac) },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" }), br("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["buyer.reports.view", "buyer.orders.view", "buyer.orders.place"], es: "Huella de CO₂" })] },

@@ -350,6 +350,7 @@ export const ADMIN_NAV: NavSection[] = [
   {
     key: "analytics", icon: "BarChart3", label: { en: "Analytics & Reports", pt: "Análises e Relatórios", es: "Analítica e informes" },
     items: [
+      ana("kitchen", "Menu Costing & Waste", "Custos de Menu e Desperdício", "P54", { live: true, href: `${A}/kitchen`, perm: ["admin.analytics.view", "admin.settings.view", "admin.settings.manage"] }),
       ana("sales", "Sales Analytics", "Análise de Vendas", "P8", { live: true }),
       ana("revenue", "Revenue", "Receita", "P8", { live: true }),
       ana("gross-margin", "Gross Margin", "Margem Bruta", "P8", { live: true }),
@@ -511,6 +512,7 @@ export const ADMIN_NAV: NavSection[] = [
       set("language", "Language Settings", "Definições de Idioma", "P1", { live: true, href: `${A}/international/languages`, perm: ["admin.settings.view", "admin.international.view"] }),
       set("api", "API Keys", "Chaves de API", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("integrations", "Integrations", "Integrações", "P21", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
+      set("kitchen", "Menu Costing & Waste", "Custos de Menu e Desperdício", "P54", { live: true, perm: ["admin.settings.manage"] }),
       set("reviews", "Reviews & Questions", "Avaliações e Perguntas", "P53", { live: true, perm: ["admin.settings.manage"] }),
       set("staff-time", "Staff & Time", "Pessoal e Horários", "P52", { live: true, perm: ["admin.settings.view", "admin.settings.manage", "admin.users.manage"] }),
       set("business-features", "Business Features", "Funcionalidades de Negócio", "P27", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),

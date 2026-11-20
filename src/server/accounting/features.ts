@@ -52,6 +52,14 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     const st = await import("@/server/staff/service");
     if (st.portalOf(ctx.company.type) !== `/${portal}` || !(await st.staffAccess(ctx.company)).on) { off.add("STAFF"); off.add("STAFF_MGR"); }
     else if (!st.isManager(ctx)) off.add("STAFF_MGR");
+    // Phase 54: menu costing & waste — buyer portal only; managers see the costing pages
+    if (portal !== "buy") { off.add("KITCHEN"); off.add("KITCHEN_MGR"); }
+    else {
+      const kt = await import("@/server/kitchen/service");
+      const ka = await kt.kitchenAccess(ctx.company);
+      if (!ka.on) { off.add("KITCHEN"); off.add("KITCHEN_MGR"); }
+      else if (!can(ctx, "buyer.kitchen.manage")) off.add("KITCHEN_MGR");
+    }
     // Phase 53: reviews — buyers who may write; suppliers whose products show reviews
     const rv = await import("@/server/reviews/service");
     const rs = await rv.reviewSettings();

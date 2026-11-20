@@ -232,8 +232,10 @@ try {
   await go(atl, "/vendor/pos/till");
   await atl.getByTestId("till-float").fill("100");
   await atl.getByTestId("till-open-btn").click(); await settle(atl);
-  await atl.getByTestId("till-search").fill(linked[0].slice(0, 12));
-  await tapItem(atl, linked[0].slice(0, 12));
+  // the full name: items whose names start alike must not be mixed up
+  await atl.getByTestId("till-search").fill(linked[0]);
+  await atl.getByTestId("till-item").filter({ hasText: linked[0] }).first().waitFor({ timeout: 10000 }).catch(() => {});
+  await tapItem(atl, linked[0]);
   await atl.getByTestId("till-pay").click();
   await atl.getByTestId("till-pay-MBWAY").click();
   await atl.getByTestId("till-complete").click(); await settle(atl);

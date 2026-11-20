@@ -233,6 +233,10 @@ export const EVENTS: EventDef[] = [
   E("review.reminder", "orders", null, ["EMAIL", "PUSH"], ["product"]),
   E("review.hidden", "catalogue", null, ["EMAIL"], ["product", "reason"]),
   E("review.to_moderate", "catalogue", ["admin.reviews.moderate"], ["PUSH"], ["kind", "reason"]),
+  // Phase 54: menu costing & food waste
+  E("kitchen.cost_rise", "account", ["buyer.kitchen.manage"], ["EMAIL", "PUSH"], ["ingredient", "pct", "count"]),
+  E("kitchen.waste_over", "account", ["buyer.kitchen.manage"], ["EMAIL", "PUSH"], ["pct", "target"]),
+  E("kitchen.use_first", "account", ["buyer.kitchen.manage", "buyer.kitchen.waste"], ["PUSH"], ["count"]),
   // Phase 48 — rebates & bonuses
   E("rebate.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "name"]),
   E("rebate.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name"]),
