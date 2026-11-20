@@ -888,7 +888,10 @@
     "My Bonuses": "Mano premijos",
     "Buying Groups": "Pirkimo grupės",
     "Pay Later": "Mokėti vėliau",
-    "Tenders": "Konkursai"
+    "Tenders": "Konkursai",
+    "Sustainability & CO₂": "Tvarumas ir CO₂",
+    "CO₂ & Packaging": "CO₂ ir pakuotės",
+    "CO₂ Footprint": "CO₂ pėdsakas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Konkurso {number} laimėtojai išrinkti",
       "body": "Šį kartą pirkėjas konkurse „{title}“ pasirinko kitus pasiūlymus."
+    },
+    "co2_review": {
+      "title": "Tikrintina CO₂ vertė",
+      "body": "{company} atsiuntė CO₂ arba pakuočių vertes. Patikrinkite jas skiltyje Katalogas › Tvarumas ir CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂ vertė patikrinta ({decision}): {product}",
+      "body": "„{product}“ {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "nepasirinkta",
     "waiting": "laukiama pirkėjo",
     "noBidLine": "nėra pasiūlymo"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Mažas CO₂",
+      "LOCAL": "Vietinis",
+      "ECO_PACKAGING": "Ekologiška pakuotė"
+    },
+    "perPack": "pak.",
+    "filterAll": "Visi produktai",
+    "filterLabel": "Tvarumas",
+    "panelTitle": "CO₂ pėdsakas",
+    "perPackLabel": "Pakuotei (produktas + pakuotė)",
+    "perKgLabel": "Produkto kilogramui",
+    "categoryAvg": "Kategorijos vidurkis: {value}",
+    "packagingLabel": "Pakuotė",
+    "packaging": {
+      "CARDBOARD": "Kartonas",
+      "PLASTIC": "Plastikas",
+      "GLASS": "Stiklas",
+      "METAL": "Metalas / skardinės",
+      "RETURNABLE": "Grąžinama",
+      "MIXED": "Mišrios medžiagos",
+      "NONE": "Be pakuotės"
+    },
+    "recyclable": "Perdirbama",
+    "sourceSupplier": "Vertę pateikė tiekėjas, o FIRINGI ją patikrino.",
+    "sourceCategory": "Vidutinė šios rūšies produktų vertė.",
+    "alternatives": "Alternatyvos su mažesniu CO₂",
+    "lessCo2": "{pct} % mažiau CO₂",
+    "orderTitle": "Šio užsakymo CO₂ pėdsakas",
+    "products": "Produktai",
+    "packagingPart": "Pakuotė",
+    "delivery": "Pristatymas",
+    "total": "Iš viso",
+    "distance": "{km} km",
+    "final": "Galutinis (pristatyta)",
+    "estimate": "Preliminarus",
+    "cartTotal": "Šis krepšelis: apie {kg}",
+    "totalYear": "Šių metų pėdsakas",
+    "perEuro": "Išleistam €",
+    "localShare": "Vietinių dalis",
+    "deliveryShare": "Pristatymo dalis",
+    "goalLine": "Tikslas: {pct} % mažiau CO₂ {year} m.",
+    "goalProgress": "Iki šiol {now} — tuo pačiu metu pernai {last}. Tikslas: {target}.",
+    "goalNoHistory": "Pažanga bus rodoma, kai bus metai, su kuriais galima palyginti.",
+    "onTrack": "Pagal planą",
+    "offTrack": "Viršija tikslą",
+    "byMonth": "Pagal mėnesį",
+    "noData": "Šiais metais dar nėra pristatytų užsakymų.",
+    "byCategory": "Pagal kategoriją",
+    "topProducts": "Didžiausi pėdsakai",
+    "method": "Įverčiai pateikiami kg CO₂e. Produktai: produkto kg × vertė kilogramui (tiekėjo patikrinta vertė, o jei jos nėra, kategorijos vidurkis). Pakuotė: kiekvienam vienetui pagal tipą. Pristatymas: kelio atstumas × svoris × transporto priemonės kuras. Galutinės vertės nustatomos pristatymo metu.",
+    "bySupplier": "Pagal tiekėją",
+    "byCustomer": "Pagal klientą",
+    "pdfTitle": "CO₂ ataskaita",
+    "scopeTitle": "Šiltnamio efektą sukeliančių dujų apimtys (GHG Protocol, 3 apimtis)",
+    "scope": "Apimtis",
+    "scope1": "3 apimtis · 1 kat. — įsigytos prekės ir pakuotės",
+    "scope4": "3 apimtis · 4 kat. — transportavimas tiekimo grandinėje",
+    "kgPerKgInput": "kg CO₂e kilogramui",
+    "sourceInput": "Šaltinis",
+    "sourcePh": "pvz., LCA tyrimas 2025, EPD, sertifikatas",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "goalInput": "{year} m. mažinimo tikslas (%)",
+    "setGoal": "Nustatyti tikslą",
+    "removeGoal": "Pašalinti tikslą",
+    "goalTitle": "Jūsų CO₂ tikslas",
+    "buyerTitle": "CO₂ pėdsakas",
+    "buyerIntro": "Jūsų pirkinių pėdsakas: produktai, pakuotės ir pristatymas. Eksportuokite jį savo tvarumo (CSRD) ataskaitai.",
+    "vendorReportTitle": "CO₂ pėdsakas",
+    "vendorReportIntro": "Jūsų parduotų ir pristatytų prekių pėdsakas pagal mėnesį, kategoriją ir klientą.",
+    "vendorTitle": "CO₂ ir pakuotės",
+    "vendorIntro": "Nurodykite savo produktų CO₂ vertes ir pakuotes. Už mažesnes nei kategorijos vidurkis vertes parduotuvėje suteikiamas ženklelis „Mažas CO₂“.",
+    "valuesTitle": "Jūsų produktai",
+    "valuesChecked": "FIRINGI patikrina kiekvieną vertę prieš ją naudojant. Nurodykite šaltinį (tyrimas, EPD, sertifikatas).",
+    "valuesAuto": "Jūsų vertės naudojamos iš karto. Nurodykite šaltinį (tyrimas, EPD, sertifikatas).",
+    "searchProducts": "Ieškoti produktų",
+    "noProducts": "Produktų nėra.",
+    "nowUsed": "Dabar: {value}/kg · {pack} pakuotei",
+    "status": {
+      "PENDING": "Tikrinama",
+      "APPROVED": "Patvirtinta",
+      "REJECTED": "Nepriimta"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Jūsų žaliasis įvertinimas — balas {score}/100",
+    "gradeHint": "Remiantis Jūsų produktų CO₂, palyginti su jų kategorijomis, ekologiškomis pakuotėmis ir Jūsų pačių patikrintomis vertėmis.",
+    "closed": {
+      "OFF": "CO₂ ataskaitos šiuo metu nepasiekiamos.",
+      "COMPANY_OFF": "CO₂ ataskaitos Jūsų įmonei išjungtos. Susisiekite su FIRINGI.",
+      "TYPE_OFF": "CO₂ ataskaitos Jūsų veiklos tipui nepasiekiamos."
+    },
+    "fuel": {
+      "label": "Kuras",
+      "unknown": "Nenustatyta",
+      "DIESEL": "Dyzelinas",
+      "PETROL": "Benzinas",
+      "HYBRID": "Hibridas",
+      "LPG": "SND",
+      "ELECTRIC": "Elektra"
+    }
   }
 }

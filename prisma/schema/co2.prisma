@@ -1,0 +1,54 @@
+// Phase 51: sustainability & CO₂ — category factors (FIRINGI), suppliers' exact values per offer (FIRINGI checks),
+// packaging, order footprints (products, packaging, delivery, local), buyers' yearly goals.
+
+enum Co2ValueStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+/// FIRINGI's production footprint per category (kg CO₂e per kg of product); children inherit.
+model Co2CategoryFactor {
+  categoryId  String   @id
+  kgPerKg     Decimal  @db.Decimal(10, 3)
+  source      String?
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+/// A supplier's own values for one offer: production footprint, packaging and its recyclability.
+model OfferCo2 {
+  offerId       String         @id
+  /// kg CO₂e per kg of product (null = the category's value)
+  kgPerKg       Decimal?       @db.Decimal(10, 3)
+  /// CARDBOARD | PLASTIC | GLASS | METAL | RETURNABLE | MIXED | NONE
+  packaging     String?
+  recyclable    Boolean        @default(false)
+  source        String?
+  status        Co2ValueStatus @default(PENDING)
+  reviewNote    String?
+  submittedById String?
+  reviewedById  String?
+  reviewedAt    DateTime?
+  updatedAt     DateTime       @updatedAt
+
+  offer VendorOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+}
+
+/// A buyer's yearly goal: this much less CO₂ than the year before (on what it buys on FIRINGI).
+model Co2Goal {
+  id           String   @id @default(cuid())
+  companyId    String
+  year         Int
+  reductionPct Decimal  @db.Decimal(5, 2)
+  createdById  String?
+  updatedAt    DateTime @updatedAt
+
+  company Company @relation("Co2Goals", fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, year])
+}

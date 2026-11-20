@@ -888,7 +888,10 @@
     "My Bonuses": "Mine bonuser",
     "Buying Groups": "Innkjøpsgrupper",
     "Pay Later": "Betal senere",
-    "Tenders": "Anbud"
+    "Tenders": "Anbud",
+    "Sustainability & CO₂": "Bærekraft og CO₂",
+    "CO₂ & Packaging": "CO₂ og emballasje",
+    "CO₂ Footprint": "CO₂-avtrykk"
   },
   "delivery": {
     "title": "Levering",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Anbud {number} er tildelt",
       "body": "Kjøperen tildelte «{title}» til andre bud denne gangen."
+    },
+    "co2_review": {
+      "title": "CO₂-verdi til kontroll",
+      "body": "{company} har sendt CO₂- eller emballasjeverdier. Kontroller dem under Katalog › Bærekraft og CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂-verdi kontrollert ({decision}): {product}",
+      "body": "«{product}» {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "ikke valgt",
     "waiting": "venter på kjøperen",
     "noBidLine": "ingen bud"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Lavt CO₂",
+      "LOCAL": "Lokal",
+      "ECO_PACKAGING": "Miljøemballasje"
+    },
+    "perPack": "pk.",
+    "filterAll": "Alle produkter",
+    "filterLabel": "Bærekraft",
+    "panelTitle": "CO₂-avtrykk",
+    "perPackLabel": "Per pakning (produkt + emballasje)",
+    "perKgLabel": "Per kg produkt",
+    "categoryAvg": "Kategorisnitt: {value}",
+    "packagingLabel": "Emballasje",
+    "packaging": {
+      "CARDBOARD": "Papp",
+      "PLASTIC": "Plast",
+      "GLASS": "Glass",
+      "METAL": "Metall / bokser",
+      "RETURNABLE": "Returnerbar",
+      "MIXED": "Blandede materialer",
+      "NONE": "Uten emballasje"
+    },
+    "recyclable": "Resirkulerbar",
+    "sourceSupplier": "Verdi oppgitt av leverandøren og kontrollert av FIRINGI.",
+    "sourceCategory": "Gjennomsnittsverdi for denne typen produkt.",
+    "alternatives": "Alternativer med lavere CO₂",
+    "lessCo2": "{pct} % mindre CO₂",
+    "orderTitle": "CO₂-avtrykket for denne bestillingen",
+    "products": "Produkter",
+    "packagingPart": "Emballasje",
+    "delivery": "Levering",
+    "total": "Totalt",
+    "distance": "{km} km",
+    "final": "Endelig (levert)",
+    "estimate": "Estimat",
+    "cartTotal": "Denne handlekurven: ca. {kg}",
+    "totalYear": "Avtrykk i år",
+    "perEuro": "Per brukt €",
+    "localShare": "Lokal andel",
+    "deliveryShare": "Leveringsandel",
+    "goalLine": "Mål: {pct} % mindre CO₂ i {year}",
+    "goalProgress": "Hittil {now} — samme tid i fjor {last}. Mål: {target}.",
+    "goalNoHistory": "Fremdriften vises når det finnes et år å sammenligne med.",
+    "onTrack": "I rute",
+    "offTrack": "Over målet",
+    "byMonth": "Per måned",
+    "noData": "Ingen leverte bestillinger i år ennå.",
+    "byCategory": "Per kategori",
+    "topProducts": "Største avtrykk",
+    "method": "Estimater i kg CO₂e. Produkter: kg produkt × verdi per kg (leverandørens kontrollerte verdi, ellers kategorisnittet). Emballasje: per enhet etter type. Levering: kjøreavstand × vekt × kjøretøyets drivstoff. Endelige verdier fastsettes ved levering.",
+    "bySupplier": "Per leverandør",
+    "byCustomer": "Per kunde",
+    "pdfTitle": "CO₂-rapport",
+    "scopeTitle": "Utslippskategorier for klimagasser (GHG Protocol, Scope 3)",
+    "scope": "Scope",
+    "scope1": "Scope 3 · Kat. 1 — innkjøpte varer og emballasje",
+    "scope4": "Scope 3 · Kat. 4 — oppstrøms transport",
+    "kgPerKgInput": "kg CO₂e per kg",
+    "sourceInput": "Kilde",
+    "sourcePh": "f.eks. LCA-studie 2025, EPD, sertifikat",
+    "save": "Lagre",
+    "saved": "Lagret.",
+    "goalInput": "Reduksjonsmål for {year} (%)",
+    "setGoal": "Sett mål",
+    "removeGoal": "Fjern mål",
+    "goalTitle": "Ditt CO₂-mål",
+    "buyerTitle": "CO₂-avtrykk",
+    "buyerIntro": "Avtrykket av det du kjøper: produkter, emballasje og levering. Eksporter det til bærekraftsrapporten din (CSRD).",
+    "vendorReportTitle": "CO₂-avtrykk",
+    "vendorReportIntro": "Avtrykket av det du har solgt og levert, per måned, kategori og kunde.",
+    "vendorTitle": "CO₂ og emballasje",
+    "vendorIntro": "Oppgi egne CO₂-verdier og emballasje for produktene dine. Verdier lavere enn kategorisnittet gir merket «Lavt CO₂» i butikken.",
+    "valuesTitle": "Dine produkter",
+    "valuesChecked": "FIRINGI kontrollerer hver verdi før den tas i bruk. Oppgi kilden (studie, EPD, sertifikat).",
+    "valuesAuto": "Verdiene dine tas i bruk med en gang. Oppgi kilden (studie, EPD, sertifikat).",
+    "searchProducts": "Søk i produkter",
+    "noProducts": "Ingen produkter.",
+    "nowUsed": "Nå: {value}/kg · {pack} per pakning",
+    "status": {
+      "PENDING": "Under kontroll",
+      "APPROVED": "Godkjent",
+      "REJECTED": "Ikke godkjent"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Din grønne karakter — poengsum {score}/100",
+    "gradeHint": "Basert på produktenes CO₂ sammenlignet med kategoriene deres, miljøemballasje og dine egne kontrollerte verdier.",
+    "closed": {
+      "OFF": "CO₂-rapportering er ikke tilgjengelig for øyeblikket.",
+      "COMPANY_OFF": "CO₂-rapportering er slått av for virksomheten din. Kontakt FIRINGI.",
+      "TYPE_OFF": "CO₂-rapportering er ikke tilgjengelig for din type virksomhet."
+    },
+    "fuel": {
+      "label": "Drivstoff",
+      "unknown": "Ikke angitt",
+      "DIESEL": "Diesel",
+      "PETROL": "Bensin",
+      "HYBRID": "Hybrid",
+      "LPG": "LPG",
+      "ELECTRIC": "Elektrisk"
+    }
   }
 }

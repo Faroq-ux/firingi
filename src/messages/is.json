@@ -888,7 +888,10 @@
     "My Bonuses": "Bónusarnir mínir",
     "Buying Groups": "Innkaupahópar",
     "Pay Later": "Greiða síðar",
-    "Tenders": "Útboð"
+    "Tenders": "Útboð",
+    "Sustainability & CO₂": "Sjálfbærni og CO₂",
+    "CO₂ & Packaging": "CO₂ og umbúðir",
+    "CO₂ Footprint": "CO₂-spor"
   },
   "delivery": {
     "title": "Afhending",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Útboði {number} úthlutað",
       "body": "Kaupandinn úthlutaði „{title}“ til annarra tilboða í þetta sinn."
+    },
+    "co2_review": {
+      "title": "CO₂-gildi til yfirferðar",
+      "body": "{company} sendi CO₂- eða umbúðagildi. Yfirfarðu þau í Vörulisti › Sjálfbærni og CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂-gildi yfirfarið, {decision}: {product}",
+      "body": "„{product}“ {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "ekki valið",
     "waiting": "bíður eftir kaupanda",
     "noBidLine": "ekkert tilboð"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Lítið CO₂",
+      "LOCAL": "Staðbundið",
+      "ECO_PACKAGING": "Vistvænar umbúðir"
+    },
+    "perPack": "pakkning",
+    "filterAll": "Allar vörur",
+    "filterLabel": "Sjálfbærni",
+    "panelTitle": "CO₂-spor",
+    "perPackLabel": "Á pakkningu (vara + umbúðir)",
+    "perKgLabel": "Á hvert kg vöru",
+    "categoryAvg": "Meðaltal flokks: {value}",
+    "packagingLabel": "Umbúðir",
+    "packaging": {
+      "CARDBOARD": "Pappi",
+      "PLASTIC": "Plast",
+      "GLASS": "Gler",
+      "METAL": "Málmur / dósir",
+      "RETURNABLE": "Margnota",
+      "MIXED": "Blönduð efni",
+      "NONE": "Engar umbúðir"
+    },
+    "recyclable": "Endurvinnanlegt",
+    "sourceSupplier": "Gildi frá birgi, yfirfarið af FIRINGI.",
+    "sourceCategory": "Meðalgildi fyrir þessa tegund vöru.",
+    "alternatives": "Valkostir með minna CO₂",
+    "lessCo2": "{pct} % minna CO₂",
+    "orderTitle": "CO₂-spor þessarar pöntunar",
+    "products": "Vörur",
+    "packagingPart": "Umbúðir",
+    "delivery": "Afhending",
+    "total": "Samtals",
+    "distance": "{km} km",
+    "final": "Endanlegt (afhent)",
+    "estimate": "Áætlun",
+    "cartTotal": "Þessi karfa: um {kg}",
+    "totalYear": "Spor á þessu ári",
+    "perEuro": "Á hverja € sem varið er",
+    "localShare": "Hlutfall staðbundins",
+    "deliveryShare": "Hlutfall afhendingar",
+    "goalLine": "Markmið: {pct} % minna CO₂ árið {year}",
+    "goalProgress": "Hingað til {now} — á sama tíma í fyrra {last}. Markmið: {target}.",
+    "goalNoHistory": "Framvinda birtist þegar ár til samanburðar liggur fyrir.",
+    "onTrack": "Á áætlun",
+    "offTrack": "Yfir markmiði",
+    "byMonth": "Eftir mánuðum",
+    "noData": "Engar afhentar pantanir á þessu ári enn.",
+    "byCategory": "Eftir flokkum",
+    "topProducts": "Stærstu sporin",
+    "method": "Áætlanir í kg CO₂e. Vörur: kg vöru × gildi á kg (yfirfarið gildi birgis, annars meðaltal flokks). Umbúðir: á hverja einingu eftir tegund. Afhending: vegalengd á vegi × þyngd × eldsneyti ökutækis. Endanleg gildi eru ákvörðuð við afhendingu.",
+    "bySupplier": "Eftir birgjum",
+    "byCustomer": "Eftir viðskiptavinum",
+    "pdfTitle": "CO₂-skýrsla",
+    "scopeTitle": "Umfang losunar gróðurhúsalofttegunda (GHG Protocol, Scope 3)",
+    "scope": "Umfang",
+    "scope1": "Scope 3 · Fl. 1 — keyptar vörur og umbúðir",
+    "scope4": "Scope 3 · Fl. 4 — flutningar í aðfangakeðju",
+    "kgPerKgInput": "kg CO₂e á kg",
+    "sourceInput": "Heimild",
+    "sourcePh": "t.d. vistferilsgreining (LCA) 2025, EPD, vottorð",
+    "save": "Vista",
+    "saved": "Vistað.",
+    "goalInput": "Lækkunarmarkmið fyrir {year} (%)",
+    "setGoal": "Setja markmið",
+    "removeGoal": "Fjarlægja markmið",
+    "goalTitle": "CO₂-markmiðið þitt",
+    "buyerTitle": "CO₂-spor",
+    "buyerIntro": "Spor þess sem þú kaupir: vörur, umbúðir og afhending. Fluttu það út fyrir sjálfbærniskýrsluna þína (CSRD).",
+    "vendorReportTitle": "CO₂-spor",
+    "vendorReportIntro": "Spor þess sem þú seldir og afhentir, eftir mánuðum, flokkum og viðskiptavinum.",
+    "vendorTitle": "CO₂ og umbúðir",
+    "vendorIntro": "Skráðu eigin CO₂-gildi og umbúðir varanna þinna. Gildi undir meðaltali flokks fá merkið „Lítið CO₂“ í versluninni.",
+    "valuesTitle": "Vörurnar þínar",
+    "valuesChecked": "FIRINGI yfirfer hvert gildi áður en það er notað. Tilgreindu heimildina (rannsókn, EPD, vottorð).",
+    "valuesAuto": "Gildin þín eru notuð strax. Tilgreindu heimildina (rannsókn, EPD, vottorð).",
+    "searchProducts": "Leita að vörum",
+    "noProducts": "Engar vörur.",
+    "nowUsed": "Núna: {value}/kg · {pack} á pakkningu",
+    "status": {
+      "PENDING": "Í yfirferð",
+      "APPROVED": "Samþykkt",
+      "REJECTED": "Ekki samþykkt"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Græna einkunnin þín — {score}/100 stig",
+    "gradeHint": "Byggt á CO₂ varanna þinna miðað við flokka þeirra, vistvænum umbúðum og eigin yfirförnum gildum.",
+    "closed": {
+      "OFF": "CO₂-skýrslugjöf er ekki í boði eins og er.",
+      "COMPANY_OFF": "Slökkt er á CO₂-skýrslugjöf fyrir fyrirtækið þitt. Hafðu samband við FIRINGI.",
+      "TYPE_OFF": "CO₂-skýrslugjöf er ekki í boði fyrir þína tegund rekstrar."
+    },
+    "fuel": {
+      "label": "Eldsneyti",
+      "unknown": "Ekki skráð",
+      "DIESEL": "Dísil",
+      "PETROL": "Bensín",
+      "HYBRID": "Tvinn",
+      "LPG": "LPG",
+      "ELECTRIC": "Rafmagn"
+    }
   }
 }

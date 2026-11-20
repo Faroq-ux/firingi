@@ -888,7 +888,10 @@
     "My Bonuses": "Moje bonusy",
     "Buying Groups": "Nákupní skupiny",
     "Pay Later": "Odložená platba",
-    "Tenders": "Výběrová řízení"
+    "Tenders": "Výběrová řízení",
+    "Sustainability & CO₂": "Udržitelnost a CO₂",
+    "CO₂ & Packaging": "CO₂ a obaly",
+    "CO₂ Footprint": "Stopa CO₂"
   },
   "delivery": {
     "title": "Doručení",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Výběrové řízení {number} je rozhodnuto",
       "body": "Kupující tentokrát přidělil „{title}“ jiným nabídkám."
+    },
+    "co2_review": {
+      "title": "Hodnota CO₂ k ověření",
+      "body": "Firma {company} odeslala hodnoty CO₂ nebo obalů. Ověřte je v sekci Katalog › Udržitelnost a CO₂."
+    },
+    "co2_decided": {
+      "title": "Hodnota CO₂ ověřena ({decision}): {product}",
+      "body": "„{product}“ {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "nevybrána",
     "waiting": "čeká na kupujícího",
     "noBidLine": "bez nabídky"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Nízké CO₂",
+      "LOCAL": "Lokální",
+      "ECO_PACKAGING": "Eko obal"
+    },
+    "perPack": "balení",
+    "filterAll": "Všechny produkty",
+    "filterLabel": "Udržitelnost",
+    "panelTitle": "Stopa CO₂",
+    "perPackLabel": "Na balení (produkt + obal)",
+    "perKgLabel": "Na kg produktu",
+    "categoryAvg": "Průměr kategorie: {value}",
+    "packagingLabel": "Obal",
+    "packaging": {
+      "CARDBOARD": "Karton",
+      "PLASTIC": "Plast",
+      "GLASS": "Sklo",
+      "METAL": "Kov / plechovky",
+      "RETURNABLE": "Vratný",
+      "MIXED": "Směsné materiály",
+      "NONE": "Bez obalu"
+    },
+    "recyclable": "Recyklovatelný",
+    "sourceSupplier": "Hodnota uvedená dodavatelem a ověřená společností FIRINGI.",
+    "sourceCategory": "Průměrná hodnota pro tento druh produktu.",
+    "alternatives": "Alternativy s nižším CO₂",
+    "lessCo2": "O {pct} % méně CO₂",
+    "orderTitle": "Stopa CO₂ této objednávky",
+    "products": "Produkty",
+    "packagingPart": "Obaly",
+    "delivery": "Doprava",
+    "total": "Celkem",
+    "distance": "{km} km",
+    "final": "Konečná (doručeno)",
+    "estimate": "Odhad",
+    "cartTotal": "Tento košík: přibližně {kg}",
+    "totalYear": "Stopa za letošní rok",
+    "perEuro": "Na utracené €",
+    "localShare": "Podíl lokálních",
+    "deliveryShare": "Podíl dopravy",
+    "goalLine": "Cíl: o {pct} % méně CO₂ v roce {year}",
+    "goalProgress": "Zatím {now} — loni ve stejném období {last}. Cíl: {target}.",
+    "goalNoHistory": "Pokrok se zobrazí, jakmile bude k dispozici rok pro srovnání.",
+    "onTrack": "V plánu",
+    "offTrack": "Nad cílem",
+    "byMonth": "Podle měsíce",
+    "noData": "V tomto roce zatím žádné doručené objednávky.",
+    "byCategory": "Podle kategorie",
+    "topProducts": "Největší stopy",
+    "method": "Odhady v kg CO₂e. Produkty: kg produktu × hodnota na kg (ověřená hodnota dodavatele, jinak průměr kategorie). Obaly: na položku podle typu. Doprava: silniční vzdálenost × hmotnost × palivo vozidla. Konečné hodnoty se stanoví při doručení.",
+    "bySupplier": "Podle dodavatele",
+    "byCustomer": "Podle zákazníka",
+    "pdfTitle": "Zpráva o CO₂",
+    "scopeTitle": "Rozsahy emisí skleníkových plynů (GHG Protocol, rozsah 3)",
+    "scope": "Rozsah",
+    "scope1": "Rozsah 3 · Kat. 1 — nakoupené zboží a obaly",
+    "scope4": "Rozsah 3 · Kat. 4 — doprava na vstupu",
+    "kgPerKgInput": "kg CO₂e na kg",
+    "sourceInput": "Zdroj",
+    "sourcePh": "např. studie LCA 2025, EPD, certifikát",
+    "save": "Uložit",
+    "saved": "Uloženo.",
+    "goalInput": "Cíl snížení pro rok {year} (%)",
+    "setGoal": "Nastavit cíl",
+    "removeGoal": "Odebrat cíl",
+    "goalTitle": "Váš cíl CO₂",
+    "buyerTitle": "Stopa CO₂",
+    "buyerIntro": "Stopa toho, co nakupujete: produkty, obaly a doprava. Exportujte ji pro svou zprávu o udržitelnosti (CSRD).",
+    "vendorReportTitle": "Stopa CO₂",
+    "vendorReportIntro": "Stopa toho, co jste prodali a doručili, podle měsíce, kategorie a zákazníka.",
+    "vendorTitle": "CO₂ a obaly",
+    "vendorIntro": "Uveďte vlastní hodnoty CO₂ a obaly svých produktů. Hodnoty nižší než průměr kategorie získají v obchodě odznak „Nízké CO₂“.",
+    "valuesTitle": "Vaše produkty",
+    "valuesChecked": "FIRINGI každou hodnotu před použitím ověří. Uveďte zdroj (studie, EPD, certifikát).",
+    "valuesAuto": "Vaše hodnoty se použijí okamžitě. Uveďte zdroj (studie, EPD, certifikát).",
+    "searchProducts": "Hledat produkty",
+    "noProducts": "Žádné produkty.",
+    "nowUsed": "Nyní: {value}/kg · {pack} na balení",
+    "status": {
+      "PENDING": "Ověřuje se",
+      "APPROVED": "Schváleno",
+      "REJECTED": "Nepřijato"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Vaše zelené hodnocení — skóre {score}/100",
+    "gradeHint": "Na základě CO₂ vašich produktů ve srovnání s jejich kategoriemi, eko obalů a vašich vlastních ověřených hodnot.",
+    "closed": {
+      "OFF": "Reporting CO₂ momentálně není k dispozici.",
+      "COMPANY_OFF": "Reporting CO₂ je pro vaši firmu vypnutý. Kontaktujte FIRINGI.",
+      "TYPE_OFF": "Reporting CO₂ není pro váš typ firmy k dispozici."
+    },
+    "fuel": {
+      "label": "Palivo",
+      "unknown": "Nenastaveno",
+      "DIESEL": "Nafta",
+      "PETROL": "Benzín",
+      "HYBRID": "Hybrid",
+      "LPG": "LPG",
+      "ELECTRIC": "Elektřina"
+    }
   }
 }

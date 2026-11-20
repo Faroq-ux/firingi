@@ -888,7 +888,10 @@
     "My Bonuses": "Mes bonus",
     "Buying Groups": "Groupements d'achat",
     "Pay Later": "Payer plus tard",
-    "Tenders": "Appels d'offres"
+    "Tenders": "Appels d'offres",
+    "Sustainability & CO₂": "Développement durable & CO₂",
+    "CO₂ & Packaging": "CO₂ & emballages",
+    "CO₂ Footprint": "Empreinte CO₂"
   },
   "delivery": {
     "title": "Livraison",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Appel d'offres {number} attribué",
       "body": "Cette fois, l'acheteur a attribué « {title} » à d'autres offres."
+    },
+    "co2_review": {
+      "title": "Valeur CO₂ à vérifier",
+      "body": "{company} a envoyé des valeurs CO₂ ou d'emballage. Vérifiez-les dans Catalogue › Développement durable & CO₂."
+    },
+    "co2_decided": {
+      "title": "Valeur CO₂ vérifiée — {decision} : {product}",
+      "body": "« {product} » {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "non retenue",
     "waiting": "en attente de l'acheteur",
     "noBidLine": "pas d'offre"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Faible CO₂",
+      "LOCAL": "Local",
+      "ECO_PACKAGING": "Emballage éco"
+    },
+    "perPack": "colis",
+    "filterAll": "Tous les produits",
+    "filterLabel": "Développement durable",
+    "panelTitle": "Empreinte CO₂",
+    "perPackLabel": "Par colis (produit + emballage)",
+    "perKgLabel": "Par kg de produit",
+    "categoryAvg": "Moyenne de la catégorie : {value}",
+    "packagingLabel": "Emballage",
+    "packaging": {
+      "CARDBOARD": "Carton",
+      "PLASTIC": "Plastique",
+      "GLASS": "Verre",
+      "METAL": "Métal / conserves",
+      "RETURNABLE": "Consigné",
+      "MIXED": "Matériaux mixtes",
+      "NONE": "Sans emballage"
+    },
+    "recyclable": "Recyclable",
+    "sourceSupplier": "Valeur fournie par le fournisseur et vérifiée par FIRINGI.",
+    "sourceCategory": "Valeur moyenne pour ce type de produit.",
+    "alternatives": "Alternatives à plus faible CO₂",
+    "lessCo2": "{pct} % de CO₂ en moins",
+    "orderTitle": "Empreinte CO₂ de cette commande",
+    "products": "Produits",
+    "packagingPart": "Emballage",
+    "delivery": "Livraison",
+    "total": "Total",
+    "distance": "{km} km",
+    "final": "Définitive (livrée)",
+    "estimate": "Estimation",
+    "cartTotal": "Ce panier : environ {kg}",
+    "totalYear": "Empreinte cette année",
+    "perEuro": "Par € dépensé",
+    "localShare": "Part locale",
+    "deliveryShare": "Part de la livraison",
+    "goalLine": "Objectif : {pct} % de CO₂ en moins en {year}",
+    "goalProgress": "À ce jour {now} — à la même période l'an dernier {last}. Objectif : {target}.",
+    "goalNoHistory": "La progression s'affichera dès qu'une année de comparaison sera disponible.",
+    "onTrack": "Dans l'objectif",
+    "offTrack": "Au-dessus de l'objectif",
+    "byMonth": "Par mois",
+    "noData": "Aucune commande livrée cette année pour l'instant.",
+    "byCategory": "Par catégorie",
+    "topProducts": "Plus fortes empreintes",
+    "method": "Estimations en kg CO₂e. Produits : kg de produit × valeur par kg (valeur vérifiée du fournisseur, sinon moyenne de la catégorie). Emballage : par article selon le type. Livraison : distance routière × poids × carburant du véhicule. Les valeurs définitives sont fixées à la livraison.",
+    "bySupplier": "Par fournisseur",
+    "byCustomer": "Par client",
+    "pdfTitle": "Rapport CO₂",
+    "scopeTitle": "Périmètres d'émissions de gaz à effet de serre (GHG Protocol, Scope 3)",
+    "scope": "Scope",
+    "scope1": "Scope 3 · Cat. 1 — biens achetés et emballages",
+    "scope4": "Scope 3 · Cat. 4 — transport amont",
+    "kgPerKgInput": "kg CO₂e par kg",
+    "sourceInput": "Source",
+    "sourcePh": "ex. étude ACV 2025, FDES, certificat",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "goalInput": "Objectif de réduction pour {year} (%)",
+    "setGoal": "Définir l'objectif",
+    "removeGoal": "Supprimer l'objectif",
+    "goalTitle": "Votre objectif CO₂",
+    "buyerTitle": "Empreinte CO₂",
+    "buyerIntro": "L'empreinte de vos achats : produits, emballages et livraison. Exportez-la pour votre rapport de durabilité (CSRD).",
+    "vendorReportTitle": "Empreinte CO₂",
+    "vendorReportIntro": "L'empreinte de ce que vous avez vendu et livré, par mois, catégorie et client.",
+    "vendorTitle": "CO₂ & emballages",
+    "vendorIntro": "Indiquez les valeurs CO₂ propres à vos produits et leurs emballages. Les valeurs inférieures à la moyenne de la catégorie obtiennent le badge « Faible CO₂ » dans la boutique.",
+    "valuesTitle": "Vos produits",
+    "valuesChecked": "FIRINGI vérifie chaque valeur avant son utilisation. Indiquez la source (étude, FDES, certificat).",
+    "valuesAuto": "Vos valeurs sont utilisées immédiatement. Indiquez la source (étude, FDES, certificat).",
+    "searchProducts": "Rechercher des produits",
+    "noProducts": "Aucun produit.",
+    "nowUsed": "Actuel : {value}/kg · {pack} par colis",
+    "status": {
+      "PENDING": "En cours de vérification",
+      "APPROVED": "Approuvée",
+      "REJECTED": "Non acceptée"
+    },
+    "firingiNote": "FIRINGI : {note}",
+    "gradeLine": "Votre note verte — score {score}/100",
+    "gradeHint": "Basée sur le CO₂ de vos produits par rapport à leur catégorie, les emballages éco et vos propres valeurs vérifiées.",
+    "closed": {
+      "OFF": "Le reporting CO₂ n'est pas disponible pour le moment.",
+      "COMPANY_OFF": "Le reporting CO₂ est désactivé pour votre entreprise. Contactez FIRINGI.",
+      "TYPE_OFF": "Le reporting CO₂ n'est pas disponible pour votre type d'entreprise."
+    },
+    "fuel": {
+      "label": "Carburant",
+      "unknown": "Non défini",
+      "DIESEL": "Diesel",
+      "PETROL": "Essence",
+      "HYBRID": "Hybride",
+      "LPG": "GPL",
+      "ELECTRIC": "Électrique"
+    }
   }
 }

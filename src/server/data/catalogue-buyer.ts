@@ -251,7 +251,7 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string 
   return { items: await withBadges(items), barcode: asBarcode(q) };
 }
 
-export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null; free?: string[]; diet?: string | null } = {}) {
+export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null; free?: string[]; diet?: string | null; eco?: string | null } = {}) {
   const scope = await buyerScope(ctx);
   const pageSize = 24;
   const page = Math.max(1, f.page ?? 1);
@@ -264,6 +264,7 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
       f.vendorId ? { vendorCompanyId: f.vendorId } : {},
       await badgeWhere(f.badge),
       await buyerFoodWhere(ctx, { free: f.free, diet: f.diet }),
+      f.eco ? await (await import("@/server/co2/service")).ecoWhere(ctx, f.eco) : {}, // Phase 51: low CO₂ / local / eco packaging
     ],
   };
   if (!f.vendorId && (await orderingMode(ctx)) === "FIRINGI") {

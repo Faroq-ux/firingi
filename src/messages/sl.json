@@ -888,7 +888,10 @@
     "My Bonuses": "Moji bonusi",
     "Buying Groups": "Nabavne skupine",
     "Pay Later": "Odloženo plačilo",
-    "Tenders": "Razpisi"
+    "Tenders": "Razpisi",
+    "Sustainability & CO₂": "Trajnost in CO₂",
+    "CO₂ & Packaging": "CO₂ in embalaža",
+    "CO₂ Footprint": "Odtis CO₂"
   },
   "delivery": {
     "title": "Dostava",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Razpis {number} dodeljen",
       "body": "Kupec je tokrat »{title}« dodelil drugim ponudbam."
+    },
+    "co2_review": {
+      "title": "Vrednost CO₂ za preverjanje",
+      "body": "Podjetje {company} je poslalo vrednosti CO₂ ali podatke o embalaži. Preverite jih v razdelku Katalog › Trajnost in CO₂."
+    },
+    "co2_decided": {
+      "title": "Vrednost CO₂ preverjena {decision}: {product}",
+      "body": "»{product}« {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "ni izbrano",
     "waiting": "čaka na kupca",
     "noBidLine": "brez ponudbe"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Nizek CO₂",
+      "LOCAL": "Lokalno",
+      "ECO_PACKAGING": "Eko embalaža"
+    },
+    "perPack": "pak.",
+    "filterAll": "Vsi izdelki",
+    "filterLabel": "Trajnost",
+    "panelTitle": "Odtis CO₂",
+    "perPackLabel": "Na pakiranje (izdelek + embalaža)",
+    "perKgLabel": "Na kg izdelka",
+    "categoryAvg": "Povprečje kategorije: {value}",
+    "packagingLabel": "Embalaža",
+    "packaging": {
+      "CARDBOARD": "Karton",
+      "PLASTIC": "Plastika",
+      "GLASS": "Steklo",
+      "METAL": "Kovina / pločevinke",
+      "RETURNABLE": "Povratna",
+      "MIXED": "Mešani materiali",
+      "NONE": "Brez embalaže"
+    },
+    "recyclable": "Primerna za recikliranje",
+    "sourceSupplier": "Vrednost, ki jo je navedel dobavitelj in preveril FIRINGI.",
+    "sourceCategory": "Povprečna vrednost za to vrsto izdelka.",
+    "alternatives": "Alternative z manj CO₂",
+    "lessCo2": "{pct} % manj CO₂",
+    "orderTitle": "Odtis CO₂ tega naročila",
+    "products": "Izdelki",
+    "packagingPart": "Embalaža",
+    "delivery": "Dostava",
+    "total": "Skupaj",
+    "distance": "{km} km",
+    "final": "Končno (dostavljeno)",
+    "estimate": "Ocena",
+    "cartTotal": "Ta košarica: približno {kg}",
+    "totalYear": "Odtis v tem letu",
+    "perEuro": "Na porabljeni €",
+    "localShare": "Delež lokalnih",
+    "deliveryShare": "Delež dostave",
+    "goalLine": "Cilj: {pct} % manj CO₂ v letu {year}",
+    "goalProgress": "Doslej {now} — v enakem obdobju lani {last}. Cilj: {target}.",
+    "goalNoHistory": "Napredek bo prikazan, ko bo na voljo leto za primerjavo.",
+    "onTrack": "Po načrtu",
+    "offTrack": "Nad ciljem",
+    "byMonth": "Po mesecih",
+    "noData": "V tem letu še ni dostavljenih naročil.",
+    "byCategory": "Po kategorijah",
+    "topProducts": "Največji odtisi",
+    "method": "Ocene v kg CO₂e. Izdelki: kg izdelka × vrednost na kg (preverjena vrednost dobavitelja, sicer povprečje kategorije). Embalaža: na kos glede na vrsto. Dostava: cestna razdalja × teža × gorivo vozila. Končne vrednosti se določijo ob dostavi.",
+    "bySupplier": "Po dobaviteljih",
+    "byCustomer": "Po strankah",
+    "pdfTitle": "Poročilo o CO₂",
+    "scopeTitle": "Obsegi emisij toplogrednih plinov (GHG Protocol, Obseg 3)",
+    "scope": "Obseg",
+    "scope1": "Obseg 3 · Kat. 1 — kupljeno blago in embalaža",
+    "scope4": "Obseg 3 · Kat. 4 — prevoz v predhodnih fazah dobavne verige",
+    "kgPerKgInput": "kg CO₂e na kg",
+    "sourceInput": "Vir",
+    "sourcePh": "npr. študija LCA 2025, EPD, certifikat",
+    "save": "Shrani",
+    "saved": "Shranjeno.",
+    "goalInput": "Cilj zmanjšanja za leto {year} (%)",
+    "setGoal": "Nastavi cilj",
+    "removeGoal": "Odstrani cilj",
+    "goalTitle": "Vaš cilj za CO₂",
+    "buyerTitle": "Odtis CO₂",
+    "buyerIntro": "Odtis vaših nakupov: izdelki, embalaža in dostava. Izvozite ga za svoje poročilo o trajnosti (CSRD).",
+    "vendorReportTitle": "Odtis CO₂",
+    "vendorReportIntro": "Odtis prodanega in dostavljenega blaga po mesecih, kategorijah in strankah.",
+    "vendorTitle": "CO₂ in embalaža",
+    "vendorIntro": "Vnesite lastne vrednosti CO₂ in embalažo svojih izdelkov. Vrednosti, nižje od povprečja kategorije, prejmejo v trgovini oznako »Nizek CO₂«.",
+    "valuesTitle": "Vaši izdelki",
+    "valuesChecked": "FIRINGI preveri vsako vrednost, preden jo uporabi. Navedite vir (študija, EPD, certifikat).",
+    "valuesAuto": "Vaše vrednosti se uporabijo takoj. Navedite vir (študija, EPD, certifikat).",
+    "searchProducts": "Iskanje izdelkov",
+    "noProducts": "Ni izdelkov.",
+    "nowUsed": "Zdaj: {value}/kg · {pack} na pakiranje",
+    "status": {
+      "PENDING": "V preverjanju",
+      "APPROVED": "Odobreno",
+      "REJECTED": "Ni sprejeto"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Vaša zelena ocena — rezultat {score}/100",
+    "gradeHint": "Na podlagi CO₂ vaših izdelkov v primerjavi z njihovimi kategorijami, eko embalaže in vaših lastnih preverjenih vrednosti.",
+    "closed": {
+      "OFF": "Poročanje o CO₂ trenutno ni na voljo.",
+      "COMPANY_OFF": "Poročanje o CO₂ je za vaše podjetje izklopljeno. Obrnite se na FIRINGI.",
+      "TYPE_OFF": "Poročanje o CO₂ ni na voljo za vašo vrsto dejavnosti."
+    },
+    "fuel": {
+      "label": "Gorivo",
+      "unknown": "Ni nastavljeno",
+      "DIESEL": "Dizel",
+      "PETROL": "Bencin",
+      "HYBRID": "Hibrid",
+      "LPG": "Avtoplin",
+      "ELECTRIC": "Elektrika"
+    }
   }
 }

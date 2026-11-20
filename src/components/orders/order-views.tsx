@@ -1,4 +1,5 @@
 /** Order list and order detail, shared by buyer, vendor and admin screens. */
+import { OrderCo2Panel } from "@/components/co2/panels";
 import { Pager } from "@/components/ui/pager";
 import { PayOrderButton } from "@/components/payments/direct-debit";
 import { paymentPolicy } from "@/server/services/payments";
@@ -202,6 +203,7 @@ export async function OrderDetail({ ctx, id, placed }: { ctx: Ctx; id: string; p
             </CardContent>
           </Card>
           <RatingPanel ctx={ctx} orderId={o.id} status={o.status} role={role} />
+          <OrderCo2Panel ctx={ctx} orderId={o.id} />
           <OrderReturnsPanel ctx={ctx} orderId={o.id} role={role} />
           {o.exceptions.length > 0 && (
             <Card>

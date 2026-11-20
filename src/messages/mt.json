@@ -888,7 +888,10 @@
     "My Bonuses": "Il-Bonusijiet Tiegħi",
     "Buying Groups": "Gruppi tax-Xiri",
     "Pay Later": "Ħallas Aktar Tard",
-    "Tenders": "Tenders"
+    "Tenders": "Tenders",
+    "Sustainability & CO₂": "Sostenibbiltà u CO₂",
+    "CO₂ & Packaging": "CO₂ u Imballaġġ",
+    "CO₂ Footprint": "Impronta tal-CO₂"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "It-tender {number} ġie aġġudikat",
       "body": "Din id-darba x-xerrej aġġudika \"{title}\" lil offerti oħra."
+    },
+    "co2_review": {
+      "title": "Valur tal-CO₂ biex jiġi ċċekkjat",
+      "body": "{company} bagħat valuri tal-CO₂ jew tal-imballaġġ. Iċċekkjahom f'Katalgu › Sostenibbiltà u CO₂."
+    },
+    "co2_decided": {
+      "title": "Valur tal-CO₂ iċċekkjat ({decision}): {product}",
+      "body": "\"{product}\" {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "mhux magħżula",
     "waiting": "qed tistenna lix-xerrej",
     "noBidLine": "l-ebda offerta"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "CO₂ baxx",
+      "LOCAL": "Lokali",
+      "ECO_PACKAGING": "Imballaġġ ekoloġiku"
+    },
+    "perPack": "pakkett",
+    "filterAll": "Il-prodotti kollha",
+    "filterLabel": "Sostenibbiltà",
+    "panelTitle": "Impronta tal-CO₂",
+    "perPackLabel": "Għal kull pakkett (prodott + imballaġġ)",
+    "perKgLabel": "Għal kull kg ta' prodott",
+    "categoryAvg": "Medja tal-kategorija: {value}",
+    "packagingLabel": "Imballaġġ",
+    "packaging": {
+      "CARDBOARD": "Kartun",
+      "PLASTIC": "Plastik",
+      "GLASS": "Ħġieġ",
+      "METAL": "Metall / laned",
+      "RETURNABLE": "Li jintradd lura",
+      "MIXED": "Materjali mħallta",
+      "NONE": "Mingħajr imballaġġ"
+    },
+    "recyclable": "Riċiklabbli",
+    "sourceSupplier": "Valur mogħti mill-fornitur u ċċekkjat minn FIRINGI.",
+    "sourceCategory": "Valur medju għal dan it-tip ta' prodott.",
+    "alternatives": "Alternattivi b'inqas CO₂",
+    "lessCo2": "{pct} % inqas CO₂",
+    "orderTitle": "Impronta tal-CO₂ ta' din l-ordni",
+    "products": "Prodotti",
+    "packagingPart": "Imballaġġ",
+    "delivery": "Kunsinna",
+    "total": "Total",
+    "distance": "{km} km",
+    "final": "Finali (ikkunsinnat)",
+    "estimate": "Stima",
+    "cartTotal": "Dan il-karrettun: madwar {kg}",
+    "totalYear": "Impronta ta' din is-sena",
+    "perEuro": "Għal kull € minfuq",
+    "localShare": "Sehem lokali",
+    "deliveryShare": "Sehem tal-kunsinna",
+    "goalLine": "Għan: {pct} % inqas CO₂ fis-sena {year}",
+    "goalProgress": "S'issa {now} — l-istess żmien is-sena l-oħra {last}. Mira: {target}.",
+    "goalNoHistory": "Il-progress jidher meta jkun hemm sena biex tqabbel magħha.",
+    "onTrack": "Fit-triq it-tajba",
+    "offTrack": "'Il fuq mill-mira",
+    "byMonth": "Skont ix-xahar",
+    "noData": "Għad m'hemmx ordnijiet ikkunsinnati din is-sena.",
+    "byCategory": "Skont il-kategorija",
+    "topProducts": "L-akbar impronti",
+    "method": "Stimi f'kg CO₂e. Prodotti: kg ta' prodott × valur għal kull kg (il-valur iċċekkjat tal-fornitur, inkella l-medja tal-kategorija). Imballaġġ: għal kull oġġett skont it-tip. Kunsinna: distanza bit-triq × piż × fjuwil tal-vettura. Il-valuri finali jiġu stabbiliti mal-kunsinna.",
+    "bySupplier": "Skont il-fornitur",
+    "byCustomer": "Skont il-klijent",
+    "pdfTitle": "Rapport tal-CO₂",
+    "scopeTitle": "Ambiti tal-gassijiet serra (GHG Protocol, Ambitu 3)",
+    "scope": "Ambitu",
+    "scope1": "Ambitu 3 · Kat. 1 — oġġetti u imballaġġ mixtrija",
+    "scope4": "Ambitu 3 · Kat. 4 — trasport upstream",
+    "kgPerKgInput": "kg CO₂e għal kull kg",
+    "sourceInput": "Sors",
+    "sourcePh": "eż. studju LCA 2025, EPD, ċertifikat",
+    "save": "Issalva",
+    "saved": "Issalvat.",
+    "goalInput": "Għan ta' tnaqqis għas-sena {year} (%)",
+    "setGoal": "Issettja għan",
+    "removeGoal": "Neħħi l-għan",
+    "goalTitle": "L-għan tal-CO₂ tiegħek",
+    "buyerTitle": "Impronta tal-CO₂",
+    "buyerIntro": "L-impronta ta' dak li tixtri: prodotti, imballaġġ u kunsinna. Esportaha għar-rapport tas-sostenibbiltà (CSRD) tiegħek.",
+    "vendorReportTitle": "Impronta tal-CO₂",
+    "vendorReportIntro": "L-impronta ta' dak li biegħt u kkunsinnajt, skont ix-xahar, il-kategorija u l-klijent.",
+    "vendorTitle": "CO₂ u Imballaġġ",
+    "vendorIntro": "Daħħal il-valuri tal-CO₂ u l-imballaġġ tal-prodotti tiegħek. Valuri aktar baxxi mill-medja tal-kategorija jaqilgħu t-timbru \"CO₂ baxx\" fil-ħanut.",
+    "valuesTitle": "Il-prodotti tiegħek",
+    "valuesChecked": "FIRINGI jiċċekkja kull valur qabel ma jintuża. Semmi s-sors (studju, EPD, ċertifikat).",
+    "valuesAuto": "Il-valuri tiegħek jintużaw minnufih. Semmi s-sors (studju, EPD, ċertifikat).",
+    "searchProducts": "Fittex prodotti",
+    "noProducts": "L-ebda prodott.",
+    "nowUsed": "Issa: {value}/kg · {pack} għal kull pakkett",
+    "status": {
+      "PENDING": "Qed jiġi ċċekkjat",
+      "APPROVED": "Approvat",
+      "REJECTED": "Mhux aċċettat"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Il-grad aħdar tiegħek — punteġġ {score}/100",
+    "gradeHint": "Ibbażat fuq is-CO₂ tal-prodotti tiegħek meta mqabbel mal-kategoriji tagħhom, l-imballaġġ ekoloġiku u l-valuri ċċekkjati tiegħek stess.",
+    "closed": {
+      "OFF": "Ir-rappurtar tal-CO₂ mhuwiex disponibbli bħalissa.",
+      "COMPANY_OFF": "Ir-rappurtar tal-CO₂ huwa mitfi għan-negozju tiegħek. Ikkuntattja lil FIRINGI.",
+      "TYPE_OFF": "Ir-rappurtar tal-CO₂ mhuwiex disponibbli għat-tip ta' negozju tiegħek."
+    },
+    "fuel": {
+      "label": "Fjuwil",
+      "unknown": "Mhux issettjat",
+      "DIESEL": "Diżil",
+      "PETROL": "Petrol",
+      "HYBRID": "Ibridu",
+      "LPG": "LPG",
+      "ELECTRIC": "Elettriku"
+    }
   }
 }

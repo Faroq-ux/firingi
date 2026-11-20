@@ -888,7 +888,10 @@
     "My Bonuses": "Omat bonukset",
     "Buying Groups": "Ostoryhmät",
     "Pay Later": "Maksa myöhemmin",
-    "Tenders": "Tarjouskilpailut"
+    "Tenders": "Tarjouskilpailut",
+    "Sustainability & CO₂": "Vastuullisuus ja CO₂",
+    "CO₂ & Packaging": "CO₂ ja pakkaukset",
+    "CO₂ Footprint": "CO₂-jalanjälki"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Tarjouskilpailu {number} ratkaistu",
       "body": "Ostaja valitsi tällä kertaa muut tarjoukset kilpailussa ”{title}”."
+    },
+    "co2_review": {
+      "title": "Tarkistettava CO₂-arvo",
+      "body": "{company} lähetti CO₂- tai pakkausarvoja. Tarkistakaa ne kohdassa Tuoteluettelo › Vastuullisuus ja CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂-arvo tarkistettu, {decision}: {product}",
+      "body": "”{product}” {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "ei valittu",
     "waiting": "odottaa ostajaa",
     "noBidLine": "ei tarjousta"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Vähän CO₂:ta",
+      "LOCAL": "Paikallinen",
+      "ECO_PACKAGING": "Ekopakkaus"
+    },
+    "perPack": "pakkaus",
+    "filterAll": "Kaikki tuotteet",
+    "filterLabel": "Vastuullisuus",
+    "panelTitle": "CO₂-jalanjälki",
+    "perPackLabel": "Pakkausta kohden (tuote + pakkaus)",
+    "perKgLabel": "Tuotekiloa kohden",
+    "categoryAvg": "Tuoteryhmän keskiarvo: {value}",
+    "packagingLabel": "Pakkaus",
+    "packaging": {
+      "CARDBOARD": "Pahvi",
+      "PLASTIC": "Muovi",
+      "GLASS": "Lasi",
+      "METAL": "Metalli / tölkit",
+      "RETURNABLE": "Palautettava",
+      "MIXED": "Sekamateriaalit",
+      "NONE": "Ei pakkausta"
+    },
+    "recyclable": "Kierrätettävä",
+    "sourceSupplier": "Toimittajan ilmoittama ja FIRINGIn tarkistama arvo.",
+    "sourceCategory": "Tämäntyyppisen tuotteen keskiarvo.",
+    "alternatives": "Vaihtoehdot, joissa vähemmän CO₂:ta",
+    "lessCo2": "{pct} % vähemmän CO₂:ta",
+    "orderTitle": "Tämän tilauksen CO₂-jalanjälki",
+    "products": "Tuotteet",
+    "packagingPart": "Pakkaus",
+    "delivery": "Toimitus",
+    "total": "Yhteensä",
+    "distance": "{km} km",
+    "final": "Lopullinen (toimitettu)",
+    "estimate": "Arvio",
+    "cartTotal": "Tämä ostoskori: noin {kg}",
+    "totalYear": "Jalanjälki tänä vuonna",
+    "perEuro": "Käytettyä €:a kohden",
+    "localShare": "Paikallisten osuus",
+    "deliveryShare": "Toimituksen osuus",
+    "goalLine": "Tavoite: {pct} % vähemmän CO₂:ta vuonna {year}",
+    "goalProgress": "Tähän mennessä {now} — viime vuonna samaan aikaan {last}. Tavoite: {target}.",
+    "goalNoHistory": "Kehitys näkyy, kun vertailuvuosi on käytettävissä.",
+    "onTrack": "Tavoitteessa",
+    "offTrack": "Yli tavoitteen",
+    "byMonth": "Kuukausittain",
+    "noData": "Tänä vuonna ei ole vielä toimitettuja tilauksia.",
+    "byCategory": "Tuoteryhmittäin",
+    "topProducts": "Suurimmat jalanjäljet",
+    "method": "Arviot yksikössä kg CO₂e. Tuotteet: tuotekilot × arvo kiloa kohden (toimittajan tarkistettu arvo, muuten tuoteryhmän keskiarvo). Pakkaus: tuotekohtaisesti tyypin mukaan. Toimitus: tieetäisyys × paino × ajoneuvon polttoaine. Lopulliset arvot vahvistetaan toimituksen yhteydessä.",
+    "bySupplier": "Toimittajittain",
+    "byCustomer": "Asiakkaittain",
+    "pdfTitle": "CO₂-raportti",
+    "scopeTitle": "Kasvihuonekaasupäästöjen luokat (GHG Protocol, Scope 3)",
+    "scope": "Scope",
+    "scope1": "Scope 3 · Kat. 1 — ostetut tuotteet ja pakkaukset",
+    "scope4": "Scope 3 · Kat. 4 — hankintaketjun kuljetukset",
+    "kgPerKgInput": "kg CO₂e kiloa kohden",
+    "sourceInput": "Lähde",
+    "sourcePh": "esim. LCA-tutkimus 2025, EPD, sertifikaatti",
+    "save": "Tallenna",
+    "saved": "Tallennettu.",
+    "goalInput": "Vähennystavoite vuodelle {year} (%)",
+    "setGoal": "Aseta tavoite",
+    "removeGoal": "Poista tavoite",
+    "goalTitle": "CO₂-tavoitteenne",
+    "buyerTitle": "CO₂-jalanjälki",
+    "buyerIntro": "Ostojenne jalanjälki: tuotteet, pakkaukset ja toimitus. Voitte viedä sen vastuullisuusraportointianne (CSRD) varten.",
+    "vendorReportTitle": "CO₂-jalanjälki",
+    "vendorReportIntro": "Myymienne ja toimittamienne tuotteiden jalanjälki kuukausittain, tuoteryhmittäin ja asiakkaittain.",
+    "vendorTitle": "CO₂ ja pakkaukset",
+    "vendorIntro": "Ilmoittakaa tuotteidenne omat CO₂-arvot ja pakkaukset. Tuoteryhmän keskiarvoa pienemmät arvot ansaitsevat kaupassa ”Vähän CO₂:ta” -merkin.",
+    "valuesTitle": "Tuotteenne",
+    "valuesChecked": "FIRINGI tarkistaa jokaisen arvon ennen käyttöä. Ilmoittakaa lähde (tutkimus, EPD, sertifikaatti).",
+    "valuesAuto": "Arvonne otetaan käyttöön heti. Ilmoittakaa lähde (tutkimus, EPD, sertifikaatti).",
+    "searchProducts": "Hae tuotteita",
+    "noProducts": "Ei tuotteita.",
+    "nowUsed": "Nyt: {value}/kg · {pack} pakkausta kohden",
+    "status": {
+      "PENDING": "Tarkistettavana",
+      "APPROVED": "Hyväksytty",
+      "REJECTED": "Ei hyväksytty"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Vihreä arvosananne — pisteet {score}/100",
+    "gradeHint": "Perustuu tuotteidenne CO₂-arvoihin suhteessa tuoteryhmiin, ekopakkauksiin ja omiin tarkistettuihin arvoihinne.",
+    "closed": {
+      "OFF": "CO₂-raportointi ei ole tällä hetkellä käytettävissä.",
+      "COMPANY_OFF": "CO₂-raportointi on poistettu käytöstä yrityksellenne. Ottakaa yhteyttä FIRINGIin.",
+      "TYPE_OFF": "CO₂-raportointi ei ole käytettävissä yritystyypillenne."
+    },
+    "fuel": {
+      "label": "Polttoaine",
+      "unknown": "Ei asetettu",
+      "DIESEL": "Diesel",
+      "PETROL": "Bensiini",
+      "HYBRID": "Hybridi",
+      "LPG": "Nestekaasu",
+      "ELECTRIC": "Sähkö"
+    }
   }
 }

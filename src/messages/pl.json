@@ -888,7 +888,10 @@
     "My Bonuses": "Moje bonusy",
     "Buying Groups": "Grupy zakupowe",
     "Pay Later": "Płatność odroczona",
-    "Tenders": "Przetargi"
+    "Tenders": "Przetargi",
+    "Sustainability & CO₂": "Zrównoważony rozwój i CO₂",
+    "CO₂ & Packaging": "CO₂ i opakowania",
+    "CO₂ Footprint": "Ślad CO₂"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Przetarg {number} rozstrzygnięty",
       "body": "Tym razem kupujący wybrał w przetargu „{title}” inne oferty."
+    },
+    "co2_review": {
+      "title": "Wartość CO₂ do sprawdzenia",
+      "body": "Firma {company} przesłała wartości CO₂ lub dane opakowań. Proszę je sprawdzić w sekcji Katalog › Zrównoważony rozwój i CO₂."
+    },
+    "co2_decided": {
+      "title": "Wartość CO₂ sprawdzona {decision}: {product}",
+      "body": "„{product}” {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "niewybrana",
     "waiting": "czeka na kupującego",
     "noBidLine": "brak oferty"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Niski CO₂",
+      "LOCAL": "Lokalny",
+      "ECO_PACKAGING": "Eko opakowanie"
+    },
+    "perPack": "opak.",
+    "filterAll": "Wszystkie produkty",
+    "filterLabel": "Zrównoważony rozwój",
+    "panelTitle": "Ślad CO₂",
+    "perPackLabel": "Na opakowanie (produkt + opakowanie)",
+    "perKgLabel": "Na kg produktu",
+    "categoryAvg": "Średnia kategorii: {value}",
+    "packagingLabel": "Opakowanie",
+    "packaging": {
+      "CARDBOARD": "Karton",
+      "PLASTIC": "Plastik",
+      "GLASS": "Szkło",
+      "METAL": "Metal / puszki",
+      "RETURNABLE": "Zwrotne",
+      "MIXED": "Materiały mieszane",
+      "NONE": "Bez opakowania"
+    },
+    "recyclable": "Do recyklingu",
+    "sourceSupplier": "Wartość podana przez dostawcę i sprawdzona przez FIRINGI.",
+    "sourceCategory": "Wartość średnia dla tego rodzaju produktu.",
+    "alternatives": "Alternatywy o niższym CO₂",
+    "lessCo2": "O {pct} % mniej CO₂",
+    "orderTitle": "Ślad CO₂ tego zamówienia",
+    "products": "Produkty",
+    "packagingPart": "Opakowania",
+    "delivery": "Dostawa",
+    "total": "Razem",
+    "distance": "{km} km",
+    "final": "Ostateczny (po dostawie)",
+    "estimate": "Szacunek",
+    "cartTotal": "Ten koszyk: ok. {kg}",
+    "totalYear": "Ślad w tym roku",
+    "perEuro": "Na każde wydane €",
+    "localShare": "Udział lokalnych",
+    "deliveryShare": "Udział dostawy",
+    "goalLine": "Cel: o {pct} % mniej CO₂ w {year}",
+    "goalProgress": "Dotychczas {now} — w tym samym okresie ubiegłego roku {last}. Cel: {target}.",
+    "goalNoHistory": "Postęp będzie widoczny, gdy pojawi się rok do porównania.",
+    "onTrack": "Zgodnie z planem",
+    "offTrack": "Powyżej celu",
+    "byMonth": "Według miesięcy",
+    "noData": "Brak dostarczonych zamówień w tym roku.",
+    "byCategory": "Według kategorii",
+    "topProducts": "Największy ślad",
+    "method": "Szacunki w kg CO₂e. Produkty: kg produktu × wartość na kg (sprawdzona wartość dostawcy, w przeciwnym razie średnia kategorii). Opakowania: na sztukę według rodzaju. Dostawa: odległość drogowa × masa × paliwo pojazdu. Wartości ostateczne są ustalane przy dostawie.",
+    "bySupplier": "Według dostawców",
+    "byCustomer": "Według klientów",
+    "pdfTitle": "Raport CO₂",
+    "scopeTitle": "Zakresy emisji gazów cieplarnianych (GHG Protocol, Zakres 3)",
+    "scope": "Zakres",
+    "scope1": "Zakres 3 · Kat. 1 — zakupione towary i opakowania",
+    "scope4": "Zakres 3 · Kat. 4 — transport na wcześniejszych etapach łańcucha dostaw",
+    "kgPerKgInput": "kg CO₂e na kg",
+    "sourceInput": "Źródło",
+    "sourcePh": "np. analiza LCA 2025, EPD, certyfikat",
+    "save": "Zapisz",
+    "saved": "Zapisano.",
+    "goalInput": "Cel redukcji na {year} (%)",
+    "setGoal": "Ustaw cel",
+    "removeGoal": "Usuń cel",
+    "goalTitle": "Państwa cel CO₂",
+    "buyerTitle": "Ślad CO₂",
+    "buyerIntro": "Ślad Państwa zakupów: produkty, opakowania i dostawa. Można go wyeksportować do raportu zrównoważonego rozwoju (CSRD).",
+    "vendorReportTitle": "Ślad CO₂",
+    "vendorReportIntro": "Ślad sprzedanych i dostarczonych produktów według miesięcy, kategorii i klientów.",
+    "vendorTitle": "CO₂ i opakowania",
+    "vendorIntro": "Proszę podać własne wartości CO₂ i opakowania swoich produktów. Wartości niższe od średniej kategorii otrzymują w sklepie oznaczenie „Niski CO₂”.",
+    "valuesTitle": "Państwa produkty",
+    "valuesChecked": "FIRINGI sprawdza każdą wartość przed jej użyciem. Proszę podać źródło (analiza, EPD, certyfikat).",
+    "valuesAuto": "Państwa wartości są stosowane od razu. Proszę podać źródło (analiza, EPD, certyfikat).",
+    "searchProducts": "Szukaj produktów",
+    "noProducts": "Brak produktów.",
+    "nowUsed": "Obecnie: {value}/kg · {pack} na opakowanie",
+    "status": {
+      "PENDING": "W weryfikacji",
+      "APPROVED": "Zatwierdzono",
+      "REJECTED": "Nie zaakceptowano"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Państwa zielona ocena — wynik {score}/100",
+    "gradeHint": "Na podstawie CO₂ Państwa produktów na tle ich kategorii, ekologicznych opakowań i własnych sprawdzonych wartości.",
+    "closed": {
+      "OFF": "Raportowanie CO₂ jest obecnie niedostępne.",
+      "COMPANY_OFF": "Raportowanie CO₂ jest wyłączone dla Państwa firmy. Prosimy o kontakt z FIRINGI.",
+      "TYPE_OFF": "Raportowanie CO₂ nie jest dostępne dla Państwa rodzaju działalności."
+    },
+    "fuel": {
+      "label": "Paliwo",
+      "unknown": "Nie ustawiono",
+      "DIESEL": "Diesel",
+      "PETROL": "Benzyna",
+      "HYBRID": "Hybryda",
+      "LPG": "LPG",
+      "ELECTRIC": "Elektryczny"
+    }
   }
 }

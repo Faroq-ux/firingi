@@ -146,6 +146,8 @@ model Vehicle {
   documents  Document[]
   deliveries Delivery[]
   routes     Route[]
+  /// Phase 51: DIESEL | PETROL | HYBRID | LPG | ELECTRIC (null = FIRINGI's default fuel)
+  fuel       String?
 
   @@unique([ownerCompanyId, plate])
 }

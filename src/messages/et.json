@@ -888,7 +888,10 @@
     "My Bonuses": "Minu boonused",
     "Buying Groups": "Ostugrupid",
     "Pay Later": "Maksa hiljem",
-    "Tenders": "Hanked"
+    "Tenders": "Hanked",
+    "Sustainability & CO₂": "Jätkusuutlikkus ja CO₂",
+    "CO₂ & Packaging": "CO₂ ja pakendid",
+    "CO₂ Footprint": "CO₂-jalajälg"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Hange {number} on otsustatud",
       "body": "Ostja valis seekord hankes „{title}“ teised pakkumused."
+    },
+    "co2_review": {
+      "title": "Kontrollimist vajav CO₂-väärtus",
+      "body": "{company} saatis CO₂- või pakendiväärtused. Kontrollige neid jaotises Kataloog › Jätkusuutlikkus ja CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂-väärtus kontrollitud ({decision}): {product}",
+      "body": "„{product}“ {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "ei valitud",
     "waiting": "ootab ostjat",
     "noBidLine": "pakkumust pole"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Madal CO₂",
+      "LOCAL": "Kohalik",
+      "ECO_PACKAGING": "Ökopakend"
+    },
+    "perPack": "pakk",
+    "filterAll": "Kõik tooted",
+    "filterLabel": "Jätkusuutlikkus",
+    "panelTitle": "CO₂-jalajälg",
+    "perPackLabel": "Paki kohta (toode + pakend)",
+    "perKgLabel": "Toote kg kohta",
+    "categoryAvg": "Kategooria keskmine: {value}",
+    "packagingLabel": "Pakend",
+    "packaging": {
+      "CARDBOARD": "Papp",
+      "PLASTIC": "Plast",
+      "GLASS": "Klaas",
+      "METAL": "Metall / purgid",
+      "RETURNABLE": "Tagastatav",
+      "MIXED": "Segamaterjalid",
+      "NONE": "Pakendita"
+    },
+    "recyclable": "Ringlussevõetav",
+    "sourceSupplier": "Tarnija esitatud ja FIRINGI kontrollitud väärtus.",
+    "sourceCategory": "Seda tüüpi toote keskmine väärtus.",
+    "alternatives": "Väiksema CO₂-ga alternatiivid",
+    "lessCo2": "{pct} % vähem CO₂",
+    "orderTitle": "Selle tellimuse CO₂-jalajälg",
+    "products": "Tooted",
+    "packagingPart": "Pakend",
+    "delivery": "Tarne",
+    "total": "Kokku",
+    "distance": "{km} km",
+    "final": "Lõplik (tarnitud)",
+    "estimate": "Hinnang",
+    "cartTotal": "See ostukorv: umbes {kg}",
+    "totalYear": "Selle aasta jalajälg",
+    "perEuro": "Kulutatud € kohta",
+    "localShare": "Kohalike osakaal",
+    "deliveryShare": "Tarne osakaal",
+    "goalLine": "Eesmärk: {year}. aastal {pct} % vähem CO₂",
+    "goalProgress": "Seni {now} — eelmisel aastal samal ajal {last}. Eesmärk: {target}.",
+    "goalNoHistory": "Edenemine kuvatakse, kui on olemas võrdlusaasta.",
+    "onTrack": "Graafikus",
+    "offTrack": "Üle eesmärgi",
+    "byMonth": "Kuude kaupa",
+    "noData": "Sel aastal pole veel tarnitud tellimusi.",
+    "byCategory": "Kategooriate kaupa",
+    "topProducts": "Suurimad jalajäljed",
+    "method": "Hinnangud kg CO₂e-des. Tooted: toote kg × väärtus kg kohta (tarnija kontrollitud väärtus, muidu kategooria keskmine). Pakend: artikli kohta tüübi järgi. Tarne: teekonna pikkus × kaal × sõiduki kütus. Lõplikud väärtused määratakse tarnimisel.",
+    "bySupplier": "Tarnijate kaupa",
+    "byCustomer": "Klientide kaupa",
+    "pdfTitle": "CO₂-aruanne",
+    "scopeTitle": "Kasvuhoonegaaside ulatused (GHG Protocol, ulatus 3)",
+    "scope": "Ulatus",
+    "scope1": "Ulatus 3 · kat. 1 — ostetud kaubad ja pakendid",
+    "scope4": "Ulatus 3 · kat. 4 — ülesvoolu transport",
+    "kgPerKgInput": "kg CO₂e kg kohta",
+    "sourceInput": "Allikas",
+    "sourcePh": "nt LCA-uuring 2025, EPD, sertifikaat",
+    "save": "Salvesta",
+    "saved": "Salvestatud.",
+    "goalInput": "{year}. aasta vähendamise eesmärk (%)",
+    "setGoal": "Määra eesmärk",
+    "removeGoal": "Eemalda eesmärk",
+    "goalTitle": "Teie CO₂-eesmärk",
+    "buyerTitle": "CO₂-jalajälg",
+    "buyerIntro": "Teie ostude jalajälg: tooted, pakendid ja tarne. Eksportige see oma jätkusuutlikkuse aruande (CSRD) jaoks.",
+    "vendorReportTitle": "CO₂-jalajälg",
+    "vendorReportIntro": "Teie müüdud ja tarnitud kaupade jalajälg kuude, kategooriate ja klientide kaupa.",
+    "vendorTitle": "CO₂ ja pakendid",
+    "vendorIntro": "Sisestage oma toodete CO₂-väärtused ja pakendid. Kategooria keskmisest madalamad väärtused saavad poes märgi „Madal CO₂“.",
+    "valuesTitle": "Teie tooted",
+    "valuesChecked": "FIRINGI kontrollib iga väärtust enne kasutamist. Märkige allikas (uuring, EPD, sertifikaat).",
+    "valuesAuto": "Teie väärtusi kasutatakse kohe. Märkige allikas (uuring, EPD, sertifikaat).",
+    "searchProducts": "Otsi tooteid",
+    "noProducts": "Tooteid pole.",
+    "nowUsed": "Praegu: {value}/kg · {pack} paki kohta",
+    "status": {
+      "PENDING": "Kontrollimisel",
+      "APPROVED": "Kinnitatud",
+      "REJECTED": "Tagasi lükatud"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Teie roheline hinne — {score}/100 punkti",
+    "gradeHint": "Põhineb teie toodete CO₂-l võrreldes nende kategooriatega, ökopakenditel ja teie enda kontrollitud väärtustel.",
+    "closed": {
+      "OFF": "CO₂-aruandlus pole praegu saadaval.",
+      "COMPANY_OFF": "CO₂-aruandlus on teie ettevõtte jaoks välja lülitatud. Võtke ühendust FIRINGI-ga.",
+      "TYPE_OFF": "CO₂-aruandlus pole teie ettevõtte tüübi jaoks saadaval."
+    },
+    "fuel": {
+      "label": "Kütus",
+      "unknown": "Määramata",
+      "DIESEL": "Diisel",
+      "PETROL": "Bensiin",
+      "HYBRID": "Hübriid",
+      "LPG": "LPG",
+      "ELECTRIC": "Elekter"
+    }
   }
 }

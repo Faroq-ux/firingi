@@ -38,7 +38,7 @@ export const withdrawBidAction = defineAction({ permission: ["vendor.pricing.man
 // FIRINGI
 export const reviewTenderAction = defineAction({ permission: [...ADMIN], schema: z.object({ id, approve: z.boolean(), note: z.string().max(500).nullable() }), handler: async (ctx, i) => { await T.reviewTender(ctx, i.id, i.approve, i.note); return done(true); } });
 export const setTenderSwitchAction = defineAction({ permission: [...ADMIN], schema: z.object({ companyId: id, state: z.enum(["DEFAULT", "ON", "OFF"]) }), handler: async (ctx, i) => { await T.setCompanySwitch(ctx, i.companyId, i.state); return done(true); } });
-export const findTenderBusinessAction = defineAction({ permission: [...ADMIN, "admin.orders.view", "admin.finance.manage"], schema: z.object({ q: z.string().max(80) }), handler: async (ctx, i) => T.findBusiness(ctx, i.q) });
+export const findTenderBusinessAction = defineAction({ permission: [...ADMIN, "admin.orders.view", "admin.finance.manage", "admin.catalogue.manage"], schema: z.object({ q: z.string().max(80) }), handler: async (ctx, i) => T.findBusiness(ctx, i.q) });
 export const saveTenderSettingsAction = defineAction({
   permission: [...ADMIN],
   schema: z.object({ enabled: z.boolean(), buyers: z.object({ CUSTOMER: z.boolean(), WHOLESALER: z.boolean() }), suppliers: z.object({ WHOLESALER: z.boolean(), DISTRIBUTOR: z.boolean() }), approval: z.enum(["ALWAYS", "AUTO"]), invitations: z.boolean(), targetPrices: z.boolean(), payLater: z.boolean(), maxLines: z.number(), minHours: z.number(), maxDays: z.number(), awardDays: z.number() }),

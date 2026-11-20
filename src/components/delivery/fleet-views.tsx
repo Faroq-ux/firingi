@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
 import { DriverActiveToggle, VehicleStatusSelect } from "./delivery-forms";
+import { FuelSelect } from "@/components/co2/client";
+import { FUELS } from "@/lib/co2";
 
 type Fleet = Awaited<ReturnType<typeof ownFleet>>;
 
@@ -32,12 +34,13 @@ export async function DriversTable({ drivers, manage, showOwner, ownerIsViewer =
 }
 
 export async function VehiclesTable({ vehicles, manage, showOwner, asFiringiOverVendor }: { vehicles: Fleet["vehicles"]; manage: boolean; showOwner?: boolean; asFiringiOverVendor?: (ownerId: string) => boolean }) {
-  const [t, tt, tv] = await Promise.all([getTranslations("delivery"), getTranslations("delivery.vehicleTypes"), getTranslations("delivery.vehicleStatus")]);
+  const [t, tt, tv, tf] = await Promise.all([getTranslations("delivery"), getTranslations("delivery.vehicleTypes"), getTranslations("delivery.vehicleStatus"), getTranslations("co2.fuel")]);
+  const fuelLabels: Record<string, string> = { label: tf("label"), unknown: tf("unknown"), ...Object.fromEntries(FUELS.map((f) => [f, tf(f)])) };
   return (
     <Table>
-      <THead><TR><TH>{t("plate")}</TH>{showOwner && <TH>{t("executor")}</TH>}<TH>{t("type")}</TH><TH>{t("make")}</TH><TH className="text-right">{t("capacityKg")}</TH><TH>{t("status")}</TH></TR></THead>
+      <THead><TR><TH>{t("plate")}</TH>{showOwner && <TH>{t("executor")}</TH>}<TH>{t("type")}</TH><TH>{t("make")}</TH><TH className="text-right">{t("capacityKg")}</TH><TH>{tf("label")}</TH><TH>{t("status")}</TH></TR></THead>
       <TBody>
-        {vehicles.length === 0 && <EmptyRow colSpan={6}>{t("noVehicles")}</EmptyRow>}
+        {vehicles.length === 0 && <EmptyRow colSpan={7}>{t("noVehicles")}</EmptyRow>}
         {vehicles.map((v) => {
           const overVendor = asFiringiOverVendor?.(v.ownerCompanyId) ?? false;
           return (
@@ -47,6 +50,7 @@ export async function VehiclesTable({ vehicles, manage, showOwner, asFiringiOver
               <TD className="text-xs">{tt(v.type as never)}</TD>
               <TD className="text-xs">{[v.make, v.model].filter(Boolean).join(" ") || "—"}</TD>
               <TD className="text-right tabular-nums">{v.capacityKg ? Number(v.capacityKg) : "—"}</TD>
+              <TD>{manage ? <FuelSelect vehicleId={v.id} fuel={v.fuel} labels={fuelLabels} /> : <span className="text-xs">{v.fuel ? fuelLabels[v.fuel] : "—"}</span>}</TD>
               <TD>{manage ? <VehicleStatusSelect id={v.id} status={v.status} statuses={overVendor ? ["ACTIVE", "INACTIVE"] : ["ACTIVE", "MAINTENANCE", "INACTIVE"]} needsReason={overVendor} /> : <Badge variant={v.status === "ACTIVE" ? "success" : "secondary"}>{tv(v.status)}</Badge>}</TD>
             </TR>
           );

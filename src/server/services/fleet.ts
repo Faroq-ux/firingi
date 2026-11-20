@@ -37,7 +37,7 @@ const driverSelect = {
 } satisfies Prisma.DriverSelect;
 
 const vehicleSelect = {
-  id: true, plate: true, type: true, make: true, model: true, capacityKg: true, capacityM3: true, isRefrigerated: true, status: true, ownerCompanyId: true, createdAt: true,
+  id: true, plate: true, type: true, make: true, model: true, capacityKg: true, capacityM3: true, isRefrigerated: true, fuel: true, status: true, ownerCompanyId: true, createdAt: true,
   owner: { select: { id: true, legalName: true, tradeName: true, type: true } },
 } satisfies Prisma.VehicleSelect;
 

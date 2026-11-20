@@ -199,6 +199,8 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     lines, dueDays: payLater ? payLater.dueDays : order.buyer.paymentTermsDays, createdById: actorUserId,
   });
   if (payLater) await (await import("@/server/pay-later/service")).afterInvoice(tx, payLater.plan.id, invoice);
+  // Phase 51: the final footprint — delivered quantities, the delivering vehicle's fuel
+  await (await import("@/server/co2/service")).stampOrder(tx, orderId, true);
 
   // What the vendor must invoice FIRINGI.
   const crossBorder = order.seller.countryId !== le.countryId;

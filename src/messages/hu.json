@@ -888,7 +888,10 @@
     "My Bonuses": "Bónuszaim",
     "Buying Groups": "Beszerzési csoportok",
     "Pay Later": "Halasztott fizetés",
-    "Tenders": "Tenderek"
+    "Tenders": "Tenderek",
+    "Sustainability & CO₂": "Fenntarthatóság és CO₂",
+    "CO₂ & Packaging": "CO₂ és csomagolás",
+    "CO₂ Footprint": "CO₂-lábnyom"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "{number} tender odaítélve",
       "body": "A vevő ezúttal más ajánlatoknak ítélte oda a(z) „{title}” tendert."
+    },
+    "co2_review": {
+      "title": "Ellenőrizendő CO₂-érték",
+      "body": "{company} CO₂- vagy csomagolási értékeket küldött. Ellenőrizze őket itt: Katalógus › Fenntarthatóság és CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂-érték ellenőrizve, {decision}: {product}",
+      "body": "„{product}” {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "nem nyert",
     "waiting": "a vevőre vár",
     "noBidLine": "nincs ajánlat"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Alacsony CO₂",
+      "LOCAL": "Helyi",
+      "ECO_PACKAGING": "Öko csomagolás"
+    },
+    "perPack": "csomag",
+    "filterAll": "Minden termék",
+    "filterLabel": "Fenntarthatóság",
+    "panelTitle": "CO₂-lábnyom",
+    "perPackLabel": "Csomagonként (termék + csomagolás)",
+    "perKgLabel": "Termékkilogrammonként",
+    "categoryAvg": "Kategóriaátlag: {value}",
+    "packagingLabel": "Csomagolás",
+    "packaging": {
+      "CARDBOARD": "Karton",
+      "PLASTIC": "Műanyag",
+      "GLASS": "Üveg",
+      "METAL": "Fém / konzerv",
+      "RETURNABLE": "Visszaváltható",
+      "MIXED": "Vegyes anyagok",
+      "NONE": "Csomagolás nélkül"
+    },
+    "recyclable": "Újrahasznosítható",
+    "sourceSupplier": "A beszállító által megadott, a FIRINGI által ellenőrzött érték.",
+    "sourceCategory": "Átlagérték az ilyen típusú termékekre.",
+    "alternatives": "Alacsonyabb CO₂-kibocsátású alternatívák",
+    "lessCo2": "{pct} %-kal kevesebb CO₂",
+    "orderTitle": "A rendelés CO₂-lábnyoma",
+    "products": "Termékek",
+    "packagingPart": "Csomagolás",
+    "delivery": "Szállítás",
+    "total": "Összesen",
+    "distance": "{km} km",
+    "final": "Végleges (kiszállítva)",
+    "estimate": "Becslés",
+    "cartTotal": "Ez a kosár: kb. {kg}",
+    "totalYear": "Idei lábnyom",
+    "perEuro": "Elköltött €-ra vetítve",
+    "localShare": "Helyi arány",
+    "deliveryShare": "Szállítás aránya",
+    "goalLine": "Cél ({year}): {pct} %-kal kevesebb CO₂",
+    "goalProgress": "Eddig {now} — tavaly ugyanekkor {last}. Cél: {target}.",
+    "goalNoHistory": "A haladás akkor jelenik meg, ha már van összehasonlítható év.",
+    "onTrack": "Jó úton",
+    "offTrack": "Cél felett",
+    "byMonth": "Havonta",
+    "noData": "Ebben az évben még nincs kiszállított rendelés.",
+    "byCategory": "Kategóriánként",
+    "topProducts": "Legnagyobb lábnyomok",
+    "method": "Becslések kg CO₂e-ben. Termékek: termék kg × kg-onkénti érték (a beszállító ellenőrzött értéke, ennek hiányában a kategóriaátlag). Csomagolás: tételenként, típus szerint. Szállítás: közúti távolság × tömeg × a jármű üzemanyaga. A végleges értékek kiszállításkor rögzülnek.",
+    "bySupplier": "Beszállítónként",
+    "byCustomer": "Vevőnként",
+    "pdfTitle": "CO₂-jelentés",
+    "scopeTitle": "Üvegházhatású gázok kibocsátási körei (GHG Protocol, Scope 3)",
+    "scope": "Hatókör",
+    "scope1": "Scope 3 · 1. kat. — beszerzett áruk és csomagolás",
+    "scope4": "Scope 3 · 4. kat. — upstream szállítás",
+    "kgPerKgInput": "kg CO₂e / kg",
+    "sourceInput": "Forrás",
+    "sourcePh": "pl. LCA-tanulmány 2025, EPD, tanúsítvány",
+    "save": "Mentés",
+    "saved": "Mentve.",
+    "goalInput": "Csökkentési cél, {year} (%)",
+    "setGoal": "Cél beállítása",
+    "removeGoal": "Cél törlése",
+    "goalTitle": "Az Ön CO₂-célja",
+    "buyerTitle": "CO₂-lábnyom",
+    "buyerIntro": "Beszerzései lábnyoma: termékek, csomagolás és szállítás. Exportálja fenntarthatósági (CSRD) jelentéséhez.",
+    "vendorReportTitle": "CO₂-lábnyom",
+    "vendorReportIntro": "Az Ön által értékesített és kiszállított termékek lábnyoma havonta, kategóriánként és vevőnként.",
+    "vendorTitle": "CO₂ és csomagolás",
+    "vendorIntro": "Adja meg termékei saját CO₂-értékeit és csomagolását. A kategóriaátlagnál alacsonyabb értékek „Alacsony CO₂” jelvényt kapnak a webáruházban.",
+    "valuesTitle": "Az Ön termékei",
+    "valuesChecked": "A FIRINGI minden értéket ellenőriz a felhasználás előtt. Adja meg a forrást (tanulmány, EPD, tanúsítvány).",
+    "valuesAuto": "Az Ön értékei azonnal érvénybe lépnek. Adja meg a forrást (tanulmány, EPD, tanúsítvány).",
+    "searchProducts": "Termékek keresése",
+    "noProducts": "Nincsenek termékek.",
+    "nowUsed": "Jelenleg: {value}/kg · {pack} csomagonként",
+    "status": {
+      "PENDING": "Ellenőrzés alatt",
+      "APPROVED": "Jóváhagyva",
+      "REJECTED": "Nem elfogadva"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Az Ön zöld minősítése — {score}/100 pont",
+    "gradeHint": "Termékei kategóriájukhoz mért CO₂-értéke, az öko csomagolás és saját ellenőrzött értékei alapján.",
+    "closed": {
+      "OFF": "A CO₂-jelentés jelenleg nem érhető el.",
+      "COMPANY_OFF": "A CO₂-jelentés ki van kapcsolva vállalkozása számára. Forduljon a FIRINGI-hez.",
+      "TYPE_OFF": "A CO₂-jelentés az Ön vállalkozástípusa számára nem érhető el."
+    },
+    "fuel": {
+      "label": "Üzemanyag",
+      "unknown": "Nincs megadva",
+      "DIESEL": "Dízel",
+      "PETROL": "Benzin",
+      "HYBRID": "Hibrid",
+      "LPG": "LPG",
+      "ELECTRIC": "Elektromos"
+    }
   }
 }

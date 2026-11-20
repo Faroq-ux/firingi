@@ -305,6 +305,7 @@ model Company {
   payLaterAccount        PayLaterAccount?          @relation("PayLaterAccount")
   tendersPosted          Tender[]                  @relation("TendersPosted")
   tenderBids             TenderBid[]               @relation("TenderBids")
+  co2Goals               Co2Goal[]                 @relation("Co2Goals")
 
   /// one company per NIF / tax id in a country, whatever its type (registration details are fixed; FIRINGI corrects them)
   @@unique([countryId, taxId])

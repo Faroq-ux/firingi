@@ -290,6 +290,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     // The orders go to the suppliers for confirmation — unless FIRINGI's risk check holds them, or
     // this buyer pays before shipping (then they wait, unseen by the supplier, until paid).
     if (payLater) await (await import("@/server/pay-later/service")).createPlans(tx, ctx, payLater, out.map((o) => o.id));
+    // Phase 51: each order's estimated footprint (products, packaging, delivery)
+    for (const o of out) await (await import("@/server/co2/service")).stampOrder(tx, o.id);
     const held = await recordRisk(tx, risk, out.map((o) => ({ id: o.id, buyerCompanyId: ctx.company.id })), pc.parts.length > 1 ? checkoutId : null);
     // paying later (partner pays FIRINGI / FIRINGI's credit) replaces paying before shipping
     const payFirst = !payLater && (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;

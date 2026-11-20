@@ -24,6 +24,9 @@ import { offerCatchWeight } from "@/server/catchweight/service";
 import { ProductCatchWeight } from "@/components/catchweight/views";
 import { cwLabels } from "@/components/catchweight/labels";
 import { offerColdBadges } from "@/server/coldchain/service";
+import { offerCo2View } from "@/server/co2/service";
+import { Co2Chips } from "@/components/co2/views";
+import { co2Labels, fill, kgText } from "@/components/co2/labels";
 import { ColdBadge } from "@/components/coldchain/views";
 import { offerBadges as exciseBadges } from "@/server/excise/service";
 import { ExciseBadge } from "@/components/excise/views";
@@ -46,6 +49,8 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const exl = ex ? (await exLabels()).l : null;
   const food = await buyerProductFood(ctx, item.productId, locale).catch(() => null); // Phase 44: allergens, ingredients, nutrition
   const fl = food ? (await foodLabels()).l : null;
+  const co2 = await offerCo2View(ctx, id, locale).catch(() => null); // Phase 51: footprint, badges, lower-CO₂ alternatives
+  const c2 = co2 ? await co2Labels() : null;
   const bb = bestBefore.get(id) ?? null; // only when the supplier shows best-before (FIRINGI decides) and it is close
   const name = pickLocalized(item.name, locale);
 
@@ -116,6 +121,26 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
               <CardContent className="space-y-2 pt-5">
                 <h2 className="font-semibold">{fl.panelTitle}</h2>
                 {food.approved ? <FoodPanel f={food} l={fl} locale={locale} labelHref={null} /> : <p className="text-sm text-muted-foreground">{fl.noInfo}</p>}
+              </CardContent>
+            </Card>
+          )}
+          {co2 && c2 && (
+            <Card data-testid="product-co2">
+              <CardContent className="space-y-3 pt-5 text-sm">
+                <h2 className="font-semibold">{c2.l.panelTitle}</h2>
+                <Co2Chips badges={co2.badges} l={c2.l} />
+                <dl className="grid grid-cols-2 gap-2">
+                  <div className="rounded-lg border p-2"><dt className="text-xs text-muted-foreground">{c2.l.perPackLabel}</dt><dd className="font-semibold tabular-nums" data-testid="co2-per-pack">{kgText(co2.perPack.total, c2.locale)}</dd></div>
+                  <div className="rounded-lg border p-2"><dt className="text-xs text-muted-foreground">{c2.l.perKgLabel}</dt><dd className="font-semibold tabular-nums">{kgText(co2.perKg, c2.locale)}</dd><dd className="text-xs text-muted-foreground">{fill(c2.l.categoryAvg, { value: kgText(co2.categoryPerKg, c2.locale) })}</dd></div>
+                </dl>
+                {co2.packaging && <p className="text-xs text-muted-foreground">{c2.l.packagingLabel}: {c2.l[`packaging.${co2.packaging}`]}{co2.recyclable ? ` · ${c2.l.recyclable}` : ""}</p>}
+                <p className="text-xs text-muted-foreground">{co2.own ? c2.l.sourceSupplier : c2.l.sourceCategory}</p>
+                {co2.alternatives.length > 0 && (
+                  <div data-testid="co2-alternatives">
+                    <h3 className="mb-1 text-xs font-medium">{c2.l.alternatives}</h3>
+                    <ul className="divide-y rounded-lg border">{co2.alternatives.map((a) => <li key={a.offerId} className="flex flex-wrap items-center justify-between gap-2 p-2"><Link href={`/buy/catalogue/offers/${a.offerId}`} className="min-w-0 break-words text-primary hover:underline">{a.name} · {a.pack} · {a.vendor}</Link><span className="text-xs text-[color:var(--vivid-teal)]">{fill(c2.l.lessCo2, { pct: a.savingPct })}</span></li>)}</ul>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}

@@ -888,7 +888,10 @@
     "My Bonuses": "Mani bonusi",
     "Buying Groups": "Iepirkumu grupas",
     "Pay Later": "Maksāt vēlāk",
-    "Tenders": "Konkursi"
+    "Tenders": "Konkursi",
+    "Sustainability & CO₂": "Ilgtspēja un CO₂",
+    "CO₂ & Packaging": "CO₂ un iepakojums",
+    "CO₂ Footprint": "CO₂ pēdas nospiedums"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Konkursā {number} izvēlēti uzvarētāji",
       "body": "Šoreiz pircējs konkursā \"{title}\" izvēlējās citus piedāvājumus."
+    },
+    "co2_review": {
+      "title": "Pārbaudāma CO₂ vērtība",
+      "body": "{company} nosūtīja CO₂ vai iepakojuma vērtības. Pārbaudiet tās sadaļā Katalogs › Ilgtspēja un CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂ vērtība pārbaudīta ({decision}): {product}",
+      "body": "„{product}” {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "nav izvēlēts",
     "waiting": "gaida pircēju",
     "noBidLine": "nav piedāvājuma"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Zems CO₂",
+      "LOCAL": "Vietējs",
+      "ECO_PACKAGING": "Eko iepakojums"
+    },
+    "perPack": "iep.",
+    "filterAll": "Visi produkti",
+    "filterLabel": "Ilgtspēja",
+    "panelTitle": "CO₂ pēdas nospiedums",
+    "perPackLabel": "Uz iepakojumu (produkts + iepakojums)",
+    "perKgLabel": "Uz produkta kg",
+    "categoryAvg": "Kategorijas vidējā vērtība: {value}",
+    "packagingLabel": "Iepakojums",
+    "packaging": {
+      "CARDBOARD": "Kartons",
+      "PLASTIC": "Plastmasa",
+      "GLASS": "Stikls",
+      "METAL": "Metāls / kārbas",
+      "RETURNABLE": "Atgriežams",
+      "MIXED": "Jaukti materiāli",
+      "NONE": "Bez iepakojuma"
+    },
+    "recyclable": "Pārstrādājams",
+    "sourceSupplier": "Vērtību norādījis piegādātājs, un FIRINGI to ir pārbaudījis.",
+    "sourceCategory": "Vidējā vērtība šāda veida produktiem.",
+    "alternatives": "Alternatīvas ar mazāku CO₂",
+    "lessCo2": "Par {pct} % mazāk CO₂",
+    "orderTitle": "Šī pasūtījuma CO₂ pēdas nospiedums",
+    "products": "Produkti",
+    "packagingPart": "Iepakojums",
+    "delivery": "Piegāde",
+    "total": "Kopā",
+    "distance": "{km} km",
+    "final": "Galīgais (piegādāts)",
+    "estimate": "Aplēse",
+    "cartTotal": "Šis grozs: aptuveni {kg}",
+    "totalYear": "Šī gada pēdas nospiedums",
+    "perEuro": "Uz iztērēto €",
+    "localShare": "Vietējo daļa",
+    "deliveryShare": "Piegādes daļa",
+    "goalLine": "Mērķis: par {pct} % mazāk CO₂ {year}. gadā",
+    "goalProgress": "Līdz šim {now} — tajā pašā laikā pērn {last}. Mērķis: {target}.",
+    "goalNoHistory": "Progress tiks parādīts, kad būs gads, ar ko salīdzināt.",
+    "onTrack": "Atbilst plānam",
+    "offTrack": "Virs mērķa",
+    "byMonth": "Pa mēnešiem",
+    "noData": "Šogad vēl nav piegādātu pasūtījumu.",
+    "byCategory": "Pa kategorijām",
+    "topProducts": "Lielākie pēdas nospiedumi",
+    "method": "Aplēses kg CO₂e. Produkti: produkta kg × vērtība uz kg (piegādātāja pārbaudītā vērtība, citādi kategorijas vidējā vērtība). Iepakojums: par katru vienību pēc veida. Piegāde: ceļa attālums × svars × transportlīdzekļa degviela. Galīgās vērtības nosaka piegādes brīdī.",
+    "bySupplier": "Pa piegādātājiem",
+    "byCustomer": "Pa klientiem",
+    "pdfTitle": "CO₂ pārskats",
+    "scopeTitle": "Siltumnīcefekta gāzu tvērumi (GHG Protocol, 3. tvērums)",
+    "scope": "Tvērums",
+    "scope1": "3. tvērums · 1. kat. — iegādātās preces un iepakojums",
+    "scope4": "3. tvērums · 4. kat. — augšupējais transports",
+    "kgPerKgInput": "kg CO₂e uz kg",
+    "sourceInput": "Avots",
+    "sourcePh": "piem., LCA pētījums 2025, EPD, sertifikāts",
+    "save": "Saglabāt",
+    "saved": "Saglabāts.",
+    "goalInput": "Samazinājuma mērķis {year}. gadam (%)",
+    "setGoal": "Noteikt mērķi",
+    "removeGoal": "Noņemt mērķi",
+    "goalTitle": "Jūsu CO₂ mērķis",
+    "buyerTitle": "CO₂ pēdas nospiedums",
+    "buyerIntro": "Jūsu pirkumu pēdas nospiedums: produkti, iepakojums un piegāde. Eksportējiet to savam ilgtspējas (CSRD) pārskatam.",
+    "vendorReportTitle": "CO₂ pēdas nospiedums",
+    "vendorReportIntro": "Jūsu pārdoto un piegādāto preču pēdas nospiedums pa mēnešiem, kategorijām un klientiem.",
+    "vendorTitle": "CO₂ un iepakojums",
+    "vendorIntro": "Norādiet savu produktu CO₂ vērtības un iepakojumu. Par vērtībām, kas zemākas par kategorijas vidējo, veikalā tiek piešķirta zīme „Zems CO₂”.",
+    "valuesTitle": "Jūsu produkti",
+    "valuesChecked": "FIRINGI pārbauda katru vērtību, pirms tā tiek izmantota. Norādiet avotu (pētījums, EPD, sertifikāts).",
+    "valuesAuto": "Jūsu vērtības tiek izmantotas uzreiz. Norādiet avotu (pētījums, EPD, sertifikāts).",
+    "searchProducts": "Meklēt produktus",
+    "noProducts": "Nav produktu.",
+    "nowUsed": "Tagad: {value}/kg · {pack} uz iepakojumu",
+    "status": {
+      "PENDING": "Tiek pārbaudīts",
+      "APPROVED": "Apstiprināts",
+      "REJECTED": "Nav pieņemts"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Jūsu zaļais vērtējums — rezultāts {score}/100",
+    "gradeHint": "Pamatojoties uz Jūsu produktu CO₂ salīdzinājumā ar to kategorijām, eko iepakojumu un Jūsu pašu pārbaudītajām vērtībām.",
+    "closed": {
+      "OFF": "CO₂ pārskati pašlaik nav pieejami.",
+      "COMPANY_OFF": "CO₂ pārskati Jūsu uzņēmumam ir izslēgti. Sazinieties ar FIRINGI.",
+      "TYPE_OFF": "CO₂ pārskati nav pieejami Jūsu uzņēmuma veidam."
+    },
+    "fuel": {
+      "label": "Degviela",
+      "unknown": "Nav iestatīts",
+      "DIESEL": "Dīzelis",
+      "PETROL": "Benzīns",
+      "HYBRID": "Hibrīds",
+      "LPG": "LPG",
+      "ELECTRIC": "Elektrisks"
+    }
   }
 }

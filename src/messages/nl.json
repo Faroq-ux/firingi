@@ -888,7 +888,10 @@
     "My Bonuses": "Mijn bonussen",
     "Buying Groups": "Inkoopgroepen",
     "Pay Later": "Achteraf betalen",
-    "Tenders": "Tenders"
+    "Tenders": "Tenders",
+    "Sustainability & CO₂": "Duurzaamheid & CO₂",
+    "CO₂ & Packaging": "CO₂ & verpakking",
+    "CO₂ Footprint": "CO₂-voetafdruk"
   },
   "delivery": {
     "title": "Levering",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Tender {number} gegund",
       "body": "De koper heeft \"{title}\" deze keer aan andere biedingen gegund."
+    },
+    "co2_review": {
+      "title": "Te controleren CO₂-waarde",
+      "body": "{company} heeft CO₂- of verpakkingswaarden gestuurd. Controleer ze in Catalogus › Duurzaamheid & CO₂."
+    },
+    "co2_decided": {
+      "title": "CO₂-waarde gecontroleerd ({decision}): {product}",
+      "body": "\"{product}\" {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "niet gekozen",
     "waiting": "wacht op de koper",
     "noBidLine": "geen bod"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Lage CO₂",
+      "LOCAL": "Lokaal",
+      "ECO_PACKAGING": "Eco-verpakking"
+    },
+    "perPack": "verp.",
+    "filterAll": "Alle producten",
+    "filterLabel": "Duurzaamheid",
+    "panelTitle": "CO₂-voetafdruk",
+    "perPackLabel": "Per verpakking (product + verpakking)",
+    "perKgLabel": "Per kg product",
+    "categoryAvg": "Categoriegemiddelde: {value}",
+    "packagingLabel": "Verpakking",
+    "packaging": {
+      "CARDBOARD": "Karton",
+      "PLASTIC": "Plastic",
+      "GLASS": "Glas",
+      "METAL": "Metaal / blik",
+      "RETURNABLE": "Retourneerbaar",
+      "MIXED": "Gemengde materialen",
+      "NONE": "Geen verpakking"
+    },
+    "recyclable": "Recyclebaar",
+    "sourceSupplier": "Waarde opgegeven door de leverancier en gecontroleerd door FIRINGI.",
+    "sourceCategory": "Gemiddelde waarde voor dit soort product.",
+    "alternatives": "Alternatieven met minder CO₂",
+    "lessCo2": "{pct} % minder CO₂",
+    "orderTitle": "CO₂-voetafdruk van deze bestelling",
+    "products": "Producten",
+    "packagingPart": "Verpakking",
+    "delivery": "Levering",
+    "total": "Totaal",
+    "distance": "{km} km",
+    "final": "Definitief (geleverd)",
+    "estimate": "Schatting",
+    "cartTotal": "Deze winkelwagen: ongeveer {kg}",
+    "totalYear": "Voetafdruk dit jaar",
+    "perEuro": "Per uitgegeven €",
+    "localShare": "Aandeel lokaal",
+    "deliveryShare": "Aandeel levering",
+    "goalLine": "Doel: {pct} % minder CO₂ in {year}",
+    "goalProgress": "Tot nu toe {now} — vorig jaar rond deze tijd {last}. Doel: {target}.",
+    "goalNoHistory": "De voortgang verschijnt zodra er een jaar is om mee te vergelijken.",
+    "onTrack": "Op koers",
+    "offTrack": "Boven doel",
+    "byMonth": "Per maand",
+    "noData": "Nog geen geleverde bestellingen dit jaar.",
+    "byCategory": "Per categorie",
+    "topProducts": "Grootste voetafdrukken",
+    "method": "Schattingen in kg CO₂e. Producten: kg product × waarde per kg (de gecontroleerde waarde van de leverancier, anders het categoriegemiddelde). Verpakking: per artikel naar type. Levering: afstand over de weg × gewicht × brandstof van het voertuig. Definitieve waarden worden bij levering vastgesteld.",
+    "bySupplier": "Per leverancier",
+    "byCustomer": "Per klant",
+    "pdfTitle": "CO₂-rapport",
+    "scopeTitle": "Broeikasgasscopes (GHG Protocol, Scope 3)",
+    "scope": "Scope",
+    "scope1": "Scope 3 · Cat. 1 — ingekochte goederen en verpakking",
+    "scope4": "Scope 3 · Cat. 4 — upstream transport",
+    "kgPerKgInput": "kg CO₂e per kg",
+    "sourceInput": "Bron",
+    "sourcePh": "bijv. LCA-studie 2025, EPD, certificaat",
+    "save": "Opslaan",
+    "saved": "Opgeslagen.",
+    "goalInput": "Reductiedoel voor {year} (%)",
+    "setGoal": "Doel instellen",
+    "removeGoal": "Doel verwijderen",
+    "goalTitle": "Uw CO₂-doel",
+    "buyerTitle": "CO₂-voetafdruk",
+    "buyerIntro": "De voetafdruk van wat u inkoopt: producten, verpakking en levering. Exporteer deze voor uw duurzaamheidsrapport (CSRD).",
+    "vendorReportTitle": "CO₂-voetafdruk",
+    "vendorReportIntro": "De voetafdruk van wat u hebt verkocht en geleverd, per maand, categorie en klant.",
+    "vendorTitle": "CO₂ & verpakking",
+    "vendorIntro": "Geef de eigen CO₂-waarden en verpakking van uw producten op. Waarden lager dan het categoriegemiddelde leveren in de shop het label \"Lage CO₂\" op.",
+    "valuesTitle": "Uw producten",
+    "valuesChecked": "FIRINGI controleert elke waarde voordat deze wordt gebruikt. Vermeld de bron (studie, EPD, certificaat).",
+    "valuesAuto": "Uw waarden worden direct gebruikt. Vermeld de bron (studie, EPD, certificaat).",
+    "searchProducts": "Producten zoeken",
+    "noProducts": "Geen producten.",
+    "nowUsed": "Nu: {value}/kg · {pack} per verpakking",
+    "status": {
+      "PENDING": "Wordt gecontroleerd",
+      "APPROVED": "Goedgekeurd",
+      "REJECTED": "Niet geaccepteerd"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Uw groene beoordeling — score {score}/100",
+    "gradeHint": "Gebaseerd op de CO₂ van uw producten ten opzichte van hun categorieën, eco-verpakking en uw eigen gecontroleerde waarden.",
+    "closed": {
+      "OFF": "CO₂-rapportage is momenteel niet beschikbaar.",
+      "COMPANY_OFF": "CO₂-rapportage is uitgeschakeld voor uw bedrijf. Neem contact op met FIRINGI.",
+      "TYPE_OFF": "CO₂-rapportage is niet beschikbaar voor uw type bedrijf."
+    },
+    "fuel": {
+      "label": "Brandstof",
+      "unknown": "Niet ingesteld",
+      "DIESEL": "Diesel",
+      "PETROL": "Benzine",
+      "HYBRID": "Hybride",
+      "LPG": "LPG",
+      "ELECTRIC": "Elektrisch"
+    }
   }
 }

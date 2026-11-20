@@ -22,6 +22,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { CartQty, CheckoutForm, ClearCartButton, CouponBox } from "@/components/orders/cart-controls";
 import { payLaterChoiceFor } from "@/components/pay-later/choice";
+import { CartCo2 } from "@/components/co2/panels";
 import { COUPON_ERRORS } from "@/lib/coupons";
 import { CartPoints } from "@/components/loyalty/controls";
 import { loyaltySettings } from "@/server/loyalty/service";
@@ -142,6 +143,7 @@ export default async function CartPage() {
               <dt className="text-muted-foreground">{tax}</dt><dd className="text-right tabular-nums">{lc ? formatMoney(lc.vat, locale, lc.code) : formatMoney(cart.totalVat, locale, fx)}</dd>
               <dt className="font-semibold">{t("total")} (c/ {tax})</dt><dd className="text-right text-lg font-semibold tabular-nums" data-testid="cart-total" data-currency={fx.code}>{lc ? formatMoney(lc.gross, locale, lc.code) : formatMoney(cart.totalGross, locale, fx)}{fx.code !== "EUR" && fx.showEur && <div className="text-xs font-normal text-muted-foreground">{tcur("approxEur", { amount: formatMoney(cart.totalGross, locale) })}</div>}</dd>
             </dl>
+            {!cart.routed && <CartCo2 ctx={ctx} lines={cart.groups.flatMap((g) => g.lines.map((x) => ({ offerId: x.offerId, qty: x.qty })))} />}
             {cwm.size > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-cw-note">{cl.l.cartTotalNote}</p>}
             {exCart && exCart.addedNet > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-excise-note">{exl.l.dutyAdded.replace("{amount}", formatMoney(exCart.addedNet + exCart.addedVat, locale, fx))} ({exl.l["mode.ADDED"]})</p>}
             {rtCart && rtCart.depositTotal > 0 && <p className="text-xs text-muted-foreground" data-testid="cart-deposit-note">{rl.l.plusDeposits.replace("{amount}", formatMoney(rtCart.depositTotal, locale, fx))}</p>}

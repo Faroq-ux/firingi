@@ -67,14 +67,15 @@ model Category {
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
 
-  parent             Category?         @relation("CategoryTree", fields: [parentId], references: [id])
-  children           Category[]        @relation("CategoryTree")
-  defaultTaxCategory TaxCategory?      @relation(fields: [defaultTaxCategoryId], references: [id])
-  tempClass          TempClass?        @relation(fields: [tempClassId], references: [id])
-  exciseCategory     ExciseCategory?   @relation(fields: [exciseCategoryId], references: [id])
+  parent             Category?          @relation("CategoryTree", fields: [parentId], references: [id])
+  children           Category[]         @relation("CategoryTree")
+  defaultTaxCategory TaxCategory?       @relation(fields: [defaultTaxCategoryId], references: [id])
+  tempClass          TempClass?         @relation(fields: [tempClassId], references: [id])
+  exciseCategory     ExciseCategory?    @relation(fields: [exciseCategoryId], references: [id])
   products           Product[]
   commissionRules    CommissionRule[]
   promotionTargets   PromotionTarget[]
+  co2Factor          Co2CategoryFactor?
 
   @@index([parentId, sortOrder])
   @@index([path])
@@ -251,6 +252,7 @@ model VendorOffer {
   clearanceDeals      ClearanceDeal[]      @relation("ClearanceOffer")
   returnables         OfferReturnable[]
   tenderBidLines      TenderBidLine[]
+  co2                 OfferCo2?
 
   @@unique([vendorCompanyId, packagingUnitId])
   @@index([sellerType, status, countryId])

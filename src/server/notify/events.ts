@@ -207,6 +207,9 @@ export const EVENTS: EventDef[] = [
   E("tender.closed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
   E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
   E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
+  // Phase 51: CO₂ values
+  E("co2.review", "catalogue", ["admin.catalogue.manage", "admin.catalogue.approve"], ["EMAIL"], ["company"]),
+  E("co2.decided", "catalogue", ["vendor.products.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["product", "decision", "reason"]),
   // Phase 48 — rebates & bonuses
   E("rebate.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "name"]),
   E("rebate.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name"]),

@@ -888,7 +888,10 @@
     "My Bonuses": "I miei bonus",
     "Buying Groups": "Gruppi d'acquisto",
     "Pay Later": "Paga dopo",
-    "Tenders": "Gare"
+    "Tenders": "Gare",
+    "Sustainability & CO₂": "Sostenibilità e CO₂",
+    "CO₂ & Packaging": "CO₂ e imballaggi",
+    "CO₂ Footprint": "Impronta CO₂"
   },
   "delivery": {
     "title": "Consegna",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Gara {number} aggiudicata",
       "body": "Questa volta l'acquirente ha aggiudicato \"{title}\" ad altre offerte."
+    },
+    "co2_review": {
+      "title": "Valore CO₂ da verificare",
+      "body": "{company} ha inviato valori CO₂ o di imballaggio. Li verifichi in Catalogo › Sostenibilità e CO₂."
+    },
+    "co2_decided": {
+      "title": "Valore CO₂ verificato, {decision}: {product}",
+      "body": "«{product}» {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "non scelta",
     "waiting": "in attesa dell'acquirente",
     "noBidLine": "nessuna offerta"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "Basso CO₂",
+      "LOCAL": "Locale",
+      "ECO_PACKAGING": "Imballaggio eco"
+    },
+    "perPack": "confezione",
+    "filterAll": "Tutti i prodotti",
+    "filterLabel": "Sostenibilità",
+    "panelTitle": "Impronta CO₂",
+    "perPackLabel": "Per confezione (prodotto + imballaggio)",
+    "perKgLabel": "Per kg di prodotto",
+    "categoryAvg": "Media della categoria: {value}",
+    "packagingLabel": "Imballaggio",
+    "packaging": {
+      "CARDBOARD": "Cartone",
+      "PLASTIC": "Plastica",
+      "GLASS": "Vetro",
+      "METAL": "Metallo / lattine",
+      "RETURNABLE": "A rendere",
+      "MIXED": "Materiali misti",
+      "NONE": "Senza imballaggio"
+    },
+    "recyclable": "Riciclabile",
+    "sourceSupplier": "Valore fornito dal fornitore e verificato da FIRINGI.",
+    "sourceCategory": "Valore medio per questo tipo di prodotto.",
+    "alternatives": "Alternative con meno CO₂",
+    "lessCo2": "{pct} % di CO₂ in meno",
+    "orderTitle": "Impronta CO₂ di questo ordine",
+    "products": "Prodotti",
+    "packagingPart": "Imballaggio",
+    "delivery": "Consegna",
+    "total": "Totale",
+    "distance": "{km} km",
+    "final": "Definitivo (consegnato)",
+    "estimate": "Stima",
+    "cartTotal": "Questo carrello: circa {kg}",
+    "totalYear": "Impronta quest'anno",
+    "perEuro": "Per € speso",
+    "localShare": "Quota locale",
+    "deliveryShare": "Quota consegna",
+    "goalLine": "Obiettivo: {pct} % di CO₂ in meno nel {year}",
+    "goalProgress": "Finora {now} — stesso periodo dell'anno scorso {last}. Obiettivo: {target}.",
+    "goalNoHistory": "I progressi saranno visibili quando ci sarà un anno di confronto.",
+    "onTrack": "In linea",
+    "offTrack": "Sopra l'obiettivo",
+    "byMonth": "Per mese",
+    "noData": "Ancora nessun ordine consegnato quest'anno.",
+    "byCategory": "Per categoria",
+    "topProducts": "Impronte maggiori",
+    "method": "Stime in kg CO₂e. Prodotti: kg di prodotto × valore per kg (il valore verificato del fornitore, altrimenti la media della categoria). Imballaggio: per articolo in base al tipo. Consegna: distanza stradale × peso × carburante del veicolo. I valori definitivi sono fissati alla consegna.",
+    "bySupplier": "Per fornitore",
+    "byCustomer": "Per cliente",
+    "pdfTitle": "Report CO₂",
+    "scopeTitle": "Ambiti delle emissioni di gas serra (GHG Protocol, Scope 3)",
+    "scope": "Scope",
+    "scope1": "Scope 3 · Cat. 1 — beni acquistati e imballaggi",
+    "scope4": "Scope 3 · Cat. 4 — trasporto a monte",
+    "kgPerKgInput": "kg CO₂e per kg",
+    "sourceInput": "Fonte",
+    "sourcePh": "es. studio LCA 2025, EPD, certificato",
+    "save": "Salva",
+    "saved": "Salvato.",
+    "goalInput": "Obiettivo di riduzione per il {year} (%)",
+    "setGoal": "Imposta obiettivo",
+    "removeGoal": "Rimuovi obiettivo",
+    "goalTitle": "Il suo obiettivo CO₂",
+    "buyerTitle": "Impronta CO₂",
+    "buyerIntro": "L'impronta di ciò che acquista: prodotti, imballaggi e consegna. Può esportarla per il suo report di sostenibilità (CSRD).",
+    "vendorReportTitle": "Impronta CO₂",
+    "vendorReportIntro": "L'impronta di ciò che ha venduto e consegnato, per mese, categoria e cliente.",
+    "vendorTitle": "CO₂ e imballaggi",
+    "vendorIntro": "Indichi i valori CO₂ specifici dei suoi prodotti e i relativi imballaggi. I valori inferiori alla media della categoria ottengono il badge «Basso CO₂» nello shop.",
+    "valuesTitle": "I suoi prodotti",
+    "valuesChecked": "FIRINGI verifica ogni valore prima di utilizzarlo. Indichi la fonte (studio, EPD, certificato).",
+    "valuesAuto": "I suoi valori vengono applicati subito. Indichi la fonte (studio, EPD, certificato).",
+    "searchProducts": "Cerca prodotti",
+    "noProducts": "Nessun prodotto.",
+    "nowUsed": "Attuale: {value}/kg · {pack} per confezione",
+    "status": {
+      "PENDING": "In verifica",
+      "APPROVED": "Approvato",
+      "REJECTED": "Non accettato"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Il suo livello green — punteggio {score}/100",
+    "gradeHint": "Basato sulla CO₂ dei suoi prodotti rispetto alle loro categorie, sugli imballaggi eco e sui suoi valori verificati.",
+    "closed": {
+      "OFF": "Il reporting CO₂ non è al momento disponibile.",
+      "COMPANY_OFF": "Il reporting CO₂ è disattivato per la sua azienda. Contatti FIRINGI.",
+      "TYPE_OFF": "Il reporting CO₂ non è disponibile per il suo tipo di attività."
+    },
+    "fuel": {
+      "label": "Carburante",
+      "unknown": "Non impostato",
+      "DIESEL": "Diesel",
+      "PETROL": "Benzina",
+      "HYBRID": "Ibrido",
+      "LPG": "GPL",
+      "ELECTRIC": "Elettrico"
+    }
   }
 }

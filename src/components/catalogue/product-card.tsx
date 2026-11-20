@@ -2,6 +2,9 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Package } from "lucide-react";
 import type { CatalogueItem } from "@/server/data/catalogue-buyer";
+import { co2Badges } from "@/server/co2/service";
+import { Co2Chips } from "@/components/co2/views";
+import { co2Labels, kgText } from "@/components/co2/labels";
 import { pickLocalized } from "@/i18n/config";
 import { Badge } from "@/components/ui/badge";
 import { PriceBlock, Codes } from "./price";
@@ -51,6 +54,8 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
   const exl = ex ? (await exLabels()).l : null;
   const fb = cctx ? (await foodBadges(cctx, [item.productId])).get(item.productId) ?? null : null; // Phase 44
   const fl = fb && (fb.contain.length || fb.diets.length || fb.hits.length) ? (await foodLabels()).l : null;
+  const co2 = cctx ? (await co2Badges(cctx, [item.offerId])).get(item.offerId) ?? null : null; // Phase 51
+  const c2 = co2 ? await co2Labels() : null;
   return (
     <Link href={sponsored?.href ?? `/buy/catalogue/offers/${item.offerId}`} prefetch={sponsored ? false : undefined} data-testid={sponsored ? "sponsored-card" : undefined} className="glass-panel group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-24px_color-mix(in_oklch,var(--vivid-violet)_80%,transparent)]">
       <div className="relative overflow-hidden bg-[linear-gradient(160deg,color-mix(in_oklch,var(--vivid-blue)_8%,var(--card)),var(--card))]">
@@ -64,6 +69,7 @@ export async function ProductCard({ item, hasImage, showVendor = true, sponsored
         <div className="text-xs text-muted-foreground">{pickLocalized(item.packaging.name, locale)}</div>
         {cold && <div><ColdBadge cls={cold} /></div>}
         {ex && exl && <div><ExciseBadge b={ex} l={exl} locale={locale} /></div>}
+        {co2 && c2 && (co2.badges.length > 0 || co2.kg > 0) && <Co2Chips badges={co2.badges} l={c2.l} kgText={co2.kg > 0 ? `${kgText(co2.kg, c2.locale)} / ${c2.l.perPack}` : null} />}
         {fb && fl && <FoodCardBadges food={{ ...item.food, contain: fb.contain, diets: fb.diets }} hits={fb.hits} l={fl} />}
         <Codes item={item} />
         <div className="mt-auto pt-2">

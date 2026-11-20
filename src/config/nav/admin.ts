@@ -157,6 +157,7 @@ export const ADMIN_NAV: NavSection[] = [
       cat("excise", "Excise Categories", "Categorias de IEC", "P43", { live: true }),
       cat("food-review", "Food Info Review", "Revisão Info Alimentar", "P44", { live: true }),
       cat("food-quality", "Food Data Quality", "Qualidade Info Alimentar", "P44", { live: true }),
+      cat("co2", "Sustainability & CO₂", "Sustentabilidade e CO₂", "P51", { live: true, perm: ["admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve", "admin.settings.manage"] }),
       cat("vendor-products", "Vendor Products", "Produtos de Fornecedores", "P3", { live: true }),
       cat("availability", "Product Availability", "Disponibilidade de Produtos", "P3", { live: true }),
       cat("stock", "Stock", "Stock", "P3", { live: true }),

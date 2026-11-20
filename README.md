@@ -691,6 +691,20 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Sustainability & CO₂ (Phase 51)
+
+FIRINGI estimates the **carbon footprint** (kg CO₂e) of what is bought and delivered: **products** (kg × kg CO₂e per kg —
+the supplier's checked value, else the category's), **packaging** (per item by type), **delivery** (road km × weight ×
+the vehicle's fuel) and **local sourcing** (supplier within 150 km). Orders are stamped at checkout (estimate) and again
+at delivery (final). Suppliers give their own values with a source (*Products › CO₂ & Packaging*) and FIRINGI checks
+them. Buyers see **badges** (Low CO₂, Local, Eco packaging) and an eco filter in the shop, the footprint on the
+product page with **lower-CO₂ alternatives**, in the cart and on each order, and a **green report** (*Reports › CO₂
+Footprint*) with a yearly **goal** and a **CSV / PDF export** (GHG Protocol Scope 3, for CSRD). Suppliers get their
+report and a **green grade** A–E. FIRINGI: *Catalogue › Sustainability & CO₂* (overview, values to check, grades,
+category values, settings); vehicle fuel on the fleet lists. **Every option is FIRINGI's switch** — each part, each
+thing shown, buyer and supplier types, approval, thresholds and factors, and each business on its own.
+Details: [docs/co2.md](docs/co2.md). Tests: `tests/unit/co2.test.ts`, `tests/integration/co2.test.ts`, `node tests/e2e/co2.mjs`.
+
 ## Pay later & open tenders (Phase 50)
 
 **Pay later (trade credit).** At checkout a buyer can pay an order's invoice **in N days** (30 / 60 / 90 on by

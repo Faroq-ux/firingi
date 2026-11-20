@@ -21,9 +21,10 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
-# The build needs a large JS heap (about 9.5 GB at the moment); give the build machine ≥ 12 GB of memory.
-ARG BUILD_HEAP_MB=9728
-ENV NODE_OPTIONS=--max-old-space-size=${BUILD_HEAP_MB}
+# The build needs a large JS heap (about 11 GB at the moment); give the build machine ≥ 16 GB of memory.
+# FIRINGI_LOW_MEMORY_BUILD=1 turns off webpack's persistent cache, which a one-off image build never reuses.
+ARG BUILD_HEAP_MB=11264
+ENV NODE_OPTIONS=--max-old-space-size=${BUILD_HEAP_MB} FIRINGI_LOW_MEMORY_BUILD=1
 COPY . .
 RUN pnpm prisma generate && pnpm build
 

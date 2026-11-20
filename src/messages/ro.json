@@ -888,7 +888,10 @@
     "My Bonuses": "Bonusurile mele",
     "Buying Groups": "Grupuri de achiziții",
     "Pay Later": "Plată amânată",
-    "Tenders": "Licitații"
+    "Tenders": "Licitații",
+    "Sustainability & CO₂": "Sustenabilitate și CO₂",
+    "CO₂ & Packaging": "CO₂ și ambalaje",
+    "CO₂ Footprint": "Amprenta de CO₂"
   },
   "delivery": {
     "title": "Livrare",
@@ -1847,6 +1850,14 @@
     "tender_lost": {
       "title": "Licitația {number} a fost atribuită",
       "body": "De data aceasta, cumpărătorul a atribuit „{title}” altor oferte."
+    },
+    "co2_review": {
+      "title": "Valoare CO₂ de verificat",
+      "body": "{company} a trimis valori de CO₂ sau de ambalaj. Verificați-le în Catalog › Sustenabilitate și CO₂."
+    },
+    "co2_decided": {
+      "title": "Valoare CO₂ verificată {decision}: {product}",
+      "body": "„{product}” {decision}. {reason}"
     }
   },
   "notifications": {
@@ -6892,5 +6903,107 @@
     "lineLost": "nealeasă",
     "waiting": "așteaptă cumpărătorul",
     "noBidLine": "fără ofertă"
+  },
+  "co2": {
+    "badge": {
+      "LOW_CO2": "CO₂ redus",
+      "LOCAL": "Local",
+      "ECO_PACKAGING": "Ambalaj eco"
+    },
+    "perPack": "pachet",
+    "filterAll": "Toate produsele",
+    "filterLabel": "Sustenabilitate",
+    "panelTitle": "Amprenta de CO₂",
+    "perPackLabel": "Per pachet (produs + ambalaj)",
+    "perKgLabel": "Per kg de produs",
+    "categoryAvg": "Media categoriei: {value}",
+    "packagingLabel": "Ambalaj",
+    "packaging": {
+      "CARDBOARD": "Carton",
+      "PLASTIC": "Plastic",
+      "GLASS": "Sticlă",
+      "METAL": "Metal / doze",
+      "RETURNABLE": "Returnabil",
+      "MIXED": "Materiale mixte",
+      "NONE": "Fără ambalaj"
+    },
+    "recyclable": "Reciclabil",
+    "sourceSupplier": "Valoare indicată de furnizor și verificată de FIRINGI.",
+    "sourceCategory": "Valoare medie pentru acest tip de produs.",
+    "alternatives": "Alternative cu mai puțin CO₂",
+    "lessCo2": "Cu {pct} % mai puțin CO₂",
+    "orderTitle": "Amprenta de CO₂ a acestei comenzi",
+    "products": "Produse",
+    "packagingPart": "Ambalaje",
+    "delivery": "Livrare",
+    "total": "Total",
+    "distance": "{km} km",
+    "final": "Final (livrat)",
+    "estimate": "Estimare",
+    "cartTotal": "Acest coș: aproximativ {kg}",
+    "totalYear": "Amprenta în acest an",
+    "perEuro": "Per € cheltuit",
+    "localShare": "Pondere locală",
+    "deliveryShare": "Pondere livrare",
+    "goalLine": "Obiectiv: cu {pct} % mai puțin CO₂ în {year}",
+    "goalProgress": "Până acum {now} — în aceeași perioadă a anului trecut {last}. Țintă: {target}.",
+    "goalNoHistory": "Progresul va fi afișat când va exista un an de comparație.",
+    "onTrack": "Pe drumul cel bun",
+    "offTrack": "Peste țintă",
+    "byMonth": "Pe luni",
+    "noData": "Nicio comandă livrată încă în acest an.",
+    "byCategory": "Pe categorii",
+    "topProducts": "Cele mai mari amprente",
+    "method": "Estimări în kg CO₂e. Produse: kg de produs × valoare per kg (valoarea verificată a furnizorului, altfel media categoriei). Ambalaje: per articol, în funcție de tip. Livrare: distanța rutieră × greutate × combustibilul vehiculului. Valorile finale se stabilesc la livrare.",
+    "bySupplier": "Pe furnizori",
+    "byCustomer": "Pe clienți",
+    "pdfTitle": "Raport CO₂",
+    "scopeTitle": "Domenii de emisii de gaze cu efect de seră (GHG Protocol, Domeniul 3)",
+    "scope": "Domeniu",
+    "scope1": "Domeniul 3 · Cat. 1 — bunuri și ambalaje achiziționate",
+    "scope4": "Domeniul 3 · Cat. 4 — transport în amonte",
+    "kgPerKgInput": "kg CO₂e per kg",
+    "sourceInput": "Sursă",
+    "sourcePh": "de ex. studiu ACV 2025, EPD, certificat",
+    "save": "Salvați",
+    "saved": "Salvat.",
+    "goalInput": "Obiectiv de reducere pentru {year} (%)",
+    "setGoal": "Setați obiectivul",
+    "removeGoal": "Eliminați obiectivul",
+    "goalTitle": "Obiectivul dumneavoastră de CO₂",
+    "buyerTitle": "Amprenta de CO₂",
+    "buyerIntro": "Amprenta achizițiilor dumneavoastră: produse, ambalaje și livrare. Exportați-o pentru raportul de sustenabilitate (CSRD).",
+    "vendorReportTitle": "Amprenta de CO₂",
+    "vendorReportIntro": "Amprenta produselor vândute și livrate, pe luni, categorii și clienți.",
+    "vendorTitle": "CO₂ și ambalaje",
+    "vendorIntro": "Introduceți valorile proprii de CO₂ și ambalajele produselor dumneavoastră. Valorile mai mici decât media categoriei primesc insigna „CO₂ redus” în magazin.",
+    "valuesTitle": "Produsele dumneavoastră",
+    "valuesChecked": "FIRINGI verifică fiecare valoare înainte de a fi folosită. Indicați sursa (studiu, EPD, certificat).",
+    "valuesAuto": "Valorile dumneavoastră sunt folosite imediat. Indicați sursa (studiu, EPD, certificat).",
+    "searchProducts": "Căutați produse",
+    "noProducts": "Niciun produs.",
+    "nowUsed": "Acum: {value}/kg · {pack} per pachet",
+    "status": {
+      "PENDING": "În verificare",
+      "APPROVED": "Aprobat",
+      "REJECTED": "Neacceptat"
+    },
+    "firingiNote": "FIRINGI: {note}",
+    "gradeLine": "Calificativul dumneavoastră verde — scor {score}/100",
+    "gradeHint": "Pe baza CO₂ al produselor dumneavoastră comparativ cu categoriile lor, a ambalajelor eco și a valorilor proprii verificate.",
+    "closed": {
+      "OFF": "Raportarea CO₂ nu este disponibilă momentan.",
+      "COMPANY_OFF": "Raportarea CO₂ este dezactivată pentru compania dumneavoastră. Contactați FIRINGI.",
+      "TYPE_OFF": "Raportarea CO₂ nu este disponibilă pentru tipul dumneavoastră de activitate."
+    },
+    "fuel": {
+      "label": "Combustibil",
+      "unknown": "Nesetat",
+      "DIESEL": "Motorină",
+      "PETROL": "Benzină",
+      "HYBRID": "Hibrid",
+      "LPG": "GPL",
+      "ELECTRIC": "Electric"
+    }
   }
 }
