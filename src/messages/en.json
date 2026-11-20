@@ -1598,6 +1598,38 @@
     "address_change_decided": {
       "title": "Your address {address} was {decision}",
       "body": "FIRINGI {decision} your address {address}. {note}"
+    },
+    "rebate_review": {
+      "title": "Rebate deal to check",
+      "body": "{company} sent the rebate deal \"{name}\". It starts only after FIRINGI approves it."
+    },
+    "rebate_approved": {
+      "title": "Rebate deal approved",
+      "body": "FIRINGI approved \"{name}\". It runs from its start date."
+    },
+    "rebate_rejected": {
+      "title": "Rebate deal refused",
+      "body": "FIRINGI didn't approve \"{name}\": {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonus period settled",
+      "body": "\"{name}\", {period}: {customers} customers rewarded ({total} €)."
+    },
+    "rebate_available": {
+      "title": "New bonus from {supplier}",
+      "body": "\"{name}\": see what you can earn in My Bonuses."
+    },
+    "rebate_close": {
+      "title": "You're close to a bonus",
+      "body": "Only {missing} more to reach the next step of \"{name}\" from {supplier}."
+    },
+    "rebate_earned": {
+      "title": "You earned a bonus",
+      "body": "\"{name}\" from {supplier}, {period}: {amount} € credited on your invoices."
+    },
+    "rebate_free_goods": {
+      "title": "Free goods for you",
+      "body": "\"{name}\" from {supplier}: {qty} × {product} free on your next order. Take them by {date}."
     }
   },
   "notifications": {
@@ -6127,5 +6159,207 @@
     "reasonNO_CODE": "Add your activity code",
     "reasonCODE": "None of your activity codes is one that sells it",
     "licenceNote": "A licence or FIRINGI's approval may still be needed (see below and Company › Licences)."
+  },
+  "rebates": {
+    "vendorTitle": "Rebates & Bonuses",
+    "vendorIntro": "Reward your customers for what they buy over a month, quarter or year: money back on volume, free goods, a growth bonus or a product mix bonus. FIRINGI checks each deal and, when a period ends, credits your customers by credit note — a bonus you pay comes off your payout.",
+    "newDeal": "New deal",
+    "editDeal": "Change deal",
+    "yourDeals": "Your deals",
+    "noDeals": "No deals yet.",
+    "closed": {
+      "OFF": "Rebate deals are switched off at the moment.",
+      "SUPPLIER_OFF": "Rebate deals aren't open for your company. Please contact FIRINGI.",
+      "TYPE_OFF": "Rebate deals aren't open for your type of company yet."
+    },
+    "approvalAlways": "FIRINGI checks every deal before it starts.",
+    "approvalAuto": "Deals within FIRINGI's limits start as soon as you send them.",
+    "maxPct": "Up to {pct} % per step.",
+    "kind": {
+      "VOLUME": "Volume rebate",
+      "FREE_GOODS": "Free goods",
+      "GROWTH": "Growth bonus",
+      "MIX": "Product mix bonus"
+    },
+    "kindHint": {
+      "VOLUME": "Money back once purchases reach a target in the period. Add steps for bigger targets.",
+      "FREE_GOODS": "Buy a number of units in the period, get units of a product free on a later order.",
+      "GROWTH": "A % when the customer buys more than in the same period last year.",
+      "MIX": "A bonus when the customer buys enough different products of your range."
+    },
+    "period": {
+      "MONTH": "Monthly",
+      "QUARTER": "Quarterly",
+      "HALF_YEAR": "Half-yearly",
+      "YEAR": "Yearly"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING": "Waiting for FIRINGI",
+      "APPROVED": "Running",
+      "SCHEDULED": "Starts soon",
+      "REJECTED": "Refused",
+      "ENDED": "Ended",
+      "CANCELLED": "Cancelled",
+      "ENDING": "Ends {date}"
+    },
+    "f": {
+      "name": "Name",
+      "namePh": "e.g. Summer volume bonus",
+      "description": "Note for customers (optional)",
+      "kind": "Kind of deal",
+      "period": "Period",
+      "starts": "Starts",
+      "ends": "Ends (optional)",
+      "noEnd": "Runs until you end it",
+      "basis": "Target counts",
+      "basisAMOUNT": "Amount bought (€, excl. VAT)",
+      "basisUNITS": "Units bought",
+      "retro": "Pay the reached % on everything bought in the period",
+      "retroHint": "Off: each % only on the part above its target.",
+      "tiers": "Steps",
+      "from": "From",
+      "pct": "%",
+      "addTier": "Add step",
+      "remove": "Remove",
+      "growthPct": "Growth over last year (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus on",
+      "baseINCREASE": "the increase only",
+      "baseTOTAL": "everything bought",
+      "minPrevious": "Last year at least (€)",
+      "minPreviousHint": "Customers who bought less last year don't take part.",
+      "buyUnits": "Buy (units)",
+      "freeUnits": "Get free (units)",
+      "maxFree": "Most free units per period (optional)",
+      "rewardOffer": "Product given free",
+      "chooseProduct": "Choose a product",
+      "freeGoodsDays": "Days to take the free goods",
+      "minDistinct": "Different products to buy",
+      "minUnitsEach": "At least units of each",
+      "rewardFixed": "Fixed bonus (€)",
+      "rewardPct": "Bonus on the products bought (%)",
+      "products": "Products that count",
+      "allProducts": "All my products",
+      "someProducts": "Only chosen products, categories or brands",
+      "offers": "Products",
+      "categories": "Categories",
+      "brands": "Brands",
+      "search": "Search…",
+      "selected": "{n} chosen",
+      "audience": "Customers",
+      "segment": "Segment",
+      "group": "Customer group",
+      "chooseOne": "Choose…",
+      "findCustomer": "Find a customer (name or NIF)",
+      "noMatch": "No match",
+      "countries": "Customer countries",
+      "allCountries": "All countries",
+      "perShop": "Count each shop on its own",
+      "perShopHint": "Customers with several shops reach the targets per shop.",
+      "saveDraft": "Save draft",
+      "send": "Send to FIRINGI",
+      "start": "Start deal",
+      "saved": "Saved.",
+      "sent": "Sent to FIRINGI.",
+      "started": "The deal is running."
+    },
+    "audience": {
+      "ALL": "All customers",
+      "SEGMENT": "A segment",
+      "GROUP": "A customer group",
+      "COMPANIES": "Chosen customers"
+    },
+    "end": "End deal",
+    "endConfirm": "End this deal? Customers keep what they earn in the current period.",
+    "cancel": "Cancel deal",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Try it",
+    "tryAmount": "Bought (€)",
+    "tryUnits": "Bought (units)",
+    "tryPrev": "Last year (€)",
+    "tryDistinct": "Different products",
+    "tryResult": "The customer gets {value}",
+    "tryFree": "The customer gets {n} free",
+    "rules": {
+      "VOLUME": "{pct} % from {from}",
+      "retro": "on the whole period",
+      "stepped": "on the part above each target",
+      "FREE_GOODS": "Buy {buy}, get {free} free",
+      "FREE_GOODS_MAX": "at most {max} free per period",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "on the increase",
+      "TOTAL": "on everything bought",
+      "MIX": "{n} different products (at least {each} of each)",
+      "units": "{n} units"
+    },
+    "scopeAll": "All products",
+    "scopeSome": "Chosen products",
+    "perShopTag": "Per shop",
+    "livePeriod": "This period ({period})",
+    "customer": "Customer",
+    "shop": "Shop",
+    "bought": "Bought",
+    "units": "Units",
+    "earning": "Earning",
+    "nextStep": "Next step",
+    "noBuyers": "No purchases yet in this period.",
+    "settled": "Settled periods",
+    "noSettled": "Nothing settled yet.",
+    "paid": "Paid",
+    "freeGiven": "Free units",
+    "earners": "Customers rewarded",
+    "rowStatus": {
+      "SETTLED": "Paid",
+      "NOTHING": "Target not reached",
+      "FAILED": "To retry"
+    },
+    "funded": {
+      "FIRINGI": "Paid by FIRINGI",
+      "SUPPLIER": "Paid by the supplier"
+    },
+    "details": "Details",
+    "back": "Back",
+    "periodCol": "Period",
+    "dates": "Dates",
+    "kindCol": "Kind",
+    "rulesCol": "Rules",
+    "statusCol": "Status",
+    "myTitle": "My Bonuses",
+    "myIntro": "Bonuses your suppliers give you for what you buy. When a period ends, FIRINGI credits what you earned on your invoices — free goods are added to your next order.",
+    "earnedYear": "Earned this year",
+    "freeLeft": "Free units to take",
+    "runningCount": "Running bonuses",
+    "running": "Running now",
+    "noRunning": "No bonuses for you at the moment.",
+    "fromSupplier": "From {supplier}",
+    "periodEnds": "Period ends {date}",
+    "startsOn": "Starts {date}",
+    "boughtSoFar": "Bought so far: {amount}",
+    "unitsSoFar": "Units so far: {n}",
+    "lastYear": "Same period last year: {amount}",
+    "productsSoFar": "Different products: {n}",
+    "earningNow": "Earned so far: {value}",
+    "freeNow": "Free so far: {n}",
+    "topReached": "Top step reached!",
+    "missing": {
+      "AMOUNT": "{missing} more for {pct} %",
+      "UNITS": "{missing} more units for {pct} %",
+      "UNITS_FREE": "{missing} more units for {free} free",
+      "PRODUCTS": "{missing} more different products for the bonus",
+      "GROWTH": "{missing} more for {pct} %"
+    },
+    "noHistory": "No purchases in the same period last year to compare with.",
+    "freeGoods": "Free goods to take",
+    "noFreeGoods": "No free goods waiting.",
+    "takeBy": "Take by {date}",
+    "left": "{n} left",
+    "addToCart": "Add to cart",
+    "added": "Added to your cart — the free units show in the cart.",
+    "expired": "Expired",
+    "earnedTitle": "What you earned",
+    "noEarned": "Nothing earned yet.",
+    "creditNote": "Credit note",
+    "freeInCart": "{n} free (bonus)"
   }
 }

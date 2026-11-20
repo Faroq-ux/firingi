@@ -883,7 +883,9 @@
     "Ingredient Stock": "Ingrediëntenvoorraad",
     "Guests & Loyalty": "Gasten & klantenkaart",
     "Till Settings": "Kassa-instellingen",
-    "Till Staff": "Kassapersoneel"
+    "Till Staff": "Kassapersoneel",
+    "Rebates & Bonuses": "Kortingen & bonussen",
+    "My Bonuses": "Mijn bonussen"
   },
   "delivery": {
     "title": "Levering",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Uw adres {address}: {decision}",
       "body": "Besluit van FIRINGI over uw adres {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Bonusafspraak te controleren",
+      "body": "{company} heeft de bonusafspraak \"{name}\" verstuurd. Deze gaat pas in nadat FIRINGI deze heeft goedgekeurd."
+    },
+    "rebate_approved": {
+      "title": "Bonusafspraak goedgekeurd",
+      "body": "FIRINGI heeft \"{name}\" goedgekeurd. De afspraak loopt vanaf de startdatum."
+    },
+    "rebate_rejected": {
+      "title": "Bonusafspraak afgewezen",
+      "body": "FIRINGI heeft \"{name}\" niet goedgekeurd: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonusperiode afgerekend",
+      "body": "\"{name}\", {period}: {customers} klanten beloond ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nieuwe bonus van {supplier}",
+      "body": "\"{name}\": bekijk wat u kunt verdienen in Mijn bonussen."
+    },
+    "rebate_close": {
+      "title": "U bent dicht bij een bonus",
+      "body": "Nog maar {missing} om de volgende staffel van \"{name}\" van {supplier} te bereiken."
+    },
+    "rebate_earned": {
+      "title": "U hebt een bonus verdiend",
+      "body": "\"{name}\" van {supplier}, {period}: {amount} € gecrediteerd op uw facturen."
+    },
+    "rebate_free_goods": {
+      "title": "Gratis goederen voor u",
+      "body": "\"{name}\" van {supplier}: {qty} × {product} gratis bij uw volgende bestelling. Neem ze af vóór {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Voeg uw activiteitscode toe",
     "reasonCODE": "Geen van uw activiteitscodes past bij de verkoop ervan",
     "licenceNote": "Een vergunning of goedkeuring van FIRINGI kan nog nodig zijn (zie hieronder en Bedrijf › Vergunningen)."
+  },
+  "rebates": {
+    "vendorTitle": "Kortingen & bonussen",
+    "vendorIntro": "Beloon uw klanten voor wat ze per maand, kwartaal of jaar inkopen: geld terug op volume, gratis goederen, een groeibonus of een assortimentsbonus. FIRINGI controleert elke afspraak en crediteert uw klanten aan het einde van een periode via een creditnota — een bonus die u betaalt, wordt van uw uitbetaling afgetrokken.",
+    "newDeal": "Nieuwe afspraak",
+    "editDeal": "Afspraak wijzigen",
+    "yourDeals": "Uw afspraken",
+    "noDeals": "Nog geen afspraken.",
+    "closed": {
+      "OFF": "Bonusafspraken zijn momenteel uitgeschakeld.",
+      "SUPPLIER_OFF": "Bonusafspraken zijn niet beschikbaar voor uw bedrijf. Neem contact op met FIRINGI.",
+      "TYPE_OFF": "Bonusafspraken zijn nog niet beschikbaar voor uw type bedrijf."
+    },
+    "approvalAlways": "FIRINGI controleert elke afspraak voordat deze ingaat.",
+    "approvalAuto": "Afspraken binnen de limieten van FIRINGI gaan in zodra u ze verstuurt.",
+    "maxPct": "Tot {pct} % per staffel.",
+    "kind": {
+      "VOLUME": "Omzetbonus",
+      "FREE_GOODS": "Gratis goederen",
+      "GROWTH": "Groeibonus",
+      "MIX": "Assortimentsbonus"
+    },
+    "kindHint": {
+      "VOLUME": "Geld terug zodra de inkopen in de periode een doel bereiken. Voeg staffels toe voor hogere doelen.",
+      "FREE_GOODS": "Koop een aantal eenheden in de periode en ontvang eenheden van een product gratis bij een volgende bestelling.",
+      "GROWTH": "Een % wanneer de klant meer inkoopt dan in dezelfde periode vorig jaar.",
+      "MIX": "Een bonus wanneer de klant voldoende verschillende producten uit uw assortiment inkoopt."
+    },
+    "period": {
+      "MONTH": "Maandelijks",
+      "QUARTER": "Per kwartaal",
+      "HALF_YEAR": "Halfjaarlijks",
+      "YEAR": "Jaarlijks"
+    },
+    "status": {
+      "DRAFT": "Concept",
+      "PENDING": "Wacht op FIRINGI",
+      "APPROVED": "Actief",
+      "SCHEDULED": "Start binnenkort",
+      "REJECTED": "Afgewezen",
+      "ENDED": "Beëindigd",
+      "CANCELLED": "Geannuleerd",
+      "ENDING": "Eindigt {date}"
+    },
+    "f": {
+      "name": "Naam",
+      "namePh": "bijv. Zomer-omzetbonus",
+      "description": "Opmerking voor klanten (optioneel)",
+      "kind": "Soort afspraak",
+      "period": "Periode",
+      "starts": "Start",
+      "ends": "Einde (optioneel)",
+      "noEnd": "Loopt tot u deze beëindigt",
+      "basis": "Doel op basis van",
+      "basisAMOUNT": "Inkoopbedrag (€, excl. btw)",
+      "basisUNITS": "Ingekochte eenheden",
+      "retro": "Behaald % betalen over alles wat in de periode is ingekocht",
+      "retroHint": "Uit: elk % alleen over het deel boven het bijbehorende doel.",
+      "tiers": "Staffels",
+      "from": "Vanaf",
+      "pct": "%",
+      "addTier": "Staffel toevoegen",
+      "remove": "Verwijderen",
+      "growthPct": "Groei t.o.v. vorig jaar (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus over",
+      "baseINCREASE": "alleen de groei",
+      "baseTOTAL": "alles wat is ingekocht",
+      "minPrevious": "Vorig jaar minimaal (€)",
+      "minPreviousHint": "Klanten die vorig jaar minder hebben ingekocht, doen niet mee.",
+      "buyUnits": "Koop (eenheden)",
+      "freeUnits": "Gratis (eenheden)",
+      "maxFree": "Max. gratis eenheden per periode (optioneel)",
+      "rewardOffer": "Gratis product",
+      "chooseProduct": "Kies een product",
+      "freeGoodsDays": "Dagen om de gratis goederen af te nemen",
+      "minDistinct": "Aantal verschillende producten",
+      "minUnitsEach": "Minimaal aantal eenheden per product",
+      "rewardFixed": "Vaste bonus (€)",
+      "rewardPct": "Bonus over de ingekochte producten (%)",
+      "products": "Producten die meetellen",
+      "allProducts": "Al mijn producten",
+      "someProducts": "Alleen gekozen producten, categorieën of merken",
+      "offers": "Producten",
+      "categories": "Categorieën",
+      "brands": "Merken",
+      "search": "Zoeken…",
+      "selected": "{n} gekozen",
+      "audience": "Klanten",
+      "segment": "Segment",
+      "group": "Klantgroep",
+      "chooseOne": "Kiezen…",
+      "findCustomer": "Klant zoeken (naam of NIF)",
+      "noMatch": "Geen resultaat",
+      "countries": "Landen van klanten",
+      "allCountries": "Alle landen",
+      "perShop": "Elke winkel apart tellen",
+      "perShopHint": "Klanten met meerdere winkels bereiken de doelen per winkel.",
+      "saveDraft": "Concept opslaan",
+      "send": "Naar FIRINGI sturen",
+      "start": "Afspraak starten",
+      "saved": "Opgeslagen.",
+      "sent": "Naar FIRINGI gestuurd.",
+      "started": "De afspraak is actief."
+    },
+    "audience": {
+      "ALL": "Alle klanten",
+      "SEGMENT": "Een segment",
+      "GROUP": "Een klantgroep",
+      "COMPANIES": "Gekozen klanten"
+    },
+    "end": "Afspraak beëindigen",
+    "endConfirm": "Deze afspraak beëindigen? Klanten behouden wat ze in de huidige periode verdienen.",
+    "cancel": "Afspraak annuleren",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Uitproberen",
+    "tryAmount": "Ingekocht (€)",
+    "tryUnits": "Ingekocht (eenheden)",
+    "tryPrev": "Vorig jaar (€)",
+    "tryDistinct": "Verschillende producten",
+    "tryResult": "De klant ontvangt {value}",
+    "tryFree": "De klant ontvangt {n} gratis",
+    "rules": {
+      "VOLUME": "{pct} % vanaf {from}",
+      "retro": "over de hele periode",
+      "stepped": "over het deel boven elk doel",
+      "FREE_GOODS": "Koop {buy}, ontvang {free} gratis",
+      "FREE_GOODS_MAX": "max. {max} gratis per periode",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "over de groei",
+      "TOTAL": "over alles wat is ingekocht",
+      "MIX": "{n} verschillende producten (minimaal {each} per product)",
+      "units": "{n} eenheden"
+    },
+    "scopeAll": "Alle producten",
+    "scopeSome": "Gekozen producten",
+    "perShopTag": "Per winkel",
+    "livePeriod": "Deze periode ({period})",
+    "customer": "Klant",
+    "shop": "Winkel",
+    "bought": "Ingekocht",
+    "units": "Eenheden",
+    "earning": "Verdiend",
+    "nextStep": "Volgende staffel",
+    "noBuyers": "Nog geen inkopen in deze periode.",
+    "settled": "Afgerekende periodes",
+    "noSettled": "Nog niets afgerekend.",
+    "paid": "Uitbetaald",
+    "freeGiven": "Gratis eenheden",
+    "earners": "Beloonde klanten",
+    "rowStatus": {
+      "SETTLED": "Betaald",
+      "NOTHING": "Doel niet bereikt",
+      "FAILED": "Opnieuw te proberen"
+    },
+    "funded": {
+      "FIRINGI": "Betaald door FIRINGI",
+      "SUPPLIER": "Betaald door de leverancier"
+    },
+    "details": "Details",
+    "back": "Terug",
+    "periodCol": "Periode",
+    "dates": "Data",
+    "kindCol": "Soort",
+    "rulesCol": "Regels",
+    "statusCol": "Status",
+    "myTitle": "Mijn bonussen",
+    "myIntro": "Bonussen die uw leveranciers u geven voor wat u inkoopt. Aan het einde van een periode crediteert FIRINGI wat u hebt verdiend op uw facturen — gratis goederen worden aan uw volgende bestelling toegevoegd.",
+    "earnedYear": "Verdiend dit jaar",
+    "freeLeft": "Gratis eenheden af te nemen",
+    "runningCount": "Lopende bonussen",
+    "running": "Nu actief",
+    "noRunning": "Op dit moment geen bonussen voor u.",
+    "fromSupplier": "Van {supplier}",
+    "periodEnds": "Periode eindigt {date}",
+    "startsOn": "Start {date}",
+    "boughtSoFar": "Tot nu toe ingekocht: {amount}",
+    "unitsSoFar": "Eenheden tot nu toe: {n}",
+    "lastYear": "Zelfde periode vorig jaar: {amount}",
+    "productsSoFar": "Verschillende producten: {n}",
+    "earningNow": "Tot nu toe verdiend: {value}",
+    "freeNow": "Tot nu toe gratis: {n}",
+    "topReached": "Hoogste staffel bereikt!",
+    "missing": {
+      "AMOUNT": "Nog {missing} voor {pct} %",
+      "UNITS": "Nog {missing} eenheden voor {pct} %",
+      "UNITS_FREE": "Nog {missing} eenheden voor {free} gratis",
+      "PRODUCTS": "Nog {missing} verschillende producten voor de bonus",
+      "GROWTH": "Nog {missing} voor {pct} %"
+    },
+    "noHistory": "Geen inkopen in dezelfde periode vorig jaar om mee te vergelijken.",
+    "freeGoods": "Gratis goederen af te nemen",
+    "noFreeGoods": "Geen gratis goederen in afwachting.",
+    "takeBy": "Af te nemen vóór {date}",
+    "left": "Nog {n} over",
+    "addToCart": "In winkelwagen",
+    "added": "Toegevoegd aan uw winkelwagen — de gratis eenheden staan in de winkelwagen.",
+    "expired": "Verlopen",
+    "earnedTitle": "Wat u hebt verdiend",
+    "noEarned": "Nog niets verdiend.",
+    "creditNote": "Creditnota",
+    "freeInCart": "{n} gratis (bonus)"
   }
 }

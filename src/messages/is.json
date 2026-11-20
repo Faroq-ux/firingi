@@ -883,7 +883,9 @@
     "Ingredient Stock": "Hráefnisbirgðir",
     "Guests & Loyalty": "Gestir og vildarkerfi",
     "Till Settings": "Stillingar kassa",
-    "Till Staff": "Starfsfólk kassa"
+    "Till Staff": "Starfsfólk kassa",
+    "Rebates & Bonuses": "Afslættir og bónusar",
+    "My Bonuses": "Bónusarnir mínir"
   },
   "delivery": {
     "title": "Afhending",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Heimilisfangið þitt {address}: {decision}",
       "body": "Ákvörðun FIRINGI um heimilisfangið þitt {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Afsláttarsamningur til yfirferðar",
+      "body": "{company} sendi afsláttarsamninginn „{name}“. Hann hefst aðeins eftir samþykki FIRINGI."
+    },
+    "rebate_approved": {
+      "title": "Afsláttarsamningur samþykktur",
+      "body": "FIRINGI samþykkti „{name}“. Hann gildir frá upphafsdegi sínum."
+    },
+    "rebate_rejected": {
+      "title": "Afsláttarsamningi hafnað",
+      "body": "FIRINGI samþykkti ekki „{name}“: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bónustímabil gert upp",
+      "body": "„{name}“, {period}: {customers} viðskiptavinir verðlaunaðir ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nýr bónus frá {supplier}",
+      "body": "„{name}“: sjáðu hvað þú getur unnið þér inn undir Bónusarnir mínir."
+    },
+    "rebate_close": {
+      "title": "Þú ert nálægt bónus",
+      "body": "Aðeins {missing} í viðbót til að ná næsta þrepi „{name}“ frá {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Þú vannst þér inn bónus",
+      "body": "„{name}“ frá {supplier}, {period}: {amount} € fært til inneignar á reikningum þínum."
+    },
+    "rebate_free_goods": {
+      "title": "Fríar vörur fyrir þig",
+      "body": "„{name}“ frá {supplier}: {qty} × {product} frítt í næstu pöntun þinni. Nýttu þær fyrir {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Bættu við atvinnugreinarnúmeri",
     "reasonCODE": "Ekkert atvinnugreinarnúmera þinna passar við sölu þess",
     "licenceNote": "Leyfi eða samþykki FIRINGI gæti enn þurft (sjá að neðan og Fyrirtæki › Leyfi)."
+  },
+  "rebates": {
+    "vendorTitle": "Afslættir og bónusar",
+    "vendorIntro": "Verðlaunaðu viðskiptavini þína fyrir kaup yfir mánuð, ársfjórðung eða ár með magnafslætti, fríum vörum, vaxtarbónus eða vöruúrvalsbónus. FIRINGI yfirfer hvern samning og í lok tímabils fá viðskiptavinir inneign með kreditreikningi — bónus sem þú greiðir dregst frá útborgun þinni.",
+    "newDeal": "Nýr samningur",
+    "editDeal": "Breyta samningi",
+    "yourDeals": "Samningarnir þínir",
+    "noDeals": "Engir samningar enn.",
+    "closed": {
+      "OFF": "Afsláttarsamningar eru óvirkir í augnablikinu.",
+      "SUPPLIER_OFF": "Afsláttarsamningar eru ekki opnir fyrir fyrirtækið þitt. Vinsamlegast hafðu samband við FIRINGI.",
+      "TYPE_OFF": "Afsláttarsamningar eru ekki enn opnir fyrir þína tegund fyrirtækis."
+    },
+    "approvalAlways": "FIRINGI yfirfer hvern samning áður en hann hefst.",
+    "approvalAuto": "Samningar innan marka FIRINGI hefjast um leið og þú sendir þá.",
+    "maxPct": "Allt að {pct} % á hvert þrep.",
+    "kind": {
+      "VOLUME": "Magnafsláttur",
+      "FREE_GOODS": "Fríar vörur",
+      "GROWTH": "Vaxtarbónus",
+      "MIX": "Vöruúrvalsbónus"
+    },
+    "kindHint": {
+      "VOLUME": "Endurgreiðsla þegar kaup ná markmiði á tímabilinu. Bættu við þrepum fyrir hærri markmið.",
+      "FREE_GOODS": "Viðskiptavinur kaupir tiltekinn fjölda eininga á tímabilinu og fær einingar af vöru frítt í síðari pöntun.",
+      "GROWTH": "% þegar viðskiptavinur kaupir meira en á sama tímabili í fyrra.",
+      "MIX": "Bónus þegar viðskiptavinur kaupir nógu margar ólíkar vörur úr vöruúrvali þínu."
+    },
+    "period": {
+      "MONTH": "Mánaðarlega",
+      "QUARTER": "Ársfjórðungslega",
+      "HALF_YEAR": "Hálfsárslega",
+      "YEAR": "Árlega"
+    },
+    "status": {
+      "DRAFT": "Drög",
+      "PENDING": "Bíður FIRINGI",
+      "APPROVED": "Í gangi",
+      "SCHEDULED": "Hefst bráðum",
+      "REJECTED": "Hafnað",
+      "ENDED": "Lokið",
+      "CANCELLED": "Hætt við",
+      "ENDING": "Lýkur {date}"
+    },
+    "f": {
+      "name": "Heiti",
+      "namePh": "t.d. Sumarmagnbónus",
+      "description": "Athugasemd til viðskiptavina (valfrjálst)",
+      "kind": "Tegund samnings",
+      "period": "Tímabil",
+      "starts": "Hefst",
+      "ends": "Lýkur (valfrjálst)",
+      "noEnd": "Gildir þar til þú lýkur honum",
+      "basis": "Markmið miðast við",
+      "basisAMOUNT": "Keypt upphæð (€, án VSK)",
+      "basisUNITS": "Keyptar einingar",
+      "retro": "Greiða náða % af öllum kaupum tímabilsins",
+      "retroHint": "Slökkt: hvert % aðeins af hlutanum yfir markmiði þess.",
+      "tiers": "Þrep",
+      "from": "Frá",
+      "pct": "%",
+      "addTier": "Bæta við þrepi",
+      "remove": "Fjarlægja",
+      "growthPct": "Vöxtur frá fyrra ári (%)",
+      "bonusPct": "Bónus (%)",
+      "base": "Bónus af",
+      "baseINCREASE": "aðeins aukningunni",
+      "baseTOTAL": "öllum kaupum",
+      "minPrevious": "Í fyrra a.m.k. (€)",
+      "minPreviousHint": "Viðskiptavinir sem keyptu minna í fyrra taka ekki þátt.",
+      "buyUnits": "Kaupa (einingar)",
+      "freeUnits": "Fá frítt (einingar)",
+      "maxFree": "Hámark frírra eininga á tímabili (valfrjálst)",
+      "rewardOffer": "Vara sem er gefin",
+      "chooseProduct": "Veldu vöru",
+      "freeGoodsDays": "Dagar til að nýta fríu vörurnar",
+      "minDistinct": "Fjöldi ólíkra vara til að kaupa",
+      "minUnitsEach": "Lágmark eininga af hverri",
+      "rewardFixed": "Fastur bónus (€)",
+      "rewardPct": "Bónus af keyptum vörum (%)",
+      "products": "Vörur sem gilda",
+      "allProducts": "Allar mínar vörur",
+      "someProducts": "Aðeins valdar vörur, flokkar eða vörumerki",
+      "offers": "Vörur",
+      "categories": "Flokkar",
+      "brands": "Vörumerki",
+      "search": "Leita…",
+      "selected": "{n} valin",
+      "audience": "Viðskiptavinir",
+      "segment": "Markhópur",
+      "group": "Viðskiptavinahópur",
+      "chooseOne": "Veldu…",
+      "findCustomer": "Finna viðskiptavin (nafn eða NIF)",
+      "noMatch": "Engar niðurstöður",
+      "countries": "Lönd viðskiptavina",
+      "allCountries": "Öll lönd",
+      "perShop": "Telja hverja verslun fyrir sig",
+      "perShopHint": "Viðskiptavinir með fleiri verslanir ná markmiðum fyrir hverja verslun.",
+      "saveDraft": "Vista drög",
+      "send": "Senda til FIRINGI",
+      "start": "Hefja samning",
+      "saved": "Vistað.",
+      "sent": "Sent til FIRINGI.",
+      "started": "Samningurinn er í gangi."
+    },
+    "audience": {
+      "ALL": "Allir viðskiptavinir",
+      "SEGMENT": "Markhópur",
+      "GROUP": "Viðskiptavinahópur",
+      "COMPANIES": "Valdir viðskiptavinir"
+    },
+    "end": "Ljúka samningi",
+    "endConfirm": "Ljúka þessum samningi? Viðskiptavinir halda því sem þeir vinna sér inn á yfirstandandi tímabili.",
+    "cancel": "Hætta við samning",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Prófa",
+    "tryAmount": "Keypt (€)",
+    "tryUnits": "Keypt (einingar)",
+    "tryPrev": "Í fyrra (€)",
+    "tryDistinct": "Ólíkar vörur",
+    "tryResult": "Viðskiptavinurinn fær {value}",
+    "tryFree": "Viðskiptavinurinn fær {n} frítt",
+    "rules": {
+      "VOLUME": "{pct} % frá {from}",
+      "retro": "af öllu tímabilinu",
+      "stepped": "af hlutanum yfir hverju markmiði",
+      "FREE_GOODS": "Kauptu {buy}, fáðu {free} frítt",
+      "FREE_GOODS_MAX": "að hámarki {max} frítt á tímabili",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "af aukningunni",
+      "TOTAL": "af öllum kaupum",
+      "MIX": "{n} ólíkar vörur (a.m.k. {each} af hverri)",
+      "units": "{n} einingar"
+    },
+    "scopeAll": "Allar vörur",
+    "scopeSome": "Valdar vörur",
+    "perShopTag": "Fyrir hverja verslun",
+    "livePeriod": "Þetta tímabil ({period})",
+    "customer": "Viðskiptavinur",
+    "shop": "Verslun",
+    "bought": "Keypt",
+    "units": "Einingar",
+    "earning": "Áunnið",
+    "nextStep": "Næsta þrep",
+    "noBuyers": "Engin kaup enn á þessu tímabili.",
+    "settled": "Uppgerð tímabil",
+    "noSettled": "Ekkert gert upp enn.",
+    "paid": "Greitt",
+    "freeGiven": "Fríar einingar",
+    "earners": "Verðlaunaðir viðskiptavinir",
+    "rowStatus": {
+      "SETTLED": "Greitt",
+      "NOTHING": "Markmiði ekki náð",
+      "FAILED": "Reyna aftur"
+    },
+    "funded": {
+      "FIRINGI": "Greitt af FIRINGI",
+      "SUPPLIER": "Greitt af birgi"
+    },
+    "details": "Nánar",
+    "back": "Til baka",
+    "periodCol": "Tímabil",
+    "dates": "Dagsetningar",
+    "kindCol": "Tegund",
+    "rulesCol": "Reglur",
+    "statusCol": "Staða",
+    "myTitle": "Bónusarnir mínir",
+    "myIntro": "Bónusar sem birgjar þínir veita þér fyrir kaupin þín. Í lok tímabils færir FIRINGI það sem þú hefur unnið þér inn til inneignar á reikningum þínum — fríar vörur bætast við næstu pöntun þína.",
+    "earnedYear": "Áunnið á þessu ári",
+    "freeLeft": "Fríar einingar til að nýta",
+    "runningCount": "Virkir bónusar",
+    "running": "Í gangi núna",
+    "noRunning": "Engir bónusar fyrir þig í augnablikinu.",
+    "fromSupplier": "Frá {supplier}",
+    "periodEnds": "Tímabili lýkur {date}",
+    "startsOn": "Hefst {date}",
+    "boughtSoFar": "Keypt hingað til: {amount}",
+    "unitsSoFar": "Einingar hingað til: {n}",
+    "lastYear": "Sama tímabil í fyrra: {amount}",
+    "productsSoFar": "Ólíkar vörur: {n}",
+    "earningNow": "Áunnið hingað til: {value}",
+    "freeNow": "Frítt hingað til: {n}",
+    "topReached": "Efsta þrepi náð!",
+    "missing": {
+      "AMOUNT": "{missing} í viðbót fyrir {pct} %",
+      "UNITS": "{missing} einingar í viðbót fyrir {pct} %",
+      "UNITS_FREE": "{missing} einingar í viðbót fyrir {free} frítt",
+      "PRODUCTS": "{missing} ólíkar vörur í viðbót fyrir bónusinn",
+      "GROWTH": "{missing} í viðbót fyrir {pct} %"
+    },
+    "noHistory": "Engin kaup á sama tímabili í fyrra til samanburðar.",
+    "freeGoods": "Fríar vörur til að nýta",
+    "noFreeGoods": "Engar fríar vörur bíða.",
+    "takeBy": "Nýta fyrir {date}",
+    "left": "{n} eftir",
+    "addToCart": "Setja í körfu",
+    "added": "Sett í körfu — fríu einingarnar birtast í körfunni.",
+    "expired": "Útrunnið",
+    "earnedTitle": "Það sem þú hefur unnið þér inn",
+    "noEarned": "Ekkert áunnið enn.",
+    "creditNote": "Kreditreikningur",
+    "freeInCart": "{n} frítt (bónus)"
   }
 }

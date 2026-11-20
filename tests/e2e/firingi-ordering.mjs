@@ -10,6 +10,10 @@
  */
 import { createRequire } from "node:module";
 const { chromium } = createRequire(import.meta.url)("playwright");
+import { execFileSync } from "node:child_process";
+// Portugal goes back to "customers choose" however this run ends (a crash used to leave it in FIRINGI mode for the other suites)
+const DB = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi";
+process.on("exit", () => { try { execFileSync("psql", ["-At", DB, "-c", `update "Country" set "customerOrderMode"='CHOOSE_SUPPLIER' where code='PT'`]); } catch { /* best effort */ } });
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const SHOTS = process.argv[3] ?? null;

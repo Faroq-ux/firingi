@@ -883,7 +883,9 @@
     "Ingredient Stock": "Stokk tal-ingredjenti",
     "Guests & Loyalty": "Klijenti u lealtà",
     "Till Settings": "Settings tal-kaxxa",
-    "Till Staff": "Persunal tal-kaxxa"
+    "Till Staff": "Persunal tal-kaxxa",
+    "Rebates & Bonuses": "Skontijiet u Bonusijiet",
+    "My Bonuses": "Il-Bonusijiet Tiegħi"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "L-indirizz tiegħek {address}: {decision}",
       "body": "Id-deċiżjoni ta' FIRINGI dwar l-indirizz tiegħek {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Ftehim ta' skont għall-verifika",
+      "body": "{company} bagħtet il-ftehim ta' skont \"{name}\". Jibda biss wara li FIRINGI japprovah."
+    },
+    "rebate_approved": {
+      "title": "Ftehim ta' skont approvat",
+      "body": "FIRINGI approva \"{name}\". Jibda mid-data tal-bidu tiegħu."
+    },
+    "rebate_rejected": {
+      "title": "Ftehim ta' skont miċħud",
+      "body": "FIRINGI ma approvax \"{name}\": {reason}"
+    },
+    "rebate_settled": {
+      "title": "Perjodu tal-bonus saldat",
+      "body": "\"{name}\", {period}: {customers} klijenti ppremjati ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Bonus ġdid minn {supplier}",
+      "body": "\"{name}\": ara x'tista' taqla' fis-sezzjoni Il-Bonusijiet Tiegħi."
+    },
+    "rebate_close": {
+      "title": "Int qrib li tikseb bonus",
+      "body": "Fadal biss {missing} biex tilħaq il-livell li jmiss ta' \"{name}\" minn {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Qlajt bonus",
+      "body": "\"{name}\" minn {supplier}, {period}: {amount} € ikkreditjati fuq il-fatturi tiegħek."
+    },
+    "rebate_free_goods": {
+      "title": "Oġġetti b'xejn għalik",
+      "body": "\"{name}\" minn {supplier}: {qty} × {product} b'xejn fl-ordni li jmiss tiegħek. Ħudhom sa {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Żid il-kodiċi tal-attività tiegħek",
     "reasonCODE": "L-ebda kodiċi tal-attività tiegħek ma jaqbel mal-bejgħ tiegħu",
     "licenceNote": "Jista' jkun għadu meħtieġ liċenzja jew l-approvazzjoni ta' FIRINGI (ara hawn taħt u Kumpanija › Liċenzji)."
+  },
+  "rebates": {
+    "vendorTitle": "Skontijiet u Bonusijiet",
+    "vendorIntro": "Ippremja lill-klijenti tiegħek għal dak li jixtru matul xahar, kwart jew sena: flus lura fuq il-volum, oġġetti b'xejn, bonus tat-tkabbir jew bonus tat-taħlita tal-prodotti. FIRINGI jiċċekkja kull ftehim u, meta jintemm perjodu, jikkreditja lill-klijenti tiegħek permezz ta' nota ta' kreditu — bonus li tħallas int jitnaqqas mill-ħlas tiegħek.",
+    "newDeal": "Ftehim ġdid",
+    "editDeal": "Ibdel il-ftehim",
+    "yourDeals": "Il-ftehimiet tiegħek",
+    "noDeals": "Għad m'hemm l-ebda ftehim.",
+    "closed": {
+      "OFF": "Il-ftehimiet ta' skont huma mitfija bħalissa.",
+      "SUPPLIER_OFF": "Il-ftehimiet ta' skont mhumiex disponibbli għall-kumpanija tiegħek. Jekk jogħġbok ikkuntattja lil FIRINGI.",
+      "TYPE_OFF": "Il-ftehimiet ta' skont għadhom mhumiex disponibbli għat-tip ta' kumpanija tiegħek."
+    },
+    "approvalAlways": "FIRINGI jiċċekkja kull ftehim qabel ma jibda.",
+    "approvalAuto": "Il-ftehimiet fil-limiti ta' FIRINGI jibdew hekk kif tibgħathom.",
+    "maxPct": "Sa {pct} % għal kull livell.",
+    "kind": {
+      "VOLUME": "Skont fuq il-volum",
+      "FREE_GOODS": "Oġġetti b'xejn",
+      "GROWTH": "Bonus tat-tkabbir",
+      "MIX": "Bonus tat-taħlita tal-prodotti"
+    },
+    "kindHint": {
+      "VOLUME": "Flus lura meta x-xiri jilħaq mira fil-perjodu. Żid livelli għal miri akbar.",
+      "FREE_GOODS": "Ixtri ċertu numru ta' unitajiet fil-perjodu, u ikseb unitajiet ta' prodott b'xejn f'ordni aktar tard.",
+      "GROWTH": "Ċertu % meta l-klijent jixtri aktar milli fl-istess perjodu tas-sena l-oħra.",
+      "MIX": "Bonus meta l-klijent jixtri biżżejjed prodotti differenti mill-firxa tiegħek."
+    },
+    "period": {
+      "MONTH": "Kull xahar",
+      "QUARTER": "Kull kwart",
+      "HALF_YEAR": "Kull sitt xhur",
+      "YEAR": "Kull sena"
+    },
+    "status": {
+      "DRAFT": "Abbozz",
+      "PENDING": "Qed jistenna lil FIRINGI",
+      "APPROVED": "Għaddej",
+      "SCHEDULED": "Jibda dalwaqt",
+      "REJECTED": "Miċħud",
+      "ENDED": "Intemm",
+      "CANCELLED": "Ikkanċellat",
+      "ENDING": "Jintemm {date}"
+    },
+    "f": {
+      "name": "Isem",
+      "namePh": "eż. Bonus tal-volum tas-sajf",
+      "description": "Nota għall-klijenti (fakultattiva)",
+      "kind": "Tip ta' ftehim",
+      "period": "Perjodu",
+      "starts": "Jibda",
+      "ends": "Jintemm (fakultattiv)",
+      "noEnd": "Jibqa' għaddej sakemm ittemmu int",
+      "basis": "Il-mira tingħadd fi",
+      "basisAMOUNT": "Ammont mixtri (€, eskl. VAT)",
+      "basisUNITS": "Unitajiet mixtrija",
+      "retro": "Ħallas il-% milħuq fuq kull ma nxtara fil-perjodu",
+      "retroHint": "Mitfi: kull % biss fuq il-parti 'l fuq mill-mira tiegħu.",
+      "tiers": "Livelli",
+      "from": "Minn",
+      "pct": "%",
+      "addTier": "Żid livell",
+      "remove": "Neħħi",
+      "growthPct": "Tkabbir fuq is-sena l-oħra (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus fuq",
+      "baseINCREASE": "iż-żieda biss",
+      "baseTOTAL": "kull ma nxtara",
+      "minPrevious": "Is-sena l-oħra mill-inqas (€)",
+      "minPreviousHint": "Il-klijenti li xtraw inqas is-sena l-oħra ma jipparteċipawx.",
+      "buyUnits": "Ixtri (unitajiet)",
+      "freeUnits": "Ikseb b'xejn (unitajiet)",
+      "maxFree": "L-ogħla numru ta' unitajiet b'xejn għal kull perjodu (fakultattiv)",
+      "rewardOffer": "Prodott mogħti b'xejn",
+      "chooseProduct": "Agħżel prodott",
+      "freeGoodsDays": "Jiem biex jinġabru l-oġġetti b'xejn",
+      "minDistinct": "Prodotti differenti li jridu jinxtraw",
+      "minUnitsEach": "Mill-inqas unitajiet minn kull wieħed",
+      "rewardFixed": "Bonus fiss (€)",
+      "rewardPct": "Bonus fuq il-prodotti mixtrija (%)",
+      "products": "Prodotti li jgħoddu",
+      "allProducts": "Il-prodotti kollha tiegħi",
+      "someProducts": "Prodotti, kategoriji jew marki magħżula biss",
+      "offers": "Prodotti",
+      "categories": "Kategoriji",
+      "brands": "Marki",
+      "search": "Fittex…",
+      "selected": "{n} magħżula",
+      "audience": "Klijenti",
+      "segment": "Segment",
+      "group": "Grupp ta' klijenti",
+      "chooseOne": "Agħżel…",
+      "findCustomer": "Sib klijent (isem jew NIF)",
+      "noMatch": "L-ebda riżultat",
+      "countries": "Pajjiżi tal-klijenti",
+      "allCountries": "Il-pajjiżi kollha",
+      "perShop": "Għodd kull ħanut għalih",
+      "perShopHint": "Klijenti b'diversi ħwienet jilħqu l-miri għal kull ħanut.",
+      "saveDraft": "Aħżen l-abbozz",
+      "send": "Ibgħat lil FIRINGI",
+      "start": "Ibda l-ftehim",
+      "saved": "Maħżun.",
+      "sent": "Mibgħut lil FIRINGI.",
+      "started": "Il-ftehim għaddej."
+    },
+    "audience": {
+      "ALL": "Il-klijenti kollha",
+      "SEGMENT": "Segment",
+      "GROUP": "Grupp ta' klijenti",
+      "COMPANIES": "Klijenti magħżula"
+    },
+    "end": "Temm il-ftehim",
+    "endConfirm": "Trid ittemm dan il-ftehim? Il-klijenti jżommu dak li jaqilgħu fil-perjodu attwali.",
+    "cancel": "Ikkanċella l-ftehim",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Ipprova",
+    "tryAmount": "Mixtri (€)",
+    "tryUnits": "Mixtri (unitajiet)",
+    "tryPrev": "Is-sena l-oħra (€)",
+    "tryDistinct": "Prodotti differenti",
+    "tryResult": "Il-klijent jieħu {value}",
+    "tryFree": "Il-klijent jieħu {n} b'xejn",
+    "rules": {
+      "VOLUME": "{pct} % minn {from}",
+      "retro": "fuq il-perjodu kollu",
+      "stepped": "fuq il-parti 'l fuq minn kull mira",
+      "FREE_GOODS": "Ixtri {buy}, ħu {free} b'xejn",
+      "FREE_GOODS_MAX": "l-aktar {max} b'xejn għal kull perjodu",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "fuq iż-żieda",
+      "TOTAL": "fuq kull ma nxtara",
+      "MIX": "{n} prodotti differenti (mill-inqas {each} minn kull wieħed)",
+      "units": "{n} unitajiet"
+    },
+    "scopeAll": "Il-prodotti kollha",
+    "scopeSome": "Prodotti magħżula",
+    "perShopTag": "Għal kull ħanut",
+    "livePeriod": "Dan il-perjodu ({period})",
+    "customer": "Klijent",
+    "shop": "Ħanut",
+    "bought": "Mixtri",
+    "units": "Unitajiet",
+    "earning": "Qligħ",
+    "nextStep": "Il-livell li jmiss",
+    "noBuyers": "Għad m'hemm l-ebda xiri f'dan il-perjodu.",
+    "settled": "Perjodi saldati",
+    "noSettled": "Għad ma ġie saldat xejn.",
+    "paid": "Imħallas",
+    "freeGiven": "Unitajiet b'xejn",
+    "earners": "Klijenti ppremjati",
+    "rowStatus": {
+      "SETTLED": "Imħallas",
+      "NOTHING": "Il-mira ma ntlaħqitx",
+      "FAILED": "Għal tentattiv ieħor"
+    },
+    "funded": {
+      "FIRINGI": "Imħallas minn FIRINGI",
+      "SUPPLIER": "Imħallas mill-fornitur"
+    },
+    "details": "Dettalji",
+    "back": "Lura",
+    "periodCol": "Perjodu",
+    "dates": "Dati",
+    "kindCol": "Tip",
+    "rulesCol": "Regoli",
+    "statusCol": "Status",
+    "myTitle": "Il-Bonusijiet Tiegħi",
+    "myIntro": "Bonusijiet li jagħtuk il-fornituri tiegħek għal dak li tixtri. Meta jintemm perjodu, FIRINGI jikkreditja dak li qlajt fuq il-fatturi tiegħek — l-oġġetti b'xejn jiżdiedu mal-ordni li jmiss tiegħek.",
+    "earnedYear": "Maqlugħ din is-sena",
+    "freeLeft": "Unitajiet b'xejn x'tieħu",
+    "runningCount": "Bonusijiet għaddejjin",
+    "running": "Għaddejjin issa",
+    "noRunning": "Bħalissa m'hemmx bonusijiet għalik.",
+    "fromSupplier": "Minn {supplier}",
+    "periodEnds": "Il-perjodu jintemm {date}",
+    "startsOn": "Jibda {date}",
+    "boughtSoFar": "Mixtri s'issa: {amount}",
+    "unitsSoFar": "Unitajiet s'issa: {n}",
+    "lastYear": "L-istess perjodu s-sena l-oħra: {amount}",
+    "productsSoFar": "Prodotti differenti: {n}",
+    "earningNow": "Maqlugħ s'issa: {value}",
+    "freeNow": "B'xejn s'issa: {n}",
+    "topReached": "Intlaħaq l-ogħla livell!",
+    "missing": {
+      "AMOUNT": "{missing} oħra għal {pct} %",
+      "UNITS": "{missing} unitajiet oħra għal {pct} %",
+      "UNITS_FREE": "{missing} unitajiet oħra għal {free} b'xejn",
+      "PRODUCTS": "{missing} prodotti differenti oħra għall-bonus",
+      "GROWTH": "{missing} oħra għal {pct} %"
+    },
+    "noHistory": "L-ebda xiri fl-istess perjodu s-sena l-oħra biex jitqabbel miegħu.",
+    "freeGoods": "Oġġetti b'xejn x'tieħu",
+    "noFreeGoods": "L-ebda oġġett b'xejn ma qed jistenna.",
+    "takeBy": "Ħudhom sa {date}",
+    "left": "Fadal {n}",
+    "addToCart": "Żid mal-karrettun",
+    "added": "Miżjud mal-karrettun tiegħek — l-unitajiet b'xejn jidhru fil-karrettun.",
+    "expired": "Skada",
+    "earnedTitle": "Dak li qlajt",
+    "noEarned": "Għadek ma qlajt xejn.",
+    "creditNote": "Nota ta' kreditu",
+    "freeInCart": "{n} b'xejn (bonus)"
   }
 }

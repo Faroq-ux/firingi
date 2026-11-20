@@ -186,6 +186,15 @@ export const EVENTS: EventDef[] = [
   E("catchweight.over_limit", "orders", ["buyer.orders.place", "buyer.orders.view"], ["EMAIL", "PUSH"], ["number", "product", "weighed", "max"]),
   E("catchweight.over_accepted", "orders", ["vendor.orders.manage"], ["EMAIL", "PUSH"], ["number"]),
   // clearance deals (Phase 38)
+  // Phase 48 — rebates & bonuses
+  E("rebate.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "name"]),
+  E("rebate.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name"]),
+  E("rebate.rejected", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["name", "reason"]),
+  E("rebate.settled", "finance", ["vendor.promotions.manage", "vendor.pricing.manage", "vendor.invoices.view"], ["EMAIL"], ["name", "period", "total", "customers"]),
+  E("rebate.available", "catalogue", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "supplier"]),
+  E("rebate.close", "catalogue", BUYER_ORDERS, ["PUSH", "EMAIL"], ["name", "supplier", "missing"]),
+  E("rebate.earned", "finance", [...BUYER_ORDERS, "buyer.invoices.view"], ["EMAIL", "PUSH"], ["name", "supplier", "amount", "period"]),
+  E("rebate.free_goods", "finance", BUYER_ORDERS, ["EMAIL", "PUSH"], ["name", "supplier", "qty", "product", "date"]),
   E("deal.review", "catalogue", ["admin.pricing.manage", "admin.marketing.manage"], ["EMAIL"], ["company", "number"]),
   E("deal.approved", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number"]),
   E("deal.rejected", "catalogue", ["vendor.promotions.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["number", "reason"]),

@@ -22,6 +22,7 @@ const SCHEDULE = [
   { job: "planning", due: (m) => m % 1440 === 4 * 60 + 37 }, // daily 04:37 UTC — forecasts & restock suggestions
   { job: "claims", due: (m) => m % 1440 === 7 * 60 + 19 }, // daily 07:19 UTC — claim SLA, supplier reminders, charge-backs, quality alerts
   { job: "buying", due: (m) => m % 15 === 11 }, // recurring orders & quotes, every 15 min (+11)
+  { job: "rebates", due: (m) => m % 1440 === 3 * 60 + 29 }, // daily 03:29 UTC — rebates & bonuses settled
 ];
 const running = new Set();
 const log = (...a) => console.log(new Date().toISOString(), ...a);

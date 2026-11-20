@@ -27,12 +27,17 @@ export async function shrinkPhoto(file: File): Promise<File> {
 export type MediaLabels = { photo: string; scan: string; stopScan: string; scanning: string; removePhoto: string; photoHint: string; tooMany: string; cameraBlocked: string; photo1: string };
 
 /** 🖼️ Add up to three photos (camera or gallery). */
-export function PhotoButton({ count, onAdd, l, disabled }: { count: number; onAdd: (files: File[]) => void; l: MediaLabels; disabled?: boolean }) {
+export function PhotoButton({ count, onAdd, l, disabled, onPreparing }: { count: number; onAdd: (files: File[]) => void; l: MediaLabels; disabled?: boolean; onPreparing?: (busy: boolean) => void }) {
   const input = useRef<HTMLInputElement>(null);
   return (
     <>
       <input ref={input} type="file" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden data-testid="photo-input"
-        onChange={async (e) => { const files = [...(e.target.files ?? [])]; e.target.value = ""; onAdd(await Promise.all(files.map(shrinkPhoto))); }} />
+        onChange={async (e) => {
+          const files = [...(e.target.files ?? [])]; e.target.value = "";
+          // shrinking takes a moment: the chat waits for it, so a question sent meanwhile goes out with its photos
+          onPreparing?.(true);
+          try { onAdd(await Promise.all(files.map(shrinkPhoto))); } finally { onPreparing?.(false); }
+        }} />
       <button type="button" onClick={() => input.current?.click()} disabled={disabled || count >= MAX_CHAT_PHOTOS} aria-label={l.photo} title={`${l.photo} — ${l.photoHint}`} data-testid="photo-btn"
         className="inline-grid size-10 shrink-0 place-items-center rounded-full border bg-background transition hover:border-[var(--vivid-violet)] hover:text-[var(--vivid-violet)] disabled:opacity-40">
         <ImagePlus className="size-4" aria-hidden />

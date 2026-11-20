@@ -134,6 +134,7 @@ export async function refreshSnapshot(portal: AppPortal, userId: string): Promis
       if (await cache.match(url)) continue;
       const r = await fetch(url).catch(() => null);
       if (r?.ok) await cache.put(url, r);
+      else await r?.body?.cancel().catch(() => {}); // not ready yet (e.g. still being issued): close it, try next time
     }
   }
   return true;

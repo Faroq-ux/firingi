@@ -883,7 +883,9 @@
     "Ingredient Stock": "Ingredienslager",
     "Guests & Loyalty": "Gäster och lojalitet",
     "Till Settings": "Kassainställningar",
-    "Till Staff": "Kassapersonal"
+    "Till Staff": "Kassapersonal",
+    "Rebates & Bonuses": "Rabatter och bonusar",
+    "My Bonuses": "Mina bonusar"
   },
   "delivery": {
     "title": "Leverans",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Din adress {address}: {decision}",
       "body": "FIRINGI:s beslut om din adress {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Rabattavtal att granska",
+      "body": "{company} har skickat rabattavtalet ”{name}”. Det startar först när FIRINGI har godkänt det."
+    },
+    "rebate_approved": {
+      "title": "Rabattavtal godkänt",
+      "body": "FIRINGI har godkänt ”{name}”. Det gäller från startdatumet."
+    },
+    "rebate_rejected": {
+      "title": "Rabattavtal avslaget",
+      "body": "FIRINGI godkände inte ”{name}”: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonusperiod avräknad",
+      "body": "”{name}”, {period}: {customers} kunder belönade ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Ny bonus från {supplier}",
+      "body": "”{name}”: se vad ni kan tjäna in under Mina bonusar."
+    },
+    "rebate_close": {
+      "title": "Ni är nära en bonus",
+      "body": "Bara {missing} till för att nå nästa steg i ”{name}” från {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Ni har fått en bonus",
+      "body": "”{name}” från {supplier}, {period}: {amount} € krediterat på era fakturor."
+    },
+    "rebate_free_goods": {
+      "title": "Gratisvaror till er",
+      "body": "”{name}” från {supplier}: {qty} × {product} gratis på er nästa order. Hämta ut dem senast {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Lägg till din branschkod",
     "reasonCODE": "Ingen av dina branschkoder passar försäljning av det",
     "licenceNote": "Tillstånd eller FIRINGI:s godkännande kan fortfarande behövas (se nedan och Företag › Tillstånd)."
+  },
+  "rebates": {
+    "vendorTitle": "Rabatter och bonusar",
+    "vendorIntro": "Belöna era kunder för det de köper under en månad, ett kvartal eller ett år: pengar tillbaka på volym, gratisvaror, tillväxtbonus eller sortimentsbonus. FIRINGI granskar varje avtal och krediterar kunderna med en kreditfaktura när perioden är slut — en bonus som ni betalar dras från er utbetalning.",
+    "newDeal": "Nytt avtal",
+    "editDeal": "Ändra avtal",
+    "yourDeals": "Era avtal",
+    "noDeals": "Inga avtal ännu.",
+    "closed": {
+      "OFF": "Rabattavtal är avstängda för tillfället.",
+      "SUPPLIER_OFF": "Rabattavtal är inte tillgängliga för ert företag. Kontakta FIRINGI.",
+      "TYPE_OFF": "Rabattavtal är ännu inte tillgängliga för er typ av företag."
+    },
+    "approvalAlways": "FIRINGI granskar varje avtal innan det startar.",
+    "approvalAuto": "Avtal inom FIRINGI:s gränser startar så snart ni skickar dem.",
+    "maxPct": "Upp till {pct} % per steg.",
+    "kind": {
+      "VOLUME": "Volymrabatt",
+      "FREE_GOODS": "Gratisvaror",
+      "GROWTH": "Tillväxtbonus",
+      "MIX": "Sortimentsbonus"
+    },
+    "kindHint": {
+      "VOLUME": "Pengar tillbaka när inköpen når ett mål under perioden. Lägg till steg för högre mål.",
+      "FREE_GOODS": "Köp ett antal enheter under perioden och få enheter av en produkt gratis på en senare order.",
+      "GROWTH": "En bonus i % när kunden köper mer än under samma period förra året.",
+      "MIX": "En bonus när kunden köper tillräckligt många olika produkter ur ert sortiment."
+    },
+    "period": {
+      "MONTH": "Månadsvis",
+      "QUARTER": "Kvartalsvis",
+      "HALF_YEAR": "Halvårsvis",
+      "YEAR": "Årsvis"
+    },
+    "status": {
+      "DRAFT": "Utkast",
+      "PENDING": "Väntar på FIRINGI",
+      "APPROVED": "Aktivt",
+      "SCHEDULED": "Startar snart",
+      "REJECTED": "Avslaget",
+      "ENDED": "Avslutat",
+      "CANCELLED": "Avbrutet",
+      "ENDING": "Slutar {date}"
+    },
+    "f": {
+      "name": "Namn",
+      "namePh": "t.ex. Sommarens volymbonus",
+      "description": "Meddelande till kunder (valfritt)",
+      "kind": "Typ av avtal",
+      "period": "Period",
+      "starts": "Startar",
+      "ends": "Slutar (valfritt)",
+      "noEnd": "Gäller tills ni avslutar det",
+      "basis": "Målet räknas på",
+      "basisAMOUNT": "Inköpt belopp (€, exkl. moms)",
+      "basisUNITS": "Inköpta enheter",
+      "retro": "Betala uppnådd % på allt som köpts under perioden",
+      "retroHint": "Av: varje % endast på delen över sitt mål.",
+      "tiers": "Steg",
+      "from": "Från",
+      "pct": "%",
+      "addTier": "Lägg till steg",
+      "remove": "Ta bort",
+      "growthPct": "Tillväxt jämfört med förra året (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus på",
+      "baseINCREASE": "endast ökningen",
+      "baseTOTAL": "allt som köpts",
+      "minPrevious": "Förra året minst (€)",
+      "minPreviousHint": "Kunder som köpte mindre förra året deltar inte.",
+      "buyUnits": "Köp (enheter)",
+      "freeUnits": "Få gratis (enheter)",
+      "maxFree": "Högst antal gratisenheter per period (valfritt)",
+      "rewardOffer": "Produkt som ges gratis",
+      "chooseProduct": "Välj en produkt",
+      "freeGoodsDays": "Dagar att hämta ut gratisvarorna",
+      "minDistinct": "Olika produkter att köpa",
+      "minUnitsEach": "Minst antal enheter av varje",
+      "rewardFixed": "Fast bonus (€)",
+      "rewardPct": "Bonus på köpta produkter (%)",
+      "products": "Produkter som räknas",
+      "allProducts": "Alla mina produkter",
+      "someProducts": "Endast valda produkter, kategorier eller varumärken",
+      "offers": "Produkter",
+      "categories": "Kategorier",
+      "brands": "Varumärken",
+      "search": "Sök…",
+      "selected": "{n} valda",
+      "audience": "Kunder",
+      "segment": "Segment",
+      "group": "Kundgrupp",
+      "chooseOne": "Välj…",
+      "findCustomer": "Hitta en kund (namn eller NIF)",
+      "noMatch": "Ingen träff",
+      "countries": "Kundländer",
+      "allCountries": "Alla länder",
+      "perShop": "Räkna varje butik för sig",
+      "perShopHint": "Kunder med flera butiker når målen per butik.",
+      "saveDraft": "Spara utkast",
+      "send": "Skicka till FIRINGI",
+      "start": "Starta avtal",
+      "saved": "Sparat.",
+      "sent": "Skickat till FIRINGI.",
+      "started": "Avtalet är aktivt."
+    },
+    "audience": {
+      "ALL": "Alla kunder",
+      "SEGMENT": "Ett segment",
+      "GROUP": "En kundgrupp",
+      "COMPANIES": "Valda kunder"
+    },
+    "end": "Avsluta avtal",
+    "endConfirm": "Avsluta detta avtal? Kunderna behåller det de tjänar in under innevarande period.",
+    "cancel": "Avbryt avtal",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Testa",
+    "tryAmount": "Köpt (€)",
+    "tryUnits": "Köpt (enheter)",
+    "tryPrev": "Förra året (€)",
+    "tryDistinct": "Olika produkter",
+    "tryResult": "Kunden får {value}",
+    "tryFree": "Kunden får {n} gratis",
+    "rules": {
+      "VOLUME": "{pct} % från {from}",
+      "retro": "på hela perioden",
+      "stepped": "på delen över varje mål",
+      "FREE_GOODS": "Köp {buy}, få {free} gratis",
+      "FREE_GOODS_MAX": "högst {max} gratis per period",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "på ökningen",
+      "TOTAL": "på allt som köpts",
+      "MIX": "{n} olika produkter (minst {each} av varje)",
+      "units": "{n} enheter"
+    },
+    "scopeAll": "Alla produkter",
+    "scopeSome": "Valda produkter",
+    "perShopTag": "Per butik",
+    "livePeriod": "Denna period ({period})",
+    "customer": "Kund",
+    "shop": "Butik",
+    "bought": "Köpt",
+    "units": "Enheter",
+    "earning": "Intjänat",
+    "nextStep": "Nästa steg",
+    "noBuyers": "Inga inköp ännu under denna period.",
+    "settled": "Avräknade perioder",
+    "noSettled": "Inget avräknat ännu.",
+    "paid": "Utbetalt",
+    "freeGiven": "Gratisenheter",
+    "earners": "Belönade kunder",
+    "rowStatus": {
+      "SETTLED": "Utbetalt",
+      "NOTHING": "Målet ej uppnått",
+      "FAILED": "Ska försökas igen"
+    },
+    "funded": {
+      "FIRINGI": "Betalt av FIRINGI",
+      "SUPPLIER": "Betalt av leverantören"
+    },
+    "details": "Detaljer",
+    "back": "Tillbaka",
+    "periodCol": "Period",
+    "dates": "Datum",
+    "kindCol": "Typ",
+    "rulesCol": "Regler",
+    "statusCol": "Status",
+    "myTitle": "Mina bonusar",
+    "myIntro": "Bonusar som era leverantörer ger er för det ni köper. När en period är slut krediterar FIRINGI det ni tjänat in på era fakturor — gratisvaror läggs till i er nästa order.",
+    "earnedYear": "Intjänat i år",
+    "freeLeft": "Gratisenheter att hämta ut",
+    "runningCount": "Aktiva bonusar",
+    "running": "Aktiva nu",
+    "noRunning": "Inga bonusar för er just nu.",
+    "fromSupplier": "Från {supplier}",
+    "periodEnds": "Perioden slutar {date}",
+    "startsOn": "Startar {date}",
+    "boughtSoFar": "Köpt hittills: {amount}",
+    "unitsSoFar": "Enheter hittills: {n}",
+    "lastYear": "Samma period förra året: {amount}",
+    "productsSoFar": "Olika produkter: {n}",
+    "earningNow": "Intjänat hittills: {value}",
+    "freeNow": "Gratis hittills: {n}",
+    "topReached": "Högsta steget uppnått!",
+    "missing": {
+      "AMOUNT": "{missing} till för {pct} %",
+      "UNITS": "{missing} enheter till för {pct} %",
+      "UNITS_FREE": "{missing} enheter till för {free} gratis",
+      "PRODUCTS": "{missing} olika produkter till för bonusen",
+      "GROWTH": "{missing} till för {pct} %"
+    },
+    "noHistory": "Inga inköp under samma period förra året att jämföra med.",
+    "freeGoods": "Gratisvaror att hämta ut",
+    "noFreeGoods": "Inga gratisvaror väntar.",
+    "takeBy": "Hämta ut senast {date}",
+    "left": "{n} kvar",
+    "addToCart": "Lägg i varukorgen",
+    "added": "Tillagt i varukorgen — gratisenheterna visas i varukorgen.",
+    "expired": "Utgånget",
+    "earnedTitle": "Det ni har tjänat in",
+    "noEarned": "Inget intjänat ännu.",
+    "creditNote": "Kreditfaktura",
+    "freeInCart": "{n} gratis (bonus)"
   }
 }

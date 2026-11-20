@@ -261,6 +261,7 @@ export const ADMIN_NAV: NavSection[] = [
           prc("promotions", "Promotions", "Promoções", "P5", { live: true }),
           prc("discounts", "Discounts", "Descontos", "P5", { live: true }),
           prc("deals", "Clearance Deals", "Oportunidades", "P38", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage", "admin.marketing.manage", "admin.settings.manage", "admin.vendors.view"] }),
+          prc("rebates", "Rebates & Bonuses", "Rappel e Bónus", "P48", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage", "admin.marketing.manage", "admin.settings.manage", "admin.vendors.view", "admin.finance.view"] }),
           prc("minimum-order", "Minimum Order Value", "Valor Mínimo de Encomenda", "P4", { live: true, perm: ["admin.pricing.view", "admin.delivery.view"] }),
           prc("delivery-fees", "Delivery Fee Rules", "Regras de Taxa de Entrega", "P4", { live: true, perm: ["admin.pricing.view", "admin.delivery.view"] }),
           prc("commission", "Commission Rules", "Regras de Comissão", "P5", { live: true, perm: ["admin.vendors.commission", "admin.finance.view"] }),

@@ -883,7 +883,9 @@
     "Ingredient Stock": "Stan składników",
     "Guests & Loyalty": "Goście i lojalność",
     "Till Settings": "Ustawienia kasy",
-    "Till Staff": "Personel kasy"
+    "Till Staff": "Personel kasy",
+    "Rebates & Bonuses": "Rabaty i bonusy",
+    "My Bonuses": "Moje bonusy"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Twój adres {address}: {decision}",
       "body": "Decyzja FIRINGI w sprawie Twojego adresu {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Umowa rabatowa do sprawdzenia",
+      "body": "Firma {company} przesłała umowę rabatową „{name}”. Zacznie obowiązywać dopiero po zatwierdzeniu przez FIRINGI."
+    },
+    "rebate_approved": {
+      "title": "Umowa rabatowa zatwierdzona",
+      "body": "FIRINGI zatwierdziło umowę „{name}”. Obowiązuje od daty rozpoczęcia."
+    },
+    "rebate_rejected": {
+      "title": "Umowa rabatowa odrzucona",
+      "body": "FIRINGI nie zatwierdziło umowy „{name}”: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Okres bonusowy rozliczony",
+      "body": "„{name}”, {period}: nagrodzeni klienci: {customers} ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nowy bonus od {supplier}",
+      "body": "„{name}”: możliwe korzyści znajdą Państwo w zakładce Moje bonusy."
+    },
+    "rebate_close": {
+      "title": "Bonus jest blisko",
+      "body": "Brakuje tylko {missing} do następnego progu „{name}” od {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Uzyskano bonus",
+      "body": "„{name}” od {supplier}, {period}: {amount} € uznano na Państwa fakturach."
+    },
+    "rebate_free_goods": {
+      "title": "Towar gratis dla Państwa",
+      "body": "„{name}” od {supplier}: {qty} × {product} gratis przy następnym zamówieniu. Odbiór do {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Dodaj swój kod działalności",
     "reasonCODE": "Żaden z Twoich kodów działalności nie pasuje do sprzedaży tego",
     "licenceNote": "Może być jeszcze potrzebna licencja lub zgoda FIRINGI (zob. niżej i Firma › Licencje)."
+  },
+  "rebates": {
+    "vendorTitle": "Rabaty i bonusy",
+    "vendorIntro": "Nagradzanie klientów za zakupy w miesiącu, kwartale lub roku: zwrot od obrotu (rabat posprzedażowy), towar gratis, bonus za wzrost lub bonus za asortyment. FIRINGI sprawdza każdą umowę, a po zakończeniu okresu uznaje klientom należną kwotę fakturą korygującą — wypłacany przez Państwa bonus jest potrącany z Państwa wypłaty.",
+    "newDeal": "Nowa umowa",
+    "editDeal": "Zmień umowę",
+    "yourDeals": "Państwa umowy",
+    "noDeals": "Brak umów.",
+    "closed": {
+      "OFF": "Umowy rabatowe są obecnie wyłączone.",
+      "SUPPLIER_OFF": "Umowy rabatowe nie są dostępne dla Państwa firmy. Prosimy o kontakt z FIRINGI.",
+      "TYPE_OFF": "Umowy rabatowe nie są jeszcze dostępne dla tego typu firmy."
+    },
+    "approvalAlways": "FIRINGI sprawdza każdą umowę przed jej rozpoczęciem.",
+    "approvalAuto": "Umowy mieszczące się w limitach FIRINGI zaczynają obowiązywać od razu po wysłaniu.",
+    "maxPct": "Do {pct} % na próg.",
+    "kind": {
+      "VOLUME": "Rabat posprzedażowy",
+      "FREE_GOODS": "Towar gratis",
+      "GROWTH": "Bonus za wzrost",
+      "MIX": "Bonus za asortyment"
+    },
+    "kindHint": {
+      "VOLUME": "Zwrot pieniędzy po osiągnięciu progu zakupów w okresie. Dla wyższych celów można dodać kolejne progi.",
+      "FREE_GOODS": "Zakup określonej liczby sztuk w okresie daje sztuki produktu gratis przy kolejnym zamówieniu.",
+      "GROWTH": "% bonusu, gdy klient kupi więcej niż w tym samym okresie ubiegłego roku.",
+      "MIX": "Bonus, gdy klient kupi wystarczająco dużo różnych produktów z Państwa oferty."
+    },
+    "period": {
+      "MONTH": "Miesięcznie",
+      "QUARTER": "Kwartalnie",
+      "HALF_YEAR": "Półrocznie",
+      "YEAR": "Rocznie"
+    },
+    "status": {
+      "DRAFT": "Szkic",
+      "PENDING": "Oczekuje na FIRINGI",
+      "APPROVED": "Aktywna",
+      "SCHEDULED": "Wkrótce się rozpocznie",
+      "REJECTED": "Odrzucona",
+      "ENDED": "Zakończona",
+      "CANCELLED": "Anulowana",
+      "ENDING": "Koniec {date}"
+    },
+    "f": {
+      "name": "Nazwa",
+      "namePh": "np. Letni bonus od obrotu",
+      "description": "Uwaga dla klientów (opcjonalnie)",
+      "kind": "Rodzaj umowy",
+      "period": "Okres",
+      "starts": "Początek",
+      "ends": "Koniec (opcjonalnie)",
+      "noEnd": "Obowiązuje do odwołania",
+      "basis": "Próg liczony według",
+      "basisAMOUNT": "Wartość zakupów (€, netto)",
+      "basisUNITS": "Liczba zakupionych sztuk",
+      "retro": "Nalicz osiągnięty % od wszystkich zakupów w okresie",
+      "retroHint": "Wyłączone: każdy % tylko od części powyżej jego progu.",
+      "tiers": "Progi",
+      "from": "Od",
+      "pct": "%",
+      "addTier": "Dodaj próg",
+      "remove": "Usuń",
+      "growthPct": "Wzrost względem ubiegłego roku (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus od",
+      "baseINCREASE": "tylko przyrostu",
+      "baseTOTAL": "wszystkich zakupów",
+      "minPrevious": "Zakupy w ubiegłym roku co najmniej (€)",
+      "minPreviousHint": "Klienci, którzy w ubiegłym roku kupili mniej, nie biorą udziału.",
+      "buyUnits": "Kup (szt.)",
+      "freeUnits": "Gratis (szt.)",
+      "maxFree": "Maks. sztuk gratis na okres (opcjonalnie)",
+      "rewardOffer": "Produkt gratis",
+      "chooseProduct": "Wybierz produkt",
+      "freeGoodsDays": "Liczba dni na odbiór towaru gratis",
+      "minDistinct": "Liczba różnych produktów do zakupu",
+      "minUnitsEach": "Minimum sztuk każdego",
+      "rewardFixed": "Bonus stały (€)",
+      "rewardPct": "Bonus od zakupionych produktów (%)",
+      "products": "Produkty objęte umową",
+      "allProducts": "Wszystkie moje produkty",
+      "someProducts": "Tylko wybrane produkty, kategorie lub marki",
+      "offers": "Produkty",
+      "categories": "Kategorie",
+      "brands": "Marki",
+      "search": "Szukaj…",
+      "selected": "Wybrano: {n}",
+      "audience": "Klienci",
+      "segment": "Segment",
+      "group": "Grupa klientów",
+      "chooseOne": "Wybierz…",
+      "findCustomer": "Znajdź klienta (nazwa lub NIF)",
+      "noMatch": "Brak wyników",
+      "countries": "Kraje klientów",
+      "allCountries": "Wszystkie kraje",
+      "perShop": "Licz każdy sklep osobno",
+      "perShopHint": "Klienci z kilkoma sklepami osiągają progi osobno dla każdego sklepu.",
+      "saveDraft": "Zapisz szkic",
+      "send": "Wyślij do FIRINGI",
+      "start": "Uruchom umowę",
+      "saved": "Zapisano.",
+      "sent": "Wysłano do FIRINGI.",
+      "started": "Umowa jest aktywna."
+    },
+    "audience": {
+      "ALL": "Wszyscy klienci",
+      "SEGMENT": "Segment",
+      "GROUP": "Grupa klientów",
+      "COMPANIES": "Wybrani klienci"
+    },
+    "end": "Zakończ umowę",
+    "endConfirm": "Zakończyć tę umowę? Klienci zachowają to, co uzyskają w bieżącym okresie.",
+    "cancel": "Anuluj umowę",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Wypróbuj",
+    "tryAmount": "Zakupy (€)",
+    "tryUnits": "Zakupy (szt.)",
+    "tryPrev": "Ubiegły rok (€)",
+    "tryDistinct": "Różne produkty",
+    "tryResult": "Klient otrzyma {value}",
+    "tryFree": "Klient otrzyma {n} gratis",
+    "rules": {
+      "VOLUME": "{pct} % od {from}",
+      "retro": "od całego okresu",
+      "stepped": "od części powyżej każdego progu",
+      "FREE_GOODS": "Kup {buy}, otrzymaj {free} gratis",
+      "FREE_GOODS_MAX": "maks. {max} gratis na okres",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "od przyrostu",
+      "TOTAL": "od wszystkich zakupów",
+      "MIX": "{n} różnych produktów (min. {each} szt. każdego)",
+      "units": "{n} szt."
+    },
+    "scopeAll": "Wszystkie produkty",
+    "scopeSome": "Wybrane produkty",
+    "perShopTag": "Na sklep",
+    "livePeriod": "Bieżący okres ({period})",
+    "customer": "Klient",
+    "shop": "Sklep",
+    "bought": "Zakupy",
+    "units": "Sztuki",
+    "earning": "Naliczono",
+    "nextStep": "Następny próg",
+    "noBuyers": "Brak zakupów w tym okresie.",
+    "settled": "Rozliczone okresy",
+    "noSettled": "Nic jeszcze nie rozliczono.",
+    "paid": "Wypłacono",
+    "freeGiven": "Sztuki gratis",
+    "earners": "Nagrodzeni klienci",
+    "rowStatus": {
+      "SETTLED": "Wypłacono",
+      "NOTHING": "Próg nieosiągnięty",
+      "FAILED": "Do ponowienia"
+    },
+    "funded": {
+      "FIRINGI": "Wypłacone przez FIRINGI",
+      "SUPPLIER": "Wypłacone przez dostawcę"
+    },
+    "details": "Szczegóły",
+    "back": "Wstecz",
+    "periodCol": "Okres",
+    "dates": "Daty",
+    "kindCol": "Rodzaj",
+    "rulesCol": "Zasady",
+    "statusCol": "Status",
+    "myTitle": "Moje bonusy",
+    "myIntro": "Bonusy od dostawców za Państwa zakupy. Po zakończeniu okresu FIRINGI uznaje należną kwotę na Państwa fakturach — towar gratis zostanie dodany do następnego zamówienia.",
+    "earnedYear": "Uzyskano w tym roku",
+    "freeLeft": "Sztuki gratis do odbioru",
+    "runningCount": "Aktywne bonusy",
+    "running": "Aktywne teraz",
+    "noRunning": "Obecnie brak bonusów dla Państwa.",
+    "fromSupplier": "Od {supplier}",
+    "periodEnds": "Okres kończy się {date}",
+    "startsOn": "Początek {date}",
+    "boughtSoFar": "Dotychczasowe zakupy: {amount}",
+    "unitsSoFar": "Dotychczas sztuk: {n}",
+    "lastYear": "Ten sam okres ubiegłego roku: {amount}",
+    "productsSoFar": "Różne produkty: {n}",
+    "earningNow": "Dotychczas uzyskano: {value}",
+    "freeNow": "Dotychczas gratis: {n}",
+    "topReached": "Osiągnięto najwyższy próg!",
+    "missing": {
+      "AMOUNT": "Jeszcze {missing} do {pct} %",
+      "UNITS": "Jeszcze {missing} szt. do {pct} %",
+      "UNITS_FREE": "Jeszcze {missing} szt. do {free} gratis",
+      "PRODUCTS": "Jeszcze {missing} różnych produktów do bonusu",
+      "GROWTH": "Jeszcze {missing} do {pct} %"
+    },
+    "noHistory": "Brak zakupów w tym samym okresie ubiegłego roku do porównania.",
+    "freeGoods": "Towar gratis do odbioru",
+    "noFreeGoods": "Brak oczekującego towaru gratis.",
+    "takeBy": "Odbiór do {date}",
+    "left": "Pozostało: {n}",
+    "addToCart": "Dodaj do koszyka",
+    "added": "Dodano do koszyka — sztuki gratis są widoczne w koszyku.",
+    "expired": "Wygasło",
+    "earnedTitle": "Uzyskane bonusy",
+    "noEarned": "Nic jeszcze nie uzyskano.",
+    "creditNote": "Faktura korygująca",
+    "freeInCart": "{n} gratis (bonus)"
   }
 }

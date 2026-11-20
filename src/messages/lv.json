@@ -883,7 +883,9 @@
     "Ingredient Stock": "Sastāvdaļu krājumi",
     "Guests & Loyalty": "Viesi un lojalitāte",
     "Till Settings": "Kases iestatījumi",
-    "Till Staff": "Kases personāls"
+    "Till Staff": "Kases personāls",
+    "Rebates & Bonuses": "Atlaides un bonusi",
+    "My Bonuses": "Mani bonusi"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Jūsu adrese {address}: {decision}",
       "body": "FIRINGI lēmums par jūsu adresi {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Atlaižu vienošanās pārbaudei",
+      "body": "{company} nosūtīja atlaižu vienošanos \"{name}\". Tā sāksies tikai pēc FIRINGI apstiprinājuma."
+    },
+    "rebate_approved": {
+      "title": "Atlaižu vienošanās apstiprināta",
+      "body": "FIRINGI apstiprināja \"{name}\". Tā darbojas no sākuma datuma."
+    },
+    "rebate_rejected": {
+      "title": "Atlaižu vienošanās noraidīta",
+      "body": "FIRINGI neapstiprināja \"{name}\": {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonusa periods norēķināts",
+      "body": "\"{name}\", {period}: atalgoti klienti — {customers} ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Jauns bonuss: {supplier}",
+      "body": "\"{name}\": skatiet, ko varat nopelnīt sadaļā \"Mani bonusi\"."
+    },
+    "rebate_close": {
+      "title": "Jūs esat tuvu bonusam",
+      "body": "Vēl tikai {missing}, lai sasniegtu nākamo pakāpi \"{name}\" (piegādātājs {supplier})."
+    },
+    "rebate_earned": {
+      "title": "Jūs nopelnījāt bonusu",
+      "body": "\"{name}\" (piegādātājs {supplier}), {period}: {amount} € ieskaitīti Jūsu rēķinos."
+    },
+    "rebate_free_goods": {
+      "title": "Bezmaksas preces Jums",
+      "body": "\"{name}\" (piegādātājs {supplier}): {qty} × {product} bez maksas nākamajā pasūtījumā. Saņemiet līdz {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Pievienojiet darbības kodu",
     "reasonCODE": "Neviens no jūsu darbības kodiem neatbilst tā pārdošanai",
     "licenceNote": "Joprojām var būt vajadzīga licence vai FIRINGI apstiprinājums (skatīt zemāk un Uzņēmums › Licences)."
+  },
+  "rebates": {
+    "vendorTitle": "Atlaides un bonusi",
+    "vendorIntro": "Atalgojiet savus klientus par to, ko viņi iepērk mēneša, ceturkšņa vai gada laikā: naudas atmaksa par apjomu, bezmaksas preces, izaugsmes bonuss vai sortimenta bonuss. FIRINGI pārbauda katru vienošanos un, beidzoties periodam, izraksta Jūsu klientiem kredītrēķinu — Jūsu maksātais bonuss tiek atskaitīts no Jūsu izmaksas.",
+    "newDeal": "Jauna vienošanās",
+    "editDeal": "Mainīt vienošanos",
+    "yourDeals": "Jūsu vienošanās",
+    "noDeals": "Vienošanos vēl nav.",
+    "closed": {
+      "OFF": "Atlaižu vienošanās pašlaik ir izslēgtas.",
+      "SUPPLIER_OFF": "Atlaižu vienošanās Jūsu uzņēmumam nav pieejamas. Lūdzu, sazinieties ar FIRINGI.",
+      "TYPE_OFF": "Atlaižu vienošanās Jūsu tipa uzņēmumiem vēl nav pieejamas."
+    },
+    "approvalAlways": "FIRINGI pārbauda katru vienošanos pirms tās sākuma.",
+    "approvalAuto": "Vienošanās FIRINGI noteikto robežu ietvaros sākas, tiklīdz tās nosūtāt.",
+    "maxPct": "Līdz {pct} % katrai pakāpei.",
+    "kind": {
+      "VOLUME": "Apjoma atlaide",
+      "FREE_GOODS": "Bezmaksas preces",
+      "GROWTH": "Izaugsmes bonuss",
+      "MIX": "Sortimenta bonuss"
+    },
+    "kindHint": {
+      "VOLUME": "Naudas atmaksa, kad iepirkumi periodā sasniedz mērķi. Pievienojiet pakāpes lielākiem mērķiem.",
+      "FREE_GOODS": "Iepērkot noteiktu vienību skaitu periodā, klients saņem produkta vienības bez maksas kādā nākamajā pasūtījumā.",
+      "GROWTH": "Noteikts %, ja klients iepērk vairāk nekā tajā pašā periodā pērn.",
+      "MIX": "Bonuss, ja klients iepērk pietiekami daudz dažādu Jūsu sortimenta produktu."
+    },
+    "period": {
+      "MONTH": "Reizi mēnesī",
+      "QUARTER": "Reizi ceturksnī",
+      "HALF_YEAR": "Reizi pusgadā",
+      "YEAR": "Reizi gadā"
+    },
+    "status": {
+      "DRAFT": "Melnraksts",
+      "PENDING": "Gaida FIRINGI",
+      "APPROVED": "Darbojas",
+      "SCHEDULED": "Drīz sāksies",
+      "REJECTED": "Noraidīta",
+      "ENDED": "Beigusies",
+      "CANCELLED": "Atcelta",
+      "ENDING": "Beidzas {date}"
+    },
+    "f": {
+      "name": "Nosaukums",
+      "namePh": "piem., Vasaras apjoma bonuss",
+      "description": "Piezīme klientiem (neobligāti)",
+      "kind": "Vienošanās veids",
+      "period": "Periods",
+      "starts": "Sākums",
+      "ends": "Beigas (neobligāti)",
+      "noEnd": "Darbojas, līdz to izbeidzat",
+      "basis": "Mērķa uzskaite",
+      "basisAMOUNT": "Iepirkuma summa (€, bez PVN)",
+      "basisUNITS": "Iepirktās vienības",
+      "retro": "Maksāt sasniegto % no visa periodā iepirktā",
+      "retroHint": "Izslēgts: katrs % tikai no daļas virs tā mērķa.",
+      "tiers": "Pakāpes",
+      "from": "No",
+      "pct": "%",
+      "addTier": "Pievienot pakāpi",
+      "remove": "Noņemt",
+      "growthPct": "Pieaugums salīdzinājumā ar pagājušo gadu (%)",
+      "bonusPct": "Bonuss (%)",
+      "base": "Bonuss no",
+      "baseINCREASE": "tikai pieauguma",
+      "baseTOTAL": "visa iepirktā",
+      "minPrevious": "Pagājušajā gadā vismaz (€)",
+      "minPreviousHint": "Klienti, kas pagājušajā gadā iepirka mazāk, nepiedalās.",
+      "buyUnits": "Pirkt (vienības)",
+      "freeUnits": "Saņemt bez maksas (vienības)",
+      "maxFree": "Maks. bezmaksas vienību skaits periodā (neobligāti)",
+      "rewardOffer": "Bezmaksas produkts",
+      "chooseProduct": "Izvēlieties produktu",
+      "freeGoodsDays": "Dienas bezmaksas preču saņemšanai",
+      "minDistinct": "Dažādu iepērkamo produktu skaits",
+      "minUnitsEach": "Vismaz vienību no katra",
+      "rewardFixed": "Fiksēts bonuss (€)",
+      "rewardPct": "Bonuss no iepirktajiem produktiem (%)",
+      "products": "Ieskaitāmie produkti",
+      "allProducts": "Visi mani produkti",
+      "someProducts": "Tikai izvēlētie produkti, kategorijas vai zīmoli",
+      "offers": "Produkti",
+      "categories": "Kategorijas",
+      "brands": "Zīmoli",
+      "search": "Meklēt…",
+      "selected": "Izvēlēti: {n}",
+      "audience": "Klienti",
+      "segment": "Segments",
+      "group": "Klientu grupa",
+      "chooseOne": "Izvēlieties…",
+      "findCustomer": "Meklēt klientu (nosaukums vai NIF)",
+      "noMatch": "Nav atbilstību",
+      "countries": "Klientu valstis",
+      "allCountries": "Visas valstis",
+      "perShop": "Uzskaitīt katru veikalu atsevišķi",
+      "perShopHint": "Klienti ar vairākiem veikaliem sasniedz mērķus katrā veikalā atsevišķi.",
+      "saveDraft": "Saglabāt melnrakstu",
+      "send": "Nosūtīt FIRINGI",
+      "start": "Sākt vienošanos",
+      "saved": "Saglabāts.",
+      "sent": "Nosūtīts FIRINGI.",
+      "started": "Vienošanās darbojas."
+    },
+    "audience": {
+      "ALL": "Visi klienti",
+      "SEGMENT": "Segments",
+      "GROUP": "Klientu grupa",
+      "COMPANIES": "Izvēlētie klienti"
+    },
+    "end": "Izbeigt vienošanos",
+    "endConfirm": "Izbeigt šo vienošanos? Klienti saglabā to, ko nopelna pašreizējā periodā.",
+    "cancel": "Atcelt vienošanos",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Izmēģināt",
+    "tryAmount": "Iepirkts (€)",
+    "tryUnits": "Iepirkts (vienības)",
+    "tryPrev": "Pagājušajā gadā (€)",
+    "tryDistinct": "Dažādi produkti",
+    "tryResult": "Klients saņem {value}",
+    "tryFree": "Klients saņem {n} bez maksas",
+    "rules": {
+      "VOLUME": "{pct} % no {from}",
+      "retro": "par visu periodu",
+      "stepped": "par daļu virs katra mērķa",
+      "FREE_GOODS": "Pērciet {buy}, saņemiet {free} bez maksas",
+      "FREE_GOODS_MAX": "ne vairāk kā {max} bez maksas periodā",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "no pieauguma",
+      "TOTAL": "no visa iepirktā",
+      "MIX": "{n} dažādi produkti (vismaz {each} no katra)",
+      "units": "{n} vienības"
+    },
+    "scopeAll": "Visi produkti",
+    "scopeSome": "Izvēlētie produkti",
+    "perShopTag": "Pa veikaliem",
+    "livePeriod": "Šis periods ({period})",
+    "customer": "Klients",
+    "shop": "Veikals",
+    "bought": "Iepirkts",
+    "units": "Vienības",
+    "earning": "Nopelnīts",
+    "nextStep": "Nākamā pakāpe",
+    "noBuyers": "Šajā periodā vēl nav iepirkumu.",
+    "settled": "Norēķinātie periodi",
+    "noSettled": "Vēl nekas nav norēķināts.",
+    "paid": "Izmaksāts",
+    "freeGiven": "Bezmaksas vienības",
+    "earners": "Atalgotie klienti",
+    "rowStatus": {
+      "SETTLED": "Apmaksāts",
+      "NOTHING": "Mērķis nav sasniegts",
+      "FAILED": "Jāmēģina vēlreiz"
+    },
+    "funded": {
+      "FIRINGI": "Apmaksāja FIRINGI",
+      "SUPPLIER": "Apmaksāja piegādātājs"
+    },
+    "details": "Sīkāk",
+    "back": "Atpakaļ",
+    "periodCol": "Periods",
+    "dates": "Datumi",
+    "kindCol": "Veids",
+    "rulesCol": "Noteikumi",
+    "statusCol": "Statuss",
+    "myTitle": "Mani bonusi",
+    "myIntro": "Bonusi, ko piegādātāji Jums piešķir par iepirkumiem. Beidzoties periodam, FIRINGI nopelnīto ieskaita Jūsu rēķinos — bezmaksas preces tiek pievienotas Jūsu nākamajam pasūtījumam.",
+    "earnedYear": "Nopelnīts šogad",
+    "freeLeft": "Saņemamās bezmaksas vienības",
+    "runningCount": "Aktīvie bonusi",
+    "running": "Darbojas tagad",
+    "noRunning": "Pašlaik Jums nav bonusu.",
+    "fromSupplier": "Piegādātājs: {supplier}",
+    "periodEnds": "Periods beidzas {date}",
+    "startsOn": "Sākas {date}",
+    "boughtSoFar": "Iepirkts līdz šim: {amount}",
+    "unitsSoFar": "Vienības līdz šim: {n}",
+    "lastYear": "Tas pats periods pērn: {amount}",
+    "productsSoFar": "Dažādi produkti: {n}",
+    "earningNow": "Nopelnīts līdz šim: {value}",
+    "freeNow": "Bez maksas līdz šim: {n}",
+    "topReached": "Sasniegta augstākā pakāpe!",
+    "missing": {
+      "AMOUNT": "Vēl {missing} līdz {pct} %",
+      "UNITS": "Vēl {missing} vienības līdz {pct} %",
+      "UNITS_FREE": "Vēl {missing} vienības līdz {free} bez maksas",
+      "PRODUCTS": "Vēl {missing} dažādi produkti līdz bonusam",
+      "GROWTH": "Vēl {missing} līdz {pct} %"
+    },
+    "noHistory": "Tajā pašā periodā pērn nav iepirkumu, ar ko salīdzināt.",
+    "freeGoods": "Saņemamās bezmaksas preces",
+    "noFreeGoods": "Nav gaidošu bezmaksas preču.",
+    "takeBy": "Saņemt līdz {date}",
+    "left": "Atlikušas: {n}",
+    "addToCart": "Pievienot grozam",
+    "added": "Pievienots grozam — bezmaksas vienības redzamas grozā.",
+    "expired": "Beidzies termiņš",
+    "earnedTitle": "Jūsu nopelnītais",
+    "noEarned": "Vēl nekas nav nopelnīts.",
+    "creditNote": "Kredītrēķins",
+    "freeInCart": "{n} bez maksas (bonuss)"
   }
 }

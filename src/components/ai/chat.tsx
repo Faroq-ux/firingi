@@ -39,12 +39,17 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
   const [conversationId, setConversationId] = useState<string | null>(active);
   const [text, setText] = useState("");
   const [photos, setPhotos] = useState<{ file: File; url: string }[]>([]);
+  // photos still being prepared: a question sent meanwhile waits for them (queued)
+  const [preparing, setPreparing] = useState(false);
+  const [queued, setQueued] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const end = useRef<HTMLDivElement>(null);
   const voice = side === "STAFF" ? EN_VOICE : undefined; // staff pages are English; suppliers / customers in their language
   useEffect(() => { setMessages(initial); setConversationId(active); }, [active, initial]);
   useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages.length, pending]);
+  // the photos are ready: send the question that waited for them
+  useEffect(() => { if (!preparing && queued != null) { const q = queued; setQueued(null); send(q); } }, [preparing, queued]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const media = photosOn ? agent?.media : undefined; // photos & scan only where FIRINGI has them on
   const addPhotos = (files: File[]) => {
@@ -57,6 +62,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
   };
   const send = (q: string) => {
     const question = q.trim();
+    if (preparing) { setQueued(q); return; }
     const sending = photos;
     if ((!question && !sending.length) || pending) return;
     setError(null);
@@ -146,7 +152,7 @@ export function AssistantChat({ side, base, conversations, active, initial, exam
             className="min-h-11 w-full flex-1 resize-none rounded-xl border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:w-auto"
           />
           <MicButton onText={(s) => setText((t) => appendSpoken(t, s))} labels={voice} lang={locale} />
-          {media && side !== "STAFF" && <PhotoButton count={photos.length} onAdd={addPhotos} l={media} disabled={pending} />}
+          {media && side !== "STAFF" && <PhotoButton count={photos.length} onAdd={addPhotos} l={media} disabled={pending} onPreparing={setPreparing} />}
           {media && side !== "STAFF" && <ScanButton onCode={(code) => setText((t) => appendSpoken(t, code))} l={media} />}
           <Button type="submit" disabled={pending || (!text.trim() && !photos.length)}><Send className="size-4" aria-hidden /> {l.send}</Button>
           {conversationId && (

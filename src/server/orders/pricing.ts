@@ -32,7 +32,9 @@ export type LineDiscount = { promotionId: string; ownerType: "VENDOR" | "ADMIN";
 /** Phase 38: the line is on a deal (price, commission) — or a deal is there but doesn't apply (why). */
 export type DealHit = { dealId: string; bidId: string | null; kind: string; unit: number; commissionPct: number | null };
 export type DealNote = { dealId: string; why: string; left?: number | null };
-type Item = Awaited<ReturnType<typeof pricedOffers>>["items"][number] & { deal?: DealHit | null; dealNote?: DealNote | null };
+/** Phase 48: free units from a rebate & bonus deal on this line (which allowances, how many the supplier pays). */
+export type FreeGoodsHit = { qty: number; vendorQty: number; grants: { id: string; qty: number }[] };
+type Item = Awaited<ReturnType<typeof pricedOffers>>["items"][number] & { deal?: DealHit | null; dealNote?: DealNote | null; freeGoods?: FreeGoodsHit | null };
 type Line = { item: Item; rate: Decimal; discounts: LineDiscount[]; unitSale: Decimal };
 
 export type SupplierPart = {
@@ -117,6 +119,31 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     key: l.item.offerId, offerId: l.item.offerId, vendorCompanyId: l.item.vendorCompanyId, productId: l.item.productId, categoryIds: l.item.categoryIds, qty: l.item.qty,
     unitSaleNet: l.unitSale, lineNet: l.unitSale.mul(l.item.qty).toDecimalPlaces(2),
   });
+  // Phase 48: free goods earned with a rebate & bonus deal — those units cost nothing (whoever funds the deal pays)
+  if (!fixed) {
+    const { freeGoodsFor, ensureFreeGoodsPromotion, FREE_GOODS_PROMOTION_ID } = await import("@/server/rebates/service");
+    const grants = await freeGoodsFor(ctx.company.id, lines.filter((l) => !l.item.deal).map((l) => l.item.offerId));
+    if (grants.size) await ensureFreeGoodsPromotion();
+    for (const l of lines) {
+      const gs = l.item.deal ? null : grants.get(l.item.offerId);
+      if (!gs || l.unitSale.lte(0)) continue;
+      let left = l.item.qty, vendorQty = 0, firingiQty = 0;
+      const used: { id: string; qty: number }[] = [];
+      for (const g of gs) {
+        const q = Math.min(left, g.qty);
+        if (q <= 0) break;
+        used.push({ id: g.id, qty: q }); left -= q;
+        if (g.funder === "FIRINGI") firingiQty += q; else vendorQty += q;
+      }
+      const free = vendorQty + firingiQty;
+      if (!free) continue;
+      const per = (q: number) => l.unitSale.mul(q).div(l.item.qty).toDecimalPlaces(4);
+      const vendorPer = per(vendorQty), firingiPer = per(firingiQty);
+      l.discounts.push({ promotionId: FREE_GOODS_PROMOTION_ID, ownerType: firingiQty && !vendorQty ? "ADMIN" : "VENDOR", coupon: false, perUnit: vendorPer.plus(firingiPer), firingiPerUnit: firingiPer, vendorPerUnit: vendorPer });
+      l.unitSale = l.unitSale.minus(vendorPer).minus(firingiPer);
+      l.item = { ...l.item, freeGoods: { qty: free, vendorQty, grants: used } };
+    }
+  }
   const take = (d: OrderDiscount) => {
     for (const l of lines) {
       const x = d.perLine.get(l.item.offerId);
@@ -203,7 +230,8 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
         qty: l.item.qty, unitListPriceNet: l.item.price!.listUnitNet, vatRatePercent: l.rate,
         commissionRatePercent: l.item.deal?.commissionPct ?? opts.commissionRates?.get(g.sellerId) ?? 0,
         vendorFundedDiscountPerUnit: l.item.deal ? new Decimal(l.item.price!.vendorFundedPerUnit) : vendor, firingiFundedDiscountPerUnit: firingi,
-        commissionUnitBase: l.item.deal ? l.item.deal.unit : null,
+        // a deal: commission on the deal price; supplier-paid free units: no commission on them
+        commissionUnitBase: l.item.deal ? l.item.deal.unit : l.item.freeGoods?.vendorQty ? new Decimal(l.item.price!.listUnitNet).mul(l.item.qty - l.item.freeGoods.vendorQty).div(l.item.qty) : null,
       });
       return { item: l.item, rate: l.rate, discounts: l.discounts, calc: { ...calc, qty: l.item.qty }, deal: l.item.deal ?? null };
     });

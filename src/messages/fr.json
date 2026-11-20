@@ -883,7 +883,9 @@
     "Ingredient Stock": "Stock d'ingrédients",
     "Guests & Loyalty": "Clients et fidélité",
     "Till Settings": "Paramètres de la caisse",
-    "Till Staff": "Personnel de caisse"
+    "Till Staff": "Personnel de caisse",
+    "Rebates & Bonuses": "Remises et bonus",
+    "My Bonuses": "Mes bonus"
   },
   "delivery": {
     "title": "Livraison",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Votre adresse {address} : {decision}",
       "body": "Décision de FIRINGI pour votre adresse {address} : {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Accord de remise à vérifier",
+      "body": "{company} a envoyé l'accord de remise « {name} ». Il ne démarre qu'après approbation de FIRINGI."
+    },
+    "rebate_approved": {
+      "title": "Accord de remise approuvé",
+      "body": "FIRINGI a approuvé « {name} ». Il s'applique à partir de sa date de début."
+    },
+    "rebate_rejected": {
+      "title": "Accord de remise refusé",
+      "body": "FIRINGI n'a pas approuvé « {name} » : {reason}"
+    },
+    "rebate_settled": {
+      "title": "Période de bonus clôturée",
+      "body": "« {name} », {period} : {customers} clients récompensés ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nouveau bonus de {supplier}",
+      "body": "« {name} » : découvrez ce que vous pouvez gagner dans Mes bonus."
+    },
+    "rebate_close": {
+      "title": "Vous êtes proche d'un bonus",
+      "body": "Plus que {missing} pour atteindre le palier suivant de « {name} » de {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Vous avez gagné un bonus",
+      "body": "« {name} » de {supplier}, {period} : {amount} € crédités sur vos factures."
+    },
+    "rebate_free_goods": {
+      "title": "Des produits gratuits pour vous",
+      "body": "« {name} » de {supplier} : {qty} × {product} offerts sur votre prochaine commande. À récupérer avant le {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Ajoutez votre code d'activité",
     "reasonCODE": "Aucun de vos codes d'activité ne correspond à sa vente",
     "licenceNote": "Une licence ou l'accord de FIRINGI peut encore être nécessaire (voir ci-dessous et Entreprise › Licences)."
+  },
+  "rebates": {
+    "vendorTitle": "Remises et bonus",
+    "vendorIntro": "Récompensez vos clients pour leurs achats sur un mois, un trimestre ou une année : ristourne sur volume, produits gratuits, bonus de croissance ou bonus d'assortiment. FIRINGI vérifie chaque accord et, à la fin d'une période, crédite vos clients par avoir — un bonus que vous accordez est déduit de votre versement.",
+    "newDeal": "Nouvel accord",
+    "editDeal": "Modifier l'accord",
+    "yourDeals": "Vos accords",
+    "noDeals": "Aucun accord pour le moment.",
+    "closed": {
+      "OFF": "Les accords de remise sont désactivés pour le moment.",
+      "SUPPLIER_OFF": "Les accords de remise ne sont pas ouverts à votre entreprise. Veuillez contacter FIRINGI.",
+      "TYPE_OFF": "Les accords de remise ne sont pas encore ouverts à votre type d'entreprise."
+    },
+    "approvalAlways": "FIRINGI vérifie chaque accord avant son démarrage.",
+    "approvalAuto": "Les accords dans les limites de FIRINGI démarrent dès leur envoi.",
+    "maxPct": "Jusqu'à {pct} % par palier.",
+    "kind": {
+      "VOLUME": "Ristourne sur volume",
+      "FREE_GOODS": "Produits gratuits",
+      "GROWTH": "Bonus de croissance",
+      "MIX": "Bonus d'assortiment"
+    },
+    "kindHint": {
+      "VOLUME": "Un remboursement dès que les achats atteignent un objectif sur la période. Ajoutez des paliers pour des objectifs plus élevés.",
+      "FREE_GOODS": "Le client achète un nombre d'unités sur la période et reçoit des unités d'un produit gratuites lors d'une commande ultérieure.",
+      "GROWTH": "Un % lorsque le client achète plus que sur la même période l'an dernier.",
+      "MIX": "Un bonus lorsque le client achète suffisamment de produits différents de votre gamme."
+    },
+    "period": {
+      "MONTH": "Mensuel",
+      "QUARTER": "Trimestriel",
+      "HALF_YEAR": "Semestriel",
+      "YEAR": "Annuel"
+    },
+    "status": {
+      "DRAFT": "Brouillon",
+      "PENDING": "En attente de FIRINGI",
+      "APPROVED": "En cours",
+      "SCHEDULED": "Bientôt",
+      "REJECTED": "Refusé",
+      "ENDED": "Terminé",
+      "CANCELLED": "Annulé",
+      "ENDING": "Se termine le {date}"
+    },
+    "f": {
+      "name": "Nom",
+      "namePh": "ex. Bonus volume été",
+      "description": "Note pour les clients (facultatif)",
+      "kind": "Type d'accord",
+      "period": "Période",
+      "starts": "Début",
+      "ends": "Fin (facultatif)",
+      "noEnd": "Court jusqu'à ce que vous y mettiez fin",
+      "basis": "L'objectif porte sur",
+      "basisAMOUNT": "Montant acheté (€, HT)",
+      "basisUNITS": "Unités achetées",
+      "retro": "Appliquer le % atteint à tous les achats de la période",
+      "retroHint": "Désactivé : chaque % uniquement sur la part au-delà de son objectif.",
+      "tiers": "Paliers",
+      "from": "À partir de",
+      "pct": "%",
+      "addTier": "Ajouter un palier",
+      "remove": "Supprimer",
+      "growthPct": "Croissance par rapport à l'an dernier (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus sur",
+      "baseINCREASE": "la hausse uniquement",
+      "baseTOTAL": "tous les achats",
+      "minPrevious": "Minimum l'an dernier (€)",
+      "minPreviousHint": "Les clients ayant acheté moins l'an dernier ne participent pas.",
+      "buyUnits": "Acheter (unités)",
+      "freeUnits": "Offert (unités)",
+      "maxFree": "Maximum d'unités gratuites par période (facultatif)",
+      "rewardOffer": "Produit offert",
+      "chooseProduct": "Choisir un produit",
+      "freeGoodsDays": "Jours pour récupérer les produits gratuits",
+      "minDistinct": "Nombre de produits différents à acheter",
+      "minUnitsEach": "Unités minimum de chacun",
+      "rewardFixed": "Bonus fixe (€)",
+      "rewardPct": "Bonus sur les produits achetés (%)",
+      "products": "Produits concernés",
+      "allProducts": "Tous mes produits",
+      "someProducts": "Uniquement les produits, catégories ou marques choisis",
+      "offers": "Produits",
+      "categories": "Catégories",
+      "brands": "Marques",
+      "search": "Rechercher…",
+      "selected": "{n} sélectionné(s)",
+      "audience": "Clients",
+      "segment": "Segment",
+      "group": "Groupe de clients",
+      "chooseOne": "Choisir…",
+      "findCustomer": "Trouver un client (nom ou NIF)",
+      "noMatch": "Aucun résultat",
+      "countries": "Pays des clients",
+      "allCountries": "Tous les pays",
+      "perShop": "Compter chaque point de vente séparément",
+      "perShopHint": "Les clients avec plusieurs points de vente atteignent les objectifs par point de vente.",
+      "saveDraft": "Enregistrer le brouillon",
+      "send": "Envoyer à FIRINGI",
+      "start": "Lancer l'accord",
+      "saved": "Enregistré.",
+      "sent": "Envoyé à FIRINGI.",
+      "started": "L'accord est en cours."
+    },
+    "audience": {
+      "ALL": "Tous les clients",
+      "SEGMENT": "Un segment",
+      "GROUP": "Un groupe de clients",
+      "COMPANIES": "Clients choisis"
+    },
+    "end": "Terminer l'accord",
+    "endConfirm": "Terminer cet accord ? Les clients conservent ce qu'ils ont gagné sur la période en cours.",
+    "cancel": "Annuler l'accord",
+    "firingiNote": "FIRINGI : {note}",
+    "tryIt": "Simuler",
+    "tryAmount": "Acheté (€)",
+    "tryUnits": "Acheté (unités)",
+    "tryPrev": "L'an dernier (€)",
+    "tryDistinct": "Produits différents",
+    "tryResult": "Le client obtient {value}",
+    "tryFree": "Le client obtient {n} gratuit(s)",
+    "rules": {
+      "VOLUME": "{pct} % à partir de {from}",
+      "retro": "sur toute la période",
+      "stepped": "sur la part au-delà de chaque objectif",
+      "FREE_GOODS": "{buy} achetés, {free} offerts",
+      "FREE_GOODS_MAX": "au maximum {max} offerts par période",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "sur la hausse",
+      "TOTAL": "sur tous les achats",
+      "MIX": "{n} produits différents (au moins {each} de chacun)",
+      "units": "{n} unités"
+    },
+    "scopeAll": "Tous les produits",
+    "scopeSome": "Produits choisis",
+    "perShopTag": "Par point de vente",
+    "livePeriod": "Cette période ({period})",
+    "customer": "Client",
+    "shop": "Point de vente",
+    "bought": "Acheté",
+    "units": "Unités",
+    "earning": "Gain",
+    "nextStep": "Palier suivant",
+    "noBuyers": "Aucun achat pour le moment sur cette période.",
+    "settled": "Périodes clôturées",
+    "noSettled": "Aucune période clôturée pour le moment.",
+    "paid": "Versé",
+    "freeGiven": "Unités gratuites",
+    "earners": "Clients récompensés",
+    "rowStatus": {
+      "SETTLED": "Versé",
+      "NOTHING": "Objectif non atteint",
+      "FAILED": "À relancer"
+    },
+    "funded": {
+      "FIRINGI": "Payé par FIRINGI",
+      "SUPPLIER": "Payé par le fournisseur"
+    },
+    "details": "Détails",
+    "back": "Retour",
+    "periodCol": "Période",
+    "dates": "Dates",
+    "kindCol": "Type",
+    "rulesCol": "Règles",
+    "statusCol": "Statut",
+    "myTitle": "Mes bonus",
+    "myIntro": "Les bonus que vos fournisseurs vous accordent pour vos achats. À la fin d'une période, FIRINGI crédite vos gains sur vos factures — les produits gratuits sont ajoutés à votre prochaine commande.",
+    "earnedYear": "Gagné cette année",
+    "freeLeft": "Unités gratuites à récupérer",
+    "runningCount": "Bonus en cours",
+    "running": "En cours",
+    "noRunning": "Aucun bonus pour vous en ce moment.",
+    "fromSupplier": "De {supplier}",
+    "periodEnds": "Fin de période le {date}",
+    "startsOn": "Début le {date}",
+    "boughtSoFar": "Achats à ce jour : {amount}",
+    "unitsSoFar": "Unités à ce jour : {n}",
+    "lastYear": "Même période l'an dernier : {amount}",
+    "productsSoFar": "Produits différents : {n}",
+    "earningNow": "Gagné à ce jour : {value}",
+    "freeNow": "Offert à ce jour : {n}",
+    "topReached": "Palier maximal atteint !",
+    "missing": {
+      "AMOUNT": "Encore {missing} pour {pct} %",
+      "UNITS": "Encore {missing} unités pour {pct} %",
+      "UNITS_FREE": "Encore {missing} unités pour {free} offerts",
+      "PRODUCTS": "Encore {missing} produits différents pour le bonus",
+      "GROWTH": "Encore {missing} pour {pct} %"
+    },
+    "noHistory": "Aucun achat sur la même période l'an dernier pour comparer.",
+    "freeGoods": "Produits gratuits à récupérer",
+    "noFreeGoods": "Aucun produit gratuit en attente.",
+    "takeBy": "À récupérer avant le {date}",
+    "left": "{n} restant(s)",
+    "addToCart": "Ajouter au panier",
+    "added": "Ajouté au panier — les unités gratuites apparaissent dans le panier.",
+    "expired": "Expiré",
+    "earnedTitle": "Vos gains",
+    "noEarned": "Aucun gain pour le moment.",
+    "creditNote": "Avoir",
+    "freeInCart": "{n} offert(s) (bonus)"
   }
 }

@@ -883,7 +883,9 @@
     "Ingredient Stock": "Ingredienslager",
     "Guests & Loyalty": "Gjester og lojalitet",
     "Till Settings": "Kasseinnstillinger",
-    "Till Staff": "Kassepersonale"
+    "Till Staff": "Kassepersonale",
+    "Rebates & Bonuses": "Rabatter og bonuser",
+    "My Bonuses": "Mine bonuser"
   },
   "delivery": {
     "title": "Levering",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Adressen din {address}: {decision}",
       "body": "FIRINGIs avgjørelse om adressen din {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Bonusavtale til kontroll",
+      "body": "{company} har sendt bonusavtalen «{name}». Den starter først når FIRINGI har godkjent den."
+    },
+    "rebate_approved": {
+      "title": "Bonusavtale godkjent",
+      "body": "FIRINGI har godkjent «{name}». Den gjelder fra startdatoen."
+    },
+    "rebate_rejected": {
+      "title": "Bonusavtale avvist",
+      "body": "FIRINGI godkjente ikke «{name}»: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonusperiode gjort opp",
+      "body": "«{name}», {period}: {customers} kunder belønnet ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Ny bonus fra {supplier}",
+      "body": "«{name}»: se hva du kan tjene under Mine bonuser."
+    },
+    "rebate_close": {
+      "title": "Du er nær en bonus",
+      "body": "Bare {missing} til for å nå neste trinn i «{name}» fra {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Du har tjent en bonus",
+      "body": "«{name}» fra {supplier}, {period}: {amount} € kreditert på fakturaene dine."
+    },
+    "rebate_free_goods": {
+      "title": "Gratisvarer til deg",
+      "body": "«{name}» fra {supplier}: {qty} × {product} gratis på neste bestilling. Hent dem innen {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Legg til næringskoden din",
     "reasonCODE": "Ingen av næringskodene dine passer til salg av det",
     "licenceNote": "Bevilling eller FIRINGIs godkjenning kan fortsatt trengs (se nedenfor og Bedrift › Bevillinger)."
+  },
+  "rebates": {
+    "vendorTitle": "Rabatter og bonuser",
+    "vendorIntro": "Belønn kundene dine for det de kjøper i løpet av en måned, et kvartal eller et år: penger tilbake på volum, gratisvarer, vekstbonus eller sortimentsbonus. FIRINGI kontrollerer hver avtale og krediterer kundene dine med kreditnota når en periode er over — en bonus du betaler, trekkes fra utbetalingen din.",
+    "newDeal": "Ny avtale",
+    "editDeal": "Endre avtale",
+    "yourDeals": "Dine avtaler",
+    "noDeals": "Ingen avtaler ennå.",
+    "closed": {
+      "OFF": "Bonusavtaler er slått av for øyeblikket.",
+      "SUPPLIER_OFF": "Bonusavtaler er ikke tilgjengelige for bedriften din. Kontakt FIRINGI.",
+      "TYPE_OFF": "Bonusavtaler er ikke tilgjengelige for din bedriftstype ennå."
+    },
+    "approvalAlways": "FIRINGI kontrollerer hver avtale før den starter.",
+    "approvalAuto": "Avtaler innenfor FIRINGIs grenser starter så snart du sender dem.",
+    "maxPct": "Opptil {pct} % per trinn.",
+    "kind": {
+      "VOLUME": "Volumbonus",
+      "FREE_GOODS": "Gratisvarer",
+      "GROWTH": "Vekstbonus",
+      "MIX": "Sortimentsbonus"
+    },
+    "kindHint": {
+      "VOLUME": "Penger tilbake når innkjøpene når et mål i perioden. Legg til trinn for større mål.",
+      "FREE_GOODS": "Kjøp et antall enheter i perioden, og få enheter av et produkt gratis på en senere bestilling.",
+      "GROWTH": "En % når kunden kjøper mer enn i samme periode i fjor.",
+      "MIX": "En bonus når kunden kjøper nok ulike produkter fra sortimentet ditt."
+    },
+    "period": {
+      "MONTH": "Månedlig",
+      "QUARTER": "Kvartalsvis",
+      "HALF_YEAR": "Halvårlig",
+      "YEAR": "Årlig"
+    },
+    "status": {
+      "DRAFT": "Utkast",
+      "PENDING": "Venter på FIRINGI",
+      "APPROVED": "Aktiv",
+      "SCHEDULED": "Starter snart",
+      "REJECTED": "Avvist",
+      "ENDED": "Avsluttet",
+      "CANCELLED": "Kansellert",
+      "ENDING": "Slutter {date}"
+    },
+    "f": {
+      "name": "Navn",
+      "namePh": "f.eks. Sommerbonus på volum",
+      "description": "Merknad til kunder (valgfritt)",
+      "kind": "Avtaletype",
+      "period": "Periode",
+      "starts": "Starter",
+      "ends": "Slutter (valgfritt)",
+      "noEnd": "Gjelder til du avslutter den",
+      "basis": "Målet regnes i",
+      "basisAMOUNT": "Kjøpt beløp (€, ekskl. mva.)",
+      "basisUNITS": "Kjøpte enheter",
+      "retro": "Betal oppnådd % på alt som er kjøpt i perioden",
+      "retroHint": "Av: hver % bare på delen over sitt mål.",
+      "tiers": "Trinn",
+      "from": "Fra",
+      "pct": "%",
+      "addTier": "Legg til trinn",
+      "remove": "Fjern",
+      "growthPct": "Vekst fra i fjor (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus på",
+      "baseINCREASE": "bare økningen",
+      "baseTOTAL": "alt som er kjøpt",
+      "minPrevious": "I fjor minst (€)",
+      "minPreviousHint": "Kunder som kjøpte mindre i fjor, deltar ikke.",
+      "buyUnits": "Kjøp (enheter)",
+      "freeUnits": "Få gratis (enheter)",
+      "maxFree": "Maks. gratis enheter per periode (valgfritt)",
+      "rewardOffer": "Gratis produkt",
+      "chooseProduct": "Velg et produkt",
+      "freeGoodsDays": "Dager til å hente gratisvarene",
+      "minDistinct": "Antall ulike produkter",
+      "minUnitsEach": "Minst antall enheter av hvert",
+      "rewardFixed": "Fast bonus (€)",
+      "rewardPct": "Bonus på kjøpte produkter (%)",
+      "products": "Produkter som teller",
+      "allProducts": "Alle mine produkter",
+      "someProducts": "Bare valgte produkter, kategorier eller merker",
+      "offers": "Produkter",
+      "categories": "Kategorier",
+      "brands": "Merker",
+      "search": "Søk…",
+      "selected": "{n} valgt",
+      "audience": "Kunder",
+      "segment": "Segment",
+      "group": "Kundegruppe",
+      "chooseOne": "Velg…",
+      "findCustomer": "Finn en kunde (navn eller NIF)",
+      "noMatch": "Ingen treff",
+      "countries": "Kundeland",
+      "allCountries": "Alle land",
+      "perShop": "Tell hver butikk for seg",
+      "perShopHint": "Kunder med flere butikker når målene per butikk.",
+      "saveDraft": "Lagre utkast",
+      "send": "Send til FIRINGI",
+      "start": "Start avtale",
+      "saved": "Lagret.",
+      "sent": "Sendt til FIRINGI.",
+      "started": "Avtalen er aktiv."
+    },
+    "audience": {
+      "ALL": "Alle kunder",
+      "SEGMENT": "Et segment",
+      "GROUP": "En kundegruppe",
+      "COMPANIES": "Valgte kunder"
+    },
+    "end": "Avslutt avtale",
+    "endConfirm": "Avslutte denne avtalen? Kundene beholder det de tjener i inneværende periode.",
+    "cancel": "Kanseller avtale",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Prøv",
+    "tryAmount": "Kjøpt (€)",
+    "tryUnits": "Kjøpt (enheter)",
+    "tryPrev": "I fjor (€)",
+    "tryDistinct": "Ulike produkter",
+    "tryResult": "Kunden får {value}",
+    "tryFree": "Kunden får {n} gratis",
+    "rules": {
+      "VOLUME": "{pct} % fra {from}",
+      "retro": "på hele perioden",
+      "stepped": "på delen over hvert mål",
+      "FREE_GOODS": "Kjøp {buy}, få {free} gratis",
+      "FREE_GOODS_MAX": "maks. {max} gratis per periode",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "på økningen",
+      "TOTAL": "på alt som er kjøpt",
+      "MIX": "{n} ulike produkter (minst {each} av hvert)",
+      "units": "{n} enheter"
+    },
+    "scopeAll": "Alle produkter",
+    "scopeSome": "Valgte produkter",
+    "perShopTag": "Per butikk",
+    "livePeriod": "Denne perioden ({period})",
+    "customer": "Kunde",
+    "shop": "Butikk",
+    "bought": "Kjøpt",
+    "units": "Enheter",
+    "earning": "Opptjent",
+    "nextStep": "Neste trinn",
+    "noBuyers": "Ingen kjøp ennå i denne perioden.",
+    "settled": "Oppgjorte perioder",
+    "noSettled": "Ingenting oppgjort ennå.",
+    "paid": "Utbetalt",
+    "freeGiven": "Gratis enheter",
+    "earners": "Belønnede kunder",
+    "rowStatus": {
+      "SETTLED": "Betalt",
+      "NOTHING": "Mål ikke nådd",
+      "FAILED": "Prøves på nytt"
+    },
+    "funded": {
+      "FIRINGI": "Betalt av FIRINGI",
+      "SUPPLIER": "Betalt av leverandøren"
+    },
+    "details": "Detaljer",
+    "back": "Tilbake",
+    "periodCol": "Periode",
+    "dates": "Datoer",
+    "kindCol": "Type",
+    "rulesCol": "Regler",
+    "statusCol": "Status",
+    "myTitle": "Mine bonuser",
+    "myIntro": "Bonuser leverandørene dine gir deg for det du kjøper. Når en periode er over, krediterer FIRINGI det du har tjent på fakturaene dine — gratisvarer legges til neste bestilling.",
+    "earnedYear": "Opptjent i år",
+    "freeLeft": "Gratis enheter å hente",
+    "runningCount": "Aktive bonuser",
+    "running": "Aktive nå",
+    "noRunning": "Ingen bonuser for deg for øyeblikket.",
+    "fromSupplier": "Fra {supplier}",
+    "periodEnds": "Perioden slutter {date}",
+    "startsOn": "Starter {date}",
+    "boughtSoFar": "Kjøpt hittil: {amount}",
+    "unitsSoFar": "Enheter hittil: {n}",
+    "lastYear": "Samme periode i fjor: {amount}",
+    "productsSoFar": "Ulike produkter: {n}",
+    "earningNow": "Opptjent hittil: {value}",
+    "freeNow": "Gratis hittil: {n}",
+    "topReached": "Høyeste trinn nådd!",
+    "missing": {
+      "AMOUNT": "{missing} til for {pct} %",
+      "UNITS": "{missing} enheter til for {pct} %",
+      "UNITS_FREE": "{missing} enheter til for {free} gratis",
+      "PRODUCTS": "{missing} ulike produkter til for bonusen",
+      "GROWTH": "{missing} til for {pct} %"
+    },
+    "noHistory": "Ingen kjøp i samme periode i fjor å sammenligne med.",
+    "freeGoods": "Gratisvarer å hente",
+    "noFreeGoods": "Ingen gratisvarer venter.",
+    "takeBy": "Hentes innen {date}",
+    "left": "{n} igjen",
+    "addToCart": "Legg i handlekurven",
+    "added": "Lagt i handlekurven — gratisenhetene vises i handlekurven.",
+    "expired": "Utløpt",
+    "earnedTitle": "Det du har tjent",
+    "noEarned": "Ingenting opptjent ennå.",
+    "creditNote": "Kreditnota",
+    "freeInCart": "{n} gratis (bonus)"
   }
 }

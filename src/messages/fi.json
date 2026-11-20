@@ -883,7 +883,9 @@
     "Ingredient Stock": "Raaka-ainevarasto",
     "Guests & Loyalty": "Asiakkaat ja kanta-asiakkuus",
     "Till Settings": "Kassan asetukset",
-    "Till Staff": "Kassahenkilöstö"
+    "Till Staff": "Kassahenkilöstö",
+    "Rebates & Bonuses": "Hyvitykset ja bonukset",
+    "My Bonuses": "Omat bonukset"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Osoitteesi {address}: {decision}",
       "body": "FIRINGIn päätös osoitteestasi {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Tarkistettava hyvityssopimus",
+      "body": "{company} lähetti hyvityssopimuksen ”{name}”. Se alkaa vasta, kun FIRINGI hyväksyy sen."
+    },
+    "rebate_approved": {
+      "title": "Hyvityssopimus hyväksytty",
+      "body": "FIRINGI hyväksyi sopimuksen ”{name}”. Se on voimassa alkamispäivästään lähtien."
+    },
+    "rebate_rejected": {
+      "title": "Hyvityssopimus hylätty",
+      "body": "FIRINGI ei hyväksynyt sopimusta ”{name}”: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonuskausi tilitetty",
+      "body": "”{name}”, {period}: {customers} asiakasta palkittu ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Uusi bonus toimittajalta {supplier}",
+      "body": "”{name}”: katso kohdasta Omat bonukset, mitä voit ansaita."
+    },
+    "rebate_close": {
+      "title": "Olet lähellä bonusta",
+      "body": "Enää {missing}, niin saavutat seuraavan portaan bonuksessa ”{name}” ({supplier})."
+    },
+    "rebate_earned": {
+      "title": "Ansaitsit bonuksen",
+      "body": "”{name}” ({supplier}), {period}: {amount} € hyvitetty laskuillesi."
+    },
+    "rebate_free_goods": {
+      "title": "Ilmaistuotteita sinulle",
+      "body": "”{name}” ({supplier}): {qty} × {product} ilmaiseksi seuraavaan tilaukseesi. Lunasta ne viimeistään {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Lisää toimialakoodisi",
     "reasonCODE": "Mikään toimialakoodisi ei vastaa sen myyntiä",
     "licenceNote": "Lupa tai FIRINGIn hyväksyntä voi silti olla tarpeen (katso alla ja Yritys › Luvat)."
+  },
+  "rebates": {
+    "vendorTitle": "Hyvitykset ja bonukset",
+    "vendorIntro": "Palkitse asiakkaitasi heidän ostoistaan kuukauden, vuosineljänneksen tai vuoden ajalta: volyymihyvitys, ilmaistuotteet, kasvubonus tai valikoimabonus. FIRINGI tarkistaa jokaisen sopimuksen ja hyvittää asiakkaita kauden päätyttyä hyvityslaskulla — maksamasi bonus vähennetään tilityksestäsi.",
+    "newDeal": "Uusi sopimus",
+    "editDeal": "Muuta sopimusta",
+    "yourDeals": "Sopimuksesi",
+    "noDeals": "Ei vielä sopimuksia.",
+    "closed": {
+      "OFF": "Hyvityssopimukset ovat tällä hetkellä pois käytöstä.",
+      "SUPPLIER_OFF": "Hyvityssopimukset eivät ole yrityksesi käytettävissä. Ota yhteyttä FIRINGIin.",
+      "TYPE_OFF": "Hyvityssopimukset eivät ole vielä käytettävissä yritystyypillesi."
+    },
+    "approvalAlways": "FIRINGI tarkistaa jokaisen sopimuksen ennen sen alkamista.",
+    "approvalAuto": "FIRINGIn rajoissa olevat sopimukset alkavat heti, kun lähetät ne.",
+    "maxPct": "Enintään {pct} % portaata kohden.",
+    "kind": {
+      "VOLUME": "Volyymihyvitys",
+      "FREE_GOODS": "Ilmaistuotteet",
+      "GROWTH": "Kasvubonus",
+      "MIX": "Valikoimabonus"
+    },
+    "kindHint": {
+      "VOLUME": "Rahaa takaisin, kun ostot saavuttavat kauden tavoitteen. Lisää portaita suurempia tavoitteita varten.",
+      "FREE_GOODS": "Asiakas ostaa tietyn määrän yksiköitä kaudella ja saa tuotteen yksiköitä ilmaiseksi myöhempään tilaukseen.",
+      "GROWTH": "% ostoista, kun asiakas ostaa enemmän kuin viime vuoden vastaavana kautena.",
+      "MIX": "Bonus, kun asiakas ostaa riittävästi eri tuotteita valikoimastasi."
+    },
+    "period": {
+      "MONTH": "Kuukausittain",
+      "QUARTER": "Neljännesvuosittain",
+      "HALF_YEAR": "Puolivuosittain",
+      "YEAR": "Vuosittain"
+    },
+    "status": {
+      "DRAFT": "Luonnos",
+      "PENDING": "Odottaa FIRINGIä",
+      "APPROVED": "Käynnissä",
+      "SCHEDULED": "Alkaa pian",
+      "REJECTED": "Hylätty",
+      "ENDED": "Päättynyt",
+      "CANCELLED": "Peruttu",
+      "ENDING": "Päättyy {date}"
+    },
+    "f": {
+      "name": "Nimi",
+      "namePh": "esim. Kesän volyymibonus",
+      "description": "Viesti asiakkaille (valinnainen)",
+      "kind": "Sopimuksen tyyppi",
+      "period": "Kausi",
+      "starts": "Alkaa",
+      "ends": "Päättyy (valinnainen)",
+      "noEnd": "Voimassa, kunnes päätät sen",
+      "basis": "Tavoitteen peruste",
+      "basisAMOUNT": "Ostettu summa (€, alv 0 %)",
+      "basisUNITS": "Ostetut yksiköt",
+      "retro": "Maksa saavutettu % kaikista kauden ostoista",
+      "retroHint": "Pois: kukin % vain tavoitteensa ylittävästä osasta.",
+      "tiers": "Portaat",
+      "from": "Alkaen",
+      "pct": "%",
+      "addTier": "Lisää porras",
+      "remove": "Poista",
+      "growthPct": "Kasvu viime vuoteen verrattuna (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus lasketaan",
+      "baseINCREASE": "vain kasvusta",
+      "baseTOTAL": "kaikista ostoista",
+      "minPrevious": "Viime vuonna vähintään (€)",
+      "minPreviousHint": "Asiakkaat, jotka ostivat viime vuonna vähemmän, eivät osallistu.",
+      "buyUnits": "Osta (yksikköä)",
+      "freeUnits": "Saa ilmaiseksi (yksikköä)",
+      "maxFree": "Ilmaisyksiköitä enintään kaudessa (valinnainen)",
+      "rewardOffer": "Ilmaiseksi annettava tuote",
+      "chooseProduct": "Valitse tuote",
+      "freeGoodsDays": "Päiviä ilmaistuotteiden lunastamiseen",
+      "minDistinct": "Ostettavien eri tuotteiden määrä",
+      "minUnitsEach": "Vähintään yksikköä kutakin",
+      "rewardFixed": "Kiinteä bonus (€)",
+      "rewardPct": "Bonus ostetuista tuotteista (%)",
+      "products": "Laskettavat tuotteet",
+      "allProducts": "Kaikki tuotteeni",
+      "someProducts": "Vain valitut tuotteet, kategoriat tai merkit",
+      "offers": "Tuotteet",
+      "categories": "Kategoriat",
+      "brands": "Merkit",
+      "search": "Hae…",
+      "selected": "{n} valittu",
+      "audience": "Asiakkaat",
+      "segment": "Segmentti",
+      "group": "Asiakasryhmä",
+      "chooseOne": "Valitse…",
+      "findCustomer": "Etsi asiakas (nimi tai NIF)",
+      "noMatch": "Ei osumia",
+      "countries": "Asiakkaiden maat",
+      "allCountries": "Kaikki maat",
+      "perShop": "Laske jokainen myymälä erikseen",
+      "perShopHint": "Usean myymälän asiakkaat saavuttavat tavoitteet myymäläkohtaisesti.",
+      "saveDraft": "Tallenna luonnos",
+      "send": "Lähetä FIRINGIlle",
+      "start": "Aloita sopimus",
+      "saved": "Tallennettu.",
+      "sent": "Lähetetty FIRINGIlle.",
+      "started": "Sopimus on käynnissä."
+    },
+    "audience": {
+      "ALL": "Kaikki asiakkaat",
+      "SEGMENT": "Segmentti",
+      "GROUP": "Asiakasryhmä",
+      "COMPANIES": "Valitut asiakkaat"
+    },
+    "end": "Päätä sopimus",
+    "endConfirm": "Päätetäänkö sopimus? Asiakkaat saavat pitää nykyisellä kaudella ansaitsemansa.",
+    "cancel": "Peru sopimus",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Kokeile",
+    "tryAmount": "Ostettu (€)",
+    "tryUnits": "Ostettu (yksikköä)",
+    "tryPrev": "Viime vuonna (€)",
+    "tryDistinct": "Eri tuotteita",
+    "tryResult": "Asiakas saa {value}",
+    "tryFree": "Asiakas saa {n} ilmaiseksi",
+    "rules": {
+      "VOLUME": "{pct} % alkaen {from}",
+      "retro": "koko kaudesta",
+      "stepped": "kunkin tavoitteen ylittävästä osasta",
+      "FREE_GOODS": "Osta {buy}, saat {free} ilmaiseksi",
+      "FREE_GOODS_MAX": "enintään {max} ilmaiseksi kaudessa",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "kasvusta",
+      "TOTAL": "kaikista ostoista",
+      "MIX": "{n} eri tuotetta (vähintään {each} kutakin)",
+      "units": "{n} yksikköä"
+    },
+    "scopeAll": "Kaikki tuotteet",
+    "scopeSome": "Valitut tuotteet",
+    "perShopTag": "Myymäläkohtaisesti",
+    "livePeriod": "Tämä kausi ({period})",
+    "customer": "Asiakas",
+    "shop": "Myymälä",
+    "bought": "Ostettu",
+    "units": "Yksiköt",
+    "earning": "Kertynyt",
+    "nextStep": "Seuraava porras",
+    "noBuyers": "Ei vielä ostoja tällä kaudella.",
+    "settled": "Tilitetyt kaudet",
+    "noSettled": "Ei vielä tilitettyjä kausia.",
+    "paid": "Maksettu",
+    "freeGiven": "Ilmaisyksiköt",
+    "earners": "Palkitut asiakkaat",
+    "rowStatus": {
+      "SETTLED": "Maksettu",
+      "NOTHING": "Tavoitetta ei saavutettu",
+      "FAILED": "Yritetään uudelleen"
+    },
+    "funded": {
+      "FIRINGI": "FIRINGIn maksama",
+      "SUPPLIER": "Toimittajan maksama"
+    },
+    "details": "Tiedot",
+    "back": "Takaisin",
+    "periodCol": "Kausi",
+    "dates": "Päivämäärät",
+    "kindCol": "Tyyppi",
+    "rulesCol": "Säännöt",
+    "statusCol": "Tila",
+    "myTitle": "Omat bonukset",
+    "myIntro": "Bonukset, joita toimittajasi antavat sinulle ostoistasi. Kauden päätyttyä FIRINGI hyvittää ansaitsemasi laskuillasi — ilmaistuotteet lisätään seuraavaan tilaukseesi.",
+    "earnedYear": "Ansaittu tänä vuonna",
+    "freeLeft": "Lunastettavat ilmaisyksiköt",
+    "runningCount": "Käynnissä olevat bonukset",
+    "running": "Käynnissä nyt",
+    "noRunning": "Sinulla ei ole tällä hetkellä bonuksia.",
+    "fromSupplier": "Toimittajalta {supplier}",
+    "periodEnds": "Kausi päättyy {date}",
+    "startsOn": "Alkaa {date}",
+    "boughtSoFar": "Ostettu tähän mennessä: {amount}",
+    "unitsSoFar": "Yksiköitä tähän mennessä: {n}",
+    "lastYear": "Viime vuoden vastaava kausi: {amount}",
+    "productsSoFar": "Eri tuotteita: {n}",
+    "earningNow": "Ansaittu tähän mennessä: {value}",
+    "freeNow": "Ilmaiseksi tähän mennessä: {n}",
+    "topReached": "Ylin porras saavutettu!",
+    "missing": {
+      "AMOUNT": "Vielä {missing}, niin saat {pct} %",
+      "UNITS": "Vielä {missing} yksikköä, niin saat {pct} %",
+      "UNITS_FREE": "Vielä {missing} yksikköä, niin saat {free} ilmaiseksi",
+      "PRODUCTS": "Vielä {missing} eri tuotetta bonukseen",
+      "GROWTH": "Vielä {missing}, niin saat {pct} %"
+    },
+    "noHistory": "Viime vuoden vastaavalta kaudelta ei ole ostoja vertailuun.",
+    "freeGoods": "Lunastettavat ilmaistuotteet",
+    "noFreeGoods": "Ei odottavia ilmaistuotteita.",
+    "takeBy": "Lunasta viimeistään {date}",
+    "left": "{n} jäljellä",
+    "addToCart": "Lisää ostoskoriin",
+    "added": "Lisätty ostoskoriin — ilmaisyksiköt näkyvät ostoskorissa.",
+    "expired": "Vanhentunut",
+    "earnedTitle": "Ansaitsemasi",
+    "noEarned": "Ei vielä ansaittua.",
+    "creditNote": "Hyvityslasku",
+    "freeInCart": "{n} ilmaiseksi (bonus)"
   }
 }

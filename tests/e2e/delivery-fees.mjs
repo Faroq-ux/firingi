@@ -8,6 +8,9 @@
  */
 import { createRequire } from "node:module";
 const { chromium } = createRequire(import.meta.url)("playwright");
+import { execFileSync as execDf } from "node:child_process";
+// FIRINGI's free delivery in Portugal back off however this run ends (a crash used to leave it on for the other suites)
+process.on("exit", () => { try { execDf("psql", ["-At", process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi", "-c", `update "DeliveryRule" set "firingiFreeEnabled"=false, "firingiFreeFrom"=null where scope='COUNTRY' and "validTo" is null and "countryId"=(select id from "Country" where code='PT')`]); } catch { /* best effort */ } });
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const SHOTS = process.argv[3] ?? null;

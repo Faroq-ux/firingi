@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
   // each compiler runs in its own worker process instead of all in one heap)
   experimental: { serverActions: { bodySizeLimit: "12mb" }, webpackMemoryOptimizations: true, webpackBuildWorker: true },
   poweredByHeader: false,
+  // FIRINGI_LOW_MEMORY_BUILD=1: no webpack persistent cache (a cold build on a small box — writing the multi-GB
+  // cache is what pushes the compiler worker past its heap; later builds are then full builds too)
+  webpack: (config) => {
+    if (process.env.FIRINGI_LOW_MEMORY_BUILD === "1") config.cache = false;
+    return config;
+  },
   // API answers (the middleware covers pages): never sniffed, never framed, never cached by proxies.
   async headers() {
     return [{ source: "/api/:path*", headers: [

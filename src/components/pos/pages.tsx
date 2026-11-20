@@ -123,9 +123,10 @@ export async function PosStaffPage({ ctx }: { ctx: Ctx }) {
 
 export async function PosTillPage({ ctx, portal, registerId }: { ctx: Ctx; portal: Portal; registerId?: string }) {
   const off = await gate(ctx); if (off) return off;
-  const locale = await getLocale();
+  const [locale, t] = await Promise.all([getLocale(), getTranslations("pos")]);
   const snap = await P.tillSnapshot(ctx, registerId ?? null);
-  return <Till portal={portal} initial={snap} locale={locale} />;
+  // full-screen till: the page title is for screen readers only
+  return <><h1 className="sr-only">{t("title")}</h1><Till portal={portal} initial={snap} locale={locale} /></>;
 }
 
 export async function PosItemsPage({ ctx, portal, edit }: { ctx: Ctx; portal: Portal; edit?: string }) {

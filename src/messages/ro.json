@@ -883,7 +883,9 @@
     "Ingredient Stock": "Stoc ingrediente",
     "Guests & Loyalty": "Clienți și fidelitate",
     "Till Settings": "Setări casă",
-    "Till Staff": "Personalul casei"
+    "Till Staff": "Personalul casei",
+    "Rebates & Bonuses": "Rabaturi și bonusuri",
+    "My Bonuses": "Bonusurile mele"
   },
   "delivery": {
     "title": "Livrare",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Adresa dvs. {address}: {decision}",
       "body": "Decizia FIRINGI privind adresa dvs. {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Acord de rabat de verificat",
+      "body": "{company} a trimis acordul de rabat „{name}”. Acesta începe doar după aprobarea FIRINGI."
+    },
+    "rebate_approved": {
+      "title": "Acord de rabat aprobat",
+      "body": "FIRINGI a aprobat „{name}”. Este activ de la data de început."
+    },
+    "rebate_rejected": {
+      "title": "Acord de rabat refuzat",
+      "body": "FIRINGI nu a aprobat „{name}”: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Perioadă de bonus decontată",
+      "body": "„{name}”, {period}: {customers} clienți recompensați ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Bonus nou de la {supplier}",
+      "body": "„{name}”: vedeți ce puteți câștiga în Bonusurile mele."
+    },
+    "rebate_close": {
+      "title": "Sunteți aproape de un bonus",
+      "body": "Mai aveți doar {missing} până la următoarea treaptă din „{name}” de la {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Ați câștigat un bonus",
+      "body": "„{name}” de la {supplier}, {period}: {amount} € creditați pe facturile dumneavoastră."
+    },
+    "rebate_free_goods": {
+      "title": "Produse gratuite pentru dumneavoastră",
+      "body": "„{name}” de la {supplier}: {qty} × {product} gratuit la următoarea comandă. Ridicați-le până la {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Adăugați codul de activitate",
     "reasonCODE": "Niciunul dintre codurile dvs. nu corespunde vânzării",
     "licenceNote": "Poate fi încă necesară o licență sau aprobarea FIRINGI (vezi mai jos și Companie › Licențe)."
+  },
+  "rebates": {
+    "vendorTitle": "Rabaturi și bonusuri",
+    "vendorIntro": "Recompensați-vă clienții pentru achizițiile dintr-o lună, un trimestru sau un an: bani înapoi pentru volum, produse gratuite, bonus de creștere sau bonus de mix de produse. FIRINGI verifică fiecare acord și, la finalul perioadei, creditează clienții prin factură de stornare — bonusul plătit de dumneavoastră se scade din plata pe care o primiți.",
+    "newDeal": "Acord nou",
+    "editDeal": "Modificați acordul",
+    "yourDeals": "Acordurile dumneavoastră",
+    "noDeals": "Niciun acord încă.",
+    "closed": {
+      "OFF": "Acordurile de rabat sunt dezactivate momentan.",
+      "SUPPLIER_OFF": "Acordurile de rabat nu sunt disponibile pentru compania dumneavoastră. Vă rugăm să contactați FIRINGI.",
+      "TYPE_OFF": "Acordurile de rabat nu sunt încă disponibile pentru tipul dumneavoastră de companie."
+    },
+    "approvalAlways": "FIRINGI verifică fiecare acord înainte de începere.",
+    "approvalAuto": "Acordurile care respectă limitele FIRINGI încep imediat după trimitere.",
+    "maxPct": "Până la {pct} % pe treaptă.",
+    "kind": {
+      "VOLUME": "Rabat de volum",
+      "FREE_GOODS": "Produse gratuite",
+      "GROWTH": "Bonus de creștere",
+      "MIX": "Bonus de mix de produse"
+    },
+    "kindHint": {
+      "VOLUME": "Bani înapoi când achizițiile ating un prag în perioadă. Adăugați trepte pentru praguri mai mari.",
+      "FREE_GOODS": "La un număr de unități cumpărate în perioadă, clientul primește gratuit unități dintr-un produs la o comandă ulterioară.",
+      "GROWTH": "Un % când clientul cumpără mai mult decât în aceeași perioadă a anului trecut.",
+      "MIX": "Un bonus când clientul cumpără suficiente produse diferite din gama dumneavoastră."
+    },
+    "period": {
+      "MONTH": "Lunar",
+      "QUARTER": "Trimestrial",
+      "HALF_YEAR": "Semestrial",
+      "YEAR": "Anual"
+    },
+    "status": {
+      "DRAFT": "Ciornă",
+      "PENDING": "În așteptarea FIRINGI",
+      "APPROVED": "Activ",
+      "SCHEDULED": "Începe în curând",
+      "REJECTED": "Refuzat",
+      "ENDED": "Încheiat",
+      "CANCELLED": "Anulat",
+      "ENDING": "Se încheie la {date}"
+    },
+    "f": {
+      "name": "Nume",
+      "namePh": "ex. Bonus de volum de vară",
+      "description": "Notă pentru clienți (opțional)",
+      "kind": "Tipul acordului",
+      "period": "Perioadă",
+      "starts": "Început",
+      "ends": "Sfârșit (opțional)",
+      "noEnd": "Activ până la oprire",
+      "basis": "Pragul se calculează după",
+      "basisAMOUNT": "Valoarea achizițiilor (€, fără TVA)",
+      "basisUNITS": "Unități cumpărate",
+      "retro": "Aplicați % atins la toate achizițiile din perioadă",
+      "retroHint": "Dezactivat: fiecare % se aplică doar părții de peste pragul său.",
+      "tiers": "Trepte",
+      "from": "De la",
+      "pct": "%",
+      "addTier": "Adăugați treaptă",
+      "remove": "Eliminați",
+      "growthPct": "Creștere față de anul trecut (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus aplicat la",
+      "baseINCREASE": "doar creșterea",
+      "baseTOTAL": "toate achizițiile",
+      "minPrevious": "Anul trecut cel puțin (€)",
+      "minPreviousHint": "Clienții care au cumpărat mai puțin anul trecut nu participă.",
+      "buyUnits": "Cumpărați (unități)",
+      "freeUnits": "Primiți gratuit (unități)",
+      "maxFree": "Maximum unități gratuite pe perioadă (opțional)",
+      "rewardOffer": "Produs oferit gratuit",
+      "chooseProduct": "Alegeți un produs",
+      "freeGoodsDays": "Zile pentru ridicarea produselor gratuite",
+      "minDistinct": "Produse diferite de cumpărat",
+      "minUnitsEach": "Minimum unități din fiecare",
+      "rewardFixed": "Bonus fix (€)",
+      "rewardPct": "Bonus la produsele cumpărate (%)",
+      "products": "Produse incluse",
+      "allProducts": "Toate produsele mele",
+      "someProducts": "Doar produsele, categoriile sau mărcile alese",
+      "offers": "Produse",
+      "categories": "Categorii",
+      "brands": "Mărci",
+      "search": "Căutați…",
+      "selected": "{n} selectate",
+      "audience": "Clienți",
+      "segment": "Segment",
+      "group": "Grup de clienți",
+      "chooseOne": "Alegeți…",
+      "findCustomer": "Căutați un client (nume sau NIF)",
+      "noMatch": "Niciun rezultat",
+      "countries": "Țările clienților",
+      "allCountries": "Toate țările",
+      "perShop": "Fiecare magazin separat",
+      "perShopHint": "Clienții cu mai multe magazine ating pragurile pentru fiecare magazin.",
+      "saveDraft": "Salvați ciorna",
+      "send": "Trimiteți la FIRINGI",
+      "start": "Porniți acordul",
+      "saved": "Salvat.",
+      "sent": "Trimis la FIRINGI.",
+      "started": "Acordul este activ."
+    },
+    "audience": {
+      "ALL": "Toți clienții",
+      "SEGMENT": "Un segment",
+      "GROUP": "Un grup de clienți",
+      "COMPANIES": "Clienți aleși"
+    },
+    "end": "Încheiați acordul",
+    "endConfirm": "Încheiați acest acord? Clienții păstrează ce au câștigat în perioada curentă.",
+    "cancel": "Anulați acordul",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Simulați",
+    "tryAmount": "Cumpărat (€)",
+    "tryUnits": "Cumpărat (unități)",
+    "tryPrev": "Anul trecut (€)",
+    "tryDistinct": "Produse diferite",
+    "tryResult": "Clientul primește {value}",
+    "tryFree": "Clientul primește {n} gratuit",
+    "rules": {
+      "VOLUME": "{pct} % de la {from}",
+      "retro": "pe întreaga perioadă",
+      "stepped": "pe partea de peste fiecare prag",
+      "FREE_GOODS": "Cumpărați {buy}, primiți {free} gratuit",
+      "FREE_GOODS_MAX": "maximum {max} gratuite pe perioadă",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "la creștere",
+      "TOTAL": "la toate achizițiile",
+      "MIX": "{n} produse diferite (cel puțin {each} din fiecare)",
+      "units": "{n} unități"
+    },
+    "scopeAll": "Toate produsele",
+    "scopeSome": "Produse alese",
+    "perShopTag": "Pe magazin",
+    "livePeriod": "Perioada curentă ({period})",
+    "customer": "Client",
+    "shop": "Magazin",
+    "bought": "Cumpărat",
+    "units": "Unități",
+    "earning": "Câștig",
+    "nextStep": "Următoarea treaptă",
+    "noBuyers": "Nicio achiziție încă în această perioadă.",
+    "settled": "Perioade decontate",
+    "noSettled": "Nimic decontat încă.",
+    "paid": "Plătit",
+    "freeGiven": "Unități gratuite",
+    "earners": "Clienți recompensați",
+    "rowStatus": {
+      "SETTLED": "Plătit",
+      "NOTHING": "Prag neatins",
+      "FAILED": "De reîncercat"
+    },
+    "funded": {
+      "FIRINGI": "Plătit de FIRINGI",
+      "SUPPLIER": "Plătit de furnizor"
+    },
+    "details": "Detalii",
+    "back": "Înapoi",
+    "periodCol": "Perioadă",
+    "dates": "Date",
+    "kindCol": "Tip",
+    "rulesCol": "Reguli",
+    "statusCol": "Stare",
+    "myTitle": "Bonusurile mele",
+    "myIntro": "Bonusuri oferite de furnizori pentru achizițiile dumneavoastră. La finalul perioadei, FIRINGI creditează pe facturi ce ați câștigat — produsele gratuite se adaugă la următoarea comandă.",
+    "earnedYear": "Câștigat anul acesta",
+    "freeLeft": "Unități gratuite de ridicat",
+    "runningCount": "Bonusuri active",
+    "running": "Active acum",
+    "noRunning": "Momentan nu aveți bonusuri.",
+    "fromSupplier": "De la {supplier}",
+    "periodEnds": "Perioada se încheie la {date}",
+    "startsOn": "Începe la {date}",
+    "boughtSoFar": "Cumpărat până acum: {amount}",
+    "unitsSoFar": "Unități până acum: {n}",
+    "lastYear": "Aceeași perioadă anul trecut: {amount}",
+    "productsSoFar": "Produse diferite: {n}",
+    "earningNow": "Câștigat până acum: {value}",
+    "freeNow": "Gratuit până acum: {n}",
+    "topReached": "Ați atins treapta maximă!",
+    "missing": {
+      "AMOUNT": "Încă {missing} pentru {pct} %",
+      "UNITS": "Încă {missing} unități pentru {pct} %",
+      "UNITS_FREE": "Încă {missing} unități pentru {free} gratuite",
+      "PRODUCTS": "Încă {missing} produse diferite pentru bonus",
+      "GROWTH": "Încă {missing} pentru {pct} %"
+    },
+    "noHistory": "Nu există achiziții în aceeași perioadă a anului trecut pentru comparație.",
+    "freeGoods": "Produse gratuite de ridicat",
+    "noFreeGoods": "Nu aveți produse gratuite în așteptare.",
+    "takeBy": "De ridicat până la {date}",
+    "left": "Rămase: {n}",
+    "addToCart": "Adăugați în coș",
+    "added": "Adăugat în coș — unitățile gratuite apar în coș.",
+    "expired": "Expirat",
+    "earnedTitle": "Ce ați câștigat",
+    "noEarned": "Nimic câștigat încă.",
+    "creditNote": "Factură de stornare",
+    "freeInCart": "{n} gratuit (bonus)"
   }
 }

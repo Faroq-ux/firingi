@@ -883,7 +883,9 @@
     "Ingredient Stock": "Zásoby surovín",
     "Guests & Loyalty": "Hostia a vernosť",
     "Till Settings": "Nastavenia pokladnice",
-    "Till Staff": "Personál pokladne"
+    "Till Staff": "Personál pokladne",
+    "Rebates & Bonuses": "Zľavy a bonusy",
+    "My Bonuses": "Moje bonusy"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Vaša adresa {address}: {decision}",
       "body": "Rozhodnutie FIRINGI k vašej adrese {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Zľavová dohoda na kontrolu",
+      "body": "Spoločnosť {company} odoslala zľavovú dohodu „{name}“. Začne platiť až po schválení FIRINGI."
+    },
+    "rebate_approved": {
+      "title": "Zľavová dohoda schválená",
+      "body": "FIRINGI schválilo dohodu „{name}“. Platí od dátumu začiatku."
+    },
+    "rebate_rejected": {
+      "title": "Zľavová dohoda zamietnutá",
+      "body": "FIRINGI neschválilo dohodu „{name}“: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonusové obdobie vyúčtované",
+      "body": "„{name}“, {period}: odmenení zákazníci: {customers} ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nový bonus od {supplier}",
+      "body": "„{name}“: pozrite si, čo môžete získať, v časti Moje bonusy."
+    },
+    "rebate_close": {
+      "title": "Ste blízko k bonusu",
+      "body": "Chýba už len {missing} do ďalšieho stupňa „{name}“ od {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Získali ste bonus",
+      "body": "„{name}“ od {supplier}, {period}: {amount} € pripísaných na Vaše faktúry."
+    },
+    "rebate_free_goods": {
+      "title": "Tovar zadarmo pre Vás",
+      "body": "„{name}“ od {supplier}: {qty} × {product} zadarmo k Vašej ďalšej objednávke. Vyzdvihnite si ho do {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Doplňte kód činnosti",
     "reasonCODE": "Žiadny z vašich kódov činnosti nezodpovedá predaju",
     "licenceNote": "Stále môže byť potrebná licencia alebo schválenie FIRINGI (pozri nižšie a Firma › Licencie)."
+  },
+  "rebates": {
+    "vendorTitle": "Zľavy a bonusy",
+    "vendorIntro": "Odmeňte zákazníkov za nákupy za mesiac, štvrťrok alebo rok: vrátenie peňazí za objem, tovar zadarmo, rastový bonus alebo bonus za sortiment. FIRINGI skontroluje každú dohodu a po skončení obdobia pripíše zákazníkom sumu dobropisom — bonus, ktorý platíte, sa odpočíta z Vašej výplaty.",
+    "newDeal": "Nová dohoda",
+    "editDeal": "Zmeniť dohodu",
+    "yourDeals": "Vaše dohody",
+    "noDeals": "Zatiaľ žiadne dohody.",
+    "closed": {
+      "OFF": "Zľavové dohody sú momentálne vypnuté.",
+      "SUPPLIER_OFF": "Zľavové dohody nie sú pre Vašu spoločnosť dostupné. Kontaktujte, prosím, FIRINGI.",
+      "TYPE_OFF": "Zľavové dohody zatiaľ nie sú dostupné pre Váš typ spoločnosti."
+    },
+    "approvalAlways": "FIRINGI skontroluje každú dohodu pred jej začatím.",
+    "approvalAuto": "Dohody v rámci limitov FIRINGI začnú platiť hneď po odoslaní.",
+    "maxPct": "Najviac {pct} % na stupeň.",
+    "kind": {
+      "VOLUME": "Objemová zľava",
+      "FREE_GOODS": "Tovar zadarmo",
+      "GROWTH": "Rastový bonus",
+      "MIX": "Bonus za sortiment"
+    },
+    "kindHint": {
+      "VOLUME": "Vrátenie peňazí po dosiahnutí cieľa nákupov v období. Pre vyššie ciele pridajte ďalšie stupne.",
+      "FREE_GOODS": "Za nákup určitého počtu kusov v období získa zákazník kusy produktu zadarmo pri ďalšej objednávke.",
+      "GROWTH": "Bonus v %, keď zákazník nakúpi viac ako v rovnakom období minulého roka.",
+      "MIX": "Bonus, keď zákazník nakúpi dostatok rôznych produktov z Vášho sortimentu."
+    },
+    "period": {
+      "MONTH": "Mesačne",
+      "QUARTER": "Štvrťročne",
+      "HALF_YEAR": "Polročne",
+      "YEAR": "Ročne"
+    },
+    "status": {
+      "DRAFT": "Koncept",
+      "PENDING": "Čaká na FIRINGI",
+      "APPROVED": "Aktívna",
+      "SCHEDULED": "Čoskoro začne",
+      "REJECTED": "Zamietnutá",
+      "ENDED": "Skončená",
+      "CANCELLED": "Zrušená",
+      "ENDING": "Končí {date}"
+    },
+    "f": {
+      "name": "Názov",
+      "namePh": "napr. Letný objemový bonus",
+      "description": "Poznámka pre zákazníkov (nepovinné)",
+      "kind": "Typ dohody",
+      "period": "Obdobie",
+      "starts": "Začiatok",
+      "ends": "Koniec (nepovinné)",
+      "noEnd": "Platí, kým ju neukončíte",
+      "basis": "Cieľ sa počíta podľa",
+      "basisAMOUNT": "Hodnota nákupov (€, bez DPH)",
+      "basisUNITS": "Nakúpené kusy",
+      "retro": "Uplatniť dosiahnuté % na všetky nákupy v období",
+      "retroHint": "Vypnuté: každé % len na časť nad jeho cieľom.",
+      "tiers": "Stupne",
+      "from": "Od",
+      "pct": "%",
+      "addTier": "Pridať stupeň",
+      "remove": "Odstrániť",
+      "growthPct": "Rast oproti minulému roku (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus z",
+      "baseINCREASE": "len z nárastu",
+      "baseTOTAL": "zo všetkých nákupov",
+      "minPrevious": "Minulý rok aspoň (€)",
+      "minPreviousHint": "Zákazníci, ktorí minulý rok nakúpili menej, sa nezúčastňujú.",
+      "buyUnits": "Kúpiť (ks)",
+      "freeUnits": "Zadarmo (ks)",
+      "maxFree": "Najviac kusov zadarmo za obdobie (nepovinné)",
+      "rewardOffer": "Produkt zadarmo",
+      "chooseProduct": "Vyberte produkt",
+      "freeGoodsDays": "Počet dní na vyzdvihnutie tovaru zadarmo",
+      "minDistinct": "Počet rôznych produktov na nákup",
+      "minUnitsEach": "Aspoň kusov z každého",
+      "rewardFixed": "Pevný bonus (€)",
+      "rewardPct": "Bonus z nakúpených produktov (%)",
+      "products": "Započítané produkty",
+      "allProducts": "Všetky moje produkty",
+      "someProducts": "Len vybrané produkty, kategórie alebo značky",
+      "offers": "Produkty",
+      "categories": "Kategórie",
+      "brands": "Značky",
+      "search": "Hľadať…",
+      "selected": "Vybrané: {n}",
+      "audience": "Zákazníci",
+      "segment": "Segment",
+      "group": "Skupina zákazníkov",
+      "chooseOne": "Vyberte…",
+      "findCustomer": "Nájsť zákazníka (názov alebo NIF)",
+      "noMatch": "Žiadna zhoda",
+      "countries": "Krajiny zákazníkov",
+      "allCountries": "Všetky krajiny",
+      "perShop": "Počítať každú prevádzku samostatne",
+      "perShopHint": "Zákazníci s viacerými prevádzkami dosahujú ciele za každú prevádzku.",
+      "saveDraft": "Uložiť koncept",
+      "send": "Odoslať do FIRINGI",
+      "start": "Spustiť dohodu",
+      "saved": "Uložené.",
+      "sent": "Odoslané do FIRINGI.",
+      "started": "Dohoda je aktívna."
+    },
+    "audience": {
+      "ALL": "Všetci zákazníci",
+      "SEGMENT": "Segment",
+      "GROUP": "Skupina zákazníkov",
+      "COMPANIES": "Vybraní zákazníci"
+    },
+    "end": "Ukončiť dohodu",
+    "endConfirm": "Ukončiť túto dohodu? Zákazníkom zostane, čo získajú v aktuálnom období.",
+    "cancel": "Zrušiť dohodu",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Vyskúšať",
+    "tryAmount": "Nakúpené (€)",
+    "tryUnits": "Nakúpené (ks)",
+    "tryPrev": "Minulý rok (€)",
+    "tryDistinct": "Rôzne produkty",
+    "tryResult": "Zákazník získa {value}",
+    "tryFree": "Zákazník získa {n} zadarmo",
+    "rules": {
+      "VOLUME": "{pct} % od {from}",
+      "retro": "za celé obdobie",
+      "stepped": "na časť nad každým cieľom",
+      "FREE_GOODS": "Kúpte {buy}, získajte {free} zadarmo",
+      "FREE_GOODS_MAX": "najviac {max} zadarmo za obdobie",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "z nárastu",
+      "TOTAL": "zo všetkých nákupov",
+      "MIX": "{n} rôznych produktov (aspoň {each} z každého)",
+      "units": "{n} ks"
+    },
+    "scopeAll": "Všetky produkty",
+    "scopeSome": "Vybrané produkty",
+    "perShopTag": "Za prevádzku",
+    "livePeriod": "Toto obdobie ({period})",
+    "customer": "Zákazník",
+    "shop": "Prevádzka",
+    "bought": "Nakúpené",
+    "units": "Kusy",
+    "earning": "Získané",
+    "nextStep": "Ďalší stupeň",
+    "noBuyers": "V tomto období zatiaľ žiadne nákupy.",
+    "settled": "Vyúčtované obdobia",
+    "noSettled": "Zatiaľ nič nevyúčtované.",
+    "paid": "Vyplatené",
+    "freeGiven": "Kusy zadarmo",
+    "earners": "Odmenení zákazníci",
+    "rowStatus": {
+      "SETTLED": "Vyplatené",
+      "NOTHING": "Cieľ nedosiahnutý",
+      "FAILED": "Na opakovanie"
+    },
+    "funded": {
+      "FIRINGI": "Vyplatené FIRINGI",
+      "SUPPLIER": "Vyplatené dodávateľom"
+    },
+    "details": "Podrobnosti",
+    "back": "Späť",
+    "periodCol": "Obdobie",
+    "dates": "Dátumy",
+    "kindCol": "Typ",
+    "rulesCol": "Pravidlá",
+    "statusCol": "Stav",
+    "myTitle": "Moje bonusy",
+    "myIntro": "Bonusy, ktoré Vám dodávatelia poskytujú za Vaše nákupy. Po skončení obdobia FIRINGI pripíše, čo ste získali, na Vaše faktúry — tovar zadarmo sa pridá k Vašej ďalšej objednávke.",
+    "earnedYear": "Získané tento rok",
+    "freeLeft": "Kusy zadarmo na vyzdvihnutie",
+    "runningCount": "Aktívne bonusy",
+    "running": "Práve aktívne",
+    "noRunning": "Momentálne pre Vás nie sú žiadne bonusy.",
+    "fromSupplier": "Od {supplier}",
+    "periodEnds": "Obdobie končí {date}",
+    "startsOn": "Začína {date}",
+    "boughtSoFar": "Doteraz nakúpené: {amount}",
+    "unitsSoFar": "Doteraz kusov: {n}",
+    "lastYear": "Rovnaké obdobie minulého roka: {amount}",
+    "productsSoFar": "Rôzne produkty: {n}",
+    "earningNow": "Doteraz získané: {value}",
+    "freeNow": "Doteraz zadarmo: {n}",
+    "topReached": "Dosiahli ste najvyšší stupeň!",
+    "missing": {
+      "AMOUNT": "Ešte {missing} do {pct} %",
+      "UNITS": "Ešte {missing} ks do {pct} %",
+      "UNITS_FREE": "Ešte {missing} ks do {free} zadarmo",
+      "PRODUCTS": "Ešte {missing} rôznych produktov do bonusu",
+      "GROWTH": "Ešte {missing} do {pct} %"
+    },
+    "noHistory": "Žiadne nákupy v rovnakom období minulého roka na porovnanie.",
+    "freeGoods": "Tovar zadarmo na vyzdvihnutie",
+    "noFreeGoods": "Žiadny tovar zadarmo nečaká.",
+    "takeBy": "Vyzdvihnite do {date}",
+    "left": "Zostáva: {n}",
+    "addToCart": "Pridať do košíka",
+    "added": "Pridané do košíka — kusy zadarmo uvidíte v košíku.",
+    "expired": "Platnosť vypršala",
+    "earnedTitle": "Čo ste získali",
+    "noEarned": "Zatiaľ nič nezískané.",
+    "creditNote": "Dobropis",
+    "freeInCart": "{n} zadarmo (bonus)"
   }
 }

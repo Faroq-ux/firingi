@@ -252,7 +252,7 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
   const inv = await tx.invoice.findUniqueOrThrow({ where: { id: invoiceId }, include: { lines: true, creditNotes: { include: { lines: true } }, order: { include: { lines: true, seller: true } } } });
   if (inv.docType === "CREDIT_NOTE" || inv.status === "DRAFT" || inv.status === "CREDITED") throw new Error("NOT_CREDITABLE");
   const credited = new Map<string, Decimal>(); // invoice line position → qty already credited
-  for (const cn of inv.creditNotes) for (const l of cn.lines) if (!l.description.startsWith(REBATE_PREFIX)) credited.set(l.description, (credited.get(l.description) ?? new Decimal(0)).plus(l.qty.toString()));
+  for (const cn of inv.creditNotes) for (const l of cn.lines) if (!l.description.startsWith(REBATE_PREFIX) && !l.description.startsWith(TRADE_BONUS_PREFIX)) credited.set(l.description, (credited.get(l.description) ?? new Decimal(0)).plus(l.qty.toString()));
   let wanted = sel.lines === "ALL" ? inv.lines.map((l) => ({ invoiceLineId: l.id, qty: Number(l.qty) - Number(credited.get(l.description) ?? 0) })) : sel.lines;
   // Phase 43: crediting goods also credits the excise FIRINGI added on them (same order line, same share)
   if (sel.lines !== "ALL") {
@@ -332,17 +332,20 @@ export const EXCISE_PREFIX = "Imposto especial de consumo";
 
 /** Lines of loyalty rebate credit notes start with this (they credit money, not goods). */
 export const REBATE_PREFIX = "Desconto por pontos de fidelização";
+/** Phase 48: lines of rebate / bonus credit notes (supplier trade deals) start with this — money, not goods. */
+export const TRADE_BONUS_PREFIX = "Rappel / bónus comercial";
 
 /**
  * Phase 32: a rebate credit note — loyalty points turned into credit on an invoice. No goods come
  * back (no order lines, no supplier credit statement): the amount (incl. VAT) is split over the
  * invoice's VAT rates in proportion to their value, so VAT is corrected the same way. FIRINGI pays.
  */
-export async function rebateCreditNote(tx: Tx, invoiceId: string, r: { gross: Decimal; description: string; reason: string; actorUserId: string }) {
+export async function rebateCreditNote(tx: Tx, invoiceId: string, r: { gross: Decimal; description: string; reason: string; actorUserId: string | null; lineIds?: string[] }) {
   const inv = await tx.invoice.findUniqueOrThrow({ where: { id: invoiceId }, include: { lines: true } });
   if (inv.docType === "CREDIT_NOTE" || inv.status === "DRAFT" || inv.status === "CREDITED") throw new Error("NOT_CREDITABLE");
   const byRate = new Map<string, Decimal>(); // VAT rate → gross of the invoice at that rate
-  for (const l of inv.lines) {
+  // Phase 48: a trade bonus splits its VAT over the goods it was earned on only (`lineIds`)
+  for (const l of r.lineIds ? inv.lines.filter((x) => r.lineIds!.includes(x.id)) : inv.lines) {
     const k = new Decimal(l.taxRate.toString()).toFixed(3);
     byRate.set(k, (byRate.get(k) ?? new Decimal(0)).plus(l.lineNet.toString()).plus(l.lineVat.toString()));
   }

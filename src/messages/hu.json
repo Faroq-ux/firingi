@@ -883,7 +883,9 @@
     "Ingredient Stock": "Hozzávaló-készlet",
     "Guests & Loyalty": "Vendégek és hűségprogram",
     "Till Settings": "Pénztár beállításai",
-    "Till Staff": "Pénztári személyzet"
+    "Till Staff": "Pénztári személyzet",
+    "Rebates & Bonuses": "Visszatérítések és bónuszok",
+    "My Bonuses": "Bónuszaim"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Az Ön címe ({address}): {decision}",
       "body": "A FIRINGI döntése az Ön címéről ({address}): {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Ellenőrizendő visszatérítési megállapodás",
+      "body": "{company} beküldte a(z) „{name}” visszatérítési megállapodást. Csak a FIRINGI jóváhagyása után indul."
+    },
+    "rebate_approved": {
+      "title": "Visszatérítési megállapodás jóváhagyva",
+      "body": "A FIRINGI jóváhagyta a(z) „{name}” megállapodást. A kezdő dátumától fut."
+    },
+    "rebate_rejected": {
+      "title": "Visszatérítési megállapodás elutasítva",
+      "body": "A FIRINGI nem hagyta jóvá a(z) „{name}” megállapodást: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bónuszidőszak elszámolva",
+      "body": "„{name}”, {period}: {customers} jutalmazott vevő ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Új bónusz a szállítótól: {supplier}",
+      "body": "„{name}”: nézze meg a Bónuszaim menüben, mennyit szerezhet."
+    },
+    "rebate_close": {
+      "title": "Közel van egy bónuszhoz",
+      "body": "Már csak {missing} a(z) „{name}” ({supplier}) következő lépcsőjéig."
+    },
+    "rebate_earned": {
+      "title": "Bónuszt szerzett",
+      "body": "„{name}” ({supplier}), {period}: {amount} € jóváírva a számláin."
+    },
+    "rebate_free_goods": {
+      "title": "Ingyenes áru az Ön számára",
+      "body": "„{name}” ({supplier}): {qty} × {product} ingyen a következő rendeléséhez. Felhasználható eddig: {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Adja meg a tevékenységi kódját",
     "reasonCODE": "Egyik tevékenységi kódja sem felel meg az árusításnak",
     "licenceNote": "Engedélyre vagy a FIRINGI jóváhagyására még szükség lehet (lásd lent és Cég › Engedélyek)."
+  },
+  "rebates": {
+    "vendorTitle": "Visszatérítések és bónuszok",
+    "vendorIntro": "Jutalmazza vevőit a havi, negyedéves vagy éves vásárlásaikért: mennyiségi visszatérítés, ingyenes áru, növekedési bónusz vagy termékmix-bónusz. A FIRINGI minden megállapodást ellenőriz, és az időszak végén jóváíró számlával írja jóvá vevőinek az összeget — az Ön által fizetett bónuszt levonjuk a kifizetéséből.",
+    "newDeal": "Új megállapodás",
+    "editDeal": "Megállapodás módosítása",
+    "yourDeals": "Az Ön megállapodásai",
+    "noDeals": "Még nincs megállapodás.",
+    "closed": {
+      "OFF": "A visszatérítési megállapodások jelenleg ki vannak kapcsolva.",
+      "SUPPLIER_OFF": "A visszatérítési megállapodások nem érhetők el cége számára. Kérjük, forduljon a FIRINGI-hez.",
+      "TYPE_OFF": "A visszatérítési megállapodások még nem érhetők el az Ön cégtípusa számára."
+    },
+    "approvalAlways": "A FIRINGI minden megállapodást ellenőriz az indulás előtt.",
+    "approvalAuto": "A FIRINGI korlátain belüli megállapodások a beküldés után azonnal indulnak.",
+    "maxPct": "Lépcsőnként legfeljebb {pct} %.",
+    "kind": {
+      "VOLUME": "Mennyiségi visszatérítés",
+      "FREE_GOODS": "Ingyenes áru",
+      "GROWTH": "Növekedési bónusz",
+      "MIX": "Termékmix-bónusz"
+    },
+    "kindHint": {
+      "VOLUME": "Pénz-visszatérítés, ha a vásárlások elérik az időszaki célt. Nagyobb célokhoz adjon hozzá lépcsőket.",
+      "FREE_GOODS": "A vevő adott számú egységet vásárol az időszakban, és egy termékből ingyenes egységeket kap egy későbbi rendeléshez.",
+      "GROWTH": "Adott %, ha a vevő többet vásárol, mint tavaly ugyanebben az időszakban.",
+      "MIX": "Bónusz, ha a vevő elég különböző terméket vásárol az Ön kínálatából."
+    },
+    "period": {
+      "MONTH": "Havi",
+      "QUARTER": "Negyedéves",
+      "HALF_YEAR": "Féléves",
+      "YEAR": "Éves"
+    },
+    "status": {
+      "DRAFT": "Piszkozat",
+      "PENDING": "FIRINGI-re vár",
+      "APPROVED": "Fut",
+      "SCHEDULED": "Hamarosan indul",
+      "REJECTED": "Elutasítva",
+      "ENDED": "Befejeződött",
+      "CANCELLED": "Visszavonva",
+      "ENDING": "Vége: {date}"
+    },
+    "f": {
+      "name": "Név",
+      "namePh": "pl. Nyári mennyiségi bónusz",
+      "description": "Megjegyzés a vevőknek (nem kötelező)",
+      "kind": "Megállapodás típusa",
+      "period": "Időszak",
+      "starts": "Kezdés",
+      "ends": "Befejezés (nem kötelező)",
+      "noEnd": "Addig fut, amíg le nem állítja",
+      "basis": "A cél alapja",
+      "basisAMOUNT": "Vásárolt összeg (€, nettó)",
+      "basisUNITS": "Vásárolt egységek",
+      "retro": "Az elért % fizetése az időszak teljes vásárlására",
+      "retroHint": "Kikapcsolva: minden % csak a saját célja feletti részre.",
+      "tiers": "Lépcsők",
+      "from": "Ettől",
+      "pct": "%",
+      "addTier": "Lépcső hozzáadása",
+      "remove": "Eltávolítás",
+      "growthPct": "Növekedés tavalyhoz képest (%)",
+      "bonusPct": "Bónusz (%)",
+      "base": "Bónusz alapja",
+      "baseINCREASE": "csak a növekmény",
+      "baseTOTAL": "teljes vásárlás",
+      "minPrevious": "Tavaly legalább (€)",
+      "minPreviousHint": "A tavaly kevesebbet vásárló vevők nem vesznek részt.",
+      "buyUnits": "Vásárlás (egység)",
+      "freeUnits": "Ingyenes (egység)",
+      "maxFree": "Ingyenes egységek maximuma időszakonként (nem kötelező)",
+      "rewardOffer": "Ingyenesen adott termék",
+      "chooseProduct": "Válasszon terméket",
+      "freeGoodsDays": "Napok az ingyenes áru felhasználására",
+      "minDistinct": "Vásárolandó különböző termékek száma",
+      "minUnitsEach": "Legalább ennyi egység mindegyikből",
+      "rewardFixed": "Fix bónusz (€)",
+      "rewardPct": "Bónusz a vásárolt termékekre (%)",
+      "products": "Beszámító termékek",
+      "allProducts": "Minden termékem",
+      "someProducts": "Csak a kiválasztott termékek, kategóriák vagy márkák",
+      "offers": "Termékek",
+      "categories": "Kategóriák",
+      "brands": "Márkák",
+      "search": "Keresés…",
+      "selected": "{n} kiválasztva",
+      "audience": "Vevők",
+      "segment": "Szegmens",
+      "group": "Vevőcsoport",
+      "chooseOne": "Válasszon…",
+      "findCustomer": "Vevő keresése (név vagy NIF)",
+      "noMatch": "Nincs találat",
+      "countries": "Vevők országai",
+      "allCountries": "Minden ország",
+      "perShop": "Üzletek külön számítása",
+      "perShopHint": "A több üzlettel rendelkező vevők üzletenként érik el a célokat.",
+      "saveDraft": "Piszkozat mentése",
+      "send": "Beküldés a FIRINGI-nek",
+      "start": "Megállapodás indítása",
+      "saved": "Mentve.",
+      "sent": "Elküldve a FIRINGI-nek.",
+      "started": "A megállapodás fut."
+    },
+    "audience": {
+      "ALL": "Minden vevő",
+      "SEGMENT": "Egy szegmens",
+      "GROUP": "Egy vevőcsoport",
+      "COMPANIES": "Kiválasztott vevők"
+    },
+    "end": "Megállapodás befejezése",
+    "endConfirm": "Befejezi ezt a megállapodást? A vevők megtartják, amit az aktuális időszakban szereztek.",
+    "cancel": "Megállapodás visszavonása",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Kipróbálás",
+    "tryAmount": "Vásárolt (€)",
+    "tryUnits": "Vásárolt (egység)",
+    "tryPrev": "Tavaly (€)",
+    "tryDistinct": "Különböző termékek",
+    "tryResult": "A vevő ezt kapja: {value}",
+    "tryFree": "A vevő ingyen kap: {n}",
+    "rules": {
+      "VOLUME": "{pct} % (ettől: {from})",
+      "retro": "a teljes időszakra",
+      "stepped": "a célok feletti részre",
+      "FREE_GOODS": "{buy} vásárlása esetén {free} ingyen",
+      "FREE_GOODS_MAX": "legfeljebb {max} ingyen időszakonként",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "a növekményre",
+      "TOTAL": "a teljes vásárlásra",
+      "MIX": "{n} különböző termék (mindegyikből legalább {each})",
+      "units": "{n} egység"
+    },
+    "scopeAll": "Minden termék",
+    "scopeSome": "Kiválasztott termékek",
+    "perShopTag": "Üzletenként",
+    "livePeriod": "Aktuális időszak ({period})",
+    "customer": "Vevő",
+    "shop": "Üzlet",
+    "bought": "Vásárolt",
+    "units": "Egység",
+    "earning": "Szerzett",
+    "nextStep": "Következő lépcső",
+    "noBuyers": "Ebben az időszakban még nincs vásárlás.",
+    "settled": "Elszámolt időszakok",
+    "noSettled": "Még nincs elszámolt időszak.",
+    "paid": "Kifizetve",
+    "freeGiven": "Ingyenes egységek",
+    "earners": "Jutalmazott vevők",
+    "rowStatus": {
+      "SETTLED": "Kifizetve",
+      "NOTHING": "A cél nem teljesült",
+      "FAILED": "Újrapróbálandó"
+    },
+    "funded": {
+      "FIRINGI": "A FIRINGI fizeti",
+      "SUPPLIER": "A szállító fizeti"
+    },
+    "details": "Részletek",
+    "back": "Vissza",
+    "periodCol": "Időszak",
+    "dates": "Dátumok",
+    "kindCol": "Típus",
+    "rulesCol": "Szabályok",
+    "statusCol": "Állapot",
+    "myTitle": "Bónuszaim",
+    "myIntro": "Szállítói bónuszok a vásárlásai után. Az időszak végén a FIRINGI a megszerzett összeget jóváírja a számláin — az ingyenes áru a következő rendeléséhez kerül.",
+    "earnedYear": "Idén szerzett",
+    "freeLeft": "Felhasználható ingyenes egységek",
+    "runningCount": "Futó bónuszok",
+    "running": "Jelenleg futó",
+    "noRunning": "Jelenleg nincs bónusza.",
+    "fromSupplier": "Szállító: {supplier}",
+    "periodEnds": "Az időszak vége: {date}",
+    "startsOn": "Kezdés: {date}",
+    "boughtSoFar": "Eddigi vásárlás: {amount}",
+    "unitsSoFar": "Eddigi egységek: {n}",
+    "lastYear": "Tavaly ugyanebben az időszakban: {amount}",
+    "productsSoFar": "Különböző termékek: {n}",
+    "earningNow": "Eddig szerzett: {value}",
+    "freeNow": "Eddig ingyen: {n}",
+    "topReached": "Elérte a legfelső lépcsőt!",
+    "missing": {
+      "AMOUNT": "Még {missing}, és {pct} % jár",
+      "UNITS": "Még {missing} egység, és {pct} % jár",
+      "UNITS_FREE": "Még {missing} egység, és {free} ingyen jár",
+      "PRODUCTS": "Még {missing} különböző termék a bónuszhoz",
+      "GROWTH": "Még {missing}, és {pct} % jár"
+    },
+    "noHistory": "Tavaly ugyanebben az időszakban nem volt vásárlás az összehasonlításhoz.",
+    "freeGoods": "Felhasználható ingyenes áru",
+    "noFreeGoods": "Nincs váró ingyenes áru.",
+    "takeBy": "Felhasználható eddig: {date}",
+    "left": "Maradt: {n}",
+    "addToCart": "Kosárba",
+    "added": "Kosárba téve — az ingyenes egységek a kosárban láthatók.",
+    "expired": "Lejárt",
+    "earnedTitle": "Amit szerzett",
+    "noEarned": "Még nincs szerzett bónusz.",
+    "creditNote": "Jóváíró számla",
+    "freeInCart": "{n} ingyen (bónusz)"
   }
 }

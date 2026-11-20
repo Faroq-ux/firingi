@@ -691,6 +691,29 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Rebates & bonuses (Phase 48)
+
+Suppliers (distributors, wholesalers) reward customers for what they buy over a **month, quarter, half-year or year**:
+**volume rebates** (steps — 2 % from 5 000 €, 3 % from 10 000 € — on the whole period or only above each target; by
+amount or units), **free goods** (buy X units, get Y free on a later order, with a cap), **growth bonus** (a % when the
+customer buys more than in the same period last year, on the increase or on everything) and **product mix / listing
+bonus** (N different products of a set → a fixed amount and / or a %). A deal is for all customers, a CRM segment, a
+customer group, chosen customers, chosen countries, and can count **each shop on its own**; it can cover all the
+supplier's products or chosen products, categories and brands. Suppliers create deals (*Products › Rebates &
+Bonuses*, with a "try it" calculator) and **FIRINGI approves** them (or, with approval AUTO, deals within the limits
+start by themselves); FIRINGI can also run deals **it pays for itself**. Purchases are FIRINGI's invoices for the
+deal's goods minus credit notes (returns, claims), excl. VAT and excise. A few days after a period ends the daily job
+(`/api/cron/rebates`, 03:29 UTC) settles it: **FIRINGI issues the customer credit notes** on that period's invoices
+(VAT split by the goods' own rates); a supplier-paid bonus gets a **supplier credit statement**, so it **comes off the
+supplier's payout**. Free goods wait for the customer (*Rewards › My Bonuses*, "add to cart") and cost nothing in the
+cart (supplier-paid: no commission on them; they don't count toward the delivery minimum); a cancelled order gives
+them back. Customers see each running bonus with a progress bar and what is missing for the next step, and get
+"you're close" reminders near the end of a period. **Every option is FIRINGI's switch** (*Pricing › Rebates &
+Bonuses › Settings*): the feature, each kind, period and targeting choice, which supplier types create and which
+buyer types earn, approval, the highest % and fixed bonus, free-goods days, settle delay, reminders — and **each
+supplier on / off** on its own. Commission stays hidden from buyers. Details: [docs/rebates.md](docs/rebates.md).
+Tests: `tests/unit/rebates.test.ts`, `tests/integration/rebates.test.ts`, `node tests/e2e/rebates.mjs`.
+
 ## E-invoicing (Phase 46)
 
 FIRINGI's documents go out electronically per the recipient's country — format (Peppol BIS 3, XRechnung, Factur-X,

@@ -27,6 +27,9 @@ const go = async (p, url) => { await p.goto(`${BASE}${url}`); await settle(p); }
 const until = async (fn, ms = 20000) => { const end = Date.now() + ms; while (Date.now() < end) { if (await fn().catch(() => false)) return true; await new Promise((r) => setTimeout(r, 300)); } return false; };
 const sql = (q) => execFileSync("psql", ["-At", DB, "-c", q], { encoding: "utf8" }).trim();
 const errors = [];
+// the deals this run creates end when it ends — so other suites buying the same products aren't capped by them
+const startedAt = sql(`select to_char(now() at time zone 'UTC', 'YYYY-MM-DD HH24:MI:SS.MS')`);
+process.on("exit", () => { try { sql(`update "ClearanceDeal" set status='ENDED' where "createdAt" >= '${startedAt}' and status in ('APPROVED','PENDING','DRAFT')`); } catch { /* best effort */ } });
 async function login(email, { viewport = { width: 1280, height: 900 }, colorScheme = "light", locale = null } = {}) {
   const ctx = await browser.newContext({ viewport, colorScheme, reducedMotion: "reduce", deviceScaleFactor: SHOTS ? 2 : 1 });
   const page = await ctx.newPage();

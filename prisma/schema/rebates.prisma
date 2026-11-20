@@ -1,0 +1,137 @@
+// Phase 48 — rebates & bonuses ("trade bonuses"): a supplier (or FIRINGI) rewards customers for what they buy over a
+// period — volume rebates (tiers), free goods, growth bonus, product mix / listing bonus. Suppliers create them and
+// FIRINGI approves; at period end FIRINGI issues the customer a credit note (supplier-funded: recovered through the
+// supplier's credit statement / payout) and free goods are added free to a later order. Rules: src/lib/rebates.ts.
+
+enum TradeBonusKind {
+  VOLUME
+  FREE_GOODS
+  GROWTH
+  MIX
+}
+
+enum TradeBonusPeriod {
+  MONTH
+  QUARTER
+  HALF_YEAR
+  YEAR
+}
+
+enum TradeBonusStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  ENDED
+  CANCELLED
+}
+
+enum TradeBonusAudience {
+  ALL
+  SEGMENT
+  GROUP
+  COMPANIES
+}
+
+model TradeBonus {
+  id              String             @id @default(cuid())
+  /// whose products count (and who funds it, unless FIRINGI does)
+  sellerCompanyId String
+  fundedBy        String             @default("SUPPLIER") // SUPPLIER | FIRINGI
+  name            String
+  description     String?
+  kind            TradeBonusKind
+  period          TradeBonusPeriod
+  /// the kind's rules (tiers, X for Y, growth steps, mix) — normalised by cleanRules()
+  rules           Json
+  validFrom       DateTime
+  validTo         DateTime?
+  /// who it is for
+  audience        TradeBonusAudience @default(ALL)
+  segmentId       String?
+  groupId         String?
+  companyIds      String[]
+  /// buyer countries (empty = all of the supplier's)
+  countries       String[]
+  /// count purchases per shop (Phase 27 branches) instead of per company
+  perShop         Boolean            @default(false)
+  /// which products count (all empty = everything the supplier sells)
+  offerIds        String[]
+  categoryIds     String[]
+  brandIds        String[]
+  /// FREE_GOODS: the product given free, and how long the customer has to take it
+  rewardOfferId   String?
+  freeGoodsDays   Int                @default(60)
+  status          TradeBonusStatus   @default(DRAFT)
+  reviewNote      String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  createdById     String
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  seller      Company                @relation("TradeBonusSeller", fields: [sellerCompanyId], references: [id])
+  settlements TradeBonusSettlement[]
+  freeGoods   TradeBonusFreeGoods[]
+
+  @@index([sellerCompanyId, status])
+  @@index([status, validFrom])
+}
+
+/// One customer's (or shop's) result for one period: what it bought, what it earned, the credit notes issued.
+model TradeBonusSettlement {
+  id            String   @id @default(cuid())
+  bonusId       String
+  companyId     String
+  /// "" = the whole company; else the shop (branch) id
+  branchId      String   @default("")
+  periodKey     String
+  periodStart   DateTime
+  periodEnd     DateTime
+  amount        Decimal  @db.Decimal(18, 2)
+  units         Decimal  @db.Decimal(18, 3)
+  value         Decimal  @db.Decimal(18, 2)
+  freeUnits     Int      @default(0)
+  pct           Decimal  @default(0) @db.Decimal(6, 3)
+  creditNoteIds String[]
+  /// SETTLED (credit / free goods given) | NOTHING (target not reached) | FAILED (error, retried)
+  status        String
+  error         String?
+  createdAt     DateTime @default(now())
+
+  bonus TradeBonus @relation(fields: [bonusId], references: [id], onDelete: Cascade)
+
+  @@unique([bonusId, companyId, branchId, periodKey])
+  @@index([companyId])
+}
+
+/// Free goods earned: added free to the customer's next orders of that product from the supplier until used or expired.
+model TradeBonusFreeGoods {
+  id        String   @id @default(cuid())
+  bonusId   String
+  companyId String
+  branchId  String   @default("")
+  offerId   String
+  qty       Int
+  usedQty   Int      @default(0)
+  periodKey String
+  expiresAt DateTime
+  /// [{ orderId, qty, at }]
+  uses      Json     @default("[]")
+  createdAt DateTime @default(now())
+
+  bonus TradeBonus @relation(fields: [bonusId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, offerId])
+}
+
+/// "You're close to the next step" was sent for this customer / shop and period (once).
+model TradeBonusNudge {
+  bonusId   String
+  companyId String
+  branchId  String   @default("")
+  periodKey String
+  sentAt    DateTime @default(now())
+
+  @@id([bonusId, companyId, branchId, periodKey])
+}

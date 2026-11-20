@@ -10,6 +10,9 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 const { chromium } = createRequire(import.meta.url)("playwright");
+import { execFileSync as execFin } from "node:child_process";
+// this run's cheese-week promotion ends however the run ends (a crash used to leave it lowering the mozzarella price for the other suites)
+process.on("exit", () => { try { execFin("psql", ["-At", process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi", "-c", `update "Promotion" set status='ENDED' where status='ACTIVE' and name::text ilike '%Semana do queijo%'`]); } catch { /* best effort */ } });
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const SHOTS = process.argv[3] ?? null;

@@ -9,6 +9,9 @@
  */
 import { createRequire } from "node:module";
 const { chromium } = createRequire(import.meta.url)("playwright");
+import { execFileSync as execInv } from "node:child_process";
+// back to the internal provider however this run ends (a crash used to leave Moloni on for the other suites)
+process.on("exit", () => { try { execInv("psql", ["-At", process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi", "-c", `update "Setting" set value = jsonb_set(value, '{provider}', '"internal"') where key='invoicing.provider'`]); } catch { /* best effort */ } });
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const SHOTS = process.argv[3] ?? null;

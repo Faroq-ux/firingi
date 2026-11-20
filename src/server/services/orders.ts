@@ -252,6 +252,11 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       await (await import("@/server/excise/service")).attachToOrder(tx, order.id);
       // Phase 45: the customer's currency and rate are locked now (a fixed local price list's price is kept exactly)
       await (await import("@/server/currency/documents")).lockOrderCurrency(tx, order.id, new Map(part.lines.filter((l) => l.item.price?.fixedLocal).map((l) => [l.item.offerId, { code: l.item.price!.fixedLocal!.code, listEur: l.calc.unitListPriceNet.toFixed(4), listLocal: l.item.price!.fixedLocal!.unitNet }])));
+      // Phase 48: free goods from rebate & bonus deals are used up
+      {
+        const grants = part.lines.flatMap((l) => l.item.freeGoods?.grants ?? []);
+        if (grants.length) await (await import("@/server/rebates/service")).consumeFreeGoods(tx, order.id, grants);
+      }
       // Phase 38: lots sold out, accepted offers used
       if (part.lines.some((l) => l.deal)) await (await import("@/server/deals/service")).afterDealOrder(tx, order.id);
       // Phase 32: the points behind this order's share of the points discount
@@ -460,6 +465,7 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   if (to === "DELIVERED") (await import("@/server/invoicing/fiscal")).kickFiscalQueue(); // send the invoice to Moloni now (the cron retries)
   if (to === "DELIVERED") await (await import("@/server/loyalty/service")).earnForOrder(orderId).catch(() => null); // Phase 32: loyalty points (the job retries)
   if (to === "CANCELLED") await (await import("@/server/loyalty/service")).refundForOrder(orderId).catch(() => null); // Phase 32: points spent on it go back
+  if (to === "CANCELLED") await (await import("@/server/rebates/service")).restoreFreeGoods(orderId).catch(() => null); // Phase 48: free goods taken on it go back
   // Cancelled before delivery: a prepayment paid online goes back to the customer.
   if (to === "CANCELLED") await (await import("@/server/payments/service")).refundOrderPrepayment(orderId).catch(() => null);
   if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);

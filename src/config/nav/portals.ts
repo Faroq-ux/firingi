@@ -57,6 +57,7 @@ export const VENDOR_NAV: NavSection[] = [
       vp("customer-groups", "Customer Groups", "Grupos de Clientes", "P3", { live: true, perm: "vendor.pricing.manage", es: "Grupos de clientes" }),
       vp("promotions", "Promotions", "Promoções", "P5", { live: true, perm: "vendor.promotions.manage", es: "Promociones" }),
       vp("deals", "Clearance Deals", "Oportunidades", "P38", { live: true, perm: ["vendor.promotions.manage", "vendor.pricing.manage"], es: "Oportunidades" }),
+      vp("rebates", "Rebates & Bonuses", "Rappel e Bónus", "P48", { live: true, perm: ["vendor.promotions.manage", "vendor.pricing.manage", "vendor.reports.view"], es: "Rappels y bonificaciones" }),
       vp("returnables", "Returnables", "Vasilhame e Tara", "P40", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Envases retornables" }),
       vp("weights", "Sold by Weight", "Venda ao Peso", "P41", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Venta al peso" }),
       vp("temperature", "Temperature", "Temperatura", "P42", { live: true, perm: ["vendor.products.manage", "vendor.products.view"], es: "Temperatura" }),
@@ -236,7 +237,7 @@ export const BUY_NAV: NavSection[] = [
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(bpos, true) },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(bac) },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" })] },
-  { key: "rewards", icon: "Gift", label: { en: "Rewards", pt: "Recompensas", es: "Recompensas" }, items: [bai("rewards", "Rewards", "Recompensas", "P32", { live: true, feature: "LOYALTY", es: "Recompensas" })] },
+  { key: "rewards", icon: "Gift", label: { en: "Rewards", pt: "Recompensas", es: "Recompensas" }, items: [bai("rewards", "Rewards", "Recompensas", "P32", { live: true, feature: "LOYALTY", es: "Recompensas" }), bai("rewards/bonuses", "My Bonuses", "Os Meus Bónus", "P48", { live: true, perm: ["buyer.orders.view", "buyer.orders.place", "buyer.invoices.view"], es: "Mis bonificaciones" })] },
   { key: "assistant", icon: "Bot", label: { en: "Assistant", pt: "Assistente", es: "Asistente" }, items: [bai("assistant", "Assistant", "Assistente", "P17", { live: true, feature: "ASSISTANT", es: "Asistente" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [bs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
   {

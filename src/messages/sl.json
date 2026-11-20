@@ -883,7 +883,9 @@
     "Ingredient Stock": "Zaloga sestavin",
     "Guests & Loyalty": "Gostje in zvestoba",
     "Till Settings": "Nastavitve blagajne",
-    "Till Staff": "Osebje blagajne"
+    "Till Staff": "Osebje blagajne",
+    "Rebates & Bonuses": "Rabati in bonusi",
+    "My Bonuses": "Moji bonusi"
   },
   "delivery": {
     "title": "Dostava",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Vaš naslov {address}: {decision}",
       "body": "Odločitev FIRINGI o vašem naslovu {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Rabatni dogovor za preverjanje",
+      "body": "Podjetje {company} je poslalo rabatni dogovor »{name}«. Začne veljati šele, ko ga FIRINGI odobri."
+    },
+    "rebate_approved": {
+      "title": "Rabatni dogovor odobren",
+      "body": "FIRINGI je odobril dogovor »{name}«. Velja od datuma začetka."
+    },
+    "rebate_rejected": {
+      "title": "Rabatni dogovor zavrnjen",
+      "body": "FIRINGI ni odobril dogovora »{name}«: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Bonusno obdobje obračunano",
+      "body": "»{name}«, {period}: nagrajene stranke: {customers} ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nov bonus od {supplier}",
+      "body": "»{name}«: v razdelku Moji bonusi preverite, kaj lahko pridobite."
+    },
+    "rebate_close": {
+      "title": "Blizu ste bonusa",
+      "body": "Še samo {missing} do naslednje stopnje dogovora »{name}« od {supplier}."
+    },
+    "rebate_earned": {
+      "title": "Pridobili ste bonus",
+      "body": "»{name}« od {supplier}, {period}: {amount} € odobreno na vaših računih."
+    },
+    "rebate_free_goods": {
+      "title": "Brezplačno blago za vas",
+      "body": "»{name}« od {supplier}: {qty} × {product} brezplačno ob naslednjem naročilu. Prevzemite do {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Dodajte šifro dejavnosti",
     "reasonCODE": "Nobena od vaših šifer dejavnosti ne ustreza prodaji",
     "licenceNote": "Morda je še vedno potrebna licenca ali odobritev FIRINGI (glej spodaj in Podjetje › Licence)."
+  },
+  "rebates": {
+    "vendorTitle": "Rabati in bonusi",
+    "vendorIntro": "Nagradite svoje stranke za nakupe v mesecu, četrtletju ali letu: vračilo denarja za količino, brezplačno blago, bonus za rast ali bonus za izbor izdelkov. FIRINGI preveri vsak dogovor in ob koncu obdobja strankam izda dobropis — bonus, ki ga plačate, se odšteje od vašega izplačila.",
+    "newDeal": "Nov dogovor",
+    "editDeal": "Spremeni dogovor",
+    "yourDeals": "Vaši dogovori",
+    "noDeals": "Še ni dogovorov.",
+    "closed": {
+      "OFF": "Rabatni dogovori so trenutno izklopljeni.",
+      "SUPPLIER_OFF": "Rabatni dogovori za vaše podjetje niso na voljo. Obrnite se na FIRINGI.",
+      "TYPE_OFF": "Rabatni dogovori za vašo vrsto podjetja še niso na voljo."
+    },
+    "approvalAlways": "FIRINGI preveri vsak dogovor, preden začne veljati.",
+    "approvalAuto": "Dogovori znotraj omejitev FIRINGI začnejo veljati takoj, ko jih pošljete.",
+    "maxPct": "Do {pct} % na stopnjo.",
+    "kind": {
+      "VOLUME": "Količinski rabat",
+      "FREE_GOODS": "Brezplačno blago",
+      "GROWTH": "Bonus za rast",
+      "MIX": "Bonus za izbor izdelkov"
+    },
+    "kindHint": {
+      "VOLUME": "Vračilo denarja, ko nakupi v obdobju dosežejo cilj. Za višje cilje dodajte stopnje.",
+      "FREE_GOODS": "Za nakup določenega števila enot v obdobju stranka prejme enote izdelka brezplačno ob naslednjem naročilu.",
+      "GROWTH": "Bonus v %, ko stranka kupi več kot v istem obdobju lani.",
+      "MIX": "Bonus, ko stranka kupi dovolj različnih izdelkov iz vaše ponudbe."
+    },
+    "period": {
+      "MONTH": "Mesečno",
+      "QUARTER": "Četrtletno",
+      "HALF_YEAR": "Polletno",
+      "YEAR": "Letno"
+    },
+    "status": {
+      "DRAFT": "Osnutek",
+      "PENDING": "Čaka na FIRINGI",
+      "APPROVED": "Aktiven",
+      "SCHEDULED": "Kmalu se začne",
+      "REJECTED": "Zavrnjen",
+      "ENDED": "Končan",
+      "CANCELLED": "Preklican",
+      "ENDING": "Konec {date}"
+    },
+    "f": {
+      "name": "Ime",
+      "namePh": "npr. Poletni količinski bonus",
+      "description": "Opomba za stranke (neobvezno)",
+      "kind": "Vrsta dogovora",
+      "period": "Obdobje",
+      "starts": "Začetek",
+      "ends": "Konec (neobvezno)",
+      "noEnd": "Velja, dokler ga ne končate",
+      "basis": "Cilj se šteje po",
+      "basisAMOUNT": "Znesek nakupov (€, brez DDV)",
+      "basisUNITS": "Kupljene enote",
+      "retro": "Doseženi % obračunaj na vse nakupe v obdobju",
+      "retroHint": "Izklopljeno: vsak % samo na del nad njegovim ciljem.",
+      "tiers": "Stopnje",
+      "from": "Od",
+      "pct": "%",
+      "addTier": "Dodaj stopnjo",
+      "remove": "Odstrani",
+      "growthPct": "Rast glede na lani (%)",
+      "bonusPct": "Bonus (%)",
+      "base": "Bonus na",
+      "baseINCREASE": "samo povečanje",
+      "baseTOTAL": "vse nakupe",
+      "minPrevious": "Lani najmanj (€)",
+      "minPreviousHint": "Stranke, ki so lani kupile manj, ne sodelujejo.",
+      "buyUnits": "Kupi (enote)",
+      "freeUnits": "Brezplačno (enote)",
+      "maxFree": "Največ brezplačnih enot na obdobje (neobvezno)",
+      "rewardOffer": "Brezplačni izdelek",
+      "chooseProduct": "Izberite izdelek",
+      "freeGoodsDays": "Dnevi za prevzem brezplačnega blaga",
+      "minDistinct": "Različni izdelki za nakup",
+      "minUnitsEach": "Najmanj enot vsakega",
+      "rewardFixed": "Fiksni bonus (€)",
+      "rewardPct": "Bonus na kupljene izdelke (%)",
+      "products": "Upoštevani izdelki",
+      "allProducts": "Vsi moji izdelki",
+      "someProducts": "Samo izbrani izdelki, kategorije ali blagovne znamke",
+      "offers": "Izdelki",
+      "categories": "Kategorije",
+      "brands": "Blagovne znamke",
+      "search": "Iskanje…",
+      "selected": "Izbrano: {n}",
+      "audience": "Stranke",
+      "segment": "Segment",
+      "group": "Skupina strank",
+      "chooseOne": "Izberite…",
+      "findCustomer": "Poiščite stranko (ime ali NIF)",
+      "noMatch": "Ni zadetkov",
+      "countries": "Države strank",
+      "allCountries": "Vse države",
+      "perShop": "Vsako poslovalnico štej posebej",
+      "perShopHint": "Stranke z več poslovalnicami dosegajo cilje za vsako poslovalnico posebej.",
+      "saveDraft": "Shrani osnutek",
+      "send": "Pošlji FIRINGI",
+      "start": "Začni dogovor",
+      "saved": "Shranjeno.",
+      "sent": "Poslano FIRINGI.",
+      "started": "Dogovor je aktiven."
+    },
+    "audience": {
+      "ALL": "Vse stranke",
+      "SEGMENT": "Segment",
+      "GROUP": "Skupina strank",
+      "COMPANIES": "Izbrane stranke"
+    },
+    "end": "Končaj dogovor",
+    "endConfirm": "Želite končati ta dogovor? Stranke obdržijo, kar pridobijo v tekočem obdobju.",
+    "cancel": "Prekliči dogovor",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Preizkusite",
+    "tryAmount": "Kupljeno (€)",
+    "tryUnits": "Kupljeno (enote)",
+    "tryPrev": "Lani (€)",
+    "tryDistinct": "Različni izdelki",
+    "tryResult": "Stranka prejme {value}",
+    "tryFree": "Stranka prejme {n} brezplačno",
+    "rules": {
+      "VOLUME": "{pct} % od {from}",
+      "retro": "na celotno obdobje",
+      "stepped": "na del nad vsakim ciljem",
+      "FREE_GOODS": "Kupite {buy}, prejmite {free} brezplačno",
+      "FREE_GOODS_MAX": "največ {max} brezplačno na obdobje",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "na povečanje",
+      "TOTAL": "na vse nakupe",
+      "MIX": "{n} različnih izdelkov (vsaj {each} od vsakega)",
+      "units": "{n} enot"
+    },
+    "scopeAll": "Vsi izdelki",
+    "scopeSome": "Izbrani izdelki",
+    "perShopTag": "Na poslovalnico",
+    "livePeriod": "To obdobje ({period})",
+    "customer": "Stranka",
+    "shop": "Poslovalnica",
+    "bought": "Kupljeno",
+    "units": "Enote",
+    "earning": "Pridobljeno",
+    "nextStep": "Naslednja stopnja",
+    "noBuyers": "V tem obdobju še ni nakupov.",
+    "settled": "Obračunana obdobja",
+    "noSettled": "Še nič obračunanega.",
+    "paid": "Izplačano",
+    "freeGiven": "Brezplačne enote",
+    "earners": "Nagrajene stranke",
+    "rowStatus": {
+      "SETTLED": "Izplačano",
+      "NOTHING": "Cilj ni dosežen",
+      "FAILED": "Za ponovitev"
+    },
+    "funded": {
+      "FIRINGI": "Izplačal FIRINGI",
+      "SUPPLIER": "Izplačal dobavitelj"
+    },
+    "details": "Podrobnosti",
+    "back": "Nazaj",
+    "periodCol": "Obdobje",
+    "dates": "Datumi",
+    "kindCol": "Vrsta",
+    "rulesCol": "Pravila",
+    "statusCol": "Stanje",
+    "myTitle": "Moji bonusi",
+    "myIntro": "Bonusi, ki vam jih dobavitelji dajejo za vaše nakupe. Ob koncu obdobja FIRINGI pridobljeno odobri na vaših računih — brezplačno blago se doda vašemu naslednjemu naročilu.",
+    "earnedYear": "Pridobljeno letos",
+    "freeLeft": "Brezplačne enote za prevzem",
+    "runningCount": "Aktivni bonusi",
+    "running": "Trenutno aktivni",
+    "noRunning": "Trenutno za vas ni bonusov.",
+    "fromSupplier": "Od {supplier}",
+    "periodEnds": "Obdobje se konča {date}",
+    "startsOn": "Začetek {date}",
+    "boughtSoFar": "Doslej kupljeno: {amount}",
+    "unitsSoFar": "Doslej enot: {n}",
+    "lastYear": "Isto obdobje lani: {amount}",
+    "productsSoFar": "Različni izdelki: {n}",
+    "earningNow": "Doslej pridobljeno: {value}",
+    "freeNow": "Doslej brezplačno: {n}",
+    "topReached": "Dosegli ste najvišjo stopnjo!",
+    "missing": {
+      "AMOUNT": "Še {missing} do {pct} %",
+      "UNITS": "Še {missing} enot do {pct} %",
+      "UNITS_FREE": "Še {missing} enot do {free} brezplačno",
+      "PRODUCTS": "Še {missing} različnih izdelkov do bonusa",
+      "GROWTH": "Še {missing} do {pct} %"
+    },
+    "noHistory": "V istem obdobju lani ni bilo nakupov za primerjavo.",
+    "freeGoods": "Brezplačno blago za prevzem",
+    "noFreeGoods": "Nobeno brezplačno blago ne čaka.",
+    "takeBy": "Prevzem do {date}",
+    "left": "Preostalo: {n}",
+    "addToCart": "Dodaj v košarico",
+    "added": "Dodano v košarico — brezplačne enote so prikazane v košarici.",
+    "expired": "Poteklo",
+    "earnedTitle": "Kaj ste pridobili",
+    "noEarned": "Še nič pridobljenega.",
+    "creditNote": "Dobropis",
+    "freeInCart": "{n} brezplačno (bonus)"
   }
 }

@@ -32,6 +32,7 @@ export const JOBS: JobDef[] = [
   { key: "food", label: "Food information (diet certificate reminders, required-to-sell check)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/food" },
   { key: "returnables", label: "Returnables (empties held too long: reminders, or the deposit kept)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/returnables" },
   { key: "deals", label: "Clearance deals (ending deals, expiring offers, alerts for deals that start, daily digest)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/deals" },
+  { key: "rebates", label: "Rebates & bonuses (settle ended periods with credit notes / free goods, end finished deals, reminders)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/rebates" },
   { key: "bank", label: "Bank reconciliation (bank feeds, matching new lines, consents ending)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/bank" },
   { key: "ads", label: "Advertising (booked days, budgets, low balances, monthly ad invoices, settling against payouts)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/ads" },
   { key: "loyalty", label: "Loyalty & rewards (points for delivered orders, expiry, reminders, tiers)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/loyalty" },

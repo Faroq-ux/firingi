@@ -883,7 +883,9 @@
     "Ingredient Stock": "Ingredientų atsargos",
     "Guests & Loyalty": "Svečiai ir lojalumas",
     "Till Settings": "Kasos nustatymai",
-    "Till Staff": "Kasos personalas"
+    "Till Staff": "Kasos personalas",
+    "Rebates & Bonuses": "Nuolaidos ir premijos",
+    "My Bonuses": "Mano premijos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Jūsų adresas {address}: {decision}",
       "body": "FIRINGI sprendimas dėl jūsų adreso {address}: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Nuolaidos susitarimas patikrinimui",
+      "body": "{company} atsiuntė nuolaidos susitarimą „{name}“. Jis įsigalios tik FIRINGI jį patvirtinus."
+    },
+    "rebate_approved": {
+      "title": "Nuolaidos susitarimas patvirtintas",
+      "body": "FIRINGI patvirtino „{name}“. Jis galioja nuo pradžios datos."
+    },
+    "rebate_rejected": {
+      "title": "Nuolaidos susitarimas atmestas",
+      "body": "FIRINGI nepatvirtino „{name}“: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Premijos laikotarpis atsiskaitytas",
+      "body": "„{name}“, {period}: apdovanota klientų – {customers} ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Nauja premija – {supplier}",
+      "body": "„{name}“: sužinokite, ką galite uždirbti skiltyje „Mano premijos“."
+    },
+    "rebate_close": {
+      "title": "Jūs netoli premijos",
+      "body": "Liko tik {missing} iki kitos „{name}“ pakopos (tiekėjas {supplier})."
+    },
+    "rebate_earned": {
+      "title": "Jūs uždirbote premiją",
+      "body": "„{name}“ (tiekėjas {supplier}), {period}: {amount} € įskaityta į Jūsų sąskaitas faktūras."
+    },
+    "rebate_free_goods": {
+      "title": "Nemokamos prekės Jums",
+      "body": "„{name}“ (tiekėjas {supplier}): {qty} × {product} nemokamai kitame užsakyme. Atsiimkite iki {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Pridėkite veiklos kodą",
     "reasonCODE": "Nė vienas jūsų veiklos kodas neatitinka šios prekybos",
     "licenceNote": "Vis dar gali reikėti licencijos ar FIRINGI patvirtinimo (žr. žemiau ir Įmonė › Licencijos)."
+  },
+  "rebates": {
+    "vendorTitle": "Nuolaidos ir premijos",
+    "vendorIntro": "Apdovanokite savo klientus už tai, ką jie perka per mėnesį, ketvirtį ar metus: pinigų grąžinimas už apimtį, nemokamos prekės, augimo premija arba asortimento premija. FIRINGI patikrina kiekvieną susitarimą ir, pasibaigus laikotarpiui, išrašo Jūsų klientams kreditinę sąskaitą faktūrą — Jūsų mokama premija išskaičiuojama iš Jūsų išmokos.",
+    "newDeal": "Naujas susitarimas",
+    "editDeal": "Keisti susitarimą",
+    "yourDeals": "Jūsų susitarimai",
+    "noDeals": "Susitarimų dar nėra.",
+    "closed": {
+      "OFF": "Nuolaidų susitarimai šiuo metu išjungti.",
+      "SUPPLIER_OFF": "Nuolaidų susitarimai Jūsų įmonei neprieinami. Susisiekite su FIRINGI.",
+      "TYPE_OFF": "Nuolaidų susitarimai Jūsų tipo įmonėms dar neprieinami."
+    },
+    "approvalAlways": "FIRINGI patikrina kiekvieną susitarimą prieš jam įsigaliojant.",
+    "approvalAuto": "Susitarimai, neviršijantys FIRINGI ribų, įsigalioja iškart juos išsiuntus.",
+    "maxPct": "Iki {pct} % už pakopą.",
+    "kind": {
+      "VOLUME": "Apimties nuolaida",
+      "FREE_GOODS": "Nemokamos prekės",
+      "GROWTH": "Augimo premija",
+      "MIX": "Asortimento premija"
+    },
+    "kindHint": {
+      "VOLUME": "Pinigų grąžinimas, kai pirkiniai per laikotarpį pasiekia tikslą. Pridėkite pakopų didesniems tikslams.",
+      "FREE_GOODS": "Nupirkus tam tikrą vienetų kiekį per laikotarpį, produkto vienetai suteikiami nemokamai vėlesniame užsakyme.",
+      "GROWTH": "Tam tikras %, kai klientas perka daugiau nei per tą patį laikotarpį pernai.",
+      "MIX": "Premija, kai klientas perka pakankamai skirtingų Jūsų asortimento produktų."
+    },
+    "period": {
+      "MONTH": "Kas mėnesį",
+      "QUARTER": "Kas ketvirtį",
+      "HALF_YEAR": "Kas pusmetį",
+      "YEAR": "Kasmet"
+    },
+    "status": {
+      "DRAFT": "Juodraštis",
+      "PENDING": "Laukiama FIRINGI",
+      "APPROVED": "Galioja",
+      "SCHEDULED": "Netrukus prasidės",
+      "REJECTED": "Atmesta",
+      "ENDED": "Baigta",
+      "CANCELLED": "Atšaukta",
+      "ENDING": "Baigiasi {date}"
+    },
+    "f": {
+      "name": "Pavadinimas",
+      "namePh": "pvz., Vasaros apimties premija",
+      "description": "Pastaba klientams (neprivaloma)",
+      "kind": "Susitarimo rūšis",
+      "period": "Laikotarpis",
+      "starts": "Pradžia",
+      "ends": "Pabaiga (neprivaloma)",
+      "noEnd": "Galioja, kol jį nutrauksite",
+      "basis": "Tikslas skaičiuojamas pagal",
+      "basisAMOUNT": "Pirkimų suma (€, be PVM)",
+      "basisUNITS": "Nupirkti vienetai",
+      "retro": "Mokėti pasiektą % nuo visų per laikotarpį nupirktų prekių",
+      "retroHint": "Išjungta: kiekvienas % taikomas tik daliai virš jo tikslo.",
+      "tiers": "Pakopos",
+      "from": "Nuo",
+      "pct": "%",
+      "addTier": "Pridėti pakopą",
+      "remove": "Pašalinti",
+      "growthPct": "Augimas, palyginti su praėjusiais metais (%)",
+      "bonusPct": "Premija (%)",
+      "base": "Premija nuo",
+      "baseINCREASE": "tik padidėjimo",
+      "baseTOTAL": "visų pirkinių",
+      "minPrevious": "Praėjusiais metais ne mažiau kaip (€)",
+      "minPreviousHint": "Klientai, kurie praėjusiais metais pirko mažiau, nedalyvauja.",
+      "buyUnits": "Pirkti (vnt.)",
+      "freeUnits": "Gauti nemokamai (vnt.)",
+      "maxFree": "Daugiausia nemokamų vienetų per laikotarpį (neprivaloma)",
+      "rewardOffer": "Nemokamai suteikiamas produktas",
+      "chooseProduct": "Pasirinkite produktą",
+      "freeGoodsDays": "Dienos nemokamoms prekėms atsiimti",
+      "minDistinct": "Kiek skirtingų produktų reikia pirkti",
+      "minUnitsEach": "Mažiausiai vienetų kiekvieno",
+      "rewardFixed": "Fiksuota premija (€)",
+      "rewardPct": "Premija nuo nupirktų produktų (%)",
+      "products": "Įskaitomi produktai",
+      "allProducts": "Visi mano produktai",
+      "someProducts": "Tik pasirinkti produktai, kategorijos ar prekių ženklai",
+      "offers": "Produktai",
+      "categories": "Kategorijos",
+      "brands": "Prekių ženklai",
+      "search": "Ieškoti…",
+      "selected": "Pasirinkta: {n}",
+      "audience": "Klientai",
+      "segment": "Segmentas",
+      "group": "Klientų grupė",
+      "chooseOne": "Pasirinkite…",
+      "findCustomer": "Rasti klientą (pavadinimas arba NIF)",
+      "noMatch": "Nerasta",
+      "countries": "Klientų šalys",
+      "allCountries": "Visos šalys",
+      "perShop": "Kiekvieną parduotuvę skaičiuoti atskirai",
+      "perShopHint": "Klientai, turintys kelias parduotuves, tikslus pasiekia kiekvienoje parduotuvėje atskirai.",
+      "saveDraft": "Išsaugoti juodraštį",
+      "send": "Siųsti FIRINGI",
+      "start": "Pradėti susitarimą",
+      "saved": "Išsaugota.",
+      "sent": "Išsiųsta FIRINGI.",
+      "started": "Susitarimas galioja."
+    },
+    "audience": {
+      "ALL": "Visi klientai",
+      "SEGMENT": "Segmentas",
+      "GROUP": "Klientų grupė",
+      "COMPANIES": "Pasirinkti klientai"
+    },
+    "end": "Nutraukti susitarimą",
+    "endConfirm": "Nutraukti šį susitarimą? Klientai išsaugo tai, ką uždirba einamuoju laikotarpiu.",
+    "cancel": "Atšaukti susitarimą",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Išbandyti",
+    "tryAmount": "Nupirkta (€)",
+    "tryUnits": "Nupirkta (vnt.)",
+    "tryPrev": "Praėjusiais metais (€)",
+    "tryDistinct": "Skirtingi produktai",
+    "tryResult": "Klientas gauna {value}",
+    "tryFree": "Klientas gauna {n} nemokamai",
+    "rules": {
+      "VOLUME": "{pct} % nuo {from}",
+      "retro": "už visą laikotarpį",
+      "stepped": "už dalį virš kiekvieno tikslo",
+      "FREE_GOODS": "Pirkite {buy}, gaukite {free} nemokamai",
+      "FREE_GOODS_MAX": "daugiausia {max} nemokamai per laikotarpį",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "nuo padidėjimo",
+      "TOTAL": "nuo visų pirkinių",
+      "MIX": "{n} skirtingų produktų (ne mažiau kaip {each} kiekvieno)",
+      "units": "{n} vnt."
+    },
+    "scopeAll": "Visi produktai",
+    "scopeSome": "Pasirinkti produktai",
+    "perShopTag": "Pagal parduotuvę",
+    "livePeriod": "Šis laikotarpis ({period})",
+    "customer": "Klientas",
+    "shop": "Parduotuvė",
+    "bought": "Nupirkta",
+    "units": "Vienetai",
+    "earning": "Uždirbta",
+    "nextStep": "Kita pakopa",
+    "noBuyers": "Šiuo laikotarpiu pirkinių dar nėra.",
+    "settled": "Atsiskaityti laikotarpiai",
+    "noSettled": "Dar nieko neatsiskaityta.",
+    "paid": "Išmokėta",
+    "freeGiven": "Nemokami vienetai",
+    "earners": "Apdovanoti klientai",
+    "rowStatus": {
+      "SETTLED": "Apmokėta",
+      "NOTHING": "Tikslas nepasiektas",
+      "FAILED": "Bandyti iš naujo"
+    },
+    "funded": {
+      "FIRINGI": "Apmokėjo FIRINGI",
+      "SUPPLIER": "Apmokėjo tiekėjas"
+    },
+    "details": "Išsamiau",
+    "back": "Atgal",
+    "periodCol": "Laikotarpis",
+    "dates": "Datos",
+    "kindCol": "Rūšis",
+    "rulesCol": "Taisyklės",
+    "statusCol": "Būsena",
+    "myTitle": "Mano premijos",
+    "myIntro": "Premijos, kurias tiekėjai Jums skiria už pirkinius. Pasibaigus laikotarpiui, FIRINGI uždirbtą sumą įskaito į Jūsų sąskaitas faktūras — nemokamos prekės pridedamos prie kito Jūsų užsakymo.",
+    "earnedYear": "Uždirbta šiais metais",
+    "freeLeft": "Atsiimtini nemokami vienetai",
+    "runningCount": "Galiojančios premijos",
+    "running": "Dabar galioja",
+    "noRunning": "Šiuo metu premijų Jums nėra.",
+    "fromSupplier": "Tiekėjas: {supplier}",
+    "periodEnds": "Laikotarpis baigiasi {date}",
+    "startsOn": "Prasideda {date}",
+    "boughtSoFar": "Iki šiol nupirkta: {amount}",
+    "unitsSoFar": "Iki šiol vienetų: {n}",
+    "lastYear": "Tas pats laikotarpis pernai: {amount}",
+    "productsSoFar": "Skirtingi produktai: {n}",
+    "earningNow": "Iki šiol uždirbta: {value}",
+    "freeNow": "Iki šiol nemokamai: {n}",
+    "topReached": "Pasiekta aukščiausia pakopa!",
+    "missing": {
+      "AMOUNT": "Dar {missing} iki {pct} %",
+      "UNITS": "Dar {missing} vnt. iki {pct} %",
+      "UNITS_FREE": "Dar {missing} vnt. iki {free} nemokamų",
+      "PRODUCTS": "Dar {missing} skirtingų produktų iki premijos",
+      "GROWTH": "Dar {missing} iki {pct} %"
+    },
+    "noHistory": "Pernai tuo pačiu laikotarpiu pirkinių nebuvo, todėl nėra su kuo palyginti.",
+    "freeGoods": "Atsiimtinos nemokamos prekės",
+    "noFreeGoods": "Atsiėmimo laukiančių nemokamų prekių nėra.",
+    "takeBy": "Atsiimti iki {date}",
+    "left": "Liko {n}",
+    "addToCart": "Į krepšelį",
+    "added": "Įdėta į krepšelį — nemokami vienetai rodomi krepšelyje.",
+    "expired": "Nebegalioja",
+    "earnedTitle": "Ką uždirbote",
+    "noEarned": "Dar nieko neuždirbta.",
+    "creditNote": "Kreditinė sąskaita faktūra",
+    "freeInCart": "{n} nemokamai (premija)"
   }
 }

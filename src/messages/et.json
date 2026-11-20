@@ -883,7 +883,9 @@
     "Ingredient Stock": "Koostisosade laoseis",
     "Guests & Loyalty": "Külalised ja lojaalsus",
     "Till Settings": "Kassa seaded",
-    "Till Staff": "Kassapersonal"
+    "Till Staff": "Kassapersonal",
+    "Rebates & Bonuses": "Tagasimaksed ja boonused",
+    "My Bonuses": "Minu boonused"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1734,6 +1736,38 @@
     "address_change_decided": {
       "title": "Teie aadress {address}: {decision}",
       "body": "FIRINGI otsus teie aadressi {address} kohta: {decision}. {note}"
+    },
+    "rebate_review": {
+      "title": "Kontrollimist ootav boonuskokkulepe",
+      "body": "{company} saatis boonuskokkuleppe „{name}“. See algab alles pärast FIRINGI kinnitust."
+    },
+    "rebate_approved": {
+      "title": "Boonuskokkulepe kinnitatud",
+      "body": "FIRINGI kinnitas kokkuleppe „{name}“. See kehtib alguskuupäevast."
+    },
+    "rebate_rejected": {
+      "title": "Boonuskokkulepe tagasi lükatud",
+      "body": "FIRINGI ei kinnitanud kokkulepet „{name}“: {reason}"
+    },
+    "rebate_settled": {
+      "title": "Boonusperiood arveldatud",
+      "body": "„{name}“, {period}: premeeritud {customers} klienti ({total} €)."
+    },
+    "rebate_available": {
+      "title": "Uus boonus tarnijalt {supplier}",
+      "body": "„{name}“: vaadake jaotisest „Minu boonused“, mida saate teenida."
+    },
+    "rebate_close": {
+      "title": "Olete boonusele lähedal",
+      "body": "Veel vaid {missing}, et jõuda kokkuleppe „{name}“ ({supplier}) järgmisele astmele."
+    },
+    "rebate_earned": {
+      "title": "Teenisite boonuse",
+      "body": "„{name}“ tarnijalt {supplier}, {period}: {amount} € krediteeriti teie arvetele."
+    },
+    "rebate_free_goods": {
+      "title": "Tasuta kaup teile",
+      "body": "„{name}“ tarnijalt {supplier}: {qty} × {product} tasuta teie järgmise tellimusega. Kasutage hiljemalt {date}."
     }
   },
   "notifications": {
@@ -6263,5 +6297,207 @@
     "reasonNO_CODE": "Lisage oma tegevusala kood",
     "reasonCODE": "Ükski teie tegevusala kood ei sobi selle müügiga",
     "licenceNote": "Vaja võib siiski olla luba või FIRINGI kinnitust (vt allpool ja Ettevõte › Load)."
+  },
+  "rebates": {
+    "vendorTitle": "Tagasimaksed ja boonused",
+    "vendorIntro": "Premeerige oma kliente ostude eest kuu, kvartali või aasta jooksul: mahupõhine tagasimakse, tasuta kaup, kasvuboonus või sortimendiboonus. FIRINGI kontrollib iga kokkulepet ja perioodi lõppedes krediteerib teie kliente kreeditarvega — teie makstav boonus arvatakse teie väljamaksest maha.",
+    "newDeal": "Uus kokkulepe",
+    "editDeal": "Muuda kokkulepet",
+    "yourDeals": "Teie kokkulepped",
+    "noDeals": "Kokkuleppeid veel pole.",
+    "closed": {
+      "OFF": "Boonuskokkulepped on praegu välja lülitatud.",
+      "SUPPLIER_OFF": "Boonuskokkulepped ei ole teie ettevõttele avatud. Palun võtke ühendust FIRINGI-ga.",
+      "TYPE_OFF": "Boonuskokkulepped ei ole teie ettevõtte tüübile veel avatud."
+    },
+    "approvalAlways": "FIRINGI kontrollib iga kokkulepet enne selle algust.",
+    "approvalAuto": "FIRINGI piirangutesse jäävad kokkulepped algavad kohe, kui need saadate.",
+    "maxPct": "Kuni {pct} % astme kohta.",
+    "kind": {
+      "VOLUME": "Mahuboonus",
+      "FREE_GOODS": "Tasuta kaup",
+      "GROWTH": "Kasvuboonus",
+      "MIX": "Sortimendiboonus"
+    },
+    "kindHint": {
+      "VOLUME": "Raha tagasi, kui ostud perioodis eesmärgini jõuavad. Lisage suuremate eesmärkide jaoks astmeid.",
+      "FREE_GOODS": "Ostke perioodis teatud arv ühikuid ja saage hilisema tellimusega toote ühikuid tasuta.",
+      "GROWTH": "Protsent (%), kui klient ostab rohkem kui eelmise aasta samal perioodil.",
+      "MIX": "Boonus, kui klient ostab teie sortimendist piisavalt erinevaid tooteid."
+    },
+    "period": {
+      "MONTH": "Igakuine",
+      "QUARTER": "Kvartaalne",
+      "HALF_YEAR": "Poolaastane",
+      "YEAR": "Aastane"
+    },
+    "status": {
+      "DRAFT": "Mustand",
+      "PENDING": "Ootab FIRINGI-t",
+      "APPROVED": "Käimas",
+      "SCHEDULED": "Algab peagi",
+      "REJECTED": "Tagasi lükatud",
+      "ENDED": "Lõppenud",
+      "CANCELLED": "Tühistatud",
+      "ENDING": "Lõpeb {date}"
+    },
+    "f": {
+      "name": "Nimi",
+      "namePh": "nt Suvine mahuboonus",
+      "description": "Märkus klientidele (valikuline)",
+      "kind": "Kokkuleppe liik",
+      "period": "Periood",
+      "starts": "Algus",
+      "ends": "Lõpp (valikuline)",
+      "noEnd": "Kehtib, kuni selle lõpetate",
+      "basis": "Eesmärgi alus",
+      "basisAMOUNT": "Ostusumma (€, km-ta)",
+      "basisUNITS": "Ostetud ühikud",
+      "retro": "Saavutatud % makstakse kõigilt perioodi ostudelt",
+      "retroHint": "Väljas: iga % ainult eesmärki ületavalt osalt.",
+      "tiers": "Astmed",
+      "from": "Alates",
+      "pct": "%",
+      "addTier": "Lisa aste",
+      "remove": "Eemalda",
+      "growthPct": "Kasv võrreldes eelmise aastaga (%)",
+      "bonusPct": "Boonus (%)",
+      "base": "Boonus arvestatakse",
+      "baseINCREASE": "ainult kasvult",
+      "baseTOTAL": "kõigilt ostudelt",
+      "minPrevious": "Eelmisel aastal vähemalt (€)",
+      "minPreviousHint": "Kliendid, kes ostsid eelmisel aastal vähem, ei osale.",
+      "buyUnits": "Osta (ühikut)",
+      "freeUnits": "Tasuta (ühikut)",
+      "maxFree": "Max tasuta ühikuid perioodis (valikuline)",
+      "rewardOffer": "Tasuta antav toode",
+      "chooseProduct": "Vali toode",
+      "freeGoodsDays": "Päevi tasuta kauba kättesaamiseks",
+      "minDistinct": "Ostetavate erinevate toodete arv",
+      "minUnitsEach": "Vähemalt ühikuid igast tootest",
+      "rewardFixed": "Fikseeritud boonus (€)",
+      "rewardPct": "Boonus ostetud toodetelt (%)",
+      "products": "Arvesse minevad tooted",
+      "allProducts": "Kõik minu tooted",
+      "someProducts": "Ainult valitud tooted, kategooriad või kaubamärgid",
+      "offers": "Tooted",
+      "categories": "Kategooriad",
+      "brands": "Kaubamärgid",
+      "search": "Otsi…",
+      "selected": "{n} valitud",
+      "audience": "Kliendid",
+      "segment": "Segment",
+      "group": "Kliendigrupp",
+      "chooseOne": "Vali…",
+      "findCustomer": "Leia klient (nimi või NIF)",
+      "noMatch": "Vasteid pole",
+      "countries": "Klientide riigid",
+      "allCountries": "Kõik riigid",
+      "perShop": "Arvesta iga poodi eraldi",
+      "perShopHint": "Mitme poega kliendid saavutavad eesmärgid poe kaupa.",
+      "saveDraft": "Salvesta mustand",
+      "send": "Saada FIRINGI-le",
+      "start": "Alusta kokkulepet",
+      "saved": "Salvestatud.",
+      "sent": "Saadetud FIRINGI-le.",
+      "started": "Kokkulepe on käimas."
+    },
+    "audience": {
+      "ALL": "Kõik kliendid",
+      "SEGMENT": "Segment",
+      "GROUP": "Kliendigrupp",
+      "COMPANIES": "Valitud kliendid"
+    },
+    "end": "Lõpeta kokkulepe",
+    "endConfirm": "Kas lõpetada see kokkulepe? Kliendid saavad jooksva perioodi teenitu endale.",
+    "cancel": "Tühista kokkulepe",
+    "firingiNote": "FIRINGI: {note}",
+    "tryIt": "Proovi",
+    "tryAmount": "Ostetud (€)",
+    "tryUnits": "Ostetud (ühikut)",
+    "tryPrev": "Eelmine aasta (€)",
+    "tryDistinct": "Erinevad tooted",
+    "tryResult": "Klient saab {value}",
+    "tryFree": "Klient saab {n} tasuta",
+    "rules": {
+      "VOLUME": "{pct} % alates {from}",
+      "retro": "kogu perioodilt",
+      "stepped": "iga eesmärki ületavalt osalt",
+      "FREE_GOODS": "Osta {buy}, saa {free} tasuta",
+      "FREE_GOODS_MAX": "kuni {max} tasuta perioodis",
+      "GROWTH": "+{growth} % → {pct} %",
+      "INCREASE": "kasvult",
+      "TOTAL": "kõigilt ostudelt",
+      "MIX": "{n} erinevat toodet (vähemalt {each} igast)",
+      "units": "{n} ühikut"
+    },
+    "scopeAll": "Kõik tooted",
+    "scopeSome": "Valitud tooted",
+    "perShopTag": "Poe kaupa",
+    "livePeriod": "Jooksev periood ({period})",
+    "customer": "Klient",
+    "shop": "Pood",
+    "bought": "Ostetud",
+    "units": "Ühikud",
+    "earning": "Teenitud",
+    "nextStep": "Järgmine aste",
+    "noBuyers": "Selles perioodis veel oste pole.",
+    "settled": "Arveldatud perioodid",
+    "noSettled": "Veel midagi arveldatud pole.",
+    "paid": "Välja makstud",
+    "freeGiven": "Tasuta ühikud",
+    "earners": "Premeeritud kliendid",
+    "rowStatus": {
+      "SETTLED": "Makstud",
+      "NOTHING": "Eesmärki ei saavutatud",
+      "FAILED": "Korratakse"
+    },
+    "funded": {
+      "FIRINGI": "Maksab FIRINGI",
+      "SUPPLIER": "Maksab tarnija"
+    },
+    "details": "Üksikasjad",
+    "back": "Tagasi",
+    "periodCol": "Periood",
+    "dates": "Kuupäevad",
+    "kindCol": "Liik",
+    "rulesCol": "Reeglid",
+    "statusCol": "Olek",
+    "myTitle": "Minu boonused",
+    "myIntro": "Boonused, mida tarnijad teile ostude eest annavad. Perioodi lõppedes krediteerib FIRINGI teenitu teie arvetele — tasuta kaup lisatakse teie järgmisele tellimusele.",
+    "earnedYear": "Sel aastal teenitud",
+    "freeLeft": "Kättesaadavad tasuta ühikud",
+    "runningCount": "Käimasolevad boonused",
+    "running": "Praegu käimas",
+    "noRunning": "Teile ei ole praegu boonuseid.",
+    "fromSupplier": "Tarnijalt {supplier}",
+    "periodEnds": "Periood lõpeb {date}",
+    "startsOn": "Algab {date}",
+    "boughtSoFar": "Seni ostetud: {amount}",
+    "unitsSoFar": "Seni ühikuid: {n}",
+    "lastYear": "Eelmise aasta sama periood: {amount}",
+    "productsSoFar": "Erinevaid tooteid: {n}",
+    "earningNow": "Seni teenitud: {value}",
+    "freeNow": "Seni tasuta: {n}",
+    "topReached": "Kõrgeim aste saavutatud!",
+    "missing": {
+      "AMOUNT": "Veel {missing}, et saada {pct} %",
+      "UNITS": "Veel {missing} ühikut, et saada {pct} %",
+      "UNITS_FREE": "Veel {missing} ühikut, et saada {free} tasuta",
+      "PRODUCTS": "Veel {missing} erinevat toodet boonuse saamiseks",
+      "GROWTH": "Veel {missing}, et saada {pct} %"
+    },
+    "noHistory": "Eelmise aasta samal perioodil pole võrdluseks oste.",
+    "freeGoods": "Kättesaadav tasuta kaup",
+    "noFreeGoods": "Ootel tasuta kaupa pole.",
+    "takeBy": "Kasutage hiljemalt {date}",
+    "left": "{n} alles",
+    "addToCart": "Lisa ostukorvi",
+    "added": "Lisatud ostukorvi — tasuta ühikud on näha ostukorvis.",
+    "expired": "Aegunud",
+    "earnedTitle": "Teie teenitu",
+    "noEarned": "Veel midagi teenitud pole.",
+    "creditNote": "Kreeditarve",
+    "freeInCart": "{n} tasuta (boonus)"
   }
 }
