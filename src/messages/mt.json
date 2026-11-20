@@ -891,7 +891,15 @@
     "Tenders": "Tenders",
     "Sustainability & CO₂": "Sostenibbiltà u CO₂",
     "CO₂ & Packaging": "CO₂ u Imballaġġ",
-    "CO₂ Footprint": "Impronta tal-CO₂"
+    "CO₂ Footprint": "Impronta tal-CO₂",
+    "Staff & Time": "Ħaddiema u Ħin",
+    "My Shifts & Hours": "Ix-Xiftijiet u s-Sigħat Tiegħi",
+    "Who's In": "Min hu fuq ix-xogħol",
+    "Rota": "Roster",
+    "Clock-in Kiosk": "Kiosk tal-Ħin",
+    "Timesheets": "Skedi tal-ħin",
+    "Leave & Swaps": "Liv u Skambji",
+    "Staff": "Ħaddiema"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Valur tal-CO₂ iċċekkjat ({decision}): {product}",
       "body": "\"{product}\" {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Ix-xiftijiet tiegħek ħarġu",
+      "body": "Ir-roster għall-ġimgħa ta' {week} ġie ppubblikat. Iftaħ Ix-Xiftijiet Tiegħi biex tara tiegħek."
+    },
+    "staff_shift_changed": {
+      "title": "Xift inbidel",
+      "body": "Ix-xift tiegħek ta' {start} inbidel jew ġie kkanċellat. Iċċekkja Ix-Xiftijiet Tiegħi."
+    },
+    "staff_shift_reminder": {
+      "title": "Ix-xift tiegħek se jibda dalwaqt",
+      "body": "Ix-xift tiegħek jibda {start}. Tinsiex tirreġistra d-dħul."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Għadek irreġistrat ġewwa?",
+      "body": "Ix-xift tiegħek spiċċa iżda għadek irreġistrat ġewwa. Irreġistra l-ħruġ jekk lestejt."
+    },
+    "staff_timesheet_approved": {
+      "title": "Skeda tal-ħin approvata",
+      "body": "Is-sigħat tiegħek għall-ġimgħa ta' {week} ġew approvati."
+    },
+    "staff_leave_decided": {
+      "title": "Liv {decision}",
+      "body": "Il-liv tiegħek {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Kollega qed joffrilek xift",
+      "body": "{name} qed joffrilek ix-xift ta' {start}. Iftaħ Ix-Xiftijiet Tiegħi biex tieħdu."
+    },
+    "staff_swap_decided": {
+      "title": "Skambju ta' xift {decision}",
+      "body": "L-iskambju tax-xift ta' {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Xift miftuħ meħud",
+      "body": "{name} ħa x-xift miftuħ ta' {start}."
+    },
+    "staff_no_show": {
+      "title": "Ma rreġistrax id-dħul: {name}",
+      "body": "{name} għandu xift li beda {start} u ma rreġistrax id-dħul."
+    },
+    "staff_missed_clock_out": {
+      "title": "Insa jirreġistra l-ħruġ: {name}",
+      "body": "{name} kien għadu rreġistrat ġewwa; l-entrata ngħalqet awtomatikament. Iċċekkjaha fi Skedi tal-ħin."
+    },
+    "staff_leave_requested": {
+      "title": "Talba għal-liv: {name}",
+      "body": "{name} qed jitlob liv {from} – {to}. Approvaha f'Liv u Skambji."
+    },
+    "staff_swap_to_approve": {
+      "title": "Skambju ta' xift biex jiġi approvat",
+      "body": "{name} ħa xift ta' {start}. Approvah f'Liv u Skambji."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Skeda tal-ħin mibgħuta: {name}",
+      "body": "{name} bagħat is-sigħat għall-ġimgħa ta' {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Ibridu",
       "LPG": "LPG",
       "ELECTRIC": "Elettriku"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Min hu fuq ix-xogħol",
+    "overviewIntro": "Min qed jaħdem issa, ix-xiftijiet tal-lum u x'jeħtieġ l-attenzjoni tiegħek.",
+    "inNow": "Fuq ix-xogħol issa",
+    "nobodyIn": "Ħadd ma rreġistra d-dħul.",
+    "onBreak": "Fil-waqfa",
+    "since": "minn {time}",
+    "staffCount": "Ħaddiema",
+    "today": "Xiftijiet tal-lum",
+    "noShiftsToday": "L-ebda xift illum.",
+    "state": {
+      "IN": "Daħal",
+      "MISSING": "Għadu ma daħalx",
+      "LATER": "Aktar tard"
+    },
+    "openShift": "Xift miftuħ",
+    "flaggedTitle": "Biex jiġi ċċekkjat",
+    "noFlags": "M'hemm xejn x'jiġi ċċekkjat.",
+    "flag": {
+      "LATE": "Tard",
+      "EARLY_LEAVE": "Telaq kmieni",
+      "OUTSIDE_AREA": "Barra miż-żona",
+      "MISSED_CLOCK_OUT": "Insa jirreġistra l-ħruġ",
+      "EDITED": "Ikkoreġut",
+      "NO_BREAK": "L-ebda waqfa",
+      "NO_SHIFT": "L-ebda xift ippjanat"
+    },
+    "pending": "Qed jistennewk",
+    "pendingLeave": "Talbiet għal-liv: {n}",
+    "pendingSwaps": "Skambji ta' xiftijiet: {n}",
+    "pendingSheets": "Skedi tal-ħin: {n}",
+    "labourTitle": "Spiża tal-ħaddiema u bejgħ (14-il jum)",
+    "hours": "Sigħat",
+    "labourCost": "Spiża tal-ħaddiema",
+    "sales": "Bejgħ",
+    "share": "Sehem tal-ħaddiema",
+    "ratesMissing": "Persuni mingħajr rata kull siegħa: {n} — mhumiex inklużi fl-ispiża.",
+    "meTitle": "Ix-Xiftijiet u s-Sigħat Tiegħi",
+    "meIntro": "Irreġistra d-dħul u l-ħruġ, ara x-xiftijiet u s-sigħat tiegħek, itlob liv jew skambja xift.",
+    "clockIn": "Irreġistra d-dħul",
+    "clockOut": "Irreġistra l-ħruġ",
+    "breakStart": "Ibda l-waqfa",
+    "breakEnd": "Temm il-waqfa",
+    "clockedInSince": "Dħul irreġistrat minn {time}",
+    "notClockedIn": "Id-dħul tiegħek mhux irreġistrat.",
+    "locating": "Qed jinstab fejn tinsab…",
+    "locationNeeded": "Ippermetti l-aċċess għal-lokalità tiegħek biex tirreġistra d-dħul mit-telefon.",
+    "clockDone": "Lest: {action} fil-{time}",
+    "nearestSite": "L-eqreb post",
+    "action": {
+      "IN": "dħul irreġistrat",
+      "OUT": "ħruġ irreġistrat",
+      "BREAK_START": "waqfa bdiet",
+      "BREAK_END": "waqfa ntemmet"
+    },
+    "phoneOff": "Ir-reġistrazzjoni tad-dħul mit-telefon hija mitfija — uża l-kiosk.",
+    "thisWeek": "Din il-ġimgħa",
+    "worked": "Maħdum",
+    "overtime": "Sahra",
+    "night": "Lejl",
+    "holiday": "Festa pubblika",
+    "contract": "Kuntratt: {h} h fil-ġimgħa",
+    "myShifts": "Ix-xiftijiet li jmiss tiegħi",
+    "noShifts": "L-ebda xift ippjanat.",
+    "offerSwap": "Offri lil kollega",
+    "anyone": "Kwalunkwe persuna",
+    "swapNote": "Nota (mhux obbligatorja)",
+    "send": "Ibgħat",
+    "offered": "Offrut.",
+    "openShifts": "Xiftijiet miftuħa",
+    "take": "Ħu dan ix-xift",
+    "swaps": "Skambji ta' xiftijiet",
+    "acceptSwap": "Ħudu",
+    "status": {
+      "PENDING": "Qed jistenna",
+      "ACCEPTED": "Meħud, qed jistenna lill-maniġer",
+      "APPROVED": "Approvat",
+      "REJECTED": "Mhux approvat",
+      "CANCELLED": "Ikkanċellat",
+      "OPEN": "Miftuħ",
+      "SUBMITTED": "Mibgħut"
+    },
+    "recent": "Sigħat riċenti",
+    "noEntries": "Għad m'hemmx sigħat.",
+    "breakShort": "waqfa {m} min",
+    "leaveTitle": "Liv",
+    "kind": "Tip",
+    "leave": {
+      "HOLIDAY": "Vaganza",
+      "SICK": "Mard",
+      "UNPAID": "Mhux imħallas",
+      "OTHER": "Oħrajn"
+    },
+    "from": "Minn",
+    "to": "Sa",
+    "halfDay": "Nofs jum",
+    "reason": "Raġuni",
+    "ask": "Itlob",
+    "asked": "Mibgħut.",
+    "cancel": "Ikkanċella",
+    "pinTitle": "Il-PIN tal-ħin tiegħi",
+    "pinHint": "4–8 ċifri — l-istess PIN tal-kaxxa.",
+    "pinSet": "Il-PIN ġie salvat.",
+    "pinMissing": "Issettja PIN biex tirreġistra d-dħul fil-kiosk.",
+    "savePin": "Issalva l-PIN",
+    "submitWeek": "Ibgħat din il-ġimgħa lill-maniġer tiegħi",
+    "submitted": "Mibgħut.",
+    "rotaTitle": "Roster",
+    "rotaIntro": "Ippjana x-xiftijiet tal-ġimgħa. Il-ħaddiema jarawhom ladarba tippubblikahom.",
+    "rotaIntroStaff": "Ix-xiftijiet ippubblikati tat-tim tiegħek.",
+    "prevWeek": "← Il-ġimgħa ta' qabel",
+    "nextWeek": "Il-ġimgħa d-dieħla →",
+    "thisWeekBtn": "Din il-ġimgħa",
+    "publish": "Ippubblika l-ġimgħa ({n} abbozzi)",
+    "published": "Ippubblikat — il-ħaddiema ġew infurmati.",
+    "copyPrev": "Ikkopja l-ġimgħa li għaddiet",
+    "copiedOk": "Ix-xiftijiet tal-ġimgħa li għaddiet ġew ikkupjati bħala abbozzi.",
+    "addShift": "Żid xift",
+    "day": "Jum",
+    "person": "Persuna",
+    "site": "Post",
+    "role": "Rwol",
+    "start": "Bidu",
+    "end": "Tmiem",
+    "breakMin": "Waqfa (min)",
+    "save": "Issalva",
+    "saved": "Salvat.",
+    "delete": "Ħassar",
+    "draft": "abbozz",
+    "planned": "Ippjanat {h}",
+    "contractOf": "minn {h} h",
+    "plannedCost": "Spiża tal-ħaddiema ppjanata: {cost}",
+    "noStaff": "L-ewwel żid il-ħaddiema tiegħek (Ħaddiema).",
+    "onLeave": "Fuq liv",
+    "warn": {
+      "WEEK_OVER_MAX": "Aktar mill-massimu fil-ġimgħa",
+      "SHORT_REST": "Inqas mistrieħ milli meħtieġ",
+      "NO_BREAK": "Jeħtieġ waqfa",
+      "OVERLAP": "Jikkoinċidi ma' xift ieħor",
+      "ON_LEAVE": "Fuq liv"
+    },
+    "kioskTitle": "Kiosk tal-Ħin",
+    "kioskIntro": "Ħalli din il-paġna miftuħa fuq l-apparat tal-ħanut jew tal-maħżen. Il-ħaddiema jdaħħlu l-PIN tagħhom biex jirreġistraw id-dħul jew il-ħruġ.",
+    "enterPin": "Daħħal il-PIN tiegħek",
+    "clear": "Naddaf",
+    "inOut": "Dħul / Ħruġ",
+    "hello": "{name}: {action} fil-{time}",
+    "timesheetsTitle": "Skedi tal-ħin",
+    "timesheetsIntro": "Il-ġimgħa ta' kull persuna: sigħat, sahra, sigħat bil-lejl u ta' festi pubbliċi. Approva biex tagħlaq il-ġimgħa.",
+    "approve": "Approva",
+    "reopen": "Iftaħ mill-ġdid",
+    "leaveDays": "Jiem ta' liv",
+    "cost": "Spiża",
+    "addEntry": "Żid entrata",
+    "editEntry": "Ikkoreġi",
+    "clockedIn": "Dħul",
+    "clockedOut": "Ħruġ",
+    "reasonRequired": "Għaliex (jinżamm fir-reġistru)",
+    "stillIn": "għadu ġewwa",
+    "export": "Esporta",
+    "payroll": "Pagi (CSV)",
+    "record": "Reġistru tal-ħin (CSV)",
+    "exportHint": "Ir-reġistru tal-ħin jelenka kull entrata u korrezzjoni — ir-reġistru legali tal-ħin tax-xogħol. Jinżamm għal {years} snin.",
+    "leavePageTitle": "Liv u Skambji",
+    "leavePageIntro": "Approva t-talbiet għal-liv u l-iskambji ta' xiftijiet.",
+    "approveBtn": "Approva",
+    "reject": "Irrifjuta",
+    "rejectReason": "Raġuni (jarawha huma)",
+    "days": "{n} jiem tax-xogħol",
+    "noRequests": "Xejn mhu qed jistenna.",
+    "peopleTitle": "Ħaddiema",
+    "peopleIntro": "Rwoli, sigħat tal-kuntratt, rati tal-paga (jarawhom il-maniġers biss), il-post ewlieni u l-PINs tal-ħin. Żid persuni f'Utenti.",
+    "rate": "Rata kull siegħa",
+    "contractHours": "Kuntratt h/ġimgħa",
+    "homeSite": "Post ewlieni",
+    "payrollCode": "Kodiċi tal-pagi",
+    "active": "Attiv",
+    "hasPin": "PIN issettjat",
+    "noPin": "L-ebda PIN",
+    "inactive": "Inattiv",
+    "teamLink": "Żid persuni",
+    "closed": {
+      "OFF": "Ħaddiema u Ħin mhux disponibbli bħalissa.",
+      "COMPANY_OFF": "Ħaddiema u Ħin huwa mitfi għan-negozju tiegħek. Ikkuntattja lil FIRINGI.",
+      "TYPE_OFF": "Ħaddiema u Ħin mhux disponibbli għat-tip ta' negozju tiegħek.",
+      "PART_OFF": "Din il-parti hija mitfija.",
+      "KIOSK_OFF": "Il-kiosk huwa mitfi — irreġistra d-dħul mit-telefon."
     }
   }
 }

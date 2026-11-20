@@ -1714,6 +1714,62 @@
     "co2_decided": {
       "title": "Valor de CO₂ revisado {decision}: {product}",
       "body": "\"{product}\" {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Sus turnos están publicados",
+      "body": "El cuadrante de la semana del {week} está publicado. Abra Mis turnos para ver los suyos."
+    },
+    "staff_shift_changed": {
+      "title": "Un turno ha cambiado",
+      "body": "Su turno del {start} se ha cambiado o cancelado. Revise Mis turnos."
+    },
+    "staff_shift_reminder": {
+      "title": "Su turno empieza pronto",
+      "body": "Su turno empieza {start}. Recuerde fichar la entrada."
+    },
+    "staff_clock_out_reminder": {
+      "title": "¿Sigue fichado?",
+      "body": "Su turno ha terminado pero sigue fichado. Fiche la salida si ya ha terminado."
+    },
+    "staff_timesheet_approved": {
+      "title": "Hoja de horas aprobada",
+      "body": "Sus horas de la semana del {week} están aprobadas."
+    },
+    "staff_leave_decided": {
+      "title": "Ausencia {decision}",
+      "body": "Su ausencia del {from} al {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Un compañero le ofrece un turno",
+      "body": "{name} le ofrece el turno del {start}. Abra Mis turnos para aceptarlo."
+    },
+    "staff_swap_decided": {
+      "title": "Cambio de turno {decision}",
+      "body": "El cambio del turno del {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Turno libre ocupado",
+      "body": "{name} se ha quedado el turno libre del {start}."
+    },
+    "staff_no_show": {
+      "title": "Sin fichar: {name}",
+      "body": "{name} tiene un turno que empezó {start} y no ha fichado la entrada."
+    },
+    "staff_missed_clock_out": {
+      "title": "Olvidó fichar la salida: {name}",
+      "body": "{name} seguía fichado; el registro se cerró automáticamente. Revíselo en Hojas de horas."
+    },
+    "staff_leave_requested": {
+      "title": "Solicitud de ausencia: {name}",
+      "body": "{name} pide ausencia del {from} al {to}. Apruébela en Ausencias y cambios."
+    },
+    "staff_swap_to_approve": {
+      "title": "Cambio de turno por aprobar",
+      "body": "{name} aceptó un turno del {start}. Apruébelo en Ausencias y cambios."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Hoja de horas enviada: {name}",
+      "body": "{name} envió las horas de la semana del {week}."
     }
   },
   "notifications": {
@@ -6872,6 +6928,195 @@
       "HYBRID": "Híbrido",
       "LPG": "GLP",
       "ELECTRIC": "Eléctrico"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Quién Está",
+    "overviewIntro": "Quién trabaja ahora, los turnos de hoy y lo que necesita su atención.",
+    "inNow": "Presentes ahora",
+    "nobodyIn": "Nadie ha fichado.",
+    "onBreak": "En pausa",
+    "since": "desde las {time}",
+    "staffCount": "Personal",
+    "today": "Turnos de hoy",
+    "noShiftsToday": "No hay turnos hoy.",
+    "state": {
+      "IN": "Presente",
+      "MISSING": "Aún no ha llegado",
+      "LATER": "Más tarde"
+    },
+    "openShift": "Turno libre",
+    "flaggedTitle": "Por revisar",
+    "noFlags": "Nada por revisar.",
+    "flag": {
+      "LATE": "Retraso",
+      "EARLY_LEAVE": "Salió antes",
+      "OUTSIDE_AREA": "Fuera del lugar",
+      "MISSED_CLOCK_OUT": "Olvidó fichar la salida",
+      "EDITED": "Corregido",
+      "NO_BREAK": "Sin pausa",
+      "NO_SHIFT": "Sin turno previsto"
+    },
+    "pending": "Esperándole",
+    "pendingLeave": "Solicitudes de ausencia: {n}",
+    "pendingSwaps": "Cambios de turno: {n}",
+    "pendingSheets": "Hojas de horas: {n}",
+    "labourTitle": "Coste de personal y ventas (14 días)",
+    "hours": "Horas",
+    "labourCost": "Coste de personal",
+    "sales": "Ventas",
+    "share": "Peso del personal",
+    "ratesMissing": "Personas sin tarifa por hora: {n} — el coste no las incluye.",
+    "meTitle": "Mis Turnos y Horas",
+    "meIntro": "Fiche la entrada y la salida, vea sus turnos y horas, pida una ausencia o cambie un turno.",
+    "clockIn": "Fichar entrada",
+    "clockOut": "Fichar salida",
+    "breakStart": "Iniciar pausa",
+    "breakEnd": "Terminar pausa",
+    "clockedInSince": "Entrada a las {time}",
+    "notClockedIn": "No ha fichado la entrada.",
+    "locating": "Obteniendo su ubicación…",
+    "locationNeeded": "Permita la ubicación para fichar desde el móvil.",
+    "clockDone": "Hecho: {action} a las {time}",
+    "nearestSite": "Lugar más cercano",
+    "action": {
+      "IN": "entrada",
+      "OUT": "salida",
+      "BREAK_START": "inicio de pausa",
+      "BREAK_END": "fin de pausa"
+    },
+    "phoneOff": "Fichar desde el móvil está desactivado — use el quiosco.",
+    "thisWeek": "Esta semana",
+    "worked": "Trabajado",
+    "overtime": "Horas extra",
+    "night": "Nocturno",
+    "holiday": "Festivo",
+    "contract": "Contrato: {h} h a la semana",
+    "myShifts": "Mis próximos turnos",
+    "noShifts": "No hay turnos previstos.",
+    "offerSwap": "Ofrecer a un compañero",
+    "anyone": "Cualquiera",
+    "swapNote": "Nota (opcional)",
+    "send": "Enviar",
+    "offered": "Ofrecido.",
+    "openShifts": "Turnos libres",
+    "take": "Quedarme este turno",
+    "swaps": "Cambios de turno",
+    "acceptSwap": "Aceptar",
+    "status": {
+      "PENDING": "En espera",
+      "ACCEPTED": "Aceptado, esperando al responsable",
+      "APPROVED": "Aprobado",
+      "REJECTED": "No aprobado",
+      "CANCELLED": "Cancelado",
+      "OPEN": "Abierta",
+      "SUBMITTED": "Enviada"
+    },
+    "recent": "Horas recientes",
+    "noEntries": "Aún no hay horas.",
+    "breakShort": "pausa {m} min",
+    "leaveTitle": "Ausencias",
+    "kind": "Tipo",
+    "leave": {
+      "HOLIDAY": "Vacaciones",
+      "SICK": "Enfermedad",
+      "UNPAID": "Sin sueldo",
+      "OTHER": "Otro"
+    },
+    "from": "Desde",
+    "to": "Hasta",
+    "halfDay": "Medio día",
+    "reason": "Motivo",
+    "ask": "Pedir",
+    "asked": "Enviado.",
+    "cancel": "Cancelar",
+    "pinTitle": "Mi PIN de fichaje",
+    "pinHint": "De 4 a 8 cifras — el mismo PIN que la caja.",
+    "pinSet": "PIN guardado.",
+    "pinMissing": "Defina un PIN para fichar en el quiosco.",
+    "savePin": "Guardar PIN",
+    "submitWeek": "Enviar esta semana a mi responsable",
+    "submitted": "Enviado.",
+    "rotaTitle": "Cuadrante",
+    "rotaIntro": "Planifique los turnos de la semana. El personal los ve cuando los publique.",
+    "rotaIntroStaff": "Los turnos publicados de su equipo.",
+    "prevWeek": "← Semana anterior",
+    "nextWeek": "Semana siguiente →",
+    "thisWeekBtn": "Esta semana",
+    "publish": "Publicar la semana ({n} borradores)",
+    "published": "Publicado — se ha avisado al personal.",
+    "copyPrev": "Copiar la semana pasada",
+    "copiedOk": "Turnos de la semana pasada copiados como borrador.",
+    "addShift": "Añadir turno",
+    "day": "Día",
+    "person": "Persona",
+    "site": "Lugar",
+    "role": "Función",
+    "start": "Inicio",
+    "end": "Fin",
+    "breakMin": "Pausa (min)",
+    "save": "Guardar",
+    "saved": "Guardado.",
+    "delete": "Borrar",
+    "draft": "borrador",
+    "planned": "Previsto {h}",
+    "contractOf": "de {h} h",
+    "plannedCost": "Coste de personal previsto: {cost}",
+    "noStaff": "Añada primero a su personal (Personal).",
+    "onLeave": "De ausencia",
+    "warn": {
+      "WEEK_OVER_MAX": "Por encima del máximo semanal",
+      "SHORT_REST": "Descanso inferior al exigido",
+      "NO_BREAK": "Necesita pausa",
+      "OVERLAP": "Se solapa con otro turno",
+      "ON_LEAVE": "De ausencia"
+    },
+    "kioskTitle": "Quiosco de Fichaje",
+    "kioskIntro": "Deje esta página abierta en el dispositivo de la tienda o del almacén. El personal escribe su PIN para fichar la entrada o la salida.",
+    "enterPin": "Escriba su PIN",
+    "clear": "Borrar",
+    "inOut": "Entrada / Salida",
+    "hello": "{name}: {action} a las {time}",
+    "timesheetsTitle": "Hojas de Horas",
+    "timesheetsIntro": "La semana de cada persona: horas, horas extra, nocturnas y en festivo. Apruebe para cerrar la semana.",
+    "approve": "Aprobar",
+    "reopen": "Reabrir",
+    "leaveDays": "Días de ausencia",
+    "cost": "Coste",
+    "addEntry": "Añadir registro",
+    "editEntry": "Corregir",
+    "clockedIn": "Entrada",
+    "clockedOut": "Salida",
+    "reasonRequired": "Por qué (queda en el registro)",
+    "stillIn": "aún presente",
+    "export": "Exportar",
+    "payroll": "Nóminas (CSV)",
+    "record": "Registro de jornada (CSV)",
+    "exportHint": "El registro de jornada lista cada entrada y corrección — el registro legal del tiempo de trabajo. Se conserva {years} años.",
+    "leavePageTitle": "Ausencias y Cambios",
+    "leavePageIntro": "Apruebe las solicitudes de ausencia y los cambios de turno.",
+    "approveBtn": "Aprobar",
+    "reject": "Rechazar",
+    "rejectReason": "Motivo (la persona lo ve)",
+    "days": "{n} días laborables",
+    "noRequests": "Nada en espera.",
+    "peopleTitle": "Personal",
+    "peopleIntro": "Funciones, horas de contrato, tarifas por hora (solo las ven los responsables), lugar habitual y PIN de fichaje. Añada personas en Usuarios.",
+    "rate": "Tarifa por hora",
+    "contractHours": "Contrato h/semana",
+    "homeSite": "Lugar habitual",
+    "payrollCode": "Código de nómina",
+    "active": "Activo",
+    "hasPin": "Con PIN",
+    "noPin": "Sin PIN",
+    "inactive": "Inactivo",
+    "teamLink": "Añadir personas",
+    "closed": {
+      "OFF": "Personal y horarios no está disponible en este momento.",
+      "COMPANY_OFF": "Personal y horarios está desactivado para su empresa. Contacte con FIRINGI.",
+      "TYPE_OFF": "Personal y horarios no está disponible para su tipo de empresa.",
+      "PART_OFF": "Esta parte está desactivada.",
+      "KIOSK_OFF": "El quiosco está desactivado — fiche desde el móvil."
     }
   }
 }

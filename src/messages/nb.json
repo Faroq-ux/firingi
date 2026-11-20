@@ -891,7 +891,15 @@
     "Tenders": "Anbud",
     "Sustainability & CO₂": "Bærekraft og CO₂",
     "CO₂ & Packaging": "CO₂ og emballasje",
-    "CO₂ Footprint": "CO₂-avtrykk"
+    "CO₂ Footprint": "CO₂-avtrykk",
+    "Staff & Time": "Ansatte og tid",
+    "My Shifts & Hours": "Mine vakter og timer",
+    "Who's In": "Hvem er inne",
+    "Rota": "Vaktplan",
+    "Clock-in Kiosk": "Stemplingskiosk",
+    "Timesheets": "Timelister",
+    "Leave & Swaps": "Fravær og bytter",
+    "Staff": "Ansatte"
   },
   "delivery": {
     "title": "Levering",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-verdi kontrollert ({decision}): {product}",
       "body": "«{product}» {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Vaktene dine er klare",
+      "body": "Vaktplanen for uken {week} er publisert. Åpne Mine vakter for å se dine."
+    },
+    "staff_shift_changed": {
+      "title": "En vakt er endret",
+      "body": "Vakten din {start} er endret eller avlyst. Sjekk Mine vakter."
+    },
+    "staff_shift_reminder": {
+      "title": "Vakten din starter snart",
+      "body": "Vakten din starter {start}. Husk å stemple inn."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Fortsatt stemplet inn?",
+      "body": "Vakten din er slutt, men du er fortsatt stemplet inn. Stemple ut hvis du er ferdig."
+    },
+    "staff_timesheet_approved": {
+      "title": "Timeliste godkjent",
+      "body": "Timene dine for uken {week} er godkjent."
+    },
+    "staff_leave_decided": {
+      "title": "Fravær {decision}",
+      "body": "Fraværet ditt {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "En kollega tilbyr deg en vakt",
+      "body": "{name} tilbyr deg vakten {start}. Åpne Mine vakter for å ta den."
+    },
+    "staff_swap_decided": {
+      "title": "Vaktbytte {decision}",
+      "body": "Byttet av vakten {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Ledig vakt tatt",
+      "body": "{name} tok den ledige vakten {start}."
+    },
+    "staff_no_show": {
+      "title": "Ikke stemplet inn: {name}",
+      "body": "{name} har en vakt som startet {start}, og har ikke stemplet inn."
+    },
+    "staff_missed_clock_out": {
+      "title": "Glemte å stemple ut: {name}",
+      "body": "{name} var fortsatt stemplet inn; registreringen ble lukket automatisk. Sjekk den under Timelister."
+    },
+    "staff_leave_requested": {
+      "title": "Fraværssøknad: {name}",
+      "body": "{name} søker om fravær {from} – {to}. Godkjenn under Fravær og bytter."
+    },
+    "staff_swap_to_approve": {
+      "title": "Vaktbytte til godkjenning",
+      "body": "{name} tok en vakt {start}. Godkjenn under Fravær og bytter."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Timeliste sendt: {name}",
+      "body": "{name} sendte timene for uken {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybrid",
       "LPG": "LPG",
       "ELECTRIC": "Elektrisk"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Hvem er inne",
+    "overviewIntro": "Hvem som jobber nå, dagens vakter og hva som trenger din oppmerksomhet.",
+    "inNow": "Inne nå",
+    "nobodyIn": "Ingen er stemplet inn.",
+    "onBreak": "På pause",
+    "since": "siden {time}",
+    "staffCount": "Ansatte",
+    "today": "Dagens vakter",
+    "noShiftsToday": "Ingen vakter i dag.",
+    "state": {
+      "IN": "Inne",
+      "MISSING": "Ikke inne ennå",
+      "LATER": "Senere"
+    },
+    "openShift": "Ledig vakt",
+    "flaggedTitle": "Til kontroll",
+    "noFlags": "Ingenting å kontrollere.",
+    "flag": {
+      "LATE": "For sent",
+      "EARLY_LEAVE": "Gikk tidlig",
+      "OUTSIDE_AREA": "Utenfor området",
+      "MISSED_CLOCK_OUT": "Glemte å stemple ut",
+      "EDITED": "Korrigert",
+      "NO_BREAK": "Ingen pause",
+      "NO_SHIFT": "Ingen planlagt vakt"
+    },
+    "pending": "Venter på deg",
+    "pendingLeave": "Fraværssøknader: {n}",
+    "pendingSwaps": "Vaktbytter: {n}",
+    "pendingSheets": "Timelister: {n}",
+    "labourTitle": "Lønnskostnad og salg (14 dager)",
+    "hours": "Timer",
+    "labourCost": "Lønnskostnad",
+    "sales": "Salg",
+    "share": "Lønnsandel",
+    "ratesMissing": "Personer uten timesats: {n} — de er ikke med i kostnaden.",
+    "meTitle": "Mine vakter og timer",
+    "meIntro": "Stemple inn og ut, se vaktene og timene dine, søk om fravær eller bytt vakt.",
+    "clockIn": "Stemple inn",
+    "clockOut": "Stemple ut",
+    "breakStart": "Start pause",
+    "breakEnd": "Avslutt pause",
+    "clockedInSince": "Stemplet inn siden {time}",
+    "notClockedIn": "Du er ikke stemplet inn.",
+    "locating": "Finner posisjonen din…",
+    "locationNeeded": "Gi tilgang til posisjonen din for å stemple inn fra telefonen.",
+    "clockDone": "Ferdig: {action} kl. {time}",
+    "nearestSite": "Nærmeste lokasjon",
+    "action": {
+      "IN": "stemplet inn",
+      "OUT": "stemplet ut",
+      "BREAK_START": "pause startet",
+      "BREAK_END": "pause avsluttet"
+    },
+    "phoneOff": "Innstempling fra telefon er slått av — bruk kiosken.",
+    "thisWeek": "Denne uken",
+    "worked": "Arbeidet",
+    "overtime": "Overtid",
+    "night": "Natt",
+    "holiday": "Helligdag",
+    "contract": "Kontrakt: {h} t per uke",
+    "myShifts": "Mine neste vakter",
+    "noShifts": "Ingen planlagte vakter.",
+    "offerSwap": "Tilby til en kollega",
+    "anyone": "Hvem som helst",
+    "swapNote": "Merknad (valgfritt)",
+    "send": "Send",
+    "offered": "Tilbudt.",
+    "openShifts": "Ledige vakter",
+    "take": "Ta denne vakten",
+    "swaps": "Vaktbytter",
+    "acceptSwap": "Ta den",
+    "status": {
+      "PENDING": "Venter",
+      "ACCEPTED": "Tatt, venter på leder",
+      "APPROVED": "Godkjent",
+      "REJECTED": "Ikke godkjent",
+      "CANCELLED": "Kansellert",
+      "OPEN": "Åpen",
+      "SUBMITTED": "Sendt"
+    },
+    "recent": "Siste timer",
+    "noEntries": "Ingen timer ennå.",
+    "breakShort": "pause {m} min",
+    "leaveTitle": "Fravær",
+    "kind": "Type",
+    "leave": {
+      "HOLIDAY": "Ferie",
+      "SICK": "Syk",
+      "UNPAID": "Ulønnet",
+      "OTHER": "Annet"
+    },
+    "from": "Fra",
+    "to": "Til",
+    "halfDay": "Halv dag",
+    "reason": "Årsak",
+    "ask": "Søk",
+    "asked": "Sendt.",
+    "cancel": "Avbryt",
+    "pinTitle": "Min stemple-PIN",
+    "pinHint": "4–8 sifre — samme PIN som på kassen.",
+    "pinSet": "PIN lagret.",
+    "pinMissing": "Velg en PIN for å stemple inn på kiosken.",
+    "savePin": "Lagre PIN",
+    "submitWeek": "Send denne uken til lederen min",
+    "submitted": "Sendt.",
+    "rotaTitle": "Vaktplan",
+    "rotaIntro": "Planlegg ukens vakter. De ansatte ser dem når du publiserer.",
+    "rotaIntroStaff": "Teamets publiserte vakter.",
+    "prevWeek": "← Forrige uke",
+    "nextWeek": "Neste uke →",
+    "thisWeekBtn": "Denne uken",
+    "publish": "Publiser uken ({n} utkast)",
+    "published": "Publisert — de ansatte har fått beskjed.",
+    "copyPrev": "Kopier forrige uke",
+    "copiedOk": "Forrige ukes vakter er kopiert som utkast.",
+    "addShift": "Legg til vakt",
+    "day": "Dag",
+    "person": "Person",
+    "site": "Lokasjon",
+    "role": "Rolle",
+    "start": "Start",
+    "end": "Slutt",
+    "breakMin": "Pause (min)",
+    "save": "Lagre",
+    "saved": "Lagret.",
+    "delete": "Slett",
+    "draft": "utkast",
+    "planned": "Planlagt {h}",
+    "contractOf": "av {h} t",
+    "plannedCost": "Planlagt lønnskostnad: {cost}",
+    "noStaff": "Legg til de ansatte først (Ansatte).",
+    "onLeave": "Fraværende",
+    "warn": {
+      "WEEK_OVER_MAX": "Over ukentlig maksimum",
+      "SHORT_REST": "Mindre hvile enn påkrevd",
+      "NO_BREAK": "Trenger pause",
+      "OVERLAP": "Overlapper en annen vakt",
+      "ON_LEAVE": "Fraværende"
+    },
+    "kioskTitle": "Stemplingskiosk",
+    "kioskIntro": "La denne siden stå åpen på enheten i butikken eller på lageret. De ansatte taster PIN-en sin for å stemple inn eller ut.",
+    "enterPin": "Tast PIN-en din",
+    "clear": "Tøm",
+    "inOut": "Inn / Ut",
+    "hello": "{name}: {action} kl. {time}",
+    "timesheetsTitle": "Timelister",
+    "timesheetsIntro": "Hver persons uke: timer, overtid, natt- og helligdagstimer. Godkjenn for å låse uken.",
+    "approve": "Godkjenn",
+    "reopen": "Gjenåpne",
+    "leaveDays": "Fraværsdager",
+    "cost": "Kostnad",
+    "addEntry": "Legg til registrering",
+    "editEntry": "Korriger",
+    "clockedIn": "Inn",
+    "clockedOut": "Ut",
+    "reasonRequired": "Hvorfor (lagres i registeret)",
+    "stillIn": "fortsatt inne",
+    "export": "Eksport",
+    "payroll": "Lønn (CSV)",
+    "record": "Tidsregistrering (CSV)",
+    "exportHint": "Tidsregistreringen viser alle registreringer og korrigeringer — den lovpålagte oversikten over arbeidstid. Den oppbevares i {years} år.",
+    "leavePageTitle": "Fravær og bytter",
+    "leavePageIntro": "Godkjenn fraværssøknader og vaktbytter.",
+    "approveBtn": "Godkjenn",
+    "reject": "Avslå",
+    "rejectReason": "Årsak (vises for den ansatte)",
+    "days": "{n} arbeidsdager",
+    "noRequests": "Ingenting venter.",
+    "peopleTitle": "Ansatte",
+    "peopleIntro": "Roller, kontraktstimer, lønnssatser (bare ledere ser dem), hjemmelokasjon og stemple-PIN-er. Legg til personer under Brukere.",
+    "rate": "Timesats",
+    "contractHours": "Kontrakt t/uke",
+    "homeSite": "Hjemmelokasjon",
+    "payrollCode": "Lønnskode",
+    "active": "Aktiv",
+    "hasPin": "PIN satt",
+    "noPin": "Ingen PIN",
+    "inactive": "Inaktiv",
+    "teamLink": "Legg til personer",
+    "closed": {
+      "OFF": "Ansatte og tid er ikke tilgjengelig for øyeblikket.",
+      "COMPANY_OFF": "Ansatte og tid er slått av for bedriften din. Kontakt FIRINGI.",
+      "TYPE_OFF": "Ansatte og tid er ikke tilgjengelig for din bedriftstype.",
+      "PART_OFF": "Denne delen er slått av.",
+      "KIOSK_OFF": "Kiosken er slått av — stemple inn fra telefonen."
     }
   }
 }

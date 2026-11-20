@@ -136,10 +136,12 @@ describe("checkout & delivery decision", () => {
     const azeite = await offerOf(LX, "FIR-AZEITE75", 6);
     await restock(azeite.id, "owner@lisboacentral.test", 3);
     const before = await stockOf(azeite.id);
-    const count = await prisma.order.count();
+    // only this buyer's orders of this product (other test files place orders at the same time)
+    const mine = { buyerCompanyId: kebab.company.id, lines: { some: { offerId: azeite.id } } };
+    const count = await prisma.order.count({ where: mine });
     await addToCart(kebab, azeite.id, 4);
     await expect(placeOrder(kebab, { deliveryAddressId: await deliveryAddress(KEBAB) })).rejects.toThrow(/Only 3 available/);
-    expect(await prisma.order.count()).toBe(count);
+    expect(await prisma.order.count({ where: mine })).toBe(count);
     expect(await stockOf(azeite.id)).toEqual(before);
   });
 });

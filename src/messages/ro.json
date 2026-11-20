@@ -891,7 +891,15 @@
     "Tenders": "Licitații",
     "Sustainability & CO₂": "Sustenabilitate și CO₂",
     "CO₂ & Packaging": "CO₂ și ambalaje",
-    "CO₂ Footprint": "Amprenta de CO₂"
+    "CO₂ Footprint": "Amprenta de CO₂",
+    "Staff & Time": "Personal și timp de lucru",
+    "My Shifts & Hours": "Turele și orele mele",
+    "Who's In": "Cine este la lucru",
+    "Rota": "Program ture",
+    "Clock-in Kiosk": "Chioșc de pontaj",
+    "Timesheets": "Foi de pontaj",
+    "Leave & Swaps": "Concedii și schimburi",
+    "Staff": "Personal"
   },
   "delivery": {
     "title": "Livrare",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Valoare CO₂ verificată {decision}: {product}",
       "body": "„{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Turele dumneavoastră au fost publicate",
+      "body": "Programul turelor pentru săptămâna {week} a fost publicat. Deschideți Turele mele pentru a le vedea."
+    },
+    "staff_shift_changed": {
+      "title": "O tură s-a modificat",
+      "body": "Tura dumneavoastră din {start} a fost modificată sau anulată. Verificați Turele mele."
+    },
+    "staff_shift_reminder": {
+      "title": "Tura începe în curând",
+      "body": "Tura dumneavoastră începe {start}. Nu uitați să pontați intrarea."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Încă pontat?",
+      "body": "Tura s-a încheiat, dar sunteți încă pontat la intrare. Pontați ieșirea dacă ați terminat."
+    },
+    "staff_timesheet_approved": {
+      "title": "Foaie de pontaj aprobată",
+      "body": "Orele dumneavoastră pentru săptămâna {week} au fost aprobate."
+    },
+    "staff_leave_decided": {
+      "title": "Concediu: {decision}",
+      "body": "Concediul dumneavoastră {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Un coleg vă oferă o tură",
+      "body": "{name} vă oferă tura din {start}. Deschideți Turele mele pentru a o prelua."
+    },
+    "staff_swap_decided": {
+      "title": "Schimb de tură: {decision}",
+      "body": "Schimbul turei din {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Tură liberă preluată",
+      "body": "{name} a preluat tura liberă din {start}."
+    },
+    "staff_no_show": {
+      "title": "Intrare nepontată: {name}",
+      "body": "{name} are o tură care a început {start} și nu a pontat intrarea."
+    },
+    "staff_missed_clock_out": {
+      "title": "Ieșire nepontată: {name}",
+      "body": "{name} era încă pontat la intrare; înregistrarea a fost închisă automat. Verificați-o în Foi de pontaj."
+    },
+    "staff_leave_requested": {
+      "title": "Cerere de concediu: {name}",
+      "body": "{name} solicită concediu {from} – {to}. Aprobați cererea în Concedii și schimburi."
+    },
+    "staff_swap_to_approve": {
+      "title": "Schimb de tură de aprobat",
+      "body": "{name} a preluat o tură din {start}. Aprobați schimbul în Concedii și schimburi."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Foaie de pontaj trimisă: {name}",
+      "body": "{name} a trimis orele pentru săptămâna {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hibrid",
       "LPG": "GPL",
       "ELECTRIC": "Electric"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Cine este la lucru",
+    "overviewIntro": "Cine lucrează acum, turele de azi și ce necesită atenția dumneavoastră.",
+    "inNow": "Prezenți acum",
+    "nobodyIn": "Nimeni nu a pontat intrarea.",
+    "onBreak": "În pauză",
+    "since": "de la {time}",
+    "staffCount": "Personal",
+    "today": "Turele de azi",
+    "noShiftsToday": "Nicio tură azi.",
+    "state": {
+      "IN": "Prezent",
+      "MISSING": "Încă nesosit",
+      "LATER": "Mai târziu"
+    },
+    "openShift": "Tură liberă",
+    "flaggedTitle": "De verificat",
+    "noFlags": "Nimic de verificat.",
+    "flag": {
+      "LATE": "Întârziere",
+      "EARLY_LEAVE": "Plecat devreme",
+      "OUTSIDE_AREA": "În afara zonei",
+      "MISSED_CLOCK_OUT": "Ieșire nepontată",
+      "EDITED": "Corectat",
+      "NO_BREAK": "Fără pauză",
+      "NO_SHIFT": "Fără tură planificată"
+    },
+    "pending": "Așteaptă decizia dumneavoastră",
+    "pendingLeave": "Cereri de concediu: {n}",
+    "pendingSwaps": "Schimburi de ture: {n}",
+    "pendingSheets": "Foi de pontaj: {n}",
+    "labourTitle": "Costul muncii și vânzări (14 zile)",
+    "hours": "Ore",
+    "labourCost": "Costul muncii",
+    "sales": "Vânzări",
+    "share": "Ponderea costului muncii",
+    "ratesMissing": "Persoane fără tarif orar: {n} — nu sunt incluse în cost.",
+    "meTitle": "Turele și orele mele",
+    "meIntro": "Pontați intrarea și ieșirea, vedeți turele și orele, solicitați concediu sau schimbați o tură.",
+    "clockIn": "Pontaj intrare",
+    "clockOut": "Pontaj ieșire",
+    "breakStart": "Început pauză",
+    "breakEnd": "Sfârșit pauză",
+    "clockedInSince": "Pontat la intrare de la {time}",
+    "notClockedIn": "Nu ați pontat intrarea.",
+    "locating": "Se determină locația…",
+    "locationNeeded": "Permiteți accesul la locație pentru a ponta din telefon.",
+    "clockDone": "Gata: {action} la {time}",
+    "nearestSite": "Cea mai apropiată locație",
+    "action": {
+      "IN": "intrare pontată",
+      "OUT": "ieșire pontată",
+      "BREAK_START": "pauză începută",
+      "BREAK_END": "pauză încheiată"
+    },
+    "phoneOff": "Pontajul din telefon este dezactivat — folosiți chioșcul.",
+    "thisWeek": "Săptămâna aceasta",
+    "worked": "Lucrat",
+    "overtime": "Ore suplimentare",
+    "night": "Noapte",
+    "holiday": "Sărbătoare legală",
+    "contract": "Contract: {h} h pe săptămână",
+    "myShifts": "Următoarele mele ture",
+    "noShifts": "Nicio tură planificată.",
+    "offerSwap": "Oferiți unui coleg",
+    "anyone": "Oricine",
+    "swapNote": "Notă (opțional)",
+    "send": "Trimite",
+    "offered": "Oferită.",
+    "openShifts": "Ture libere",
+    "take": "Preiau această tură",
+    "swaps": "Schimburi de ture",
+    "acceptSwap": "Preiau",
+    "status": {
+      "PENDING": "În așteptare",
+      "ACCEPTED": "Preluată, așteaptă managerul",
+      "APPROVED": "Aprobat",
+      "REJECTED": "Neaprobat",
+      "CANCELLED": "Anulat",
+      "OPEN": "Deschis",
+      "SUBMITTED": "Trimis"
+    },
+    "recent": "Ore recente",
+    "noEntries": "Încă nu există ore.",
+    "breakShort": "pauză {m} min",
+    "leaveTitle": "Concediu",
+    "kind": "Tip",
+    "leave": {
+      "HOLIDAY": "Concediu de odihnă",
+      "SICK": "Medical",
+      "UNPAID": "Fără plată",
+      "OTHER": "Altul"
+    },
+    "from": "De la",
+    "to": "Până la",
+    "halfDay": "Jumătate de zi",
+    "reason": "Motiv",
+    "ask": "Solicită",
+    "asked": "Trimis.",
+    "cancel": "Anulează",
+    "pinTitle": "PIN-ul meu de pontaj",
+    "pinHint": "4–8 cifre — același PIN ca la casa de marcat.",
+    "pinSet": "PIN salvat.",
+    "pinMissing": "Setați un PIN pentru a ponta la chioșc.",
+    "savePin": "Salvează PIN",
+    "submitWeek": "Trimite săptămâna aceasta managerului",
+    "submitted": "Trimis.",
+    "rotaTitle": "Program ture",
+    "rotaIntro": "Planificați turele săptămânii. Personalul le vede după ce le publicați.",
+    "rotaIntroStaff": "Turele publicate ale echipei dumneavoastră.",
+    "prevWeek": "← Săptămâna anterioară",
+    "nextWeek": "Săptămâna următoare →",
+    "thisWeekBtn": "Săptămâna aceasta",
+    "publish": "Publică săptămâna ({n} ciorne)",
+    "published": "Publicat — personalul a fost anunțat.",
+    "copyPrev": "Copiază săptămâna trecută",
+    "copiedOk": "Turele săptămânii trecute au fost copiate ca ciorne.",
+    "addShift": "Adaugă tură",
+    "day": "Zi",
+    "person": "Persoană",
+    "site": "Locație",
+    "role": "Rol",
+    "start": "Început",
+    "end": "Sfârșit",
+    "breakMin": "Pauză (min)",
+    "save": "Salvează",
+    "saved": "Salvat.",
+    "delete": "Șterge",
+    "draft": "ciornă",
+    "planned": "Planificat {h}",
+    "contractOf": "din {h} h",
+    "plannedCost": "Cost planificat al muncii: {cost}",
+    "noStaff": "Adăugați mai întâi personalul (Personal).",
+    "onLeave": "În concediu",
+    "warn": {
+      "WEEK_OVER_MAX": "Peste maximul săptămânal",
+      "SHORT_REST": "Odihnă insuficientă",
+      "NO_BREAK": "Necesită pauză",
+      "OVERLAP": "Se suprapune cu altă tură",
+      "ON_LEAVE": "În concediu"
+    },
+    "kioskTitle": "Chioșc de pontaj",
+    "kioskIntro": "Lăsați această pagină deschisă pe dispozitivul din magazin sau depozit. Personalul introduce PIN-ul pentru a ponta intrarea sau ieșirea.",
+    "enterPin": "Introduceți PIN-ul",
+    "clear": "Golește",
+    "inOut": "Intrare / Ieșire",
+    "hello": "{name}: {action} la {time}",
+    "timesheetsTitle": "Foi de pontaj",
+    "timesheetsIntro": "Săptămâna fiecărei persoane: ore, ore suplimentare, ore de noapte și de sărbători legale. Aprobați pentru a bloca săptămâna.",
+    "approve": "Aprobă",
+    "reopen": "Redeschide",
+    "leaveDays": "Zile de concediu",
+    "cost": "Cost",
+    "addEntry": "Adaugă înregistrare",
+    "editEntry": "Corectează",
+    "clockedIn": "Intrare",
+    "clockedOut": "Ieșire",
+    "reasonRequired": "Motiv (păstrat în evidență)",
+    "stillIn": "încă prezent",
+    "export": "Export",
+    "payroll": "Salarizare (CSV)",
+    "record": "Evidența timpului de muncă (CSV)",
+    "exportHint": "Evidența timpului de muncă listează fiecare înregistrare și corectare — evidența legală a timpului de muncă. Se păstrează {years} ani.",
+    "leavePageTitle": "Concedii și schimburi",
+    "leavePageIntro": "Aprobați cererile de concediu și schimburile de ture.",
+    "approveBtn": "Aprobă",
+    "reject": "Respinge",
+    "rejectReason": "Motiv (vizibil pentru angajat)",
+    "days": "{n} zile lucrătoare",
+    "noRequests": "Nimic în așteptare.",
+    "peopleTitle": "Personal",
+    "peopleIntro": "Roluri, ore contractuale, tarife (vizibile doar pentru manageri), locația de bază și PIN-uri de pontaj. Adăugați persoane în Utilizatori.",
+    "rate": "Tarif orar",
+    "contractHours": "Ore contract/săpt.",
+    "homeSite": "Locația de bază",
+    "payrollCode": "Cod salarizare",
+    "active": "Activ",
+    "hasPin": "PIN setat",
+    "noPin": "Fără PIN",
+    "inactive": "Inactiv",
+    "teamLink": "Adaugă persoane",
+    "closed": {
+      "OFF": "Modulul Personal și timp de lucru nu este disponibil momentan.",
+      "COMPANY_OFF": "Modulul Personal și timp de lucru este dezactivat pentru firma dumneavoastră. Contactați FIRINGI.",
+      "TYPE_OFF": "Modulul Personal și timp de lucru nu este disponibil pentru tipul dumneavoastră de activitate.",
+      "PART_OFF": "Această secțiune este dezactivată.",
+      "KIOSK_OFF": "Chioșcul este dezactivat — pontați din telefon."
     }
   }
 }

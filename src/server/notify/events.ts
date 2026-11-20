@@ -208,6 +208,21 @@ export const EVENTS: EventDef[] = [
   E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
   E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
   // Phase 51: CO₂ values
+  // Phase 52: staff shifts & time (personal ones go to the staff member; the rest to the business's managers)
+  E("staff.rota_published", "account", null, ["EMAIL", "PUSH"], ["week"]),
+  E("staff.shift_changed", "account", null, ["PUSH", "EMAIL"], ["start"]),
+  E("staff.shift_reminder", "account", null, ["PUSH"], ["start"]),
+  E("staff.clock_out_reminder", "account", null, ["PUSH"], []),
+  E("staff.timesheet_approved", "account", null, ["PUSH"], ["week"]),
+  E("staff.leave_decided", "account", null, ["EMAIL", "PUSH"], ["from", "to", "decision", "note"]),
+  E("staff.swap_requested", "account", null, ["PUSH", "EMAIL"], ["name", "start"]),
+  E("staff.swap_decided", "account", null, ["PUSH"], ["start", "decision"]),
+  E("staff.shift_claimed", "account", ["company.staff.manage", "admin.staff.manage"], ["PUSH"], ["name", "start"]),
+  E("staff.no_show", "account", ["company.staff.manage", "admin.staff.manage"], ["PUSH", "EMAIL"], ["name", "start"]),
+  E("staff.missed_clock_out", "account", ["company.staff.manage", "admin.staff.manage"], ["PUSH"], ["name"]),
+  E("staff.leave_requested", "account", ["company.staff.manage", "admin.staff.manage"], ["EMAIL", "PUSH"], ["name", "from", "to"]),
+  E("staff.swap_to_approve", "account", ["company.staff.manage", "admin.staff.manage"], ["PUSH"], ["name", "start"]),
+  E("staff.timesheet_submitted", "account", ["company.staff.manage", "admin.staff.manage"], ["EMAIL"], ["name", "week"]),
   E("co2.review", "catalogue", ["admin.catalogue.manage", "admin.catalogue.approve"], ["EMAIL"], ["company"]),
   E("co2.decided", "catalogue", ["vendor.products.manage", "vendor.pricing.manage"], ["EMAIL", "PUSH"], ["product", "decision", "reason"]),
   // Phase 48 — rebates & bonuses

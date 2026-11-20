@@ -891,7 +891,15 @@
     "Tenders": "Tenders",
     "Sustainability & CO₂": "Duurzaamheid & CO₂",
     "CO₂ & Packaging": "CO₂ & verpakking",
-    "CO₂ Footprint": "CO₂-voetafdruk"
+    "CO₂ Footprint": "CO₂-voetafdruk",
+    "Staff & Time": "Personeel & tijd",
+    "My Shifts & Hours": "Mijn diensten & uren",
+    "Who's In": "Wie is er",
+    "Rota": "Rooster",
+    "Clock-in Kiosk": "Inklokkiosk",
+    "Timesheets": "Urenstaten",
+    "Leave & Swaps": "Verlof & ruilen",
+    "Staff": "Personeel"
   },
   "delivery": {
     "title": "Levering",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-waarde gecontroleerd ({decision}): {product}",
       "body": "\"{product}\" {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Uw diensten staan klaar",
+      "body": "Het rooster voor de week van {week} is gepubliceerd. Open Mijn diensten om de uwe te zien."
+    },
+    "staff_shift_changed": {
+      "title": "Een dienst is gewijzigd",
+      "body": "Uw dienst op {start} is gewijzigd of geannuleerd. Bekijk Mijn diensten."
+    },
+    "staff_shift_reminder": {
+      "title": "Uw dienst begint binnenkort",
+      "body": "Uw dienst begint {start}. Vergeet niet in te klokken."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Nog ingeklokt?",
+      "body": "Uw dienst is afgelopen, maar u bent nog ingeklokt. Klok uit als u klaar bent."
+    },
+    "staff_timesheet_approved": {
+      "title": "Urenstaat goedgekeurd",
+      "body": "Uw uren voor de week van {week} zijn goedgekeurd."
+    },
+    "staff_leave_decided": {
+      "title": "Verlof {decision}",
+      "body": "Uw verlof {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Een collega biedt u een dienst aan",
+      "body": "{name} biedt u de dienst op {start} aan. Open Mijn diensten om deze over te nemen."
+    },
+    "staff_swap_decided": {
+      "title": "Dienstruil {decision}",
+      "body": "De ruil van de dienst op {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Open dienst overgenomen",
+      "body": "{name} heeft de open dienst op {start} overgenomen."
+    },
+    "staff_no_show": {
+      "title": "Niet ingeklokt: {name}",
+      "body": "{name} heeft een dienst die is begonnen op {start} en is niet ingeklokt."
+    },
+    "staff_missed_clock_out": {
+      "title": "Vergeten uit te klokken: {name}",
+      "body": "{name} was nog ingeklokt; de registratie is automatisch afgesloten. Controleer deze in Urenstaten."
+    },
+    "staff_leave_requested": {
+      "title": "Verlofaanvraag: {name}",
+      "body": "{name} vraagt verlof aan {from} – {to}. Keur dit goed in Verlof & ruilen."
+    },
+    "staff_swap_to_approve": {
+      "title": "Dienstruil ter goedkeuring",
+      "body": "{name} heeft een dienst op {start} overgenomen. Keur dit goed in Verlof & ruilen."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Urenstaat verstuurd: {name}",
+      "body": "{name} heeft de uren voor de week van {week} verstuurd."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybride",
       "LPG": "LPG",
       "ELECTRIC": "Elektrisch"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Wie is er",
+    "overviewIntro": "Wie er nu werkt, de diensten van vandaag en wat uw aandacht nodig heeft.",
+    "inNow": "Nu aanwezig",
+    "nobodyIn": "Niemand is ingeklokt.",
+    "onBreak": "Met pauze",
+    "since": "sinds {time}",
+    "staffCount": "Personeel",
+    "today": "Diensten vandaag",
+    "noShiftsToday": "Geen diensten vandaag.",
+    "state": {
+      "IN": "Aanwezig",
+      "MISSING": "Nog niet aanwezig",
+      "LATER": "Later"
+    },
+    "openShift": "Open dienst",
+    "flaggedTitle": "Te controleren",
+    "noFlags": "Niets te controleren.",
+    "flag": {
+      "LATE": "Te laat",
+      "EARLY_LEAVE": "Vroeg vertrokken",
+      "OUTSIDE_AREA": "Buiten het gebied",
+      "MISSED_CLOCK_OUT": "Vergeten uit te klokken",
+      "EDITED": "Gecorrigeerd",
+      "NO_BREAK": "Geen pauze",
+      "NO_SHIFT": "Geen dienst gepland"
+    },
+    "pending": "Wacht op u",
+    "pendingLeave": "Verlofaanvragen: {n}",
+    "pendingSwaps": "Dienstruilen: {n}",
+    "pendingSheets": "Urenstaten: {n}",
+    "labourTitle": "Loonkosten en omzet (14 dagen)",
+    "hours": "Uren",
+    "labourCost": "Loonkosten",
+    "sales": "Omzet",
+    "share": "Loonkostenaandeel",
+    "ratesMissing": "Medewerkers zonder uurloon: {n} — zij zijn niet meegenomen in de kosten.",
+    "meTitle": "Mijn diensten & uren",
+    "meIntro": "In- en uitklokken, uw diensten en uren bekijken, verlof aanvragen of een dienst ruilen.",
+    "clockIn": "Inklokken",
+    "clockOut": "Uitklokken",
+    "breakStart": "Pauze starten",
+    "breakEnd": "Pauze beëindigen",
+    "clockedInSince": "Ingeklokt sinds {time}",
+    "notClockedIn": "U bent niet ingeklokt.",
+    "locating": "Uw locatie bepalen…",
+    "locationNeeded": "Sta locatietoegang toe om met uw telefoon in te klokken.",
+    "clockDone": "Gelukt: {action} om {time}",
+    "nearestSite": "Dichtstbijzijnde locatie",
+    "action": {
+      "IN": "ingeklokt",
+      "OUT": "uitgeklokt",
+      "BREAK_START": "pauze gestart",
+      "BREAK_END": "pauze beëindigd"
+    },
+    "phoneOff": "Inklokken met de telefoon is uitgeschakeld — gebruik de kiosk.",
+    "thisWeek": "Deze week",
+    "worked": "Gewerkt",
+    "overtime": "Overuren",
+    "night": "Nacht",
+    "holiday": "Feestdag",
+    "contract": "Contract: {h} u per week",
+    "myShifts": "Mijn volgende diensten",
+    "noShifts": "Geen diensten gepland.",
+    "offerSwap": "Aanbieden aan een collega",
+    "anyone": "Iedereen",
+    "swapNote": "Opmerking (optioneel)",
+    "send": "Versturen",
+    "offered": "Aangeboden.",
+    "openShifts": "Open diensten",
+    "take": "Deze dienst nemen",
+    "swaps": "Dienstruilen",
+    "acceptSwap": "Overnemen",
+    "status": {
+      "PENDING": "In afwachting",
+      "ACCEPTED": "Overgenomen, wacht op de leidinggevende",
+      "APPROVED": "Goedgekeurd",
+      "REJECTED": "Niet goedgekeurd",
+      "CANCELLED": "Geannuleerd",
+      "OPEN": "Open",
+      "SUBMITTED": "Verstuurd"
+    },
+    "recent": "Recente uren",
+    "noEntries": "Nog geen uren.",
+    "breakShort": "pauze {m} min",
+    "leaveTitle": "Verlof",
+    "kind": "Soort",
+    "leave": {
+      "HOLIDAY": "Vakantie",
+      "SICK": "Ziek",
+      "UNPAID": "Onbetaald",
+      "OTHER": "Overig"
+    },
+    "from": "Van",
+    "to": "Tot",
+    "halfDay": "Halve dag",
+    "reason": "Reden",
+    "ask": "Aanvragen",
+    "asked": "Verstuurd.",
+    "cancel": "Annuleren",
+    "pinTitle": "Mijn klok-PIN",
+    "pinHint": "4–8 cijfers — dezelfde PIN als bij de kassa.",
+    "pinSet": "PIN opgeslagen.",
+    "pinMissing": "Stel een PIN in om bij de kiosk in te klokken.",
+    "savePin": "PIN opslaan",
+    "submitWeek": "Deze week naar mijn leidinggevende sturen",
+    "submitted": "Verstuurd.",
+    "rotaTitle": "Rooster",
+    "rotaIntro": "Plan de diensten van de week. Medewerkers zien ze zodra u publiceert.",
+    "rotaIntroStaff": "De gepubliceerde diensten van uw team.",
+    "prevWeek": "← Vorige week",
+    "nextWeek": "Volgende week →",
+    "thisWeekBtn": "Deze week",
+    "publish": "Week publiceren ({n} concepten)",
+    "published": "Gepubliceerd — medewerkers zijn op de hoogte gebracht.",
+    "copyPrev": "Vorige week kopiëren",
+    "copiedOk": "Diensten van vorige week gekopieerd als concepten.",
+    "addShift": "Dienst toevoegen",
+    "day": "Dag",
+    "person": "Persoon",
+    "site": "Locatie",
+    "role": "Functie",
+    "start": "Begin",
+    "end": "Einde",
+    "breakMin": "Pauze (min)",
+    "save": "Opslaan",
+    "saved": "Opgeslagen.",
+    "delete": "Verwijderen",
+    "draft": "concept",
+    "planned": "Gepland {h}",
+    "contractOf": "van {h} u",
+    "plannedCost": "Geplande loonkosten: {cost}",
+    "noStaff": "Voeg eerst uw medewerkers toe (Personeel).",
+    "onLeave": "Met verlof",
+    "warn": {
+      "WEEK_OVER_MAX": "Boven het weekmaximum",
+      "SHORT_REST": "Minder rust dan vereist",
+      "NO_BREAK": "Pauze nodig",
+      "OVERLAP": "Overlapt met een andere dienst",
+      "ON_LEAVE": "Met verlof"
+    },
+    "kioskTitle": "Inklokkiosk",
+    "kioskIntro": "Laat deze pagina openstaan op het apparaat in de winkel of het magazijn. Medewerkers typen hun PIN om in of uit te klokken.",
+    "enterPin": "Voer uw PIN in",
+    "clear": "Wissen",
+    "inOut": "In / Uit",
+    "hello": "{name}: {action} om {time}",
+    "timesheetsTitle": "Urenstaten",
+    "timesheetsIntro": "De week van elke medewerker: uren, overuren, nacht- en feestdaguren. Keur goed om de week te vergrendelen.",
+    "approve": "Goedkeuren",
+    "reopen": "Heropenen",
+    "leaveDays": "Verlofdagen",
+    "cost": "Kosten",
+    "addEntry": "Registratie toevoegen",
+    "editEntry": "Corrigeren",
+    "clockedIn": "In",
+    "clockedOut": "Uit",
+    "reasonRequired": "Waarom (wordt bewaard in de registratie)",
+    "stillIn": "nog aanwezig",
+    "export": "Exporteren",
+    "payroll": "Salarisadministratie (CSV)",
+    "record": "Tijdregistratie (CSV)",
+    "exportHint": "De tijdregistratie bevat elke registratie en correctie — de wettelijke arbeidstijdregistratie. Deze wordt {years} jaar bewaard.",
+    "leavePageTitle": "Verlof & ruilen",
+    "leavePageIntro": "Keur verlofaanvragen en dienstruilen goed.",
+    "approveBtn": "Goedkeuren",
+    "reject": "Afwijzen",
+    "rejectReason": "Reden (zichtbaar voor de medewerker)",
+    "days": "{n} werkdagen",
+    "noRequests": "Niets in afwachting.",
+    "peopleTitle": "Personeel",
+    "peopleIntro": "Functies, contracturen, loontarieven (alleen zichtbaar voor leidinggevenden), vaste locatie en klok-PIN's. Voeg mensen toe bij Gebruikers.",
+    "rate": "Uurloon",
+    "contractHours": "Contract u/week",
+    "homeSite": "Vaste locatie",
+    "payrollCode": "Salariscode",
+    "active": "Actief",
+    "hasPin": "PIN ingesteld",
+    "noPin": "Geen PIN",
+    "inactive": "Inactief",
+    "teamLink": "Mensen toevoegen",
+    "closed": {
+      "OFF": "Personeel & tijd is op dit moment niet beschikbaar.",
+      "COMPANY_OFF": "Personeel & tijd is uitgeschakeld voor uw bedrijf. Neem contact op met FIRINGI.",
+      "TYPE_OFF": "Personeel & tijd is niet beschikbaar voor uw type bedrijf.",
+      "PART_OFF": "Dit onderdeel is uitgeschakeld.",
+      "KIOSK_OFF": "De kiosk is uitgeschakeld — klok in met uw telefoon."
     }
   }
 }

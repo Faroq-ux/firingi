@@ -891,7 +891,15 @@
     "Tenders": "Hanked",
     "Sustainability & CO₂": "Jätkusuutlikkus ja CO₂",
     "CO₂ & Packaging": "CO₂ ja pakendid",
-    "CO₂ Footprint": "CO₂-jalajälg"
+    "CO₂ Footprint": "CO₂-jalajälg",
+    "Staff & Time": "Töötajad ja tööaeg",
+    "My Shifts & Hours": "Minu vahetused ja tunnid",
+    "Who's In": "Kes on tööl",
+    "Rota": "Töögraafik",
+    "Clock-in Kiosk": "Registreerimisterminal",
+    "Timesheets": "Tööajatabelid",
+    "Leave & Swaps": "Puudumised ja vahetused",
+    "Staff": "Töötajad"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-väärtus kontrollitud ({decision}): {product}",
       "body": "„{product}“ {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Teie vahetused on avaldatud",
+      "body": "Nädala {week} töögraafik on avaldatud. Avage Minu vahetused, et oma vahetusi näha."
+    },
+    "staff_shift_changed": {
+      "title": "Vahetus muutus",
+      "body": "Teie vahetust {start} muudeti või see tühistati. Vaadake Minu vahetused."
+    },
+    "staff_shift_reminder": {
+      "title": "Teie vahetus algab varsti",
+      "body": "Teie vahetus algab {start}. Ärge unustage saabumist registreerida."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Ikka tööl?",
+      "body": "Teie vahetus on lõppenud, kuid lahkumine on registreerimata. Registreerige lahkumine, kui olete lõpetanud."
+    },
+    "staff_timesheet_approved": {
+      "title": "Tööajatabel kinnitatud",
+      "body": "Teie nädala {week} tunnid on kinnitatud."
+    },
+    "staff_leave_decided": {
+      "title": "Puudumine: {decision}",
+      "body": "Teie puudumine {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Kolleeg pakub teile vahetust",
+      "body": "{name} pakub teile vahetust {start}. Avage Minu vahetused, et see võtta."
+    },
+    "staff_swap_decided": {
+      "title": "Vahetuse vahetamine: {decision}",
+      "body": "Vahetuse {start} vahetamine: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Vaba vahetus võeti",
+      "body": "{name} võttis vaba vahetuse {start}."
+    },
+    "staff_no_show": {
+      "title": "Pole saabunud: {name}",
+      "body": "{name} vahetus algas {start}, kuid saabumist pole registreeritud."
+    },
+    "staff_missed_clock_out": {
+      "title": "Lahkumine registreerimata: {name}",
+      "body": "{name} lahkumine oli registreerimata; kanne suleti automaatselt. Kontrollige seda jaotises Tööajatabelid."
+    },
+    "staff_leave_requested": {
+      "title": "Puudumistaotlus: {name}",
+      "body": "{name} taotleb puudumist {from} – {to}. Kinnitage see jaotises Puudumised ja vahetused."
+    },
+    "staff_swap_to_approve": {
+      "title": "Vahetuse vahetamine kinnitamiseks",
+      "body": "{name} võttis vahetuse {start}. Kinnitage see jaotises Puudumised ja vahetused."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Tööajatabel saadetud: {name}",
+      "body": "{name} saatis nädala {week} tunnid."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hübriid",
       "LPG": "LPG",
       "ELECTRIC": "Elekter"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Kes on tööl",
+    "overviewIntro": "Kes praegu töötab, tänased vahetused ja mis vajab teie tähelepanu.",
+    "inNow": "Praegu tööl",
+    "nobodyIn": "Keegi pole saabumist registreerinud.",
+    "onBreak": "Pausil",
+    "since": "alates {time}",
+    "staffCount": "Töötajad",
+    "today": "Tänased vahetused",
+    "noShiftsToday": "Täna vahetusi pole.",
+    "state": {
+      "IN": "Tööl",
+      "MISSING": "Pole veel saabunud",
+      "LATER": "Hiljem"
+    },
+    "openShift": "Vaba vahetus",
+    "flaggedTitle": "Kontrollida",
+    "noFlags": "Pole midagi kontrollida.",
+    "flag": {
+      "LATE": "Hilines",
+      "EARLY_LEAVE": "Lahkus varem",
+      "OUTSIDE_AREA": "Väljaspool ala",
+      "MISSED_CLOCK_OUT": "Lahkumine registreerimata",
+      "EDITED": "Parandatud",
+      "NO_BREAK": "Pausita",
+      "NO_SHIFT": "Vahetust pole planeeritud"
+    },
+    "pending": "Ootab teid",
+    "pendingLeave": "Puudumistaotlused: {n}",
+    "pendingSwaps": "Vahetuste vahetamised: {n}",
+    "pendingSheets": "Tööajatabelid: {n}",
+    "labourTitle": "Tööjõukulu ja müük (14 päeva)",
+    "hours": "Tunnid",
+    "labourCost": "Tööjõukulu",
+    "sales": "Müük",
+    "share": "Tööjõukulu osakaal",
+    "ratesMissing": "Tunnitasuta inimesi: {n} — kulu ei arvesta neid.",
+    "meTitle": "Minu vahetused ja tunnid",
+    "meIntro": "Registreerige saabumine ja lahkumine, vaadake oma vahetusi ja tunde, taotlege puudumist või vahetage vahetust.",
+    "clockIn": "Saabumine",
+    "clockOut": "Lahkumine",
+    "breakStart": "Alusta pausi",
+    "breakEnd": "Lõpeta paus",
+    "clockedInSince": "Tööl alates {time}",
+    "notClockedIn": "Te pole saabumist registreerinud.",
+    "locating": "Asukoha tuvastamine…",
+    "locationNeeded": "Lubage juurdepääs asukohale, et telefonist saabumist registreerida.",
+    "clockDone": "Tehtud: {action} kell {time}",
+    "nearestSite": "Lähim asukoht",
+    "action": {
+      "IN": "saabumine registreeritud",
+      "OUT": "lahkumine registreeritud",
+      "BREAK_START": "paus alustatud",
+      "BREAK_END": "paus lõpetatud"
+    },
+    "phoneOff": "Telefonist registreerimine on välja lülitatud — kasutage terminali.",
+    "thisWeek": "See nädal",
+    "worked": "Töötatud",
+    "overtime": "Ületunnid",
+    "night": "Öö",
+    "holiday": "Riigipüha",
+    "contract": "Leping: {h} h nädalas",
+    "myShifts": "Minu järgmised vahetused",
+    "noShifts": "Vahetusi pole planeeritud.",
+    "offerSwap": "Paku kolleegile",
+    "anyone": "Ükskõik kes",
+    "swapNote": "Märkus (valikuline)",
+    "send": "Saada",
+    "offered": "Pakutud.",
+    "openShifts": "Vabad vahetused",
+    "take": "Võta see vahetus",
+    "swaps": "Vahetuste vahetamised",
+    "acceptSwap": "Võta",
+    "status": {
+      "PENDING": "Ootel",
+      "ACCEPTED": "Võetud, ootab juhti",
+      "APPROVED": "Kinnitatud",
+      "REJECTED": "Pole kinnitatud",
+      "CANCELLED": "Tühistatud",
+      "OPEN": "Avatud",
+      "SUBMITTED": "Saadetud"
+    },
+    "recent": "Viimased tunnid",
+    "noEntries": "Tunde veel pole.",
+    "breakShort": "paus {m} min",
+    "leaveTitle": "Puudumine",
+    "kind": "Liik",
+    "leave": {
+      "HOLIDAY": "Puhkus",
+      "SICK": "Haigus",
+      "UNPAID": "Palgata",
+      "OTHER": "Muu"
+    },
+    "from": "Alates",
+    "to": "Kuni",
+    "halfDay": "Pool päeva",
+    "reason": "Põhjus",
+    "ask": "Taotle",
+    "asked": "Saadetud.",
+    "cancel": "Tühista",
+    "pinTitle": "Minu registreerimise PIN",
+    "pinHint": "4–8 numbrit — sama PIN mis kassas.",
+    "pinSet": "PIN salvestatud.",
+    "pinMissing": "Määrake PIN, et terminalis saabumist registreerida.",
+    "savePin": "Salvesta PIN",
+    "submitWeek": "Saada see nädal mu juhile",
+    "submitted": "Saadetud.",
+    "rotaTitle": "Töögraafik",
+    "rotaIntro": "Planeerige nädala vahetused. Töötajad näevad neid pärast avaldamist.",
+    "rotaIntroStaff": "Teie meeskonna avaldatud vahetused.",
+    "prevWeek": "← Eelmine nädal",
+    "nextWeek": "Järgmine nädal →",
+    "thisWeekBtn": "See nädal",
+    "publish": "Avalda nädal ({n} mustandit)",
+    "published": "Avaldatud — töötajaid on teavitatud.",
+    "copyPrev": "Kopeeri eelmine nädal",
+    "copiedOk": "Eelmise nädala vahetused kopeeriti mustanditena.",
+    "addShift": "Lisa vahetus",
+    "day": "Päev",
+    "person": "Isik",
+    "site": "Asukoht",
+    "role": "Roll",
+    "start": "Algus",
+    "end": "Lõpp",
+    "breakMin": "Paus (min)",
+    "save": "Salvesta",
+    "saved": "Salvestatud.",
+    "delete": "Kustuta",
+    "draft": "mustand",
+    "planned": "Planeeritud {h}",
+    "contractOf": "{h} h-st",
+    "plannedCost": "Planeeritud tööjõukulu: {cost}",
+    "noStaff": "Lisage esmalt oma töötajad (Töötajad).",
+    "onLeave": "Puudub",
+    "warn": {
+      "WEEK_OVER_MAX": "Üle nädala maksimumi",
+      "SHORT_REST": "Vähem puhkeaega kui nõutud",
+      "NO_BREAK": "Vajab pausi",
+      "OVERLAP": "Kattub teise vahetusega",
+      "ON_LEAVE": "Puudub"
+    },
+    "kioskTitle": "Registreerimisterminal",
+    "kioskIntro": "Jätke see leht poe või lao seadmes avatuks. Töötajad sisestavad oma PIN-i, et saabumist või lahkumist registreerida.",
+    "enterPin": "Sisestage oma PIN",
+    "clear": "Tühjenda",
+    "inOut": "Saabumine / Lahkumine",
+    "hello": "{name}: {action} kell {time}",
+    "timesheetsTitle": "Tööajatabelid",
+    "timesheetsIntro": "Iga inimese nädal: tunnid, ületunnid, öö- ja riigipühatunnid. Kinnitage, et nädal lukustada.",
+    "approve": "Kinnita",
+    "reopen": "Ava uuesti",
+    "leaveDays": "Puudumispäevad",
+    "cost": "Kulu",
+    "addEntry": "Lisa kanne",
+    "editEntry": "Paranda",
+    "clockedIn": "Saabus",
+    "clockedOut": "Lahkus",
+    "reasonRequired": "Põhjus (jääb arvestusse)",
+    "stillIn": "veel tööl",
+    "export": "Eksport",
+    "payroll": "Palgaarvestus (CSV)",
+    "record": "Tööaja arvestus (CSV)",
+    "exportHint": "Tööaja arvestus sisaldab kõiki kandeid ja parandusi — see on seadusega nõutav tööaja arvestus. Seda säilitatakse {years} aastat.",
+    "leavePageTitle": "Puudumised ja vahetused",
+    "leavePageIntro": "Kinnitage puudumistaotlused ja vahetuste vahetamised.",
+    "approveBtn": "Kinnita",
+    "reject": "Lükka tagasi",
+    "rejectReason": "Põhjus (töötaja näeb seda)",
+    "days": "{n} tööpäeva",
+    "noRequests": "Midagi ei oota.",
+    "peopleTitle": "Töötajad",
+    "peopleIntro": "Rollid, lepingutunnid, töötasumäärad (näevad ainult juhid), põhiasukoht ja registreerimise PIN-id. Lisage inimesi jaotises Kasutajad.",
+    "rate": "Tunnitasu",
+    "contractHours": "Leping h/näd",
+    "homeSite": "Põhiasukoht",
+    "payrollCode": "Palgaarvestuse kood",
+    "active": "Aktiivne",
+    "hasPin": "PIN määratud",
+    "noPin": "PIN puudub",
+    "inactive": "Mitteaktiivne",
+    "teamLink": "Lisa inimesi",
+    "closed": {
+      "OFF": "Töötajad ja tööaeg pole praegu saadaval.",
+      "COMPANY_OFF": "Töötajad ja tööaeg on teie ettevõtte jaoks välja lülitatud. Võtke ühendust FIRINGI-ga.",
+      "TYPE_OFF": "Töötajad ja tööaeg pole teie ettevõtte tüübi jaoks saadaval.",
+      "PART_OFF": "See osa on välja lülitatud.",
+      "KIOSK_OFF": "Terminal on välja lülitatud — registreerige saabumine telefonist."
     }
   }
 }

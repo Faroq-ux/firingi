@@ -891,7 +891,15 @@
     "Tenders": "Gare",
     "Sustainability & CO₂": "Sostenibilità e CO₂",
     "CO₂ & Packaging": "CO₂ e imballaggi",
-    "CO₂ Footprint": "Impronta CO₂"
+    "CO₂ Footprint": "Impronta CO₂",
+    "Staff & Time": "Personale e presenze",
+    "My Shifts & Hours": "I miei turni e ore",
+    "Who's In": "Chi è presente",
+    "Rota": "Turni",
+    "Clock-in Kiosk": "Chiosco di timbratura",
+    "Timesheets": "Fogli presenze",
+    "Leave & Swaps": "Assenze e scambi",
+    "Staff": "Personale"
   },
   "delivery": {
     "title": "Consegna",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Valore CO₂ verificato, {decision}: {product}",
       "body": "«{product}» {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "I Suoi turni sono pubblicati",
+      "body": "I turni della settimana del {week} sono stati pubblicati. Apra I miei turni per vedere i Suoi."
+    },
+    "staff_shift_changed": {
+      "title": "Un turno è cambiato",
+      "body": "Il Suo turno del {start} è stato modificato o annullato. Controlli I miei turni."
+    },
+    "staff_shift_reminder": {
+      "title": "Il Suo turno inizia a breve",
+      "body": "Inizio del Suo turno: {start}. Si ricordi di timbrare l'entrata."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Ancora in servizio?",
+      "body": "Il Suo turno è terminato ma Lei risulta ancora presente. Timbri l'uscita se ha finito."
+    },
+    "staff_timesheet_approved": {
+      "title": "Foglio presenze approvato",
+      "body": "Le Sue ore della settimana del {week} sono state approvate."
+    },
+    "staff_leave_decided": {
+      "title": "Assenza: {decision}",
+      "body": "La Sua assenza {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Un collega Le offre un turno",
+      "body": "{name} Le offre il turno del {start}. Apra I miei turni per prenderlo."
+    },
+    "staff_swap_decided": {
+      "title": "Scambio di turno: {decision}",
+      "body": "Scambio del turno del {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Turno scoperto preso",
+      "body": "{name} ha preso il turno scoperto del {start}."
+    },
+    "staff_no_show": {
+      "title": "Entrata non timbrata: {name}",
+      "body": "{name} non ha timbrato l'entrata per il turno iniziato {start}."
+    },
+    "staff_missed_clock_out": {
+      "title": "Uscita non timbrata: {name}",
+      "body": "{name} risultava ancora presente; la timbratura è stata chiusa automaticamente. La controlli in Fogli presenze."
+    },
+    "staff_leave_requested": {
+      "title": "Richiesta di assenza: {name}",
+      "body": "{name} chiede un'assenza {from} – {to}. La approvi in Assenze e scambi."
+    },
+    "staff_swap_to_approve": {
+      "title": "Scambio di turno da approvare",
+      "body": "{name} ha preso un turno del {start}. Lo approvi in Assenze e scambi."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Foglio presenze inviato: {name}",
+      "body": "{name} ha inviato le ore della settimana del {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Ibrido",
       "LPG": "GPL",
       "ELECTRIC": "Elettrico"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Chi è presente",
+    "overviewIntro": "Chi sta lavorando ora, i turni di oggi e cosa richiede la Sua attenzione.",
+    "inNow": "Presenti ora",
+    "nobodyIn": "Nessuno ha timbrato l'entrata.",
+    "onBreak": "In pausa",
+    "since": "dalle {time}",
+    "staffCount": "Personale",
+    "today": "Turni di oggi",
+    "noShiftsToday": "Nessun turno oggi.",
+    "state": {
+      "IN": "Presente",
+      "MISSING": "Non ancora arrivato",
+      "LATER": "Più tardi"
+    },
+    "openShift": "Turno scoperto",
+    "flaggedTitle": "Da verificare",
+    "noFlags": "Niente da verificare.",
+    "flag": {
+      "LATE": "In ritardo",
+      "EARLY_LEAVE": "Uscito in anticipo",
+      "OUTSIDE_AREA": "Fuori zona",
+      "MISSED_CLOCK_OUT": "Uscita non timbrata",
+      "EDITED": "Corretto",
+      "NO_BREAK": "Senza pausa",
+      "NO_SHIFT": "Nessun turno previsto"
+    },
+    "pending": "Da gestire",
+    "pendingLeave": "Richieste di assenza: {n}",
+    "pendingSwaps": "Scambi di turno: {n}",
+    "pendingSheets": "Fogli presenze: {n}",
+    "labourTitle": "Costo del personale e vendite (14 giorni)",
+    "hours": "Ore",
+    "labourCost": "Costo del personale",
+    "sales": "Vendite",
+    "share": "Incidenza costo personale",
+    "ratesMissing": "Persone senza tariffa oraria: {n} — non sono incluse nel costo.",
+    "meTitle": "I miei turni e ore",
+    "meIntro": "Timbri entrata e uscita, consulti turni e ore, chieda un'assenza o scambi un turno.",
+    "clockIn": "Timbra entrata",
+    "clockOut": "Timbra uscita",
+    "breakStart": "Inizia pausa",
+    "breakEnd": "Termina pausa",
+    "clockedInSince": "Entrata timbrata alle {time}",
+    "notClockedIn": "Non ha timbrato l'entrata.",
+    "locating": "Rilevamento posizione…",
+    "locationNeeded": "Consenta l'accesso alla posizione per timbrare dal telefono.",
+    "clockDone": "Fatto: {action} alle {time}",
+    "nearestSite": "Sede più vicina",
+    "action": {
+      "IN": "entrata timbrata",
+      "OUT": "uscita timbrata",
+      "BREAK_START": "pausa iniziata",
+      "BREAK_END": "pausa terminata"
+    },
+    "phoneOff": "La timbratura da telefono è disattivata — usi il chiosco.",
+    "thisWeek": "Questa settimana",
+    "worked": "Lavorate",
+    "overtime": "Straordinari",
+    "night": "Notturne",
+    "holiday": "Festivi",
+    "contract": "Contratto: {h} h a settimana",
+    "myShifts": "I miei prossimi turni",
+    "noShifts": "Nessun turno previsto.",
+    "offerSwap": "Offri a un collega",
+    "anyone": "Chiunque",
+    "swapNote": "Nota (facoltativa)",
+    "send": "Invia",
+    "offered": "Offerto.",
+    "openShifts": "Turni scoperti",
+    "take": "Prendi questo turno",
+    "swaps": "Scambi di turno",
+    "acceptSwap": "Prendilo",
+    "status": {
+      "PENDING": "In attesa",
+      "ACCEPTED": "Preso, in attesa del responsabile",
+      "APPROVED": "Approvato",
+      "REJECTED": "Non approvato",
+      "CANCELLED": "Annullato",
+      "OPEN": "Aperto",
+      "SUBMITTED": "Inviato"
+    },
+    "recent": "Ore recenti",
+    "noEntries": "Ancora nessuna ora.",
+    "breakShort": "pausa {m} min",
+    "leaveTitle": "Assenze",
+    "kind": "Tipo",
+    "leave": {
+      "HOLIDAY": "Ferie",
+      "SICK": "Malattia",
+      "UNPAID": "Non retribuito",
+      "OTHER": "Altro"
+    },
+    "from": "Dal",
+    "to": "Al",
+    "halfDay": "Mezza giornata",
+    "reason": "Motivo",
+    "ask": "Richiedi",
+    "asked": "Inviato.",
+    "cancel": "Annulla",
+    "pinTitle": "Il mio PIN di timbratura",
+    "pinHint": "4–8 cifre — lo stesso PIN della cassa.",
+    "pinSet": "PIN salvato.",
+    "pinMissing": "Imposti un PIN per timbrare al chiosco.",
+    "savePin": "Salva PIN",
+    "submitWeek": "Invia questa settimana al mio responsabile",
+    "submitted": "Inviato.",
+    "rotaTitle": "Turni",
+    "rotaIntro": "Pianifichi i turni della settimana. Il personale li vede dopo la pubblicazione.",
+    "rotaIntroStaff": "I turni pubblicati del Suo team.",
+    "prevWeek": "← Settimana precedente",
+    "nextWeek": "Settimana successiva →",
+    "thisWeekBtn": "Questa settimana",
+    "publish": "Pubblica la settimana ({n} bozze)",
+    "published": "Pubblicato — il personale è stato avvisato.",
+    "copyPrev": "Copia settimana scorsa",
+    "copiedOk": "Turni della settimana scorsa copiati come bozze.",
+    "addShift": "Aggiungi turno",
+    "day": "Giorno",
+    "person": "Persona",
+    "site": "Sede",
+    "role": "Ruolo",
+    "start": "Inizio",
+    "end": "Fine",
+    "breakMin": "Pausa (min)",
+    "save": "Salva",
+    "saved": "Salvato.",
+    "delete": "Elimina",
+    "draft": "bozza",
+    "planned": "Pianificate {h}",
+    "contractOf": "su {h} h",
+    "plannedCost": "Costo del personale pianificato: {cost}",
+    "noStaff": "Aggiunga prima il personale (Personale).",
+    "onLeave": "Assente",
+    "warn": {
+      "WEEK_OVER_MAX": "Oltre il massimo settimanale",
+      "SHORT_REST": "Riposo inferiore al minimo",
+      "NO_BREAK": "Pausa necessaria",
+      "OVERLAP": "Si sovrappone a un altro turno",
+      "ON_LEAVE": "Assente"
+    },
+    "kioskTitle": "Chiosco di timbratura",
+    "kioskIntro": "Lasci questa pagina aperta sul dispositivo del negozio o del magazzino. Il personale digita il PIN per timbrare l'entrata o l'uscita.",
+    "enterPin": "Digiti il PIN",
+    "clear": "Cancella",
+    "inOut": "Entrata / Uscita",
+    "hello": "{name}: {action} alle {time}",
+    "timesheetsTitle": "Fogli presenze",
+    "timesheetsIntro": "La settimana di ogni persona: ore, straordinari, ore notturne e festive. Approvi per bloccare la settimana.",
+    "approve": "Approva",
+    "reopen": "Riapri",
+    "leaveDays": "Giorni di assenza",
+    "cost": "Costo",
+    "addEntry": "Aggiungi timbratura",
+    "editEntry": "Correggi",
+    "clockedIn": "Entrata",
+    "clockedOut": "Uscita",
+    "reasonRequired": "Motivo (conservato nel registro)",
+    "stillIn": "ancora presente",
+    "export": "Esporta",
+    "payroll": "Paghe (CSV)",
+    "record": "Registro presenze (CSV)",
+    "exportHint": "Il registro presenze elenca ogni timbratura e correzione — è il registro legale dell'orario di lavoro. Viene conservato per {years} anni.",
+    "leavePageTitle": "Assenze e scambi",
+    "leavePageIntro": "Approvi le richieste di assenza e gli scambi di turno.",
+    "approveBtn": "Approva",
+    "reject": "Rifiuta",
+    "rejectReason": "Motivo (visibile alla persona)",
+    "days": "{n} giorni lavorativi",
+    "noRequests": "Niente in attesa.",
+    "peopleTitle": "Personale",
+    "peopleIntro": "Ruoli, ore da contratto, tariffe (visibili solo ai responsabili), sede abituale e PIN di timbratura. Aggiunga persone in Utenti.",
+    "rate": "Tariffa oraria",
+    "contractHours": "Contratto h/sett.",
+    "homeSite": "Sede abituale",
+    "payrollCode": "Codice paghe",
+    "active": "Attivo",
+    "hasPin": "PIN impostato",
+    "noPin": "Nessun PIN",
+    "inactive": "Non attivo",
+    "teamLink": "Aggiungi persone",
+    "closed": {
+      "OFF": "Personale e presenze non è al momento disponibile.",
+      "COMPANY_OFF": "Personale e presenze è disattivato per la Sua azienda. Contatti FIRINGI.",
+      "TYPE_OFF": "Personale e presenze non è disponibile per il Suo tipo di attività.",
+      "PART_OFF": "Questa sezione è disattivata.",
+      "KIOSK_OFF": "Il chiosco è disattivato — timbri dal telefono."
     }
   }
 }

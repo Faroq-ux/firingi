@@ -891,7 +891,15 @@
     "Tenders": "Útboð",
     "Sustainability & CO₂": "Sjálfbærni og CO₂",
     "CO₂ & Packaging": "CO₂ og umbúðir",
-    "CO₂ Footprint": "CO₂-spor"
+    "CO₂ Footprint": "CO₂-spor",
+    "Staff & Time": "Starfsfólk og tími",
+    "My Shifts & Hours": "Mínar vaktir og tímar",
+    "Who's In": "Hver er á staðnum",
+    "Rota": "Vaktaplan",
+    "Clock-in Kiosk": "Stimpilstöð",
+    "Timesheets": "Tímaskýrslur",
+    "Leave & Swaps": "Leyfi og vaktaskipti",
+    "Staff": "Starfsfólk"
   },
   "delivery": {
     "title": "Afhending",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-gildi yfirfarið, {decision}: {product}",
       "body": "„{product}“ {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Vaktirnar þínar eru komnar",
+      "body": "Vaktaplan vikunnar {week} hefur verið birt. Opnaðu Mínar vaktir til að sjá þínar."
+    },
+    "staff_shift_changed": {
+      "title": "Vakt hefur breyst",
+      "body": "Vaktinni þinni {start} var breytt eða hún felld niður. Skoðaðu Mínar vaktir."
+    },
+    "staff_shift_reminder": {
+      "title": "Vaktin þín hefst bráðum",
+      "body": "Vaktin þín hefst {start}. Mundu að stimpla þig inn."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Enn inni?",
+      "body": "Vaktinni þinni er lokið en þú hefur ekki stimplað þig út. Stimplaðu þig út ef þú hefur lokið vinnu."
+    },
+    "staff_timesheet_approved": {
+      "title": "Tímaskýrsla samþykkt",
+      "body": "Tímar þínir fyrir vikuna {week} hafa verið samþykktir."
+    },
+    "staff_leave_decided": {
+      "title": "Leyfi: {decision}",
+      "body": "Leyfið þitt {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Samstarfsmaður býður þér vakt",
+      "body": "{name} býður þér vaktina {start}. Opnaðu Mínar vaktir til að taka hana."
+    },
+    "staff_swap_decided": {
+      "title": "Vaktaskipti: {decision}",
+      "body": "Skipti á vaktinni {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Laus vakt tekin",
+      "body": "{name} tók lausu vaktina {start}."
+    },
+    "staff_no_show": {
+      "title": "Ekki stimplað inn: {name}",
+      "body": "{name} á vakt sem hófst {start} en hefur ekki stimplað sig inn."
+    },
+    "staff_missed_clock_out": {
+      "title": "Gleymdi að stimpla út: {name}",
+      "body": "{name} hafði ekki stimplað sig út; færslunni var lokað sjálfkrafa. Skoðaðu hana í Tímaskýrslum."
+    },
+    "staff_leave_requested": {
+      "title": "Leyfisbeiðni: {name}",
+      "body": "{name} sækir um leyfi {from} – {to}. Samþykktu það undir Leyfi og vaktaskipti."
+    },
+    "staff_swap_to_approve": {
+      "title": "Vaktaskipti til samþykktar",
+      "body": "{name} tók vakt {start}. Samþykktu það undir Leyfi og vaktaskipti."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Tímaskýrsla send: {name}",
+      "body": "{name} sendi tímana fyrir vikuna {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Tvinn",
       "LPG": "LPG",
       "ELECTRIC": "Rafmagn"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Hver er á staðnum",
+    "overviewIntro": "Hver er að vinna núna, vaktir dagsins og það sem þarfnast athygli þinnar.",
+    "inNow": "Inni núna",
+    "nobodyIn": "Enginn hefur stimplað sig inn.",
+    "onBreak": "Í pásu",
+    "since": "síðan {time}",
+    "staffCount": "Starfsfólk",
+    "today": "Vaktir dagsins",
+    "noShiftsToday": "Engar vaktir í dag.",
+    "state": {
+      "IN": "Inni",
+      "MISSING": "Ekki mætt enn",
+      "LATER": "Síðar"
+    },
+    "openShift": "Laus vakt",
+    "flaggedTitle": "Til skoðunar",
+    "noFlags": "Ekkert til að skoða.",
+    "flag": {
+      "LATE": "Of seint",
+      "EARLY_LEAVE": "Fór snemma",
+      "OUTSIDE_AREA": "Utan svæðis",
+      "MISSED_CLOCK_OUT": "Gleymdi að stimpla sig út",
+      "EDITED": "Leiðrétt",
+      "NO_BREAK": "Engin pása",
+      "NO_SHIFT": "Engin vakt skipulögð"
+    },
+    "pending": "Bíður þín",
+    "pendingLeave": "Leyfisbeiðnir: {n}",
+    "pendingSwaps": "Vaktaskipti: {n}",
+    "pendingSheets": "Tímaskýrslur: {n}",
+    "labourTitle": "Launakostnaður og sala (14 dagar)",
+    "hours": "Tímar",
+    "labourCost": "Launakostnaður",
+    "sales": "Sala",
+    "share": "Hlutfall launakostnaðar",
+    "ratesMissing": "Fólk án tímakaups: {n} — það er ekki talið með í kostnaðinum.",
+    "meTitle": "Mínar vaktir og tímar",
+    "meIntro": "Stimplaðu þig inn og út, skoðaðu vaktir og tíma, sæktu um leyfi eða skiptu um vakt.",
+    "clockIn": "Stimpla inn",
+    "clockOut": "Stimpla út",
+    "breakStart": "Hefja pásu",
+    "breakEnd": "Ljúka pásu",
+    "clockedInSince": "Inni síðan {time}",
+    "notClockedIn": "Þú hefur ekki stimplað þig inn.",
+    "locating": "Leita að staðsetningu…",
+    "locationNeeded": "Leyfðu aðgang að staðsetningu til að stimpla þig inn úr símanum.",
+    "clockDone": "Lokið: {action} kl. {time}",
+    "nearestSite": "Næsta starfsstöð",
+    "action": {
+      "IN": "stimplað inn",
+      "OUT": "stimplað út",
+      "BREAK_START": "pása hafin",
+      "BREAK_END": "pásu lokið"
+    },
+    "phoneOff": "Slökkt er á innstimplun úr síma — notaðu stimpilstöðina.",
+    "thisWeek": "Þessi vika",
+    "worked": "Unnið",
+    "overtime": "Yfirvinna",
+    "night": "Nætur",
+    "holiday": "Helgidagar",
+    "contract": "Samningur: {h} klst. á viku",
+    "myShifts": "Næstu vaktir mínar",
+    "noShifts": "Engar vaktir skipulagðar.",
+    "offerSwap": "Bjóða samstarfsmanni",
+    "anyone": "Hver sem er",
+    "swapNote": "Athugasemd (valkvætt)",
+    "send": "Senda",
+    "offered": "Boðið.",
+    "openShifts": "Lausar vaktir",
+    "take": "Taka þessa vakt",
+    "swaps": "Vaktaskipti",
+    "acceptSwap": "Taka hana",
+    "status": {
+      "PENDING": "Í bið",
+      "ACCEPTED": "Tekin, bíður yfirmanns",
+      "APPROVED": "Samþykkt",
+      "REJECTED": "Ekki samþykkt",
+      "CANCELLED": "Hætt við",
+      "OPEN": "Opin",
+      "SUBMITTED": "Sent"
+    },
+    "recent": "Nýlegir tímar",
+    "noEntries": "Engir tímar enn.",
+    "breakShort": "pása {m} mín.",
+    "leaveTitle": "Leyfi",
+    "kind": "Tegund",
+    "leave": {
+      "HOLIDAY": "Orlof",
+      "SICK": "Veikindi",
+      "UNPAID": "Launalaust",
+      "OTHER": "Annað"
+    },
+    "from": "Frá",
+    "to": "Til",
+    "halfDay": "Hálfur dagur",
+    "reason": "Ástæða",
+    "ask": "Sækja um",
+    "asked": "Sent.",
+    "cancel": "Hætta við",
+    "pinTitle": "PIN-ið mitt fyrir stimpilklukku",
+    "pinHint": "4–8 tölustafir — sama PIN og á kassanum.",
+    "pinSet": "PIN vistað.",
+    "pinMissing": "Veldu PIN til að stimpla þig inn á stimpilstöðinni.",
+    "savePin": "Vista PIN",
+    "submitWeek": "Senda þessa viku til yfirmanns",
+    "submitted": "Sent.",
+    "rotaTitle": "Vaktaplan",
+    "rotaIntro": "Skipuleggðu vaktir vikunnar. Starfsfólk sér þær þegar þú hefur birt þær.",
+    "rotaIntroStaff": "Birtar vaktir teymisins þíns.",
+    "prevWeek": "← Fyrri vika",
+    "nextWeek": "Næsta vika →",
+    "thisWeekBtn": "Þessi vika",
+    "publish": "Birta vikuna ({n} drög)",
+    "published": "Birt — starfsfólki hefur verið tilkynnt.",
+    "copyPrev": "Afrita síðustu viku",
+    "copiedOk": "Vaktir síðustu viku afritaðar sem drög.",
+    "addShift": "Bæta við vakt",
+    "day": "Dagur",
+    "person": "Starfsmaður",
+    "site": "Starfsstöð",
+    "role": "Hlutverk",
+    "start": "Byrjar",
+    "end": "Lýkur",
+    "breakMin": "Pása (mín.)",
+    "save": "Vista",
+    "saved": "Vistað.",
+    "delete": "Eyða",
+    "draft": "drög",
+    "planned": "Skipulagt {h}",
+    "contractOf": "af {h} klst.",
+    "plannedCost": "Áætlaður launakostnaður: {cost}",
+    "noStaff": "Bættu fyrst við starfsfólki (Starfsfólk).",
+    "onLeave": "Í leyfi",
+    "warn": {
+      "WEEK_OVER_MAX": "Yfir vikulegu hámarki",
+      "SHORT_REST": "Minni hvíld en krafist er",
+      "NO_BREAK": "Þarf pásu",
+      "OVERLAP": "Skarast á við aðra vakt",
+      "ON_LEAVE": "Í leyfi"
+    },
+    "kioskTitle": "Stimpilstöð",
+    "kioskIntro": "Hafðu þessa síðu opna á tæki verslunarinnar eða lagersins. Starfsfólk slær inn PIN til að stimpla sig inn eða út.",
+    "enterPin": "Sláðu inn PIN",
+    "clear": "Hreinsa",
+    "inOut": "Inn / Út",
+    "hello": "{name}: {action} kl. {time}",
+    "timesheetsTitle": "Tímaskýrslur",
+    "timesheetsIntro": "Vika hvers starfsmanns: tímar, yfirvinna, nætur- og helgidagatímar. Samþykktu til að læsa vikunni.",
+    "approve": "Samþykkja",
+    "reopen": "Opna aftur",
+    "leaveDays": "Leyfisdagar",
+    "cost": "Kostnaður",
+    "addEntry": "Bæta við færslu",
+    "editEntry": "Leiðrétta",
+    "clockedIn": "Inn",
+    "clockedOut": "Út",
+    "reasonRequired": "Ástæða (geymd í skránni)",
+    "stillIn": "enn inni",
+    "export": "Útflutningur",
+    "payroll": "Launavinnsla (CSV)",
+    "record": "Tímaskráning (CSV)",
+    "exportHint": "Tímaskráningin sýnir hverja færslu og leiðréttingu — hún er lögbundin skráning vinnutíma. Hún er geymd í {years} ár.",
+    "leavePageTitle": "Leyfi og vaktaskipti",
+    "leavePageIntro": "Samþykktu leyfisbeiðnir og vaktaskipti.",
+    "approveBtn": "Samþykkja",
+    "reject": "Hafna",
+    "rejectReason": "Ástæða (viðkomandi sér hana)",
+    "days": "{n} vinnudagar",
+    "noRequests": "Ekkert í bið.",
+    "peopleTitle": "Starfsfólk",
+    "peopleIntro": "Hlutverk, samningsbundnir tímar, laun (aðeins stjórnendur sjá þau), heimastöð og PIN fyrir stimpilklukku. Bættu fólki við undir Notendur.",
+    "rate": "Tímakaup",
+    "contractHours": "Samn. klst./viku",
+    "homeSite": "Heimastöð",
+    "payrollCode": "Launanúmer",
+    "active": "Virkt",
+    "hasPin": "PIN skráð",
+    "noPin": "Ekkert PIN",
+    "inactive": "Óvirkt",
+    "teamLink": "Bæta við fólki",
+    "closed": {
+      "OFF": "Starfsfólk og tími er ekki í boði eins og er.",
+      "COMPANY_OFF": "Slökkt er á Starfsfólki og tíma fyrir fyrirtækið þitt. Hafðu samband við FIRINGI.",
+      "TYPE_OFF": "Starfsfólk og tími er ekki í boði fyrir þína tegund rekstrar.",
+      "PART_OFF": "Slökkt er á þessum hluta.",
+      "KIOSK_OFF": "Slökkt er á stimpilstöðinni — stimplaðu þig inn úr símanum."
     }
   }
 }

@@ -33,6 +33,8 @@ const rsk = section(`${A}/risk`, "admin.risk.view");
 const usr = section(`${A}/users`, ["admin.users.view", "admin.users.manage"]);
 const ntf = section(`${A}/notifications`, "admin.notifications.view");
 const set = section(`${A}/settings`, ["admin.settings.view", "admin.settings.manage"]);
+const stf = section(`${A}/staff`, ["admin.dashboard.view", "admin.staff.manage", "admin.users.manage"]);
+const STF_MGR = ["admin.staff.manage", "admin.users.manage"] as const;
 
 /** The 10 vendor sub-pages shared by Distributors and Wholesalers. */
 function vendorItems(s: typeof dist) {
@@ -444,6 +446,18 @@ export const ADMIN_NAV: NavSection[] = [
     ],
   },
   {
+    key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" },
+    items: [
+      stf("me", "My Shifts & Hours", "Os Meus Turnos e Horas", "P52", { live: true }),
+      stf("", "Who's In", "Quem Está", "P52", { live: true, perm: [...STF_MGR], href: `${A}/staff` }),
+      stf("rota", "Rota", "Escala", "P52", { live: true }),
+      stf("clock", "Clock-in Kiosk", "Quiosque de Ponto", "P52", { live: true, perm: [...STF_MGR] }),
+      stf("timesheets", "Timesheets", "Folhas de Horas", "P52", { live: true, perm: [...STF_MGR] }),
+      stf("leave", "Leave & Swaps", "Férias e Trocas", "P52", { live: true, perm: [...STF_MGR] }),
+      stf("people", "Staff", "Pessoal", "P52", { live: true, perm: [...STF_MGR] }),
+    ],
+  },
+  {
     key: "users", icon: "UserRound", label: { en: "Users & Permissions", pt: "Utilizadores e Permissões", es: "Usuarios y permisos" },
     items: [
       usr("all", "Users", "Utilizadores", "P1", { live: true }),
@@ -495,6 +509,7 @@ export const ADMIN_NAV: NavSection[] = [
       set("language", "Language Settings", "Definições de Idioma", "P1", { live: true, href: `${A}/international/languages`, perm: ["admin.settings.view", "admin.international.view"] }),
       set("api", "API Keys", "Chaves de API", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("integrations", "Integrations", "Integrações", "P21", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
+      set("staff-time", "Staff & Time", "Pessoal e Horários", "P52", { live: true, perm: ["admin.settings.view", "admin.settings.manage", "admin.users.manage"] }),
       set("business-features", "Business Features", "Funcionalidades de Negócio", "P27", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("security", "Security", "Segurança", "P11", { live: true, perm: ["admin.settings.view", "admin.settings.manage"] }),
       set("audit-logs", "Audit Logs", "Registos de Auditoria", "P1", { live: true, perm: ["admin.audit.view", "admin.settings.view"] }),

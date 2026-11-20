@@ -1714,6 +1714,62 @@
     "co2_decided": {
       "title": "Valor de CO₂ verificado {decision}: {product}",
       "body": "\"{product}\" {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Os seus turnos estão publicados",
+      "body": "A escala da semana de {week} foi publicada. Abra Os Meus Turnos para ver os seus."
+    },
+    "staff_shift_changed": {
+      "title": "Um turno mudou",
+      "body": "O seu turno de {start} foi alterado ou cancelado. Veja Os Meus Turnos."
+    },
+    "staff_shift_reminder": {
+      "title": "O seu turno começa em breve",
+      "body": "O seu turno começa {start}. Não se esqueça de picar a entrada."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Ainda com a entrada picada?",
+      "body": "O seu turno terminou mas ainda tem a entrada picada. Pique a saída se já terminou."
+    },
+    "staff_timesheet_approved": {
+      "title": "Folha de horas aprovada",
+      "body": "As suas horas da semana de {week} foram aprovadas."
+    },
+    "staff_leave_decided": {
+      "title": "Férias {decision}",
+      "body": "As suas férias de {from} a {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Um colega oferece-lhe um turno",
+      "body": "{name} oferece-lhe o turno de {start}. Abra Os Meus Turnos para aceitar."
+    },
+    "staff_swap_decided": {
+      "title": "Troca de turno {decision}",
+      "body": "A troca do turno de {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Turno livre ocupado",
+      "body": "{name} ficou com o turno livre de {start}."
+    },
+    "staff_no_show": {
+      "title": "Sem entrada picada: {name}",
+      "body": "{name} tem um turno que começou {start} e não picou a entrada."
+    },
+    "staff_missed_clock_out": {
+      "title": "Esqueceu-se de picar a saída: {name}",
+      "body": "{name} ainda tinha a entrada picada; o registo foi fechado automaticamente. Verifique-o nas Folhas de Horas."
+    },
+    "staff_leave_requested": {
+      "title": "Pedido de férias: {name}",
+      "body": "{name} pede férias de {from} a {to}. Aprove em Férias e Trocas."
+    },
+    "staff_swap_to_approve": {
+      "title": "Troca de turno a aprovar",
+      "body": "{name} aceitou um turno de {start}. Aprove em Férias e Trocas."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Folha de horas enviada: {name}",
+      "body": "{name} enviou as horas da semana de {week}."
     }
   },
   "notifications": {
@@ -6872,6 +6928,195 @@
       "HYBRID": "Híbrido",
       "LPG": "GPL",
       "ELECTRIC": "Elétrico"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Quem Está",
+    "overviewIntro": "Quem está a trabalhar agora, os turnos de hoje e o que precisa da sua atenção.",
+    "inNow": "Presentes agora",
+    "nobodyIn": "Ninguém picou o ponto.",
+    "onBreak": "Em pausa",
+    "since": "desde {time}",
+    "staffCount": "Pessoal",
+    "today": "Turnos de hoje",
+    "noShiftsToday": "Sem turnos hoje.",
+    "state": {
+      "IN": "Presente",
+      "MISSING": "Ainda não chegou",
+      "LATER": "Mais tarde"
+    },
+    "openShift": "Turno livre",
+    "flaggedTitle": "A verificar",
+    "noFlags": "Nada a verificar.",
+    "flag": {
+      "LATE": "Atraso",
+      "EARLY_LEAVE": "Saiu mais cedo",
+      "OUTSIDE_AREA": "Fora do local",
+      "MISSED_CLOCK_OUT": "Esqueceu-se de picar a saída",
+      "EDITED": "Corrigido",
+      "NO_BREAK": "Sem pausa",
+      "NO_SHIFT": "Sem turno marcado"
+    },
+    "pending": "À sua espera",
+    "pendingLeave": "Pedidos de férias: {n}",
+    "pendingSwaps": "Trocas de turno: {n}",
+    "pendingSheets": "Folhas de horas: {n}",
+    "labourTitle": "Custo de pessoal e vendas (14 dias)",
+    "hours": "Horas",
+    "labourCost": "Custo de pessoal",
+    "sales": "Vendas",
+    "share": "Peso do pessoal",
+    "ratesMissing": "Pessoas sem valor/hora: {n} — o custo não as inclui.",
+    "meTitle": "Os Meus Turnos e Horas",
+    "meIntro": "Pique a entrada e a saída, veja os seus turnos e horas, peça férias ou troque um turno.",
+    "clockIn": "Picar entrada",
+    "clockOut": "Picar saída",
+    "breakStart": "Iniciar pausa",
+    "breakEnd": "Terminar pausa",
+    "clockedInSince": "Entrada às {time}",
+    "notClockedIn": "Não tem a entrada picada.",
+    "locating": "A obter a sua localização…",
+    "locationNeeded": "Permita a localização para picar o ponto pelo telemóvel.",
+    "clockDone": "Feito: {action} às {time}",
+    "nearestSite": "Local mais próximo",
+    "action": {
+      "IN": "entrada",
+      "OUT": "saída",
+      "BREAK_START": "início de pausa",
+      "BREAK_END": "fim de pausa"
+    },
+    "phoneOff": "Picar o ponto pelo telemóvel está desligado — use o quiosque.",
+    "thisWeek": "Esta semana",
+    "worked": "Trabalhado",
+    "overtime": "Horas extra",
+    "night": "Noturno",
+    "holiday": "Feriado",
+    "contract": "Contrato: {h} h por semana",
+    "myShifts": "Os meus próximos turnos",
+    "noShifts": "Sem turnos marcados.",
+    "offerSwap": "Oferecer a um colega",
+    "anyone": "Qualquer pessoa",
+    "swapNote": "Nota (opcional)",
+    "send": "Enviar",
+    "offered": "Oferecido.",
+    "openShifts": "Turnos livres",
+    "take": "Ficar com este turno",
+    "swaps": "Trocas de turno",
+    "acceptSwap": "Aceitar",
+    "status": {
+      "PENDING": "À espera",
+      "ACCEPTED": "Aceite, à espera do responsável",
+      "APPROVED": "Aprovado",
+      "REJECTED": "Não aprovado",
+      "CANCELLED": "Cancelado",
+      "OPEN": "Aberta",
+      "SUBMITTED": "Enviada"
+    },
+    "recent": "Horas recentes",
+    "noEntries": "Ainda sem horas.",
+    "breakShort": "pausa {m} min",
+    "leaveTitle": "Férias e ausências",
+    "kind": "Tipo",
+    "leave": {
+      "HOLIDAY": "Férias",
+      "SICK": "Doença",
+      "UNPAID": "Sem vencimento",
+      "OTHER": "Outro"
+    },
+    "from": "De",
+    "to": "Até",
+    "halfDay": "Meio dia",
+    "reason": "Motivo",
+    "ask": "Pedir",
+    "asked": "Enviado.",
+    "cancel": "Cancelar",
+    "pinTitle": "O meu PIN de ponto",
+    "pinHint": "4 a 8 algarismos — o mesmo PIN da caixa.",
+    "pinSet": "PIN guardado.",
+    "pinMissing": "Defina um PIN para picar o ponto no quiosque.",
+    "savePin": "Guardar PIN",
+    "submitWeek": "Enviar esta semana ao responsável",
+    "submitted": "Enviado.",
+    "rotaTitle": "Escala",
+    "rotaIntro": "Planeie os turnos da semana. O pessoal vê-os quando publicar.",
+    "rotaIntroStaff": "Os turnos publicados da sua equipa.",
+    "prevWeek": "← Semana anterior",
+    "nextWeek": "Semana seguinte →",
+    "thisWeekBtn": "Esta semana",
+    "publish": "Publicar a semana ({n} rascunhos)",
+    "published": "Publicado — o pessoal foi avisado.",
+    "copyPrev": "Copiar a semana passada",
+    "copiedOk": "Turnos da semana passada copiados como rascunho.",
+    "addShift": "Adicionar turno",
+    "day": "Dia",
+    "person": "Pessoa",
+    "site": "Local",
+    "role": "Função",
+    "start": "Início",
+    "end": "Fim",
+    "breakMin": "Pausa (min)",
+    "save": "Guardar",
+    "saved": "Guardado.",
+    "delete": "Apagar",
+    "draft": "rascunho",
+    "planned": "Planeado {h}",
+    "contractOf": "de {h} h",
+    "plannedCost": "Custo de pessoal planeado: {cost}",
+    "noStaff": "Adicione primeiro o seu pessoal (Pessoal).",
+    "onLeave": "De férias",
+    "warn": {
+      "WEEK_OVER_MAX": "Acima do máximo semanal",
+      "SHORT_REST": "Descanso abaixo do exigido",
+      "NO_BREAK": "Precisa de pausa",
+      "OVERLAP": "Sobrepõe-se a outro turno",
+      "ON_LEAVE": "De férias"
+    },
+    "kioskTitle": "Quiosque de Ponto",
+    "kioskIntro": "Deixe esta página aberta no dispositivo da loja ou do armazém. O pessoal escreve o PIN para picar a entrada ou a saída.",
+    "enterPin": "Escreva o seu PIN",
+    "clear": "Limpar",
+    "inOut": "Entrada / Saída",
+    "hello": "{name}: {action} às {time}",
+    "timesheetsTitle": "Folhas de Horas",
+    "timesheetsIntro": "A semana de cada pessoa: horas, horas extra, noturnas e em feriado. Aprove para fechar a semana.",
+    "approve": "Aprovar",
+    "reopen": "Reabrir",
+    "leaveDays": "Dias de ausência",
+    "cost": "Custo",
+    "addEntry": "Adicionar registo",
+    "editEntry": "Corrigir",
+    "clockedIn": "Entrada",
+    "clockedOut": "Saída",
+    "reasonRequired": "Porquê (fica no registo)",
+    "stillIn": "ainda presente",
+    "export": "Exportar",
+    "payroll": "Processamento salarial (CSV)",
+    "record": "Registo de tempos (CSV)",
+    "exportHint": "O registo de tempos lista cada entrada e correção — o registo legal do tempo de trabalho. É guardado durante {years} anos.",
+    "leavePageTitle": "Férias e Trocas",
+    "leavePageIntro": "Aprove pedidos de férias e trocas de turno.",
+    "approveBtn": "Aprovar",
+    "reject": "Recusar",
+    "rejectReason": "Motivo (a pessoa vê-o)",
+    "days": "{n} dias úteis",
+    "noRequests": "Nada à espera.",
+    "peopleTitle": "Pessoal",
+    "peopleIntro": "Funções, horas de contrato, valor/hora (só os responsáveis veem), local habitual e PIN de ponto. Adicione pessoas em Utilizadores.",
+    "rate": "Valor/hora",
+    "contractHours": "Contrato h/semana",
+    "homeSite": "Local habitual",
+    "payrollCode": "Código salarial",
+    "active": "Ativo",
+    "hasPin": "Com PIN",
+    "noPin": "Sem PIN",
+    "inactive": "Inativo",
+    "teamLink": "Adicionar pessoas",
+    "closed": {
+      "OFF": "Pessoal e horários não está disponível de momento.",
+      "COMPANY_OFF": "Pessoal e horários está desligado para a sua empresa. Contacte a FIRINGI.",
+      "TYPE_OFF": "Pessoal e horários não está disponível para o seu tipo de empresa.",
+      "PART_OFF": "Esta parte está desligada.",
+      "KIOSK_OFF": "O quiosque está desligado — pique o ponto pelo telemóvel."
     }
   }
 }

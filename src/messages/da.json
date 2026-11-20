@@ -891,7 +891,15 @@
     "Tenders": "Udbud",
     "Sustainability & CO₂": "Bæredygtighed & CO₂",
     "CO₂ & Packaging": "CO₂ & emballage",
-    "CO₂ Footprint": "CO₂-aftryk"
+    "CO₂ Footprint": "CO₂-aftryk",
+    "Staff & Time": "Personale & tid",
+    "My Shifts & Hours": "Mine vagter & timer",
+    "Who's In": "Hvem er inde",
+    "Rota": "Vagtplan",
+    "Clock-in Kiosk": "Stempelterminal",
+    "Timesheets": "Timesedler",
+    "Leave & Swaps": "Fravær & bytter",
+    "Staff": "Personale"
   },
   "delivery": {
     "title": "Levering",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-værdi kontrolleret ({decision}): {product}",
       "body": "»{product}« {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Dine vagter er klar",
+      "body": "Vagtplanen for ugen {week} er offentliggjort. Åbn Mine vagter for at se dine."
+    },
+    "staff_shift_changed": {
+      "title": "En vagt er ændret",
+      "body": "Din vagt {start} er ændret eller aflyst. Tjek Mine vagter."
+    },
+    "staff_shift_reminder": {
+      "title": "Din vagt starter snart",
+      "body": "Din vagt starter {start}. Husk at stemple ind."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Stadig stemplet ind?",
+      "body": "Din vagt er slut, men du er stadig stemplet ind. Stempl ud, hvis du er færdig."
+    },
+    "staff_timesheet_approved": {
+      "title": "Timeseddel godkendt",
+      "body": "Dine timer for ugen {week} er godkendt."
+    },
+    "staff_leave_decided": {
+      "title": "Fravær {decision}",
+      "body": "Dit fravær {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "En kollega tilbyder dig en vagt",
+      "body": "{name} tilbyder dig vagten {start}. Åbn Mine vagter for at tage den."
+    },
+    "staff_swap_decided": {
+      "title": "Vagtbytte {decision}",
+      "body": "Byttet af vagten {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Ledig vagt taget",
+      "body": "{name} har taget den ledige vagt {start}."
+    },
+    "staff_no_show": {
+      "title": "Ikke stemplet ind: {name}",
+      "body": "{name} har en vagt, der startede {start}, og har ikke stemplet ind."
+    },
+    "staff_missed_clock_out": {
+      "title": "Glemte at stemple ud: {name}",
+      "body": "{name} var stadig stemplet ind; registreringen blev lukket automatisk. Tjek den under Timesedler."
+    },
+    "staff_leave_requested": {
+      "title": "Fraværsanmodning: {name}",
+      "body": "{name} anmoder om fravær {from} – {to}. Godkend det under Fravær & bytter."
+    },
+    "staff_swap_to_approve": {
+      "title": "Vagtbytte til godkendelse",
+      "body": "{name} har taget en vagt {start}. Godkend det under Fravær & bytter."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Timeseddel sendt: {name}",
+      "body": "{name} har sendt timerne for ugen {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybrid",
       "LPG": "LPG",
       "ELECTRIC": "El"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Hvem er inde",
+    "overviewIntro": "Hvem der arbejder nu, dagens vagter og hvad der kræver din opmærksomhed.",
+    "inNow": "Inde nu",
+    "nobodyIn": "Ingen er stemplet ind.",
+    "onBreak": "På pause",
+    "since": "siden {time}",
+    "staffCount": "Personale",
+    "today": "Dagens vagter",
+    "noShiftsToday": "Ingen vagter i dag.",
+    "state": {
+      "IN": "Inde",
+      "MISSING": "Ikke mødt endnu",
+      "LATER": "Senere"
+    },
+    "openShift": "Ledig vagt",
+    "flaggedTitle": "Skal tjekkes",
+    "noFlags": "Intet at tjekke.",
+    "flag": {
+      "LATE": "For sent",
+      "EARLY_LEAVE": "Gik tidligt",
+      "OUTSIDE_AREA": "Uden for området",
+      "MISSED_CLOCK_OUT": "Glemte at stemple ud",
+      "EDITED": "Rettet",
+      "NO_BREAK": "Ingen pause",
+      "NO_SHIFT": "Ingen vagt planlagt"
+    },
+    "pending": "Venter på dig",
+    "pendingLeave": "Fraværsanmodninger: {n}",
+    "pendingSwaps": "Vagtbytter: {n}",
+    "pendingSheets": "Timesedler: {n}",
+    "labourTitle": "Lønomkostninger og salg (14 dage)",
+    "hours": "Timer",
+    "labourCost": "Lønomkostninger",
+    "sales": "Salg",
+    "share": "Lønandel",
+    "ratesMissing": "Personer uden timeløn: {n} — de er ikke med i omkostningen.",
+    "meTitle": "Mine vagter & timer",
+    "meIntro": "Stempl ind og ud, se dine vagter og timer, søg om fravær eller byt en vagt.",
+    "clockIn": "Stempl ind",
+    "clockOut": "Stempl ud",
+    "breakStart": "Start pause",
+    "breakEnd": "Afslut pause",
+    "clockedInSince": "Stemplet ind siden {time}",
+    "notClockedIn": "Du er ikke stemplet ind.",
+    "locating": "Finder din placering…",
+    "locationNeeded": "Tillad adgang til din placering for at stemple ind fra telefonen.",
+    "clockDone": "Udført: {action} kl. {time}",
+    "nearestSite": "Nærmeste lokation",
+    "action": {
+      "IN": "stemplet ind",
+      "OUT": "stemplet ud",
+      "BREAK_START": "pause startet",
+      "BREAK_END": "pause afsluttet"
+    },
+    "phoneOff": "Indstempling fra telefon er slået fra — brug stempelterminalen.",
+    "thisWeek": "Denne uge",
+    "worked": "Arbejdet",
+    "overtime": "Overarbejde",
+    "night": "Nat",
+    "holiday": "Helligdag",
+    "contract": "Kontrakt: {h} t om ugen",
+    "myShifts": "Mine næste vagter",
+    "noShifts": "Ingen vagter planlagt.",
+    "offerSwap": "Tilbyd til en kollega",
+    "anyone": "Alle",
+    "swapNote": "Note (valgfri)",
+    "send": "Send",
+    "offered": "Tilbudt.",
+    "openShifts": "Ledige vagter",
+    "take": "Tag denne vagt",
+    "swaps": "Vagtbytter",
+    "acceptSwap": "Tag den",
+    "status": {
+      "PENDING": "Venter",
+      "ACCEPTED": "Taget, venter på lederen",
+      "APPROVED": "Godkendt",
+      "REJECTED": "Ikke godkendt",
+      "CANCELLED": "Annulleret",
+      "OPEN": "Åben",
+      "SUBMITTED": "Sendt"
+    },
+    "recent": "Seneste timer",
+    "noEntries": "Ingen timer endnu.",
+    "breakShort": "pause {m} min",
+    "leaveTitle": "Fravær",
+    "kind": "Type",
+    "leave": {
+      "HOLIDAY": "Ferie",
+      "SICK": "Syg",
+      "UNPAID": "Ulønnet",
+      "OTHER": "Andet"
+    },
+    "from": "Fra",
+    "to": "Til",
+    "halfDay": "Halv dag",
+    "reason": "Årsag",
+    "ask": "Anmod",
+    "asked": "Sendt.",
+    "cancel": "Annuller",
+    "pinTitle": "Min stempel-PIN",
+    "pinHint": "4–8 cifre — samme PIN som ved kassen.",
+    "pinSet": "PIN gemt.",
+    "pinMissing": "Vælg en PIN for at stemple ind ved stempelterminalen.",
+    "savePin": "Gem PIN",
+    "submitWeek": "Send denne uge til min leder",
+    "submitted": "Sendt.",
+    "rotaTitle": "Vagtplan",
+    "rotaIntro": "Planlæg ugens vagter. Medarbejderne kan se dem, når du offentliggør.",
+    "rotaIntroStaff": "Dit teams offentliggjorte vagter.",
+    "prevWeek": "← Forrige uge",
+    "nextWeek": "Næste uge →",
+    "thisWeekBtn": "Denne uge",
+    "publish": "Offentliggør ugen ({n} kladder)",
+    "published": "Offentliggjort — medarbejderne har fået besked.",
+    "copyPrev": "Kopiér sidste uge",
+    "copiedOk": "Sidste uges vagter er kopieret som kladder.",
+    "addShift": "Tilføj vagt",
+    "day": "Dag",
+    "person": "Person",
+    "site": "Lokation",
+    "role": "Rolle",
+    "start": "Start",
+    "end": "Slut",
+    "breakMin": "Pause (min)",
+    "save": "Gem",
+    "saved": "Gemt.",
+    "delete": "Slet",
+    "draft": "kladde",
+    "planned": "Planlagt {h}",
+    "contractOf": "af {h} t",
+    "plannedCost": "Planlagte lønomkostninger: {cost}",
+    "noStaff": "Tilføj først dit personale (Personale).",
+    "onLeave": "Fraværende",
+    "warn": {
+      "WEEK_OVER_MAX": "Over ugentligt maksimum",
+      "SHORT_REST": "Mindre hvile end påkrævet",
+      "NO_BREAK": "Mangler pause",
+      "OVERLAP": "Overlapper en anden vagt",
+      "ON_LEAVE": "Fraværende"
+    },
+    "kioskTitle": "Stempelterminal",
+    "kioskIntro": "Lad denne side være åben på butikkens eller lagerets enhed. Medarbejderne indtaster deres PIN for at stemple ind eller ud.",
+    "enterPin": "Indtast din PIN",
+    "clear": "Ryd",
+    "inOut": "Ind / Ud",
+    "hello": "{name}: {action} kl. {time}",
+    "timesheetsTitle": "Timesedler",
+    "timesheetsIntro": "Hver persons uge: timer, overarbejde, nattimer og helligdagstimer. Godkend for at låse ugen.",
+    "approve": "Godkend",
+    "reopen": "Genåbn",
+    "leaveDays": "Fraværsdage",
+    "cost": "Omkostning",
+    "addEntry": "Tilføj registrering",
+    "editEntry": "Ret",
+    "clockedIn": "Ind",
+    "clockedOut": "Ud",
+    "reasonRequired": "Årsag (gemmes i registreringen)",
+    "stillIn": "stadig inde",
+    "export": "Eksport",
+    "payroll": "Løn (CSV)",
+    "record": "Tidsregistrering (CSV)",
+    "exportHint": "Tidsregistreringen viser hver registrering og rettelse — den lovpligtige registrering af arbejdstid. Den opbevares i {years} år.",
+    "leavePageTitle": "Fravær & bytter",
+    "leavePageIntro": "Godkend fraværsanmodninger og vagtbytter.",
+    "approveBtn": "Godkend",
+    "reject": "Afvis",
+    "rejectReason": "Årsag (medarbejderen kan se den)",
+    "days": "{n} arbejdsdage",
+    "noRequests": "Intet venter.",
+    "peopleTitle": "Personale",
+    "peopleIntro": "Roller, kontrakttimer, lønsatser (kun ledere kan se dem), fast lokation og stempel-PIN-koder. Tilføj personer under Brugere.",
+    "rate": "Timeløn",
+    "contractHours": "Kontrakt t/uge",
+    "homeSite": "Fast lokation",
+    "payrollCode": "Lønnummer",
+    "active": "Aktiv",
+    "hasPin": "PIN angivet",
+    "noPin": "Ingen PIN",
+    "inactive": "Inaktiv",
+    "teamLink": "Tilføj personer",
+    "closed": {
+      "OFF": "Personale & tid er ikke tilgængelig i øjeblikket.",
+      "COMPANY_OFF": "Personale & tid er slået fra for din virksomhed. Kontakt FIRINGI.",
+      "TYPE_OFF": "Personale & tid er ikke tilgængelig for din virksomhedstype.",
+      "PART_OFF": "Denne del er slået fra.",
+      "KIOSK_OFF": "Stempelterminalen er slået fra — stempl ind fra din telefon."
     }
   }
 }

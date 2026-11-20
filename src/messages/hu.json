@@ -891,7 +891,15 @@
     "Tenders": "Tenderek",
     "Sustainability & CO₂": "Fenntarthatóság és CO₂",
     "CO₂ & Packaging": "CO₂ és csomagolás",
-    "CO₂ Footprint": "CO₂-lábnyom"
+    "CO₂ Footprint": "CO₂-lábnyom",
+    "Staff & Time": "Munkatársak és munkaidő",
+    "My Shifts & Hours": "Műszakjaim és óráim",
+    "Who's In": "Ki van bent",
+    "Rota": "Beosztás",
+    "Clock-in Kiosk": "Blokkoló kioszk",
+    "Timesheets": "Jelenléti ívek",
+    "Leave & Swaps": "Szabadság és cserék",
+    "Staff": "Munkatársak"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-érték ellenőrizve, {decision}: {product}",
       "body": "„{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Megjelent a beosztása",
+      "body": "A(z) {week} kezdetű hét beosztása megjelent. Saját műszakjait a Műszakjaim oldalon tekintheti meg."
+    },
+    "staff_shift_changed": {
+      "title": "Egy műszak megváltozott",
+      "body": "A(z) {start} kezdetű műszakját módosították vagy törölték. Ellenőrizze a Műszakjaim oldalon."
+    },
+    "staff_shift_reminder": {
+      "title": "Hamarosan kezdődik a műszakja",
+      "body": "Műszakja kezdete: {start}. Ne felejtse el rögzíteni az érkezését."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Még bent van?",
+      "body": "Műszakja véget ért, de a távozását még nem rögzítette. Rögzítse a távozását, ha végzett."
+    },
+    "staff_timesheet_approved": {
+      "title": "Jelenléti ív jóváhagyva",
+      "body": "A(z) {week} kezdetű hét óráit jóváhagyták."
+    },
+    "staff_leave_decided": {
+      "title": "Szabadság: {decision}",
+      "body": "Szabadsága ({from} – {to}): {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Egy kolléga műszakot ajánl fel Önnek",
+      "body": "{name} felajánlja Önnek a(z) {start} kezdetű műszakot. Az átvételhez nyissa meg a Műszakjaim oldalt."
+    },
+    "staff_swap_decided": {
+      "title": "Műszakcsere: {decision}",
+      "body": "A(z) {start} kezdetű műszak cseréje: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Szabad műszakot átvettek",
+      "body": "{name} átvette a(z) {start} kezdetű szabad műszakot."
+    },
+    "staff_no_show": {
+      "title": "Nem rögzített érkezést: {name}",
+      "body": "{name} műszakja ekkor kezdődött: {start}, de az érkezését nem rögzítette."
+    },
+    "staff_missed_clock_out": {
+      "title": "Elmaradt távozásrögzítés: {name}",
+      "body": "{name} távozása nem volt rögzítve; a bejegyzést a rendszer automatikusan lezárta. Ellenőrizze a Jelenléti ívek oldalon."
+    },
+    "staff_leave_requested": {
+      "title": "Szabadságkérelem: {name}",
+      "body": "{name} szabadságot kér: {from} – {to}. Hagyja jóvá a Szabadság és cserék oldalon."
+    },
+    "staff_swap_to_approve": {
+      "title": "Jóváhagyandó műszakcsere",
+      "body": "{name} átvett egy műszakot ({start}). Hagyja jóvá a Szabadság és cserék oldalon."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Jelenléti ív elküldve: {name}",
+      "body": "{name} elküldte a(z) {week} kezdetű hét óráit."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hibrid",
       "LPG": "LPG",
       "ELECTRIC": "Elektromos"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Ki van bent",
+    "overviewIntro": "Ki dolgozik most, a mai műszakok és ami az Ön figyelmét igényli.",
+    "inNow": "Most bent",
+    "nobodyIn": "Senki sem rögzítette az érkezését.",
+    "onBreak": "Szünetben",
+    "since": "{time} óta",
+    "staffCount": "Munkatársak",
+    "today": "Mai műszakok",
+    "noShiftsToday": "Ma nincs műszak.",
+    "state": {
+      "IN": "Bent",
+      "MISSING": "Még nem érkezett",
+      "LATER": "Később"
+    },
+    "openShift": "Szabad műszak",
+    "flaggedTitle": "Ellenőrizendő",
+    "noFlags": "Nincs mit ellenőrizni.",
+    "flag": {
+      "LATE": "Késés",
+      "EARLY_LEAVE": "Korán távozott",
+      "OUTSIDE_AREA": "Területen kívül",
+      "MISSED_CLOCK_OUT": "Távozás rögzítése elmaradt",
+      "EDITED": "Javítva",
+      "NO_BREAK": "Nincs szünet",
+      "NO_SHIFT": "Nincs tervezett műszak"
+    },
+    "pending": "Önre vár",
+    "pendingLeave": "Szabadságkérelmek: {n}",
+    "pendingSwaps": "Műszakcserék: {n}",
+    "pendingSheets": "Jelenléti ívek: {n}",
+    "labourTitle": "Bérköltség és árbevétel (14 nap)",
+    "hours": "Órák",
+    "labourCost": "Bérköltség",
+    "sales": "Árbevétel",
+    "share": "Bérköltség aránya",
+    "ratesMissing": "Órabér nélküli munkatársak: {n} — a költség nem tartalmazza őket.",
+    "meTitle": "Műszakjaim és óráim",
+    "meIntro": "Rögzítse érkezését és távozását, tekintse meg műszakjait és óráit, kérjen szabadságot vagy cseréljen műszakot.",
+    "clockIn": "Érkezés",
+    "clockOut": "Távozás",
+    "breakStart": "Szünet kezdése",
+    "breakEnd": "Szünet vége",
+    "clockedInSince": "Bent {time} óta",
+    "notClockedIn": "Ön még nem rögzítette az érkezését.",
+    "locating": "Helymeghatározás…",
+    "locationNeeded": "Engedélyezze a helymeghatározást a telefonos blokkoláshoz.",
+    "clockDone": "Kész: {action}, {time}",
+    "nearestSite": "Legközelebbi telephely",
+    "action": {
+      "IN": "érkezés rögzítve",
+      "OUT": "távozás rögzítve",
+      "BREAK_START": "szünet elkezdve",
+      "BREAK_END": "szünet befejezve"
+    },
+    "phoneOff": "A telefonos blokkolás ki van kapcsolva — használja a kioszkot.",
+    "thisWeek": "Ez a hét",
+    "worked": "Ledolgozott",
+    "overtime": "Túlóra",
+    "night": "Éjszakai",
+    "holiday": "Ünnepnap",
+    "contract": "Szerződés: heti {h} óra",
+    "myShifts": "Következő műszakjaim",
+    "noShifts": "Nincs tervezett műszak.",
+    "offerSwap": "Felajánlás kollégának",
+    "anyone": "Bárki",
+    "swapNote": "Megjegyzés (nem kötelező)",
+    "send": "Küldés",
+    "offered": "Felajánlva.",
+    "openShifts": "Szabad műszakok",
+    "take": "Műszak átvétele",
+    "swaps": "Műszakcserék",
+    "acceptSwap": "Átveszem",
+    "status": {
+      "PENDING": "Függőben",
+      "ACCEPTED": "Átvéve, vezetői jóváhagyásra vár",
+      "APPROVED": "Jóváhagyva",
+      "REJECTED": "Elutasítva",
+      "CANCELLED": "Visszavonva",
+      "OPEN": "Nyitott",
+      "SUBMITTED": "Elküldve"
+    },
+    "recent": "Legutóbbi órák",
+    "noEntries": "Még nincsenek órák.",
+    "breakShort": "szünet {m} perc",
+    "leaveTitle": "Szabadság",
+    "kind": "Típus",
+    "leave": {
+      "HOLIDAY": "Éves szabadság",
+      "SICK": "Betegség",
+      "UNPAID": "Fizetés nélküli",
+      "OTHER": "Egyéb"
+    },
+    "from": "Kezdete",
+    "to": "Vége",
+    "halfDay": "Fél nap",
+    "reason": "Indok",
+    "ask": "Kérelem",
+    "asked": "Elküldve.",
+    "cancel": "Mégse",
+    "pinTitle": "Saját blokkoló PIN",
+    "pinHint": "4–8 számjegy — ugyanaz a PIN, mint a kasszánál.",
+    "pinSet": "PIN mentve.",
+    "pinMissing": "Állítson be PIN-t a kioszkos blokkoláshoz.",
+    "savePin": "PIN mentése",
+    "submitWeek": "E hét elküldése a vezetőmnek",
+    "submitted": "Elküldve.",
+    "rotaTitle": "Beosztás",
+    "rotaIntro": "Tervezze meg a hét műszakjait. A munkatársak a közzététel után látják őket.",
+    "rotaIntroStaff": "Csapata közzétett műszakjai.",
+    "prevWeek": "← Előző hét",
+    "nextWeek": "Következő hét →",
+    "thisWeekBtn": "Ez a hét",
+    "publish": "Hét közzététele ({n} piszkozat)",
+    "published": "Közzétéve — a munkatársak értesítést kaptak.",
+    "copyPrev": "Előző hét másolása",
+    "copiedOk": "Az előző hét műszakjai piszkozatként átmásolva.",
+    "addShift": "Műszak hozzáadása",
+    "day": "Nap",
+    "person": "Személy",
+    "site": "Telephely",
+    "role": "Szerepkör",
+    "start": "Kezdés",
+    "end": "Befejezés",
+    "breakMin": "Szünet (perc)",
+    "save": "Mentés",
+    "saved": "Mentve.",
+    "delete": "Törlés",
+    "draft": "piszkozat",
+    "planned": "Tervezett: {h}",
+    "contractOf": "/ {h} óra",
+    "plannedCost": "Tervezett bérköltség: {cost}",
+    "noStaff": "Először adja hozzá a munkatársakat (Munkatársak).",
+    "onLeave": "Szabadságon",
+    "warn": {
+      "WEEK_OVER_MAX": "Heti maximum felett",
+      "SHORT_REST": "Kevesebb pihenőidő a kötelezőnél",
+      "NO_BREAK": "Szünet szükséges",
+      "OVERLAP": "Ütközik egy másik műszakkal",
+      "ON_LEAVE": "Szabadságon"
+    },
+    "kioskTitle": "Blokkoló kioszk",
+    "kioskIntro": "Hagyja nyitva ezt az oldalt az üzlet vagy a raktár eszközén. A munkatársak a PIN beírásával rögzítik érkezésüket vagy távozásukat.",
+    "enterPin": "Írja be a PIN-t",
+    "clear": "Törlés",
+    "inOut": "Érkezés / Távozás",
+    "hello": "{name}: {action}, {time}",
+    "timesheetsTitle": "Jelenléti ívek",
+    "timesheetsIntro": "Minden munkatárs hete: órák, túlóra, éjszakai és ünnepnapi órák. A jóváhagyás lezárja a hetet.",
+    "approve": "Jóváhagyás",
+    "reopen": "Újranyitás",
+    "leaveDays": "Szabadságnapok",
+    "cost": "Költség",
+    "addEntry": "Bejegyzés hozzáadása",
+    "editEntry": "Javítás",
+    "clockedIn": "Érkezés",
+    "clockedOut": "Távozás",
+    "reasonRequired": "Indok (a nyilvántartásban megmarad)",
+    "stillIn": "még bent",
+    "export": "Exportálás",
+    "payroll": "Bérszámfejtés (CSV)",
+    "record": "Munkaidő-nyilvántartás (CSV)",
+    "exportHint": "A munkaidő-nyilvántartás minden bejegyzést és javítást tartalmaz — ez a törvényben előírt munkaidő-nyilvántartás. Megőrzési idő: {years} év.",
+    "leavePageTitle": "Szabadság és cserék",
+    "leavePageIntro": "Szabadságkérelmek és műszakcserék jóváhagyása.",
+    "approveBtn": "Jóváhagyás",
+    "reject": "Elutasítás",
+    "rejectReason": "Indok (az érintett látja)",
+    "days": "{n} munkanap",
+    "noRequests": "Nincs függő tétel.",
+    "peopleTitle": "Munkatársak",
+    "peopleIntro": "Szerepkörök, szerződéses órák, bérek (csak a vezetők látják), saját telephely és blokkoló PIN-kódok. Munkatársakat a Felhasználók menüpontban adhat hozzá.",
+    "rate": "Órabér",
+    "contractHours": "Szerz. óra/hét",
+    "homeSite": "Saját telephely",
+    "payrollCode": "Bérszámfejtési kód",
+    "active": "Aktív",
+    "hasPin": "PIN beállítva",
+    "noPin": "Nincs PIN",
+    "inactive": "Inaktív",
+    "teamLink": "Munkatársak hozzáadása",
+    "closed": {
+      "OFF": "A Munkatársak és munkaidő funkció jelenleg nem érhető el.",
+      "COMPANY_OFF": "A Munkatársak és munkaidő funkció ki van kapcsolva az Ön vállalkozásánál. Forduljon a FIRINGI-hez.",
+      "TYPE_OFF": "A Munkatársak és munkaidő funkció nem érhető el az Ön vállalkozástípusához.",
+      "PART_OFF": "Ez a rész ki van kapcsolva.",
+      "KIOSK_OFF": "A kioszk ki van kapcsolva — blokkoljon telefonról."
     }
   }
 }

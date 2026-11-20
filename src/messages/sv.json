@@ -891,7 +891,15 @@
     "Tenders": "Upphandlingar",
     "Sustainability & CO₂": "Hållbarhet och CO₂",
     "CO₂ & Packaging": "CO₂ och förpackning",
-    "CO₂ Footprint": "CO₂-avtryck"
+    "CO₂ Footprint": "CO₂-avtryck",
+    "Staff & Time": "Personal och tid",
+    "My Shifts & Hours": "Mina pass och timmar",
+    "Who's In": "Vem är på plats",
+    "Rota": "Schema",
+    "Clock-in Kiosk": "Stämpelkiosk",
+    "Timesheets": "Tidrapporter",
+    "Leave & Swaps": "Ledighet och byten",
+    "Staff": "Personal"
   },
   "delivery": {
     "title": "Leverans",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-värde granskat {decision}: {product}",
       "body": "”{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Dina pass är publicerade",
+      "body": "Schemat för veckan {week} är publicerat. Öppna Mina pass för att se dina."
+    },
+    "staff_shift_changed": {
+      "title": "Ett pass har ändrats",
+      "body": "Ditt pass {start} har ändrats eller ställts in. Kolla Mina pass."
+    },
+    "staff_shift_reminder": {
+      "title": "Ditt pass börjar snart",
+      "body": "Ditt pass börjar {start}. Kom ihåg att stämpla in."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Fortfarande instämplad?",
+      "body": "Ditt pass har slutat men du är fortfarande instämplad. Stämpla ut om du är klar."
+    },
+    "staff_timesheet_approved": {
+      "title": "Tidrapport godkänd",
+      "body": "Dina timmar för veckan {week} är godkända."
+    },
+    "staff_leave_decided": {
+      "title": "Ledighet: {decision}",
+      "body": "Din ledighet {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "En kollega erbjuder dig ett pass",
+      "body": "{name} erbjuder dig passet {start}. Öppna Mina pass för att ta det."
+    },
+    "staff_swap_decided": {
+      "title": "Passbyte: {decision}",
+      "body": "Bytet av passet {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Ledigt pass taget",
+      "body": "{name} tog det lediga passet {start}."
+    },
+    "staff_no_show": {
+      "title": "Inte instämplad: {name}",
+      "body": "{name} har ett pass som började {start} och har inte stämplat in."
+    },
+    "staff_missed_clock_out": {
+      "title": "Glömde stämpla ut: {name}",
+      "body": "{name} var fortfarande instämplad; posten stängdes automatiskt. Kontrollera den i Tidrapporter."
+    },
+    "staff_leave_requested": {
+      "title": "Ledighetsansökan: {name}",
+      "body": "{name} ansöker om ledighet {from} – {to}. Godkänn den under Ledighet och byten."
+    },
+    "staff_swap_to_approve": {
+      "title": "Passbyte att godkänna",
+      "body": "{name} tog ett pass {start}. Godkänn det under Ledighet och byten."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Tidrapport skickad: {name}",
+      "body": "{name} skickade timmarna för veckan {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybrid",
       "LPG": "LPG",
       "ELECTRIC": "El"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Vem är på plats",
+    "overviewIntro": "Vem som jobbar nu, dagens pass och vad som behöver din uppmärksamhet.",
+    "inNow": "På plats nu",
+    "nobodyIn": "Ingen är instämplad.",
+    "onBreak": "På rast",
+    "since": "sedan {time}",
+    "staffCount": "Personal",
+    "today": "Dagens pass",
+    "noShiftsToday": "Inga pass i dag.",
+    "state": {
+      "IN": "På plats",
+      "MISSING": "Inte här än",
+      "LATER": "Senare"
+    },
+    "openShift": "Ledigt pass",
+    "flaggedTitle": "Att kontrollera",
+    "noFlags": "Inget att kontrollera.",
+    "flag": {
+      "LATE": "Sen",
+      "EARLY_LEAVE": "Gick tidigt",
+      "OUTSIDE_AREA": "Utanför området",
+      "MISSED_CLOCK_OUT": "Glömde stämpla ut",
+      "EDITED": "Korrigerad",
+      "NO_BREAK": "Ingen rast",
+      "NO_SHIFT": "Inget planerat pass"
+    },
+    "pending": "Väntar på dig",
+    "pendingLeave": "Ledighetsansökningar: {n}",
+    "pendingSwaps": "Passbyten: {n}",
+    "pendingSheets": "Tidrapporter: {n}",
+    "labourTitle": "Personalkostnad och försäljning (14 dagar)",
+    "hours": "Timmar",
+    "labourCost": "Personalkostnad",
+    "sales": "Försäljning",
+    "share": "Personalkostnadsandel",
+    "ratesMissing": "Personer utan timlön: {n} — de ingår inte i kostnaden.",
+    "meTitle": "Mina pass och timmar",
+    "meIntro": "Stämpla in och ut, se dina pass och timmar, ansök om ledighet eller byt pass.",
+    "clockIn": "Stämpla in",
+    "clockOut": "Stämpla ut",
+    "breakStart": "Starta rast",
+    "breakEnd": "Avsluta rast",
+    "clockedInSince": "Instämplad sedan {time}",
+    "notClockedIn": "Du är inte instämplad.",
+    "locating": "Hämtar din plats…",
+    "locationNeeded": "Tillåt platsåtkomst för att stämpla in från telefonen.",
+    "clockDone": "Klart: {action} kl. {time}",
+    "nearestSite": "Närmaste arbetsplats",
+    "action": {
+      "IN": "instämplad",
+      "OUT": "utstämplad",
+      "BREAK_START": "rast startad",
+      "BREAK_END": "rast avslutad"
+    },
+    "phoneOff": "Instämpling från telefon är avstängd — använd kiosken.",
+    "thisWeek": "Den här veckan",
+    "worked": "Arbetat",
+    "overtime": "Övertid",
+    "night": "Natt",
+    "holiday": "Helgdag",
+    "contract": "Avtal: {h} h i veckan",
+    "myShifts": "Mina kommande pass",
+    "noShifts": "Inga planerade pass.",
+    "offerSwap": "Erbjud en kollega",
+    "anyone": "Vem som helst",
+    "swapNote": "Anteckning (valfritt)",
+    "send": "Skicka",
+    "offered": "Erbjudet.",
+    "openShifts": "Lediga pass",
+    "take": "Ta det här passet",
+    "swaps": "Passbyten",
+    "acceptSwap": "Ta det",
+    "status": {
+      "PENDING": "Väntar",
+      "ACCEPTED": "Taget, väntar på chefen",
+      "APPROVED": "Godkänt",
+      "REJECTED": "Inte godkänt",
+      "CANCELLED": "Avbrutet",
+      "OPEN": "Öppet",
+      "SUBMITTED": "Skickat"
+    },
+    "recent": "Senaste timmar",
+    "noEntries": "Inga timmar än.",
+    "breakShort": "rast {m} min",
+    "leaveTitle": "Ledighet",
+    "kind": "Typ",
+    "leave": {
+      "HOLIDAY": "Semester",
+      "SICK": "Sjuk",
+      "UNPAID": "Obetald",
+      "OTHER": "Annat"
+    },
+    "from": "Från",
+    "to": "Till",
+    "halfDay": "Halvdag",
+    "reason": "Orsak",
+    "ask": "Ansök",
+    "asked": "Skickat.",
+    "cancel": "Avbryt",
+    "pinTitle": "Min PIN för instämpling",
+    "pinHint": "4–8 siffror — samma PIN som i kassan.",
+    "pinSet": "PIN sparad.",
+    "pinMissing": "Ange en PIN för att stämpla in vid kiosken.",
+    "savePin": "Spara PIN",
+    "submitWeek": "Skicka veckan till min chef",
+    "submitted": "Skickat.",
+    "rotaTitle": "Schema",
+    "rotaIntro": "Planera veckans pass. Personalen ser dem när du publicerar.",
+    "rotaIntroStaff": "Ditt teams publicerade pass.",
+    "prevWeek": "← Föregående vecka",
+    "nextWeek": "Nästa vecka →",
+    "thisWeekBtn": "Den här veckan",
+    "publish": "Publicera veckan ({n} utkast)",
+    "published": "Publicerat — personalen har meddelats.",
+    "copyPrev": "Kopiera förra veckan",
+    "copiedOk": "Förra veckans pass har kopierats som utkast.",
+    "addShift": "Lägg till pass",
+    "day": "Dag",
+    "person": "Person",
+    "site": "Arbetsplats",
+    "role": "Roll",
+    "start": "Start",
+    "end": "Slut",
+    "breakMin": "Rast (min)",
+    "save": "Spara",
+    "saved": "Sparat.",
+    "delete": "Ta bort",
+    "draft": "utkast",
+    "planned": "Planerat {h}",
+    "contractOf": "av {h} h",
+    "plannedCost": "Planerad personalkostnad: {cost}",
+    "noStaff": "Lägg till din personal först (Personal).",
+    "onLeave": "Ledig",
+    "warn": {
+      "WEEK_OVER_MAX": "Över veckomaximum",
+      "SHORT_REST": "Kortare vila än tillåtet",
+      "NO_BREAK": "Behöver rast",
+      "OVERLAP": "Överlappar ett annat pass",
+      "ON_LEAVE": "Ledig"
+    },
+    "kioskTitle": "Stämpelkiosk",
+    "kioskIntro": "Låt sidan vara öppen på butikens eller lagrets enhet. Personalen anger sin PIN för att stämpla in eller ut.",
+    "enterPin": "Ange din PIN",
+    "clear": "Rensa",
+    "inOut": "In / Ut",
+    "hello": "{name}: {action} kl. {time}",
+    "timesheetsTitle": "Tidrapporter",
+    "timesheetsIntro": "Varje persons vecka: timmar, övertid, natt- och helgdagstimmar. Godkänn för att låsa veckan.",
+    "approve": "Godkänn",
+    "reopen": "Öppna igen",
+    "leaveDays": "Ledighetsdagar",
+    "cost": "Kostnad",
+    "addEntry": "Lägg till post",
+    "editEntry": "Korrigera",
+    "clockedIn": "In",
+    "clockedOut": "Ut",
+    "reasonRequired": "Varför (sparas i registret)",
+    "stillIn": "fortfarande inne",
+    "export": "Export",
+    "payroll": "Lön (CSV)",
+    "record": "Tidregister (CSV)",
+    "exportHint": "Tidregistret listar varje post och korrigering — det lagstadgade registret över arbetstid. Det sparas i {years} år.",
+    "leavePageTitle": "Ledighet och byten",
+    "leavePageIntro": "Godkänn ledighetsansökningar och passbyten.",
+    "approveBtn": "Godkänn",
+    "reject": "Avslå",
+    "rejectReason": "Orsak (syns för den anställda)",
+    "days": "{n} arbetsdagar",
+    "noRequests": "Inget väntar.",
+    "peopleTitle": "Personal",
+    "peopleIntro": "Roller, avtalade timmar, lönesatser (syns bara för chefer), hemarbetsplats och stämpel-PIN. Lägg till personer under Användare.",
+    "rate": "Timlön",
+    "contractHours": "Avtal h/vecka",
+    "homeSite": "Hemarbetsplats",
+    "payrollCode": "Lönekod",
+    "active": "Aktiv",
+    "hasPin": "PIN angiven",
+    "noPin": "Ingen PIN",
+    "inactive": "Inaktiv",
+    "teamLink": "Lägg till personer",
+    "closed": {
+      "OFF": "Personal och tid är inte tillgängligt just nu.",
+      "COMPANY_OFF": "Personal och tid är avstängt för ditt företag. Kontakta FIRINGI.",
+      "TYPE_OFF": "Personal och tid är inte tillgängligt för din typ av verksamhet.",
+      "PART_OFF": "Den här delen är avstängd.",
+      "KIOSK_OFF": "Kiosken är avstängd — stämpla in från telefonen."
     }
   }
 }

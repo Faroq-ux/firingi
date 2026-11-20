@@ -64,6 +64,7 @@ const defs = {
   "admin.messages.manage": { audience: "ADMIN", module: "Notifications", description: "Reply to customer, vendor and driver messages" },
   "admin.settings.view": { audience: "ADMIN", module: "Settings", description: "View settings" },
   "admin.settings.manage": { audience: "ADMIN", module: "Settings", description: "Change platform settings" },
+  "admin.staff.manage": { audience: "ADMIN", module: "Staff & Time", description: "FIRINGI's own staff: rota, clock entries, timesheets, leave, payroll export" },
 
   // ── VENDOR (sell portal) ─────────────────────────────────────────────────
   "vendor.dashboard.view": { audience: "VENDOR", module: "Dashboard", description: "View the sales dashboard" },
@@ -116,6 +117,8 @@ const defs = {
   "company.pos.manage": { audience: "COMPANY", module: "Till (POS)", description: "Set up the till: items, prices, recipes, tills, loyalty, the certified provider; refunds, discounts and reports" },
   "company.bank.view": { audience: "COMPANY", module: "Finance", description: "See the company's bank accounts and statement lines" },
   "company.bank.manage": { audience: "COMPANY", module: "Finance", description: "Import bank statements, link the bank feed and match bank lines" },
+  "company.staff.manage": { audience: "COMPANY", module: "Staff & Time", description: "Plan the rota, manage staff and PINs, correct clock entries, approve timesheets, leave and swaps, export payroll (when FIRINGI switched it on)" },
+  "company.staff.kiosk": { audience: "COMPANY", module: "Staff & Time", description: "Run the clock-in kiosk (PIN pad) on a shared device" },
   "team.users.view": { audience: "COMPANY", module: "Team", description: "View company users" },
   "team.users.manage": { audience: "COMPANY", module: "Team", description: "Create, disable and assign roles to company users" },
   "team.roles.manage": { audience: "COMPANY", module: "Team", description: "Create and edit company roles" },

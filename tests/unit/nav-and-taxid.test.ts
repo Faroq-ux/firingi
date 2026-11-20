@@ -6,8 +6,8 @@ import { ALL_PERMISSION_CODES, type PermissionCode } from "@/server/rbac/permiss
 import { checkCompanyVat, isValidPtNif, makePtNif } from "@/lib/tax-id";
 
 describe("admin sidebar", () => {
-  it("has all 22 sections (Inventory & Warehouses added in Phase 24, Till (POS) in Phase 47)", () => {
-    expect(ADMIN_NAV).toHaveLength(22);
+  it("has all 23 sections (Inventory & Warehouses added in Phase 24, Till (POS) in Phase 47, Staff & Time in Phase 52)", () => {
+    expect(ADMIN_NAV).toHaveLength(23);
   });
   it("vendors section has Distributors, Wholesalers, Vendor Management (Plans + Early Payouts, Phase 36; Address Approvals, Phase 47d) and Supplier Compliance (Phase 28) groups", () => {
     const vendors = ADMIN_NAV.find((s) => s.key === "vendors")!;
@@ -26,7 +26,9 @@ describe("admin sidebar", () => {
     const support = new Set<PermissionCode>(["admin.dashboard.view", "admin.orders.view"]);
     const nav = resolveNav(ADMIN_NAV, support, "en");
     // Order lists also appear under Vendors / Customers for people with order access.
-    expect(nav.map((s) => s.key)).toEqual(["dashboard", "orders", "vendors", "customers", "delivery"]);
+    // every FIRINGI member sees their own shifts & hours (Phase 52)
+    expect(nav.map((s) => s.key)).toEqual(["dashboard", "orders", "vendors", "customers", "delivery", "staff"]);
+    expect(nav.find((s) => s.key === "staff")!.items.map((i) => i.key)).toEqual(["/admin/staff/me", "/admin/staff/rota"]);
     // …and returns + cold chain (order-related) under Delivery — nothing else from Delivery.
     expect(nav.find((s) => s.key === "delivery")!.items.map((i) => i.key)).toEqual(["/admin/delivery/returns", "/admin/delivery/cold-chain"]);
     expect(nav.find((s) => s.key === "vendors")!.groups.flatMap((g) => g.items).every((i) => i.key.endsWith("/orders"))).toBe(true);

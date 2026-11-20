@@ -891,7 +891,15 @@
     "Tenders": "Konkursai",
     "Sustainability & CO₂": "Tvarumas ir CO₂",
     "CO₂ & Packaging": "CO₂ ir pakuotės",
-    "CO₂ Footprint": "CO₂ pėdsakas"
+    "CO₂ Footprint": "CO₂ pėdsakas",
+    "Staff & Time": "Darbuotojai ir laikas",
+    "My Shifts & Hours": "Mano pamainos ir valandos",
+    "Who's In": "Kas darbe",
+    "Rota": "Darbo grafikas",
+    "Clock-in Kiosk": "Žymėjimo kioskas",
+    "Timesheets": "Žiniaraščiai",
+    "Leave & Swaps": "Atostogos ir keitimai",
+    "Staff": "Darbuotojai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂ vertė patikrinta ({decision}): {product}",
       "body": "„{product}“ {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Jūsų pamainos paskelbtos",
+      "body": "{week} savaitės darbo grafikas paskelbtas. Atidarykite „Mano pamainos“, kad pamatytumėte savąsias."
+    },
+    "staff_shift_changed": {
+      "title": "Pamaina pakeista",
+      "body": "Jūsų pamaina {start} buvo pakeista arba atšaukta. Patikrinkite „Mano pamainos“."
+    },
+    "staff_shift_reminder": {
+      "title": "Jūsų pamaina netrukus prasidės",
+      "body": "Jūsų pamaina prasideda {start}. Nepamirškite pažymėti atvykimo."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Vis dar darbe?",
+      "body": "Jūsų pamaina baigėsi, bet išvykimas nepažymėtas. Pažymėkite išvykimą, jei baigėte darbą."
+    },
+    "staff_timesheet_approved": {
+      "title": "Žiniaraštis patvirtintas",
+      "body": "Jūsų {week} savaitės valandos patvirtintos."
+    },
+    "staff_leave_decided": {
+      "title": "Atostogos: {decision}",
+      "body": "Jūsų atostogos {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Kolega siūlo Jums pamainą",
+      "body": "{name} siūlo Jums pamainą {start}. Atidarykite „Mano pamainos“, kad ją paimtumėte."
+    },
+    "staff_swap_decided": {
+      "title": "Pamainų keitimas: {decision}",
+      "body": "Pamainos {start} keitimas: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Laisva pamaina paimta",
+      "body": "{name} paėmė laisvą pamainą {start}."
+    },
+    "staff_no_show": {
+      "title": "Nepažymėtas atvykimas: {name}",
+      "body": "{name} turi pamainą, kuri prasidėjo {start}, bet atvykimas nepažymėtas."
+    },
+    "staff_missed_clock_out": {
+      "title": "Pamiršo pažymėti išvykimą: {name}",
+      "body": "{name} vis dar buvo darbe; įrašas uždarytas automatiškai. Patikrinkite jį skiltyje „Žiniaraščiai“."
+    },
+    "staff_leave_requested": {
+      "title": "Atostogų prašymas: {name}",
+      "body": "{name} prašo atostogų {from} – {to}. Patvirtinkite skiltyje „Atostogos ir keitimai“."
+    },
+    "staff_swap_to_approve": {
+      "title": "Pamainų keitimas laukia patvirtinimo",
+      "body": "{name} paėmė pamainą {start}. Patvirtinkite skiltyje „Atostogos ir keitimai“."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Žiniaraštis išsiųstas: {name}",
+      "body": "{name} išsiuntė {week} savaitės valandas."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hibridas",
       "LPG": "SND",
       "ELECTRIC": "Elektra"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Kas darbe",
+    "overviewIntro": "Kas dirba dabar, šiandienos pamainos ir kam reikia Jūsų dėmesio.",
+    "inNow": "Dabar darbe",
+    "nobodyIn": "Niekas nepažymėjo atvykimo.",
+    "onBreak": "Per pertrauką",
+    "since": "nuo {time}",
+    "staffCount": "Darbuotojai",
+    "today": "Šiandienos pamainos",
+    "noShiftsToday": "Šiandien pamainų nėra.",
+    "state": {
+      "IN": "Atvyko",
+      "MISSING": "Dar neatvyko",
+      "LATER": "Vėliau"
+    },
+    "openShift": "Laisva pamaina",
+    "flaggedTitle": "Patikrinti",
+    "noFlags": "Nėra ką tikrinti.",
+    "flag": {
+      "LATE": "Vėluoja",
+      "EARLY_LEAVE": "Išėjo anksčiau",
+      "OUTSIDE_AREA": "Už zonos ribų",
+      "MISSED_CLOCK_OUT": "Pamiršo pažymėti išvykimą",
+      "EDITED": "Pataisyta",
+      "NO_BREAK": "Be pertraukos",
+      "NO_SHIFT": "Pamaina nesuplanuota"
+    },
+    "pending": "Laukia Jūsų",
+    "pendingLeave": "Atostogų prašymai: {n}",
+    "pendingSwaps": "Pamainų keitimai: {n}",
+    "pendingSheets": "Žiniaraščiai: {n}",
+    "labourTitle": "Darbo sąnaudos ir pardavimai (14 d.)",
+    "hours": "Valandos",
+    "labourCost": "Darbo sąnaudos",
+    "sales": "Pardavimai",
+    "share": "Darbo sąnaudų dalis",
+    "ratesMissing": "Darbuotojai be valandinio įkainio: {n} — į sąnaudas jie neįtraukti.",
+    "meTitle": "Mano pamainos ir valandos",
+    "meIntro": "Pažymėkite atvykimą ir išvykimą, peržiūrėkite savo pamainas ir valandas, prašykite atostogų arba apsikeiskite pamaina.",
+    "clockIn": "Pažymėti atvykimą",
+    "clockOut": "Pažymėti išvykimą",
+    "breakStart": "Pradėti pertrauką",
+    "breakEnd": "Baigti pertrauką",
+    "clockedInSince": "Darbe nuo {time}",
+    "notClockedIn": "Jūsų atvykimas nepažymėtas.",
+    "locating": "Nustatoma Jūsų vieta…",
+    "locationNeeded": "Leiskite nustatyti Jūsų vietą, kad galėtumėte pažymėti atvykimą telefonu.",
+    "clockDone": "Atlikta: {action} {time}",
+    "nearestSite": "Artimiausia vieta",
+    "action": {
+      "IN": "pažymėtas atvykimas",
+      "OUT": "pažymėtas išvykimas",
+      "BREAK_START": "pradėta pertrauka",
+      "BREAK_END": "baigta pertrauka"
+    },
+    "phoneOff": "Atvykimo žymėjimas telefonu išjungtas — naudokite kioską.",
+    "thisWeek": "Ši savaitė",
+    "worked": "Dirbta",
+    "overtime": "Viršvalandžiai",
+    "night": "Naktis",
+    "holiday": "Šventinė diena",
+    "contract": "Sutartis: {h} val. per savaitę",
+    "myShifts": "Mano artimiausios pamainos",
+    "noShifts": "Pamainų nesuplanuota.",
+    "offerSwap": "Pasiūlyti kolegai",
+    "anyone": "Bet kas",
+    "swapNote": "Pastaba (neprivaloma)",
+    "send": "Siųsti",
+    "offered": "Pasiūlyta.",
+    "openShifts": "Laisvos pamainos",
+    "take": "Imti šią pamainą",
+    "swaps": "Pamainų keitimai",
+    "acceptSwap": "Imti",
+    "status": {
+      "PENDING": "Laukiama",
+      "ACCEPTED": "Paimta, laukiama vadovo",
+      "APPROVED": "Patvirtinta",
+      "REJECTED": "Nepatvirtinta",
+      "CANCELLED": "Atšaukta",
+      "OPEN": "Atvira",
+      "SUBMITTED": "Išsiųsta"
+    },
+    "recent": "Paskutinės valandos",
+    "noEntries": "Valandų dar nėra.",
+    "breakShort": "pertrauka {m} min.",
+    "leaveTitle": "Atostogos",
+    "kind": "Rūšis",
+    "leave": {
+      "HOLIDAY": "Kasmetinės atostogos",
+      "SICK": "Liga",
+      "UNPAID": "Neapmokamos",
+      "OTHER": "Kita"
+    },
+    "from": "Nuo",
+    "to": "Iki",
+    "halfDay": "Pusė dienos",
+    "reason": "Priežastis",
+    "ask": "Prašyti",
+    "asked": "Išsiųsta.",
+    "cancel": "Atšaukti",
+    "pinTitle": "Mano žymėjimo PIN",
+    "pinHint": "4–8 skaitmenys — tas pats PIN kaip kasoje.",
+    "pinSet": "PIN išsaugotas.",
+    "pinMissing": "Nustatykite PIN, kad galėtumėte pažymėti atvykimą kioske.",
+    "savePin": "Išsaugoti PIN",
+    "submitWeek": "Siųsti šią savaitę vadovui",
+    "submitted": "Išsiųsta.",
+    "rotaTitle": "Darbo grafikas",
+    "rotaIntro": "Suplanuokite savaitės pamainas. Darbuotojai jas matys, kai paskelbsite.",
+    "rotaIntroStaff": "Paskelbtos Jūsų komandos pamainos.",
+    "prevWeek": "← Ankstesnė savaitė",
+    "nextWeek": "Kita savaitė →",
+    "thisWeekBtn": "Ši savaitė",
+    "publish": "Paskelbti savaitę (juodraščių: {n})",
+    "published": "Paskelbta — darbuotojams pranešta.",
+    "copyPrev": "Kopijuoti praėjusią savaitę",
+    "copiedOk": "Praėjusios savaitės pamainos nukopijuotos kaip juodraščiai.",
+    "addShift": "Pridėti pamainą",
+    "day": "Diena",
+    "person": "Asmuo",
+    "site": "Vieta",
+    "role": "Pareigos",
+    "start": "Pradžia",
+    "end": "Pabaiga",
+    "breakMin": "Pertrauka (min.)",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "delete": "Ištrinti",
+    "draft": "juodraštis",
+    "planned": "Suplanuota {h}",
+    "contractOf": "iš {h} val.",
+    "plannedCost": "Suplanuotos darbo sąnaudos: {cost}",
+    "noStaff": "Pirmiausia pridėkite darbuotojus (Darbuotojai).",
+    "onLeave": "Atostogauja",
+    "warn": {
+      "WEEK_OVER_MAX": "Viršytas savaitės maksimumas",
+      "SHORT_REST": "Per trumpas poilsis",
+      "NO_BREAK": "Reikia pertraukos",
+      "OVERLAP": "Sutampa su kita pamaina",
+      "ON_LEAVE": "Atostogauja"
+    },
+    "kioskTitle": "Žymėjimo kioskas",
+    "kioskIntro": "Palikite šį puslapį atidarytą parduotuvės ar sandėlio įrenginyje. Darbuotojai įveda savo PIN, kad pažymėtų atvykimą ar išvykimą.",
+    "enterPin": "Įveskite savo PIN",
+    "clear": "Išvalyti",
+    "inOut": "Atvykimas / išvykimas",
+    "hello": "{name}: {action} {time}",
+    "timesheetsTitle": "Žiniaraščiai",
+    "timesheetsIntro": "Kiekvieno darbuotojo savaitė: valandos, viršvalandžiai, naktinės ir švenčių dienų valandos. Patvirtinkite, kad užrakintumėte savaitę.",
+    "approve": "Patvirtinti",
+    "reopen": "Atidaryti iš naujo",
+    "leaveDays": "Atostogų dienos",
+    "cost": "Sąnaudos",
+    "addEntry": "Pridėti įrašą",
+    "editEntry": "Taisyti",
+    "clockedIn": "Atvyko",
+    "clockedOut": "Išvyko",
+    "reasonRequired": "Priežastis (saugoma įraše)",
+    "stillIn": "dar darbe",
+    "export": "Eksportas",
+    "payroll": "Darbo užmokestis (CSV)",
+    "record": "Darbo laiko apskaita (CSV)",
+    "exportHint": "Darbo laiko apskaitoje pateikiami visi įrašai ir pataisymai — tai teisės aktų reikalaujama darbo laiko apskaita. Ji saugoma {years} m.",
+    "leavePageTitle": "Atostogos ir keitimai",
+    "leavePageIntro": "Tvirtinkite atostogų prašymus ir pamainų keitimus.",
+    "approveBtn": "Patvirtinti",
+    "reject": "Atmesti",
+    "rejectReason": "Priežastis (darbuotojas ją matys)",
+    "days": "Darbo dienų: {n}",
+    "noRequests": "Niekas nelaukia.",
+    "peopleTitle": "Darbuotojai",
+    "peopleIntro": "Pareigos, sutartinės valandos, įkainiai (mato tik vadovai), pagrindinė vieta ir žymėjimo PIN. Darbuotojus pridėkite skiltyje „Naudotojai“.",
+    "rate": "Valandinis įkainis",
+    "contractHours": "Sutart. val./sav.",
+    "homeSite": "Pagrindinė vieta",
+    "payrollCode": "Darbo užmokesčio kodas",
+    "active": "Aktyvus",
+    "hasPin": "PIN nustatytas",
+    "noPin": "Nėra PIN",
+    "inactive": "Neaktyvus",
+    "teamLink": "Pridėti žmonių",
+    "closed": {
+      "OFF": "Darbuotojai ir laikas šiuo metu nepasiekiami.",
+      "COMPANY_OFF": "Darbuotojai ir laikas Jūsų įmonei išjungti. Susisiekite su FIRINGI.",
+      "TYPE_OFF": "Darbuotojai ir laikas nepasiekiami Jūsų verslo tipui.",
+      "PART_OFF": "Ši dalis išjungta.",
+      "KIOSK_OFF": "Kioskas išjungtas — pažymėkite atvykimą telefonu."
     }
   }
 }

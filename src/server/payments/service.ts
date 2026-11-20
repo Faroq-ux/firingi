@@ -535,14 +535,23 @@ export async function refundOrderPrepayment(orderId: string) {
 /** For the customer's invoices / payments pages: open invoices, what's being paid, credit, the mandate. */
 export async function buyerPaymentOverview(ctx: Ctx) {
   if (!can(ctx, ["buyer.invoices.view", "buyer.payments.view", "buyer.payments.make"])) throw new ForbiddenError();
-  const invoices = await prisma.invoice.findMany({
+  // every invoice is looked at (oldest due first), in pages — a long-standing customer has hundreds, most of them paid
+  const page = (skip: number) => prisma.invoice.findMany({
     where: { recipientCompanyId: ctx.company.id, docType: { in: [...INVOICE_TYPES] }, status: { not: "DRAFT" } },
-    select: { id: true, fullNumber: true, providerNumber: true, dueAt: true, issuedAt: true, currencyCode: true, grossTotal: true, grossTotalLocal: true }, orderBy: [{ dueAt: "asc" }, { issuedAt: "asc" }], take: 500,
+    select: { id: true, fullNumber: true, providerNumber: true, dueAt: true, issuedAt: true, currencyCode: true, grossTotal: true, grossTotalLocal: true }, orderBy: [{ dueAt: "asc" }, { issuedAt: "asc" }, { id: "asc" }], skip, take: 500,
   });
+  type Row = Awaited<ReturnType<typeof page>>[number];
   // Phase 45: open amounts in the invoice's own currency (what the customer pays)
-  const localOpen = (i: (typeof invoices)[number], eur: Decimal) => (i.currencyCode !== "EUR" && i.grossTotalLocal && !D(i.grossTotal).isZero() ? eur.mul(D(i.grossTotalLocal)).div(D(i.grossTotal)).toFixed(i.currencyCode === "ISK" ? 0 : 2) : eur.toFixed(2));
-  const open = await openAmounts(invoices.map((i) => i.id));
-  const openInvoices = invoices.filter((i) => (open.get(i.id) ?? ZERO).gt(0.004));
+  const localOpen = (i: Row, eur: Decimal) => (i.currencyCode !== "EUR" && i.grossTotalLocal && !D(i.grossTotal).isZero() ? eur.mul(D(i.grossTotalLocal)).div(D(i.grossTotal)).toFixed(i.currencyCode === "ISK" ? 0 : 2) : eur.toFixed(2));
+  const open = new Map<string, Decimal>();
+  const openInvoices: Row[] = [];
+  for (let skip = 0; openInvoices.length < 500; skip += 500) {
+    const rows = await page(skip);
+    if (!rows.length) break;
+    const o = await openAmounts(rows.map((i) => i.id));
+    for (const i of rows) { const v = o.get(i.id) ?? ZERO; if (v.gt(0.004)) { open.set(i.id, v); openInvoices.push(i); } }
+    if (rows.length < 500) break;
+  }
   const [busyItems, credit, mandate, inProgress, methods] = await Promise.all([
     prisma.paymentRequestItem.findMany({ where: { invoiceId: { in: openInvoices.map((i) => i.id) }, request: { status: "PROCESSING" } }, select: { invoiceId: true } }),
     customerCredit(ctx.company.id),

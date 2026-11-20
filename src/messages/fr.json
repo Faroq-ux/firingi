@@ -891,7 +891,15 @@
     "Tenders": "Appels d'offres",
     "Sustainability & CO₂": "Développement durable & CO₂",
     "CO₂ & Packaging": "CO₂ & emballages",
-    "CO₂ Footprint": "Empreinte CO₂"
+    "CO₂ Footprint": "Empreinte CO₂",
+    "Staff & Time": "Personnel et temps",
+    "My Shifts & Hours": "Mes postes et heures",
+    "Who's In": "Qui est là",
+    "Rota": "Planning",
+    "Clock-in Kiosk": "Borne de pointage",
+    "Timesheets": "Feuilles de temps",
+    "Leave & Swaps": "Congés et échanges",
+    "Staff": "Personnel"
   },
   "delivery": {
     "title": "Livraison",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Valeur CO₂ vérifiée — {decision} : {product}",
       "body": "« {product} » {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Vos postes sont publiés",
+      "body": "Le planning de la semaine du {week} est publié. Ouvrez Mes postes pour voir les vôtres."
+    },
+    "staff_shift_changed": {
+      "title": "Un poste a changé",
+      "body": "Votre poste du {start} a été modifié ou annulé. Consultez Mes postes."
+    },
+    "staff_shift_reminder": {
+      "title": "Votre poste commence bientôt",
+      "body": "Début de votre poste : {start}. N'oubliez pas de pointer votre arrivée."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Toujours pointé ?",
+      "body": "Votre poste est terminé mais votre départ n'est pas pointé. Pointez votre départ si vous avez fini."
+    },
+    "staff_timesheet_approved": {
+      "title": "Feuille de temps approuvée",
+      "body": "Vos heures de la semaine du {week} sont approuvées."
+    },
+    "staff_leave_decided": {
+      "title": "Congé : {decision}",
+      "body": "Votre congé {from} – {to} : {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Un collègue vous propose un poste",
+      "body": "{name} vous propose son poste du {start}. Ouvrez Mes postes pour le prendre."
+    },
+    "staff_swap_decided": {
+      "title": "Échange de poste : {decision}",
+      "body": "Échange du poste du {start} : {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Poste à pourvoir pris",
+      "body": "{name} a pris le poste à pourvoir du {start}."
+    },
+    "staff_no_show": {
+      "title": "Arrivée non pointée : {name}",
+      "body": "{name} n'a pas pointé son arrivée alors que son poste a commencé ({start})."
+    },
+    "staff_missed_clock_out": {
+      "title": "Départ non pointé : {name}",
+      "body": "{name} n'avait pas pointé son départ ; le pointage a été clôturé automatiquement. Vérifiez-le dans Feuilles de temps."
+    },
+    "staff_leave_requested": {
+      "title": "Demande de congé : {name}",
+      "body": "{name} demande un congé {from} – {to}. Approuvez-le dans Congés et échanges."
+    },
+    "staff_swap_to_approve": {
+      "title": "Échange de poste à approuver",
+      "body": "{name} a pris un poste le {start}. Approuvez l'échange dans Congés et échanges."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Feuille de temps envoyée : {name}",
+      "body": "{name} a envoyé ses heures de la semaine du {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybride",
       "LPG": "GPL",
       "ELECTRIC": "Électrique"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Qui est là",
+    "overviewIntro": "Qui travaille en ce moment, les postes du jour et ce qui requiert votre attention.",
+    "inNow": "Présents",
+    "nobodyIn": "Personne n'a pointé son arrivée.",
+    "onBreak": "En pause",
+    "since": "depuis {time}",
+    "staffCount": "Personnel",
+    "today": "Postes du jour",
+    "noShiftsToday": "Aucun poste aujourd'hui.",
+    "state": {
+      "IN": "Présent",
+      "MISSING": "Pas encore arrivé",
+      "LATER": "Plus tard"
+    },
+    "openShift": "Poste à pourvoir",
+    "flaggedTitle": "À vérifier",
+    "noFlags": "Rien à vérifier.",
+    "flag": {
+      "LATE": "En retard",
+      "EARLY_LEAVE": "Parti en avance",
+      "OUTSIDE_AREA": "Hors zone",
+      "MISSED_CLOCK_OUT": "Départ non pointé",
+      "EDITED": "Corrigé",
+      "NO_BREAK": "Sans pause",
+      "NO_SHIFT": "Aucun poste prévu"
+    },
+    "pending": "En attente de votre action",
+    "pendingLeave": "Demandes de congé : {n}",
+    "pendingSwaps": "Échanges de poste : {n}",
+    "pendingSheets": "Feuilles de temps : {n}",
+    "labourTitle": "Coût salarial et ventes (14 jours)",
+    "hours": "Heures",
+    "labourCost": "Coût salarial",
+    "sales": "Ventes",
+    "share": "Part du coût salarial",
+    "ratesMissing": "Personnes sans taux horaire : {n} — elles ne sont pas comptées dans le coût.",
+    "meTitle": "Mes postes et heures",
+    "meIntro": "Pointez à l'arrivée et au départ, consultez vos postes et vos heures, demandez un congé ou échangez un poste.",
+    "clockIn": "Pointer l'arrivée",
+    "clockOut": "Pointer le départ",
+    "breakStart": "Commencer la pause",
+    "breakEnd": "Terminer la pause",
+    "clockedInSince": "Arrivée pointée à {time}",
+    "notClockedIn": "Vous n'avez pas pointé votre arrivée.",
+    "locating": "Localisation en cours…",
+    "locationNeeded": "Autorisez la localisation pour pointer depuis votre téléphone.",
+    "clockDone": "Fait : {action} à {time}",
+    "nearestSite": "Site le plus proche",
+    "action": {
+      "IN": "arrivée pointée",
+      "OUT": "départ pointé",
+      "BREAK_START": "pause commencée",
+      "BREAK_END": "pause terminée"
+    },
+    "phoneOff": "Le pointage par téléphone est désactivé — utilisez la borne.",
+    "thisWeek": "Cette semaine",
+    "worked": "Travaillé",
+    "overtime": "Heures sup.",
+    "night": "Nuit",
+    "holiday": "Jour férié",
+    "contract": "Contrat : {h} h par semaine",
+    "myShifts": "Mes prochains postes",
+    "noShifts": "Aucun poste prévu.",
+    "offerSwap": "Proposer à un collègue",
+    "anyone": "N'importe qui",
+    "swapNote": "Note (facultatif)",
+    "send": "Envoyer",
+    "offered": "Proposé.",
+    "openShifts": "Postes à pourvoir",
+    "take": "Prendre ce poste",
+    "swaps": "Échanges de poste",
+    "acceptSwap": "Le prendre",
+    "status": {
+      "PENDING": "En attente",
+      "ACCEPTED": "Pris, en attente du responsable",
+      "APPROVED": "Approuvé",
+      "REJECTED": "Refusé",
+      "CANCELLED": "Annulé",
+      "OPEN": "Ouvert",
+      "SUBMITTED": "Envoyé"
+    },
+    "recent": "Heures récentes",
+    "noEntries": "Aucune heure pour l'instant.",
+    "breakShort": "pause {m} min",
+    "leaveTitle": "Congés",
+    "kind": "Type",
+    "leave": {
+      "HOLIDAY": "Congés payés",
+      "SICK": "Maladie",
+      "UNPAID": "Sans solde",
+      "OTHER": "Autre"
+    },
+    "from": "Du",
+    "to": "Au",
+    "halfDay": "Demi-journée",
+    "reason": "Motif",
+    "ask": "Demander",
+    "asked": "Envoyé.",
+    "cancel": "Annuler",
+    "pinTitle": "Mon PIN de pointage",
+    "pinHint": "4–8 chiffres — le même PIN que pour la caisse.",
+    "pinSet": "PIN enregistré.",
+    "pinMissing": "Définissez un PIN pour pointer sur la borne.",
+    "savePin": "Enregistrer le PIN",
+    "submitWeek": "Envoyer cette semaine à mon responsable",
+    "submitted": "Envoyé.",
+    "rotaTitle": "Planning",
+    "rotaIntro": "Planifiez les postes de la semaine. Le personnel les voit dès leur publication.",
+    "rotaIntroStaff": "Les postes publiés de votre équipe.",
+    "prevWeek": "← Semaine précédente",
+    "nextWeek": "Semaine suivante →",
+    "thisWeekBtn": "Cette semaine",
+    "publish": "Publier la semaine ({n} brouillons)",
+    "published": "Publié — le personnel a été prévenu.",
+    "copyPrev": "Copier la semaine dernière",
+    "copiedOk": "Postes de la semaine dernière copiés en brouillon.",
+    "addShift": "Ajouter un poste",
+    "day": "Jour",
+    "person": "Personne",
+    "site": "Site",
+    "role": "Rôle",
+    "start": "Début",
+    "end": "Fin",
+    "breakMin": "Pause (min)",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "delete": "Supprimer",
+    "draft": "brouillon",
+    "planned": "Prévu {h}",
+    "contractOf": "sur {h} h",
+    "plannedCost": "Coût salarial prévu : {cost}",
+    "noStaff": "Ajoutez d'abord votre personnel (Personnel).",
+    "onLeave": "En congé",
+    "warn": {
+      "WEEK_OVER_MAX": "Dépasse le maximum hebdomadaire",
+      "SHORT_REST": "Repos insuffisant",
+      "NO_BREAK": "Pause nécessaire",
+      "OVERLAP": "Chevauche un autre poste",
+      "ON_LEAVE": "En congé"
+    },
+    "kioskTitle": "Borne de pointage",
+    "kioskIntro": "Laissez cette page ouverte sur l'appareil du magasin ou de l'entrepôt. Le personnel saisit son PIN pour pointer à l'arrivée ou au départ.",
+    "enterPin": "Saisissez votre PIN",
+    "clear": "Effacer",
+    "inOut": "Arrivée / Départ",
+    "hello": "{name} : {action} à {time}",
+    "timesheetsTitle": "Feuilles de temps",
+    "timesheetsIntro": "La semaine de chaque personne : heures, heures sup., heures de nuit et de jours fériés. Approuvez pour verrouiller la semaine.",
+    "approve": "Approuver",
+    "reopen": "Rouvrir",
+    "leaveDays": "Jours de congé",
+    "cost": "Coût",
+    "addEntry": "Ajouter un pointage",
+    "editEntry": "Corriger",
+    "clockedIn": "Arrivée",
+    "clockedOut": "Départ",
+    "reasonRequired": "Motif (conservé dans le registre)",
+    "stillIn": "toujours présent",
+    "export": "Exporter",
+    "payroll": "Paie (CSV)",
+    "record": "Registre des temps (CSV)",
+    "exportHint": "Le registre des temps liste chaque pointage et chaque correction — c'est le registre légal du temps de travail. Il est conservé {years} ans.",
+    "leavePageTitle": "Congés et échanges",
+    "leavePageIntro": "Approuvez les demandes de congé et les échanges de poste.",
+    "approveBtn": "Approuver",
+    "reject": "Refuser",
+    "rejectReason": "Motif (visible par la personne)",
+    "days": "{n} jours ouvrés",
+    "noRequests": "Rien en attente.",
+    "peopleTitle": "Personnel",
+    "peopleIntro": "Rôles, heures contractuelles, taux de rémunération (visibles uniquement par les responsables), site de rattachement et PIN de pointage. Ajoutez des personnes dans Utilisateurs.",
+    "rate": "Taux horaire",
+    "contractHours": "Contrat h/sem.",
+    "homeSite": "Site de rattachement",
+    "payrollCode": "Matricule de paie",
+    "active": "Actif",
+    "hasPin": "PIN défini",
+    "noPin": "Aucun PIN",
+    "inactive": "Inactif",
+    "teamLink": "Ajouter des personnes",
+    "closed": {
+      "OFF": "Personnel et temps n'est pas disponible pour le moment.",
+      "COMPANY_OFF": "Personnel et temps est désactivé pour votre entreprise. Contactez FIRINGI.",
+      "TYPE_OFF": "Personnel et temps n'est pas disponible pour votre type d'activité.",
+      "PART_OFF": "Cette section est désactivée.",
+      "KIOSK_OFF": "La borne est désactivée — pointez depuis votre téléphone."
     }
   }
 }

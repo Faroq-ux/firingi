@@ -27,8 +27,8 @@ Five portals, one app:
 | FIRINGI back office | `/admin` | FIRINGI staff | English |
 | Public | `/`, `/login`, `/register`, `/pay/…`, `/status` | everyone | 25 languages |
 
-Size at handover: **614 pages** (372 back office, 128 supplier, 91 buyer, 8 driver, the rest public), **53 schema
-files / 76 migrations**, **197 notification events**, **30 scheduled job routes**, **25 languages** (5,981 texts each).
+Size at handover: **636 pages** (372 back office, 128 supplier, 91 buyer, 8 driver, the rest public), **54 schema
+files / 76 migrations**, **211 notification events**, **31 scheduled job routes**, **25 languages** (6,190 texts each).
 Bangla and Hindi are handled by the AI customer-service assistant, not as interface languages.
 
 ## 2. Technology
@@ -117,6 +117,21 @@ The code is complete for launch; what remains needs people, contracts and accoun
 
 *Settings › Launch Readiness* checks all of this live and says what is still missing.
 
-## 8. Final regression at handover
+## 8. Final regression at handover (20 November 2026)
 
-See the section "Final regression" below — filled in from the last full run.
+| Suite | Result |
+|---|---|
+| Unit + integration (vitest, 93 files) | **877 pass, 2 skipped, 0 failed** (the first run had 1 failure, a test-data issue — fixed) |
+| Browser suites (57, one per area) | all pass — 53 in the full run; catalogue, inventory and loyalty failed there and pass after the fixes below; staff-time added and passing |
+| Crawl (every page, laptop light + phone dark, all portals) | **589 pages, no errors, nothing wider than a phone** |
+
+Found and fixed by the regression:
+
+* **Supplier shop** — the CO₂ filter added a second "All products" link next to the shop's own (Phase 51); the shop now shows only the CO₂ chips, and tapping the active one clears it.
+* **Loyalty** — turning points into a credit note looked only at a customer's 200 oldest invoices; a customer with more (all paid) got "no unpaid invoice". It now looks through all of them.
+* **Pay invoices page** — only the 500 oldest invoices were read, so after 500 a customer stopped seeing new unpaid ones. It now pages through all invoices.
+* **Staff & time** — breaks from the phone were refused (the location is only needed to clock in and out).
+* **Test robustness** — the POS and order tests no longer depend on data other test files create at the same time; the inventory test waits for the transfer page's button.
+
+How to repeat it: `pnpm test` (with `DATABASE_URL` pointing at the test database), then the browser suites one after
+another against a fresh production build with the demo seed (see §5); the crawl last.

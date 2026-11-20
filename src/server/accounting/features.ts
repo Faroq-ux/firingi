@@ -48,6 +48,10 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     // Phase 47: the till, where FIRINGI switched it on — suppliers sell from /vendor, wholesale customers from /buy
     const { posAccess, posPortal } = await import("@/server/pos/settings");
     if (posPortal(ctx.company.type) !== portal || !(await posAccess(ctx.company.id)).on) off.add("POS");
+    // Phase 52: staff & time — customers in /buy, suppliers in /vendor; managers' pages only for managers
+    const st = await import("@/server/staff/service");
+    if (st.portalOf(ctx.company.type) !== `/${portal}` || !(await st.staffAccess(ctx.company)).on) { off.add("STAFF"); off.add("STAFF_MGR"); }
+    else if (!st.isManager(ctx)) off.add("STAFF_MGR");
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

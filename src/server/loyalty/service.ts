@@ -454,9 +454,14 @@ export async function redeemAsCreditNote(ctx: Ctx, points: number) {
   const gross = new Decimal(points).mul(s.pointValue).toDecimalPlaces(2, Decimal.ROUND_DOWN);
   // the oldest unpaid invoice whose open amount (after payments and credit notes) covers it
   const { openAmounts } = await import("@/server/payments/service");
-  const invoices = await prisma.invoice.findMany({ where: { recipientCompanyId: ctx.company.id, docType: "INVOICE", status: { in: ["ISSUED", "PARTIALLY_CREDITED"] } }, select: { id: true, fullNumber: true }, orderBy: { issuedAt: "asc" }, take: 200 });
-  const open = await openAmounts(invoices.map((i) => i.id));
-  const target = invoices.find((i) => (open.get(i.id) ?? new Decimal(0)).gte(gross));
+  // page through every open-status invoice, oldest first (a long-standing customer has hundreds, most paid)
+  let target: { id: string; fullNumber: string | null } | undefined;
+  for (let skip = 0; !target; skip += 200) {
+    const invoices = await prisma.invoice.findMany({ where: { recipientCompanyId: ctx.company.id, docType: "INVOICE", status: { in: ["ISSUED", "PARTIALLY_CREDITED"] } }, select: { id: true, fullNumber: true }, orderBy: [{ issuedAt: "asc" }, { id: "asc" }], skip, take: 200 });
+    if (!invoices.length) break;
+    const open = await openAmounts(invoices.map((i) => i.id));
+    target = invoices.find((i) => (open.get(i.id) ?? new Decimal(0)).gte(gross));
+  }
   if (!target) throw new AppError("NO_OPEN_INVOICE", "You have no unpaid invoice to take the credit off — use the points in your cart instead.", 409);
   const { rebateCreditNote, REBATE_PREFIX } = await import("@/server/invoicing/service");
   const cn = await prisma.$transaction(async (tx) => {

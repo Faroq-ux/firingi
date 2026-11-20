@@ -891,7 +891,15 @@
     "Tenders": "Konkursi",
     "Sustainability & CO₂": "Ilgtspēja un CO₂",
     "CO₂ & Packaging": "CO₂ un iepakojums",
-    "CO₂ Footprint": "CO₂ pēdas nospiedums"
+    "CO₂ Footprint": "CO₂ pēdas nospiedums",
+    "Staff & Time": "Darbinieki un laiks",
+    "My Shifts & Hours": "Manas maiņas un stundas",
+    "Who's In": "Kas darbā",
+    "Rota": "Maiņu grafiks",
+    "Clock-in Kiosk": "Laika uzskaites kiosks",
+    "Timesheets": "Darba laika tabulas",
+    "Leave & Swaps": "Atvaļinājumi un apmaiņas",
+    "Staff": "Darbinieki"
   },
   "delivery": {
     "title": "Piegāde",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂ vērtība pārbaudīta ({decision}): {product}",
       "body": "„{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Jūsu maiņas ir publicētas",
+      "body": "Maiņu grafiks nedēļai {week} ir publicēts. Atveriet “Manas maiņas”, lai redzētu savējās."
+    },
+    "staff_shift_changed": {
+      "title": "Maiņa mainīta",
+      "body": "Jūsu maiņa {start} tika mainīta vai atcelta. Pārbaudiet sadaļu “Manas maiņas”."
+    },
+    "staff_shift_reminder": {
+      "title": "Jūsu maiņa drīz sāksies",
+      "body": "Jūsu maiņa sākas {start}. Neaizmirstiet atzīmēt ierašanos."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Joprojām darbā?",
+      "body": "Jūsu maiņa ir beigusies, bet aiziešana nav atzīmēta. Atzīmējiet aiziešanu, ja esat beidzis darbu."
+    },
+    "staff_timesheet_approved": {
+      "title": "Darba laika tabula apstiprināta",
+      "body": "Jūsu stundas par nedēļu {week} ir apstiprinātas."
+    },
+    "staff_leave_decided": {
+      "title": "Atvaļinājums: {decision}",
+      "body": "Jūsu atvaļinājums {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Kolēģis piedāvā Jums maiņu",
+      "body": "{name} piedāvā Jums maiņu {start}. Atveriet “Manas maiņas”, lai to paņemtu."
+    },
+    "staff_swap_decided": {
+      "title": "Maiņu apmaiņa: {decision}",
+      "body": "Maiņas {start} apmaiņa: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Brīvā maiņa paņemta",
+      "body": "{name} paņēma brīvo maiņu {start}."
+    },
+    "staff_no_show": {
+      "title": "Nav atzīmēta ierašanās: {name}",
+      "body": "{name}: maiņa sākās {start}, bet ierašanās nav atzīmēta."
+    },
+    "staff_missed_clock_out": {
+      "title": "Aizmirsa atzīmēt aiziešanu: {name}",
+      "body": "{name}: aiziešana netika atzīmēta; ieraksts tika slēgts automātiski. Pārbaudiet to sadaļā “Darba laika tabulas”."
+    },
+    "staff_leave_requested": {
+      "title": "Atvaļinājuma pieprasījums: {name}",
+      "body": "{name} pieprasa atvaļinājumu {from} – {to}. Apstipriniet to sadaļā “Atvaļinājumi un apmaiņas”."
+    },
+    "staff_swap_to_approve": {
+      "title": "Maiņu apmaiņa jāapstiprina",
+      "body": "{name} paņēma maiņu {start}. Apstipriniet to sadaļā “Atvaļinājumi un apmaiņas”."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Darba laika tabula nosūtīta: {name}",
+      "body": "{name} nosūtīja stundas par nedēļu {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hibrīds",
       "LPG": "LPG",
       "ELECTRIC": "Elektrisks"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Kas darbā",
+    "overviewIntro": "Kas strādā pašlaik, šodienas maiņas un kam nepieciešama Jūsu uzmanība.",
+    "inNow": "Pašlaik darbā",
+    "nobodyIn": "Neviens nav atzīmējis ierašanos.",
+    "onBreak": "Pārtraukumā",
+    "since": "kopš {time}",
+    "staffCount": "Darbinieki",
+    "today": "Šodienas maiņas",
+    "noShiftsToday": "Šodien maiņu nav.",
+    "state": {
+      "IN": "Ieradies",
+      "MISSING": "Vēl nav ieradies",
+      "LATER": "Vēlāk"
+    },
+    "openShift": "Brīva maiņa",
+    "flaggedTitle": "Jāpārbauda",
+    "noFlags": "Nav ko pārbaudīt.",
+    "flag": {
+      "LATE": "Kavējas",
+      "EARLY_LEAVE": "Aizgāja agrāk",
+      "OUTSIDE_AREA": "Ārpus zonas",
+      "MISSED_CLOCK_OUT": "Aizmirsa atzīmēt aiziešanu",
+      "EDITED": "Labots",
+      "NO_BREAK": "Bez pārtraukuma",
+      "NO_SHIFT": "Maiņa nav plānota"
+    },
+    "pending": "Gaida Jūs",
+    "pendingLeave": "Atvaļinājuma pieprasījumi: {n}",
+    "pendingSwaps": "Maiņu apmaiņas: {n}",
+    "pendingSheets": "Darba laika tabulas: {n}",
+    "labourTitle": "Darbaspēka izmaksas un pārdošana (14 dienas)",
+    "hours": "Stundas",
+    "labourCost": "Darbaspēka izmaksas",
+    "sales": "Pārdošana",
+    "share": "Darbaspēka izmaksu daļa",
+    "ratesMissing": "Darbinieki bez stundas likmes: {n} — izmaksās viņi nav iekļauti.",
+    "meTitle": "Manas maiņas un stundas",
+    "meIntro": "Atzīmējiet ierašanos un aiziešanu, skatiet savas maiņas un stundas, pieprasiet atvaļinājumu vai apmainiet maiņu.",
+    "clockIn": "Atzīmēt ierašanos",
+    "clockOut": "Atzīmēt aiziešanu",
+    "breakStart": "Sākt pārtraukumu",
+    "breakEnd": "Beigt pārtraukumu",
+    "clockedInSince": "Darbā kopš {time}",
+    "notClockedIn": "Jūsu ierašanās nav atzīmēta.",
+    "locating": "Nosaka Jūsu atrašanās vietu…",
+    "locationNeeded": "Atļaujiet piekļuvi atrašanās vietai, lai atzīmētu ierašanos no tālruņa.",
+    "clockDone": "Gatavs: {action} plkst. {time}",
+    "nearestSite": "Tuvākā vieta",
+    "action": {
+      "IN": "ierašanās atzīmēta",
+      "OUT": "aiziešana atzīmēta",
+      "BREAK_START": "pārtraukums sākts",
+      "BREAK_END": "pārtraukums beigts"
+    },
+    "phoneOff": "Ierašanās atzīmēšana no tālruņa ir izslēgta — izmantojiet kiosku.",
+    "thisWeek": "Šonedēļ",
+    "worked": "Nostrādāts",
+    "overtime": "Virsstundas",
+    "night": "Nakts",
+    "holiday": "Svētku diena",
+    "contract": "Līgums: {h} h nedēļā",
+    "myShifts": "Manas nākamās maiņas",
+    "noShifts": "Maiņas nav plānotas.",
+    "offerSwap": "Piedāvāt kolēģim",
+    "anyone": "Jebkurš",
+    "swapNote": "Piezīme (neobligāti)",
+    "send": "Sūtīt",
+    "offered": "Piedāvāts.",
+    "openShifts": "Brīvās maiņas",
+    "take": "Ņemt šo maiņu",
+    "swaps": "Maiņu apmaiņas",
+    "acceptSwap": "Ņemt",
+    "status": {
+      "PENDING": "Gaida",
+      "ACCEPTED": "Paņemta, gaida vadītāju",
+      "APPROVED": "Apstiprināts",
+      "REJECTED": "Nav apstiprināts",
+      "CANCELLED": "Atcelts",
+      "OPEN": "Atvērts",
+      "SUBMITTED": "Nosūtīts"
+    },
+    "recent": "Pēdējās stundas",
+    "noEntries": "Stundu vēl nav.",
+    "breakShort": "pārtraukums {m} min",
+    "leaveTitle": "Atvaļinājums",
+    "kind": "Veids",
+    "leave": {
+      "HOLIDAY": "Ikgadējais atvaļinājums",
+      "SICK": "Slimība",
+      "UNPAID": "Bezalgas",
+      "OTHER": "Cits"
+    },
+    "from": "No",
+    "to": "Līdz",
+    "halfDay": "Puse dienas",
+    "reason": "Iemesls",
+    "ask": "Pieprasīt",
+    "asked": "Nosūtīts.",
+    "cancel": "Atcelt",
+    "pinTitle": "Mans laika uzskaites PIN",
+    "pinHint": "4–8 cipari — tas pats PIN, kas kasē.",
+    "pinSet": "PIN saglabāts.",
+    "pinMissing": "Iestatiet PIN, lai atzīmētu ierašanos kioskā.",
+    "savePin": "Saglabāt PIN",
+    "submitWeek": "Nosūtīt šo nedēļu vadītājam",
+    "submitted": "Nosūtīts.",
+    "rotaTitle": "Maiņu grafiks",
+    "rotaIntro": "Plānojiet nedēļas maiņas. Darbinieki tās redzēs, kad tās publicēsiet.",
+    "rotaIntroStaff": "Jūsu komandas publicētās maiņas.",
+    "prevWeek": "← Iepriekšējā nedēļa",
+    "nextWeek": "Nākamā nedēļa →",
+    "thisWeekBtn": "Šonedēļ",
+    "publish": "Publicēt nedēļu (melnraksti: {n})",
+    "published": "Publicēts — darbinieki ir informēti.",
+    "copyPrev": "Kopēt iepriekšējo nedēļu",
+    "copiedOk": "Iepriekšējās nedēļas maiņas nokopētas kā melnraksti.",
+    "addShift": "Pievienot maiņu",
+    "day": "Diena",
+    "person": "Persona",
+    "site": "Vieta",
+    "role": "Amats",
+    "start": "Sākums",
+    "end": "Beigas",
+    "breakMin": "Pārtraukums (min)",
+    "save": "Saglabāt",
+    "saved": "Saglabāts.",
+    "delete": "Dzēst",
+    "draft": "melnraksts",
+    "planned": "Plānots {h}",
+    "contractOf": "no {h} h",
+    "plannedCost": "Plānotās darbaspēka izmaksas: {cost}",
+    "noStaff": "Vispirms pievienojiet darbiniekus (Darbinieki).",
+    "onLeave": "Atvaļinājumā",
+    "warn": {
+      "WEEK_OVER_MAX": "Pārsniegts nedēļas maksimums",
+      "SHORT_REST": "Mazāk atpūtas nekā noteikts",
+      "NO_BREAK": "Nepieciešams pārtraukums",
+      "OVERLAP": "Pārklājas ar citu maiņu",
+      "ON_LEAVE": "Atvaļinājumā"
+    },
+    "kioskTitle": "Laika uzskaites kiosks",
+    "kioskIntro": "Atstājiet šo lapu atvērtu veikala vai noliktavas ierīcē. Darbinieki ievada savu PIN, lai atzīmētu ierašanos vai aiziešanu.",
+    "enterPin": "Ievadiet savu PIN",
+    "clear": "Notīrīt",
+    "inOut": "Ierašanās / aiziešana",
+    "hello": "{name}: {action} plkst. {time}",
+    "timesheetsTitle": "Darba laika tabulas",
+    "timesheetsIntro": "Katra darbinieka nedēļa: stundas, virsstundas, nakts un svētku dienu stundas. Apstipriniet, lai slēgtu nedēļu.",
+    "approve": "Apstiprināt",
+    "reopen": "Atvērt atkārtoti",
+    "leaveDays": "Atvaļinājuma dienas",
+    "cost": "Izmaksas",
+    "addEntry": "Pievienot ierakstu",
+    "editEntry": "Labot",
+    "clockedIn": "Ieradās",
+    "clockedOut": "Aizgāja",
+    "reasonRequired": "Iemesls (tiek saglabāts uzskaitē)",
+    "stillIn": "vēl darbā",
+    "export": "Eksports",
+    "payroll": "Algas aprēķins (CSV)",
+    "record": "Darba laika uzskaite (CSV)",
+    "exportHint": "Darba laika uzskaitē ir iekļauti visi ieraksti un labojumi — tā ir likumā noteiktā darba laika uzskaite. To glabā {years} gadus.",
+    "leavePageTitle": "Atvaļinājumi un apmaiņas",
+    "leavePageIntro": "Apstipriniet atvaļinājuma pieprasījumus un maiņu apmaiņas.",
+    "approveBtn": "Apstiprināt",
+    "reject": "Noraidīt",
+    "rejectReason": "Iemesls (darbinieks to redzēs)",
+    "days": "Darba dienas: {n}",
+    "noRequests": "Nekas negaida.",
+    "peopleTitle": "Darbinieki",
+    "peopleIntro": "Amati, līguma stundas, atalgojuma likmes (redz tikai vadītāji), pamata vieta un laika uzskaites PIN. Pievienojiet cilvēkus sadaļā “Lietotāji”.",
+    "rate": "Stundas likme",
+    "contractHours": "Līguma h/nedēļā",
+    "homeSite": "Pamata vieta",
+    "payrollCode": "Algas kods",
+    "active": "Aktīvs",
+    "hasPin": "PIN iestatīts",
+    "noPin": "Nav PIN",
+    "inactive": "Neaktīvs",
+    "teamLink": "Pievienot cilvēkus",
+    "closed": {
+      "OFF": "Darbinieki un laiks pašlaik nav pieejami.",
+      "COMPANY_OFF": "Darbinieki un laiks Jūsu uzņēmumam ir izslēgti. Sazinieties ar FIRINGI.",
+      "TYPE_OFF": "Darbinieki un laiks nav pieejami Jūsu uzņēmuma veidam.",
+      "PART_OFF": "Šī sadaļa ir izslēgta.",
+      "KIOSK_OFF": "Kiosks ir izslēgts — atzīmējiet ierašanos no tālruņa."
     }
   }
 }

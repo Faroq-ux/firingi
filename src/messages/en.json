@@ -1714,6 +1714,62 @@
     "co2_decided": {
       "title": "CO₂ value checked {decision}: {product}",
       "body": "\"{product}\" {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Your shifts are out",
+      "body": "The rota for the week of {week} is published. Open My Shifts to see yours."
+    },
+    "staff_shift_changed": {
+      "title": "A shift changed",
+      "body": "Your shift on {start} was changed or cancelled. Check My Shifts."
+    },
+    "staff_shift_reminder": {
+      "title": "Your shift starts soon",
+      "body": "Your shift starts {start}. Remember to clock in."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Still clocked in?",
+      "body": "Your shift has ended but you are still clocked in. Clock out if you have finished."
+    },
+    "staff_timesheet_approved": {
+      "title": "Timesheet approved",
+      "body": "Your hours for the week of {week} are approved."
+    },
+    "staff_leave_decided": {
+      "title": "Leave {decision}",
+      "body": "Your leave {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "A colleague offers you a shift",
+      "body": "{name} offers you the shift on {start}. Open My Shifts to take it."
+    },
+    "staff_swap_decided": {
+      "title": "Shift swap {decision}",
+      "body": "The swap of the shift on {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Open shift taken",
+      "body": "{name} took the open shift on {start}."
+    },
+    "staff_no_show": {
+      "title": "Not clocked in: {name}",
+      "body": "{name} has a shift that started {start} and has not clocked in."
+    },
+    "staff_missed_clock_out": {
+      "title": "Forgot to clock out: {name}",
+      "body": "{name} was still clocked in; the entry was closed automatically. Check it in Timesheets."
+    },
+    "staff_leave_requested": {
+      "title": "Leave request: {name}",
+      "body": "{name} asks for leave {from} – {to}. Approve it in Leave & Swaps."
+    },
+    "staff_swap_to_approve": {
+      "title": "Shift swap to approve",
+      "body": "{name} took a shift on {start}. Approve it in Leave & Swaps."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Timesheet sent: {name}",
+      "body": "{name} sent the hours for the week of {week}."
     }
   },
   "notifications": {
@@ -6860,6 +6916,195 @@
       "HYBRID": "Hybrid",
       "LPG": "LPG",
       "ELECTRIC": "Electric"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Who's In",
+    "overviewIntro": "Who is working now, today's shifts and what needs your attention.",
+    "inNow": "In now",
+    "nobodyIn": "Nobody is clocked in.",
+    "onBreak": "On a break",
+    "since": "since {time}",
+    "staffCount": "Staff",
+    "today": "Today's shifts",
+    "noShiftsToday": "No shifts today.",
+    "state": {
+      "IN": "In",
+      "MISSING": "Not in yet",
+      "LATER": "Later"
+    },
+    "openShift": "Open shift",
+    "flaggedTitle": "To check",
+    "noFlags": "Nothing to check.",
+    "flag": {
+      "LATE": "Late",
+      "EARLY_LEAVE": "Left early",
+      "OUTSIDE_AREA": "Outside the area",
+      "MISSED_CLOCK_OUT": "Forgot to clock out",
+      "EDITED": "Corrected",
+      "NO_BREAK": "No break",
+      "NO_SHIFT": "No shift planned"
+    },
+    "pending": "Waiting for you",
+    "pendingLeave": "Leave requests: {n}",
+    "pendingSwaps": "Shift swaps: {n}",
+    "pendingSheets": "Timesheets: {n}",
+    "labourTitle": "Labour cost and sales (14 days)",
+    "hours": "Hours",
+    "labourCost": "Labour cost",
+    "sales": "Sales",
+    "share": "Labour share",
+    "ratesMissing": "People without an hourly rate: {n} — the cost leaves them out.",
+    "meTitle": "My Shifts & Hours",
+    "meIntro": "Clock in and out, see your shifts and hours, ask for leave or swap a shift.",
+    "clockIn": "Clock in",
+    "clockOut": "Clock out",
+    "breakStart": "Start break",
+    "breakEnd": "End break",
+    "clockedInSince": "Clocked in since {time}",
+    "notClockedIn": "You are not clocked in.",
+    "locating": "Finding your location…",
+    "locationNeeded": "Allow your location to clock in from your phone.",
+    "clockDone": "Done: {action} at {time}",
+    "nearestSite": "Nearest site",
+    "action": {
+      "IN": "clocked in",
+      "OUT": "clocked out",
+      "BREAK_START": "break started",
+      "BREAK_END": "break ended"
+    },
+    "phoneOff": "Clocking in from a phone is switched off — use the kiosk.",
+    "thisWeek": "This week",
+    "worked": "Worked",
+    "overtime": "Overtime",
+    "night": "Night",
+    "holiday": "Public holiday",
+    "contract": "Contract: {h} h a week",
+    "myShifts": "My next shifts",
+    "noShifts": "No shifts planned.",
+    "offerSwap": "Offer to a colleague",
+    "anyone": "Anyone",
+    "swapNote": "Note (optional)",
+    "send": "Send",
+    "offered": "Offered.",
+    "openShifts": "Open shifts",
+    "take": "Take this shift",
+    "swaps": "Shift swaps",
+    "acceptSwap": "Take it",
+    "status": {
+      "PENDING": "Waiting",
+      "ACCEPTED": "Taken, waiting for the manager",
+      "APPROVED": "Approved",
+      "REJECTED": "Not approved",
+      "CANCELLED": "Cancelled",
+      "OPEN": "Open",
+      "SUBMITTED": "Sent"
+    },
+    "recent": "Recent hours",
+    "noEntries": "No hours yet.",
+    "breakShort": "break {m} min",
+    "leaveTitle": "Leave",
+    "kind": "Kind",
+    "leave": {
+      "HOLIDAY": "Holiday",
+      "SICK": "Sick",
+      "UNPAID": "Unpaid",
+      "OTHER": "Other"
+    },
+    "from": "From",
+    "to": "To",
+    "halfDay": "Half day",
+    "reason": "Reason",
+    "ask": "Ask",
+    "asked": "Sent.",
+    "cancel": "Cancel",
+    "pinTitle": "My clock PIN",
+    "pinHint": "4–8 digits — the same PIN as the till.",
+    "pinSet": "PIN saved.",
+    "pinMissing": "Set a PIN to clock in at the kiosk.",
+    "savePin": "Save PIN",
+    "submitWeek": "Send this week to my manager",
+    "submitted": "Sent.",
+    "rotaTitle": "Rota",
+    "rotaIntro": "Plan the week's shifts. Staff see them once you publish.",
+    "rotaIntroStaff": "Your team's published shifts.",
+    "prevWeek": "← Previous week",
+    "nextWeek": "Next week →",
+    "thisWeekBtn": "This week",
+    "publish": "Publish the week ({n} drafts)",
+    "published": "Published — staff have been told.",
+    "copyPrev": "Copy last week",
+    "copiedOk": "Last week's shifts copied as drafts.",
+    "addShift": "Add shift",
+    "day": "Day",
+    "person": "Person",
+    "site": "Site",
+    "role": "Role",
+    "start": "Start",
+    "end": "End",
+    "breakMin": "Break (min)",
+    "save": "Save",
+    "saved": "Saved.",
+    "delete": "Delete",
+    "draft": "draft",
+    "planned": "Planned {h}",
+    "contractOf": "of {h} h",
+    "plannedCost": "Planned labour cost: {cost}",
+    "noStaff": "Add your staff first (Staff).",
+    "onLeave": "On leave",
+    "warn": {
+      "WEEK_OVER_MAX": "Over the weekly maximum",
+      "SHORT_REST": "Less rest than required",
+      "NO_BREAK": "Needs a break",
+      "OVERLAP": "Overlaps another shift",
+      "ON_LEAVE": "On leave"
+    },
+    "kioskTitle": "Clock-in Kiosk",
+    "kioskIntro": "Leave this page open on the shop's or warehouse's device. Staff type their PIN to clock in or out.",
+    "enterPin": "Type your PIN",
+    "clear": "Clear",
+    "inOut": "In / Out",
+    "hello": "{name}: {action} at {time}",
+    "timesheetsTitle": "Timesheets",
+    "timesheetsIntro": "Each person's week: hours, overtime, night and public-holiday hours. Approve to lock the week.",
+    "approve": "Approve",
+    "reopen": "Reopen",
+    "leaveDays": "Leave days",
+    "cost": "Cost",
+    "addEntry": "Add entry",
+    "editEntry": "Correct",
+    "clockedIn": "In",
+    "clockedOut": "Out",
+    "reasonRequired": "Why (kept in the record)",
+    "stillIn": "still in",
+    "export": "Export",
+    "payroll": "Payroll (CSV)",
+    "record": "Time record (CSV)",
+    "exportHint": "The time record lists every entry and correction — the legal working-time record. It is kept {years} years.",
+    "leavePageTitle": "Leave & Swaps",
+    "leavePageIntro": "Approve leave requests and shift swaps.",
+    "approveBtn": "Approve",
+    "reject": "Turn down",
+    "rejectReason": "Reason (they see it)",
+    "days": "{n} working days",
+    "noRequests": "Nothing waiting.",
+    "peopleTitle": "Staff",
+    "peopleIntro": "Roles, contract hours, pay rates (only managers see them), home site and clock PINs. Add people in Users.",
+    "rate": "Hourly rate",
+    "contractHours": "Contract h/week",
+    "homeSite": "Home site",
+    "payrollCode": "Payroll code",
+    "active": "Active",
+    "hasPin": "PIN set",
+    "noPin": "No PIN",
+    "inactive": "Inactive",
+    "teamLink": "Add people",
+    "closed": {
+      "OFF": "Staff & time is not available at the moment.",
+      "COMPANY_OFF": "Staff & time is switched off for your business. Contact FIRINGI.",
+      "TYPE_OFF": "Staff & time is not available for your type of business.",
+      "PART_OFF": "This part is switched off.",
+      "KIOSK_OFF": "The kiosk is switched off — clock in from your phone."
     }
   }
 }

@@ -130,8 +130,13 @@ await tf.locator('input[type="number"]').first().fill("2");
 await tf.getByRole("button", { name: /Criar/ }).click();
 await lx.waitForURL(/\/vendor\/inventory\/transfers\/[a-z0-9]+$/, { timeout: 15000 }).catch(() => {});
 await settle(lx);
-await lx.getByTestId("transfer-send").click();
-check("transfer in transit", await until(async () => /trânsito/i.test(await lx.getByTestId("transfer-status").textContent())));
+// the new transfer page may still be loading its buttons — click again until the transfer is on its way
+check("transfer in transit", await until(async () => {
+  if (/trânsito/i.test(await lx.getByTestId("transfer-status").textContent())) return true;
+  if (await lx.getByTestId("transfer-send").count()) await lx.getByTestId("transfer-send").click({ timeout: 3000 }).catch(() => {});
+  await lx.waitForTimeout(1500);
+  return /trânsito/i.test(await lx.getByTestId("transfer-status").textContent());
+}, 30000));
 await lx.getByTestId("transfer-receive-btn").click();
 check("transfer received", await until(async () => /Recebida/.test(await lx.getByTestId("transfer-status").textContent())));
 

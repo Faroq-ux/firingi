@@ -891,7 +891,15 @@
     "Tenders": "Przetargi",
     "Sustainability & CO₂": "Zrównoważony rozwój i CO₂",
     "CO₂ & Packaging": "CO₂ i opakowania",
-    "CO₂ Footprint": "Ślad CO₂"
+    "CO₂ Footprint": "Ślad CO₂",
+    "Staff & Time": "Pracownicy i czas pracy",
+    "My Shifts & Hours": "Moje zmiany i godziny",
+    "Who's In": "Kto jest w pracy",
+    "Rota": "Grafik",
+    "Clock-in Kiosk": "Kiosk rejestracji czasu",
+    "Timesheets": "Karty czasu pracy",
+    "Leave & Swaps": "Urlopy i zamiany",
+    "Staff": "Pracownicy"
   },
   "delivery": {
     "title": "Dostawa",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Wartość CO₂ sprawdzona {decision}: {product}",
       "body": "„{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Grafik został opublikowany",
+      "body": "Grafik na tydzień {week} został opublikowany. Swoje zmiany można sprawdzić w sekcji Moje zmiany."
+    },
+    "staff_shift_changed": {
+      "title": "Zmiana w grafiku",
+      "body": "Zmiana zaplanowana na {start} została zmieniona lub odwołana. Proszę sprawdzić Moje zmiany."
+    },
+    "staff_shift_reminder": {
+      "title": "Zmiana wkrótce się zaczyna",
+      "body": "Zmiana zaczyna się {start}. Proszę pamiętać o rejestracji wejścia."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Nadal w pracy?",
+      "body": "Zmiana się zakończyła, ale wyjście nie zostało zarejestrowane. Proszę zarejestrować wyjście po zakończeniu pracy."
+    },
+    "staff_timesheet_approved": {
+      "title": "Karta czasu pracy zatwierdzona",
+      "body": "Godziny za tydzień {week} zostały zatwierdzone."
+    },
+    "staff_leave_decided": {
+      "title": "Urlop: {decision}",
+      "body": "Urlop {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Propozycja przejęcia zmiany",
+      "body": "{name} proponuje przejęcie zmiany zaplanowanej na {start}. Można ją przejąć w sekcji Moje zmiany."
+    },
+    "staff_swap_decided": {
+      "title": "Zamiana zmiany: {decision}",
+      "body": "Zamiana zmiany zaplanowanej na {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Wolna zmiana przejęta",
+      "body": "Wolna zmiana zaplanowana na {start} została przejęta przez: {name}."
+    },
+    "staff_no_show": {
+      "title": "Brak rejestracji wejścia: {name}",
+      "body": "{name}: zmiana rozpoczęła się {start}, a wejście nie zostało zarejestrowane."
+    },
+    "staff_missed_clock_out": {
+      "title": "Brak rejestracji wyjścia: {name}",
+      "body": "{name}: wyjście nie zostało zarejestrowane; wpis zamknięto automatycznie. Proszę go sprawdzić w Kartach czasu pracy."
+    },
+    "staff_leave_requested": {
+      "title": "Wniosek urlopowy: {name}",
+      "body": "{name}: wniosek o urlop {from} – {to}. Można go zatwierdzić w sekcji Urlopy i zamiany."
+    },
+    "staff_swap_to_approve": {
+      "title": "Zamiana zmiany do zatwierdzenia",
+      "body": "{name}: przejęcie zmiany zaplanowanej na {start}. Można je zatwierdzić w sekcji Urlopy i zamiany."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Karta czasu pracy wysłana: {name}",
+      "body": "{name}: przesłano godziny za tydzień {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybryda",
       "LPG": "LPG",
       "ELECTRIC": "Elektryczny"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Kto jest w pracy",
+    "overviewIntro": "Kto teraz pracuje, dzisiejsze zmiany i sprawy wymagające uwagi.",
+    "inNow": "Teraz w pracy",
+    "nobodyIn": "Nikt nie zarejestrował wejścia.",
+    "onBreak": "Na przerwie",
+    "since": "od {time}",
+    "staffCount": "Pracownicy",
+    "today": "Dzisiejsze zmiany",
+    "noShiftsToday": "Brak zmian na dziś.",
+    "state": {
+      "IN": "Obecny",
+      "MISSING": "Jeszcze nieobecny",
+      "LATER": "Później"
+    },
+    "openShift": "Wolna zmiana",
+    "flaggedTitle": "Do sprawdzenia",
+    "noFlags": "Nic do sprawdzenia.",
+    "flag": {
+      "LATE": "Spóźnienie",
+      "EARLY_LEAVE": "Wcześniejsze wyjście",
+      "OUTSIDE_AREA": "Poza obszarem",
+      "MISSED_CLOCK_OUT": "Brak rejestracji wyjścia",
+      "EDITED": "Poprawiono",
+      "NO_BREAK": "Bez przerwy",
+      "NO_SHIFT": "Brak zaplanowanej zmiany"
+    },
+    "pending": "Czeka na decyzję",
+    "pendingLeave": "Wnioski urlopowe: {n}",
+    "pendingSwaps": "Zamiany zmian: {n}",
+    "pendingSheets": "Karty czasu pracy: {n}",
+    "labourTitle": "Koszty pracy i sprzedaż (14 dni)",
+    "hours": "Godziny",
+    "labourCost": "Koszt pracy",
+    "sales": "Sprzedaż",
+    "share": "Udział kosztów pracy",
+    "ratesMissing": "Osoby bez stawki godzinowej: {n} — nie są uwzględnione w kosztach.",
+    "meTitle": "Moje zmiany i godziny",
+    "meIntro": "Rejestracja wejścia i wyjścia, podgląd zmian i godzin, wnioski urlopowe i zamiany zmian.",
+    "clockIn": "Wejście",
+    "clockOut": "Wyjście",
+    "breakStart": "Rozpocznij przerwę",
+    "breakEnd": "Zakończ przerwę",
+    "clockedInSince": "W pracy od {time}",
+    "notClockedIn": "Wejście nie zostało zarejestrowane.",
+    "locating": "Ustalanie lokalizacji…",
+    "locationNeeded": "Aby rejestrować wejście z telefonu, należy zezwolić na dostęp do lokalizacji.",
+    "clockDone": "Gotowe: {action} o {time}",
+    "nearestSite": "Najbliższa lokalizacja",
+    "action": {
+      "IN": "wejście zarejestrowane",
+      "OUT": "wyjście zarejestrowane",
+      "BREAK_START": "przerwa rozpoczęta",
+      "BREAK_END": "przerwa zakończona"
+    },
+    "phoneOff": "Rejestracja wejścia z telefonu jest wyłączona — proszę użyć kiosku.",
+    "thisWeek": "Ten tydzień",
+    "worked": "Przepracowane",
+    "overtime": "Nadgodziny",
+    "night": "Noc",
+    "holiday": "Święto",
+    "contract": "Umowa: {h} godz. tygodniowo",
+    "myShifts": "Moje najbliższe zmiany",
+    "noShifts": "Brak zaplanowanych zmian.",
+    "offerSwap": "Zaproponuj współpracownikowi",
+    "anyone": "Dowolna osoba",
+    "swapNote": "Notatka (opcjonalnie)",
+    "send": "Wyślij",
+    "offered": "Zaproponowano.",
+    "openShifts": "Wolne zmiany",
+    "take": "Przejmij tę zmianę",
+    "swaps": "Zamiany zmian",
+    "acceptSwap": "Przejmij",
+    "status": {
+      "PENDING": "Oczekuje",
+      "ACCEPTED": "Przejęta, czeka na kierownika",
+      "APPROVED": "Zatwierdzono",
+      "REJECTED": "Odrzucono",
+      "CANCELLED": "Anulowano",
+      "OPEN": "Otwarte",
+      "SUBMITTED": "Wysłano"
+    },
+    "recent": "Ostatnie godziny",
+    "noEntries": "Brak godzin.",
+    "breakShort": "przerwa {m} min",
+    "leaveTitle": "Urlop",
+    "kind": "Rodzaj",
+    "leave": {
+      "HOLIDAY": "Urlop wypoczynkowy",
+      "SICK": "Choroba",
+      "UNPAID": "Bezpłatny",
+      "OTHER": "Inny"
+    },
+    "from": "Od",
+    "to": "Do",
+    "halfDay": "Pół dnia",
+    "reason": "Powód",
+    "ask": "Złóż wniosek",
+    "asked": "Wysłano.",
+    "cancel": "Anuluj",
+    "pinTitle": "Mój PIN do rejestracji czasu",
+    "pinHint": "4–8 cyfr — ten sam PIN co w kasie.",
+    "pinSet": "PIN zapisany.",
+    "pinMissing": "Proszę ustawić PIN, aby rejestrować wejście w kiosku.",
+    "savePin": "Zapisz PIN",
+    "submitWeek": "Wyślij ten tydzień kierownikowi",
+    "submitted": "Wysłano.",
+    "rotaTitle": "Grafik",
+    "rotaIntro": "Zaplanuj zmiany na tydzień. Pracownicy zobaczą je po publikacji.",
+    "rotaIntroStaff": "Opublikowane zmiany zespołu.",
+    "prevWeek": "← Poprzedni tydzień",
+    "nextWeek": "Następny tydzień →",
+    "thisWeekBtn": "Ten tydzień",
+    "publish": "Opublikuj tydzień (szkice: {n})",
+    "published": "Opublikowano — pracownicy zostali powiadomieni.",
+    "copyPrev": "Kopiuj poprzedni tydzień",
+    "copiedOk": "Zmiany z poprzedniego tygodnia skopiowano jako szkice.",
+    "addShift": "Dodaj zmianę",
+    "day": "Dzień",
+    "person": "Osoba",
+    "site": "Lokalizacja",
+    "role": "Rola",
+    "start": "Początek",
+    "end": "Koniec",
+    "breakMin": "Przerwa (min)",
+    "save": "Zapisz",
+    "saved": "Zapisano.",
+    "delete": "Usuń",
+    "draft": "szkic",
+    "planned": "Zaplanowano {h}",
+    "contractOf": "z {h} godz.",
+    "plannedCost": "Planowany koszt pracy: {cost}",
+    "noStaff": "Najpierw należy dodać pracowników (Pracownicy).",
+    "onLeave": "Na urlopie",
+    "warn": {
+      "WEEK_OVER_MAX": "Przekroczony tygodniowy limit",
+      "SHORT_REST": "Za krótki odpoczynek",
+      "NO_BREAK": "Wymagana przerwa",
+      "OVERLAP": "Nakłada się na inną zmianę",
+      "ON_LEAVE": "Na urlopie"
+    },
+    "kioskTitle": "Kiosk rejestracji czasu",
+    "kioskIntro": "Proszę zostawić tę stronę otwartą na urządzeniu w sklepie lub magazynie. Pracownicy wpisują PIN, aby zarejestrować wejście lub wyjście.",
+    "enterPin": "Wpisz PIN",
+    "clear": "Wyczyść",
+    "inOut": "Wejście / Wyjście",
+    "hello": "{name}: {action} o {time}",
+    "timesheetsTitle": "Karty czasu pracy",
+    "timesheetsIntro": "Tydzień każdej osoby: godziny, nadgodziny, godziny nocne i świąteczne. Zatwierdzenie blokuje tydzień.",
+    "approve": "Zatwierdź",
+    "reopen": "Otwórz ponownie",
+    "leaveDays": "Dni urlopu",
+    "cost": "Koszt",
+    "addEntry": "Dodaj wpis",
+    "editEntry": "Popraw",
+    "clockedIn": "Wejście",
+    "clockedOut": "Wyjście",
+    "reasonRequired": "Powód (zapisywany w ewidencji)",
+    "stillIn": "nadal w pracy",
+    "export": "Eksport",
+    "payroll": "Płace (CSV)",
+    "record": "Ewidencja czasu pracy (CSV)",
+    "exportHint": "Ewidencja czasu pracy zawiera wszystkie wpisy i korekty — to prawnie wymagana ewidencja czasu pracy. Okres przechowywania: {years} lat.",
+    "leavePageTitle": "Urlopy i zamiany",
+    "leavePageIntro": "Zatwierdzanie wniosków urlopowych i zamian zmian.",
+    "approveBtn": "Zatwierdź",
+    "reject": "Odrzuć",
+    "rejectReason": "Powód (widoczny dla pracownika)",
+    "days": "Dni robocze: {n}",
+    "noRequests": "Nic nie oczekuje.",
+    "peopleTitle": "Pracownicy",
+    "peopleIntro": "Role, wymiar etatu, stawki (widoczne tylko dla kierowników), lokalizacja macierzysta i PIN-y. Osoby dodaje się w sekcji Użytkownicy.",
+    "rate": "Stawka godzinowa",
+    "contractHours": "Godz./tydz. wg umowy",
+    "homeSite": "Lokalizacja macierzysta",
+    "payrollCode": "Kod płacowy",
+    "active": "Aktywny",
+    "hasPin": "PIN ustawiony",
+    "noPin": "Brak PIN",
+    "inactive": "Nieaktywny",
+    "teamLink": "Dodaj osoby",
+    "closed": {
+      "OFF": "Moduł Pracownicy i czas pracy jest obecnie niedostępny.",
+      "COMPANY_OFF": "Moduł Pracownicy i czas pracy jest wyłączony dla Państwa firmy. Prosimy o kontakt z FIRINGI.",
+      "TYPE_OFF": "Moduł Pracownicy i czas pracy nie jest dostępny dla tego rodzaju działalności.",
+      "PART_OFF": "Ta sekcja jest wyłączona.",
+      "KIOSK_OFF": "Kiosk jest wyłączony — proszę rejestrować wejście z telefonu."
     }
   }
 }

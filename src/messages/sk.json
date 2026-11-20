@@ -891,7 +891,15 @@
     "Tenders": "Tendre",
     "Sustainability & CO₂": "Udržateľnosť a CO₂",
     "CO₂ & Packaging": "CO₂ a obaly",
-    "CO₂ Footprint": "Stopa CO₂"
+    "CO₂ Footprint": "Stopa CO₂",
+    "Staff & Time": "Zamestnanci a čas",
+    "My Shifts & Hours": "Moje zmeny a hodiny",
+    "Who's In": "Kto je v práci",
+    "Rota": "Rozpis zmien",
+    "Clock-in Kiosk": "Dochádzkový kiosk",
+    "Timesheets": "Výkazy dochádzky",
+    "Leave & Swaps": "Voľno a výmeny",
+    "Staff": "Zamestnanci"
   },
   "delivery": {
     "title": "Doručenie",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Hodnota CO₂ overená {decision}: {product}",
       "body": "„{product}“ {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Vaše zmeny sú zverejnené",
+      "body": "Rozpis zmien na týždeň {week} je zverejnený. Svoje zmeny nájdete v časti Moje zmeny."
+    },
+    "staff_shift_changed": {
+      "title": "Zmena bola upravená",
+      "body": "Vaša zmena {start} bola upravená alebo zrušená. Skontrolujte Moje zmeny."
+    },
+    "staff_shift_reminder": {
+      "title": "Vaša zmena sa čoskoro začína",
+      "body": "Vaša zmena začína {start}. Nezabudnite zaznamenať príchod."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Stále v práci?",
+      "body": "Vaša zmena skončila, ale stále máte zaznamenaný príchod. Ak ste skončili, zaznamenajte odchod."
+    },
+    "staff_timesheet_approved": {
+      "title": "Výkaz dochádzky schválený",
+      "body": "Vaše hodiny za týždeň {week} sú schválené."
+    },
+    "staff_leave_decided": {
+      "title": "Voľno: {decision}",
+      "body": "Vaše voľno {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Kolega Vám ponúka zmenu",
+      "body": "{name} Vám ponúka zmenu {start}. Prevziať ju môžete v časti Moje zmeny."
+    },
+    "staff_swap_decided": {
+      "title": "Výmena zmeny: {decision}",
+      "body": "Výmena zmeny {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Voľná zmena prevzatá",
+      "body": "{name} prevzal(a) voľnú zmenu {start}."
+    },
+    "staff_no_show": {
+      "title": "Nezaznamenaný príchod: {name}",
+      "body": "{name} má zmenu, ktorá začala {start}, a nezaznamenal(a) príchod."
+    },
+    "staff_missed_clock_out": {
+      "title": "Nezaznamenaný odchod: {name}",
+      "body": "{name} mal(a) stále zaznamenaný príchod; záznam bol automaticky uzavretý. Skontrolujte ho vo Výkazoch dochádzky."
+    },
+    "staff_leave_requested": {
+      "title": "Žiadosť o voľno: {name}",
+      "body": "{name} žiada o voľno {from} – {to}. Schváľte ho v časti Voľno a výmeny."
+    },
+    "staff_swap_to_approve": {
+      "title": "Výmena zmeny na schválenie",
+      "body": "{name} prevzal(a) zmenu {start}. Schváľte to v časti Voľno a výmeny."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Výkaz dochádzky odoslaný: {name}",
+      "body": "{name} odoslal(a) hodiny za týždeň {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybrid",
       "LPG": "LPG",
       "ELECTRIC": "Elektrina"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Kto je v práci",
+    "overviewIntro": "Kto práve pracuje, dnešné zmeny a čo si vyžaduje Vašu pozornosť.",
+    "inNow": "Teraz v práci",
+    "nobodyIn": "Nikto nemá zaznamenaný príchod.",
+    "onBreak": "Na prestávke",
+    "since": "od {time}",
+    "staffCount": "Zamestnanci",
+    "today": "Dnešné zmeny",
+    "noShiftsToday": "Dnes žiadne zmeny.",
+    "state": {
+      "IN": "Prítomný",
+      "MISSING": "Ešte neprišiel",
+      "LATER": "Neskôr"
+    },
+    "openShift": "Voľná zmena",
+    "flaggedTitle": "Na kontrolu",
+    "noFlags": "Nič na kontrolu.",
+    "flag": {
+      "LATE": "Meškanie",
+      "EARLY_LEAVE": "Skorší odchod",
+      "OUTSIDE_AREA": "Mimo oblasti",
+      "MISSED_CLOCK_OUT": "Nezaznamenaný odchod",
+      "EDITED": "Opravené",
+      "NO_BREAK": "Bez prestávky",
+      "NO_SHIFT": "Bez plánovanej zmeny"
+    },
+    "pending": "Čaká na Vás",
+    "pendingLeave": "Žiadosti o voľno: {n}",
+    "pendingSwaps": "Výmeny zmien: {n}",
+    "pendingSheets": "Výkazy dochádzky: {n}",
+    "labourTitle": "Mzdové náklady a tržby (14 dní)",
+    "hours": "Hodiny",
+    "labourCost": "Mzdové náklady",
+    "sales": "Tržby",
+    "share": "Podiel mzdových nákladov",
+    "ratesMissing": "Osoby bez hodinovej sadzby: {n} — náklady ich nezahŕňajú.",
+    "meTitle": "Moje zmeny a hodiny",
+    "meIntro": "Zaznamenajte príchod a odchod, pozrite si svoje zmeny a hodiny, požiadajte o voľno alebo vymeňte zmenu.",
+    "clockIn": "Príchod",
+    "clockOut": "Odchod",
+    "breakStart": "Začať prestávku",
+    "breakEnd": "Ukončiť prestávku",
+    "clockedInSince": "V práci od {time}",
+    "notClockedIn": "Nemáte zaznamenaný príchod.",
+    "locating": "Zisťuje sa poloha…",
+    "locationNeeded": "Povoľte prístup k polohe, aby ste mohli zaznamenať príchod z telefónu.",
+    "clockDone": "Hotovo: {action} o {time}",
+    "nearestSite": "Najbližšia prevádzka",
+    "action": {
+      "IN": "príchod zaznamenaný",
+      "OUT": "odchod zaznamenaný",
+      "BREAK_START": "prestávka začatá",
+      "BREAK_END": "prestávka ukončená"
+    },
+    "phoneOff": "Zaznamenávanie príchodu z telefónu je vypnuté — použite kiosk.",
+    "thisWeek": "Tento týždeň",
+    "worked": "Odpracované",
+    "overtime": "Nadčasy",
+    "night": "Noc",
+    "holiday": "Sviatok",
+    "contract": "Zmluva: {h} h týždenne",
+    "myShifts": "Moje ďalšie zmeny",
+    "noShifts": "Žiadne naplánované zmeny.",
+    "offerSwap": "Ponúknuť kolegovi",
+    "anyone": "Ktokoľvek",
+    "swapNote": "Poznámka (nepovinné)",
+    "send": "Odoslať",
+    "offered": "Ponúknuté.",
+    "openShifts": "Voľné zmeny",
+    "take": "Prevziať túto zmenu",
+    "swaps": "Výmeny zmien",
+    "acceptSwap": "Prevziať",
+    "status": {
+      "PENDING": "Čaká sa",
+      "ACCEPTED": "Prevzaté, čaká sa na vedúceho",
+      "APPROVED": "Schválené",
+      "REJECTED": "Neschválené",
+      "CANCELLED": "Zrušené",
+      "OPEN": "Otvorené",
+      "SUBMITTED": "Odoslané"
+    },
+    "recent": "Posledné hodiny",
+    "noEntries": "Zatiaľ žiadne hodiny.",
+    "breakShort": "prestávka {m} min",
+    "leaveTitle": "Voľno",
+    "kind": "Druh",
+    "leave": {
+      "HOLIDAY": "Dovolenka",
+      "SICK": "Choroba",
+      "UNPAID": "Neplatené",
+      "OTHER": "Iné"
+    },
+    "from": "Od",
+    "to": "Do",
+    "halfDay": "Poldeň",
+    "reason": "Dôvod",
+    "ask": "Požiadať",
+    "asked": "Odoslané.",
+    "cancel": "Zrušiť",
+    "pinTitle": "Môj dochádzkový PIN",
+    "pinHint": "4–8 číslic — rovnaký PIN ako pri pokladni.",
+    "pinSet": "PIN uložený.",
+    "pinMissing": "Nastavte si PIN na zaznamenávanie príchodu v kiosku.",
+    "savePin": "Uložiť PIN",
+    "submitWeek": "Poslať tento týždeň vedúcemu",
+    "submitted": "Odoslané.",
+    "rotaTitle": "Rozpis zmien",
+    "rotaIntro": "Naplánujte zmeny na týždeň. Zamestnanci ich uvidia po zverejnení.",
+    "rotaIntroStaff": "Zverejnené zmeny Vášho tímu.",
+    "prevWeek": "← Predchádzajúci týždeň",
+    "nextWeek": "Ďalší týždeň →",
+    "thisWeekBtn": "Tento týždeň",
+    "publish": "Zverejniť týždeň (koncepty: {n})",
+    "published": "Zverejnené — zamestnanci boli upozornení.",
+    "copyPrev": "Kopírovať minulý týždeň",
+    "copiedOk": "Zmeny z minulého týždňa boli skopírované ako koncepty.",
+    "addShift": "Pridať zmenu",
+    "day": "Deň",
+    "person": "Osoba",
+    "site": "Prevádzka",
+    "role": "Rola",
+    "start": "Začiatok",
+    "end": "Koniec",
+    "breakMin": "Prestávka (min)",
+    "save": "Uložiť",
+    "saved": "Uložené.",
+    "delete": "Odstrániť",
+    "draft": "koncept",
+    "planned": "Naplánované {h}",
+    "contractOf": "z {h} h",
+    "plannedCost": "Plánované mzdové náklady: {cost}",
+    "noStaff": "Najprv pridajte zamestnancov (Zamestnanci).",
+    "onLeave": "Má voľno",
+    "warn": {
+      "WEEK_OVER_MAX": "Nad týždenným maximom",
+      "SHORT_REST": "Kratší odpočinok, než je povinný",
+      "NO_BREAK": "Potrebná prestávka",
+      "OVERLAP": "Prekrýva sa s inou zmenou",
+      "ON_LEAVE": "Má voľno"
+    },
+    "kioskTitle": "Dochádzkový kiosk",
+    "kioskIntro": "Nechajte túto stránku otvorenú na zariadení v predajni alebo sklade. Zamestnanci zadajú svoj PIN a zaznamenajú príchod alebo odchod.",
+    "enterPin": "Zadajte PIN",
+    "clear": "Vymazať",
+    "inOut": "Príchod / Odchod",
+    "hello": "{name}: {action} o {time}",
+    "timesheetsTitle": "Výkazy dochádzky",
+    "timesheetsIntro": "Týždeň každej osoby: hodiny, nadčasy, nočné hodiny a hodiny vo sviatok. Schválením sa týždeň uzamkne.",
+    "approve": "Schváliť",
+    "reopen": "Znovu otvoriť",
+    "leaveDays": "Dni voľna",
+    "cost": "Náklady",
+    "addEntry": "Pridať záznam",
+    "editEntry": "Opraviť",
+    "clockedIn": "Príchod",
+    "clockedOut": "Odchod",
+    "reasonRequired": "Dôvod (uchováva sa v evidencii)",
+    "stillIn": "stále v práci",
+    "export": "Export",
+    "payroll": "Mzdy (CSV)",
+    "record": "Evidencia pracovného času (CSV)",
+    "exportHint": "Evidencia pracovného času obsahuje každý záznam a opravu — zákonnú evidenciu pracovného času. Uchováva sa {years} rokov.",
+    "leavePageTitle": "Voľno a výmeny",
+    "leavePageIntro": "Schvaľujte žiadosti o voľno a výmeny zmien.",
+    "approveBtn": "Schváliť",
+    "reject": "Zamietnuť",
+    "rejectReason": "Dôvod (zamestnanec ho uvidí)",
+    "days": "Pracovné dni: {n}",
+    "noRequests": "Nič nečaká.",
+    "peopleTitle": "Zamestnanci",
+    "peopleIntro": "Roly, zmluvné hodiny, mzdové sadzby (vidia ich len vedúci), domovská prevádzka a dochádzkové PIN-y. Osoby pridáte v časti Používatelia.",
+    "rate": "Hodinová sadzba",
+    "contractHours": "Zmluvné h/týždeň",
+    "homeSite": "Domovská prevádzka",
+    "payrollCode": "Mzdový kód",
+    "active": "Aktívny",
+    "hasPin": "PIN nastavený",
+    "noPin": "Bez PIN",
+    "inactive": "Neaktívny",
+    "teamLink": "Pridať osoby",
+    "closed": {
+      "OFF": "Modul Zamestnanci a čas momentálne nie je dostupný.",
+      "COMPANY_OFF": "Modul Zamestnanci a čas je pre Vašu firmu vypnutý. Kontaktujte FIRINGI.",
+      "TYPE_OFF": "Modul Zamestnanci a čas nie je dostupný pre Váš typ podnikania.",
+      "PART_OFF": "Táto časť je vypnutá.",
+      "KIOSK_OFF": "Kiosk je vypnutý — zaznamenajte príchod z telefónu."
     }
   }
 }

@@ -891,7 +891,15 @@
     "Tenders": "Ausschreibungen",
     "Sustainability & CO₂": "Nachhaltigkeit & CO₂",
     "CO₂ & Packaging": "CO₂ & Verpackung",
-    "CO₂ Footprint": "CO₂-Fußabdruck"
+    "CO₂ Footprint": "CO₂-Fußabdruck",
+    "Staff & Time": "Personal & Zeit",
+    "My Shifts & Hours": "Meine Schichten & Stunden",
+    "Who's In": "Wer ist da",
+    "Rota": "Dienstplan",
+    "Clock-in Kiosk": "Stempelterminal",
+    "Timesheets": "Stundenzettel",
+    "Leave & Swaps": "Abwesenheit & Tausch",
+    "Staff": "Personal"
   },
   "delivery": {
     "title": "Lieferung",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-Wert geprüft ({decision}): {product}",
       "body": "„{product}“ {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Ihre Schichten sind da",
+      "body": "Der Dienstplan für die Woche vom {week} ist veröffentlicht. Öffnen Sie Meine Schichten, um Ihre zu sehen."
+    },
+    "staff_shift_changed": {
+      "title": "Eine Schicht wurde geändert",
+      "body": "Ihre Schicht am {start} wurde geändert oder abgesagt. Prüfen Sie Meine Schichten."
+    },
+    "staff_shift_reminder": {
+      "title": "Ihre Schicht beginnt bald",
+      "body": "Ihre Schicht beginnt {start}. Denken Sie ans Einstempeln."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Noch eingestempelt?",
+      "body": "Ihre Schicht ist vorbei, aber Sie sind noch eingestempelt. Stempeln Sie sich aus, wenn Sie fertig sind."
+    },
+    "staff_timesheet_approved": {
+      "title": "Stundenzettel genehmigt",
+      "body": "Ihre Stunden für die Woche vom {week} sind genehmigt."
+    },
+    "staff_leave_decided": {
+      "title": "Abwesenheit {decision}",
+      "body": "Ihre Abwesenheit {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Ein Kollege bietet Ihnen eine Schicht an",
+      "body": "{name} bietet Ihnen die Schicht am {start} an. Öffnen Sie Meine Schichten, um sie zu übernehmen."
+    },
+    "staff_swap_decided": {
+      "title": "Schichttausch {decision}",
+      "body": "Tausch der Schicht am {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Offene Schicht übernommen",
+      "body": "{name} hat die offene Schicht am {start} übernommen."
+    },
+    "staff_no_show": {
+      "title": "Nicht eingestempelt: {name}",
+      "body": "{name} hat eine Schicht, die {start} begonnen hat, und ist nicht eingestempelt."
+    },
+    "staff_missed_clock_out": {
+      "title": "Ausstempeln vergessen: {name}",
+      "body": "{name} war noch eingestempelt; der Eintrag wurde automatisch geschlossen. Prüfen Sie ihn unter Stundenzettel."
+    },
+    "staff_leave_requested": {
+      "title": "Abwesenheitsantrag: {name}",
+      "body": "{name} beantragt Abwesenheit {from} – {to}. Genehmigen Sie sie unter Abwesenheit & Tausch."
+    },
+    "staff_swap_to_approve": {
+      "title": "Schichttausch zu genehmigen",
+      "body": "{name} hat eine Schicht am {start} übernommen. Genehmigen Sie dies unter Abwesenheit & Tausch."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Stundenzettel gesendet: {name}",
+      "body": "{name} hat die Stunden für die Woche vom {week} gesendet."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybrid",
       "LPG": "LPG",
       "ELECTRIC": "Elektro"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Wer ist da",
+    "overviewIntro": "Wer gerade arbeitet, die heutigen Schichten und was Ihre Aufmerksamkeit braucht.",
+    "inNow": "Jetzt da",
+    "nobodyIn": "Niemand ist eingestempelt.",
+    "onBreak": "In der Pause",
+    "since": "seit {time}",
+    "staffCount": "Personal",
+    "today": "Heutige Schichten",
+    "noShiftsToday": "Heute keine Schichten.",
+    "state": {
+      "IN": "Da",
+      "MISSING": "Noch nicht da",
+      "LATER": "Später"
+    },
+    "openShift": "Offene Schicht",
+    "flaggedTitle": "Zu prüfen",
+    "noFlags": "Nichts zu prüfen.",
+    "flag": {
+      "LATE": "Verspätet",
+      "EARLY_LEAVE": "Früher gegangen",
+      "OUTSIDE_AREA": "Außerhalb des Bereichs",
+      "MISSED_CLOCK_OUT": "Ausstempeln vergessen",
+      "EDITED": "Korrigiert",
+      "NO_BREAK": "Keine Pause",
+      "NO_SHIFT": "Keine Schicht geplant"
+    },
+    "pending": "Wartet auf Sie",
+    "pendingLeave": "Abwesenheitsanträge: {n}",
+    "pendingSwaps": "Schichttausch: {n}",
+    "pendingSheets": "Stundenzettel: {n}",
+    "labourTitle": "Personalkosten und Umsatz (14 Tage)",
+    "hours": "Stunden",
+    "labourCost": "Personalkosten",
+    "sales": "Umsatz",
+    "share": "Personalkostenquote",
+    "ratesMissing": "Personen ohne Stundenlohn: {n} — sie fehlen in den Kosten.",
+    "meTitle": "Meine Schichten & Stunden",
+    "meIntro": "Ein- und ausstempeln, Schichten und Stunden ansehen, Abwesenheit beantragen oder eine Schicht tauschen.",
+    "clockIn": "Einstempeln",
+    "clockOut": "Ausstempeln",
+    "breakStart": "Pause beginnen",
+    "breakEnd": "Pause beenden",
+    "clockedInSince": "Eingestempelt seit {time}",
+    "notClockedIn": "Sie sind nicht eingestempelt.",
+    "locating": "Standort wird ermittelt…",
+    "locationNeeded": "Erlauben Sie den Standortzugriff, um sich per Handy einzustempeln.",
+    "clockDone": "Erledigt: {action} um {time}",
+    "nearestSite": "Nächster Standort",
+    "action": {
+      "IN": "eingestempelt",
+      "OUT": "ausgestempelt",
+      "BREAK_START": "Pause begonnen",
+      "BREAK_END": "Pause beendet"
+    },
+    "phoneOff": "Einstempeln per Handy ist deaktiviert — nutzen Sie das Stempelterminal.",
+    "thisWeek": "Diese Woche",
+    "worked": "Gearbeitet",
+    "overtime": "Überstunden",
+    "night": "Nacht",
+    "holiday": "Feiertag",
+    "contract": "Vertrag: {h} Std. pro Woche",
+    "myShifts": "Meine nächsten Schichten",
+    "noShifts": "Keine Schichten geplant.",
+    "offerSwap": "Kollegen anbieten",
+    "anyone": "Alle",
+    "swapNote": "Notiz (optional)",
+    "send": "Senden",
+    "offered": "Angeboten.",
+    "openShifts": "Offene Schichten",
+    "take": "Diese Schicht übernehmen",
+    "swaps": "Schichttausch",
+    "acceptSwap": "Übernehmen",
+    "status": {
+      "PENDING": "Wartend",
+      "ACCEPTED": "Übernommen, wartet auf Vorgesetzte",
+      "APPROVED": "Genehmigt",
+      "REJECTED": "Nicht genehmigt",
+      "CANCELLED": "Storniert",
+      "OPEN": "Offen",
+      "SUBMITTED": "Gesendet"
+    },
+    "recent": "Letzte Stunden",
+    "noEntries": "Noch keine Stunden.",
+    "breakShort": "Pause {m} Min.",
+    "leaveTitle": "Abwesenheit",
+    "kind": "Art",
+    "leave": {
+      "HOLIDAY": "Urlaub",
+      "SICK": "Krank",
+      "UNPAID": "Unbezahlt",
+      "OTHER": "Sonstiges"
+    },
+    "from": "Von",
+    "to": "Bis",
+    "halfDay": "Halber Tag",
+    "reason": "Grund",
+    "ask": "Beantragen",
+    "asked": "Gesendet.",
+    "cancel": "Stornieren",
+    "pinTitle": "Meine Stempel-PIN",
+    "pinHint": "4–8 Ziffern — dieselbe PIN wie an der Kasse.",
+    "pinSet": "PIN gespeichert.",
+    "pinMissing": "Legen Sie eine PIN fest, um sich am Stempelterminal einzustempeln.",
+    "savePin": "PIN speichern",
+    "submitWeek": "Diese Woche an meine Vorgesetzten senden",
+    "submitted": "Gesendet.",
+    "rotaTitle": "Dienstplan",
+    "rotaIntro": "Planen Sie die Schichten der Woche. Mitarbeitende sehen sie, sobald Sie veröffentlichen.",
+    "rotaIntroStaff": "Die veröffentlichten Schichten Ihres Teams.",
+    "prevWeek": "← Vorherige Woche",
+    "nextWeek": "Nächste Woche →",
+    "thisWeekBtn": "Diese Woche",
+    "publish": "Woche veröffentlichen ({n} Entwürfe)",
+    "published": "Veröffentlicht — Mitarbeitende wurden benachrichtigt.",
+    "copyPrev": "Letzte Woche kopieren",
+    "copiedOk": "Schichten der letzten Woche als Entwürfe kopiert.",
+    "addShift": "Schicht hinzufügen",
+    "day": "Tag",
+    "person": "Person",
+    "site": "Standort",
+    "role": "Rolle",
+    "start": "Beginn",
+    "end": "Ende",
+    "breakMin": "Pause (Min.)",
+    "save": "Speichern",
+    "saved": "Gespeichert.",
+    "delete": "Löschen",
+    "draft": "Entwurf",
+    "planned": "Geplant {h}",
+    "contractOf": "von {h} Std.",
+    "plannedCost": "Geplante Personalkosten: {cost}",
+    "noStaff": "Fügen Sie zuerst Ihr Personal hinzu (Personal).",
+    "onLeave": "Abwesend",
+    "warn": {
+      "WEEK_OVER_MAX": "Über der wöchentlichen Höchstarbeitszeit",
+      "SHORT_REST": "Weniger Ruhezeit als vorgeschrieben",
+      "NO_BREAK": "Pause erforderlich",
+      "OVERLAP": "Überschneidet sich mit anderer Schicht",
+      "ON_LEAVE": "Abwesend"
+    },
+    "kioskTitle": "Stempelterminal",
+    "kioskIntro": "Lassen Sie diese Seite auf dem Gerät im Laden oder Lager geöffnet. Mitarbeitende geben ihre PIN ein, um sich ein- oder auszustempeln.",
+    "enterPin": "PIN eingeben",
+    "clear": "Leeren",
+    "inOut": "Ein / Aus",
+    "hello": "{name}: {action} um {time}",
+    "timesheetsTitle": "Stundenzettel",
+    "timesheetsIntro": "Die Woche jeder Person: Stunden, Überstunden, Nacht- und Feiertagsstunden. Genehmigen Sie, um die Woche zu sperren.",
+    "approve": "Genehmigen",
+    "reopen": "Wieder öffnen",
+    "leaveDays": "Abwesenheitstage",
+    "cost": "Kosten",
+    "addEntry": "Eintrag hinzufügen",
+    "editEntry": "Korrigieren",
+    "clockedIn": "Ein",
+    "clockedOut": "Aus",
+    "reasonRequired": "Grund (wird protokolliert)",
+    "stillIn": "noch eingestempelt",
+    "export": "Export",
+    "payroll": "Lohnabrechnung (CSV)",
+    "record": "Arbeitszeitnachweis (CSV)",
+    "exportHint": "Der Arbeitszeitnachweis listet jeden Eintrag und jede Korrektur auf — die gesetzlich vorgeschriebene Arbeitszeiterfassung. Er wird {years} Jahre aufbewahrt.",
+    "leavePageTitle": "Abwesenheit & Tausch",
+    "leavePageIntro": "Genehmigen Sie Abwesenheitsanträge und Schichttausche.",
+    "approveBtn": "Genehmigen",
+    "reject": "Ablehnen",
+    "rejectReason": "Grund (für die Person sichtbar)",
+    "days": "{n} Arbeitstage",
+    "noRequests": "Nichts offen.",
+    "peopleTitle": "Personal",
+    "peopleIntro": "Rollen, Vertragsstunden, Lohnsätze (nur für Vorgesetzte sichtbar), Stammstandort und Stempel-PINs. Personen fügen Sie unter Benutzer hinzu.",
+    "rate": "Stundenlohn",
+    "contractHours": "Vertrag Std./Woche",
+    "homeSite": "Stammstandort",
+    "payrollCode": "Personalnummer",
+    "active": "Aktiv",
+    "hasPin": "PIN festgelegt",
+    "noPin": "Keine PIN",
+    "inactive": "Inaktiv",
+    "teamLink": "Personen hinzufügen",
+    "closed": {
+      "OFF": "Personal & Zeit ist derzeit nicht verfügbar.",
+      "COMPANY_OFF": "Personal & Zeit ist für Ihr Unternehmen deaktiviert. Wenden Sie sich an FIRINGI.",
+      "TYPE_OFF": "Personal & Zeit ist für Ihre Unternehmensart nicht verfügbar.",
+      "PART_OFF": "Dieser Bereich ist deaktiviert.",
+      "KIOSK_OFF": "Das Stempelterminal ist deaktiviert — stempeln Sie sich per Handy ein."
     }
   }
 }

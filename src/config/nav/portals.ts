@@ -11,6 +11,20 @@ function ACCOUNTING_ITEMS(s: ReturnType<typeof section>) {
   ];
 }
 
+/** Staff shifts & time (Phase 52) — customers in /buy, suppliers in /vendor; FIRINGI switches it per type and per business. */
+function STAFF_ITEMS(s: ReturnType<typeof section>) {
+  const mgr = ["company.staff.manage", "team.users.manage"] as const;
+  return [
+    s("me", "My Shifts & Hours", "Os Meus Turnos e Horas", "P52", { live: true, feature: "STAFF", es: "Mis turnos y horas" }),
+    s("", "Who's In", "Quem Está", "P52", { live: true, feature: "STAFF_MGR", perm: [...mgr], href: `${s("", "", "", "P52").href.replace(/\/$/, "")}`, es: "Quién está" }),
+    s("rota", "Rota", "Escala", "P52", { live: true, feature: "STAFF", es: "Cuadrante" }),
+    s("clock", "Clock-in Kiosk", "Quiosque de Ponto", "P52", { live: true, feature: "STAFF", perm: [...mgr, "company.staff.kiosk", "company.pos.sell", "company.pos.manage"], es: "Quiosco de fichaje" }),
+    s("timesheets", "Timesheets", "Folhas de Horas", "P52", { live: true, feature: "STAFF_MGR", perm: [...mgr], es: "Hojas de horas" }),
+    s("leave", "Leave & Swaps", "Férias e Trocas", "P52", { live: true, feature: "STAFF_MGR", perm: [...mgr], es: "Ausencias y cambios" }),
+    s("people", "Staff", "Pessoal", "P52", { live: true, feature: "STAFF_MGR", perm: [...mgr], es: "Personal" }),
+  ];
+}
+
 /** The till (Phase 47) — same pages in both portals; FIRINGI switches it on per company type, country and company. */
 function POS_ITEMS(s: ReturnType<typeof section>, customer: boolean) {
   const sell = ["company.pos.sell", "company.pos.manage"] as const;
@@ -43,6 +57,7 @@ const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventor
 const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vad = section(`${V}/ads`, "vendor.promotions.manage");
 const vpos = section(`${V}/pos`, ["company.pos.sell", "company.pos.manage"]);
+const vst = section(`${V}/staff`, ["vendor.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
@@ -154,6 +169,7 @@ export const VENDOR_NAV: NavSection[] = [
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" }), vr("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["vendor.reports.view", "vendor.orders.view", "vendor.products.manage"], es: "Huella de CO₂" })] },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(vpos, false) },
+  { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(vst) },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(vac) },
   { key: "assistant", icon: "Bot", label: { en: "Assistant", pt: "Assistente", es: "Asistente" }, items: [vai("assistant", "Assistant", "Assistente", "P17", { live: true, feature: "ASSISTANT", es: "Asistente" })] },
   { key: "help", icon: "LifeBuoy", label: { en: "Help & Support", pt: "Ajuda e Suporte", es: "Ayuda y soporte" }, items: [vs("support", "Help & Support", "Ajuda e Suporte", "P13", { live: true, es: "Ayuda y soporte" })] },
@@ -185,6 +201,7 @@ const bai = section(`${B}`, ["buyer.orders.view", "buyer.orders.place"]);
 const bsh = section(`${B}/branches`, ["buyer.branches.manage", "buyer.orders.view", "buyer.orders.place", "buyer.reports.view"]);
 const bac = section(`${B}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 const bpos = section(`${B}/pos`, ["company.pos.sell", "company.pos.manage"]);
+const bst = section(`${B}/staff`, ["buyer.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 
 export const BUY_NAV: NavSection[] = [
   { key: "dashboard", icon: "LayoutDashboard", label: { en: "Dashboard", pt: "Painel", es: "Panel" }, items: [bd("overview", "Overview", "Visão Geral", "P1", { live: true, es: "Resumen" })] },
@@ -240,6 +257,7 @@ export const BUY_NAV: NavSection[] = [
     ],
   },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(bpos, true) },
+  { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(bst) },
   { key: "accounting", icon: "BookOpenCheck", label: { en: "Accounting", pt: "Contabilidade", es: "Contabilidad" }, items: ACCOUNTING_ITEMS(bac) },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [br("spending", "Spending Report", "Relatório de Compras", "P8", { live: true, es: "Informe de compras" }), br("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["buyer.reports.view", "buyer.orders.view", "buyer.orders.place"], es: "Huella de CO₂" })] },
   { key: "rewards", icon: "Gift", label: { en: "Rewards", pt: "Recompensas", es: "Recompensas" }, items: [bai("rewards", "Rewards", "Recompensas", "P32", { live: true, feature: "LOYALTY", es: "Recompensas" }), bai("rewards/bonuses", "My Bonuses", "Os Meus Bónus", "P48", { live: true, perm: ["buyer.orders.view", "buyer.orders.place", "buyer.invoices.view"], es: "Mis bonificaciones" })] },

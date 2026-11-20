@@ -691,6 +691,21 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Staff shifts & time (Phase 52)
+
+For the staff of customers (buyer portal), suppliers (supplier portal) and FIRINGI (back office): a **rota** (weekly
+shift planner per person and site, drafts → published, open shifts staff can take, copy last week, EU working-time
+warnings: 48 h a week, 11 h rest, a break after 6 h), **clock in / out with breaks** — from the phone with the
+**location checked** against the shop / warehouse, or on a **kiosk PIN pad** (the same PIN as the till) — with flags
+(late, left early, outside the area, no break, forgot to clock out), **manager corrections with a reason** (kept and
+audited), weekly **timesheets** (regular, overtime, night and public-holiday hours; approval locks the week),
+**payroll CSV** and the **legal time record**, **leave** (holiday, sick, unpaid) and **shift swaps** with the
+manager's approval, **who's in now**, and **labour cost against sales**. A job sends shift reminders, reminds and then
+closes forgotten clock-outs, reports no-shows and removes records after the legal time. **Every option is FIRINGI's
+switch** (*Settings › Staff & Time*): who uses it, each part, the rules and limits, approvals, public holidays per
+country — and each business on its own. Details: [docs/staff-time.md](docs/staff-time.md).
+Tests: `tests/unit/staff-time.test.ts`, `tests/integration/staff-time.test.ts`, `node tests/e2e/staff-time.mjs`.
+
 ## Sustainability & CO₂ (Phase 51)
 
 FIRINGI estimates the **carbon footprint** (kg CO₂e) of what is bought and delivered: **products** (kg × kg CO₂e per kg —

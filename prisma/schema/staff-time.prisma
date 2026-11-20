@@ -1,0 +1,192 @@
+// ── Phase 52: staff shifts & time ─────────────────────────────────────────────
+// Staff are a business's members (customers, suppliers, FIRINGI). A rota of shifts per site (an address), clock in /
+// out with breaks (phone with location, kiosk PIN pad or the till — the same PIN as the till), weekly timesheets
+// (regular, overtime, night, public-holiday hours) approved by a manager, leave and shift swaps. FIRINGI switches
+// every part on / off, per business type and per business.
+
+enum StaffShiftStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+
+enum TimeEntrySource {
+  PHONE
+  KIOSK
+  TILL
+  MANAGER
+  AUTO
+}
+
+enum StaffRequestStatus {
+  PENDING
+  ACCEPTED // a swap the colleague accepted, waiting for the manager
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum LeaveKind {
+  HOLIDAY
+  SICK
+  UNPAID
+  OTHER
+}
+
+enum TimesheetStatus {
+  OPEN
+  SUBMITTED
+  APPROVED
+}
+
+/// A member as staff: role, contract hours, pay rate (managers only), home site.
+model StaffProfile {
+  membershipId  String   @id
+  companyId     String
+  role          String?
+  /// contracted hours a week
+  contractHours Decimal? @db.Decimal(5, 2)
+  /// gross pay per hour — managers and the payroll export only
+  hourlyRate    Decimal? @db.Decimal(10, 2)
+  homeSiteId    String?
+  payrollCode   String?
+  active        Boolean  @default(true)
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  membership Membership @relation("StaffProfile", fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}
+
+/// A planned shift. No member = an open shift that staff can claim.
+model StaffShift {
+  id           String           @id @default(cuid())
+  companyId    String
+  siteId       String?
+  membershipId String?
+  role         String?
+  startsAt     DateTime
+  endsAt       DateTime
+  breakMinutes Int              @default(0)
+  status       StaffShiftStatus @default(DRAFT)
+  note         String?
+  createdById  String?
+  publishedAt  DateTime?
+  remindedAt   DateTime?
+  /// set once the job has checked the shift for a no-show
+  noShowAt     DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  membership Membership? @relation("StaffShifts", fields: [membershipId], references: [id], onDelete: SetNull)
+  entries    TimeEntry[]
+  swaps      ShiftSwap[]
+
+  @@index([companyId, startsAt])
+  @@index([membershipId, startsAt])
+}
+
+/// A clocked stretch of work. Breaks: [{ start, end }] (ISO); flags: LATE, EARLY_LEAVE, OUTSIDE_AREA, MISSED_CLOCK_OUT, EDITED, NO_BREAK.
+model TimeEntry {
+  id           String           @id @default(cuid())
+  companyId    String
+  membershipId String
+  siteId       String?
+  shiftId      String?
+  clockIn      DateTime
+  clockOut     DateTime?
+  breaks       Json             @default("[]")
+  breakMinutes Int              @default(0)
+  source       TimeEntrySource
+  outSource    TimeEntrySource?
+  inDistanceM  Int?
+  outDistanceM Int?
+  flags        String[]         @default([])
+  note         String?
+  editedById   String?
+  editedAt     DateTime?
+  editReason   String?
+  remindedAt   DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  membership Membership  @relation("TimeEntries", fields: [membershipId], references: [id], onDelete: Cascade)
+  shift      StaffShift? @relation(fields: [shiftId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, clockIn])
+  @@index([membershipId, clockIn])
+}
+
+/// A week of a member's hours, as approved (minutes; the week starts on Monday).
+model Timesheet {
+  id              String          @id @default(cuid())
+  companyId       String
+  membershipId    String
+  weekStart       DateTime        @db.Date
+  status          TimesheetStatus @default(OPEN)
+  minutes         Int             @default(0)
+  overtimeMinutes Int             @default(0)
+  nightMinutes    Int             @default(0)
+  holidayMinutes  Int             @default(0)
+  leaveDays       Decimal         @default(0) @db.Decimal(5, 1)
+  submittedAt     DateTime?
+  approvedById    String?
+  approvedAt      DateTime?
+  note            String?
+  updatedAt       DateTime        @updatedAt
+
+  @@unique([membershipId, weekStart])
+  @@index([companyId, weekStart])
+}
+
+model LeaveRequest {
+  id           String             @id @default(cuid())
+  companyId    String
+  membershipId String
+  kind         LeaveKind
+  startsOn     DateTime           @db.Date
+  endsOn       DateTime           @db.Date
+  halfDay      Boolean            @default(false)
+  reason       String?
+  status       StaffRequestStatus @default(PENDING)
+  decidedById  String?
+  decidedAt    DateTime?
+  decisionNote String?
+  createdAt    DateTime           @default(now())
+
+  @@index([companyId, startsOn])
+  @@index([membershipId])
+}
+
+/// A shift handed to a colleague (named, or anyone who takes it); the manager approves.
+model ShiftSwap {
+  id               String             @id @default(cuid())
+  companyId        String
+  shiftId          String
+  fromMembershipId String
+  toMembershipId   String?
+  status           StaffRequestStatus @default(PENDING)
+  note             String?
+  acceptedAt       DateTime?
+  decidedById      String?
+  decidedAt        DateTime?
+  decisionNote     String?
+  createdAt        DateTime           @default(now())
+
+  shift StaffShift @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, status])
+}
+
+/// Public holidays per country (FIRINGI keeps the list; hours on them count as holiday hours).
+model PublicHoliday {
+  id        String   @id @default(cuid())
+  countryId String
+  date      DateTime @db.Date
+  name      String
+  createdAt DateTime @default(now())
+
+  @@unique([countryId, date])
+}

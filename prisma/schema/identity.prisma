@@ -374,6 +374,9 @@ model Membership {
   scopes            MembershipScope[]
   branchAssignments BranchMember[]
   managedBranches   Branch[]          @relation("BranchManager")
+  staffProfile      StaffProfile?     @relation("StaffProfile")
+  staffShifts       StaffShift[]      @relation("StaffShifts")
+  timeEntries       TimeEntry[]       @relation("TimeEntries")
 
   @@unique([userId, companyId])
   @@index([companyId])

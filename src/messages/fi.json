@@ -891,7 +891,15 @@
     "Tenders": "Tarjouskilpailut",
     "Sustainability & CO₂": "Vastuullisuus ja CO₂",
     "CO₂ & Packaging": "CO₂ ja pakkaukset",
-    "CO₂ Footprint": "CO₂-jalanjälki"
+    "CO₂ Footprint": "CO₂-jalanjälki",
+    "Staff & Time": "Henkilöstö ja työaika",
+    "My Shifts & Hours": "Omat vuorot ja tunnit",
+    "Who's In": "Paikalla",
+    "Rota": "Työvuorolista",
+    "Clock-in Kiosk": "Leimauspääte",
+    "Timesheets": "Tuntilistat",
+    "Leave & Swaps": "Lomat ja vaihdot",
+    "Staff": "Henkilöstö"
   },
   "delivery": {
     "title": "Toimitus",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "CO₂-arvo tarkistettu, {decision}: {product}",
       "body": "”{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Vuoronne on julkaistu",
+      "body": "Viikon {week} työvuorolista on julkaistu. Omat vuoronne näette kohdassa Omat vuorot."
+    },
+    "staff_shift_changed": {
+      "title": "Vuoro muuttui",
+      "body": "Vuoronne {start} on muutettu tai peruttu. Tarkistakaa Omat vuorot."
+    },
+    "staff_shift_reminder": {
+      "title": "Vuoronne alkaa pian",
+      "body": "Vuoronne alkaa {start}. Muistakaa leimata sisään."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Yhä leimattuna sisään?",
+      "body": "Vuoronne on päättynyt, mutta olette yhä leimattuna sisään. Leimatkaa ulos, jos olette lopettaneet."
+    },
+    "staff_timesheet_approved": {
+      "title": "Tuntilista hyväksytty",
+      "body": "Tuntinne viikolta {week} on hyväksytty."
+    },
+    "staff_leave_decided": {
+      "title": "Lomapyyntö: {decision}",
+      "body": "Lomanne {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Työkaveri tarjoaa teille vuoroa",
+      "body": "{name} tarjoaa teille vuoroa {start}. Voitte ottaa sen kohdassa Omat vuorot."
+    },
+    "staff_swap_decided": {
+      "title": "Vuoronvaihto: {decision}",
+      "body": "Vuoron {start} vaihto: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Avoin vuoro otettu",
+      "body": "{name} otti avoimen vuoron {start}."
+    },
+    "staff_no_show": {
+      "title": "Ei leimannut sisään: {name}",
+      "body": "Henkilön {name} vuoro alkoi {start}, mutta hän ei ole leimannut sisään."
+    },
+    "staff_missed_clock_out": {
+      "title": "Unohti leimata ulos: {name}",
+      "body": "{name} oli yhä leimattuna sisään; merkintä suljettiin automaattisesti. Tarkistakaa se kohdassa Tuntilistat."
+    },
+    "staff_leave_requested": {
+      "title": "Lomapyyntö: {name}",
+      "body": "{name} hakee lomaa {from} – {to}. Hyväksykää se kohdassa Lomat ja vaihdot."
+    },
+    "staff_swap_to_approve": {
+      "title": "Hyväksyttävä vuoronvaihto",
+      "body": "{name} otti vuoron {start}. Hyväksykää se kohdassa Lomat ja vaihdot."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Tuntilista lähetetty: {name}",
+      "body": "{name} lähetti tunnit viikolta {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hybridi",
       "LPG": "Nestekaasu",
       "ELECTRIC": "Sähkö"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Paikalla",
+    "overviewIntro": "Kuka on nyt töissä, tämän päivän vuorot ja mikä vaatii huomiotanne.",
+    "inNow": "Paikalla nyt",
+    "nobodyIn": "Kukaan ei ole leimannut sisään.",
+    "onBreak": "Tauolla",
+    "since": "klo {time} alkaen",
+    "staffCount": "Henkilöstö",
+    "today": "Tämän päivän vuorot",
+    "noShiftsToday": "Ei vuoroja tänään.",
+    "state": {
+      "IN": "Paikalla",
+      "MISSING": "Ei vielä paikalla",
+      "LATER": "Myöhemmin"
+    },
+    "openShift": "Avoin vuoro",
+    "flaggedTitle": "Tarkistettavaa",
+    "noFlags": "Ei tarkistettavaa.",
+    "flag": {
+      "LATE": "Myöhässä",
+      "EARLY_LEAVE": "Lähti aikaisin",
+      "OUTSIDE_AREA": "Alueen ulkopuolella",
+      "MISSED_CLOCK_OUT": "Unohti leimata ulos",
+      "EDITED": "Korjattu",
+      "NO_BREAK": "Ei taukoa",
+      "NO_SHIFT": "Ei suunniteltua vuoroa"
+    },
+    "pending": "Odottaa toimenpiteitänne",
+    "pendingLeave": "Lomapyynnöt: {n}",
+    "pendingSwaps": "Vuoronvaihdot: {n}",
+    "pendingSheets": "Tuntilistat: {n}",
+    "labourTitle": "Palkkakulut ja myynti (14 päivää)",
+    "hours": "Tunnit",
+    "labourCost": "Palkkakulut",
+    "sales": "Myynti",
+    "share": "Palkkakulujen osuus",
+    "ratesMissing": "Henkilöt ilman tuntipalkkaa: {n} — heitä ei ole laskettu kuluihin.",
+    "meTitle": "Omat vuorot ja tunnit",
+    "meIntro": "Leimaus sisään ja ulos, omat vuorot ja tunnit, lomahakemukset ja vuoronvaihdot.",
+    "clockIn": "Leimaa sisään",
+    "clockOut": "Leimaa ulos",
+    "breakStart": "Aloita tauko",
+    "breakEnd": "Lopeta tauko",
+    "clockedInSince": "Leimattu sisään klo {time}",
+    "notClockedIn": "Ette ole leimanneet sisään.",
+    "locating": "Haetaan sijaintia…",
+    "locationNeeded": "Leimaus puhelimella edellyttää sijainnin sallimista.",
+    "clockDone": "Valmis: {action} klo {time}",
+    "nearestSite": "Lähin toimipaikka",
+    "action": {
+      "IN": "leimattu sisään",
+      "OUT": "leimattu ulos",
+      "BREAK_START": "tauko aloitettu",
+      "BREAK_END": "tauko lopetettu"
+    },
+    "phoneOff": "Leimaus puhelimella on poistettu käytöstä — leimaus tehdään leimauspäätteellä.",
+    "thisWeek": "Tämä viikko",
+    "worked": "Tehty",
+    "overtime": "Ylityö",
+    "night": "Yö",
+    "holiday": "Arkipyhä",
+    "contract": "Sopimus: {h} h viikossa",
+    "myShifts": "Seuraavat vuoroni",
+    "noShifts": "Ei suunniteltuja vuoroja.",
+    "offerSwap": "Tarjoa työkaverille",
+    "anyone": "Kuka tahansa",
+    "swapNote": "Viesti (valinnainen)",
+    "send": "Lähetä",
+    "offered": "Tarjottu.",
+    "openShifts": "Avoimet vuorot",
+    "take": "Ota tämä vuoro",
+    "swaps": "Vuoronvaihdot",
+    "acceptSwap": "Ota vuoro",
+    "status": {
+      "PENDING": "Odottaa",
+      "ACCEPTED": "Otettu, odottaa esihenkilöä",
+      "APPROVED": "Hyväksytty",
+      "REJECTED": "Ei hyväksytty",
+      "CANCELLED": "Peruttu",
+      "OPEN": "Avoin",
+      "SUBMITTED": "Lähetetty"
+    },
+    "recent": "Viimeisimmät tunnit",
+    "noEntries": "Ei vielä tunteja.",
+    "breakShort": "tauko {m} min",
+    "leaveTitle": "Loma",
+    "kind": "Laji",
+    "leave": {
+      "HOLIDAY": "Vuosiloma",
+      "SICK": "Sairaus",
+      "UNPAID": "Palkaton",
+      "OTHER": "Muu"
+    },
+    "from": "Alkaen",
+    "to": "Päättyen",
+    "halfDay": "Puolikas päivä",
+    "reason": "Syy",
+    "ask": "Hae",
+    "asked": "Lähetetty.",
+    "cancel": "Peruuta",
+    "pinTitle": "Leimaus-PIN",
+    "pinHint": "4–8 numeroa — sama PIN kuin kassalla.",
+    "pinSet": "PIN tallennettu.",
+    "pinMissing": "Asettakaa PIN, jotta voitte leimata leimauspäätteellä.",
+    "savePin": "Tallenna PIN",
+    "submitWeek": "Lähetä tämä viikko esihenkilölle",
+    "submitted": "Lähetetty.",
+    "rotaTitle": "Työvuorolista",
+    "rotaIntro": "Viikon vuorojen suunnittelu. Henkilöstö näkee vuorot julkaisun jälkeen.",
+    "rotaIntroStaff": "Tiimin julkaistut vuorot.",
+    "prevWeek": "← Edellinen viikko",
+    "nextWeek": "Seuraava viikko →",
+    "thisWeekBtn": "Tämä viikko",
+    "publish": "Julkaise viikko ({n} luonnosta)",
+    "published": "Julkaistu — henkilöstölle on ilmoitettu.",
+    "copyPrev": "Kopioi edellinen viikko",
+    "copiedOk": "Edellisen viikon vuorot kopioitu luonnoksiksi.",
+    "addShift": "Lisää vuoro",
+    "day": "Päivä",
+    "person": "Henkilö",
+    "site": "Toimipaikka",
+    "role": "Rooli",
+    "start": "Alku",
+    "end": "Loppu",
+    "breakMin": "Tauko (min)",
+    "save": "Tallenna",
+    "saved": "Tallennettu.",
+    "delete": "Poista",
+    "draft": "luonnos",
+    "planned": "Suunniteltu {h}",
+    "contractOf": "/ {h} h",
+    "plannedCost": "Suunnitellut palkkakulut: {cost}",
+    "noStaff": "Lisätkää ensin henkilöstö (Henkilöstö).",
+    "onLeave": "Lomalla",
+    "warn": {
+      "WEEK_OVER_MAX": "Ylittää viikoittaisen enimmäismäärän",
+      "SHORT_REST": "Liian lyhyt lepoaika",
+      "NO_BREAK": "Tarvitsee tauon",
+      "OVERLAP": "Päällekkäin toisen vuoron kanssa",
+      "ON_LEAVE": "Lomalla"
+    },
+    "kioskTitle": "Leimauspääte",
+    "kioskIntro": "Tämä sivu jätetään auki myymälän tai varaston laitteelle. Henkilöstö leimaa sisään tai ulos syöttämällä PIN-koodinsa.",
+    "enterPin": "Syötä PIN",
+    "clear": "Tyhjennä",
+    "inOut": "Sisään / Ulos",
+    "hello": "{name}: {action} klo {time}",
+    "timesheetsTitle": "Tuntilistat",
+    "timesheetsIntro": "Kunkin henkilön viikko: tunnit, ylityö, yö- ja arkipyhätunnit. Hyväksyminen lukitsee viikon.",
+    "approve": "Hyväksy",
+    "reopen": "Avaa uudelleen",
+    "leaveDays": "Lomapäivät",
+    "cost": "Kulut",
+    "addEntry": "Lisää merkintä",
+    "editEntry": "Korjaa",
+    "clockedIn": "Sisään",
+    "clockedOut": "Ulos",
+    "reasonRequired": "Syy (säilytetään kirjanpidossa)",
+    "stillIn": "yhä paikalla",
+    "export": "Vienti",
+    "payroll": "Palkanlaskenta (CSV)",
+    "record": "Työaikakirjanpito (CSV)",
+    "exportHint": "Työaikakirjanpito sisältää jokaisen merkinnän ja korjauksen — se on lakisääteinen työaikakirjanpito. Sitä säilytetään {years} vuotta.",
+    "leavePageTitle": "Lomat ja vaihdot",
+    "leavePageIntro": "Lomapyyntöjen ja vuoronvaihtojen hyväksyminen.",
+    "approveBtn": "Hyväksy",
+    "reject": "Hylkää",
+    "rejectReason": "Syy (näkyy hakijalle)",
+    "days": "{n} työpäivää",
+    "noRequests": "Ei odottavia.",
+    "peopleTitle": "Henkilöstö",
+    "peopleIntro": "Roolit, sopimustunnit, palkat (näkyvät vain esihenkilöille), kotitoimipaikka ja leimaus-PIN:t. Henkilöt lisätään kohdassa Käyttäjät.",
+    "rate": "Tuntipalkka",
+    "contractHours": "Sopimus h/vko",
+    "homeSite": "Kotitoimipaikka",
+    "payrollCode": "Palkanlaskentakoodi",
+    "active": "Aktiivinen",
+    "hasPin": "PIN asetettu",
+    "noPin": "Ei PIN:iä",
+    "inactive": "Ei aktiivinen",
+    "teamLink": "Lisää henkilöitä",
+    "closed": {
+      "OFF": "Henkilöstö ja työaika ei ole tällä hetkellä käytettävissä.",
+      "COMPANY_OFF": "Henkilöstö ja työaika on poistettu käytöstä yrityksenne osalta. Ottakaa yhteyttä FIRINGIin.",
+      "TYPE_OFF": "Henkilöstö ja työaika ei ole käytettävissä yrityksenne toimialalla.",
+      "PART_OFF": "Tämä osio on poistettu käytöstä.",
+      "KIOSK_OFF": "Leimauspääte on poistettu käytöstä — leimaus tehdään puhelimella."
     }
   }
 }

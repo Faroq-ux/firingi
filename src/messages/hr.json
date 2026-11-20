@@ -891,7 +891,15 @@
     "Tenders": "Natječaji",
     "Sustainability & CO₂": "Održivost i CO₂",
     "CO₂ & Packaging": "CO₂ i ambalaža",
-    "CO₂ Footprint": "CO₂ otisak"
+    "CO₂ Footprint": "CO₂ otisak",
+    "Staff & Time": "Zaposlenici i radno vrijeme",
+    "My Shifts & Hours": "Moje smjene i sati",
+    "Who's In": "Tko je tu",
+    "Rota": "Raspored smjena",
+    "Clock-in Kiosk": "Kiosk za evidenciju",
+    "Timesheets": "Evidencija sati",
+    "Leave & Swaps": "Dopusti i zamjene",
+    "Staff": "Zaposlenici"
   },
   "delivery": {
     "title": "Dostava",
@@ -1858,6 +1866,62 @@
     "co2_decided": {
       "title": "Provjera CO₂ vrijednosti — {decision}: {product}",
       "body": "„{product}” {decision}. {reason}"
+    },
+    "staff_rota_published": {
+      "title": "Vaše smjene su objavljene",
+      "body": "Raspored smjena za tjedan {week} je objavljen. Otvorite Moje smjene da biste vidjeli svoje."
+    },
+    "staff_shift_changed": {
+      "title": "Smjena je promijenjena",
+      "body": "Vaša smjena {start} promijenjena je ili otkazana. Provjerite Moje smjene."
+    },
+    "staff_shift_reminder": {
+      "title": "Vaša smjena uskoro počinje",
+      "body": "Vaša smjena počinje {start}. Ne zaboravite prijaviti dolazak."
+    },
+    "staff_clock_out_reminder": {
+      "title": "Još ste prijavljeni?",
+      "body": "Vaša je smjena završila, ali odlazak još nije prijavljen. Prijavite odlazak ako ste završili."
+    },
+    "staff_timesheet_approved": {
+      "title": "Evidencija sati odobrena",
+      "body": "Vaši sati za tjedan {week} su odobreni."
+    },
+    "staff_leave_decided": {
+      "title": "Dopust: {decision}",
+      "body": "Vaš dopust {from} – {to}: {decision}. {note}"
+    },
+    "staff_swap_requested": {
+      "title": "Kolega Vam nudi smjenu",
+      "body": "Osoba {name} nudi Vam smjenu {start}. Otvorite Moje smjene da biste je preuzeli."
+    },
+    "staff_swap_decided": {
+      "title": "Zamjena smjene: {decision}",
+      "body": "Zamjena smjene {start}: {decision}."
+    },
+    "staff_shift_claimed": {
+      "title": "Slobodna smjena preuzeta",
+      "body": "Osoba {name} preuzela je slobodnu smjenu {start}."
+    },
+    "staff_no_show": {
+      "title": "Dolazak nije prijavljen: {name}",
+      "body": "Osoba {name} ima smjenu koja je počela {start}, a nije prijavila dolazak."
+    },
+    "staff_missed_clock_out": {
+      "title": "Odlazak nije prijavljen: {name}",
+      "body": "Osoba {name} nije prijavila odlazak; unos je automatski zatvoren. Provjerite ga u odjeljku Evidencija sati."
+    },
+    "staff_leave_requested": {
+      "title": "Zahtjev za dopust: {name}",
+      "body": "Osoba {name} traži dopust {from} – {to}. Odobrite ga u odjeljku Dopusti i zamjene."
+    },
+    "staff_swap_to_approve": {
+      "title": "Zamjena smjene za odobrenje",
+      "body": "Osoba {name} preuzela je smjenu {start}. Odobrite to u odjeljku Dopusti i zamjene."
+    },
+    "staff_timesheet_submitted": {
+      "title": "Evidencija sati poslana: {name}",
+      "body": "Osoba {name} poslala je sate za tjedan {week}."
     }
   },
   "notifications": {
@@ -7004,6 +7068,195 @@
       "HYBRID": "Hibrid",
       "LPG": "Autoplin",
       "ELECTRIC": "Električno"
+    }
+  },
+  "staff": {
+    "overviewTitle": "Tko je tu",
+    "overviewIntro": "Tko trenutačno radi, današnje smjene i što zahtijeva Vašu pažnju.",
+    "inNow": "Trenutačno prisutni",
+    "nobodyIn": "Nitko nije prijavio dolazak.",
+    "onBreak": "Na pauzi",
+    "since": "od {time}",
+    "staffCount": "Zaposlenici",
+    "today": "Današnje smjene",
+    "noShiftsToday": "Danas nema smjena.",
+    "state": {
+      "IN": "Prisutan",
+      "MISSING": "Još nije stigao",
+      "LATER": "Kasnije"
+    },
+    "openShift": "Slobodna smjena",
+    "flaggedTitle": "Za provjeru",
+    "noFlags": "Nema ništa za provjeru.",
+    "flag": {
+      "LATE": "Kašnjenje",
+      "EARLY_LEAVE": "Raniji odlazak",
+      "OUTSIDE_AREA": "Izvan područja",
+      "MISSED_CLOCK_OUT": "Odlazak nije prijavljen",
+      "EDITED": "Ispravljeno",
+      "NO_BREAK": "Bez pauze",
+      "NO_SHIFT": "Nema planirane smjene"
+    },
+    "pending": "Čeka Vas",
+    "pendingLeave": "Zahtjevi za dopust: {n}",
+    "pendingSwaps": "Zamjene smjena: {n}",
+    "pendingSheets": "Evidencije sati: {n}",
+    "labourTitle": "Trošak rada i prodaja (14 dana)",
+    "hours": "Sati",
+    "labourCost": "Trošak rada",
+    "sales": "Prodaja",
+    "share": "Udio troška rada",
+    "ratesMissing": "Osobe bez satnice: {n} — nisu uključene u trošak.",
+    "meTitle": "Moje smjene i sati",
+    "meIntro": "Prijavite dolazak i odlazak, pregledajte svoje smjene i sate, zatražite dopust ili zamijenite smjenu.",
+    "clockIn": "Prijavi dolazak",
+    "clockOut": "Prijavi odlazak",
+    "breakStart": "Započni pauzu",
+    "breakEnd": "Završi pauzu",
+    "clockedInSince": "Dolazak prijavljen u {time}",
+    "notClockedIn": "Niste prijavili dolazak.",
+    "locating": "Utvrđivanje lokacije…",
+    "locationNeeded": "Dopustite pristup lokaciji kako biste se mogli prijaviti putem telefona.",
+    "clockDone": "Gotovo: {action} u {time}",
+    "nearestSite": "Najbliža lokacija",
+    "action": {
+      "IN": "prijavljen dolazak",
+      "OUT": "prijavljen odlazak",
+      "BREAK_START": "pauza započeta",
+      "BREAK_END": "pauza završena"
+    },
+    "phoneOff": "Prijava putem telefona je isključena — koristite kiosk.",
+    "thisWeek": "Ovaj tjedan",
+    "worked": "Odrađeno",
+    "overtime": "Prekovremeni",
+    "night": "Noćni",
+    "holiday": "Blagdan",
+    "contract": "Ugovor: {h} h tjedno",
+    "myShifts": "Moje sljedeće smjene",
+    "noShifts": "Nema planiranih smjena.",
+    "offerSwap": "Ponudi kolegi",
+    "anyone": "Bilo tko",
+    "swapNote": "Napomena (neobavezno)",
+    "send": "Pošalji",
+    "offered": "Ponuđeno.",
+    "openShifts": "Slobodne smjene",
+    "take": "Preuzmi ovu smjenu",
+    "swaps": "Zamjene smjena",
+    "acceptSwap": "Preuzmi",
+    "status": {
+      "PENDING": "Na čekanju",
+      "ACCEPTED": "Preuzeto, čeka voditelja",
+      "APPROVED": "Odobreno",
+      "REJECTED": "Nije odobreno",
+      "CANCELLED": "Otkazano",
+      "OPEN": "Otvoreno",
+      "SUBMITTED": "Poslano"
+    },
+    "recent": "Nedavni sati",
+    "noEntries": "Još nema sati.",
+    "breakShort": "pauza {m} min",
+    "leaveTitle": "Dopust",
+    "kind": "Vrsta",
+    "leave": {
+      "HOLIDAY": "Godišnji odmor",
+      "SICK": "Bolovanje",
+      "UNPAID": "Neplaćeni dopust",
+      "OTHER": "Ostalo"
+    },
+    "from": "Od",
+    "to": "Do",
+    "halfDay": "Pola dana",
+    "reason": "Razlog",
+    "ask": "Zatraži",
+    "asked": "Poslano.",
+    "cancel": "Odustani",
+    "pinTitle": "Moj PIN za evidenciju",
+    "pinHint": "4–8 znamenki — isti PIN kao na blagajni.",
+    "pinSet": "PIN je spremljen.",
+    "pinMissing": "Postavite PIN za prijavu na kiosku.",
+    "savePin": "Spremi PIN",
+    "submitWeek": "Pošalji ovaj tjedan voditelju",
+    "submitted": "Poslano.",
+    "rotaTitle": "Raspored smjena",
+    "rotaIntro": "Planirajte smjene za tjedan. Zaposlenici ih vide nakon objave.",
+    "rotaIntroStaff": "Objavljene smjene Vašeg tima.",
+    "prevWeek": "← Prethodni tjedan",
+    "nextWeek": "Sljedeći tjedan →",
+    "thisWeekBtn": "Ovaj tjedan",
+    "publish": "Objavi tjedan ({n} nacrta)",
+    "published": "Objavljeno — zaposlenici su obaviješteni.",
+    "copyPrev": "Kopiraj prošli tjedan",
+    "copiedOk": "Smjene iz prošlog tjedna kopirane su kao nacrti.",
+    "addShift": "Dodaj smjenu",
+    "day": "Dan",
+    "person": "Osoba",
+    "site": "Lokacija",
+    "role": "Uloga",
+    "start": "Početak",
+    "end": "Kraj",
+    "breakMin": "Pauza (min)",
+    "save": "Spremi",
+    "saved": "Spremljeno.",
+    "delete": "Izbriši",
+    "draft": "nacrt",
+    "planned": "Planirano {h}",
+    "contractOf": "od {h} h",
+    "plannedCost": "Planirani trošak rada: {cost}",
+    "noStaff": "Najprije dodajte zaposlenike (Zaposlenici).",
+    "onLeave": "Na dopustu",
+    "warn": {
+      "WEEK_OVER_MAX": "Iznad tjednog maksimuma",
+      "SHORT_REST": "Nedovoljan odmor",
+      "NO_BREAK": "Potrebna pauza",
+      "OVERLAP": "Preklapa se s drugom smjenom",
+      "ON_LEAVE": "Na dopustu"
+    },
+    "kioskTitle": "Kiosk za evidenciju",
+    "kioskIntro": "Ostavite ovu stranicu otvorenom na uređaju u trgovini ili skladištu. Zaposlenici upisuju svoj PIN za prijavu dolaska ili odlaska.",
+    "enterPin": "Upišite svoj PIN",
+    "clear": "Obriši",
+    "inOut": "Dolazak / Odlazak",
+    "hello": "{name}: {action} u {time}",
+    "timesheetsTitle": "Evidencija sati",
+    "timesheetsIntro": "Tjedan svake osobe: sati, prekovremeni, noćni i blagdanski sati. Odobrenjem se tjedan zaključava.",
+    "approve": "Odobri",
+    "reopen": "Ponovno otvori",
+    "leaveDays": "Dani dopusta",
+    "cost": "Trošak",
+    "addEntry": "Dodaj unos",
+    "editEntry": "Ispravi",
+    "clockedIn": "Dolazak",
+    "clockedOut": "Odlazak",
+    "reasonRequired": "Razlog (čuva se u evidenciji)",
+    "stillIn": "još prisutan",
+    "export": "Izvoz",
+    "payroll": "Obračun plaća (CSV)",
+    "record": "Evidencija radnog vremena (CSV)",
+    "exportHint": "Evidencija radnog vremena sadrži svaki unos i ispravak — to je zakonska evidencija radnog vremena. Čuva se {years} godina.",
+    "leavePageTitle": "Dopusti i zamjene",
+    "leavePageIntro": "Odobravanje zahtjeva za dopust i zamjena smjena.",
+    "approveBtn": "Odobri",
+    "reject": "Odbij",
+    "rejectReason": "Razlog (osoba ga vidi)",
+    "days": "{n} radnih dana",
+    "noRequests": "Ništa ne čeka.",
+    "peopleTitle": "Zaposlenici",
+    "peopleIntro": "Uloge, ugovoreni sati, satnice (vide ih samo voditelji), matična lokacija i PIN-ovi za evidenciju. Osobe dodajte u odjeljku Korisnici.",
+    "rate": "Satnica",
+    "contractHours": "Ugovor h/tj.",
+    "homeSite": "Matična lokacija",
+    "payrollCode": "Šifra za obračun plaća",
+    "active": "Aktivan",
+    "hasPin": "PIN postavljen",
+    "noPin": "Nema PIN-a",
+    "inactive": "Neaktivan",
+    "teamLink": "Dodaj osobe",
+    "closed": {
+      "OFF": "Zaposlenici i radno vrijeme trenutačno nisu dostupni.",
+      "COMPANY_OFF": "Zaposlenici i radno vrijeme isključeni su za Vašu tvrtku. Obratite se FIRINGI-ju.",
+      "TYPE_OFF": "Zaposlenici i radno vrijeme nisu dostupni za Vašu vrstu djelatnosti.",
+      "PART_OFF": "Ovaj dio je isključen.",
+      "KIOSK_OFF": "Kiosk je isključen — prijavite se putem telefona."
     }
   }
 }
