@@ -109,6 +109,10 @@ model Order {
   deliveryRuleId        String?
   requestedDeliveryDate DateTime?
   buyerNotes            String?
+  /// Phase 58: WEB | WHATSAPP | API … where the order was placed (WhatsApp orders get their updates on WhatsApp)
+  placedVia             String        @default("WEB")
+  /// Phase 58: a small order (FIRINGI's minimum reached, not the wholesaler's free-delivery minimum) — counted against FIRINGI's monthly limit
+  smallOrder            Boolean       @default(false)
   parentOrderId         String? // admin split / re-allocation
   routedByFiringi       Boolean       @default(false) // customer ordered from FIRINGI; FIRINGI picked the supplier
   /// Phase 27: the buyer's branch (from the delivery address), its cost centre and the buyer's PO reference

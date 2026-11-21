@@ -5,7 +5,9 @@
  *   goods reach the wholesaler's free-delivery minimum      → the WHOLESALER delivers, free
  *   else goods < FIRINGI's minimum order                     → checkout blocked
  *   else FIRINGI free delivery is on and goods ≥ its "free from" → FIRINGI delivers, free
- *   else                                                     → FIRINGI delivers at its flat rate
+ *   else                                                     → FIRINGI delivers at its flat rate (a "small order")
+ *   Phase 58: FIRINGI may limit small orders per month; when a customer has used them, it must reach the
+ *   wholesaler's free-delivery minimum (or FIRINGI's free delivery) instead
  *   (FIRINGI's minimum, flat rate and free delivery are set by the admin per country, or per
  *   delivery zone, which overrides the country.)
  *
@@ -22,8 +24,8 @@ export type FiringiRule = { id: string; minOrderValue: Decimal.Value; feeNet: De
 export type VendorRule = { id: string; kind?: "AMOUNT" | "UNITS"; amount?: Decimal.Value | null; units?: number | null; flatFeeNet?: Decimal.Value | null } | null;
 
 export type DeliveryDecision =
-  | { ok: true; mode: DeliveryMode; feeNet: Decimal; ruleId: string | null; feeOwner: "FIRINGI" | "VENDOR" | null; free: "VENDOR" | "FIRINGI" | null }
-  | { ok: false; reason: "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM"; minimum: Decimal; missing: Decimal; unit: "AMOUNT" | "UNITS"; vendorMinimum: Decimal | null };
+  | { ok: true; mode: DeliveryMode; feeNet: Decimal; ruleId: string | null; feeOwner: "FIRINGI" | "VENDOR" | null; free: "VENDOR" | "FIRINGI" | null; small?: boolean }
+  | { ok: false; reason: "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "SMALL_ORDER_LIMIT"; minimum: Decimal; missing: Decimal; unit: "AMOUNT" | "UNITS"; vendorMinimum: Decimal | null };
 
 export type DeliveryInput = {
   goodsNet: Decimal.Value;
@@ -36,6 +38,8 @@ export type DeliveryInput = {
   vendor: VendorRule;
   /** A supplier-paid free-delivery offer: the supplier delivers free, as if its minimum were reached. */
   vendorFree?: boolean;
+  /** Phase 58: small orders the customer may still place this month (null = no limit). */
+  smallOrdersLeft?: number | null;
 };
 
 /** Has the order reached the supplier's free-delivery minimum? (No minimum set → no.) */
@@ -69,8 +73,12 @@ export function decideDelivery(i: DeliveryInput): DeliveryDecision {
   const min = f ? new Decimal(f.minOrderValue) : new Decimal(0);
   if (goods.lt(min)) return { ok: false, reason: "BELOW_MINIMUM", minimum: min, missing: min.minus(goods), unit: "AMOUNT", vendorMinimum: vendorAmount };
   if (f?.freeEnabled && f.freeFrom != null && goods.gte(f.freeFrom)) return { ok: true, mode: "FIRINGI_FLEET", feeNet: new Decimal(0), ruleId: f.id, feeOwner: null, free: "FIRINGI" };
+  // A small order (FIRINGI's minimum reached, the wholesaler's free-delivery minimum not): limited per month
+  // (only where there is a free-delivery amount to reach — otherwise every order is delivered this way)
+  const target = vendorAmount ?? (f?.freeEnabled && f.freeFrom != null ? new Decimal(f.freeFrom) : null);
+  if (target && i.smallOrdersLeft != null && i.smallOrdersLeft <= 0) return { ok: false, reason: "SMALL_ORDER_LIMIT", minimum: target, missing: target.minus(goods), unit: "AMOUNT", vendorMinimum: vendorAmount };
   const fee = f ? new Decimal(f.feeNet) : new Decimal(0);
-  return { ok: true, mode: "FIRINGI_FLEET", feeNet: fee, ruleId: f?.id ?? null, feeOwner: fee.gt(0) ? "FIRINGI" : null, free: fee.gt(0) ? null : "FIRINGI" };
+  return { ok: true, mode: "FIRINGI_FLEET", feeNet: fee, ruleId: f?.id ?? null, feeOwner: fee.gt(0) ? "FIRINGI" : null, free: fee.gt(0) ? null : "FIRINGI", small: !!target };
 }
 
 /** Rule rows (Prisma) → decision inputs. */

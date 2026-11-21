@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { handleMeta, metaSignatureValid } from "@/server/services/notifications";
 
 /** Meta WhatsApp Cloud API: subscription check (GET) and events (POST, signed with the app secret). */
@@ -14,10 +15,13 @@ export async function POST(req: Request) {
   if (!secret) return new Response("WhatsApp is not configured", { status: 503 });
   const raw = await req.text();
   if (!metaSignatureValid(raw, req.headers.get("x-hub-signature-256") ?? "", secret)) return new Response("Invalid signature", { status: 403 });
+  let ids: string[] = [];
   try {
-    await handleMeta(JSON.parse(raw));
+    ids = await handleMeta(JSON.parse(raw));
   } catch {
     return new Response("Bad request", { status: 400 });
   }
+  // Phase 58: answer Meta at once; the ordering AI handles the messages right after (the job catches any left over)
+  if (ids.length) after(async () => { const { processInbound } = await import("@/server/whatsapp/ordering"); for (const id of ids) await processInbound(id).catch(() => null); });
   return new Response("OK");
 }

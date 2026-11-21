@@ -249,6 +249,8 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
 
   // 4. per supplier: delivery, totals, redemptions
   const parts: SupplierPart[] = [];
+  // Phase 58: small orders left this month (FIRINGI's limit for wholesale customers; null = no limit)
+  let smallLeft = await (await import("@/server/orders/small-orders")).smallOrdersLeft(ctx.company.id, ctx.company.type);
   for (const g of groups) {
     const calcLines = g.lines.map((l) => {
       const firingi = l.discounts.reduce((a, d) => a.plus(d.firingiPerUnit), new Decimal(0));
@@ -269,13 +271,14 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     const pointsOff = calcLines.reduce((a, l) => a.plus(l.discounts.filter((d) => d.promotionId === LOYALTY_PROMOTION_ID).reduce((x, d) => x.plus(d.perUnit.mul(l.item.qty)), new Decimal(0))), new Decimal(0));
     const input = {
       goodsNet: goodsNet.plus(pointsOff.toDecimalPlaces(2)), units: calcLines.reduce((a, l) => a + l.calc.qty, 0), supplierDelivers: ctx.company.type === "WHOLESALER",
-      crossBorder: seller.countryId !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor),
+      crossBorder: seller.countryId !== ctx.company.countryId, firingi: firingiInput(rules.firingi), vendor: vendorInput(rules.vendor), smallOrdersLeft: smallLeft,
     };
     // The coupon's free delivery counts for a supplier whose goods it applies to; else the automatic one.
     const couponHere = couponFree && coupon && g.lines.some((l) => promoMatchesOffer(coupon!.promo, { id: l.item.offerId, vendorCompanyId: l.item.vendorCompanyId, productId: l.item.productId, categoryIds: l.item.categoryIds })) ? couponFree : null;
     const free = couponHere ?? autoFree.get(g.sellerId) ?? null;
     const normal = decideDelivery(input);
     const decision = free?.funder === "VENDOR" ? decideDelivery({ ...input, vendorFree: true }) : normal;
+    if (decision.ok && decision.small && smallLeft != null) smallLeft -= 1; // two small parts in one cart use two
     const normalFee = normal.ok ? normal.feeNet : new Decimal(0);
     const waived = free?.funder === "FIRINGI" && decision.ok ? decision.feeNet : new Decimal(0);
     const chargedFee = decision.ok ? decision.feeNet.minus(waived) : new Decimal(0);

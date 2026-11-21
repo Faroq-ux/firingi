@@ -921,7 +921,8 @@
     "Reward Products": "Produkty jako odměny",
     "Rewards to Hand Over": "Odměny k předání",
     "Customs Codes": "Celní kódy",
-    "EU Trade Report": "Zpráva o obchodu v EU"
+    "EU Trade Report": "Zpráva o obchodu v EU",
+    "Order by WhatsApp": "Objednat přes WhatsApp"
   },
   "delivery": {
     "title": "Doručení",
@@ -8484,6 +8485,71 @@
       "GOODS": "Zboží",
       "SERVICES": "Služby",
       "TRIANGULAR": "Třístranný obchod"
+    }
+  },
+  "waOrder": {
+    "bot": {
+      "register": "Dobrý den! Toto číslo zatím není propojeno s účtem FIRINGI. Zaregistrujte svou firmu zde: {link} — poté přidejte toto číslo WhatsApp do svého profilu a objednávejte zprávou.",
+      "error": "Omlouváme se, na naší straně se něco pokazilo. Zkuste to prosím znovu za pár minut.",
+      "limit": "Za poslední hodinu jste poslali hodně zpráv. Chvíli prosím počkejte a napište znovu.",
+      "voiceOff": "Hlasové zprávy teď nejsou k dispozici — napište prosím svou objednávku.",
+      "voiceFail": "Omlouváme se, hlasové zprávě se nepodařilo porozumět. Napište ji prosím nebo ji pošlete znovu.",
+      "photosOff": "Fotky teď nejsou k dispozici — napište prosím svou objednávku.",
+      "cancelled": "Dobře, objednávka nebyla odeslána. Váš košík zůstává uložený na FIRINGI.",
+      "confirmHint": "Odpovězte ANO pro odeslání objednávky nebo NE pro zrušení.",
+      "btnConfirm": "Ano, objednat",
+      "btnCancel": "Zrušit",
+      "btnRepeat": "Opakovat objednávku",
+      "handover": "Brzy vám tu odpoví někdo z FIRINGI.",
+      "expired": "Platnost tohoto návrhu vypršela. Napište mi, co potřebujete, a připravím ho znovu.",
+      "cartChanged": "Od návrhu se váš košík změnil. Objednávka nebyla odeslána — požádejte mě o nové shrnutí.",
+      "approval": "Vaše objednávka čeká na schválení ve vaší firmě. Až bude odeslána, dostanete zprávu.",
+      "placed": "Objednávka odeslána ✅ {numbers} — celkem {total}. Novinky vám budeme posílat sem.",
+      "payFirst": "Pro zahájení doručení prosím zaplaťte: {link}",
+      "failed": "Objednávku se nepodařilo odeslat: {reason}",
+      "status": {
+        "SUPPLIER_PROCESSING": "Objednávka {number} je potvrzená a připravuje se.",
+        "OUT_FOR_DELIVERY": "Objednávka {number} je na cestě.",
+        "DELIVERED": "Objednávka {number} byla doručena. Děkujeme!",
+        "CANCELLED": "Objednávka {number} byla zrušena."
+      },
+      "reminder": "Dobrý den, {company}! Je čas doplnit zásoby? Odpovězte ZNOVU a objednáte totéž jako v objednávce {number}, nebo mi napište, co potřebujete."
+    },
+    "title": "Objednat přes WhatsApp",
+    "intro": "Napište FIRINGI na WhatsApp z čísla vaší firmy: napište objednávku, pošlete fotku seznamu nebo hlasovou zprávu. Asistent najde produkty, naplní váš košík a pošle shrnutí s doručením od každého dodavatele. Nic se neobjedná, dokud neodpovíte ANO.",
+    "notAvailable": "Objednávky přes WhatsApp teď nejsou pro vaši firmu k dispozici.",
+    "firingiNumber": "Číslo WhatsApp FIRINGI",
+    "openChat": "Otevřít WhatsApp",
+    "noFiringiNumber": "Číslo WhatsApp FIRINGI se tu brzy zobrazí.",
+    "myNumber": "Vaše číslo WhatsApp",
+    "myNumberHint": "Zprávy přijímáme jen z tohoto čísla. Změnit ho můžete v profilu firmy.",
+    "noMyNumber": "Přidejte své číslo WhatsApp do profilu firmy a objednávejte přes WhatsApp.",
+    "editProfile": "Profil firmy",
+    "howTitle": "Jak to funguje",
+    "how1": "Pošlete, co potřebujete, např. „10 Coca-Cola 33cl a 2 rýže 5 kg“.",
+    "how2": "Zkontrolujte shrnutí: produkty, minimum a doprava zdarma u každého dodavatele, celkem.",
+    "how3": "Odpovězte ANO pro odeslání (nebo NE pro zrušení). Odpovězte ZNOVU a objednáte totéž co minule.",
+    "howVoice": "Rozumíme hlasovým zprávám.",
+    "howPhotos": "Rozumíme fotkám nákupního seznamu nebo produktu.",
+    "settingsTitle": "Zprávy na WhatsAppu",
+    "orderUpdates": "Novinky o objednávkách na WhatsAppu",
+    "orderUpdatesHint": "Potvrzeno, na cestě, doručeno.",
+    "reminders": "Připomínky k opakované objednávce",
+    "remindersHint": "Ve chvíli, kdy obvykle objednáváte znovu, s jedním klepnutím pro zopakování poslední objednávky.",
+    "save": "Uložit",
+    "saved": "Uloženo.",
+    "recentTitle": "Objednávky odeslané přes WhatsApp",
+    "noOrders": "Zatím žádné objednávky přes WhatsApp.",
+    "order": "Objednávka",
+    "date": "Datum",
+    "status": "Stav",
+    "total": "Celkem",
+    "small": {
+      "title": "Malé objednávky tento měsíc",
+      "left": "Tento měsíc zbývá {left} z {limit} malých objednávek.",
+      "none": "Malé objednávky na tento měsíc jste vyčerpali. Objednávky teď musí dosáhnout částky pro dopravu zdarma u každého dodavatele.",
+      "hint": "Malá objednávka dosahuje minima FIRINGI, ale ne částky pro dopravu zdarma u dodavatele.",
+      "cartBlocked": "Malé objednávky na tento měsíc jste vyčerpali. Přidejte ještě {missing} (doprava zdarma od {min} bez {tax}) a objednejte u tohoto dodavatele."
     }
   }
 }

@@ -921,7 +921,8 @@
     "Reward Products": "Belønningsprodukter",
     "Rewards to Hand Over": "Belønninger å levere",
     "Customs Codes": "Tollkoder",
-    "EU Trade Report": "EU-handelsrapport"
+    "EU Trade Report": "EU-handelsrapport",
+    "Order by WhatsApp": "Bestill via WhatsApp"
   },
   "delivery": {
     "title": "Levering",
@@ -8484,6 +8485,71 @@
       "GOODS": "Varer",
       "SERVICES": "Tjenester",
       "TRIANGULAR": "Trekantshandel"
+    }
+  },
+  "waOrder": {
+    "bot": {
+      "register": "Hei! Dette nummeret er ikke knyttet til en FIRINGI-konto ennå. Registrer bedriften din her: {link} — legg deretter til dette WhatsApp-nummeret i profilen din og bestill via melding.",
+      "error": "Beklager, noe gikk galt hos oss. Prøv igjen om noen minutter.",
+      "limit": "Du har sendt mange meldinger den siste timen. Vent litt og skriv igjen.",
+      "voiceOff": "Talemeldinger er ikke tilgjengelige akkurat nå — skriv inn bestillingen din.",
+      "voiceFail": "Beklager, jeg forsto ikke talemeldingen. Skriv den inn eller send den på nytt.",
+      "photosOff": "Bilder er ikke tilgjengelige akkurat nå — skriv inn bestillingen din.",
+      "cancelled": "OK, bestillingen ble ikke sendt. Handlekurven din er lagret på FIRINGI.",
+      "confirmHint": "Svar JA for å sende denne bestillingen eller NEI for å avbryte.",
+      "btnConfirm": "Ja, bestill",
+      "btnCancel": "Avbryt",
+      "btnRepeat": "Gjenta forrige",
+      "handover": "En person fra FIRINGI svarer deg her snart.",
+      "expired": "Dette forslaget har utløpt. Si hva du trenger, så lager jeg det på nytt.",
+      "cartChanged": "Handlekurven din er endret siden forslaget. Jeg har ikke sendt bestillingen — be meg om en ny oppsummering.",
+      "approval": "Bestillingen din venter på godkjenning i bedriften din. Du får en melding når den er sendt.",
+      "placed": "Bestilling sendt ✅ {numbers} — totalt {total}. Vi sender oppdateringer her.",
+      "payFirst": "Betal for å starte leveringen: {link}",
+      "failed": "Bestillingen kunne ikke sendes: {reason}",
+      "status": {
+        "SUPPLIER_PROCESSING": "Bestilling {number} er bekreftet og klargjøres.",
+        "OUT_FOR_DELIVERY": "Bestilling {number} er på vei.",
+        "DELIVERED": "Bestilling {number} er levert. Takk!",
+        "CANCELLED": "Bestilling {number} ble kansellert."
+      },
+      "reminder": "Hei {company}! På tide å fylle på? Svar GJENTA for å bestille det samme som {number}, eller si hva du trenger."
+    },
+    "title": "Bestill via WhatsApp",
+    "intro": "Skriv til FIRINGI på WhatsApp fra bedriftsnummeret ditt: skriv inn bestillingen, send et bilde av listen din eller en talemelding. Assistenten finner produktene, fyller handlekurven og sender en oppsummering med levering fra hver leverandør. Ingenting bestilles før du svarer JA.",
+    "notAvailable": "Bestilling via WhatsApp er ikke tilgjengelig for bedriften din akkurat nå.",
+    "firingiNumber": "FIRINGIs WhatsApp-nummer",
+    "openChat": "Åpne WhatsApp",
+    "noFiringiNumber": "FIRINGIs WhatsApp-nummer vises her snart.",
+    "myNumber": "Ditt WhatsApp-nummer",
+    "myNumberHint": "Meldinger godtas bare fra dette nummeret. Endre det i bedriftsprofilen.",
+    "noMyNumber": "Legg til WhatsApp-nummeret ditt i bedriftsprofilen for å bestille via WhatsApp.",
+    "editProfile": "Bedriftsprofil",
+    "howTitle": "Slik fungerer det",
+    "how1": "Send det du trenger, f.eks. «10 Coca-Cola 33 cl og 2 ris 5 kg».",
+    "how2": "Sjekk oppsummeringen: produkter, hver leverandørs minimum og fri frakt, totalt.",
+    "how3": "Svar JA for å bestille (eller NEI for å avbryte). Svar GJENTA for å bestille det samme som sist.",
+    "howVoice": "Talemeldinger forstås.",
+    "howPhotos": "Bilder av en handleliste eller et produkt forstås.",
+    "settingsTitle": "Meldinger på WhatsApp",
+    "orderUpdates": "Ordreoppdateringer på WhatsApp",
+    "orderUpdatesHint": "Bekreftet, på vei, levert.",
+    "reminders": "Påminnelser om ny bestilling",
+    "remindersHint": "Når du vanligvis bestiller igjen, med ett trykk for å gjenta forrige bestilling.",
+    "save": "Lagre",
+    "saved": "Lagret.",
+    "recentTitle": "Bestillinger via WhatsApp",
+    "noOrders": "Ingen bestillinger via WhatsApp ennå.",
+    "order": "Bestilling",
+    "date": "Dato",
+    "status": "Status",
+    "total": "Totalt",
+    "small": {
+      "title": "Små bestillinger denne måneden",
+      "left": "{left} av {limit} små bestillinger igjen denne måneden.",
+      "none": "Du har brukt opp denne månedens små bestillinger. Bestillinger må nå komme opp i hver leverandørs beløp for fri frakt.",
+      "hint": "En liten bestilling når FIRINGIs minimum, men ikke leverandørens beløp for fri frakt.",
+      "cartBlocked": "Du har brukt opp denne månedens små bestillinger. Legg til {missing} til (fri frakt fra {min} ekskl. {tax}) for å bestille fra denne leverandøren."
     }
   }
 }

@@ -114,9 +114,18 @@ model InboundMessage {
   receivedAt        DateTime            @default(now())
   handledAt         DateTime?
   handledById       String?
+  /// Phase 58: TEXT | AUDIO | IMAGE | BUTTON | OTHER, the media's type, a voice note's transcript, and the AI's
+  /// handling: PENDING → DONE | SKIPPED (not for the AI: switched off, paused for a person, not allowed) | FAILED
+  kind              String?
+  mediaType         String?
+  transcript        String?
+  aiStatus          String?
+  aiNote            String?
+  aiAt              DateTime?
 
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([from, receivedAt])
   @@index([handledAt])
+  @@index([aiStatus, receivedAt])
 }

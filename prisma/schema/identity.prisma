@@ -165,6 +165,14 @@ model Company {
   phone                   String?
   /// Optional WhatsApp number (with country code), given at registration or in the company profile.
   whatsapp                String?
+  /// Phase 58: order updates on WhatsApp for orders placed there; reorder reminders on WhatsApp (the business agreed)
+  whatsappOrderUpdates    Boolean       @default(true)
+  whatsappReminders       Boolean       @default(false)
+  whatsappRemindedAt      DateTime?
+  /// Phase 58: small orders allowed per month for this customer (null = FIRINGI's general limit; 0 = none)
+  smallOrdersPerMonth     Int?
+  /// Phase 58: no small-order limit for this customer
+  smallOrdersUnlimited    Boolean       @default(false)
   website                 String?
   businessType            String? // restaurant, kebab/pizza, mini-market … (customers)
   /// FIRINGI's own in-house warehouse, run as a wholesaler (managed by FIRINGI staff).
@@ -226,6 +234,7 @@ model Company {
   restrictionApprovals     RestrictionApproval[]
   vatValidations           VatValidation[]
   tradeProposals           TradeCodeProposal[]
+  waDrafts                 WaOrderDraft[]
   productsProposed         Product[]
   vendorOffers             VendorOffer[]
   customerGroupsOwned      CustomerGroup[]             @relation("GroupOwner")

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
+import { mySmallOrders } from "@/server/orders/small-orders";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { cartView } from "@/server/services/cart";
 import { cartReturnables } from "@/server/returnables/service";
@@ -47,6 +48,7 @@ export default async function CartPage() {
   const td = await getTranslations("deals");
   const trb = await getTranslations("rebates"); // Phase 48: free goods from a bonus
   const trw = await getTranslations("rewardsShop"); // Phase 55: reward products free in the cart
+  const [tw, small] = await Promise.all([getTranslations("waOrder"), mySmallOrders(ctx)]); // Phase 58: small orders per month
   // Phase 44: products on the kitchen's allergen avoid list (when FIRINGI has the profile on)
   const [foodWarn, fdl] = await Promise.all([
     cartFoodWarnings(ctx, cart.lines.map((x) => ({ offerId: x.offerId, name: pickLocalized(x.name, locale) }))).catch(() => []),
@@ -79,13 +81,14 @@ export default async function CartPage() {
       </p>
     ) : (
       <p role="alert" className="rounded-md bg-warning/15 p-2 text-sm" data-testid="group-delivery">
-        {gd.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : "unit" in gd && gd.unit === "UNITS" ? t("belowSupplierUnits", { min: gd.minimum, missing: gd.missing }) : t(gd.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(gd.minimum, locale, fx), missing: formatMoney(gd.missing, locale, fx), tax })}
+        {gd.reason === "NOT_AVAILABLE_HERE" ? t("notAvailableHere") : gd.reason === "SMALL_ORDER_LIMIT" ? tw("small.cartBlocked", { min: formatMoney(gd.minimum, locale, fx), missing: formatMoney(gd.missing, locale, fx), tax }) : "unit" in gd && gd.unit === "UNITS" ? t("belowSupplierUnits", { min: gd.minimum, missing: gd.missing }) : t(gd.reason === "BELOW_SUPPLIER_MINIMUM" ? "belowSupplierMin" : "belowMinimum", { min: formatMoney(gd.minimum, locale, fx), missing: formatMoney(gd.missing, locale, fx), tax })}
       </p>
     );
   };
   return (
     <>
       <PageHeader title={t("cart")} description={cart.routed ? <span data-testid="routed-cart">{t("routedCart")}</span> : cart.groups.length > 1 ? <span data-testid="split-note">{t("splitNote", { count: cart.groups.length })}</span> : <span>{t("supplier")}: <Link className="font-medium text-primary hover:underline" href={`/buy/catalogue/suppliers/${cart.groups[0].supplier.id}`}>{cart.groups[0].supplier.name}</Link></span>} actions={<ClearCartButton />} />
+      {small.limit != null && <p className={`mb-4 rounded-md p-3 text-sm ${small.left ? "bg-muted" : "bg-warning/10"}`} data-testid="small-orders" title={tw("small.hint")}>{small.left ? tw("small.left", { left: small.left, limit: small.limit }) : tw("small.none")}</p>}
       {cart.unavailable.length > 0 && <p className="mb-4 rounded-md bg-warning/10 p-3 text-sm">{t("unavailable", { count: cart.unavailable.length })}</p>}
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">

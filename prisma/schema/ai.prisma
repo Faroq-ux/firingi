@@ -61,15 +61,19 @@ model AiActivity {
 
 /// A chat with the AI Business Assistant. Private to the user, in the company they were in.
 model AiConversation {
-  id        String      @id @default(cuid())
-  userId    String
-  companyId String
+  id            String      @id @default(cuid())
+  userId        String
+  companyId     String
   /// Which portal it was asked from (a wholesaler chats as a buyer and as a supplier).
-  side      AiAudience
-  title     String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  messages  AiMessage[]
+  side          AiAudience
+  title         String
+  /// Phase 58: WEB (the Assistant page) or WHATSAPP (+ the number); a person took over until aiPausedUntil
+  channel       String      @default("WEB")
+  waNumber      String?
+  aiPausedUntil DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  messages      AiMessage[]
 
   @@index([userId, companyId, side, updatedAt])
 }

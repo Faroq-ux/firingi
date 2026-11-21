@@ -154,6 +154,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     const d = part.decision;
     if (!d.ok) {
       const who = pc.parts.length > 1 ? `${nameOf(part.sellerId)}: ` : "";
+      if (d.reason === "SMALL_ORDER_LIMIT")
+        throw new AppError("SMALL_ORDER_LIMIT", `${who}You have used this month's small orders. Orders must now reach ${d.minimum.toFixed(2)} € (excl. VAT) — add ${d.missing.toFixed(2)} € more.`, 422);
       throw new AppError("BELOW_MINIMUM", d.unit === "UNITS"
         ? `${who}Minimum order for delivery is ${d.minimum} units. Add ${d.missing} more.`
         : `${who}Minimum order for delivery is ${d.minimum.toFixed(2)} € (excl. VAT). Add ${d.missing.toFixed(2)} € more.`, 422);
@@ -204,7 +206,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       const order = await tx.order.create({
         data: {
           number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId, groupRoundId: input.groupRoundId ?? null,
-          status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId, checkoutId: pc.parts.length > 1 ? checkoutId : null,
+          status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId, smallOrder: !!decision.small, checkoutId: pc.parts.length > 1 ? checkoutId : null,
           couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: part.waived.toFixed(2), deliveryPromotionId: part.deliveryPromotionId,
           deliveryAddress, requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null,
           branchId: stamp.branchId, costCentre: stamp.costCentre, poReference,
@@ -483,6 +485,7 @@ export async function changeOrderStatus(ctx: Ctx, orderId: string, to: OrderStat
   if (to === "CANCELLED") await (await import("@/server/rewards/service")).restoreRewardGoods(orderId).catch(() => null); // Phase 55: reward products taken on it go back
   // Cancelled before delivery: a prepayment paid online goes back to the customer.
   if (to === "CANCELLED") await (await import("@/server/payments/service")).refundOrderPrepayment(orderId).catch(() => null);
+  await (await import("@/server/whatsapp/ordering")).orderStatusChanged(orderId, to).catch(() => null); // Phase 58: WhatsApp orders hear back there
   if (order.status === "ON_HOLD") return notifyHoldDecision(order, to, reason, actor);
   if (to === "CANCELLED" && actor === "VENDOR" && order.status === "PENDING_CONFIRMATION") {
     // Supplier declined: FIRINGI tries to move the order to another supplier (Phase 9).
@@ -635,6 +638,7 @@ export async function confirmOrder(ctx: Ctx, orderId: string, quantities: Record
   });
   const seller = await prisma.company.findUniqueOrThrow({ where: { id: order.sellerCompanyId }, select: { legalName: true, tradeName: true } });
   await notify("order.confirmed", [{ companyId: order.buyerCompanyId, link: `/buy/orders/${orderId}` }], { number: order.number, supplier: seller.tradeName ?? seller.legalName }, { ref: { type: "Order", id: orderId } });
+  await (await import("@/server/whatsapp/ordering")).orderStatusChanged(orderId, "SUPPLIER_PROCESSING").catch(() => null); // Phase 58
   if (confirmed.some((c) => c.qty < c.line.qtyOrdered)) {
     // Short supply: the missing quantities go to another supplier (Phase 9).
     const { onSupplierEvent } = await import("@/server/allocation/engine");

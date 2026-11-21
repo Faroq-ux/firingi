@@ -184,7 +184,7 @@ export async function cartView(ctx: Ctx) {
       lines, goodsNet: part.totals.goodsNet.toFixed(2), shownNet: shown.toFixed(2), offerDiscount: shown.minus(part.totals.goodsNet).minus(loyaltyOff(part)).toFixed(2),
       delivery: d.ok
         ? { ok: true as const, mode: d.mode, feeNet: part.chargedFee.toFixed(2), feeVat: part.totals.deliveryFeeVat.toFixed(2), feeVatRate: part.feeVatRate.toString(), free: part.freeDelivery ? ("OFFER" as const) : d.free }
-        : { ok: false as const, reason: d.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE", minimum: d.unit === "UNITS" ? String(d.minimum) : d.minimum.toFixed(2), missing: d.unit === "UNITS" ? String(d.missing) : d.missing.toFixed(2), unit: d.unit, vendorMinimum: d.vendorMinimum?.toFixed(2) ?? null },
+        : { ok: false as const, reason: d.reason as "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE" | "SMALL_ORDER_LIMIT", minimum: d.unit === "UNITS" ? String(d.minimum) : d.minimum.toFixed(2), missing: d.unit === "UNITS" ? String(d.missing) : d.missing.toFixed(2), unit: d.unit, vendorMinimum: d.vendorMinimum?.toFixed(2) ?? null },
       freeDelivery: part.freeDelivery ? { amount: part.freeDelivery.amount.toFixed(2) } : null,
     };
   });
@@ -258,7 +258,7 @@ async function routedCartView(
   let free: { amount: string } | null = null;
   let couponSavings = ro.coupon?.ok ? ro.redemptions.filter((r) => r.code === ro.coupon!.code).reduce((a, r) => a.plus(r.amount), new Decimal(0)) : new Decimal(0);
   type D = { ok: true; mode: "VENDOR_FLEET" | "FIRINGI_FLEET" | "CARRIER"; feeNet: string; feeVat: string; feeVatRate: string; suppliers: number }
-    | { ok: false; reason: "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE"; minimum: string; missing: string; vendorMinimum: string | null };
+    | { ok: false; reason: "BELOW_MINIMUM" | "BELOW_SUPPLIER_MINIMUM" | "NOT_AVAILABLE_HERE" | "SMALL_ORDER_LIMIT"; minimum: string; missing: string; vendorMinimum: string | null };
   let delivery: D | null = null;
   let feeNet = new Decimal(0), feeVat = new Decimal(0);
   if (lines.length && addresses[0] && !unavailable.length) {

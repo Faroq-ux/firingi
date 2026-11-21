@@ -176,9 +176,9 @@ const backoff = (attempt: number) => new Date(Date.now() + Math.min(60, 2 ** att
 export async function deliverMessage(id: string, fetchImpl?: typeof fetch) {
   const m = await prisma.notificationMessage.findUnique({ where: { id } });
   if (!m || (m.status !== "QUEUED" && m.status !== "FAILED")) return m;
-  const vars = (m.variables ?? {}) as { _wa?: { name: string; language: string; params: string[] }; _push?: { endpoint: string; p256dh: string; auth: string } };
+  const vars = (m.variables ?? {}) as { _wa?: { name: string; language: string; params: string[] }; _push?: { endpoint: string; p256dh: string; auth: string }; _buttons?: { id: string; title: string }[] };
   const r = await sendVia(
-    { channel: m.channel, to: m.to, subject: m.subject, body: m.body, link: m.link, html: m.channel === "EMAIL" ? ((m.variables as { _html?: string } | null)?._html ?? emailHtml(m.subject ?? "FIRINGI", m.body, m.link, "FIRINGI →")) : null, waTemplate: vars._wa ?? null, push: vars._push ?? null,
+    { channel: m.channel, to: m.to, subject: m.subject, body: m.body, link: m.link, html: m.channel === "EMAIL" ? ((m.variables as { _html?: string } | null)?._html ?? emailHtml(m.subject ?? "FIRINGI", m.body, m.link, "FIRINGI →")) : null, waTemplate: vars._wa ?? null, push: vars._push ?? null, buttons: vars._buttons ?? null,
       badge: m.channel === "PUSH" && m.userId ? await prisma.notification.count({ where: { userId: m.userId, readAt: null } }) : null },
     fetchImpl,
   );

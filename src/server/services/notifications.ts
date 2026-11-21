@@ -306,10 +306,12 @@ async function updateStatus(providerMessageId: string, raw: string, error?: stri
   });
 }
 
-async function storeInbound(channel: NotificationChannel, rawFrom: string, body: string, providerMessageId: string | null, mediaUrl?: string | null) {
+type InboundExtra = { kind?: "TEXT" | "AUDIO" | "IMAGE" | "BUTTON" | "OTHER"; mediaType?: string | null };
+/** Store an inbound SMS / WhatsApp; Phase 58: WhatsApp messages are queued for the ordering AI. Returns the new id. */
+async function storeInbound(channel: NotificationChannel, rawFrom: string, body: string, providerMessageId: string | null, mediaUrl?: string | null, extra: InboundExtra = {}): Promise<string | null> {
   const from = normalisePhone(rawFrom.replace(/^whatsapp:/, "").replace(/^(\d)/, "+$1"));
-  if (!from) return;
-  if (providerMessageId && (await prisma.inboundMessage.findUnique({ where: { providerMessageId } }))) return; // provider retries
+  if (!from) return null;
+  if (providerMessageId && (await prisma.inboundMessage.findUnique({ where: { providerMessageId } }))) return null; // provider retries
   let userId: string | null = null, companyId: string | null = null;
   const user = await prisma.user.findFirst({ where: { phone: from }, select: { id: true, memberships: { where: { status: "ACTIVE" }, take: 1, select: { companyId: true } } } });
   if (user) { userId = user.id; companyId = user.memberships[0]?.companyId ?? null; }
@@ -318,8 +320,12 @@ async function storeInbound(channel: NotificationChannel, rawFrom: string, body:
     const company = await prisma.company.findFirst({ where: { whatsapp: from }, select: { id: true, memberships: { where: { status: "ACTIVE", isOwner: true }, take: 1, select: { userId: true } } } });
     if (company) { companyId = company.id; userId = company.memberships[0]?.userId ?? null; }
   }
-  await prisma.inboundMessage.create({ data: { channel, from, body: body.slice(0, 4000), mediaUrl: mediaUrl ?? null, providerMessageId, userId, companyId } });
+  const row = await prisma.inboundMessage.create({ data: { channel, from, body: body.slice(0, 4000), mediaUrl: mediaUrl ?? null, providerMessageId, userId, companyId, kind: extra.kind ?? "TEXT", mediaType: extra.mediaType ?? null, ...(channel === "WHATSAPP" ? { aiStatus: "PENDING" } : {}) } });
+  return channel === "WHATSAPP" ? row.id : null;
 }
+
+/** Tests and the e2e helper: an inbound WhatsApp as the providers deliver it (no signature). */
+export const storeInboundForTests = storeInbound;
 
 /** Twilio: X-Twilio-Signature = base64(HMAC-SHA1(authToken, url + sorted key+value pairs)). */
 export function twilioSignatureValid(url: string, params: Record<string, string>, signature: string, token: string) {
@@ -328,9 +334,15 @@ export function twilioSignatureValid(url: string, params: Record<string, string>
   return expected.length === signature.length && timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 }
 
-export async function handleTwilio(params: Record<string, string>) {
-  if (params.MessageStatus && params.MessageSid) return updateStatus(params.MessageSid, params.MessageStatus, params.ErrorMessage ?? (params.ErrorCode ? `Twilio error ${params.ErrorCode}` : null));
-  if (params.From && params.Body !== undefined) return storeInbound(params.From.startsWith("whatsapp:") ? "WHATSAPP" : "SMS", params.From, params.Body, params.MessageSid ?? null, params.MediaUrl0 ?? null);
+/** Returns the id of a stored inbound WhatsApp (for the ordering AI) or null. */
+export async function handleTwilio(params: Record<string, string>): Promise<string | null> {
+  if (params.MessageStatus && params.MessageSid && params.Body === undefined) { await updateStatus(params.MessageSid, params.MessageStatus, params.ErrorMessage ?? (params.ErrorCode ? `Twilio error ${params.ErrorCode}` : null)); return null; }
+  if (params.From && params.Body !== undefined) {
+    const mime = params.MediaContentType0 ?? null;
+    const kind = params.ButtonPayload ? "BUTTON" : mime?.startsWith("audio") ? "AUDIO" : mime?.startsWith("image") ? "IMAGE" : params.MediaUrl0 ? "OTHER" : "TEXT";
+    return storeInbound(params.From.startsWith("whatsapp:") ? "WHATSAPP" : "SMS", params.From, params.ButtonPayload ?? params.Body, params.MessageSid ?? null, params.MediaUrl0 ?? null, { kind, mediaType: mime });
+  }
+  return null;
 }
 
 /** Meta: X-Hub-Signature-256 = "sha256=" + HMAC-SHA256(appSecret, raw body). */
@@ -339,11 +351,24 @@ export function metaSignatureValid(rawBody: string, signature: string, secret: s
   return expected.length === signature.length && timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 }
 
-type MetaBody = { entry?: { changes?: { value?: { statuses?: { id: string; status: string; errors?: { title?: string }[] }[]; messages?: { id: string; from: string; type: string; text?: { body: string } }[] } }[] }[] };
-export async function handleMeta(body: MetaBody) {
+type MetaMedia = { id: string; mime_type?: string; caption?: string };
+type MetaBody = { entry?: { changes?: { value?: { statuses?: { id: string; status: string; errors?: { title?: string }[] }[]; messages?: { id: string; from: string; type: string; text?: { body: string }; audio?: MetaMedia; voice?: MetaMedia; image?: MetaMedia; interactive?: { button_reply?: { id: string; title: string }; list_reply?: { id: string; title: string } }; button?: { payload?: string; text?: string } }[] } }[] }[] };
+/** Returns the ids of stored inbound WhatsApp messages (for the ordering AI). */
+export async function handleMeta(body: MetaBody): Promise<string[]> {
+  const ids: string[] = [];
   for (const e of body.entry ?? [])
     for (const c of e.changes ?? []) {
       for (const s of c.value?.statuses ?? []) await updateStatus(s.id, s.status, s.errors?.[0]?.title ?? null);
-      for (const m of c.value?.messages ?? []) await storeInbound("WHATSAPP", m.from, m.type === "text" ? m.text?.body ?? "" : `[${m.type}]`, m.id);
+      for (const m of c.value?.messages ?? []) {
+        const audio = m.audio ?? m.voice;
+        const id = m.type === "text" ? await storeInbound("WHATSAPP", m.from, m.text?.body ?? "", m.id)
+          : audio ? await storeInbound("WHATSAPP", m.from, "[voice note]", m.id, `meta:${audio.id}`, { kind: "AUDIO", mediaType: audio.mime_type ?? "audio/ogg" })
+          : m.image ? await storeInbound("WHATSAPP", m.from, m.image.caption ?? "[image]", m.id, `meta:${m.image.id}`, { kind: "IMAGE", mediaType: m.image.mime_type ?? "image/jpeg" })
+          : m.interactive ? await storeInbound("WHATSAPP", m.from, m.interactive.button_reply?.id ?? m.interactive.list_reply?.id ?? "", m.id, null, { kind: "BUTTON" })
+          : m.button ? await storeInbound("WHATSAPP", m.from, m.button.payload ?? m.button.text ?? "", m.id, null, { kind: "BUTTON" })
+          : await storeInbound("WHATSAPP", m.from, `[${m.type}]`, m.id, null, { kind: "OTHER" });
+        if (id) ids.push(id);
+      }
     }
+  return ids;
 }

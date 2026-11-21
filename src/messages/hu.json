@@ -921,7 +921,8 @@
     "Reward Products": "Jutalomtermékek",
     "Rewards to Hand Over": "Átadandó jutalmak",
     "Customs Codes": "Vámtarifaszámok",
-    "EU Trade Report": "Uniós kereskedelmi jelentés"
+    "EU Trade Report": "Uniós kereskedelmi jelentés",
+    "Order by WhatsApp": "Rendelés WhatsAppon"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -8484,6 +8485,71 @@
       "GOODS": "Áru",
       "SERVICES": "Szolgáltatás",
       "TRIANGULAR": "Háromszögügylet"
+    }
+  },
+  "waOrder": {
+    "bot": {
+      "register": "Üdvözöljük! Ez a szám még nincs FIRINGI-fiókhoz rendelve. Regisztrálja vállalkozását itt: {link} — majd adja hozzá ezt a WhatsApp-számot a profiljához, és rendeljen üzenetben.",
+      "error": "Elnézést, hiba történt a mi oldalunkon. Kérjük, próbálja újra néhány perc múlva.",
+      "limit": "Az elmúlt órában sok üzenetet küldött. Kérjük, várjon egy kicsit, és írjon újra.",
+      "voiceOff": "A hangüzenetek jelenleg nem érhetők el — kérjük, gépelje be a rendelését.",
+      "voiceFail": "Elnézést, nem értettem a hangüzenetet. Kérjük, gépelje be, vagy küldje el újra.",
+      "photosOff": "A fotók jelenleg nem érhetők el — kérjük, gépelje be a rendelését.",
+      "cancelled": "Rendben, a rendelést nem adtuk le. A kosara megmarad a FIRINGI-n.",
+      "confirmHint": "Válaszolja: IGEN, ha leadja a rendelést, vagy NEM, ha lemondja.",
+      "btnConfirm": "Igen, megrendelem",
+      "btnCancel": "Mégse",
+      "btnRepeat": "Előző rendelés újra",
+      "handover": "A FIRINGI egyik munkatársa hamarosan válaszol itt.",
+      "expired": "Ez az ajánlat lejárt. Írja meg, mire van szüksége, és újra összeállítom.",
+      "cartChanged": "A kosara megváltozott az ajánlat óta. Nem adtam le a rendelést — kérjen tőlem új összesítőt.",
+      "approval": "Rendelése jóváhagyásra vár a cégénél. Üzenetben értesítjük, amint leadták.",
+      "placed": "Rendelés leadva ✅ {numbers} — összesen {total}. A fejleményekről itt értesítjük.",
+      "payFirst": "Kérjük, fizessen a szállítás elindításához: {link}",
+      "failed": "A rendelést nem sikerült leadni: {reason}",
+      "status": {
+        "SUPPLIER_PROCESSING": "A(z) {number} rendelés visszaigazolva, előkészítés alatt.",
+        "OUT_FOR_DELIVERY": "A(z) {number} rendelés úton van.",
+        "DELIVERED": "A(z) {number} rendelés kiszállítva. Köszönjük!",
+        "CANCELLED": "A(z) {number} rendelés törölve."
+      },
+      "reminder": "Üdvözöljük, {company}! Ideje feltölteni a készletet? Válaszolja: ÚJRA, ha ugyanazt rendelné, mint a(z) {number} rendelésben, vagy írja meg, mire van szüksége."
+    },
+    "title": "Rendelés WhatsAppon",
+    "intro": "Írjon a FIRINGI-nek WhatsAppon a vállalkozása számáról: gépelje be a rendelését, küldjön fotót a listájáról, vagy küldjön hangüzenetet. Az asszisztens megkeresi a termékeket, feltölti a kosarát, és összesítőt küld az egyes beszállítók szállításával. Semmit nem rendelünk meg, amíg nem válaszolja: IGEN.",
+    "notAvailable": "A WhatsAppos rendelés jelenleg nem érhető el a vállalkozása számára.",
+    "firingiNumber": "A FIRINGI WhatsApp-száma",
+    "openChat": "WhatsApp megnyitása",
+    "noFiringiNumber": "A FIRINGI WhatsApp-száma hamarosan itt jelenik meg.",
+    "myNumber": "Az Ön WhatsApp-száma",
+    "myNumberHint": "Csak erről a számról fogadunk üzeneteket. Módosítsa a cégprofiljában.",
+    "noMyNumber": "Adja meg WhatsApp-számát a cégprofiljában, hogy WhatsAppon rendelhessen.",
+    "editProfile": "Cégprofil",
+    "howTitle": "Hogyan működik?",
+    "how1": "Küldje el, mire van szüksége, pl. „10 Coca-Cola 33cl és 2 rizs 5 kg”.",
+    "how2": "Ellenőrizze az összesítőt: termékek, az egyes beszállítók minimuma és ingyenes szállítása, végösszeg.",
+    "how3": "Válaszolja: IGEN, ha leadja (vagy NEM, ha lemondja). Válaszolja: ÚJRA, ha ugyanazt rendelné, mint legutóbb.",
+    "howVoice": "A hangüzeneteket is értjük.",
+    "howPhotos": "A bevásárlólistáról vagy termékről készült fotókat is értjük.",
+    "settingsTitle": "Üzenetek WhatsAppon",
+    "orderUpdates": "Rendelési értesítések WhatsAppon",
+    "orderUpdatesHint": "Visszaigazolva, úton, kiszállítva.",
+    "reminders": "Újrarendelési emlékeztetők",
+    "remindersHint": "Amikor általában újra rendelni szokott – egy koppintással megismételheti az előző rendelését.",
+    "save": "Mentés",
+    "saved": "Mentve.",
+    "recentTitle": "WhatsAppon leadott rendelések",
+    "noOrders": "Még nincs WhatsAppos rendelés.",
+    "order": "Rendelés",
+    "date": "Dátum",
+    "status": "Állapot",
+    "total": "Összesen",
+    "small": {
+      "title": "Kis rendelések ebben a hónapban",
+      "left": "Ebben a hónapban hátralévő kis rendelések: {left}/{limit}.",
+      "none": "Felhasználta az e havi kis rendeléseket. A rendeléseknek most el kell érniük az egyes beszállítók ingyenes szállítási összeghatárát.",
+      "hint": "A kis rendelés eléri a FIRINGI minimumát, de nem éri el a beszállító ingyenes szállítási összeghatárát.",
+      "cartBlocked": "Felhasználta az e havi kis rendeléseket. Adjon hozzá még {missing} értékben (ingyenes szállítás {min} felett, {tax} nélkül), hogy ettől a beszállítótól rendelhessen."
     }
   }
 }

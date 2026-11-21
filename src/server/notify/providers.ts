@@ -30,6 +30,8 @@ export type OutgoingMessage = {
   push?: { endpoint: string; p256dh: string; auth: string } | null;
   /** Phase 39: unread notifications — the number on the installed app's icon. */
   badge?: number | null;
+  /** Phase 58: WhatsApp reply buttons (Meta Cloud API, up to 3; other drivers send the text only). */
+  buttons?: { id: string; title: string }[] | null;
 };
 type Fetch = typeof fetch;
 
@@ -102,7 +104,9 @@ async function meta(m: OutgoingMessage, fetchImpl: Fetch): Promise<SendResult> {
         messaging_product: "whatsapp", to, type: "template",
         template: { name: m.waTemplate.name, language: { code: m.waTemplate.language }, components: m.waTemplate.params.length ? [{ type: "body", parameters: m.waTemplate.params.map((text) => ({ type: "text", text })) }] : [] },
       }
-    : { messaging_product: "whatsapp", to, type: "text", text: { body: m.body, preview_url: false } };
+    : m.buttons?.length
+      ? { messaging_product: "whatsapp", to, type: "interactive", interactive: { type: "button", body: { text: m.body.slice(0, 1024) }, action: { buttons: m.buttons.slice(0, 3).map((b) => ({ type: "reply", reply: { id: b.id, title: b.title.slice(0, 20) } })) } } }
+      : { messaging_product: "whatsapp", to, type: "text", text: { body: m.body, preview_url: false } };
   try {
     const res = await fetchImpl(`https://graph.facebook.com/v21.0/${phoneId}/messages`, {
       method: "POST", body: JSON.stringify(payload), signal: AbortSignal.timeout(15000),

@@ -23,7 +23,7 @@ export const EN_CHAT: ChatLabels = {
   delete: "Delete conversation", tryAsking: "Try asking",
 };
 /** What the agent did, shown under its answer: products put in the cart, an offer to pass the chat to FIRINGI support. */
-export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string };
+export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string } | { kind: "proposal"; draftId: string };
 export type ChatTool = { name: string; ok: boolean; card?: ToolCard; ticketId?: string; ticketNumber?: string };
 export type AgentLabels = Record<"addedToCart" | "cartNow" | "openCart" | "handoverTitle" | "handoverText" | "handoverSend" | "handoverSent" | "openRequest", string> & { media: MediaLabels };
 /** `photos`: how many the person sent (served from the server); `previews`: local previews right after sending. */

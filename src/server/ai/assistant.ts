@@ -19,7 +19,7 @@ import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/serv
 import { aiScope, type Side } from "./insights";
 import { CompanyFeatureOffError, companyFeatureOn } from "@/server/accounting/features";
 import { logAi } from "./feed";
-import { apiTools, toolsFor, type ToolCard } from "./tools";
+import { apiTools, toolsFor, type Channel, type ToolCard } from "./tools";
 import { AI_MODELS, DEFAULT_AI, type AiSettings } from "@/lib/ai";
 export type { AiSettings };
 
@@ -110,7 +110,13 @@ const PHOTOS_VENDOR = "Photos: the supplier may send photos (a delivery note, da
 export const MAX_PHOTOS = 3;
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
-function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
+const WHATSAPP = [
+  "You are answering on WhatsApp. Keep every reply short (at most about 10 lines), in plain text; *bold* is fine, no tables, no Markdown links. The customer can't see the website cart here: you show what matters in the chat.",
+  "Ordering on WhatsApp: find the products (search_catalogue), put what the customer asked in the cart (add_to_cart; ask if the product or quantity is unclear), then call propose_order. propose_order checks each supplier's own minimum order and free-delivery amount and sends the customer the order to confirm. The order is placed only when the customer replies YES — never say it is placed or confirmed yourself. For 'the same as last time' use repeat_last_order, then propose_order.",
+  "Payments: pay_invoices_link gives a secure payment link for the open invoices.",
+].join("\n");
+
+function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "", channel: Channel = "WEB") {
   const who = side === "STAFF"
     ? "a member of FIRINGI's back-office staff. FIRINGI is a B2B wholesale marketplace in the Schengen area: restaurants and shops (customers) buy from wholesalers in their own country; wholesalers buy from distributors across the EU. FIRINGI buys from the supplier and resells to every buyer, earning a commission that buyers never see."
     : side === "VENDOR"
@@ -137,6 +143,7 @@ function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
     side !== "STAFF" ? facts : "",
     side === "BUYER" ? "Never mention FIRINGI's commission, margins, supplier costs or payouts, or other customers." : "",
     side === "VENDOR" ? "Talk only about this supplier's own products, orders and customers." : "",
+    channel === "WHATSAPP" ? WHATSAPP : "",
     `Reply in ${languageName(locale)}. Be short and concrete: lead with the answer, then the few numbers that support it (amounts in EUR, excl. VAT unless said), then at most three suggestions. Use plain words; use a small Markdown table only when comparing several rows.`,
   ].filter(Boolean).join("\n\n");
 }
@@ -147,21 +154,21 @@ function systemPrompt(ctx: Ctx, side: Side, locale: string, facts = "") {
  * Staff: the AI right (Super Admin by default, others by role). Suppliers and customers: only when
  * FIRINGI switched the Assistant on for their company (Settings › Business Features).
  */
-async function assertSide(ctx: Ctx, side: Side) {
+async function assertSide(ctx: Ctx, side: Side, channel: Channel = "WEB") {
   aiScope(ctx, side);
-  if (side === "STAFF") return;
+  if (side === "STAFF" || channel === "WHATSAPP") return; // WhatsApp: its own switches (whatsapp/ordering.ts)
   const s = await aiSettings();
   if (!(side === "BUYER" ? s.buyers : s.suppliers) || !(await companyFeatureOn(ctx.company.id, "ASSISTANT"))) throw new CompanyFeatureOffError();
 }
 
 export async function listConversations(ctx: Ctx, side: Side) {
   await assertSide(ctx, side);
-  return prisma.aiConversation.findMany({ where: { userId: ctx.user.id, companyId: ctx.company.id, side }, orderBy: { updatedAt: "desc" }, take: 50, select: { id: true, title: true, updatedAt: true } });
+  return prisma.aiConversation.findMany({ where: { userId: ctx.user.id, companyId: ctx.company.id, side, channel: "WEB" }, orderBy: { updatedAt: "desc" }, take: 50, select: { id: true, title: true, updatedAt: true } });
 }
 
-export async function getConversation(ctx: Ctx, side: Side, id: string) {
-  await assertSide(ctx, side);
-  const c = await prisma.aiConversation.findFirst({ where: { id, userId: ctx.user.id, companyId: ctx.company.id, side }, include: { messages: { orderBy: { at: "asc" } } } });
+export async function getConversation(ctx: Ctx, side: Side, id: string, channel: Channel = "WEB") {
+  await assertSide(ctx, side, channel);
+  const c = await prisma.aiConversation.findFirst({ where: { id, userId: ctx.user.id, companyId: ctx.company.id, side, channel }, include: { messages: { orderBy: { at: "asc" } } } });
   if (!c) throw new NotFoundError("Conversation");
   return c;
 }
@@ -175,8 +182,9 @@ export async function deleteConversation(ctx: Ctx, side: Side, id: string) {
 
 const textOf = (m: BetaMessage) => m.content.filter((b): b is Anthropic.Beta.Messages.BetaTextBlock => b.type === "text").map((b) => b.text).join("\n").trim();
 
-export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string | null; text: string; locale?: string; photos?: File[] }) {
-  await assertSide(ctx, side);
+export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string | null; text: string; locale?: string; photos?: File[]; whatsapp?: { number: string } }) {
+  const channel: Channel = input.whatsapp ? "WHATSAPP" : "WEB";
+  await assertSide(ctx, side, channel);
   const files = (input.photos ?? []).filter((f) => f && f.size > 0);
   const text = input.text.trim() || (files.length ? "(photo)" : "");
   if (!text) throw new ValidationError("Type a question.");
@@ -186,14 +194,14 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
   if (text.length > 4000) throw new ValidationError("Please keep the question under 4,000 characters.");
   const status = await assistantStatus(side, ctx.company.id);
   if (!status.configured) throw new AppError("AI_NOT_CONFIGURED", "The AI assistant isn't set up yet (no Anthropic API key).", 503);
-  if (!status.switchedOn) throw new ForbiddenError("The AI assistant is switched off.");
-  if (files.length && !status.photos) throw new ValidationError("Photos are switched off for the Assistant.");
+  if (!status.switchedOn && channel === "WEB") throw new ForbiddenError("The AI assistant is switched off.");
+  if (files.length && !status.photos && channel === "WEB") throw new ValidationError("Photos are switched off for the Assistant.");
   const settings = await aiSettings();
   const asked = await prisma.aiMessage.count({ where: { role: "user", at: { gt: new Date(Date.now() - 3600_000) }, conversation: { userId: ctx.user.id } } });
   if (asked >= settings.hourlyLimit) throw new AppError("AI_LIMIT", `You've reached ${settings.hourlyLimit} questions this hour — please try again later.`, 429);
 
   const locale = input.locale ?? ctx.user.locale ?? "en";
-  const conv = input.conversationId ? await getConversation(ctx, side, input.conversationId) : null;
+  const conv = input.conversationId ? await getConversation(ctx, side, input.conversationId, channel) : null;
   // Earlier photos aren't sent again (cost); the answer that followed them says what they showed.
   const history: BetaMessageParam[] = (conv?.messages ?? []).slice(-HISTORY_TURNS * 2).map((m) => ({
     role: m.role as "user" | "assistant", content: m.photoKeys.length ? `[sent ${m.photoKeys.length} photo(s) earlier]\n${m.text}` : m.text,
@@ -215,8 +223,8 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
       : question,
   }];
   const facts = side === "STAFF" ? "" : await helpFacts();
-  const tools = apiTools(side);
-  const runners = new Map(toolsFor(side).map((t) => [t.name, t]));
+  const tools = apiTools(side, channel);
+  const runners = new Map(toolsFor(side, channel).map((t) => [t.name, t]));
   const transport = transportOverride ?? (simulating(side) ? (await import("./simulated")).simulatedTransport : liveTransport);
   const used: { name: string; input: unknown; ok: boolean; card?: ToolCard }[] = [];
   let tokensIn = 0, tokensOut = 0, answer = "", stopReason: string | null = null, servedBy: string = settings.model;
@@ -225,7 +233,7 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
     let res: BetaMessage;
     try {
       res = await transport({
-        model: settings.model, max_tokens: 16000, system: systemPrompt(ctx, side, locale, facts), tools, tool_choice: { type: "auto" }, messages,
+        model: settings.model, max_tokens: 16000, system: systemPrompt(ctx, side, locale, facts, channel), tools, tool_choice: { type: "auto" }, messages,
         thinking: { type: "adaptive" }, output_config: { effort: "medium" }, cache_control: { type: "ephemeral" },
         betas: ["server-side-fallback-2026-07-01"], fallbacks: "default",
         metadata: { user_id: ctx.user.id },
@@ -255,7 +263,7 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
       else if (!parsed!.success) { content = `Invalid input: ${parsed!.error.issues.map((x) => x.message).join("; ")}`; isError = true; }
       else {
         try {
-          const out = await t.run(ctx, side, parsed!.data, locale);
+          const out = await t.run(ctx, side, parsed!.data, locale, { channel, waNumber: input.whatsapp?.number ?? null, conversationId: conv?.id ?? null });
           card = (out as { card?: ToolCard } | null)?.card;
           content = JSON.stringify(out ?? null);
           if (content.length > MAX_TOOL_CHARS) content = `${content.slice(0, MAX_TOOL_CHARS)}… [cut: ask for fewer rows]`;
@@ -278,7 +286,7 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
   if (!answer) answer = "I couldn't find an answer to that.";
 
   const saved = await prisma.$transaction(async (tx) => {
-    const c = conv ?? await tx.aiConversation.create({ data: { userId: ctx.user.id, companyId: ctx.company.id, side, title: text.length > 80 ? `${text.slice(0, 77)}…` : text } });
+    const c = conv ?? await tx.aiConversation.create({ data: { userId: ctx.user.id, companyId: ctx.company.id, side, channel, waNumber: input.whatsapp?.number ?? null, title: text.length > 80 ? `${text.slice(0, 77)}…` : text } });
     const q = await tx.aiMessage.create({ data: { conversationId: c.id, role: "user", text, photoKeys: photos.map((p) => p.key) } });
     const m = await tx.aiMessage.create({ data: { conversationId: c.id, role: "assistant", text: answer, tools: used as Prisma.InputJsonValue, model: servedBy, tokensIn, tokensOut, stopReason } });
     await tx.aiConversation.update({ where: { id: c.id }, data: { updatedAt: new Date() } });

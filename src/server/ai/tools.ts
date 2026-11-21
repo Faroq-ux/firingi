@@ -24,10 +24,15 @@ type ToolDef<T> = {
   /** JSON schema sent to Claude (strict: every property required, no extra properties). */
   properties: Record<string, unknown>;
   input: z.ZodType<T>;
-  run: (ctx: Ctx, side: Side, input: T, locale: string) => Promise<unknown>;
+  /** Phase 58: only in these channels (default: everywhere) */
+  channels?: Channel[];
+  run: (ctx: Ctx, side: Side, input: T, locale: string, extra: ToolExtra) => Promise<unknown>;
 };
+export type Channel = "WEB" | "WHATSAPP";
+/** Phase 58: what a tool knows about the conversation (the WhatsApp number it runs for). */
+export type ToolExtra = { channel: Channel; waNumber?: string | null; conversationId?: string | null };
 /** A tool result may carry a small `card` the chat shows (cart line added, hand-over offered). */
-export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string };
+export type ToolCard = { kind: "cart"; product: string; pack: string; qty: number; cartQty: number } | { kind: "handover"; subject: string; summary: string; category: string } | { kind: "proposal"; draftId: string };
 const tool = <T,>(t: ToolDef<T>) => t as unknown as ToolDef<unknown>;
 
 const period = { type: "string", enum: [...PERIODS], description: "7d, 30d, 90d, 12m (last 12 months), mtd (this month), lastmonth, ytd (this year)" };
@@ -244,6 +249,41 @@ export const TOOLS: ToolDef<unknown>[] = [
       };
     },
   }),
+  // ── WhatsApp ordering (Phase 58) ──
+  tool({
+    name: "propose_order", sides: ["BUYER"], channels: ["WHATSAPP"],
+    description: "Send the customer their cart as an order to confirm on WhatsApp: it checks delivery for each supplier (each supplier's own minimum order and free-delivery amount, the fee) and the total incl. VAT. If something is missing it returns the problems instead (e.g. how much more to reach a supplier's minimum) — tell the customer. Use it when the customer wants to order or after you filled the cart with what they asked. The order is placed ONLY when the customer replies YES; never say it is placed.",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx, _s, _i, locale, extra) => {
+      if (!extra.waNumber) throw new (await import("@/server/errors")).ValidationError("Only on WhatsApp.");
+      const { proposeOrder } = await import("@/server/whatsapp/ordering");
+      const r = await proposeOrder(ctx, extra.waNumber, locale, extra.conversationId ?? null);
+      return r.ok
+        ? { proposed: true, ...r.summary, next: "Show the customer this order briefly (lines, delivery per supplier, total incl. VAT) and tell them to reply YES to place it or NO to cancel, or to tell you what to change. Do not say it is placed.", card: { kind: "proposal", draftId: r.draftId } satisfies ToolCard }
+        : { proposed: false, problems: r.problems, next: "Tell the customer what is missing and offer to add products." };
+    },
+  }),
+  tool({
+    name: "repeat_last_order", sides: ["BUYER"], channels: ["WHATSAPP"],
+    description: "Put the products and quantities of the customer's last order back in the cart (the cart is emptied first). Use when they ask for 'the same as last time' / 'repeat'. Then call propose_order.",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx, _s, _i, locale) => {
+      const { repeatLastOrder } = await import("@/server/whatsapp/ordering");
+      return repeatLastOrder(ctx, locale);
+    },
+  }),
+  tool({
+    name: "pay_invoices_link", sides: ["BUYER"], channels: ["WHATSAPP"],
+    description: "A secure payment link (MB WAY, Multibanco, card…) for all of this customer's open invoices. Use when they ask how to pay or what they owe and want to pay now.",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx) => {
+      const { payLinkForOpenInvoices } = await import("@/server/whatsapp/ordering");
+      return payLinkForOpenInvoices(ctx);
+    },
+  }),
   tool({
     name: "handover", sides: ["BUYER", "VENDOR"],
     description: "Offer to pass the conversation to FIRINGI's support team (a person). Use when you can't solve it, it needs a decision or a change only FIRINGI staff can make (refunds, cancellations, account or price changes, complaints), or the person asks for a human. Shows a 'Send to FIRINGI support' button; the person taps it to send a support request with your summary and this chat.",
@@ -277,11 +317,11 @@ export const TOOLS: ToolDef<unknown>[] = [
   }),
 ];
 
-export const toolsFor = (side: Side) => TOOLS.filter((t) => t.sides.includes(side));
+export const toolsFor = (side: Side, channel: Channel = "WEB") => TOOLS.filter((t) => t.sides.includes(side) && (!t.channels || t.channels.includes(channel)));
 
 /** Tool definitions for the Messages API (strict schemas). */
-export function apiTools(side: Side) {
-  return toolsFor(side).map((t) => ({
+export function apiTools(side: Side, channel: Channel = "WEB") {
+  return toolsFor(side, channel).map((t) => ({
     name: t.name, description: t.description, strict: true,
     input_schema: { type: "object" as const, properties: t.properties, required: Object.keys(t.properties), additionalProperties: false },
   }));

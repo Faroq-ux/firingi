@@ -22,6 +22,9 @@ const callTool = (name: string, input: unknown) => ({ type: "tool_use", id: `tu_
 const ADD = /(?:add|adicion\w*|junt\w*|p[oõ]e|ponha|coloca\w*|quero|leg\w*|añad\w*)\s+(\d+)\s+(?:x\s+|caixas?\s+de\s+|boxes?\s+of\s+|packs?\s+of\s+)?(.+)/i;
 /** "olive oil to my cart" → "olive oil" */
 const product = (s: string) => s.replace(/[.!?]+$/, "").replace(/\s+(?:to|in|into)\s+(?:my|the)\s+(?:cart|basket)$|\s+(?:a|ao|no|para o)\s+(?:meu\s+)?carrinho$|\s+(?:a|al|en)\s+(?:mi\s+)?carrito$/i, "").trim();
+const REPEAT_Q = /repeat my last order|same as last|o mesmo|repetir/i;
+const ORDER_Q = /\b(place (?:the |my )?order|order (?:it|now)|encomendar|fazer (?:a )?encomenda|finalizar|checkout|pedir)\b/i;
+const PAY_Q = /\b(pay|pagar|owe|devo|payment link)\b/i;
 const HUMAN = /\b(human|person|agent|staff|pessoa|humano|suporte|support|falar com|hablar con|persona)\b/i;
 
 type Content = Params["messages"][number]["content"];
@@ -49,6 +52,10 @@ export async function simulatedTransport(params: Params): Promise<BetaMessage> {
     const n = photosIn(last.content);
     if (n && !ADD.test(q)) return reply([text(`I received ${n} photo(s). The simulated assistant can't read photos — with the AI connected I would read the products, labels or order list in them and fill your cart.`)], "end_turn");
     const add = q.match(ADD);
+    // Phase 58 (WhatsApp): repeat, propose, pay
+    if (tools.has("repeat_last_order") && REPEAT_Q.test(q)) return reply([callTool("repeat_last_order", {})], "tool_use");
+    if (tools.has("propose_order") && !add && ORDER_Q.test(q)) return reply([callTool("propose_order", {})], "tool_use");
+    if (tools.has("pay_invoices_link") && PAY_Q.test(q)) return reply([callTool("pay_invoices_link", {})], "tool_use");
     if (add && tools.has("add_to_cart")) return reply([callTool("search_catalogue", { query: product(add[2]), limit: 5 })], "tool_use");
     if (tools.has("search_catalogue") && q.length > 2) return reply([callTool("search_catalogue", { query: q.replace(/[?!.]+$/, "").split(/\s+/).slice(-2).join(" "), limit: 3 })], "tool_use");
     if (tools.has("find_orders")) return reply([callTool("find_orders", { query: "", state: "ANY", limit: 3 })], "tool_use");
@@ -72,6 +79,19 @@ export async function simulatedTransport(params: Params): Promise<BetaMessage> {
     }
     if (!rows.length) return reply([text("I couldn't find that product in your catalogue.")], "end_turn");
     return reply([text(rows.slice(0, 3).map((r) => `- **${r.product}** — ${r.pack}: ${r.pricePerPackNet ?? "?"} € excl. VAT (${r.stock})`).join("\n"))], "end_turn");
+  }
+  if (call?.name === "add_to_cart" && tools.has("propose_order")) return reply([callTool("propose_order", {})], "tool_use");
+  if (call?.name === "repeat_last_order") return (data as { repeated?: boolean })?.repeated ? reply([callTool("propose_order", {})], "tool_use") : reply([text("You have no earlier order to repeat.")], "end_turn");
+  if (call?.name === "propose_order") {
+    const d = data as { proposed: boolean; lines?: { product: string; pack: string; qty: number }[]; totalInclVat?: string; delivery?: { supplier: string; deliveryFeeNet: string | null; freeDeliveryFromNet: string | null }[]; problems?: { supplier?: string; problem: string; missing?: string; minimum?: string }[] };
+    if (!d.proposed) return reply([text(`I can't send the order yet: ${(d.problems ?? []).map((p) => `${p.supplier ?? ""} ${p.problem}${p.missing ? ` (${p.missing} € more, minimum ${p.minimum} €)` : ""}`.trim()).join("; ")}.`)], "end_turn");
+    const lines = (d.lines ?? []).map((l) => `- ${l.qty} × ${l.product} (${l.pack})`).join("\n");
+    const del = (d.delivery ?? []).map((g) => `${g.supplier}: delivery ${g.deliveryFeeNet ?? "0.00"} €${g.freeDeliveryFromNet ? ` (free from ${g.freeDeliveryFromNet} €)` : ""}`).join("\n");
+    return reply([text(`Your order:\n${lines}\n${del}\nTotal ${d.totalInclVat} € incl. VAT.`)], "end_turn");
+  }
+  if (call?.name === "pay_invoices_link") {
+    const d = data as { link: string | null; note?: string; total?: string };
+    return reply([text(d.link ? `Pay ${d.total} € here: ${d.link}` : d.note ?? "Nothing to pay.")], "end_turn");
   }
   if (call?.name === "add_to_cart") {
     const d = data as { product: string; pack: string; qtyAdded: number; qtyInCartNow: number };

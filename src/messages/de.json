@@ -921,7 +921,8 @@
     "Reward Products": "Prämienprodukte",
     "Rewards to Hand Over": "Zu übergebende Prämien",
     "Customs Codes": "Zolltarifnummern",
-    "EU Trade Report": "EU-Handelsbericht"
+    "EU Trade Report": "EU-Handelsbericht",
+    "Order by WhatsApp": "Per WhatsApp bestellen"
   },
   "delivery": {
     "title": "Lieferung",
@@ -8484,6 +8485,71 @@
       "GOODS": "Waren",
       "SERVICES": "Dienstleistungen",
       "TRIANGULAR": "Dreiecksgeschäft"
+    }
+  },
+  "waOrder": {
+    "bot": {
+      "register": "Hallo! Diese Nummer ist noch keinem FIRINGI-Konto zugeordnet. Registrieren Sie Ihr Unternehmen hier: {link} — fügen Sie dann diese WhatsApp-Nummer Ihrem Profil hinzu und bestellen Sie per Nachricht.",
+      "error": "Entschuldigung, bei uns ist etwas schiefgelaufen. Bitte versuchen Sie es in ein paar Minuten erneut.",
+      "limit": "Sie haben in der letzten Stunde viele Nachrichten gesendet. Bitte warten Sie kurz und schreiben Sie dann erneut.",
+      "voiceOff": "Sprachnachrichten sind derzeit nicht verfügbar — bitte schreiben Sie Ihre Bestellung.",
+      "voiceFail": "Entschuldigung, ich konnte die Sprachnachricht nicht verstehen. Bitte schreiben Sie sie oder senden Sie sie erneut.",
+      "photosOff": "Fotos sind derzeit nicht verfügbar — bitte schreiben Sie Ihre Bestellung.",
+      "cancelled": "OK, die Bestellung wurde nicht aufgegeben. Ihr Warenkorb bleibt auf FIRINGI gespeichert.",
+      "confirmHint": "Antworten Sie JA, um diese Bestellung aufzugeben, oder NEIN, um abzubrechen.",
+      "btnConfirm": "Ja, bestellen",
+      "btnCancel": "Abbrechen",
+      "btnRepeat": "Erneut bestellen",
+      "handover": "Jemand von FIRINGI antwortet Ihnen hier in Kürze.",
+      "expired": "Dieser Vorschlag ist abgelaufen. Sagen Sie mir, was Sie brauchen, und ich bereite ihn neu vor.",
+      "cartChanged": "Ihr Warenkorb hat sich seit dem Vorschlag geändert. Ich habe die Bestellung nicht aufgegeben — bitten Sie mich um eine neue Übersicht.",
+      "approval": "Ihre Bestellung wartet in Ihrem Unternehmen auf Freigabe. Sie erhalten eine Nachricht, sobald sie aufgegeben wurde.",
+      "placed": "Bestellung aufgegeben ✅ {numbers} — gesamt {total}. Updates senden wir Ihnen hier.",
+      "payFirst": "Bitte bezahlen Sie, damit die Lieferung starten kann: {link}",
+      "failed": "Die Bestellung konnte nicht aufgegeben werden: {reason}",
+      "status": {
+        "SUPPLIER_PROCESSING": "Bestellung {number} ist bestätigt und wird vorbereitet.",
+        "OUT_FOR_DELIVERY": "Bestellung {number} ist unterwegs.",
+        "DELIVERED": "Bestellung {number} wurde geliefert. Vielen Dank!",
+        "CANCELLED": "Bestellung {number} wurde storniert."
+      },
+      "reminder": "Hallo {company}! Zeit zum Nachbestellen? Antworten Sie NOCHMAL, um dasselbe wie bei {number} zu bestellen, oder sagen Sie mir, was Sie brauchen."
+    },
+    "title": "Per WhatsApp bestellen",
+    "intro": "Schreiben Sie FIRINGI auf WhatsApp von Ihrer Geschäftsnummer: Tippen Sie Ihre Bestellung, senden Sie ein Foto Ihrer Liste oder eine Sprachnachricht. Der Assistent findet die Produkte, füllt Ihren Warenkorb und sendet eine Übersicht mit der Lieferung jedes Lieferanten. Bestellt wird erst, wenn Sie mit JA antworten.",
+    "notAvailable": "Bestellen per WhatsApp ist für Ihr Unternehmen derzeit nicht verfügbar.",
+    "firingiNumber": "WhatsApp-Nummer von FIRINGI",
+    "openChat": "WhatsApp öffnen",
+    "noFiringiNumber": "Die WhatsApp-Nummer von FIRINGI erscheint hier in Kürze.",
+    "myNumber": "Ihre WhatsApp-Nummer",
+    "myNumberHint": "Nachrichten werden nur von dieser Nummer angenommen. Ändern Sie sie in Ihrem Unternehmensprofil.",
+    "noMyNumber": "Hinterlegen Sie Ihre WhatsApp-Nummer in Ihrem Unternehmensprofil, um per WhatsApp zu bestellen.",
+    "editProfile": "Unternehmensprofil",
+    "howTitle": "So funktioniert's",
+    "how1": "Senden Sie, was Sie brauchen, z. B. „10 Coca-Cola 33cl und 2 Reis 5 kg“.",
+    "how2": "Prüfen Sie die Übersicht: Produkte, Mindestbestellwert und kostenlose Lieferung je Lieferant, Gesamtsumme.",
+    "how3": "Antworten Sie JA, um zu bestellen (oder NEIN, um abzubrechen). Antworten Sie NOCHMAL, um dasselbe wie beim letzten Mal zu bestellen.",
+    "howVoice": "Sprachnachrichten werden verstanden.",
+    "howPhotos": "Fotos von Einkaufslisten oder Produkten werden verstanden.",
+    "settingsTitle": "Nachrichten auf WhatsApp",
+    "orderUpdates": "Bestell-Updates auf WhatsApp",
+    "orderUpdatesHint": "Bestätigt, unterwegs, geliefert.",
+    "reminders": "Erinnerungen zum Nachbestellen",
+    "remindersHint": "Wenn Sie üblicherweise nachbestellen – mit einem Tipp Ihre letzte Bestellung wiederholen.",
+    "save": "Speichern",
+    "saved": "Gespeichert.",
+    "recentTitle": "Per WhatsApp aufgegebene Bestellungen",
+    "noOrders": "Noch keine Bestellungen per WhatsApp.",
+    "order": "Bestellung",
+    "date": "Datum",
+    "status": "Status",
+    "total": "Gesamt",
+    "small": {
+      "title": "Kleinbestellungen diesen Monat",
+      "left": "Noch {left} von {limit} Kleinbestellungen diesen Monat.",
+      "none": "Sie haben die Kleinbestellungen dieses Monats aufgebraucht. Bestellungen müssen jetzt den Betrag für kostenlose Lieferung des jeweiligen Lieferanten erreichen.",
+      "hint": "Eine Kleinbestellung erreicht den FIRINGI-Mindestwert, aber nicht den Betrag für kostenlose Lieferung des Lieferanten.",
+      "cartBlocked": "Sie haben die Kleinbestellungen dieses Monats aufgebraucht. Fügen Sie noch {missing} hinzu (kostenlose Lieferung ab {min} zzgl. {tax}), um bei diesem Lieferanten zu bestellen."
     }
   }
 }

@@ -297,6 +297,7 @@ export const BUY_NAV: NavSection[] = [
       bco("roles", "Roles & Permissions", "Funções e Permissões", "P1", { live: true, perm: ["team.users.view", "team.roles.manage"], es: "Roles y permisos" }),
       bco("integrations", "Integrations", "Integrações", "P21", { live: true, perm: "company.integrations.manage", es: "Integraciones" }),
       bco("e-invoicing", "E-Invoicing", "Faturação Eletrónica", "P46", { live: true, perm: ["company.profile.manage", "company.accounting.manage", "buyer.invoices.view"], es: "Facturación electrónica" }),
+      bco("whatsapp", "Order by WhatsApp", "Encomendar por WhatsApp", "P58", { live: true, perm: ["buyer.orders.view", "buyer.orders.place", "company.profile.manage"], feature: "WHATSAPP_ORDERING", es: "Pedir por WhatsApp" }),
     ],
   },
 ];

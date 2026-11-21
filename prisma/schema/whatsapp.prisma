@@ -1,0 +1,41 @@
+// ───────────────────────── WhatsApp ordering with AI (Phase 58) ─────────────────────────
+// A business writes to FIRINGI's WhatsApp number from its own WhatsApp (registration / profile). The AI agent
+// finds the products and fills the cart; it then proposes the order (a draft). Only the customer's YES places it —
+// matched by FIRINGI, not by the AI. Status updates, payment links and reorder reminders go back on WhatsApp.
+
+enum WaDraftStatus {
+  PENDING
+  PLACED
+  CANCELLED
+  EXPIRED
+  CHANGED // the cart changed after the proposal: a new one is needed
+}
+
+model WaOrderDraft {
+  id             String        @id @default(cuid())
+  companyId      String
+  userId         String
+  conversationId String?
+  /// the WhatsApp number the proposal went to (E.164)
+  waNumber       String
+  /// fingerprint of the cart lines when proposed — a YES places only exactly this cart
+  cartHash       String
+  /// what the customer saw: lines, per supplier delivery / minimum / free-delivery amount, totals
+  summary        Json
+  totalGross     Decimal       @db.Decimal(18, 2)
+  addressId      String
+  status         WaDraftStatus @default(PENDING)
+  orderIds       String[]      @default([])
+  orderNumbers   String[]      @default([])
+  /// waiting for an approver (Phase 26 buyer approvals) instead of placed
+  approvalId     String?
+  error          String?
+  expiresAt      DateTime
+  decidedAt      DateTime?
+  createdAt      DateTime      @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([waNumber, status])
+  @@index([companyId, createdAt])
+}

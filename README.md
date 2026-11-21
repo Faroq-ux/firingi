@@ -691,6 +691,17 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## WhatsApp ordering with AI (Phase 58)
+
+Wholesale customers order by writing to FIRINGI's WhatsApp number, with text, photos of a list, or voice notes. The AI agent fills the cart and proposes the order with each wholesaler's own minimum and free-delivery amount. **Only the customer's YES places it**, and FIRINGI checks that the cart is unchanged.
+
+- **Messages back:** order updates, payment links, reorder reminders (opt-in), and hand-over to a person (the AI pauses).
+- **Who can order:** wholesale customers by default. Wholesalers and unknown numbers are each an admin switch, as is each business. Set in *Settings › WhatsApp Ordering*.
+- **Monthly small-order limit:** an order that reaches FIRINGI's minimum but not the wholesaler's free-delivery amount is a small order. FIRINGI can limit these per month, with one general number plus per-customer exceptions. Off by default; applies on the website, the app and WhatsApp.
+- **Pages:** FIRINGI's *Notifications › WhatsApp Orders* shows conversations, proposals and orders. Customers see *Company › Order by WhatsApp* (25 languages).
+
+Details and set-up (provider, `STT_URL` for voice notes, templates): [docs/whatsapp-ordering.md](docs/whatsapp-ordering.md).
+
 ## EU trade reporting (Phase 57)
 
 FIRINGI invoices every buyer and buys from every supplier, so **FIRINGI's own entity files the EU returns**: the

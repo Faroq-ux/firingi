@@ -10,10 +10,10 @@ import { can } from "@/server/rbac/guard";
 import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "@/server/services/audit";
 
-export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT", "ASSISTANT_PHOTOS", "LOYALTY", "ADS", "CHAT", "CHAT_MASK"] as const;
+export const COMPANY_FEATURES = ["ACCOUNTING", "ASSISTANT", "ASSISTANT_PHOTOS", "LOYALTY", "ADS", "CHAT", "CHAT_MASK", "WHATSAPP_ORDERING"] as const;
 export type CompanyFeatureKey = (typeof COMPANY_FEATURES)[number];
 /** On for every company unless FIRINGI switched it off (the Assistant is the support & sales channel). */
-const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true, ASSISTANT_PHOTOS: true, LOYALTY: true, ADS: true, CHAT: true, CHAT_MASK: true };
+const DEFAULT_ON: Record<CompanyFeatureKey, boolean> = { ACCOUNTING: false, ASSISTANT: true, ASSISTANT_PHOTOS: true, LOYALTY: true, ADS: true, CHAT: true, CHAT_MASK: true, WHATSAPP_ORDERING: true };
 
 export async function companyFeatureOn(companyId: string, key: CompanyFeatureKey) {
   const row = await prisma.companyFeature.findUnique({ where: { companyId_key: { companyId, key } } });
@@ -72,6 +72,12 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
     if (!rs.enabled || !rs.parts.reviews) off.add("REVIEWS");
     else if (portal === "buy" && !(await rv.buyerAccess(ctx.company, rs)).on) off.add("REVIEWS");
     else if (portal === "vendor" && !(await rv.showingSellers([ctx.company.id], rs)).has(ctx.company.id)) off.add("REVIEWS");
+    // Phase 58: ordering by WhatsApp — only for the businesses FIRINGI opened it to
+    if (portal !== "buy") off.add("WHATSAPP_ORDERING");
+    else {
+      const wa = await (await import("@/server/whatsapp/ordering")).waSettings();
+      if (!wa.enabled || !(ctx.company.type === "CUSTOMER" ? wa.audiences.customers : ctx.company.type === "WHOLESALER" && wa.audiences.wholesalers)) off.add("WHATSAPP_ORDERING");
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

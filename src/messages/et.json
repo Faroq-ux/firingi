@@ -921,7 +921,8 @@
     "Reward Products": "Preemiatooted",
     "Rewards to Hand Over": "Üleandmist ootavad preemiad",
     "Customs Codes": "Tollikoodid",
-    "EU Trade Report": "ELi kaubandusaruanne"
+    "EU Trade Report": "ELi kaubandusaruanne",
+    "Order by WhatsApp": "Tellimine WhatsAppis"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -8484,6 +8485,71 @@
       "GOODS": "Kaubad",
       "SERVICES": "Teenused",
       "TRIANGULAR": "Kolmnurktehing"
+    }
+  },
+  "waOrder": {
+    "bot": {
+      "register": "Tere! See number ei ole veel FIRINGI kontoga seotud. Registreerige oma ettevõte siin: {link} — seejärel lisage see WhatsAppi number oma profiili ja tellige sõnumiga.",
+      "error": "Vabandame, meie poolel läks midagi valesti. Proovige mõne minuti pärast uuesti.",
+      "limit": "Saatsite viimase tunni jooksul palju sõnumeid. Oodake veidi ja kirjutage uuesti.",
+      "voiceOff": "Häälsõnumid ei ole praegu saadaval — palun kirjutage oma tellimus.",
+      "voiceFail": "Vabandust, ma ei saanud häälsõnumist aru. Palun kirjutage see või saatke uuesti.",
+      "photosOff": "Fotod ei ole praegu saadaval — palun kirjutage oma tellimus.",
+      "cancelled": "Olgu, tellimust ei esitatud. Teie ostukorv jääb FIRINGIsse alles.",
+      "confirmHint": "Vastake JAH, et tellimus esitada, või EI, et tühistada.",
+      "btnConfirm": "Jah, esita tellimus",
+      "btnCancel": "Tühista",
+      "btnRepeat": "Korda tellimust",
+      "handover": "FIRINGI töötaja vastab teile siin peagi.",
+      "expired": "See pakkumine on aegunud. Öelge, mida vajate, ja koostan selle uuesti.",
+      "cartChanged": "Teie ostukorv on pärast pakkumist muutunud. Ma ei esitanud tellimust — küsige minult uut kokkuvõtet.",
+      "approval": "Teie tellimus ootab teie ettevõttes kinnitamist. Saate sõnumi, kui see on esitatud.",
+      "placed": "Tellimus esitatud ✅ {numbers} — kokku {total}. Saadame uuendused siia.",
+      "payFirst": "Palun makske, et tarne saaks alata: {link}",
+      "failed": "Tellimust ei õnnestunud esitada: {reason}",
+      "status": {
+        "SUPPLIER_PROCESSING": "Tellimus {number} on kinnitatud ja seda valmistatakse ette.",
+        "OUT_FOR_DELIVERY": "Tellimus {number} on teel.",
+        "DELIVERED": "Tellimus {number} on kohale toimetatud. Aitäh!",
+        "CANCELLED": "Tellimus {number} on tühistatud."
+      },
+      "reminder": "Tere, {company}! Kas on aeg varusid täiendada? Vastake UUESTI, et tellida sama mis {number}, või öelge, mida vajate."
+    },
+    "title": "Tellimine WhatsAppis",
+    "intro": "Kirjutage FIRINGIle WhatsAppis oma ettevõtte numbrilt: kirjutage tellimus, saatke foto oma nimekirjast või häälsõnum. Assistent leiab tooted, täidab teie ostukorvi ja saadab kokkuvõtte iga tarnija tarneinfoga. Midagi ei tellita enne, kui vastate JAH.",
+    "notAvailable": "WhatsAppi kaudu tellimine ei ole teie ettevõttele praegu saadaval.",
+    "firingiNumber": "FIRINGI WhatsAppi number",
+    "openChat": "Ava WhatsApp",
+    "noFiringiNumber": "FIRINGI WhatsAppi number ilmub siia peagi.",
+    "myNumber": "Teie WhatsAppi number",
+    "myNumberHint": "Sõnumeid võetakse vastu ainult sellelt numbrilt. Saate seda muuta ettevõtte profiilis.",
+    "noMyNumber": "Lisage oma WhatsAppi number ettevõtte profiili, et WhatsAppi kaudu tellida.",
+    "editProfile": "Ettevõtte profiil",
+    "howTitle": "Kuidas see töötab",
+    "how1": "Saatke, mida vajate, nt „10 Coca-Cola 33cl ja 2 riisi 5 kg“.",
+    "how2": "Kontrollige kokkuvõtet: tooted, iga tarnija miinimum ja tasuta tarne, kogusumma.",
+    "how3": "Vastake JAH, et tellimus esitada (või EI, et tühistada). Vastake UUESTI, et tellida sama mis eelmisel korral.",
+    "howVoice": "Häälsõnumitest saadakse aru.",
+    "howPhotos": "Ostunimekirja või toote fotodest saadakse aru.",
+    "settingsTitle": "Sõnumid WhatsAppis",
+    "orderUpdates": "Tellimuste uuendused WhatsAppis",
+    "orderUpdatesHint": "Kinnitatud, teel, kohale toimetatud.",
+    "reminders": "Uuesti tellimise meeldetuletused",
+    "remindersHint": "Siis, kui tavaliselt uuesti tellite, ühe puudutusega viimase tellimuse kordamiseks.",
+    "save": "Salvesta",
+    "saved": "Salvestatud.",
+    "recentTitle": "WhatsAppi kaudu esitatud tellimused",
+    "noOrders": "WhatsAppi kaudu tellimusi veel ei ole.",
+    "order": "Tellimus",
+    "date": "Kuupäev",
+    "status": "Olek",
+    "total": "Kokku",
+    "small": {
+      "title": "Väikesed tellimused sel kuul",
+      "left": "Sel kuul on alles {left} väikest tellimust (kokku {limit}).",
+      "none": "Olete selle kuu väikesed tellimused ära kasutanud. Tellimused peavad nüüd jõudma iga tarnija tasuta tarne summani.",
+      "hint": "Väike tellimus jõuab FIRINGI miinimumini, kuid mitte tarnija tasuta tarne summani.",
+      "cartBlocked": "Olete selle kuu väikesed tellimused ära kasutanud. Lisage veel {missing} (tasuta tarne alates {min} ilma {tax}), et sellelt tarnijalt tellida."
     }
   }
 }

@@ -10,6 +10,11 @@ import { createRequire } from "node:module";
 const { chromium } = createRequire(import.meta.url)("playwright");
 import { execFileSync as execDf } from "node:child_process";
 // FIRINGI's free delivery in Portugal back off however this run ends (a crash used to leave it on for the other suites)
+// The Kebab House's loyalty tier can include free delivery (Gold); test the delivery rules at Bronze and put the tier back after.
+const DFDB = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi";
+const KEBAB_TIER = execDf("psql", ["-At", DFDB, "-c", `select a.tier from "LoyaltyAccount" a join "Company" c on c.id=a."companyId" where c."legalName"='Kebab House Lisboa, Lda'`], { encoding: "utf8" }).trim();
+const setKebabTier = (t) => execDf("psql", ["-At", DFDB, "-c", `update "LoyaltyAccount" set tier='${t}' where "companyId"=(select id from "Company" where "legalName"='Kebab House Lisboa, Lda')`]);
+if (KEBAB_TIER) { setKebabTier("BRONZE"); process.on("exit", () => { try { setKebabTier(KEBAB_TIER); } catch { /* best effort */ } }); }
 process.on("exit", () => { try { execDf("psql", ["-At", process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/firingi", "-c", `update "DeliveryRule" set "firingiFreeEnabled"=false, "firingiFreeFrom"=null where scope='COUNTRY' and "validTo" is null and "countryId"=(select id from "Country" where code='PT')`]); } catch { /* best effort */ } });
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
