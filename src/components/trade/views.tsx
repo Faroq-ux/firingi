@@ -22,7 +22,7 @@ export function ReturnsTable({ rows, testid = "trade-returns" }: { rows: ReturnR
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[720px] text-sm" data-testid={testid}>
-        <thead><tr className="text-left text-xs text-muted-foreground"><th className="py-1">Return</th><th>Period</th><th>Entity</th><th>Status</th><th>Due</th><th className="text-right">Value</th><th className="text-right">Lines</th><th>Needs attention</th></tr></thead>
+        <thead><tr className="text-left text-xs text-muted-foreground"><th className="py-1">Return</th><th>Period</th><th>Entity</th><th>Status</th><th>Due</th><th className="pr-3 text-right">Value</th><th className="pr-3 text-right">Lines</th><th>Needs attention</th></tr></thead>
         <tbody>
           {rows.map((r) => (
             <tr key={r.id} className="border-t" data-testid={`trade-row-${r.kindName.replace(/\W+/g, "-").toLowerCase()}-${r.period}`}>
@@ -30,9 +30,9 @@ export function ReturnsTable({ rows, testid = "trade-returns" }: { rows: ReturnR
               <td className="tabular-nums">{r.period}</td>
               <td>{r.country}</td>
               <td><StatusBadge status={r.status} />{r.filingRef && <span className="block text-xs text-muted-foreground">{r.filingRef}</span>}</td>
-              <td className="tabular-nums">{r.dueOn}{r.daysLeft != null && r.status !== "FILED" && <span className={`block text-xs ${r.daysLeft < 0 ? "text-destructive" : r.daysLeft <= 3 ? "text-amber-600" : "text-muted-foreground"}`}>{r.daysLeft < 0 ? `${-r.daysLeft} days late` : `in ${r.daysLeft} days`}</span>}</td>
-              <td className="text-right tabular-nums">{eur(r.total)}</td>
-              <td className="text-right tabular-nums">{r.lines}</td>
+              <td className="tabular-nums">{r.dueOn}{r.daysLeft != null && r.status !== "FILED" && (r.lines > 0 || r.obliged !== false) && <span className={`block text-xs ${r.daysLeft < 0 ? "text-destructive" : r.daysLeft <= 3 ? "text-amber-600" : "text-muted-foreground"}`}>{r.daysLeft < 0 ? `${-r.daysLeft} days late` : `in ${r.daysLeft} days`}</span>}</td>
+              <td className="pr-3 text-right tabular-nums">{eur(r.total)}</td>
+              <td className="pr-3 text-right tabular-nums">{r.lines}</td>
               <td>{r.problems > 0 ? <Badge variant="destructive">{r.problems} with missing data</Badge> : null}{r.corrections > 0 ? <Badge variant="warning" className="ml-1">{r.corrections} corrections</Badge> : null}</td>
             </tr>
           ))}
