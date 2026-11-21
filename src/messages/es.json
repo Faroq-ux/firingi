@@ -1857,6 +1857,26 @@
     "website_vendor_interest": {
       "title": "Nueva solicitud de proveedor",
       "body": "{name} de {company} quiere vender en FIRINGI. Está en el CRM como lead."
+    },
+    "trade_deadline": {
+      "title": "{return} de {period}: vence el {date}",
+      "body": "La {return} de {period} debe presentarse antes del {date} ({days} días). Revísela en Facturas e impuestos › Comercio intracomunitario."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% del umbral en {country}",
+      "body": "Las {flow} de bienes en {country} alcanzaron el {pct}% del umbral Intrastat de {threshold} € este año. Al superarlo, FIRINGI debe presentar el Intrastat cada mes."
+    },
+    "trade_code_review": {
+      "title": "Datos aduaneros por revisar: {product}",
+      "body": "{company} envió el código NC8, la masa neta o el origen de \"{product}\". Revíselo en Facturas e impuestos › Códigos aduaneros."
+    },
+    "trade_code_accepted": {
+      "title": "Datos aduaneros aceptados: {product}",
+      "body": "FIRINGI revisó y aceptó los datos aduaneros que envió para \"{product}\"."
+    },
+    "trade_code_rejected": {
+      "title": "Datos aduaneros no aceptados: {product}",
+      "body": "FIRINGI no aceptó los datos aduaneros que envió para \"{product}\": {note}"
     }
   },
   "notifications": {
@@ -2111,7 +2131,9 @@
     "Import & Sync": "Importar y sincronizar",
     "Integrations": "Integraciones",
     "Exports": "Exportaciones",
-    "Assistant": "Asistente"
+    "Assistant": "Asistente",
+    "Customs Codes": "Códigos aduaneros",
+    "EU Trade Report": "Informe intracomunitario"
   },
   "support": {
     "title": "Ayuda y soporte",
@@ -8241,6 +8263,66 @@
           "14": "Suministros para kebab y pizza"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Códigos aduaneros",
+    "customsIntro": "FIRINGI declara las mercancías que cruzan una frontera de la UE (Intrastat). Indique el código NC de 8 dígitos, la masa neta y las unidades suplementarias por envase y el país de origen de sus productos. FIRINGI los comprueba antes de usarlos.",
+    "customsOff": "Por ahora FIRINGI no recoge códigos aduaneros de los proveedores.",
+    "search": "Buscar productos",
+    "product": "Producto",
+    "cn": "Código NC8",
+    "cnHint": "8 dígitos, p. ej. 2202 10 00 (base de datos TARIC de la UE).",
+    "netKg": "Masa neta por envase (kg)",
+    "supp": "Unidades suplementarias por envase",
+    "suppUnit": "Unidad: {unit}",
+    "origin": "País de origen",
+    "originHint": "Dos letras, p. ej. ES",
+    "note": "Nota para FIRINGI (opcional)",
+    "onFile": "Registrado",
+    "categoryDefault": "Por defecto de la categoría: {code}",
+    "missing": "Faltan datos",
+    "status": {
+      "PENDING": "Enviado a FIRINGI — pendiente de revisión",
+      "ACCEPTED": "Aceptado por FIRINGI",
+      "REJECTED": "No aceptado"
+    },
+    "send": "Enviar a FIRINGI",
+    "sent": "Enviado. FIRINGI lo revisará.",
+    "edit": "Indicar los datos",
+    "none": "Todavía no hay productos.",
+    "reportTitle": "Informe intracomunitario",
+    "reportIntro": "Lo que FIRINGI le compró a través de una frontera de la UE, para su propia declaración recapitulativa (modelo 349) y expediciones Intrastat. Los importes son los que factura a FIRINGI, sin IVA (inversión del sujeto pasivo).",
+    "reportOff": "FIRINGI ha desactivado los informes de proveedores.",
+    "period": "Periodo",
+    "ecslTitle": "Declaración recapitulativa",
+    "ecslHint": "Una línea por número de IVA del cliente (la entidad de FIRINGI).",
+    "intrastatTitle": "Expediciones Intrastat",
+    "intrastatHint": "Mercancías con código NC8, masa neta y país de origen. Solo necesario por encima del umbral Intrastat de su país.",
+    "downloadCsv": "Descargar CSV",
+    "downloadXlsx": "Descargar Excel",
+    "total": "Total {amount}",
+    "empty": "Nada cruzó una frontera en este periodo.",
+    "missingData": "Algunas mercancías no tienen código NC8 o masa neta. Añádalos en Productos › Códigos aduaneros.",
+    "cols": {
+      "country": "País",
+      "vat": "Número de IVA",
+      "customer": "Cliente",
+      "type": "Tipo",
+      "value": "Importe (EUR)",
+      "corrects": "Corrige el periodo",
+      "description": "Descripción",
+      "destination": "País de destino",
+      "nature": "Naturaleza de la transacción",
+      "transport": "Modo de transporte",
+      "terms": "Condiciones de entrega",
+      "partnerVat": "IVA del cliente",
+      "statValue": "Valor estadístico (EUR)"
+    },
+    "types": {
+      "GOODS": "Bienes",
+      "SERVICES": "Servicios",
+      "TRIANGULAR": "Triangular"
     }
   }
 }

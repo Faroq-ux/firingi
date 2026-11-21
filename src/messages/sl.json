@@ -919,7 +919,9 @@
     "Rewards Shop": "Trgovina z nagradami",
     "My Rewards": "Moje nagrade",
     "Reward Products": "Izdelki kot nagrade",
-    "Rewards to Hand Over": "Nagrade za izročitev"
+    "Rewards to Hand Over": "Nagrade za izročitev",
+    "Customs Codes": "Carinske oznake",
+    "EU Trade Report": "Poročilo o trgovini v EU"
   },
   "delivery": {
     "title": "Dostava",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nova prijava dobavitelja",
       "body": "{name} iz podjetja {company} želi prodajati na FIRINGI. V CRM je kot potencialna stranka."
+    },
+    "trade_deadline": {
+      "title": "{return} za {period}: rok {date}",
+      "body": "{return} za {period} je treba oddati do {date} (čez {days} dni). Preverite v Računi in davki › Trgovina v EU."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % praga v {country}",
+      "body": "{flow} blaga v {country} so letos dosegle {pct} % praga Intrastat {threshold} €. Nad njim mora FIRINGI vsak mesec oddajati Intrastat."
+    },
+    "trade_code_review": {
+      "title": "Carinski podatki za preverjanje: {product}",
+      "body": "{company} je poslal oznako KN8, neto maso ali poreklo za »{product}«. Preverite v Računi in davki › Carinske oznake."
+    },
+    "trade_code_accepted": {
+      "title": "Carinski podatki sprejeti: {product}",
+      "body": "FIRINGI je preveril in sprejel carinske podatke, ki ste jih poslali za »{product}«."
+    },
+    "trade_code_rejected": {
+      "title": "Carinski podatki niso sprejeti: {product}",
+      "body": "FIRINGI ni sprejel carinskih podatkov, ki ste jih poslali za »{product}«: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Za kebab in pico"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Carinske oznake",
+    "customsIntro": "FIRINGI poroča o blagu, ki prečka mejo EU (Intrastat). Navedite 8-mestno oznako KN, neto maso in dodatne enote na pakiranje ter državo porekla svojih izdelkov. FIRINGI jih pred uporabo preveri.",
+    "customsOff": "FIRINGI trenutno ne zbira carinskih oznak od dobaviteljev.",
+    "search": "Iskanje izdelkov",
+    "product": "Izdelek",
+    "cn": "Oznaka KN8",
+    "cnHint": "8 števk, npr. 2202 10 00 (podatkovna zbirka TARIC EU).",
+    "netKg": "Neto masa na pakiranje (kg)",
+    "supp": "Dodatne enote na pakiranje",
+    "suppUnit": "Enota: {unit}",
+    "origin": "Država porekla",
+    "originHint": "Dve črki, npr. SI",
+    "note": "Opomba za FIRINGI (neobvezno)",
+    "onFile": "Shranjeno",
+    "categoryDefault": "Privzeta oznaka kategorije: {code}",
+    "missing": "Manjkajo podatki",
+    "status": {
+      "PENDING": "Poslano FIRINGI — čaka na preverjanje",
+      "ACCEPTED": "Sprejeto pri FIRINGI",
+      "REJECTED": "Ni sprejeto"
+    },
+    "send": "Pošlji FIRINGI",
+    "sent": "Poslano. FIRINGI bo preveril.",
+    "edit": "Vnesi podatke",
+    "none": "Še ni izdelkov.",
+    "reportTitle": "Poročilo o trgovini v EU",
+    "reportIntro": "Kaj je FIRINGI kupil od vas prek meje EU, za vaš rekapitulacijski obračun in odpreme Intrastat. Zneski so tisto, kar zaračunate FIRINGI, brez DDV (obrnjena davčna obveznost).",
+    "reportOff": "FIRINGI je izklopil poročila za dobavitelje.",
+    "period": "Obdobje",
+    "ecslTitle": "Rekapitulacijsko poročilo",
+    "ecslHint": "Ena vrstica na ID za DDV kupca (subjekt FIRINGI).",
+    "intrastatTitle": "Odpreme Intrastat",
+    "intrastatHint": "Blago z oznako KN8, neto maso in državo porekla. Potrebno le nad pragom Intrastat v vaši državi.",
+    "downloadCsv": "Prenesi CSV",
+    "downloadXlsx": "Prenesi Excel",
+    "total": "Skupaj {amount}",
+    "empty": "V tem obdobju ni nič prečkalo meje.",
+    "missingData": "Pri nekaterem blagu manjka oznaka KN8 ali neto masa. Dodajte ju v Izdelki › Carinske oznake.",
+    "cols": {
+      "country": "Država",
+      "vat": "ID za DDV",
+      "customer": "Kupec",
+      "type": "Vrsta",
+      "value": "Vrednost (EUR)",
+      "corrects": "Popravlja obdobje",
+      "description": "Opis",
+      "destination": "Namembna država",
+      "nature": "Vrsta posla",
+      "transport": "Vrsta prevoza",
+      "terms": "Dobavni pogoji",
+      "partnerVat": "ID za DDV kupca",
+      "statValue": "Statistična vrednost (EUR)"
+    },
+    "types": {
+      "GOODS": "Blago",
+      "SERVICES": "Storitve",
+      "TRIANGULAR": "Tristranski posel"
     }
   }
 }

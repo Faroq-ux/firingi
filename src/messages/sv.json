@@ -919,7 +919,9 @@
     "Rewards Shop": "Belöningsbutik",
     "My Rewards": "Mina belöningar",
     "Reward Products": "Belöningsprodukter",
-    "Rewards to Hand Over": "Belöningar att lämna ut"
+    "Rewards to Hand Over": "Belöningar att lämna ut",
+    "Customs Codes": "Tullkoder",
+    "EU Trade Report": "EU-handelsrapport"
   },
   "delivery": {
     "title": "Leverans",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Ny leverantörsansökan",
       "body": "{name} från {company} vill sälja på FIRINGI. Finns i CRM som lead."
+    },
+    "trade_deadline": {
+      "title": "{return} för {period}: förfaller {date}",
+      "body": "{return} för {period} ska lämnas senast {date} (om {days} dagar). Kontrollera under Fakturor och skatter › EU-handel."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % av tröskeln i {country}",
+      "body": "Varu-{flow} i {country} har i år nått {pct} % av Intrastat-tröskeln på {threshold} €. Över den måste FIRINGI lämna Intrastat varje månad."
+    },
+    "trade_code_review": {
+      "title": "Tulluppgifter att kontrollera: {product}",
+      "body": "{company} skickade KN8-kod, nettovikt eller ursprung för ”{product}”. Kontrollera under Fakturor och skatter › Tullkoder."
+    },
+    "trade_code_accepted": {
+      "title": "Tulluppgifter godkända: {product}",
+      "body": "FIRINGI har kontrollerat och godkänt tulluppgifterna du skickade för ”{product}”."
+    },
+    "trade_code_rejected": {
+      "title": "Tulluppgifter inte godkända: {product}",
+      "body": "FIRINGI godkände inte tulluppgifterna du skickade för ”{product}”: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebab- och pizzatillbehör"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Tullkoder",
+    "customsIntro": "FIRINGI rapporterar varor som passerar en EU-gräns (Intrastat). Ange den 8-siffriga KN-koden, nettovikten och de extra måttenheterna per förpackning samt ursprungslandet för dina produkter. FIRINGI kontrollerar dem innan de används.",
+    "customsOff": "FIRINGI samlar för närvarande inte in tullkoder från leverantörer.",
+    "search": "Sök produkter",
+    "product": "Produkt",
+    "cn": "KN8-kod",
+    "cnHint": "8 siffror, t.ex. 2202 10 00 (EU:s Taric-databas).",
+    "netKg": "Nettovikt per förpackning (kg)",
+    "supp": "Extra måttenheter per förpackning",
+    "suppUnit": "Enhet: {unit}",
+    "origin": "Ursprungsland",
+    "originHint": "Två bokstäver, t.ex. SE",
+    "note": "Anteckning till FIRINGI (valfritt)",
+    "onFile": "Registrerat",
+    "categoryDefault": "Kategorins standard: {code}",
+    "missing": "Uppgifter saknas",
+    "status": {
+      "PENDING": "Skickat till FIRINGI — väntar på kontroll",
+      "ACCEPTED": "Godkänt av FIRINGI",
+      "REJECTED": "Inte godkänt"
+    },
+    "send": "Skicka till FIRINGI",
+    "sent": "Skickat. FIRINGI kontrollerar det.",
+    "edit": "Ange uppgifterna",
+    "none": "Inga produkter ännu.",
+    "reportTitle": "EU-handelsrapport",
+    "reportIntro": "Vad FIRINGI köpte av dig över en EU-gräns, för din egen periodiska sammanställning och Intrastat-avsändningar. Beloppen är vad du fakturerar FIRINGI, utan moms (omvänd skattskyldighet).",
+    "reportOff": "FIRINGI har stängt av leverantörsrapporterna.",
+    "period": "Period",
+    "ecslTitle": "Periodisk sammanställning",
+    "ecslHint": "En rad per kundens momsnummer (FIRINGI-enheten).",
+    "intrastatTitle": "Intrastat-avsändningar",
+    "intrastatHint": "Varor med KN8-kod, nettovikt och ursprungsland. Behövs bara över ditt lands Intrastat-tröskel.",
+    "downloadCsv": "Ladda ner CSV",
+    "downloadXlsx": "Ladda ner Excel",
+    "total": "Totalt {amount}",
+    "empty": "Inget passerade en gräns under perioden.",
+    "missingData": "Vissa varor saknar KN8-kod eller nettovikt. Lägg till dem under Produkter › Tullkoder.",
+    "cols": {
+      "country": "Land",
+      "vat": "Momsnummer",
+      "customer": "Kund",
+      "type": "Typ",
+      "value": "Värde (EUR)",
+      "corrects": "Rättar period",
+      "description": "Beskrivning",
+      "destination": "Destinationsland",
+      "nature": "Transaktionens art",
+      "transport": "Transportsätt",
+      "terms": "Leveransvillkor",
+      "partnerVat": "Kundens momsnummer",
+      "statValue": "Statistiskt värde (EUR)"
+    },
+    "types": {
+      "GOODS": "Varor",
+      "SERVICES": "Tjänster",
+      "TRIANGULAR": "Trepartshandel"
     }
   }
 }

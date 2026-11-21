@@ -919,7 +919,9 @@
     "Rewards Shop": "Ħanut tal-premjijiet",
     "My Rewards": "Il-premjijiet tiegħi",
     "Reward Products": "Prodotti bħala premju",
-    "Rewards to Hand Over": "Premjijiet x'tgħaddi"
+    "Rewards to Hand Over": "Premjijiet x'tgħaddi",
+    "Customs Codes": "Kodiċi doganali",
+    "EU Trade Report": "Rapport tal-kummerċ fl-UE"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Applikazzjoni ġdida ta' fornitur",
       "body": "{name} minn {company} irid ibigħ fuq FIRINGI. Jinsab fis-CRM bħala lead."
+    },
+    "trade_deadline": {
+      "title": "{return} għal {period}: skadenza {date}",
+      "body": "Ir-{return} għal {period} trid tiġi ppreżentata sa {date} ({days} jiem). Iċċekkja f'Fatturi u taxxi › Kummerċ fl-UE."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% tal-limitu f'{country}",
+      "body": "Il-{flow} ta' merkanzija f'{country} laħqu {pct}% tal-limitu Intrastat ta' {threshold} € din is-sena. Lil hinn minnu FIRINGI trid tippreżenta Intrastat kull xahar."
+    },
+    "trade_code_review": {
+      "title": "Data doganali biex tiġi ċċekkjata: {product}",
+      "body": "{company} bagħtet il-kodiċi NM8, il-massa netta jew l-oriġini ta' \"{product}\". Iċċekkja f'Fatturi u taxxi › Kodiċi doganali."
+    },
+    "trade_code_accepted": {
+      "title": "Data doganali aċċettata: {product}",
+      "body": "FIRINGI ċċekkjat u aċċettat id-data doganali li bgħatt għal \"{product}\"."
+    },
+    "trade_code_rejected": {
+      "title": "Data doganali mhux aċċettata: {product}",
+      "body": "FIRINGI ma aċċettatx id-data doganali li bgħatt għal \"{product}\": {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Provvisti għall-kebab u l-pizza"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Kodiċi doganali",
+    "customsIntro": "FIRINGI tiddikjara l-merkanzija li taqsam fruntiera tal-UE (Intrastat). Agħti l-kodiċi NM ta' 8 ċifri, il-massa netta u l-unitajiet supplimentari għal kull pakkett u l-pajjiż tal-oriġini tal-prodotti tiegħek. FIRINGI tiċċekkjahom qabel ma tużahom.",
+    "customsOff": "Bħalissa FIRINGI mhix qed tiġbor kodiċi doganali mill-fornituri.",
+    "search": "Fittex prodotti",
+    "product": "Prodott",
+    "cn": "Kodiċi NM8",
+    "cnHint": "8 ċifri, eż. 2202 10 00 (database TARIC tal-UE).",
+    "netKg": "Massa netta għal kull pakkett (kg)",
+    "supp": "Unitajiet supplimentari għal kull pakkett",
+    "suppUnit": "Unità: {unit}",
+    "origin": "Pajjiż tal-oriġini",
+    "originHint": "Żewġ ittri, eż. MT",
+    "note": "Nota għal FIRINGI (mhux obbligatorja)",
+    "onFile": "Irreġistrat",
+    "categoryDefault": "Default tal-kategorija: {code}",
+    "missing": "Nieqsa d-data",
+    "status": {
+      "PENDING": "Mibgħut lil FIRINGI — qed jistenna l-verifika",
+      "ACCEPTED": "Aċċettat minn FIRINGI",
+      "REJECTED": "Mhux aċċettat"
+    },
+    "send": "Ibgħat lil FIRINGI",
+    "sent": "Mibgħut. FIRINGI se tiċċekkjah.",
+    "edit": "Daħħal id-data",
+    "none": "Għad m'hemmx prodotti.",
+    "reportTitle": "Rapport tal-kummerċ fl-UE",
+    "reportIntro": "Dak li FIRINGI xtrat mingħandek minn naħa għal oħra ta' fruntiera tal-UE, għar-rapport rikapitolattiv tiegħek u l-kunsinni Intrastat. L-ammonti huma dawk li tiffattura lil FIRINGI, mingħajr VAT (inverżjoni tal-ħlas).",
+    "reportOff": "FIRINGI itfiet ir-rapporti tal-fornituri.",
+    "period": "Perjodu",
+    "ecslTitle": "Rapport rikapitolattiv",
+    "ecslHint": "Linja waħda għal kull numru tal-VAT tal-klijent (l-entità ta' FIRINGI).",
+    "intrastatTitle": "Kunsinni Intrastat",
+    "intrastatHint": "Merkanzija b'kodiċi NM8, massa netta u pajjiż tal-oriġini. Meħtieġ biss 'il fuq mil-limitu Intrastat ta' pajjiżek.",
+    "downloadCsv": "Niżżel CSV",
+    "downloadXlsx": "Niżżel Excel",
+    "total": "Total {amount}",
+    "empty": "Xejn ma qasam fruntiera f'dan il-perjodu.",
+    "missingData": "Xi merkanzija m'għandhiex kodiċi NM8 jew massa netta. Żidhom f'Prodotti › Kodiċi doganali.",
+    "cols": {
+      "country": "Pajjiż",
+      "vat": "Numru tal-VAT",
+      "customer": "Klijent",
+      "type": "Tip",
+      "value": "Valur (EUR)",
+      "corrects": "Jikkoreġi l-perjodu",
+      "description": "Deskrizzjoni",
+      "destination": "Pajjiż tad-destinazzjoni",
+      "nature": "Natura tat-tranżazzjoni",
+      "transport": "Mod ta' trasport",
+      "terms": "Kundizzjonijiet tal-kunsinna",
+      "partnerVat": "VAT tal-klijent",
+      "statValue": "Valur statistiku (EUR)"
+    },
+    "types": {
+      "GOODS": "Merkanzija",
+      "SERVICES": "Servizzi",
+      "TRIANGULAR": "Tranżazzjoni triangolari"
     }
   }
 }

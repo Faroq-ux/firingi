@@ -919,7 +919,9 @@
     "Rewards Shop": "Belønningsbutikk",
     "My Rewards": "Mine belønninger",
     "Reward Products": "Belønningsprodukter",
-    "Rewards to Hand Over": "Belønninger å levere"
+    "Rewards to Hand Over": "Belønninger å levere",
+    "Customs Codes": "Tollkoder",
+    "EU Trade Report": "EU-handelsrapport"
   },
   "delivery": {
     "title": "Levering",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Ny leverandørsøknad",
       "body": "{name} fra {company} vil selge på FIRINGI. Det ligger i CRM-en som et lead."
+    },
+    "trade_deadline": {
+      "title": "{return} for {period}: frist {date}",
+      "body": "{return} for {period} må leveres innen {date} (om {days} dager). Sjekk under Fakturaer og skatt › EU-handel."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % av terskelen i {country}",
+      "body": "Vare-{flow} i {country} har i år nådd {pct} % av Intrastat-terskelen på {threshold} €. Over den må FIRINGI levere Intrastat hver måned."
+    },
+    "trade_code_review": {
+      "title": "Tolldata til kontroll: {product}",
+      "body": "{company} sendte KN8-kode, nettovekt eller opprinnelse for «{product}». Sjekk under Fakturaer og skatt › Tollkoder."
+    },
+    "trade_code_accepted": {
+      "title": "Tolldata godkjent: {product}",
+      "body": "FIRINGI har kontrollert og godkjent tolldataene du sendte for «{product}»."
+    },
+    "trade_code_rejected": {
+      "title": "Tolldata ikke godkjent: {product}",
+      "body": "FIRINGI godkjente ikke tolldataene du sendte for «{product}»: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebab- og pizzavarer"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Tollkoder",
+    "customsIntro": "FIRINGI rapporterer varer som krysser en EU-grense (Intrastat). Oppgi den 8-sifrede KN-koden, nettovekten og tilleggsenhetene per pakning samt opprinnelseslandet for produktene dine. FIRINGI kontrollerer dem før de brukes.",
+    "customsOff": "FIRINGI samler for øyeblikket ikke inn tollkoder fra leverandører.",
+    "search": "Søk etter produkter",
+    "product": "Produkt",
+    "cn": "KN8-kode",
+    "cnHint": "8 sifre, f.eks. 2202 10 00 (EUs Taric-database).",
+    "netKg": "Nettovekt per pakning (kg)",
+    "supp": "Tilleggsenheter per pakning",
+    "suppUnit": "Enhet: {unit}",
+    "origin": "Opprinnelsesland",
+    "originHint": "To bokstaver, f.eks. NO",
+    "note": "Merknad til FIRINGI (valgfritt)",
+    "onFile": "Registrert",
+    "categoryDefault": "Kategoriens standard: {code}",
+    "missing": "Mangler data",
+    "status": {
+      "PENDING": "Sendt til FIRINGI — venter på kontroll",
+      "ACCEPTED": "Godkjent av FIRINGI",
+      "REJECTED": "Ikke godkjent"
+    },
+    "send": "Send til FIRINGI",
+    "sent": "Sendt. FIRINGI kontrollerer det.",
+    "edit": "Oppgi dataene",
+    "none": "Ingen produkter ennå.",
+    "reportTitle": "EU-handelsrapport",
+    "reportIntro": "Hva FIRINGI kjøpte fra deg over en EU-grense, til din egen sammenfattende oppgave og Intrastat-forsendelser. Beløpene er det du fakturerer FIRINGI, uten mva (omvendt avgiftsplikt).",
+    "reportOff": "FIRINGI har slått av leverandørrapportene.",
+    "period": "Periode",
+    "ecslTitle": "Sammenfattende oppgave",
+    "ecslHint": "Én linje per kundens mva-nummer (FIRINGI-enheten).",
+    "intrastatTitle": "Intrastat-forsendelser",
+    "intrastatHint": "Varer med KN8-kode, nettovekt og opprinnelsesland. Bare nødvendig over landets Intrastat-terskel.",
+    "downloadCsv": "Last ned CSV",
+    "downloadXlsx": "Last ned Excel",
+    "total": "Totalt {amount}",
+    "empty": "Ingenting krysset en grense i perioden.",
+    "missingData": "Noen varer mangler KN8-kode eller nettovekt. Legg dem til under Produkter › Tollkoder.",
+    "cols": {
+      "country": "Land",
+      "vat": "Mva-nummer",
+      "customer": "Kunde",
+      "type": "Type",
+      "value": "Verdi (EUR)",
+      "corrects": "Retter periode",
+      "description": "Beskrivelse",
+      "destination": "Bestemmelsesland",
+      "nature": "Transaksjonens art",
+      "transport": "Transportmåte",
+      "terms": "Leveringsbetingelser",
+      "partnerVat": "Kundens mva-nummer",
+      "statValue": "Statistisk verdi (EUR)"
+    },
+    "types": {
+      "GOODS": "Varer",
+      "SERVICES": "Tjenester",
+      "TRIANGULAR": "Trekantshandel"
     }
   }
 }

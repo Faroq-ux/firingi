@@ -691,6 +691,23 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## EU trade reporting (Phase 57)
+
+FIRINGI invoices every buyer and buys from every supplier, so **FIRINGI's own entity files the EU returns**: the
+**EC Sales List** (exempt intra-EU sales of goods, reverse-charge services), **Intrastat arrivals** (goods bought from
+suppliers in other EU countries) and **Intrastat dispatches** (goods sold into other EU countries). Returns are
+**rebuilt nightly from the issued invoices and supplier statements**, checked line by line (CN8 code, net mass, origin,
+partner VAT number), downloaded as **CSV / Excel** or in the **national layout** (Portugal AT/INE, Spain Modelo 349,
+France DEB/DES, Germany ZM/IDEV; generic for the rest) and **marked filed with the reference**; a filed return never
+changes — later credits become **correction lines** in the next one. **CN8 codes**: a default per category, the exact
+values per product from FIRINGI or **the supplier** (*Products › Customs Codes*, FIRINGI checks). Before invoicing a
+buyer in a country without a FIRINGI entity **without VAT**, its VAT number is **checked at VIES and the proof kept**
+with the invoice (not valid → Portuguese VAT). **Threshold watch** per country and flow, **deadline reminders**, and
+suppliers download **their own report** of what FIRINGI bought from them across a border. Every part is a FIRINGI
+switch (*Settings › EU Trade Reporting*); supplier pages in 25 languages, FIRINGI's in English.
+Details: [docs/eu-trade.md](docs/eu-trade.md).
+Tests: `tests/unit/trade.test.ts`, `tests/integration/trade.test.ts`, `node tests/e2e/eu-trade.mjs`.
+
 ## Landing page (Phase 56)
 
 The public **main page** for wholesale customers: "Buy, restock and run your business without wasting your time.",

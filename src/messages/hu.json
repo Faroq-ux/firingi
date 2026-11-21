@@ -919,7 +919,9 @@
     "Rewards Shop": "Jutalombolt",
     "My Rewards": "Jutalmaim",
     "Reward Products": "Jutalomtermékek",
-    "Rewards to Hand Over": "Átadandó jutalmak"
+    "Rewards to Hand Over": "Átadandó jutalmak",
+    "Customs Codes": "Vámtarifaszámok",
+    "EU Trade Report": "Uniós kereskedelmi jelentés"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Új beszállítói jelentkezés",
       "body": "{name} ({company}) szeretne a FIRINGI-n értékesíteni. Leadként szerepel a CRM-ben."
+    },
+    "trade_deadline": {
+      "title": "{return} – {period}: határidő {date}",
+      "body": "A(z) {period} időszak {return} bevallását {date}-ig kell beadni ({days} nap). Ellenőrizze: Számlák és adók › Közösségen belüli kereskedelem."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: a küszöb {pct}%-a ({country})",
+      "body": "Az áru-{flow} {country} országban idén elérték a {threshold} €-s Intrastat-küszöb {pct}%-át. Felette a FIRINGI-nek havonta Intrastatot kell beadnia."
+    },
+    "trade_code_review": {
+      "title": "Ellenőrizendő vámadatok: {product}",
+      "body": "{company} elküldte a(z) „{product}” KN8-kódját, nettó tömegét vagy származását. Ellenőrizze: Számlák és adók › Vámtarifaszámok."
+    },
+    "trade_code_accepted": {
+      "title": "Vámadatok elfogadva: {product}",
+      "body": "A FIRINGI ellenőrizte és elfogadta a(z) „{product}” termékhez küldött vámadatokat."
+    },
+    "trade_code_rejected": {
+      "title": "Vámadatok nem elfogadva: {product}",
+      "body": "A FIRINGI nem fogadta el a(z) „{product}” termékhez küldött vámadatokat: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebab- és pizzakellékek"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Vámtarifaszámok",
+    "customsIntro": "A FIRINGI bejelenti az uniós határt átlépő árukat (Intrastat). Adja meg termékei 8 jegyű KN-kódját, csomagonkénti nettó tömegét és kiegészítő mennyiségét, valamint a származási országot. A FIRINGI felhasználás előtt ellenőrzi őket.",
+    "customsOff": "A FIRINGI jelenleg nem gyűjt vámtarifaszámokat a beszállítóktól.",
+    "search": "Termékek keresése",
+    "product": "Termék",
+    "cn": "KN8-kód",
+    "cnHint": "8 számjegy, pl. 2202 10 00 (uniós TARIC adatbázis).",
+    "netKg": "Nettó tömeg csomagonként (kg)",
+    "supp": "Kiegészítő mennyiség csomagonként",
+    "suppUnit": "Egység: {unit}",
+    "origin": "Származási ország",
+    "originHint": "Két betű, pl. HU",
+    "note": "Megjegyzés a FIRINGI-nek (nem kötelező)",
+    "onFile": "Rögzítve",
+    "categoryDefault": "A kategória alapértéke: {code}",
+    "missing": "Hiányzó adatok",
+    "status": {
+      "PENDING": "Elküldve a FIRINGI-nek — ellenőrzésre vár",
+      "ACCEPTED": "A FIRINGI elfogadta",
+      "REJECTED": "Nem fogadták el"
+    },
+    "send": "Küldés a FIRINGI-nek",
+    "sent": "Elküldve. A FIRINGI ellenőrzi.",
+    "edit": "Adatok megadása",
+    "none": "Még nincs termék.",
+    "reportTitle": "Uniós kereskedelmi jelentés",
+    "reportIntro": "Amit a FIRINGI uniós határon át vásárolt Öntől, a saját összesítő nyilatkozatához és Intrastat-kiszállításaihoz. Az összegek azok, amelyeket a FIRINGI-nek ÁFA nélkül számláz (fordított adózás).",
+    "reportOff": "A FIRINGI kikapcsolta a beszállítói jelentéseket.",
+    "period": "Időszak",
+    "ecslTitle": "Összesítő nyilatkozat",
+    "ecslHint": "Ügyfél-adószámonként egy sor (a FIRINGI-egység).",
+    "intrastatTitle": "Intrastat-kiszállítások",
+    "intrastatHint": "Áruk KN8-kóddal, nettó tömeggel és származási országgal. Csak az ország Intrastat-küszöbe felett szükséges.",
+    "downloadCsv": "CSV letöltése",
+    "downloadXlsx": "Excel letöltése",
+    "total": "Összesen {amount}",
+    "empty": "Ebben az időszakban semmi sem lépett át határt.",
+    "missingData": "Néhány árunál hiányzik a KN8-kód vagy a nettó tömeg. Adja meg őket itt: Termékek › Vámtarifaszámok.",
+    "cols": {
+      "country": "Ország",
+      "vat": "Közösségi adószám",
+      "customer": "Ügyfél",
+      "type": "Típus",
+      "value": "Érték (EUR)",
+      "corrects": "Javított időszak",
+      "description": "Leírás",
+      "destination": "Rendeltetési ország",
+      "nature": "Ügylet jellege",
+      "transport": "Szállítási mód",
+      "terms": "Szállítási feltételek",
+      "partnerVat": "Ügyfél adószáma",
+      "statValue": "Statisztikai érték (EUR)"
+    },
+    "types": {
+      "GOODS": "Áru",
+      "SERVICES": "Szolgáltatás",
+      "TRIANGULAR": "Háromszögügylet"
     }
   }
 }

@@ -919,7 +919,9 @@
     "Rewards Shop": "Obchod s odmenami",
     "My Rewards": "Moje odmeny",
     "Reward Products": "Produkty ako odmeny",
-    "Rewards to Hand Over": "Odmeny na odovzdanie"
+    "Rewards to Hand Over": "Odmeny na odovzdanie",
+    "Customs Codes": "Colné kódy",
+    "EU Trade Report": "Správa o obchode v EÚ"
   },
   "delivery": {
     "title": "Doručenie",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nová žiadosť dodávateľa",
       "body": "{name} z firmy {company} chce predávať na FIRINGI. Je v CRM ako lead."
+    },
+    "trade_deadline": {
+      "title": "{return} za {period}: splatné {date}",
+      "body": "{return} za {period} treba podať do {date} (o {days} dní). Skontrolujte v Faktúry a dane › Obchod v rámci EÚ."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % prahu v {country}",
+      "body": "{flow} tovaru v {country} tento rok dosiahli {pct} % prahu Intrastat {threshold} €. Nad ním musí FIRINGI podávať Intrastat každý mesiac."
+    },
+    "trade_code_review": {
+      "title": "Colné údaje na kontrolu: {product}",
+      "body": "{company} poslal kód KN8, čistú hmotnosť alebo pôvod „{product}“. Skontrolujte v Faktúry a dane › Colné kódy."
+    },
+    "trade_code_accepted": {
+      "title": "Colné údaje prijaté: {product}",
+      "body": "FIRINGI skontrolovala a prijala colné údaje, ktoré ste poslali pre „{product}“."
+    },
+    "trade_code_rejected": {
+      "title": "Colné údaje neprijaté: {product}",
+      "body": "FIRINGI neprijala colné údaje, ktoré ste poslali pre „{product}“: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Potreby na kebab a pizzu"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Colné kódy",
+    "customsIntro": "FIRINGI hlási tovar, ktorý prekročí hranicu EÚ (Intrastat). Uveďte 8-miestny kód KN, čistú hmotnosť a doplnkové jednotky na balenie a krajinu pôvodu svojich výrobkov. FIRINGI ich pred použitím skontroluje.",
+    "customsOff": "FIRINGI momentálne nezbiera colné kódy od dodávateľov.",
+    "search": "Hľadať výrobky",
+    "product": "Výrobok",
+    "cn": "Kód KN8",
+    "cnHint": "8 číslic, napr. 2202 10 00 (databáza TARIC EÚ).",
+    "netKg": "Čistá hmotnosť na balenie (kg)",
+    "supp": "Doplnkové jednotky na balenie",
+    "suppUnit": "Jednotka: {unit}",
+    "origin": "Krajina pôvodu",
+    "originHint": "Dve písmená, napr. SK",
+    "note": "Poznámka pre FIRINGI (nepovinné)",
+    "onFile": "Uložené",
+    "categoryDefault": "Predvolený kód kategórie: {code}",
+    "missing": "Chýbajú údaje",
+    "status": {
+      "PENDING": "Odoslané FIRINGI — čaká na kontrolu",
+      "ACCEPTED": "Prijaté FIRINGI",
+      "REJECTED": "Neprijaté"
+    },
+    "send": "Odoslať FIRINGI",
+    "sent": "Odoslané. FIRINGI to skontroluje.",
+    "edit": "Zadať údaje",
+    "none": "Zatiaľ žiadne výrobky.",
+    "reportTitle": "Správa o obchode v EÚ",
+    "reportIntro": "Čo od vás FIRINGI kúpila cez hranicu EÚ, pre váš súhrnný výkaz a odoslania Intrastat. Sumy sú to, čo fakturujete FIRINGI, bez DPH (prenesenie daňovej povinnosti).",
+    "reportOff": "FIRINGI vypla správy pre dodávateľov.",
+    "period": "Obdobie",
+    "ecslTitle": "Súhrnný výkaz",
+    "ecslHint": "Jeden riadok na IČ DPH zákazníka (subjekt FIRINGI).",
+    "intrastatTitle": "Odoslania Intrastat",
+    "intrastatHint": "Tovar s kódom KN8, čistou hmotnosťou a krajinou pôvodu. Potrebné len nad prahom Intrastat vo vašej krajine.",
+    "downloadCsv": "Stiahnuť CSV",
+    "downloadXlsx": "Stiahnuť Excel",
+    "total": "Spolu {amount}",
+    "empty": "V tomto období nič neprekročilo hranicu.",
+    "missingData": "Pri niektorom tovare chýba kód KN8 alebo čistá hmotnosť. Doplňte ich v Výrobky › Colné kódy.",
+    "cols": {
+      "country": "Krajina",
+      "vat": "IČ DPH",
+      "customer": "Zákazník",
+      "type": "Druh",
+      "value": "Hodnota (EUR)",
+      "corrects": "Opravuje obdobie",
+      "description": "Popis",
+      "destination": "Krajina určenia",
+      "nature": "Povaha transakcie",
+      "transport": "Druh dopravy",
+      "terms": "Dodacie podmienky",
+      "partnerVat": "IČ DPH zákazníka",
+      "statValue": "Štatistická hodnota (EUR)"
+    },
+    "types": {
+      "GOODS": "Tovar",
+      "SERVICES": "Služby",
+      "TRIANGULAR": "Trojstranný obchod"
     }
   }
 }

@@ -225,6 +225,7 @@ model Company {
   documents                Document[]
   restrictionApprovals     RestrictionApproval[]
   vatValidations           VatValidation[]
+  tradeProposals           TradeCodeProposal[]
   productsProposed         Product[]
   vendorOffers             VendorOffer[]
   customerGroupsOwned      CustomerGroup[]             @relation("GroupOwner")
@@ -358,6 +359,7 @@ model LegalEntity {
   country       Country         @relation(fields: [countryId], references: [id])
   invoiceSeries InvoiceSeries[]
   invoices      Invoice[]
+  tradeReturns  TradeReturn[]
 
   @@unique([countryId, taxId])
 }

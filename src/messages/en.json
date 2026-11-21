@@ -1857,6 +1857,26 @@
     "website_vendor_interest": {
       "title": "New vendor application",
       "body": "{name} from {company} wants to sell on FIRINGI. It is in the CRM as a lead."
+    },
+    "trade_deadline": {
+      "title": "{return} for {period} is due {date}",
+      "body": "The {return} for {period} must be filed by {date} ({days} days). Check it in Invoices & Tax › EU Trade Reporting."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% of the threshold in {country}",
+      "body": "Goods {flow} in {country} reached {pct}% of the €{threshold} Intrastat threshold this year. Once over it, FIRINGI must file Intrastat every month."
+    },
+    "trade_code_review": {
+      "title": "Customs data to check: {product}",
+      "body": "{company} sent the CN8 code, net mass or origin of \"{product}\". Check it in Invoices & Tax › Customs Codes."
+    },
+    "trade_code_accepted": {
+      "title": "Customs data accepted: {product}",
+      "body": "FIRINGI checked and accepted the customs data you sent for \"{product}\"."
+    },
+    "trade_code_rejected": {
+      "title": "Customs data not accepted: {product}",
+      "body": "FIRINGI did not accept the customs data you sent for \"{product}\": {note}"
     }
   },
   "notifications": {
@@ -8229,6 +8249,66 @@
           "14": "Kebab & Pizza Supplies"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Customs Codes",
+    "customsIntro": "FIRINGI reports goods that cross an EU border (Intrastat). Give the 8-digit CN code, the net mass and supplementary units per pack and the country of origin of your products. FIRINGI checks them before they are used.",
+    "customsOff": "FIRINGI is not collecting customs codes from suppliers at the moment.",
+    "search": "Search products",
+    "product": "Product",
+    "cn": "CN8 code",
+    "cnHint": "8 digits, e.g. 2202 10 00 (EU TARIC database).",
+    "netKg": "Net mass per pack (kg)",
+    "supp": "Supplementary units per pack",
+    "suppUnit": "Unit: {unit}",
+    "origin": "Country of origin",
+    "originHint": "Two letters, e.g. PT",
+    "note": "Note for FIRINGI (optional)",
+    "onFile": "On file",
+    "categoryDefault": "Category default: {code}",
+    "missing": "Missing data",
+    "status": {
+      "PENDING": "Sent to FIRINGI — waiting for the check",
+      "ACCEPTED": "Accepted by FIRINGI",
+      "REJECTED": "Not accepted"
+    },
+    "send": "Send to FIRINGI",
+    "sent": "Sent. FIRINGI will check it.",
+    "edit": "Give the data",
+    "none": "No products yet.",
+    "reportTitle": "EU Trade Report",
+    "reportIntro": "What FIRINGI bought from you across an EU border, for your own EC Sales List and Intrastat dispatches. Amounts are what you invoice FIRINGI, without VAT (reverse charge).",
+    "reportOff": "FIRINGI has switched supplier reports off.",
+    "period": "Period",
+    "ecslTitle": "EC Sales List",
+    "ecslHint": "One line per customer VAT number (FIRINGI's entity).",
+    "intrastatTitle": "Intrastat dispatches",
+    "intrastatHint": "Goods with CN8 code, net mass and country of origin. Only needed above your country's Intrastat threshold.",
+    "downloadCsv": "Download CSV",
+    "downloadXlsx": "Download Excel",
+    "total": "Total {amount}",
+    "empty": "Nothing crossed a border in this period.",
+    "missingData": "Some goods have no CN8 code or net mass. Add them in Products › Customs Codes.",
+    "cols": {
+      "country": "Country",
+      "vat": "VAT number",
+      "customer": "Customer",
+      "type": "Type",
+      "value": "Value (EUR)",
+      "corrects": "Corrects period",
+      "description": "Description",
+      "destination": "Country of destination",
+      "nature": "Nature of transaction",
+      "transport": "Mode of transport",
+      "terms": "Delivery terms",
+      "partnerVat": "Customer VAT",
+      "statValue": "Statistical value (EUR)"
+    },
+    "types": {
+      "GOODS": "Goods",
+      "SERVICES": "Services",
+      "TRIANGULAR": "Triangular"
     }
   }
 }

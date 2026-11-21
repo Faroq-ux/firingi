@@ -919,7 +919,9 @@
     "Rewards Shop": "Magazinul de recompense",
     "My Rewards": "Recompensele mele",
     "Reward Products": "Produse ca recompense",
-    "Rewards to Hand Over": "Recompense de predat"
+    "Rewards to Hand Over": "Recompense de predat",
+    "Customs Codes": "Coduri vamale",
+    "EU Trade Report": "Raport intracomunitar"
   },
   "delivery": {
     "title": "Livrare",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Cerere nouă de furnizor",
       "body": "{name} de la {company} vrea să vândă pe FIRINGI. Este în CRM ca lead."
+    },
+    "trade_deadline": {
+      "title": "{return} pentru {period}: termen {date}",
+      "body": "{return} pentru {period} trebuie depusă până la {date} ({days} zile). Verificați în Facturi și taxe › Comerț intracomunitar."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% din prag în {country}",
+      "body": "{flow} de bunuri în {country} au atins anul acesta {pct}% din pragul Intrastat de {threshold} €. Peste prag, FIRINGI trebuie să depună Intrastat lunar."
+    },
+    "trade_code_review": {
+      "title": "Date vamale de verificat: {product}",
+      "body": "{company} a trimis codul NC8, masa netă sau originea pentru „{product}”. Verificați în Facturi și taxe › Coduri vamale."
+    },
+    "trade_code_accepted": {
+      "title": "Date vamale acceptate: {product}",
+      "body": "FIRINGI a verificat și acceptat datele vamale trimise pentru „{product}”."
+    },
+    "trade_code_rejected": {
+      "title": "Date vamale neacceptate: {product}",
+      "body": "FIRINGI nu a acceptat datele vamale trimise pentru „{product}”: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Produse pentru kebab și pizza"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Coduri vamale",
+    "customsIntro": "FIRINGI declară mărfurile care trec o frontieră a UE (Intrastat). Indicați codul NC de 8 cifre, masa netă și unitățile suplimentare pe ambalaj și țara de origine a produselor. FIRINGI le verifică înainte de a le folosi.",
+    "customsOff": "Momentan FIRINGI nu colectează coduri vamale de la furnizori.",
+    "search": "Căutați produse",
+    "product": "Produs",
+    "cn": "Cod NC8",
+    "cnHint": "8 cifre, de ex. 2202 10 00 (baza de date TARIC a UE).",
+    "netKg": "Masă netă pe ambalaj (kg)",
+    "supp": "Unități suplimentare pe ambalaj",
+    "suppUnit": "Unitate: {unit}",
+    "origin": "Țara de origine",
+    "originHint": "Două litere, de ex. RO",
+    "note": "Notă pentru FIRINGI (opțional)",
+    "onFile": "Înregistrat",
+    "categoryDefault": "Implicit din categorie: {code}",
+    "missing": "Date lipsă",
+    "status": {
+      "PENDING": "Trimis la FIRINGI — în așteptarea verificării",
+      "ACCEPTED": "Acceptat de FIRINGI",
+      "REJECTED": "Neacceptat"
+    },
+    "send": "Trimiteți la FIRINGI",
+    "sent": "Trimis. FIRINGI va verifica.",
+    "edit": "Completați datele",
+    "none": "Încă nu există produse.",
+    "reportTitle": "Raport intracomunitar",
+    "reportIntro": "Ce a cumpărat FIRINGI de la dvs. peste o frontieră a UE, pentru propria declarație recapitulativă și expedierile Intrastat. Sumele sunt cele facturate către FIRINGI, fără TVA (taxare inversă).",
+    "reportOff": "FIRINGI a dezactivat rapoartele pentru furnizori.",
+    "period": "Perioadă",
+    "ecslTitle": "Declarație recapitulativă",
+    "ecslHint": "Un rând pe cod de TVA al clientului (entitatea FIRINGI).",
+    "intrastatTitle": "Expedieri Intrastat",
+    "intrastatHint": "Mărfuri cu cod NC8, masă netă și țara de origine. Necesar doar peste pragul Intrastat al țării dvs.",
+    "downloadCsv": "Descărcați CSV",
+    "downloadXlsx": "Descărcați Excel",
+    "total": "Total {amount}",
+    "empty": "Nimic nu a trecut o frontieră în această perioadă.",
+    "missingData": "Unele mărfuri nu au cod NC8 sau masă netă. Adăugați-le în Produse › Coduri vamale.",
+    "cols": {
+      "country": "Țară",
+      "vat": "Cod de TVA",
+      "customer": "Client",
+      "type": "Tip",
+      "value": "Valoare (EUR)",
+      "corrects": "Corectează perioada",
+      "description": "Descriere",
+      "destination": "Țara de destinație",
+      "nature": "Natura tranzacției",
+      "transport": "Modul de transport",
+      "terms": "Condiții de livrare",
+      "partnerVat": "Cod TVA client",
+      "statValue": "Valoare statistică (EUR)"
+    },
+    "types": {
+      "GOODS": "Bunuri",
+      "SERVICES": "Servicii",
+      "TRIANGULAR": "Operațiune triunghiulară"
     }
   }
 }

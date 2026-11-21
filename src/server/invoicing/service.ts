@@ -48,7 +48,7 @@ async function previousHash(tx: Tx, seriesId: string) {
   return (await tx.invoice.findFirst({ where: { seriesId, status: { not: "DRAFT" } }, orderBy: { number: "desc" }, select: { hash: true } }))?.hash ?? null;
 }
 
-type DraftLine = { orderLineId?: string | null; description: string; qty: Decimal; unitPriceNet: Decimal; discountNet?: Decimal; taxRate: Decimal; saftTaxCode?: string | null; lineNet: Decimal; lineVat: Decimal; exciseNet?: Decimal };
+type DraftLine = { orderLineId?: string | null; description: string; qty: Decimal; unitPriceNet: Decimal; discountNet?: Decimal; taxRate: Decimal; saftTaxCode?: string | null; lineNet: Decimal; lineVat: Decimal; exciseNet?: Decimal; exemptionReasonId?: string | null };
 
 /** Create the document as DRAFT, add lines + tax summary, then issue it (number, hash, ATCUD). */
 async function issueDocument(tx: Tx, d: {
@@ -77,7 +77,7 @@ async function issueDocument(tx: Tx, d: {
   await tx.invoiceLine.createMany({
     data: d.lines.map((l, i) => ({
       invoiceId: draft.id, orderLineId: l.orderLineId ?? null, position: i + 1, description: l.description, qty: l.qty.toFixed(3), unitPriceNet: l.unitPriceNet.toFixed(4),
-      discountNet: (l.discountNet ?? new Decimal(0)).toFixed(2), taxRate: l.taxRate.toFixed(3), saftTaxCode: l.saftTaxCode ?? null, lineNet: l.lineNet.toFixed(2), lineVat: l.lineVat.toFixed(2), exciseNet: (l.exciseNet ?? new Decimal(0)).toFixed(2),
+      discountNet: (l.discountNet ?? new Decimal(0)).toFixed(2), taxRate: l.taxRate.toFixed(3), saftTaxCode: l.saftTaxCode ?? null, exemptionReasonId: l.exemptionReasonId ?? null, lineNet: l.lineNet.toFixed(2), lineVat: l.lineVat.toFixed(2), exciseNet: (l.exciseNet ?? new Decimal(0)).toFixed(2),
       ...(loc ? { unitPriceLocal: loc.lines[i].unitLocal.toString(), lineNetLocal: loc.lines[i].netLocal.toString(), lineVatLocal: loc.lines[i].vatLocal.toString() } : {}),
     })),
   });
@@ -146,7 +146,11 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
     where: { id: orderId },
     include: { lines: true, buyer: { include: { country: true } }, seller: { include: { country: true } }, deliveryRule: true },
   });
-  const le = await legalEntityFor(tx, order.countryId);
+  // Phase 57: FIRINGI's entity in the buyer's country; with none there, the main entity (exempt intra-EU supply
+  // after a VIES check of the buyer's VAT number, or its local VAT when the number isn't valid)
+  const trade = await import("@/server/trade/service");
+  const sale = await trade.saleFor(tx, order);
+  const le = sale.le;
   const leCountry = await tx.country.findUniqueOrThrow({ where: { id: le.countryId } });
   const lines: DraftLine[] = [];
   for (const l of order.lines) {
@@ -192,12 +196,18 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
   const payLater = await (await import("@/server/pay-later/service")).invoicePart(tx, orderId);
   if (payLater?.feeLine) lines.push(payLater.feeLine);
   const buyerAddr = await billingAddress(tx, order.buyerCompanyId);
+  if (sale.kind !== "DOMESTIC") await crossBorderRates(tx, sale.kind, lines, { orderId, entityCountryId: le.countryId, feeTaxCategoryId: order.deliveryRule?.feeTaxCategoryId ?? null });
   const invoice = await issueDocument(tx, {
-    legalEntityId: le.id, countryId: le.countryId, docType: "INVOICE", taxRegime: "DOMESTIC", recipientCompanyId: order.buyerCompanyId, orderId,
+    legalEntityId: le.id, countryId: le.countryId, docType: "INVOICE", taxRegime: sale.kind === "INTRA_EU_SUPPLY" ? "INTRA_EU_SUPPLY" : "DOMESTIC", recipientCompanyId: order.buyerCompanyId, orderId,
     issuerSnapshot: { name: le.legalName, taxId: le.taxId, vatNumber: le.vatNumber, address: `${le.addressLine}, ${le.postalCode} ${le.city}`, email: le.email, iban: le.iban, country: leCountry.code },
-    recipientSnapshot: companySnapshot(order.buyer, buyerAddr),
+    recipientSnapshot: {
+      ...companySnapshot(order.buyer, buyerAddr),
+      ...(sale.kind !== "DOMESTIC" ? { vies: { result: sale.proof.result, ref: sale.proof.ref, checkedAt: sale.proof.checkedAt } } : {}),
+      ...(sale.kind === "INTRA_EU_SUPPLY" ? { note: "Isento — transmissão intracomunitária (art. 14.º RITI / art. 138.º Diretiva 2006/112/CE)" } : {}),
+    },
     lines, dueDays: payLater ? payLater.dueDays : order.buyer.paymentTermsDays, createdById: actorUserId,
   });
+  if (sale.kind !== "DOMESTIC") await trade.linkProof(tx, sale.proof, invoice.id);
   if (payLater) await (await import("@/server/pay-later/service")).afterInvoice(tx, payLater.plan.id, invoice);
   // Phase 51: the final footprint — delivered quantities, the delivering vehicle's fuel
   await (await import("@/server/co2/service")).stampOrder(tx, orderId, true);
@@ -250,6 +260,31 @@ export async function invoiceDeliveredOrder(tx: Tx, orderId: string, actorUserId
 }
 
 /**
+ * Phase 57: invoice lines of a sale from the main entity to a buyer in another EU country. An exempt intra-EU
+ * supply has no VAT (exemption M16 in Portugal); when the buyer's VAT number isn't valid, the entity's own VAT
+ * applies: goods at their tax category's rate there, the delivery fee at its category's, other lines at the
+ * order's highest goods rate (deposits and duty follow the goods).
+ */
+async function crossBorderRates(tx: Tx, kind: "INTRA_EU_SUPPLY" | "LOCAL_VAT", lines: DraftLine[], o: { orderId: string; entityCountryId: string; feeTaxCategoryId: string | null }) {
+  if (kind === "INTRA_EU_SUPPLY") {
+    const reason = await (await import("@/server/trade/service")).intraEuExemption(tx, o.entityCountryId);
+    for (const l of lines) { l.taxRate = new Decimal(0); l.lineVat = new Decimal(0); l.exemptionReasonId = reason; }
+    return;
+  }
+  const { vatRate } = await import("@/server/services/orders");
+  const ols = await tx.orderLine.findMany({ where: { orderId: o.orderId }, select: { id: true, offer: { select: { packaging: { select: { variant: { select: { product: { select: { taxCategoryId: true } } } } } } } } } });
+  const rateOf = new Map<string, Decimal>();
+  for (const ol of ols) rateOf.set(ol.id, await vatRate(tx, o.entityCountryId, null, ol.offer.packaging.variant.product.taxCategoryId));
+  const top = [...rateOf.values()].reduce((a, r) => Decimal.max(a, r), new Decimal(0));
+  const fee = o.feeTaxCategoryId ? await vatRate(tx, o.entityCountryId, null, o.feeTaxCategoryId) : top;
+  for (const l of lines) {
+    const rate = l.orderLineId && rateOf.has(l.orderLineId) ? rateOf.get(l.orderLineId)! : l.description.startsWith("Entrega") ? fee : l.taxRate.gt(0) ? top : new Decimal(0);
+    l.taxRate = rate;
+    l.lineVat = r2(l.lineNet.mul(rate).div(100));
+  }
+}
+
+/**
  * Credit note on a sales invoice — whole invoice, or chosen quantities per line. Also
  * creates a CREDIT billing statement so the vendor issues its own credit note to FIRINGI
  * (unless `chargeVendor` is false — FIRINGI then carries the cost).
@@ -282,7 +317,7 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
     if (remaining.lt(w.qty)) throw new Error(`QTY_TOO_HIGH:${l.description}`);
     const f = new Decimal(w.qty).div(l.qty.toString());
     lines.push({ orderLineId: l.orderLineId, description: l.description, qty: new Decimal(w.qty), unitPriceNet: new Decimal(l.unitPriceNet.toString()), discountNet: r2(new Decimal(l.discountNet.toString()).mul(f)),
-      taxRate: new Decimal(l.taxRate.toString()), lineNet: r2(new Decimal(l.lineNet.toString()).mul(f)), lineVat: r2(new Decimal(l.lineVat.toString()).mul(f)), exciseNet: r2(new Decimal(l.exciseNet.toString()).mul(f)) });
+      taxRate: new Decimal(l.taxRate.toString()), lineNet: r2(new Decimal(l.lineNet.toString()).mul(f)), lineVat: r2(new Decimal(l.lineVat.toString()).mul(f)), exciseNet: r2(new Decimal(l.exciseNet.toString()).mul(f)), exemptionReasonId: l.exemptionReasonId });
     if (l.orderLineId && l.description.startsWith(EXCISE_PREFIX)) vendorExcise.push({ orderLineId: l.orderLineId, qty: w.qty, net: r2(new Decimal(l.lineNet.toString()).mul(f)), description: l.description, unit: l.unitPriceNet.toString() });
     else if (l.orderLineId) vendorLines.push({ orderLineId: l.orderLineId, qty: w.qty });
   }
@@ -301,17 +336,19 @@ export async function creditInvoice(tx: Tx, invoiceId: string, sel: { lines: { i
   let creditStatementId: string | null = null;
   // Vendor side: credit statement for the goods returned (not when FIRINGI carries the cost, e.g. a claim for a FIRINGI delivery fault).
   if (inv.order && (vendorLines.length || vendorExcise.length) && sel.chargeVendor !== false) {
+    // the supplier's side keeps the treatment of its original statement (domestic, or reverse charge across a border)
+    const origRegime = (await tx.vendorBillingStatement.findFirst({ where: { orderId: inv.orderId!, isCreditStatement: false }, select: { taxRegime: true } }))?.taxRegime ?? "DOMESTIC";
     const stLines = vendorLines.map((v) => {
       const ol = inv.order!.lines.find((x) => x.id === v.orderLineId)!;
       const delivered = ol.qtyDelivered ?? ol.qtyConfirmed ?? ol.qtyOrdered;
       const net = r2(new Decimal(ol.vendorLineNet.toString()).mul(v.qty).div(delivered));
-      const st = inv.taxRegime === "DOMESTIC" && inv.order!.seller.countryId === inv.order!.countryId ? new Decimal(ol.taxRate.toString()) : new Decimal(0);
+      const st = origRegime === "DOMESTIC" ? new Decimal(ol.taxRate.toString()) : new Decimal(0);
       return { orderLineId: ol.id, sku: ol.sku, description: `${pick(ol.productName)} — ${pick(ol.packagingName)}`, qty: v.qty, unitCostNet: ol.vendorUnitCostNet.toString(), lineNet: net.toFixed(2), taxRate: st.toFixed(3), vat: r2(net.mul(st).div(100)).toFixed(2) };
     });
     // Phase 43: the excise passed on to the supplier comes back the same way
     for (const v of vendorExcise) {
       const ol = inv.order!.lines.find((x) => x.id === v.orderLineId)!;
-      const st = inv.taxRegime === "DOMESTIC" && inv.order!.seller.countryId === inv.order!.countryId ? new Decimal(ol.taxRate.toString()) : new Decimal(0);
+      const st = origRegime === "DOMESTIC" ? new Decimal(ol.taxRate.toString()) : new Decimal(0);
       stLines.push({ orderLineId: ol.id, sku: `EXCISE-${ol.sku}`, description: v.description, qty: v.qty, unitCostNet: v.unit, lineNet: v.net.toFixed(2), taxRate: st.toFixed(3), vat: r2(v.net.mul(st).div(100)).toFixed(2) });
     }
     const n = stLines.reduce((a, l) => a.plus(l.lineNet), new Decimal(0));

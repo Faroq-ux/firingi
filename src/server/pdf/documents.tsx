@@ -91,6 +91,7 @@ function InvoiceDoc({ d }: { d: InvoicePdfData }) {
   const ptCert = d.issuer.country === "PT" || !d.issuer.country;
   const mentions = [
     ...(d.taxRegime === "INTRA_EU_REVERSE_CHARGE" ? [t.reverseCharge, ...(t2 ? [t2.reverseCharge] : [])] : []),
+    ...(d.taxRegime === "INTRA_EU_SUPPLY" ? [t.intraEuSupply, ...(t2 ? [t2.intraEuSupply] : [])] : []),
     ...(d.selfBilled ? [t.selfBilling, ...(t2 ? [t2.selfBilling] : []), ...(d.agreement ? [`${L("agreement")}: ${d.agreement}`] : [])] : []),
     ...(d.legalTexts ?? []),
   ];

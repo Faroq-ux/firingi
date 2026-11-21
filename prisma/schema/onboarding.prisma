@@ -152,10 +152,14 @@ model VatValidation {
   consultationRef   String?
   checkedAt         DateTime            @default(now())
   checkedById       String?
+  /// Phase 57: why it was checked (ONBOARDING | INVOICE | RECHECK | MANUAL) and the invoice it is the proof for
+  purpose           String?
+  invoiceId         String?
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@index([companyId, checkedAt])
+  @@index([invoiceId])
 }
 
 enum AddressChangeAction {

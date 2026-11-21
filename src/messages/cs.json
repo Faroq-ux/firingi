@@ -919,7 +919,9 @@
     "Rewards Shop": "Obchod s odměnami",
     "My Rewards": "Moje odměny",
     "Reward Products": "Produkty jako odměny",
-    "Rewards to Hand Over": "Odměny k předání"
+    "Rewards to Hand Over": "Odměny k předání",
+    "Customs Codes": "Celní kódy",
+    "EU Trade Report": "Zpráva o obchodu v EU"
   },
   "delivery": {
     "title": "Doručení",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nová žádost dodavatele",
       "body": "{name} z firmy {company} chce prodávat na FIRINGI. Je v CRM jako lead."
+    },
+    "trade_deadline": {
+      "title": "{return} za {period}: splatné {date}",
+      "body": "{return} za {period} je třeba podat do {date} (za {days} dní). Zkontrolujte v Faktury a daně › Obchod v rámci EU."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % prahu v {country}",
+      "body": "{flow} zboží v {country} letos dosáhla {pct} % prahu Intrastat {threshold} €. Nad ním musí FIRINGI podávat Intrastat každý měsíc."
+    },
+    "trade_code_review": {
+      "title": "Celní údaje ke kontrole: {product}",
+      "body": "{company} poslal kód KN8, čistou hmotnost nebo původ „{product}“. Zkontrolujte v Faktury a daně › Celní kódy."
+    },
+    "trade_code_accepted": {
+      "title": "Celní údaje přijaty: {product}",
+      "body": "FIRINGI zkontrolovala a přijala celní údaje, které jste poslali pro „{product}“."
+    },
+    "trade_code_rejected": {
+      "title": "Celní údaje nepřijaty: {product}",
+      "body": "FIRINGI nepřijala celní údaje, které jste poslali pro „{product}“: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Potřeby pro kebab a pizzu"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Celní kódy",
+    "customsIntro": "FIRINGI hlásí zboží, které překročí hranici EU (Intrastat). Uveďte 8místný kód KN, čistou hmotnost a doplňkové jednotky na balení a zemi původu svých výrobků. FIRINGI je před použitím zkontroluje.",
+    "customsOff": "FIRINGI momentálně nesbírá celní kódy od dodavatelů.",
+    "search": "Hledat výrobky",
+    "product": "Výrobek",
+    "cn": "Kód KN8",
+    "cnHint": "8 číslic, např. 2202 10 00 (databáze TARIC EU).",
+    "netKg": "Čistá hmotnost na balení (kg)",
+    "supp": "Doplňkové jednotky na balení",
+    "suppUnit": "Jednotka: {unit}",
+    "origin": "Země původu",
+    "originHint": "Dvě písmena, např. CZ",
+    "note": "Poznámka pro FIRINGI (nepovinné)",
+    "onFile": "Uloženo",
+    "categoryDefault": "Výchozí kód kategorie: {code}",
+    "missing": "Chybí údaje",
+    "status": {
+      "PENDING": "Odesláno FIRINGI — čeká na kontrolu",
+      "ACCEPTED": "Přijato FIRINGI",
+      "REJECTED": "Nepřijato"
+    },
+    "send": "Odeslat FIRINGI",
+    "sent": "Odesláno. FIRINGI to zkontroluje.",
+    "edit": "Zadat údaje",
+    "none": "Zatím žádné výrobky.",
+    "reportTitle": "Zpráva o obchodu v EU",
+    "reportIntro": "Co od vás FIRINGI koupila přes hranici EU, pro vaše souhrnné hlášení a odeslání Intrastat. Částky jsou to, co fakturujete FIRINGI, bez DPH (přenesená daňová povinnost).",
+    "reportOff": "FIRINGI vypnula zprávy pro dodavatele.",
+    "period": "Období",
+    "ecslTitle": "Souhrnné hlášení",
+    "ecslHint": "Jeden řádek na DIČ zákazníka (subjekt FIRINGI).",
+    "intrastatTitle": "Odeslání Intrastat",
+    "intrastatHint": "Zboží s kódem KN8, čistou hmotností a zemí původu. Potřeba jen nad prahem Intrastat ve vaší zemi.",
+    "downloadCsv": "Stáhnout CSV",
+    "downloadXlsx": "Stáhnout Excel",
+    "total": "Celkem {amount}",
+    "empty": "V tomto období nic nepřekročilo hranici.",
+    "missingData": "U některého zboží chybí kód KN8 nebo čistá hmotnost. Doplňte je v Výrobky › Celní kódy.",
+    "cols": {
+      "country": "Země",
+      "vat": "DIČ",
+      "customer": "Zákazník",
+      "type": "Druh",
+      "value": "Hodnota (EUR)",
+      "corrects": "Opravuje období",
+      "description": "Popis",
+      "destination": "Země určení",
+      "nature": "Povaha transakce",
+      "transport": "Druh dopravy",
+      "terms": "Dodací podmínky",
+      "partnerVat": "DIČ zákazníka",
+      "statValue": "Statistická hodnota (EUR)"
+    },
+    "types": {
+      "GOODS": "Zboží",
+      "SERVICES": "Služby",
+      "TRIANGULAR": "Třístranný obchod"
     }
   }
 }

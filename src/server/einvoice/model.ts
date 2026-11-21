@@ -52,6 +52,7 @@ async function entityParty(legalEntityId: string): Promise<EParty & { language: 
 
 function category(rate: Decimal, regime: string): VatCategory {
   if (regime === "INTRA_EU_REVERSE_CHARGE") return "AE";
+  if (regime === "INTRA_EU_SUPPLY") return "K";
   if (regime === "EXEMPT") return "E";
   return rate.gt(0) ? "S" : "Z";
 }
@@ -68,7 +69,7 @@ function taxBreakdown(lines: { net: Decimal; vat: Decimal; rate: Decimal }[], re
     const c = category(x.rate, regime);
     return {
       category: c, rate: x.rate.toString(), base: f2(x.base), vat: f2(x.vat),
-      ...(c === "AE" ? { exemptionCode: "VATEX-EU-AE", exemptionText: t.reverseCharge } : c === "E" ? { exemptionCode: "VATEX-EU-132", exemptionText: "Exempt" } : {}),
+      ...(c === "AE" ? { exemptionCode: "VATEX-EU-AE", exemptionText: t.reverseCharge } : c === "K" ? { exemptionCode: "VATEX-EU-IC", exemptionText: t.intraEuSupply } : c === "E" ? { exemptionCode: "VATEX-EU-132", exemptionText: "Exempt" } : {}),
     };
   });
 }

@@ -919,7 +919,9 @@
     "Rewards Shop": "Boutique de récompenses",
     "My Rewards": "Mes récompenses",
     "Reward Products": "Produits récompenses",
-    "Rewards to Hand Over": "Récompenses à remettre"
+    "Rewards to Hand Over": "Récompenses à remettre",
+    "Customs Codes": "Codes douaniers",
+    "EU Trade Report": "Rapport intracommunautaire"
   },
   "delivery": {
     "title": "Livraison",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nouvelle candidature fournisseur",
       "body": "{name} de {company} veut vendre sur FIRINGI. Enregistré dans le CRM en tant que lead."
+    },
+    "trade_deadline": {
+      "title": "{return} de {period} : échéance le {date}",
+      "body": "La déclaration {return} de {period} doit être déposée avant le {date} ({days} jours). Vérifiez-la dans Factures et taxes › Commerce intracommunautaire."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow} : {pct} % du seuil en {country}",
+      "body": "Les {flow} de biens en {country} ont atteint {pct} % du seuil Intrastat de {threshold} € cette année. Au-delà, FIRINGI doit déposer l'Intrastat chaque mois."
+    },
+    "trade_code_review": {
+      "title": "Données douanières à vérifier : {product}",
+      "body": "{company} a envoyé le code NC8, la masse nette ou l'origine de « {product} ». Vérifiez dans Factures et taxes › Codes douaniers."
+    },
+    "trade_code_accepted": {
+      "title": "Données douanières acceptées : {product}",
+      "body": "FIRINGI a vérifié et accepté les données douanières que vous avez envoyées pour « {product} »."
+    },
+    "trade_code_rejected": {
+      "title": "Données douanières refusées : {product}",
+      "body": "FIRINGI n'a pas accepté les données douanières que vous avez envoyées pour « {product} » : {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Fournitures kebab et pizza"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Codes douaniers",
+    "customsIntro": "FIRINGI déclare les marchandises qui franchissent une frontière de l'UE (Intrastat). Indiquez le code NC à 8 chiffres, la masse nette et les unités supplémentaires par colis et le pays d'origine de vos produits. FIRINGI les vérifie avant de les utiliser.",
+    "customsOff": "FIRINGI ne collecte pas de codes douaniers auprès des fournisseurs pour le moment.",
+    "search": "Rechercher des produits",
+    "product": "Produit",
+    "cn": "Code NC8",
+    "cnHint": "8 chiffres, p. ex. 2202 10 00 (base TARIC de l'UE).",
+    "netKg": "Masse nette par colis (kg)",
+    "supp": "Unités supplémentaires par colis",
+    "suppUnit": "Unité : {unit}",
+    "origin": "Pays d'origine",
+    "originHint": "Deux lettres, p. ex. FR",
+    "note": "Note pour FIRINGI (facultatif)",
+    "onFile": "Enregistré",
+    "categoryDefault": "Par défaut de la catégorie : {code}",
+    "missing": "Données manquantes",
+    "status": {
+      "PENDING": "Envoyé à FIRINGI — en attente de vérification",
+      "ACCEPTED": "Accepté par FIRINGI",
+      "REJECTED": "Non accepté"
+    },
+    "send": "Envoyer à FIRINGI",
+    "sent": "Envoyé. FIRINGI va vérifier.",
+    "edit": "Indiquer les données",
+    "none": "Pas encore de produits.",
+    "reportTitle": "Rapport intracommunautaire",
+    "reportIntro": "Ce que FIRINGI vous a acheté au-delà d'une frontière de l'UE, pour votre propre état récapitulatif et vos expéditions Intrastat. Les montants sont ceux que vous facturez à FIRINGI, hors TVA (autoliquidation).",
+    "reportOff": "FIRINGI a désactivé les rapports fournisseurs.",
+    "period": "Période",
+    "ecslTitle": "État récapitulatif",
+    "ecslHint": "Une ligne par numéro de TVA du client (l'entité FIRINGI).",
+    "intrastatTitle": "Expéditions Intrastat",
+    "intrastatHint": "Marchandises avec code NC8, masse nette et pays d'origine. Nécessaire seulement au-dessus du seuil Intrastat de votre pays.",
+    "downloadCsv": "Télécharger CSV",
+    "downloadXlsx": "Télécharger Excel",
+    "total": "Total {amount}",
+    "empty": "Rien n'a franchi de frontière sur cette période.",
+    "missingData": "Certaines marchandises n'ont pas de code NC8 ou de masse nette. Ajoutez-les dans Produits › Codes douaniers.",
+    "cols": {
+      "country": "Pays",
+      "vat": "Numéro de TVA",
+      "customer": "Client",
+      "type": "Type",
+      "value": "Montant (EUR)",
+      "corrects": "Corrige la période",
+      "description": "Description",
+      "destination": "Pays de destination",
+      "nature": "Nature de la transaction",
+      "transport": "Mode de transport",
+      "terms": "Conditions de livraison",
+      "partnerVat": "TVA du client",
+      "statValue": "Valeur statistique (EUR)"
+    },
+    "types": {
+      "GOODS": "Biens",
+      "SERVICES": "Services",
+      "TRIANGULAR": "Triangulaire"
     }
   }
 }

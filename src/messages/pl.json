@@ -919,7 +919,9 @@
     "Rewards Shop": "Sklep z nagrodami",
     "My Rewards": "Moje nagrody",
     "Reward Products": "Produkty jako nagrody",
-    "Rewards to Hand Over": "Nagrody do wydania"
+    "Rewards to Hand Over": "Nagrody do wydania",
+    "Customs Codes": "Kody celne",
+    "EU Trade Report": "Raport wewnątrzwspólnotowy"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nowe zgłoszenie dostawcy",
       "body": "{name} z firmy {company} chce sprzedawać na FIRINGI. Jest w CRM jako lead."
+    },
+    "trade_deadline": {
+      "title": "{return} za {period}: termin {date}",
+      "body": "{return} za {period} trzeba złożyć do {date} (za {days} dni). Sprawdź w Faktury i podatki › Handel wewnątrzwspólnotowy."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% progu w {country}",
+      "body": "{flow} towarów w {country} osiągnęły w tym roku {pct}% progu Intrastat {threshold} €. Po jego przekroczeniu FIRINGI musi co miesiąc składać Intrastat."
+    },
+    "trade_code_review": {
+      "title": "Dane celne do sprawdzenia: {product}",
+      "body": "{company} przesłało kod CN8, masę netto lub pochodzenie „{product}”. Sprawdź w Faktury i podatki › Kody celne."
+    },
+    "trade_code_accepted": {
+      "title": "Dane celne zaakceptowane: {product}",
+      "body": "FIRINGI sprawdziło i zaakceptowało dane celne przesłane dla „{product}”."
+    },
+    "trade_code_rejected": {
+      "title": "Dane celne nie zaakceptowane: {product}",
+      "body": "FIRINGI nie zaakceptowało danych celnych przesłanych dla „{product}”: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Produkty do kebabów i pizzy"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Kody celne",
+    "customsIntro": "FIRINGI zgłasza towary przekraczające granicę UE (Intrastat). Podaj 8-cyfrowy kod CN, masę netto i jednostki uzupełniające na opakowanie oraz kraj pochodzenia swoich produktów. FIRINGI sprawdza je przed użyciem.",
+    "customsOff": "FIRINGI obecnie nie zbiera kodów celnych od dostawców.",
+    "search": "Szukaj produktów",
+    "product": "Produkt",
+    "cn": "Kod CN8",
+    "cnHint": "8 cyfr, np. 2202 10 00 (baza TARIC UE).",
+    "netKg": "Masa netto na opakowanie (kg)",
+    "supp": "Jednostki uzupełniające na opakowanie",
+    "suppUnit": "Jednostka: {unit}",
+    "origin": "Kraj pochodzenia",
+    "originHint": "Dwie litery, np. PL",
+    "note": "Uwaga dla FIRINGI (opcjonalnie)",
+    "onFile": "Zapisane",
+    "categoryDefault": "Domyślny dla kategorii: {code}",
+    "missing": "Brak danych",
+    "status": {
+      "PENDING": "Wysłane do FIRINGI — czeka na sprawdzenie",
+      "ACCEPTED": "Zaakceptowane przez FIRINGI",
+      "REJECTED": "Nie zaakceptowano"
+    },
+    "send": "Wyślij do FIRINGI",
+    "sent": "Wysłano. FIRINGI to sprawdzi.",
+    "edit": "Podaj dane",
+    "none": "Brak produktów.",
+    "reportTitle": "Raport wewnątrzwspólnotowy",
+    "reportIntro": "Co FIRINGI kupiło od Ciebie przez granicę UE — do Twojej informacji podsumowującej (VAT-UE) i wysyłek Intrastat. Kwoty to to, co fakturujesz FIRINGI, bez VAT (odwrotne obciążenie).",
+    "reportOff": "FIRINGI wyłączyło raporty dla dostawców.",
+    "period": "Okres",
+    "ecslTitle": "Informacja podsumowująca",
+    "ecslHint": "Jeden wiersz na numer VAT klienta (podmiot FIRINGI).",
+    "intrastatTitle": "Wysyłki Intrastat",
+    "intrastatHint": "Towary z kodem CN8, masą netto i krajem pochodzenia. Wymagane tylko powyżej progu Intrastat w Twoim kraju.",
+    "downloadCsv": "Pobierz CSV",
+    "downloadXlsx": "Pobierz Excel",
+    "total": "Razem {amount}",
+    "empty": "W tym okresie nic nie przekroczyło granicy.",
+    "missingData": "Niektóre towary nie mają kodu CN8 lub masy netto. Dodaj je w Produkty › Kody celne.",
+    "cols": {
+      "country": "Kraj",
+      "vat": "Numer VAT",
+      "customer": "Klient",
+      "type": "Rodzaj",
+      "value": "Wartość (EUR)",
+      "corrects": "Koryguje okres",
+      "description": "Opis",
+      "destination": "Kraj przeznaczenia",
+      "nature": "Rodzaj transakcji",
+      "transport": "Rodzaj transportu",
+      "terms": "Warunki dostawy",
+      "partnerVat": "Numer VAT klienta",
+      "statValue": "Wartość statystyczna (EUR)"
+    },
+    "types": {
+      "GOODS": "Towary",
+      "SERVICES": "Usługi",
+      "TRIANGULAR": "Transakcja trójstronna"
     }
   }
 }

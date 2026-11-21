@@ -919,7 +919,9 @@
     "Rewards Shop": "Balvu veikals",
     "My Rewards": "Manas balvas",
     "Reward Products": "Balvu produkti",
-    "Rewards to Hand Over": "Nododamās balvas"
+    "Rewards to Hand Over": "Nododamās balvas",
+    "Customs Codes": "Muitas kodi",
+    "EU Trade Report": "ES tirdzniecības pārskats"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Jauns piegādātāja pieteikums",
       "body": "{name} no {company} vēlas pārdot FIRINGI platformā. Tas ir CRM kā potenciālais klients."
+    },
+    "trade_deadline": {
+      "title": "{return} par {period}: termiņš {date}",
+      "body": "{return} par {period} jāiesniedz līdz {date} (pēc {days} dienām). Pārbaudiet sadaļā Rēķini un nodokļi › ES iekšējā tirdzniecība."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% no sliekšņa valstī {country}",
+      "body": "Preču {flow} valstī {country} šogad sasniedza {pct}% no Intrastat sliekšņa {threshold} €. Virs tā FIRINGI katru mēnesi jāiesniedz Intrastat."
+    },
+    "trade_code_review": {
+      "title": "Pārbaudāmi muitas dati: {product}",
+      "body": "{company} nosūtīja produkta “{product}” KN8 kodu, neto masu vai izcelsmi. Pārbaudiet sadaļā Rēķini un nodokļi › Muitas kodi."
+    },
+    "trade_code_accepted": {
+      "title": "Muitas dati apstiprināti: {product}",
+      "body": "FIRINGI pārbaudīja un apstiprināja muitas datus, ko nosūtījāt produktam “{product}”."
+    },
+    "trade_code_rejected": {
+      "title": "Muitas dati nav apstiprināti: {product}",
+      "body": "FIRINGI neapstiprināja muitas datus, ko nosūtījāt produktam “{product}”: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebaba un picas piederumi"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Muitas kodi",
+    "customsIntro": "FIRINGI deklarē preces, kas šķērso ES robežu (Intrastat). Norādiet produktu 8 ciparu KN kodu, neto masu un papildu mērvienības uz iepakojumu un izcelsmes valsti. FIRINGI tos pārbauda pirms izmantošanas.",
+    "customsOff": "FIRINGI pašlaik nevāc muitas kodus no piegādātājiem.",
+    "search": "Meklēt produktus",
+    "product": "Produkts",
+    "cn": "KN8 kods",
+    "cnHint": "8 cipari, piem. 2202 10 00 (ES TARIC datubāze).",
+    "netKg": "Neto masa uz iepakojumu (kg)",
+    "supp": "Papildu mērvienības uz iepakojumu",
+    "suppUnit": "Mērvienība: {unit}",
+    "origin": "Izcelsmes valsts",
+    "originHint": "Divi burti, piem. LV",
+    "note": "Piezīme FIRINGI (neobligāti)",
+    "onFile": "Reģistrēts",
+    "categoryDefault": "Kategorijas noklusējums: {code}",
+    "missing": "Trūkst datu",
+    "status": {
+      "PENDING": "Nosūtīts FIRINGI — gaida pārbaudi",
+      "ACCEPTED": "FIRINGI apstiprināja",
+      "REJECTED": "Nav apstiprināts"
+    },
+    "send": "Sūtīt FIRINGI",
+    "sent": "Nosūtīts. FIRINGI pārbaudīs.",
+    "edit": "Norādīt datus",
+    "none": "Vēl nav produktu.",
+    "reportTitle": "ES tirdzniecības pārskats",
+    "reportIntro": "Ko FIRINGI no jums nopirka pāri ES robežai — jūsu kopsavilkuma paziņojumam un Intrastat nosūtījumiem. Summas ir tās, ko izrakstāt FIRINGI, bez PVN (apgrieztā maksāšana).",
+    "reportOff": "FIRINGI ir izslēgusi piegādātāju pārskatus.",
+    "period": "Periods",
+    "ecslTitle": "Kopsavilkuma paziņojums",
+    "ecslHint": "Viena rinda uz klienta PVN numuru (FIRINGI vienība).",
+    "intrastatTitle": "Intrastat nosūtījumi",
+    "intrastatHint": "Preces ar KN8 kodu, neto masu un izcelsmes valsti. Vajadzīgs tikai virs jūsu valsts Intrastat sliekšņa.",
+    "downloadCsv": "Lejupielādēt CSV",
+    "downloadXlsx": "Lejupielādēt Excel",
+    "total": "Kopā {amount}",
+    "empty": "Šajā periodā nekas nešķērsoja robežu.",
+    "missingData": "Dažām precēm trūkst KN8 koda vai neto masas. Pievienojiet tos sadaļā Produkti › Muitas kodi.",
+    "cols": {
+      "country": "Valsts",
+      "vat": "PVN numurs",
+      "customer": "Klients",
+      "type": "Veids",
+      "value": "Vērtība (EUR)",
+      "corrects": "Labo periodu",
+      "description": "Apraksts",
+      "destination": "Galamērķa valsts",
+      "nature": "Darījuma veids",
+      "transport": "Transporta veids",
+      "terms": "Piegādes nosacījumi",
+      "partnerVat": "Klienta PVN numurs",
+      "statValue": "Statistiskā vērtība (EUR)"
+    },
+    "types": {
+      "GOODS": "Preces",
+      "SERVICES": "Pakalpojumi",
+      "TRIANGULAR": "Trīspusējs darījums"
     }
   }
 }

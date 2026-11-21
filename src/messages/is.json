@@ -919,7 +919,9 @@
     "Rewards Shop": "Umbunarbúð",
     "My Rewards": "Umbunin mín",
     "Reward Products": "Umbunarvörur",
-    "Rewards to Hand Over": "Umbun til afhendingar"
+    "Rewards to Hand Over": "Umbun til afhendingar",
+    "Customs Codes": "Tollskrárnúmer",
+    "EU Trade Report": "Skýrsla um viðskipti innan ESB"
   },
   "delivery": {
     "title": "Afhending",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Ný umsókn söluaðila",
       "body": "{name} frá {company} vill selja á FIRINGI. Umsóknin er skráð í CRM sem sölutækifæri."
+    },
+    "trade_deadline": {
+      "title": "{return} fyrir {period}: skilafrestur {date}",
+      "body": "Skila þarf {return} fyrir {period} eigi síðar en {date} (eftir {days} daga). Skoðaðu undir Reikningar og skattar › Viðskipti innan ESB."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% af mörkum í {country}",
+      "body": "{flow} vara í {country} hafa í ár náð {pct}% af Intrastat-mörkunum {threshold} €. Ofan við þau þarf FIRINGI að skila Intrastat mánaðarlega."
+    },
+    "trade_code_review": {
+      "title": "Tollgögn til yfirferðar: {product}",
+      "body": "{company} sendi KN8-númer, nettóþyngd eða uppruna fyrir „{product}“. Skoðaðu undir Reikningar og skattar › Tollskrárnúmer."
+    },
+    "trade_code_accepted": {
+      "title": "Tollgögn samþykkt: {product}",
+      "body": "FIRINGI fór yfir og samþykkti tollgögnin sem þú sendir fyrir „{product}“."
+    },
+    "trade_code_rejected": {
+      "title": "Tollgögn ekki samþykkt: {product}",
+      "body": "FIRINGI samþykkti ekki tollgögnin sem þú sendir fyrir „{product}“: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebab- og pítsuvörur"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Tollskrárnúmer",
+    "customsIntro": "FIRINGI tilkynnir vörur sem fara yfir landamæri ESB (Intrastat). Gefðu upp 8 stafa KN-númer, nettóþyngd og viðbótareiningar á pakkningu og upprunaland vara þinna. FIRINGI yfirfer þau áður en þau eru notuð.",
+    "customsOff": "FIRINGI safnar ekki tollskrárnúmerum frá birgjum eins og er.",
+    "search": "Leita að vörum",
+    "product": "Vara",
+    "cn": "KN8-númer",
+    "cnHint": "8 tölustafir, t.d. 2202 10 00 (TARIC-gagnagrunnur ESB).",
+    "netKg": "Nettóþyngd á pakkningu (kg)",
+    "supp": "Viðbótareiningar á pakkningu",
+    "suppUnit": "Eining: {unit}",
+    "origin": "Upprunaland",
+    "originHint": "Tveir stafir, t.d. IS",
+    "note": "Athugasemd til FIRINGI (valfrjálst)",
+    "onFile": "Skráð",
+    "categoryDefault": "Sjálfgefið í flokki: {code}",
+    "missing": "Gögn vantar",
+    "status": {
+      "PENDING": "Sent til FIRINGI — bíður yfirferðar",
+      "ACCEPTED": "Samþykkt af FIRINGI",
+      "REJECTED": "Ekki samþykkt"
+    },
+    "send": "Senda til FIRINGI",
+    "sent": "Sent. FIRINGI fer yfir það.",
+    "edit": "Skrá gögnin",
+    "none": "Engar vörur enn.",
+    "reportTitle": "Skýrsla um viðskipti innan ESB",
+    "reportIntro": "Það sem FIRINGI keypti af þér yfir landamæri ESB, fyrir þína eigin samantektarskýrslu og Intrastat-sendingar. Fjárhæðirnar eru það sem þú reikningsfærir FIRINGI, án virðisaukaskatts (öfug skattskylda).",
+    "reportOff": "FIRINGI hefur slökkt á skýrslum fyrir birgja.",
+    "period": "Tímabil",
+    "ecslTitle": "Samantektarskýrsla",
+    "ecslHint": "Ein lína á hvert VSK-númer viðskiptavinar (eining FIRINGI).",
+    "intrastatTitle": "Intrastat-sendingar",
+    "intrastatHint": "Vörur með KN8-númeri, nettóþyngd og upprunalandi. Aðeins þörf yfir Intrastat-mörkum þíns lands.",
+    "downloadCsv": "Sækja CSV",
+    "downloadXlsx": "Sækja Excel",
+    "total": "Samtals {amount}",
+    "empty": "Ekkert fór yfir landamæri á þessu tímabili.",
+    "missingData": "Sumar vörur vantar KN8-númer eða nettóþyngd. Bættu þeim við undir Vörur › Tollskrárnúmer.",
+    "cols": {
+      "country": "Land",
+      "vat": "VSK-númer",
+      "customer": "Viðskiptavinur",
+      "type": "Tegund",
+      "value": "Virði (EUR)",
+      "corrects": "Leiðréttir tímabil",
+      "description": "Lýsing",
+      "destination": "Ákvörðunarland",
+      "nature": "Eðli viðskipta",
+      "transport": "Flutningsmáti",
+      "terms": "Afhendingarskilmálar",
+      "partnerVat": "VSK-númer viðskiptavinar",
+      "statValue": "Tölfræðilegt virði (EUR)"
+    },
+    "types": {
+      "GOODS": "Vörur",
+      "SERVICES": "Þjónusta",
+      "TRIANGULAR": "Þríhliða viðskipti"
     }
   }
 }

@@ -919,7 +919,9 @@
     "Rewards Shop": "Beloningsshop",
     "My Rewards": "Mijn beloningen",
     "Reward Products": "Beloningsproducten",
-    "Rewards to Hand Over": "Te leveren beloningen"
+    "Rewards to Hand Over": "Te leveren beloningen",
+    "Customs Codes": "Douanecodes",
+    "EU Trade Report": "EU-handelsrapport"
   },
   "delivery": {
     "title": "Levering",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nieuwe leveranciersaanmelding",
       "body": "{name} van {company} wil verkopen op FIRINGI. Staat in het CRM als lead."
+    },
+    "trade_deadline": {
+      "title": "{return} voor {period}: uiterlijk {date}",
+      "body": "De {return} voor {period} moet uiterlijk {date} worden ingediend ({days} dagen). Controleer het in Facturen en belastingen › Intracommunautaire handel."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% van de drempel in {country}",
+      "body": "De {flow} van goederen in {country} bereikten dit jaar {pct}% van de Intrastat-drempel van € {threshold}. Daarboven moet FIRINGI elke maand Intrastat indienen."
+    },
+    "trade_code_review": {
+      "title": "Douanegegevens te controleren: {product}",
+      "body": "{company} stuurde de GN8-code, het nettogewicht of de oorsprong van \"{product}\". Controleer het in Facturen en belastingen › Douanecodes."
+    },
+    "trade_code_accepted": {
+      "title": "Douanegegevens geaccepteerd: {product}",
+      "body": "FIRINGI heeft de douanegegevens die u voor \"{product}\" stuurde gecontroleerd en geaccepteerd."
+    },
+    "trade_code_rejected": {
+      "title": "Douanegegevens niet geaccepteerd: {product}",
+      "body": "FIRINGI heeft de douanegegevens die u voor \"{product}\" stuurde niet geaccepteerd: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebab- & pizzabenodigdheden"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Douanecodes",
+    "customsIntro": "FIRINGI meldt goederen die een EU-grens overgaan (Intrastat). Geef de 8-cijferige GN-code, het nettogewicht en de aanvullende eenheden per verpakking en het land van oorsprong van uw producten. FIRINGI controleert ze voordat ze worden gebruikt.",
+    "customsOff": "FIRINGI verzamelt op dit moment geen douanecodes van leveranciers.",
+    "search": "Producten zoeken",
+    "product": "Product",
+    "cn": "GN8-code",
+    "cnHint": "8 cijfers, bv. 2202 10 00 (EU-TARIC-databank).",
+    "netKg": "Nettogewicht per verpakking (kg)",
+    "supp": "Aanvullende eenheden per verpakking",
+    "suppUnit": "Eenheid: {unit}",
+    "origin": "Land van oorsprong",
+    "originHint": "Twee letters, bv. NL",
+    "note": "Opmerking voor FIRINGI (optioneel)",
+    "onFile": "Geregistreerd",
+    "categoryDefault": "Standaard van de categorie: {code}",
+    "missing": "Gegevens ontbreken",
+    "status": {
+      "PENDING": "Naar FIRINGI gestuurd — wacht op controle",
+      "ACCEPTED": "Geaccepteerd door FIRINGI",
+      "REJECTED": "Niet geaccepteerd"
+    },
+    "send": "Naar FIRINGI sturen",
+    "sent": "Verstuurd. FIRINGI controleert het.",
+    "edit": "Gegevens invullen",
+    "none": "Nog geen producten.",
+    "reportTitle": "EU-handelsrapport",
+    "reportIntro": "Wat FIRINGI over een EU-grens bij u kocht, voor uw eigen opgaaf intracommunautaire prestaties (ICP) en Intrastat-verzendingen. Bedragen zijn wat u FIRINGI factureert, zonder btw (verlegd).",
+    "reportOff": "FIRINGI heeft de leveranciersrapporten uitgeschakeld.",
+    "period": "Periode",
+    "ecslTitle": "Opgaaf ICP",
+    "ecslHint": "Eén regel per btw-nummer van de klant (de FIRINGI-entiteit).",
+    "intrastatTitle": "Intrastat-verzendingen",
+    "intrastatHint": "Goederen met GN8-code, nettogewicht en land van oorsprong. Alleen nodig boven de Intrastat-drempel van uw land.",
+    "downloadCsv": "CSV downloaden",
+    "downloadXlsx": "Excel downloaden",
+    "total": "Totaal {amount}",
+    "empty": "Niets ging in deze periode over een grens.",
+    "missingData": "Bij sommige goederen ontbreken de GN8-code of het nettogewicht. Vul ze aan in Producten › Douanecodes.",
+    "cols": {
+      "country": "Land",
+      "vat": "Btw-nummer",
+      "customer": "Klant",
+      "type": "Soort",
+      "value": "Bedrag (EUR)",
+      "corrects": "Corrigeert periode",
+      "description": "Omschrijving",
+      "destination": "Land van bestemming",
+      "nature": "Aard van de transactie",
+      "transport": "Vervoerswijze",
+      "terms": "Leveringsvoorwaarden",
+      "partnerVat": "Btw-nummer klant",
+      "statValue": "Statistische waarde (EUR)"
+    },
+    "types": {
+      "GOODS": "Goederen",
+      "SERVICES": "Diensten",
+      "TRIANGULAR": "Driehoeksverkeer"
     }
   }
 }

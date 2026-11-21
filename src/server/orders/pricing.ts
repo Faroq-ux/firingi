@@ -107,10 +107,12 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
       return { ...i, deal: { dealId: h.dealId, bidId: h.bidId, kind: h.kind, unit: h.unit, commissionPct: h.commissionPct }, price: { ...i.price, unitPriceNet: unit.toFixed(4), unitPriceGross: grossOf(unit, String(i.vatRate)).toFixed(2), promotions: [], vendorFundedPerUnit: list.minus(unit).toFixed(4), firingiFundedPerUnit: "0" } };
     });
   }
+  // Phase 57: a buyer FIRINGI invoices as an exempt intra-EU supply (no FIRINGI entity in its country, VAT number valid at VIES)
+  const zeroRated = await (await import("@/server/trade/service")).zeroRatedBuyer(ctx.company.id);
   const lines: Line[] = await Promise.all(items.filter((i) => i.price).map(async (i) => {
     const p = i.price!;
     return {
-      item: i, rate: await vatRate(prisma, ctx.company.countryId, opts.regionId, i.taxCategoryId),
+      item: i, rate: zeroRated ? new Decimal(0) : await vatRate(prisma, ctx.company.countryId, opts.regionId, i.taxCategoryId),
       discounts: p.promotions.map((x) => ({ promotionId: x.id, ownerType: x.ownerType, coupon: x.coupon, perUnit: new Decimal(x.perUnit), firingiPerUnit: new Decimal(x.firingiPerUnit), vendorPerUnit: new Decimal(x.vendorPerUnit) })),
       unitSale: new Decimal(p.listUnitNet).minus(p.vendorFundedPerUnit).minus(p.firingiFundedPerUnit),
     };
@@ -278,7 +280,7 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     const waived = free?.funder === "FIRINGI" && decision.ok ? decision.feeNet : new Decimal(0);
     const chargedFee = decision.ok ? decision.feeNet.minus(waived) : new Decimal(0);
     const feeRule = decision.ok ? (decision.feeOwner === "VENDOR" ? rules.vendor : rules.firingi) : null;
-    const feeVatRate = chargedFee.gt(0) && feeRule?.feeTaxCategoryId ? await vatRate(prisma, ctx.company.countryId, opts.regionId, feeRule.feeTaxCategoryId) : new Decimal(0);
+    const feeVatRate = chargedFee.gt(0) && feeRule?.feeTaxCategoryId && !zeroRated ? await vatRate(prisma, ctx.company.countryId, opts.regionId, feeRule.feeTaxCategoryId) : new Decimal(0);
     const toVendor = decision.ok && decision.feeOwner === "VENDOR";
     const totals = computeTotals(calcLines.map((l) => l.calc), { feeNet: chargedFee, feeVatPercent: feeVatRate, toVendor, firingiPaysVendorFeeNet: toVendor ? waived : 0 });
     const freeUsed = free && normalFee.gt(0) ? free : null;

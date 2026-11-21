@@ -919,7 +919,9 @@
     "Rewards Shop": "Preemiapood",
     "My Rewards": "Minu preemiad",
     "Reward Products": "Preemiatooted",
-    "Rewards to Hand Over": "Üleandmist ootavad preemiad"
+    "Rewards to Hand Over": "Üleandmist ootavad preemiad",
+    "Customs Codes": "Tollikoodid",
+    "EU Trade Report": "ELi kaubandusaruanne"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Uus müüjataotlus",
       "body": "{name} ettevõttest {company} soovib FIRINGIs müüa. See on CRM-is müügivihjena."
+    },
+    "trade_deadline": {
+      "title": "{return} perioodi {period} eest: tähtaeg {date}",
+      "body": "Perioodi {period} {return} tuleb esitada hiljemalt {date} ({days} päeva). Kontrollige jaotises Arved ja maksud › ELi-sisene kaubandus."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct}% künnisest riigis {country}",
+      "body": "Kaupade {flow} riigis {country} on tänavu jõudnud {pct}%-ni Intrastati {threshold} € künnisest. Sellest üle peab FIRINGI esitama Intrastati igal kuul."
+    },
+    "trade_code_review": {
+      "title": "Kontrollimist ootavad tolliandmed: {product}",
+      "body": "{company} saatis toote „{product}” KN8-koodi, netomassi või päritolu. Kontrollige jaotises Arved ja maksud › Tollikoodid."
+    },
+    "trade_code_accepted": {
+      "title": "Tolliandmed kinnitatud: {product}",
+      "body": "FIRINGI kontrollis ja kinnitas tolliandmed, mille saatsite toote „{product}” kohta."
+    },
+    "trade_code_rejected": {
+      "title": "Tolliandmeid ei kinnitatud: {product}",
+      "body": "FIRINGI ei kinnitanud tolliandmeid, mille saatsite toote „{product}” kohta: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebabi- ja pitsatarvikud"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Tollikoodid",
+    "customsIntro": "FIRINGI deklareerib kaubad, mis ületavad ELi piiri (Intrastat). Märkige oma toodete 8-kohaline KN-kood, netomass ja lisaühikud pakendi kohta ning päritoluriik. FIRINGI kontrollib neid enne kasutamist.",
+    "customsOff": "FIRINGI ei kogu praegu tarnijatelt tollikoode.",
+    "search": "Otsi tooteid",
+    "product": "Toode",
+    "cn": "KN8-kood",
+    "cnHint": "8 numbrit, nt 2202 10 00 (ELi TARIC-andmebaas).",
+    "netKg": "Netomass pakendi kohta (kg)",
+    "supp": "Lisaühikud pakendi kohta",
+    "suppUnit": "Ühik: {unit}",
+    "origin": "Päritoluriik",
+    "originHint": "Kaks tähte, nt EE",
+    "note": "Märkus FIRINGIle (valikuline)",
+    "onFile": "Salvestatud",
+    "categoryDefault": "Kategooria vaikimisi kood: {code}",
+    "missing": "Andmed puuduvad",
+    "status": {
+      "PENDING": "Saadetud FIRINGIle — ootab kontrolli",
+      "ACCEPTED": "FIRINGI kinnitas",
+      "REJECTED": "Ei kinnitatud"
+    },
+    "send": "Saada FIRINGIle",
+    "sent": "Saadetud. FIRINGI kontrollib.",
+    "edit": "Sisesta andmed",
+    "none": "Tooteid veel pole.",
+    "reportTitle": "ELi kaubandusaruanne",
+    "reportIntro": "Mida FIRINGI teilt üle ELi piiri ostis — teie enda koondaruande (VD) ja Intrastati väljaveo jaoks. Summad on need, mis te FIRINGIle arveldate, ilma käibemaksuta (pöördmaksustamine).",
+    "reportOff": "FIRINGI on tarnijate aruanded välja lülitanud.",
+    "period": "Periood",
+    "ecslTitle": "Koondaruanne",
+    "ecslHint": "Üks rida kliendi KMKR-numbri kohta (FIRINGI üksus).",
+    "intrastatTitle": "Intrastati väljavedu",
+    "intrastatHint": "Kaubad KN8-koodi, netomassi ja päritoluriigiga. Vajalik ainult üle teie riigi Intrastati künnise.",
+    "downloadCsv": "Laadi alla CSV",
+    "downloadXlsx": "Laadi alla Excel",
+    "total": "Kokku {amount}",
+    "empty": "Selles perioodis ei ületanud miski piiri.",
+    "missingData": "Mõnel kaubal puudub KN8-kood või netomass. Lisage need jaotises Tooted › Tollikoodid.",
+    "cols": {
+      "country": "Riik",
+      "vat": "KMKR-number",
+      "customer": "Klient",
+      "type": "Liik",
+      "value": "Väärtus (EUR)",
+      "corrects": "Parandab perioodi",
+      "description": "Kirjeldus",
+      "destination": "Sihtriik",
+      "nature": "Tehingu liik",
+      "transport": "Transpordiliik",
+      "terms": "Tarnetingimused",
+      "partnerVat": "Kliendi KMKR-number",
+      "statValue": "Statistiline väärtus (EUR)"
+    },
+    "types": {
+      "GOODS": "Kaubad",
+      "SERVICES": "Teenused",
+      "TRIANGULAR": "Kolmnurktehing"
     }
   }
 }

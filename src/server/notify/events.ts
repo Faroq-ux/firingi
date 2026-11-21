@@ -233,6 +233,12 @@ export const EVENTS: EventDef[] = [
   E("review.reminder", "orders", null, ["EMAIL", "PUSH"], ["product"]),
   E("review.hidden", "catalogue", null, ["EMAIL"], ["product", "reason"]),
   E("review.to_moderate", "catalogue", ["admin.reviews.moderate"], ["PUSH"], ["kind", "reason"]),
+  // Phase 57: EU trade reporting
+  E("trade.deadline", "finance", ["admin.finance.manage", "admin.tax.manage"], ["EMAIL", "PUSH"], ["return", "period", "date", "days"]),
+  E("trade.threshold", "finance", ["admin.finance.manage", "admin.tax.manage"], ["EMAIL"], ["country", "flow", "pct", "threshold"]),
+  E("trade.code_review", "catalogue", ["admin.catalogue.manage", "admin.tax.manage"], ["EMAIL"], ["company", "product"]),
+  E("trade.code_accepted", "catalogue", ["vendor.products.manage"], ["EMAIL", "PUSH"], ["product"]),
+  E("trade.code_rejected", "catalogue", ["vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "note"]),
   // Phase 56: landing page
   E("website.contact", "account", ["admin.crm.view", "admin.crm.manage"], ["EMAIL", "PUSH"], ["company", "name"]),
   E("website.vendor_interest", "account", ["admin.crm.view", "admin.crm.manage"], ["EMAIL", "PUSH"], ["company", "name"]),

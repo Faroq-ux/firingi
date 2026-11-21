@@ -919,7 +919,9 @@
     "Rewards Shop": "Prizų parduotuvė",
     "My Rewards": "Mano prizai",
     "Reward Products": "Prizų produktai",
-    "Rewards to Hand Over": "Perduotini prizai"
+    "Rewards to Hand Over": "Perduotini prizai",
+    "Customs Codes": "Muitinės kodai",
+    "EU Trade Report": "ES prekybos ataskaita"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Nauja tiekėjo paraiška",
       "body": "{name} iš {company} nori parduoti per FIRINGI. Jis įrašytas CRM kaip potencialus klientas."
+    },
+    "trade_deadline": {
+      "title": "{return} už {period}: terminas {date}",
+      "body": "{return} už {period} reikia pateikti iki {date} (po {days} d.). Patikrinkite skiltyje Sąskaitos ir mokesčiai › Prekyba ES viduje."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % ribos šalyje {country}",
+      "body": "Prekių {flow} šalyje {country} šiemet pasiekė {pct} % Intrastat ribos ({threshold} €). Ją viršijus FIRINGI kas mėnesį turi teikti Intrastat."
+    },
+    "trade_code_review": {
+      "title": "Tikrintini muitinės duomenys: {product}",
+      "body": "{company} atsiuntė „{product}“ KN8 kodą, grynąją masę ar kilmę. Patikrinkite skiltyje Sąskaitos ir mokesčiai › Muitinės kodai."
+    },
+    "trade_code_accepted": {
+      "title": "Muitinės duomenys patvirtinti: {product}",
+      "body": "FIRINGI patikrino ir patvirtino muitinės duomenis, kuriuos atsiuntėte „{product}“."
+    },
+    "trade_code_rejected": {
+      "title": "Muitinės duomenys nepatvirtinti: {product}",
+      "body": "FIRINGI nepatvirtino muitinės duomenų, kuriuos atsiuntėte „{product}“: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebabų ir picų reikmenys"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Muitinės kodai",
+    "customsIntro": "FIRINGI deklaruoja prekes, kertančias ES sieną (Intrastat). Nurodykite savo produktų 8 skaitmenų KN kodą, grynąją masę ir papildomus vienetus pakuotėje bei kilmės šalį. FIRINGI juos patikrina prieš naudodama.",
+    "customsOff": "Šiuo metu FIRINGI nerenka muitinės kodų iš tiekėjų.",
+    "search": "Ieškoti produktų",
+    "product": "Produktas",
+    "cn": "KN8 kodas",
+    "cnHint": "8 skaitmenys, pvz., 2202 10 00 (ES TARIC duomenų bazė).",
+    "netKg": "Grynoji masė pakuotėje (kg)",
+    "supp": "Papildomi vienetai pakuotėje",
+    "suppUnit": "Vienetas: {unit}",
+    "origin": "Kilmės šalis",
+    "originHint": "Dvi raidės, pvz., LT",
+    "note": "Pastaba FIRINGI (neprivaloma)",
+    "onFile": "Užregistruota",
+    "categoryDefault": "Kategorijos numatytasis: {code}",
+    "missing": "Trūksta duomenų",
+    "status": {
+      "PENDING": "Išsiųsta FIRINGI — laukia patikros",
+      "ACCEPTED": "FIRINGI patvirtino",
+      "REJECTED": "Nepatvirtinta"
+    },
+    "send": "Siųsti FIRINGI",
+    "sent": "Išsiųsta. FIRINGI patikrins.",
+    "edit": "Nurodyti duomenis",
+    "none": "Produktų dar nėra.",
+    "reportTitle": "ES prekybos ataskaita",
+    "reportIntro": "Ką FIRINGI iš jūsų pirko per ES sieną — jūsų suvestinei ataskaitai ir Intrastat išsiuntimams. Sumos yra tai, ką išrašote FIRINGI, be PVM (atvirkštinis apmokestinimas).",
+    "reportOff": "FIRINGI išjungė tiekėjų ataskaitas.",
+    "period": "Laikotarpis",
+    "ecslTitle": "Suvestinė ataskaita",
+    "ecslHint": "Viena eilutė vienam kliento PVM kodui (FIRINGI subjektas).",
+    "intrastatTitle": "Intrastat išsiuntimai",
+    "intrastatHint": "Prekės su KN8 kodu, grynąja mase ir kilmės šalimi. Reikia tik viršijus jūsų šalies Intrastat ribą.",
+    "downloadCsv": "Atsisiųsti CSV",
+    "downloadXlsx": "Atsisiųsti Excel",
+    "total": "Iš viso {amount}",
+    "empty": "Šiuo laikotarpiu niekas nekirto sienos.",
+    "missingData": "Kai kurioms prekėms trūksta KN8 kodo ar grynosios masės. Pridėkite juos skiltyje Produktai › Muitinės kodai.",
+    "cols": {
+      "country": "Šalis",
+      "vat": "PVM kodas",
+      "customer": "Klientas",
+      "type": "Rūšis",
+      "value": "Vertė (EUR)",
+      "corrects": "Taiso laikotarpį",
+      "description": "Aprašymas",
+      "destination": "Paskirties šalis",
+      "nature": "Sandorio pobūdis",
+      "transport": "Transporto rūšis",
+      "terms": "Pristatymo sąlygos",
+      "partnerVat": "Kliento PVM kodas",
+      "statValue": "Statistinė vertė (EUR)"
+    },
+    "types": {
+      "GOODS": "Prekės",
+      "SERVICES": "Paslaugos",
+      "TRIANGULAR": "Trišalis sandoris"
     }
   }
 }

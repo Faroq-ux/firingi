@@ -919,7 +919,9 @@
     "Rewards Shop": "Palkintokauppa",
     "My Rewards": "Omat palkinnot",
     "Reward Products": "Palkintotuotteet",
-    "Rewards to Hand Over": "Luovutettavat palkinnot"
+    "Rewards to Hand Over": "Luovutettavat palkinnot",
+    "Customs Codes": "Tullikoodit",
+    "EU Trade Report": "EU-kauppaneraportti"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2026,6 +2028,26 @@
     "website_vendor_interest": {
       "title": "Uusi toimittajahakemus",
       "body": "{name} yrityksestä {company} haluaa myydä FIRINGIssä. Se on CRM:ssä liidinä."
+    },
+    "trade_deadline": {
+      "title": "{return} jaksolta {period}: määräpäivä {date}",
+      "body": "{return} jaksolta {period} on annettava viimeistään {date} ({days} päivää). Tarkista kohdassa Laskut ja verot › EU-kauppa."
+    },
+    "trade_threshold": {
+      "title": "Intrastat {flow}: {pct} % kynnyksestä ({country})",
+      "body": "Tavaroiden {flow} maassa {country} ovat tänä vuonna {pct} % Intrastat-kynnyksestä {threshold} €. Sen yli FIRINGIn on annettava Intrastat joka kuukausi."
+    },
+    "trade_code_review": {
+      "title": "Tarkistettavat tullitiedot: {product}",
+      "body": "{company} lähetti tuotteen ”{product}” CN8-koodin, nettopainon tai alkuperän. Tarkista kohdassa Laskut ja verot › Tullikoodit."
+    },
+    "trade_code_accepted": {
+      "title": "Tullitiedot hyväksytty: {product}",
+      "body": "FIRINGI tarkisti ja hyväksyi tuotteelle ”{product}” lähettämäsi tullitiedot."
+    },
+    "trade_code_rejected": {
+      "title": "Tullitietoja ei hyväksytty: {product}",
+      "body": "FIRINGI ei hyväksynyt tuotteelle ”{product}” lähettämiäsi tullitietoja: {note}"
     }
   },
   "notifications": {
@@ -8402,6 +8424,66 @@
           "14": "Kebab- ja pizzatarvikkeet"
         }
       }
+    }
+  },
+  "trade": {
+    "customsTitle": "Tullikoodit",
+    "customsIntro": "FIRINGI ilmoittaa EU:n rajan ylittävät tavarat (Intrastat). Anna tuotteidesi 8-numeroinen CN-koodi, nettopaino ja lisäyksiköt pakkausta kohden sekä alkuperämaa. FIRINGI tarkistaa ne ennen käyttöä.",
+    "customsOff": "FIRINGI ei tällä hetkellä kerää tullikoodeja toimittajilta.",
+    "search": "Hae tuotteita",
+    "product": "Tuote",
+    "cn": "CN8-koodi",
+    "cnHint": "8 numeroa, esim. 2202 10 00 (EU:n TARIC-tietokanta).",
+    "netKg": "Nettopaino pakkausta kohden (kg)",
+    "supp": "Lisäyksiköt pakkausta kohden",
+    "suppUnit": "Yksikkö: {unit}",
+    "origin": "Alkuperämaa",
+    "originHint": "Kaksi kirjainta, esim. FI",
+    "note": "Viesti FIRINGIlle (valinnainen)",
+    "onFile": "Tallennettu",
+    "categoryDefault": "Kategorian oletus: {code}",
+    "missing": "Tietoja puuttuu",
+    "status": {
+      "PENDING": "Lähetetty FIRINGIlle — odottaa tarkistusta",
+      "ACCEPTED": "FIRINGI hyväksyi",
+      "REJECTED": "Ei hyväksytty"
+    },
+    "send": "Lähetä FIRINGIlle",
+    "sent": "Lähetetty. FIRINGI tarkistaa sen.",
+    "edit": "Anna tiedot",
+    "none": "Ei vielä tuotteita.",
+    "reportTitle": "EU-kauppaneraportti",
+    "reportIntro": "Mitä FIRINGI osti sinulta EU:n rajan yli, omaa yhteenvetoilmoitustasi ja Intrastat-lähetyksiäsi varten. Summat ovat FIRINGIlle laskuttamasi, ilman arvonlisäveroa (käännetty verovelvollisuus).",
+    "reportOff": "FIRINGI on poistanut toimittajaraportit käytöstä.",
+    "period": "Jakso",
+    "ecslTitle": "Yhteenvetoilmoitus",
+    "ecslHint": "Yksi rivi asiakkaan ALV-numeroa kohden (FIRINGIn yksikkö).",
+    "intrastatTitle": "Intrastat-lähetykset",
+    "intrastatHint": "Tavarat CN8-koodilla, nettopainolla ja alkuperämaalla. Tarpeen vain maasi Intrastat-kynnyksen ylittyessä.",
+    "downloadCsv": "Lataa CSV",
+    "downloadXlsx": "Lataa Excel",
+    "total": "Yhteensä {amount}",
+    "empty": "Mikään ei ylittänyt rajaa tällä jaksolla.",
+    "missingData": "Joiltakin tavaroilta puuttuu CN8-koodi tai nettopaino. Lisää ne kohdassa Tuotteet › Tullikoodit.",
+    "cols": {
+      "country": "Maa",
+      "vat": "ALV-numero",
+      "customer": "Asiakas",
+      "type": "Tyyppi",
+      "value": "Arvo (EUR)",
+      "corrects": "Korjaa jakson",
+      "description": "Kuvaus",
+      "destination": "Määrämaa",
+      "nature": "Liiketoimen luonne",
+      "transport": "Kuljetusmuoto",
+      "terms": "Toimitusehdot",
+      "partnerVat": "Asiakkaan ALV-numero",
+      "statValue": "Tilastoarvo (EUR)"
+    },
+    "types": {
+      "GOODS": "Tavarat",
+      "SERVICES": "Palvelut",
+      "TRIANGULAR": "Kolmikantakauppa"
     }
   }
 }
