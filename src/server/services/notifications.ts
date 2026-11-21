@@ -309,9 +309,16 @@ async function updateStatus(providerMessageId: string, raw: string, error?: stri
 async function storeInbound(channel: NotificationChannel, rawFrom: string, body: string, providerMessageId: string | null, mediaUrl?: string | null) {
   const from = normalisePhone(rawFrom.replace(/^whatsapp:/, "").replace(/^(\d)/, "+$1"));
   if (!from) return;
-  const user = await prisma.user.findFirst({ where: { phone: from }, select: { id: true, memberships: { where: { status: "ACTIVE" }, take: 1, select: { companyId: true } } } });
   if (providerMessageId && (await prisma.inboundMessage.findUnique({ where: { providerMessageId } }))) return; // provider retries
-  await prisma.inboundMessage.create({ data: { channel, from, body: body.slice(0, 4000), mediaUrl: mediaUrl ?? null, providerMessageId, userId: user?.id ?? null, companyId: user?.memberships[0]?.companyId ?? null } });
+  let userId: string | null = null, companyId: string | null = null;
+  const user = await prisma.user.findFirst({ where: { phone: from }, select: { id: true, memberships: { where: { status: "ACTIVE" }, take: 1, select: { companyId: true } } } });
+  if (user) { userId = user.id; companyId = user.memberships[0]?.companyId ?? null; }
+  else if (channel === "WHATSAPP") {
+    // Phase 56: a business's own WhatsApp number (given at registration or in its profile) → that business and its owner
+    const company = await prisma.company.findFirst({ where: { whatsapp: from }, select: { id: true, memberships: { where: { status: "ACTIVE", isOwner: true }, take: 1, select: { userId: true } } } });
+    if (company) { companyId = company.id; userId = company.memberships[0]?.userId ?? null; }
+  }
+  await prisma.inboundMessage.create({ data: { channel, from, body: body.slice(0, 4000), mediaUrl: mediaUrl ?? null, providerMessageId, userId, companyId } });
 }
 
 /** Twilio: X-Twilio-Signature = base64(HMAC-SHA1(authToken, url + sorted key+value pairs)). */

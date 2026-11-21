@@ -259,7 +259,10 @@
       "activityCodeOnce": "Įveskite jį vieną kartą — vėliau jį gali pakeisti tik FIRINGI.",
       "activityCodesSecondary": "Papildomi {scheme} kodai (neprivaloma)",
       "activityCodesHint": "Atskirkite kableliais — iki {max}.",
-      "activityCodesAdd": "Daugiau kodų pridėkite čia; jau nurodyti lieka — pašalinti juos gali tik FIRINGI."
+      "activityCodesAdd": "Daugiau kodų pridėkite čia; jau nurodyti lieka — pašalinti juos gali tik FIRINGI.",
+      "whatsapp": "WhatsApp numeris (neprivaloma)",
+      "whatsappHint": "Nurodykite, jei užsakymams ir žinutėms naudojate WhatsApp. Su šalies kodu.",
+      "whatsappSame": "Šis telefono numeris taip pat naudojamas WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restoranas",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Prizų lieka nedaug",
       "body": "„{reward}“ liko tik {left}."
+    },
+    "website_contact": {
+      "title": "Naujas klausimas iš svetainės",
+      "body": "{name} iš {company} atsiuntė klausimą. Jis įrašytas CRM kaip potencialus klientas."
+    },
+    "website_vendor_interest": {
+      "title": "Nauja tiekėjo paraiška",
+      "body": "{name} iš {company} nori parduoti per FIRINGI. Jis įrašytas CRM kaip potencialus klientas."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Dar nė vienas klientas neiškeitė taškų į jūsų produktus.",
       "orderBy": "Užsakyti iki {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Pirkite, papildykite atsargas ir valdykite savo verslą",
+      "description": "Papildykite verslo atsargas iš visų didmenininkų vienu užsakymu: kiekio kainos, aiškios sąskaitos su jūsų NIF, pristatymas tą pačią dieną."
+    },
+    "open": "Sukurti verslo paskyrą",
+    "menuOpen": "Atidaryti meniu",
+    "menuClose": "Uždaryti meniu",
+    "chart": {
+      "label": "Trys tiekėjai siunčia pristatymo maršrutus į vieną verslą",
+      "shop": "Jūsų verslas",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Kt 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Kt 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Š 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI programėlės ekranas: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Ieškokite prekių, prekės ženklų, tiekėjų…",
+        "next": "Pristatymas šiandien",
+        "cart": "Jūsų krepšelis",
+        "minOk": "Minimumas pasiektas",
+        "total": "Iš viso",
+        "checkout": "Užsakyti ir apmokėti",
+        "steps": {
+          "1": "Užsakyta",
+          "2": "Paruošta",
+          "3": "Pakeliui",
+          "4": "Pristatyta"
+        },
+        "reorder": "Laikas užsakyti vėl",
+        "fill": "Užpildyti krepšelį",
+        "lastTime": "Praėjusį kartą: {n} dėž.",
+        "role": "Didmeninis klientas",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "TIESIOGIAI",
+        "welcome": "Sveiki, {name}",
+        "recent": "Naujausi užsakymai",
+        "nav": {
+          "1": "Skydelis",
+          "2": "Katalogas",
+          "3": "Užsakymai",
+          "4": "Sąskaitos ir mokėjimai",
+          "5": "Prizai",
+          "6": "Pagalba ir palaikymas",
+          "7": "Kasa (POS)",
+          "8": "Virtuvė ir atsargos"
+        },
+        "kpi": {
+          "1": "Vykdomi užsakymai",
+          "2": "Pakeliui",
+          "3": "Išleista per 30 dienų",
+          "4": "Neapmokėtos sąskaitos"
+        }
+      },
+      "products": {
+        "1": "Ilgagrūdžiai ryžiai 1 kg × 10",
+        "2": "Ypač tyras alyvuogių aliejus 5 l",
+        "3": "Tunas alyvuogių aliejuje 120 g × 24",
+        "4": "UHT pienas 1 l × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Perkelkite savo didmeninę prekybą į internetą.",
+      "sub": "Pasiekite verslus, kurie užsako kas savaitę, nepriimdami užsakymų telefonu ir nesivaikydami mokėjimų.",
+      "cta": "Tapkite tiekėju",
+      "rows": {
+        "1": {
+          "t": "Nustatykite savo sąlygas",
+          "p": "Pasirinkite kainas, kiekio pakopas, minimalius užsakymus ir pristatymo dienas."
+        },
+        "2": {
+          "t": "Visi užsakymai vienoje eilėje",
+          "p": "Nauji užsakymai patenka į vieną sąrašą, paruošti pakuoti."
+        },
+        "3": {
+          "t": "Siųskite ir dalinkitės būsena",
+          "p": "Paskirkite vairuotojus, o klientai seks sunkvežimį jums neskambindami."
+        },
+        "4": {
+          "t": "Išmoka už kiekvieną užsakymą",
+          "p": "Kiekvienas užsakymas išmokamas atskirai, su aiškiu įrašu jūsų buhalterijai."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Parduokite per FIRINGI — pasiekite verslus visoje Portugalijoje",
+      "description": "Įkelkite savo didmenines prekes į FIRINGI. Verslai užsako iš jūsų viename krepšelyje su kitais tiekėjais, o FIRINGI išrašo jiems sąskaitas ir išmoka jums pinigus.",
+      "rowsH2": "Viskas, ko reikia norint parduoti verslams.",
+      "formH2": "Pateikite paraišką parduoti per FIRINGI",
+      "formSub": "Papasakokite apie savo įmonę. Per vieną darbo dieną atsakysime ir nurodysime tolesnius žingsnius.",
+      "navPlans": "Planai tiekėjams",
+      "typesH2": "Du būdai parduoti per FIRINGI.",
+      "typesSub": "Didmenininkai parduoda parduotuvėms, kavinėms ir restoranams savo šalyje. Platintojai parduoda didmenininkams visoje ES.",
+      "types": {
+        "wholesaler": {
+          "t": "Didmenininkas",
+          "p": "Parduokite parduotuvėms, kavinėms ir restoranams savo šalyje pagal zoną arba atstumą — ir papildykite atsargas iš platintojų per FIRINGI.",
+          "b": {
+            "1": "Jūsų šalies parduotuvės, kavinės ir restoranai perka iš jūsų",
+            "2": "Pristatymas pagal zoną arba atstumą",
+            "3": "Pirkite prekes iš platintojų visoje ES"
+          },
+          "cta": "Registruokitės kaip didmenininkas"
+        },
+        "distributor": {
+          "t": "Platintojas",
+          "p": "Parduokite didmenininkams visoje ES. Jie perka jūsų prekes dideliais kiekiais ir perparduoda jas parduotuvėms bei restoranams savo šalyje.",
+          "b": {
+            "1": "ES šalių didmenininkai perka iš jūsų",
+            "2": "Užsakymai dideliais kiekiais, dėžėmis ir paletėmis",
+            "3": "Tarpvalstybines sąskaitas tvarko FIRINGI"
+          },
+          "cta": "Registruokitės kaip platintojas"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Ko verslai klausia pirmiausia.",
+      "items": {
+        "1": {
+          "q": "Ar gali pirkti privatūs asmenys?",
+          "a": "Ne. FIRINGI skirta įmonėms, turinčioms NIF. Kainos didmeninės, o sąskaitos išrašomos jūsų įmonei."
+        },
+        "2": {
+          "q": "Koks minimalus užsakymas?",
+          "a": "150 € visam krepšeliui, nesvarbu, kiek tiekėjų jame yra."
+        },
+        "3": {
+          "q": "Ar kainos su PVM, ar be jo?",
+          "a": "Be PVM. PVM pridedamas apmokant pagal kiekvienos prekės tarifą ir rodomas kiekvienoje sąskaitos eilutėje."
+        },
+        "4": {
+          "q": "Kada atvyks mano prekės?",
+          "a": "Tą pačią dieną. Viskas, ką užsakote iki nustatyto laiko, atvyksta tą dieną iš visų krepšelio tiekėjų, o kiekvieną sunkvežimį galite sekti programėlėje."
+        },
+        "5": {
+          "q": "Kaip ir kada mokėti?",
+          "a": "Už visą krepšelį sumokate vieną kartą per Multibanco, MB WAY, kortele arba SEPA pavedimu. Patvirtinti verslai taip pat gali mokėti iki 30 dienų po sąskaitos išrašymo."
+        },
+        "6": {
+          "q": "Ar mano kolegos gali užsakyti iš tos pačios paskyros?",
+          "a": "Taip. Pridėkite naudotojų su atskirais prisijungimais ir pasirinkite, kas gali užsakyti, kas mato sąskaitas ir kas keičia pristatymo adresus."
+        },
+        "7": {
+          "q": "O jei prekės atvyksta pažeistos?",
+          "a": "Praneškite programėlėje per 24 valandas ir pridėkite nuotrauką. Tiekėjas pakeis prekę arba išrašys kreditinę sąskaitą."
+        },
+        "8": {
+          "q": "Ar pristatote į Madeirą ir Azorus?",
+          "a": "Kol kas ne. Pradedame nuo žemyninės Portugalijos, salas pridėsime vėliau."
+        },
+        "9": {
+          "q": "Ar galiu parduoti per FIRINGI?",
+          "a": "Taip. Tapkite tiekėju, nustatykite kainas, minimumus ir pristatymo dienas ir pradėkite gauti užsakymus iš netoliese esančių verslų."
+        }
+      }
+    },
+    "final": {
+      "h2": "Kitas atsargų papildymas gali būti vienas užsakymas.",
+      "p": "Sukurkite verslo paskyrą ir pamatykite netoliese esančių tiekėjų didmenines kainas."
+    },
+    "plans": {
+      "h2": "Planai tiekėjams. Pirkėjai niekada nemoka.",
+      "sub": "Verslai, perkantys per FIRINGI, naudojasi nemokamai. Tiekėjai pradeda nemokamai ir augdami pereina prie didesnio plano.",
+      "per": "/mėn.",
+      "top": "Dažniausiai renkamasi",
+      "note": "Planai ir kainos imami iš FIRINGI planų nustatymų, todėl šis skyrius visada atitinka tai, ką moka tiekėjai.",
+      "start": "Pradėti nemokamai",
+      "choose": "Rinktis {name}",
+      "products": "Iki {n} prekių",
+      "productsAll": "Neribotas prekių skaičius",
+      "team": "Naudotojai: {users}, sandėliai: {wh}, vairuotojai: {drivers}",
+      "teamAll": "Neriboti naudotojai, sandėliai ir vairuotojai",
+      "earlyPay": "Ankstesnė išmoka nuo {rate} % per dieną",
+      "freeEarly": "Nemokamos ankstesnės išmokos: {n} per mėnesį",
+      "includes": "Apima: {list}",
+      "basics": "Užsakymai, sąskaitos ir išmokos per FIRINGI",
+      "feature": {
+        "INVENTORY": "atsargos",
+        "PLANNING": "planavimas",
+        "WAREHOUSE": "komplektavimas sandėlyje",
+        "PRICE_INSIGHTS": "kainų įžvalgos",
+        "ADS": "reklama",
+        "INTEGRATIONS": "integracijos",
+        "ROUTES": "maršrutai",
+        "ASSISTANT": "DI asistentas"
+      }
+    },
+    "contact": {
+      "h2": "Susisiekite su mumis.",
+      "sub": "Klausimų apie pirkimą ar pardavimą? Atsakome per vieną darbo dieną.",
+      "name": "Vardas",
+      "company": "Įmonė",
+      "email": "El. paštas",
+      "phone": "Mobilusis",
+      "nif": "NIF",
+      "type": "Jūsų verslas",
+      "msg": "Žinutė",
+      "consent": "Sutinku, kad FIRINGI naudotų šiuos duomenis atsakymui, kaip nurodyta privatumo politikoje.",
+      "send": "Siųsti",
+      "waT": "WhatsApp",
+      "waP": "Rašykite mūsų komandai per WhatsApp nuo pirmadienio iki šeštadienio, 9:00–19:00.",
+      "waB": "Atidaryti WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restoranas, kavinė ar baras",
+        "2": "Maisto parduotuvė ar minimarketas",
+        "3": "Viešbutis ar maitinimo paslaugos",
+        "4": "Valgykla, mokykla ar globos namai",
+        "5": "Kita"
+      },
+      "vendorMsg": "Ką parduodate ir kur pristatote",
+      "sent": "Ačiū. Atsakysime per vieną darbo dieną.",
+      "errRequired": "Įrašykite vardą, įmonę ir el. paštą.",
+      "errEmail": "Įveskite tinkamą el. pašto adresą.",
+      "errConsent": "Pažymėkite langelį, kad sutiktumėte.",
+      "errSpam": "Kažkas nepavyko. Bandykite dar kartą.",
+      "errBusy": "Per daug žinučių. Bandykite dar kartą po minutės.",
+      "sending": "Siunčiama…",
+      "vendorType": "Noriu parduoti kaip",
+      "vendorTypes": {
+        "WHOLESALER": "Didmenininkas — parduodu parduotuvėms savo šalyje",
+        "DISTRIBUTOR": "Platintojas — parduodu didmenininkams ES"
+      }
+    },
+    "news": {
+      "label": "Kartą per mėnesį el. paštu: nauji tiekėjai, pasiūlymai ir pristatymo zonos.",
+      "ph": "Jūsų darbo el. paštas",
+      "btn": "Prenumeruoti",
+      "note": "Atsisakyti galite bet kada.",
+      "consent": "Sutinku gauti FIRINGI naujienlaiškį. Atsisakyti galiu bet kada.",
+      "sent": "Beveik baigta. Patikrinkite el. paštą ir patvirtinkite prenumeratą.",
+      "confirmedTitle": "Prenumerata patvirtinta.",
+      "confirmedBody": "Ačiū. Naujienlaiškį gausite kartą per mėnesį.",
+      "unsubTitle": "Prenumeratos atsisakėte.",
+      "unsubBody": "Naujienlaiškio nebegausite. Vėl užsiprenumeruoti galite bet kada.",
+      "invalid": "Ši nuoroda nebegalioja.",
+      "back": "Grįžti į FIRINGI"
+    },
+    "foot": {
+      "tag": "Pirkite, papildykite atsargas ir valdykite savo verslą negaišdami laiko.",
+      "buy": "Pirkimas",
+      "sell": "Tiekėjams",
+      "help": "Pagalba",
+      "legal": "Teisinė informacija",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Visos teisės saugomos.",
+      "links": {
+        "buy": {
+          "1": "Pirkimas",
+          "2": "Kasa",
+          "3": "Valdymas",
+          "4": "Taupymas"
+        },
+        "sell": {
+          "1": "Tapkite tiekėju",
+          "2": "Planai tiekėjams"
+        },
+        "help": {
+          "1": "Klausimai",
+          "2": "Kontaktai",
+          "3": "Sistemos būsena",
+          "4": "Prisijungti"
+        },
+        "legal": {
+          "1": "Naudojimo sąlygos",
+          "2": "Privatumo politika (BDAR)",
+          "3": "Slapukai",
+          "4": "Įmonės duomenys"
+        }
+      }
+    },
+    "login": "Prisijungti",
+    "mail": {
+      "contactSubject": "Gavome jūsų žinutę",
+      "hello": "Sveiki, {name},",
+      "helloAll": "Sveiki,",
+      "contactBody": "Ačiū, kad susisiekėte su FIRINGI. Gavome jūsų žinutę ir atsakysime per vieną darbo dieną.",
+      "newsSubject": "Patvirtinkite FIRINGI naujienlaiškio prenumeratą",
+      "newsBody": "Patvirtinkite, kad norite gauti FIRINGI naujienlaiškį:",
+      "newsIgnore": "Jei to neprašėte, nekreipkite dėmesio į šį laišką.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Naudojimo sąlygos",
+      "privacy": "Privatumo politika (BDAR)",
+      "cookies": "Slapukai",
+      "company": "Įmonės duomenys",
+      "updated": "Atnaujinta {date}",
+      "empty": "Šis puslapis ruošiamas. Jei turite klausimų, susisiekite su mumis.",
+      "back": "Grįžti į FIRINGI"
+    },
+    "langPicker": "Pasirinkite kalbą",
+    "app": {
+      "nav": {
+        "buy": "Pirkimas",
+        "till": "Kasa",
+        "manage": "Valdymas",
+        "save": "Taupymas",
+        "vendors": "Tapkite tiekėju",
+        "faq": "Klausimai"
+      },
+      "hero": {
+        "eyebrow": "Parduotuvėms, minimarketams, kavinėms ir restoranams Portugalijoje",
+        "h1a": "Pirkite, papildykite atsargas ir valdykite",
+        "h1b": "savo verslą",
+        "h1c": "negaišdami laiko.",
+        "lead": "Užsakykite iš visų didmenininkų viename krepšelyje — maisto prekes, gėrimus, higienos ir valymo priemones, tabaką ir daugiau — su pristatymu tą pačią dieną. Parduokite su FIRINGI kasa ir matykite maržas, atsargas bei darbuotojus viename skydelyje.",
+        "cta2": "Pažiūrėkite, kaip tai veikia",
+        "note": "Verslui nemokamai · Kortelės nereikia"
+      },
+      "float": {
+        "1": "Naujas užsakymas · pristatymas šiandien",
+        "2": "Sąskaita apmokėta · MB WAY",
+        "3": "+120 lojalumo taškų"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minimalus užsakymas visam krepšeliui"
+        },
+        "2": {
+          "v": "Tą pačią dieną",
+          "l": "pristatymas nuo pirmadienio iki šeštadienio"
+        },
+        "3": {
+          "v": "1 sąskaita",
+          "l": "iš FIRINGI už kiekvieną užsakymą"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "verslo paskyrai sukurti"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Pirkimas",
+          "h": "Visi didmenininkai. Vienas krepšelis. Pristatoma šiandien.",
+          "p": "Ieškokite viename kataloge su daugelio tiekėjų didmeninėmis kainomis, užpildykite vieną krepšelį ir sumokėkite vieną kartą. Viskas atvyksta tą pačią dieną.",
+          "b": {
+            "1": "Vienas 150 € minimumas visam krepšeliui",
+            "2": "Kiekio kainos kiekvienai prekei",
+            "3": "Sekite kiekvieną sunkvežimį programėlėje"
+          }
+        },
+        "till": {
+          "tag": "Kasa",
+          "h": "Kasa, kuri žino jūsų atsargas.",
+          "p": "Parduokite prie prekystalio su FIRINGI kasa: palieskite arba nuskenuokite, priimkite kortelę, MB WAY ar grynuosius ir atspausdinkite čekį su kliento NIF.",
+          "b": {
+            "1": "Veikia ir be interneto",
+            "2": "Kiekvienas pardavimas atnaujina atsargas",
+            "3": "PVM kiekvienoje čekio eilutėje"
+          }
+        },
+        "manage": {
+          "tag": "Valdymas",
+          "h": "Žinokite maržas dar prieš parduodami.",
+          "p": "Prekių ir receptų maržos pagal tikras pirkimo kainas, atsargos su galiojimo datomis ir darbuotojų pamainos — viskas iš užsakymų, kuriuos jau darote.",
+          "b": {
+            "1": "Maržos pagal prekę ir receptą",
+            "2": "Atsargos, galiojimo įspėjimai ir priminimai užsakyti",
+            "3": "Darbuotojų valandos ir pamainos"
+          }
+        },
+        "save": {
+          "tag": "Taupymas",
+          "h": "Išleiskite mažiau. Mokėkite, kai jums patogu.",
+          "p": "Rinkite taškus už kiekvieną pristatytą užsakymą, keiskite juos prizų parduotuvėje, junkitės prie pirkimo grupių dėl geresnių kainų ir mokėkite vėliau patvirtintose paskyrose.",
+          "b": {
+            "1": "Taškai ir prizų parduotuvė",
+            "2": "Pirkimo grupės ir kiekio pasiūlymai",
+            "3": "Mokėkite iki 30 dienų vėliau"
+          }
+        }
+      },
+      "start": {
+        "h": "Pradėkite trimis žingsniais.",
+        "steps": {
+          "1": {
+            "t": "Susikurkite nemokamą paskyrą",
+            "p": "Įmonės pavadinimas, NIF ir pristatymo adresas."
+          },
+          "2": {
+            "t": "Mes ją patikriname",
+            "p": "Paprastai per vieną darbo dieną."
+          },
+          "3": {
+            "t": "Užsakykite ir augkite",
+            "p": "Pirkite šiandien, gaukite šiandien, o kasą ir įrankius įjunkite, kai jų prireiks."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Čekis",
+        "nif": "Kliento NIF",
+        "card": "Kortelė",
+        "cash": "Grynieji",
+        "total": "Iš viso",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Karštas sumuštinis",
+          "4": "Vanduo 0,5 l",
+          "5": "Kiaušinio kremo pyragėlis",
+          "6": "Apelsinų sultys"
+        }
+      },
+      "mng": {
+        "recipe": "Recepto savikaina",
+        "dish": "Karštas sumuštinis",
+        "cost": "Savikaina",
+        "price": "Kaina",
+        "margin": "Marža",
+        "stock": "Atsargų įspėjimai",
+        "low": "Liko dienų: {n}",
+        "expiry": "Galioja dar {n} d.",
+        "staff": "Darbuotojai šiandien",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} tšk.",
+        "next": "Iki kito prizo liko {n} tšk.",
+        "rewards": "Prizų parduotuvė",
+        "pts": "{n} tšk.",
+        "items": {
+          "1": "10 € kuponas",
+          "2": "Nemokamas pristatymas",
+          "3": "Kavos aparato valymo rinkinys"
+        },
+        "later": "Mokėkite vėliau",
+        "laterP": "30 dienų · limitas {amount}",
+        "group": "Pirkimo grupė: −6 % gėrimams"
+      },
+      "cats": {
+        "h": "Viskas, ką parduoda jūsų parduotuvė, vienoje vietoje.",
+        "p": "14 kategorijų iš didmenininkų visoje Portugalijoje — ir kas mėnesį daugiau.",
+        "items": {
+          "1": "Maisto prekės",
+          "2": "Šviežia produkcija",
+          "3": "Gėrimai",
+          "4": "Kosmetika ir grožis",
+          "5": "Asmens higiena",
+          "6": "Namų ūkis ir valymas",
+          "7": "Kūdikiams ir vaikų priežiūrai",
+          "8": "Gyvūnų prekės",
+          "9": "Tabakas",
+          "10": "Mada ir aksesuarai",
+          "11": "Žaislai ir vaikams",
+          "12": "Suvenyrai ir dovanos",
+          "13": "Pakuotės ir reikmenys",
+          "14": "Kebabų ir picų reikmenys"
+        }
+      }
     }
   }
 }

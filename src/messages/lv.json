@@ -259,7 +259,10 @@
       "activityCodeOnce": "Ievadiet to vienreiz — pēc tam to var mainīt tikai FIRINGI.",
       "activityCodesSecondary": "Papildu {scheme} kodi (neobligāti)",
       "activityCodesHint": "Atdaliet ar komatiem — līdz {max}.",
-      "activityCodesAdd": "Pievienojiet vairāk kodu šeit; jau norādītie paliek — noņemt tos var tikai FIRINGI."
+      "activityCodesAdd": "Pievienojiet vairāk kodu šeit; jau norādītie paliek — noņemt tos var tikai FIRINGI.",
+      "whatsapp": "WhatsApp numurs (nav obligāts)",
+      "whatsappHint": "Norādiet to, ja izmantojat WhatsApp pasūtījumiem un ziņām. Ar valsts kodu.",
+      "whatsappSame": "Šis tālruņa numurs ir arī WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restorāns",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Balva drīz beigsies",
       "body": "No „{reward}” atlikuši tikai {left}."
+    },
+    "website_contact": {
+      "title": "Jauns jautājums no tīmekļa vietnes",
+      "body": "{name} no {company} nosūtīja jautājumu. Tas ir CRM kā potenciālais klients."
+    },
+    "website_vendor_interest": {
+      "title": "Jauns piegādātāja pieteikums",
+      "body": "{name} no {company} vēlas pārdot FIRINGI platformā. Tas ir CRM kā potenciālais klients."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Neviens klients vēl nav apmainījis punktus pret jūsu produktiem.",
       "orderBy": "Pasūtīt līdz {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Iepērcieties, papildiniet krājumus un vadiet savu uzņēmumu",
+      "description": "Papildiniet krājumus no visiem vairumtirgotājiem ar vienu pasūtījumu: apjoma cenas, skaidri rēķini ar jūsu NIF un piegāde tajā pašā dienā."
+    },
+    "open": "Atvērt uzņēmuma kontu",
+    "menuOpen": "Atvērt izvēlni",
+    "menuClose": "Aizvērt izvēlni",
+    "chart": {
+      "label": "Trīs piegādātāji, katrs sūta piegādes maršrutu vienam uzņēmumam",
+      "shop": "Jūsu uzņēmums",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Ce 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Ce 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Se 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI lietotnes ekrāns: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Meklēt produktus, zīmolus, piegādātājus…",
+        "next": "Piegāde šodien",
+        "cart": "Jūsu grozs",
+        "minOk": "Minimums sasniegts",
+        "total": "Kopā",
+        "checkout": "Pasūtīt un apmaksāt",
+        "steps": {
+          "1": "Pasūtīts",
+          "2": "Sagatavots",
+          "3": "Ceļā",
+          "4": "Piegādāts"
+        },
+        "reorder": "Laiks pasūtīt atkārtoti",
+        "fill": "Aizpildīt grozu",
+        "lastTime": "Pēdējo reizi: {n} kastes",
+        "role": "Vairumtirdzniecības klients",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "TIEŠRAIDE",
+        "welcome": "Laipni lūdzam, {name}",
+        "recent": "Jaunākie pasūtījumi",
+        "nav": {
+          "1": "Pārskats",
+          "2": "Katalogs",
+          "3": "Pasūtījumi",
+          "4": "Rēķini un maksājumi",
+          "5": "Bonusi",
+          "6": "Palīdzība un atbalsts",
+          "7": "Kase (POS)",
+          "8": "Virtuve un krājumi"
+        },
+        "kpi": {
+          "1": "Pasūtījumi procesā",
+          "2": "Ceļā",
+          "3": "Iztērēts pēdējās 30 dienās",
+          "4": "Neapmaksātie rēķini"
+        }
+      },
+      "products": {
+        "1": "Gargraudu rīsi 1 kg × 10",
+        "2": "Ekstra neapstrādāta olīveļļa 5 L",
+        "3": "Tuncis olīveļļā 120 g × 24",
+        "4": "UHT piens 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Pārceliet savu vairumtirdzniecību tiešsaistē.",
+      "sub": "Sasniedziet uzņēmumus, kas pasūta katru nedēļu, nepieņemot pasūtījumus pa tālruni un nedzenoties pakaļ maksājumiem.",
+      "cta": "Pieteikties par piegādātāju",
+      "rows": {
+        "1": {
+          "t": "Nosakiet savus noteikumus",
+          "p": "Izvēlieties cenas, apjoma līmeņus, minimālos pasūtījumus un piegādes dienas."
+        },
+        "2": {
+          "t": "Viena rinda visiem pasūtījumiem",
+          "p": "Jauni pasūtījumi nonāk vienā sarakstā, gatavi iepakošanai."
+        },
+        "3": {
+          "t": "Nosūtiet un dalieties ar statusu",
+          "p": "Piešķiriet šoferus un ļaujiet klientiem sekot kravas auto, nezvanot jums."
+        },
+        "4": {
+          "t": "Saņemiet samaksu par katru pasūtījumu",
+          "p": "Katrs pasūtījums tiek izmaksāts atsevišķi, ar skaidru ierakstu jūsu grāmatvedībai."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Pārdodiet FIRINGI platformā — sasniedziet uzņēmumus visā Portugālē",
+      "description": "Ievietojiet savus vairumtirdzniecības produktus FIRINGI platformā. Uzņēmumi pasūta no jums vienā grozā kopā ar citiem piegādātājiem; FIRINGI izraksta viņiem rēķinus un izmaksā naudu jums.",
+      "rowsH2": "Viss, kas nepieciešams, lai pārdotu uzņēmumiem.",
+      "formH2": "Piesakieties, lai pārdotu FIRINGI platformā",
+      "formSub": "Pastāstiet mums par savu uzņēmumu. Mēs atbildēsim vienas darba dienas laikā un izklāstīsim nākamos soļus.",
+      "navPlans": "Plāni piegādātājiem",
+      "typesH2": "Divi veidi, kā pārdot FIRINGI platformā.",
+      "typesSub": "Vairumtirgotāji pārdod veikaliem, kafejnīcām un restorāniem savā valstī. Izplatītāji pārdod vairumtirgotājiem visā ES.",
+      "types": {
+        "wholesaler": {
+          "t": "Vairumtirgotājs",
+          "p": "Pārdodiet veikaliem, kafejnīcām un restorāniem savā valstī pēc zonas vai attāluma — un papildiniet krājumus no izplatītājiem FIRINGI platformā.",
+          "b": {
+            "1": "Jūsu valsts veikali, kafejnīcas un restorāni pērk no jums",
+            "2": "Piegāde pēc zonas vai attāluma",
+            "3": "Iepērciet krājumus no izplatītājiem visā ES"
+          },
+          "cta": "Reģistrēties kā vairumtirgotājs"
+        },
+        "distributor": {
+          "t": "Izplatītājs",
+          "p": "Pārdodiet vairumtirgotājiem visā ES. Viņi pērk jūsu preces lielos apjomos un tālāk pārdod tās veikaliem un restorāniem savā valstī.",
+          "b": {
+            "1": "ES valstu vairumtirgotāji pērk no jums",
+            "2": "Pasūtījumi lielos apjomos, kastēs un uz paletēm",
+            "3": "Pārrobežu rēķinus kārto FIRINGI"
+          },
+          "cta": "Reģistrēties kā izplatītājs"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Ko uzņēmumi jautā vispirms.",
+      "items": {
+        "1": {
+          "q": "Vai privātpersonas var iepirkties?",
+          "a": "Nē. FIRINGI ir paredzēts uzņēmumiem ar NIF. Cenas ir vairumtirdzniecības cenas, un rēķini tiek izrakstīti uz jūsu uzņēmumu."
+        },
+        "2": {
+          "q": "Kāds ir minimālais pasūtījums?",
+          "a": "150 € par visu grozu neatkarīgi no tā, cik piegādātāju tajā ir."
+        },
+        "3": {
+          "q": "Vai cenas ir ar PVN vai bez?",
+          "a": "Bez PVN. PVN tiek pieskaitīts, noformējot pasūtījumu, pēc katra produkta likmes un ir redzams katrā rēķina rindā."
+        },
+        "4": {
+          "q": "Kad pienāks manas preces?",
+          "a": "Tajā pašā dienā. Viss, ko pasūtāt līdz pieņemšanas termiņam, pienāk tajā pašā dienā no visiem jūsu groza piegādātājiem, un katram kravas auto varat sekot lietotnē."
+        },
+        "5": {
+          "q": "Kā un kad man jāmaksā?",
+          "a": "Apmaksājiet visu grozu vienā reizē ar Multibanco, MB WAY, karti vai SEPA pārskaitījumu. Apstiprināti uzņēmumi var maksāt arī līdz 30 dienām pēc rēķina izrakstīšanas."
+        },
+        "6": {
+          "q": "Vai mani kolēģi var pasūtīt no tā paša konta?",
+          "a": "Jā. Pievienojiet lietotājus ar savu pieteikšanos un izvēlieties, kas var pasūtīt, kas redz rēķinus un kas var mainīt piegādes adreses."
+        },
+        "7": {
+          "q": "Ko darīt, ja preces pienāk bojātas?",
+          "a": "Ziņojiet par to lietotnē 24 stundu laikā, pievienojot fotoattēlu. Piegādātājs atbildēs ar aizstājēju preci vai kredītrēķinu."
+        },
+        "8": {
+          "q": "Vai piegādājat uz Madeiru un Azoru salām?",
+          "a": "Vēl ne. Sākam ar kontinentālo Portugāli, un salas pievienosim vēlāk."
+        },
+        "9": {
+          "q": "Vai es varu pārdot FIRINGI platformā?",
+          "a": "Jā. Piesakieties par piegādātāju, nosakiet cenas, minimālos pasūtījumus un piegādes dienas un sāciet saņemt pasūtījumus no tuvākajiem uzņēmumiem."
+        }
+      }
+    },
+    "final": {
+      "h2": "Nākamā krājumu papildināšana var būt viens pasūtījums.",
+      "p": "Atveriet uzņēmuma kontu un skatiet tuvāko piegādātāju vairumtirdzniecības cenas."
+    },
+    "plans": {
+      "h2": "Plāni piegādātājiem. Pircēji nekad nemaksā.",
+      "sub": "Uzņēmumi, kas iepērkas FIRINGI platformā, to izmanto bez maksas. Piegādātāji sāk bez maksas un, augot, pāriet uz augstāku plānu.",
+      "per": "/mēn.",
+      "top": "Populārākais",
+      "note": "Plāni un cenas tiek ņemti no FIRINGI plānu iestatījumiem, tāpēc šī sadaļa vienmēr atbilst tam, ko maksā piegādātāji.",
+      "start": "Sākt bez maksas",
+      "choose": "Izvēlēties {name}",
+      "products": "Līdz {n} produktiem",
+      "productsAll": "Neierobežots produktu skaits",
+      "team": "{users} lietotāji, {wh} noliktavas, {drivers} šoferi",
+      "teamAll": "Neierobežots lietotāju, noliktavu un šoferu skaits",
+      "earlyPay": "Agrā izmaksa no {rate}% dienā",
+      "freeEarly": "{n} bezmaksas agrās izmaksas mēnesī",
+      "includes": "Iekļauts: {list}",
+      "basics": "Pasūtījumi, rēķini un izmaksas caur FIRINGI",
+      "feature": {
+        "INVENTORY": "krājumu uzskaite",
+        "PLANNING": "plānošana",
+        "WAREHOUSE": "komplektēšana noliktavā",
+        "PRICE_INSIGHTS": "cenu analīze",
+        "ADS": "reklāma",
+        "INTEGRATIONS": "integrācijas",
+        "ROUTES": "maršruti",
+        "ASSISTANT": "MI asistents"
+      }
+    },
+    "contact": {
+      "h2": "Sazinieties ar mums.",
+      "sub": "Jautājumi par iepirkšanos vai pārdošanu? Atbildam vienas darba dienas laikā.",
+      "name": "Vārds",
+      "company": "Uzņēmums",
+      "email": "E-pasts",
+      "phone": "Mobilais tālrunis",
+      "nif": "NIF",
+      "type": "Jūsu uzņēmums",
+      "msg": "Ziņojums",
+      "consent": "Piekrītu, ka FIRINGI izmanto šos datus, lai man atbildētu, kā aprakstīts privātuma politikā.",
+      "send": "Nosūtīt",
+      "waT": "WhatsApp",
+      "waP": "Rakstiet mūsu komandai WhatsApp no pirmdienas līdz sestdienai, 9.00–19.00.",
+      "waB": "Atvērt WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restorāns, kafejnīca vai bārs",
+        "2": "Pārtikas veikals vai minimārkets",
+        "3": "Viesnīca vai ēdināšana",
+        "4": "Ēdnīca, skola vai aprūpes nams",
+        "5": "Cits"
+      },
+      "vendorMsg": "Ko jūs pārdodat un kur piegādājat",
+      "sent": "Paldies! Atbildēsim vienas darba dienas laikā.",
+      "errRequired": "Ievadiet savu vārdu, uzņēmumu un e-pastu.",
+      "errEmail": "Ievadiet derīgu e-pasta adresi.",
+      "errConsent": "Lūdzu, atzīmējiet lodziņu, lai piekristu.",
+      "errSpam": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.",
+      "errBusy": "Pārāk daudz ziņojumu. Lūdzu, mēģiniet vēlreiz pēc minūtes.",
+      "sending": "Sūta…",
+      "vendorType": "Vēlos pārdot kā",
+      "vendorTypes": {
+        "WHOLESALER": "Vairumtirgotājs — pārdodu veikaliem savā valstī",
+        "DISTRIBUTOR": "Izplatītājs — pārdodu vairumtirgotājiem ES"
+      }
+    },
+    "news": {
+      "label": "Saņemiet jaunus piegādātājus, piedāvājumus un piegādes zonas e-pastā reizi mēnesī.",
+      "ph": "Jūsu darba e-pasts",
+      "btn": "Abonēt",
+      "note": "Abonementu varat atcelt jebkurā laikā.",
+      "consent": "Piekrītu saņemt FIRINGI jaunumu vēstuli. Varu atteikties jebkurā laikā.",
+      "sent": "Gandrīz gatavs. Pārbaudiet e-pastu un apstipriniet abonementu.",
+      "confirmedTitle": "Abonements ir aktivizēts.",
+      "confirmedBody": "Paldies! Jūs saņemsiet mūsu jaunumu vēstuli reizi mēnesī.",
+      "unsubTitle": "Abonements ir atcelts.",
+      "unsubBody": "Jūs vairs nesaņemsiet jaunumu vēstuli. Varat to abonēt atkal jebkurā laikā.",
+      "invalid": "Šī saite vairs nav derīga.",
+      "back": "Atpakaļ uz FIRINGI"
+    },
+    "foot": {
+      "tag": "Iepērcieties, papildiniet krājumus un vadiet savu uzņēmumu, netērējot laiku.",
+      "buy": "Pirkt",
+      "sell": "Piegādātājiem",
+      "help": "Palīdzība",
+      "legal": "Juridiskā informācija",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Visas tiesības aizsargātas.",
+      "links": {
+        "buy": {
+          "1": "Pirkt",
+          "2": "Kase",
+          "3": "Pārvaldīt",
+          "4": "Ietaupīt"
+        },
+        "sell": {
+          "1": "Kļūt par piegādātāju",
+          "2": "Plāni piegādātājiem"
+        },
+        "help": {
+          "1": "Jautājumi",
+          "2": "Kontakti",
+          "3": "Sistēmas statuss",
+          "4": "Pieteikties"
+        },
+        "legal": {
+          "1": "Lietošanas noteikumi",
+          "2": "Privātuma politika (VDAR)",
+          "3": "Sīkdatnes",
+          "4": "Uzņēmuma rekvizīti"
+        }
+      }
+    },
+    "login": "Pieteikties",
+    "mail": {
+      "contactSubject": "Esam saņēmuši jūsu ziņojumu",
+      "hello": "Labdien, {name}!",
+      "helloAll": "Labdien!",
+      "contactBody": "Paldies, ka sazinājāties ar FIRINGI. Esam saņēmuši jūsu ziņojumu un atbildēsim vienas darba dienas laikā.",
+      "newsSubject": "Apstipriniet FIRINGI jaunumu vēstules abonementu",
+      "newsBody": "Lūdzu, apstipriniet, ka vēlaties saņemt FIRINGI jaunumu vēstuli:",
+      "newsIgnore": "Ja to nepieprasījāt, ignorējiet šo e-pastu.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Lietošanas noteikumi",
+      "privacy": "Privātuma politika (VDAR)",
+      "cookies": "Sīkdatnes",
+      "company": "Uzņēmuma rekvizīti",
+      "updated": "Pēdējoreiz atjaunināts {date}",
+      "empty": "Šī lapa tiek gatavota. Ja jums ir jautājums, sazinieties ar mums.",
+      "back": "Atpakaļ uz FIRINGI"
+    },
+    "langPicker": "Izvēlēties valodu",
+    "app": {
+      "nav": {
+        "buy": "Pirkt",
+        "till": "Kase",
+        "manage": "Pārvaldīt",
+        "save": "Ietaupīt",
+        "vendors": "Kļūt par piegādātāju",
+        "faq": "Jautājumi"
+      },
+      "hero": {
+        "eyebrow": "Veikaliem, minimārketiem, kafejnīcām un restorāniem Portugālē",
+        "h1a": "Iepērcieties, papildiniet krājumus un vadiet",
+        "h1b": "savu uzņēmumu,",
+        "h1c": "netērējot laiku.",
+        "lead": "Pasūtiet no visiem vairumtirgotājiem vienā grozā — pārtiku, dzērienus, higiēnas un tīrīšanas preces, tabaku un daudz ko citu — ar piegādi tajā pašā dienā. Pārdodiet ar FIRINGI kasi un redziet savu peļņas normu, krājumus un darbiniekus vienā panelī.",
+        "cta2": "Uzziniet, kā tas darbojas",
+        "note": "Bez maksas uzņēmumiem · Karte nav nepieciešama"
+      },
+      "float": {
+        "1": "Jauns pasūtījums · piegāde šodien",
+        "2": "Rēķins apmaksāts · MB WAY",
+        "3": "+120 bonusa punkti"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minimālais pasūtījums visam grozam"
+        },
+        "2": {
+          "v": "Tajā pašā dienā",
+          "l": "piegāde no pirmdienas līdz sestdienai"
+        },
+        "3": {
+          "v": "1 rēķins",
+          "l": "no FIRINGI par katru pasūtījumu"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "par uzņēmuma konta atvēršanu"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Pirkt",
+          "h": "Visi vairumtirgotāji. Viens grozs. Piegādāts šodien.",
+          "p": "Meklējiet vienā katalogā ar daudzu piegādātāju vairumtirdzniecības cenām, aizpildiet vienu grozu un maksājiet vienreiz. Viss pienāk tajā pašā dienā.",
+          "b": {
+            "1": "Viens 150 € minimums visam grozam",
+            "2": "Apjoma cenas visiem produktiem",
+            "3": "Sekojiet katram kravas auto lietotnē"
+          }
+        },
+        "till": {
+          "tag": "Kase",
+          "h": "Kase, kas zina jūsu krājumus.",
+          "p": "Pārdodiet pie letes ar FIRINGI kasi: pieskarieties vai skenējiet, pieņemiet karti, MB WAY vai skaidru naudu un izdrukājiet čeku ar klienta NIF.",
+          "b": {
+            "1": "Turpina pārdot bez interneta",
+            "2": "Katrs pārdevums atjaunina krājumus",
+            "3": "PVN katrā čeka rindā"
+          }
+        },
+        "manage": {
+          "tag": "Pārvaldīt",
+          "h": "Ziniet savu peļņas normu, pirms pārdodat.",
+          "p": "Produktu un receptu peļņas norma no jūsu reālajām iepirkuma cenām, krājumi ar derīguma termiņiem un darbinieku maiņas — veidots no pasūtījumiem, ko jau veicat.",
+          "b": {
+            "1": "Peļņas norma katram produktam un receptei",
+            "2": "Krājumi, derīguma termiņa brīdinājumi un atgādinājumi par pasūtīšanu",
+            "3": "Darba stundas un maiņas"
+          }
+        },
+        "save": {
+          "tag": "Ietaupīt",
+          "h": "Tērējiet mazāk. Maksājiet, kad jums ērti.",
+          "p": "Krājiet punktus par katru piegādāto pasūtījumu, apmainiet tos bonusu veikalā, pievienojieties iepirkumu grupām labākām cenām un maksājiet vēlāk apstiprinātos kontos.",
+          "b": {
+            "1": "Punkti un bonusu veikals",
+            "2": "Iepirkumu grupas un apjoma piedāvājumi",
+            "3": "Maksājiet līdz 30 dienām vēlāk"
+          }
+        }
+      },
+      "start": {
+        "h": "Sāciet trīs soļos.",
+        "steps": {
+          "1": {
+            "t": "Atveriet bezmaksas kontu",
+            "p": "Uzņēmuma nosaukums, NIF un piegādes adrese."
+          },
+          "2": {
+            "t": "Mēs to pārbaudām",
+            "p": "Parasti vienas darba dienas laikā."
+          },
+          "3": {
+            "t": "Pasūtiet un augiet",
+            "p": "Pērciet šodien, saņemiet šodien un ieslēdziet kasi un rīkus, kad tie vajadzīgi."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Čeks",
+        "nif": "Klienta NIF",
+        "card": "Karte",
+        "cash": "Skaidra nauda",
+        "total": "Kopā",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Karstā sviestmaize",
+          "4": "Ūdens 0,5 L",
+          "5": "Krēma groziņš",
+          "6": "Apelsīnu sula"
+        }
+      },
+      "mng": {
+        "recipe": "Receptes pašizmaksa",
+        "dish": "Karstā sviestmaize",
+        "cost": "Pašizmaksa",
+        "price": "Cena",
+        "margin": "Peļņa",
+        "stock": "Krājumu brīdinājumi",
+        "low": "Atlikušas {n} dienas",
+        "expiry": "Termiņš beidzas pēc {n} dienām",
+        "staff": "Darbinieki šodien",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} punkti",
+        "next": "Vēl {n} punkti līdz nākamajam bonusam",
+        "rewards": "Bonusu veikals",
+        "pts": "{n} p.",
+        "items": {
+          "1": "10 € dāvanu karte",
+          "2": "Bezmaksas piegāde",
+          "3": "Kafijas automāta tīrīšanas komplekts"
+        },
+        "later": "Maksāt vēlāk",
+        "laterP": "30 dienas · limits {amount}",
+        "group": "Iepirkumu grupa: −6% dzērieniem"
+      },
+      "cats": {
+        "h": "Viss, ko pārdod jūsu veikals, vienuviet.",
+        "p": "14 kategorijas no vairumtirgotājiem visā Portugālē — un katru mēnesi vairāk.",
+        "items": {
+          "1": "Pārtika",
+          "2": "Svaigi produkti",
+          "3": "Dzērieni",
+          "4": "Kosmētika un skaistumkopšana",
+          "5": "Personīgā higiēna",
+          "6": "Mājsaimniecība un tīrīšana",
+          "7": "Zīdaiņi un bērnu kopšana",
+          "8": "Mājdzīvnieku preces",
+          "9": "Tabaka",
+          "10": "Mode un aksesuāri",
+          "11": "Rotaļlietas un bērnu preces",
+          "12": "Suvenīri un dāvanas",
+          "13": "Iepakojums un palīgmateriāli",
+          "14": "Kebaba un picas piederumi"
+        }
+      }
     }
   }
 }

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label, Select } from "@/components/ui/input";
 import { registerCompanyAction, registerDriverAction } from "@/server/actions/onboarding";
+import { WhatsAppField, whatsappFrom } from "@/components/company/whatsapp-field";
 
 type Country = { code: string; label: string; vatPrefix: string; cities: { id: string; name: string }[] };
 const BUSINESS_TYPES = ["restaurant", "kebab_pizza", "mini_market", "cafe_bar", "hotel", "catering", "retail", "other"] as const;
@@ -60,7 +61,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
         start(async () => {
           const r = await registerCompanyAction({
             type, countryCode: country, legalName: s(fd, "legalName") ?? "", tradeName: s(fd, "tradeName"), taxId: s(fd, "taxId") ?? "",
-            vatNumber: s(fd, "vatNumber"), activityCode: s(fd, "activityCode"), activityCodes: s(fd, "activityCodes"), sellsRestricted: fd.getAll("sellsRestricted").map(String) as ("TOBACCO" | "ALCOHOL" | "VAPING")[], companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", businessType: s(fd, "businessType"),
+            vatNumber: s(fd, "vatNumber"), activityCode: s(fd, "activityCode"), activityCodes: s(fd, "activityCodes"), sellsRestricted: fd.getAll("sellsRestricted").map(String) as ("TOBACCO" | "ALCOHOL" | "VAPING")[], companyEmail: s(fd, "companyEmail") ?? "", phone: s(fd, "phone") ?? "", whatsapp: whatsappFrom(fd), businessType: s(fd, "businessType"),
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
             cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
@@ -103,6 +104,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
         </Field>
         <Field id="companyEmail" label={t("form.companyEmail")} errors={fe.companyEmail}><Input id="companyEmail" name="companyEmail" type="email" required /></Field>
         <Field id="phone" label={t("form.phone")} errors={fe.phone}><Input id="phone" name="phone" type="tel" required /></Field>
+        <WhatsAppField label={t("form.whatsapp")} sameLabel={t("form.whatsappSame")} hint={t("form.whatsappHint")} error={fe.whatsapp} />
         {type === "CUSTOMER" && (
           <Field id="businessType" label={t("form.businessType")}>
             <Select id="businessType" name="businessType" defaultValue="restaurant">

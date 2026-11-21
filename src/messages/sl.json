@@ -259,7 +259,10 @@
       "activityCodeOnce": "Vnesite jo enkrat — nato jo lahko spremeni le FIRINGI.",
       "activityCodesSecondary": "Dodatne šifre {scheme} (neobvezno)",
       "activityCodesHint": "Ločite z vejicami — do {max}.",
-      "activityCodesAdd": "Več šifer dodajte tukaj; že vnesene ostanejo — odstrani jih lahko le FIRINGI."
+      "activityCodesAdd": "Več šifer dodajte tukaj; že vnesene ostanejo — odstrani jih lahko le FIRINGI.",
+      "whatsapp": "Številka WhatsApp (neobvezno)",
+      "whatsappHint": "Vpišite jo, če za naročila in sporočila uporabljate WhatsApp. S kodo države.",
+      "whatsappSame": "Ta telefonska številka je tudi na WhatsAppu"
     },
     "businessTypes": {
       "restaurant": "Restavracija",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Nagrade zmanjkuje",
       "body": "Na voljo je le še {left} × »{reward}«."
+    },
+    "website_contact": {
+      "title": "Novo vprašanje s spletne strani",
+      "body": "{name} iz podjetja {company} je poslal(a) vprašanje. V CRM je kot potencialna stranka."
+    },
+    "website_vendor_interest": {
+      "title": "Nova prijava dobavitelja",
+      "body": "{name} iz podjetja {company} želi prodajati na FIRINGI. V CRM je kot potencialna stranka."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Nobena stranka še ni unovčila vaših izdelkov.",
       "orderBy": "Rok za naročilo: {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Nakupujte, polnite zaloge in vodite svoje podjetje",
+      "description": "Oskrbite svoje podjetje pri vseh veletrgovcih z enim naročilom: količinske cene, pregledni računi z vašim NIF, dostava isti dan."
+    },
+    "open": "Odprite poslovni račun",
+    "menuOpen": "Odpri meni",
+    "menuClose": "Zapri meni",
+    "chart": {
+      "label": "Trije dobavitelji pošiljajo dostavne poti do enega podjetja",
+      "shop": "Vaše podjetje",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "čet. 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "čet. 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "sob. 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Zaslon aplikacije FIRINGI: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Iščite izdelke, blagovne znamke, dobavitelje…",
+        "next": "Dostava danes",
+        "cart": "Vaša košarica",
+        "minOk": "Minimum dosežen",
+        "total": "Skupaj",
+        "checkout": "Naroči in plačaj",
+        "steps": {
+          "1": "Naročeno",
+          "2": "Pripravljeno",
+          "3": "Na poti",
+          "4": "Dostavljeno"
+        },
+        "reorder": "Čas za ponovno naročilo",
+        "fill": "Napolni košarico",
+        "lastTime": "Zadnjič: {n} škatel",
+        "role": "Veleprodajna stranka",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "V ŽIVO",
+        "welcome": "Dobrodošli, {name}",
+        "recent": "Zadnja naročila",
+        "nav": {
+          "1": "Nadzorna plošča",
+          "2": "Katalog",
+          "3": "Naročila",
+          "4": "Računi in plačila",
+          "5": "Nagrade",
+          "6": "Pomoč in podpora",
+          "7": "Blagajna (POS)",
+          "8": "Kuhinja in zaloga"
+        },
+        "kpi": {
+          "1": "Naročila v teku",
+          "2": "Na poti",
+          "3": "Porabljeno v zadnjih 30 dneh",
+          "4": "Neplačani računi"
+        }
+      },
+      "products": {
+        "1": "Dolgozrnati riž 1 kg × 10",
+        "2": "Ekstra deviško oljčno olje 5 l",
+        "3": "Tuna v oljčnem olju 120 g × 24",
+        "4": "Trajno mleko 1 l × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Preselite svojo veleprodajo na splet.",
+      "sub": "Dosezite podjetja, ki naročajo vsak teden, brez telefonskih naročil in lovljenja plačil.",
+      "cta": "Postanite dobavitelj",
+      "rows": {
+        "1": {
+          "t": "Določite svoje pogoje",
+          "p": "Izberite cene, količinske razrede, minimalna naročila in dneve dostave."
+        },
+        "2": {
+          "t": "Ena vrsta za vsa naročila",
+          "p": "Nova naročila prihajajo na en seznam, pripravljena za pakiranje."
+        },
+        "3": {
+          "t": "Odpremite in delite stanje",
+          "p": "Dodelite voznike, stranke pa spremljajo tovornjak, ne da bi vas klicale."
+        },
+        "4": {
+          "t": "Izplačilo za vsako naročilo",
+          "p": "Vsako naročilo se izplača posebej, z jasnim zapisom za knjigovodstvo."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Prodajajte na FIRINGI — dosezite podjetja po vsej Portugalski",
+      "description": "Ponudite svoje veleprodajne izdelke na FIRINGI. Podjetja pri vas naročajo v eni košarici z drugimi dobavitelji; FIRINGI jim izstavi račun, vam pa izplača denar.",
+      "rowsH2": "Vse, kar potrebujete za prodajo podjetjem.",
+      "formH2": "Prijavite se za prodajo na FIRINGI",
+      "formSub": "Povejte nam o svojem podjetju. V enem delovnem dnevu vam odgovorimo z naslednjimi koraki.",
+      "navPlans": "Paketi za dobavitelje",
+      "typesH2": "Dva načina prodaje na FIRINGI.",
+      "typesSub": "Veletrgovci prodajajo trgovinam, kavarnam in restavracijam v svoji državi. Distributerji prodajajo veletrgovcem po vsej EU.",
+      "types": {
+        "wholesaler": {
+          "t": "Veletrgovec",
+          "p": "Prodajajte trgovinam, kavarnam in restavracijam v svoji državi po conah ali glede na razdaljo — in se oskrbujte pri distributerjih na FIRINGI.",
+          "b": {
+            "1": "Trgovine, kavarne in restavracije v vaši državi kupujejo pri vas",
+            "2": "Dostava po conah ali glede na razdaljo",
+            "3": "Kupujte zaloge pri distributerjih po vsej EU"
+          },
+          "cta": "Registrirajte se kot veletrgovec"
+        },
+        "distributor": {
+          "t": "Distributer",
+          "p": "Prodajajte veletrgovcem po vsej EU. Vaše blago kupujejo v velikih količinah in ga preprodajajo trgovinam in restavracijam v svoji državi.",
+          "b": {
+            "1": "Veletrgovci iz držav EU kupujejo pri vas",
+            "2": "Naročila v velikih količinah, po kartonih in paletah",
+            "3": "Čezmejne račune ureja FIRINGI"
+          },
+          "cta": "Registrirajte se kot distributer"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Kaj podjetja vprašajo najprej.",
+      "items": {
+        "1": {
+          "q": "Ali lahko kupujejo zasebniki?",
+          "a": "Ne. FIRINGI je za podjetja z NIF. Cene so veleprodajne, računi pa se izstavijo na vaše podjetje."
+        },
+        "2": {
+          "q": "Kolikšno je minimalno naročilo?",
+          "a": "150 € za celotno košarico, ne glede na število dobaviteljev."
+        },
+        "3": {
+          "q": "Ali so cene z DDV ali brez?",
+          "a": "Brez DDV. DDV se prišteje ob plačilu po stopnji za vsak izdelek in je prikazan v vsaki vrstici računa."
+        },
+        "4": {
+          "q": "Kdaj prispe moje blago?",
+          "a": "Isti dan. Vse, kar naročite pred rokom za naročila, prispe isti dan od vseh dobaviteljev v košarici, vsak tovornjak pa lahko spremljate v aplikaciji."
+        },
+        "5": {
+          "q": "Kako in kdaj plačam?",
+          "a": "Celotno košarico plačate enkrat prek Multibanco, MB WAY, s kartico ali nakazilom SEPA. Odobrena podjetja lahko plačajo tudi do 30 dni po izdaji računa."
+        },
+        "6": {
+          "q": "Ali lahko sodelavci naročajo z istega uporabniškega računa?",
+          "a": "Da. Dodajte uporabnike z lastnimi prijavami in določite, kdo lahko naroča, kdo vidi račune in kdo spreminja naslove za dostavo."
+        },
+        "7": {
+          "q": "Kaj, če blago prispe poškodovano?",
+          "a": "V 24 urah to prijavite v aplikaciji in priložite fotografijo. Dobavitelj vam zagotovi zamenjavo ali dobropis."
+        },
+        "8": {
+          "q": "Ali dostavljate na Madeiro in Azore?",
+          "a": "Še ne. Začenjamo s celinsko Portugalsko, otoke bomo dodali pozneje."
+        },
+        "9": {
+          "q": "Ali lahko prodajam na FIRINGI?",
+          "a": "Da. Postanite dobavitelj, določite cene, minimume in dneve dostave ter začnite prejemati naročila podjetij v vaši bližini."
+        }
+      }
+    },
+    "final": {
+      "h2": "Naslednje polnjenje zalog je lahko eno samo naročilo.",
+      "p": "Odprite poslovni račun in si oglejte veleprodajne cene dobaviteljev v vaši bližini."
+    },
+    "plans": {
+      "h2": "Paketi za dobavitelje. Kupci nikoli ne plačajo.",
+      "sub": "Podjetja, ki kupujejo na FIRINGI, ga uporabljajo brezplačno. Dobavitelji začnejo brezplačno in z rastjo preidejo na višji paket.",
+      "per": "/mesec",
+      "top": "Najpogosteje izbran",
+      "note": "Paketi in cene prihajajo iz nastavitev paketov FIRINGI, zato ta razdelek vedno ustreza temu, kar plačujejo dobavitelji.",
+      "start": "Začnite brezplačno",
+      "choose": "Izberite {name}",
+      "products": "Do {n} izdelkov",
+      "productsAll": "Neomejeno izdelkov",
+      "team": "Uporabniki: {users}, skladišča: {wh}, vozniki: {drivers}",
+      "teamAll": "Neomejeno uporabnikov, skladišč in voznikov",
+      "earlyPay": "Predčasno izplačilo od {rate} % na dan",
+      "freeEarly": "Brezplačna predčasna izplačila: {n} na mesec",
+      "includes": "Vključuje: {list}",
+      "basics": "Naročila, izdajanje računov in izplačila prek FIRINGI",
+      "feature": {
+        "INVENTORY": "zaloga",
+        "PLANNING": "načrtovanje",
+        "WAREHOUSE": "komisioniranje v skladišču",
+        "PRICE_INSIGHTS": "cenovni vpogledi",
+        "ADS": "oglaševanje",
+        "INTEGRATIONS": "integracije",
+        "ROUTES": "poti",
+        "ASSISTANT": "AI-pomočnik"
+      }
+    },
+    "contact": {
+      "h2": "Pišite nam.",
+      "sub": "Imate vprašanje o nakupu ali prodaji? Odgovorimo v enem delovnem dnevu.",
+      "name": "Ime",
+      "company": "Podjetje",
+      "email": "E-pošta",
+      "phone": "Mobilni telefon",
+      "nif": "NIF",
+      "type": "Vaše podjetje",
+      "msg": "Sporočilo",
+      "consent": "Strinjam se, da FIRINGI te podatke uporabi za odgovor, kot je opisano v politiki zasebnosti.",
+      "send": "Pošlji",
+      "waT": "WhatsApp",
+      "waP": "Pišite naši ekipi na WhatsApp, od ponedeljka do sobote, 9.00–19.00.",
+      "waB": "Odpri WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restavracija, kavarna ali bar",
+        "2": "Trgovina z živili ali minimarket",
+        "3": "Hotel ali catering",
+        "4": "Menza, šola ali dom za starejše",
+        "5": "Drugo"
+      },
+      "vendorMsg": "Kaj prodajate in kam dostavljate",
+      "sent": "Hvala. Odgovorili vam bomo v enem delovnem dnevu.",
+      "errRequired": "Vpišite ime, podjetje in e-pošto.",
+      "errEmail": "Vnesite veljaven e-poštni naslov.",
+      "errConsent": "Za soglasje označite polje.",
+      "errSpam": "Prišlo je do napake. Poskusite znova.",
+      "errBusy": "Preveč sporočil. Poskusite znova čez minuto.",
+      "sending": "Pošiljanje…",
+      "vendorType": "Želim prodajati kot",
+      "vendorTypes": {
+        "WHOLESALER": "Veletrgovec — prodajam trgovinam v svoji državi",
+        "DISTRIBUTOR": "Distributer — prodajam veletrgovcem v EU"
+      }
+    },
+    "news": {
+      "label": "Enkrat na mesec po e-pošti: novi dobavitelji, ponudbe in območja dostave.",
+      "ph": "Vaš poslovni e-naslov",
+      "btn": "Naročite se",
+      "note": "Odjavite se lahko kadar koli.",
+      "consent": "Strinjam se s prejemanjem novic FIRINGI. Odjavim se lahko kadar koli.",
+      "sent": "Skoraj končano. Preverite e-pošto in potrdite naročnino.",
+      "confirmedTitle": "Naročeni ste.",
+      "confirmedBody": "Hvala. Novice boste prejemali enkrat na mesec.",
+      "unsubTitle": "Odjavljeni ste.",
+      "unsubBody": "Novic ne boste več prejemali. Znova se lahko naročite kadar koli.",
+      "invalid": "Ta povezava ni več veljavna.",
+      "back": "Nazaj na FIRINGI"
+    },
+    "foot": {
+      "tag": "Nakupujte, polnite zaloge in vodite svoje podjetje brez izgubljanja časa.",
+      "buy": "Nakup",
+      "sell": "Za dobavitelje",
+      "help": "Pomoč",
+      "legal": "Pravno",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Vse pravice pridržane.",
+      "links": {
+        "buy": {
+          "1": "Nakup",
+          "2": "Blagajna",
+          "3": "Upravljanje",
+          "4": "Prihranki"
+        },
+        "sell": {
+          "1": "Postanite dobavitelj",
+          "2": "Paketi za dobavitelje"
+        },
+        "help": {
+          "1": "Vprašanja",
+          "2": "Kontakt",
+          "3": "Stanje sistema",
+          "4": "Prijava"
+        },
+        "legal": {
+          "1": "Pogoji uporabe",
+          "2": "Politika zasebnosti (GDPR)",
+          "3": "Piškotki",
+          "4": "Podatki o podjetju"
+        }
+      }
+    },
+    "login": "Prijava",
+    "mail": {
+      "contactSubject": "Prejeli smo vaše sporočilo",
+      "hello": "Pozdravljeni, {name},",
+      "helloAll": "Pozdravljeni,",
+      "contactBody": "Hvala, ker ste se obrnili na FIRINGI. Prejeli smo vaše sporočilo in vam bomo odgovorili v enem delovnem dnevu.",
+      "newsSubject": "Potrdite naročnino na novice FIRINGI",
+      "newsBody": "Potrdite, da želite prejemati novice FIRINGI:",
+      "newsIgnore": "Če tega niste zahtevali, prezrite to sporočilo.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Pogoji uporabe",
+      "privacy": "Politika zasebnosti (GDPR)",
+      "cookies": "Piškotki",
+      "company": "Podatki o podjetju",
+      "updated": "Zadnja posodobitev: {date}",
+      "empty": "Ta stran je v pripravi. Če imate vprašanje, nam pišite.",
+      "back": "Nazaj na FIRINGI"
+    },
+    "langPicker": "Izberite jezik",
+    "app": {
+      "nav": {
+        "buy": "Nakup",
+        "till": "Blagajna",
+        "manage": "Upravljanje",
+        "save": "Prihranki",
+        "vendors": "Postanite dobavitelj",
+        "faq": "Vprašanja"
+      },
+      "hero": {
+        "eyebrow": "Za trgovine, minimarkete, kavarne in restavracije na Portugalskem",
+        "h1a": "Nakupujte, polnite zaloge in vodite",
+        "h1b": "svoje podjetje",
+        "h1c": "brez izgubljanja časa.",
+        "lead": "Naročajte pri vseh veletrgovcih v eni košarici — živila, pijače, higiena, čistila, tobak in drugo — z dostavo isti dan. Prodajajte z blagajno FIRINGI ter spremljajte marže, zaloge in osebje na eni nadzorni plošči.",
+        "cta2": "Oglejte si, kako deluje",
+        "note": "Brezplačno za podjetja · Brez kartice"
+      },
+      "float": {
+        "1": "Novo naročilo · dostava danes",
+        "2": "Račun plačan · MB WAY",
+        "3": "+120 nagradnih točk"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minimalno naročilo za celotno košarico"
+        },
+        "2": {
+          "v": "Isti dan",
+          "l": "dostava od ponedeljka do sobote"
+        },
+        "3": {
+          "v": "1 račun",
+          "l": "od FIRINGI za vsako naročilo"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "za odprtje poslovnega računa"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Nakup",
+          "h": "Vsi veletrgovci. Ena košarica. Dostava danes.",
+          "p": "Iščite v enem katalogu z veleprodajnimi cenami številnih dobaviteljev, napolnite eno košarico in plačajte enkrat. Vse prispe isti dan.",
+          "b": {
+            "1": "En minimum 150 € za celotno košarico",
+            "2": "Količinske cene za vsak izdelek",
+            "3": "Spremljajte vsak tovornjak v aplikaciji"
+          }
+        },
+        "till": {
+          "tag": "Blagajna",
+          "h": "Blagajna, ki pozna vašo zalogo.",
+          "p": "Prodajajte za pultom z blagajno FIRINGI: tapnite ali skenirajte, sprejmite kartico, MB WAY ali gotovino in natisnite račun z NIF stranke.",
+          "b": {
+            "1": "Prodaja tudi brez interneta",
+            "2": "Vsaka prodaja posodobi zalogo",
+            "3": "DDV v vsaki vrstici računa"
+          }
+        },
+        "manage": {
+          "tag": "Upravljanje",
+          "h": "Poznajte svoje marže, še preden prodate.",
+          "p": "Marže izdelkov in receptov iz dejanskih nabavnih cen, zaloga z roki uporabnosti in izmene osebja — vse iz naročil, ki jih že oddajate.",
+          "b": {
+            "1": "Marže po izdelku in receptu",
+            "2": "Zaloga, opozorila o roku uporabnosti in opomniki za naročila",
+            "3": "Delovni čas in izmene osebja"
+          }
+        },
+        "save": {
+          "tag": "Prihranki",
+          "h": "Porabite manj. Plačajte, ko vam ustreza.",
+          "p": "Zbirajte točke za vsako dostavljeno naročilo, jih zamenjajte v trgovini z nagradami, se pridružite nakupnim skupinam za boljše cene in pri odobrenih računih plačajte pozneje.",
+          "b": {
+            "1": "Točke in trgovina z nagradami",
+            "2": "Nakupne skupine in količinski popusti",
+            "3": "Plačilo do 30 dni pozneje"
+          }
+        }
+      },
+      "start": {
+        "h": "Začnite v treh korakih.",
+        "steps": {
+          "1": {
+            "t": "Odprite brezplačen račun",
+            "p": "Ime podjetja, NIF in naslov za dostavo."
+          },
+          "2": {
+            "t": "Preverimo ga",
+            "p": "Običajno v enem delovnem dnevu."
+          },
+          "3": {
+            "t": "Naročajte in rastite",
+            "p": "Kupite danes, prejmite danes, blagajno in orodja pa vklopite, ko jih potrebujete."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Račun",
+        "nif": "NIF stranke",
+        "card": "Kartica",
+        "cash": "Gotovina",
+        "total": "Skupaj",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Toast",
+          "4": "Voda 0,5 l",
+          "5": "Kremna tortica",
+          "6": "Pomarančni sok"
+        }
+      },
+      "mng": {
+        "recipe": "Strošek recepta",
+        "dish": "Toast",
+        "cost": "Strošek",
+        "price": "Cena",
+        "margin": "Marža",
+        "stock": "Opozorila o zalogi",
+        "low": "Še dni: {n}",
+        "expiry": "Poteče čez {n} dni",
+        "staff": "Osebje danes",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} točk",
+        "next": "Do naslednje nagrade še {n} točk",
+        "rewards": "Trgovina z nagradami",
+        "pts": "{n} tč.",
+        "items": {
+          "1": "Bon za 10 €",
+          "2": "Brezplačna dostava",
+          "3": "Komplet za čiščenje kavnega aparata"
+        },
+        "later": "Plačilo pozneje",
+        "laterP": "30 dni · limit {amount}",
+        "group": "Nakupna skupina: −6 % na pijače"
+      },
+      "cats": {
+        "h": "Vse, kar prodaja vaša trgovina, na enem mestu.",
+        "p": "14 kategorij od veletrgovcev po vsej Portugalski — in vsak mesec več.",
+        "items": {
+          "1": "Živila",
+          "2": "Sveži pridelki",
+          "3": "Pijače",
+          "4": "Kozmetika in lepota",
+          "5": "Osebna higiena",
+          "6": "Gospodinjstvo in čiščenje",
+          "7": "Dojenčki in otroška nega",
+          "8": "Za hišne ljubljenčke",
+          "9": "Tobak",
+          "10": "Moda in dodatki",
+          "11": "Igrače in otroci",
+          "12": "Spominki in darila",
+          "13": "Embalaža in potrošni material",
+          "14": "Za kebab in pico"
+        }
+      }
     }
   }
 }

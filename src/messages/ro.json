@@ -259,7 +259,10 @@
       "activityCodeOnce": "Introduceți-l o dată — apoi doar FIRINGI îl poate modifica.",
       "activityCodesSecondary": "Coduri {scheme} secundare (opțional)",
       "activityCodesHint": "Separați prin virgule — până la {max}.",
-      "activityCodesAdd": "Adăugați aici alte coduri; cele deja date rămân — doar FIRINGI le poate elimina."
+      "activityCodesAdd": "Adăugați aici alte coduri; cele deja date rămân — doar FIRINGI le poate elimina.",
+      "whatsapp": "Număr WhatsApp (opțional)",
+      "whatsappHint": "Adăugați-l dacă folosiți WhatsApp pentru comenzi și mesaje. Cu prefixul țării.",
+      "whatsappSame": "Acest număr de telefon are și WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Recompensa se epuizează",
       "body": "Au mai rămas doar {left} din „{reward}”."
+    },
+    "website_contact": {
+      "title": "Întrebare nouă de pe site",
+      "body": "{name} de la {company} a trimis o întrebare. Este în CRM ca lead."
+    },
+    "website_vendor_interest": {
+      "title": "Cerere nouă de furnizor",
+      "body": "{name} de la {company} vrea să vândă pe FIRINGI. Este în CRM ca lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Niciun client nu a revendicat încă produsele dvs.",
       "orderBy": "Termen de comandă: {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Cumpărați, reaprovizionați și conduceți-vă afacerea",
+      "description": "Reaprovizionați-vă afacerea de la toți angrosiștii într-o singură comandă: prețuri de volum, facturi clare cu NIF-ul dumneavoastră, livrare în aceeași zi."
+    },
+    "open": "Deschideți un cont de firmă",
+    "menuOpen": "Deschideți meniul",
+    "menuClose": "Închideți meniul",
+    "chart": {
+      "label": "Trei furnizori, fiecare trimițând o rută de livrare către o singură afacere",
+      "shop": "Afacerea dumneavoastră",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Joi 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Joi 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Sâm 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Ecran aplicație FIRINGI: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Căutați produse, mărci, furnizori…",
+        "next": "Livrare azi",
+        "cart": "Coșul dumneavoastră",
+        "minOk": "Minim atins",
+        "total": "Total",
+        "checkout": "Comandați și plătiți",
+        "steps": {
+          "1": "Comandat",
+          "2": "Pregătit",
+          "3": "Pe drum",
+          "4": "Livrat"
+        },
+        "reorder": "E timpul pentru o nouă comandă",
+        "fill": "Umpleți coșul",
+        "lastTime": "Data trecută: {n} baxuri",
+        "role": "Client angro",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Bun venit, {name}",
+        "recent": "Ultimele comenzi",
+        "nav": {
+          "1": "Panou de control",
+          "2": "Catalog",
+          "3": "Comenzi",
+          "4": "Facturi și plăți",
+          "5": "Recompense",
+          "6": "Ajutor și asistență",
+          "7": "Casă de marcat (POS)",
+          "8": "Bucătărie și stoc"
+        },
+        "kpi": {
+          "1": "Comenzi în curs",
+          "2": "Pe drum",
+          "3": "Cheltuit, ultimele 30 de zile",
+          "4": "Facturi neachitate"
+        }
+      },
+      "products": {
+        "1": "Orez bob lung 1 kg × 10",
+        "2": "Ulei de măsline extravirgin 5 L",
+        "3": "Ton în ulei de măsline 120 g × 24",
+        "4": "Lapte UHT 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Aduceți-vă afacerea angro online.",
+      "sub": "Ajungeți la afaceri care comandă în fiecare săptămână, fără să luați comenzi la telefon sau să alergați după plăți.",
+      "cta": "Aplicați ca furnizor",
+      "rows": {
+        "1": {
+          "t": "Stabiliți-vă propriile condiții",
+          "p": "Alegeți prețurile, pragurile de volum, comenzile minime și zilele de livrare."
+        },
+        "2": {
+          "t": "O singură listă pentru toate comenzile",
+          "p": "Comenzile noi sosesc într-o singură listă, gata de ambalat."
+        },
+        "3": {
+          "t": "Expediați și partajați statusul",
+          "p": "Alocați șoferi și lăsați clienții să urmărească camionul fără să vă sune."
+        },
+        "4": {
+          "t": "Plătit pentru fiecare comandă",
+          "p": "Fiecare comandă este plătită separat, cu o evidență clară pentru contabilitate."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Vindeți pe FIRINGI — ajungeți la afaceri din toată Portugalia",
+      "description": "Listați-vă produsele angro pe FIRINGI. Afacerile comandă de la dumneavoastră în același coș cu alți furnizori; FIRINGI le facturează și vă plătește pe dumneavoastră.",
+      "rowsH2": "Tot ce vă trebuie ca să vindeți către afaceri.",
+      "formH2": "Aplicați pentru a vinde pe FIRINGI",
+      "formSub": "Spuneți-ne despre firma dumneavoastră. Vă răspundem în cel mult o zi lucrătoare cu pașii următori.",
+      "navPlans": "Planuri pentru furnizori",
+      "typesH2": "Două moduri de a vinde pe FIRINGI.",
+      "typesSub": "Angrosiștii vând magazinelor, cafenelelor și restaurantelor din propria țară. Distribuitorii vând angrosiștilor din toată UE.",
+      "types": {
+        "wholesaler": {
+          "t": "Angrosist",
+          "p": "Vindeți magazinelor, cafenelelor și restaurantelor din țara dumneavoastră, pe zone sau după distanță — și aprovizionați-vă de la distribuitorii de pe FIRINGI.",
+          "b": {
+            "1": "Magazinele, cafenelele și restaurantele din țara dumneavoastră cumpără de la dumneavoastră",
+            "2": "Livrare pe zone sau după distanță",
+            "3": "Cumpărați marfă de la distribuitori din toată UE"
+          },
+          "cta": "Înregistrați-vă ca angrosist"
+        },
+        "distributor": {
+          "t": "Distribuitor",
+          "p": "Vindeți angrosiștilor din toată UE. Aceștia cumpără mărfurile dumneavoastră în cantități mari și le revând magazinelor și restaurantelor din țara lor.",
+          "b": {
+            "1": "Angrosiștii din țările UE cumpără de la dumneavoastră",
+            "2": "Comenzi en-gros, la bax și la palet",
+            "3": "Facturile transfrontaliere sunt gestionate de FIRINGI"
+          },
+          "cta": "Înregistrați-vă ca distribuitor"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Primele întrebări puse de afaceri.",
+      "items": {
+        "1": {
+          "q": "Pot cumpăra și persoanele fizice?",
+          "a": "Nu. FIRINGI este pentru firme cu NIF. Prețurile sunt angro, iar facturile sunt emise pe firma dumneavoastră."
+        },
+        "2": {
+          "q": "Care este comanda minimă?",
+          "a": "150 € pentru tot coșul, indiferent câți furnizori include."
+        },
+        "3": {
+          "q": "Prețurile sunt cu sau fără TVA?",
+          "a": "Fără TVA. TVA se adaugă la finalizarea comenzii, la cota fiecărui produs, și apare pe fiecare linie din factură."
+        },
+        "4": {
+          "q": "Când ajunge marfa?",
+          "a": "În aceeași zi. Tot ce comandați înainte de ora-limită ajunge în acea zi, de la toți furnizorii din coș, și puteți urmări fiecare camion în aplicație."
+        },
+        "5": {
+          "q": "Cum și când plătesc?",
+          "a": "Plătiți o singură dată pentru tot coșul prin Multibanco, MB WAY, card sau transfer SEPA. Firmele aprobate pot plăti și în până la 30 de zile de la factură."
+        },
+        "6": {
+          "q": "Pot colegii mei să comande din același cont?",
+          "a": "Da. Adăugați utilizatori cu propriile date de autentificare și alegeți cine poate comanda, cine vede facturile și cine poate schimba adresele de livrare."
+        },
+        "7": {
+          "q": "Ce fac dacă marfa ajunge deteriorată?",
+          "a": "Raportați în aplicație în 24 de ore, cu o fotografie. Furnizorul răspunde cu un produs de înlocuire sau o notă de credit."
+        },
+        "8": {
+          "q": "Livrați în Madeira și Azore?",
+          "a": "Încă nu. Începem cu Portugalia continentală și vom adăuga insulele mai târziu."
+        },
+        "9": {
+          "q": "Pot vinde pe FIRINGI?",
+          "a": "Da. Aplicați ca furnizor, stabiliți prețurile, minimele și zilele de livrare și începeți să primiți comenzi de la afaceri din apropiere."
+        }
+      }
+    },
+    "final": {
+      "h2": "Următoarea reaprovizionare poate fi o singură comandă.",
+      "p": "Deschideți un cont de firmă și vedeți prețurile angro ale furnizorilor din apropiere."
+    },
+    "plans": {
+      "h2": "Planuri pentru furnizori. Cumpărătorii nu plătesc niciodată.",
+      "sub": "Afacerile care cumpără pe FIRINGI îl folosesc gratuit. Furnizorii încep gratuit și trec la un plan superior pe măsură ce cresc.",
+      "per": "/lună",
+      "top": "Cel mai ales",
+      "note": "Planurile și prețurile vin din setările de planuri FIRINGI, așa că această secțiune corespunde mereu cu ce plătesc furnizorii.",
+      "start": "Începeți gratuit",
+      "choose": "Alegeți {name}",
+      "products": "Până la {n} produse",
+      "productsAll": "Produse nelimitate",
+      "team": "{users} utilizatori, {wh} depozite, {drivers} șoferi",
+      "teamAll": "Utilizatori, depozite și șoferi nelimitați",
+      "earlyPay": "Plată anticipată de la {rate}% pe zi",
+      "freeEarly": "{n} plăți anticipate gratuite pe lună",
+      "includes": "Include: {list}",
+      "basics": "Comenzi, facturare și plăți prin FIRINGI",
+      "feature": {
+        "INVENTORY": "inventar",
+        "PLANNING": "planificare",
+        "WAREHOUSE": "picking în depozit",
+        "PRICE_INSIGHTS": "analize de preț",
+        "ADS": "publicitate",
+        "INTEGRATIONS": "integrări",
+        "ROUTES": "rute",
+        "ASSISTANT": "asistent AI"
+      }
+    },
+    "contact": {
+      "h2": "Vorbiți cu noi.",
+      "sub": "Întrebări despre cumpărare sau vânzare? Răspundem în cel mult o zi lucrătoare.",
+      "name": "Nume",
+      "company": "Firmă",
+      "email": "E-mail",
+      "phone": "Mobil",
+      "nif": "NIF",
+      "type": "Afacerea dumneavoastră",
+      "msg": "Mesaj",
+      "consent": "Sunt de acord ca FIRINGI să folosească aceste date pentru a-mi răspunde, conform politicii de confidențialitate.",
+      "send": "Trimiteți",
+      "waT": "WhatsApp",
+      "waP": "Scrieți echipei noastre pe WhatsApp, de luni până sâmbătă, între 9:00 și 19:00.",
+      "waB": "Deschideți WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restaurant, cafenea sau bar",
+        "2": "Magazin alimentar sau minimarket",
+        "3": "Hotel sau catering",
+        "4": "Cantină, școală sau cămin de bătrâni",
+        "5": "Altele"
+      },
+      "vendorMsg": "Ce vindeți și unde livrați",
+      "sent": "Vă mulțumim. Vă răspundem în cel mult o zi lucrătoare.",
+      "errRequired": "Completați numele, firma și adresa de e-mail.",
+      "errEmail": "Introduceți o adresă de e-mail validă.",
+      "errConsent": "Bifați căsuța pentru a vă da acordul.",
+      "errSpam": "Ceva nu a mers. Încercați din nou.",
+      "errBusy": "Prea multe mesaje. Încercați din nou peste un minut.",
+      "sending": "Se trimite…",
+      "vendorType": "Vreau să vând ca",
+      "vendorTypes": {
+        "WHOLESALER": "Angrosist — vând magazinelor din țara mea",
+        "DISTRIBUTOR": "Distribuitor — vând angrosiștilor din UE"
+      }
+    },
+    "news": {
+      "label": "Primiți lunar pe e-mail furnizorii noi, ofertele și zonele de livrare.",
+      "ph": "E-mailul firmei",
+      "btn": "Abonați-vă",
+      "note": "Vă puteți dezabona oricând.",
+      "consent": "Sunt de acord să primesc newsletterul FIRINGI. Mă pot dezabona oricând.",
+      "sent": "Aproape gata. Verificați-vă e-mailul și confirmați abonarea.",
+      "confirmedTitle": "Sunteți abonat.",
+      "confirmedBody": "Vă mulțumim. Veți primi newsletterul nostru o dată pe lună.",
+      "unsubTitle": "V-ați dezabonat.",
+      "unsubBody": "Nu veți mai primi newsletterul. Vă puteți abona din nou oricând.",
+      "invalid": "Acest link nu mai este valabil.",
+      "back": "Înapoi la FIRINGI"
+    },
+    "foot": {
+      "tag": "Cumpărați, reaprovizionați și conduceți-vă afacerea fără să pierdeți timpul.",
+      "buy": "Cumpărare",
+      "sell": "Pentru furnizori",
+      "help": "Ajutor",
+      "legal": "Juridic",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Toate drepturile rezervate.",
+      "links": {
+        "buy": {
+          "1": "Cumpărare",
+          "2": "Casă",
+          "3": "Gestiune",
+          "4": "Economii"
+        },
+        "sell": {
+          "1": "Deveniți furnizor",
+          "2": "Planuri pentru furnizori"
+        },
+        "help": {
+          "1": "Întrebări",
+          "2": "Contact",
+          "3": "Starea sistemului",
+          "4": "Autentificare"
+        },
+        "legal": {
+          "1": "Termeni de utilizare",
+          "2": "Politica de confidențialitate (RGPD)",
+          "3": "Cookie-uri",
+          "4": "Date despre firmă"
+        }
+      }
+    },
+    "login": "Autentificare",
+    "mail": {
+      "contactSubject": "Am primit mesajul dumneavoastră",
+      "hello": "Bună ziua, {name},",
+      "helloAll": "Bună ziua,",
+      "contactBody": "Vă mulțumim că ați contactat FIRINGI. Am primit mesajul dumneavoastră și vă răspundem în cel mult o zi lucrătoare.",
+      "newsSubject": "Confirmați abonarea la newsletterul FIRINGI",
+      "newsBody": "Vă rugăm să confirmați că doriți să primiți newsletterul FIRINGI:",
+      "newsIgnore": "Dacă nu ați solicitat acest lucru, ignorați acest e-mail.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Termeni de utilizare",
+      "privacy": "Politica de confidențialitate (RGPD)",
+      "cookies": "Cookie-uri",
+      "company": "Date despre firmă",
+      "updated": "Ultima actualizare: {date}",
+      "empty": "Această pagină este în pregătire. Contactați-ne dacă aveți o întrebare.",
+      "back": "Înapoi la FIRINGI"
+    },
+    "langPicker": "Alegeți limba",
+    "app": {
+      "nav": {
+        "buy": "Cumpărare",
+        "till": "Casă",
+        "manage": "Gestiune",
+        "save": "Economii",
+        "vendors": "Deveniți furnizor",
+        "faq": "Întrebări"
+      },
+      "hero": {
+        "eyebrow": "Pentru magazine, minimarketuri, cafenele și restaurante din Portugalia",
+        "h1a": "Cumpărați, reaprovizionați și conduceți-vă",
+        "h1b": "afacerea",
+        "h1c": "fără să pierdeți timpul.",
+        "lead": "Comandați de la toți angrosiștii într-un singur coș — alimente, băuturi, igienă, curățenie, tutun și multe altele — cu livrare în aceeași zi. Vindeți cu casa de marcat FIRINGI și vedeți marjele, stocul și personalul într-un singur panou.",
+        "cta2": "Vedeți cum funcționează",
+        "note": "Gratuit pentru firme · Fără card"
+      },
+      "float": {
+        "1": "Comandă nouă · livrare azi",
+        "2": "Factură plătită · MB WAY",
+        "3": "+120 puncte de fidelitate"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "comandă minimă pentru tot coșul"
+        },
+        "2": {
+          "v": "În aceeași zi",
+          "l": "livrare, de luni până sâmbătă"
+        },
+        "3": {
+          "v": "1 factură",
+          "l": "de la FIRINGI pentru fiecare comandă"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "pentru deschiderea contului de firmă"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Cumpărare",
+          "h": "Toți angrosiștii. Un singur coș. Livrat azi.",
+          "p": "Căutați într-un singur catalog cu prețuri angro de la mulți furnizori, umpleți un singur coș și plătiți o singură dată. Totul ajunge în aceeași zi.",
+          "b": {
+            "1": "Un singur minim de 150 € pentru tot coșul",
+            "2": "Prețuri de volum la fiecare produs",
+            "3": "Urmăriți fiecare camion în aplicație"
+          }
+        },
+        "till": {
+          "tag": "Casă",
+          "h": "O casă de marcat care vă cunoaște stocul.",
+          "p": "Vindeți la tejghea cu casa de marcat FIRINGI: atingeți sau scanați, acceptați card, MB WAY sau numerar și tipăriți bonul cu NIF-ul clientului.",
+          "b": {
+            "1": "Vinde și fără internet",
+            "2": "Fiecare vânzare actualizează stocul",
+            "3": "TVA pe fiecare linie din bon"
+          }
+        },
+        "manage": {
+          "tag": "Gestiune",
+          "h": "Aflați-vă marjele înainte să vindeți.",
+          "p": "Marje pe produs și pe rețetă din prețurile reale de achiziție, stoc cu date de expirare și ture de personal — totul din comenzile pe care le plasați deja.",
+          "b": {
+            "1": "Marje pe produs și pe rețetă",
+            "2": "Stoc, alerte de expirare și mementouri pentru comenzi noi",
+            "3": "Ore și ture de personal"
+          }
+        },
+        "save": {
+          "tag": "Economii",
+          "h": "Cheltuiți mai puțin. Plătiți când vă convine.",
+          "p": "Câștigați puncte la fiecare comandă livrată, schimbați-le în magazinul de recompense, intrați în grupuri de achiziție pentru prețuri mai bune și plătiți mai târziu cu un cont aprobat.",
+          "b": {
+            "1": "Puncte și magazin de recompense",
+            "2": "Grupuri de achiziție și oferte de volum",
+            "3": "Plătiți în până la 30 de zile"
+          }
+        }
+      },
+      "start": {
+        "h": "Începeți în trei pași.",
+        "steps": {
+          "1": {
+            "t": "Deschideți contul gratuit",
+            "p": "Numele firmei, NIF-ul și adresa de livrare."
+          },
+          "2": {
+            "t": "Noi verificăm",
+            "p": "De obicei, într-o zi lucrătoare."
+          },
+          "3": {
+            "t": "Comandați și creșteți",
+            "p": "Cumpărați azi, primiți azi și activați casa de marcat și instrumentele când aveți nevoie de ele."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Bon",
+        "nif": "NIF client",
+        "card": "Card",
+        "cash": "Numerar",
+        "total": "Total",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Sandviș cald",
+          "4": "Apă 0,5 L",
+          "5": "Tartă cu cremă",
+          "6": "Suc de portocale"
+        }
+      },
+      "mng": {
+        "recipe": "Cost rețetă",
+        "dish": "Sandviș cald",
+        "cost": "Cost",
+        "price": "Preț",
+        "margin": "Marjă",
+        "stock": "Alerte de stoc",
+        "low": "Mai sunt {n} zile",
+        "expiry": "Expiră în {n} zile",
+        "staff": "Personal azi",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} puncte",
+        "next": "Încă {n} puncte până la următoarea recompensă",
+        "rewards": "Magazin de recompense",
+        "pts": "{n} pct",
+        "items": {
+          "1": "Voucher de 10 €",
+          "2": "Livrare gratuită",
+          "3": "Kit de curățare pentru espressor"
+        },
+        "later": "Plată ulterioară",
+        "laterP": "30 de zile · limită {amount}",
+        "group": "Grup de achiziție: −6% la băuturi"
+      },
+      "cats": {
+        "h": "Tot ce vinde magazinul dumneavoastră, dintr-un singur loc.",
+        "p": "14 categorii de la angrosiști din toată Portugalia — și tot mai multe în fiecare lună.",
+        "items": {
+          "1": "Alimente",
+          "2": "Produse proaspete",
+          "3": "Băuturi",
+          "4": "Cosmetice și frumusețe",
+          "5": "Igienă personală",
+          "6": "Casă și curățenie",
+          "7": "Bebeluși și îngrijirea copilului",
+          "8": "Produse pentru animale",
+          "9": "Tutun",
+          "10": "Modă și accesorii",
+          "11": "Jucării și articole pentru copii",
+          "12": "Suveniruri și cadouri",
+          "13": "Ambalaje și consumabile",
+          "14": "Produse pentru kebab și pizza"
+        }
+      }
     }
   }
 }

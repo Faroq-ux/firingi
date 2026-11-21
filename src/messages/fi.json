@@ -259,7 +259,10 @@
       "activityCodeOnce": "Anna se kerran — sen jälkeen vain FIRINGI voi muuttaa sitä.",
       "activityCodesSecondary": "Muut {scheme}-koodit (valinnainen)",
       "activityCodesHint": "Erota pilkuilla — enintään {max}.",
-      "activityCodesAdd": "Lisää koodeja tähän; jo annetut säilyvät — vain FIRINGI voi poistaa ne."
+      "activityCodesAdd": "Lisää koodeja tähän; jo annetut säilyvät — vain FIRINGI voi poistaa ne.",
+      "whatsapp": "WhatsApp-numero (valinnainen)",
+      "whatsappHint": "Lisää se, jos käytät WhatsAppia tilauksiin ja viesteihin. Maatunnuksen kanssa.",
+      "whatsappSame": "Tämä puhelinnumero on myös WhatsAppissa"
     },
     "businessTypes": {
       "restaurant": "Ravintola",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Palkinto on loppumassa",
       "body": "Palkintoa ”{reward}” on jäljellä enää {left}."
+    },
+    "website_contact": {
+      "title": "Uusi kysymys verkkosivuilta",
+      "body": "{name} yrityksestä {company} lähetti kysymyksen. Se on CRM:ssä liidinä."
+    },
+    "website_vendor_interest": {
+      "title": "Uusi toimittajahakemus",
+      "body": "{name} yrityksestä {company} haluaa myydä FIRINGIssä. Se on CRM:ssä liidinä."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Yksikään asiakas ei ole vielä lunastanut tuotteitasi.",
       "orderBy": "Tilaa viimeistään {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Osta, täydennä varastosi ja pyöritä yritystäsi",
+      "description": "Täydennä varastosi kaikilta tukkureilta yhdellä tilauksella: määräalennukset, selkeät laskut NIF-numerollasi ja toimitus samana päivänä."
+    },
+    "open": "Avaa yritystili",
+    "menuOpen": "Avaa valikko",
+    "menuClose": "Sulje valikko",
+    "chart": {
+      "label": "Kolme toimittajaa, joista kukin lähettää toimitusreitin samalle yritykselle",
+      "shop": "Yrityksesi",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "to 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "to 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "la 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI-sovelluksen näkymä: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Hae tuotteita, merkkejä, toimittajia…",
+        "next": "Toimitus tänään",
+        "cart": "Ostoskorisi",
+        "minOk": "Minimi täynnä",
+        "total": "Yhteensä",
+        "checkout": "Tilaa ja maksa",
+        "steps": {
+          "1": "Tilattu",
+          "2": "Pakattu",
+          "3": "Matkalla",
+          "4": "Toimitettu"
+        },
+        "reorder": "Aika tilata uudelleen",
+        "fill": "Täytä ostoskori",
+        "lastTime": "Viimeksi: {n} laatikkoa",
+        "role": "Tukkuasiakas",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Tervetuloa, {name}",
+        "recent": "Viimeisimmät tilaukset",
+        "nav": {
+          "1": "Yleiskatsaus",
+          "2": "Tuoteluettelo",
+          "3": "Tilaukset",
+          "4": "Laskut ja maksut",
+          "5": "Edut",
+          "6": "Ohjeet ja tuki",
+          "7": "Kassa (POS)",
+          "8": "Keittiö ja varasto"
+        },
+        "kpi": {
+          "1": "Käynnissä olevat tilaukset",
+          "2": "Matkalla",
+          "3": "Ostot, viim. 30 pv",
+          "4": "Avoimet laskut"
+        }
+      },
+      "products": {
+        "1": "Pitkäjyväinen riisi 1 kg × 10",
+        "2": "Extra-neitsytoliiviöljy 5 l",
+        "3": "Tonnikala oliiviöljyssä 120 g × 24",
+        "4": "UHT-maito 1 l × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Vie tukkukauppasi verkkoon.",
+      "sub": "Tavoita yritykset, jotka tilaavat joka viikko – ilman puhelintilauksia ja maksujen perimistä.",
+      "cta": "Hae toimittajaksi",
+      "rows": {
+        "1": {
+          "t": "Päätä omat ehtosi",
+          "p": "Valitse hinnat, määräportaat, vähimmäistilaukset ja toimituspäivät."
+        },
+        "2": {
+          "t": "Kaikki tilaukset yhdessä jonossa",
+          "p": "Uudet tilaukset tulevat yhdelle listalle valmiina pakattaviksi."
+        },
+        "3": {
+          "t": "Lähetä ja jaa tila",
+          "p": "Määritä kuljettajat ja anna asiakkaiden seurata autoa ilman, että he soittavat sinulle."
+        },
+        "4": {
+          "t": "Saat maksun tilauskohtaisesti",
+          "p": "Jokainen tilaus maksetaan erikseen, ja kirjanpitoon jää selkeä tosite."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Myy FIRINGIssä – tavoita yritykset koko Portugalissa",
+      "description": "Listaa tukkutuotteesi FIRINGIin. Yritykset tilaavat sinulta samassa ostoskorissa muiden toimittajien kanssa; FIRINGI laskuttaa ne ja tilittää rahat sinulle.",
+      "rowsH2": "Kaikki, mitä tarvitset yrityksille myymiseen.",
+      "formH2": "Hae myyjäksi FIRINGIin",
+      "formSub": "Kerro meille yrityksestäsi. Vastaamme yhden arkipäivän kuluessa ja kerromme seuraavat vaiheet.",
+      "navPlans": "Paketit toimittajille",
+      "typesH2": "Kaksi tapaa myydä FIRINGIssä.",
+      "typesSub": "Tukkurit myyvät kaupoille, kahviloille ja ravintoloille omassa maassaan. Jakelijat myyvät tukkureille kaikkialla EU:ssa.",
+      "types": {
+        "wholesaler": {
+          "t": "Tukkuri",
+          "p": "Myy kaupoille, kahviloille ja ravintoloille omassa maassasi alueen tai etäisyyden mukaan – ja täydennä varastosi FIRINGIn jakelijoilta.",
+          "b": {
+            "1": "Maasi kaupat, kahvilat ja ravintolat ostavat sinulta",
+            "2": "Toimitus alueen tai etäisyyden mukaan",
+            "3": "Osta varastosi jakelijoilta kaikkialta EU:sta"
+          },
+          "cta": "Rekisteröidy tukkuriksi"
+        },
+        "distributor": {
+          "t": "Jakelija",
+          "p": "Myy tukkureille kaikkialla EU:ssa. He ostavat tuotteesi suurina erinä ja myyvät ne edelleen kaupoille ja ravintoloille omassa maassaan.",
+          "b": {
+            "1": "EU-maiden tukkurit ostavat sinulta",
+            "2": "Tilaukset suurina erinä, laatikoittain ja lavoittain",
+            "3": "FIRINGI hoitaa rajat ylittävät laskut"
+          },
+          "cta": "Rekisteröidy jakelijaksi"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Yritysten yleisimmät kysymykset.",
+      "items": {
+        "1": {
+          "q": "Voivatko yksityishenkilöt ostaa?",
+          "a": "Eivät. FIRINGI on yrityksille, joilla on NIF. Hinnat ovat tukkuhintoja, ja laskut osoitetaan yrityksellesi."
+        },
+        "2": {
+          "q": "Mikä on vähimmäistilaus?",
+          "a": "150 € koko ostoskorille, oli siinä kuinka monta toimittajaa tahansa."
+        },
+        "3": {
+          "q": "Sisältävätkö hinnat ALV:n?",
+          "a": "Eivät. ALV lisätään kassalla kunkin tuotteen verokannan mukaan, ja se näkyy jokaisella laskurivillä."
+        },
+        "4": {
+          "q": "Milloin tavarani saapuvat?",
+          "a": "Samana päivänä. Kaikki, mitä tilaat ennen määräaikaa, saapuu samana päivänä kaikilta ostoskorisi toimittajilta, ja voit seurata jokaista autoa sovelluksessa."
+        },
+        "5": {
+          "q": "Miten ja milloin maksan?",
+          "a": "Maksa koko ostoskori kerralla: Multibanco, MB WAY, kortti tai SEPA-tilisiirto. Hyväksytyt yritykset voivat maksaa myös jopa 30 päivää laskun jälkeen."
+        },
+        "6": {
+          "q": "Voivatko kollegani tilata samalta tililtä?",
+          "a": "Kyllä. Lisää käyttäjiä omilla tunnuksillaan ja valitse, kuka voi tilata, kuka näkee laskut ja kuka voi muuttaa toimitusosoitteita."
+        },
+        "7": {
+          "q": "Entä jos tavarat saapuvat vahingoittuneina?",
+          "a": "Ilmoita siitä sovelluksessa 24 tunnin kuluessa ja liitä kuva. Toimittaja vastaa korvaavalla tuotteella tai hyvityslaskulla."
+        },
+        "8": {
+          "q": "Toimitatteko Madeiralle ja Azoreille?",
+          "a": "Emme vielä. Aloitamme Manner-Portugalista ja lisäämme saaret myöhemmin."
+        },
+        "9": {
+          "q": "Voinko myydä FIRINGIssä?",
+          "a": "Kyllä. Hae toimittajaksi, aseta hinnat, vähimmäistilaukset ja toimituspäivät ja ala saada tilauksia lähialueen yrityksiltä."
+        }
+      }
+    },
+    "final": {
+      "h2": "Seuraava täydennys voi olla yksi tilaus.",
+      "p": "Avaa yritystili ja näe lähialueen toimittajien tukkuhinnat."
+    },
+    "plans": {
+      "h2": "Paketit toimittajille. Ostajat eivät maksa koskaan.",
+      "sub": "FIRINGIssä ostavat yritykset käyttävät palvelua ilmaiseksi. Toimittajat aloittavat ilmaiseksi ja päivittävät pakettia kasvaessaan.",
+      "per": "/kk",
+      "top": "Suosituin",
+      "note": "Paketit ja hinnat haetaan FIRINGIn pakettiasetuksista, joten tämä osio vastaa aina sitä, mitä toimittajat maksavat.",
+      "start": "Aloita ilmaiseksi",
+      "choose": "Valitse {name}",
+      "products": "Enintään {n} tuotetta",
+      "productsAll": "Rajattomasti tuotteita",
+      "team": "{users} käyttäjää, {wh} varastoa, {drivers} kuljettajaa",
+      "teamAll": "Rajattomasti käyttäjiä, varastoja ja kuljettajia",
+      "earlyPay": "Ennakkotilitys alkaen {rate} % päivässä",
+      "freeEarly": "{n} ilmaista ennakkotilitystä kuukaudessa",
+      "includes": "Sisältää: {list}",
+      "basics": "Tilaukset, laskutus ja tilitykset FIRINGIn kautta",
+      "feature": {
+        "INVENTORY": "varastonhallinta",
+        "PLANNING": "suunnittelu",
+        "WAREHOUSE": "keräily varastossa",
+        "PRICE_INSIGHTS": "hintatiedot",
+        "ADS": "mainonta",
+        "INTEGRATIONS": "integraatiot",
+        "ROUTES": "reitit",
+        "ASSISTANT": "tekoälyavustaja"
+      }
+    },
+    "contact": {
+      "h2": "Ota yhteyttä.",
+      "sub": "Kysyttävää ostamisesta tai myymisestä? Vastaamme yhden arkipäivän kuluessa.",
+      "name": "Nimi",
+      "company": "Yritys",
+      "email": "Sähköposti",
+      "phone": "Matkapuhelin",
+      "nif": "NIF",
+      "type": "Yrityksesi",
+      "msg": "Viesti",
+      "consent": "Hyväksyn, että FIRINGI käyttää näitä tietoja vastatakseen minulle tietosuojaselosteen mukaisesti.",
+      "send": "Lähetä",
+      "waT": "WhatsApp",
+      "waP": "Lähetä viesti tiimillemme WhatsAppissa maanantaista lauantaihin klo 9.00–19.00.",
+      "waB": "Avaa WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Ravintola, kahvila tai baari",
+        "2": "Ruokakauppa tai lähikauppa",
+        "3": "Hotelli tai catering",
+        "4": "Henkilöstöravintola, koulu tai hoivakoti",
+        "5": "Muu"
+      },
+      "vendorMsg": "Mitä myyt ja minne toimitat",
+      "sent": "Kiitos. Vastaamme yhden arkipäivän kuluessa.",
+      "errRequired": "Täytä nimesi, yrityksesi ja sähköpostiosoitteesi.",
+      "errEmail": "Anna kelvollinen sähköpostiosoite.",
+      "errConsent": "Hyväksy rastittamalla ruutu.",
+      "errSpam": "Jokin meni vikaan. Yritä uudelleen.",
+      "errBusy": "Liian monta viestiä. Yritä uudelleen minuutin päästä.",
+      "sending": "Lähetetään…",
+      "vendorType": "Haluan myydä seuraavasti",
+      "vendorTypes": {
+        "WHOLESALER": "Tukkuri – myyn kaupoille omassa maassani",
+        "DISTRIBUTOR": "Jakelija – myyn tukkureille EU:ssa"
+      }
+    },
+    "news": {
+      "label": "Saat uudet toimittajat, tarjoukset ja toimitusalueet sähköpostiisi kerran kuukaudessa.",
+      "ph": "Yrityksesi sähköposti",
+      "btn": "Tilaa",
+      "note": "Voit perua tilauksen milloin tahansa.",
+      "consent": "Haluan tilata FIRINGIn uutiskirjeen. Voin perua tilauksen milloin tahansa.",
+      "sent": "Melkein valmista. Tarkista sähköpostisi ja vahvista tilaus.",
+      "confirmedTitle": "Olet tilannut uutiskirjeen.",
+      "confirmedBody": "Kiitos. Saat uutiskirjeemme kerran kuukaudessa.",
+      "unsubTitle": "Tilaus on peruttu.",
+      "unsubBody": "Et saa enää uutiskirjettä. Voit tilata sen uudelleen milloin tahansa.",
+      "invalid": "Tämä linkki ei ole enää voimassa.",
+      "back": "Takaisin FIRINGIin"
+    },
+    "foot": {
+      "tag": "Osta, täydennä varastosi ja pyöritä yritystäsi tuhlaamatta aikaasi.",
+      "buy": "Osta",
+      "sell": "Toimittajille",
+      "help": "Ohjeet",
+      "legal": "Juridiset tiedot",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Kaikki oikeudet pidätetään.",
+      "links": {
+        "buy": {
+          "1": "Osta",
+          "2": "Kassa",
+          "3": "Hallitse",
+          "4": "Säästä"
+        },
+        "sell": {
+          "1": "Ryhdy toimittajaksi",
+          "2": "Paketit toimittajille"
+        },
+        "help": {
+          "1": "Kysymykset",
+          "2": "Yhteystiedot",
+          "3": "Järjestelmän tila",
+          "4": "Kirjaudu"
+        },
+        "legal": {
+          "1": "Käyttöehdot",
+          "2": "Tietosuojaseloste (tietosuoja-asetus)",
+          "3": "Evästeet",
+          "4": "Yrityksen tiedot"
+        }
+      }
+    },
+    "login": "Kirjaudu",
+    "mail": {
+      "contactSubject": "Saimme viestisi",
+      "hello": "Hei {name},",
+      "helloAll": "Hei,",
+      "contactBody": "Kiitos, että otit yhteyttä FIRINGIin. Saimme viestisi ja vastaamme yhden arkipäivän kuluessa.",
+      "newsSubject": "Vahvista FIRINGIn uutiskirjeen tilaus",
+      "newsBody": "Vahvista, että haluat tilata FIRINGIn uutiskirjeen:",
+      "newsIgnore": "Jos et pyytänyt tätä, voit jättää viestin huomiotta.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Käyttöehdot",
+      "privacy": "Tietosuojaseloste (tietosuoja-asetus)",
+      "cookies": "Evästeet",
+      "company": "Yrityksen tiedot",
+      "updated": "Päivitetty viimeksi {date}",
+      "empty": "Tätä sivua valmistellaan. Ota yhteyttä, jos sinulla on kysyttävää.",
+      "back": "Takaisin FIRINGIin"
+    },
+    "langPicker": "Valitse kieli",
+    "app": {
+      "nav": {
+        "buy": "Osta",
+        "till": "Kassa",
+        "manage": "Hallitse",
+        "save": "Säästä",
+        "vendors": "Ryhdy toimittajaksi",
+        "faq": "Kysymykset"
+      },
+      "hero": {
+        "eyebrow": "Kaupoille, lähikaupoille, kahviloille ja ravintoloille Portugalissa",
+        "h1a": "Osta, täydennä varastosi ja pyöritä",
+        "h1b": "yritystäsi",
+        "h1c": "tuhlaamatta aikaasi.",
+        "lead": "Tilaa kaikilta tukkureilta yhteen ostoskoriin – elintarvikkeet, juomat, hygienia, siivous, tupakka ja paljon muuta – toimitus samana päivänä. Myy FIRINGI-kassalla ja näe katteet, varasto ja henkilöstö yhdessä näkymässä.",
+        "cta2": "Katso, miten se toimii",
+        "note": "Ilmainen yrityksille · Ei korttia tarvita"
+      },
+      "float": {
+        "1": "Uusi tilaus · toimitus tänään",
+        "2": "Lasku maksettu · MB WAY",
+        "3": "+120 etupistettä"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "vähimmäistilaus koko ostoskorille"
+        },
+        "2": {
+          "v": "Samana päivänä",
+          "l": "toimitus maanantaista lauantaihin"
+        },
+        "3": {
+          "v": "1 lasku",
+          "l": "FIRINGIltä jokaisesta tilauksesta"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "yritystilin avaaminen"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Osta",
+          "h": "Kaikki tukkurit. Yksi ostoskori. Perillä tänään.",
+          "p": "Hae yhdestä tuoteluettelosta monen toimittajan tukkuhinnoilla, täytä yksi ostoskori ja maksa kerran. Kaikki saapuu samana päivänä.",
+          "b": {
+            "1": "Yksi 150 €:n minimi koko ostoskorille",
+            "2": "Määräalennukset kaikissa tuotteissa",
+            "3": "Seuraa jokaista autoa sovelluksessa"
+          }
+        },
+        "till": {
+          "tag": "Kassa",
+          "h": "Kassa, joka tuntee varastosi.",
+          "p": "Myy tiskillä FIRINGI-kassalla: napauta tai skannaa, ota vastaan kortti, MB WAY tai käteinen ja tulosta kuitti asiakkaan NIF-numerolla.",
+          "b": {
+            "1": "Myy myös ilman nettiä",
+            "2": "Jokainen myynti päivittää varaston",
+            "3": "ALV jokaisella kuittirivillä"
+          }
+        },
+        "manage": {
+          "tag": "Hallitse",
+          "h": "Tunne katteesi ennen kuin myyt.",
+          "p": "Tuote- ja reseptikatteet todellisista ostohinnoista, varasto parasta ennen -päivineen ja henkilöstön vuorot – kaikki jo tekemistäsi tilauksista.",
+          "b": {
+            "1": "Katteet tuotteittain ja resepteittäin",
+            "2": "Varasto, vanhenemishälytykset ja tilausmuistutukset",
+            "3": "Työtunnit ja vuorot"
+          }
+        },
+        "save": {
+          "tag": "Säästä",
+          "h": "Kuluta vähemmän. Maksa, kun sinulle sopii.",
+          "p": "Ansaitse pisteitä jokaisesta toimitetusta tilauksesta, vaihda ne etukaupassa, liity ostorenkaisiin parempien hintojen vuoksi ja maksa myöhemmin hyväksytyillä tileillä.",
+          "b": {
+            "1": "Pisteet ja etukauppa",
+            "2": "Ostorenkaat ja määräalennukset",
+            "3": "Maksa jopa 30 päivää myöhemmin"
+          }
+        }
+      },
+      "start": {
+        "h": "Aloita kolmessa vaiheessa.",
+        "steps": {
+          "1": {
+            "t": "Avaa ilmainen tili",
+            "p": "Yrityksesi nimi, NIF ja toimitusosoite."
+          },
+          "2": {
+            "t": "Tarkistamme sen",
+            "p": "Yleensä yhden arkipäivän kuluessa."
+          },
+          "3": {
+            "t": "Tilaa ja kasva",
+            "p": "Osta tänään, saat tavarat tänään, ja ota kassa ja työkalut käyttöön, kun tarvitset niitä."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Kuitti",
+        "nif": "Asiakkaan NIF",
+        "card": "Kortti",
+        "cash": "Käteinen",
+        "total": "Yhteensä",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Lämmin voileipä",
+          "4": "Vesi 0,5 l",
+          "5": "Vaniljatorttu",
+          "6": "Appelsiinimehu"
+        }
+      },
+      "mng": {
+        "recipe": "Reseptin kustannus",
+        "dish": "Lämmin voileipä",
+        "cost": "Kustannus",
+        "price": "Hinta",
+        "margin": "Kate",
+        "stock": "Varastohälytykset",
+        "low": "{n} päivää jäljellä",
+        "expiry": "Vanhenee {n} päivän kuluttua",
+        "staff": "Henkilöstö tänään",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} pistettä",
+        "next": "{n} pistettä seuraavaan etuun",
+        "rewards": "Etukauppa",
+        "pts": "{n} p",
+        "items": {
+          "1": "10 €:n lahjakortti",
+          "2": "Ilmainen toimitus",
+          "3": "Kahvinkeittimen puhdistussarja"
+        },
+        "later": "Maksa myöhemmin",
+        "laterP": "30 päivää · raja {amount}",
+        "group": "Ostorengas: −6 % juomista"
+      },
+      "cats": {
+        "h": "Kaikki, mitä kauppasi myy, yhdestä paikasta.",
+        "p": "14 kategoriaa tukkureilta koko Portugalista – ja lisää joka kuukausi.",
+        "items": {
+          "1": "Elintarvikkeet",
+          "2": "Tuoretuotteet",
+          "3": "Juomat",
+          "4": "Kosmetiikka ja kauneus",
+          "5": "Henkilökohtainen hygienia",
+          "6": "Koti ja siivous",
+          "7": "Vauvat ja lastenhoito",
+          "8": "Lemmikkitarvikkeet",
+          "9": "Tupakka",
+          "10": "Muoti ja asusteet",
+          "11": "Lelut ja lapset",
+          "12": "Matkamuistot ja lahjat",
+          "13": "Pakkaukset ja tarvikkeet",
+          "14": "Kebab- ja pizzatarvikkeet"
+        }
+      }
     }
   }
 }

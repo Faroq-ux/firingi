@@ -259,7 +259,10 @@
       "activityCodeOnce": "Saisissez-le une fois — ensuite seul FIRINGI peut le modifier.",
       "activityCodesSecondary": "Codes {scheme} secondaires (facultatif)",
       "activityCodesHint": "Séparez par des virgules — jusqu'à {max}.",
-      "activityCodesAdd": "Ajoutez d'autres codes ici ; ceux déjà donnés restent — seul FIRINGI peut les retirer."
+      "activityCodesAdd": "Ajoutez d'autres codes ici ; ceux déjà donnés restent — seul FIRINGI peut les retirer.",
+      "whatsapp": "Numéro WhatsApp (facultatif)",
+      "whatsappHint": "Indiquez-le si vous utilisez WhatsApp pour les commandes et les messages. Avec l'indicatif du pays.",
+      "whatsappSame": "Ce numéro de téléphone est aussi sur WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Récompense bientôt épuisée",
       "body": "Plus que {left} pour « {reward} »."
+    },
+    "website_contact": {
+      "title": "Nouvelle question depuis le site",
+      "body": "{name} de {company} a envoyé une question. Elle est dans le CRM en tant que lead."
+    },
+    "website_vendor_interest": {
+      "title": "Nouvelle candidature fournisseur",
+      "body": "{name} de {company} veut vendre sur FIRINGI. Enregistré dans le CRM en tant que lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Aucun client n'a encore échangé vos produits.",
       "orderBy": "À commander d'ici le {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Achetez, réapprovisionnez et gérez votre commerce",
+      "description": "Réapprovisionnez votre commerce chez tous les grossistes en une seule commande : prix dégressifs, factures claires avec votre NIF, livraison le jour même."
+    },
+    "open": "Ouvrir un compte professionnel",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu",
+    "chart": {
+      "label": "Trois fournisseurs envoyant chacun une tournée de livraison vers un même commerce",
+      "shop": "Votre commerce",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Jeu. 9 h à 12 h"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Jeu. 13 h à 16 h"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Sam. 8 h à 11 h"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Écran de l'app FIRINGI : {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Rechercher produits, marques, fournisseurs…",
+        "next": "Livraison aujourd'hui",
+        "cart": "Votre panier",
+        "minOk": "Minimum atteint",
+        "total": "Total",
+        "checkout": "Commander et payer",
+        "steps": {
+          "1": "Commandé",
+          "2": "Préparé",
+          "3": "En route",
+          "4": "Livré"
+        },
+        "reorder": "Il est temps de recommander",
+        "fill": "Remplir mon panier",
+        "lastTime": "La dernière fois : {n} cartons",
+        "role": "Client professionnel",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "EN DIRECT",
+        "welcome": "Bienvenue, {name}",
+        "recent": "Dernières commandes",
+        "nav": {
+          "1": "Tableau de bord",
+          "2": "Catalogue",
+          "3": "Commandes",
+          "4": "Factures et paiements",
+          "5": "Récompenses",
+          "6": "Aide et assistance",
+          "7": "Caisse (TPV)",
+          "8": "Cuisine et stock"
+        },
+        "kpi": {
+          "1": "Commandes en cours",
+          "2": "En route",
+          "3": "Dépensé, 30 derniers jours",
+          "4": "Factures à régler"
+        }
+      },
+      "products": {
+        "1": "Riz long grain 1 kg × 10",
+        "2": "Huile d'olive vierge extra 5 L",
+        "3": "Thon à l'huile d'olive 120 g × 24",
+        "4": "Lait UHT 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Mettez votre commerce de gros en ligne.",
+      "sub": "Touchez des entreprises qui recommandent chaque semaine, sans prendre les commandes par téléphone ni relancer les paiements.",
+      "cta": "Devenir fournisseur",
+      "rows": {
+        "1": {
+          "t": "Fixez vos conditions",
+          "p": "Choisissez les prix, les paliers de volume, les minimums de commande et les jours de livraison."
+        },
+        "2": {
+          "t": "Une seule file pour toutes les commandes",
+          "p": "Les nouvelles commandes arrivent dans une seule liste, prêtes à préparer."
+        },
+        "3": {
+          "t": "Expédiez et partagez le suivi",
+          "p": "Assignez des chauffeurs et laissez vos clients suivre le camion sans vous appeler."
+        },
+        "4": {
+          "t": "Payé à chaque commande",
+          "p": "Chaque commande vous est versée séparément, avec un justificatif clair pour votre comptabilité."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Vendez sur FIRINGI — touchez des entreprises dans tout le Portugal",
+      "description": "Proposez vos produits de gros sur FIRINGI. Les entreprises vous commandent dans un même panier avec d'autres fournisseurs ; FIRINGI les facture et vous reverse les paiements.",
+      "rowsH2": "Tout ce qu'il faut pour vendre aux entreprises.",
+      "formH2": "Postulez pour vendre sur FIRINGI",
+      "formSub": "Parlez-nous de votre entreprise. Nous répondons sous un jour ouvré avec les prochaines étapes.",
+      "navPlans": "Offres fournisseurs",
+      "typesH2": "Deux façons de vendre sur FIRINGI.",
+      "typesSub": "Les grossistes vendent aux commerces, cafés et restaurants de leur propre pays. Les distributeurs vendent aux grossistes dans toute l'UE.",
+      "types": {
+        "wholesaler": {
+          "t": "Grossiste",
+          "p": "Vendez aux commerces, cafés et restaurants de votre pays, par zone ou par distance — et réapprovisionnez-vous auprès des distributeurs sur FIRINGI.",
+          "b": {
+            "1": "Les commerces, cafés et restaurants de votre pays vous achètent",
+            "2": "Livraison par zone ou par distance",
+            "3": "Achetez votre stock auprès de distributeurs de toute l'UE"
+          },
+          "cta": "S'inscrire comme grossiste"
+        },
+        "distributor": {
+          "t": "Distributeur",
+          "p": "Vendez aux grossistes de toute l'UE. Ils achètent vos produits en gros et les revendent aux commerces et restaurants de leur pays.",
+          "b": {
+            "1": "Les grossistes des pays de l'UE vous achètent",
+            "2": "Commandes en gros, au carton et à la palette",
+            "3": "Factures transfrontalières gérées par FIRINGI"
+          },
+          "cta": "S'inscrire comme distributeur"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Les questions que les entreprises posent d'abord.",
+      "items": {
+        "1": {
+          "q": "Les particuliers peuvent-ils acheter ?",
+          "a": "Non. FIRINGI est réservé aux entreprises ayant un NIF. Les prix sont des prix de gros et les factures sont établies au nom de votre entreprise."
+        },
+        "2": {
+          "q": "Quel est le minimum de commande ?",
+          "a": "150 € pour tout votre panier, quel que soit le nombre de fournisseurs."
+        },
+        "3": {
+          "q": "Les prix sont-ils HT ou TTC ?",
+          "a": "HT. La TVA est ajoutée au paiement, au taux de chaque produit, et indiquée sur chaque ligne de facture."
+        },
+        "4": {
+          "q": "Quand ma marchandise arrive-t-elle ?",
+          "a": "Le jour même. Tout ce que vous commandez avant l'heure limite arrive le jour même, de chaque fournisseur de votre panier, et vous pouvez suivre chaque camion dans l'app."
+        },
+        "5": {
+          "q": "Comment et quand payer ?",
+          "a": "Payez une seule fois tout le panier par Multibanco, MB WAY, carte ou virement SEPA. Les entreprises approuvées peuvent aussi payer jusqu'à 30 jours après facture."
+        },
+        "6": {
+          "q": "Mes collègues peuvent-ils commander depuis le même compte ?",
+          "a": "Oui. Ajoutez des utilisateurs avec leurs propres identifiants et choisissez qui peut commander, qui peut voir les factures et qui peut modifier les adresses de livraison."
+        },
+        "7": {
+          "q": "Et si la marchandise arrive abîmée ?",
+          "a": "Signalez-le dans l'app sous 24 heures, avec une photo. Le fournisseur répond par un remplacement ou un avoir."
+        },
+        "8": {
+          "q": "Livrez-vous à Madère et aux Açores ?",
+          "a": "Pas encore. Nous commençons par le Portugal continental et ajouterons les îles plus tard."
+        },
+        "9": {
+          "q": "Puis-je vendre sur FIRINGI ?",
+          "a": "Oui. Devenez fournisseur, fixez vos prix, minimums et jours de livraison, et recevez des commandes d'entreprises près de chez vous."
+        }
+      }
+    },
+    "final": {
+      "h2": "Votre prochain réassort peut tenir en une seule commande.",
+      "p": "Ouvrez un compte professionnel et découvrez les prix de gros des fournisseurs près de chez vous."
+    },
+    "plans": {
+      "h2": "Des offres pour les fournisseurs. Les acheteurs ne paient jamais.",
+      "sub": "Les entreprises qui achètent sur FIRINGI l'utilisent gratuitement. Les fournisseurs démarrent gratuitement et passent à l'offre supérieure en grandissant.",
+      "per": "/mois",
+      "top": "Le plus choisi",
+      "note": "Les offres et les prix proviennent des paramètres d'offres de FIRINGI : cette section correspond donc toujours à ce que paient les fournisseurs.",
+      "start": "Commencer gratuitement",
+      "choose": "Choisir {name}",
+      "products": "Jusqu'à {n} produits",
+      "productsAll": "Produits illimités",
+      "team": "{users} utilisateurs, {wh} entrepôts, {drivers} chauffeurs",
+      "teamAll": "Utilisateurs, entrepôts et chauffeurs illimités",
+      "earlyPay": "Versement anticipé dès {rate} % par jour",
+      "freeEarly": "{n} versements anticipés gratuits par mois",
+      "includes": "Inclut : {list}",
+      "basics": "Commandes, facturation et versements gérés par FIRINGI",
+      "feature": {
+        "INVENTORY": "inventaire",
+        "PLANNING": "planification",
+        "WAREHOUSE": "préparation en entrepôt",
+        "PRICE_INSIGHTS": "analyse des prix",
+        "ADS": "publicité",
+        "INTEGRATIONS": "intégrations",
+        "ROUTES": "tournées",
+        "ASSISTANT": "assistant IA"
+      }
+    },
+    "contact": {
+      "h2": "Parlons-en.",
+      "sub": "Une question sur l'achat ou la vente ? Nous répondons sous un jour ouvré.",
+      "name": "Nom",
+      "company": "Entreprise",
+      "email": "E-mail",
+      "phone": "Mobile",
+      "nif": "NIF",
+      "type": "Votre commerce",
+      "msg": "Message",
+      "consent": "J'accepte que FIRINGI utilise ces données pour me répondre, comme indiqué dans la politique de confidentialité.",
+      "send": "Envoyer",
+      "waT": "WhatsApp",
+      "waP": "Écrivez à notre équipe sur WhatsApp, du lundi au samedi, de 9 h à 19 h.",
+      "waB": "Ouvrir WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restaurant, café ou bar",
+        "2": "Épicerie ou supérette",
+        "3": "Hôtel ou traiteur",
+        "4": "Cantine, école ou maison de retraite",
+        "5": "Autre"
+      },
+      "vendorMsg": "Ce que vous vendez et où vous livrez",
+      "sent": "Merci. Nous vous répondrons sous un jour ouvré.",
+      "errRequired": "Indiquez votre nom, votre entreprise et votre e-mail.",
+      "errEmail": "Saisissez une adresse e-mail valide.",
+      "errConsent": "Veuillez cocher la case pour accepter.",
+      "errSpam": "Une erreur s'est produite. Veuillez réessayer.",
+      "errBusy": "Trop de messages. Veuillez réessayer dans une minute.",
+      "sending": "Envoi…",
+      "vendorType": "Je veux vendre en tant que",
+      "vendorTypes": {
+        "WHOLESALER": "Grossiste — je vends aux commerces de mon pays",
+        "DISTRIBUTOR": "Distributeur — je vends aux grossistes de l'UE"
+      }
+    },
+    "news": {
+      "label": "Recevez une fois par mois par e-mail les nouveaux fournisseurs, offres et zones de livraison.",
+      "ph": "Votre e-mail professionnel",
+      "btn": "S'abonner",
+      "note": "Vous pouvez vous désabonner à tout moment.",
+      "consent": "J'accepte de recevoir la newsletter FIRINGI. Je peux me désabonner à tout moment.",
+      "sent": "Presque fini. Consultez vos e-mails et confirmez votre abonnement.",
+      "confirmedTitle": "Vous êtes abonné.",
+      "confirmedBody": "Merci. Vous recevrez notre newsletter une fois par mois.",
+      "unsubTitle": "Vous êtes désabonné.",
+      "unsubBody": "Vous ne recevrez plus la newsletter. Vous pouvez vous réabonner à tout moment.",
+      "invalid": "Ce lien n'est plus valide.",
+      "back": "Retour à FIRINGI"
+    },
+    "foot": {
+      "tag": "Achetez, réapprovisionnez et gérez votre commerce sans perdre de temps.",
+      "buy": "Acheter",
+      "sell": "Pour les fournisseurs",
+      "help": "Aide",
+      "legal": "Mentions légales",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Tous droits réservés.",
+      "links": {
+        "buy": {
+          "1": "Acheter",
+          "2": "Caisse",
+          "3": "Gérer",
+          "4": "Économiser"
+        },
+        "sell": {
+          "1": "Devenir fournisseur",
+          "2": "Offres fournisseurs"
+        },
+        "help": {
+          "1": "Questions",
+          "2": "Contact",
+          "3": "État du système",
+          "4": "Se connecter"
+        },
+        "legal": {
+          "1": "Conditions d'utilisation",
+          "2": "Politique de confidentialité (RGPD)",
+          "3": "Cookies",
+          "4": "Informations légales"
+        }
+      }
+    },
+    "login": "Se connecter",
+    "mail": {
+      "contactSubject": "Nous avons bien reçu votre message",
+      "hello": "Bonjour {name},",
+      "helloAll": "Bonjour,",
+      "contactBody": "Merci d'avoir contacté FIRINGI. Nous avons bien reçu votre message et vous répondrons sous un jour ouvré.",
+      "newsSubject": "Confirmez votre abonnement à la newsletter FIRINGI",
+      "newsBody": "Veuillez confirmer que vous souhaitez recevoir la newsletter FIRINGI :",
+      "newsIgnore": "Si vous n'avez rien demandé, ignorez cet e-mail.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité (RGPD)",
+      "cookies": "Cookies",
+      "company": "Informations légales",
+      "updated": "Dernière mise à jour le {date}",
+      "empty": "Cette page est en préparation. Contactez-nous si vous avez une question.",
+      "back": "Retour à FIRINGI"
+    },
+    "langPicker": "Choisir la langue",
+    "app": {
+      "nav": {
+        "buy": "Acheter",
+        "till": "Caisse",
+        "manage": "Gérer",
+        "save": "Économiser",
+        "vendors": "Devenir fournisseur",
+        "faq": "Questions"
+      },
+      "hero": {
+        "eyebrow": "Pour les commerces, supérettes, cafés et restaurants au Portugal",
+        "h1a": "Achetez, réapprovisionnez et gérez",
+        "h1b": "votre commerce",
+        "h1c": "sans perdre de temps.",
+        "lead": "Commandez chez tous les grossistes dans un seul panier — épicerie, boissons, hygiène, entretien, tabac et plus — avec livraison le jour même. Vendez avec la caisse FIRINGI et suivez vos marges, votre stock et votre équipe dans un seul tableau de bord.",
+        "cta2": "Voir comment ça marche",
+        "note": "Gratuit pour les entreprises · Sans carte bancaire"
+      },
+      "float": {
+        "1": "Nouvelle commande · livraison aujourd'hui",
+        "2": "Facture payée · MB WAY",
+        "3": "+120 points de fidélité"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "de commande minimum pour tout le panier"
+        },
+        "2": {
+          "v": "Le jour même",
+          "l": "livraison du lundi au samedi"
+        },
+        "3": {
+          "v": "1 facture",
+          "l": "de FIRINGI pour chaque commande"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "pour ouvrir votre compte professionnel"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Acheter",
+          "h": "Tous les grossistes. Un panier. Livré aujourd'hui.",
+          "p": "Cherchez dans un seul catalogue aux prix de gros de nombreux fournisseurs, remplissez un panier et payez une fois. Tout arrive le jour même.",
+          "b": {
+            "1": "Un seul minimum de 150 € pour tout le panier",
+            "2": "Prix dégressifs sur chaque produit",
+            "3": "Suivez chaque camion dans l'app"
+          }
+        },
+        "till": {
+          "tag": "Caisse",
+          "h": "Une caisse qui connaît votre stock.",
+          "p": "Vendez au comptoir avec la caisse FIRINGI : touchez ou scannez, encaissez par carte, MB WAY ou espèces, et imprimez le ticket avec le NIF de votre client.",
+          "b": {
+            "1": "Continue de vendre sans internet",
+            "2": "Chaque vente met à jour votre stock",
+            "3": "TVA sur chaque ligne du ticket"
+          }
+        },
+        "manage": {
+          "tag": "Gérer",
+          "h": "Connaissez vos marges avant de vendre.",
+          "p": "Marges par produit et par recette selon vos vrais prix d'achat, stock avec dates de péremption et plannings de l'équipe — à partir des commandes que vous passez déjà.",
+          "b": {
+            "1": "Marges par produit et par recette",
+            "2": "Stock, alertes de péremption et rappels de commande",
+            "3": "Heures et plannings de l'équipe"
+          }
+        },
+        "save": {
+          "tag": "Économiser",
+          "h": "Dépensez moins. Payez quand ça vous arrange.",
+          "p": "Gagnez des points à chaque commande livrée, échangez-les dans la boutique de récompenses, rejoignez des groupements d'achat pour de meilleurs prix et payez plus tard avec un compte approuvé.",
+          "b": {
+            "1": "Points et boutique de récompenses",
+            "2": "Groupements d'achat et offres en volume",
+            "3": "Payez jusqu'à 30 jours plus tard"
+          }
+        }
+      },
+      "start": {
+        "h": "Démarrez en trois étapes.",
+        "steps": {
+          "1": {
+            "t": "Ouvrez votre compte gratuit",
+            "p": "Nom de votre entreprise, NIF et adresse de livraison."
+          },
+          "2": {
+            "t": "Nous le vérifions",
+            "p": "Généralement sous un jour ouvré."
+          },
+          "3": {
+            "t": "Commandez et développez-vous",
+            "p": "Achetez aujourd'hui, recevez aujourd'hui, et activez la caisse et les outils quand vous en avez besoin."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Ticket",
+        "nif": "NIF client",
+        "card": "Carte",
+        "cash": "Espèces",
+        "total": "Total",
+        "items": {
+          "1": "Expresso",
+          "2": "Galão",
+          "3": "Croque-monsieur",
+          "4": "Eau 0,5 L",
+          "5": "Tartelette à la crème",
+          "6": "Jus d'orange"
+        }
+      },
+      "mng": {
+        "recipe": "Coût de la recette",
+        "dish": "Croque-monsieur",
+        "cost": "Coût",
+        "price": "Prix",
+        "margin": "Marge",
+        "stock": "Alertes de stock",
+        "low": "{n} jours restants",
+        "expiry": "Expire dans {n} jours",
+        "staff": "Équipe du jour",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} points",
+        "next": "Plus que {n} points avant votre prochaine récompense",
+        "rewards": "Boutique de récompenses",
+        "pts": "{n} pts",
+        "items": {
+          "1": "Bon d'achat de 10 €",
+          "2": "Livraison gratuite",
+          "3": "Kit de nettoyage pour machine à café"
+        },
+        "later": "Payer plus tard",
+        "laterP": "30 jours · plafond {amount}",
+        "group": "Groupement d'achat : −6 % sur les boissons"
+      },
+      "cats": {
+        "h": "Tout ce que vend votre commerce, au même endroit.",
+        "p": "14 catégories de grossistes de tout le Portugal — et plus chaque mois.",
+        "items": {
+          "1": "Épicerie",
+          "2": "Produits frais",
+          "3": "Boissons",
+          "4": "Cosmétiques et beauté",
+          "5": "Hygiène personnelle",
+          "6": "Maison et entretien",
+          "7": "Bébé et puériculture",
+          "8": "Animalerie",
+          "9": "Tabac",
+          "10": "Mode et accessoires",
+          "11": "Jouets et enfants",
+          "12": "Souvenirs et cadeaux",
+          "13": "Emballages et fournitures",
+          "14": "Fournitures kebab et pizza"
+        }
+      }
     }
   }
 }

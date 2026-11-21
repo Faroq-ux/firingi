@@ -259,7 +259,10 @@
       "activityCodeOnce": "Daħħlu darba — wara dan FIRINGI biss jista' jibdlu.",
       "activityCodesSecondary": "Kodiċijiet {scheme} sekondarji (mhux obbligatorju)",
       "activityCodesHint": "Issepara b'virgoli — sa {max}.",
-      "activityCodesAdd": "Żid aktar kodiċijiet hawn; dawk diġà mogħtija jibqgħu — FIRINGI biss jista' jneħħihom."
+      "activityCodesAdd": "Żid aktar kodiċijiet hawn; dawk diġà mogħtija jibqgħu — FIRINGI biss jista' jneħħihom.",
+      "whatsapp": "Numru tal-WhatsApp (mhux obbligatorju)",
+      "whatsappHint": "Żidu jekk tuża l-WhatsApp għall-ordnijiet u l-messaġġi. Bil-kodiċi tal-pajjiż.",
+      "whatsappSame": "Dan in-numru tat-telefon għandu wkoll WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Ristorant",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Premju qed jispiċċa",
       "body": "Fadal biss {left} minn “{reward}”."
+    },
+    "website_contact": {
+      "title": "Mistoqsija ġdida mis-sit",
+      "body": "{name} minn {company} bagħat mistoqsija. Tinsab fis-CRM bħala lead."
+    },
+    "website_vendor_interest": {
+      "title": "Applikazzjoni ġdida ta' fornitur",
+      "body": "{name} minn {company} irid ibigħ fuq FIRINGI. Jinsab fis-CRM bħala lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "L-ebda klijent għadu ma feda l-prodotti tiegħek.",
       "orderBy": "Ordna sa {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Ixtri, imla l-istokk u mexxi n-negozju tiegħek",
+      "description": "Imla l-istokk tan-negozju tiegħek mingħand il-grossisti kollha f'ordni waħda: prezzijiet skont il-kwantità, fatturi ċari bin-NIF tiegħek, kunsinna fl-istess jum."
+    },
+    "open": "Iftaħ kont kummerċjali",
+    "menuOpen": "Iftaħ il-menu",
+    "menuClose": "Agħlaq il-menu",
+    "chart": {
+      "label": "Tliet fornituri, kull wieħed jibgħat rotta ta' kunsinna lil negozju wieħed",
+      "shop": "In-negozju tiegħek",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Ħam 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Ħam 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Sib 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Skrin tal-app FIRINGI: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Fittex prodotti, marki, fornituri…",
+        "next": "Kunsinna llum",
+        "cart": "Il-karrettun tiegħek",
+        "minOk": "Laħaqt il-minimu",
+        "total": "Total",
+        "checkout": "Ordna u ħallas",
+        "steps": {
+          "1": "Ordnat",
+          "2": "Ippreparat",
+          "3": "Fit-triq",
+          "4": "Ikkunsinnat"
+        },
+        "reorder": "Wasal il-ħin li terġa' tordna",
+        "fill": "Imla l-karrettun tiegħi",
+        "lastTime": "L-aħħar darba: {n} kaxxi",
+        "role": "Klijent bl-ingrossa",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Merħba, {name}",
+        "recent": "L-aħħar ordnijiet",
+        "nav": {
+          "1": "Pannell",
+          "2": "Katalgu",
+          "3": "Ordnijiet",
+          "4": "Fatturi u ħlasijiet",
+          "5": "Premjijiet",
+          "6": "Għajnuna u appoġġ",
+          "7": "Kaxxa (POS)",
+          "8": "Kċina u stokk"
+        },
+        "kpi": {
+          "1": "Ordnijiet għaddejjin",
+          "2": "Fit-triq",
+          "3": "Infiq, l-aħħar 30 jum",
+          "4": "Fatturi miftuħa"
+        }
+      },
+      "products": {
+        "1": "Ross tal-ħabba twila 1 kg × 10",
+        "2": "Żejt taż-żebbuġa extra verġni 5 L",
+        "3": "Tonn fiż-żejt taż-żebbuġa 120 g × 24",
+        "4": "Ħalib UHT 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Ġib in-negozju tiegħek bl-ingrossa online.",
+      "sub": "Ilħaq negozji li jordnaw kull ġimgħa, mingħajr ma tieħu ordnijiet bit-telefon jew tiġri wara l-ħlasijiet.",
+      "cta": "Applika bħala fornitur",
+      "rows": {
+        "1": {
+          "t": "Agħżel il-kundizzjonijiet tiegħek",
+          "p": "Agħżel il-prezzijiet, il-livelli tal-kwantità, l-ordnijiet minimi u l-ġranet tal-kunsinna."
+        },
+        "2": {
+          "t": "Lista waħda għall-ordnijiet kollha",
+          "p": "L-ordnijiet il-ġodda jaslu f'lista waħda, lesti biex jiġu ppakkjati."
+        },
+        "3": {
+          "t": "Ibgħat u aqsam l-istatus",
+          "p": "Assenja x-xufiera u ħalli lill-klijenti jsegwu t-trakk mingħajr ma jċemplulek."
+        },
+        "4": {
+          "t": "Titħallas għal kull ordni",
+          "p": "Kull ordni titħallas separatament, b'rekord ċar għall-kontabilità tiegħek."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Biegħ fuq FIRINGI — ilħaq negozji madwar il-Portugall kollu",
+      "description": "Poġġi l-prodotti bl-ingrossa tiegħek fuq FIRINGI. In-negozji jordnaw mingħandek f'karrettun wieħed ma' fornituri oħra; FIRINGI joħroġ il-fattura lilhom u jħallsek int.",
+      "rowsH2": "Dak kollu li għandek bżonn biex tbigħ lin-negozji.",
+      "formH2": "Applika biex tbigħ fuq FIRINGI",
+      "formSub": "Għidilna dwar il-kumpanija tiegħek. Inwieġbu fi żmien jum tax-xogħol bil-passi li jmiss.",
+      "navPlans": "Pjanijiet għall-fornituri",
+      "typesH2": "Żewġ modi kif tbigħ fuq FIRINGI.",
+      "typesSub": "Il-grossisti jbigħu lil ħwienet, kafetteriji u ristoranti f'pajjiżhom. Id-distributuri jbigħu lill-grossisti madwar l-UE.",
+      "types": {
+        "wholesaler": {
+          "t": "Grossista",
+          "p": "Biegħ lil ħwienet, kafetteriji u ristoranti f'pajjiżek, skont iż-żona jew id-distanza — u ixtri l-istokk mingħand distributuri fuq FIRINGI.",
+          "b": {
+            "1": "Ħwienet, kafetteriji u ristoranti f'pajjiżek jixtru mingħandek",
+            "2": "Kunsinna skont iż-żona jew id-distanza",
+            "3": "Ixtri l-istokk tiegħek mingħand distributuri madwar l-UE"
+          },
+          "cta": "Irreġistra bħala grossista"
+        },
+        "distributor": {
+          "t": "Distributur",
+          "p": "Biegħ lill-grossisti madwar l-UE. Huma jixtru l-merkanzija tiegħek bl-ingrossa u jerġgħu jbigħuha lil ħwienet u ristoranti f'pajjiżhom.",
+          "b": {
+            "1": "Grossisti minn pajjiżi tal-UE jixtru mingħandek",
+            "2": "Ordnijiet bl-ingrossa, bil-kaxxa u bil-paletta",
+            "3": "FIRINGI jieħu ħsieb il-fatturi bejn il-pajjiżi"
+          },
+          "cta": "Irreġistra bħala distributur"
+        }
+      }
+    },
+    "faq": {
+      "h2": "L-ewwel mistoqsijiet li jagħmlu n-negozji.",
+      "items": {
+        "1": {
+          "q": "Jistgħu jixtru l-individwi privati?",
+          "a": "Le. FIRINGI huwa għal negozji b'NIF. Il-prezzijiet huma bl-ingrossa u l-fatturi jinħarġu f'isem il-kumpanija tiegħek."
+        },
+        "2": {
+          "q": "X'inhi l-ordni minima?",
+          "a": "€150 għall-karrettun kollu, ikunu kemm ikunu l-fornituri fih."
+        },
+        "3": {
+          "q": "Il-prezzijiet huma bil-VAT jew mingħajru?",
+          "a": "Mingħajr VAT. Il-VAT jiżdied meta tħallas, skont ir-rata ta' kull prodott, u jidher f'kull linja tal-fattura."
+        },
+        "4": {
+          "q": "Meta tasal il-merkanzija tiegħi?",
+          "a": "Fl-istess jum. Kull ma tordna qabel il-ħin tal-għeluq jasal dakinhar, mingħand il-fornituri kollha fil-karrettun tiegħek, u tista' ssegwi kull trakk fl-app."
+        },
+        "5": {
+          "q": "Kif u meta nħallas?",
+          "a": "Tħallas darba għall-karrettun kollu b'Multibanco, MB WAY, karta jew trasferiment SEPA. In-negozji approvati jistgħu jħallsu wkoll sa 30 jum wara l-fattura."
+        },
+        "6": {
+          "q": "Jistgħu l-kollegi tiegħi jordnaw mill-istess kont?",
+          "a": "Iva. Żid utenti bil-login tagħhom u agħżel min jista' jordna, min jara l-fatturi u min jista' jibdel l-indirizzi tal-kunsinna."
+        },
+        "7": {
+          "q": "X'jiġri jekk il-merkanzija tasal imħassra?",
+          "a": "Irrappurtaha fl-app fi żmien 24 siegħa, b'ritratt. Il-fornitur iwieġeb b'sostituzzjoni jew b'nota ta' kreditu."
+        },
+        "8": {
+          "q": "Tikkunsinnaw f'Madeira u l-Azores?",
+          "a": "Għadna le. Qed nibdew bil-Portugall kontinentali u l-gżejjer inżiduhom aktar tard."
+        },
+        "9": {
+          "q": "Nista' nbigħ fuq FIRINGI?",
+          "a": "Iva. Applika bħala fornitur, agħżel il-prezzijiet, il-minimi u l-ġranet tal-kunsinna, u ibda tirċievi ordnijiet minn negozji qribek."
+        }
+      }
+    },
+    "final": {
+      "h2": "L-istokk li jmiss jista' jasal f'ordni waħda.",
+      "p": "Iftaħ kont kummerċjali u ara l-prezzijiet bl-ingrossa ta' fornituri qribek."
+    },
+    "plans": {
+      "h2": "Pjanijiet għall-fornituri. Ix-xerrejja qatt ma jħallsu.",
+      "sub": "In-negozji li jixtru fuq FIRINGI jużawh b'xejn. Il-fornituri jibdew b'xejn u jtellgħu l-pjan hekk kif jikbru.",
+      "per": "/xahar",
+      "top": "L-iktar magħżul",
+      "note": "Il-pjanijiet u l-prezzijiet ġejjin mis-settings tal-pjanijiet ta' FIRINGI, għalhekk din it-taqsima dejjem taqbel ma' dak li jħallsu l-fornituri.",
+      "start": "Ibda b'xejn",
+      "choose": "Agħżel {name}",
+      "products": "Sa {n} prodott",
+      "productsAll": "Prodotti bla limitu",
+      "team": "{users} utenti, {wh} maħżeni, {drivers} xufiera",
+      "teamAll": "Utenti, maħżeni u xufiera bla limitu",
+      "earlyPay": "Ħlas bikri minn {rate}% kuljum",
+      "freeEarly": "{n} ħlasijiet bikrin b'xejn fix-xahar",
+      "includes": "Jinkludi: {list}",
+      "basics": "Ordnijiet, fatturazzjoni u ħlasijiet minn FIRINGI",
+      "feature": {
+        "INVENTORY": "inventarju",
+        "PLANNING": "ippjanar",
+        "WAREHOUSE": "ġbir tal-ordnijiet fil-maħżen",
+        "PRICE_INSIGHTS": "analiżi tal-prezzijiet",
+        "ADS": "reklamar",
+        "INTEGRATIONS": "integrazzjonijiet",
+        "ROUTES": "rotot",
+        "ASSISTANT": "assistent AI"
+      }
+    },
+    "contact": {
+      "h2": "Kellimna.",
+      "sub": "Għandek mistoqsijiet dwar ix-xiri jew il-bejgħ? Inwieġbu fi żmien jum tax-xogħol.",
+      "name": "Isem",
+      "company": "Kumpanija",
+      "email": "Email",
+      "phone": "Mowbajl",
+      "nif": "NIF",
+      "type": "In-negozju tiegħek",
+      "msg": "Messaġġ",
+      "consent": "Naqbel li FIRINGI juża dawn id-dettalji biex jirrispondini, kif spjegat fil-politika tal-privatezza.",
+      "send": "Ibgħat",
+      "waT": "WhatsApp",
+      "waP": "Ibgħat messaġġ lit-tim tagħna fuq WhatsApp, mit-Tnejn sas-Sibt, mid-9:00 sas-19:00.",
+      "waB": "Iftaħ WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Ristorant, kafetterija jew bar",
+        "2": "Ħanut tal-merċa jew minimarket",
+        "3": "Lukanda jew catering",
+        "4": "Kantina, skola jew dar tal-anzjani",
+        "5": "Oħrajn"
+      },
+      "vendorMsg": "X'tbigħ u fejn tikkunsinna",
+      "sent": "Grazzi. Inwieġbu fi żmien jum tax-xogħol.",
+      "errRequired": "Imla ismek, il-kumpanija u l-email.",
+      "errEmail": "Daħħal indirizz tal-email validu.",
+      "errConsent": "Jekk jogħġbok immarka l-kaxxa biex taqbel.",
+      "errSpam": "Inqala' xi żball. Jekk jogħġbok erġa' pprova.",
+      "errBusy": "Wisq messaġġi. Jekk jogħġbok erġa' pprova wara minuta.",
+      "sending": "Qed jintbagħat…",
+      "vendorType": "Irrid inbigħ bħala",
+      "vendorTypes": {
+        "WHOLESALER": "Grossista — nbigħ lil ħwienet f'pajjiżi",
+        "DISTRIBUTOR": "Distributur — nbigħ lill-grossisti fl-UE"
+      }
+    },
+    "news": {
+      "label": "Irċievi fornituri ġodda, offerti u żoni ta' kunsinna bl-email, darba fix-xahar.",
+      "ph": "L-email tan-negozju tiegħek",
+      "btn": "Abbona",
+      "note": "Tista' tneħħi l-abbonament meta trid.",
+      "consent": "Naqbel li nirċievi n-newsletter ta' FIRINGI. Nista' nneħħi l-abbonament meta rrid.",
+      "sent": "Kważi lest. Iċċekkja l-email tiegħek u kkonferma l-abbonament.",
+      "confirmedTitle": "Issa int abbonat.",
+      "confirmedBody": "Grazzi. Se tirċievi n-newsletter tagħna darba fix-xahar.",
+      "unsubTitle": "Neħħejt l-abbonament.",
+      "unsubBody": "M'intix se tirċievi aktar in-newsletter. Tista' terġa' tabbona meta trid.",
+      "invalid": "Din il-link m'għadhiex valida.",
+      "back": "Lura għal FIRINGI"
+    },
+    "foot": {
+      "tag": "Ixtri, imla l-istokk u mexxi n-negozju tiegħek mingħajr ma taħli ħinek.",
+      "buy": "Xiri",
+      "sell": "Għall-fornituri",
+      "help": "Għajnuna",
+      "legal": "Legali",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Id-drittijiet kollha riżervati.",
+      "links": {
+        "buy": {
+          "1": "Xiri",
+          "2": "Kaxxa",
+          "3": "Ġestjoni",
+          "4": "Iffranka"
+        },
+        "sell": {
+          "1": "Sir fornitur",
+          "2": "Pjanijiet għall-fornituri"
+        },
+        "help": {
+          "1": "Mistoqsijiet",
+          "2": "Kuntatt",
+          "3": "Status tas-sistema",
+          "4": "Idħol"
+        },
+        "legal": {
+          "1": "Termini tal-użu",
+          "2": "Politika tal-privatezza (GDPR)",
+          "3": "Cookies",
+          "4": "Dettalji tal-kumpanija"
+        }
+      }
+    },
+    "login": "Idħol",
+    "mail": {
+      "contactSubject": "Irċevejna l-messaġġ tiegħek",
+      "hello": "Bonġu {name},",
+      "helloAll": "Bonġu,",
+      "contactBody": "Grazzi talli kkuntattjajt lil FIRINGI. Irċevejna l-messaġġ tiegħek u se nwieġbu fi żmien jum tax-xogħol.",
+      "newsSubject": "Ikkonferma l-abbonament tiegħek għan-newsletter ta' FIRINGI",
+      "newsBody": "Jekk jogħġbok ikkonferma li trid tirċievi n-newsletter ta' FIRINGI:",
+      "newsIgnore": "Jekk ma tlabtx dan, injora din l-email.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Termini tal-użu",
+      "privacy": "Politika tal-privatezza (GDPR)",
+      "cookies": "Cookies",
+      "company": "Dettalji tal-kumpanija",
+      "updated": "L-aħħar aġġornament: {date}",
+      "empty": "Din il-paġna qed titħejja. Ikkuntattjana jekk għandek xi mistoqsija.",
+      "back": "Lura għal FIRINGI"
+    },
+    "langPicker": "Agħżel il-lingwa",
+    "app": {
+      "nav": {
+        "buy": "Xiri",
+        "till": "Kaxxa",
+        "manage": "Ġestjoni",
+        "save": "Iffranka",
+        "vendors": "Sir fornitur",
+        "faq": "Mistoqsijiet"
+      },
+      "hero": {
+        "eyebrow": "Għal ħwienet, minimarkets, kafetteriji u ristoranti fil-Portugall",
+        "h1a": "Ixtri, imla l-istokk u mexxi",
+        "h1b": "in-negozju tiegħek",
+        "h1c": "mingħajr ma taħli ħinek.",
+        "lead": "Ordna mingħand il-grossisti kollha f'karrettun wieħed — ikel, xorb, iġjene, tindif, tabakk u aktar — b'kunsinna fl-istess jum. Biegħ bil-kaxxa ta' FIRINGI u ara l-marġini, l-istokk u l-istaff tiegħek f'pannell wieħed.",
+        "cta2": "Ara kif jaħdem",
+        "note": "B'xejn għan-negozji · M'hemmx bżonn karta"
+      },
+      "float": {
+        "1": "Ordni ġdida · kunsinna llum",
+        "2": "Fattura mħallsa · MB WAY",
+        "3": "+120 punt ta' premju"
+      },
+      "stats": {
+        "1": {
+          "v": "€150",
+          "l": "ordni minima għall-karrettun kollu"
+        },
+        "2": {
+          "v": "L-istess jum",
+          "l": "kunsinna, mit-Tnejn sas-Sibt"
+        },
+        "3": {
+          "v": "1 fattura",
+          "l": "minn FIRINGI għal kull ordni"
+        },
+        "4": {
+          "v": "€0",
+          "l": "biex tiftaħ il-kont kummerċjali tiegħek"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Xiri",
+          "h": "Il-grossisti kollha. Karrettun wieħed. Kunsinna llum.",
+          "p": "Fittex f'katalgu wieħed bi prezzijiet bl-ingrossa minn ħafna fornituri, imla karrettun wieħed u ħallas darba. Kollox jasal fl-istess jum.",
+          "b": {
+            "1": "Minimu wieħed ta' €150 għall-karrettun kollu",
+            "2": "Prezzijiet skont il-kwantità fuq kull prodott",
+            "3": "Segwi kull trakk fl-app"
+          }
+        },
+        "till": {
+          "tag": "Kaxxa",
+          "h": "Kaxxa li taf l-istokk tiegħek.",
+          "p": "Biegħ fuq il-kawnter bil-kaxxa ta' FIRINGI: agħfas jew skennja, aċċetta karta, MB WAY jew flus kontanti, u stampa l-irċevuta bin-NIF tal-klijent.",
+          "b": {
+            "1": "Tibqa' tbigħ anke mingħajr internet",
+            "2": "Kull bejgħ jaġġorna l-istokk",
+            "3": "VAT f'kull linja tal-irċevuta"
+          }
+        },
+        "manage": {
+          "tag": "Ġestjoni",
+          "h": "Kun af il-marġini tiegħek qabel tbigħ.",
+          "p": "Marġini għal kull prodott u riċetta mill-prezzijiet veri tax-xiri tiegħek, stokk b'dati ta' skadenza u xiftijiet tal-istaff — mill-ordnijiet li diġà tagħmel.",
+          "b": {
+            "1": "Marġini għal kull prodott u kull riċetta",
+            "2": "Stokk, twissijiet ta' skadenza u tfakkiriet biex terġa' tordna",
+            "3": "Sigħat u xiftijiet tal-istaff"
+          }
+        },
+        "save": {
+          "tag": "Iffranka",
+          "h": "Onfoq inqas. Ħallas meta jaqbillek.",
+          "p": "Aqla' punti fuq kull ordni kkunsinnata, ibdilhom fil-ħanut tal-premjijiet, ingħaqad ma' gruppi tax-xiri għal prezzijiet aħjar u ħallas aktar tard b'kont approvat.",
+          "b": {
+            "1": "Punti u ħanut tal-premjijiet",
+            "2": "Gruppi tax-xiri u offerti skont il-kwantità",
+            "3": "Ħallas sa 30 jum wara"
+          }
+        }
+      },
+      "start": {
+        "h": "Ibda fi tliet passi.",
+        "steps": {
+          "1": {
+            "t": "Iftaħ kont b'xejn",
+            "p": "Isem il-kumpanija, NIF u l-indirizz tal-kunsinna."
+          },
+          "2": {
+            "t": "Aħna niċċekkjawh",
+            "p": "Normalment fi żmien jum tax-xogħol."
+          },
+          "3": {
+            "t": "Ordna u ikber",
+            "p": "Ixtri llum, irċievi llum, u ixgħel il-kaxxa u l-għodod meta jkollok bżonnhom."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Irċevuta",
+        "nif": "NIF tal-klijent",
+        "card": "Karta",
+        "cash": "Flus kontanti",
+        "total": "Total",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Sandwich mixwi",
+          "4": "Ilma 0.5 L",
+          "5": "Tart tal-krema",
+          "6": "Meraq tal-larinġ"
+        }
+      },
+      "mng": {
+        "recipe": "Spiża tar-riċetta",
+        "dish": "Sandwich mixwi",
+        "cost": "Spiża",
+        "price": "Prezz",
+        "margin": "Marġini",
+        "stock": "Twissijiet tal-istokk",
+        "low": "Fadal {n} ijiem",
+        "expiry": "Jiskadi fi {n} ijiem",
+        "staff": "Staff illum",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} punti",
+        "next": "{n} punti oħra għall-premju li jmiss",
+        "rewards": "Ħanut tal-premjijiet",
+        "pts": "{n} pt",
+        "items": {
+          "1": "Vawċer ta' €10",
+          "2": "Kunsinna b'xejn",
+          "3": "Kit għat-tindif tal-magna tal-kafè"
+        },
+        "later": "Ħallas aktar tard",
+        "laterP": "30 jum · limitu {amount}",
+        "group": "Grupp tax-xiri: −6% fuq ix-xorb"
+      },
+      "cats": {
+        "h": "Kull ma jbigħ il-ħanut tiegħek, minn post wieħed.",
+        "p": "14-il kategorija minn grossisti madwar il-Portugall — u aktar kull xahar.",
+        "items": {
+          "1": "Ikel",
+          "2": "Prodotti friski",
+          "3": "Xorb",
+          "4": "Kożmetiċi u sbuħija",
+          "5": "Iġjene personali",
+          "6": "Dar u tindif",
+          "7": "Trabi u kura tat-tfal",
+          "8": "Prodotti għall-annimali domestiċi",
+          "9": "Tabakk",
+          "10": "Moda u aċċessorji",
+          "11": "Ġugarelli u tfal",
+          "12": "Tifkiriet u rigali",
+          "13": "Ippakkjar u provvisti",
+          "14": "Provvisti għall-kebab u l-pizza"
+        }
+      }
     }
   }
 }

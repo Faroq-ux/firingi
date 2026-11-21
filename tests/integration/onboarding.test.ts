@@ -33,6 +33,30 @@ async function newCustomer(opts: { cityId?: string } = {}) {
 }
 
 describe("registration", () => {
+  it("keeps an optional WhatsApp number (Phase 56) and lets the company change it in its profile", async () => {
+    const email = `wa.${Date.now()}@test.pt`;
+    const nif = await freshNif();
+    const { companyId } = await registerCompany({
+      type: "WHOLESALER", countryCode: "PT", activityCode: "46390", legalName: `Grossista ${email}`, taxId: nif, vatNumber: `PT${nif}`, companyEmail: email, phone: "+351910000000",
+      whatsapp: "+351 912 000 111", owner: { name: "Rui WA", email, password: PW },
+      headOffice: { line1: "Rua A 1", postalCode: "1000-001", cityId: await lisbon(), cityName: "Lisboa" },
+    });
+    expect((await prisma.company.findUniqueOrThrow({ where: { id: companyId } })).whatsapp).toBe("+351912000111");
+    // a WhatsApp message from that number is linked to the business and its owner (for the AI / inbox)
+    const { handleTwilio } = await import("@/server/services/notifications");
+    await handleTwilio({ From: "whatsapp:+351912000111", Body: "Olá, quero encomendar", MessageSid: `wa-${Date.now()}` });
+    const msg = await prisma.inboundMessage.findFirstOrThrow({ where: { from: "+351912000111" }, orderBy: { receivedAt: "desc" } });
+    expect(msg.companyId).toBe(companyId);
+    expect(msg.userId).toBeTruthy();
+    const { updateOwnProfile } = await import("@/server/services/company");
+    const ctx = await ctxFor(email);
+    await updateOwnProfile(ctx, { email, phone: "+351910000000", whatsapp: "+351910000000" });
+    expect((await prisma.company.findUniqueOrThrow({ where: { id: companyId } })).whatsapp).toBe("+351910000000");
+    await updateOwnProfile(ctx, { email, phone: "+351910000000", whatsapp: null });
+    expect((await prisma.company.findUniqueOrThrow({ where: { id: companyId } })).whatsapp).toBeNull();
+    const plain = await newCustomer();
+    expect((await prisma.company.findUniqueOrThrow({ where: { id: plain.companyId } })).whatsapp).toBeNull();
+  });
   it("creates a PENDING company, an owner and a head-office address; owner can only do onboarding", async () => {
     const { email, companyId } = await newCustomer();
     const c = await prisma.company.findUniqueOrThrow({ where: { id: companyId }, include: { addresses: true, statusHistory: true } });

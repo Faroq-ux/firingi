@@ -259,7 +259,10 @@
       "activityCodeOnce": "Eén keer invullen — daarna kan alleen FIRINGI hem wijzigen.",
       "activityCodesSecondary": "Extra {scheme}-codes (optioneel)",
       "activityCodesHint": "Scheid met komma's — tot {max}.",
-      "activityCodesAdd": "Voeg hier meer codes toe; al opgegeven codes blijven — alleen FIRINGI kan ze verwijderen."
+      "activityCodesAdd": "Voeg hier meer codes toe; al opgegeven codes blijven — alleen FIRINGI kan ze verwijderen.",
+      "whatsapp": "WhatsApp-nummer (optioneel)",
+      "whatsappHint": "Vul het in als je WhatsApp gebruikt voor bestellingen en berichten. Met landcode.",
+      "whatsappSame": "Dit telefoonnummer heeft ook WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Beloning raakt op",
       "body": "Nog maar {left} over van “{reward}”."
+    },
+    "website_contact": {
+      "title": "Nieuwe vraag via de website",
+      "body": "{name} van {company} heeft een vraag gestuurd. Staat in het CRM als lead."
+    },
+    "website_vendor_interest": {
+      "title": "Nieuwe leveranciersaanmelding",
+      "body": "{name} van {company} wil verkopen op FIRINGI. Staat in het CRM als lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Nog geen klant heeft uw producten ingewisseld.",
       "orderBy": "Te bestellen uiterlijk {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Inkopen, aanvullen en je zaak runnen",
+      "description": "Vul je voorraad aan bij alle groothandels in één bestelling: staffelprijzen, duidelijke facturen met je NIF, levering op dezelfde dag."
+    },
+    "open": "Zakelijk account openen",
+    "menuOpen": "Menu openen",
+    "menuClose": "Menu sluiten",
+    "chart": {
+      "label": "Drie leveranciers die elk een leverroute naar één zaak sturen",
+      "shop": "Jouw zaak",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Do 9 tot 12 uur"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Do 13 tot 16 uur"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Za 8 tot 11 uur"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI-appscherm: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Zoek producten, merken, leveranciers…",
+        "next": "Vandaag geleverd",
+        "cart": "Je winkelwagen",
+        "minOk": "Minimum bereikt",
+        "total": "Totaal",
+        "checkout": "Bestellen en betalen",
+        "steps": {
+          "1": "Besteld",
+          "2": "Klaargezet",
+          "3": "Onderweg",
+          "4": "Geleverd"
+        },
+        "reorder": "Tijd om bij te bestellen",
+        "fill": "Vul mijn winkelwagen",
+        "lastTime": "Vorige keer: {n} dozen",
+        "role": "Groothandelsklant",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Welkom, {name}",
+        "recent": "Laatste bestellingen",
+        "nav": {
+          "1": "Dashboard",
+          "2": "Catalogus",
+          "3": "Bestellingen",
+          "4": "Facturen & betalingen",
+          "5": "Beloningen",
+          "6": "Hulp & support",
+          "7": "Kassa (POS)",
+          "8": "Keuken & voorraad"
+        },
+        "kpi": {
+          "1": "Lopende bestellingen",
+          "2": "Onderweg",
+          "3": "Uitgegeven, laatste 30 dagen",
+          "4": "Openstaande facturen"
+        }
+      },
+      "products": {
+        "1": "Langkorrelige rijst 1 kg × 10",
+        "2": "Extra vierge olijfolie 5 L",
+        "3": "Tonijn in olijfolie 120 g × 24",
+        "4": "Houdbare melk 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Breng je groothandel online.",
+      "sub": "Bereik zaken die elke week opnieuw bestellen, zonder telefonische bestellingen of achter betalingen aan te zitten.",
+      "cta": "Aanmelden als leverancier",
+      "rows": {
+        "1": {
+          "t": "Bepaal je eigen voorwaarden",
+          "p": "Kies prijzen, staffels, minimale bestellingen en leverdagen."
+        },
+        "2": {
+          "t": "Eén wachtrij voor alle bestellingen",
+          "p": "Nieuwe bestellingen komen binnen in één lijst, klaar om in te pakken."
+        },
+        "3": {
+          "t": "Verzenden en status delen",
+          "p": "Wijs chauffeurs toe en laat klanten de vrachtwagen volgen zonder dat ze je bellen."
+        },
+        "4": {
+          "t": "Uitbetaald per bestelling",
+          "p": "Elke bestelling wordt apart uitbetaald, met een duidelijk overzicht voor je boekhouding."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Verkopen op FIRINGI — bereik zaken in heel Portugal",
+      "description": "Zet je groothandelsproducten op FIRINGI. Zaken bestellen bij jou in één winkelwagen met andere leveranciers; FIRINGI factureert hen en betaalt jou uit.",
+      "rowsH2": "Alles wat je nodig hebt om aan bedrijven te verkopen.",
+      "formH2": "Meld je aan om op FIRINGI te verkopen",
+      "formSub": "Vertel ons over je bedrijf. We reageren binnen één werkdag met de volgende stappen.",
+      "navPlans": "Abonnementen voor leveranciers",
+      "typesH2": "Twee manieren om te verkopen op FIRINGI.",
+      "typesSub": "Groothandels verkopen aan winkels, cafés en restaurants in hun eigen land. Distributeurs verkopen aan groothandels in de hele EU.",
+      "types": {
+        "wholesaler": {
+          "t": "Groothandel",
+          "p": "Verkoop aan winkels, cafés en restaurants in je eigen land, per zone of op basis van afstand — en vul je voorraad aan bij distributeurs op FIRINGI.",
+          "b": {
+            "1": "Winkels, cafés en restaurants in jouw land kopen bij jou",
+            "2": "Levering per zone of op basis van afstand",
+            "3": "Koop je voorraad bij distributeurs in de hele EU"
+          },
+          "cta": "Aanmelden als groothandel"
+        },
+        "distributor": {
+          "t": "Distributeur",
+          "p": "Verkoop aan groothandels in de hele EU. Zij kopen je goederen in bulk en verkopen ze door aan winkels en restaurants in hun land.",
+          "b": {
+            "1": "Groothandels in EU-landen kopen bij jou",
+            "2": "Bestellingen in bulk, per doos en per pallet",
+            "3": "Grensoverschrijdende facturen geregeld door FIRINGI"
+          },
+          "cta": "Aanmelden als distributeur"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Wat zaken als eerste vragen.",
+      "items": {
+        "1": {
+          "q": "Kunnen particulieren kopen?",
+          "a": "Nee. FIRINGI is voor bedrijven met een NIF. De prijzen zijn groothandelsprijzen en facturen staan op naam van je bedrijf."
+        },
+        "2": {
+          "q": "Wat is de minimale bestelling?",
+          "a": "€ 150 voor je hele winkelwagen, ongeacht hoeveel leveranciers erin zitten."
+        },
+        "3": {
+          "q": "Zijn de prijzen inclusief of exclusief btw?",
+          "a": "Exclusief btw. De btw wordt bij het afrekenen toegevoegd tegen het tarief van elk product en staat op elke factuurregel."
+        },
+        "4": {
+          "q": "Wanneer komen mijn goederen aan?",
+          "a": "Dezelfde dag. Alles wat je vóór de besteldeadline bestelt, komt die dag nog aan, van elke leverancier in je winkelwagen, en je kunt elke vrachtwagen volgen in de app."
+        },
+        "5": {
+          "q": "Hoe en wanneer betaal ik?",
+          "a": "Betaal één keer voor de hele winkelwagen met Multibanco, MB WAY, kaart of SEPA-overboeking. Goedgekeurde bedrijven kunnen ook tot 30 dagen na factuurdatum betalen."
+        },
+        "6": {
+          "q": "Kunnen mijn collega's via hetzelfde account bestellen?",
+          "a": "Ja. Voeg gebruikers toe met hun eigen login en kies wie mag bestellen, wie facturen mag zien en wie afleveradressen mag wijzigen."
+        },
+        "7": {
+          "q": "Wat als goederen beschadigd aankomen?",
+          "a": "Meld het binnen 24 uur in de app, met een foto. De leverancier reageert met vervanging of een creditnota."
+        },
+        "8": {
+          "q": "Leveren jullie op Madeira en de Azoren?",
+          "a": "Nog niet. We beginnen op het Portugese vasteland en voegen de eilanden later toe."
+        },
+        "9": {
+          "q": "Kan ik verkopen op FIRINGI?",
+          "a": "Ja. Meld je aan als leverancier, stel je prijzen, minimums en leverdagen in en ontvang bestellingen van zaken bij jou in de buurt."
+        }
+      }
+    },
+    "final": {
+      "h2": "Je volgende aanvulling kan één bestelling zijn.",
+      "p": "Open een zakelijk account en bekijk groothandelsprijzen van leveranciers bij jou in de buurt."
+    },
+    "plans": {
+      "h2": "Abonnementen voor leveranciers. Kopers betalen nooit.",
+      "sub": "Bedrijven die op FIRINGI inkopen, gebruiken het gratis. Leveranciers beginnen gratis en stappen over naar een groter abonnement als ze groeien.",
+      "per": "/maand",
+      "top": "Meest gekozen",
+      "note": "Abonnementen en prijzen komen uit de abonnementsinstellingen van FIRINGI, dus dit deel klopt altijd met wat leveranciers betalen.",
+      "start": "Gratis beginnen",
+      "choose": "Kies {name}",
+      "products": "Tot {n} producten",
+      "productsAll": "Onbeperkt producten",
+      "team": "{users} gebruikers, {wh} magazijnen, {drivers} chauffeurs",
+      "teamAll": "Onbeperkt gebruikers, magazijnen en chauffeurs",
+      "earlyPay": "Vervroegde uitbetaling vanaf {rate}% per dag",
+      "freeEarly": "{n} gratis vervroegde uitbetalingen per maand",
+      "includes": "Inclusief: {list}",
+      "basics": "Bestellingen, facturatie en uitbetalingen door FIRINGI",
+      "feature": {
+        "INVENTORY": "voorraad",
+        "PLANNING": "planning",
+        "WAREHOUSE": "orderpicking",
+        "PRICE_INSIGHTS": "prijsinzichten",
+        "ADS": "advertenties",
+        "INTEGRATIONS": "integraties",
+        "ROUTES": "routes",
+        "ASSISTANT": "AI-assistent"
+      }
+    },
+    "contact": {
+      "h2": "Neem contact op.",
+      "sub": "Vragen over inkopen of verkopen? We antwoorden binnen één werkdag.",
+      "name": "Naam",
+      "company": "Bedrijf",
+      "email": "E-mail",
+      "phone": "Mobiel",
+      "nif": "NIF",
+      "type": "Jouw zaak",
+      "msg": "Bericht",
+      "consent": "Ik ga ermee akkoord dat FIRINGI deze gegevens gebruikt om mij te antwoorden, zoals beschreven in het privacybeleid.",
+      "send": "Versturen",
+      "waT": "WhatsApp",
+      "waP": "Stuur ons team een bericht via WhatsApp, maandag tot zaterdag, 9:00 tot 19:00 uur.",
+      "waB": "WhatsApp openen",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restaurant, café of bar",
+        "2": "Kruidenier of minimarkt",
+        "3": "Hotel of catering",
+        "4": "Kantine, school of zorginstelling",
+        "5": "Anders"
+      },
+      "vendorMsg": "Wat je verkoopt en waar je levert",
+      "sent": "Bedankt. We antwoorden binnen één werkdag.",
+      "errRequired": "Vul je naam, bedrijf en e-mailadres in.",
+      "errEmail": "Vul een geldig e-mailadres in.",
+      "errConsent": "Vink het vakje aan om akkoord te gaan.",
+      "errSpam": "Er ging iets mis. Probeer het opnieuw.",
+      "errBusy": "Te veel berichten. Probeer het over een minuut opnieuw.",
+      "sending": "Versturen…",
+      "vendorType": "Ik wil verkopen als",
+      "vendorTypes": {
+        "WHOLESALER": "Groothandel — ik verkoop aan winkels in mijn land",
+        "DISTRIBUTOR": "Distributeur — ik verkoop aan groothandels in de EU"
+      }
+    },
+    "news": {
+      "label": "Ontvang één keer per maand nieuwe leveranciers, aanbiedingen en levergebieden per e-mail.",
+      "ph": "Je zakelijke e-mailadres",
+      "btn": "Inschrijven",
+      "note": "Je kunt je op elk moment uitschrijven.",
+      "consent": "Ik wil de FIRINGI-nieuwsbrief ontvangen. Ik kan me op elk moment uitschrijven.",
+      "sent": "Bijna klaar. Check je e-mail en bevestig je inschrijving.",
+      "confirmedTitle": "Je bent ingeschreven.",
+      "confirmedBody": "Bedankt. Je ontvangt onze nieuwsbrief één keer per maand.",
+      "unsubTitle": "Je bent uitgeschreven.",
+      "unsubBody": "Je ontvangt de nieuwsbrief niet meer. Je kunt je op elk moment opnieuw inschrijven.",
+      "invalid": "Deze link is niet meer geldig.",
+      "back": "Terug naar FIRINGI"
+    },
+    "foot": {
+      "tag": "Inkopen, aanvullen en je zaak runnen zonder tijd te verspillen.",
+      "buy": "Inkopen",
+      "sell": "Voor leveranciers",
+      "help": "Hulp",
+      "legal": "Juridisch",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Alle rechten voorbehouden.",
+      "links": {
+        "buy": {
+          "1": "Inkopen",
+          "2": "Kassa",
+          "3": "Beheren",
+          "4": "Besparen"
+        },
+        "sell": {
+          "1": "Leverancier worden",
+          "2": "Abonnementen voor leveranciers"
+        },
+        "help": {
+          "1": "Vragen",
+          "2": "Contact",
+          "3": "Systeemstatus",
+          "4": "Inloggen"
+        },
+        "legal": {
+          "1": "Gebruiksvoorwaarden",
+          "2": "Privacybeleid (AVG)",
+          "3": "Cookies",
+          "4": "Bedrijfsgegevens"
+        }
+      }
+    },
+    "login": "Inloggen",
+    "mail": {
+      "contactSubject": "We hebben je bericht ontvangen",
+      "hello": "Hallo {name},",
+      "helloAll": "Hallo,",
+      "contactBody": "Bedankt voor je bericht aan FIRINGI. We hebben het ontvangen en antwoorden binnen één werkdag.",
+      "newsSubject": "Bevestig je inschrijving voor de FIRINGI-nieuwsbrief",
+      "newsBody": "Bevestig dat je de FIRINGI-nieuwsbrief wilt ontvangen:",
+      "newsIgnore": "Heb je hier niet om gevraagd? Negeer dan deze e-mail.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Gebruiksvoorwaarden",
+      "privacy": "Privacybeleid (AVG)",
+      "cookies": "Cookies",
+      "company": "Bedrijfsgegevens",
+      "updated": "Laatst bijgewerkt op {date}",
+      "empty": "Deze pagina wordt nog voorbereid. Neem contact op als je een vraag hebt.",
+      "back": "Terug naar FIRINGI"
+    },
+    "langPicker": "Kies taal",
+    "app": {
+      "nav": {
+        "buy": "Inkopen",
+        "till": "Kassa",
+        "manage": "Beheren",
+        "save": "Besparen",
+        "vendors": "Leverancier worden",
+        "faq": "Vragen"
+      },
+      "hero": {
+        "eyebrow": "Voor winkels, minimarkten, cafés en restaurants in Portugal",
+        "h1a": "Inkopen, aanvullen en",
+        "h1b": "je zaak runnen",
+        "h1c": "zonder tijd te verspillen.",
+        "lead": "Bestel bij alle groothandels in één winkelwagen — levensmiddelen, dranken, hygiëne, schoonmaak, tabak en meer — met levering op dezelfde dag. Verkoop met de FIRINGI-kassa en zie je marges, voorraad en personeel in één dashboard.",
+        "cta2": "Bekijk hoe het werkt",
+        "note": "Gratis voor bedrijven · Geen kaart nodig"
+      },
+      "float": {
+        "1": "Nieuwe bestelling · vandaag geleverd",
+        "2": "Factuur betaald · MB WAY",
+        "3": "+120 spaarpunten"
+      },
+      "stats": {
+        "1": {
+          "v": "€ 150",
+          "l": "minimale bestelling voor de hele winkelwagen"
+        },
+        "2": {
+          "v": "Dezelfde dag",
+          "l": "geleverd, maandag tot zaterdag"
+        },
+        "3": {
+          "v": "1 factuur",
+          "l": "van FIRINGI voor elke bestelling"
+        },
+        "4": {
+          "v": "€ 0",
+          "l": "om je zakelijke account te openen"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Inkopen",
+          "h": "Alle groothandels. Eén winkelwagen. Vandaag geleverd.",
+          "p": "Zoek in één catalogus met groothandelsprijzen van veel leveranciers, vul één winkelwagen en betaal één keer. Alles komt dezelfde dag aan.",
+          "b": {
+            "1": "Eén minimum van € 150 voor de hele winkelwagen",
+            "2": "Staffelprijzen op elk product",
+            "3": "Volg elke vrachtwagen in de app"
+          }
+        },
+        "till": {
+          "tag": "Kassa",
+          "h": "Een kassa die je voorraad kent.",
+          "p": "Verkoop aan de toonbank met de FIRINGI-kassa: tik of scan, accepteer kaart, MB WAY of contant en print de bon met de NIF van je klant.",
+          "b": {
+            "1": "Blijft verkopen zonder internet",
+            "2": "Elke verkoop werkt je voorraad bij",
+            "3": "Btw op elke bonregel"
+          }
+        },
+        "manage": {
+          "tag": "Beheren",
+          "h": "Ken je marges voordat je verkoopt.",
+          "p": "Marges per product en recept op basis van je echte inkoopprijzen, voorraad met houdbaarheidsdatums en personeelsdiensten — opgebouwd uit de bestellingen die je al plaatst.",
+          "b": {
+            "1": "Marges per product en per recept",
+            "2": "Voorraad, houdbaarheidsmeldingen en herinneringen om bij te bestellen",
+            "3": "Uren en diensten van personeel"
+          }
+        },
+        "save": {
+          "tag": "Besparen",
+          "h": "Geef minder uit. Betaal wanneer het jou uitkomt.",
+          "p": "Spaar punten bij elke geleverde bestelling, wissel ze in in de beloningswinkel, sluit je aan bij inkoopgroepen voor betere prijzen en betaal later met een goedgekeurd account.",
+          "b": {
+            "1": "Punten en een beloningswinkel",
+            "2": "Inkoopgroepen en volumedeals",
+            "3": "Betaal tot 30 dagen later"
+          }
+        }
+      },
+      "start": {
+        "h": "Begin in drie stappen.",
+        "steps": {
+          "1": {
+            "t": "Open je gratis account",
+            "p": "Je bedrijfsnaam, NIF en afleveradres."
+          },
+          "2": {
+            "t": "Wij controleren het",
+            "p": "Meestal binnen één werkdag."
+          },
+          "3": {
+            "t": "Bestel en groei",
+            "p": "Vandaag kopen, vandaag ontvangen, en zet de kassa en tools aan wanneer je ze nodig hebt."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Bon",
+        "nif": "NIF klant",
+        "card": "Kaart",
+        "cash": "Contant",
+        "total": "Totaal",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Tosti",
+          "4": "Water 0,5 L",
+          "5": "Custardtaartje",
+          "6": "Sinaasappelsap"
+        }
+      },
+      "mng": {
+        "recipe": "Receptkosten",
+        "dish": "Tosti",
+        "cost": "Kosten",
+        "price": "Prijs",
+        "margin": "Marge",
+        "stock": "Voorraadmeldingen",
+        "low": "Nog {n} dagen",
+        "expiry": "Verloopt over {n} dagen",
+        "staff": "Personeel vandaag",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} punten",
+        "next": "Nog {n} punten tot je volgende beloning",
+        "rewards": "Beloningswinkel",
+        "pts": "{n} ptn",
+        "items": {
+          "1": "Waardebon van € 10",
+          "2": "Gratis levering",
+          "3": "Reinigingsset voor koffiemachine"
+        },
+        "later": "Later betalen",
+        "laterP": "30 dagen · limiet {amount}",
+        "group": "Inkoopgroep: −6% op dranken"
+      },
+      "cats": {
+        "h": "Alles wat je winkel verkoopt, op één plek.",
+        "p": "14 categorieën van groothandels uit heel Portugal — en elke maand meer.",
+        "items": {
+          "1": "Levensmiddelen",
+          "2": "Vers",
+          "3": "Dranken",
+          "4": "Cosmetica & beauty",
+          "5": "Persoonlijke verzorging",
+          "6": "Huishouden & schoonmaak",
+          "7": "Baby & kind",
+          "8": "Dierenbenodigdheden",
+          "9": "Tabak",
+          "10": "Mode & accessoires",
+          "11": "Speelgoed & kinderen",
+          "12": "Souvenirs & cadeaus",
+          "13": "Verpakking & benodigdheden",
+          "14": "Kebab- & pizzabenodigdheden"
+        }
+      }
     }
   }
 }

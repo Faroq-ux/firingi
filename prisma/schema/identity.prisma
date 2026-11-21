@@ -163,6 +163,8 @@ model Company {
   countryId               String
   email                   String
   phone                   String?
+  /// Optional WhatsApp number (with country code), given at registration or in the company profile.
+  whatsapp                String?
   website                 String?
   businessType            String? // restaurant, kebab/pizza, mini-market … (customers)
   /// FIRINGI's own in-house warehouse, run as a wholesaler (managed by FIRINGI staff).

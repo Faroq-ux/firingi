@@ -259,7 +259,10 @@
       "activityCodeOnce": "Enter it once — after that only FIRINGI can change it.",
       "activityCodesSecondary": "Secondary {scheme} codes (optional)",
       "activityCodesHint": "Separate with commas — up to {max}.",
-      "activityCodesAdd": "Add more codes here; codes already given stay — only FIRINGI can remove them."
+      "activityCodesAdd": "Add more codes here; codes already given stay — only FIRINGI can remove them.",
+      "whatsapp": "WhatsApp number (optional)",
+      "whatsappHint": "Add it if you use WhatsApp for orders and messages. With the country code.",
+      "whatsappSame": "This phone number is also on WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -1846,6 +1849,14 @@
     "rewards_low_stock": {
       "title": "Reward running out",
       "body": "Only {left} left of “{reward}”."
+    },
+    "website_contact": {
+      "title": "New question from the website",
+      "body": "{name} from {company} sent a question. It is in the CRM as a lead."
+    },
+    "website_vendor_interest": {
+      "title": "New vendor application",
+      "body": "{name} from {company} wants to sell on FIRINGI. It is in the CRM as a lead."
     }
   },
   "notifications": {
@@ -7744,6 +7755,480 @@
       },
       "noHandovers": "No customer has redeemed your products yet.",
       "orderBy": "Order by {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Buy, restock and run your business",
+      "description": "Restock your business from every wholesaler in one order: volume prices, clear invoices with your NIF, same-day delivery."
+    },
+    "open": "Open a business account",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "chart": {
+      "label": "Three vendors each sending a delivery route to one business",
+      "shop": "Your business",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Thu 9 to 12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Thu 13 to 16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Sat 8 to 11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI app screen: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Search products, brands, vendors…",
+        "next": "Delivery today",
+        "cart": "Your cart",
+        "minOk": "Minimum reached",
+        "total": "Total",
+        "checkout": "Order and pay",
+        "steps": {
+          "1": "Ordered",
+          "2": "Prepared",
+          "3": "On the way",
+          "4": "Delivered"
+        },
+        "reorder": "Time to reorder",
+        "fill": "Fill my cart",
+        "lastTime": "Last time: {n} boxes",
+        "role": "Wholesale customer",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Welcome, {name}",
+        "recent": "Latest orders",
+        "nav": {
+          "1": "Dashboard",
+          "2": "Catalogue",
+          "3": "Orders",
+          "4": "Invoices & payments",
+          "5": "Rewards",
+          "6": "Help & support",
+          "7": "Till (POS)",
+          "8": "Kitchen & stock"
+        },
+        "kpi": {
+          "1": "Orders in progress",
+          "2": "On the way",
+          "3": "Spent, last 30 days",
+          "4": "Open invoices"
+        }
+      },
+      "products": {
+        "1": "Long-grain rice 1 kg × 10",
+        "2": "Extra virgin olive oil 5 L",
+        "3": "Tuna in olive oil 120 g × 24",
+        "4": "UHT milk 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Bring your wholesale business online.",
+      "sub": "Reach businesses that reorder every week, without taking orders by phone or chasing payments.",
+      "cta": "Apply as a vendor",
+      "rows": {
+        "1": {
+          "t": "Set your own terms",
+          "p": "Choose prices, volume tiers, minimum orders and delivery days."
+        },
+        "2": {
+          "t": "One queue for every order",
+          "p": "New orders arrive in a single list, ready to pack."
+        },
+        "3": {
+          "t": "Dispatch and share status",
+          "p": "Assign drivers and let customers follow the truck without calling you."
+        },
+        "4": {
+          "t": "Get paid per order",
+          "p": "Each order is paid out separately, with a clear record for your books."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Sell on FIRINGI — reach businesses across Portugal",
+      "description": "List your wholesale products on FIRINGI. Businesses order from you in one cart with other vendors; FIRINGI invoices them and pays you out.",
+      "rowsH2": "Everything you need to sell to businesses.",
+      "formH2": "Apply to sell on FIRINGI",
+      "formSub": "Tell us about your company. We reply within one business day with the next steps.",
+      "navPlans": "Supplier plans",
+      "typesH2": "Two ways to sell on FIRINGI.",
+      "typesSub": "Wholesalers sell to shops, cafés and restaurants in their own country. Distributors sell to wholesalers across the EU.",
+      "types": {
+        "wholesaler": {
+          "t": "Wholesaler",
+          "p": "Sell to shops, cafés and restaurants in your own country, by zone or by distance — and restock from distributors on FIRINGI.",
+          "b": {
+            "1": "Shops, cafés and restaurants in your country buy from you",
+            "2": "Delivery by zone or by distance",
+            "3": "Buy your stock from distributors across the EU"
+          },
+          "cta": "Register as a wholesaler"
+        },
+        "distributor": {
+          "t": "Distributor",
+          "p": "Sell to wholesalers across the EU. They buy your goods in bulk and resell them to shops and restaurants in their country.",
+          "b": {
+            "1": "Wholesalers in EU countries buy from you",
+            "2": "Bulk, carton and pallet orders",
+            "3": "Cross-border invoices handled by FIRINGI"
+          },
+          "cta": "Register as a distributor"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Questions businesses ask first.",
+      "items": {
+        "1": {
+          "q": "Can private customers buy?",
+          "a": "No. FIRINGI is for businesses with a NIF. Prices are wholesale and invoices are made out to your company."
+        },
+        "2": {
+          "q": "What is the minimum order?",
+          "a": "€150 for your whole cart, however many vendors it includes."
+        },
+        "3": {
+          "q": "Are the prices with or without IVA?",
+          "a": "Without IVA. IVA is added at checkout at the rate for each product, and shown on every invoice line."
+        },
+        "4": {
+          "q": "When do my goods arrive?",
+          "a": "The same day. Everything you order before the cut-off time arrives that day, from every vendor in your cart, and you can follow each truck in the app."
+        },
+        "5": {
+          "q": "How do I pay, and when?",
+          "a": "Pay once for the whole cart by Multibanco, MB WAY, card or SEPA transfer. Approved businesses can also pay up to 30 days after invoice."
+        },
+        "6": {
+          "q": "Can my colleagues order from the same account?",
+          "a": "Yes. Add users with their own logins and choose who can order, who can see invoices and who can change delivery addresses."
+        },
+        "7": {
+          "q": "What if goods arrive damaged?",
+          "a": "Report it in the app within 24 hours, with a photo. The vendor replies with a replacement or a credit note."
+        },
+        "8": {
+          "q": "Do you deliver to Madeira and the Azores?",
+          "a": "Not yet. We are starting with mainland Portugal and will add the islands later."
+        },
+        "9": {
+          "q": "Can I sell on FIRINGI?",
+          "a": "Yes. Apply as a vendor, set your prices, minimums and delivery days, and start receiving orders from businesses near you."
+        }
+      }
+    },
+    "final": {
+      "h2": "Your next restock can be one order.",
+      "p": "Open a business account and see wholesale prices from vendors near you."
+    },
+    "plans": {
+      "h2": "Plans for vendors. Buyers never pay.",
+      "sub": "Businesses that buy on FIRINGI use it free. Vendors start free and upgrade as they grow.",
+      "per": "/month",
+      "top": "Most chosen",
+      "note": "Plans and prices come from FIRINGI's plan settings, so this section always matches what vendors pay.",
+      "start": "Start free",
+      "choose": "Choose {name}",
+      "products": "Up to {n} products",
+      "productsAll": "Unlimited products",
+      "team": "{users} users, {wh} warehouses, {drivers} drivers",
+      "teamAll": "Unlimited users, warehouses and drivers",
+      "earlyPay": "Early payout from {rate}% a day",
+      "freeEarly": "{n} free early payouts a month",
+      "includes": "Includes: {list}",
+      "basics": "Orders, invoicing and payouts by FIRINGI",
+      "feature": {
+        "INVENTORY": "inventory",
+        "PLANNING": "planning",
+        "WAREHOUSE": "warehouse picking",
+        "PRICE_INSIGHTS": "price insights",
+        "ADS": "advertising",
+        "INTEGRATIONS": "integrations",
+        "ROUTES": "routes",
+        "ASSISTANT": "AI assistant"
+      }
+    },
+    "contact": {
+      "h2": "Talk to us.",
+      "sub": "Questions about buying or selling? We answer within one business day.",
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Mobile",
+      "nif": "NIF",
+      "type": "Your business",
+      "msg": "Message",
+      "consent": "I agree that FIRINGI uses these details to answer me, as set out in the privacy policy.",
+      "send": "Send",
+      "waT": "WhatsApp",
+      "waP": "Message our team on WhatsApp, Monday to Saturday, 9:00 to 19:00.",
+      "waB": "Open WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restaurant, café or bar",
+        "2": "Grocery shop or minimarket",
+        "3": "Hotel or catering",
+        "4": "Canteen, school or care home",
+        "5": "Other"
+      },
+      "vendorMsg": "What you sell and where you deliver",
+      "sent": "Thank you. We will answer within one business day.",
+      "errRequired": "Fill in your name, company and email.",
+      "errEmail": "Enter a valid email address.",
+      "errConsent": "Please tick the box to agree.",
+      "errSpam": "Something went wrong. Please try again.",
+      "errBusy": "Too many messages. Please try again in a minute.",
+      "sending": "Sending…",
+      "vendorType": "I want to sell as",
+      "vendorTypes": {
+        "WHOLESALER": "Wholesaler — I sell to shops in my country",
+        "DISTRIBUTOR": "Distributor — I sell to wholesalers in the EU"
+      }
+    },
+    "news": {
+      "label": "Get new vendors, deals and delivery areas by email, once a month.",
+      "ph": "Your business email",
+      "btn": "Subscribe",
+      "note": "You can unsubscribe at any time.",
+      "consent": "I agree to receive the FIRINGI newsletter. I can unsubscribe at any time.",
+      "sent": "Almost done. Check your email and confirm your subscription.",
+      "confirmedTitle": "You are subscribed.",
+      "confirmedBody": "Thank you. You will get our newsletter once a month.",
+      "unsubTitle": "You are unsubscribed.",
+      "unsubBody": "You will not get the newsletter any more. You can subscribe again at any time.",
+      "invalid": "This link is no longer valid.",
+      "back": "Back to FIRINGI"
+    },
+    "foot": {
+      "tag": "Buy, restock and run your business without wasting your time.",
+      "buy": "Buy",
+      "sell": "For suppliers",
+      "help": "Help",
+      "legal": "Legal",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. All rights reserved.",
+      "links": {
+        "buy": {
+          "1": "Buy",
+          "2": "Till",
+          "3": "Manage",
+          "4": "Save"
+        },
+        "sell": {
+          "1": "Become a supplier",
+          "2": "Supplier plans"
+        },
+        "help": {
+          "1": "Questions",
+          "2": "Contact",
+          "3": "System status",
+          "4": "Log in"
+        },
+        "legal": {
+          "1": "Terms of use",
+          "2": "Privacy policy (GDPR)",
+          "3": "Cookies",
+          "4": "Company details"
+        }
+      }
+    },
+    "login": "Log in",
+    "mail": {
+      "contactSubject": "We received your message",
+      "hello": "Hello {name},",
+      "helloAll": "Hello,",
+      "contactBody": "Thank you for contacting FIRINGI. We received your message and will answer within one business day.",
+      "newsSubject": "Confirm your FIRINGI newsletter subscription",
+      "newsBody": "Please confirm that you want to receive the FIRINGI newsletter:",
+      "newsIgnore": "If you did not ask for this, ignore this email.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Terms of use",
+      "privacy": "Privacy policy (GDPR)",
+      "cookies": "Cookies",
+      "company": "Company details",
+      "updated": "Last updated {date}",
+      "empty": "This page is being prepared. Contact us if you have a question.",
+      "back": "Back to FIRINGI"
+    },
+    "langPicker": "Choose language",
+    "app": {
+      "nav": {
+        "buy": "Buy",
+        "till": "Till",
+        "manage": "Manage",
+        "save": "Save",
+        "vendors": "Become a supplier",
+        "faq": "Questions"
+      },
+      "hero": {
+        "eyebrow": "For shops, mini-markets, cafés and restaurants in Portugal",
+        "h1a": "Buy, restock and run",
+        "h1b": "your business",
+        "h1c": "without wasting your time.",
+        "lead": "Order from every wholesaler in one cart — groceries, drinks, hygiene, cleaning, tobacco and more — with same-day delivery. Sell with the FIRINGI till and see your margins, stock and staff in one dashboard.",
+        "cta2": "See how it works",
+        "note": "Free for businesses · No card needed"
+      },
+      "float": {
+        "1": "New order · delivery today",
+        "2": "Invoice paid · MB WAY",
+        "3": "+120 reward points"
+      },
+      "stats": {
+        "1": {
+          "v": "€150",
+          "l": "minimum order for the whole cart"
+        },
+        "2": {
+          "v": "Same day",
+          "l": "delivery, Monday to Saturday"
+        },
+        "3": {
+          "v": "1 invoice",
+          "l": "from FIRINGI for every order"
+        },
+        "4": {
+          "v": "€0",
+          "l": "to open your business account"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Buy",
+          "h": "Every wholesaler. One cart. Delivered today.",
+          "p": "Search one catalogue with wholesale prices from many vendors, fill one cart and pay once. Everything arrives the same day.",
+          "b": {
+            "1": "One €150 minimum for the whole cart",
+            "2": "Volume prices on every product",
+            "3": "Follow every truck in the app"
+          }
+        },
+        "till": {
+          "tag": "Till",
+          "h": "A till that knows your stock.",
+          "p": "Sell at the counter with the FIRINGI till: tap or scan, take card, MB WAY or cash, and print the receipt with your customer's NIF.",
+          "b": {
+            "1": "Keeps selling without internet",
+            "2": "Every sale updates your stock",
+            "3": "IVA on every receipt line"
+          }
+        },
+        "manage": {
+          "tag": "Manage",
+          "h": "Know your margins before you sell.",
+          "p": "Product and recipe margins from your real purchase prices, stock with expiry dates and staff shifts — built from the orders you already place.",
+          "b": {
+            "1": "Margins per product and per recipe",
+            "2": "Stock, expiry alerts and reorder reminders",
+            "3": "Staff hours and shifts"
+          }
+        },
+        "save": {
+          "tag": "Save",
+          "h": "Spend less. Pay when it suits you.",
+          "p": "Earn points on every delivered order, swap them in the rewards shop, join buying groups for better prices and pay later on approved accounts.",
+          "b": {
+            "1": "Points and a rewards shop",
+            "2": "Buying groups and volume deals",
+            "3": "Pay up to 30 days later"
+          }
+        }
+      },
+      "start": {
+        "h": "Start in three steps.",
+        "steps": {
+          "1": {
+            "t": "Open your free account",
+            "p": "Your company name, NIF and delivery address."
+          },
+          "2": {
+            "t": "We check it",
+            "p": "Usually within one business day."
+          },
+          "3": {
+            "t": "Order and grow",
+            "p": "Buy today, receive it today, and switch on the till and tools when you need them."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Ticket",
+        "nif": "Customer NIF",
+        "card": "Card",
+        "cash": "Cash",
+        "total": "Total",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Toasted sandwich",
+          "4": "Water 0.5 L",
+          "5": "Custard tart",
+          "6": "Orange juice"
+        }
+      },
+      "mng": {
+        "recipe": "Recipe cost",
+        "dish": "Toasted sandwich",
+        "cost": "Cost",
+        "price": "Price",
+        "margin": "Margin",
+        "stock": "Stock alerts",
+        "low": "{n} days left",
+        "expiry": "Expires in {n} days",
+        "staff": "Staff today",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} points",
+        "next": "{n} points to your next reward",
+        "rewards": "Rewards shop",
+        "pts": "{n} pts",
+        "items": {
+          "1": "€10 voucher",
+          "2": "Free delivery",
+          "3": "Coffee machine cleaning kit"
+        },
+        "later": "Pay later",
+        "laterP": "30 days · limit {amount}",
+        "group": "Buying group: −6% on drinks"
+      },
+      "cats": {
+        "h": "Everything your shop sells, from one place.",
+        "p": "14 categories from wholesalers across Portugal — and more every month.",
+        "items": {
+          "1": "Groceries",
+          "2": "Fresh Produce",
+          "3": "Beverages",
+          "4": "Cosmetics & Beauty",
+          "5": "Personal Hygiene",
+          "6": "Household & Cleaning",
+          "7": "Baby & Childcare",
+          "8": "Pet Supplies",
+          "9": "Tobacco",
+          "10": "Fashion & Accessories",
+          "11": "Toys & Kids",
+          "12": "Souvenirs & Gifts",
+          "13": "Packaging & Supplies",
+          "14": "Kebab & Pizza Supplies"
+        }
+      }
     }
   }
 }

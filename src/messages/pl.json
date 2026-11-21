@@ -259,7 +259,10 @@
       "activityCodeOnce": "Wpisz go raz — potem może go zmienić tylko FIRINGI.",
       "activityCodesSecondary": "Dodatkowe kody {scheme} (opcjonalnie)",
       "activityCodesHint": "Oddziel przecinkami — do {max}.",
-      "activityCodesAdd": "Dodaj tu więcej kodów; podane już kody zostają — tylko FIRINGI może je usunąć."
+      "activityCodesAdd": "Dodaj tu więcej kodów; podane już kody zostają — tylko FIRINGI może je usunąć.",
+      "whatsapp": "Numer WhatsApp (opcjonalnie)",
+      "whatsappHint": "Podaj go, jeśli używasz WhatsApp do zamówień i wiadomości. Z numerem kierunkowym kraju.",
+      "whatsappSame": "Ten numer telefonu ma też WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restauracja",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Nagroda się kończy",
       "body": "Pozostało tylko {left} szt. nagrody „{reward}”."
+    },
+    "website_contact": {
+      "title": "Nowe pytanie ze strony",
+      "body": "{name} z firmy {company} wysłał(a) pytanie. Jest w CRM jako lead."
+    },
+    "website_vendor_interest": {
+      "title": "Nowe zgłoszenie dostawcy",
+      "body": "{name} z firmy {company} chce sprzedawać na FIRINGI. Jest w CRM jako lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Żaden klient nie wymienił jeszcze punktów na Twoje produkty.",
       "orderBy": "Termin zamówienia: {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Kupuj, zaopatruj się i prowadź swoją firmę",
+      "description": "Zaopatruj firmę u wszystkich hurtowni w jednym zamówieniu: rabaty ilościowe, przejrzyste faktury z twoim NIF, dostawa tego samego dnia."
+    },
+    "open": "Załóż konto firmowe",
+    "menuOpen": "Otwórz menu",
+    "menuClose": "Zamknij menu",
+    "chart": {
+      "label": "Trzech dostawców wysyła trasy dostaw do jednej firmy",
+      "shop": "Twoja firma",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "czw. 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "czw. 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "sob. 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Ekran aplikacji FIRINGI: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Szukaj produktów, marek, dostawców…",
+        "next": "Dostawa dziś",
+        "cart": "Twój koszyk",
+        "minOk": "Minimum osiągnięte",
+        "total": "Razem",
+        "checkout": "Zamów i zapłać",
+        "steps": {
+          "1": "Zamówione",
+          "2": "Przygotowane",
+          "3": "W drodze",
+          "4": "Dostarczone"
+        },
+        "reorder": "Czas zamówić ponownie",
+        "fill": "Napełnij koszyk",
+        "lastTime": "Ostatnio: {n} kartonów",
+        "role": "Klient hurtowy",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "NA ŻYWO",
+        "welcome": "Witaj, {name}",
+        "recent": "Ostatnie zamówienia",
+        "nav": {
+          "1": "Pulpit",
+          "2": "Katalog",
+          "3": "Zamówienia",
+          "4": "Faktury i płatności",
+          "5": "Nagrody",
+          "6": "Pomoc i wsparcie",
+          "7": "Kasa (POS)",
+          "8": "Kuchnia i magazyn"
+        },
+        "kpi": {
+          "1": "Zamówienia w realizacji",
+          "2": "W drodze",
+          "3": "Wydatki, ostatnie 30 dni",
+          "4": "Niezapłacone faktury"
+        }
+      },
+      "products": {
+        "1": "Ryż długoziarnisty 1 kg × 10",
+        "2": "Oliwa z oliwek extra virgin 5 l",
+        "3": "Tuńczyk w oliwie 120 g × 24",
+        "4": "Mleko UHT 1 l × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Przenieś swoją hurtownię do sieci.",
+      "sub": "Docieraj do firm, które zamawiają co tydzień, bez przyjmowania zamówień przez telefon i upominania się o płatności.",
+      "cta": "Zostań dostawcą",
+      "rows": {
+        "1": {
+          "t": "Ustal własne warunki",
+          "p": "Wybierz ceny, progi ilościowe, minimalne zamówienia i dni dostaw."
+        },
+        "2": {
+          "t": "Jedna kolejka na wszystkie zamówienia",
+          "p": "Nowe zamówienia trafiają na jedną listę, gotowe do spakowania."
+        },
+        "3": {
+          "t": "Wysyłaj i udostępniaj status",
+          "p": "Przydzielaj kierowców, a klienci śledzą ciężarówkę bez dzwonienia do ciebie."
+        },
+        "4": {
+          "t": "Wypłata za każde zamówienie",
+          "p": "Każde zamówienie jest wypłacane osobno, z czytelnym zapisem do księgowości."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Sprzedawaj na FIRINGI — docieraj do firm w całej Portugalii",
+      "description": "Wystaw swoje produkty hurtowe na FIRINGI. Firmy zamawiają u ciebie w jednym koszyku z innymi dostawcami, a FIRINGI wystawia im faktury i wypłaca ci pieniądze.",
+      "rowsH2": "Wszystko, czego potrzebujesz, by sprzedawać firmom.",
+      "formH2": "Zgłoś się do sprzedaży na FIRINGI",
+      "formSub": "Opowiedz nam o swojej firmie. W ciągu jednego dnia roboczego odpowiemy z kolejnymi krokami.",
+      "navPlans": "Plany dla dostawców",
+      "typesH2": "Dwa sposoby sprzedaży na FIRINGI.",
+      "typesSub": "Hurtownie sprzedają sklepom, kawiarniom i restauracjom we własnym kraju. Dystrybutorzy sprzedają hurtowniom w całej UE.",
+      "types": {
+        "wholesaler": {
+          "t": "Hurtownia",
+          "p": "Sprzedawaj sklepom, kawiarniom i restauracjom we własnym kraju, według strefy lub odległości — i uzupełniaj towar u dystrybutorów na FIRINGI.",
+          "b": {
+            "1": "Sklepy, kawiarnie i restauracje w twoim kraju kupują u ciebie",
+            "2": "Dostawa według strefy lub odległości",
+            "3": "Kupuj towar od dystrybutorów z całej UE"
+          },
+          "cta": "Zarejestruj się jako hurtownia"
+        },
+        "distributor": {
+          "t": "Dystrybutor",
+          "p": "Sprzedawaj hurtowniom w całej UE. Kupują twoje towary hurtowo i odsprzedają je sklepom i restauracjom w swoim kraju.",
+          "b": {
+            "1": "Hurtownie z krajów UE kupują u ciebie",
+            "2": "Zamówienia hurtowe, na kartony i na palety",
+            "3": "Faktury transgraniczne obsługuje FIRINGI"
+          },
+          "cta": "Zarejestruj się jako dystrybutor"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Pytania, które firmy zadają najczęściej.",
+      "items": {
+        "1": {
+          "q": "Czy mogą kupować klienci prywatni?",
+          "a": "Nie. FIRINGI jest dla firm z numerem NIF. Ceny są hurtowe, a faktury wystawiamy na twoją firmę."
+        },
+        "2": {
+          "q": "Jakie jest minimalne zamówienie?",
+          "a": "150 € za cały koszyk, niezależnie od liczby dostawców."
+        },
+        "3": {
+          "q": "Czy ceny są z VAT, czy bez?",
+          "a": "Bez VAT. VAT jest doliczany przy płatności według stawki każdego produktu i widoczny w każdej pozycji faktury."
+        },
+        "4": {
+          "q": "Kiedy dotrze mój towar?",
+          "a": "Tego samego dnia. Wszystko, co zamówisz przed godziną graniczną, dotrze tego dnia od każdego dostawcy z koszyka, a każdą ciężarówkę możesz śledzić w aplikacji."
+        },
+        "5": {
+          "q": "Jak i kiedy płacę?",
+          "a": "Płacisz raz za cały koszyk: Multibanco, MB WAY, kartą lub przelewem SEPA. Zatwierdzone firmy mogą też zapłacić do 30 dni od wystawienia faktury."
+        },
+        "6": {
+          "q": "Czy współpracownicy mogą zamawiać z tego samego konta?",
+          "a": "Tak. Dodaj użytkowników z własnymi loginami i zdecyduj, kto może zamawiać, kto widzi faktury, a kto zmienia adresy dostaw."
+        },
+        "7": {
+          "q": "Co, jeśli towar dotrze uszkodzony?",
+          "a": "Zgłoś to w aplikacji w ciągu 24 godzin, ze zdjęciem. Dostawca wymieni towar lub wystawi fakturę korygującą."
+        },
+        "8": {
+          "q": "Czy dostarczacie na Maderę i Azory?",
+          "a": "Jeszcze nie. Zaczynamy od Portugalii kontynentalnej, wyspy dodamy później."
+        },
+        "9": {
+          "q": "Czy mogę sprzedawać na FIRINGI?",
+          "a": "Tak. Zostań dostawcą, ustal ceny, minima i dni dostaw, i zacznij otrzymywać zamówienia od firm w okolicy."
+        }
+      }
+    },
+    "final": {
+      "h2": "Następne zaopatrzenie może być jednym zamówieniem.",
+      "p": "Załóż konto firmowe i zobacz ceny hurtowe dostawców w twojej okolicy."
+    },
+    "plans": {
+      "h2": "Plany dla dostawców. Kupujący nigdy nie płacą.",
+      "sub": "Firmy kupujące na FIRINGI korzystają za darmo. Dostawcy zaczynają za darmo i przechodzą na wyższy plan, gdy rosną.",
+      "per": "/mies.",
+      "top": "Najczęściej wybierany",
+      "note": "Plany i ceny pochodzą z ustawień planów FIRINGI, więc ta sekcja zawsze odpowiada temu, co płacą dostawcy.",
+      "start": "Zacznij za darmo",
+      "choose": "Wybierz {name}",
+      "products": "Do {n} produktów",
+      "productsAll": "Bez limitu produktów",
+      "team": "Użytkownicy: {users}, magazyny: {wh}, kierowcy: {drivers}",
+      "teamAll": "Bez limitu użytkowników, magazynów i kierowców",
+      "earlyPay": "Wcześniejsza wypłata od {rate}% dziennie",
+      "freeEarly": "Darmowe wcześniejsze wypłaty: {n} miesięcznie",
+      "includes": "W pakiecie: {list}",
+      "basics": "Zamówienia, faktury i wypłaty przez FIRINGI",
+      "feature": {
+        "INVENTORY": "stany magazynowe",
+        "PLANNING": "planowanie",
+        "WAREHOUSE": "kompletacja w magazynie",
+        "PRICE_INSIGHTS": "analiza cen",
+        "ADS": "reklama",
+        "INTEGRATIONS": "integracje",
+        "ROUTES": "trasy",
+        "ASSISTANT": "asystent AI"
+      }
+    },
+    "contact": {
+      "h2": "Porozmawiajmy.",
+      "sub": "Pytania o zakupy lub sprzedaż? Odpowiadamy w ciągu jednego dnia roboczego.",
+      "name": "Imię i nazwisko",
+      "company": "Firma",
+      "email": "E-mail",
+      "phone": "Telefon komórkowy",
+      "nif": "NIF",
+      "type": "Twoja firma",
+      "msg": "Wiadomość",
+      "consent": "Zgadzam się, aby FIRINGI wykorzystało te dane do udzielenia mi odpowiedzi, zgodnie z polityką prywatności.",
+      "send": "Wyślij",
+      "waT": "WhatsApp",
+      "waP": "Napisz do naszego zespołu na WhatsAppie, od poniedziałku do soboty, 9:00–19:00.",
+      "waB": "Otwórz WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restauracja, kawiarnia lub bar",
+        "2": "Sklep spożywczy lub minimarket",
+        "3": "Hotel lub catering",
+        "4": "Stołówka, szkoła lub dom opieki",
+        "5": "Inne"
+      },
+      "vendorMsg": "Co sprzedajesz i gdzie dostarczasz",
+      "sent": "Dziękujemy. Odpowiemy w ciągu jednego dnia roboczego.",
+      "errRequired": "Podaj imię, firmę i e-mail.",
+      "errEmail": "Podaj prawidłowy adres e-mail.",
+      "errConsent": "Zaznacz pole, aby wyrazić zgodę.",
+      "errSpam": "Coś poszło nie tak. Spróbuj ponownie.",
+      "errBusy": "Zbyt wiele wiadomości. Spróbuj ponownie za minutę.",
+      "sending": "Wysyłanie…",
+      "vendorType": "Chcę sprzedawać jako",
+      "vendorTypes": {
+        "WHOLESALER": "Hurtownia — sprzedaję sklepom w moim kraju",
+        "DISTRIBUTOR": "Dystrybutor — sprzedaję hurtowniom w UE"
+      }
+    },
+    "news": {
+      "label": "Raz w miesiącu e-mailem: nowi dostawcy, oferty i strefy dostaw.",
+      "ph": "Twój firmowy e-mail",
+      "btn": "Zapisz się",
+      "note": "Możesz wypisać się w każdej chwili.",
+      "consent": "Zgadzam się na otrzymywanie newslettera FIRINGI. Mogę wypisać się w każdej chwili.",
+      "sent": "Prawie gotowe. Sprawdź skrzynkę i potwierdź subskrypcję.",
+      "confirmedTitle": "Subskrypcja aktywna.",
+      "confirmedBody": "Dziękujemy. Newsletter będzie przychodził raz w miesiącu.",
+      "unsubTitle": "Subskrypcja anulowana.",
+      "unsubBody": "Newsletter nie będzie już przychodził. Możesz zapisać się ponownie w każdej chwili.",
+      "invalid": "Ten link jest już nieaktualny.",
+      "back": "Wróć do FIRINGI"
+    },
+    "foot": {
+      "tag": "Kupuj, zaopatruj się i prowadź swoją firmę bez straty czasu.",
+      "buy": "Zakupy",
+      "sell": "Dla dostawców",
+      "help": "Pomoc",
+      "legal": "Informacje prawne",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Wszelkie prawa zastrzeżone.",
+      "links": {
+        "buy": {
+          "1": "Zakupy",
+          "2": "Kasa",
+          "3": "Zarządzanie",
+          "4": "Oszczędności"
+        },
+        "sell": {
+          "1": "Zostań dostawcą",
+          "2": "Plany dla dostawców"
+        },
+        "help": {
+          "1": "Pytania",
+          "2": "Kontakt",
+          "3": "Status systemu",
+          "4": "Zaloguj się"
+        },
+        "legal": {
+          "1": "Warunki korzystania",
+          "2": "Polityka prywatności (RODO)",
+          "3": "Pliki cookie",
+          "4": "Dane firmy"
+        }
+      }
+    },
+    "login": "Zaloguj się",
+    "mail": {
+      "contactSubject": "Otrzymaliśmy twoją wiadomość",
+      "hello": "Dzień dobry, {name},",
+      "helloAll": "Dzień dobry,",
+      "contactBody": "Dziękujemy za kontakt z FIRINGI. Otrzymaliśmy twoją wiadomość i odpowiemy w ciągu jednego dnia roboczego.",
+      "newsSubject": "Potwierdź subskrypcję newslettera FIRINGI",
+      "newsBody": "Potwierdź, że chcesz otrzymywać newsletter FIRINGI:",
+      "newsIgnore": "Jeśli to nie ty, zignoruj tę wiadomość.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Warunki korzystania",
+      "privacy": "Polityka prywatności (RODO)",
+      "cookies": "Pliki cookie",
+      "company": "Dane firmy",
+      "updated": "Ostatnia aktualizacja: {date}",
+      "empty": "Ta strona jest w przygotowaniu. Masz pytanie? Skontaktuj się z nami.",
+      "back": "Wróć do FIRINGI"
+    },
+    "langPicker": "Wybierz język",
+    "app": {
+      "nav": {
+        "buy": "Zakupy",
+        "till": "Kasa",
+        "manage": "Zarządzanie",
+        "save": "Oszczędności",
+        "vendors": "Zostań dostawcą",
+        "faq": "Pytania"
+      },
+      "hero": {
+        "eyebrow": "Dla sklepów, minimarketów, kawiarni i restauracji w Portugalii",
+        "h1a": "Kupuj, zaopatruj się i prowadź",
+        "h1b": "swoją firmę",
+        "h1c": "bez straty czasu.",
+        "lead": "Zamawiaj u wszystkich hurtowni w jednym koszyku — spożywka, napoje, higiena, chemia, wyroby tytoniowe i więcej — z dostawą tego samego dnia. Sprzedawaj z kasą FIRINGI i miej marże, zapasy i personel w jednym panelu.",
+        "cta2": "Zobacz, jak to działa",
+        "note": "Bezpłatnie dla firm · Bez karty"
+      },
+      "float": {
+        "1": "Nowe zamówienie · dostawa dziś",
+        "2": "Faktura opłacona · MB WAY",
+        "3": "+120 punktów nagród"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minimalne zamówienie za cały koszyk"
+        },
+        "2": {
+          "v": "Tego samego dnia",
+          "l": "dostawa od poniedziałku do soboty"
+        },
+        "3": {
+          "v": "1 faktura",
+          "l": "od FIRINGI za każde zamówienie"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "za założenie konta firmowego"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Zakupy",
+          "h": "Wszystkie hurtownie. Jeden koszyk. Dostawa dziś.",
+          "p": "Przeszukuj jeden katalog z cenami hurtowymi wielu dostawców, napełnij jeden koszyk i zapłać raz. Wszystko dotrze tego samego dnia.",
+          "b": {
+            "1": "Jedno minimum 150 € na cały koszyk",
+            "2": "Rabaty ilościowe na każdy produkt",
+            "3": "Śledź każdą ciężarówkę w aplikacji"
+          }
+        },
+        "till": {
+          "tag": "Kasa",
+          "h": "Kasa, która zna twoje zapasy.",
+          "p": "Sprzedawaj przy ladzie z kasą FIRINGI: dotknij lub zeskanuj, przyjmij kartę, MB WAY lub gotówkę i wydrukuj paragon z NIF klienta.",
+          "b": {
+            "1": "Działa także bez internetu",
+            "2": "Każda sprzedaż aktualizuje zapasy",
+            "3": "VAT w każdej pozycji paragonu"
+          }
+        },
+        "manage": {
+          "tag": "Zarządzanie",
+          "h": "Poznaj swoje marże, zanim sprzedasz.",
+          "p": "Marże produktów i receptur z prawdziwych cen zakupu, zapasy z datami ważności i grafik personelu — wszystko z zamówień, które już składasz.",
+          "b": {
+            "1": "Marże na produkt i recepturę",
+            "2": "Zapasy, alerty o terminach ważności i przypomnienia o zamówieniu",
+            "3": "Godziny pracy i zmiany personelu"
+          }
+        },
+        "save": {
+          "tag": "Oszczędności",
+          "h": "Wydawaj mniej. Płać, kiedy ci pasuje.",
+          "p": "Zbieraj punkty za każde dostarczone zamówienie, wymieniaj je w sklepie z nagrodami, dołącz do grup zakupowych po lepsze ceny i płać później na zatwierdzonych kontach.",
+          "b": {
+            "1": "Punkty i sklep z nagrodami",
+            "2": "Grupy zakupowe i rabaty ilościowe",
+            "3": "Płać nawet 30 dni później"
+          }
+        }
+      },
+      "start": {
+        "h": "Zacznij w trzech krokach.",
+        "steps": {
+          "1": {
+            "t": "Załóż darmowe konto",
+            "p": "Nazwa firmy, NIF i adres dostawy."
+          },
+          "2": {
+            "t": "Weryfikujemy je",
+            "p": "Zwykle w ciągu jednego dnia roboczego."
+          },
+          "3": {
+            "t": "Zamawiaj i rozwijaj się",
+            "p": "Kup dziś, odbierz dziś, a kasę i narzędzia włącz, kiedy będą potrzebne."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Paragon",
+        "nif": "NIF klienta",
+        "card": "Karta",
+        "cash": "Gotówka",
+        "total": "Razem",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Tost",
+          "4": "Woda 0,5 l",
+          "5": "Babeczka z kremem",
+          "6": "Sok pomarańczowy"
+        }
+      },
+      "mng": {
+        "recipe": "Koszt receptury",
+        "dish": "Tost",
+        "cost": "Koszt",
+        "price": "Cena",
+        "margin": "Marża",
+        "stock": "Alerty magazynowe",
+        "low": "Zostało dni: {n}",
+        "expiry": "Ważność kończy się za {n} dni",
+        "staff": "Personel dziś",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} pkt",
+        "next": "Jeszcze {n} pkt do następnej nagrody",
+        "rewards": "Sklep z nagrodami",
+        "pts": "{n} pkt",
+        "items": {
+          "1": "Bon 10 €",
+          "2": "Darmowa dostawa",
+          "3": "Zestaw do czyszczenia ekspresu"
+        },
+        "later": "Płać później",
+        "laterP": "30 dni · limit {amount}",
+        "group": "Grupa zakupowa: −6% na napoje"
+      },
+      "cats": {
+        "h": "Wszystko, co sprzedaje twój sklep, w jednym miejscu.",
+        "p": "14 kategorii od hurtowni z całej Portugalii — co miesiąc więcej.",
+        "items": {
+          "1": "Artykuły spożywcze",
+          "2": "Świeże produkty",
+          "3": "Napoje",
+          "4": "Kosmetyki i uroda",
+          "5": "Higiena osobista",
+          "6": "Dom i sprzątanie",
+          "7": "Artykuły dziecięce",
+          "8": "Dla zwierząt",
+          "9": "Wyroby tytoniowe",
+          "10": "Moda i akcesoria",
+          "11": "Zabawki",
+          "12": "Pamiątki i prezenty",
+          "13": "Opakowania i materiały",
+          "14": "Produkty do kebabów i pizzy"
+        }
+      }
     }
   }
 }

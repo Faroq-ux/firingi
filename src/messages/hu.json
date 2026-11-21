@@ -259,7 +259,10 @@
       "activityCodeOnce": "Egyszer adja meg — utána csak a FIRINGI módosíthatja.",
       "activityCodesSecondary": "További {scheme} kódok (nem kötelező)",
       "activityCodesHint": "Vesszővel válassza el — legfeljebb {max}.",
-      "activityCodesAdd": "További kódokat itt adhat meg; a megadottak megmaradnak — csak a FIRINGI távolíthatja el őket."
+      "activityCodesAdd": "További kódokat itt adhat meg; a megadottak megmaradnak — csak a FIRINGI távolíthatja el őket.",
+      "whatsapp": "WhatsApp-szám (nem kötelező)",
+      "whatsappHint": "Adja meg, ha WhatsAppot használ rendelésekhez és üzenetekhez. Országkóddal.",
+      "whatsappSame": "Ez a telefonszám WhatsAppon is elérhető"
     },
     "businessTypes": {
       "restaurant": "Étterem",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Fogyóban a jutalom",
       "body": "A(z) „{reward}” jutalomból már csak {left} maradt."
+    },
+    "website_contact": {
+      "title": "Új kérdés a weboldalról",
+      "body": "{name} ({company}) kérdést küldött. Leadként szerepel a CRM-ben."
+    },
+    "website_vendor_interest": {
+      "title": "Új beszállítói jelentkezés",
+      "body": "{name} ({company}) szeretne a FIRINGI-n értékesíteni. Leadként szerepel a CRM-ben."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Még egy vevő sem váltotta be az Ön termékeit.",
       "orderBy": "Rendelés eddig: {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Vásároljon, rendeljen újra és vezesse a vállalkozását",
+      "description": "Töltse fel készletét minden nagykereskedőtől egyetlen rendeléssel: mennyiségi árak, átlátható számlák az Ön NIF-számával, aznapi szállítás."
+    },
+    "open": "Üzleti fiók nyitása",
+    "menuOpen": "Menü megnyitása",
+    "menuClose": "Menü bezárása",
+    "chart": {
+      "label": "Három beszállító, mindegyik szállítási útvonalat küld egy vállalkozáshoz",
+      "shop": "Az Ön vállalkozása",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Cs 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Cs 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Szo 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI alkalmazásképernyő: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Termékek, márkák, beszállítók keresése…",
+        "next": "Szállítás ma",
+        "cart": "Az Ön kosara",
+        "minOk": "Minimum elérve",
+        "total": "Összesen",
+        "checkout": "Rendelés és fizetés",
+        "steps": {
+          "1": "Megrendelve",
+          "2": "Előkészítve",
+          "3": "Úton",
+          "4": "Kiszállítva"
+        },
+        "reorder": "Ideje újrarendelni",
+        "fill": "Kosár feltöltése",
+        "lastTime": "Legutóbb: {n} karton",
+        "role": "Nagykereskedelmi vásárló",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "ÉLŐ",
+        "welcome": "Üdvözöljük, {name}",
+        "recent": "Legutóbbi rendelések",
+        "nav": {
+          "1": "Irányítópult",
+          "2": "Katalógus",
+          "3": "Rendelések",
+          "4": "Számlák és fizetések",
+          "5": "Jutalmak",
+          "6": "Súgó és támogatás",
+          "7": "Kassza (POS)",
+          "8": "Konyha és készlet"
+        },
+        "kpi": {
+          "1": "Folyamatban lévő rendelések",
+          "2": "Úton",
+          "3": "Költés, elmúlt 30 nap",
+          "4": "Nyitott számlák"
+        }
+      },
+      "products": {
+        "1": "Hosszú szemű rizs 1 kg × 10",
+        "2": "Extra szűz olívaolaj 5 l",
+        "3": "Tonhal olívaolajban 120 g × 24",
+        "4": "UHT tej 1 l × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Vigye online nagykereskedését.",
+      "sub": "Érje el a hetente újrarendelő vállalkozásokat telefonos rendelésfelvétel és a fizetések utáni hajsza nélkül.",
+      "cta": "Jelentkezés beszállítóként",
+      "rows": {
+        "1": {
+          "t": "Saját feltételek",
+          "p": "Határozza meg az árakat, mennyiségi sávokat, minimális rendelést és szállítási napokat."
+        },
+        "2": {
+          "t": "Egy lista minden rendeléshez",
+          "p": "Az új rendelések egyetlen listába érkeznek, csomagolásra készen."
+        },
+        "3": {
+          "t": "Kiszállítás és állapotkövetés",
+          "p": "Osszon be sofőröket, és ügyfelei telefonálás nélkül követhetik a teherautót."
+        },
+        "4": {
+          "t": "Kifizetés rendelésenként",
+          "p": "Minden rendelést külön fizetünk ki, átlátható nyilvántartással a könyveléséhez."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Értékesítsen a FIRINGI-n — érje el a vállalkozásokat egész Portugáliában",
+      "description": "Tegye fel nagykereskedelmi termékeit a FIRINGI-re. A vállalkozások egy kosárban rendelnek Öntől és más beszállítóktól; a FIRINGI számláz nekik, és kifizeti Önt.",
+      "rowsH2": "Minden, ami a vállalkozásoknak való értékesítéshez kell.",
+      "formH2": "Jelentkezzen, és értékesítsen a FIRINGI-n",
+      "formSub": "Meséljen cégéről. Egy munkanapon belül válaszolunk a következő lépésekkel.",
+      "navPlans": "Csomagok beszállítóknak",
+      "typesH2": "Kétféle módon értékesíthet a FIRINGI-n.",
+      "typesSub": "A nagykereskedők a saját országukban értékesítenek boltoknak, kávézóknak és éttermeknek. A disztribútorok az egész EU-ban értékesítenek nagykereskedőknek.",
+      "types": {
+        "wholesaler": {
+          "t": "Nagykereskedő",
+          "p": "Értékesítsen boltoknak, kávézóknak és éttermeknek a saját országában, zóna vagy távolság alapján — és töltse fel készletét disztribútoroktól a FIRINGI-n.",
+          "b": {
+            "1": "Országa boltjai, kávézói és éttermei Öntől vásárolnak",
+            "2": "Szállítás zóna vagy távolság alapján",
+            "3": "Szerezze be készletét disztribútoroktól az egész EU-ból"
+          },
+          "cta": "Regisztráció nagykereskedőként"
+        },
+        "distributor": {
+          "t": "Disztribútor",
+          "p": "Értékesítsen nagykereskedőknek az egész EU-ban. Ők nagy tételben vásárolják meg áruit, és továbbértékesítik boltoknak és éttermeknek a saját országukban.",
+          "b": {
+            "1": "EU-országok nagykereskedői vásárolnak Öntől",
+            "2": "Nagy tételes, kartonos és raklapos rendelések",
+            "3": "A határokon átnyúló számlázást a FIRINGI intézi"
+          },
+          "cta": "Regisztráció disztribútorként"
+        }
+      }
+    },
+    "faq": {
+      "h2": "A vállalkozások leggyakoribb kérdései.",
+      "items": {
+        "1": {
+          "q": "Vásárolhatnak magánszemélyek?",
+          "a": "Nem. A FIRINGI NIF-számmal rendelkező vállalkozásoknak szól. Az árak nagykereskedelmi árak, a számlák pedig az Ön cégére szólnak."
+        },
+        "2": {
+          "q": "Mennyi a minimális rendelés?",
+          "a": "150 € a teljes kosárra, akárhány beszállító is szerepel benne."
+        },
+        "3": {
+          "q": "Az árak ÁFA-val vagy anélkül értendők?",
+          "a": "ÁFA nélkül. Az ÁFA-t a fizetésnél adjuk hozzá az adott termék kulcsa szerint, és minden számlasoron feltüntetjük."
+        },
+        "4": {
+          "q": "Mikor érkezik meg az áru?",
+          "a": "Még aznap. Minden, amit a rendelési határidő előtt megrendel, aznap megérkezik a kosarában szereplő összes beszállítótól, és minden teherautót követhet az alkalmazásban."
+        },
+        "5": {
+          "q": "Hogyan és mikor fizetek?",
+          "a": "Egyszer fizet az egész kosárért Multibanco, MB WAY, kártya vagy SEPA átutalás útján. A jóváhagyott vállalkozások akár a számla után 30 nappal is fizethetnek."
+        },
+        "6": {
+          "q": "Rendelhetnek a kollégáim ugyanarról a fiókról?",
+          "a": "Igen. Adjon hozzá felhasználókat saját belépéssel, és döntse el, ki rendelhet, ki láthatja a számlákat és ki módosíthatja a szállítási címeket."
+        },
+        "7": {
+          "q": "Mi a teendő, ha sérült áru érkezik?",
+          "a": "Jelezze az alkalmazásban 24 órán belül, fotóval. A beszállító cserét vagy jóváírást ad."
+        },
+        "8": {
+          "q": "Szállítanak Madeirára és az Azori-szigetekre?",
+          "a": "Még nem. Portugália szárazföldi részével kezdünk, a szigetek később jönnek."
+        },
+        "9": {
+          "q": "Értékesíthetek a FIRINGI-n?",
+          "a": "Igen. Jelentkezzen beszállítóként, állítsa be árait, minimumait és szállítási napjait, és fogadjon rendeléseket a környékbeli vállalkozásoktól."
+        }
+      }
+    },
+    "final": {
+      "h2": "A következő feltöltés lehet egyetlen rendelés.",
+      "p": "Nyisson üzleti fiókot, és nézze meg a környékbeli beszállítók nagykereskedelmi árait."
+    },
+    "plans": {
+      "h2": "Csomagok beszállítóknak. A vásárlók soha nem fizetnek.",
+      "sub": "A FIRINGI-n vásárló vállalkozások ingyen használják. A beszállítók ingyen kezdenek, és növekedésükkel nagyobb csomagra válthatnak.",
+      "per": "/hó",
+      "top": "Legnépszerűbb",
+      "note": "A csomagok és árak a FIRINGI csomagbeállításaiból jönnek, így ez a rész mindig egyezik azzal, amit a beszállítók fizetnek.",
+      "start": "Ingyenes kezdés",
+      "choose": "{name} választása",
+      "products": "Legfeljebb {n} termék",
+      "productsAll": "Korlátlan termék",
+      "team": "{users} felhasználó, {wh} raktár, {drivers} sofőr",
+      "teamAll": "Korlátlan felhasználó, raktár és sofőr",
+      "earlyPay": "Korai kifizetés napi {rate}%-tól",
+      "freeEarly": "Havi {n} ingyenes korai kifizetés",
+      "includes": "Tartalmazza: {list}",
+      "basics": "Rendelések, számlázás és kifizetések a FIRINGI-től",
+      "feature": {
+        "INVENTORY": "készlet",
+        "PLANNING": "tervezés",
+        "WAREHOUSE": "raktári komissiózás",
+        "PRICE_INSIGHTS": "árelemzések",
+        "ADS": "hirdetés",
+        "INTEGRATIONS": "integrációk",
+        "ROUTES": "útvonalak",
+        "ASSISTANT": "MI-asszisztens"
+      }
+    },
+    "contact": {
+      "h2": "Beszéljünk.",
+      "sub": "Kérdése van a vásárlással vagy az értékesítéssel kapcsolatban? Egy munkanapon belül válaszolunk.",
+      "name": "Név",
+      "company": "Cég",
+      "email": "E-mail",
+      "phone": "Mobil",
+      "nif": "NIF",
+      "type": "Az Ön vállalkozása",
+      "msg": "Üzenet",
+      "consent": "Hozzájárulok, hogy a FIRINGI ezeket az adatokat a válaszadáshoz használja, az adatvédelmi szabályzatban leírtak szerint.",
+      "send": "Küldés",
+      "waT": "WhatsApp",
+      "waP": "Írjon csapatunknak WhatsAppon, hétfőtől szombatig, 9:00 és 19:00 között.",
+      "waB": "WhatsApp megnyitása",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Étterem, kávézó vagy bár",
+        "2": "Élelmiszerbolt vagy minimarket",
+        "3": "Szálloda vagy catering",
+        "4": "Menza, iskola vagy idősotthon",
+        "5": "Egyéb"
+      },
+      "vendorMsg": "Mit árul és hova szállít",
+      "sent": "Köszönjük. Egy munkanapon belül válaszolunk.",
+      "errRequired": "Adja meg nevét, cégét és e-mail-címét.",
+      "errEmail": "Adjon meg érvényes e-mail-címet.",
+      "errConsent": "Kérjük, jelölje be a négyzetet a hozzájáruláshoz.",
+      "errSpam": "Hiba történt. Kérjük, próbálja újra.",
+      "errBusy": "Túl sok üzenet. Kérjük, próbálja újra egy perc múlva.",
+      "sending": "Küldés…",
+      "vendorType": "Milyen minőségben értékesít?",
+      "vendorTypes": {
+        "WHOLESALER": "Nagykereskedő — boltoknak értékesítek a saját országomban",
+        "DISTRIBUTOR": "Disztribútor — nagykereskedőknek értékesítek az EU-ban"
+      }
+    },
+    "news": {
+      "label": "Új beszállítók, ajánlatok és szállítási területek e-mailben, havonta egyszer.",
+      "ph": "Céges e-mail-címe",
+      "btn": "Feliratkozás",
+      "note": "Bármikor leiratkozhat.",
+      "consent": "Hozzájárulok, hogy megkapjam a FIRINGI hírlevelét. Bármikor leiratkozhatok.",
+      "sent": "Majdnem kész. Nézze meg e-mailjeit, és erősítse meg feliratkozását.",
+      "confirmedTitle": "Feliratkozott.",
+      "confirmedBody": "Köszönjük. Havonta egyszer küldjük Önnek hírlevelünket.",
+      "unsubTitle": "Leiratkozott.",
+      "unsubBody": "Többé nem kapja a hírlevelet. Bármikor újra feliratkozhat.",
+      "invalid": "Ez a link már nem érvényes.",
+      "back": "Vissza a FIRINGI-hez"
+    },
+    "foot": {
+      "tag": "Vásároljon, rendeljen újra és vezesse a vállalkozását időpazarlás nélkül.",
+      "buy": "Vásárlás",
+      "sell": "Beszállítóknak",
+      "help": "Súgó",
+      "legal": "Jogi információk",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Minden jog fenntartva.",
+      "links": {
+        "buy": {
+          "1": "Vásárlás",
+          "2": "Kassza",
+          "3": "Irányítás",
+          "4": "Spórolás"
+        },
+        "sell": {
+          "1": "Legyen beszállító",
+          "2": "Csomagok beszállítóknak"
+        },
+        "help": {
+          "1": "Kérdések",
+          "2": "Kapcsolat",
+          "3": "Rendszerállapot",
+          "4": "Belépés"
+        },
+        "legal": {
+          "1": "Felhasználási feltételek",
+          "2": "Adatvédelmi szabályzat (GDPR)",
+          "3": "Sütik",
+          "4": "Cégadatok"
+        }
+      }
+    },
+    "login": "Belépés",
+    "mail": {
+      "contactSubject": "Megkaptuk üzenetét",
+      "hello": "Kedves {name}!",
+      "helloAll": "Üdvözöljük!",
+      "contactBody": "Köszönjük, hogy felvette a kapcsolatot a FIRINGI-vel. Megkaptuk üzenetét, és egy munkanapon belül válaszolunk.",
+      "newsSubject": "Erősítse meg feliratkozását a FIRINGI hírlevelére",
+      "newsBody": "Kérjük, erősítse meg, hogy szeretné megkapni a FIRINGI hírlevelét:",
+      "newsIgnore": "Ha nem Ön kérte, hagyja figyelmen kívül ezt az e-mailt.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Felhasználási feltételek",
+      "privacy": "Adatvédelmi szabályzat (GDPR)",
+      "cookies": "Sütik",
+      "company": "Cégadatok",
+      "updated": "Utolsó frissítés: {date}",
+      "empty": "Ez az oldal készül. Ha kérdése van, írjon nekünk.",
+      "back": "Vissza a FIRINGI-hez"
+    },
+    "langPicker": "Nyelv kiválasztása",
+    "app": {
+      "nav": {
+        "buy": "Vásárlás",
+        "till": "Kassza",
+        "manage": "Irányítás",
+        "save": "Spórolás",
+        "vendors": "Legyen beszállító",
+        "faq": "Kérdések"
+      },
+      "hero": {
+        "eyebrow": "Boltoknak, minimarketeknek, kávézóknak és éttermeknek Portugáliában",
+        "h1a": "Vásároljon, rendeljen újra és vezesse",
+        "h1b": "a vállalkozását",
+        "h1c": "időpazarlás nélkül.",
+        "lead": "Rendeljen minden nagykereskedőtől egy kosárban — élelmiszer, ital, higiénia, tisztítószer, dohányáru és még sok más — aznapi szállítással. Értékesítsen a FIRINGI kasszával, és lássa árrését, készletét és munkatársait egyetlen irányítópulton.",
+        "cta2": "Nézze meg, hogyan működik",
+        "note": "Ingyenes vállalkozásoknak · Nem kell kártya"
+      },
+      "float": {
+        "1": "Új rendelés · szállítás ma",
+        "2": "Számla kifizetve · MB WAY",
+        "3": "+120 hűségpont"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minimális rendelés a teljes kosárra"
+        },
+        "2": {
+          "v": "Aznap",
+          "l": "szállítás, hétfőtől szombatig"
+        },
+        "3": {
+          "v": "1 számla",
+          "l": "a FIRINGI-től minden rendelésről"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "az üzleti fiók megnyitása"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Vásárlás",
+          "h": "Minden nagykereskedő. Egy kosár. Szállítás ma.",
+          "p": "Keressen egyetlen katalógusban, sok beszállító nagykereskedelmi áraival, töltsön meg egy kosarat, és fizessen egyszer. Minden még aznap megérkezik.",
+          "b": {
+            "1": "Egyetlen 150 €-s minimum a teljes kosárra",
+            "2": "Mennyiségi árak minden terméknél",
+            "3": "Kövessen minden teherautót az alkalmazásban"
+          }
+        },
+        "till": {
+          "tag": "Kassza",
+          "h": "Kassza, amely ismeri a készletét.",
+          "p": "Értékesítsen a pultnál a FIRINGI kasszával: koppintson vagy szkenneljen, fogadjon kártyát, MB WAY-t vagy készpénzt, és nyomtassa ki a nyugtát a vásárló NIF-számával.",
+          "b": {
+            "1": "Internet nélkül is működik",
+            "2": "Minden eladás frissíti a készletet",
+            "3": "ÁFA minden nyugtasoron"
+          }
+        },
+        "manage": {
+          "tag": "Irányítás",
+          "h": "Ismerje árrését, mielőtt elad.",
+          "p": "Termék- és receptárrés a valós beszerzési árakból, készlet lejárati dátumokkal és műszakbeosztás — mindez a már leadott rendeléseiből.",
+          "b": {
+            "1": "Árrés termékenként és receptenként",
+            "2": "Készlet, lejárati figyelmeztetések és újrarendelési emlékeztetők",
+            "3": "Munkaidő és műszakok"
+          }
+        },
+        "save": {
+          "tag": "Spórolás",
+          "h": "Költsön kevesebbet. Fizessen, amikor Önnek jó.",
+          "p": "Gyűjtsön pontokat minden kiszállított rendelés után, váltsa be őket a jutalomboltban, csatlakozzon beszerzési csoportokhoz a jobb árakért, és fizessen később jóváhagyott fiókkal.",
+          "b": {
+            "1": "Pontok és jutalombolt",
+            "2": "Beszerzési csoportok és mennyiségi ajánlatok",
+            "3": "Fizetés akár 30 nappal később"
+          }
+        }
+      },
+      "start": {
+        "h": "Kezdje három lépésben.",
+        "steps": {
+          "1": {
+            "t": "Nyissa meg ingyenes fiókját",
+            "p": "Cégnév, NIF-szám és szállítási cím."
+          },
+          "2": {
+            "t": "Ellenőrizzük",
+            "p": "Általában egy munkanapon belül."
+          },
+          "3": {
+            "t": "Rendeljen és fejlődjön",
+            "p": "Vásároljon ma, kapja meg ma, és kapcsolja be a kasszát és az eszközöket, amikor szüksége van rájuk."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Blokk",
+        "nif": "Vásárló NIF-száma",
+        "card": "Kártya",
+        "cash": "Készpénz",
+        "total": "Összesen",
+        "items": {
+          "1": "Eszpresszó",
+          "2": "Galão",
+          "3": "Melegszendvics",
+          "4": "Víz 0,5 l",
+          "5": "Pudingos kosárka",
+          "6": "Narancslé"
+        }
+      },
+      "mng": {
+        "recipe": "Receptköltség",
+        "dish": "Melegszendvics",
+        "cost": "Költség",
+        "price": "Ár",
+        "margin": "Árrés",
+        "stock": "Készlet-figyelmeztetések",
+        "low": "Még {n} nap",
+        "expiry": "{n} nap múlva lejár",
+        "staff": "Mai személyzet",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} pont",
+        "next": "Még {n} pont a következő jutalomig",
+        "rewards": "Jutalombolt",
+        "pts": "{n} pont",
+        "items": {
+          "1": "10 €-s utalvány",
+          "2": "Ingyenes szállítás",
+          "3": "Kávégép-tisztító készlet"
+        },
+        "later": "Későbbi fizetés",
+        "laterP": "30 nap · keret: {amount}",
+        "group": "Beszerzési csoport: −6% az italokra"
+      },
+      "cats": {
+        "h": "Minden, amit az üzlete árul, egy helyről.",
+        "p": "14 kategória nagykereskedőktől egész Portugáliából — és havonta egyre több.",
+        "items": {
+          "1": "Élelmiszer",
+          "2": "Friss termékek",
+          "3": "Italok",
+          "4": "Kozmetika és szépségápolás",
+          "5": "Testápolás és higiénia",
+          "6": "Háztartás és tisztítószerek",
+          "7": "Baba- és gyermekápolás",
+          "8": "Állateledel és felszerelés",
+          "9": "Dohányáru",
+          "10": "Divat és kiegészítők",
+          "11": "Játékok és gyerektermékek",
+          "12": "Szuvenírek és ajándékok",
+          "13": "Csomagolóanyagok és kellékek",
+          "14": "Kebab- és pizzakellékek"
+        }
+      }
     }
   }
 }

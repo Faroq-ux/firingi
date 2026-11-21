@@ -1,0 +1,31 @@
+// ── Phase 56: landing page ───────────────────────────────────────────────────
+// The public landing page at "/" (texts, numbers and sections are FIRINGI's settings, Setting "landing.settings").
+// Visitors' questions and vendor applications become CRM leads (source WEBSITE). Newsletter sign-ups are kept
+// here with double opt-in: a sign-up is PENDING until the visitor confirms from the e-mail.
+
+enum NewsletterStatus {
+  PENDING
+  CONFIRMED
+  UNSUBSCRIBED
+}
+
+model NewsletterSubscriber {
+  id             String           @id @default(cuid())
+  email          String           @unique
+  locale         String
+  countryCode    String?
+  source         String           @default("landing")
+  status         NewsletterStatus @default(PENDING)
+  /// confirm / unsubscribe links carry this (never the e-mail)
+  token          String           @unique
+  /// the consent wording the visitor saw (GDPR record)
+  consentText    String
+  /// SHA-256 of the IP and a server secret, to spot abuse without keeping the IP
+  ipHash         String?
+  confirmedAt    DateTime?
+  unsubscribedAt DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([status, createdAt])
+}

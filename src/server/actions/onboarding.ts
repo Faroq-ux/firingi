@@ -1,6 +1,7 @@
 "use server";
 /** Registration and applicant self-service actions. */
 import { z } from "zod";
+import { normalisePhone } from "@/server/notify/events";
 import { headers, cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/server/auth/auth";
@@ -15,6 +16,11 @@ import { defineAction, runAction, type ActionResult } from "./_action";
 
 const password = z.string().min(10, "At least 10 characters").max(128);
 const phone = z.string().trim().min(6, "Enter a phone number").max(30);
+/** optional WhatsApp number: + and 8–15 digits once spaces are removed */
+const whatsapp = z.string().trim().max(30).optional().nullable()
+  .transform((v) => (v ? v.replace(/[\s().-]/g, "") : null))
+  .refine((v) => v === null || normalisePhone(/^(\+|00)/.test(v) ? v : `+${v}`) !== null, "Enter the WhatsApp number with the country code, e.g. +351 912 345 678")
+  .transform((v) => (v ? normalisePhone(/^(\+|00)/.test(v) ? v : `+${v}`) : null));
 
 const companySchema = z.object({
   type: z.enum(["DISTRIBUTOR", "WHOLESALER", "CUSTOMER"]),
@@ -29,6 +35,7 @@ const companySchema = z.object({
   sellsRestricted: z.array(z.enum(["TOBACCO", "ALCOHOL", "VAPING"])).max(3).optional(),
   companyEmail: z.string().trim().email(),
   phone,
+  whatsapp,
   businessType: z.string().max(40).optional().nullable(),
   ownerName: z.string().trim().min(2).max(120),
   ownerEmail: z.string().trim().email(),
@@ -61,7 +68,7 @@ export async function registerCompanyAction(raw: z.input<typeof companySchema>):
   try {
     const reg = await registerCompany({
       type: i.type, countryCode: i.countryCode, invite: i.invite, legalName: i.legalName, tradeName: i.tradeName, taxId: i.taxId, vatNumber: i.vatNumber, activityCode: i.activityCode, activityCodes: i.activityCodes, sellsRestricted: i.sellsRestricted,
-      companyEmail: i.companyEmail, phone: i.phone, businessType: i.businessType,
+      companyEmail: i.companyEmail, phone: i.phone, whatsapp: i.whatsapp, businessType: i.businessType,
       owner: { name: i.ownerName, email: i.ownerEmail, password: i.password },
       headOffice: { line1: i.line1, line2: i.line2, postalCode: i.postalCode, cityId: i.cityId, cityName: i.cityName },
     });
@@ -109,6 +116,7 @@ export const updateProfileAction = defineAction({
     addActivityCodes: z.string().trim().max(400).optional().nullable(),
     email: z.string().trim().email(),
     phone: z.string().trim().max(30).optional().nullable(),
+    whatsapp,
     website: z.string().trim().max(200).optional().nullable(),
     businessType: z.string().max(40).optional().nullable(),
     legalForm: z.enum(["COMPANY", "SOLE_TRADER"]).optional(),

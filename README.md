@@ -691,6 +691,21 @@ button's hint); the browser asks for the microphone the first time. Where a brow
 buttons don't show and typing works as before. 25 languages; FIRINGI's pages in English.
 Test: `node tests/e2e/voice.mjs` (a fake speech engine stands in for the microphone).
 
+## Landing page (Phase 56)
+
+The public **main page** for wholesale customers: "Buy, restock and run your business without wasting your time.",
+the customer **dashboard drawn in code** (overview, cart, till, margins/stock/staff, rewards) animating as you scroll,
+a numbers strip (**€150 minimum for the whole cart**, same-day delivery, one invoice from FIRINGI), **14 gliding
+categories**, steps, FAQ, contact (→ CRM lead), newsletter (double opt-in) and a full footer (contact and social icons,
+GDPR privacy policy, cookies, terms, Livro de Reclamações). **Become a supplier** (`/sell`, only from the menu and
+footer): **wholesalers** (own country, by zone or distance, buy from distributors) and **distributors** (sell to
+wholesalers across the EU), plans and an application form (→ CRM lead of the right type). Registration and company
+profile take an optional **WhatsApp number** ("this phone is also on WhatsApp" or another number); incoming WhatsApp
+from it is linked to the business. FIRINGI's colours, no dark mode, phone-friendly, 25 languages; **every section,
+text, number and legal page is editable** in *Marketing › Landing Page*.
+Details: [docs/landing.md](docs/landing.md).
+Tests: `tests/unit/landing.test.ts`, `tests/integration/landing.test.ts`, `node tests/e2e/landing.mjs`.
+
 ## Rewards shop (Phase 55)
 
 Businesses spend their **loyalty points** on **vouchers** and **free delivery** (FIRINGI-funded single-use coupons only

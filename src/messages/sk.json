@@ -259,7 +259,10 @@
       "activityCodeOnce": "Zadajte ho raz — potom ho môže zmeniť iba FIRINGI.",
       "activityCodesSecondary": "Vedľajšie kódy {scheme} (nepovinné)",
       "activityCodesHint": "Oddeľte čiarkami — až {max}.",
-      "activityCodesAdd": "Ďalšie kódy pridajte tu; zadané zostanú — odstrániť ich môže len FIRINGI."
+      "activityCodesAdd": "Ďalšie kódy pridajte tu; zadané zostanú — odstrániť ich môže len FIRINGI.",
+      "whatsapp": "Číslo WhatsApp (nepovinné)",
+      "whatsappHint": "Uveďte ho, ak používate WhatsApp na objednávky a správy. S predvoľbou krajiny.",
+      "whatsappSame": "Toto telefónne číslo je aj na WhatsAppe"
     },
     "businessTypes": {
       "restaurant": "Reštaurácia",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Odmena dochádza",
       "body": "Z „{reward}“ zostáva už len {left}."
+    },
+    "website_contact": {
+      "title": "Nová otázka z webu",
+      "body": "{name} z firmy {company} poslal(a) otázku. Je v CRM ako lead."
+    },
+    "website_vendor_interest": {
+      "title": "Nová žiadosť dodávateľa",
+      "body": "{name} z firmy {company} chce predávať na FIRINGI. Je v CRM ako lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Vaše produkty zatiaľ neuplatnil žiadny zákazník.",
       "orderBy": "Termín objednávky: {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Nakupujte, dopĺňajte zásoby a riaďte svoj podnik",
+      "description": "Zásobte svoj podnik od všetkých veľkoobchodov v jednej objednávke: množstevné ceny, prehľadné faktúry s vaším NIF, doručenie v ten istý deň."
+    },
+    "open": "Založiť firemný účet",
+    "menuOpen": "Otvoriť menu",
+    "menuClose": "Zavrieť menu",
+    "chart": {
+      "label": "Traja dodávatelia posielajú rozvozové trasy do jedného podniku",
+      "shop": "Váš podnik",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "št 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "št 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "so 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Obrazovka aplikácie FIRINGI: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Hľadajte produkty, značky, dodávateľov…",
+        "next": "Doručenie dnes",
+        "cart": "Váš košík",
+        "minOk": "Minimum splnené",
+        "total": "Spolu",
+        "checkout": "Objednať a zaplatiť",
+        "steps": {
+          "1": "Objednané",
+          "2": "Pripravené",
+          "3": "Na ceste",
+          "4": "Doručené"
+        },
+        "reorder": "Čas objednať znova",
+        "fill": "Naplniť košík",
+        "lastTime": "Minule: {n} kartónov",
+        "role": "Veľkoobchodný zákazník",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "NAŽIVO",
+        "welcome": "Vitajte, {name}",
+        "recent": "Posledné objednávky",
+        "nav": {
+          "1": "Prehľad",
+          "2": "Katalóg",
+          "3": "Objednávky",
+          "4": "Faktúry a platby",
+          "5": "Odmeny",
+          "6": "Pomoc a podpora",
+          "7": "Pokladnica (POS)",
+          "8": "Kuchyňa a sklad"
+        },
+        "kpi": {
+          "1": "Rozpracované objednávky",
+          "2": "Na ceste",
+          "3": "Výdavky za posledných 30 dní",
+          "4": "Neuhradené faktúry"
+        }
+      },
+      "products": {
+        "1": "Dlhozrnná ryža 1 kg × 10",
+        "2": "Extra panenský olivový olej 5 l",
+        "3": "Tuniak v olivovom oleji 120 g × 24",
+        "4": "Trvanlivé mlieko 1 l × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Preneste svoj veľkoobchod online.",
+      "sub": "Oslovte podniky, ktoré objednávajú každý týždeň, bez telefonických objednávok a naháňania platieb.",
+      "cta": "Staňte sa dodávateľom",
+      "rows": {
+        "1": {
+          "t": "Nastavte si vlastné podmienky",
+          "p": "Zvoľte ceny, množstevné zľavy, minimálne objednávky a dni doručenia."
+        },
+        "2": {
+          "t": "Jeden rad pre všetky objednávky",
+          "p": "Nové objednávky prichádzajú do jedného zoznamu, pripravené na balenie."
+        },
+        "3": {
+          "t": "Expedujte a zdieľajte stav",
+          "p": "Prideľte vodičov a zákazníci budú sledovať auto bez toho, aby vám volali."
+        },
+        "4": {
+          "t": "Výplata za každú objednávku",
+          "p": "Každá objednávka sa vypláca samostatne, s prehľadným záznamom pre účtovníctvo."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Predávajte na FIRINGI — oslovte podniky po celom Portugalsku",
+      "description": "Ponúknite svoj veľkoobchodný tovar na FIRINGI. Podniky u vás objednávajú v jednom košíku s ďalšími dodávateľmi; FIRINGI im vystaví faktúru a vám vyplatí peniaze.",
+      "rowsH2": "Všetko, čo potrebujete na predaj podnikom.",
+      "formH2": "Prihláste sa na predaj na FIRINGI",
+      "formSub": "Povedzte nám o svojej firme. Do jedného pracovného dňa vám odpovieme s ďalšími krokmi.",
+      "navPlans": "Tarify pre dodávateľov",
+      "typesH2": "Dva spôsoby, ako predávať na FIRINGI.",
+      "typesSub": "Veľkoobchody predávajú obchodom, kaviarňam a reštauráciám vo vlastnej krajine. Distribútori predávajú veľkoobchodom v celej EÚ.",
+      "types": {
+        "wholesaler": {
+          "t": "Veľkoobchod",
+          "p": "Predávajte obchodom, kaviarňam a reštauráciám vo svojej krajine podľa zóny alebo vzdialenosti — a dopĺňajte zásoby od distribútorov na FIRINGI.",
+          "b": {
+            "1": "Obchody, kaviarne a reštaurácie vo vašej krajine nakupujú od vás",
+            "2": "Doručenie podľa zóny alebo vzdialenosti",
+            "3": "Nakupujte tovar od distribútorov z celej EÚ"
+          },
+          "cta": "Zaregistrujte sa ako veľkoobchod"
+        },
+        "distributor": {
+          "t": "Distribútor",
+          "p": "Predávajte veľkoobchodom v celej EÚ. Nakupujú váš tovar vo veľkom a ďalej ho predávajú obchodom a reštauráciám vo svojej krajine.",
+          "b": {
+            "1": "Veľkoobchody z krajín EÚ nakupujú od vás",
+            "2": "Objednávky vo veľkom, po kartónoch aj po paletách",
+            "3": "Cezhraničné faktúry vybavuje FIRINGI"
+          },
+          "cta": "Zaregistrujte sa ako distribútor"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Na čo sa podniky pýtajú najskôr.",
+      "items": {
+        "1": {
+          "q": "Môžu nakupovať súkromné osoby?",
+          "a": "Nie. FIRINGI je pre firmy s NIF. Ceny sú veľkoobchodné a faktúry sa vystavujú na vašu firmu."
+        },
+        "2": {
+          "q": "Aká je minimálna objednávka?",
+          "a": "150 € za celý košík, bez ohľadu na počet dodávateľov."
+        },
+        "3": {
+          "q": "Sú ceny s DPH, alebo bez DPH?",
+          "a": "Bez DPH. DPH sa pripočíta pri platbe podľa sadzby každého produktu a je uvedená na každom riadku faktúry."
+        },
+        "4": {
+          "q": "Kedy mi príde tovar?",
+          "a": "V ten istý deň. Všetko, čo objednáte pred uzávierkou, príde v ten deň od všetkých dodávateľov v košíku a každé auto môžete sledovať v aplikácii."
+        },
+        "5": {
+          "q": "Ako a kedy platím?",
+          "a": "Celý košík zaplatíte naraz cez Multibanco, MB WAY, kartou alebo prevodom SEPA. Schválené firmy môžu platiť aj do 30 dní od vystavenia faktúry."
+        },
+        "6": {
+          "q": "Môžu z jedného účtu objednávať aj kolegovia?",
+          "a": "Áno. Pridajte používateľov s vlastným prihlásením a určte, kto môže objednávať, kto vidí faktúry a kto mení doručovacie adresy."
+        },
+        "7": {
+          "q": "Čo ak tovar príde poškodený?",
+          "a": "Nahláste to v aplikácii do 24 hodín aj s fotkou. Dodávateľ zabezpečí výmenu alebo vystaví dobropis."
+        },
+        "8": {
+          "q": "Doručujete na Madeiru a Azory?",
+          "a": "Zatiaľ nie. Začíname v kontinentálnom Portugalsku, ostrovy pridáme neskôr."
+        },
+        "9": {
+          "q": "Môžem predávať na FIRINGI?",
+          "a": "Áno. Staňte sa dodávateľom, nastavte ceny, minimá a dni doručenia a začnite prijímať objednávky od podnikov vo vašom okolí."
+        }
+      }
+    },
+    "final": {
+      "h2": "Ďalšie doplnenie zásob môže byť jedna objednávka.",
+      "p": "Založte si firemný účet a pozrite si veľkoobchodné ceny dodávateľov vo vašom okolí."
+    },
+    "plans": {
+      "h2": "Tarify pre dodávateľov. Kupujúci nikdy neplatia.",
+      "sub": "Podniky, ktoré nakupujú na FIRINGI, ho používajú zadarmo. Dodávatelia začínajú zadarmo a s rastom prechádzajú na vyšší tarif.",
+      "per": "/mesiac",
+      "top": "Najobľúbenejší",
+      "note": "Tarify a ceny sa načítavajú z nastavení tarifov FIRINGI, takže táto sekcia vždy zodpovedá tomu, čo dodávatelia platia.",
+      "start": "Začať zadarmo",
+      "choose": "Vybrať {name}",
+      "products": "Až {n} produktov",
+      "productsAll": "Neobmedzene produktov",
+      "team": "Používatelia: {users}, sklady: {wh}, vodiči: {drivers}",
+      "teamAll": "Neobmedzene používateľov, skladov a vodičov",
+      "earlyPay": "Skoršia výplata od {rate} % denne",
+      "freeEarly": "Skoršie výplaty zadarmo: {n} mesačne",
+      "includes": "Obsahuje: {list}",
+      "basics": "Objednávky, fakturácia a výplaty cez FIRINGI",
+      "feature": {
+        "INVENTORY": "skladové zásoby",
+        "PLANNING": "plánovanie",
+        "WAREHOUSE": "vychystávanie v sklade",
+        "PRICE_INSIGHTS": "cenové prehľady",
+        "ADS": "reklama",
+        "INTEGRATIONS": "integrácie",
+        "ROUTES": "trasy",
+        "ASSISTANT": "AI asistent"
+      }
+    },
+    "contact": {
+      "h2": "Napíšte nám.",
+      "sub": "Máte otázku k nákupu alebo predaju? Odpovieme do jedného pracovného dňa.",
+      "name": "Meno",
+      "company": "Firma",
+      "email": "E-mail",
+      "phone": "Mobil",
+      "nif": "NIF",
+      "type": "Váš podnik",
+      "msg": "Správa",
+      "consent": "Súhlasím, aby FIRINGI použil tieto údaje na odpoveď, ako je uvedené v zásadách ochrany osobných údajov.",
+      "send": "Odoslať",
+      "waT": "WhatsApp",
+      "waP": "Napíšte nášmu tímu na WhatsApp, od pondelka do soboty, 9:00 – 19:00.",
+      "waB": "Otvoriť WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Reštaurácia, kaviareň alebo bar",
+        "2": "Potraviny alebo minimarket",
+        "3": "Hotel alebo catering",
+        "4": "Jedáleň, škola alebo domov sociálnych služieb",
+        "5": "Iné"
+      },
+      "vendorMsg": "Čo predávate a kam doručujete",
+      "sent": "Ďakujeme. Odpovieme do jedného pracovného dňa.",
+      "errRequired": "Vyplňte meno, firmu a e-mail.",
+      "errEmail": "Zadajte platnú e-mailovú adresu.",
+      "errConsent": "Na vyjadrenie súhlasu označte políčko.",
+      "errSpam": "Niečo sa pokazilo. Skúste to znova.",
+      "errBusy": "Príliš veľa správ. Skúste to znova o minútu.",
+      "sending": "Odosiela sa…",
+      "vendorType": "Chcem predávať ako",
+      "vendorTypes": {
+        "WHOLESALER": "Veľkoobchod — predávam obchodom vo svojej krajine",
+        "DISTRIBUTOR": "Distribútor — predávam veľkoobchodom v EÚ"
+      }
+    },
+    "news": {
+      "label": "Raz mesačne e-mailom: noví dodávatelia, ponuky a oblasti doručenia.",
+      "ph": "Váš firemný e-mail",
+      "btn": "Odoberať",
+      "note": "Odber môžete kedykoľvek zrušiť.",
+      "consent": "Súhlasím so zasielaním newslettera FIRINGI. Odber môžem kedykoľvek zrušiť.",
+      "sent": "Takmer hotovo. Skontrolujte e-mail a potvrďte odber.",
+      "confirmedTitle": "Odber je aktívny.",
+      "confirmedBody": "Ďakujeme. Newsletter vám budeme posielať raz mesačne.",
+      "unsubTitle": "Odber bol zrušený.",
+      "unsubBody": "Newsletter vám už nebudeme posielať. Odber môžete kedykoľvek obnoviť.",
+      "invalid": "Tento odkaz už nie je platný.",
+      "back": "Späť na FIRINGI"
+    },
+    "foot": {
+      "tag": "Nakupujte, dopĺňajte zásoby a riaďte svoj podnik bez straty času.",
+      "buy": "Nákup",
+      "sell": "Pre dodávateľov",
+      "help": "Pomoc",
+      "legal": "Právne informácie",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Všetky práva vyhradené.",
+      "links": {
+        "buy": {
+          "1": "Nákup",
+          "2": "Pokladnica",
+          "3": "Správa",
+          "4": "Úspory"
+        },
+        "sell": {
+          "1": "Staňte sa dodávateľom",
+          "2": "Tarify pre dodávateľov"
+        },
+        "help": {
+          "1": "Otázky",
+          "2": "Kontakt",
+          "3": "Stav systému",
+          "4": "Prihlásiť sa"
+        },
+        "legal": {
+          "1": "Podmienky používania",
+          "2": "Ochrana osobných údajov (GDPR)",
+          "3": "Súbory cookie",
+          "4": "Údaje o spoločnosti"
+        }
+      }
+    },
+    "login": "Prihlásiť sa",
+    "mail": {
+      "contactSubject": "Vašu správu sme prijali",
+      "hello": "Dobrý deň, {name},",
+      "helloAll": "Dobrý deň,",
+      "contactBody": "Ďakujeme, že ste kontaktovali FIRINGI. Vašu správu sme prijali a odpovieme do jedného pracovného dňa.",
+      "newsSubject": "Potvrďte odber newslettera FIRINGI",
+      "newsBody": "Potvrďte, prosím, že chcete dostávať newsletter FIRINGI:",
+      "newsIgnore": "Ak ste o to nežiadali, tento e-mail ignorujte.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Podmienky používania",
+      "privacy": "Ochrana osobných údajov (GDPR)",
+      "cookies": "Súbory cookie",
+      "company": "Údaje o spoločnosti",
+      "updated": "Naposledy aktualizované {date}",
+      "empty": "Túto stránku pripravujeme. Ak máte otázku, kontaktujte nás.",
+      "back": "Späť na FIRINGI"
+    },
+    "langPicker": "Vyberte jazyk",
+    "app": {
+      "nav": {
+        "buy": "Nákup",
+        "till": "Pokladnica",
+        "manage": "Správa",
+        "save": "Úspory",
+        "vendors": "Staňte sa dodávateľom",
+        "faq": "Otázky"
+      },
+      "hero": {
+        "eyebrow": "Pre obchody, minimarkety, kaviarne a reštaurácie v Portugalsku",
+        "h1a": "Nakupujte, dopĺňajte zásoby a riaďte",
+        "h1b": "svoj podnik",
+        "h1c": "bez straty času.",
+        "lead": "Objednávajte od všetkých veľkoobchodov v jednom košíku — potraviny, nápoje, hygienu, čistiace prostriedky, tabak a ďalšie — s doručením v ten istý deň. Predávajte s pokladnicou FIRINGI a majte marže, zásoby aj personál v jednom prehľade.",
+        "cta2": "Pozrite sa, ako to funguje",
+        "note": "Pre firmy zadarmo · Bez platobnej karty"
+      },
+      "float": {
+        "1": "Nová objednávka · doručenie dnes",
+        "2": "Faktúra zaplatená · MB WAY",
+        "3": "+120 bodov odmien"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minimálna objednávka za celý košík"
+        },
+        "2": {
+          "v": "V ten istý deň",
+          "l": "doručenie od pondelka do soboty"
+        },
+        "3": {
+          "v": "1 faktúra",
+          "l": "od FIRINGI za každú objednávku"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "za založenie firemného účtu"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Nákup",
+          "h": "Všetky veľkoobchody. Jeden košík. Doručené dnes.",
+          "p": "Prehľadávajte jeden katalóg s veľkoobchodnými cenami mnohých dodávateľov, naplňte jeden košík a zaplaťte raz. Všetko príde v ten istý deň.",
+          "b": {
+            "1": "Jedno minimum 150 € za celý košík",
+            "2": "Množstevné ceny pri každom produkte",
+            "3": "Sledujte každé auto v aplikácii"
+          }
+        },
+        "till": {
+          "tag": "Pokladnica",
+          "h": "Pokladnica, ktorá pozná vaše zásoby.",
+          "p": "Predávajte pri pulte s pokladnicou FIRINGI: ťuknite alebo naskenujte, prijmite kartu, MB WAY alebo hotovosť a vytlačte doklad s NIF zákazníka.",
+          "b": {
+            "1": "Predáva aj bez internetu",
+            "2": "Každý predaj aktualizuje zásoby",
+            "3": "DPH na každom riadku dokladu"
+          }
+        },
+        "manage": {
+          "tag": "Správa",
+          "h": "Poznajte svoje marže ešte pred predajom.",
+          "p": "Marže produktov a receptúr zo skutočných nákupných cien, zásoby s dátumami spotreby a zmeny personálu — všetko z objednávok, ktoré už robíte.",
+          "b": {
+            "1": "Marže na produkt aj receptúru",
+            "2": "Zásoby, upozornenia na expiráciu a pripomienky objednávok",
+            "3": "Pracovný čas a zmeny personálu"
+          }
+        },
+        "save": {
+          "tag": "Úspory",
+          "h": "Míňajte menej. Plaťte, keď sa vám to hodí.",
+          "p": "Zbierajte body za každú doručenú objednávku, vymeňte ich v obchode s odmenami, pridajte sa k nákupným skupinám pre lepšie ceny a pri schválených účtoch plaťte neskôr.",
+          "b": {
+            "1": "Body a obchod s odmenami",
+            "2": "Nákupné skupiny a množstevné ponuky",
+            "3": "Plaťte až o 30 dní neskôr"
+          }
+        }
+      },
+      "start": {
+        "h": "Začnite v troch krokoch.",
+        "steps": {
+          "1": {
+            "t": "Založte si účet zadarmo",
+            "p": "Názov firmy, NIF a doručovacia adresa."
+          },
+          "2": {
+            "t": "Overíme ho",
+            "p": "Zvyčajne do jedného pracovného dňa."
+          },
+          "3": {
+            "t": "Objednávajte a rastite",
+            "p": "Nakúpte dnes, prevezmite dnes a pokladnicu aj nástroje zapnite, keď ich budete potrebovať."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Doklad",
+        "nif": "NIF zákazníka",
+        "card": "Karta",
+        "cash": "Hotovosť",
+        "total": "Spolu",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Toast",
+          "4": "Voda 0,5 l",
+          "5": "Košíček s krémom",
+          "6": "Pomarančový džús"
+        }
+      },
+      "mng": {
+        "recipe": "Náklady na receptúru",
+        "dish": "Toast",
+        "cost": "Náklady",
+        "price": "Cena",
+        "margin": "Marža",
+        "stock": "Upozornenia na zásoby",
+        "low": "Zostáva dní: {n}",
+        "expiry": "Expirácia o {n} dní",
+        "staff": "Personál dnes",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} bodov",
+        "next": "Do ďalšej odmeny zostáva {n} bodov",
+        "rewards": "Obchod s odmenami",
+        "pts": "{n} b.",
+        "items": {
+          "1": "Poukaz 10 €",
+          "2": "Doprava zadarmo",
+          "3": "Čistiaca súprava na kávovar"
+        },
+        "later": "Platba neskôr",
+        "laterP": "30 dní · limit {amount}",
+        "group": "Nákupná skupina: −6 % na nápoje"
+      },
+      "cats": {
+        "h": "Všetko, čo váš obchod predáva, na jednom mieste.",
+        "p": "14 kategórií od veľkoobchodov z celého Portugalska — a každý mesiac ďalšie.",
+        "items": {
+          "1": "Potraviny",
+          "2": "Čerstvé potraviny",
+          "3": "Nápoje",
+          "4": "Kozmetika a krása",
+          "5": "Osobná hygiena",
+          "6": "Domácnosť a upratovanie",
+          "7": "Bábätká a starostlivosť o deti",
+          "8": "Potreby pre zvieratá",
+          "9": "Tabak",
+          "10": "Móda a doplnky",
+          "11": "Hračky a deti",
+          "12": "Suveníry a darčeky",
+          "13": "Obaly a spotrebný materiál",
+          "14": "Potreby na kebab a pizzu"
+        }
+      }
     }
   }
 }

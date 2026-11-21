@@ -259,7 +259,10 @@
       "activityCodeOnce": "Einmal eingeben — danach kann ihn nur FIRINGI ändern.",
       "activityCodesSecondary": "Weitere {scheme}-Codes (optional)",
       "activityCodesHint": "Mit Kommas trennen — bis zu {max}.",
-      "activityCodesAdd": "Weitere Codes hier ergänzen; bereits angegebene bleiben — nur FIRINGI kann sie entfernen."
+      "activityCodesAdd": "Weitere Codes hier ergänzen; bereits angegebene bleiben — nur FIRINGI kann sie entfernen.",
+      "whatsapp": "WhatsApp-Nummer (optional)",
+      "whatsappHint": "Geben Sie sie an, wenn Sie WhatsApp für Bestellungen und Nachrichten nutzen. Mit Ländervorwahl.",
+      "whatsappSame": "Diese Telefonnummer hat auch WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restaurant",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Prämie bald vergriffen",
       "body": "Nur noch {left} von “{reward}” übrig."
+    },
+    "website_contact": {
+      "title": "Neue Frage von der Website",
+      "body": "{name} von {company} hat eine Frage gesendet. Steht als Lead im CRM."
+    },
+    "website_vendor_interest": {
+      "title": "Neue Lieferantenbewerbung",
+      "body": "{name} von {company} möchte auf FIRINGI verkaufen. Steht als Lead im CRM."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Noch kein Kunde hat Ihre Produkte eingelöst.",
       "orderBy": "Bestellen bis {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Einkaufen, nachbestellen und Ihr Geschäft führen",
+      "description": "Bestellen Sie bei allen Großhändlern mit einer einzigen Bestellung nach: Staffelpreise, klare Rechnungen mit Ihrer NIF, Lieferung am selben Tag."
+    },
+    "open": "Geschäftskonto eröffnen",
+    "menuOpen": "Menü öffnen",
+    "menuClose": "Menü schließen",
+    "chart": {
+      "label": "Drei Lieferanten, die jeweils eine Lieferroute zu einem Geschäft schicken",
+      "shop": "Ihr Geschäft",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Do. 9 bis 12 Uhr"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Do. 13 bis 16 Uhr"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Sa. 8 bis 11 Uhr"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI-App-Bildschirm: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Produkte, Marken, Lieferanten suchen…",
+        "next": "Lieferung heute",
+        "cart": "Ihr Warenkorb",
+        "minOk": "Mindestbestellwert erreicht",
+        "total": "Gesamt",
+        "checkout": "Bestellen und bezahlen",
+        "steps": {
+          "1": "Bestellt",
+          "2": "Vorbereitet",
+          "3": "Unterwegs",
+          "4": "Geliefert"
+        },
+        "reorder": "Zeit zum Nachbestellen",
+        "fill": "Warenkorb füllen",
+        "lastTime": "Letztes Mal: {n} Kartons",
+        "role": "Großhandelskunde",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Willkommen, {name}",
+        "recent": "Letzte Bestellungen",
+        "nav": {
+          "1": "Dashboard",
+          "2": "Katalog",
+          "3": "Bestellungen",
+          "4": "Rechnungen & Zahlungen",
+          "5": "Prämien",
+          "6": "Hilfe & Support",
+          "7": "Kasse (POS)",
+          "8": "Küche & Lager"
+        },
+        "kpi": {
+          "1": "Laufende Bestellungen",
+          "2": "Unterwegs",
+          "3": "Ausgaben, letzte 30 Tage",
+          "4": "Offene Rechnungen"
+        }
+      },
+      "products": {
+        "1": "Langkornreis 1 kg × 10",
+        "2": "Natives Olivenöl extra 5 L",
+        "3": "Thunfisch in Olivenöl 120 g × 24",
+        "4": "H-Milch 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Bringen Sie Ihren Großhandel online.",
+      "sub": "Erreichen Sie Unternehmen, die jede Woche nachbestellen – ohne telefonische Bestellungen und ohne Zahlungen hinterherzulaufen.",
+      "cta": "Als Lieferant bewerben",
+      "rows": {
+        "1": {
+          "t": "Eigene Konditionen festlegen",
+          "p": "Wählen Sie Preise, Mengenstaffeln, Mindestbestellwerte und Liefertage."
+        },
+        "2": {
+          "t": "Eine Liste für alle Bestellungen",
+          "p": "Neue Bestellungen kommen in einer einzigen Liste an, bereit zum Packen."
+        },
+        "3": {
+          "t": "Ausliefern und Status teilen",
+          "p": "Weisen Sie Fahrer zu und lassen Sie Kunden den Lkw verfolgen, ohne dass sie Sie anrufen müssen."
+        },
+        "4": {
+          "t": "Bezahlt pro Bestellung",
+          "p": "Jede Bestellung wird einzeln ausgezahlt, mit einem klaren Beleg für Ihre Buchhaltung."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Auf FIRINGI verkaufen – Unternehmen in ganz Portugal erreichen",
+      "description": "Bieten Sie Ihre Großhandelsprodukte auf FIRINGI an. Unternehmen bestellen bei Ihnen in einem Warenkorb zusammen mit anderen Lieferanten; FIRINGI stellt ihnen die Rechnung und zahlt Sie aus.",
+      "rowsH2": "Alles, was Sie brauchen, um an Unternehmen zu verkaufen.",
+      "formH2": "Als Verkäufer auf FIRINGI bewerben",
+      "formSub": "Erzählen Sie uns von Ihrem Unternehmen. Wir antworten innerhalb eines Werktags mit den nächsten Schritten.",
+      "navPlans": "Tarife für Lieferanten",
+      "typesH2": "Zwei Wege, auf FIRINGI zu verkaufen.",
+      "typesSub": "Großhändler verkaufen an Läden, Cafés und Restaurants im eigenen Land. Distributoren verkaufen an Großhändler in der ganzen EU.",
+      "types": {
+        "wholesaler": {
+          "t": "Großhändler",
+          "p": "Verkaufen Sie an Läden, Cafés und Restaurants in Ihrem Land, nach Zone oder nach Entfernung – und kaufen Sie bei Distributoren auf FIRINGI nach.",
+          "b": {
+            "1": "Läden, Cafés und Restaurants in Ihrem Land kaufen bei Ihnen",
+            "2": "Lieferung nach Zone oder nach Entfernung",
+            "3": "Beziehen Sie Ihre Ware von Distributoren aus der ganzen EU"
+          },
+          "cta": "Als Großhändler registrieren"
+        },
+        "distributor": {
+          "t": "Distributor",
+          "p": "Verkaufen Sie an Großhändler in der ganzen EU. Diese kaufen Ihre Waren in großen Mengen und verkaufen sie an Läden und Restaurants in ihrem Land weiter.",
+          "b": {
+            "1": "Großhändler aus EU-Ländern kaufen bei Ihnen",
+            "2": "Großmengen-, Karton- und Palettenbestellungen",
+            "3": "Grenzüberschreitende Rechnungen übernimmt FIRINGI"
+          },
+          "cta": "Als Distributor registrieren"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Was Unternehmen zuerst fragen.",
+      "items": {
+        "1": {
+          "q": "Können Privatkunden kaufen?",
+          "a": "Nein. FIRINGI ist für Unternehmen mit NIF. Die Preise sind Großhandelspreise und die Rechnungen werden auf Ihr Unternehmen ausgestellt."
+        },
+        "2": {
+          "q": "Wie hoch ist der Mindestbestellwert?",
+          "a": "150 € für Ihren gesamten Warenkorb, egal wie viele Lieferanten er enthält."
+        },
+        "3": {
+          "q": "Sind die Preise mit oder ohne MwSt.?",
+          "a": "Ohne MwSt. Die MwSt. wird beim Bezahlen mit dem Satz des jeweiligen Produkts hinzugefügt und auf jeder Rechnungszeile ausgewiesen."
+        },
+        "4": {
+          "q": "Wann kommt meine Ware an?",
+          "a": "Am selben Tag. Alles, was Sie vor Bestellschluss bestellen, kommt noch am selben Tag an, von jedem Lieferanten in Ihrem Warenkorb, und Sie können jeden Lkw in der App verfolgen."
+        },
+        "5": {
+          "q": "Wie und wann bezahle ich?",
+          "a": "Bezahlen Sie den ganzen Warenkorb auf einmal per Multibanco, MB WAY, Karte oder SEPA-Überweisung. Freigegebene Unternehmen können auch bis zu 30 Tage nach Rechnungsstellung zahlen."
+        },
+        "6": {
+          "q": "Können meine Kollegen über dasselbe Konto bestellen?",
+          "a": "Ja. Fügen Sie Nutzer mit eigenen Zugangsdaten hinzu und legen Sie fest, wer bestellen, wer Rechnungen sehen und wer Lieferadressen ändern darf."
+        },
+        "7": {
+          "q": "Was, wenn Ware beschädigt ankommt?",
+          "a": "Melden Sie es innerhalb von 24 Stunden mit einem Foto in der App. Der Lieferant antwortet mit Ersatz oder einer Gutschrift."
+        },
+        "8": {
+          "q": "Liefern Sie nach Madeira und auf die Azoren?",
+          "a": "Noch nicht. Wir starten auf dem portugiesischen Festland und nehmen die Inseln später dazu."
+        },
+        "9": {
+          "q": "Kann ich auf FIRINGI verkaufen?",
+          "a": "Ja. Bewerben Sie sich als Lieferant, legen Sie Preise, Mindestmengen und Liefertage fest und erhalten Sie Bestellungen von Unternehmen in Ihrer Nähe."
+        }
+      }
+    },
+    "final": {
+      "h2": "Ihre nächste Nachbestellung kann eine einzige Bestellung sein.",
+      "p": "Eröffnen Sie ein Geschäftskonto und sehen Sie Großhandelspreise von Lieferanten in Ihrer Nähe."
+    },
+    "plans": {
+      "h2": "Tarife für Lieferanten. Käufer zahlen nie.",
+      "sub": "Unternehmen, die auf FIRINGI einkaufen, nutzen es kostenlos. Lieferanten starten kostenlos und wechseln den Tarif, wenn sie wachsen.",
+      "per": "/Monat",
+      "top": "Am beliebtesten",
+      "note": "Tarife und Preise stammen aus den Tarifeinstellungen von FIRINGI, daher entspricht dieser Abschnitt immer dem, was Lieferanten zahlen.",
+      "start": "Kostenlos starten",
+      "choose": "{name} wählen",
+      "products": "Bis zu {n} Produkte",
+      "productsAll": "Unbegrenzt Produkte",
+      "team": "{users} Nutzer, {wh} Lager, {drivers} Fahrer",
+      "teamAll": "Unbegrenzt Nutzer, Lager und Fahrer",
+      "earlyPay": "Vorzeitige Auszahlung ab {rate} % pro Tag",
+      "freeEarly": "{n} kostenlose vorzeitige Auszahlungen pro Monat",
+      "includes": "Enthält: {list}",
+      "basics": "Bestellungen, Rechnungsstellung und Auszahlungen durch FIRINGI",
+      "feature": {
+        "INVENTORY": "Bestand",
+        "PLANNING": "Planung",
+        "WAREHOUSE": "Kommissionierung",
+        "PRICE_INSIGHTS": "Preisanalysen",
+        "ADS": "Werbung",
+        "INTEGRATIONS": "Integrationen",
+        "ROUTES": "Routen",
+        "ASSISTANT": "KI-Assistent"
+      }
+    },
+    "contact": {
+      "h2": "Sprechen Sie mit uns.",
+      "sub": "Fragen zum Einkaufen oder Verkaufen? Wir antworten innerhalb eines Werktags.",
+      "name": "Name",
+      "company": "Unternehmen",
+      "email": "E-Mail",
+      "phone": "Mobilnummer",
+      "nif": "NIF",
+      "type": "Ihr Geschäft",
+      "msg": "Nachricht",
+      "consent": "Ich bin einverstanden, dass FIRINGI diese Angaben nutzt, um mir zu antworten, wie in der Datenschutzerklärung beschrieben.",
+      "send": "Senden",
+      "waT": "WhatsApp",
+      "waP": "Schreiben Sie unserem Team auf WhatsApp, Montag bis Samstag, 9:00 bis 19:00 Uhr.",
+      "waB": "WhatsApp öffnen",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restaurant, Café oder Bar",
+        "2": "Lebensmittelgeschäft oder Minimarkt",
+        "3": "Hotel oder Catering",
+        "4": "Kantine, Schule oder Pflegeheim",
+        "5": "Sonstiges"
+      },
+      "vendorMsg": "Was Sie verkaufen und wohin Sie liefern",
+      "sent": "Vielen Dank. Wir antworten innerhalb eines Werktags.",
+      "errRequired": "Bitte geben Sie Ihren Namen, Ihr Unternehmen und Ihre E-Mail-Adresse an.",
+      "errEmail": "Geben Sie eine gültige E-Mail-Adresse ein.",
+      "errConsent": "Bitte setzen Sie das Häkchen, um zuzustimmen.",
+      "errSpam": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+      "errBusy": "Zu viele Nachrichten. Bitte versuchen Sie es in einer Minute erneut.",
+      "sending": "Wird gesendet…",
+      "vendorType": "Ich möchte verkaufen als",
+      "vendorTypes": {
+        "WHOLESALER": "Großhändler – ich verkaufe an Läden in meinem Land",
+        "DISTRIBUTOR": "Distributor – ich verkaufe an Großhändler in der EU"
+      }
+    },
+    "news": {
+      "label": "Erhalten Sie einmal im Monat neue Lieferanten, Angebote und Liefergebiete per E-Mail.",
+      "ph": "Ihre geschäftliche E-Mail-Adresse",
+      "btn": "Abonnieren",
+      "note": "Sie können sich jederzeit abmelden.",
+      "consent": "Ich möchte den FIRINGI-Newsletter erhalten. Ich kann mich jederzeit abmelden.",
+      "sent": "Fast geschafft. Prüfen Sie Ihr Postfach und bestätigen Sie Ihr Abonnement.",
+      "confirmedTitle": "Sie sind angemeldet.",
+      "confirmedBody": "Vielen Dank. Sie erhalten unseren Newsletter einmal im Monat.",
+      "unsubTitle": "Sie sind abgemeldet.",
+      "unsubBody": "Sie erhalten den Newsletter nicht mehr. Sie können sich jederzeit wieder anmelden.",
+      "invalid": "Dieser Link ist nicht mehr gültig.",
+      "back": "Zurück zu FIRINGI"
+    },
+    "foot": {
+      "tag": "Einkaufen, nachbestellen und Ihr Geschäft führen, ohne Zeit zu verlieren.",
+      "buy": "Einkaufen",
+      "sell": "Für Lieferanten",
+      "help": "Hilfe",
+      "legal": "Rechtliches",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Alle Rechte vorbehalten.",
+      "links": {
+        "buy": {
+          "1": "Einkaufen",
+          "2": "Kasse",
+          "3": "Verwalten",
+          "4": "Sparen"
+        },
+        "sell": {
+          "1": "Lieferant werden",
+          "2": "Tarife für Lieferanten"
+        },
+        "help": {
+          "1": "Fragen",
+          "2": "Kontakt",
+          "3": "Systemstatus",
+          "4": "Anmelden"
+        },
+        "legal": {
+          "1": "Nutzungsbedingungen",
+          "2": "Datenschutzerklärung (DSGVO)",
+          "3": "Cookies",
+          "4": "Impressum"
+        }
+      }
+    },
+    "login": "Anmelden",
+    "mail": {
+      "contactSubject": "Wir haben Ihre Nachricht erhalten",
+      "hello": "Hallo {name},",
+      "helloAll": "Hallo,",
+      "contactBody": "Vielen Dank, dass Sie FIRINGI kontaktiert haben. Wir haben Ihre Nachricht erhalten und antworten innerhalb eines Werktags.",
+      "newsSubject": "Bestätigen Sie Ihr Abonnement des FIRINGI-Newsletters",
+      "newsBody": "Bitte bestätigen Sie, dass Sie den FIRINGI-Newsletter erhalten möchten:",
+      "newsIgnore": "Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzerklärung (DSGVO)",
+      "cookies": "Cookies",
+      "company": "Impressum",
+      "updated": "Zuletzt aktualisiert am {date}",
+      "empty": "Diese Seite wird gerade vorbereitet. Kontaktieren Sie uns, wenn Sie eine Frage haben.",
+      "back": "Zurück zu FIRINGI"
+    },
+    "langPicker": "Sprache wählen",
+    "app": {
+      "nav": {
+        "buy": "Einkaufen",
+        "till": "Kasse",
+        "manage": "Verwalten",
+        "save": "Sparen",
+        "vendors": "Lieferant werden",
+        "faq": "Fragen"
+      },
+      "hero": {
+        "eyebrow": "Für Läden, Minimärkte, Cafés und Restaurants in Portugal",
+        "h1a": "Einkaufen, nachbestellen,",
+        "h1b": "Ihr Geschäft führen –",
+        "h1c": "ohne Zeit zu verlieren.",
+        "lead": "Bestellen Sie bei allen Großhändlern in einem Warenkorb – Lebensmittel, Getränke, Hygiene, Reinigung, Tabak und mehr – mit Lieferung am selben Tag. Verkaufen Sie mit der FIRINGI-Kasse und sehen Sie Margen, Bestand und Personal in einem Dashboard.",
+        "cta2": "So funktioniert's",
+        "note": "Kostenlos für Unternehmen · Keine Karte nötig"
+      },
+      "float": {
+        "1": "Neue Bestellung · Lieferung heute",
+        "2": "Rechnung bezahlt · MB WAY",
+        "3": "+120 Prämienpunkte"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "Mindestbestellwert für den ganzen Warenkorb"
+        },
+        "2": {
+          "v": "Am selben Tag",
+          "l": "geliefert, Montag bis Samstag"
+        },
+        "3": {
+          "v": "1 Rechnung",
+          "l": "von FIRINGI für jede Bestellung"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "für die Eröffnung Ihres Geschäftskontos"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Einkaufen",
+          "h": "Alle Großhändler. Ein Warenkorb. Heute geliefert.",
+          "p": "Durchsuchen Sie einen Katalog mit Großhandelspreisen vieler Lieferanten, füllen Sie einen Warenkorb und zahlen Sie einmal. Alles kommt am selben Tag an.",
+          "b": {
+            "1": "Ein Mindestbestellwert von 150 € für den ganzen Warenkorb",
+            "2": "Staffelpreise für jedes Produkt",
+            "3": "Jeden Lkw in der App verfolgen"
+          }
+        },
+        "till": {
+          "tag": "Kasse",
+          "h": "Eine Kasse, die Ihren Bestand kennt.",
+          "p": "Verkaufen Sie an der Theke mit der FIRINGI-Kasse: antippen oder scannen, Karte, MB WAY oder Bargeld annehmen und den Beleg mit der NIF Ihres Kunden drucken.",
+          "b": {
+            "1": "Verkauft auch ohne Internet weiter",
+            "2": "Jeder Verkauf aktualisiert Ihren Bestand",
+            "3": "MwSt. auf jeder Belegzeile"
+          }
+        },
+        "manage": {
+          "tag": "Verwalten",
+          "h": "Kennen Sie Ihre Margen, bevor Sie verkaufen.",
+          "p": "Produkt- und Rezeptmargen aus Ihren echten Einkaufspreisen, Bestand mit Ablaufdaten und Personalschichten – erstellt aus den Bestellungen, die Sie ohnehin aufgeben.",
+          "b": {
+            "1": "Margen pro Produkt und pro Rezept",
+            "2": "Bestand, Ablaufwarnungen und Nachbestell-Erinnerungen",
+            "3": "Arbeitszeiten und Schichten"
+          }
+        },
+        "save": {
+          "tag": "Sparen",
+          "h": "Weniger ausgeben. Zahlen, wann es passt.",
+          "p": "Sammeln Sie Punkte für jede gelieferte Bestellung, lösen Sie sie im Prämienshop ein, treten Sie Einkaufsgemeinschaften für bessere Preise bei und zahlen Sie mit freigegebenem Konto später.",
+          "b": {
+            "1": "Punkte und ein Prämienshop",
+            "2": "Einkaufsgemeinschaften und Mengenrabatte",
+            "3": "Bis zu 30 Tage später zahlen"
+          }
+        }
+      },
+      "start": {
+        "h": "In drei Schritten starten.",
+        "steps": {
+          "1": {
+            "t": "Kostenloses Konto eröffnen",
+            "p": "Firmenname, NIF und Lieferadresse."
+          },
+          "2": {
+            "t": "Wir prüfen es",
+            "p": "Meist innerhalb eines Werktags."
+          },
+          "3": {
+            "t": "Bestellen und wachsen",
+            "p": "Heute kaufen, heute erhalten – und Kasse und Tools einschalten, wenn Sie sie brauchen."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Bon",
+        "nif": "Kunden-NIF",
+        "card": "Karte",
+        "cash": "Bar",
+        "total": "Gesamt",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Toast",
+          "4": "Wasser 0,5 L",
+          "5": "Puddingtörtchen",
+          "6": "Orangensaft"
+        }
+      },
+      "mng": {
+        "recipe": "Rezeptkosten",
+        "dish": "Toast",
+        "cost": "Kosten",
+        "price": "Preis",
+        "margin": "Marge",
+        "stock": "Bestandswarnungen",
+        "low": "Noch {n} Tage",
+        "expiry": "Läuft in {n} Tagen ab",
+        "staff": "Personal heute",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} Punkte",
+        "next": "Noch {n} Punkte bis zur nächsten Prämie",
+        "rewards": "Prämienshop",
+        "pts": "{n} Pkt.",
+        "items": {
+          "1": "10-€-Gutschein",
+          "2": "Kostenlose Lieferung",
+          "3": "Reinigungsset für Kaffeemaschinen"
+        },
+        "later": "Später zahlen",
+        "laterP": "30 Tage · Limit {amount}",
+        "group": "Einkaufsgemeinschaft: −6 % auf Getränke"
+      },
+      "cats": {
+        "h": "Alles, was Ihr Laden verkauft, aus einer Hand.",
+        "p": "14 Kategorien von Großhändlern aus ganz Portugal – und jeden Monat mehr.",
+        "items": {
+          "1": "Lebensmittel",
+          "2": "Frische Produkte",
+          "3": "Getränke",
+          "4": "Kosmetik & Schönheit",
+          "5": "Körperpflege",
+          "6": "Haushalt & Reinigung",
+          "7": "Baby & Kind",
+          "8": "Tierbedarf",
+          "9": "Tabak",
+          "10": "Mode & Accessoires",
+          "11": "Spielzeug & Kinder",
+          "12": "Souvenirs & Geschenke",
+          "13": "Verpackung & Zubehör",
+          "14": "Kebab- & Pizzabedarf"
+        }
+      }
     }
   }
 }

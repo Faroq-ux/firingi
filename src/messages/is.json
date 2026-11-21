@@ -259,7 +259,10 @@
       "activityCodeOnce": "Sláðu það inn einu sinni — eftir það getur aðeins FIRINGI breytt því.",
       "activityCodesSecondary": "Fleiri {scheme}-númer (valfrjálst)",
       "activityCodesHint": "Aðskildu með kommum — allt að {max}.",
-      "activityCodesAdd": "Bættu við fleiri númerum hér; þau sem eru komin haldast — aðeins FIRINGI getur fjarlægt þau."
+      "activityCodesAdd": "Bættu við fleiri númerum hér; þau sem eru komin haldast — aðeins FIRINGI getur fjarlægt þau.",
+      "whatsapp": "WhatsApp-númer (valfrjálst)",
+      "whatsappHint": "Bættu því við ef þú notar WhatsApp fyrir pantanir og skilaboð. Með landsnúmeri.",
+      "whatsappSame": "Þetta símanúmer er líka á WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Veitingastaður",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Umbun að klárast",
       "body": "Aðeins {left} eftir af „{reward}“."
+    },
+    "website_contact": {
+      "title": "Ný spurning af vefsíðunni",
+      "body": "{name} frá {company} sendi spurningu. Hún er skráð í CRM sem sölutækifæri."
+    },
+    "website_vendor_interest": {
+      "title": "Ný umsókn söluaðila",
+      "body": "{name} frá {company} vill selja á FIRINGI. Umsóknin er skráð í CRM sem sölutækifæri."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Enginn viðskiptavinur hefur enn innleyst vörurnar þínar.",
       "orderBy": "Panta í síðasta lagi {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Keyptu inn, fylltu á og rektu fyrirtækið þitt",
+      "description": "Fylltu á hjá öllum heildsölum í einni pöntun: magnverð, skýrir reikningar með NIF-númerinu þínu og afhending samdægurs."
+    },
+    "open": "Stofnaðu fyrirtækjaaðgang",
+    "menuOpen": "Opna valmynd",
+    "menuClose": "Loka valmynd",
+    "chart": {
+      "label": "Þrír söluaðilar sem senda hver sína afhendingarleið til eins fyrirtækis",
+      "shop": "Fyrirtækið þitt",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "fim. 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "fim. 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "lau. 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "Skjámynd úr FIRINGI-appinu: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Leitaðu að vörum, vörumerkjum, söluaðilum…",
+        "next": "Afhending í dag",
+        "cart": "Karfan þín",
+        "minOk": "Lágmarki náð",
+        "total": "Samtals",
+        "checkout": "Panta og greiða",
+        "steps": {
+          "1": "Pantað",
+          "2": "Tilbúið",
+          "3": "Á leiðinni",
+          "4": "Afhent"
+        },
+        "reorder": "Tími til að panta aftur",
+        "fill": "Fylla körfuna",
+        "lastTime": "Síðast: {n} kassar",
+        "role": "Heildsöluviðskiptavinur",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "Í BEINNI",
+        "welcome": "Velkomin(n), {name}",
+        "recent": "Nýjustu pantanir",
+        "nav": {
+          "1": "Yfirlit",
+          "2": "Vörulisti",
+          "3": "Pantanir",
+          "4": "Reikningar og greiðslur",
+          "5": "Fríðindi",
+          "6": "Hjálp og aðstoð",
+          "7": "Kassi (POS)",
+          "8": "Eldhús og lager"
+        },
+        "kpi": {
+          "1": "Pantanir í vinnslu",
+          "2": "Á leiðinni",
+          "3": "Eytt síðustu 30 daga",
+          "4": "Ógreiddir reikningar"
+        }
+      },
+      "products": {
+        "1": "Langkorna hrísgrjón 1 kg × 10",
+        "2": "Extra virgin ólífuolía 5 L",
+        "3": "Túnfiskur í ólífuolíu 120 g × 24",
+        "4": "G-mjólk 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Komdu heildsölunni þinni á netið.",
+      "sub": "Náðu til fyrirtækja sem panta aftur í hverri viku, án þess að taka við pöntunum í síma eða elta greiðslur.",
+      "cta": "Sæktu um sem söluaðili",
+      "rows": {
+        "1": {
+          "t": "Settu þína eigin skilmála",
+          "p": "Veldu verð, magnþrep, lágmarkspantanir og afhendingardaga."
+        },
+        "2": {
+          "t": "Ein röð fyrir allar pantanir",
+          "p": "Nýjar pantanir berast á einn lista, tilbúnar til pökkunar."
+        },
+        "3": {
+          "t": "Sendu út og deildu stöðunni",
+          "p": "Úthlutaðu bílstjórum og leyfðu viðskiptavinum að fylgjast með bílnum án þess að hringja í þig."
+        },
+        "4": {
+          "t": "Fáðu greitt fyrir hverja pöntun",
+          "p": "Hver pöntun er greidd út sér, með skýrri færslu fyrir bókhaldið."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Seldu á FIRINGI — náðu til fyrirtækja um allt Portúgal",
+      "description": "Settu heildsöluvörurnar þínar á FIRINGI. Fyrirtæki panta frá þér í einni körfu með öðrum söluaðilum; FIRINGI sendir þeim reikning og greiðir þér út.",
+      "rowsH2": "Allt sem þú þarft til að selja fyrirtækjum.",
+      "formH2": "Sæktu um að selja á FIRINGI",
+      "formSub": "Segðu okkur frá fyrirtækinu þínu. Við svörum innan eins virks dags með næstu skrefum.",
+      "navPlans": "Áskriftarleiðir fyrir söluaðila",
+      "typesH2": "Tvær leiðir til að selja á FIRINGI.",
+      "typesSub": "Heildsalar selja verslunum, kaffihúsum og veitingastöðum í eigin landi. Dreifingaraðilar selja heildsölum um allt ESB.",
+      "types": {
+        "wholesaler": {
+          "t": "Heildsali",
+          "p": "Seldu verslunum, kaffihúsum og veitingastöðum í þínu eigin landi, eftir svæði eða fjarlægð — og fylltu á lagerinn hjá dreifingaraðilum á FIRINGI.",
+          "b": {
+            "1": "Verslanir, kaffihús og veitingastaðir í þínu landi kaupa af þér",
+            "2": "Afhending eftir svæði eða fjarlægð",
+            "3": "Keyptu vörur á lager frá dreifingaraðilum um allt ESB"
+          },
+          "cta": "Skráðu þig sem heildsala"
+        },
+        "distributor": {
+          "t": "Dreifingaraðili",
+          "p": "Seldu heildsölum um allt ESB. Þeir kaupa vörurnar þínar í miklu magni og endurselja þær verslunum og veitingastöðum í sínu landi.",
+          "b": {
+            "1": "Heildsalar í ESB-löndum kaupa af þér",
+            "2": "Pantanir í miklu magni, í kössum og á brettum",
+            "3": "FIRINGI sér um reikninga milli landa"
+          },
+          "cta": "Skráðu þig sem dreifingaraðila"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Það sem fyrirtæki spyrja fyrst um.",
+      "items": {
+        "1": {
+          "q": "Geta einstaklingar keypt?",
+          "a": "Nei. FIRINGI er fyrir fyrirtæki með NIF. Verðin eru heildsöluverð og reikningar eru gefnir út á fyrirtækið þitt."
+        },
+        "2": {
+          "q": "Hver er lágmarkspöntunin?",
+          "a": "150 € fyrir alla körfuna, sama hve marga söluaðila hún inniheldur."
+        },
+        "3": {
+          "q": "Eru verðin með eða án VSK?",
+          "a": "Án VSK. VSK bætist við í greiðsluferlinu, eftir skatthlutfalli hverrar vöru, og kemur fram á hverri reikningslínu."
+        },
+        "4": {
+          "q": "Hvenær koma vörurnar mínar?",
+          "a": "Samdægurs. Allt sem þú pantar fyrir lokafrest berst sama dag frá öllum söluaðilum í körfunni og þú getur fylgst með hverjum bíl í appinu."
+        },
+        "5": {
+          "q": "Hvernig og hvenær greiði ég?",
+          "a": "Greiddu einu sinni fyrir alla körfuna með Multibanco, MB WAY, korti eða SEPA-millifærslu. Samþykkt fyrirtæki geta líka greitt allt að 30 dögum eftir útgáfu reiknings."
+        },
+        "6": {
+          "q": "Geta samstarfsmenn mínir pantað á sama aðgangi?",
+          "a": "Já. Bættu við notendum með eigin innskráningu og veldu hver má panta, hver sér reikninga og hver má breyta afhendingarheimilisföngum."
+        },
+        "7": {
+          "q": "Hvað ef vörur berast skemmdar?",
+          "a": "Tilkynntu það í appinu innan 24 klukkustunda, með mynd. Söluaðilinn svarar með nýrri vöru eða kreditreikningi."
+        },
+        "8": {
+          "q": "Sendið þið til Madeira og Asoreyja?",
+          "a": "Ekki enn. Við byrjum á meginlandi Portúgals og bætum eyjunum við síðar."
+        },
+        "9": {
+          "q": "Get ég selt á FIRINGI?",
+          "a": "Já. Sæktu um sem söluaðili, settu verð, lágmarkspantanir og afhendingardaga og byrjaðu að fá pantanir frá fyrirtækjum í nágrenninu."
+        }
+      }
+    },
+    "final": {
+      "h2": "Næsta áfylling getur verið ein pöntun.",
+      "p": "Stofnaðu fyrirtækjaaðgang og sjáðu heildsöluverð frá söluaðilum í nágrenninu."
+    },
+    "plans": {
+      "h2": "Áskriftarleiðir fyrir söluaðila. Kaupendur greiða aldrei.",
+      "sub": "Fyrirtæki sem kaupa á FIRINGI nota það ókeypis. Söluaðilar byrja ókeypis og uppfæra eftir því sem þeir vaxa.",
+      "per": "/mán.",
+      "top": "Vinsælast",
+      "note": "Áskriftarleiðir og verð koma úr áskriftarstillingum FIRINGI, svo þessi hluti passar alltaf við það sem söluaðilar greiða.",
+      "start": "Byrja ókeypis",
+      "choose": "Velja {name}",
+      "products": "Allt að {n} vörur",
+      "productsAll": "Ótakmarkaður fjöldi vara",
+      "team": "{users} notendur, {wh} vöruhús, {drivers} bílstjórar",
+      "teamAll": "Ótakmarkaður fjöldi notenda, vöruhúsa og bílstjóra",
+      "earlyPay": "Snemmgreiðsla frá {rate}% á dag",
+      "freeEarly": "{n} ókeypis snemmgreiðslur á mánuði",
+      "includes": "Innifalið: {list}",
+      "basics": "Pantanir, reikningagerð og útgreiðslur í gegnum FIRINGI",
+      "feature": {
+        "INVENTORY": "birgðahald",
+        "PLANNING": "áætlanagerð",
+        "WAREHOUSE": "tínsla á lager",
+        "PRICE_INSIGHTS": "verðgreining",
+        "ADS": "auglýsingar",
+        "INTEGRATIONS": "samþættingar",
+        "ROUTES": "leiðir",
+        "ASSISTANT": "gervigreindaraðstoð"
+      }
+    },
+    "contact": {
+      "h2": "Hafðu samband.",
+      "sub": "Spurningar um kaup eða sölu? Við svörum innan eins virks dags.",
+      "name": "Nafn",
+      "company": "Fyrirtæki",
+      "email": "Netfang",
+      "phone": "Farsími",
+      "nif": "NIF",
+      "type": "Fyrirtækið þitt",
+      "msg": "Skilaboð",
+      "consent": "Ég samþykki að FIRINGI noti þessar upplýsingar til að svara mér, eins og lýst er í persónuverndarstefnunni.",
+      "send": "Senda",
+      "waT": "WhatsApp",
+      "waP": "Sendu teyminu okkar skilaboð á WhatsApp, mánudaga til laugardaga, kl. 9:00–19:00.",
+      "waB": "Opna WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Veitingastaður, kaffihús eða bar",
+        "2": "Matvöruverslun eða hverfisbúð",
+        "3": "Hótel eða veisluþjónusta",
+        "4": "Mötuneyti, skóli eða hjúkrunarheimili",
+        "5": "Annað"
+      },
+      "vendorMsg": "Hvað þú selur og hvert þú afhendir",
+      "sent": "Takk fyrir. Við svörum innan eins virks dags.",
+      "errRequired": "Fylltu út nafn, fyrirtæki og netfang.",
+      "errEmail": "Sláðu inn gilt netfang.",
+      "errConsent": "Hakaðu í reitinn til að samþykkja.",
+      "errSpam": "Eitthvað fór úrskeiðis. Reyndu aftur.",
+      "errBusy": "Of mörg skilaboð. Reyndu aftur eftir mínútu.",
+      "sending": "Sendir…",
+      "vendorType": "Ég vil selja sem",
+      "vendorTypes": {
+        "WHOLESALER": "Heildsali — ég sel verslunum í mínu landi",
+        "DISTRIBUTOR": "Dreifingaraðili — ég sel heildsölum í ESB"
+      }
+    },
+    "news": {
+      "label": "Fáðu nýja söluaðila, tilboð og afhendingarsvæði í tölvupósti, einu sinni í mánuði.",
+      "ph": "Netfang fyrirtækisins",
+      "btn": "Skrá mig",
+      "note": "Þú getur afskráð þig hvenær sem er.",
+      "consent": "Ég samþykki að fá fréttabréf FIRINGI. Ég get afskráð mig hvenær sem er.",
+      "sent": "Næstum búið. Athugaðu tölvupóstinn þinn og staðfestu áskriftina.",
+      "confirmedTitle": "Áskriftin er virk.",
+      "confirmedBody": "Takk fyrir. Þú færð fréttabréfið okkar einu sinni í mánuði.",
+      "unsubTitle": "Áskriftinni hefur verið hætt.",
+      "unsubBody": "Þú færð fréttabréfið ekki lengur. Þú getur skráð þig aftur hvenær sem er.",
+      "invalid": "Þessi hlekkur er ekki lengur gildur.",
+      "back": "Aftur á FIRINGI"
+    },
+    "foot": {
+      "tag": "Keyptu inn, fylltu á lagerinn og rektu fyrirtækið þitt án þess að sóa tímanum.",
+      "buy": "Kaupa",
+      "sell": "Fyrir söluaðila",
+      "help": "Hjálp",
+      "legal": "Lagalegt",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Allur réttur áskilinn.",
+      "links": {
+        "buy": {
+          "1": "Kaupa",
+          "2": "Kassi",
+          "3": "Stjórna",
+          "4": "Spara"
+        },
+        "sell": {
+          "1": "Gerstu söluaðili",
+          "2": "Áskriftarleiðir fyrir söluaðila"
+        },
+        "help": {
+          "1": "Spurningar",
+          "2": "Hafa samband",
+          "3": "Staða kerfis",
+          "4": "Innskráning"
+        },
+        "legal": {
+          "1": "Notkunarskilmálar",
+          "2": "Persónuverndarstefna (persónuverndarreglugerðin)",
+          "3": "Vafrakökur",
+          "4": "Upplýsingar um fyrirtækið"
+        }
+      }
+    },
+    "login": "Innskráning",
+    "mail": {
+      "contactSubject": "Við höfum móttekið skilaboðin þín",
+      "hello": "Hæ {name},",
+      "helloAll": "Hæ,",
+      "contactBody": "Takk fyrir að hafa samband við FIRINGI. Við höfum móttekið skilaboðin þín og svörum innan eins virks dags.",
+      "newsSubject": "Staðfestu áskrift að fréttabréfi FIRINGI",
+      "newsBody": "Vinsamlegast staðfestu að þú viljir fá fréttabréf FIRINGI:",
+      "newsIgnore": "Ef þú baðst ekki um þetta skaltu hunsa þennan tölvupóst.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Notkunarskilmálar",
+      "privacy": "Persónuverndarstefna (persónuverndarreglugerðin)",
+      "cookies": "Vafrakökur",
+      "company": "Upplýsingar um fyrirtækið",
+      "updated": "Síðast uppfært {date}",
+      "empty": "Verið er að vinna að þessari síðu. Hafðu samband ef þú ert með spurningu.",
+      "back": "Aftur á FIRINGI"
+    },
+    "langPicker": "Veldu tungumál",
+    "app": {
+      "nav": {
+        "buy": "Kaupa",
+        "till": "Kassi",
+        "manage": "Stjórna",
+        "save": "Spara",
+        "vendors": "Gerstu söluaðili",
+        "faq": "Spurningar"
+      },
+      "hero": {
+        "eyebrow": "Fyrir verslanir, hverfisbúðir, kaffihús og veitingastaði í Portúgal",
+        "h1a": "Keyptu inn, fylltu á lagerinn og rektu",
+        "h1b": "fyrirtækið þitt",
+        "h1c": "án þess að sóa tímanum.",
+        "lead": "Pantaðu frá öllum heildsölum í einni körfu — matvöru, drykki, hreinlætisvörur, ræstivörur, tóbak og fleira — með afhendingu samdægurs. Seldu með FIRINGI-kassanum og sjáðu framlegð, birgðir og starfsfólk á einu mælaborði.",
+        "cta2": "Sjáðu hvernig þetta virkar",
+        "note": "Ókeypis fyrir fyrirtæki · Ekkert kort þarf"
+      },
+      "float": {
+        "1": "Ný pöntun · afhending í dag",
+        "2": "Reikningur greiddur · MB WAY",
+        "3": "+120 fríðindapunktar"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "lágmarkspöntun fyrir alla körfuna"
+        },
+        "2": {
+          "v": "Samdægurs",
+          "l": "afhending, mánudaga til laugardaga"
+        },
+        "3": {
+          "v": "1 reikningur",
+          "l": "frá FIRINGI fyrir hverja pöntun"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "til að stofna fyrirtækjaaðgang"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Kaupa",
+          "h": "Allir heildsalar. Ein karfa. Afhent í dag.",
+          "p": "Leitaðu í einum vörulista með heildsöluverði frá mörgum söluaðilum, fylltu eina körfu og greiddu einu sinni. Allt berst sama dag.",
+          "b": {
+            "1": "Eitt 150 € lágmark fyrir alla körfuna",
+            "2": "Magnverð á öllum vörum",
+            "3": "Fylgstu með hverjum bíl í appinu"
+          }
+        },
+        "till": {
+          "tag": "Kassi",
+          "h": "Kassi sem þekkir lagerinn þinn.",
+          "p": "Seldu við afgreiðsluborðið með FIRINGI-kassanum: pikkaðu eða skannaðu, taktu við korti, MB WAY eða reiðufé og prentaðu kvittunina með NIF viðskiptavinarins.",
+          "b": {
+            "1": "Heldur áfram að selja án nettengingar",
+            "2": "Hver sala uppfærir lagerinn",
+            "3": "VSK á hverri kvittunarlínu"
+          }
+        },
+        "manage": {
+          "tag": "Stjórna",
+          "h": "Þekktu framlegðina áður en þú selur.",
+          "p": "Framlegð á vörum og uppskriftum út frá raunverulegu innkaupsverði, birgðir með fyrningardagsetningum og vaktir starfsfólks — byggt á pöntununum sem þú gerir nú þegar.",
+          "b": {
+            "1": "Framlegð á hverja vöru og uppskrift",
+            "2": "Birgðir, viðvaranir um fyrningu og áminningar um endurpöntun",
+            "3": "Vinnustundir og vaktir"
+          }
+        },
+        "save": {
+          "tag": "Spara",
+          "h": "Eyddu minna. Greiddu þegar þér hentar.",
+          "p": "Safnaðu punktum fyrir hverja afhenta pöntun, skiptu þeim í fríðindabúðinni, taktu þátt í innkaupahópum fyrir betra verð og greiddu síðar á samþykktum aðgöngum.",
+          "b": {
+            "1": "Punktar og fríðindabúð",
+            "2": "Innkaupahópar og magntilboð",
+            "3": "Greiddu allt að 30 dögum síðar"
+          }
+        }
+      },
+      "start": {
+        "h": "Byrjaðu í þremur skrefum.",
+        "steps": {
+          "1": {
+            "t": "Stofnaðu ókeypis aðgang",
+            "p": "Nafn fyrirtækis, NIF og afhendingarheimilisfang."
+          },
+          "2": {
+            "t": "Við förum yfir hann",
+            "p": "Yfirleitt innan eins virks dags."
+          },
+          "3": {
+            "t": "Pantaðu og vaxtu",
+            "p": "Keyptu í dag, fáðu það í dag og kveiktu á kassanum og verkfærunum þegar þú þarft á þeim að halda."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Kvittun",
+        "nif": "NIF viðskiptavinar",
+        "card": "Kort",
+        "cash": "Reiðufé",
+        "total": "Samtals",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Grilluð samloka",
+          "4": "Vatn 0,5 L",
+          "5": "Rjómabaka",
+          "6": "Appelsínusafi"
+        }
+      },
+      "mng": {
+        "recipe": "Kostnaður uppskriftar",
+        "dish": "Grilluð samloka",
+        "cost": "Kostnaður",
+        "price": "Verð",
+        "margin": "Framlegð",
+        "stock": "Birgðaviðvaranir",
+        "low": "{n} dagar eftir",
+        "expiry": "Rennur út eftir {n} daga",
+        "staff": "Starfsfólk í dag",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} punktar",
+        "next": "{n} punktar í næstu fríðindi",
+        "rewards": "Fríðindabúð",
+        "pts": "{n} p.",
+        "items": {
+          "1": "10 € gjafabréf",
+          "2": "Frí afhending",
+          "3": "Hreinsisett fyrir kaffivél"
+        },
+        "later": "Greiða síðar",
+        "laterP": "30 dagar · hámark {amount}",
+        "group": "Innkaupahópur: −6% á drykkjum"
+      },
+      "cats": {
+        "h": "Allt sem verslunin þín selur, á einum stað.",
+        "p": "14 flokkar frá heildsölum um allt Portúgal — og fleiri í hverjum mánuði.",
+        "items": {
+          "1": "Matvara",
+          "2": "Ferskvara",
+          "3": "Drykkir",
+          "4": "Snyrtivörur og fegurð",
+          "5": "Hreinlætisvörur",
+          "6": "Heimili og þrif",
+          "7": "Ungbörn og barnavörur",
+          "8": "Gæludýravörur",
+          "9": "Tóbak",
+          "10": "Tíska og fylgihlutir",
+          "11": "Leikföng og börn",
+          "12": "Minjagripir og gjafir",
+          "13": "Umbúðir og rekstrarvörur",
+          "14": "Kebab- og pítsuvörur"
+        }
+      }
     }
   }
 }

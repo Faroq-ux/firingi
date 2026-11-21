@@ -2,6 +2,7 @@
  * Self-registration for distributors, wholesalers, wholesale customers and drivers.
  * Every new account starts PENDING and needs FIRINGI approval before it can trade.
  */
+import { normalisePhone } from "@/server/notify/events";
 import { platformSettings } from "./platform-settings";
 import type { CompanyType } from "@prisma/client";
 import { hashPassword } from "better-auth/crypto";
@@ -29,6 +30,8 @@ export type CompanyRegistration = {
   sellsRestricted?: string[] | null;
   companyEmail: string;
   phone: string;
+  /** optional WhatsApp number (with country code) */
+  whatsapp?: string | null;
   businessType?: string | null;
   owner: { name: string; email: string; password: string };
   headOffice: { line1: string; line2?: string | null; postalCode: string; cityId?: string | null; cityName: string };
@@ -118,6 +121,7 @@ export async function registerCompany(input: CompanyRegistration) {
         countryId: country.id,
         email: input.companyEmail.trim().toLowerCase(),
         phone: input.phone,
+        whatsapp: normalisePhone(input.whatsapp) ?? null,
         businessType: input.type === "CUSTOMER" ? input.businessType ?? null : null,
         defaultCurrencyCode: country.defaultCurrencyCode,
         defaultLanguageCode: country.defaultLanguageCode,

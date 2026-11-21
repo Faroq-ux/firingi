@@ -24,7 +24,7 @@ export async function ProfileSection({ ctx }: { ctx: Ctx }) {
     <ProfileForm
       canEdit={can(ctx, "company.profile.manage")}
       data={{
-        type: c.type, legalName: c.legalName, tradeName: c.tradeName, taxId: c.taxId, vatNumber: c.vatNumber, email: c.email, phone: c.phone,
+        type: c.type, legalName: c.legalName, tradeName: c.tradeName, taxId: c.taxId, vatNumber: c.vatNumber, email: c.email, phone: c.phone, whatsapp: c.whatsapp,
         website: c.website, businessType: c.businessType, locked: true,
         countryLabel: `${c.country.flag ?? ""} ${pickLocalized(c.country.name, locale)}`,
         legalForm: c.legalForm, certificateCode: c.registryCertificateCode, countryCode: c.country.code,

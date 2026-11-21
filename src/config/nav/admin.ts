@@ -427,6 +427,8 @@ export const ADMIN_NAV: NavSection[] = [
       mkt("loyalty", "Loyalty & Rewards", "Fidelização e Recompensas", "P32", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
       mkt("rewards", "Rewards Shop", "Loja de Recompensas", "P55", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
       mkt("rewards/redemptions", "Reward Redemptions", "Trocas de Recompensas", "P55", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
+      mkt("landing", "Landing Page", "Página Inicial", "P56", { live: true, perm: ["admin.marketing.manage"] }),
+      mkt("newsletter", "Newsletter", "Newsletter", "P56", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),
       mkt("ads", "Sponsored Products", "Produtos Patrocinados", "P34", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage", "admin.finance.view", "admin.finance.manage"] }),
       mkt("coupons", "Coupons", "Cupões", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage", "admin.pricing.view", "admin.pricing.manage"] }),
       mkt("push", "Push Notifications", "Notificações Push", "P15", { live: true, perm: ["admin.marketing.view", "admin.marketing.manage"] }),

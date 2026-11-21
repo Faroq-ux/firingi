@@ -2,6 +2,7 @@
  * Company lifecycle: profile edits, applicant submission, admin decisions,
  * VIES checks and commission (no default commission — must be set per vendor).
  */
+import { normalisePhone } from "@/server/notify/events";
 import type { AccountStatus, Prisma } from "@prisma/client";
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
@@ -47,7 +48,7 @@ export async function readinessInput(companyId: string): Promise<ReadinessInput 
 // ── Applicant side ──────────────────────────────────────────────────────────
 
 export type ProfileInput = {
-  tradeName?: string | null; email: string; phone?: string | null; website?: string | null; businessType?: string | null;
+  tradeName?: string | null; email: string; phone?: string | null; whatsapp?: string | null; website?: string | null; businessType?: string | null;
   // Legal identity — only editable while the application is not yet approved.
   legalName?: string; vatNumber?: string | null;
   /** Phase 28 — legal form is locked after submission; the certificate code can be renewed any time. */
@@ -70,6 +71,7 @@ export async function updateOwnProfile(ctx: Ctx, input: ProfileInput) {
     tradeName: input.tradeName?.trim() || null,
     email: input.email.trim().toLowerCase(),
     phone: input.phone?.trim() || null,
+    ...(input.whatsapp !== undefined ? { whatsapp: normalisePhone(input.whatsapp) ?? null } : {}),
     website: input.website?.trim() || null,
     ...(before.type === "CUSTOMER" ? { businessType: input.businessType || null } : {}),
     ...(!locked && input.legalName ? { legalName: input.legalName.trim() } : {}),

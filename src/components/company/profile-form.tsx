@@ -1,4 +1,5 @@
 "use client";
+import { WhatsAppField, whatsappFrom } from "./whatsapp-field";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -8,7 +9,7 @@ import { updateProfileAction } from "@/server/actions/onboarding";
 
 export type ProfileData = {
   type: string; legalName: string; tradeName: string | null; taxId: string; vatNumber: string | null; email: string;
-  phone: string | null; website: string | null; businessType: string | null; locked: boolean; countryLabel: string;
+  phone: string | null; whatsapp: string | null; website: string | null; businessType: string | null; locked: boolean; countryLabel: string;
   legalForm: "COMPANY" | "SOLE_TRADER"; certificateCode: string | null; countryCode: string; activityCode: string | null; activityCodes: string[]; activityName: string; activityExample: string;
 };
 const BUSINESS_TYPES = ["restaurant", "kebab_pizza", "mini_market", "cafe_bar", "hotel", "catering", "retail", "other"];
@@ -32,7 +33,7 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
             certificateCode: s(fd, "certificateCode"),
             ...(data.activityCode ? {} : { activityCode: s(fd, "activityCode") }),
             addActivityCodes: s(fd, "addActivityCodes"),
-            tradeName: s(fd, "tradeName"), email: s(fd, "email") ?? "", phone: s(fd, "phone"), website: s(fd, "website"), businessType: s(fd, "businessType"),
+            tradeName: s(fd, "tradeName"), email: s(fd, "email") ?? "", phone: s(fd, "phone"), whatsapp: whatsappFrom(fd), website: s(fd, "website"), businessType: s(fd, "businessType"),
           });
           setMsg(r.ok ? { ok: true, text: t("profile.saved") } : { ok: false, text: r.error });
           if (r.ok) router.refresh();
@@ -69,6 +70,7 @@ export function ProfileForm({ data, canEdit }: { data: ProfileData; canEdit: boo
         </div>
         <div className="space-y-1.5"><Label htmlFor="email">{t("form.companyEmail")}</Label><Input id="email" name="email" type="email" defaultValue={data.email} required /></div>
         <div className="space-y-1.5"><Label htmlFor="phone">{t("form.phone")}</Label><Input id="phone" name="phone" defaultValue={data.phone ?? ""} /></div>
+        <WhatsAppField label={t("form.whatsapp")} sameLabel={t("form.whatsappSame")} hint={t("form.whatsappHint")} phone={data.phone} value={data.whatsapp} />
         <div className="space-y-1.5"><Label htmlFor="website">{t("profile.website")}</Label><Input id="website" name="website" defaultValue={data.website ?? ""} /></div>
         {data.type === "CUSTOMER" && (
           <div className="space-y-1.5">

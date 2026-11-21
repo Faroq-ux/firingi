@@ -259,7 +259,10 @@
       "activityCodeOnce": "Ange den en gång — därefter kan bara FIRINGI ändra den.",
       "activityCodesSecondary": "Ytterligare {scheme}-koder (valfritt)",
       "activityCodesHint": "Separera med kommatecken — upp till {max}.",
-      "activityCodesAdd": "Lägg till fler koder här; angivna koder ligger kvar — bara FIRINGI kan ta bort dem."
+      "activityCodesAdd": "Lägg till fler koder här; angivna koder ligger kvar — bara FIRINGI kan ta bort dem.",
+      "whatsapp": "WhatsApp-nummer (valfritt)",
+      "whatsappHint": "Fyll i det om du använder WhatsApp för beställningar och meddelanden. Med landsnummer.",
+      "whatsappSame": "Det här telefonnumret har också WhatsApp"
     },
     "businessTypes": {
       "restaurant": "Restaurang",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Belöningen håller på att ta slut",
       "body": "Bara {left} kvar av ”{reward}”."
+    },
+    "website_contact": {
+      "title": "Ny fråga från webbplatsen",
+      "body": "{name} från {company} har skickat en fråga. Den finns i CRM som lead."
+    },
+    "website_vendor_interest": {
+      "title": "Ny leverantörsansökan",
+      "body": "{name} från {company} vill sälja på FIRINGI. Finns i CRM som lead."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Ingen kund har löst in dina produkter än.",
       "orderBy": "Beställ senast {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Köp, fyll på och driv ditt företag",
+      "description": "Fyll på lagret från alla grossister i en enda beställning: volympriser, tydliga fakturor med ditt NIF och leverans samma dag."
+    },
+    "open": "Öppna ett företagskonto",
+    "menuOpen": "Öppna meny",
+    "menuClose": "Stäng meny",
+    "chart": {
+      "label": "Tre leverantörer som var och en skickar en leveransrutt till ett och samma företag",
+      "shop": "Ditt företag",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "Tor 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "Tor 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "Lör 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI-appens skärm: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Sök produkter, varumärken, leverantörer…",
+        "next": "Leverans i dag",
+        "cart": "Din varukorg",
+        "minOk": "Minimum uppnått",
+        "total": "Totalt",
+        "checkout": "Beställ och betala",
+        "steps": {
+          "1": "Beställd",
+          "2": "Förberedd",
+          "3": "På väg",
+          "4": "Levererad"
+        },
+        "reorder": "Dags att beställa igen",
+        "fill": "Fyll min varukorg",
+        "lastTime": "Förra gången: {n} kartonger",
+        "role": "Grossistkund",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "LIVE",
+        "welcome": "Välkommen, {name}",
+        "recent": "Senaste beställningar",
+        "nav": {
+          "1": "Översikt",
+          "2": "Katalog",
+          "3": "Beställningar",
+          "4": "Fakturor och betalningar",
+          "5": "Belöningar",
+          "6": "Hjälp och support",
+          "7": "Kassa (POS)",
+          "8": "Kök och lager"
+        },
+        "kpi": {
+          "1": "Pågående beställningar",
+          "2": "På väg",
+          "3": "Spenderat, senaste 30 dagarna",
+          "4": "Obetalda fakturor"
+        }
+      },
+      "products": {
+        "1": "Långkornigt ris 1 kg × 10",
+        "2": "Extra jungfruolivolja 5 L",
+        "3": "Tonfisk i olivolja 120 g × 24",
+        "4": "UHT-mjölk 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Ta din grossistverksamhet online.",
+      "sub": "Nå företag som beställer varje vecka, utan att ta emot beställningar per telefon eller jaga betalningar.",
+      "cta": "Ansök som leverantör",
+      "rows": {
+        "1": {
+          "t": "Sätt dina egna villkor",
+          "p": "Välj priser, volymnivåer, minsta order och leveransdagar."
+        },
+        "2": {
+          "t": "En kö för alla beställningar",
+          "p": "Nya beställningar hamnar i en enda lista, redo att packas."
+        },
+        "3": {
+          "t": "Skicka och dela status",
+          "p": "Tilldela förare och låt kunderna följa lastbilen utan att ringa dig."
+        },
+        "4": {
+          "t": "Få betalt per beställning",
+          "p": "Varje beställning betalas ut separat, med ett tydligt underlag för bokföringen."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Sälj på FIRINGI — nå företag i hela Portugal",
+      "description": "Lägg upp dina grossistprodukter på FIRINGI. Företag beställer från dig i samma varukorg som från andra leverantörer; FIRINGI fakturerar dem och betalar ut till dig.",
+      "rowsH2": "Allt du behöver för att sälja till företag.",
+      "formH2": "Ansök om att sälja på FIRINGI",
+      "formSub": "Berätta om ditt företag. Vi svarar inom en arbetsdag med nästa steg.",
+      "navPlans": "Planer för leverantörer",
+      "typesH2": "Två sätt att sälja på FIRINGI.",
+      "typesSub": "Grossister säljer till butiker, kaféer och restauranger i sitt eget land. Distributörer säljer till grossister i hela EU.",
+      "types": {
+        "wholesaler": {
+          "t": "Grossist",
+          "p": "Sälj till butiker, kaféer och restauranger i ditt eget land, per zon eller efter avstånd — och fyll på lagret från distributörer på FIRINGI.",
+          "b": {
+            "1": "Butiker, kaféer och restauranger i ditt land köper av dig",
+            "2": "Leverans per zon eller efter avstånd",
+            "3": "Köp ditt lager från distributörer i hela EU"
+          },
+          "cta": "Registrera dig som grossist"
+        },
+        "distributor": {
+          "t": "Distributör",
+          "p": "Sälj till grossister i hela EU. De köper dina varor i stora volymer och säljer dem vidare till butiker och restauranger i sitt land.",
+          "b": {
+            "1": "Grossister i EU-länder köper av dig",
+            "2": "Beställningar i bulk, per kartong och per pall",
+            "3": "Gränsöverskridande fakturor sköts av FIRINGI"
+          },
+          "cta": "Registrera dig som distributör"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Det företag frågar först.",
+      "items": {
+        "1": {
+          "q": "Kan privatpersoner handla?",
+          "a": "Nej. FIRINGI är för företag med NIF. Priserna är grossistpriser och fakturorna ställs ut på ditt företag."
+        },
+        "2": {
+          "q": "Vad är minsta order?",
+          "a": "150 € för hela varukorgen, oavsett hur många leverantörer den innehåller."
+        },
+        "3": {
+          "q": "Är priserna med eller utan moms?",
+          "a": "Utan moms. Momsen läggs till i kassan enligt varje produkts momssats och visas på varje fakturarad."
+        },
+        "4": {
+          "q": "När kommer mina varor?",
+          "a": "Samma dag. Allt du beställer före sista beställningstid kommer samma dag, från alla leverantörer i din varukorg, och du kan följa varje lastbil i appen."
+        },
+        "5": {
+          "q": "Hur och när betalar jag?",
+          "a": "Betala hela varukorgen på en gång med Multibanco, MB WAY, kort eller SEPA-överföring. Godkända företag kan också betala upp till 30 dagar efter faktura."
+        },
+        "6": {
+          "q": "Kan mina kollegor beställa från samma konto?",
+          "a": "Ja. Lägg till användare med egna inloggningar och välj vem som får beställa, vem som får se fakturor och vem som får ändra leveransadresser."
+        },
+        "7": {
+          "q": "Vad händer om varorna kommer skadade?",
+          "a": "Rapportera det i appen inom 24 timmar, med ett foto. Leverantören svarar med en ersättningsvara eller en kreditnota."
+        },
+        "8": {
+          "q": "Levererar ni till Madeira och Azorerna?",
+          "a": "Inte än. Vi börjar med Portugals fastland och lägger till öarna senare."
+        },
+        "9": {
+          "q": "Kan jag sälja på FIRINGI?",
+          "a": "Ja. Ansök som leverantör, sätt dina priser, minimibelopp och leveransdagar och börja ta emot beställningar från företag nära dig."
+        }
+      }
+    },
+    "final": {
+      "h2": "Din nästa påfyllning kan vara en enda beställning.",
+      "p": "Öppna ett företagskonto och se grossistpriser från leverantörer nära dig."
+    },
+    "plans": {
+      "h2": "Planer för leverantörer. Köpare betalar aldrig.",
+      "sub": "Företag som köper på FIRINGI använder det gratis. Leverantörer börjar gratis och uppgraderar när de växer.",
+      "per": "/mån",
+      "top": "Mest vald",
+      "note": "Planer och priser hämtas från FIRINGI:s planinställningar, så det här avsnittet stämmer alltid med vad leverantörerna betalar.",
+      "start": "Börja gratis",
+      "choose": "Välj {name}",
+      "products": "Upp till {n} produkter",
+      "productsAll": "Obegränsat antal produkter",
+      "team": "{users} användare, {wh} lager, {drivers} förare",
+      "teamAll": "Obegränsat antal användare, lager och förare",
+      "earlyPay": "Förtida utbetalning från {rate} % per dag",
+      "freeEarly": "{n} kostnadsfria förtida utbetalningar per månad",
+      "includes": "Ingår: {list}",
+      "basics": "Beställningar, fakturering och utbetalningar via FIRINGI",
+      "feature": {
+        "INVENTORY": "lagerhantering",
+        "PLANNING": "planering",
+        "WAREHOUSE": "plock i lager",
+        "PRICE_INSIGHTS": "prisinsikter",
+        "ADS": "annonsering",
+        "INTEGRATIONS": "integrationer",
+        "ROUTES": "rutter",
+        "ASSISTANT": "AI-assistent"
+      }
+    },
+    "contact": {
+      "h2": "Prata med oss.",
+      "sub": "Frågor om att köpa eller sälja? Vi svarar inom en arbetsdag.",
+      "name": "Namn",
+      "company": "Företag",
+      "email": "E-post",
+      "phone": "Mobil",
+      "nif": "NIF",
+      "type": "Ditt företag",
+      "msg": "Meddelande",
+      "consent": "Jag godkänner att FIRINGI använder dessa uppgifter för att svara mig, enligt integritetspolicyn.",
+      "send": "Skicka",
+      "waT": "WhatsApp",
+      "waP": "Skriv till vårt team på WhatsApp, måndag till lördag, 9.00–19.00.",
+      "waB": "Öppna WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restaurang, kafé eller bar",
+        "2": "Livsmedelsbutik eller närbutik",
+        "3": "Hotell eller catering",
+        "4": "Personalmatsal, skola eller äldreboende",
+        "5": "Annat"
+      },
+      "vendorMsg": "Vad du säljer och vart du levererar",
+      "sent": "Tack. Vi svarar inom en arbetsdag.",
+      "errRequired": "Fyll i namn, företag och e-post.",
+      "errEmail": "Ange en giltig e-postadress.",
+      "errConsent": "Kryssa i rutan för att godkänna.",
+      "errSpam": "Något gick fel. Försök igen.",
+      "errBusy": "För många meddelanden. Försök igen om en minut.",
+      "sending": "Skickar…",
+      "vendorType": "Jag vill sälja som",
+      "vendorTypes": {
+        "WHOLESALER": "Grossist — jag säljer till butiker i mitt land",
+        "DISTRIBUTOR": "Distributör — jag säljer till grossister i EU"
+      }
+    },
+    "news": {
+      "label": "Få nya leverantörer, erbjudanden och leveransområden via e-post, en gång i månaden.",
+      "ph": "Din företagsmejl",
+      "btn": "Prenumerera",
+      "note": "Du kan avsluta prenumerationen när som helst.",
+      "consent": "Jag vill få FIRINGI:s nyhetsbrev. Jag kan avsluta prenumerationen när som helst.",
+      "sent": "Nästan klart. Kolla din e-post och bekräfta din prenumeration.",
+      "confirmedTitle": "Du prenumererar nu.",
+      "confirmedBody": "Tack. Du får vårt nyhetsbrev en gång i månaden.",
+      "unsubTitle": "Din prenumeration är avslutad.",
+      "unsubBody": "Du får inte nyhetsbrevet längre. Du kan prenumerera igen när som helst.",
+      "invalid": "Den här länken är inte längre giltig.",
+      "back": "Tillbaka till FIRINGI"
+    },
+    "foot": {
+      "tag": "Köp, fyll på och driv ditt företag utan att slösa tid.",
+      "buy": "Köp",
+      "sell": "För leverantörer",
+      "help": "Hjälp",
+      "legal": "Juridiskt",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Alla rättigheter förbehållna.",
+      "links": {
+        "buy": {
+          "1": "Köp",
+          "2": "Kassa",
+          "3": "Hantera",
+          "4": "Spara"
+        },
+        "sell": {
+          "1": "Bli leverantör",
+          "2": "Planer för leverantörer"
+        },
+        "help": {
+          "1": "Frågor",
+          "2": "Kontakt",
+          "3": "Systemstatus",
+          "4": "Logga in"
+        },
+        "legal": {
+          "1": "Användarvillkor",
+          "2": "Integritetspolicy (GDPR)",
+          "3": "Cookies",
+          "4": "Företagsuppgifter"
+        }
+      }
+    },
+    "login": "Logga in",
+    "mail": {
+      "contactSubject": "Vi har fått ditt meddelande",
+      "hello": "Hej {name},",
+      "helloAll": "Hej,",
+      "contactBody": "Tack för att du kontaktade FIRINGI. Vi har fått ditt meddelande och svarar inom en arbetsdag.",
+      "newsSubject": "Bekräfta din prenumeration på FIRINGI:s nyhetsbrev",
+      "newsBody": "Bekräfta att du vill få FIRINGI:s nyhetsbrev:",
+      "newsIgnore": "Om du inte har bett om detta kan du ignorera det här mejlet.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Användarvillkor",
+      "privacy": "Integritetspolicy (GDPR)",
+      "cookies": "Cookies",
+      "company": "Företagsuppgifter",
+      "updated": "Senast uppdaterad {date}",
+      "empty": "Den här sidan håller på att förberedas. Kontakta oss om du har en fråga.",
+      "back": "Tillbaka till FIRINGI"
+    },
+    "langPicker": "Välj språk",
+    "app": {
+      "nav": {
+        "buy": "Köp",
+        "till": "Kassa",
+        "manage": "Hantera",
+        "save": "Spara",
+        "vendors": "Bli leverantör",
+        "faq": "Frågor"
+      },
+      "hero": {
+        "eyebrow": "För butiker, närbutiker, kaféer och restauranger i Portugal",
+        "h1a": "Köp, fyll på och driv",
+        "h1b": "ditt företag",
+        "h1c": "utan att slösa tid.",
+        "lead": "Beställ från alla grossister i en varukorg — livsmedel, drycker, hygien, städ, tobak och mer — med leverans samma dag. Sälj med FIRINGI-kassan och se marginaler, lager och personal i en och samma översikt.",
+        "cta2": "Se hur det fungerar",
+        "note": "Gratis för företag · Inget kort behövs"
+      },
+      "float": {
+        "1": "Ny beställning · leverans i dag",
+        "2": "Faktura betald · MB WAY",
+        "3": "+120 bonuspoäng"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "minsta order för hela varukorgen"
+        },
+        "2": {
+          "v": "Samma dag",
+          "l": "leverans, måndag till lördag"
+        },
+        "3": {
+          "v": "1 faktura",
+          "l": "från FIRINGI för varje beställning"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "för att öppna ditt företagskonto"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Köp",
+          "h": "Alla grossister. En varukorg. Levererat i dag.",
+          "p": "Sök i en katalog med grossistpriser från många leverantörer, fyll en varukorg och betala en gång. Allt kommer samma dag.",
+          "b": {
+            "1": "Ett minimum på 150 € för hela varukorgen",
+            "2": "Volympriser på varje produkt",
+            "3": "Följ varje lastbil i appen"
+          }
+        },
+        "till": {
+          "tag": "Kassa",
+          "h": "En kassa som känner ditt lager.",
+          "p": "Sälj vid disken med FIRINGI-kassan: tryck eller skanna, ta betalt med kort, MB WAY eller kontanter och skriv ut kvittot med kundens NIF.",
+          "b": {
+            "1": "Fortsätter sälja utan internet",
+            "2": "Varje försäljning uppdaterar lagret",
+            "3": "Moms på varje kvittorad"
+          }
+        },
+        "manage": {
+          "tag": "Hantera",
+          "h": "Känn dina marginaler innan du säljer.",
+          "p": "Marginaler per produkt och recept utifrån dina verkliga inköpspriser, lager med bäst före-datum och personalens pass — byggt på beställningarna du redan gör.",
+          "b": {
+            "1": "Marginaler per produkt och per recept",
+            "2": "Lager, varningar för bäst före-datum och påminnelser om påfyllning",
+            "3": "Personalens timmar och pass"
+          }
+        },
+        "save": {
+          "tag": "Spara",
+          "h": "Spendera mindre. Betala när det passar dig.",
+          "p": "Samla poäng på varje levererad beställning, byt dem i belöningsbutiken, gå med i inköpsgrupper för bättre priser och betala senare med godkänt konto.",
+          "b": {
+            "1": "Poäng och en belöningsbutik",
+            "2": "Inköpsgrupper och volymerbjudanden",
+            "3": "Betala upp till 30 dagar senare"
+          }
+        }
+      },
+      "start": {
+        "h": "Kom igång i tre steg.",
+        "steps": {
+          "1": {
+            "t": "Öppna ditt kostnadsfria konto",
+            "p": "Företagsnamn, NIF och leveransadress."
+          },
+          "2": {
+            "t": "Vi granskar det",
+            "p": "Oftast inom en arbetsdag."
+          },
+          "3": {
+            "t": "Beställ och väx",
+            "p": "Köp i dag, få det i dag, och slå på kassan och verktygen när du behöver dem."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Kvitto",
+        "nif": "Kundens NIF",
+        "card": "Kort",
+        "cash": "Kontant",
+        "total": "Totalt",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Varm macka",
+          "4": "Vatten 0,5 L",
+          "5": "Vaniljtartelett",
+          "6": "Apelsinjuice"
+        }
+      },
+      "mng": {
+        "recipe": "Receptkostnad",
+        "dish": "Varm macka",
+        "cost": "Kostnad",
+        "price": "Pris",
+        "margin": "Marginal",
+        "stock": "Lagervarningar",
+        "low": "{n} dagar kvar",
+        "expiry": "Går ut om {n} dagar",
+        "staff": "Personal i dag",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} poäng",
+        "next": "{n} poäng till nästa belöning",
+        "rewards": "Belöningsbutik",
+        "pts": "{n} p",
+        "items": {
+          "1": "Presentkort 10 €",
+          "2": "Fri leverans",
+          "3": "Rengöringskit för kaffemaskin"
+        },
+        "later": "Betala senare",
+        "laterP": "30 dagar · gräns {amount}",
+        "group": "Inköpsgrupp: −6 % på drycker"
+      },
+      "cats": {
+        "h": "Allt din butik säljer, på ett ställe.",
+        "p": "14 kategorier från grossister i hela Portugal — och fler varje månad.",
+        "items": {
+          "1": "Livsmedel",
+          "2": "Färskvaror",
+          "3": "Drycker",
+          "4": "Kosmetika och skönhet",
+          "5": "Personlig hygien",
+          "6": "Hushåll och städ",
+          "7": "Baby och barn",
+          "8": "Djurtillbehör",
+          "9": "Tobak",
+          "10": "Mode och accessoarer",
+          "11": "Leksaker och barn",
+          "12": "Souvenirer och presenter",
+          "13": "Förpackningar och förbrukning",
+          "14": "Kebab- och pizzatillbehör"
+        }
+      }
     }
   }
 }

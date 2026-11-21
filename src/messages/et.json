@@ -259,7 +259,10 @@
       "activityCodeOnce": "Sisestage see üks kord — pärast seda saab seda muuta ainult FIRINGI.",
       "activityCodesSecondary": "Täiendavad {scheme} koodid (valikuline)",
       "activityCodesHint": "Eraldage komadega — kuni {max}.",
-      "activityCodesAdd": "Lisage siia rohkem koode; juba antud jäävad — eemaldada saab ainult FIRINGI."
+      "activityCodesAdd": "Lisage siia rohkem koode; juba antud jäävad — eemaldada saab ainult FIRINGI.",
+      "whatsapp": "WhatsAppi number (valikuline)",
+      "whatsappHint": "Lisa see, kui kasutad WhatsAppi tellimuste ja sõnumite jaoks. Koos riigikoodiga.",
+      "whatsappSame": "See telefoninumber on ka WhatsAppis"
     },
     "businessTypes": {
       "restaurant": "Restoran",
@@ -2015,6 +2018,14 @@
     "rewards_low_stock": {
       "title": "Preemia saab otsa",
       "body": "“{reward}” on järel vaid {left}."
+    },
+    "website_contact": {
+      "title": "Uus küsimus veebilehelt",
+      "body": "{name} ettevõttest {company} saatis küsimuse. See on CRM-is müügivihjena."
+    },
+    "website_vendor_interest": {
+      "title": "Uus müüjataotlus",
+      "body": "{name} ettevõttest {company} soovib FIRINGIs müüa. See on CRM-is müügivihjena."
     }
   },
   "notifications": {
@@ -7917,6 +7928,480 @@
       },
       "noHandovers": "Ükski klient pole veel teie tooteid lunastanud.",
       "orderBy": "Tellida kuni {date}"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "FIRINGI — Osta, täienda varusid ja juhi oma ettevõtet",
+      "description": "Täienda varusid kõigilt hulgimüüjatelt ühe tellimusega: kogusehinnad, selged arved sinu NIF-iga ja kohaletoimetamine samal päeval."
+    },
+    "open": "Ava ärikonto",
+    "menuOpen": "Ava menüü",
+    "menuClose": "Sulge menüü",
+    "chart": {
+      "label": "Kolm müüjat, kes igaüks saadavad tarneringi ühele ettevõttele",
+      "shop": "Sinu ettevõte",
+      "vendors": {
+        "1": {
+          "name": "Cais Bebidas",
+          "slot": "N 9–12"
+        },
+        "2": {
+          "name": "Maré Alimentar",
+          "slot": "N 13–16"
+        },
+        "3": {
+          "name": "Farol Casa",
+          "slot": "L 8–11"
+        }
+      }
+    },
+    "tour": {
+      "frame": "FIRINGI rakenduse vaade: {title}",
+      "ui": {
+        "url": "firingi.pt/buy",
+        "search": "Otsi tooteid, kaubamärke, müüjaid…",
+        "next": "Tarne täna",
+        "cart": "Sinu ostukorv",
+        "minOk": "Miinimum täis",
+        "total": "Kokku",
+        "checkout": "Telli ja maksa",
+        "steps": {
+          "1": "Tellitud",
+          "2": "Komplekteeritud",
+          "3": "Teel",
+          "4": "Kohal"
+        },
+        "reorder": "Aeg uuesti tellida",
+        "fill": "Täida ostukorv",
+        "lastTime": "Eelmine kord: {n} kasti",
+        "role": "Hulgiklient",
+        "company": "Café Central",
+        "person": "Ana",
+        "live": "OTSE",
+        "welcome": "Tere tulemast, {name}",
+        "recent": "Viimased tellimused",
+        "nav": {
+          "1": "Töölaud",
+          "2": "Kataloog",
+          "3": "Tellimused",
+          "4": "Arved ja maksed",
+          "5": "Boonused",
+          "6": "Abi ja tugi",
+          "7": "Kassa (POS)",
+          "8": "Köök ja laoseis"
+        },
+        "kpi": {
+          "1": "Pooleli tellimused",
+          "2": "Teel",
+          "3": "Kulutatud, viimased 30 päeva",
+          "4": "Tasumata arved"
+        }
+      },
+      "products": {
+        "1": "Pikateraline riis 1 kg × 10",
+        "2": "Ekstra neitsioliiviõli 5 L",
+        "3": "Tuunikala oliiviõlis 120 g × 24",
+        "4": "UHT-piim 1 L × 12"
+      }
+    },
+    "vendors": {
+      "h2": "Vii oma hulgimüük internetti.",
+      "sub": "Jõua ettevõteteni, kes tellivad igal nädalal, ilma telefoni teel tellimusi vastu võtmata ja makseid taga ajamata.",
+      "cta": "Kandideeri müüjaks",
+      "rows": {
+        "1": {
+          "t": "Määra oma tingimused",
+          "p": "Vali hinnad, koguseastmed, miinimumtellimused ja tarnepäevad."
+        },
+        "2": {
+          "t": "Üks järjekord kõigile tellimustele",
+          "p": "Uued tellimused saabuvad ühte nimekirja, valmis pakkimiseks."
+        },
+        "3": {
+          "t": "Saada teele ja jaga olekut",
+          "p": "Määra autojuhid ja lase klientidel autot jälgida, ilma et nad sulle helistaksid."
+        },
+        "4": {
+          "t": "Saa raha iga tellimuse eest",
+          "p": "Iga tellimus makstakse välja eraldi, koos selge kandega sinu raamatupidamise jaoks."
+        }
+      }
+    },
+    "sellPage": {
+      "title": "Müü FIRINGIs – jõua ettevõteteni üle Portugali",
+      "description": "Lisa oma hulgikaup FIRINGIsse. Ettevõtted tellivad sinult ühes ostukorvis koos teiste müüjatega; FIRINGI esitab neile arve ja maksab sulle välja.",
+      "rowsH2": "Kõik, mida vajad ettevõtetele müümiseks.",
+      "formH2": "Kandideeri FIRINGIs müüjaks",
+      "formSub": "Räägi meile oma ettevõttest. Vastame ühe tööpäeva jooksul ja anname teada järgmised sammud.",
+      "navPlans": "Paketid müüjatele",
+      "typesH2": "Kaks võimalust FIRINGIs müüa.",
+      "typesSub": "Hulgimüüjad müüvad poodidele, kohvikutele ja restoranidele oma riigis. Turustajad müüvad hulgimüüjatele üle kogu ELi.",
+      "types": {
+        "wholesaler": {
+          "t": "Hulgimüüja",
+          "p": "Müü poodidele, kohvikutele ja restoranidele oma riigis tsooni või vahemaa järgi – ja täienda varusid turustajatelt FIRINGIs.",
+          "b": {
+            "1": "Sinu riigi poed, kohvikud ja restoranid ostavad sinult",
+            "2": "Tarne tsooni või vahemaa järgi",
+            "3": "Osta kaupa turustajatelt üle kogu ELi"
+          },
+          "cta": "Registreeru hulgimüüjana"
+        },
+        "distributor": {
+          "t": "Turustaja",
+          "p": "Müü hulgimüüjatele üle kogu ELi. Nad ostavad sinu kaupa suures koguses ja müüvad selle edasi oma riigi poodidele ja restoranidele.",
+          "b": {
+            "1": "ELi riikide hulgimüüjad ostavad sinult",
+            "2": "Hulgi-, kasti- ja kaubaalusetellimused",
+            "3": "Piiriülesed arved korraldab FIRINGI"
+          },
+          "cta": "Registreeru turustajana"
+        }
+      }
+    },
+    "faq": {
+      "h2": "Mida ettevõtted kõigepealt küsivad.",
+      "items": {
+        "1": {
+          "q": "Kas eraisikud saavad osta?",
+          "a": "Ei. FIRINGI on mõeldud ettevõtetele, kellel on NIF. Hinnad on hulgihinnad ja arved väljastatakse sinu ettevõttele."
+        },
+        "2": {
+          "q": "Mis on miinimumtellimus?",
+          "a": "150 € kogu ostukorvi kohta, olenemata sellest, mitu müüjat selles on."
+        },
+        "3": {
+          "q": "Kas hinnad on käibemaksuga või ilma?",
+          "a": "Ilma käibemaksuta. Käibemaks lisatakse maksmisel iga toote määra järgi ja kuvatakse igal arvereal."
+        },
+        "4": {
+          "q": "Millal mu kaup kohale jõuab?",
+          "a": "Samal päeval. Kõik, mis tellid enne tähtaega, jõuab samal päeval kohale kõigilt sinu ostukorvi müüjatelt ja iga autot saad rakenduses jälgida."
+        },
+        "5": {
+          "q": "Kuidas ja millal ma maksan?",
+          "a": "Maksa kogu ostukorvi eest korraga: Multibanco, MB WAY, kaart või SEPA-ülekanne. Kinnitatud ettevõtted saavad maksta ka kuni 30 päeva pärast arve esitamist."
+        },
+        "6": {
+          "q": "Kas mu kolleegid saavad samalt kontolt tellida?",
+          "a": "Jah. Lisa kasutajad oma sisselogimisandmetega ja vali, kes saab tellida, kes näeb arveid ja kes saab tarneaadresse muuta."
+        },
+        "7": {
+          "q": "Mis siis, kui kaup jõuab kohale kahjustatuna?",
+          "a": "Teata sellest rakenduses 24 tunni jooksul ja lisa foto. Müüja vastab asenduskauba või kreeditarvega."
+        },
+        "8": {
+          "q": "Kas toimetate kaupa ka Madeirale ja Assooridele?",
+          "a": "Veel mitte. Alustame Mandri-Portugalist ja lisame saared hiljem."
+        },
+        "9": {
+          "q": "Kas ma saan FIRINGIs müüa?",
+          "a": "Jah. Kandideeri müüjaks, määra hinnad, miinimumtellimused ja tarnepäevad ning hakka saama tellimusi lähedal asuvatelt ettevõtetelt."
+        }
+      }
+    },
+    "final": {
+      "h2": "Sinu järgmine varude täiendamine võib olla üks tellimus.",
+      "p": "Ava ärikonto ja vaata lähedal asuvate müüjate hulgihindu."
+    },
+    "plans": {
+      "h2": "Paketid müüjatele. Ostjad ei maksa kunagi.",
+      "sub": "FIRINGIs ostvad ettevõtted kasutavad seda tasuta. Müüjad alustavad tasuta ja valivad kasvades suurema paketi.",
+      "per": "/kuu",
+      "top": "Kõige populaarsem",
+      "note": "Paketid ja hinnad tulevad FIRINGI paketiseadetest, nii et see jaotis vastab alati sellele, mida müüjad maksavad.",
+      "start": "Alusta tasuta",
+      "choose": "Vali {name}",
+      "products": "Kuni {n} toodet",
+      "productsAll": "Piiramatult tooteid",
+      "team": "{users} kasutajat, {wh} ladu, {drivers} autojuhti",
+      "teamAll": "Piiramatult kasutajaid, ladusid ja autojuhte",
+      "earlyPay": "Varajane väljamakse alates {rate}% päevas",
+      "freeEarly": "{n} tasuta varajast väljamakset kuus",
+      "includes": "Sisaldab: {list}",
+      "basics": "Tellimused, arveldus ja väljamaksed FIRINGI kaudu",
+      "feature": {
+        "INVENTORY": "laohaldus",
+        "PLANNING": "planeerimine",
+        "WAREHOUSE": "laos komplekteerimine",
+        "PRICE_INSIGHTS": "hinnaülevaated",
+        "ADS": "reklaam",
+        "INTEGRATIONS": "liidestused",
+        "ROUTES": "marsruudid",
+        "ASSISTANT": "tehisintellekti assistent"
+      }
+    },
+    "contact": {
+      "h2": "Võta meiega ühendust.",
+      "sub": "Küsimusi ostmise või müümise kohta? Vastame ühe tööpäeva jooksul.",
+      "name": "Nimi",
+      "company": "Ettevõte",
+      "email": "E-post",
+      "phone": "Mobiil",
+      "nif": "NIF",
+      "type": "Sinu ettevõte",
+      "msg": "Sõnum",
+      "consent": "Nõustun, et FIRINGI kasutab neid andmeid mulle vastamiseks, nagu on kirjeldatud privaatsuspoliitikas.",
+      "send": "Saada",
+      "waT": "WhatsApp",
+      "waP": "Kirjuta meie meeskonnale WhatsAppis esmaspäevast laupäevani kell 9.00–19.00.",
+      "waB": "Ava WhatsApp",
+      "coT": "FIRINGI",
+      "types": {
+        "1": "Restoran, kohvik või baar",
+        "2": "Toidupood või minimarket",
+        "3": "Hotell või toitlustus",
+        "4": "Söökla, kool või hooldekodu",
+        "5": "Muu"
+      },
+      "vendorMsg": "Mida sa müüd ja kuhu tarnid",
+      "sent": "Aitäh! Vastame ühe tööpäeva jooksul.",
+      "errRequired": "Sisesta oma nimi, ettevõte ja e-post.",
+      "errEmail": "Sisesta kehtiv e-posti aadress.",
+      "errConsent": "Nõustumiseks märgi kast.",
+      "errSpam": "Midagi läks valesti. Proovi uuesti.",
+      "errBusy": "Liiga palju sõnumeid. Proovi minuti pärast uuesti.",
+      "sending": "Saatmine…",
+      "vendorType": "Soovin müüa kui",
+      "vendorTypes": {
+        "WHOLESALER": "Hulgimüüja – müün oma riigi poodidele",
+        "DISTRIBUTOR": "Turustaja – müün hulgimüüjatele ELis"
+      }
+    },
+    "news": {
+      "label": "Saa uued müüjad, pakkumised ja tarnepiirkonnad e-postiga kord kuus.",
+      "ph": "Sinu tööalane e-post",
+      "btn": "Telli",
+      "note": "Saad tellimusest igal ajal loobuda.",
+      "consent": "Nõustun FIRINGI uudiskirja saamisega. Saan tellimusest igal ajal loobuda.",
+      "sent": "Peaaegu valmis. Vaata oma e-posti ja kinnita tellimus.",
+      "confirmedTitle": "Oled uudiskirja tellinud.",
+      "confirmedBody": "Aitäh! Saad meie uudiskirja kord kuus.",
+      "unsubTitle": "Oled tellimusest loobunud.",
+      "unsubBody": "Sa ei saa enam uudiskirja. Saad selle igal ajal uuesti tellida.",
+      "invalid": "See link ei kehti enam.",
+      "back": "Tagasi FIRINGIsse"
+    },
+    "foot": {
+      "tag": "Osta, täienda varusid ja juhi oma ettevõtet aega raiskamata.",
+      "buy": "Osta",
+      "sell": "Müüjatele",
+      "help": "Abi",
+      "legal": "Õiguslik teave",
+      "livro": "Livro de Reclamações",
+      "rights": "© {year} FIRINGI. Kõik õigused kaitstud.",
+      "links": {
+        "buy": {
+          "1": "Osta",
+          "2": "Kassa",
+          "3": "Halda",
+          "4": "Säästa"
+        },
+        "sell": {
+          "1": "Hakka müüjaks",
+          "2": "Paketid müüjatele"
+        },
+        "help": {
+          "1": "Küsimused",
+          "2": "Kontakt",
+          "3": "Süsteemi olek",
+          "4": "Logi sisse"
+        },
+        "legal": {
+          "1": "Kasutustingimused",
+          "2": "Privaatsuspoliitika (IKÜM)",
+          "3": "Küpsised",
+          "4": "Ettevõtte andmed"
+        }
+      }
+    },
+    "login": "Logi sisse",
+    "mail": {
+      "contactSubject": "Saime sinu sõnumi",
+      "hello": "Tere, {name}!",
+      "helloAll": "Tere!",
+      "contactBody": "Aitäh, et võtsid FIRINGIga ühendust. Saime sinu sõnumi ja vastame ühe tööpäeva jooksul.",
+      "newsSubject": "Kinnita FIRINGI uudiskirja tellimus",
+      "newsBody": "Palun kinnita, et soovid saada FIRINGI uudiskirja:",
+      "newsIgnore": "Kui sa seda ei tellinud, jäta see e-kiri tähelepanuta.",
+      "sign": "FIRINGI"
+    },
+    "legal": {
+      "terms": "Kasutustingimused",
+      "privacy": "Privaatsuspoliitika (IKÜM)",
+      "cookies": "Küpsised",
+      "company": "Ettevõtte andmed",
+      "updated": "Viimati uuendatud {date}",
+      "empty": "Seda lehte alles valmistatakse. Kui sul on küsimus, võta meiega ühendust.",
+      "back": "Tagasi FIRINGIsse"
+    },
+    "langPicker": "Vali keel",
+    "app": {
+      "nav": {
+        "buy": "Osta",
+        "till": "Kassa",
+        "manage": "Halda",
+        "save": "Säästa",
+        "vendors": "Hakka müüjaks",
+        "faq": "Küsimused"
+      },
+      "hero": {
+        "eyebrow": "Poodidele, minimarketitele, kohvikutele ja restoranidele Portugalis",
+        "h1a": "Osta, täienda varusid ja juhi",
+        "h1b": "oma ettevõtet",
+        "h1c": "aega raiskamata.",
+        "lead": "Telli kõigilt hulgimüüjatelt ühte ostukorvi – toidukaubad, joogid, hügieen, puhastusvahendid, tubakas ja palju muud – kohaletoimetamisega samal päeval. Müü FIRINGI kassaga ja näe oma marginaale, laoseisu ja töötajaid ühel töölaual.",
+        "cta2": "Vaata, kuidas see töötab",
+        "note": "Ettevõtetele tasuta · Kaarti pole vaja"
+      },
+      "float": {
+        "1": "Uus tellimus · tarne täna",
+        "2": "Arve tasutud · MB WAY",
+        "3": "+120 boonuspunkti"
+      },
+      "stats": {
+        "1": {
+          "v": "150 €",
+          "l": "miinimumtellimus kogu ostukorvile"
+        },
+        "2": {
+          "v": "Samal päeval",
+          "l": "tarne esmaspäevast laupäevani"
+        },
+        "3": {
+          "v": "1 arve",
+          "l": "FIRINGIlt iga tellimuse kohta"
+        },
+        "4": {
+          "v": "0 €",
+          "l": "ärikonto avamine"
+        }
+      },
+      "bands": {
+        "buy": {
+          "tag": "Osta",
+          "h": "Kõik hulgimüüjad. Üks ostukorv. Kohal täna.",
+          "p": "Otsi ühest kataloogist paljude müüjate hulgihindadega, täida üks ostukorv ja maksa korra. Kõik jõuab kohale samal päeval.",
+          "b": {
+            "1": "Üks 150 € miinimum kogu ostukorvile",
+            "2": "Kogusehinnad kõigil toodetel",
+            "3": "Jälgi iga autot rakenduses"
+          }
+        },
+        "till": {
+          "tag": "Kassa",
+          "h": "Kassa, mis tunneb sinu laoseisu.",
+          "p": "Müü leti taga FIRINGI kassaga: puuduta või skanni, võta vastu kaart, MB WAY või sularaha ja prindi tšekk kliendi NIF-iga.",
+          "b": {
+            "1": "Müüb edasi ka ilma internetita",
+            "2": "Iga müük uuendab laoseisu",
+            "3": "Käibemaks igal tšekireal"
+          }
+        },
+        "manage": {
+          "tag": "Halda",
+          "h": "Tea oma marginaale enne müümist.",
+          "p": "Toote- ja retseptimarginaalid sinu tegelike ostuhindade põhjal, laoseis koos aegumiskuupäevadega ja töötajate vahetused – kõik sinu juba tehtud tellimustest.",
+          "b": {
+            "1": "Marginaalid toote ja retsepti kaupa",
+            "2": "Laoseis, aegumishoiatused ja tellimise meeldetuletused",
+            "3": "Tööajad ja vahetused"
+          }
+        },
+        "save": {
+          "tag": "Säästa",
+          "h": "Kuluta vähem. Maksa siis, kui sulle sobib.",
+          "p": "Kogu punkte iga kohale toimetatud tellimuse eest, vaheta need boonuspoes, liitu ostugruppidega paremate hindade saamiseks ja maksa hiljem kinnitatud kontodel.",
+          "b": {
+            "1": "Punktid ja boonuspood",
+            "2": "Ostugrupid ja kogusepakkumised",
+            "3": "Maksa kuni 30 päeva hiljem"
+          }
+        }
+      },
+      "start": {
+        "h": "Alusta kolme sammuga.",
+        "steps": {
+          "1": {
+            "t": "Ava tasuta konto",
+            "p": "Ettevõtte nimi, NIF ja tarneaadress."
+          },
+          "2": {
+            "t": "Me kontrollime selle",
+            "p": "Tavaliselt ühe tööpäeva jooksul."
+          },
+          "3": {
+            "t": "Telli ja kasva",
+            "p": "Osta täna, saa kätte täna ning lülita kassa ja tööriistad sisse, kui neid vajad."
+          }
+        }
+      },
+      "pos": {
+        "ticket": "Tšekk",
+        "nif": "Kliendi NIF",
+        "card": "Kaart",
+        "cash": "Sularaha",
+        "total": "Kokku",
+        "items": {
+          "1": "Espresso",
+          "2": "Galão",
+          "3": "Kuum võileib",
+          "4": "Vesi 0,5 L",
+          "5": "Kreemikorvike",
+          "6": "Apelsinimahl"
+        }
+      },
+      "mng": {
+        "recipe": "Retsepti omahind",
+        "dish": "Kuum võileib",
+        "cost": "Omahind",
+        "price": "Hind",
+        "margin": "Marginaal",
+        "stock": "Laohoiatused",
+        "low": "{n} päeva jäänud",
+        "expiry": "Aegub {n} päeva pärast",
+        "staff": "Töötajad täna",
+        "people": {
+          "1": "Rita",
+          "2": "João",
+          "3": "Sara"
+        }
+      },
+      "sv": {
+        "points": "{n} punkti",
+        "next": "{n} punkti järgmise boonuseni",
+        "rewards": "Boonuspood",
+        "pts": "{n} p",
+        "items": {
+          "1": "10 € kinkekaart",
+          "2": "Tasuta tarne",
+          "3": "Kohvimasina puhastuskomplekt"
+        },
+        "later": "Maksa hiljem",
+        "laterP": "30 päeva · limiit {amount}",
+        "group": "Ostugrupp: −6% jookidelt"
+      },
+      "cats": {
+        "h": "Kõik, mida su pood müüb, ühest kohast.",
+        "p": "14 kategooriat hulgimüüjatelt üle Portugali – ja iga kuu lisandub uusi.",
+        "items": {
+          "1": "Toidukaubad",
+          "2": "Värske toodang",
+          "3": "Joogid",
+          "4": "Kosmeetika ja ilu",
+          "5": "Isiklik hügieen",
+          "6": "Kodu ja puhastus",
+          "7": "Beebid ja lapsehooldus",
+          "8": "Lemmikloomatarbed",
+          "9": "Tubakas",
+          "10": "Mood ja aksessuaarid",
+          "11": "Mänguasjad ja lapsed",
+          "12": "Suveniirid ja kingitused",
+          "13": "Pakendid ja tarvikud",
+          "14": "Kebabi- ja pitsatarvikud"
+        }
+      }
     }
   }
 }

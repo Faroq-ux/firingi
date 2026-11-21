@@ -233,6 +233,9 @@ export const EVENTS: EventDef[] = [
   E("review.reminder", "orders", null, ["EMAIL", "PUSH"], ["product"]),
   E("review.hidden", "catalogue", null, ["EMAIL"], ["product", "reason"]),
   E("review.to_moderate", "catalogue", ["admin.reviews.moderate"], ["PUSH"], ["kind", "reason"]),
+  // Phase 56: landing page
+  E("website.contact", "account", ["admin.crm.view", "admin.crm.manage"], ["EMAIL", "PUSH"], ["company", "name"]),
+  E("website.vendor_interest", "account", ["admin.crm.view", "admin.crm.manage"], ["EMAIL", "PUSH"], ["company", "name"]),
   // Phase 55: rewards shop
   E("rewards.supplier_redeemed", "orders", ["vendor.promotions.manage", "vendor.orders.view"], ["EMAIL", "PUSH"], ["reward", "company"]),
   E("rewards.to_review", "catalogue", ["admin.marketing.manage"], ["EMAIL"], ["company", "reward"]),

@@ -148,6 +148,7 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
               <dl className="grid grid-cols-[6.5rem_1fr] gap-y-1.5 text-sm">
                 <dt className="text-muted-foreground">E-mail</dt><dd className="break-all">{c.email}</dd>
                 <dt className="text-muted-foreground">Phone</dt><dd>{c.phone ?? "—"}</dd>
+                <dt className="text-muted-foreground">WhatsApp</dt><dd>{c.whatsapp ? <a className="text-primary hover:underline" href={`https://wa.me/${c.whatsapp.replace(/[^\d]/g, "")}`} target="_blank" rel="noopener noreferrer">{c.whatsapp}</a> : "—"}</dd>
                 <dt className="text-muted-foreground">VAT</dt><dd>{c.vatNumber ?? "—"}</dd>
                 <dt className="text-muted-foreground">Legal form</dt><dd>{c.legalForm === "SOLE_TRADER" ? "Sole trader" : "Company"}</dd>
                 <dt className="text-muted-foreground">Cert. code</dt><dd data-testid="cert-code">{c.registryCertificateCode ?? (needsCertificateCode(c.type, c.legalForm) ? <span className="text-amber-700 dark:text-warning">not given</span> : "—")}</dd>
