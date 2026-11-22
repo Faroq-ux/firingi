@@ -57,6 +57,7 @@ const vin = section(`${V}/inventory`, ["vendor.inventory.view", "vendor.inventor
 const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage"]);
 const vad = section(`${V}/ads`, "vendor.promotions.manage");
 const vpos = section(`${V}/pos`, ["company.pos.sell", "company.pos.manage"]);
+const vrp = section(`${V}/reps`, ["vendor.reps.manage", "vendor.reps.field"]);
 const vst = section(`${V}/staff`, ["vendor.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
@@ -174,6 +175,17 @@ export const VENDOR_NAV: NavSection[] = [
       vfl("cold-chain", "Cold Chain", "Cadeia de Frio", "P42", { live: true, perm: ["vendor.orders.view", "vendor.orders.manage", "vendor.fleet.view", "vendor.inventory.view"], es: "Cadena de frío" }),
     ],
   },
+  {
+    key: "reps", icon: "Handshake", label: { en: "Sales Reps", pt: "Vendedores", es: "Comerciales" },
+    items: [
+      vrp("my-day", "My Day", "O Meu Dia", "P62", { live: true, feature: "SALES_REP_ME", perm: "vendor.reps.field", es: "Mi día" }),
+      vrp("my-customers", "My Customers", "Os Meus Clientes", "P62", { live: true, feature: "SALES_REP_ME", perm: "vendor.reps.field", es: "Mis clientes" }),
+      vrp("my-orders", "Orders I Took", "Encomendas que Registei", "P62", { live: true, feature: "SALES_REP_ME", perm: "vendor.reps.field", es: "Pedidos que tomé" }),
+      vrp("", "Sales Team", "Equipa Comercial", "P62", { live: true, href: `${V}/reps`, feature: "SALES_REPS", perm: "vendor.reps.manage", es: "Equipo comercial" }),
+      vrp("customers", "Rep Customers", "Clientes por Vendedor", "P62", { live: true, feature: "SALES_REPS", perm: "vendor.reps.manage", es: "Clientes por comercial" }),
+      vrp("visits", "Visit Plan & Map", "Plano e Mapa de Visitas", "P62", { live: true, feature: "SALES_REPS", perm: "vendor.reps.manage", es: "Plan y mapa de visitas" }),
+    ],
+  },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" }), vr("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["vendor.reports.view", "vendor.orders.view", "vendor.products.manage"], es: "Huella de CO₂" }), vr("eu-trade", "EU Trade Report", "Relatório Intracomunitário", "P57", { live: true, perm: ["vendor.reports.view", "vendor.invoices.view", "vendor.orders.view"], es: "Informe intracomunitario" })] },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(vpos, false) },
   { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(vst) },
@@ -239,6 +251,7 @@ export const BUY_NAV: NavSection[] = [
       bo("quotes", "Quotes", "Orçamentos", "P26", { live: true, es: "Presupuestos" }),
       bo("tenders", "Tenders", "Concursos", "P50", { live: true, perm: ["buyer.orders.view", "buyer.orders.place"], es: "Licitaciones" }),
       bo("recurring", "Recurring Orders", "Encomendas Recorrentes", "P26", { live: true, es: "Pedidos recurrentes" }),
+      bo("rep-orders", "Orders from Sales Reps", "Encomendas dos Vendedores", "P62", { live: true, feature: "REP_ORDERS", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Pedidos de comerciales" }),
       bo("substitutions", "Replacements", "Substituições", "P60", { live: true, perm: ["buyer.orders.place", "buyer.orders.view"], es: "Sustituciones" }),
       bo("lists", "Order Lists", "Listas de Encomenda", "P26", { live: true, es: "Listas de pedidos" }),
       bo("approvals", "Approvals", "Aprovações", "P26", { live: true, perm: ["buyer.orders.place", "buyer.orders.view", "buyer.orders.approve"], es: "Aprobaciones" }),

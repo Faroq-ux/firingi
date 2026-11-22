@@ -78,6 +78,14 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       const wa = await (await import("@/server/whatsapp/ordering")).waSettings();
       if (!wa.enabled || !(ctx.company.type === "CUSTOMER" ? wa.audiences.customers : ctx.company.type === "WHOLESALER" && wa.audiences.wholesalers)) off.add("WHATSAPP_ORDERING");
     }
+    // Phase 62: sales reps — FIRINGI's switch; the rep's own pages only for active reps; customers once a rep serves them
+    {
+      const sr = await import("@/server/salesreps/service");
+      const on = (await sr.salesRepSettings()).enabled;
+      if (!on || portal !== "vendor") { off.add("SALES_REPS"); off.add("SALES_REP_ME"); }
+      else if (!(await sr.myRep(ctx))?.active) off.add("SALES_REP_ME");
+      if (!on || portal !== "buy" || !(await sr.servedByReps(ctx.company.id))) off.add("REP_ORDERS");
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

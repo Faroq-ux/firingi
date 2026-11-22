@@ -73,8 +73,12 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "VENDOR_SALES", name: "Sales Manager", description: "Products, pricing, promotions and orders", appliesTo: VENDOR_TYPES,
     permissions: ["company.support.use", 
       "vendor.dashboard.view", "vendor.products.view", "vendor.products.manage", "vendor.pricing.manage",
-      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.reports.view", "vendor.inventory.view", "vendor.reviews.manage",
+      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.reports.view", "vendor.inventory.view", "vendor.reviews.manage", "vendor.reps.manage",
     ],
+  },
+  {
+    key: "VENDOR_REP", name: "Sales Rep", description: "Field sales: own customers, visits and orders taken for customers", appliesTo: VENDOR_TYPES,
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.orders.view", "vendor.reps.field"],
   },
   {
     key: "VENDOR_WAREHOUSE", name: "Warehouse", description: "Stock and order preparation", appliesTo: VENDOR_TYPES,

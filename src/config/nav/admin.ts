@@ -105,6 +105,7 @@ export const ADMIN_NAV: NavSection[] = [
           vm("approval", "Approval", "Aprovação", "P2", { live: true, perm: "admin.vendors.approve" }),
           vm("address-requests", "Address Approvals", "Aprovação de Moradas", "P47", { live: true, perm: ["admin.vendors.view", "admin.vendors.approve", "admin.settings.manage"] }),
           vm("storefronts", "Storefronts", "Lojas Online", "P61", { live: true, href: `${A}/vendors/storefronts`, perm: ["admin.vendors.view", "admin.vendors.approve", "admin.settings.manage"] }),
+          vm("sales-reps", "Sales Reps", "Vendedores", "P62", { live: true, href: `${A}/vendors/sales-reps`, perm: ["admin.vendors.view", "admin.vendors.approve", "admin.settings.manage"] }),
           vm("commission", "Commission", "Comissões", "P5", { live: true, perm: ["admin.vendors.commission", "admin.finance.view"] }),
           vm("plans", "Supplier Plans", "Planos de Fornecedor", "P36", { live: true, href: `${A}/vendors/plans`, perm: ["admin.vendors.view", "admin.vendors.commission", "admin.finance.view", "admin.finance.manage"] }),
           vm("early-payouts", "Early Payouts", "Pagamentos Antecipados", "P36", { live: true, href: `${A}/vendors/plans/early-payouts`, perm: ["admin.finance.view", "admin.finance.manage"] }),

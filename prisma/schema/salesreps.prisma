@@ -1,0 +1,129 @@
+// ───────────────────────── Sales reps (Phase 62) ─────────────────────────
+// A wholesaler's (or distributor's) field sales reps: their own customers, a visit plan, visits with check-in,
+// outcome, notes and photos, orders taken for a customer (the customer confirms — or lets the rep place them
+// directly), monthly targets and commission. FIRINGI still invoices every order; the commission is between the
+// supplier and its rep (FIRINGI only reports it).
+
+enum RepVisitStatus {
+  PLANNED
+  DONE
+  MISSED
+  CANCELLED
+}
+
+enum RepVisitOutcome {
+  ORDER
+  NO_ORDER
+  FOLLOW_UP
+  CLOSED
+}
+
+enum RepOrderStatus {
+  PENDING
+  PLACED
+  REJECTED
+  EXPIRED
+  FAILED
+  CANCELLED
+}
+
+model SalesRep {
+  id              String   @id @default(cuid())
+  vendorCompanyId String
+  userId          String
+  active          Boolean  @default(true)
+  /// % of the net goods of delivered orders from the rep's customers
+  commissionPct   Decimal  @default(0) @db.Decimal(5, 2)
+  /// sales target per month (net, excl. VAT)
+  monthlyTarget   Decimal? @db.Decimal(18, 2)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  assignments RepAssignment[]
+  visits      RepVisit[]
+  orders      RepOrder[]
+
+  @@unique([vendorCompanyId, userId])
+}
+
+/**
+ * One rep per customer and supplier.
+ */
+model RepAssignment {
+  id              String   @id @default(cuid())
+  repId           String
+  vendorCompanyId String
+  buyerCompanyId  String
+  createdAt       DateTime @default(now())
+
+  rep SalesRep @relation(fields: [repId], references: [id], onDelete: Cascade)
+
+  @@unique([vendorCompanyId, buyerCompanyId])
+  @@index([repId])
+}
+
+model RepVisit {
+  id              String           @id @default(cuid())
+  repId           String
+  vendorCompanyId String
+  buyerCompanyId  String
+  plannedFor      DateTime         @db.Date
+  status          RepVisitStatus   @default(PLANNED)
+  checkInAt       DateTime?
+  checkOutAt      DateTime?
+  latitude        Decimal?         @db.Decimal(9, 6)
+  longitude       Decimal?         @db.Decimal(9, 6)
+  outcome         RepVisitOutcome?
+  note            String?
+  photoKeys       String[]         @default([])
+  repOrderId      String?
+  createdById     String?
+  createdAt       DateTime         @default(now())
+
+  rep SalesRep @relation(fields: [repId], references: [id], onDelete: Cascade)
+
+  @@index([repId, plannedFor])
+  @@index([vendorCompanyId, plannedFor])
+}
+
+/**
+ * An order a rep takes for a customer: placed when the customer confirms (or at once, if the customer allows it).
+ */
+model RepOrder {
+  id              String         @id @default(cuid())
+  repId           String
+  vendorCompanyId String
+  buyerCompanyId  String
+  addressId       String
+  /// [{ offerId, qty }]
+  items           Json
+  note            String?
+  status          RepOrderStatus @default(PENDING)
+  /// placed without asking (the customer allows this supplier's reps to)
+  auto            Boolean        @default(false)
+  totalNet        Decimal        @db.Decimal(18, 2)
+  orderIds        String[]       @default([])
+  orderNumbers    String[]       @default([])
+  error           String?
+  expiresAt       DateTime
+  decidedAt       DateTime?
+  decidedById     String?
+  createdAt       DateTime       @default(now())
+
+  rep SalesRep @relation(fields: [repId], references: [id], onDelete: Cascade)
+
+  @@index([buyerCompanyId, status])
+  @@index([repId, createdAt])
+}
+
+/**
+ * The customer lets a supplier's reps place its orders directly (no confirmation).
+ */
+model RepOrderPreference {
+  buyerCompanyId  String
+  vendorCompanyId String
+  autoConfirm     Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+
+  @@id([buyerCompanyId, vendorCompanyId])
+}

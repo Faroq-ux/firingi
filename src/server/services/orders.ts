@@ -206,6 +206,8 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       const order = await tx.order.create({
         data: {
           number, flow, buyerCompanyId: ctx.company.id, sellerCompanyId: sellerId, placedByUserId: ctx.user.id, countryId: ctx.company.countryId, groupRoundId: input.groupRoundId ?? null,
+          // Phase 62: the supplier's sales rep for this customer (commission), whatever the channel
+          salesRepId: await (await import("@/server/salesreps/service")).repFor(tx, sellerId, ctx.company.id),
           status: "NEW", deliveryMode: decision.mode, deliveryRuleId: decision.ruleId, smallOrder: !!decision.small, checkoutId: pc.parts.length > 1 ? checkoutId : null,
           couponCode: pc.coupon?.ok ? pc.coupon.code : null, deliveryDiscountNet: part.waived.toFixed(2), deliveryPromotionId: part.deliveryPromotionId,
           deliveryAddress, requestedDeliveryDate: input.requestedDeliveryDate ?? null, buyerNotes: input.notes?.trim() || null,

@@ -77,6 +77,8 @@ const defs = {
   "vendor.inventory.manage": { audience: "VENDOR", module: "Inventory", description: "Receive stock, counts, transfers, write-offs, reorder points" },
   "vendor.purchasing.manage": { audience: "VENDOR", module: "Inventory", description: "Suppliers and purchase orders" },
   "vendor.warehouse.pick": { audience: "VENDOR", module: "Inventory", description: "Pick & pack orders, scan, print labels and packing slips" },
+  "vendor.reps.manage": { audience: "VENDOR", module: "Sales reps", description: "Manage sales reps: customers, visit plans, targets, commission and results" },
+  "vendor.reps.field": { audience: "VENDOR", module: "Sales reps", description: "Sales rep: own customers, visits and orders taken for customers" },
   "vendor.recalls.manage": { audience: "VENDOR", module: "Inventory", description: "Recall own lots (blocks stock and tells every buyer)" },
   "vendor.pricing.manage": { audience: "VENDOR", module: "Pricing", description: "Manage price lists and customer pricing" },
   "vendor.promotions.manage": { audience: "VENDOR", module: "Pricing", description: "Manage own promotions" },

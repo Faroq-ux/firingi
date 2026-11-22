@@ -16,8 +16,14 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // FIRINGI_LOW_MEMORY_BUILD=1: no webpack persistent cache (a cold build on a small box — writing the multi-GB
   // cache is what pushes the compiler worker past its heap; later builds are then full builds too)
-  webpack: (config) => {
-    if (process.env.FIRINGI_LOW_MEMORY_BUILD === "1") config.cache = false;
+  // …and the server bundle isn't minified (it never goes to a browser; minifying it is the largest peak) and no
+  // source maps are made.
+  webpack: (config, { isServer, dev }) => {
+    if (process.env.FIRINGI_LOW_MEMORY_BUILD === "1" && !dev) {
+      config.cache = false;
+      config.devtool = false;
+      if (isServer) config.optimization = { ...config.optimization, minimize: false };
+    }
     return config;
   },
   // API answers (the middleware covers pages): never sniffed, never framed, never cached by proxies.

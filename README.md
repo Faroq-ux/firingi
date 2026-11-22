@@ -742,6 +742,28 @@ Every wholesaler (and distributor) gets its own branded page at `/s/<name>`, wit
 
 Details: [docs/storefronts.md](docs/storefronts.md).
 
+## Sales reps (Phase 62)
+
+Wholesalers' and distributors' **field sales reps** get a phone-first app; their managers get the team view.
+
+- **Rep app:**
+  - *My day*: visits with check-in (location), outcome, notes and photos, plus the month's progress against the target.
+  - *My customers*: longest without an order first.
+  - *Customer card*: what they usually buy, and a **new order at the customer's own prices**.
+  - *Orders I took*.
+- **Customer decides:** a rep's order waits for the customer to confirm (48 h by default, then it expires), or is placed at once when the customer lets that supplier's reps order directly. Placing goes through normal checkout (minimums, credit, approvals), and **FIRINGI invoices the customer** as always.
+- **Manager:**
+  - the team (commission %, monthly target, active), with results per month and a CSV;
+  - one rep per customer (prospects found by name);
+  - the visit plan and a **map of the day's visits**.
+- **Commission:** every new order from a rep's customer carries the rep, whatever the channel. Delivered net goods (no delivery fee, no VAT) give the commission. It is between the supplier and its rep; FIRINGI only reports it.
+- **Pages:**
+  - *Sales Reps* section for suppliers and *Orders › Orders from Sales Reps* for customers (25 languages).
+  - FIRINGI *Vendors › Sales Reps* (English): overview and every switch (on/off, direct ordering allowed, hours to confirm, photos per visit).
+- **Background job:** `/api/cron/salesreps`, hourly.
+
+Details: [docs/sales-reps.md](docs/sales-reps.md).
+
 ## EU trade reporting (Phase 57)
 
 FIRINGI invoices every buyer and buys from every supplier, so **FIRINGI's own entity files the EU returns**: the

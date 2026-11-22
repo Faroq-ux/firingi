@@ -207,6 +207,11 @@ export const EVENTS: EventDef[] = [
   E("tender.closed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
   E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
   E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
+  // Phase 62: sales reps
+  E("reporder.proposed", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["rep", "supplier", "total", "hours"]),
+  E("reporder.placed", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH"], ["numbers"]),
+  E("reporder.rejected", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH", "EMAIL"], ["customer"]),
+  E("reporder.expired", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH"], ["total"]),
   // Phase 61: storefronts
   E("storefront.review", "catalogue", ["admin.vendors.approve", "admin.vendors.view"], ["EMAIL"], ["company", "slug"]),
   E("storefront.decided", "catalogue", ["company.profile.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["status", "note"]),
