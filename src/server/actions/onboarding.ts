@@ -52,6 +52,8 @@ const companySchema = z.object({
   referralCode: z.string().trim().max(20).optional().nullable(),
   /** Phase 33: pilot invitation code. */
   invite: z.string().trim().max(20).optional().nullable(),
+  /** Phase 61: the storefront link the business registered from. */
+  store: z.string().trim().max(40).optional().nullable(),
 });
 
 async function signInAfterRegistration(email: string, pw: string, locale: string) {
@@ -73,6 +75,7 @@ export async function registerCompanyAction(raw: z.input<typeof companySchema>):
       headOffice: { line1: i.line1, line2: i.line2, postalCode: i.postalCode, cityId: i.cityId, cityName: i.cityName },
     });
     if (i.referralCode && i.type !== "DISTRIBUTOR") await (await import("@/server/loyalty/service")).attachReferral(reg.companyId, i.referralCode).catch(() => false);
+    if (i.store) await (await import("@/server/storefront/service")).attachStorefrontSignup(reg.companyId, i.store).catch(() => false);
     await signInAfterRegistration(i.ownerEmail.toLowerCase(), i.password, i.countryCode === "PT" ? "pt-PT" : i.countryCode === "ES" ? "es" : "en");
     return { ok: true, data: { redirectTo: "/application-status" } };
   } catch (e) {

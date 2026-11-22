@@ -1,0 +1,65 @@
+// ───────────────────────── Wholesaler storefronts (Phase 61) ─────────────────────────
+// A wholesaler (or distributor) gets its own branded page on FIRINGI — logo, banner, colour, tagline, about text,
+// featured products — at a public link /s/<slug> with a QR code, to bring its existing customers in. Businesses that
+// register from that link are linked to the store; prices stay behind sign-in and FIRINGI still invoices the buyer.
+// FIRINGI approves the first publication (switchable) and can suspend a store.
+
+enum StorefrontStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  SUSPENDED
+}
+
+model Storefront {
+  companyId        String           @id
+  slug             String           @unique
+  status           StorefrontStatus @default(DRAFT)
+  tagline          String?
+  about            String?
+  /// one of FIRINGI's brand-safe accent colours (hex)
+  accent           String?
+  logoKey          String?
+  bannerKey        String?
+  /// offers shown first (max 12, in this order)
+  featuredOfferIds String[]         @default([])
+  /// visitors who aren't signed in see the product list (never prices)
+  showProducts     Boolean          @default(true)
+  reviewNote       String?
+  reviewedById     String?
+  reviewedAt       DateTime?
+  submittedAt      DateTime?
+  publishedAt      DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  stats StorefrontStat[]
+  links StorefrontLink[]
+}
+
+/**
+ * Visits and registrations per day.
+ */
+model StorefrontStat {
+  companyId String
+  day       DateTime @db.Date
+  views     Int      @default(0)
+  signups   Int      @default(0)
+
+  storefront Storefront @relation(fields: [companyId], references: [companyId], onDelete: Cascade)
+
+  @@id([companyId, day])
+}
+
+/**
+ * A business that registered from a store's link (one store per business).
+ */
+model StorefrontLink {
+  buyerCompanyId String   @id
+  storeCompanyId String
+  createdAt      DateTime @default(now())
+
+  storefront Storefront @relation(fields: [storeCompanyId], references: [companyId], onDelete: Cascade)
+
+  @@index([storeCompanyId])
+}

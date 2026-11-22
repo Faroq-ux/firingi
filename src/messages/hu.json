@@ -923,7 +923,8 @@
     "Customs Codes": "Vámtarifaszámok",
     "EU Trade Report": "Uniós kereskedelmi jelentés",
     "Order by WhatsApp": "Rendelés WhatsAppon",
-    "Replacements": "Helyettesítések"
+    "Replacements": "Helyettesítések",
+    "Storefront": "Kirakat"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2070,6 +2071,18 @@
     "substitution_expired": {
       "title": "Helyettesítés megválaszolatlan — {number} rendelés",
       "body": "Senki nem válaszolt időben, ezért a helyettesítés nem került a rendelésbe."
+    },
+    "storefront_review": {
+      "title": "Ellenőrizendő kirakat",
+      "body": "A(z) {company} kéri a(z) /s/{slug} kirakat közzétételét."
+    },
+    "storefront_decided": {
+      "title": "Az Ön kirakata: {status}",
+      "body": "A FIRINGI frissítette a kirakatát: {status}. {note}"
+    },
+    "storefront_signup": {
+      "title": "Új vállalkozás a kirakatáról",
+      "body": "A(z) {company} a kirakata linkjén keresztül regisztrált a FIRINGI-n."
     }
   },
   "notifications": {
@@ -8736,5 +8749,99 @@
     "addReplacement": "Helyettesítő hozzáadása",
     "noLinks": "Ehhez a termékhez nincs kiválasztva helyettesítő.",
     "up": "Fel"
+  },
+  "storefront": {
+    "registerCta": "Regisztrálja vállalkozását a rendeléshez",
+    "signIn": "Már vevőnk? Jelentkezzen be",
+    "openStore": "Áruház megnyitása és rendelés",
+    "pricesNote": "Az árak bejelentkezés után láthatók — vállalkozásától függenek.",
+    "preview": "Előnézet — ez a kirakat még nem nyilvános.",
+    "deliveryTitle": "Kiszállítás",
+    "minOrder": "Minimális rendelés: {amount} (nettó)",
+    "minOrderUnits": "Minimális rendelés: {units} egység",
+    "freeFrom": "Ingyenes szállítás {amount} felett (nettó)",
+    "freeFromUnits": "Ingyenes szállítás {units} egységtől",
+    "feeBelow": "Ez alatt a szállítási díj {amount} (nettó)",
+    "firingiFree": "Ingyenes szállítás a FIRINGI-vel {amount} felett (nettó)",
+    "noMinimum": "Nincs minimális rendelés",
+    "offersTitle": "Aktuális ajánlatok",
+    "noOffers": "Jelenleg nincs ajánlat — nézzen vissza hamarosan.",
+    "offer": {
+      "PERCENT": "{value} % kedvezmény",
+      "FIXED_AMOUNT": "{amount} kedvezmény egységenként",
+      "ORDER_AMOUNT": "{amount} kedvezmény a rendelésből",
+      "FREE_DELIVERY": "Ingyenes szállítás",
+      "BUY_X_GET_Y": "Vegyen {buy} darabot, {free} ingyen"
+    },
+    "offerMinQty": "{qty} egységtől",
+    "offerMinOrder": "{amount} feletti rendelésekre",
+    "offerUntil": "{date}-ig",
+    "offerFirstOrder": "csak első rendelésre",
+    "offerWholeRange": "a teljes kínálatra",
+    "deal": {
+      "FLASH": "Villámár",
+      "BUNDLE": "Többes vásárlás",
+      "VOLUME": "Mennyiségi árak",
+      "LOT": "Teljes tétel",
+      "BEST_OFFER": "Árajánlat tétele"
+    },
+    "dealEnds": "lejár: {date}",
+    "bestBefore": "minőségét megőrzi: {date}",
+    "productsTitle": "Termékek",
+    "productsCount": "{count} termék",
+    "featuredBadge": "Kiemelt",
+    "categoriesTitle": "Kategóriák",
+    "aboutTitle": "Rólunk",
+    "moreAfterSignIn": "…és még több bejelentkezés után.",
+    "productsHidden": "Jelentkezzen be a termékek megtekintéséhez.",
+    "poweredBy": "A FIRINGI-n — minden rendelést a FIRINGI számláz, és a fizetést is intézi.",
+    "title": "Kirakatom",
+    "intro": "Saját oldala a FIRINGI-n, hogy behozza vevőit: ossza meg a linket vagy a QR-kódot. Az árak csak bejelentkezés után láthatók, a rendeléseket a FIRINGI számlázza.",
+    "status": {
+      "DRAFT": "Nincs közzétéve",
+      "PENDING": "FIRINGI-re vár",
+      "PUBLISHED": "Közzétéve",
+      "SUSPENDED": "A FIRINGI felfüggesztette"
+    },
+    "link": "Link neve",
+    "tagline": "Szlogen",
+    "about": "Vállalkozásáról",
+    "accent": "Szín",
+    "logo": "Logó",
+    "banner": "Borítókép",
+    "upload": "Feltöltés",
+    "remove": "Eltávolítás",
+    "featured": "Kiemelt termékek (legfeljebb {max})",
+    "showProducts": "Termékeim megjelenítése a be nem jelentkezett látogatóknak (árak soha)",
+    "save": "Mentés",
+    "saved": "Mentve.",
+    "publish": "Közzététel",
+    "askApproval": "Küldés a FIRINGI-nek jóváhagyásra",
+    "unpublish": "Offline állítás",
+    "view": "Kirakatom megnyitása",
+    "copy": "Link másolása",
+    "copied": "Másolva.",
+    "qrTitle": "QR-kód",
+    "qrHint": "Nyomtassa rá számlákra, furgonokra és a pultra.",
+    "download": "Letöltés",
+    "statsTitle": "Eredmények",
+    "views": "Látogatások (30 nap)",
+    "signups": "Regisztrációk (30 nap)",
+    "customers": "Vállalkozások az Ön linkjéről",
+    "approved": "Jóváhagyva",
+    "ordersFrom": "Rendeléseik",
+    "customersTitle": "Az Ön linkjéről regisztrált vállalkozások",
+    "noCustomers": "Még senki — ossza meg a linkjét.",
+    "reviewNote": "A FIRINGI megjegyzése: {note}",
+    "off": "A kirakatokat a FIRINGI kikapcsolta.",
+    "pendingNote": "A FIRINGI ellenőrzi a kirakatát, mielőtt nyilvános lesz.",
+    "searchProducts": "Termékei keresése…",
+    "saveFirst": "Előbb mentsen, aztán adjon hozzá képeket.",
+    "publicOff": "A FIRINGI csak bejelentkezett vállalkozásoknak mutatja a termékeket.",
+    "fromSettings": "A szállítási feltételek és az ajánlatok a szállítási beállításaiból és akcióiból származnak.",
+    "homeStore": "Az Ön nagykereskedője",
+    "homeStoreHint": "A(z) {name} kirakatán keresztül csatlakozott a FIRINGI-hez.",
+    "visitStore": "Áruház megnyitása",
+    "storeLink": "Kirakat"
   }
 }

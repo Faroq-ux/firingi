@@ -184,6 +184,7 @@ export const VENDOR_NAV: NavSection[] = [
     key: "company", icon: "Building2", label: { en: "Company", pt: "Empresa", es: "Empresa" },
     items: [
       vc("profile", "Profile", "Perfil", "P2", { live: true, es: "Perfil" }),
+      vc("storefront", "Storefront", "Loja Online", "P61", { live: true, perm: ["company.profile.manage", "vendor.products.manage", "vendor.products.view"], es: "Tienda online" }),
       vc("addresses", "Warehouse & Pickup Addresses", "Moradas de Armazém e Recolha", "P2", { live: true, perm: "company.addresses.manage", es: "Direcciones" }),
       vc("documents", "Documents", "Documentos", "P2", { live: true, perm: "company.documents.manage", es: "Documentos" }),
       vc("compliance", "Certificates & Compliance", "Certificados e Conformidade", "P28", { live: true, perm: ["company.documents.manage", "company.profile.manage", "vendor.products.view", "vendor.products.manage"], es: "Certificados y cumplimiento" }),

@@ -923,7 +923,8 @@
     "Customs Codes": "Tullikoodit",
     "EU Trade Report": "EU-kauppaneraportti",
     "Order by WhatsApp": "Tilaa WhatsAppilla",
-    "Replacements": "Korvaavat tuotteet"
+    "Replacements": "Korvaavat tuotteet",
+    "Storefront": "Kauppasivu"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2070,6 +2071,18 @@
     "substitution_expired": {
       "title": "Korvaavaan tuotteeseen ei vastattu — tilaus {number}",
       "body": "Kukaan ei vastannut ajoissa, joten korvaavaa tuotetta ei lisätty."
+    },
+    "storefront_review": {
+      "title": "Tarkistettava kauppasivu",
+      "body": "{company} pyytää julkaisemaan kauppasivunsa /s/{slug}."
+    },
+    "storefront_decided": {
+      "title": "Kauppasivusi: {status}",
+      "body": "FIRINGI päivitti kauppasivusi: {status}. {note}"
+    },
+    "storefront_signup": {
+      "title": "Uusi yritys kauppasivultasi",
+      "body": "{company} rekisteröityi FIRINGIin kauppasivusi linkin kautta."
     }
   },
   "notifications": {
@@ -8736,5 +8749,99 @@
     "addReplacement": "Lisää korvaava tuote",
     "noLinks": "Tälle tuotteelle ei ole valittu korvaavia tuotteita.",
     "up": "Siirrä ylös"
+  },
+  "storefront": {
+    "registerCta": "Rekisteröi yrityksesi tilataksesi",
+    "signIn": "Oletko jo asiakas? Kirjaudu sisään",
+    "openStore": "Avaa kauppa ja tilaa",
+    "pricesNote": "Hinnat näytetään kirjautumisen jälkeen — ne riippuvat yrityksestäsi.",
+    "preview": "Esikatselu — tämä kauppasivu ei ole vielä julkinen.",
+    "deliveryTitle": "Toimitus",
+    "minOrder": "Vähimmäistilaus: {amount} (alv 0 %)",
+    "minOrderUnits": "Vähimmäistilaus: {units} yksikköä",
+    "freeFrom": "Ilmainen toimitus alkaen {amount} (alv 0 %)",
+    "freeFromUnits": "Ilmainen toimitus alkaen {units} yksikköä",
+    "feeBelow": "Sen alle toimitus maksaa {amount} (alv 0 %)",
+    "firingiFree": "FIRINGIn ilmainen toimitus alkaen {amount} (alv 0 %)",
+    "noMinimum": "Ei vähimmäistilausta",
+    "offersTitle": "Ajankohtaiset tarjoukset",
+    "noOffers": "Ei tarjouksia juuri nyt — palaa pian.",
+    "offer": {
+      "PERCENT": "{value} % alennus",
+      "FIXED_AMOUNT": "{amount} alennus yksiköltä",
+      "ORDER_AMOUNT": "{amount} alennus tilauksesta",
+      "FREE_DELIVERY": "Ilmainen toimitus",
+      "BUY_X_GET_Y": "Osta {buy}, saat {free} ilmaiseksi"
+    },
+    "offerMinQty": "alkaen {qty} yksikköä",
+    "offerMinOrder": "tilauksiin alkaen {amount}",
+    "offerUntil": "{date} asti",
+    "offerFirstOrder": "vain ensimmäinen tilaus",
+    "offerWholeRange": "koko valikoimaan",
+    "deal": {
+      "FLASH": "Salamatarjous",
+      "BUNDLE": "Monipakkaus",
+      "VOLUME": "Määrähinnat",
+      "LOT": "Koko erä",
+      "BEST_OFFER": "Tee hintatarjous"
+    },
+    "dealEnds": "päättyy {date}",
+    "bestBefore": "parasta ennen {date}",
+    "productsTitle": "Tuotteet",
+    "productsCount": "{count} tuotetta",
+    "featuredBadge": "Nostot",
+    "categoriesTitle": "Kategoriat",
+    "aboutTitle": "Tietoa meistä",
+    "moreAfterSignIn": "…ja lisää kirjautumisen jälkeen.",
+    "productsHidden": "Kirjaudu sisään nähdäksesi tuotteet.",
+    "poweredBy": "FIRINGIssä — FIRINGI laskuttaa jokaisen tilauksen ja hoitaa maksun.",
+    "title": "Oma kauppasivu",
+    "intro": "Oma sivusi FIRINGIssä asiakkaidesi houkutteluun: jaa linkki tai QR-koodi. Hinnat näkyvät vain kirjautuneille, ja FIRINGI laskuttaa tilaukset.",
+    "status": {
+      "DRAFT": "Ei julkaistu",
+      "PENDING": "Odottaa FIRINGIä",
+      "PUBLISHED": "Julkaistu",
+      "SUSPENDED": "FIRINGI on jäädyttänyt"
+    },
+    "link": "Linkin nimi",
+    "tagline": "Iskulause",
+    "about": "Tietoa yrityksestäsi",
+    "accent": "Väri",
+    "logo": "Logo",
+    "banner": "Bannerikuva",
+    "upload": "Lataa",
+    "remove": "Poista",
+    "featured": "Nostetut tuotteet (enintään {max})",
+    "showProducts": "Näytä tuotteeni kirjautumattomille vierailijoille (ei koskaan hintoja)",
+    "save": "Tallenna",
+    "saved": "Tallennettu.",
+    "publish": "Julkaise",
+    "askApproval": "Lähetä FIRINGIlle hyväksyttäväksi",
+    "unpublish": "Poista näkyvistä",
+    "view": "Avaa kauppasivuni",
+    "copy": "Kopioi linkki",
+    "copied": "Kopioitu.",
+    "qrTitle": "QR-koodi",
+    "qrHint": "Tulosta se laskuihin, pakettiautoihin ja tiskille.",
+    "download": "Lataa",
+    "statsTitle": "Tulokset",
+    "views": "Käynnit (30 päivää)",
+    "signups": "Rekisteröitymiset (30 päivää)",
+    "customers": "Yritykset linkkisi kautta",
+    "approved": "Hyväksytty",
+    "ordersFrom": "Heidän tilauksensa",
+    "customersTitle": "Linkkisi kautta rekisteröityneet yritykset",
+    "noCustomers": "Ei vielä ketään — jaa linkkisi.",
+    "reviewNote": "FIRINGIn huomautus: {note}",
+    "off": "FIRINGI on poistanut kauppasivut käytöstä.",
+    "pendingNote": "FIRINGI tarkistaa kauppasivusi ennen kuin se julkaistaan.",
+    "searchProducts": "Hae tuotteitasi…",
+    "saveFirst": "Tallenna ensin, lisää sitten kuvat.",
+    "publicOff": "FIRINGI näyttää tuotteet vain kirjautuneille yrityksille.",
+    "fromSettings": "Toimitusehdot ja tarjoukset tulevat toimitusasetuksistasi ja kampanjoistasi.",
+    "homeStore": "Tukkurisi",
+    "homeStoreHint": "Liityit FIRINGIin yrityksen {name} kauppasivun kautta.",
+    "visitStore": "Avaa kauppa",
+    "storeLink": "Kauppasivu"
   }
 }

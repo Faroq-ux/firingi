@@ -725,6 +725,23 @@ When a supplier can't deliver a product it accepted, it offers one of its **own*
 
 Details: [docs/substitutions.md](docs/substitutions.md).
 
+## Storefronts (Phase 61)
+
+Every wholesaler (and distributor) gets its own branded page at `/s/<name>`, with a QR code, to bring its own customers onto FIRINGI.
+
+- **Branding:** logo, banner, colour, tagline, about text and featured products.
+- **Delivery terms:** minimum order, **free delivery from** and the fee below it, taken from the same rules checkout uses.
+- **Offers:** the supplier's current public promotions and clearance deals. Never offers made for chosen customers.
+- **Products:** shown without prices; prices are for signed-in buyers.
+- **Registering from the link:** "Register your business" links the new business to the store. The store is told and sees its results (visits, sign-ups, businesses joined and their orders). The customer then sees **Your wholesaler** in the shop.
+- **In the shop:** the supplier's page shows the same branding, delivery terms and offers.
+- **Pages:**
+  - *Company › Storefront* for suppliers (25 languages).
+  - FIRINGI *Vendors › Storefronts* (English): approval of the first publication, suspend and restore with a reason, and every switch (on/off, approval, products shown to visitors, featured maximum).
+- **Invoicing:** FIRINGI still invoices every order.
+
+Details: [docs/storefronts.md](docs/storefronts.md).
+
 ## EU trade reporting (Phase 57)
 
 FIRINGI invoices every buyer and buys from every supplier, so **FIRINGI's own entity files the EU returns**: the

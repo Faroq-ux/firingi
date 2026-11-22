@@ -923,7 +923,8 @@
     "Customs Codes": "Muitinės kodai",
     "EU Trade Report": "ES prekybos ataskaita",
     "Order by WhatsApp": "Užsakyti per WhatsApp",
-    "Replacements": "Pakaitalai"
+    "Replacements": "Pakaitalai",
+    "Storefront": "Parduotuvės puslapis"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2070,6 +2071,18 @@
     "substitution_expired": {
       "title": "Į pakaitalą neatsakyta — užsakymas {number}",
       "body": "Niekas laiku neatsakė, todėl pakaitalas nepridėtas."
+    },
+    "storefront_review": {
+      "title": "Parduotuvės puslapis peržiūrai",
+      "body": "{company} prašo paskelbti savo parduotuvės puslapį /s/{slug}."
+    },
+    "storefront_decided": {
+      "title": "Jūsų parduotuvės puslapis: {status}",
+      "body": "FIRINGI atnaujino jūsų parduotuvės puslapį: {status}. {note}"
+    },
+    "storefront_signup": {
+      "title": "Nauja įmonė iš jūsų parduotuvės puslapio",
+      "body": "{company} užsiregistravo FIRINGI per jūsų parduotuvės puslapio nuorodą."
     }
   },
   "notifications": {
@@ -8736,5 +8749,99 @@
     "addReplacement": "Pridėti pakaitalą",
     "noLinks": "Šiam produktui pakaitalų nepasirinkta.",
     "up": "Aukštyn"
+  },
+  "storefront": {
+    "registerCta": "Užregistruokite įmonę, kad galėtumėte užsakyti",
+    "signIn": "Jau esate klientas? Prisijunkite",
+    "openStore": "Atidaryti parduotuvę ir užsakyti",
+    "pricesNote": "Kainos rodomos prisijungus — jos priklauso nuo jūsų įmonės.",
+    "preview": "Peržiūra — šis parduotuvės puslapis dar neviešas.",
+    "deliveryTitle": "Pristatymas",
+    "minOrder": "Minimalus užsakymas: {amount} (be PVM)",
+    "minOrderUnits": "Minimalus užsakymas: {units} vnt.",
+    "freeFrom": "Nemokamas pristatymas nuo {amount} (be PVM)",
+    "freeFromUnits": "Nemokamas pristatymas nuo {units} vnt.",
+    "feeBelow": "Mažesniems užsakymams pristatymas kainuoja {amount} (be PVM)",
+    "firingiFree": "Nemokamas FIRINGI pristatymas nuo {amount} (be PVM)",
+    "noMinimum": "Be minimalaus užsakymo",
+    "offersTitle": "Dabartiniai pasiūlymai",
+    "noOffers": "Šiuo metu pasiūlymų nėra — užsukite netrukus.",
+    "offer": {
+      "PERCENT": "{value} % nuolaida",
+      "FIXED_AMOUNT": "{amount} nuolaida vienetui",
+      "ORDER_AMOUNT": "{amount} nuolaida užsakymui",
+      "FREE_DELIVERY": "Nemokamas pristatymas",
+      "BUY_X_GET_Y": "Pirkite {buy}, gaukite {free} nemokamai"
+    },
+    "offerMinQty": "nuo {qty} vnt.",
+    "offerMinOrder": "užsakymams nuo {amount}",
+    "offerUntil": "iki {date}",
+    "offerFirstOrder": "tik pirmam užsakymui",
+    "offerWholeRange": "visam asortimentui",
+    "deal": {
+      "FLASH": "Žaibiškas pasiūlymas",
+      "BUNDLE": "Keli už vieną kainą",
+      "VOLUME": "Kiekio kainos",
+      "LOT": "Visa partija",
+      "BEST_OFFER": "Pasiūlyti kainą"
+    },
+    "dealEnds": "baigiasi {date}",
+    "bestBefore": "geriausias iki {date}",
+    "productsTitle": "Produktai",
+    "productsCount": "Produktų: {count}",
+    "featuredBadge": "Išskirta",
+    "categoriesTitle": "Kategorijos",
+    "aboutTitle": "Apie mus",
+    "moreAfterSignIn": "…ir daugiau prisijungus.",
+    "productsHidden": "Prisijunkite, kad matytumėte produktus.",
+    "poweredBy": "FIRINGI platformoje — FIRINGI išrašo sąskaitą už kiekvieną užsakymą ir tvarko mokėjimą.",
+    "title": "Mano parduotuvės puslapis",
+    "intro": "Jūsų puslapis FIRINGI platformoje klientams pritraukti: dalinkitės nuoroda arba QR kodu. Kainos matomos tik prisijungus, o sąskaitas už užsakymus išrašo FIRINGI.",
+    "status": {
+      "DRAFT": "Nepaskelbta",
+      "PENDING": "Laukiama FIRINGI",
+      "PUBLISHED": "Paskelbta",
+      "SUSPENDED": "Sustabdė FIRINGI"
+    },
+    "link": "Nuorodos pavadinimas",
+    "tagline": "Šūkis",
+    "about": "Apie jūsų įmonę",
+    "accent": "Spalva",
+    "logo": "Logotipas",
+    "banner": "Antraštės paveikslėlis",
+    "upload": "Įkelti",
+    "remove": "Pašalinti",
+    "featured": "Išskirti produktai (iki {max})",
+    "showProducts": "Rodyti mano produktus neprisijungusiems lankytojams (kainų niekada)",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "publish": "Paskelbti",
+    "askApproval": "Siųsti FIRINGI patvirtinti",
+    "unpublish": "Išjungti",
+    "view": "Atidaryti mano parduotuvės puslapį",
+    "copy": "Kopijuoti nuorodą",
+    "copied": "Nukopijuota.",
+    "qrTitle": "QR kodas",
+    "qrHint": "Atspausdinkite jį ant sąskaitų, furgonų ir prekystalio.",
+    "download": "Atsisiųsti",
+    "statsTitle": "Rezultatai",
+    "views": "Apsilankymai (30 dienų)",
+    "signups": "Registracijos (30 dienų)",
+    "customers": "Įmonės per jūsų nuorodą",
+    "approved": "Patvirtinta",
+    "ordersFrom": "Jų užsakymai",
+    "customersTitle": "Įmonės, užsiregistravusios per jūsų nuorodą",
+    "noCustomers": "Kol kas niekas — pasidalinkite savo nuoroda.",
+    "reviewNote": "FIRINGI pastaba: {note}",
+    "off": "FIRINGI išjungė parduotuvių puslapius.",
+    "pendingNote": "FIRINGI patikrina jūsų parduotuvės puslapį prieš jį paskelbiant.",
+    "searchProducts": "Ieškoti savo produktų…",
+    "saveFirst": "Pirmiausia išsaugokite, tada pridėkite paveikslėlius.",
+    "publicOff": "FIRINGI rodo produktus tik prisijungusioms įmonėms.",
+    "fromSettings": "Pristatymo sąlygos ir pasiūlymai imami iš jūsų pristatymo nustatymų ir akcijų.",
+    "homeStore": "Jūsų didmenininkas",
+    "homeStoreHint": "Prisijungėte prie FIRINGI per {name} parduotuvės puslapį.",
+    "visitStore": "Atidaryti parduotuvę",
+    "storeLink": "Parduotuvės puslapis"
   }
 }

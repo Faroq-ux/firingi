@@ -37,7 +37,7 @@ function TermsText({ legal }: { legal?: Legal }) {
   return <>{tl.rich("acceptTerms", { terms: a(legal.termsUrl), privacy: a(legal.privacyUrl) })}</>;
 }
 
-export function CompanyRegistrationForm({ type, countries, referralCode = null, invite = null, legal }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[]; referralCode?: string | null; invite?: Invite; legal?: Legal }) {
+export function CompanyRegistrationForm({ type, countries, referralCode = null, invite = null, legal, store = null }: { type: "DISTRIBUTOR" | "WHOLESALER" | "CUSTOMER"; countries: Country[]; referralCode?: string | null; invite?: Invite; legal?: Legal; store?: string | null }) {
   const t = useTranslations("onboarding");
   const tsa = useTranslations("specialAccess");
   const tl = useTranslations("launch");
@@ -65,7 +65,7 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
             ownerName: s(fd, "ownerName") ?? "", ownerEmail: s(fd, "ownerEmail") ?? "", password: String(fd.get("password") ?? ""),
             line1: s(fd, "line1") ?? "", line2: s(fd, "line2"), postalCode: s(fd, "postalCode") ?? "",
             cityId: city?.id ?? null, cityName: city?.name ?? s(fd, "cityName") ?? "", acceptTerms: fd.get("acceptTerms") === "on", businessDeclaration: fd.get("businessDeclaration") === "on",
-            referralCode: s(fd, "referralCode"), invite: invite?.code ?? null,
+            referralCode: s(fd, "referralCode"), invite: invite?.code ?? null, store,
           } as Parameters<typeof registerCompanyAction>[0]);
           if (r.ok) { router.push(r.data.redirectTo); router.refresh(); }
           else { setError(r.error); setFe(r.fieldErrors ?? {}); window.scrollTo({ top: 0, behavior: "smooth" }); }

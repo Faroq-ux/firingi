@@ -20,6 +20,7 @@ import { foodLabels } from "@/components/food/labels";
 import { foodSettings } from "@/server/food/service";
 import { EcoFilter } from "@/components/co2/views";
 import { co2Filter } from "@/components/co2/filter";
+import { ShopStorePanel } from "@/components/storefront/views";
 
 /** A supplier's store: every product that supplier offers to this buyer. */
 export default async function StorePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; category?: string; page?: string; free?: string | string[]; diet?: string; eco?: string; stars?: string; sort?: string }> }) {
@@ -51,6 +52,7 @@ export default async function StorePage({ params, searchParams }: { params: Prom
         description={<span className="flex flex-wrap items-center gap-2">{s.country.flag} {s.city} <MapPin className="size-3.5" />{s.distanceKm !== null ? t("distance", { km: s.distanceKm.toLocaleString() }) : t("noDistance")} · {t("productsCount", { count: s.offers })}</span>}
       />
       {s.badges.length > 0 && <div className="mb-6"><VerifiedPanel badges={s.badges} /></div>}
+      <ShopStorePanel vendorId={id} locale={locale} />
       <div className="grid gap-6 lg:grid-cols-[15rem_1fr]">
         <aside className="space-y-1 lg:sticky lg:top-20 lg:self-start">
           <Link href={qs({ category: undefined, page: undefined })} className={cn("block rounded-md px-2 py-1.5 text-sm hover:bg-accent", !category && "bg-accent font-medium")}>{t("allProducts")} ({s.offers})</Link>

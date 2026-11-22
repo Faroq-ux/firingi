@@ -39,7 +39,8 @@ check("category page lists wholesalers carrying it", (await customer.textContent
 await customer.getByRole("link", { name: /Lisboa Central/ }).first().click();
 await settle(customer);
 await shot(customer, "p3-01b-customer-store");
-const text = await customer.textContent("main");
+// the products only (Phase 61: the store's offers panel above may name other products)
+const text = await customer.evaluate(() => { const m = document.querySelector("main").cloneNode(true); m.querySelector("[data-testid=shop-store-panel]")?.remove(); return m.textContent; });
 check("store opens filtered on that category", /Cone de kebab|Chicken kebab/.test(text) && !/Coca-Cola/.test(text));
 await customer.getByRole("link", { name: /Todos os produtos|All products/ }).click();
 await settle(customer);

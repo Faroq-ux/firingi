@@ -207,6 +207,10 @@ export const EVENTS: EventDef[] = [
   E("tender.closed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
   E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
   E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
+  // Phase 61: storefronts
+  E("storefront.review", "catalogue", ["admin.vendors.approve", "admin.vendors.view"], ["EMAIL"], ["company", "slug"]),
+  E("storefront.decided", "catalogue", ["company.profile.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["status", "note"]),
+  E("storefront.signup", "account", ["company.profile.manage", "vendor.products.manage", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["company"]),
   // Phase 60: substitutions (a replacement for a product the supplier can't deliver)
   E("substitution.proposed", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["number", "product", "substitute", "minutes"]),
   E("substitution.accepted", "orders", VENDOR_ORDERS, ["PUSH"], ["number", "substitute", "qty"]),

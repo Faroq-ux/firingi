@@ -13,10 +13,12 @@ export const dynamic = "force-dynamic";
 const MAP = { customer: "CUSTOMER", wholesaler: "WHOLESALER", distributor: "DISTRIBUTOR" } as const;
 const REASON = { missing: "pilotText", invalid: "inviteInvalid", used: "inviteUsed", expired: "inviteExpired", revoked: "inviteInvalid", type: "inviteType" } as const;
 
-export default async function RegisterTypePage({ params, searchParams }: { params: Promise<{ type: string }>; searchParams: Promise<{ ref?: string; invite?: string }> }) {
+export default async function RegisterTypePage({ params, searchParams }: { params: Promise<{ type: string }>; searchParams: Promise<{ ref?: string; invite?: string; store?: string }> }) {
   const { type } = await params;
   const sp = await searchParams;
   const ref = (sp.ref ?? "").replace(/[^A-Za-z0-9]/g, "").slice(0, 20) || null;
+  // Phase 61: arrived from a wholesaler's storefront (/s/<slug>) — the new business is linked to that store
+  const store = (sp.store ?? "").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 40) || null;
   const [t, tl, locale, info] = await Promise.all([getTranslations("onboarding"), getTranslations("launch"), getLocale(), publicLaunchInfo()]);
   const legal = { termsUrl: info.termsUrl, privacyUrl: info.privacyUrl };
   if (type === "driver")
@@ -51,7 +53,7 @@ export default async function RegisterTypePage({ params, searchParams }: { param
           <p className="text-sm text-muted-foreground">{t("form.notOpen")}</p>
         ) : (
           <CompanyRegistrationForm
-            type={companyType} referralCode={companyType === "DISTRIBUTOR" ? null : ref} legal={legal}
+            type={companyType} referralCode={companyType === "DISTRIBUTOR" ? null : ref} legal={legal} store={store}
             invite={invite?.ok ? { code: invite.code, email: invite.email, companyName: invite.companyName } : null}
             countries={countries.map((c) => ({ code: c.code, label: `${c.flag ?? ""} ${pickLocalized(c.name, locale)}`, vatPrefix: c.vatPrefix ?? c.code, cities: c.cities }))}
           />
