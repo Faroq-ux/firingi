@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label, Select } from "@/components/ui/input";
 import { registerCompanyAction, registerDriverAction } from "@/server/actions/onboarding";
 import { WhatsAppField, whatsappFrom } from "@/components/company/whatsapp-field";
+import { PhoneWithCode } from "@/components/company/phone-field";
+import { dialCodeOf } from "@/lib/phone-codes";
 
 type Country = { code: string; label: string; vatPrefix: string; cities: { id: string; name: string }[] };
 const BUSINESS_TYPES = ["restaurant", "kebab_pizza", "mini_market", "cafe_bar", "hotel", "catering", "retail", "other"] as const;
@@ -103,8 +105,8 @@ export function CompanyRegistrationForm({ type, countries, referralCode = null, 
           <Input id="activityCodes" name="activityCodes" autoComplete="off" placeholder={`${activityScheme(country).example}, …`} data-testid="reg-activity-codes" />
         </Field>
         <Field id="companyEmail" label={t("form.companyEmail")} errors={fe.companyEmail}><Input id="companyEmail" name="companyEmail" type="email" required /></Field>
-        <Field id="phone" label={t("form.phone")} errors={fe.phone}><Input id="phone" name="phone" type="tel" required /></Field>
-        <WhatsAppField label={t("form.whatsapp")} sameLabel={t("form.whatsappSame")} hint={t("form.whatsappHint")} error={fe.whatsapp} />
+        <Field id="phone" label={t("form.phone")} errors={fe.phone}><PhoneWithCode id="phone" name="phone" dial={dialCodeOf(country)} required testid="reg-phone" /></Field>
+        <WhatsAppField label={t("form.whatsapp")} sameLabel={t("form.whatsappSame")} hint={t("form.whatsappHint")} error={fe.whatsapp} dial={dialCodeOf(country)} />
         {type === "CUSTOMER" && (
           <Field id="businessType" label={t("form.businessType")}>
             <Select id="businessType" name="businessType" defaultValue="restaurant">

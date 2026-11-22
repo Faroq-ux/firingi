@@ -3,6 +3,7 @@
  * Every new account starts PENDING and needs FIRINGI approval before it can trade.
  */
 import { normalisePhone } from "@/server/notify/events";
+import { withDialCode } from "@/lib/phone-codes";
 import { platformSettings } from "./platform-settings";
 import type { CompanyType } from "@prisma/client";
 import { hashPassword } from "better-auth/crypto";
@@ -65,6 +66,8 @@ export async function registerCompany(input: CompanyRegistration) {
   if (!country || !country.isActive || !country[MARKET_FLAG[input.type]])
     throw new ValidationError("Registration for this account type is not open in the selected country yet.", { countryCode: ["Not available"] });
 
+  // phone numbers get the company country's international code when typed as national numbers
+  input = { ...input, phone: withDialCode(input.phone, country.code), whatsapp: input.whatsapp ? withDialCode(input.whatsapp, country.code) : input.whatsapp };
   const taxId = normaliseTaxId(country.code, input.taxId);
   if (country.code === "PT" && !isValidPtNif(taxId)) throw new ValidationError("Invalid Portuguese NIF.", { taxId: ["Invalid NIF"] });
   if (taxId.length < 5) throw new ValidationError("Invalid tax ID.", { taxId: ["Invalid tax ID"] });
