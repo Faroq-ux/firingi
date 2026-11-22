@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Belöningar att lämna ut",
     "Customs Codes": "Tullkoder",
     "EU Trade Report": "EU-handelsrapport",
-    "Order by WhatsApp": "Beställ via WhatsApp"
+    "Order by WhatsApp": "Beställ via WhatsApp",
+    "Replacements": "Ersättningar"
   },
   "delivery": {
     "title": "Leverans",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Tulluppgifter inte godkända: {product}",
       "body": "FIRINGI godkände inte tulluppgifterna du skickade för ”{product}”: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Ersättning erbjuden för order {number}",
+      "body": "{product} är inte tillgänglig. Leverantören erbjuder {substitute} i stället — acceptera eller avvisa inom {minutes} minuter."
+    },
+    "substitution_accepted": {
+      "title": "Ersättning accepterad — order {number}",
+      "body": "Kunden har accepterat {qty} × {substitute}. Den har lagts till i ordern."
+    },
+    "substitution_auto_accepted": {
+      "title": "Ersättning tillagd i order {number}",
+      "body": "{qty} × {substitute} ersätter en produkt som inte fanns tillgänglig (accepterad enligt kundens ersättningsregler)."
+    },
+    "substitution_rejected": {
+      "title": "Ersättning avvisad — order {number}",
+      "body": "Kunden vill inte ha ersättningen. De saknade enheterna utgår ur ordern."
+    },
+    "substitution_expired": {
+      "title": "Ersättning obesvarad — order {number}",
+      "body": "Ingen svarade i tid, så ersättningen lades inte till."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Allt fungerar",
     "warning": "Fungerar, med varningar",
     "critical": "Något ligger nere"
+  },
+  "substitutions": {
+    "title": "Ersättningar",
+    "orderIntroBuyer": "När leverantören inte kan leverera en produkt kan den erbjuda en annan i stället. Du bestämmer — eller låter dina ersättningsregler bestämma.",
+    "orderIntroSupplier": "Saknas en produkt? Erbjud en av dina andra produkter i stället. Kundens regler avgör om den läggs till direkt eller om kunden tillfrågas.",
+    "status": {
+      "PENDING": "Väntar på kunden",
+      "ACCEPTED": "Accepterad",
+      "REJECTED": "Avvisad",
+      "EXPIRED": "Inte besvarad",
+      "CANCELLED": "Återkallad"
+    },
+    "autoBadge": "enligt dina regler",
+    "autoBadgeSupplier": "enligt kundens regler",
+    "missing": "Saknas",
+    "instead": "I stället",
+    "priceChange": "Prisskillnad",
+    "samePrice": "Samma pris (leverantören betalar mellanskillnaden)",
+    "sameBrand": "Samma varumärke",
+    "otherBrand": "Annat varumärke",
+    "answerBy": "Svara senast {time}",
+    "accept": "Acceptera",
+    "reject": "Avvisa",
+    "withdraw": "Återkalla",
+    "accepted": "Ersättningen har lagts till i din order.",
+    "rejected": "Ersättningen avvisades.",
+    "noteFromSupplier": "Leverantörens anteckning: {note}",
+    "offerTitle": "Erbjud en ersättning",
+    "line": "Produkt som saknas",
+    "chooseLine": "Välj en produkt…",
+    "shortQty": "Enheter som saknas",
+    "alreadyShort": "{n} saknas redan och har inte ersatts än",
+    "replacement": "Ersättning",
+    "linked": "Ditt val",
+    "inStock": "{n} i lager",
+    "qty": "Enheter av ersättningen",
+    "note": "Anteckning till kunden (valfritt)",
+    "priceMatch": "Samma pris — jag betalar mellanskillnaden",
+    "preview": "Kunden betalar {now} i stället för {was} ({diff}).",
+    "ruleNEVER": "Den här kunden accepterar inte ersättningar för den här produkten.",
+    "ruleASK": "Kunden kommer att tillfrågas.",
+    "ruleAUTO": "Läggs till direkt om den kostar högst {pct} % mer; annars tillfrågas kunden.",
+    "ruleBrand": "Endast samma varumärke accepteras automatiskt.",
+    "send": "Erbjud ersättning",
+    "sent": "Ersättning erbjuden.",
+    "sentAuto": "Ersättningen har lagts till — kundens regler accepterar den.",
+    "noCandidates": "Ingen av dina andra produkter kan erbjudas den här kunden just nu.",
+    "noOpen": "Ersättningar kan erbjudas efter att du har accepterat ordern och innan den packas.",
+    "pageIntroBuyer": "Välj vad som händer när en leverantör inte kan leverera en av dina produkter.",
+    "rulesTitle": "Dina ersättningsregler",
+    "modeLabel": "När en produkt saknas",
+    "mode": {
+      "ASK": "Fråga mig varje gång",
+      "AUTO": "Acceptera automatiskt inom mina gränser",
+      "NEVER": "Inga ersättningar"
+    },
+    "maxPricePct": "Acceptera automatiskt om den kostar högst (% mer)",
+    "sameBrandOnly": "Endast samma varumärke",
+    "acceptOnTimeout": "Om jag inte svarar i tid, acceptera ersättningen",
+    "timeoutHint": "Du har {minutes} minuter på dig att svara på varje förslag.",
+    "autoOff": "FIRINGI har stängt av automatisk acceptans — du kommer att tillfrågas.",
+    "save": "Spara",
+    "saved": "Sparat.",
+    "productsTitle": "Regler för enskilda produkter",
+    "productsHint": "En regel för en enskild produkt går före din allmänna regel (till exempel: ersätt aldrig din Coca-Cola).",
+    "searchProducts": "Sök bland produkter du har köpt…",
+    "add": "Lägg till",
+    "remove": "Ta bort",
+    "noProducts": "Inga produktregler än.",
+    "recentTitle": "Senaste ersättningar",
+    "noRecent": "Inga ersättningar än.",
+    "off": "Ersättningar är avstängda av FIRINGI.",
+    "pageIntroSupplier": "Välj för var och en av dina produkter vilka av dina andra produkter som kan ersätta den när den tar slut. Dina val visas först när du erbjuder en ersättning på en order.",
+    "linksTitle": "Ersättningsprodukter",
+    "chooseProduct": "Välj en av dina produkter…",
+    "searchOwn": "Sök bland dina produkter…",
+    "addReplacement": "Lägg till ersättning",
+    "noLinks": "Inga ersättningar valda för den här produkten.",
+    "up": "Flytta upp"
   }
 }

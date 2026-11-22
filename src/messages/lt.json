@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Perduotini prizai",
     "Customs Codes": "Muitinės kodai",
     "EU Trade Report": "ES prekybos ataskaita",
-    "Order by WhatsApp": "Užsakyti per WhatsApp"
+    "Order by WhatsApp": "Užsakyti per WhatsApp",
+    "Replacements": "Pakaitalai"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Muitinės duomenys nepatvirtinti: {product}",
       "body": "FIRINGI nepatvirtino muitinės duomenų, kuriuos atsiuntėte „{product}“: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Pasiūlytas pakaitalas užsakymui {number}",
+      "body": "Produkto {product} nėra. Tiekėjas vietoj jo siūlo {substitute} — priimkite arba atmeskite per {minutes} min."
+    },
+    "substitution_accepted": {
+      "title": "Pakaitalas priimtas — užsakymas {number}",
+      "body": "Klientas priėmė {qty} × {substitute}. Tai pridėta prie užsakymo."
+    },
+    "substitution_auto_accepted": {
+      "title": "Pakaitalas pridėtas prie užsakymo {number}",
+      "body": "{qty} × {substitute} pakeičia nepasiekiamą produktą (priimta pagal kliento pakeitimo taisykles)."
+    },
+    "substitution_rejected": {
+      "title": "Pakaitalas atmestas — užsakymas {number}",
+      "body": "Klientas nenori pakaitalo. Trūkstami vienetai į užsakymą neįtraukiami."
+    },
+    "substitution_expired": {
+      "title": "Į pakaitalą neatsakyta — užsakymas {number}",
+      "body": "Niekas laiku neatsakė, todėl pakaitalas nepridėtas."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Viskas veikia",
     "warning": "Veikia, yra įspėjimų",
     "critical": "Kažkas neveikia"
+  },
+  "substitutions": {
+    "title": "Pakaitalai",
+    "orderIntroBuyer": "Kai tiekėjas negali pristatyti produkto, jis gali pasiūlyti kitą vietoj jo. Sprendžiate jūs — arba jūsų pakeitimo taisyklės.",
+    "orderIntroSupplier": "Trūksta produkto? Pasiūlykite vietoj jo kitą savo produktą. Kliento taisyklės nusprendžia, ar jis pridedamas iš karto, ar klausiama kliento.",
+    "status": {
+      "PENDING": "Laukiama kliento atsakymo",
+      "ACCEPTED": "Priimta",
+      "REJECTED": "Atmesta",
+      "EXPIRED": "Neatsakyta",
+      "CANCELLED": "Atšaukta"
+    },
+    "autoBadge": "pagal jūsų taisykles",
+    "autoBadgeSupplier": "pagal kliento taisykles",
+    "missing": "Trūksta",
+    "instead": "Vietoj jo",
+    "priceChange": "Kainų skirtumas",
+    "samePrice": "Ta pati kaina (skirtumą apmoka tiekėjas)",
+    "sameBrand": "Tas pats prekės ženklas",
+    "otherBrand": "Kitas prekės ženklas",
+    "answerBy": "Atsakykite iki {time}",
+    "accept": "Priimti",
+    "reject": "Atmesti",
+    "withdraw": "Atšaukti",
+    "accepted": "Pakaitalas pridėtas prie jūsų užsakymo.",
+    "rejected": "Pakaitalas atmestas.",
+    "noteFromSupplier": "Tiekėjo pastaba: {note}",
+    "offerTitle": "Pasiūlyti pakaitalą",
+    "line": "Trūkstamas produktas",
+    "chooseLine": "Pasirinkite produktą…",
+    "shortQty": "Trūkstami vienetai",
+    "alreadyShort": "{n} jau trūksta ir dar nepakeista",
+    "replacement": "Pakaitalas",
+    "linked": "Jūsų pasirinkimas",
+    "inStock": "{n} sandėlyje",
+    "qty": "Pakaitalo vienetai",
+    "note": "Pastaba klientui (neprivaloma)",
+    "priceMatch": "Ta pati kaina — skirtumą apmoku aš",
+    "preview": "Klientas moka {now} vietoj {was} ({diff}).",
+    "ruleNEVER": "Šis klientas nepriima šio produkto pakaitalų.",
+    "ruleASK": "Bus klausiama kliento.",
+    "ruleAUTO": "Pridedama iš karto, jei kainuoja ne daugiau kaip {pct} % brangiau; kitu atveju klausiama kliento.",
+    "ruleBrand": "Automatiškai priimamas tik tas pats prekės ženklas.",
+    "send": "Pasiūlyti pakaitalą",
+    "sent": "Pakaitalas pasiūlytas.",
+    "sentAuto": "Pakaitalas pridėtas — kliento taisyklės jį priima.",
+    "noCandidates": "Šiuo metu šiam klientui negalima pasiūlyti nė vieno kito jūsų produkto.",
+    "noOpen": "Pakaitalus galima siūlyti priėmus užsakymą ir prieš jį supakuojant.",
+    "pageIntroBuyer": "Pasirinkite, kas vyksta, kai tiekėjas negali pristatyti kurio nors jūsų produkto.",
+    "rulesTitle": "Jūsų pakeitimo taisyklės",
+    "modeLabel": "Kai trūksta produkto",
+    "mode": {
+      "ASK": "Klausti manęs kiekvieną kartą",
+      "AUTO": "Priimti automatiškai mano ribose",
+      "NEVER": "Jokių pakaitalų"
+    },
+    "maxPricePct": "Priimti automatiškai, jei kainuoja ne daugiau kaip (% brangiau)",
+    "sameBrandOnly": "Tik tas pats prekės ženklas",
+    "acceptOnTimeout": "Jei neatsakau laiku, priimti pakaitalą",
+    "timeoutHint": "Į kiekvieną pasiūlymą turite atsakyti per {minutes} min.",
+    "autoOff": "FIRINGI išjungė automatinį priėmimą — jūsų bus klausiama.",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "productsTitle": "Atskirų produktų taisyklės",
+    "productsHint": "Vieno produkto taisyklė turi pirmenybę prieš bendrąją taisyklę (pavyzdžiui: niekada nekeisti jūsų Coca-Cola).",
+    "searchProducts": "Ieškoti pirktų produktų…",
+    "add": "Pridėti",
+    "remove": "Pašalinti",
+    "noProducts": "Produktų taisyklių dar nėra.",
+    "recentTitle": "Naujausi pakaitalai",
+    "noRecent": "Pakaitalų dar nėra.",
+    "off": "Pakaitalus išjungė FIRINGI.",
+    "pageIntroSupplier": "Kiekvienam savo produktui pasirinkite, kurie kiti jūsų produktai gali jį pakeisti, kai jo pritrūksta. Jūsų pasirinkimai rodomi pirmiausia, kai siūlote pakaitalą užsakyme.",
+    "linksTitle": "Pakaitiniai produktai",
+    "chooseProduct": "Pasirinkite vieną iš savo produktų…",
+    "searchOwn": "Ieškoti savo produktų…",
+    "addReplacement": "Pridėti pakaitalą",
+    "noLinks": "Šiam produktui pakaitalų nepasirinkta.",
+    "up": "Aukštyn"
   }
 }

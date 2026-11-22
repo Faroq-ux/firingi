@@ -702,6 +702,29 @@ Wholesale customers order by writing to FIRINGI's WhatsApp number, with text, ph
 
 Details and set-up (provider, `STT_URL` for voice notes, templates): [docs/whatsapp-ordering.md](docs/whatsapp-ordering.md).
 
+## Substitutions (Phase 60)
+
+When a supplier can't deliver a product it accepted, it offers one of its **own** other products instead, from the order page, after accepting and before packing.
+
+- **Customer's rule:** decides what happens, generally or per product.
+  - *Ask me each time*.
+  - *Accept automatically within my limits*: at most X % more, optionally the same brand only.
+  - *No replacements*.
+  - Plus: accept or reject when nobody answers in time.
+- **The missing units** leave the line at once.
+- **An accepted replacement:**
+  - becomes its own order line at the customer's normal price, never above the price shown in the proposal (with **same price**, the supplier pays the difference);
+  - gets stock reserved and is added to an open pick list;
+  - updates totals, excise, deposits, currency and CO₂;
+  - is invoiced by FIRINGI at delivery.
+- **Rejected or expired replacements:** the units stay out of the order, and FIRINGI's shortfall handling takes over.
+- **Pages:**
+  - *Orders › Replacements* for customers (rules) and suppliers (which product replaces which), in 25 languages.
+  - FIRINGI *Orders › Substitutions*, in English: overview plus every switch (on/off, automatic allowed, same price allowed, time to answer, defaults).
+- **Background job:** `/api/cron/substitutions`, every 5 minutes.
+
+Details: [docs/substitutions.md](docs/substitutions.md).
+
 ## EU trade reporting (Phase 57)
 
 FIRINGI invoices every buyer and buys from every supplier, so **FIRINGI's own entity files the EU returns**: the

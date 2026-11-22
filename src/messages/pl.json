@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Nagrody do wydania",
     "Customs Codes": "Kody celne",
     "EU Trade Report": "Raport wewnątrzwspólnotowy",
-    "Order by WhatsApp": "Zamawiaj przez WhatsApp"
+    "Order by WhatsApp": "Zamawiaj przez WhatsApp",
+    "Replacements": "Zamienniki"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Dane celne nie zaakceptowane: {product}",
       "body": "FIRINGI nie zaakceptowało danych celnych przesłanych dla „{product}”: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Zaproponowano zamiennik do zamówienia {number}",
+      "body": "Produkt {product} jest niedostępny. Dostawca proponuje w zamian {substitute} — zaakceptuj lub odrzuć w ciągu {minutes} min."
+    },
+    "substitution_accepted": {
+      "title": "Zamiennik zaakceptowany — zamówienie {number}",
+      "body": "Klient zaakceptował {qty} × {substitute}. Dodano do zamówienia."
+    },
+    "substitution_auto_accepted": {
+      "title": "Zamiennik dodany do zamówienia {number}",
+      "body": "{qty} × {substitute} zastępuje niedostępny produkt (zaakceptowane przez reguły zamienników klienta)."
+    },
+    "substitution_rejected": {
+      "title": "Zamiennik odrzucony — zamówienie {number}",
+      "body": "Klient nie chce zamiennika. Brakujące jednostki nie zostaną uwzględnione w zamówieniu."
+    },
+    "substitution_expired": {
+      "title": "Brak odpowiedzi na zamiennik — zamówienie {number}",
+      "body": "Nikt nie odpowiedział na czas, więc zamiennik nie został dodany."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Wszystko działa",
     "warning": "Działa, z ostrzeżeniami",
     "critical": "Coś nie działa"
+  },
+  "substitutions": {
+    "title": "Zamienniki",
+    "orderIntroBuyer": "Gdy dostawca nie może dostarczyć produktu, może zaproponować w zamian inny. Decydujesz Ty — albo Twoje reguły zamienników.",
+    "orderIntroSupplier": "Brakuje produktu? Zaproponuj w zamian inny ze swoich produktów. Reguły klienta decydują, czy zostanie dodany od razu, czy klient zostanie zapytany.",
+    "status": {
+      "PENDING": "Czeka na klienta",
+      "ACCEPTED": "Zaakceptowany",
+      "REJECTED": "Odrzucony",
+      "EXPIRED": "Bez odpowiedzi",
+      "CANCELLED": "Wycofany"
+    },
+    "autoBadge": "według Twoich reguł",
+    "autoBadgeSupplier": "według reguł klienta",
+    "missing": "Brakuje",
+    "instead": "W zamian",
+    "priceChange": "Różnica w cenie",
+    "samePrice": "Ta sama cena (dostawca pokrywa różnicę)",
+    "sameBrand": "Ta sama marka",
+    "otherBrand": "Inna marka",
+    "answerBy": "Odpowiedz do {time}",
+    "accept": "Akceptuj",
+    "reject": "Odrzuć",
+    "withdraw": "Wycofaj",
+    "accepted": "Zamiennik dodany do Twojego zamówienia.",
+    "rejected": "Zamiennik odrzucony.",
+    "noteFromSupplier": "Uwaga dostawcy: {note}",
+    "offerTitle": "Zaproponuj zamiennik",
+    "line": "Brakujący produkt",
+    "chooseLine": "Wybierz produkt…",
+    "shortQty": "Brakujące jednostki",
+    "alreadyShort": "Już brakuje {n}, jeszcze bez zamiennika",
+    "replacement": "Zamiennik",
+    "linked": "Twój wybór",
+    "inStock": "{n} na stanie",
+    "qty": "Jednostki zamiennika",
+    "note": "Uwaga dla klienta (opcjonalnie)",
+    "priceMatch": "Ta sama cena — pokrywam różnicę",
+    "preview": "Klient płaci {now} zamiast {was} ({diff}).",
+    "ruleNEVER": "Ten klient nie akceptuje zamienników tego produktu.",
+    "ruleASK": "Klient zostanie zapytany.",
+    "ruleAUTO": "Dodany od razu, jeśli kosztuje najwyżej {pct} % więcej; w przeciwnym razie klient zostanie zapytany.",
+    "ruleBrand": "Automatycznie akceptowana jest tylko ta sama marka.",
+    "send": "Zaproponuj zamiennik",
+    "sent": "Zaproponowano zamiennik.",
+    "sentAuto": "Zamiennik dodany — reguły klienta go akceptują.",
+    "noCandidates": "Żadnego z Twoich innych produktów nie można teraz zaproponować temu klientowi.",
+    "noOpen": "Zamienniki można proponować po zaakceptowaniu zamówienia i przed jego spakowaniem.",
+    "pageIntroBuyer": "Wybierz, co się stanie, gdy dostawca nie może dostarczyć któregoś z Twoich produktów.",
+    "rulesTitle": "Twoje reguły zamienników",
+    "modeLabel": "Gdy brakuje produktu",
+    "mode": {
+      "ASK": "Pytaj mnie za każdym razem",
+      "AUTO": "Akceptuj automatycznie w moich limitach",
+      "NEVER": "Bez zamienników"
+    },
+    "maxPricePct": "Akceptuj automatycznie, jeśli kosztuje najwyżej (% więcej)",
+    "sameBrandOnly": "Tylko ta sama marka",
+    "acceptOnTimeout": "Jeśli nie odpowiem na czas, zaakceptuj zamiennik",
+    "timeoutHint": "Masz {minutes} min na odpowiedź na każdą propozycję.",
+    "autoOff": "FIRINGI wyłączyło automatyczną akceptację — otrzymasz zapytanie.",
+    "save": "Zapisz",
+    "saved": "Zapisano.",
+    "productsTitle": "Reguły dla pojedynczych produktów",
+    "productsHint": "Reguła dla jednego produktu ma pierwszeństwo przed regułą ogólną (np.: nigdy nie zastępuj produktu Coca-Cola).",
+    "searchProducts": "Szukaj kupionych produktów…",
+    "add": "Dodaj",
+    "remove": "Usuń",
+    "noProducts": "Brak reguł dla produktów.",
+    "recentTitle": "Ostatnie zamienniki",
+    "noRecent": "Brak zamienników.",
+    "off": "Zamienniki są wyłączone przez FIRINGI.",
+    "pageIntroSupplier": "Wybierz dla każdego produktu, które z Twoich innych produktów mogą go zastąpić, gdy się skończy. Twoje wybory są proponowane jako pierwsze, gdy oferujesz zamiennik w zamówieniu.",
+    "linksTitle": "Produkty zastępcze",
+    "chooseProduct": "Wybierz jeden ze swoich produktów…",
+    "searchOwn": "Szukaj swoich produktów…",
+    "addReplacement": "Dodaj zamiennik",
+    "noLinks": "Nie wybrano zamienników dla tego produktu.",
+    "up": "Przesuń w górę"
   }
 }

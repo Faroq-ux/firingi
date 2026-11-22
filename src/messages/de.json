@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Zu übergebende Prämien",
     "Customs Codes": "Zolltarifnummern",
     "EU Trade Report": "EU-Handelsbericht",
-    "Order by WhatsApp": "Per WhatsApp bestellen"
+    "Order by WhatsApp": "Per WhatsApp bestellen",
+    "Replacements": "Ersatzprodukte"
   },
   "delivery": {
     "title": "Lieferung",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Zolldaten nicht angenommen: {product}",
       "body": "FIRINGI hat die Zolldaten, die Sie für „{product}“ gesendet haben, nicht angenommen: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Ersatz angeboten für Bestellung {number}",
+      "body": "{product} ist nicht verfügbar. Der Lieferant bietet stattdessen {substitute} an — nehmen Sie innerhalb von {minutes} Minuten an oder lehnen Sie ab."
+    },
+    "substitution_accepted": {
+      "title": "Ersatz angenommen — Bestellung {number}",
+      "body": "Der Kunde hat {qty} × {substitute} angenommen. Es wurde der Bestellung hinzugefügt."
+    },
+    "substitution_auto_accepted": {
+      "title": "Ersatz zur Bestellung {number} hinzugefügt",
+      "body": "{qty} × {substitute} ersetzt ein nicht verfügbares Produkt (angenommen durch die Ersatzregeln des Kunden)."
+    },
+    "substitution_rejected": {
+      "title": "Ersatz abgelehnt — Bestellung {number}",
+      "body": "Der Kunde möchte den Ersatz nicht. Die fehlenden Einheiten entfallen aus der Bestellung."
+    },
+    "substitution_expired": {
+      "title": "Ersatz nicht beantwortet — Bestellung {number}",
+      "body": "Niemand hat rechtzeitig geantwortet, daher wurde der Ersatz nicht hinzugefügt."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Alles läuft",
     "warning": "Läuft, mit Warnungen",
     "critical": "Etwas ist ausgefallen"
+  },
+  "substitutions": {
+    "title": "Ersatzprodukte",
+    "orderIntroBuyer": "Wenn der Lieferant ein Produkt nicht liefern kann, kann er stattdessen ein anderes anbieten. Sie entscheiden — oder überlassen es Ihren Ersatzregeln.",
+    "orderIntroSupplier": "Fehlt ein Produkt? Bieten Sie stattdessen eines Ihrer anderen Produkte an. Die Regeln des Kunden entscheiden, ob es sofort hinzugefügt oder der Kunde gefragt wird.",
+    "status": {
+      "PENDING": "Wartet auf den Kunden",
+      "ACCEPTED": "Angenommen",
+      "REJECTED": "Abgelehnt",
+      "EXPIRED": "Nicht beantwortet",
+      "CANCELLED": "Zurückgezogen"
+    },
+    "autoBadge": "nach Ihren Regeln",
+    "autoBadgeSupplier": "nach den Regeln des Kunden",
+    "missing": "Fehlt",
+    "instead": "Stattdessen",
+    "priceChange": "Preisunterschied",
+    "samePrice": "Gleicher Preis (Lieferant zahlt die Differenz)",
+    "sameBrand": "Gleiche Marke",
+    "otherBrand": "Andere Marke",
+    "answerBy": "Antwort bis {time}",
+    "accept": "Annehmen",
+    "reject": "Ablehnen",
+    "withdraw": "Zurückziehen",
+    "accepted": "Ersatz wurde Ihrer Bestellung hinzugefügt.",
+    "rejected": "Ersatz abgelehnt.",
+    "noteFromSupplier": "Hinweis des Lieferanten: {note}",
+    "offerTitle": "Ersatz anbieten",
+    "line": "Fehlendes Produkt",
+    "chooseLine": "Produkt wählen…",
+    "shortQty": "Fehlende Einheiten",
+    "alreadyShort": "{n} fehlen bereits und sind noch nicht ersetzt",
+    "replacement": "Ersatz",
+    "linked": "Ihre Wahl",
+    "inStock": "{n} auf Lager",
+    "qty": "Einheiten des Ersatzprodukts",
+    "note": "Hinweis für den Kunden (optional)",
+    "priceMatch": "Gleicher Preis — ich zahle die Differenz",
+    "preview": "Der Kunde zahlt {now} statt {was} ({diff}).",
+    "ruleNEVER": "Dieser Kunde akzeptiert für dieses Produkt keinen Ersatz.",
+    "ruleASK": "Der Kunde wird gefragt.",
+    "ruleAUTO": "Wird sofort hinzugefügt, wenn es höchstens {pct} % mehr kostet; sonst wird der Kunde gefragt.",
+    "ruleBrand": "Nur dieselbe Marke wird automatisch angenommen.",
+    "send": "Ersatz anbieten",
+    "sent": "Ersatz angeboten.",
+    "sentAuto": "Ersatz hinzugefügt — die Regeln des Kunden nehmen ihn an.",
+    "noCandidates": "Derzeit kann diesem Kunden keines Ihrer anderen Produkte angeboten werden.",
+    "noOpen": "Ersatz kann angeboten werden, nachdem Sie die Bestellung angenommen haben und bevor sie verpackt ist.",
+    "pageIntroBuyer": "Legen Sie fest, was passiert, wenn ein Lieferant eines Ihrer Produkte nicht liefern kann.",
+    "rulesTitle": "Ihre Ersatzregeln",
+    "modeLabel": "Wenn ein Produkt fehlt",
+    "mode": {
+      "ASK": "Jedes Mal fragen",
+      "AUTO": "Innerhalb meiner Grenzen automatisch annehmen",
+      "NEVER": "Kein Ersatz"
+    },
+    "maxPricePct": "Automatisch annehmen, wenn höchstens (% teurer)",
+    "sameBrandOnly": "Nur dieselbe Marke",
+    "acceptOnTimeout": "Wenn ich nicht rechtzeitig antworte, Ersatz annehmen",
+    "timeoutHint": "Sie haben {minutes} Minuten, um auf jeden Vorschlag zu antworten.",
+    "autoOff": "FIRINGI hat die automatische Annahme ausgeschaltet — Sie werden gefragt.",
+    "save": "Speichern",
+    "saved": "Gespeichert.",
+    "productsTitle": "Regeln für einzelne Produkte",
+    "productsHint": "Eine Regel für ein Produkt hat Vorrang vor Ihrer allgemeinen Regel (zum Beispiel: Ihre Coca-Cola nie ersetzen).",
+    "searchProducts": "Gekaufte Produkte suchen…",
+    "add": "Hinzufügen",
+    "remove": "Entfernen",
+    "noProducts": "Noch keine Produktregeln.",
+    "recentTitle": "Letzte Ersetzungen",
+    "noRecent": "Noch keine Ersetzungen.",
+    "off": "Ersatzprodukte sind von FIRINGI ausgeschaltet.",
+    "pageIntroSupplier": "Legen Sie für jedes Ihrer Produkte fest, welche Ihrer anderen Produkte es ersetzen können, wenn es ausverkauft ist. Ihre Auswahl erscheint zuerst, wenn Sie bei einer Bestellung Ersatz anbieten.",
+    "linksTitle": "Ersatzprodukte",
+    "chooseProduct": "Eines Ihrer Produkte wählen…",
+    "searchOwn": "Ihre Produkte suchen…",
+    "addReplacement": "Ersatz hinzufügen",
+    "noLinks": "Für dieses Produkt ist kein Ersatz ausgewählt.",
+    "up": "Nach oben"
   }
 }

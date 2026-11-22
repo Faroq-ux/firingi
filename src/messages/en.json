@@ -1877,6 +1877,26 @@
     "trade_code_rejected": {
       "title": "Customs data not accepted: {product}",
       "body": "FIRINGI did not accept the customs data you sent for \"{product}\": {note}"
+    },
+    "substitution_proposed": {
+      "title": "Replacement offered for order {number}",
+      "body": "{product} is not available. The supplier offers {substitute} instead — accept or reject within {minutes} minutes."
+    },
+    "substitution_accepted": {
+      "title": "Replacement accepted — order {number}",
+      "body": "The customer accepted {qty} × {substitute}. It has been added to the order."
+    },
+    "substitution_auto_accepted": {
+      "title": "Replacement added to order {number}",
+      "body": "{qty} × {substitute} replaces a product that wasn't available (accepted by the customer's replacement rules)."
+    },
+    "substitution_rejected": {
+      "title": "Replacement rejected — order {number}",
+      "body": "The customer doesn't want the replacement. The missing units stay out of the order."
+    },
+    "substitution_expired": {
+      "title": "Replacement not answered — order {number}",
+      "body": "Nobody answered in time, so the replacement was not added."
     }
   },
   "notifications": {
@@ -8460,5 +8480,84 @@
     "ok": "Everything is running",
     "warning": "Running, with warnings",
     "critical": "Something is down"
+  },
+  "substitutions": {
+    "title": "Replacements",
+    "orderIntroBuyer": "When the supplier can't deliver a product, it may offer another one instead. You decide — or let your replacement rules decide.",
+    "orderIntroSupplier": "Missing a product? Offer one of your other products instead. The customer's rules decide whether it is added at once or the customer is asked.",
+    "status": {
+      "PENDING": "Waiting for the customer",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected",
+      "EXPIRED": "Not answered",
+      "CANCELLED": "Withdrawn"
+    },
+    "autoBadge": "by your rules",
+    "autoBadgeSupplier": "by the customer's rules",
+    "missing": "Missing",
+    "instead": "Instead",
+    "priceChange": "Price difference",
+    "samePrice": "Same price (supplier pays the difference)",
+    "sameBrand": "Same brand",
+    "otherBrand": "Other brand",
+    "answerBy": "Answer by {time}",
+    "accept": "Accept",
+    "reject": "Reject",
+    "withdraw": "Withdraw",
+    "accepted": "Replacement added to your order.",
+    "rejected": "Replacement rejected.",
+    "noteFromSupplier": "Supplier's note: {note}",
+    "offerTitle": "Offer a replacement",
+    "line": "Product that is short",
+    "chooseLine": "Choose a product…",
+    "shortQty": "Units missing",
+    "alreadyShort": "{n} already missing and not yet replaced",
+    "replacement": "Replacement",
+    "linked": "Your choice",
+    "inStock": "{n} in stock",
+    "qty": "Units of the replacement",
+    "note": "Note for the customer (optional)",
+    "priceMatch": "Same price — I pay the difference",
+    "preview": "The customer pays {now} instead of {was} ({diff}).",
+    "ruleNEVER": "This customer doesn't accept replacements for this product.",
+    "ruleASK": "The customer will be asked.",
+    "ruleAUTO": "Added at once if it costs at most {pct} % more; otherwise the customer is asked.",
+    "ruleBrand": "Only the same brand is accepted automatically.",
+    "send": "Offer replacement",
+    "sent": "Replacement offered.",
+    "sentAuto": "Replacement added — the customer's rules accept it.",
+    "noCandidates": "None of your other products can be offered to this customer right now.",
+    "noOpen": "Replacements can be offered after you accept the order and before it is packed.",
+    "pageIntroBuyer": "Choose what happens when a supplier can't deliver one of your products.",
+    "rulesTitle": "Your replacement rules",
+    "modeLabel": "When a product is missing",
+    "mode": {
+      "ASK": "Ask me each time",
+      "AUTO": "Accept automatically within my limits",
+      "NEVER": "No replacements"
+    },
+    "maxPricePct": "Accept automatically if it costs at most (% more)",
+    "sameBrandOnly": "Only the same brand",
+    "acceptOnTimeout": "If I don't answer in time, accept the replacement",
+    "timeoutHint": "You have {minutes} minutes to answer each proposal.",
+    "autoOff": "FIRINGI has switched automatic acceptance off — you will be asked.",
+    "save": "Save",
+    "saved": "Saved.",
+    "productsTitle": "Rules for single products",
+    "productsHint": "A rule for one product overrides your general rule (for example: never replace your Coca-Cola).",
+    "searchProducts": "Search products you bought…",
+    "add": "Add",
+    "remove": "Remove",
+    "noProducts": "No product rules yet.",
+    "recentTitle": "Recent replacements",
+    "noRecent": "No replacements yet.",
+    "off": "Replacements are switched off by FIRINGI.",
+    "pageIntroSupplier": "Choose, for each of your products, which of your other products can replace it when it runs out. Your choices come first when you offer a replacement on an order.",
+    "linksTitle": "Replacement products",
+    "chooseProduct": "Choose one of your products…",
+    "searchOwn": "Search your products…",
+    "addReplacement": "Add replacement",
+    "noLinks": "No replacements chosen for this product.",
+    "up": "Move up"
   }
 }

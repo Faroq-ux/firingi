@@ -144,6 +144,7 @@ model Order {
   parentOrder       Order?                   @relation("OrderSplit", fields: [parentOrderId], references: [id])
   childOrders       Order[]                  @relation("OrderSplit")
   lines             OrderLine[]
+  substitutions     Substitution[]
   tempReadings      TempReading[]            @relation("TempReadingOrder")
   coldIncidents     ColdIncident[]           @relation("ColdIncidentOrder")
   statusHistory     OrderStatusHistory[]
@@ -244,16 +245,19 @@ model OrderLine {
   exciseNet         Decimal          @default(0) @db.Decimal(18, 2)
   exciseMeasure     Json?
 
-  order          Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  offer          VendorOffer         @relation(fields: [offerId], references: [id])
-  commissionRule CommissionRule?     @relation(fields: [commissionRuleId], references: [id])
-  deal           ClearanceDeal?      @relation("ClearanceLines", fields: [dealId], references: [id])
-  discounts      OrderLineDiscount[]
-  invoiceLines   InvoiceLine[]
-  returnLines    ReturnLine[]
-  claimLines     QualityClaimLine[]  @relation("ClaimOrderLine")
+  order               Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  offer               VendorOffer         @relation(fields: [offerId], references: [id])
+  commissionRule      CommissionRule?     @relation(fields: [commissionRuleId], references: [id])
+  deal                ClearanceDeal?      @relation("ClearanceLines", fields: [dealId], references: [id])
+  discounts           OrderLineDiscount[]
+  invoiceLines        InvoiceLine[]
+  returnLines         ReturnLine[]
+  claimLines          QualityClaimLine[]  @relation("ClaimOrderLine")
   /// Phase 51: kg CO₂e of the line (product + packaging)
-  co2Kg          Decimal?            @db.Decimal(14, 3)
+  co2Kg               Decimal?            @db.Decimal(14, 3)
+  /// Phase 60: units of this line replaced by a substitute; on a substitute line, the line it replaces
+  substitutedQty      Int                 @default(0)
+  substituteForLineId String?
 
   @@index([orderId])
   @@index([dealId])

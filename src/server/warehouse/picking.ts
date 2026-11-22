@@ -53,7 +53,7 @@ async function batchInfo(tx: Tx, batchId: string | null) {
 }
 
 /** Lines for what an order still holds in the warehouse (minus what is already on the list). */
-async function addLines(tx: Tx, pickListId: string, orderId: string, addressId: string, only?: { batchId: string; qty: number }[]) {
+export async function addLines(tx: Tx, pickListId: string, orderId: string, addressId: string, only?: { batchId: string; qty: number }[]) {
   const held = only ?? (await reservedFor(tx, orderId)).filter((r) => r.addressId === addressId).map((r) => ({ batchId: r.batchId!, qty: r.qty, offerId: r.offerId }));
   let n = 0;
   for (const h of held) {

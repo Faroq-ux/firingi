@@ -82,6 +82,7 @@ export const ADMIN_NAV: NavSection[] = [
       ord("tenders", "Tenders", "Concursos", "P50", { live: true }),
       ord("empties", "Empties & Deposits", "Vasilhame e Depósitos", "P40", { live: true, perm: ["admin.orders.view", "admin.orders.manage", "admin.finance.view"] }),
       ord("catch-weight", "Sold by Weight", "Venda ao Peso", "P41", { live: true, perm: ["admin.orders.view", "admin.orders.manage"] }),
+      ord("substitutions", "Substitutions", "Substituições", "P60", { live: true, perm: ["admin.orders.view", "admin.orders.manage"] }),
       ord("recurring", "Recurring Orders", "Encomendas Recorrentes", "P26", { live: true }),
       ord("claims", "Quality Claims", "Reclamações de Qualidade", "P31", { live: true, perm: ["admin.claims.manage", "admin.orders.view", "admin.orders.manage"] }),
       ord("claims/chargebacks", "Claim Charge-backs", "Débitos de Reclamações", "P31", { live: true, perm: ["admin.claims.manage", "admin.finance.view", "admin.fleet.view"] }),

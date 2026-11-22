@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Odmeny na odovzdanie",
     "Customs Codes": "Colné kódy",
     "EU Trade Report": "Správa o obchode v EÚ",
-    "Order by WhatsApp": "Objednať cez WhatsApp"
+    "Order by WhatsApp": "Objednať cez WhatsApp",
+    "Replacements": "Náhrady"
   },
   "delivery": {
     "title": "Doručenie",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Colné údaje neprijaté: {product}",
       "body": "FIRINGI neprijala colné údaje, ktoré ste poslali pre „{product}“: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Ponúknutá náhrada k objednávke {number}",
+      "body": "Produkt {product} nie je dostupný. Dodávateľ namiesto neho ponúka {substitute} — prijmite alebo odmietnite do {minutes} min."
+    },
+    "substitution_accepted": {
+      "title": "Náhrada prijatá — objednávka {number}",
+      "body": "Zákazník prijal {qty} × {substitute}. Bolo to pridané do objednávky."
+    },
+    "substitution_auto_accepted": {
+      "title": "Náhrada pridaná do objednávky {number}",
+      "body": "{qty} × {substitute} nahrádza nedostupný produkt (prijaté podľa pravidiel zákazníka pre náhrady)."
+    },
+    "substitution_rejected": {
+      "title": "Náhrada odmietnutá — objednávka {number}",
+      "body": "Zákazník náhradu nechce. Chýbajúce jednotky v objednávke nebudú."
+    },
+    "substitution_expired": {
+      "title": "Náhrada bez odpovede — objednávka {number}",
+      "body": "Nikto neodpovedal včas, preto náhrada nebola pridaná."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Všetko funguje",
     "warning": "Funguje, s upozorneniami",
     "critical": "Niečo nefunguje"
+  },
+  "substitutions": {
+    "title": "Náhrady",
+    "orderIntroBuyer": "Keď dodávateľ nemôže dodať produkt, môže namiesto neho ponúknuť iný. Rozhodnete vy — alebo vaše pravidlá pre náhrady.",
+    "orderIntroSupplier": "Chýba produkt? Ponúknite namiesto neho iný zo svojich produktov. Pravidlá zákazníka rozhodnú, či sa pridá hneď, alebo bude zákazník opýtaný.",
+    "status": {
+      "PENDING": "Čaká na zákazníka",
+      "ACCEPTED": "Prijaté",
+      "REJECTED": "Odmietnuté",
+      "EXPIRED": "Bez odpovede",
+      "CANCELLED": "Stiahnuté"
+    },
+    "autoBadge": "podľa vašich pravidiel",
+    "autoBadgeSupplier": "podľa pravidiel zákazníka",
+    "missing": "Chýba",
+    "instead": "Namiesto toho",
+    "priceChange": "Rozdiel v cene",
+    "samePrice": "Rovnaká cena (rozdiel hradí dodávateľ)",
+    "sameBrand": "Rovnaká značka",
+    "otherBrand": "Iná značka",
+    "answerBy": "Odpovedzte do {time}",
+    "accept": "Prijať",
+    "reject": "Odmietnuť",
+    "withdraw": "Stiahnuť",
+    "accepted": "Náhrada bola pridaná do vašej objednávky.",
+    "rejected": "Náhrada odmietnutá.",
+    "noteFromSupplier": "Poznámka dodávateľa: {note}",
+    "offerTitle": "Ponúknuť náhradu",
+    "line": "Chýbajúci produkt",
+    "chooseLine": "Vyberte produkt…",
+    "shortQty": "Chýbajúce jednotky",
+    "alreadyShort": "Už chýba {n}, zatiaľ bez náhrady",
+    "replacement": "Náhrada",
+    "linked": "Vaša voľba",
+    "inStock": "{n} na sklade",
+    "qty": "Jednotky náhrady",
+    "note": "Poznámka pre zákazníka (voliteľné)",
+    "priceMatch": "Rovnaká cena — rozdiel hradím ja",
+    "preview": "Zákazník zaplatí {now} namiesto {was} ({diff}).",
+    "ruleNEVER": "Tento zákazník neprijíma náhrady za tento produkt.",
+    "ruleASK": "Zákazník bude opýtaný.",
+    "ruleAUTO": "Pridá sa hneď, ak stojí najviac o {pct} % viac; inak bude zákazník opýtaný.",
+    "ruleBrand": "Automaticky sa prijíma len rovnaká značka.",
+    "send": "Ponúknuť náhradu",
+    "sent": "Náhrada ponúknutá.",
+    "sentAuto": "Náhrada pridaná — pravidlá zákazníka ju prijímajú.",
+    "noCandidates": "Tomuto zákazníkovi teraz nemožno ponúknuť žiadny z vašich ďalších produktov.",
+    "noOpen": "Náhrady možno ponúkať po prijatí objednávky a pred jej zabalením.",
+    "pageIntroBuyer": "Vyberte, čo sa stane, keď dodávateľ nemôže dodať niektorý z vašich produktov.",
+    "rulesTitle": "Vaše pravidlá pre náhrady",
+    "modeLabel": "Keď produkt chýba",
+    "mode": {
+      "ASK": "Zakaždým sa ma opýtať",
+      "AUTO": "Automaticky prijať v rámci mojich limitov",
+      "NEVER": "Žiadne náhrady"
+    },
+    "maxPricePct": "Automaticky prijať, ak stojí najviac (o % viac)",
+    "sameBrandOnly": "Len rovnaká značka",
+    "acceptOnTimeout": "Ak neodpoviem včas, náhradu prijať",
+    "timeoutHint": "Na každý návrh máte {minutes} min na odpoveď.",
+    "autoOff": "FIRINGI vyplo automatické prijímanie — budete opýtaní.",
+    "save": "Uložiť",
+    "saved": "Uložené.",
+    "productsTitle": "Pravidlá pre jednotlivé produkty",
+    "productsHint": "Pravidlo pre jeden produkt má prednosť pred všeobecným pravidlom (napr.: nikdy nenahrádzať produkt Coca-Cola).",
+    "searchProducts": "Hľadať produkty, ktoré ste kúpili…",
+    "add": "Pridať",
+    "remove": "Odstrániť",
+    "noProducts": "Zatiaľ žiadne pravidlá pre produkty.",
+    "recentTitle": "Posledné náhrady",
+    "noRecent": "Zatiaľ žiadne náhrady.",
+    "off": "Náhrady vyplo FIRINGI.",
+    "pageIntroSupplier": "Pri každom produkte vyberte, ktoré z vašich ďalších produktov ho môžu nahradiť, keď sa minie. Vaše voľby sa ponúknu ako prvé, keď ponúkate náhradu v objednávke.",
+    "linksTitle": "Náhradné produkty",
+    "chooseProduct": "Vyberte jeden zo svojich produktov…",
+    "searchOwn": "Hľadať vaše produkty…",
+    "addReplacement": "Pridať náhradu",
+    "noLinks": "Pre tento produkt nie sú vybrané žiadne náhrady.",
+    "up": "Posunúť nahor"
   }
 }

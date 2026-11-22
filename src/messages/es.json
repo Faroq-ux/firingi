@@ -1877,6 +1877,26 @@
     "trade_code_rejected": {
       "title": "Datos aduaneros no aceptados: {product}",
       "body": "FIRINGI no aceptó los datos aduaneros que envió para \"{product}\": {note}"
+    },
+    "substitution_proposed": {
+      "title": "Sustitución ofrecida para el pedido {number}",
+      "body": "{product} no está disponible. El proveedor ofrece {substitute} en su lugar — acepte o rechace en {minutes} minutos."
+    },
+    "substitution_accepted": {
+      "title": "Sustitución aceptada — pedido {number}",
+      "body": "El cliente ha aceptado {qty} × {substitute}. Se ha añadido al pedido."
+    },
+    "substitution_auto_accepted": {
+      "title": "Sustitución añadida al pedido {number}",
+      "body": "{qty} × {substitute} sustituye a un producto que no estaba disponible (aceptado por las reglas de sustitución del cliente)."
+    },
+    "substitution_rejected": {
+      "title": "Sustitución rechazada — pedido {number}",
+      "body": "El cliente no quiere la sustitución. Las unidades que faltan quedan fuera del pedido."
+    },
+    "substitution_expired": {
+      "title": "Sustitución sin respuesta — pedido {number}",
+      "body": "Nadie respondió a tiempo, así que la sustitución no se ha añadido."
     }
   },
   "notifications": {
@@ -2134,7 +2154,8 @@
     "Assistant": "Asistente",
     "Customs Codes": "Códigos aduaneros",
     "EU Trade Report": "Informe intracomunitario",
-    "Order": "Pedir por WhatsApp"
+    "Order": "Pedir por WhatsApp",
+    "Replacements": "Sustituciones"
   },
   "support": {
     "title": "Ayuda y soporte",
@@ -8475,5 +8496,84 @@
     "ok": "Todo funciona correctamente",
     "warning": "Funciona, con advertencias",
     "critical": "Algo no funciona"
+  },
+  "substitutions": {
+    "title": "Sustituciones",
+    "orderIntroBuyer": "Cuando el proveedor no puede entregar un producto, puede ofrecer otro en su lugar. Usted decide — o deje que decidan sus reglas de sustitución.",
+    "orderIntroSupplier": "¿Falta un producto? Ofrezca otro de sus productos en su lugar. Las reglas del cliente deciden si se añade al momento o si se pregunta al cliente.",
+    "status": {
+      "PENDING": "Esperando al cliente",
+      "ACCEPTED": "Aceptada",
+      "REJECTED": "Rechazada",
+      "EXPIRED": "Sin respuesta",
+      "CANCELLED": "Retirada"
+    },
+    "autoBadge": "por sus reglas",
+    "autoBadgeSupplier": "por las reglas del cliente",
+    "missing": "Falta",
+    "instead": "En su lugar",
+    "priceChange": "Diferencia de precio",
+    "samePrice": "Mismo precio (el proveedor paga la diferencia)",
+    "sameBrand": "Misma marca",
+    "otherBrand": "Otra marca",
+    "answerBy": "Responda antes de {time}",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "withdraw": "Retirar",
+    "accepted": "Sustitución añadida a su pedido.",
+    "rejected": "Sustitución rechazada.",
+    "noteFromSupplier": "Nota del proveedor: {note}",
+    "offerTitle": "Ofrecer una sustitución",
+    "line": "Producto que falta",
+    "chooseLine": "Elija un producto…",
+    "shortQty": "Unidades que faltan",
+    "alreadyShort": "{n} ya faltan y aún no se han sustituido",
+    "replacement": "Sustituto",
+    "linked": "Su elección",
+    "inStock": "{n} en stock",
+    "qty": "Unidades del sustituto",
+    "note": "Nota para el cliente (opcional)",
+    "priceMatch": "Mismo precio — pago yo la diferencia",
+    "preview": "El cliente paga {now} en lugar de {was} ({diff}).",
+    "ruleNEVER": "Este cliente no acepta sustituciones para este producto.",
+    "ruleASK": "Se preguntará al cliente.",
+    "ruleAUTO": "Se añade al momento si cuesta como máximo un {pct} % más; si no, se pregunta al cliente.",
+    "ruleBrand": "Solo se acepta automáticamente la misma marca.",
+    "send": "Ofrecer sustitución",
+    "sent": "Sustitución ofrecida.",
+    "sentAuto": "Sustitución añadida — las reglas del cliente la aceptan.",
+    "noCandidates": "Ahora mismo no se puede ofrecer ninguno de sus otros productos a este cliente.",
+    "noOpen": "Las sustituciones se pueden ofrecer después de aceptar el pedido y antes de embalarlo.",
+    "pageIntroBuyer": "Elija qué ocurre cuando un proveedor no puede entregar uno de sus productos.",
+    "rulesTitle": "Sus reglas de sustitución",
+    "modeLabel": "Cuando falta un producto",
+    "mode": {
+      "ASK": "Preguntarme cada vez",
+      "AUTO": "Aceptar automáticamente dentro de mis límites",
+      "NEVER": "Sin sustituciones"
+    },
+    "maxPricePct": "Aceptar automáticamente si cuesta como máximo (% más)",
+    "sameBrandOnly": "Solo la misma marca",
+    "acceptOnTimeout": "Si no respondo a tiempo, aceptar la sustitución",
+    "timeoutHint": "Tiene {minutes} minutos para responder a cada propuesta.",
+    "autoOff": "FIRINGI ha desactivado la aceptación automática — se le preguntará.",
+    "save": "Guardar",
+    "saved": "Guardado.",
+    "productsTitle": "Reglas por producto",
+    "productsHint": "Una regla para un producto prevalece sobre su regla general (por ejemplo: no sustituir nunca su Coca-Cola).",
+    "searchProducts": "Buscar productos que ha comprado…",
+    "add": "Añadir",
+    "remove": "Eliminar",
+    "noProducts": "Aún no hay reglas por producto.",
+    "recentTitle": "Sustituciones recientes",
+    "noRecent": "Aún no hay sustituciones.",
+    "off": "FIRINGI ha desactivado las sustituciones.",
+    "pageIntroSupplier": "Elija, para cada uno de sus productos, cuáles de sus otros productos pueden sustituirlo cuando se agote. Sus elecciones aparecen primero cuando ofrece una sustitución en un pedido.",
+    "linksTitle": "Productos sustitutos",
+    "chooseProduct": "Elija uno de sus productos…",
+    "searchOwn": "Buscar sus productos…",
+    "addReplacement": "Añadir sustituto",
+    "noLinks": "No hay sustitutos elegidos para este producto.",
+    "up": "Subir"
   }
 }

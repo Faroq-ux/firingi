@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Te leveren beloningen",
     "Customs Codes": "Douanecodes",
     "EU Trade Report": "EU-handelsrapport",
-    "Order by WhatsApp": "Bestellen via WhatsApp"
+    "Order by WhatsApp": "Bestellen via WhatsApp",
+    "Replacements": "Vervangingen"
   },
   "delivery": {
     "title": "Levering",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Douanegegevens niet geaccepteerd: {product}",
       "body": "FIRINGI heeft de douanegegevens die u voor \"{product}\" stuurde niet geaccepteerd: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Vervanging aangeboden voor bestelling {number}",
+      "body": "{product} is niet beschikbaar. De leverancier biedt in plaats daarvan {substitute} aan — accepteer of wijs af binnen {minutes} minuten."
+    },
+    "substitution_accepted": {
+      "title": "Vervanging geaccepteerd — bestelling {number}",
+      "body": "De klant heeft {qty} × {substitute} geaccepteerd. Het is aan de bestelling toegevoegd."
+    },
+    "substitution_auto_accepted": {
+      "title": "Vervanging toegevoegd aan bestelling {number}",
+      "body": "{qty} × {substitute} vervangt een product dat niet beschikbaar was (geaccepteerd door de vervangingsregels van de klant)."
+    },
+    "substitution_rejected": {
+      "title": "Vervanging afgewezen — bestelling {number}",
+      "body": "De klant wil de vervanging niet. De ontbrekende eenheden blijven buiten de bestelling."
+    },
+    "substitution_expired": {
+      "title": "Vervanging niet beantwoord — bestelling {number}",
+      "body": "Niemand heeft op tijd geantwoord, dus de vervanging is niet toegevoegd."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Alles werkt",
     "warning": "Werkt, met waarschuwingen",
     "critical": "Er is iets uitgevallen"
+  },
+  "substitutions": {
+    "title": "Vervangingen",
+    "orderIntroBuyer": "Als de leverancier een product niet kan leveren, kan hij in plaats daarvan een ander product aanbieden. U beslist — of laat uw vervangingsregels beslissen.",
+    "orderIntroSupplier": "Ontbreekt er een product? Bied in plaats daarvan een van uw andere producten aan. De regels van de klant bepalen of het meteen wordt toegevoegd of dat het de klant wordt gevraagd.",
+    "status": {
+      "PENDING": "Wacht op de klant",
+      "ACCEPTED": "Geaccepteerd",
+      "REJECTED": "Afgewezen",
+      "EXPIRED": "Niet beantwoord",
+      "CANCELLED": "Ingetrokken"
+    },
+    "autoBadge": "volgens uw regels",
+    "autoBadgeSupplier": "volgens de regels van de klant",
+    "missing": "Ontbreekt",
+    "instead": "In plaats daarvan",
+    "priceChange": "Prijsverschil",
+    "samePrice": "Zelfde prijs (leverancier betaalt het verschil)",
+    "sameBrand": "Zelfde merk",
+    "otherBrand": "Ander merk",
+    "answerBy": "Antwoord vóór {time}",
+    "accept": "Accepteren",
+    "reject": "Afwijzen",
+    "withdraw": "Intrekken",
+    "accepted": "Vervanging toegevoegd aan uw bestelling.",
+    "rejected": "Vervanging afgewezen.",
+    "noteFromSupplier": "Opmerking van de leverancier: {note}",
+    "offerTitle": "Vervanging aanbieden",
+    "line": "Product dat ontbreekt",
+    "chooseLine": "Kies een product…",
+    "shortQty": "Ontbrekende eenheden",
+    "alreadyShort": "{n} ontbreken al en zijn nog niet vervangen",
+    "replacement": "Vervanging",
+    "linked": "Uw keuze",
+    "inStock": "{n} op voorraad",
+    "qty": "Eenheden van de vervanging",
+    "note": "Opmerking voor de klant (optioneel)",
+    "priceMatch": "Zelfde prijs — ik betaal het verschil",
+    "preview": "De klant betaalt {now} in plaats van {was} ({diff}).",
+    "ruleNEVER": "Deze klant accepteert geen vervangingen voor dit product.",
+    "ruleASK": "De klant wordt gevraagd.",
+    "ruleAUTO": "Wordt meteen toegevoegd als het hoogstens {pct} % meer kost; anders wordt het de klant gevraagd.",
+    "ruleBrand": "Alleen hetzelfde merk wordt automatisch geaccepteerd.",
+    "send": "Vervanging aanbieden",
+    "sent": "Vervanging aangeboden.",
+    "sentAuto": "Vervanging toegevoegd — de regels van de klant accepteren deze.",
+    "noCandidates": "Geen van uw andere producten kan nu aan deze klant worden aangeboden.",
+    "noOpen": "Vervangingen kunnen worden aangeboden nadat u de bestelling hebt geaccepteerd en voordat deze is ingepakt.",
+    "pageIntroBuyer": "Kies wat er gebeurt als een leverancier een van uw producten niet kan leveren.",
+    "rulesTitle": "Uw vervangingsregels",
+    "modeLabel": "Als een product ontbreekt",
+    "mode": {
+      "ASK": "Vraag het mij elke keer",
+      "AUTO": "Automatisch accepteren binnen mijn grenzen",
+      "NEVER": "Geen vervangingen"
+    },
+    "maxPricePct": "Automatisch accepteren als het hoogstens (% meer) kost",
+    "sameBrandOnly": "Alleen hetzelfde merk",
+    "acceptOnTimeout": "Als ik niet op tijd antwoord, de vervanging accepteren",
+    "timeoutHint": "U hebt {minutes} minuten om op elk voorstel te antwoorden.",
+    "autoOff": "FIRINGI heeft automatisch accepteren uitgeschakeld — het wordt u gevraagd.",
+    "save": "Opslaan",
+    "saved": "Opgeslagen.",
+    "productsTitle": "Regels voor afzonderlijke producten",
+    "productsHint": "Een regel voor één product gaat voor uw algemene regel (bijvoorbeeld: uw Coca-Cola nooit vervangen).",
+    "searchProducts": "Zoek producten die u hebt gekocht…",
+    "add": "Toevoegen",
+    "remove": "Verwijderen",
+    "noProducts": "Nog geen productregels.",
+    "recentTitle": "Recente vervangingen",
+    "noRecent": "Nog geen vervangingen.",
+    "off": "Vervangingen zijn uitgeschakeld door FIRINGI.",
+    "pageIntroSupplier": "Kies voor elk van uw producten welke van uw andere producten het kunnen vervangen als het op is. Uw keuzes komen eerst wanneer u bij een bestelling een vervanging aanbiedt.",
+    "linksTitle": "Vervangende producten",
+    "chooseProduct": "Kies een van uw producten…",
+    "searchOwn": "Zoek in uw producten…",
+    "addReplacement": "Vervanging toevoegen",
+    "noLinks": "Geen vervangingen gekozen voor dit product.",
+    "up": "Omhoog"
   }
 }

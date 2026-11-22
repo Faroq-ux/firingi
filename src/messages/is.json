@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Umbun til afhendingar",
     "Customs Codes": "Tollskrárnúmer",
     "EU Trade Report": "Skýrsla um viðskipti innan ESB",
-    "Order by WhatsApp": "Panta með WhatsApp"
+    "Order by WhatsApp": "Panta með WhatsApp",
+    "Replacements": "Staðgönguvörur"
   },
   "delivery": {
     "title": "Afhending",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Tollgögn ekki samþykkt: {product}",
       "body": "FIRINGI samþykkti ekki tollgögnin sem þú sendir fyrir „{product}“: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Staðgönguvara boðin fyrir pöntun {number}",
+      "body": "{product} er ekki fáanleg. Birgirinn býður {substitute} í staðinn — samþykktu eða hafnaðu innan {minutes} mínútna."
+    },
+    "substitution_accepted": {
+      "title": "Staðgönguvara samþykkt — pöntun {number}",
+      "body": "Viðskiptavinurinn samþykkti {qty} × {substitute}. Henni hefur verið bætt við pöntunina."
+    },
+    "substitution_auto_accepted": {
+      "title": "Staðgönguvöru bætt við pöntun {number}",
+      "body": "{qty} × {substitute} kemur í stað vöru sem var ekki fáanleg (samþykkt samkvæmt reglum viðskiptavinarins um staðgönguvörur)."
+    },
+    "substitution_rejected": {
+      "title": "Staðgönguvöru hafnað — pöntun {number}",
+      "body": "Viðskiptavinurinn vill ekki staðgönguvöruna. Einingarnar sem vantar verða ekki með í pöntuninni."
+    },
+    "substitution_expired": {
+      "title": "Staðgönguvöru ekki svarað — pöntun {number}",
+      "body": "Enginn svaraði í tæka tíð, svo staðgönguvörunni var ekki bætt við."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Allt virkar",
     "warning": "Virkar, með viðvörunum",
     "critical": "Eitthvað liggur niðri"
+  },
+  "substitutions": {
+    "title": "Staðgönguvörur",
+    "orderIntroBuyer": "Þegar birgirinn getur ekki afhent vöru getur hann boðið aðra í staðinn. Þú ákveður — eða lætur reglurnar þínar um staðgönguvörur ráða.",
+    "orderIntroSupplier": "Vantar vöru? Bjóddu eina af öðrum vörum þínum í staðinn. Reglur viðskiptavinarins ráða því hvort henni er bætt við strax eða viðskiptavinurinn spurður.",
+    "status": {
+      "PENDING": "Bíður eftir viðskiptavininum",
+      "ACCEPTED": "Samþykkt",
+      "REJECTED": "Hafnað",
+      "EXPIRED": "Ekki svarað",
+      "CANCELLED": "Dregið til baka"
+    },
+    "autoBadge": "samkvæmt reglunum þínum",
+    "autoBadgeSupplier": "samkvæmt reglum viðskiptavinarins",
+    "missing": "Vantar",
+    "instead": "Í staðinn",
+    "priceChange": "Verðmunur",
+    "samePrice": "Sama verð (birgirinn greiðir mismuninn)",
+    "sameBrand": "Sama vörumerki",
+    "otherBrand": "Annað vörumerki",
+    "answerBy": "Svaraðu fyrir {time}",
+    "accept": "Samþykkja",
+    "reject": "Hafna",
+    "withdraw": "Draga til baka",
+    "accepted": "Staðgönguvöru bætt við pöntunina þína.",
+    "rejected": "Staðgönguvöru hafnað.",
+    "noteFromSupplier": "Athugasemd birgis: {note}",
+    "offerTitle": "Bjóða staðgönguvöru",
+    "line": "Vara sem vantar",
+    "chooseLine": "Veldu vöru…",
+    "shortQty": "Einingar sem vantar",
+    "alreadyShort": "{n} vantar þegar og hefur ekki verið skipt út",
+    "replacement": "Staðgönguvara",
+    "linked": "Þitt val",
+    "inStock": "{n} á lager",
+    "qty": "Einingar af staðgönguvörunni",
+    "note": "Athugasemd til viðskiptavinarins (valfrjálst)",
+    "priceMatch": "Sama verð — ég greiði mismuninn",
+    "preview": "Viðskiptavinurinn greiðir {now} í stað {was} ({diff}).",
+    "ruleNEVER": "Þessi viðskiptavinur tekur ekki við staðgönguvörum fyrir þessa vöru.",
+    "ruleASK": "Viðskiptavinurinn verður spurður.",
+    "ruleAUTO": "Bætt við strax ef hún kostar mest {pct} % meira; annars er viðskiptavinurinn spurður.",
+    "ruleBrand": "Aðeins sama vörumerki er samþykkt sjálfkrafa.",
+    "send": "Bjóða staðgönguvöru",
+    "sent": "Staðgönguvara boðin.",
+    "sentAuto": "Staðgönguvöru bætt við — reglur viðskiptavinarins samþykkja hana.",
+    "noCandidates": "Ekki er hægt að bjóða þessum viðskiptavini neina af öðrum vörum þínum núna.",
+    "noOpen": "Hægt er að bjóða staðgönguvörur eftir að þú samþykkir pöntunina og áður en henni er pakkað.",
+    "pageIntroBuyer": "Veldu hvað gerist þegar birgir getur ekki afhent eina af vörunum þínum.",
+    "rulesTitle": "Reglurnar þínar um staðgönguvörur",
+    "modeLabel": "Þegar vöru vantar",
+    "mode": {
+      "ASK": "Spyrja mig í hvert sinn",
+      "AUTO": "Samþykkja sjálfkrafa innan minna marka",
+      "NEVER": "Engar staðgönguvörur"
+    },
+    "maxPricePct": "Samþykkja sjálfkrafa ef hún kostar mest (% meira)",
+    "sameBrandOnly": "Aðeins sama vörumerki",
+    "acceptOnTimeout": "Ef ég svara ekki í tæka tíð, samþykkja staðgönguvöruna",
+    "timeoutHint": "Þú hefur {minutes} mínútur til að svara hverri tillögu.",
+    "autoOff": "FIRINGI hefur slökkt á sjálfvirku samþykki — spurt verður í hvert sinn.",
+    "save": "Vista",
+    "saved": "Vistað.",
+    "productsTitle": "Reglur fyrir einstakar vörur",
+    "productsHint": "Regla fyrir eina vöru gengur framar almennu reglunni þinni (til dæmis: aldrei skipta út Coca-Cola).",
+    "searchProducts": "Leita í vörum sem þú hefur keypt…",
+    "add": "Bæta við",
+    "remove": "Fjarlægja",
+    "noProducts": "Engar vörureglur enn.",
+    "recentTitle": "Nýlegar staðgönguvörur",
+    "noRecent": "Engar staðgönguvörur enn.",
+    "off": "FIRINGI hefur slökkt á staðgönguvörum.",
+    "pageIntroSupplier": "Veldu fyrir hverja af vörunum þínum hvaða aðrar vörur þínar geta komið í stað hennar þegar hún klárast. Val þitt birtist fyrst þegar þú býður staðgönguvöru í pöntun.",
+    "linksTitle": "Staðgönguvörur",
+    "chooseProduct": "Veldu eina af vörunum þínum…",
+    "searchOwn": "Leita í vörunum þínum…",
+    "addReplacement": "Bæta við staðgönguvöru",
+    "noLinks": "Engar staðgönguvörur valdar fyrir þessa vöru.",
+    "up": "Færa upp"
   }
 }

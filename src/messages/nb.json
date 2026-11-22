@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Belønninger å levere",
     "Customs Codes": "Tollkoder",
     "EU Trade Report": "EU-handelsrapport",
-    "Order by WhatsApp": "Bestill via WhatsApp"
+    "Order by WhatsApp": "Bestill via WhatsApp",
+    "Replacements": "Erstatninger"
   },
   "delivery": {
     "title": "Levering",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Tolldata ikke godkjent: {product}",
       "body": "FIRINGI godkjente ikke tolldataene du sendte for «{product}»: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Erstatning tilbudt for ordre {number}",
+      "body": "{product} er ikke tilgjengelig. Leverandøren tilbyr {substitute} i stedet — godta eller avvis innen {minutes} minutter."
+    },
+    "substitution_accepted": {
+      "title": "Erstatning godtatt — ordre {number}",
+      "body": "Kunden har godtatt {qty} × {substitute}. Det er lagt til i ordren."
+    },
+    "substitution_auto_accepted": {
+      "title": "Erstatning lagt til i ordre {number}",
+      "body": "{qty} × {substitute} erstatter et produkt som ikke var tilgjengelig (godtatt av kundens erstatningsregler)."
+    },
+    "substitution_rejected": {
+      "title": "Erstatning avvist — ordre {number}",
+      "body": "Kunden vil ikke ha erstatningen. De manglende enhetene holdes utenfor ordren."
+    },
+    "substitution_expired": {
+      "title": "Erstatning ikke besvart — ordre {number}",
+      "body": "Ingen svarte i tide, så erstatningen ble ikke lagt til."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Alt kjører",
     "warning": "Kjører, med advarsler",
     "critical": "Noe er nede"
+  },
+  "substitutions": {
+    "title": "Erstatninger",
+    "orderIntroBuyer": "Når leverandøren ikke kan levere et produkt, kan den tilby et annet i stedet. Du bestemmer — eller lar erstatningsreglene dine bestemme.",
+    "orderIntroSupplier": "Mangler et produkt? Tilby et av de andre produktene dine i stedet. Kundens regler avgjør om det legges til med en gang, eller om kunden blir spurt.",
+    "status": {
+      "PENDING": "Venter på kunden",
+      "ACCEPTED": "Godtatt",
+      "REJECTED": "Avvist",
+      "EXPIRED": "Ikke besvart",
+      "CANCELLED": "Trukket tilbake"
+    },
+    "autoBadge": "etter reglene dine",
+    "autoBadgeSupplier": "etter kundens regler",
+    "missing": "Mangler",
+    "instead": "I stedet",
+    "priceChange": "Prisforskjell",
+    "samePrice": "Samme pris (leverandøren betaler mellomlegget)",
+    "sameBrand": "Samme merke",
+    "otherBrand": "Annet merke",
+    "answerBy": "Svar innen {time}",
+    "accept": "Godta",
+    "reject": "Avvis",
+    "withdraw": "Trekk tilbake",
+    "accepted": "Erstatningen er lagt til i ordren din.",
+    "rejected": "Erstatningen ble avvist.",
+    "noteFromSupplier": "Merknad fra leverandøren: {note}",
+    "offerTitle": "Tilby en erstatning",
+    "line": "Produkt som mangler",
+    "chooseLine": "Velg et produkt…",
+    "shortQty": "Manglende enheter",
+    "alreadyShort": "{n} mangler allerede og er ikke erstattet ennå",
+    "replacement": "Erstatning",
+    "linked": "Ditt valg",
+    "inStock": "{n} på lager",
+    "qty": "Enheter av erstatningen",
+    "note": "Merknad til kunden (valgfritt)",
+    "priceMatch": "Samme pris — jeg betaler mellomlegget",
+    "preview": "Kunden betaler {now} i stedet for {was} ({diff}).",
+    "ruleNEVER": "Denne kunden godtar ikke erstatninger for dette produktet.",
+    "ruleASK": "Kunden blir spurt.",
+    "ruleAUTO": "Legges til med en gang hvis det koster maks {pct} % mer; ellers blir kunden spurt.",
+    "ruleBrand": "Bare samme merke godtas automatisk.",
+    "send": "Tilby erstatning",
+    "sent": "Erstatning tilbudt.",
+    "sentAuto": "Erstatning lagt til — kundens regler godtar den.",
+    "noCandidates": "Ingen av de andre produktene dine kan tilbys denne kunden akkurat nå.",
+    "noOpen": "Erstatninger kan tilbys etter at du har godtatt ordren og før den er pakket.",
+    "pageIntroBuyer": "Velg hva som skjer når en leverandør ikke kan levere et av produktene dine.",
+    "rulesTitle": "Erstatningsreglene dine",
+    "modeLabel": "Når et produkt mangler",
+    "mode": {
+      "ASK": "Spør meg hver gang",
+      "AUTO": "Godta automatisk innenfor grensene mine",
+      "NEVER": "Ingen erstatninger"
+    },
+    "maxPricePct": "Godta automatisk hvis det koster maks (% mer)",
+    "sameBrandOnly": "Bare samme merke",
+    "acceptOnTimeout": "Hvis jeg ikke svarer i tide, godta erstatningen",
+    "timeoutHint": "Du har {minutes} minutter på å svare på hvert forslag.",
+    "autoOff": "FIRINGI har slått av automatisk godtaking — du blir spurt.",
+    "save": "Lagre",
+    "saved": "Lagret.",
+    "productsTitle": "Regler for enkeltprodukter",
+    "productsHint": "En regel for ett produkt går foran den generelle regelen din (for eksempel: erstatt aldri Coca-Cola).",
+    "searchProducts": "Søk i produkter du har kjøpt…",
+    "add": "Legg til",
+    "remove": "Fjern",
+    "noProducts": "Ingen produktregler ennå.",
+    "recentTitle": "Siste erstatninger",
+    "noRecent": "Ingen erstatninger ennå.",
+    "off": "FIRINGI har slått av erstatninger.",
+    "pageIntroSupplier": "Velg for hvert av produktene dine hvilke av de andre produktene dine som kan erstatte det når det er utsolgt. Valgene dine kommer først når du tilbyr en erstatning på en ordre.",
+    "linksTitle": "Erstatningsprodukter",
+    "chooseProduct": "Velg et av produktene dine…",
+    "searchOwn": "Søk i produktene dine…",
+    "addReplacement": "Legg til erstatning",
+    "noLinks": "Ingen erstatninger valgt for dette produktet.",
+    "up": "Flytt opp"
   }
 }

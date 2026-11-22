@@ -26,6 +26,7 @@ export const JOBS: JobDef[] = [
   { key: "coldchain", label: "Cold chain (equipment checks due, loggers out of range)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/coldchain" },
   { key: "excise", label: "Licensed goods (licence expiry reminders, expired licences)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/excise" },
   { key: "whatsapp", label: "WhatsApp ordering (messages left over, expired proposals, reorder reminders)", every: "every 5 minutes", staleAfterMin: 60, critical: false, path: "/api/cron/whatsapp" },
+  { key: "substitutions", label: "Substitutions (unanswered replacements)", every: "every 5 minutes", staleAfterMin: 60, critical: false, path: "/api/cron/substitutions" },
   { key: "trade", label: "EU trade reporting (EC Sales List and Intrastat returns rebuilt, filing reminders, threshold watch)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/trade" },
   { key: "fx", label: "Exchange rates (ECB daily rates, rate alerts)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/fx" },
   { key: "pos-daily", label: "Till sales into each company's Accounting (daily cash / card / other by VAT rate, last 7 days rebuilt)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/pos-daily" },

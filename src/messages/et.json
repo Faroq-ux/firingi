@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Üleandmist ootavad preemiad",
     "Customs Codes": "Tollikoodid",
     "EU Trade Report": "ELi kaubandusaruanne",
-    "Order by WhatsApp": "Tellimine WhatsAppis"
+    "Order by WhatsApp": "Tellimine WhatsAppis",
+    "Replacements": "Asendused"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Tolliandmeid ei kinnitatud: {product}",
       "body": "FIRINGI ei kinnitanud tolliandmeid, mille saatsite toote „{product}” kohta: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Tellimusele {number} pakuti asendust",
+      "body": "{product} pole saadaval. Tarnija pakub selle asemel toodet {substitute} — nõustuge või lükake tagasi {minutes} minuti jooksul."
+    },
+    "substitution_accepted": {
+      "title": "Asendusega nõustuti — tellimus {number}",
+      "body": "Klient nõustus: {qty} × {substitute}. See lisati tellimusele."
+    },
+    "substitution_auto_accepted": {
+      "title": "Asendus lisati tellimusele {number}",
+      "body": "{qty} × {substitute} asendab toodet, mis polnud saadaval (aktsepteeritud kliendi asendusreeglite alusel)."
+    },
+    "substitution_rejected": {
+      "title": "Asendus lükati tagasi — tellimus {number}",
+      "body": "Klient ei soovi asendust. Puuduvad ühikud jäävad tellimusest välja."
+    },
+    "substitution_expired": {
+      "title": "Asendusele ei vastatud — tellimus {number}",
+      "body": "Keegi ei vastanud õigeks ajaks, seega asendust ei lisatud."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Kõik töötab",
     "warning": "Töötab, hoiatustega",
     "critical": "Midagi ei tööta"
+  },
+  "substitutions": {
+    "title": "Asendused",
+    "orderIntroBuyer": "Kui tarnija ei saa toodet tarnida, võib ta pakkuda selle asemel mõnda teist. Teie otsustate — või otsustavad teie asendusreeglid.",
+    "orderIntroSupplier": "Toode puudu? Pakkuge selle asemel mõnda oma teist toodet. Kliendi reeglid otsustavad, kas see lisatakse kohe või küsitakse kliendilt.",
+    "status": {
+      "PENDING": "Ootab kliendi vastust",
+      "ACCEPTED": "Nõustutud",
+      "REJECTED": "Tagasi lükatud",
+      "EXPIRED": "Vastamata",
+      "CANCELLED": "Tagasi võetud"
+    },
+    "autoBadge": "teie reeglite järgi",
+    "autoBadgeSupplier": "kliendi reeglite järgi",
+    "missing": "Puudu",
+    "instead": "Asemel",
+    "priceChange": "Hinnavahe",
+    "samePrice": "Sama hind (vahe maksab tarnija)",
+    "sameBrand": "Sama kaubamärk",
+    "otherBrand": "Muu kaubamärk",
+    "answerBy": "Vastake hiljemalt {time}",
+    "accept": "Nõustu",
+    "reject": "Lükka tagasi",
+    "withdraw": "Võta tagasi",
+    "accepted": "Asendus lisati teie tellimusele.",
+    "rejected": "Asendus lükati tagasi.",
+    "noteFromSupplier": "Tarnija märkus: {note}",
+    "offerTitle": "Paku asendust",
+    "line": "Puuduv toode",
+    "chooseLine": "Valige toode…",
+    "shortQty": "Puuduvad ühikud",
+    "alreadyShort": "{n} on juba puudu ja pole veel asendatud",
+    "replacement": "Asendus",
+    "linked": "Teie valik",
+    "inStock": "{n} laos",
+    "qty": "Asenduse ühikud",
+    "note": "Märkus kliendile (valikuline)",
+    "priceMatch": "Sama hind — maksan vahe ise",
+    "preview": "Klient maksab {was} asemel {now} ({diff}).",
+    "ruleNEVER": "See klient ei aktsepteeri selle toote asendusi.",
+    "ruleASK": "Kliendilt küsitakse.",
+    "ruleAUTO": "Lisatakse kohe, kui see maksab kuni {pct} % rohkem; muidu küsitakse kliendilt.",
+    "ruleBrand": "Automaatselt aktsepteeritakse ainult sama kaubamärki.",
+    "send": "Paku asendust",
+    "sent": "Asendus pakutud.",
+    "sentAuto": "Asendus lisatud — kliendi reeglid aktsepteerivad seda.",
+    "noCandidates": "Ühtegi teie teist toodet ei saa sellele kliendile praegu pakkuda.",
+    "noOpen": "Asendusi saab pakkuda pärast tellimusega nõustumist ja enne selle pakkimist.",
+    "pageIntroBuyer": "Valige, mis juhtub, kui tarnija ei saa mõnda teie toodet tarnida.",
+    "rulesTitle": "Teie asendusreeglid",
+    "modeLabel": "Kui toode on puudu",
+    "mode": {
+      "ASK": "Küsi minult iga kord",
+      "AUTO": "Nõustu automaatselt minu piirides",
+      "NEVER": "Ilma asendusteta"
+    },
+    "maxPricePct": "Nõustu automaatselt, kui see maksab kuni (% rohkem)",
+    "sameBrandOnly": "Ainult sama kaubamärk",
+    "acceptOnTimeout": "Kui ma ei vasta õigeks ajaks, nõustu asendusega",
+    "timeoutHint": "Teil on igale ettepanekule vastamiseks {minutes} minutit.",
+    "autoOff": "FIRINGI on automaatse nõustumise välja lülitanud — teilt küsitakse.",
+    "save": "Salvesta",
+    "saved": "Salvestatud.",
+    "productsTitle": "Üksikute toodete reeglid",
+    "productsHint": "Ühe toote reegel on tähtsam kui teie üldreegel (näiteks: Coca-Cola asendamine on alati keelatud).",
+    "searchProducts": "Otsige ostetud tooteid…",
+    "add": "Lisa",
+    "remove": "Eemalda",
+    "noProducts": "Tootereegleid veel pole.",
+    "recentTitle": "Viimased asendused",
+    "noRecent": "Asendusi veel pole.",
+    "off": "FIRINGI on asendused välja lülitanud.",
+    "pageIntroSupplier": "Valige iga oma toote jaoks, millised teie teised tooted võivad seda asendada, kui see otsa saab. Teie valikud kuvatakse esimesena, kui pakute tellimusel asendust.",
+    "linksTitle": "Asendustooted",
+    "chooseProduct": "Valige üks oma toodetest…",
+    "searchOwn": "Otsige oma tooteid…",
+    "addReplacement": "Lisa asendus",
+    "noLinks": "Selle toote jaoks pole asendusi valitud.",
+    "up": "Liiguta üles"
   }
 }

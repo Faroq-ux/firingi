@@ -257,6 +257,9 @@ model VendorOffer {
   transferLines       StockTransferLine[]  @relation("StockTransferLineOffer")
   cartItems           CartItem[]
   orderLines          OrderLine[]
+  substituteFrom      SubstituteLink[]     @relation("SubstituteFrom")
+  substituteTo        SubstituteLink[]     @relation("SubstituteTo")
+  substitutions       Substitution[]       @relation("SubstitutionOffer")
   promotionTargets    PromotionTarget[]
   priceChangeRequests PriceChangeRequest[] @relation("PriceChangeOffer")
   priceAlerts         PriceAlert[]         @relation("PriceAlertOffer")

@@ -1,0 +1,98 @@
+// ───────────────────────── Substitutions (Phase 60) ─────────────────────────
+// A product the supplier can't deliver (found short at confirmation or at picking) may be replaced by another
+// of the supplier's products. The customer decides how: never, ask me each time, or automatically within limits
+// (price increase, same brand) — for all products or per product. A proposal the customer doesn't answer in time
+// follows the customer's choice (accept or reject). An accepted substitute becomes its own order line at the
+// customer's normal price (optionally price-matched by the supplier); FIRINGI invoices it at delivery as usual.
+
+enum SubstitutionMode {
+  ASK
+  AUTO
+  NEVER
+}
+
+enum SubstitutionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+  CANCELLED
+}
+
+/// The customer's rule for all products (one row per company; missing = FIRINGI's default).
+model SubstitutionPreference {
+  companyId       String           @id
+  mode            SubstitutionMode @default(ASK)
+  /// AUTO: accepted without asking only when the replacement costs at most this % more
+  maxPricePct     Int              @default(10)
+  /// AUTO: only a product of the same brand
+  sameBrandOnly   Boolean          @default(false)
+  /// a proposal not answered in time: accepted (true) or rejected (false)
+  acceptOnTimeout Boolean          @default(false)
+  updatedById     String?
+  updatedAt       DateTime         @updatedAt
+}
+
+/// The customer's rule for one product (overrides the general rule).
+model SubstitutionProductRule {
+  id        String           @id @default(cuid())
+  companyId String
+  productId String
+  mode      SubstitutionMode
+  createdAt DateTime         @default(now())
+
+  @@unique([companyId, productId])
+}
+
+/// A supplier's chosen replacements for one of its products, in order of preference.
+model SubstituteLink {
+  id                String   @id @default(cuid())
+  vendorCompanyId   String
+  offerId           String
+  substituteOfferId String
+  rank              Int      @default(0)
+  createdAt         DateTime @default(now())
+
+  offer      VendorOffer @relation("SubstituteFrom", fields: [offerId], references: [id], onDelete: Cascade)
+  substitute VendorOffer @relation("SubstituteTo", fields: [substituteOfferId], references: [id], onDelete: Cascade)
+
+  @@unique([offerId, substituteOfferId])
+  @@index([vendorCompanyId])
+}
+
+model Substitution {
+  id                   String             @id @default(cuid())
+  orderId              String
+  /// the line that is short
+  lineId               String
+  /// units of that line replaced
+  shortQty             Int
+  substituteOfferId    String
+  qty                  Int
+  /// what the customer pays per unit (net, before VAT) and what the missing units cost
+  unitPriceNet         Decimal            @db.Decimal(18, 4)
+  originalUnitPriceNet Decimal            @db.Decimal(18, 4)
+  /// the supplier charges no more than the missing units cost (it pays the difference)
+  priceMatch           Boolean            @default(false)
+  /// % the replacement costs more (+) or less (−) than the missing units
+  priceDiffPct         Decimal            @db.Decimal(8, 2)
+  sameBrand            Boolean
+  status               SubstitutionStatus @default(PENDING)
+  /// accepted by the customer's rule (AUTO) / on time-out — not by a person
+  auto                 Boolean            @default(false)
+  note                 String?
+  proposedById         String
+  decidedById          String?
+  decidedAt            DateTime?
+  decisionNote         String?
+  expiresAt            DateTime
+  /// the order line created when accepted
+  newLineId            String?
+  createdAt            DateTime           @default(now())
+
+  order Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  offer VendorOffer @relation("SubstitutionOffer", fields: [substituteOfferId], references: [id])
+
+  @@index([orderId])
+  @@index([status, expiresAt])
+}

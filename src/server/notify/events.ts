@@ -207,6 +207,12 @@ export const EVENTS: EventDef[] = [
   E("tender.closed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
   E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
   E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
+  // Phase 60: substitutions (a replacement for a product the supplier can't deliver)
+  E("substitution.proposed", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["number", "product", "substitute", "minutes"]),
+  E("substitution.accepted", "orders", VENDOR_ORDERS, ["PUSH"], ["number", "substitute", "qty"]),
+  E("substitution.auto_accepted", "orders", ORDERS, ["EMAIL", "PUSH"], ["number", "substitute", "qty"]),
+  E("substitution.rejected", "orders", VENDOR_ORDERS, ["EMAIL", "PUSH"], ["number"]),
+  E("substitution.expired", "orders", ORDERS, ["PUSH"], ["number"]),
   // Phase 51: CO₂ values
   // Phase 52: staff shifts & time (personal ones go to the staff member; the rest to the business's managers)
   E("staff.rota_published", "account", null, ["EMAIL", "PUSH"], ["week"]),

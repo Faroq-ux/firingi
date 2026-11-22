@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Premjijiet x'tgħaddi",
     "Customs Codes": "Kodiċi doganali",
     "EU Trade Report": "Rapport tal-kummerċ fl-UE",
-    "Order by WhatsApp": "Ordna bil-WhatsApp"
+    "Order by WhatsApp": "Ordna bil-WhatsApp",
+    "Replacements": "Sostituzzjonijiet"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Data doganali mhux aċċettata: {product}",
       "body": "FIRINGI ma aċċettatx id-data doganali li bgħatt għal \"{product}\": {note}"
+    },
+    "substitution_proposed": {
+      "title": "Sostituzzjoni offruta għall-ordni {number}",
+      "body": "{product} mhux disponibbli. Il-fornitur joffri {substitute} minfloku — aċċetta jew irrifjuta fi żmien {minutes} minuta."
+    },
+    "substitution_accepted": {
+      "title": "Sostituzzjoni aċċettata — ordni {number}",
+      "body": "Il-klijent aċċetta {qty} × {substitute}. Żdied mal-ordni."
+    },
+    "substitution_auto_accepted": {
+      "title": "Sostituzzjoni miżjuda mal-ordni {number}",
+      "body": "{qty} × {substitute} jieħu post prodott li ma kienx disponibbli (aċċettat mir-regoli tas-sostituzzjoni tal-klijent)."
+    },
+    "substitution_rejected": {
+      "title": "Sostituzzjoni miċħuda — ordni {number}",
+      "body": "Il-klijent ma jridx is-sostituzzjoni. Il-biċċiet neqsin jibqgħu barra mill-ordni."
+    },
+    "substitution_expired": {
+      "title": "Sostituzzjoni mingħajr tweġiba — ordni {number}",
+      "body": "Ħadd ma wieġeb fil-ħin, għalhekk is-sostituzzjoni ma żdietx."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Kollox qed jaħdem",
     "warning": "Qed jaħdem, b'xi twissijiet",
     "critical": "Xi ħaġa mhix taħdem"
+  },
+  "substitutions": {
+    "title": "Sostituzzjonijiet",
+    "orderIntroBuyer": "Meta l-fornitur ma jkunx jista' jwassal prodott, jista' joffri ieħor minfloku. Inti tiddeċiedi — jew ħalli r-regoli tas-sostituzzjoni tiegħek jiddeċiedu.",
+    "orderIntroSupplier": "Jonqsok prodott? Offri wieħed mill-prodotti l-oħra tiegħek minfloku. Ir-regoli tal-klijent jiddeċiedu jekk jiżdiedx minnufih jew jekk il-klijent jiġix mistoqsi.",
+    "status": {
+      "PENDING": "Qed jistenna lill-klijent",
+      "ACCEPTED": "Aċċettata",
+      "REJECTED": "Miċħuda",
+      "EXPIRED": "Bla tweġiba",
+      "CANCELLED": "Irtirata"
+    },
+    "autoBadge": "mir-regoli tiegħek",
+    "autoBadgeSupplier": "mir-regoli tal-klijent",
+    "missing": "Nieqes",
+    "instead": "Minfloku",
+    "priceChange": "Differenza fil-prezz",
+    "samePrice": "L-istess prezz (il-fornitur iħallas id-differenza)",
+    "sameBrand": "L-istess marka",
+    "otherBrand": "Marka oħra",
+    "answerBy": "Wieġeb sa {time}",
+    "accept": "Aċċetta",
+    "reject": "Irrifjuta",
+    "withdraw": "Irtira",
+    "accepted": "Is-sostituzzjoni żdiedet mal-ordni tiegħek.",
+    "rejected": "Is-sostituzzjoni ġiet miċħuda.",
+    "noteFromSupplier": "Nota tal-fornitur: {note}",
+    "offerTitle": "Offri sostituzzjoni",
+    "line": "Prodott nieqes",
+    "chooseLine": "Agħżel prodott…",
+    "shortQty": "Biċċiet neqsin",
+    "alreadyShort": "{n} diġà neqsin u għadhom ma ġewx sostitwiti",
+    "replacement": "Sostitut",
+    "linked": "L-għażla tiegħek",
+    "inStock": "{n} fl-istokk",
+    "qty": "Biċċiet tas-sostitut",
+    "note": "Nota għall-klijent (mhux obbligatorja)",
+    "priceMatch": "L-istess prezz — inħallas jien id-differenza",
+    "preview": "Il-klijent iħallas {now} minflok {was} ({diff}).",
+    "ruleNEVER": "Dan il-klijent ma jaċċettax sostituzzjonijiet għal dan il-prodott.",
+    "ruleASK": "Il-klijent se jiġi mistoqsi.",
+    "ruleAUTO": "Jiżdied minnufih jekk jiswa l-aktar {pct} % aktar; inkella l-klijent jiġi mistoqsi.",
+    "ruleBrand": "L-istess marka biss tiġi aċċettata awtomatikament.",
+    "send": "Offri s-sostituzzjoni",
+    "sent": "Sostituzzjoni offruta.",
+    "sentAuto": "Sostituzzjoni miżjuda — ir-regoli tal-klijent jaċċettawha.",
+    "noCandidates": "Bħalissa l-ebda prodott ieħor tiegħek ma jista' jiġi offrut lil dan il-klijent.",
+    "noOpen": "Is-sostituzzjonijiet jistgħu jiġu offruti wara li taċċetta l-ordni u qabel ma tiġi ppakkjata.",
+    "pageIntroBuyer": "Agħżel x'jiġri meta fornitur ma jkunx jista' jwassal wieħed mill-prodotti tiegħek.",
+    "rulesTitle": "Ir-regoli tas-sostituzzjoni tiegħek",
+    "modeLabel": "Meta jonqos prodott",
+    "mode": {
+      "ASK": "Staqsini kull darba",
+      "AUTO": "Aċċetta awtomatikament fil-limiti tiegħi",
+      "NEVER": "L-ebda sostituzzjoni"
+    },
+    "maxPricePct": "Aċċetta awtomatikament jekk jiswa l-aktar (% aktar)",
+    "sameBrandOnly": "L-istess marka biss",
+    "acceptOnTimeout": "Jekk ma nweġibx fil-ħin, aċċetta s-sostituzzjoni",
+    "timeoutHint": "Għandek {minutes} minuta biex twieġeb kull proposta.",
+    "autoOff": "FIRINGI tfiet l-aċċettazzjoni awtomatika — se tiġi mistoqsi.",
+    "save": "Issejvja",
+    "saved": "Issejvjat.",
+    "productsTitle": "Regoli għal prodotti individwali",
+    "productsHint": "Regola għal prodott wieħed tieħu preċedenza fuq ir-regola ġenerali tiegħek (pereżempju: qatt ma tissostitwixxi l-Coca-Cola tiegħek).",
+    "searchProducts": "Fittex prodotti li xtrajt…",
+    "add": "Żid",
+    "remove": "Neħħi",
+    "noProducts": "Għad m'hemm l-ebda regola għal prodotti.",
+    "recentTitle": "Sostituzzjonijiet riċenti",
+    "noRecent": "Għad m'hemm l-ebda sostituzzjoni.",
+    "off": "Is-sostituzzjonijiet huma mitfija minn FIRINGI.",
+    "pageIntroSupplier": "Agħżel, għal kull prodott tiegħek, liema mill-prodotti l-oħra tiegħek jistgħu jissostitwuh meta jispiċċa. L-għażliet tiegħek jidhru l-ewwel meta toffri sostituzzjoni f'ordni.",
+    "linksTitle": "Prodotti sostituti",
+    "chooseProduct": "Agħżel wieħed mill-prodotti tiegħek…",
+    "searchOwn": "Fittex il-prodotti tiegħek…",
+    "addReplacement": "Żid sostitut",
+    "noLinks": "L-ebda sostitut magħżul għal dan il-prodott.",
+    "up": "Ittella' 'l fuq"
   }
 }

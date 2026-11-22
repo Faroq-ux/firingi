@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Átadandó jutalmak",
     "Customs Codes": "Vámtarifaszámok",
     "EU Trade Report": "Uniós kereskedelmi jelentés",
-    "Order by WhatsApp": "Rendelés WhatsAppon"
+    "Order by WhatsApp": "Rendelés WhatsAppon",
+    "Replacements": "Helyettesítések"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Vámadatok nem elfogadva: {product}",
       "body": "A FIRINGI nem fogadta el a(z) „{product}” termékhez küldött vámadatokat: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Helyettesítést ajánlottak a(z) {number} rendeléshez",
+      "body": "A(z) {product} nem elérhető. A beszállító helyette ezt ajánlja: {substitute} — fogadja el vagy utasítsa el {minutes} percen belül."
+    },
+    "substitution_accepted": {
+      "title": "Helyettesítés elfogadva — {number} rendelés",
+      "body": "Az ügyfél elfogadta: {qty} × {substitute}. Hozzáadtuk a rendeléshez."
+    },
+    "substitution_auto_accepted": {
+      "title": "Helyettesítés hozzáadva a(z) {number} rendeléshez",
+      "body": "{qty} × {substitute} helyettesít egy nem elérhető terméket (az ügyfél helyettesítési szabályai alapján elfogadva)."
+    },
+    "substitution_rejected": {
+      "title": "Helyettesítés elutasítva — {number} rendelés",
+      "body": "Az ügyfél nem kéri a helyettesítést. A hiányzó darabok kimaradnak a rendelésből."
+    },
+    "substitution_expired": {
+      "title": "Helyettesítés megválaszolatlan — {number} rendelés",
+      "body": "Senki nem válaszolt időben, ezért a helyettesítés nem került a rendelésbe."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Minden működik",
     "warning": "Működik, figyelmeztetésekkel",
     "critical": "Valami nem működik"
+  },
+  "substitutions": {
+    "title": "Helyettesítések",
+    "orderIntroBuyer": "Ha a beszállító nem tud leszállítani egy terméket, helyette másikat ajánlhat. Ön dönt — vagy a helyettesítési szabályai döntenek.",
+    "orderIntroSupplier": "Hiányzik egy termék? Ajánljon helyette egy másikat a termékei közül. Az ügyfél szabályai döntik el, hogy azonnal hozzáadjuk-e, vagy megkérdezzük az ügyfelet.",
+    "status": {
+      "PENDING": "Várakozás az ügyfélre",
+      "ACCEPTED": "Elfogadva",
+      "REJECTED": "Elutasítva",
+      "EXPIRED": "Nem válaszolt",
+      "CANCELLED": "Visszavonva"
+    },
+    "autoBadge": "az Ön szabályai alapján",
+    "autoBadgeSupplier": "az ügyfél szabályai alapján",
+    "missing": "Hiányzik",
+    "instead": "Helyette",
+    "priceChange": "Árkülönbség",
+    "samePrice": "Azonos ár (a különbözetet a beszállító fizeti)",
+    "sameBrand": "Azonos márka",
+    "otherBrand": "Más márka",
+    "answerBy": "Válaszoljon eddig: {time}",
+    "accept": "Elfogadás",
+    "reject": "Elutasítás",
+    "withdraw": "Visszavonás",
+    "accepted": "A helyettesítő termék bekerült a rendelésébe.",
+    "rejected": "Helyettesítés elutasítva.",
+    "noteFromSupplier": "A beszállító megjegyzése: {note}",
+    "offerTitle": "Helyettesítés ajánlása",
+    "line": "Hiányzó termék",
+    "chooseLine": "Válasszon terméket…",
+    "shortQty": "Hiányzó darabszám",
+    "alreadyShort": "{n} már hiányzik, és még nincs helyettesítve",
+    "replacement": "Helyettesítő termék",
+    "linked": "Az Ön választása",
+    "inStock": "{n} raktáron",
+    "qty": "Helyettesítő termék darabszáma",
+    "note": "Megjegyzés az ügyfélnek (nem kötelező)",
+    "priceMatch": "Azonos ár — a különbözetet én fizetem",
+    "preview": "Az ügyfél {was} helyett {now} összeget fizet ({diff}).",
+    "ruleNEVER": "Ez az ügyfél nem fogad el helyettesítést ehhez a termékhez.",
+    "ruleASK": "Megkérdezzük az ügyfelet.",
+    "ruleAUTO": "Azonnal hozzáadjuk, ha legfeljebb {pct} %-kal drágább; egyébként megkérdezzük az ügyfelet.",
+    "ruleBrand": "Automatikusan csak azonos márkát fogad el.",
+    "send": "Helyettesítés ajánlása",
+    "sent": "Helyettesítés felajánlva.",
+    "sentAuto": "Helyettesítő termék hozzáadva — az ügyfél szabályai elfogadják.",
+    "noCandidates": "Jelenleg egyik másik terméke sem ajánlható fel ennek az ügyfélnek.",
+    "noOpen": "Helyettesítést a rendelés elfogadása után és a csomagolás előtt ajánlhat.",
+    "pageIntroBuyer": "Válassza ki, mi történjen, ha egy beszállító nem tudja leszállítani valamelyik termékét.",
+    "rulesTitle": "Helyettesítési szabályai",
+    "modeLabel": "Ha egy termék hiányzik",
+    "mode": {
+      "ASK": "Mindig kérdezzen meg",
+      "AUTO": "Automatikus elfogadás a megadott korlátokon belül",
+      "NEVER": "Nincs helyettesítés"
+    },
+    "maxPricePct": "Automatikus elfogadás, ha legfeljebb ennyivel drágább (%)",
+    "sameBrandOnly": "Csak azonos márka",
+    "acceptOnTimeout": "Ha nem válaszolok időben, fogadja el a helyettesítést",
+    "timeoutHint": "Minden ajánlatra {minutes} perce van válaszolni.",
+    "autoOff": "A FIRINGI kikapcsolta az automatikus elfogadást — megkérdezzük Önt.",
+    "save": "Mentés",
+    "saved": "Mentve.",
+    "productsTitle": "Szabályok egyes termékekre",
+    "productsHint": "Az egy termékre vonatkozó szabály felülírja az általános szabályt (például: a Coca-Cola soha ne kerüljön helyettesítésre).",
+    "searchProducts": "Keresés a vásárolt termékek között…",
+    "add": "Hozzáadás",
+    "remove": "Eltávolítás",
+    "noProducts": "Még nincs termékszabály.",
+    "recentTitle": "Legutóbbi helyettesítések",
+    "noRecent": "Még nincs helyettesítés.",
+    "off": "A helyettesítéseket a FIRINGI kikapcsolta.",
+    "pageIntroSupplier": "Válassza ki minden termékéhez, hogy mely más termékei helyettesíthetik, ha elfogy. Ha egy rendelésnél helyettesítést ajánl, ezek jelennek meg elsőként.",
+    "linksTitle": "Helyettesítő termékek",
+    "chooseProduct": "Válasszon a termékei közül…",
+    "searchOwn": "Keresés a termékei között…",
+    "addReplacement": "Helyettesítő hozzáadása",
+    "noLinks": "Ehhez a termékhez nincs kiválasztva helyettesítő.",
+    "up": "Fel"
   }
 }

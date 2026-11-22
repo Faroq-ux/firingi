@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Recompense de predat",
     "Customs Codes": "Coduri vamale",
     "EU Trade Report": "Raport intracomunitar",
-    "Order by WhatsApp": "Comandă pe WhatsApp"
+    "Order by WhatsApp": "Comandă pe WhatsApp",
+    "Replacements": "Înlocuiri"
   },
   "delivery": {
     "title": "Livrare",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Date vamale neacceptate: {product}",
       "body": "FIRINGI nu a acceptat datele vamale trimise pentru „{product}”: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Înlocuitor oferit pentru comanda {number}",
+      "body": "{product} nu este disponibil. Furnizorul oferă în schimb {substitute} — acceptați sau respingeți în {minutes} minute."
+    },
+    "substitution_accepted": {
+      "title": "Înlocuitor acceptat — comanda {number}",
+      "body": "Clientul a acceptat {qty} × {substitute}. A fost adăugat în comandă."
+    },
+    "substitution_auto_accepted": {
+      "title": "Înlocuitor adăugat în comanda {number}",
+      "body": "{qty} × {substitute} înlocuiește un produs indisponibil (acceptat conform regulilor de înlocuire ale clientului)."
+    },
+    "substitution_rejected": {
+      "title": "Înlocuitor respins — comanda {number}",
+      "body": "Clientul nu dorește înlocuitorul. Bucățile lipsă rămân în afara comenzii."
+    },
+    "substitution_expired": {
+      "title": "Înlocuitor fără răspuns — comanda {number}",
+      "body": "Nimeni nu a răspuns la timp, așa că înlocuitorul nu a fost adăugat."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Totul funcționează",
     "warning": "Funcționează, cu avertismente",
     "critical": "Ceva nu funcționează"
+  },
+  "substitutions": {
+    "title": "Înlocuiri",
+    "orderIntroBuyer": "Când furnizorul nu poate livra un produs, poate oferi altul în schimb. Decideți dvs. — sau lăsați regulile dvs. de înlocuire să decidă.",
+    "orderIntroSupplier": "Lipsește un produs? Oferiți în schimb un alt produs de-al dvs. Regulile clientului decid dacă este adăugat imediat sau dacă clientul este întrebat.",
+    "status": {
+      "PENDING": "În așteptarea clientului",
+      "ACCEPTED": "Acceptat",
+      "REJECTED": "Respins",
+      "EXPIRED": "Fără răspuns",
+      "CANCELLED": "Retras"
+    },
+    "autoBadge": "conform regulilor dvs.",
+    "autoBadgeSupplier": "conform regulilor clientului",
+    "missing": "Lipsă",
+    "instead": "În schimb",
+    "priceChange": "Diferență de preț",
+    "samePrice": "Același preț (furnizorul plătește diferența)",
+    "sameBrand": "Aceeași marcă",
+    "otherBrand": "Altă marcă",
+    "answerBy": "Răspundeți până la {time}",
+    "accept": "Acceptă",
+    "reject": "Respinge",
+    "withdraw": "Retrage",
+    "accepted": "Înlocuitor adăugat în comanda dvs.",
+    "rejected": "Înlocuitor respins.",
+    "noteFromSupplier": "Nota furnizorului: {note}",
+    "offerTitle": "Oferiți un înlocuitor",
+    "line": "Produsul care lipsește",
+    "chooseLine": "Alegeți un produs…",
+    "shortQty": "Bucăți lipsă",
+    "alreadyShort": "{n} deja lipsă și încă neînlocuite",
+    "replacement": "Înlocuitor",
+    "linked": "Alegerea dvs.",
+    "inStock": "{n} în stoc",
+    "qty": "Bucăți din înlocuitor",
+    "note": "Notă pentru client (opțional)",
+    "priceMatch": "Același preț — plătesc eu diferența",
+    "preview": "Clientul plătește {now} în loc de {was} ({diff}).",
+    "ruleNEVER": "Acest client nu acceptă înlocuiri pentru acest produs.",
+    "ruleASK": "Clientul va fi întrebat.",
+    "ruleAUTO": "Adăugat imediat dacă costă cu cel mult {pct} % mai mult; altfel, clientul este întrebat.",
+    "ruleBrand": "Doar aceeași marcă este acceptată automat.",
+    "send": "Oferă înlocuitor",
+    "sent": "Înlocuitor oferit.",
+    "sentAuto": "Înlocuitor adăugat — regulile clientului îl acceptă.",
+    "noCandidates": "Momentan, niciunul dintre celelalte produse ale dvs. nu poate fi oferit acestui client.",
+    "noOpen": "Înlocuitorii pot fi oferiți după ce acceptați comanda și înainte ca aceasta să fie ambalată.",
+    "pageIntroBuyer": "Alegeți ce se întâmplă când un furnizor nu poate livra unul dintre produsele dvs.",
+    "rulesTitle": "Regulile dvs. de înlocuire",
+    "modeLabel": "Când lipsește un produs",
+    "mode": {
+      "ASK": "Întreabă-mă de fiecare dată",
+      "AUTO": "Acceptă automat în limitele mele",
+      "NEVER": "Fără înlocuiri"
+    },
+    "maxPricePct": "Acceptă automat dacă costă cu cel mult (% mai mult)",
+    "sameBrandOnly": "Doar aceeași marcă",
+    "acceptOnTimeout": "Dacă nu răspund la timp, acceptă înlocuitorul",
+    "timeoutHint": "Aveți {minutes} minute pentru a răspunde la fiecare propunere.",
+    "autoOff": "FIRINGI a dezactivat acceptarea automată — veți fi întrebat.",
+    "save": "Salvează",
+    "saved": "Salvat.",
+    "productsTitle": "Reguli pentru produse individuale",
+    "productsHint": "O regulă pentru un produs are prioritate față de regula dvs. generală (de exemplu: nu înlocui niciodată Coca-Cola).",
+    "searchProducts": "Căutați produse cumpărate…",
+    "add": "Adaugă",
+    "remove": "Elimină",
+    "noProducts": "Încă nu există reguli pe produs.",
+    "recentTitle": "Înlocuiri recente",
+    "noRecent": "Încă nu există înlocuiri.",
+    "off": "Înlocuirile sunt dezactivate de FIRINGI.",
+    "pageIntroSupplier": "Alegeți, pentru fiecare produs al dvs., care dintre celelalte produse ale dvs. îl pot înlocui când se epuizează. Alegerile dvs. apar primele când oferiți un înlocuitor pentru o comandă.",
+    "linksTitle": "Produse înlocuitoare",
+    "chooseProduct": "Alegeți unul dintre produsele dvs.…",
+    "searchOwn": "Căutați în produsele dvs.…",
+    "addReplacement": "Adaugă înlocuitor",
+    "noLinks": "Niciun înlocuitor ales pentru acest produs.",
+    "up": "Mută sus"
   }
 }

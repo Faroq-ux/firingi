@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Luovutettavat palkinnot",
     "Customs Codes": "Tullikoodit",
     "EU Trade Report": "EU-kauppaneraportti",
-    "Order by WhatsApp": "Tilaa WhatsAppilla"
+    "Order by WhatsApp": "Tilaa WhatsAppilla",
+    "Replacements": "Korvaavat tuotteet"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Tullitietoja ei hyväksytty: {product}",
       "body": "FIRINGI ei hyväksynyt tuotteelle ”{product}” lähettämiäsi tullitietoja: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Korvaava tuote tarjottu tilaukseen {number}",
+      "body": "{product} ei ole saatavilla. Toimittaja tarjoaa tilalle tuotetta {substitute} — hyväksy tai hylkää {minutes} minuutin kuluessa."
+    },
+    "substitution_accepted": {
+      "title": "Korvaava tuote hyväksytty — tilaus {number}",
+      "body": "Asiakas hyväksyi {qty} × {substitute}. Se on lisätty tilaukseen."
+    },
+    "substitution_auto_accepted": {
+      "title": "Korvaava tuote lisätty tilaukseen {number}",
+      "body": "{qty} × {substitute} korvaa tuotteen, joka ei ollut saatavilla (hyväksytty asiakkaan korvaussääntöjen mukaan)."
+    },
+    "substitution_rejected": {
+      "title": "Korvaava tuote hylätty — tilaus {number}",
+      "body": "Asiakas ei halua korvaavaa tuotetta. Puuttuvat kappaleet jäävät pois tilauksesta."
+    },
+    "substitution_expired": {
+      "title": "Korvaavaan tuotteeseen ei vastattu — tilaus {number}",
+      "body": "Kukaan ei vastannut ajoissa, joten korvaavaa tuotetta ei lisätty."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Kaikki toimii",
     "warning": "Toimii, mutta varoituksia",
     "critical": "Jokin ei toimi"
+  },
+  "substitutions": {
+    "title": "Korvaavat tuotteet",
+    "orderIntroBuyer": "Kun toimittaja ei voi toimittaa tuotetta, se voi tarjota tilalle toisen. Sinä päätät — tai korvaussääntösi päättävät.",
+    "orderIntroSupplier": "Puuttuuko tuote? Tarjoa tilalle jokin muista tuotteistasi. Asiakkaan säännöt ratkaisevat, lisätäänkö se heti vai kysytäänkö asiakkaalta.",
+    "status": {
+      "PENDING": "Odottaa asiakasta",
+      "ACCEPTED": "Hyväksytty",
+      "REJECTED": "Hylätty",
+      "EXPIRED": "Ei vastattu",
+      "CANCELLED": "Peruttu"
+    },
+    "autoBadge": "sääntöjesi mukaan",
+    "autoBadgeSupplier": "asiakkaan sääntöjen mukaan",
+    "missing": "Puuttuu",
+    "instead": "Tilalle",
+    "priceChange": "Hintaero",
+    "samePrice": "Sama hinta (toimittaja maksaa erotuksen)",
+    "sameBrand": "Sama merkki",
+    "otherBrand": "Eri merkki",
+    "answerBy": "Vastaa viimeistään {time}",
+    "accept": "Hyväksy",
+    "reject": "Hylkää",
+    "withdraw": "Peru",
+    "accepted": "Korvaava tuote lisätty tilaukseesi.",
+    "rejected": "Korvaava tuote hylätty.",
+    "noteFromSupplier": "Toimittajan huomautus: {note}",
+    "offerTitle": "Tarjoa korvaava tuote",
+    "line": "Puuttuva tuote",
+    "chooseLine": "Valitse tuote…",
+    "shortQty": "Puuttuvat kappaleet",
+    "alreadyShort": "{n} puuttuu jo eikä niitä ole vielä korvattu",
+    "replacement": "Korvaava tuote",
+    "linked": "Oma valintasi",
+    "inStock": "{n} varastossa",
+    "qty": "Korvaavan tuotteen kappaleet",
+    "note": "Huomautus asiakkaalle (valinnainen)",
+    "priceMatch": "Sama hinta — maksan erotuksen itse",
+    "preview": "Asiakas maksaa {was} sijaan {now} ({diff}).",
+    "ruleNEVER": "Tämä asiakas ei hyväksy korvaavia tuotteita tälle tuotteelle.",
+    "ruleASK": "Asiakkaalta kysytään.",
+    "ruleAUTO": "Lisätään heti, jos se maksaa enintään {pct} % enemmän; muuten asiakkaalta kysytään.",
+    "ruleBrand": "Vain sama merkki hyväksytään automaattisesti.",
+    "send": "Tarjoa korvaava tuote",
+    "sent": "Korvaava tuote tarjottu.",
+    "sentAuto": "Korvaava tuote lisätty — asiakkaan säännöt hyväksyvät sen.",
+    "noCandidates": "Mitään muista tuotteistasi ei voi tarjota tälle asiakkaalle juuri nyt.",
+    "noOpen": "Korvaavia tuotteita voi tarjota, kun olet hyväksynyt tilauksen ja ennen kuin se on pakattu.",
+    "pageIntroBuyer": "Valitse, mitä tapahtuu, kun toimittaja ei voi toimittaa jotakin tuotteistasi.",
+    "rulesTitle": "Korvaussääntösi",
+    "modeLabel": "Kun tuote puuttuu",
+    "mode": {
+      "ASK": "Kysy minulta joka kerta",
+      "AUTO": "Hyväksy automaattisesti rajojeni sisällä",
+      "NEVER": "Ei korvaavia tuotteita"
+    },
+    "maxPricePct": "Hyväksy automaattisesti, jos hinta on enintään (% enemmän)",
+    "sameBrandOnly": "Vain sama merkki",
+    "acceptOnTimeout": "Jos en vastaa ajoissa, hyväksy korvaava tuote",
+    "timeoutHint": "Sinulla on {minutes} minuuttia aikaa vastata jokaiseen ehdotukseen.",
+    "autoOff": "FIRINGI on poistanut automaattisen hyväksynnän käytöstä — sinulta kysytään.",
+    "save": "Tallenna",
+    "saved": "Tallennettu.",
+    "productsTitle": "Tuotekohtaiset säännöt",
+    "productsHint": "Yksittäisen tuotteen sääntö ohittaa yleisen sääntösi (esimerkiksi: älä koskaan korvaa Coca-Cola-tuotettasi).",
+    "searchProducts": "Hae ostamiasi tuotteita…",
+    "add": "Lisää",
+    "remove": "Poista",
+    "noProducts": "Ei vielä tuotekohtaisia sääntöjä.",
+    "recentTitle": "Viimeisimmät korvaukset",
+    "noRecent": "Ei vielä korvauksia.",
+    "off": "FIRINGI on poistanut korvaavat tuotteet käytöstä.",
+    "pageIntroSupplier": "Valitse jokaiselle tuotteellesi, mitkä muut tuotteesi voivat korvata sen, kun se loppuu. Valintasi näytetään ensimmäisinä, kun tarjoat korvaavaa tuotetta tilaukseen.",
+    "linksTitle": "Korvaavat tuotteet",
+    "chooseProduct": "Valitse jokin tuotteistasi…",
+    "searchOwn": "Hae tuotteistasi…",
+    "addReplacement": "Lisää korvaava tuote",
+    "noLinks": "Tälle tuotteelle ei ole valittu korvaavia tuotteita.",
+    "up": "Siirrä ylös"
   }
 }

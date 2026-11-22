@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Nagrade za izročitev",
     "Customs Codes": "Carinske oznake",
     "EU Trade Report": "Poročilo o trgovini v EU",
-    "Order by WhatsApp": "Naročanje prek WhatsAppa"
+    "Order by WhatsApp": "Naročanje prek WhatsAppa",
+    "Replacements": "Nadomestki"
   },
   "delivery": {
     "title": "Dostava",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Carinski podatki niso sprejeti: {product}",
       "body": "FIRINGI ni sprejel carinskih podatkov, ki ste jih poslali za »{product}«: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Ponujen nadomestek za naročilo {number}",
+      "body": "Izdelek {product} ni na voljo. Dobavitelj namesto njega ponuja {substitute} — sprejmite ali zavrnite v {minutes} min."
+    },
+    "substitution_accepted": {
+      "title": "Nadomestek sprejet — naročilo {number}",
+      "body": "Kupec je sprejel {qty} × {substitute}. Dodano je v naročilo."
+    },
+    "substitution_auto_accepted": {
+      "title": "Nadomestek dodan v naročilo {number}",
+      "body": "{qty} × {substitute} nadomešča izdelek, ki ni bil na voljo (sprejeto po pravilih kupca za nadomestke)."
+    },
+    "substitution_rejected": {
+      "title": "Nadomestek zavrnjen — naročilo {number}",
+      "body": "Kupec ne želi nadomestka. Manjkajoče enote ostanejo zunaj naročila."
+    },
+    "substitution_expired": {
+      "title": "Nadomestek brez odgovora — naročilo {number}",
+      "body": "Nihče ni odgovoril pravočasno, zato nadomestek ni bil dodan."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Vse deluje",
     "warning": "Deluje, z opozorili",
     "critical": "Nekaj ne deluje"
+  },
+  "substitutions": {
+    "title": "Nadomestki",
+    "orderIntroBuyer": "Če dobavitelj izdelka ne more dobaviti, lahko namesto njega ponudi drugega. Odločite vi — ali pa vaša pravila za nadomestke.",
+    "orderIntroSupplier": "Izdelka ni? Namesto njega ponudite drug svoj izdelek. Pravila kupca odločijo, ali se doda takoj ali pa kupca vprašamo.",
+    "status": {
+      "PENDING": "Čaka na kupca",
+      "ACCEPTED": "Sprejeto",
+      "REJECTED": "Zavrnjeno",
+      "EXPIRED": "Brez odgovora",
+      "CANCELLED": "Umaknjeno"
+    },
+    "autoBadge": "po vaših pravilih",
+    "autoBadgeSupplier": "po pravilih kupca",
+    "missing": "Manjka",
+    "instead": "Namesto tega",
+    "priceChange": "Razlika v ceni",
+    "samePrice": "Enaka cena (razliko krije dobavitelj)",
+    "sameBrand": "Ista znamka",
+    "otherBrand": "Druga znamka",
+    "answerBy": "Odgovorite do {time}",
+    "accept": "Sprejmi",
+    "reject": "Zavrni",
+    "withdraw": "Umakni",
+    "accepted": "Nadomestek je dodan v vaše naročilo.",
+    "rejected": "Nadomestek zavrnjen.",
+    "noteFromSupplier": "Opomba dobavitelja: {note}",
+    "offerTitle": "Ponudi nadomestek",
+    "line": "Manjkajoči izdelek",
+    "chooseLine": "Izberite izdelek…",
+    "shortQty": "Manjkajoče enote",
+    "alreadyShort": "Že manjka {n}, še brez nadomestka",
+    "replacement": "Nadomestek",
+    "linked": "Vaša izbira",
+    "inStock": "{n} na zalogi",
+    "qty": "Enote nadomestka",
+    "note": "Opomba za kupca (neobvezno)",
+    "priceMatch": "Enaka cena — razliko krijem jaz",
+    "preview": "Kupec plača {now} namesto {was} ({diff}).",
+    "ruleNEVER": "Ta kupec ne sprejema nadomestkov za ta izdelek.",
+    "ruleASK": "Kupca bomo vprašali.",
+    "ruleAUTO": "Doda se takoj, če stane največ {pct} % več; sicer kupca vprašamo.",
+    "ruleBrand": "Samodejno se sprejme samo ista znamka.",
+    "send": "Ponudi nadomestek",
+    "sent": "Nadomestek ponujen.",
+    "sentAuto": "Nadomestek dodan — pravila kupca ga sprejmejo.",
+    "noCandidates": "Temu kupcu trenutno ne morete ponuditi nobenega od svojih drugih izdelkov.",
+    "noOpen": "Nadomestke lahko ponudite, ko sprejmete naročilo in preden je zapakirano.",
+    "pageIntroBuyer": "Izberite, kaj se zgodi, ko dobavitelj ne more dobaviti katerega od vaših izdelkov.",
+    "rulesTitle": "Vaša pravila za nadomestke",
+    "modeLabel": "Ko izdelek manjka",
+    "mode": {
+      "ASK": "Vsakič me vprašaj",
+      "AUTO": "Samodejno sprejmi v mojih omejitvah",
+      "NEVER": "Brez nadomestkov"
+    },
+    "maxPricePct": "Samodejno sprejmi, če stane največ (% več)",
+    "sameBrandOnly": "Samo ista znamka",
+    "acceptOnTimeout": "Če ne odgovorim pravočasno, sprejmi nadomestek",
+    "timeoutHint": "Za odgovor na vsak predlog imate {minutes} min.",
+    "autoOff": "FIRINGI je izklopil samodejno sprejemanje — vprašali vas bomo.",
+    "save": "Shrani",
+    "saved": "Shranjeno.",
+    "productsTitle": "Pravila za posamezne izdelke",
+    "productsHint": "Pravilo za en izdelek ima prednost pred splošnim pravilom (npr.: nikoli ne zamenjaj izdelka Coca-Cola).",
+    "searchProducts": "Iskanje kupljenih izdelkov…",
+    "add": "Dodaj",
+    "remove": "Odstrani",
+    "noProducts": "Še ni pravil za izdelke.",
+    "recentTitle": "Nedavni nadomestki",
+    "noRecent": "Še ni nadomestkov.",
+    "off": "Nadomestke je izklopil FIRINGI.",
+    "pageIntroSupplier": "Za vsak svoj izdelek izberite, kateri vaši drugi izdelki ga lahko nadomestijo, ko ga zmanjka. Vaše izbire so ponujene prve, ko ponudite nadomestek v naročilu.",
+    "linksTitle": "Nadomestni izdelki",
+    "chooseProduct": "Izberite enega od svojih izdelkov…",
+    "searchOwn": "Iskanje vaših izdelkov…",
+    "addReplacement": "Dodaj nadomestek",
+    "noLinks": "Za ta izdelek ni izbranih nadomestkov.",
+    "up": "Premakni gor"
   }
 }

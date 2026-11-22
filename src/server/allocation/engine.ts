@@ -76,10 +76,14 @@ export async function itemsToMove(order: OrderWithLines, trigger: AllocationTrig
   const offers = await prisma.vendorOffer.findMany({ where: { id: { in: order.lines.map((l) => l.offerId) } }, select: { id: true, packagingUnitId: true } });
   const pu = new Map(offers.map((o) => [o.id, o.packagingUnitId]));
   const shortfall = trigger === "SHORTFALL" || (trigger === "MANUAL" && order.status !== "PENDING_CONFIRMATION" && order.status !== "CANCELLED");
+  // Phase 60: units replaced by the supplier's substitute, or waiting for the customer's answer, don't move
+  const pending = shortfall
+    ? new Map((await prisma.substitution.groupBy({ by: ["lineId"], where: { orderId: order.id, status: "PENDING" }, _sum: { shortQty: true } })).map((g) => [g.lineId, g._sum.shortQty ?? 0]))
+    : new Map<string, number>();
   return order.lines
     .map((l) => ({
       lineId: l.id, offerId: l.offerId, packagingUnitId: pu.get(l.offerId)!, name: l.productName as Record<string, string>, sku: l.sku,
-      qty: shortfall ? l.qtyOrdered - (l.qtyConfirmed ?? l.qtyOrdered) : l.qtyOrdered,
+      qty: shortfall ? Math.max(0, l.qtyOrdered - (l.qtyConfirmed ?? l.qtyOrdered) - l.substitutedQty - (pending.get(l.id) ?? 0)) : l.qtyOrdered,
       unitSalePriceNet: l.unitSalePriceNet.toString(), taxRate: l.taxRate.toString(),
     }))
     .filter((i) => i.qty > 0);

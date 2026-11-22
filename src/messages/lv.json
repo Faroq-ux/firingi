@@ -922,7 +922,8 @@
     "Rewards to Hand Over": "Nododamās balvas",
     "Customs Codes": "Muitas kodi",
     "EU Trade Report": "ES tirdzniecības pārskats",
-    "Order by WhatsApp": "Pasūtīt WhatsApp"
+    "Order by WhatsApp": "Pasūtīt WhatsApp",
+    "Replacements": "Aizstājumi"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2049,6 +2050,26 @@
     "trade_code_rejected": {
       "title": "Muitas dati nav apstiprināti: {product}",
       "body": "FIRINGI neapstiprināja muitas datus, ko nosūtījāt produktam “{product}”: {note}"
+    },
+    "substitution_proposed": {
+      "title": "Piedāvāts aizstājējs pasūtījumam {number}",
+      "body": "{product} nav pieejams. Piegādātājs tā vietā piedāvā {substitute} — pieņemiet vai noraidiet {minutes} minūšu laikā."
+    },
+    "substitution_accepted": {
+      "title": "Aizstājējs pieņemts — pasūtījums {number}",
+      "body": "Klients pieņēma {qty} × {substitute}. Tas ir pievienots pasūtījumam."
+    },
+    "substitution_auto_accepted": {
+      "title": "Aizstājējs pievienots pasūtījumam {number}",
+      "body": "{qty} × {substitute} aizstāj produktu, kas nebija pieejams (pieņemts saskaņā ar klienta aizstāšanas noteikumiem)."
+    },
+    "substitution_rejected": {
+      "title": "Aizstājējs noraidīts — pasūtījums {number}",
+      "body": "Klients nevēlas aizstājēju. Trūkstošās vienības netiek iekļautas pasūtījumā."
+    },
+    "substitution_expired": {
+      "title": "Uz aizstājēju nav atbildēts — pasūtījums {number}",
+      "body": "Neviens neatbildēja laikā, tāpēc aizstājējs netika pievienots."
     }
   },
   "notifications": {
@@ -8636,5 +8657,84 @@
     "ok": "Viss darbojas",
     "warning": "Darbojas, ar brīdinājumiem",
     "critical": "Kaut kas nedarbojas"
+  },
+  "substitutions": {
+    "title": "Aizstājumi",
+    "orderIntroBuyer": "Ja piegādātājs nevar piegādāt produktu, tas var piedāvāt citu tā vietā. Izlemjat jūs — vai jūsu aizstāšanas noteikumi.",
+    "orderIntroSupplier": "Trūkst produkta? Piedāvājiet tā vietā kādu citu savu produktu. Klienta noteikumi nosaka, vai tas tiek pievienots uzreiz vai klientam tiek jautāts.",
+    "status": {
+      "PENDING": "Gaida klienta atbildi",
+      "ACCEPTED": "Pieņemts",
+      "REJECTED": "Noraidīts",
+      "EXPIRED": "Nav atbildēts",
+      "CANCELLED": "Atsaukts"
+    },
+    "autoBadge": "saskaņā ar jūsu noteikumiem",
+    "autoBadgeSupplier": "saskaņā ar klienta noteikumiem",
+    "missing": "Trūkst",
+    "instead": "Tā vietā",
+    "priceChange": "Cenu starpība",
+    "samePrice": "Tā pati cena (starpību sedz piegādātājs)",
+    "sameBrand": "Tas pats zīmols",
+    "otherBrand": "Cits zīmols",
+    "answerBy": "Atbildiet līdz {time}",
+    "accept": "Pieņemt",
+    "reject": "Noraidīt",
+    "withdraw": "Atsaukt",
+    "accepted": "Aizstājējs pievienots jūsu pasūtījumam.",
+    "rejected": "Aizstājējs noraidīts.",
+    "noteFromSupplier": "Piegādātāja piezīme: {note}",
+    "offerTitle": "Piedāvāt aizstājēju",
+    "line": "Produkts, kura trūkst",
+    "chooseLine": "Izvēlieties produktu…",
+    "shortQty": "Trūkstošās vienības",
+    "alreadyShort": "{n} jau trūkst un vēl nav aizstātas",
+    "replacement": "Aizstājējs",
+    "linked": "Jūsu izvēle",
+    "inStock": "{n} noliktavā",
+    "qty": "Aizstājēja vienības",
+    "note": "Piezīme klientam (neobligāti)",
+    "priceMatch": "Tā pati cena — starpību sedzu es",
+    "preview": "Klients maksā {now} {was} vietā ({diff}).",
+    "ruleNEVER": "Šis klients nepieņem aizstājējus šim produktam.",
+    "ruleASK": "Klientam tiks jautāts.",
+    "ruleAUTO": "Tiek pievienots uzreiz, ja tas maksā ne vairāk kā par {pct} % vairāk; citādi klientam tiek jautāts.",
+    "ruleBrand": "Automātiski tiek pieņemts tikai tas pats zīmols.",
+    "send": "Piedāvāt aizstājēju",
+    "sent": "Aizstājējs piedāvāts.",
+    "sentAuto": "Aizstājējs pievienots — klienta noteikumi to pieņem.",
+    "noCandidates": "Šobrīd nevienu no jūsu citiem produktiem nevar piedāvāt šim klientam.",
+    "noOpen": "Aizstājējus var piedāvāt pēc pasūtījuma pieņemšanas un pirms tā iepakošanas.",
+    "pageIntroBuyer": "Izvēlieties, kas notiek, ja piegādātājs nevar piegādāt kādu no jūsu produktiem.",
+    "rulesTitle": "Jūsu aizstāšanas noteikumi",
+    "modeLabel": "Ja trūkst produkta",
+    "mode": {
+      "ASK": "Jautāt man katru reizi",
+      "AUTO": "Pieņemt automātiski manu limitu robežās",
+      "NEVER": "Bez aizstājējiem"
+    },
+    "maxPricePct": "Pieņemt automātiski, ja maksā ne vairāk kā (% vairāk)",
+    "sameBrandOnly": "Tikai tas pats zīmols",
+    "acceptOnTimeout": "Ja neatbildu laikā, pieņemt aizstājēju",
+    "timeoutHint": "Jums ir {minutes} minūtes, lai atbildētu uz katru piedāvājumu.",
+    "autoOff": "FIRINGI ir izslēdzis automātisko pieņemšanu — jums tiks jautāts.",
+    "save": "Saglabāt",
+    "saved": "Saglabāts.",
+    "productsTitle": "Noteikumi atsevišķiem produktiem",
+    "productsHint": "Noteikums vienam produktam ir svarīgāks par jūsu vispārējo noteikumu (piemēram: nekad neaizstāt jūsu Coca-Cola).",
+    "searchProducts": "Meklēt iegādātos produktus…",
+    "add": "Pievienot",
+    "remove": "Noņemt",
+    "noProducts": "Produktu noteikumu vēl nav.",
+    "recentTitle": "Nesenie aizstājumi",
+    "noRecent": "Aizstājumu vēl nav.",
+    "off": "FIRINGI ir izslēdzis aizstājumus.",
+    "pageIntroSupplier": "Katram savam produktam izvēlieties, kuri citi jūsu produkti var to aizstāt, kad tas beidzas. Jūsu izvēle tiek rādīta pirmā, kad piedāvājat aizstājēju pasūtījumā.",
+    "linksTitle": "Aizstājējprodukti",
+    "chooseProduct": "Izvēlieties kādu no saviem produktiem…",
+    "searchOwn": "Meklēt savus produktus…",
+    "addReplacement": "Pievienot aizstājēju",
+    "noLinks": "Šim produktam nav izvēlēts neviens aizstājējs.",
+    "up": "Uz augšu"
   }
 }
