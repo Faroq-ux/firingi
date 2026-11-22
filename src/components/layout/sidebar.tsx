@@ -39,7 +39,7 @@ function NavLink({ item, pathname, search, soonLabel }: { item: ResolvedItem; pa
       href={item.href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "relative ml-5 flex items-center justify-between gap-2 rounded-lg py-1.5 pl-4 pr-2 text-[13px] transition-all duration-150 hover:translate-x-0.5 before:absolute before:-left-px before:top-1/2 before:h-4 before:w-px before:-translate-y-1/2 before:bg-white/10",
+        "relative ml-4 flex items-center justify-between gap-2 rounded-lg py-1 pl-3.5 pr-2 text-[12.5px] transition-all duration-150 hover:translate-x-0.5 before:absolute before:-left-px before:top-1/2 before:h-4 before:w-px before:-translate-y-1/2 before:bg-white/10",
         active ? "nav-active before:hidden" : "text-sidebar-foreground/80 hover:bg-white/[0.06] hover:text-white",
       )}
     >
@@ -65,8 +65,8 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
   if (collapsed)
     return (
       <nav className="sidebar-aurora flex h-full flex-col items-center gap-1 py-3 text-sidebar-foreground" data-testid="sidebar-rail">
-        <div className="mb-2 grid size-10 place-items-center rounded-xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-sm font-bold text-white shadow-[0_0_24px_-4px_var(--vivid-violet)]">F</div>
-        <button type="button" onClick={openPalette} title={t("search")} aria-label={t("search")} className="grid size-10 place-items-center rounded-xl text-sidebar-foreground/80 hover:bg-white/10 hover:text-white"><Search className="size-5" /></button>
+        <div className="mb-2 grid size-9 place-items-center rounded-xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-sm font-bold text-white shadow-[0_0_24px_-4px_var(--vivid-violet)]">F</div>
+        <button type="button" onClick={openPalette} title={t("search")} aria-label={t("search")} className="grid size-9 place-items-center rounded-lg text-sidebar-foreground/80 hover:bg-white/10 hover:text-white"><Search className="size-[18px]" /></button>
         <div className="my-1 h-px w-8 bg-white/10" />
         <div className="flex flex-1 flex-col items-center gap-1 overflow-y-auto">
           {nav.map((s) => {
@@ -74,32 +74,32 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
             const active = sectionHasActive(s, pathname, search);
             return (
               <button key={s.key} type="button" title={s.label} aria-label={s.label} onClick={() => { setOpen((o) => ({ ...o, [s.key]: true })); onCollapse?.(false); }}
-                className={cn("grid size-10 place-items-center rounded-xl transition-all", active ? "nav-active" : "text-sidebar-foreground/75 hover:bg-white/10 hover:text-white")}>
+                className={cn("grid size-9 place-items-center rounded-lg transition-all", active ? "nav-active" : "text-sidebar-foreground/75 hover:bg-white/10 hover:text-white")}>
                 <Icon className="size-5" />
               </button>
             );
           })}
         </div>
-        <button type="button" onClick={() => onCollapse?.(false)} title={t("expand")} aria-label={t("expand")} className="grid size-10 place-items-center rounded-xl text-sidebar-muted hover:bg-white/10 hover:text-white" data-testid="sidebar-expand"><PanelLeftOpen className="size-5" /></button>
+        <button type="button" onClick={() => onCollapse?.(false)} title={t("expand")} aria-label={t("expand")} className="grid size-9 place-items-center rounded-lg text-sidebar-muted hover:bg-white/10 hover:text-white" data-testid="sidebar-expand"><PanelLeftOpen className="size-5" /></button>
       </nav>
     );
 
   return (
     <nav className="sidebar-aurora flex h-full flex-col text-sidebar-foreground">
-      <div className="flex h-16 shrink-0 items-center gap-3 px-4">
-        <div className="grid size-10 place-items-center rounded-xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-base font-bold text-white shadow-[0_0_24px_-4px_var(--vivid-violet)]">F</div>
+      <div className="flex h-14 shrink-0 items-center gap-2.5 px-3">
+        <div className="grid size-8 place-items-center rounded-lg bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-sm font-bold text-white shadow-[0_0_24px_-4px_var(--vivid-violet)]">F</div>
         <div className="min-w-0 flex-1 leading-tight">
-          <div className="text-[15px] font-bold tracking-[0.12em] text-white">{title}</div>
+          <div className="text-[14px] font-bold tracking-[0.1em] text-white">{title}</div>
           <div className="truncate text-[11px] text-sidebar-muted">{subtitle}</div>
         </div>
         {onCollapse && <button type="button" onClick={() => onCollapse(true)} title={t("collapse")} aria-label={t("collapse")} className="hidden rounded-lg p-1.5 text-sidebar-muted hover:bg-white/10 hover:text-white lg:block" data-testid="sidebar-collapse"><PanelLeftClose className="size-4" /></button>}
       </div>
-      <div className="px-3 pb-2">
-        <button type="button" onClick={openPalette} className="flex w-full items-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-left text-[13px] text-sidebar-foreground/75 transition-colors hover:border-white/20 hover:bg-white/10" data-testid="palette-open">
+      <div className="px-2.5 pb-1.5">
+        <button type="button" onClick={openPalette} className="flex w-full items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 text-left text-[12.5px] text-sidebar-foreground/75 transition-colors hover:border-white/20 hover:bg-white/10" data-testid="palette-open">
           <Search className="size-4" /><span className="flex-1">{t("search")}</span><span className="rounded-md border border-white/15 px-1.5 text-[10px] text-sidebar-muted">Ctrl K</span>
         </button>
       </div>
-      <div className="flex-1 space-y-0.5 overflow-y-auto px-2 py-2">
+      <div className="flex-1 space-y-px overflow-y-auto px-1.5 py-1.5">
         {nav.map((s, idx) => {
           const Icon = ICONS[s.icon] ?? LayoutDashboard;
           const isOpen = open[s.key];
@@ -110,12 +110,12 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
                 onClick={() => setOpen((o) => ({ ...o, [s.key]: !o[s.key] }))}
                 aria-expanded={isOpen}
                 className={cn(
-                  "group flex w-full items-center gap-2.5 rounded-xl px-2 py-1.5 text-left text-[13px] font-medium transition-colors hover:bg-white/[0.06]",
+                  "group flex w-full items-center gap-2 rounded-lg px-1.5 py-1 text-left text-[12.5px] font-medium transition-colors hover:bg-white/[0.06]",
                   sectionHasActive(s, pathname, search) && "text-white",
                 )}
               >
                 <span className="sr-only">{nav.length > 8 ? idx + 1 : ""}</span>
-                <span className={cn("grid size-7 shrink-0 place-items-center rounded-lg transition-all", sectionHasActive(s, pathname, search) ? "bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white shadow-[0_0_14px_-3px_var(--vivid-violet)]" : "bg-white/[0.06] text-sidebar-muted group-hover:text-white")}><Icon className="size-4" /></span>
+                <span className={cn("grid size-6 shrink-0 place-items-center rounded-md transition-all", sectionHasActive(s, pathname, search) ? "bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-white shadow-[0_0_14px_-3px_var(--vivid-violet)]" : "bg-white/[0.06] text-sidebar-muted group-hover:text-white")}><Icon className="size-3.5" /></span>
                 <span className="flex-1 truncate">{s.label}</span>
                 <ChevronDown className={cn("size-3.5 text-sidebar-muted transition-transform duration-200", isOpen && "rotate-180")} />
               </button>
@@ -124,7 +124,7 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
                   {s.items.map((i) => <NavLink key={i.key} item={i} pathname={pathname} search={search} soonLabel={soonLabel} />)}
                   {s.groups.map((g) => (
                     <div key={g.key} className="pt-1">
-                      <div className="pb-0.5 pl-9 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-sidebar-muted">{g.label}</div>
+                      <div className="pb-0.5 pl-8 pt-1 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-sidebar-muted">{g.label}</div>
                       {g.items.map((i) => <NavLink key={i.key} item={i} pathname={pathname} search={search} soonLabel={soonLabel} />)}
                     </div>
                   ))}
@@ -134,7 +134,7 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
           );
         })}
       </div>
-      <div className="shrink-0 border-t border-white/10 px-4 py-2.5 text-[10px] font-medium tracking-[0.24em] text-sidebar-muted">{BRAND_SLOGAN}</div>
+      <div className="shrink-0 border-t border-white/10 px-3 py-2 text-[9px] font-medium tracking-[0.22em] text-sidebar-muted">{BRAND_SLOGAN}</div>
     </nav>
   );
 }

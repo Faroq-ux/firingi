@@ -21,7 +21,8 @@ export function DashboardGrid({ prefKey, cards, saved }: { prefKey: string; card
   const ids = cards.map((c) => c.id);
   const defaults: Layout = { order: ids, hidden: [], size: Object.fromEntries(cards.map((c) => [c.id, c.size ?? 1])) };
   const merge = (s?: Partial<Layout> | null): Layout => ({
-    order: [...(s?.order ?? []).filter((id) => ids.includes(id)), ...ids.filter((id) => !(s?.order ?? []).includes(id))],
+    // Cards added since the layout was saved go to their default place (not to the end), saved cards keep their order.
+    order: ids.reduce<string[]>((o, id, i) => { if (!o.includes(id)) o.splice(Math.min(i, o.length), 0, id); return o; }, (s?.order ?? []).filter((id) => ids.includes(id))),
     hidden: (s?.hidden ?? []).filter((id) => ids.includes(id)),
     size: { ...defaults.size, ...(s?.size ?? {}) },
   });

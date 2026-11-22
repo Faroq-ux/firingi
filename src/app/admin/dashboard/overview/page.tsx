@@ -3,6 +3,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Building2, Globe, Store, Truck, Users } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { adminLive, adminOverview } from "@/server/data/dashboard";
+import { adminCentre } from "@/server/data/admin-centre";
+import { ActionsPanel, HealthPanel, MoneyPanel, PipelinePanel, SalesPanel, SplitPanel, TopPanel } from "@/components/dashboard/admin-centre";
 import { AccountStatusBadge } from "@/components/layout/status-badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
@@ -22,7 +24,8 @@ export const dynamic = "force-dynamic";
 export default async function OverviewPage() {
   const ctx = await pagePortal("admin");
   pagePermission(ctx, "admin.dashboard.view");
-  const [o, live, t, tc, ts, tl, locale, layout] = await Promise.all([adminOverview(ctx), adminLive(ctx), getTranslations("dashboard"), getTranslations("companyType"), getTranslations("orders.statuses"), getTranslations("live"), getLocale(), getPreference<Record<string, never>>(ctx, "dashboard.admin")]);
+  const [o, live, t, tc, ts, tl, locale, layout, c] = await Promise.all([adminOverview(ctx), adminLive(ctx), getTranslations("dashboard"), getTranslations("companyType"), getTranslations("orders.statuses"), getTranslations("live"), getLocale(), getPreference<Record<string, never>>(ctx, "dashboard.admin"), adminCentre(ctx)]);
+  const ta = await getTranslations("adminDash");
   const net14 = live.series.reduce((a, d) => a + d.net, 0);
   const d = live.deliveries;
   return (
@@ -49,6 +52,14 @@ export default async function OverviewPage() {
       </Aurora>
 
       <DashboardGrid prefKey="dashboard.admin" saved={layout} cards={[
+        // Phase 59: more information — sales vs last month, money, what needs action, pipeline, best sellers, split, health
+        { id: "sales", title: ta("monthSoFar"), size: 2, node: <SalesPanel d={c} locale={locale} /> },
+        { id: "actions", title: ta("needsAction"), node: <ActionsPanel d={c} /> },
+        { id: "pipeline", title: ta("inProgress"), size: 3, node: <PipelinePanel d={c} /> },
+        ...(c.money ? [{ id: "money", title: ta("money"), node: <MoneyPanel d={c} locale={locale} /> }] : []),
+        { id: "top", title: ta("best"), size: 2 as const, node: <TopPanel d={c} locale={locale} /> },
+        { id: "split", title: ta("whereFrom"), size: 2 as const, node: <SplitPanel d={c} locale={locale} /> },
+        ...(c.health ? [{ id: "health", title: ta("health"), node: <HealthPanel d={c} /> }] : []),
         { id: "latest", title: t("latestOrders"), size: 3, node: live.latest.length > 0 ? (
           <section {...rise(2)}>
             <h2 className="mb-2 text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]">{t("latestOrders")}</h2>

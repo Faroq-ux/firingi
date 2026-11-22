@@ -46,7 +46,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ portal: 
     lang: locale, dir: "ltr",
     start_url: `/${portal}?source=app`, scope: "/",
     display: "standalone", display_override: ["standalone", "minimal-ui"], orientation: "portrait",
-    background_color: "#0b1020", theme_color: "#3b6cf6",
+    background_color: "#0b1315", theme_color: "#0d7f8c",
     categories: ["business", "shopping", "productivity"],
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },

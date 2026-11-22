@@ -35,9 +35,9 @@ export function AppShell({
       <TableLabeler />
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-72 -translate-x-full shadow-[8px_0_40px_-20px_rgb(0_0_0/0.5)] transition-[transform,width] duration-300 ease-out lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-72 -translate-x-full lg:w-60 shadow-[8px_0_40px_-20px_rgb(0_0_0/0.5)] transition-[transform,width] duration-300 ease-out lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0",
           mobileOpen && "translate-x-0",
-          collapsed && "lg:w-[72px]",
+          collapsed && "lg:w-[60px]",
         )}
       >
         <Suspense>

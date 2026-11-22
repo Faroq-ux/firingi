@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 /** Phase 39: the browser / app bar colour follows the light or dark look; content may use the full screen on phones with a notch. */
 export const viewport: Viewport = {
-  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#0b1020" }],
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#0b1315" }],
   viewportFit: "cover",
 };
 
