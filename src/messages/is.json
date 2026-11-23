@@ -936,7 +936,9 @@
     "Van Sales": "Sala úr bíl",
     "Sell from Van": "Selja úr bíl",
     "Van Loads": "Bílhleðslur",
-    "Bought from Vans": "Keypt úr bílum"
+    "Bought from Vans": "Keypt úr bílum",
+    "Customer Assortments": "Vöruúrval viðskiptavina",
+    "Must-Stock List": "Skylduvörulisti"
   },
   "delivery": {
     "title": "Afhending",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Bíll {number} er enn úti",
       "body": "Bíllinn hefur verið úti í meira en {hours} klukkustundir. Affermdu hann og teldu reiðuféð."
+    },
+    "assortment_gaps": {
+      "title": "Skylduvörur sem þarf að panta aftur",
+      "body": "{n} af skylduvörum þínum hafa ekki verið pantaðar í {days} daga."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Dagsetning",
     "viewOrder": "Skoða pöntun",
     "noneToday": "Engin sala í dag."
+  },
+  "assortments": {
+    "title": "Vöruúrval viðskiptavina",
+    "intro": "Ákveddu hvað hver viðskiptavinur getur séð og keypt hjá þér: samþykktur listi (aðeins þessar vörur), faldar vörur (ekki þessar) eða skylduvörulisti (vörur sem viðskiptavinurinn ætti alltaf að hafa á boðstólum).",
+    "off": "FIRINGI hefur slökkt á vöruúrvali viðskiptavina í bili.",
+    "newList": "Nýr listi",
+    "name": "Heiti",
+    "kind": "Tegund lista",
+    "mode": {
+      "ONLY_LISTED": "Samþykktur listi",
+      "HIDE_LISTED": "Faldar vörur",
+      "MUST_STOCK": "Skylduvörulisti"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Þessir viðskiptavinir sjá aðeins vörurnar á listanum.",
+      "HIDE_LISTED": "Þessir viðskiptavinir sjá ekki vörurnar á listanum.",
+      "MUST_STOCK": "Vörur sem þessir viðskiptavinir ættu alltaf að hafa á boðstólum. Það sem þeir sjá breytist ekki."
+    },
+    "modeOff": "Ekki leyft af FIRINGI í bili.",
+    "for": "Fyrir",
+    "target": {
+      "ALL": "Allir mínir viðskiptavinir",
+      "GROUP": "Viðskiptavinahópur",
+      "CUSTOMER": "Einn viðskiptavinur"
+    },
+    "group": "Viðskiptavinahópur",
+    "noGroups": "Þú ert ekki enn með neina viðskiptavinahópa.",
+    "customer": "Viðskiptavinur",
+    "searchCustomer": "Leita að viðskiptavini (nafn eða kennitala)",
+    "noCustomers": "Engir viðskiptavinir fundust.",
+    "create": "Stofna",
+    "lists": "Listarnir þínir",
+    "noLists": "Engir listar enn. Án lista sér hver viðskiptavinur allar vörurnar þínar.",
+    "products": "Vörur",
+    "mustStock": "Skylduvörur",
+    "customers": "Viðskiptavinir",
+    "active": "Virkur",
+    "inactive": "Óvirkur",
+    "open": "Opna",
+    "save": "Vista",
+    "saved": "Vistað",
+    "delete": "Eyða listanum",
+    "deleteConfirm": "Eyða þessum lista? Viðskiptavinir sjá vörurnar þínar eins og hann hefði aldrei verið til.",
+    "addProducts": "Bæta við vörum",
+    "searchProducts": "Leita í vörunum þínum (heiti eða vörunúmer)",
+    "add": "Bæta við",
+    "added": "Á listanum",
+    "pasteSkus": "Líma vörunúmer",
+    "pasteHint": "Eitt í hverja línu, eða aðskilin með kommum. Þín vörunúmer eða vörunúmer FIRINGI.",
+    "addSkus": "Bæta þessum vörunúmerum við",
+    "addedN": "{n} bætt við.",
+    "notFound": "Fannst ekki: {skus}",
+    "remove": "Fjarlægja",
+    "noItems": "Engar vörur á þessum lista enn.",
+    "previewTitle": "Skoða sem viðskiptavinur",
+    "previewHint": "Veldu viðskiptavin til að sjá hversu margar af vörunum þínum hann sér miðað við alla listana þína.",
+    "previewResult": "{customer} sér {visible} af {total} vörum þínum ({hidden} faldar) · {must} skylduvörur.",
+    "preview": "Sýna",
+    "rulesTitle": "Hvernig listarnir vinna saman",
+    "rule1": "Viðskiptavinur sem fellur undir samþykktan lista sér aðeins vörurnar á samþykktu listunum þínum fyrir hann.",
+    "rule2": "Faldar vörur eru aldrei sýndar nema þær séu á eigin lista viðkomandi viðskiptavinar.",
+    "rule3": "Skylduvörur eru alltaf sýndar viðkomandi viðskiptavini.",
+    "rule4": "Allar rásir fylgja listunum: vefverslunin, karfan, tilboð, sölufulltrúar, sendibílar, WhatsApp og API-ið.",
+    "inactiveNote": "Óvirkir listar gilda ekki.",
+    "mustTitle": "Skylduvörulisti",
+    "mustIntro": "Vörur sem birgjar þínir hafa beðið þig um að hafa alltaf á boðstólum. Þær sem þú hefur ekki pantað í {days} daga eru merktar.",
+    "noneMust": "Engar skylduvörur.",
+    "supplier": "Birgir",
+    "lastOrdered": "Síðast pantað",
+    "never": "Aldrei",
+    "daysAgo": "Fyrir {n} dögum",
+    "gap": "Ekki pantað nýlega",
+    "ok": "Pantað nýlega",
+    "unavailable": "Ekki fáanlegt núna",
+    "addMissing": "Setja vörurnar sem vantar í körfuna",
+    "addAllMissing": "Setja allt sem vantar í körfuna",
+    "addedToCart": "{n} sett í körfuna.",
+    "goToCart": "Fara í körfuna",
+    "repGaps": "Skylduvörur ekki pantaðar nýlega",
+    "repGapsNone": "Ekkert vantar af skylduvörum.",
+    "price": "Verð",
+    "edit": "Breyta",
+    "cancel": "Hætta við"
   }
 }

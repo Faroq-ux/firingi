@@ -936,7 +936,9 @@
     "Van Sales": "Bejgħ mill-Vann",
     "Sell from Van": "Biegħ mill-Vann",
     "Van Loads": "Tagħbijiet tal-Vann",
-    "Bought from Vans": "Mixtri minn Vannijiet"
+    "Bought from Vans": "Mixtri minn Vannijiet",
+    "Customer Assortments": "Assortimenti tal-Klijenti",
+    "Must-Stock List": "Lista ta' Stokk Obbligatorju"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Vann {number} għadu barra",
       "body": "Il-vann ilu barra aktar minn {hours} siegħa. Ħottu u għodd il-flus kontanti."
+    },
+    "assortment_gaps": {
+      "title": "Prodotti ta' stokk obbligatorju biex terġgħu tordnaw",
+      "body": "{n} mill-prodotti ta' stokk obbligatorju tagħkom ma ġewx ordnati f'dawn l-aħħar {days} jum."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Data",
     "viewOrder": "Ara l-ordni",
     "noneToday": "L-ebda bejgħ illum."
+  },
+  "assortments": {
+    "title": "Assortimenti tal-klijenti",
+    "intro": "Iddeċiedu x'jista' jara u jixtri mingħandkom kull klijent: lista approvata (dawn il-prodotti biss), oġġetti moħbija (mhux dawn), jew lista ta' stokk obbligatorju (prodotti li għandu jżomm dejjem).",
+    "off": "Bħalissa l-assortimenti tal-klijenti huma mitfija minn FIRINGI.",
+    "newList": "Lista ġdida",
+    "name": "Isem",
+    "kind": "Tip ta' lista",
+    "mode": {
+      "ONLY_LISTED": "Lista approvata",
+      "HIDE_LISTED": "Oġġetti moħbija",
+      "MUST_STOCK": "Lista ta' stokk obbligatorju"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Dawn il-klijenti jaraw biss il-prodotti fil-lista.",
+      "HIDE_LISTED": "Dawn il-klijenti ma jarawx il-prodotti fil-lista.",
+      "MUST_STOCK": "Prodotti li dawn il-klijenti għandhom iżommu dejjem. Dak li jaraw ma jinbidilx."
+    },
+    "modeOff": "Bħalissa mhux permess minn FIRINGI.",
+    "for": "Għal",
+    "target": {
+      "ALL": "Il-klijenti kollha tiegħi",
+      "GROUP": "Grupp ta' klijenti",
+      "CUSTOMER": "Klijent wieħed"
+    },
+    "group": "Grupp ta' klijenti",
+    "noGroups": "Għad m'għandkomx gruppi ta' klijenti.",
+    "customer": "Klijent",
+    "searchCustomer": "Fittxu klijent (isem jew numru tat-taxxa)",
+    "noCustomers": "Ma nstab l-ebda klijent.",
+    "create": "Oħloq",
+    "lists": "Il-listi tagħkom",
+    "noLists": "Għad m'hemm l-ebda lista. Mingħajr listi, kull klijent jara l-prodotti kollha tagħkom.",
+    "products": "Prodotti",
+    "mustStock": "Stokk obbligatorju",
+    "customers": "Klijenti",
+    "active": "Attiva",
+    "inactive": "Inattiva",
+    "open": "Iftaħ",
+    "save": "Salva",
+    "saved": "Salvat",
+    "delete": "Ħassar il-lista",
+    "deleteConfirm": "Tħassru din il-lista? Il-klijenti se jaraw il-prodotti tagħkom bħallikieku qatt ma eżistiet.",
+    "addProducts": "Żid prodotti",
+    "searchProducts": "Fittxu l-prodotti tagħkom (isem jew SKU)",
+    "add": "Żid",
+    "added": "Fil-lista",
+    "pasteSkus": "Waħħal l-SKUs",
+    "pasteHint": "Wieħed f'kull linja, jew separati b'virgoli. L-SKU tagħkom jew dak ta' FIRINGI.",
+    "addSkus": "Żid dawn l-SKUs",
+    "addedN": "{n} miżjuda.",
+    "notFound": "Ma nstabux: {skus}",
+    "remove": "Neħħi",
+    "noItems": "Għad m'hemm l-ebda prodott f'din il-lista.",
+    "previewTitle": "Araha bħala klijent",
+    "previewHint": "Agħżlu klijent biex taraw kemm mill-prodotti tagħkom jista' jara taħt il-listi kollha tagħkom.",
+    "previewResult": "{customer} jara {visible} minn {total} prodott tagħkom ({hidden} moħbija) · {must} obbligatorji.",
+    "preview": "Uri",
+    "rulesTitle": "Kif jaħdmu flimkien il-listi",
+    "rule1": "Klijent kopert minn lista approvata jara biss il-prodotti fil-listi approvati tagħkom għalih.",
+    "rule2": "Oġġetti moħbija qatt ma jintwerew, sakemm ma jkunux fil-lista proprja ta' dak il-klijent.",
+    "rule3": "Prodotti ta' stokk obbligatorju dejjem jintwerew lil dak il-klijent.",
+    "rule4": "Kull kanal isegwi l-listi: il-ħanut, il-kartell, il-kwotazzjonijiet, ir-rappreżentanti tal-bejgħ, il-vannijiet, WhatsApp u l-API.",
+    "inactiveNote": "Listi inattivi ma japplikawx.",
+    "mustTitle": "Lista ta' stokk obbligatorju",
+    "mustIntro": "Prodotti li l-fornituri tagħkom talbukom iżżommu dejjem. Dawk li ma ordnajtuhomx f'dawn l-aħħar {days} jum huma mmarkati.",
+    "noneMust": "L-ebda prodott ta' stokk obbligatorju.",
+    "supplier": "Fornitur",
+    "lastOrdered": "L-aħħar ordni",
+    "never": "Qatt",
+    "daysAgo": "{n} jum ilu",
+    "gap": "Mhux ordnat dan l-aħħar",
+    "ok": "Ordnat dan l-aħħar",
+    "unavailable": "Mhux disponibbli bħalissa",
+    "addMissing": "Żid dawk li jonqsu mal-kartell",
+    "addAllMissing": "Żid dawk kollha li jonqsu mal-kartell",
+    "addedToCart": "{n} miżjuda mal-kartell.",
+    "goToCart": "Mur għall-kartell",
+    "repGaps": "Stokk obbligatorju mhux ordnat dan l-aħħar",
+    "repGapsNone": "L-ebda nuqqas fl-istokk obbligatorju.",
+    "price": "Prezz",
+    "edit": "Editja",
+    "cancel": "Ikkanċella"
   }
 }

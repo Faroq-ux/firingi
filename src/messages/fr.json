@@ -936,7 +936,9 @@
     "Van Sales": "Ventes en camionnette",
     "Sell from Van": "Vendre depuis la camionnette",
     "Van Loads": "Chargements",
-    "Bought from Vans": "Achats en camionnette"
+    "Bought from Vans": "Achats en camionnette",
+    "Customer Assortments": "Assortiments clients",
+    "Must-Stock List": "Référencement obligatoire"
   },
   "delivery": {
     "title": "Livraison",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Camionnette {number} toujours en tournée",
       "body": "La camionnette est sortie depuis plus de {hours} heures. Déchargez-la et comptez les espèces."
+    },
+    "assortment_gaps": {
+      "title": "Produits obligatoires à recommander",
+      "body": "{n} de vos produits en référencement obligatoire n'ont pas été commandés depuis {days} jours."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Date",
     "viewOrder": "Voir la commande",
     "noneToday": "Aucune vente aujourd'hui."
+  },
+  "assortments": {
+    "title": "Assortiments clients",
+    "intro": "Décidez ce que chaque client peut voir et vous acheter : une liste approuvée (uniquement ces produits), des articles masqués (sauf ceux-ci) ou une liste de référencement obligatoire (produits à toujours avoir en stock).",
+    "off": "Les assortiments clients sont actuellement désactivés par FIRINGI.",
+    "newList": "Nouvelle liste",
+    "name": "Nom",
+    "kind": "Type de liste",
+    "mode": {
+      "ONLY_LISTED": "Liste approuvée",
+      "HIDE_LISTED": "Articles masqués",
+      "MUST_STOCK": "Liste de référencement obligatoire"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Ces clients voient uniquement les produits de la liste.",
+      "HIDE_LISTED": "Ces clients ne voient pas les produits de la liste.",
+      "MUST_STOCK": "Produits que ces clients doivent toujours avoir en stock. Ce qu'ils voient ne change pas."
+    },
+    "modeOff": "Non autorisé par FIRINGI pour le moment.",
+    "for": "Pour",
+    "target": {
+      "ALL": "Tous mes clients",
+      "GROUP": "Un groupe de clients",
+      "CUSTOMER": "Un client"
+    },
+    "group": "Groupe de clients",
+    "noGroups": "Vous n'avez pas encore de groupes de clients.",
+    "customer": "Client",
+    "searchCustomer": "Rechercher un client (nom ou numéro de TVA)",
+    "noCustomers": "Aucun client trouvé.",
+    "create": "Créer",
+    "lists": "Vos listes",
+    "noLists": "Aucune liste pour l'instant. Sans liste, chaque client voit tous vos produits.",
+    "products": "Produits",
+    "mustStock": "Référencement obligatoire",
+    "customers": "Clients",
+    "active": "Active",
+    "inactive": "Inactive",
+    "open": "Ouvrir",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "delete": "Supprimer la liste",
+    "deleteConfirm": "Supprimer cette liste ? Les clients verront vos produits comme si elle n'avait jamais existé.",
+    "addProducts": "Ajouter des produits",
+    "searchProducts": "Rechercher vos produits (nom ou SKU)",
+    "add": "Ajouter",
+    "added": "Dans la liste",
+    "pasteSkus": "Coller des SKU",
+    "pasteHint": "Un par ligne ou séparés par des virgules. Votre SKU ou celui de FIRINGI.",
+    "addSkus": "Ajouter ces SKU",
+    "addedN": "{n} ajouté(s).",
+    "notFound": "Introuvables : {skus}",
+    "remove": "Retirer",
+    "noItems": "Aucun produit dans cette liste pour l'instant.",
+    "previewTitle": "Voir en tant que client",
+    "previewHint": "Choisissez un client pour voir combien de vos produits il peut voir avec toutes vos listes.",
+    "previewResult": "{customer} voit {visible} de vos {total} produits ({hidden} masqués) · {must} en référencement obligatoire.",
+    "preview": "Afficher",
+    "rulesTitle": "Comment les listes se combinent",
+    "rule1": "Un client couvert par une liste approuvée voit uniquement les produits de vos listes approuvées qui le concernent.",
+    "rule2": "Les articles masqués ne sont jamais affichés, sauf si la liste propre à ce client les contient.",
+    "rule3": "Les produits en référencement obligatoire sont toujours affichés à ce client.",
+    "rule4": "Tous les canaux appliquent les listes : la boutique, le panier, les devis, les commerciaux, les camionnettes, WhatsApp et l'API.",
+    "inactiveNote": "Les listes inactives ne s'appliquent pas.",
+    "mustTitle": "Liste de référencement obligatoire",
+    "mustIntro": "Produits que vos fournisseurs vous demandent de toujours avoir en stock. Ceux que vous n'avez pas commandés depuis {days} jours sont signalés.",
+    "noneMust": "Aucun produit en référencement obligatoire.",
+    "supplier": "Fournisseur",
+    "lastOrdered": "Dernière commande",
+    "never": "Jamais",
+    "daysAgo": "Il y a {n} jours",
+    "gap": "Pas commandé récemment",
+    "ok": "Commandé récemment",
+    "unavailable": "Indisponible pour le moment",
+    "addMissing": "Ajouter les manquants au panier",
+    "addAllMissing": "Ajouter tous les manquants au panier",
+    "addedToCart": "{n} ajouté(s) au panier.",
+    "goToCart": "Aller au panier",
+    "repGaps": "Référencement obligatoire non commandé récemment",
+    "repGapsNone": "Aucun manque en référencement obligatoire.",
+    "price": "Prix",
+    "edit": "Modifier",
+    "cancel": "Annuler"
   }
 }

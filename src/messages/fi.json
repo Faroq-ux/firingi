@@ -936,7 +936,9 @@
     "Van Sales": "Myynti autosta",
     "Sell from Van": "Myy autosta",
     "Van Loads": "Lastaukset",
-    "Bought from Vans": "Ostettu autoista"
+    "Bought from Vans": "Ostettu autoista",
+    "Customer Assortments": "Asiakasvalikoimat",
+    "Must-Stock List": "Perusvalikoimalista"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Auto {number} on yhä liikkeellä",
       "body": "Auto on ollut liikkeellä yli {hours} tuntia. Pura se ja laske käteinen."
+    },
+    "assortment_gaps": {
+      "title": "Uudelleen tilattavia perusvalikoiman tuotteita",
+      "body": "{n} perusvalikoimanne tuotetta ei ole tilattu {days} päivään."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Päivämäärä",
     "viewOrder": "Näytä tilaus",
     "noneToday": "Ei myyntejä tänään."
+  },
+  "assortments": {
+    "title": "Asiakasvalikoimat",
+    "intro": "Määritä, mitä kukin asiakas voi nähdä ja ostaa teiltä: hyväksytty lista (vain nämä tuotteet), piilotetut tuotteet (ei näitä) tai perusvalikoimalista (tuotteet, joita asiakkaan tulisi aina pitää valikoimassaan).",
+    "off": "FIRINGI on toistaiseksi poistanut asiakasvalikoimat käytöstä.",
+    "newList": "Uusi lista",
+    "name": "Nimi",
+    "kind": "Listan tyyppi",
+    "mode": {
+      "ONLY_LISTED": "Hyväksytty lista",
+      "HIDE_LISTED": "Piilotetut tuotteet",
+      "MUST_STOCK": "Perusvalikoimalista"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Nämä asiakkaat näkevät vain listalla olevat tuotteet.",
+      "HIDE_LISTED": "Nämä asiakkaat eivät näe listalla olevia tuotteita.",
+      "MUST_STOCK": "Tuotteet, joita näiden asiakkaiden tulisi aina pitää valikoimassaan. Näkyvät tuotteet eivät muutu."
+    },
+    "modeOff": "FIRINGI ei salli tätä tällä hetkellä.",
+    "for": "Kohde",
+    "target": {
+      "ALL": "Kaikki asiakkaani",
+      "GROUP": "Asiakasryhmä",
+      "CUSTOMER": "Yksi asiakas"
+    },
+    "group": "Asiakasryhmä",
+    "noGroups": "Teillä ei ole vielä asiakasryhmiä.",
+    "customer": "Asiakas",
+    "searchCustomer": "Hae asiakasta (nimi tai Y-tunnus)",
+    "noCustomers": "Asiakkaita ei löytynyt.",
+    "create": "Luo",
+    "lists": "Listanne",
+    "noLists": "Ei vielä listoja. Ilman listoja jokainen asiakas näkee kaikki tuotteenne.",
+    "products": "Tuotteet",
+    "mustStock": "Perusvalikoima",
+    "customers": "Asiakkaat",
+    "active": "Aktiivinen",
+    "inactive": "Ei aktiivinen",
+    "open": "Avaa",
+    "save": "Tallenna",
+    "saved": "Tallennettu",
+    "delete": "Poista lista",
+    "deleteConfirm": "Poistetaanko tämä lista? Asiakkaat näkevät tuotteenne kuin listaa ei olisi koskaan ollut.",
+    "addProducts": "Lisää tuotteita",
+    "searchProducts": "Hae tuotteistanne (nimi tai tuotekoodi)",
+    "add": "Lisää",
+    "added": "Listalla",
+    "pasteSkus": "Liitä tuotekoodit",
+    "pasteHint": "Yksi riviä kohden tai pilkuilla erotettuina. Oma tuotekoodinne tai FIRINGIn.",
+    "addSkus": "Lisää nämä tuotekoodit",
+    "addedN": "{n} lisätty.",
+    "notFound": "Ei löytynyt: {skus}",
+    "remove": "Poista",
+    "noItems": "Tällä listalla ei ole vielä tuotteita.",
+    "previewTitle": "Katso asiakkaan näkökulmasta",
+    "previewHint": "Valitse asiakas nähdäksenne, kuinka monta tuotettanne se näkee kaikkien listojenne perusteella.",
+    "previewResult": "{customer} näkee {visible}/{total} tuotteestanne ({hidden} piilotettu) · {must} perusvalikoimassa.",
+    "preview": "Näytä",
+    "rulesTitle": "Miten listat toimivat yhdessä",
+    "rule1": "Asiakas, jota hyväksytty lista koskee, näkee vain ne tuotteet, jotka ovat sille tarkoitetuilla hyväksytyillä listoillanne.",
+    "rule2": "Piilotettuja tuotteita ei koskaan näytetä, elleivät ne ole kyseisen asiakkaan omalla listalla.",
+    "rule3": "Perusvalikoiman tuotteet näytetään aina kyseiselle asiakkaalle.",
+    "rule4": "Kaikki kanavat noudattavat listoja: verkkokauppa, ostoskori, tarjoukset, myyjät, jakeluautot, WhatsApp ja API.",
+    "inactiveNote": "Ei-aktiiviset listat eivät ole voimassa.",
+    "mustTitle": "Perusvalikoimalista",
+    "mustIntro": "Tuotteet, jotka toimittajanne ovat pyytäneet teitä pitämään aina valikoimassa. Tuotteet, joita ette ole tilanneet {days} päivään, on merkitty.",
+    "noneMust": "Ei perusvalikoiman tuotteita.",
+    "supplier": "Toimittaja",
+    "lastOrdered": "Viimeksi tilattu",
+    "never": "Ei koskaan",
+    "daysAgo": "{n} päivää sitten",
+    "gap": "Ei tilattu viime aikoina",
+    "ok": "Tilattu äskettäin",
+    "unavailable": "Ei saatavilla nyt",
+    "addMissing": "Lisää puuttuvat ostoskoriin",
+    "addAllMissing": "Lisää kaikki puuttuvat ostoskoriin",
+    "addedToCart": "{n} lisätty ostoskoriin.",
+    "goToCart": "Siirry ostoskoriin",
+    "repGaps": "Perusvalikoima, jota ei ole tilattu viime aikoina",
+    "repGapsNone": "Ei puutteita perusvalikoimassa.",
+    "price": "Hinta",
+    "edit": "Muokkaa",
+    "cancel": "Peruuta"
   }
 }

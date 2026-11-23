@@ -936,7 +936,9 @@
     "Van Sales": "Salg fra varevogn",
     "Sell from Van": "Sælg fra varevogn",
     "Van Loads": "Varevognslæsninger",
-    "Bought from Vans": "Købt fra varevogne"
+    "Bought from Vans": "Købt fra varevogne",
+    "Customer Assortments": "Kundesortimenter",
+    "Must-Stock List": "Basissortiment"
   },
   "delivery": {
     "title": "Levering",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Varevogn {number} er stadig ude",
       "body": "Varevognen har været ude i mere end {hours} timer. Los den, og tæl kontanterne op."
+    },
+    "assortment_gaps": {
+      "title": "Basissortimentsvarer, der skal genbestilles",
+      "body": "{n} af dine basissortimentsvarer er ikke bestilt i {days} dage."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Dato",
     "viewOrder": "Se ordre",
     "noneToday": "Intet salg i dag."
+  },
+  "assortments": {
+    "title": "Kundesortimenter",
+    "intro": "Bestem, hvad hver kunde kan se og købe hos dig: en godkendt liste (kun disse produkter), skjulte varer (ikke disse) eller en basissortimentsliste (produkter, kunden altid bør føre).",
+    "off": "Kundesortimenter er i øjeblikket slået fra af FIRINGI.",
+    "newList": "Ny liste",
+    "name": "Navn",
+    "kind": "Listetype",
+    "mode": {
+      "ONLY_LISTED": "Godkendt liste",
+      "HIDE_LISTED": "Skjulte varer",
+      "MUST_STOCK": "Basissortimentsliste"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Disse kunder ser kun produkterne på listen.",
+      "HIDE_LISTED": "Disse kunder ser ikke produkterne på listen.",
+      "MUST_STOCK": "Produkter, som disse kunder altid bør føre. Det, de kan se, ændres ikke."
+    },
+    "modeOff": "Ikke tilladt af FIRINGI i øjeblikket.",
+    "for": "For",
+    "target": {
+      "ALL": "Alle mine kunder",
+      "GROUP": "En kundegruppe",
+      "CUSTOMER": "Én kunde"
+    },
+    "group": "Kundegruppe",
+    "noGroups": "Du har endnu ingen kundegrupper.",
+    "customer": "Kunde",
+    "searchCustomer": "Søg efter en kunde (navn eller CVR-nummer)",
+    "noCustomers": "Ingen kunder fundet.",
+    "create": "Opret",
+    "lists": "Dine lister",
+    "noLists": "Ingen lister endnu. Uden lister ser alle kunder alle dine produkter.",
+    "products": "Produkter",
+    "mustStock": "Basissortiment",
+    "customers": "Kunder",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "open": "Åbn",
+    "save": "Gem",
+    "saved": "Gemt",
+    "delete": "Slet listen",
+    "deleteConfirm": "Vil du slette denne liste? Kunderne vil se dine produkter, som om den aldrig havde eksisteret.",
+    "addProducts": "Tilføj produkter",
+    "searchProducts": "Søg i dine produkter (navn eller varenummer)",
+    "add": "Tilføj",
+    "added": "På listen",
+    "pasteSkus": "Indsæt varenumre",
+    "pasteHint": "Ét pr. linje eller adskilt med kommaer. Dit varenummer eller FIRINGI's.",
+    "addSkus": "Tilføj disse varenumre",
+    "addedN": "{n} tilføjet.",
+    "notFound": "Ikke fundet: {skus}",
+    "remove": "Fjern",
+    "noItems": "Ingen produkter på denne liste endnu.",
+    "previewTitle": "Se det som kunde",
+    "previewHint": "Vælg en kunde for at se, hvor mange af dine produkter kunden kan se ud fra alle dine lister.",
+    "previewResult": "{customer} ser {visible} af dine {total} produkter ({hidden} skjulte) · {must} i basissortimentet.",
+    "preview": "Vis",
+    "rulesTitle": "Sådan virker listerne sammen",
+    "rule1": "En kunde, der er omfattet af en godkendt liste, ser kun produkterne på dine godkendte lister for den pågældende kunde.",
+    "rule2": "Skjulte varer vises aldrig, medmindre kundens egen liste indeholder dem.",
+    "rule3": "Produkter i basissortimentet vises altid for den pågældende kunde.",
+    "rule4": "Alle kanaler følger listerne: webshoppen, kurven, tilbud, sælgere, varevogne, WhatsApp og API'et.",
+    "inactiveNote": "Inaktive lister gælder ikke.",
+    "mustTitle": "Basissortiment",
+    "mustIntro": "Produkter, som dine leverandører har bedt dig altid at føre. Dem, du ikke har bestilt i {days} dage, er markeret.",
+    "noneMust": "Ingen produkter i basissortimentet.",
+    "supplier": "Leverandør",
+    "lastOrdered": "Senest bestilt",
+    "never": "Aldrig",
+    "daysAgo": "for {n} dage siden",
+    "gap": "Ikke bestilt for nylig",
+    "ok": "Bestilt for nylig",
+    "unavailable": "Ikke tilgængelig lige nu",
+    "addMissing": "Læg de manglende i kurven",
+    "addAllMissing": "Læg alle manglende i kurven",
+    "addedToCart": "{n} lagt i kurven.",
+    "goToCart": "Gå til kurven",
+    "repGaps": "Basissortiment, der ikke er bestilt for nylig",
+    "repGapsNone": "Ingen mangler i basissortimentet.",
+    "price": "Pris",
+    "edit": "Rediger",
+    "cancel": "Annuller"
   }
 }

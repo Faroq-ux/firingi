@@ -936,7 +936,9 @@
     "Van Sales": "Salg fra bil",
     "Sell from Van": "Selg fra bil",
     "Van Loads": "Billaster",
-    "Bought from Vans": "Kjøpt fra bil"
+    "Bought from Vans": "Kjøpt fra bil",
+    "Customer Assortments": "Kundesortiment",
+    "Must-Stock List": "Obligatorisk sortiment"
   },
   "delivery": {
     "title": "Levering",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Bil {number} er fortsatt ute",
       "body": "Bilen har vært ute i mer enn {hours} timer. Loss den og tell kontantene."
+    },
+    "assortment_gaps": {
+      "title": "Obligatoriske produkter som bør bestilles på nytt",
+      "body": "{n} av dine obligatoriske produkter er ikke bestilt på {days} dager."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Dato",
     "viewOrder": "Vis ordre",
     "noneToday": "Ingen salg i dag."
+  },
+  "assortments": {
+    "title": "Kundesortiment",
+    "intro": "Bestem hva hver kunde kan se og kjøpe fra deg: en godkjent liste (bare disse produktene), skjulte varer (ikke disse) eller et obligatorisk sortiment (produkter kunden alltid bør ha på lager).",
+    "off": "FIRINGI har for øyeblikket slått av kundesortiment.",
+    "newList": "Ny liste",
+    "name": "Navn",
+    "kind": "Listetype",
+    "mode": {
+      "ONLY_LISTED": "Godkjent liste",
+      "HIDE_LISTED": "Skjulte varer",
+      "MUST_STOCK": "Obligatorisk sortiment"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Disse kundene ser bare produktene på listen.",
+      "HIDE_LISTED": "Disse kundene ser ikke produktene på listen.",
+      "MUST_STOCK": "Produkter disse kundene alltid bør ha på lager. Det de ser, endres ikke."
+    },
+    "modeOff": "Ikke tillatt av FIRINGI for øyeblikket.",
+    "for": "For",
+    "target": {
+      "ALL": "Alle mine kunder",
+      "GROUP": "En kundegruppe",
+      "CUSTOMER": "Én kunde"
+    },
+    "group": "Kundegruppe",
+    "noGroups": "Du har ingen kundegrupper ennå.",
+    "customer": "Kunde",
+    "searchCustomer": "Søk etter kunde (navn eller organisasjonsnummer)",
+    "noCustomers": "Fant ingen kunder.",
+    "create": "Opprett",
+    "lists": "Dine lister",
+    "noLists": "Ingen lister ennå. Uten lister ser alle kunder alle produktene dine.",
+    "products": "Produkter",
+    "mustStock": "Obligatorisk",
+    "customers": "Kunder",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "open": "Åpne",
+    "save": "Lagre",
+    "saved": "Lagret",
+    "delete": "Slett listen",
+    "deleteConfirm": "Vil du slette denne listen? Kundene vil se produktene dine som om den aldri hadde eksistert.",
+    "addProducts": "Legg til produkter",
+    "searchProducts": "Søk i produktene dine (navn eller varenummer)",
+    "add": "Legg til",
+    "added": "På listen",
+    "pasteSkus": "Lim inn varenumre",
+    "pasteHint": "Ett per linje, eller atskilt med komma. Ditt varenummer eller FIRINGIs.",
+    "addSkus": "Legg til disse varenumrene",
+    "addedN": "{n} lagt til.",
+    "notFound": "Ikke funnet: {skus}",
+    "remove": "Fjern",
+    "noItems": "Ingen produkter på denne listen ennå.",
+    "previewTitle": "Se det som en kunde",
+    "previewHint": "Velg en kunde for å se hvor mange av produktene dine kunden kan se ut fra alle listene dine.",
+    "previewResult": "{customer} ser {visible} av dine {total} produkter ({hidden} skjult) · {must} obligatoriske.",
+    "preview": "Vis",
+    "rulesTitle": "Slik virker listene sammen",
+    "rule1": "En kunde som omfattes av en godkjent liste, ser bare produktene på dine godkjente lister for denne kunden.",
+    "rule2": "Skjulte varer vises aldri, med mindre kundens egen liste inneholder dem.",
+    "rule3": "Produkter i obligatorisk sortiment vises alltid for denne kunden.",
+    "rule4": "Alle kanaler følger listene: nettbutikken, handlekurven, tilbud, selgere, varebiler, WhatsApp og API-et.",
+    "inactiveNote": "Inaktive lister gjelder ikke.",
+    "mustTitle": "Obligatorisk sortiment",
+    "mustIntro": "Produkter leverandørene dine har bedt deg om alltid å ha på lager. De du ikke har bestilt på {days} dager, er merket.",
+    "noneMust": "Ingen produkter i obligatorisk sortiment.",
+    "supplier": "Leverandør",
+    "lastOrdered": "Sist bestilt",
+    "never": "Aldri",
+    "daysAgo": "For {n} dager siden",
+    "gap": "Ikke bestilt nylig",
+    "ok": "Bestilt nylig",
+    "unavailable": "Ikke tilgjengelig nå",
+    "addMissing": "Legg de manglende i handlekurven",
+    "addAllMissing": "Legg alle manglende i handlekurven",
+    "addedToCart": "{n} lagt i handlekurven.",
+    "goToCart": "Gå til handlekurven",
+    "repGaps": "Obligatorisk sortiment ikke bestilt nylig",
+    "repGapsNone": "Ingen mangler i obligatorisk sortiment.",
+    "price": "Pris",
+    "edit": "Rediger",
+    "cancel": "Avbryt"
   }
 }

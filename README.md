@@ -742,6 +742,24 @@ Every wholesaler (and distributor) gets its own branded page at `/s/<name>`, wit
 
 Details: [docs/storefronts.md](docs/storefronts.md).
 
+## Customer assortments (Phase 64)
+
+Suppliers decide **what each customer can see and buy**, for all customers, a customer group or one customer:
+
+- **Approved lists:** only these products.
+- **Hidden items:** not these products.
+- **Must-stock lists:** products the customer should always carry.
+
+The rules sit in the catalogue's one visibility filter, so the shop, cart, checkout, quotes, reps, vans, WhatsApp, the API and FIRINGI's routed orders all follow them.
+
+- **Supplier:** builds lists by search or pasted SKUs, and can **see it as a customer** (visible, hidden, must-stock).
+- **Customer:** gets a *Must-Stock List* with what it hasn't ordered in 30 days, **adds the missing ones to the cart** in one click, and gets a weekly reminder.
+- **Reps:** see the gaps on the customer card.
+- **Pages:** supplier and customer pages are in 25 languages. FIRINGI's *Vendors › Customer Assortments* (English) has every switch: on/off, per supplier, each kind of list, gap days, reminders.
+- **Background job:** `/api/cron/assortments`, hourly.
+
+Details: [docs/assortments.md](docs/assortments.md).
+
 ## Van sales (Phase 63)
 
 Suppliers **sell straight from a van** to registered customers, and **FIRINGI still invoices every sale**.

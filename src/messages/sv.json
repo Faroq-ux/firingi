@@ -936,7 +936,9 @@
     "Van Sales": "Försäljning från skåpbil",
     "Sell from Van": "Sälj från skåpbil",
     "Van Loads": "Lastningar",
-    "Bought from Vans": "Köpt från skåpbilar"
+    "Bought from Vans": "Köpt från skåpbilar",
+    "Customer Assortments": "Kundsortiment",
+    "Must-Stock List": "Bassortiment"
   },
   "delivery": {
     "title": "Leverans",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Bil {number} är fortfarande ute",
       "body": "Bilen har varit ute i mer än {hours} timmar. Lossa den och räkna kassan."
+    },
+    "assortment_gaps": {
+      "title": "Bassortimentsprodukter att beställa igen",
+      "body": "{n} av dina bassortimentsprodukter har inte beställts på {days} dagar."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datum",
     "viewOrder": "Visa order",
     "noneToday": "Ingen försäljning i dag."
+  },
+  "assortments": {
+    "title": "Kundsortiment",
+    "intro": "Bestäm vad varje kund kan se och köpa av dig: en godkänd lista (endast dessa produkter), dolda artiklar (inte dessa) eller en bassortimentslista (produkter som kunden alltid bör föra).",
+    "off": "Kundsortiment är för närvarande avstängt av FIRINGI.",
+    "newList": "Ny lista",
+    "name": "Namn",
+    "kind": "Typ av lista",
+    "mode": {
+      "ONLY_LISTED": "Godkänd lista",
+      "HIDE_LISTED": "Dolda artiklar",
+      "MUST_STOCK": "Bassortimentslista"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Dessa kunder ser endast produkterna på listan.",
+      "HIDE_LISTED": "Dessa kunder ser inte produkterna på listan.",
+      "MUST_STOCK": "Produkter som dessa kunder alltid bör föra. Det de ser ändras inte."
+    },
+    "modeOff": "Inte tillåtet av FIRINGI för närvarande.",
+    "for": "För",
+    "target": {
+      "ALL": "Alla mina kunder",
+      "GROUP": "En kundgrupp",
+      "CUSTOMER": "En kund"
+    },
+    "group": "Kundgrupp",
+    "noGroups": "Du har inga kundgrupper ännu.",
+    "customer": "Kund",
+    "searchCustomer": "Sök efter en kund (namn eller organisationsnummer)",
+    "noCustomers": "Inga kunder hittades.",
+    "create": "Skapa",
+    "lists": "Dina listor",
+    "noLists": "Inga listor ännu. Utan listor ser alla kunder alla dina produkter.",
+    "products": "Produkter",
+    "mustStock": "Bassortiment",
+    "customers": "Kunder",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "open": "Öppna",
+    "save": "Spara",
+    "saved": "Sparat",
+    "delete": "Ta bort listan",
+    "deleteConfirm": "Vill du ta bort den här listan? Kunderna ser då dina produkter som om den aldrig hade funnits.",
+    "addProducts": "Lägg till produkter",
+    "searchProducts": "Sök bland dina produkter (namn eller artikelnummer)",
+    "add": "Lägg till",
+    "added": "På listan",
+    "pasteSkus": "Klistra in artikelnummer",
+    "pasteHint": "Ett per rad eller kommaseparerade. Ditt artikelnummer eller FIRINGI:s.",
+    "addSkus": "Lägg till dessa artikelnummer",
+    "addedN": "{n} har lagts till.",
+    "notFound": "Hittades inte: {skus}",
+    "remove": "Ta bort",
+    "noItems": "Inga produkter på den här listan ännu.",
+    "previewTitle": "Se det som kund",
+    "previewHint": "Välj en kund för att se hur många av dina produkter kunden ser utifrån alla dina listor.",
+    "previewResult": "{customer} ser {visible} av dina {total} produkter ({hidden} dolda) · {must} i bassortimentet.",
+    "preview": "Visa",
+    "rulesTitle": "Så samverkar listorna",
+    "rule1": "En kund som omfattas av en godkänd lista ser endast produkterna på dina godkända listor för kunden.",
+    "rule2": "Dolda artiklar visas aldrig, om de inte finns på kundens egen lista.",
+    "rule3": "Produkter i bassortimentet visas alltid för kunden.",
+    "rule4": "Alla kanaler följer listorna: webbutiken, varukorgen, offerter, säljare, skåpbilar, WhatsApp och API:et.",
+    "inactiveNote": "Inaktiva listor gäller inte.",
+    "mustTitle": "Bassortiment",
+    "mustIntro": "Produkter som dina leverantörer har bett dig att alltid föra. De du inte har beställt på {days} dagar är markerade.",
+    "noneMust": "Inga produkter i bassortimentet.",
+    "supplier": "Leverantör",
+    "lastOrdered": "Senast beställd",
+    "never": "Aldrig",
+    "daysAgo": "för {n} dagar sedan",
+    "gap": "Inte beställd nyligen",
+    "ok": "Beställd nyligen",
+    "unavailable": "Inte tillgänglig just nu",
+    "addMissing": "Lägg de saknade i varukorgen",
+    "addAllMissing": "Lägg alla saknade i varukorgen",
+    "addedToCart": "{n} har lagts i varukorgen.",
+    "goToCart": "Gå till varukorgen",
+    "repGaps": "Bassortiment som inte beställts nyligen",
+    "repGapsNone": "Inga luckor i bassortimentet.",
+    "price": "Pris",
+    "edit": "Redigera",
+    "cancel": "Avbryt"
   }
 }

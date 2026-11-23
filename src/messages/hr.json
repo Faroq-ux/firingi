@@ -936,7 +936,9 @@
     "Van Sales": "Prodaja iz kombija",
     "Sell from Van": "Prodaj iz kombija",
     "Van Loads": "Utovari kombija",
-    "Bought from Vans": "Kupljeno iz kombija"
+    "Bought from Vans": "Kupljeno iz kombija",
+    "Customer Assortments": "Asortimani kupaca",
+    "Must-Stock List": "Obvezni popis"
   },
   "delivery": {
     "title": "Dostava",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Kombi {number} još je na ruti",
       "body": "Kombi je na ruti više od {hours} h. Istovarite ga i prebrojite gotovinu."
+    },
+    "assortment_gaps": {
+      "title": "Obvezni proizvodi za ponovnu narudžbu",
+      "body": "Broj obveznih proizvoda koje niste naručili {days} dana: {n}."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datum",
     "viewOrder": "Prikaži narudžbu",
     "noneToday": "Danas nema prodaja."
+  },
+  "assortments": {
+    "title": "Asortimani kupaca",
+    "intro": "Odredite što svaki kupac može vidjeti i kupiti kod Vas: odobreni popis (samo ovi proizvodi), skriveni artikli (ne ovi) ili obvezni popis (proizvodi koje bi uvijek trebao imati na zalihi).",
+    "off": "FIRINGI je trenutačno isključio asortimane kupaca.",
+    "newList": "Novi popis",
+    "name": "Naziv",
+    "kind": "Vrsta popisa",
+    "mode": {
+      "ONLY_LISTED": "Odobreni popis",
+      "HIDE_LISTED": "Skriveni artikli",
+      "MUST_STOCK": "Obvezni popis"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Ti kupci vide samo proizvode s popisa.",
+      "HIDE_LISTED": "Ti kupci ne vide proizvode s popisa.",
+      "MUST_STOCK": "Proizvodi koje bi ti kupci uvijek trebali imati na zalihi. Ono što vide ne mijenja se."
+    },
+    "modeOff": "FIRINGI to trenutačno ne dopušta.",
+    "for": "Za",
+    "target": {
+      "ALL": "Svi moji kupci",
+      "GROUP": "Grupa kupaca",
+      "CUSTOMER": "Jedan kupac"
+    },
+    "group": "Grupa kupaca",
+    "noGroups": "Još nemate grupa kupaca.",
+    "customer": "Kupac",
+    "searchCustomer": "Pretražite kupca (naziv ili OIB)",
+    "noCustomers": "Nije pronađen nijedan kupac.",
+    "create": "Izradi",
+    "lists": "Vaši popisi",
+    "noLists": "Još nema popisa. Bez popisa svaki kupac vidi sve Vaše proizvode.",
+    "products": "Proizvodi",
+    "mustStock": "Obvezno",
+    "customers": "Kupci",
+    "active": "Aktivan",
+    "inactive": "Neaktivan",
+    "open": "Otvori",
+    "save": "Spremi",
+    "saved": "Spremljeno",
+    "delete": "Izbriši popis",
+    "deleteConfirm": "Izbrisati ovaj popis? Kupci će vidjeti Vaše proizvode kao da nikad nije postojao.",
+    "addProducts": "Dodaj proizvode",
+    "searchProducts": "Pretražite svoje proizvode (naziv ili šifra)",
+    "add": "Dodaj",
+    "added": "Na popisu",
+    "pasteSkus": "Zalijepi šifre",
+    "pasteHint": "Jedna po retku ili odvojene zarezima. Vaša šifra ili šifra FIRINGI.",
+    "addSkus": "Dodaj ove šifre",
+    "addedN": "Dodano: {n}.",
+    "notFound": "Nije pronađeno: {skus}",
+    "remove": "Ukloni",
+    "noItems": "Na ovom popisu još nema proizvoda.",
+    "previewTitle": "Prikaz kao kupac",
+    "previewHint": "Odaberite kupca da biste vidjeli koliko Vaših proizvoda vidi prema svim Vašim popisima.",
+    "previewResult": "{customer} vidi {visible} od {total} Vaših proizvoda (skriveno: {hidden}) · obvezno: {must}.",
+    "preview": "Prikaži",
+    "rulesTitle": "Kako popisi djeluju zajedno",
+    "rule1": "Kupac obuhvaćen odobrenim popisom vidi samo proizvode s Vaših odobrenih popisa za njega.",
+    "rule2": "Skriveni artikli nikad se ne prikazuju, osim ako se nalaze na vlastitom popisu tog kupca.",
+    "rule3": "Obvezni proizvodi uvijek se prikazuju tom kupcu.",
+    "rule4": "Svi kanali poštuju popise: trgovina, košarica, ponude, prodajni predstavnici, dostavna vozila, WhatsApp i API.",
+    "inactiveNote": "Neaktivni popisi se ne primjenjuju.",
+    "mustTitle": "Obvezni popis",
+    "mustIntro": "Proizvodi koje Vas dobavljači mole da uvijek imate na zalihi. Označeni su oni koje niste naručili {days} dana.",
+    "noneMust": "Nema obveznih proizvoda.",
+    "supplier": "Dobavljač",
+    "lastOrdered": "Zadnja narudžba",
+    "never": "Nikad",
+    "daysAgo": "prije {n} dana",
+    "gap": "Nije naručeno u posljednje vrijeme",
+    "ok": "Nedavno naručeno",
+    "unavailable": "Trenutačno nedostupno",
+    "addMissing": "Dodaj nedostajuće u košaricu",
+    "addAllMissing": "Dodaj sve nedostajuće u košaricu",
+    "addedToCart": "Dodano u košaricu: {n}.",
+    "goToCart": "Idi u košaricu",
+    "repGaps": "Obvezni proizvodi koji nisu nedavno naručeni",
+    "repGapsNone": "Nema nedostataka u obveznom asortimanu.",
+    "price": "Cijena",
+    "edit": "Uredi",
+    "cancel": "Odustani"
   }
 }

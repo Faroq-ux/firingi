@@ -10,7 +10,9 @@
  *   • an offer is only visible if the buyer has a price for it,
  *   • offers paused for compliance (a required certificate missing / expired — Phase 28) are hidden,
  *   • food products whose required food information is missing / not approved are hidden while FIRINGI's
- *     "required to sell" switch is on (Product.foodBlockedAt — Phase 44).
+ *     "required to sell" switch is on (Product.foodBlockedAt — Phase 44),
+ *   • the supplier's assortments for this buyer: a supplier with an approved list shows only its listed products;
+ *     hidden items are never shown (Phase 64).
  */
 import type { CompanyType, Prisma, Restriction, SellerType } from "@prisma/client";
 
@@ -25,6 +27,8 @@ export type BuyerScope = {
   excludedVendorIds?: string[];
   /** Category ids whose effective restriction is NOT allowed (for the product-level override check). */
   now?: Date;
+  /** Phase 64: the suppliers' assortments for this buyer — approved lists (only these, per supplier) and hidden items. */
+  assortment?: { onlyVendorIds: string[]; allowedOfferIds: string[]; hiddenOfferIds: string[] };
 };
 
 export const SELLER_FOR_BUYER: Record<BuyerScope["buyerType"], SellerType> = {
@@ -75,5 +79,15 @@ export function visibleOfferWhere(s: BuyerScope): Prisma.VendorOfferWhereInput {
       },
     },
     prices: { some: { priceList: applicablePriceListWhere(s, s.now) } },
+    ...assortmentWhere(s.assortment),
+  };
+}
+
+/** Phase 64: hidden items out; a supplier with an approved list keeps only the listed products. */
+function assortmentWhere(a: BuyerScope["assortment"]): Prisma.VendorOfferWhereInput {
+  if (!a) return {};
+  return {
+    ...(a.hiddenOfferIds.length ? { id: { notIn: a.hiddenOfferIds } } : {}),
+    ...(a.onlyVendorIds.length ? { AND: [{ OR: [{ vendorCompanyId: { notIn: a.onlyVendorIds } }, { id: { in: a.allowedOfferIds } }] }] } : {}),
   };
 }

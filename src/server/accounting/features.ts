@@ -86,6 +86,13 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       else if (!(await sr.myRep(ctx))?.active) off.add("SALES_REP_ME");
       if (!on || portal !== "buy" || !(await sr.servedByReps(ctx.company.id))) off.add("REP_ORDERS");
     }
+    // Phase 64: customer assortments — FIRINGI's switch (all / per supplier); customers once they have a must-stock list
+    {
+      const as = await import("@/server/assortments/service");
+      const s = await as.assortmentSettings();
+      if (portal !== "vendor" || !s.enabled || s.disabledVendors.includes(ctx.company.id)) off.add("ASSORTMENTS");
+      if (portal !== "buy" || !(await as.hasMustStock(ctx.company.id))) off.add("MUST_STOCK");
+    }
     // Phase 63: van sales — FIRINGI's switch (all / per supplier); customers once they bought from a van
     {
       const vs = await import("@/server/vansales/service");

@@ -936,7 +936,9 @@
     "Van Sales": "Kaubikumüük",
     "Sell from Van": "Müü kaubikust",
     "Van Loads": "Kaubikukoormad",
-    "Bought from Vans": "Kaubikutest ostetud"
+    "Bought from Vans": "Kaubikutest ostetud",
+    "Customer Assortments": "Klientide sortimendid",
+    "Must-Stock List": "Kohustuslik sortiment"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Kaubik {number} on endiselt väljas",
       "body": "Kaubik on olnud väljas üle {hours} tunni. Laadige see maha ja lugege sularaha üle."
+    },
+    "assortment_gaps": {
+      "title": "Kohustuslikud tooted uuesti tellimiseks",
+      "body": "{n} teie kohustuslikust tootest pole {days} päeva jooksul tellitud."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Kuupäev",
     "viewOrder": "Vaata tellimust",
     "noneToday": "Täna müüke pole."
+  },
+  "assortments": {
+    "title": "Klientide sortimendid",
+    "intro": "Otsustage, mida iga klient saab teilt näha ja osta: lubatud loend (ainult need tooted), peidetud tooted (mitte need) või kohustuslik sortiment (tooted, mis tal peavad alati olemas olema).",
+    "off": "FIRINGI on klientide sortimendid praegu välja lülitanud.",
+    "newList": "Uus loend",
+    "name": "Nimi",
+    "kind": "Loendi liik",
+    "mode": {
+      "ONLY_LISTED": "Lubatud loend",
+      "HIDE_LISTED": "Peidetud tooted",
+      "MUST_STOCK": "Kohustuslik sortiment"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Need kliendid näevad ainult loendis olevaid tooteid.",
+      "HIDE_LISTED": "Need kliendid ei näe loendis olevaid tooteid.",
+      "MUST_STOCK": "Tooted, mis neil klientidel peavad alati olemas olema. See, mida nad näevad, ei muutu."
+    },
+    "modeOff": "FIRINGI ei luba seda praegu.",
+    "for": "Kellele",
+    "target": {
+      "ALL": "Kõik minu kliendid",
+      "GROUP": "Kliendirühm",
+      "CUSTOMER": "Üks klient"
+    },
+    "group": "Kliendirühm",
+    "noGroups": "Teil pole veel kliendirühmi.",
+    "customer": "Klient",
+    "searchCustomer": "Otsige klienti (nimi või maksunumber)",
+    "noCustomers": "Kliente ei leitud.",
+    "create": "Loo",
+    "lists": "Teie loendid",
+    "noLists": "Loendeid veel pole. Ilma loenditeta näeb iga klient kõiki teie tooteid.",
+    "products": "Tooted",
+    "mustStock": "Kohustuslik",
+    "customers": "Kliendid",
+    "active": "Aktiivne",
+    "inactive": "Mitteaktiivne",
+    "open": "Ava",
+    "save": "Salvesta",
+    "saved": "Salvestatud",
+    "delete": "Kustuta loend",
+    "deleteConfirm": "Kas kustutada see loend? Kliendid näevad teie tooteid nii, nagu seda poleks kunagi olnud.",
+    "addProducts": "Lisa tooted",
+    "searchProducts": "Otsige oma tooteid (nimi või SKU)",
+    "add": "Lisa",
+    "added": "Loendis",
+    "pasteSkus": "Kleebi SKU-d",
+    "pasteHint": "Üks rea kohta või komadega eraldatult. Teie SKU või FIRINGI oma.",
+    "addSkus": "Lisa need SKU-d",
+    "addedN": "{n} lisatud.",
+    "notFound": "Ei leitud: {skus}",
+    "remove": "Eemalda",
+    "noItems": "Selles loendis pole veel tooteid.",
+    "previewTitle": "Vaadake kliendi pilguga",
+    "previewHint": "Valige klient, et näha, kui paljusid teie tooteid ta kõigi teie loendite alusel näeb.",
+    "previewResult": "{customer} näeb {visible} teie {total} tootest ({hidden} peidetud) · {must} kohustuslikku.",
+    "preview": "Näita",
+    "rulesTitle": "Kuidas loendid koos toimivad",
+    "rule1": "Klient, kellele kehtib lubatud loend, näeb ainult neid tooteid, mis on tema jaoks teie lubatud loendites.",
+    "rule2": "Peidetud tooteid ei näidata kunagi, välja arvatud juhul, kui need on selle kliendi enda loendis.",
+    "rule3": "Kohustusliku sortimendi tooteid näidatakse sellele kliendile alati.",
+    "rule4": "Loendeid järgivad kõik kanalid: e-pood, ostukorv, pakkumised, müügiesindajad, kaubikud, WhatsApp ja API.",
+    "inactiveNote": "Mitteaktiivsed loendid ei kehti.",
+    "mustTitle": "Kohustuslik sortiment",
+    "mustIntro": "Tooted, mida teie tarnijad on palunud teil alati müügil hoida. Need, mida te pole {days} päeva jooksul tellinud, on märgitud.",
+    "noneMust": "Kohustusliku sortimendi tooteid pole.",
+    "supplier": "Tarnija",
+    "lastOrdered": "Viimati tellitud",
+    "never": "Mitte kunagi",
+    "daysAgo": "{n} päeva tagasi",
+    "gap": "Hiljuti tellimata",
+    "ok": "Hiljuti tellitud",
+    "unavailable": "Praegu pole saadaval",
+    "addMissing": "Lisa puuduvad ostukorvi",
+    "addAllMissing": "Lisa kõik puuduvad ostukorvi",
+    "addedToCart": "{n} lisatud ostukorvi.",
+    "goToCart": "Mine ostukorvi",
+    "repGaps": "Hiljuti tellimata kohustuslikud tooted",
+    "repGapsNone": "Kohustuslikus sortimendis puudujääke pole.",
+    "price": "Hind",
+    "edit": "Muuda",
+    "cancel": "Tühista"
   }
 }

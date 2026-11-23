@@ -1,0 +1,59 @@
+// ───────────────────────── Customer assortments (Phase 64) ─────────────────────────
+// A supplier decides what each customer (or group of customers, or all of them) may see and buy:
+//   ONLY_LISTED — an approved list: those customers see only the listed products of this supplier;
+//   HIDE_LISTED — hidden items: those customers don't see the listed products;
+//   MUST_STOCK  — a core list the customer should always carry (visibility unchanged).
+// Items of an approved list can also be marked must-stock. The rules apply in the catalogue's single visibility
+// filter, so every channel (shop, cart, checkout, reps, vans, WhatsApp, API, FIRINGI's routed orders) follows them.
+
+enum AssortmentMode {
+  ONLY_LISTED
+  HIDE_LISTED
+  MUST_STOCK
+}
+
+enum AssortmentTarget {
+  ALL // every customer of the supplier
+  GROUP // a customer group of the supplier
+  CUSTOMER // one customer
+}
+
+model Assortment {
+  id              String           @id @default(cuid())
+  vendorCompanyId String
+  name            String
+  mode            AssortmentMode
+  target          AssortmentTarget
+  targetGroupId   String?
+  targetCompanyId String?
+  active          Boolean          @default(true)
+  note            String?
+  createdById     String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  items AssortmentItem[]
+
+  @@index([vendorCompanyId, active])
+  @@index([targetCompanyId])
+  @@index([targetGroupId])
+}
+
+model AssortmentItem {
+  assortmentId String
+  offerId      String
+  /// must-stock (always true in a MUST_STOCK list)
+  mustStock    Boolean  @default(false)
+  addedAt      DateTime @default(now())
+
+  assortment Assortment @relation(fields: [assortmentId], references: [id], onDelete: Cascade)
+
+  @@id([assortmentId, offerId])
+  @@index([offerId])
+}
+
+/// When the customer was last reminded of must-stock products it hasn't ordered lately.
+model MustStockReminder {
+  buyerCompanyId String   @id
+  sentAt         DateTime
+}

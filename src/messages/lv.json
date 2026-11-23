@@ -936,7 +936,9 @@
     "Van Sales": "Pārdošana no furgona",
     "Sell from Van": "Pārdot no furgona",
     "Van Loads": "Furgonu kravas",
-    "Bought from Vans": "Pirkts no furgoniem"
+    "Bought from Vans": "Pirkts no furgoniem",
+    "Customer Assortments": "Klientu sortimenti",
+    "Must-Stock List": "Obligātais sortiments"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Furgons {number} joprojām ceļā",
       "body": "Furgons ir ceļā ilgāk par {hours} stundām. Izkraujiet to un saskaitiet skaidro naudu."
+    },
+    "assortment_gaps": {
+      "title": "Atkārtoti pasūtāmas obligātās preces",
+      "body": "{n} no jūsu obligātajām precēm nav pasūtītas {days} dienu laikā."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datums",
     "viewOrder": "Skatīt pasūtījumu",
     "noneToday": "Šodien pārdevumu nav."
+  },
+  "assortments": {
+    "title": "Klientu sortimenti",
+    "intro": "Nosakiet, ko katrs klients var redzēt un iegādāties no jums: apstiprinātais saraksts (tikai šīs preces), slēptās preces (ne šīs) vai obligātais sortiments (preces, kurām klientam vienmēr jābūt pieejamām).",
+    "off": "FIRINGI pašlaik ir izslēdzis klientu sortimentus.",
+    "newList": "Jauns saraksts",
+    "name": "Nosaukums",
+    "kind": "Saraksta veids",
+    "mode": {
+      "ONLY_LISTED": "Apstiprinātais saraksts",
+      "HIDE_LISTED": "Slēptās preces",
+      "MUST_STOCK": "Obligātais sortiments"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Šie klienti redz tikai sarakstā iekļautās preces.",
+      "HIDE_LISTED": "Šie klienti neredz sarakstā iekļautās preces.",
+      "MUST_STOCK": "Preces, kurām šiem klientiem vienmēr jābūt pieejamām. Tas, ko viņi redz, nemainās."
+    },
+    "modeOff": "FIRINGI pašlaik to neatļauj.",
+    "for": "Kam",
+    "target": {
+      "ALL": "Visi mani klienti",
+      "GROUP": "Klientu grupa",
+      "CUSTOMER": "Viens klients"
+    },
+    "group": "Klientu grupa",
+    "noGroups": "Jums vēl nav klientu grupu.",
+    "customer": "Klients",
+    "searchCustomer": "Meklēt klientu (nosaukums vai nodokļu maksātāja numurs)",
+    "noCustomers": "Klienti nav atrasti.",
+    "create": "Izveidot",
+    "lists": "Jūsu saraksti",
+    "noLists": "Sarakstu vēl nav. Bez sarakstiem katrs klients redz visas jūsu preces.",
+    "products": "Preces",
+    "mustStock": "Obligātās",
+    "customers": "Klienti",
+    "active": "Aktīvs",
+    "inactive": "Neaktīvs",
+    "open": "Atvērt",
+    "save": "Saglabāt",
+    "saved": "Saglabāts",
+    "delete": "Dzēst sarakstu",
+    "deleteConfirm": "Dzēst šo sarakstu? Klienti redzēs jūsu preces tā, it kā tas nekad nebūtu pastāvējis.",
+    "addProducts": "Pievienot preces",
+    "searchProducts": "Meklēt savas preces (nosaukums vai SKU)",
+    "add": "Pievienot",
+    "added": "Sarakstā",
+    "pasteSkus": "Ielīmēt SKU",
+    "pasteHint": "Pa vienam katrā rindā vai atdalītus ar komatiem. Jūsu SKU vai FIRINGI SKU.",
+    "addSkus": "Pievienot šos SKU",
+    "addedN": "Pievienoti: {n}.",
+    "notFound": "Nav atrasti: {skus}",
+    "remove": "Noņemt",
+    "noItems": "Šajā sarakstā vēl nav preču.",
+    "previewTitle": "Skatīt kā klientam",
+    "previewHint": "Izvēlieties klientu, lai redzētu, cik daudz jūsu preču tas redz, ņemot vērā visus jūsu sarakstus.",
+    "previewResult": "{customer} redz {visible} no jūsu {total} precēm ({hidden} slēptas) · {must} obligātās.",
+    "preview": "Rādīt",
+    "rulesTitle": "Kā saraksti darbojas kopā",
+    "rule1": "Klients, uz kuru attiecas apstiprinātais saraksts, redz tikai tās preces, kas tam paredzētas jūsu apstiprinātajos sarakstos.",
+    "rule2": "Slēptās preces netiek rādītas nekad, ja vien tās nav šī klienta paša sarakstā.",
+    "rule3": "Obligātā sortimenta preces šim klientam tiek rādītas vienmēr.",
+    "rule4": "Sarakstus ievēro visi kanāli: veikals, grozs, piedāvājumi, tirdzniecības pārstāvji, furgoni, WhatsApp un API.",
+    "inactiveNote": "Neaktīvi saraksti netiek piemēroti.",
+    "mustTitle": "Obligātais sortiments",
+    "mustIntro": "Preces, kuras jūsu piegādātāji lūguši vienmēr turēt pieejamas. Tās, kuras neesat pasūtījuši {days} dienu laikā, ir atzīmētas.",
+    "noneMust": "Nav obligātā sortimenta preču.",
+    "supplier": "Piegādātājs",
+    "lastOrdered": "Pēdējoreiz pasūtīts",
+    "never": "Nekad",
+    "daysAgo": "Pirms {n} dienām",
+    "gap": "Nesen nav pasūtīts",
+    "ok": "Nesen pasūtīts",
+    "unavailable": "Pašlaik nav pieejams",
+    "addMissing": "Pievienot trūkstošās grozam",
+    "addAllMissing": "Pievienot visas trūkstošās grozam",
+    "addedToCart": "Grozam pievienoti: {n}.",
+    "goToCart": "Uz grozu",
+    "repGaps": "Nesen nepasūtītas obligātās preces",
+    "repGapsNone": "Obligātajā sortimentā iztrūkumu nav.",
+    "price": "Cena",
+    "edit": "Rediģēt",
+    "cancel": "Atcelt"
   }
 }

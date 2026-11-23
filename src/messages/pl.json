@@ -936,7 +936,9 @@
     "Van Sales": "Sprzedaż z samochodu",
     "Sell from Van": "Sprzedaj z samochodu",
     "Van Loads": "Załadunki",
-    "Bought from Vans": "Zakupy z samochodów"
+    "Bought from Vans": "Zakupy z samochodów",
+    "Customer Assortments": "Asortymenty klientów",
+    "Must-Stock List": "Lista obowiązkowa"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Samochód {number} wciąż w trasie",
       "body": "Samochód jest w trasie od ponad {hours} godz. Rozładuj go i policz gotówkę."
+    },
+    "assortment_gaps": {
+      "title": "Produkty obowiązkowe do ponownego zamówienia",
+      "body": "Produkty obowiązkowe niezamawiane od {days} dni: {n}."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Data",
     "viewOrder": "Zobacz zamówienie",
     "noneToday": "Brak sprzedaży dzisiaj."
+  },
+  "assortments": {
+    "title": "Asortymenty klientów",
+    "intro": "Proszę określić, co każdy klient może zobaczyć i kupić: lista zatwierdzona (tylko te produkty), produkty ukryte (bez tych) lub lista obowiązkowa (produkty, które klient powinien zawsze mieć w ofercie).",
+    "off": "Asortymenty klientów są obecnie wyłączone przez FIRINGI.",
+    "newList": "Nowa lista",
+    "name": "Nazwa",
+    "kind": "Rodzaj listy",
+    "mode": {
+      "ONLY_LISTED": "Lista zatwierdzona",
+      "HIDE_LISTED": "Produkty ukryte",
+      "MUST_STOCK": "Lista obowiązkowa"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Ci klienci widzą tylko produkty z listy.",
+      "HIDE_LISTED": "Ci klienci nie widzą produktów z listy.",
+      "MUST_STOCK": "Produkty, które ci klienci powinni zawsze mieć w ofercie. To, co widzą, się nie zmienia."
+    },
+    "modeOff": "Obecnie niedozwolone przez FIRINGI.",
+    "for": "Dla",
+    "target": {
+      "ALL": "Wszyscy moi klienci",
+      "GROUP": "Grupa klientów",
+      "CUSTOMER": "Jeden klient"
+    },
+    "group": "Grupa klientów",
+    "noGroups": "Brak grup klientów.",
+    "customer": "Klient",
+    "searchCustomer": "Wyszukaj klienta (nazwa lub NIP)",
+    "noCustomers": "Nie znaleziono klientów.",
+    "create": "Utwórz",
+    "lists": "Moje listy",
+    "noLists": "Brak list. Bez list każdy klient widzi wszystkie Państwa produkty.",
+    "products": "Produkty",
+    "mustStock": "Obowiązkowe",
+    "customers": "Klienci",
+    "active": "Aktywna",
+    "inactive": "Nieaktywna",
+    "open": "Otwórz",
+    "save": "Zapisz",
+    "saved": "Zapisano",
+    "delete": "Usuń listę",
+    "deleteConfirm": "Usunąć tę listę? Klienci będą widzieć Państwa produkty tak, jakby nigdy nie istniała.",
+    "addProducts": "Dodaj produkty",
+    "searchProducts": "Wyszukaj produkty (nazwa lub SKU)",
+    "add": "Dodaj",
+    "added": "Na liście",
+    "pasteSkus": "Wklej SKU",
+    "pasteHint": "Jeden na wiersz lub oddzielone przecinkami. Własne SKU lub SKU FIRINGI.",
+    "addSkus": "Dodaj te SKU",
+    "addedN": "Dodano: {n}.",
+    "notFound": "Nie znaleziono: {skus}",
+    "remove": "Usuń",
+    "noItems": "Brak produktów na tej liście.",
+    "previewTitle": "Widok klienta",
+    "previewHint": "Proszę wybrać klienta, aby sprawdzić, ile Państwa produktów widzi przy wszystkich listach.",
+    "previewResult": "{customer} widzi {visible} z {total} produktów (ukryte: {hidden}) · obowiązkowe: {must}.",
+    "preview": "Pokaż",
+    "rulesTitle": "Jak listy współdziałają",
+    "rule1": "Klient objęty listą zatwierdzoną widzi tylko produkty z zatwierdzonych list przypisanych do niego.",
+    "rule2": "Produkty ukryte nigdy nie są wyświetlane, chyba że znajdują się na własnej liście tego klienta.",
+    "rule3": "Produkty obowiązkowe są zawsze wyświetlane temu klientowi.",
+    "rule4": "Wszystkie kanały uwzględniają listy: sklep, koszyk, oferty, przedstawiciele handlowi, samochody dostawcze, WhatsApp i API.",
+    "inactiveNote": "Nieaktywne listy nie są stosowane.",
+    "mustTitle": "Lista obowiązkowa",
+    "mustIntro": "Produkty, które według dostawców powinny być zawsze w Państwa ofercie. Oznaczono te niezamawiane od {days} dni.",
+    "noneMust": "Brak produktów obowiązkowych.",
+    "supplier": "Dostawca",
+    "lastOrdered": "Ostatnie zamówienie",
+    "never": "Nigdy",
+    "daysAgo": "{n} dni temu",
+    "gap": "Brak niedawnych zamówień",
+    "ok": "Zamawiane niedawno",
+    "unavailable": "Obecnie niedostępny",
+    "addMissing": "Dodaj brakujące do koszyka",
+    "addAllMissing": "Dodaj wszystkie brakujące do koszyka",
+    "addedToCart": "Dodano do koszyka: {n}.",
+    "goToCart": "Przejdź do koszyka",
+    "repGaps": "Obowiązkowe niezamawiane ostatnio",
+    "repGapsNone": "Wszystkie produkty obowiązkowe zamawiane na bieżąco.",
+    "price": "Cena",
+    "edit": "Edytuj",
+    "cancel": "Anuluj"
   }
 }

@@ -1937,6 +1937,10 @@
     "vansales_late": {
       "title": "Carrinha {number} ainda em rota",
       "body": "A carrinha está fora há mais de {hours} horas. Descarregue-a e conte o numerário."
+    },
+    "assortment_gaps": {
+      "title": "Produtos de stock obrigatório a reencomendar",
+      "body": "{n} dos seus produtos de stock obrigatório não são encomendados há {days} dias."
     }
   },
   "notifications": {
@@ -2208,7 +2212,9 @@
     "Van Sales": "Vendas em carrinha",
     "Sell from Van": "Vender da carrinha",
     "Van Loads": "Carregamentos",
-    "Bought from Vans": "Compras em carrinhas"
+    "Bought from Vans": "Compras em carrinhas",
+    "Customer Assortments": "Sortidos de clientes",
+    "Must-Stock List": "Lista de stock obrigatório"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -9019,5 +9025,88 @@
     "date": "Data",
     "viewOrder": "Ver encomenda",
     "noneToday": "Sem vendas hoje."
+  },
+  "assortments": {
+    "title": "Sortidos de clientes",
+    "intro": "Decida o que cada cliente pode ver e comprar-lhe: uma lista aprovada (apenas estes produtos), artigos ocultos (exceto estes) ou uma lista de stock obrigatório (produtos que deve ter sempre).",
+    "off": "Os sortidos de clientes estão de momento desativados pela FIRINGI.",
+    "newList": "Nova lista",
+    "name": "Nome",
+    "kind": "Tipo de lista",
+    "mode": {
+      "ONLY_LISTED": "Lista aprovada",
+      "HIDE_LISTED": "Artigos ocultos",
+      "MUST_STOCK": "Lista de stock obrigatório"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Estes clientes veem apenas os produtos da lista.",
+      "HIDE_LISTED": "Estes clientes não veem os produtos da lista.",
+      "MUST_STOCK": "Produtos que estes clientes devem ter sempre. O que veem não muda."
+    },
+    "modeOff": "De momento, não permitido pela FIRINGI.",
+    "for": "Para",
+    "target": {
+      "ALL": "Todos os meus clientes",
+      "GROUP": "Um grupo de clientes",
+      "CUSTOMER": "Um cliente"
+    },
+    "group": "Grupo de clientes",
+    "noGroups": "Ainda não tem grupos de clientes.",
+    "customer": "Cliente",
+    "searchCustomer": "Pesquisar um cliente (nome ou NIF)",
+    "noCustomers": "Nenhum cliente encontrado.",
+    "create": "Criar",
+    "lists": "As suas listas",
+    "noLists": "Ainda não há listas. Sem listas, todos os clientes veem todos os seus produtos.",
+    "products": "Produtos",
+    "mustStock": "Stock obrigatório",
+    "customers": "Clientes",
+    "active": "Ativa",
+    "inactive": "Inativa",
+    "open": "Abrir",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "delete": "Eliminar a lista",
+    "deleteConfirm": "Eliminar esta lista? Os clientes verão os seus produtos como se ela nunca tivesse existido.",
+    "addProducts": "Adicionar produtos",
+    "searchProducts": "Pesquisar os seus produtos (nome ou SKU)",
+    "add": "Adicionar",
+    "added": "Na lista",
+    "pasteSkus": "Colar SKUs",
+    "pasteHint": "Um por linha ou separados por vírgulas. O seu SKU ou o da FIRINGI.",
+    "addSkus": "Adicionar estes SKUs",
+    "addedN": "{n} adicionados.",
+    "notFound": "Não encontrados: {skus}",
+    "remove": "Remover",
+    "noItems": "Ainda não há produtos nesta lista.",
+    "previewTitle": "Ver como cliente",
+    "previewHint": "Escolha um cliente para ver quantos dos seus produtos ele pode ver com todas as suas listas.",
+    "previewResult": "{customer} vê {visible} dos seus {total} produtos ({hidden} ocultos) · {must} de stock obrigatório.",
+    "preview": "Mostrar",
+    "rulesTitle": "Como as listas funcionam em conjunto",
+    "rule1": "Um cliente abrangido por uma lista aprovada vê apenas os produtos das suas listas aprovadas para ele.",
+    "rule2": "Os artigos ocultos nunca são mostrados, exceto se a lista própria desse cliente os incluir.",
+    "rule3": "Os produtos de stock obrigatório são sempre mostrados a esse cliente.",
+    "rule4": "Todos os canais seguem as listas: a loja, o carrinho, os orçamentos, os comerciais, as carrinhas, o WhatsApp e a API.",
+    "inactiveNote": "As listas inativas não se aplicam.",
+    "mustTitle": "Lista de stock obrigatório",
+    "mustIntro": "Produtos que os seus fornecedores lhe pediram para ter sempre. Os que não encomendou nos últimos {days} dias estão assinalados.",
+    "noneMust": "Nenhum produto de stock obrigatório.",
+    "supplier": "Fornecedor",
+    "lastOrdered": "Última encomenda",
+    "never": "Nunca",
+    "daysAgo": "Há {n} dias",
+    "gap": "Sem encomendas recentes",
+    "ok": "Encomendado recentemente",
+    "unavailable": "Indisponível de momento",
+    "addMissing": "Adicionar os em falta ao carrinho",
+    "addAllMissing": "Adicionar todos os em falta ao carrinho",
+    "addedToCart": "{n} adicionados ao carrinho.",
+    "goToCart": "Ir para o carrinho",
+    "repGaps": "Stock obrigatório sem encomendas recentes",
+    "repGapsNone": "Sem falhas de stock obrigatório.",
+    "price": "Preço",
+    "edit": "Editar",
+    "cancel": "Cancelar"
   }
 }

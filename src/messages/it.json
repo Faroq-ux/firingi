@@ -936,7 +936,9 @@
     "Van Sales": "Vendita da furgone",
     "Sell from Van": "Vendi dal furgone",
     "Van Loads": "Carichi furgone",
-    "Bought from Vans": "Acquisti da furgone"
+    "Bought from Vans": "Acquisti da furgone",
+    "Customer Assortments": "Assortimenti clienti",
+    "Must-Stock List": "Assortimento obbligatorio"
   },
   "delivery": {
     "title": "Consegna",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Furgone {number} ancora fuori",
       "body": "Il furgone è fuori da più di {hours} ore. Lo scarichi e conti i contanti."
+    },
+    "assortment_gaps": {
+      "title": "Prodotti obbligatori da riordinare",
+      "body": "{n} dei suoi prodotti in assortimento obbligatorio non vengono ordinati da {days} giorni."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Data",
     "viewOrder": "Vedi ordine",
     "noneToday": "Nessuna vendita oggi."
+  },
+  "assortments": {
+    "title": "Assortimenti clienti",
+    "intro": "Decida cosa può vedere e acquistare da lei ogni cliente: un elenco approvato (solo questi prodotti), articoli nascosti (tranne questi) o un assortimento obbligatorio (prodotti da avere sempre).",
+    "off": "Gli assortimenti clienti sono attualmente disattivati da FIRINGI.",
+    "newList": "Nuovo elenco",
+    "name": "Nome",
+    "kind": "Tipo di elenco",
+    "mode": {
+      "ONLY_LISTED": "Elenco approvato",
+      "HIDE_LISTED": "Articoli nascosti",
+      "MUST_STOCK": "Assortimento obbligatorio"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Questi clienti vedono solo i prodotti dell'elenco.",
+      "HIDE_LISTED": "Questi clienti non vedono i prodotti dell'elenco.",
+      "MUST_STOCK": "Prodotti che questi clienti dovrebbero avere sempre. Ciò che vedono non cambia."
+    },
+    "modeOff": "Al momento non consentito da FIRINGI.",
+    "for": "Per",
+    "target": {
+      "ALL": "Tutti i miei clienti",
+      "GROUP": "Un gruppo di clienti",
+      "CUSTOMER": "Un cliente"
+    },
+    "group": "Gruppo di clienti",
+    "noGroups": "Non ha ancora gruppi di clienti.",
+    "customer": "Cliente",
+    "searchCustomer": "Cerchi un cliente (nome o partita IVA)",
+    "noCustomers": "Nessun cliente trovato.",
+    "create": "Crea",
+    "lists": "I suoi elenchi",
+    "noLists": "Ancora nessun elenco. Senza elenchi, ogni cliente vede tutti i suoi prodotti.",
+    "products": "Prodotti",
+    "mustStock": "Obbligatori",
+    "customers": "Clienti",
+    "active": "Attivo",
+    "inactive": "Inattivo",
+    "open": "Apri",
+    "save": "Salva",
+    "saved": "Salvato",
+    "delete": "Elimina l'elenco",
+    "deleteConfirm": "Eliminare questo elenco? I clienti vedranno i suoi prodotti come se non fosse mai esistito.",
+    "addProducts": "Aggiungi prodotti",
+    "searchProducts": "Cerchi tra i suoi prodotti (nome o SKU)",
+    "add": "Aggiungi",
+    "added": "Nell'elenco",
+    "pasteSkus": "Incolla SKU",
+    "pasteHint": "Uno per riga o separati da virgole. Il suo SKU o quello di FIRINGI.",
+    "addSkus": "Aggiungi questi SKU",
+    "addedN": "{n} aggiunti.",
+    "notFound": "Non trovati: {skus}",
+    "remove": "Rimuovi",
+    "noItems": "Ancora nessun prodotto in questo elenco.",
+    "previewTitle": "Visualizza come cliente",
+    "previewHint": "Scelga un cliente per vedere quanti dei suoi prodotti può vedere con tutti i suoi elenchi.",
+    "previewResult": "{customer} vede {visible} dei suoi {total} prodotti ({hidden} nascosti) · {must} in assortimento obbligatorio.",
+    "preview": "Mostra",
+    "rulesTitle": "Come funzionano insieme gli elenchi",
+    "rule1": "Un cliente coperto da un elenco approvato vede solo i prodotti dei suoi elenchi approvati per lui.",
+    "rule2": "Gli articoli nascosti non vengono mai mostrati, a meno che l'elenco specifico di quel cliente non li includa.",
+    "rule3": "I prodotti in assortimento obbligatorio vengono sempre mostrati a quel cliente.",
+    "rule4": "Tutti i canali seguono gli elenchi: negozio, carrello, preventivi, agenti di vendita, furgoni, WhatsApp e API.",
+    "inactiveNote": "Gli elenchi inattivi non si applicano.",
+    "mustTitle": "Assortimento obbligatorio",
+    "mustIntro": "Prodotti che i suoi fornitori le chiedono di avere sempre. Sono evidenziati quelli non ordinati da {days} giorni.",
+    "noneMust": "Nessun prodotto in assortimento obbligatorio.",
+    "supplier": "Fornitore",
+    "lastOrdered": "Ultimo ordine",
+    "never": "Mai",
+    "daysAgo": "{n} giorni fa",
+    "gap": "Non ordinato di recente",
+    "ok": "Ordinato di recente",
+    "unavailable": "Non disponibile ora",
+    "addMissing": "Aggiungi i mancanti al carrello",
+    "addAllMissing": "Aggiungi tutti i mancanti al carrello",
+    "addedToCart": "{n} aggiunti al carrello.",
+    "goToCart": "Vai al carrello",
+    "repGaps": "Assortimento obbligatorio non ordinato di recente",
+    "repGapsNone": "Nessuna lacuna nell'assortimento obbligatorio.",
+    "price": "Prezzo",
+    "edit": "Modifica",
+    "cancel": "Annulla"
   }
 }

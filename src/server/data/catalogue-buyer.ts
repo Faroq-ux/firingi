@@ -48,6 +48,8 @@ export const buyerScope = cache(async (ctx: Ctx): Promise<BuyerScope & { info: A
     allowedRestrictions: allowed,
     browsableCategoryIds: browsableCategoryIds(info, allowed).filter((id) => !special.cats.has(id)),
     excludedVendorIds: await excludedVendorIds(addressId),
+    // Phase 64: the suppliers' assortments for this customer
+    assortment: await (await import("@/server/assortments/service")).buyerAssortment(ctx.company.id),
     info,
   };
 });

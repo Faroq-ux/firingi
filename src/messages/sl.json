@@ -936,7 +936,9 @@
     "Van Sales": "Prodaja iz vozil",
     "Sell from Van": "Prodaja na terenu",
     "Van Loads": "Nalaganja vozil",
-    "Bought from Vans": "Kupljeno iz vozil"
+    "Bought from Vans": "Kupljeno iz vozil",
+    "Customer Assortments": "Asortimenti strank",
+    "Must-Stock List": "Obvezni asortiman"
   },
   "delivery": {
     "title": "Dostava",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Vozilo {number} je še na poti",
       "body": "Vozilo je na poti že več kot {hours} ur. Razložite ga in preštejte gotovino."
+    },
+    "assortment_gaps": {
+      "title": "Izdelki obveznega asortimana za ponovno naročilo",
+      "body": "Število izdelkov obveznega asortimana, ki jih niste naročili {days} dni: {n}."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datum",
     "viewOrder": "Ogled naročila",
     "noneToday": "Danes ni prodaje."
+  },
+  "assortments": {
+    "title": "Asortimenti strank",
+    "intro": "Določite, kaj lahko posamezna stranka pri vas vidi in kupi: odobreni seznam (samo ti izdelki), skriti artikli (ne ti) ali seznam obveznega asortimana (izdelki, ki jih mora vedno imeti v ponudbi).",
+    "off": "FIRINGI je asortimente strank trenutno izklopil.",
+    "newList": "Nov seznam",
+    "name": "Ime",
+    "kind": "Vrsta seznama",
+    "mode": {
+      "ONLY_LISTED": "Odobreni seznam",
+      "HIDE_LISTED": "Skriti artikli",
+      "MUST_STOCK": "Seznam obveznega asortimana"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Te stranke vidijo samo izdelke s seznama.",
+      "HIDE_LISTED": "Te stranke ne vidijo izdelkov s seznama.",
+      "MUST_STOCK": "Izdelki, ki bi jih te stranke morale vedno imeti v ponudbi. Kaj vidijo, se ne spremeni."
+    },
+    "modeOff": "FIRINGI tega trenutno ne dovoljuje.",
+    "for": "Za",
+    "target": {
+      "ALL": "Vse moje stranke",
+      "GROUP": "Skupina strank",
+      "CUSTOMER": "Ena stranka"
+    },
+    "group": "Skupina strank",
+    "noGroups": "Še nimate skupin strank.",
+    "customer": "Stranka",
+    "searchCustomer": "Poiščite stranko (ime ali davčna številka)",
+    "noCustomers": "Ni najdenih strank.",
+    "create": "Ustvari",
+    "lists": "Vaši seznami",
+    "noLists": "Seznamov še ni. Brez seznamov vsaka stranka vidi vse vaše izdelke.",
+    "products": "Izdelki",
+    "mustStock": "Obvezni asortiman",
+    "customers": "Stranke",
+    "active": "Aktiven",
+    "inactive": "Neaktiven",
+    "open": "Odpri",
+    "save": "Shrani",
+    "saved": "Shranjeno",
+    "delete": "Izbriši seznam",
+    "deleteConfirm": "Želite izbrisati ta seznam? Stranke bodo vaše izdelke videle, kot da ga nikoli ni bilo.",
+    "addProducts": "Dodaj izdelke",
+    "searchProducts": "Poiščite svoje izdelke (ime ali šifra)",
+    "add": "Dodaj",
+    "added": "Na seznamu",
+    "pasteSkus": "Prilepi šifre",
+    "pasteHint": "Ena na vrstico ali ločene z vejicami. Vaša šifra ali šifra FIRINGI.",
+    "addSkus": "Dodaj te šifre",
+    "addedN": "Dodano: {n}.",
+    "notFound": "Ni najdeno: {skus}",
+    "remove": "Odstrani",
+    "noItems": "Na tem seznamu še ni izdelkov.",
+    "previewTitle": "Prikaz z vidika stranke",
+    "previewHint": "Izberite stranko in preverite, koliko vaših izdelkov vidi glede na vse vaše sezname.",
+    "previewResult": "{customer} vidi {visible} od {total} vaših izdelkov ({hidden} skritih) · {must} v obveznem asortimanu.",
+    "preview": "Prikaži",
+    "rulesTitle": "Kako seznami delujejo skupaj",
+    "rule1": "Stranka, za katero velja odobreni seznam, vidi samo izdelke na vaših odobrenih seznamih zanjo.",
+    "rule2": "Skriti artikli niso nikoli prikazani, razen če so na lastnem seznamu te stranke.",
+    "rule3": "Izdelki obveznega asortimana so tej stranki vedno prikazani.",
+    "rule4": "Sezname upoštevajo vsi kanali: spletna trgovina, košarica, ponudbe, prodajni zastopniki, dostavna vozila, WhatsApp in API.",
+    "inactiveNote": "Neaktivni seznami ne veljajo.",
+    "mustTitle": "Seznam obveznega asortimana",
+    "mustIntro": "Izdelki, za katere so vaši dobavitelji prosili, da jih imate vedno v ponudbi. Označeni so tisti, ki jih niste naročili {days} dni.",
+    "noneMust": "Ni izdelkov obveznega asortimana.",
+    "supplier": "Dobavitelj",
+    "lastOrdered": "Zadnje naročilo",
+    "never": "Nikoli",
+    "daysAgo": "pred {n} dnevi",
+    "gap": "V zadnjem času ni naročeno",
+    "ok": "Nedavno naročeno",
+    "unavailable": "Trenutno ni na voljo",
+    "addMissing": "Dodaj manjkajoče v košarico",
+    "addAllMissing": "Dodaj vse manjkajoče v košarico",
+    "addedToCart": "V košarico dodano: {n}.",
+    "goToCart": "Pojdi v košarico",
+    "repGaps": "Obvezni asortiman, ki v zadnjem času ni bil naročen",
+    "repGapsNone": "Ni vrzeli v obveznem asortimanu.",
+    "price": "Cena",
+    "edit": "Uredi",
+    "cancel": "Prekliči"
   }
 }

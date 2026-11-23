@@ -936,7 +936,9 @@
     "Van Sales": "Fahrverkauf",
     "Sell from Van": "Aus Transporter verkaufen",
     "Van Loads": "Transporter-Beladungen",
-    "Bought from Vans": "Aus Transportern gekauft"
+    "Bought from Vans": "Aus Transportern gekauft",
+    "Customer Assortments": "Kundensortimente",
+    "Must-Stock List": "Pflichtsortiment"
   },
   "delivery": {
     "title": "Lieferung",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Transporter {number} noch unterwegs",
       "body": "Der Transporter ist seit mehr als {hours} Stunden unterwegs. Entladen Sie ihn und zählen Sie das Bargeld."
+    },
+    "assortment_gaps": {
+      "title": "Pflichtsortiment nachbestellen",
+      "body": "{n} Ihrer Produkte aus dem Pflichtsortiment wurden seit {days} Tagen nicht bestellt."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datum",
     "viewOrder": "Bestellung ansehen",
     "noneToday": "Heute keine Verkäufe."
+  },
+  "assortments": {
+    "title": "Kundensortimente",
+    "intro": "Legen Sie fest, was jeder Kunde bei Ihnen sehen und kaufen kann: eine Freigabeliste (nur diese Produkte), ausgeblendete Artikel (diese nicht) oder ein Pflichtsortiment (Produkte, die er immer führen sollte).",
+    "off": "Kundensortimente sind derzeit von FIRINGI deaktiviert.",
+    "newList": "Neue Liste",
+    "name": "Name",
+    "kind": "Art der Liste",
+    "mode": {
+      "ONLY_LISTED": "Freigabeliste",
+      "HIDE_LISTED": "Ausgeblendete Artikel",
+      "MUST_STOCK": "Pflichtsortiment"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Diese Kunden sehen nur die Produkte auf der Liste.",
+      "HIDE_LISTED": "Diese Kunden sehen die Produkte auf der Liste nicht.",
+      "MUST_STOCK": "Produkte, die diese Kunden immer führen sollten. Was sie sehen, ändert sich nicht."
+    },
+    "modeOff": "Derzeit von FIRINGI nicht zugelassen.",
+    "for": "Für",
+    "target": {
+      "ALL": "Alle meine Kunden",
+      "GROUP": "Eine Kundengruppe",
+      "CUSTOMER": "Ein Kunde"
+    },
+    "group": "Kundengruppe",
+    "noGroups": "Sie haben noch keine Kundengruppen.",
+    "customer": "Kunde",
+    "searchCustomer": "Kunden suchen (Name oder Steuernummer)",
+    "noCustomers": "Keine Kunden gefunden.",
+    "create": "Erstellen",
+    "lists": "Ihre Listen",
+    "noLists": "Noch keine Listen. Ohne Listen sieht jeder Kunde alle Ihre Produkte.",
+    "products": "Produkte",
+    "mustStock": "Pflichtsortiment",
+    "customers": "Kunden",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "open": "Öffnen",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "delete": "Liste löschen",
+    "deleteConfirm": "Diese Liste löschen? Kunden sehen Ihre Produkte dann so, als hätte es sie nie gegeben.",
+    "addProducts": "Produkte hinzufügen",
+    "searchProducts": "Ihre Produkte durchsuchen (Name oder SKU)",
+    "add": "Hinzufügen",
+    "added": "Auf der Liste",
+    "pasteSkus": "SKUs einfügen",
+    "pasteHint": "Eine pro Zeile oder durch Kommas getrennt. Ihre SKU oder die von FIRINGI.",
+    "addSkus": "Diese SKUs hinzufügen",
+    "addedN": "{n} hinzugefügt.",
+    "notFound": "Nicht gefunden: {skus}",
+    "remove": "Entfernen",
+    "noItems": "Noch keine Produkte auf dieser Liste.",
+    "previewTitle": "Als Kunde ansehen",
+    "previewHint": "Wählen Sie einen Kunden, um zu sehen, wie viele Ihrer Produkte er unter all Ihren Listen sehen kann.",
+    "previewResult": "{customer} sieht {visible} von Ihren {total} Produkten ({hidden} ausgeblendet) · {must} im Pflichtsortiment.",
+    "preview": "Anzeigen",
+    "rulesTitle": "So wirken die Listen zusammen",
+    "rule1": "Ein Kunde, für den eine Freigabeliste gilt, sieht nur die Produkte auf Ihren Freigabelisten für ihn.",
+    "rule2": "Ausgeblendete Artikel werden nie angezeigt, es sei denn, die eigene Liste dieses Kunden enthält sie.",
+    "rule3": "Produkte im Pflichtsortiment werden diesem Kunden immer angezeigt.",
+    "rule4": "Alle Kanäle folgen den Listen: Shop, Warenkorb, Angebote, Außendienst, Lieferwagen, WhatsApp und die API.",
+    "inactiveNote": "Inaktive Listen gelten nicht.",
+    "mustTitle": "Pflichtsortiment",
+    "mustIntro": "Produkte, die Sie laut Ihren Lieferanten immer führen sollten. Produkte, die Sie seit {days} Tagen nicht bestellt haben, sind markiert.",
+    "noneMust": "Keine Produkte im Pflichtsortiment.",
+    "supplier": "Lieferant",
+    "lastOrdered": "Zuletzt bestellt",
+    "never": "Nie",
+    "daysAgo": "Vor {n} Tagen",
+    "gap": "Länger nicht bestellt",
+    "ok": "Kürzlich bestellt",
+    "unavailable": "Derzeit nicht verfügbar",
+    "addMissing": "Fehlende in den Warenkorb legen",
+    "addAllMissing": "Alle fehlenden in den Warenkorb legen",
+    "addedToCart": "{n} in den Warenkorb gelegt.",
+    "goToCart": "Zum Warenkorb",
+    "repGaps": "Pflichtsortiment länger nicht bestellt",
+    "repGapsNone": "Keine Lücken im Pflichtsortiment.",
+    "price": "Preis",
+    "edit": "Bearbeiten",
+    "cancel": "Abbrechen"
   }
 }

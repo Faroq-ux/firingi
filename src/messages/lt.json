@@ -936,7 +936,9 @@
     "Van Sales": "Prekyba iš furgono",
     "Sell from Van": "Parduoti iš furgono",
     "Van Loads": "Furgonų kroviniai",
-    "Bought from Vans": "Pirkta iš furgonų"
+    "Bought from Vans": "Pirkta iš furgonų",
+    "Customer Assortments": "Klientų asortimentai",
+    "Must-Stock List": "Privalomas asortimentas"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Furgonas {number} vis dar negrįžo",
       "body": "Furgonas išvykęs ilgiau nei {hours} val. Iškraukite jį ir suskaičiuokite grynuosius."
+    },
+    "assortment_gaps": {
+      "title": "Privalomos prekės, kurias reikia užsakyti iš naujo",
+      "body": "{n} jūsų privalomų prekių neužsakyta per {days} d."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Data",
     "viewOrder": "Peržiūrėti užsakymą",
     "noneToday": "Šiandien pardavimų nėra."
+  },
+  "assortments": {
+    "title": "Klientų asortimentai",
+    "intro": "Nuspręskite, ką kiekvienas klientas gali matyti ir pirkti iš jūsų: patvirtintas sąrašas (tik šios prekės), paslėptos prekės (ne šios) arba privalomas asortimentas (prekės, kurias klientas turėtų visada turėti).",
+    "off": "Klientų asortimentai šiuo metu išjungti FIRINGI sprendimu.",
+    "newList": "Naujas sąrašas",
+    "name": "Pavadinimas",
+    "kind": "Sąrašo tipas",
+    "mode": {
+      "ONLY_LISTED": "Patvirtintas sąrašas",
+      "HIDE_LISTED": "Paslėptos prekės",
+      "MUST_STOCK": "Privalomas asortimentas"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Šie klientai mato tik sąraše esančias prekes.",
+      "HIDE_LISTED": "Šie klientai nemato sąraše esančių prekių.",
+      "MUST_STOCK": "Prekės, kurias šie klientai turėtų visada turėti. Tai, ką jie mato, nesikeičia."
+    },
+    "modeOff": "Šiuo metu FIRINGI to neleidžia.",
+    "for": "Kam",
+    "target": {
+      "ALL": "Visi mano klientai",
+      "GROUP": "Klientų grupė",
+      "CUSTOMER": "Vienas klientas"
+    },
+    "group": "Klientų grupė",
+    "noGroups": "Dar neturite klientų grupių.",
+    "customer": "Klientas",
+    "searchCustomer": "Ieškoti kliento (pavadinimas arba mokesčių mokėtojo kodas)",
+    "noCustomers": "Klientų nerasta.",
+    "create": "Sukurti",
+    "lists": "Jūsų sąrašai",
+    "noLists": "Sąrašų dar nėra. Be sąrašų kiekvienas klientas mato visas jūsų prekes.",
+    "products": "Prekės",
+    "mustStock": "Privalomos",
+    "customers": "Klientai",
+    "active": "Aktyvus",
+    "inactive": "Neaktyvus",
+    "open": "Atidaryti",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota",
+    "delete": "Ištrinti sąrašą",
+    "deleteConfirm": "Ištrinti šį sąrašą? Klientai matys jūsų prekes taip, lyg jo niekada nebūtų buvę.",
+    "addProducts": "Pridėti prekių",
+    "searchProducts": "Ieškoti savo prekių (pavadinimas arba SKU)",
+    "add": "Pridėti",
+    "added": "Sąraše",
+    "pasteSkus": "Įklijuoti SKU",
+    "pasteHint": "Po vieną eilutėje arba atskirtus kableliais. Jūsų arba FIRINGI SKU.",
+    "addSkus": "Pridėti šiuos SKU",
+    "addedN": "Pridėta: {n}.",
+    "notFound": "Nerasta: {skus}",
+    "remove": "Pašalinti",
+    "noItems": "Šiame sąraše dar nėra prekių.",
+    "previewTitle": "Peržiūrėti kliento akimis",
+    "previewHint": "Pasirinkite klientą ir pamatysite, kiek jūsų prekių jis mato pagal visus jūsų sąrašus.",
+    "previewResult": "{customer} mato {visible} iš {total} jūsų prekių (paslėpta: {hidden}) · privalomų: {must}.",
+    "preview": "Rodyti",
+    "rulesTitle": "Kaip sąrašai veikia kartu",
+    "rule1": "Klientas, kuriam taikomas patvirtintas sąrašas, mato tik tas prekes, kurios jam įtrauktos į jūsų patvirtintus sąrašus.",
+    "rule2": "Paslėptos prekės niekada nerodomos, nebent jos yra paties to kliento sąraše.",
+    "rule3": "Privalomo asortimento prekės tam klientui rodomos visada.",
+    "rule4": "Sąrašų laikosi visi kanalai: parduotuvė, krepšelis, pasiūlymai, prekybos atstovai, furgonai, WhatsApp ir API.",
+    "inactiveNote": "Neaktyvūs sąrašai netaikomi.",
+    "mustTitle": "Privalomas asortimentas",
+    "mustIntro": "Prekės, kurias tiekėjai paprašė jūsų visada turėti. Pažymėtos tos, kurių neužsakėte per {days} d.",
+    "noneMust": "Privalomų prekių nėra.",
+    "supplier": "Tiekėjas",
+    "lastOrdered": "Paskutinį kartą užsakyta",
+    "never": "Niekada",
+    "daysAgo": "Prieš {n} d.",
+    "gap": "Seniai neužsakyta",
+    "ok": "Neseniai užsakyta",
+    "unavailable": "Šiuo metu nėra",
+    "addMissing": "Pridėti trūkstamas į krepšelį",
+    "addAllMissing": "Pridėti visas trūkstamas į krepšelį",
+    "addedToCart": "Į krepšelį pridėta: {n}.",
+    "goToCart": "Eiti į krepšelį",
+    "repGaps": "Seniai neužsakytos privalomos prekės",
+    "repGapsNone": "Privalomo asortimento spragų nėra.",
+    "price": "Kaina",
+    "edit": "Redaguoti",
+    "cancel": "Atšaukti"
   }
 }

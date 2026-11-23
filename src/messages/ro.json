@@ -936,7 +936,9 @@
     "Van Sales": "Vânzări din mașină",
     "Sell from Van": "Vânzare din mașină",
     "Van Loads": "Încărcări mașini",
-    "Bought from Vans": "Cumpărat din mașini"
+    "Bought from Vans": "Cumpărat din mașini",
+    "Customer Assortments": "Sortimente clienți",
+    "Must-Stock List": "Listă obligatorie"
   },
   "delivery": {
     "title": "Livrare",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Mașina {number} este încă pe traseu",
       "body": "Mașina este pe traseu de peste {hours} ore. Descărcați-o și numărați numerarul."
+    },
+    "assortment_gaps": {
+      "title": "Produse obligatorii de comandat din nou",
+      "body": "{n} dintre produsele dumneavoastră obligatorii nu au fost comandate în ultimele {days} zile."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Dată",
     "viewOrder": "Vedeți comanda",
     "noneToday": "Nicio vânzare azi."
+  },
+  "assortments": {
+    "title": "Sortimente clienți",
+    "intro": "Stabiliți ce poate vedea și cumpăra fiecare client de la dumneavoastră: o listă aprobată (doar aceste produse), articole ascunse (nu acestea) sau o listă obligatorie (produse pe care ar trebui să le aibă mereu în stoc).",
+    "off": "Sortimentele clienților sunt momentan dezactivate de FIRINGI.",
+    "newList": "Listă nouă",
+    "name": "Nume",
+    "kind": "Tipul listei",
+    "mode": {
+      "ONLY_LISTED": "Listă aprobată",
+      "HIDE_LISTED": "Articole ascunse",
+      "MUST_STOCK": "Listă obligatorie"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Acești clienți văd doar produsele de pe listă.",
+      "HIDE_LISTED": "Acești clienți nu văd produsele de pe listă.",
+      "MUST_STOCK": "Produse pe care acești clienți ar trebui să le aibă mereu în stoc. Ce văd nu se schimbă."
+    },
+    "modeOff": "Momentan nepermis de FIRINGI.",
+    "for": "Pentru",
+    "target": {
+      "ALL": "Toți clienții mei",
+      "GROUP": "Un grup de clienți",
+      "CUSTOMER": "Un singur client"
+    },
+    "group": "Grup de clienți",
+    "noGroups": "Nu aveți încă grupuri de clienți.",
+    "customer": "Client",
+    "searchCustomer": "Căutați un client (nume sau CUI)",
+    "noCustomers": "Nu s-au găsit clienți.",
+    "create": "Creați",
+    "lists": "Listele dumneavoastră",
+    "noLists": "Nicio listă încă. Fără liste, fiecare client vede toate produsele dumneavoastră.",
+    "products": "Produse",
+    "mustStock": "Obligatorii",
+    "customers": "Clienți",
+    "active": "Activă",
+    "inactive": "Inactivă",
+    "open": "Deschideți",
+    "save": "Salvați",
+    "saved": "Salvat",
+    "delete": "Ștergeți lista",
+    "deleteConfirm": "Ștergeți această listă? Clienții vor vedea produsele dumneavoastră ca și cum nu ar fi existat niciodată.",
+    "addProducts": "Adăugați produse",
+    "searchProducts": "Căutați produsele dumneavoastră (nume sau SKU)",
+    "add": "Adăugați",
+    "added": "Pe listă",
+    "pasteSkus": "Lipiți SKU-uri",
+    "pasteHint": "Câte unul pe rând sau separate prin virgulă. SKU-ul dumneavoastră sau cel FIRINGI.",
+    "addSkus": "Adăugați aceste SKU-uri",
+    "addedN": "{n} adăugate.",
+    "notFound": "Negăsite: {skus}",
+    "remove": "Eliminați",
+    "noItems": "Niciun produs pe această listă încă.",
+    "previewTitle": "Vedeți ca un client",
+    "previewHint": "Alegeți un client pentru a vedea câte dintre produsele dumneavoastră poate vedea conform tuturor listelor.",
+    "previewResult": "{customer} vede {visible} din cele {total} produse ale dumneavoastră ({hidden} ascunse) · {must} obligatorii.",
+    "preview": "Afișați",
+    "rulesTitle": "Cum funcționează listele împreună",
+    "rule1": "Un client inclus într-o listă aprobată vede doar produsele de pe listele aprobate pentru el.",
+    "rule2": "Articolele ascunse nu sunt afișate niciodată, decât dacă se află pe lista proprie a acelui client.",
+    "rule3": "Produsele obligatorii sunt întotdeauna afișate acelui client.",
+    "rule4": "Toate canalele respectă listele: magazinul, coșul, ofertele, agenții de vânzări, dubele, WhatsApp și API-ul.",
+    "inactiveNote": "Listele inactive nu se aplică.",
+    "mustTitle": "Listă obligatorie",
+    "mustIntro": "Produse pe care furnizorii v-au cerut să le aveți mereu în stoc. Cele pe care nu le-ați comandat în ultimele {days} zile sunt marcate.",
+    "noneMust": "Niciun produs obligatoriu.",
+    "supplier": "Furnizor",
+    "lastOrdered": "Ultima comandă",
+    "never": "Niciodată",
+    "daysAgo": "acum {n} zile",
+    "gap": "Necomandat recent",
+    "ok": "Comandat recent",
+    "unavailable": "Indisponibil momentan",
+    "addMissing": "Adăugați produsele lipsă în coș",
+    "addAllMissing": "Adăugați toate produsele lipsă în coș",
+    "addedToCart": "{n} adăugate în coș.",
+    "goToCart": "Mergeți la coș",
+    "repGaps": "Obligatorii necomandate recent",
+    "repGapsNone": "Nicio lipsă la produsele obligatorii.",
+    "price": "Preț",
+    "edit": "Editați",
+    "cancel": "Anulați"
   }
 }

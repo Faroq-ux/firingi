@@ -936,7 +936,9 @@
     "Van Sales": "Prodej z vozu",
     "Sell from Van": "Prodávat z vozu",
     "Van Loads": "Nakládky vozů",
-    "Bought from Vans": "Nákupy z vozů"
+    "Bought from Vans": "Nákupy z vozů",
+    "Customer Assortments": "Sortimenty zákazníků",
+    "Must-Stock List": "Povinný sortiment"
   },
   "delivery": {
     "title": "Doručení",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Vůz {number} je stále na trase",
       "body": "Vůz je na trase déle než {hours} h. Vyložte ho a spočítejte hotovost."
+    },
+    "assortment_gaps": {
+      "title": "Povinné produkty k doobjednání",
+      "body": "Počet povinných produktů neobjednaných {days} dní: {n}."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datum",
     "viewOrder": "Zobrazit objednávku",
     "noneToday": "Dnes žádné prodeje."
+  },
+  "assortments": {
+    "title": "Sortimenty zákazníků",
+    "intro": "Určete, co každý zákazník u vás uvidí a může koupit: schválený seznam (pouze tyto produkty), skryté položky (tyto ne) nebo povinný sortiment (produkty, které by měl mít vždy na skladě).",
+    "off": "Sortimenty zákazníků jsou v tuto chvíli vypnuty ze strany FIRINGI.",
+    "newList": "Nový seznam",
+    "name": "Název",
+    "kind": "Typ seznamu",
+    "mode": {
+      "ONLY_LISTED": "Schválený seznam",
+      "HIDE_LISTED": "Skryté položky",
+      "MUST_STOCK": "Povinný sortiment"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Tito zákazníci vidí pouze produkty ze seznamu.",
+      "HIDE_LISTED": "Tito zákazníci nevidí produkty ze seznamu.",
+      "MUST_STOCK": "Produkty, které by tito zákazníci měli mít vždy na skladě. To, co vidí, se nemění."
+    },
+    "modeOff": "FIRINGI to v tuto chvíli nepovoluje.",
+    "for": "Pro",
+    "target": {
+      "ALL": "Všichni moji zákazníci",
+      "GROUP": "Skupina zákazníků",
+      "CUSTOMER": "Jeden zákazník"
+    },
+    "group": "Skupina zákazníků",
+    "noGroups": "Zatím nemáte žádné skupiny zákazníků.",
+    "customer": "Zákazník",
+    "searchCustomer": "Vyhledat zákazníka (název nebo DIČ)",
+    "noCustomers": "Nebyli nalezeni žádní zákazníci.",
+    "create": "Vytvořit",
+    "lists": "Vaše seznamy",
+    "noLists": "Zatím žádné seznamy. Bez seznamů vidí každý zákazník všechny vaše produkty.",
+    "products": "Produkty",
+    "mustStock": "Povinné",
+    "customers": "Zákazníci",
+    "active": "Aktivní",
+    "inactive": "Neaktivní",
+    "open": "Otevřít",
+    "save": "Uložit",
+    "saved": "Uloženo",
+    "delete": "Smazat seznam",
+    "deleteConfirm": "Smazat tento seznam? Zákazníci uvidí vaše produkty, jako by nikdy neexistoval.",
+    "addProducts": "Přidat produkty",
+    "searchProducts": "Vyhledat vaše produkty (název nebo SKU)",
+    "add": "Přidat",
+    "added": "Na seznamu",
+    "pasteSkus": "Vložit SKU",
+    "pasteHint": "Jeden na řádek nebo oddělené čárkami. Vaše SKU nebo SKU FIRINGI.",
+    "addSkus": "Přidat tato SKU",
+    "addedN": "Přidáno: {n}.",
+    "notFound": "Nenalezeno: {skus}",
+    "remove": "Odebrat",
+    "noItems": "Na tomto seznamu zatím nejsou žádné produkty.",
+    "previewTitle": "Zobrazit jako zákazník",
+    "previewHint": "Vyberte zákazníka a zjistěte, kolik vašich produktů vidí podle všech vašich seznamů.",
+    "previewResult": "{customer} vidí {visible} z {total} vašich produktů (skryto: {hidden}) · povinné: {must}.",
+    "preview": "Zobrazit",
+    "rulesTitle": "Jak seznamy fungují společně",
+    "rule1": "Zákazník, na kterého se vztahuje schválený seznam, vidí pouze produkty z vašich schválených seznamů pro něj.",
+    "rule2": "Skryté položky se nikdy nezobrazují, pokud je nemá vlastní seznam daného zákazníka.",
+    "rule3": "Povinné produkty se danému zákazníkovi zobrazují vždy.",
+    "rule4": "Seznamy platí ve všech kanálech: e-shop, košík, nabídky, obchodní zástupci, dodávky, WhatsApp a API.",
+    "inactiveNote": "Neaktivní seznamy se neuplatňují.",
+    "mustTitle": "Povinný sortiment",
+    "mustIntro": "Produkty, které vás dodavatelé požádali mít vždy na skladě. Označeny jsou ty, které jste neobjednali {days} dní.",
+    "noneMust": "Žádné povinné produkty.",
+    "supplier": "Dodavatel",
+    "lastOrdered": "Naposledy objednáno",
+    "never": "Nikdy",
+    "daysAgo": "před {n} dny",
+    "gap": "Poslední dobou neobjednáno",
+    "ok": "Nedávno objednáno",
+    "unavailable": "Momentálně nedostupné",
+    "addMissing": "Přidat chybějící do košíku",
+    "addAllMissing": "Přidat všechny chybějící do košíku",
+    "addedToCart": "Přidáno do košíku: {n}.",
+    "goToCart": "Přejít do košíku",
+    "repGaps": "Povinné položky poslední dobou neobjednané",
+    "repGapsNone": "Žádné mezery v povinném sortimentu.",
+    "price": "Cena",
+    "edit": "Upravit",
+    "cancel": "Zrušit"
   }
 }

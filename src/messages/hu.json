@@ -936,7 +936,9 @@
     "Van Sales": "Furgonos értékesítés",
     "Sell from Van": "Eladás furgonból",
     "Van Loads": "Furgonrakományok",
-    "Bought from Vans": "Vásárlások furgonból"
+    "Bought from Vans": "Vásárlások furgonból",
+    "Customer Assortments": "Ügyfélválaszték",
+    "Must-Stock List": "Kötelező lista"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Furgon {number} még úton van",
       "body": "A furgon több mint {hours} órája úton van. Rakodja ki, és számolja meg a készpénzt."
+    },
+    "assortment_gaps": {
+      "title": "Újrarendelendő kötelező termékek",
+      "body": "{n} kötelező termékét {days} napja nem rendelte meg."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Dátum",
     "viewOrder": "Rendelés megtekintése",
     "noneToday": "Ma nincs eladás."
+  },
+  "assortments": {
+    "title": "Ügyfélválaszték",
+    "intro": "Határozza meg, mit láthat és vásárolhat meg Öntől egy-egy ügyfél: jóváhagyott lista (csak ezek a termékek), rejtett tételek (ezek nem) vagy kötelező lista (termékek, amelyeket mindig tartania kell).",
+    "off": "Az ügyfélválasztékot a FIRINGI jelenleg kikapcsolta.",
+    "newList": "Új lista",
+    "name": "Név",
+    "kind": "Lista típusa",
+    "mode": {
+      "ONLY_LISTED": "Jóváhagyott lista",
+      "HIDE_LISTED": "Rejtett tételek",
+      "MUST_STOCK": "Kötelező lista"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Ezek az ügyfelek csak a listán szereplő termékeket látják.",
+      "HIDE_LISTED": "Ezek az ügyfelek nem látják a listán szereplő termékeket.",
+      "MUST_STOCK": "Termékek, amelyeket ezeknek az ügyfeleknek mindig tartaniuk kell. Amit látnak, nem változik."
+    },
+    "modeOff": "A FIRINGI jelenleg nem engedélyezi.",
+    "for": "Kinek",
+    "target": {
+      "ALL": "Összes ügyfelem",
+      "GROUP": "Egy ügyfélcsoport",
+      "CUSTOMER": "Egy ügyfél"
+    },
+    "group": "Ügyfélcsoport",
+    "noGroups": "Még nincs ügyfélcsoportja.",
+    "customer": "Ügyfél",
+    "searchCustomer": "Ügyfél keresése (név vagy adószám)",
+    "noCustomers": "Nem található ügyfél.",
+    "create": "Létrehozás",
+    "lists": "Az Ön listái",
+    "noLists": "Még nincs lista. Listák nélkül minden ügyfél az összes termékét látja.",
+    "products": "Termékek",
+    "mustStock": "Kötelező",
+    "customers": "Ügyfelek",
+    "active": "Aktív",
+    "inactive": "Inaktív",
+    "open": "Megnyitás",
+    "save": "Mentés",
+    "saved": "Mentve",
+    "delete": "Lista törlése",
+    "deleteConfirm": "Törli ezt a listát? Az ügyfelek úgy látják majd a termékeit, mintha sosem létezett volna.",
+    "addProducts": "Termékek hozzáadása",
+    "searchProducts": "Termékek keresése (név vagy cikkszám)",
+    "add": "Hozzáadás",
+    "added": "A listán",
+    "pasteSkus": "Cikkszámok beillesztése",
+    "pasteHint": "Soronként egy, vagy vesszővel elválasztva. Az Ön cikkszáma vagy a FIRINGI cikkszáma.",
+    "addSkus": "Cikkszámok hozzáadása",
+    "addedN": "{n} hozzáadva.",
+    "notFound": "Nem található: {skus}",
+    "remove": "Eltávolítás",
+    "noItems": "Ezen a listán még nincs termék.",
+    "previewTitle": "Megtekintés ügyfélként",
+    "previewHint": "Válasszon ki egy ügyfelet, hogy lássa, az összes listája alapján hány termékét látja.",
+    "previewResult": "{customer} {visible} terméket lát az Ön {total} termékéből ({hidden} rejtett) · {must} kötelező.",
+    "preview": "Megjelenítés",
+    "rulesTitle": "Hogyan működnek együtt a listák",
+    "rule1": "A jóváhagyott listával érintett ügyfél csak a számára készített jóváhagyott listák termékeit látja.",
+    "rule2": "A rejtett tételek soha nem jelennek meg, kivéve, ha az adott ügyfél saját listáján szerepelnek.",
+    "rule3": "A kötelező termékek mindig megjelennek az adott ügyfélnek.",
+    "rule4": "Minden csatorna követi a listákat: webáruház, kosár, árajánlatok, értékesítők, furgonok, WhatsApp és API.",
+    "inactiveNote": "Az inaktív listák nem érvényesek.",
+    "mustTitle": "Kötelező lista",
+    "mustIntro": "Termékek, amelyeket beszállítói kérésére mindig tartania kell. Jelölve vannak azok, amelyeket {days} napja nem rendelt.",
+    "noneMust": "Nincs kötelező termék.",
+    "supplier": "Beszállító",
+    "lastOrdered": "Utolsó rendelés",
+    "never": "Soha",
+    "daysAgo": "{n} napja",
+    "gap": "Mostanában nem rendelt",
+    "ok": "Nemrég rendelt",
+    "unavailable": "Jelenleg nem elérhető",
+    "addMissing": "A hiányzók kosárba tétele",
+    "addAllMissing": "Az összes hiányzó kosárba tétele",
+    "addedToCart": "{n} tétel a kosárba téve.",
+    "goToCart": "Ugrás a kosárhoz",
+    "repGaps": "Mostanában nem rendelt kötelező termékek",
+    "repGapsNone": "Nincs hiány a kötelező termékeknél.",
+    "price": "Ár",
+    "edit": "Szerkesztés",
+    "cancel": "Mégse"
   }
 }

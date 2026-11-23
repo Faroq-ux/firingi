@@ -936,7 +936,9 @@
     "Van Sales": "Bestelwagenverkoop",
     "Sell from Van": "Verkopen uit bestelwagen",
     "Van Loads": "Bestelwagenladingen",
-    "Bought from Vans": "Gekocht uit bestelwagens"
+    "Bought from Vans": "Gekocht uit bestelwagens",
+    "Customer Assortments": "Klantassortimenten",
+    "Must-Stock List": "Verplicht assortiment"
   },
   "delivery": {
     "title": "Levering",
@@ -2123,6 +2125,10 @@
     "vansales_late": {
       "title": "Bestelwagen {number} nog onderweg",
       "body": "De bestelwagen is al meer dan {hours} uur onderweg. Los hem en tel het contante geld."
+    },
+    "assortment_gaps": {
+      "title": "Verplichte producten om na te bestellen",
+      "body": "{n} van uw producten uit het verplichte assortiment zijn al {days} dagen niet besteld."
     }
   },
   "notifications": {
@@ -9180,5 +9186,88 @@
     "date": "Datum",
     "viewOrder": "Bestelling bekijken",
     "noneToday": "Geen verkopen vandaag."
+  },
+  "assortments": {
+    "title": "Klantassortimenten",
+    "intro": "Bepaal wat elke klant bij u kan zien en kopen: een goedgekeurde lijst (alleen deze producten), verborgen artikelen (niet deze) of een verplicht assortiment (producten die de klant altijd moet voeren).",
+    "off": "Klantassortimenten zijn momenteel door FIRINGI uitgeschakeld.",
+    "newList": "Nieuwe lijst",
+    "name": "Naam",
+    "kind": "Soort lijst",
+    "mode": {
+      "ONLY_LISTED": "Goedgekeurde lijst",
+      "HIDE_LISTED": "Verborgen artikelen",
+      "MUST_STOCK": "Verplicht assortiment"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Deze klanten zien alleen de producten op de lijst.",
+      "HIDE_LISTED": "Deze klanten zien de producten op de lijst niet.",
+      "MUST_STOCK": "Producten die deze klanten altijd moeten voeren. Wat ze zien, verandert niet."
+    },
+    "modeOff": "Momenteel niet toegestaan door FIRINGI.",
+    "for": "Voor",
+    "target": {
+      "ALL": "Al mijn klanten",
+      "GROUP": "Een klantgroep",
+      "CUSTOMER": "Eén klant"
+    },
+    "group": "Klantgroep",
+    "noGroups": "U hebt nog geen klantgroepen.",
+    "customer": "Klant",
+    "searchCustomer": "Zoek een klant (naam of btw-nummer)",
+    "noCustomers": "Geen klanten gevonden.",
+    "create": "Aanmaken",
+    "lists": "Uw lijsten",
+    "noLists": "Nog geen lijsten. Zonder lijsten ziet elke klant al uw producten.",
+    "products": "Producten",
+    "mustStock": "Verplicht",
+    "customers": "Klanten",
+    "active": "Actief",
+    "inactive": "Inactief",
+    "open": "Openen",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "delete": "Lijst verwijderen",
+    "deleteConfirm": "Deze lijst verwijderen? Klanten zien uw producten dan alsof de lijst nooit heeft bestaan.",
+    "addProducts": "Producten toevoegen",
+    "searchProducts": "Zoek in uw producten (naam of SKU)",
+    "add": "Toevoegen",
+    "added": "Op de lijst",
+    "pasteSkus": "SKU's plakken",
+    "pasteHint": "Eén per regel of gescheiden door komma's. Uw SKU of die van FIRINGI.",
+    "addSkus": "Deze SKU's toevoegen",
+    "addedN": "{n} toegevoegd.",
+    "notFound": "Niet gevonden: {skus}",
+    "remove": "Verwijderen",
+    "noItems": "Nog geen producten op deze lijst.",
+    "previewTitle": "Bekijken als klant",
+    "previewHint": "Kies een klant om te zien hoeveel van uw producten deze onder al uw lijsten kan zien.",
+    "previewResult": "{customer} ziet {visible} van uw {total} producten ({hidden} verborgen) · {must} verplicht.",
+    "preview": "Tonen",
+    "rulesTitle": "Hoe lijsten samenwerken",
+    "rule1": "Een klant die onder een goedgekeurde lijst valt, ziet alleen de producten op uw goedgekeurde lijsten voor die klant.",
+    "rule2": "Verborgen artikelen worden nooit getoond, tenzij de eigen lijst van die klant ze bevat.",
+    "rule3": "Producten uit het verplichte assortiment worden altijd aan die klant getoond.",
+    "rule4": "Alle kanalen volgen de lijsten: de webshop, de winkelwagen, offertes, vertegenwoordigers, bestelwagens, WhatsApp en de API.",
+    "inactiveNote": "Inactieve lijsten gelden niet.",
+    "mustTitle": "Verplicht assortiment",
+    "mustIntro": "Producten die uw leveranciers u vragen altijd te voeren. Producten die u al {days} dagen niet hebt besteld, zijn gemarkeerd.",
+    "noneMust": "Geen producten in het verplichte assortiment.",
+    "supplier": "Leverancier",
+    "lastOrdered": "Laatst besteld",
+    "never": "Nooit",
+    "daysAgo": "{n} dagen geleden",
+    "gap": "Lang niet besteld",
+    "ok": "Recent besteld",
+    "unavailable": "Nu niet beschikbaar",
+    "addMissing": "Ontbrekende aan de winkelwagen toevoegen",
+    "addAllMissing": "Alle ontbrekende aan de winkelwagen toevoegen",
+    "addedToCart": "{n} aan de winkelwagen toegevoegd.",
+    "goToCart": "Naar de winkelwagen",
+    "repGaps": "Verplicht assortiment lang niet besteld",
+    "repGapsNone": "Geen tekorten in het verplichte assortiment.",
+    "price": "Prijs",
+    "edit": "Bewerken",
+    "cancel": "Annuleren"
   }
 }

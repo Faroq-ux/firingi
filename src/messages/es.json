@@ -1937,6 +1937,10 @@
     "vansales_late": {
       "title": "Furgoneta {number} todavía en ruta",
       "body": "La furgoneta lleva fuera más de {hours} horas. Descárguela y cuente el efectivo."
+    },
+    "assortment_gaps": {
+      "title": "Productos de surtido obligatorio por reponer",
+      "body": "{n} de sus productos de surtido obligatorio no se han pedido en {days} días."
     }
   },
   "notifications": {
@@ -2208,7 +2212,9 @@
     "Van Sales": "Venta en furgoneta",
     "Sell from Van": "Vender desde furgoneta",
     "Van Loads": "Cargas de furgoneta",
-    "Bought from Vans": "Compras en furgoneta"
+    "Bought from Vans": "Compras en furgoneta",
+    "Customer Assortments": "Surtidos por cliente",
+    "Must-Stock List": "Lista de surtido obligatorio"
   },
   "support": {
     "title": "Ayuda y soporte",
@@ -9019,5 +9025,88 @@
     "date": "Fecha",
     "viewOrder": "Ver pedido",
     "noneToday": "No hay ventas hoy."
+  },
+  "assortments": {
+    "title": "Surtidos por cliente",
+    "intro": "Decida qué puede ver y comprarle cada cliente: una lista aprobada (solo estos productos), artículos ocultos (estos no) o una lista de surtido obligatorio (productos que siempre deben tener).",
+    "off": "FIRINGI ha desactivado los surtidos por cliente por el momento.",
+    "newList": "Nueva lista",
+    "name": "Nombre",
+    "kind": "Tipo de lista",
+    "mode": {
+      "ONLY_LISTED": "Lista aprobada",
+      "HIDE_LISTED": "Artículos ocultos",
+      "MUST_STOCK": "Lista de surtido obligatorio"
+    },
+    "modeHint": {
+      "ONLY_LISTED": "Estos clientes solo ven los productos de la lista.",
+      "HIDE_LISTED": "Estos clientes no ven los productos de la lista.",
+      "MUST_STOCK": "Productos que estos clientes deben tener siempre. Lo que ven no cambia."
+    },
+    "modeOff": "FIRINGI no lo permite por el momento.",
+    "for": "Para",
+    "target": {
+      "ALL": "Todos mis clientes",
+      "GROUP": "Un grupo de clientes",
+      "CUSTOMER": "Un cliente"
+    },
+    "group": "Grupo de clientes",
+    "noGroups": "Aún no tiene grupos de clientes.",
+    "customer": "Cliente",
+    "searchCustomer": "Buscar un cliente (nombre o NIF)",
+    "noCustomers": "No se han encontrado clientes.",
+    "create": "Crear",
+    "lists": "Sus listas",
+    "noLists": "Aún no hay listas. Sin listas, todos los clientes ven todos sus productos.",
+    "products": "Productos",
+    "mustStock": "Surtido obligatorio",
+    "customers": "Clientes",
+    "active": "Activa",
+    "inactive": "Inactiva",
+    "open": "Abrir",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "delete": "Eliminar la lista",
+    "deleteConfirm": "¿Eliminar esta lista? Los clientes verán sus productos como si nunca hubiera existido.",
+    "addProducts": "Añadir productos",
+    "searchProducts": "Buscar en sus productos (nombre o SKU)",
+    "add": "Añadir",
+    "added": "En la lista",
+    "pasteSkus": "Pegar SKU",
+    "pasteHint": "Uno por línea o separados por comas. Su SKU o el de FIRINGI.",
+    "addSkus": "Añadir estos SKU",
+    "addedN": "{n} añadidos.",
+    "notFound": "No encontrados: {skus}",
+    "remove": "Quitar",
+    "noItems": "Aún no hay productos en esta lista.",
+    "previewTitle": "Verlo como cliente",
+    "previewHint": "Elija un cliente para ver cuántos de sus productos puede ver con todas sus listas.",
+    "previewResult": "{customer} ve {visible} de sus {total} productos ({hidden} ocultos) · {must} de surtido obligatorio.",
+    "preview": "Mostrar",
+    "rulesTitle": "Cómo se combinan las listas",
+    "rule1": "Un cliente incluido en una lista aprobada solo ve los productos de sus listas aprobadas para él.",
+    "rule2": "Los artículos ocultos nunca se muestran, salvo que la propia lista de ese cliente los incluya.",
+    "rule3": "Los productos de surtido obligatorio siempre se muestran a ese cliente.",
+    "rule4": "Todos los canales respetan las listas: la tienda, el carrito, los presupuestos, los comerciales, las furgonetas, WhatsApp y la API.",
+    "inactiveNote": "Las listas inactivas no se aplican.",
+    "mustTitle": "Lista de surtido obligatorio",
+    "mustIntro": "Productos que sus proveedores le han pedido tener siempre. Se marcan los que no ha pedido en {days} días.",
+    "noneMust": "No hay productos de surtido obligatorio.",
+    "supplier": "Proveedor",
+    "lastOrdered": "Último pedido",
+    "never": "Nunca",
+    "daysAgo": "Hace {n} días",
+    "gap": "Sin pedidos recientes",
+    "ok": "Pedido recientemente",
+    "unavailable": "No disponible ahora",
+    "addMissing": "Añadir los que faltan al carrito",
+    "addAllMissing": "Añadir todos los que faltan al carrito",
+    "addedToCart": "{n} añadidos al carrito.",
+    "goToCart": "Ir al carrito",
+    "repGaps": "Surtido obligatorio sin pedidos recientes",
+    "repGapsNone": "Sin carencias de surtido obligatorio.",
+    "price": "Precio",
+    "edit": "Editar",
+    "cancel": "Cancelar"
   }
 }

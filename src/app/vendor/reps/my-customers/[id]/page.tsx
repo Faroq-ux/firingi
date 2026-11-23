@@ -14,6 +14,8 @@ import { fill, srLabels } from "@/components/salesreps/labels";
 import { formatDate, formatMoney } from "@/lib/utils";
 
 import { getTranslations } from "next-intl/server";
+import { mustStockGapsFor } from "@/server/assortments/service";
+import { asLabels } from "@/components/assortments/labels";
 
 export const metadata = { title: "Customer" };
 export const dynamic = "force-dynamic";
@@ -25,7 +27,7 @@ export default async function RepCustomerPage({ params, searchParams }: { params
   const { l, locale } = await srLabels();
   if (!(await myRep(ctx))?.active) notFound();
   const c = await customerCard(ctx, id).catch((e) => { if (e instanceof NotFoundError) notFound(); throw e; });
-  const [s, ts] = await Promise.all([salesRepSettings(), getTranslations("orders.statuses")]);
+  const [s, ts, gaps, al] = await Promise.all([salesRepSettings(), getTranslations("orders.statuses"), mustStockGapsFor(ctx.company.id, id, locale), asLabels()]);
   const m = (n: number) => formatMoney(n, locale);
   return (
     <>
@@ -45,6 +47,16 @@ export default async function RepCustomerPage({ params, searchParams }: { params
           </CardContent>
         </Card>
         <div className="space-y-6">
+          {gaps.length > 0 && (
+            <Card>
+              <CardHeader><CardTitle className="text-base">{al.l.repGaps}</CardTitle></CardHeader>
+              <CardContent>
+                <ul className="divide-y" data-testid="rc-gaps">
+                  {gaps.map((g) => <li key={g.offerId} className="flex flex-wrap items-center gap-2 py-2 text-sm"><span className="min-w-0 flex-1 break-words">{g.name} <span className="text-xs text-muted-foreground">· {g.packaging}</span></span><span className="text-xs text-muted-foreground">{g.days == null ? al.l.never : fill(al.l.daysAgo, { n: g.days })}</span></li>)}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
           {c.pending.length > 0 && (
             <Card>
               <CardHeader><CardTitle className="text-base">{l.pendingTitle}</CardTitle></CardHeader>
