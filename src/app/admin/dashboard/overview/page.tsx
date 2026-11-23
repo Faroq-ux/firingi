@@ -4,6 +4,8 @@ import { Building2, Globe, Store, Truck, Users } from "lucide-react";
 import { pagePermission, pagePortal } from "@/server/rbac/guard";
 import { adminLive, adminOverview } from "@/server/data/dashboard";
 import { adminCentre } from "@/server/data/admin-centre";
+import { adminExtras } from "@/server/data/admin-extras";
+import { AiCentrePanel, ConsignmentPanel, SavingsPanel } from "@/components/dashboard/admin-extras";
 import { ActionsPanel, HealthPanel, MoneyPanel, PipelinePanel, SalesPanel, SplitPanel, TopPanel } from "@/components/dashboard/admin-centre";
 import { AccountStatusBadge } from "@/components/layout/status-badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,6 +27,8 @@ export default async function OverviewPage() {
   const ctx = await pagePortal("admin");
   pagePermission(ctx, "admin.dashboard.view");
   const [o, live, t, tc, ts, tl, locale, layout, c] = await Promise.all([adminOverview(ctx), adminLive(ctx), getTranslations("dashboard"), getTranslations("companyType"), getTranslations("orders.statuses"), getTranslations("live"), getLocale(), getPreference<Record<string, never>>(ctx, "dashboard.admin"), adminCentre(ctx)]);
+  const x = await adminExtras(ctx);
+  const tx = await getTranslations("adminExtra");
   const ta = await getTranslations("adminDash");
   const net14 = live.series.reduce((a, d) => a + d.net, 0);
   const d = live.deliveries;
@@ -56,6 +60,10 @@ export default async function OverviewPage() {
         { id: "sales", title: ta("monthSoFar"), size: 2, node: <SalesPanel d={c} locale={locale} /> },
         { id: "actions", title: ta("needsAction"), node: <ActionsPanel d={c} /> },
         { id: "pipeline", title: ta("inProgress"), size: 3, node: <PipelinePanel d={c} /> },
+        // AI Centre, savings this month, consignment
+        ...(x.ai ? [{ id: "ai", title: tx("aiTitle"), size: 2 as const, node: <AiCentrePanel d={x.ai} locale={locale} /> }] : []),
+        ...(x.savings ? [{ id: "savings", title: tx("savingsTitle"), node: <SavingsPanel d={x.savings} locale={locale} /> }] : []),
+        ...(x.consignment ? [{ id: "consignment", title: tx("consignmentTitle"), node: <ConsignmentPanel d={x.consignment} locale={locale} /> }] : []),
         ...(c.money ? [{ id: "money", title: ta("money"), node: <MoneyPanel d={c} locale={locale} /> }] : []),
         { id: "top", title: ta("best"), size: 2 as const, node: <TopPanel d={c} locale={locale} /> },
         { id: "split", title: ta("whereFrom"), size: 2 as const, node: <SplitPanel d={c} locale={locale} /> },

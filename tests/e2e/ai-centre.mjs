@@ -69,6 +69,13 @@ try {
   await rec.getByRole("button", { name: "Use the shorter order" }).click();
   check("stops put in the shorter order", await until(async () => sql(`select string_agg(label, ',' order by sequence) from "RouteStop" where "routeId"='${routeId}'`) !== order0), sql(`select string_agg(label, ',' order by sequence) from "RouteStop" where "routeId"='${routeId}'`));
   check("route shorter now", Number(sql(`select "plannedKm" from "Route" where id='${routeId}'`)) < (kmBefore || 9999));
+  // main dashboard: AI Centre, savings this month, consignment cards
+  await go(sa, "/admin/dashboard/overview");
+  check("main dashboard: AI Centre card", (await sa.getByTestId("extra-ai").count()) === 1 && (await sa.getByTestId("extra-ai-top").locator("li").count()) > 0);
+  check("main dashboard: savings this month from the accepted route", (await sa.getByTestId("extra-savings").count()) === 1 && /[1-9]/.test(await sa.getByTestId("extra-savings-km").textContent()), await sa.getByTestId("extra-savings-km").textContent());
+  check("main dashboard: consignment card", (await sa.getByTestId("extra-consignment").count()) === 1);
+  check("main dashboard: no van sales card", (await sa.getByTestId("extra-van").count()) === 0);
+  await shot(sa, "00-main-dashboard", true);
   for (const [area, id] of [["SALES", "ins-sales"], ["PRICING", "ins-pricing"], ["SUPPLIERS", "ins-suppliers"], ["STOCK", "ins-stock"], ["CUSTOMERS", "ins-reorders"]]) {
     await go(sa, `/admin/ai/recommendations?area=${area}`);
     check(`${area.toLowerCase()} area with its detail table`, (await sa.getByTestId(id).count()) === 1 && (await sa.getByTestId("rec-area-hint").count()) === 1);

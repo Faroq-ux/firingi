@@ -111,7 +111,9 @@ const usual = k.getByTestId("usual-order").filter({ hasText: "C&C Almada" });
 check("buy again lists the usual C&C Almada order, late", (await usual.count()) === 1 && /mais tarde do que o habitual/.test(await usual.textContent()));
 await usual.getByRole("button", { name: "Adicionar ao carrinho" }).click();
 await settle(k);
-check("usual order put in the cart", /\d+ produtos adicionados ao carrinho/.test(await usual.textContent()));
+let addedMsg = false;
+for (let i = 0; i < 30 && !addedMsg; i++) { addedMsg = /\d+ produtos adicionados ao carrinho/.test((await usual.textContent()) ?? ""); if (!addedMsg) await k.waitForTimeout(500); }
+check("usual order put in the cart", addedMsg);
 await shot(k, "p17-07-buy-again");
 await go(k, "/buy/orders/cart");
 check("cart holds C&C Almada's products", /C&C Almada/.test(await main(k)));
