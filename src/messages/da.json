@@ -950,7 +950,8 @@
     "Food Safety Training": "Uddannelse i fødevaresikkerhed",
     "Logbook Setup": "Opsætning af logbog",
     "Price Benchmark": "Prissammenligning",
-    "Price Position": "Prisposition"
+    "Price Position": "Prisposition",
+    "Pre-orders & Price Locks": "Forudbestillinger & prislåse"
   },
   "delivery": {
     "title": "Levering",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Du kan spare {amount} om året",
       "body": "På {count} produkt(er) betaler du mere end lignende virksomheder. Se hvor — og billigere tilbud på FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Ny forudbestilling: {title}",
+      "body": "{supplier} har åbnet en forudbestilling — bestil på forhånd senest {date}."
+    },
+    "preorder_allocated": {
+      "title": "Forudbestilling {number}: mængder fastsat",
+      "body": "{title}: {lines} (tildelt / ønsket)."
+    },
+    "preorder_ordered": {
+      "title": "Forudbestilling {number} bestilt",
+      "body": "{title}: ordre {order} afgivet til levering."
+    },
+    "preorder_failed": {
+      "title": "Forudbestilling {number} kunne ikke bestilles",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Forudbestilling {number} annulleret",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Forudbestilling {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Forudbestilling {number} til gennemgang",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Anmodning om prislås {number}",
+      "body": "{company} ønsker {qty} pakninger {product} til dagens pris i {months} måneder."
+    },
+    "pricelock_review": {
+      "title": "Prislås {number} til godkendelse",
+      "body": "{company}: værdi {value}"
+    },
+    "pricelock_decided": {
+      "title": "Prislås {number}: {decision}",
+      "body": "Pris {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Prislås {number} udløber {date}",
+      "body": "{left} pakninger {product} mangler stadig at blive afkaldt til den låste pris."
+    },
+    "pricelock_expired": {
+      "title": "Prislås {number} udløbet",
+      "body": "{left} pakninger blev ikke afkaldt."
+    },
+    "website_job_application": {
+      "title": "Ny jobansøgning",
+      "body": "{name} har søgt: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Privatlivspolitik (databeskyttelsesforordningen)",
           "3": "Cookies",
           "4": "Virksomhedsoplysninger"
+        },
+        "company": {
+          "1": "Bæredygtighed",
+          "2": "Karriere"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Log ind",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Souvenirs og gaver",
           "13": "Emballage og forbrugsvarer",
           "14": "Kebab- og pizzavarer"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Bæredygtighed",
+        "lead": "Sådan arbejder FIRINGI for at spilde mindre og flytte varer mere effektivt.",
+        "start": {
+          "1": "FIRINGI forbinder restauranter, caféer og butikker med grossister og distributører i hele Europa. Vi tror på, at en bedre forsyningskæde også er en lettere en.",
+          "2": "Mindre madspild — kunderne kan se udløbsdatoer, brug-først-lister og udsalgstilbud, og usolgt mad kan doneres i stedet for at ende i skraldespanden.",
+          "3": "Færre kilometer — vores leveringsruter planlægges, så ordrer samles og tomme ture undgås, og CO₂-aftrykket for hver levering måles.",
+          "4": "Genanvendelig emballage — kasser, fustager og anden returemballage registreres og indsamles, så de kan bruges igen og igen.",
+          "5": "Brugt madolie — indsamles fra køkkener af autoriserede partnere og omdannes til biobrændstof.",
+          "6": "Fødevaresikkerhed — temperaturer og kontroller registreres digitalt, fra leverandørens kølerum til køkkenet.",
+          "7": "Vi bliver ved med at forbedre os. Har du en idé eller et spørgsmål, så kontakt os."
+        }
+      },
+      "careers": {
+        "title": "Karriere",
+        "lead": "Arbejd sammen med os om at gøre engroshandel enkel for tusindvis af virksomheder.",
+        "start": {
+          "1": "FIRINGI er et voksende team i Europa, der bygger markedspladsen for engroshandel til restauranter, caféer og butikker. Vi arbejder med salg, drift, logistik, kundeservice og teknologi.",
+          "2": "Vi sætter pris på mennesker, der er praktiske, venlige over for kunder og leverandører og glade for at lære. Vi tilbyder reelt ansvar, et venligt team og muligheden for at forme et produkt, der bruges hver dag.",
+          "3": "Se vores ledige stillinger nedenfor, eller send en uopfordret ansøgning."
+        },
+        "openings": "Ledige stillinger",
+        "none": "Der er ingen ledige stillinger lige nu — du kan stadig sende en uopfordret ansøgning.",
+        "applyTitle": "Ansøg",
+        "applyLead": "Fortæl os om dig selv. Vi svarer på alle ansøgninger.",
+        "position": "Stilling",
+        "openApplication": "Uopfordret ansøgning",
+        "link": "Link til dit CV eller LinkedIn (valgfrit)",
+        "linkHint": "Et link, der starter med https:// — ingen filer.",
+        "msg": "Hvorfor FIRINGI? (valgfrit)",
+        "consent": "Jeg accepterer, at FIRINGI opbevarer mine oplysninger for at behandle min ansøgning og sletter dem, når ansættelsesforløbet er afsluttet (GDPR).",
+        "send": "Send ansøgning",
+        "sent": "Tak — vi har modtaget din ansøgning og svarer snart.",
+        "errLink": "Linket skal starte med https://",
+        "errOff": "Der er lukket for ansøgninger lige nu.",
+        "mailSubject": "Vi har modtaget din ansøgning",
+        "mailBody": "Tak for din ansøgning til FIRINGI. Vi læser alle ansøgninger og svarer snart.",
+        "type": {
+          "FULL_TIME": "Fuldtid",
+          "PART_TIME": "Deltid",
+          "INTERNSHIP": "Praktik",
+          "TEMPORARY": "Midlertidig",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Under hvad købere normalt betaler"
     },
     "vNone": "Ingen aktive tilbud."
+  },
+  "preorders": {
+    "title": "Forudbestillinger & prislåse",
+    "intro": "Bestil sæsonvarer, nye produkter og varer med knap forsyning på forhånd, og lås dagens pris for det, du får brug for de kommende måneder.",
+    "sellerTitle": "Forudbestillinger & prislåse",
+    "sellerIntro": "Åbn forudbestillinger for dine kunder (sæson, nye produkter, knap forsyning), og besvar anmodninger om prislås. Planlæg indkøb ud fra det, der er forudbestilt.",
+    "tabOpen": "Åbne forudbestillinger",
+    "tabMine": "Mine forudbestillinger",
+    "tabLocks": "Prislåse",
+    "tabCampaigns": "Mine forudbestillingskampagner",
+    "kind": {
+      "SEASONAL": "Sæson",
+      "LAUNCH": "Nyt produkt",
+      "SCARCE": "Knap forsyning"
+    },
+    "status": {
+      "DRAFT": "Kladde",
+      "PENDING": "Afventer FIRINGI",
+      "OPEN": "Åben",
+      "CLOSED": "Lukket",
+      "ALLOCATED": "Fordelt",
+      "DONE": "Afsluttet",
+      "CANCELLED": "Annulleret",
+      "REJECTED": "Ikke godkendt"
+    },
+    "resStatus": {
+      "PLACED": "Forudbestilt",
+      "ALLOCATED": "Bekræft mængden",
+      "CONFIRMED": "Bekræftet",
+      "ORDERED": "Bestilt",
+      "CANCELLED": "Annulleret",
+      "DECLINED": "Afvist",
+      "FAILED": "Kunne ikke bestilles"
+    },
+    "lockStatus": {
+      "REQUESTED": "Afventer leverandøren",
+      "REVIEW": "Afventer FIRINGI",
+      "ACTIVE": "Aktiv",
+      "REJECTED": "Afvist",
+      "CANCELLED": "Annulleret",
+      "EXPIRED": "Udløbet",
+      "DONE": "Alt afkaldt"
+    },
+    "alloc": {
+      "PRO_RATA": "Forholdsmæssigt efter, hvad hver har bedt om",
+      "FIRST_COME": "Først til mølle",
+      "LOYAL_FIRST": "Faste kunder først"
+    },
+    "supplier": "Leverandør",
+    "closes": "Lukker {date}",
+    "closesLabel": "Lukker",
+    "opensLabel": "Åbner",
+    "deliveries": "Levering",
+    "deliveryDates": "Leveringsdatoer",
+    "deliveryDate": "Leveringsdato",
+    "address": "Leveringsadresse",
+    "note": "Bemærkning (valgfri)",
+    "deposit": "Depositum {pct}%",
+    "depositLabel": "Depositum",
+    "depositDue": "Depositum til betaling: {amount}",
+    "depositPaid": "Depositum betalt",
+    "payDeposit": "Betal depositum",
+    "depositHint": "Depositummet står som tilgodehavende på din konto og bruges på dine fakturaer. Hvis leverandøren ikke kan levere, forbliver det som tilgodehavende.",
+    "suggested": "Til dig",
+    "suggestedHint": "Du købte dette omkring denne tid sidste år",
+    "product": "Produkt",
+    "pack": "Pakning",
+    "priceNow": "Pris nu",
+    "perPack": "pr. pakning",
+    "nextTier": "{missing} pakninger mere forudbestilt i alt → {price}",
+    "tiers": "Pris efter samlet forudbestilt mængde",
+    "tierRow": "fra {min} pakninger: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · maks. {max}",
+    "short": "Stor efterspørgsel — kan blive fordelt",
+    "qty": "Pakninger",
+    "preorder": "Forudbestil",
+    "update": "Opdater forudbestilling",
+    "alreadyMine": "Du har forudbestilt her — du kan ændre det, indtil den lukker.",
+    "placed": "Forudbestilling afgivet.",
+    "updated": "Forudbestilling opdateret.",
+    "noOpen": "Ingen åbne forudbestillinger til dig lige nu. Når dine leverandører åbner en, vises den her.",
+    "noMine": "Du har ikke forudbestilt noget endnu.",
+    "asked": "Ønsket",
+    "given": "Tildelt",
+    "finalPrice": "Endelig pris",
+    "cancel": "Annuller",
+    "cancelled": "Annulleret.",
+    "accept": "Accepter denne mængde",
+    "decline": "Afvis",
+    "allocatedHint": "Forsyningen var knap — du fik tildelt mindre, end du bad om. Accepter eller afvis; uden svar accepteres det automatisk.",
+    "orders": "Ordrer",
+    "failed": "Hvorfor: {reason}",
+    "reason": "Årsag: {reason}",
+    "allocRule": "Ved knap forsyning: {rule}",
+    "lockIntro": "Behold dagens pris for en mængde, du aftager over de kommende måneder. Hver gang du har brug for varer, afkalder du dem — en almindelig ordre til den låste pris.",
+    "lockSuggest": "Produkter, du ofte køber",
+    "lockSuggestHint": "Ca. {n} pakninger om måneden",
+    "lockFor": "Lås prisen",
+    "months": "Måneder",
+    "lockRequest": "Anmod om prislås",
+    "lockRequested": "Anmodning sendt til leverandøren.",
+    "noLocks": "Ingen prislåse endnu.",
+    "noSuggest": "Intet at foreslå endnu — køb et par gange først.",
+    "lockedPrice": "Låst pris",
+    "listPrice": "Pris ved anmodning",
+    "taken": "{taken} af {total} afkaldt",
+    "left": "{left} tilbage",
+    "until": "Indtil {date}",
+    "perMonthHint": "Ca. {n} om måneden for at bruge det hele",
+    "saved": "Sparet indtil nu: {amount}",
+    "callOff": "Afkald",
+    "callOffDone": "Ordre {number} afgivet.",
+    "calloffs": "Afkaldsordrer",
+    "priceToday": "Pris i dag",
+    "tierLabel": "Trinpriser",
+    "allocLabel": "Ved knap forsyning",
+    "none": "—",
+    "total": "Forudbestilt indtil nu",
+    "value": "Værdi",
+    "sellerNewCampaign": "Ny forudbestilling",
+    "sellerNoCampaigns": "Ingen forudbestillinger endnu. Åbn en for en sæson, et nyt produkt eller varer med knap forsyning.",
+    "sellerBuyers": "Købere",
+    "sellerProducts": "Produkter",
+    "sellerKind": "Type",
+    "sellerTitleField": "Titel",
+    "sellerDescription": "Beskrivelse (valgfri)",
+    "sellerAddDate": "Tilføj en dato",
+    "sellerRemove": "Fjern",
+    "sellerAddProduct": "Tilføj produkt",
+    "sellerChooseProduct": "Vælg et produkt",
+    "sellerPrice": "Pris pr. pakning",
+    "sellerMin": "Min. pr. køber",
+    "sellerMax": "Maks. pr. køber",
+    "sellerSupply": "Tilgængelige pakninger",
+    "sellerSupplyHint": "Tom = ingen grænse",
+    "sellerAddTier": "Tilføj trin",
+    "sellerTierFrom": "Fra samlet antal pakninger",
+    "sellerTierPrice": "Pris",
+    "sellerSave": "Gem kladde",
+    "sellerSaved": "Gemt.",
+    "sellerSubmit": "Send til FIRINGI",
+    "sellerSubmitAuto": "Åbn forudbestillingen",
+    "sellerSubmitted": "Sendt.",
+    "sellerCloseNow": "Luk nu og fordel",
+    "sellerClosed": "Lukket og fordelt.",
+    "sellerCancel": "Annuller forudbestillingen",
+    "sellerCancelReason": "Hvorfor annullerer du?",
+    "sellerOrderNow": "Afgiv ordrer nu",
+    "sellerOrdered": "Ordrer afgivet: {n}.",
+    "sellerPlan": "Plan: pakninger pr. leveringsdato",
+    "sellerReservations": "Forudbestillinger",
+    "sellerReviewNote": "Bemærkning fra FIRINGI: {note}",
+    "sellerDeposit": "Depositum (%)",
+    "sellerOpens": "Åbner",
+    "sellerCloses": "Lukker",
+    "sellerLocks": "Anmodninger om prislås",
+    "sellerLocksActive": "Prislåse",
+    "sellerNoLocks": "Ingen anmodninger om prislås.",
+    "sellerAcceptAt": "Accepter til",
+    "sellerDepositPct": "Depositum %",
+    "sellerAccept": "Accepter",
+    "sellerReject": "Afvis",
+    "sellerDecided": "Besvaret.",
+    "sellerCommitted": "Mangler at blive afkaldt",
+    "sellerBuyer": "Køber",
+    "sellerPerMonth": "~ pr. måned",
+    "sellerMonths": "{n} måneder"
   }
 }

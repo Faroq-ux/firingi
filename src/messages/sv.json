@@ -950,7 +950,8 @@
     "Food Safety Training": "Utbildning i livsmedelssäkerhet",
     "Logbook Setup": "Inställning av loggbok",
     "Price Benchmark": "Prisjämförelse",
-    "Price Position": "Prisposition"
+    "Price Position": "Prisposition",
+    "Pre-orders & Price Locks": "Förbeställningar & prislås"
   },
   "delivery": {
     "title": "Leverans",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Du kan spara {amount} per år",
       "body": "På {count} produkt(er) betalar du mer än liknande företag. Se var — och billigare erbjudanden på FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Ny förbeställning: {title}",
+      "body": "{supplier} har öppnat en förbeställning — beställ i förväg senast {date}."
+    },
+    "preorder_allocated": {
+      "title": "Förbeställning {number}: antal fastställda",
+      "body": "{title}: {lines} (tilldelat / begärt)."
+    },
+    "preorder_ordered": {
+      "title": "Förbeställning {number} beställd",
+      "body": "{title}: order {order} lagd för leverans."
+    },
+    "preorder_failed": {
+      "title": "Förbeställning {number} kunde inte beställas",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Förbeställning {number} avbruten",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Förbeställning {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Förbeställning {number} att granska",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Förfrågan om prislås {number}",
+      "body": "{company} vill ha {qty} förpackningar {product} till dagens pris i {months} månader."
+    },
+    "pricelock_review": {
+      "title": "Prislås {number} att godkänna",
+      "body": "{company}: värde {value}"
+    },
+    "pricelock_decided": {
+      "title": "Prislås {number}: {decision}",
+      "body": "Pris {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Prislås {number} upphör {date}",
+      "body": "{left} förpackningar {product} kvar att avropa till det låsta priset."
+    },
+    "pricelock_expired": {
+      "title": "Prislås {number} har upphört",
+      "body": "{left} förpackningar avropades inte."
+    },
+    "website_job_application": {
+      "title": "Ny jobbansökan",
+      "body": "{name} har sökt: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Integritetspolicy (GDPR)",
           "3": "Cookies",
           "4": "Företagsuppgifter"
+        },
+        "company": {
+          "1": "Hållbarhet",
+          "2": "Karriär"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Logga in",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Souvenirer och presenter",
           "13": "Förpackningar och förbrukning",
           "14": "Kebab- och pizzatillbehör"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Hållbarhet",
+        "lead": "Så arbetar FIRINGI för att slösa mindre och flytta varor mer effektivt.",
+        "start": {
+          "1": "FIRINGI kopplar samman restauranger, kaféer och butiker med grossister och distributörer i hela Europa. Vi tror att en bättre leveranskedja också är en lättare.",
+          "2": "Mindre matsvinn — kunderna ser bäst före-datum, listor över vad som ska användas först och utförsäljningserbjudanden, och osåld mat kan skänkas i stället för att slängas.",
+          "3": "Färre kilometer — våra leveransrutter planeras för att samla ordrar och undvika tomma körningar, och varje leverans CO₂-avtryck mäts.",
+          "4": "Återanvändbara förpackningar — backar, fat och andra returförpackningar spåras och samlas in, så att de används om och om igen.",
+          "5": "Använd matolja — samlas in från kök av auktoriserade partner och omvandlas till biobränsle.",
+          "6": "Livsmedelssäkerhet — temperaturer och kontroller loggas digitalt, från leverantörens kylrum till köket.",
+          "7": "Vi fortsätter att bli bättre. Har du en idé eller en fråga är du välkommen att kontakta oss."
+        }
+      },
+      "careers": {
+        "title": "Karriär",
+        "lead": "Jobba med oss och gör grosshandeln enkel för tusentals företag.",
+        "start": {
+          "1": "FIRINGI är ett växande team i Europa som bygger marknadsplatsen för grosshandel till restauranger, kaféer och butiker. Vi arbetar inom försäljning, drift, logistik, kundtjänst och teknik.",
+          "2": "Vi uppskattar människor som är praktiska, vänliga mot kunder och leverantörer och gärna lär sig nytt. Vi erbjuder verkligt ansvar, ett vänligt team och chansen att forma en produkt som används varje dag.",
+          "3": "Se våra lediga tjänster nedan, eller skicka en spontanansökan."
+        },
+        "openings": "Lediga tjänster",
+        "none": "Det finns inga lediga tjänster just nu — du kan ändå skicka en spontanansökan.",
+        "applyTitle": "Ansök",
+        "applyLead": "Berätta om dig själv. Vi svarar på alla ansökningar.",
+        "position": "Tjänst",
+        "openApplication": "Spontanansökan",
+        "link": "Länk till ditt CV eller LinkedIn (valfritt)",
+        "linkHint": "En länk som börjar med https:// — inga filer.",
+        "msg": "Varför FIRINGI? (valfritt)",
+        "consent": "Jag godkänner att FIRINGI sparar mina uppgifter för att behandla min ansökan och raderar dem när rekryteringen är avslutad (GDPR).",
+        "send": "Skicka ansökan",
+        "sent": "Tack — vi har tagit emot din ansökan och återkommer snart.",
+        "errLink": "Länken måste börja med https://",
+        "errOff": "Ansökan är stängd just nu.",
+        "mailSubject": "Vi har tagit emot din ansökan",
+        "mailBody": "Tack för din ansökan till FIRINGI. Vi läser alla ansökningar och återkommer snart.",
+        "type": {
+          "FULL_TIME": "Heltid",
+          "PART_TIME": "Deltid",
+          "INTERNSHIP": "Praktik",
+          "TEMPORARY": "Tillfällig",
+          "FREELANCE": "Frilans"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Under vad köpare brukar betala"
     },
     "vNone": "Inga aktiva erbjudanden."
+  },
+  "preorders": {
+    "title": "Förbeställningar & prislås",
+    "intro": "Beställ säsongsvaror, nya produkter och bristvaror i förväg, och lås dagens pris för det du behöver de kommande månaderna.",
+    "sellerTitle": "Förbeställningar & prislås",
+    "sellerIntro": "Öppna förbeställningar för dina kunder (säsong, nya produkter, bristvaror) och svara på förfrågningar om prislås. Planera inköp utifrån det som är förbeställt.",
+    "tabOpen": "Öppna förbeställningar",
+    "tabMine": "Mina förbeställningar",
+    "tabLocks": "Prislås",
+    "tabCampaigns": "Mina förbeställningskampanjer",
+    "kind": {
+      "SEASONAL": "Säsong",
+      "LAUNCH": "Ny produkt",
+      "SCARCE": "Begränsad tillgång"
+    },
+    "status": {
+      "DRAFT": "Utkast",
+      "PENDING": "Väntar på FIRINGI",
+      "OPEN": "Öppen",
+      "CLOSED": "Stängd",
+      "ALLOCATED": "Fördelad",
+      "DONE": "Avslutad",
+      "CANCELLED": "Avbruten",
+      "REJECTED": "Inte godkänd"
+    },
+    "resStatus": {
+      "PLACED": "Förbeställd",
+      "ALLOCATED": "Bekräfta antalet",
+      "CONFIRMED": "Bekräftad",
+      "ORDERED": "Beställd",
+      "CANCELLED": "Avbruten",
+      "DECLINED": "Avböjd",
+      "FAILED": "Kunde inte beställas"
+    },
+    "lockStatus": {
+      "REQUESTED": "Väntar på leverantören",
+      "REVIEW": "Väntar på FIRINGI",
+      "ACTIVE": "Aktivt",
+      "REJECTED": "Avböjt",
+      "CANCELLED": "Avbrutet",
+      "EXPIRED": "Avslutat",
+      "DONE": "Allt avropat"
+    },
+    "alloc": {
+      "PRO_RATA": "I proportion till vad var och en bad om",
+      "FIRST_COME": "Först till kvarn",
+      "LOYAL_FIRST": "Stamkunder först"
+    },
+    "supplier": "Leverantör",
+    "closes": "Stänger {date}",
+    "closesLabel": "Stänger",
+    "opensLabel": "Öppnar",
+    "deliveries": "Leverans",
+    "deliveryDates": "Leveransdatum",
+    "deliveryDate": "Leveransdatum",
+    "address": "Leveransadress",
+    "note": "Anteckning (valfritt)",
+    "deposit": "Handpenning {pct}%",
+    "depositLabel": "Handpenning",
+    "depositDue": "Handpenning att betala: {amount}",
+    "depositPaid": "Handpenning betald",
+    "payDeposit": "Betala handpenning",
+    "depositHint": "Handpenningen sparas som tillgodohavande på ditt konto och dras av på dina fakturor. Om leverantören inte kan leverera finns den kvar som tillgodohavande.",
+    "suggested": "För dig",
+    "suggestedHint": "Du köpte detta ungefär vid den här tiden förra året",
+    "product": "Produkt",
+    "pack": "Förpackning",
+    "priceNow": "Pris nu",
+    "perPack": "per förpackning",
+    "nextTier": "{missing} förpackningar till förbeställda totalt → {price}",
+    "tiers": "Pris efter totalt förbeställt antal",
+    "tierRow": "från {min} förpackningar: {price}",
+    "limits": "Min {min}",
+    "limitsMax": "Min {min} · max {max}",
+    "short": "Hög efterfrågan — kan komma att fördelas",
+    "qty": "Förpackningar",
+    "preorder": "Förbeställ",
+    "update": "Uppdatera förbeställning",
+    "alreadyMine": "Du har förbeställt här — du kan ändra fram till att den stänger.",
+    "placed": "Förbeställning lagd.",
+    "updated": "Förbeställning uppdaterad.",
+    "noOpen": "Inga öppna förbeställningar för dig just nu. När dina leverantörer öppnar en visas den här.",
+    "noMine": "Du har inte förbeställt något ännu.",
+    "asked": "Begärt",
+    "given": "Tilldelat",
+    "finalPrice": "Slutpris",
+    "cancel": "Avbryt",
+    "cancelled": "Avbruten.",
+    "accept": "Godkänn detta antal",
+    "decline": "Avböj",
+    "allocatedHint": "Tillgången var begränsad — du fick mindre än du bad om. Godkänn eller avböj; utan svar godkänns det automatiskt.",
+    "orders": "Ordrar",
+    "failed": "Varför: {reason}",
+    "reason": "Orsak: {reason}",
+    "allocRule": "Vid begränsad tillgång: {rule}",
+    "lockIntro": "Behåll dagens pris för en mängd som du tar ut under de kommande månaderna. Varje gång du behöver varor gör du ett avrop — en vanlig order till det låsta priset.",
+    "lockSuggest": "Produkter du köper ofta",
+    "lockSuggestHint": "Cirka {n} förpackningar i månaden",
+    "lockFor": "Lås priset",
+    "months": "Månader",
+    "lockRequest": "Begär prislås",
+    "lockRequested": "Förfrågan skickad till leverantören.",
+    "noLocks": "Inga prislås ännu.",
+    "noSuggest": "Inget att föreslå ännu — köp några gånger först.",
+    "lockedPrice": "Låst pris",
+    "listPrice": "Pris vid förfrågan",
+    "taken": "{taken} av {total} avropade",
+    "left": "{left} kvar",
+    "until": "Till och med {date}",
+    "perMonthHint": "Cirka {n} i månaden för att använda allt",
+    "saved": "Sparat hittills: {amount}",
+    "callOff": "Avropa",
+    "callOffDone": "Order {number} lagd.",
+    "calloffs": "Avrop",
+    "priceToday": "Pris i dag",
+    "tierLabel": "Stegpriser",
+    "allocLabel": "Vid begränsad tillgång",
+    "none": "—",
+    "total": "Förbeställt hittills",
+    "value": "Värde",
+    "sellerNewCampaign": "Ny förbeställning",
+    "sellerNoCampaigns": "Inga förbeställningar ännu. Öppna en för en säsong, en ny produkt eller bristvaror.",
+    "sellerBuyers": "Köpare",
+    "sellerProducts": "Produkter",
+    "sellerKind": "Typ",
+    "sellerTitleField": "Titel",
+    "sellerDescription": "Beskrivning (valfritt)",
+    "sellerAddDate": "Lägg till ett datum",
+    "sellerRemove": "Ta bort",
+    "sellerAddProduct": "Lägg till produkt",
+    "sellerChooseProduct": "Välj en produkt",
+    "sellerPrice": "Pris per förpackning",
+    "sellerMin": "Min per köpare",
+    "sellerMax": "Max per köpare",
+    "sellerSupply": "Tillgängliga förpackningar",
+    "sellerSupplyHint": "Tomt = ingen gräns",
+    "sellerAddTier": "Lägg till steg",
+    "sellerTierFrom": "Från totalt antal förpackningar",
+    "sellerTierPrice": "Pris",
+    "sellerSave": "Spara utkast",
+    "sellerSaved": "Sparat.",
+    "sellerSubmit": "Skicka till FIRINGI",
+    "sellerSubmitAuto": "Öppna förbeställningen",
+    "sellerSubmitted": "Skickat.",
+    "sellerCloseNow": "Stäng nu och fördela",
+    "sellerClosed": "Stängd och fördelad.",
+    "sellerCancel": "Avbryt förbeställningen",
+    "sellerCancelReason": "Varför avbryter du?",
+    "sellerOrderNow": "Lägg ordrar nu",
+    "sellerOrdered": "Lagda ordrar: {n}.",
+    "sellerPlan": "Plan: förpackningar per leveransdatum",
+    "sellerReservations": "Förbeställningar",
+    "sellerReviewNote": "Anteckning från FIRINGI: {note}",
+    "sellerDeposit": "Handpenning (%)",
+    "sellerOpens": "Öppnar",
+    "sellerCloses": "Stänger",
+    "sellerLocks": "Förfrågningar om prislås",
+    "sellerLocksActive": "Prislås",
+    "sellerNoLocks": "Inga förfrågningar om prislås.",
+    "sellerAcceptAt": "Godkänn till",
+    "sellerDepositPct": "Handpenning %",
+    "sellerAccept": "Godkänn",
+    "sellerReject": "Avböj",
+    "sellerDecided": "Besvarad.",
+    "sellerCommitted": "Kvar att avropa",
+    "sellerBuyer": "Köpare",
+    "sellerPerMonth": "~ per månad",
+    "sellerMonths": "{n} månader"
   }
 }

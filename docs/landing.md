@@ -60,6 +60,21 @@ The dashboard pictures are drawn in code (`tour.tsx`) rather than screenshots, s
   - Wording is chosen in this order: your own text in the visitor's language → the built-in translation → your own English → the English.
 - **Legal pages per language:** empty means the starting GDPR, cookies or terms text with the company details filled in. Have the final texts checked by a lawyer.
 
+## Sustainability & Careers (footer)
+
+FIRINGI only — FIRINGI's own pages, not suppliers' shops (`/s/<slug>`).
+
+- **Footer:** a "FIRINGI" column (`foot-company`) links `/sustainability` and `/careers`; each link shows only while its page is on. Off → the page answers 404.
+- **Texts:** per page and language in `landing.settings.about.<page>.text`. Empty → English text → the starting text (`landing.about.<page>.start.N`, 25 languages).
+- **Openings:** `landing.settings.jobs` (id, title, location, type FULL_TIME / PART_TIME / SEASONAL / INTERNSHIP, text, shown). Written once, in the language FIRINGI chooses.
+- **Applications** (`JobApplication`): job or open application, name, email, phone, a https link (CV / LinkedIn — no file uploads), message, language, the consent text agreed and a hashed IP.
+  - Spam check (hidden field, time on page) and 3 per hour per IP.
+  - Notification `website.job_application` to marketing staff; confirmation e-mail to the applicant; optional copy to `careersEmail`.
+  - Status NEW → REVIEWING → REJECTED / HIRED; delete for good (GDPR, audit keeps only that it happened).
+- **Admin:** *Marketing › Sustainability & Careers* (`/admin/marketing/careers`, English, `admin.marketing.manage`; view with `admin.marketing.view`).
+- **Code:** `src/lib/landing.ts` (types, checks), `src/server/landing/careers.ts`, `src/server/actions/landing.ts`, `src/app/(site)/{sustainability,careers}/page.tsx`, `src/components/landing/careers-admin.tsx`, `ApplyForm` in `src/components/landing/client.tsx`.
+- **Tests:** `tests/unit/careers.test.ts`, `tests/integration/careers.test.ts`, `tests/e2e/careers.mjs`.
+
 ## Code
 
 - **Rules and texts:**

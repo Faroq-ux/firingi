@@ -18,7 +18,7 @@ const SECTION_LABEL: Record<LandingSection, string> = {
 const GROUP_LABEL: Record<string, string> = {
   meta: "Search engines (title, description)", app: "Main page (top, numbers, categories, sections, steps, screen texts)", tour: "Dashboard pictures (menu, labels)",
   chart: "Sell page picture (vendors and slots)", vendors: "Sell page (vendors)", sellPage: "Sell page (headings)", plans: "Vendor plans", faq: "Questions (FAQ)",
-  final: "Final call to action", contact: "Contact form", news: "Newsletter", mail: "E-mails sent to visitors", foot: "Footer", legal: "Legal page titles",
+  final: "Final call to action", about: "Sustainability & Careers pages (footer)", contact: "Contact form", news: "Newsletter", mail: "E-mails sent to visitors", foot: "Footer", legal: "Legal page titles",
 };
 
 type Row = { key: string; en: string; built: string; own: string | null };

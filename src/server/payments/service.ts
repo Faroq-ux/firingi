@@ -96,7 +96,11 @@ export async function applyCustomerCredit(tx: Tx, companyId: string) {
 
 const newToken = () => randomBytes(24).toString("base64url");
 
-type CreateInput = { companyId: string; invoiceIds?: string[]; orderId?: string; source: PaymentRequestSource; createdById?: string | null; expiresInHours?: number };
+type CreateInput = {
+  companyId: string; invoiceIds?: string[]; orderId?: string; source: PaymentRequestSource; createdById?: string | null; expiresInHours?: number;
+  /** Phase 71: a deposit for a pre-order / price lock — a set amount, no invoices; once paid it is credit used on the invoices. */
+  deposit?: { amount: number; ref: string };
+};
 
 /** Create a payment request (internal — callers check who may do it). */
 export async function createRequest(input: CreateInput) {
@@ -105,7 +109,10 @@ export async function createRequest(input: CreateInput) {
   return prisma.$transaction(async (tx) => {
     let items: { invoiceId: string; amount: Decimal }[] = [];
     let amount = ZERO;
-    if (input.orderId) {
+    if (input.deposit) {
+      amount = D(input.deposit.amount);
+      await tx.paymentRequest.updateMany({ where: { preorderRef: input.deposit.ref, status: "OPEN" }, data: { status: "CANCELLED" } });
+    } else if (input.orderId) {
       const o = await tx.order.findUnique({ where: { id: input.orderId }, select: { buyerCompanyId: true, awaitingPayment: true, grandTotal: true, prepayBuffer: true, status: true } });
       if (!o || o.buyerCompanyId !== input.companyId) throw new NotFoundError("Order");
       if (!o.awaitingPayment || o.status !== "ON_HOLD") throw new ValidationError("This order doesn't need a payment.");
@@ -138,7 +145,7 @@ export async function createRequest(input: CreateInput) {
     return tx.paymentRequest.create({
       data: {
         currencyCode: cur.currencyCode, amountLocal: cur.amountLocal,
-        token: newToken(), companyId: input.companyId, orderId: input.orderId ?? null, amount: amount.toFixed(2), source: input.source,
+        token: newToken(), companyId: input.companyId, orderId: input.orderId ?? null, preorderRef: input.deposit?.ref ?? null, amount: amount.toFixed(2), source: input.source,
         expiresAt: new Date(Date.now() + hours * 3600_000), createdById: input.createdById ?? null,
         items: { create: items.map((i) => ({ invoiceId: i.invoiceId, amount: i.amount.toFixed(2) })) },
       },

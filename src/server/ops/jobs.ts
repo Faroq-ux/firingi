@@ -55,6 +55,7 @@ export const JOBS: JobDef[] = [
   { key: "ai", label: "AI suggestions", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/ai" },
   { key: "automation", label: "AI Centre automations, approvals and scheduled agents", every: "every 5 minutes", staleAfterMin: 30, critical: false, path: "/api/cron/automation" },
   { key: "benchmark", label: "Price benchmark (rebuild what similar buyers pay; monthly savings message)", every: "hourly", staleAfterMin: 1560, critical: false, path: "/api/cron/benchmark" },
+  { key: "preorders", label: "Pre-orders & price locks (close and share out, orders before delivery, reminders)", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/preorders" },
   { key: "haccp", label: "Food safety logbook (missed temperature checks, training running out)", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/haccp" },
   { key: "services", label: "Services & used oil (plan visits, reminders, missed visits, containers full, oil changes, licences, monthly commission invoices)", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/services" },
   { key: "backup", label: "Database backup", every: "nightly", staleAfterMin: 26 * 60, critical: true, path: null },

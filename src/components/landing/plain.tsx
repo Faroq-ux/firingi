@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LangSelect } from "./client";
 import { languageList } from "./view";
 
-export function PlainPage({ locale, langLabel, back, children }: { locale: string; langLabel: string; back: string; children: React.ReactNode }) {
+export function PlainPage({ locale, langLabel, back, children, footer }: { locale: string; langLabel: string; back: string; children: React.ReactNode; footer?: React.ReactNode }) {
   return (
     <div className="fg" lang={locale}>
       <header className="fg-topbar">
@@ -19,6 +19,7 @@ export function PlainPage({ locale, langLabel, back, children }: { locale: strin
         {children}
         <p style={{ marginTop: 40 }}><Link className="fg-btn ink" href="/">{back}</Link></p>
       </main>
+      {footer}
     </div>
   );
 }

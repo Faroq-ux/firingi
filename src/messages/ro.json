@@ -950,7 +950,8 @@
     "Food Safety Training": "Instruire siguranța alimentelor",
     "Logbook Setup": "Configurarea registrului",
     "Price Benchmark": "Comparație de prețuri",
-    "Price Position": "Poziția prețurilor"
+    "Price Position": "Poziția prețurilor",
+    "Pre-orders & Price Locks": "Precomenzi și prețuri blocate"
   },
   "delivery": {
     "title": "Livrare",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Ați putea economisi {amount} pe an",
       "body": "La {count} produs(e) plătiți mai mult decât afaceri similare. Vedeți unde — și oferte mai ieftine pe FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Precomandă nouă: {title}",
+      "body": "{supplier} a deschis o precomandă — comandați din timp până pe {date}."
+    },
+    "preorder_allocated": {
+      "title": "Precomanda {number}: cantități stabilite",
+      "body": "{title}: {lines} (alocat / cerut)."
+    },
+    "preorder_ordered": {
+      "title": "Precomanda {number} a fost comandată",
+      "body": "{title}: comanda {order} a fost plasată pentru livrare."
+    },
+    "preorder_failed": {
+      "title": "Precomanda {number} nu a putut fi comandată",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Precomanda {number} a fost anulată",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Precomanda {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Precomanda {number} de verificat",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Cererea de blocare a prețului {number}",
+      "body": "{company} dorește {qty} baxuri de {product} la prețul de azi pentru {months} luni."
+    },
+    "pricelock_review": {
+      "title": "Blocarea prețului {number} de aprobat",
+      "body": "{company}: valoare {value}"
+    },
+    "pricelock_decided": {
+      "title": "Blocarea prețului {number}: {decision}",
+      "body": "Preț {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Blocarea prețului {number} se încheie pe {date}",
+      "body": "Mai sunt {left} baxuri de {product} de comandat la prețul blocat."
+    },
+    "pricelock_expired": {
+      "title": "Blocarea prețului {number} s-a încheiat",
+      "body": "{left} baxuri nu au fost comandate."
+    },
+    "website_job_application": {
+      "title": "Candidatură nouă",
+      "body": "{name} a aplicat: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Politica de confidențialitate (RGPD)",
           "3": "Cookie-uri",
           "4": "Date despre firmă"
+        },
+        "company": {
+          "1": "Sustenabilitate",
+          "2": "Cariere"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Autentificare",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Suveniruri și cadouri",
           "13": "Ambalaje și consumabile",
           "14": "Produse pentru kebab și pizza"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Sustenabilitate",
+        "lead": "Cum lucrează FIRINGI pentru a risipi mai puțin și a transporta mărfurile mai eficient.",
+        "start": {
+          "1": "FIRINGI conectează restaurante, cafenele și magazine cu angrosiști și distribuitori din toată Europa. Credem că un lanț de aprovizionare mai bun este și unul mai ușor.",
+          "2": "Mai puțină risipă alimentară — clienții văd datele de expirare, listele cu produse de folosit mai întâi și ofertele de lichidare a stocului, iar alimentele nevândute pot fi donate în loc să ajungă la gunoi.",
+          "3": "Mai puțini kilometri — rutele noastre de livrare sunt planificate pentru a grupa comenzile și a evita drumurile în gol, iar amprenta de CO₂ a fiecărei livrări este măsurată.",
+          "4": "Ambalaje reutilizabile — lăzile, butoaiele și alte ambalaje returnabile sunt urmărite și colectate, astfel încât să fie folosite din nou și din nou.",
+          "5": "Ulei de gătit uzat — colectat din bucătării de parteneri autorizați și transformat în biocombustibil.",
+          "6": "Siguranța alimentelor — temperaturile și verificările sunt înregistrate digital, de la camera frigorifică a furnizorului până în bucătărie.",
+          "7": "Ne îmbunătățim continuu. Dacă aveți o idee sau o întrebare, contactați-ne."
+        }
+      },
+      "careers": {
+        "title": "Cariere",
+        "lead": "Lucrați cu noi pentru a face comerțul en-gros simplu pentru mii de afaceri.",
+        "start": {
+          "1": "FIRINGI este o echipă în creștere în Europa, care construiește marketplace-ul en-gros pentru restaurante, cafenele și magazine. Lucrăm în vânzări, operațiuni, logistică, asistență pentru clienți și tehnologie.",
+          "2": "Prețuim oamenii practici, amabili cu clienții și furnizorii și dornici să învețe. Oferim responsabilitate reală, o echipă prietenoasă și șansa de a modela un produs folosit în fiecare zi.",
+          "3": "Vedeți mai jos posturile disponibile sau trimiteți o candidatură spontană."
+        },
+        "openings": "Posturi disponibile",
+        "none": "Momentan nu există posturi disponibile — puteți totuși trimite o candidatură spontană.",
+        "applyTitle": "Aplicați",
+        "applyLead": "Spuneți-ne despre dvs. Răspundem la fiecare candidatură.",
+        "position": "Post",
+        "openApplication": "Candidatură spontană",
+        "link": "Link către CV-ul dvs. sau profilul LinkedIn (opțional)",
+        "linkHint": "Un link care începe cu https:// — fără fișiere.",
+        "msg": "De ce FIRINGI? (opțional)",
+        "consent": "Sunt de acord ca FIRINGI să îmi păstreze datele pentru a-mi analiza candidatura și să le șteargă la finalul procesului de recrutare (GDPR).",
+        "send": "Trimiteți candidatura",
+        "sent": "Vă mulțumim — am primit candidatura dvs. și vă vom răspunde în curând.",
+        "errLink": "Linkul trebuie să înceapă cu https://",
+        "errOff": "Momentan nu acceptăm candidaturi.",
+        "mailSubject": "Am primit candidatura dvs.",
+        "mailBody": "Vă mulțumim că ați aplicat la FIRINGI. Citim fiecare candidatură și vă vom răspunde în curând.",
+        "type": {
+          "FULL_TIME": "Normă întreagă",
+          "PART_TIME": "Normă parțială",
+          "INTERNSHIP": "Stagiu",
+          "TEMPORARY": "Temporar",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Sub ce plătesc de obicei cumpărătorii"
     },
     "vNone": "Nicio ofertă activă."
+  },
+  "preorders": {
+    "title": "Precomenzi și prețuri blocate",
+    "intro": "Comandați din timp produse de sezon, produse noi și mărfuri cu stoc limitat și blocați prețul de azi pentru ce vă va trebui în lunile următoare.",
+    "sellerTitle": "Precomenzi și prețuri blocate",
+    "sellerIntro": "Deschideți precomenzi pentru clienții dumneavoastră (sezon, produse noi, stoc limitat) și răspundeți la cererile de blocare a prețului. Planificați achizițiile în funcție de precomenzi.",
+    "tabOpen": "Precomenzi deschise",
+    "tabMine": "Precomenzile mele",
+    "tabLocks": "Prețuri blocate",
+    "tabCampaigns": "Campaniile mele de precomandă",
+    "kind": {
+      "SEASONAL": "Sezonier",
+      "LAUNCH": "Produs nou",
+      "SCARCE": "Stoc limitat"
+    },
+    "status": {
+      "DRAFT": "Ciornă",
+      "PENDING": "În așteptarea FIRINGI",
+      "OPEN": "Deschisă",
+      "CLOSED": "Închisă",
+      "ALLOCATED": "Repartizată",
+      "DONE": "Finalizată",
+      "CANCELLED": "Anulată",
+      "REJECTED": "Neaprobată"
+    },
+    "resStatus": {
+      "PLACED": "Precomandat",
+      "ALLOCATED": "Confirmați cantitatea",
+      "CONFIRMED": "Confirmat",
+      "ORDERED": "Comandat",
+      "CANCELLED": "Anulat",
+      "DECLINED": "Refuzat",
+      "FAILED": "Nu a putut fi comandat"
+    },
+    "lockStatus": {
+      "REQUESTED": "În așteptarea furnizorului",
+      "REVIEW": "În așteptarea FIRINGI",
+      "ACTIVE": "Activă",
+      "REJECTED": "Refuzată",
+      "CANCELLED": "Anulată",
+      "EXPIRED": "Încheiată",
+      "DONE": "Integral comandată"
+    },
+    "alloc": {
+      "PRO_RATA": "Proporțional cu cantitatea cerută",
+      "FIRST_COME": "Primul venit, primul servit",
+      "LOYAL_FIRST": "Clienții fideli au prioritate"
+    },
+    "supplier": "Furnizor",
+    "closes": "Se închide pe {date}",
+    "closesLabel": "Închidere",
+    "opensLabel": "Deschidere",
+    "deliveries": "Livrare",
+    "deliveryDates": "Date de livrare",
+    "deliveryDate": "Data livrării",
+    "address": "Adresa de livrare",
+    "note": "Notă (opțional)",
+    "deposit": "Avans {pct}%",
+    "depositLabel": "Avans",
+    "depositDue": "Avans de plătit: {amount}",
+    "depositPaid": "Avans plătit",
+    "payDeposit": "Plătiți avansul",
+    "depositHint": "Avansul rămâne credit în contul dumneavoastră și se folosește la plata facturilor. Dacă furnizorul nu poate livra, rămâne credit.",
+    "suggested": "Pentru dumneavoastră",
+    "suggestedHint": "Ați cumpărat acest produs în aceeași perioadă anul trecut",
+    "product": "Produs",
+    "pack": "Bax",
+    "priceNow": "Preț actual",
+    "perPack": "per bax",
+    "nextTier": "Încă {missing} baxuri precomandate în total → {price}",
+    "tiers": "Preț în funcție de totalul precomandat",
+    "tierRow": "de la {min} baxuri: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · max. {max}",
+    "short": "Cerere mare — se poate repartiza",
+    "qty": "Baxuri",
+    "preorder": "Precomandați",
+    "update": "Modificați precomanda",
+    "alreadyMine": "Aveți o precomandă aici — o puteți modifica până la închidere.",
+    "placed": "Precomandă plasată.",
+    "updated": "Precomandă actualizată.",
+    "noOpen": "Momentan nu există precomenzi deschise pentru dumneavoastră. Când furnizorii deschid una, apare aici.",
+    "noMine": "Nu ați precomandat încă nimic.",
+    "asked": "Cerut",
+    "given": "Alocat",
+    "finalPrice": "Preț final",
+    "cancel": "Anulați",
+    "cancelled": "Anulat.",
+    "accept": "Acceptați această cantitate",
+    "decline": "Refuzați",
+    "allocatedHint": "Stocul a fost limitat — vi s-a alocat mai puțin decât ați cerut. Acceptați sau refuzați; fără răspuns, cantitatea se acceptă automat.",
+    "orders": "Comenzi",
+    "failed": "De ce: {reason}",
+    "reason": "Motiv: {reason}",
+    "allocRule": "Dacă stocul este limitat: {rule}",
+    "lockIntro": "Păstrați prețul de azi pentru o cantitate pe care o luați în lunile următoare. De fiecare dată când aveți nevoie de marfă, comandați o parte — o comandă obișnuită la prețul blocat.",
+    "lockSuggest": "Produse pe care le cumpărați des",
+    "lockSuggestHint": "Circa {n} baxuri pe lună",
+    "lockFor": "Blocați prețul",
+    "months": "Luni",
+    "lockRequest": "Solicitați blocarea prețului",
+    "lockRequested": "Cerere trimisă furnizorului.",
+    "noLocks": "Încă nu aveți prețuri blocate.",
+    "noSuggest": "Nimic de sugerat încă — faceți mai întâi câteva cumpărături.",
+    "lockedPrice": "Preț blocat",
+    "listPrice": "Preț la data cererii",
+    "taken": "{taken} din {total} comandate",
+    "left": "{left} rămase",
+    "until": "Până la {date}",
+    "perMonthHint": "Circa {n} pe lună pentru a folosi tot",
+    "saved": "Economisit până acum: {amount}",
+    "callOff": "Comandați o parte",
+    "callOffDone": "Comanda {number} a fost plasată.",
+    "calloffs": "Comenzi la preț blocat",
+    "priceToday": "Prețul de azi",
+    "tierLabel": "Prețuri pe praguri",
+    "allocLabel": "Dacă stocul este limitat",
+    "none": "—",
+    "total": "Precomandat până acum",
+    "value": "Valoare",
+    "sellerNewCampaign": "Precomandă nouă",
+    "sellerNoCampaigns": "Încă nu există precomenzi. Deschideți una pentru un sezon, un produs nou sau mărfuri cu stoc limitat.",
+    "sellerBuyers": "Cumpărători",
+    "sellerProducts": "Produse",
+    "sellerKind": "Tip",
+    "sellerTitleField": "Titlu",
+    "sellerDescription": "Descriere (opțional)",
+    "sellerAddDate": "Adăugați o dată",
+    "sellerRemove": "Eliminați",
+    "sellerAddProduct": "Adăugați produs",
+    "sellerChooseProduct": "Alegeți un produs",
+    "sellerPrice": "Preț per bax",
+    "sellerMin": "Min. per cumpărător",
+    "sellerMax": "Max. per cumpărător",
+    "sellerSupply": "Baxuri disponibile",
+    "sellerSupplyHint": "Gol = fără limită",
+    "sellerAddTier": "Adăugați prag",
+    "sellerTierFrom": "De la total baxuri",
+    "sellerTierPrice": "Preț",
+    "sellerSave": "Salvați ciorna",
+    "sellerSaved": "Salvat.",
+    "sellerSubmit": "Trimiteți la FIRINGI",
+    "sellerSubmitAuto": "Deschideți precomanda",
+    "sellerSubmitted": "Trimis.",
+    "sellerCloseNow": "Închideți acum și repartizați",
+    "sellerClosed": "Închisă și repartizată.",
+    "sellerCancel": "Anulați precomanda",
+    "sellerCancelReason": "De ce anulați?",
+    "sellerOrderNow": "Plasați comenzile acum",
+    "sellerOrdered": "Comenzi plasate: {n}.",
+    "sellerPlan": "Plan: baxuri pe dată de livrare",
+    "sellerReservations": "Precomenzi",
+    "sellerReviewNote": "Nota FIRINGI: {note}",
+    "sellerDeposit": "Avans (%)",
+    "sellerOpens": "Deschidere",
+    "sellerCloses": "Închidere",
+    "sellerLocks": "Cereri de blocare a prețului",
+    "sellerLocksActive": "Prețuri blocate",
+    "sellerNoLocks": "Nicio cerere de blocare a prețului.",
+    "sellerAcceptAt": "Acceptați la",
+    "sellerDepositPct": "Avans %",
+    "sellerAccept": "Acceptați",
+    "sellerReject": "Refuzați",
+    "sellerDecided": "Răspuns trimis.",
+    "sellerCommitted": "Rămas de comandat",
+    "sellerBuyer": "Cumpărător",
+    "sellerPerMonth": "~ pe lună",
+    "sellerMonths": "{n} luni"
   }
 }

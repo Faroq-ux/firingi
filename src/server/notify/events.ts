@@ -228,6 +228,19 @@ export const EVENTS: EventDef[] = [
   E("tender.closed", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "bids"]),
   E("tender.awarded", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "lines", "order"]),
   E("tender.lost", "orders", ["vendor.pricing.manage", ...VENDOR_ORDERS], ["EMAIL"], ["number", "title"]),
+  // Phase 71: pre-orders & price locks
+  E("preorder.review", "orders", ["admin.orders.manage", "admin.orders.view"], ["EMAIL"], ["number", "company", "title"]),
+  E("preorder.reviewed", "orders", ["vendor.pricing.manage", "vendor.promotions.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "title", "decision", "reason"]),
+  E("preorder.campaign_open", "catalogue", BUYER_ORDERS, ["EMAIL", "PUSH"], ["title", "supplier", "date"]),
+  E("preorder.allocated", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "result", "lines"]),
+  E("preorder.ordered", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "order"]),
+  E("preorder.failed", "orders", null, ["EMAIL", "PUSH"], ["number", "title", "reason"]),
+  E("preorder.cancelled", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "title", "reason"]),
+  E("pricelock.requested", "orders", ["vendor.pricing.manage", "vendor.promotions.manage", ...VENDOR_ORDERS], ["EMAIL", "PUSH"], ["number", "company", "product", "qty", "months"]),
+  E("pricelock.review", "orders", ["admin.orders.manage", "admin.orders.view"], ["EMAIL"], ["number", "company", "value"]),
+  E("pricelock.decided", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "decision", "price", "reason"]),
+  E("pricelock.ending", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "product", "left", "date"]),
+  E("pricelock.expired", "orders", BUYER_ORDERS, ["EMAIL"], ["number", "left"]),
   // Phase 62: sales reps
   E("reporder.proposed", "orders", BUYER_ORDERS, ["EMAIL", "WHATSAPP", "PUSH"], ["rep", "supplier", "total", "hours"]),
   E("reporder.placed", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH"], ["numbers"]),
@@ -295,6 +308,7 @@ export const EVENTS: EventDef[] = [
   // Phase 56: landing page
   E("website.contact", "account", ["admin.crm.view", "admin.crm.manage"], ["EMAIL", "PUSH"], ["company", "name"]),
   E("website.vendor_interest", "account", ["admin.crm.view", "admin.crm.manage"], ["EMAIL", "PUSH"], ["company", "name"]),
+  E("website.job_application", "account", ["admin.marketing.manage", "admin.marketing.view"], ["EMAIL", "PUSH"], ["name", "job"]),
   // Phase 55: rewards shop
   E("rewards.supplier_redeemed", "orders", ["vendor.promotions.manage", "vendor.orders.view"], ["EMAIL", "PUSH"], ["reward", "company"]),
   E("rewards.to_review", "catalogue", ["admin.marketing.manage"], ["EMAIL"], ["company", "reward"]),

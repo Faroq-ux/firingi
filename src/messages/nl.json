@@ -950,7 +950,8 @@
     "Food Safety Training": "Training voedselveiligheid",
     "Logbook Setup": "Logboek instellen",
     "Price Benchmark": "Prijsvergelijking",
-    "Price Position": "Prijspositie"
+    "Price Position": "Prijspositie",
+    "Pre-orders & Price Locks": "Voorbestellingen & vaste prijzen"
   },
   "delivery": {
     "title": "Levering",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "U kunt {amount} per jaar besparen",
       "body": "Voor {count} product(en) betaalt u meer dan vergelijkbare bedrijven. Bekijk waar — en goedkopere aanbiedingen op FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Nieuwe voorbestelling: {title}",
+      "body": "{supplier} heeft een voorbestelling geopend — bestel vooraf tot {date}."
+    },
+    "preorder_allocated": {
+      "title": "Voorbestelling {number}: hoeveelheden vastgesteld",
+      "body": "{title}: {lines} (toegewezen / gevraagd)."
+    },
+    "preorder_ordered": {
+      "title": "Voorbestelling {number} besteld",
+      "body": "{title}: bestelling {order} geplaatst voor levering."
+    },
+    "preorder_failed": {
+      "title": "Voorbestelling {number} kon niet worden besteld",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Voorbestelling {number} geannuleerd",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Voorbestelling {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Voorbestelling {number} te beoordelen",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Aanvraag vaste prijs {number}",
+      "body": "{company} wil {qty} verpakkingen {product} tegen de prijs van vandaag voor {months} maanden."
+    },
+    "pricelock_review": {
+      "title": "Vaste prijs {number} ter goedkeuring",
+      "body": "{company}: waarde {value}"
+    },
+    "pricelock_decided": {
+      "title": "Vaste prijs {number}: {decision}",
+      "body": "Prijs {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Vaste prijs {number} loopt af op {date}",
+      "body": "Nog {left} verpakkingen {product} af te roepen tegen de vaste prijs."
+    },
+    "pricelock_expired": {
+      "title": "Vaste prijs {number} beëindigd",
+      "body": "{left} verpakkingen zijn niet afgeroepen."
+    },
+    "website_job_application": {
+      "title": "Nieuwe sollicitatie",
+      "body": "{name} heeft gesolliciteerd: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Privacybeleid (AVG)",
           "3": "Cookies",
           "4": "Bedrijfsgegevens"
+        },
+        "company": {
+          "1": "Duurzaamheid",
+          "2": "Werken bij FIRINGI"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Inloggen",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Souvenirs & cadeaus",
           "13": "Verpakking & benodigdheden",
           "14": "Kebab- & pizzabenodigdheden"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Duurzaamheid",
+        "lead": "Hoe FIRINGI werkt aan minder verspilling en efficiënter goederenvervoer.",
+        "start": {
+          "1": "FIRINGI verbindt restaurants, cafés en winkels met groothandels en distributeurs in heel Europa. Wij geloven dat een betere toeleveringsketen ook een lichtere is.",
+          "2": "Minder voedselverspilling — klanten zien houdbaarheidsdata, lijsten met producten die eerst op moeten en uitverkoopaanbiedingen, en onverkocht voedsel kan worden gedoneerd in plaats van weggegooid.",
+          "3": "Minder kilometers — onze bezorgroutes worden zo gepland dat bestellingen worden gebundeld en lege ritten worden vermeden, en de CO₂-voetafdruk van elke levering wordt gemeten.",
+          "4": "Herbruikbare verpakkingen — kratten, vaten en ander retourleeggoed worden gevolgd en opgehaald, zodat ze steeds opnieuw worden gebruikt.",
+          "5": "Gebruikte frituurolie — wordt door erkende partners bij keukens opgehaald en omgezet in biobrandstof.",
+          "6": "Voedselveiligheid — temperaturen en controles worden digitaal vastgelegd, van de koelcel van de leverancier tot in de keuken.",
+          "7": "We blijven verbeteren. Heeft u een idee of een vraag? Neem dan contact met ons op."
+        }
+      },
+      "careers": {
+        "title": "Werken bij FIRINGI",
+        "lead": "Werk met ons mee om groothandel eenvoudig te maken voor duizenden bedrijven.",
+        "start": {
+          "1": "FIRINGI is een groeiend team in Europa dat de groothandelsmarktplaats bouwt voor restaurants, cafés en winkels. We werken aan verkoop, operations, logistiek, klantenservice en technologie.",
+          "2": "We waarderen mensen die praktisch zijn, vriendelijk voor klanten en leveranciers en graag leren. We bieden echte verantwoordelijkheid, een vriendelijk team en de kans om een product vorm te geven dat elke dag wordt gebruikt.",
+          "3": "Bekijk hieronder onze vacatures, of stuur een open sollicitatie."
+        },
+        "openings": "Vacatures",
+        "none": "Er zijn momenteel geen vacatures — u kunt wel een open sollicitatie sturen.",
+        "applyTitle": "Solliciteren",
+        "applyLead": "Vertel ons over uzelf. We reageren op elke sollicitatie.",
+        "position": "Functie",
+        "openApplication": "Open sollicitatie",
+        "link": "Link naar uw cv of LinkedIn (optioneel)",
+        "linkHint": "Een link die begint met https:// — geen bestanden.",
+        "msg": "Waarom FIRINGI? (optioneel)",
+        "consent": "Ik ga ermee akkoord dat FIRINGI mijn gegevens bewaart om mijn sollicitatie te beoordelen en ze verwijdert zodra de werving is afgerond (AVG).",
+        "send": "Sollicitatie versturen",
+        "sent": "Bedankt — we hebben uw sollicitatie ontvangen en reageren binnenkort.",
+        "errLink": "De link moet beginnen met https://",
+        "errOff": "Er kan momenteel niet worden gesolliciteerd.",
+        "mailSubject": "We hebben uw sollicitatie ontvangen",
+        "mailBody": "Bedankt voor uw sollicitatie bij FIRINGI. We lezen elke sollicitatie en reageren binnenkort.",
+        "type": {
+          "FULL_TIME": "Voltijd",
+          "PART_TIME": "Deeltijd",
+          "INTERNSHIP": "Stage",
+          "TEMPORARY": "Tijdelijk",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Onder wat kopers gewoonlijk betalen"
     },
     "vNone": "Geen actieve aanbiedingen."
+  },
+  "preorders": {
+    "title": "Voorbestellingen & vaste prijzen",
+    "intro": "Bestel seizoensproducten, nieuwe producten en schaarse goederen vooraf, en zet de prijs van vandaag vast voor wat u de komende maanden nodig hebt.",
+    "sellerTitle": "Voorbestellingen & vaste prijzen",
+    "sellerIntro": "Open voorbestellingen voor uw klanten (seizoen, nieuwe producten, schaarste) en beantwoord aanvragen voor een vaste prijs. Plan uw inkopen op basis van de voorbestellingen.",
+    "tabOpen": "Open voorbestellingen",
+    "tabMine": "Mijn voorbestellingen",
+    "tabLocks": "Vaste prijzen",
+    "tabCampaigns": "Mijn voorbestelacties",
+    "kind": {
+      "SEASONAL": "Seizoen",
+      "LAUNCH": "Nieuw product",
+      "SCARCE": "Schaars"
+    },
+    "status": {
+      "DRAFT": "Concept",
+      "PENDING": "Wacht op FIRINGI",
+      "OPEN": "Open",
+      "CLOSED": "Gesloten",
+      "ALLOCATED": "Verdeeld",
+      "DONE": "Afgerond",
+      "CANCELLED": "Geannuleerd",
+      "REJECTED": "Niet goedgekeurd"
+    },
+    "resStatus": {
+      "PLACED": "Voorbesteld",
+      "ALLOCATED": "Bevestig de hoeveelheid",
+      "CONFIRMED": "Bevestigd",
+      "ORDERED": "Besteld",
+      "CANCELLED": "Geannuleerd",
+      "DECLINED": "Afgewezen",
+      "FAILED": "Kon niet worden besteld"
+    },
+    "lockStatus": {
+      "REQUESTED": "Wacht op de leverancier",
+      "REVIEW": "Wacht op FIRINGI",
+      "ACTIVE": "Actief",
+      "REJECTED": "Afgewezen",
+      "CANCELLED": "Geannuleerd",
+      "EXPIRED": "Beëindigd",
+      "DONE": "Alles afgeroepen"
+    },
+    "alloc": {
+      "PRO_RATA": "Naar verhouding van de gevraagde hoeveelheid",
+      "FIRST_COME": "Wie het eerst komt, het eerst maalt",
+      "LOYAL_FIRST": "Vaste klanten eerst"
+    },
+    "supplier": "Leverancier",
+    "closes": "Sluit op {date}",
+    "closesLabel": "Sluit",
+    "opensLabel": "Opent",
+    "deliveries": "Levering",
+    "deliveryDates": "Leverdata",
+    "deliveryDate": "Leverdatum",
+    "address": "Afleveradres",
+    "note": "Opmerking (optioneel)",
+    "deposit": "Aanbetaling {pct}%",
+    "depositLabel": "Aanbetaling",
+    "depositDue": "Te betalen aanbetaling: {amount}",
+    "depositPaid": "Aanbetaling betaald",
+    "payDeposit": "Aanbetaling betalen",
+    "depositHint": "De aanbetaling blijft als tegoed op uw account staan en wordt verrekend met uw facturen. Kan de leverancier niet leveren, dan blijft het tegoed staan.",
+    "suggested": "Voor u",
+    "suggestedHint": "U kocht dit vorig jaar rond deze tijd",
+    "product": "Product",
+    "pack": "Verpakking",
+    "priceNow": "Huidige prijs",
+    "perPack": "per verpakking",
+    "nextTier": "Nog {missing} verpakkingen voorbesteld door iedereen → {price}",
+    "tiers": "Prijs op basis van totaal voorbesteld",
+    "tierRow": "vanaf {min} verpakkingen: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · max. {max}",
+    "short": "Veel vraag — mogelijk verdeeld",
+    "qty": "Verpakkingen",
+    "preorder": "Voorbestellen",
+    "update": "Voorbestelling wijzigen",
+    "alreadyMine": "U hebt hier voorbesteld — u kunt dit wijzigen tot de sluiting.",
+    "placed": "Voorbestelling geplaatst.",
+    "updated": "Voorbestelling bijgewerkt.",
+    "noOpen": "Er zijn nu geen voorbestellingen voor u open. Zodra uw leveranciers er een openen, verschijnt die hier.",
+    "noMine": "U hebt nog niets voorbesteld.",
+    "asked": "Gevraagd",
+    "given": "Toegewezen",
+    "finalPrice": "Eindprijs",
+    "cancel": "Annuleren",
+    "cancelled": "Geannuleerd.",
+    "accept": "Deze hoeveelheid accepteren",
+    "decline": "Afwijzen",
+    "allocatedHint": "Het aanbod was beperkt — u kreeg minder dan gevraagd. Accepteer of wijs af; zonder antwoord wordt het automatisch geaccepteerd.",
+    "orders": "Bestellingen",
+    "failed": "Waarom: {reason}",
+    "reason": "Reden: {reason}",
+    "allocRule": "Bij schaarste: {rule}",
+    "lockIntro": "Houd de prijs van vandaag voor een hoeveelheid die u de komende maanden afneemt. Wanneer u goederen nodig hebt, roept u ze af — een gewone bestelling tegen de vaste prijs.",
+    "lockSuggest": "Producten die u vaak koopt",
+    "lockSuggestHint": "Ongeveer {n} verpakkingen per maand",
+    "lockFor": "Prijs vastzetten",
+    "months": "Maanden",
+    "lockRequest": "Vaste prijs aanvragen",
+    "lockRequested": "Aanvraag verzonden naar de leverancier.",
+    "noLocks": "Nog geen vaste prijzen.",
+    "noSuggest": "Nog niets voor te stellen — bestel eerst een paar keer.",
+    "lockedPrice": "Vaste prijs",
+    "listPrice": "Prijs bij aanvraag",
+    "taken": "{taken} van {total} afgeroepen",
+    "left": "Nog {left}",
+    "until": "Tot {date}",
+    "perMonthHint": "Ongeveer {n} per maand om alles te gebruiken",
+    "saved": "Tot nu toe bespaard: {amount}",
+    "callOff": "Afroepen",
+    "callOffDone": "Bestelling {number} geplaatst.",
+    "calloffs": "Afroeporders",
+    "priceToday": "Prijs vandaag",
+    "tierLabel": "Staffelprijzen",
+    "allocLabel": "Bij schaarste",
+    "none": "—",
+    "total": "Tot nu toe voorbesteld",
+    "value": "Waarde",
+    "sellerNewCampaign": "Nieuwe voorbestelling",
+    "sellerNoCampaigns": "Nog geen voorbestellingen. Open er een voor een seizoen, een nieuw product of schaarse goederen.",
+    "sellerBuyers": "Kopers",
+    "sellerProducts": "Producten",
+    "sellerKind": "Soort",
+    "sellerTitleField": "Titel",
+    "sellerDescription": "Beschrijving (optioneel)",
+    "sellerAddDate": "Datum toevoegen",
+    "sellerRemove": "Verwijderen",
+    "sellerAddProduct": "Product toevoegen",
+    "sellerChooseProduct": "Kies een product",
+    "sellerPrice": "Prijs per verpakking",
+    "sellerMin": "Min. per koper",
+    "sellerMax": "Max. per koper",
+    "sellerSupply": "Beschikbare verpakkingen",
+    "sellerSupplyHint": "Leeg = geen limiet",
+    "sellerAddTier": "Staffel toevoegen",
+    "sellerTierFrom": "Vanaf totaal aantal verpakkingen",
+    "sellerTierPrice": "Prijs",
+    "sellerSave": "Concept opslaan",
+    "sellerSaved": "Opgeslagen.",
+    "sellerSubmit": "Naar FIRINGI sturen",
+    "sellerSubmitAuto": "Voorbestelling openen",
+    "sellerSubmitted": "Verzonden.",
+    "sellerCloseNow": "Nu sluiten en verdelen",
+    "sellerClosed": "Gesloten en verdeeld.",
+    "sellerCancel": "Voorbestelling annuleren",
+    "sellerCancelReason": "Waarom annuleert u?",
+    "sellerOrderNow": "Nu bestellingen plaatsen",
+    "sellerOrdered": "Bestellingen geplaatst: {n}.",
+    "sellerPlan": "Planning: verpakkingen per leverdatum",
+    "sellerReservations": "Voorbestellingen",
+    "sellerReviewNote": "Opmerking van FIRINGI: {note}",
+    "sellerDeposit": "Aanbetaling (%)",
+    "sellerOpens": "Opent",
+    "sellerCloses": "Sluit",
+    "sellerLocks": "Aanvragen voor vaste prijs",
+    "sellerLocksActive": "Vaste prijzen",
+    "sellerNoLocks": "Geen aanvragen voor vaste prijs.",
+    "sellerAcceptAt": "Accepteren tegen",
+    "sellerDepositPct": "Aanbetaling %",
+    "sellerAccept": "Accepteren",
+    "sellerReject": "Afwijzen",
+    "sellerDecided": "Beantwoord.",
+    "sellerCommitted": "Nog af te roepen",
+    "sellerBuyer": "Koper",
+    "sellerPerMonth": "~ per maand",
+    "sellerMonths": "{n} maanden"
   }
 }

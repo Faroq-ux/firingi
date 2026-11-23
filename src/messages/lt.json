@@ -950,7 +950,8 @@
     "Food Safety Training": "Maisto saugos mokymai",
     "Logbook Setup": "Žurnalo nustatymai",
     "Price Benchmark": "Kainų palyginimas",
-    "Price Position": "Kainų pozicija"
+    "Price Position": "Kainų pozicija",
+    "Pre-orders & Price Locks": "Išankstiniai užsakymai ir fiksuotos kainos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Galėtumėte sutaupyti {amount} per metus",
       "body": "Už {count} produktą (-us) mokate daugiau nei panašios įmonės. Pažiūrėkite, kur — ir pigesnius pasiūlymus FIRINGI platformoje."
+    },
+    "preorder_campaign_open": {
+      "title": "Naujas išankstinis užsakymas: {title}",
+      "body": "{supplier} atidarė išankstinį užsakymą — užsakykite iš anksto iki {date}."
+    },
+    "preorder_allocated": {
+      "title": "Išankstinis užsakymas {number}: kiekiai nustatyti",
+      "body": "{title}: {lines} (skirta / prašyta)."
+    },
+    "preorder_ordered": {
+      "title": "Išankstinis užsakymas {number} užsakytas",
+      "body": "{title}: užsakymas {order} pateiktas pristatymui."
+    },
+    "preorder_failed": {
+      "title": "Išankstinio užsakymo {number} nepavyko užsakyti",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Išankstinis užsakymas {number} atšauktas",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Išankstinis užsakymas {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Išankstinis užsakymas {number} laukia peržiūros",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Kainos fiksavimo prašymas {number}",
+      "body": "{company} nori {qty} pak. {product} šiandienos kaina {months} mėn."
+    },
+    "pricelock_review": {
+      "title": "Fiksuota kaina {number} laukia patvirtinimo",
+      "body": "{company}: vertė {value}"
+    },
+    "pricelock_decided": {
+      "title": "Fiksuota kaina {number}: {decision}",
+      "body": "Kaina {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Fiksuota kaina {number} baigiasi {date}",
+      "body": "Liko atsiimti {left} pak. {product} fiksuota kaina."
+    },
+    "pricelock_expired": {
+      "title": "Fiksuota kaina {number} baigėsi",
+      "body": "Neatsiimta pakuočių: {left}."
+    },
+    "website_job_application": {
+      "title": "Nauja darbo paraiška",
+      "body": "{name} pateikė paraišką: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Privatumo politika (BDAR)",
           "3": "Slapukai",
           "4": "Įmonės duomenys"
+        },
+        "company": {
+          "1": "Tvarumas",
+          "2": "Karjera"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Prisijungti",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Suvenyrai ir dovanos",
           "13": "Pakuotės ir reikmenys",
           "14": "Kebabų ir picų reikmenys"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Tvarumas",
+        "lead": "Kaip FIRINGI siekia mažiau švaistyti ir efektyviau gabenti prekes.",
+        "start": {
+          "1": "FIRINGI sujungia restoranus, kavines ir parduotuves su didmenininkais ir platintojais visoje Europoje. Tikime, kad geresnė tiekimo grandinė yra ir tausesnė aplinkai.",
+          "2": "Mažiau maisto švaistymo — klientai mato galiojimo datas, pirmiausia sunaudotinų produktų sąrašus ir išpardavimo pasiūlymus, be to, neparduotas maistas gali būti paaukotas, užuot jį išmetus.",
+          "3": "Mažiau kilometrų — mūsų pristatymo maršrutai planuojami taip, kad užsakymai būtų sugrupuoti ir išvengta tuščių reisų, o kiekvieno pristatymo CO₂ pėdsakas yra matuojamas.",
+          "4": "Daugkartinė pakuotė — dėžės, statinės ir kita grąžinama tara yra sekama ir surenkama, kad būtų naudojama vėl ir vėl.",
+          "5": "Panaudotas kepimo aliejus — licencijuoti partneriai jį surenka iš virtuvių ir perdirba į biokurą.",
+          "6": "Maisto sauga — temperatūra ir patikros registruojamos skaitmeniniu būdu, nuo tiekėjo šaldymo kameros iki virtuvės.",
+          "7": "Nuolat tobulėjame. Jei turite idėją ar klausimą, susisiekite su mumis."
+        }
+      },
+      "careers": {
+        "title": "Karjera",
+        "lead": "Dirbkite su mumis ir padėkite tūkstančiams įmonių paprasčiau pirkti didmeninėje prekyboje.",
+        "start": {
+          "1": "FIRINGI yra auganti komanda Europoje, kurianti didmeninės prekybos prekyvietę restoranams, kavinėms ir parduotuvėms. Dirbame pardavimų, operacijų, logistikos, klientų aptarnavimo ir technologijų srityse.",
+          "2": "Vertiname žmones, kurie yra praktiški, malonūs klientams ir tiekėjams ir noriai mokosi. Siūlome tikrą atsakomybę, draugišką komandą ir galimybę kurti produktą, kuriuo naudojamasi kasdien.",
+          "3": "Peržiūrėkite laisvas darbo vietas žemiau arba atsiųskite bendrąją paraišką."
+        },
+        "openings": "Laisvos darbo vietos",
+        "none": "Šiuo metu laisvų darbo vietų nėra — vis tiek galite atsiųsti bendrąją paraišką.",
+        "applyTitle": "Teikti paraišką",
+        "applyLead": "Papasakokite apie save. Atsakome į kiekvieną paraišką.",
+        "position": "Pareigos",
+        "openApplication": "Bendroji paraiška",
+        "link": "Nuoroda į Jūsų CV arba LinkedIn profilį (neprivaloma)",
+        "linkHint": "Nuoroda, prasidedanti https:// — failų nesiųskite.",
+        "msg": "Kodėl FIRINGI? (neprivaloma)",
+        "consent": "Sutinku, kad FIRINGI saugotų mano duomenis mano paraiškai įvertinti ir juos ištrintų, kai atranka bus baigta (BDAR).",
+        "send": "Siųsti paraišką",
+        "sent": "Ačiū — gavome Jūsų paraišką ir netrukus atsakysime.",
+        "errLink": "Nuoroda turi prasidėti https://",
+        "errOff": "Šiuo metu paraiškos nepriimamos.",
+        "mailSubject": "Gavome Jūsų paraišką",
+        "mailBody": "Dėkojame, kad pateikėte paraišką FIRINGI. Perskaitome kiekvieną paraišką ir netrukus atsakysime.",
+        "type": {
+          "FULL_TIME": "Visa darbo diena",
+          "PART_TIME": "Ne visa darbo diena",
+          "INTERNSHIP": "Praktika",
+          "TEMPORARY": "Laikinas darbas",
+          "FREELANCE": "Laisvai samdomas darbas"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Mažiau, nei pirkėjai paprastai moka"
     },
     "vNone": "Aktyvių pasiūlymų nėra."
+  },
+  "preorders": {
+    "title": "Išankstiniai užsakymai ir fiksuotos kainos",
+    "intro": "Užsisakykite sezoninių prekių, naujų produktų ir trūkstamų prekių iš anksto ir užfiksuokite šiandienos kainą tam, ko jums reikės ateinančiais mėnesiais.",
+    "sellerTitle": "Išankstiniai užsakymai ir fiksuotos kainos",
+    "sellerIntro": "Atidarykite išankstinius užsakymus savo klientams (sezoninės prekės, nauji produktai, prekių trūkumas) ir atsakykite į kainos fiksavimo prašymus. Planuokite pirkimus pagal išankstinius užsakymus.",
+    "tabOpen": "Atviri išankstiniai užsakymai",
+    "tabMine": "Mano išankstiniai užsakymai",
+    "tabLocks": "Fiksuotos kainos",
+    "tabCampaigns": "Mano išankstinių užsakymų kampanijos",
+    "kind": {
+      "SEASONAL": "Sezoninė",
+      "LAUNCH": "Naujas produktas",
+      "SCARCE": "Prekių trūkumas"
+    },
+    "status": {
+      "DRAFT": "Juodraštis",
+      "PENDING": "Laukiama FIRINGI",
+      "OPEN": "Atidaryta",
+      "CLOSED": "Uždaryta",
+      "ALLOCATED": "Paskirstyta",
+      "DONE": "Baigta",
+      "CANCELLED": "Atšaukta",
+      "REJECTED": "Nepatvirtinta"
+    },
+    "resStatus": {
+      "PLACED": "Užsakyta iš anksto",
+      "ALLOCATED": "Patvirtinkite kiekį",
+      "CONFIRMED": "Patvirtinta",
+      "ORDERED": "Užsakyta",
+      "CANCELLED": "Atšaukta",
+      "DECLINED": "Atmesta",
+      "FAILED": "Nepavyko užsakyti"
+    },
+    "lockStatus": {
+      "REQUESTED": "Laukiama tiekėjo",
+      "REVIEW": "Laukiama FIRINGI",
+      "ACTIVE": "Aktyvi",
+      "REJECTED": "Atmesta",
+      "CANCELLED": "Atšaukta",
+      "EXPIRED": "Baigėsi",
+      "DONE": "Viskas atsiimta"
+    },
+    "alloc": {
+      "PRO_RATA": "Proporcingai pagal tai, kiek kiekvienas prašė",
+      "FIRST_COME": "Kas pirmesnis, tas laimi",
+      "LOYAL_FIRST": "Pirmiausia nuolatiniai klientai"
+    },
+    "supplier": "Tiekėjas",
+    "closes": "Uždaroma {date}",
+    "closesLabel": "Uždaroma",
+    "opensLabel": "Atidaroma",
+    "deliveries": "Pristatymas",
+    "deliveryDates": "Pristatymo datos",
+    "deliveryDate": "Pristatymo data",
+    "address": "Pristatymo adresas",
+    "note": "Pastaba (neprivaloma)",
+    "deposit": "Avansas {pct}%",
+    "depositLabel": "Avansas",
+    "depositDue": "Mokėtinas avansas: {amount}",
+    "depositPaid": "Avansas sumokėtas",
+    "payDeposit": "Mokėti avansą",
+    "depositHint": "Avansas lieka kaip kreditas jūsų paskyroje ir naudojamas jūsų sąskaitoms apmokėti. Jei tiekėjas negali pristatyti, jis lieka kaip kreditas.",
+    "suggested": "Jums",
+    "suggestedHint": "Šią prekę pirkote maždaug tuo pačiu metu pernai",
+    "product": "Produktas",
+    "pack": "Pakuotė",
+    "priceNow": "Kaina dabar",
+    "perPack": "už pakuotę",
+    "nextTier": "Dar {missing} pak. bendrai užsakius iš anksto → {price}",
+    "tiers": "Kaina pagal bendrą iš anksto užsakytą kiekį",
+    "tierRow": "nuo {min} pak.: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · maks. {max}",
+    "short": "Didelė paklausa — gali būti paskirstyta",
+    "qty": "Pakuotės",
+    "preorder": "Užsakyti iš anksto",
+    "update": "Atnaujinti išankstinį užsakymą",
+    "alreadyMine": "Čia jau užsakėte iš anksto — galite keisti, kol užsakymas neuždarytas.",
+    "placed": "Išankstinis užsakymas pateiktas.",
+    "updated": "Išankstinis užsakymas atnaujintas.",
+    "noOpen": "Šiuo metu jums nėra atvirų išankstinių užsakymų. Kai tiekėjai juos atidarys, jie bus rodomi čia.",
+    "noMine": "Dar nieko neužsakėte iš anksto.",
+    "asked": "Prašyta",
+    "given": "Skirta",
+    "finalPrice": "Galutinė kaina",
+    "cancel": "Atšaukti",
+    "cancelled": "Atšaukta.",
+    "accept": "Priimti šį kiekį",
+    "decline": "Atmesti",
+    "allocatedHint": "Prekių trūko — gavote mažiau, nei prašėte. Priimkite arba atmeskite; jei neatsakysite, bus priimta automatiškai.",
+    "orders": "Užsakymai",
+    "failed": "Kodėl: {reason}",
+    "reason": "Priežastis: {reason}",
+    "allocRule": "Jei prekių trūks: {rule}",
+    "lockIntro": "Išlaikykite šiandienos kainą kiekiui, kurį atsiimsite per ateinančius mėnesius. Kai tik reikės prekių, atsiimkite jas — tai įprastas užsakymas fiksuota kaina.",
+    "lockSuggest": "Dažnai perkami produktai",
+    "lockSuggestHint": "Apie {n} pak. per mėnesį",
+    "lockFor": "Užfiksuoti kainą",
+    "months": "Mėnesiai",
+    "lockRequest": "Prašyti fiksuotos kainos",
+    "lockRequested": "Prašymas išsiųstas tiekėjui.",
+    "noLocks": "Fiksuotų kainų dar nėra.",
+    "noSuggest": "Kol kas nėra ką pasiūlyti — pirmiausia apsipirkite kelis kartus.",
+    "lockedPrice": "Fiksuota kaina",
+    "listPrice": "Kaina prašymo metu",
+    "taken": "Atsiimta {taken} iš {total}",
+    "left": "Liko {left}",
+    "until": "Iki {date}",
+    "perMonthHint": "Apie {n} per mėnesį, kad išnaudotumėte viską",
+    "saved": "Sutaupyta iki šiol: {amount}",
+    "callOff": "Atsiimti",
+    "callOffDone": "Užsakymas {number} pateiktas.",
+    "calloffs": "Atsiėmimai",
+    "priceToday": "Šiandienos kaina",
+    "tierLabel": "Pakopų kainos",
+    "allocLabel": "Jei prekių trūks",
+    "none": "—",
+    "total": "Iš anksto užsakyta iki šiol",
+    "value": "Vertė",
+    "sellerNewCampaign": "Naujas išankstinis užsakymas",
+    "sellerNoCampaigns": "Išankstinių užsakymų dar nėra. Atidarykite vieną sezonui, naujam produktui ar trūkstamoms prekėms.",
+    "sellerBuyers": "Pirkėjai",
+    "sellerProducts": "Produktai",
+    "sellerKind": "Tipas",
+    "sellerTitleField": "Pavadinimas",
+    "sellerDescription": "Aprašymas (neprivaloma)",
+    "sellerAddDate": "Pridėti datą",
+    "sellerRemove": "Pašalinti",
+    "sellerAddProduct": "Pridėti produktą",
+    "sellerChooseProduct": "Pasirinkite produktą",
+    "sellerPrice": "Pakuotės kaina",
+    "sellerMin": "Min. vienam pirkėjui",
+    "sellerMax": "Maks. vienam pirkėjui",
+    "sellerSupply": "Turimos pakuotės",
+    "sellerSupplyHint": "Tuščia = be ribos",
+    "sellerAddTier": "Pridėti pakopą",
+    "sellerTierFrom": "Nuo bendro pakuočių kiekio",
+    "sellerTierPrice": "Kaina",
+    "sellerSave": "Išsaugoti juodraštį",
+    "sellerSaved": "Išsaugota.",
+    "sellerSubmit": "Siųsti FIRINGI",
+    "sellerSubmitAuto": "Atidaryti išankstinį užsakymą",
+    "sellerSubmitted": "Išsiųsta.",
+    "sellerCloseNow": "Uždaryti dabar ir paskirstyti",
+    "sellerClosed": "Uždaryta ir paskirstyta.",
+    "sellerCancel": "Atšaukti išankstinį užsakymą",
+    "sellerCancelReason": "Kodėl atšaukiate?",
+    "sellerOrderNow": "Pateikti užsakymus dabar",
+    "sellerOrdered": "Pateikta užsakymų: {n}.",
+    "sellerPlan": "Planas: pakuotės pagal pristatymo datą",
+    "sellerReservations": "Išankstiniai užsakymai",
+    "sellerReviewNote": "FIRINGI pastaba: {note}",
+    "sellerDeposit": "Avansas (%)",
+    "sellerOpens": "Atidaroma",
+    "sellerCloses": "Uždaroma",
+    "sellerLocks": "Kainos fiksavimo prašymai",
+    "sellerLocksActive": "Fiksuotos kainos",
+    "sellerNoLocks": "Kainos fiksavimo prašymų nėra.",
+    "sellerAcceptAt": "Priimti už",
+    "sellerDepositPct": "Avansas %",
+    "sellerAccept": "Priimti",
+    "sellerReject": "Atmesti",
+    "sellerDecided": "Atsakyta.",
+    "sellerCommitted": "Dar neatsiimta",
+    "sellerBuyer": "Pirkėjas",
+    "sellerPerMonth": "~ per mėnesį",
+    "sellerMonths": "{n} mėn."
   }
 }

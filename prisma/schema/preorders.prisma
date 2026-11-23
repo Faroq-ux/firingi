@@ -1,0 +1,157 @@
+// Phase 71 — Pre-orders and price-locked forward buying. Distributors and wholesalers (FIRINGI switches each on or off)
+// open pre-order campaigns (seasonal, new product launch, short supply) with an order window, delivery dates,
+// optional tier prices and a deposit; buyers pre-order, FIRINGI allocates fairly when supply is short, and orders are
+// placed at the final price for each delivery date. A price lock keeps today's price for a quantity taken over
+// coming months, each call-off a normal order at the locked price. FIRINGI invoices the buyer, as always.
+
+/// A supplier's pre-order campaign.
+model PreorderCampaign {
+  id              String    @id @default(cuid())
+  number          String    @unique // PRE-2026-000001
+  vendorCompanyId String
+  sellerType      String // WHOLESALER | DISTRIBUTOR (who may pre-order follows the usual flow)
+  countryId       String
+  kind            String // SEASONAL | LAUNCH | SCARCE
+  title           String
+  description     String?
+  /// DRAFT | PENDING | OPEN | CLOSED | ALLOCATED | DONE | CANCELLED | REJECTED
+  status          String    @default("DRAFT")
+  opensAt         DateTime
+  closesAt        DateTime
+  deliveryDates   DateTime[]
+  /// when supply is short: PRO_RATA | FIRST_COME | LOYAL_FIRST
+  allocation      String    @default("PRO_RATA")
+  /// deposit asked when pre-ordering (% of the pre-order's value; 0 = none)
+  depositPct      Int       @default(0)
+  reviewNote      String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  submittedAt     DateTime?
+  closedAt        DateTime?
+  allocatedAt     DateTime?
+  announcedAt     DateTime?
+  cancelReason    String?
+  createdById     String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  items        PreorderItem[]
+  reservations PreorderReservation[]
+
+  @@index([status, countryId])
+  @@index([vendorCompanyId, status])
+}
+
+/// A product in a campaign: its price, tier prices by total pre-ordered, per-buyer limits and the supply available.
+model PreorderItem {
+  id         String  @id @default(cuid())
+  campaignId String
+  offerId    String
+  /// price per pack (net) before any tier
+  unitNet    Decimal @db.Decimal(18, 4)
+  /// [{ minTotal: 100, unitNet: 9.5 }, …] — the more everyone pre-orders, the lower the price for everyone
+  tiers      Json    @default("[]")
+  minQty     Int     @default(1)
+  maxQty     Int?
+  /// packs available (null = no limit); above it the campaign's allocation rule decides
+  supplyQty  Int?
+  sort       Int     @default(0)
+
+  campaign PreorderCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  lines    PreorderLine[]
+
+  @@index([campaignId])
+}
+
+/// A buyer's pre-order in a campaign (one per buyer per campaign).
+model PreorderReservation {
+  id               String    @id @default(cuid())
+  number           String    @unique // PR-2026-000001
+  campaignId       String
+  buyerCompanyId   String
+  addressId        String
+  deliveryDate     DateTime
+  /// PLACED | ALLOCATED (less than asked — confirm or decline) | CONFIRMED | ORDERED | CANCELLED | DECLINED | FAILED
+  status           String    @default("PLACED")
+  depositAmount    Decimal   @default(0) @db.Decimal(18, 2)
+  depositRequestId String?
+  note             String?
+  failReason       String?
+  cancelReason     String?
+  cancelledAt      DateTime?
+  confirmedAt      DateTime?
+  orderIds         String[]
+  createdById      String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  campaign PreorderCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  lines    PreorderLine[]
+
+  @@unique([campaignId, buyerCompanyId])
+  @@index([buyerCompanyId, status])
+}
+
+model PreorderLine {
+  id            String   @id @default(cuid())
+  reservationId String
+  itemId        String
+  qty           Int
+  allocatedQty  Int?
+  /// the final price per pack (tier reached), set at allocation
+  unitNet       Decimal? @db.Decimal(18, 4)
+
+  reservation PreorderReservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  item        PreorderItem        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([reservationId, itemId])
+}
+
+/// A price lock: a quantity of one product at a fixed price, taken in call-offs until a date.
+model PriceLock {
+  id               String    @id @default(cuid())
+  number           String    @unique // PL-2026-000001
+  vendorCompanyId  String
+  buyerCompanyId   String
+  offerId          String
+  /// price per pack (net) asked / agreed
+  unitNet          Decimal   @db.Decimal(18, 4)
+  /// the price list price when it was requested (for "you saved")
+  listUnitNet      Decimal   @db.Decimal(18, 4)
+  qtyTotal         Int
+  qtyTaken         Int       @default(0)
+  months           Int
+  validUntil       DateTime?
+  /// REQUESTED | ACTIVE | REJECTED | CANCELLED | EXPIRED | DONE
+  status           String    @default("REQUESTED")
+  depositPct       Int       @default(0)
+  depositAmount    Decimal   @default(0) @db.Decimal(18, 2)
+  depositRequestId String?
+  note             String?
+  reviewNote       String?
+  decidedById      String?
+  decidedAt        DateTime?
+  remindedAt       DateTime?
+  createdById      String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  calloffs PriceLockCalloff[]
+
+  @@index([buyerCompanyId, status])
+  @@index([vendorCompanyId, status])
+}
+
+model PriceLockCalloff {
+  id          String   @id @default(cuid())
+  lockId      String
+  qty         Int
+  orderId     String
+  orderNumber String
+  createdById String
+  createdAt   DateTime @default(now())
+
+  lock PriceLock @relation(fields: [lockId], references: [id], onDelete: Cascade)
+
+  @@index([lockId])
+}

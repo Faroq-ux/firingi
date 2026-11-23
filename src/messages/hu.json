@@ -950,7 +950,8 @@
     "Food Safety Training": "Élelmiszer-biztonsági képzés",
     "Logbook Setup": "Napló beállítása",
     "Price Benchmark": "Árösszehasonlítás",
-    "Price Position": "Árpozíció"
+    "Price Position": "Árpozíció",
+    "Pre-orders & Price Locks": "Előrendelések és árrögzítések"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Évente {amount} összeget takaríthat meg",
       "body": "{count} terméknél többet fizet, mint a hasonló vállalkozások. Nézze meg, hol — és a FIRINGI olcsóbb ajánlatait."
+    },
+    "preorder_campaign_open": {
+      "title": "Új előrendelés: {title}",
+      "body": "{supplier} előrendelést nyitott — rendeljen előre eddig: {date}."
+    },
+    "preorder_allocated": {
+      "title": "Előrendelés {number}: mennyiségek meghatározva",
+      "body": "{title}: {lines} (kiosztott / igényelt)."
+    },
+    "preorder_ordered": {
+      "title": "Előrendelés {number}: megrendelve",
+      "body": "{title}: {order} rendelés leadva szállításra."
+    },
+    "preorder_failed": {
+      "title": "Előrendelés {number}: nem sikerült megrendelni",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Előrendelés {number}: törölve",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Előrendelés {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Előrendelés {number}: ellenőrzésre vár",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Árrögzítési kérelem: {number}",
+      "body": "{company} {qty} csomag {product} terméket kér mai áron {months} hónapra."
+    },
+    "pricelock_review": {
+      "title": "Árrögzítés {number}: jóváhagyásra vár",
+      "body": "{company}: érték {value}"
+    },
+    "pricelock_decided": {
+      "title": "Árrögzítés {number}: {decision}",
+      "body": "Ár: {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Árrögzítés {number} lejárata: {date}",
+      "body": "{product}: még {left} csomag hívható le a rögzített áron."
+    },
+    "pricelock_expired": {
+      "title": "Árrögzítés {number}: lejárt",
+      "body": "{left} csomag nem lett lehívva."
+    },
+    "website_job_application": {
+      "title": "Új jelentkezés",
+      "body": "{name} jelentkezett: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Adatvédelmi szabályzat (GDPR)",
           "3": "Sütik",
           "4": "Cégadatok"
+        },
+        "company": {
+          "1": "Fenntarthatóság",
+          "2": "Karrier"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Belépés",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Szuvenírek és ajándékok",
           "13": "Csomagolóanyagok és kellékek",
           "14": "Kebab- és pizzakellékek"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Fenntarthatóság",
+        "lead": "Így dolgozik a FIRINGI a kevesebb pazarlásért és a hatékonyabb áruszállításért.",
+        "start": {
+          "1": "A FIRINGI éttermeket, kávézókat és üzleteket köt össze nagykereskedőkkel és forgalmazókkal Európa-szerte. Hisszük, hogy a jobb ellátási lánc egyben környezetkímélőbb is.",
+          "2": "Kevesebb élelmiszer-pazarlás — a vásárlók látják a lejárati dátumokat, az „először felhasználandó” listákat és a kiárusítási ajánlatokat, az el nem adott élelmiszer pedig a kuka helyett adományként kerülhet tovább.",
+          "3": "Kevesebb kilométer — szállítási útvonalainkat úgy tervezzük, hogy összevonjuk a rendeléseket és elkerüljük az üres fuvarokat, és minden kiszállítás CO₂-lábnyomát mérjük.",
+          "4": "Újrahasználható csomagolás — a ládákat, hordókat és egyéb visszaváltható göngyölegeket nyomon követjük és begyűjtjük, így újra és újra felhasználhatók.",
+          "5": "Használt sütőolaj — engedéllyel rendelkező partnereink gyűjtik be a konyhákból, és bioüzemanyagot készítenek belőle.",
+          "6": "Élelmiszer-biztonság — a hőmérsékleteket és az ellenőrzéseket digitálisan rögzítjük, a beszállító hűtőkamrájától egészen a konyháig.",
+          "7": "Folyamatosan fejlődünk. Ha ötlete vagy kérdése van, vegye fel velünk a kapcsolatot."
+        }
+      },
+      "careers": {
+        "title": "Karrier",
+        "lead": "Dolgozzon velünk, hogy a nagykereskedelmi beszerzés egyszerű legyen több ezer vállalkozás számára.",
+        "start": {
+          "1": "A FIRINGI egy növekvő európai csapat, amely nagykereskedelmi piacteret épít éttermek, kávézók és üzletek számára. Értékesítés, üzemeltetés, logisztika, ügyfélszolgálat és technológia területén dolgozunk.",
+          "2": "Nagyra értékeljük azokat, akik gyakorlatiasak, kedvesek az ügyfelekkel és a beszállítókkal, és szívesen tanulnak. Valódi felelősséget, barátságos csapatot és lehetőséget kínálunk egy naponta használt termék formálására.",
+          "3": "Nyitott pozícióinkat alább találja, vagy küldjön nekünk nyílt jelentkezést."
+        },
+        "openings": "Nyitott pozíciók",
+        "none": "Jelenleg nincs nyitott pozíciónk — nyílt jelentkezést azonban így is küldhet.",
+        "applyTitle": "Jelentkezés",
+        "applyLead": "Meséljen magáról. Minden jelentkezésre válaszolunk.",
+        "position": "Pozíció",
+        "openApplication": "Nyílt jelentkezés",
+        "link": "Link az önéletrajzához vagy LinkedIn-profiljához (nem kötelező)",
+        "linkHint": "https:// kezdetű link — fájlt ne csatoljon.",
+        "msg": "Miért a FIRINGI? (nem kötelező)",
+        "consent": "Hozzájárulok, hogy a FIRINGI a jelentkezésem elbírálása céljából megőrizze az adataimat, és a kiválasztási folyamat végén törölje azokat (GDPR).",
+        "send": "Jelentkezés elküldése",
+        "sent": "Köszönjük — megkaptuk jelentkezését, és hamarosan válaszolunk.",
+        "errLink": "A linknek https://-sel kell kezdődnie",
+        "errOff": "Jelenleg nem fogadunk jelentkezéseket.",
+        "mailSubject": "Megkaptuk jelentkezését",
+        "mailBody": "Köszönjük, hogy jelentkezett a FIRINGI-hez. Minden jelentkezést elolvasunk, és hamarosan válaszolunk.",
+        "type": {
+          "FULL_TIME": "Teljes munkaidő",
+          "PART_TIME": "Részmunkaidő",
+          "INTERNSHIP": "Szakmai gyakorlat",
+          "TEMPORARY": "Határozott idejű",
+          "FREELANCE": "Szabadúszó"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Alacsonyabb, mint amit a vevők általában fizetnek"
     },
     "vNone": "Nincs aktív ajánlat."
+  },
+  "preorders": {
+    "title": "Előrendelések és árrögzítések",
+    "intro": "Rendelje meg előre a szezonális árukat, az új termékeket és a hiánycikkeket, és rögzítse a mai árat arra, amire a következő hónapokban szüksége lesz.",
+    "sellerTitle": "Előrendelések és árrögzítések",
+    "sellerIntro": "Nyisson előrendeléseket vevőinek (szezonális áru, új termék, hiánycikk), és válaszoljon az árrögzítési kérelmekre. Tervezze beszerzéseit az előrendelések alapján.",
+    "tabOpen": "Nyitott előrendelések",
+    "tabMine": "Előrendeléseim",
+    "tabLocks": "Árrögzítések",
+    "tabCampaigns": "Előrendelési kampányaim",
+    "kind": {
+      "SEASONAL": "Szezonális",
+      "LAUNCH": "Új termék",
+      "SCARCE": "Hiánycikk"
+    },
+    "status": {
+      "DRAFT": "Piszkozat",
+      "PENDING": "FIRINGI jóváhagyására vár",
+      "OPEN": "Nyitott",
+      "CLOSED": "Lezárva",
+      "ALLOCATED": "Elosztva",
+      "DONE": "Befejezve",
+      "CANCELLED": "Törölve",
+      "REJECTED": "Nem jóváhagyva"
+    },
+    "resStatus": {
+      "PLACED": "Előrendelve",
+      "ALLOCATED": "Erősítse meg a mennyiséget",
+      "CONFIRMED": "Megerősítve",
+      "ORDERED": "Megrendelve",
+      "CANCELLED": "Törölve",
+      "DECLINED": "Elutasítva",
+      "FAILED": "Nem sikerült megrendelni"
+    },
+    "lockStatus": {
+      "REQUESTED": "A szállítóra vár",
+      "REVIEW": "FIRINGI jóváhagyására vár",
+      "ACTIVE": "Aktív",
+      "REJECTED": "Elutasítva",
+      "CANCELLED": "Törölve",
+      "EXPIRED": "Lejárt",
+      "DONE": "Mind lehívva"
+    },
+    "alloc": {
+      "PRO_RATA": "Az igényelt mennyiség arányában",
+      "FIRST_COME": "Érkezési sorrendben",
+      "LOYAL_FIRST": "Elsőként a törzsvásárlók"
+    },
+    "supplier": "Szállító",
+    "closes": "Lezárás: {date}",
+    "closesLabel": "Lezárás",
+    "opensLabel": "Megnyitás",
+    "deliveries": "Szállítás",
+    "deliveryDates": "Szállítási dátumok",
+    "deliveryDate": "Szállítási dátum",
+    "address": "Szállítási cím",
+    "note": "Megjegyzés (nem kötelező)",
+    "deposit": "Előleg {pct}%",
+    "depositLabel": "Előleg",
+    "depositDue": "Fizetendő előleg: {amount}",
+    "depositPaid": "Előleg kifizetve",
+    "payDeposit": "Előleg fizetése",
+    "depositHint": "Az előleg jóváírásként marad a fiókjában, és a számláiba beszámítjuk. Ha a szállító nem tud szállítani, jóváírásként megmarad.",
+    "suggested": "Önnek",
+    "suggestedHint": "Tavaly ilyenkor ezt vásárolta",
+    "product": "Termék",
+    "pack": "Csomag",
+    "priceNow": "Jelenlegi ár",
+    "perPack": "csomagonként",
+    "nextTier": "Még {missing} csomag összesített előrendelés → {price}",
+    "tiers": "Ár az összes előrendelt mennyiség szerint",
+    "tierRow": "{min} csomagtól: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · max. {max}",
+    "short": "Nagy a kereslet — elosztás lehetséges",
+    "qty": "Csomag",
+    "preorder": "Előrendelés",
+    "update": "Előrendelés módosítása",
+    "alreadyMine": "Itt már van előrendelése — a lezárásig módosíthatja.",
+    "placed": "Előrendelés leadva.",
+    "updated": "Előrendelés módosítva.",
+    "noOpen": "Jelenleg nincs Önnek nyitott előrendelés. Amikor egy szállítója nyit egyet, itt jelenik meg.",
+    "noMine": "Még nem rendelt elő semmit.",
+    "asked": "Igényelt",
+    "given": "Kiosztott",
+    "finalPrice": "Végső ár",
+    "cancel": "Törlés",
+    "cancelled": "Törölve.",
+    "accept": "Mennyiség elfogadása",
+    "decline": "Elutasítás",
+    "allocatedHint": "Kevés volt az áru — kevesebbet kapott, mint amennyit igényelt. Fogadja el vagy utasítsa el; válasz hiányában automatikusan elfogadottnak tekintjük.",
+    "orders": "Rendelések",
+    "failed": "Miért: {reason}",
+    "reason": "Indok: {reason}",
+    "allocRule": "Készlethiány esetén: {rule}",
+    "lockIntro": "Tartsa meg a mai árat egy olyan mennyiségre, amelyet a következő hónapokban vesz át. Amikor árura van szüksége, hívjon le belőle — ez egy normál rendelés a rögzített áron.",
+    "lockSuggest": "Gyakran vásárolt termékek",
+    "lockSuggestHint": "Kb. havi {n} csomag",
+    "lockFor": "Ár rögzítése",
+    "months": "Hónapok",
+    "lockRequest": "Árrögzítés kérése",
+    "lockRequested": "A kérelmet elküldtük a szállítónak.",
+    "noLocks": "Még nincs árrögzítés.",
+    "noSuggest": "Még nincs javaslat — előbb vásároljon néhányszor.",
+    "lockedPrice": "Rögzített ár",
+    "listPrice": "Ár a kéréskor",
+    "taken": "{taken} / {total} lehívva",
+    "left": "{left} maradt",
+    "until": "Lejárat: {date}",
+    "perMonthHint": "Havi kb. {n} a teljes mennyiség felhasználásához",
+    "saved": "Eddigi megtakarítás: {amount}",
+    "callOff": "Lehívás",
+    "callOffDone": "Rendelés leadva: {number}.",
+    "calloffs": "Lehívások",
+    "priceToday": "Mai ár",
+    "tierLabel": "Sávos árak",
+    "allocLabel": "Készlethiány esetén",
+    "none": "—",
+    "total": "Eddig előrendelve",
+    "value": "Érték",
+    "sellerNewCampaign": "Új előrendelés",
+    "sellerNoCampaigns": "Még nincs előrendelés. Nyisson egyet szezonra, új termékre vagy hiánycikkre.",
+    "sellerBuyers": "Vevők",
+    "sellerProducts": "Termékek",
+    "sellerKind": "Típus",
+    "sellerTitleField": "Cím",
+    "sellerDescription": "Leírás (nem kötelező)",
+    "sellerAddDate": "Dátum hozzáadása",
+    "sellerRemove": "Eltávolítás",
+    "sellerAddProduct": "Termék hozzáadása",
+    "sellerChooseProduct": "Válasszon terméket",
+    "sellerPrice": "Ár csomagonként",
+    "sellerMin": "Min. vevőnként",
+    "sellerMax": "Max. vevőnként",
+    "sellerSupply": "Elérhető csomagok",
+    "sellerSupplyHint": "Üres = nincs korlát",
+    "sellerAddTier": "Sáv hozzáadása",
+    "sellerTierFrom": "Összesen ennyi csomagtól",
+    "sellerTierPrice": "Ár",
+    "sellerSave": "Piszkozat mentése",
+    "sellerSaved": "Mentve.",
+    "sellerSubmit": "Küldés a FIRINGI-nek",
+    "sellerSubmitAuto": "Előrendelés megnyitása",
+    "sellerSubmitted": "Elküldve.",
+    "sellerCloseNow": "Lezárás és elosztás most",
+    "sellerClosed": "Lezárva és elosztva.",
+    "sellerCancel": "Előrendelés törlése",
+    "sellerCancelReason": "Miért törli?",
+    "sellerOrderNow": "Rendelések leadása most",
+    "sellerOrdered": "Leadott rendelések: {n}.",
+    "sellerPlan": "Terv: csomagok szállítási dátum szerint",
+    "sellerReservations": "Előrendelések",
+    "sellerReviewNote": "FIRINGI megjegyzése: {note}",
+    "sellerDeposit": "Előleg (%)",
+    "sellerOpens": "Megnyitás",
+    "sellerCloses": "Lezárás",
+    "sellerLocks": "Árrögzítési kérelmek",
+    "sellerLocksActive": "Árrögzítések",
+    "sellerNoLocks": "Nincs árrögzítési kérelem.",
+    "sellerAcceptAt": "Elfogadás ezen az áron",
+    "sellerDepositPct": "Előleg %",
+    "sellerAccept": "Elfogadás",
+    "sellerReject": "Elutasítás",
+    "sellerDecided": "Megválaszolva.",
+    "sellerCommitted": "Még lehívandó",
+    "sellerBuyer": "Vevő",
+    "sellerPerMonth": "~ havonta",
+    "sellerMonths": "{n} hónap"
   }
 }

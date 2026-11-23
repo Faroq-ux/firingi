@@ -10,6 +10,8 @@ const FOOT: Record<"buy" | "sell" | "help" | "legal", string[]> = {
   help: ["#faq", "#contact", "/status", "/login"],
   legal: ["/legal/terms", "/legal/privacy", "/legal/cookies", "/legal/company"],
 };
+/** FIRINGI's own pages (FIRINGI only), each shown when FIRINGI switched it on. */
+const COMPANY: { page: "sustainability" | "careers"; href: string; n: number }[] = [{ page: "sustainability", href: "/sustainability", n: 1 }, { page: "careers", href: "/careers", n: 2 }];
 
 export function languageList(locale: string) {
   return (UI_LOCALES as readonly string[]).map((code) => {
@@ -61,6 +63,12 @@ export function LandingFooter({ s, t, locale, home, buy, whatsapp }: { s: Landin
                 {(g === "buy" && buy ? buy : FOOT[g].map((href, i) => ({ href: fix(href), label: t(`foot.links.${g}.${i + 1}`) }))).map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
               </nav>
             ))}
+            {COMPANY.some((c) => s.about[c.page].on) && (
+              <nav aria-label={t("foot.company")} data-testid="foot-company">
+                <h4>{t("foot.company")}</h4>
+                {COMPANY.filter((c) => s.about[c.page].on).map((c) => <a key={c.href} href={c.href} data-testid={`foot-${c.page}`}>{t(`foot.links.company.${c.n}`)}</a>)}
+              </nav>
+            )}
           </div>
           <div className="fg-legalrow">
             <span>{t("foot.rights", { year })}{(s.company.legalName || s.company.nif) && ` ${[s.company.legalName, s.company.nif && `NIF ${s.company.nif}`, s.company.address].filter(Boolean).join(" · ")}`}</span>

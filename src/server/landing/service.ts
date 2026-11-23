@@ -33,8 +33,10 @@ function staff(ctx: Ctx, manage = true) {
 export async function saveLandingSettings(ctx: Ctx, input: LandingSettings) {
   staff(ctx);
   let v: LandingSettings;
-  try { v = cleanLanding(input, UI_LOCALES); } catch (e) { throw new ValidationError((e as Error).message); }
   const before = await landingSettings();
+  // the sustainability / careers pages are saved on their own (saveAboutSettings) — keep them unless given
+  const merged = { ...input, about: input.about ?? before.about, jobs: input.jobs ?? before.jobs, careersEmail: input.careersEmail ?? before.careersEmail };
+  try { v = cleanLanding(merged, UI_LOCALES); } catch (e) { throw new ValidationError((e as Error).message); }
   // a legal page whose text changed gets a new "last updated" date
   for (const p of LEGAL_PAGES) if (JSON.stringify(before.legal[p]) !== JSON.stringify(v.legal[p])) v.legalUpdated[p] = new Date().toISOString().slice(0, 10);
   await prisma.setting.upsert({

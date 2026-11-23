@@ -17,7 +17,7 @@ export const TOOL_LABEL: Record<string, string> = {
   sales_summary: "Sales summary", breakdown: "Breakdown", demand_forecast: "Demand forecast", stock_outlook: "Stock outlook", reorder_outlook: "Reorder timing",
   supplier_alternatives: "Supplier alternatives", margin_opportunities: "Margin opportunities", delivery_risk: "Delivery risk", supplier_scorecards: "Supplier scorecards",
   find_orders: "Orders", search_catalogue: "Catalogue", open_suggestions: "Suggestions", profit_and_loss: "Profit & loss",
-  my_services: "My services", my_food_safety: "Food safety logbook", price_check: "Price check", request_collection: "Collection request", services_overview: "Services",
+  my_services: "My services", my_food_safety: "Food safety logbook", price_check: "Price check", my_preorders: "Pre-orders & price locks", preorder_demand: "Pre-order demand", request_collection: "Collection request", services_overview: "Services",
 };
 
 /** Why an open order may be late (delivery risk); `n` = hours / products / orders. */

@@ -950,7 +950,8 @@
     "Food Safety Training": "Elintarviketurvallisuuskoulutus",
     "Logbook Setup": "Omavalvontakirjan asetukset",
     "Price Benchmark": "Hintavertailu",
-    "Price Position": "Hinta-asema"
+    "Price Position": "Hinta-asema",
+    "Pre-orders & Price Locks": "Ennakkotilaukset & hintalukitukset"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Voisit säästää {amount} vuodessa",
       "body": "Maksat {count} tuotteesta enemmän kuin vastaavat yritykset. Katso missä — ja halvemmat tarjoukset FIRINGIssä."
+    },
+    "preorder_campaign_open": {
+      "title": "Uusi ennakkotilaus: {title}",
+      "body": "{supplier} avasi ennakkotilauksen — tilaa etukäteen {date} mennessä."
+    },
+    "preorder_allocated": {
+      "title": "Ennakkotilaus {number}: määrät vahvistettu",
+      "body": "{title}: {lines} (myönnetty / pyydetty)."
+    },
+    "preorder_ordered": {
+      "title": "Ennakkotilaus {number} tilattu",
+      "body": "{title}: tilaus {order} tehty toimitettavaksi."
+    },
+    "preorder_failed": {
+      "title": "Ennakkotilausta {number} ei voitu tilata",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Ennakkotilaus {number} peruttu",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Ennakkotilaus {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Ennakkotilaus {number} tarkistettavana",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Hintalukituspyyntö {number}",
+      "body": "{company} haluaa {qty} pakkausta tuotetta {product} tämän päivän hintaan {months} kuukaudeksi."
+    },
+    "pricelock_review": {
+      "title": "Hintalukitus {number} hyväksyttävänä",
+      "body": "{company}: arvo {value}"
+    },
+    "pricelock_decided": {
+      "title": "Hintalukitus {number}: {decision}",
+      "body": "Hinta {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Hintalukitus {number} päättyy {date}",
+      "body": "{left} pakkausta tuotetta {product} vielä tilaamatta lukittuun hintaan."
+    },
+    "pricelock_expired": {
+      "title": "Hintalukitus {number} päättyi",
+      "body": "{left} pakkausta jäi tilaamatta."
+    },
+    "website_job_application": {
+      "title": "Uusi työhakemus",
+      "body": "{name} haki: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Tietosuojaseloste (tietosuoja-asetus)",
           "3": "Evästeet",
           "4": "Yrityksen tiedot"
+        },
+        "company": {
+          "1": "Vastuullisuus",
+          "2": "Ura"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Kirjaudu",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Matkamuistot ja lahjat",
           "13": "Pakkaukset ja tarvikkeet",
           "14": "Kebab- ja pizzatarvikkeet"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Vastuullisuus",
+        "lead": "Näin FIRINGI vähentää hävikkiä ja kuljettaa tavaraa tehokkaammin.",
+        "start": {
+          "1": "FIRINGI yhdistää ravintolat, kahvilat ja kaupat tukkureihin ja jakelijoihin kaikkialla Euroopassa. Uskomme, että parempi toimitusketju on myös kevyempi.",
+          "2": "Vähemmän ruokahävikkiä — asiakkaat näkevät viimeiset käyttöpäivät, ensin käytettävien tuotteiden listat ja tyhjennysmyynnit, ja myymätön ruoka voidaan lahjoittaa roskiin heittämisen sijaan.",
+          "3": "Vähemmän kilometrejä — toimitusreitit suunnitellaan niin, että tilaukset yhdistetään ja tyhjiä ajoja vältetään, ja jokaisen toimituksen CO₂-jalanjälki mitataan.",
+          "4": "Uudelleenkäytettävät pakkaukset — laatikot, tynnyrit ja muut palautettavat pakkaukset seurataan ja kerätään, jotta niitä käytetään yhä uudelleen.",
+          "5": "Käytetty paistoöljy — luvan saaneet kumppanit keräävät sen keittiöistä ja jalostavat biopolttoaineeksi.",
+          "6": "Elintarviketurvallisuus — lämpötilat ja tarkastukset kirjataan digitaalisesti toimittajan kylmähuoneesta keittiöön asti.",
+          "7": "Kehitämme toimintaamme jatkuvasti. Jos sinulla on idea tai kysyttävää, ota meihin yhteyttä."
+        }
+      },
+      "careers": {
+        "title": "Ura",
+        "lead": "Tule mukaan tekemään tukkukaupasta helppoa tuhansille yrityksille.",
+        "start": {
+          "1": "FIRINGI on kasvava tiimi Euroopassa, ja rakennamme tukkukaupan markkinapaikkaa ravintoloille, kahviloille ja kaupoille. Työskentelemme myynnin, operaatioiden, logistiikan, asiakastuen ja teknologian parissa.",
+          "2": "Arvostamme ihmisiä, jotka ovat käytännöllisiä, ystävällisiä asiakkaille ja toimittajille ja innokkaita oppimaan. Tarjoamme todellista vastuuta, mukavan tiimin ja mahdollisuuden vaikuttaa tuotteeseen, jota käytetään joka päivä.",
+          "3": "Katso avoimet työpaikkamme alta tai lähetä avoin hakemus."
+        },
+        "openings": "Avoimet työpaikat",
+        "none": "Avoimia työpaikkoja ei ole juuri nyt — voit silti lähettää avoimen hakemuksen.",
+        "applyTitle": "Hae",
+        "applyLead": "Kerro meille itsestäsi. Vastaamme jokaiseen hakemukseen.",
+        "position": "Tehtävä",
+        "openApplication": "Avoin hakemus",
+        "link": "Linkki CV:hen tai LinkedIn-profiiliin (valinnainen)",
+        "linkHint": "Linkki, joka alkaa https:// — ei tiedostoja.",
+        "msg": "Miksi FIRINGI? (valinnainen)",
+        "consent": "Hyväksyn, että FIRINGI säilyttää tietoni hakemukseni käsittelyä varten ja poistaa ne, kun rekrytointi on päättynyt (GDPR).",
+        "send": "Lähetä hakemus",
+        "sent": "Kiitos — olemme vastaanottaneet hakemuksesi ja vastaamme pian.",
+        "errLink": "Linkin täytyy alkaa https://",
+        "errOff": "Haku on tällä hetkellä suljettu.",
+        "mailSubject": "Olemme vastaanottaneet hakemuksesi",
+        "mailBody": "Kiitos hakemuksestasi FIRINGIlle. Luemme jokaisen hakemuksen ja vastaamme pian.",
+        "type": {
+          "FULL_TIME": "Kokoaikainen",
+          "PART_TIME": "Osa-aikainen",
+          "INTERNSHIP": "Harjoittelu",
+          "TEMPORARY": "Määräaikainen",
+          "FREELANCE": "Freelancer"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Alle sen, mitä ostajat yleensä maksavat"
     },
     "vNone": "Ei aktiivisia tarjouksia."
+  },
+  "preorders": {
+    "title": "Ennakkotilaukset & hintalukitukset",
+    "intro": "Tilaa sesonkituotteet, uutuudet ja niukasti saatavilla olevat tuotteet etukäteen ja lukitse tämän päivän hinta sille, mitä tarvitset tulevina kuukausina.",
+    "sellerTitle": "Ennakkotilaukset & hintalukitukset",
+    "sellerIntro": "Avaa ennakkotilauksia asiakkaillesi (sesonki, uutuudet, niukka saatavuus) ja vastaa hintalukituspyyntöihin. Suunnittele ostot ennakkotilausten perusteella.",
+    "tabOpen": "Avoimet ennakkotilaukset",
+    "tabMine": "Omat ennakkotilaukset",
+    "tabLocks": "Hintalukitukset",
+    "tabCampaigns": "Omat ennakkotilauskampanjat",
+    "kind": {
+      "SEASONAL": "Sesonki",
+      "LAUNCH": "Uutuus",
+      "SCARCE": "Niukka saatavuus"
+    },
+    "status": {
+      "DRAFT": "Luonnos",
+      "PENDING": "Odottaa FIRINGIä",
+      "OPEN": "Avoin",
+      "CLOSED": "Suljettu",
+      "ALLOCATED": "Jaettu",
+      "DONE": "Valmis",
+      "CANCELLED": "Peruttu",
+      "REJECTED": "Ei hyväksytty"
+    },
+    "resStatus": {
+      "PLACED": "Ennakkotilattu",
+      "ALLOCATED": "Vahvista määrä",
+      "CONFIRMED": "Vahvistettu",
+      "ORDERED": "Tilattu",
+      "CANCELLED": "Peruttu",
+      "DECLINED": "Hylätty",
+      "FAILED": "Tilaus ei onnistunut"
+    },
+    "lockStatus": {
+      "REQUESTED": "Odottaa toimittajaa",
+      "REVIEW": "Odottaa FIRINGIä",
+      "ACTIVE": "Voimassa",
+      "REJECTED": "Hylätty",
+      "CANCELLED": "Peruttu",
+      "EXPIRED": "Päättynyt",
+      "DONE": "Kaikki tilattu"
+    },
+    "alloc": {
+      "PRO_RATA": "Suhteessa kunkin pyytämään määrään",
+      "FIRST_COME": "Saapumisjärjestyksessä",
+      "LOYAL_FIRST": "Vakioasiakkaat ensin"
+    },
+    "supplier": "Toimittaja",
+    "closes": "Sulkeutuu {date}",
+    "closesLabel": "Sulkeutuu",
+    "opensLabel": "Avautuu",
+    "deliveries": "Toimitus",
+    "deliveryDates": "Toimituspäivät",
+    "deliveryDate": "Toimituspäivä",
+    "address": "Toimitusosoite",
+    "note": "Huomautus (valinnainen)",
+    "deposit": "Ennakkomaksu {pct}%",
+    "depositLabel": "Ennakkomaksu",
+    "depositDue": "Maksettava ennakkomaksu: {amount}",
+    "depositPaid": "Ennakkomaksu maksettu",
+    "payDeposit": "Maksa ennakkomaksu",
+    "depositHint": "Ennakkomaksu jää tilillesi hyvitykseksi ja käytetään laskuihisi. Jos toimittaja ei pysty toimittamaan, se jää hyvitykseksi.",
+    "suggested": "Sinulle",
+    "suggestedHint": "Ostit tätä suunnilleen tähän aikaan viime vuonna",
+    "product": "Tuote",
+    "pack": "Pakkaus",
+    "priceNow": "Hinta nyt",
+    "perPack": "/ pakkaus",
+    "nextTier": "Vielä {missing} pakkausta ennakkotilattuna yhteensä → {price}",
+    "tiers": "Hinta ennakkotilausten kokonaismäärän mukaan",
+    "tierRow": "{min} pakkauksesta alkaen: {price}",
+    "limits": "Väh. {min}",
+    "limitsMax": "Väh. {min} · enint. {max}",
+    "short": "Suuri kysyntä — määriä voidaan jakaa",
+    "qty": "Pakkaukset",
+    "preorder": "Ennakkotilaa",
+    "update": "Päivitä ennakkotilaus",
+    "alreadyMine": "Olet tehnyt tähän ennakkotilauksen — voit muuttaa sitä, kunnes se sulkeutuu.",
+    "placed": "Ennakkotilaus tehty.",
+    "updated": "Ennakkotilaus päivitetty.",
+    "noOpen": "Sinulle ei ole nyt avoimia ennakkotilauksia. Kun toimittajasi avaa sellaisen, se näkyy tässä.",
+    "noMine": "Et ole vielä tehnyt ennakkotilauksia.",
+    "asked": "Pyydetty",
+    "given": "Myönnetty",
+    "finalPrice": "Lopullinen hinta",
+    "cancel": "Peru",
+    "cancelled": "Peruttu.",
+    "accept": "Hyväksy tämä määrä",
+    "decline": "Hylkää",
+    "allocatedHint": "Saatavuus oli niukka — sait vähemmän kuin pyysit. Hyväksy tai hylkää; ilman vastausta määrä hyväksytään automaattisesti.",
+    "orders": "Tilaukset",
+    "failed": "Miksi: {reason}",
+    "reason": "Syy: {reason}",
+    "allocRule": "Niukan saatavuuden sattuessa: {rule}",
+    "lockIntro": "Säilytä tämän päivän hinta määrälle, jonka otat tulevien kuukausien aikana. Aina kun tarvitset tavaraa, tilaa erä — tavallinen tilaus lukittuun hintaan.",
+    "lockSuggest": "Usein ostamasi tuotteet",
+    "lockSuggestHint": "Noin {n} pakkausta kuukaudessa",
+    "lockFor": "Lukitse hinta",
+    "months": "Kuukaudet",
+    "lockRequest": "Pyydä hintalukitusta",
+    "lockRequested": "Pyyntö lähetetty toimittajalle.",
+    "noLocks": "Ei vielä hintalukituksia.",
+    "noSuggest": "Ei vielä ehdotettavaa — osta ensin muutaman kerran.",
+    "lockedPrice": "Lukittu hinta",
+    "listPrice": "Hinta pyyntöhetkellä",
+    "taken": "{taken} / {total} tilattu",
+    "left": "{left} jäljellä",
+    "until": "{date} asti",
+    "perMonthHint": "Noin {n} kuukaudessa, jotta kaikki tulee käytettyä",
+    "saved": "Säästetty tähän mennessä: {amount}",
+    "callOff": "Tilaa erä",
+    "callOffDone": "Tilaus {number} tehty.",
+    "calloffs": "Erätilaukset",
+    "priceToday": "Hinta tänään",
+    "tierLabel": "Porrashinnat",
+    "allocLabel": "Niukan saatavuuden sattuessa",
+    "none": "—",
+    "total": "Ennakkotilattu tähän mennessä",
+    "value": "Arvo",
+    "sellerNewCampaign": "Uusi ennakkotilaus",
+    "sellerNoCampaigns": "Ei vielä ennakkotilauksia. Avaa sellainen sesonkia, uutuutta tai niukasti saatavilla olevia tuotteita varten.",
+    "sellerBuyers": "Ostajat",
+    "sellerProducts": "Tuotteet",
+    "sellerKind": "Tyyppi",
+    "sellerTitleField": "Otsikko",
+    "sellerDescription": "Kuvaus (valinnainen)",
+    "sellerAddDate": "Lisää päivämäärä",
+    "sellerRemove": "Poista",
+    "sellerAddProduct": "Lisää tuote",
+    "sellerChooseProduct": "Valitse tuote",
+    "sellerPrice": "Hinta / pakkaus",
+    "sellerMin": "Väh. / ostaja",
+    "sellerMax": "Enint. / ostaja",
+    "sellerSupply": "Saatavilla olevat pakkaukset",
+    "sellerSupplyHint": "Tyhjä = ei rajaa",
+    "sellerAddTier": "Lisää porras",
+    "sellerTierFrom": "Pakkauksia yhteensä alkaen",
+    "sellerTierPrice": "Hinta",
+    "sellerSave": "Tallenna luonnos",
+    "sellerSaved": "Tallennettu.",
+    "sellerSubmit": "Lähetä FIRINGIlle",
+    "sellerSubmitAuto": "Avaa ennakkotilaus",
+    "sellerSubmitted": "Lähetetty.",
+    "sellerCloseNow": "Sulje nyt ja jaa",
+    "sellerClosed": "Suljettu ja jaettu.",
+    "sellerCancel": "Peru ennakkotilaus",
+    "sellerCancelReason": "Miksi perut?",
+    "sellerOrderNow": "Tee tilaukset nyt",
+    "sellerOrdered": "Tilauksia tehty: {n}.",
+    "sellerPlan": "Suunnitelma: pakkaukset toimituspäivittäin",
+    "sellerReservations": "Ennakkotilaukset",
+    "sellerReviewNote": "FIRINGIn huomautus: {note}",
+    "sellerDeposit": "Ennakkomaksu (%)",
+    "sellerOpens": "Avautuu",
+    "sellerCloses": "Sulkeutuu",
+    "sellerLocks": "Hintalukituspyynnöt",
+    "sellerLocksActive": "Hintalukitukset",
+    "sellerNoLocks": "Ei hintalukituspyyntöjä.",
+    "sellerAcceptAt": "Hyväksy hintaan",
+    "sellerDepositPct": "Ennakkomaksu %",
+    "sellerAccept": "Hyväksy",
+    "sellerReject": "Hylkää",
+    "sellerDecided": "Vastattu.",
+    "sellerCommitted": "Vielä tilaamatta",
+    "sellerBuyer": "Ostaja",
+    "sellerPerMonth": "~ kuukaudessa",
+    "sellerMonths": "{n} kuukautta"
   }
 }

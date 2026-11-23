@@ -128,6 +128,13 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       if (portal !== "buy" || !a.buyer) off.add("BENCHMARK");
       if (portal !== "vendor" || !a.supplier) off.add("BENCHMARK_SUPPLIER");
     }
+    // Phase 71: pre-orders & price locks (sellers: distributors / wholesalers; buyers: the type they sell to)
+    {
+      const { preAccess } = await import("@/server/preorders/settings");
+      const a = await preAccess(ctx.company);
+      if (portal !== "buy" || !(a.buyerCampaigns || a.buyerLocks)) off.add("PREORDERS_BUYER");
+      if (portal !== "vendor" || !(a.sellerCampaigns || a.sellerLocks)) off.add("PREORDERS_SELLER");
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

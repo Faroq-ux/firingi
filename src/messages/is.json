@@ -950,7 +950,8 @@
     "Food Safety Training": "Þjálfun í matvælaöryggi",
     "Logbook Setup": "Uppsetning skráningarbókar",
     "Price Benchmark": "Verðsamanburður",
-    "Price Position": "Verðstaða"
+    "Price Position": "Verðstaða",
+    "Pre-orders & Price Locks": "Forpantanir og verðlæsingar"
   },
   "delivery": {
     "title": "Afhending",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Þú gætir sparað {amount} á ári",
       "body": "Á {count} vöru/vörum greiðir þú meira en sambærileg fyrirtæki. Sjáðu hvar — og ódýrari tilboð á FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Ný forpöntun: {title}",
+      "body": "{supplier} opnaði forpöntun — pantaðu fyrir fram til {date}."
+    },
+    "preorder_allocated": {
+      "title": "Forpöntun {number}: magn ákveðið",
+      "body": "{title}: {lines} (úthlutað / beðið um)."
+    },
+    "preorder_ordered": {
+      "title": "Forpöntun {number} pöntuð",
+      "body": "{title}: pöntun {order} skráð til afhendingar."
+    },
+    "preorder_failed": {
+      "title": "Ekki tókst að panta forpöntun {number}",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Hætt við forpöntun {number}",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Forpöntun {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Forpöntun {number} til yfirferðar",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Beiðni um verðlæsingu {number}",
+      "body": "{company} vill {qty} pakkningar af {product} á verði dagsins í {months} mánuði."
+    },
+    "pricelock_review": {
+      "title": "Verðlæsing {number} til samþykktar",
+      "body": "{company}: virði {value}"
+    },
+    "pricelock_decided": {
+      "title": "Verðlæsing {number}: {decision}",
+      "body": "Verð {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Verðlæsing {number} lýkur {date}",
+      "body": "{left} pakkningar af {product} eru eftir til úttektar á læstu verði."
+    },
+    "pricelock_expired": {
+      "title": "Verðlæsingu {number} lokið",
+      "body": "{left} pakkningar voru ekki teknar út."
+    },
+    "website_job_application": {
+      "title": "Ný starfsumsókn",
+      "body": "{name} sótti um: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Persónuverndarstefna (persónuverndarreglugerðin)",
           "3": "Vafrakökur",
           "4": "Upplýsingar um fyrirtækið"
+        },
+        "company": {
+          "1": "Sjálfbærni",
+          "2": "Störf"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Innskráning",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Minjagripir og gjafir",
           "13": "Umbúðir og rekstrarvörur",
           "14": "Kebab- og pítsuvörur"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Sjálfbærni",
+        "lead": "Hvernig FIRINGI vinnur að því að draga úr sóun og flytja vörur á skilvirkari hátt.",
+        "start": {
+          "1": "FIRINGI tengir veitingastaði, kaffihús og verslanir við heildsala og dreifingaraðila um alla Evrópu. Við trúum því að betri aðfangakeðja sé líka umhverfisvænni.",
+          "2": "Minni matarsóun — viðskiptavinir sjá síðasta notkunardag, lista yfir vörur sem á að nota fyrst og útsölutilboð, og óseldur matur getur farið í matargjafir í stað þess að enda í ruslinu.",
+          "3": "Færri kílómetrar — afhendingarleiðir okkar eru skipulagðar þannig að pantanir séu sameinaðar og komist sé hjá tómum ferðum, og CO₂-spor hverrar afhendingar er mælt.",
+          "4": "Fjölnota umbúðir — kassar, kútar og aðrar skilaumbúðir eru raktar og sóttar svo hægt sé að nota þær aftur og aftur.",
+          "5": "Notuð matarolía — löggiltir samstarfsaðilar sækja hana í eldhúsin og breyta henni í lífeldsneyti.",
+          "6": "Matvælaöryggi — hitastig og eftirlit er skráð stafrænt, frá kæliklefa birgisins alla leið í eldhúsið.",
+          "7": "Við erum stöðugt að bæta okkur. Ef þú ert með hugmynd eða spurningu skaltu hafa samband við okkur."
+        }
+      },
+      "careers": {
+        "title": "Störf",
+        "lead": "Vinndu með okkur að því að einfalda heildsöluviðskipti fyrir þúsundir fyrirtækja.",
+        "start": {
+          "1": "FIRINGI er vaxandi teymi í Evrópu sem byggir upp heildsölumarkaðstorg fyrir veitingastaði, kaffihús og verslanir. Við störfum við sölu, rekstur, flutninga, þjónustu við viðskiptavini og tækni.",
+          "2": "Við kunnum að meta fólk sem er lausnamiðað, vingjarnlegt við viðskiptavini og birgja og hefur gaman af að læra. Við bjóðum raunverulega ábyrgð, vinalegt teymi og tækifæri til að móta vöru sem er notuð á hverjum degi.",
+          "3": "Skoðaðu laus störf hér fyrir neðan eða sendu almenna umsókn."
+        },
+        "openings": "Laus störf",
+        "none": "Engin laus störf eru í boði eins og er — þú getur samt sent almenna umsókn.",
+        "applyTitle": "Sækja um",
+        "applyLead": "Segðu okkur frá þér. Við svörum öllum umsóknum.",
+        "position": "Starf",
+        "openApplication": "Almenn umsókn",
+        "link": "Tengill á ferilskrána þína eða LinkedIn (valfrjálst)",
+        "linkHint": "Tengill sem byrjar á https:// — engar skrár.",
+        "msg": "Af hverju FIRINGI? (valfrjálst)",
+        "consent": "Ég samþykki að FIRINGI geymi upplýsingarnar mínar til að meta umsókn mína og eyði þeim þegar ráðningarferlinu er lokið (GDPR).",
+        "send": "Senda umsókn",
+        "sent": "Takk — við höfum móttekið umsóknina þína og svörum fljótlega.",
+        "errLink": "Tengillinn verður að byrja á https://",
+        "errOff": "Ekki er tekið við umsóknum eins og er.",
+        "mailSubject": "Við höfum móttekið umsóknina þína",
+        "mailBody": "Takk fyrir að sækja um hjá FIRINGI. Við lesum allar umsóknir og svörum fljótlega.",
+        "type": {
+          "FULL_TIME": "Fullt starf",
+          "PART_TIME": "Hlutastarf",
+          "INTERNSHIP": "Starfsnám",
+          "TEMPORARY": "Tímabundið starf",
+          "FREELANCE": "Verktaka"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Undir því sem kaupendur greiða venjulega"
     },
     "vNone": "Engin virk tilboð."
+  },
+  "preorders": {
+    "title": "Forpantanir og verðlæsingar",
+    "intro": "Pantaðu árstíðabundnar vörur, nýjar vörur og vörur sem skortur er á fyrir fram, og læstu verði dagsins fyrir það sem þú þarft næstu mánuði.",
+    "sellerTitle": "Forpantanir og verðlæsingar",
+    "sellerIntro": "Opnaðu forpantanir fyrir viðskiptavini þína (árstíðabundið, nýjar vörur, skortur) og svaraðu beiðnum um verðlæsingu. Skipuleggðu innkaup út frá því sem hefur verið forpantað.",
+    "tabOpen": "Opnar forpantanir",
+    "tabMine": "Mínar forpantanir",
+    "tabLocks": "Verðlæsingar",
+    "tabCampaigns": "Forpöntunarherferðir mínar",
+    "kind": {
+      "SEASONAL": "Árstíðabundið",
+      "LAUNCH": "Ný vara",
+      "SCARCE": "Skortur"
+    },
+    "status": {
+      "DRAFT": "Drög",
+      "PENDING": "Bíður eftir FIRINGI",
+      "OPEN": "Opin",
+      "CLOSED": "Lokuð",
+      "ALLOCATED": "Úthlutað",
+      "DONE": "Lokið",
+      "CANCELLED": "Hætt við",
+      "REJECTED": "Ekki samþykkt"
+    },
+    "resStatus": {
+      "PLACED": "Forpantað",
+      "ALLOCATED": "Staðfestu magnið",
+      "CONFIRMED": "Staðfest",
+      "ORDERED": "Pantað",
+      "CANCELLED": "Hætt við",
+      "DECLINED": "Hafnað",
+      "FAILED": "Ekki tókst að panta"
+    },
+    "lockStatus": {
+      "REQUESTED": "Bíður eftir birgja",
+      "REVIEW": "Bíður eftir FIRINGI",
+      "ACTIVE": "Virk",
+      "REJECTED": "Hafnað",
+      "CANCELLED": "Hætt við",
+      "EXPIRED": "Lokið",
+      "DONE": "Allt tekið út"
+    },
+    "alloc": {
+      "PRO_RATA": "Í hlutfalli við það sem hver bað um",
+      "FIRST_COME": "Fyrstur kemur, fyrstur fær",
+      "LOYAL_FIRST": "Fastir viðskiptavinir fyrst"
+    },
+    "supplier": "Birgir",
+    "closes": "Lokar {date}",
+    "closesLabel": "Lokar",
+    "opensLabel": "Opnar",
+    "deliveries": "Afhending",
+    "deliveryDates": "Afhendingardagar",
+    "deliveryDate": "Afhendingardagur",
+    "address": "Afhendingarheimilisfang",
+    "note": "Athugasemd (valfrjálst)",
+    "deposit": "Innborgun {pct}%",
+    "depositLabel": "Innborgun",
+    "depositDue": "Innborgun til greiðslu: {amount}",
+    "depositPaid": "Innborgun greidd",
+    "payDeposit": "Greiða innborgun",
+    "depositHint": "Innborgunin er geymd sem inneign á reikningnum þínum og nýtt upp í reikningana þína. Ef birgirinn getur ekki afhent helst hún sem inneign.",
+    "suggested": "Fyrir þig",
+    "suggestedHint": "Þú keyptir þetta um þetta leyti í fyrra",
+    "product": "Vara",
+    "pack": "Pakkning",
+    "priceNow": "Verð núna",
+    "perPack": "á pakkningu",
+    "nextTier": "{missing} pakkningar í viðbót forpantaðar af öllum → {price}",
+    "tiers": "Verð eftir heildarforpöntun",
+    "tierRow": "frá {min} pakkningum: {price}",
+    "limits": "Lágm. {min}",
+    "limitsMax": "Lágm. {min} · hám. {max}",
+    "short": "Mikil eftirspurn — gæti verið skipt",
+    "qty": "Pakkningar",
+    "preorder": "Forpanta",
+    "update": "Uppfæra forpöntun",
+    "alreadyMine": "Þú hefur forpantað hér — þú getur breytt því þar til lokað er.",
+    "placed": "Forpöntun skráð.",
+    "updated": "Forpöntun uppfærð.",
+    "noOpen": "Engar forpantanir opnar fyrir þig núna. Þegar birgjar þínir opna eina birtist hún hér.",
+    "noMine": "Þú hefur ekki forpantað neitt enn.",
+    "asked": "Beðið um",
+    "given": "Úthlutað",
+    "finalPrice": "Lokaverð",
+    "cancel": "Hætta við",
+    "cancelled": "Hætt við.",
+    "accept": "Samþykkja þetta magn",
+    "decline": "Hafna",
+    "allocatedHint": "Skortur var á vörunni — þú fékkst minna en þú baðst um. Samþykktu eða hafnaðu; án svars er það samþykkt sjálfkrafa.",
+    "orders": "Pantanir",
+    "failed": "Hvers vegna: {reason}",
+    "reason": "Ástæða: {reason}",
+    "allocRule": "Ef skortur verður: {rule}",
+    "lockIntro": "Haltu verði dagsins fyrir magn sem þú tekur út næstu mánuði. Í hvert sinn sem þú þarft vörur tekur þú þær út — venjuleg pöntun á læstu verði.",
+    "lockSuggest": "Vörur sem þú kaupir oft",
+    "lockSuggestHint": "Um {n} pakkningar á mánuði",
+    "lockFor": "Læsa verðinu",
+    "months": "Mánuðir",
+    "lockRequest": "Biðja um verðlæsingu",
+    "lockRequested": "Beiðni send til birgis.",
+    "noLocks": "Engar verðlæsingar enn.",
+    "noSuggest": "Ekkert að stinga upp á enn — keyptu nokkrum sinnum fyrst.",
+    "lockedPrice": "Læst verð",
+    "listPrice": "Verð við beiðni",
+    "taken": "{taken} af {total} tekið út",
+    "left": "{left} eftir",
+    "until": "Til {date}",
+    "perMonthHint": "Um {n} á mánuði til að nýta allt",
+    "saved": "Sparað hingað til: {amount}",
+    "callOff": "Taka út",
+    "callOffDone": "Pöntun {number} skráð.",
+    "calloffs": "Úttektir",
+    "priceToday": "Verð í dag",
+    "tierLabel": "Þrepaverð",
+    "allocLabel": "Ef skortur verður",
+    "none": "—",
+    "total": "Forpantað hingað til",
+    "value": "Virði",
+    "sellerNewCampaign": "Ný forpöntun",
+    "sellerNoCampaigns": "Engar forpantanir enn. Opnaðu eina fyrir árstíð, nýja vöru eða vörur sem skortur er á.",
+    "sellerBuyers": "Kaupendur",
+    "sellerProducts": "Vörur",
+    "sellerKind": "Tegund",
+    "sellerTitleField": "Titill",
+    "sellerDescription": "Lýsing (valfrjálst)",
+    "sellerAddDate": "Bæta við dagsetningu",
+    "sellerRemove": "Fjarlægja",
+    "sellerAddProduct": "Bæta við vöru",
+    "sellerChooseProduct": "Veldu vöru",
+    "sellerPrice": "Verð á pakkningu",
+    "sellerMin": "Lágm. á kaupanda",
+    "sellerMax": "Hám. á kaupanda",
+    "sellerSupply": "Pakkningar í boði",
+    "sellerSupplyHint": "Autt = ekkert hámark",
+    "sellerAddTier": "Bæta við þrepi",
+    "sellerTierFrom": "Frá heildarfjölda pakkninga",
+    "sellerTierPrice": "Verð",
+    "sellerSave": "Vista drög",
+    "sellerSaved": "Vistað.",
+    "sellerSubmit": "Senda til FIRINGI",
+    "sellerSubmitAuto": "Opna forpöntunina",
+    "sellerSubmitted": "Sent.",
+    "sellerCloseNow": "Loka núna og úthluta",
+    "sellerClosed": "Lokað og úthlutað.",
+    "sellerCancel": "Hætta við forpöntunina",
+    "sellerCancelReason": "Hvers vegna hættir þú við?",
+    "sellerOrderNow": "Panta núna",
+    "sellerOrdered": "Pantanir skráðar: {n}.",
+    "sellerPlan": "Áætlun: pakkningar eftir afhendingardegi",
+    "sellerReservations": "Forpantanir",
+    "sellerReviewNote": "Athugasemd FIRINGI: {note}",
+    "sellerDeposit": "Innborgun (%)",
+    "sellerOpens": "Opnar",
+    "sellerCloses": "Lokar",
+    "sellerLocks": "Beiðnir um verðlæsingu",
+    "sellerLocksActive": "Verðlæsingar",
+    "sellerNoLocks": "Engar beiðnir um verðlæsingu.",
+    "sellerAcceptAt": "Samþykkja á",
+    "sellerDepositPct": "Innborgun %",
+    "sellerAccept": "Samþykkja",
+    "sellerReject": "Hafna",
+    "sellerDecided": "Svarað.",
+    "sellerCommitted": "Eftir að taka út",
+    "sellerBuyer": "Kaupandi",
+    "sellerPerMonth": "~ á mánuði",
+    "sellerMonths": "{n} mánuðir"
   }
 }

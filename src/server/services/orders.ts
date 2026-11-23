@@ -95,6 +95,8 @@ export type PlaceOrderInput = {
    * No delivery fee or minimum, no stock reserved (the caller ships it from the van / the customer's shelf), no risk
    * hold; `paidNow` = paid on the spot or billed for goods already used (no credit check); `reason` for the history. */
   handover?: { warehouseId: string; paidNow: boolean; reason?: string } | null;
+  /** Phase 71: an order from a confirmed pre-order — the supplier agreed the quantities, so its delivery minimum doesn't apply. */
+  preorder?: boolean;
 };
 
 export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<import("@/server/buying/approvals").PlacedOrPending> {
@@ -156,7 +158,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   if (pc.coupon && !pc.coupon.ok) throw pc.coupon.error!;
   for (const part of pc.parts) {
     const d = part.decision;
-    if (!d.ok) {
+    if (!d.ok && !input.preorder) {
       const who = pc.parts.length > 1 ? `${nameOf(part.sellerId)}: ` : "";
       if (d.reason === "SMALL_ORDER_LIMIT")
         throw new AppError("SMALL_ORDER_LIMIT", `${who}You have used this month's small orders. Orders must now reach ${d.minimum.toFixed(2)} € (excl. VAT) — add ${d.missing.toFixed(2)} € more.`, 422);

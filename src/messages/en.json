@@ -2057,6 +2057,58 @@
     "benchmark_monthly_savings": {
       "title": "You could save {amount} a year",
       "body": "On {count} product(s) you pay more than similar businesses. See where — and cheaper offers on FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "New pre-order: {title}",
+      "body": "{supplier} opened a pre-order — order ahead until {date}."
+    },
+    "preorder_allocated": {
+      "title": "Pre-order {number}: quantities set",
+      "body": "{title}: {lines} (given / asked)."
+    },
+    "preorder_ordered": {
+      "title": "Pre-order {number} ordered",
+      "body": "{title}: order {order} placed for delivery."
+    },
+    "preorder_failed": {
+      "title": "Pre-order {number} could not be ordered",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Pre-order {number} cancelled",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Pre-order {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Pre-order {number} to review",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Price-lock request {number}",
+      "body": "{company} wants {qty} packs of {product} at today's price for {months} months."
+    },
+    "pricelock_review": {
+      "title": "Price lock {number} to approve",
+      "body": "{company}: value {value}"
+    },
+    "pricelock_decided": {
+      "title": "Price lock {number}: {decision}",
+      "body": "Price {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Price lock {number} ends {date}",
+      "body": "{left} packs of {product} still to call off at the locked price."
+    },
+    "pricelock_expired": {
+      "title": "Price lock {number} ended",
+      "body": "{left} packs were not called off."
+    },
+    "website_job_application": {
+      "title": "New job application",
+      "body": "{name} applied: {job}."
     }
   },
   "notifications": {
@@ -8241,8 +8293,13 @@
           "2": "Privacy policy (GDPR)",
           "3": "Cookies",
           "4": "Company details"
+        },
+        "company": {
+          "1": "Sustainability",
+          "2": "Careers"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Log in",
     "mail": {
@@ -8428,6 +8485,53 @@
           "12": "Souvenirs & Gifts",
           "13": "Packaging & Supplies",
           "14": "Kebab & Pizza Supplies"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Sustainability",
+        "lead": "How FIRINGI works to waste less and move goods more efficiently.",
+        "start": {
+          "1": "FIRINGI connects restaurants, cafés and shops with wholesalers and distributors across Europe. We believe a better supply chain is also a lighter one.",
+          "2": "Less food waste — customers see expiry dates, use-first lists and clearance deals, and unsold food can go to donation instead of the bin.",
+          "3": "Fewer kilometres — our delivery routes are planned to group orders and avoid empty trips, and each delivery's CO₂ footprint is measured.",
+          "4": "Reusable packaging — crates, kegs and other returnables are tracked and collected, so they are used again and again.",
+          "5": "Used cooking oil — collected from kitchens by licensed partners and turned into biofuel.",
+          "6": "Food safety — temperatures and checks are logged digitally, from the supplier's cold room to the kitchen.",
+          "7": "We keep improving. If you have an idea or a question, contact us."
+        }
+      },
+      "careers": {
+        "title": "Careers",
+        "lead": "Work with us to make wholesale simple for thousands of businesses.",
+        "start": {
+          "1": "FIRINGI is a growing team in Europe building the wholesale marketplace for restaurants, cafés and shops. We work across sales, operations, logistics, customer support and technology.",
+          "2": "We value people who are practical, kind to customers and suppliers, and happy to learn. We offer real responsibility, a friendly team and the chance to shape a product used every day.",
+          "3": "See our open positions below, or send an open application."
+        },
+        "openings": "Open positions",
+        "none": "There are no open positions right now — you can still send an open application.",
+        "applyTitle": "Apply",
+        "applyLead": "Tell us about yourself. We reply to every application.",
+        "position": "Position",
+        "openApplication": "Open application",
+        "link": "Link to your CV or LinkedIn (optional)",
+        "linkHint": "A link starting with https:// — no files.",
+        "msg": "Why FIRINGI? (optional)",
+        "consent": "I agree that FIRINGI keeps my details to consider my application and deletes them when the hiring is over (GDPR).",
+        "send": "Send application",
+        "sent": "Thank you — we received your application and will reply soon.",
+        "errLink": "The link must start with https://",
+        "errOff": "Applications are closed right now.",
+        "mailSubject": "We received your application",
+        "mailBody": "Thank you for applying to FIRINGI. We read every application and will reply soon.",
+        "type": {
+          "FULL_TIME": "Full-time",
+          "PART_TIME": "Part-time",
+          "INTERNSHIP": "Internship",
+          "TEMPORARY": "Temporary",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -9810,5 +9914,173 @@
       "BELOW": "Below what buyers usually pay"
     },
     "vNone": "No active offers."
+  },
+  "preorders": {
+    "title": "Pre-orders & Price Locks",
+    "intro": "Order seasonal goods, new products and goods in short supply ahead, and lock today's price for what you'll need in the coming months.",
+    "sellerTitle": "Pre-orders & Price Locks",
+    "sellerIntro": "Open pre-orders for your customers (seasonal, new products, short supply) and answer price-lock requests. Plan purchases from what is pre-ordered.",
+    "tabOpen": "Open pre-orders",
+    "tabMine": "My pre-orders",
+    "tabLocks": "Price locks",
+    "tabCampaigns": "My pre-order campaigns",
+    "kind": {
+      "SEASONAL": "Seasonal",
+      "LAUNCH": "New product",
+      "SCARCE": "Short supply"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING": "Waiting for FIRINGI",
+      "OPEN": "Open",
+      "CLOSED": "Closed",
+      "ALLOCATED": "Shared out",
+      "DONE": "Finished",
+      "CANCELLED": "Cancelled",
+      "REJECTED": "Not approved"
+    },
+    "resStatus": {
+      "PLACED": "Pre-ordered",
+      "ALLOCATED": "Confirm the quantity",
+      "CONFIRMED": "Confirmed",
+      "ORDERED": "Ordered",
+      "CANCELLED": "Cancelled",
+      "DECLINED": "Declined",
+      "FAILED": "Could not be ordered"
+    },
+    "lockStatus": {
+      "REQUESTED": "Waiting for the supplier",
+      "REVIEW": "Waiting for FIRINGI",
+      "ACTIVE": "Active",
+      "REJECTED": "Declined",
+      "CANCELLED": "Cancelled",
+      "EXPIRED": "Ended",
+      "DONE": "All taken"
+    },
+    "alloc": {
+      "PRO_RATA": "In proportion to what each asked",
+      "FIRST_COME": "First come, first served",
+      "LOYAL_FIRST": "Regular customers first"
+    },
+    "supplier": "Supplier",
+    "closes": "Closes {date}",
+    "closesLabel": "Closes",
+    "opensLabel": "Opens",
+    "deliveries": "Delivery",
+    "deliveryDates": "Delivery dates",
+    "deliveryDate": "Delivery date",
+    "address": "Delivery address",
+    "note": "Note (optional)",
+    "deposit": "Deposit {pct}%",
+    "depositLabel": "Deposit",
+    "depositDue": "Deposit to pay: {amount}",
+    "depositPaid": "Deposit paid",
+    "payDeposit": "Pay deposit",
+    "depositHint": "The deposit is kept as credit on your account and used on your invoices. If the supplier can't deliver, it stays as credit.",
+    "suggested": "For you",
+    "suggestedHint": "You bought this around this time last year",
+    "product": "Product",
+    "pack": "Pack",
+    "priceNow": "Price now",
+    "perPack": "per pack",
+    "nextTier": "{missing} more packs pre-ordered by everyone → {price}",
+    "tiers": "Price by total pre-ordered",
+    "tierRow": "from {min} packs: {price}",
+    "limits": "Min {min}",
+    "limitsMax": "Min {min} · max {max}",
+    "short": "High demand — may be shared",
+    "qty": "Packs",
+    "preorder": "Pre-order",
+    "update": "Update pre-order",
+    "alreadyMine": "You have pre-ordered here — you can change it until it closes.",
+    "placed": "Pre-order placed.",
+    "updated": "Pre-order updated.",
+    "noOpen": "No pre-orders open for you right now. When your suppliers open one, it appears here.",
+    "noMine": "You haven't pre-ordered anything yet.",
+    "asked": "Asked",
+    "given": "Given",
+    "finalPrice": "Final price",
+    "cancel": "Cancel",
+    "cancelled": "Cancelled.",
+    "accept": "Accept this quantity",
+    "decline": "Decline",
+    "allocatedHint": "Supply was short — you were given less than you asked. Accept or decline; without an answer it is accepted automatically.",
+    "orders": "Orders",
+    "failed": "Why: {reason}",
+    "reason": "Reason: {reason}",
+    "allocRule": "If supply is short: {rule}",
+    "lockIntro": "Keep today's price for a quantity you'll take over the coming months. Each time you need goods, call them off — a normal order at the locked price.",
+    "lockSuggest": "Products you buy often",
+    "lockSuggestHint": "About {n} packs a month",
+    "lockFor": "Lock the price",
+    "months": "Months",
+    "lockRequest": "Ask for a price lock",
+    "lockRequested": "Request sent to the supplier.",
+    "noLocks": "No price locks yet.",
+    "noSuggest": "Nothing to suggest yet — buy a few times first.",
+    "lockedPrice": "Locked price",
+    "listPrice": "Price when asked",
+    "taken": "{taken} of {total} taken",
+    "left": "{left} left",
+    "until": "Until {date}",
+    "perMonthHint": "About {n} a month to use it all",
+    "saved": "Saved so far: {amount}",
+    "callOff": "Call off",
+    "callOffDone": "Order {number} placed.",
+    "calloffs": "Call-offs",
+    "priceToday": "Price today",
+    "tierLabel": "Tier prices",
+    "allocLabel": "If supply is short",
+    "none": "—",
+    "total": "Pre-ordered so far",
+    "value": "Value",
+    "sellerNewCampaign": "New pre-order",
+    "sellerNoCampaigns": "No pre-orders yet. Open one for a season, a new product or goods in short supply.",
+    "sellerBuyers": "Buyers",
+    "sellerProducts": "Products",
+    "sellerKind": "Kind",
+    "sellerTitleField": "Title",
+    "sellerDescription": "Description (optional)",
+    "sellerAddDate": "Add a date",
+    "sellerRemove": "Remove",
+    "sellerAddProduct": "Add product",
+    "sellerChooseProduct": "Choose a product",
+    "sellerPrice": "Price per pack",
+    "sellerMin": "Min per buyer",
+    "sellerMax": "Max per buyer",
+    "sellerSupply": "Packs available",
+    "sellerSupplyHint": "Empty = no limit",
+    "sellerAddTier": "Add tier",
+    "sellerTierFrom": "From total packs",
+    "sellerTierPrice": "Price",
+    "sellerSave": "Save draft",
+    "sellerSaved": "Saved.",
+    "sellerSubmit": "Send to FIRINGI",
+    "sellerSubmitAuto": "Open the pre-order",
+    "sellerSubmitted": "Sent.",
+    "sellerCloseNow": "Close now and share out",
+    "sellerClosed": "Closed and shared out.",
+    "sellerCancel": "Cancel the pre-order",
+    "sellerCancelReason": "Why are you cancelling?",
+    "sellerOrderNow": "Place orders now",
+    "sellerOrdered": "Orders placed: {n}.",
+    "sellerPlan": "Plan: packs per delivery date",
+    "sellerReservations": "Pre-orders",
+    "sellerReviewNote": "FIRINGI's note: {note}",
+    "sellerDeposit": "Deposit (%)",
+    "sellerOpens": "Opens",
+    "sellerCloses": "Closes",
+    "sellerLocks": "Price-lock requests",
+    "sellerLocksActive": "Price locks",
+    "sellerNoLocks": "No price-lock requests.",
+    "sellerAcceptAt": "Accept at",
+    "sellerDepositPct": "Deposit %",
+    "sellerAccept": "Accept",
+    "sellerReject": "Decline",
+    "sellerDecided": "Answered.",
+    "sellerCommitted": "Still to be called off",
+    "sellerBuyer": "Buyer",
+    "sellerPerMonth": "~ per month",
+    "sellerMonths": "{n} months"
   }
 }

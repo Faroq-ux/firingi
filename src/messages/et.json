@@ -950,7 +950,8 @@
     "Food Safety Training": "Toiduohutuse koolitus",
     "Logbook Setup": "Logiraamatu seadistus",
     "Price Benchmark": "Hinnavõrdlus",
-    "Price Position": "Hinnapositsioon"
+    "Price Position": "Hinnapositsioon",
+    "Pre-orders & Price Locks": "Eeltellimused & hinnalukud"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Võiksite säästa {amount} aastas",
       "body": "{count} toote eest maksate rohkem kui sarnased ettevõtted. Vaadake, kus — ja odavamaid pakkumisi FIRINGIs."
+    },
+    "preorder_campaign_open": {
+      "title": "Uus eeltellimus: {title}",
+      "body": "{supplier} avas eeltellimuse — tellige ette kuni {date}."
+    },
+    "preorder_allocated": {
+      "title": "Eeltellimus {number}: kogused määratud",
+      "body": "{title}: {lines} (eraldatud / soovitud)."
+    },
+    "preorder_ordered": {
+      "title": "Eeltellimus {number} tellitud",
+      "body": "{title}: tellimus {order} esitatud tarneks."
+    },
+    "preorder_failed": {
+      "title": "Eeltellimust {number} ei õnnestunud tellida",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Eeltellimus {number} tühistatud",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Eeltellimus {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Eeltellimus {number} ülevaatamiseks",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Hinnaluku taotlus {number}",
+      "body": "{company} soovib {qty} pakendit toodet {product} tänase hinnaga {months} kuuks."
+    },
+    "pricelock_review": {
+      "title": "Hinnalukk {number} kinnitamiseks",
+      "body": "{company}: väärtus {value}"
+    },
+    "pricelock_decided": {
+      "title": "Hinnalukk {number}: {decision}",
+      "body": "Hind {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Hinnalukk {number} lõpeb {date}",
+      "body": "{left} pakendit toodet {product} on lukustatud hinnaga veel tellimata."
+    },
+    "pricelock_expired": {
+      "title": "Hinnalukk {number} lõppes",
+      "body": "{left} pakendit jäi tellimata."
+    },
+    "website_job_application": {
+      "title": "Uus tööavaldus",
+      "body": "{name} kandideeris: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Privaatsuspoliitika (IKÜM)",
           "3": "Küpsised",
           "4": "Ettevõtte andmed"
+        },
+        "company": {
+          "1": "Jätkusuutlikkus",
+          "2": "Karjäär"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Logi sisse",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Suveniirid ja kingitused",
           "13": "Pakendid ja tarvikud",
           "14": "Kebabi- ja pitsatarvikud"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Jätkusuutlikkus",
+        "lead": "Kuidas FIRINGI töötab selle nimel, et raisata vähem ja vedada kaupa tõhusamalt.",
+        "start": {
+          "1": "FIRINGI ühendab restoranid, kohvikud ja poed hulgimüüjate ja turustajatega üle Euroopa. Usume, et parem tarneahel on ka kergem.",
+          "2": "Vähem toidujäätmeid — kliendid näevad säilivusaegu, esmalt kasutatavate toodete nimekirju ja tühjendusmüügi pakkumisi ning müümata toidu saab prügikasti asemel annetada.",
+          "3": "Vähem kilomeetreid — meie tarneteed planeeritakse nii, et tellimused koondatakse ja tühisõite välditakse, ning iga tarne CO₂-jalajälg mõõdetakse.",
+          "4": "Korduskasutatav pakend — kaste, vaate ja muid tagastatavaid pakendeid jälgitakse ja kogutakse kokku, et neid saaks ikka ja jälle kasutada.",
+          "5": "Kasutatud toiduõli — litsentseeritud partnerid koguvad selle köökidest kokku ja töötlevad biokütuseks.",
+          "6": "Toiduohutus — temperatuurid ja kontrollid registreeritakse digitaalselt, alates tarnija külmkambrist kuni köögini.",
+          "7": "Me areneme pidevalt. Kui teil on idee või küsimus, võtke meiega ühendust."
+        }
+      },
+      "careers": {
+        "title": "Karjäär",
+        "lead": "Tulge meiega tegema hulgikaubandust lihtsaks tuhandetele ettevõtetele.",
+        "start": {
+          "1": "FIRINGI on kasvav meeskond Euroopas, kes ehitab hulgikaubanduse turuplatsi restoranidele, kohvikutele ja poodidele. Töötame müügi, operatsioonide, logistika, klienditoe ja tehnoloogia valdkonnas.",
+          "2": "Hindame inimesi, kes on praktilised, sõbralikud klientide ja tarnijatega ning õpivad meelsasti. Pakume tõelist vastutust, sõbralikku meeskonda ja võimalust kujundada toodet, mida kasutatakse iga päev.",
+          "3": "Vaadake meie avatud ametikohti allpool või saatke vabas vormis avaldus."
+        },
+        "openings": "Avatud ametikohad",
+        "none": "Praegu avatud ametikohti ei ole — saate siiski saata vabas vormis avalduse.",
+        "applyTitle": "Kandideeri",
+        "applyLead": "Rääkige meile endast. Vastame igale avaldusele.",
+        "position": "Ametikoht",
+        "openApplication": "Vabas vormis avaldus",
+        "link": "Link teie CV-le või LinkedIni profiilile (valikuline)",
+        "linkHint": "Link, mis algab https:// — faile mitte.",
+        "msg": "Miks FIRINGI? (valikuline)",
+        "consent": "Nõustun, et FIRINGI säilitab minu andmeid minu kandideerimise läbivaatamiseks ja kustutab need, kui värbamine on lõppenud (GDPR).",
+        "send": "Saada avaldus",
+        "sent": "Aitäh — saime teie avalduse kätte ja vastame peagi.",
+        "errLink": "Link peab algama https://",
+        "errOff": "Kandideerimine on praegu suletud.",
+        "mailSubject": "Saime teie avalduse kätte",
+        "mailBody": "Aitäh, et kandideerisite FIRINGIsse. Loeme iga avalduse läbi ja vastame peagi.",
+        "type": {
+          "FULL_TIME": "Täistööaeg",
+          "PART_TIME": "Osaline tööaeg",
+          "INTERNSHIP": "Praktika",
+          "TEMPORARY": "Ajutine",
+          "FREELANCE": "Vabakutseline"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Madalam, kui ostjad tavaliselt maksavad"
     },
     "vNone": "Aktiivseid pakkumisi pole."
+  },
+  "preorders": {
+    "title": "Eeltellimused & hinnalukud",
+    "intro": "Tellige hooajakaupu, uustooteid ja piiratud saadavusega kaupu ette ning lukustage tänane hind sellele, mida vajate lähikuudel.",
+    "sellerTitle": "Eeltellimused & hinnalukud",
+    "sellerIntro": "Avage oma klientidele eeltellimusi (hooaeg, uustooted, piiratud saadavus) ja vastake hinnaluku taotlustele. Planeerige oste eeltellitu põhjal.",
+    "tabOpen": "Avatud eeltellimused",
+    "tabMine": "Minu eeltellimused",
+    "tabLocks": "Hinnalukud",
+    "tabCampaigns": "Minu eeltellimuskampaaniad",
+    "kind": {
+      "SEASONAL": "Hooajaline",
+      "LAUNCH": "Uustoode",
+      "SCARCE": "Piiratud saadavus"
+    },
+    "status": {
+      "DRAFT": "Mustand",
+      "PENDING": "Ootab FIRINGI-t",
+      "OPEN": "Avatud",
+      "CLOSED": "Suletud",
+      "ALLOCATED": "Jaotatud",
+      "DONE": "Lõpetatud",
+      "CANCELLED": "Tühistatud",
+      "REJECTED": "Pole kinnitatud"
+    },
+    "resStatus": {
+      "PLACED": "Eeltellitud",
+      "ALLOCATED": "Kinnitage kogus",
+      "CONFIRMED": "Kinnitatud",
+      "ORDERED": "Tellitud",
+      "CANCELLED": "Tühistatud",
+      "DECLINED": "Tagasi lükatud",
+      "FAILED": "Tellimine ebaõnnestus"
+    },
+    "lockStatus": {
+      "REQUESTED": "Ootab tarnijat",
+      "REVIEW": "Ootab FIRINGI-t",
+      "ACTIVE": "Aktiivne",
+      "REJECTED": "Tagasi lükatud",
+      "CANCELLED": "Tühistatud",
+      "EXPIRED": "Lõppenud",
+      "DONE": "Kõik tellitud"
+    },
+    "alloc": {
+      "PRO_RATA": "Proportsionaalselt igaühe soovitud kogusega",
+      "FIRST_COME": "Kes ees, see mees",
+      "LOYAL_FIRST": "Püsikliendid eespool"
+    },
+    "supplier": "Tarnija",
+    "closes": "Sulgub {date}",
+    "closesLabel": "Sulgub",
+    "opensLabel": "Avaneb",
+    "deliveries": "Tarne",
+    "deliveryDates": "Tarnekuupäevad",
+    "deliveryDate": "Tarnekuupäev",
+    "address": "Tarneaadress",
+    "note": "Märkus (valikuline)",
+    "deposit": "Ettemaks {pct}%",
+    "depositLabel": "Ettemaks",
+    "depositDue": "Tasuda ettemaksu: {amount}",
+    "depositPaid": "Ettemaks tasutud",
+    "payDeposit": "Tasu ettemaks",
+    "depositHint": "Ettemaks jääb Teie kontole krediidiks ja seda kasutatakse Teie arvetel. Kui tarnija ei saa tarnida, jääb see krediidiks.",
+    "suggested": "Teile",
+    "suggestedHint": "Ostsite seda eelmisel aastal umbes samal ajal",
+    "product": "Toode",
+    "pack": "Pakend",
+    "priceNow": "Praegune hind",
+    "perPack": "pakendi kohta",
+    "nextTier": "Veel {missing} pakendit kõigi eeltellimustes → {price}",
+    "tiers": "Hind eeltellitud koguse järgi",
+    "tierRow": "alates {min} pakendist: {price}",
+    "limits": "Min {min}",
+    "limitsMax": "Min {min} · max {max}",
+    "short": "Suur nõudlus — võidakse jaotada",
+    "qty": "Pakendid",
+    "preorder": "Eeltelli",
+    "update": "Uuenda eeltellimust",
+    "alreadyMine": "Olete siin eeltellinud — saate seda muuta kuni sulgemiseni.",
+    "placed": "Eeltellimus esitatud.",
+    "updated": "Eeltellimus uuendatud.",
+    "noOpen": "Praegu pole Teile avatud eeltellimusi. Kui tarnijad mõne avavad, kuvatakse see siin.",
+    "noMine": "Te pole veel midagi eeltellinud.",
+    "asked": "Soovitud",
+    "given": "Eraldatud",
+    "finalPrice": "Lõplik hind",
+    "cancel": "Tühista",
+    "cancelled": "Tühistatud.",
+    "accept": "Nõustu selle kogusega",
+    "decline": "Keeldu",
+    "allocatedHint": "Saadavus oli piiratud — saite vähem, kui soovisite. Nõustuge või keelduge; vastuseta kinnitatakse see automaatselt.",
+    "orders": "Tellimused",
+    "failed": "Miks: {reason}",
+    "reason": "Põhjus: {reason}",
+    "allocRule": "Piiratud saadavuse korral: {rule}",
+    "lockIntro": "Hoidke tänast hinda koguse jaoks, mille võtate lähikuudel. Iga kord, kui vajate kaupa, esitage osatellimus — tavaline tellimus lukustatud hinnaga.",
+    "lockSuggest": "Sageli ostetavad tooted",
+    "lockSuggestHint": "Umbes {n} pakendit kuus",
+    "lockFor": "Lukusta hind",
+    "months": "Kuud",
+    "lockRequest": "Taotle hinnalukku",
+    "lockRequested": "Taotlus saadetud tarnijale.",
+    "noLocks": "Hinnalukke veel pole.",
+    "noSuggest": "Veel pole midagi soovitada — ostke enne paar korda.",
+    "lockedPrice": "Lukustatud hind",
+    "listPrice": "Hind taotlemisel",
+    "taken": "{taken} / {total} tellitud",
+    "left": "{left} järel",
+    "until": "Kuni {date}",
+    "perMonthHint": "Umbes {n} kuus, et kõik ära kasutada",
+    "saved": "Seni säästetud: {amount}",
+    "callOff": "Telli osa",
+    "callOffDone": "Tellimus {number} esitatud.",
+    "calloffs": "Osatellimused",
+    "priceToday": "Tänane hind",
+    "tierLabel": "Astmehinnad",
+    "allocLabel": "Piiratud saadavuse korral",
+    "none": "—",
+    "total": "Seni eeltellitud",
+    "value": "Väärtus",
+    "sellerNewCampaign": "Uus eeltellimus",
+    "sellerNoCampaigns": "Eeltellimusi veel pole. Avage üks hooaja, uustoote või piiratud saadavusega kaupade jaoks.",
+    "sellerBuyers": "Ostjad",
+    "sellerProducts": "Tooted",
+    "sellerKind": "Liik",
+    "sellerTitleField": "Pealkiri",
+    "sellerDescription": "Kirjeldus (valikuline)",
+    "sellerAddDate": "Lisa kuupäev",
+    "sellerRemove": "Eemalda",
+    "sellerAddProduct": "Lisa toode",
+    "sellerChooseProduct": "Valige toode",
+    "sellerPrice": "Hind pakendi kohta",
+    "sellerMin": "Min ostja kohta",
+    "sellerMax": "Max ostja kohta",
+    "sellerSupply": "Saadaolevad pakendid",
+    "sellerSupplyHint": "Tühi = piiranguta",
+    "sellerAddTier": "Lisa aste",
+    "sellerTierFrom": "Alates pakendeid kokku",
+    "sellerTierPrice": "Hind",
+    "sellerSave": "Salvesta mustand",
+    "sellerSaved": "Salvestatud.",
+    "sellerSubmit": "Saada FIRINGI-le",
+    "sellerSubmitAuto": "Ava eeltellimus",
+    "sellerSubmitted": "Saadetud.",
+    "sellerCloseNow": "Sulge kohe ja jaota",
+    "sellerClosed": "Suletud ja jaotatud.",
+    "sellerCancel": "Tühista eeltellimus",
+    "sellerCancelReason": "Miks Te tühistate?",
+    "sellerOrderNow": "Esita tellimused kohe",
+    "sellerOrdered": "Esitatud tellimusi: {n}.",
+    "sellerPlan": "Plaan: pakendid tarnekuupäeva kaupa",
+    "sellerReservations": "Eeltellimused",
+    "sellerReviewNote": "FIRINGI märkus: {note}",
+    "sellerDeposit": "Ettemaks (%)",
+    "sellerOpens": "Avaneb",
+    "sellerCloses": "Sulgub",
+    "sellerLocks": "Hinnaluku taotlused",
+    "sellerLocksActive": "Hinnalukud",
+    "sellerNoLocks": "Hinnaluku taotlusi pole.",
+    "sellerAcceptAt": "Nõustu hinnaga",
+    "sellerDepositPct": "Ettemaks %",
+    "sellerAccept": "Nõustu",
+    "sellerReject": "Keeldu",
+    "sellerDecided": "Vastatud.",
+    "sellerCommitted": "Veel tellimata",
+    "sellerBuyer": "Ostja",
+    "sellerPerMonth": "~ kuus",
+    "sellerMonths": "{n} kuud"
   }
 }

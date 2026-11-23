@@ -5,7 +5,7 @@ import { cookies, headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { defineAction } from "./_action";
 import * as L from "@/server/landing/service";
-import { LANDING_SECTIONS, LEGAL_PAGES, SOCIALS } from "@/lib/landing";
+import { ABOUT_PAGES, APPLICATION_STATUSES, JOB_TYPES, LANDING_SECTIONS, LEGAL_PAGES, SOCIALS } from "@/lib/landing";
 import { LOCALE_COOKIE, UI_LOCALES } from "@/i18n/config";
 
 async function visitor() {
@@ -28,6 +28,15 @@ export async function submitContactAction(input: unknown) {
   if (!p.success) return { ok: false as const, problem: "REQUIRED" as const };
   const v = await visitor();
   return L.submitContact(p.data, v);
+}
+
+const ApplySchema = z.object({ jobId: short(40), name: short(120), email: short(254), phone: short(40), link: short(500), message: short(4000), consent: z.boolean(), website: short(200), startedAt: z.number() });
+/** A job application for FIRINGI (careers page; no sign-in). */
+export async function submitApplicationAction(input: unknown) {
+  const p = ApplySchema.safeParse(input);
+  if (!p.success) return { ok: false as const, problem: "REQUIRED" as const };
+  const v = await visitor();
+  return (await import("@/server/landing/careers")).submitApplication(p.data, v);
 }
 
 /** Newsletter sign-up: an e-mail asks the visitor to confirm. */
@@ -67,4 +76,25 @@ export const saveLandingSettingsAction = defineAction({
 export const deleteSubscriberAction = defineAction({
   permission: [...MKT], schema: z.object({ id: z.string().min(1).max(64) }),
   handler: async (ctx, i) => { await L.deleteSubscriber(ctx, i.id); revalidatePath("/admin/marketing/newsletter"); return true; },
+});
+
+// ── footer pages: sustainability, careers (FIRINGI only) ────────────────────
+const careers = () => import("@/server/landing/careers");
+const reCareers = <T>(v: T) => { revalidatePath("/sustainability"); revalidatePath("/careers"); revalidatePath("/", "layout"); revalidatePath("/admin/marketing/careers"); return v; };
+export const saveAboutSettingsAction = defineAction({
+  permission: [...MKT],
+  schema: z.object({
+    about: z.record(z.enum(ABOUT_PAGES), z.object({ on: z.boolean(), text: z.record(z.string().max(10), z.string().max(30000)) })),
+    jobs: z.array(z.object({ id: z.string().max(40), title: z.string().max(200), location: z.string().max(200), type: z.enum(JOB_TYPES), text: z.string().max(8000), on: z.boolean() })).max(50),
+    careersEmail: z.string().max(254),
+  }),
+  handler: async (ctx, i) => { await (await careers()).saveAboutSettings(ctx, i as never); return reCareers({ ok: true }); },
+});
+export const setApplicationStatusAction = defineAction({
+  permission: [...MKT], schema: z.object({ id: z.string().min(1).max(40), status: z.enum(APPLICATION_STATUSES), note: z.string().max(1000).nullable().optional() }),
+  handler: async (ctx, i) => reCareers(await (await careers()).setApplicationStatus(ctx, i.id, i.status, i.note)),
+});
+export const deleteApplicationAction = defineAction({
+  permission: [...MKT], schema: z.object({ id: z.string().min(1).max(40) }),
+  handler: async (ctx, i) => reCareers(await (await careers()).deleteApplication(ctx, i.id)),
 });

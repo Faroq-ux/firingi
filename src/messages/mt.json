@@ -950,7 +950,8 @@
     "Food Safety Training": "Taħriġ fis-Sigurtà tal-Ikel",
     "Logbook Setup": "Setup tal-Logbook",
     "Price Benchmark": "Paragun tal-Prezzijiet",
-    "Price Position": "Pożizzjoni tal-Prezz"
+    "Price Position": "Pożizzjoni tal-Prezz",
+    "Pre-orders & Price Locks": "Ordnijiet minn qabel u prezzijiet iffissati"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Tista' tiffranka {amount} fis-sena",
       "body": "Fuq {count} prodott(i) qed tħallas iktar minn negozji simili. Ara fejn — u offerti orħos fuq FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Ordni ġdida minn qabel: {title}",
+      "body": "{supplier} fetaħ ordni minn qabel — ordna minn qabel sa {date}."
+    },
+    "preorder_allocated": {
+      "title": "Ordni minn qabel {number}: kwantitajiet stabbiliti",
+      "body": "{title}: {lines} (mogħti / mitlub)."
+    },
+    "preorder_ordered": {
+      "title": "Ordni minn qabel {number} ordnata",
+      "body": "{title}: ordni {order} saret għall-kunsinna."
+    },
+    "preorder_failed": {
+      "title": "Ordni minn qabel {number} ma setgħetx tiġi ordnata",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Ordni minn qabel {number} ikkanċellata",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Ordni minn qabel {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Ordni minn qabel {number} għar-reviżjoni",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Talba għal prezz iffissat {number}",
+      "body": "{company} trid {qty} pakketti ta' {product} bil-prezz tal-lum għal {months} xhur."
+    },
+    "pricelock_review": {
+      "title": "Prezz iffissat {number} għall-approvazzjoni",
+      "body": "{company}: valur {value}"
+    },
+    "pricelock_decided": {
+      "title": "Prezz iffissat {number}: {decision}",
+      "body": "Prezz {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Il-prezz iffissat {number} jintemm {date}",
+      "body": "Fadal {left} pakketti ta' {product} x'tiġbed bil-prezz iffissat."
+    },
+    "pricelock_expired": {
+      "title": "Il-prezz iffissat {number} intemm",
+      "body": "{left} pakketti ma nġibdux."
+    },
+    "website_job_application": {
+      "title": "Applikazzjoni ġdida għal xogħol",
+      "body": "Applikazzjoni minn {name}: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Politika tal-privatezza (GDPR)",
           "3": "Cookies",
           "4": "Dettalji tal-kumpanija"
+        },
+        "company": {
+          "1": "Sostenibbiltà",
+          "2": "Karrieri"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Idħol",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Tifkiriet u rigali",
           "13": "Ippakkjar u provvisti",
           "14": "Provvisti għall-kebab u l-pizza"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Sostenibbiltà",
+        "lead": "Kif FIRINGI taħdem biex taħli inqas u tittrasporta l-oġġetti b'mod aktar effiċjenti.",
+        "start": {
+          "1": "FIRINGI tgħaqqad ristoranti, kafetteriji u ħwienet ma' bejjiegħa bl-ingrossa u distributuri madwar l-Ewropa. Aħna nemmnu li katina tal-provvista aħjar hija wkoll waħda eħfef fuq l-ambjent.",
+          "2": "Inqas ħela ta' ikel — il-klijenti jaraw id-dati ta' skadenza, listi ta' prodotti li għandhom jintużaw l-ewwel u offerti ta' stralċ, u l-ikel mhux mibjugħ jista' jingħata b'donazzjoni minflok ma jintrema.",
+          "3": "Inqas kilometri — ir-rotot tal-konsenja tagħna huma ppjanati biex jiġbru l-ordnijiet flimkien u jevitaw vjaġġi vojta, u l-impronta tal-CO₂ ta' kull konsenja titkejjel.",
+          "4": "Imballaġġ li jerġa' jintuża — kaxxi, btieti u oġġetti oħra li jintraddu jiġu ttraċċati u miġbura, biex jintużaw darba wara l-oħra.",
+          "5": "Żejt tat-tisjir użat — jinġabar mill-kċejjen minn sħab liċenzjati u jinbidel f'bijofjuwil.",
+          "6": "Sikurezza tal-ikel — it-temperaturi u l-kontrolli jiġu rreġistrati b'mod diġitali, mill-kamra kiesħa tal-fornitur sal-kċina.",
+          "7": "Dejjem qed intejbu. Jekk għandek idea jew mistoqsija, ikkuntattjana."
+        }
+      },
+      "careers": {
+        "title": "Karrieri",
+        "lead": "Aħdem magħna biex nagħmlu x-xiri bl-ingrossa sempliċi għal eluf ta' negozji.",
+        "start": {
+          "1": "FIRINGI hija tim li qed jikber fl-Ewropa u li qed jibni s-suq bl-ingrossa għal ristoranti, kafetteriji u ħwienet. Naħdmu fil-bejgħ, l-operazzjonijiet, il-loġistika, l-appoġġ għall-klijenti u t-teknoloġija.",
+          "2": "Napprezzaw nies prattiċi, ġentili mal-klijenti u l-fornituri, u li jieħdu pjaċir jitgħallmu. Noffru responsabbiltà vera, tim ħabib u l-opportunità li tifforma prodott li jintuża kuljum.",
+          "3": "Ara l-pożizzjonijiet vakanti tagħna hawn taħt, jew ibgħat applikazzjoni ġenerali."
+        },
+        "openings": "Pożizzjonijiet vakanti",
+        "none": "Bħalissa m'hemmx pożizzjonijiet vakanti — xorta tista' tibgħat applikazzjoni ġenerali.",
+        "applyTitle": "Applika",
+        "applyLead": "Għidilna dwarek. Inwieġbu għal kull applikazzjoni.",
+        "position": "Pożizzjoni",
+        "openApplication": "Applikazzjoni ġenerali",
+        "link": "Link għas-CV tiegħek jew għal-LinkedIn (mhux obbligatorju)",
+        "linkHint": "Link li jibda bi https:// — l-ebda fajl.",
+        "msg": "Għaliex FIRINGI? (mhux obbligatorju)",
+        "consent": "Naqbel li FIRINGI żżomm id-dettalji tiegħi biex tikkunsidra l-applikazzjoni tiegħi u tħassarhom meta jintemm il-proċess tar-reklutaġġ (GDPR).",
+        "send": "Ibgħat l-applikazzjoni",
+        "sent": "Grazzi — irċevejna l-applikazzjoni tiegħek u se nwieġbu dalwaqt.",
+        "errLink": "Il-link irid jibda bi https://",
+        "errOff": "Bħalissa l-applikazzjonijiet huma magħluqa.",
+        "mailSubject": "Irċevejna l-applikazzjoni tiegħek",
+        "mailBody": "Grazzi talli applikajt ma' FIRINGI. Naqraw kull applikazzjoni u se nwieġbu dalwaqt.",
+        "type": {
+          "FULL_TIME": "Ħin sħiħ",
+          "PART_TIME": "Ħin parzjali",
+          "INTERNSHIP": "Internship",
+          "TEMPORARY": "Temporanju",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Inqas minn dak li normalment iħallsu x-xerrejja"
     },
     "vNone": "L-ebda offerta attiva."
+  },
+  "preorders": {
+    "title": "Ordnijiet minn qabel u prezzijiet iffissati",
+    "intro": "Ordna minn qabel prodotti staġjonali, prodotti ġodda u oġġetti skarsi, u żomm il-prezz tal-lum għal dak li se jkollok bżonn fix-xhur li ġejjin.",
+    "sellerTitle": "Ordnijiet minn qabel u prezzijiet iffissati",
+    "sellerIntro": "Iftaħ ordnijiet minn qabel għall-klijenti tiegħek (staġjonali, prodotti ġodda, provvista skarsa) u wieġeb it-talbiet għal prezz iffissat. Ippjana x-xiri skont dak li ġie ordnat minn qabel.",
+    "tabOpen": "Ordnijiet minn qabel miftuħa",
+    "tabMine": "L-ordnijiet minn qabel tiegħi",
+    "tabLocks": "Prezzijiet iffissati",
+    "tabCampaigns": "Il-kampanji tiegħi ta' ordnijiet minn qabel",
+    "kind": {
+      "SEASONAL": "Staġjonali",
+      "LAUNCH": "Prodott ġdid",
+      "SCARCE": "Provvista skarsa"
+    },
+    "status": {
+      "DRAFT": "Abbozz",
+      "PENDING": "Qed tistenna lil FIRINGI",
+      "OPEN": "Miftuħa",
+      "CLOSED": "Magħluqa",
+      "ALLOCATED": "Imqassma",
+      "DONE": "Lesta",
+      "CANCELLED": "Ikkanċellata",
+      "REJECTED": "Mhux approvata"
+    },
+    "resStatus": {
+      "PLACED": "Ordnata minn qabel",
+      "ALLOCATED": "Ikkonferma l-kwantità",
+      "CONFIRMED": "Ikkonfermata",
+      "ORDERED": "Ordnata",
+      "CANCELLED": "Ikkanċellata",
+      "DECLINED": "Miċħuda",
+      "FAILED": "Ma setgħetx tiġi ordnata"
+    },
+    "lockStatus": {
+      "REQUESTED": "Qed tistenna lill-fornitur",
+      "REVIEW": "Qed tistenna lil FIRINGI",
+      "ACTIVE": "Attiv",
+      "REJECTED": "Miċħud",
+      "CANCELLED": "Ikkanċellat",
+      "EXPIRED": "Intemm",
+      "DONE": "Kollu meħud"
+    },
+    "alloc": {
+      "PRO_RATA": "Skont il-proporzjon ta' dak li talab kull wieħed",
+      "FIRST_COME": "L-ewwel jasal, l-ewwel jinqeda",
+      "LOYAL_FIRST": "L-ewwel il-klijenti regolari"
+    },
+    "supplier": "Fornitur",
+    "closes": "Tagħlaq {date}",
+    "closesLabel": "Tagħlaq",
+    "opensLabel": "Tiftaħ",
+    "deliveries": "Kunsinna",
+    "deliveryDates": "Dati tal-kunsinna",
+    "deliveryDate": "Data tal-kunsinna",
+    "address": "Indirizz tal-kunsinna",
+    "note": "Nota (mhux obbligatorja)",
+    "deposit": "Depożitu {pct}%",
+    "depositLabel": "Depożitu",
+    "depositDue": "Depożitu li għandek tħallas: {amount}",
+    "depositPaid": "Depożitu mħallas",
+    "payDeposit": "Ħallas id-depożitu",
+    "depositHint": "Id-depożitu jinżamm bħala kreditu fil-kont tiegħek u jintuża fuq il-fatturi tiegħek. Jekk il-fornitur ma jkunx jista' jwassal, jibqa' bħala kreditu.",
+    "suggested": "Għalik",
+    "suggestedHint": "Xtrajt dan madwar dan iż-żmien is-sena l-oħra",
+    "product": "Prodott",
+    "pack": "Pakkett",
+    "priceNow": "Prezz issa",
+    "perPack": "kull pakkett",
+    "nextTier": "{missing} pakketti oħra ordnati minn qabel minn kulħadd → {price}",
+    "tiers": "Prezz skont it-total ordnat minn qabel",
+    "tierRow": "minn {min} pakketti: {price}",
+    "limits": "Min {min}",
+    "limitsMax": "Min {min} · mass {max}",
+    "short": "Domanda għolja — jista' jiġi mqassam",
+    "qty": "Pakketti",
+    "preorder": "Ordna minn qabel",
+    "update": "Aġġorna l-ordni minn qabel",
+    "alreadyMine": "Għamilt ordni minn qabel hawn — tista' tibdilha sakemm tingħalaq.",
+    "placed": "L-ordni minn qabel saret.",
+    "updated": "L-ordni minn qabel ġiet aġġornata.",
+    "noOpen": "Bħalissa m'hemm l-ebda ordni minn qabel miftuħa għalik. Meta l-fornituri tiegħek jiftħu waħda, tidher hawn.",
+    "noMine": "Għadek ma ordnajt xejn minn qabel.",
+    "asked": "Mitlub",
+    "given": "Mogħti",
+    "finalPrice": "Prezz finali",
+    "cancel": "Ikkanċella",
+    "cancelled": "Ikkanċellata.",
+    "accept": "Aċċetta din il-kwantità",
+    "decline": "Iċħad",
+    "allocatedHint": "Il-provvista kienet skarsa — ingħatajt inqas milli tlabt. Aċċetta jew iċħad; mingħajr tweġiba tiġi aċċettata awtomatikament.",
+    "orders": "Ordnijiet",
+    "failed": "Għaliex: {reason}",
+    "reason": "Raġuni: {reason}",
+    "allocRule": "Jekk il-provvista tkun skarsa: {rule}",
+    "lockIntro": "Żomm il-prezz tal-lum għal kwantità li se tieħu matul ix-xhur li ġejjin. Kull darba li jkollok bżonn oġġetti, iġbedhom — ordni normali bil-prezz iffissat.",
+    "lockSuggest": "Prodotti li tixtri spiss",
+    "lockSuggestHint": "Madwar {n} pakketti fix-xahar",
+    "lockFor": "Iffissa l-prezz",
+    "months": "Xhur",
+    "lockRequest": "Itlob prezz iffissat",
+    "lockRequested": "It-talba ntbagħtet lill-fornitur.",
+    "noLocks": "L-ebda prezz iffissat s'issa.",
+    "noSuggest": "Għad m'hemm xejn x'nissuġġerixxu — ixtri ftit drabi l-ewwel.",
+    "lockedPrice": "Prezz iffissat",
+    "listPrice": "Prezz meta ntalab",
+    "taken": "{taken} minn {total} meħuda",
+    "left": "{left} fadal",
+    "until": "Sa {date}",
+    "perMonthHint": "Madwar {n} fix-xahar biex tużah kollu",
+    "saved": "Iffrankat s'issa: {amount}",
+    "callOff": "Iġbed",
+    "callOffDone": "Ordni {number} saret.",
+    "calloffs": "Ġbidiet",
+    "priceToday": "Prezz tal-lum",
+    "tierLabel": "Prezzijiet skont il-livell",
+    "allocLabel": "Jekk il-provvista tkun skarsa",
+    "none": "—",
+    "total": "Ordnat minn qabel s'issa",
+    "value": "Valur",
+    "sellerNewCampaign": "Ordni ġdida minn qabel",
+    "sellerNoCampaigns": "L-ebda ordni minn qabel s'issa. Iftaħ waħda għal staġun, prodott ġdid jew oġġetti skarsi.",
+    "sellerBuyers": "Xerrejja",
+    "sellerProducts": "Prodotti",
+    "sellerKind": "Tip",
+    "sellerTitleField": "Titlu",
+    "sellerDescription": "Deskrizzjoni (mhux obbligatorja)",
+    "sellerAddDate": "Żid data",
+    "sellerRemove": "Neħħi",
+    "sellerAddProduct": "Żid prodott",
+    "sellerChooseProduct": "Agħżel prodott",
+    "sellerPrice": "Prezz kull pakkett",
+    "sellerMin": "Min kull xerrej",
+    "sellerMax": "Mass kull xerrej",
+    "sellerSupply": "Pakketti disponibbli",
+    "sellerSupplyHint": "Vojt = l-ebda limitu",
+    "sellerAddTier": "Żid livell",
+    "sellerTierFrom": "Minn total ta' pakketti",
+    "sellerTierPrice": "Prezz",
+    "sellerSave": "Issejvja l-abbozz",
+    "sellerSaved": "Issejvjat.",
+    "sellerSubmit": "Ibgħat lil FIRINGI",
+    "sellerSubmitAuto": "Iftaħ l-ordni minn qabel",
+    "sellerSubmitted": "Mibgħut.",
+    "sellerCloseNow": "Agħlaq issa u qassam",
+    "sellerClosed": "Magħluqa u mqassma.",
+    "sellerCancel": "Ikkanċella l-ordni minn qabel",
+    "sellerCancelReason": "Għaliex qed tikkanċella?",
+    "sellerOrderNow": "Agħmel l-ordnijiet issa",
+    "sellerOrdered": "Ordnijiet magħmula: {n}.",
+    "sellerPlan": "Pjan: pakketti skont id-data tal-kunsinna",
+    "sellerReservations": "Ordnijiet minn qabel",
+    "sellerReviewNote": "Nota ta' FIRINGI: {note}",
+    "sellerDeposit": "Depożitu (%)",
+    "sellerOpens": "Tiftaħ",
+    "sellerCloses": "Tagħlaq",
+    "sellerLocks": "Talbiet għal prezz iffissat",
+    "sellerLocksActive": "Prezzijiet iffissati",
+    "sellerNoLocks": "L-ebda talba għal prezz iffissat.",
+    "sellerAcceptAt": "Aċċetta bi",
+    "sellerDepositPct": "Depożitu %",
+    "sellerAccept": "Aċċetta",
+    "sellerReject": "Iċħad",
+    "sellerDecided": "Imwieġeb.",
+    "sellerCommitted": "Għad irid jinġibed",
+    "sellerBuyer": "Xerrej",
+    "sellerPerMonth": "~ fix-xahar",
+    "sellerMonths": "{n} xhur"
   }
 }

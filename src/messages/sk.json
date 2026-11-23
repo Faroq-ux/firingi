@@ -950,7 +950,8 @@
     "Food Safety Training": "Školenie bezpečnosti potravín",
     "Logbook Setup": "Nastavenie denníka",
     "Price Benchmark": "Porovnanie cien",
-    "Price Position": "Cenová pozícia"
+    "Price Position": "Cenová pozícia",
+    "Pre-orders & Price Locks": "Predobjednávky a fixácia cien"
   },
   "delivery": {
     "title": "Doručenie",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Môžete ušetriť {amount} ročne",
       "body": "Pri produktoch ({count}) platíte viac ako podobné podniky. Pozrite sa kde — a na lacnejšie ponuky na FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Nová predobjednávka: {title}",
+      "body": "Dodávateľ {supplier} otvoril predobjednávku — objednávajte vopred do {date}."
+    },
+    "preorder_allocated": {
+      "title": "Predobjednávka {number}: množstvá stanovené",
+      "body": "{title}: {lines} (pridelené / požadované)."
+    },
+    "preorder_ordered": {
+      "title": "Predobjednávka {number} objednaná",
+      "body": "{title}: objednávka {order} vytvorená na dodanie."
+    },
+    "preorder_failed": {
+      "title": "Predobjednávku {number} nebolo možné objednať",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Predobjednávka {number} zrušená",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Predobjednávka {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Predobjednávka {number} na kontrolu",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Žiadosť o fixáciu ceny {number}",
+      "body": "{company} žiada {product}: {qty} bal. za dnešnú cenu na {months} mes."
+    },
+    "pricelock_review": {
+      "title": "Fixácia ceny {number} na schválenie",
+      "body": "{company}: hodnota {value}"
+    },
+    "pricelock_decided": {
+      "title": "Fixácia ceny {number}: {decision}",
+      "body": "Cena {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Fixácia ceny {number} končí {date}",
+      "body": "{product}: zostáva odobrať {left} bal. za fixovanú cenu."
+    },
+    "pricelock_expired": {
+      "title": "Fixácia ceny {number} skončila",
+      "body": "Neodobraté balenia: {left}."
+    },
+    "website_job_application": {
+      "title": "Nová žiadosť o zamestnanie",
+      "body": "{name} — žiadosť o pozíciu {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Ochrana osobných údajov (GDPR)",
           "3": "Súbory cookie",
           "4": "Údaje o spoločnosti"
+        },
+        "company": {
+          "1": "Udržateľnosť",
+          "2": "Kariéra"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Prihlásiť sa",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Suveníry a darčeky",
           "13": "Obaly a spotrebný materiál",
           "14": "Potreby na kebab a pizzu"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Udržateľnosť",
+        "lead": "Ako FIRINGI znižuje plytvanie a prepravuje tovar efektívnejšie.",
+        "start": {
+          "1": "FIRINGI spája reštaurácie, kaviarne a obchody s veľkoobchodmi a distribútormi po celej Európe. Veríme, že lepší dodávateľský reťazec je zároveň aj šetrnejší k životnému prostrediu.",
+          "2": "Menej plytvania potravinami — zákazníci vidia dátumy spotreby, zoznamy „spotrebovať prednostne“ a výpredajové ponuky a nepredané potraviny možno namiesto vyhodenia darovať.",
+          "3": "Menej kilometrov — naše doručovacie trasy plánujeme tak, aby sme spájali objednávky a vyhli sa jazdám naprázdno, a pri každom doručení meriame stopu CO₂.",
+          "4": "Opakovane použiteľné obaly — prepravky, sudy a ďalšie vratné obaly evidujeme a zbierame, aby sa mohli používať znova a znova.",
+          "5": "Použitý kuchynský olej — z kuchýň ho zbierajú licencovaní partneri a spracúvajú ho na biopalivo.",
+          "6": "Bezpečnosť potravín — teploty a kontroly sa zaznamenávajú digitálne, od chladiarne dodávateľa až po kuchyňu.",
+          "7": "Neustále sa zlepšujeme. Ak máte nápad alebo otázku, kontaktujte nás."
+        }
+      },
+      "careers": {
+        "title": "Kariéra",
+        "lead": "Pracujte s nami a zjednodušte veľkoobchodný nákup tisícom firiem.",
+        "start": {
+          "1": "FIRINGI je rastúci tím v Európe, ktorý buduje veľkoobchodnú platformu pre reštaurácie, kaviarne a obchody. Pôsobíme v oblasti predaja, prevádzky, logistiky, zákazníckej podpory a technológií.",
+          "2": "Oceňujeme ľudí, ktorí sú praktickí, milí k zákazníkom aj dodávateľom a radi sa učia. Ponúkame skutočnú zodpovednosť, priateľský tím a možnosť podieľať sa na produkte, ktorý sa používa každý deň.",
+          "3": "Pozrite si naše voľné pozície nižšie alebo nám pošlite otvorenú žiadosť."
+        },
+        "openings": "Voľné pozície",
+        "none": "Momentálne nemáme žiadne voľné pozície — aj tak nám však môžete poslať otvorenú žiadosť.",
+        "applyTitle": "Uchádzať sa",
+        "applyLead": "Povedzte nám niečo o sebe. Odpovedáme na každú žiadosť.",
+        "position": "Pozícia",
+        "openApplication": "Otvorená žiadosť",
+        "link": "Odkaz na váš životopis alebo LinkedIn (nepovinné)",
+        "linkHint": "Odkaz začínajúci https:// — žiadne súbory.",
+        "msg": "Prečo FIRINGI? (nepovinné)",
+        "consent": "Súhlasím, aby FIRINGI uchovávalo moje údaje na účely posúdenia mojej žiadosti a po skončení výberového konania ich vymazalo (GDPR).",
+        "send": "Odoslať žiadosť",
+        "sent": "Ďakujeme — vašu žiadosť sme prijali a čoskoro sa vám ozveme.",
+        "errLink": "Odkaz musí začínať https://",
+        "errOff": "Žiadosti momentálne neprijímame.",
+        "mailSubject": "Vašu žiadosť sme prijali",
+        "mailBody": "Ďakujeme za váš záujem o prácu vo FIRINGI. Každú žiadosť si prečítame a čoskoro sa vám ozveme.",
+        "type": {
+          "FULL_TIME": "Plný úväzok",
+          "PART_TIME": "Čiastočný úväzok",
+          "INTERNSHIP": "Stáž",
+          "TEMPORARY": "Na dobu určitú",
+          "FREELANCE": "Externá spolupráca"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Pod tým, čo odberatelia zvyčajne platia"
     },
     "vNone": "Žiadne aktívne ponuky."
+  },
+  "preorders": {
+    "title": "Predobjednávky a fixácia cien",
+    "intro": "Objednajte si sezónny tovar, novinky a nedostatkový tovar vopred a zafixujte si dnešnú cenu na to, čo budete potrebovať v nasledujúcich mesiacoch.",
+    "sellerTitle": "Predobjednávky a fixácia cien",
+    "sellerIntro": "Otvárajte predobjednávky pre svojich zákazníkov (sezónny tovar, novinky, nedostatkový tovar) a odpovedajte na žiadosti o fixáciu ceny. Plánujte nákupy podľa predobjednaného množstva.",
+    "tabOpen": "Otvorené predobjednávky",
+    "tabMine": "Moje predobjednávky",
+    "tabLocks": "Fixácie cien",
+    "tabCampaigns": "Moje predobjednávkové kampane",
+    "kind": {
+      "SEASONAL": "Sezónne",
+      "LAUNCH": "Novinka",
+      "SCARCE": "Nedostatkový tovar"
+    },
+    "status": {
+      "DRAFT": "Koncept",
+      "PENDING": "Čaká na FIRINGI",
+      "OPEN": "Otvorená",
+      "CLOSED": "Uzavretá",
+      "ALLOCATED": "Rozdelené",
+      "DONE": "Dokončená",
+      "CANCELLED": "Zrušená",
+      "REJECTED": "Neschválená"
+    },
+    "resStatus": {
+      "PLACED": "Predobjednané",
+      "ALLOCATED": "Potvrďte množstvo",
+      "CONFIRMED": "Potvrdené",
+      "ORDERED": "Objednané",
+      "CANCELLED": "Zrušené",
+      "DECLINED": "Odmietnuté",
+      "FAILED": "Nedalo sa objednať"
+    },
+    "lockStatus": {
+      "REQUESTED": "Čaká na dodávateľa",
+      "REVIEW": "Čaká na FIRINGI",
+      "ACTIVE": "Aktívna",
+      "REJECTED": "Odmietnutá",
+      "CANCELLED": "Zrušená",
+      "EXPIRED": "Ukončená",
+      "DONE": "Všetko odobraté"
+    },
+    "alloc": {
+      "PRO_RATA": "Pomerne podľa požiadaviek",
+      "FIRST_COME": "Kto prv príde, ten prv berie",
+      "LOYAL_FIRST": "Prednostne stáli zákazníci"
+    },
+    "supplier": "Dodávateľ",
+    "closes": "Uzatvára sa {date}",
+    "closesLabel": "Uzavretie",
+    "opensLabel": "Otvorenie",
+    "deliveries": "Dodanie",
+    "deliveryDates": "Termíny dodania",
+    "deliveryDate": "Termín dodania",
+    "address": "Dodacia adresa",
+    "note": "Poznámka (nepovinné)",
+    "deposit": "Záloha {pct} %",
+    "depositLabel": "Záloha",
+    "depositDue": "Záloha na úhradu: {amount}",
+    "depositPaid": "Záloha zaplatená",
+    "payDeposit": "Zaplatiť zálohu",
+    "depositHint": "Záloha zostane ako kredit na vašom účte a použije sa na vaše faktúry. Ak dodávateľ nemôže dodať, zostane ako kredit.",
+    "suggested": "Pre vás",
+    "suggestedHint": "Toto ste kupovali vlani v tomto období",
+    "product": "Produkt",
+    "pack": "Balenie",
+    "priceNow": "Aktuálna cena",
+    "perPack": "za balenie",
+    "nextTier": "Ešte {missing} bal. v celkovej predobjednávke → {price}",
+    "tiers": "Cena podľa celkového predobjednaného množstva",
+    "tierRow": "od {min} bal.: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · max. {max}",
+    "short": "Vysoký dopyt — môže sa rozdeliť",
+    "qty": "Balenia",
+    "preorder": "Predobjednať",
+    "update": "Upraviť predobjednávku",
+    "alreadyMine": "Tu máte predobjednávku — môžete ju zmeniť až do uzavretia.",
+    "placed": "Predobjednávka odoslaná.",
+    "updated": "Predobjednávka upravená.",
+    "noOpen": "Momentálne pre vás nie sú otvorené žiadne predobjednávky. Keď ju niektorý z vašich dodávateľov otvorí, zobrazí sa tu.",
+    "noMine": "Zatiaľ ste nič nepredobjednali.",
+    "asked": "Požadované",
+    "given": "Pridelené",
+    "finalPrice": "Konečná cena",
+    "cancel": "Zrušiť",
+    "cancelled": "Zrušené.",
+    "accept": "Prijať toto množstvo",
+    "decline": "Odmietnuť",
+    "allocatedHint": "Ponuka bola obmedzená — bolo vám pridelené menej, než ste žiadali. Prijmite alebo odmietnite; bez odpovede sa množstvo prijme automaticky.",
+    "orders": "Objednávky",
+    "failed": "Prečo: {reason}",
+    "reason": "Dôvod: {reason}",
+    "allocRule": "Pri nedostatku tovaru: {rule}",
+    "lockIntro": "Zachovajte si dnešnú cenu pre množstvo, ktoré odoberiete v nasledujúcich mesiacoch. Vždy, keď tovar potrebujete, odoberte časť — ako bežnú objednávku za fixovanú cenu.",
+    "lockSuggest": "Produkty, ktoré často nakupujete",
+    "lockSuggestHint": "Približne {n} bal. mesačne",
+    "lockFor": "Zafixovať cenu",
+    "months": "Mesiace",
+    "lockRequest": "Požiadať o fixáciu ceny",
+    "lockRequested": "Žiadosť bola odoslaná dodávateľovi.",
+    "noLocks": "Zatiaľ žiadne fixácie cien.",
+    "noSuggest": "Zatiaľ nie je čo navrhnúť — najprv niekoľkokrát nakúpte.",
+    "lockedPrice": "Fixovaná cena",
+    "listPrice": "Cena v čase žiadosti",
+    "taken": "Odobraté {taken} z {total}",
+    "left": "Zostáva {left}",
+    "until": "Do {date}",
+    "perMonthHint": "Približne {n} mesačne, aby ste všetko vyčerpali",
+    "saved": "Doteraz ušetrené: {amount}",
+    "callOff": "Odobrať",
+    "callOffDone": "Objednávka {number} odoslaná.",
+    "calloffs": "Odbery",
+    "priceToday": "Dnešná cena",
+    "tierLabel": "Cenové stupne",
+    "allocLabel": "Pri nedostatku tovaru",
+    "none": "—",
+    "total": "Doteraz predobjednané",
+    "value": "Hodnota",
+    "sellerNewCampaign": "Nová predobjednávka",
+    "sellerNoCampaigns": "Zatiaľ žiadne predobjednávky. Otvorte jednu pre sezónu, novinku alebo nedostatkový tovar.",
+    "sellerBuyers": "Kupujúci",
+    "sellerProducts": "Produkty",
+    "sellerKind": "Typ",
+    "sellerTitleField": "Názov",
+    "sellerDescription": "Popis (nepovinné)",
+    "sellerAddDate": "Pridať termín",
+    "sellerRemove": "Odstrániť",
+    "sellerAddProduct": "Pridať produkt",
+    "sellerChooseProduct": "Vyberte produkt",
+    "sellerPrice": "Cena za balenie",
+    "sellerMin": "Min. na kupujúceho",
+    "sellerMax": "Max. na kupujúceho",
+    "sellerSupply": "Dostupné balenia",
+    "sellerSupplyHint": "Prázdne = bez obmedzenia",
+    "sellerAddTier": "Pridať stupeň",
+    "sellerTierFrom": "Od celkového počtu balení",
+    "sellerTierPrice": "Cena",
+    "sellerSave": "Uložiť koncept",
+    "sellerSaved": "Uložené.",
+    "sellerSubmit": "Odoslať do FIRINGI",
+    "sellerSubmitAuto": "Otvoriť predobjednávku",
+    "sellerSubmitted": "Odoslané.",
+    "sellerCloseNow": "Uzavrieť a rozdeliť",
+    "sellerClosed": "Uzavreté a rozdelené.",
+    "sellerCancel": "Zrušiť predobjednávku",
+    "sellerCancelReason": "Prečo ju rušíte?",
+    "sellerOrderNow": "Vytvoriť objednávky",
+    "sellerOrdered": "Vytvorené objednávky: {n}.",
+    "sellerPlan": "Plán: balenia podľa termínu dodania",
+    "sellerReservations": "Predobjednávky",
+    "sellerReviewNote": "Poznámka FIRINGI: {note}",
+    "sellerDeposit": "Záloha (%)",
+    "sellerOpens": "Otvorenie",
+    "sellerCloses": "Uzavretie",
+    "sellerLocks": "Žiadosti o fixáciu ceny",
+    "sellerLocksActive": "Fixácie cien",
+    "sellerNoLocks": "Žiadne žiadosti o fixáciu ceny.",
+    "sellerAcceptAt": "Prijať za",
+    "sellerDepositPct": "Záloha %",
+    "sellerAccept": "Prijať",
+    "sellerReject": "Odmietnuť",
+    "sellerDecided": "Zodpovedané.",
+    "sellerCommitted": "Zostáva odobrať",
+    "sellerBuyer": "Kupujúci",
+    "sellerPerMonth": "~ mesačne",
+    "sellerMonths": "{n} mes."
   }
 }

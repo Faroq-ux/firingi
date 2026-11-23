@@ -320,6 +320,20 @@ export const TOOLS: ToolDef<unknown>[] = [
     run: async (ctx, _s, i) => (await import("@/server/benchmark/service")).priceCheckForAi(ctx, i.product),
   }),
   tool({
+    name: "my_preorders", sides: ["BUYER"],
+    description: "Pre-orders and price locks for this buyer: open pre-order campaigns from its suppliers (seasonal, new products, short supply — suggested ones first, with today's price per pack and the next tier price), its own pre-orders (status, delivery date, deposit due, packs asked vs given) and its price locks (price, packs left, until when, how many a month), plus products it buys often that are worth locking (e.g. 'lock your oil price for 3 months').",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx) => (await import("@/server/preorders/ai")).preordersForBuyerAi(ctx),
+  }),
+  tool({
+    name: "preorder_demand", sides: ["VENDOR"],
+    description: "The supplier's pre-order campaigns with the packs pre-ordered per product and per delivery date (to plan purchases and production), tier prices reached, price-lock requests waiting for an answer and packs still committed under active price locks.",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx) => (await import("@/server/preorders/ai")).preordersForVendorAi(ctx),
+  }),
+  tool({
     name: "my_food_safety", sides: ["BUYER"],
     description: "The customer's food safety (HACCP) logbook: today's and this week's completion, temperature checks and checklists still due today (and late ones), readings out of range with the corrective action taken, tips (fridges drifting towards their limit, checks often missed, training running out) and each fridge's readings today.",
     properties: {},

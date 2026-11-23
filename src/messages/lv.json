@@ -950,7 +950,8 @@
     "Food Safety Training": "Pārtikas drošības apmācība",
     "Logbook Setup": "Žurnāla iestatīšana",
     "Price Benchmark": "Cenu salīdzinājums",
-    "Price Position": "Cenu pozīcija"
+    "Price Position": "Cenu pozīcija",
+    "Pre-orders & Price Locks": "Priekšpasūtījumi & cenu fiksācija"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Jūs varētu ietaupīt {amount} gadā",
       "body": "Par {count} produktu(-iem) jūs maksājat vairāk nekā līdzīgi uzņēmumi. Skatiet, kur — un lētākus piedāvājumus platformā FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Jauns priekšpasūtījums: {title}",
+      "body": "{supplier} atvēra priekšpasūtījumu — pasūtiet iepriekš līdz {date}."
+    },
+    "preorder_allocated": {
+      "title": "Priekšpasūtījums {number}: daudzumi noteikti",
+      "body": "{title}: {lines} (piešķirts / pieprasīts)."
+    },
+    "preorder_ordered": {
+      "title": "Priekšpasūtījums {number} pasūtīts",
+      "body": "{title}: pasūtījums {order} veikts piegādei."
+    },
+    "preorder_failed": {
+      "title": "Priekšpasūtījumu {number} neizdevās pasūtīt",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Priekšpasūtījums {number} atcelts",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Priekšpasūtījums {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Priekšpasūtījums {number} jāpārskata",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Cenas fiksācijas pieprasījums {number}",
+      "body": "{company} vēlas {qty} iepakojumus produkta {product} par šodienas cenu uz {months} mēnešiem."
+    },
+    "pricelock_review": {
+      "title": "Cenas fiksācija {number} jāapstiprina",
+      "body": "{company}: vērtība {value}"
+    },
+    "pricelock_decided": {
+      "title": "Cenas fiksācija {number}: {decision}",
+      "body": "Cena {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Cenas fiksācija {number} beidzas {date}",
+      "body": "Vēl jāpasūta {left} iepakojumi produkta {product} par fiksēto cenu."
+    },
+    "pricelock_expired": {
+      "title": "Cenas fiksācija {number} beigusies",
+      "body": "{left} iepakojumi netika pasūtīti."
+    },
+    "website_job_application": {
+      "title": "Jauns darba pieteikums",
+      "body": "{name} pieteicās: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Privātuma politika (VDAR)",
           "3": "Sīkdatnes",
           "4": "Uzņēmuma rekvizīti"
+        },
+        "company": {
+          "1": "Ilgtspēja",
+          "2": "Karjera"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Pieteikties",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Suvenīri un dāvanas",
           "13": "Iepakojums un palīgmateriāli",
           "14": "Kebaba un picas piederumi"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Ilgtspēja",
+        "lead": "Kā FIRINGI strādā, lai radītu mazāk atkritumu un pārvadātu preces efektīvāk.",
+        "start": {
+          "1": "FIRINGI savieno restorānus, kafejnīcas un veikalus ar vairumtirgotājiem un izplatītājiem visā Eiropā. Mēs uzskatām, ka labāka piegādes ķēde ir arī vieglāka.",
+          "2": "Mazāk pārtikas atkritumu — klienti redz derīguma termiņus, vispirms izlietojamo produktu sarakstus un izpārdošanas piedāvājumus, un nepārdoto pārtiku var ziedot, nevis izmest.",
+          "3": "Mazāk kilometru — mūsu piegādes maršruti tiek plānoti tā, lai apvienotu pasūtījumus un izvairītos no tukšiem braucieniem, un katras piegādes CO₂ pēdas nospiedums tiek mērīts.",
+          "4": "Atkārtoti lietojams iepakojums — kastes, mucas un cits atgriežamais iepakojums tiek uzskaitīts un savākts, lai to varētu izmantot atkal un atkal.",
+          "5": "Lietota cepamā eļļa — licencēti partneri to savāc no virtuvēm un pārstrādā biodegvielā.",
+          "6": "Pārtikas drošība — temperatūras un pārbaudes tiek reģistrētas digitāli, no piegādātāja saldētavas līdz virtuvei.",
+          "7": "Mēs turpinām pilnveidoties. Ja jums ir ideja vai jautājums, sazinieties ar mums."
+        }
+      },
+      "careers": {
+        "title": "Karjera",
+        "lead": "Strādājiet kopā ar mums, lai padarītu vairumtirdzniecību vienkāršu tūkstošiem uzņēmumu.",
+        "start": {
+          "1": "FIRINGI ir augoša komanda Eiropā, kas veido vairumtirdzniecības tirgus platformu restorāniem, kafejnīcām un veikaliem. Mēs strādājam pārdošanas, operāciju, loģistikas, klientu atbalsta un tehnoloģiju jomā.",
+          "2": "Mēs novērtējam cilvēkus, kuri ir praktiski, laipni pret klientiem un piegādātājiem un labprāt mācās. Mēs piedāvājam reālu atbildību, draudzīgu komandu un iespēju veidot produktu, ko izmanto katru dienu.",
+          "3": "Apskatiet mūsu brīvās vakances zemāk vai nosūtiet iniciatīvas pieteikumu."
+        },
+        "openings": "Brīvās vakances",
+        "none": "Pašlaik brīvu vakanču nav — jūs joprojām varat nosūtīt iniciatīvas pieteikumu.",
+        "applyTitle": "Pieteikties",
+        "applyLead": "Pastāstiet mums par sevi. Mēs atbildam uz katru pieteikumu.",
+        "position": "Amats",
+        "openApplication": "Iniciatīvas pieteikums",
+        "link": "Saite uz jūsu CV vai LinkedIn profilu (neobligāti)",
+        "linkHint": "Saite, kas sākas ar https:// — bez failiem.",
+        "msg": "Kāpēc FIRINGI? (neobligāti)",
+        "consent": "Es piekrītu, ka FIRINGI glabā manus datus, lai izskatītu manu pieteikumu, un dzēš tos, kad atlase ir noslēgusies (VDAR).",
+        "send": "Nosūtīt pieteikumu",
+        "sent": "Paldies — esam saņēmuši jūsu pieteikumu un drīz atbildēsim.",
+        "errLink": "Saitei jāsākas ar https://",
+        "errOff": "Pieteikšanās pašlaik ir slēgta.",
+        "mailSubject": "Esam saņēmuši jūsu pieteikumu",
+        "mailBody": "Paldies, ka pieteicāties darbam FIRINGI. Mēs izlasām katru pieteikumu un drīz atbildēsim.",
+        "type": {
+          "FULL_TIME": "Pilna slodze",
+          "PART_TIME": "Nepilna slodze",
+          "INTERNSHIP": "Prakse",
+          "TEMPORARY": "Pagaidu darbs",
+          "FREELANCE": "Ārštata darbs"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Zem tā, ko pircēji parasti maksā"
     },
     "vNone": "Nav aktīvu piedāvājumu."
+  },
+  "preorders": {
+    "title": "Priekšpasūtījumi & cenu fiksācija",
+    "intro": "Pasūtiet sezonas preces, jaunus produktus un deficīta preces iepriekš un fiksējiet šodienas cenu tam, kas Jums būs vajadzīgs nākamajos mēnešos.",
+    "sellerTitle": "Priekšpasūtījumi & cenu fiksācija",
+    "sellerIntro": "Atveriet priekšpasūtījumus saviem klientiem (sezonas preces, jauni produkti, ierobežots piedāvājums) un atbildiet uz cenu fiksācijas pieprasījumiem. Plānojiet iepirkumus pēc priekšpasūtītā.",
+    "tabOpen": "Atvērtie priekšpasūtījumi",
+    "tabMine": "Mani priekšpasūtījumi",
+    "tabLocks": "Cenu fiksācijas",
+    "tabCampaigns": "Manas priekšpasūtījumu kampaņas",
+    "kind": {
+      "SEASONAL": "Sezonas",
+      "LAUNCH": "Jauns produkts",
+      "SCARCE": "Ierobežots piedāvājums"
+    },
+    "status": {
+      "DRAFT": "Melnraksts",
+      "PENDING": "Gaida FIRINGI",
+      "OPEN": "Atvērts",
+      "CLOSED": "Slēgts",
+      "ALLOCATED": "Sadalīts",
+      "DONE": "Pabeigts",
+      "CANCELLED": "Atcelts",
+      "REJECTED": "Nav apstiprināts"
+    },
+    "resStatus": {
+      "PLACED": "Priekšpasūtīts",
+      "ALLOCATED": "Apstipriniet daudzumu",
+      "CONFIRMED": "Apstiprināts",
+      "ORDERED": "Pasūtīts",
+      "CANCELLED": "Atcelts",
+      "DECLINED": "Noraidīts",
+      "FAILED": "Neizdevās pasūtīt"
+    },
+    "lockStatus": {
+      "REQUESTED": "Gaida piegādātāju",
+      "REVIEW": "Gaida FIRINGI",
+      "ACTIVE": "Aktīva",
+      "REJECTED": "Noraidīta",
+      "CANCELLED": "Atcelta",
+      "EXPIRED": "Beigusies",
+      "DONE": "Viss pasūtīts"
+    },
+    "alloc": {
+      "PRO_RATA": "Proporcionāli katra pieprasītajam",
+      "FIRST_COME": "Rindas kārtībā",
+      "LOYAL_FIRST": "Vispirms pastāvīgie klienti"
+    },
+    "supplier": "Piegādātājs",
+    "closes": "Slēdzas {date}",
+    "closesLabel": "Slēdzas",
+    "opensLabel": "Atveras",
+    "deliveries": "Piegāde",
+    "deliveryDates": "Piegādes datumi",
+    "deliveryDate": "Piegādes datums",
+    "address": "Piegādes adrese",
+    "note": "Piezīme (nav obligāta)",
+    "deposit": "Avanss {pct}%",
+    "depositLabel": "Avanss",
+    "depositDue": "Maksājamais avanss: {amount}",
+    "depositPaid": "Avanss samaksāts",
+    "payDeposit": "Maksāt avansu",
+    "depositHint": "Avanss paliek kā kredīts Jūsu kontā un tiek izmantots Jūsu rēķiniem. Ja piegādātājs nevar piegādāt, tas paliek kā kredīts.",
+    "suggested": "Jums",
+    "suggestedHint": "Jūs to pirkāt aptuveni šajā laikā pagājušajā gadā",
+    "product": "Produkts",
+    "pack": "Iepakojums",
+    "priceNow": "Cena tagad",
+    "perPack": "par iepakojumu",
+    "nextTier": "Vēl {missing} iepakojumi kopējā priekšpasūtījumā → {price}",
+    "tiers": "Cena pēc kopējā priekšpasūtītā daudzuma",
+    "tierRow": "no {min} iepakojumiem: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · maks. {max}",
+    "short": "Liels pieprasījums — var tikt sadalīts",
+    "qty": "Iepakojumi",
+    "preorder": "Priekšpasūtīt",
+    "update": "Atjaunināt priekšpasūtījumu",
+    "alreadyMine": "Jūs šeit esat veicis priekšpasūtījumu — to var mainīt līdz slēgšanai.",
+    "placed": "Priekšpasūtījums veikts.",
+    "updated": "Priekšpasūtījums atjaunināts.",
+    "noOpen": "Pašlaik Jums nav atvērtu priekšpasūtījumu. Kad piegādātāji kādu atvērs, tas parādīsies šeit.",
+    "noMine": "Jūs vēl neko neesat priekšpasūtījis.",
+    "asked": "Pieprasīts",
+    "given": "Piešķirts",
+    "finalPrice": "Galīgā cena",
+    "cancel": "Atcelt",
+    "cancelled": "Atcelts.",
+    "accept": "Pieņemt šo daudzumu",
+    "decline": "Noraidīt",
+    "allocatedHint": "Piedāvājums bija ierobežots — Jūs saņēmāt mazāk, nekā pieprasījāt. Pieņemiet vai noraidiet; bez atbildes tas tiek pieņemts automātiski.",
+    "orders": "Pasūtījumi",
+    "failed": "Kāpēc: {reason}",
+    "reason": "Iemesls: {reason}",
+    "allocRule": "Ja piedāvājums ir ierobežots: {rule}",
+    "lockIntro": "Saglabājiet šodienas cenu daudzumam, ko ņemsiet nākamajos mēnešos. Katru reizi, kad vajag preces, veiciet daļēju pasūtījumu — parastu pasūtījumu par fiksēto cenu.",
+    "lockSuggest": "Bieži pirktie produkti",
+    "lockSuggestHint": "Aptuveni {n} iepakojumi mēnesī",
+    "lockFor": "Fiksēt cenu",
+    "months": "Mēneši",
+    "lockRequest": "Pieprasīt cenas fiksāciju",
+    "lockRequested": "Pieprasījums nosūtīts piegādātājam.",
+    "noLocks": "Cenu fiksāciju vēl nav.",
+    "noSuggest": "Pagaidām nav ko ieteikt — vispirms iepērcieties dažas reizes.",
+    "lockedPrice": "Fiksētā cena",
+    "listPrice": "Cena pieprasījuma brīdī",
+    "taken": "{taken} no {total} pasūtīti",
+    "left": "Atlikuši {left}",
+    "until": "Līdz {date}",
+    "perMonthHint": "Aptuveni {n} mēnesī, lai izmantotu visu",
+    "saved": "Līdz šim ietaupīts: {amount}",
+    "callOff": "Pasūtīt daļu",
+    "callOffDone": "Pasūtījums {number} veikts.",
+    "calloffs": "Daļējie pasūtījumi",
+    "priceToday": "Cena šodien",
+    "tierLabel": "Pakāpju cenas",
+    "allocLabel": "Ja piedāvājums ir ierobežots",
+    "none": "—",
+    "total": "Līdz šim priekšpasūtīts",
+    "value": "Vērtība",
+    "sellerNewCampaign": "Jauns priekšpasūtījums",
+    "sellerNoCampaigns": "Priekšpasūtījumu vēl nav. Atveriet kādu sezonai, jaunam produktam vai deficīta precēm.",
+    "sellerBuyers": "Pircēji",
+    "sellerProducts": "Produkti",
+    "sellerKind": "Veids",
+    "sellerTitleField": "Nosaukums",
+    "sellerDescription": "Apraksts (nav obligāts)",
+    "sellerAddDate": "Pievienot datumu",
+    "sellerRemove": "Noņemt",
+    "sellerAddProduct": "Pievienot produktu",
+    "sellerChooseProduct": "Izvēlieties produktu",
+    "sellerPrice": "Cena par iepakojumu",
+    "sellerMin": "Min. vienam pircējam",
+    "sellerMax": "Maks. vienam pircējam",
+    "sellerSupply": "Pieejamie iepakojumi",
+    "sellerSupplyHint": "Tukšs = bez ierobežojuma",
+    "sellerAddTier": "Pievienot pakāpi",
+    "sellerTierFrom": "No kopējā iepakojumu skaita",
+    "sellerTierPrice": "Cena",
+    "sellerSave": "Saglabāt melnrakstu",
+    "sellerSaved": "Saglabāts.",
+    "sellerSubmit": "Nosūtīt FIRINGI",
+    "sellerSubmitAuto": "Atvērt priekšpasūtījumu",
+    "sellerSubmitted": "Nosūtīts.",
+    "sellerCloseNow": "Slēgt tagad un sadalīt",
+    "sellerClosed": "Slēgts un sadalīts.",
+    "sellerCancel": "Atcelt priekšpasūtījumu",
+    "sellerCancelReason": "Kāpēc atceļat?",
+    "sellerOrderNow": "Veikt pasūtījumus tagad",
+    "sellerOrdered": "Veikti pasūtījumi: {n}.",
+    "sellerPlan": "Plāns: iepakojumi pa piegādes datumiem",
+    "sellerReservations": "Priekšpasūtījumi",
+    "sellerReviewNote": "FIRINGI piezīme: {note}",
+    "sellerDeposit": "Avanss (%)",
+    "sellerOpens": "Atveras",
+    "sellerCloses": "Slēdzas",
+    "sellerLocks": "Cenu fiksācijas pieprasījumi",
+    "sellerLocksActive": "Cenu fiksācijas",
+    "sellerNoLocks": "Nav cenu fiksācijas pieprasījumu.",
+    "sellerAcceptAt": "Pieņemt par cenu",
+    "sellerDepositPct": "Avanss %",
+    "sellerAccept": "Pieņemt",
+    "sellerReject": "Noraidīt",
+    "sellerDecided": "Atbildēts.",
+    "sellerCommitted": "Vēl jāpasūta",
+    "sellerBuyer": "Pircējs",
+    "sellerPerMonth": "~ mēnesī",
+    "sellerMonths": "{n} mēneši"
   }
 }

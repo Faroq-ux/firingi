@@ -950,7 +950,8 @@
     "Food Safety Training": "Szkolenia z bezpieczeństwa żywności",
     "Logbook Setup": "Konfiguracja dziennika",
     "Price Benchmark": "Porównanie cen",
-    "Price Position": "Pozycja cenowa"
+    "Price Position": "Pozycja cenowa",
+    "Pre-orders & Price Locks": "Przedsprzedaż i blokady cen"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Możesz zaoszczędzić {amount} rocznie",
       "body": "Za {count} produkt(y) płacisz więcej niż podobne firmy. Sprawdź, gdzie — i zobacz tańsze oferty w FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Nowa przedsprzedaż: {title}",
+      "body": "{supplier}: nowa przedsprzedaż — zamów z wyprzedzeniem do {date}."
+    },
+    "preorder_allocated": {
+      "title": "Zamówienie w przedsprzedaży {number}: ilości ustalone",
+      "body": "{title}: {lines} (przydzielone / zamówione)."
+    },
+    "preorder_ordered": {
+      "title": "Zamówienie w przedsprzedaży {number} zrealizowane jako zamówienie",
+      "body": "{title}: złożono zamówienie {order} do dostawy."
+    },
+    "preorder_failed": {
+      "title": "Zamówienie w przedsprzedaży {number}: nie udało się zamówić",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Zamówienie w przedsprzedaży {number} anulowane",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Przedsprzedaż {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Przedsprzedaż {number} do sprawdzenia",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Prośba o blokadę ceny {number}",
+      "body": "{company} chce {qty} opak. {product} po dzisiejszej cenie przez {months} mies."
+    },
+    "pricelock_review": {
+      "title": "Blokada ceny {number} do zatwierdzenia",
+      "body": "{company}: wartość {value}"
+    },
+    "pricelock_decided": {
+      "title": "Blokada ceny {number}: {decision}",
+      "body": "Cena {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Blokada ceny {number} kończy się {date}",
+      "body": "Pozostało {left} opak. {product} do zamówienia po zablokowanej cenie."
+    },
+    "pricelock_expired": {
+      "title": "Blokada ceny {number} zakończona",
+      "body": "Niezamówione opakowania: {left}."
+    },
+    "website_job_application": {
+      "title": "Nowa aplikacja",
+      "body": "{name} złożył(a) aplikację: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Polityka prywatności (RODO)",
           "3": "Pliki cookie",
           "4": "Dane firmy"
+        },
+        "company": {
+          "1": "Zrównoważony rozwój",
+          "2": "Kariera"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Zaloguj się",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Pamiątki i prezenty",
           "13": "Opakowania i materiały",
           "14": "Produkty do kebabów i pizzy"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Zrównoważony rozwój",
+        "lead": "Jak FIRINGI działa na rzecz mniejszego marnotrawstwa i wydajniejszego transportu towarów.",
+        "start": {
+          "1": "FIRINGI łączy restauracje, kawiarnie i sklepy z hurtowniami i dystrybutorami w całej Europie. Wierzymy, że lepszy łańcuch dostaw to także lżejszy łańcuch dostaw.",
+          "2": "Mniej marnowania żywności — klienci widzą daty ważności, listy produktów do wykorzystania w pierwszej kolejności i oferty wyprzedażowe, a niesprzedana żywność może trafić do darowizny zamiast do kosza.",
+          "3": "Mniej kilometrów — nasze trasy dostaw są planowane tak, by łączyć zamówienia i unikać pustych przejazdów, a ślad CO₂ każdej dostawy jest mierzony.",
+          "4": "Opakowania wielokrotnego użytku — skrzynki, kegi i inne opakowania zwrotne są śledzone i odbierane, aby można było używać ich wciąż na nowo.",
+          "5": "Zużyty olej spożywczy — odbierany z kuchni przez licencjonowanych partnerów i przetwarzany na biopaliwo.",
+          "6": "Bezpieczeństwo żywności — temperatury i kontrole są rejestrowane cyfrowo, od chłodni dostawcy aż po kuchnię.",
+          "7": "Wciąż się doskonalimy. Jeśli masz pomysł lub pytanie, skontaktuj się z nami."
+        }
+      },
+      "careers": {
+        "title": "Kariera",
+        "lead": "Pracuj z nami i pomóż uprościć handel hurtowy dla tysięcy firm.",
+        "start": {
+          "1": "FIRINGI to rozwijający się zespół w Europie, który tworzy platformę hurtową dla restauracji, kawiarni i sklepów. Działamy w obszarach sprzedaży, operacji, logistyki, obsługi klienta i technologii.",
+          "2": "Cenimy osoby praktyczne, życzliwe wobec klientów i dostawców oraz chętne do nauki. Oferujemy prawdziwą odpowiedzialność, przyjazny zespół i szansę współtworzenia produktu używanego każdego dnia.",
+          "3": "Zobacz nasze oferty pracy poniżej lub wyślij aplikację z własnej inicjatywy."
+        },
+        "openings": "Oferty pracy",
+        "none": "Obecnie nie mamy otwartych ofert pracy — możesz jednak wysłać aplikację z własnej inicjatywy.",
+        "applyTitle": "Aplikuj",
+        "applyLead": "Opowiedz nam o sobie. Odpowiadamy na każde zgłoszenie.",
+        "position": "Stanowisko",
+        "openApplication": "Aplikacja z własnej inicjatywy",
+        "link": "Link do Twojego CV lub profilu LinkedIn (opcjonalnie)",
+        "linkHint": "Link zaczynający się od https:// — bez plików.",
+        "msg": "Dlaczego FIRINGI? (opcjonalnie)",
+        "consent": "Wyrażam zgodę na przechowywanie moich danych przez FIRINGI w celu rozpatrzenia mojej aplikacji oraz ich usunięcie po zakończeniu rekrutacji (RODO).",
+        "send": "Wyślij aplikację",
+        "sent": "Dziękujemy — otrzymaliśmy Twoją aplikację i wkrótce odpowiemy.",
+        "errLink": "Link musi zaczynać się od https://",
+        "errOff": "Rekrutacja jest obecnie zamknięta.",
+        "mailSubject": "Otrzymaliśmy Twoją aplikację",
+        "mailBody": "Dziękujemy za aplikację do FIRINGI. Czytamy każde zgłoszenie i wkrótce odpowiemy.",
+        "type": {
+          "FULL_TIME": "Pełny etat",
+          "PART_TIME": "Niepełny etat",
+          "INTERNSHIP": "Staż",
+          "TEMPORARY": "Praca tymczasowa",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Poniżej tego, co zwykle płacą kupujący"
     },
     "vNone": "Brak aktywnych ofert."
+  },
+  "preorders": {
+    "title": "Przedsprzedaż i blokady cen",
+    "intro": "Zamów z wyprzedzeniem towary sezonowe, nowości i towary o ograniczonej dostępności oraz zablokuj dzisiejszą cenę na potrzeby kolejnych miesięcy.",
+    "sellerTitle": "Przedsprzedaż i blokady cen",
+    "sellerIntro": "Otwieraj przedsprzedaże dla swoich klientów (sezonowe, nowości, ograniczona dostępność) i odpowiadaj na prośby o blokadę ceny. Planuj zakupy na podstawie zamówień w przedsprzedaży.",
+    "tabOpen": "Otwarte przedsprzedaże",
+    "tabMine": "Moje zamówienia w przedsprzedaży",
+    "tabLocks": "Blokady cen",
+    "tabCampaigns": "Moje kampanie przedsprzedaży",
+    "kind": {
+      "SEASONAL": "Sezonowe",
+      "LAUNCH": "Nowy produkt",
+      "SCARCE": "Ograniczona dostępność"
+    },
+    "status": {
+      "DRAFT": "Wersja robocza",
+      "PENDING": "Oczekuje na FIRINGI",
+      "OPEN": "Otwarta",
+      "CLOSED": "Zamknięta",
+      "ALLOCATED": "Rozdzielona",
+      "DONE": "Zakończona",
+      "CANCELLED": "Anulowana",
+      "REJECTED": "Niezatwierdzona"
+    },
+    "resStatus": {
+      "PLACED": "Zamówione w przedsprzedaży",
+      "ALLOCATED": "Potwierdź ilość",
+      "CONFIRMED": "Potwierdzone",
+      "ORDERED": "Zamówione",
+      "CANCELLED": "Anulowane",
+      "DECLINED": "Odrzucone",
+      "FAILED": "Nie udało się zamówić"
+    },
+    "lockStatus": {
+      "REQUESTED": "Oczekuje na dostawcę",
+      "REVIEW": "Oczekuje na FIRINGI",
+      "ACTIVE": "Aktywna",
+      "REJECTED": "Odrzucona",
+      "CANCELLED": "Anulowana",
+      "EXPIRED": "Zakończona",
+      "DONE": "Całość zamówiona"
+    },
+    "alloc": {
+      "PRO_RATA": "Proporcjonalnie do zamówionych ilości",
+      "FIRST_COME": "Kto pierwszy, ten lepszy",
+      "LOYAL_FIRST": "Najpierw stali klienci"
+    },
+    "supplier": "Dostawca",
+    "closes": "Zamknięcie {date}",
+    "closesLabel": "Zamknięcie",
+    "opensLabel": "Otwarcie",
+    "deliveries": "Dostawa",
+    "deliveryDates": "Terminy dostaw",
+    "deliveryDate": "Termin dostawy",
+    "address": "Adres dostawy",
+    "note": "Uwagi (opcjonalnie)",
+    "deposit": "Zaliczka {pct}%",
+    "depositLabel": "Zaliczka",
+    "depositDue": "Zaliczka do zapłaty: {amount}",
+    "depositPaid": "Zaliczka zapłacona",
+    "payDeposit": "Zapłać zaliczkę",
+    "depositHint": "Zaliczka pozostaje jako saldo na koncie i jest rozliczana na fakturach. Jeśli dostawca nie zrealizuje dostawy, pozostaje jako saldo.",
+    "suggested": "Polecane",
+    "suggestedHint": "Ten produkt był kupowany w tym okresie w zeszłym roku",
+    "product": "Produkt",
+    "pack": "Opakowanie",
+    "priceNow": "Aktualna cena",
+    "perPack": "za opakowanie",
+    "nextTier": "Jeszcze {missing} opak. zamówionych łącznie przez wszystkich → {price}",
+    "tiers": "Cena wg łącznej ilości w przedsprzedaży",
+    "tierRow": "od {min} opak.: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · maks. {max}",
+    "short": "Duży popyt — możliwy podział",
+    "qty": "Opakowania",
+    "preorder": "Zamów w przedsprzedaży",
+    "update": "Zmień zamówienie",
+    "alreadyMine": "Złożono tu zamówienie w przedsprzedaży — można je zmienić do zamknięcia.",
+    "placed": "Zamówienie w przedsprzedaży złożone.",
+    "updated": "Zamówienie w przedsprzedaży zaktualizowane.",
+    "noOpen": "Obecnie brak otwartych przedsprzedaży. Gdy dostawcy otworzą przedsprzedaż, pojawi się tutaj.",
+    "noMine": "Nie złożono jeszcze żadnych zamówień w przedsprzedaży.",
+    "asked": "Zamówione",
+    "given": "Przydzielone",
+    "finalPrice": "Cena końcowa",
+    "cancel": "Anuluj",
+    "cancelled": "Anulowano.",
+    "accept": "Akceptuj tę ilość",
+    "decline": "Odrzuć",
+    "allocatedHint": "Dostępność była ograniczona — przydzielono mniej, niż zamówiono. Zaakceptuj lub odrzuć; bez odpowiedzi ilość zostanie zaakceptowana automatycznie.",
+    "orders": "Zamówienia",
+    "failed": "Dlaczego: {reason}",
+    "reason": "Powód: {reason}",
+    "allocRule": "Przy ograniczonej dostępności: {rule}",
+    "lockIntro": "Zachowaj dzisiejszą cenę dla ilości odbieranej w kolejnych miesiącach. Gdy potrzebny jest towar, zamów jego część — zwykłe zamówienie po zablokowanej cenie.",
+    "lockSuggest": "Często kupowane produkty",
+    "lockSuggestHint": "Ok. {n} opak. miesięcznie",
+    "lockFor": "Zablokuj cenę",
+    "months": "Miesiące",
+    "lockRequest": "Poproś o blokadę ceny",
+    "lockRequested": "Prośba wysłana do dostawcy.",
+    "noLocks": "Brak blokad cen.",
+    "noSuggest": "Na razie brak propozycji — najpierw potrzeba kilku zakupów.",
+    "lockedPrice": "Zablokowana cena",
+    "listPrice": "Cena w dniu prośby",
+    "taken": "Zamówiono {taken} z {total}",
+    "left": "Pozostało: {left}",
+    "until": "Do {date}",
+    "perMonthHint": "Ok. {n} miesięcznie, aby wykorzystać całość",
+    "saved": "Zaoszczędzono dotąd: {amount}",
+    "callOff": "Zamów część",
+    "callOffDone": "Zamówienie {number} złożone.",
+    "calloffs": "Zamówienia z blokady",
+    "priceToday": "Cena dziś",
+    "tierLabel": "Ceny progowe",
+    "allocLabel": "Przy ograniczonej dostępności",
+    "none": "—",
+    "total": "Dotychczas zamówiono",
+    "value": "Wartość",
+    "sellerNewCampaign": "Nowa przedsprzedaż",
+    "sellerNoCampaigns": "Brak przedsprzedaży. Otwórz przedsprzedaż na sezon, nowy produkt lub towar o ograniczonej dostępności.",
+    "sellerBuyers": "Kupujący",
+    "sellerProducts": "Produkty",
+    "sellerKind": "Rodzaj",
+    "sellerTitleField": "Tytuł",
+    "sellerDescription": "Opis (opcjonalnie)",
+    "sellerAddDate": "Dodaj datę",
+    "sellerRemove": "Usuń",
+    "sellerAddProduct": "Dodaj produkt",
+    "sellerChooseProduct": "Wybierz produkt",
+    "sellerPrice": "Cena za opakowanie",
+    "sellerMin": "Min. na kupującego",
+    "sellerMax": "Maks. na kupującego",
+    "sellerSupply": "Dostępne opakowania",
+    "sellerSupplyHint": "Puste = bez limitu",
+    "sellerAddTier": "Dodaj próg",
+    "sellerTierFrom": "Od łącznej liczby opak.",
+    "sellerTierPrice": "Cena",
+    "sellerSave": "Zapisz wersję roboczą",
+    "sellerSaved": "Zapisano.",
+    "sellerSubmit": "Wyślij do FIRINGI",
+    "sellerSubmitAuto": "Otwórz przedsprzedaż",
+    "sellerSubmitted": "Wysłano.",
+    "sellerCloseNow": "Zamknij teraz i rozdziel",
+    "sellerClosed": "Zamknięto i rozdzielono.",
+    "sellerCancel": "Anuluj przedsprzedaż",
+    "sellerCancelReason": "Jaki jest powód anulowania?",
+    "sellerOrderNow": "Złóż zamówienia teraz",
+    "sellerOrdered": "Złożone zamówienia: {n}.",
+    "sellerPlan": "Plan: opakowania na termin dostawy",
+    "sellerReservations": "Zamówienia w przedsprzedaży",
+    "sellerReviewNote": "Uwaga FIRINGI: {note}",
+    "sellerDeposit": "Zaliczka (%)",
+    "sellerOpens": "Otwarcie",
+    "sellerCloses": "Zamknięcie",
+    "sellerLocks": "Prośby o blokadę ceny",
+    "sellerLocksActive": "Blokady cen",
+    "sellerNoLocks": "Brak próśb o blokadę ceny.",
+    "sellerAcceptAt": "Akceptuj po cenie",
+    "sellerDepositPct": "Zaliczka %",
+    "sellerAccept": "Akceptuj",
+    "sellerReject": "Odrzuć",
+    "sellerDecided": "Odpowiedziano.",
+    "sellerCommitted": "Pozostało do zamówienia",
+    "sellerBuyer": "Kupujący",
+    "sellerPerMonth": "~ miesięcznie",
+    "sellerMonths": "{n} mies."
   }
 }

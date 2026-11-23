@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "./icons";
-import { setLandingLocaleAction, submitContactAction, subscribeNewsletterAction } from "@/server/actions/landing";
+import { setLandingLocaleAction, submitApplicationAction, submitContactAction, subscribeNewsletterAction } from "@/server/actions/landing";
 
 
 export function LangSelect({ locale, locales, label }: { locale: string; locales: { code: string; name: string }[]; label: string }) {
@@ -213,4 +213,41 @@ export function LandingFx() {
     return () => cleanups.forEach((f) => f());
   }, []);
   return <div className="fg-progress" aria-hidden="true" />;
+}
+
+/** Footer pages (FIRINGI only): a job application on /careers — an opening or an open application; a link to a CV, no files. */
+export function ApplyForm({ jobs, l }: {
+  jobs: { id: string; title: string }[];
+  l: { position: string; openApplication: string; name: string; email: string; phone: string; link: string; linkHint: string; msg: string; consent: string; send: string; sending: string; sent: string; errRequired: string; errEmail: string; errConsent: string; errSpam: string; errBusy: string; errLink: string; errOff: string };
+}) {
+  const [pending, start] = useTransition();
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const started = useRef(0);
+  useEffect(() => { started.current = Date.now(); }, []);
+  return (
+    <form className="fg-form" noValidate data-testid="apply-form" onSubmit={(e) => {
+      e.preventDefault();
+      const f = new FormData(e.currentTarget), s = (k: string) => String(f.get(k) ?? ""), form = e.currentTarget;
+      start(async () => {
+        const r = await submitApplicationAction({ jobId: s("jobId"), name: s("name"), email: s("email"), phone: s("phone"), link: s("link"), message: s("message"), consent: f.get("consent") === "on", website: s("website"), startedAt: started.current });
+        if (r.ok) { setMsg({ ok: true, text: l.sent }); form.reset(); started.current = Date.now(); }
+        else setMsg({ ok: false, text: r.problem === "LINK" ? l.errLink : r.problem === "OFF" ? l.errOff : errText(r.problem, l) });
+      });
+    }}>
+      <div className="fg-fields">
+        <label className="fg-field wide">{l.position}<select name="jobId" defaultValue={jobs[0]?.id ?? ""} data-testid="apply-job">
+          {jobs.map((j) => <option key={j.id} value={j.id}>{j.title}</option>)}<option value="">{l.openApplication}</option>
+        </select></label>
+        <label className="fg-field">{l.name}<input name="name" autoComplete="name" required maxLength={120} /></label>
+        <label className="fg-field">{l.email}<input name="email" type="email" autoComplete="email" required maxLength={254} /></label>
+        <label className="fg-field">{l.phone}<input name="phone" type="tel" autoComplete="tel" maxLength={40} /></label>
+        <label className="fg-field">{l.link}<input name="link" type="url" inputMode="url" placeholder="https://" maxLength={500} /><span style={{ fontSize: 12.5, opacity: 0.75 }}>{l.linkHint}</span></label>
+        <label className="fg-field wide">{l.msg}<textarea name="message" maxLength={4000} /></label>
+      </div>
+      <label className="fg-hp" aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off" /></label>
+      <label className="fg-consent"><input type="checkbox" name="consent" /><span>{l.consent}</span></label>
+      <button className="fg-btn red" type="submit" disabled={pending} data-testid="apply-send">{pending ? l.sending : l.send}</button>
+      {msg && <p className={"fg-msg" + (msg.ok ? "" : " err")} role={msg.ok ? "status" : "alert"} data-testid="apply-msg">{msg.text}</p>}
+    </form>
+  );
 }

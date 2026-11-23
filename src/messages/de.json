@@ -950,7 +950,8 @@
     "Food Safety Training": "Hygieneschulung",
     "Logbook Setup": "Kontrollbuch einrichten",
     "Price Benchmark": "Preisvergleich",
-    "Price Position": "Preisposition"
+    "Price Position": "Preisposition",
+    "Pre-orders & Price Locks": "Vorbestellungen & Festpreise"
   },
   "delivery": {
     "title": "Lieferung",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Sie könnten {amount} pro Jahr sparen",
       "body": "Bei {count} Produkt(en) zahlen Sie mehr als ähnliche Betriebe. Sehen Sie, wo – und günstigere Angebote auf FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Neue Vorbestellung: {title}",
+      "body": "{supplier} hat eine Vorbestellung eröffnet — bestellen Sie bis {date} im Voraus."
+    },
+    "preorder_allocated": {
+      "title": "Vorbestellung {number}: Mengen festgelegt",
+      "body": "{title}: {lines} (zugeteilt / angefragt)."
+    },
+    "preorder_ordered": {
+      "title": "Vorbestellung {number} bestellt",
+      "body": "{title}: Bestellung {order} zur Lieferung aufgegeben."
+    },
+    "preorder_failed": {
+      "title": "Vorbestellung {number} konnte nicht bestellt werden",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Vorbestellung {number} storniert",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Vorbestellung {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Vorbestellung {number} zur Prüfung",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Festpreis-Anfrage {number}",
+      "body": "{company} möchte {qty} Gebinde {product} zum heutigen Preis für {months} Monate."
+    },
+    "pricelock_review": {
+      "title": "Festpreis {number} zur Genehmigung",
+      "body": "{company}: Wert {value}"
+    },
+    "pricelock_decided": {
+      "title": "Festpreis {number}: {decision}",
+      "body": "Preis {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Festpreis {number} endet am {date}",
+      "body": "Noch {left} Gebinde {product} zum Festpreis abzurufen."
+    },
+    "pricelock_expired": {
+      "title": "Festpreis {number} beendet",
+      "body": "{left} Gebinde wurden nicht abgerufen."
+    },
+    "website_job_application": {
+      "title": "Neue Bewerbung",
+      "body": "{name} hat sich beworben: {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Datenschutzerklärung (DSGVO)",
           "3": "Cookies",
           "4": "Impressum"
+        },
+        "company": {
+          "1": "Nachhaltigkeit",
+          "2": "Karriere"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Anmelden",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Souvenirs & Geschenke",
           "13": "Verpackung & Zubehör",
           "14": "Kebab- & Pizzabedarf"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Nachhaltigkeit",
+        "lead": "Wie FIRINGI daran arbeitet, weniger zu verschwenden und Waren effizienter zu bewegen.",
+        "start": {
+          "1": "FIRINGI verbindet Restaurants, Cafés und Geschäfte mit Großhändlern und Distributoren in ganz Europa. Wir sind überzeugt: Eine bessere Lieferkette ist auch eine leichtere.",
+          "2": "Weniger Lebensmittelverschwendung — Kunden sehen Ablaufdaten, Listen mit zuerst zu verbrauchenden Waren und Abverkaufsangebote, und nicht verkaufte Lebensmittel können gespendet statt weggeworfen werden.",
+          "3": "Weniger Kilometer — unsere Lieferrouten werden so geplant, dass Bestellungen gebündelt und Leerfahrten vermieden werden, und der CO₂-Fußabdruck jeder Lieferung wird gemessen.",
+          "4": "Mehrwegverpackungen — Kisten, Fässer und anderes Leergut werden erfasst und abgeholt, damit sie immer wieder verwendet werden.",
+          "5": "Altspeiseöl — wird von zugelassenen Partnern in den Küchen abgeholt und zu Biokraftstoff verarbeitet.",
+          "6": "Lebensmittelsicherheit — Temperaturen und Kontrollen werden digital protokolliert, vom Kühlraum des Lieferanten bis in die Küche.",
+          "7": "Wir werden stetig besser. Wenn Sie eine Idee oder eine Frage haben, kontaktieren Sie uns."
+        }
+      },
+      "careers": {
+        "title": "Karriere",
+        "lead": "Arbeiten Sie mit uns daran, den Großhandel für Tausende von Unternehmen einfach zu machen.",
+        "start": {
+          "1": "FIRINGI ist ein wachsendes Team in Europa, das den Großhandelsmarktplatz für Restaurants, Cafés und Geschäfte aufbaut. Wir arbeiten in den Bereichen Vertrieb, Operations, Logistik, Kundensupport und Technologie.",
+          "2": "Wir schätzen Menschen, die pragmatisch sind, freundlich zu Kunden und Lieferanten und gerne dazulernen. Wir bieten echte Verantwortung, ein herzliches Team und die Chance, ein Produkt mitzugestalten, das jeden Tag genutzt wird.",
+          "3": "Sehen Sie sich unten unsere offenen Stellen an oder senden Sie uns eine Initiativbewerbung."
+        },
+        "openings": "Offene Stellen",
+        "none": "Derzeit gibt es keine offenen Stellen — Sie können uns trotzdem eine Initiativbewerbung senden.",
+        "applyTitle": "Bewerben",
+        "applyLead": "Erzählen Sie uns von sich. Wir antworten auf jede Bewerbung.",
+        "position": "Stelle",
+        "openApplication": "Initiativbewerbung",
+        "link": "Link zu Ihrem Lebenslauf oder LinkedIn (optional)",
+        "linkHint": "Ein Link, der mit https:// beginnt — keine Dateien.",
+        "msg": "Warum FIRINGI? (optional)",
+        "consent": "Ich bin damit einverstanden, dass FIRINGI meine Daten zur Prüfung meiner Bewerbung speichert und nach Abschluss des Auswahlverfahrens löscht (DSGVO).",
+        "send": "Bewerbung senden",
+        "sent": "Vielen Dank — wir haben Ihre Bewerbung erhalten und melden uns bald bei Ihnen.",
+        "errLink": "Der Link muss mit https:// beginnen",
+        "errOff": "Derzeit nehmen wir keine Bewerbungen an.",
+        "mailSubject": "Wir haben Ihre Bewerbung erhalten",
+        "mailBody": "Vielen Dank für Ihre Bewerbung bei FIRINGI. Wir lesen jede Bewerbung und melden uns bald bei Ihnen.",
+        "type": {
+          "FULL_TIME": "Vollzeit",
+          "PART_TIME": "Teilzeit",
+          "INTERNSHIP": "Praktikum",
+          "TEMPORARY": "Befristet",
+          "FREELANCE": "Freiberuflich"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Unter dem, was Käufer üblicherweise zahlen"
     },
     "vNone": "Keine aktiven Angebote."
+  },
+  "preorders": {
+    "title": "Vorbestellungen & Festpreise",
+    "intro": "Bestellen Sie Saisonware, neue Produkte und knappe Ware im Voraus und sichern Sie sich den heutigen Preis für Ihren Bedarf der kommenden Monate.",
+    "sellerTitle": "Vorbestellungen & Festpreise",
+    "sellerIntro": "Eröffnen Sie Vorbestellungen für Ihre Kunden (Saison, neue Produkte, knappe Ware) und beantworten Sie Festpreis-Anfragen. Planen Sie Ihre Einkäufe anhand der Vorbestellungen.",
+    "tabOpen": "Offene Vorbestellungen",
+    "tabMine": "Meine Vorbestellungen",
+    "tabLocks": "Festpreise",
+    "tabCampaigns": "Meine Vorbestell-Aktionen",
+    "kind": {
+      "SEASONAL": "Saisonal",
+      "LAUNCH": "Neues Produkt",
+      "SCARCE": "Knappe Ware"
+    },
+    "status": {
+      "DRAFT": "Entwurf",
+      "PENDING": "Wartet auf FIRINGI",
+      "OPEN": "Offen",
+      "CLOSED": "Geschlossen",
+      "ALLOCATED": "Zugeteilt",
+      "DONE": "Abgeschlossen",
+      "CANCELLED": "Storniert",
+      "REJECTED": "Nicht genehmigt"
+    },
+    "resStatus": {
+      "PLACED": "Vorbestellt",
+      "ALLOCATED": "Menge bestätigen",
+      "CONFIRMED": "Bestätigt",
+      "ORDERED": "Bestellt",
+      "CANCELLED": "Storniert",
+      "DECLINED": "Abgelehnt",
+      "FAILED": "Bestellung nicht möglich"
+    },
+    "lockStatus": {
+      "REQUESTED": "Wartet auf Lieferanten",
+      "REVIEW": "Wartet auf FIRINGI",
+      "ACTIVE": "Aktiv",
+      "REJECTED": "Abgelehnt",
+      "CANCELLED": "Storniert",
+      "EXPIRED": "Beendet",
+      "DONE": "Vollständig abgerufen"
+    },
+    "alloc": {
+      "PRO_RATA": "Anteilig nach angefragter Menge",
+      "FIRST_COME": "Wer zuerst kommt, mahlt zuerst",
+      "LOYAL_FIRST": "Stammkunden zuerst"
+    },
+    "supplier": "Lieferant",
+    "closes": "Endet am {date}",
+    "closesLabel": "Endet",
+    "opensLabel": "Beginnt",
+    "deliveries": "Lieferung",
+    "deliveryDates": "Liefertermine",
+    "deliveryDate": "Liefertermin",
+    "address": "Lieferadresse",
+    "note": "Notiz (optional)",
+    "deposit": "Anzahlung {pct}%",
+    "depositLabel": "Anzahlung",
+    "depositDue": "Zu zahlende Anzahlung: {amount}",
+    "depositPaid": "Anzahlung bezahlt",
+    "payDeposit": "Anzahlung zahlen",
+    "depositHint": "Die Anzahlung wird Ihrem Konto als Guthaben gutgeschrieben und mit Ihren Rechnungen verrechnet. Kann der Lieferant nicht liefern, bleibt sie als Guthaben erhalten.",
+    "suggested": "Für Sie",
+    "suggestedHint": "Sie haben dies letztes Jahr um diese Zeit gekauft",
+    "product": "Produkt",
+    "pack": "Gebinde",
+    "priceNow": "Aktueller Preis",
+    "perPack": "pro Gebinde",
+    "nextTier": "Noch {missing} Gebinde insgesamt vorbestellt → {price}",
+    "tiers": "Preis nach Gesamtvorbestellmenge",
+    "tierRow": "ab {min} Gebinden: {price}",
+    "limits": "Min. {min}",
+    "limitsMax": "Min. {min} · max. {max}",
+    "short": "Hohe Nachfrage — Zuteilung möglich",
+    "qty": "Gebinde",
+    "preorder": "Vorbestellen",
+    "update": "Vorbestellung ändern",
+    "alreadyMine": "Sie haben hier vorbestellt — Änderungen sind bis zum Ende möglich.",
+    "placed": "Vorbestellung aufgegeben.",
+    "updated": "Vorbestellung aktualisiert.",
+    "noOpen": "Derzeit keine offenen Vorbestellungen für Sie. Sobald Ihre Lieferanten eine eröffnen, erscheint sie hier.",
+    "noMine": "Sie haben noch nichts vorbestellt.",
+    "asked": "Angefragt",
+    "given": "Zugeteilt",
+    "finalPrice": "Endpreis",
+    "cancel": "Stornieren",
+    "cancelled": "Storniert.",
+    "accept": "Diese Menge annehmen",
+    "decline": "Ablehnen",
+    "allocatedHint": "Die Ware war knapp — Sie haben weniger erhalten als angefragt. Nehmen Sie an oder lehnen Sie ab; ohne Antwort wird automatisch angenommen.",
+    "orders": "Bestellungen",
+    "failed": "Grund: {reason}",
+    "reason": "Grund: {reason}",
+    "allocRule": "Bei knapper Ware: {rule}",
+    "lockIntro": "Sichern Sie sich den heutigen Preis für eine Menge, die Sie in den kommenden Monaten abnehmen. Bei Bedarf rufen Sie Ware ab — eine normale Bestellung zum Festpreis.",
+    "lockSuggest": "Häufig gekaufte Produkte",
+    "lockSuggestHint": "Ca. {n} Gebinde pro Monat",
+    "lockFor": "Preis festschreiben",
+    "months": "Monate",
+    "lockRequest": "Festpreis anfragen",
+    "lockRequested": "Anfrage an den Lieferanten gesendet.",
+    "noLocks": "Noch keine Festpreise.",
+    "noSuggest": "Noch keine Vorschläge — kaufen Sie zuerst ein paar Mal.",
+    "lockedPrice": "Festpreis",
+    "listPrice": "Preis bei Anfrage",
+    "taken": "{taken} von {total} abgerufen",
+    "left": "{left} übrig",
+    "until": "Bis {date}",
+    "perMonthHint": "Ca. {n} pro Monat, um alles abzurufen",
+    "saved": "Bisher gespart: {amount}",
+    "callOff": "Abrufen",
+    "callOffDone": "Bestellung {number} aufgegeben.",
+    "calloffs": "Abrufe",
+    "priceToday": "Heutiger Preis",
+    "tierLabel": "Staffelpreise",
+    "allocLabel": "Bei knapper Ware",
+    "none": "—",
+    "total": "Bisher vorbestellt",
+    "value": "Wert",
+    "sellerNewCampaign": "Neue Vorbestellung",
+    "sellerNoCampaigns": "Noch keine Vorbestellungen. Eröffnen Sie eine für eine Saison, ein neues Produkt oder knappe Ware.",
+    "sellerBuyers": "Käufer",
+    "sellerProducts": "Produkte",
+    "sellerKind": "Art",
+    "sellerTitleField": "Titel",
+    "sellerDescription": "Beschreibung (optional)",
+    "sellerAddDate": "Datum hinzufügen",
+    "sellerRemove": "Entfernen",
+    "sellerAddProduct": "Produkt hinzufügen",
+    "sellerChooseProduct": "Produkt auswählen",
+    "sellerPrice": "Preis pro Gebinde",
+    "sellerMin": "Min. pro Käufer",
+    "sellerMax": "Max. pro Käufer",
+    "sellerSupply": "Verfügbare Gebinde",
+    "sellerSupplyHint": "Leer = unbegrenzt",
+    "sellerAddTier": "Staffel hinzufügen",
+    "sellerTierFrom": "Ab Gesamtmenge (Gebinde)",
+    "sellerTierPrice": "Preis",
+    "sellerSave": "Entwurf speichern",
+    "sellerSaved": "Gespeichert.",
+    "sellerSubmit": "An FIRINGI senden",
+    "sellerSubmitAuto": "Vorbestellung eröffnen",
+    "sellerSubmitted": "Gesendet.",
+    "sellerCloseNow": "Jetzt schließen und zuteilen",
+    "sellerClosed": "Geschlossen und zugeteilt.",
+    "sellerCancel": "Vorbestellung stornieren",
+    "sellerCancelReason": "Warum stornieren Sie?",
+    "sellerOrderNow": "Jetzt Bestellungen aufgeben",
+    "sellerOrdered": "Aufgegebene Bestellungen: {n}.",
+    "sellerPlan": "Plan: Gebinde pro Liefertermin",
+    "sellerReservations": "Vorbestellungen",
+    "sellerReviewNote": "Hinweis von FIRINGI: {note}",
+    "sellerDeposit": "Anzahlung (%)",
+    "sellerOpens": "Beginnt",
+    "sellerCloses": "Endet",
+    "sellerLocks": "Festpreis-Anfragen",
+    "sellerLocksActive": "Festpreise",
+    "sellerNoLocks": "Keine Festpreis-Anfragen.",
+    "sellerAcceptAt": "Annehmen zu",
+    "sellerDepositPct": "Anzahlung %",
+    "sellerAccept": "Annehmen",
+    "sellerReject": "Ablehnen",
+    "sellerDecided": "Beantwortet.",
+    "sellerCommitted": "Noch abzurufen",
+    "sellerBuyer": "Käufer",
+    "sellerPerMonth": "~ pro Monat",
+    "sellerMonths": "{n} Monate"
   }
 }

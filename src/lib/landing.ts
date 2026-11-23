@@ -10,6 +10,13 @@ export type LandingSection = (typeof LANDING_SECTIONS)[number];
 export const LEGAL_PAGES = ["terms", "privacy", "cookies"] as const;
 export type LegalPage = (typeof LEGAL_PAGES)[number];
 export const SOCIALS = ["instagram", "facebook", "linkedin", "youtube", "tiktok"] as const;
+/** FIRINGI's own pages linked from the footer (FIRINGI only — not suppliers' shops): sustainability and careers. */
+export const ABOUT_PAGES = ["sustainability", "careers"] as const;
+export type AboutPage = (typeof ABOUT_PAGES)[number];
+export const JOB_TYPES = ["FULL_TIME", "PART_TIME", "INTERNSHIP", "TEMPORARY", "FREELANCE"] as const;
+export type JobType = (typeof JOB_TYPES)[number];
+/** A job opening at FIRINGI (written in one language by FIRINGI). */
+export type Job = { id: string; title: string; location: string; type: JobType; text: string; on: boolean };
 export type Social = (typeof SOCIALS)[number];
 
 export type LandingSettings = {
@@ -32,6 +39,12 @@ export type LandingSettings = {
   hidden: string[];
   legal: Record<LegalPage, Record<string, string>>;
   legalUpdated: Record<LegalPage, string | null>;
+  /** Sustainability and careers pages: shown (and linked in the footer) when on; FIRINGI's text per language (empty = the starting text). */
+  about: Record<AboutPage, { on: boolean; text: Record<string, string> }>;
+  /** FIRINGI's job openings on the careers page. */
+  jobs: Job[];
+  /** Applications are also e-mailed here (optional; they are always kept in the admin list). */
+  careersEmail: string;
 };
 
 export const DEFAULT_LANDING: LandingSettings = {
@@ -48,6 +61,9 @@ export const DEFAULT_LANDING: LandingSettings = {
   hidden: [],
   legal: { terms: {}, privacy: {}, cookies: {} },
   legalUpdated: { terms: null, privacy: null, cookies: null },
+  about: { sustainability: { on: true, text: {} }, careers: { on: true, text: {} } },
+  jobs: [],
+  careersEmail: "",
 };
 
 const str = (v: unknown, d = "") => (typeof v === "string" ? v : d);
@@ -68,6 +84,11 @@ export function mergeLanding(v: Partial<LandingSettings> | null | undefined): La
     hidden: Array.isArray(x.hidden) ? (x.hidden as unknown[]).filter((h): h is string => typeof h === "string") : [],
     legal: Object.fromEntries(LEGAL_PAGES.map((p) => [p, strMap(lg[p])])) as Record<LegalPage, Record<string, string>>,
     legalUpdated: Object.fromEntries(LEGAL_PAGES.map((p) => [p, typeof lu[p] === "string" ? (lu[p] as string) : null])) as Record<LegalPage, string | null>,
+    about: Object.fromEntries(ABOUT_PAGES.map((p) => { const a = obj(obj(x.about)[p]); return [p, { on: typeof a.on === "boolean" ? a.on : d.about[p].on, text: strMap(a.text) }]; })) as LandingSettings["about"],
+    jobs: (Array.isArray(x.jobs) ? (x.jobs as unknown[]) : []).map((j) => obj(j)).filter((j) => typeof j.id === "string" && typeof j.title === "string").map((j) => ({
+      id: str(j.id), title: str(j.title), location: str(j.location), type: (JOB_TYPES as readonly string[]).includes(str(j.type)) ? (str(j.type) as JobType) : "FULL_TIME", text: str(j.text), on: j.on !== false,
+    })),
+    careersEmail: str(x.careersEmail),
   };
 }
 
@@ -101,6 +122,20 @@ export function cleanLanding(v: LandingSettings, locales: readonly string[]): La
     if (!locales.includes(l)) throw new Error(`Unknown language: ${l}`);
     if (txt.length > 60000) throw new Error(`${p}: text too long.`);
   }
+  for (const p of ABOUT_PAGES) for (const [l, txt] of Object.entries(s.about[p].text)) {
+    if (!locales.includes(l)) throw new Error(`Unknown language: ${l}`);
+    if (txt.length > 30000) throw new Error(`${p}: text too long.`);
+  }
+  if (s.jobs.length > 50) throw new Error("At most 50 job openings.");
+  const ids = new Set<string>();
+  for (const j of s.jobs) {
+    j.title = j.title.trim().slice(0, 120); j.location = j.location.trim().slice(0, 120); j.text = j.text.trim().slice(0, 8000);
+    if (!j.title) throw new Error("Each job opening needs a title.");
+    if (!/^[a-z0-9-]{1,40}$/.test(j.id) || ids.has(j.id)) throw new Error("Job opening ids must be unique.");
+    ids.add(j.id);
+  }
+  s.careersEmail = s.careersEmail.trim();
+  if (s.careersEmail && !isEmail(s.careersEmail)) throw new Error("Careers e-mail is not valid.");
   return s;
 }
 
@@ -171,4 +206,27 @@ export function checkContact(i: ContactIn, now = Date.now()): FormProblem | null
 export function underLimit(times: number[], now: number, max: number, windowMs: number) {
   const recent = times.filter((t) => now - t < windowMs);
   return { ok: recent.length < max, recent };
+}
+
+// ── careers (FIRINGI's job applications) ────────────────────────────────────
+
+export type ApplicationIn = { jobId: string; name: string; email: string; phone: string; link: string; message: string; consent: boolean; website: string; startedAt: number };
+export const APPLICATION_STATUSES = ["NEW", "REVIEWING", "REJECTED", "HIRED"] as const;
+export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number];
+export const APPLICATION_STATUS_LABEL: Record<ApplicationStatus, string> = { NEW: "New", REVIEWING: "In review", REJECTED: "Rejected", HIRED: "Hired" };
+/** An application: a person's name, a valid e-mail and consent; an optional CV / LinkedIn link must be https. */
+export function checkApplication(i: ApplicationIn, now = Date.now()): FormProblem | "LINK" | null {
+  if (looksLikeSpam(i, now)) return "SPAM";
+  if (!i.name.trim() || !i.email.trim()) return "REQUIRED";
+  if (!isEmail(i.email)) return "EMAIL";
+  if (i.link.trim() && !/^https:\/\/[^\s]{3,500}$/i.test(i.link.trim())) return "LINK";
+  if (!i.consent) return "CONSENT";
+  return null;
+}
+/** A job id from its title ("Sales manager – Lisbon" → "sales-manager-lisbon"), unique among `taken`. */
+export function jobId(title: string, taken: string[]) {
+  const base = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 34) || "job";
+  let id = base, n = 2;
+  while (taken.includes(id)) id = `${base}-${n++}`;
+  return id;
 }

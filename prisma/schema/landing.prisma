@@ -29,3 +29,28 @@ model NewsletterSubscriber {
 
   @@index([status, createdAt])
 }
+
+/// Footer pages (FIRINGI only): an application for a job at FIRINGI, sent from /careers. Personal data — FIRINGI
+/// deletes it when no longer needed (GDPR); only a link to a CV / profile is asked, no files.
+model JobApplication {
+  id          String   @id @default(cuid())
+  /// the opening applied for ("" = an open application); its title is kept in case the opening is removed
+  jobId       String   @default("")
+  jobTitle    String   @default("")
+  name        String
+  email       String
+  phone       String?
+  link        String?
+  message     String?
+  locale      String
+  /// the consent wording the applicant saw (GDPR record)
+  consentText String
+  ipHash      String?
+  /// NEW | REVIEWING | REJECTED | HIRED
+  status      String   @default("NEW")
+  note        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, createdAt])
+}

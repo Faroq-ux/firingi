@@ -2057,6 +2057,58 @@
     "benchmark_monthly_savings": {
       "title": "Pode poupar {amount} por ano",
       "body": "Em {count} produto(s) paga mais do que negócios semelhantes. Veja onde — e ofertas mais baratas na FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Nova pré-encomenda: {title}",
+      "body": "{supplier} abriu uma pré-encomenda — encomende com antecedência até {date}."
+    },
+    "preorder_allocated": {
+      "title": "Pré-encomenda {number}: quantidades definidas",
+      "body": "{title}: {lines} (atribuído / pedido)."
+    },
+    "preorder_ordered": {
+      "title": "Pré-encomenda {number} encomendada",
+      "body": "{title}: encomenda {order} feita para entrega."
+    },
+    "preorder_failed": {
+      "title": "Não foi possível encomendar a pré-encomenda {number}",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Pré-encomenda {number} cancelada",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Pré-encomenda {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Pré-encomenda {number} para rever",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Pedido de preço fixo {number}",
+      "body": "{company} quer {qty} caixas de {product} ao preço de hoje durante {months} meses."
+    },
+    "pricelock_review": {
+      "title": "Preço fixo {number} para aprovar",
+      "body": "{company}: valor {value}"
+    },
+    "pricelock_decided": {
+      "title": "Preço fixo {number}: {decision}",
+      "body": "Preço {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "O preço fixo {number} termina a {date}",
+      "body": "Ainda há {left} caixas de {product} por retirar ao preço fixo."
+    },
+    "pricelock_expired": {
+      "title": "Preço fixo {number} terminado",
+      "body": "{left} caixas não foram retiradas."
+    },
+    "website_job_application": {
+      "title": "Nova candidatura de emprego",
+      "body": "{name} candidatou-se a: {job}."
     }
   },
   "notifications": {
@@ -2342,7 +2394,8 @@
     "Food Safety Training": "Formação em Segurança Alimentar",
     "Logbook Setup": "Configuração do Registo",
     "Price Benchmark": "Comparação de preços",
-    "Price Position": "Posição de preço"
+    "Price Position": "Posição de preço",
+    "Pre-orders & Price Locks": "Pré-encomendas e preços fixos"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -8284,8 +8337,13 @@
           "2": "Política de privacidade (RGPD)",
           "3": "Cookies",
           "4": "Dados da empresa"
+        },
+        "company": {
+          "1": "Sustentabilidade",
+          "2": "Carreiras"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Entrar",
     "mail": {
@@ -8471,6 +8529,53 @@
           "12": "Souvenirs e presentes",
           "13": "Embalagens e consumíveis",
           "14": "Fornecimentos para kebab e pizza"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Sustentabilidade",
+        "lead": "Como a FIRINGI trabalha para desperdiçar menos e transportar mercadorias de forma mais eficiente.",
+        "start": {
+          "1": "A FIRINGI liga restaurantes, cafés e lojas a grossistas e distribuidores em toda a Europa. Acreditamos que uma cadeia de abastecimento melhor é também uma cadeia mais leve para o planeta.",
+          "2": "Menos desperdício alimentar — os clientes veem as datas de validade, listas de produtos a consumir primeiro e promoções de escoamento, e os alimentos não vendidos podem ser doados em vez de irem para o lixo.",
+          "3": "Menos quilómetros — as nossas rotas de entrega são planeadas para agrupar encomendas e evitar viagens em vazio, e a pegada de CO₂ de cada entrega é medida.",
+          "4": "Embalagens reutilizáveis — grades, barris e outras embalagens retornáveis são rastreados e recolhidos, para serem utilizados vezes sem conta.",
+          "5": "Óleo alimentar usado — recolhido nas cozinhas por parceiros licenciados e transformado em biocombustível.",
+          "6": "Segurança alimentar — as temperaturas e os controlos são registados digitalmente, desde a câmara frigorífica do fornecedor até à cozinha.",
+          "7": "Continuamos a melhorar. Se tiver uma ideia ou uma pergunta, contacte-nos."
+        }
+      },
+      "careers": {
+        "title": "Carreiras",
+        "lead": "Trabalhe connosco para tornar o comércio grossista simples para milhares de empresas.",
+        "start": {
+          "1": "A FIRINGI é uma equipa em crescimento na Europa que está a construir o marketplace grossista para restaurantes, cafés e lojas. Trabalhamos nas áreas de vendas, operações, logística, apoio ao cliente e tecnologia.",
+          "2": "Valorizamos pessoas práticas, simpáticas com clientes e fornecedores e com vontade de aprender. Oferecemos responsabilidade real, uma equipa acolhedora e a oportunidade de moldar um produto utilizado todos os dias.",
+          "3": "Veja as nossas vagas abaixo ou envie uma candidatura espontânea."
+        },
+        "openings": "Vagas em aberto",
+        "none": "De momento não há vagas em aberto — pode, ainda assim, enviar uma candidatura espontânea.",
+        "applyTitle": "Candidatar-se",
+        "applyLead": "Fale-nos um pouco de si. Respondemos a todas as candidaturas.",
+        "position": "Vaga",
+        "openApplication": "Candidatura espontânea",
+        "link": "Link para o seu CV ou LinkedIn (opcional)",
+        "linkHint": "Um link que comece por https:// — sem ficheiros.",
+        "msg": "Porquê a FIRINGI? (opcional)",
+        "consent": "Aceito que a FIRINGI guarde os meus dados para avaliar a minha candidatura e os elimine quando o processo de recrutamento terminar (RGPD).",
+        "send": "Enviar candidatura",
+        "sent": "Obrigado — recebemos a sua candidatura e responderemos em breve.",
+        "errLink": "O link deve começar por https://",
+        "errOff": "De momento, as candidaturas estão encerradas.",
+        "mailSubject": "Recebemos a sua candidatura",
+        "mailBody": "Obrigado por se candidatar à FIRINGI. Lemos todas as candidaturas e responderemos em breve.",
+        "type": {
+          "FULL_TIME": "Tempo inteiro",
+          "PART_TIME": "Tempo parcial",
+          "INTERNSHIP": "Estágio",
+          "TEMPORARY": "Temporário",
+          "FREELANCE": "Freelance"
         }
       }
     }
@@ -9853,5 +9958,173 @@
       "BELOW": "Abaixo do que os compradores costumam pagar"
     },
     "vNone": "Sem ofertas ativas."
+  },
+  "preorders": {
+    "title": "Pré-encomendas e preços fixos",
+    "intro": "Encomende com antecedência produtos sazonais, novidades e produtos escassos, e fixe o preço de hoje para o que vai precisar nos próximos meses.",
+    "sellerTitle": "Pré-encomendas e preços fixos",
+    "sellerIntro": "Abra pré-encomendas para os seus clientes (sazonais, novidades, escassez) e responda aos pedidos de preço fixo. Planeie as compras com base no que foi pré-encomendado.",
+    "tabOpen": "Pré-encomendas abertas",
+    "tabMine": "As minhas pré-encomendas",
+    "tabLocks": "Preços fixos",
+    "tabCampaigns": "As minhas campanhas de pré-encomenda",
+    "kind": {
+      "SEASONAL": "Sazonal",
+      "LAUNCH": "Novidade",
+      "SCARCE": "Escassez"
+    },
+    "status": {
+      "DRAFT": "Rascunho",
+      "PENDING": "A aguardar a FIRINGI",
+      "OPEN": "Aberta",
+      "CLOSED": "Fechada",
+      "ALLOCATED": "Distribuída",
+      "DONE": "Concluída",
+      "CANCELLED": "Cancelada",
+      "REJECTED": "Não aprovada"
+    },
+    "resStatus": {
+      "PLACED": "Pré-encomendada",
+      "ALLOCATED": "Confirme a quantidade",
+      "CONFIRMED": "Confirmada",
+      "ORDERED": "Encomendada",
+      "CANCELLED": "Cancelada",
+      "DECLINED": "Recusada",
+      "FAILED": "Não foi possível encomendar"
+    },
+    "lockStatus": {
+      "REQUESTED": "A aguardar o fornecedor",
+      "REVIEW": "A aguardar a FIRINGI",
+      "ACTIVE": "Ativo",
+      "REJECTED": "Recusado",
+      "CANCELLED": "Cancelado",
+      "EXPIRED": "Terminado",
+      "DONE": "Tudo retirado"
+    },
+    "alloc": {
+      "PRO_RATA": "Proporcional ao que cada um pediu",
+      "FIRST_COME": "Por ordem de chegada",
+      "LOYAL_FIRST": "Clientes habituais primeiro"
+    },
+    "supplier": "Fornecedor",
+    "closes": "Fecha a {date}",
+    "closesLabel": "Fecho",
+    "opensLabel": "Abertura",
+    "deliveries": "Entrega",
+    "deliveryDates": "Datas de entrega",
+    "deliveryDate": "Data de entrega",
+    "address": "Morada de entrega",
+    "note": "Nota (opcional)",
+    "deposit": "Sinal {pct}%",
+    "depositLabel": "Sinal",
+    "depositDue": "Sinal a pagar: {amount}",
+    "depositPaid": "Sinal pago",
+    "payDeposit": "Pagar sinal",
+    "depositHint": "O sinal fica como crédito na sua conta e é usado nas suas faturas. Se o fornecedor não puder entregar, mantém-se como crédito.",
+    "suggested": "Para si",
+    "suggestedHint": "Comprou isto por esta altura no ano passado",
+    "product": "Produto",
+    "pack": "Caixa",
+    "priceNow": "Preço atual",
+    "perPack": "por caixa",
+    "nextTier": "Mais {missing} caixas pré-encomendadas por todos → {price}",
+    "tiers": "Preço pelo total pré-encomendado",
+    "tierRow": "a partir de {min} caixas: {price}",
+    "limits": "Mín. {min}",
+    "limitsMax": "Mín. {min} · máx. {max}",
+    "short": "Muita procura — pode ser distribuído",
+    "qty": "Caixas",
+    "preorder": "Pré-encomendar",
+    "update": "Atualizar pré-encomenda",
+    "alreadyMine": "Já fez uma pré-encomenda aqui — pode alterá-la até ao fecho.",
+    "placed": "Pré-encomenda feita.",
+    "updated": "Pré-encomenda atualizada.",
+    "noOpen": "De momento, não há pré-encomendas abertas para si. Quando os seus fornecedores abrirem uma, aparecerá aqui.",
+    "noMine": "Ainda não fez nenhuma pré-encomenda.",
+    "asked": "Pedido",
+    "given": "Atribuído",
+    "finalPrice": "Preço final",
+    "cancel": "Cancelar",
+    "cancelled": "Cancelada.",
+    "accept": "Aceitar esta quantidade",
+    "decline": "Recusar",
+    "allocatedHint": "Houve escassez — recebeu menos do que pediu. Aceite ou recuse; sem resposta, é aceite automaticamente.",
+    "orders": "Encomendas",
+    "failed": "Porquê: {reason}",
+    "reason": "Motivo: {reason}",
+    "allocRule": "Em caso de escassez: {rule}",
+    "lockIntro": "Mantenha o preço de hoje para uma quantidade que vai levantar nos próximos meses. Sempre que precisar de mercadoria, retire-a — uma encomenda normal ao preço fixo.",
+    "lockSuggest": "Produtos que compra com frequência",
+    "lockSuggestHint": "Cerca de {n} caixas por mês",
+    "lockFor": "Fixar o preço",
+    "months": "Meses",
+    "lockRequest": "Pedir preço fixo",
+    "lockRequested": "Pedido enviado ao fornecedor.",
+    "noLocks": "Ainda não há preços fixos.",
+    "noSuggest": "Ainda nada a sugerir — faça algumas compras primeiro.",
+    "lockedPrice": "Preço fixo",
+    "listPrice": "Preço na data do pedido",
+    "taken": "{taken} de {total} retiradas",
+    "left": "Faltam {left}",
+    "until": "Até {date}",
+    "perMonthHint": "Cerca de {n} por mês para usar tudo",
+    "saved": "Poupança até agora: {amount}",
+    "callOff": "Retirar",
+    "callOffDone": "Encomenda {number} feita.",
+    "calloffs": "Retiradas",
+    "priceToday": "Preço hoje",
+    "tierLabel": "Preços por escalão",
+    "allocLabel": "Em caso de escassez",
+    "none": "—",
+    "total": "Pré-encomendado até agora",
+    "value": "Valor",
+    "sellerNewCampaign": "Nova pré-encomenda",
+    "sellerNoCampaigns": "Ainda não há pré-encomendas. Abra uma para uma época, uma novidade ou produtos escassos.",
+    "sellerBuyers": "Compradores",
+    "sellerProducts": "Produtos",
+    "sellerKind": "Tipo",
+    "sellerTitleField": "Título",
+    "sellerDescription": "Descrição (opcional)",
+    "sellerAddDate": "Adicionar data",
+    "sellerRemove": "Remover",
+    "sellerAddProduct": "Adicionar produto",
+    "sellerChooseProduct": "Escolha um produto",
+    "sellerPrice": "Preço por caixa",
+    "sellerMin": "Mín. por comprador",
+    "sellerMax": "Máx. por comprador",
+    "sellerSupply": "Caixas disponíveis",
+    "sellerSupplyHint": "Vazio = sem limite",
+    "sellerAddTier": "Adicionar escalão",
+    "sellerTierFrom": "A partir do total de caixas",
+    "sellerTierPrice": "Preço",
+    "sellerSave": "Guardar rascunho",
+    "sellerSaved": "Guardado.",
+    "sellerSubmit": "Enviar à FIRINGI",
+    "sellerSubmitAuto": "Abrir a pré-encomenda",
+    "sellerSubmitted": "Enviado.",
+    "sellerCloseNow": "Fechar agora e distribuir",
+    "sellerClosed": "Fechada e distribuída.",
+    "sellerCancel": "Cancelar a pré-encomenda",
+    "sellerCancelReason": "Porque está a cancelar?",
+    "sellerOrderNow": "Fazer encomendas agora",
+    "sellerOrdered": "Encomendas feitas: {n}.",
+    "sellerPlan": "Plano: caixas por data de entrega",
+    "sellerReservations": "Pré-encomendas",
+    "sellerReviewNote": "Nota da FIRINGI: {note}",
+    "sellerDeposit": "Sinal (%)",
+    "sellerOpens": "Abertura",
+    "sellerCloses": "Fecho",
+    "sellerLocks": "Pedidos de preço fixo",
+    "sellerLocksActive": "Preços fixos",
+    "sellerNoLocks": "Não há pedidos de preço fixo.",
+    "sellerAcceptAt": "Aceitar a",
+    "sellerDepositPct": "Sinal %",
+    "sellerAccept": "Aceitar",
+    "sellerReject": "Recusar",
+    "sellerDecided": "Respondido.",
+    "sellerCommitted": "Por retirar",
+    "sellerBuyer": "Comprador",
+    "sellerPerMonth": "~ por mês",
+    "sellerMonths": "{n} meses"
   }
 }

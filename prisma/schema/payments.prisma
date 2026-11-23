@@ -19,6 +19,7 @@ enum PaymentRequestSource {
   REMINDER // created for a reminder message
   DIRECT_DEBIT // collected automatically from a SEPA mandate
   ORDER // pay-before-shipping order
+  PREORDER // Phase 71: deposit for a pre-order or a price lock (kept as credit, used on the invoices)
 }
 
 enum MandateStatus {
@@ -34,6 +35,8 @@ model PaymentRequest {
   token              String               @unique
   companyId          String
   orderId            String?
+  /// Phase 71: the pre-order (PreorderReservation) or price lock (PriceLock) this deposit is for
+  preorderRef        String?
   amount             Decimal              @db.Decimal(18, 2)
   currencyCode       String               @default("EUR")
   /// Phase 45: what is charged in `currencyCode` (null = EUR, charge `amount`)

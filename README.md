@@ -67,6 +67,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/services.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 68: a distributor offers oil collection and pest control → FIRINGI approves (pest: provider invoices, 20 % commission) and adds a service → a restaurant takes a monthly plan and an on-request oil plan → fryer log fills the containers, a collection is asked for by itself → the provider records it and a pest visit with its own invoice → history + PDF → Money (buy-back paid, commission invoiced) → switch off Fryers & Oil → phone / dark |
 | `node tests/e2e/haccp.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 69: not set up → restaurant template → temperatures (one out of range with a corrective action) → checklist → cooling → delivery checks (another supplier; failed FIRINGI delivery → claim link) → training → logbook + PDF → FIRINGI overview, businesses, a switch → phone / dark |
 | `node tests/e2e/benchmark.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 70: three test restaurants buy for less → customer savings, position, cheaper offer → cart, basket, trend, nobody named → supplier price position → FIRINGI overview, customers off (page and menu gone) and on, rebuild → phone / dark |
+| `node tests/e2e/preorders.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 71: supplier drafts a pre-order (tier price, short supply) → FIRINGI approves → customer pre-orders more than there is → close and share out → accept → orders placed → price lock asked, accepted, called off → wholesalers switched off (page and menu gone) and on → phone / dark |
 | `node tests/e2e/invoicing.mjs http://localhost:3000 [screenshotDir]` | Browser test of certified invoicing with a simulated Moloni (start the server with `MOLONI_SIMULATE=1`), payouts due* |
 | `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
 | `pnpm db:demo-planning` | Demo stock, purchase history, a short-dated lot and a promotion for demand planning at Distribuidora Atlântico (dev / demo only) |
@@ -775,6 +776,19 @@ A supplier leaves stock at a customer's premises; the customer pays only for wha
 - **Background job:** `/api/cron/consignment`, hourly (auto-confirm, count reminders, expiry alerts).
 
 Details: [docs/consignment.md](docs/consignment.md).
+
+## Sustainability & Careers (website footer)
+
+FIRINGI's own website footer gets a **FIRINGI** column with **Sustainability** (`/sustainability`) and **Careers** (`/careers`) — for FIRINGI only, not suppliers' shops. Both pages come with a starting text in 25 languages; FIRINGI can write its own per language. Careers lists FIRINGI's job openings (title, place, type, text) and takes applications (name, email, phone, a link to a CV or LinkedIn — no files — and GDPR consent; spam check and 3 per hour). FIRINGI (*Marketing › Sustainability & Careers*, English) switches each page on or off (the footer link follows), edits the texts and openings, gets each application by notification (and optionally by e-mail), sets its status (new, in review, rejected, hired) and deletes it for good.
+
+Details: [docs/landing.md](docs/landing.md#sustainability--careers-footer).
+Tests: `tests/unit/careers.test.ts`, `tests/integration/careers.test.ts`, `node tests/e2e/careers.mjs`.
+
+## Pre-orders & Price Locks (Phase 71)
+
+Distributors and wholesalers (FIRINGI switches each on or off, also per company) open **pre-orders** for seasonal goods, new products and goods in short supply — an order window, delivery dates, tier prices by total pre-ordered, per-buyer limits, packs available and an optional deposit — and answer **price-lock** requests (today's price kept for a quantity taken over coming months). Buyers of the matching type (wholesalers from distributors, customers from wholesalers) pre-order (`/buy/orders/preorders`, 25 languages), see the tier price reached and what is missing for the next, pay deposits online (kept as credit), accept or decline a smaller share when supply is short, and call off locked quantities as normal orders at the locked price. At the close the final price is set and short supply shared (in proportion, first come, regular customers first); orders are placed before each delivery date and invoiced by FIRINGI as usual. Suppliers (`/vendor/orders/preorders`) see demand and a plan per delivery date; the Assistant has `my_preorders` and `preorder_demand`. FIRINGI (`/admin/orders/preorders`, English) approves, sees everything and sets every switch and limit.
+
+Details: [docs/preorders.md](docs/preorders.md).
 
 ## Price Benchmark (Phase 70)
 

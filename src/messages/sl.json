@@ -950,7 +950,8 @@
     "Food Safety Training": "Usposabljanje iz varnosti hrane",
     "Logbook Setup": "Nastavitev dnevnika",
     "Price Benchmark": "Primerjava cen",
-    "Price Position": "Cenovni položaj"
+    "Price Position": "Cenovni položaj",
+    "Pre-orders & Price Locks": "Prednaročila in zaklenjene cene"
   },
   "delivery": {
     "title": "Dostava",
@@ -2257,6 +2258,58 @@
     "benchmark_monthly_savings": {
       "title": "Letno bi lahko prihranili {amount}",
       "body": "Pri {count} izdelkih plačujete več kot podobna podjetja. Oglejte si, kje — in cenejše ponudbe na FIRINGI."
+    },
+    "preorder_campaign_open": {
+      "title": "Novo prednaročilo: {title}",
+      "body": "Dobavitelj {supplier} je odprl prednaročilo — naročite vnaprej do {date}."
+    },
+    "preorder_allocated": {
+      "title": "Prednaročilo {number}: količine določene",
+      "body": "{title}: {lines} (dodeljeno / zahtevano)."
+    },
+    "preorder_ordered": {
+      "title": "Prednaročilo {number} naročeno",
+      "body": "{title}: naročilo {order} oddano za dostavo."
+    },
+    "preorder_failed": {
+      "title": "Prednaročila {number} ni bilo mogoče naročiti",
+      "body": "{title}: {reason}"
+    },
+    "preorder_cancelled": {
+      "title": "Prednaročilo {number} preklicano",
+      "body": "{title}: {reason}"
+    },
+    "preorder_reviewed": {
+      "title": "Prednaročilo {number}: {decision}",
+      "body": "{title} {reason}"
+    },
+    "preorder_review": {
+      "title": "Prednaročilo {number} za pregled",
+      "body": "{company}: {title}"
+    },
+    "pricelock_requested": {
+      "title": "Zahteva za zaklep cene {number}",
+      "body": "{company} želi {product}: {qty} pak. po današnji ceni za {months} mes."
+    },
+    "pricelock_review": {
+      "title": "Zaklep cene {number} za odobritev",
+      "body": "{company}: vrednost {value}"
+    },
+    "pricelock_decided": {
+      "title": "Zaklep cene {number}: {decision}",
+      "body": "Cena {price}. {reason}"
+    },
+    "pricelock_ending": {
+      "title": "Zaklep cene {number} se izteče {date}",
+      "body": "{product}: še {left} pak. za prevzem po zaklenjeni ceni."
+    },
+    "pricelock_expired": {
+      "title": "Zaklep cene {number} se je iztekel",
+      "body": "Neprevzeta pakiranja: {left}."
+    },
+    "website_job_application": {
+      "title": "Nova prijava za zaposlitev",
+      "body": "{name} — prijava na delovno mesto {job}."
     }
   },
   "notifications": {
@@ -8441,8 +8494,13 @@
           "2": "Politika zasebnosti (GDPR)",
           "3": "Piškotki",
           "4": "Podatki o podjetju"
+        },
+        "company": {
+          "1": "Trajnost",
+          "2": "Kariera"
         }
-      }
+      },
+      "company": "FIRINGI"
     },
     "login": "Prijava",
     "mail": {
@@ -8628,6 +8686,53 @@
           "12": "Spominki in darila",
           "13": "Embalaža in potrošni material",
           "14": "Za kebab in pico"
+        }
+      }
+    },
+    "about": {
+      "sustainability": {
+        "title": "Trajnost",
+        "lead": "Kako si FIRINGI prizadeva za manj odpadkov in učinkovitejši prevoz blaga.",
+        "start": {
+          "1": "FIRINGI povezuje restavracije, kavarne in trgovine z veletrgovci in distributerji po vsej Evropi. Verjamemo, da je boljša dobavna veriga tudi okolju prijaznejša.",
+          "2": "Manj zavržene hrane — kupci vidijo roke uporabnosti, sezname »porabi najprej« in razprodajne ponudbe, neprodano hrano pa je mogoče namesto v smeti podariti.",
+          "3": "Manj kilometrov — naše dostavne poti načrtujemo tako, da združujemo naročila in se izognemo praznim vožnjam, za vsako dostavo pa merimo odtis CO₂.",
+          "4": "Večkratna embalaža — zaboje, sode in drugo povratno embalažo spremljamo in zbiramo, da se lahko uporablja znova in znova.",
+          "5": "Odpadno jedilno olje — iz kuhinj ga zbirajo pooblaščeni partnerji in ga predelajo v biogorivo.",
+          "6": "Varnost hrane — temperature in preverjanja se beležijo digitalno, od hladilnice dobavitelja do kuhinje.",
+          "7": "Nenehno se izboljšujemo. Če imate idejo ali vprašanje, nas kontaktirajte."
+        }
+      },
+      "careers": {
+        "title": "Kariera",
+        "lead": "Pridružite se nam in poenostavite veleprodajo za tisoče podjetij.",
+        "start": {
+          "1": "FIRINGI je rastoča ekipa v Evropi, ki gradi veleprodajno platformo za restavracije, kavarne in trgovine. Delamo na področjih prodaje, operacij, logistike, podpore strankam in tehnologije.",
+          "2": "Cenimo ljudi, ki so praktični, prijazni do strank in dobaviteljev ter se radi učijo. Ponujamo resnično odgovornost, prijazno ekipo in priložnost, da soustvarjate izdelek, ki se uporablja vsak dan.",
+          "3": "Spodaj si oglejte prosta delovna mesta ali nam pošljite odprto prijavo."
+        },
+        "openings": "Prosta delovna mesta",
+        "none": "Trenutno ni prostih delovnih mest — še vedno pa nam lahko pošljete odprto prijavo.",
+        "applyTitle": "Prijavite se",
+        "applyLead": "Povejte nam nekaj o sebi. Odgovorimo na vsako prijavo.",
+        "position": "Delovno mesto",
+        "openApplication": "Odprta prijava",
+        "link": "Povezava do vašega življenjepisa ali profila LinkedIn (neobvezno)",
+        "linkHint": "Povezava, ki se začne s https:// — brez datotek.",
+        "msg": "Zakaj FIRINGI? (neobvezno)",
+        "consent": "Strinjam se, da FIRINGI hrani moje podatke za obravnavo moje prijave in jih po koncu zaposlitvenega postopka izbriše (GDPR).",
+        "send": "Pošlji prijavo",
+        "sent": "Hvala — vašo prijavo smo prejeli in vam bomo kmalu odgovorili.",
+        "errLink": "Povezava se mora začeti s https://",
+        "errOff": "Prijave so trenutno zaprte.",
+        "mailSubject": "Vašo prijavo smo prejeli",
+        "mailBody": "Hvala za vašo prijavo pri FIRINGI. Preberemo vsako prijavo in vam bomo kmalu odgovorili.",
+        "type": {
+          "FULL_TIME": "Polni delovni čas",
+          "PART_TIME": "Krajši delovni čas",
+          "INTERNSHIP": "Praksa",
+          "TEMPORARY": "Za določen čas",
+          "FREELANCE": "Pogodbeno delo"
         }
       }
     }
@@ -10010,5 +10115,173 @@
       "BELOW": "Pod tem, kar kupci običajno plačajo"
     },
     "vNone": "Ni aktivnih ponudb."
+  },
+  "preorders": {
+    "title": "Prednaročila in zaklenjene cene",
+    "intro": "Sezonsko blago, novosti in blago z omejeno zalogo naročite vnaprej in zaklenite današnjo ceno za tisto, kar boste potrebovali v prihodnjih mesecih.",
+    "sellerTitle": "Prednaročila in zaklenjene cene",
+    "sellerIntro": "Odprite prednaročila za svoje stranke (sezonsko blago, novi izdelki, omejena zaloga) in odgovarjajte na zahteve za zaklep cene. Nabavo načrtujte glede na prednaročene količine.",
+    "tabOpen": "Odprta prednaročila",
+    "tabMine": "Moja prednaročila",
+    "tabLocks": "Zaklenjene cene",
+    "tabCampaigns": "Moje kampanje prednaročil",
+    "kind": {
+      "SEASONAL": "Sezonsko",
+      "LAUNCH": "Nov izdelek",
+      "SCARCE": "Omejena zaloga"
+    },
+    "status": {
+      "DRAFT": "Osnutek",
+      "PENDING": "Čaka na FIRINGI",
+      "OPEN": "Odprto",
+      "CLOSED": "Zaprto",
+      "ALLOCATED": "Razdeljeno",
+      "DONE": "Zaključeno",
+      "CANCELLED": "Preklicano",
+      "REJECTED": "Ni odobreno"
+    },
+    "resStatus": {
+      "PLACED": "Prednaročeno",
+      "ALLOCATED": "Potrdite količino",
+      "CONFIRMED": "Potrjeno",
+      "ORDERED": "Naročeno",
+      "CANCELLED": "Preklicano",
+      "DECLINED": "Zavrnjeno",
+      "FAILED": "Naročila ni bilo mogoče oddati"
+    },
+    "lockStatus": {
+      "REQUESTED": "Čaka na dobavitelja",
+      "REVIEW": "Čaka na FIRINGI",
+      "ACTIVE": "Aktivno",
+      "REJECTED": "Zavrnjeno",
+      "CANCELLED": "Preklicano",
+      "EXPIRED": "Končano",
+      "DONE": "Vse prevzeto"
+    },
+    "alloc": {
+      "PRO_RATA": "Sorazmerno z zahtevanimi količinami",
+      "FIRST_COME": "Kdor prej pride, prej melje",
+      "LOYAL_FIRST": "Najprej stalne stranke"
+    },
+    "supplier": "Dobavitelj",
+    "closes": "Zapre se {date}",
+    "closesLabel": "Zaprtje",
+    "opensLabel": "Odprtje",
+    "deliveries": "Dostava",
+    "deliveryDates": "Datumi dostave",
+    "deliveryDate": "Datum dostave",
+    "address": "Naslov dostave",
+    "note": "Opomba (neobvezno)",
+    "deposit": "Predplačilo {pct} %",
+    "depositLabel": "Predplačilo",
+    "depositDue": "Znesek predplačila: {amount}",
+    "depositPaid": "Predplačilo plačano",
+    "payDeposit": "Plačajte predplačilo",
+    "depositHint": "Predplačilo ostane kot dobroimetje in se upošteva pri vaših računih. Če dobavitelj ne more dobaviti, ostane kot dobroimetje.",
+    "suggested": "Za vas",
+    "suggestedHint": "To ste kupovali lani v tem času",
+    "product": "Izdelek",
+    "pack": "Pakiranje",
+    "priceNow": "Trenutna cena",
+    "perPack": "na pakiranje",
+    "nextTier": "Še {missing} pak. skupnih prednaročil → {price}",
+    "tiers": "Cena glede na skupno prednaročeno količino",
+    "tierRow": "od {min} pak.: {price}",
+    "limits": "Najm. {min}",
+    "limitsMax": "Najm. {min} · najv. {max}",
+    "short": "Veliko povpraševanje — možna razdelitev",
+    "qty": "Pakiranja",
+    "preorder": "Prednaročite",
+    "update": "Posodobite prednaročilo",
+    "alreadyMine": "Tukaj imate prednaročilo — spremenite ga lahko do zaprtja.",
+    "placed": "Prednaročilo oddano.",
+    "updated": "Prednaročilo posodobljeno.",
+    "noOpen": "Trenutno za vas ni odprtih prednaročil. Ko ga odpre katerikoli od vaših dobaviteljev, se prikaže tukaj.",
+    "noMine": "Ničesar še niste prednaročili.",
+    "asked": "Zahtevano",
+    "given": "Dodeljeno",
+    "finalPrice": "Končna cena",
+    "cancel": "Prekličite",
+    "cancelled": "Preklicano.",
+    "accept": "Sprejmite to količino",
+    "decline": "Zavrnite",
+    "allocatedHint": "Blaga je bilo premalo — dodeljeno vam je manj, kot ste zahtevali. Sprejmite ali zavrnite; brez odgovora se količina samodejno sprejme.",
+    "orders": "Naročila",
+    "failed": "Zakaj: {reason}",
+    "reason": "Razlog: {reason}",
+    "allocRule": "Če blaga ni dovolj: {rule}",
+    "lockIntro": "Ohranite današnjo ceno za količino, ki jo boste prevzeli v prihodnjih mesecih. Kadar potrebujete blago, prevzemite del — kot običajno naročilo po zaklenjeni ceni.",
+    "lockSuggest": "Izdelki, ki jih pogosto kupujete",
+    "lockSuggestHint": "Približno {n} pak. na mesec",
+    "lockFor": "Zaklenite ceno",
+    "months": "Meseci",
+    "lockRequest": "Zahtevajte zaklep cene",
+    "lockRequested": "Zahteva je poslana dobavitelju.",
+    "noLocks": "Še ni zaklenjenih cen.",
+    "noSuggest": "Še ni predlogov — najprej nekajkrat kupite.",
+    "lockedPrice": "Zaklenjena cena",
+    "listPrice": "Cena ob zahtevi",
+    "taken": "Prevzeto {taken} od {total}",
+    "left": "Preostalo {left}",
+    "until": "Do {date}",
+    "perMonthHint": "Približno {n} na mesec, da porabite vse",
+    "saved": "Doslej prihranjeno: {amount}",
+    "callOff": "Prevzemite",
+    "callOffDone": "Naročilo {number} oddano.",
+    "calloffs": "Prevzemi",
+    "priceToday": "Današnja cena",
+    "tierLabel": "Cenovni razredi",
+    "allocLabel": "Če blaga ni dovolj",
+    "none": "—",
+    "total": "Doslej prednaročeno",
+    "value": "Vrednost",
+    "sellerNewCampaign": "Novo prednaročilo",
+    "sellerNoCampaigns": "Še ni prednaročil. Odprite ga za sezono, nov izdelek ali blago z omejeno zalogo.",
+    "sellerBuyers": "Kupci",
+    "sellerProducts": "Izdelki",
+    "sellerKind": "Vrsta",
+    "sellerTitleField": "Naslov",
+    "sellerDescription": "Opis (neobvezno)",
+    "sellerAddDate": "Dodajte datum",
+    "sellerRemove": "Odstranite",
+    "sellerAddProduct": "Dodajte izdelek",
+    "sellerChooseProduct": "Izberite izdelek",
+    "sellerPrice": "Cena na pakiranje",
+    "sellerMin": "Najm. na kupca",
+    "sellerMax": "Najv. na kupca",
+    "sellerSupply": "Razpoložljiva pakiranja",
+    "sellerSupplyHint": "Prazno = brez omejitve",
+    "sellerAddTier": "Dodajte razred",
+    "sellerTierFrom": "Od skupnega števila pakiranj",
+    "sellerTierPrice": "Cena",
+    "sellerSave": "Shranite osnutek",
+    "sellerSaved": "Shranjeno.",
+    "sellerSubmit": "Pošljite FIRINGI",
+    "sellerSubmitAuto": "Odprite prednaročilo",
+    "sellerSubmitted": "Poslano.",
+    "sellerCloseNow": "Zaprite zdaj in razdelite",
+    "sellerClosed": "Zaprto in razdeljeno.",
+    "sellerCancel": "Prekličite prednaročilo",
+    "sellerCancelReason": "Zakaj preklicujete?",
+    "sellerOrderNow": "Oddajte naročila zdaj",
+    "sellerOrdered": "Oddana naročila: {n}.",
+    "sellerPlan": "Načrt: pakiranja po datumu dostave",
+    "sellerReservations": "Prednaročila",
+    "sellerReviewNote": "Opomba FIRINGI: {note}",
+    "sellerDeposit": "Predplačilo (%)",
+    "sellerOpens": "Odprtje",
+    "sellerCloses": "Zaprtje",
+    "sellerLocks": "Zahteve za zaklep cene",
+    "sellerLocksActive": "Zaklenjene cene",
+    "sellerNoLocks": "Ni zahtev za zaklep cene.",
+    "sellerAcceptAt": "Sprejmite po ceni",
+    "sellerDepositPct": "Predplačilo %",
+    "sellerAccept": "Sprejmite",
+    "sellerReject": "Zavrnite",
+    "sellerDecided": "Odgovorjeno.",
+    "sellerCommitted": "Še za prevzem",
+    "sellerBuyer": "Kupec",
+    "sellerPerMonth": "~ na mesec",
+    "sellerMonths": "{n} mes."
   }
 }
