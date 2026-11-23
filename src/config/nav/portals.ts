@@ -58,6 +58,7 @@ const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor
 const vad = section(`${V}/ads`, "vendor.promotions.manage");
 const vpos = section(`${V}/pos`, ["company.pos.sell", "company.pos.manage"]);
 const vrp = section(`${V}/reps`, ["vendor.reps.manage", "vendor.reps.field"]);
+const vvn = section(`${V}/van`, ["vendor.vansales.manage", "vendor.vansales.sell"]);
 const vst = section(`${V}/staff`, ["vendor.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
@@ -186,6 +187,13 @@ export const VENDOR_NAV: NavSection[] = [
       vrp("visits", "Visit Plan & Map", "Plano e Mapa de Visitas", "P62", { live: true, feature: "SALES_REPS", perm: "vendor.reps.manage", es: "Plan y mapa de visitas" }),
     ],
   },
+  {
+    key: "van", icon: "Truck", label: { en: "Van Sales", pt: "Vendas na Carrinha", es: "Venta en ruta" },
+    items: [
+      vvn("sell", "Sell from Van", "Vender da Carrinha", "P63", { live: true, feature: "VAN_SALES", perm: ["vendor.vansales.sell", "vendor.vansales.manage"], es: "Vender desde la furgoneta" }),
+      vvn("", "Van Loads", "Cargas das Carrinhas", "P63", { live: true, href: `${V}/van`, feature: "VAN_SALES", perm: "vendor.vansales.manage", es: "Cargas de furgonetas" }),
+    ],
+  },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" }), vr("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["vendor.reports.view", "vendor.orders.view", "vendor.products.manage"], es: "Huella de CO₂" }), vr("eu-trade", "EU Trade Report", "Relatório Intracomunitário", "P57", { live: true, perm: ["vendor.reports.view", "vendor.invoices.view", "vendor.orders.view"], es: "Informe intracomunitario" })] },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(vpos, false) },
   { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(vst) },
@@ -252,6 +260,7 @@ export const BUY_NAV: NavSection[] = [
       bo("tenders", "Tenders", "Concursos", "P50", { live: true, perm: ["buyer.orders.view", "buyer.orders.place"], es: "Licitaciones" }),
       bo("recurring", "Recurring Orders", "Encomendas Recorrentes", "P26", { live: true, es: "Pedidos recurrentes" }),
       bo("rep-orders", "Orders from Sales Reps", "Encomendas dos Vendedores", "P62", { live: true, feature: "REP_ORDERS", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Pedidos de comerciales" }),
+      bo("van", "Bought from Vans", "Compras à Carrinha", "P63", { live: true, feature: "VAN_PURCHASES", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Compras en furgoneta" }),
       bo("substitutions", "Replacements", "Substituições", "P60", { live: true, perm: ["buyer.orders.place", "buyer.orders.view"], es: "Sustituciones" }),
       bo("lists", "Order Lists", "Listas de Encomenda", "P26", { live: true, es: "Listas de pedidos" }),
       bo("approvals", "Approvals", "Aprovações", "P26", { live: true, perm: ["buyer.orders.place", "buyer.orders.view", "buyer.orders.approve"], es: "Aprobaciones" }),

@@ -1,0 +1,124 @@
+// ───────────────────────── Van sales (Phase 63) ─────────────────────────
+// A supplier loads a van from one of its warehouses; the seller drives a round and sells straight from the van
+// to registered FIRINGI customers. Each sale is a normal FIRINGI order, delivered at once and invoiced by FIRINGI
+// to the customer. Payment is taken on the spot (cash, card, MB WAY) or left on the customer's account. At the end
+// of the day the van is unloaded: leftovers go back to the warehouse, the cash is counted, and what is missing is
+// recorded. Cash the supplier's seller collected for FIRINGI is netted from the supplier's payouts.
+//
+// Van stock is kept out of the warehouse's stock levels (so online orders never sell goods that are on a van):
+// loading issues the goods (TRANSFER_OUT), each sale logs them back in and out as a shipment on the order (so cost
+// of goods, recalls and the customer's lot alerts follow the lot), unloading receives what's left.
+
+enum VanLoadStatus {
+  OPEN // being loaded
+  ON_ROAD // loaded, selling
+  CLOSED // unloaded and counted
+  CANCELLED
+}
+
+enum VanPayMethod {
+  CASH
+  CARD
+  MB_WAY
+  ON_ACCOUNT
+}
+
+enum VanSaleStatus {
+  DONE
+  FAILED
+}
+
+model VanLoad {
+  id              String        @id @default(cuid())
+  number          String        @unique // VL-2026-000001
+  vendorCompanyId String
+  /// the warehouse the goods come from and go back to
+  warehouseId     String
+  vehicleId       String?
+  sellerUserId    String
+  status          VanLoadStatus @default(OPEN)
+  note            String?
+  loadedAt        DateTime?
+  closedAt        DateTime?
+  closedById      String?
+  /// cash the seller should hand in (cash sales of this load)
+  cashExpected    Decimal       @default(0) @db.Decimal(18, 2)
+  cashCounted     Decimal?      @db.Decimal(18, 2)
+  cashVariance    Decimal?      @db.Decimal(18, 2)
+  closeNote       String?
+  createdById     String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  lots  VanLot[]
+  sales VanSale[]
+
+  @@index([vendorCompanyId, status])
+  @@index([sellerUserId, status])
+}
+
+/**
+ * Goods on the van, per offer and warehouse lot (FEFO when loaded). Sold first-to-expire first.
+ */
+model VanLot {
+  id        String    @id @default(cuid())
+  loadId    String
+  offerId   String
+  batchId   String?
+  lotCode   String?
+  expiresOn DateTime? @db.Date
+  /// average cost when loaded (cost of goods)
+  unitCost  Decimal   @default(0) @db.Decimal(18, 4)
+  qtyLoaded Int
+  qtySold   Int       @default(0)
+  qtyBack   Int       @default(0)
+  qtyLost   Int       @default(0)
+
+  load VanLoad @relation(fields: [loadId], references: [id], onDelete: Cascade)
+
+  @@index([loadId, offerId])
+}
+
+/**
+ * One sale from the van: a FIRINGI order delivered on the spot and invoiced to the customer.
+ */
+model VanSale {
+  id              String        @id @default(cuid())
+  number          String        @unique // VS-2026-000001
+  loadId          String
+  vendorCompanyId String
+  buyerCompanyId  String
+  addressId       String
+  /// sent by the phone (offline sales are sent again until accepted — the same ref is taken once)
+  clientRef       String?       @unique
+  status          VanSaleStatus @default(DONE)
+  error           String?
+  orderId         String?
+  orderNumber     String?
+  invoiceId       String?
+  invoiceNumber   String?
+  method          VanPayMethod
+  /// what the customer owes for the sale (gross, EUR) and what was paid on the spot
+  grossTotal      Decimal       @default(0) @db.Decimal(18, 2)
+  paid            Decimal       @default(0) @db.Decimal(18, 2)
+  paymentId       String?
+  /// cash collected for FIRINGI already settled against the supplier's payouts
+  cashNetted      Decimal       @default(0) @db.Decimal(18, 2)
+  signedBy        String?
+  signatureKey    String?
+  emptiesReturnId String?
+  latitude        Decimal?      @db.Decimal(9, 6)
+  longitude       Decimal?      @db.Decimal(9, 6)
+  note            String?
+  /// [{ offerId, qty }] as sent by the seller
+  items           Json
+  createdById     String
+  soldAt          DateTime      @default(now())
+  createdAt       DateTime      @default(now())
+
+  load VanLoad @relation(fields: [loadId], references: [id], onDelete: Cascade)
+
+  @@index([loadId])
+  @@index([buyerCompanyId, createdAt])
+  @@index([vendorCompanyId, createdAt])
+}

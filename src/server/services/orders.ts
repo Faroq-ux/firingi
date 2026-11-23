@@ -91,6 +91,9 @@ export type PlaceOrderInput = {
   groupRoundId?: string | null;
   /** Phase 50: pay later with this term (FIRINGI's settings; partner or own credit is picked per country). */
   payLater?: { termId: string } | null;
+  /** Phase 63: a sale from a supplier's van — goods handed over now (no delivery fee or minimum, no stock reserved:
+   * the van service ships it from the van), no risk hold; `paidNow` = paid in full on the spot (no credit check). */
+  van?: { warehouseId: string; paidNow: boolean } | null;
 };
 
 export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<import("@/server/buying/approvals").PlacedOrPending> {
@@ -131,7 +134,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   const nameOf = (id: string) => { const c = sellers.find((x) => x.id === id); return c?.tradeName ?? c?.legalName ?? "a supplier"; };
   const commissions = new Map<string, NonNullable<Awaited<ReturnType<typeof activeCommission>>>>();
   for (const sid of sellerIds) {
-    if (!(await vendorReaches(sid, address.id)))
+    if (!input.van && !(await vendorReaches(sid, address.id)))
       throw new AppError("OUTSIDE_SERVICE_AREA", `${nameOf(sid)} doesn't deliver to that address. Choose another delivery address or remove its products.`, 422, { supplier: nameOf(sid) });
     const c = await activeCommission(prisma as unknown as Tx, sid);
     if (!c) throw new AppError("SUPPLIER_UNAVAILABLE", `${nameOf(sid)} can't take orders at the moment. Remove its products to continue.`, 409, { supplier: nameOf(sid) });
@@ -142,7 +145,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   const flow: OrderFlow = ctx.company.type === "CUSTOMER" ? "CUSTOMER_FROM_WHOLESALER" : "WHOLESALER_FROM_DISTRIBUTOR";
   const pc = await priceCheckout(ctx, { items: cart.items.map((i) => ({ offerId: i.offerId, qty: i.qty })), couponCode: cart.couponCode }, {
     regionId: address.city?.regionId ?? null, addressId: address.id, commissionRates: new Map([...commissions].map(([k, c]) => [k, c.rate.toString()])),
-    fixedPrices: input.fixedPrices, loyaltyPoints: cart.loyaltyPoints,
+    fixedPrices: input.fixedPrices, loyaltyPoints: cart.loyaltyPoints, noDelivery: !!input.van,
   });
   // Phase 32: points the buyer chose but can't use (fewer than the minimum, not enough) → refused, not silently dropped
   if (pc.loyalty && (pc.loyalty.reason === "BELOW_MIN" || pc.loyalty.reason === "NOT_ENOUGH"))
@@ -181,7 +184,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   const checkoutId = randomUUID();
   // FIRINGI's risk checks on the whole checkout: HIGH → held for review before the suppliers see it.
   const { assessCheckout, recordRisk, afterCheckout } = await import("@/server/risk/service");
-  const risk = await assessCheckout(ctx, { gross: pc.grandTotal.toNumber(), goods: pc.goodsNet.toNumber(), addressId: address.id, couponCode: pc.coupon?.ok ? pc.coupon.code : null });
+  const risk = input.van ? { score: 0, level: "LOW" as const, reasons: [] } : await assessCheckout(ctx, { gross: pc.grandTotal.toNumber(), goods: pc.goodsNet.toNumber(), addressId: address.id, couponCode: pc.coupon?.ok ? pc.coupon.code : null });
   const deliveryAddress = {
     id: address.id, label: address.label, line1: address.line1, line2: address.line2, postalCode: address.postalCode, city: address.cityName,
     regionId: address.city?.regionId ?? null, country: address.country.code, contactName: address.contactName, phone: address.phone,
@@ -194,7 +197,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
   const loyaltyShares: { orderId: string; number: string; euros: Decimal; points: number }[] = [];
   const created = await prisma.$transaction(async (tx) => {
     // Credit control on the whole checkout: overdue invoices / credit limit (Payment Settings).
-    await assertCanOrder(ctx.company.id, pc.grandTotal);
+    if (!input.van?.paidNow) await assertCanOrder(ctx.company.id, pc.grandTotal);
     const out: { id: string; number: string; sellerId: string }[] = [];
     for (const part of pc.parts) {
       const sellerId = part.sellerId;
@@ -217,8 +220,9 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
           commissionTotal: totals.commissionTotal.toFixed(2), vendorPayableNet: totals.vendorPayableNet.toFixed(2), firingiMarginNet: totals.firingiMarginNet.toFixed(2),
         },
       });
+      if (input.van) await tx.order.update({ where: { id: order.id }, data: { sourceAddressId: input.van.warehouseId } }).then((o) => (order.sourceAddressId = o.sourceAddressId));
       for (const l of part.lines) {
-        const res = await reserveStock(tx, order.id, l.item.offerId, l.item.qty);
+        const res = input.van ? { ok: true as const, addressId: input.van.warehouseId, available: 0 } : await reserveStock(tx, order.id, l.item.offerId, l.item.qty);
         if (!res.ok) {
           const name = l.item.name.pt ?? l.item.name.en;
           throw new AppError("OUT_OF_STOCK", `Only ${res.available} available of "${name}". Please change the quantity.`, 409);
@@ -302,13 +306,13 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
     for (const o of out) await (await import("@/server/co2/service")).stampOrder(tx, o.id);
     const held = await recordRisk(tx, risk, out.map((o) => ({ id: o.id, buyerCompanyId: ctx.company.id })), pc.parts.length > 1 ? checkoutId : null);
     // paying later (partner pays FIRINGI / FIRINGI's credit) replaces paying before shipping
-    const payFirst = !payLater && (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;
+    const payFirst = !payLater && !input.van && (await tx.company.findUniqueOrThrow({ where: { id: ctx.company.id }, select: { payBeforeShipping: true } })).payBeforeShipping;
     for (const o of out) {
       const to = held || payFirst ? "ON_HOLD" : "PENDING_CONFIRMATION";
       // Phase 41: pay-before-shipping buyers also pay a buffer on sold-by-weight lines (unused part stays as credit)
       const buffer = payFirst ? await (await import("@/server/catchweight/service")).prepayBufferFor(tx, o.id) : new Decimal(0);
       await tx.order.update({ where: { id: o.id }, data: { status: to, awaitingPayment: payFirst, prepayBuffer: buffer.toFixed(2) } });
-      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : payFirst ? "Waiting for payment" : "Sent to supplier" } });
+      await tx.orderStatusHistory.create({ data: { orderId: o.id, fromStatus: "NEW", toStatus: to, reason: held ? `Held for a check by FIRINGI (risk ${risk.score})` : payFirst ? "Waiting for payment" : input.van ? "Sold from the supplier's van" : "Sent to supplier" } });
       await (await import("@/server/integrations/webhooks")).emitOrderEvents(tx, o.id, { from: "NEW", to, placed: true });
     }
     payFirstOrders = payFirst;
@@ -326,6 +330,7 @@ export async function placeOrder(ctx: Ctx, input: PlaceOrderInput): Promise<impo
       const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true, prepayBuffer: true } });
       await notify("order.awaiting_payment", [{ companyId: ctx.company.id, link: `/buy/orders/${o.id}` }], { number: o.number, total: row.grandTotal.plus(row.prepayBuffer).toNumber() }, { ref: { type: "Order", id: o.id } });
     }
+  if (input.van) return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })) };
   if (risk.level === "HIGH" || payFirstOrders) return { id: created[0].id, number: created[0].number, orders: created.map((o) => ({ id: o.id, number: o.number })), payFirst: payFirstOrders };
   for (const o of created) {
     const row = await prisma.order.findUniqueOrThrow({ where: { id: o.id }, select: { grandTotal: true } });

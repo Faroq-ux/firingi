@@ -273,6 +273,19 @@ async function run(ctx: Ctx, kind: OfflineKind, d: Record<string, unknown>, s: A
       const sale = await recordSale(ctx, d as never, { offline: true });
       return { status: "DONE", result: { saleId: sale.id, number: sale.number, fiscalNumber: sale.fiscalNumber, receiptToken: sale.receiptToken } };
     }
+    case "van.sale": {
+      // Phase 63: a sale made from the van without signal (the phone's id for it makes it happen once)
+      const { sellFromVan } = await import("@/server/vansales/service");
+      const items = Array.isArray(d.items) ? (d.items as { offerId?: unknown; qty?: unknown }[]).map((x) => ({ offerId: str(x.offerId, 64), qty: int(x.qty) })) : [];
+      const empties = d.empties && typeof d.empties === "object" ? Object.fromEntries(Object.entries(d.empties as Record<string, unknown>).map(([k, v]) => [k.slice(0, 64), int(v)])) : null;
+      const sale = await sellFromVan(ctx, {
+        buyerCompanyId: str(d.buyerCompanyId, 64), addressId: str(d.addressId, 64), items, method: str(d.method, 20) as never, signedBy: str(d.signedBy, 120) || null,
+        signature: dataUrlFile(d.signature, "signature"), empties, clientRef: str(d.clientRef, 64) || null,
+        lat: typeof d.lat === "number" ? d.lat : null, lng: typeof d.lng === "number" ? d.lng : null, note: str(d.note, 500) || null,
+        soldAt: typeof d.soldAt === "string" && !Number.isNaN(Date.parse(d.soldAt)) ? new Date(d.soldAt) : null,
+      });
+      return { status: "DONE", result: sale };
+    }
     case "delivery.step": {
       const deliveries = await import("@/server/services/deliveries");
       const id = str(d.deliveryId, 64);

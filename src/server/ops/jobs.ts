@@ -28,6 +28,7 @@ export const JOBS: JobDef[] = [
   { key: "whatsapp", label: "WhatsApp ordering (messages left over, expired proposals, reorder reminders)", every: "every 5 minutes", staleAfterMin: 60, critical: false, path: "/api/cron/whatsapp" },
   { key: "substitutions", label: "Substitutions (unanswered replacements)", every: "every 5 minutes", staleAfterMin: 60, critical: false, path: "/api/cron/substitutions" },
   { key: "salesreps", label: "Sales reps (unconfirmed orders, missed visits)", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/salesreps" },
+  { key: "vansales", label: "Van sales (cash netted from payouts, vans still out)", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/vansales" },
   { key: "trade", label: "EU trade reporting (EC Sales List and Intrastat returns rebuilt, filing reminders, threshold watch)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/trade" },
   { key: "fx", label: "Exchange rates (ECB daily rates, rate alerts)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/fx" },
   { key: "pos-daily", label: "Till sales into each company's Accounting (daily cash / card / other by VAT rate, last 7 days rebuilt)", every: "daily", staleAfterMin: 26 * 60, critical: false, path: "/api/cron/pos-daily" },

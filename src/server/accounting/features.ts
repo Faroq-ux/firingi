@@ -86,6 +86,12 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       else if (!(await sr.myRep(ctx))?.active) off.add("SALES_REP_ME");
       if (!on || portal !== "buy" || !(await sr.servedByReps(ctx.company.id))) off.add("REP_ORDERS");
     }
+    // Phase 63: van sales — FIRINGI's switch (all / per supplier); customers once they bought from a van
+    {
+      const vs = await import("@/server/vansales/service");
+      if (portal !== "vendor" || !(await vs.vanSalesOn(ctx.company.id))) off.add("VAN_SALES");
+      if (portal !== "buy" || !(await vs.boughtFromVans(ctx.company.id))) off.add("VAN_PURCHASES");
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

@@ -62,6 +62,8 @@ export async function renderEvent(eventKey: string, channel: NotificationChannel
   const k = messageKey(eventKey);
   // Amounts in the recipient's number format (EUR).
   if (typeof vars.total === "number") vars = { ...vars, total: new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(vars.total) };
+  // Phase 63: van sales — paid on the spot, cash difference
+  for (const k of ["paid", "variance"] as const) if (typeof vars[k] === "number") vars = { ...vars, [k]: new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(vars[k] as number) };
   // Coded values shown in the recipient's language (e.g. restriction TOBACCO → "Tabaco").
   if (typeof vars.restriction === "string" && /^[A-Z]+$/.test(vars.restriction))
     vars = { ...vars, restriction: (loc.onboarding?.restricted?.[vars.restriction] ?? en.onboarding?.restricted?.[vars.restriction] ?? vars.restriction).toLowerCase() };

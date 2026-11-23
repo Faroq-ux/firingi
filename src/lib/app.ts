@@ -82,8 +82,8 @@ export function offlineDecision(check: OrderCheck, s: AppSettings["offlineOrders
 }
 
 /** Offline action kinds (queued on the phone, carried out once on the server). */
-export const OFFLINE_KINDS = ["order.place", "delivery.step", "delivery.complete", "delivery.fail", "pick.scan", "pick.confirm", "pick.short", "pos.sale", "pos.sale.buy"] as const;
+export const OFFLINE_KINDS = ["order.place", "delivery.step", "delivery.complete", "delivery.fail", "pick.scan", "pick.confirm", "pick.short", "pos.sale", "pos.sale.buy", "van.sale"] as const;
 export type OfflineKind = (typeof OFFLINE_KINDS)[number];
 export const KIND_PORTAL: Record<OfflineKind, AppPortal> = {
-  "order.place": "buy", "delivery.step": "driver", "delivery.complete": "driver", "delivery.fail": "driver", "pick.scan": "vendor", "pick.confirm": "vendor", "pick.short": "vendor", "pos.sale": "vendor", "pos.sale.buy": "buy",
+  "order.place": "buy", "delivery.step": "driver", "delivery.complete": "driver", "delivery.fail": "driver", "pick.scan": "vendor", "pick.confirm": "vendor", "pick.short": "vendor", "pos.sale": "vendor", "pos.sale.buy": "buy", "van.sale": "vendor",
 };

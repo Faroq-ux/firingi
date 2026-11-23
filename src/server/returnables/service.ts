@@ -241,6 +241,17 @@ export async function invoiceDeposits(tx: Tx, orderId: string, o: { buyerCompany
  */
 export async function recordStopEmpties(tx: Tx, deliveryId: string, counted: Record<string, number>, userId: string) {
   const d = await tx.delivery.findUniqueOrThrow({ where: { id: deliveryId }, include: { order: { select: { id: true, buyerCompanyId: true, sellerCompanyId: true } } } });
+  return recordEmptiesFor(tx, d.order, counted, userId, "DELIVERY", deliveryId);
+}
+
+/** Phase 63: empties the customer hands back at a sale from the supplier's van (the sale's order). */
+export async function recordOrderEmpties(tx: Tx, orderId: string, counted: Record<string, number>, userId: string) {
+  const order = await tx.order.findUniqueOrThrow({ where: { id: orderId }, select: { id: true, buyerCompanyId: true, sellerCompanyId: true } });
+  return recordEmptiesFor(tx, order, counted, userId, "VAN", null);
+}
+
+async function recordEmptiesFor(tx: Tx, order: { id: string; buyerCompanyId: string; sellerCompanyId: string }, counted: Record<string, number>, userId: string, source: EmptiesSource, deliveryId: string | null) {
+  const d = { order };
   await attachToOrder(tx, d.order.id);
   const rows = await tx.orderReturnable.findMany({ where: { orderId: d.order.id }, include: { type: true } });
   const allowed = await allowedTypes(tx, d.order.buyerCompanyId, d.order.sellerCompanyId);
@@ -255,7 +266,7 @@ export async function recordStopEmpties(tx: Tx, deliveryId: string, counted: Rec
   for (const r of rows) if (r.type.kind === "EXCHANGE") await tx.orderReturnable.update({ where: { id: r.id }, data: { swapDone: swaps[r.typeId] ?? 0 } });
   let ret: { id: string; number: string } | null = null;
   if (Object.keys(returns).length) {
-    ret = await createReturn(tx, { customerId: d.order.buyerCompanyId, supplierId: d.order.sellerCompanyId, source: "DELIVERY", deliveryId, orderId: d.order.id, userId, lines: returns });
+    ret = await createReturn(tx, { customerId: d.order.buyerCompanyId, supplierId: d.order.sellerCompanyId, source, deliveryId, orderId: d.order.id, userId, lines: returns });
     await tx.emptiesPickup.updateMany({ where: { customerCompanyId: d.order.buyerCompanyId, supplierCompanyId: d.order.sellerCompanyId, status: { in: ["REQUESTED", "PLANNED"] } }, data: { status: "COLLECTED", returnId: ret.id } });
   }
   return { swaps, returns, ret };

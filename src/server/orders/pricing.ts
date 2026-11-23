@@ -66,6 +66,8 @@ type Opts = {
   fixedPrices?: Map<string, Decimal.Value>;
   /** Phase 32: loyalty points the buyer wants to spend (discount at checkout, FIRINGI-funded). */
   loyaltyPoints?: number;
+  /** Phase 63: handed over now (van sale) — no delivery fee, minimum or small-order limit. */
+  noDelivery?: boolean;
 };
 
 export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; qty: number }[]; couponCode: string | null }, opts: Opts): Promise<PricedCheckout> {
@@ -276,8 +278,8 @@ export async function priceCheckout(ctx: Ctx, cart: { items: { offerId: string; 
     // The coupon's free delivery counts for a supplier whose goods it applies to; else the automatic one.
     const couponHere = couponFree && coupon && g.lines.some((l) => promoMatchesOffer(coupon!.promo, { id: l.item.offerId, vendorCompanyId: l.item.vendorCompanyId, productId: l.item.productId, categoryIds: l.item.categoryIds })) ? couponFree : null;
     const free = couponHere ?? autoFree.get(g.sellerId) ?? null;
-    const normal = decideDelivery(input);
-    const decision = free?.funder === "VENDOR" ? decideDelivery({ ...input, vendorFree: true }) : normal;
+    const normal: ReturnType<typeof decideDelivery> = opts.noDelivery ? { ok: true, mode: "VENDOR_FLEET", feeNet: new Decimal(0), ruleId: null, feeOwner: null, free: "VENDOR" } : decideDelivery(input);
+    const decision = opts.noDelivery ? normal : free?.funder === "VENDOR" ? decideDelivery({ ...input, vendorFree: true }) : normal;
     if (decision.ok && decision.small && smallLeft != null) smallLeft -= 1; // two small parts in one cart use two
     const normalFee = normal.ok ? normal.feeNet : new Decimal(0);
     const waived = free?.funder === "FIRINGI" && decision.ok ? decision.feeNet : new Decimal(0);

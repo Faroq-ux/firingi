@@ -212,6 +212,10 @@ export const EVENTS: EventDef[] = [
   E("reporder.placed", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH"], ["numbers"]),
   E("reporder.rejected", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH", "EMAIL"], ["customer"]),
   E("reporder.expired", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH"], ["total"]),
+  // Phase 63: van sales
+  E("vansale.receipt", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["supplier", "number", "total", "paid"]),
+  E("vansales.variance", "orders", ["vendor.vansales.manage", "admin.vendors.view", "admin.finance.view"], ["EMAIL", "PUSH"], ["number", "supplier", "variance", "missing"]),
+  E("vansales.late", "orders", ["vendor.vansales.manage"], ["PUSH", "EMAIL"], ["number", "hours"]),
   // Phase 61: storefronts
   E("storefront.review", "catalogue", ["admin.vendors.approve", "admin.vendors.view"], ["EMAIL"], ["company", "slug"]),
   E("storefront.decided", "catalogue", ["company.profile.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["status", "note"]),

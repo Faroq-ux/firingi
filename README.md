@@ -742,6 +742,25 @@ Every wholesaler (and distributor) gets its own branded page at `/s/<name>`, wit
 
 Details: [docs/storefronts.md](docs/storefronts.md).
 
+## Van sales (Phase 63)
+
+Suppliers **sell straight from a van** to registered customers, and **FIRINGI still invoices every sale**.
+
+- **Load:** the manager loads goods from a warehouse, first to expire first, and starts the round. Goods on a van leave the warehouse, so online orders can't sell them.
+- **Sell (phone):**
+  - the customer, products at **the customer's own prices**, payment (**cash with change, card, MB WAY or on account**), empties handed back, name and signature;
+  - the sale is a FIRINGI order, **delivered and invoiced at once**, and the phone shows the exact amount to collect;
+  - with no signal the sale is kept on the phone and sent once when back online.
+- **End of the day:** count what comes back (to the warehouse, same lots; the rest is recorded as missing) and the cash against cash sales. A difference alerts the supplier and FIRINGI.
+- **Money:** payments taken on the spot pay the customer's invoice. The supplier collected them for FIRINGI, so they are **netted from FIRINGI's payouts** to the supplier.
+- **Lots:** recalls and the customer's expiry alerts follow the lots sold from the van.
+- **Pages:**
+  - *Van Sales* for suppliers (*Van Loads*, *Sell from Van*) and *Orders › Bought from Vans* for customers (25 languages);
+  - FIRINGI *Vendors › Van Sales* (English): every switch (on/off, per supplier, each payment method, cash limit, signature, empties, offline, alerts) and money still to net.
+- **Background job:** `/api/cron/vansales`, hourly.
+
+Details: [docs/van-sales.md](docs/van-sales.md).
+
 ## Sales reps (Phase 62)
 
 Wholesalers' and distributors' **field sales reps** get a phone-first app; their managers get the team view.
