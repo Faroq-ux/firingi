@@ -40,7 +40,7 @@ describe("admin sidebar", () => {
     expect(nav[0].items[0].label).toBe("Visão Geral Executiva");
   });
   it("finds items by URL; every admin page is live", () => {
-    expect(findNavItem("admin", "/admin/ai/demand-forecasting")?.item.phase).toBe("P17");
+    expect(findNavItem("admin", "/admin/ai/forecasting")?.item.phase).toBe("P66");
     expect(findNavItem("admin", "/admin/does-not-exist")).toBeNull();
     expect(allItems(ADMIN_NAV).filter((i) => !i.live).map((i) => i.href)).toEqual([]);
   });

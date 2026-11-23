@@ -41,20 +41,20 @@ export default async function Page() {
           </div>
         </div>
         <div className="mt-6 grid grid-cols-2 gap-3 @2xl:grid-cols-4" data-testid="ai-hero">
-          <HeroStat label="Reorders late" value={c("REORDER_DUE")} locale="en" href="/admin/ai/reorder-predictions" i={0} />
-          <HeroStat label="Stock running out" value={c("STOCK_OUT")} locale="en" href="/admin/ai/stock-predictions" i={1} />
-          <HeroStat label="Deliveries at risk" value={c("DELIVERY_RISK")} locale="en" href="/admin/ai/delivery-risk" i={2} />
-          <HeroStat label="Demand rising" value={c("DEMAND_SURGE")} locale="en" href="/admin/ai/demand-forecasting" i={3} />
+          <HeroStat label="Reorders late" value={c("REORDER_DUE")} locale="en" href="/admin/ai/recommendations?area=CUSTOMERS" i={0} />
+          <HeroStat label="Stock running out" value={c("STOCK_OUT")} locale="en" href="/admin/ai/forecasting?tab=INVENTORY" i={1} />
+          <HeroStat label="Deliveries at risk" value={c("DELIVERY_RISK")} locale="en" href="/admin/ai/recommendations?area=ROUTES" i={2} />
+          <HeroStat label="Demand rising" value={c("DEMAND_SURGE")} locale="en" href="/admin/ai/forecasting?tab=DEMAND" i={3} />
         </div>
       </Aurora>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <Tile icon={Repeat} label="Late reorders" value={c("REORDER_DUE")} locale="en" href="/admin/ai/reorder-predictions" tone="tone-blue" i={0} hint="customers past their usual rhythm" />
-        <Tile icon={PackageX} label="Stock-outs coming" value={c("STOCK_OUT")} locale="en" href="/admin/ai/stock-predictions" tone="tone-pink" i={1} hint="under 7 days of stock" />
-        <Tile icon={Truck} label="Late deliveries" value={c("DELIVERY_RISK")} locale="en" href="/admin/ai/delivery-risk" tone="tone-orange" i={2} hint="high risk open orders" />
-        <Tile icon={TrendingUp} label="Rising demand" value={c("DEMAND_SURGE")} locale="en" href="/admin/ai/demand-forecasting" tone="tone-lime" i={3} hint="+30% or more next 4 weeks" />
-        <Tile icon={PiggyBank} label="Better suppliers" value={c("CHEAPER_SUPPLIER")} locale="en" href="/admin/ai/supplier-recommendations" tone="tone-teal" i={4} hint="cheaper or more reliable" />
-        <Tile icon={AlertTriangle} label="Margin gaps" value={c("MARGIN_GAP")} locale="en" href="/admin/ai/margin-opportunities" tone="tone-violet" i={5} hint="below the margin rules" />
+        <Tile icon={Repeat} label="Late reorders" value={c("REORDER_DUE")} locale="en" href="/admin/ai/recommendations?area=CUSTOMERS" tone="tone-blue" i={0} hint="customers past their usual rhythm" />
+        <Tile icon={PackageX} label="Stock-outs coming" value={c("STOCK_OUT")} locale="en" href="/admin/ai/forecasting?tab=INVENTORY" tone="tone-pink" i={1} hint="under 7 days of stock" />
+        <Tile icon={Truck} label="Late deliveries" value={c("DELIVERY_RISK")} locale="en" href="/admin/ai/recommendations?area=ROUTES" tone="tone-orange" i={2} hint="high risk open orders" />
+        <Tile icon={TrendingUp} label="Rising demand" value={c("DEMAND_SURGE")} locale="en" href="/admin/ai/forecasting?tab=DEMAND" tone="tone-lime" i={3} hint="+30% or more next 4 weeks" />
+        <Tile icon={PiggyBank} label="Better suppliers" value={c("CHEAPER_SUPPLIER")} locale="en" href="/admin/ai/recommendations?area=SUPPLIERS" tone="tone-teal" i={4} hint="cheaper or more reliable" />
+        <Tile icon={AlertTriangle} label="Margin gaps" value={c("MARGIN_GAP")} locale="en" href="/admin/ai/recommendations?area=PRICING" tone="tone-violet" i={5} hint="below the margin rules" />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-5">
@@ -72,7 +72,7 @@ export default async function Page() {
           </CardContent>
         </Card>
         <Card className={`lg:col-span-2 ${rise(7).className}`} style={rise(7).style}>
-          <CardHeader className="flex-row items-center justify-between"><CardTitle>Biggest demand, next 4 weeks</CardTitle><Link className="text-sm text-primary underline-offset-4 hover:underline" href="/admin/ai/demand-forecasting">Forecasts →</Link></CardHeader>
+          <CardHeader className="flex-row items-center justify-between"><CardTitle>Biggest demand, next 4 weeks</CardTitle><Link className="text-sm text-primary underline-offset-4 hover:underline" href="/admin/ai/forecasting?tab=DEMAND">Forecasts →</Link></CardHeader>
           <CardContent className="space-y-3" data-testid="ai-demand">
             {demand.map((d) => (
               <div key={d.offerId}>

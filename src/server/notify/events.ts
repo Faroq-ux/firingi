@@ -108,6 +108,9 @@ export const EVENTS: EventDef[] = [
   E("recurring.placed", "orders", null, ["PUSH"], ["name", "orders"]),
   E("recurring.failed", "orders", null, ["EMAIL", "PUSH"], ["name", "reason"]),
   E("budget.threshold", "orders", ["buyer.branches.manage"], ["EMAIL", "PUSH"], ["name", "pct", "spent", "amount"]),
+  // Phase 66: AI Centre
+  E("ai.route_saving", "deliveries", ["vendor.fleet.view", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["number", "km", "cost", "co2"]),
+  E("ai.weekly_report", "account", ["admin.ai.view"], ["EMAIL"], ["period", "summary"]),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

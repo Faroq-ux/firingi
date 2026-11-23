@@ -16,6 +16,7 @@ import { ALL_PERMISSION_CODES, PERMISSIONS, type PermissionCode } from "@/server
 import { ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { notify } from "@/server/notify/dispatch";
 import { reasonText, type RecKind } from "@/lib/ai";
+import { KIND_AREA, type AnyRecKind } from "@/lib/ai-centre";
 import { aiScope, deliveryRisk, demandForecast, marginOpportunities, reorderPredictions, stockPredictions, supplierRecommendations, type Side } from "./insights";
 
 const DAY = 86400_000;
@@ -55,7 +56,7 @@ export async function listActivity(ctx: Ctx, f: { kind?: string; page?: number }
 // ── refresh ─────────────────────────────────────────────────────────────────
 
 /** A read-only staff context for scheduled work (no user; never used to write as someone). */
-async function systemCtx(): Promise<Ctx> {
+export async function staffSystemCtx(): Promise<Ctx> {
   const admin = await prisma.company.findFirstOrThrow({ where: { type: "ADMIN" }, include: { country: { select: { code: true } } }, orderBy: { createdAt: "asc" } });
   return {
     user: { id: "system", email: "", name: "FIRINGI AI", locale: "en", twoFactor: false }, sessionId: "system", membership: { id: "system", isOwner: false },
@@ -65,13 +66,13 @@ async function systemCtx(): Promise<Ctx> {
   };
 }
 
-type Rec = { kind: RecKind; audience: "STAFF" | "BUYER" | "VENDOR"; companyId: string | null; subjectType: string | null; subjectId: string | null; dedupeKey: string; title: string; detail: Record<string, unknown>; score: number };
+type Rec = { kind: AnyRecKind; audience: "STAFF" | "BUYER" | "VENDOR"; companyId: string | null; subjectType: string | null; subjectId: string | null; dedupeKey: string; title: string; detail: Record<string, unknown>; score: number };
 const clamp = (n: number) => Math.max(0, Math.min(100, Math.round(n)));
 const weekKey = (now: Date) => Math.floor(now.getTime() / (7 * DAY));
 const monthKey = (now: Date) => now.toISOString().slice(0, 7);
 
 export async function computeRecommendations(now = new Date()): Promise<Rec[]> {
-  const sys = await systemCtx();
+  const sys = await staffSystemCtx();
   const wk = weekKey(now), mo = monthKey(now);
   const [reorders, stock, suppliers, margins, risks, demand] = await Promise.all([
     reorderPredictions(sys, "STAFF", { now, onlyDue: true, dueWithinDays: 1 }),
@@ -124,7 +125,12 @@ export async function computeRecommendations(now = new Date()): Promise<Rec[]> {
     if (vId) out.push({ kind: "DEMAND_SURGE", audience: "VENDOR", companyId: vId, subjectType: "VendorOffer", subjectId: d.offerId, dedupeKey: `V:SURGE:${d.offerId}:${wk}`, title: `Demand for ${d.product} (${d.pack}) is rising (+${pct}%)`, detail: { ...d }, score: clamp(40 + pct / 4) });
     out.push({ kind: "DEMAND_SURGE", audience: "STAFF", companyId: null, subjectType: "VendorOffer", subjectId: d.offerId, dedupeKey: `SURGE:${d.offerId}:${wk}`, title: `${d.product} (${d.pack}) from ${d.vendor}: about ${d.nextWeeks} units in the next 4 weeks (+${pct}%)`, detail: { ...d }, score: clamp(30 + pct / 4) });
   }
-  return out;
+  // Phase 66: the AI Centre's kinds, and FIRINGI's switch per area
+  const { aiCentreSettings } = await import("./centre/settings");
+  const cs = await aiCentreSettings();
+  const { centreRecommendations } = await import("./centre/recs");
+  out.push(...(await centreRecommendations(now, cs)));
+  return out.filter((r) => cs.areas[KIND_AREA[r.kind]]);
 }
 
 export async function refreshRecommendations(now = new Date()) {
@@ -197,7 +203,13 @@ export async function decideRecommendation(ctx: Ctx, id: string, accept: boolean
     } else if (r.kind === "STOCK_OUT") {
       const n = await notify("ai.stock_low", [{ companyId: String(d.vendorId), link: "/vendor/products/stock" }], { product: `${d.product} (${d.pack})`, days: d.days === null ? "0" : String(d.days), available: String(d.available) }, { ref: { type: "VendorOffer", id: String(d.offerId) } });
       result = { notified: n.recipients };
+    } else {
+      const { acceptCentreKind } = await import("./centre/dashboard");
+      result = await acceptCentreKind(ctx, r);
     }
+  } else if (accept && r.audience === "VENDOR" && r.kind === "ROUTE_SAVING") {
+    const { acceptCentreKind } = await import("./centre/dashboard");
+    result = await acceptCentreKind(ctx, r);
   }
   const done = await prisma.aiRecommendation.updateMany({ where: { id, status: "OPEN" }, data: { status: accept ? "ACCEPTED" : "DISMISSED", decidedById: ctx.user.id, decidedAt: new Date(), result: { ...result, note: note?.trim() || null } as Prisma.InputJsonValue } });
   if (!done.count) throw new ValidationError("This suggestion was already handled.");

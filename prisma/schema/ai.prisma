@@ -98,3 +98,24 @@ model AiMessage {
 
   @@index([conversationId, at])
 }
+
+/// Phase 66: an AI report as generated (data snapshot + summary) — for the history, the PDF and the weekly email.
+model AiReportRun {
+  id          String    @id @default(cuid())
+  /// EXECUTIVE | SALES | SUPPLIER | STOCK | FINANCE | DELIVERY_RISK | FRAUD
+  kind        String
+  periodFrom  DateTime
+  periodTo    DateTime
+  data        Json
+  /// the written summary (Claude's when connected, otherwise FIRINGI's own wording)
+  summary     String
+  model       String?
+  byClaude    Boolean   @default(false)
+  createdById String?
+  /// the weekly executive email
+  emailedAt   DateTime?
+  recipients  Int       @default(0)
+  createdAt   DateTime  @default(now())
+
+  @@index([kind, createdAt])
+}

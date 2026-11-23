@@ -40,8 +40,8 @@ const shot = async (page, name) => SHOTS && page.screenshot({ path: `${SHOTS}/${
   const sections = await page.locator("aside nav > div > div > button").count();
   check("super admin sees all 23 sidebar sections", sections === 23, `${sections}`); // Phase 47 added the Till (POS) section, Phase 52 Staff & Time
   await shot(page, "01-admin-dashboard");
-  await page.goto(`${BASE}/admin/ai/demand-forecasting`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
-  check("AI Centre page renders (no placeholders left)", (await page.getByTestId("demand-table").count()) === 1 && !/Coming soon/.test(await page.textContent("main")));
+  await page.goto(`${BASE}/admin/ai/forecasting?tab=DEMAND`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
+  check("AI Centre page renders (no placeholders left)", (await page.getByTestId("fc-demand").count()) === 1 && !/Coming soon/.test(await page.textContent("main")));
   await shot(page, "02-ai-demand");
   await page.goto(`${BASE}/admin/users/all`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
   check("admin users page lists staff", (await page.textContent("main")).includes("rm.lisboa@firingi.test"));

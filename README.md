@@ -772,6 +772,12 @@ A supplier leaves stock at a customer's premises; the customer pays only for wha
 
 Details: [docs/consignment.md](docs/consignment.md).
 
+## AI Centre (Phase 66)
+
+One AI Centre for FIRINGI's back office (English): **AI Dashboard**, **Recommendations** (sales, pricing, suppliers, stock, customers, delivery routes — shorter or combined routes with km, fuel / energy, € and CO₂ saved), **Forecasting** (demand, sales, orders, inventory, cash flow, delivery), **AI Reports** (executive, sales, suppliers, stock, finance, delivery risks, fraud & risk — Claude or FIRINGI summary, PDF / CSV, weekly email), **AI Assistant** and the activity log. AI suggests; people decide. FIRINGI switches each area, forecast and report on or off and sets the fuel rates and thresholds. Phase 67 adds Automation, AI Agents and AI Governance.
+
+Details: [docs/ai-centre.md](docs/ai-centre.md).
+
 ## Van sales (Phase 63)
 
 Suppliers **sell straight from a van** to registered customers, and **FIRINGI still invoices every sale**.

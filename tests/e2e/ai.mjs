@@ -51,16 +51,16 @@ check("demand forecasts drawn", (await sa.getByTestId("ai-demand").locator("svg"
 await shot(sa, "p17-01-ai-insights");
 
 // ── 2. Insight pages ──
-await go(sa, "/admin/ai/reorder-predictions");
-const cc = sa.getByTestId("reorder-table").locator("tr", { hasText: "C&C Almada" }).filter({ hasText: "Atlântico" });
+await go(sa, "/admin/ai/recommendations?area=CUSTOMERS");
+const cc = sa.getByTestId("ins-reorders").locator("tr", { hasText: "C&C Almada" }).filter({ hasText: "Atlântico" });
 check("C&C Almada is late with its usual Atlântico order", (await cc.count()) === 1 && /days late/.test(await cc.textContent()));
 await shot(sa, "p17-02-reorder");
-await go(sa, "/admin/ai/demand-forecasting");
-check("demand forecast table with sparklines", (await rows(sa, "demand-table")) > 0 && (await sa.getByTestId("demand-table").locator("svg").count()) > 0);
+await go(sa, "/admin/ai/forecasting?tab=DEMAND");
+check("demand forecast table with sparklines", (await rows(sa, "fc-demand")) > 0 && (await sa.getByTestId("fc-demand").locator("svg").count()) > 0);
 await shot(sa, "p17-03-demand");
-await go(sa, "/admin/ai/stock-predictions?all=1");
-check("stock predictions", (await rows(sa, "stock-table")) > 0);
-for (const [url, id] of [["/admin/ai/supplier-recommendations", "supplier-table"], ["/admin/ai/margin-opportunities", "margin-table"], ["/admin/ai/delivery-risk", "delivery-table"], ["/admin/ai/fraud-alerts", "fraud-table"], ["/admin/ai/route-optimization", "route-groups"]]) {
+await go(sa, "/admin/ai/forecasting?tab=INVENTORY");
+check("stock predictions", (await rows(sa, "fc-inventory")) > 0);
+for (const [url, id] of [["/admin/ai/recommendations?area=SUPPLIERS", "ins-suppliers"], ["/admin/ai/recommendations?area=PRICING", "ins-pricing"], ["/admin/ai/recommendations?area=ROUTES", "ins-delivery"], ["/admin/ai/reports?tab=FRAUD", "rep-summary"], ["/admin/ai/recommendations?area=ROUTES", "ins-routes"]]) {
   await go(sa, url);
   check(`${url} renders`, (await sa.getByTestId(id).count()) === 1);
 }
@@ -72,14 +72,14 @@ await go(sales, "/admin/ai/recommendations");
 check("Sales staff without the AI right are blocked", sales.url().endsWith("/forbidden"), sales.url());
 
 // ── 3b. Accept a late reorder → CRM call task for the account owner ──
-await go(sa, "/admin/ai/recommendations?kind=REORDER_DUE");
+await go(sa, "/admin/ai/recommendations?area=CUSTOMERS&kind=REORDER_DUE");
 // C&C Almada late with its usual Atlântico order (not Kebab House late with C&C Almada as supplier)
 const rec = sa.getByTestId("recommendations").locator("tr", { hasText: /C&C Almada is \d+ days late reordering/ }).first();
 // A suggestion is made once per situation: on a rerun this week it may already be accepted.
 const already = !(await rec.count());
 check("late reorder suggested to staff", already || (await rec.getByRole("button", { name: "Create call task" }).count()) === 1, already ? "already accepted earlier" : "");
 if (!already) { await rec.getByRole("button", { name: "Create call task" }).click(); await settle(sa); }
-await go(sa, "/admin/ai/recommendations?kind=REORDER_DUE&status=ACCEPTED");
+await go(sa, "/admin/ai/recommendations?area=CUSTOMERS&kind=REORDER_DUE&status=ACCEPTED");
 check("suggestion accepted", (await sa.getByTestId("recommendations").locator("tr", { hasText: "C&C Almada" }).count()) > 0);
 // The task goes to C&C Almada's account owner (Super Admin when the account has none) — look at the team list.
 await go(sa, "/admin/crm/follow-ups?who=all");
@@ -95,7 +95,7 @@ await go(sa, "/admin/ai/activity-log");
 const log = await main(sa);
 check("activity log shows refreshes and decisions", /refresh/.test(log) && /accept/.test(log));
 const support = await login("support@firingi.test");
-await go(support, "/admin/ai/demand-forecasting");
+await go(support, "/admin/ai/forecasting");
 check("support (no AI right) is blocked", support.url().endsWith("/forbidden"), support.url());
 
 // ── 5. Customer (Portuguese): time to reorder, buy again ──

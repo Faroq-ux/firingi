@@ -1,6 +1,7 @@
 "use server";
 /** AI Centre: suggestions, refresh, buy again, assistant, settings (services re-check access). */
 import { z } from "zod";
+import { aiCentreSettingsSchema, reportKindSchema } from "@/server/ai/centre/schema";
 import { revalidatePath } from "next/cache";
 import { defineAction, runAction } from "./_action";
 import * as feed from "@/server/ai/feed";
@@ -33,4 +34,15 @@ export const saveAiSettingsAction = defineAction({
   permission: "admin.settings.manage",
   schema: z.object({ model: z.enum(AI_MODELS), staff: z.boolean(), buyers: z.boolean(), suppliers: z.boolean(), photos: z.boolean(), hourlyLimit: z.coerce.number().int() }),
   handler: async (ctx, i) => done(await assistant.saveAiSettings(ctx, i)),
+});
+
+// ── Phase 66: AI Centre ─────────────────────────────────────────────────────
+export const saveAiCentreSettingsAction = defineAction({
+  permission: "admin.settings.manage",
+  schema: aiCentreSettingsSchema,
+  handler: async (ctx, i) => { const r = await (await import("@/server/ai/centre/settings")).saveAiCentreSettings(ctx, i); revalidatePath("/admin/ai", "layout"); return r; },
+});
+export const generateReportAction = defineAction({
+  permission: "admin.ai.view", schema: z.object({ kind: reportKindSchema, days: z.number().int().min(1).max(90).optional(), claude: z.boolean().optional() }),
+  handler: async (ctx, i) => { const r = await (await import("@/server/ai/centre/reports")).generateReport(ctx, i.kind, { days: i.days, claude: i.claude }); revalidatePath("/admin/ai/reports"); return { id: r.id, byClaude: r.byClaude }; },
 });

@@ -28,3 +28,19 @@ export function Level({ value, children }: { value: string; children?: ReactNode
 export function SuggestOnly() {
   return <p className="mb-4 text-xs text-muted-foreground">AI suggests; people decide. Nothing on this page changes orders, prices or stock by itself.</p>;
 }
+
+/** Phase 66: a row of tab links (keeps the page server-rendered). */
+export function TabLinks({ tabs, active, href, testid }: { tabs: { key: string; label: string; count?: number }[]; active: string; href: (key: string) => string; testid?: string }) {
+  return (
+    <nav className="mb-4 flex flex-wrap gap-2" data-testid={testid} aria-label="Sections">
+      {tabs.map((t) => (
+        <a key={t.key} href={href(t.key)} aria-current={t.key === active ? "page" : undefined} data-tab={t.key}
+          className={`rounded-full border px-3 py-1 text-sm ${t.key === active ? "border-primary bg-primary/10 font-medium" : "hover:bg-muted"}`}>
+          {t.label}{t.count !== undefined && <span className="ml-1 tabular-nums text-muted-foreground">{t.count}</span>}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+export const AREA_TONE: Record<string, string> = { SALES: "tone-blue", PRICING: "tone-violet", SUPPLIERS: "tone-teal", STOCK: "tone-pink", CUSTOMERS: "tone-orange", ROUTES: "tone-lime" };
