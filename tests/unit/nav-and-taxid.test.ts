@@ -11,7 +11,7 @@ describe("admin sidebar", () => {
   });
   it("vendors section has Distributors, Wholesalers, Vendor Management (Plans + Early Payouts, Phase 36; Address Approvals, Phase 47d; Storefronts, Phase 61; Sales Reps, Phase 62) and Supplier Compliance (Phase 28) groups", () => {
     const vendors = ADMIN_NAV.find((s) => s.key === "vendors")!;
-    expect(vendors.groups!.map((g) => g.items.length)).toEqual([10, 10, 16, 5]);
+    expect(vendors.groups!.map((g) => g.items.length)).toEqual([10, 10, 17, 5]);
   });
   it("every item has a unique key, a known permission and an admin URL", () => {
     const items = allItems(ADMIN_NAV);

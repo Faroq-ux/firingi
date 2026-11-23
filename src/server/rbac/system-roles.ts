@@ -73,20 +73,20 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "VENDOR_SALES", name: "Sales Manager", description: "Products, pricing, promotions and orders", appliesTo: VENDOR_TYPES,
     permissions: ["company.support.use", 
       "vendor.dashboard.view", "vendor.products.view", "vendor.products.manage", "vendor.pricing.manage",
-      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.reports.view", "vendor.inventory.view", "vendor.reviews.manage", "vendor.reps.manage", "vendor.vansales.manage",
+      "vendor.promotions.manage", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.reports.view", "vendor.inventory.view", "vendor.reviews.manage", "vendor.reps.manage", "vendor.vansales.manage", "vendor.consignment.manage",
     ],
   },
   {
     key: "VENDOR_REP", name: "Sales Rep", description: "Field sales: own customers, visits and orders taken for customers", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.orders.view", "vendor.reps.field", "vendor.vansales.sell"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.orders.view", "vendor.reps.field", "vendor.vansales.sell", "vendor.consignment.count"],
   },
   {
     key: "VENDOR_VAN", name: "Van Seller", description: "Sells from the van on a round: customers, payment, signatures, empties, end-of-day count", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.orders.view", "vendor.vansales.sell"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.orders.view", "vendor.vansales.sell", "vendor.consignment.count"],
   },
   {
     key: "VENDOR_WAREHOUSE", name: "Warehouse", description: "Stock and order preparation", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.warehouse.pick", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.vansales.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.products.view", "vendor.stock.manage", "vendor.inventory.view", "vendor.inventory.manage", "vendor.purchasing.manage", "vendor.warehouse.pick", "vendor.orders.view", "vendor.orders.manage", "vendor.claims.respond", "vendor.vansales.manage", "vendor.consignment.manage"],
   },
   {
     key: "VENDOR_FLEET", name: "Fleet Manager", description: "Drivers, vehicles and service areas", appliesTo: VENDOR_TYPES,

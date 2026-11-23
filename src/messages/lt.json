@@ -938,7 +938,8 @@
     "Van Loads": "Furgonų kroviniai",
     "Bought from Vans": "Pirkta iš furgonų",
     "Customer Assortments": "Klientų asortimentai",
-    "Must-Stock List": "Privalomas asortimentas"
+    "Must-Stock List": "Privalomas asortimentas",
+    "Consignment Stock": "Konsignacinės atsargos"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Privalomos prekės, kurias reikia užsakyti iš naujo",
       "body": "{n} jūsų privalomų prekių neužsakyta per {days} d."
+    },
+    "consignment_site_pending": {
+      "title": "Nauja konsignacija laukia patvirtinimo",
+      "body": "{supplier} nori palikti konsignacines atsargas pas {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignacija patvirtinta",
+      "body": "FIRINGI patvirtino konsignaciją {site}. Dabar galite siųsti atsargas."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignacija atmesta",
+      "body": "FIRINGI atmetė konsignaciją {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignacinės atsargos iš {supplier}",
+      "body": "{supplier} paliks atsargas pas jus ({site}). Mokate tik už tai, ką sunaudojate."
+    },
+    "consignment_shipment": {
+      "title": "Konsignacinis pristatymas pakeliui",
+      "body": "{supplier} išsiuntė {units} vnt. konsignacijos pagrindais ({number}). Patvirtinkite, kas atvyko."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventorizacija laukia patvirtinimo",
+      "body": "Inventorizacija {number} vietoje {site}: sunaudota {units} vnt. Patvirtinkite arba užginčykite per {days} d."
+    },
+    "consignment_count_due": {
+      "title": "Laikas konsignacijos inventorizacijai",
+      "body": "Atsargas vietoje {site} reikia inventorizuoti (kas {days} d.)."
+    },
+    "consignment_invoiced": {
+      "title": "Išrašyta sąskaita už konsignacines prekes",
+      "body": "Už vietoje {site} sunaudotas prekes išrašyta sąskaita: užsakymas {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignacijos inventorizacija ginčijama",
+      "body": "Inventorizacija {number} vietoje {site} užginčyta: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignacinių prekių galiojimas netrukus baigsis",
+      "body": "{n} vnt. vietoje {site} galiojimas baigsis per {days} d. Atsiimkite juos arba susitarkite su klientu."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Kaina",
     "edit": "Redaguoti",
     "cancel": "Atšaukti"
+  },
+  "consignment": {
+    "title": "Konsignacinės atsargos",
+    "intro": "Atsargos, kurias paliekate klientams. Jie moka tik už tai, ką sunaudoja: po kiekvienos inventorizacijos FIRINGI išrašo sąskaitą už sunaudotas prekes. Likusios lieka jūsų ir gali būti atsiimtos.",
+    "buyTitle": "Konsignacinės atsargos",
+    "buyIntro": "Atsargos, kurias tiekėjai palieka jums. Mokate tik už tai, ką sunaudojate: po kiekvienos inventorizacijos FIRINGI išrašo sąskaitą už sunaudotas prekes. Likusios lieka tiekėjo.",
+    "off": "FIRINGI išjungė konsignacines atsargas.",
+    "kpi": {
+      "sites": "Aktyvios vietos",
+      "units": "Vienetai pas klientus",
+      "value": "Vertė savikaina",
+      "toConfirm": "Inventorizacijos tvirtinti"
+    },
+    "newSite": "Nauja konsignacija",
+    "newSiteHint": "Pasirinkite klientą, adresą, kur bus laikomos atsargos, ir sandėlį, iš kurio jos siunčiamos.",
+    "newSiteApproval": "FIRINGI tikrina kiekvieną naują konsignaciją. Atsargas galėsite siųsti, kai ji bus patvirtinta.",
+    "customer": "Klientas",
+    "searchCustomer": "Ieškoti kliento (pavadinimas arba PVM kodas)",
+    "noCustomers": "Klientų nerasta.",
+    "address": "Adresas, kur laikomos atsargos",
+    "warehouse": "Sandėlis",
+    "countEvery": "Inventorizuoti kas (dienų)",
+    "counter": "Kas inventorizuoja",
+    "counterKind": {
+      "CUSTOMER": "Klientas",
+      "SUPPLIER": "Tiekėjas",
+      "EITHER": "Klientas arba tiekėjas"
+    },
+    "note": "Pastaba",
+    "create": "Sukurti",
+    "sites": "Vietos",
+    "noSites": "Konsignacijų dar nėra.",
+    "open": "Atidaryti",
+    "back": "Visos vietos",
+    "supplier": "Tiekėjas",
+    "status": {
+      "ACTIVE": "Aktyvi",
+      "PENDING": "Laukia FIRINGI patvirtinimo",
+      "REJECTED": "Atmesta",
+      "CLOSED": "Uždaryta"
+    },
+    "pendingHint": "FIRINGI tikrina naujas konsignacijas. Atsargas galėsite siųsti, kai konsignacija bus patvirtinta.",
+    "rejected": "FIRINGI atmetė: {reason}",
+    "inTransit": "Pakeliui",
+    "toConfirm": "Laukia patvirtinimo: {n}",
+    "disputed": "Ginčijama: {n}",
+    "overdue": "Inventorizacija vėluoja",
+    "lastCount": "Paskutinė inventorizacija",
+    "nextCount": "Kita inventorizacija",
+    "never": "Niekada",
+    "products": "Produktai",
+    "product": "Produktas",
+    "sent": "Išsiųsta",
+    "short": "Trūksta",
+    "used": "Sunaudota",
+    "returned": "Atsiimta",
+    "onShelf": "Lentynoje",
+    "value": "Vertė savikaina",
+    "nextExpiry": "Artimiausias galiojimo terminas",
+    "noProducts": "Dar nieko nepateikta.",
+    "send": "Siųsti atsargas",
+    "sendHint": "Prekės dabar išvyksta iš jūsų sandėlio (pirmiausia anksčiausiai baigiančios galioti) ir lieka jūsų, kol bus sunaudotos.",
+    "searchProduct": "Ieškoti savo produktų",
+    "free": "Laisva: {n}",
+    "qty": "Kiekis",
+    "sendNow": "Siųsti",
+    "sentOk": "Pristatymas {number} išsiųstas",
+    "remove": "Pašalinti",
+    "shipments": "Pristatymai",
+    "noShipments": "Pristatymų dar nėra.",
+    "ship": {
+      "SENT": "Pakeliui",
+      "RECEIVED": "Gauta"
+    },
+    "receive": "Patvirtinti, kas atvyko",
+    "receiveHint": "Įveskite, kas iš tikrųjų atvyko. Trūkstamos prekės yra tiekėjo nuostolis.",
+    "received": "Atvyko",
+    "confirmReceived": "Patvirtinti",
+    "shortOk": "Patvirtinta. Trūksta {n}.",
+    "count": "Inventorizuoti atsargas",
+    "countHint": "Įveskite, kiek kiekvieno produkto liko lentynoje. Skirtumas yra sunaudotas kiekis. Kita šalis jį patvirtina, tada FIRINGI išrašo sąskaitą.",
+    "counted": "Liko",
+    "expected": "Tikėtasi",
+    "submitCount": "Siųsti inventorizaciją",
+    "countSent": "Inventorizacija {number} išsiųsta",
+    "counts": "Inventorizacijos",
+    "noCounts": "Inventorizacijų dar nėra.",
+    "countStatus": {
+      "SUBMITTED": "Laukia patvirtinimo",
+      "DISPUTED": "Ginčijama",
+      "INVOICED": "Sąskaita išrašyta",
+      "FAILED": "Nepavyko išrašyti sąskaitos",
+      "SUPERSEDED": "Pakeista pakartotine inventorizacija"
+    },
+    "countedBy": "Inventorizavo {name}",
+    "usedUnits": "Sunaudota: {n}",
+    "nothingUsed": "Nieko nesunaudota",
+    "autoAt": "Bus patvirtinta automatiškai {date}, jei niekas neatsakys.",
+    "accept": "Patvirtinti",
+    "dispute": "Ginčyti",
+    "disputeWhy": "Kodėl inventorizacija neteisinga?",
+    "disputeNote": "Ginčijama: {note}",
+    "order": "Užsakymas",
+    "invoice": "Sąskaita",
+    "total": "Iš viso",
+    "auto": "patvirtinta automatiškai",
+    "retry": "Išrašyti sąskaitą iš naujo",
+    "error": "Problema: {error}",
+    "pickUp": "Atsiimti prekes",
+    "pickUpHint": "Nesunaudotos prekės grįžta į {warehouse} (pirmiausia vėliausiai baigiančios galioti).",
+    "takeBack": "Atsiimti",
+    "tookBack": "Atsiimta vienetų: {n}",
+    "settings": "Vietos nustatymai",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota",
+    "close": "Uždaryti konsignaciją",
+    "closeHint": "Galima, kai nieko neliko, niekas nėra pakeliui ir jokia inventorizacija nelaukia.",
+    "withdraw": "Atšaukti",
+    "supplierCounts": "Šias atsargas inventorizuoja tiekėjas.",
+    "waitingCount": "Laukia inventorizacija. Pirmiausia ją patvirtinkite arba užginčykite."
   }
 }

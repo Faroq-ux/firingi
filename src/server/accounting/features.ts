@@ -99,6 +99,13 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       if (portal !== "vendor" || !(await vs.vanSalesOn(ctx.company.id))) off.add("VAN_SALES");
       if (portal !== "buy" || !(await vs.boughtFromVans(ctx.company.id))) off.add("VAN_PURCHASES");
     }
+    // Phase 65: consignment stock — FIRINGI's switch (all / per channel / per supplier); customers once they have a site
+    {
+      const cs = await import("@/server/consignment/service");
+      const s = await cs.consignmentSettings();
+      if (portal !== "vendor" || !cs.consignmentOn(s, ctx.company)) off.add("CONSIGNMENT");
+      if (portal !== "buy" || !(await cs.hasConsignment(ctx.company.id))) off.add("CONSIGNMENT_BUY");
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

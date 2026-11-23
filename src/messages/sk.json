@@ -938,7 +938,8 @@
     "Van Loads": "Nakládky dodávok",
     "Bought from Vans": "Nákupy z dodávok",
     "Customer Assortments": "Sortimenty zákazníkov",
-    "Must-Stock List": "Povinný sortiment"
+    "Must-Stock List": "Povinný sortiment",
+    "Consignment Stock": "Konsignačný sklad"
   },
   "delivery": {
     "title": "Doručenie",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Povinné produkty na doobjednanie",
       "body": "Počet povinných produktov neobjednaných {days} dní: {n}."
+    },
+    "consignment_site_pending": {
+      "title": "Nová konsignácia na schválenie",
+      "body": "{supplier} chce umiestniť konsignačný tovar u {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignácia schválená",
+      "body": "FIRINGI schválilo konsignáciu {site}. Teraz môžete odoslať tovar."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignácia zamietnutá",
+      "body": "FIRINGI zamietlo konsignáciu {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignačný tovar od {supplier}",
+      "body": "{supplier} u vás ponechá tovar ({site}). Platíte len za to, čo spotrebujete."
+    },
+    "consignment_shipment": {
+      "title": "Konsignačná dodávka je na ceste",
+      "body": "{supplier} odoslal {units} ks do konsignácie ({number}). Potvrďte, čo prišlo."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventúra na potvrdenie",
+      "body": "Inventúra {number} na mieste {site}: spotrebované {units} ks. Potvrďte ju alebo namietnite do {days} dní."
+    },
+    "consignment_count_due": {
+      "title": "Termín konsignačnej inventúry",
+      "body": "Tovar na mieste {site} treba spočítať (každých {days} dní)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignačný tovar vyfakturovaný",
+      "body": "Tovar spotrebovaný na mieste {site} bol vyfakturovaný: objednávka {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignačná inventúra namietnutá",
+      "body": "Inventúra {number} na mieste {site} bola namietnutá: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignačnému tovaru čoskoro končí trvanlivosť",
+      "body": "{n} ks na mieste {site} expiruje do {days} dní. Odvezte ich alebo sa so zákazníkom dohodnite na postupe."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Cena",
     "edit": "Upraviť",
     "cancel": "Zrušiť"
+  },
+  "consignment": {
+    "title": "Konsignačný sklad",
+    "intro": "Tovar, ktorý nechávate u zákazníkov. Platia len za to, čo spotrebujú: po každej inventúre FIRINGI vyfakturuje spotrebovaný tovar. Zvyšok zostáva vo vašom vlastníctve a môžete si ho vziať späť.",
+    "buyTitle": "Konsignačný sklad",
+    "buyIntro": "Tovar, ktorý u vás nechávajú dodávatelia. Platíte len za to, čo spotrebujete: po každej inventúre FIRINGI vyfakturuje spotrebovaný tovar. Zvyšok zostáva vo vlastníctve dodávateľa.",
+    "off": "FIRINGI má konsignačný sklad vypnutý.",
+    "kpi": {
+      "sites": "Aktívne miesta",
+      "units": "Kusy u zákazníkov",
+      "value": "Hodnota v nákupných cenách",
+      "toConfirm": "Inventúry na potvrdenie"
+    },
+    "newSite": "Nová konsignácia",
+    "newSiteHint": "Vyberte zákazníka, adresu, kde bude tovar uložený, a sklad, z ktorého pochádza.",
+    "newSiteApproval": "FIRINGI kontroluje každú novú konsignáciu. Tovar môžete odoslať po jej schválení.",
+    "customer": "Zákazník",
+    "searchCustomer": "Hľadať zákazníka (názov alebo IČ DPH)",
+    "noCustomers": "Nenašli sa žiadni zákazníci.",
+    "address": "Adresa uloženia tovaru",
+    "warehouse": "Sklad",
+    "countEvery": "Inventúra každých (dní)",
+    "counter": "Kto počíta",
+    "counterKind": {
+      "CUSTOMER": "Zákazník",
+      "SUPPLIER": "Dodávateľ",
+      "EITHER": "Zákazník alebo dodávateľ"
+    },
+    "note": "Poznámka",
+    "create": "Vytvoriť",
+    "sites": "Miesta",
+    "noSites": "Zatiaľ žiadna konsignácia.",
+    "open": "Otvoriť",
+    "back": "Všetky miesta",
+    "supplier": "Dodávateľ",
+    "status": {
+      "ACTIVE": "Aktívne",
+      "PENDING": "Čaká na FIRINGI",
+      "REJECTED": "Zamietnuté",
+      "CLOSED": "Uzavreté"
+    },
+    "pendingHint": "FIRINGI kontroluje nové konsignácie. Tovar môžete odoslať po schválení.",
+    "rejected": "Zamietnuté FIRINGI: {reason}",
+    "inTransit": "Na ceste",
+    "toConfirm": "{n} na potvrdenie",
+    "disputed": "{n} namietnuté",
+    "overdue": "Inventúra po termíne",
+    "lastCount": "Posledná inventúra",
+    "nextCount": "Ďalšia inventúra",
+    "never": "Nikdy",
+    "products": "Produkty",
+    "product": "Produkt",
+    "sent": "Odoslané",
+    "short": "Chýba",
+    "used": "Spotrebované",
+    "returned": "Odvezené",
+    "onShelf": "Na regáli",
+    "value": "Hodnota v nákupných cenách",
+    "nextExpiry": "Najbližšia expirácia",
+    "noProducts": "Zatiaľ nič nenaskladnené.",
+    "send": "Odoslať tovar",
+    "sendHint": "Tovar teraz opúšťa váš sklad (najskôr ten s najkratšou expiráciou) a zostáva váš, kým sa nespotrebuje.",
+    "searchProduct": "Hľadať vo vašich produktoch",
+    "free": "Voľné: {n}",
+    "qty": "Množstvo",
+    "sendNow": "Odoslať",
+    "sentOk": "Dodávka {number} odoslaná",
+    "remove": "Odstrániť",
+    "shipments": "Dodávky",
+    "noShipments": "Zatiaľ žiadne dodávky.",
+    "ship": {
+      "SENT": "Na ceste",
+      "RECEIVED": "Prijaté"
+    },
+    "receive": "Potvrdiť, čo prišlo",
+    "receiveHint": "Zadajte, čo skutočne prišlo. Chýbajúci tovar ide na vrub dodávateľa.",
+    "received": "Prišlo",
+    "confirmReceived": "Potvrdiť",
+    "shortOk": "Potvrdené. Chýba: {n}.",
+    "count": "Spočítať tovar",
+    "countHint": "Pri každom produkte zadajte, koľko zostáva na regáli. Rozdiel je spotreba. Druhá strana ju potvrdí a FIRINGI ju vyfakturuje.",
+    "counted": "Zostáva",
+    "expected": "Očakávané",
+    "submitCount": "Odoslať inventúru",
+    "countSent": "Inventúra {number} odoslaná",
+    "counts": "Inventúry",
+    "noCounts": "Zatiaľ žiadne inventúry.",
+    "countStatus": {
+      "SUBMITTED": "Čaká na potvrdenie",
+      "DISPUTED": "Namietnuté",
+      "INVOICED": "Vyfakturované",
+      "FAILED": "Fakturácia zlyhala",
+      "SUPERSEDED": "Nahradené novou inventúrou"
+    },
+    "countedBy": "Spočítal(a): {name}",
+    "usedUnits": "Spotrebované: {n}",
+    "nothingUsed": "Nič nespotrebované",
+    "autoAt": "Ak nikto nereaguje, potvrdí sa automaticky {date}.",
+    "accept": "Potvrdiť",
+    "dispute": "Namietať",
+    "disputeWhy": "Prečo je inventúra nesprávna?",
+    "disputeNote": "Namietnuté: {note}",
+    "order": "Objednávka",
+    "invoice": "Faktúra",
+    "total": "Spolu",
+    "auto": "potvrdené automaticky",
+    "retry": "Fakturovať znova",
+    "error": "Problém: {error}",
+    "pickUp": "Odviezť tovar",
+    "pickUpHint": "Nespotrebovaný tovar sa vracia do skladu {warehouse} (najskôr ten s najdlhšou expiráciou).",
+    "takeBack": "Odviezť",
+    "tookBack": "Odvezené ks: {n}",
+    "settings": "Nastavenia miesta",
+    "save": "Uložiť",
+    "saved": "Uložené",
+    "close": "Uzavrieť konsignáciu",
+    "closeHint": "Možné, keď nič nezostáva, nič nie je na ceste a nečaká žiadna inventúra.",
+    "withdraw": "Stiahnuť",
+    "supplierCounts": "Tento tovar počíta dodávateľ.",
+    "waitingCount": "Čaká inventúra. Najskôr ju potvrďte alebo namietnite."
   }
 }

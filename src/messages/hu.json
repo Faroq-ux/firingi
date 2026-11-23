@@ -938,7 +938,8 @@
     "Van Loads": "Furgonrakományok",
     "Bought from Vans": "Vásárlások furgonból",
     "Customer Assortments": "Ügyfélválaszték",
-    "Must-Stock List": "Kötelező lista"
+    "Must-Stock List": "Kötelező lista",
+    "Consignment Stock": "Bizományi készlet"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Újrarendelendő kötelező termékek",
       "body": "{n} kötelező termékét {days} napja nem rendelte meg."
+    },
+    "consignment_site_pending": {
+      "title": "Új bizomány jóváhagyásra",
+      "body": "{supplier} bizományi készletet helyezne el itt: {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Bizomány jóváhagyva",
+      "body": "A FIRINGI jóváhagyta a(z) {site} bizományt. Most már küldhet készletet."
+    },
+    "consignment_site_rejected": {
+      "title": "Bizomány elutasítva",
+      "body": "A FIRINGI elutasította a(z) {site} bizományt: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Bizományi készlet tőle: {supplier}",
+      "body": "{supplier} készletet hagy Önnél ({site}). Csak azt fizeti ki, amit felhasznál."
+    },
+    "consignment_shipment": {
+      "title": "Bizományi szállítmány úton",
+      "body": "{supplier} {units} db árut küldött bizományba ({number}). Erősítse meg, mi érkezett meg."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Megerősítendő leltár",
+      "body": "{number} leltár, {site}: {units} db felhasználva. Erősítse meg vagy vitassa {days} napon belül."
+    },
+    "consignment_count_due": {
+      "title": "Esedékes bizományi leltár",
+      "body": "A(z) {site} helyszínen lévő készletet le kell leltározni ({days} naponta)."
+    },
+    "consignment_invoiced": {
+      "title": "Bizományi áru kiszámlázva",
+      "body": "A(z) {site} helyszínen felhasznált árut kiszámláztuk: {number} rendelés, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Bizományi leltár vitatva",
+      "body": "A(z) {site} helyszínen a(z) {number} leltárt vitatták: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Hamarosan lejáró bizományi áru",
+      "body": "{n} db a(z) {site} helyszínen {days} napon belül lejár. Vegye vissza, vagy egyeztessen tervet a vevővel."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Ár",
     "edit": "Szerkesztés",
     "cancel": "Mégse"
+  },
+  "consignment": {
+    "title": "Bizományi készlet",
+    "intro": "A vevőknél hagyott készlet. Csak azt fizetik ki, amit felhasználnak: minden leltár után a FIRINGI kiszámlázza a felhasznált árut. A többi az Öné marad, és visszaviheti.",
+    "buyTitle": "Bizományi készlet",
+    "buyIntro": "A beszállítók által Önnél hagyott készlet. Csak azt fizeti ki, amit felhasznál: minden leltár után a FIRINGI kiszámlázza a felhasznált árut. A többi a beszállító tulajdona marad.",
+    "off": "A bizományi készletet a FIRINGI kikapcsolta.",
+    "kpi": {
+      "sites": "Aktív helyszínek",
+      "units": "Darab a vevőknél",
+      "value": "Érték beszerzési áron",
+      "toConfirm": "Megerősítendő leltárak"
+    },
+    "newSite": "Új bizomány",
+    "newSiteHint": "Válassza ki a vevőt, a címet, ahol a készlet marad, és a raktárat, ahonnan érkezik.",
+    "newSiteApproval": "A FIRINGI minden új bizományt ellenőriz. A jóváhagyás után küldhet készletet.",
+    "customer": "Vevő",
+    "searchCustomer": "Vevő keresése (név vagy adószám)",
+    "noCustomers": "Nincs találat.",
+    "address": "A készlet helye (cím)",
+    "warehouse": "Raktár",
+    "countEvery": "Leltár gyakorisága (nap)",
+    "counter": "Ki leltároz",
+    "counterKind": {
+      "CUSTOMER": "A vevő",
+      "SUPPLIER": "A beszállító",
+      "EITHER": "Vevő vagy beszállító"
+    },
+    "note": "Megjegyzés",
+    "create": "Létrehozás",
+    "sites": "Helyszínek",
+    "noSites": "Még nincs bizomány.",
+    "open": "Megnyitás",
+    "back": "Összes helyszín",
+    "supplier": "Beszállító",
+    "status": {
+      "ACTIVE": "Aktív",
+      "PENDING": "FIRINGI jóváhagyásra vár",
+      "REJECTED": "Elutasítva",
+      "CLOSED": "Lezárva"
+    },
+    "pendingHint": "A FIRINGI ellenőrzi az új bizományokat. A jóváhagyás után küldhet készletet.",
+    "rejected": "A FIRINGI elutasította: {reason}",
+    "inTransit": "Úton",
+    "toConfirm": "{n} megerősítésre vár",
+    "disputed": "{n} vitatott",
+    "overdue": "Leltár késésben",
+    "lastCount": "Utolsó leltár",
+    "nextCount": "Következő leltár",
+    "never": "Soha",
+    "products": "Termékek",
+    "product": "Termék",
+    "sent": "Elküldve",
+    "short": "Hiány",
+    "used": "Felhasználva",
+    "returned": "Visszavéve",
+    "onShelf": "Polcon",
+    "value": "Érték beszerzési áron",
+    "nextExpiry": "Legközelebbi lejárat",
+    "noProducts": "Még nincs kihelyezett áru.",
+    "send": "Készlet küldése",
+    "sendHint": "Az áru most elhagyja a raktárát (először a leghamarabb lejáró), és felhasználásig az Ön tulajdona marad.",
+    "searchProduct": "Keresés a termékei között",
+    "free": "Szabad: {n}",
+    "qty": "Mennyiség",
+    "sendNow": "Küldés",
+    "sentOk": "{number} szállítmány elküldve",
+    "remove": "Eltávolítás",
+    "shipments": "Szállítmányok",
+    "noShipments": "Még nincs szállítmány.",
+    "ship": {
+      "SENT": "Úton",
+      "RECEIVED": "Átvéve"
+    },
+    "receive": "Beérkezett áru megerősítése",
+    "receiveHint": "Adja meg, mi érkezett meg ténylegesen. A hiány a beszállító vesztesége.",
+    "received": "Megérkezett",
+    "confirmReceived": "Megerősítés",
+    "shortOk": "Megerősítve. Hiány: {n}.",
+    "count": "Készlet leltározása",
+    "countHint": "Adja meg termékenként, mennyi maradt a polcon. A különbség a felhasznált mennyiség. A másik fél megerősíti, majd a FIRINGI kiszámlázza.",
+    "counted": "Maradt",
+    "expected": "Várt",
+    "submitCount": "Leltár küldése",
+    "countSent": "{number} leltár elküldve",
+    "counts": "Leltárak",
+    "noCounts": "Még nincs leltár.",
+    "countStatus": {
+      "SUBMITTED": "Megerősítésre vár",
+      "DISPUTED": "Vitatott",
+      "INVOICED": "Kiszámlázva",
+      "FAILED": "Sikertelen számlázás",
+      "SUPERSEDED": "Új leltár váltotta fel"
+    },
+    "countedBy": "Leltározta: {name}",
+    "usedUnits": "Felhasználva: {n}",
+    "nothingUsed": "Nincs felhasználás",
+    "autoAt": "Ha senki nem válaszol, {date} napon automatikusan megerősítésre kerül.",
+    "accept": "Megerősítés",
+    "dispute": "Vitatás",
+    "disputeWhy": "Miért hibás a leltár?",
+    "disputeNote": "Vitatva: {note}",
+    "order": "Rendelés",
+    "invoice": "Számla",
+    "total": "Összesen",
+    "auto": "automatikusan megerősítve",
+    "retry": "Újraszámlázás",
+    "error": "Hiba: {error}",
+    "pickUp": "Áru visszavétele",
+    "pickUpHint": "A fel nem használt áru visszakerül ide: {warehouse} (először a legkésőbb lejáró).",
+    "takeBack": "Visszavétel",
+    "tookBack": "{n} db visszavéve",
+    "settings": "Helyszín beállításai",
+    "save": "Mentés",
+    "saved": "Mentve",
+    "close": "Bizomány lezárása",
+    "closeHint": "Akkor lehetséges, ha nem maradt semmi, semmi sincs úton, és nem vár leltár.",
+    "withdraw": "Visszavonás",
+    "supplierCounts": "Ezt a készletet a beszállító leltározza.",
+    "waitingCount": "Egy leltár vár. Először erősítse meg vagy vitassa."
   }
 }

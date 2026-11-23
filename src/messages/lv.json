@@ -938,7 +938,8 @@
     "Van Loads": "Furgonu kravas",
     "Bought from Vans": "Pirkts no furgoniem",
     "Customer Assortments": "Klientu sortimenti",
-    "Must-Stock List": "Obligātais sortiments"
+    "Must-Stock List": "Obligātais sortiments",
+    "Consignment Stock": "Konsignācijas krājumi"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Atkārtoti pasūtāmas obligātās preces",
       "body": "{n} no jūsu obligātajām precēm nav pasūtītas {days} dienu laikā."
+    },
+    "consignment_site_pending": {
+      "title": "Jauna konsignācija apstiprināšanai",
+      "body": "{supplier} vēlas izvietot konsignācijas krājumus pie {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignācija apstiprināta",
+      "body": "FIRINGI apstiprināja konsignāciju {site}. Tagad varat sūtīt krājumus."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignācija noraidīta",
+      "body": "FIRINGI noraidīja konsignāciju {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignācijas krājumi no {supplier}",
+      "body": "{supplier} atstās krājumus pie jums ({site}). Jūs maksājat tikai par izlietoto."
+    },
+    "consignment_shipment": {
+      "title": "Konsignācijas piegāde ir ceļā",
+      "body": "{supplier} nosūtīja {units} vienības konsignācijā ({number}). Apstipriniet saņemto."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventarizācija jāapstiprina",
+      "body": "Inventarizācija {number} vietā {site}: izlietotas {units} vienības. Apstipriniet vai apstrīdiet to {days} dienu laikā."
+    },
+    "consignment_count_due": {
+      "title": "Jāveic konsignācijas inventarizācija",
+      "body": "Krājumi vietā {site} ir jāinventarizē (ik pēc {days} dienām)."
+    },
+    "consignment_invoiced": {
+      "title": "Izrakstīts rēķins par konsignācijas precēm",
+      "body": "Par vietā {site} izlietotajām precēm izrakstīts rēķins: pasūtījums {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignācijas inventarizācija apstrīdēta",
+      "body": "Inventarizācija {number} vietā {site} tika apstrīdēta: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignācijas precēm drīz beigsies derīgums",
+      "body": "{n} vienībām vietā {site} derīgums beidzas {days} dienu laikā. Paņemiet tās atpakaļ vai vienojieties ar klientu."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Cena",
     "edit": "Rediģēt",
     "cancel": "Atcelt"
+  },
+  "consignment": {
+    "title": "Konsignācijas krājumi",
+    "intro": "Krājumi, ko atstājat pie klientiem. Viņi maksā tikai par izlietoto: pēc katras inventarizācijas FIRINGI izraksta rēķinu par izlietotajām precēm. Pārējais paliek jūsu īpašumā, un to var paņemt atpakaļ.",
+    "buyTitle": "Konsignācijas krājumi",
+    "buyIntro": "Krājumi, ko piegādātāji atstāj pie jums. Jūs maksājat tikai par izlietoto: pēc katras inventarizācijas FIRINGI izraksta rēķinu par izlietoto. Pārējais paliek piegādātāja īpašumā.",
+    "off": "FIRINGI ir izslēdzis konsignācijas krājumus.",
+    "kpi": {
+      "sites": "Aktīvās vietas",
+      "units": "Vienības pie klientiem",
+      "value": "Vērtība pašizmaksā",
+      "toConfirm": "Inventarizācijas apstiprināšanai"
+    },
+    "newSite": "Jauna konsignācija",
+    "newSiteHint": "Izvēlieties klientu, adresi, kur atradīsies krājumi, un noliktavu, no kuras tie tiks nosūtīti.",
+    "newSiteApproval": "FIRINGI pārbauda katru jauno konsignāciju. Krājumus varat sūtīt pēc apstiprināšanas.",
+    "customer": "Klients",
+    "searchCustomer": "Meklēt klientu (nosaukums vai PVN numurs)",
+    "noCustomers": "Klienti nav atrasti.",
+    "address": "Adrese, kur atradīsies krājumi",
+    "warehouse": "Noliktava",
+    "countEvery": "Inventarizēt ik pēc (dienām)",
+    "counter": "Kas inventarizē",
+    "counterKind": {
+      "CUSTOMER": "Klients",
+      "SUPPLIER": "Piegādātājs",
+      "EITHER": "Klients vai piegādātājs"
+    },
+    "note": "Piezīme",
+    "create": "Izveidot",
+    "sites": "Vietas",
+    "noSites": "Konsignāciju vēl nav.",
+    "open": "Atvērt",
+    "back": "Visas vietas",
+    "supplier": "Piegādātājs",
+    "status": {
+      "ACTIVE": "Aktīva",
+      "PENDING": "Gaida FIRINGI apstiprinājumu",
+      "REJECTED": "Noraidīta",
+      "CLOSED": "Slēgta"
+    },
+    "pendingHint": "FIRINGI pārbauda jaunās konsignācijas. Krājumus varat sūtīt pēc apstiprināšanas.",
+    "rejected": "FIRINGI noraidīja: {reason}",
+    "inTransit": "Ceļā",
+    "toConfirm": "{n} jāapstiprina",
+    "disputed": "{n} apstrīdētas",
+    "overdue": "Inventarizācija nokavēta",
+    "lastCount": "Pēdējā inventarizācija",
+    "nextCount": "Nākamā inventarizācija",
+    "never": "Nekad",
+    "products": "Produkti",
+    "product": "Produkts",
+    "sent": "Nosūtīts",
+    "short": "Trūkst",
+    "used": "Izlietots",
+    "returned": "Paņemts atpakaļ",
+    "onShelf": "Plauktā",
+    "value": "Vērtība pašizmaksā",
+    "nextExpiry": "Tuvākais derīguma termiņš",
+    "noProducts": "Vēl nekas nav izvietots.",
+    "send": "Sūtīt krājumus",
+    "sendHint": "Preces tagad atstāj jūsu noliktavu (vispirms tās, kurām derīgums beidzas agrāk) un paliek jūsu īpašumā līdz izlietošanai.",
+    "searchProduct": "Meklēt savus produktus",
+    "free": "Brīvs: {n}",
+    "qty": "Daudzums",
+    "sendNow": "Sūtīt",
+    "sentOk": "Piegāde {number} nosūtīta",
+    "remove": "Noņemt",
+    "shipments": "Piegādes",
+    "noShipments": "Piegāžu vēl nav.",
+    "ship": {
+      "SENT": "Ceļā",
+      "RECEIVED": "Saņemts"
+    },
+    "receive": "Apstiprināt saņemto",
+    "receiveHint": "Ievadiet, kas faktiski tika saņemts. Iztrūkums ir piegādātāja zaudējums.",
+    "received": "Saņemts",
+    "confirmReceived": "Apstiprināt",
+    "shortOk": "Apstiprināts. Trūkst {n}.",
+    "count": "Inventarizēt krājumus",
+    "countHint": "Ievadiet, cik katra produkta palicis plauktā. Starpība ir izlietotais daudzums. Otra puse to apstiprina, pēc tam FIRINGI izraksta rēķinu.",
+    "counted": "Atlikums",
+    "expected": "Paredzēts",
+    "submitCount": "Nosūtīt inventarizāciju",
+    "countSent": "Inventarizācija {number} nosūtīta",
+    "counts": "Inventarizācijas",
+    "noCounts": "Inventarizāciju vēl nav.",
+    "countStatus": {
+      "SUBMITTED": "Gaida apstiprinājumu",
+      "DISPUTED": "Apstrīdēta",
+      "INVOICED": "Rēķins izrakstīts",
+      "FAILED": "Rēķina izrakstīšana neizdevās",
+      "SUPERSEDED": "Aizstāta ar atkārtotu inventarizāciju"
+    },
+    "countedBy": "Inventarizēja {name}",
+    "usedUnits": "Izlietots: {n}",
+    "nothingUsed": "Nekas nav izlietots",
+    "autoAt": "Tiks apstiprināta automātiski {date}, ja neviens neatbildēs.",
+    "accept": "Apstiprināt",
+    "dispute": "Apstrīdēt",
+    "disputeWhy": "Kāpēc inventarizācija ir nepareiza?",
+    "disputeNote": "Apstrīdēta: {note}",
+    "order": "Pasūtījums",
+    "invoice": "Rēķins",
+    "total": "Kopā",
+    "auto": "apstiprināta automātiski",
+    "retry": "Izrakstīt rēķinu atkārtoti",
+    "error": "Problēma: {error}",
+    "pickUp": "Paņemt preces atpakaļ",
+    "pickUpHint": "Neizlietotās preces atgriežas noliktavā {warehouse} (vispirms tās, kurām derīgums beidzas vēlāk).",
+    "takeBack": "Paņemt atpakaļ",
+    "tookBack": "Paņemts atpakaļ: {n} vienības",
+    "settings": "Vietas iestatījumi",
+    "save": "Saglabāt",
+    "saved": "Saglabāts",
+    "close": "Slēgt konsignāciju",
+    "closeHint": "Iespējams, ja nekas nav palicis, nekas nav ceļā un neviena inventarizācija negaida.",
+    "withdraw": "Atsaukt",
+    "supplierCounts": "Šos krājumus inventarizē piegādātājs.",
+    "waitingCount": "Inventarizācija gaida. Vispirms apstipriniet vai apstrīdiet to."
   }
 }

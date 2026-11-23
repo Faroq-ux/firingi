@@ -938,7 +938,8 @@
     "Van Loads": "Carichi furgone",
     "Bought from Vans": "Acquisti da furgone",
     "Customer Assortments": "Assortimenti clienti",
-    "Must-Stock List": "Assortimento obbligatorio"
+    "Must-Stock List": "Assortimento obbligatorio",
+    "Consignment Stock": "Conto deposito"
   },
   "delivery": {
     "title": "Consegna",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Prodotti obbligatori da riordinare",
       "body": "{n} dei suoi prodotti in assortimento obbligatorio non vengono ordinati da {days} giorni."
+    },
+    "consignment_site_pending": {
+      "title": "Nuovo conto deposito da approvare",
+      "body": "{supplier} vuole collocare merce in conto deposito presso {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Conto deposito approvato",
+      "body": "FIRINGI ha approvato il conto deposito {site}. Ora puoi inviare merce."
+    },
+    "consignment_site_rejected": {
+      "title": "Conto deposito rifiutato",
+      "body": "FIRINGI ha rifiutato il conto deposito {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Merce in conto deposito da {supplier}",
+      "body": "{supplier} lascerà merce presso di te ({site}). Paghi solo ciò che usi."
+    },
+    "consignment_shipment": {
+      "title": "Consegna in conto deposito in viaggio",
+      "body": "{supplier} ha inviato {units} unità in conto deposito ({number}). Conferma cosa è arrivato."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Conteggio da confermare",
+      "body": "Conteggio {number} presso {site}: {units} unità usate. Confermalo o contestalo entro {days} giorni."
+    },
+    "consignment_count_due": {
+      "title": "Conteggio conto deposito da fare",
+      "body": "La merce presso {site} va contata (ogni {days} giorni)."
+    },
+    "consignment_invoiced": {
+      "title": "Merce in conto deposito fatturata",
+      "body": "La merce usata presso {site} è stata fatturata: ordine {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Conteggio conto deposito contestato",
+      "body": "Il conteggio {number} presso {site} è stato contestato: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Merce in conto deposito in scadenza",
+      "body": "{n} unità presso {site} scadono entro {days} giorni. Ritirale o concorda un piano con il cliente."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Prezzo",
     "edit": "Modifica",
     "cancel": "Annulla"
+  },
+  "consignment": {
+    "title": "Conto deposito",
+    "intro": "Merce che lasci presso i clienti. Pagano solo ciò che usano: dopo ogni conteggio FIRINGI fattura la merce usata. Il resto rimane tuo e può tornare indietro.",
+    "buyTitle": "Conto deposito",
+    "buyIntro": "Merce che i tuoi fornitori lasciano presso di te. Paghi solo ciò che usi: dopo ogni conteggio FIRINGI fattura ciò che è stato usato. Il resto rimane del fornitore.",
+    "off": "Il conto deposito è disattivato da FIRINGI.",
+    "kpi": {
+      "sites": "Sedi attive",
+      "units": "Unità presso i clienti",
+      "value": "Valore al costo",
+      "toConfirm": "Conteggi da confermare"
+    },
+    "newSite": "Nuovo conto deposito",
+    "newSiteHint": "Scegli il cliente, l'indirizzo dove resta la merce e il magazzino da cui parte.",
+    "newSiteApproval": "FIRINGI verifica ogni nuovo conto deposito. Potrai inviare merce dopo l'approvazione.",
+    "customer": "Cliente",
+    "searchCustomer": "Cerca un cliente (nome o partita IVA)",
+    "noCustomers": "Nessun cliente trovato.",
+    "address": "Indirizzo dove resta la merce",
+    "warehouse": "Magazzino",
+    "countEvery": "Conta ogni (giorni)",
+    "counter": "Chi conta",
+    "counterKind": {
+      "CUSTOMER": "Il cliente",
+      "SUPPLIER": "Il fornitore",
+      "EITHER": "Cliente o fornitore"
+    },
+    "note": "Nota",
+    "create": "Crea",
+    "sites": "Sedi",
+    "noSites": "Ancora nessun conto deposito.",
+    "open": "Apri",
+    "back": "Tutte le sedi",
+    "supplier": "Fornitore",
+    "status": {
+      "ACTIVE": "Attivo",
+      "PENDING": "In attesa di FIRINGI",
+      "REJECTED": "Rifiutato",
+      "CLOSED": "Chiuso"
+    },
+    "pendingHint": "FIRINGI verifica i nuovi conti deposito. Potrai inviare merce dopo l'approvazione.",
+    "rejected": "Rifiutato da FIRINGI: {reason}",
+    "inTransit": "In viaggio",
+    "toConfirm": "{n} da confermare",
+    "disputed": "{n} contestati",
+    "overdue": "Conteggio in ritardo",
+    "lastCount": "Ultimo conteggio",
+    "nextCount": "Prossimo conteggio",
+    "never": "Mai",
+    "products": "Prodotti",
+    "product": "Prodotto",
+    "sent": "Inviato",
+    "short": "Mancante",
+    "used": "Usato",
+    "returned": "Ritirato",
+    "onShelf": "A scaffale",
+    "value": "Valore al costo",
+    "nextExpiry": "Prossima scadenza",
+    "noProducts": "Ancora nulla collocato.",
+    "send": "Invia merce",
+    "sendHint": "La merce lascia ora il tuo magazzino (prima quella in scadenza) e resta tua finché non viene usata.",
+    "searchProduct": "Cerca i tuoi prodotti",
+    "free": "Disponibile: {n}",
+    "qty": "Quantità",
+    "sendNow": "Invia",
+    "sentOk": "Consegna {number} inviata",
+    "remove": "Rimuovi",
+    "shipments": "Consegne",
+    "noShipments": "Ancora nessuna consegna.",
+    "ship": {
+      "SENT": "In viaggio",
+      "RECEIVED": "Ricevuta"
+    },
+    "receive": "Conferma cosa è arrivato",
+    "receiveHint": "Inserisci ciò che è arrivato davvero. Quanto manca è a carico del fornitore.",
+    "received": "Arrivato",
+    "confirmReceived": "Conferma",
+    "shortOk": "Confermato. Mancano {n}.",
+    "count": "Conta la merce",
+    "countHint": "Inserisci ciò che resta a scaffale per ogni prodotto. La differenza è ciò che è stato usato. L'altra parte lo conferma, poi FIRINGI lo fattura.",
+    "counted": "Rimasto",
+    "expected": "Atteso",
+    "submitCount": "Invia conteggio",
+    "countSent": "Conteggio {number} inviato",
+    "counts": "Conteggi",
+    "noCounts": "Ancora nessun conteggio.",
+    "countStatus": {
+      "SUBMITTED": "In attesa di conferma",
+      "DISPUTED": "Contestato",
+      "INVOICED": "Fatturato",
+      "FAILED": "Fatturazione non riuscita",
+      "SUPERSEDED": "Sostituito da un riconteggio"
+    },
+    "countedBy": "Contato da {name}",
+    "usedUnits": "{n} usati",
+    "nothingUsed": "Nulla usato",
+    "autoAt": "Confermato automaticamente il {date} se nessuno risponde.",
+    "accept": "Conferma",
+    "dispute": "Contesta",
+    "disputeWhy": "Perché il conteggio è errato?",
+    "disputeNote": "Contestato: {note}",
+    "order": "Ordine",
+    "invoice": "Fattura",
+    "total": "Totale",
+    "auto": "confermato automaticamente",
+    "retry": "Fattura di nuovo",
+    "error": "Problema: {error}",
+    "pickUp": "Ritira merce",
+    "pickUpHint": "La merce non usata torna a {warehouse} (prima quella con scadenza più lontana).",
+    "takeBack": "Ritira",
+    "tookBack": "{n} unità ritirate",
+    "settings": "Impostazioni sede",
+    "save": "Salva",
+    "saved": "Salvato",
+    "close": "Chiudi conto deposito",
+    "closeHint": "Possibile quando non resta nulla, nulla è in viaggio e nessun conteggio è in attesa.",
+    "withdraw": "Revoca",
+    "supplierCounts": "Il fornitore conta questa merce.",
+    "waitingCount": "C'è un conteggio in attesa. Prima confermalo o contestalo."
   }
 }

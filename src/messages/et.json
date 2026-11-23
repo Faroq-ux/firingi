@@ -938,7 +938,8 @@
     "Van Loads": "Kaubikukoormad",
     "Bought from Vans": "Kaubikutest ostetud",
     "Customer Assortments": "Klientide sortimendid",
-    "Must-Stock List": "Kohustuslik sortiment"
+    "Must-Stock List": "Kohustuslik sortiment",
+    "Consignment Stock": "Konsignatsiooniladu"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Kohustuslikud tooted uuesti tellimiseks",
       "body": "{n} teie kohustuslikust tootest pole {days} päeva jooksul tellitud."
+    },
+    "consignment_site_pending": {
+      "title": "Uus konsignatsioon kinnitamiseks",
+      "body": "{supplier} soovib paigutada konsignatsioonikaupa kliendi {customer} juurde ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignatsioon kinnitatud",
+      "body": "FIRINGI kinnitas konsignatsiooni {site}. Nüüd saate kaupa saata."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignatsioon tagasi lükatud",
+      "body": "FIRINGI lükkas konsignatsiooni {site} tagasi: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignatsioonikaup tarnijalt {supplier}",
+      "body": "{supplier} jätab kauba teie juurde ({site}). Maksate ainult kasutatu eest."
+    },
+    "consignment_shipment": {
+      "title": "Konsignatsioonitarne on teel",
+      "body": "{supplier} saatis konsignatsioonina {units} ühikut ({number}). Kinnitage saabunud kaup."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventuur kinnitada",
+      "body": "Inventuur {number} asukohas {site}: kasutatud {units} ühikut. Kinnitage või vaidlustage see {days} päeva jooksul."
+    },
+    "consignment_count_due": {
+      "title": "Konsignatsiooni inventuuri tähtaeg",
+      "body": "Asukoha {site} kaup tuleb inventeerida (iga {days} päeva järel)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignatsioonikaubale esitati arve",
+      "body": "Asukohas {site} kasutatud kaubale esitati arve: tellimus {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignatsiooni inventuur vaidlustatud",
+      "body": "Inventuur {number} asukohas {site} vaidlustati: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignatsioonikaup aegub peagi",
+      "body": "{n} ühikut asukohas {site} aegub {days} päeva jooksul. Võtke need tagasi või leppige kliendiga kokku."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Hind",
     "edit": "Muuda",
     "cancel": "Tühista"
+  },
+  "consignment": {
+    "title": "Konsignatsiooniladu",
+    "intro": "Kaup, mille jätate klientide juurde. Nad maksavad ainult kasutatu eest: pärast iga inventuuri esitab FIRINGI arve kasutatud kauba eest. Ülejäänu jääb teie omaks ja selle saab tagasi võtta.",
+    "buyTitle": "Konsignatsiooniladu",
+    "buyIntro": "Kaup, mille tarnijad jätavad teie juurde. Maksate ainult kasutatu eest: pärast iga inventuuri esitab FIRINGI arve kasutatu eest. Ülejäänu jääb tarnija omaks.",
+    "off": "FIRINGI on konsignatsioonilao välja lülitanud.",
+    "kpi": {
+      "sites": "Aktiivsed asukohad",
+      "units": "Ühikuid klientide juures",
+      "value": "Väärtus omahinnas",
+      "toConfirm": "Kinnitamata inventuurid"
+    },
+    "newSite": "Uus konsignatsioon",
+    "newSiteHint": "Valige klient, aadress, kus kaup asub, ja ladu, kust see tuleb.",
+    "newSiteApproval": "FIRINGI kontrollib iga uut konsignatsiooni. Kaupa saate saata pärast kinnitamist.",
+    "customer": "Klient",
+    "searchCustomer": "Otsi klienti (nimi või KMKR-number)",
+    "noCustomers": "Kliente ei leitud.",
+    "address": "Aadress, kus kaup asub",
+    "warehouse": "Ladu",
+    "countEvery": "Inventuuri intervall (päevades)",
+    "counter": "Kes inventeerib",
+    "counterKind": {
+      "CUSTOMER": "Klient",
+      "SUPPLIER": "Tarnija",
+      "EITHER": "Klient või tarnija"
+    },
+    "note": "Märkus",
+    "create": "Loo",
+    "sites": "Asukohad",
+    "noSites": "Konsignatsioone veel pole.",
+    "open": "Ava",
+    "back": "Kõik asukohad",
+    "supplier": "Tarnija",
+    "status": {
+      "ACTIVE": "Aktiivne",
+      "PENDING": "Ootab FIRINGI kinnitust",
+      "REJECTED": "Tagasi lükatud",
+      "CLOSED": "Suletud"
+    },
+    "pendingHint": "FIRINGI kontrollib uusi konsignatsioone. Kaupa saate saata pärast kinnitamist.",
+    "rejected": "FIRINGI lükkas tagasi: {reason}",
+    "inTransit": "Teel",
+    "toConfirm": "{n} kinnitada",
+    "disputed": "{n} vaidlustatud",
+    "overdue": "Inventuur hilinenud",
+    "lastCount": "Viimane inventuur",
+    "nextCount": "Järgmine inventuur",
+    "never": "Mitte kunagi",
+    "products": "Tooted",
+    "product": "Toode",
+    "sent": "Saadetud",
+    "short": "Puudu",
+    "used": "Kasutatud",
+    "returned": "Tagasi võetud",
+    "onShelf": "Riiulil",
+    "value": "Väärtus omahinnas",
+    "nextExpiry": "Lähim aegumiskuupäev",
+    "noProducts": "Midagi pole veel paigutatud.",
+    "send": "Saada kaupa",
+    "sendHint": "Kaup lahkub teie laost kohe (esmalt varem aeguv) ja jääb teie omaks kuni kasutamiseni.",
+    "searchProduct": "Otsi oma tooteid",
+    "free": "Vaba: {n}",
+    "qty": "Kogus",
+    "sendNow": "Saada",
+    "sentOk": "Tarne {number} saadetud",
+    "remove": "Eemalda",
+    "shipments": "Tarned",
+    "noShipments": "Tarneid veel pole.",
+    "ship": {
+      "SENT": "Teel",
+      "RECEIVED": "Kätte saadud"
+    },
+    "receive": "Kinnita saabunud kaup",
+    "receiveHint": "Sisestage, mis tegelikult saabus. Puuduv kaup on tarnija kahjum.",
+    "received": "Saabus",
+    "confirmReceived": "Kinnita",
+    "shortOk": "Kinnitatud. Puudu {n}.",
+    "count": "Inventeeri kaup",
+    "countHint": "Sisestage iga toote riiulile jäänud kogus. Vahe on kasutatud kogus. Teine pool kinnitab selle, seejärel esitab FIRINGI arve.",
+    "counted": "Alles",
+    "expected": "Oodatud",
+    "submitCount": "Saada inventuur",
+    "countSent": "Inventuur {number} saadetud",
+    "counts": "Inventuurid",
+    "noCounts": "Inventuure veel pole.",
+    "countStatus": {
+      "SUBMITTED": "Ootab kinnitust",
+      "DISPUTED": "Vaidlustatud",
+      "INVOICED": "Arve esitatud",
+      "FAILED": "Arve esitamine ebaõnnestus",
+      "SUPERSEDED": "Asendatud kordusinventuuriga"
+    },
+    "countedBy": "Inventeeris {name}",
+    "usedUnits": "{n} kasutatud",
+    "nothingUsed": "Midagi ei kasutatud",
+    "autoAt": "Kinnitatakse automaatselt {date}, kui keegi ei vasta.",
+    "accept": "Kinnita",
+    "dispute": "Vaidlusta",
+    "disputeWhy": "Miks on inventuur vale?",
+    "disputeNote": "Vaidlustatud: {note}",
+    "order": "Tellimus",
+    "invoice": "Arve",
+    "total": "Kokku",
+    "auto": "kinnitatud automaatselt",
+    "retry": "Esita arve uuesti",
+    "error": "Probleem: {error}",
+    "pickUp": "Võta kaup tagasi",
+    "pickUpHint": "Kasutamata kaup läheb tagasi lattu {warehouse} (esmalt hiljem aeguv).",
+    "takeBack": "Võta tagasi",
+    "tookBack": "{n} ühikut tagasi võetud",
+    "settings": "Asukoha seaded",
+    "save": "Salvesta",
+    "saved": "Salvestatud",
+    "close": "Sulge konsignatsioon",
+    "closeHint": "Võimalik, kui midagi pole alles, midagi pole teel ja ükski inventuur ei oota.",
+    "withdraw": "Tühista",
+    "supplierCounts": "Seda kaupa inventeerib tarnija.",
+    "waitingCount": "Inventuur ootab. Kinnitage või vaidlustage see esmalt."
   }
 }

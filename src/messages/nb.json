@@ -938,7 +938,8 @@
     "Van Loads": "Billaster",
     "Bought from Vans": "Kjøpt fra bil",
     "Customer Assortments": "Kundesortiment",
-    "Must-Stock List": "Obligatorisk sortiment"
+    "Must-Stock List": "Obligatorisk sortiment",
+    "Consignment Stock": "Konsignasjonslager"
   },
   "delivery": {
     "title": "Levering",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Obligatoriske produkter som bør bestilles på nytt",
       "body": "{n} av dine obligatoriske produkter er ikke bestilt på {days} dager."
+    },
+    "consignment_site_pending": {
+      "title": "Nytt konsignasjonslager til godkjenning",
+      "body": "{supplier} vil plassere konsignasjonslager hos {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignasjonslager godkjent",
+      "body": "FIRINGI har godkjent konsignasjonslager {site}. Du kan sende varer nå."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignasjonslager avvist",
+      "body": "FIRINGI har avvist konsignasjonslager {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignasjonslager fra {supplier}",
+      "body": "{supplier} vil la varer stå hos deg ({site}). Du betaler bare for det du bruker."
+    },
+    "consignment_shipment": {
+      "title": "Konsignasjonslevering underveis",
+      "body": "{supplier} har sendt {units} enheter i konsignasjon ({number}). Bekreft hva som kom."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Telling å bekrefte",
+      "body": "Telling {number} på {site}: {units} enheter brukt. Bekreft eller bestrid innen {days} dager."
+    },
+    "consignment_count_due": {
+      "title": "Konsignasjonstelling forfaller",
+      "body": "Varene på {site} skal telles (hver {days}. dag)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignasjonsvarer fakturert",
+      "body": "Varene brukt på {site} er fakturert: ordre {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignasjonstelling bestridt",
+      "body": "Telling {number} på {site} er bestridt: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignasjonsvarer går snart ut på dato",
+      "body": "{n} enheter på {site} går ut på dato innen {days} dager. Hent dem tilbake eller avtal en plan med kunden."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Pris",
     "edit": "Rediger",
     "cancel": "Avbryt"
+  },
+  "consignment": {
+    "title": "Konsignasjonslager",
+    "intro": "Varer du lar stå hos kunder. De betaler bare for det de bruker: etter hver telling fakturerer FIRINGI de brukte varene. Resten er fortsatt ditt og kan hentes tilbake.",
+    "buyTitle": "Konsignasjonslager",
+    "buyIntro": "Varer leverandørene dine lar stå hos deg. Du betaler bare for det du bruker: etter hver telling fakturerer FIRINGI det som er brukt. Resten tilhører fortsatt leverandøren.",
+    "off": "FIRINGI har slått av konsignasjonslager.",
+    "kpi": {
+      "sites": "Aktive lokasjoner",
+      "units": "Enheter hos kunder",
+      "value": "Verdi til kost",
+      "toConfirm": "Tellinger å bekrefte"
+    },
+    "newSite": "Nytt konsignasjonslager",
+    "newSiteHint": "Velg kunden, adressen varene skal stå på og lageret de kommer fra.",
+    "newSiteApproval": "FIRINGI kontrollerer hvert nye konsignasjonslager. Du kan sende varer når det er godkjent.",
+    "customer": "Kunde",
+    "searchCustomer": "Søk etter kunde (navn eller MVA-nummer)",
+    "noCustomers": "Ingen kunder funnet.",
+    "address": "Adressen varene står på",
+    "warehouse": "Lager",
+    "countEvery": "Tell hver (dager)",
+    "counter": "Hvem teller",
+    "counterKind": {
+      "CUSTOMER": "Kunden",
+      "SUPPLIER": "Leverandøren",
+      "EITHER": "Kunde eller leverandør"
+    },
+    "note": "Merknad",
+    "create": "Opprett",
+    "sites": "Lokasjoner",
+    "noSites": "Ingen konsignasjonslager ennå.",
+    "open": "Åpne",
+    "back": "Alle lokasjoner",
+    "supplier": "Leverandør",
+    "status": {
+      "ACTIVE": "Aktiv",
+      "PENDING": "Venter på FIRINGI",
+      "REJECTED": "Avvist",
+      "CLOSED": "Avsluttet"
+    },
+    "pendingHint": "FIRINGI kontrollerer nye konsignasjonslager. Du kan sende varer når det er godkjent.",
+    "rejected": "Avvist av FIRINGI: {reason}",
+    "inTransit": "Underveis",
+    "toConfirm": "{n} å bekrefte",
+    "disputed": "{n} bestridt",
+    "overdue": "Telling forfalt",
+    "lastCount": "Siste telling",
+    "nextCount": "Neste telling",
+    "never": "Aldri",
+    "products": "Produkter",
+    "product": "Produkt",
+    "sent": "Sendt",
+    "short": "Mangler",
+    "used": "Brukt",
+    "returned": "Hentet tilbake",
+    "onShelf": "På hyllen",
+    "value": "Verdi til kost",
+    "nextExpiry": "Neste utløpsdato",
+    "noProducts": "Ingenting plassert ennå.",
+    "send": "Send varer",
+    "sendHint": "Varene forlater lageret ditt nå (først utløpt, først ut) og er dine til de brukes.",
+    "searchProduct": "Søk i produktene dine",
+    "free": "Ledig: {n}",
+    "qty": "Antall",
+    "sendNow": "Send",
+    "sentOk": "Levering {number} sendt",
+    "remove": "Fjern",
+    "shipments": "Leveringer",
+    "noShipments": "Ingen leveringer ennå.",
+    "ship": {
+      "SENT": "Underveis",
+      "RECEIVED": "Mottatt"
+    },
+    "receive": "Bekreft hva som kom",
+    "receiveHint": "Registrer hva som faktisk kom. Det som mangler, er leverandørens tap.",
+    "received": "Kommet",
+    "confirmReceived": "Bekreft",
+    "shortOk": "Bekreftet. {n} mangler.",
+    "count": "Tell varene",
+    "countHint": "Registrer hva som er igjen på hyllen for hvert produkt. Differansen er det som er brukt. Motparten bekrefter, deretter fakturerer FIRINGI.",
+    "counted": "Igjen",
+    "expected": "Forventet",
+    "submitCount": "Send telling",
+    "countSent": "Telling {number} sendt",
+    "counts": "Tellinger",
+    "noCounts": "Ingen tellinger ennå.",
+    "countStatus": {
+      "SUBMITTED": "Venter på bekreftelse",
+      "DISPUTED": "Bestridt",
+      "INVOICED": "Fakturert",
+      "FAILED": "Fakturering mislyktes",
+      "SUPERSEDED": "Erstattet av ny telling"
+    },
+    "countedBy": "Telt av {name}",
+    "usedUnits": "{n} brukt",
+    "nothingUsed": "Ingenting brukt",
+    "autoAt": "Bekreftes automatisk {date} hvis ingen svarer.",
+    "accept": "Bekreft",
+    "dispute": "Bestrid",
+    "disputeWhy": "Hvorfor er tellingen feil?",
+    "disputeNote": "Bestridt: {note}",
+    "order": "Ordre",
+    "invoice": "Faktura",
+    "total": "Totalt",
+    "auto": "bekreftet automatisk",
+    "retry": "Fakturer på nytt",
+    "error": "Problem: {error}",
+    "pickUp": "Hent varer tilbake",
+    "pickUpHint": "Ubrukte varer går tilbake til {warehouse} (senest utløp først).",
+    "takeBack": "Hent tilbake",
+    "tookBack": "{n} enheter hentet tilbake",
+    "settings": "Lokasjonsinnstillinger",
+    "save": "Lagre",
+    "saved": "Lagret",
+    "close": "Avslutt konsignasjonslager",
+    "closeHint": "Mulig når ingenting er igjen, ingenting er underveis og ingen telling venter.",
+    "withdraw": "Trekk tilbake",
+    "supplierCounts": "Leverandøren teller disse varene.",
+    "waitingCount": "En telling venter. Bekreft eller bestrid den først."
   }
 }

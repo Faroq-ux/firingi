@@ -938,7 +938,8 @@
     "Van Loads": "Lastaukset",
     "Bought from Vans": "Ostettu autoista",
     "Customer Assortments": "Asiakasvalikoimat",
-    "Must-Stock List": "Perusvalikoimalista"
+    "Must-Stock List": "Perusvalikoimalista",
+    "Consignment Stock": "Konsignaatiovarasto"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Uudelleen tilattavia perusvalikoiman tuotteita",
       "body": "{n} perusvalikoimanne tuotetta ei ole tilattu {days} päivään."
+    },
+    "consignment_site_pending": {
+      "title": "Uusi konsignaatiovarasto hyväksyttäväksi",
+      "body": "{supplier} haluaa sijoittaa konsignaatiovaraston asiakkaalle {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignaatiovarasto hyväksytty",
+      "body": "FIRINGI hyväksyi konsignaatiovaraston {site}. Voit nyt lähettää tuotteita."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignaatiovarasto hylätty",
+      "body": "FIRINGI hylkäsi konsignaatiovaraston {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignaatiovarasto toimittajalta {supplier}",
+      "body": "{supplier} sijoittaa tuotteita luoksesi ({site}). Maksat vain käyttämästäsi."
+    },
+    "consignment_shipment": {
+      "title": "Konsignaatiotoimitus matkalla",
+      "body": "{supplier} lähetti {units} yksikköä konsignaatioon ({number}). Vahvista saapuneet tuotteet."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Vahvistettava inventointi",
+      "body": "Inventointi {number} kohteessa {site}: {units} yksikköä käytetty. Vahvista tai kiistä se {days} päivän kuluessa."
+    },
+    "consignment_count_due": {
+      "title": "Konsignaatiovaraston inventointi on ajankohtainen",
+      "body": "Kohteen {site} varasto on inventoitava (joka {days}. päivä)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignaatiotuotteet laskutettu",
+      "body": "Kohteessa {site} käytetyt tuotteet on laskutettu: tilaus {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignaatioinventointi kiistetty",
+      "body": "Inventointi {number} kohteessa {site} on kiistetty: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignaatiotuotteita vanhenemassa",
+      "body": "{n} yksikköä kohteessa {site} vanhenee {days} päivän kuluessa. Nouda ne takaisin tai sovi suunnitelmasta asiakkaan kanssa."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Hinta",
     "edit": "Muokkaa",
     "cancel": "Peruuta"
+  },
+  "consignment": {
+    "title": "Konsignaatiovarasto",
+    "intro": "Asiakkaiden luona olevat tuotteesi. Asiakas maksaa vain käyttämästään: jokaisen inventoinnin jälkeen FIRINGI laskuttaa käytetyt tuotteet. Loput pysyvät omistuksessasi ja voidaan noutaa takaisin.",
+    "buyTitle": "Konsignaatiovarasto",
+    "buyIntro": "Toimittajien luonasi pitämät tuotteet. Maksat vain käyttämästäsi: jokaisen inventoinnin jälkeen FIRINGI laskuttaa käytetyn määrän. Loput pysyvät toimittajan omistuksessa.",
+    "off": "FIRINGI on poistanut konsignaatiovaraston käytöstä.",
+    "kpi": {
+      "sites": "Aktiiviset kohteet",
+      "units": "Yksiköitä asiakkailla",
+      "value": "Arvo hankintahintaan",
+      "toConfirm": "Vahvistettavat inventoinnit"
+    },
+    "newSite": "Uusi konsignaatiovarasto",
+    "newSiteHint": "Valitse asiakas, osoite, jossa tuotteita säilytetään, ja varasto, josta ne lähtevät.",
+    "newSiteApproval": "FIRINGI tarkistaa jokaisen uuden konsignaatiovaraston. Voit lähettää tuotteita, kun se on hyväksytty.",
+    "customer": "Asiakas",
+    "searchCustomer": "Hae asiakasta (nimi tai ALV-tunnus)",
+    "noCustomers": "Asiakkaita ei löytynyt.",
+    "address": "Osoite, jossa tuotteita säilytetään",
+    "warehouse": "Varasto",
+    "countEvery": "Inventointiväli (päivää)",
+    "counter": "Kuka inventoi",
+    "counterKind": {
+      "CUSTOMER": "Asiakas",
+      "SUPPLIER": "Toimittaja",
+      "EITHER": "Asiakas tai toimittaja"
+    },
+    "note": "Huomautus",
+    "create": "Luo",
+    "sites": "Kohteet",
+    "noSites": "Ei vielä konsignaatiovarastoja.",
+    "open": "Avaa",
+    "back": "Kaikki kohteet",
+    "supplier": "Toimittaja",
+    "status": {
+      "ACTIVE": "Aktiivinen",
+      "PENDING": "Odottaa FIRINGI:n hyväksyntää",
+      "REJECTED": "Hylätty",
+      "CLOSED": "Suljettu"
+    },
+    "pendingHint": "FIRINGI tarkistaa uudet konsignaatiovarastot. Voit lähettää tuotteita, kun se on hyväksytty.",
+    "rejected": "FIRINGI hylkäsi: {reason}",
+    "inTransit": "Matkalla",
+    "toConfirm": "{n} vahvistettavana",
+    "disputed": "{n} kiistetty",
+    "overdue": "Inventointi myöhässä",
+    "lastCount": "Edellinen inventointi",
+    "nextCount": "Seuraava inventointi",
+    "never": "Ei koskaan",
+    "products": "Tuotteet",
+    "product": "Tuote",
+    "sent": "Lähetetty",
+    "short": "Vajaus",
+    "used": "Käytetty",
+    "returned": "Noudettu takaisin",
+    "onShelf": "Hyllyssä",
+    "value": "Arvo hankintahintaan",
+    "nextExpiry": "Seuraava vanhentuminen",
+    "noProducts": "Ei vielä sijoitettuja tuotteita.",
+    "send": "Lähetä tuotteita",
+    "sendHint": "Tuotteet lähtevät varastostasi nyt (ensin vanhenevat ensin) ja pysyvät omistuksessasi, kunnes ne käytetään.",
+    "searchProduct": "Hae tuotteistasi",
+    "free": "Vapaana: {n}",
+    "qty": "Määrä",
+    "sendNow": "Lähetä",
+    "sentOk": "Toimitus {number} lähetetty",
+    "remove": "Poista",
+    "shipments": "Toimitukset",
+    "noShipments": "Ei vielä toimituksia.",
+    "ship": {
+      "SENT": "Matkalla",
+      "RECEIVED": "Vastaanotettu"
+    },
+    "receive": "Vahvista saapuneet tuotteet",
+    "receiveHint": "Syötä, mitä todella saapui. Puuttuvat tuotteet ovat toimittajan tappiota.",
+    "received": "Saapunut",
+    "confirmReceived": "Vahvista",
+    "shortOk": "Vahvistettu. {n} puuttuu.",
+    "count": "Inventoi varasto",
+    "countHint": "Syötä kunkin tuotteen hyllyyn jäänyt määrä. Erotus on käytetty määrä. Toinen osapuoli vahvistaa sen, minkä jälkeen FIRINGI laskuttaa.",
+    "counted": "Jäljellä",
+    "expected": "Odotettu",
+    "submitCount": "Lähetä inventointi",
+    "countSent": "Inventointi {number} lähetetty",
+    "counts": "Inventoinnit",
+    "noCounts": "Ei vielä inventointeja.",
+    "countStatus": {
+      "SUBMITTED": "Odottaa vahvistusta",
+      "DISPUTED": "Kiistetty",
+      "INVOICED": "Laskutettu",
+      "FAILED": "Laskutus epäonnistui",
+      "SUPERSEDED": "Korvattu uudella inventoinnilla"
+    },
+    "countedBy": "Inventoija: {name}",
+    "usedUnits": "{n} käytetty",
+    "nothingUsed": "Ei käyttöä",
+    "autoAt": "Vahvistetaan automaattisesti {date}, jos kukaan ei vastaa.",
+    "accept": "Vahvista",
+    "dispute": "Kiistä",
+    "disputeWhy": "Miksi inventointi on väärin?",
+    "disputeNote": "Kiistetty: {note}",
+    "order": "Tilaus",
+    "invoice": "Lasku",
+    "total": "Yhteensä",
+    "auto": "vahvistettu automaattisesti",
+    "retry": "Laskuta uudelleen",
+    "error": "Ongelma: {error}",
+    "pickUp": "Nouda tuotteita takaisin",
+    "pickUpHint": "Käyttämättömät tuotteet palautetaan varastoon {warehouse} (viimeisenä vanhenevat ensin).",
+    "takeBack": "Nouda takaisin",
+    "tookBack": "{n} yksikköä noudettu takaisin",
+    "settings": "Kohteen asetukset",
+    "save": "Tallenna",
+    "saved": "Tallennettu",
+    "close": "Sulje konsignaatiovarasto",
+    "closeHint": "Mahdollista, kun mitään ei ole jäljellä, mitään ei ole matkalla eikä mikään inventointi odota.",
+    "withdraw": "Peruuta",
+    "supplierCounts": "Toimittaja inventoi tämän varaston.",
+    "waitingCount": "Inventointi odottaa. Vahvista tai kiistä se ensin."
   }
 }

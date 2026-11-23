@@ -1,0 +1,139 @@
+// ───────────────────────── Consignment stock (Phase 65) ─────────────────────────
+// A supplier leaves stock at a customer's premises; the customer pays only for what it uses. Goods sent leave the
+// supplier's warehouse (TRANSFER_OUT) and stay the supplier's until used. Regular counts find what was used (what
+// was sent and received, less what is still on the shelf and what went back): once the other side confirms the count
+// (or it is confirmed automatically after FIRINGI's days), FIRINGI places an order for the used goods at the
+// customer's prices, delivered at once and invoiced to the customer — the lots follow the goods (recalls, expiry).
+// Unused goods can be picked up and go back to the warehouse.
+
+enum ConsignmentStatus {
+  ACTIVE
+  CLOSED
+  PENDING // waiting for FIRINGI's approval (when FIRINGI approves consignments)
+  REJECTED
+}
+
+/// who counts the stock at the customer
+enum ConsignmentCounter {
+  CUSTOMER
+  SUPPLIER
+  EITHER
+}
+
+enum ConsignmentShipmentStatus {
+  SENT
+  RECEIVED
+}
+
+enum ConsignmentCountStatus {
+  SUBMITTED // waiting for the other side
+  DISPUTED
+  INVOICED // confirmed and billed (or nothing used)
+  FAILED // confirmed, but the order couldn't be placed (retry)
+  SUPERSEDED // replaced by a newer count
+}
+
+model ConsignmentSite {
+  id              String             @id @default(cuid())
+  number          String             @unique // CS-2026-000001
+  vendorCompanyId String
+  buyerCompanyId  String
+  /// the customer's delivery address the stock sits at
+  addressId       String
+  /// the supplier's warehouse the goods come from and go back to
+  warehouseId     String
+  status          ConsignmentStatus  @default(ACTIVE)
+  countEveryDays  Int                @default(7)
+  counter         ConsignmentCounter @default(EITHER)
+  note            String?
+  lastCountAt     DateTime?
+  /// last "count due" reminder
+  remindedAt      DateTime?
+  createdById     String
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  closedAt        DateTime?
+  /// FIRINGI's decision (when consignments need its approval)
+  decidedAt       DateTime?
+  decidedById     String?
+  rejectReason    String?
+
+  lots      ConsignmentLot[]
+  shipments ConsignmentShipment[]
+  counts    ConsignmentCount[]
+
+  @@index([vendorCompanyId, status])
+  @@index([buyerCompanyId, status])
+}
+
+model ConsignmentShipment {
+  id           String                    @id @default(cuid())
+  number       String                    @unique // CSH-2026-000001
+  siteId       String
+  status       ConsignmentShipmentStatus @default(SENT)
+  note         String?
+  createdById  String
+  sentAt       DateTime                  @default(now())
+  receivedAt   DateTime?
+  receivedById String?
+
+  site ConsignmentSite  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  lots ConsignmentLot[]
+
+  @@index([siteId, status])
+}
+
+/// Goods at the customer per offer and warehouse lot (as sent).
+model ConsignmentLot {
+  id          String    @id @default(cuid())
+  siteId      String
+  shipmentId  String
+  offerId     String
+  batchId     String?
+  lotCode     String?
+  expiresOn   DateTime? @db.Date
+  /// average cost when sent (cost of goods)
+  unitCost    Decimal   @default(0) @db.Decimal(18, 4)
+  qtySent     Int
+  /// not received by the customer (lost on the way: the supplier's loss, not billed)
+  qtyShort    Int       @default(0)
+  qtyUsed     Int       @default(0)
+  qtyReturned Int       @default(0)
+  /// "expires soon" alert sent
+  alertedAt   DateTime?
+
+  site     ConsignmentSite     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  shipment ConsignmentShipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, offerId])
+}
+
+model ConsignmentCount {
+  id                 String                 @id @default(cuid())
+  number             String                 @unique // CC-2026-000001
+  siteId             String
+  status             ConsignmentCountStatus @default(SUBMITTED)
+  /// the company whose person counted (customer or supplier) — the other one confirms
+  countedByCompanyId String
+  countedById        String
+  countedAt          DateTime               @default(now())
+  /// [{ offerId, expected, counted, used }]
+  lines              Json
+  usedUnits          Int                    @default(0)
+  note               String?
+  decidedAt          DateTime?
+  decidedById        String?
+  /// confirmed by FIRINGI's automatic rule (nobody answered in time)
+  autoConfirmed      Boolean                @default(false)
+  disputeNote        String?
+  orderId            String?
+  orderNumber        String?
+  invoiceNumber      String?
+  grossTotal         Decimal?               @db.Decimal(18, 2)
+  error              String?
+
+  site ConsignmentSite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, status])
+  @@index([status, countedAt])
+}

@@ -938,7 +938,8 @@
     "Van Loads": "Nakládky vozů",
     "Bought from Vans": "Nákupy z vozů",
     "Customer Assortments": "Sortimenty zákazníků",
-    "Must-Stock List": "Povinný sortiment"
+    "Must-Stock List": "Povinný sortiment",
+    "Consignment Stock": "Konsignační sklad"
   },
   "delivery": {
     "title": "Doručení",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Povinné produkty k doobjednání",
       "body": "Počet povinných produktů neobjednaných {days} dní: {n}."
+    },
+    "consignment_site_pending": {
+      "title": "Nová konsignace ke schválení",
+      "body": "{supplier} chce umístit konsignační zboží u {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignace schválena",
+      "body": "FIRINGI schválilo konsignaci {site}. Nyní můžete odeslat zboží."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignace zamítnuta",
+      "body": "FIRINGI zamítlo konsignaci {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignační zboží od {supplier}",
+      "body": "{supplier} u vás ponechá zboží ({site}). Platíte jen za to, co spotřebujete."
+    },
+    "consignment_shipment": {
+      "title": "Konsignační dodávka je na cestě",
+      "body": "{supplier} odeslal {units} ks do konsignace ({number}). Potvrďte, co dorazilo."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventura k potvrzení",
+      "body": "Inventura {number} na místě {site}: spotřebováno {units} ks. Potvrďte ji nebo rozporujte do {days} dní."
+    },
+    "consignment_count_due": {
+      "title": "Termín konsignační inventury",
+      "body": "Zboží na místě {site} je třeba spočítat (každých {days} dní)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignační zboží vyfakturováno",
+      "body": "Zboží spotřebované na místě {site} bylo vyfakturováno: objednávka {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignační inventura rozporována",
+      "body": "Inventura {number} na místě {site} byla rozporována: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignačnímu zboží brzy končí trvanlivost",
+      "body": "{n} ks na místě {site} expiruje do {days} dní. Odvezte je nebo se se zákazníkem dohodněte na postupu."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Cena",
     "edit": "Upravit",
     "cancel": "Zrušit"
+  },
+  "consignment": {
+    "title": "Konsignační sklad",
+    "intro": "Zboží, které necháváte u zákazníků. Platí jen za to, co spotřebují: po každé inventuře FIRINGI vyfakturuje spotřebované zboží. Zbytek zůstává ve vašem vlastnictví a můžete si ho vzít zpět.",
+    "buyTitle": "Konsignační sklad",
+    "buyIntro": "Zboží, které u vás nechávají dodavatelé. Platíte jen za to, co spotřebujete: po každé inventuře FIRINGI vyfakturuje spotřebované zboží. Zbytek zůstává ve vlastnictví dodavatele.",
+    "off": "FIRINGI má konsignační sklad vypnutý.",
+    "kpi": {
+      "sites": "Aktivní místa",
+      "units": "Kusy u zákazníků",
+      "value": "Hodnota v nákupních cenách",
+      "toConfirm": "Inventury k potvrzení"
+    },
+    "newSite": "Nová konsignace",
+    "newSiteHint": "Vyberte zákazníka, adresu, kde bude zboží uloženo, a sklad, ze kterého pochází.",
+    "newSiteApproval": "FIRINGI kontroluje každou novou konsignaci. Zboží můžete odeslat po jejím schválení.",
+    "customer": "Zákazník",
+    "searchCustomer": "Hledat zákazníka (název nebo DIČ)",
+    "noCustomers": "Nenalezeni žádní zákazníci.",
+    "address": "Adresa uložení zboží",
+    "warehouse": "Sklad",
+    "countEvery": "Inventura každých (dní)",
+    "counter": "Kdo počítá",
+    "counterKind": {
+      "CUSTOMER": "Zákazník",
+      "SUPPLIER": "Dodavatel",
+      "EITHER": "Zákazník nebo dodavatel"
+    },
+    "note": "Poznámka",
+    "create": "Vytvořit",
+    "sites": "Místa",
+    "noSites": "Zatím žádná konsignace.",
+    "open": "Otevřít",
+    "back": "Všechna místa",
+    "supplier": "Dodavatel",
+    "status": {
+      "ACTIVE": "Aktivní",
+      "PENDING": "Čeká na FIRINGI",
+      "REJECTED": "Zamítnuto",
+      "CLOSED": "Uzavřeno"
+    },
+    "pendingHint": "FIRINGI kontroluje nové konsignace. Zboží můžete odeslat po schválení.",
+    "rejected": "Zamítnuto FIRINGI: {reason}",
+    "inTransit": "Na cestě",
+    "toConfirm": "{n} k potvrzení",
+    "disputed": "{n} rozporováno",
+    "overdue": "Inventura po termínu",
+    "lastCount": "Poslední inventura",
+    "nextCount": "Příští inventura",
+    "never": "Nikdy",
+    "products": "Produkty",
+    "product": "Produkt",
+    "sent": "Odesláno",
+    "short": "Chybí",
+    "used": "Spotřebováno",
+    "returned": "Odvezeno",
+    "onShelf": "Na regálu",
+    "value": "Hodnota v nákupních cenách",
+    "nextExpiry": "Nejbližší expirace",
+    "noProducts": "Zatím nic nenaskladněno.",
+    "send": "Odeslat zboží",
+    "sendHint": "Zboží nyní opouští váš sklad (nejdříve to s nejkratší expirací) a zůstává vaše, dokud se nespotřebuje.",
+    "searchProduct": "Hledat ve vašich produktech",
+    "free": "Volné: {n}",
+    "qty": "Množství",
+    "sendNow": "Odeslat",
+    "sentOk": "Dodávka {number} odeslána",
+    "remove": "Odebrat",
+    "shipments": "Dodávky",
+    "noShipments": "Zatím žádné dodávky.",
+    "ship": {
+      "SENT": "Na cestě",
+      "RECEIVED": "Přijato"
+    },
+    "receive": "Potvrdit, co dorazilo",
+    "receiveHint": "Zadejte, co skutečně dorazilo. Chybějící zboží jde na vrub dodavatele.",
+    "received": "Dorazilo",
+    "confirmReceived": "Potvrdit",
+    "shortOk": "Potvrzeno. Chybí: {n}.",
+    "count": "Spočítat zboží",
+    "countHint": "U každého produktu zadejte, kolik zbývá na regálu. Rozdíl je spotřeba. Druhá strana ji potvrdí a FIRINGI ji vyfakturuje.",
+    "counted": "Zbývá",
+    "expected": "Očekáváno",
+    "submitCount": "Odeslat inventuru",
+    "countSent": "Inventura {number} odeslána",
+    "counts": "Inventury",
+    "noCounts": "Zatím žádné inventury.",
+    "countStatus": {
+      "SUBMITTED": "Čeká na potvrzení",
+      "DISPUTED": "Rozporováno",
+      "INVOICED": "Vyfakturováno",
+      "FAILED": "Fakturace selhala",
+      "SUPERSEDED": "Nahrazeno novou inventurou"
+    },
+    "countedBy": "Spočítal(a): {name}",
+    "usedUnits": "Spotřebováno: {n}",
+    "nothingUsed": "Nic nespotřebováno",
+    "autoAt": "Pokud nikdo nereaguje, potvrdí se automaticky {date}.",
+    "accept": "Potvrdit",
+    "dispute": "Rozporovat",
+    "disputeWhy": "Proč je inventura chybná?",
+    "disputeNote": "Rozporováno: {note}",
+    "order": "Objednávka",
+    "invoice": "Faktura",
+    "total": "Celkem",
+    "auto": "potvrzeno automaticky",
+    "retry": "Fakturovat znovu",
+    "error": "Problém: {error}",
+    "pickUp": "Odvézt zboží",
+    "pickUpHint": "Nespotřebované zboží se vrací do skladu {warehouse} (nejdříve to s nejdelší expirací).",
+    "takeBack": "Odvézt",
+    "tookBack": "Odvezeno ks: {n}",
+    "settings": "Nastavení místa",
+    "save": "Uložit",
+    "saved": "Uloženo",
+    "close": "Uzavřít konsignaci",
+    "closeHint": "Možné, když nic nezbývá, nic není na cestě a nečeká žádná inventura.",
+    "withdraw": "Stáhnout",
+    "supplierCounts": "Toto zboží počítá dodavatel.",
+    "waitingCount": "Čeká inventura. Nejdříve ji potvrďte nebo rozporujte."
   }
 }

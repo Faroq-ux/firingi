@@ -1941,6 +1941,46 @@
     "assortment_gaps": {
       "title": "Must-stock products to reorder",
       "body": "{n} of your must-stock products haven't been ordered in {days} days."
+    },
+    "consignment_site_pending": {
+      "title": "New consignment to approve",
+      "body": "{supplier} wants to place consignment stock with {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Consignment approved",
+      "body": "FIRINGI approved consignment {site}. You can send stock now."
+    },
+    "consignment_site_rejected": {
+      "title": "Consignment rejected",
+      "body": "FIRINGI rejected consignment {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Consignment stock from {supplier}",
+      "body": "{supplier} will leave stock with you ({site}). You pay only for what you use."
+    },
+    "consignment_shipment": {
+      "title": "Consignment delivery on its way",
+      "body": "{supplier} sent {units} units on consignment ({number}). Confirm what arrived."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Count to confirm",
+      "body": "Count {number} at {site}: {units} units used. Confirm or dispute it within {days} days."
+    },
+    "consignment_count_due": {
+      "title": "Consignment count due",
+      "body": "The stock at {site} is due to be counted (every {days} days)."
+    },
+    "consignment_invoiced": {
+      "title": "Consignment goods invoiced",
+      "body": "The goods used at {site} were invoiced: order {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Consignment count disputed",
+      "body": "Count {number} at {site} was disputed: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Consignment goods expire soon",
+      "body": "{n} units at {site} expire within {days} days. Take them back or agree a plan with the customer."
     }
   },
   "notifications": {
@@ -9077,5 +9117,125 @@
     "price": "Price",
     "edit": "Edit",
     "cancel": "Cancel"
+  },
+  "consignment": {
+    "title": "Consignment Stock",
+    "intro": "Stock you leave at customers. They pay only for what they use: after each count FIRINGI invoices the used goods. The rest stays yours and can come back.",
+    "buyTitle": "Consignment Stock",
+    "buyIntro": "Stock your suppliers leave with you. You pay only for what you use: after each count FIRINGI invoices what was used. The rest stays the supplier's.",
+    "off": "Consignment stock is switched off by FIRINGI.",
+    "kpi": {
+      "sites": "Active sites",
+      "units": "Units at customers",
+      "value": "Value at cost",
+      "toConfirm": "Counts to confirm"
+    },
+    "newSite": "New consignment",
+    "newSiteHint": "Choose the customer, the address the stock stays at and the warehouse it comes from.",
+    "newSiteApproval": "FIRINGI checks each new consignment. You can send stock once it is approved.",
+    "customer": "Customer",
+    "searchCustomer": "Search a customer (name or VAT number)",
+    "noCustomers": "No customers found.",
+    "address": "Address the stock stays at",
+    "warehouse": "Warehouse",
+    "countEvery": "Count every (days)",
+    "counter": "Who counts",
+    "counterKind": {
+      "CUSTOMER": "The customer",
+      "SUPPLIER": "The supplier",
+      "EITHER": "Customer or supplier"
+    },
+    "note": "Note",
+    "create": "Create",
+    "sites": "Sites",
+    "noSites": "No consignment yet.",
+    "open": "Open",
+    "back": "All sites",
+    "supplier": "Supplier",
+    "status": {
+      "ACTIVE": "Active",
+      "PENDING": "Waiting for FIRINGI",
+      "REJECTED": "Rejected",
+      "CLOSED": "Closed"
+    },
+    "pendingHint": "FIRINGI checks new consignments. You can send stock once it is approved.",
+    "rejected": "Rejected by FIRINGI: {reason}",
+    "inTransit": "On the way",
+    "toConfirm": "{n} to confirm",
+    "disputed": "{n} disputed",
+    "overdue": "Count overdue",
+    "lastCount": "Last count",
+    "nextCount": "Next count",
+    "never": "Never",
+    "products": "Products",
+    "product": "Product",
+    "sent": "Sent",
+    "short": "Short",
+    "used": "Used",
+    "returned": "Taken back",
+    "onShelf": "On the shelf",
+    "value": "Value at cost",
+    "nextExpiry": "Next expiry",
+    "noProducts": "Nothing placed yet.",
+    "send": "Send stock",
+    "sendHint": "The goods leave your warehouse now (first to expire first) and stay yours until used.",
+    "searchProduct": "Search your products",
+    "free": "Free: {n}",
+    "qty": "Quantity",
+    "sendNow": "Send",
+    "sentOk": "Delivery {number} sent",
+    "remove": "Remove",
+    "shipments": "Deliveries",
+    "noShipments": "No deliveries yet.",
+    "ship": {
+      "SENT": "On the way",
+      "RECEIVED": "Received"
+    },
+    "receive": "Confirm what arrived",
+    "receiveHint": "Enter what actually arrived. Anything missing is the supplier's loss.",
+    "received": "Arrived",
+    "confirmReceived": "Confirm",
+    "shortOk": "Confirmed. {n} missing.",
+    "count": "Count the stock",
+    "countHint": "Enter what is left on the shelf for each product. The difference is what was used. The other side confirms it, then FIRINGI invoices it.",
+    "counted": "Left",
+    "expected": "Expected",
+    "submitCount": "Send count",
+    "countSent": "Count {number} sent",
+    "counts": "Counts",
+    "noCounts": "No counts yet.",
+    "countStatus": {
+      "SUBMITTED": "Waiting for confirmation",
+      "DISPUTED": "Disputed",
+      "INVOICED": "Invoiced",
+      "FAILED": "Billing failed",
+      "SUPERSEDED": "Replaced by a recount"
+    },
+    "countedBy": "Counted by {name}",
+    "usedUnits": "{n} used",
+    "nothingUsed": "Nothing used",
+    "autoAt": "Confirmed automatically on {date} if nobody answers.",
+    "accept": "Confirm",
+    "dispute": "Dispute",
+    "disputeWhy": "Why is the count wrong?",
+    "disputeNote": "Disputed: {note}",
+    "order": "Order",
+    "invoice": "Invoice",
+    "total": "Total",
+    "auto": "confirmed automatically",
+    "retry": "Bill again",
+    "error": "Problem: {error}",
+    "pickUp": "Take goods back",
+    "pickUpHint": "Unused goods go back to {warehouse} (latest to expire first).",
+    "takeBack": "Take back",
+    "tookBack": "{n} units taken back",
+    "settings": "Site settings",
+    "save": "Save",
+    "saved": "Saved",
+    "close": "Close consignment",
+    "closeHint": "Possible when nothing is left, nothing is on the way and no count is waiting.",
+    "withdraw": "Withdraw",
+    "supplierCounts": "The supplier counts this stock.",
+    "waitingCount": "A count is waiting. Confirm or dispute it first."
   }
 }

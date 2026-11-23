@@ -938,7 +938,8 @@
     "Van Loads": "Bílhleðslur",
     "Bought from Vans": "Keypt úr bílum",
     "Customer Assortments": "Vöruúrval viðskiptavina",
-    "Must-Stock List": "Skylduvörulisti"
+    "Must-Stock List": "Skylduvörulisti",
+    "Consignment Stock": "Umboðssölulager"
   },
   "delivery": {
     "title": "Afhending",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Skylduvörur sem þarf að panta aftur",
       "body": "{n} af skylduvörum þínum hafa ekki verið pantaðar í {days} daga."
+    },
+    "consignment_site_pending": {
+      "title": "Nýr umboðssölulager til samþykktar",
+      "body": "{supplier} vill koma fyrir umboðssöluvörum hjá {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Umboðssölulager samþykktur",
+      "body": "FIRINGI samþykkti umboðssölulager {site}. Þú getur nú sent vörur."
+    },
+    "consignment_site_rejected": {
+      "title": "Umboðssölulager hafnað",
+      "body": "FIRINGI hafnaði umboðssölulager {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Umboðssöluvörur frá {supplier}",
+      "body": "{supplier} mun skilja eftir vörur hjá þér ({site}). Þú greiðir aðeins fyrir það sem þú notar."
+    },
+    "consignment_shipment": {
+      "title": "Umboðssölusending á leiðinni",
+      "body": "{supplier} sendi {units} einingar í umboðssölu ({number}). Staðfestu það sem barst."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Talning til staðfestingar",
+      "body": "Talning {number} á {site}: {units} einingar notaðar. Staðfestu eða andmæltu innan {days} daga."
+    },
+    "consignment_count_due": {
+      "title": "Komið að talningu umboðssölulagers",
+      "body": "Telja þarf vörurnar á {site} (á {days} daga fresti)."
+    },
+    "consignment_invoiced": {
+      "title": "Umboðssöluvörur reikningsfærðar",
+      "body": "Vörur sem voru notaðar á {site} hafa verið reikningsfærðar: pöntun {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Ágreiningur um talningu umboðssölulagers",
+      "body": "Talningu {number} á {site} var andmælt: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Umboðssöluvörur renna brátt út",
+      "body": "{n} einingar á {site} renna út innan {days} daga. Sæktu þær aftur eða semdu um áætlun við viðskiptavininn."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Verð",
     "edit": "Breyta",
     "cancel": "Hætta við"
+  },
+  "consignment": {
+    "title": "Umboðssölulager",
+    "intro": "Vörur sem þú skilur eftir hjá viðskiptavinum. Þeir greiða aðeins fyrir það sem þeir nota: eftir hverja talningu reikningsfærir FIRINGI notaðar vörur. Afgangurinn er áfram þinn og má sækja aftur.",
+    "buyTitle": "Umboðssölulager",
+    "buyIntro": "Vörur sem birgjar þínir skilja eftir hjá þér. Þú greiðir aðeins fyrir það sem þú notar: eftir hverja talningu reikningsfærir FIRINGI það sem var notað. Afgangurinn er áfram eign birgisins.",
+    "off": "FIRINGI hefur slökkt á umboðssölulager.",
+    "kpi": {
+      "sites": "Virkir staðir",
+      "units": "Einingar hjá viðskiptavinum",
+      "value": "Virði á kostnaðarverði",
+      "toConfirm": "Talningar til staðfestingar"
+    },
+    "newSite": "Nýr umboðssölulager",
+    "newSiteHint": "Veldu viðskiptavininn, heimilisfangið þar sem vörurnar verða geymdar og vöruhúsið sem þær koma frá.",
+    "newSiteApproval": "FIRINGI yfirfer hvern nýjan umboðssölulager. Þú getur sent vörur þegar hann hefur verið samþykktur.",
+    "customer": "Viðskiptavinur",
+    "searchCustomer": "Leita að viðskiptavini (nafn eða VSK-númer)",
+    "noCustomers": "Engir viðskiptavinir fundust.",
+    "address": "Heimilisfang þar sem vörurnar eru geymdar",
+    "warehouse": "Vöruhús",
+    "countEvery": "Telja á (daga) fresti",
+    "counter": "Hver telur",
+    "counterKind": {
+      "CUSTOMER": "Viðskiptavinurinn",
+      "SUPPLIER": "Birginn",
+      "EITHER": "Viðskiptavinur eða birgir"
+    },
+    "note": "Athugasemd",
+    "create": "Stofna",
+    "sites": "Staðir",
+    "noSites": "Enginn umboðssölulager enn.",
+    "open": "Opna",
+    "back": "Allir staðir",
+    "supplier": "Birgir",
+    "status": {
+      "ACTIVE": "Virkur",
+      "PENDING": "Bíður eftir FIRINGI",
+      "REJECTED": "Hafnað",
+      "CLOSED": "Lokað"
+    },
+    "pendingHint": "FIRINGI yfirfer nýja umboðssölulagera. Þú getur sent vörur þegar hann hefur verið samþykktur.",
+    "rejected": "FIRINGI hafnaði: {reason}",
+    "inTransit": "Á leiðinni",
+    "toConfirm": "{n} til staðfestingar",
+    "disputed": "{n} í ágreiningi",
+    "overdue": "Talning komin fram yfir tíma",
+    "lastCount": "Síðasta talning",
+    "nextCount": "Næsta talning",
+    "never": "Aldrei",
+    "products": "Vörur",
+    "product": "Vara",
+    "sent": "Sent",
+    "short": "Vantar",
+    "used": "Notað",
+    "returned": "Sótt aftur",
+    "onShelf": "Í hillu",
+    "value": "Virði á kostnaðarverði",
+    "nextExpiry": "Næsta fyrningardagsetning",
+    "noProducts": "Engu komið fyrir enn.",
+    "send": "Senda vörur",
+    "sendHint": "Vörurnar fara úr vöruhúsinu þínu núna (fyrst það sem rennur fyrst út) og eru áfram þínar þar til þær eru notaðar.",
+    "searchProduct": "Leita í vörunum þínum",
+    "free": "Laust: {n}",
+    "qty": "Magn",
+    "sendNow": "Senda",
+    "sentOk": "Sending {number} send",
+    "remove": "Fjarlægja",
+    "shipments": "Sendingar",
+    "noShipments": "Engar sendingar enn.",
+    "ship": {
+      "SENT": "Á leiðinni",
+      "RECEIVED": "Móttekið"
+    },
+    "receive": "Staðfesta það sem barst",
+    "receiveHint": "Skráðu það sem raunverulega barst. Það sem vantar er tap birgisins.",
+    "received": "Barst",
+    "confirmReceived": "Staðfesta",
+    "shortOk": "Staðfest. {n} vantar.",
+    "count": "Telja birgðirnar",
+    "countHint": "Skráðu hvað er eftir í hillunni af hverri vöru. Mismunurinn er það sem var notað. Hinn aðilinn staðfestir, síðan reikningsfærir FIRINGI.",
+    "counted": "Eftir",
+    "expected": "Áætlað",
+    "submitCount": "Senda talningu",
+    "countSent": "Talning {number} send",
+    "counts": "Talningar",
+    "noCounts": "Engar talningar enn.",
+    "countStatus": {
+      "SUBMITTED": "Bíður staðfestingar",
+      "DISPUTED": "Í ágreiningi",
+      "INVOICED": "Reikningsfært",
+      "FAILED": "Reikningsfærsla mistókst",
+      "SUPERSEDED": "Leyst af hólmi með endurtalningu"
+    },
+    "countedBy": "Talið af {name}",
+    "usedUnits": "{n} notaðar",
+    "nothingUsed": "Ekkert notað",
+    "autoAt": "Staðfest sjálfkrafa {date} ef enginn svarar.",
+    "accept": "Staðfesta",
+    "dispute": "Andmæla",
+    "disputeWhy": "Hvers vegna er talningin röng?",
+    "disputeNote": "Andmælt: {note}",
+    "order": "Pöntun",
+    "invoice": "Reikningur",
+    "total": "Samtals",
+    "auto": "staðfest sjálfkrafa",
+    "retry": "Reikningsfæra aftur",
+    "error": "Vandamál: {error}",
+    "pickUp": "Sækja vörur aftur",
+    "pickUpHint": "Ónotaðar vörur fara aftur í {warehouse} (fyrst það sem rennur síðast út).",
+    "takeBack": "Sækja aftur",
+    "tookBack": "{n} einingar sóttar aftur",
+    "settings": "Stillingar staðar",
+    "save": "Vista",
+    "saved": "Vistað",
+    "close": "Loka umboðssölulager",
+    "closeHint": "Mögulegt þegar ekkert er eftir, ekkert er á leiðinni og engin talning bíður.",
+    "withdraw": "Draga til baka",
+    "supplierCounts": "Birginn telur þessar vörur.",
+    "waitingCount": "Talning bíður. Staðfestu hana eða andmæltu henni fyrst."
   }
 }

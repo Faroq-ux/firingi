@@ -58,6 +58,7 @@ const vpl = section(`${V}/inventory/planning`, ["vendor.inventory.view", "vendor
 const vad = section(`${V}/ads`, "vendor.promotions.manage");
 const vpos = section(`${V}/pos`, ["company.pos.sell", "company.pos.manage"]);
 const vrp = section(`${V}/reps`, ["vendor.reps.manage", "vendor.reps.field"]);
+const vcs = section(`${V}/consignment`, ["vendor.consignment.manage", "vendor.consignment.count"]);
 const vvn = section(`${V}/van`, ["vendor.vansales.manage", "vendor.vansales.sell"]);
 const vst = section(`${V}/staff`, ["vendor.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
@@ -141,6 +142,7 @@ export const VENDOR_NAV: NavSection[] = [
     items: [
       vo("incoming", "Incoming Orders", "Encomendas Recebidas", "P4", { live: true, es: "Pedidos recibidos" }),
       vo("history", "Order History", "Histórico", "P4", { live: true, es: "Historial" }),
+      vcs("", "Consignment Stock", "Stock à Consignação", "P65", { live: true, href: `${V}/consignment`, feature: "CONSIGNMENT", perm: ["vendor.consignment.manage", "vendor.consignment.count"], es: "Stock en depósito" }),
       vo("quotes", "Quote Requests", "Pedidos de Orçamento", "P26", { live: true, perm: ["vendor.pricing.manage", "vendor.orders.manage", "vendor.orders.view"], es: "Solicitudes de presupuesto" }),
       vo("tenders", "Tenders", "Concursos", "P50", { live: true, perm: ["vendor.pricing.manage", "vendor.orders.manage"], es: "Licitaciones" }),
       vo("returns", "Returns", "Devoluções", "P6", { live: true, es: "Devoluciones" }),
@@ -262,6 +264,7 @@ export const BUY_NAV: NavSection[] = [
       bo("recurring", "Recurring Orders", "Encomendas Recorrentes", "P26", { live: true, es: "Pedidos recurrentes" }),
       bo("rep-orders", "Orders from Sales Reps", "Encomendas dos Vendedores", "P62", { live: true, feature: "REP_ORDERS", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Pedidos de comerciales" }),
       bo("must-stock", "Must-Stock List", "Lista de Stock Obrigatório", "P64", { live: true, feature: "MUST_STOCK", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Lista de surtido obligatorio" }),
+      bo("consignment", "Consignment Stock", "Stock à Consignação", "P65", { live: true, feature: "CONSIGNMENT_BUY", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Stock en depósito" }),
       bo("van", "Bought from Vans", "Compras à Carrinha", "P63", { live: true, feature: "VAN_PURCHASES", perm: ["buyer.orders.place", "buyer.orders.view"], es: "Compras en furgoneta" }),
       bo("substitutions", "Replacements", "Substituições", "P60", { live: true, perm: ["buyer.orders.place", "buyer.orders.view"], es: "Sustituciones" }),
       bo("lists", "Order Lists", "Listas de Encomenda", "P26", { live: true, es: "Listas de pedidos" }),

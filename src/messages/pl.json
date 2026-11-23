@@ -938,7 +938,8 @@
     "Van Loads": "Załadunki",
     "Bought from Vans": "Zakupy z samochodów",
     "Customer Assortments": "Asortymenty klientów",
-    "Must-Stock List": "Lista obowiązkowa"
+    "Must-Stock List": "Lista obowiązkowa",
+    "Consignment Stock": "Towar w komisie"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Produkty obowiązkowe do ponownego zamówienia",
       "body": "Produkty obowiązkowe niezamawiane od {days} dni: {n}."
+    },
+    "consignment_site_pending": {
+      "title": "Nowy komis do zatwierdzenia",
+      "body": "{supplier} chce umieścić towar w komisie u {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Komis zatwierdzony",
+      "body": "FIRINGI zatwierdziło komis {site}. Możesz już wysłać towar."
+    },
+    "consignment_site_rejected": {
+      "title": "Komis odrzucony",
+      "body": "FIRINGI odrzuciło komis {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Towar w komisie od {supplier}",
+      "body": "{supplier} zostawi u Ciebie towar ({site}). Płacisz tylko za to, co zużyjesz."
+    },
+    "consignment_shipment": {
+      "title": "Dostawa komisowa w drodze",
+      "body": "{supplier} wysłał {units} szt. w komis ({number}). Potwierdź, co dotarło."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Spis do potwierdzenia",
+      "body": "Spis {number} w {site}: zużyto {units} szt. Potwierdź lub zakwestionuj w ciągu {days} dni."
+    },
+    "consignment_count_due": {
+      "title": "Termin spisu komisu",
+      "body": "Towar w {site} należy policzyć (co {days} dni)."
+    },
+    "consignment_invoiced": {
+      "title": "Towar z komisu zafakturowany",
+      "body": "Towar zużyty w {site} został zafakturowany: zamówienie {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Zakwestionowano spis komisu",
+      "body": "Spis {number} w {site} został zakwestionowany: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Towar z komisu wkrótce traci ważność",
+      "body": "{n} szt. w {site} traci ważność w ciągu {days} dni. Odbierz je lub uzgodnij plan z klientem."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Cena",
     "edit": "Edytuj",
     "cancel": "Anuluj"
+  },
+  "consignment": {
+    "title": "Towar w komisie",
+    "intro": "Towar, który zostawiasz u klientów. Płacą tylko za to, co zużyją: po każdym spisie FIRINGI fakturuje zużyty towar. Reszta pozostaje Twoja i może wrócić.",
+    "buyTitle": "Towar w komisie",
+    "buyIntro": "Towar, który zostawiają u Ciebie dostawcy. Płacisz tylko za to, co zużyjesz: po każdym spisie FIRINGI fakturuje to, co zostało zużyte. Reszta pozostaje własnością dostawcy.",
+    "off": "Towar w komisie został wyłączony przez FIRINGI.",
+    "kpi": {
+      "sites": "Aktywne lokalizacje",
+      "units": "Sztuki u klientów",
+      "value": "Wartość w cenie zakupu",
+      "toConfirm": "Spisy do potwierdzenia"
+    },
+    "newSite": "Nowy komis",
+    "newSiteHint": "Wybierz klienta, adres, pod którym towar będzie przechowywany, oraz magazyn, z którego pochodzi.",
+    "newSiteApproval": "FIRINGI sprawdza każdy nowy komis. Towar możesz wysłać po jego zatwierdzeniu.",
+    "customer": "Klient",
+    "searchCustomer": "Szukaj klienta (nazwa lub NIP)",
+    "noCustomers": "Nie znaleziono klientów.",
+    "address": "Adres przechowywania towaru",
+    "warehouse": "Magazyn",
+    "countEvery": "Spis co (dni)",
+    "counter": "Kto liczy",
+    "counterKind": {
+      "CUSTOMER": "Klient",
+      "SUPPLIER": "Dostawca",
+      "EITHER": "Klient lub dostawca"
+    },
+    "note": "Uwaga",
+    "create": "Utwórz",
+    "sites": "Lokalizacje",
+    "noSites": "Brak komisów.",
+    "open": "Otwórz",
+    "back": "Wszystkie lokalizacje",
+    "supplier": "Dostawca",
+    "status": {
+      "ACTIVE": "Aktywny",
+      "PENDING": "Czeka na FIRINGI",
+      "REJECTED": "Odrzucony",
+      "CLOSED": "Zamknięty"
+    },
+    "pendingHint": "FIRINGI sprawdza nowe komisy. Towar możesz wysłać po zatwierdzeniu.",
+    "rejected": "Odrzucone przez FIRINGI: {reason}",
+    "inTransit": "W drodze",
+    "toConfirm": "{n} do potwierdzenia",
+    "disputed": "{n} zakwestionowane",
+    "overdue": "Spis zaległy",
+    "lastCount": "Ostatni spis",
+    "nextCount": "Następny spis",
+    "never": "Nigdy",
+    "products": "Produkty",
+    "product": "Produkt",
+    "sent": "Wysłano",
+    "short": "Braki",
+    "used": "Zużyto",
+    "returned": "Odebrano",
+    "onShelf": "Na półce",
+    "value": "Wartość w cenie zakupu",
+    "nextExpiry": "Najbliższy termin ważności",
+    "noProducts": "Nic jeszcze nie umieszczono.",
+    "send": "Wyślij towar",
+    "sendHint": "Towar opuszcza teraz Twój magazyn (najpierw ten z najkrótszym terminem) i pozostaje Twój do momentu zużycia.",
+    "searchProduct": "Szukaj swoich produktów",
+    "free": "Dostępne: {n}",
+    "qty": "Ilość",
+    "sendNow": "Wyślij",
+    "sentOk": "Dostawa {number} wysłana",
+    "remove": "Usuń",
+    "shipments": "Dostawy",
+    "noShipments": "Brak dostaw.",
+    "ship": {
+      "SENT": "W drodze",
+      "RECEIVED": "Przyjęta"
+    },
+    "receive": "Potwierdź, co dotarło",
+    "receiveHint": "Wpisz, co faktycznie dotarło. Braki obciążają dostawcę.",
+    "received": "Dotarło",
+    "confirmReceived": "Potwierdź",
+    "shortOk": "Potwierdzono. Brakuje: {n}.",
+    "count": "Policz towar",
+    "countHint": "Wpisz, ile zostało na półce z każdego produktu. Różnica to zużycie. Druga strona je potwierdza, a następnie FIRINGI wystawia fakturę.",
+    "counted": "Zostało",
+    "expected": "Oczekiwano",
+    "submitCount": "Wyślij spis",
+    "countSent": "Spis {number} wysłany",
+    "counts": "Spisy",
+    "noCounts": "Brak spisów.",
+    "countStatus": {
+      "SUBMITTED": "Czeka na potwierdzenie",
+      "DISPUTED": "Zakwestionowany",
+      "INVOICED": "Zafakturowany",
+      "FAILED": "Fakturowanie nieudane",
+      "SUPERSEDED": "Zastąpiony ponownym spisem"
+    },
+    "countedBy": "Policzył(a): {name}",
+    "usedUnits": "Zużyto: {n}",
+    "nothingUsed": "Nic nie zużyto",
+    "autoAt": "Zostanie potwierdzony automatycznie {date}, jeśli nikt nie odpowie.",
+    "accept": "Potwierdź",
+    "dispute": "Zakwestionuj",
+    "disputeWhy": "Dlaczego spis jest błędny?",
+    "disputeNote": "Zakwestionowano: {note}",
+    "order": "Zamówienie",
+    "invoice": "Faktura",
+    "total": "Razem",
+    "auto": "potwierdzono automatycznie",
+    "retry": "Zafakturuj ponownie",
+    "error": "Problem: {error}",
+    "pickUp": "Odbierz towar",
+    "pickUpHint": "Niezużyty towar wraca do magazynu {warehouse} (najpierw ten z najdłuższym terminem).",
+    "takeBack": "Odbierz",
+    "tookBack": "Odebrano szt.: {n}",
+    "settings": "Ustawienia lokalizacji",
+    "save": "Zapisz",
+    "saved": "Zapisano",
+    "close": "Zamknij komis",
+    "closeHint": "Możliwe, gdy nic nie zostało, nic nie jest w drodze i żaden spis nie czeka.",
+    "withdraw": "Wycofaj",
+    "supplierCounts": "Ten towar liczy dostawca.",
+    "waitingCount": "Spis czeka na decyzję. Najpierw go potwierdź lub zakwestionuj."
   }
 }

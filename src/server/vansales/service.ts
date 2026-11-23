@@ -488,7 +488,7 @@ export async function sellFromVan(ctx: Ctx, i: VanSaleInput) {
     const placed = await placeOrder(buyer, {
       deliveryAddressId: addr.id, items: [...items].map(([offerId, qty]) => ({ offerId, qty })), approved: true,
       notes: [`Van sale ${number} · ${ctx.user.name ?? ""}`, i.note?.trim().slice(0, 300)].filter(Boolean).join(" — "),
-      van: { warehouseId: load.warehouseId, paidNow: i.method !== "ON_ACCOUNT" },
+      handover: { warehouseId: load.warehouseId, paidNow: i.method !== "ON_ACCOUNT", reason: "Sold from the supplier's van" },
     });
     const orders = "orders" in placed && placed.orders ? placed.orders : [];
     if (orders.length !== 1) throw new AppError("VAN_SALE", "The sale couldn't be placed.", 409);

@@ -1941,6 +1941,46 @@
     "assortment_gaps": {
       "title": "Produtos de stock obrigatório a reencomendar",
       "body": "{n} dos seus produtos de stock obrigatório não são encomendados há {days} dias."
+    },
+    "consignment_site_pending": {
+      "title": "Nova consignação para aprovar",
+      "body": "{supplier} quer colocar stock à consignação em {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Consignação aprovada",
+      "body": "A FIRINGI aprovou a consignação {site}. Já pode enviar stock."
+    },
+    "consignment_site_rejected": {
+      "title": "Consignação rejeitada",
+      "body": "A FIRINGI rejeitou a consignação {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Stock à consignação de {supplier}",
+      "body": "{supplier} vai deixar stock consigo ({site}). Paga apenas o que usar."
+    },
+    "consignment_shipment": {
+      "title": "Entrega à consignação a caminho",
+      "body": "{supplier} enviou {units} unidades à consignação ({number}). Confirme o que chegou."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Contagem por confirmar",
+      "body": "Contagem {number} em {site}: {units} unidades usadas. Confirme ou conteste no prazo de {days} dias."
+    },
+    "consignment_count_due": {
+      "title": "Contagem de consignação pendente",
+      "body": "O stock em {site} tem de ser contado (a cada {days} dias)."
+    },
+    "consignment_invoiced": {
+      "title": "Produtos à consignação faturados",
+      "body": "Os produtos usados em {site} foram faturados: encomenda {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Contagem de consignação contestada",
+      "body": "A contagem {number} em {site} foi contestada: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Produtos à consignação a expirar em breve",
+      "body": "{n} unidades em {site} expiram dentro de {days} dias. Recolha-as ou combine um plano com o cliente."
     }
   },
   "notifications": {
@@ -2214,7 +2254,8 @@
     "Van Loads": "Carregamentos",
     "Bought from Vans": "Compras em carrinhas",
     "Customer Assortments": "Sortidos de clientes",
-    "Must-Stock List": "Lista de stock obrigatório"
+    "Must-Stock List": "Lista de stock obrigatório",
+    "Consignment Stock": "Stock à Consignação"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -9108,5 +9149,125 @@
     "price": "Preço",
     "edit": "Editar",
     "cancel": "Cancelar"
+  },
+  "consignment": {
+    "title": "Stock à Consignação",
+    "intro": "Stock que deixa nos clientes. Pagam apenas o que usam: após cada contagem, a FIRINGI fatura os produtos usados. O resto continua a ser seu e pode voltar.",
+    "buyTitle": "Stock à Consignação",
+    "buyIntro": "Stock que os seus fornecedores deixam consigo. Paga apenas o que usa: após cada contagem, a FIRINGI fatura o que foi usado. O resto continua a ser do fornecedor.",
+    "off": "O stock à consignação está desativado pela FIRINGI.",
+    "kpi": {
+      "sites": "Locais ativos",
+      "units": "Unidades nos clientes",
+      "value": "Valor ao custo",
+      "toConfirm": "Contagens por confirmar"
+    },
+    "newSite": "Nova consignação",
+    "newSiteHint": "Escolha o cliente, a morada onde o stock fica e o armazém de onde sai.",
+    "newSiteApproval": "A FIRINGI verifica cada nova consignação. Pode enviar stock assim que for aprovada.",
+    "customer": "Cliente",
+    "searchCustomer": "Pesquisar um cliente (nome ou NIF)",
+    "noCustomers": "Nenhum cliente encontrado.",
+    "address": "Morada onde o stock fica",
+    "warehouse": "Armazém",
+    "countEvery": "Contar a cada (dias)",
+    "counter": "Quem conta",
+    "counterKind": {
+      "CUSTOMER": "O cliente",
+      "SUPPLIER": "O fornecedor",
+      "EITHER": "Cliente ou fornecedor"
+    },
+    "note": "Nota",
+    "create": "Criar",
+    "sites": "Locais",
+    "noSites": "Ainda sem consignações.",
+    "open": "Abrir",
+    "back": "Todos os locais",
+    "supplier": "Fornecedor",
+    "status": {
+      "ACTIVE": "Ativo",
+      "PENDING": "A aguardar a FIRINGI",
+      "REJECTED": "Rejeitado",
+      "CLOSED": "Fechado"
+    },
+    "pendingHint": "A FIRINGI verifica as novas consignações. Pode enviar stock assim que for aprovada.",
+    "rejected": "Rejeitado pela FIRINGI: {reason}",
+    "inTransit": "A caminho",
+    "toConfirm": "{n} por confirmar",
+    "disputed": "{n} contestadas",
+    "overdue": "Contagem em atraso",
+    "lastCount": "Última contagem",
+    "nextCount": "Próxima contagem",
+    "never": "Nunca",
+    "products": "Produtos",
+    "product": "Produto",
+    "sent": "Enviado",
+    "short": "Em falta",
+    "used": "Usado",
+    "returned": "Recolhido",
+    "onShelf": "Na prateleira",
+    "value": "Valor ao custo",
+    "nextExpiry": "Próxima validade",
+    "noProducts": "Ainda nada colocado.",
+    "send": "Enviar stock",
+    "sendHint": "Os produtos saem agora do seu armazém (validade mais curta primeiro) e continuam a ser seus até serem usados.",
+    "searchProduct": "Pesquisar os seus produtos",
+    "free": "Livre: {n}",
+    "qty": "Quantidade",
+    "sendNow": "Enviar",
+    "sentOk": "Entrega {number} enviada",
+    "remove": "Remover",
+    "shipments": "Entregas",
+    "noShipments": "Ainda sem entregas.",
+    "ship": {
+      "SENT": "A caminho",
+      "RECEIVED": "Recebida"
+    },
+    "receive": "Confirmar o que chegou",
+    "receiveHint": "Indique o que chegou realmente. O que faltar é perda do fornecedor.",
+    "received": "Chegou",
+    "confirmReceived": "Confirmar",
+    "shortOk": "Confirmado. {n} em falta.",
+    "count": "Contar o stock",
+    "countHint": "Indique o que resta na prateleira de cada produto. A diferença é o que foi usado. A outra parte confirma e depois a FIRINGI fatura.",
+    "counted": "Resta",
+    "expected": "Esperado",
+    "submitCount": "Enviar contagem",
+    "countSent": "Contagem {number} enviada",
+    "counts": "Contagens",
+    "noCounts": "Ainda sem contagens.",
+    "countStatus": {
+      "SUBMITTED": "A aguardar confirmação",
+      "DISPUTED": "Contestada",
+      "INVOICED": "Faturada",
+      "FAILED": "Falha na faturação",
+      "SUPERSEDED": "Substituída por recontagem"
+    },
+    "countedBy": "Contado por {name}",
+    "usedUnits": "{n} usados",
+    "nothingUsed": "Nada usado",
+    "autoAt": "Confirmada automaticamente a {date} se ninguém responder.",
+    "accept": "Confirmar",
+    "dispute": "Contestar",
+    "disputeWhy": "Porque é que a contagem está errada?",
+    "disputeNote": "Contestada: {note}",
+    "order": "Encomenda",
+    "invoice": "Fatura",
+    "total": "Total",
+    "auto": "confirmada automaticamente",
+    "retry": "Faturar novamente",
+    "error": "Problema: {error}",
+    "pickUp": "Recolher produtos",
+    "pickUpHint": "Os produtos não usados voltam para {warehouse} (validade mais longa primeiro).",
+    "takeBack": "Recolher",
+    "tookBack": "{n} unidades recolhidas",
+    "settings": "Definições do local",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "close": "Fechar consignação",
+    "closeHint": "Possível quando não resta nada, nada está a caminho e nenhuma contagem está pendente.",
+    "withdraw": "Retirar",
+    "supplierCounts": "O fornecedor conta este stock.",
+    "waitingCount": "Há uma contagem pendente. Confirme-a ou conteste-a primeiro."
   }
 }

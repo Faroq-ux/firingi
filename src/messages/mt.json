@@ -938,7 +938,8 @@
     "Van Loads": "Tagħbijiet tal-Vann",
     "Bought from Vans": "Mixtri minn Vannijiet",
     "Customer Assortments": "Assortimenti tal-Klijenti",
-    "Must-Stock List": "Lista ta' Stokk Obbligatorju"
+    "Must-Stock List": "Lista ta' Stokk Obbligatorju",
+    "Consignment Stock": "Stokk fuq Konsenja"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Prodotti ta' stokk obbligatorju biex terġgħu tordnaw",
       "body": "{n} mill-prodotti ta' stokk obbligatorju tagħkom ma ġewx ordnati f'dawn l-aħħar {days} jum."
+    },
+    "consignment_site_pending": {
+      "title": "Konsenja ġdida x'tiġi approvata",
+      "body": "{supplier} irid iqiegħed stokk fuq konsenja għand {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsenja approvata",
+      "body": "FIRINGI approva l-konsenja {site}. Issa tista' tibgħat stokk."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsenja miċħuda",
+      "body": "FIRINGI ċaħad il-konsenja {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Stokk fuq konsenja minn {supplier}",
+      "body": "{supplier} se jħalli stokk għandek ({site}). Tħallas biss għal dak li tuża."
+    },
+    "consignment_shipment": {
+      "title": "Kunsinna fuq konsenja fit-triq",
+      "body": "{supplier} bagħat {units} unitajiet fuq konsenja ({number}). Ikkonferma x'wasal."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Għadd x'jiġi kkonfermat",
+      "body": "Għadd {number} f'{site}: {units} unitajiet użati. Ikkonfermah jew ikkontestah fi żmien {days} jiem."
+    },
+    "consignment_count_due": {
+      "title": "Wasal iż-żmien għall-għadd tal-konsenja",
+      "body": "L-istokk f'{site} irid jingħadd (kull {days} jiem)."
+    },
+    "consignment_invoiced": {
+      "title": "Oġġetti fuq konsenja ġew iffatturati",
+      "body": "L-oġġetti użati f'{site} ġew iffatturati: ordni {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Għadd tal-konsenja ikkontestat",
+      "body": "L-għadd {number} f'{site} ġie kkontestat: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Oġġetti fuq konsenja jiskadu dalwaqt",
+      "body": "{n} unitajiet f'{site} jiskadu fi żmien {days} jiem. Ħudhom lura jew aqbel fuq pjan mal-klijent."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Prezz",
     "edit": "Editja",
     "cancel": "Ikkanċella"
+  },
+  "consignment": {
+    "title": "Stokk fuq Konsenja",
+    "intro": "Stokk li tħalli għand il-klijenti. Iħallsu biss għal dak li jużaw: wara kull għadd FIRINGI joħroġ fattura għall-oġġetti użati. Il-bqija jibqa' tiegħek u jista' jittieħed lura.",
+    "buyTitle": "Stokk fuq Konsenja",
+    "buyIntro": "Stokk li l-fornituri tiegħek iħallu għandek. Tħallas biss għal dak li tuża: wara kull għadd FIRINGI joħroġ fattura għal dak li ntuża. Il-bqija jibqa' tal-fornitur.",
+    "off": "L-istokk fuq konsenja ġie mitfi minn FIRINGI.",
+    "kpi": {
+      "sites": "Siti attivi",
+      "units": "Unitajiet għand il-klijenti",
+      "value": "Valur bil-kost",
+      "toConfirm": "Għaddijiet x'jiġu kkonfermati"
+    },
+    "newSite": "Konsenja ġdida",
+    "newSiteHint": "Agħżel il-klijent, l-indirizz fejn jinżamm l-istokk u l-maħżen minn fejn ġej.",
+    "newSiteApproval": "FIRINGI jiċċekkja kull konsenja ġdida. Tista' tibgħat stokk ladarba tiġi approvata.",
+    "customer": "Klijent",
+    "searchCustomer": "Fittex klijent (isem jew numru tal-VAT)",
+    "noCustomers": "Ma nstab l-ebda klijent.",
+    "address": "Indirizz fejn jinżamm l-istokk",
+    "warehouse": "Maħżen",
+    "countEvery": "Għodd kull (jiem)",
+    "counter": "Min jagħmel l-għadd",
+    "counterKind": {
+      "CUSTOMER": "Il-klijent",
+      "SUPPLIER": "Il-fornitur",
+      "EITHER": "Il-klijent jew il-fornitur"
+    },
+    "note": "Nota",
+    "create": "Oħloq",
+    "sites": "Siti",
+    "noSites": "Għad m'hemm l-ebda konsenja.",
+    "open": "Iftaħ",
+    "back": "Is-siti kollha",
+    "supplier": "Fornitur",
+    "status": {
+      "ACTIVE": "Attiva",
+      "PENDING": "Qed tistenna lil FIRINGI",
+      "REJECTED": "Miċħuda",
+      "CLOSED": "Magħluqa"
+    },
+    "pendingHint": "FIRINGI jiċċekkja l-konsenji ġodda. Tista' tibgħat stokk ladarba tiġi approvata.",
+    "rejected": "Miċħuda minn FIRINGI: {reason}",
+    "inTransit": "Fit-triq",
+    "toConfirm": "{n} x'jiġu kkonfermati",
+    "disputed": "{n} ikkontestati",
+    "overdue": "Għadd tard",
+    "lastCount": "L-aħħar għadd",
+    "nextCount": "Il-għadd li jmiss",
+    "never": "Qatt",
+    "products": "Prodotti",
+    "product": "Prodott",
+    "sent": "Mibgħut",
+    "short": "Nieqes",
+    "used": "Użat",
+    "returned": "Meħud lura",
+    "onShelf": "Fuq l-ixkaffa",
+    "value": "Valur bil-kost",
+    "nextExpiry": "L-iskadenza li jmiss",
+    "noProducts": "Għadu ma tqiegħed xejn.",
+    "send": "Ibgħat stokk",
+    "sendHint": "L-oġġetti joħorġu mill-maħżen tiegħek issa (l-ewwel dawk li jiskadu l-ewwel) u jibqgħu tiegħek sakemm jintużaw.",
+    "searchProduct": "Fittex il-prodotti tiegħek",
+    "free": "Disponibbli: {n}",
+    "qty": "Kwantità",
+    "sendNow": "Ibgħat",
+    "sentOk": "Il-kunsinna {number} intbagħtet",
+    "remove": "Neħħi",
+    "shipments": "Kunsinni",
+    "noShipments": "Għad m'hemm l-ebda kunsinna.",
+    "ship": {
+      "SENT": "Fit-triq",
+      "RECEIVED": "Riċevuta"
+    },
+    "receive": "Ikkonferma x'wasal",
+    "receiveHint": "Daħħal x'wasal verament. Kull ma jkun nieqes huwa telf tal-fornitur.",
+    "received": "Wasal",
+    "confirmReceived": "Ikkonferma",
+    "shortOk": "Ikkonfermat. Nieqsa {n}.",
+    "count": "Għodd l-istokk",
+    "countHint": "Daħħal kemm fadal fuq l-ixkaffa minn kull prodott. Id-differenza hija dak li ntuża. Il-parti l-oħra tikkonfermah, imbagħad FIRINGI joħroġ il-fattura.",
+    "counted": "Fadal",
+    "expected": "Mistenni",
+    "submitCount": "Ibgħat l-għadd",
+    "countSent": "L-għadd {number} intbagħat",
+    "counts": "Għaddijiet",
+    "noCounts": "Għad m'hemm l-ebda għadd.",
+    "countStatus": {
+      "SUBMITTED": "Qed jistenna konferma",
+      "DISPUTED": "Ikkontestat",
+      "INVOICED": "Iffatturat",
+      "FAILED": "Il-fatturazzjoni falliet",
+      "SUPERSEDED": "Sostitwit b'għadd ġdid"
+    },
+    "countedBy": "Magħdud minn {name}",
+    "usedUnits": "{n} użati",
+    "nothingUsed": "Xejn ma ntuża",
+    "autoAt": "Jiġi kkonfermat awtomatikament fi {date} jekk ħadd ma jwieġeb.",
+    "accept": "Ikkonferma",
+    "dispute": "Ikkontesta",
+    "disputeWhy": "Għaliex l-għadd mhux korrett?",
+    "disputeNote": "Ikkontestat: {note}",
+    "order": "Ordni",
+    "invoice": "Fattura",
+    "total": "Total",
+    "auto": "ikkonfermat awtomatikament",
+    "retry": "Erġa' ffattura",
+    "error": "Problema: {error}",
+    "pickUp": "Ħu l-oġġetti lura",
+    "pickUpHint": "L-oġġetti mhux użati jmorru lura f'{warehouse} (l-ewwel dawk li jiskadu l-aħħar).",
+    "takeBack": "Ħu lura",
+    "tookBack": "{n} unitajiet meħuda lura",
+    "settings": "Issettjar tas-sit",
+    "save": "Issejvja",
+    "saved": "Issejvjat",
+    "close": "Agħlaq il-konsenja",
+    "closeHint": "Possibbli meta ma jkun fadal xejn, xejn ma jkun fit-triq u l-ebda għadd ma jkun qed jistenna.",
+    "withdraw": "Irtira",
+    "supplierCounts": "Il-fornitur jgħodd dan l-istokk.",
+    "waitingCount": "Hemm għadd jistenna. L-ewwel ikkonfermah jew ikkontestah."
   }
 }

@@ -938,7 +938,8 @@
     "Van Loads": "Bestelwagenladingen",
     "Bought from Vans": "Gekocht uit bestelwagens",
     "Customer Assortments": "Klantassortimenten",
-    "Must-Stock List": "Verplicht assortiment"
+    "Must-Stock List": "Verplicht assortiment",
+    "Consignment Stock": "Consignatievoorraad"
   },
   "delivery": {
     "title": "Levering",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Verplichte producten om na te bestellen",
       "body": "{n} van uw producten uit het verplichte assortiment zijn al {days} dagen niet besteld."
+    },
+    "consignment_site_pending": {
+      "title": "Nieuwe consignatie ter goedkeuring",
+      "body": "{supplier} wil consignatievoorraad plaatsen bij {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Consignatie goedgekeurd",
+      "body": "FIRINGI heeft consignatie {site} goedgekeurd. U kunt nu voorraad sturen."
+    },
+    "consignment_site_rejected": {
+      "title": "Consignatie afgewezen",
+      "body": "FIRINGI heeft consignatie {site} afgewezen: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Consignatievoorraad van {supplier}",
+      "body": "{supplier} laat voorraad bij u achter ({site}). U betaalt alleen wat u gebruikt."
+    },
+    "consignment_shipment": {
+      "title": "Consignatielevering onderweg",
+      "body": "{supplier} heeft {units} eenheden in consignatie verzonden ({number}). Bevestig wat is aangekomen."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Telling te bevestigen",
+      "body": "Telling {number} bij {site}: {units} eenheden gebruikt. Bevestig of betwist deze binnen {days} dagen."
+    },
+    "consignment_count_due": {
+      "title": "Consignatietelling nodig",
+      "body": "De voorraad bij {site} moet worden geteld (elke {days} dagen)."
+    },
+    "consignment_invoiced": {
+      "title": "Consignatiegoederen gefactureerd",
+      "body": "De bij {site} gebruikte goederen zijn gefactureerd: bestelling {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Consignatietelling betwist",
+      "body": "Telling {number} bij {site} is betwist: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Consignatiegoederen verlopen binnenkort",
+      "body": "{n} eenheden bij {site} verlopen binnen {days} dagen. Neem ze terug of spreek een plan af met de klant."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Prijs",
     "edit": "Bewerken",
     "cancel": "Annuleren"
+  },
+  "consignment": {
+    "title": "Consignatievoorraad",
+    "intro": "Voorraad die u bij klanten achterlaat. Zij betalen alleen wat ze gebruiken: na elke telling factureert FIRINGI de gebruikte goederen. De rest blijft van u en kan terugkomen.",
+    "buyTitle": "Consignatievoorraad",
+    "buyIntro": "Voorraad die uw leveranciers bij u achterlaten. U betaalt alleen wat u gebruikt: na elke telling factureert FIRINGI wat is gebruikt. De rest blijft van de leverancier.",
+    "off": "Consignatievoorraad is uitgeschakeld door FIRINGI.",
+    "kpi": {
+      "sites": "Actieve locaties",
+      "units": "Eenheden bij klanten",
+      "value": "Waarde tegen kostprijs",
+      "toConfirm": "Te bevestigen tellingen"
+    },
+    "newSite": "Nieuwe consignatie",
+    "newSiteHint": "Kies de klant, het adres waar de voorraad blijft en het magazijn waar deze vandaan komt.",
+    "newSiteApproval": "FIRINGI controleert elke nieuwe consignatie. U kunt voorraad sturen zodra deze is goedgekeurd.",
+    "customer": "Klant",
+    "searchCustomer": "Zoek een klant (naam of btw-nummer)",
+    "noCustomers": "Geen klanten gevonden.",
+    "address": "Adres waar de voorraad blijft",
+    "warehouse": "Magazijn",
+    "countEvery": "Tellen elke (dagen)",
+    "counter": "Wie telt",
+    "counterKind": {
+      "CUSTOMER": "De klant",
+      "SUPPLIER": "De leverancier",
+      "EITHER": "Klant of leverancier"
+    },
+    "note": "Notitie",
+    "create": "Aanmaken",
+    "sites": "Locaties",
+    "noSites": "Nog geen consignatie.",
+    "open": "Openen",
+    "back": "Alle locaties",
+    "supplier": "Leverancier",
+    "status": {
+      "ACTIVE": "Actief",
+      "PENDING": "Wacht op FIRINGI",
+      "REJECTED": "Afgewezen",
+      "CLOSED": "Gesloten"
+    },
+    "pendingHint": "FIRINGI controleert nieuwe consignaties. U kunt voorraad sturen zodra deze is goedgekeurd.",
+    "rejected": "Afgewezen door FIRINGI: {reason}",
+    "inTransit": "Onderweg",
+    "toConfirm": "{n} te bevestigen",
+    "disputed": "{n} betwist",
+    "overdue": "Telling te laat",
+    "lastCount": "Laatste telling",
+    "nextCount": "Volgende telling",
+    "never": "Nooit",
+    "products": "Producten",
+    "product": "Product",
+    "sent": "Verzonden",
+    "short": "Tekort",
+    "used": "Gebruikt",
+    "returned": "Teruggenomen",
+    "onShelf": "In het schap",
+    "value": "Waarde tegen kostprijs",
+    "nextExpiry": "Eerstvolgende vervaldatum",
+    "noProducts": "Nog niets geplaatst.",
+    "send": "Voorraad sturen",
+    "sendHint": "De goederen verlaten nu uw magazijn (kortste houdbaarheid eerst) en blijven van u tot ze worden gebruikt.",
+    "searchProduct": "Zoek uw producten",
+    "free": "Vrij: {n}",
+    "qty": "Aantal",
+    "sendNow": "Versturen",
+    "sentOk": "Levering {number} verzonden",
+    "remove": "Verwijderen",
+    "shipments": "Leveringen",
+    "noShipments": "Nog geen leveringen.",
+    "ship": {
+      "SENT": "Onderweg",
+      "RECEIVED": "Ontvangen"
+    },
+    "receive": "Bevestig wat is aangekomen",
+    "receiveHint": "Vul in wat er werkelijk is aangekomen. Wat ontbreekt, is voor rekening van de leverancier.",
+    "received": "Aangekomen",
+    "confirmReceived": "Bevestigen",
+    "shortOk": "Bevestigd. {n} ontbreken.",
+    "count": "Voorraad tellen",
+    "countHint": "Vul per product in wat er nog in het schap ligt. Het verschil is wat is gebruikt. De andere partij bevestigt het, daarna factureert FIRINGI het.",
+    "counted": "Over",
+    "expected": "Verwacht",
+    "submitCount": "Telling versturen",
+    "countSent": "Telling {number} verzonden",
+    "counts": "Tellingen",
+    "noCounts": "Nog geen tellingen.",
+    "countStatus": {
+      "SUBMITTED": "Wacht op bevestiging",
+      "DISPUTED": "Betwist",
+      "INVOICED": "Gefactureerd",
+      "FAILED": "Facturatie mislukt",
+      "SUPERSEDED": "Vervangen door hertelling"
+    },
+    "countedBy": "Geteld door {name}",
+    "usedUnits": "{n} gebruikt",
+    "nothingUsed": "Niets gebruikt",
+    "autoAt": "Wordt op {date} automatisch bevestigd als niemand reageert.",
+    "accept": "Bevestigen",
+    "dispute": "Betwisten",
+    "disputeWhy": "Waarom klopt de telling niet?",
+    "disputeNote": "Betwist: {note}",
+    "order": "Bestelling",
+    "invoice": "Factuur",
+    "total": "Totaal",
+    "auto": "automatisch bevestigd",
+    "retry": "Opnieuw factureren",
+    "error": "Probleem: {error}",
+    "pickUp": "Goederen terugnemen",
+    "pickUpHint": "Ongebruikte goederen gaan terug naar {warehouse} (langste houdbaarheid eerst).",
+    "takeBack": "Terugnemen",
+    "tookBack": "{n} eenheden teruggenomen",
+    "settings": "Locatie-instellingen",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "close": "Consignatie sluiten",
+    "closeHint": "Mogelijk als er niets meer over is, niets onderweg is en geen telling openstaat.",
+    "withdraw": "Intrekken",
+    "supplierCounts": "De leverancier telt deze voorraad.",
+    "waitingCount": "Er staat een telling open. Bevestig of betwist deze eerst."
   }
 }

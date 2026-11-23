@@ -938,7 +938,8 @@
     "Van Loads": "Încărcări mașini",
     "Bought from Vans": "Cumpărat din mașini",
     "Customer Assortments": "Sortimente clienți",
-    "Must-Stock List": "Listă obligatorie"
+    "Must-Stock List": "Listă obligatorie",
+    "Consignment Stock": "Stoc în consignație"
   },
   "delivery": {
     "title": "Livrare",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Produse obligatorii de comandat din nou",
       "body": "{n} dintre produsele dumneavoastră obligatorii nu au fost comandate în ultimele {days} zile."
+    },
+    "consignment_site_pending": {
+      "title": "Consignație nouă de aprobat",
+      "body": "{supplier} vrea să plaseze stoc în consignație la {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Consignație aprobată",
+      "body": "FIRINGI a aprobat consignația {site}. Poți trimite stoc acum."
+    },
+    "consignment_site_rejected": {
+      "title": "Consignație respinsă",
+      "body": "FIRINGI a respins consignația {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Stoc în consignație de la {supplier}",
+      "body": "{supplier} va lăsa stoc la tine ({site}). Plătești doar ce folosești."
+    },
+    "consignment_shipment": {
+      "title": "Livrare în consignație pe drum",
+      "body": "{supplier} a trimis {units} unități în consignație ({number}). Confirmă ce a sosit."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventar de confirmat",
+      "body": "Inventarul {number} la {site}: {units} unități folosite. Confirmă-l sau contestă-l în {days} zile."
+    },
+    "consignment_count_due": {
+      "title": "Inventar de consignație scadent",
+      "body": "Stocul de la {site} trebuie inventariat (la fiecare {days} zile)."
+    },
+    "consignment_invoiced": {
+      "title": "Marfă în consignație facturată",
+      "body": "Marfa folosită la {site} a fost facturată: comanda {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Inventar de consignație contestat",
+      "body": "Inventarul {number} la {site} a fost contestat: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Marfă în consignație care expiră curând",
+      "body": "{n} unități la {site} expiră în {days} zile. Retrage-le sau convine un plan cu clientul."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Preț",
     "edit": "Editați",
     "cancel": "Anulați"
+  },
+  "consignment": {
+    "title": "Stoc în consignație",
+    "intro": "Stoc pe care îl lași la clienți. Aceștia plătesc doar ce folosesc: după fiecare inventar, FIRINGI facturează marfa folosită. Restul rămâne al tău și poate reveni.",
+    "buyTitle": "Stoc în consignație",
+    "buyIntro": "Stoc pe care furnizorii îl lasă la tine. Plătești doar ce folosești: după fiecare inventar, FIRINGI facturează ce a fost folosit. Restul rămâne al furnizorului.",
+    "off": "Stocul în consignație este dezactivat de FIRINGI.",
+    "kpi": {
+      "sites": "Locații active",
+      "units": "Unități la clienți",
+      "value": "Valoare la cost",
+      "toConfirm": "Inventare de confirmat"
+    },
+    "newSite": "Consignație nouă",
+    "newSiteHint": "Alege clientul, adresa unde rămâne stocul și depozitul din care provine.",
+    "newSiteApproval": "FIRINGI verifică fiecare consignație nouă. Poți trimite stoc după aprobare.",
+    "customer": "Client",
+    "searchCustomer": "Caută un client (nume sau CUI)",
+    "noCustomers": "Nu s-au găsit clienți.",
+    "address": "Adresa unde rămâne stocul",
+    "warehouse": "Depozit",
+    "countEvery": "Inventar la fiecare (zile)",
+    "counter": "Cine inventariază",
+    "counterKind": {
+      "CUSTOMER": "Clientul",
+      "SUPPLIER": "Furnizorul",
+      "EITHER": "Clientul sau furnizorul"
+    },
+    "note": "Notă",
+    "create": "Creează",
+    "sites": "Locații",
+    "noSites": "Nicio consignație încă.",
+    "open": "Deschide",
+    "back": "Toate locațiile",
+    "supplier": "Furnizor",
+    "status": {
+      "ACTIVE": "Activă",
+      "PENDING": "Așteaptă FIRINGI",
+      "REJECTED": "Respinsă",
+      "CLOSED": "Închisă"
+    },
+    "pendingHint": "FIRINGI verifică consignațiile noi. Poți trimite stoc după aprobare.",
+    "rejected": "Respinsă de FIRINGI: {reason}",
+    "inTransit": "Pe drum",
+    "toConfirm": "{n} de confirmat",
+    "disputed": "{n} contestate",
+    "overdue": "Inventar întârziat",
+    "lastCount": "Ultimul inventar",
+    "nextCount": "Următorul inventar",
+    "never": "Niciodată",
+    "products": "Produse",
+    "product": "Produs",
+    "sent": "Trimis",
+    "short": "Lipsă",
+    "used": "Folosit",
+    "returned": "Retras",
+    "onShelf": "Pe raft",
+    "value": "Valoare la cost",
+    "nextExpiry": "Următoarea expirare",
+    "noProducts": "Nimic plasat încă.",
+    "send": "Trimite stoc",
+    "sendHint": "Marfa iese acum din depozitul tău (întâi cea care expiră prima) și rămâne a ta până este folosită.",
+    "searchProduct": "Caută produsele tale",
+    "free": "Disponibil: {n}",
+    "qty": "Cantitate",
+    "sendNow": "Trimite",
+    "sentOk": "Livrarea {number} a fost trimisă",
+    "remove": "Elimină",
+    "shipments": "Livrări",
+    "noShipments": "Nicio livrare încă.",
+    "ship": {
+      "SENT": "Pe drum",
+      "RECEIVED": "Recepționată"
+    },
+    "receive": "Confirmă ce a sosit",
+    "receiveHint": "Introdu ce a sosit efectiv. Lipsurile sunt pierderea furnizorului.",
+    "received": "Sosit",
+    "confirmReceived": "Confirmă",
+    "shortOk": "Confirmat. Lipsesc {n}.",
+    "count": "Inventariază stocul",
+    "countHint": "Introdu ce a rămas pe raft pentru fiecare produs. Diferența reprezintă ce s-a folosit. Cealaltă parte confirmă, apoi FIRINGI facturează.",
+    "counted": "Rămas",
+    "expected": "Așteptat",
+    "submitCount": "Trimite inventarul",
+    "countSent": "Inventarul {number} a fost trimis",
+    "counts": "Inventare",
+    "noCounts": "Niciun inventar încă.",
+    "countStatus": {
+      "SUBMITTED": "Așteaptă confirmarea",
+      "DISPUTED": "Contestat",
+      "INVOICED": "Facturat",
+      "FAILED": "Facturare eșuată",
+      "SUPERSEDED": "Înlocuit de un nou inventar"
+    },
+    "countedBy": "Inventariat de {name}",
+    "usedUnits": "{n} folosite",
+    "nothingUsed": "Nimic folosit",
+    "autoAt": "Confirmat automat pe {date} dacă nu răspunde nimeni.",
+    "accept": "Confirmă",
+    "dispute": "Contestă",
+    "disputeWhy": "De ce este greșit inventarul?",
+    "disputeNote": "Contestat: {note}",
+    "order": "Comandă",
+    "invoice": "Factură",
+    "total": "Total",
+    "auto": "confirmat automat",
+    "retry": "Facturează din nou",
+    "error": "Problemă: {error}",
+    "pickUp": "Retrage marfa",
+    "pickUpHint": "Marfa nefolosită revine în {warehouse} (întâi cea care expiră ultima).",
+    "takeBack": "Retrage",
+    "tookBack": "{n} unități retrase",
+    "settings": "Setările locației",
+    "save": "Salvează",
+    "saved": "Salvat",
+    "close": "Închide consignația",
+    "closeHint": "Posibil când nu a mai rămas nimic, nimic nu este pe drum și niciun inventar nu așteaptă.",
+    "withdraw": "Retrage cererea",
+    "supplierCounts": "Furnizorul inventariază acest stoc.",
+    "waitingCount": "Un inventar așteaptă. Confirmă-l sau contestă-l mai întâi."
   }
 }

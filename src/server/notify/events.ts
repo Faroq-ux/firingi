@@ -214,6 +214,17 @@ export const EVENTS: EventDef[] = [
   E("reporder.expired", "orders", ["vendor.reps.field", "vendor.reps.manage"], ["PUSH"], ["total"]),
   // Phase 64: customer assortments
   E("assortment.gaps", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["n", "days"]),
+  // Phase 65: consignment stock
+  E("consignment.site_pending", "orders", ["admin.vendors.approve", "admin.vendors.view"], ["EMAIL"], ["site", "supplier", "customer"]),
+  E("consignment.site_approved", "orders", ["vendor.consignment.manage"], ["EMAIL", "PUSH"], ["site"]),
+  E("consignment.site_rejected", "orders", ["vendor.consignment.manage"], ["EMAIL", "PUSH"], ["site", "reason"]),
+  E("consignment.site_opened", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["site", "supplier"]),
+  E("consignment.shipment", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["number", "supplier", "units"]),
+  E("consignment.count_to_confirm", "orders", [...BUYER_ORDERS, "vendor.consignment.manage"], ["EMAIL", "PUSH"], ["number", "site", "units", "days"]),
+  E("consignment.count_due", "orders", [...BUYER_ORDERS, "vendor.consignment.manage", "vendor.consignment.count"], ["PUSH", "EMAIL"], ["site", "days"]),
+  E("consignment.invoiced", "orders", [...BUYER_ORDERS, "vendor.consignment.manage"], ["EMAIL", "PUSH"], ["number", "site", "total"]),
+  E("consignment.disputed", "orders", [...BUYER_ORDERS, "vendor.consignment.manage", "admin.vendors.view", "admin.orders.view"], ["EMAIL", "PUSH"], ["number", "site", "note"]),
+  E("consignment.expiring", "orders", ["vendor.consignment.manage"], ["EMAIL", "PUSH"], ["site", "n", "days"]),
   // Phase 63: van sales
   E("vansale.receipt", "orders", BUYER_ORDERS, ["EMAIL", "PUSH"], ["supplier", "number", "total", "paid"]),
   E("vansales.variance", "orders", ["vendor.vansales.manage", "admin.vendors.view", "admin.finance.view"], ["EMAIL", "PUSH"], ["number", "supplier", "variance", "missing"]),

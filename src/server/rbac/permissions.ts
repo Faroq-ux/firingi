@@ -80,6 +80,8 @@ const defs = {
   "vendor.reps.manage": { audience: "VENDOR", module: "Sales reps", description: "Manage sales reps: customers, visit plans, targets, commission and results" },
   "vendor.reps.field": { audience: "VENDOR", module: "Sales reps", description: "Sales rep: own customers, visits and orders taken for customers" },
   "vendor.vansales.manage": { audience: "VENDOR", module: "Van sales", description: "Load vans from the warehouse, start and unload rounds, count the cash, see van sales" },
+  "vendor.consignment.manage": { audience: "VENDOR", module: "Consignment", description: "Consignment stock: open sites at customers, send stock, confirm counts, pick up, close" },
+  "vendor.consignment.count": { audience: "VENDOR", module: "Consignment", description: "Count consignment stock at customers" },
   "vendor.vansales.sell": { audience: "VENDOR", module: "Van sales", description: "Van seller: sell from the van to customers, take payment, signatures and empties" },
   "vendor.recalls.manage": { audience: "VENDOR", module: "Inventory", description: "Recall own lots (blocks stock and tells every buyer)" },
   "vendor.pricing.manage": { audience: "VENDOR", module: "Pricing", description: "Manage price lists and customer pricing" },

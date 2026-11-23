@@ -938,7 +938,8 @@
     "Van Loads": "Transporter-Beladungen",
     "Bought from Vans": "Aus Transportern gekauft",
     "Customer Assortments": "Kundensortimente",
-    "Must-Stock List": "Pflichtsortiment"
+    "Must-Stock List": "Pflichtsortiment",
+    "Consignment Stock": "Konsignationslager"
   },
   "delivery": {
     "title": "Lieferung",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Pflichtsortiment nachbestellen",
       "body": "{n} Ihrer Produkte aus dem Pflichtsortiment wurden seit {days} Tagen nicht bestellt."
+    },
+    "consignment_site_pending": {
+      "title": "Neues Konsignationslager zu genehmigen",
+      "body": "{supplier} möchte Konsignationsware bei {customer} ({site}) einlagern."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignationslager genehmigt",
+      "body": "FIRINGI hat das Konsignationslager {site} genehmigt. Sie können jetzt Ware senden."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignationslager abgelehnt",
+      "body": "FIRINGI hat das Konsignationslager {site} abgelehnt: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignationsware von {supplier}",
+      "body": "{supplier} lagert Ware bei Ihnen ein ({site}). Sie zahlen nur, was Sie verbrauchen."
+    },
+    "consignment_shipment": {
+      "title": "Konsignationslieferung unterwegs",
+      "body": "{supplier} hat {units} Einheiten in Konsignation gesendet ({number}). Bestätigen Sie den Wareneingang."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Zählung zu bestätigen",
+      "body": "Zählung {number} bei {site}: {units} Einheiten verbraucht. Bestätigen oder beanstanden Sie sie innerhalb von {days} Tagen."
+    },
+    "consignment_count_due": {
+      "title": "Konsignationszählung fällig",
+      "body": "Der Bestand bei {site} muss gezählt werden (alle {days} Tage)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignationsware abgerechnet",
+      "body": "Die bei {site} verbrauchte Ware wurde abgerechnet: Bestellung {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Konsignationszählung beanstandet",
+      "body": "Zählung {number} bei {site} wurde beanstandet: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignationsware läuft bald ab",
+      "body": "{n} Einheiten bei {site} laufen innerhalb von {days} Tagen ab. Holen Sie sie zurück oder vereinbaren Sie einen Plan mit dem Kunden."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Preis",
     "edit": "Bearbeiten",
     "cancel": "Abbrechen"
+  },
+  "consignment": {
+    "title": "Konsignationslager",
+    "intro": "Ware, die Sie bei Kunden lagern. Kunden zahlen nur, was sie verbrauchen: Nach jeder Zählung stellt FIRINGI die verbrauchte Ware in Rechnung. Der Rest bleibt Ihr Eigentum und kann zurückgeholt werden.",
+    "buyTitle": "Konsignationslager",
+    "buyIntro": "Ware, die Ihre Lieferanten bei Ihnen lagern. Sie zahlen nur, was Sie verbrauchen: Nach jeder Zählung stellt FIRINGI den Verbrauch in Rechnung. Der Rest bleibt Eigentum des Lieferanten.",
+    "off": "Das Konsignationslager wurde von FIRINGI deaktiviert.",
+    "kpi": {
+      "sites": "Aktive Standorte",
+      "units": "Einheiten bei Kunden",
+      "value": "Wert zum Einstandspreis",
+      "toConfirm": "Zu bestätigende Zählungen"
+    },
+    "newSite": "Neues Konsignationslager",
+    "newSiteHint": "Wählen Sie den Kunden, die Adresse, an der die Ware lagert, und das Lager, aus dem sie kommt.",
+    "newSiteApproval": "FIRINGI prüft jedes neue Konsignationslager. Sie können Ware senden, sobald es genehmigt ist.",
+    "customer": "Kunde",
+    "searchCustomer": "Kunden suchen (Name oder USt-IdNr.)",
+    "noCustomers": "Keine Kunden gefunden.",
+    "address": "Adresse, an der die Ware lagert",
+    "warehouse": "Lager",
+    "countEvery": "Zählen alle (Tage)",
+    "counter": "Wer zählt",
+    "counterKind": {
+      "CUSTOMER": "Der Kunde",
+      "SUPPLIER": "Der Lieferant",
+      "EITHER": "Kunde oder Lieferant"
+    },
+    "note": "Notiz",
+    "create": "Erstellen",
+    "sites": "Standorte",
+    "noSites": "Noch kein Konsignationslager.",
+    "open": "Öffnen",
+    "back": "Alle Standorte",
+    "supplier": "Lieferant",
+    "status": {
+      "ACTIVE": "Aktiv",
+      "PENDING": "Wartet auf FIRINGI",
+      "REJECTED": "Abgelehnt",
+      "CLOSED": "Geschlossen"
+    },
+    "pendingHint": "FIRINGI prüft neue Konsignationslager. Sie können Ware senden, sobald es genehmigt ist.",
+    "rejected": "Von FIRINGI abgelehnt: {reason}",
+    "inTransit": "Unterwegs",
+    "toConfirm": "{n} zu bestätigen",
+    "disputed": "{n} beanstandet",
+    "overdue": "Zählung überfällig",
+    "lastCount": "Letzte Zählung",
+    "nextCount": "Nächste Zählung",
+    "never": "Nie",
+    "products": "Produkte",
+    "product": "Produkt",
+    "sent": "Gesendet",
+    "short": "Fehlmenge",
+    "used": "Verbraucht",
+    "returned": "Zurückgeholt",
+    "onShelf": "Im Regal",
+    "value": "Wert zum Einstandspreis",
+    "nextExpiry": "Nächstes Ablaufdatum",
+    "noProducts": "Noch nichts eingelagert.",
+    "send": "Ware senden",
+    "sendHint": "Die Ware verlässt jetzt Ihr Lager (kürzestes Ablaufdatum zuerst) und bleibt bis zum Verbrauch Ihr Eigentum.",
+    "searchProduct": "Ihre Produkte suchen",
+    "free": "Frei: {n}",
+    "qty": "Menge",
+    "sendNow": "Senden",
+    "sentOk": "Lieferung {number} gesendet",
+    "remove": "Entfernen",
+    "shipments": "Lieferungen",
+    "noShipments": "Noch keine Lieferungen.",
+    "ship": {
+      "SENT": "Unterwegs",
+      "RECEIVED": "Erhalten"
+    },
+    "receive": "Wareneingang bestätigen",
+    "receiveHint": "Geben Sie ein, was tatsächlich angekommen ist. Fehlmengen trägt der Lieferant.",
+    "received": "Angekommen",
+    "confirmReceived": "Bestätigen",
+    "shortOk": "Bestätigt. {n} fehlen.",
+    "count": "Bestand zählen",
+    "countHint": "Geben Sie für jedes Produkt den Restbestand im Regal ein. Die Differenz ist der Verbrauch. Die andere Seite bestätigt ihn, dann stellt FIRINGI ihn in Rechnung.",
+    "counted": "Rest",
+    "expected": "Erwartet",
+    "submitCount": "Zählung senden",
+    "countSent": "Zählung {number} gesendet",
+    "counts": "Zählungen",
+    "noCounts": "Noch keine Zählungen.",
+    "countStatus": {
+      "SUBMITTED": "Wartet auf Bestätigung",
+      "DISPUTED": "Beanstandet",
+      "INVOICED": "Abgerechnet",
+      "FAILED": "Abrechnung fehlgeschlagen",
+      "SUPERSEDED": "Durch Nachzählung ersetzt"
+    },
+    "countedBy": "Gezählt von {name}",
+    "usedUnits": "{n} verbraucht",
+    "nothingUsed": "Nichts verbraucht",
+    "autoAt": "Wird am {date} automatisch bestätigt, falls niemand antwortet.",
+    "accept": "Bestätigen",
+    "dispute": "Beanstanden",
+    "disputeWhy": "Warum ist die Zählung falsch?",
+    "disputeNote": "Beanstandet: {note}",
+    "order": "Bestellung",
+    "invoice": "Rechnung",
+    "total": "Summe",
+    "auto": "automatisch bestätigt",
+    "retry": "Erneut abrechnen",
+    "error": "Problem: {error}",
+    "pickUp": "Ware zurückholen",
+    "pickUpHint": "Nicht verbrauchte Ware geht zurück nach {warehouse} (spätestes Ablaufdatum zuerst).",
+    "takeBack": "Zurückholen",
+    "tookBack": "{n} Einheiten zurückgeholt",
+    "settings": "Standorteinstellungen",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "close": "Konsignationslager schließen",
+    "closeHint": "Möglich, wenn nichts mehr vorhanden, nichts unterwegs und keine Zählung offen ist.",
+    "withdraw": "Zurückziehen",
+    "supplierCounts": "Der Lieferant zählt diesen Bestand.",
+    "waitingCount": "Eine Zählung ist offen. Bestätigen oder beanstanden Sie sie zuerst."
   }
 }

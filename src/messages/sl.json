@@ -938,7 +938,8 @@
     "Van Loads": "Nalaganja vozil",
     "Bought from Vans": "Kupljeno iz vozil",
     "Customer Assortments": "Asortimenti strank",
-    "Must-Stock List": "Obvezni asortiman"
+    "Must-Stock List": "Obvezni asortiman",
+    "Consignment Stock": "Konsignacijska zaloga"
   },
   "delivery": {
     "title": "Dostava",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Izdelki obveznega asortimana za ponovno naročilo",
       "body": "Število izdelkov obveznega asortimana, ki jih niste naročili {days} dni: {n}."
+    },
+    "consignment_site_pending": {
+      "title": "Nova konsignacija za odobritev",
+      "body": "{supplier} želi namestiti konsignacijsko zalogo pri {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignacija odobrena",
+      "body": "FIRINGI je odobril konsignacijo {site}. Zdaj lahko pošljete zalogo."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignacija zavrnjena",
+      "body": "FIRINGI je zavrnil konsignacijo {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignacijska zaloga od {supplier}",
+      "body": "{supplier} bo pri vas pustil zalogo ({site}). Plačate samo, kar porabite."
+    },
+    "consignment_shipment": {
+      "title": "Konsignacijska dobava je na poti",
+      "body": "{supplier} je poslal {units} enot v konsignacijo ({number}). Potrdite, kaj je prispelo."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Popis za potrditev",
+      "body": "Popis {number} na lokaciji {site}: porabljenih {units} enot. Potrdite ga ali izpodbijajte v {days} dneh."
+    },
+    "consignment_count_due": {
+      "title": "Čas za popis konsignacije",
+      "body": "Zaloga na lokaciji {site} je na vrsti za popis (vsakih {days} dni)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignacijsko blago zaračunano",
+      "body": "Blago, porabljeno na lokaciji {site}, je bilo zaračunano: naročilo {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Popis konsignacije izpodbijan",
+      "body": "Popis {number} na lokaciji {site} je bil izpodbijan: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignacijskemu blagu kmalu poteče rok",
+      "body": "{n} enot na lokaciji {site} poteče v {days} dneh. Prevzemite jih nazaj ali se s stranko dogovorite za načrt."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Cena",
     "edit": "Uredi",
     "cancel": "Prekliči"
+  },
+  "consignment": {
+    "title": "Konsignacijska zaloga",
+    "intro": "Zaloga, ki jo pustite pri strankah. Plačajo samo, kar porabijo: po vsakem popisu FIRINGI zaračuna porabljeno blago. Preostanek ostane vaš in ga lahko prevzamete nazaj.",
+    "buyTitle": "Konsignacijska zaloga",
+    "buyIntro": "Zaloga, ki jo dobavitelji pustijo pri vas. Plačate samo, kar porabite: po vsakem popisu FIRINGI zaračuna porabljeno. Preostanek ostane last dobavitelja.",
+    "off": "FIRINGI je izklopil konsignacijsko zalogo.",
+    "kpi": {
+      "sites": "Aktivne lokacije",
+      "units": "Enote pri strankah",
+      "value": "Vrednost po nabavni ceni",
+      "toConfirm": "Popisi za potrditev"
+    },
+    "newSite": "Nova konsignacija",
+    "newSiteHint": "Izberite stranko, naslov, kjer bo zaloga, in skladišče, iz katerega prihaja.",
+    "newSiteApproval": "FIRINGI preveri vsako novo konsignacijo. Zalogo lahko pošljete, ko je odobrena.",
+    "customer": "Stranka",
+    "searchCustomer": "Iščite stranko (ime ali ID za DDV)",
+    "noCustomers": "Ni najdenih strank.",
+    "address": "Naslov, kjer je zaloga",
+    "warehouse": "Skladišče",
+    "countEvery": "Popis vsakih (dni)",
+    "counter": "Kdo popisuje",
+    "counterKind": {
+      "CUSTOMER": "Stranka",
+      "SUPPLIER": "Dobavitelj",
+      "EITHER": "Stranka ali dobavitelj"
+    },
+    "note": "Opomba",
+    "create": "Ustvari",
+    "sites": "Lokacije",
+    "noSites": "Še ni konsignacij.",
+    "open": "Odpri",
+    "back": "Vse lokacije",
+    "supplier": "Dobavitelj",
+    "status": {
+      "ACTIVE": "Aktivna",
+      "PENDING": "Čaka na FIRINGI",
+      "REJECTED": "Zavrnjena",
+      "CLOSED": "Zaprta"
+    },
+    "pendingHint": "FIRINGI preveri nove konsignacije. Zalogo lahko pošljete, ko je odobrena.",
+    "rejected": "FIRINGI je zavrnil: {reason}",
+    "inTransit": "Na poti",
+    "toConfirm": "{n} za potrditev",
+    "disputed": "{n} izpodbijanih",
+    "overdue": "Popis zamuja",
+    "lastCount": "Zadnji popis",
+    "nextCount": "Naslednji popis",
+    "never": "Nikoli",
+    "products": "Izdelki",
+    "product": "Izdelek",
+    "sent": "Poslano",
+    "short": "Manjka",
+    "used": "Porabljeno",
+    "returned": "Prevzeto nazaj",
+    "onShelf": "Na polici",
+    "value": "Vrednost po nabavni ceni",
+    "nextExpiry": "Naslednji rok uporabe",
+    "noProducts": "Še nič ni nameščeno.",
+    "send": "Pošlji zalogo",
+    "sendHint": "Blago zdaj zapusti vaše skladišče (najprej tisto z najkrajšim rokom) in ostane vaše, dokler ni porabljeno.",
+    "searchProduct": "Iščite med svojimi izdelki",
+    "free": "Prosto: {n}",
+    "qty": "Količina",
+    "sendNow": "Pošlji",
+    "sentOk": "Dobava {number} poslana",
+    "remove": "Odstrani",
+    "shipments": "Dobave",
+    "noShipments": "Še ni dobav.",
+    "ship": {
+      "SENT": "Na poti",
+      "RECEIVED": "Prejeto"
+    },
+    "receive": "Potrdite, kaj je prispelo",
+    "receiveHint": "Vnesite, kaj je dejansko prispelo. Kar manjka, je izguba dobavitelja.",
+    "received": "Prispelo",
+    "confirmReceived": "Potrdi",
+    "shortOk": "Potrjeno. Manjka: {n}.",
+    "count": "Popišite zalogo",
+    "countHint": "Za vsak izdelek vnesite, koliko je ostalo na polici. Razlika je porabljeno. Druga stran to potrdi, nato FIRINGI izstavi račun.",
+    "counted": "Ostalo",
+    "expected": "Pričakovano",
+    "submitCount": "Pošlji popis",
+    "countSent": "Popis {number} poslan",
+    "counts": "Popisi",
+    "noCounts": "Še ni popisov.",
+    "countStatus": {
+      "SUBMITTED": "Čaka na potrditev",
+      "DISPUTED": "Izpodbijano",
+      "INVOICED": "Zaračunano",
+      "FAILED": "Zaračunavanje ni uspelo",
+      "SUPERSEDED": "Nadomeščen s ponovnim popisom"
+    },
+    "countedBy": "Popisal: {name}",
+    "usedUnits": "Porabljeno: {n}",
+    "nothingUsed": "Nič porabljeno",
+    "autoAt": "Samodejno se potrdi {date}, če nihče ne odgovori.",
+    "accept": "Potrdi",
+    "dispute": "Izpodbijaj",
+    "disputeWhy": "Zakaj je popis napačen?",
+    "disputeNote": "Izpodbijano: {note}",
+    "order": "Naročilo",
+    "invoice": "Račun",
+    "total": "Skupaj",
+    "auto": "samodejno potrjeno",
+    "retry": "Ponovno zaračunaj",
+    "error": "Težava: {error}",
+    "pickUp": "Prevzemi blago nazaj",
+    "pickUpHint": "Neporabljeno blago se vrne v {warehouse} (najprej tisto z najdaljšim rokom).",
+    "takeBack": "Prevzemi nazaj",
+    "tookBack": "Prevzetih nazaj: {n} enot",
+    "settings": "Nastavitve lokacije",
+    "save": "Shrani",
+    "saved": "Shranjeno",
+    "close": "Zapri konsignacijo",
+    "closeHint": "Mogoče, ko ni ostalo nič, nič ni na poti in noben popis ne čaka.",
+    "withdraw": "Umakni",
+    "supplierCounts": "To zalogo popisuje dobavitelj.",
+    "waitingCount": "Popis čaka. Najprej ga potrdite ali izpodbijajte."
   }
 }

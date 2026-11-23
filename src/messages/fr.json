@@ -938,7 +938,8 @@
     "Van Loads": "Chargements",
     "Bought from Vans": "Achats en camionnette",
     "Customer Assortments": "Assortiments clients",
-    "Must-Stock List": "Référencement obligatoire"
+    "Must-Stock List": "Référencement obligatoire",
+    "Consignment Stock": "Stock en dépôt"
   },
   "delivery": {
     "title": "Livraison",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Produits obligatoires à recommander",
       "body": "{n} de vos produits en référencement obligatoire n'ont pas été commandés depuis {days} jours."
+    },
+    "consignment_site_pending": {
+      "title": "Nouveau dépôt à approuver",
+      "body": "{supplier} souhaite placer du stock en dépôt chez {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Dépôt approuvé",
+      "body": "FIRINGI a approuvé le dépôt {site}. Vous pouvez maintenant envoyer du stock."
+    },
+    "consignment_site_rejected": {
+      "title": "Dépôt refusé",
+      "body": "FIRINGI a refusé le dépôt {site} : {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Stock en dépôt de {supplier}",
+      "body": "{supplier} va laisser du stock chez vous ({site}). Vous ne payez que ce que vous utilisez."
+    },
+    "consignment_shipment": {
+      "title": "Livraison en dépôt en route",
+      "body": "{supplier} a envoyé {units} unités en dépôt ({number}). Confirmez la réception."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Comptage à confirmer",
+      "body": "Comptage {number} à {site} : {units} unités utilisées. Confirmez-le ou contestez-le sous {days} jours."
+    },
+    "consignment_count_due": {
+      "title": "Comptage de dépôt à effectuer",
+      "body": "Le stock à {site} doit être compté (tous les {days} jours)."
+    },
+    "consignment_invoiced": {
+      "title": "Marchandises en dépôt facturées",
+      "body": "Les marchandises utilisées à {site} ont été facturées : commande {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Comptage de dépôt contesté",
+      "body": "Le comptage {number} à {site} a été contesté : {note}"
+    },
+    "consignment_expiring": {
+      "title": "Marchandises en dépôt bientôt périmées",
+      "body": "{n} unités à {site} expirent sous {days} jours. Reprenez-les ou convenez d'un plan avec le client."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Prix",
     "edit": "Modifier",
     "cancel": "Annuler"
+  },
+  "consignment": {
+    "title": "Stock en dépôt",
+    "intro": "Le stock que vous laissez chez vos clients. Ils ne paient que ce qu'ils utilisent : après chaque comptage, FIRINGI facture les marchandises utilisées. Le reste vous appartient et peut revenir.",
+    "buyTitle": "Stock en dépôt",
+    "buyIntro": "Le stock que vos fournisseurs laissent chez vous. Vous ne payez que ce que vous utilisez : après chaque comptage, FIRINGI facture ce qui a été utilisé. Le reste appartient au fournisseur.",
+    "off": "Le stock en dépôt est désactivé par FIRINGI.",
+    "kpi": {
+      "sites": "Sites actifs",
+      "units": "Unités chez les clients",
+      "value": "Valeur au coût",
+      "toConfirm": "Comptages à confirmer"
+    },
+    "newSite": "Nouveau dépôt",
+    "newSiteHint": "Choisissez le client, l'adresse où reste le stock et l'entrepôt d'où il part.",
+    "newSiteApproval": "FIRINGI vérifie chaque nouveau dépôt. Vous pourrez envoyer du stock une fois qu'il sera approuvé.",
+    "customer": "Client",
+    "searchCustomer": "Rechercher un client (nom ou n° de TVA)",
+    "noCustomers": "Aucun client trouvé.",
+    "address": "Adresse où reste le stock",
+    "warehouse": "Entrepôt",
+    "countEvery": "Compter tous les (jours)",
+    "counter": "Qui compte",
+    "counterKind": {
+      "CUSTOMER": "Le client",
+      "SUPPLIER": "Le fournisseur",
+      "EITHER": "Client ou fournisseur"
+    },
+    "note": "Note",
+    "create": "Créer",
+    "sites": "Sites",
+    "noSites": "Aucun dépôt pour l'instant.",
+    "open": "Ouvrir",
+    "back": "Tous les sites",
+    "supplier": "Fournisseur",
+    "status": {
+      "ACTIVE": "Actif",
+      "PENDING": "En attente de FIRINGI",
+      "REJECTED": "Refusé",
+      "CLOSED": "Clôturé"
+    },
+    "pendingHint": "FIRINGI vérifie les nouveaux dépôts. Vous pourrez envoyer du stock une fois le dépôt approuvé.",
+    "rejected": "Refusé par FIRINGI : {reason}",
+    "inTransit": "En route",
+    "toConfirm": "{n} à confirmer",
+    "disputed": "{n} contestés",
+    "overdue": "Comptage en retard",
+    "lastCount": "Dernier comptage",
+    "nextCount": "Prochain comptage",
+    "never": "Jamais",
+    "products": "Produits",
+    "product": "Produit",
+    "sent": "Envoyé",
+    "short": "Manquant",
+    "used": "Utilisé",
+    "returned": "Repris",
+    "onShelf": "En rayon",
+    "value": "Valeur au coût",
+    "nextExpiry": "Prochaine péremption",
+    "noProducts": "Rien de placé pour l'instant.",
+    "send": "Envoyer du stock",
+    "sendHint": "Les marchandises quittent maintenant votre entrepôt (les premières à expirer d'abord) et restent à vous jusqu'à leur utilisation.",
+    "searchProduct": "Rechercher vos produits",
+    "free": "Disponible : {n}",
+    "qty": "Quantité",
+    "sendNow": "Envoyer",
+    "sentOk": "Livraison {number} envoyée",
+    "remove": "Supprimer",
+    "shipments": "Livraisons",
+    "noShipments": "Aucune livraison pour l'instant.",
+    "ship": {
+      "SENT": "En route",
+      "RECEIVED": "Reçue"
+    },
+    "receive": "Confirmer la réception",
+    "receiveHint": "Indiquez ce qui est réellement arrivé. Tout manquant est à la charge du fournisseur.",
+    "received": "Arrivé",
+    "confirmReceived": "Confirmer",
+    "shortOk": "Confirmé. {n} manquants.",
+    "count": "Compter le stock",
+    "countHint": "Indiquez ce qui reste en rayon pour chaque produit. La différence correspond à ce qui a été utilisé. L'autre partie le confirme, puis FIRINGI le facture.",
+    "counted": "Restant",
+    "expected": "Attendu",
+    "submitCount": "Envoyer le comptage",
+    "countSent": "Comptage {number} envoyé",
+    "counts": "Comptages",
+    "noCounts": "Aucun comptage pour l'instant.",
+    "countStatus": {
+      "SUBMITTED": "En attente de confirmation",
+      "DISPUTED": "Contesté",
+      "INVOICED": "Facturé",
+      "FAILED": "Échec de facturation",
+      "SUPERSEDED": "Remplacé par un recomptage"
+    },
+    "countedBy": "Compté par {name}",
+    "usedUnits": "{n} utilisés",
+    "nothingUsed": "Rien d'utilisé",
+    "autoAt": "Confirmé automatiquement le {date} en l'absence de réponse.",
+    "accept": "Confirmer",
+    "dispute": "Contester",
+    "disputeWhy": "Pourquoi le comptage est-il faux ?",
+    "disputeNote": "Contesté : {note}",
+    "order": "Commande",
+    "invoice": "Facture",
+    "total": "Total",
+    "auto": "confirmé automatiquement",
+    "retry": "Refacturer",
+    "error": "Problème : {error}",
+    "pickUp": "Reprendre des marchandises",
+    "pickUpHint": "Les marchandises non utilisées retournent à {warehouse} (les dernières à expirer d'abord).",
+    "takeBack": "Reprendre",
+    "tookBack": "{n} unités reprises",
+    "settings": "Paramètres du site",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "close": "Clôturer le dépôt",
+    "closeHint": "Possible quand il ne reste rien, que rien n'est en route et qu'aucun comptage n'est en attente.",
+    "withdraw": "Retirer",
+    "supplierCounts": "Le fournisseur compte ce stock.",
+    "waitingCount": "Un comptage est en attente. Confirmez-le ou contestez-le d'abord."
   }
 }

@@ -938,7 +938,8 @@
     "Van Loads": "Lastningar",
     "Bought from Vans": "Köpt från skåpbilar",
     "Customer Assortments": "Kundsortiment",
-    "Must-Stock List": "Bassortiment"
+    "Must-Stock List": "Bassortiment",
+    "Consignment Stock": "Konsignationslager"
   },
   "delivery": {
     "title": "Leverans",
@@ -2129,6 +2130,46 @@
     "assortment_gaps": {
       "title": "Bassortimentsprodukter att beställa igen",
       "body": "{n} av dina bassortimentsprodukter har inte beställts på {days} dagar."
+    },
+    "consignment_site_pending": {
+      "title": "Nytt konsignationslager att godkänna",
+      "body": "{supplier} vill placera konsignationslager hos {customer} ({site})."
+    },
+    "consignment_site_approved": {
+      "title": "Konsignationslager godkänt",
+      "body": "FIRINGI har godkänt konsignationslagret {site}. Du kan skicka varor nu."
+    },
+    "consignment_site_rejected": {
+      "title": "Konsignationslager avvisat",
+      "body": "FIRINGI har avvisat konsignationslagret {site}: {reason}"
+    },
+    "consignment_site_opened": {
+      "title": "Konsignationslager från {supplier}",
+      "body": "{supplier} kommer att lämna varor hos dig ({site}). Du betalar bara för det du använder."
+    },
+    "consignment_shipment": {
+      "title": "Konsignationsleverans på väg",
+      "body": "{supplier} har skickat {units} enheter i konsignation ({number}). Bekräfta vad som kom fram."
+    },
+    "consignment_count_to_confirm": {
+      "title": "Inventering att bekräfta",
+      "body": "Inventering {number} på {site}: {units} enheter använda. Bekräfta eller bestrid den inom {days} dagar."
+    },
+    "consignment_count_due": {
+      "title": "Dags att inventera konsignationslager",
+      "body": "Lagret på {site} ska inventeras (intervall {days} dagar)."
+    },
+    "consignment_invoiced": {
+      "title": "Konsignationsvaror fakturerade",
+      "body": "Varorna som använts på {site} har fakturerats: order {number}, {total}."
+    },
+    "consignment_disputed": {
+      "title": "Inventering av konsignationslager bestridd",
+      "body": "Inventering {number} på {site} har bestridits: {note}"
+    },
+    "consignment_expiring": {
+      "title": "Konsignationsvaror går snart ut",
+      "body": "{n} enheter på {site} går ut inom {days} dagar. Hämta tillbaka dem eller kom överens med kunden om en plan."
     }
   },
   "notifications": {
@@ -9269,5 +9310,125 @@
     "price": "Pris",
     "edit": "Redigera",
     "cancel": "Avbryt"
+  },
+  "consignment": {
+    "title": "Konsignationslager",
+    "intro": "Varor som du lämnar hos kunder. De betalar bara för det de använder: efter varje inventering fakturerar FIRINGI de använda varorna. Resten förblir ditt och kan hämtas tillbaka.",
+    "buyTitle": "Konsignationslager",
+    "buyIntro": "Varor som dina leverantörer lämnar hos dig. Du betalar bara för det du använder: efter varje inventering fakturerar FIRINGI det som har använts. Resten tillhör leverantören.",
+    "off": "Konsignationslager är avstängt av FIRINGI.",
+    "kpi": {
+      "sites": "Aktiva platser",
+      "units": "Enheter hos kunder",
+      "value": "Värde till inköpspris",
+      "toConfirm": "Inventeringar att bekräfta"
+    },
+    "newSite": "Nytt konsignationslager",
+    "newSiteHint": "Välj kund, adressen där varorna ska stå och det lager de skickas från.",
+    "newSiteApproval": "FIRINGI granskar varje nytt konsignationslager. Du kan skicka varor när det har godkänts.",
+    "customer": "Kund",
+    "searchCustomer": "Sök kund (namn eller momsregistreringsnummer)",
+    "noCustomers": "Inga kunder hittades.",
+    "address": "Adress där varorna står",
+    "warehouse": "Lager",
+    "countEvery": "Inventeringsintervall (dagar)",
+    "counter": "Vem inventerar",
+    "counterKind": {
+      "CUSTOMER": "Kunden",
+      "SUPPLIER": "Leverantören",
+      "EITHER": "Kund eller leverantör"
+    },
+    "note": "Anteckning",
+    "create": "Skapa",
+    "sites": "Platser",
+    "noSites": "Inga konsignationslager ännu.",
+    "open": "Öppna",
+    "back": "Alla platser",
+    "supplier": "Leverantör",
+    "status": {
+      "ACTIVE": "Aktivt",
+      "PENDING": "Väntar på FIRINGI",
+      "REJECTED": "Avvisat",
+      "CLOSED": "Stängt"
+    },
+    "pendingHint": "FIRINGI granskar nya konsignationslager. Du kan skicka varor när det har godkänts.",
+    "rejected": "Avvisat av FIRINGI: {reason}",
+    "inTransit": "På väg",
+    "toConfirm": "{n} att bekräfta",
+    "disputed": "{n} bestridda",
+    "overdue": "Inventering försenad",
+    "lastCount": "Senaste inventering",
+    "nextCount": "Nästa inventering",
+    "never": "Aldrig",
+    "products": "Produkter",
+    "product": "Produkt",
+    "sent": "Skickat",
+    "short": "Saknas",
+    "used": "Använt",
+    "returned": "Hämtat tillbaka",
+    "onShelf": "På hyllan",
+    "value": "Värde till inköpspris",
+    "nextExpiry": "Nästa utgångsdatum",
+    "noProducts": "Inget placerat ännu.",
+    "send": "Skicka varor",
+    "sendHint": "Varorna lämnar ditt lager nu (kortast hållbarhet först) och förblir dina tills de används.",
+    "searchProduct": "Sök bland dina produkter",
+    "free": "Ledigt: {n}",
+    "qty": "Antal",
+    "sendNow": "Skicka",
+    "sentOk": "Leverans {number} skickad",
+    "remove": "Ta bort",
+    "shipments": "Leveranser",
+    "noShipments": "Inga leveranser ännu.",
+    "ship": {
+      "SENT": "På väg",
+      "RECEIVED": "Mottagen"
+    },
+    "receive": "Bekräfta vad som kom fram",
+    "receiveHint": "Ange vad som faktiskt kom fram. Det som saknas är leverantörens förlust.",
+    "received": "Mottaget",
+    "confirmReceived": "Bekräfta",
+    "shortOk": "Bekräftat. {n} saknas.",
+    "count": "Inventera lagret",
+    "countHint": "Ange vad som finns kvar på hyllan för varje produkt. Skillnaden är det som har använts. Motparten bekräftar, sedan fakturerar FIRINGI.",
+    "counted": "Kvar",
+    "expected": "Förväntat",
+    "submitCount": "Skicka inventering",
+    "countSent": "Inventering {number} skickad",
+    "counts": "Inventeringar",
+    "noCounts": "Inga inventeringar ännu.",
+    "countStatus": {
+      "SUBMITTED": "Väntar på bekräftelse",
+      "DISPUTED": "Bestridd",
+      "INVOICED": "Fakturerad",
+      "FAILED": "Faktureringen misslyckades",
+      "SUPERSEDED": "Ersatt av ny inventering"
+    },
+    "countedBy": "Inventerad av {name}",
+    "usedUnits": "{n} använda",
+    "nothingUsed": "Inget använt",
+    "autoAt": "Bekräftas automatiskt den {date} om ingen svarar.",
+    "accept": "Bekräfta",
+    "dispute": "Bestrid",
+    "disputeWhy": "Varför är inventeringen fel?",
+    "disputeNote": "Bestridd: {note}",
+    "order": "Order",
+    "invoice": "Faktura",
+    "total": "Totalt",
+    "auto": "bekräftad automatiskt",
+    "retry": "Fakturera igen",
+    "error": "Problem: {error}",
+    "pickUp": "Hämta tillbaka varor",
+    "pickUpHint": "Oanvända varor går tillbaka till {warehouse} (längst hållbarhet först).",
+    "takeBack": "Hämta tillbaka",
+    "tookBack": "{n} enheter hämtade tillbaka",
+    "settings": "Platsinställningar",
+    "save": "Spara",
+    "saved": "Sparat",
+    "close": "Avsluta konsignationslager",
+    "closeHint": "Möjligt när inget finns kvar, inget är på väg och ingen inventering väntar.",
+    "withdraw": "Dra tillbaka",
+    "supplierCounts": "Leverantören inventerar det här lagret.",
+    "waitingCount": "En inventering väntar. Bekräfta eller bestrid den först."
   }
 }

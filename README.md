@@ -760,6 +760,18 @@ The rules sit in the catalogue's one visibility filter, so the shop, cart, check
 
 Details: [docs/assortments.md](docs/assortments.md).
 
+## Consignment stock (Phase 65)
+
+A supplier leaves stock at a customer's premises; the customer pays only for what it uses.
+
+- **Both channels:** distributors with wholesalers, and wholesalers with shops and restaurants. A wholesaler can be on both sides.
+- **FIRINGI approves** each new consignment before any stock is sent (switchable), and switches consignment on/off overall, per channel and per supplier.
+- **Flow:** send stock (it leaves the warehouse, stays the supplier's) → the customer confirms what arrived (short = written off) → counts of what is left → the other side confirms or disputes (recount) → FIRINGI orders and invoices the used goods to the customer at its prices; lots go out first to expire first. Unused goods go back to the warehouse.
+- **Pages:** supplier and customer *Orders › Consignment Stock* in 25 languages; FIRINGI's *Vendors › Consignment Stock* (English).
+- **Background job:** `/api/cron/consignment`, hourly (auto-confirm, count reminders, expiry alerts).
+
+Details: [docs/consignment.md](docs/consignment.md).
+
 ## Van sales (Phase 63)
 
 Suppliers **sell straight from a van** to registered customers, and **FIRINGI still invoices every sale**.
