@@ -38,7 +38,7 @@ const shot = async (page, name) => SHOTS && page.screenshot({ path: `${SHOTS}/${
   const { ctx, page } = await login("superadmin@firingi.test");
   check("super admin lands on admin dashboard", page.url().endsWith("/admin/dashboard/overview"), page.url());
   const sections = await page.locator("aside nav > div > div > button").count();
-  check("super admin sees all 23 sidebar sections", sections === 23, `${sections}`); // Phase 47 added the Till (POS) section, Phase 52 Staff & Time
+  check("super admin sees all 24 sidebar sections", sections === 24, `${sections}`); // Phase 47 added the Till (POS) section, Phase 52 Staff & Time, Phase 68 Services & Used Oil
   await shot(page, "01-admin-dashboard");
   await page.goto(`${BASE}/admin/ai/forecasting?tab=DEMAND`); await page.waitForLoadState("networkidle"); await page.waitForTimeout(400);
   check("AI Centre page renders (no placeholders left)", (await page.getByTestId("fc-demand").count()) === 1 && !/Coming soon/.test(await page.textContent("main")));
