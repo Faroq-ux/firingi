@@ -32,7 +32,8 @@ export default async function FoodSafetyDeliveries() {
               <ul className="divide-y">
                 {orders.map((o) => (
                   <li key={o.id} className="space-y-2 py-3" data-testid="hc-order-row" data-number={o.number}>
-                    <div className="flex flex-wrap items-center gap-2 text-sm"><span className="font-medium">{o.number}</span><span className="min-w-0 break-words text-muted-foreground">{o.seller} · {dayText(locale, o.at)}</span>{o.checked && <Badge variant="success">{l.checked}</Badge>}</div>
+                    <div className="flex flex-wrap items-center gap-2 text-sm"><span className="font-medium">{o.number}</span><span className="min-w-0 break-words text-muted-foreground">{o.seller} · {dayText(locale, o.at)}</span>{o.checked && <Badge variant={o.failed ? "destructive" : "success"}>{o.failed ? l.notOk : l.checked}</Badge>}</div>
+                    {o.failed && <div className="space-y-2 rounded-lg border border-destructive/40 p-3 text-sm" data-testid="hc-claim"><p>{l.claimHint}</p><a className="font-medium text-primary hover:underline" href={`/buy/orders/${o.id}/claim`}>{l.openClaim} →</a></div>}
                     {!o.checked && <DeliveryForm l={l} orderId={o.id} seller={o.seller} chilled={r.deliveryChilledMaxC} frozenMax={r.deliveryFrozenMaxC} />}
                   </li>
                 ))}

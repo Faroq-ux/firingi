@@ -302,8 +302,9 @@ export async function recentDeliveries(ctx: Ctx, now = new Date()) {
   await access(ctx, "log", "deliveries");
   const orders = await prisma.order.findMany({ where: { buyerCompanyId: ctx.company.id, status: { in: ["DELIVERED", "OUT_FOR_DELIVERY"] }, updatedAt: { gte: new Date(now.getTime() - 7 * DAY) } }, select: { id: true, number: true, sellerCompanyId: true, updatedAt: true }, orderBy: { updatedAt: "desc" }, take: 30 });
   const cos = await prisma.company.findMany({ where: { id: { in: orders.map((o) => o.sellerCompanyId) } }, select: { id: true, legalName: true, tradeName: true } });
-  const checked = new Set((await prisma.haccpEntry.findMany({ where: { companyId: ctx.company.id, orderId: { in: orders.map((o) => o.id) } }, select: { orderId: true } })).map((e) => e.orderId));
-  return orders.map((o) => ({ id: o.id, number: o.number, at: o.updatedAt, seller: cos.find((c) => c.id === o.sellerCompanyId)?.tradeName ?? cos.find((c) => c.id === o.sellerCompanyId)?.legalName ?? "—", checked: checked.has(o.id) }));
+  const entries = await prisma.haccpEntry.findMany({ where: { companyId: ctx.company.id, orderId: { in: orders.map((o) => o.id) } }, select: { orderId: true, ok: true } });
+  const checked = new Set(entries.map((e) => e.orderId)), failed = new Set(entries.filter((e) => !e.ok).map((e) => e.orderId));
+  return orders.map((o) => ({ failed: failed.has(o.id), id: o.id, number: o.number, at: o.updatedAt, seller: cos.find((c) => c.id === o.sellerCompanyId)?.tradeName ?? cos.find((c) => c.id === o.sellerCompanyId)?.legalName ?? "—", checked: checked.has(o.id) }));
 }
 
 // ── history & report ────────────────────────────────────────────────────────

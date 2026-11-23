@@ -16,7 +16,7 @@ export const AREA_HINT: Record<RecArea, string> = {
 };
 
 /** New kinds (Phase 66) alongside Phase 17's. */
-export const CENTRE_KINDS = ["SALES_DROP", "PRICE_REVIEW", "COMMISSION_REVIEW", "CUSTOMER_LAPSING", "OVERDUE_PAYMENT", "ROUTE_SAVING", "ROUTE_MERGE", "SERVICE_MISSED", "SERVICE_FREQUENCY", "OIL_CONTAINER_FULL", "PROVIDER_LICENCE"] as const;
+export const CENTRE_KINDS = ["SALES_DROP", "PRICE_REVIEW", "COMMISSION_REVIEW", "CUSTOMER_LAPSING", "OVERDUE_PAYMENT", "ROUTE_SAVING", "ROUTE_MERGE", "SERVICE_MISSED", "SERVICE_FREQUENCY", "OIL_CONTAINER_FULL", "PROVIDER_LICENCE", "CUSTOMER_OVERPAYING"] as const;
 export type CentreKind = (typeof CENTRE_KINDS)[number];
 export type AnyRecKind = RecKind | CentreKind;
 export const KIND_AREA: Record<AnyRecKind, RecArea> = {
@@ -24,13 +24,13 @@ export const KIND_AREA: Record<AnyRecKind, RecArea> = {
   MARGIN_GAP: "PRICING", PRICE_REVIEW: "PRICING", COMMISSION_REVIEW: "PRICING",
   CHEAPER_SUPPLIER: "SUPPLIERS", PROVIDER_LICENCE: "SUPPLIERS",
   STOCK_OUT: "STOCK", LOW_COVER: "STOCK",
-  REORDER_DUE: "CUSTOMERS", CUSTOMER_LAPSING: "CUSTOMERS", OVERDUE_PAYMENT: "CUSTOMERS", SERVICE_MISSED: "CUSTOMERS", SERVICE_FREQUENCY: "CUSTOMERS",
+  REORDER_DUE: "CUSTOMERS", CUSTOMER_LAPSING: "CUSTOMERS", OVERDUE_PAYMENT: "CUSTOMERS", SERVICE_MISSED: "CUSTOMERS", SERVICE_FREQUENCY: "CUSTOMERS", CUSTOMER_OVERPAYING: "CUSTOMERS",
   DELIVERY_RISK: "ROUTES", ROUTE_SAVING: "ROUTES", ROUTE_MERGE: "ROUTES", OIL_CONTAINER_FULL: "ROUTES",
 };
 export const CENTRE_KIND_LABEL: Record<CentreKind, string> = {
   SALES_DROP: "Sales dropping", PRICE_REVIEW: "Price to review", COMMISSION_REVIEW: "Commission to review", CUSTOMER_LAPSING: "Customer going quiet",
   OVERDUE_PAYMENT: "Overdue invoices", ROUTE_SAVING: "Shorter route", ROUTE_MERGE: "Combine routes",
-  SERVICE_MISSED: "Service visit missed", SERVICE_FREQUENCY: "Service schedule to adjust", OIL_CONTAINER_FULL: "Used oil overflowing", PROVIDER_LICENCE: "Provider licence ending",
+  SERVICE_MISSED: "Service visit missed", SERVICE_FREQUENCY: "Service schedule to adjust", OIL_CONTAINER_FULL: "Used oil overflowing", PROVIDER_LICENCE: "Provider licence ending", CUSTOMER_OVERPAYING: "Customer paying above the market",
 };
 export const kindsOf = (area: RecArea) => (Object.keys(KIND_AREA) as AnyRecKind[]).filter((k) => KIND_AREA[k] === area);
 

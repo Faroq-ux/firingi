@@ -304,6 +304,7 @@ export const ADMIN_NAV: NavSection[] = [
           pin("requests", "Price Change Approvals", "Aprovação de Alterações de Preço", "P29", { live: true }),
           pin("margin", "Margin Heat-map", "Mapa de Margens", "P29", { live: true, perm: ["admin.pricing.view", "admin.pricing.manage", "admin.finance.view"] }),
           pin("suggestions", "Price Suggestions", "Sugestões de Preço", "P29", { live: true }),
+          pin("benchmark", "Price Benchmark", "Comparação de Preços", "P70", { live: true }),
           pin("settings", "Price Rules & Approvals", "Regras e Aprovações de Preço", "P29", { live: true }),
         ],
       },

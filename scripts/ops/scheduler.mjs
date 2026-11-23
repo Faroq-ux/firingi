@@ -45,6 +45,7 @@ const SCHEDULE = [
   { job: "deals", due: (m) => m % 60 === 41 },
   { job: "ads", due: (m) => m % 60 === 47 },
   { job: "loyalty", due: (m) => m % 60 === 53 },
+  { job: "benchmark", due: (m) => m % 60 === 53 }, // price benchmark rebuild + monthly savings
   { job: "haccp", due: (m) => m % 60 === 41 }, // food safety: missed checks, training running out
   { job: "services", due: (m) => m % 60 === 19 }, // services: plan visits, reminders, missed, containers full, oil alerts, commissions
   // daily (UTC)

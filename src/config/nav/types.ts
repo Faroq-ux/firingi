@@ -3,7 +3,7 @@ import type { PermissionCode } from "@/server/rbac/permissions";
 /** Localized label; missing languages fall back to English. */
 export type L = { en: string; pt?: string; es?: string };
 
-export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P47" | "P48" | "P49" | "P50" | "P51" | "P52" | "P53" | "P54" | "P55" | "P56" | "P57" | "P58" | "P60" | "P61" | "P62" | "P63" | "P64" | "P65" | "P66" | "P67" | "P68" | "P69" | "LATER";
+export type Phase = "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P36" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P47" | "P48" | "P49" | "P50" | "P51" | "P52" | "P53" | "P54" | "P55" | "P56" | "P57" | "P58" | "P60" | "P61" | "P62" | "P63" | "P64" | "P65" | "P66" | "P67" | "P68" | "P69" | "P70" | "LATER";
 
 export const PHASE_LABEL: Record<Phase, L> = {
   P1: { en: "Phase 1 — Foundation", pt: "Fase 1 — Fundação" },
@@ -72,6 +72,7 @@ export const PHASE_LABEL: Record<Phase, L> = {
   P67: { en: "Phase 67 — AI Automation, Agents & Governance", pt: "Fase 67 — Automação, Agentes e Governação de IA" },
   P68: { en: "Phase 68 — Services & used cooking oil", pt: "Fase 68 — Serviços e óleo alimentar usado" },
   P69: { en: "Phase 69 — Food safety (HACCP) logbook", pt: "Fase 69 — Registos de segurança alimentar (HACCP)" },
+  P70: { en: "Phase 70 — Price benchmark", pt: "Fase 70 — Comparação de preços" },
   LATER: { en: "Later phases", pt: "Fases posteriores" },
 };
 

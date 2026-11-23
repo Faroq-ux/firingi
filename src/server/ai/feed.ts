@@ -136,6 +136,8 @@ export async function computeRecommendations(now = new Date()): Promise<Rec[]> {
   out.push(...(await centreRecommendations(now, cs)));
   // Phase 68: services & used oil
   out.push(...(await (await import("../servicing/ai")).serviceRecommendations(now).catch(() => [])));
+  // Phase 70: customers paying well above similar businesses
+  out.push(...(await (await import("../benchmark/service")).overpayingRecommendations(now).catch(() => [])));
   return out.filter((r) => cs.areas[KIND_AREA[r.kind]]);
 }
 

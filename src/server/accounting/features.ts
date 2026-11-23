@@ -121,6 +121,13 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       if (portal !== "buy" || !hs.haccpOn(s, ctx.company)) { off.add("HACCP"); off.add("HACCP_DELIVERIES"); off.add("HACCP_TRAINING"); }
       else { if (!s.parts.deliveries) off.add("HACCP_DELIVERIES"); if (!s.parts.training) off.add("HACCP_TRAINING"); }
     }
+    // Phase 70: price benchmark (customers / wholesalers) and suppliers' price position
+    {
+      const { benchAccess } = await import("@/server/benchmark/service");
+      const a = await benchAccess(ctx.company);
+      if (portal !== "buy" || !a.buyer) off.add("BENCHMARK");
+      if (portal !== "vendor" || !a.supplier) off.add("BENCHMARK_SUPPLIER");
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

@@ -124,6 +124,7 @@ export const EVENTS: EventDef[] = [
   E("service.visit_missed", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("service.container_full", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["PUSH"], ["number", "date"]),
   E("service.oil_change_due", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["PUSH"], ["fryer", "days"]),
+  E("benchmark.monthly_savings", "orders", ["buyer.reports.view", "buyer.orders.place"], ["EMAIL", "PUSH"], ["amount", "count"]),
   E("haccp.out_of_range", "account", ["buyer.haccp.manage"], ["PUSH", "EMAIL"], ["what", "detail"]),
   E("haccp.checks_missed", "account", ["buyer.haccp.manage", "buyer.haccp.log"], ["PUSH"], ["count", "list"]),
   E("haccp.training_expiring", "account", ["buyer.haccp.manage"], ["EMAIL"], ["person", "course", "date"]),

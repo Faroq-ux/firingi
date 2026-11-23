@@ -1,0 +1,24 @@
+// Phase 70 — Price benchmark: what similar buyers pay for the same product (per base unit), by country, region and
+// kind of business. Each buyer counts once; a group is stored only with FIRINGI's minimum number of buyers, so no
+// buyer or supplier can be singled out. Rebuilt by the "benchmark" job.
+
+model PriceBenchmark {
+  id         String   @id @default(cuid())
+  variantId  String
+  countryId  String
+  regionKey  String   @default("") // "" = the whole country
+  typeKey    String   @default("") // business type; "" = all kinds of business
+  buyers     Int
+  lines      Int
+  p10        Decimal  @db.Decimal(18, 4)
+  p25        Decimal  @db.Decimal(18, 4)
+  p50        Decimal  @db.Decimal(18, 4)
+  p75        Decimal  @db.Decimal(18, 4)
+  p90        Decimal  @db.Decimal(18, 4)
+  avg        Decimal  @db.Decimal(18, 4)
+  periodDays Int
+  computedAt DateTime @default(now())
+
+  @@unique([variantId, countryId, regionKey, typeKey])
+  @@index([countryId, variantId])
+}

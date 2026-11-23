@@ -313,6 +313,13 @@ export const TOOLS: ToolDef<unknown>[] = [
     run: async (ctx) => (await import("@/server/servicing/ai")).myServicesForAi(ctx),
   }),
   tool({
+    name: "price_check", sides: ["BUYER"],
+    description: "Is the customer paying too much? Compares what it paid per unit (last 90 days) with what similar businesses nearby pay for the same product (anonymous: median, typical range, the share paying less), the yearly saving at the median and cheaper offers for the same product on FIRINGI. Give a product name / SKU, or leave empty for the biggest savings.",
+    properties: { product: { type: "string", description: "product name or SKU, or empty" } },
+    input: z.object({ product: z.string().max(80) }),
+    run: async (ctx, _s, i) => (await import("@/server/benchmark/service")).priceCheckForAi(ctx, i.product),
+  }),
+  tool({
     name: "my_food_safety", sides: ["BUYER"],
     description: "The customer's food safety (HACCP) logbook: today's and this week's completion, temperature checks and checklists still due today (and late ones), readings out of range with the corrective action taken, tips (fridges drifting towards their limit, checks often missed, training running out) and each fridge's readings today.",
     properties: {},

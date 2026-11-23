@@ -66,6 +66,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/ai-ops.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 67: an agent from a template → run (simulated) → proposal approved → rated; an automation from a template → test → on → run; an approval step; Rules, Schedules, Logs; AI Governance (switches, permissions, audit trail + CSV, models); phone / dark (server with `ASSISTANT_SIMULATE=1`) |
 | `node tests/e2e/services.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 68: a distributor offers oil collection and pest control → FIRINGI approves (pest: provider invoices, 20 % commission) and adds a service → a restaurant takes a monthly plan and an on-request oil plan → fryer log fills the containers, a collection is asked for by itself → the provider records it and a pest visit with its own invoice → history + PDF → Money (buy-back paid, commission invoiced) → switch off Fryers & Oil → phone / dark |
 | `node tests/e2e/haccp.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 69: not set up → restaurant template → temperatures (one out of range with a corrective action) → checklist → cooling → delivery checks (another supplier; failed FIRINGI delivery → claim link) → training → logbook + PDF → FIRINGI overview, businesses, a switch → phone / dark |
+| `node tests/e2e/benchmark.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 70: three test restaurants buy for less → customer savings, position, cheaper offer → cart, basket, trend, nobody named → supplier price position → FIRINGI overview, customers off (page and menu gone) and on, rebuild → phone / dark |
 | `node tests/e2e/invoicing.mjs http://localhost:3000 [screenshotDir]` | Browser test of certified invoicing with a simulated Moloni (start the server with `MOLONI_SIMULATE=1`), payouts due* |
 | `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
 | `pnpm db:demo-planning` | Demo stock, purchase history, a short-dated lot and a promotion for demand planning at Distribuidora Atlântico (dev / demo only) |
@@ -774,6 +775,12 @@ A supplier leaves stock at a customer's premises; the customer pays only for wha
 - **Background job:** `/api/cron/consignment`, hourly (auto-confirm, count reminders, expiry alerts).
 
 Details: [docs/consignment.md](docs/consignment.md).
+
+## Price Benchmark (Phase 70)
+
+Customers and wholesalers see how their prices compare with similar businesses (`/buy/reports/price-benchmark`, 25 languages): per product, the share of similar buyers paying less, the market middle and range, "above / around / below", the yearly saving at the market middle, cheaper offers on FIRINGI with **Add to cart**, a basket check and a 6-month trend (warning when their price rises faster than the market's). The comparison is anonymous: a group (same region and kind of business → region → kind of business → country) counts only with enough different buyers (FIRINGI's minimum, 5 by default), each buyer counts once, and no other buyer or supplier price is ever named. Suppliers see where their list prices sit against what buyers pay (`/vendor/reports/price-position`). AI: the Assistant's `price_check`, an AI Centre suggestion for customers paying well above the market, and a monthly savings message. FIRINGI (`/admin/pricing/intelligence/benchmark`, English) sees the groups and the biggest savings, and switches it, each audience, each part, countries, kinds of business, categories and single businesses on or off; sets the minimum group size, the period and the refresh.
+
+Details: [docs/benchmark.md](docs/benchmark.md).
 
 ## Food Safety (HACCP) Logbook (Phase 69)
 

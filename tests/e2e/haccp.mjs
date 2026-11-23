@@ -110,7 +110,11 @@ try {
     await buyer.uncheck("[data-testid=hc-del-pack]");
     await buyer.fill("[data-testid=hc-corrective]", "Embalagem rasgada");
     await tap(buyer, "[data-testid=hc-del-save]");
-    check("failed FIRINGI delivery → claim link", await until(async () => (await buyer.getByTestId("hc-claim").count()) === 1 && (await buyer.getByTestId("hc-claim").locator("a").getAttribute("href")).endsWith("/claim")));
+    const number = await orderRow.getAttribute("data-number");
+    const row = () => buyer.locator(`[data-testid=hc-order-row][data-number="${number}"]`);
+    check("failed FIRINGI delivery → claim link", await until(async () => (await row().getByTestId("hc-claim").count()) >= 1 && (await row().getByTestId("hc-claim").first().locator("a").getAttribute("href")).endsWith("/claim")));
+    await go(buyer, "/buy/food-safety/deliveries");
+    check("claim link stays after the page reloads", (await row().getByTestId("hc-claim").count()) === 1);
   } else console.log("· no FIRINGI delivery in the last 7 days for this customer — claim path covered by the integration test");
   await shot(buyer, "03-deliveries", true);
 
