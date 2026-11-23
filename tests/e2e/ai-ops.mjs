@@ -54,7 +54,7 @@ try {
 
   // 1. AI Agents: a template → own agent
   await go(sa, "/admin/ai/agents?tab=TEMPLATES");
-  check("agent templates", (await sa.getByTestId("ag-template").count()) === 5);
+  check("agent templates", (await sa.getByTestId("ag-template").count()) === 6);
   await shot(sa, "01-agent-templates", true);
   await sa.getByTestId("ag-template").filter({ hasText: "Credit Controller" }).getByTestId("ag-use-template").click();
   await settle(sa);
@@ -97,7 +97,7 @@ try {
 
   // 5. Automation from a template: test → save → switch on → run now
   await go(sa, "/admin/ai/automation?tab=RULES");
-  check("templates on the Rules tab", (await sa.getByTestId("wf-template").count()) === 7);
+  check("templates on the Rules tab", (await sa.getByTestId("wf-template").count()) === 8);
   await sa.getByTestId("wf-template").filter({ hasText: "Big order alert" }).getByTestId("wf-use-template").click();
   await settle(sa);
   check("template fills the builder", (await sa.getByTestId("wf-name").inputValue()) === "Big order alert" && (await sa.getByTestId("wf-cond").count()) === 1 && (await sa.getByTestId("wf-step").count()) === 1);

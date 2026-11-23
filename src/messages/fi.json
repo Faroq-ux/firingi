@@ -939,7 +939,10 @@
     "Bought from Vans": "Ostettu autoista",
     "Customer Assortments": "Asiakasvalikoimat",
     "Must-Stock List": "Perusvalikoimalista",
-    "Consignment Stock": "Konsignaatiovarasto"
+    "Consignment Stock": "Konsignaatiovarasto",
+    "Services": "Palvelut",
+    "My Services": "Omat palvelut",
+    "Fryers & Oil": "Rasvakeittimet & öljy"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Tarkistettava palveluntarjoaja",
+      "body": "{company} haluaa tarjota palvelua {service}."
+    },
+    "service_provider_decided": {
+      "title": "Palveluhakemuksesi",
+      "body": "FIRINGIn päätös: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Uusi tilausasiakas",
+      "body": "{customer} tilasi palvelun {service} (tilaus {number})."
+    },
+    "service_request_new": {
+      "title": "Uusi palvelupyyntö",
+      "body": "{customer} pyytää palvelua {service} {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Käynti muuttunut",
+      "body": "Käynti {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Käynti vahvistettu",
+      "body": "Käynti {number} on vahvistettu: {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Käynti huomenna",
+      "body": "{service}: käynti {number} {date}."
+    },
+    "service_visit_done": {
+      "title": "Käynti tehty",
+      "body": "{service}: käynti {number} on tehty ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Käynti jäi tekemättä",
+      "body": "Käyntiä {number} ei tehty: {reason}."
+    },
+    "service_container_full": {
+      "title": "Nouto pyydetty",
+      "body": "Käytetyn öljyn astiasi ovat lähes täynnä — nouto {number} on pyydetty ajalle {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Vaihda öljy",
+      "body": "{fryer}: öljy pitää vaihtaa ({days} pv)."
+    },
+    "service_licence_expiring": {
+      "title": "Lupa vanhenemassa",
+      "body": "Lupasi palveluun {service} päättyy {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Säästetyt polttoaine- ja energiakustannukset",
     "savingsHint": "Tässä kuussa hyväksytyt reittimuutokset: {n}.",
     "stillWaiting": "Vielä odottamassa: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Omat palvelut",
+    "intro": "Käytetyn paistoöljyn nouto ja muut keittiöpalvelut — aikataulun mukaan tai pyynnöstä. FIRINGI etsii palveluntarjoajan.",
+    "catalogue": "Tilattavissa olevat palvelut",
+    "yourPlans": "Omat tilaukset",
+    "upcoming": "Tulevat käynnit",
+    "history": "Historia",
+    "noProvider": "Ei vielä saatavilla alueellasi",
+    "take": "Tilaa palvelu",
+    "request": "Pyydä noutoa",
+    "requestVisit": "Pyydä käyntiä",
+    "change": "Muuta",
+    "pause": "Keskeytä",
+    "resume": "Jatka",
+    "end": "Lopeta",
+    "endConfirm": "Lopetetaanko tämä tilaus? Tulevat käynnit perutaan.",
+    "skip": "Ohita",
+    "move": "Siirrä",
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "send": "Lähetä",
+    "howOften": "Kuinka usein",
+    "weekday": "Viikonpäivä",
+    "dayOfMonth": "Kuukauden päivä",
+    "secondDay": "Toinen päivä",
+    "time": "Aika",
+    "address": "Osoite",
+    "containers": "Astiat",
+    "containerLitres": "Litraa / astia",
+    "autoRequest": "Pyydä nouto automaattisesti, kun astiat ovat lähes täynnä",
+    "notes": "Lisätiedot palveluntarjoajalle",
+    "date": "Päivä",
+    "note": "Huomautus",
+    "earliest": "Aikaisintaan: {date}",
+    "freq": {
+      "WEEKLY": "Joka viikko",
+      "BIWEEKLY": "2 viikon välein",
+      "TWICE_MONTHLY": "Kahdesti kuukaudessa",
+      "MONTHLY": "Kerran kuukaudessa",
+      "ON_REQUEST": "Vain pyynnöstä"
+    },
+    "window": {
+      "ANY": "Mihin aikaan tahansa",
+      "MORNING": "Aamupäivä",
+      "AFTERNOON": "Iltapäivä"
+    },
+    "weekdays": {
+      "d1": "Maanantai",
+      "d2": "Tiistai",
+      "d3": "Keskiviikko",
+      "d4": "Torstai",
+      "d5": "Perjantai",
+      "d6": "Lauantai",
+      "d7": "Sunnuntai"
+    },
+    "sched": {
+      "WEEKLY": "joka viikko: {day}",
+      "BIWEEKLY": "joka toinen viikko: {day}",
+      "TWICE_MONTHLY": "kuun {a}. ja {b}. päivä",
+      "MONTHLY": "kuun {a}. päivä",
+      "ON_REQUEST": "pyynnöstä"
+    },
+    "st": {
+      "REQUESTED": "Pyydetty",
+      "SCHEDULED": "Suunniteltu",
+      "CONFIRMED": "Vahvistettu",
+      "DONE": "Tehty",
+      "MISSED": "Jäi tekemättä",
+      "SKIPPED": "Ohitettu",
+      "CANCELLED": "Peruttu",
+      "ACTIVE": "Aktiivinen",
+      "PAUSED": "Keskeytetty",
+      "PENDING": "Odottaa FIRINGIä",
+      "APPROVED": "Hyväksytty",
+      "REJECTED": "Hylätty",
+      "SUSPENDED": "Jäädytetty"
+    },
+    "reason": {
+      "CUSTOMER": "Asiakkaan pyynnöstä",
+      "CONTAINER_FULL": "Astiat lähes täynnä",
+      "ASSISTANT": "Pyydetty Avustajan kautta"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "astiaa",
+      "VISIT": "käynti"
+    },
+    "priceVisit": "{amount} / käynti",
+    "priceUnit": "{amount} / {unit}",
+    "buyback": "Saat {amount} / {unit}",
+    "free": "Maksuton",
+    "invoicedByProvider": "Palveluntarjoaja laskuttaa",
+    "invoicedByFiringi": "FIRINGI laskuttaa",
+    "provider": "Palveluntarjoaja",
+    "next": "Seuraava käynti",
+    "service": "Palvelu",
+    "schedule": "Aikataulu",
+    "status": "Tila",
+    "quantity": "Määrä",
+    "document": "Asiakirja",
+    "docNumber": "Jätteen siirtoasiakirjan nro",
+    "noPlans": "Ei vielä tilauksia — tilaa palvelu yllä.",
+    "noUpcoming": "Ei suunniteltuja käyntejä.",
+    "noHistory": "Ei vielä käyntejä.",
+    "requested": "Pyyntö lähetetty.",
+    "saved": "Tallennettu.",
+    "pausedUntil": "Keskeytetty {date} asti",
+    "pauseUntil": "Keskeytys päättyy (valinnainen)",
+    "wasteCode": "Jätekoodi {code}",
+    "fee": "Maksu",
+    "paidYou": "Sinulle maksettu",
+    "oilTitle": "Rasvakeittimet & öljy",
+    "oilIntro": "Kirjaa öljynvaihdot ja mittaukset keittimittäin, näe milloin öljy pitää vaihtaa ja kuinka täynnä käytetyn öljyn astiat ovat.",
+    "fryers": "Rasvakeittimet",
+    "addFryer": "Lisää rasvakeitin",
+    "edit": "Muokkaa",
+    "fryerName": "Nimi",
+    "capacity": "Tilavuus (L)",
+    "oilName": "Öljy",
+    "oilCost": "Öljyn litrahinta",
+    "log": "Kirjaa",
+    "logKind": {
+      "TOP_UP": "Lisätty",
+      "CHANGE": "Öljy vaihdettu",
+      "TEST": "Mitattu",
+      "FILTER": "Suodatettu"
+    },
+    "litres": "Litraa",
+    "polar": "Mittarin lukema (polaariset yhdisteet %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Vaihda pian",
+      "CHANGE": "Vaihda nyt"
+    },
+    "daysSince": "{n} päivää edellisestä vaihdosta",
+    "never": "Vaihtoa ei ole vielä kirjattu",
+    "lastPolar": "Viimeisin lukema {pct} %",
+    "litres30": "Käytetty öljy (30 pv)",
+    "changes30": "Vaihdot (30 pv)",
+    "cost30": "Öljykulut (30 pv)",
+    "storage": "Noutoa odottava käytetty öljy",
+    "storageOf": "{litres} / {capacity} L",
+    "storageNoSize": "{litres} L — lisää astian koko noutotilaukseesi",
+    "noOilPlan": "Ei vielä käytetyn öljyn noutoa — tilaa se Omista palveluista.",
+    "fresh30": "Tuore öljy (30 pv)",
+    "collected90": "Noudettu (90 pv)",
+    "paid90": "Sinulle maksettu (90 pv)",
+    "co2": "Vältetty CO₂ (90 pv)",
+    "lastCollection": "Viimeisin nouto: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: vaihda öljy nyt.",
+      "CHANGE_SOON": "{fryer}: vaihda öljy pian.",
+      "FULL": "Käytetyn öljyn astiat ovat {n} % täynnä — pyydä noutoa.",
+      "NO_TEST": "{fryer}: ei mitattu 2 viikkoon — mittaa öljy.",
+      "OFTEN": "{fryer}: {n} vaihtoa 30 päivässä — tarkista lämpötila ja suodatus.",
+      "LESS_OFTEN": "Astiat ovat noudettaessa vain {n} % täynnä — harvempi nouto riittäisi.",
+      "MORE_OFTEN": "Astiat ovat täynnä joka noudolla ({n} %) — tilaa nouto useammin."
+    },
+    "insights": "Vinkit",
+    "noInsights": "Kaikki kunnossa.",
+    "noFryers": "Ei vielä rasvakeittimiä.",
+    "recentLog": "Viimeisimmät merkinnät",
+    "remove": "Kumoa",
+    "when": "Milloin",
+    "fryer": "Rasvakeitin",
+    "kind": "Mitä",
+    "rules": "Vaihto {days} päivän jälkeen tai kun polaarisia yhdisteitä on {pct} %.",
+    "inactive": "Ei käytössä",
+    "active": "Käytössä",
+    "vTitle": "Palvelut",
+    "vIntro": "Tarjoa noutoja ja keittiöpalveluja FIRINGIn asiakkaille. FIRINGI hyväksyy sinut, osoittaa asiakkaat ja suunnittelee käynnit.",
+    "myServices": "Tarjoamasi palvelut",
+    "apply": "Tarjoa palvelua",
+    "applyHint": "FIRINGI tarkistaa lupasi ja hyväksyy sinut.",
+    "countries": "Maat (esim. PT, ES)",
+    "licence": "Luvan numero",
+    "licenceUntil": "Lupa voimassa asti",
+    "applied": "Lähetetty FIRINGIlle.",
+    "youInvoice": "Sinä laskutat asiakasta. FIRINGI laskuttaa sinulta palkkionsa kuukausittain.",
+    "firingiInvoices": "FIRINGI laskuttaa asiakasta ja maksaa sinulle.",
+    "yourAmount": "Sinun osuutesi: {amount}",
+    "commission": "Palkkio: {value}",
+    "requests": "Pyynnöt",
+    "toDo": "Tulevat käynnit",
+    "plansV": "Tilausasiakkaat",
+    "recent": "Viimeisimmät käynnit",
+    "customer": "Asiakas",
+    "confirm": "Vahvista",
+    "complete": "Tehty",
+    "missed": "Ei voitu tehdä",
+    "missReason": "Miksi?",
+    "containersTaken": "Noudetut astiat",
+    "containersLeft": "Jätetyt astiat",
+    "signedBy": "Allekirjoittaja (asiakkaan puolelta)",
+    "yourInvoiceNo": "Laskusi nro",
+    "noRequests": "Ei pyyntöjä.",
+    "noVisits": "Ei tulevia käyntejä.",
+    "noRecent": "Ei vielä käyntejä.",
+    "noProviderYet": "Et tarjoa vielä yhtään palvelua.",
+    "openPdf": "PDF"
   }
 }

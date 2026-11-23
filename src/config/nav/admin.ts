@@ -33,6 +33,7 @@ const rsk = section(`${A}/risk`, "admin.risk.view");
 const usr = section(`${A}/users`, ["admin.users.view", "admin.users.manage"]);
 const ntf = section(`${A}/notifications`, "admin.notifications.view");
 const set = section(`${A}/settings`, ["admin.settings.view", "admin.settings.manage"]);
+const svc = section(`${A}/services`, ["admin.services.view", "admin.services.manage"]);
 const stf = section(`${A}/staff`, ["admin.dashboard.view", "admin.staff.manage", "admin.users.manage"]);
 const STF_MGR = ["admin.staff.manage", "admin.users.manage"] as const;
 
@@ -243,6 +244,17 @@ export const ADMIN_NAV: NavSection[] = [
       del("returns", "Returns", "Devoluções", "P6", { live: true, perm: ["admin.orders.view", "admin.orders.manage", "admin.delivery.view"] }),
       del("performance", "Delivery Performance", "Desempenho de Entregas", "P12", { live: true, perm: ["admin.delivery.view", "admin.delivery.manage", "admin.analytics.view"] }),
       del("cold-chain", "Cold Chain", "Cadeia de Frio", "P42", { live: true, perm: ["admin.delivery.view", "admin.fleet.view", "admin.orders.view"] }),
+    ],
+  },
+  {
+    key: "services", icon: "Recycle", label: { en: "Services & Used Oil", pt: "Serviços e Óleo Usado", es: "Servicios y aceite usado" },
+    items: [
+      svc("", "Services Overview", "Resumo de Serviços", "P68", { live: true, href: `${A}/services` }),
+      svc("catalogue", "Services Catalogue", "Catálogo de Serviços", "P68", { live: true, href: `${A}/services?tab=CATALOGUE` }),
+      svc("providers", "Service Providers", "Prestadores de Serviços", "P68", { live: true, href: `${A}/services?tab=PROVIDERS` }),
+      svc("visits", "Plans & Visits", "Planos e Visitas", "P68", { live: true, href: `${A}/services?tab=VISITS` }),
+      svc("money", "Service Money", "Valores de Serviços", "P68", { live: true, href: `${A}/services?tab=MONEY` }),
+      svc("settings", "Services Settings", "Definições de Serviços", "P68", { live: true, href: `${A}/services?tab=SETTINGS` }),
     ],
   },
   {

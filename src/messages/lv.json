@@ -939,7 +939,10 @@
     "Bought from Vans": "Pirkts no furgoniem",
     "Customer Assortments": "Klientu sortimenti",
     "Must-Stock List": "Obligātais sortiments",
-    "Consignment Stock": "Konsignācijas krājumi"
+    "Consignment Stock": "Konsignācijas krājumi",
+    "Services": "Pakalpojumi",
+    "My Services": "Mani pakalpojumi",
+    "Fryers & Oil": "Fritieri un eļļa"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Jāizskata pakalpojuma sniedzējs",
+      "body": "{company} vēlas sniegt pakalpojumu {service}."
+    },
+    "service_provider_decided": {
+      "title": "Jūsu pakalpojuma sniedzēja pieteikums",
+      "body": "FIRINGI lēmums: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Jauns klients ar plānu",
+      "body": "{customer} piesaka {service} (plāns {number})."
+    },
+    "service_request_new": {
+      "title": "Jauns pakalpojuma pieprasījums",
+      "body": "{customer} pieprasa {service} uz {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Apmeklējums mainīts",
+      "body": "Apmeklējums {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Apmeklējums apstiprināts",
+      "body": "Apmeklējums {number} apstiprināts uz {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Apmeklējums rīt",
+      "body": "{service}: apmeklējums {number} {date}."
+    },
+    "service_visit_done": {
+      "title": "Apmeklējums izpildīts",
+      "body": "{service}: apmeklējums {number} izpildīts ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Apmeklējums neizpildīts",
+      "body": "Apmeklējums {number} netika izpildīts: {reason}."
+    },
+    "service_container_full": {
+      "title": "Savākšana pieprasīta",
+      "body": "Jūsu lietotās eļļas konteineri ir gandrīz pilni — savākšana {number} pieprasīta uz {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Nomainiet eļļu",
+      "body": "{fryer}: jāmaina eļļa ({days} dienas)."
+    },
+    "service_licence_expiring": {
+      "title": "Licences termiņš beidzas",
+      "body": "Jūsu licence pakalpojumam {service} beidzas {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Ietaupītās degvielas un enerģijas izmaksas",
     "savingsHint": "Šomēnes pieņemtās maršrutu izmaiņas: {n}.",
     "stillWaiting": "Vēl gaida: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mani pakalpojumi",
+    "intro": "Lietotās cepamās eļļas savākšana un citi virtuves pakalpojumi — pēc grafika vai pēc jūsu pieprasījuma. FIRINGI atrod pakalpojuma sniedzēju.",
+    "catalogue": "Pieejamie pakalpojumi",
+    "yourPlans": "Jūsu plāni",
+    "upcoming": "Gaidāmie apmeklējumi",
+    "history": "Vēsture",
+    "noProvider": "Jūsu reģionā vēl nav pieejams",
+    "take": "Pieteikt šo pakalpojumu",
+    "request": "Pieprasīt savākšanu",
+    "requestVisit": "Pieprasīt apmeklējumu",
+    "change": "Mainīt",
+    "pause": "Apturēt",
+    "resume": "Atsākt",
+    "end": "Beigt",
+    "endConfirm": "Beigt šo plānu? Gaidāmie apmeklējumi tiks atcelti.",
+    "skip": "Izlaist",
+    "move": "Pārcelt",
+    "save": "Saglabāt",
+    "cancel": "Atcelt",
+    "send": "Sūtīt",
+    "howOften": "Biežums",
+    "weekday": "Nedēļas diena",
+    "dayOfMonth": "Mēneša diena",
+    "secondDay": "Otrā diena",
+    "time": "Laiks",
+    "address": "Adrese",
+    "containers": "Konteineri",
+    "containerLitres": "Litri vienā konteinerā",
+    "autoRequest": "Automātiski pieprasīt savākšanu, kad konteineri ir gandrīz pilni",
+    "notes": "Piezīmes pakalpojuma sniedzējam",
+    "date": "Diena",
+    "note": "Piezīme",
+    "earliest": "Agrākais: {date}",
+    "freq": {
+      "WEEKLY": "Katru nedēļu",
+      "BIWEEKLY": "Ik pēc 2 nedēļām",
+      "TWICE_MONTHLY": "Divreiz mēnesī",
+      "MONTHLY": "Katru mēnesi",
+      "ON_REQUEST": "Tikai pēc pieprasījuma"
+    },
+    "window": {
+      "ANY": "Jebkurā laikā",
+      "MORNING": "No rīta",
+      "AFTERNOON": "Pēcpusdienā"
+    },
+    "weekdays": {
+      "d1": "Pirmdiena",
+      "d2": "Otrdiena",
+      "d3": "Trešdiena",
+      "d4": "Ceturtdiena",
+      "d5": "Piektdiena",
+      "d6": "Sestdiena",
+      "d7": "Svētdiena"
+    },
+    "sched": {
+      "WEEKLY": "katru nedēļu: {day}",
+      "BIWEEKLY": "katru otro nedēļu: {day}",
+      "TWICE_MONTHLY": "mēneša {a}. un {b}. datumā",
+      "MONTHLY": "mēneša {a}. datumā",
+      "ON_REQUEST": "pēc jūsu pieprasījuma"
+    },
+    "st": {
+      "REQUESTED": "Pieprasīts",
+      "SCHEDULED": "Ieplānots",
+      "CONFIRMED": "Apstiprināts",
+      "DONE": "Izpildīts",
+      "MISSED": "Neizpildīts",
+      "SKIPPED": "Izlaists",
+      "CANCELLED": "Atcelts",
+      "ACTIVE": "Aktīvs",
+      "PAUSED": "Apturēts",
+      "PENDING": "Gaida FIRINGI apstiprinājumu",
+      "APPROVED": "Akceptēts",
+      "REJECTED": "Noraidīts",
+      "SUSPENDED": "Darbība apturēta"
+    },
+    "reason": {
+      "CUSTOMER": "Pēc klienta pieprasījuma",
+      "CONTAINER_FULL": "Konteineri gandrīz pilni",
+      "ASSISTANT": "Pieprasīts ar Asistenta palīdzību"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "konteiners",
+      "VISIT": "apmeklējums"
+    },
+    "priceVisit": "{amount} par apmeklējumu",
+    "priceUnit": "{amount} / {unit}",
+    "buyback": "Jums maksā {amount} / {unit}",
+    "free": "Bez maksas",
+    "invoicedByProvider": "Rēķinu izraksta pakalpojuma sniedzējs",
+    "invoicedByFiringi": "Rēķinu izraksta FIRINGI",
+    "provider": "Pakalpojuma sniedzējs",
+    "next": "Nākamais apmeklējums",
+    "service": "Pakalpojums",
+    "schedule": "Grafiks",
+    "status": "Statuss",
+    "quantity": "Daudzums",
+    "document": "Dokuments",
+    "docNumber": "Atkritumu dokumenta nr.",
+    "noPlans": "Plānu vēl nav — izvēlieties pakalpojumu augstāk.",
+    "noUpcoming": "Nekas nav ieplānots.",
+    "noHistory": "Apmeklējumu vēl nav.",
+    "requested": "Pieprasījums nosūtīts.",
+    "saved": "Saglabāts.",
+    "pausedUntil": "Apturēts līdz {date}",
+    "pauseUntil": "Apturēt līdz (pēc izvēles)",
+    "wasteCode": "Atkritumu kods {code}",
+    "fee": "Maksa",
+    "paidYou": "Izmaksāts jums",
+    "oilTitle": "Fritieri un eļļa",
+    "oilIntro": "Reģistrējiet eļļas maiņas un pārbaudes katram fritierim, skatiet, kad jāmaina eļļa un cik pilni ir lietotās eļļas konteineri.",
+    "fryers": "Fritieri",
+    "addFryer": "Pievienot fritieri",
+    "edit": "Rediģēt",
+    "fryerName": "Nosaukums",
+    "capacity": "Tilpums (L)",
+    "oilName": "Eļļa",
+    "oilCost": "Eļļas cena par litru",
+    "log": "Reģistrēt",
+    "logKind": {
+      "TOP_UP": "Papildināts",
+      "CHANGE": "Eļļa nomainīta",
+      "TEST": "Pārbaudīts",
+      "FILTER": "Filtrēts"
+    },
+    "litres": "Litri",
+    "polar": "Testera rādījums (polārie %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Drīz jāmaina",
+      "CHANGE": "Jāmaina tagad"
+    },
+    "daysSince": "{n} dienas kopš pēdējās maiņas",
+    "never": "Maiņa vēl nav reģistrēta",
+    "lastPolar": "Pēdējais rādījums {pct}%",
+    "litres30": "Izlietotā eļļa (30 dienas)",
+    "changes30": "Maiņas (30 dienas)",
+    "cost30": "Eļļas izmaksas (30 dienas)",
+    "storage": "Lietotā eļļa gaida savākšanu",
+    "storageOf": "{litres} no {capacity} L",
+    "storageNoSize": "{litres} L — pievienojiet konteinera izmēru savam savākšanas plānam",
+    "noOilPlan": "Lietotās eļļas savākšanas vēl nav — piesakiet to sadaļā Mani pakalpojumi.",
+    "fresh30": "Svaigā eļļa (30 dienas)",
+    "collected90": "Savākts (90 dienas)",
+    "paid90": "Izmaksāts jums (90 dienas)",
+    "co2": "Novērstais CO₂ (90 dienas)",
+    "lastCollection": "Pēdējā savākšana: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: nomainiet eļļu tagad.",
+      "CHANGE_SOON": "{fryer}: drīzumā nomainiet eļļu.",
+      "FULL": "Lietotās eļļas konteineri ir {n}% pilni — pieprasiet savākšanu.",
+      "NO_TEST": "{fryer}: nav pārbaudīts 2 nedēļas — pārbaudiet eļļu.",
+      "OFTEN": "{fryer}: {n} maiņas 30 dienās — pārbaudiet temperatūru un filtrēšanu.",
+      "LESS_OFTEN": "Savākšanas brīdī konteineri ir tikai {n}% pilni — pietiktu ar retāku plānu.",
+      "MORE_OFTEN": "Konteineri ir pilni katrā savākšanā ({n}%) — savāciet biežāk."
+    },
+    "insights": "Padomi",
+    "noInsights": "Viss kārtībā.",
+    "noFryers": "Fritieru vēl nav.",
+    "recentLog": "Pēdējie ieraksti",
+    "remove": "Atsaukt",
+    "when": "Kad",
+    "fryer": "Fritieris",
+    "kind": "Kas",
+    "rules": "Mainiet pēc {days} dienām vai pie {pct}% polāro savienojumu.",
+    "inactive": "Netiek lietots",
+    "active": "Tiek lietots",
+    "vTitle": "Pakalpojumi",
+    "vIntro": "Sniedziet savākšanas un virtuves pakalpojumus FIRINGI klientiem. FIRINGI jūs apstiprina, piešķir klientus un plāno apmeklējumus.",
+    "myServices": "Jūsu sniegtie pakalpojumi",
+    "apply": "Piedāvāt pakalpojumu",
+    "applyHint": "FIRINGI pārbauda jūsu licenci un jūs apstiprina.",
+    "countries": "Valstis (piem., PT, ES)",
+    "licence": "Licences numurs",
+    "licenceUntil": "Licence derīga līdz",
+    "applied": "Nosūtīts FIRINGI.",
+    "youInvoice": "Jūs izrakstāt rēķinu klientam. FIRINGI komisijas maksas rēķinu jums izraksta reizi mēnesī.",
+    "firingiInvoices": "FIRINGI izraksta rēķinu klientam un samaksā jums.",
+    "yourAmount": "Jūsu summa: {amount}",
+    "commission": "Komisija: {value}",
+    "requests": "Pieprasījumi",
+    "toDo": "Gaidāmie apmeklējumi",
+    "plansV": "Klienti ar plānu",
+    "recent": "Pēdējie apmeklējumi",
+    "customer": "Klients",
+    "confirm": "Apstiprināt",
+    "complete": "Izpildīts",
+    "missed": "Neizdevās",
+    "missReason": "Kāpēc?",
+    "containersTaken": "Paņemtie konteineri",
+    "containersLeft": "Atstātie konteineri",
+    "signedBy": "Parakstīja (klienta pusē)",
+    "yourInvoiceNo": "Jūsu rēķina nr.",
+    "noRequests": "Pieprasījumu nav.",
+    "noVisits": "Nekas nav gaidāms.",
+    "noRecent": "Apmeklējumu vēl nav.",
+    "noProviderYet": "Jūs vēl nesniedzat nevienu pakalpojumu.",
+    "openPdf": "PDF"
   }
 }

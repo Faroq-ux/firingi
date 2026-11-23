@@ -45,6 +45,7 @@ const SCHEDULE = [
   { job: "deals", due: (m) => m % 60 === 41 },
   { job: "ads", due: (m) => m % 60 === 47 },
   { job: "loyalty", due: (m) => m % 60 === 53 },
+  { job: "services", due: (m) => m % 60 === 19 }, // services: plan visits, reminders, missed, containers full, oil alerts, commissions
   // daily (UTC)
   { job: "pos-daily", due: (m) => m % 1440 === 1 * 60 + 17 },
   { job: "plans", due: (m) => m % 1440 === 2 * 60 + 41 },

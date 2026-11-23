@@ -939,7 +939,10 @@
     "Bought from Vans": "Köpt från skåpbilar",
     "Customer Assortments": "Kundsortiment",
     "Must-Stock List": "Bassortiment",
-    "Consignment Stock": "Konsignationslager"
+    "Consignment Stock": "Konsignationslager",
+    "Services": "Tjänster",
+    "My Services": "Mina tjänster",
+    "Fryers & Oil": "Fritöser & olja"
   },
   "delivery": {
     "title": "Leverans",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Tjänsteleverantör att granska",
+      "body": "{company} vill erbjuda {service}."
+    },
+    "service_provider_decided": {
+      "title": "Din tjänsteansökan",
+      "body": "FIRINGI:s beslut: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Ny kund med plan",
+      "body": "{customer} beställer {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "Ny tjänstebegäran",
+      "body": "{customer} begär {service} den {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Besök ändrat",
+      "body": "Besök {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Besök bekräftat",
+      "body": "Besök {number} är bekräftat till {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Besök i morgon",
+      "body": "{service}: besök {number} den {date}."
+    },
+    "service_visit_done": {
+      "title": "Besök utfört",
+      "body": "{service}: besök {number} är utfört ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Besök ej utfört",
+      "body": "Besök {number} blev inte utfört: {reason}."
+    },
+    "service_container_full": {
+      "title": "Hämtning begärd",
+      "body": "Dina behållare för använd olja är nästan fulla — hämtning {number} har begärts till {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Byt oljan",
+      "body": "{fryer}: dags att byta olja ({days} dagar)."
+    },
+    "service_licence_expiring": {
+      "title": "Tillståndet går ut",
+      "body": "Ditt tillstånd för {service} går ut den {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Sparade bränsle- och energikostnader",
     "savingsHint": "Från {n} godkända ruttändringar denna månad.",
     "stillWaiting": "Väntar fortfarande: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mina tjänster",
+    "intro": "Hämtning av använd frityrolja och andra kökstjänster — enligt schema eller när du ber om det. FIRINGI hittar leverantören.",
+    "catalogue": "Tjänster du kan beställa",
+    "yourPlans": "Dina planer",
+    "upcoming": "Kommande besök",
+    "history": "Historik",
+    "noProvider": "Inte tillgängligt i ditt område än",
+    "take": "Beställ tjänsten",
+    "request": "Begär hämtning",
+    "requestVisit": "Begär besök",
+    "change": "Ändra",
+    "pause": "Pausa",
+    "resume": "Återuppta",
+    "end": "Avsluta",
+    "endConfirm": "Avsluta den här planen? Kommande besök ställs in.",
+    "skip": "Hoppa över",
+    "move": "Flytta",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "send": "Skicka",
+    "howOften": "Hur ofta",
+    "weekday": "Veckodag",
+    "dayOfMonth": "Dag i månaden",
+    "secondDay": "Andra dagen",
+    "time": "Tid",
+    "address": "Adress",
+    "containers": "Behållare",
+    "containerLitres": "Liter per behållare",
+    "autoRequest": "Begär hämtning automatiskt när behållarna är nästan fulla",
+    "notes": "Anteckningar till leverantören",
+    "date": "Dag",
+    "note": "Anteckning",
+    "earliest": "Tidigast: {date}",
+    "freq": {
+      "WEEKLY": "Varje vecka",
+      "BIWEEKLY": "Varannan vecka",
+      "TWICE_MONTHLY": "Två gånger i månaden",
+      "MONTHLY": "Varje månad",
+      "ON_REQUEST": "Endast vid beställning"
+    },
+    "window": {
+      "ANY": "När som helst",
+      "MORNING": "Förmiddag",
+      "AFTERNOON": "Eftermiddag"
+    },
+    "weekdays": {
+      "d1": "Måndag",
+      "d2": "Tisdag",
+      "d3": "Onsdag",
+      "d4": "Torsdag",
+      "d5": "Fredag",
+      "d6": "Lördag",
+      "d7": "Söndag"
+    },
+    "sched": {
+      "WEEKLY": "varje {day}",
+      "BIWEEKLY": "varannan {day}",
+      "TWICE_MONTHLY": "dag {a} och {b} i månaden",
+      "MONTHLY": "dag {a} i månaden",
+      "ON_REQUEST": "när du ber om det"
+    },
+    "st": {
+      "REQUESTED": "Begärt",
+      "SCHEDULED": "Planerat",
+      "CONFIRMED": "Bekräftat",
+      "DONE": "Utfört",
+      "MISSED": "Ej utfört",
+      "SKIPPED": "Överhoppat",
+      "CANCELLED": "Inställt",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "Pausad",
+      "PENDING": "Väntar på FIRINGI",
+      "APPROVED": "Godkänd",
+      "REJECTED": "Avslagen",
+      "SUSPENDED": "Avstängd"
+    },
+    "reason": {
+      "CUSTOMER": "Begärt av kunden",
+      "CONTAINER_FULL": "Behållarna nästan fulla",
+      "ASSISTANT": "Begärt via Assistenten"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "kärl",
+      "VISIT": "besök"
+    },
+    "priceVisit": "{amount} per besök",
+    "priceUnit": "{amount} per {unit}",
+    "buyback": "Du får {amount} per {unit}",
+    "free": "Kostnadsfritt",
+    "invoicedByProvider": "Faktureras av leverantören",
+    "invoicedByFiringi": "Faktureras av FIRINGI",
+    "provider": "Leverantör",
+    "next": "Nästa besök",
+    "service": "Tjänst",
+    "schedule": "Schema",
+    "status": "Status",
+    "quantity": "Mängd",
+    "document": "Dokument",
+    "docNumber": "Avfallsdokument nr",
+    "noPlans": "Inga planer än — beställ en tjänst ovan.",
+    "noUpcoming": "Inget planerat.",
+    "noHistory": "Inga besök än.",
+    "requested": "Begäran skickad.",
+    "saved": "Sparat.",
+    "pausedUntil": "Pausad till {date}",
+    "pauseUntil": "Pausa till (valfritt)",
+    "wasteCode": "Avfallskod {code}",
+    "fee": "Avgift",
+    "paidYou": "Utbetalt till dig",
+    "oilTitle": "Fritöser & olja",
+    "oilIntro": "Logga oljebyten och tester per fritös, se när oljan ska bytas och hur fulla behållarna för använd olja är.",
+    "fryers": "Fritöser",
+    "addFryer": "Lägg till fritös",
+    "edit": "Redigera",
+    "fryerName": "Namn",
+    "capacity": "Kapacitet (L)",
+    "oilName": "Olja",
+    "oilCost": "Oljepris per liter",
+    "log": "Logga",
+    "logKind": {
+      "TOP_UP": "Påfylld",
+      "CHANGE": "Olja bytt",
+      "TEST": "Testad",
+      "FILTER": "Filtrerad"
+    },
+    "litres": "Liter",
+    "polar": "Testarvärde (polära ämnen %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Byt snart",
+      "CHANGE": "Byt nu"
+    },
+    "daysSince": "{n} dagar sedan senaste bytet",
+    "never": "Inget byte loggat än",
+    "lastPolar": "Senaste värde {pct} %",
+    "litres30": "Använd olja (30 dagar)",
+    "changes30": "Byten (30 dagar)",
+    "cost30": "Oljekostnad (30 dagar)",
+    "storage": "Använd olja som väntar",
+    "storageOf": "{litres} av {capacity} L",
+    "storageNoSize": "{litres} L — lägg till behållarstorleken i din hämtningsplan",
+    "noOilPlan": "Ingen hämtning av använd olja än — beställ den under Mina tjänster.",
+    "fresh30": "Färsk olja (30 dagar)",
+    "collected90": "Hämtat (90 dagar)",
+    "paid90": "Utbetalt till dig (90 dagar)",
+    "co2": "Undvikt CO₂ (90 dagar)",
+    "lastCollection": "Senaste hämtning: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: byt oljan nu.",
+      "CHANGE_SOON": "{fryer}: byt oljan snart.",
+      "FULL": "Behållarna för använd olja är {n} % fulla — begär hämtning.",
+      "NO_TEST": "{fryer}: inte testad på 2 veckor — testa oljan.",
+      "OFTEN": "{fryer}: {n} byten på 30 dagar — kontrollera temperaturen och filtreringen.",
+      "LESS_OFTEN": "Behållarna är bara {n} % fulla vid hämtning — en glesare plan räcker.",
+      "MORE_OFTEN": "Behållarna är fulla vid varje hämtning ({n} %) — hämta oftare."
+    },
+    "insights": "Tips",
+    "noInsights": "Allt ser bra ut.",
+    "noFryers": "Inga fritöser än.",
+    "recentLog": "Senaste poster",
+    "remove": "Ångra",
+    "when": "När",
+    "fryer": "Fritös",
+    "kind": "Vad",
+    "rules": "Byt efter {days} dagar eller vid {pct} % polära ämnen.",
+    "inactive": "Används inte",
+    "active": "Används",
+    "vTitle": "Tjänster",
+    "vIntro": "Erbjud hämtning och kökstjänster till FIRINGI:s kunder. FIRINGI godkänner dig, tilldelar kunder och planerar besöken.",
+    "myServices": "Tjänster du erbjuder",
+    "apply": "Erbjud en tjänst",
+    "applyHint": "FIRINGI kontrollerar ditt tillstånd och godkänner dig.",
+    "countries": "Länder (t.ex. PT, ES)",
+    "licence": "Tillståndsnummer",
+    "licenceUntil": "Tillståndet gäller till",
+    "applied": "Skickat till FIRINGI.",
+    "youInvoice": "Du fakturerar kunden. FIRINGI:s provision faktureras dig månadsvis.",
+    "firingiInvoices": "FIRINGI fakturerar kunden och betalar dig.",
+    "yourAmount": "Ditt belopp: {amount}",
+    "commission": "Provision: {value}",
+    "requests": "Förfrågningar",
+    "toDo": "Kommande besök",
+    "plansV": "Kunder med plan",
+    "recent": "Senaste besök",
+    "customer": "Kund",
+    "confirm": "Bekräfta",
+    "complete": "Utfört",
+    "missed": "Kunde inte utföras",
+    "missReason": "Varför?",
+    "containersTaken": "Behållare hämtade",
+    "containersLeft": "Behållare lämnade",
+    "signedBy": "Signerat av (hos kunden)",
+    "yourInvoiceNo": "Ditt fakturanr",
+    "noRequests": "Inga förfrågningar.",
+    "noVisits": "Inget på gång.",
+    "noRecent": "Inga besök än.",
+    "noProviderYet": "Du erbjuder ingen tjänst än.",
+    "openPdf": "PDF"
   }
 }

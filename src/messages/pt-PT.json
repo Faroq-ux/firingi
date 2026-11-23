@@ -1993,6 +1993,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Prestador de serviços a analisar",
+      "body": "{company} pretende prestar {service}."
+    },
+    "service_provider_decided": {
+      "title": "A sua candidatura de serviço",
+      "body": "Decisão da FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Novo cliente com plano",
+      "body": "{customer} aderiu a {service} (plano {number})."
+    },
+    "service_request_new": {
+      "title": "Novo pedido de serviço",
+      "body": "{customer} pede {service} para {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Visita alterada",
+      "body": "Visita {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Visita confirmada",
+      "body": "A visita {number} está confirmada para {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Visita amanhã",
+      "body": "{service}: visita {number} em {date}."
+    },
+    "service_visit_done": {
+      "title": "Visita concluída",
+      "body": "{service}: a visita {number} foi concluída ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Visita não realizada",
+      "body": "A visita {number} não foi realizada: {reason}."
+    },
+    "service_container_full": {
+      "title": "Recolha pedida",
+      "body": "Os seus contentores de óleo usado estão quase cheios — a recolha {number} foi pedida para {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Mude o óleo",
+      "body": "{fryer}: está na altura de mudar o óleo ({days} dias)."
+    },
+    "service_licence_expiring": {
+      "title": "Licença a expirar",
+      "body": "A sua licença para {service} termina em {date}."
     }
   },
   "notifications": {
@@ -2267,7 +2315,10 @@
     "Bought from Vans": "Compras em carrinhas",
     "Customer Assortments": "Sortidos de clientes",
     "Must-Stock List": "Lista de stock obrigatório",
-    "Consignment Stock": "Stock à Consignação"
+    "Consignment Stock": "Stock à Consignação",
+    "Services": "Serviços",
+    "My Services": "Os meus serviços",
+    "Fryers & Oil": "Fritadeiras e óleo"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -9305,5 +9356,207 @@
     "costSaved": "Custo de combustível e energia poupado",
     "savingsHint": "De {n} alterações de rota aceites este mês.",
     "stillWaiting": "Ainda pendente: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Os meus serviços",
+    "intro": "Recolha de óleo alimentar usado e outros serviços de cozinha — com periodicidade fixa ou a pedido. A FIRINGI encontra o prestador.",
+    "catalogue": "Serviços disponíveis",
+    "yourPlans": "Os seus planos",
+    "upcoming": "Próximas visitas",
+    "history": "Histórico",
+    "noProvider": "Ainda não disponível na sua zona",
+    "take": "Aderir a este serviço",
+    "request": "Pedir uma recolha",
+    "requestVisit": "Pedir uma visita",
+    "change": "Alterar",
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "end": "Terminar",
+    "endConfirm": "Terminar este plano? As próximas visitas serão canceladas.",
+    "skip": "Saltar",
+    "move": "Mudar data",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "send": "Enviar",
+    "howOften": "Frequência",
+    "weekday": "Dia da semana",
+    "dayOfMonth": "Dia do mês",
+    "secondDay": "Segundo dia",
+    "time": "Hora",
+    "address": "Morada",
+    "containers": "Contentores",
+    "containerLitres": "Litros por contentor",
+    "autoRequest": "Pedir uma recolha automaticamente quando os contentores estiverem quase cheios",
+    "notes": "Notas para o prestador",
+    "date": "Dia",
+    "note": "Nota",
+    "earliest": "A partir de: {date}",
+    "freq": {
+      "WEEKLY": "Todas as semanas",
+      "BIWEEKLY": "De 2 em 2 semanas",
+      "TWICE_MONTHLY": "Duas vezes por mês",
+      "MONTHLY": "Todos os meses",
+      "ON_REQUEST": "Só a pedido"
+    },
+    "window": {
+      "ANY": "Qualquer hora",
+      "MORNING": "Manhã",
+      "AFTERNOON": "Tarde"
+    },
+    "weekdays": {
+      "d1": "Segunda-feira",
+      "d2": "Terça-feira",
+      "d3": "Quarta-feira",
+      "d4": "Quinta-feira",
+      "d5": "Sexta-feira",
+      "d6": "Sábado",
+      "d7": "Domingo"
+    },
+    "sched": {
+      "WEEKLY": "cada {day}",
+      "BIWEEKLY": "quinzenalmente, {day}",
+      "TWICE_MONTHLY": "nos dias {a} e {b}",
+      "MONTHLY": "no dia {a}",
+      "ON_REQUEST": "a pedido"
+    },
+    "st": {
+      "REQUESTED": "Pedido",
+      "SCHEDULED": "Planeado",
+      "CONFIRMED": "Confirmado",
+      "DONE": "Concluído",
+      "MISSED": "Não realizado",
+      "SKIPPED": "Saltado",
+      "CANCELLED": "Cancelado",
+      "ACTIVE": "Ativo",
+      "PAUSED": "Em pausa",
+      "PENDING": "A aguardar a FIRINGI",
+      "APPROVED": "Aprovado",
+      "REJECTED": "Rejeitado",
+      "SUSPENDED": "Suspenso"
+    },
+    "reason": {
+      "CUSTOMER": "Pedido pelo cliente",
+      "CONTAINER_FULL": "Contentores quase cheios",
+      "ASSISTANT": "Pedido através do Assistente"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "contentores",
+      "VISIT": "visita"
+    },
+    "priceVisit": "{amount} por visita",
+    "priceUnit": "{amount} por {unit}",
+    "buyback": "Recebe {amount} por {unit}",
+    "free": "Sem custos",
+    "invoicedByProvider": "Faturado pelo prestador",
+    "invoicedByFiringi": "Faturado pela FIRINGI",
+    "provider": "Prestador",
+    "next": "Próxima visita",
+    "service": "Serviço",
+    "schedule": "Calendário",
+    "status": "Estado",
+    "quantity": "Quantidade",
+    "document": "Documento",
+    "docNumber": "N.º da guia de resíduos",
+    "noPlans": "Ainda sem planos — adira a um serviço acima.",
+    "noUpcoming": "Nada planeado.",
+    "noHistory": "Ainda sem visitas.",
+    "requested": "Pedido enviado.",
+    "saved": "Guardado.",
+    "pausedUntil": "Em pausa até {date}",
+    "pauseUntil": "Pausar até (opcional)",
+    "wasteCode": "Código de resíduo {code}",
+    "fee": "Custo",
+    "paidYou": "Pago a si",
+    "oilTitle": "Fritadeiras e óleo",
+    "oilIntro": "Registe as mudanças e os testes de óleo por fritadeira, veja quando o óleo deve ser mudado e quão cheios estão os contentores de óleo usado.",
+    "fryers": "Fritadeiras",
+    "addFryer": "Adicionar fritadeira",
+    "edit": "Editar",
+    "fryerName": "Nome",
+    "capacity": "Capacidade (L)",
+    "oilName": "Óleo",
+    "oilCost": "Preço do óleo por litro",
+    "log": "Registar",
+    "logKind": {
+      "TOP_UP": "Óleo acrescentado",
+      "CHANGE": "Óleo mudado",
+      "TEST": "Testado",
+      "FILTER": "Filtrado"
+    },
+    "litres": "Litros",
+    "polar": "Leitura do medidor (% compostos polares)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Mudar em breve",
+      "CHANGE": "Mudar agora"
+    },
+    "daysSince": "{n} dias desde a última mudança",
+    "never": "Ainda sem mudanças registadas",
+    "lastPolar": "Última leitura {pct}%",
+    "litres30": "Óleo gasto (30 dias)",
+    "changes30": "Mudanças (30 dias)",
+    "cost30": "Custo do óleo (30 dias)",
+    "storage": "Óleo usado em espera",
+    "storageOf": "{litres} de {capacity} L",
+    "storageNoSize": "{litres} L — indique o tamanho do contentor no seu plano de recolha",
+    "noOilPlan": "Ainda sem recolha de óleo usado — adira a uma em Os meus serviços.",
+    "fresh30": "Óleo novo (30 dias)",
+    "collected90": "Recolhido (90 dias)",
+    "paid90": "Pago a si (90 dias)",
+    "co2": "CO₂ evitado (90 dias)",
+    "lastCollection": "Última recolha: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: mude o óleo agora.",
+      "CHANGE_SOON": "{fryer}: mude o óleo em breve.",
+      "FULL": "Os contentores de óleo usado estão {n}% cheios — peça uma recolha.",
+      "NO_TEST": "{fryer}: sem teste há 2 semanas — teste o óleo.",
+      "OFTEN": "{fryer}: {n} mudanças em 30 dias — verifique a temperatura e a filtragem.",
+      "LESS_OFTEN": "Os contentores só estão {n}% cheios na recolha — um plano menos frequente seria suficiente.",
+      "MORE_OFTEN": "Os contentores estão cheios em todas as recolhas ({n}%) — aumente a frequência das recolhas."
+    },
+    "insights": "Dicas",
+    "noInsights": "Tudo em ordem.",
+    "noFryers": "Ainda sem fritadeiras.",
+    "recentLog": "Registos recentes",
+    "remove": "Anular",
+    "when": "Quando",
+    "fryer": "Fritadeira",
+    "kind": "O quê",
+    "rules": "Mudar após {days} dias ou com {pct}% de compostos polares.",
+    "inactive": "Fora de uso",
+    "active": "Em uso",
+    "vTitle": "Serviços",
+    "vIntro": "Preste serviços de recolha e de cozinha a clientes FIRINGI. A FIRINGI aprova-o, atribui-lhe clientes e planeia as visitas.",
+    "myServices": "Serviços que presta",
+    "apply": "Oferecer um serviço",
+    "applyHint": "A FIRINGI verifica a sua licença e aprova-o.",
+    "countries": "Países (ex.: PT, ES)",
+    "licence": "Número da licença",
+    "licenceUntil": "Licença válida até",
+    "applied": "Enviado à FIRINGI.",
+    "youInvoice": "Fatura diretamente ao cliente. A comissão da FIRINGI é-lhe faturada mensalmente.",
+    "firingiInvoices": "A FIRINGI fatura ao cliente e paga-lhe.",
+    "yourAmount": "O seu valor: {amount}",
+    "commission": "Comissão: {value}",
+    "requests": "Pedidos",
+    "toDo": "Próximas visitas",
+    "plansV": "Clientes com plano",
+    "recent": "Visitas recentes",
+    "customer": "Cliente",
+    "confirm": "Confirmar",
+    "complete": "Concluir",
+    "missed": "Não foi possível",
+    "missReason": "Motivo?",
+    "containersTaken": "Contentores recolhidos",
+    "containersLeft": "Contentores deixados",
+    "signedBy": "Assinado por (do lado do cliente)",
+    "yourInvoiceNo": "N.º da sua fatura",
+    "noRequests": "Sem pedidos.",
+    "noVisits": "Nada previsto.",
+    "noRecent": "Ainda sem visitas.",
+    "noProviderYet": "Ainda não presta nenhum serviço.",
+    "openPdf": "PDF"
   }
 }

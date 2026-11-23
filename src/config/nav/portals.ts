@@ -61,6 +61,7 @@ const vrp = section(`${V}/reps`, ["vendor.reps.manage", "vendor.reps.field"]);
 const vcs = section(`${V}/consignment`, ["vendor.consignment.manage", "vendor.consignment.count"]);
 const vvn = section(`${V}/van`, ["vendor.vansales.manage", "vendor.vansales.sell"]);
 const vst = section(`${V}/staff`, ["vendor.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
+const vsv = section(`${V}/services`, ["vendor.services.manage", "vendor.services.visit"]);
 const vwh = section(`${V}/warehouse`, ["vendor.inventory.view", "vendor.inventory.manage", "vendor.warehouse.pick", "vendor.recalls.manage"]);
 
 export const VENDOR_NAV: NavSection[] = [
@@ -197,6 +198,10 @@ export const VENDOR_NAV: NavSection[] = [
       vvn("", "Van Loads", "Cargas das Carrinhas", "P63", { live: true, href: `${V}/van`, feature: "VAN_SALES", perm: "vendor.vansales.manage", es: "Cargas de furgonetas" }),
     ],
   },
+  {
+    key: "services", icon: "Recycle", label: { en: "Services", pt: "Serviços", es: "Servicios" },
+    items: [vsv("", "Services", "Serviços", "P68", { live: true, href: `${V}/services`, feature: "SERVICES_PROVIDER", es: "Servicios" })],
+  },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" }), vr("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["vendor.reports.view", "vendor.orders.view", "vendor.products.manage"], es: "Huella de CO₂" }), vr("eu-trade", "EU Trade Report", "Relatório Intracomunitário", "P57", { live: true, perm: ["vendor.reports.view", "vendor.invoices.view", "vendor.orders.view"], es: "Informe intracomunitario" })] },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(vpos, false) },
   { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(vst) },
@@ -233,6 +238,7 @@ const bsh = section(`${B}/branches`, ["buyer.branches.manage", "buyer.orders.vie
 const bac = section(`${B}/accounting`, ["company.accounting.view", "company.accounting.manage"]);
 const bpos = section(`${B}/pos`, ["company.pos.sell", "company.pos.manage"]);
 const bk = section(`${B}/kitchen`, ["buyer.kitchen.manage", "buyer.kitchen.waste"]);
+const bsv = section(`${B}/services`, ["buyer.services.manage", "buyer.services.log"]);
 const bst = section(`${B}/staff`, ["buyer.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 
 export const BUY_NAV: NavSection[] = [
@@ -306,6 +312,13 @@ export const BUY_NAV: NavSection[] = [
       bk("waste/reports", "Waste Reports", "Relatórios de Desperdício", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Informes de desperdicio" }),
       bk("use-first", "Use First", "Usar Primeiro", "P54", { live: true, feature: "KITCHEN_MGR", perm: "buyer.kitchen.manage", es: "Usar primero" }),
       bk("donations", "Donations", "Doações", "P54", { live: true, feature: "KITCHEN", es: "Donaciones" }),
+    ],
+  },
+  {
+    key: "services", icon: "Recycle", label: { en: "Services", pt: "Serviços", es: "Servicios" },
+    items: [
+      bsv("", "My Services", "Os Meus Serviços", "P68", { live: true, href: `${B}/services`, feature: "SERVICES", es: "Mis servicios" }),
+      bsv("oil", "Fryers & Oil", "Fritadeiras e Óleo", "P68", { live: true, feature: "SERVICES_OIL", es: "Freidoras y aceite" }),
     ],
   },
   { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(bst) },

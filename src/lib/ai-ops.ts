@@ -52,6 +52,16 @@ export const TRIGGERS = {
     fields: { title: { label: "Suggestion", type: "text" }, kind: { label: "Kind (STOCK_OUT, SALES_DROP…)", type: "text" }, area: { label: "Area (SALES, STOCK, ROUTES…)", type: "text" }, score: { label: "Importance (0–100)", type: "number" } },
     sample: { title: "Olive oil 5 L runs out in 2 days", kind: "STOCK_OUT", area: "STOCK", score: 85 },
   },
+  SERVICE_REQUESTED: {
+    label: "A service is requested", hint: "A customer (or its full used-oil containers) asks for a collection / visit.",
+    fields: { number: { label: "Visit number", type: "text" }, service: { label: "Service", type: "text" }, customer: { label: "Customer", type: "text" }, date: { label: "Date", type: "text" }, reason: { label: "Why (CUSTOMER, CONTAINER_FULL, ASSISTANT)", type: "text" } },
+    sample: { number: "SV-2026-000042", service: "Used cooking oil collection", customer: "Kebab House", date: "2026-11-25", reason: "CONTAINER_FULL" },
+  },
+  SERVICE_MISSED: {
+    label: "A service visit is missed", hint: "The provider couldn't do it, or nothing was recorded.",
+    fields: { number: { label: "Visit number", type: "text" }, service: { label: "Service", type: "text" }, customer: { label: "Customer", type: "text" }, provider: { label: "Provider", type: "text" }, reason: { label: "Reason", type: "text" } },
+    sample: { number: "SV-2026-000040", service: "Used cooking oil collection", customer: "Kebab House", provider: "Lisboa Central", reason: "Closed" },
+  },
   SCHEDULE: { label: "On a schedule", hint: "Hourly, daily, weekly or monthly.", fields: { date: { label: "Date", type: "text" } }, sample: { date: "2026-11-23" } },
   MANUAL: { label: "Only when started by hand", hint: "The Run button.", fields: { date: { label: "Date", type: "text" } }, sample: { date: "2026-11-23" } },
 } satisfies Record<string, TriggerDef>;
@@ -208,6 +218,10 @@ export const WORKFLOW_TEMPLATES: (WorkflowTemplate & { agentTemplate?: string })
     steps: [{ type: "AGENT", agentId: "", task: "{{title}}. Who buys it most, how long it lasts, and which supplier could cover?" }], agentTemplate: "stock",
   },
   {
+    key: "service-missed", name: "Missed service → call the customer", description: "A follow-up task for the account manager when a service visit is missed.", trigger: "SERVICE_MISSED", match: "ALL", conditions: [],
+    steps: [{ type: "TASK", title: "Rebook {{service}} for {{customer}}", notes: "Visit {{number}} missed ({{reason}}), provider {{provider}}. Call and agree a new day.", dueDays: 0 }],
+  },
+  {
     key: "weekly-report", name: "Monday executive report", description: "The executive report every Monday at 06:00 UTC, and a note to the AI Centre users.", trigger: "SCHEDULE", schedule: { every: "WEEKLY", hour: 6, weekday: 1, day: 1 }, match: "ALL", conditions: [],
     steps: [{ type: "REPORT", kind: "EXECUTIVE", days: 7 }, { type: "NOTIFY", group: "admin.ai.view", title: "This week's executive report is ready", body: "Open AI Reports › Executive." }],
   },
@@ -242,6 +256,7 @@ export const AGENT_TOOLS: Record<string, AgentToolDef> = {
   overdue_customers: { label: "Overdue customers", kind: "READ", hint: "Who owes how much, how late", area: "FINANCE" },
   delivery_risk: { label: "Delivery risk", kind: "READ", hint: "Orders that may arrive late", area: "DELIVERY" },
   open_suggestions: { label: "Open AI suggestions", kind: "READ", hint: "What the AI Centre found" },
+  services_overview: { label: "Services & used oil", kind: "READ", hint: "Requests, visits, missed, oil collected, money open", area: "CUSTOMERS" },
   find_company: { label: "Find a company", kind: "READ", hint: "Customer / supplier by name", area: "CUSTOMERS" },
   create_task: { label: "Create a follow-up task", kind: "ACT", hint: "A CRM task for a company (call, chase, review)" },
   notify_staff: { label: "Notify staff", kind: "ACT", hint: "A message to a staff group" },
@@ -286,6 +301,12 @@ export const AGENT_TEMPLATES: AgentTemplate[] = [
     instructions: "You look after deliveries. List orders that may arrive late and why, and the route savings the AI Centre found (km, fuel or energy, €, CO₂). Suggest which to act on first.",
     tools: ["delivery_risk", "open_suggestions", "find_orders"], data: ["DELIVERY", "ORDERS"], autonomy: "SUGGEST",
     schedule: { every: "WEEKDAYS", hour: 6, weekday: 1, day: 1 }, task: "Today's delivery risks and route savings.",
+  },
+  {
+    key: "services", name: "Services Coordinator", role: "Keeps oil collections and other services on time.", icon: "Truck", tone: "tone-teal",
+    instructions: "You look after FIRINGI's services (used cooking oil collection, cleaning, pest control). Check requests waiting, missed visits and money still open. For each customer with a missed visit, propose a follow-up task to call them and rebook; tell the delivery team when requests have waited more than 2 days.",
+    tools: ["services_overview", "open_suggestions", "find_company", "create_task", "notify_staff"], data: ["CUSTOMERS", "DELIVERY"], autonomy: "APPROVAL",
+    schedule: { every: "WEEKDAYS", hour: 7, weekday: 1, day: 1 }, task: "Services today: requests waiting, missed visits, what to do.",
   },
   {
     key: "suppliers", name: "Supplier Quality", role: "Reviews supplier performance and margins.", icon: "ShieldCheck", tone: "tone-teal",

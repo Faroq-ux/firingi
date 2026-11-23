@@ -939,7 +939,10 @@
     "Bought from Vans": "Aus Transportern gekauft",
     "Customer Assortments": "Kundensortimente",
     "Must-Stock List": "Pflichtsortiment",
-    "Consignment Stock": "Konsignationslager"
+    "Consignment Stock": "Konsignationslager",
+    "Services": "Services",
+    "My Services": "Meine Services",
+    "Fryers & Oil": "Fritteusen & Öl"
   },
   "delivery": {
     "title": "Lieferung",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Serviceanbieter zu prüfen",
+      "body": "{company} möchte {service} anbieten."
+    },
+    "service_provider_decided": {
+      "title": "Ihre Bewerbung als Anbieter",
+      "body": "Entscheidung von FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Neuer Kunde mit Plan",
+      "body": "{customer} bucht {service} (Plan {number})."
+    },
+    "service_request_new": {
+      "title": "Neue Serviceanfrage",
+      "body": "{customer} fragt {service} für {date} an ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Termin geändert",
+      "body": "Termin {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Termin bestätigt",
+      "body": "Termin {number} ist für {date} bestätigt."
+    },
+    "service_visit_reminder": {
+      "title": "Termin morgen",
+      "body": "{service}: Termin {number} am {date}."
+    },
+    "service_visit_done": {
+      "title": "Termin erledigt",
+      "body": "{service}: Termin {number} ist erledigt ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Termin verpasst",
+      "body": "Termin {number} wurde nicht durchgeführt: {reason}."
+    },
+    "service_container_full": {
+      "title": "Abholung angefordert",
+      "body": "Ihre Altölbehälter sind fast voll – Abholung {number} wurde für {date} angefordert."
+    },
+    "service_oil_change_due": {
+      "title": "Öl wechseln",
+      "body": "{fryer}: Das Öl ist fällig ({days} Tage)."
+    },
+    "service_licence_expiring": {
+      "title": "Genehmigung läuft ab",
+      "body": "Ihre Genehmigung für {service} endet am {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Eingesparte Kraftstoff- und Energiekosten",
     "savingsHint": "Aus {n} angenommenen Routenänderungen in diesem Monat.",
     "stillWaiting": "Noch ausstehend: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Meine Services",
+    "intro": "Abholung von gebrauchtem Speiseöl und weitere Küchenservices – regelmäßig oder auf Anfrage. FIRINGI findet den Anbieter.",
+    "catalogue": "Verfügbare Services",
+    "yourPlans": "Ihre Pläne",
+    "upcoming": "Anstehende Termine",
+    "history": "Verlauf",
+    "noProvider": "In Ihrer Region noch nicht verfügbar",
+    "take": "Service buchen",
+    "request": "Abholung anfordern",
+    "requestVisit": "Termin anfordern",
+    "change": "Ändern",
+    "pause": "Pausieren",
+    "resume": "Fortsetzen",
+    "end": "Beenden",
+    "endConfirm": "Diesen Plan beenden? Anstehende Termine werden storniert.",
+    "skip": "Auslassen",
+    "move": "Verschieben",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "send": "Senden",
+    "howOften": "Häufigkeit",
+    "weekday": "Wochentag",
+    "dayOfMonth": "Tag im Monat",
+    "secondDay": "Zweiter Tag",
+    "time": "Uhrzeit",
+    "address": "Adresse",
+    "containers": "Behälter",
+    "containerLitres": "Liter pro Behälter",
+    "autoRequest": "Automatisch eine Abholung anfordern, wenn die Behälter fast voll sind",
+    "notes": "Hinweise für den Anbieter",
+    "date": "Tag",
+    "note": "Hinweis",
+    "earliest": "Frühestens: {date}",
+    "freq": {
+      "WEEKLY": "Jede Woche",
+      "BIWEEKLY": "Alle 2 Wochen",
+      "TWICE_MONTHLY": "Zweimal im Monat",
+      "MONTHLY": "Jeden Monat",
+      "ON_REQUEST": "Nur auf Anfrage"
+    },
+    "window": {
+      "ANY": "Beliebige Zeit",
+      "MORNING": "Vormittag",
+      "AFTERNOON": "Nachmittag"
+    },
+    "weekdays": {
+      "d1": "Montag",
+      "d2": "Dienstag",
+      "d3": "Mittwoch",
+      "d4": "Donnerstag",
+      "d5": "Freitag",
+      "d6": "Samstag",
+      "d7": "Sonntag"
+    },
+    "sched": {
+      "WEEKLY": "jeden {day}",
+      "BIWEEKLY": "jeden zweiten {day}",
+      "TWICE_MONTHLY": "am {a}. und {b}. des Monats",
+      "MONTHLY": "am {a}. des Monats",
+      "ON_REQUEST": "auf Anfrage"
+    },
+    "st": {
+      "REQUESTED": "Angefordert",
+      "SCHEDULED": "Geplant",
+      "CONFIRMED": "Bestätigt",
+      "DONE": "Erledigt",
+      "MISSED": "Verpasst",
+      "SKIPPED": "Ausgelassen",
+      "CANCELLED": "Storniert",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "Pausiert",
+      "PENDING": "Wartet auf FIRINGI",
+      "APPROVED": "Genehmigt",
+      "REJECTED": "Abgelehnt",
+      "SUSPENDED": "Gesperrt"
+    },
+    "reason": {
+      "CUSTOMER": "Vom Kunden angefordert",
+      "CONTAINER_FULL": "Behälter fast voll",
+      "ASSISTANT": "Über den Assistenten angefordert"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "Tonnen",
+      "VISIT": "Termin"
+    },
+    "priceVisit": "{amount} pro Termin",
+    "priceUnit": "{amount} pro {unit}",
+    "buyback": "Sie erhalten {amount} pro {unit}",
+    "free": "Kostenlos",
+    "invoicedByProvider": "Rechnung durch den Anbieter",
+    "invoicedByFiringi": "Rechnung durch FIRINGI",
+    "provider": "Anbieter",
+    "next": "Nächster Termin",
+    "service": "Service",
+    "schedule": "Zeitplan",
+    "status": "Status",
+    "quantity": "Menge",
+    "document": "Dokument",
+    "docNumber": "Abfallbegleitschein-Nr.",
+    "noPlans": "Noch keine Pläne – buchen Sie oben einen Service.",
+    "noUpcoming": "Nichts geplant.",
+    "noHistory": "Noch keine Termine.",
+    "requested": "Anfrage gesendet.",
+    "saved": "Gespeichert.",
+    "pausedUntil": "Pausiert bis {date}",
+    "pauseUntil": "Pausieren bis (optional)",
+    "wasteCode": "Abfallschlüssel {code}",
+    "fee": "Kosten",
+    "paidYou": "An Sie gezahlt",
+    "oilTitle": "Fritteusen & Öl",
+    "oilIntro": "Erfassen Sie Ölwechsel und Messungen je Fritteuse, sehen Sie, wann das Öl fällig ist und wie voll die Altölbehälter sind.",
+    "fryers": "Fritteusen",
+    "addFryer": "Fritteuse hinzufügen",
+    "edit": "Bearbeiten",
+    "fryerName": "Name",
+    "capacity": "Fassungsvermögen (L)",
+    "oilName": "Öl",
+    "oilCost": "Ölpreis pro Liter",
+    "log": "Erfassen",
+    "logKind": {
+      "TOP_UP": "Nachgefüllt",
+      "CHANGE": "Öl gewechselt",
+      "TEST": "Gemessen",
+      "FILTER": "Gefiltert"
+    },
+    "litres": "Liter",
+    "polar": "Messwert (% polare Anteile)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Bald wechseln",
+      "CHANGE": "Jetzt wechseln"
+    },
+    "daysSince": "{n} Tage seit dem letzten Wechsel",
+    "never": "Noch kein Wechsel erfasst",
+    "lastPolar": "Letzter Messwert {pct} %",
+    "litres30": "Ölverbrauch (30 Tage)",
+    "changes30": "Wechsel (30 Tage)",
+    "cost30": "Ölkosten (30 Tage)",
+    "storage": "Wartendes Altöl",
+    "storageOf": "{litres} von {capacity} L",
+    "storageNoSize": "{litres} L – tragen Sie die Behältergröße in Ihrem Abholplan ein",
+    "noOilPlan": "Noch keine Altölabholung – buchen Sie eine unter Meine Services.",
+    "fresh30": "Frischöl (30 Tage)",
+    "collected90": "Abgeholt (90 Tage)",
+    "paid90": "An Sie gezahlt (90 Tage)",
+    "co2": "Vermiedenes CO₂ (90 Tage)",
+    "lastCollection": "Letzte Abholung: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: Öl jetzt wechseln.",
+      "CHANGE_SOON": "{fryer}: Öl bald wechseln.",
+      "FULL": "Die Altölbehälter sind zu {n} % voll – fordern Sie eine Abholung an.",
+      "NO_TEST": "{fryer}: seit 2 Wochen nicht gemessen – messen Sie das Öl.",
+      "OFTEN": "{fryer}: {n} Wechsel in 30 Tagen – prüfen Sie Temperatur und Filterung.",
+      "LESS_OFTEN": "Die Behälter sind bei der Abholung nur zu {n} % voll – ein selteneres Intervall würde reichen.",
+      "MORE_OFTEN": "Die Behälter sind bei jeder Abholung voll ({n} %) – lassen Sie häufiger abholen."
+    },
+    "insights": "Tipps",
+    "noInsights": "Alles in Ordnung.",
+    "noFryers": "Noch keine Fritteusen.",
+    "recentLog": "Letzte Einträge",
+    "remove": "Zurücknehmen",
+    "when": "Wann",
+    "fryer": "Fritteuse",
+    "kind": "Was",
+    "rules": "Wechsel nach {days} Tagen oder bei {pct} % polaren Anteilen.",
+    "inactive": "Nicht in Betrieb",
+    "active": "In Betrieb",
+    "vTitle": "Services",
+    "vIntro": "Bieten Sie FIRINGI-Kunden Abholungen und Küchenservices an. FIRINGI gibt Sie frei, weist Ihnen Kunden zu und plant die Termine.",
+    "myServices": "Ihre angebotenen Services",
+    "apply": "Service anbieten",
+    "applyHint": "FIRINGI prüft Ihre Genehmigung und gibt Sie frei.",
+    "countries": "Länder (z. B. PT, ES)",
+    "licence": "Genehmigungsnummer",
+    "licenceUntil": "Genehmigung gültig bis",
+    "applied": "An FIRINGI gesendet.",
+    "youInvoice": "Sie stellen dem Kunden die Rechnung. Die Provision von FIRINGI wird Ihnen monatlich in Rechnung gestellt.",
+    "firingiInvoices": "FIRINGI stellt dem Kunden die Rechnung und bezahlt Sie.",
+    "yourAmount": "Ihr Betrag: {amount}",
+    "commission": "Provision: {value}",
+    "requests": "Anfragen",
+    "toDo": "Anstehende Termine",
+    "plansV": "Kunden mit Plan",
+    "recent": "Letzte Termine",
+    "customer": "Kunde",
+    "confirm": "Bestätigen",
+    "complete": "Erledigt",
+    "missed": "Nicht möglich",
+    "missReason": "Grund?",
+    "containersTaken": "Abgeholte Behälter",
+    "containersLeft": "Dagelassene Behälter",
+    "signedBy": "Unterschrieben von (beim Kunden)",
+    "yourInvoiceNo": "Ihre Rechnungsnr.",
+    "noRequests": "Keine Anfragen.",
+    "noVisits": "Nichts geplant.",
+    "noRecent": "Noch keine Termine.",
+    "noProviderYet": "Sie bieten noch keinen Service an.",
+    "openPdf": "PDF"
   }
 }

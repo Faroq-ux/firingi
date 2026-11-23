@@ -939,7 +939,10 @@
     "Bought from Vans": "Cumpărat din mașini",
     "Customer Assortments": "Sortimente clienți",
     "Must-Stock List": "Listă obligatorie",
-    "Consignment Stock": "Stoc în consignație"
+    "Consignment Stock": "Stoc în consignație",
+    "Services": "Servicii",
+    "My Services": "Serviciile mele",
+    "Fryers & Oil": "Friteuze și ulei"
   },
   "delivery": {
     "title": "Livrare",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Furnizor de servicii de verificat",
+      "body": "{company} dorește să ofere {service}."
+    },
+    "service_provider_decided": {
+      "title": "Cererea dvs. de furnizor de servicii",
+      "body": "Decizia FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Client nou cu plan",
+      "body": "{customer} a ales {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "Solicitare nouă de serviciu",
+      "body": "{customer} solicită {service} pe {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Vizită modificată",
+      "body": "Vizita {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Vizită confirmată",
+      "body": "Vizita {number} este confirmată pentru {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Vizită mâine",
+      "body": "{service}: vizita {number} pe {date}."
+    },
+    "service_visit_done": {
+      "title": "Vizită efectuată",
+      "body": "{service}: vizita {number} a fost efectuată ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Vizită ratată",
+      "body": "Vizita {number} nu a fost efectuată: {reason}."
+    },
+    "service_container_full": {
+      "title": "Colectare solicitată",
+      "body": "Recipientele dvs. de ulei uzat sunt aproape pline — colectarea {number} a fost solicitată pentru {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Schimbați uleiul",
+      "body": "{fryer}: uleiul trebuie schimbat ({days} zile)."
+    },
+    "service_licence_expiring": {
+      "title": "Licența expiră curând",
+      "body": "Licența dvs. pentru {service} expiră pe {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Cost economisit la combustibil și energie",
     "savingsHint": "Din {n} modificări de rută acceptate luna aceasta.",
     "stillWaiting": "Încă în așteptare: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Serviciile mele",
+    "intro": "Colectarea uleiului alimentar uzat și alte servicii pentru bucătărie — după program sau la cerere. FIRINGI găsește furnizorul.",
+    "catalogue": "Servicii disponibile",
+    "yourPlans": "Planurile dvs.",
+    "upcoming": "Vizite următoare",
+    "history": "Istoric",
+    "noProvider": "Încă indisponibil în zona dvs.",
+    "take": "Comandați acest serviciu",
+    "request": "Solicitați o colectare",
+    "requestVisit": "Solicitați o vizită",
+    "change": "Modificați",
+    "pause": "Întrerupeți",
+    "resume": "Reluați",
+    "end": "Încheiați",
+    "endConfirm": "Încheiați acest plan? Vizitele următoare vor fi anulate.",
+    "skip": "Omiteți",
+    "move": "Reprogramați",
+    "save": "Salvați",
+    "cancel": "Anulați",
+    "send": "Trimiteți",
+    "howOften": "Frecvență",
+    "weekday": "Ziua săptămânii",
+    "dayOfMonth": "Ziua lunii",
+    "secondDay": "A doua zi",
+    "time": "Ora",
+    "address": "Adresă",
+    "containers": "Recipiente",
+    "containerLitres": "Litri per recipient",
+    "autoRequest": "Solicită automat o colectare când recipientele sunt aproape pline",
+    "notes": "Note pentru furnizor",
+    "date": "Ziua",
+    "note": "Notă",
+    "earliest": "Cel mai devreme: {date}",
+    "freq": {
+      "WEEKLY": "Săptămânal",
+      "BIWEEKLY": "La 2 săptămâni",
+      "TWICE_MONTHLY": "De două ori pe lună",
+      "MONTHLY": "Lunar",
+      "ON_REQUEST": "Doar la cerere"
+    },
+    "window": {
+      "ANY": "Oricând",
+      "MORNING": "Dimineața",
+      "AFTERNOON": "După-amiaza"
+    },
+    "weekdays": {
+      "d1": "Luni",
+      "d2": "Marți",
+      "d3": "Miercuri",
+      "d4": "Joi",
+      "d5": "Vineri",
+      "d6": "Sâmbătă",
+      "d7": "Duminică"
+    },
+    "sched": {
+      "WEEKLY": "în fiecare {day}",
+      "BIWEEKLY": "la două săptămâni, {day}",
+      "TWICE_MONTHLY": "în zilele {a} și {b}",
+      "MONTHLY": "în ziua {a}",
+      "ON_REQUEST": "la cerere"
+    },
+    "st": {
+      "REQUESTED": "Solicitat",
+      "SCHEDULED": "Programat",
+      "CONFIRMED": "Confirmat",
+      "DONE": "Efectuat",
+      "MISSED": "Neefectuat",
+      "SKIPPED": "Omis",
+      "CANCELLED": "Anulat",
+      "ACTIVE": "Activ",
+      "PAUSED": "Întrerupt",
+      "PENDING": "În așteptarea FIRINGI",
+      "APPROVED": "Aprobat",
+      "REJECTED": "Respins",
+      "SUSPENDED": "Suspendat"
+    },
+    "reason": {
+      "CUSTOMER": "La cererea clientului",
+      "CONTAINER_FULL": "Recipiente aproape pline",
+      "ASSISTANT": "Solicitat prin Asistent"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "recipiente",
+      "VISIT": "vizită"
+    },
+    "priceVisit": "{amount} per vizită",
+    "priceUnit": "{amount} per {unit}",
+    "buyback": "Primiți {amount} per {unit}",
+    "free": "Gratuit",
+    "invoicedByProvider": "Facturat de furnizor",
+    "invoicedByFiringi": "Facturat de FIRINGI",
+    "provider": "Furnizor",
+    "next": "Următoarea vizită",
+    "service": "Serviciu",
+    "schedule": "Program",
+    "status": "Stare",
+    "quantity": "Cantitate",
+    "document": "Document",
+    "docNumber": "Nr. document deșeuri",
+    "noPlans": "Niciun plan încă — alegeți un serviciu mai sus.",
+    "noUpcoming": "Nimic programat.",
+    "noHistory": "Nicio vizită încă.",
+    "requested": "Solicitare trimisă.",
+    "saved": "Salvat.",
+    "pausedUntil": "Întrerupt până la {date}",
+    "pauseUntil": "Întrerupeți până la (opțional)",
+    "wasteCode": "Cod deșeu {code}",
+    "fee": "Tarif",
+    "paidYou": "Plătit către dvs.",
+    "oilTitle": "Friteuze și ulei",
+    "oilIntro": "Înregistrați schimbările și testele uleiului pentru fiecare friteuză, vedeți când trebuie schimbat uleiul și cât de pline sunt recipientele de ulei uzat.",
+    "fryers": "Friteuze",
+    "addFryer": "Adăugați o friteuză",
+    "edit": "Editați",
+    "fryerName": "Nume",
+    "capacity": "Capacitate (L)",
+    "oilName": "Ulei",
+    "oilCost": "Prețul uleiului per litru",
+    "log": "Înregistrați",
+    "logKind": {
+      "TOP_UP": "Completat",
+      "CHANGE": "Ulei schimbat",
+      "TEST": "Testat",
+      "FILTER": "Filtrat"
+    },
+    "litres": "Litri",
+    "polar": "Citire tester (% compuși polari)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Schimbați curând",
+      "CHANGE": "Schimbați acum"
+    },
+    "daysSince": "{n} zile de la ultima schimbare",
+    "never": "Nicio schimbare înregistrată",
+    "lastPolar": "Ultima citire {pct}%",
+    "litres30": "Ulei consumat (30 de zile)",
+    "changes30": "Schimbări (30 de zile)",
+    "cost30": "Cost ulei (30 de zile)",
+    "storage": "Ulei uzat în așteptare",
+    "storageOf": "{litres} din {capacity} L",
+    "storageNoSize": "{litres} L — adăugați dimensiunea recipientelor în planul de colectare",
+    "noOilPlan": "Nicio colectare de ulei uzat încă — alegeți una în Serviciile mele.",
+    "fresh30": "Ulei proaspăt (30 de zile)",
+    "collected90": "Colectat (90 de zile)",
+    "paid90": "Plătit către dvs. (90 de zile)",
+    "co2": "CO₂ evitat (90 de zile)",
+    "lastCollection": "Ultima colectare: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: schimbați uleiul acum.",
+      "CHANGE_SOON": "{fryer}: schimbați uleiul curând.",
+      "FULL": "Recipientele de ulei uzat sunt pline în proporție de {n}% — solicitați o colectare.",
+      "NO_TEST": "{fryer}: netestat de 2 săptămâni — testați uleiul.",
+      "OFTEN": "{fryer}: {n} schimbări în 30 de zile — verificați temperatura și filtrarea.",
+      "LESS_OFTEN": "Recipientele sunt pline doar {n}% la colectare — un plan mai rar ar fi suficient.",
+      "MORE_OFTEN": "Recipientele sunt pline la fiecare colectare ({n}%) — colectați mai des."
+    },
+    "insights": "Sfaturi",
+    "noInsights": "Totul este în regulă.",
+    "noFryers": "Nicio friteuză încă.",
+    "recentLog": "Înregistrări recente",
+    "remove": "Retrageți",
+    "when": "Când",
+    "fryer": "Friteuză",
+    "kind": "Ce",
+    "rules": "Schimbați după {days} zile sau la {pct}% compuși polari.",
+    "inactive": "Neutilizată",
+    "active": "În uz",
+    "vTitle": "Servicii",
+    "vIntro": "Oferiți colectări și servicii pentru bucătărie clienților FIRINGI. FIRINGI vă aprobă, vă atribuie clienți și planifică vizitele.",
+    "myServices": "Serviciile oferite",
+    "apply": "Oferiți un serviciu",
+    "applyHint": "FIRINGI verifică licența dvs. și vă aprobă.",
+    "countries": "Țări (ex. PT, ES)",
+    "licence": "Număr licență",
+    "licenceUntil": "Licență valabilă până la",
+    "applied": "Trimis către FIRINGI.",
+    "youInvoice": "Dvs. facturați clientul. Comisionul FIRINGI vă este facturat lunar.",
+    "firingiInvoices": "FIRINGI facturează clientul și vă plătește.",
+    "yourAmount": "Suma dvs.: {amount}",
+    "commission": "Comision: {value}",
+    "requests": "Solicitări",
+    "toDo": "Vizite următoare",
+    "plansV": "Clienți cu plan",
+    "recent": "Vizite recente",
+    "customer": "Client",
+    "confirm": "Confirmați",
+    "complete": "Efectuat",
+    "missed": "Nu s-a putut efectua",
+    "missReason": "De ce?",
+    "containersTaken": "Recipiente preluate",
+    "containersLeft": "Recipiente lăsate",
+    "signedBy": "Semnat de (la client)",
+    "yourInvoiceNo": "Nr. facturii dvs.",
+    "noRequests": "Nicio solicitare.",
+    "noVisits": "Nimic programat.",
+    "noRecent": "Nicio vizită încă.",
+    "noProviderYet": "Încă nu oferiți niciun serviciu.",
+    "openPdf": "PDF"
   }
 }

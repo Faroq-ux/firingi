@@ -939,7 +939,10 @@
     "Bought from Vans": "Nákupy z vozů",
     "Customer Assortments": "Sortimenty zákazníků",
     "Must-Stock List": "Povinný sortiment",
-    "Consignment Stock": "Konsignační sklad"
+    "Consignment Stock": "Konsignační sklad",
+    "Services": "Služby",
+    "My Services": "Moje služby",
+    "Fryers & Oil": "Fritézy a olej"
   },
   "delivery": {
     "title": "Doručení",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Poskytovatel služeb ke schválení",
+      "body": "{company} chce poskytovat službu {service}."
+    },
+    "service_provider_decided": {
+      "title": "Vaše žádost o poskytování služeb",
+      "body": "Rozhodnutí FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Nový zákazník s plánem",
+      "body": "{customer} si objednává {service} (plán {number})."
+    },
+    "service_request_new": {
+      "title": "Nová žádost o službu",
+      "body": "{customer} žádá o {service} na {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Návštěva změněna",
+      "body": "Návštěva {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Návštěva potvrzena",
+      "body": "Návštěva {number} je potvrzena na {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Návštěva zítra",
+      "body": "{service}: návštěva {number} dne {date}."
+    },
+    "service_visit_done": {
+      "title": "Návštěva provedena",
+      "body": "{service}: návštěva {number} byla provedena ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Návštěva neproběhla",
+      "body": "Návštěva {number} neproběhla: {reason}."
+    },
+    "service_container_full": {
+      "title": "Svoz vyžádán",
+      "body": "Vaše nádoby na použitý olej jsou téměř plné — svoz {number} byl vyžádán na {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Vyměňte olej",
+      "body": "{fryer}: je čas vyměnit olej ({days} dní)."
+    },
+    "service_licence_expiring": {
+      "title": "Licence brzy vyprší",
+      "body": "Vaše licence pro {service} končí {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Ušetřené náklady na palivo a energii",
     "savingsHint": "Přijaté změny tras tento měsíc: {n}.",
     "stillWaiting": "Stále čeká: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Moje služby",
+    "intro": "Svoz použitého kuchyňského oleje a další služby pro kuchyně — podle plánu nebo na vyžádání. FIRINGI najde poskytovatele.",
+    "catalogue": "Dostupné služby",
+    "yourPlans": "Vaše plány",
+    "upcoming": "Nadcházející návštěvy",
+    "history": "Historie",
+    "noProvider": "Ve vaší oblasti zatím není k dispozici",
+    "take": "Objednat službu",
+    "request": "Vyžádat svoz",
+    "requestVisit": "Vyžádat návštěvu",
+    "change": "Změnit",
+    "pause": "Pozastavit",
+    "resume": "Obnovit",
+    "end": "Ukončit",
+    "endConfirm": "Ukončit tento plán? Nadcházející návštěvy budou zrušeny.",
+    "skip": "Přeskočit",
+    "move": "Přesunout",
+    "save": "Uložit",
+    "cancel": "Zrušit",
+    "send": "Odeslat",
+    "howOften": "Jak často",
+    "weekday": "Den v týdnu",
+    "dayOfMonth": "Den v měsíci",
+    "secondDay": "Druhý den",
+    "time": "Čas",
+    "address": "Adresa",
+    "containers": "Nádoby",
+    "containerLitres": "Litrů na nádobu",
+    "autoRequest": "Automaticky vyžádat svoz, když jsou nádoby téměř plné",
+    "notes": "Poznámky pro poskytovatele",
+    "date": "Den",
+    "note": "Poznámka",
+    "earliest": "Nejdříve: {date}",
+    "freq": {
+      "WEEKLY": "Každý týden",
+      "BIWEEKLY": "Každé 2 týdny",
+      "TWICE_MONTHLY": "Dvakrát měsíčně",
+      "MONTHLY": "Každý měsíc",
+      "ON_REQUEST": "Pouze na vyžádání"
+    },
+    "window": {
+      "ANY": "Kdykoli",
+      "MORNING": "Dopoledne",
+      "AFTERNOON": "Odpoledne"
+    },
+    "weekdays": {
+      "d1": "Pondělí",
+      "d2": "Úterý",
+      "d3": "Středa",
+      "d4": "Čtvrtek",
+      "d5": "Pátek",
+      "d6": "Sobota",
+      "d7": "Neděle"
+    },
+    "sched": {
+      "WEEKLY": "každý týden, {day}",
+      "BIWEEKLY": "každý druhý týden, {day}",
+      "TWICE_MONTHLY": "{a}. a {b}. den v měsíci",
+      "MONTHLY": "{a}. den v měsíci",
+      "ON_REQUEST": "na vyžádání"
+    },
+    "st": {
+      "REQUESTED": "Vyžádáno",
+      "SCHEDULED": "Naplánováno",
+      "CONFIRMED": "Potvrzeno",
+      "DONE": "Hotovo",
+      "MISSED": "Neproběhlo",
+      "SKIPPED": "Přeskočeno",
+      "CANCELLED": "Zrušeno",
+      "ACTIVE": "Aktivní",
+      "PAUSED": "Pozastaveno",
+      "PENDING": "Čeká na FIRINGI",
+      "APPROVED": "Schváleno",
+      "REJECTED": "Zamítnuto",
+      "SUSPENDED": "Suspendováno"
+    },
+    "reason": {
+      "CUSTOMER": "Na žádost zákazníka",
+      "CONTAINER_FULL": "Nádoby téměř plné",
+      "ASSISTANT": "Vyžádáno přes Asistenta"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "nádoby",
+      "VISIT": "návštěva"
+    },
+    "priceVisit": "{amount} za návštěvu",
+    "priceUnit": "{amount} za {unit}",
+    "buyback": "Dostanete {amount} za {unit}",
+    "free": "Zdarma",
+    "invoicedByProvider": "Fakturuje poskytovatel",
+    "invoicedByFiringi": "Fakturuje FIRINGI",
+    "provider": "Poskytovatel",
+    "next": "Další návštěva",
+    "service": "Služba",
+    "schedule": "Harmonogram",
+    "status": "Stav",
+    "quantity": "Množství",
+    "document": "Doklad",
+    "docNumber": "Č. dokladu o odpadu",
+    "noPlans": "Zatím žádné plány — objednejte službu výše.",
+    "noUpcoming": "Nic naplánováno.",
+    "noHistory": "Zatím žádné návštěvy.",
+    "requested": "Žádost odeslána.",
+    "saved": "Uloženo.",
+    "pausedUntil": "Pozastaveno do {date}",
+    "pauseUntil": "Pozastavit do (nepovinné)",
+    "wasteCode": "Kód odpadu {code}",
+    "fee": "Poplatek",
+    "paidYou": "Vyplaceno vám",
+    "oilTitle": "Fritézy a olej",
+    "oilIntro": "Zaznamenávejte výměny a testy oleje u každé fritézy, sledujte, kdy je potřeba olej vyměnit a jak plné jsou nádoby na použitý olej.",
+    "fryers": "Fritézy",
+    "addFryer": "Přidat fritézu",
+    "edit": "Upravit",
+    "fryerName": "Název",
+    "capacity": "Objem (L)",
+    "oilName": "Olej",
+    "oilCost": "Cena oleje za litr",
+    "log": "Zaznamenat",
+    "logKind": {
+      "TOP_UP": "Doplněno",
+      "CHANGE": "Olej vyměněn",
+      "TEST": "Otestováno",
+      "FILTER": "Přefiltrováno"
+    },
+    "litres": "Litry",
+    "polar": "Hodnota testeru (% polárních látek)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Brzy vyměnit",
+      "CHANGE": "Vyměnit hned"
+    },
+    "daysSince": "{n} dní od poslední výměny",
+    "never": "Zatím žádná zaznamenaná výměna",
+    "lastPolar": "Poslední měření {pct} %",
+    "litres30": "Spotřeba oleje (30 dní)",
+    "changes30": "Výměny (30 dní)",
+    "cost30": "Náklady na olej (30 dní)",
+    "storage": "Použitý olej k odvozu",
+    "storageOf": "{litres} z {capacity} L",
+    "storageNoSize": "{litres} L — doplňte velikost nádob do plánu svozu",
+    "noOilPlan": "Zatím žádný svoz použitého oleje — objednejte ho v Mých službách.",
+    "fresh30": "Čerstvý olej (30 dní)",
+    "collected90": "Svezeno (90 dní)",
+    "paid90": "Vyplaceno vám (90 dní)",
+    "co2": "Ušetřené CO₂ (90 dní)",
+    "lastCollection": "Poslední svoz: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: vyměňte olej hned.",
+      "CHANGE_SOON": "{fryer}: brzy vyměňte olej.",
+      "FULL": "Nádoby na použitý olej jsou plné z {n} % — vyžádejte svoz.",
+      "NO_TEST": "{fryer}: 2 týdny bez testu — otestujte olej.",
+      "OFTEN": "{fryer}: {n} výměn za 30 dní — zkontrolujte teplotu a filtrování.",
+      "LESS_OFTEN": "Nádoby jsou při svozu plné jen z {n} % — stačil by méně častý plán.",
+      "MORE_OFTEN": "Nádoby jsou při každém svozu plné ({n} %) — nechte svážet častěji."
+    },
+    "insights": "Tipy",
+    "noInsights": "Vše v pořádku.",
+    "noFryers": "Zatím žádné fritézy.",
+    "recentLog": "Poslední záznamy",
+    "remove": "Vzít zpět",
+    "when": "Kdy",
+    "fryer": "Fritéza",
+    "kind": "Co",
+    "rules": "Výměna po {days} dnech nebo při {pct} % polárních látek.",
+    "inactive": "Nepoužívá se",
+    "active": "Používá se",
+    "vTitle": "Služby",
+    "vIntro": "Poskytujte svozy a kuchyňské služby zákazníkům FIRINGI. FIRINGI vás schválí, přidělí zákazníky a naplánuje návštěvy.",
+    "myServices": "Vaše služby",
+    "apply": "Nabídnout službu",
+    "applyHint": "FIRINGI ověří vaši licenci a schválí vás.",
+    "countries": "Země (např. PT, ES)",
+    "licence": "Číslo licence",
+    "licenceUntil": "Licence platná do",
+    "applied": "Odesláno FIRINGI.",
+    "youInvoice": "Zákazníkovi fakturujete vy. Provize FIRINGI vám bude fakturována měsíčně.",
+    "firingiInvoices": "FIRINGI fakturuje zákazníkovi a platí vám.",
+    "yourAmount": "Vaše částka: {amount}",
+    "commission": "Provize: {value}",
+    "requests": "Žádosti",
+    "toDo": "Nadcházející návštěvy",
+    "plansV": "Zákazníci s plánem",
+    "recent": "Nedávné návštěvy",
+    "customer": "Zákazník",
+    "confirm": "Potvrdit",
+    "complete": "Hotovo",
+    "missed": "Nebylo možné provést",
+    "missReason": "Proč?",
+    "containersTaken": "Odvezené nádoby",
+    "containersLeft": "Ponechané nádoby",
+    "signedBy": "Podepsal (u zákazníka)",
+    "yourInvoiceNo": "Č. vaší faktury",
+    "noRequests": "Žádné žádosti.",
+    "noVisits": "Nic naplánováno.",
+    "noRecent": "Zatím žádné návštěvy.",
+    "noProviderYet": "Zatím neposkytujete žádnou službu.",
+    "openPdf": "PDF"
   }
 }

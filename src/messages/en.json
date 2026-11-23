@@ -1993,6 +1993,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Service provider to review",
+      "body": "{company} wants to provide {service}."
+    },
+    "service_provider_decided": {
+      "title": "Your service application",
+      "body": "FIRINGI's decision: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "New customer on a plan",
+      "body": "{customer} takes {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "New service request",
+      "body": "{customer} asks for {service} on {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Visit changed",
+      "body": "Visit {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Visit confirmed",
+      "body": "Visit {number} is confirmed for {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Visit tomorrow",
+      "body": "{service}: visit {number} on {date}."
+    },
+    "service_visit_done": {
+      "title": "Visit done",
+      "body": "{service}: visit {number} is done ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Visit missed",
+      "body": "Visit {number} wasn't done: {reason}."
+    },
+    "service_container_full": {
+      "title": "Collection requested",
+      "body": "Your used-oil containers are nearly full — collection {number} was asked for {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Change the oil",
+      "body": "{fryer}: the oil is due ({days} days)."
+    },
+    "service_licence_expiring": {
+      "title": "Licence running out",
+      "body": "Your licence for {service} ends on {date}."
     }
   },
   "notifications": {
@@ -9273,5 +9321,207 @@
     "costSaved": "Fuel & energy cost saved",
     "savingsHint": "From {n} route changes accepted this month.",
     "stillWaiting": "Still waiting: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "My Services",
+    "intro": "Used cooking oil collection and other kitchen services — on a schedule or when you ask. FIRINGI finds the provider.",
+    "catalogue": "Services you can take",
+    "yourPlans": "Your plans",
+    "upcoming": "Coming visits",
+    "history": "History",
+    "noProvider": "Not available in your area yet",
+    "take": "Take this service",
+    "request": "Request a collection",
+    "requestVisit": "Request a visit",
+    "change": "Change",
+    "pause": "Pause",
+    "resume": "Resume",
+    "end": "End",
+    "endConfirm": "End this plan? Coming visits are cancelled.",
+    "skip": "Skip",
+    "move": "Move",
+    "save": "Save",
+    "cancel": "Cancel",
+    "send": "Send",
+    "howOften": "How often",
+    "weekday": "Day of the week",
+    "dayOfMonth": "Day of the month",
+    "secondDay": "Second day",
+    "time": "Time",
+    "address": "Address",
+    "containers": "Containers",
+    "containerLitres": "Litres per container",
+    "autoRequest": "Ask for a collection by itself when the containers are nearly full",
+    "notes": "Notes for the provider",
+    "date": "Day",
+    "note": "Note",
+    "earliest": "Earliest: {date}",
+    "freq": {
+      "WEEKLY": "Every week",
+      "BIWEEKLY": "Every 2 weeks",
+      "TWICE_MONTHLY": "Twice a month",
+      "MONTHLY": "Every month",
+      "ON_REQUEST": "Only when requested"
+    },
+    "window": {
+      "ANY": "Any time",
+      "MORNING": "Morning",
+      "AFTERNOON": "Afternoon"
+    },
+    "weekdays": {
+      "d1": "Monday",
+      "d2": "Tuesday",
+      "d3": "Wednesday",
+      "d4": "Thursday",
+      "d5": "Friday",
+      "d6": "Saturday",
+      "d7": "Sunday"
+    },
+    "sched": {
+      "WEEKLY": "every {day}",
+      "BIWEEKLY": "every other {day}",
+      "TWICE_MONTHLY": "on day {a} and day {b}",
+      "MONTHLY": "on day {a}",
+      "ON_REQUEST": "when you ask"
+    },
+    "st": {
+      "REQUESTED": "Requested",
+      "SCHEDULED": "Planned",
+      "CONFIRMED": "Confirmed",
+      "DONE": "Done",
+      "MISSED": "Missed",
+      "SKIPPED": "Skipped",
+      "CANCELLED": "Cancelled",
+      "ACTIVE": "Active",
+      "PAUSED": "Paused",
+      "PENDING": "Waiting for FIRINGI",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SUSPENDED": "Suspended"
+    },
+    "reason": {
+      "CUSTOMER": "Asked by the customer",
+      "CONTAINER_FULL": "Containers nearly full",
+      "ASSISTANT": "Asked through the Assistant"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "bins",
+      "VISIT": "visit"
+    },
+    "priceVisit": "{amount} per visit",
+    "priceUnit": "{amount} per {unit}",
+    "buyback": "You are paid {amount} per {unit}",
+    "free": "No charge",
+    "invoicedByProvider": "Invoiced by the provider",
+    "invoicedByFiringi": "Invoiced by FIRINGI",
+    "provider": "Provider",
+    "next": "Next visit",
+    "service": "Service",
+    "schedule": "Schedule",
+    "status": "Status",
+    "quantity": "Quantity",
+    "document": "Document",
+    "docNumber": "Waste document no.",
+    "noPlans": "No plans yet — take a service above.",
+    "noUpcoming": "Nothing planned.",
+    "noHistory": "No visits yet.",
+    "requested": "Request sent.",
+    "saved": "Saved.",
+    "pausedUntil": "Paused until {date}",
+    "pauseUntil": "Pause until (optional)",
+    "wasteCode": "Waste code {code}",
+    "fee": "Charge",
+    "paidYou": "Paid to you",
+    "oilTitle": "Fryers & Oil",
+    "oilIntro": "Log oil changes and tests per fryer, see when the oil is due and how full the used-oil containers are.",
+    "fryers": "Fryers",
+    "addFryer": "Add a fryer",
+    "edit": "Edit",
+    "fryerName": "Name",
+    "capacity": "Capacity (L)",
+    "oilName": "Oil",
+    "oilCost": "Oil price per litre",
+    "log": "Log",
+    "logKind": {
+      "TOP_UP": "Topped up",
+      "CHANGE": "Oil changed",
+      "TEST": "Tested",
+      "FILTER": "Filtered"
+    },
+    "litres": "Litres",
+    "polar": "Tester reading (polar %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Change soon",
+      "CHANGE": "Change now"
+    },
+    "daysSince": "{n} days since the last change",
+    "never": "No change logged yet",
+    "lastPolar": "Last reading {pct}%",
+    "litres30": "Oil used (30 days)",
+    "changes30": "Changes (30 days)",
+    "cost30": "Oil cost (30 days)",
+    "storage": "Used oil waiting",
+    "storageOf": "{litres} of {capacity} L",
+    "storageNoSize": "{litres} L — add the container size to your collection plan",
+    "noOilPlan": "No used-oil collection yet — take one on My Services.",
+    "fresh30": "Fresh oil (30 days)",
+    "collected90": "Collected (90 days)",
+    "paid90": "Paid to you (90 days)",
+    "co2": "CO₂ avoided (90 days)",
+    "lastCollection": "Last collection: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: change the oil now.",
+      "CHANGE_SOON": "{fryer}: change the oil soon.",
+      "FULL": "The used-oil containers are {n}% full — request a collection.",
+      "NO_TEST": "{fryer}: not tested for 2 weeks — test the oil.",
+      "OFTEN": "{fryer}: {n} changes in 30 days — check the temperature and the filtering.",
+      "LESS_OFTEN": "The containers are only {n}% full at collection — a less frequent plan would do.",
+      "MORE_OFTEN": "The containers are full at every collection ({n}%) — collect more often."
+    },
+    "insights": "Tips",
+    "noInsights": "All good.",
+    "noFryers": "No fryers yet.",
+    "recentLog": "Recent entries",
+    "remove": "Take back",
+    "when": "When",
+    "fryer": "Fryer",
+    "kind": "What",
+    "rules": "Change after {days} days or at {pct}% polar compounds.",
+    "inactive": "Not in use",
+    "active": "In use",
+    "vTitle": "Services",
+    "vIntro": "Provide collections and kitchen services to FIRINGI customers. FIRINGI approves you, assigns customers and plans the visits.",
+    "myServices": "Services you provide",
+    "apply": "Offer a service",
+    "applyHint": "FIRINGI checks your licence and approves you.",
+    "countries": "Countries (e.g. PT, ES)",
+    "licence": "Licence number",
+    "licenceUntil": "Licence valid until",
+    "applied": "Sent to FIRINGI.",
+    "youInvoice": "You invoice the customer. FIRINGI's commission is invoiced to you monthly.",
+    "firingiInvoices": "FIRINGI invoices the customer and pays you.",
+    "yourAmount": "Your amount: {amount}",
+    "commission": "Commission: {value}",
+    "requests": "Requests",
+    "toDo": "Coming visits",
+    "plansV": "Customers on a plan",
+    "recent": "Recent visits",
+    "customer": "Customer",
+    "confirm": "Confirm",
+    "complete": "Done",
+    "missed": "Couldn't do it",
+    "missReason": "Why?",
+    "containersTaken": "Containers taken",
+    "containersLeft": "Containers left",
+    "signedBy": "Signed by (at the customer)",
+    "yourInvoiceNo": "Your invoice no.",
+    "noRequests": "No requests.",
+    "noVisits": "Nothing coming.",
+    "noRecent": "No visits yet.",
+    "noProviderYet": "You don't provide any service yet.",
+    "openPdf": "PDF"
   }
 }

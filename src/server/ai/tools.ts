@@ -306,6 +306,32 @@ export const TOOLS: ToolDef<unknown>[] = [
     run: async (ctx, side, i) => (await listRecommendations(ctx, side, { limit: i.limit })).map((r) => ({ kind: r.kind, title: r.title, importance: r.score, since: r.createdAt.toISOString().slice(0, 10) })),
   }),
   tool({
+    name: "my_services", sides: ["BUYER"],
+    description: "The customer's services (used cooking oil collection, grease trap cleaning, pest control…): plans and how often, the next visits, the last ones with litres collected, and the fryers' oil status (days since change, polar %, used oil waiting, how full the containers are).",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx) => (await import("@/server/servicing/ai")).myServicesForAi(ctx),
+  }),
+  tool({
+    name: "request_collection", sides: ["BUYER"],
+    description: "Request a collection / visit for one of the customer's services (e.g. 'collect my used oil'). Use only when the customer asks for it. Give the serviceTypeId from my_services, a date (YYYY-MM-DD, or empty for the first possible day) and a short note.",
+    properties: { service_type_id: { type: "string" }, date: { type: "string", description: "YYYY-MM-DD or empty" }, note: { type: "string" } },
+    input: z.object({ service_type_id: z.string().min(5).max(40), date: z.string().max(10), note: z.string().max(300) }),
+    run: async (ctx, _s, i) => {
+      const { requestVisit } = await import("@/server/servicing/plans");
+      const d = /^\d{4}-\d{2}-\d{2}$/.test(i.date) ? new Date(`${i.date}T00:00:00Z`) : null;
+      const v = await requestVisit(ctx, { serviceTypeId: i.service_type_id, date: d, note: i.note || null, reason: "ASSISTANT" });
+      return { requested: true, number: v.number, date: v.date.toISOString().slice(0, 10), status: v.status, note: "The provider confirms the day; the customer sees it in Services." };
+    },
+  }),
+  tool({
+    name: "services_overview", sides: ["STAFF"],
+    description: "FIRINGI's services (used oil collection, cleaning, pest control…): requests waiting, visits in the next 7 days, missed visits, litres of used oil collected and fees / commission in 30 days, money still open (oil to pay customers, providers to pay, commission to invoice).",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx) => (await import("@/server/servicing/ai")).servicesOverviewForAi(ctx),
+  }),
+  tool({
     name: "profit_and_loss", sides: ["STAFF"],
     description: "FIRINGI's monthly profit and loss (revenue, gross profit, costs, net profit) for the last N months. Finance staff only.",
     properties: { months: { type: "integer", description: "1–24" } },

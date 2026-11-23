@@ -12,14 +12,14 @@ import { PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
 import { openPalette } from "./command-palette";
 import {
   BarChart3, Bell, Bot, Building2, Calculator, CalendarClock, ChefHat, ChevronDown, Coins, Contact, Gift, Globe, Handshake, LayoutDashboard, LifeBuoy, Megaphone, Package,
-  Receipt, ScanBarcode, Settings, ShieldCheck, ShoppingBag, Store, TrendingUp, Truck, UserCog, UserRound, Users, Wallet, Warehouse, type LucideIcon,
+  Receipt, Recycle, ScanBarcode, Settings, ShieldCheck, ShoppingBag, Store, TrendingUp, Truck, UserCog, UserRound, Users, Wallet, Warehouse, type LucideIcon,
 } from "lucide-react";
 import type { ResolvedItem, ResolvedSection } from "@/config/nav/resolve";
 import { cn } from "@/lib/utils";
 
 export const ICONS: Record<string, LucideIcon> = {
   BarChart3, Bell, Bot, Building2, Calculator, CalendarClock, ChefHat, Coins, Contact, Gift, Globe, Handshake, LayoutDashboard, LifeBuoy, Megaphone, Package, Receipt,
-  ScanBarcode, Settings, ShieldCheck, ShoppingBag, Store, TrendingUp, Truck, UserCog, UserRound, Users, Wallet, Warehouse,
+  Recycle, ScanBarcode, Settings, ShieldCheck, ShoppingBag, Store, TrendingUp, Truck, UserCog, UserRound, Users, Wallet, Warehouse,
 };
 
 function isActive(item: ResolvedItem, pathname: string, search: string) {

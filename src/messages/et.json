@@ -939,7 +939,10 @@
     "Bought from Vans": "Kaubikutest ostetud",
     "Customer Assortments": "Klientide sortimendid",
     "Must-Stock List": "Kohustuslik sortiment",
-    "Consignment Stock": "Konsignatsiooniladu"
+    "Consignment Stock": "Konsignatsiooniladu",
+    "Services": "Teenused",
+    "My Services": "Minu teenused",
+    "Fryers & Oil": "Fritüürid ja õli"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Teenusepakkuja ootab ülevaatust",
+      "body": "{company} soovib pakkuda teenust {service}."
+    },
+    "service_provider_decided": {
+      "title": "Teie teenusepakkuja taotlus",
+      "body": "FIRINGI otsus: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Uus plaaniga klient",
+      "body": "{customer} tellis teenuse {service} (plaan {number})."
+    },
+    "service_request_new": {
+      "title": "Uus teenusetellimus",
+      "body": "{customer} soovib teenust {service} kuupäeval {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Külastus muudetud",
+      "body": "Külastus {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Külastus kinnitatud",
+      "body": "Külastus {number} on kinnitatud kuupäevaks {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Külastus homme",
+      "body": "{service}: külastus {number} kuupäeval {date}."
+    },
+    "service_visit_done": {
+      "title": "Külastus tehtud",
+      "body": "{service}: külastus {number} on tehtud ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Külastus jäi tegemata",
+      "body": "Külastust {number} ei tehtud: {reason}."
+    },
+    "service_container_full": {
+      "title": "Kogumine tellitud",
+      "body": "Teie kasutatud õli konteinerid on peaaegu täis — kogumine {number} telliti kuupäevaks {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Vahetage õli",
+      "body": "{fryer}: õli vahetamise aeg ({days} päeva)."
+    },
+    "service_licence_expiring": {
+      "title": "Litsents aegumas",
+      "body": "Teie litsents teenusele {service} aegub {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Säästetud kütuse- ja energiakulu",
     "savingsHint": "Sel kuul heaks kiidetud marsruudimuudatusi: {n}.",
     "stillWaiting": "Veel ootel: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Minu teenused",
+    "intro": "Kasutatud toiduõli kogumine ja muud köögiteenused — graafiku alusel või teie soovil. FIRINGI leiab teenusepakkuja.",
+    "catalogue": "Saadaolevad teenused",
+    "yourPlans": "Teie plaanid",
+    "upcoming": "Eelseisvad külastused",
+    "history": "Ajalugu",
+    "noProvider": "Teie piirkonnas veel saadaval ei ole",
+    "take": "Telli see teenus",
+    "request": "Telli kogumine",
+    "requestVisit": "Telli külastus",
+    "change": "Muuda",
+    "pause": "Peata",
+    "resume": "Jätka",
+    "end": "Lõpeta",
+    "endConfirm": "Kas lõpetada see plaan? Eelseisvad külastused tühistatakse.",
+    "skip": "Jäta vahele",
+    "move": "Muuda aega",
+    "save": "Salvesta",
+    "cancel": "Tühista",
+    "send": "Saada",
+    "howOften": "Sagedus",
+    "weekday": "Nädalapäev",
+    "dayOfMonth": "Kuu päev",
+    "secondDay": "Teine päev",
+    "time": "Kellaaeg",
+    "address": "Aadress",
+    "containers": "Konteinerid",
+    "containerLitres": "Liitrit konteineri kohta",
+    "autoRequest": "Telli kogumine automaatselt, kui konteinerid on peaaegu täis",
+    "notes": "Märkused teenusepakkujale",
+    "date": "Päev",
+    "note": "Märkus",
+    "earliest": "Varaseim: {date}",
+    "freq": {
+      "WEEKLY": "Iga nädal",
+      "BIWEEKLY": "Iga 2 nädala järel",
+      "TWICE_MONTHLY": "Kaks korda kuus",
+      "MONTHLY": "Iga kuu",
+      "ON_REQUEST": "Ainult tellimisel"
+    },
+    "window": {
+      "ANY": "Igal ajal",
+      "MORNING": "Hommikul",
+      "AFTERNOON": "Pärastlõunal"
+    },
+    "weekdays": {
+      "d1": "Esmaspäev",
+      "d2": "Teisipäev",
+      "d3": "Kolmapäev",
+      "d4": "Neljapäev",
+      "d5": "Reede",
+      "d6": "Laupäev",
+      "d7": "Pühapäev"
+    },
+    "sched": {
+      "WEEKLY": "iga nädal: {day}",
+      "BIWEEKLY": "üle nädala: {day}",
+      "TWICE_MONTHLY": "kuu {a}. ja {b}. päeval",
+      "MONTHLY": "kuu {a}. päeval",
+      "ON_REQUEST": "teie soovil"
+    },
+    "st": {
+      "REQUESTED": "Tellitud",
+      "SCHEDULED": "Planeeritud",
+      "CONFIRMED": "Kinnitatud",
+      "DONE": "Tehtud",
+      "MISSED": "Tegemata",
+      "SKIPPED": "Vahele jäetud",
+      "CANCELLED": "Tühistatud",
+      "ACTIVE": "Aktiivne",
+      "PAUSED": "Peatatud",
+      "PENDING": "Ootab FIRINGI kinnitust",
+      "APPROVED": "Heaks kiidetud",
+      "REJECTED": "Tagasi lükatud",
+      "SUSPENDED": "Ajutiselt peatatud"
+    },
+    "reason": {
+      "CUSTOMER": "Kliendi soovil",
+      "CONTAINER_FULL": "Konteinerid peaaegu täis",
+      "ASSISTANT": "Tellitud assistendi kaudu"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "konteiner",
+      "VISIT": "külastus"
+    },
+    "priceVisit": "{amount} külastuse kohta",
+    "priceUnit": "{amount} / {unit}",
+    "buyback": "Teile makstakse {amount} / {unit}",
+    "free": "Tasuta",
+    "invoicedByProvider": "Arve esitab teenusepakkuja",
+    "invoicedByFiringi": "Arve esitab FIRINGI",
+    "provider": "Teenusepakkuja",
+    "next": "Järgmine külastus",
+    "service": "Teenus",
+    "schedule": "Graafik",
+    "status": "Olek",
+    "quantity": "Kogus",
+    "document": "Dokument",
+    "docNumber": "Jäätmedokumendi nr",
+    "noPlans": "Plaane veel pole — valige teenus ülalt.",
+    "noUpcoming": "Midagi pole planeeritud.",
+    "noHistory": "Külastusi veel pole.",
+    "requested": "Tellimus saadetud.",
+    "saved": "Salvestatud.",
+    "pausedUntil": "Peatatud kuni {date}",
+    "pauseUntil": "Peata kuni (valikuline)",
+    "wasteCode": "Jäätmekood {code}",
+    "fee": "Tasu",
+    "paidYou": "Teile makstud",
+    "oilTitle": "Fritüürid ja õli",
+    "oilIntro": "Registreerige õlivahetused ja testid fritüüride kaupa, vaadake, millal on õli vahetamise aeg ja kui täis on kasutatud õli konteinerid.",
+    "fryers": "Fritüürid",
+    "addFryer": "Lisa fritüür",
+    "edit": "Muuda",
+    "fryerName": "Nimi",
+    "capacity": "Maht (L)",
+    "oilName": "Õli",
+    "oilCost": "Õli hind liitri kohta",
+    "log": "Lisa kanne",
+    "logKind": {
+      "TOP_UP": "Juurde valatud",
+      "CHANGE": "Õli vahetatud",
+      "TEST": "Testitud",
+      "FILTER": "Filtreeritud"
+    },
+    "litres": "Liitrid",
+    "polar": "Testri näit (polaarsed %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Vaheta varsti",
+      "CHANGE": "Vaheta kohe"
+    },
+    "daysSince": "{n} päeva viimasest vahetusest",
+    "never": "Vahetust pole veel registreeritud",
+    "lastPolar": "Viimane näit {pct}%",
+    "litres30": "Kulunud õli (30 päeva)",
+    "changes30": "Vahetused (30 päeva)",
+    "cost30": "Õli maksumus (30 päeva)",
+    "storage": "Kasutatud õli ootel",
+    "storageOf": "{litres} / {capacity} L",
+    "storageNoSize": "{litres} L — lisage konteineri maht oma kogumisplaani",
+    "noOilPlan": "Kasutatud õli kogumist veel pole — tellige see lehel Minu teenused.",
+    "fresh30": "Värske õli (30 päeva)",
+    "collected90": "Kogutud (90 päeva)",
+    "paid90": "Teile makstud (90 päeva)",
+    "co2": "Välditud CO₂ (90 päeva)",
+    "lastCollection": "Viimane kogumine: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: vahetage õli kohe.",
+      "CHANGE_SOON": "{fryer}: vahetage õli varsti.",
+      "FULL": "Kasutatud õli konteinerid on {n}% täis — tellige kogumine.",
+      "NO_TEST": "{fryer}: pole 2 nädalat testitud — testige õli.",
+      "OFTEN": "{fryer}: {n} vahetust 30 päevaga — kontrollige temperatuuri ja filtreerimist.",
+      "LESS_OFTEN": "Konteinerid on kogumisel ainult {n}% täis — piisaks harvemast plaanist.",
+      "MORE_OFTEN": "Konteinerid on igal kogumisel täis ({n}%) — koguge sagedamini."
+    },
+    "insights": "Nõuanded",
+    "noInsights": "Kõik on korras.",
+    "noFryers": "Fritüüre veel pole.",
+    "recentLog": "Viimased kanded",
+    "remove": "Võta tagasi",
+    "when": "Millal",
+    "fryer": "Fritüür",
+    "kind": "Mis",
+    "rules": "Vahetage {days} päeva järel või {pct}% polaarsete ühendite juures.",
+    "inactive": "Pole kasutusel",
+    "active": "Kasutusel",
+    "vTitle": "Teenused",
+    "vIntro": "Pakkuge FIRINGI klientidele kogumist ja köögiteenuseid. FIRINGI kiidab teid heaks, määrab kliendid ja planeerib külastused.",
+    "myServices": "Teie pakutavad teenused",
+    "apply": "Paku teenust",
+    "applyHint": "FIRINGI kontrollib teie litsentsi ja kiidab teid heaks.",
+    "countries": "Riigid (nt PT, ES)",
+    "licence": "Litsentsi number",
+    "licenceUntil": "Litsents kehtib kuni",
+    "applied": "Saadetud FIRINGI-le.",
+    "youInvoice": "Teie esitate kliendile arve. FIRINGI vahendustasu arve esitatakse teile kord kuus.",
+    "firingiInvoices": "FIRINGI esitab kliendile arve ja maksab teile.",
+    "yourAmount": "Teie summa: {amount}",
+    "commission": "Vahendustasu: {value}",
+    "requests": "Tellimused",
+    "toDo": "Eelseisvad külastused",
+    "plansV": "Plaaniga kliendid",
+    "recent": "Viimased külastused",
+    "customer": "Klient",
+    "confirm": "Kinnita",
+    "complete": "Tehtud",
+    "missed": "Ei õnnestunud",
+    "missReason": "Miks?",
+    "containersTaken": "Ära viidud konteinerid",
+    "containersLeft": "Jäetud konteinerid",
+    "signedBy": "Allkirjastas (kliendi poolt)",
+    "yourInvoiceNo": "Teie arve nr",
+    "noRequests": "Tellimusi pole.",
+    "noVisits": "Eelseisvaid külastusi pole.",
+    "noRecent": "Külastusi veel pole.",
+    "noProviderYet": "Te ei paku veel ühtegi teenust.",
+    "openPdf": "PDF"
   }
 }

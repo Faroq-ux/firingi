@@ -939,7 +939,10 @@
     "Bought from Vans": "Gekocht uit bestelwagens",
     "Customer Assortments": "Klantassortimenten",
     "Must-Stock List": "Verplicht assortiment",
-    "Consignment Stock": "Consignatievoorraad"
+    "Consignment Stock": "Consignatievoorraad",
+    "Services": "Diensten",
+    "My Services": "Mijn diensten",
+    "Fryers & Oil": "Friteuses & olie"
   },
   "delivery": {
     "title": "Levering",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Dienstverlener te beoordelen",
+      "body": "{company} wil {service} leveren."
+    },
+    "service_provider_decided": {
+      "title": "Uw aanvraag als dienstverlener",
+      "body": "Besluit van FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Nieuwe klant met abonnement",
+      "body": "{customer} neemt {service} af (abonnement {number})."
+    },
+    "service_request_new": {
+      "title": "Nieuwe dienstaanvraag",
+      "body": "{customer} vraagt {service} aan voor {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Bezoek gewijzigd",
+      "body": "Bezoek {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Bezoek bevestigd",
+      "body": "Bezoek {number} is bevestigd voor {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Bezoek morgen",
+      "body": "{service}: bezoek {number} op {date}."
+    },
+    "service_visit_done": {
+      "title": "Bezoek uitgevoerd",
+      "body": "{service}: bezoek {number} is uitgevoerd ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Bezoek gemist",
+      "body": "Bezoek {number} is niet uitgevoerd: {reason}."
+    },
+    "service_container_full": {
+      "title": "Inzameling aangevraagd",
+      "body": "Uw vaten met gebruikte olie zijn bijna vol — inzameling {number} is aangevraagd voor {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Ververs de olie",
+      "body": "{fryer}: de olie moet worden ververst ({days} dagen)."
+    },
+    "service_licence_expiring": {
+      "title": "Vergunning verloopt binnenkort",
+      "body": "Uw vergunning voor {service} verloopt op {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Bespaarde brandstof- en energiekosten",
     "savingsHint": "Uit {n} geaccepteerde routewijzigingen deze maand.",
     "stillWaiting": "Nog in afwachting: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mijn diensten",
+    "intro": "Inzameling van gebruikte frituurolie en andere keukendiensten — volgens schema of op aanvraag. FIRINGI zoekt de dienstverlener.",
+    "catalogue": "Beschikbare diensten",
+    "yourPlans": "Uw abonnementen",
+    "upcoming": "Komende bezoeken",
+    "history": "Geschiedenis",
+    "noProvider": "Nog niet beschikbaar in uw regio",
+    "take": "Deze dienst afnemen",
+    "request": "Inzameling aanvragen",
+    "requestVisit": "Bezoek aanvragen",
+    "change": "Wijzigen",
+    "pause": "Pauzeren",
+    "resume": "Hervatten",
+    "end": "Beëindigen",
+    "endConfirm": "Dit abonnement beëindigen? Komende bezoeken worden geannuleerd.",
+    "skip": "Overslaan",
+    "move": "Verplaatsen",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "send": "Verzenden",
+    "howOften": "Hoe vaak",
+    "weekday": "Dag van de week",
+    "dayOfMonth": "Dag van de maand",
+    "secondDay": "Tweede dag",
+    "time": "Tijd",
+    "address": "Adres",
+    "containers": "Vaten",
+    "containerLitres": "Liter per vat",
+    "autoRequest": "Automatisch een inzameling aanvragen als de vaten bijna vol zijn",
+    "notes": "Opmerkingen voor de dienstverlener",
+    "date": "Dag",
+    "note": "Opmerking",
+    "earliest": "Vroegst: {date}",
+    "freq": {
+      "WEEKLY": "Elke week",
+      "BIWEEKLY": "Elke 2 weken",
+      "TWICE_MONTHLY": "Twee keer per maand",
+      "MONTHLY": "Elke maand",
+      "ON_REQUEST": "Alleen op aanvraag"
+    },
+    "window": {
+      "ANY": "Elk moment",
+      "MORNING": "Ochtend",
+      "AFTERNOON": "Middag"
+    },
+    "weekdays": {
+      "d1": "Maandag",
+      "d2": "Dinsdag",
+      "d3": "Woensdag",
+      "d4": "Donderdag",
+      "d5": "Vrijdag",
+      "d6": "Zaterdag",
+      "d7": "Zondag"
+    },
+    "sched": {
+      "WEEKLY": "elke {day}",
+      "BIWEEKLY": "om de week op {day}",
+      "TWICE_MONTHLY": "op dag {a} en dag {b}",
+      "MONTHLY": "op dag {a}",
+      "ON_REQUEST": "op aanvraag"
+    },
+    "st": {
+      "REQUESTED": "Aangevraagd",
+      "SCHEDULED": "Gepland",
+      "CONFIRMED": "Bevestigd",
+      "DONE": "Uitgevoerd",
+      "MISSED": "Gemist",
+      "SKIPPED": "Overgeslagen",
+      "CANCELLED": "Geannuleerd",
+      "ACTIVE": "Actief",
+      "PAUSED": "Gepauzeerd",
+      "PENDING": "Wacht op FIRINGI",
+      "APPROVED": "Goedgekeurd",
+      "REJECTED": "Afgewezen",
+      "SUSPENDED": "Opgeschort"
+    },
+    "reason": {
+      "CUSTOMER": "Aangevraagd door de klant",
+      "CONTAINER_FULL": "Vaten bijna vol",
+      "ASSISTANT": "Aangevraagd via de Assistent"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "bakken",
+      "VISIT": "bezoek"
+    },
+    "priceVisit": "{amount} per bezoek",
+    "priceUnit": "{amount} per {unit}",
+    "buyback": "U ontvangt {amount} per {unit}",
+    "free": "Kosteloos",
+    "invoicedByProvider": "Gefactureerd door de dienstverlener",
+    "invoicedByFiringi": "Gefactureerd door FIRINGI",
+    "provider": "Dienstverlener",
+    "next": "Volgend bezoek",
+    "service": "Dienst",
+    "schedule": "Schema",
+    "status": "Status",
+    "quantity": "Hoeveelheid",
+    "document": "Document",
+    "docNumber": "Nr. afvalbegeleidingsbrief",
+    "noPlans": "Nog geen abonnementen — neem hierboven een dienst af.",
+    "noUpcoming": "Niets gepland.",
+    "noHistory": "Nog geen bezoeken.",
+    "requested": "Aanvraag verzonden.",
+    "saved": "Opgeslagen.",
+    "pausedUntil": "Gepauzeerd tot {date}",
+    "pauseUntil": "Pauzeren tot (optioneel)",
+    "wasteCode": "Afvalcode {code}",
+    "fee": "Kosten",
+    "paidYou": "Aan u betaald",
+    "oilTitle": "Friteuses & olie",
+    "oilIntro": "Registreer olieverversingen en metingen per friteuse, zie wanneer de olie aan vervanging toe is en hoe vol de vaten met gebruikte olie zijn.",
+    "fryers": "Friteuses",
+    "addFryer": "Friteuse toevoegen",
+    "edit": "Bewerken",
+    "fryerName": "Naam",
+    "capacity": "Inhoud (L)",
+    "oilName": "Olie",
+    "oilCost": "Olieprijs per liter",
+    "log": "Registreren",
+    "logKind": {
+      "TOP_UP": "Bijgevuld",
+      "CHANGE": "Olie ververst",
+      "TEST": "Gemeten",
+      "FILTER": "Gefilterd"
+    },
+    "litres": "Liter",
+    "polar": "Meetwaarde (% polaire stoffen)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Binnenkort verversen",
+      "CHANGE": "Nu verversen"
+    },
+    "daysSince": "{n} dagen sinds de laatste verversing",
+    "never": "Nog geen verversing geregistreerd",
+    "lastPolar": "Laatste meting {pct}%",
+    "litres30": "Olieverbruik (30 dagen)",
+    "changes30": "Verversingen (30 dagen)",
+    "cost30": "Oliekosten (30 dagen)",
+    "storage": "Gebruikte olie in opslag",
+    "storageOf": "{litres} van {capacity} L",
+    "storageNoSize": "{litres} L — vul de vatgrootte in bij uw inzamelabonnement",
+    "noOilPlan": "Nog geen inzameling van gebruikte olie — neem er een af bij Mijn diensten.",
+    "fresh30": "Verse olie (30 dagen)",
+    "collected90": "Ingezameld (90 dagen)",
+    "paid90": "Aan u betaald (90 dagen)",
+    "co2": "Vermeden CO₂ (90 dagen)",
+    "lastCollection": "Laatste inzameling: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: ververs de olie nu.",
+      "CHANGE_SOON": "{fryer}: ververs de olie binnenkort.",
+      "FULL": "De vaten met gebruikte olie zijn voor {n}% vol — vraag een inzameling aan.",
+      "NO_TEST": "{fryer}: al 2 weken niet gemeten — meet de olie.",
+      "OFTEN": "{fryer}: {n} verversingen in 30 dagen — controleer de temperatuur en het filteren.",
+      "LESS_OFTEN": "De vaten zijn bij inzameling maar voor {n}% vol — een minder frequent abonnement volstaat.",
+      "MORE_OFTEN": "De vaten zijn bij elke inzameling vol ({n}%) — laat vaker inzamelen."
+    },
+    "insights": "Tips",
+    "noInsights": "Alles in orde.",
+    "noFryers": "Nog geen friteuses.",
+    "recentLog": "Recente registraties",
+    "remove": "Intrekken",
+    "when": "Wanneer",
+    "fryer": "Friteuse",
+    "kind": "Wat",
+    "rules": "Verversen na {days} dagen of bij {pct}% polaire stoffen.",
+    "inactive": "Niet in gebruik",
+    "active": "In gebruik",
+    "vTitle": "Diensten",
+    "vIntro": "Lever inzamelingen en keukendiensten aan klanten van FIRINGI. FIRINGI keurt u goed, wijst klanten toe en plant de bezoeken.",
+    "myServices": "Diensten die u levert",
+    "apply": "Dienst aanbieden",
+    "applyHint": "FIRINGI controleert uw vergunning en keurt u goed.",
+    "countries": "Landen (bijv. PT, ES)",
+    "licence": "Vergunningsnummer",
+    "licenceUntil": "Vergunning geldig tot",
+    "applied": "Verzonden naar FIRINGI.",
+    "youInvoice": "U factureert de klant. De commissie van FIRINGI wordt u maandelijks gefactureerd.",
+    "firingiInvoices": "FIRINGI factureert de klant en betaalt u.",
+    "yourAmount": "Uw bedrag: {amount}",
+    "commission": "Commissie: {value}",
+    "requests": "Aanvragen",
+    "toDo": "Komende bezoeken",
+    "plansV": "Klanten met een abonnement",
+    "recent": "Recente bezoeken",
+    "customer": "Klant",
+    "confirm": "Bevestigen",
+    "complete": "Uitgevoerd",
+    "missed": "Niet gelukt",
+    "missReason": "Reden?",
+    "containersTaken": "Vaten meegenomen",
+    "containersLeft": "Vaten achtergelaten",
+    "signedBy": "Ondertekend door (bij de klant)",
+    "yourInvoiceNo": "Uw factuurnr.",
+    "noRequests": "Geen aanvragen.",
+    "noVisits": "Niets gepland.",
+    "noRecent": "Nog geen bezoeken.",
+    "noProviderYet": "U levert nog geen diensten.",
+    "openPdf": "PDF"
   }
 }

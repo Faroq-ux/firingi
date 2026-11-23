@@ -939,7 +939,10 @@
     "Bought from Vans": "Kupljeno iz kombija",
     "Customer Assortments": "Asortimani kupaca",
     "Must-Stock List": "Obvezni popis",
-    "Consignment Stock": "Roba u konsignaciji"
+    "Consignment Stock": "Roba u konsignaciji",
+    "Services": "Usluge",
+    "My Services": "Moje usluge",
+    "Fryers & Oil": "Friteze i ulje"
   },
   "delivery": {
     "title": "Dostava",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Pružatelj usluge za provjeru",
+      "body": "{company} želi pružati uslugu {service}."
+    },
+    "service_provider_decided": {
+      "title": "Vaša prijava za pružanje usluga",
+      "body": "Odluka FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Novi kupac s planom",
+      "body": "{customer} koristi uslugu {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "Novi zahtjev za uslugu",
+      "body": "{customer} traži uslugu {service} za {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Posjet promijenjen",
+      "body": "Posjet {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Posjet potvrđen",
+      "body": "Posjet {number} potvrđen je za {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Posjet sutra",
+      "body": "{service}: posjet {number} dana {date}."
+    },
+    "service_visit_done": {
+      "title": "Posjet obavljen",
+      "body": "{service}: posjet {number} je obavljen ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Posjet propušten",
+      "body": "Posjet {number} nije obavljen: {reason}."
+    },
+    "service_container_full": {
+      "title": "Zatražen odvoz",
+      "body": "Vaši spremnici za korišteno ulje gotovo su puni — odvoz {number} zatražen je za {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Zamijenite ulje",
+      "body": "{fryer}: vrijeme je za zamjenu ulja ({days} dana)."
+    },
+    "service_licence_expiring": {
+      "title": "Dozvola uskoro istječe",
+      "body": "Vaša dozvola za {service} istječe {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Ušteđeni trošak goriva i energije",
     "savingsHint": "Prihvaćene promjene ruta ovaj mjesec: {n}.",
     "stillWaiting": "Još na čekanju: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Moje usluge",
+    "intro": "Odvoz korištenog jestivog ulja i druge kuhinjske usluge — prema rasporedu ili na zahtjev. FIRINGI pronalazi pružatelja usluge.",
+    "catalogue": "Dostupne usluge",
+    "yourPlans": "Vaši planovi",
+    "upcoming": "Nadolazeći posjeti",
+    "history": "Povijest",
+    "noProvider": "U vašem području još nije dostupno",
+    "take": "Naruči uslugu",
+    "request": "Zatraži odvoz",
+    "requestVisit": "Zatraži posjet",
+    "change": "Promijeni",
+    "pause": "Pauziraj",
+    "resume": "Nastavi",
+    "end": "Završi",
+    "endConfirm": "Završiti ovaj plan? Nadolazeći posjeti bit će otkazani.",
+    "skip": "Preskoči",
+    "move": "Premjesti",
+    "save": "Spremi",
+    "cancel": "Odustani",
+    "send": "Pošalji",
+    "howOften": "Koliko često",
+    "weekday": "Dan u tjednu",
+    "dayOfMonth": "Dan u mjesecu",
+    "secondDay": "Drugi dan",
+    "time": "Vrijeme",
+    "address": "Adresa",
+    "containers": "Spremnici",
+    "containerLitres": "Litara po spremniku",
+    "autoRequest": "Automatski zatraži odvoz kada su spremnici gotovo puni",
+    "notes": "Napomene za pružatelja usluge",
+    "date": "Dan",
+    "note": "Napomena",
+    "earliest": "Najranije: {date}",
+    "freq": {
+      "WEEKLY": "Svaki tjedan",
+      "BIWEEKLY": "Svaka 2 tjedna",
+      "TWICE_MONTHLY": "Dvaput mjesečno",
+      "MONTHLY": "Svaki mjesec",
+      "ON_REQUEST": "Samo na zahtjev"
+    },
+    "window": {
+      "ANY": "Bilo kada",
+      "MORNING": "Ujutro",
+      "AFTERNOON": "Poslijepodne"
+    },
+    "weekdays": {
+      "d1": "Ponedjeljak",
+      "d2": "Utorak",
+      "d3": "Srijeda",
+      "d4": "Četvrtak",
+      "d5": "Petak",
+      "d6": "Subota",
+      "d7": "Nedjelja"
+    },
+    "sched": {
+      "WEEKLY": "svaki tjedan, {day}",
+      "BIWEEKLY": "svaka 2 tjedna, {day}",
+      "TWICE_MONTHLY": "{a}. i {b}. dan u mjesecu",
+      "MONTHLY": "{a}. dan u mjesecu",
+      "ON_REQUEST": "na zahtjev"
+    },
+    "st": {
+      "REQUESTED": "Zatraženo",
+      "SCHEDULED": "Planirano",
+      "CONFIRMED": "Potvrđeno",
+      "DONE": "Obavljeno",
+      "MISSED": "Propušteno",
+      "SKIPPED": "Preskočeno",
+      "CANCELLED": "Otkazano",
+      "ACTIVE": "Aktivno",
+      "PAUSED": "Pauzirano",
+      "PENDING": "Čeka FIRINGI",
+      "APPROVED": "Odobreno",
+      "REJECTED": "Odbijeno",
+      "SUSPENDED": "Suspendirano"
+    },
+    "reason": {
+      "CUSTOMER": "Na zahtjev kupca",
+      "CONTAINER_FULL": "Spremnici gotovo puni",
+      "ASSISTANT": "Zatraženo putem Asistenta"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "spremnici",
+      "VISIT": "posjet"
+    },
+    "priceVisit": "{amount} po posjetu",
+    "priceUnit": "{amount} po {unit}",
+    "buyback": "Dobivate {amount} po {unit}",
+    "free": "Besplatno",
+    "invoicedByProvider": "Fakturira pružatelj usluge",
+    "invoicedByFiringi": "Fakturira FIRINGI",
+    "provider": "Pružatelj usluge",
+    "next": "Sljedeći posjet",
+    "service": "Usluga",
+    "schedule": "Raspored",
+    "status": "Status",
+    "quantity": "Količina",
+    "document": "Dokument",
+    "docNumber": "Br. pratećeg lista za otpad",
+    "noPlans": "Još nema planova — naručite uslugu iznad.",
+    "noUpcoming": "Ništa nije planirano.",
+    "noHistory": "Još nema posjeta.",
+    "requested": "Zahtjev poslan.",
+    "saved": "Spremljeno.",
+    "pausedUntil": "Pauzirano do {date}",
+    "pauseUntil": "Pauziraj do (neobavezno)",
+    "wasteCode": "Ključni broj otpada {code}",
+    "fee": "Naknada",
+    "paidYou": "Isplaćeno vama",
+    "oilTitle": "Friteze i ulje",
+    "oilIntro": "Bilježite zamjene i testove ulja po fritezi, pratite kada je ulje za zamjenu i koliko su puni spremnici za korišteno ulje.",
+    "fryers": "Friteze",
+    "addFryer": "Dodaj fritezu",
+    "edit": "Uredi",
+    "fryerName": "Naziv",
+    "capacity": "Kapacitet (L)",
+    "oilName": "Ulje",
+    "oilCost": "Cijena ulja po litri",
+    "log": "Zabilježi",
+    "logKind": {
+      "TOP_UP": "Dolijevanje",
+      "CHANGE": "Zamjena ulja",
+      "TEST": "Test",
+      "FILTER": "Filtriranje"
+    },
+    "litres": "Litre",
+    "polar": "Očitanje testera (% polarnih spojeva)",
+    "fryerStatus": {
+      "OK": "U redu",
+      "SOON": "Uskoro zamijeniti",
+      "CHANGE": "Zamijeniti odmah"
+    },
+    "daysSince": "{n} dana od zadnje zamjene",
+    "never": "Još nema zabilježene zamjene",
+    "lastPolar": "Zadnje očitanje {pct} %",
+    "litres30": "Potrošeno ulje (30 dana)",
+    "changes30": "Zamjene (30 dana)",
+    "cost30": "Trošak ulja (30 dana)",
+    "storage": "Korišteno ulje na čekanju",
+    "storageOf": "{litres} od {capacity} L",
+    "storageNoSize": "{litres} L — dodajte veličinu spremnika u plan odvoza",
+    "noOilPlan": "Još nema odvoza korištenog ulja — naručite ga u Mojim uslugama.",
+    "fresh30": "Svježe ulje (30 dana)",
+    "collected90": "Odvezeno (90 dana)",
+    "paid90": "Isplaćeno vama (90 dana)",
+    "co2": "Izbjegnuti CO₂ (90 dana)",
+    "lastCollection": "Zadnji odvoz: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: zamijenite ulje odmah.",
+      "CHANGE_SOON": "{fryer}: uskoro zamijenite ulje.",
+      "FULL": "Spremnici za korišteno ulje puni su {n} % — zatražite odvoz.",
+      "NO_TEST": "{fryer}: nije testirano 2 tjedna — testirajte ulje.",
+      "OFTEN": "{fryer}: {n} zamjena u 30 dana — provjerite temperaturu i filtriranje.",
+      "LESS_OFTEN": "Spremnici su pri odvozu puni samo {n} % — dovoljan bi bio rjeđi plan.",
+      "MORE_OFTEN": "Spremnici su puni pri svakom odvozu ({n} %) — zatražite češći odvoz."
+    },
+    "insights": "Savjeti",
+    "noInsights": "Sve je u redu.",
+    "noFryers": "Još nema friteza.",
+    "recentLog": "Nedavni unosi",
+    "remove": "Poništi",
+    "when": "Kada",
+    "fryer": "Friteza",
+    "kind": "Što",
+    "rules": "Zamjena nakon {days} dana ili pri {pct} % polarnih spojeva.",
+    "inactive": "Nije u upotrebi",
+    "active": "U upotrebi",
+    "vTitle": "Usluge",
+    "vIntro": "Pružajte usluge odvoza i kuhinjske usluge kupcima FIRINGI. FIRINGI vas odobrava, dodjeljuje kupce i planira posjete.",
+    "myServices": "Usluge koje pružate",
+    "apply": "Ponudi uslugu",
+    "applyHint": "FIRINGI provjerava vašu dozvolu i odobrava vas.",
+    "countries": "Države (npr. PT, ES)",
+    "licence": "Broj dozvole",
+    "licenceUntil": "Dozvola vrijedi do",
+    "applied": "Poslano platformi FIRINGI.",
+    "youInvoice": "Vi fakturirate kupcu. Provizija FIRINGI fakturira vam se mjesečno.",
+    "firingiInvoices": "FIRINGI fakturira kupcu i isplaćuje vas.",
+    "yourAmount": "Vaš iznos: {amount}",
+    "commission": "Provizija: {value}",
+    "requests": "Zahtjevi",
+    "toDo": "Nadolazeći posjeti",
+    "plansV": "Kupci s planom",
+    "recent": "Nedavni posjeti",
+    "customer": "Kupac",
+    "confirm": "Potvrdi",
+    "complete": "Obavljeno",
+    "missed": "Nije obavljeno",
+    "missReason": "Zašto?",
+    "containersTaken": "Preuzeti spremnici",
+    "containersLeft": "Ostavljeni spremnici",
+    "signedBy": "Potpisao (kod kupca)",
+    "yourInvoiceNo": "Br. vašeg računa",
+    "noRequests": "Nema zahtjeva.",
+    "noVisits": "Ništa nije planirano.",
+    "noRecent": "Još nema posjeta.",
+    "noProviderYet": "Još ne pružate nijednu uslugu.",
+    "openPdf": "PDF"
   }
 }

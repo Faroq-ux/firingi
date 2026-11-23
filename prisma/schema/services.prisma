@@ -1,0 +1,216 @@
+// ───────────── Services & used cooking oil (Phase 68) ─────────────
+
+/// A service FIRINGI offers customers: used cooking oil collection, grease trap cleaning, pest control… (built-in or added by FIRINGI).
+model ServiceType {
+  id               String   @id @default(cuid())
+  /// OIL_COLLECTION, GREASE_TRAP, PEST_CONTROL, HOOD_CLEANING (built-in, translated) or a code FIRINGI gives its own
+  code             String   @unique
+  /// { en, pt?, … } — names FIRINGI typed (built-ins use the translations)
+  name             Json
+  description      Json?
+  /// COLLECTION (a quantity is collected: litres, kg, bins) | VISIT
+  kind             String   @default("VISIT")
+  /// L | KG | BIN | VISIT
+  unit             String   @default("VISIT")
+  /// links the fryers & used oil pages
+  isOil            Boolean  @default(false)
+  /// European waste list code (LER / EWC), e.g. 20 01 25 for used cooking oil
+  wasteCode        String?
+  /// a waste transfer document / certificate for every visit
+  needsDocument    Boolean  @default(false)
+  /// WEEKLY | BIWEEKLY | TWICE_MONTHLY | MONTHLY | ON_REQUEST
+  frequencies      String[]
+  /// FIRINGI invoices the customer per visit (+ per unit); FIRINGI pays the customer per unit (buy-back, e.g. oil)
+  feeNet           Decimal  @default(0) @db.Decimal(12, 2)
+  pricePerUnit     Decimal  @default(0) @db.Decimal(12, 4)
+  buybackPerUnit   Decimal  @default(0) @db.Decimal(12, 4)
+  /// what FIRINGI pays the provider (when FIRINGI invoices the customer)
+  providerPerVisit Decimal  @default(0) @db.Decimal(12, 2)
+  providerPerUnit  Decimal  @default(0) @db.Decimal(12, 4)
+  /// who invoices the customer: FIRINGI (FIRINGI pays the provider) | PROVIDER (the provider invoices the customer; FIRINGI earns a commission, invoiced to the provider monthly)
+  invoicedBy       String   @default("FIRINGI")
+  commissionPct    Decimal  @default(0) @db.Decimal(5, 2)
+  commissionPerVisit Decimal @default(0) @db.Decimal(12, 2)
+  commissionPerUnit  Decimal @default(0) @db.Decimal(12, 4)
+  /// countries it is offered in (codes); empty = everywhere FIRINGI sells
+  countries        String[]
+  active           Boolean  @default(true)
+  sort             Int      @default(0)
+  createdById      String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  providers ServiceProvider[]
+  plans     ServicePlan[]
+  visits    ServiceVisit[]
+}
+
+/// A company approved by FIRINGI to do a service (a supplier on FIRINGI, or FIRINGI itself).
+model ServiceProvider {
+  id               String    @id @default(cuid())
+  companyId        String
+  serviceTypeId    String
+  /// PENDING | APPROVED | REJECTED | SUSPENDED
+  status           String    @default("PENDING")
+  /// country codes it covers
+  countries        String[]
+  licenceNumber    String?
+  licenceExpiresAt DateTime?
+  licenceDocKey    String?
+  /// FIRINGI's choice for this provider (null = the service's): FIRINGI | PROVIDER, and its own commission %
+  invoicedBy       String?
+  commissionPct    Decimal?  @db.Decimal(5, 2)
+  note             String?
+  decidedById      String?
+  decidedAt        DateTime?
+  decisionNote     String?
+  licenceAlertedAt DateTime?
+  createdById      String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  serviceType ServiceType    @relation(fields: [serviceTypeId], references: [id], onDelete: Cascade)
+  plans       ServicePlan[]
+  visits      ServiceVisit[]
+
+  @@unique([companyId, serviceTypeId])
+  @@index([serviceTypeId, status])
+}
+
+/// A customer's service plan: what, by whom, how often (or only when requested), where.
+model ServicePlan {
+  id                  String    @id @default(cuid())
+  number              String    @unique
+  customerCompanyId   String
+  serviceTypeId       String
+  providerId          String?
+  addressId           String?
+  /// WEEKLY | BIWEEKLY | TWICE_MONTHLY | MONTHLY | ON_REQUEST
+  frequency           String
+  /// 1 = Monday … 7 = Sunday (weekly, every 2 weeks)
+  weekday             Int       @default(2)
+  /// day of the month (monthly; twice a month: A and B)
+  dayA                Int       @default(1)
+  dayB                Int       @default(15)
+  /// ANY | MORNING | AFTERNOON
+  timeWindow          String    @default("ANY")
+  /// ACTIVE | PAUSED | CANCELLED
+  status              String    @default("ACTIVE")
+  pausedUntil         DateTime?
+  /// used oil: the containers at the customer and their size; ask for a collection by itself when they are nearly full
+  containers          Int       @default(1)
+  containerLitres     Int       @default(0)
+  autoRequestWhenFull Boolean   @default(true)
+  notes               String?
+  startsOn            DateTime
+  createdById         String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  serviceType ServiceType      @relation(fields: [serviceTypeId], references: [id])
+  provider    ServiceProvider? @relation(fields: [providerId], references: [id], onDelete: SetNull)
+  visits      ServiceVisit[]
+
+  @@index([customerCompanyId, status])
+  @@index([providerId, status])
+}
+
+/// One visit: from the plan's schedule, or a collection the customer requested.
+model ServiceVisit {
+  id                 String    @id @default(cuid())
+  number             String    @unique
+  planId             String?
+  customerCompanyId  String
+  serviceTypeId      String
+  providerId         String?
+  /// SCHEDULED (from the plan) | REQUESTED (asked by the customer, or by itself when the containers are full)
+  origin             String    @default("SCHEDULED")
+  /// REQUESTED | SCHEDULED | CONFIRMED | DONE | MISSED | SKIPPED | CANCELLED
+  status             String    @default("SCHEDULED")
+  date               DateTime
+  timeWindow         String    @default("ANY")
+  /// why it was requested: CUSTOMER | CONTAINER_FULL | ASSISTANT
+  requestReason      String?
+  requestedById      String?
+  requestNote        String?
+  /// what was done
+  quantity           Decimal?  @db.Decimal(12, 2)
+  containersTaken    Int?
+  containersLeft     Int?
+  providerNote       String?
+  signedBy           String?
+  /// waste transfer document number (e.g. e-GAR in Portugal)
+  docNumber          String?
+  photoKeys          String[]  @default([])
+  doneAt             DateTime?
+  doneById           String?
+  missedReason       String?
+  /// money — FIRINGI | PROVIDER (who invoiced the customer, fixed when done)
+  invoicedBy         String    @default("FIRINGI")
+  /// the customer's fee; what the customer is paid per unit (oil); the provider's amount (FIRINGI mode); FIRINGI's commission (provider mode)
+  feeNet             Decimal   @default(0) @db.Decimal(12, 2)
+  buybackNet         Decimal   @default(0) @db.Decimal(12, 2)
+  providerAmount     Decimal   @default(0) @db.Decimal(12, 2)
+  commissionNet      Decimal   @default(0) @db.Decimal(12, 2)
+  /// FIRINGI's invoice to the customer (FIRINGI mode) / the provider's own invoice number (provider mode) / FIRINGI's commission invoice to the provider
+  invoiceId          String?
+  providerInvoiceNo  String?
+  commissionInvoiceId String?
+  buybackPaidAt      DateTime?
+  providerPaidAt     DateTime?
+  remindedAt         DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  plan        ServicePlan?     @relation(fields: [planId], references: [id], onDelete: SetNull)
+  serviceType ServiceType      @relation(fields: [serviceTypeId], references: [id])
+  provider    ServiceProvider? @relation(fields: [providerId], references: [id], onDelete: SetNull)
+
+  @@unique([planId, date, origin])
+  @@index([customerCompanyId, date])
+  @@index([providerId, status, date])
+  @@index([status, date])
+  @@index([invoicedBy, commissionInvoiceId])
+}
+
+/// A fryer at a customer's kitchen.
+model Fryer {
+  id           String    @id @default(cuid())
+  companyId    String
+  name         String
+  capacityL    Decimal   @db.Decimal(8, 2)
+  oilName      String?
+  /// € per litre of fresh oil (for the cost per fryer)
+  oilCostPerL  Decimal?  @db.Decimal(8, 4)
+  active       Boolean   @default(true)
+  lastChangeAt DateTime?
+  lastPolarPct Decimal?  @db.Decimal(5, 2)
+  /// the last "change the oil" alert (once a day)
+  alertedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  logs FryerLog[]
+
+  @@index([companyId, active])
+}
+
+/// The fryer log: topped up, oil changed (the old oil goes to the used-oil containers), tested, filtered.
+model FryerLog {
+  id        String   @id @default(cuid())
+  fryerId   String
+  companyId String
+  /// TOP_UP | CHANGE | TEST | FILTER
+  kind      String
+  litres    Decimal? @db.Decimal(8, 2)
+  /// total polar compounds % from a tester
+  polarPct  Decimal? @db.Decimal(5, 2)
+  note      String?
+  at        DateTime @default(now())
+  byUserId  String?
+
+  fryer Fryer @relation(fields: [fryerId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, at])
+  @@index([fryerId, at])
+}

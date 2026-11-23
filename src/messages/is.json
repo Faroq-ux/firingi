@@ -939,7 +939,10 @@
     "Bought from Vans": "Keypt úr bílum",
     "Customer Assortments": "Vöruúrval viðskiptavina",
     "Must-Stock List": "Skylduvörulisti",
-    "Consignment Stock": "Umboðssölulager"
+    "Consignment Stock": "Umboðssölulager",
+    "Services": "Þjónusta",
+    "My Services": "Mín þjónusta",
+    "Fryers & Oil": "Steikingarpottar og olía"
   },
   "delivery": {
     "title": "Afhending",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Þjónustuaðili til yfirferðar",
+      "body": "{company} vill veita {service}."
+    },
+    "service_provider_decided": {
+      "title": "Umsókn þín sem þjónustuaðili",
+      "body": "Ákvörðun FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Nýr viðskiptavinur með áætlun",
+      "body": "{customer} pantar {service} (áætlun {number})."
+    },
+    "service_request_new": {
+      "title": "Ný þjónustubeiðni",
+      "body": "{customer} óskar eftir {service} {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Heimsókn breytt",
+      "body": "Heimsókn {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Heimsókn staðfest",
+      "body": "Heimsókn {number} er staðfest {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Heimsókn á morgun",
+      "body": "{service}: heimsókn {number} {date}."
+    },
+    "service_visit_done": {
+      "title": "Heimsókn lokið",
+      "body": "{service}: heimsókn {number} er lokið ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Heimsókn ekki framkvæmd",
+      "body": "Heimsókn {number} var ekki framkvæmd: {reason}."
+    },
+    "service_container_full": {
+      "title": "Beðið um söfnun",
+      "body": "Ílátin þín fyrir notaða olíu eru næstum full — beðið var um söfnun {number} {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Skiptu um olíu",
+      "body": "{fryer}: komið að olíuskiptum ({days} dagar)."
+    },
+    "service_licence_expiring": {
+      "title": "Leyfi að renna út",
+      "body": "Leyfið þitt fyrir {service} rennur út {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Sparaður eldsneytis- og orkukostnaður",
     "savingsHint": "Út frá {n} samþykktum leiðabreytingum í þessum mánuði.",
     "stillWaiting": "Enn í bið: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mín þjónusta",
+    "intro": "Söfnun notaðrar steikingarolíu og önnur eldhúsþjónusta — samkvæmt áætlun eða þegar þú óskar. FIRINGI finnur þjónustuaðilann.",
+    "catalogue": "Þjónusta í boði",
+    "yourPlans": "Áætlanirnar þínar",
+    "upcoming": "Væntanlegar heimsóknir",
+    "history": "Saga",
+    "noProvider": "Ekki enn í boði á þínu svæði",
+    "take": "Panta þessa þjónustu",
+    "request": "Óska eftir söfnun",
+    "requestVisit": "Óska eftir heimsókn",
+    "change": "Breyta",
+    "pause": "Gera hlé",
+    "resume": "Halda áfram",
+    "end": "Ljúka",
+    "endConfirm": "Ljúka þessari áætlun? Væntanlegum heimsóknum verður aflýst.",
+    "skip": "Sleppa",
+    "move": "Færa",
+    "save": "Vista",
+    "cancel": "Hætta við",
+    "send": "Senda",
+    "howOften": "Hversu oft",
+    "weekday": "Vikudagur",
+    "dayOfMonth": "Dagur mánaðar",
+    "secondDay": "Annar dagur",
+    "time": "Tími",
+    "address": "Heimilisfang",
+    "containers": "Ílát",
+    "containerLitres": "Lítrar í hverju íláti",
+    "autoRequest": "Óska sjálfkrafa eftir söfnun þegar ílátin eru næstum full",
+    "notes": "Athugasemdir til þjónustuaðila",
+    "date": "Dagur",
+    "note": "Athugasemd",
+    "earliest": "Í fyrsta lagi: {date}",
+    "freq": {
+      "WEEKLY": "Vikulega",
+      "BIWEEKLY": "Aðra hverja viku",
+      "TWICE_MONTHLY": "Tvisvar í mánuði",
+      "MONTHLY": "Mánaðarlega",
+      "ON_REQUEST": "Aðeins eftir beiðni"
+    },
+    "window": {
+      "ANY": "Hvenær sem er",
+      "MORNING": "Morgunn",
+      "AFTERNOON": "Síðdegis"
+    },
+    "weekdays": {
+      "d1": "Mánudagur",
+      "d2": "Þriðjudagur",
+      "d3": "Miðvikudagur",
+      "d4": "Fimmtudagur",
+      "d5": "Föstudagur",
+      "d6": "Laugardagur",
+      "d7": "Sunnudagur"
+    },
+    "sched": {
+      "WEEKLY": "vikulega: {day}",
+      "BIWEEKLY": "aðra hverja viku: {day}",
+      "TWICE_MONTHLY": "{a}. og {b}. dag mánaðar",
+      "MONTHLY": "{a}. dag mánaðar",
+      "ON_REQUEST": "þegar þú óskar"
+    },
+    "st": {
+      "REQUESTED": "Beðið um",
+      "SCHEDULED": "Áætlað",
+      "CONFIRMED": "Staðfest",
+      "DONE": "Lokið",
+      "MISSED": "Ekki framkvæmt",
+      "SKIPPED": "Sleppt",
+      "CANCELLED": "Aflýst",
+      "ACTIVE": "Virk",
+      "PAUSED": "Í hléi",
+      "PENDING": "Bíður eftir FIRINGI",
+      "APPROVED": "Samþykkt",
+      "REJECTED": "Hafnað",
+      "SUSPENDED": "Lokað tímabundið"
+    },
+    "reason": {
+      "CUSTOMER": "Að beiðni viðskiptavinar",
+      "CONTAINER_FULL": "Ílát næstum full",
+      "ASSISTANT": "Beðið um í gegnum aðstoðarmanninn"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "ílát",
+      "VISIT": "heimsókn"
+    },
+    "priceVisit": "{amount} fyrir hverja heimsókn",
+    "priceUnit": "{amount} á {unit}",
+    "buyback": "Þú færð greitt {amount} á {unit}",
+    "free": "Án endurgjalds",
+    "invoicedByProvider": "Þjónustuaðili gefur út reikning",
+    "invoicedByFiringi": "FIRINGI gefur út reikning",
+    "provider": "Þjónustuaðili",
+    "next": "Næsta heimsókn",
+    "service": "Þjónusta",
+    "schedule": "Áætlun",
+    "status": "Staða",
+    "quantity": "Magn",
+    "document": "Skjal",
+    "docNumber": "Úrgangsskjal nr.",
+    "noPlans": "Engar áætlanir enn — veldu þjónustu hér að ofan.",
+    "noUpcoming": "Ekkert áætlað.",
+    "noHistory": "Engar heimsóknir enn.",
+    "requested": "Beiðni send.",
+    "saved": "Vistað.",
+    "pausedUntil": "Í hléi til {date}",
+    "pauseUntil": "Hlé til (valfrjálst)",
+    "wasteCode": "Úrgangskóði {code}",
+    "fee": "Gjald",
+    "paidYou": "Greitt til þín",
+    "oilTitle": "Steikingarpottar og olía",
+    "oilIntro": "Skráðu olíuskipti og mælingar fyrir hvern steikingarpott og sjáðu hvenær skipta þarf um olíu og hversu full ílátin fyrir notaða olíu eru.",
+    "fryers": "Steikingarpottar",
+    "addFryer": "Bæta við steikingarpotti",
+    "edit": "Breyta",
+    "fryerName": "Heiti",
+    "capacity": "Rúmmál (L)",
+    "oilName": "Olía",
+    "oilCost": "Verð á olíu á lítra",
+    "log": "Skrá",
+    "logKind": {
+      "TOP_UP": "Bætt á",
+      "CHANGE": "Olíu skipt",
+      "TEST": "Mælt",
+      "FILTER": "Síað"
+    },
+    "litres": "Lítrar",
+    "polar": "Mæligildi (pólar %)",
+    "fryerStatus": {
+      "OK": "Í lagi",
+      "SOON": "Skipta fljótlega",
+      "CHANGE": "Skipta núna"
+    },
+    "daysSince": "{n} dagar frá síðustu skiptum",
+    "never": "Engin skipti skráð enn",
+    "lastPolar": "Síðasta mæling {pct}%",
+    "litres30": "Olíunotkun (30 dagar)",
+    "changes30": "Skipti (30 dagar)",
+    "cost30": "Olíukostnaður (30 dagar)",
+    "storage": "Notuð olía sem bíður",
+    "storageOf": "{litres} af {capacity} L",
+    "storageNoSize": "{litres} L — bættu stærð ílátsins við söfnunaráætlunina þína",
+    "noOilPlan": "Engin söfnun á notaðri olíu enn — pantaðu hana undir Mín þjónusta.",
+    "fresh30": "Ný olía (30 dagar)",
+    "collected90": "Safnað (90 dagar)",
+    "paid90": "Greitt til þín (90 dagar)",
+    "co2": "CO₂ sem sparaðist (90 dagar)",
+    "lastCollection": "Síðasta söfnun: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: skiptu um olíu núna.",
+      "CHANGE_SOON": "{fryer}: skiptu um olíu fljótlega.",
+      "FULL": "Ílátin fyrir notaða olíu eru {n}% full — óskaðu eftir söfnun.",
+      "NO_TEST": "{fryer}: ekki mælt í 2 vikur — mældu olíuna.",
+      "OFTEN": "{fryer}: {n} skipti á 30 dögum — athugaðu hitastigið og síunina.",
+      "LESS_OFTEN": "Ílátin eru aðeins {n}% full við söfnun — sjaldnari áætlun myndi duga.",
+      "MORE_OFTEN": "Ílátin eru full við hverja söfnun ({n}%) — safnaðu oftar."
+    },
+    "insights": "Ábendingar",
+    "noInsights": "Allt í góðu.",
+    "noFryers": "Engir steikingarpottar enn.",
+    "recentLog": "Nýlegar færslur",
+    "remove": "Afturkalla",
+    "when": "Hvenær",
+    "fryer": "Steikingarpottur",
+    "kind": "Hvað",
+    "rules": "Skipta eftir {days} daga eða við {pct}% pólarefni.",
+    "inactive": "Ekki í notkun",
+    "active": "Í notkun",
+    "vTitle": "Þjónusta",
+    "vIntro": "Veittu viðskiptavinum FIRINGI söfnun og eldhúsþjónustu. FIRINGI samþykkir þig, úthlutar viðskiptavinum og skipuleggur heimsóknirnar.",
+    "myServices": "Þjónusta sem þú veitir",
+    "apply": "Bjóða þjónustu",
+    "applyHint": "FIRINGI fer yfir leyfið þitt og samþykkir þig.",
+    "countries": "Lönd (t.d. PT, ES)",
+    "licence": "Leyfisnúmer",
+    "licenceUntil": "Leyfi gildir til",
+    "applied": "Sent til FIRINGI.",
+    "youInvoice": "Þú gefur út reikning til viðskiptavinarins. Þóknun FIRINGI er innheimt hjá þér mánaðarlega.",
+    "firingiInvoices": "FIRINGI gefur út reikning til viðskiptavinarins og greiðir þér.",
+    "yourAmount": "Þín upphæð: {amount}",
+    "commission": "Þóknun: {value}",
+    "requests": "Beiðnir",
+    "toDo": "Væntanlegar heimsóknir",
+    "plansV": "Viðskiptavinir með áætlun",
+    "recent": "Nýlegar heimsóknir",
+    "customer": "Viðskiptavinur",
+    "confirm": "Staðfesta",
+    "complete": "Lokið",
+    "missed": "Tókst ekki",
+    "missReason": "Hvers vegna?",
+    "containersTaken": "Ílát tekin",
+    "containersLeft": "Ílát skilin eftir",
+    "signedBy": "Undirritað af (hjá viðskiptavini)",
+    "yourInvoiceNo": "Reikningsnúmerið þitt",
+    "noRequests": "Engar beiðnir.",
+    "noVisits": "Ekkert framundan.",
+    "noRecent": "Engar heimsóknir enn.",
+    "noProviderYet": "Þú veitir enga þjónustu enn.",
+    "openPdf": "PDF"
   }
 }

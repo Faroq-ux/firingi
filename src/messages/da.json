@@ -939,7 +939,10 @@
     "Bought from Vans": "Købt fra varevogne",
     "Customer Assortments": "Kundesortimenter",
     "Must-Stock List": "Basissortiment",
-    "Consignment Stock": "Konsignationslager"
+    "Consignment Stock": "Konsignationslager",
+    "Services": "Ydelser",
+    "My Services": "Mine ydelser",
+    "Fryers & Oil": "Frituregryder & olie"
   },
   "delivery": {
     "title": "Levering",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Serviceleverandør til gennemsyn",
+      "body": "{company} vil levere {service}."
+    },
+    "service_provider_decided": {
+      "title": "Din ansøgning om ydelser",
+      "body": "Afgørelse fra FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Ny kunde med plan",
+      "body": "{customer} bestiller {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "Ny anmodning om ydelse",
+      "body": "{customer} beder om {service} den {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Besøg ændret",
+      "body": "Besøg {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Besøg bekræftet",
+      "body": "Besøg {number} er bekræftet til {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Besøg i morgen",
+      "body": "{service}: besøg {number} den {date}."
+    },
+    "service_visit_done": {
+      "title": "Besøg udført",
+      "body": "{service}: besøg {number} er udført ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Besøg ikke udført",
+      "body": "Besøg {number} blev ikke udført: {reason}."
+    },
+    "service_container_full": {
+      "title": "Afhentning bestilt",
+      "body": "Dine beholdere til brugt olie er næsten fulde — afhentning {number} er bestilt til {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Skift olien",
+      "body": "{fryer}: olien skal skiftes ({days} dage)."
+    },
+    "service_licence_expiring": {
+      "title": "Tilladelse udløber snart",
+      "body": "Din tilladelse til {service} udløber den {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Sparede brændstof- og energiomkostninger",
     "savingsHint": "Fra {n} accepterede ruteændringer denne måned.",
     "stillWaiting": "Venter stadig: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mine ydelser",
+    "intro": "Afhentning af brugt fritureolie og andre køkkenydelser — efter fast plan eller når du beder om det. FIRINGI finder leverandøren.",
+    "catalogue": "Ydelser, du kan bestille",
+    "yourPlans": "Dine planer",
+    "upcoming": "Kommende besøg",
+    "history": "Historik",
+    "noProvider": "Endnu ikke tilgængelig i dit område",
+    "take": "Bestil denne ydelse",
+    "request": "Bestil afhentning",
+    "requestVisit": "Bestil besøg",
+    "change": "Ændr",
+    "pause": "Sæt på pause",
+    "resume": "Genoptag",
+    "end": "Afslut",
+    "endConfirm": "Vil du afslutte denne plan? Kommende besøg aflyses.",
+    "skip": "Spring over",
+    "move": "Flyt",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "send": "Send",
+    "howOften": "Hvor ofte",
+    "weekday": "Ugedag",
+    "dayOfMonth": "Dag i måneden",
+    "secondDay": "Anden dag",
+    "time": "Tidspunkt",
+    "address": "Adresse",
+    "containers": "Beholdere",
+    "containerLitres": "Liter pr. beholder",
+    "autoRequest": "Bestil automatisk afhentning, når beholderne er næsten fulde",
+    "notes": "Bemærkninger til leverandøren",
+    "date": "Dag",
+    "note": "Bemærkning",
+    "earliest": "Tidligst: {date}",
+    "freq": {
+      "WEEKLY": "Hver uge",
+      "BIWEEKLY": "Hver 2. uge",
+      "TWICE_MONTHLY": "To gange om måneden",
+      "MONTHLY": "Hver måned",
+      "ON_REQUEST": "Kun ved bestilling"
+    },
+    "window": {
+      "ANY": "Når som helst",
+      "MORNING": "Formiddag",
+      "AFTERNOON": "Eftermiddag"
+    },
+    "weekdays": {
+      "d1": "Mandag",
+      "d2": "Tirsdag",
+      "d3": "Onsdag",
+      "d4": "Torsdag",
+      "d5": "Fredag",
+      "d6": "Lørdag",
+      "d7": "Søndag"
+    },
+    "sched": {
+      "WEEKLY": "hver {day}",
+      "BIWEEKLY": "hver anden {day}",
+      "TWICE_MONTHLY": "den {a}. og den {b}.",
+      "MONTHLY": "den {a}.",
+      "ON_REQUEST": "når du beder om det"
+    },
+    "st": {
+      "REQUESTED": "Bestilt",
+      "SCHEDULED": "Planlagt",
+      "CONFIRMED": "Bekræftet",
+      "DONE": "Udført",
+      "MISSED": "Ikke udført",
+      "SKIPPED": "Sprunget over",
+      "CANCELLED": "Aflyst",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "På pause",
+      "PENDING": "Afventer FIRINGI",
+      "APPROVED": "Godkendt",
+      "REJECTED": "Afvist",
+      "SUSPENDED": "Suspenderet"
+    },
+    "reason": {
+      "CUSTOMER": "Bestilt af kunden",
+      "CONTAINER_FULL": "Beholdere næsten fulde",
+      "ASSISTANT": "Bestilt via Assistenten"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "spande",
+      "VISIT": "besøg"
+    },
+    "priceVisit": "{amount} pr. besøg",
+    "priceUnit": "{amount} pr. {unit}",
+    "buyback": "Du får {amount} pr. {unit}",
+    "free": "Gratis",
+    "invoicedByProvider": "Faktureres af leverandøren",
+    "invoicedByFiringi": "Faktureres af FIRINGI",
+    "provider": "Leverandør",
+    "next": "Næste besøg",
+    "service": "Ydelse",
+    "schedule": "Tidsplan",
+    "status": "Status",
+    "quantity": "Mængde",
+    "document": "Dokument",
+    "docNumber": "Affaldsdokument nr.",
+    "noPlans": "Ingen planer endnu — bestil en ydelse ovenfor.",
+    "noUpcoming": "Intet planlagt.",
+    "noHistory": "Ingen besøg endnu.",
+    "requested": "Anmodning sendt.",
+    "saved": "Gemt.",
+    "pausedUntil": "På pause indtil {date}",
+    "pauseUntil": "Pause indtil (valgfrit)",
+    "wasteCode": "Affaldskode {code}",
+    "fee": "Pris",
+    "paidYou": "Udbetalt til dig",
+    "oilTitle": "Frituregryder & olie",
+    "oilIntro": "Registrér olieskift og test for hver frituregryde, se hvornår olien skal skiftes, og hvor fulde beholderne til brugt olie er.",
+    "fryers": "Frituregryder",
+    "addFryer": "Tilføj frituregryde",
+    "edit": "Rediger",
+    "fryerName": "Navn",
+    "capacity": "Kapacitet (L)",
+    "oilName": "Olie",
+    "oilCost": "Oliepris pr. liter",
+    "log": "Registrér",
+    "logKind": {
+      "TOP_UP": "Efterfyldt",
+      "CHANGE": "Olie skiftet",
+      "TEST": "Testet",
+      "FILTER": "Filtreret"
+    },
+    "litres": "Liter",
+    "polar": "Testerværdi (polære stoffer %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Skift snart",
+      "CHANGE": "Skift nu"
+    },
+    "daysSince": "{n} dage siden sidste skift",
+    "never": "Intet skift registreret endnu",
+    "lastPolar": "Seneste måling {pct} %",
+    "litres30": "Olieforbrug (30 dage)",
+    "changes30": "Skift (30 dage)",
+    "cost30": "Olieudgift (30 dage)",
+    "storage": "Brugt olie, der venter",
+    "storageOf": "{litres} af {capacity} L",
+    "storageNoSize": "{litres} L — tilføj beholderstørrelsen i din afhentningsplan",
+    "noOilPlan": "Ingen afhentning af brugt olie endnu — bestil en under Mine ydelser.",
+    "fresh30": "Frisk olie (30 dage)",
+    "collected90": "Afhentet (90 dage)",
+    "paid90": "Udbetalt til dig (90 dage)",
+    "co2": "CO₂ undgået (90 dage)",
+    "lastCollection": "Seneste afhentning: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: skift olien nu.",
+      "CHANGE_SOON": "{fryer}: skift olien snart.",
+      "FULL": "Beholderne til brugt olie er {n} % fulde — bestil afhentning.",
+      "NO_TEST": "{fryer}: ikke testet i 2 uger — test olien.",
+      "OFTEN": "{fryer}: {n} skift på 30 dage — tjek temperaturen og filtreringen.",
+      "LESS_OFTEN": "Beholderne er kun {n} % fulde ved afhentning — en sjældnere plan er nok.",
+      "MORE_OFTEN": "Beholderne er fulde ved hver afhentning ({n} %) — få afhentet oftere."
+    },
+    "insights": "Tips",
+    "noInsights": "Alt er i orden.",
+    "noFryers": "Ingen frituregryder endnu.",
+    "recentLog": "Seneste registreringer",
+    "remove": "Fortryd",
+    "when": "Hvornår",
+    "fryer": "Frituregryde",
+    "kind": "Hvad",
+    "rules": "Skift efter {days} dage eller ved {pct} % polære stoffer.",
+    "inactive": "Ikke i brug",
+    "active": "I brug",
+    "vTitle": "Ydelser",
+    "vIntro": "Levér afhentning og køkkenydelser til kunder hos FIRINGI. FIRINGI godkender dig, tildeler kunder og planlægger besøgene.",
+    "myServices": "Ydelser, du leverer",
+    "apply": "Tilbyd en ydelse",
+    "applyHint": "FIRINGI kontrollerer din tilladelse og godkender dig.",
+    "countries": "Lande (f.eks. PT, ES)",
+    "licence": "Tilladelsesnummer",
+    "licenceUntil": "Tilladelse gyldig til",
+    "applied": "Sendt til FIRINGI.",
+    "youInvoice": "Du fakturerer kunden. FIRINGI fakturerer dig for sin provision hver måned.",
+    "firingiInvoices": "FIRINGI fakturerer kunden og betaler dig.",
+    "yourAmount": "Dit beløb: {amount}",
+    "commission": "Provision: {value}",
+    "requests": "Anmodninger",
+    "toDo": "Kommende besøg",
+    "plansV": "Kunder med plan",
+    "recent": "Seneste besøg",
+    "customer": "Kunde",
+    "confirm": "Bekræft",
+    "complete": "Udført",
+    "missed": "Kunne ikke udføres",
+    "missReason": "Hvorfor?",
+    "containersTaken": "Beholdere taget med",
+    "containersLeft": "Beholdere efterladt",
+    "signedBy": "Underskrevet af (hos kunden)",
+    "yourInvoiceNo": "Dit fakturanr.",
+    "noRequests": "Ingen anmodninger.",
+    "noVisits": "Intet på vej.",
+    "noRecent": "Ingen besøg endnu.",
+    "noProviderYet": "Du leverer ingen ydelser endnu.",
+    "openPdf": "PDF"
   }
 }

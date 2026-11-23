@@ -108,6 +108,8 @@ export async function acceptCentreKind(ctx: Ctx, r: { kind: string; audience: st
       }
       return {};
     }
+    case "SERVICE_MISSED": case "SERVICE_FREQUENCY": case "OIL_CONTAINER_FULL": case "PROVIDER_LICENCE":
+      return (await import("@/server/servicing/ai")).acceptServiceKind(ctx, r);
     default: return {};
   }
 }

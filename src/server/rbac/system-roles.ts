@@ -28,6 +28,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
       "admin.customers.view", "admin.customers.approve", "admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve",
       "admin.allocation.manage", "admin.inventory.view", "admin.inventory.manage", "admin.recalls.manage", "admin.delivery.view", "admin.delivery.manage", "admin.fleet.view", "admin.fleet.manage",
       "admin.risk.view", "admin.international.view", "admin.notifications.view", "admin.messages.manage", "admin.support.manage", "admin.reviews.moderate",
+      "admin.services.view", "admin.services.manage",
       ],
   },
   {
@@ -51,7 +52,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
     key: "SUPPORT", name: "Support", description: "Read access to help customers and vendors", appliesTo: ["ADMIN"],
     permissions: [
       "admin.dashboard.view", "admin.orders.view", "admin.vendors.view", "admin.customers.view", "admin.catalogue.view", "admin.inventory.view",
-      "admin.delivery.view", "admin.notifications.view", "admin.messages.manage", "admin.crm.view", "admin.support.manage", "admin.reviews.moderate",
+      "admin.delivery.view", "admin.notifications.view", "admin.messages.manage", "admin.crm.view", "admin.support.manage", "admin.reviews.moderate", "admin.services.view",
     ],
   },
   {
@@ -90,7 +91,7 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "VENDOR_FLEET", name: "Fleet Manager", description: "Drivers, vehicles and service areas", appliesTo: VENDOR_TYPES,
-    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.fleet.view", "vendor.drivers.manage", "vendor.vehicles.manage", "vendor.service_areas.manage"],
+    permissions: ["company.support.use", "vendor.dashboard.view", "vendor.orders.view", "vendor.fleet.view", "vendor.drivers.manage", "vendor.vehicles.manage", "vendor.service_areas.manage", "vendor.services.manage", "vendor.services.visit"],
   },
   {
     key: "VENDOR_ACCOUNTANT", name: "Accountant (sales)", description: "Billing statements, invoices to FIRINGI, payments", appliesTo: VENDOR_TYPES,
@@ -98,17 +99,17 @@ export const SYSTEM_ROLES: SystemRoleDef[] = [
   },
   {
     key: "BUYER_PURCHASER", name: "Purchaser", description: "Browse, order and track orders", appliesTo: BUYER_TYPES,
-    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.claims.manage", "buyer.addresses.manage", "buyer.reports.view", "buyer.reviews.write", "buyer.kitchen.waste"],
+    permissions: ["company.support.use", "buyer.dashboard.view", "buyer.catalogue.view", "buyer.orders.place", "buyer.orders.view", "buyer.claims.manage", "buyer.addresses.manage", "buyer.reports.view", "buyer.reviews.write", "buyer.kitchen.waste", "buyer.services.manage", "buyer.services.log"],
   },
   {
     key: "BUYER_ACCOUNTANT", name: "Accountant (purchases)", description: "Invoices and payments", appliesTo: BUYER_TYPES,
     permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.invoices.view", "buyer.payments.view", "buyer.payments.make", "buyer.reports.view", "company.accounting.view", "company.accounting.manage", "company.bank.view", "company.bank.manage"],
   },
-  { key: "POS_CASHIER", name: "Cashier", description: "Sells at the company's till (shifts, payments, receipts)", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.staff.kiosk", "buyer.kitchen.waste"] },
-  { key: "POS_MANAGER", name: "Shop Manager", description: "Runs the till: items, prices, refunds, discounts, shifts and reports", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.pos.manage", "company.staff.kiosk", "buyer.kitchen.waste"] },
-  { key: "KITCHEN_MANAGER", name: "Kitchen Manager", description: "Ingredients, recipes and menu costing; logs and reviews food waste and donations", appliesTo: BUYER_TYPES, permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.kitchen.manage", "buyer.kitchen.waste"] },
+  { key: "POS_CASHIER", name: "Cashier", description: "Sells at the company's till (shifts, payments, receipts)", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.staff.kiosk", "buyer.kitchen.waste", "buyer.services.log"] },
+  { key: "POS_MANAGER", name: "Shop Manager", description: "Runs the till: items, prices, refunds, discounts, shifts and reports", appliesTo: COMPANY_TYPES, permissions: ["company.pos.sell", "company.pos.manage", "company.staff.kiosk", "buyer.kitchen.waste", "buyer.services.log"] },
+  { key: "KITCHEN_MANAGER", name: "Kitchen Manager", description: "Ingredients, recipes and menu costing; logs and reviews food waste and donations", appliesTo: BUYER_TYPES, permissions: ["company.support.use", "buyer.dashboard.view", "buyer.orders.view", "buyer.kitchen.manage", "buyer.kitchen.waste", "buyer.services.manage", "buyer.services.log"] },
   { key: "STAFF_MANAGER", name: "Staff & Rota Manager", description: "Plans shifts, keeps clock entries and timesheets, approves leave and swaps, exports payroll", appliesTo: COMPANY_TYPES, permissions: ["company.support.use", "company.staff.manage", "company.staff.kiosk"] },
-  { key: "VENDOR_DRIVER", name: "Driver", description: "Driver in the company's own fleet", appliesTo: VENDOR_TYPES, permissions: ["driver.deliveries.view", "driver.deliveries.update", "driver.pod.capture", "vendor.vansales.sell"] },
+  { key: "VENDOR_DRIVER", name: "Driver", description: "Driver in the company's own fleet", appliesTo: VENDOR_TYPES, permissions: ["driver.deliveries.view", "driver.deliveries.update", "driver.pod.capture", "vendor.vansales.sell", "vendor.services.visit"] },
 ];
 
 /** Expand ALL_* shortcuts into concrete permission codes. */

@@ -939,7 +939,10 @@
     "Bought from Vans": "Vásárlások furgonból",
     "Customer Assortments": "Ügyfélválaszték",
     "Must-Stock List": "Kötelező lista",
-    "Consignment Stock": "Bizományi készlet"
+    "Consignment Stock": "Bizományi készlet",
+    "Services": "Szolgáltatások",
+    "My Services": "Szolgáltatásaim",
+    "Fryers & Oil": "Fritőzök és olaj"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Ellenőrizendő szolgáltató",
+      "body": "{company} szeretné nyújtani: {service}."
+    },
+    "service_provider_decided": {
+      "title": "Az Ön szolgáltatói jelentkezése",
+      "body": "A FIRINGI döntése: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Új előfizető ügyfél",
+      "body": "{customer} igénybe veszi: {service} (előfizetés: {number})."
+    },
+    "service_request_new": {
+      "title": "Új szolgáltatáskérés",
+      "body": "{customer} kéri: {service}, {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Látogatás módosult",
+      "body": "Látogatás {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Látogatás megerősítve",
+      "body": "A(z) {number} látogatás megerősítve: {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Holnapi látogatás",
+      "body": "{service}: {number} látogatás, {date}."
+    },
+    "service_visit_done": {
+      "title": "Látogatás elvégezve",
+      "body": "{service}: a(z) {number} látogatás elvégezve ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Elmaradt látogatás",
+      "body": "A(z) {number} látogatás elmaradt: {reason}."
+    },
+    "service_container_full": {
+      "title": "Elszállítás kérve",
+      "body": "Használtolaj-tartályai majdnem tele vannak — a(z) {number} elszállítást kértük erre a napra: {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Olajcsere esedékes",
+      "body": "{fryer}: esedékes az olajcsere ({days} nap)."
+    },
+    "service_licence_expiring": {
+      "title": "Lejáró engedély",
+      "body": "A(z) {service} engedélye lejár: {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Megtakarított üzemanyag- és energiaköltség",
     "savingsHint": "E hónapban elfogadott {n} útvonal-módosítás alapján.",
     "stillWaiting": "Még függőben: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Szolgáltatásaim",
+    "intro": "Használt sütőolaj elszállítása és egyéb konyhai szolgáltatások — ütemezve vagy kérésre. A FIRINGI megtalálja a szolgáltatót.",
+    "catalogue": "Igénybe vehető szolgáltatások",
+    "yourPlans": "Előfizetései",
+    "upcoming": "Közelgő látogatások",
+    "history": "Előzmények",
+    "noProvider": "Az Ön területén még nem elérhető",
+    "take": "Szolgáltatás igénylése",
+    "request": "Elszállítás kérése",
+    "requestVisit": "Látogatás kérése",
+    "change": "Módosítás",
+    "pause": "Szüneteltetés",
+    "resume": "Folytatás",
+    "end": "Befejezés",
+    "endConfirm": "Befejezi ezt az előfizetést? A közelgő látogatások törlődnek.",
+    "skip": "Kihagyás",
+    "move": "Áthelyezés",
+    "save": "Mentés",
+    "cancel": "Mégse",
+    "send": "Küldés",
+    "howOften": "Gyakoriság",
+    "weekday": "A hét napja",
+    "dayOfMonth": "A hónap napja",
+    "secondDay": "Második nap",
+    "time": "Időpont",
+    "address": "Cím",
+    "containers": "Tartályok",
+    "containerLitres": "Liter tartályonként",
+    "autoRequest": "Elszállítás automatikus kérése, ha a tartályok majdnem tele vannak",
+    "notes": "Megjegyzés a szolgáltatónak",
+    "date": "Nap",
+    "note": "Megjegyzés",
+    "earliest": "Legkorábban: {date}",
+    "freq": {
+      "WEEKLY": "Hetente",
+      "BIWEEKLY": "Kéthetente",
+      "TWICE_MONTHLY": "Havonta kétszer",
+      "MONTHLY": "Havonta",
+      "ON_REQUEST": "Csak kérésre"
+    },
+    "window": {
+      "ANY": "Bármikor",
+      "MORNING": "Délelőtt",
+      "AFTERNOON": "Délután"
+    },
+    "weekdays": {
+      "d1": "Hétfő",
+      "d2": "Kedd",
+      "d3": "Szerda",
+      "d4": "Csütörtök",
+      "d5": "Péntek",
+      "d6": "Szombat",
+      "d7": "Vasárnap"
+    },
+    "sched": {
+      "WEEKLY": "hetente, {day}",
+      "BIWEEKLY": "kéthetente, {day}",
+      "TWICE_MONTHLY": "a hónap {a}. és {b}. napján",
+      "MONTHLY": "a hónap {a}. napján",
+      "ON_REQUEST": "kérésre"
+    },
+    "st": {
+      "REQUESTED": "Igényelve",
+      "SCHEDULED": "Ütemezve",
+      "CONFIRMED": "Megerősítve",
+      "DONE": "Elvégezve",
+      "MISSED": "Elmaradt",
+      "SKIPPED": "Kihagyva",
+      "CANCELLED": "Törölve",
+      "ACTIVE": "Aktív",
+      "PAUSED": "Szüneteltetve",
+      "PENDING": "FIRINGI jóváhagyására vár",
+      "APPROVED": "Jóváhagyva",
+      "REJECTED": "Elutasítva",
+      "SUSPENDED": "Felfüggesztve"
+    },
+    "reason": {
+      "CUSTOMER": "Az ügyfél kérésére",
+      "CONTAINER_FULL": "Tartályok majdnem tele",
+      "ASSISTANT": "Az Asszisztensen keresztül kérve"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "tartály",
+      "VISIT": "látogatás"
+    },
+    "priceVisit": "{amount} / látogatás",
+    "priceUnit": "{amount} / {unit}",
+    "buyback": "Ön kap: {amount} / {unit}",
+    "free": "Díjmentes",
+    "invoicedByProvider": "A szolgáltató számlázza",
+    "invoicedByFiringi": "A FIRINGI számlázza",
+    "provider": "Szolgáltató",
+    "next": "Következő látogatás",
+    "service": "Szolgáltatás",
+    "schedule": "Ütemezés",
+    "status": "Állapot",
+    "quantity": "Mennyiség",
+    "document": "Dokumentum",
+    "docNumber": "Hulladékbizonylat száma",
+    "noPlans": "Még nincs előfizetés — vegyen igénybe egy szolgáltatást fent.",
+    "noUpcoming": "Nincs ütemezett látogatás.",
+    "noHistory": "Még nem volt látogatás.",
+    "requested": "Kérés elküldve.",
+    "saved": "Mentve.",
+    "pausedUntil": "Szüneteltetve eddig: {date}",
+    "pauseUntil": "Szüneteltetés eddig (nem kötelező)",
+    "wasteCode": "Hulladékkód: {code}",
+    "fee": "Díj",
+    "paidYou": "Önnek fizetve",
+    "oilTitle": "Fritőzök és olaj",
+    "oilIntro": "Rögzítse az olajcseréket és méréseket fritőzönként, és lássa, mikor esedékes az olajcsere, illetve mennyire teltek meg a használtolaj-tartályok.",
+    "fryers": "Fritőzök",
+    "addFryer": "Fritőz hozzáadása",
+    "edit": "Szerkesztés",
+    "fryerName": "Név",
+    "capacity": "Űrtartalom (L)",
+    "oilName": "Olaj",
+    "oilCost": "Olaj literára",
+    "log": "Rögzítés",
+    "logKind": {
+      "TOP_UP": "Utántöltés",
+      "CHANGE": "Olajcsere",
+      "TEST": "Mérés",
+      "FILTER": "Szűrés"
+    },
+    "litres": "Liter",
+    "polar": "Teszter értéke (poláris anyagok %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Hamarosan csere",
+      "CHANGE": "Csere most"
+    },
+    "daysSince": "{n} nap az utolsó csere óta",
+    "never": "Még nincs rögzített csere",
+    "lastPolar": "Utolsó mérés: {pct}%",
+    "litres30": "Felhasznált olaj (30 nap)",
+    "changes30": "Cserék (30 nap)",
+    "cost30": "Olajköltség (30 nap)",
+    "storage": "Elszállításra váró használt olaj",
+    "storageOf": "{litres} / {capacity} L",
+    "storageNoSize": "{litres} L — adja meg a tartályméretet az elszállítási előfizetésben",
+    "noOilPlan": "Még nincs használtolaj-elszállítás — igényelje a Szolgáltatásaim oldalon.",
+    "fresh30": "Friss olaj (30 nap)",
+    "collected90": "Elszállítva (90 nap)",
+    "paid90": "Önnek fizetve (90 nap)",
+    "co2": "Elkerült CO₂ (90 nap)",
+    "lastCollection": "Utolsó elszállítás: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: cserélje az olajat most.",
+      "CHANGE_SOON": "{fryer}: hamarosan cserélje az olajat.",
+      "FULL": "A használtolaj-tartályok {n}%-ban tele vannak — kérjen elszállítást.",
+      "NO_TEST": "{fryer}: 2 hete nem volt mérés — mérje meg az olajat.",
+      "OFTEN": "{fryer}: {n} csere 30 nap alatt — ellenőrizze a hőmérsékletet és a szűrést.",
+      "LESS_OFTEN": "A tartályok elszállításkor csak {n}%-ban vannak tele — ritkább ütemezés is elegendő.",
+      "MORE_OFTEN": "A tartályok minden elszállításkor tele vannak ({n}%) — kérjen gyakoribb elszállítást."
+    },
+    "insights": "Tippek",
+    "noInsights": "Minden rendben.",
+    "noFryers": "Még nincs fritőz.",
+    "recentLog": "Legutóbbi bejegyzések",
+    "remove": "Visszavonás",
+    "when": "Mikor",
+    "fryer": "Fritőz",
+    "kind": "Mi",
+    "rules": "Csere {days} nap után vagy {pct}% poláris anyagnál.",
+    "inactive": "Nincs használatban",
+    "active": "Használatban",
+    "vTitle": "Szolgáltatások",
+    "vIntro": "Nyújtson elszállítást és konyhai szolgáltatásokat a FIRINGI ügyfeleinek. A FIRINGI jóváhagyja Önt, ügyfeleket rendel Önhöz és ütemezi a látogatásokat.",
+    "myServices": "Az Ön által nyújtott szolgáltatások",
+    "apply": "Szolgáltatás felajánlása",
+    "applyHint": "A FIRINGI ellenőrzi az engedélyét és jóváhagyja Önt.",
+    "countries": "Országok (pl. PT, ES)",
+    "licence": "Engedélyszám",
+    "licenceUntil": "Engedély érvényes eddig",
+    "applied": "Elküldve a FIRINGI-nek.",
+    "youInvoice": "Ön számláz az ügyfélnek. A FIRINGI jutalékát havonta számlázzuk Önnek.",
+    "firingiInvoices": "A FIRINGI számláz az ügyfélnek, és kifizeti Önt.",
+    "yourAmount": "Az Ön összege: {amount}",
+    "commission": "Jutalék: {value}",
+    "requests": "Kérések",
+    "toDo": "Közelgő látogatások",
+    "plansV": "Előfizető ügyfelek",
+    "recent": "Legutóbbi látogatások",
+    "customer": "Ügyfél",
+    "confirm": "Megerősítés",
+    "complete": "Elvégezve",
+    "missed": "Nem sikerült",
+    "missReason": "Miért?",
+    "containersTaken": "Elvitt tartályok",
+    "containersLeft": "Ott hagyott tartályok",
+    "signedBy": "Aláírta (az ügyfélnél)",
+    "yourInvoiceNo": "Az Ön számlaszáma",
+    "noRequests": "Nincs kérés.",
+    "noVisits": "Nincs közelgő látogatás.",
+    "noRecent": "Még nem volt látogatás.",
+    "noProviderYet": "Még nem nyújt szolgáltatást.",
+    "openPdf": "PDF"
   }
 }

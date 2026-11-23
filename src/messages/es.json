@@ -1993,6 +1993,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Proveedor de servicios por revisar",
+      "body": "{company} quiere prestar {service}."
+    },
+    "service_provider_decided": {
+      "title": "Su solicitud de servicio",
+      "body": "Decisión de FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Nuevo cliente con plan",
+      "body": "{customer} contrata {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "Nueva solicitud de servicio",
+      "body": "{customer} solicita {service} para el {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Visita modificada",
+      "body": "Visita {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Visita confirmada",
+      "body": "La visita {number} está confirmada para el {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Visita mañana",
+      "body": "{service}: visita {number} el {date}."
+    },
+    "service_visit_done": {
+      "title": "Visita realizada",
+      "body": "{service}: la visita {number} se ha realizado ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Visita no realizada",
+      "body": "La visita {number} no se ha realizado: {reason}."
+    },
+    "service_container_full": {
+      "title": "Recogida solicitada",
+      "body": "Sus contenedores de aceite usado están casi llenos: se ha solicitado la recogida {number} para el {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Cambie el aceite",
+      "body": "{fryer}: toca cambiar el aceite ({days} días)."
+    },
+    "service_licence_expiring": {
+      "title": "Licencia a punto de vencer",
+      "body": "Su licencia para {service} vence el {date}."
     }
   },
   "notifications": {
@@ -2267,7 +2315,10 @@
     "Bought from Vans": "Compras en furgoneta",
     "Customer Assortments": "Surtidos por cliente",
     "Must-Stock List": "Lista de surtido obligatorio",
-    "Consignment Stock": "Stock en depósito"
+    "Consignment Stock": "Stock en depósito",
+    "Services": "Servicios",
+    "My Services": "Mis servicios",
+    "Fryers & Oil": "Freidoras y aceite"
   },
   "support": {
     "title": "Ayuda y soporte",
@@ -9305,5 +9356,207 @@
     "costSaved": "Coste de combustible y energía ahorrado",
     "savingsHint": "De {n} cambios de ruta aceptados este mes.",
     "stillWaiting": "Aún pendiente: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mis servicios",
+    "intro": "Recogida de aceite de cocina usado y otros servicios de cocina, con calendario fijo o a petición. FIRINGI encuentra el proveedor.",
+    "catalogue": "Servicios disponibles",
+    "yourPlans": "Sus planes",
+    "upcoming": "Próximas visitas",
+    "history": "Historial",
+    "noProvider": "Aún no disponible en su zona",
+    "take": "Contratar este servicio",
+    "request": "Solicitar una recogida",
+    "requestVisit": "Solicitar una visita",
+    "change": "Cambiar",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "end": "Finalizar",
+    "endConfirm": "¿Finalizar este plan? Se cancelarán las próximas visitas.",
+    "skip": "Omitir",
+    "move": "Cambiar fecha",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "send": "Enviar",
+    "howOften": "Frecuencia",
+    "weekday": "Día de la semana",
+    "dayOfMonth": "Día del mes",
+    "secondDay": "Segundo día",
+    "time": "Hora",
+    "address": "Dirección",
+    "containers": "Contenedores",
+    "containerLitres": "Litros por contenedor",
+    "autoRequest": "Solicitar una recogida automáticamente cuando los contenedores estén casi llenos",
+    "notes": "Notas para el proveedor",
+    "date": "Día",
+    "note": "Nota",
+    "earliest": "A partir del: {date}",
+    "freq": {
+      "WEEKLY": "Cada semana",
+      "BIWEEKLY": "Cada 2 semanas",
+      "TWICE_MONTHLY": "Dos veces al mes",
+      "MONTHLY": "Cada mes",
+      "ON_REQUEST": "Solo a petición"
+    },
+    "window": {
+      "ANY": "Cualquier hora",
+      "MORNING": "Mañana",
+      "AFTERNOON": "Tarde"
+    },
+    "weekdays": {
+      "d1": "Lunes",
+      "d2": "Martes",
+      "d3": "Miércoles",
+      "d4": "Jueves",
+      "d5": "Viernes",
+      "d6": "Sábado",
+      "d7": "Domingo"
+    },
+    "sched": {
+      "WEEKLY": "cada {day}",
+      "BIWEEKLY": "cada dos semanas, {day}",
+      "TWICE_MONTHLY": "los días {a} y {b}",
+      "MONTHLY": "el día {a}",
+      "ON_REQUEST": "a petición"
+    },
+    "st": {
+      "REQUESTED": "Solicitada",
+      "SCHEDULED": "Planificada",
+      "CONFIRMED": "Confirmada",
+      "DONE": "Realizada",
+      "MISSED": "No realizada",
+      "SKIPPED": "Omitida",
+      "CANCELLED": "Cancelada",
+      "ACTIVE": "Activo",
+      "PAUSED": "En pausa",
+      "PENDING": "Pendiente de FIRINGI",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado",
+      "SUSPENDED": "Suspendido"
+    },
+    "reason": {
+      "CUSTOMER": "Solicitada por el cliente",
+      "CONTAINER_FULL": "Contenedores casi llenos",
+      "ASSISTANT": "Solicitada a través del Asistente"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "contenedores",
+      "VISIT": "visita"
+    },
+    "priceVisit": "{amount} por visita",
+    "priceUnit": "{amount} por {unit}",
+    "buyback": "Se le paga {amount} por {unit}",
+    "free": "Sin coste",
+    "invoicedByProvider": "Facturado por el proveedor",
+    "invoicedByFiringi": "Facturado por FIRINGI",
+    "provider": "Proveedor",
+    "next": "Próxima visita",
+    "service": "Servicio",
+    "schedule": "Calendario",
+    "status": "Estado",
+    "quantity": "Cantidad",
+    "document": "Documento",
+    "docNumber": "N.º de documento de residuos",
+    "noPlans": "Aún no hay planes: contrate un servicio arriba.",
+    "noUpcoming": "Nada planificado.",
+    "noHistory": "Aún no hay visitas.",
+    "requested": "Solicitud enviada.",
+    "saved": "Guardado.",
+    "pausedUntil": "En pausa hasta el {date}",
+    "pauseUntil": "Pausar hasta (opcional)",
+    "wasteCode": "Código de residuo {code}",
+    "fee": "Coste",
+    "paidYou": "Pagado a usted",
+    "oilTitle": "Freidoras y aceite",
+    "oilIntro": "Registre los cambios y las pruebas de aceite de cada freidora, vea cuándo toca cambiar el aceite y cuánto están llenos los contenedores de aceite usado.",
+    "fryers": "Freidoras",
+    "addFryer": "Añadir freidora",
+    "edit": "Editar",
+    "fryerName": "Nombre",
+    "capacity": "Capacidad (L)",
+    "oilName": "Aceite",
+    "oilCost": "Precio del aceite por litro",
+    "log": "Registrar",
+    "logKind": {
+      "TOP_UP": "Aceite añadido",
+      "CHANGE": "Aceite cambiado",
+      "TEST": "Medido",
+      "FILTER": "Filtrado"
+    },
+    "litres": "Litros",
+    "polar": "Lectura del medidor (% compuestos polares)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Cambiar pronto",
+      "CHANGE": "Cambiar ahora"
+    },
+    "daysSince": "{n} días desde el último cambio",
+    "never": "Aún no hay cambios registrados",
+    "lastPolar": "Última lectura {pct}%",
+    "litres30": "Aceite consumido (30 días)",
+    "changes30": "Cambios (30 días)",
+    "cost30": "Coste del aceite (30 días)",
+    "storage": "Aceite usado en espera",
+    "storageOf": "{litres} de {capacity} L",
+    "storageNoSize": "{litres} L: indique el tamaño del contenedor en su plan de recogida",
+    "noOilPlan": "Aún no tiene recogida de aceite usado: contrátela en Mis servicios.",
+    "fresh30": "Aceite nuevo (30 días)",
+    "collected90": "Recogido (90 días)",
+    "paid90": "Pagado a usted (90 días)",
+    "co2": "CO₂ evitado (90 días)",
+    "lastCollection": "Última recogida: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: cambie el aceite ahora.",
+      "CHANGE_SOON": "{fryer}: cambie el aceite pronto.",
+      "FULL": "Los contenedores de aceite usado están al {n}%: solicite una recogida.",
+      "NO_TEST": "{fryer}: sin medir desde hace 2 semanas; mida el aceite.",
+      "OFTEN": "{fryer}: {n} cambios en 30 días; revise la temperatura y el filtrado.",
+      "LESS_OFTEN": "Los contenedores solo están al {n}% en cada recogida: bastaría con un plan menos frecuente.",
+      "MORE_OFTEN": "Los contenedores están llenos en cada recogida ({n}%): aumente la frecuencia de recogida."
+    },
+    "insights": "Consejos",
+    "noInsights": "Todo en orden.",
+    "noFryers": "Aún no hay freidoras.",
+    "recentLog": "Registros recientes",
+    "remove": "Deshacer",
+    "when": "Cuándo",
+    "fryer": "Freidora",
+    "kind": "Qué",
+    "rules": "Cambiar tras {days} días o al {pct}% de compuestos polares.",
+    "inactive": "Fuera de uso",
+    "active": "En uso",
+    "vTitle": "Servicios",
+    "vIntro": "Preste servicios de recogida y de cocina a clientes de FIRINGI. FIRINGI le aprueba, le asigna clientes y planifica las visitas.",
+    "myServices": "Servicios que presta",
+    "apply": "Ofrecer un servicio",
+    "applyHint": "FIRINGI comprueba su licencia y le aprueba.",
+    "countries": "Países (p. ej., PT, ES)",
+    "licence": "Número de licencia",
+    "licenceUntil": "Licencia válida hasta",
+    "applied": "Enviado a FIRINGI.",
+    "youInvoice": "Usted factura al cliente. FIRINGI le factura su comisión mensualmente.",
+    "firingiInvoices": "FIRINGI factura al cliente y le paga a usted.",
+    "yourAmount": "Su importe: {amount}",
+    "commission": "Comisión: {value}",
+    "requests": "Solicitudes",
+    "toDo": "Próximas visitas",
+    "plansV": "Clientes con plan",
+    "recent": "Visitas recientes",
+    "customer": "Cliente",
+    "confirm": "Confirmar",
+    "complete": "Realizada",
+    "missed": "No se pudo realizar",
+    "missReason": "¿Motivo?",
+    "containersTaken": "Contenedores retirados",
+    "containersLeft": "Contenedores dejados",
+    "signedBy": "Firmado por (en el cliente)",
+    "yourInvoiceNo": "N.º de su factura",
+    "noRequests": "No hay solicitudes.",
+    "noVisits": "Nada previsto.",
+    "noRecent": "Aún no hay visitas.",
+    "noProviderYet": "Aún no presta ningún servicio.",
+    "openPdf": "PDF"
   }
 }

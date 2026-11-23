@@ -55,6 +55,17 @@ export async function eventsSince(trigger: TriggerKind, since: Date, now = new D
         return { key: `rec:${r.id}`, at: r.createdAt, subjectType: "AiRecommendation", subjectId: r.id, companyId: r.subjectType === "Company" ? r.subjectId : null, link: `/admin/ai/recommendations?area=${area}`, payload: { title: r.title, kind: r.kind, area, score: r.score } };
       });
     }
+    case "SERVICE_REQUESTED":
+    case "SERVICE_MISSED": {
+      const missed = trigger === "SERVICE_MISSED";
+      const rows = await prisma.serviceVisit.findMany({ where: missed ? { status: "MISSED", updatedAt: after } : { origin: "REQUESTED", createdAt: after }, orderBy: missed ? { updatedAt: "asc" } : { createdAt: "asc" }, take, include: { serviceType: { select: { name: true, code: true } }, provider: { select: { companyId: true } } } });
+      const cos = await prisma.company.findMany({ where: { id: { in: [...rows.map((v) => v.customerCompanyId), ...rows.map((v) => v.provider?.companyId).filter((x): x is string => !!x)] } }, select: { id: true, legalName: true, tradeName: true } });
+      const nm = (id: string | undefined) => name(cos.find((c) => c.id === id));
+      return rows.map((v) => ({
+        key: `${missed ? "svcmissed" : "svcreq"}:${v.id}`, at: missed ? v.updatedAt : v.createdAt, subjectType: "ServiceVisit", subjectId: v.id, companyId: v.customerCompanyId, link: `/admin/services?tab=VISITS`,
+        payload: { number: v.number, service: String((v.serviceType.name as Record<string, string>).en ?? v.serviceType.code), customer: nm(v.customerCompanyId), date: v.date.toISOString().slice(0, 10), ...(missed ? { provider: nm(v.provider?.companyId), reason: v.missedReason ?? "" } : { reason: v.requestReason ?? "" }) },
+      }));
+    }
     case "SCHEDULE":
     case "MANUAL":
       return [];

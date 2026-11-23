@@ -939,7 +939,10 @@
     "Bought from Vans": "Mixtri minn Vannijiet",
     "Customer Assortments": "Assortimenti tal-Klijenti",
     "Must-Stock List": "Lista ta' Stokk Obbligatorju",
-    "Consignment Stock": "Stokk fuq Konsenja"
+    "Consignment Stock": "Stokk fuq Konsenja",
+    "Services": "Servizzi",
+    "My Services": "Is-Servizzi Tiegħi",
+    "Fryers & Oil": "Friġġituri u Żejt"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Fornitur tas-servizz biex jiġi rivedut",
+      "body": "{company} trid tipprovdi {service}."
+    },
+    "service_provider_decided": {
+      "title": "L-applikazzjoni tiegħek bħala fornitur",
+      "body": "Id-deċiżjoni ta' FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Klijent ġdid fuq pjan",
+      "body": "{customer} abbona għal {service} (pjan {number})."
+    },
+    "service_request_new": {
+      "title": "Talba ġdida għal servizz",
+      "body": "{customer} jitlob {service} għal {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Żjara mibdula",
+      "body": "Żjara {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Żjara kkonfermata",
+      "body": "Iż-żjara {number} hija kkonfermata għal {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Żjara għada",
+      "body": "{service}: żjara {number} nhar {date}."
+    },
+    "service_visit_done": {
+      "title": "Żjara saret",
+      "body": "{service}: iż-żjara {number} saret ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Żjara ma saritx",
+      "body": "Iż-żjara {number} ma saritx: {reason}."
+    },
+    "service_container_full": {
+      "title": "Ġbir mitlub",
+      "body": "Il-kontenituri taż-żejt użat tiegħek huma kważi mimlija — il-ġbir {number} intalab għal {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Ibdel iż-żejt",
+      "body": "{fryer}: wasal il-waqt li jinbidel iż-żejt ({days} jiem)."
+    },
+    "service_licence_expiring": {
+      "title": "Liċenzja qed tiskadi",
+      "body": "Il-liċenzja tiegħek għal {service} tiskadi nhar {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Spiża tal-fjuwil u l-enerġija ffrankata",
     "savingsHint": "Minn {n} bidliet fir-rotot aċċettati dan ix-xahar.",
     "stillWaiting": "Għadhom pendenti: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Is-Servizzi Tiegħi",
+    "intro": "Ġbir taż-żejt tat-tisjir użat u servizzi oħra tal-kċina — skont skeda jew meta titlob. FIRINGI ssib il-fornitur.",
+    "catalogue": "Servizzi disponibbli",
+    "yourPlans": "Il-pjanijiet tiegħek",
+    "upcoming": "Żjarat li ġejjin",
+    "history": "Storja",
+    "noProvider": "Għadu mhux disponibbli fiż-żona tiegħek",
+    "take": "Abbona għal dan is-servizz",
+    "request": "Itlob ġbir",
+    "requestVisit": "Itlob żjara",
+    "change": "Ibdel",
+    "pause": "Ippawża",
+    "resume": "Kompli",
+    "end": "Temm",
+    "endConfirm": "Ittemm dan il-pjan? Iż-żjarat li ġejjin jiġu kkanċellati.",
+    "skip": "Aqbeż",
+    "move": "Ċaqlaq",
+    "save": "Salva",
+    "cancel": "Ikkanċella",
+    "send": "Ibgħat",
+    "howOften": "Kemm-il darba",
+    "weekday": "Jum tal-ġimgħa",
+    "dayOfMonth": "Jum tax-xahar",
+    "secondDay": "It-tieni jum",
+    "time": "Ħin",
+    "address": "Indirizz",
+    "containers": "Kontenituri",
+    "containerLitres": "Litri għal kull kontenitur",
+    "autoRequest": "Itlob ġbir awtomatikament meta l-kontenituri jkunu kważi mimlija",
+    "notes": "Noti għall-fornitur",
+    "date": "Jum",
+    "note": "Nota",
+    "earliest": "L-iktar kmieni: {date}",
+    "freq": {
+      "WEEKLY": "Kull ġimgħa",
+      "BIWEEKLY": "Kull ġimagħtejn",
+      "TWICE_MONTHLY": "Darbtejn fix-xahar",
+      "MONTHLY": "Kull xahar",
+      "ON_REQUEST": "Biss meta jintalab"
+    },
+    "window": {
+      "ANY": "Kwalunkwe ħin",
+      "MORNING": "Filgħodu",
+      "AFTERNOON": "Wara nofsinhar"
+    },
+    "weekdays": {
+      "d1": "It-Tnejn",
+      "d2": "It-Tlieta",
+      "d3": "L-Erbgħa",
+      "d4": "Il-Ħamis",
+      "d5": "Il-Ġimgħa",
+      "d6": "Is-Sibt",
+      "d7": "Il-Ħadd"
+    },
+    "sched": {
+      "WEEKLY": "kull ġimgħa: {day}",
+      "BIWEEKLY": "kull ġimagħtejn: {day}",
+      "TWICE_MONTHLY": "fil-jum {a} u l-jum {b} tax-xahar",
+      "MONTHLY": "fil-jum {a} tax-xahar",
+      "ON_REQUEST": "meta titlob"
+    },
+    "st": {
+      "REQUESTED": "Mitlub",
+      "SCHEDULED": "Ippjanat",
+      "CONFIRMED": "Ikkonfermat",
+      "DONE": "Magħmul",
+      "MISSED": "Mitluf",
+      "SKIPPED": "Maqbuż",
+      "CANCELLED": "Ikkanċellat",
+      "ACTIVE": "Attiv",
+      "PAUSED": "Ippawżat",
+      "PENDING": "Qed jistenna lil FIRINGI",
+      "APPROVED": "Approvat",
+      "REJECTED": "Miċħud",
+      "SUSPENDED": "Sospiż"
+    },
+    "reason": {
+      "CUSTOMER": "Mitlub mill-klijent",
+      "CONTAINER_FULL": "Kontenituri kważi mimlija",
+      "ASSISTANT": "Mitlub permezz tal-Assistent"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "kontenitur",
+      "VISIT": "żjara"
+    },
+    "priceVisit": "{amount} kull żjara",
+    "priceUnit": "{amount} kull {unit}",
+    "buyback": "Titħallas {amount} kull {unit}",
+    "free": "Bla ħlas",
+    "invoicedByProvider": "Fatturat mill-fornitur",
+    "invoicedByFiringi": "Fatturat minn FIRINGI",
+    "provider": "Fornitur",
+    "next": "Żjara li jmiss",
+    "service": "Servizz",
+    "schedule": "Skeda",
+    "status": "Status",
+    "quantity": "Kwantità",
+    "document": "Dokument",
+    "docNumber": "Nru tad-dokument tal-iskart",
+    "noPlans": "Għad m'hemm l-ebda pjan — agħżel servizz hawn fuq.",
+    "noUpcoming": "Xejn ippjanat.",
+    "noHistory": "Għad m'hemm l-ebda żjara.",
+    "requested": "It-talba ntbagħtet.",
+    "saved": "Issalvjat.",
+    "pausedUntil": "Ippawżat sa {date}",
+    "pauseUntil": "Ippawża sa (fakultattiv)",
+    "wasteCode": "Kodiċi tal-iskart {code}",
+    "fee": "Ħlas",
+    "paidYou": "Imħallas lilek",
+    "oilTitle": "Friġġituri u Żejt",
+    "oilIntro": "Irreġistra l-bidliet u t-testijiet taż-żejt għal kull friġġitur, ara meta jrid jinbidel iż-żejt u kemm huma mimlija l-kontenituri taż-żejt użat.",
+    "fryers": "Friġġituri",
+    "addFryer": "Żid friġġitur",
+    "edit": "Editja",
+    "fryerName": "Isem",
+    "capacity": "Kapaċità (L)",
+    "oilName": "Żejt",
+    "oilCost": "Prezz taż-żejt kull litru",
+    "log": "Irreġistra",
+    "logKind": {
+      "TOP_UP": "Miżjud",
+      "CHANGE": "Żejt mibdul",
+      "TEST": "Ittestjat",
+      "FILTER": "Iffiltrat"
+    },
+    "litres": "Litri",
+    "polar": "Qari tat-tester (% polari)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Ibdel dalwaqt",
+      "CHANGE": "Ibdel issa"
+    },
+    "daysSince": "{n} jiem mill-aħħar bidla",
+    "never": "Għad ma ġiet irreġistrata l-ebda bidla",
+    "lastPolar": "L-aħħar qari {pct}%",
+    "litres30": "Żejt ikkunsmat (30 jum)",
+    "changes30": "Bidliet (30 jum)",
+    "cost30": "Spiża taż-żejt (30 jum)",
+    "storage": "Żejt użat jistenna",
+    "storageOf": "{litres} minn {capacity} L",
+    "storageNoSize": "{litres} L — żid id-daqs tal-kontenitur mal-pjan tal-ġbir tiegħek",
+    "noOilPlan": "Għad m'hemm l-ebda ġbir taż-żejt użat — abbona għal wieħed f'Is-Servizzi Tiegħi.",
+    "fresh30": "Żejt frisk (30 jum)",
+    "collected90": "Miġbur (90 jum)",
+    "paid90": "Imħallas lilek (90 jum)",
+    "co2": "CO₂ evitat (90 jum)",
+    "lastCollection": "L-aħħar ġbir: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: ibdel iż-żejt issa.",
+      "CHANGE_SOON": "{fryer}: ibdel iż-żejt dalwaqt.",
+      "FULL": "Il-kontenituri taż-żejt użat huma {n}% mimlija — itlob ġbir.",
+      "NO_TEST": "{fryer}: ma ġiex ittestjat għal ġimagħtejn — ittestja ż-żejt.",
+      "OFTEN": "{fryer}: {n} bidliet f'30 jum — iċċekkja t-temperatura u l-filtrazzjoni.",
+      "LESS_OFTEN": "Il-kontenituri huma biss {n}% mimlija meta jinġabru — pjan inqas frekwenti jkun biżżejjed.",
+      "MORE_OFTEN": "Il-kontenituri huma mimlija f'kull ġbir ({n}%) — iġbor aktar spiss."
+    },
+    "insights": "Suġġerimenti",
+    "noInsights": "Kollox sew.",
+    "noFryers": "Għad m'hemm l-ebda friġġitur.",
+    "recentLog": "Entrati riċenti",
+    "remove": "Irtira",
+    "when": "Meta",
+    "fryer": "Friġġitur",
+    "kind": "X'inhu",
+    "rules": "Ibdel wara {days} jiem jew f'{pct}% komposti polari.",
+    "inactive": "Mhux qed jintuża",
+    "active": "Qed jintuża",
+    "vTitle": "Servizzi",
+    "vIntro": "Ipprovdi ġbir u servizzi tal-kċina lill-klijenti ta' FIRINGI. FIRINGI tapprovak, tassenjalek il-klijenti u tippjana ż-żjarat.",
+    "myServices": "Servizzi li tipprovdi",
+    "apply": "Offri servizz",
+    "applyHint": "FIRINGI tiċċekkja l-liċenzja tiegħek u tapprovak.",
+    "countries": "Pajjiżi (eż. PT, ES)",
+    "licence": "Numru tal-liċenzja",
+    "licenceUntil": "Liċenzja valida sa",
+    "applied": "Mibgħut lil FIRINGI.",
+    "youInvoice": "Int toħroġ il-fattura lill-klijent. Il-kummissjoni ta' FIRINGI tiġi fatturata lilek kull xahar.",
+    "firingiInvoices": "FIRINGI toħroġ il-fattura lill-klijent u tħallsek.",
+    "yourAmount": "L-ammont tiegħek: {amount}",
+    "commission": "Kummissjoni: {value}",
+    "requests": "Talbiet",
+    "toDo": "Żjarat li ġejjin",
+    "plansV": "Klijenti fuq pjan",
+    "recent": "Żjarat riċenti",
+    "customer": "Klijent",
+    "confirm": "Ikkonferma",
+    "complete": "Lest",
+    "missed": "Ma setax isir",
+    "missReason": "Għaliex?",
+    "containersTaken": "Kontenituri meħuda",
+    "containersLeft": "Kontenituri mħallija",
+    "signedBy": "Iffirmat minn (għand il-klijent)",
+    "yourInvoiceNo": "Nru tal-fattura tiegħek",
+    "noRequests": "L-ebda talba.",
+    "noVisits": "Xejn ġej.",
+    "noRecent": "Għad m'hemm l-ebda żjara.",
+    "noProviderYet": "Għadek ma tipprovdi l-ebda servizz.",
+    "openPdf": "PDF"
   }
 }

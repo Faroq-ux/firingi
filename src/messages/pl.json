@@ -939,7 +939,10 @@
     "Bought from Vans": "Zakupy z samochodów",
     "Customer Assortments": "Asortymenty klientów",
     "Must-Stock List": "Lista obowiązkowa",
-    "Consignment Stock": "Towar w komisie"
+    "Consignment Stock": "Towar w komisie",
+    "Services": "Usługi",
+    "My Services": "Moje usługi",
+    "Fryers & Oil": "Frytownice i olej"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Usługodawca do weryfikacji",
+      "body": "{company} chce świadczyć usługę: {service}."
+    },
+    "service_provider_decided": {
+      "title": "Twój wniosek o świadczenie usług",
+      "body": "Decyzja FIRINGI: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Nowy klient z planem",
+      "body": "{customer} korzysta z usługi {service} (plan {number})."
+    },
+    "service_request_new": {
+      "title": "Nowe zgłoszenie usługi",
+      "body": "{customer} zamawia usługę {service} na {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Zmiana wizyty",
+      "body": "Wizyta {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Wizyta potwierdzona",
+      "body": "Wizyta {number} potwierdzona na {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Wizyta jutro",
+      "body": "{service}: wizyta {number} w dniu {date}."
+    },
+    "service_visit_done": {
+      "title": "Wizyta wykonana",
+      "body": "{service}: wizyta {number} wykonana ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Wizyta niewykonana",
+      "body": "Wizyta {number} nie została wykonana: {reason}."
+    },
+    "service_container_full": {
+      "title": "Zamówiono odbiór",
+      "body": "Pojemniki na zużyty olej są prawie pełne — zamówiono odbiór {number} na {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Wymień olej",
+      "body": "{fryer}: czas wymienić olej ({days} dni)."
+    },
+    "service_licence_expiring": {
+      "title": "Zezwolenie wkrótce wygasa",
+      "body": "Twoje zezwolenie na {service} wygasa {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Zaoszczędzone koszty paliwa i energii",
     "savingsHint": "Zaakceptowane zmiany tras w tym miesiącu: {n}.",
     "stillWaiting": "Nadal oczekuje: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Moje usługi",
+    "intro": "Odbiór zużytego oleju spożywczego i inne usługi dla kuchni — według harmonogramu lub na życzenie. FIRINGI znajdzie usługodawcę.",
+    "catalogue": "Dostępne usługi",
+    "yourPlans": "Twoje plany",
+    "upcoming": "Nadchodzące wizyty",
+    "history": "Historia",
+    "noProvider": "Jeszcze niedostępne w Twojej okolicy",
+    "take": "Zamów tę usługę",
+    "request": "Zamów odbiór",
+    "requestVisit": "Zamów wizytę",
+    "change": "Zmień",
+    "pause": "Wstrzymaj",
+    "resume": "Wznów",
+    "end": "Zakończ",
+    "endConfirm": "Zakończyć ten plan? Nadchodzące wizyty zostaną anulowane.",
+    "skip": "Pomiń",
+    "move": "Przełóż",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "send": "Wyślij",
+    "howOften": "Jak często",
+    "weekday": "Dzień tygodnia",
+    "dayOfMonth": "Dzień miesiąca",
+    "secondDay": "Drugi dzień",
+    "time": "Godzina",
+    "address": "Adres",
+    "containers": "Pojemniki",
+    "containerLitres": "Litry na pojemnik",
+    "autoRequest": "Automatycznie zamawiaj odbiór, gdy pojemniki są prawie pełne",
+    "notes": "Uwagi dla usługodawcy",
+    "date": "Dzień",
+    "note": "Uwaga",
+    "earliest": "Najwcześniej: {date}",
+    "freq": {
+      "WEEKLY": "Co tydzień",
+      "BIWEEKLY": "Co 2 tygodnie",
+      "TWICE_MONTHLY": "Dwa razy w miesiącu",
+      "MONTHLY": "Co miesiąc",
+      "ON_REQUEST": "Tylko na życzenie"
+    },
+    "window": {
+      "ANY": "Dowolna pora",
+      "MORNING": "Rano",
+      "AFTERNOON": "Po południu"
+    },
+    "weekdays": {
+      "d1": "Poniedziałek",
+      "d2": "Wtorek",
+      "d3": "Środa",
+      "d4": "Czwartek",
+      "d5": "Piątek",
+      "d6": "Sobota",
+      "d7": "Niedziela"
+    },
+    "sched": {
+      "WEEKLY": "co tydzień, {day}",
+      "BIWEEKLY": "co 2 tygodnie, {day}",
+      "TWICE_MONTHLY": "w dniach {a} i {b} miesiąca",
+      "MONTHLY": "w dniu {a} miesiąca",
+      "ON_REQUEST": "na życzenie"
+    },
+    "st": {
+      "REQUESTED": "Zgłoszone",
+      "SCHEDULED": "Zaplanowane",
+      "CONFIRMED": "Potwierdzone",
+      "DONE": "Wykonane",
+      "MISSED": "Niewykonane",
+      "SKIPPED": "Pominięte",
+      "CANCELLED": "Anulowane",
+      "ACTIVE": "Aktywne",
+      "PAUSED": "Wstrzymane",
+      "PENDING": "Oczekuje na FIRINGI",
+      "APPROVED": "Zatwierdzone",
+      "REJECTED": "Odrzucone",
+      "SUSPENDED": "Zawieszone"
+    },
+    "reason": {
+      "CUSTOMER": "Na prośbę klienta",
+      "CONTAINER_FULL": "Pojemniki prawie pełne",
+      "ASSISTANT": "Zlecone przez Asystenta"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "pojemniki",
+      "VISIT": "wizyta"
+    },
+    "priceVisit": "{amount} za wizytę",
+    "priceUnit": "{amount} za {unit}",
+    "buyback": "Otrzymujesz {amount} za {unit}",
+    "free": "Bezpłatnie",
+    "invoicedByProvider": "Fakturowane przez usługodawcę",
+    "invoicedByFiringi": "Fakturowane przez FIRINGI",
+    "provider": "Usługodawca",
+    "next": "Następna wizyta",
+    "service": "Usługa",
+    "schedule": "Harmonogram",
+    "status": "Status",
+    "quantity": "Ilość",
+    "document": "Dokument",
+    "docNumber": "Nr karty przekazania odpadów",
+    "noPlans": "Brak planów — zamów usługę powyżej.",
+    "noUpcoming": "Nic nie zaplanowano.",
+    "noHistory": "Brak wizyt.",
+    "requested": "Zgłoszenie wysłane.",
+    "saved": "Zapisano.",
+    "pausedUntil": "Wstrzymane do {date}",
+    "pauseUntil": "Wstrzymaj do (opcjonalnie)",
+    "wasteCode": "Kod odpadu {code}",
+    "fee": "Opłata",
+    "paidYou": "Otrzymane",
+    "oilTitle": "Frytownice i olej",
+    "oilIntro": "Zapisuj wymiany i testy oleju dla każdej frytownicy, sprawdzaj, kiedy trzeba wymienić olej i jak pełne są pojemniki na zużyty olej.",
+    "fryers": "Frytownice",
+    "addFryer": "Dodaj frytownicę",
+    "edit": "Edytuj",
+    "fryerName": "Nazwa",
+    "capacity": "Pojemność (L)",
+    "oilName": "Olej",
+    "oilCost": "Cena oleju za litr",
+    "log": "Dodaj wpis",
+    "logKind": {
+      "TOP_UP": "Dolano",
+      "CHANGE": "Wymieniono olej",
+      "TEST": "Zmierzono",
+      "FILTER": "Przefiltrowano"
+    },
+    "litres": "Litry",
+    "polar": "Odczyt testera (% związków polarnych)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Wymień wkrótce",
+      "CHANGE": "Wymień teraz"
+    },
+    "daysSince": "{n} dni od ostatniej wymiany",
+    "never": "Brak zapisanych wymian",
+    "lastPolar": "Ostatni odczyt {pct}%",
+    "litres30": "Zużycie oleju (30 dni)",
+    "changes30": "Wymiany (30 dni)",
+    "cost30": "Koszt oleju (30 dni)",
+    "storage": "Zużyty olej do odbioru",
+    "storageOf": "{litres} z {capacity} L",
+    "storageNoSize": "{litres} L — dodaj pojemność pojemników do planu odbioru",
+    "noOilPlan": "Brak odbioru zużytego oleju — zamów go w Moich usługach.",
+    "fresh30": "Świeży olej (30 dni)",
+    "collected90": "Odebrano (90 dni)",
+    "paid90": "Otrzymane (90 dni)",
+    "co2": "Uniknięta emisja CO₂ (90 dni)",
+    "lastCollection": "Ostatni odbiór: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: wymień olej teraz.",
+      "CHANGE_SOON": "{fryer}: wkrótce wymień olej.",
+      "FULL": "Pojemniki na zużyty olej są pełne w {n}% — zamów odbiór.",
+      "NO_TEST": "{fryer}: brak testu od 2 tygodni — sprawdź olej.",
+      "OFTEN": "{fryer}: {n} wymian w 30 dni — sprawdź temperaturę i filtrowanie.",
+      "LESS_OFTEN": "Przy odbiorze pojemniki są pełne tylko w {n}% — wystarczy rzadszy plan.",
+      "MORE_OFTEN": "Przy każdym odbiorze pojemniki są pełne ({n}%) — zamawiaj odbiór częściej."
+    },
+    "insights": "Wskazówki",
+    "noInsights": "Wszystko w porządku.",
+    "noFryers": "Brak frytownic.",
+    "recentLog": "Ostatnie wpisy",
+    "remove": "Cofnij",
+    "when": "Kiedy",
+    "fryer": "Frytownica",
+    "kind": "Co",
+    "rules": "Wymiana po {days} dniach lub przy {pct}% związków polarnych.",
+    "inactive": "Nieużywana",
+    "active": "W użyciu",
+    "vTitle": "Usługi",
+    "vIntro": "Świadcz usługi odbioru i usługi dla kuchni klientom FIRINGI. FIRINGI zatwierdza Cię, przydziela klientów i planuje wizyty.",
+    "myServices": "Świadczone usługi",
+    "apply": "Zaoferuj usługę",
+    "applyHint": "FIRINGI sprawdza Twoje zezwolenie i zatwierdza Cię.",
+    "countries": "Kraje (np. PT, ES)",
+    "licence": "Numer zezwolenia",
+    "licenceUntil": "Zezwolenie ważne do",
+    "applied": "Wysłano do FIRINGI.",
+    "youInvoice": "Wystawiasz fakturę klientowi. Prowizja FIRINGI jest fakturowana co miesiąc.",
+    "firingiInvoices": "FIRINGI wystawia fakturę klientowi i płaci Tobie.",
+    "yourAmount": "Twoja kwota: {amount}",
+    "commission": "Prowizja: {value}",
+    "requests": "Zgłoszenia",
+    "toDo": "Nadchodzące wizyty",
+    "plansV": "Klienci z planem",
+    "recent": "Ostatnie wizyty",
+    "customer": "Klient",
+    "confirm": "Potwierdź",
+    "complete": "Wykonano",
+    "missed": "Nie udało się",
+    "missReason": "Dlaczego?",
+    "containersTaken": "Odebrane pojemniki",
+    "containersLeft": "Pozostawione pojemniki",
+    "signedBy": "Podpisane przez (u klienta)",
+    "yourInvoiceNo": "Nr Twojej faktury",
+    "noRequests": "Brak zgłoszeń.",
+    "noVisits": "Brak nadchodzących wizyt.",
+    "noRecent": "Brak wizyt.",
+    "noProviderYet": "Nie świadczysz jeszcze żadnej usługi.",
+    "openPdf": "PDF"
   }
 }

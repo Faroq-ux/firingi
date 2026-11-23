@@ -939,7 +939,10 @@
     "Bought from Vans": "Pirkta iš furgonų",
     "Customer Assortments": "Klientų asortimentai",
     "Must-Stock List": "Privalomas asortimentas",
-    "Consignment Stock": "Konsignacinės atsargos"
+    "Consignment Stock": "Konsignacinės atsargos",
+    "Services": "Paslaugos",
+    "My Services": "Mano paslaugos",
+    "Fryers & Oil": "Gruzdintuvės ir aliejus"
   },
   "delivery": {
     "title": "Pristatymas",
@@ -2182,6 +2185,54 @@
     "ai_automation": {
       "title": "{title}",
       "body": "{body}"
+    },
+    "service_provider_review": {
+      "title": "Reikia peržiūrėti paslaugų teikėją",
+      "body": "{company} nori teikti paslaugą {service}."
+    },
+    "service_provider_decided": {
+      "title": "Jūsų paslaugų teikėjo paraiška",
+      "body": "FIRINGI sprendimas: {decision}. {note}"
+    },
+    "service_plan_new": {
+      "title": "Naujas klientas su planu",
+      "body": "{customer} užsakė {service} (planas {number})."
+    },
+    "service_request_new": {
+      "title": "Nauja paslaugos užklausa",
+      "body": "{customer} prašo {service} {date} ({number})."
+    },
+    "service_visit_changed": {
+      "title": "Vizitas pakeistas",
+      "body": "Vizitas {number}: {change}, {date}."
+    },
+    "service_visit_confirmed": {
+      "title": "Vizitas patvirtintas",
+      "body": "Vizitas {number} patvirtintas {date}."
+    },
+    "service_visit_reminder": {
+      "title": "Vizitas rytoj",
+      "body": "{service}: vizitas {number} {date}."
+    },
+    "service_visit_done": {
+      "title": "Vizitas atliktas",
+      "body": "{service}: vizitas {number} atliktas ({qty})."
+    },
+    "service_visit_missed": {
+      "title": "Vizitas neatliktas",
+      "body": "Vizitas {number} neatliktas: {reason}."
+    },
+    "service_container_full": {
+      "title": "Surinkimas užsakytas",
+      "body": "Jūsų panaudoto aliejaus konteineriai beveik pilni — surinkimas {number} užsakytas {date}."
+    },
+    "service_oil_change_due": {
+      "title": "Pakeiskite aliejų",
+      "body": "{fryer}: laikas keisti aliejų ({days} d.)."
+    },
+    "service_licence_expiring": {
+      "title": "Baigiasi licencijos galiojimas",
+      "body": "Jūsų licencija paslaugai {service} baigia galioti {date}."
     }
   },
   "notifications": {
@@ -9462,5 +9513,207 @@
     "costSaved": "Sutaupytos kuro ir energijos išlaidos",
     "savingsHint": "Šį mėnesį priimti maršrutų pakeitimai: {n}.",
     "stillWaiting": "Dar laukia: {km} km, {co2} kg CO₂."
+  },
+  "services": {
+    "title": "Mano paslaugos",
+    "intro": "Panaudoto kepimo aliejaus surinkimas ir kitos virtuvės paslaugos — pagal grafiką arba jūsų prašymu. FIRINGI suranda paslaugų teikėją.",
+    "catalogue": "Galimos paslaugos",
+    "yourPlans": "Jūsų planai",
+    "upcoming": "Būsimi vizitai",
+    "history": "Istorija",
+    "noProvider": "Jūsų regione dar neteikiama",
+    "take": "Užsakyti šią paslaugą",
+    "request": "Užsakyti surinkimą",
+    "requestVisit": "Užsakyti vizitą",
+    "change": "Keisti",
+    "pause": "Pristabdyti",
+    "resume": "Tęsti",
+    "end": "Baigti",
+    "endConfirm": "Baigti šį planą? Būsimi vizitai bus atšaukti.",
+    "skip": "Praleisti",
+    "move": "Perkelti",
+    "save": "Išsaugoti",
+    "cancel": "Atšaukti",
+    "send": "Siųsti",
+    "howOften": "Kaip dažnai",
+    "weekday": "Savaitės diena",
+    "dayOfMonth": "Mėnesio diena",
+    "secondDay": "Antra diena",
+    "time": "Laikas",
+    "address": "Adresas",
+    "containers": "Konteineriai",
+    "containerLitres": "Litrai viename konteineryje",
+    "autoRequest": "Automatiškai užsakyti surinkimą, kai konteineriai beveik pilni",
+    "notes": "Pastabos paslaugų teikėjui",
+    "date": "Diena",
+    "note": "Pastaba",
+    "earliest": "Anksčiausiai: {date}",
+    "freq": {
+      "WEEKLY": "Kas savaitę",
+      "BIWEEKLY": "Kas 2 savaites",
+      "TWICE_MONTHLY": "Du kartus per mėnesį",
+      "MONTHLY": "Kas mėnesį",
+      "ON_REQUEST": "Tik pagal užklausą"
+    },
+    "window": {
+      "ANY": "Bet kuriuo metu",
+      "MORNING": "Rytą",
+      "AFTERNOON": "Po pietų"
+    },
+    "weekdays": {
+      "d1": "Pirmadienis",
+      "d2": "Antradienis",
+      "d3": "Trečiadienis",
+      "d4": "Ketvirtadienis",
+      "d5": "Penktadienis",
+      "d6": "Šeštadienis",
+      "d7": "Sekmadienis"
+    },
+    "sched": {
+      "WEEKLY": "kas savaitę: {day}",
+      "BIWEEKLY": "kas antrą savaitę: {day}",
+      "TWICE_MONTHLY": "{a} ir {b} mėnesio dieną",
+      "MONTHLY": "{a} mėnesio dieną",
+      "ON_REQUEST": "jūsų prašymu"
+    },
+    "st": {
+      "REQUESTED": "Užsakyta",
+      "SCHEDULED": "Suplanuota",
+      "CONFIRMED": "Patvirtinta",
+      "DONE": "Atlikta",
+      "MISSED": "Neatlikta",
+      "SKIPPED": "Praleista",
+      "CANCELLED": "Atšaukta",
+      "ACTIVE": "Aktyvus",
+      "PAUSED": "Pristabdytas",
+      "PENDING": "Laukiama FIRINGI patvirtinimo",
+      "APPROVED": "Patvirtintas",
+      "REJECTED": "Atmestas",
+      "SUSPENDED": "Sustabdytas"
+    },
+    "reason": {
+      "CUSTOMER": "Kliento prašymu",
+      "CONTAINER_FULL": "Konteineriai beveik pilni",
+      "ASSISTANT": "Užsakyta per Asistentą"
+    },
+    "unit": {
+      "L": "L",
+      "KG": "kg",
+      "BIN": "konteineris",
+      "VISIT": "vizitas"
+    },
+    "priceVisit": "{amount} už vizitą",
+    "priceUnit": "{amount} / {unit}",
+    "buyback": "Jums mokama {amount} / {unit}",
+    "free": "Nemokamai",
+    "invoicedByProvider": "Sąskaitą išrašo paslaugų teikėjas",
+    "invoicedByFiringi": "Sąskaitą išrašo FIRINGI",
+    "provider": "Paslaugų teikėjas",
+    "next": "Kitas vizitas",
+    "service": "Paslauga",
+    "schedule": "Grafikas",
+    "status": "Būsena",
+    "quantity": "Kiekis",
+    "document": "Dokumentas",
+    "docNumber": "Atliekų dokumento nr.",
+    "noPlans": "Planų dar nėra — pasirinkite paslaugą aukščiau.",
+    "noUpcoming": "Nieko nesuplanuota.",
+    "noHistory": "Vizitų dar nėra.",
+    "requested": "Užklausa išsiųsta.",
+    "saved": "Išsaugota.",
+    "pausedUntil": "Pristabdyta iki {date}",
+    "pauseUntil": "Pristabdyti iki (neprivaloma)",
+    "wasteCode": "Atliekų kodas {code}",
+    "fee": "Mokestis",
+    "paidYou": "Sumokėta jums",
+    "oilTitle": "Gruzdintuvės ir aliejus",
+    "oilIntro": "Registruokite aliejaus keitimus ir patikras kiekvienai gruzdintuvei, matykite, kada reikia keisti aliejų ir kiek pilni panaudoto aliejaus konteineriai.",
+    "fryers": "Gruzdintuvės",
+    "addFryer": "Pridėti gruzdintuvę",
+    "edit": "Redaguoti",
+    "fryerName": "Pavadinimas",
+    "capacity": "Talpa (L)",
+    "oilName": "Aliejus",
+    "oilCost": "Aliejaus kaina už litrą",
+    "log": "Registruoti",
+    "logKind": {
+      "TOP_UP": "Papildyta",
+      "CHANGE": "Aliejus pakeistas",
+      "TEST": "Patikrinta",
+      "FILTER": "Išfiltruota"
+    },
+    "litres": "Litrai",
+    "polar": "Testerio rodmuo (poliniai %)",
+    "fryerStatus": {
+      "OK": "OK",
+      "SOON": "Netrukus keisti",
+      "CHANGE": "Keisti dabar"
+    },
+    "daysSince": "{n} d. nuo paskutinio keitimo",
+    "never": "Keitimų dar neužregistruota",
+    "lastPolar": "Paskutinis rodmuo {pct}%",
+    "litres30": "Sunaudota aliejaus (30 d.)",
+    "changes30": "Keitimai (30 d.)",
+    "cost30": "Aliejaus išlaidos (30 d.)",
+    "storage": "Laukia panaudotas aliejus",
+    "storageOf": "{litres} iš {capacity} L",
+    "storageNoSize": "{litres} L — į surinkimo planą įtraukite konteinerio dydį",
+    "noOilPlan": "Panaudoto aliejaus surinkimo dar nėra — užsakykite jį skiltyje Mano paslaugos.",
+    "fresh30": "Šviežias aliejus (30 d.)",
+    "collected90": "Surinkta (90 d.)",
+    "paid90": "Sumokėta jums (90 d.)",
+    "co2": "Išvengta CO₂ (90 d.)",
+    "lastCollection": "Paskutinis surinkimas: {date}",
+    "insight": {
+      "CHANGE_NOW": "{fryer}: pakeiskite aliejų dabar.",
+      "CHANGE_SOON": "{fryer}: netrukus pakeiskite aliejų.",
+      "FULL": "Panaudoto aliejaus konteineriai užpildyti {n}% — užsakykite surinkimą.",
+      "NO_TEST": "{fryer}: netikrinta 2 savaites — patikrinkite aliejų.",
+      "OFTEN": "{fryer}: {n} keitimai per 30 d. — patikrinkite temperatūrą ir filtravimą.",
+      "LESS_OFTEN": "Surinkimo metu konteineriai užpildyti tik {n}% — pakaktų retesnio plano.",
+      "MORE_OFTEN": "Per kiekvieną surinkimą konteineriai pilni ({n}%) — rinkite dažniau."
+    },
+    "insights": "Patarimai",
+    "noInsights": "Viskas gerai.",
+    "noFryers": "Gruzdintuvių dar nėra.",
+    "recentLog": "Naujausi įrašai",
+    "remove": "Anuliuoti",
+    "when": "Kada",
+    "fryer": "Gruzdintuvė",
+    "kind": "Kas",
+    "rules": "Keiskite po {days} d. arba pasiekus {pct}% polinių junginių.",
+    "inactive": "Nenaudojama",
+    "active": "Naudojama",
+    "vTitle": "Paslaugos",
+    "vIntro": "Teikite surinkimo ir virtuvės paslaugas FIRINGI klientams. FIRINGI jus patvirtina, priskiria klientus ir planuoja vizitus.",
+    "myServices": "Jūsų teikiamos paslaugos",
+    "apply": "Siūlyti paslaugą",
+    "applyHint": "FIRINGI patikrina jūsų licenciją ir jus patvirtina.",
+    "countries": "Šalys (pvz., PT, ES)",
+    "licence": "Licencijos numeris",
+    "licenceUntil": "Licencija galioja iki",
+    "applied": "Išsiųsta FIRINGI.",
+    "youInvoice": "Sąskaitą klientui išrašote jūs. FIRINGI komisinio mokesčio sąskaita jums išrašoma kas mėnesį.",
+    "firingiInvoices": "FIRINGI išrašo sąskaitą klientui ir sumoka jums.",
+    "yourAmount": "Jūsų suma: {amount}",
+    "commission": "Komisinis mokestis: {value}",
+    "requests": "Užklausos",
+    "toDo": "Būsimi vizitai",
+    "plansV": "Klientai su planu",
+    "recent": "Naujausi vizitai",
+    "customer": "Klientas",
+    "confirm": "Patvirtinti",
+    "complete": "Atlikta",
+    "missed": "Nepavyko atlikti",
+    "missReason": "Kodėl?",
+    "containersTaken": "Paimta konteinerių",
+    "containersLeft": "Palikta konteinerių",
+    "signedBy": "Pasirašė (kliento pusėje)",
+    "yourInvoiceNo": "Jūsų sąskaitos nr.",
+    "noRequests": "Užklausų nėra.",
+    "noVisits": "Nieko nenumatyta.",
+    "noRecent": "Vizitų dar nėra.",
+    "noProviderYet": "Kol kas neteikiate jokių paslaugų.",
+    "openPdf": "PDF"
   }
 }
