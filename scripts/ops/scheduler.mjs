@@ -2,7 +2,7 @@
 /**
  * FIRINGI scheduler: calls the app's job endpoints on time (UTC) with the CRON_SECRET. The app
  * records every run (System Health › Scheduled jobs) and alerts when a job stops or keeps failing.
- *   notifications every 2 min · invoicing every 5 · payments every 5 (+2) · ops every 5 (+1) · integrations every 5 (+4) · allocation every 10 (+3) · ai hourly (:07) · pricing hourly (:23) · inventory daily (06:13) · compliance daily (05:47) · planning daily (04:37) · buying every 15 (+11)
+ *   The SCHEDULE list below (UTC): every few minutes, hourly and daily jobs.
  * Runs anywhere Node 18+ runs:  APP_INTERNAL_URL=http://app:3000 CRON_SECRET=… node scheduler.mjs
  */
 const BASE = (process.env.APP_INTERNAL_URL ?? "http://app:3000").replace(/\/$/, "");
@@ -30,7 +30,32 @@ const SCHEDULE = [
   { job: "reviews", due: (m) => m % 1440 === 10 * 60 + 17 }, // daily 10:17 UTC — "How was …?" review reminders after delivery
   { job: "staff", due: (m) => m % 15 === 13 }, // every 15 min (+13) — staff shift reminders, forgotten clock-outs, no-shows
   { job: "rebates", due: (m) => m % 1440 === 3 * 60 + 29 }, // daily 03:29 UTC — rebates & bonuses settled
-];
+  // every few minutes
+  { job: "automation", due: (m) => m % 5 === 3 }, // AI Centre automations, approvals, scheduled agents
+  { job: "whatsapp", due: (m) => m % 5 === 1 }, // WhatsApp ordering: messages left over, expired proposals, reminders
+  { job: "substitutions", due: (m) => m % 5 === 4 }, // unanswered replacements
+  { job: "pos", due: (m) => m % 5 === 2 }, // till receipts to the certified providers
+  { job: "einvoice", due: (m) => m % 10 === 6 }, // e-invoices: send, follow statuses, receive
+  // hourly
+  { job: "salesreps", due: (m) => m % 60 === 13 },
+  { job: "assortments", due: (m) => m % 60 === 17 },
+  { job: "ai-reports", due: (m) => m % 60 === 27 }, // the weekly executive email is sent from the Monday run
+  { job: "consignment", due: (m) => m % 60 === 33 },
+  { job: "vansales", due: (m) => m % 60 === 37 },
+  { job: "deals", due: (m) => m % 60 === 41 },
+  { job: "ads", due: (m) => m % 60 === 47 },
+  { job: "loyalty", due: (m) => m % 60 === 53 },
+  // daily (UTC)
+  { job: "pos-daily", due: (m) => m % 1440 === 1 * 60 + 17 },
+  { job: "plans", due: (m) => m % 1440 === 2 * 60 + 41 },
+  { job: "trade", due: (m) => m % 1440 === 4 * 60 + 11 },
+  { job: "coldchain", due: (m) => m % 1440 === 5 * 60 + 11 },
+  { job: "excise", due: (m) => m % 1440 === 5 * 60 + 31 },
+  { job: "food", due: (m) => m % 1440 === 5 * 60 + 53 },
+  { job: "returnables", due: (m) => m % 1440 === 6 * 60 + 29 },
+  { job: "bank", due: (m) => m % 1440 === 6 * 60 + 47 },
+  { job: "fx", due: (m) => m % 1440 === 15 * 60 + 23 }, // after the ECB publishes its daily rates
+]; // every job in src/server/ops/jobs.ts with an endpoint must be here (tests/unit/scheduler.test.ts checks)
 const running = new Set();
 const log = (...a) => console.log(new Date().toISOString(), ...a);
 

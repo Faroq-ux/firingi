@@ -6,7 +6,7 @@ const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta
 
 export default [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
-  { ignores: [".next/**", "node_modules/**", "prisma/migrations/**"] },
+  { ignores: [".next/**", ".next-dev/**", "node_modules/**", "prisma/migrations/**"] },
   {
     // SECURITY RULE: the database client may only be used inside src/server/**.
     // Pages, components and route handlers must go through the guarded data layer

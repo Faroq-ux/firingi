@@ -383,9 +383,11 @@ export const ADMIN_NAV: NavSection[] = [
       ai("", "AI Dashboard", "Painel de IA", "P66", { live: true, href: "/admin/ai" }),
       ai("recommendations", "Recommendations", "Recomendações", "P66", { live: true }),
       ai("forecasting", "Forecasting", "Previsões", "P66", { live: true }),
+      ai("automation", "Automation", "Automação", "P67", { live: true }),
       ai("reports", "AI Reports", "Relatórios de IA", "P66", { live: true }),
       ai("assistant", "AI Assistant", "Assistente de IA", "P17", { live: true }),
-      ai("activity-log", "AI Activity Log", "Registo de Atividade IA", "P17", { live: true }),
+      ai("agents", "AI Agents", "Agentes de IA", "P67", { live: true }),
+      ai("governance", "AI Governance", "Governação de IA", "P67", { live: true }),
     ],
   },
   {

@@ -32,10 +32,14 @@ export async function logAi(a: { kind: string; ctx?: Ctx | null; summary: string
   });
 }
 
-export async function listActivity(ctx: Ctx, f: { kind?: string; page?: number } = {}) {
+export async function listActivity(ctx: Ctx, f: { kind?: string; page?: number; from?: Date | null; to?: Date | null; actorUserId?: string | null; q?: string | null; size?: number } = {}) {
   aiScope(ctx, "STAFF");
-  const size = 50, page = Math.max(1, f.page ?? 1);
-  const w = f.kind ? { kind: f.kind } : {};
+  const size = f.size ?? 50, page = Math.max(1, f.page ?? 1);
+  const w = {
+    ...(f.kind ? { kind: f.kind } : {}), ...(f.actorUserId ? { actorUserId: f.actorUserId } : {}),
+    ...(f.from || f.to ? { at: { ...(f.from ? { gte: f.from } : {}), ...(f.to ? { lt: f.to } : {}) } } : {}),
+    ...(f.q ? { summary: { contains: f.q, mode: "insensitive" as const } } : {}),
+  };
   const [rows, total, usage] = await Promise.all([
     prisma.aiActivity.findMany({ where: w, orderBy: { at: "desc" }, skip: (page - 1) * size, take: size }),
     prisma.aiActivity.count({ where: w }),

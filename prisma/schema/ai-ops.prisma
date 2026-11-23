@@ -1,0 +1,164 @@
+// ───────────── AI Centre: Automation, AI Agents, AI Governance (Phase 67) ─────────────
+
+/// An automation: when something happens (or on a schedule / by hand) and the conditions hold, the steps run in order.
+model AiWorkflow {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  active        Boolean  @default(false)
+  /// ORDER_PLACED | ORDER_HELD | INVOICE_OVERDUE | DELIVERY_FAILED | CLAIM_OPENED | TICKET_OPENED | COMPANY_REGISTERED | AI_SUGGESTION | SCHEDULE | MANUAL
+  trigger       String
+  /// { schedule?: { every, hour, weekday, day } }
+  triggerConfig Json     @default("{}")
+  /// [{ field, op, value }]
+  conditions    Json     @default("[]")
+  match         String   @default("ALL") // ALL | ANY
+  /// [{ type: NOTIFY | TASK | AGENT | APPROVAL | WAIT | WEBHOOK | REPORT, ... }]
+  steps         Json     @default("[]")
+  /// most runs a day (a safety brake)
+  maxRunsPerDay Int      @default(50)
+  /// events after this moment are picked up (set when switched on, so history doesn't fire)
+  cursorAt      DateTime?
+  nextRunAt     DateTime?
+  lastRunAt     DateTime?
+  template      String?
+  /// the steps run with this person's rights
+  ownerId       String
+  createdById   String
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  runs AiWorkflowRun[]
+
+  @@index([active, trigger])
+  @@index([active, nextRunAt])
+}
+
+model AiWorkflowRun {
+  id          String    @id @default(cuid())
+  workflowId  String
+  /// EVENT | SCHEDULE | MANUAL | TEST
+  source      String
+  /// what it ran for — one run per workflow and subject
+  subjectKey  String
+  subjectType String?
+  subjectId   String?
+  companyId   String?
+  link        String?
+  payload     Json
+  /// RUNNING | WAITING | WAITING_APPROVAL | DONE | FAILED | REJECTED | CANCELLED
+  status      String    @default("RUNNING")
+  stepIndex   Int       @default(0)
+  /// [{ step, type, at, ok, text }]
+  log         Json      @default("[]")
+  resumeAt    DateTime?
+  error       String?
+  startedById String?
+  startedAt   DateTime  @default(now())
+  finishedAt  DateTime?
+
+  workflow AiWorkflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@unique([workflowId, subjectKey])
+  @@index([status, resumeAt])
+  @@index([startedAt])
+}
+
+/// A specialist AI agent FIRINGI's staff set up: its job, the tools and data it may use, how freely it may act, its model and schedule.
+model AiAgent {
+  id            String    @id @default(cuid())
+  name          String
+  role          String
+  instructions  String
+  icon          String    @default("Bot")
+  tone          String    @default("tone-blue")
+  /// tool names (AGENT_TOOLS)
+  tools         String[]
+  /// data areas it may read (DATA_AREAS) — never more than the person it runs for
+  dataAreas     String[]
+  /// SUGGEST | APPROVAL | AUTO
+  autonomy      String    @default("APPROVAL")
+  /// null = the default model in AI Governance
+  model         String?
+  effort        String    @default("medium")
+  maxRunsPerDay Int       @default(24)
+  active        Boolean   @default(true)
+  /// { every, hour, weekday, day } or null
+  schedule      Json?
+  scheduleTask  String?
+  nextRunAt     DateTime?
+  template      String?
+  /// scheduled and workflow runs use this person's rights
+  ownerId       String
+  createdById   String
+  updatedById   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  runs AiAgentRun[]
+
+  @@index([active, nextRunAt])
+}
+
+model AiAgentRun {
+  id            String    @id @default(cuid())
+  agentId       String
+  /// MANUAL | SCHEDULE | WORKFLOW | TEST
+  source        String
+  task          String
+  workflowRunId String?
+  /// RUNNING | DONE | FAILED | BLOCKED
+  status        String    @default("RUNNING")
+  output        String?
+  /// [{ name, input, ok, proposalId? }]
+  tools         Json?
+  model         String?
+  byClaude      Boolean   @default(true)
+  tokensIn      Int       @default(0)
+  tokensOut     Int       @default(0)
+  durationMs    Int?
+  proposals     Int       @default(0)
+  /// 1 = useful, -1 = not useful
+  rating        Int?
+  ratedById     String?
+  error         String?
+  runById       String?
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+
+  agent AiAgent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@index([agentId, startedAt])
+  @@index([startedAt])
+}
+
+/// Something the AI wants to do that a person must approve: an agent's proposed action, or a workflow's approval step.
+model AiApproval {
+  id            String    @id @default(cuid())
+  /// AGENT | WORKFLOW
+  source        String
+  agentId       String?
+  agentRunId    String?
+  workflowId    String?
+  workflowRunId String?
+  /// create_task | notify_staff | STEP
+  action        String
+  title         String
+  /// why (the agent's reasoning / the workflow's event)
+  reason        String?
+  detail        Json
+  /// who may decide (permission code)
+  permission    String    @default("admin.ai.approve")
+  /// PENDING | APPROVED | REJECTED | EXPIRED | FAILED
+  status        String    @default("PENDING")
+  decidedById   String?
+  decidedAt     DateTime?
+  note          String?
+  result        Json?
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+
+  @@index([status, createdAt])
+  @@index([agentId, status])
+}

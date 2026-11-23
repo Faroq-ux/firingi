@@ -59,7 +59,9 @@ export async function assistantStatus(side: Side, companyId?: string) {
   const on = side === "STAFF" ? s.staff : (side === "BUYER" ? s.buyers : s.suppliers) && !!companyId && (await companyFeatureOn(companyId, "ASSISTANT"));
   // Photos & barcode scan: FIRINGI's global switch and the company's own
   const photos = side !== "STAFF" && on && s.photos && (await companyFeatureOn(companyId!, "ASSISTANT_PHOTOS"));
-  return { configured, enabled: configured && on, switchedOn: on, photos, model: s.model };
+  // Phase 67: AI Governance's master switch stops every Claude call
+  const governed = (await (await import("./ops/governance")).governance()).enabled;
+  return { configured, enabled: configured && on && governed, switchedOn: on, photos, model: s.model };
 }
 
 // ── transport (swappable in tests: no live API calls there) ─────────────────
@@ -197,6 +199,10 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
   if (!status.switchedOn && channel === "WEB") throw new ForbiddenError("The AI assistant is switched off.");
   if (files.length && !status.photos && channel === "WEB") throw new ValidationError("Photos are switched off for the Assistant.");
   const settings = await aiSettings();
+  // Phase 67: AI Governance (master switch, monthly budget) and the model chosen for the assistant
+  const { assertClaude, modelFor } = await import("./ops/governance");
+  await assertClaude("assistant");
+  const model = await modelFor("assistant");
   const asked = await prisma.aiMessage.count({ where: { role: "user", at: { gt: new Date(Date.now() - 3600_000) }, conversation: { userId: ctx.user.id } } });
   if (asked >= settings.hourlyLimit) throw new AppError("AI_LIMIT", `You've reached ${settings.hourlyLimit} questions this hour — please try again later.`, 429);
 
@@ -227,13 +233,13 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
   const runners = new Map(toolsFor(side, channel).map((t) => [t.name, t]));
   const transport = transportOverride ?? (simulating(side) ? (await import("./simulated")).simulatedTransport : liveTransport);
   const used: { name: string; input: unknown; ok: boolean; card?: ToolCard }[] = [];
-  let tokensIn = 0, tokensOut = 0, answer = "", stopReason: string | null = null, servedBy: string = settings.model;
+  let tokensIn = 0, tokensOut = 0, answer = "", stopReason: string | null = null, servedBy: string = model;
 
   for (let step = 0; step < MAX_STEPS; step++) {
     let res: BetaMessage;
     try {
       res = await transport({
-        model: settings.model, max_tokens: 16000, system: systemPrompt(ctx, side, locale, facts, channel), tools, tool_choice: { type: "auto" }, messages,
+        model, max_tokens: 16000, system: systemPrompt(ctx, side, locale, facts, channel), tools, tool_choice: { type: "auto" }, messages,
         thinking: { type: "adaptive" }, output_config: { effort: "medium" }, cache_control: { type: "ephemeral" },
         betas: ["server-side-fallback-2026-07-01"], fallbacks: "default",
         metadata: { user_id: ctx.user.id },
@@ -293,7 +299,7 @@ export async function ask(ctx: Ctx, side: Side, input: { conversationId?: string
     return { conversationId: c.id, message: m, question: q };
   });
   await logAi({ kind: "ASSISTANT", ctx, summary: `${side.toLowerCase()} asked: ${text.slice(0, 160)}`, detail: { conversationId: saved.conversationId, tools: used.map((x) => `${x.name}${x.ok ? "" : " (error)"}`), stopReason, side, photos: photos.length }, model: servedBy, tokensIn, tokensOut });
-  return { conversationId: saved.conversationId, messageId: saved.message.id, questionId: saved.question.id, photos: photos.length, answer, tools: used, model: servedBy, fellBack: servedBy !== settings.model };
+  return { conversationId: saved.conversationId, messageId: saved.message.id, questionId: saved.question.id, photos: photos.length, answer, tools: used, model: servedBy, fellBack: servedBy !== model };
 }
 
 /** A photo the person sent in their own conversation (for the chat thumbnails). */

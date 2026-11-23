@@ -210,7 +210,10 @@ async function claudeSummary(ctx: Ctx | null, d: ReportData): Promise<{ text: st
   const { aiTransport, aiSettings } = await import("../assistant");
   const transport = aiTransport();
   if (!transport) return null;
-  const s = await aiSettings();
+  // Phase 67: AI Governance (master switch, budget) and the model chosen for report summaries
+  const { claudeGate, modelFor } = await import("../ops/governance");
+  if (!(await claudeGate("reports")).ok) return null;
+  const s = { ...(await aiSettings()), model: await modelFor("reports") };
   const compact = { ...d, tables: d.tables.map((t) => ({ ...t, rows: t.rows.slice(0, 12) })) };
   const params: Anthropic.Beta.Messages.MessageCreateParamsNonStreaming = {
     model: s.model, max_tokens: 700,

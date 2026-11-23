@@ -63,6 +63,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/routes.mjs http://localhost:3000 [screenshotDir]` | Browser test of a multi-stop route: planning, driver start, customer ETA window, stops ticking, live board, performance, earnings* |
 | `node tests/e2e/analytics.mjs http://localhost:3000 [screenshotDir]` | Browser test of the analytics pages, chart hover / table view, filters, CSV / Excel export, report builder, vendor and buyer reports* |
 | `node tests/e2e/ai.mjs http://localhost:3000 [screenshotDir]` | Browser test of the AI Centre: insights, suggestions → CRM task, activity log, customer Buy Again, supplier Demand & Stock (run `pnpm db:demo-history` first)* |
+| `node tests/e2e/ai-ops.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 67: an agent from a template → run (simulated) → proposal approved → rated; an automation from a template → test → on → run; an approval step; Rules, Schedules, Logs; AI Governance (switches, permissions, audit trail + CSV, models); phone / dark (server with `ASSISTANT_SIMULATE=1`) |
 | `node tests/e2e/invoicing.mjs http://localhost:3000 [screenshotDir]` | Browser test of certified invoicing with a simulated Moloni (start the server with `MOLONI_SIMULATE=1`), payouts due* |
 | `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
 | `pnpm db:demo-planning` | Demo stock, purchase history, a short-dated lot and a promotion for demand planning at Distribuidora Atlântico (dev / demo only) |
@@ -772,9 +773,35 @@ A supplier leaves stock at a customer's premises; the customer pays only for wha
 
 Details: [docs/consignment.md](docs/consignment.md).
 
+## AI Automation, Agents & Governance (Phase 67)
+
+Three more AI Centre sections (back office, English):
+
+- **Automation**:
+  - workflows run when something happens (order placed, fraud hold, overdue customer, failed delivery, claim, support request, registration, new AI suggestion), on a schedule or by hand;
+  - conditions on the event's values decide whether they run;
+  - steps run in order: notify a staff group, create a follow-up task, ask an AI agent, wait for a person's approval, wait, call another system (webhook), or make an AI report;
+  - also: templates, a test run that changes nothing, run logs step by step, schedules and a safety brake.
+- **AI Agents**: FIRINGI's team creates its own specialist agents, or starts from five templates. Each agent has:
+  - a job and instructions;
+  - tools and the data areas it may read (never more than the person it works for);
+  - how freely it may act: report only, propose for approval, or act on its own within limits;
+  - a model, effort and schedule.
+  Each run keeps its report, tools, tokens and rating. Proposals wait in one approval queue.
+- **AI Governance**:
+  - one switch for every Claude call, plus switches for agents and for automation;
+  - a model per feature and a monthly token budget with alerts;
+  - what agents may do without a person;
+  - personal data removed before it is sent to Claude;
+  - retention, the permission matrix, and the audit trail with CSV export.
+- **Rights**: `admin.ai.automate`, `admin.ai.agents`, `admin.ai.approve`, `admin.ai.govern`.
+- **Background job**: `/api/cron/automation`, every 5 minutes. The production scheduler now calls every job; 21 were missing before.
+
+Details: [docs/ai-automation.md](docs/ai-automation.md).
+
 ## AI Centre (Phase 66)
 
-One AI Centre for FIRINGI's back office (English): **AI Dashboard**, **Recommendations** (sales, pricing, suppliers, stock, customers, delivery routes — shorter or combined routes with km, fuel / energy, € and CO₂ saved), **Forecasting** (demand, sales, orders, inventory, cash flow, delivery), **AI Reports** (executive, sales, suppliers, stock, finance, delivery risks, fraud & risk — Claude or FIRINGI summary, PDF / CSV, weekly email), **AI Assistant** and the activity log. AI suggests; people decide. FIRINGI switches each area, forecast and report on or off and sets the fuel rates and thresholds. Phase 67 adds Automation, AI Agents and AI Governance.
+One AI Centre for FIRINGI's back office (English): **AI Dashboard**, **Recommendations** (sales, pricing, suppliers, stock, customers, delivery routes — shorter or combined routes with km, fuel / energy, € and CO₂ saved), **Forecasting** (demand, sales, orders, inventory, cash flow, delivery), **AI Reports** (executive, sales, suppliers, stock, finance, delivery risks, fraud & risk — Claude or FIRINGI summary, PDF / CSV, weekly email), **AI Assistant** and the activity log. AI suggests; people decide. FIRINGI switches each area, forecast and report on or off and sets the fuel rates and thresholds. Phase 67 adds Automation, AI Agents and AI Governance (above).
 
 Details: [docs/ai-centre.md](docs/ai-centre.md).
 

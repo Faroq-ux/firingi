@@ -9,9 +9,11 @@ FIRINGI's back office (English) has one AI Centre. **AI suggests; people decide.
 | **Forecasting** | `/admin/ai/forecasting?tab=` | Demand, sales, orders, inventory, cash flow, delivery |
 | **AI Reports** | `/admin/ai/reports?tab=` | Executive, sales, suppliers, stock, finance, delivery risks, fraud & risk alerts — summary, KPIs, tables, PDF, CSV, history |
 | **AI Assistant** | `/admin/ai/assistant` | Ask about FIRINGI's data (Claude, read-only tools, your access rights) |
-| **AI Activity Log** | `/admin/ai/activity-log` | Everything the AI did (refreshes, answers, decisions, reports) |
+| **Automation** | `/admin/ai/automation` | Workflows, rules, approvals, schedules, execution logs (Phase 67) |
+| **AI Agents** | `/admin/ai/agents` | FIRINGI's own specialist agents: job, tools, data, autonomy, model, schedule, performance (Phase 67) |
+| **AI Governance** | `/admin/ai/governance` | Switches, models, budget, approval rules, permissions, audit trail (Phase 67; the old activity log redirects here) |
 
-Coming next (Phase 67): Automation (workflows, rules, approvals, schedules, run logs), AI Agents (FIRINGI creates its own agents — job, instructions, tools, data, schedule, approval — plus ready-made specialist agents) and AI Governance (approvals, permissions, audit trail, model settings).
+Automation, AI Agents and AI Governance: [ai-automation.md](ai-automation.md).
 
 Rights: `admin.ai.view` to open the AI Centre, plus the right to each page's data (e.g. finance for cash flow, risk for fraud). `admin.settings.manage` to change the settings.
 

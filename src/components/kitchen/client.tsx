@@ -260,6 +260,9 @@ export function WasteLogger({ l, locale, ingredients, recipes, lots, kind = "WAS
 
 // ── the business's own targets ─────────────────────────────────────────────
 
+/** Message keys can't contain "." — "0.05" → "r005", "X.90" → "x90". */
+const roundingKey = (x: string) => ({ "0.05": "r005", "0.10": "r010", "0.50": "r050", "X.90": "x90" } as Record<string, string>)[x] ?? x;
+
 export function ProfileForm({ l, own, defaults }: { l: L; own: { targetFoodCostPct: number | null; wasteTargetPct: number | null; costBasis: string | null; rounding: string | null }; defaults: { targetFoodCostPct: number; wasteTargetPct: number; costBasis: string; rounding: string } }) {
   const { pending, error, done, run } = useRun();
   const [t, setT] = useState(own.targetFoodCostPct != null ? String(own.targetFoodCostPct) : ""), [w, setW] = useState(own.wasteTargetPct != null ? String(own.wasteTargetPct) : "");
@@ -269,7 +272,7 @@ export function ProfileForm({ l, own, defaults }: { l: L; own: { targetFoodCostP
       <div><Label className="text-xs">{l.targetFoodCost}</Label><Input inputMode="decimal" value={t} placeholder={String(defaults.targetFoodCostPct)} onChange={(e) => setT(e.target.value)} data-testid="prof-target" /></div>
       <div><Label className="text-xs">{l.wasteTarget}</Label><Input inputMode="decimal" value={w} placeholder={String(defaults.wasteTargetPct)} onChange={(e) => setW(e.target.value)} /></div>
       <div><Label className="text-xs">{l.costBasisLabel}</Label><Select value={b} onChange={(e) => setB(e.target.value)}><option value="">{fill(l.byDefault, { v: l[`basis.${defaults.costBasis}`] })}</option>{COST_BASES.map((x) => <option key={x} value={x}>{l[`basis.${x}`]}</option>)}</Select></div>
-      <div><Label className="text-xs">{l.roundingLabel}</Label><Select value={r} onChange={(e) => setR(e.target.value)}><option value="">{fill(l.byDefault, { v: l[`rounding.${defaults.rounding}`] })}</option>{ROUNDINGS.map((x) => <option key={x} value={x}>{l[`rounding.${x}`]}</option>)}</Select></div>
+      <div><Label className="text-xs">{l.roundingLabel}</Label><Select value={r} onChange={(e) => setR(e.target.value)}><option value="">{fill(l.byDefault, { v: l[`rounding.${roundingKey(defaults.rounding)}`] })}</option>{ROUNDINGS.map((x) => <option key={x} value={x}>{l[`rounding.${roundingKey(x)}`]}</option>)}</Select></div>
       <div className="flex items-end gap-2"><Button size="sm" disabled={pending} onClick={() => run(() => saveKitchenProfileAction({ targetFoodCostPct: numOrNull(t), wasteTargetPct: numOrNull(w), costBasis: (b || null) as never, rounding: (r || null) as never }), undefined, l.saved)} data-testid="prof-save"><Spin on={pending} icon={Save} /> {l.save}</Button><Msg error={error} done={done} /></div>
     </div>
   );

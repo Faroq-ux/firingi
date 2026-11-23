@@ -53,6 +53,7 @@ export const JOBS: JobDef[] = [
   { key: "loyalty", label: "Loyalty & rewards (points for delivered orders, expiry, reminders, tiers)", every: "hourly", staleAfterMin: 3 * 60, critical: false, path: "/api/cron/loyalty" },
   { key: "pricing", label: "Price changes due & price alerts", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/pricing" },
   { key: "ai", label: "AI suggestions", every: "hourly", staleAfterMin: 180, critical: false, path: "/api/cron/ai" },
+  { key: "automation", label: "AI Centre automations, approvals and scheduled agents", every: "every 5 minutes", staleAfterMin: 30, critical: false, path: "/api/cron/automation" },
   { key: "backup", label: "Database backup", every: "nightly", staleAfterMin: 26 * 60, critical: true, path: null },
   { key: "restore-test", label: "Backup restore test", every: "monthly", staleAfterMin: 35 * 24 * 60, critical: false, path: null },
 ];

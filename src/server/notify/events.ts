@@ -111,6 +111,7 @@ export const EVENTS: EventDef[] = [
   // Phase 66: AI Centre
   E("ai.route_saving", "deliveries", ["vendor.fleet.view", "vendor.orders.manage"], ["EMAIL", "PUSH"], ["number", "km", "cost", "co2"]),
   E("ai.weekly_report", "account", ["admin.ai.view"], ["EMAIL"], ["period", "summary"]),
+  E("ai.automation", "account", ["admin.ai.view"], ["EMAIL", "PUSH"], ["title", "body"]),
   E("ai.stock_low", "catalogue", ["vendor.stock.manage", "vendor.products.manage"], ["EMAIL", "PUSH"], ["product", "days", "available"]),
   // deliveries
   E("delivery.assigned", "deliveries", ["driver.deliveries.view"], ["SMS", "WHATSAPP", "PUSH"], ["number", "customer", "address"]),

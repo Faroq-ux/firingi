@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
   typedRoutes: false,
   // A self-contained server (.next/standalone) for the Docker image — runs on any host with Node or Docker.
   output: "standalone",
+  // A second build folder lets a dev server run next to a production test server (they must not share .next)
+  ...(process.env.NEXT_DIST_DIR ? { distDir: process.env.NEXT_DIST_DIR } : {}),
   // Document uploads go through server actions (max file size is enforced again in the storage service).
   // webpackMemoryOptimizations + webpackBuildWorker: lower peak memory while building (the build box has ~10 GB;
   // each compiler runs in its own worker process instead of all in one heap)

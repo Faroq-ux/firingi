@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, Bot, Fuel, Leaf, Route as RouteIcon, ShieldAlert, Sparkles, TrendingUp } from "lucide-react";
+import { AlertTriangle, Bot, CheckCircle2, Fuel, Landmark, Leaf, Route as RouteIcon, ShieldAlert, Sparkles, TrendingUp, Workflow } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,8 @@ import { ForecastSpark } from "@/components/ai/forecast-chart";
 import { RecDecision, RefreshInsights } from "@/components/ai/actions";
 import { AiCentreSettingsForm } from "@/components/ai/centre";
 import { centreDashboard } from "@/server/ai/centre/dashboard";
+import { opsSummary } from "@/server/ai/ops/workflows";
+import { governance, usageThisMonth } from "@/server/ai/ops/governance";
 import { can } from "@/server/rbac/guard";
 import { AREA_LABEL, REC_AREAS, REPORT_LABEL, type ReportKind } from "@/lib/ai-centre";
 import { AREA_TONE, aiPage, eur, num, pct } from "./_kit";
@@ -18,6 +20,7 @@ export const dynamic = "force-dynamic";
 export default async function AiDashboard() {
   const { ctx } = await aiPage();
   const d = await centreDashboard(ctx);
+  const [ops, gov, usage] = await Promise.all([opsSummary(), governance(), usageThisMonth()]);
   const fuelLine = [d.route.litres ? `${num(d.route.litres)} L fuel` : null, d.route.kwh ? `${num(d.route.kwh)} kWh` : null].filter(Boolean).join(" · ") || "fuel / energy";
   return (
     <>
@@ -31,6 +34,13 @@ export default async function AiDashboard() {
         <Tile icon={RouteIcon} label="Route savings waiting" value={d.route.km} locale="en" href="/admin/ai/recommendations?area=ROUTES" tone="tone-lime" i={1} hint={`km · ${eur(d.route.cost, 2)} · ${fuelLine}`} testId="aid-route" />
         <Tile icon={Leaf} label="CO₂ that can be avoided" value={d.route.co2} locale="en" href="/admin/ai/recommendations?area=ROUTES" tone="tone-teal" i={2} hint="kg, on planned routes" />
         <Tile icon={TrendingUp} label="Sales, next 4 weeks" value={d.forecast?.next4 ?? 0} fmt="money" locale="en" href="/admin/ai/forecasting?tab=SALES" tone="tone-violet" i={3} hint={d.forecast ? `${pct(d.forecast.trend)} vs the last 4 weeks` : "no access to sales"} />
+      </div>
+
+      <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" data-testid="aid-ops">
+        <Tile icon={CheckCircle2} label="AI actions waiting for approval" value={ops.pending} locale="en" href="/admin/ai/automation?tab=APPROVALS" tone="tone-orange" i={4} testId="aid-approvals" />
+        <Tile icon={Workflow} label="Automations on" value={ops.active} locale="en" href="/admin/ai/automation" tone="tone-blue" i={5} hint={`${ops.runs24} runs in 24 h${ops.failed24 ? ` · ${ops.failed24} failed` : ""}`} />
+        <Tile icon={Bot} label="AI agents active" value={ops.agents} locale="en" href="/admin/ai/agents" tone="tone-violet" i={6} hint={`${ops.agentRuns24} runs in 24 h`} />
+        <Tile icon={Landmark} label="AI tokens this month" value={usage.total} locale="en" href="/admin/ai/governance" tone="tone-teal" i={7} hint={gov.enabled ? (gov.monthlyTokens ? `${Math.round((usage.total / gov.monthlyTokens) * 100)}% of the budget` : "no budget set") : "AI switched off"} />
       </div>
 
       <div className="mb-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-6" data-testid="aid-areas">
@@ -82,7 +92,7 @@ export default async function AiDashboard() {
           <CardHeader><CardTitle>AI activity</CardTitle><CardDescription>Last 30 days: {d.usage30.events} events · {(d.usage30.tokensIn + d.usage30.tokensOut).toLocaleString("en")} tokens · suggestions accepted {d.decided30.rate === null ? "—" : `${d.decided30.rate}%`}</CardDescription></CardHeader>
           <CardContent>
             <ul className="space-y-1 text-sm" data-testid="aid-activity">{d.activity.map((a) => <li key={a.id} className="flex gap-2"><span className="w-24 shrink-0 tabular-nums text-xs text-muted-foreground">{a.at.toISOString().slice(5, 16).replace("T", " ")}</span><span className="min-w-0 break-words">{a.summary}</span></li>)}</ul>
-            <Link href="/admin/ai/activity-log" className="mt-2 inline-block text-sm text-primary underline-offset-4 hover:underline">Activity log →</Link>
+            <Link href="/admin/ai/governance?tab=AUDIT" className="mt-2 inline-block text-sm text-primary underline-offset-4 hover:underline">Audit trail →</Link>
           </CardContent>
         </Card>
         <Card>
