@@ -65,6 +65,7 @@ pnpm dev                             # http://localhost:3000
 | `node tests/e2e/ai.mjs http://localhost:3000 [screenshotDir]` | Browser test of the AI Centre: insights, suggestions → CRM task, activity log, customer Buy Again, supplier Demand & Stock (run `pnpm db:demo-history` first)* |
 | `node tests/e2e/ai-ops.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 67: an agent from a template → run (simulated) → proposal approved → rated; an automation from a template → test → on → run; an approval step; Rules, Schedules, Logs; AI Governance (switches, permissions, audit trail + CSV, models); phone / dark (server with `ASSISTANT_SIMULATE=1`) |
 | `node tests/e2e/services.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 68: a distributor offers oil collection and pest control → FIRINGI approves (pest: provider invoices, 20 % commission) and adds a service → a restaurant takes a monthly plan and an on-request oil plan → fryer log fills the containers, a collection is asked for by itself → the provider records it and a pest visit with its own invoice → history + PDF → Money (buy-back paid, commission invoiced) → switch off Fryers & Oil → phone / dark |
+| `node tests/e2e/haccp.mjs http://localhost:3000 [screenshotDir]` | Browser test of Phase 69: not set up → restaurant template → temperatures (one out of range with a corrective action) → checklist → cooling → delivery checks (another supplier; failed FIRINGI delivery → claim link) → training → logbook + PDF → FIRINGI overview, businesses, a switch → phone / dark |
 | `node tests/e2e/invoicing.mjs http://localhost:3000 [screenshotDir]` | Browser test of certified invoicing with a simulated Moloni (start the server with `MOLONI_SIMULATE=1`), payouts due* |
 | `pnpm db:demo-history` | Adds 16 weeks of demo buying history (dev / demo databases only) |
 | `pnpm db:demo-planning` | Demo stock, purchase history, a short-dated lot and a promotion for demand planning at Distribuidora Atlântico (dev / demo only) |
@@ -773,6 +774,12 @@ A supplier leaves stock at a customer's premises; the customer pays only for wha
 - **Background job:** `/api/cron/consignment`, hourly (auto-confirm, count reminders, expiry alerts).
 
 Details: [docs/consignment.md](docs/consignment.md).
+
+## Food Safety (HACCP) Logbook (Phase 69)
+
+Customers and wholesalers keep their food safety records on FIRINGI (`/buy/food-safety`, 25 languages): fridge, freezer and hot-holding temperatures at set times against limits, opening / closing checklists, cleaning (daily, weekly, monthly, optional photo), delivery checks on arrival (a failed FIRINGI delivery leads to a claim), cooling and food-handler training. Anything out of range needs the corrective action. Ready-made templates (restaurant, café, shop), completion per day, missed checks, tips (fridges drifting, checks often missed, training running out), the Assistant's `my_food_safety`, and an inspector-ready PDF report. FIRINGI (`/admin/food-safety`, English) sees who uses it and how complete it is, and switches it, each part and each template on or off, sets the rules and overrides it per business.
+
+Details: [docs/haccp.md](docs/haccp.md).
 
 ## Services & Used Cooking Oil (Phase 68)
 

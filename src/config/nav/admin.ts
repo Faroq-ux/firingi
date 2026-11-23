@@ -469,6 +469,7 @@ export const ADMIN_NAV: NavSection[] = [
       rsk("compliance", "Compliance", "Conformidade", "P2", { live: true, perm: ["admin.risk.view", "admin.risk.manage", "admin.customers.approve"] }),
       rsk("audit-trail", "Audit Trail", "Trilho de Auditoria", "P1", { live: true, perm: "admin.audit.view" }),
       rsk("data-privacy", "Data Privacy", "Privacidade de Dados", "P11", { live: true, perm: ["admin.users.manage", "admin.settings.manage"] }),
+      rsk("food-safety", "Food Safety (HACCP)", "Segurança Alimentar (HACCP)", "P69", { live: true, href: `${A}/food-safety`, perm: ["admin.haccp.view", "admin.haccp.manage"], es: "Seguridad alimentaria (APPCC)" }),
     ],
   },
   {

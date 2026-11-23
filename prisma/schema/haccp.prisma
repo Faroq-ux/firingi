@@ -1,0 +1,92 @@
+// Phase 69 — Food safety (HACCP) logbook for kitchens and shops: equipment with limits and check times, checklists
+// and cleaning tasks, every entry (temperatures, tasks, deliveries received, cooling) with corrective actions, and
+// food-handler training records.
+
+/// A fridge, freezer, cold room, hot-holding unit or display with its limits and the times it is checked.
+model HaccpUnit {
+  id        String    @id @default(cuid())
+  companyId String
+  name      String
+  kind      String // FRIDGE | FREEZER | COLD_ROOM | HOT_HOLD | DISPLAY | OTHER
+  minC      Decimal?  @db.Decimal(5, 1)
+  maxC      Decimal?  @db.Decimal(5, 1)
+  times     String[] // "09:00", "17:00"
+  active    Boolean   @default(true)
+  sort      Int       @default(0)
+  alertedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  entries HaccpEntry[]
+
+  @@index([companyId, active])
+}
+
+/// An opening / closing checklist or a cleaning task (daily, weekly, monthly) with its items.
+model HaccpTask {
+  id         String   @id @default(cuid())
+  companyId  String
+  name       String
+  kind       String // CHECKLIST | CLEANING
+  frequency  String // OPENING | CLOSING | DAILY | WEEKLY | MONTHLY
+  weekday    Int?
+  dayOfMonth Int?
+  items      String[]
+  needsPhoto Boolean  @default(false)
+  active     Boolean  @default(true)
+  sort       Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  entries HaccpEntry[]
+
+  @@index([companyId, active])
+}
+
+/// One line of the logbook: a temperature reading, a checklist / cleaning done, a delivery received, a cooling check.
+model HaccpEntry {
+  id         String   @id @default(cuid())
+  companyId  String
+  kind       String // TEMP | TASK | DELIVERY | COOLING
+  unitId     String?
+  taskId     String?
+  forDate    DateTime @db.Date
+  slot       String? // the check time the reading is for ("09:00")
+  valueC     Decimal? @db.Decimal(5, 1)
+  startC     Decimal? @db.Decimal(5, 1) // cooling: start temperature
+  minutes    Int? // cooling: minutes taken
+  ok         Boolean
+  results    Json? // task: { item: true/false }; delivery: { packagingOk, datesOk, frozen }
+  product    String? // delivery / cooling
+  supplier   String? // delivery from outside FIRINGI
+  orderId    String? // delivery from a FIRINGI order
+  note       String?
+  corrective String? // what was done when out of range / not ok
+  photoKey   String?
+  byUserId   String?
+  byName     String?
+  at         DateTime @default(now())
+
+  unit HaccpUnit? @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  task HaccpTask? @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, forDate])
+  @@index([companyId, kind, at])
+  @@index([unitId, at])
+}
+
+/// Food-handler training and certificates (who, course, valid until).
+model HaccpTraining {
+  id            String    @id @default(cuid())
+  companyId     String
+  personName    String
+  userId        String?
+  course        String
+  certificateNo String?
+  issuedAt      DateTime  @db.Date
+  expiresAt     DateTime? @db.Date
+  note          String?
+  alertedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([companyId])
+  @@index([expiresAt])
+}

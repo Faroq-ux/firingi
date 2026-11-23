@@ -239,6 +239,7 @@ const bac = section(`${B}/accounting`, ["company.accounting.view", "company.acco
 const bpos = section(`${B}/pos`, ["company.pos.sell", "company.pos.manage"]);
 const bk = section(`${B}/kitchen`, ["buyer.kitchen.manage", "buyer.kitchen.waste"]);
 const bsv = section(`${B}/services`, ["buyer.services.manage", "buyer.services.log"]);
+const bfs = section(`${B}/food-safety`, ["buyer.haccp.manage", "buyer.haccp.log"]);
 const bst = section(`${B}/staff`, ["buyer.dashboard.view", "company.support.use", "company.pos.sell", "company.staff.manage", "company.staff.kiosk", "team.users.view"]);
 
 export const BUY_NAV: NavSection[] = [
@@ -319,6 +320,16 @@ export const BUY_NAV: NavSection[] = [
     items: [
       bsv("", "My Services", "Os Meus Serviços", "P68", { live: true, href: `${B}/services`, feature: "SERVICES", es: "Mis servicios" }),
       bsv("oil", "Fryers & Oil", "Fritadeiras e Óleo", "P68", { live: true, feature: "SERVICES_OIL", es: "Freidoras y aceite" }),
+    ],
+  },
+  {
+    key: "foodSafety", icon: "ShieldCheck", label: { en: "Food Safety", pt: "Segurança Alimentar", es: "Seguridad alimentaria" },
+    items: [
+      bfs("", "Today's Checks", "Registos de Hoje", "P69", { live: true, href: `${B}/food-safety`, feature: "HACCP", es: "Controles de hoy" }),
+      bfs("log", "Logbook & Reports", "Registos e Relatórios", "P69", { live: true, feature: "HACCP", es: "Registros e informes" }),
+      bfs("deliveries", "Delivery Checks", "Controlo de Receções", "P69", { live: true, feature: "HACCP_DELIVERIES", es: "Control de recepciones" }),
+      bfs("training", "Food Safety Training", "Formação em Higiene", "P69", { live: true, feature: "HACCP_TRAINING", es: "Formación en higiene" }),
+      bfs("setup", "Logbook Setup", "Configurar Registos", "P69", { live: true, feature: "HACCP", perm: "buyer.haccp.manage", es: "Configurar registros" }),
     ],
   },
   { key: "staff", icon: "CalendarClock", label: { en: "Staff & Time", pt: "Pessoal e Horários", es: "Personal y horarios" }, items: STAFF_ITEMS(bst) },

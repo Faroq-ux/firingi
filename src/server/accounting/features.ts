@@ -114,6 +114,13 @@ export async function hiddenCompanyNav(ctx: Ctx, portal?: "buy" | "vendor"): Pro
       else if (!ss.parts.oil) off.add("SERVICES_OIL");
       if (portal !== "vendor" || !sv.providerOn(ss, ctx.company)) off.add("SERVICES_PROVIDER");
     }
+    // Phase 69: food safety logbook (customers and wholesalers)
+    {
+      const hs = await import("@/server/haccp/settings");
+      const s = await hs.haccpSettings();
+      if (portal !== "buy" || !hs.haccpOn(s, ctx.company)) { off.add("HACCP"); off.add("HACCP_DELIVERIES"); off.add("HACCP_TRAINING"); }
+      else { if (!s.parts.deliveries) off.add("HACCP_DELIVERIES"); if (!s.parts.training) off.add("HACCP_TRAINING"); }
+    }
     // Phase 36: the supplier's plan hides what it doesn't include (nothing while plans are off)
     if (portal === "vendor") {
       const { planMissing } = await import("@/server/plans/service");

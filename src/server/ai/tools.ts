@@ -313,6 +313,13 @@ export const TOOLS: ToolDef<unknown>[] = [
     run: async (ctx) => (await import("@/server/servicing/ai")).myServicesForAi(ctx),
   }),
   tool({
+    name: "my_food_safety", sides: ["BUYER"],
+    description: "The customer's food safety (HACCP) logbook: today's and this week's completion, temperature checks and checklists still due today (and late ones), readings out of range with the corrective action taken, tips (fridges drifting towards their limit, checks often missed, training running out) and each fridge's readings today.",
+    properties: {},
+    input: z.object({}),
+    run: async (ctx) => (await import("@/server/haccp/service")).foodSafetyForAi(ctx),
+  }),
+  tool({
     name: "request_collection", sides: ["BUYER"],
     description: "Request a collection / visit for one of the customer's services (e.g. 'collect my used oil'). Use only when the customer asks for it. Give the serviceTypeId from my_services, a date (YYYY-MM-DD, or empty for the first possible day) and a short note.",
     properties: { service_type_id: { type: "string" }, date: { type: "string", description: "YYYY-MM-DD or empty" }, note: { type: "string" } },
