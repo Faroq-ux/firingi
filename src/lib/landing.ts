@@ -55,7 +55,7 @@ export const DEFAULT_LANDING: LandingSettings = {
   email: "",
   phone: "",
   company: { legalName: "", nif: "", address: "" },
-  social: { instagram: "", facebook: "", linkedin: "", youtube: "", tiktok: "" },
+  social: { instagram: "", facebook: "", linkedin: "https://www.linkedin.com/company/firingi", youtube: "", tiktok: "" },
   livroUrl: "https://www.livroreclamacoes.pt",
   texts: {},
   hidden: [],
@@ -78,7 +78,7 @@ export function mergeLanding(v: Partial<LandingSettings> | null | undefined): La
     sections: Object.fromEntries(LANDING_SECTIONS.map((s) => [s, typeof sec[s] === "boolean" ? (sec[s] as boolean) : d.sections[s]])) as Record<LandingSection, boolean>,
     whatsapp: str(x.whatsapp), whatsappVendors: str(x.whatsappVendors), email: str(x.email), phone: str(x.phone),
     company: { legalName: str(co.legalName), nif: str(co.nif), address: str(co.address) },
-    social: Object.fromEntries(SOCIALS.map((s) => [s, str(so[s])])) as Record<Social, string>,
+    social: Object.fromEntries(SOCIALS.map((s) => [s, typeof so[s] === "string" ? (so[s] as string) : d.social[s]])) as Record<Social, string>, // not saved yet → default; cleared on purpose → stays empty
     livroUrl: str(x.livroUrl, d.livroUrl) || d.livroUrl,
     texts: Object.fromEntries(Object.entries(obj(x.texts)).map(([l, m]) => [l, strMap(m)])),
     hidden: Array.isArray(x.hidden) ? (x.hidden as unknown[]).filter((h): h is string => typeof h === "string") : [],
