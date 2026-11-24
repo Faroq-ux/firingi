@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import type { ResolvedItem, ResolvedSection } from "@/config/nav/resolve";
 import { cn } from "@/lib/utils";
+import { Wordmark } from "@/components/brand/wordmark";
 
 export const ICONS: Record<string, LucideIcon> = {
   BarChart3, Bell, Bot, Building2, Calculator, CalendarClock, ChefHat, Coins, Contact, Gift, Globe, Handshake, LayoutDashboard, LifeBuoy, Megaphone, Package, Receipt,
@@ -65,7 +66,7 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
   if (collapsed)
     return (
       <nav className="sidebar-aurora flex h-full flex-col items-center gap-1 py-3 text-sidebar-foreground" data-testid="sidebar-rail">
-        <div className="mb-2 grid size-9 place-items-center rounded-xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-sm font-bold text-white shadow-[0_0_24px_-4px_var(--vivid-violet)]">F</div>
+        <div className="mb-2 text-white"><Wordmark className="text-[13px]" /></div>
         <button type="button" onClick={openPalette} title={t("search")} aria-label={t("search")} className="grid size-9 place-items-center rounded-lg text-sidebar-foreground/80 hover:bg-white/10 hover:text-white"><Search className="size-[18px]" /></button>
         <div className="my-1 h-px w-8 bg-white/10" />
         <div className="flex flex-1 flex-col items-center gap-1 overflow-y-auto">
@@ -87,9 +88,8 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
   return (
     <nav className="sidebar-aurora flex h-full flex-col text-sidebar-foreground">
       <div className="flex h-14 shrink-0 items-center gap-2.5 px-3">
-        <div className="grid size-8 place-items-center rounded-lg bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-sm font-bold text-white shadow-[0_0_24px_-4px_var(--vivid-violet)]">F</div>
-        <div className="min-w-0 flex-1 leading-tight">
-          <div className="text-[14px] font-bold tracking-[0.1em] text-white">{title}</div>
+                <div className="min-w-0 flex-1 leading-tight">
+          <div className="text-[14px] font-bold tracking-[0.1em] text-white">{title === "FIRINGI" ? <Wordmark className="text-[24px]" /> : title}</div>
           <div className="truncate text-[11px] text-sidebar-muted">{subtitle}</div>
         </div>
         {onCollapse && <button type="button" onClick={() => onCollapse(true)} title={t("collapse")} aria-label={t("collapse")} className="hidden rounded-lg p-1.5 text-sidebar-muted hover:bg-white/10 hover:text-white lg:block" data-testid="sidebar-collapse"><PanelLeftClose className="size-4" /></button>}

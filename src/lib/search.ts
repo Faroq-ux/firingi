@@ -36,7 +36,8 @@ export function cleanSearchSettings(v: Partial<SearchSettings>): SearchSettings 
 /** Lower case, accents off ("Açúcar" → "acucar"), punctuation to spaces (sizes like "1.5l" / "33cl" kept). */
 export function normalize(s: string) {
   return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
-    .replace(/ß/g, "ss").replace(/æ/g, "ae").replace(/œ/g, "oe").replace(/ø/g, "o").replace(/ł/g, "l").replace(/đ/g, "d")
+    .replace(/ß/g, "ss").replace(/æ/g, "ae").replace(/œ/g, "oe").replace(/ø/g, "o").replace(/ł/g, "l").replace(/[đð]/g, "d")
+    .replace(/ı/g, "i").replace(/þ/g, "th").replace(/ħ/g, "h").replace(/ŧ/g, "t").replace(/ŀ/g, "l")
     .replace(/(\d)[.,](\d)/g, "$1.$2").replace(/[^a-z0-9.]+/g, " ").replace(/(^|\s)\.+|\.+(\s|$)/g, " ").replace(/\s+/g, " ").trim();
 }
 

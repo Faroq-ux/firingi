@@ -12,6 +12,7 @@ import { Icon, type IconName } from "./icons";
 import { ContactForm, Faq, LandingFx, LangSelect, MobileMenu, NewsletterForm } from "./client";
 import { appScreen } from "./tour";
 import { LandingFooter, languageList, RouteChart } from "./view";
+import { Wordmark } from "@/components/brand/wordmark";
 
 const BANDS: { key: "buy" | "till" | "manage" | "save"; icon: IconName }[] = [
   { key: "buy", icon: "cart" }, { key: "till", icon: "card" }, { key: "manage", icon: "sliders" }, { key: "save", icon: "tag" },
@@ -167,7 +168,7 @@ function SiteHeader({ t, locale, nav }: { t: TFn; locale: string; nav: { href: s
   return (
     <div className="fg-navbar"><div className="fg-navin"><div className="fg-wrap">
       <div className="fg-nav">
-        <Link className="fg-mark" href="/" aria-label="FIRINGI">FIRINGI</Link>
+        <Link className="fg-mark" href="/" aria-label="FIRINGI"><Wordmark /></Link>
         <div className="fg-navr">
           <nav className="fg-links" aria-label="Main">
             {nav.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}

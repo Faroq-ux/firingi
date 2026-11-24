@@ -3,6 +3,7 @@ import { UI_LOCALES } from "@/i18n/config";
 import type { LandingSettings } from "@/lib/landing";
 import { Icon, type IconName } from "./icons";
 import { LangSelect } from "./client";
+import { Wordmark } from "@/components/brand/wordmark";
 
 const FOOT: Record<"buy" | "sell" | "help" | "legal", string[]> = {
   buy: ["#buy", "#till", "#manage", "#save"],
@@ -36,7 +37,7 @@ export function LandingFooter({ s, t, locale, home, buy, whatsapp }: { s: Landin
         <div className="fg-wrap">
           <div className="fg-footcols">
             <div>
-              <span className="fg-mark">FIRINGI</span>
+              <span className="fg-mark"><Wordmark /></span>
               <p className="fg-tagline">{t("foot.tag")}</p>
               <LangSelect locale={locale} locales={langs} label={t("langPicker")} />
               {(s.email || s.phone || wa) && (

@@ -8,6 +8,8 @@ describe("normalize & words", () => {
     expect(normalize("Açúcar  Branco 1,5 KG")).toBe("acucar branco 1.5 kg");
     expect(normalize("Água Luso 1.5L!")).toBe("agua luso 1.5l");
     expect(normalize("Weißbier Œufs")).toBe("weissbier oeufs");
+    expect(normalize("FIRINGI fırıngı İstanbul")).toBe("firingi firingi istanbul"); // Turkish dotless / dotted i
+    expect(normalize("Þorskur ð ħobż")).toBe("thorskur d hobz"); // Icelandic, Maltese — as the database's unaccent
   });
   it("little words dropped, max 8, no duplicates", () => {
     expect(searchWords("queijo para a pizza do restaurante")).toEqual(["queijo", "pizza", "restaurante"]);

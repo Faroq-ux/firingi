@@ -1,5 +1,6 @@
 import { BRAND_SLOGAN } from "@/config/brand";
 import { PublicThemeToggle } from "@/components/theme/public-theme-toggle";
+import { Wordmark } from "@/components/brand/wordmark";
 
 /** Sign-in, registration, payment links: deep night sky with a moving aurora and a crisp glass card. */
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -10,10 +11,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <PublicThemeToggle className="absolute right-3 top-3 z-10 text-white" />
       <div className="animate-page relative z-10 w-full max-w-md">
         <div className="mb-7 flex flex-col items-center gap-2 text-white">
-          <div className="flex items-center gap-3">
-            <div className="grid size-12 place-items-center rounded-2xl bg-[linear-gradient(135deg,var(--vivid-blue),var(--vivid-violet))] text-xl font-bold shadow-[0_0_40px_-6px_var(--vivid-violet)]">F</div>
-            <span className="text-3xl font-bold tracking-[0.14em]">FIRINGI</span>
-          </div>
+          <Wordmark className="text-[52px]" />
           <span className="text-[11px] font-medium tracking-[0.3em] text-white/70">{BRAND_SLOGAN}</span>
         </div>
         {children}

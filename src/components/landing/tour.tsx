@@ -5,6 +5,7 @@
  * The screens are pictures for visitors: hidden from screen readers (the slide caption says the same) and not clickable.
  */
 import { Icon, type IconName } from "./icons";
+import { Wordmark } from "@/components/brand/wordmark";
 
 type T = (key: string, v?: Record<string, string | number>) => string;
 type Ctx = { t: T; locale: string; vendors: string[] };
@@ -37,7 +38,7 @@ function Frame({ t, children, title, active }: { t: T; children: React.ReactNode
       <div className="fg-devbar" aria-hidden="true"><i /><i /><i /><span>{t("tour.ui.url")}</span></div>
       <div className="fg-dapp" aria-hidden="true">
         <aside className="fg-dside">
-          <div className="brand"><i>F</i><span><b>FIRINGI</b><small>{t("tour.ui.role")}</small></span></div>
+          <div className="brand"><span><b><Wordmark /></b><small>{t("tour.ui.role")}</small></span></div>
           {NAV.map(([k, ic]) => (
             <span key={k} className={"it" + (k === active ? " on" : "")}><Icon name={ic} size={14} /><span>{t(`tour.ui.nav.${k}`)}</span></span>
           ))}
