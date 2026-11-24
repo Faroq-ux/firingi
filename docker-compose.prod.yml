@@ -5,6 +5,11 @@
 #   docker compose -f docker-compose.prod.yml --env-file production.env up -d --build
 #   docker compose -f docker-compose.prod.yml --env-file production.env --profile https up -d   # + automatic HTTPS (Caddy)
 #
+# Ready-made images (built by GitHub Actions, .github/workflows/images.yml) instead of building here: set
+# FIRINGI_IMAGE / FIRINGI_TOOLS_IMAGE / FIRINGI_OPS_IMAGE in production.env, then
+#   docker compose -f docker-compose.prod.yml --env-file production.env pull
+#   docker compose -f docker-compose.prod.yml --env-file production.env up -d --no-build
+#
 # Services: db (PostgreSQL 16 + PostGIS) → migrate (one-shot) → app (Next.js) ← scheduler (jobs),
 #           backup (nightly encrypted dumps + monthly restore test), caddy (optional HTTPS).
 x-app-env: &app-env
@@ -32,7 +37,7 @@ services:
 
   migrate:
     build: { context: ., target: tools }
-    image: firingi-tools:${FIRINGI_VERSION:-latest}
+    image: ${FIRINGI_TOOLS_IMAGE:-firingi-tools}:${FIRINGI_VERSION:-latest}
     env_file: [production.env]
     environment: *app-env
     depends_on: { db: { condition: service_healthy } }
@@ -41,7 +46,7 @@ services:
 
   app:
     build: { context: ., target: app, args: { GIT_COMMIT: "${GIT_COMMIT:-dev}" } }
-    image: firingi:${FIRINGI_VERSION:-latest}
+    image: ${FIRINGI_IMAGE:-firingi}:${FIRINGI_VERSION:-latest}
     restart: unless-stopped
     env_file: [production.env]
     environment: *app-env
@@ -52,7 +57,7 @@ services:
     volumes: [storage:/app/storage]
 
   scheduler:
-    image: firingi:${FIRINGI_VERSION:-latest}
+    image: ${FIRINGI_IMAGE:-firingi}:${FIRINGI_VERSION:-latest}
     restart: unless-stopped
     environment:
       APP_INTERNAL_URL: http://app:3000
@@ -63,7 +68,7 @@ services:
 
   backup:
     build: { context: ., target: ops }
-    image: firingi-ops:${FIRINGI_VERSION:-latest}
+    image: ${FIRINGI_OPS_IMAGE:-firingi-ops}:${FIRINGI_VERSION:-latest}
     restart: unless-stopped
     env_file: [production.env]
     environment:

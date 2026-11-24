@@ -6,7 +6,7 @@ on container platforms.
 
 - [1. What runs](#1-what-runs)
 - [2. First deployment](#2-first-deployment)
-- [3. Updating to a new version](#3-updating-to-a-new-version)
+- [3. Updating to a new version](#3-updating-to-a-new-version) · [3b. with ready-made images](#3b-updating-with-ready-made-images-github-actions--for-a-small-server)
 - [4. Settings](#4-settings)
 - [5. Monitoring and alerts](#5-monitoring-and-alerts)
 - [6. Backups and restore](#6-backups-and-restore)
@@ -110,6 +110,42 @@ a backup is taken nightly, but take one by hand before a big update:
 Rollback: check out the previous version and run the same commands. A migration is never rolled
 back automatically — if a new migration must be undone, restore the backup taken before the
 update ([§6](#6-backups-and-restore)).
+
+### 3b. Updating with ready-made images (GitHub Actions) — for a small server
+
+Building needs ~15 GB of memory. With GitHub Actions the server never builds: every push to `main`
+(each "merge it") builds the three images in `.github/workflows/images.yml` and stores them in GitHub's
+registry as `ghcr.io/faroq-ux/firingi`, `…/firingi-tools` and `…/firingi-ops` (tags `latest` and
+`sha-<commit>`). The run takes about 30–60 minutes; its summary on GitHub (Actions › Build images) says when the
+version is ready.
+
+Once, on the server — in `production.env`:
+
+```bash
+FIRINGI_IMAGE="ghcr.io/faroq-ux/firingi"
+FIRINGI_TOOLS_IMAGE="ghcr.io/faroq-ux/firingi-tools"
+FIRINGI_OPS_IMAGE="ghcr.io/faroq-ux/firingi-ops"
+```
+
+If the images are private (GitHub › your profile › Packages › the image › Package settings shows "Private"),
+sign the server in once with a GitHub token that can read packages (Settings › Developer settings ›
+Personal access tokens › `read:packages`):
+
+```bash
+echo <token> | docker login ghcr.io -u <github-username> --password-stdin
+```
+
+Each update (after the Actions run is green):
+
+```bash
+cd firingi && git pull
+docker compose -f docker-compose.prod.yml --env-file production.env pull
+docker compose -f docker-compose.prod.yml --env-file production.env up -d --no-build
+```
+
+`git pull` only refreshes the compose file and scripts; the code comes in the images. `migrate` still runs
+first. Back to an earlier version: set `FIRINGI_VERSION="sha-<commit>"` in `production.env` and run the last two
+commands (see the rollback note above about migrations).
 
 ## 4. Settings
 

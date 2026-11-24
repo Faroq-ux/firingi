@@ -1,0 +1,96 @@
+# Builds FIRINGI's three production images on every push to main and stores them in GitHub's container
+# registry (ghcr.io), so the server only downloads and restarts — it never builds (the build needs ~15 GB of
+# memory; the server can be small). See docs/operations.md › "Updating with ready-made images".
+#   ghcr.io/<owner>/firingi        the web app + scheduler   (target "app")
+#   ghcr.io/<owner>/firingi-tools  migrations / first admin   (target "tools")
+#   ghcr.io/<owner>/firingi-ops    backups                    (target "ops")
+# Tags: "latest" (main) and the short commit ("sha-abc1234") to go back to an earlier version.
+name: Build images
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: images-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Next.js build needs ~15 GB: make room on the disk and add swap next to the runner's memory.
+      - name: Free disk space and add swap
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL || true
+          sudo swapoff -a || true
+          sudo fallocate -l 12G /mnt/firingi.swap && sudo chmod 600 /mnt/firingi.swap
+          sudo mkswap /mnt/firingi.swap && sudo swapon /mnt/firingi.swap
+          free -h && df -h / /mnt
+
+      - name: Names
+        id: n
+        run: |
+          owner="$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
+          echo "base=ghcr.io/${owner}" >> "$GITHUB_OUTPUT"
+          echo "sha=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          echo "commit=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: App image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: app
+          push: true
+          build-args: |
+            GIT_COMMIT=${{ steps.n.outputs.commit }}
+            BUILD_HEAP_MB=15360
+          tags: |
+            ${{ steps.n.outputs.base }}/firingi:latest
+            ${{ steps.n.outputs.base }}/firingi:${{ steps.n.outputs.sha }}
+          cache-from: type=gha,scope=deps
+          cache-to: type=gha,scope=deps,mode=min
+
+      - name: Tools image (migrations)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: tools
+          push: true
+          tags: |
+            ${{ steps.n.outputs.base }}/firingi-tools:latest
+            ${{ steps.n.outputs.base }}/firingi-tools:${{ steps.n.outputs.sha }}
+          cache-from: type=gha,scope=deps
+
+      - name: Ops image (backups)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: ops
+          push: true
+          tags: |
+            ${{ steps.n.outputs.base }}/firingi-ops:latest
+            ${{ steps.n.outputs.base }}/firingi-ops:${{ steps.n.outputs.sha }}
+
+      - name: Summary
+        run: |
+          {
+            echo "### Images ready — version ${{ steps.n.outputs.sha }}"
+            echo "On the server: \`docker compose -f docker-compose.prod.yml --env-file production.env pull && docker compose -f docker-compose.prod.yml --env-file production.env up -d --no-build\`"
+          } >> "$GITHUB_STEP_SUMMARY"

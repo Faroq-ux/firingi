@@ -21,9 +21,10 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
-# The build needs a large JS heap (about 11 GB at the moment); give the build machine ≥ 16 GB of memory.
+# The build needs a large JS heap (about 15 GB at the moment); give the build machine ≥ 16 GB of memory (or memory +
+# swap). GitHub Actions builds the images with BUILD_HEAP_MB=15360 (.github/workflows/images.yml).
 # FIRINGI_LOW_MEMORY_BUILD=1 turns off webpack's persistent cache, which a one-off image build never reuses.
-ARG BUILD_HEAP_MB=11264
+ARG BUILD_HEAP_MB=15360
 ENV NODE_OPTIONS=--max-old-space-size=${BUILD_HEAP_MB} FIRINGI_LOW_MEMORY_BUILD=1
 COPY . .
 RUN pnpm prisma generate && pnpm build
