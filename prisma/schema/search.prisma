@@ -1,0 +1,29 @@
+// ── Phase 72: smart product search ─────────────────────────────────────────────
+// Matching runs on Product.searchText with pg_trgm + unaccent (index "Product_searchText_trgm" on
+// firingi_unaccent("searchText"), created in the migration). Settings: Setting "search.settings".
+
+/// Words that mean the same thing for search ("tomato" → tomate, pomodoro, tomaten …): kept by FIRINGI, or added by
+/// the AI when it reads a query. Used for every search while synonyms are switched on, also without AI.
+model SearchSynonym {
+  id           String   @id @default(cuid())
+  /// the word, normalised (lower case, no accents)
+  term         String   @unique
+  alternatives String[]
+  /// AI | ADMIN (FIRINGI wrote or corrected it — the AI never overwrites it)
+  source       String   @default("AI")
+  hidden       Boolean  @default(false)
+  uses         Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// What the AI understood from a query, kept so the same query never costs a second AI call (30 days).
+model SearchUnderstanding {
+  id        String   @id @default(cuid())
+  /// "<locale>|<normalised query>"
+  key       String   @unique
+  result    Json
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

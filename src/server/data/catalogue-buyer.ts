@@ -231,26 +231,116 @@ export function productQueryWhere(q: string): Prisma.VendorOfferWhereInput {
 }
 
 /**
- * Find goods across every supplier the buyer may use — by barcode or name — with the
- * supplier's distance, nearest supplier first.
+ * Phase 72: the products a text search matches — every word (or one of its synonyms) found, accent-insensitive and
+ * typo-tolerant, best match first. Nothing with every word → products with most of the words (`partial`).
+ * A barcode keeps its exact match.
  */
-export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string | null) {
+export async function productMatch(q: string, extra: { word: string; alternatives: string[] }[] = []) {
+  const code = asBarcode(q);
+  if (code) return { where: productQueryWhere(q), rank: new Map<string, number>(), words: [] as string[], partial: false };
+  const { searchSettings, expandWords, matchProducts } = await import("@/server/search/service");
+  const { searchWords } = await import("@/lib/search");
+  const settings = await searchSettings();
+  const words = extra.length ? extra.map((w) => w.word) : searchWords(q);
+  // Nothing word-like left (one letter, only little words): plain "contains" as before.
+  if (!words.length) return { where: productQueryWhere(q), rank: new Map<string, number>(), words, partial: false };
+  const expanded = await expandWords(words, settings);
+  const groups = words.map((w) => [...(expanded.get(w) ?? [w]), ...(extra.find((x) => x.word === w)?.alternatives ?? [])]);
+  const opts = { fuzzy: settings.fuzzy, typo: settings.typo };
+  let hits = groups.length ? await matchProducts(groups, { ...opts, all: true }) : [];
+  let partial = false;
+  if (!hits.length && groups.length > 1) { hits = await matchProducts(groups, { ...opts, all: false }); partial = hits.length > 0; }
+  const text = q.trim();
+  return {
+    where: { OR: [
+      { packaging: { variant: { productId: { in: hits.map((h) => h.id) } } } },
+      { packaging: { variant: { sku: { equals: text.toUpperCase() } } } },
+      { vendorSku: { equals: text, mode: "insensitive" as const } },
+    ] } satisfies Prisma.VendorOfferWhereInput,
+    rank: new Map(hits.map((h, i) => [h.id, i])), words, partial,
+  };
+}
+
+export type SearchOptions = { filters?: import("@/lib/search").SearchFilters; ai?: boolean; aiFilters?: boolean; locale?: string };
+
+/**
+ * Find goods across every supplier the buyer may use — by barcode or words (Phase 72: smart matching, the AI's reading
+ * of the query, filters and sorting) — with the supplier's distance. Without options: best match, nearest supplier.
+ */
+export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string | null, opts: SearchOptions = {}) {
+  const { NO_FILTERS } = await import("@/lib/search");
+  const empty = { items: [] as (CatalogueItem & { distanceKm: number | null })[], barcode: null as string | null, meta: null };
+  if (!q.trim()) return empty;
   const scope = await buyerScope(ctx);
-  if (!q.trim()) return { items: [], barcode: null as string | null };
+  const { searchSettings, understand } = await import("@/server/search/service");
+  const settings = await searchSettings();
+  const asked = settings.filters ? (opts.filters ?? NO_FILTERS) : NO_FILTERS;
+  const code = asBarcode(q);
+  const understood = !code && opts.ai ? await understand(ctx, q, opts.locale ?? "en") : null;
+  const match = await productMatch(q, understood?.words.length ? understood.words : []);
+
+  // The AI's filters fill in what the buyer didn't set themselves (and can be switched off from the page).
+  const f = { ...asked };
+  const aiApplied: string[] = [];
+  if (understood && settings.filters && opts.aiFilters !== false) {
+    if (!f.free.length && understood.free.length) { f.free = understood.free; aiApplied.push("free"); }
+    if (!f.diet && understood.diet) { f.diet = understood.diet; aiApplied.push("diet"); }
+    if (!f.max && understood.maxPrice) { f.max = understood.maxPrice; aiApplied.push("max"); }
+    if (!f.deal && understood.onDeal) { f.deal = true; aiApplied.push("deal"); }
+    if (f.sort === "relevance" && understood.sort && understood.sort !== "relevance") { f.sort = understood.sort; aiApplied.push("sort"); }
+  }
+
   const rows = await prisma.vendorOffer.findMany({
-    where: { AND: [visibleOfferWhere(scope), productQueryWhere(q), await badgeWhere(badge)] },
+    where: { AND: [
+      visibleOfferWhere(scope), match.where, await badgeWhere(badge),
+      await buyerFoodWhere(ctx, { free: f.free, diet: f.diet }),
+      f.stars ? await (await import("@/server/reviews/service")).ratingWhere(ctx, f.stars) : {},
+    ] },
     include: offerInclude(scope),
-    take: 100,
+    take: 400,
   });
   const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope)]);
   const presented = rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn));
   const picked = await firingiPicks(ctx, presented);
-  if (picked) return { items: picked.map((i) => ({ ...i, distanceKm: null as number | null })), barcode: asBarcode(q) };
   const suppliers = new Map((await visibleSuppliers(ctx)).map((s) => [s.id, s]));
-  const items = rows
-    .map((r) => ({ ...present(r, vat, ctx.company.countryCode, 1, promoFn), distanceKm: suppliers.get(r.vendorCompanyId)?.distanceKm ?? null }))
-    .sort((a, b) => byDistance({ name: a.vendor.name, distanceKm: a.distanceKm }, { name: b.vendor.name, distanceKm: b.distanceKm }));
-  return { items: await withBadges(items), barcode: asBarcode(q) };
+  let items = (picked ?? presented).map((i) => ({ ...i, distanceKm: picked ? null : suppliers.get(i.vendor.id)?.distanceKm ?? null }));
+
+  // Facets: the categories and suppliers among what matched (before choosing one of them).
+  const count = (key: (i: (typeof items)[number]) => [string, string] | null) => {
+    const m = new Map<string, { id: string; name: string; count: number }>();
+    for (const i of items) { const k = key(i); if (!k) continue; const cur = m.get(k[0]) ?? { id: k[0], name: k[1], count: 0 }; cur.count++; m.set(k[0], cur); }
+    return [...m.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  };
+  const locale = opts.locale ?? "en";
+  const facets = {
+    categories: count((i) => [i.category.id, i.category.name[locale] ?? i.category.name.en ?? Object.values(i.category.name)[0] ?? ""]),
+    suppliers: picked ? [] : count((i) => (i.vendor.id ? [i.vendor.id, i.vendor.name] : null)),
+  };
+  if (f.cat) { const ids = new Set(withDescendants(f.cat, scope.info)); items = items.filter((i) => ids.has(i.category.id)); }
+  if (f.vendor && !picked) items = items.filter((i) => i.vendor.id === f.vendor);
+  const price = (i: (typeof items)[number]) => Number(i.price?.local?.unitPriceGross ?? i.price?.unitPriceGross ?? Infinity);
+  if (f.max) items = items.filter((i) => price(i) <= f.max!);
+  const deals = await (await import("@/server/deals/service")).dealBadges(items.map((i) => i.offerId));
+  if (f.deal) items = items.filter((i) => deals.has(i.offerId) || (i.price && Number(i.price.unitPriceNet) < Number(i.price.listUnitNet)));
+
+  const rank = (i: (typeof items)[number]) => match.rank.get(i.productId) ?? 1e9;
+  const near = (a: (typeof items)[number], b: (typeof items)[number]) => byDistance({ name: a.vendor.name, distanceKm: a.distanceKm }, { name: b.vendor.name, distanceKm: b.distanceKm });
+  if (f.sort === "price") items.sort((a, b) => price(a) - price(b) || rank(a) - rank(b));
+  else if (f.sort === "distance") items.sort((a, b) => near(a, b) || rank(a) - rank(b));
+  else if (f.sort === "rating") {
+    const m = await (await import("@/server/reviews/service")).cardRatings(items.map((i) => ({ productId: i.productId, sellerId: i.vendor.id || null })));
+    const r = (i: (typeof items)[number]) => m.get(`${i.productId}:${i.vendor.id || ""}`);
+    items.sort((a, b) => (r(b)?.avg ?? 0) - (r(a)?.avg ?? 0) || (r(b)?.count ?? 0) - (r(a)?.count ?? 0) || rank(a) - rank(b));
+  } else items.sort((a, b) => rank(a) - rank(b) || near(a, b));
+
+  return {
+    items: await withBadges(items.slice(0, 120)),
+    barcode: asBarcode(q),
+    meta: {
+      total: items.length, words: match.words, partial: match.partial, applied: f, aiApplied, facets,
+      understood: understood && { corrected: understood.corrected, simulated: understood.simulated, words: understood.words.map((w) => w.word) },
+    },
+  };
 }
 
 export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: string; vendorId?: string; page?: number; badge?: string | null; free?: string[]; diet?: string | null; eco?: string | null; stars?: number | null; sort?: string | null } = {}) {
@@ -261,7 +351,7 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
   const where: Prisma.VendorOfferWhereInput = {
     AND: [
       visibleOfferWhere(scope),
-      f.q ? productQueryWhere(f.q) : {},
+      f.q ? (await productMatch(f.q)).where : {},
       categoryIds ? { packaging: { variant: { product: { categoryId: { in: categoryIds } } } } } : {},
       f.vendorId ? { vendorCompanyId: f.vendorId } : {},
       await badgeWhere(f.badge),

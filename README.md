@@ -777,6 +777,18 @@ A supplier leaves stock at a customer's premises; the customer pays only for wha
 
 Details: [docs/consignment.md](docs/consignment.md).
 
+## Smart Search (Phase 72)
+
+Customers find products despite **typos and missing accents** (“mozarela”, “agua”) and in **other languages**, and can
+type **plain sentences** — the **AI** reads “gluten-free mozzarella under 8 €, cheapest” into the product word (with its
+names in other EU languages), filters and sort order, shown as removable chips, plus “Did you mean …”. The search page
+gets **filters**: sort, category, supplier, max price, deals, rating, allergens and diet. Synonyms (FIRINGI’s own and
+those the AI learns) help every search, also without AI. FIRINGI switches each part on or off and edits synonyms in
+*Catalogue › Smart Search* (English). Customer pages in 25 languages.
+
+Details: [docs/search.md](docs/search.md).
+Tests: `tests/unit/search.test.ts`, `tests/integration/search.test.ts`, `node tests/e2e/search.mjs`.
+
 ## Sustainability & Careers (website footer)
 
 FIRINGI's own website footer gets a **FIRINGI** column with **Sustainability** (`/sustainability`) and **Careers** (`/careers`) — for FIRINGI only, not suppliers' shops. Both pages come with a starting text in 25 languages; FIRINGI can write its own per language. Careers lists FIRINGI's job openings (title, place, type, text) and takes applications (name, email, phone, a link to a CV or LinkedIn — no files — and GDPR consent; spam check and 3 per hour). FIRINGI (*Marketing › Sustainability & Careers*, English) switches each page on or off (the footer link follows), edits the texts and openings, gets each application by notification (and optionally by e-mail), sets its status (new, in review, rejected, hired) and deletes it for good.
