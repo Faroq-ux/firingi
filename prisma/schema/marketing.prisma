@@ -70,3 +70,55 @@ model CampaignRecipient {
   @@index([companyId, clickedAt])
   @@index([userId])
 }
+
+// ───────────────────────── Marketing catalogues ─────────────────────────
+
+enum MarketingCatalogueScope {
+  ALL // every wholesaler in the country
+  WHOLESALER // these wholesalers
+  ZONE // wholesalers serving these delivery zones
+  DISTRICT // wholesalers serving these districts (regions)
+}
+
+enum MarketingCatalogueStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+/// A product catalogue / brochure FIRINGI makes for marketing (by hand or with AI): a PDF and a share link with
+/// a QR code per product. Or FIRINGI's own PDF uploaded (uploadKey) and shared the same way.
+model MarketingCatalogue {
+  id          String                   @id @default(cuid())
+  title       String
+  subtitle    String?
+  intro       String?
+  /// language of the texts and product names (e.g. pt-PT)
+  locale      String                   @default("pt-PT")
+  countryId   String
+  scope       MarketingCatalogueScope  @default(ALL)
+  /// wholesaler / zone / region ids for the scope
+  scopeIds    String[]
+  /// how products are picked: { categoryIds?, brandIds?, q?, bestSellers?, withImages?, max? }
+  filters     Json
+  /// the chosen offers in order: [{ offerId, section? }]
+  items       Json
+  /// GRID4 | GRID6 | GRID9 | LIST
+  layout      String                   @default("GRID6")
+  /// { price: NONE|NET|GROSS, barcode, qty, supplier: NONE|NAME|AREA, qr }
+  options     Json
+  /// own PDF instead of the generated one
+  uploadKey   String?
+  shareToken  String                   @unique
+  status      MarketingCatalogueStatus @default(DRAFT)
+  aiPrompt    String?
+  /// the campaign it was sent with (latest)
+  campaignId  String?
+  views       Int                      @default(0)
+  createdById String
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+  publishedAt DateTime?
+
+  @@index([status, createdAt])
+}

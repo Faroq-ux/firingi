@@ -1,0 +1,40 @@
+# Marketing Catalogues
+
+FIRINGI makes product catalogues / brochures for marketing in *Marketing › Marketing Catalogues* (English).
+
+## For whom
+- **All wholesalers** of a country, **some wholesalers**, **delivery zones** or **districts** (regions). Zones and
+  districts use the wholesalers that deliver there (their service areas; a wholesaler without service areas
+  delivers everywhere).
+
+## Picking products
+- **Filters:** categories, brands, words / barcode, best sellers first (last 90 days), only with a photo, at most N.
+  "Fill from these filters" adds them grouped into sections by category. When several wholesalers sell the same pack,
+  the lowest list price is used.
+- **AI:** a brief ("summer drinks for cafés, 24 products"): the AI picks from the products of the scope only, groups
+  them into sections and writes the title, subtitle and intro in the catalogue's language. Check, reorder, remove,
+  rename sections by hand.
+- Tobacco is never put in a catalogue (EU advertising rules).
+
+## What each product shows (FIRINGI decides)
+- **Price:** none, list price excl. VAT, or incl. VAT (the country's VAT). List prices; a customer's own price may be
+  lower.
+- **Barcode** (pack and single item), **pack and minimum order**, **supplier** (not shown, the wholesaler's name, or
+  "FIRINGI + area"), **QR code** that opens the product in the shop.
+- Layouts: 4 per page (large photos), 6, 9, or a list.
+
+## Output
+- **PDF** (A4): cover with the FIRINGI wordmark, sections, product cards, page numbers. Photos in JPG / PNG are used.
+- **Publish** → a public **share link** `/c/<token>` (no sign-in, in the catalogue's language, with a PDF download);
+  views are counted.
+- **Your own PDF** (e.g. made in Canva) can be uploaded instead; the share link then serves it.
+- **Copy in another language:** the AI translates FIRINGI's texts (product names come from the catalogue).
+- **Send to customers:** a campaign draft (email + in-app) for the customers in the scope (zones / districts: by
+  delivery address; wholesalers: their customers of the last year and storefront sign-ups) with the share link —
+  choose channels and send in *Campaigns*.
+
+Switches: marketing catalogues on / off, AI on / off. Permissions: `admin.marketing.view` / `admin.marketing.manage`.
+
+Code: `src/lib/marketing-catalogue.ts`, `src/server/marketing/catalogues.ts`, `src/server/pdf/marketing-catalogue.tsx`,
+`src/app/c/[token]`. Tests: `tests/unit/marketing-catalogue.test.ts`, `tests/integration/marketing-catalogue.test.ts`,
+`node tests/e2e/marketing-catalogue.mjs`.

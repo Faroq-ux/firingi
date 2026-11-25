@@ -789,6 +789,19 @@ those the AI learns) help every search, also without AI. FIRINGI switches each p
 Details: [docs/search.md](docs/search.md).
 Tests: `tests/unit/search.test.ts`, `tests/integration/search.test.ts`, `node tests/e2e/search.mjs`.
 
+## Marketing Catalogues
+
+FIRINGI makes **product catalogues / brochures** for marketing — for **all wholesalers, some wholesalers, delivery
+zones or districts**. Products are picked with filters (categories, brands, best sellers) or **by AI from a brief**
+("summer drinks for cafés, 24 products"), then reordered by hand. FIRINGI chooses what each product shows: **price**
+(none / excl. / incl. VAT), **barcode**, **pack and minimum order**, supplier, a **QR code** to order. Output: an A4
+**PDF**, a public **share link** in the catalogue's language, a copy in another language (AI), or **your own PDF**
+uploaded; **send it** to the customers in the scope through a campaign. *Marketing › Marketing Catalogues* (English);
+the public page and PDF in 25 languages.
+
+Details: [docs/marketing-catalogues.md](docs/marketing-catalogues.md).
+Tests: `tests/unit/marketing-catalogue.test.ts`, `tests/integration/marketing-catalogue.test.ts`, `node tests/e2e/marketing-catalogue.mjs`.
+
 ## Suppliers & Minimums
 
 Where customers choose their own wholesalers, FIRINGI helps them **reach each supplier's minimum** instead of splitting
