@@ -76,6 +76,8 @@ export function cleanItems(v: unknown): McItem[] {
 
 /** Height (pt) of a product row and a section header on an A4 page, per layout; the space for them per page. */
 export const ROW_H: Record<McLayout, number> = { GRID4: 320, GRID6: 205, GRID9: 205, LIST: 52 };
+/** extra height when products carry a drawn barcode */
+export const BARS_H: Record<McLayout, number> = { GRID4: 40, GRID6: 40, GRID9: 36, LIST: 18 };
 export const HEADER_H = 28;
 export const PAGE_BUDGET = 765;
 
@@ -118,3 +120,58 @@ export type AiCatalogue = z.infer<typeof AiCatalogue>;
 
 /** The texts of a catalogue the AI translates into another language. */
 export const AiTranslation = z.object({ title: z.string().min(1).max(120), subtitle: z.string().max(160).default(""), intro: z.string().max(600).default(""), sections: z.array(z.string().max(80)).max(20).default([]) });
+
+// ── scannable barcodes (EAN-13 / EAN-8 / UPC-A) ─────────────────────────────
+
+const L = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"];
+/** R = L inverted; G = R reversed */
+const R = L.map((p) => [...p].map((b) => (b === "1" ? "0" : "1")).join(""));
+const G = R.map((p) => [...p].reverse().join(""));
+/** first digit of an EAN-13 → which of the left six digits use the G (even) set */
+const PARITY = ["LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL"];
+
+const checkOk = (code: string) => {
+  const d = code.split("").map(Number);
+  const c = d.pop()!;
+  return (10 - (d.reverse().reduce((a, x, i) => a + x * (i % 2 === 0 ? 3 : 1), 0) % 10)) % 10 === c;
+};
+
+/**
+ * The bars of a barcode as modules ("1" black, "0" white): EAN-13 (95), UPC-A (as EAN-13 with a leading 0),
+ * EAN-8 (67), GTIN-14 with a leading 0. Null for anything else (e.g. a case code ITF-14) or a wrong check digit.
+ */
+export function eanModules(raw: string | null | undefined): { modules: string; digits: string } | null {
+  let code = (raw ?? "").replace(/\s/g, "");
+  if (/^0\d{13}$/.test(code)) code = code.slice(1);
+  if (/^\d{12}$/.test(code)) code = `0${code}`;
+  if (/^\d{13}$/.test(code) && checkOk(code)) {
+    const p = PARITY[Number(code[0])];
+    const left = code.slice(1, 7).split("").map((x, i) => (p[i] === "L" ? L : G)[Number(x)]).join("");
+    const right = code.slice(7).split("").map((x) => R[Number(x)]).join("");
+    return { modules: `101${left}01010${right}101`, digits: code };
+  }
+  if (/^\d{8}$/.test(code) && checkOk(code)) {
+    const left = code.slice(0, 4).split("").map((x) => L[Number(x)]).join("");
+    const right = code.slice(4).split("").map((x) => R[Number(x)]).join("");
+    return { modules: `101${left}01010${right}101`, digits: code };
+  }
+  return null;
+}
+
+/** Runs of black modules [start, width] — one rectangle per bar. */
+export function barRuns(modules: string): [number, number][] {
+  const out: [number, number][] = [];
+  for (let i = 0; i < modules.length; i++) {
+    if (modules[i] !== "1") continue;
+    let j = i;
+    while (modules[j + 1] === "1") j++;
+    out.push([i, j - i + 1]);
+    i = j;
+  }
+  return out;
+}
+
+/** The barcode to print for a product: the pack's if it can be drawn, else the single item's. */
+export function printableBarcode(packGtin: string | null, unitGtin: string | null) {
+  return eanModules(packGtin) ?? eanModules(unitGtin);
+}

@@ -9,10 +9,23 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Download, LogIn, Package, UserPlus } from "lucide-react";
 import { catalogueEntries, publicCatalogue } from "@/server/marketing/catalogues";
-import { mergeOptions, type McOptions } from "@/lib/marketing-catalogue";
+import { barRuns, mergeOptions, type McOptions } from "@/lib/marketing-catalogue";
 import { Wordmark } from "@/components/brand/wordmark";
 
 export const dynamic = "force-dynamic";
+
+/** A scannable EAN / UPC barcode as SVG (quiet zones included), digits under it. */
+function Bars({ modules, digits }: { modules: string; digits: string }) {
+  const w = modules.length + 14;
+  return (
+    <figure className="mt-1" data-testid="pc-bars">
+      <svg viewBox={`0 0 ${w} 30`} className="h-9 w-36 bg-white" role="img" aria-label={digits} preserveAspectRatio="none">
+        {barRuns(modules).map(([x, n], k) => <rect key={k} x={x + 7} y={0} width={n} height={30} fill="#000" />)}
+      </svg>
+      <figcaption className="w-36 text-center font-mono text-[10px] tracking-widest">{digits}</figcaption>
+    </figure>
+  );
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
   const c = await publicCatalogue((await params).token, false).catch(() => null);
@@ -60,7 +73,7 @@ export default async function PublicCataloguePage({ params }: { params: Promise<
                   {e.brand && <div className="text-xs text-muted-foreground">{e.brand}</div>}
                   {o.qty && <div className="text-xs">{e.pack}{e.minQty > 1 ? ` · ${t("minOrder", { qty: e.minQty })}` : ""}</div>}
                   {e.supplier && <div className="text-xs text-muted-foreground">{t("soldBy", { name: e.supplier })}</div>}
-                  {e.gtin && <div className="font-mono text-[11px] text-muted-foreground">{t("barcode", { code: e.gtin })}</div>}
+                  {e.bars ? <Bars modules={e.bars.modules} digits={e.bars.digits} /> : e.gtin && <div className="font-mono text-[11px] text-muted-foreground">{t("barcode", { code: e.gtin })}</div>}
                   {price(e.priceNet, e.priceGross) && <div className="mt-auto pt-2 font-bold text-[#E10600]" data-testid="pc-price">{price(e.priceNet, e.priceGross)}</div>}
                 </Link>
               </div>

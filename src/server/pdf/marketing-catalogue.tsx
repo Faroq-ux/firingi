@@ -8,7 +8,7 @@ import React from "react";
 import path from "node:path";
 import QRCode from "qrcode";
 import { Document, Font, Image, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
-import { GRID_COLS, ROW_H, packPages, type McLayout, type McOptions } from "@/lib/marketing-catalogue";
+import { BARS_H, GRID_COLS, ROW_H, barRuns, packPages, type McLayout, type McOptions } from "@/lib/marketing-catalogue";
 import type { McEntry } from "@/server/marketing/catalogues";
 
 let fonts = false;
@@ -42,14 +42,28 @@ const s = StyleSheet.create({
 export type McPdfLabels = { priceNet: string; priceGross: string; minOrder: string; barcode: string; unitBarcode: string; scan: string; pricesNote: string; page: string; soldBy: string };
 const fill = (t: string, v: Record<string, string | number>) => t.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ""));
 
+/** A scannable EAN / UPC barcode drawn with rectangles (quiet zones left and right), the digits under it. */
+function Bars({ modules, digits, module = 0.9, height = 22 }: { modules: string; digits: string; module?: number; height?: number }) {
+  const w = (modules.length + 14) * module;
+  return (
+    <View style={{ width: w, marginTop: 4 }}>
+      <View style={{ height, width: w, position: "relative", backgroundColor: "#ffffff" }}>
+        {barRuns(modules).map(([x, n], k) => <View key={k} style={{ position: "absolute", left: (x + 7) * module, top: 0, width: n * module, height, backgroundColor: "#000000" }} />)}
+      </View>
+      <Text style={{ fontSize: 6, textAlign: "center", letterSpacing: 1 }}>{digits}</Text>
+    </View>
+  );
+}
+
 export async function renderMarketingCatalogue(i: {
   title: string; subtitle: string | null; intro: string | null; locale: string; layout: McLayout; options: McOptions;
   entries: McEntry[]; images: Map<string, Buffer>; baseUrl: string; l: McPdfLabels; money: (amount: string) => string;
 }) {
   registerFonts();
   const cols = GRID_COLS[i.layout];
-  const qrs = i.options.qr ? new Map(await Promise.all(i.entries.map(async (e) => [e.offerId, await QRCode.toDataURL(`${i.baseUrl}/buy/catalogue/offers/${e.offerId}`, { margin: 0, width: 160, errorCorrectionLevel: "M" })] as const))) : new Map<string, string>();
-  const pages = packPages(i.entries, cols, ROW_H[i.layout]);
+  // a QR where the product gets one (QR on, or no barcode to draw)
+  const qrs = new Map(await Promise.all(i.entries.filter((e) => e.qr).map(async (e) => [e.offerId, await QRCode.toDataURL(`${i.baseUrl}/buy/catalogue/offers/${e.offerId}`, { margin: 0, width: 160, errorCorrectionLevel: "M" })] as const)));
+  const pages = packPages(i.entries, cols, ROW_H[i.layout] + (i.entries.some((e) => e.bars) ? BARS_H[i.layout] : 0));
   const list = i.layout === "LIST";
   const cardW = cols === 3 ? "32%" : "49%";
   const imgH = i.layout === "GRID4" ? 230 : i.layout === "GRID6" ? 120 : 110;
@@ -60,9 +74,10 @@ export async function renderMarketingCatalogue(i: {
       {!!e.brand && <Text style={s.muted}>{e.brand}</Text>}
       {i.options.qty && <Text>{e.pack}{e.minQty > 1 ? ` · ${fill(i.l.minOrder, { qty: e.minQty })}` : ""}</Text>}
       {!!e.supplier && <Text style={s.muted}>{fill(i.l.soldBy, { name: e.supplier })}</Text>}
-      {!!e.gtin && <Text style={s.muted}>{fill(i.l.barcode, { code: e.gtin })}</Text>}
-      {!!e.unitGtin && e.unitGtin !== e.gtin && <Text style={s.muted}>{fill(i.l.unitBarcode, { code: e.unitGtin })}</Text>}
       {!!price(e) && <Text style={s.price}>{price(e)}</Text>}
+      {e.bars ? <Bars modules={e.bars.modules} digits={e.bars.digits} module={list ? 0.8 : cols === 3 ? 0.75 : 0.9} height={list ? 16 : 22} />
+        : <>{!!e.gtin && <Text style={s.muted}>{fill(i.l.barcode, { code: e.gtin })}</Text>}</>}
+      {!!e.unitGtin && e.unitGtin !== e.gtin && e.unitGtin !== e.bars?.digits && <Text style={s.muted}>{fill(i.l.unitBarcode, { code: e.unitGtin })}</Text>}
     </>
   );
   const doc = (

@@ -22,7 +22,7 @@ import { aiSettings, aiTransport } from "@/server/ai/assistant";
 import { logAi } from "@/server/ai/feed";
 import { pickLocalized } from "@/i18n/config";
 import {
-  AiCatalogue, AiTranslation, MC_LAYOUTS, cleanItems, mergeFilters, mergeOptions,
+  AiCatalogue, AiTranslation, MC_LAYOUTS, cleanItems, mergeFilters, mergeOptions, printableBarcode,
   type McFilters, type McItem, type McLayout, type McOptions, type McScope,
 } from "@/lib/marketing-catalogue";
 
@@ -318,8 +318,21 @@ export async function translateCatalogue(ctx: Ctx, id: string, locale: string) {
 export type McEntry = {
   offerId: string; productId: string; section: string | null; name: string; brand: string | null; pack: string; unitsPerPack: number;
   gtin: string | null; unitGtin: string | null; minQty: number; step: number; supplier: string | null;
+  /** the barcode as scannable bars (EAN-13 / EAN-8 / UPC; pack's, else the single item's), when drawable */
+  bars: { modules: string; digits: string } | null;
+  /** a QR code to the product in the shop */
+  qr: boolean;
   priceNet: string | null; priceGross: string | null; vatRate: string | null; imageKey: string | null;
 };
+
+/**
+ * Every product gets at least one code to scan: the barcode when it is on (or when the QR is off), the QR when it is
+ * on (or when the product has no barcode that can be drawn).
+ */
+export function codes(o: Pick<McOptions, "barcode" | "qr">, bars: { modules: string; digits: string } | null) {
+  const showBars = !!bars && (o.barcode || !o.qr);
+  return { bars: showBars ? bars : null, qr: o.qr || !showBars };
+}
 
 /** The catalogue's products as they print / show: only those still sold, with the options FIRINGI chose. */
 export async function catalogueEntries(c: MarketingCatalogue): Promise<McEntry[]> {
@@ -345,6 +358,7 @@ export async function catalogueEntries(c: MarketingCatalogue): Promise<McEntry[]
       name: pickLocalized(p.name, c.locale), brand: p.brand?.name ?? null, pack: pickLocalized(r.packaging.name, c.locale), unitsPerPack: r.packaging.unitsPerPack,
       gtin: o.barcode ? r.packaging.gtin ?? (r.packaging.unitsPerPack === 1 ? r.packaging.variant.gtin : null) : null,
       unitGtin: o.barcode ? r.packaging.variant.gtin : null,
+      ...codes(o, printableBarcode(r.packaging.gtin, r.packaging.variant.gtin)),
       minQty: r.minOrderQty, step: r.qtyStep,
       supplier: o.supplier === "NAME" ? r.vendor.tradeName ?? r.vendor.legalName : o.supplier === "AREA" ? areas!.get(r.vendor.id) ?? "FIRINGI" : null,
       priceNet: o.price !== "NONE" && net ? net.toFixed(2) : null,

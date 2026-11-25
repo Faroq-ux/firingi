@@ -91,3 +91,14 @@ describe("marketing catalogues", () => {
     await expect(M.createCatalogue(await ctxFor("owner@kebabhouse.test"), base())).rejects.toThrow();
   });
 });
+
+describe("codes to scan", () => {
+  const bars = { modules: "101", digits: "5449000000996" };
+  it("no barcode → QR; QR off → barcode; both on → both", () => {
+    expect(M.codes({ barcode: true, qr: true }, bars)).toEqual({ bars, qr: true });
+    expect(M.codes({ barcode: true, qr: false }, bars)).toEqual({ bars, qr: false });
+    expect(M.codes({ barcode: false, qr: false }, bars)).toEqual({ bars, qr: false }); // QR off → barcode
+    expect(M.codes({ barcode: true, qr: false }, null)).toEqual({ bars: null, qr: true }); // no barcode → QR
+    expect(M.codes({ barcode: false, qr: true }, bars)).toEqual({ bars: null, qr: true });
+  });
+});

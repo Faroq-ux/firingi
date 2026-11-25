@@ -97,6 +97,16 @@ try {
   check("AI built it", await until(async () => (await a.getByTestId("mc-item").count()) === 6));
   check("AI wrote the title", await until(async () => (await a.getByTestId("mc-title").inputValue()).startsWith("E2E drinks")));
   await shot(a, "03-ai", true);
+  // barcode + QR both on (defaults): scannable bars on the share link and in the PDF
+  await tap(a, "[data-testid=mc-publish]");
+  await until(async () => (await a.getByTestId("mc-status").innerText()) === "published");
+  const link2 = (await a.getByTestId("mc-link").innerText()).trim();
+  const pub2 = await login(null, { locale: "pt-PT" });
+  await go(pub2, link2);
+  check("barcodes drawn (scannable lines)", (await pub2.getByTestId("pc-bars").count()) >= 1, String(await pub2.getByTestId("pc-bars").count()));
+  await shot(pub2, "02b-public-barcodes", true);
+  const dl2 = await pub2.request.get(`${BASE}${link2}/pdf`);
+  if (SHOTS) (await import("node:fs")).writeFileSync(`${SHOTS}/catalogue-bars.pdf`, await dl2.body());
 
   // 4. send: a campaign draft for the customers
   await go(a, "/admin/marketing/catalogues");

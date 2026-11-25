@@ -129,10 +129,11 @@ export function CatalogueEditor({ id, initial, lists, entries, aiReady, status, 
               </Select></div>
           </div>
           <div className="flex flex-wrap gap-4">
-            <Box label="Barcode" checked={v.options.barcode} onChange={(x) => set("options", { ...v.options, barcode: x })} testid="mc-barcode" />
+            <Box label="Barcode (scannable lines + number)" checked={v.options.barcode} onChange={(x) => set("options", { ...v.options, barcode: x })} testid="mc-barcode" />
             <Box label="Pack and minimum order" checked={v.options.qty} onChange={(x) => set("options", { ...v.options, qty: x })} testid="mc-qty" />
-            <Box label="QR code to order" checked={v.options.qr} onChange={(x) => set("options", { ...v.options, qr: x })} testid="mc-qr" />
+            <Box label="QR code (opens the product in the shop)" checked={v.options.qr} onChange={(x) => set("options", { ...v.options, qr: x })} testid="mc-qr" />
           </div>
+          <p className="text-xs text-muted-foreground">Every product always gets a code to scan: no barcode → QR code; QR off → barcode.</p>
         </section>
 
         <div className="flex flex-wrap items-center gap-3"><Button type="submit" disabled={pending} data-testid="mc-save"><Spin on={pending} icon={Save} /> {id ? "Save" : "Create"}</Button><Msg error={error} done={done} /></div>
