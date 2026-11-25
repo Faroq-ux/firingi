@@ -79,11 +79,20 @@ export function SellThisForm({ packagingUnitId, canPrice }: { packagingUnitId: s
 }
 
 type Opt = { id: string; label: string };
-export function ProposeProductForm({ categories, brands, taxCategories, units, canPrice }: { categories: Opt[]; brands: Opt[]; taxCategories: Opt[]; units: Opt[]; canPrice: boolean }) {
+/** Values filled in by "Add by barcode" (AI / product databases); the supplier checks them. */
+export type ProposeInitial = {
+  gtin?: string; unitGtin?: string | null; barcodeOn?: "UNIT" | "PACK"; nameEn?: string; namePt?: string; brandId?: string | null; brandName?: string; categoryId?: string | null; taxCategoryId?: string | null;
+  restriction?: "ALCOHOL" | "TOBACCO" | null; uomCode?: string; unitsPerPack?: number; packName?: string; descriptionEn?: string; descriptionPt?: string;
+  food?: { contain: string[]; mayContain: string[]; diets: string[]; ingredients: Record<string, string> } | null;
+};
+export function ProposeProductForm({ categories, brands, taxCategories, units, canPrice, initial, defaultOpen = false, onProposed }: { categories: Opt[]; brands: Opt[]; taxCategories: Opt[]; units: Opt[]; canPrice: boolean; initial?: ProposeInitial; defaultOpen?: boolean; onProposed?: () => void }) {
   const t = useTranslations("catalogue.vendor");
   const { pending, error, run } = useRun();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const [done, setDone] = useState(false);
+  const i = initial ?? {};
+  const unitGtin = i.unitGtin ?? (i.gtin && i.barcodeOn !== "PACK" ? i.gtin : "");
+  const packGtin = i.gtin && i.barcodeOn === "PACK" ? i.gtin : "";
   if (!open) return (
     <div className="space-y-1">
       <Button variant="outline" onClick={() => { setOpen(true); setDone(false); }}>{t("proposeNew")}</Button>
@@ -93,7 +102,7 @@ export function ProposeProductForm({ categories, brands, taxCategories, units, c
   const s = (fd: FormData, k: string) => String(fd.get(k) ?? "").trim();
   return (
     <form
-      className="space-y-4 rounded-xl border bg-card p-4"
+      className="space-y-4 rounded-xl border bg-card p-4" data-testid="propose-form"
       onSubmit={(e) => {
         e.preventDefault();
         const fd = new FormData(e.currentTarget);
@@ -101,31 +110,36 @@ export function ProposeProductForm({ categories, brands, taxCategories, units, c
           name: { en: s(fd, "nameEn"), pt: s(fd, "namePt") || null }, categoryId: s(fd, "categoryId"), brandId: s(fd, "brandId") || null,
           taxCategoryId: s(fd, "taxCategoryId"), restriction: (s(fd, "restriction") || null) as "TOBACCO" | null, gtin: s(fd, "gtin") || null,
           packaging: { uomCode: s(fd, "uomCode"), name: { en: s(fd, "packName"), pt: s(fd, "packName") }, unitsPerPack: Number(fd.get("unitsPerPack")), gtin: s(fd, "packGtin") || null },
-          offer: { vendorSku: s(fd, "vendorSku") || null, minOrderQty: Number(fd.get("minOrderQty")), qtyStep: 1, leadTimeDays: Number(fd.get("leadTimeDays")) },
+          offer: { vendorSku: s(fd, "vendorSku") || null, minOrderQty: Number(fd.get("minOrderQty")), qtyStep: Number(fd.get("qtyStep")) || 1, leadTimeDays: Number(fd.get("leadTimeDays")) },
           basePrice: fd.get("basePrice") ? Number(fd.get("basePrice")) : undefined,
-        }), () => { setOpen(false); setDone(true); });
+          description: i.descriptionEn || i.descriptionPt ? { en: i.descriptionEn || null, pt: i.descriptionPt || null } : null,
+          brandName: s(fd, "brandId") ? null : i.brandName || null,
+          food: i.food ?? null,
+        }), () => { setOpen(false); setDone(true); onProposed?.(); });
       }}
     >
       <h3 className="font-semibold">{t("proposeNew")}</h3>
+      {i.brandName && !i.brandId && <p className="text-sm" data-testid="ba-new-brand">{t("barcodeAi.newBrand", { brand: i.brandName })}</p>}
       <p className="text-sm text-muted-foreground">{t("proposalNote")}</p>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="space-y-1"><Label htmlFor="nameEn">{t("name")} (EN)</Label><Input id="nameEn" name="nameEn" required /></div>
-        <div className="space-y-1"><Label htmlFor="namePt">{t("namePt")}</Label><Input id="namePt" name="namePt" /></div>
+        <div className="space-y-1"><Label htmlFor="nameEn">{t("name")} (EN)</Label><Input id="nameEn" name="nameEn" required defaultValue={i.nameEn ?? ""} /></div>
+        <div className="space-y-1"><Label htmlFor="namePt">{t("namePt")}</Label><Input id="namePt" name="namePt" defaultValue={i.namePt ?? ""} /></div>
         <div className="space-y-1"><Label htmlFor="categoryId">{t("category")}</Label>
-          <Select id="categoryId" name="categoryId" required defaultValue=""><option value="" disabled>—</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</Select></div>
+          <Select id="categoryId" name="categoryId" required defaultValue={i.categoryId ?? ""}><option value="" disabled>—</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</Select></div>
         <div className="space-y-1"><Label htmlFor="brandId">{t("brand")}</Label>
-          <Select id="brandId" name="brandId" defaultValue=""><option value="">—</option>{brands.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}</Select></div>
+          <Select id="brandId" name="brandId" defaultValue={i.brandId ?? ""}><option value="">—</option>{brands.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}</Select></div>
         <div className="space-y-1"><Label htmlFor="taxCategoryId">{t("taxCategory")}</Label>
-          <Select id="taxCategoryId" name="taxCategoryId" required>{taxCategories.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}</Select></div>
+          <Select id="taxCategoryId" name="taxCategoryId" required defaultValue={i.taxCategoryId ?? undefined}>{taxCategories.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}</Select></div>
         <div className="space-y-1"><Label htmlFor="restriction">{t("restriction")}</Label>
-          <Select id="restriction" name="restriction" defaultValue=""><option value="">{t("none")}</option><option value="TOBACCO">Tobacco</option><option value="ALCOHOL">Alcohol</option></Select></div>
-        <div className="space-y-1"><Label htmlFor="gtin">{t("unitBarcode")}</Label><Input id="gtin" name="gtin" inputMode="numeric" /></div>
-        <div className="space-y-1"><Label htmlFor="packGtin">{t("packBarcode")}</Label><Input id="packGtin" name="packGtin" inputMode="numeric" /></div>
-        <div className="space-y-1"><Label htmlFor="packName">{t("packagingName")}</Label><Input id="packName" name="packName" required placeholder="Case 12 × 1L" /></div>
+          <Select id="restriction" name="restriction" defaultValue={i.restriction ?? ""}><option value="">{t("none")}</option><option value="TOBACCO">Tobacco</option><option value="ALCOHOL">Alcohol</option></Select></div>
+        <div className="space-y-1"><Label htmlFor="gtin">{t("unitBarcode")}</Label><Input id="gtin" name="gtin" inputMode="numeric" defaultValue={unitGtin} /></div>
+        <div className="space-y-1"><Label htmlFor="packGtin">{t("packBarcode")}</Label><Input id="packGtin" name="packGtin" inputMode="numeric" defaultValue={packGtin} /></div>
+        <div className="space-y-1"><Label htmlFor="packName">{t("packagingName")}</Label><Input id="packName" name="packName" required placeholder="Case 12 × 1L" defaultValue={i.packName ?? ""} /></div>
         <div className="space-y-1"><Label htmlFor="uomCode">{t("unit")}</Label>
-          <Select id="uomCode" name="uomCode">{units.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}</Select></div>
-        <div className="space-y-1"><Label htmlFor="unitsPerPack">{t("unitsPerPack")}</Label><Input id="unitsPerPack" name="unitsPerPack" type="number" min={1} defaultValue={1} /></div>
+          <Select id="uomCode" name="uomCode" defaultValue={i.uomCode ?? undefined}>{units.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}</Select></div>
+        <div className="space-y-1"><Label htmlFor="unitsPerPack">{t("unitsPerPack")}</Label><Input id="unitsPerPack" name="unitsPerPack" type="number" min={1} defaultValue={i.unitsPerPack ?? 1} /></div>
         <div className="space-y-1"><Label htmlFor="minOrderQty">{t("minOrderQty")}</Label><Input id="minOrderQty" name="minOrderQty" type="number" min={1} defaultValue={1} /></div>
+        <div className="space-y-1"><Label htmlFor="qtyStep">{t("qtyStep")}</Label><Input id="qtyStep" name="qtyStep" type="number" min={1} defaultValue={1} /></div>
         <div className="space-y-1"><Label htmlFor="leadTimeDays">{t("leadTimeDays")}</Label><Input id="leadTimeDays" name="leadTimeDays" type="number" min={0} defaultValue={1} /></div>
         <div className="space-y-1"><Label htmlFor="vendorSku">{t("vendorSku")}</Label><Input id="vendorSku" name="vendorSku" /></div>
         {canPrice && <div className="space-y-1"><Label htmlFor="basePrice">{t("basePrice")}</Label><Input id="basePrice" name="basePrice" type="number" min="0.01" step="0.01" /></div>}

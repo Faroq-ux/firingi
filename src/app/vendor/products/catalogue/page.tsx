@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { EmptyRow, TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
 import { BasePriceCell, OfferActiveToggle, ProposeProductForm, SellThisForm } from "@/components/vendor/offer-controls";
+import { BarcodeAdd } from "@/components/vendor/barcode-add";
+import { barcodeAiAccess } from "@/server/catalogue/barcode-ai";
 import { compliancePaused } from "@/server/compliance/service";
 
 export const metadata = { title: "My products" };
@@ -23,7 +25,7 @@ export default async function VendorProductsPage({ searchParams }: { searchParam
   const sp = await searchParams;
   const canManage = can(ctx, "vendor.products.manage");
   const canPrice = can(ctx, "vendor.pricing.manage");
-  const [tc, pausedWhole] = await Promise.all([getTranslations("compliance"), compliancePaused(ctx)]);
+  const [tc, pausedWhole, ba] = await Promise.all([getTranslations("compliance"), compliancePaused(ctx), canManage ? barcodeAiAccess(ctx) : null]);
   const [offers, t, c, locale, options, found] = await Promise.all([
     listOwnOffers(ctx, { q: sp.q }),
     getTranslations("catalogue.vendor"),
@@ -37,6 +39,17 @@ export default async function VendorProductsPage({ searchParams }: { searchParam
   return (
     <>
       <PageHeader title={t("myProducts")} />
+      {canManage && options && ba?.on && (
+        <Card className="mb-6" data-testid="ba-card"><CardContent className="pt-6">
+          <BarcodeAdd photosOn={ba.photos} lists={{
+            canPrice,
+            categories: options.categories.filter((x) => x.isActive).map((x) => ({ id: x.id, label: `${"— ".repeat(x.depth)}${L(x.name)}` })),
+            brands: options.brands.map((b) => ({ id: b.id, label: b.name })),
+            taxCategories: options.taxCategories.map((x) => ({ id: x.id, label: x.code })),
+            units: options.units.map((u) => ({ id: u.code, label: `${u.code} — ${L(u.name)}` })),
+          }} />
+        </CardContent></Card>
+      )}
       <form className="mb-4 flex gap-2" action="/vendor/products/catalogue">
         <Input name="q" defaultValue={sp.q} placeholder={c("search")} className="max-w-sm" />
         <Button type="submit" variant="outline">{c("search")}</Button>

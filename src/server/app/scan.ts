@@ -20,7 +20,11 @@ export async function scanToCart(ctx: Ctx, raw: string, locale: string): Promise
   if (!code) return { status: "NOT_FOUND", code: raw };
   const { searchAcrossSuppliers } = await import("@/server/data/catalogue-buyer");
   const { items } = await searchAcrossSuppliers(ctx, code);
-  const exact = items.filter((i) => i.price && (i.gtin === code || i.unitGtin === code || i.sku?.toLowerCase() === code.toLowerCase()));
+  const { barcodeFamily } = await import("@/lib/barcode");
+  const codes = barcodeFamily(code);
+  const matched = items.filter((i) => i.price && ((i.gtin && codes.includes(i.gtin)) || (i.unitGtin && codes.includes(i.unitGtin)) || i.sku?.toLowerCase() === code.toLowerCase()));
+  // a pack scanned that a supplier sells another way (single / other pack): offer those options
+  const exact = matched.length ? matched : items.filter((i) => i.price);
   if (!exact.length) return { status: "NOT_FOUND", code };
   const last = await prisma.orderLine.findMany({
     where: { offerId: { in: exact.map((i) => i.offerId) }, order: { buyerCompanyId: ctx.company.id } },

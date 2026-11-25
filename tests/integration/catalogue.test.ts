@@ -261,15 +261,19 @@ describe("barcodes and prices with IVA", () => {
     expect(vendorsInOrder.slice(0, 3).sort()).toEqual(["C&C Almada", "FIRINGI Armazém", "Lisboa Central"]); // … then the others by distance (checked below)
     expect(can.items.every((i, k) => k === 0 || (can.items[k - 1].distanceKm ?? 0) <= (i.distanceKm ?? Infinity))).toBe(true);
 
-    // The case has its own barcode, which finds the case offer only.
+    // The case has its own barcode: the case offers come first, then the other ways the can is sold (wholesale).
     const caseGtin = can.items.find((i) => i.packaging.unitsPerPack === 24)!.gtin!;
     const byCase = await searchAcrossSuppliers(kebab, caseGtin);
-    expect(byCase.items.length).toBeGreaterThan(0);
-    expect(byCase.items.every((i) => i.packaging.unitsPerPack === 24)).toBe(true);
+    const cases = byCase.items.filter((i) => i.gtin === caseGtin);
+    expect(cases.length).toBeGreaterThan(0);
+    expect(byCase.items.slice(0, cases.length).every((i) => i.packaging.unitsPerPack === 24)).toBe(true);
+    expect(byCase.items.every((i) => i.unitGtin === "5449000000996")).toBe(true);
+    expect(byCase.items.length).toBe(can.items.length);
 
-    // A wholesaler scanning the same code sees distributors, nearest first.
+    // A wholesaler scanning the same code sees the distributors' cases first, nearest first.
     const w = await searchAcrossSuppliers(await ctxFor(LX_BUYER), caseGtin);
-    expect(w.items.map((i) => i.vendor.name)).toEqual(["Atlântico", "Ibéricas"]);
+    expect(w.items.filter((i) => i.gtin === caseGtin).map((i) => i.vendor.name)).toEqual(["Atlântico", "Ibéricas"]);
+    expect(w.items[0].gtin).toBe(caseGtin);
 
     // Restricted product barcode returns nothing without a licence.
     const cig = await prisma.productVariant.findUniqueOrThrow({ where: { sku: "FIR-CIG20" } });

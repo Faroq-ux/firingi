@@ -171,6 +171,7 @@ export const ADMIN_NAV: NavSection[] = [
       cat("reviews-overview", "Reviews Overview", "Resumo das Avaliações", "P53", { live: true, href: `${A}/reviews/overview`, perm: ["admin.reviews.moderate", "admin.settings.manage"] }),
       cat("co2", "Sustainability & CO₂", "Sustentabilidade e CO₂", "P51", { live: true, perm: ["admin.catalogue.view", "admin.catalogue.manage", "admin.catalogue.approve", "admin.settings.manage"] }),
       cat("search", "Smart Search", "Pesquisa Inteligente", "P72", { live: true, perm: ["admin.catalogue.view", "admin.catalogue.manage"] }),
+      cat("barcode-ai", "Add by Barcode (AI)", "Adicionar por Código de Barras (IA)", "P72", { live: true, perm: ["admin.catalogue.view", "admin.catalogue.manage", "admin.settings.manage"] }),
       cat("vendor-products", "Vendor Products", "Produtos de Fornecedores", "P3", { live: true }),
       cat("availability", "Product Availability", "Disponibilidade de Produtos", "P3", { live: true }),
       cat("stock", "Stock", "Stock", "P3", { live: true }),

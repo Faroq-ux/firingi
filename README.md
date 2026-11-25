@@ -789,6 +789,23 @@ those the AI learns) help every search, also without AI. FIRINGI switches each p
 Details: [docs/search.md](docs/search.md).
 Tests: `tests/unit/search.test.ts`, `tests/integration/search.test.ts`, `node tests/e2e/search.mjs`.
 
+## Add by Barcode with AI (suppliers)
+
+A supplier **types or scans a barcode** (phone camera or USB scanner). If the product is already on FIRINGI they just
+add their price. If not, FIRINGI looks it up in the **open product databases** (Open Food Facts, Open Beauty Facts,
+Open Pet Food Facts, Open Products Facts — all categories) and the **AI fills in the product**: name (EN/PT), brand,
+FIRINGI category, VAT, unit, pack, description and, for food, allergens, diets and ingredients (saved as a food-info
+draft). Not found → the AI reads **1–3 photos of the package**, or the supplier fills it in by hand. **Made for
+wholesale**: one simple choice — **per item** (with a minimum order, e.g. 12) or **per case** (items in a case); a case
+code (GTIN-14) is recognised and the item inside is filled in too. **Customers** scanning either the can or the pack
+barcode (they differ, e.g. Coca-Cola) see every way suppliers sell that product. FIRINGI approves new products as
+usual and switches it all in *Catalogue › Add by Barcode (AI)* (English): on/off, distributors / wholesalers, each
+part (database lookup, AI, photos), countries left out, single suppliers always on / off, lookups per hour.
+Supplier pages in 25 languages.
+
+Details: [docs/barcode-ai.md](docs/barcode-ai.md).
+Tests: `tests/unit/barcode-ai.test.ts`, `tests/integration/barcode-ai.test.ts`, `node tests/e2e/barcode-ai.mjs`.
+
 ## Sustainability & Careers (website footer)
 
 FIRINGI's own website footer gets a **FIRINGI** column with **Sustainability** (`/sustainability`) and **Careers** (`/careers`) — for FIRINGI only, not suppliers' shops. Both pages come with a starting text in 25 languages; FIRINGI can write its own per language. Careers lists FIRINGI's job openings (title, place, type, text) and takes applications (name, email, phone, a link to a CV or LinkedIn — no files — and GDPR consent; spam check and 3 per hour). FIRINGI (*Marketing › Sustainability & Careers*, English) switches each page on or off (the footer link follows), edits the texts and openings, gets each application by notification (and optionally by e-mail), sets its status (new, in review, rejected, hired) and deletes it for good.

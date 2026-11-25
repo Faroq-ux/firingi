@@ -117,10 +117,17 @@ export const proposeProductAction = defineAction({
     name: l10n, categoryId: z.string().min(1, "Choose a category"), brandId: optId, taxCategoryId: z.string().min(1), restriction, gtin: z.string().trim().max(20).optional().nullable(),
     packaging: z.object({ uomCode: z.string(), name: l10n, unitsPerPack: z.coerce.number().int().min(1), gtin: z.string().trim().max(20).optional().nullable() }),
     offer: z.object(offerFields), basePrice: z.coerce.number().positive().optional(),
+    // Added by barcode with AI: description, a brand not yet in FIRINGI's list (FIRINGI sets it when approving) and,
+    // for food, the allergens / diets / ingredients saved as a food-information DRAFT for the supplier to check.
+    description: z.object({ en: z.string().trim().max(1000).optional().nullable(), pt: z.string().trim().max(1000).optional().nullable() }).optional().nullable(),
+    brandName: z.string().trim().max(100).optional().nullable(),
+    food: z.object({ contain: z.array(z.string().max(20)).max(14), mayContain: z.array(z.string().max(20)).max(14), diets: z.array(z.string().max(20)).max(10), ingredients: z.record(z.string().max(5), z.string().max(3000)) }).optional().nullable(),
   }),
-  handler: async (ctx, { basePrice, ...i }) => {
-    const r = await vendor.proposeProduct(ctx, i);
+  handler: async (ctx, { basePrice, description, brandName, food, ...i }) => {
+    const desc = description && (description.en || description.pt) ? { en: description.en || description.pt || "", ...(description.pt ? { pt: description.pt } : {}) } : null;
+    const r = await vendor.proposeProduct(ctx, { ...i, description: desc, attributes: !i.brandId && brandName ? { brand: brandName } : null });
     if (basePrice && can(ctx, "vendor.pricing.manage")) await pricing.setPrice(ctx, (await pricing.ensureBaseList(ctx)).id, r.offerId, 1, basePrice);
+    if (food) await (await import("@/server/catalogue/barcode-ai")).saveDraftFoodInfo(ctx, r.productId, food);
     return done(r);
   },
 });

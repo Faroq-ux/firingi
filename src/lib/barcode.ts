@@ -19,5 +19,18 @@ export function asBarcode(input: string): string | null {
   return /^\d{8,14}$/.test(digits) ? digits : null;
 }
 
+/**
+ * The barcodes that mean the same product (wholesale): the code itself, its 13/14-digit forms with a leading 0, and —
+ * for a case code (GTIN-14, first digit 1–8) — the single item inside. A scan of the item finds the case / box listings
+ * because they carry the item barcode too.
+ */
+export function barcodeFamily(code: string): string[] {
+  const out = new Set([code]);
+  if (/^0\d{13}$/.test(code)) out.add(code.slice(1));
+  if (/^\d{13}$/.test(code)) out.add(`0${code}`);
+  if (/^[1-8]\d{13}$/.test(code) && isValidGtin(code)) { const body = code.slice(1, 13); out.add(body + gtinCheckDigit(body)); }
+  return [...out];
+}
+
 /** Build a valid EAN-13 from a 12-digit body (seeds / tests). */
 export const makeEan13 = (body12: string) => body12 + gtinCheckDigit(body12);

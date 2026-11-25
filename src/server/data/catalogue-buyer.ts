@@ -21,7 +21,7 @@ import { isLocal, roundMoney, type Fx } from "@/lib/currency";
 import { applyPromotions, type PromoCandidate } from "@/server/catalogue/promotions";
 import { loadActivePromotions, promotionsForOffer } from "@/server/services/promotions";
 import { buyerPromoContext } from "@/server/marketing/offers";
-import { asBarcode } from "@/lib/barcode";
+import { asBarcode, barcodeFamily } from "@/lib/barcode";
 import { taxLabel } from "@/lib/tax-label";
 import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance";
 import { excludedVendorIds } from "@/server/delivery/coverage";
@@ -219,7 +219,9 @@ async function badgeWhere(badge?: string | null): Promise<Prisma.VendorOfferWher
  */
 export function productQueryWhere(q: string): Prisma.VendorOfferWhereInput {
   const code = asBarcode(q);
-  if (code) return { OR: [{ packaging: { gtin: code } }, { packaging: { variant: { gtin: code } } }, { packaging: { variant: { sku: code } } }] };
+  // Wholesale: the can and its pack carry different barcodes — either finds every way the product is sold (single, pack,
+  // case, tray …) by every supplier: the offers of the product whose item barcode, or any of whose packs' barcodes, matches.
+  if (code) { const codes = barcodeFamily(code); return { OR: [{ packaging: { gtin: { in: codes } } }, { packaging: { variant: { OR: [{ gtin: { in: codes } }, { packagings: { some: { gtin: { in: codes } } } }] } } }, { packaging: { variant: { sku: code } } }] }; }
   const text = q.trim();
   return {
     OR: [
@@ -331,7 +333,12 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string 
     const m = await (await import("@/server/reviews/service")).cardRatings(items.map((i) => ({ productId: i.productId, sellerId: i.vendor.id || null })));
     const r = (i: (typeof items)[number]) => m.get(`${i.productId}:${i.vendor.id || ""}`);
     items.sort((a, b) => (r(b)?.avg ?? 0) - (r(a)?.avg ?? 0) || (r(b)?.count ?? 0) - (r(a)?.count ?? 0) || rank(a) - rank(b));
-  } else items.sort((a, b) => rank(a) - rank(b) || near(a, b));
+  } else {
+    // a barcode: what was scanned first (that pack / that item), then the other ways the product is sold, nearest first
+    const fam = asBarcode(q) ? barcodeFamily(asBarcode(q)!) : null;
+    const exact = (i: (typeof items)[number]) => (fam && i.gtin && fam.includes(i.gtin) ? 0 : 1);
+    items.sort((a, b) => rank(a) - rank(b) || exact(a) - exact(b) || near(a, b));
+  }
 
   return {
     items: await withBadges(items.slice(0, 120)),

@@ -20,6 +20,7 @@ async function login(email) {
   await page.fill("#email", email);
   await page.fill("#password", PASSWORD);
   await page.click("button[type=submit]");
+  await page.waitForURL((u) => u.pathname !== "/login", { timeout: 120000 }).catch(() => {});
   await settle(page);
   return page;
 }
