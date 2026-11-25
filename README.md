@@ -789,6 +789,19 @@ those the AI learns) help every search, also without AI. FIRINGI switches each p
 Details: [docs/search.md](docs/search.md).
 Tests: `tests/unit/search.test.ts`, `tests/integration/search.test.ts`, `node tests/e2e/search.mjs`.
 
+## Suppliers & Minimums
+
+Where customers choose their own wholesalers, FIRINGI helps them **reach each supplier's minimum** instead of splitting
+the cart: suppliers already in the cart (then their usual ones) come **first** in search and scan results, a **badge**
+shows "In your cart · €12 more to reach the minimum" or "Minimum order €50", and the **cart suggests what the customer
+usually buys** from a supplier below its minimum, one tap to add. FIRINGI also decides whether buyers see the
+**wholesaler's name or "FIRINGI + area"** (e.g. FIRINGI Almada) — per customer country, for wholesalers, and per
+supplier — across results, cart, orders, dashboard, phone app and notifications. *Catalogue › Suppliers & Minimums*
+(English); customer pages in 25 languages.
+
+Details: [docs/suppliers-minimums.md](docs/suppliers-minimums.md).
+Tests: `tests/unit/cart-help.test.ts`, `tests/integration/cart-help.test.ts`, `node tests/e2e/cart-help.mjs`.
+
 ## Add by Barcode with AI (suppliers)
 
 A supplier **types or scans a barcode** (phone camera or USB scanner). If the product is already on FIRINGI they just

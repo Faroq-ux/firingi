@@ -169,6 +169,7 @@ export async function cartView(ctx: Ctx) {
   // the points discount on the goods (not the tier's free delivery) — shown apart from offers
   const loyaltyOff = (part: (typeof pc.parts)[number]) => part.lines.reduce((a, l) => a.plus(l.discounts.filter((d) => d.promotionId === LOYALTY_PROMOTION_ID).reduce((x, d) => x.plus(d.perUnit.mul(l.item.qty)), new Decimal(0))), new Decimal(0)).toDecimalPlaces(2);
   const sellers = await prisma.company.findMany({ where: { id: { in: pc.parts.map((p) => p.sellerId) } }, select: { id: true, legalName: true, tradeName: true } });
+  const named = await (await import("@/server/catalogue/cart-help")).supplierNamer(ctx);
   // One group per supplier (= one order). Lines at their price after product offers (incl. a product
   // coupon); € off the order is shown apart.
   const groups = pc.parts.map((part) => {
@@ -180,7 +181,7 @@ export async function cartView(ctx: Ctx) {
     const d = part.decision;
     const s0 = sellers.find((x) => x.id === part.sellerId)!;
     return {
-      supplier: { id: part.sellerId, name: s0.tradeName ?? s0.legalName },
+      supplier: { id: part.sellerId, name: named(part.sellerId, s0.tradeName ?? s0.legalName) },
       lines, goodsNet: part.totals.goodsNet.toFixed(2), shownNet: shown.toFixed(2), offerDiscount: shown.minus(part.totals.goodsNet).minus(loyaltyOff(part)).toFixed(2),
       delivery: d.ok
         ? { ok: true as const, mode: d.mode, feeNet: part.chargedFee.toFixed(2), feeVat: part.totals.deliveryFeeVat.toFixed(2), feeVatRate: part.feeVatRate.toString(), free: part.freeDelivery ? ("OFFER" as const) : d.free }

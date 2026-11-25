@@ -82,14 +82,14 @@ async function dailySeries(where: Prisma.Sql, days = 14) {
 }
 
 type TickerOrder = { id: string; number: string; who: string; city: string | null; net: string; placedAt: Date; status: string };
-async function latestOrders(where: Prisma.OrderWhereInput, who: "buyer" | "seller", take = 14): Promise<TickerOrder[]> {
+async function latestOrders(where: Prisma.OrderWhereInput, who: "buyer" | "seller", take = 14, named: (id: string, n: string) => string = (_i, n) => n): Promise<TickerOrder[]> {
   const rows = await prisma.order.findMany({
     where, orderBy: { placedAt: "desc" }, take,
-    select: { id: true, number: true, netTotal: true, placedAt: true, status: true, deliveryAddress: true, routedByFiringi: true, buyer: { select: { tradeName: true, legalName: true } }, seller: { select: { tradeName: true, legalName: true } } },
+    select: { id: true, number: true, netTotal: true, placedAt: true, status: true, deliveryAddress: true, routedByFiringi: true, buyer: { select: { tradeName: true, legalName: true } }, sellerCompanyId: true, seller: { select: { tradeName: true, legalName: true } } },
   });
   return rows.map((o) => ({
     id: o.id, number: o.number, net: o.netTotal.toString(), placedAt: o.placedAt, status: o.status, city: (o.deliveryAddress as { city?: string }).city ?? null,
-    who: who === "buyer" ? o.buyer.tradeName ?? o.buyer.legalName : o.routedByFiringi ? "FIRINGI" : o.seller.tradeName ?? o.seller.legalName,
+    who: who === "buyer" ? o.buyer.tradeName ?? o.buyer.legalName : o.routedByFiringi ? "FIRINGI" : named(o.sellerCompanyId, o.seller.tradeName ?? o.seller.legalName),
   }));
 }
 
@@ -158,18 +158,19 @@ export async function vendorLive(ctx: Ctx) {
 /** Buyer dashboard: orders in progress, on the way today, spend, open invoices, most bought. */
 export async function buyerLive(ctx: Ctx) {
   const me = ctx.company.id;
+  const named = await (await import("@/server/catalogue/cart-help")).supplierNamer(ctx);
   const since30 = new Date(Date.now() - 30 * 86400_000), since60 = new Date(Date.now() - 60 * 86400_000);
   const [inProgress, onTheWay, cur, prev, series, latest, invoices, top] = await Promise.all([
     prisma.order.count({ where: { buyerCompanyId: me, status: { notIn: ["DELIVERED", "CANCELLED", "RETURNED"] } } }),
     prisma.delivery.findMany({
       where: { order: { buyerCompanyId: me }, status: { in: ["ASSIGNED", "PICKED_UP", "OUT_FOR_DELIVERY"] } },
-      select: { id: true, eta: true, status: true, order: { select: { id: true, number: true, routedByFiringi: true, seller: { select: { tradeName: true, legalName: true } } } } },
+      select: { id: true, eta: true, status: true, order: { select: { id: true, number: true, routedByFiringi: true, sellerCompanyId: true, seller: { select: { tradeName: true, legalName: true } } } } },
       orderBy: [{ eta: { sort: "asc", nulls: "last" } }], take: 6,
     }),
     prisma.order.aggregate({ where: { buyerCompanyId: me, status: { not: "CANCELLED" }, placedAt: { gte: since30 } }, _sum: { grandTotal: true }, _count: true }),
     prisma.order.aggregate({ where: { buyerCompanyId: me, status: { not: "CANCELLED" }, placedAt: { gte: since60, lt: since30 } }, _sum: { grandTotal: true } }),
     dailySeries(Prisma.sql`"buyerCompanyId" = ${me}`),
-    latestOrders({ buyerCompanyId: me }, "seller"),
+    latestOrders({ buyerCompanyId: me }, "seller", 14, named),
     creditStatuses([me]),
     prisma.$queryRaw<{ name: Prisma.JsonValue; net: number }[]>`
       SELECT l."productName" AS name, sum(l."lineNet")::float8 AS net FROM "OrderLine" l JOIN "Order" o ON o.id = l."orderId"
@@ -179,7 +180,7 @@ export async function buyerLive(ctx: Ctx) {
   const open = invoices[0]?.openInvoices ?? 0;
   const overdue = invoices[0]?.overdue ?? 0;
   return {
-    inProgress, onTheWay: onTheWay.map((d) => ({ ...d, supplier: d.order.routedByFiringi ? "FIRINGI" : d.order.seller.tradeName ?? d.order.seller.legalName })),
+    inProgress, onTheWay: onTheWay.map((d) => ({ ...d, supplier: d.order.routedByFiringi ? "FIRINGI" : named(d.order.sellerCompanyId, d.order.seller.tradeName ?? d.order.seller.legalName) })),
     spend30: Number(cur._sum.grandTotal ?? 0), spendPrev: Number(prev._sum.grandTotal ?? 0), orders30: cur._count, series, latest, openInvoices: open, overdue, top,
   };
 }

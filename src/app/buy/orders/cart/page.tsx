@@ -30,6 +30,9 @@ import { loyaltySettings } from "@/server/loyalty/service";
 import { CartExtras } from "@/components/buying/controls";
 import { formatMoney } from "@/lib/utils";
 import { viewerFx } from "@/server/currency/service";
+import { cartHelpFor, supplierStandings, topUpSuggestions } from "@/server/catalogue/cart-help";
+import { formatStanding } from "@/lib/cart-help";
+import { TopUp } from "@/components/orders/cart-help";
 
 export const metadata = { title: "Cart" };
 
@@ -59,6 +62,23 @@ export default async function CartPage() {
     cartExcise(ctx, cart.lines.map((x) => ({ offerId: x.offerId, qty: (x as { qty?: number }).qty ?? 1, unitPriceNet: Number(x.price?.unitPriceNet ?? 0), taxRate: Number(x.lineNet) ? (Number(x.lineVat) / Number(x.lineNet)) * 100 : 0, name: pickLocalized(x.name, locale) })), locale).catch(() => null),
     exLabels(),
   ]);
+  // Buying from several wholesalers: for a supplier below its minimum, what the customer usually buys from it
+  const help = !cart.routed && cart.groups.length ? await cartHelpFor(ctx) : null;
+  const topUps = new Map<string, { s: ReturnType<typeof formatStanding<import("@/lib/cart-help").Standing>>; items: { offerId: string; name: string; packaging: string; price: string; qty: number; times: number }[] }>();
+  if (help?.suggestions) {
+    const inCartIds = cart.lines.map((l) => l.offerId);
+    const stand = await supplierStandings(ctx, [], new Map(cart.groups.filter((g) => g.supplier.id).map((g) => [g.supplier.id, { goodsNet: g.goodsNet, units: g.lines.reduce((a, l) => a + l.qty, 0) }])));
+    const eur = (x: string) => formatMoney(x, locale, "EUR");
+    await Promise.all(cart.groups.map(async (g) => {
+      const st = stand.get(g.supplier.id);
+      if (!st || (st.state !== "MINIMUM" && st.state !== "FREE") || !st.missing) return;
+      const sug = await topUpSuggestions(ctx, g.supplier.id, inCartIds);
+      topUps.set(g.supplier.id, {
+        s: formatStanding(st, eur),
+        items: sug.map((x) => ({ offerId: x.item.offerId, name: pickLocalized(x.item.name, locale), packaging: pickLocalized(x.item.packaging.name, locale), price: formatMoney(x.item.price!.local?.unitPriceGross ?? x.item.price!.unitPriceGross, locale, x.item.price!.local?.code ?? "EUR"), qty: x.qty, times: x.times })),
+      });
+    }));
+  }
   const poRequired = ordering.requirePoReference;
   const tax = cart.taxLabel;
   const L = (v: unknown) => pickLocalized(v, locale);
@@ -123,6 +143,7 @@ export default async function CartPage() {
                 </TBody>
               </Table>
               {cart.groups.length > 1 && deliveryNote(g)}
+              {topUps.get(g.supplier.id) && <TopUp supplier={g.supplier.name} s={topUps.get(g.supplier.id)!.s} items={topUps.get(g.supplier.id)!.items} />}
             </div>
           ))}
           {foodWarn.length > 0 && (

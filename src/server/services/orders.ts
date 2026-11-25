@@ -376,8 +376,8 @@ export async function getOrder(ctx: Ctx, id: string) {
       lines: { orderBy: { id: "asc" } },
       statusHistory: { orderBy: { at: "asc" } },
       exceptions: { orderBy: { createdAt: "desc" } },
-      parentOrder: { select: { id: true, number: true, seller: { select: { legalName: true, tradeName: true } } } },
-      childOrders: { select: { id: true, number: true, status: true, placedAt: true, seller: { select: { legalName: true, tradeName: true } } }, orderBy: { placedAt: "asc" } },
+      parentOrder: { select: { id: true, number: true, seller: { select: { id: true, legalName: true, tradeName: true } } } },
+      childOrders: { select: { id: true, number: true, status: true, placedAt: true, seller: { select: { id: true, legalName: true, tradeName: true } } }, orderBy: { placedAt: "asc" } },
     },
   });
   if (!order) throw new NotFoundError("Order");
@@ -390,6 +390,14 @@ export async function getOrder(ctx: Ctx, id: string) {
   const hide = role === "BUYER" ? ["midRate", "fxMarginPct", "vendorRate", "vendorCurrencyCode", "fxRate"] : role === "VENDOR" ? ["eurRate", "midRate", "fxMarginPct", "fxRate", "netTotalLocal", "vatTotalLocal", "grandTotalLocal"] : [];
   for (const k of hide) delete (order as Record<string, unknown>)[k];
   if (role === "VENDOR") for (const l of order.lines) for (const k of ["unitPriceLocal", "lineNetLocal", "lineVatLocal"]) delete (l as Record<string, unknown>)[k];
+  if (role === "BUYER") {
+    // the buyer sees FIRINGI (ordered from FIRINGI) or the name FIRINGI shows for the supplier ("FIRINGI <area>")
+    const named = await (await import("@/server/catalogue/cart-help")).supplierNamer(ctx);
+    const show = (id: string, c: { legalName: string; tradeName: string | null }) => { const n = order.routedByFiringi ? "FIRINGI" : named(id, c.tradeName ?? c.legalName); c.legalName = n; c.tradeName = n; };
+    show(order.seller.id, order.seller);
+    if (order.parentOrder) show(order.parentOrder.seller.id, order.parentOrder.seller);
+    for (const c of order.childOrders) show(c.seller.id, c.seller);
+  }
   return { order, role, actors, allowed };
 }
 
@@ -446,7 +454,9 @@ export async function listOrders(ctx: Ctx, as: OrderRole, f: OrderListFilter = {
     prisma.order.count({ where: full }),
   ]);
   // Ordered from FIRINGI: the buyer's supplier is FIRINGI, not the wholesaler it picked.
-  const shown = as === "BUYER" ? rows.map((o) => (o.routedByFiringi ? { ...o, seller: { legalName: "FIRINGI", tradeName: "FIRINGI", type: "ADMIN" as const } } : o)) : rows;
+  const named = as === "BUYER" ? await (await import("@/server/catalogue/cart-help")).supplierNamer(ctx) : null;
+  const shown = as === "BUYER" ? rows.map((o) => (o.routedByFiringi ? { ...o, seller: { legalName: "FIRINGI", tradeName: "FIRINGI", type: "ADMIN" as const } }
+    : ((n) => (n === (o.seller.tradeName ?? o.seller.legalName) ? o : { ...o, seller: { ...o.seller, legalName: n, tradeName: n } }))(named!(o.sellerCompanyId, o.seller.tradeName ?? o.seller.legalName)))) : rows;
   return { rows: shown, total, page, pageCount: Math.max(1, Math.ceil(total / size)) };
 }
 

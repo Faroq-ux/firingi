@@ -145,6 +145,7 @@ export async function reorderPredictions(ctx: Ctx, side: Side, opts: { locale?: 
   const s = aiScope(ctx, side, ["admin.customers.view", "admin.crm.view", "admin.orders.view"]);
   const now = opts.now ?? new Date();
   const since = new Date(now.getTime() - 180 * DAY);
+  const named = side === "BUYER" ? await (await import("@/server/catalogue/cart-help")).supplierNamer(ctx) : (_id: string, n: string) => n;
   const orders = await prisma.$queryRaw<{ id: string; buyerId: string; sellerId: string; placedAt: Date; net: number; routed: boolean }[]>`
     SELECT o.id, o."buyerCompanyId" AS "buyerId", o."sellerCompanyId" AS "sellerId", o."placedAt", o."netTotal"::float8 AS net, o."routedByFiringi" AS routed
     FROM "Order" o WHERE ${LIVE} AND o."placedAt" > ${since} ${where(s)} ORDER BY o."placedAt"`;
@@ -184,7 +185,7 @@ export async function reorderPredictions(ctx: Ctx, side: Side, opts: { locale?: 
       .sort((a, b) => b.qty - a.qty);
     return {
       // A buyer ordering from FIRINGI never sees which supplier FIRINGI picked.
-      buyerId, buyer: cname.get(buyerId) ?? "?", sellerId, seller: side === "BUYER" && list.some((o) => o.routed) ? "FIRINGI" : cname.get(sellerId) ?? "?", orders: list.length, gapDays: nx.gapDays,
+      buyerId, buyer: cname.get(buyerId) ?? "?", sellerId, seller: side === "BUYER" && list.some((o) => o.routed) ? "FIRINGI" : side === "BUYER" ? named(sellerId, cname.get(sellerId) ?? "?") : cname.get(sellerId) ?? "?", orders: list.length, gapDays: nx.gapDays,
       lastOrder: nx.last.toISOString().slice(0, 10), expected: nx.expected.toISOString().slice(0, 10), overdueDays: nx.overdueDays, due: nx.due,
       usualNet: Math.round(median(recent.map((o) => o.net)) * 100) / 100, basket,
     };

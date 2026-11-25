@@ -116,17 +116,18 @@ async function buyerData(ctx: Ctx, s: AppSettings, locale: string) {
   const addresses = await prisma.address.findMany({ where: await orderableAddressWhere(ctx), orderBy: [{ isDefault: "desc" }, { label: "asc" }], select: { id: true, label: true, line1: true, cityName: true, postalCode: true } });
   const orders = await prisma.order.findMany({
     where: { buyerCompanyId: ctx.company.id, ...inScope }, orderBy: { placedAt: "desc" }, take: s.snapshot.orders,
-    select: { id: true, number: true, status: true, placedAt: true, grandTotal: true, netTotal: true, requestedDeliveryDate: true, seller: { select: { tradeName: true, legalName: true } }, delivery: { select: { status: true, eta: true } }, lines: { select: { productName: true, packagingName: true, qtyOrdered: true, lineNet: true } } },
+    select: { id: true, number: true, status: true, placedAt: true, grandTotal: true, netTotal: true, requestedDeliveryDate: true, routedByFiringi: true, sellerCompanyId: true, seller: { select: { tradeName: true, legalName: true } }, delivery: { select: { status: true, eta: true } }, lines: { select: { productName: true, packagingName: true, qtyOrdered: true, lineNet: true } } },
   });
   const invoices = s.snapshot.invoices && can(ctx, ["buyer.invoices.view", "buyer.payments.view"]) ? await prisma.invoice.findMany({
     where: { recipientCompanyId: ctx.company.id, status: { not: "DRAFT" }, ...(scope ? { order: inScope } : {}) }, orderBy: { issuedAt: "desc" }, take: s.snapshot.invoices,
     select: { id: true, fullNumber: true, docType: true, issuedAt: true, dueAt: true, grossTotal: true },
   }) : [];
+  const named = await (await import("@/server/catalogue/cart-help")).supplierNamer(ctx);
   return {
     products, addresses: addresses.map((a) => ({ id: a.id, label: `${a.label} · ${a.line1}, ${a.postalCode ?? ""} ${a.cityName ?? ""}`.trim() })),
     canOrder: can(ctx, "buyer.orders.place"),
     orders: orders.map((o) => ({
-      id: o.id, number: o.number, status: o.status, placedAt: o.placedAt.toISOString(), total: Number(o.grandTotal), supplier: o.seller.tradeName ?? o.seller.legalName,
+      id: o.id, number: o.number, status: o.status, placedAt: o.placedAt.toISOString(), total: Number(o.grandTotal), supplier: o.routedByFiringi ? "FIRINGI" : named(o.sellerCompanyId, o.seller.tradeName ?? o.seller.legalName),
       deliveryDate: o.requestedDeliveryDate?.toISOString() ?? null, eta: o.delivery?.eta?.toISOString() ?? null, delivery: o.delivery?.status ?? null,
       lines: o.lines.map((l) => ({ name: pickLocalized(l.productName, locale), packaging: pickLocalized(l.packagingName, locale), qty: l.qtyOrdered, net: Number(l.lineNet) })),
     })),

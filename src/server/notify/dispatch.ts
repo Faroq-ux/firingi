@@ -215,10 +215,22 @@ export async function notify(eventKey: string, targets: Target[], vars: Vars = {
     result.recipients = people.length;
     const eventChannels = overrides[eventKey] ?? def.channels;
     const prefs = await prisma.notificationPreference.findMany({ where: { userId: { in: people.map((p) => p.userId) }, category: def.category } });
+    // A buyer sees the supplier's name or "FIRINGI <area>", as FIRINGI decides (src/lib/cart-help.ts).
+    const masked = new Map<string, Vars>();
+    const varsFor = async (companyId: string | null): Promise<Vars> => {
+      if (!companyId || typeof vars.supplier !== "string") return vars;
+      if (!masked.has(companyId)) {
+        const c = await prisma.company.findUnique({ where: { id: companyId }, select: { id: true, type: true, country: { select: { code: true } } } });
+        const { maskSupplierText } = await import("@/server/catalogue/cart-help");
+        masked.set(companyId, c ? { ...vars, supplier: await maskSupplierText({ id: c.id, type: c.type, countryCode: c.country?.code ?? "" }, vars.supplier as string) } : vars);
+      }
+      return masked.get(companyId)!;
+    };
     for (const p of people) {
       const mine = Object.fromEntries(prefs.filter((x) => x.userId === p.userId).map((x) => [x.channel, x.enabled])) as Partial<Record<NotificationChannel, boolean>>;
+      const pv = await varsFor(p.companyId);
       for (const channel of channelsFor(def, eventChannels, enabled, mine)) {
-        const text = await renderEvent(eventKey, channel, p.locale, vars);
+        const text = await renderEvent(eventKey, channel, p.locale, pv);
         if (channel === "IN_APP") {
           await prisma.notification.create({ data: { userId: p.userId, type: eventKey, title: text.title, body: text.body, link: p.link ? p.link.replace(appUrl(), "") : null } });
           result.messages.push({ userId: p.userId, channel, status: "SENT" });
@@ -234,8 +246,8 @@ export async function notify(eventKey: string, targets: Target[], vars: Vars = {
         if (channel === "SMS" && !p.smsConsent) { await skip(p.phone!, "No SMS consent"); continue; }
         if (channel === "WHATSAPP" && !p.waConsent) { await skip(p.phone!, "No WhatsApp consent"); continue; }
         const rows: Prisma.NotificationMessageUncheckedCreateInput[] = [];
-        const varsJson = { ...vars } as Record<string, unknown>;
-        if (channel === "WHATSAPP" && text.wa) varsJson._wa = { ...text.wa, params: def.vars.map((k) => String(vars[k] ?? "")) };
+        const varsJson = { ...pv } as Record<string, unknown>;
+        if (channel === "WHATSAPP" && text.wa) varsJson._wa = { ...text.wa, params: def.vars.map((k) => String(pv[k] ?? "")) };
         if (channel === "PUSH") {
           const subs = await prisma.pushSubscription.findMany({ where: { userId: p.userId } });
           if (!subs.length) continue; // most users have no push device: nothing to log

@@ -14,6 +14,9 @@ import { searchAiStatus, searchSettings } from "@/server/search/service";
 import { orderingMode } from "@/server/allocation/mode";
 import { SORTS, parseFilters } from "@/lib/search";
 import { SearchFilterPanel, UnderstoodBar, type SearchLabels } from "@/components/search/views";
+import { resultsHelp } from "@/server/catalogue/cart-help";
+import { cartFirst, formatStanding } from "@/lib/cart-help";
+import { MinBadge } from "@/components/orders/cart-help";
 
 export const metadata = { title: "Search" };
 
@@ -36,6 +39,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     searchAcrossSuppliers(ctx, q, null, { filters: asked, ai: true, aiFilters: !aiOff, locale }),
     getTranslations("catalogue"), getTranslations("smartSearch"), foodSettings(), foodLabels(),
   ]);
+  // Buying from several wholesalers: suppliers already in the cart (then the usual ones) first, with where each stands
+  const help = await resultsHelp(ctx, [...new Set(res.items.map((i) => i.vendor.id).filter(Boolean))]);
+  if (help?.settings.cartFirst && (res.meta?.applied ?? asked).sort === "relevance") res.items = cartFirst(res.items, help.inCart, help.usual);
   const images = await productsWithImages(res.items.map((i) => i.productId));
   const dealMap = await dealBadges(res.items.map((i) => i.offerId));
   const l: SearchLabels = {
@@ -47,6 +53,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   };
   const currency = res.items.find((i) => i.price?.local)?.price?.local?.code ?? "EUR";
   const money = (n: number) => new Intl.NumberFormat(locale, { style: "currency", currency }).format(n);
+  const eur = (x: string) => new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(Number(x));
   const f = res.meta?.applied ?? asked;
   const showFilters = settings.filters && !!q && !res.barcode;
   return (
@@ -71,6 +78,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             {res.items.map((i) => (
               <div key={i.offerId} className="flex flex-col" data-testid="search-hit" data-product={i.name.en ?? ""}>
                 <ProductCard item={i} hasImage={images.has(i.productId)} deal={dealMap.get(i.offerId)} />
+                {help?.settings.badges && help.standing.get(i.vendor.id) && <div className="px-1"><MinBadge s={formatStanding(help.standing.get(i.vendor.id)!, eur)} /></div>}
                 <div className="mt-1 flex items-center gap-1 px-1 text-xs text-muted-foreground">
                   <MapPin className="size-3" /> {i.distanceKm !== null ? t("distance", { km: i.distanceKm.toLocaleString(locale) }) : t("noDistance")}
                 </div>

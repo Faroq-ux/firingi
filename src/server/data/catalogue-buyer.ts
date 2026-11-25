@@ -27,6 +27,7 @@ import { byDistance, nearestKm, type LatLng } from "@/server/catalogue/distance"
 import { excludedVendorIds } from "@/server/delivery/coverage";
 import { badgesFor, vendorsWithBadge, type Badge } from "@/server/compliance/service";
 import { buyerFoodWhere } from "@/server/food/service";
+import { supplierNamer, withSupplierNames } from "@/server/catalogue/cart-help";
 
 async function loadCategoryInfo() {
   const cats = await prisma.category.findMany({ select: { id: true, parentId: true, restriction: true, isActive: true } });
@@ -204,9 +205,10 @@ async function firingiPicks(ctx: Ctx, items: CatalogueItem[]): Promise<Catalogue
 const asFiringi = (i: CatalogueItem): CatalogueItem => ({ ...i, vendorSku: null, vendor: { ...i.vendor, id: "", name: "FIRINGI", badges: [] } });
 
 /** Phase 28: the suppliers' verified badges (FIRINGI-sold items carry none — the supplier isn't shown). */
-async function withBadges<T extends { vendor: { id: string; badges: Badge[] } }>(items: T[]): Promise<T[]> {
-  const map = await badgesFor(items.map((i) => i.vendor.id));
-  return items.map((i) => (i.vendor.id ? { ...i, vendor: { ...i.vendor, badges: map.get(i.vendor.id) ?? [] } } : i));
+async function withBadges<T extends { vendor: { id: string; name: string; badges: Badge[] } }>(ctx: Ctx, items: T[]): Promise<T[]> {
+  const [map, named] = await Promise.all([badgesFor(items.map((i) => i.vendor.id)), withSupplierNames(ctx, items)]);
+  // the supplier's name, or "FIRINGI <area>" when FIRINGI shows buyers the area instead
+  return named.map((i) => (i.vendor.id ? { ...i, vendor: { ...i.vendor, badges: map.get(i.vendor.id) ?? [] } } : i));
 }
 /** Phase 28: limit to suppliers holding a verified badge (catalogue filter). */
 async function badgeWhere(badge?: string | null): Promise<Prisma.VendorOfferWhereInput> {
@@ -316,7 +318,7 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string 
   const locale = opts.locale ?? "en";
   const facets = {
     categories: count((i) => [i.category.id, i.category.name[locale] ?? i.category.name.en ?? Object.values(i.category.name)[0] ?? ""]),
-    suppliers: picked ? [] : count((i) => (i.vendor.id ? [i.vendor.id, i.vendor.name] : null)),
+    suppliers: picked ? [] : count(((nm) => (i: (typeof items)[number]) => (i.vendor.id ? [i.vendor.id, nm(i.vendor.id, i.vendor.name)] : null))(await supplierNamer(ctx))),
   };
   if (f.cat) { const ids = new Set(withDescendants(f.cat, scope.info)); items = items.filter((i) => ids.has(i.category.id)); }
   if (f.vendor && !picked) items = items.filter((i) => i.vendor.id === f.vendor);
@@ -341,7 +343,7 @@ export async function searchAcrossSuppliers(ctx: Ctx, q: string, badge?: string 
   }
 
   return {
-    items: await withBadges(items.slice(0, 120)),
+    items: await withBadges(ctx, items.slice(0, 120)),
     barcode: asBarcode(q),
     meta: {
       total: items.length, words: match.words, partial: match.partial, applied: f, aiApplied, facets,
@@ -385,14 +387,14 @@ export async function browseCatalogue(ctx: Ctx, f: { q?: string; categoryId?: st
     const all = await prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }], take: 2000 });
     const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(all.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope)]);
     const sorted = await byRating(all.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn)));
-    return { items: await withBadges(sorted.slice((page - 1) * pageSize, page * pageSize)), total: sorted.length, page, pageCount: Math.max(1, Math.ceil(sorted.length / pageSize)) };
+    return { items: await withBadges(ctx, sorted.slice((page - 1) * pageSize, page * pageSize)), total: sorted.length, page, pageCount: Math.max(1, Math.ceil(sorted.length / pageSize)) };
   }
   const [rows, total] = await Promise.all([
     prisma.vendorOffer.findMany({ where, include: offerInclude(scope), orderBy: [{ packaging: { variant: { product: { searchText: "asc" } } } }, { id: "asc" }], skip: (page - 1) * pageSize, take: pageSize }),
     prisma.vendorOffer.count({ where }),
   ]);
   const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope)]);
-  return { items: await withBadges(rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn))), total, page, pageCount: Math.max(1, Math.ceil(total / pageSize)) };
+  return { items: await withBadges(ctx, rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn))), total, page, pageCount: Math.max(1, Math.ceil(total / pageSize)) };
 }
 
 /** A single offer — 404 (not 403) when it isn't visible, so its existence isn't revealed. */
@@ -411,7 +413,7 @@ export async function catalogueItem(ctx: Ctx, offerId: string) {
   const alts = alternatives.map((a) => present(a, vat, ctx.company.countryCode, 1, promoFn));
   const picked = await firingiPicks(ctx, alts.filter((a) => a.packagingUnitId !== item.packagingUnitId));
   if (picked) return { item: asFiringi(item), alternatives: picked };
-  const [withB, ...altsB] = await withBadges([item, ...alts]);
+  const [withB, ...altsB] = await withBadges(ctx, [item, ...alts]);
   return { item: withB, alternatives: altsB };
 }
 
@@ -482,6 +484,7 @@ async function suppliersNearest(ctx: Ctx, opts: { categoryId?: string; q?: strin
     },
   });
   const counts = new Map(grouped.map((g) => [g.vendorCompanyId, g._count._all]));
+  const named = await supplierNamer(ctx);
   return vendors
     .map((v) => {
       const depots = v.addresses.filter((a) => a.kind !== "HEAD_OFFICE" && a.latitude !== null);
@@ -489,7 +492,7 @@ async function suppliersNearest(ctx: Ctx, opts: { categoryId?: string; q?: strin
       const km = nearestKm(from, points);
       return {
         id: v.id,
-        name: v.tradeName ?? v.legalName,
+        name: named(v.id, v.tradeName ?? v.legalName),
         legalName: v.legalName,
         country: v.country,
         city: (v.addresses.find((a) => a.kind === "HEAD_OFFICE") ?? v.addresses[0])?.cityName ?? null,
@@ -595,10 +598,11 @@ export async function pricedOffers(ctx: Ctx, lines: { offerId: string; qty: numb
   });
   const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope, opts.couponId)]);
   const byId = new Map(rows.map((r) => [r.id, r]));
+  const named = await supplierNamer(ctx);
   const items = lines.filter((l) => byId.has(l.offerId)).map((l) => {
     const r = byId.get(l.offerId)!;
     return {
-      ...present(r, vat, ctx.company.countryCode, l.qty, promoFn), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId,
+      ...((p) => ({ ...p, vendor: { ...p.vendor, name: named(p.vendor.id, p.vendor.name) } }))(present(r, vat, ctx.company.countryCode, l.qty, promoFn)), qty: l.qty, taxCategoryId: r.packaging.variant.product.taxCategoryId, vendorCompanyId: r.vendorCompanyId, productId: r.packaging.variant.productId,
       categoryIds: categoryIdsOf(scope, r.packaging.variant.product.categoryId),
     };
   });
@@ -631,5 +635,5 @@ export async function presentOffers(ctx: Ctx, offerIds: string[], opts: { matchi
     include: offerInclude(scope),
   });
   const [vat, promoFn] = await Promise.all([vatRates(scope.buyerCountryId, [...new Set(rows.map((r) => r.packaging.variant.product.taxCategoryId))], ctx), promoMatcher(ctx, scope)]);
-  return withBadges(rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn)));
+  return withBadges(ctx, rows.map((r) => present(r, vat, ctx.company.countryCode, 1, promoFn)));
 }

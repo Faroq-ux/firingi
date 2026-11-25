@@ -24,7 +24,11 @@ export async function scanToCart(ctx: Ctx, raw: string, locale: string): Promise
   const codes = barcodeFamily(code);
   const matched = items.filter((i) => i.price && ((i.gtin && codes.includes(i.gtin)) || (i.unitGtin && codes.includes(i.unitGtin)) || i.sku?.toLowerCase() === code.toLowerCase()));
   // a pack scanned that a supplier sells another way (single / other pack): offer those options
-  const exact = matched.length ? matched : items.filter((i) => i.price);
+  let exact = matched.length ? matched : items.filter((i) => i.price);
+  // suppliers already in the cart (then the usual ones) first — to reach their minimum order
+  const { resultsHelp } = await import("@/server/catalogue/cart-help");
+  const help = await resultsHelp(ctx, []);
+  if (help?.settings.cartFirst) exact = (await import("@/lib/cart-help")).cartFirst(exact, help.inCart, help.usual);
   if (!exact.length) return { status: "NOT_FOUND", code };
   const last = await prisma.orderLine.findMany({
     where: { offerId: { in: exact.map((i) => i.offerId) }, order: { buyerCompanyId: ctx.company.id } },
