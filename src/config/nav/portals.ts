@@ -254,6 +254,7 @@ export const BUY_NAV: NavSection[] = [
       bc("deals", "My Offers", "As Minhas Ofertas", "P15", { live: true, es: "Mis ofertas" }),
       bc("price-changes", "Price Changes", "Alterações de Preço", "P29", { live: true, es: "Cambios de precio" }),
       bc("allergens", "Allergens & Food Info", "Alergénios e Info Alimentar", "P44", { live: true, es: "Alérgenos e info alimentaria" }),
+      bc("shelf-labels", "Shelf Price Labels", "Etiquetas de Preço", "P72", { live: true, perm: ["buyer.catalogue.view", "buyer.orders.place", "company.pos.manage", "company.pos.sell"], es: "Etiquetas de precio" }),
     ],
   },
   {

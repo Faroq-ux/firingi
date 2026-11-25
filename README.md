@@ -815,6 +815,18 @@ supplier — across results, cart, orders, dashboard, phone app and notification
 Details: [docs/suppliers-minimums.md](docs/suppliers-minimums.md).
 Tests: `tests/unit/cart-help.test.ts`, `tests/integration/cart-help.test.ts`, `node tests/e2e/cart-help.mjs`.
 
+## Shelf Price Labels (shops)
+
+Shops and wholesale counters **print price labels for their shelves**: products bought on FIRINGI (price = today's cost
+per item + their margin, incl. VAT, ending in 9 if they like) or items from their FIRINGI till. Each label carries the
+**product's own barcode** (the till scans it, customers see the same code as on the pack) or a QR to the food
+information, the price, the **price per kg / litre**, promos with the old price struck through, and brand / origin where
+FIRINGI allows. A4 sheets (21 / 12 / 4), shelf-edge strips and label-printer rolls; a "to print" list of labels whose
+price changed; prices can be saved into the till. FIRINGI turns it on/off by buyer type, country and business.
+
+Details: [docs/shelf-labels.md](docs/shelf-labels.md).
+Tests: `tests/unit/shelf-labels.test.ts`, `tests/integration/shelf-labels.test.ts`, `node tests/e2e/shelf-labels.mjs`.
+
 ## Add by Barcode with AI (suppliers)
 
 A supplier **types or scans a barcode** (phone camera or USB scanner). If the product is already on FIRINGI they just
