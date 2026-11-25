@@ -24,7 +24,7 @@ const sql = (q) => execFileSync("psql", ["-At", DB, "-c", q], { encoding: "utf8"
 const tap = async (p, sel) => { const l = typeof sel === "string" ? p.locator(sel).first() : sel; await l.evaluate((e) => e.scrollIntoView({ block: "center" })); await l.click(); };
 
 const KEBAB = sql(`select id from "Company" where "tradeName"='Kebab House'`);
-const clean = () => { sql(`delete from "ShelfLabel" where "companyId"='${KEBAB}'`); sql(`delete from "Setting" where key='shelfLabels.settings'`); };
+const clean = () => { sql(`delete from "ShelfLabel" where "companyId"='${KEBAB}'`); sql(`delete from "Setting" where key in ('shelfLabels.settings','shelfLabels.customSize')`); };
 clean();
 process.on("exit", () => { try { clean(); } catch (e) { console.log("cleanup:", e.message); } });
 const count = (w = "true") => Number(sql(`select count(*) from "ShelfLabel" where "companyId"='${KEBAB}' and ${w}`));
@@ -96,10 +96,35 @@ try {
   check("back on to print", (await c.getByTestId("sl-row").count()) === 1);
   await shot(c, "03-to-print-again", true);
 
+  // 4b. my own size: sticker sheet 63.5 × 38.1 with margins → 21 per sheet; saved; test print not counted as printed
+  await c.getByTestId("sl-format").selectOption("CUSTOM");
+  check("own size form", await c.getByTestId("sz-form").isVisible());
+  const setN = async (k, v) => { await c.getByTestId(`sz-${k}`).fill(String(v)); await c.getByTestId(`sz-${k}`).blur(); };
+  await setN("w", 63.5); await setN("h", 38.1); await setN("top", 15.1); await setN("left", 7.2); await setN("gapX", 2.5);
+  check("fits 21 per sheet (3 × 7)", /21\b[\s\S]*3 × 7/.test(await c.getByTestId("sz-fits").innerText()), await c.getByTestId("sz-fits").innerText());
+  check("sheet drawing", (await c.getByTestId("sz-preview").locator("rect").count()) === 22);
+  await shot(c, "06-my-size", true);
+  await tap(c, "[data-testid=sz-save]");
+  check("size saved", await until(async () => sql(`select value->>'w' from "Setting" where key='shelfLabels.customSize' and "scopeId"='${KEBAB}'`) === "63.5"));
+  const toPrint0 = count(`"printedPrice" is distinct from "priceGross"`);
+  const [tr] = await Promise.all([c.waitForResponse((r) => r.url().includes("/api/buy/shelf-labels/pdf")), tap(c, "[data-testid=sz-test]")]);
+  check("test print PDF", tr.status() === 200);
+  await c.waitForTimeout(800);
+  check("test print not marked printed", count(`"printedPrice" is distinct from "priceGross"`) === toPrint0);
+  for (const [name, custom] of [["sheet", { paper: "A4", w: 63.5, h: 38.1, top: 15.1, left: 7.2, gapX: 2.5, gapY: 0 }], ["roll", { paper: "ROLL", w: 50, h: 30 }]]) {
+    const r = await c.request.post(`${BASE}/api/buy/shelf-labels/pdf`, { data: { ids: sql(`select string_agg(id, ',') from "ShelfLabel" where "companyId"='${KEBAB}'`).split(","), format: "CUSTOM", custom, test: name === "sheet", fields: { brand: true, origin: false, code: "BARCODE", unitPrice: true, shopName: true, date: true } } });
+    const body = await r.body();
+    check(`own size PDF (${name})`, r.status() === 200 && body.subarray(0, 4).toString() === "%PDF");
+    if (SHOTS) writeFileSync(`${SHOTS}/labels-own-${name}.pdf`, body);
+  }
+  await go(c, "/buy/catalogue/shelf-labels");
+  check("saved size chosen next time", (await c.getByTestId("sl-format").inputValue()) === "CUSTOM");
+
   // 5. FIRINGI: Portugal off, this shop on
   const a = await login("superadmin@firingi.test", { locale: "en-GB" });
   await go(a, "/admin/catalogue/shelf-labels");
   check("admin page", await a.getByTestId("sla-form").isVisible());
+  await a.getByTestId("sla-customsize").uncheck();
   await a.getByTestId("sla-country-PT").uncheck();
   await tap(a, "[data-testid=sla-save]");
   check("saved", await until(async () => sql(`select value->'offCountries' ? 'PT' from "Setting" where key='shelfLabels.settings'`) === "t"));
@@ -112,6 +137,7 @@ try {
   check("shop switched on", await until(async () => sql(`select value->'companies'->>'${KEBAB}' from "Setting" where key='shelfLabels.settings'`) === "ON"));
   await go(c, "/buy/catalogue/shelf-labels");
   check("shop: works again", await c.getByTestId("sl-list").isVisible());
+  check("own size switched off by FIRINGI", (await c.getByTestId("sl-format").locator("option[value=CUSTOM]").count()) === 0);
 
   // 6. phone
   const ph = await login("owner@kebabhouse.test", { viewport: { width: 390, height: 844 } });

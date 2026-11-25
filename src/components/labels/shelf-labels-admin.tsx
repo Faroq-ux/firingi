@@ -31,6 +31,7 @@ export function ShelfLabelSettingsForm({ initial, countries }: { initial: ShelfL
         <Box label="Brand" checked={s.allowBrand} onChange={(v) => setS({ ...s, allowBrand: v })} testid="sla-brand" />
         <Box label="Origin country" hint="From the product's origin on FIRINGI; shops can correct it." checked={s.allowOrigin} onChange={(v) => setS({ ...s, allowOrigin: v })} testid="sla-origin" />
         <Box label="QR code" hint="Opens the product's food information (allergens, ingredients). Also used when a product has no barcode." checked={s.allowQr} onChange={(v) => setS({ ...s, allowQr: v })} testid="sla-qr" />
+        <Box label="Shops can set their own label size" hint="Width × height in mm on A4 sticker sheets (margins and gaps) or label-printer rolls, with a test print to check alignment. Off: only the standard sizes." checked={s.allowCustomSize} onChange={(v) => setS({ ...s, allowCustomSize: v })} testid="sla-customsize" />
         <Box label="Save the price into the shop's FIRINGI till" checked={s.allowPosSync} onChange={(v) => setS({ ...s, allowPosSync: v })} testid="sla-possync" />
       </section>
       <section className="space-y-2">

@@ -34,12 +34,18 @@ export const updateLabelAction = defineAction({
 export const applyLabelPricesAction = defineAction({ permission: [...SHOP], schema: z.object({ ids }), handler: async (ctx, i) => page(await S.applyNewPrices(ctx, i.ids)) });
 export const removeLabelsAction = defineAction({ permission: [...SHOP], schema: z.object({ ids }), handler: async (ctx, i) => { page(await S.removeLabels(ctx, i.ids)); return true; } });
 
+export const saveLabelSizeAction = defineAction({
+  permission: [...SHOP],
+  schema: z.object({ paper: z.enum(["A4", "ROLL"]), w: z.number(), h: z.number(), top: z.number(), left: z.number(), gapX: z.number(), gapY: z.number() }),
+  handler: async (ctx, i) => page(await S.saveCustomSize(ctx, i)),
+});
+
 const are = <T,>(v: T) => { revalidatePath("/admin/catalogue/shelf-labels"); revalidatePath("/buy", "layout"); return v; };
 export const saveShelfLabelSettingsAction = defineAction({
   permission: [...ADMIN],
   schema: z.object({
     enabled: z.boolean(), buyers: z.object({ CUSTOMER: z.boolean(), WHOLESALER: z.boolean() }),
-    allowBrand: z.boolean(), allowOrigin: z.boolean(), allowQr: z.boolean(), allowPosSync: z.boolean(), offCountries: z.array(z.string().length(2)).max(60),
+    allowBrand: z.boolean(), allowOrigin: z.boolean(), allowQr: z.boolean(), allowPosSync: z.boolean(), allowCustomSize: z.boolean(), offCountries: z.array(z.string().length(2)).max(60),
   }),
   handler: async (ctx, i) => { are(await S.saveSlSettings(ctx, i)); return true; },
 });

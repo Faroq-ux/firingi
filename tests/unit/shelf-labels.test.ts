@@ -1,6 +1,6 @@
 /** Shelf price labels: margin prices, unit price, sizes from names, promo, reprint, switches. */
 import { describe, expect, it } from "vitest";
-import { allowedFields, contentFromName, marginOf, mergeSl, needsPrint, priceFromMargin, shownPrice, slOn, unitPrice, DEFAULT_FIELDS, FORMATS } from "@/lib/shelf-labels";
+import { allowedFields, cleanCustom, customFormat, sizeClass, contentFromName, marginOf, mergeSl, needsPrint, priceFromMargin, shownPrice, slOn, unitPrice, DEFAULT_FIELDS, FORMATS } from "@/lib/shelf-labels";
 
 describe("shelf label rules", () => {
   it("price from margin: case split per item, VAT, ending in 9", () => {
@@ -37,5 +37,31 @@ describe("shelf label rules", () => {
   });
   it("formats fit on the page", () => {
     for (const f of Object.values(FORMATS)) { expect(f.cols * f.w).toBeLessThanOrEqual(f.pageW + 0.01); expect(f.rows * f.h).toBeLessThanOrEqual(f.pageH + 0.01); }
+  });
+  it("own size: as many as fit on A4, margins and gaps for sticker sheets, rolls, limits", () => {
+    const MM = 2.834645669;
+    // 70 × 37 centred: 3 × 8 = 24
+    const a = customFormat({ paper: "A4", w: 70, h: 37 })!;
+    expect([a.cols, a.rows]).toEqual([3, 8]);
+    expect(a.mx).toBeCloseTo(0, 1);
+    // Apli-style 63.5 × 38.1, top 15.1, left 7.2, gap 2.5 across → 3 × 7
+    const b = customFormat({ paper: "A4", w: 63.5, h: 38.1, top: 15.1, left: 7.2, gapX: 2.5 })!;
+    expect([b.cols, b.rows]).toEqual([3, 7]);
+    expect(b.mx / MM).toBeCloseTo(7.2, 1);
+    expect(b.my / MM).toBeCloseTo(15.1, 1);
+    // every label inside the page
+    for (const f of [a, b]) {
+      expect(f.mx + f.cols * f.w + (f.cols - 1) * (f.gx ?? 0)).toBeLessThanOrEqual(f.pageW + 0.01);
+      expect(f.my + f.rows * f.h + (f.rows - 1) * (f.gy ?? 0)).toBeLessThanOrEqual(f.pageH + 0.01);
+    }
+    // a roll: one label per page of exactly that size
+    const r = customFormat({ paper: "ROLL", w: 50, h: 30 })!;
+    expect([r.cols, r.rows, Math.round(r.pageW / MM), Math.round(r.pageH / MM)]).toEqual([1, 1, 50, 30]);
+    // limits and too big
+    expect(cleanCustom({ w: 5, h: 999, top: -3 })).toMatchObject({ w: 25, h: 287, top: 0 });
+    expect(customFormat({ paper: "A4", w: 200, h: 200, top: 60 })).toBeNull();
+    expect([sizeClass(105, 148), sizeClass(105, 50), sizeClass(70, 37)]).toEqual(["L", "M", "S"]);
+    expect(mergeSl({}).allowCustomSize).toBe(true);
+    expect(mergeSl({ allowCustomSize: false }).allowCustomSize).toBe(false);
   });
 });

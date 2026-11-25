@@ -1,7 +1,7 @@
 import { Printer, RefreshCw, Tags } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal, can } from "@/server/rbac/guard";
-import { labelCandidates, listLabels, slAccess } from "@/server/labels/service";
+import { labelCandidates, listLabels, slAccess, slCustomSize } from "@/server/labels/service";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tile } from "@/components/motion/dashboard-kit";
@@ -17,9 +17,9 @@ export default async function ShelfLabelsPage() {
   if (!access.on) {
     return (<><PageHeader title={t("title")} description={t("intro")} icon={Tags} /><Card><CardContent className="py-8 text-sm text-muted-foreground" data-testid="sl-off">{t("off")}</CardContent></Card></>);
   }
-  const [{ labels }, cand] = await Promise.all([listLabels(ctx), labelCandidates(ctx, locale)]);
+  const [{ labels }, cand, custom] = await Promise.all([listLabels(ctx), labelCandidates(ctx, locale), slCustomSize(ctx)]);
   const s = access.settings;
-  const allow: SlAllow = { brand: s.allowBrand, origin: s.allowOrigin, qr: s.allowQr, posSync: s.allowPosSync && can(ctx, "company.pos.manage"), manage: access.manage, till: can(ctx, ["company.pos.manage", "company.pos.sell"]) };
+  const allow: SlAllow = { brand: s.allowBrand, origin: s.allowOrigin, qr: s.allowQr, posSync: s.allowPosSync && can(ctx, "company.pos.manage"), manage: access.manage, till: can(ctx, ["company.pos.manage", "company.pos.sell"]), customSize: s.allowCustomSize };
   const rows: SlRow[] = labels.map((l) => ({
     id: l.id, name: l.name, barcode: l.barcode, brand: l.brand, originCountryCode: l.originCountryCode, offerId: l.offerId, posItemId: l.posItemId,
     priceGross: l.priceGross.toFixed(2), marginPct: l.marginPct?.toString() ?? null, promoPrice: l.promoPrice?.toFixed(2) ?? null, promoUntil: l.promoUntil?.toISOString() ?? null,
@@ -42,7 +42,7 @@ export default async function ShelfLabelsPage() {
         )}
         <Card>
           <CardHeader><CardTitle>{t("listTitle")}</CardTitle><CardDescription>{t("listHint")}</CardDescription></CardHeader>
-          <CardContent><LabelList key={rows.map((r) => r.id).join(",")} labels={rows} locale={locale} allow={allow} /></CardContent>
+          <CardContent><LabelList key={rows.map((r) => r.id).join(",")} labels={rows} locale={locale} allow={allow} custom={custom} /></CardContent>
         </Card>
       </div>
     </>

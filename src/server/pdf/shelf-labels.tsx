@@ -9,7 +9,7 @@ import path from "node:path";
 import QRCode from "qrcode";
 import { Document, Font, Image, Page, Text, View, renderToBuffer } from "@react-pdf/renderer";
 import type { ShelfLabel } from "@prisma/client";
-import { FORMATS, shownPrice, unitPrice, type LabelFields, type LabelFormat } from "@/lib/shelf-labels";
+import { shownPrice, unitPrice, type FormatSpec, type LabelFields } from "@/lib/shelf-labels";
 import { barRuns, eanModules } from "@/lib/marketing-catalogue";
 
 let fonts = false;
@@ -38,12 +38,17 @@ function Bars({ modules, digits, module, height }: { modules: string; digits: st
 }
 
 export async function renderShelfLabelsPdf(i: {
-  format: LabelFormat; fields: LabelFields; locale: string; baseUrl: string; shopName: string; date: Date; labels: ShelfLabel[]; l: ShelfPdfLabels;
+  /** page and label layout (a standard size or the shop's own) */
+  spec: FormatSpec;
+  /** CUT: light dashed cut lines (plain paper); NONE: nothing (sticker sheets, rolls); TEST: solid outlines to check alignment */
+  borders?: "CUT" | "NONE" | "TEST";
+  fields: LabelFields; locale: string; baseUrl: string; shopName: string; date: Date; labels: ShelfLabel[]; l: ShelfPdfLabels;
   /** a QR where a label has no barcode that can be drawn (FIRINGI allows QR codes) */
   qrFallback?: boolean;
 }) {
   registerFonts();
-  const f = FORMATS[i.format];
+  const f = i.spec;
+  const border = i.borders === "TEST" ? { borderWidth: 0.6, borderColor: "#111827", borderStyle: "solid" as const } : i.borders === "NONE" ? {} : { borderWidth: 0.4, borderColor: "#d1d5db", borderStyle: "dashed" as const };
   const per = f.cols * f.rows;
   const nf = new Intl.NumberFormat(i.locale, { style: "currency", currency: "EUR" });
   const df = new Intl.DateTimeFormat(i.locale, { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -55,6 +60,11 @@ export async function renderShelfLabelsPdf(i: {
   const T = f.size === "L" ? { name: 20, sub: 11, price: 60, unit: 11, mod: 1.4, barH: 40, qr: 80, pad: 14 }
     : f.size === "M" ? { name: 11, sub: 7.5, price: 30, unit: 7.5, mod: 0.95, barH: 22, qr: 44, pad: 7 }
     : { name: low ? 7.5 : 8.5, sub: 6, price: low ? 15 : 20, unit: 6, mod: f.w > 160 ? 0.85 : 0.75, barH: low ? 12 : 18, qr: low ? 26 : 32, pad: low ? 3.5 : 4.5 };
+  // very low labels (own sizes under 29 mm): smaller type and shorter bars — never thinner bars
+  const k = f.size === "S" && f.h < 29 * 2.83 ? Math.max(0.6, f.h / (29 * 2.83)) : 1;
+  if (k < 1) Object.assign(T, { name: T.name * k, sub: Math.max(4.5, T.sub * k), price: T.price * k, unit: Math.max(4.5, T.unit * k), barH: Math.max(8, T.barH * k), qr: T.qr * k, pad: T.pad * k });
+  /** a barcode fits across the label (95 modules + quiet zones) */
+  const barsFit = (modules: number) => (modules + 14) * T.mod <= f.w - 2 * T.pad;
   /** the price as large as it fits on one line (DejaVu Sans Bold digits ≈ 0.64 em) */
   /** narrow labels: shop and date go under the name, the barcode keeps its quiet zone free */
   const narrow = f.w < 130;
@@ -82,7 +92,7 @@ export async function renderShelfLabelsPdf(i: {
     const sub = [i.fields.brand ? l.brand : null, origin].filter(Boolean).join(" · ");
     const priceText = nf.format(s.price.toNumber());
     return (
-      <View style={{ width: f.w, height: f.h, padding: T.pad, borderWidth: 0.4, borderColor: "#d1d5db", borderStyle: "dashed", justifyContent: "space-between" }}>
+      <View style={{ width: f.w, height: f.h, padding: T.pad, ...border, justifyContent: "space-between" }}>
         {s.promo && <View style={{ position: "absolute", top: 0, left: 0, right: 0, backgroundColor: RED, paddingVertical: 1 }}><Text style={{ color: "#fff", fontSize: T.sub, fontWeight: "bold", textAlign: "center" }}>{i.l.promo}{l.promoUntil ? ` · ${fill(i.l.until, { date: df.format(l.promoUntil) })}` : ""}</Text></View>}
         <View style={{ marginTop: s.promo ? T.sub + 3 : 0 }}>
           <Text style={{ fontSize: T.name, fontWeight: "bold" }} hyphenationCallback={(w) => [w]}>{fit(l.name)}</Text>
@@ -95,7 +105,7 @@ export async function renderShelfLabelsPdf(i: {
           {up && <Text style={{ fontSize: T.unit }}>{nf.format(up.toNumber())}{l.contentUnit === "KG" ? i.l.perKg : i.l.perL}</Text>}
         </View>
         <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" }}>
-          {bars ? <Bars modules={bars.modules} digits={bars.digits} module={T.mod} height={T.barH} /> : qr ? <Image src={qr} style={{ width: T.qr, height: T.qr }} /* eslint-disable-line jsx-a11y/alt-text */ /> : <View />}
+          {bars && barsFit(bars.modules.length) ? <Bars modules={bars.modules} digits={bars.digits} module={T.mod} height={T.barH} /> : bars ? <Text style={{ fontSize: T.unit, letterSpacing: 0.6 }}>{bars.digits}</Text> : qr ? <Image src={qr} style={{ width: T.qr, height: T.qr }} /* eslint-disable-line jsx-a11y/alt-text */ /> : <View />}
           {!narrow && <View style={{ alignItems: "flex-end" }}>
             {i.fields.shopName && !!i.shopName && <Text style={{ fontSize: T.unit - 1, color: "#6b7280" }}>{i.shopName}</Text>}
             {i.fields.date && <Text style={{ fontSize: T.unit - 1.5, color: "#9ca3af" }}>{df.format(i.date)}</Text>}
@@ -108,10 +118,11 @@ export async function renderShelfLabelsPdf(i: {
   const doc = (
     <Document title="FIRINGI shelf labels" author="FIRINGI" language={i.locale}>
       {pages.map((pg, n) => (
-        <Page key={n} size={[f.pageW, f.pageH]} style={{ fontFamily: "DejaVu", color: "#111827", paddingLeft: f.mx, paddingTop: f.my }}>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", width: f.cols * f.w }}>
-            {pg.map((l, k) => <View key={k}>{one(l)}</View>)}
-          </View>
+        <Page key={n} size={[f.pageW, f.pageH]} style={{ fontFamily: "DejaVu", color: "#111827", position: "relative" }}>
+          {pg.map((l, k) => {
+            const col = k % f.cols, row = Math.floor(k / f.cols);
+            return <View key={k} style={{ position: "absolute", left: f.mx + col * (f.w + (f.gx ?? 0)), top: f.my + row * (f.h + (f.gy ?? 0)) }}>{one(l)}</View>;
+          })}
         </Page>
       ))}
     </Document>

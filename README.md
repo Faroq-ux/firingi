@@ -821,7 +821,8 @@ Shops and wholesale counters **print price labels for their shelves**: products 
 per item + their margin, incl. VAT, ending in 9 if they like) or items from their FIRINGI till. Each label carries the
 **product's own barcode** (the till scans it, customers see the same code as on the pack) or a QR to the food
 information, the price, the **price per kg / litre**, promos with the old price struck through, and brand / origin where
-FIRINGI allows. A4 sheets (21 / 12 / 4), shelf-edge strips and label-printer rolls; a "to print" list of labels whose
+FIRINGI allows. A4 sheets (21 / 12 / 4), shelf-edge strips, label-printer rolls or **their own size** (mm, sticker-sheet margins and
+gaps, test print — FIRINGI can switch it off); a "to print" list of labels whose
 price changed; prices can be saved into the till. FIRINGI turns it on/off by buyer type, country and business.
 
 Details: [docs/shelf-labels.md](docs/shelf-labels.md).

@@ -16,8 +16,8 @@ import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/serv
 import { writeAudit } from "@/server/services/audit";
 import { pickLocalized } from "@/i18n/config";
 import {
-  LABEL_FORMATS, allowedFields, contentFromName, marginOf, mergeSl, needsPrint, priceFromMargin, slOn,
-  type LabelFields, type LabelFormat, type Rounding, type ShelfLabelSettings,
+  FORMATS, LABEL_FORMATS, allowedFields, cleanCustom, contentFromName, customFormat, marginOf, mergeSl, needsPrint, priceFromMargin, slOn,
+  type CustomSize, type FormatSpec, type LabelFields, type LabelFormat, type Rounding, type ShelfLabelSettings,
 } from "@/lib/shelf-labels";
 
 const KEY = "shelfLabels.settings";
@@ -216,12 +216,47 @@ async function syncTill(ctx: Ctx, l: ShelfLabel) {
 
 // ── printing ────────────────────────────────────────────────────────────────
 
-/** The PDF for these labels in this format; they are marked as printed at their current price. */
-export async function printLabels(ctx: Ctx, ids: string[], format: LabelFormat, fields: LabelFields, locale: string, copies = 1) {
+// ── the shop's own size ─────────────────────────────────────────────────────
+
+const SIZE_KEY = "shelfLabels.customSize";
+/** The size the shop saved (or the default). */
+export async function slCustomSize(ctx: Ctx): Promise<CustomSize & { saved: boolean }> {
+  const row = await prisma.setting.findFirst({ where: { scope: "COMPANY", scopeId: ctx.company.id, key: SIZE_KEY } });
+  return { ...cleanCustom(row?.value as Partial<CustomSize> | null), saved: !!row };
+}
+export async function saveCustomSize(ctx: Ctx, input: Partial<CustomSize>) {
+  const a = await need(ctx, true);
+  if (!a.settings.allowCustomSize) throw new ForbiddenError();
+  const c = cleanCustom(input);
+  if (!customFormat(c)) throw new ValidationError("This size does not fit on an A4 page.");
+  await prisma.setting.upsert({
+    where: { scope_scopeId_key: { scope: "COMPANY", scopeId: ctx.company.id, key: SIZE_KEY } },
+    update: { value: c as unknown as Prisma.InputJsonValue, updatedById: ctx.user.id },
+    create: { scope: "COMPANY", scopeId: ctx.company.id, key: SIZE_KEY, value: c as unknown as Prisma.InputJsonValue, updatedById: ctx.user.id },
+  });
+  return c;
+}
+
+// ── printing ────────────────────────────────────────────────────────────────
+
+export type PrintFormat = LabelFormat | "CUSTOM";
+/**
+ * The PDF for these labels. A standard size, or the shop's own ("CUSTOM": the size sent, else the saved one).
+ * Test print: one page filled with the labels, solid outlines, not marked printed — to check a sticker sheet lines up.
+ */
+export async function printLabels(ctx: Ctx, ids: string[], format: PrintFormat, fields: LabelFields, locale: string, copies = 1, opts: { custom?: Partial<CustomSize>; test?: boolean } = {}) {
   const a = await need(ctx);
   const labels = await prisma.shelfLabel.findMany({ where: { id: { in: ids }, companyId: ctx.company.id }, orderBy: { name: "asc" } });
   if (!labels.length) throw new ValidationError("Choose labels to print.");
   if (labels.length * copies > 2000) throw new ValidationError("Print at most 2000 labels at a time.");
+  let spec: FormatSpec, borders: "CUT" | "NONE" | "TEST";
+  if (format === "CUSTOM") {
+    if (!a.settings.allowCustomSize) throw new ForbiddenError();
+    const s = customFormat(opts.custom ?? (await slCustomSize(ctx)));
+    if (!s) throw new ValidationError("This size does not fit on an A4 page.");
+    spec = s; borders = "NONE";
+  } else { spec = FORMATS[format]; borders = format.startsWith("ROLL") ? "NONE" : "CUT"; }
+  if (opts.test) borders = "TEST";
   const f = allowedFields(fields, a.settings);
   const { renderShelfLabelsPdf } = await import("@/server/pdf/shelf-labels");
   const { appUrl } = await import("@/server/notify/dispatch");
@@ -230,11 +265,15 @@ export async function printLabels(ctx: Ctx, ids: string[], format: LabelFormat, 
   const l = (k: string) => mine[k] ?? en[k] ?? k;
   const shop = await prisma.company.findUnique({ where: { id: ctx.company.id }, select: { tradeName: true, legalName: true } });
   const now = new Date();
+  const perPage = spec.cols * spec.rows;
+  const list = opts.test
+    ? Array.from({ length: perPage }, (_, k) => labels[k % labels.length])
+    : labels.flatMap((x) => Array.from({ length: Math.max(1, Math.min(50, copies)) }, () => x));
   const pdf = await renderShelfLabelsPdf({
-    format, fields: f, qrFallback: a.settings.allowQr, locale, baseUrl: appUrl(), shopName: shop?.tradeName ?? shop?.legalName ?? "", date: now,
-    labels: labels.flatMap((x) => Array.from({ length: Math.max(1, Math.min(50, copies)) }, () => x)),
+    spec, borders, fields: f, qrFallback: a.settings.allowQr, locale, baseUrl: appUrl(), shopName: shop?.tradeName ?? shop?.legalName ?? "", date: now, labels: list,
     l: { perKg: l("perKg"), perL: l("perL"), promo: l("promo"), was: l("was"), until: l("until"), origin: l("origin") },
   });
+  if (opts.test) return pdf;
   await prisma.$transaction(labels.map((x) => {
     const promoOn = x.promoPrice != null && (!x.promoUntil || x.promoUntil >= now);
     return prisma.shelfLabel.update({ where: { id: x.id }, data: { printedAt: now, printedPrice: x.priceGross, printedPromo: promoOn ? x.promoPrice : null } });
@@ -242,9 +281,9 @@ export async function printLabels(ctx: Ctx, ids: string[], format: LabelFormat, 
   return pdf;
 }
 
-export function assertFormat(f: string): LabelFormat {
-  if (!(LABEL_FORMATS as readonly string[]).includes(f)) throw new AppError("BAD_FORMAT", "Unknown label size.");
-  return f as LabelFormat;
+export function assertFormat(f: string): PrintFormat {
+  if (f !== "CUSTOM" && !(LABEL_FORMATS as readonly string[]).includes(f)) throw new AppError("BAD_FORMAT", "Unknown label size.");
+  return f as PrintFormat;
 }
 
 // ── FIRINGI ─────────────────────────────────────────────────────────────────

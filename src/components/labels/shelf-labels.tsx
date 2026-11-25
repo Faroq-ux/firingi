@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Msg, Spin, useRun } from "@/components/shared/run";
-import { addLabelsFromPurchasesAction, addLabelsFromTillAction, applyLabelPricesAction, removeLabelsAction, updateLabelAction } from "@/server/actions/shelf-labels";
-import { DEFAULT_FIELDS, LABEL_FORMATS, unitPrice, type LabelFields, type LabelFormat } from "@/lib/shelf-labels";
+import { addLabelsFromPurchasesAction, addLabelsFromTillAction, applyLabelPricesAction, removeLabelsAction, saveLabelSizeAction, updateLabelAction } from "@/server/actions/shelf-labels";
+import { CUSTOM_LIMITS, DEFAULT_FIELDS, LABEL_FORMATS, cleanCustom, customFormat, unitPrice, type CustomSize, type LabelFields, type LabelFormat } from "@/lib/shelf-labels";
 import { formatDate, formatMoney } from "@/lib/utils";
 
 export type SlRow = {
@@ -21,7 +21,7 @@ export type SlRow = {
 };
 export type SlPurchase = { offerId: string; name: string; pack: string; brand: string | null; barcode: string | null; costNet: string | null; times: number };
 export type SlTill = { posItemId: string; name: string; barcode: string | null; priceGross: string };
-export type SlAllow = { brand: boolean; origin: boolean; qr: boolean; posSync: boolean; manage: boolean; till: boolean };
+export type SlAllow = { brand: boolean; origin: boolean; qr: boolean; posSync: boolean; manage: boolean; till: boolean; customSize: boolean };
 
 const num = (v: string) => { const n = Number(v.replace(",", ".")); return Number.isFinite(n) ? n : NaN; };
 
@@ -125,13 +125,15 @@ function Editor({ l, allow, onClose }: { l: SlRow; allow: SlAllow; onClose: () =
   );
 }
 
-export function LabelList({ labels, locale, allow }: { labels: SlRow[]; locale: string; allow: SlAllow }) {
+export function LabelList({ labels, locale, allow, custom: savedSize }: { labels: SlRow[]; locale: string; allow: SlAllow; custom: CustomSize & { saved: boolean } }) {
   const t = useTranslations("shelfLabels");
   const { pending, error, done, run, router } = useRun();
   const [filter, setFilter] = useState<"ALL" | "PRINT">(labels.some((l) => l.toPrint) ? "PRINT" : "ALL");
   const [sel, setSel] = useState<Set<string>>(() => new Set(labels.filter((l) => l.toPrint).map((l) => l.id)));
   const [edit, setEdit] = useState<string | null>(null);
-  const [format, setFormat] = useState<LabelFormat>("A4_21");
+  const [format, setFormat] = useState<LabelFormat | "CUSTOM">(allow.customSize && savedSize.saved ? "CUSTOM" : "A4_21");
+  const [custom, setCustom] = useState<CustomSize>(cleanCustom(savedSize));
+  const ts = useTranslations("labelSize");
   const [fields, setFields] = useState<LabelFields>({ ...DEFAULT_FIELDS, brand: allow.brand && DEFAULT_FIELDS.brand });
   const [copies, setCopies] = useState(1);
   const [printing, setPrinting] = useState(false);
@@ -141,14 +143,15 @@ export function LabelList({ labels, locale, allow }: { labels: SlRow[]; locale: 
   const toggle = (id: string) => { const n = new Set(sel); if (n.has(id)) n.delete(id); else n.add(id); setSel(n); };
   const box = (k: keyof LabelFields, label: string) => <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={!!fields[k]} onChange={(e) => setFields({ ...fields, [k]: e.target.checked })} data-testid={`sl-show-${k}`} /> {label}</label>;
 
-  const print = async () => {
+  const print = async (test = false) => {
     setPrinting(true); setPrintMsg(null);
     const w = window.open("", "_blank");
     try {
-      const r = await fetch("/api/buy/shelf-labels/pdf", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids: [...sel], format, fields, copies }) });
+      const r = await fetch("/api/buy/shelf-labels/pdf", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids: [...sel], format, fields, copies, test, ...(format === "CUSTOM" ? { custom } : {}) }) });
       if (!r.ok) { w?.close(); setPrintMsg({ ok: false, text: (await r.text()) || t("printError") }); return; }
       const url = URL.createObjectURL(await r.blob());
       if (w) w.location.href = url; else { const a = document.createElement("a"); a.href = url; a.download = `shelf-labels-${format}.pdf`; a.click(); }
+      if (test) return;
       setPrintMsg({ ok: true, text: t("printed") });
       router.refresh();
     } finally { setPrinting(false); }
@@ -200,7 +203,10 @@ export function LabelList({ labels, locale, allow }: { labels: SlRow[]; locale: 
         <h3 className="font-semibold">{t("printTitle")}</h3>
         <div className="grid gap-3 md:grid-cols-3">
           <label className="space-y-1 text-sm"><span className="block text-xs text-muted-foreground">{t("size")}</span>
-            <Select value={format} onChange={(e) => setFormat(e.target.value as LabelFormat)} data-testid="sl-format">{LABEL_FORMATS.map((f) => <option key={f} value={f}>{t(`formats.${f}`)}</option>)}</Select></label>
+            <Select value={format} onChange={(e) => setFormat(e.target.value as LabelFormat | "CUSTOM")} data-testid="sl-format">
+              {allow.customSize && <option value="CUSTOM">{ts("mySize")}{savedSize.saved ? ` (${savedSize.w} × ${savedSize.h} mm)` : ""}</option>}
+              {LABEL_FORMATS.map((f) => <option key={f} value={f}>{t(`formats.${f}`)}</option>)}
+            </Select></label>
           <label className="space-y-1 text-sm"><span className="block text-xs text-muted-foreground">{t("code")}</span>
             <Select value={fields.code} onChange={(e) => setFields({ ...fields, code: e.target.value as LabelFields["code"] })} data-testid="sl-code">
               <option value="BARCODE">{t("codeBarcode")}</option>{allow.qr && <option value="QR">{t("codeQr")}</option>}<option value="NONE">{t("codeNone")}</option>
@@ -215,13 +221,63 @@ export function LabelList({ labels, locale, allow }: { labels: SlRow[]; locale: 
           {box("shopName", t("showShop"))}
           {box("date", t("showDate"))}
         </div>
+        {format === "CUSTOM" && <SizeForm value={custom} onChange={setCustom} canSave={allow.manage} onTest={() => print(true)} testing={printing} canTest={sel.size > 0} />}
         {fields.code === "BARCODE" && allow.qr && <p className="text-xs text-muted-foreground">{t("noBarcodeHint")}</p>}
         <div className="flex flex-wrap items-center gap-3">
-          <Button type="button" disabled={printing || !sel.size} onClick={print} data-testid="sl-print-btn"><Spin on={printing} icon={Printer} /> {t("print", { n: sel.size * copies })}</Button>
+          <Button type="button" disabled={printing || !sel.size || (format === "CUSTOM" && !customFormat(custom))} onClick={() => print()} data-testid="sl-print-btn"><Spin on={printing} icon={Printer} /> {t("print", { n: sel.size * copies })}</Button>
           {!sel.size && <span className="text-sm text-muted-foreground">{t("selectToPrint")}</span>}
           {printMsg && <p className={printMsg.ok ? "text-sm text-[color:var(--success,#16a34a)]" : "text-sm text-destructive"} role="status" data-testid="sl-print-msg">{printMsg.text}</p>}
         </div>
       </section>
+    </div>
+  );
+}
+
+/** The shop's own label size: paper, width × height, sticker-sheet margins and gaps, a drawing of the sheet, save, test print. */
+function SizeForm({ value: c, onChange, canSave, onTest, testing, canTest }: { value: CustomSize; onChange: (c: CustomSize) => void; canSave: boolean; onTest: () => void; testing: boolean; canTest: boolean }) {
+  const t = useTranslations("labelSize");
+  const { pending, error, done, run } = useRun();
+  const spec = customFormat(c);
+  const n = (k: keyof CustomSize, label: string, lim: readonly [number, number]) => (
+    <label className="space-y-1 text-sm"><span className="block text-xs text-muted-foreground">{label}</span>
+      <Input type="number" inputMode="decimal" step="0.5" min={lim[0]} max={lim[1]} className="w-24" value={String(c[k])} onChange={(e) => onChange({ ...c, [k]: e.target.value === "" ? 0 : Number(e.target.value) })} onBlur={() => onChange(cleanCustom(c))} data-testid={`sz-${k}`} /></label>
+  );
+  // the sheet, drawn at 1 px = 2 mm
+  const S = 0.5, MM = 2.834645669;
+  return (
+    <div className="space-y-3 rounded-lg border bg-muted/30 p-3" data-testid="sz-form">
+      <div className="text-sm font-semibold">{t("title")}</div>
+      <div className="flex flex-wrap gap-4">
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {(["A4", "ROLL"] as const).map((p) => <Button key={p} type="button" size="sm" variant={c.paper === p ? "default" : "outline"} onClick={() => onChange({ ...c, paper: p })} data-testid={`sz-paper-${p}`}>{t(p === "A4" ? "paperA4" : "paperRoll")}</Button>)}
+          </div>
+          <div className="flex flex-wrap gap-3">{n("w", t("width"), CUSTOM_LIMITS.w)}{n("h", t("height"), CUSTOM_LIMITS.h)}</div>
+          {c.paper === "A4" && <>
+            <div className="flex flex-wrap gap-3">{n("top", t("top"), CUSTOM_LIMITS.margin)}{n("left", t("left"), CUSTOM_LIMITS.margin)}{n("gapX", t("gapX"), CUSTOM_LIMITS.gap)}{n("gapY", t("gapY"), CUSTOM_LIMITS.gap)}</div>
+            <p className="max-w-md text-xs text-muted-foreground">{t("marginHint")}</p>
+          </>}
+          <p className={spec ? "text-sm" : "text-sm text-destructive"} data-testid="sz-fits">
+            {!spec ? t("noFit") : c.paper === "ROLL" ? t("perRoll") : t("fits", { n: spec.cols * spec.rows, cols: spec.cols, rows: spec.rows })}
+          </p>
+          {spec && c.w < 32 && <p className="max-w-md text-xs text-[color:var(--warning,#d97706)]">{t("narrowBarcode")}</p>}
+        </div>
+        {spec && (
+          <svg width={(spec.pageW / MM) * S + 2} height={(spec.pageH / MM) * S + 2} className="shrink-0" role="img" aria-label={t("title")} data-testid="sz-preview">
+            <rect x={1} y={1} width={(spec.pageW / MM) * S} height={(spec.pageH / MM) * S} fill="#fff" stroke="#9ca3af" />
+            {Array.from({ length: spec.cols * spec.rows }, (_, k) => {
+              const col = k % spec.cols, row = Math.floor(k / spec.cols);
+              return <rect key={k} x={1 + ((spec.mx + col * (spec.w + (spec.gx ?? 0))) / MM) * S} y={1 + ((spec.my + row * (spec.h + (spec.gy ?? 0))) / MM) * S} width={(spec.w / MM) * S} height={(spec.h / MM) * S} fill="#ccfbf1" stroke="#0d9488" strokeWidth={0.6} />;
+            })}
+          </svg>
+        )}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        {canSave && <Button type="button" size="sm" variant="outline" disabled={pending || !spec} onClick={() => run(() => saveLabelSizeAction(cleanCustom(c)), undefined, t("saved"))} data-testid="sz-save"><Spin on={pending} icon={Check} /> {t("save")}</Button>}
+        <Button type="button" size="sm" variant="outline" disabled={testing || !spec || !canTest} onClick={onTest} data-testid="sz-test"><Printer className="size-4" /> {t("test")}</Button>
+        <Msg error={error} done={done} />
+      </div>
+      <p className="max-w-xl text-xs text-muted-foreground">{t("testHint")}</p>
     </div>
   );
 }

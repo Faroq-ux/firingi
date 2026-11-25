@@ -60,6 +60,30 @@ describe("shelf price labels", () => {
     for (const f of ["A4_12", "A4_4", "STRIP_27", "ROLL_58x40", "ROLL_62x29", "ROLL_40x30"] as const) expect((await S.printLabels(k, [l.id], f, DEFAULT_FIELDS, "en")).length).toBeGreaterThan(500);
   });
 
+  it("own size: saved per shop, printed, test print not marked printed; FIRINGI can switch it off", async () => {
+    const k = await ctxFor(KEBAB), sa = await ctxFor("superadmin@firingi.test");
+    await prisma.setting.deleteMany({ where: { key: "shelfLabels.customSize" } });
+    expect((await S.slCustomSize(k)).saved).toBe(false);
+    await S.saveCustomSize(k, { paper: "A4", w: 63.5, h: 38.1, top: 15.1, left: 7.2, gapX: 2.5, gapY: 0 });
+    expect(await S.slCustomSize(k)).toMatchObject({ saved: true, w: 63.5, gapX: 2.5 });
+    await expect(S.saveCustomSize(k, { paper: "A4", w: 200, h: 200, top: 60 })).rejects.toThrow(/A4/);
+    const [l] = (await S.listLabels(k)).labels;
+    await S.updateLabel(k, l.id, { priceGross: 3.19 });
+    const test = await S.printLabels(k, [l.id], "CUSTOM", DEFAULT_FIELDS, "pt-PT", 1, { test: true });
+    expect(test.subarray(0, 4).toString()).toBe("%PDF");
+    expect((await S.listLabels(k)).labels.find((x) => x.id === l.id)!.toPrint).toBe(true); // a test print does not count
+    const real = await S.printLabels(k, [l.id], "CUSTOM", DEFAULT_FIELDS, "pt-PT");
+    expect(real.subarray(0, 4).toString()).toBe("%PDF");
+    expect((await S.listLabels(k)).labels.find((x) => x.id === l.id)!.toPrint).toBe(false);
+    // a size sent with the print (not saved) and a tiny roll
+    expect((await S.printLabels(k, [l.id], "CUSTOM", DEFAULT_FIELDS, "en", 1, { custom: { paper: "ROLL", w: 25, h: 15 } })).length).toBeGreaterThan(500);
+    await S.saveSlSettings(sa, { allowCustomSize: false });
+    await expect(S.printLabels(k, [l.id], "CUSTOM", DEFAULT_FIELDS, "en")).rejects.toThrow();
+    await expect(S.saveCustomSize(k, { paper: "ROLL", w: 50, h: 30 })).rejects.toThrow();
+    expect((await S.printLabels(k, [l.id], "A4_21", DEFAULT_FIELDS, "en")).length).toBeGreaterThan(500); // standard sizes still work
+    await prisma.setting.deleteMany({ where: { key: { in: ["shelfLabels.customSize", "shelfLabels.settings"] } } });
+  });
+
   it("till items: price and barcode from the till; a label price saved back into the till", async () => {
     const k = await ctxFor(KEBAB);
     const item = await prisma.posItem.create({ data: { companyId: kebabId, name: "Sumo laranja 1L", barcode: "5601111222333", price: 2.2, vatRate: 23 } });
