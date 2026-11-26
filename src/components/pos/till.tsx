@@ -7,6 +7,7 @@
  * saved snapshot and sends the sales when back online (stored once each).
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Portal } from "@/components/ui/portal";
 import { useTranslations } from "next-intl";
 import QRCode from "qrcode";
 import { AlertTriangle, Banknote, ChefHat, CloudOff, CreditCard, LockKeyhole, IdCard, Mail, Minus, Plus, Printer, RefreshCw, Scale, Search, ShoppingCart, Smartphone, Star, Trash2, User, UtensilsCrossed, Wallet, X } from "lucide-react";
@@ -342,12 +343,14 @@ type T = ReturnType<typeof useTranslations>;
 
 function Modal({ title, onClose, children, testId, wide }: { title: string; onClose: () => void; children: React.ReactNode; testId: string; wide?: boolean }) {
   return (
+    <Portal>
     <div className="fixed inset-0 z-50 grid place-items-end bg-black/50 p-0 sm:place-items-center sm:p-4" role="dialog" aria-modal="true" aria-label={title} data-testid={testId}>
       <div className={cn("max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl border bg-card p-4 shadow-xl sm:rounded-2xl", wide ? "sm:max-w-2xl" : "sm:max-w-md")}>
         <div className="mb-3 flex items-center justify-between gap-2"><h2 className="text-base font-semibold">{title}</h2><Button size="icon" variant="ghost" onClick={onClose} aria-label="×"><X className="size-4" /></Button></div>
         {children}
       </div>
     </div>
+    </Portal>
   );
 }
 

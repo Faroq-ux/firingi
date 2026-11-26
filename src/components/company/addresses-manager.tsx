@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { Portal } from "@/components/ui/portal";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { MapPin, Plus } from "lucide-react";
@@ -27,6 +28,7 @@ function AddressDialog({ initial, kinds, countries, defaultCountry, onClose, onP
   const cities = countries.find((c) => c.code === country)?.cities ?? [];
   const [cityId, setCityId] = useState(initial ? initial.cityId ?? "__other" : cities.length ? "" : "__other");
   return (
+    <Portal>
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" role="dialog" aria-modal="true">
       <form
         className="max-h-[90dvh] w-full max-w-xl space-y-4 overflow-y-auto rounded-xl border bg-card p-6 shadow-lg"
@@ -98,6 +100,7 @@ function AddressDialog({ initial, kinds, countries, defaultCountry, onClose, onP
         </div>
       </form>
     </div>
+    </Portal>
   );
 }
 

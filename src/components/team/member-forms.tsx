@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { Portal } from "@/components/ui/portal";
 import { useState, useTransition } from "react";
 import { UserPlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -51,6 +52,7 @@ export function AddMemberForm({ roles, regions, labels }: { roles: RoleOption[];
     );
 
   return (
+    <Portal>
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" role="dialog" aria-modal="true">
       <form
         className="max-h-[90dvh] w-full max-w-2xl space-y-4 overflow-y-auto rounded-xl border bg-card p-6 shadow-lg"
@@ -118,6 +120,7 @@ export function AddMemberForm({ roles, regions, labels }: { roles: RoleOption[];
         </div>
       </form>
     </div>
+    </Portal>
   );
 }
 
@@ -149,6 +152,7 @@ export function MemberActions({
         {status === "ACTIVE" ? labels.disable : labels.enable}
       </Button>
       {editing && (
+        <Portal>
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4 text-left" role="dialog" aria-modal="true">
           <div className="w-full max-w-2xl space-y-4 rounded-xl border bg-card p-6 shadow-lg">
             <h2 className="text-lg font-semibold">{labels.editRoles}</h2>
@@ -170,6 +174,7 @@ export function MemberActions({
             </div>
           </div>
         </div>
+        </Portal>
       )}
     </div>
   );

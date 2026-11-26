@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { Portal } from "@/components/ui/portal";
 import { useState, useTransition } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ export function RoleEditor({
         )}
       </div>
       {open && (
+        <Portal>
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" role="dialog" aria-modal="true">
           <form
             className="max-h-[90dvh] w-full max-w-3xl space-y-4 overflow-y-auto rounded-xl border bg-card p-6 shadow-lg"
@@ -96,6 +98,7 @@ export function RoleEditor({
             </div>
           </form>
         </div>
+        </Portal>
       )}
     </>
   );
