@@ -994,7 +994,8 @@
     "Price Benchmark": "Porovnanie cien",
     "Price Position": "Cenová pozícia",
     "Pre-orders & Price Locks": "Predobjednávky a fixácia cien",
-    "Shelf Price Labels": "Cenovky na regály"
+    "Shelf Price Labels": "Cenovky na regály",
+    "Printing": "Tlač"
   },
   "delivery": {
     "title": "Doručenie",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Nová žiadosť o zamestnanie",
       "body": "{name} — žiadosť o pozíciu {job}."
+    },
+    "print_job_new": {
+      "title": "Nová objednávka tlače",
+      "body": "Zákazník {customer} objednal {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Cenová ponuka k Vašej objednávke tlače",
+      "body": "Objednávka tlače {number}: {amount} + DPH. Prijmite ju na stránke Tlač."
+    },
+    "print_job_update": {
+      "title": "Aktualizácia objednávky tlače",
+      "body": "K objednávke tlače {number} sú novinky."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Každé 2 týždne",
       "TWICE_MONTHLY": "Dvakrát mesačne",
       "MONTHLY": "Každý mesiac",
-      "ON_REQUEST": "Iba na požiadanie"
+      "ON_REQUEST": "Iba na požiadanie",
+      "QUARTERLY": "Každé 3 mesiace",
+      "HALF_YEARLY": "Každých 6 mesiacov"
     },
     "window": {
       "ANY": "Kedykoľvek",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "každý druhý týždeň, {day}",
       "TWICE_MONTHLY": "{a}. a {b}. deň v mesiaci",
       "MONTHLY": "{a}. deň v mesiaci",
-      "ON_REQUEST": "na požiadanie"
+      "ON_REQUEST": "na požiadanie",
+      "QUARTERLY": "každé 3 mesiace, {a}. deň",
+      "HALF_YEARLY": "každých 6 mesiacov, {a}. deň"
     },
     "st": {
       "REQUESTED": "Vyžiadané",
@@ -9886,7 +9903,16 @@
     "noVisits": "Nič naplánované.",
     "noRecent": "Zatiaľ žiadne návštevy.",
     "noProviderYet": "Zatiaľ neposkytujete žiadnu službu.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Diely a práca (€, bez DPH)",
+      "note": "Použité diely a vykonaná práca",
+      "shown": "Diely a práca {amount}: {note}",
+      "hint": "Opravy: technik pri návšteve doplní diely a prácu."
+    },
+    "print": {
+      "open": "Otvoriť Tlač →"
+    }
   },
   "haccp": {
     "todayTitle": "Dnešné kontroly",
@@ -10508,5 +10534,104 @@
     "saved": "Veľkosť uložená.",
     "test": "Skúšobná tlač",
     "testHint": "Vytlačí jeden hárok s obrysmi. Vytlačte ho na obyčajný papier a priložte ho k hárku etikiet, aby ste overili, že sedí. Etikety sa neoznačia ako vytlačené."
+  },
+  "printing": {
+    "title": "Tlač",
+    "intro": "Letáky, jedálne lístky, plagáty, nálepky, vizitky, bannery a regálové etikety — vytlačia ich dodávatelia na FIRINGI a doručia Vám alebo pripravia na vyzdvihnutie.",
+    "kinds": {
+      "SHELF_LABELS": "Regálové etikety",
+      "LEAFLET": "Letáky a prospekty",
+      "MENU": "Jedálne lístky",
+      "POSTER": "Plagáty",
+      "STICKER": "Nálepky",
+      "BUSINESS_CARD": "Vizitky",
+      "BANNER": "Bannery a tabule",
+      "OTHER": "Iná tlač"
+    },
+    "products": "Čo môžete tlačiť",
+    "noProducts": "Vo Vašej oblasti zatiaľ žiadny dodávateľ neponúka tlač.",
+    "labelsFromPage": "Regálové etikety: objednajte ich na stránke Cenové etikety na regály.",
+    "by": "od {supplier}",
+    "perItem": "{price} za kus",
+    "setup": "+ {price} príprava",
+    "minQty": "od {n}",
+    "step": "po {n}",
+    "onRequest": "Cena na požiadanie — dodávateľ Vám pošle cenovú ponuku",
+    "turnaround": "hotové približne za {n} dní",
+    "delivery": {
+      "DELIVERY": "Doručenie k Vám",
+      "PICKUP": "Osobný odber"
+    },
+    "deliveryLabel": "Ako to dostanete",
+    "order": "Objednať",
+    "qty": "Množstvo",
+    "orderTitle": "Názov zákazky",
+    "notes": "Pokyny (rozmer, papier, text, farby…)",
+    "files": "Vaše súbory (PDF, JPG, PNG)",
+    "addFile": "Pridať súbor",
+    "uploading": "Nahráva sa…",
+    "wantedBy": "Potrebné do",
+    "total": "{price} + DPH",
+    "qtyRule": "Množstvo: aspoň {min}, po {step}.",
+    "send": "Odoslať objednávku",
+    "sent": "Objednávka odoslaná — dodávateľ ju potvrdí.",
+    "cancel": "Zrušiť",
+    "orders": "Vaše objednávky tlače",
+    "noOrders": "Zatiaľ žiadne objednávky tlače.",
+    "st": {
+      "REQUESTED": "Čaká sa na dodávateľa",
+      "QUOTED": "Ponuka na prijatie",
+      "ACCEPTED": "Prijatá",
+      "PRINTING": "Tlačí sa",
+      "DELIVERED": "Doručená",
+      "REJECTED": "Zamietnutá",
+      "CANCELLED": "Zrušená"
+    },
+    "quote": "Ponuka: {price} + DPH",
+    "readyBy": "hotové do {date}",
+    "acceptQuote": "Prijať ponuku",
+    "cancelOrder": "Zrušiť objednávku",
+    "rejected": "Zamietnutá: {reason}",
+    "labelsPdf": "PDF etikiet",
+    "vTitle": "Tlač",
+    "vIntro": "Vaše tlačové produkty a objednávky tlače, ktoré Vám posielajú zákazníci.",
+    "notApproved": "Požiadajte o „Tlač“ na stránke Služby. Keď Vás FIRINGI schváli, pridajte sem svoje produkty.",
+    "termsFiringi": "FIRINGI fakturuje zákazníkovi a vyplatí Vám cenu mínus {pct}% provízie.",
+    "termsProvider": "Zákazníkovi fakturujete sami; provízia FIRINGI je {pct}% a fakturuje sa Vám mesačne.",
+    "myProducts": "Vaše produkty",
+    "addProduct": "Pridať produkt",
+    "edit": "Upraviť",
+    "save": "Uložiť",
+    "kind": "Čo to je",
+    "name": "Názov",
+    "description": "Popis (rozmer, papier, povrchová úprava)",
+    "labelSize": "Rozmer etikety",
+    "unitPrice": "Cena za kus (€, bez DPH)",
+    "setupPrice": "Príprava na objednávku (€, bez DPH)",
+    "min": "Minimálne množstvo",
+    "stepQty": "Krok množstva",
+    "priceOnRequest": "Cena na požiadanie (pošlem ponuku)",
+    "vat": "DPH %",
+    "days": "Dni na tlač",
+    "active": "V predaji",
+    "inactive": "Nie je v predaji",
+    "incoming": "Objednávky tlače",
+    "noIncoming": "Zatiaľ žiadne objednávky tlače.",
+    "accept": "Prijať",
+    "sendQuote": "Poslať ponuku",
+    "quotePrice": "Vaša cena (€, bez DPH)",
+    "quoteNote": "Poznámka pre zákazníka",
+    "readyByLabel": "Hotové do",
+    "reject": "Zamietnuť",
+    "rejectReason": "Prečo to nemôžete vytlačiť",
+    "startPrinting": "Práve sa tlačí",
+    "delivered": "Doručená / vyzdvihnutá",
+    "yourInvoiceNo": "Číslo Vašej faktúry",
+    "yourAmount": "dostanete {amount}",
+    "labelsTitle": "Dať vytlačiť",
+    "labelsHint": "Dodávateľ tlače vytlačí vybrané etikety na vhodný etiketový papier a doručí ich.",
+    "labelsOrder": "Objednať {n} vytlačených etikiet",
+    "labelsOrdered": "Odoslané do tlačiarne — pozrite Služby › Tlač.",
+    "labelsPrice": "{price} + DPH"
   }
 }

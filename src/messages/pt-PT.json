@@ -2151,6 +2151,18 @@
     "website_job_application": {
       "title": "Nova candidatura de emprego",
       "body": "{name} candidatou-se a: {job}."
+    },
+    "print_job_new": {
+      "title": "Nova encomenda de impressão",
+      "body": "{customer} encomendou {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Orçamento para a sua encomenda de impressão",
+      "body": "Encomenda de impressão {number}: {amount} + IVA. Aceite-a na página Impressão."
+    },
+    "print_job_update": {
+      "title": "Atualização da encomenda de impressão",
+      "body": "Há novidades sobre a encomenda de impressão {number}."
     }
   },
   "notifications": {
@@ -2438,7 +2450,8 @@
     "Price Benchmark": "Comparação de preços",
     "Price Position": "Posição de preço",
     "Pre-orders & Price Locks": "Pré-encomendas e preços fixos",
-    "Shelf Price Labels": "Etiquetas de preço para prateleiras"
+    "Shelf Price Labels": "Etiquetas de preço para prateleiras",
+    "Printing": "Impressão"
   },
   "support": {
     "title": "Ajuda e Suporte",
@@ -9568,7 +9581,9 @@
       "BIWEEKLY": "De 2 em 2 semanas",
       "TWICE_MONTHLY": "Duas vezes por mês",
       "MONTHLY": "Todos os meses",
-      "ON_REQUEST": "Só a pedido"
+      "ON_REQUEST": "Só a pedido",
+      "QUARTERLY": "A cada 3 meses",
+      "HALF_YEARLY": "A cada 6 meses"
     },
     "window": {
       "ANY": "Qualquer hora",
@@ -9589,7 +9604,9 @@
       "BIWEEKLY": "quinzenalmente, {day}",
       "TWICE_MONTHLY": "nos dias {a} e {b}",
       "MONTHLY": "no dia {a}",
-      "ON_REQUEST": "a pedido"
+      "ON_REQUEST": "a pedido",
+      "QUARTERLY": "a cada 3 meses, no dia {a}",
+      "HALF_YEARLY": "a cada 6 meses, no dia {a}"
     },
     "st": {
       "REQUESTED": "Pedido",
@@ -9729,7 +9746,16 @@
     "noVisits": "Nada previsto.",
     "noRecent": "Ainda sem visitas.",
     "noProviderYet": "Ainda não presta nenhum serviço.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Peças e mão de obra (€, sem IVA)",
+      "note": "Peças utilizadas e trabalho realizado",
+      "shown": "Peças e mão de obra {amount}: {note}",
+      "hint": "Reparações: o técnico adiciona as peças e a mão de obra durante a visita."
+    },
+    "print": {
+      "open": "Abrir Impressão →"
+    }
   },
   "haccp": {
     "todayTitle": "Verificações de hoje",
@@ -10351,5 +10377,104 @@
     "saved": "Tamanho guardado.",
     "test": "Impressão de teste",
     "testHint": "Imprime uma folha com os contornos. Imprima-a em papel normal e sobreponha-a à sua folha de etiquetas autocolantes para verificar se coincide. As etiquetas não são marcadas como impressas."
+  },
+  "printing": {
+    "title": "Impressão",
+    "intro": "Folhetos, ementas, cartazes, autocolantes, cartões de visita, faixas e etiquetas de prateleira — impressos por fornecedores na FIRINGI e entregues a si ou prontos a levantar.",
+    "kinds": {
+      "SHELF_LABELS": "Etiquetas de prateleira",
+      "LEAFLET": "Folhetos e flyers",
+      "MENU": "Ementas",
+      "POSTER": "Cartazes",
+      "STICKER": "Autocolantes",
+      "BUSINESS_CARD": "Cartões de visita",
+      "BANNER": "Faixas e placas",
+      "OTHER": "Outras impressões"
+    },
+    "products": "O que pode imprimir",
+    "noProducts": "Ainda nenhum fornecedor de impressão oferece impressão na sua zona.",
+    "labelsFromPage": "Etiquetas de prateleira: encomende-as na página Etiquetas de preço de prateleira.",
+    "by": "por {supplier}",
+    "perItem": "{price} cada",
+    "setup": "+ {price} de preparação",
+    "minQty": "a partir de {n}",
+    "step": "em múltiplos de {n}",
+    "onRequest": "Preço sob consulta — o fornecedor envia-lhe um orçamento",
+    "turnaround": "pronto em cerca de {n} dias",
+    "delivery": {
+      "DELIVERY": "Entregue a si",
+      "PICKUP": "Levantar"
+    },
+    "deliveryLabel": "Como o recebe",
+    "order": "Encomendar",
+    "qty": "Quantidade",
+    "orderTitle": "Nome deste trabalho",
+    "notes": "Instruções (formato, papel, texto, cores…)",
+    "files": "Os seus ficheiros (PDF, JPG, PNG)",
+    "addFile": "Adicionar um ficheiro",
+    "uploading": "A carregar…",
+    "wantedBy": "Necessário até",
+    "total": "{price} + IVA",
+    "qtyRule": "Quantidade: pelo menos {min}, em múltiplos de {step}.",
+    "send": "Enviar encomenda",
+    "sent": "Encomenda enviada — o fornecedor irá confirmá-la.",
+    "cancel": "Cancelar",
+    "orders": "As suas encomendas de impressão",
+    "noOrders": "Ainda não há encomendas de impressão.",
+    "st": {
+      "REQUESTED": "A aguardar o fornecedor",
+      "QUOTED": "Orçamento por aceitar",
+      "ACCEPTED": "Aceite",
+      "PRINTING": "Em impressão",
+      "DELIVERED": "Entregue",
+      "REJECTED": "Recusada",
+      "CANCELLED": "Cancelada"
+    },
+    "quote": "Orçamento: {price} + IVA",
+    "readyBy": "pronto até {date}",
+    "acceptQuote": "Aceitar orçamento",
+    "cancelOrder": "Cancelar encomenda",
+    "rejected": "Recusada: {reason}",
+    "labelsPdf": "PDF das etiquetas",
+    "vTitle": "Impressão",
+    "vIntro": "Os seus produtos de impressão e as encomendas de impressão que os clientes lhe enviam.",
+    "notApproved": "Candidate-se a «Impressão» na página Serviços. Assim que a FIRINGI o aprovar, adicione aqui os seus produtos.",
+    "termsFiringi": "A FIRINGI fatura ao cliente e paga-lhe o preço menos {pct}% de comissão.",
+    "termsProvider": "Fatura diretamente ao cliente; a comissão da FIRINGI é de {pct}%, faturada a si mensalmente.",
+    "myProducts": "Os seus produtos",
+    "addProduct": "Adicionar um produto",
+    "edit": "Editar",
+    "save": "Guardar",
+    "kind": "O que é",
+    "name": "Nome",
+    "description": "Descrição (formato, papel, acabamento)",
+    "labelSize": "Tamanho da etiqueta",
+    "unitPrice": "Preço por unidade (€, sem IVA)",
+    "setupPrice": "Preparação por encomenda (€, sem IVA)",
+    "min": "Quantidade mínima",
+    "stepQty": "Múltiplos de quantidade",
+    "priceOnRequest": "Preço sob consulta (envio um orçamento)",
+    "vat": "IVA %",
+    "days": "Dias de impressão",
+    "active": "À venda",
+    "inactive": "Não está à venda",
+    "incoming": "Encomendas de impressão",
+    "noIncoming": "Ainda não há encomendas de impressão.",
+    "accept": "Aceitar",
+    "sendQuote": "Enviar orçamento",
+    "quotePrice": "O seu preço (€, sem IVA)",
+    "quoteNote": "Nota para o cliente",
+    "readyByLabel": "Pronto até",
+    "reject": "Recusar",
+    "rejectReason": "Porque não pode imprimir",
+    "startPrinting": "A imprimir",
+    "delivered": "Entregue / levantada",
+    "yourInvoiceNo": "O seu número de fatura",
+    "yourAmount": "recebe {amount}",
+    "labelsTitle": "Mandar imprimir",
+    "labelsHint": "Um fornecedor de impressão imprime as etiquetas selecionadas em papel de etiquetas adequado e entrega-as.",
+    "labelsOrder": "Encomendar {n} etiquetas impressas",
+    "labelsOrdered": "Enviado para a gráfica — veja Serviços › Impressão.",
+    "labelsPrice": "{price} + IVA"
   }
 }

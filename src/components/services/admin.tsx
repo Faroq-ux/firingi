@@ -12,7 +12,7 @@ import {
 import { findTenderBusinessAction } from "@/server/actions/tenders";
 import type { ServicesSettings } from "@/server/servicing/settings";
 
-const FREQ: Record<string, string> = { WEEKLY: "Every week", BIWEEKLY: "Every 2 weeks", TWICE_MONTHLY: "Twice a month", MONTHLY: "Every month", ON_REQUEST: "Only when requested" };
+const FREQ: Record<string, string> = { WEEKLY: "Every week", BIWEEKLY: "Every 2 weeks", TWICE_MONTHLY: "Twice a month", MONTHLY: "Every month", QUARTERLY: "Every 3 months", HALF_YEARLY: "Every 6 months", ON_REQUEST: "Only when requested" };
 const UNITS: Record<string, string> = { L: "Litres", KG: "Kilograms", BIN: "Bins", VISIT: "Per visit" };
 const box = "space-y-4 rounded-lg border bg-muted/20 p-4";
 
@@ -26,12 +26,12 @@ function Num({ label, value, onChange, hint, testid, step = 0.01 }: { label: str
 // ── catalogue ───────────────────────────────────────────────────────────────
 
 export type TypeDraft = {
-  code: string; name: string; namePt: string; description: string; kind: "COLLECTION" | "VISIT"; unit: string; isOil: boolean; wasteCode: string; needsDocument: boolean; frequencies: string[];
+  code: string; name: string; namePt: string; description: string; kind: "COLLECTION" | "VISIT" | "PRINT"; allowExtras: boolean; unit: string; isOil: boolean; wasteCode: string; needsDocument: boolean; frequencies: string[];
   feeNet: number; pricePerUnit: number; buybackPerUnit: number; providerPerVisit: number; providerPerUnit: number; invoicedBy: "FIRINGI" | "PROVIDER"; commissionPct: number; commissionPerVisit: number; commissionPerUnit: number;
   countries: string; active: boolean;
 };
 const EMPTY_TYPE: TypeDraft = {
-  code: "", name: "", namePt: "", description: "", kind: "VISIT", unit: "VISIT", isOil: false, wasteCode: "", needsDocument: false, frequencies: ["MONTHLY", "ON_REQUEST"],
+  code: "", name: "", namePt: "", description: "", kind: "VISIT", allowExtras: false, unit: "VISIT", isOil: false, wasteCode: "", needsDocument: false, frequencies: ["MONTHLY", "ON_REQUEST"],
   feeNet: 0, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 0, providerPerUnit: 0, invoicedBy: "FIRINGI", commissionPct: 15, commissionPerVisit: 0, commissionPerUnit: 0, countries: "", active: true,
 };
 
@@ -48,7 +48,7 @@ export function TypeEditor({ id, initial = EMPTY_TYPE }: { id: string | null; in
         <div className="space-y-1"><Label className="text-xs">Code</Label><Input value={t.code} disabled={!!id} onChange={(e) => set("code", e.target.value.toUpperCase())} placeholder="e.g. DRAIN_CLEANING" data-testid="svt-code" /></div>
         <div className="space-y-1"><Label className="text-xs">Name (English)</Label><Input value={t.name} onChange={(e) => set("name", e.target.value)} data-testid="svt-name" /></div>
         <div className="space-y-1"><Label className="text-xs">Name (Portuguese)</Label><Input value={t.namePt} onChange={(e) => set("namePt", e.target.value)} /></div>
-        <div className="space-y-1"><Label className="text-xs">Kind</Label><Select value={t.kind} onChange={(e) => setT({ ...t, kind: e.target.value as TypeDraft["kind"], unit: e.target.value === "VISIT" ? "VISIT" : t.unit === "VISIT" ? "L" : t.unit })} data-testid="svt-kind"><option value="COLLECTION">Collection (a quantity is taken)</option><option value="VISIT">Visit (a job is done)</option></Select></div>
+        <div className="space-y-1"><Label className="text-xs">Kind</Label><Select value={t.kind} onChange={(e) => setT({ ...t, kind: e.target.value as TypeDraft["kind"], unit: e.target.value === "VISIT" ? "VISIT" : t.unit === "VISIT" ? "L" : t.unit })} data-testid="svt-kind"><option value="COLLECTION">Collection (a quantity is taken)</option><option value="VISIT">Visit (a job is done)</option><option value="PRINT">Printing (orders from print suppliers&apos; products)</option></Select></div>
         <div className="space-y-1 sm:col-span-2 lg:col-span-4"><Label className="text-xs">Description (shown to customers)</Label><Input value={t.description} maxLength={1000} onChange={(e) => set("description", e.target.value)} /></div>
         <div className="space-y-1"><Label className="text-xs">Unit</Label><Select value={t.unit} onChange={(e) => set("unit", e.target.value)} data-testid="svt-unit">{Object.entries(UNITS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</Select></div>
         <div className="space-y-1"><Label className="text-xs">Waste code (LER / EWC)</Label><Input value={t.wasteCode} onChange={(e) => set("wasteCode", e.target.value)} placeholder="20 01 25" /></div>
@@ -58,9 +58,11 @@ export function TypeEditor({ id, initial = EMPTY_TYPE }: { id: string | null; in
         <Box label="Used cooking oil (fryers page, auto request)" checked={t.isOil} onChange={(v) => set("isOil", v)} />
         <Box label="Needs a licence and a signed document" checked={t.needsDocument} onChange={(v) => set("needsDocument", v)} testid="svt-doc" />
         <Box label="Active (customers can see it)" checked={t.active} onChange={(v) => set("active", v)} testid="svt-active" />
+        {t.kind === "VISIT" && <Box label="Technician may add parts & labour (repairs)" checked={t.allowExtras} onChange={(v) => set("allowExtras", v)} hint="Charged to the customer on the visit; FIRINGI keeps its commission % of them." testid="svt-extras" />}
       </div>
-      <div className="space-y-1"><p className="text-xs font-medium">Schedules customers can choose</p>
-        <div className="flex flex-wrap gap-x-5 gap-y-2">{Object.entries(FREQ).map(([k, v]) => <Box key={k} label={v} checked={t.frequencies.includes(k)} onChange={(on) => set("frequencies", on ? [...t.frequencies, k] : t.frequencies.filter((x) => x !== k))} testid={`svt-freq-${k}`} />)}</div></div>
+      {t.kind === "PRINT" && <p className="text-xs text-muted-foreground">Print suppliers set their own products and prices; FIRINGI decides who invoices and the commission % below.</p>}
+      {t.kind !== "PRINT" && <div className="space-y-1"><p className="text-xs font-medium">Schedules customers can choose</p>
+        <div className="flex flex-wrap gap-x-5 gap-y-2">{Object.entries(FREQ).map(([k, v]) => <Box key={k} label={v} checked={t.frequencies.includes(k)} onChange={(on) => set("frequencies", on ? [...t.frequencies, k] : t.frequencies.filter((x) => x !== k))} testid={`svt-freq-${k}`} />)}</div></div>}
       <div className="space-y-2">
         <p className="text-xs font-medium">Who invoices the customer</p>
         <div className="flex flex-wrap gap-4 text-sm">

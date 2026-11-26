@@ -25,6 +25,8 @@ async function clean() {
   await prisma.setting.deleteMany({ where: { key: "services.settings" } });
   await prisma.fryerLog.deleteMany({});
   await prisma.fryer.deleteMany({});
+  await prisma.printJob.deleteMany({});
+  await prisma.printProduct.deleteMany({});
   await prisma.serviceVisit.deleteMany({});
   await prisma.servicePlan.deleteMany({});
   await prisma.serviceProvider.deleteMany({});

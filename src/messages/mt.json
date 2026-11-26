@@ -994,7 +994,8 @@
     "Price Benchmark": "Paragun tal-Prezzijiet",
     "Price Position": "Pożizzjoni tal-Prezz",
     "Pre-orders & Price Locks": "Ordnijiet minn qabel u prezzijiet iffissati",
-    "Shelf Price Labels": "Tikketti tal-prezzijiet għall-ixkafef"
+    "Shelf Price Labels": "Tikketti tal-prezzijiet għall-ixkafef",
+    "Printing": "Stampar"
   },
   "delivery": {
     "title": "Kunsinna",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Applikazzjoni ġdida għal xogħol",
       "body": "Applikazzjoni minn {name}: {job}."
+    },
+    "print_job_new": {
+      "title": "Ordni ġdida tal-istampar",
+      "body": "{customer} ordna {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Kwotazzjoni għall-ordni tal-istampar tiegħek",
+      "body": "Ordni tal-istampar {number}: {amount} + VAT. Aċċettaha fil-paġna tal-Istampar."
+    },
+    "print_job_update": {
+      "title": "Aġġornament tal-ordni tal-istampar",
+      "body": "Hemm aħbarijiet dwar l-ordni tal-istampar {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Kull ġimagħtejn",
       "TWICE_MONTHLY": "Darbtejn fix-xahar",
       "MONTHLY": "Kull xahar",
-      "ON_REQUEST": "Biss meta jintalab"
+      "ON_REQUEST": "Biss meta jintalab",
+      "QUARTERLY": "Kull 3 xhur",
+      "HALF_YEARLY": "Kull 6 xhur"
     },
     "window": {
       "ANY": "Kwalunkwe ħin",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "kull ġimagħtejn: {day}",
       "TWICE_MONTHLY": "fil-jum {a} u l-jum {b} tax-xahar",
       "MONTHLY": "fil-jum {a} tax-xahar",
-      "ON_REQUEST": "meta titlob"
+      "ON_REQUEST": "meta titlob",
+      "QUARTERLY": "kull 3 xhur, f'jum {a}",
+      "HALF_YEARLY": "kull 6 xhur, f'jum {a}"
     },
     "st": {
       "REQUESTED": "Mitlub",
@@ -9886,7 +9903,16 @@
     "noVisits": "Xejn ġej.",
     "noRecent": "Għad m'hemm l-ebda żjara.",
     "noProviderYet": "Għadek ma tipprovdi l-ebda servizz.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Partijiet u xogħol (€, mingħajr VAT)",
+      "note": "Partijiet użati u xogħol magħmul",
+      "shown": "Partijiet u xogħol {amount}: {note}",
+      "hint": "Tiswijiet: it-tekniku jżid il-partijiet u x-xogħol waqt iż-żjara."
+    },
+    "print": {
+      "open": "Iftaħ l-Istampar →"
+    }
   },
   "haccp": {
     "todayTitle": "Il-kontrolli tal-lum",
@@ -10508,5 +10534,104 @@
     "saved": "Id-daqs ġie ssejvjat.",
     "test": "Stampar ta' prova",
     "testHint": "Jistampa folja waħda bil-kontorni. Stampaha fuq karta normali u żommha mal-folja tal-istikers tiegħek biex tiċċekkja li taqbel. It-tikketti ma jiġux immarkati bħala stampati."
+  },
+  "printing": {
+    "title": "Stampar",
+    "intro": "Fuljetti, menu, posters, stickers, biljetti tal-viżta, banners u tikketti tal-ixkaffa — stampati minn fornituri fuq FIRINGI u mwassla għandek jew lesti biex tiġborhom.",
+    "kinds": {
+      "SHELF_LABELS": "Tikketti tal-ixkaffa",
+      "LEAFLET": "Fuljetti u flyers",
+      "MENU": "Menu",
+      "POSTER": "Posters",
+      "STICKER": "Stickers",
+      "BUSINESS_CARD": "Biljetti tal-viżta",
+      "BANNER": "Banners u tabelli",
+      "OTHER": "Stampar ieħor"
+    },
+    "products": "X'tista' tistampa",
+    "noProducts": "L-ebda fornitur tal-istampar għadu ma joffri stampar fiż-żona tiegħek.",
+    "labelsFromPage": "Tikketti tal-ixkaffa: ordnahom mill-paġna tat-Tikketti tal-Prezzijiet tal-Ixkaffa.",
+    "by": "minn {supplier}",
+    "perItem": "{price} kull wieħed",
+    "setup": "+ {price} preparazzjoni",
+    "minQty": "minn {n}",
+    "step": "b'passi ta' {n}",
+    "onRequest": "Prezz fuq talba — il-fornitur jibgħatlek kwotazzjoni",
+    "turnaround": "lest f'madwar {n} ijiem",
+    "delivery": {
+      "DELIVERY": "Imwassal għandek",
+      "PICKUP": "Iġbru int"
+    },
+    "deliveryLabel": "Kif tirċevih",
+    "order": "Ordna",
+    "qty": "Kwantità",
+    "orderTitle": "Isem ta' dan ix-xogħol",
+    "notes": "Istruzzjonijiet (daqs, karta, test, kuluri…)",
+    "files": "Il-fajls tiegħek (PDF, JPG, PNG)",
+    "addFile": "Żid fajl",
+    "uploading": "Qed jittella'…",
+    "wantedBy": "Meħtieġ sa",
+    "total": "{price} + VAT",
+    "qtyRule": "Kwantità: mill-inqas {min}, b'passi ta' {step}.",
+    "send": "Ibgħat l-ordni",
+    "sent": "Ordni mibgħuta — il-fornitur se jikkonfermaha.",
+    "cancel": "Ikkanċella",
+    "orders": "L-ordnijiet tal-istampar tiegħek",
+    "noOrders": "Għad m'hemmx ordnijiet tal-istampar.",
+    "st": {
+      "REQUESTED": "Qed tistenna l-fornitur",
+      "QUOTED": "Kwotazzjoni biex taċċetta",
+      "ACCEPTED": "Aċċettata",
+      "PRINTING": "Qed tiġi stampata",
+      "DELIVERED": "Imwassla",
+      "REJECTED": "Miċħuda",
+      "CANCELLED": "Ikkanċellata"
+    },
+    "quote": "Kwotazzjoni: {price} + VAT",
+    "readyBy": "lesta sa {date}",
+    "acceptQuote": "Aċċetta l-kwotazzjoni",
+    "cancelOrder": "Ikkanċella l-ordni",
+    "rejected": "Miċħuda: {reason}",
+    "labelsPdf": "PDF tat-tikketti",
+    "vTitle": "Stampar",
+    "vIntro": "Il-prodotti tal-istampar tiegħek u l-ordnijiet tal-istampar li jibagħtulek il-klijenti.",
+    "notApproved": "Applika għal “Stampar” fil-paġna tas-Servizzi tiegħek. Ladarba FIRINGI japprovak, żid il-prodotti tiegħek hawn.",
+    "termsFiringi": "FIRINGI toħroġ il-fattura lill-klijent u tħallsek il-prezz bla {pct}% kummissjoni.",
+    "termsProvider": "Int toħroġ il-fattura lill-klijent; il-kummissjoni ta' FIRINGI hija {pct}%, iffatturata lilek kull xahar.",
+    "myProducts": "Il-prodotti tiegħek",
+    "addProduct": "Żid prodott",
+    "edit": "Editja",
+    "save": "Salva",
+    "kind": "X'inhu",
+    "name": "Isem",
+    "description": "Deskrizzjoni (daqs, karta, finitura)",
+    "labelSize": "Daqs tat-tikketta",
+    "unitPrice": "Prezz kull biċċa (€, mingħajr VAT)",
+    "setupPrice": "Preparazzjoni kull ordni (€, mingħajr VAT)",
+    "min": "Kwantità minima",
+    "stepQty": "Passi tal-kwantità",
+    "priceOnRequest": "Prezz fuq talba (nibgħat kwotazzjoni)",
+    "vat": "VAT %",
+    "days": "Jiem għall-istampar",
+    "active": "Għall-bejgħ",
+    "inactive": "Mhux għall-bejgħ",
+    "incoming": "Ordnijiet tal-istampar",
+    "noIncoming": "Għad m'hemmx ordnijiet tal-istampar.",
+    "accept": "Aċċetta",
+    "sendQuote": "Ibgħat kwotazzjoni",
+    "quotePrice": "Il-prezz tiegħek (€, mingħajr VAT)",
+    "quoteNote": "Nota għall-klijent",
+    "readyByLabel": "Lesta sa",
+    "reject": "Iċħad",
+    "rejectReason": "Għaliex ma tistax tistampaha",
+    "startPrinting": "Qed tiġi stampata issa",
+    "delivered": "Imwassla / miġbura",
+    "yourInvoiceNo": "In-numru tal-fattura tiegħek",
+    "yourAmount": "tirċievi {amount}",
+    "labelsTitle": "Ħallihom jiġu stampati",
+    "labelsHint": "Fornitur tal-istampar jistampa t-tikketti magħżula fuq karta tat-tikketti xierqa u jwassalhom.",
+    "labelsOrder": "Ordna {n} tikketti stampati",
+    "labelsOrdered": "Mibgħuta lill-istampatur — ara Servizzi › Stampar.",
+    "labelsPrice": "{price} + VAT"
   }
 }

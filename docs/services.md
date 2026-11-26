@@ -63,3 +63,36 @@ languages.
 ## Tests
 
 `tests/unit/services.test.ts`, `tests/integration/services.test.ts`, `node tests/e2e/services.mjs <baseUrl> [shots]`.
+
+## Refrigeration maintenance & repair
+
+Built-in service `FRIDGE_SERVICE` (visit; licence and signed document). Schedules: every 3 months, every 6 months, every
+month (counted from the plan's start month, day A) or only when requested (repairs: the customer describes the problem).
+**Parts & labour**: for services where FIRINGI ticks "technician may add parts & labour" (`allowExtras`), the technician
+enters the amount (excl. VAT) and what was done when recording the visit (a description is required). The customer is
+charged the visit fee + parts & labour (FIRINGI invoices: two invoice lines); FIRINGI keeps its commission % of the parts
+& labour and pays the rest to the technician (`visitMoney(…, extras)`); when the provider invoices, the commission is a %
+of the whole charge. The customer sees "Parts & labour €120: …" in the history.
+
+New schedules `QUARTERLY` and `HALF_YEARLY` are available to every service (Catalogue › schedules).
+
+## Printing
+
+Built-in service `PRINTING` (kind `PRINT` — no plans or visits). Print suppliers apply for it like any service; FIRINGI
+approves them (Providers) and sets who invoices and the commission (Catalogue › Printing, or per provider).
+
+| Who | Where | What |
+| --- | --- | --- |
+| Print supplier | `/vendor/services/printing` | Products: shelf labels (with the label size), leaflets & flyers, menus, posters, stickers, business cards, banners, other — price per item + setup per order, minimum and step quantities, or **price on request**; VAT, days to print, delivery and / or pick-up, on sale. Orders: accept (fixed price) or send a quote, reject (why), printing, delivered / picked up (own invoice number when it invoices). Files and the shelf-labels PDF to download. |
+| Customer | `/buy/services/printing` | Products of approved suppliers covering its country; order: quantity (price shown), job name, instructions, files (PDF / JPG / PNG, private), delivery or pick-up, needed by; accept a quote or cancel before printing. Sees its price only — never the supplier's amount or the commission. |
+| Customer | `/buy/catalogue/shelf-labels` | **Have them printed**: picks a shelf-labels product; the selected labels × copies are sent with a print-ready PDF made for the supplier (label size from the product); the labels count as printed. |
+| FIRINGI | `/admin/services?tab=PRINTING` | All print orders by status, owed to print suppliers (mark paid — Finance right), commission to invoice. |
+
+Order steps: REQUESTED → (QUOTED →) ACCEPTED → PRINTING → DELIVERED; REJECTED / CANCELLED. On delivery: FIRINGI
+invoices the customer and owes the supplier price − commission, or the supplier invoiced and FIRINGI's commission joins
+the monthly commission invoice (hourly job on the 1st, or "Invoice commissions now"). Notifications: `print.job_new`,
+`print.quoted`, `print.job_update`. Files: `/api/services/print/upload` (stored under the customer's company),
+`/api/services/print/[id]/file/[pdf|n]` (customer, its supplier, FIRINGI).
+
+Code: `src/lib/printing.ts`, `src/server/servicing/printing.ts`, `src/components/services/printing.tsx`.
+Tests: `tests/unit/printing.test.ts`, `tests/integration/services-print-fridge.test.ts`, `node tests/e2e/services-print.mjs`.

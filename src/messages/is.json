@@ -994,7 +994,8 @@
     "Price Benchmark": "Verðsamanburður",
     "Price Position": "Verðstaða",
     "Pre-orders & Price Locks": "Forpantanir og verðlæsingar",
-    "Shelf Price Labels": "Hillumiðar"
+    "Shelf Price Labels": "Hillumiðar",
+    "Printing": "Prentun"
   },
   "delivery": {
     "title": "Afhending",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Ný starfsumsókn",
       "body": "{name} sótti um: {job}."
+    },
+    "print_job_new": {
+      "title": "Ný prentpöntun",
+      "body": "{customer} pantaði {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Tilboð í prentpöntunina þína",
+      "body": "Prentpöntun {number}: {amount} + VSK. Samþykktu hana á síðunni Prentun."
+    },
+    "print_job_update": {
+      "title": "Uppfærsla á prentpöntun",
+      "body": "Það eru fréttir af prentpöntun {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Aðra hverja viku",
       "TWICE_MONTHLY": "Tvisvar í mánuði",
       "MONTHLY": "Mánaðarlega",
-      "ON_REQUEST": "Aðeins eftir beiðni"
+      "ON_REQUEST": "Aðeins eftir beiðni",
+      "QUARTERLY": "Á 3 mánaða fresti",
+      "HALF_YEARLY": "Á 6 mánaða fresti"
     },
     "window": {
       "ANY": "Hvenær sem er",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "aðra hverja viku: {day}",
       "TWICE_MONTHLY": "{a}. og {b}. dag mánaðar",
       "MONTHLY": "{a}. dag mánaðar",
-      "ON_REQUEST": "þegar þú óskar"
+      "ON_REQUEST": "þegar þú óskar",
+      "QUARTERLY": "á 3 mánaða fresti, {a}. dag mánaðar",
+      "HALF_YEARLY": "á 6 mánaða fresti, {a}. dag mánaðar"
     },
     "st": {
       "REQUESTED": "Beðið um",
@@ -9886,7 +9903,16 @@
     "noVisits": "Ekkert framundan.",
     "noRecent": "Engar heimsóknir enn.",
     "noProviderYet": "Þú veitir enga þjónustu enn.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Varahlutir og vinna (€, án VSK)",
+      "note": "Notaðir varahlutir og unnin vinna",
+      "shown": "Varahlutir og vinna {amount}: {note}",
+      "hint": "Viðgerðir: tæknimaðurinn skráir varahluti og vinnu í heimsókninni."
+    },
+    "print": {
+      "open": "Opna Prentun →"
+    }
   },
   "haccp": {
     "todayTitle": "Eftirlit dagsins",
@@ -10508,5 +10534,104 @@
     "saved": "Stærð vistuð.",
     "test": "Prufuprentun",
     "testHint": "Prentar eina örk með útlínum. Prentaðu hana á venjulegan pappír og leggðu hana við límmiðaörkina þína til að athuga hvort hún passi. Miðarnir eru ekki merktir sem prentaðir."
+  },
+  "printing": {
+    "title": "Prentun",
+    "intro": "Dreifimiðar, matseðlar, veggspjöld, límmiðar, nafnspjöld, borðar og hillumiðar — prentað af birgjum á FIRINGI og sent til þín eða tilbúið til afhendingar.",
+    "kinds": {
+      "SHELF_LABELS": "Hillumiðar",
+      "LEAFLET": "Bæklingar og dreifimiðar",
+      "MENU": "Matseðlar",
+      "POSTER": "Veggspjöld",
+      "STICKER": "Límmiðar",
+      "BUSINESS_CARD": "Nafnspjöld",
+      "BANNER": "Borðar og skilti",
+      "OTHER": "Önnur prentun"
+    },
+    "products": "Það sem þú getur látið prenta",
+    "noProducts": "Enginn prentbirgir býður enn upp á prentun á þínu svæði.",
+    "labelsFromPage": "Hillumiðar: pantaðu þá á síðunni Verðmiðar á hillur.",
+    "by": "frá {supplier}",
+    "perItem": "{price} á stk.",
+    "setup": "+ {price} uppsetning",
+    "minQty": "frá {n}",
+    "step": "í {n} stk. þrepum",
+    "onRequest": "Verð eftir samkomulagi — birgirinn sendir þér tilboð",
+    "turnaround": "tilbúið eftir um {n} daga",
+    "delivery": {
+      "DELIVERY": "Sent til þín",
+      "PICKUP": "Sótt"
+    },
+    "deliveryLabel": "Hvernig þú færð það",
+    "order": "Panta",
+    "qty": "Magn",
+    "orderTitle": "Heiti verksins",
+    "notes": "Leiðbeiningar (stærð, pappír, texti, litir…)",
+    "files": "Skrárnar þínar (PDF, JPG, PNG)",
+    "addFile": "Bæta við skrá",
+    "uploading": "Hleð upp…",
+    "wantedBy": "Þarf fyrir",
+    "total": "{price} + VSK",
+    "qtyRule": "Magn: minnst {min}, í {step} stk. þrepum.",
+    "send": "Senda pöntun",
+    "sent": "Pöntun send — birgirinn staðfestir hana.",
+    "cancel": "Hætta við",
+    "orders": "Prentpantanirnar þínar",
+    "noOrders": "Engar prentpantanir enn.",
+    "st": {
+      "REQUESTED": "Bíður eftir birgi",
+      "QUOTED": "Tilboð til samþykktar",
+      "ACCEPTED": "Samþykkt",
+      "PRINTING": "Í prentun",
+      "DELIVERED": "Afhent",
+      "REJECTED": "Hafnað",
+      "CANCELLED": "Hætt við"
+    },
+    "quote": "Tilboð: {price} + VSK",
+    "readyBy": "tilbúið {date}",
+    "acceptQuote": "Samþykkja tilboð",
+    "cancelOrder": "Hætta við pöntun",
+    "rejected": "Hafnað: {reason}",
+    "labelsPdf": "PDF með miðum",
+    "vTitle": "Prentun",
+    "vIntro": "Prentvörurnar þínar og prentpantanir frá viðskiptavinum.",
+    "notApproved": "Sæktu um „Prentun“ á síðunni Þjónusta. Þegar FIRINGI hefur samþykkt þig skaltu bæta vörunum þínum við hér.",
+    "termsFiringi": "FIRINGI rukkar viðskiptavininn og greiðir þér verðið að frádreginni {pct}% þóknun.",
+    "termsProvider": "Þú rukkar viðskiptavininn sjálf(ur); þóknun FIRINGI er {pct}% og er rukkuð mánaðarlega.",
+    "myProducts": "Vörurnar þínar",
+    "addProduct": "Bæta við vöru",
+    "edit": "Breyta",
+    "save": "Vista",
+    "kind": "Hvað þetta er",
+    "name": "Heiti",
+    "description": "Lýsing (stærð, pappír, áferð)",
+    "labelSize": "Stærð miða",
+    "unitPrice": "Verð á stykki (€, án VSK)",
+    "setupPrice": "Uppsetning á pöntun (€, án VSK)",
+    "min": "Lágmarksmagn",
+    "stepQty": "Magnþrep",
+    "priceOnRequest": "Verð eftir samkomulagi (ég sendi tilboð)",
+    "vat": "VSK %",
+    "days": "Dagar í prentun",
+    "active": "Í sölu",
+    "inactive": "Ekki í sölu",
+    "incoming": "Prentpantanir",
+    "noIncoming": "Engar prentpantanir enn.",
+    "accept": "Samþykkja",
+    "sendQuote": "Senda tilboð",
+    "quotePrice": "Verðið þitt (€, án VSK)",
+    "quoteNote": "Athugasemd til viðskiptavinar",
+    "readyByLabel": "Tilbúið",
+    "reject": "Hafna",
+    "rejectReason": "Af hverju þú getur ekki prentað þetta",
+    "startPrinting": "Í prentun núna",
+    "delivered": "Afhent / sótt",
+    "yourInvoiceNo": "Reikningsnúmerið þitt",
+    "yourAmount": "þú færð {amount}",
+    "labelsTitle": "Láta prenta þá",
+    "labelsHint": "Prentbirgir prentar valda miða á viðeigandi miðapappír og sendir þá til þín.",
+    "labelsOrder": "Panta {n} prentaða miða",
+    "labelsOrdered": "Sent í prentsmiðju — sjá Þjónusta › Prentun.",
+    "labelsPrice": "{price} + VSK"
   }
 }

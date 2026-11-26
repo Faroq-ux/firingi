@@ -994,7 +994,8 @@
     "Price Benchmark": "Comparație de prețuri",
     "Price Position": "Poziția prețurilor",
     "Pre-orders & Price Locks": "Precomenzi și prețuri blocate",
-    "Shelf Price Labels": "Etichete de preț pentru raft"
+    "Shelf Price Labels": "Etichete de preț pentru raft",
+    "Printing": "Tipar"
   },
   "delivery": {
     "title": "Livrare",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Candidatură nouă",
       "body": "{name} a aplicat: {job}."
+    },
+    "print_job_new": {
+      "title": "Comandă nouă de tipar",
+      "body": "{customer} a comandat {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Ofertă pentru comanda dumneavoastră de tipar",
+      "body": "Comanda de tipar {number}: {amount} + TVA. Acceptați-o pe pagina Tipar."
+    },
+    "print_job_update": {
+      "title": "Actualizare comandă de tipar",
+      "body": "Există noutăți despre comanda de tipar {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "La 2 săptămâni",
       "TWICE_MONTHLY": "De două ori pe lună",
       "MONTHLY": "Lunar",
-      "ON_REQUEST": "Doar la cerere"
+      "ON_REQUEST": "Doar la cerere",
+      "QUARTERLY": "La fiecare 3 luni",
+      "HALF_YEARLY": "La fiecare 6 luni"
     },
     "window": {
       "ANY": "Oricând",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "la două săptămâni, {day}",
       "TWICE_MONTHLY": "în zilele {a} și {b}",
       "MONTHLY": "în ziua {a}",
-      "ON_REQUEST": "la cerere"
+      "ON_REQUEST": "la cerere",
+      "QUARTERLY": "la fiecare 3 luni, în ziua {a}",
+      "HALF_YEARLY": "la fiecare 6 luni, în ziua {a}"
     },
     "st": {
       "REQUESTED": "Solicitat",
@@ -9886,7 +9903,16 @@
     "noVisits": "Nimic programat.",
     "noRecent": "Nicio vizită încă.",
     "noProviderYet": "Încă nu oferiți niciun serviciu.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Piese și manoperă (€, fără TVA)",
+      "note": "Piese folosite și lucrări efectuate",
+      "shown": "Piese și manoperă {amount}: {note}",
+      "hint": "Reparații: tehnicianul adaugă piesele și manopera în timpul vizitei."
+    },
+    "print": {
+      "open": "Deschideți Tipar →"
+    }
   },
   "haccp": {
     "todayTitle": "Verificările de azi",
@@ -10508,5 +10534,104 @@
     "saved": "Dimensiune salvată.",
     "test": "Tipărire de probă",
     "testHint": "Tipărește o coală cu contururi. Tipăriți-o pe hârtie simplă și suprapuneți-o peste coala de etichete pentru a verifica dacă se potrivește. Etichetele nu sunt marcate ca tipărite."
+  },
+  "printing": {
+    "title": "Tipar",
+    "intro": "Pliante, meniuri, afișe, autocolante, cărți de vizită, bannere și etichete de raft — tipărite de furnizori pe FIRINGI și livrate la dumneavoastră sau gata de ridicare.",
+    "kinds": {
+      "SHELF_LABELS": "Etichete de raft",
+      "LEAFLET": "Pliante și fluturași",
+      "MENU": "Meniuri",
+      "POSTER": "Afișe",
+      "STICKER": "Autocolante",
+      "BUSINESS_CARD": "Cărți de vizită",
+      "BANNER": "Bannere și panouri",
+      "OTHER": "Alte tipărituri"
+    },
+    "products": "Ce puteți tipări",
+    "noProducts": "Niciun furnizor de tipar nu oferă încă servicii în zona dumneavoastră.",
+    "labelsFromPage": "Etichete de raft: comandați-le din pagina Etichete de preț pentru raft.",
+    "by": "de la {supplier}",
+    "perItem": "{price} bucata",
+    "setup": "+ {price} pregătire",
+    "minQty": "de la {n}",
+    "step": "în pași de {n}",
+    "onRequest": "Preț la cerere — furnizorul vă trimite o ofertă",
+    "turnaround": "gata în aproximativ {n} zile",
+    "delivery": {
+      "DELIVERY": "Livrare la dumneavoastră",
+      "PICKUP": "Ridicare personală"
+    },
+    "deliveryLabel": "Cum îl primiți",
+    "order": "Comandați",
+    "qty": "Cantitate",
+    "orderTitle": "Numele lucrării",
+    "notes": "Instrucțiuni (format, hârtie, text, culori…)",
+    "files": "Fișierele dumneavoastră (PDF, JPG, PNG)",
+    "addFile": "Adăugați un fișier",
+    "uploading": "Se încarcă…",
+    "wantedBy": "Necesar până la",
+    "total": "{price} + TVA",
+    "qtyRule": "Cantitate: cel puțin {min}, în pași de {step}.",
+    "send": "Trimiteți comanda",
+    "sent": "Comandă trimisă — furnizorul o va confirma.",
+    "cancel": "Anulați",
+    "orders": "Comenzile dumneavoastră de tipar",
+    "noOrders": "Nicio comandă de tipar încă.",
+    "st": {
+      "REQUESTED": "Se așteaptă furnizorul",
+      "QUOTED": "Ofertă de acceptat",
+      "ACCEPTED": "Acceptată",
+      "PRINTING": "În tipar",
+      "DELIVERED": "Livrată",
+      "REJECTED": "Respinsă",
+      "CANCELLED": "Anulată"
+    },
+    "quote": "Ofertă: {price} + TVA",
+    "readyBy": "gata până la {date}",
+    "acceptQuote": "Acceptați oferta",
+    "cancelOrder": "Anulați comanda",
+    "rejected": "Respinsă: {reason}",
+    "labelsPdf": "PDF etichete",
+    "vTitle": "Tipar",
+    "vIntro": "Produsele dumneavoastră de tipar și comenzile de tipar trimise de clienți.",
+    "notApproved": "Solicitați „Tipar” pe pagina Servicii. După ce FIRINGI vă aprobă, adăugați aici produsele dumneavoastră.",
+    "termsFiringi": "FIRINGI facturează clientul și vă plătește prețul minus comisionul de {pct}%.",
+    "termsProvider": "Facturați dumneavoastră clientul; comisionul FIRINGI este de {pct}%, facturat lunar către dumneavoastră.",
+    "myProducts": "Produsele dumneavoastră",
+    "addProduct": "Adăugați un produs",
+    "edit": "Editați",
+    "save": "Salvați",
+    "kind": "Ce este",
+    "name": "Nume",
+    "description": "Descriere (format, hârtie, finisaj)",
+    "labelSize": "Dimensiune etichetă",
+    "unitPrice": "Preț pe bucată (€, fără TVA)",
+    "setupPrice": "Pregătire per comandă (€, fără TVA)",
+    "min": "Cantitate minimă",
+    "stepQty": "Pași de cantitate",
+    "priceOnRequest": "Preț la cerere (trimit o ofertă)",
+    "vat": "TVA %",
+    "days": "Zile pentru tipar",
+    "active": "În vânzare",
+    "inactive": "Nu este în vânzare",
+    "incoming": "Comenzi de tipar",
+    "noIncoming": "Nicio comandă de tipar încă.",
+    "accept": "Acceptați",
+    "sendQuote": "Trimiteți oferta",
+    "quotePrice": "Prețul dumneavoastră (€, fără TVA)",
+    "quoteNote": "Notă pentru client",
+    "readyByLabel": "Gata până la",
+    "reject": "Respingeți",
+    "rejectReason": "De ce nu îl puteți tipări",
+    "startPrinting": "Se tipărește acum",
+    "delivered": "Livrată / ridicată",
+    "yourInvoiceNo": "Numărul facturii dumneavoastră",
+    "yourAmount": "primiți {amount}",
+    "labelsTitle": "Dați-le la tipar",
+    "labelsHint": "Un furnizor de tipar tipărește etichetele selectate pe hârtie potrivită pentru etichete și le livrează.",
+    "labelsOrder": "Comandați {n} etichete tipărite",
+    "labelsOrdered": "Trimis la tipografie — vedeți Servicii › Tipar.",
+    "labelsPrice": "{price} + TVA"
   }
 }

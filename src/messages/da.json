@@ -994,7 +994,8 @@
     "Price Benchmark": "Prissammenligning",
     "Price Position": "Prisposition",
     "Pre-orders & Price Locks": "Forudbestillinger & prislåse",
-    "Shelf Price Labels": "Hyldeetiketter"
+    "Shelf Price Labels": "Hyldeetiketter",
+    "Printing": "Tryk"
   },
   "delivery": {
     "title": "Levering",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Ny jobansøgning",
       "body": "{name} har søgt: {job}."
+    },
+    "print_job_new": {
+      "title": "Ny trykordre",
+      "body": "{customer} har bestilt {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Tilbud på din trykordre",
+      "body": "Trykordre {number}: {amount} + moms. Accepter den på siden Tryk."
+    },
+    "print_job_update": {
+      "title": "Nyt om trykordre",
+      "body": "Der er nyt om trykordre {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Hver 2. uge",
       "TWICE_MONTHLY": "To gange om måneden",
       "MONTHLY": "Hver måned",
-      "ON_REQUEST": "Kun ved bestilling"
+      "ON_REQUEST": "Kun ved bestilling",
+      "QUARTERLY": "Hver 3. måned",
+      "HALF_YEARLY": "Hver 6. måned"
     },
     "window": {
       "ANY": "Når som helst",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "hver anden {day}",
       "TWICE_MONTHLY": "den {a}. og den {b}.",
       "MONTHLY": "den {a}.",
-      "ON_REQUEST": "når du beder om det"
+      "ON_REQUEST": "når du beder om det",
+      "QUARTERLY": "hver 3. måned, den {a}.",
+      "HALF_YEARLY": "hver 6. måned, den {a}."
     },
     "st": {
       "REQUESTED": "Bestilt",
@@ -9886,7 +9903,16 @@
     "noVisits": "Intet på vej.",
     "noRecent": "Ingen besøg endnu.",
     "noProviderYet": "Du leverer ingen ydelser endnu.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Reservedele & arbejdsløn (€, ekskl. moms)",
+      "note": "Brugte reservedele og udført arbejde",
+      "shown": "Reservedele & arbejdsløn {amount}: {note}",
+      "hint": "Reparationer: teknikeren tilføjer reservedele & arbejdsløn ved besøget."
+    },
+    "print": {
+      "open": "Åbn Tryk →"
+    }
   },
   "haccp": {
     "todayTitle": "Dagens kontroller",
@@ -10508,5 +10534,104 @@
     "saved": "Størrelse gemt.",
     "test": "Testudskrift",
     "testHint": "Udskriver ét ark med omrids. Udskriv det på almindeligt papir, og hold det op mod dit etiketark for at tjekke, at det passer. Etiketterne markeres ikke som udskrevet."
+  },
+  "printing": {
+    "title": "Tryk",
+    "intro": "Flyers, menukort, plakater, klistermærker, visitkort, bannere og hyldeetiketter — trykt af leverandører på FIRINGI og leveret til dig eller klar til afhentning.",
+    "kinds": {
+      "SHELF_LABELS": "Hyldeetiketter",
+      "LEAFLET": "Foldere & flyers",
+      "MENU": "Menukort",
+      "POSTER": "Plakater",
+      "STICKER": "Klistermærker",
+      "BUSINESS_CARD": "Visitkort",
+      "BANNER": "Bannere & skilte",
+      "OTHER": "Andet tryk"
+    },
+    "products": "Det kan du få trykt",
+    "noProducts": "Ingen trykleverandør tilbyder tryk i dit område endnu.",
+    "labelsFromPage": "Hyldeetiketter: bestil dem fra din side Hyldeprisetiketter.",
+    "by": "fra {supplier}",
+    "perItem": "{price} pr. stk.",
+    "setup": "+ {price} i opstart",
+    "minQty": "fra {n}",
+    "step": "i trin af {n}",
+    "onRequest": "Pris på forespørgsel — leverandøren sender dig et tilbud",
+    "turnaround": "klar om ca. {n} dage",
+    "delivery": {
+      "DELIVERY": "Leveret til dig",
+      "PICKUP": "Afhentning"
+    },
+    "deliveryLabel": "Sådan får du det",
+    "order": "Bestil",
+    "qty": "Antal",
+    "orderTitle": "Navn på opgaven",
+    "notes": "Instruktioner (format, papir, tekst, farver…)",
+    "files": "Dine filer (PDF, JPG, PNG)",
+    "addFile": "Tilføj en fil",
+    "uploading": "Uploader…",
+    "wantedBy": "Skal bruges senest",
+    "total": "{price} + moms",
+    "qtyRule": "Antal: mindst {min}, i trin af {step}.",
+    "send": "Send ordre",
+    "sent": "Ordre sendt — leverandøren bekræfter den.",
+    "cancel": "Annuller",
+    "orders": "Dine trykordrer",
+    "noOrders": "Ingen trykordrer endnu.",
+    "st": {
+      "REQUESTED": "Venter på leverandøren",
+      "QUOTED": "Tilbud til godkendelse",
+      "ACCEPTED": "Accepteret",
+      "PRINTING": "Trykkes",
+      "DELIVERED": "Leveret",
+      "REJECTED": "Afvist",
+      "CANCELLED": "Annulleret"
+    },
+    "quote": "Tilbud: {price} + moms",
+    "readyBy": "klar senest {date}",
+    "acceptQuote": "Accepter tilbud",
+    "cancelOrder": "Annuller ordre",
+    "rejected": "Afvist: {reason}",
+    "labelsPdf": "PDF med etiketter",
+    "vTitle": "Tryk",
+    "vIntro": "Dine trykprodukter og de trykordrer, kunderne sender dig.",
+    "notApproved": "Ansøg om „Tryk“ på din side Tjenester. Når FIRINGI har godkendt dig, kan du tilføje dine produkter her.",
+    "termsFiringi": "FIRINGI fakturerer kunden og betaler dig prisen minus {pct}% i kommission.",
+    "termsProvider": "Du fakturerer selv kunden; FIRINGI's kommission er {pct}% og faktureres dig månedligt.",
+    "myProducts": "Dine produkter",
+    "addProduct": "Tilføj et produkt",
+    "edit": "Rediger",
+    "save": "Gem",
+    "kind": "Hvad det er",
+    "name": "Navn",
+    "description": "Beskrivelse (format, papir, finish)",
+    "labelSize": "Etiketstørrelse",
+    "unitPrice": "Pris pr. stk. (€, ekskl. moms)",
+    "setupPrice": "Opstart pr. ordre (€, ekskl. moms)",
+    "min": "Mindste antal",
+    "stepQty": "Antalstrin",
+    "priceOnRequest": "Pris på forespørgsel (jeg sender et tilbud)",
+    "vat": "Moms %",
+    "days": "Dage til tryk",
+    "active": "Til salg",
+    "inactive": "Ikke til salg",
+    "incoming": "Trykordrer",
+    "noIncoming": "Ingen trykordrer endnu.",
+    "accept": "Accepter",
+    "sendQuote": "Send tilbud",
+    "quotePrice": "Din pris (€, ekskl. moms)",
+    "quoteNote": "Besked til kunden",
+    "readyByLabel": "Klar senest",
+    "reject": "Afvis",
+    "rejectReason": "Hvorfor du ikke kan trykke det",
+    "startPrinting": "Trykkes nu",
+    "delivered": "Leveret / afhentet",
+    "yourInvoiceNo": "Dit fakturanummer",
+    "yourAmount": "du får {amount}",
+    "labelsTitle": "Få dem trykt",
+    "labelsHint": "En trykleverandør trykker de valgte etiketter på ordentligt etiketpapir og leverer dem.",
+    "labelsOrder": "Bestil {n} trykte etiketter",
+    "labelsOrdered": "Sendt til trykkeriet — se Tjenester › Tryk.",
+    "labelsPrice": "{price} + moms"
   }
 }

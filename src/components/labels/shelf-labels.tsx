@@ -13,6 +13,7 @@ import { Msg, Spin, useRun } from "@/components/shared/run";
 import { addLabelsFromPurchasesAction, addLabelsFromTillAction, applyLabelPricesAction, removeLabelsAction, saveLabelSizeAction, updateLabelAction } from "@/server/actions/shelf-labels";
 import { CUSTOM_LIMITS, DEFAULT_FIELDS, LABEL_FORMATS, cleanCustom, customFormat, unitPrice, type CustomSize, type LabelFields, type LabelFormat } from "@/lib/shelf-labels";
 import { formatDate, formatMoney } from "@/lib/utils";
+import { OrderPrintedLabels, type PrintProductRow } from "@/components/services/printing";
 
 export type SlRow = {
   id: string; name: string; barcode: string | null; brand: string | null; originCountryCode: string | null; offerId: string | null; posItemId: string | null;
@@ -125,7 +126,7 @@ function Editor({ l, allow, onClose }: { l: SlRow; allow: SlAllow; onClose: () =
   );
 }
 
-export function LabelList({ labels, locale, allow, custom: savedSize }: { labels: SlRow[]; locale: string; allow: SlAllow; custom: CustomSize & { saved: boolean } }) {
+export function LabelList({ labels, locale, allow, custom: savedSize, printProducts = [] }: { labels: SlRow[]; locale: string; allow: SlAllow; custom: CustomSize & { saved: boolean }; printProducts?: PrintProductRow[] }) {
   const t = useTranslations("shelfLabels");
   const { pending, error, done, run, router } = useRun();
   const [filter, setFilter] = useState<"ALL" | "PRINT">(labels.some((l) => l.toPrint) ? "PRINT" : "ALL");
@@ -229,6 +230,7 @@ export function LabelList({ labels, locale, allow, custom: savedSize }: { labels
           {printMsg && <p className={printMsg.ok ? "text-sm text-[color:var(--success,#16a34a)]" : "text-sm text-destructive"} role="status" data-testid="sl-print-msg">{printMsg.text}</p>}
         </div>
       </section>
+      {allow.manage && <OrderPrintedLabels products={printProducts} ids={[...sel]} copies={copies} fields={fields} locale={locale} />}
     </div>
   );
 }

@@ -14,7 +14,7 @@ const today = (now: Date) => new Date(Date.UTC(now.getUTCFullYear(), now.getUTCM
 
 export async function processServices(now = new Date()) {
   const s = await servicesSettings();
-  const out = { planned: 0, reminded: 0, missed: 0, autoRequests: 0, oilAlerts: 0, licences: 0, commissionInvoices: 0 };
+  const out = { planned: 0, reminded: 0, missed: 0, autoRequests: 0, oilAlerts: 0, licences: 0, commissionInvoices: 0, printCommissionInvoices: 0 };
   if (!s.enabled) return out;
   const { notify } = await import("@/server/notify/dispatch");
   const { planVisits, invoiceCommissions } = await import("./plans");
@@ -65,5 +65,7 @@ export async function processServices(now = new Date()) {
 
   // 6. FIRINGI's commission on last month's provider-invoiced visits
   out.commissionInvoices = await invoiceCommissions(null, new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1))).catch((e) => { console.error("service commissions", e); return 0; });
+  const { invoicePrintCommissions } = await import("./printing");
+  out.printCommissionInvoices = await invoicePrintCommissions(null, new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1))).catch((e) => { console.error("print commissions", e); return 0; });
   return out;
 }

@@ -54,7 +54,7 @@ export async function listTypes(ctx: Ctx, f: { all?: boolean } = {}) {
 }
 
 export type TypeInput = {
-  code: string; name: string; namePt?: string | null; description?: string | null; kind: "COLLECTION" | "VISIT"; unit: string; isOil: boolean; wasteCode?: string | null; needsDocument: boolean;
+  code: string; name: string; namePt?: string | null; description?: string | null; kind: "COLLECTION" | "VISIT" | "PRINT"; allowExtras?: boolean; unit: string; isOil: boolean; wasteCode?: string | null; needsDocument: boolean;
   frequencies: string[]; feeNet: number; pricePerUnit: number; buybackPerUnit: number; providerPerVisit: number; providerPerUnit: number;
   invoicedBy: string; commissionPct: number; commissionPerVisit: number; commissionPerUnit: number; countries: string[]; active: boolean;
 };
@@ -64,7 +64,7 @@ export async function saveType(ctx: Ctx, id: string | null, i: TypeInput) {
   if (code.length < 3) throw new ValidationError("Give the service a code (letters, numbers, _).");
   if (!i.name.trim()) throw new ValidationError("Name the service.");
   const freq = [...new Set(i.frequencies.filter((x) => (FREQUENCIES as readonly string[]).includes(x)))];
-  if (!freq.length) throw new ValidationError("Allow at least one schedule (or 'only when requested').");
+  if (!freq.length && i.kind !== "PRINT") throw new ValidationError("Allow at least one schedule (or 'only when requested').");
   if (!(SERVICE_UNITS as readonly string[]).includes(i.unit)) throw new ValidationError("Unknown unit.");
   if (!(INVOICED_BY as readonly string[]).includes(i.invoicedBy)) throw new ValidationError("Choose who invoices the customer.");
   for (const k of ["feeNet", "pricePerUnit", "buybackPerUnit", "providerPerVisit", "providerPerUnit", "commissionPerVisit", "commissionPerUnit"] as const) if (!(i[k] >= 0)) throw new ValidationError("Amounts can't be negative.");
@@ -73,7 +73,7 @@ export async function saveType(ctx: Ctx, id: string | null, i: TypeInput) {
   if (id && !before) throw new NotFoundError("Service");
   const name = { ...((before?.name as Record<string, string>) ?? {}), en: i.name.trim().slice(0, 120), ...(i.namePt?.trim() ? { "pt-PT": i.namePt.trim().slice(0, 120) } : {}) };
   const data = {
-    name, description: i.description?.trim() ? { en: i.description.trim().slice(0, 1000) } : undefined, kind: i.kind, unit: i.unit, isOil: i.isOil, wasteCode: i.wasteCode?.trim() || null, needsDocument: i.needsDocument,
+    name, description: i.description?.trim() ? { en: i.description.trim().slice(0, 1000) } : undefined, kind: i.kind, allowExtras: i.kind === "VISIT" && !!i.allowExtras, unit: i.unit, isOil: i.isOil, wasteCode: i.wasteCode?.trim() || null, needsDocument: i.needsDocument,
     frequencies: freq, feeNet: i.feeNet, pricePerUnit: i.pricePerUnit, buybackPerUnit: i.buybackPerUnit, providerPerVisit: i.providerPerVisit, providerPerUnit: i.providerPerUnit,
     invoicedBy: i.invoicedBy, commissionPct: i.commissionPct, commissionPerVisit: i.commissionPerVisit, commissionPerUnit: i.commissionPerUnit,
     countries: [...new Set(i.countries.map((c) => c.trim().toUpperCase()).filter((c) => /^[A-Z]{2}$/.test(c)))], active: i.active,

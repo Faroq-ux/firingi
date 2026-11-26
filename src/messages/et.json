@@ -994,7 +994,8 @@
     "Price Benchmark": "Hinnavõrdlus",
     "Price Position": "Hinnapositsioon",
     "Pre-orders & Price Locks": "Eeltellimused & hinnalukud",
-    "Shelf Price Labels": "Riiulihinnasildid"
+    "Shelf Price Labels": "Riiulihinnasildid",
+    "Printing": "Trükk"
   },
   "delivery": {
     "title": "Kohaletoimetamine",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Uus tööavaldus",
       "body": "{name} kandideeris: {job}."
+    },
+    "print_job_new": {
+      "title": "Uus trükitellimus",
+      "body": "{customer} tellis {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Pakkumine teie trükitellimusele",
+      "body": "Trükitellimus {number}: {amount} + km. Kinnitage see lehel Trükk."
+    },
+    "print_job_update": {
+      "title": "Trükitellimuse uudised",
+      "body": "Trükitellimuse {number} kohta on uudiseid."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Iga 2 nädala järel",
       "TWICE_MONTHLY": "Kaks korda kuus",
       "MONTHLY": "Iga kuu",
-      "ON_REQUEST": "Ainult tellimisel"
+      "ON_REQUEST": "Ainult tellimisel",
+      "QUARTERLY": "Iga 3 kuu järel",
+      "HALF_YEARLY": "Iga 6 kuu järel"
     },
     "window": {
       "ANY": "Igal ajal",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "üle nädala: {day}",
       "TWICE_MONTHLY": "kuu {a}. ja {b}. päeval",
       "MONTHLY": "kuu {a}. päeval",
-      "ON_REQUEST": "teie soovil"
+      "ON_REQUEST": "teie soovil",
+      "QUARTERLY": "iga 3 kuu järel, kuupäeval {a}",
+      "HALF_YEARLY": "iga 6 kuu järel, kuupäeval {a}"
     },
     "st": {
       "REQUESTED": "Tellitud",
@@ -9886,7 +9903,16 @@
     "noVisits": "Eelseisvaid külastusi pole.",
     "noRecent": "Külastusi veel pole.",
     "noProviderYet": "Te ei paku veel ühtegi teenust.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Varuosad ja töö (€, km-ta)",
+      "note": "Kasutatud varuosad ja tehtud töö",
+      "shown": "Varuosad ja töö {amount}: {note}",
+      "hint": "Remont: tehnik lisab varuosad ja töö külastuse ajal."
+    },
+    "print": {
+      "open": "Ava Trükk →"
+    }
   },
   "haccp": {
     "todayTitle": "Tänased kontrollid",
@@ -10508,5 +10534,104 @@
     "saved": "Suurus salvestatud.",
     "test": "Proovitrükk",
     "testHint": "Prindib ühe lehe piirjoontega. Printige see tavalisele paberile ja asetage kleebiselehe vastu, et kontrollida, kas see kattub. Silte ei märgita prindituks."
+  },
+  "printing": {
+    "title": "Trükk",
+    "intro": "Flaierid, menüüd, plakatid, kleebised, visiitkaardid, bännerid ja riiulisildid — trükivad FIRINGI tarnijad ning need tarnitakse teile või on valmis järeletulemiseks.",
+    "kinds": {
+      "SHELF_LABELS": "Riiulisildid",
+      "LEAFLET": "Voldikud ja flaierid",
+      "MENU": "Menüüd",
+      "POSTER": "Plakatid",
+      "STICKER": "Kleebised",
+      "BUSINESS_CARD": "Visiitkaardid",
+      "BANNER": "Bännerid ja sildid",
+      "OTHER": "Muu trükk"
+    },
+    "products": "Mida saate trükkida",
+    "noProducts": "Teie piirkonnas ei paku veel ükski trükitarnija trükiteenust.",
+    "labelsFromPage": "Riiulisildid: tellige need lehelt Riiuli hinnasildid.",
+    "by": "tarnija {supplier}",
+    "perItem": "{price} / tk",
+    "setup": "+ {price} ettevalmistus",
+    "minQty": "alates {n}",
+    "step": "{n} kaupa",
+    "onRequest": "Hind päringu alusel — tarnija saadab teile pakkumise",
+    "turnaround": "valmib umbes {n} päevaga",
+    "delivery": {
+      "DELIVERY": "Tarne teile",
+      "PICKUP": "Järeletulemine"
+    },
+    "deliveryLabel": "Kuidas selle kätte saate",
+    "order": "Telli",
+    "qty": "Kogus",
+    "orderTitle": "Töö nimetus",
+    "notes": "Juhised (formaat, paber, tekst, värvid…)",
+    "files": "Teie failid (PDF, JPG, PNG)",
+    "addFile": "Lisa fail",
+    "uploading": "Üleslaadimine…",
+    "wantedBy": "Vajalik kuupäevaks",
+    "total": "{price} + km",
+    "qtyRule": "Kogus: vähemalt {min}, {step} kaupa.",
+    "send": "Saada tellimus",
+    "sent": "Tellimus saadetud — tarnija kinnitab selle.",
+    "cancel": "Tühista",
+    "orders": "Teie trükitellimused",
+    "noOrders": "Trükitellimusi veel pole.",
+    "st": {
+      "REQUESTED": "Ootab tarnijat",
+      "QUOTED": "Pakkumine kinnitamiseks",
+      "ACCEPTED": "Kinnitatud",
+      "PRINTING": "Trükkimisel",
+      "DELIVERED": "Tarnitud",
+      "REJECTED": "Tagasi lükatud",
+      "CANCELLED": "Tühistatud"
+    },
+    "quote": "Pakkumine: {price} + km",
+    "readyBy": "valmis {date}",
+    "acceptQuote": "Kinnita pakkumine",
+    "cancelOrder": "Tühista tellimus",
+    "rejected": "Tagasi lükatud: {reason}",
+    "labelsPdf": "Siltide PDF",
+    "vTitle": "Trükk",
+    "vIntro": "Teie trükitooted ja klientide trükitellimused.",
+    "notApproved": "Taotlege teenust „Trükk“ lehel Teenused. Kui FIRINGI teid kinnitab, lisage siia oma tooted.",
+    "termsFiringi": "FIRINGI esitab kliendile arve ja maksab teile hinna, millest on maha arvatud {pct}% komisjonitasu.",
+    "termsProvider": "Esitate kliendile arve ise; FIRINGI komisjonitasu on {pct}% ja see arveldatakse teiega igakuiselt.",
+    "myProducts": "Teie tooted",
+    "addProduct": "Lisa toode",
+    "edit": "Muuda",
+    "save": "Salvesta",
+    "kind": "Mis see on",
+    "name": "Nimetus",
+    "description": "Kirjeldus (formaat, paber, viimistlus)",
+    "labelSize": "Sildi suurus",
+    "unitPrice": "Hind tk kohta (€, km-ta)",
+    "setupPrice": "Ettevalmistus tellimuse kohta (€, km-ta)",
+    "min": "Minimaalne kogus",
+    "stepQty": "Koguse samm",
+    "priceOnRequest": "Hind päringu alusel (saadan pakkumise)",
+    "vat": "Km %",
+    "days": "Trükkimise päevad",
+    "active": "Müügis",
+    "inactive": "Pole müügis",
+    "incoming": "Trükitellimused",
+    "noIncoming": "Trükitellimusi veel pole.",
+    "accept": "Kinnita",
+    "sendQuote": "Saada pakkumine",
+    "quotePrice": "Teie hind (€, km-ta)",
+    "quoteNote": "Märkus kliendile",
+    "readyByLabel": "Valmis kuupäevaks",
+    "reject": "Lükka tagasi",
+    "rejectReason": "Miks te ei saa seda trükkida",
+    "startPrinting": "Trükitakse",
+    "delivered": "Tarnitud / järele tuldud",
+    "yourInvoiceNo": "Teie arve number",
+    "yourAmount": "saate {amount}",
+    "labelsTitle": "Lase trükkida",
+    "labelsHint": "Trükitarnija trükib valitud sildid sobivale sildipaberile ja tarnib need.",
+    "labelsOrder": "Telli {n} trükitud silti",
+    "labelsOrdered": "Saadetud trükikotta — vt Teenused › Trükk.",
+    "labelsPrice": "{price} + km"
   }
 }

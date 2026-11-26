@@ -12,13 +12,14 @@ export const planSchema = z.object({
   autoRequestWhenFull: z.boolean().optional(), notes: z.string().trim().max(500).nullable().optional(), startsOn: day.nullable().optional(),
 });
 export const doneSchema = z.object({
+  extrasNet: z.coerce.number().min(0).max(50000).nullable().optional(), extrasNote: z.string().trim().max(300).nullable().optional(),
   quantity: z.coerce.number().min(0).max(99999).nullable().optional(), containersTaken: z.coerce.number().int().min(0).max(100).nullable().optional(), containersLeft: z.coerce.number().int().min(0).max(100).nullable().optional(),
   signedBy: z.string().trim().max(120).nullable().optional(), docNumber: z.string().trim().max(60).nullable().optional(), providerInvoiceNo: z.string().trim().max(60).nullable().optional(), note: z.string().trim().max(1000).nullable().optional(),
 });
 export const typeSchema = z.object({
   code: z.string().trim().min(3, "Give the service a code.").max(40), name: z.string().trim().min(2, "Name the service.").max(120), namePt: z.string().trim().max(120).nullable().optional(),
-  description: z.string().trim().max(1000).nullable().optional(), kind: z.enum(["COLLECTION", "VISIT"]), unit: z.enum(SERVICE_UNITS), isOil: z.boolean(), wasteCode: z.string().trim().max(20).nullable().optional(),
-  needsDocument: z.boolean(), frequencies: z.array(z.enum(FREQUENCIES)).min(1, "Allow at least one schedule."),
+  description: z.string().trim().max(1000).nullable().optional(), kind: z.enum(["COLLECTION", "VISIT", "PRINT"]), allowExtras: z.boolean().optional(), unit: z.enum(SERVICE_UNITS), isOil: z.boolean(), wasteCode: z.string().trim().max(20).nullable().optional(),
+  needsDocument: z.boolean(), frequencies: z.array(z.enum(FREQUENCIES)),
   feeNet: money, pricePerUnit: money, buybackPerUnit: money, providerPerVisit: money, providerPerUnit: money,
   invoicedBy: z.enum(INVOICED_BY), commissionPct: z.coerce.number().min(0).max(100), commissionPerVisit: money, commissionPerUnit: money,
   countries: z.array(z.string().trim().length(2)).max(40), active: z.boolean(),

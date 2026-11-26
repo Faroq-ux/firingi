@@ -994,7 +994,8 @@
     "Price Benchmark": "Comparateur de prix",
     "Price Position": "Positionnement prix",
     "Pre-orders & Price Locks": "Précommandes et prix bloqués",
-    "Shelf Price Labels": "Étiquettes de prix"
+    "Shelf Price Labels": "Étiquettes de prix",
+    "Printing": "Impression"
   },
   "delivery": {
     "title": "Livraison",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Nouvelle candidature",
       "body": "{name} a postulé : {job}."
+    },
+    "print_job_new": {
+      "title": "Nouvelle commande d'impression",
+      "body": "{customer} a commandé {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Devis pour votre commande d'impression",
+      "body": "Commande d'impression {number} : {amount} + TVA. Acceptez-la sur la page Impression."
+    },
+    "print_job_update": {
+      "title": "Mise à jour de la commande d'impression",
+      "body": "Du nouveau sur la commande d'impression {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Toutes les 2 semaines",
       "TWICE_MONTHLY": "Deux fois par mois",
       "MONTHLY": "Chaque mois",
-      "ON_REQUEST": "Uniquement sur demande"
+      "ON_REQUEST": "Uniquement sur demande",
+      "QUARTERLY": "Tous les 3 mois",
+      "HALF_YEARLY": "Tous les 6 mois"
     },
     "window": {
       "ANY": "Indifférent",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "un {day} sur deux",
       "TWICE_MONTHLY": "le {a} et le {b} du mois",
       "MONTHLY": "le {a} du mois",
-      "ON_REQUEST": "sur demande"
+      "ON_REQUEST": "sur demande",
+      "QUARTERLY": "tous les 3 mois, le jour {a}",
+      "HALF_YEARLY": "tous les 6 mois, le jour {a}"
     },
     "st": {
       "REQUESTED": "Demandée",
@@ -9886,7 +9903,16 @@
     "noVisits": "Rien de prévu.",
     "noRecent": "Aucune visite pour l’instant.",
     "noProviderYet": "Vous ne proposez encore aucun service.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Pièces et main-d'œuvre (€, HT)",
+      "note": "Pièces utilisées et travaux effectués",
+      "shown": "Pièces et main-d'œuvre {amount} : {note}",
+      "hint": "Réparations : le technicien ajoute les pièces et la main-d'œuvre lors de la visite."
+    },
+    "print": {
+      "open": "Ouvrir Impression →"
+    }
   },
   "haccp": {
     "todayTitle": "Contrôles du jour",
@@ -10508,5 +10534,104 @@
     "saved": "Taille enregistrée.",
     "test": "Impression test",
     "testHint": "Imprime une feuille avec les contours. Imprimez-la sur du papier ordinaire et superposez-la à votre planche d'étiquettes pour vérifier l'alignement. Les étiquettes ne sont pas marquées comme imprimées."
+  },
+  "printing": {
+    "title": "Impression",
+    "intro": "Flyers, menus, affiches, autocollants, cartes de visite, banderoles et étiquettes de rayon — imprimés par des fournisseurs sur FIRINGI et livrés chez vous ou prêts à retirer.",
+    "kinds": {
+      "SHELF_LABELS": "Étiquettes de rayon",
+      "LEAFLET": "Dépliants et flyers",
+      "MENU": "Menus",
+      "POSTER": "Affiches",
+      "STICKER": "Autocollants",
+      "BUSINESS_CARD": "Cartes de visite",
+      "BANNER": "Banderoles et panneaux",
+      "OTHER": "Autres impressions"
+    },
+    "products": "Ce que vous pouvez imprimer",
+    "noProducts": "Aucun imprimeur ne propose encore d'impression dans votre zone.",
+    "labelsFromPage": "Étiquettes de rayon : commandez-les depuis votre page Étiquettes de prix de rayon.",
+    "by": "par {supplier}",
+    "perItem": "{price} l'unité",
+    "setup": "+ {price} de frais de calage",
+    "minQty": "à partir de {n}",
+    "step": "par multiples de {n}",
+    "onRequest": "Prix sur demande — le fournisseur vous envoie un devis",
+    "turnaround": "prêt en environ {n} jours",
+    "delivery": {
+      "DELIVERY": "Livré chez vous",
+      "PICKUP": "Retrait sur place"
+    },
+    "deliveryLabel": "Mode de réception",
+    "order": "Commander",
+    "qty": "Quantité",
+    "orderTitle": "Nom de ce travail",
+    "notes": "Instructions (format, papier, texte, couleurs…)",
+    "files": "Vos fichiers (PDF, JPG, PNG)",
+    "addFile": "Ajouter un fichier",
+    "uploading": "Envoi en cours…",
+    "wantedBy": "Pour le",
+    "total": "{price} + TVA",
+    "qtyRule": "Quantité : au moins {min}, par multiples de {step}.",
+    "send": "Envoyer la commande",
+    "sent": "Commande envoyée — le fournisseur va la confirmer.",
+    "cancel": "Annuler",
+    "orders": "Vos commandes d'impression",
+    "noOrders": "Aucune commande d'impression pour l'instant.",
+    "st": {
+      "REQUESTED": "En attente du fournisseur",
+      "QUOTED": "Devis à accepter",
+      "ACCEPTED": "Acceptée",
+      "PRINTING": "En impression",
+      "DELIVERED": "Livrée",
+      "REJECTED": "Refusée",
+      "CANCELLED": "Annulée"
+    },
+    "quote": "Devis : {price} + TVA",
+    "readyBy": "prêt le {date}",
+    "acceptQuote": "Accepter le devis",
+    "cancelOrder": "Annuler la commande",
+    "rejected": "Refusée : {reason}",
+    "labelsPdf": "PDF des étiquettes",
+    "vTitle": "Impression",
+    "vIntro": "Vos produits d'impression et les commandes d'impression de vos clients.",
+    "notApproved": "Demandez « Impression » sur votre page Services. Une fois approuvé par FIRINGI, ajoutez vos produits ici.",
+    "termsFiringi": "FIRINGI facture le client et vous verse le prix moins {pct} % de commission.",
+    "termsProvider": "Vous facturez le client vous-même ; la commission de FIRINGI est de {pct} %, facturée chaque mois.",
+    "myProducts": "Vos produits",
+    "addProduct": "Ajouter un produit",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "kind": "Type de produit",
+    "name": "Nom",
+    "description": "Description (format, papier, finition)",
+    "labelSize": "Format d'étiquette",
+    "unitPrice": "Prix unitaire (€, HT)",
+    "setupPrice": "Frais de calage par commande (€, HT)",
+    "min": "Quantité minimale",
+    "stepQty": "Multiples de quantité",
+    "priceOnRequest": "Prix sur demande (j'envoie un devis)",
+    "vat": "TVA %",
+    "days": "Délai d'impression (jours)",
+    "active": "En vente",
+    "inactive": "Hors vente",
+    "incoming": "Commandes d'impression",
+    "noIncoming": "Aucune commande d'impression pour l'instant.",
+    "accept": "Accepter",
+    "sendQuote": "Envoyer le devis",
+    "quotePrice": "Votre prix (€, HT)",
+    "quoteNote": "Note pour le client",
+    "readyByLabel": "Prêt le",
+    "reject": "Refuser",
+    "rejectReason": "Pourquoi vous ne pouvez pas l'imprimer",
+    "startPrinting": "Impression en cours",
+    "delivered": "Livrée / retirée",
+    "yourInvoiceNo": "Votre numéro de facture",
+    "yourAmount": "vous recevez {amount}",
+    "labelsTitle": "Les faire imprimer",
+    "labelsHint": "Un imprimeur imprime les étiquettes sélectionnées sur du papier étiquette adapté et les livre.",
+    "labelsOrder": "Commander {n} étiquettes imprimées",
+    "labelsOrdered": "Envoyé à l'imprimeur — voir Services › Impression.",
+    "labelsPrice": "{price} + TVA"
   }
 }

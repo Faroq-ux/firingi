@@ -12,12 +12,14 @@ import { TabLinks } from "@/app/admin/ai/_kit";
 import { svLabelsEn } from "@/components/services/labels";
 import { day, isoDay, money, num, schedText, statusTone } from "@/components/services/text";
 import { ProviderVisit } from "@/components/services/client";
+import { MarkPrintPaid } from "@/components/services/printing";
+import { adminPrint, printMoneyOpen } from "@/server/servicing/printing";
 import { AddFiringiProvider, CompanyServicesSwitch, DecideProvider, FindServicesBusiness, InvoiceCommissions, MarkPaid, ReassignPlan, ServicesSettingsForm, TypeEditor, type TypeDraft } from "@/components/services/admin";
 
 export const metadata = { title: "Services & Used Oil" };
 export const dynamic = "force-dynamic";
 
-const TABS = ["OVERVIEW", "CATALOGUE", "PROVIDERS", "VISITS", "MONEY", "SETTINGS"] as const;
+const TABS = ["OVERVIEW", "CATALOGUE", "PROVIDERS", "VISITS", "PRINTING", "MONEY", "SETTINGS"] as const;
 type Tab = (typeof TABS)[number];
 const n = (v: { toString(): string } | null | undefined) => (v == null ? 0 : Number(v.toString()));
 const tname = (t: { name: unknown; code: string }) => String((t.name as Record<string, string>)?.en ?? t.code);
@@ -42,17 +44,62 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
       {!settings.enabled && <p className="mb-4 rounded-lg border border-dashed p-3 text-sm text-muted-foreground" data-testid="svs-off">Services are switched off (Settings).</p>}
       <TabLinks testid="sv-tabs" active={tab} href={(x) => `/admin/services?tab=${x}`} tabs={[
         { key: "OVERVIEW", label: "Overview" }, { key: "CATALOGUE", label: "Catalogue" }, { key: "PROVIDERS", label: "Providers", count: providersPending.filter((p) => p.status === "PENDING").length || undefined },
-        { key: "VISITS", label: "Plans & Visits", count: o.requested || undefined }, { key: "MONEY", label: "Money" }, { key: "SETTINGS", label: "Settings" },
+        { key: "VISITS", label: "Plans & Visits", count: o.requested || undefined }, { key: "PRINTING", label: "Printing" }, { key: "MONEY", label: "Money" }, { key: "SETTINGS", label: "Settings" },
       ]} />
 
       {tab === "OVERVIEW" && <Overview o={o} pending={providersPending.filter((p) => p.status === "PENDING").length} />}
       {tab === "CATALOGUE" && <Catalogue ctx={ctx} manage={manage} />}
       {tab === "PROVIDERS" && <Providers ctx={ctx} manage={manage} rows={providersPending} />}
       {tab === "VISITS" && <Visits ctx={ctx} l={l} manage={manage} status={sp.status ?? null} page={Number(sp.page ?? 1) || 1} />}
+      {tab === "PRINTING" && <Printing ctx={ctx} finance={finance && manage} status={sp.status ?? null} />}
       {tab === "MONEY" && <Money finance={finance && manage} />}
       {tab === "SETTINGS" && <Settings ctx={ctx} manage={can(ctx, ["admin.services.manage", "admin.settings.manage"])} s={settings} />}
     </>
   );
+
+  async function Printing({ ctx, finance, status }: { ctx: Parameters<typeof adminPrint>[0]; finance: boolean; status: string | null }) {
+    const [d, m] = await Promise.all([adminPrint(ctx, status), printMoneyOpen()]);
+    const PS = ["REQUESTED", "QUOTED", "ACCEPTED", "PRINTING", "DELIVERED", "REJECTED", "CANCELLED"];
+    return (
+      <div className="space-y-6">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <Tile icon={Inbox} label="Open print orders" value={d.open} locale="en" tone="tone-orange" i={0} testId="pa-open" />
+          <Tile icon={CalendarCheck} label="Products on sale" value={d.products} locale="en" tone="tone-teal" i={1} />
+          <Tile icon={Coins} label="Owed to print suppliers" value={m.provider} locale="en" tone="tone-pink" i={2} fmt="money" />
+          <Tile icon={Coins} label="Commission to invoice" value={m.commission} locale="en" tone="tone-violet" i={3} fmt="money" />
+        </div>
+        <Card>
+          <CardHeader><CardTitle>Print orders</CardTitle><CardDescription>Print suppliers are approved under Providers (service “Printing”); who invoices and the commission are set in Catalogue › Printing and per provider. Customers never see the supplier&apos;s amount or the commission.</CardDescription></CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex flex-wrap gap-1 text-xs">
+              <Link href="/admin/services?tab=PRINTING" className={`rounded-full border px-2 py-0.5 ${!status ? "bg-primary text-primary-foreground" : ""}`}>All</Link>
+              {PS.map((s) => <Link key={s} href={`/admin/services?tab=PRINTING&status=${s}`} className={`rounded-full border px-2 py-0.5 ${status === s ? "bg-primary text-primary-foreground" : ""}`}>{s.toLowerCase()} {d.counts[s] ? `(${d.counts[s]})` : ""}</Link>)}
+            </div>
+            {!d.jobs.length ? <p className="text-sm text-muted-foreground" data-testid="pa-none">No print orders.</p> : (
+              <ul className="divide-y" data-testid="pa-jobs">
+                {d.jobs.map((j) => (
+                  <li key={j.id} className="flex flex-wrap items-center gap-2 py-2 text-sm" data-testid="pa-job">
+                    <span className="w-28 shrink-0 tabular-nums text-xs text-muted-foreground">{j.number}</span>
+                    <span className="min-w-0 flex-1 basis-60 break-words"><span className="font-medium">{j.customer}</span> → {j.supplier} · {j.product.name} × {j.qty}
+                      <span className="block text-xs text-muted-foreground">{money("en", n(j.priceNet))}{j.status === "DELIVERED" ? ` · ${j.invoicedBy === "FIRINGI" ? `FIRINGI invoiced · supplier ${money("en", n(j.providerAmount))}${j.providerPaidAt ? " (paid)" : ""}` : `supplier invoiced ${j.providerInvoiceNo ?? ""} · commission ${money("en", n(j.commissionNet))}${j.commissionInvoiceId ? " (invoiced)" : ""}`}` : ""}</span></span>
+                    <Badge variant={j.status === "DELIVERED" ? "success" : j.status === "REJECTED" || j.status === "CANCELLED" ? "secondary" : "warning"}>{j.status.toLowerCase()}</Badge>
+                    {(j.pdfKey || j.artworkKeys.length > 0) && <a className="text-xs text-primary hover:underline" href={`/api/services/print/${j.id}/file/${j.pdfKey ? "pdf" : "0"}`} target="_blank" rel="noreferrer">File</a>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader><CardTitle>Owed to print suppliers</CardTitle><CardDescription>Delivered orders FIRINGI invoiced: the supplier&apos;s amount (price minus commission). Commissions on orders suppliers invoiced go on FIRINGI&apos;s monthly commission invoice (Money tab button or the hourly job on the 1st).</CardDescription></CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <p>{money("en", m.provider)} to pay · {money("en", m.commission)} commission to invoice</p>
+            {finance && <MarkPrintPaid ids={m.rows.filter((r) => r.invoicedBy === "FIRINGI").map((r) => r.id)} />}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   function Overview({ o, pending }: { o: Awaited<ReturnType<typeof adminOverview>>; pending: number }) {
     return (
@@ -83,7 +130,7 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
 async function Catalogue({ ctx, manage }: { ctx: Awaited<ReturnType<typeof pagePortal>>; manage: boolean }) {
   const types = await listTypes(ctx, { all: true });
   const draft = (t: (typeof types)[number]): TypeDraft => ({
-    code: t.code, name: tname(t), namePt: String((t.name as Record<string, string>)?.["pt-PT"] ?? (t.name as Record<string, string>)?.pt ?? ""), description: String((t.description as Record<string, string> | null)?.en ?? ""), kind: t.kind as TypeDraft["kind"], unit: t.unit, isOil: t.isOil,
+    code: t.code, name: tname(t), namePt: String((t.name as Record<string, string>)?.["pt-PT"] ?? (t.name as Record<string, string>)?.pt ?? ""), description: String((t.description as Record<string, string> | null)?.en ?? ""), kind: t.kind as TypeDraft["kind"], allowExtras: t.allowExtras, unit: t.unit, isOil: t.isOil,
     wasteCode: t.wasteCode ?? "", needsDocument: t.needsDocument, frequencies: t.frequencies, feeNet: n(t.feeNet), pricePerUnit: n(t.pricePerUnit), buybackPerUnit: n(t.buybackPerUnit), providerPerVisit: n(t.providerPerVisit),
     providerPerUnit: n(t.providerPerUnit), invoicedBy: t.invoicedBy as TypeDraft["invoicedBy"], commissionPct: n(t.commissionPct), commissionPerVisit: n(t.commissionPerVisit), commissionPerUnit: n(t.commissionPerUnit), countries: t.countries.join(", "), active: t.active,
   });

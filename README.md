@@ -815,6 +815,16 @@ supplier — across results, cart, orders, dashboard, phone app and notification
 Details: [docs/suppliers-minimums.md](docs/suppliers-minimums.md).
 Tests: `tests/unit/cart-help.test.ts`, `tests/integration/cart-help.test.ts`, `node tests/e2e/cart-help.mjs`.
 
+## Services: Printing and Refrigeration
+
+**Printing**: print suppliers approved by FIRINGI list leaflets, menus, posters, stickers, business cards, banners and
+shelf labels with their prices (per item + setup, minimum quantities) or "price on request"; customers order with their
+files, accept quotes, and get it delivered or pick it up — or send their shelf labels straight from the labels page.
+**Refrigeration maintenance & repair**: plans every 3 or 6 months (new schedules for all services) or repairs on request,
+with parts & labour added by the technician. FIRINGI decides who invoices and its commission (hidden from customers).
+Details: [docs/services.md](docs/services.md). Tests: `tests/unit/printing.test.ts`,
+`tests/integration/services-print-fridge.test.ts`, `node tests/e2e/services-print.mjs`.
+
 ## Shelf Price Labels (shops)
 
 Shops and wholesale counters **print price labels for their shelves**: products bought on FIRINGI (price = today's cost

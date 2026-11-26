@@ -6,8 +6,8 @@
 
 /// A supplier's pre-order campaign.
 model PreorderCampaign {
-  id              String    @id @default(cuid())
-  number          String    @unique // PRE-2026-000001
+  id              String     @id @default(cuid())
+  number          String     @unique // PRE-2026-000001
   vendorCompanyId String
   sellerType      String // WHOLESALER | DISTRIBUTOR (who may pre-order follows the usual flow)
   countryId       String
@@ -15,14 +15,14 @@ model PreorderCampaign {
   title           String
   description     String?
   /// DRAFT | PENDING | OPEN | CLOSED | ALLOCATED | DONE | CANCELLED | REJECTED
-  status          String    @default("DRAFT")
+  status          String     @default("DRAFT")
   opensAt         DateTime
   closesAt        DateTime
   deliveryDates   DateTime[]
   /// when supply is short: PRO_RATA | FIRST_COME | LOYAL_FIRST
-  allocation      String    @default("PRO_RATA")
+  allocation      String     @default("PRO_RATA")
   /// deposit asked when pre-ordering (% of the pre-order's value; 0 = none)
-  depositPct      Int       @default(0)
+  depositPct      Int        @default(0)
   reviewNote      String?
   reviewedById    String?
   reviewedAt      DateTime?
@@ -32,8 +32,8 @@ model PreorderCampaign {
   announcedAt     DateTime?
   cancelReason    String?
   createdById     String
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 
   items        PreorderItem[]
   reservations PreorderReservation[]

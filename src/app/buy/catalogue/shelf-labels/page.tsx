@@ -2,6 +2,8 @@ import { Printer, RefreshCw, Tags } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePermission, pagePortal, can } from "@/server/rbac/guard";
 import { labelCandidates, listLabels, slAccess, slCustomSize } from "@/server/labels/service";
+import { printAccess, printCatalogue } from "@/server/servicing/printing";
+import type { PrintProductRow } from "@/components/services/printing";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tile } from "@/components/motion/dashboard-kit";
@@ -17,7 +19,10 @@ export default async function ShelfLabelsPage() {
   if (!access.on) {
     return (<><PageHeader title={t("title")} description={t("intro")} icon={Tags} /><Card><CardContent className="py-8 text-sm text-muted-foreground" data-testid="sl-off">{t("off")}</CardContent></Card></>);
   }
-  const [{ labels }, cand, custom] = await Promise.all([listLabels(ctx), labelCandidates(ctx, locale), slCustomSize(ctx)]);
+  const [{ labels }, cand, custom, print] = await Promise.all([listLabels(ctx), labelCandidates(ctx, locale), slCustomSize(ctx), printAccess(ctx)]);
+  // print suppliers that print shelf labels (Services › Printing)
+  const n = (v: { toString(): string }) => Number(v.toString());
+  const printProducts: PrintProductRow[] = print.order ? (await printCatalogue(ctx)).filter((p) => p.kind === "SHELF_LABELS" && !p.priceOnRequest).map((p) => ({ id: p.id, kind: p.kind, name: p.name, description: p.description, supplier: p.supplier, labelFormat: p.labelFormat, unitPriceNet: n(p.unitPriceNet), setupNet: n(p.setupNet), minQty: p.minQty, stepQty: p.stepQty, priceOnRequest: p.priceOnRequest, vatRate: n(p.vatRate), turnaroundDays: p.turnaroundDays, delivery: p.delivery, active: p.active })) : [];
   const s = access.settings;
   const allow: SlAllow = { brand: s.allowBrand, origin: s.allowOrigin, qr: s.allowQr, posSync: s.allowPosSync && can(ctx, "company.pos.manage"), manage: access.manage, till: can(ctx, ["company.pos.manage", "company.pos.sell"]), customSize: s.allowCustomSize };
   const rows: SlRow[] = labels.map((l) => ({
@@ -42,7 +47,7 @@ export default async function ShelfLabelsPage() {
         )}
         <Card>
           <CardHeader><CardTitle>{t("listTitle")}</CardTitle><CardDescription>{t("listHint")}</CardDescription></CardHeader>
-          <CardContent><LabelList key={rows.map((r) => r.id).join(",")} labels={rows} locale={locale} allow={allow} custom={custom} /></CardContent>
+          <CardContent><LabelList key={rows.map((r) => r.id).join(",")} labels={rows} locale={locale} allow={allow} custom={custom} printProducts={printProducts} /></CardContent>
         </Card>
       </div>
     </>

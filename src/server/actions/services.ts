@@ -90,7 +90,8 @@ export const invoiceServiceCommissionsAction = defineAction({
   handler: async (ctx) => {
     const { can } = await import("@/server/rbac/guard");
     if (!can(ctx, "admin.finance.manage")) throw new (await import("@/server/errors")).ForbiddenError("Invoicing needs the Finance right.");
-    return adm({ invoices: await (await plans()).invoiceCommissions(ctx.user.id, new Date()) });
+    const { invoicePrintCommissions } = await import("@/server/servicing/printing");
+    return adm({ invoices: (await (await plans()).invoiceCommissions(ctx.user.id, new Date())) + (await invoicePrintCommissions(ctx.user.id, new Date())) });
   },
 });
 export const saveServicesSettingsAction = defineAction({

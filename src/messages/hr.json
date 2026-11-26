@@ -994,7 +994,8 @@
     "Price Benchmark": "Usporedba cijena",
     "Price Position": "Cjenovna pozicija",
     "Pre-orders & Price Locks": "Prednarudžbe i zaključane cijene",
-    "Shelf Price Labels": "Cjenovne etikete za police"
+    "Shelf Price Labels": "Cjenovne etikete za police",
+    "Printing": "Tisak"
   },
   "delivery": {
     "title": "Dostava",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Nova prijava za posao",
       "body": "{name} — prijava za poziciju {job}."
+    },
+    "print_job_new": {
+      "title": "Nova narudžba tiska",
+      "body": "{customer} je naručio/la {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Ponuda za vašu narudžbu tiska",
+      "body": "Narudžba tiska {number}: {amount} + PDV. Prihvatite je na stranici Tisak."
+    },
+    "print_job_update": {
+      "title": "Novosti o narudžbi tiska",
+      "body": "Ima novosti o narudžbi tiska {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Svaka 2 tjedna",
       "TWICE_MONTHLY": "Dvaput mjesečno",
       "MONTHLY": "Svaki mjesec",
-      "ON_REQUEST": "Samo na zahtjev"
+      "ON_REQUEST": "Samo na zahtjev",
+      "QUARTERLY": "Svaka 3 mjeseca",
+      "HALF_YEARLY": "Svakih 6 mjeseci"
     },
     "window": {
       "ANY": "Bilo kada",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "svaka 2 tjedna, {day}",
       "TWICE_MONTHLY": "{a}. i {b}. dan u mjesecu",
       "MONTHLY": "{a}. dan u mjesecu",
-      "ON_REQUEST": "na zahtjev"
+      "ON_REQUEST": "na zahtjev",
+      "QUARTERLY": "svaka 3 mjeseca, {a}. dana u mjesecu",
+      "HALF_YEARLY": "svakih 6 mjeseci, {a}. dana u mjesecu"
     },
     "st": {
       "REQUESTED": "Zatraženo",
@@ -9886,7 +9903,16 @@
     "noVisits": "Ništa nije planirano.",
     "noRecent": "Još nema posjeta.",
     "noProviderYet": "Još ne pružate nijednu uslugu.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Dijelovi i rad (€, bez PDV-a)",
+      "note": "Korišteni dijelovi i obavljeni rad",
+      "shown": "Dijelovi i rad {amount}: {note}",
+      "hint": "Popravci: serviser unosi dijelove i rad tijekom posjeta."
+    },
+    "print": {
+      "open": "Otvori Tisak →"
+    }
   },
   "haccp": {
     "todayTitle": "Današnje provjere",
@@ -10508,5 +10534,104 @@
     "saved": "Veličina spremljena.",
     "test": "Probni ispis",
     "testHint": "Ispisuje jedan list s obrisima. Ispišite ga na običan papir i prislonite uz list naljepnica kako biste provjerili poklapa li se. Naljepnice se ne označavaju kao ispisane."
+  },
+  "printing": {
+    "title": "Tisak",
+    "intro": "Letci, jelovnici, plakati, naljepnice, posjetnice, banneri i cjenovne etikete za police — tiskaju ih dobavljači na FIRINGI-ju te ih dostavljaju vama ili su spremni za preuzimanje.",
+    "kinds": {
+      "SHELF_LABELS": "Etikete za police",
+      "LEAFLET": "Letci i flyeri",
+      "MENU": "Jelovnici",
+      "POSTER": "Plakati",
+      "STICKER": "Naljepnice",
+      "BUSINESS_CARD": "Posjetnice",
+      "BANNER": "Banneri i natpisi",
+      "OTHER": "Ostali tisak"
+    },
+    "products": "Što možete tiskati",
+    "noProducts": "Nijedan dobavljač još ne nudi tisak u vašem području.",
+    "labelsFromPage": "Etikete za police: naručite ih na stranici Cjenovne etikete za police.",
+    "by": "dobavljač {supplier}",
+    "perItem": "{price} po komadu",
+    "setup": "+ {price} priprema",
+    "minQty": "od {n}",
+    "step": "u koracima od {n}",
+    "onRequest": "Cijena na upit — dobavljač vam šalje ponudu",
+    "turnaround": "gotovo za oko {n} dana",
+    "delivery": {
+      "DELIVERY": "Dostava do vas",
+      "PICKUP": "Preuzimanje"
+    },
+    "deliveryLabel": "Način preuzimanja",
+    "order": "Naruči",
+    "qty": "Količina",
+    "orderTitle": "Naziv posla",
+    "notes": "Upute (format, papir, tekst, boje…)",
+    "files": "Vaše datoteke (PDF, JPG, PNG)",
+    "addFile": "Dodaj datoteku",
+    "uploading": "Prijenos…",
+    "wantedBy": "Potrebno do",
+    "total": "{price} + PDV",
+    "qtyRule": "Količina: najmanje {min}, u koracima od {step}.",
+    "send": "Pošalji narudžbu",
+    "sent": "Narudžba poslana — dobavljač će je potvrditi.",
+    "cancel": "Odustani",
+    "orders": "Vaše narudžbe tiska",
+    "noOrders": "Još nema narudžbi tiska.",
+    "st": {
+      "REQUESTED": "Čeka dobavljača",
+      "QUOTED": "Ponuda za prihvaćanje",
+      "ACCEPTED": "Prihvaćeno",
+      "PRINTING": "U tisku",
+      "DELIVERED": "Isporučeno",
+      "REJECTED": "Odbijeno",
+      "CANCELLED": "Otkazano"
+    },
+    "quote": "Ponuda: {price} + PDV",
+    "readyBy": "gotovo do {date}",
+    "acceptQuote": "Prihvati ponudu",
+    "cancelOrder": "Otkaži narudžbu",
+    "rejected": "Odbijeno: {reason}",
+    "labelsPdf": "PDF etiketa",
+    "vTitle": "Tisak",
+    "vIntro": "Vaši tiskarski proizvodi i narudžbe tiska koje vam šalju kupci.",
+    "notApproved": "Prijavite se za „Tisak” na stranici Usluge. Kada vas FIRINGI odobri, ovdje dodajte svoje proizvode.",
+    "termsFiringi": "FIRINGI izdaje račun kupcu i isplaćuje vam cijenu umanjenu za {pct}% provizije.",
+    "termsProvider": "Kupcu sami izdajete račun; provizija FIRINGI-ja iznosi {pct}% i obračunava vam se mjesečno.",
+    "myProducts": "Vaši proizvodi",
+    "addProduct": "Dodaj proizvod",
+    "edit": "Uredi",
+    "save": "Spremi",
+    "kind": "Vrsta proizvoda",
+    "name": "Naziv",
+    "description": "Opis (format, papir, završna obrada)",
+    "labelSize": "Veličina etikete",
+    "unitPrice": "Cijena po komadu (€, bez PDV-a)",
+    "setupPrice": "Priprema po narudžbi (€, bez PDV-a)",
+    "min": "Minimalna količina",
+    "stepQty": "Korak količine",
+    "priceOnRequest": "Cijena na upit (šaljem ponudu)",
+    "vat": "PDV %",
+    "days": "Dani za tisak",
+    "active": "U prodaji",
+    "inactive": "Nije u prodaji",
+    "incoming": "Narudžbe tiska",
+    "noIncoming": "Još nema narudžbi tiska.",
+    "accept": "Prihvati",
+    "sendQuote": "Pošalji ponudu",
+    "quotePrice": "Vaša cijena (€, bez PDV-a)",
+    "quoteNote": "Napomena za kupca",
+    "readyByLabel": "Gotovo do",
+    "reject": "Odbij",
+    "rejectReason": "Zašto to ne možete tiskati",
+    "startPrinting": "Tiska se",
+    "delivered": "Isporučeno / preuzeto",
+    "yourInvoiceNo": "Broj vašeg računa",
+    "yourAmount": "primate {amount}",
+    "labelsTitle": "Dajte ih tiskati",
+    "labelsHint": "Dobavljač tiska otiskuje odabrane etikete na prikladnom papiru za etikete i dostavlja ih.",
+    "labelsOrder": "Naruči {n} tiskanih etiketa",
+    "labelsOrdered": "Poslano u tiskaru — pogledajte Usluge › Tisak.",
+    "labelsPrice": "{price} + PDV"
   }
 }

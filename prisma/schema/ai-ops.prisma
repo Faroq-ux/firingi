@@ -2,21 +2,21 @@
 
 /// An automation: when something happens (or on a schedule / by hand) and the conditions hold, the steps run in order.
 model AiWorkflow {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
   description   String?
-  active        Boolean  @default(false)
+  active        Boolean   @default(false)
   /// ORDER_PLACED | ORDER_HELD | INVOICE_OVERDUE | DELIVERY_FAILED | CLAIM_OPENED | TICKET_OPENED | COMPANY_REGISTERED | AI_SUGGESTION | SCHEDULE | MANUAL
   trigger       String
   /// { schedule?: { every, hour, weekday, day } }
-  triggerConfig Json     @default("{}")
+  triggerConfig Json      @default("{}")
   /// [{ field, op, value }]
-  conditions    Json     @default("[]")
-  match         String   @default("ALL") // ALL | ANY
+  conditions    Json      @default("[]")
+  match         String    @default("ALL") // ALL | ANY
   /// [{ type: NOTIFY | TASK | AGENT | APPROVAL | WAIT | WEBHOOK | REPORT, ... }]
-  steps         Json     @default("[]")
+  steps         Json      @default("[]")
   /// most runs a day (a safety brake)
-  maxRunsPerDay Int      @default(50)
+  maxRunsPerDay Int       @default(50)
   /// events after this moment are picked up (set when switched on, so history doesn't fire)
   cursorAt      DateTime?
   nextRunAt     DateTime?
@@ -26,8 +26,8 @@ model AiWorkflow {
   ownerId       String
   createdById   String
   updatedById   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   runs AiWorkflowRun[]
 

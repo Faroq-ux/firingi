@@ -994,7 +994,8 @@
     "Price Benchmark": "Porównanie cen",
     "Price Position": "Pozycja cenowa",
     "Pre-orders & Price Locks": "Przedsprzedaż i blokady cen",
-    "Shelf Price Labels": "Etykiety cenowe na półki"
+    "Shelf Price Labels": "Etykiety cenowe na półki",
+    "Printing": "Druk"
   },
   "delivery": {
     "title": "Dostawa",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Nowa aplikacja",
       "body": "{name} złożył(a) aplikację: {job}."
+    },
+    "print_job_new": {
+      "title": "Nowe zamówienie druku",
+      "body": "Klient {customer} zamówił {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Wycena twojego zamówienia druku",
+      "body": "Zamówienie druku {number}: {amount} + VAT. Zaakceptuj je na stronie Druk."
+    },
+    "print_job_update": {
+      "title": "Aktualizacja zamówienia druku",
+      "body": "Są nowości w zamówieniu druku {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Co 2 tygodnie",
       "TWICE_MONTHLY": "Dwa razy w miesiącu",
       "MONTHLY": "Co miesiąc",
-      "ON_REQUEST": "Tylko na życzenie"
+      "ON_REQUEST": "Tylko na życzenie",
+      "QUARTERLY": "Co 3 miesiące",
+      "HALF_YEARLY": "Co 6 miesięcy"
     },
     "window": {
       "ANY": "Dowolna pora",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "co 2 tygodnie, {day}",
       "TWICE_MONTHLY": "w dniach {a} i {b} miesiąca",
       "MONTHLY": "w dniu {a} miesiąca",
-      "ON_REQUEST": "na życzenie"
+      "ON_REQUEST": "na życzenie",
+      "QUARTERLY": "co 3 miesiące, {a}. dnia",
+      "HALF_YEARLY": "co 6 miesięcy, {a}. dnia"
     },
     "st": {
       "REQUESTED": "Zgłoszone",
@@ -9886,7 +9903,16 @@
     "noVisits": "Brak nadchodzących wizyt.",
     "noRecent": "Brak wizyt.",
     "noProviderYet": "Nie świadczysz jeszcze żadnej usługi.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Części i robocizna (€, bez VAT)",
+      "note": "Użyte części i wykonana praca",
+      "shown": "Części i robocizna {amount}: {note}",
+      "hint": "Naprawy: technik dodaje części i robociznę podczas wizyty."
+    },
+    "print": {
+      "open": "Otwórz druk →"
+    }
   },
   "haccp": {
     "todayTitle": "Dzisiejsze kontrole",
@@ -10508,5 +10534,104 @@
     "saved": "Rozmiar zapisany.",
     "test": "Wydruk próbny",
     "testHint": "Drukuje jeden arkusz z konturami. Wydrukuj go na zwykłym papierze i przyłóż do arkusza etykiet, aby sprawdzić, czy się pokrywa. Etykiety nie są oznaczane jako wydrukowane."
+  },
+  "printing": {
+    "title": "Druk",
+    "intro": "Ulotki, menu, plakaty, naklejki, wizytówki, banery i etykiety półkowe — drukowane przez dostawców w FIRINGI i dostarczane do ciebie lub gotowe do odbioru.",
+    "kinds": {
+      "SHELF_LABELS": "Etykiety półkowe",
+      "LEAFLET": "Ulotki i flyery",
+      "MENU": "Menu",
+      "POSTER": "Plakaty",
+      "STICKER": "Naklejki",
+      "BUSINESS_CARD": "Wizytówki",
+      "BANNER": "Banery i szyldy",
+      "OTHER": "Inny druk"
+    },
+    "products": "Co możesz wydrukować",
+    "noProducts": "W twojej okolicy żaden dostawca nie oferuje jeszcze druku.",
+    "labelsFromPage": "Etykiety półkowe: zamów je na stronie Etykiety cenowe na półki.",
+    "by": "od {supplier}",
+    "perItem": "{price} za szt.",
+    "setup": "+ {price} za przygotowanie",
+    "minQty": "od {n}",
+    "step": "co {n}",
+    "onRequest": "Cena na zapytanie — dostawca wyśle ci wycenę",
+    "turnaround": "gotowe w ok. {n} dni",
+    "delivery": {
+      "DELIVERY": "Dostawa do ciebie",
+      "PICKUP": "Odbiór osobisty"
+    },
+    "deliveryLabel": "Jak to otrzymasz",
+    "order": "Zamów",
+    "qty": "Ilość",
+    "orderTitle": "Nazwa zlecenia",
+    "notes": "Instrukcje (format, papier, tekst, kolory…)",
+    "files": "Twoje pliki (PDF, JPG, PNG)",
+    "addFile": "Dodaj plik",
+    "uploading": "Przesyłanie…",
+    "wantedBy": "Potrzebne do",
+    "total": "{price} + VAT",
+    "qtyRule": "Ilość: co najmniej {min}, co {step}.",
+    "send": "Wyślij zamówienie",
+    "sent": "Zamówienie wysłane — dostawca je potwierdzi.",
+    "cancel": "Anuluj",
+    "orders": "Twoje zamówienia druku",
+    "noOrders": "Brak zamówień druku.",
+    "st": {
+      "REQUESTED": "Czeka na dostawcę",
+      "QUOTED": "Wycena do akceptacji",
+      "ACCEPTED": "Zaakceptowane",
+      "PRINTING": "W druku",
+      "DELIVERED": "Dostarczone",
+      "REJECTED": "Odrzucone",
+      "CANCELLED": "Anulowane"
+    },
+    "quote": "Wycena: {price} + VAT",
+    "readyBy": "gotowe do {date}",
+    "acceptQuote": "Akceptuj wycenę",
+    "cancelOrder": "Anuluj zamówienie",
+    "rejected": "Odrzucone: {reason}",
+    "labelsPdf": "PDF z etykietami",
+    "vTitle": "Druk",
+    "vIntro": "Twoje produkty drukowane i zamówienia druku od klientów.",
+    "notApproved": "Złóż wniosek o „Druk” na stronie Usługi. Gdy FIRINGI cię zatwierdzi, dodaj tu swoje produkty.",
+    "termsFiringi": "FIRINGI wystawia fakturę klientowi i płaci ci cenę pomniejszoną o {pct}% prowizji.",
+    "termsProvider": "Sam wystawiasz fakturę klientowi; prowizja FIRINGI wynosi {pct}% i jest fakturowana co miesiąc.",
+    "myProducts": "Twoje produkty",
+    "addProduct": "Dodaj produkt",
+    "edit": "Edytuj",
+    "save": "Zapisz",
+    "kind": "Co to jest",
+    "name": "Nazwa",
+    "description": "Opis (format, papier, wykończenie)",
+    "labelSize": "Rozmiar etykiety",
+    "unitPrice": "Cena za sztukę (€, bez VAT)",
+    "setupPrice": "Przygotowanie za zamówienie (€, bez VAT)",
+    "min": "Minimalna ilość",
+    "stepQty": "Krok ilości",
+    "priceOnRequest": "Cena na zapytanie (wysyłam wycenę)",
+    "vat": "VAT %",
+    "days": "Dni na druk",
+    "active": "W sprzedaży",
+    "inactive": "Poza sprzedażą",
+    "incoming": "Zamówienia druku",
+    "noIncoming": "Brak zamówień druku.",
+    "accept": "Akceptuj",
+    "sendQuote": "Wyślij wycenę",
+    "quotePrice": "Twoja cena (€, bez VAT)",
+    "quoteNote": "Uwaga dla klienta",
+    "readyByLabel": "Gotowe do",
+    "reject": "Odrzuć",
+    "rejectReason": "Dlaczego nie możesz tego wydrukować",
+    "startPrinting": "W trakcie druku",
+    "delivered": "Dostarczone / odebrane",
+    "yourInvoiceNo": "Numer twojej faktury",
+    "yourAmount": "otrzymasz {amount}",
+    "labelsTitle": "Zleć druk",
+    "labelsHint": "Dostawca druku wydrukuje wybrane etykiety na odpowiednim papierze etykietowym i je dostarczy.",
+    "labelsOrder": "Zamów {n} wydrukowanych etykiet",
+    "labelsOrdered": "Wysłano do drukarni — zobacz Usługi › Druk.",
+    "labelsPrice": "{price} + VAT"
   }
 }

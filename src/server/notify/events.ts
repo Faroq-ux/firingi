@@ -124,6 +124,10 @@ export const EVENTS: EventDef[] = [
   E("service.visit_missed", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["EMAIL", "PUSH"], ["number", "reason"]),
   E("service.container_full", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["PUSH"], ["number", "date"]),
   E("service.oil_change_due", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["PUSH"], ["fryer", "days"]),
+  // printing (services)
+  E("print.job_new", "deliveries", ["vendor.services.manage", "vendor.services.visit"], ["EMAIL", "PUSH"], ["number", "customer", "product"]),
+  E("print.quoted", "deliveries", ["buyer.services.manage", "buyer.services.log"], ["EMAIL", "PUSH"], ["number", "amount"]),
+  E("print.job_update", "deliveries", ["buyer.services.manage", "buyer.services.log", "vendor.services.manage", "vendor.services.visit"], ["EMAIL", "PUSH"], ["number", "status"]),
   E("benchmark.monthly_savings", "orders", ["buyer.reports.view", "buyer.orders.place"], ["EMAIL", "PUSH"], ["amount", "count"]),
   E("haccp.out_of_range", "account", ["buyer.haccp.manage"], ["PUSH", "EMAIL"], ["what", "detail"]),
   E("haccp.checks_missed", "account", ["buyer.haccp.manage", "buyer.haccp.log"], ["PUSH"], ["count", "list"]),

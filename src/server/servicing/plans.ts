@@ -90,7 +90,7 @@ export async function subscribe(ctx: Ctx, i: PlanInput, now = new Date()) {
   const s = await assertCustomer(ctx, "buyer.services.manage");
   await ensureBuiltIns();
   const t = await prisma.serviceType.findUnique({ where: { id: i.serviceTypeId } });
-  if (!t || !t.active || (t.countries.length && !t.countries.includes(ctx.company.countryCode))) throw new NotFoundError("Service");
+  if (!t || !t.active || t.kind === "PRINT" || (t.countries.length && !t.countries.includes(ctx.company.countryCode))) throw new NotFoundError("Service");
   const sch = cleanSchedule(i);
   if (!allowedFrequency(t, sch.frequency)) throw new ValidationError("This service isn't offered on that schedule.");
   if (sch.frequency === "ON_REQUEST" ? !s.parts.onRequest : !s.parts.scheduled) throw new ValidationError("This schedule is switched off.");
@@ -240,14 +240,14 @@ export async function myServices(ctx: Ctx, now = new Date(), locale = "en") {
   const visit = (v: (typeof visits)[number]) => ({
     id: v.id, number: v.number, planId: v.planId, serviceTypeId: v.serviceTypeId, service: ln(v.serviceType), unit: v.serviceType.unit, isCollection: v.serviceType.kind === "COLLECTION",
     origin: v.origin, status: v.status, date: v.date, timeWindow: v.timeWindow, requestReason: v.requestReason, requestNote: v.requestNote, quantity: v.quantity == null ? null : n(v.quantity),
-    docNumber: v.docNumber, missedReason: v.missedReason, signedBy: v.signedBy, doneAt: v.doneAt, invoicedBy: v.invoicedBy, feeNet: v.feeNet == null ? null : n(v.feeNet), buybackNet: v.buybackNet == null ? null : n(v.buybackNet),
+    docNumber: v.docNumber, missedReason: v.missedReason, signedBy: v.signedBy, doneAt: v.doneAt, invoicedBy: v.invoicedBy, feeNet: v.feeNet == null ? null : n(v.feeNet), buybackNet: v.buybackNet == null ? null : n(v.buybackNet), extrasNet: n(v.extrasNet), extrasNote: v.extrasNote,
   });
   return {
     settings: { parts: s.parts, requestLeadDays: s.requestLeadDays },
     types: types.map((t) => {
       const pr = pricingOf(t);
       return {
-        id: t.id, code: t.code, name: ln(t), description: String((t.description as Record<string, string> | null)?.en ?? ""), kind: t.kind, unit: t.unit, isOil: t.isOil, wasteCode: t.wasteCode, frequencies: t.frequencies,
+        id: t.id, code: t.code, name: ln(t), description: String((t.description as Record<string, string> | null)?.en ?? ""), kind: t.kind, allowExtras: t.allowExtras, unit: t.unit, isOil: t.isOil, wasteCode: t.wasteCode, frequencies: t.frequencies,
         feeNet: pr.feeNet, pricePerUnit: pr.pricePerUnit, buybackPerUnit: s.parts.buyback ? pr.buybackPerUnit : 0, invoicedBy: pr.invoicedBy,
         available: providers.some((p) => p.serviceTypeId === t.id && (!p.countries.length || p.countries.includes(ctx.company.countryCode))), planId: plans.find((p) => p.serviceTypeId === t.id)?.id ?? null,
       };
@@ -300,7 +300,7 @@ export async function confirmVisit(ctx: Ctx, id: string, date?: Date | null) {
   await notify("service.visit_confirmed", [{ companyId: v.customerCompanyId, link: "/buy/services" }], { number: v.number, date: isoDay(d) }, { ref: { type: "ServiceVisit", id } }).catch(() => null);
 }
 
-export type DoneInput = { quantity?: number | null; containersTaken?: number | null; containersLeft?: number | null; signedBy?: string | null; docNumber?: string | null; providerInvoiceNo?: string | null; note?: string | null };
+export type DoneInput = { extrasNet?: number | null; extrasNote?: string | null; quantity?: number | null; containersTaken?: number | null; containersLeft?: number | null; signedBy?: string | null; docNumber?: string | null; providerInvoiceNo?: string | null; note?: string | null };
 /** The provider records the visit: quantity, containers, signature, waste document; FIRINGI's invoice / the commission follow. */
 export async function completeVisit(ctx: Ctx, id: string, i: DoneInput, now = new Date()) {
   const v = await visitFor(ctx, id, "PROVIDER");
@@ -314,18 +314,25 @@ export async function completeVisit(ctx: Ctx, id: string, i: DoneInput, now = ne
   const pricing = pricingOf(t, v.provider);
   const by: InvoicedBy = v.provider && (await prisma.company.findUnique({ where: { id: v.provider.companyId }, select: { type: true } }))?.type === "ADMIN" ? "FIRINGI" : pricing.invoicedBy;
   if (by === "PROVIDER" && !i.providerInvoiceNo?.trim() && pricing.feeNet + pricing.pricePerUnit > 0) throw new ValidationError("You invoice this customer yourself — enter your invoice number.");
-  const m = visitMoney(pricing, qty, by);
+  // parts & labour (repairs): only where FIRINGI allows them for this service
+  const extras = t.allowExtras ? Math.round(Math.max(0, Number(i.extrasNet ?? 0) || 0) * 100) / 100 : 0;
+  if (extras > 50000) throw new ValidationError("Parts & labour: at most 50,000.");
+  if (extras > 0 && !i.extrasNote?.trim()) throw new ValidationError("Write which parts and how much labour.");
+  const m = visitMoney(pricing, qty, by, extras);
   const buyback = s.parts.buyback ? m.buyback : 0;
   await prisma.$transaction(async (tx) => {
     let invoiceId: string | null = null;
     if (by === "FIRINGI" && s.parts.invoicing && m.fee > 0) {
       const { issueServiceInvoice } = await import("@/server/invoicing/service");
-      const inv = await issueServiceInvoice(tx, { recipientCompanyId: v.customerCompanyId, docType: "INVOICE", dueDays: 15, actorUserId: ctx.user.id, lines: [{ description: `${typeName(t)} — ${v.number} (${isoDay(v.date)})${t.kind === "COLLECTION" ? ` · ${qty} ${t.unit}` : ""}`, net: new Decimal(m.fee) }] });
+      const inv = await issueServiceInvoice(tx, { recipientCompanyId: v.customerCompanyId, docType: "INVOICE", dueDays: 15, actorUserId: ctx.user.id, lines: [
+        { description: `${typeName(t)} — ${v.number} (${isoDay(v.date)})${t.kind === "COLLECTION" ? ` · ${qty} ${t.unit}` : ""}`, net: new Decimal(m.fee).minus(extras) },
+        ...(extras > 0 ? [{ description: `${typeName(t)} — ${v.number}: ${i.extrasNote!.trim().slice(0, 300)}`, net: new Decimal(extras) }] : []),
+      ].filter((x) => x.net.gt(0)) });
       invoiceId = inv.id;
     }
     await tx.serviceVisit.update({
       where: { id }, data: {
-        status: "DONE", quantity: t.kind === "COLLECTION" ? qty : null, containersTaken: i.containersTaken ?? null, containersLeft: i.containersLeft ?? null,
+        status: "DONE", quantity: t.kind === "COLLECTION" ? qty : null, extrasNet: extras, extrasNote: extras > 0 ? i.extrasNote!.trim().slice(0, 300) : null, containersTaken: i.containersTaken ?? null, containersLeft: i.containersLeft ?? null,
         signedBy: i.signedBy?.trim().slice(0, 120) || null, docNumber: i.docNumber?.trim().slice(0, 60) || null, providerInvoiceNo: i.providerInvoiceNo?.trim().slice(0, 60) || null, providerNote: i.note?.trim().slice(0, 1000) || null,
         doneAt: now, doneById: ctx.user.id, invoicedBy: by, feeNet: m.fee, buybackNet: buyback, providerAmount: m.provider, commissionNet: m.commission, invoiceId,
       },

@@ -43,10 +43,11 @@ export default async function VendorServicesPage() {
           {v.address ?? "—"}{v.timeWindow && v.timeWindow !== "ANY" ? ` · ${l[`window.${v.timeWindow}`]}` : ""}
           {v.origin === "REQUESTED" && v.requestReason ? ` · ${l[`reason.${v.requestReason}`]}` : ""}{v.requestNote ? ` · ${v.requestNote}` : ""}
           {v.status === "DONE" && v.quantity != null ? ` · ${num(locale, n(v.quantity))} ${unitText(l, v.serviceType.unit)}` : ""}
+          {v.status === "DONE" && n(v.extrasNet) > 0 ? ` · ${fill(l["extras.shown"], { amount: money(locale, n(v.extrasNet)), note: v.extrasNote ?? "" })}` : ""}
           {v.status === "DONE" && v.invoicedBy === "FIRINGI" && n(v.providerAmount) > 0 ? ` · ${fill(l.yourAmount, { amount: money(locale, n(v.providerAmount)) })}` : ""}
           {v.status === "MISSED" && v.missedReason ? ` · ${v.missedReason}` : ""}
         </p>
-        {work && <ProviderVisit l={l} v={{ id: v.id, status: v.status, date: isoDay(v.date), isCollection: v.serviceType.kind === "COLLECTION", unit: v.serviceType.unit, needsSignature: v.serviceType.needsDocument, youInvoice: (p?.pricing.invoicedBy ?? "FIRINGI") === "PROVIDER" && ctx.company.type !== "ADMIN", containers: v.plan?.containers ?? 0 }} />}
+        {work && <ProviderVisit l={l} v={{ id: v.id, status: v.status, date: isoDay(v.date), isCollection: v.serviceType.kind === "COLLECTION", unit: v.serviceType.unit, needsSignature: v.serviceType.needsDocument, youInvoice: (p?.pricing.invoicedBy ?? "FIRINGI") === "PROVIDER" && ctx.company.type !== "ADMIN", containers: v.plan?.containers ?? 0, allowExtras: v.serviceType.allowExtras }} />}
       </li>
     );
   };

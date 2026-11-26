@@ -994,7 +994,8 @@
     "Price Benchmark": "Prijsvergelijking",
     "Price Position": "Prijspositie",
     "Pre-orders & Price Locks": "Voorbestellingen & vaste prijzen",
-    "Shelf Price Labels": "Schapetiketten"
+    "Shelf Price Labels": "Schapetiketten",
+    "Printing": "Drukwerk"
   },
   "delivery": {
     "title": "Levering",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Nieuwe sollicitatie",
       "body": "{name} heeft gesolliciteerd: {job}."
+    },
+    "print_job_new": {
+      "title": "Nieuwe drukwerkbestelling",
+      "body": "{customer} heeft {product} besteld ({number})."
+    },
+    "print_quoted": {
+      "title": "Offerte voor uw drukwerkbestelling",
+      "body": "Drukwerkbestelling {number}: {amount} + btw. Accepteer deze op de pagina Drukwerk."
+    },
+    "print_job_update": {
+      "title": "Update drukwerkbestelling",
+      "body": "Er is nieuws over drukwerkbestelling {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Elke 2 weken",
       "TWICE_MONTHLY": "Twee keer per maand",
       "MONTHLY": "Elke maand",
-      "ON_REQUEST": "Alleen op aanvraag"
+      "ON_REQUEST": "Alleen op aanvraag",
+      "QUARTERLY": "Elke 3 maanden",
+      "HALF_YEARLY": "Elke 6 maanden"
     },
     "window": {
       "ANY": "Elk moment",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "om de week op {day}",
       "TWICE_MONTHLY": "op dag {a} en dag {b}",
       "MONTHLY": "op dag {a}",
-      "ON_REQUEST": "op aanvraag"
+      "ON_REQUEST": "op aanvraag",
+      "QUARTERLY": "elke 3 maanden, op dag {a}",
+      "HALF_YEARLY": "elke 6 maanden, op dag {a}"
     },
     "st": {
       "REQUESTED": "Aangevraagd",
@@ -9886,7 +9903,16 @@
     "noVisits": "Niets gepland.",
     "noRecent": "Nog geen bezoeken.",
     "noProviderYet": "U levert nog geen diensten.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Onderdelen & arbeid (€, excl. btw)",
+      "note": "Gebruikte onderdelen en uitgevoerd werk",
+      "shown": "Onderdelen & arbeid {amount}: {note}",
+      "hint": "Reparaties: de monteur voegt onderdelen & arbeid toe tijdens het bezoek."
+    },
+    "print": {
+      "open": "Drukwerk openen →"
+    }
   },
   "haccp": {
     "todayTitle": "Controles van vandaag",
@@ -10508,5 +10534,104 @@
     "saved": "Formaat opgeslagen.",
     "test": "Proefafdruk",
     "testHint": "Drukt één vel af met omtrekken. Druk het af op gewoon papier en houd het tegen uw etikettenvel om te controleren of het klopt. Etiketten worden niet als afgedrukt gemarkeerd."
+  },
+  "printing": {
+    "title": "Drukwerk",
+    "intro": "Folders, menukaarten, posters, stickers, visitekaartjes, banners en schaplabels — gedrukt door leveranciers op FIRINGI en bij u bezorgd of klaar om op te halen.",
+    "kinds": {
+      "SHELF_LABELS": "Schaplabels",
+      "LEAFLET": "Folders & flyers",
+      "MENU": "Menukaarten",
+      "POSTER": "Posters",
+      "STICKER": "Stickers",
+      "BUSINESS_CARD": "Visitekaartjes",
+      "BANNER": "Banners & borden",
+      "OTHER": "Ander drukwerk"
+    },
+    "products": "Wat u kunt laten drukken",
+    "noProducts": "Nog geen drukkerij biedt drukwerk aan in uw regio.",
+    "labelsFromPage": "Schaplabels: bestel ze via uw pagina Schapprijslabels.",
+    "by": "door {supplier}",
+    "perItem": "{price} per stuk",
+    "setup": "+ {price} opstartkosten",
+    "minQty": "vanaf {n}",
+    "step": "per {n}",
+    "onRequest": "Prijs op aanvraag — de leverancier stuurt u een offerte",
+    "turnaround": "klaar in ongeveer {n} dagen",
+    "delivery": {
+      "DELIVERY": "Bij u bezorgd",
+      "PICKUP": "Ophalen"
+    },
+    "deliveryLabel": "Hoe u het ontvangt",
+    "order": "Bestellen",
+    "qty": "Aantal",
+    "orderTitle": "Naam van deze opdracht",
+    "notes": "Instructies (formaat, papier, tekst, kleuren…)",
+    "files": "Uw bestanden (PDF, JPG, PNG)",
+    "addFile": "Bestand toevoegen",
+    "uploading": "Uploaden…",
+    "wantedBy": "Nodig op",
+    "total": "{price} + btw",
+    "qtyRule": "Aantal: minimaal {min}, per {step}.",
+    "send": "Bestelling versturen",
+    "sent": "Bestelling verstuurd — de leverancier bevestigt deze.",
+    "cancel": "Annuleren",
+    "orders": "Uw drukwerkbestellingen",
+    "noOrders": "Nog geen drukwerkbestellingen.",
+    "st": {
+      "REQUESTED": "Wacht op leverancier",
+      "QUOTED": "Offerte te accepteren",
+      "ACCEPTED": "Geaccepteerd",
+      "PRINTING": "Wordt gedrukt",
+      "DELIVERED": "Geleverd",
+      "REJECTED": "Afgewezen",
+      "CANCELLED": "Geannuleerd"
+    },
+    "quote": "Offerte: {price} + btw",
+    "readyBy": "klaar op {date}",
+    "acceptQuote": "Offerte accepteren",
+    "cancelOrder": "Bestelling annuleren",
+    "rejected": "Afgewezen: {reason}",
+    "labelsPdf": "Labels-pdf",
+    "vTitle": "Drukwerk",
+    "vIntro": "Uw drukwerkproducten en de drukwerkbestellingen die klanten u sturen.",
+    "notApproved": "Vraag „Drukwerk” aan op uw pagina Diensten. Zodra FIRINGI u goedkeurt, voegt u hier uw producten toe.",
+    "termsFiringi": "FIRINGI factureert de klant en betaalt u de prijs min {pct}% commissie.",
+    "termsProvider": "U factureert de klant zelf; de commissie van FIRINGI is {pct}%, maandelijks aan u gefactureerd.",
+    "myProducts": "Uw producten",
+    "addProduct": "Product toevoegen",
+    "edit": "Bewerken",
+    "save": "Opslaan",
+    "kind": "Wat het is",
+    "name": "Naam",
+    "description": "Omschrijving (formaat, papier, afwerking)",
+    "labelSize": "Labelformaat",
+    "unitPrice": "Prijs per stuk (€, excl. btw)",
+    "setupPrice": "Opstartkosten per bestelling (€, excl. btw)",
+    "min": "Minimum aantal",
+    "stepQty": "Aantalstappen",
+    "priceOnRequest": "Prijs op aanvraag (ik stuur een offerte)",
+    "vat": "Btw %",
+    "days": "Drukdagen",
+    "active": "In de verkoop",
+    "inactive": "Niet in de verkoop",
+    "incoming": "Drukwerkbestellingen",
+    "noIncoming": "Nog geen drukwerkbestellingen.",
+    "accept": "Accepteren",
+    "sendQuote": "Offerte sturen",
+    "quotePrice": "Uw prijs (€, excl. btw)",
+    "quoteNote": "Opmerking voor de klant",
+    "readyByLabel": "Klaar op",
+    "reject": "Afwijzen",
+    "rejectReason": "Waarom u het niet kunt drukken",
+    "startPrinting": "Wordt nu gedrukt",
+    "delivered": "Geleverd / opgehaald",
+    "yourInvoiceNo": "Uw factuurnummer",
+    "yourAmount": "u ontvangt {amount}",
+    "labelsTitle": "Laten drukken",
+    "labelsHint": "Een drukkerij drukt de geselecteerde labels op geschikt labelpapier en levert ze.",
+    "labelsOrder": "{n} gedrukte labels bestellen",
+    "labelsOrdered": "Naar de drukkerij gestuurd — zie Diensten › Drukwerk.",
+    "labelsPrice": "{price} + btw"
   }
 }

@@ -2151,6 +2151,18 @@
     "website_job_application": {
       "title": "New job application",
       "body": "{name} applied: {job}."
+    },
+    "print_job_new": {
+      "title": "New print order",
+      "body": "{customer} ordered {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Quote for your print order",
+      "body": "Print order {number}: {amount} + VAT. Accept it on the Printing page."
+    },
+    "print_job_update": {
+      "title": "Print order update",
+      "body": "There is news on print order {number}."
     }
   },
   "notifications": {
@@ -9523,7 +9535,9 @@
       "BIWEEKLY": "Every 2 weeks",
       "TWICE_MONTHLY": "Twice a month",
       "MONTHLY": "Every month",
-      "ON_REQUEST": "Only when requested"
+      "ON_REQUEST": "Only when requested",
+      "QUARTERLY": "Every 3 months",
+      "HALF_YEARLY": "Every 6 months"
     },
     "window": {
       "ANY": "Any time",
@@ -9544,7 +9558,9 @@
       "BIWEEKLY": "every other {day}",
       "TWICE_MONTHLY": "on day {a} and day {b}",
       "MONTHLY": "on day {a}",
-      "ON_REQUEST": "when you ask"
+      "ON_REQUEST": "when you ask",
+      "QUARTERLY": "every 3 months, on day {a}",
+      "HALF_YEARLY": "every 6 months, on day {a}"
     },
     "st": {
       "REQUESTED": "Requested",
@@ -9684,7 +9700,16 @@
     "noVisits": "Nothing coming.",
     "noRecent": "No visits yet.",
     "noProviderYet": "You don't provide any service yet.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Parts & labour (€, excl. VAT)",
+      "note": "Parts used and work done",
+      "shown": "Parts & labour {amount}: {note}",
+      "hint": "Repairs: the technician adds parts & labour on the visit."
+    },
+    "print": {
+      "open": "Open printing →"
+    }
   },
   "haccp": {
     "todayTitle": "Today's checks",
@@ -10306,5 +10331,104 @@
     "saved": "Size saved.",
     "test": "Test print",
     "testHint": "Prints one sheet with outlines. Print it on plain paper and hold it against your sticker sheet to check it lines up. Labels are not marked as printed."
+  },
+  "printing": {
+    "title": "Printing",
+    "intro": "Leaflets, menus, posters, stickers, business cards, banners and shelf labels — printed by suppliers on FIRINGI and delivered to you or ready to pick up.",
+    "kinds": {
+      "SHELF_LABELS": "Shelf labels",
+      "LEAFLET": "Leaflets & flyers",
+      "MENU": "Menus",
+      "POSTER": "Posters",
+      "STICKER": "Stickers",
+      "BUSINESS_CARD": "Business cards",
+      "BANNER": "Banners & signs",
+      "OTHER": "Other printing"
+    },
+    "products": "What you can print",
+    "noProducts": "No print supplier offers printing in your area yet.",
+    "labelsFromPage": "Shelf labels: order them from your Shelf Price Labels page.",
+    "by": "by {supplier}",
+    "perItem": "{price} each",
+    "setup": "+ {price} setup",
+    "minQty": "from {n}",
+    "step": "in steps of {n}",
+    "onRequest": "Price on request — the supplier sends you a quote",
+    "turnaround": "ready in about {n} days",
+    "delivery": {
+      "DELIVERY": "Delivered to you",
+      "PICKUP": "Pick up"
+    },
+    "deliveryLabel": "How you get it",
+    "order": "Order",
+    "qty": "Quantity",
+    "orderTitle": "Name of this job",
+    "notes": "Instructions (size, paper, text, colours…)",
+    "files": "Your files (PDF, JPG, PNG)",
+    "addFile": "Add a file",
+    "uploading": "Uploading…",
+    "wantedBy": "Needed by",
+    "total": "{price} + VAT",
+    "qtyRule": "Quantity: at least {min}, in steps of {step}.",
+    "send": "Send order",
+    "sent": "Order sent — the supplier will confirm.",
+    "cancel": "Cancel",
+    "orders": "Your print orders",
+    "noOrders": "No print orders yet.",
+    "st": {
+      "REQUESTED": "Waiting for the supplier",
+      "QUOTED": "Quote to accept",
+      "ACCEPTED": "Accepted",
+      "PRINTING": "Printing",
+      "DELIVERED": "Delivered",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    },
+    "quote": "Quote: {price} + VAT",
+    "readyBy": "ready by {date}",
+    "acceptQuote": "Accept quote",
+    "cancelOrder": "Cancel order",
+    "rejected": "Rejected: {reason}",
+    "labelsPdf": "Labels PDF",
+    "vTitle": "Printing",
+    "vIntro": "Your print products and the print orders customers send you.",
+    "notApproved": "Apply for “Printing” on your Services page. Once FIRINGI approves you, add your products here.",
+    "termsFiringi": "FIRINGI invoices the customer and pays you the price minus {pct}% commission.",
+    "termsProvider": "You invoice the customer yourself; FIRINGI's commission is {pct}%, invoiced to you monthly.",
+    "myProducts": "Your products",
+    "addProduct": "Add a product",
+    "edit": "Edit",
+    "save": "Save",
+    "kind": "What it is",
+    "name": "Name",
+    "description": "Description (size, paper, finish)",
+    "labelSize": "Label size",
+    "unitPrice": "Price per item (€, excl. VAT)",
+    "setupPrice": "Setup per order (€, excl. VAT)",
+    "min": "Minimum quantity",
+    "stepQty": "Quantity steps",
+    "priceOnRequest": "Price on request (I send a quote)",
+    "vat": "VAT %",
+    "days": "Days to print",
+    "active": "On sale",
+    "inactive": "Not on sale",
+    "incoming": "Print orders",
+    "noIncoming": "No print orders yet.",
+    "accept": "Accept",
+    "sendQuote": "Send quote",
+    "quotePrice": "Your price (€, excl. VAT)",
+    "quoteNote": "Note to the customer",
+    "readyByLabel": "Ready by",
+    "reject": "Reject",
+    "rejectReason": "Why you can't print it",
+    "startPrinting": "Printing now",
+    "delivered": "Delivered / picked up",
+    "yourInvoiceNo": "Your invoice number",
+    "yourAmount": "you receive {amount}",
+    "labelsTitle": "Have them printed",
+    "labelsHint": "A print supplier prints the selected labels on proper label paper and delivers them.",
+    "labelsOrder": "Order {n} printed labels",
+    "labelsOrdered": "Sent to the printer — see Services › Printing.",
+    "labelsPrice": "{price} + VAT"
   }
 }

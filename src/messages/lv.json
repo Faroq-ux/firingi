@@ -994,7 +994,8 @@
     "Price Benchmark": "Cenu salīdzinājums",
     "Price Position": "Cenu pozīcija",
     "Pre-orders & Price Locks": "Priekšpasūtījumi & cenu fiksācija",
-    "Shelf Price Labels": "Plauktu cenu etiķetes"
+    "Shelf Price Labels": "Plauktu cenu etiķetes",
+    "Printing": "Druka"
   },
   "delivery": {
     "title": "Piegāde",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Jauns darba pieteikums",
       "body": "{name} pieteicās: {job}."
+    },
+    "print_job_new": {
+      "title": "Jauns drukas pasūtījums",
+      "body": "{customer} pasūtīja {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Piedāvājums Jūsu drukas pasūtījumam",
+      "body": "Drukas pasūtījums {number}: {amount} + PVN. Apstipriniet to lapā “Druka”."
+    },
+    "print_job_update": {
+      "title": "Drukas pasūtījuma jaunumi",
+      "body": "Ir jaunumi par drukas pasūtījumu {number}."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Ik pēc 2 nedēļām",
       "TWICE_MONTHLY": "Divreiz mēnesī",
       "MONTHLY": "Katru mēnesi",
-      "ON_REQUEST": "Tikai pēc pieprasījuma"
+      "ON_REQUEST": "Tikai pēc pieprasījuma",
+      "QUARTERLY": "Ik pēc 3 mēnešiem",
+      "HALF_YEARLY": "Ik pēc 6 mēnešiem"
     },
     "window": {
       "ANY": "Jebkurā laikā",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "katru otro nedēļu: {day}",
       "TWICE_MONTHLY": "mēneša {a}. un {b}. datumā",
       "MONTHLY": "mēneša {a}. datumā",
-      "ON_REQUEST": "pēc jūsu pieprasījuma"
+      "ON_REQUEST": "pēc jūsu pieprasījuma",
+      "QUARTERLY": "ik pēc 3 mēnešiem, {a}. datumā",
+      "HALF_YEARLY": "ik pēc 6 mēnešiem, {a}. datumā"
     },
     "st": {
       "REQUESTED": "Pieprasīts",
@@ -9886,7 +9903,16 @@
     "noVisits": "Nekas nav gaidāms.",
     "noRecent": "Apmeklējumu vēl nav.",
     "noProviderYet": "Jūs vēl nesniedzat nevienu pakalpojumu.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Detaļas un darbs (€, bez PVN)",
+      "note": "Izmantotās detaļas un veiktie darbi",
+      "shown": "Detaļas un darbs {amount}: {note}",
+      "hint": "Remonts: tehniķis vizītes laikā pievieno detaļas un darbu."
+    },
+    "print": {
+      "open": "Atvērt drukāšanu →"
+    }
   },
   "haccp": {
     "todayTitle": "Šodienas pārbaudes",
@@ -10508,5 +10534,104 @@
     "saved": "Izmērs saglabāts.",
     "test": "Izmēģinājuma druka",
     "testHint": "Izdrukā vienu lapu ar kontūrām. Izdrukājiet to uz parasta papīra un pielieciet pie uzlīmju lapas, lai pārbaudītu, vai tā sakrīt. Etiķetes netiek atzīmētas kā izdrukātas."
+  },
+  "printing": {
+    "title": "Druka",
+    "intro": "Bukleti, ēdienkartes, plakāti, uzlīmes, vizītkartes, baneri un plauktu etiķetes — tos drukā piegādātāji FIRINGI platformā un piegādā Jums vai sagatavo saņemšanai.",
+    "kinds": {
+      "SHELF_LABELS": "Plauktu etiķetes",
+      "LEAFLET": "Bukleti un skrejlapas",
+      "MENU": "Ēdienkartes",
+      "POSTER": "Plakāti",
+      "STICKER": "Uzlīmes",
+      "BUSINESS_CARD": "Vizītkartes",
+      "BANNER": "Baneri un izkārtnes",
+      "OTHER": "Cita druka"
+    },
+    "products": "Ko varat drukāt",
+    "noProducts": "Jūsu reģionā vēl neviens drukas piegādātājs nepiedāvā drukāšanu.",
+    "labelsFromPage": "Plauktu etiķetes: pasūtiet tās lapā “Plauktu cenu etiķetes”.",
+    "by": "piegādātājs {supplier}",
+    "perItem": "{price} gabalā",
+    "setup": "+ {price} sagatavošana",
+    "minQty": "no {n}",
+    "step": "pa {n}",
+    "onRequest": "Cena pēc pieprasījuma — piegādātājs Jums nosūtīs piedāvājumu",
+    "turnaround": "gatavs aptuveni {n} dienās",
+    "delivery": {
+      "DELIVERY": "Piegāde Jums",
+      "PICKUP": "Saņemt uz vietas"
+    },
+    "deliveryLabel": "Kā saņemsiet",
+    "order": "Pasūtīt",
+    "qty": "Daudzums",
+    "orderTitle": "Darba nosaukums",
+    "notes": "Norādījumi (izmērs, papīrs, teksts, krāsas…)",
+    "files": "Jūsu faili (PDF, JPG, PNG)",
+    "addFile": "Pievienot failu",
+    "uploading": "Augšupielādē…",
+    "wantedBy": "Vajadzīgs līdz",
+    "total": "{price} + PVN",
+    "qtyRule": "Daudzums: vismaz {min}, pa {step}.",
+    "send": "Nosūtīt pasūtījumu",
+    "sent": "Pasūtījums nosūtīts — piegādātājs to apstiprinās.",
+    "cancel": "Atcelt",
+    "orders": "Jūsu drukas pasūtījumi",
+    "noOrders": "Drukas pasūtījumu vēl nav.",
+    "st": {
+      "REQUESTED": "Gaida piegādātāju",
+      "QUOTED": "Piedāvājums jāpieņem",
+      "ACCEPTED": "Pieņemts",
+      "PRINTING": "Drukā",
+      "DELIVERED": "Piegādāts",
+      "REJECTED": "Noraidīts",
+      "CANCELLED": "Atcelts"
+    },
+    "quote": "Piedāvājums: {price} + PVN",
+    "readyBy": "gatavs līdz {date}",
+    "acceptQuote": "Pieņemt piedāvājumu",
+    "cancelOrder": "Atcelt pasūtījumu",
+    "rejected": "Noraidīts: {reason}",
+    "labelsPdf": "Etiķešu PDF",
+    "vTitle": "Druka",
+    "vIntro": "Jūsu drukas produkti un klientu sūtītie drukas pasūtījumi.",
+    "notApproved": "Piesakieties pakalpojumam “Druka” lapā “Pakalpojumi”. Kad FIRINGI Jūs apstiprinās, pievienojiet savus produktus šeit.",
+    "termsFiringi": "FIRINGI izraksta rēķinu klientam un samaksā Jums cenu, atskaitot {pct}% komisiju.",
+    "termsProvider": "Rēķinu klientam izrakstāt Jūs pats; FIRINGI komisija ir {pct}%, rēķins Jums tiek izrakstīts katru mēnesi.",
+    "myProducts": "Jūsu produkti",
+    "addProduct": "Pievienot produktu",
+    "edit": "Rediģēt",
+    "save": "Saglabāt",
+    "kind": "Kas tas ir",
+    "name": "Nosaukums",
+    "description": "Apraksts (izmērs, papīrs, apdare)",
+    "labelSize": "Etiķetes izmērs",
+    "unitPrice": "Cena par gabalu (€, bez PVN)",
+    "setupPrice": "Sagatavošana pasūtījumam (€, bez PVN)",
+    "min": "Minimālais daudzums",
+    "stepQty": "Daudzuma solis",
+    "priceOnRequest": "Cena pēc pieprasījuma (sūtu piedāvājumu)",
+    "vat": "PVN %",
+    "days": "Drukāšanas dienas",
+    "active": "Pārdošanā",
+    "inactive": "Nav pārdošanā",
+    "incoming": "Drukas pasūtījumi",
+    "noIncoming": "Drukas pasūtījumu vēl nav.",
+    "accept": "Pieņemt",
+    "sendQuote": "Nosūtīt piedāvājumu",
+    "quotePrice": "Jūsu cena (€, bez PVN)",
+    "quoteNote": "Piezīme klientam",
+    "readyByLabel": "Gatavs līdz",
+    "reject": "Noraidīt",
+    "rejectReason": "Kāpēc nevarat to nodrukāt",
+    "startPrinting": "Pašlaik drukā",
+    "delivered": "Piegādāts / saņemts",
+    "yourInvoiceNo": "Jūsu rēķina numurs",
+    "yourAmount": "Jūs saņemat {amount}",
+    "labelsTitle": "Pasūtīt drukāšanu",
+    "labelsHint": "Drukas piegādātājs nodrukā atlasītās etiķetes uz piemērota etiķešu papīra un piegādā tās.",
+    "labelsOrder": "Pasūtīt {n} nodrukātas etiķetes",
+    "labelsOrdered": "Nosūtīts uz tipogrāfiju — skatiet Pakalpojumi › Druka.",
+    "labelsPrice": "{price} + PVN"
   }
 }

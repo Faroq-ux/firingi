@@ -4,11 +4,11 @@
  * fryer oil status and how full the used-oil containers are. No server imports.
  */
 
-export const FREQUENCIES = ["WEEKLY", "BIWEEKLY", "TWICE_MONTHLY", "MONTHLY", "ON_REQUEST"] as const;
+export const FREQUENCIES = ["WEEKLY", "BIWEEKLY", "TWICE_MONTHLY", "MONTHLY", "QUARTERLY", "HALF_YEARLY", "ON_REQUEST"] as const;
 export type Frequency = (typeof FREQUENCIES)[number];
-export const FREQ_LABEL: Record<Frequency, string> = { WEEKLY: "Every week", BIWEEKLY: "Every 2 weeks", TWICE_MONTHLY: "Twice a month", MONTHLY: "Every month", ON_REQUEST: "Only when requested" };
+export const FREQ_LABEL: Record<Frequency, string> = { WEEKLY: "Every week", BIWEEKLY: "Every 2 weeks", TWICE_MONTHLY: "Twice a month", MONTHLY: "Every month", QUARTERLY: "Every 3 months", HALF_YEARLY: "Every 6 months", ON_REQUEST: "Only when requested" };
 /** visits a month, roughly (for comparing plans) */
-export const VISITS_PER_MONTH: Record<Frequency, number> = { WEEKLY: 4.33, BIWEEKLY: 2.17, TWICE_MONTHLY: 2, MONTHLY: 1, ON_REQUEST: 0 };
+export const VISITS_PER_MONTH: Record<Frequency, number> = { WEEKLY: 4.33, BIWEEKLY: 2.17, TWICE_MONTHLY: 2, MONTHLY: 1, QUARTERLY: 1 / 3, HALF_YEARLY: 1 / 6, ON_REQUEST: 0 };
 
 export const WINDOWS = ["ANY", "MORNING", "AFTERNOON"] as const;
 export type TimeWindow = (typeof WINDOWS)[number];
@@ -29,7 +29,8 @@ export const isoDay = (d: Date) => d.toISOString().slice(0, 10);
 /**
  * The visit dates of a plan from `from` up to `to` (both days included, UTC days).
  * Weekly: every chosen weekday. Every 2 weeks: the chosen weekday, every other week counted from the start.
- * Twice a month: days A and B of each month. Monthly: day A. Days above 28 move to the month's last day.
+ * Twice a month: days A and B of each month. Monthly: day A. Every 3 / 6 months: day A, counted from the start month.
+ * Days above 28 move to the month's last day.
  */
 export function visitDates(p: PlanSchedule, from: Date, to: Date): Date[] {
   if (p.frequency === "ON_REQUEST") return [];
@@ -48,7 +49,11 @@ export function visitDates(p: PlanSchedule, from: Date, to: Date): Date[] {
     return out;
   }
   const days = p.frequency === "TWICE_MONTHLY" ? [...new Set([p.dayA, p.dayB])].sort((a, b) => a - b) : [p.dayA];
+  // every 3 / 6 months: day A of every 3rd / 6th month counted from the plan's start month
+  const every = p.frequency === "QUARTERLY" ? 3 : p.frequency === "HALF_YEARLY" ? 6 : 1;
+  const m0 = p.startsOn.getUTCFullYear() * 12 + p.startsOn.getUTCMonth();
   for (let y = start.getUTCFullYear(), m = start.getUTCMonth(); Date.UTC(y, m, 1) <= end.getTime(); m === 11 ? (y++, m = 0) : m++) {
+    if (((y * 12 + m - m0) % every + every) % every !== 0) continue;
     const last = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
     for (const day of days) {
       const d = new Date(Date.UTC(y, m, Math.min(day, last)));
@@ -101,21 +106,21 @@ export type Pricing = { feeNet: number; pricePerUnit: number; buybackPerUnit: nu
  *   The provider invoices the customer: the same fee and buy-back, between them; FIRINGI's commission = % of the fee +
  *   per visit + per unit, invoiced to the provider (monthly); FIRINGI pays nobody.
  */
-export function visitMoney(t: Pricing, qty: number, by: InvoicedBy) {
+export function visitMoney(t: Pricing, qty: number, by: InvoicedBy, extras = 0) {
   const r2 = (n: number) => Math.round(n * 100) / 100;
-  const q = Math.max(0, qty);
-  const fee = r2(t.feeNet + t.pricePerUnit * q), buyback = r2(t.buybackPerUnit * q);
+  const q = Math.max(0, qty), x = Math.max(0, extras);
+  // parts & labour the technician adds (repairs): charged to the customer; FIRINGI keeps its commission % of them
+  const fee = r2(t.feeNet + t.pricePerUnit * q + x), buyback = r2(t.buybackPerUnit * q);
   if (by === "PROVIDER") return { fee, buyback, provider: 0, commission: r2((fee * t.commissionPct) / 100 + t.commissionPerVisit + t.commissionPerUnit * q) };
-  return { fee, buyback, provider: r2(t.providerPerVisit + t.providerPerUnit * q), commission: 0 };
+  return { fee, buyback, provider: r2(t.providerPerVisit + t.providerPerUnit * q + (x * (100 - t.commissionPct)) / 100), commission: 0 };
 }
-
-// ── built-in service types (FIRINGI can add more) ───────────────────────────
-
-export type ServiceTemplate = { code: string; kind: "COLLECTION" | "VISIT"; unit: ServiceUnit; isOil: boolean; wasteCode: string | null; needsDocument: boolean; frequencies: Frequency[]; invoicedBy: InvoicedBy } & Pricing;
+export type ServiceTemplate = { code: string; kind: "COLLECTION" | "VISIT" | "PRINT"; allowExtras?: boolean; unit: ServiceUnit; isOil: boolean; wasteCode: string | null; needsDocument: boolean; frequencies: Frequency[]; invoicedBy: InvoicedBy } & Pricing;
 export const BUILT_IN_SERVICES: ServiceTemplate[] = [
   { code: "OIL_COLLECTION", kind: "COLLECTION", unit: "L", isOil: true, wasteCode: "20 01 25", needsDocument: true, frequencies: ["WEEKLY", "BIWEEKLY", "TWICE_MONTHLY", "MONTHLY", "ON_REQUEST"], feeNet: 0, pricePerUnit: 0, buybackPerUnit: 0.2, providerPerVisit: 0, providerPerUnit: 0.05, invoicedBy: "FIRINGI", commissionPct: 0, commissionPerVisit: 0, commissionPerUnit: 0.03 },
   { code: "GREASE_TRAP", kind: "VISIT", unit: "VISIT", isOil: false, wasteCode: "19 08 09", needsDocument: true, frequencies: ["MONTHLY", "TWICE_MONTHLY", "ON_REQUEST"], feeNet: 65, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 50, providerPerUnit: 0, invoicedBy: "FIRINGI", commissionPct: 15, commissionPerVisit: 0, commissionPerUnit: 0 },
   { code: "PEST_CONTROL", kind: "VISIT", unit: "VISIT", isOil: false, wasteCode: null, needsDocument: true, frequencies: ["MONTHLY", "TWICE_MONTHLY", "ON_REQUEST"], feeNet: 45, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 35, providerPerUnit: 0, invoicedBy: "PROVIDER", commissionPct: 15, commissionPerVisit: 0, commissionPerUnit: 0 },
+  { code: "FRIDGE_SERVICE", kind: "VISIT", unit: "VISIT", isOil: false, wasteCode: null, needsDocument: true, allowExtras: true, frequencies: ["QUARTERLY", "HALF_YEARLY", "MONTHLY", "ON_REQUEST"], feeNet: 55, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 45, providerPerUnit: 0, invoicedBy: "FIRINGI", commissionPct: 15, commissionPerVisit: 0, commissionPerUnit: 0 },
+  { code: "PRINTING", kind: "PRINT", unit: "VISIT", isOil: false, wasteCode: null, needsDocument: false, frequencies: [], feeNet: 0, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 0, providerPerUnit: 0, invoicedBy: "FIRINGI", commissionPct: 12, commissionPerVisit: 0, commissionPerUnit: 0 },
   { code: "HOOD_CLEANING", kind: "VISIT", unit: "VISIT", isOil: false, wasteCode: null, needsDocument: false, frequencies: ["MONTHLY", "ON_REQUEST"], feeNet: 90, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 70, providerPerUnit: 0, invoicedBy: "PROVIDER", commissionPct: 12, commissionPerVisit: 0, commissionPerUnit: 0 },
 ];
 /** Built-in service names in the 25 languages (FIRINGI can rename them; its own names win). */
@@ -140,6 +145,20 @@ export const BUILT_IN_NAMES: Record<string, Record<string, string>> = {
     sk: "Deratizácia a dezinsekcia", hu: "Kártevőirtás", hr: "Suzbijanje štetnika", sl: "Zatiranje škodljivcev", bg: "Контрол на вредители",
     el: "Απεντόμωση και μυοκτονία", da: "Skadedyrsbekæmpelse", sv: "Skadedjursbekämpning", fi: "Tuholaistorjunta", et: "Kahjuritõrje",
     lv: "Kaitēkļu apkarošana", lt: "Kenkėjų kontrolė", mt: "Kontroll tal-pesti", nb: "Skadedyrkontroll", is: "Meindýravarnir",
+  },
+  FRIDGE_SERVICE: {
+    en: "Refrigeration maintenance & repair", "pt-PT": "Manutenção e reparação de frio", es: "Mantenimiento y reparación de frío", fr: "Maintenance et dépannage froid", de: "Kühltechnik: Wartung & Reparatur",
+    it: "Manutenzione e riparazione frigoriferi", nl: "Onderhoud en reparatie koeling", pl: "Serwis i naprawa urządzeń chłodniczych", ro: "Întreținere și reparații frigorifice", cs: "Servis a opravy chladicích zařízení",
+    sk: "Servis a opravy chladiacich zariadení", hu: "Hűtőgépek karbantartása és javítása", hr: "Održavanje i popravak rashladnih uređaja", sl: "Vzdrževanje in popravila hladilnih naprav", bg: "Поддръжка и ремонт на хладилна техника",
+    el: "Συντήρηση και επισκευή ψυκτικών", da: "Service og reparation af køl", sv: "Service och reparation av kyl", fi: "Kylmälaitteiden huolto ja korjaus", et: "Külmaseadmete hooldus ja remont",
+    lv: "Saldēšanas iekārtu apkope un remonts", lt: "Šaldymo įrangos priežiūra ir remontas", mt: "Manutenzjoni u tiswija tal-friġġijiet", nb: "Service og reparasjon av kjøl", is: "Viðhald og viðgerðir kælitækja",
+  },
+  PRINTING: {
+    en: "Printing", "pt-PT": "Impressão", es: "Impresión", fr: "Impression", de: "Druck",
+    it: "Stampa", nl: "Drukwerk", pl: "Druk", ro: "Tipărire", cs: "Tisk",
+    sk: "Tlač", hu: "Nyomtatás", hr: "Tisak", sl: "Tisk", bg: "Печат",
+    el: "Εκτυπώσεις", da: "Tryk", sv: "Tryck", fi: "Painatus", et: "Trükk",
+    lv: "Druka", lt: "Spauda", mt: "Stampar", nb: "Trykk", is: "Prentun",
   },
   HOOD_CLEANING: {
     en: "Kitchen hood & duct cleaning", "pt-PT": "Limpeza de exaustores e condutas", es: "Limpieza de campanas y conductos", fr: "Nettoyage des hottes et conduits", de: "Dunstabzug- und Kanalreinigung",

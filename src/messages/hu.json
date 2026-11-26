@@ -994,7 +994,8 @@
     "Price Benchmark": "Árösszehasonlítás",
     "Price Position": "Árpozíció",
     "Pre-orders & Price Locks": "Előrendelések és árrögzítések",
-    "Shelf Price Labels": "Polccímkék"
+    "Shelf Price Labels": "Polccímkék",
+    "Printing": "Nyomtatás"
   },
   "delivery": {
     "title": "Kiszállítás",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Új jelentkezés",
       "body": "{name} jelentkezett: {job}."
+    },
+    "print_job_new": {
+      "title": "Új nyomdai rendelés",
+      "body": "{customer} megrendelte: {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Árajánlat a nyomdai rendeléséhez",
+      "body": "{number} nyomdai rendelés: {amount} + áfa. Fogadja el a Nyomtatás oldalon."
+    },
+    "print_job_update": {
+      "title": "Nyomdai rendelés frissítése",
+      "body": "Újdonság van a(z) {number} nyomdai rendelésnél."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "Kéthetente",
       "TWICE_MONTHLY": "Havonta kétszer",
       "MONTHLY": "Havonta",
-      "ON_REQUEST": "Csak kérésre"
+      "ON_REQUEST": "Csak kérésre",
+      "QUARTERLY": "3 havonta",
+      "HALF_YEARLY": "6 havonta"
     },
     "window": {
       "ANY": "Bármikor",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "kéthetente, {day}",
       "TWICE_MONTHLY": "a hónap {a}. és {b}. napján",
       "MONTHLY": "a hónap {a}. napján",
-      "ON_REQUEST": "kérésre"
+      "ON_REQUEST": "kérésre",
+      "QUARTERLY": "3 havonta, a hónap {a}. napján",
+      "HALF_YEARLY": "6 havonta, a hónap {a}. napján"
     },
     "st": {
       "REQUESTED": "Igényelve",
@@ -9886,7 +9903,16 @@
     "noVisits": "Nincs közelgő látogatás.",
     "noRecent": "Még nem volt látogatás.",
     "noProviderYet": "Még nem nyújt szolgáltatást.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Alkatrész és munkadíj (€, áfa nélkül)",
+      "note": "Felhasznált alkatrészek és elvégzett munka",
+      "shown": "Alkatrész és munkadíj {amount}: {note}",
+      "hint": "Javítások: a szerelő a kiszálláskor rögzíti az alkatrészeket és a munkadíjat."
+    },
+    "print": {
+      "open": "Nyomtatás megnyitása →"
+    }
   },
   "haccp": {
     "todayTitle": "Mai ellenőrzések",
@@ -10508,5 +10534,104 @@
     "saved": "Méret mentve.",
     "test": "Próbanyomtatás",
     "testHint": "Egy ívet nyomtat körvonalakkal. Nyomtassa ki sima papírra, és illessze a címkeívhez, hogy ellenőrizze, egyezik-e. A címkék nem lesznek nyomtatottként megjelölve."
+  },
+  "printing": {
+    "title": "Nyomtatás",
+    "intro": "Szórólapok, étlapok, plakátok, matricák, névjegykártyák, molinók és polccímkék — a FIRINGI beszállítói nyomtatják, és kiszállítják Önnek, vagy átvehetők.",
+    "kinds": {
+      "SHELF_LABELS": "Polccímkék",
+      "LEAFLET": "Szórólapok",
+      "MENU": "Étlapok",
+      "POSTER": "Plakátok",
+      "STICKER": "Matricák",
+      "BUSINESS_CARD": "Névjegykártyák",
+      "BANNER": "Molinók és táblák",
+      "OTHER": "Egyéb nyomtatás"
+    },
+    "products": "Mit nyomtathat",
+    "noProducts": "Az Ön területén még egy nyomdai beszállító sem kínál nyomtatást.",
+    "labelsFromPage": "Polccímkék: rendelje meg őket a Polci árcímkék oldalon.",
+    "by": "szállító: {supplier}",
+    "perItem": "{price} / db",
+    "setup": "+ {price} beállítási díj",
+    "minQty": "{n} db-tól",
+    "step": "{n} db-os lépésekben",
+    "onRequest": "Ár ajánlatkérésre — a szállító árajánlatot küld Önnek",
+    "turnaround": "kb. {n} nap alatt kész",
+    "delivery": {
+      "DELIVERY": "Kiszállítás Önhöz",
+      "PICKUP": "Személyes átvétel"
+    },
+    "deliveryLabel": "Átvétel módja",
+    "order": "Rendelés",
+    "qty": "Mennyiség",
+    "orderTitle": "A munka neve",
+    "notes": "Utasítások (méret, papír, szöveg, színek…)",
+    "files": "Az Ön fájljai (PDF, JPG, PNG)",
+    "addFile": "Fájl hozzáadása",
+    "uploading": "Feltöltés…",
+    "wantedBy": "Határidő",
+    "total": "{price} + áfa",
+    "qtyRule": "Mennyiség: legalább {min}, {step} db-os lépésekben.",
+    "send": "Rendelés elküldése",
+    "sent": "Rendelés elküldve — a szállító visszaigazolja.",
+    "cancel": "Mégse",
+    "orders": "Az Ön nyomdai rendelései",
+    "noOrders": "Még nincs nyomdai rendelés.",
+    "st": {
+      "REQUESTED": "Szállítóra vár",
+      "QUOTED": "Elfogadandó árajánlat",
+      "ACCEPTED": "Elfogadva",
+      "PRINTING": "Nyomtatás alatt",
+      "DELIVERED": "Kiszállítva",
+      "REJECTED": "Elutasítva",
+      "CANCELLED": "Lemondva"
+    },
+    "quote": "Árajánlat: {price} + áfa",
+    "readyBy": "kész: {date}",
+    "acceptQuote": "Árajánlat elfogadása",
+    "cancelOrder": "Rendelés lemondása",
+    "rejected": "Elutasítva: {reason}",
+    "labelsPdf": "Címkék PDF-ben",
+    "vTitle": "Nyomtatás",
+    "vIntro": "Az Ön nyomdai termékei és a vevőktől érkező nyomdai rendelések.",
+    "notApproved": "Jelentkezzen a „Nyomtatás” szolgáltatásra a Szolgáltatások oldalon. Miután a FIRINGI jóváhagyta, itt adhatja hozzá termékeit.",
+    "termsFiringi": "A FIRINGI számlázza a vevőt, és kifizeti Önnek az árat {pct}% jutalék levonásával.",
+    "termsProvider": "Ön számlázza a vevőt; a FIRINGI jutaléka {pct}%, amelyet havonta számláz Önnek.",
+    "myProducts": "Az Ön termékei",
+    "addProduct": "Termék hozzáadása",
+    "edit": "Szerkesztés",
+    "save": "Mentés",
+    "kind": "Termék típusa",
+    "name": "Név",
+    "description": "Leírás (méret, papír, felületkezelés)",
+    "labelSize": "Címkeméret",
+    "unitPrice": "Darabár (€, áfa nélkül)",
+    "setupPrice": "Beállítási díj rendelésenként (€, áfa nélkül)",
+    "min": "Minimális mennyiség",
+    "stepQty": "Mennyiségi lépés",
+    "priceOnRequest": "Ár ajánlatkérésre (árajánlatot küldök)",
+    "vat": "Áfa %",
+    "days": "Nyomtatási idő (nap)",
+    "active": "Eladó",
+    "inactive": "Nem eladó",
+    "incoming": "Nyomdai rendelések",
+    "noIncoming": "Még nincs nyomdai rendelés.",
+    "accept": "Elfogadás",
+    "sendQuote": "Árajánlat küldése",
+    "quotePrice": "Az Ön ára (€, áfa nélkül)",
+    "quoteNote": "Megjegyzés a vevőnek",
+    "readyByLabel": "Kész ekkorra",
+    "reject": "Elutasítás",
+    "rejectReason": "Miért nem tudja kinyomtatni",
+    "startPrinting": "Nyomtatás folyamatban",
+    "delivered": "Kiszállítva / átvéve",
+    "yourInvoiceNo": "Az Ön számlaszáma",
+    "yourAmount": "Ön ennyit kap: {amount}",
+    "labelsTitle": "Nyomtattassa ki",
+    "labelsHint": "Egy nyomdai beszállító kinyomtatja a kiválasztott címkéket megfelelő címkepapírra, és kiszállítja őket.",
+    "labelsOrder": "{n} nyomtatott címke megrendelése",
+    "labelsOrdered": "Elküldve a nyomdának — lásd Szolgáltatások › Nyomtatás.",
+    "labelsPrice": "{price} + áfa"
   }
 }

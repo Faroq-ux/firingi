@@ -201,7 +201,10 @@ export const VENDOR_NAV: NavSection[] = [
   },
   {
     key: "services", icon: "Recycle", label: { en: "Services", pt: "Serviços", es: "Servicios" },
-    items: [vsv("", "Services", "Serviços", "P68", { live: true, href: `${V}/services`, feature: "SERVICES_PROVIDER", es: "Servicios" })],
+    items: [
+      vsv("", "Services", "Serviços", "P68", { live: true, href: `${V}/services`, feature: "SERVICES_PROVIDER", es: "Servicios" }),
+      vsv("printing", "Printing", "Impressão", "P72", { live: true, href: `${V}/services/printing`, feature: "SERVICES_PROVIDER", es: "Impresión" }),
+    ],
   },
   { key: "reports", icon: "BarChart3", label: { en: "Reports", pt: "Relatórios", es: "Informes" }, items: [vr("sales", "Sales Report", "Relatório de Vendas", "P8", { live: true, es: "Informe de ventas" }), vr("demand", "Demand & Stock", "Procura e Stock", "P17", { live: true, es: "Demanda y stock" }), vr("co2", "CO₂ Footprint", "Pegada de CO₂", "P51", { live: true, perm: ["vendor.reports.view", "vendor.orders.view", "vendor.products.manage"], es: "Huella de CO₂" }), vr("eu-trade", "EU Trade Report", "Relatório Intracomunitário", "P57", { live: true, perm: ["vendor.reports.view", "vendor.invoices.view", "vendor.orders.view"], es: "Informe intracomunitario" }), vr("price-position", "Price Position", "Posição de Preço", "P70", { live: true, feature: "BENCHMARK_SUPPLIER", perm: ["vendor.reports.view", "vendor.products.manage"], es: "Posición de precio" })] },
   { key: "pos", icon: "Calculator", label: { en: "Till (POS)", pt: "Caixa (POS)", es: "Caja (TPV)" }, items: POS_ITEMS(vpos, false) },
@@ -322,6 +325,7 @@ export const BUY_NAV: NavSection[] = [
     key: "services", icon: "Recycle", label: { en: "Services", pt: "Serviços", es: "Servicios" },
     items: [
       bsv("", "My Services", "Os Meus Serviços", "P68", { live: true, href: `${B}/services`, feature: "SERVICES", es: "Mis servicios" }),
+      bsv("printing", "Printing", "Impressão", "P72", { live: true, href: `${B}/services/printing`, feature: "SERVICES", es: "Impresión" }),
       bsv("oil", "Fryers & Oil", "Fritadeiras e Óleo", "P68", { live: true, feature: "SERVICES_OIL", es: "Freidoras y aceite" }),
     ],
   },

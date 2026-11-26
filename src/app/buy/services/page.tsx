@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FileText, Recycle } from "lucide-react";
 import { pagePermission, pagePortal, can } from "@/server/rbac/guard";
@@ -39,7 +40,8 @@ export default async function BuyServicesPage() {
                 <CardHeader><CardTitle className="flex flex-wrap items-center gap-2"><span className="min-w-0 break-words">{t.name}</span>{t.planId && <Badge variant="success">{l["st.ACTIVE"]}</Badge>}</CardTitle>
                   {t.description && <CardDescription>{t.description}</CardDescription>}</CardHeader>
                 <CardContent className="space-y-3 text-sm">
-                  <p className="font-medium">{price(t)}</p>
+                  {t.kind === "PRINT" ? <p><Link href="/buy/services/printing" className="font-medium text-primary hover:underline" data-testid="sv-printing-link">{l["print.open"]}</Link></p> : <>
+                  <p className="font-medium">{price(t)}{t.allowExtras ? <span className="block text-xs font-normal text-muted-foreground">{l["extras.hint"]}</span> : null}</p>
                   {t.buybackPerUnit > 0 && <p className="text-[color:var(--success,#16a34a)]">{fill(l.buyback, { amount: money(locale, t.buybackPerUnit), unit: unitText(l, t.unit) })}</p>}
                   <p className="text-xs text-muted-foreground">{t.frequencies.map((f) => l[`freq.${f}`] ?? f).join(" · ")}{t.wasteCode ? ` · ${fill(l.wasteCode, { code: t.wasteCode })}` : ""} · {t.invoicedBy === "PROVIDER" ? l.invoicedByProvider : l.invoicedByFiringi}</p>
                   {!t.available ? <p className="text-muted-foreground" data-testid="sv-unavailable">{l.noProvider}</p> : (
@@ -48,6 +50,7 @@ export default async function BuyServicesPage() {
                       {d.settings.parts.onRequest && (t.planId || t.frequencies.includes("ON_REQUEST")) && <RequestService l={l} serviceTypeId={t.id} code={t.code} label={t.kind === "COLLECTION" ? l.request : l.requestVisit} earliest={earliest} />}
                     </div>
                   )}
+                  </>}
                 </CardContent>
               </Card>
             ))}
@@ -108,6 +111,7 @@ export default async function BuyServicesPage() {
                       <span className="min-w-0 flex-1 basis-40 break-words">{v.service}{v.isCollection && v.quantity != null ? ` · ${num(locale, v.quantity)} ${unitText(l, v.unit)}` : ""}
                         {v.status === "MISSED" && v.missedReason ? <span className="block text-xs text-muted-foreground">{v.missedReason}</span> : null}
                         {v.status === "DONE" && (v.feeNet ?? 0) > 0 && v.invoicedBy === "FIRINGI" ? <span className="block text-xs text-muted-foreground">{l.fee}: {money(locale, v.feeNet ?? 0)}</span> : null}
+                        {v.status === "DONE" && (v.extrasNet ?? 0) > 0 ? <span className="block text-xs text-muted-foreground">{fill(l["extras.shown"], { amount: money(locale, v.extrasNet ?? 0), note: v.extrasNote ?? "" })}</span> : null}
                         {v.status === "DONE" && (v.buybackNet ?? 0) > 0 ? <span className="block text-xs text-[color:var(--success,#16a34a)]">{l.paidYou}: {money(locale, v.buybackNet ?? 0)}</span> : null}</span>
                       <Badge variant={statusTone(v.status)}>{l[`st.${v.status}`] ?? v.status}</Badge>
                       {v.status === "DONE" && d.settings.parts.documents && <a className="inline-flex items-center gap-1 text-xs text-primary hover:underline" href={`/api/services/visits/${v.id}/document`} target="_blank" rel="noreferrer" data-testid="sv-doc"><FileText className="size-3.5" /> {l.openPdf}</a>}

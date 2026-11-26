@@ -994,7 +994,8 @@
     "Price Benchmark": "Hintavertailu",
     "Price Position": "Hinta-asema",
     "Pre-orders & Price Locks": "Ennakkotilaukset & hintalukitukset",
-    "Shelf Price Labels": "Hyllyn hintalaput"
+    "Shelf Price Labels": "Hyllyn hintalaput",
+    "Printing": "Painatus"
   },
   "delivery": {
     "title": "Toimitus",
@@ -2353,6 +2354,18 @@
     "website_job_application": {
       "title": "Uusi työhakemus",
       "body": "{name} haki: {job}."
+    },
+    "print_job_new": {
+      "title": "Uusi painotilaus",
+      "body": "{customer} tilasi tuotteen {product} ({number})."
+    },
+    "print_quoted": {
+      "title": "Tarjous painotilauksestasi",
+      "body": "Painotilaus {number}: {amount} + alv. Hyväksy se Painatus-sivulla."
+    },
+    "print_job_update": {
+      "title": "Painotilauksen päivitys",
+      "body": "Painotilauksessa {number} on uutta."
     }
   },
   "notifications": {
@@ -9725,7 +9738,9 @@
       "BIWEEKLY": "2 viikon välein",
       "TWICE_MONTHLY": "Kahdesti kuukaudessa",
       "MONTHLY": "Kerran kuukaudessa",
-      "ON_REQUEST": "Vain pyynnöstä"
+      "ON_REQUEST": "Vain pyynnöstä",
+      "QUARTERLY": "3 kuukauden välein",
+      "HALF_YEARLY": "6 kuukauden välein"
     },
     "window": {
       "ANY": "Mihin aikaan tahansa",
@@ -9746,7 +9761,9 @@
       "BIWEEKLY": "joka toinen viikko: {day}",
       "TWICE_MONTHLY": "kuun {a}. ja {b}. päivä",
       "MONTHLY": "kuun {a}. päivä",
-      "ON_REQUEST": "pyynnöstä"
+      "ON_REQUEST": "pyynnöstä",
+      "QUARTERLY": "3 kuukauden välein, kuun {a}. päivä",
+      "HALF_YEARLY": "6 kuukauden välein, kuun {a}. päivä"
     },
     "st": {
       "REQUESTED": "Pyydetty",
@@ -9886,7 +9903,16 @@
     "noVisits": "Ei tulevia käyntejä.",
     "noRecent": "Ei vielä käyntejä.",
     "noProviderYet": "Et tarjoa vielä yhtään palvelua.",
-    "openPdf": "PDF"
+    "openPdf": "PDF",
+    "extras": {
+      "amount": "Osat ja työ (€, alv 0 %)",
+      "note": "Käytetyt osat ja tehty työ",
+      "shown": "Osat ja työ {amount}: {note}",
+      "hint": "Korjaukset: asentaja lisää osat ja työn käynnin yhteydessä."
+    },
+    "print": {
+      "open": "Avaa Painatus →"
+    }
   },
   "haccp": {
     "todayTitle": "Päivän tarkastukset",
@@ -10508,5 +10534,104 @@
     "saved": "Koko tallennettu.",
     "test": "Testitulostus",
     "testHint": "Tulostaa yhden arkin ääriviivoineen. Tulosta se tavalliselle paperille ja aseta tarra-arkkia vasten tarkistaaksesi, että kohdat osuvat. Tarroja ei merkitä tulostetuiksi."
+  },
+  "printing": {
+    "title": "Painatus",
+    "intro": "Flyerit, ruokalistat, julisteet, tarrat, käyntikortit, bannerit ja hyllyetiketit — FIRINGIn toimittajat painavat ne ja toimittavat sinulle tai ne ovat noudettavissa.",
+    "kinds": {
+      "SHELF_LABELS": "Hyllyetiketit",
+      "LEAFLET": "Esitteet ja flyerit",
+      "MENU": "Ruokalistat",
+      "POSTER": "Julisteet",
+      "STICKER": "Tarrat",
+      "BUSINESS_CARD": "Käyntikortit",
+      "BANNER": "Bannerit ja kyltit",
+      "OTHER": "Muu painatus"
+    },
+    "products": "Mitä voit painattaa",
+    "noProducts": "Alueellasi ei vielä ole painatusta tarjoavaa toimittajaa.",
+    "labelsFromPage": "Hyllyetiketit: tilaa ne Hyllyhintaetiketit-sivulta.",
+    "by": "toimittaja {supplier}",
+    "perItem": "{price} / kpl",
+    "setup": "+ {price} aloitusmaksu",
+    "minQty": "alkaen {n}",
+    "step": "{n} kpl:n erissä",
+    "onRequest": "Hinta pyynnöstä — toimittaja lähettää sinulle tarjouksen",
+    "turnaround": "valmis noin {n} päivässä",
+    "delivery": {
+      "DELIVERY": "Toimitus sinulle",
+      "PICKUP": "Nouto"
+    },
+    "deliveryLabel": "Miten saat sen",
+    "order": "Tilaa",
+    "qty": "Määrä",
+    "orderTitle": "Työn nimi",
+    "notes": "Ohjeet (koko, paperi, teksti, värit…)",
+    "files": "Tiedostosi (PDF, JPG, PNG)",
+    "addFile": "Lisää tiedosto",
+    "uploading": "Ladataan…",
+    "wantedBy": "Tarvitaan viimeistään",
+    "total": "{price} + alv",
+    "qtyRule": "Määrä: vähintään {min}, {step} kpl:n erissä.",
+    "send": "Lähetä tilaus",
+    "sent": "Tilaus lähetetty — toimittaja vahvistaa sen.",
+    "cancel": "Peruuta",
+    "orders": "Painotilauksesi",
+    "noOrders": "Ei vielä painotilauksia.",
+    "st": {
+      "REQUESTED": "Odottaa toimittajaa",
+      "QUOTED": "Tarjous hyväksyttävänä",
+      "ACCEPTED": "Hyväksytty",
+      "PRINTING": "Painossa",
+      "DELIVERED": "Toimitettu",
+      "REJECTED": "Hylätty",
+      "CANCELLED": "Peruttu"
+    },
+    "quote": "Tarjous: {price} + alv",
+    "readyBy": "valmis {date} mennessä",
+    "acceptQuote": "Hyväksy tarjous",
+    "cancelOrder": "Peruuta tilaus",
+    "rejected": "Hylätty: {reason}",
+    "labelsPdf": "Etiketit PDF:nä",
+    "vTitle": "Painatus",
+    "vIntro": "Painotuotteesi ja asiakkaiden lähettämät painotilaukset.",
+    "notApproved": "Hae ”Painatus”-palvelua Palvelut-sivulla. Kun FIRINGI on hyväksynyt sinut, lisää tuotteesi tänne.",
+    "termsFiringi": "FIRINGI laskuttaa asiakasta ja maksaa sinulle hinnan, josta on vähennetty {pct}% palkkio.",
+    "termsProvider": "Laskutat asiakasta itse; FIRINGIn palkkio on {pct}%, ja se laskutetaan sinulta kuukausittain.",
+    "myProducts": "Tuotteesi",
+    "addProduct": "Lisää tuote",
+    "edit": "Muokkaa",
+    "save": "Tallenna",
+    "kind": "Mikä se on",
+    "name": "Nimi",
+    "description": "Kuvaus (koko, paperi, viimeistely)",
+    "labelSize": "Etiketin koko",
+    "unitPrice": "Kappalehinta (€, alv 0 %)",
+    "setupPrice": "Aloitusmaksu tilausta kohden (€, alv 0 %)",
+    "min": "Vähimmäismäärä",
+    "stepQty": "Määrän porrastus",
+    "priceOnRequest": "Hinta pyynnöstä (lähetän tarjouksen)",
+    "vat": "Alv %",
+    "days": "Painopäivät",
+    "active": "Myynnissä",
+    "inactive": "Ei myynnissä",
+    "incoming": "Painotilaukset",
+    "noIncoming": "Ei vielä painotilauksia.",
+    "accept": "Hyväksy",
+    "sendQuote": "Lähetä tarjous",
+    "quotePrice": "Hintasi (€, alv 0 %)",
+    "quoteNote": "Viesti asiakkaalle",
+    "readyByLabel": "Valmis viimeistään",
+    "reject": "Hylkää",
+    "rejectReason": "Miksi et voi painaa sitä",
+    "startPrinting": "Painetaan nyt",
+    "delivered": "Toimitettu / noudettu",
+    "yourInvoiceNo": "Laskusi numero",
+    "yourAmount": "saat {amount}",
+    "labelsTitle": "Painata ne",
+    "labelsHint": "Painotoimittaja painaa valitut etiketit kunnon etikettipaperille ja toimittaa ne.",
+    "labelsOrder": "Tilaa {n} painettua etikettiä",
+    "labelsOrdered": "Lähetetty painoon — katso Palvelut › Painatus.",
+    "labelsPrice": "{price} + alv"
   }
 }

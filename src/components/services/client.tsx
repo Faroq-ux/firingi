@@ -36,7 +36,7 @@ function PlanForm({ l, frequencies, collection, oil, addresses, initial, submit,
           <div className="space-y-1"><Label htmlFor="sv-weekday">{l.weekday}</Label>
             <Select id="sv-weekday" value={d.weekday} onChange={(e) => set("weekday", Number(e.target.value))} data-testid="sv-weekday">{[1, 2, 3, 4, 5, 6, 7].map((w) => <option key={w} value={w}>{l[`weekdays.d${w}`]}</option>)}</Select></div>
         )}
-        {(d.frequency === "MONTHLY" || d.frequency === "TWICE_MONTHLY") && (
+        {(d.frequency === "MONTHLY" || d.frequency === "TWICE_MONTHLY" || d.frequency === "QUARTERLY" || d.frequency === "HALF_YEARLY") && (
           <div className="space-y-1"><Label htmlFor="sv-daya">{l.dayOfMonth}</Label>
             <Input id="sv-daya" type="number" min={1} max={28} value={d.dayA} onChange={(e) => set("dayA", Number(e.target.value))} data-testid="sv-daya" /></div>
         )}
@@ -233,22 +233,24 @@ export function ApplyForm({ l, types, country }: { l: L; types: { id: string; na
   );
 }
 
-export type ProviderVisitRow = { id: string; status: string; date: string; isCollection: boolean; unit: string; needsSignature: boolean; youInvoice: boolean; containers: number };
+export type ProviderVisitRow = { id: string; status: string; date: string; isCollection: boolean; unit: string; needsSignature: boolean; youInvoice: boolean; containers: number; allowExtras?: boolean };
 export function ProviderVisit({ l, v }: { l: L; v: ProviderVisitRow }) {
   const { pending, error, run } = useRun();
   const [mode, setMode] = useState<"" | "move" | "done" | "miss">("");
-  const [d, setD] = useState({ quantity: "", containersTaken: String(v.containers || ""), containersLeft: String(v.containers || ""), signedBy: "", docNumber: "", providerInvoiceNo: "", note: "" });
+  const [d, setD] = useState({ extrasNet: "", extrasNote: "", quantity: "", containersTaken: String(v.containers || ""), containersLeft: String(v.containers || ""), signedBy: "", docNumber: "", providerInvoiceNo: "", note: "" });
   const [reason, setReason] = useState("");
   const late = v.date > isoDay(new Date(Date.now() + 86400_000));
   if (mode === "move") return <MoveVisit l={l} id={v.id} date={v.date} onClose={() => setMode("")} />;
   if (mode === "done") return (
-    <form className={box} data-testid="pv-done-form" onSubmit={(e) => { e.preventDefault(); run(() => completeServiceVisitAction({ id: v.id, input: { quantity: v.isCollection ? numOrNull(d.quantity) : null, containersTaken: numOrNull(d.containersTaken), containersLeft: numOrNull(d.containersLeft), signedBy: d.signedBy || null, docNumber: d.docNumber || null, providerInvoiceNo: d.providerInvoiceNo || null, note: d.note || null } }), () => setMode("")); }}>
+    <form className={box} data-testid="pv-done-form" onSubmit={(e) => { e.preventDefault(); run(() => completeServiceVisitAction({ id: v.id, input: { extrasNet: v.allowExtras ? numOrNull(d.extrasNet) : null, extrasNote: v.allowExtras ? d.extrasNote || null : null, quantity: v.isCollection ? numOrNull(d.quantity) : null, containersTaken: numOrNull(d.containersTaken), containersLeft: numOrNull(d.containersLeft), signedBy: d.signedBy || null, docNumber: d.docNumber || null, providerInvoiceNo: d.providerInvoiceNo || null, note: d.note || null } }), () => setMode("")); }}>
       <div className={grid}>
         {v.isCollection && <div className="space-y-1"><Label htmlFor={`pv-q-${v.id}`}>{l.quantity} ({l[`unit.${v.unit}`] ?? v.unit})</Label><Input id={`pv-q-${v.id}`} type="number" step="0.1" min={0} value={d.quantity} onChange={(e) => setD({ ...d, quantity: e.target.value })} data-testid="pv-qty" /></div>}
         {v.isCollection && <div className="space-y-1"><Label htmlFor={`pv-t-${v.id}`}>{l.containersTaken}</Label><Input id={`pv-t-${v.id}`} type="number" min={0} value={d.containersTaken} onChange={(e) => setD({ ...d, containersTaken: e.target.value })} data-testid="pv-taken" /></div>}
         {v.isCollection && <div className="space-y-1"><Label htmlFor={`pv-lf-${v.id}`}>{l.containersLeft}</Label><Input id={`pv-lf-${v.id}`} type="number" min={0} value={d.containersLeft} onChange={(e) => setD({ ...d, containersLeft: e.target.value })} data-testid="pv-left" /></div>}
         <div className="space-y-1"><Label htmlFor={`pv-s-${v.id}`}>{l.signedBy}{v.needsSignature ? " *" : ""}</Label><Input id={`pv-s-${v.id}`} maxLength={120} value={d.signedBy} onChange={(e) => setD({ ...d, signedBy: e.target.value })} data-testid="pv-signed" /></div>
         <div className="space-y-1"><Label htmlFor={`pv-d-${v.id}`}>{l.docNumber}</Label><Input id={`pv-d-${v.id}`} maxLength={60} value={d.docNumber} onChange={(e) => setD({ ...d, docNumber: e.target.value })} data-testid="pv-doc" /></div>
+        {v.allowExtras && <div className="space-y-1"><Label htmlFor={`pv-x-${v.id}`}>{l["extras.amount"]}</Label><Input id={`pv-x-${v.id}`} type="number" step="0.01" min={0} value={d.extrasNet} onChange={(e) => setD({ ...d, extrasNet: e.target.value })} data-testid="pv-extras" /></div>}
+        {v.allowExtras && <div className="space-y-1"><Label htmlFor={`pv-xn-${v.id}`}>{l["extras.note"]}</Label><Input id={`pv-xn-${v.id}`} maxLength={300} value={d.extrasNote} onChange={(e) => setD({ ...d, extrasNote: e.target.value })} data-testid="pv-extras-note" /></div>}
         {v.youInvoice && <div className="space-y-1"><Label htmlFor={`pv-i-${v.id}`}>{l.yourInvoiceNo} *</Label><Input id={`pv-i-${v.id}`} maxLength={60} value={d.providerInvoiceNo} onChange={(e) => setD({ ...d, providerInvoiceNo: e.target.value })} data-testid="pv-inv" /></div>}
         <div className="space-y-1 sm:col-span-2"><Label htmlFor={`pv-n-${v.id}`}>{l.note}</Label><Input id={`pv-n-${v.id}`} maxLength={1000} value={d.note} onChange={(e) => setD({ ...d, note: e.target.value })} /></div>
       </div>
