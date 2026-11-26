@@ -18,15 +18,16 @@ export async function globalSearch(ctx: Ctx, portal: Portal, raw: string): Promi
   const money = (v: { toString(): string }) => `${Number(v.toString()).toFixed(2)} €`;
 
   if (portal === "admin") {
-    const scope = scopeWhere(ctx);
+    const { adminCompanyWhere } = await import("./admin-search");
+    const scope = await adminCompanyWhere(ctx);
     const [orders, companies, products, invoices] = await Promise.all([
       can(ctx, ["admin.orders.view", "admin.orders.manage"]) ? prisma.order.findMany({ where: { number: ci(q), buyer: scope }, select: { id: true, number: true, status: true, grandTotal: true, buyer: { select: { legalName: true } } }, orderBy: { placedAt: "desc" }, take: 6 }) : [],
-      can(ctx, ["admin.customers.view", "admin.vendors.view"]) ? prisma.company.findMany({ where: { AND: [scope, { type: { not: "ADMIN" } }, { OR: [{ legalName: ci(q) }, { tradeName: ci(q) }, { taxId: { startsWith: q } }, { email: ci(q) }] }] }, select: { id: true, legalName: true, tradeName: true, type: true, taxId: true }, take: 6 }) : [],
+      can(ctx, ["admin.customers.view", "admin.vendors.view"]) ? prisma.company.findMany({ where: { AND: [scope, { type: { not: "ADMIN" } }, { OR: [{ legalName: ci(q) }, { tradeName: ci(q) }, { taxId: { startsWith: q } }, { email: ci(q) }] }] }, select: { id: true, legalName: true, tradeName: true, type: true, taxId: true, country: { select: { code: true } } }, take: 6 }) : [],
       can(ctx, ["admin.catalogue.view", "admin.catalogue.manage"]) ? prisma.product.findMany({ where: { OR: [{ searchText: ci(q) }, { variants: { some: { OR: [{ sku: ci(q) }, { gtin: q }] } } }] }, select: { id: true, name: true, status: true }, take: 6 }) : [],
       can(ctx, ["admin.invoices.view", "admin.finance.view"]) ? prisma.invoice.findMany({ where: { OR: [{ fullNumber: ci(q) }, { providerNumber: ci(q) }], recipient: scope }, select: { id: true, fullNumber: true, providerNumber: true, grossTotal: true, recipient: { select: { legalName: true } } }, take: 4 }) : [],
     ]);
     for (const o of orders) hits.push({ kind: "order", id: o.id, title: o.number, subtitle: `${o.buyer.legalName} · ${o.status} · ${money(o.grandTotal)}`, href: `/admin/orders/${o.id}` });
-    for (const c of companies) hits.push({ kind: "company", id: c.id, title: c.tradeName ?? c.legalName, subtitle: `${c.type} · ${c.taxId}`, href: `/admin/companies/${c.id}` });
+    for (const c of companies) hits.push({ kind: "company", id: c.id, title: c.tradeName ?? c.legalName, subtitle: `${c.type} · ${c.country.code} · ${c.taxId}`, href: `/admin/companies/${c.id}` });
     for (const p of products) hits.push({ kind: "product", id: p.id, title: nameOf(p.name), subtitle: p.status, href: `/admin/catalogue/products/${p.id}` });
     for (const i of invoices) hits.push({ kind: "invoice", id: i.id, title: i.providerNumber ?? i.fullNumber ?? i.id, subtitle: `${i.recipient.legalName} · ${money(i.grossTotal)}`, href: `/admin/invoices/${i.id}` });
     return hits;

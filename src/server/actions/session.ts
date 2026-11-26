@@ -43,3 +43,4 @@ export async function afterLoginAction() {
   (await cookies()).set(LOCALE_COOKIE, locale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
   return { redirectTo: homeFor(ctx) };
 }
+

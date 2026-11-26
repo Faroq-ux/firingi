@@ -815,6 +815,15 @@ supplier — across results, cart, orders, dashboard, phone app and notification
 Details: [docs/suppliers-minimums.md](docs/suppliers-minimums.md).
 Tests: `tests/unit/cart-help.test.ts`, `tests/integration/cart-help.test.ts`, `node tests/e2e/cart-help.mjs`.
 
+## Admin search by country
+
+FIRINGI's top bar has a **search country** box (All countries / PT / ES …). Ctrl+K and every "find a business" box in
+the admin pages (providers, tenders, buying groups, rewards, rebates, bank matching, assortments, single-business
+switches) search only that country; with "All countries" each result shows its country, e.g. "Kebab House (PT)".
+Admins limited to a country or region always search inside it. Searchable: legal name, trade name, NIF / VAT (Ctrl+K
+also the company email, order and invoice numbers, products). Code: `src/server/services/admin-search.ts`.
+Tests: `tests/integration/admin-search-country.test.ts`, `node tests/e2e/admin-search-country.mjs`.
+
 ## Services: Printing and Refrigeration
 
 **Printing**: print suppliers approved by FIRINGI list leaflets, menus, posters, stickers, business cards, banners and

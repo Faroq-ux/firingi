@@ -405,8 +405,9 @@ export async function findBusiness(ctx: Ctx, q: string) {
   if (ctx.company.type !== "ADMIN") throw new ForbiddenError();
   const t = q.trim();
   if (t.length < 2) return [];
-  const rows = await prisma.company.findMany({ where: { type: { in: ["CUSTOMER", "WHOLESALER", "DISTRIBUTOR"] }, OR: [{ legalName: { contains: t, mode: "insensitive" } }, { tradeName: { contains: t, mode: "insensitive" } }, { taxId: { contains: t } }] }, select: { id: true, legalName: true, tradeName: true, type: true }, take: 15 });
-  return rows.map((c) => ({ id: c.id, name: nameOf(c), type: c.type }));
+  const { adminCompanyWhere, countryLabel } = await import("@/server/services/admin-search");
+  const rows = await prisma.company.findMany({ where: { AND: [await adminCompanyWhere(ctx), { type: { in: ["CUSTOMER", "WHOLESALER", "DISTRIBUTOR"] }, OR: [{ legalName: { contains: t, mode: "insensitive" } }, { tradeName: { contains: t, mode: "insensitive" } }, { taxId: { contains: t } }] }] }, select: { id: true, legalName: true, tradeName: true, type: true }, take: 15 });
+  return (await countryLabel(rows.map((c) => ({ id: c.id, name: nameOf(c) })))).map((r, k) => ({ ...r, type: rows[k].type }));
 }
 
 // ── the job ─────────────────────────────────────────────────────────────────

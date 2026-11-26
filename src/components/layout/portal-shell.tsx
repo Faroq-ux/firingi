@@ -89,6 +89,10 @@ export async function PortalShell({ portal, children }: { portal: Portal; childr
         locales,
         labels: { signOut: t("signOut"), language: t("language"), company: t("company"), menu: t("menu"), security: (await getTranslations("security"))("title"), search: (await getTranslations("palette"))("search") },
         securityHref: portal === "driver" ? null : `/${portal}/me/security`,
+        searchCountry: portal === "admin" ? await (async () => {
+          const { adminCountryOptions, adminSearchCountry } = await import("@/server/services/admin-search");
+          return { value: (await adminSearchCountry()) ?? "", options: await adminCountryOptions(ctx) };
+        })() : null,
         cart,
         bell: { initialUnread: unread, base: `/${portal}`, labels: { title: tn("title"), empty: tn("empty"), markAllRead: tn("markAllRead"), viewAll: tn("viewAll"), preferences: tn("preferences") } },
         theme: {

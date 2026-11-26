@@ -366,7 +366,7 @@ export async function searchVendors(ctx: Ctx, q: string) {
   if (!isStaff(ctx)) throw new ForbiddenError();
   const term = q.trim().slice(0, 60);
   if (term.length < 2) return [];
-  const rows = await prisma.company.findMany({ where: { type: { in: ["WHOLESALER", "DISTRIBUTOR"] }, OR: [{ legalName: { contains: term, mode: "insensitive" } }, { tradeName: { contains: term, mode: "insensitive" } }] }, select: { id: true, legalName: true, tradeName: true }, take: 10 });
+  const rows = await prisma.company.findMany({ where: { AND: [await (await import("@/server/services/admin-search")).adminCompanyWhere(ctx)], type: { in: ["WHOLESALER", "DISTRIBUTOR"] }, OR: [{ legalName: { contains: term, mode: "insensitive" } }, { tradeName: { contains: term, mode: "insensitive" } }] }, select: { id: true, legalName: true, tradeName: true }, take: 10 });
   return rows.map((r) => ({ id: r.id, name: nameOf(r) }));
 }
 

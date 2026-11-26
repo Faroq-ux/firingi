@@ -710,7 +710,7 @@ export async function searchCustomers(ctx: Ctx, q: string) {
   const term = q.trim();
   if (term.length < 2) return [];
   const rows = await prisma.company.findMany({
-    where: { type: { in: ["CUSTOMER", "WHOLESALER"] }, status: "APPROVED", OR: [{ legalName: { contains: term, mode: "insensitive" } }, { tradeName: { contains: term, mode: "insensitive" } }, { taxId: { contains: term } }] },
+    where: { ...(admin ? { AND: [await (await import("@/server/services/admin-search")).adminCompanyWhere(ctx)] } : {}), type: { in: ["CUSTOMER", "WHOLESALER"] }, status: "APPROVED", OR: [{ legalName: { contains: term, mode: "insensitive" } }, { tradeName: { contains: term, mode: "insensitive" } }, { taxId: { contains: term } }] },
     select: { id: true, legalName: true, tradeName: true, country: { select: { code: true } } }, take: 20,
   });
   return rows.map((c) => ({ id: c.id, name: name(c), country: c.country.code }));

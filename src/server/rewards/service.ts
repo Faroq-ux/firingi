@@ -91,7 +91,7 @@ export async function findRewardsBusiness(ctx: Ctx, q: string) {
   const t = q.trim();
   if (t.length < 2) return [];
   const rows = await prisma.company.findMany({
-    where: { type: { in: ["CUSTOMER", "WHOLESALER", "DISTRIBUTOR"] }, OR: [{ legalName: { contains: t, mode: "insensitive" } }, { tradeName: { contains: t, mode: "insensitive" } }, { taxId: { contains: t } }] },
+    where: { AND: [await (await import("@/server/services/admin-search")).adminCompanyWhere(ctx), { type: { in: ["CUSTOMER", "WHOLESALER", "DISTRIBUTOR"] }, OR: [{ legalName: { contains: t, mode: "insensitive" } }, { tradeName: { contains: t, mode: "insensitive" } }, { taxId: { contains: t } }] }] },
     select: { id: true, legalName: true, tradeName: true, type: true }, take: 10, orderBy: { legalName: "asc" },
   });
   return Promise.all(rows.map(async (c) => ({ id: c.id, name: c.tradeName ?? c.legalName, type: c.type, state: await rewardsSwitch(c.id) })));

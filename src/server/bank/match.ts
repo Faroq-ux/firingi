@@ -423,7 +423,7 @@ export async function matchCompanies(ctx: Ctx, q: string) {
   if (ctx.company.type !== "ADMIN") return [];
   const s = q.trim();
   if (s.length < 2) return [];
-  return prisma.company.findMany({ where: { type: { not: "ADMIN" }, OR: [{ legalName: { contains: s, mode: "insensitive" } }, { tradeName: { contains: s, mode: "insensitive" } }, { taxId: { contains: s } }, { vatNumber: { contains: s, mode: "insensitive" } }] }, select: { id: true, legalName: true, type: true }, take: 15 });
+  return prisma.company.findMany({ where: { AND: [await (await import("@/server/services/admin-search")).adminCompanyWhere(ctx)], type: { not: "ADMIN" }, OR: [{ legalName: { contains: s, mode: "insensitive" } }, { tradeName: { contains: s, mode: "insensitive" } }, { taxId: { contains: s } }, { vatNumber: { contains: s, mode: "insensitive" } }] }, select: { id: true, legalName: true, type: true }, take: 15 });
 }
 
 // ── booking ─────────────────────────────────────────────────────────────────

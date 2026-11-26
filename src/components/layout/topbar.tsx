@@ -23,6 +23,8 @@ export type TopbarProps = {
   locales: { code: string; native: string }[];
   labels: { signOut: string; language: string; company: string; menu: string; security?: string; search?: string };
   securityHref?: string | null;
+  /** FIRINGI: the country Ctrl+K and the "find a business" boxes search in */
+  searchCountry?: { value: string; options: { code: string; name: string }[] } | null;
   cart?: { count: number; label: string } | null;
   bell?: { initialUnread: number; base: string; labels: BellLabels } | null;
   theme: { initial: ThemeChoice; labels: Record<ThemeChoice, string> };
@@ -34,6 +36,7 @@ export function Topbar(p: TopbarProps) {
   const [pending, start] = useTransition();
   // Phones: language, theme and sign-out fold into a small menu so the bar never overflows.
   const [more, setMore] = useState(false);
+  const [country, setCountry] = useState(p.searchCountry?.value ?? "");
   const pathname = usePathname();
   useEffect(() => setMore(false), [pathname]);
 
@@ -63,6 +66,19 @@ export function Topbar(p: TopbarProps) {
         <Search className="size-4 text-[var(--vivid-violet)]" /><span className="flex-1 truncate">{p.labels.search ?? "Search"}</span><span className="kbd">Ctrl K</span>
       </button>
       <button type="button" onClick={openPalette} aria-label={p.labels.search ?? "Search"} className="rounded-md p-2 hover:bg-accent lg:hidden"><Search className="size-5" /></button>
+      {p.searchCountry && p.searchCountry.options.length > 1 && (
+        <select aria-label="Search country" title="Ctrl+K and every “find a business” box search in this country"
+          className="h-8 w-20 shrink-0 rounded-md border bg-card px-1 text-sm sm:w-auto" value={country} data-testid="admin-search-country" data-saving={pending ? "1" : undefined}
+          onChange={(e) => {
+            const v = e.target.value; setCountry(v);
+            // a browser preference; the server still limits every search to this admin's countries
+            document.cookie = v ? `firingi_admin_country=${v}; path=/; max-age=31536000; samesite=lax` : "firingi_admin_country=; path=/; max-age=0; samesite=lax";
+            start(() => router.refresh());
+          }}>
+          <option value="">All countries</option>
+          {p.searchCountry.options.map((c) => <option key={c.code} value={c.code}>{c.code} · {c.name}</option>)}
+        </select>
+      )}
 
       <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
         {p.bell && <NotificationBell {...p.bell} />}
