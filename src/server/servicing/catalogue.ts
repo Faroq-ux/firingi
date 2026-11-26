@@ -4,12 +4,12 @@ import "server-only";
  * schedules, unit, waste code, documents, prices and who invoices the customer) and the providers FIRINGI approves
  * (suppliers on FIRINGI, or FIRINGI itself) with their licence, countries and invoicing / commission.
  */
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import Decimal from "decimal.js";
 import { prisma } from "@/server/db";
 import type { Ctx } from "@/server/context";
 import { can } from "@/server/rbac/guard";
-import { ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
+import { AppError, ForbiddenError, NotFoundError, ValidationError } from "@/server/errors";
 import { writeAudit } from "@/server/services/audit";
 import { BUILT_IN_NAMES, BUILT_IN_SERVICES, FREQUENCIES, INVOICED_BY, SERVICE_UNITS, type Frequency, type InvoicedBy, type Pricing } from "@/lib/services";
 import { providerOn, servicesSettings } from "./settings";
@@ -73,7 +73,7 @@ export async function saveType(ctx: Ctx, id: string | null, i: TypeInput) {
   if (id && !before) throw new NotFoundError("Service");
   const name = { ...((before?.name as Record<string, string>) ?? {}), en: i.name.trim().slice(0, 120), ...(i.namePt?.trim() ? { "pt-PT": i.namePt.trim().slice(0, 120) } : {}) };
   const data = {
-    name, description: i.description?.trim() ? { en: i.description.trim().slice(0, 1000) } : undefined, kind: i.kind, allowExtras: i.kind === "VISIT" && !!i.allowExtras, unit: i.unit, isOil: i.isOil, wasteCode: i.wasteCode?.trim() || null, needsDocument: i.needsDocument,
+    name, description: i.description?.trim() ? { ...((before?.description as Record<string, string> | null) ?? {}), en: i.description.trim().slice(0, 1000) } : undefined, kind: i.kind, allowExtras: i.kind === "VISIT" && !!i.allowExtras, unit: i.unit, isOil: i.isOil, wasteCode: i.wasteCode?.trim() || null, needsDocument: i.needsDocument,
     frequencies: freq, feeNet: i.feeNet, pricePerUnit: i.pricePerUnit, buybackPerUnit: i.buybackPerUnit, providerPerVisit: i.providerPerVisit, providerPerUnit: i.providerPerUnit,
     invoicedBy: i.invoicedBy, commissionPct: i.commissionPct, commissionPerVisit: i.commissionPerVisit, commissionPerUnit: i.commissionPerUnit,
     countries: [...new Set(i.countries.map((c) => c.trim().toUpperCase()).filter((c) => /^[A-Z]{2}$/.test(c)))], active: i.active,
@@ -101,7 +101,9 @@ export async function listProviders(ctx: Ctx, f: { serviceTypeId?: string; statu
 /** A supplier asks to provide a service (FIRINGI approves). */
 export async function applyProvider(ctx: Ctx, i: { serviceTypeId: string; countries: string[]; licenceNumber?: string | null; licenceExpiresAt?: Date | null; note?: string | null }) {
   if (isStaff(ctx) || !can(ctx, "vendor.services.manage")) throw new ForbiddenError();
-  if (!providerOn(await servicesSettings(), ctx.company)) throw new ForbiddenError("FIRINGI hasn't opened services to your company.");
+  const settings = await servicesSettings();
+  if (!settings.selfApply) throw new ForbiddenError("FIRINGI adds service providers itself — contact FIRINGI.");
+  if (!providerOn(settings, ctx.company)) throw new ForbiddenError("FIRINGI hasn't opened services to your company.");
   const t = await prisma.serviceType.findUnique({ where: { id: i.serviceTypeId } });
   if (!t || !t.active) throw new NotFoundError("Service");
   if (t.needsDocument && !i.licenceNumber?.trim()) throw new ValidationError("This service needs a licence number (waste operator / pest control licence).");
@@ -138,6 +140,91 @@ export async function decideProvider(ctx: Ctx, id: string, i: { approve: boolean
     await notify("service.provider_decided", [{ companyId: p.companyId, link: "/vendor/services" }], { decision: status, note: i.note ?? "" }).catch(() => null);
   }
   return u;
+}
+
+/**
+ * FIRINGI adds a provider itself (no application): a supplier on FIRINGI (distributor / wholesaler) for a service,
+ * the countries it covers, its licence, and — if not the service's — who invoices and the commission. Approved at once.
+ */
+export async function addProvider(ctx: Ctx, i: { companyId: string; serviceTypeId: string; countries: string[]; licenceNumber?: string | null; licenceExpiresAt?: Date | null; invoicedBy?: string | null; commissionPct?: number | null; note?: string | null }) {
+  assertStaff(ctx, true);
+  const [t, co, s] = await Promise.all([prisma.serviceType.findUnique({ where: { id: i.serviceTypeId } }), prisma.company.findUnique({ where: { id: i.companyId }, select: { id: true, type: true, legalName: true, tradeName: true, country: { select: { code: true } } } }), servicesSettings()]);
+  if (!t) throw new NotFoundError("Service");
+  if (!co) throw new NotFoundError("Business");
+  if (co.type === "ADMIN") return addFiringiProvider(ctx, i.serviceTypeId, i.countries);
+  if (co.type !== "DISTRIBUTOR" && co.type !== "WHOLESALER") throw new ValidationError("Providers are suppliers on FIRINGI (distributors or wholesalers) — or FIRINGI itself.");
+  if (!providerOn(s, { id: co.id, type: co.type })) throw new ValidationError("Services are switched off for this business — turn its type on in Settings, or set the business to Always on.");
+  if (t.needsDocument && !i.licenceNumber?.trim()) throw new ValidationError("This service needs the provider's licence number.");
+  if (i.invoicedBy && !(INVOICED_BY as readonly string[]).includes(i.invoicedBy)) throw new ValidationError("Choose who invoices the customer.");
+  if (i.commissionPct != null && !(i.commissionPct >= 0 && i.commissionPct <= 100)) throw new ValidationError("Commission: 0 to 100 %.");
+  const countries = [...new Set(i.countries.map((c) => c.trim().toUpperCase()).filter((c) => /^[A-Z]{2}$/.test(c)))];
+  if (!countries.length) countries.push(co.country.code);
+  const data = {
+    status: "APPROVED", countries, licenceNumber: i.licenceNumber?.trim() || null, licenceExpiresAt: i.licenceExpiresAt ?? null, note: i.note?.trim().slice(0, 500) || null,
+    invoicedBy: i.invoicedBy || null, commissionPct: i.commissionPct == null ? null : new Decimal(i.commissionPct), decidedById: ctx.user.id, decidedAt: new Date(), decisionNote: null,
+  };
+  const p = await prisma.serviceProvider.upsert({
+    where: { companyId_serviceTypeId: { companyId: co.id, serviceTypeId: t.id } }, update: data,
+    create: { ...data, companyId: co.id, serviceTypeId: t.id, createdById: ctx.user.id },
+  });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "services.provider_added", entityType: "ServiceProvider", entityId: p.id, after: { companyId: co.id, serviceTypeId: t.id, countries, invoicedBy: p.invoicedBy, commissionPct: p.commissionPct?.toString() ?? null } });
+  const { notify } = await import("@/server/notify/dispatch");
+  await notify("service.provider_decided", [{ companyId: co.id, link: "/vendor/services" }], { decision: "APPROVED", note: `${String((t.name as Record<string, string>).en ?? t.code)}${i.note ? ` — ${i.note}` : ""}` }).catch(() => null);
+  return p;
+}
+
+// ── names in every language ─────────────────────────────────────────────────
+
+/** FIRINGI's corrections of a service's name and description, per language (empty = not set). */
+export async function saveTypeTexts(ctx: Ctx, id: string, i: { names: Record<string, string>; descriptions: Record<string, string> }) {
+  assertStaff(ctx, true);
+  const { UI_LOCALES } = await import("@/i18n/config");
+  const t = await prisma.serviceType.findUnique({ where: { id } });
+  if (!t) throw new NotFoundError("Service");
+  const clean = (m: Record<string, string>, max: number) => Object.fromEntries(Object.entries(m).filter(([k, v]) => (UI_LOCALES as readonly string[]).includes(k) && v.trim()).map(([k, v]) => [k, v.trim().slice(0, max)]));
+  const names = clean(i.names, 120), descriptions = clean(i.descriptions, 1000);
+  if (!names.en) throw new ValidationError("The English name is needed.");
+  const u = await prisma.serviceType.update({ where: { id }, data: { name: names, description: Object.keys(descriptions).length ? descriptions : Prisma.DbNull } });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "services.type_texts", entityType: "ServiceType", entityId: id, before: { name: t.name, description: t.description } as unknown as Prisma.InputJsonValue, after: { name: names, description: descriptions } as unknown as Prisma.InputJsonValue });
+  return u;
+}
+
+/** The AI translates the English name and description into the other 24 languages (FIRINGI's own texts are kept unless `overwrite`). */
+export async function translateType(ctx: Ctx, id: string, overwrite = false) {
+  assertStaff(ctx, true);
+  const { UI_LOCALES } = await import("@/i18n/config");
+  const t = await prisma.serviceType.findUnique({ where: { id } });
+  if (!t) throw new NotFoundError("Service");
+  const names = { ...((t.name ?? {}) as Record<string, string>) }, descs = { ...((t.description ?? {}) as Record<string, string>) };
+  const en = { name: names.en ?? t.code, description: descs.en ?? "" };
+  const want = UI_LOCALES.filter((l) => l !== "en" && (overwrite || !names[l] || (en.description && !descs[l])));
+  if (!want.length) return { translated: 0, missing: [] as string[] };
+  const { aiSettings, aiTransport } = await import("@/server/ai/assistant");
+  const governed = (await (await import("@/server/ai/ops/governance")).governance()).enabled;
+  const transport = aiTransport();
+  const simulating = process.env.ASSISTANT_SIMULATE === "1" && !process.env.ANTHROPIC_API_KEY && process.env.FIRINGI_ENV !== "production";
+  let out: Record<string, { name: string; description?: string }> = {};
+  if (transport && governed) {
+    const settings = await aiSettings();
+    const res = await transport({
+      model: settings.model, max_tokens: 4000,
+      system: "Translate the name and description of a service offered to restaurants and shops on a B2B wholesale marketplace (FIRINGI) into each requested language. Short, natural trade terms; keep brand names and \"FIRINGI\" as they are. pt-PT is European Portuguese.",
+      tools: [{ name: "translations", description: "One entry per language code.", input_schema: { type: "object", properties: { items: { type: "array", items: { type: "object", properties: { locale: { type: "string" }, name: { type: "string" }, description: { type: "string" } }, required: ["locale", "name"] } } }, required: ["items"] } } as never],
+      tool_choice: { type: "tool", name: "translations" },
+      messages: [{ role: "user", content: JSON.stringify({ languages: want, name: en.name, description: en.description }) }],
+    });
+    const call = res.content.find((b: { type: string }) => b.type === "tool_use") as { input?: { items?: { locale: string; name: string; description?: string }[] } } | undefined;
+    for (const x of call?.input?.items ?? []) if (want.includes(x.locale as never) && typeof x.name === "string" && x.name.trim()) out[x.locale] = { name: x.name.trim().slice(0, 120), description: x.description?.trim().slice(0, 1000) };
+  } else if (simulating) {
+    out = Object.fromEntries(want.map((l) => [l, { name: `${en.name} (${l})`, description: en.description ? `${en.description} (${l})` : undefined }]));
+  } else throw new AppError("AI_OFF", "AI isn't available — type the names in each language instead.");
+  for (const [l, v] of Object.entries(out)) {
+    if (overwrite || !names[l]) names[l] = v.name;
+    if (v.description && (overwrite || !descs[l])) descs[l] = v.description;
+  }
+  await prisma.serviceType.update({ where: { id }, data: { name: names, ...(Object.keys(descs).length ? { description: descs } : {}) } });
+  await writeAudit({ actorUserId: ctx.user.id, actorCompanyId: ctx.company.id, action: "services.type_translated", entityType: "ServiceType", entityId: id, after: { languages: Object.keys(out) } });
+  return { translated: Object.keys(out).length, missing: want.filter((l) => !out[l]) };
 }
 
 /** FIRINGI provides a service itself (its own fleet / team): approved at once. */

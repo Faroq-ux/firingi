@@ -1,13 +1,13 @@
 "use client";
 /** FIRINGI's Services admin (Phase 68, English): catalogue, providers, plans, money and settings. */
 import { useEffect, useState } from "react";
-import { Check, FileText, Pencil, Plus, Save, ShieldOff, UserPlus, X } from "lucide-react";
+import { Check, FileText, Pencil, Plus, Save, ShieldOff, Sparkles, UserPlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
 import { Msg, Spin, useRun } from "@/components/shared/run";
 import {
   addFiringiProviderAction, decideProviderAction, invoiceServiceCommissionsAction, markServicePaidAction, reassignServicePlanAction, saveServiceTypeAction,
-  saveServicesSettingsAction, setCompanyServicesAction,
+  saveServicesSettingsAction, setCompanyServicesAction, addServiceProviderAction, saveServiceTextsAction, translateServiceTypeAction,
 } from "@/server/actions/services";
 import { findTenderBusinessAction } from "@/server/actions/tenders";
 import type { ServicesSettings } from "@/server/servicing/settings";
@@ -185,6 +185,7 @@ export function ServicesSettingsForm({ initial }: { initial: ServicesForm }) {
           <Box label="Distributors" checked={s.providers.distributors} onChange={(v) => set("providers", { ...s.providers, distributors: v })} testid="svs-prov-distributors" />
           <Box label="Wholesalers" checked={s.providers.wholesalers} onChange={(v) => set("providers", { ...s.providers, wholesalers: v })} testid="svs-prov-wholesalers" />
           <Box label="FIRINGI itself" checked={s.providers.firingi} onChange={(v) => set("providers", { ...s.providers, firingi: v })} testid="svs-prov-firingi" />
+          <Box label="Suppliers may apply to provide services" hint="Off: only FIRINGI adds providers (Providers tab)." checked={s.selfApply} onChange={(v) => set("selfApply", v)} testid="svs-self-apply" />
         </div>
         <div className="space-y-2 lg:col-span-2"><h3 className="text-sm font-semibold">Parts</h3>
           <div className="grid gap-2 sm:grid-cols-2">{(Object.keys(PARTS) as (keyof ServicesForm["parts"])[]).map((k) => <Box key={k} label={PARTS[k][0]} hint={PARTS[k][1]} checked={s.parts[k]} onChange={(v) => set("parts", { ...s.parts, [k]: v })} testid={`svs-part-${k}`} />)}</div>
@@ -235,6 +236,77 @@ export function FindServicesBusiness() {
     <div className="space-y-2">
       <Input placeholder="Find a business by name or NIF…" value={q} onChange={(e) => setQ(e.target.value)} data-testid="svs-find" />
       {hits.length > 0 && <ul className="divide-y rounded-lg border">{hits.map((h) => <li key={h.id} className="flex flex-wrap items-center gap-2 px-3 py-2 text-sm"><span className="min-w-0 flex-1 break-words">{h.name} <span className="text-xs text-muted-foreground">· {h.type.toLowerCase()}</span></span><CompanyServicesSwitch companyId={h.id} state="DEFAULT" /></li>)}</ul>}
+    </div>
+  );
+}
+
+// ── providers added by FIRINGI ──────────────────────────────────────────────
+
+export function AddProvider({ types }: { types: { id: string; name: string; needsDocument: boolean }[] }) {
+  const { pending, error, done, run } = useRun();
+  const [q, setQ] = useState(""), [hits, setHits] = useState<{ id: string; name: string; type: string; countryCode?: string }[]>([]);
+  const [co, setCo] = useState<{ id: string; name: string } | null>(null);
+  const [v, setV] = useState({ serviceTypeId: types[0]?.id ?? "", countries: "", licenceNumber: "", licenceExpiresAt: "", invoicedBy: "", commissionPct: "", note: "" });
+  useEffect(() => {
+    if (q.trim().length < 2 || co) { setHits([]); return; }
+    const t = setTimeout(async () => { const r = await findTenderBusinessAction({ q }); if (r.ok) setHits((r.data as typeof hits).filter((h) => h.type === "DISTRIBUTOR" || h.type === "WHOLESALER")); }, 250);
+    return () => clearTimeout(t);
+  }, [q, co]);
+  const t = types.find((x) => x.id === v.serviceTypeId);
+  const add = () => run(() => addServiceProviderAction({ input: { companyId: co!.id, serviceTypeId: v.serviceTypeId, countries: v.countries.split(/[\s,;]+/).filter(Boolean), licenceNumber: v.licenceNumber || null, licenceExpiresAt: v.licenceExpiresAt || null, invoicedBy: v.invoicedBy || null, commissionPct: v.commissionPct === "" ? null : Number(v.commissionPct), note: v.note || null } }), () => { setCo(null); setQ(""); setV({ ...v, licenceNumber: "", licenceExpiresAt: "", note: "" }); }, "Provider added.");
+  return (
+    <div className="space-y-3" data-testid="svp-add">
+      <p className="text-sm font-medium">Add a provider</p>
+      <p className="text-xs text-muted-foreground">A supplier on FIRINGI (distributor or wholesaler) that does the service — approved at once; it records visits on its Services page. For a company outside FIRINGI, add FIRINGI itself as the provider and record the visits here.</p>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="space-y-1"><Label className="text-xs">Service</Label><Select value={v.serviceTypeId} onChange={(e) => setV({ ...v, serviceTypeId: e.target.value })} data-testid="svp-add-type">{types.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</Select></div>
+        <div className="space-y-1 sm:col-span-2 lg:col-span-3"><Label className="text-xs">Supplier</Label>
+          {co ? <div className="flex items-center gap-2 text-sm"><span className="font-medium" data-testid="svp-add-chosen">{co.name}</span><Button type="button" size="sm" variant="ghost" onClick={() => { setCo(null); setQ(""); }}>Change</Button></div>
+            : <Input placeholder="Find a supplier by name or NIF…" value={q} onChange={(e) => setQ(e.target.value)} data-testid="svp-add-find" />}
+          {!co && hits.length > 0 && <ul className="divide-y rounded-lg border">{hits.map((h) => <li key={h.id}><button type="button" className="w-full px-3 py-1.5 text-left text-sm hover:bg-muted" onClick={() => setCo({ id: h.id, name: h.name })} data-testid="svp-add-hit">{h.name} <span className="text-xs text-muted-foreground">· {h.type.toLowerCase()}</span></button></li>)}</ul>}
+        </div>
+        <div className="space-y-1"><Label className="text-xs">Countries (empty = its own)</Label><Input value={v.countries} onChange={(e) => setV({ ...v, countries: e.target.value.toUpperCase() })} placeholder="PT, ES" data-testid="svp-add-countries" /></div>
+        <div className="space-y-1"><Label className="text-xs">Licence no.{t?.needsDocument ? " *" : ""}</Label><Input value={v.licenceNumber} maxLength={60} onChange={(e) => setV({ ...v, licenceNumber: e.target.value })} data-testid="svp-add-licence" /></div>
+        <div className="space-y-1"><Label className="text-xs">Licence valid until</Label><Input type="date" value={v.licenceExpiresAt} onChange={(e) => setV({ ...v, licenceExpiresAt: e.target.value })} /></div>
+        <div className="space-y-1"><Label className="text-xs">Who invoices the customer</Label><Select value={v.invoicedBy} onChange={(e) => setV({ ...v, invoicedBy: e.target.value })} data-testid="svp-add-by"><option value="">As the service</option><option value="FIRINGI">FIRINGI</option><option value="PROVIDER">The provider (commission only)</option></Select></div>
+        <div className="space-y-1"><Label className="text-xs">Commission % (empty = the service&apos;s)</Label><Input type="number" min={0} max={100} step={0.5} value={v.commissionPct} onChange={(e) => setV({ ...v, commissionPct: e.target.value })} /></div>
+        <div className="space-y-1 sm:col-span-2 lg:col-span-3"><Label className="text-xs">Note to the provider</Label><Input value={v.note} maxLength={500} onChange={(e) => setV({ ...v, note: e.target.value })} /></div>
+      </div>
+      <div className="flex flex-wrap items-center gap-2"><Button type="button" disabled={pending || !co || !v.serviceTypeId} onClick={add} data-testid="svp-add-save"><Spin on={pending} icon={Plus} /> Add provider</Button><Msg error={error} done={done} /></div>
+    </div>
+  );
+}
+
+// ── names in every language ─────────────────────────────────────────────────
+
+const LANGS: [string, string][] = [["en", "English"], ["pt-PT", "Português"], ["es", "Español"], ["fr", "Français"], ["de", "Deutsch"], ["it", "Italiano"], ["nl", "Nederlands"], ["pl", "Polski"], ["ro", "Română"], ["cs", "Čeština"], ["sk", "Slovenčina"], ["hu", "Magyar"], ["hr", "Hrvatski"], ["sl", "Slovenščina"], ["bg", "Български"], ["el", "Ελληνικά"], ["da", "Dansk"], ["sv", "Svenska"], ["fi", "Suomi"], ["et", "Eesti"], ["lv", "Latviešu"], ["lt", "Lietuvių"], ["mt", "Malti"], ["nb", "Norsk"], ["is", "Íslenska"]];
+export function ServiceLanguages({ id, names, descriptions }: { id: string; names: Record<string, string>; descriptions: Record<string, string> }) {
+  const { pending, error, done, run } = useRun();
+  const [open, setOpen] = useState(false);
+  const [n, setN] = useState(names), [d, setD] = useState(descriptions);
+  const have = LANGS.filter(([k]) => names[k]?.trim()).length;
+  return (
+    <div className="space-y-2" data-testid="svt-langs">
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <span className={have === LANGS.length ? "text-[color:var(--success,#16a34a)]" : "text-muted-foreground"} data-testid="svt-lang-count">Languages: {have}/{LANGS.length}</span>
+        <Button type="button" size="sm" variant="outline" disabled={pending} onClick={() => run(() => translateServiceTypeAction({ id }), undefined, "Translated — check / correct below.")} data-testid="svt-translate"><Spin on={pending} icon={Sparkles} /> Translate with AI</Button>
+        <Button type="button" size="sm" variant="ghost" onClick={() => setOpen(!open)} data-testid="svt-lang-edit">{open ? "Close" : "Check / correct"}</Button>
+        <Msg error={error} done={done} />
+      </div>
+      {open && (
+        <form className={box} onSubmit={(e) => { e.preventDefault(); run(() => saveServiceTextsAction({ id, input: { names: n, descriptions: d } }), () => setOpen(false), "Saved."); }}>
+          <div className="grid gap-2">
+            {LANGS.map(([k, label]) => (
+              <div key={k} className="grid gap-2 sm:grid-cols-[8rem_1fr_2fr] sm:items-center">
+                <span className="text-xs font-medium">{label}</span>
+                <Input value={n[k] ?? ""} maxLength={120} onChange={(e) => setN({ ...n, [k]: e.target.value })} placeholder="Name" aria-label={`Name (${label})`} data-testid={`svt-name-${k}`} />
+                <Input value={d[k] ?? ""} maxLength={1000} onChange={(e) => setD({ ...d, [k]: e.target.value })} placeholder="Description" aria-label={`Description (${label})`} />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2"><Button type="submit" size="sm" disabled={pending} data-testid="svt-lang-save"><Spin on={pending} icon={Save} /> Save</Button><Msg error={error} /></div>
+        </form>
+      )}
     </div>
   );
 }

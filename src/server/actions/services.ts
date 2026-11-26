@@ -4,7 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { defineAction } from "./_action";
 import { firstIssue } from "@/server/ai/ops/parse";
-import { applySchema, doneSchema, fryerSchema, id, logSchema, planSchema, settingsSchema, typeSchema } from "@/server/servicing/schema";
+import { addProviderSchema, applySchema, doneSchema, typeTextsSchema, fryerSchema, id, logSchema, planSchema, settingsSchema, typeSchema } from "@/server/servicing/schema";
 
 const plans = () => import("@/server/servicing/plans");
 const cat = () => import("@/server/servicing/catalogue");
@@ -101,4 +101,17 @@ export const saveServicesSettingsAction = defineAction({
 export const setCompanyServicesAction = defineAction({
   permission: ["admin.services.manage", "admin.settings.manage"], schema: z.object({ companyId: id, value: z.enum(["ON", "OFF"]).nullable() }),
   handler: async (ctx, i) => { await (await import("@/server/servicing/settings")).setCompanyServices(ctx, i.companyId, i.value); return adm(ok); },
+});
+
+export const addServiceProviderAction = defineAction({
+  permission: "admin.services.manage", schema: z.object({ input: z.unknown() }),
+  handler: async (ctx, i) => { const p = await (await cat()).addProvider(ctx, firstIssue(addProviderSchema, i.input)); revalidatePath("/vendor/services"); return adm({ id: p.id }); },
+});
+export const saveServiceTextsAction = defineAction({
+  permission: "admin.services.manage", schema: z.object({ id, input: z.unknown() }),
+  handler: async (ctx, i) => { await (await cat()).saveTypeTexts(ctx, i.id, firstIssue(typeTextsSchema, i.input)); revalidatePath("/buy/services", "layout"); return adm(ok); },
+});
+export const translateServiceTypeAction = defineAction({
+  permission: "admin.services.manage", schema: z.object({ id, overwrite: z.boolean().optional() }),
+  handler: async (ctx, i) => { const r = await (await cat()).translateType(ctx, i.id, !!i.overwrite); revalidatePath("/buy/services", "layout"); return adm(r); },
 });

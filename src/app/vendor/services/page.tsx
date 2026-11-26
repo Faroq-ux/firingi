@@ -23,7 +23,8 @@ const n = (v: { toString(): string } | null | undefined) => (v == null ? 0 : Num
 export default async function VendorServicesPage() {
   const ctx = await pagePortal("vendor");
   pagePermission(ctx, ["vendor.services.manage", "vendor.services.visit"]);
-  if (!(await providerAccess(ctx.company)).on) notFound();
+  const access = await providerAccess(ctx.company);
+  if (!access.on) notFound();
   const [{ l, locale }, b, types] = await Promise.all([svLabels(), providerBoard(ctx), listTypes(ctx)]);
   const manage = can(ctx, "vendor.services.manage");
   const tname = (t: { name: unknown; code: string }) => localName(t.name, t.code, locale);
@@ -73,7 +74,7 @@ export default async function VendorServicesPage() {
               )}
             </CardContent>
           </Card>
-          {manage && canApply.length > 0 && ctx.company.type !== "ADMIN" && (
+          {manage && access.s.selfApply && canApply.length > 0 && ctx.company.type !== "ADMIN" && (
             <Card><CardHeader><CardTitle>{l.apply}</CardTitle></CardHeader><CardContent><ApplyForm l={l} types={canApply} country={ctx.company.countryCode} /></CardContent></Card>
           )}
         </div>

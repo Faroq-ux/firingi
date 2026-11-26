@@ -14,7 +14,7 @@ import { day, isoDay, money, num, schedText, statusTone } from "@/components/ser
 import { ProviderVisit } from "@/components/services/client";
 import { MarkPrintPaid } from "@/components/services/printing";
 import { adminPrint, printMoneyOpen } from "@/server/servicing/printing";
-import { AddFiringiProvider, CompanyServicesSwitch, DecideProvider, FindServicesBusiness, InvoiceCommissions, MarkPaid, ReassignPlan, ServicesSettingsForm, TypeEditor, type TypeDraft } from "@/components/services/admin";
+import { AddFiringiProvider, AddProvider, ServiceLanguages, CompanyServicesSwitch, DecideProvider, FindServicesBusiness, InvoiceCommissions, MarkPaid, ReassignPlan, ServicesSettingsForm, TypeEditor, type TypeDraft } from "@/components/services/admin";
 
 export const metadata = { title: "Services & Used Oil" };
 export const dynamic = "force-dynamic";
@@ -142,7 +142,7 @@ async function Catalogue({ ctx, manage }: { ctx: Awaited<ReturnType<typeof pageP
           <Card key={t.id} data-testid="svt-row" data-code={t.code}>
             <CardHeader>
               <CardTitle className="flex flex-wrap items-center gap-2"><span className="min-w-0 break-words">{tname(t)}</span><span className="text-xs font-normal text-muted-foreground">{t.code}</span>{!t.active && <Badge variant="secondary">off</Badge>}</CardTitle>
-              <CardDescription>{t.kind === "COLLECTION" ? `Collection · ${t.unit}` : "Visit"}{t.wasteCode ? ` · LER ${t.wasteCode}` : ""} · {t.frequencies.map((f) => f.toLowerCase().replace("_", " ")).join(", ")}{t.countries.length ? ` · ${t.countries.join(", ")}` : ""}</CardDescription>
+              <CardDescription>{t.kind === "COLLECTION" ? `Collection · ${t.unit}` : t.kind === "PRINT" ? "Printing" : "Visit"}{t.wasteCode ? ` · LER ${t.wasteCode}` : ""} · {t.frequencies.map((f) => f.toLowerCase().replace("_", " ")).join(", ")}{t.countries.length ? ` · ${t.countries.join(", ")}` : ""}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p data-testid="svt-by" data-by={t.invoicedBy}><Badge variant={t.invoicedBy === "PROVIDER" ? "warning" : "default"}>{t.invoicedBy === "PROVIDER" ? "Provider invoices · commission" : "FIRINGI invoices"}</Badge></p>
@@ -151,6 +151,7 @@ async function Catalogue({ ctx, manage }: { ctx: Awaited<ReturnType<typeof pageP
                 {t.invoicedBy === "PROVIDER" ? ` · commission ${n(t.commissionPct)}%${n(t.commissionPerVisit) > 0 ? ` + ${money("en", n(t.commissionPerVisit))}/visit` : ""}${n(t.commissionPerUnit) > 0 ? ` + ${money("en", n(t.commissionPerUnit))}/${t.unit}` : ""}` : ` · provider ${money("en", n(t.providerPerVisit))}/visit${n(t.providerPerUnit) > 0 ? ` + ${money("en", n(t.providerPerUnit))}/${t.unit}` : ""}`}
               </p>
               <p className="text-xs text-muted-foreground">{t._count.plans} active plans · {t._count.providers} approved providers</p>
+              {manage && <ServiceLanguages key={t.updatedAt.toISOString()} id={t.id} names={(t.name ?? {}) as Record<string, string>} descriptions={(t.description ?? {}) as Record<string, string>} />}
               {manage && <TypeEditor id={t.id} initial={draft(t)} />}
             </CardContent>
           </Card>
@@ -164,9 +165,9 @@ async function Providers({ ctx, manage, rows }: { ctx: Awaited<ReturnType<typeof
   const types = await listTypes(ctx, { all: true });
   return (
     <div className="space-y-4">
-      {manage && <Card><CardContent className="pt-6"><AddFiringiProvider types={types.map((t) => ({ id: t.id, name: tname(t) }))} /></CardContent></Card>}
+      {manage && <Card><CardContent className="space-y-6 pt-6"><AddProvider types={types.map((t) => ({ id: t.id, name: tname(t), needsDocument: t.needsDocument }))} /><AddFiringiProvider types={types.map((t) => ({ id: t.id, name: tname(t) }))} /></CardContent></Card>}
       <Card>
-        <CardHeader><CardTitle>Providers</CardTitle><CardDescription>Suppliers apply from their Services page; FIRINGI approves, sets who invoices the customer and the commission.</CardDescription></CardHeader>
+        <CardHeader><CardTitle>Providers</CardTitle><CardDescription>FIRINGI adds the providers (or provides a service itself) and sets who invoices the customer and the commission. Suppliers can only apply themselves if Settings allows it.</CardDescription></CardHeader>
         <CardContent>
           {!rows.length ? <p className="text-sm text-muted-foreground">No providers yet.</p> : (
             <ul className="divide-y">

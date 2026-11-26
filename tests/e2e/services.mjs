@@ -50,6 +50,8 @@ const cleanup = () => {
   sql(`delete from "ServiceProvider" where "companyId"='${AT}'`);
   sql(`delete from "ServiceType" where code='DRAIN_E2E'`);
   sql(`delete from "Setting" where key='services.settings'`);
+  // this test lets suppliers apply themselves (off by default: FIRINGI adds providers)
+  sql(`insert into "Setting" (id, scope, "scopeId", key, value, "updatedAt") values ('e2e-svs', 'GLOBAL', '', 'services.settings', '{"selfApply": true}', now())`);
 };
 cleanup();
 try {

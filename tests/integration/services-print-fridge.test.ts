@@ -26,6 +26,7 @@ async function clean() {
   if (kbId) await prisma.shelfLabel.deleteMany({ where: { companyId: kbId } });
 }
 beforeAll(async () => {
+  process.env.ASSISTANT_SIMULATE = "1"; // the AI translation without a key
   kbId = (await ctxFor(KB)).company.id;
   await clean();
   await Cat.ensureBuiltIns();
@@ -33,8 +34,7 @@ beforeAll(async () => {
   printId = (await prisma.serviceType.findUniqueOrThrow({ where: { code: "PRINTING" } })).id;
   const at = await ctxFor(AT), admin = await ctxFor(ADMIN);
   for (const [t, lic] of [[fridgeId, "F-GAS-123"], [printId, null]] as const) {
-    const p = await Cat.applyProvider(at, { serviceTypeId: t, countries: ["PT"], licenceNumber: lic, licenceExpiresAt: lic ? new Date(Date.now() + 400 * DAY) : null });
-    await Cat.decideProvider(admin, p.id, { approve: true });
+    await Cat.addProvider(admin, { companyId: at.company.id, serviceTypeId: t, countries: ["PT"], licenceNumber: lic, licenceExpiresAt: lic ? new Date(Date.now() + 400 * DAY) : null });
   }
 });
 afterAll(clean);
@@ -57,6 +57,44 @@ describe("refrigeration maintenance & repair", () => {
     const h = mine.history.find((x) => x.id === v.id)!;
     expect(h.extrasNet).toBe(120);
     expect(JSON.stringify(h)).not.toMatch(/providerAmount|commission/);
+  });
+});
+
+describe("providers added by FIRINGI; names in every language", () => {
+  it("FIRINGI adds a supplier as provider (approved at once); licence needed where the service needs it; not a customer", async () => {
+    const admin = await ctxFor(ADMIN), at = await ctxFor(AT), kb = await ctxFor(KB);
+    const p = await prisma.serviceProvider.findUniqueOrThrow({ where: { companyId_serviceTypeId: { companyId: at.company.id, serviceTypeId: fridgeId } } });
+    expect(p.status).toBe("APPROVED");
+    await expect(Cat.addProvider(admin, { companyId: kb.company.id, serviceTypeId: printId, countries: [] })).rejects.toThrow(/suppliers/);
+    const lx = await ctxFor(LX);
+    await expect(Cat.addProvider(admin, { companyId: lx.company.id, serviceTypeId: fridgeId, countries: [] })).rejects.toThrow(/licence/);
+    const q = await Cat.addProvider(admin, { companyId: lx.company.id, serviceTypeId: printId, countries: [], invoicedBy: "PROVIDER", commissionPct: 9 });
+    expect(q.countries).toEqual(["PT"]);
+    expect(q.invoicedBy).toBe("PROVIDER");
+    await expect(Cat.addProvider(at, { companyId: lx.company.id, serviceTypeId: printId, countries: [] })).rejects.toThrow();
+    await prisma.serviceProvider.delete({ where: { id: q.id } });
+  });
+  it("a new service: AI translates the name into the 24 other languages; FIRINGI corrects one; customers see their language", async () => {
+    const admin = await ctxFor(ADMIN);
+    const t = await Cat.saveType(admin, null, { code: "DRAIN_CLEANING", name: "Drain cleaning", description: "Kitchen drains unblocked", kind: "VISIT", unit: "VISIT", isOil: false, needsDocument: false, frequencies: ["ON_REQUEST"], feeNet: 80, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 60, providerPerUnit: 0, invoicedBy: "FIRINGI", commissionPct: 15, commissionPerVisit: 0, commissionPerUnit: 0, countries: [], active: true });
+    try {
+      const r = await Cat.translateType(admin, t.id);
+      expect(r.translated).toBe(24);
+      let row = await prisma.serviceType.findUniqueOrThrow({ where: { id: t.id } });
+      expect(Object.keys(row.name as object).length).toBe(25);
+      const names = { ...(row.name as Record<string, string>), "pt-PT": "Desentupimento de esgotos" };
+      await Cat.saveTypeTexts(admin, t.id, { names, descriptions: row.description as Record<string, string> });
+      expect((await Cat.translateType(admin, t.id)).translated).toBe(0); // nothing missing; FIRINGI's own text kept
+      row = await prisma.serviceType.findUniqueOrThrow({ where: { id: t.id } });
+      expect((row.name as Record<string, string>)["pt-PT"]).toBe("Desentupimento de esgotos");
+      // editing the English name keeps the other languages
+      await Cat.saveType(admin, t.id, { code: "DRAIN_CLEANING", name: "Drain & pipe cleaning", description: "Kitchen drains unblocked", kind: "VISIT", unit: "VISIT", isOil: false, needsDocument: false, frequencies: ["ON_REQUEST"], feeNet: 80, pricePerUnit: 0, buybackPerUnit: 0, providerPerVisit: 60, providerPerUnit: 0, invoicedBy: "FIRINGI", commissionPct: 15, commissionPerVisit: 0, commissionPerUnit: 0, countries: [], active: true });
+      row = await prisma.serviceType.findUniqueOrThrow({ where: { id: t.id } });
+      expect(Object.keys(row.name as object).length).toBe(25);
+      expect(Object.keys(row.description as object).length).toBe(25);
+      const mine = await Plans.myServices(await ctxFor(KB), new Date(), "pt-PT");
+      expect(mine.types.find((x) => x.id === t.id)?.name).toBe("Desentupimento de esgotos");
+    } finally { await prisma.serviceType.delete({ where: { id: t.id } }); }
   });
 });
 

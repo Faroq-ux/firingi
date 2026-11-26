@@ -247,7 +247,7 @@ export async function myServices(ctx: Ctx, now = new Date(), locale = "en") {
     types: types.map((t) => {
       const pr = pricingOf(t);
       return {
-        id: t.id, code: t.code, name: ln(t), description: String((t.description as Record<string, string> | null)?.en ?? ""), kind: t.kind, allowExtras: t.allowExtras, unit: t.unit, isOil: t.isOil, wasteCode: t.wasteCode, frequencies: t.frequencies,
+        id: t.id, code: t.code, name: ln(t), description: t.description ? localName(t.description, "", locale) : "", kind: t.kind, allowExtras: t.allowExtras, unit: t.unit, isOil: t.isOil, wasteCode: t.wasteCode, frequencies: t.frequencies,
         feeNet: pr.feeNet, pricePerUnit: pr.pricePerUnit, buybackPerUnit: s.parts.buyback ? pr.buybackPerUnit : 0, invoicedBy: pr.invoicedBy,
         available: providers.some((p) => p.serviceTypeId === t.id && (!p.countries.length || p.countries.includes(ctx.company.countryCode))), planId: plans.find((p) => p.serviceTypeId === t.id)?.id ?? null,
       };

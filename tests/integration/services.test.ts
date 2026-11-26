@@ -45,6 +45,9 @@ afterAll(async () => { await clean(); });
 describe("Services & used oil", () => {
   it("a supplier applies, FIRINGI approves (who invoices: per service, or the provider's own)", async () => {
     const at = await ctxFor(AT), admin = await ctxFor(ADMIN);
+    // suppliers may only apply when FIRINGI allows it
+    await expect(Cat.applyProvider(at, { serviceTypeId: oilId, countries: ["PT"], licenceNumber: "X" })).rejects.toThrow(/FIRINGI adds/);
+    await saveServicesSettings(admin, { selfApply: true });
     await expect(Cat.applyProvider(at, { serviceTypeId: oilId, countries: ["PT"] })).rejects.toThrow(/licence/);
     const oilP = await Cat.applyProvider(at, { serviceTypeId: oilId, countries: ["PT"], licenceNumber: "APA-123", licenceExpiresAt: new Date(Date.now() + 400 * DAY) });
     const pestP = await Cat.applyProvider(at, { serviceTypeId: pestId, countries: ["PT"], licenceNumber: "DGAV-9" });

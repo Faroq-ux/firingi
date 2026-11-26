@@ -18,6 +18,8 @@ export type ServicesSettings = {
   enabled: boolean;
   audiences: { customers: boolean; wholesalers: boolean };
   providers: { distributors: boolean; wholesalers: boolean; firingi: boolean };
+  /** suppliers may ask to provide a service themselves (off: only FIRINGI adds providers) */
+  selfApply: boolean;
   parts: { scheduled: boolean; onRequest: boolean; oil: boolean; invoicing: boolean; buyback: boolean; documents: boolean; ai: boolean };
   oil: OilRules;
   /** a reminder this many hours before a visit */
@@ -35,6 +37,7 @@ export const DEFAULT_SERVICES: ServicesSettings = {
   enabled: true,
   audiences: { customers: true, wholesalers: true },
   providers: { distributors: true, wholesalers: true, firingi: true },
+  selfApply: false,
   parts: { scheduled: true, onRequest: true, oil: true, invoicing: true, buyback: true, documents: true, ai: true },
   oil: DEFAULT_OIL, reminderHours: 24, missedAfterHours: 24, daysAhead: 35, requestLeadDays: 1, companies: {},
 };
@@ -45,6 +48,7 @@ export function mergeServices(v: Partial<ServicesSettings> | null | undefined): 
     enabled: s.enabled ?? d.enabled,
     audiences: { ...d.audiences, ...(s.audiences ?? {}) },
     providers: { ...d.providers, ...(s.providers ?? {}) },
+    selfApply: typeof s.selfApply === "boolean" ? s.selfApply : d.selfApply,
     parts: { ...d.parts, ...(s.parts ?? {}) },
     oil: { changeDays: int(s.oil?.changeDays, d.oil.changeDays, 1, 60), warnPolarPct: int(s.oil?.warnPolarPct, d.oil.warnPolarPct, 5, 40), maxPolarPct: int(s.oil?.maxPolarPct, d.oil.maxPolarPct, 10, 40), fullPct: int(s.oil?.fullPct, d.oil.fullPct, 30, 100) },
     reminderHours: int(s.reminderHours, d.reminderHours, 1, 168), missedAfterHours: int(s.missedAfterHours, d.missedAfterHours, 1, 168),

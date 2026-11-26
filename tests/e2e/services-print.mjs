@@ -53,11 +53,43 @@ try {
   const a = await login("superadmin@firingi.test", { locale: "en-GB" });
   await go(a, "/admin/services?tab=CATALOGUE");
   check("built-in refrigeration + printing services", !!typeId("FRIDGE_SERVICE") && !!typeId("PRINTING"));
-  for (const code of ["PRINTING", "FRIDGE_SERVICE"]) {
-    sql(`insert into "ServiceProvider" (id, "companyId", "serviceTypeId", status, countries, "licenceNumber", "createdAt", "updatedAt") values ('e2e'||md5(random()::text), '${AT}', '${typeId(code)}', 'APPROVED', '{PT}', 'E2E-1', now(), now()) on conflict ("companyId", "serviceTypeId") do update set status='APPROVED', "invoicedBy"=null`);
-  }
   clean();
-  await shot(a, "01-admin-catalogue", true);
+  sql(`delete from "ServiceProvider" where "companyId"='${AT}' and "serviceTypeId" in ('${typeId("PRINTING")}', '${typeId("FRIDGE_SERVICE")}')`);
+  // suppliers can't apply themselves (FIRINGI adds providers)
+  const v0 = await login("owner@atlantico.test");
+  await go(v0, "/vendor/services");
+  check("supplier: no apply form", (await v0.locator("[data-testid=pv-apply]").count()) === 0);
+  await v0.context().close();
+  // FIRINGI adds Atlântico as provider of Printing and of Refrigeration (licence)
+  await go(a, "/admin/services?tab=PROVIDERS");
+  for (const [code, lic] of [["PRINTING", ""], ["FRIDGE_SERVICE", "F-GAS-E2E"]]) {
+    await a.getByTestId("svp-add-type").selectOption(typeId(code));
+    await a.getByTestId("svp-add-find").fill("Atl");
+    await until(async () => (await a.getByTestId("svp-add-hit").count()) > 0, 20000);
+    await tap(a, a.getByTestId("svp-add-hit").first());
+    if (lic) await a.getByTestId("svp-add-licence").fill(lic);
+    await tap(a, "[data-testid=svp-add-save]");
+    check(`provider added by FIRINGI (${code})`, await until(async () => sql(`select status from "ServiceProvider" where "companyId"='${AT}' and "serviceTypeId"='${typeId(code)}'`) === "APPROVED"));
+    await go(a, "/admin/services?tab=PROVIDERS");
+  }
+  await shot(a, "01-admin-add-provider", true);
+  // a new service, translated by AI into all languages
+  sql(`delete from "ServiceType" where code='E2E_DRAIN'`);
+  await go(a, "/admin/services?tab=CATALOGUE");
+  await tap(a, "[data-testid=svt-new]");
+  await a.getByTestId("svt-code").fill("E2E_DRAIN"); await a.getByTestId("svt-name").fill("Drain cleaning");
+  await a.getByTestId("svt-freq-ON_REQUEST").check();
+  await tap(a, "[data-testid=svt-save]");
+  await until(async () => sql(`select count(*) from "ServiceType" where code='E2E_DRAIN'`) === "1");
+  await go(a, "/admin/services?tab=CATALOGUE");
+  const drain = a.locator("[data-testid=svt-row][data-code=E2E_DRAIN]");
+  check("new service: 1 language", /1\/25/.test(await drain.getByTestId("svt-lang-count").innerText()));
+  await tap(a, drain.getByTestId("svt-translate"));
+  check("AI translated into 25 languages", await until(async () => sql(`select count(*) from jsonb_object_keys((select name from "ServiceType" where code='E2E_DRAIN'))`) === "25"));
+  await go(a, "/admin/services?tab=CATALOGUE");
+  await tap(a, a.locator("[data-testid=svt-row][data-code=E2E_DRAIN]").getByTestId("svt-lang-edit"));
+  await shot(a, "01b-admin-languages", true);
+  sql(`delete from "ServiceType" where code='E2E_DRAIN'`);
 
   // 1. print supplier adds products
   const v = await login("owner@atlantico.test");
@@ -161,7 +193,7 @@ try {
   console.log("✘ crashed —", e.message); failures++;
 } finally {
   await browser.close();
-  try { clean(); sql(`delete from "ServiceProvider" where "companyId"='${AT}' and "licenceNumber"='E2E-1'`); } catch (e) { console.log("cleanup:", e.message); }
+  try { clean(); sql(`delete from "ServiceProvider" where "companyId"='${AT}' and "serviceTypeId" in ('${typeId("PRINTING")}', '${typeId("FRIDGE_SERVICE")}')`); sql(`delete from "ServiceType" where code='E2E_DRAIN'`); } catch (e) { console.log("cleanup:", e.message); }
 }
 console.log(failures ? `\n${failures} failed` : "\nall passed");
 process.exit(failures ? 1 : 0);

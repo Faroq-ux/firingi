@@ -96,3 +96,20 @@ the monthly commission invoice (hourly job on the 1st, or "Invoice commissions n
 
 Code: `src/lib/printing.ts`, `src/server/servicing/printing.ts`, `src/components/services/printing.tsx`.
 Tests: `tests/unit/printing.test.ts`, `tests/integration/services-print-fridge.test.ts`, `node tests/e2e/services-print.mjs`.
+
+## Providers are added by FIRINGI
+
+Suppliers don't apply by themselves (Settings › "Suppliers may apply to provide services" is **off** by default; the
+vendor Services page then shows no "Offer a service" form). FIRINGI adds providers on **Providers › Add a provider**:
+the service, a supplier on FIRINGI (distributor or wholesaler — found by name or NIF), the countries it covers (empty =
+its own), its licence (required where the service needs one) and expiry, who invoices the customer and the commission
+(empty = the service's), a note. The provider is approved at once and told; it records its visits / print orders on its
+Services page. For a company outside FIRINGI, add **FIRINGI itself** as the provider and record the visits from the
+admin side. Providers can be suspended or have their terms changed at any time (Terms / Suspend).
+
+## Service names in every language
+
+Each service in the Catalogue shows "Languages: n/25". **Translate with AI** fills the missing languages from the
+English name and description (FIRINGI's own texts are kept); **Check / correct** opens all 25 languages to edit and save.
+Customers and providers see the name and description in their language (English if missing). Editing the English name
+in the service form keeps the other languages.

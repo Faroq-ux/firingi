@@ -822,6 +822,8 @@ shelf labels with their prices (per item + setup, minimum quantities) or "price 
 files, accept quotes, and get it delivered or pick it up — or send their shelf labels straight from the labels page.
 **Refrigeration maintenance & repair**: plans every 3 or 6 months (new schedules for all services) or repairs on request,
 with parts & labour added by the technician. FIRINGI decides who invoices and its commission (hidden from customers).
+FIRINGI adds new services itself (names translated into 25 languages by AI, correctable) and **adds the providers itself**
+— a supplier on FIRINGI or FIRINGI's own team; suppliers can't apply unless FIRINGI switches that on.
 Details: [docs/services.md](docs/services.md). Tests: `tests/unit/printing.test.ts`,
 `tests/integration/services-print-fridge.test.ts`, `node tests/e2e/services-print.mjs`.
 
