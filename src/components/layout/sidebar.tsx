@@ -95,8 +95,8 @@ export function Sidebar({ nav, title, subtitle, soonLabel, collapsed = false, on
         {onCollapse && <button type="button" onClick={() => onCollapse(true)} title={t("collapse")} aria-label={t("collapse")} className="hidden rounded-lg p-1.5 text-sidebar-muted hover:bg-white/10 hover:text-white lg:block" data-testid="sidebar-collapse"><PanelLeftClose className="size-4" /></button>}
       </div>
       <div className="px-2.5 pb-1.5">
-        <button type="button" onClick={openPalette} className="flex w-full items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 text-left text-[12.5px] text-sidebar-foreground/75 transition-colors hover:border-white/20 hover:bg-white/10" data-testid="palette-open">
-          <Search className="size-4" /><span className="flex-1">{t("search")}</span><span className="rounded-md border border-white/15 px-1.5 text-[10px] text-sidebar-muted">Ctrl K</span>
+        <button type="button" onClick={openPalette} title={`${t("search")} (Ctrl+K)`} className="flex w-full items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 text-left text-[12.5px] text-sidebar-foreground/75 transition-colors hover:border-white/20 hover:bg-white/10" data-testid="palette-open">
+          <Search className="size-4" /><span className="flex-1">{t("search")}</span>
         </button>
       </div>
       <div className="flex-1 space-y-px overflow-y-auto px-1.5 py-1.5">

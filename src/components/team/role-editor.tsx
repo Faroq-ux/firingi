@@ -85,7 +85,7 @@ export function RoleEditor({
                           checked={perms.includes(p.code)}
                           onChange={(e) => setPerms(e.target.checked ? [...perms, p.code] : perms.filter((x) => x !== p.code))}
                         />
-                        <span>{p.description} <code className="text-[10px] text-muted-foreground">{p.code}</code></span>
+                        <span>{p.description}</span>
                       </label>
                     ))}
                   </div>

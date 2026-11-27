@@ -62,8 +62,8 @@ export function Topbar(p: TopbarProps) {
         </div>
       )}
 
-      <button type="button" onClick={openPalette} className="hidden h-10 min-w-0 max-w-sm flex-1 items-center gap-2 rounded-xl border border-[color:var(--glass-border)] bg-card/60 px-3 text-left text-sm text-muted-foreground shadow-xs transition-all hover:border-[color:color-mix(in_oklch,var(--vivid-violet)_40%,var(--border))] hover:shadow-[0_0_0_4px_color-mix(in_oklch,var(--vivid-violet)_10%,transparent)] lg:flex" data-testid="topbar-search">
-        <Search className="size-4 text-[var(--vivid-violet)]" /><span className="flex-1 truncate">{p.labels.search ?? "Search"}</span><span className="kbd">Ctrl K</span>
+      <button type="button" onClick={openPalette} title={`${p.labels.search ?? "Search"} (Ctrl+K)`} className="hidden h-10 min-w-0 max-w-sm flex-1 items-center gap-2 rounded-xl border border-[color:var(--glass-border)] bg-card/60 px-3 text-left text-sm text-muted-foreground shadow-xs transition-all hover:border-[color:color-mix(in_oklch,var(--vivid-violet)_40%,var(--border))] hover:shadow-[0_0_0_4px_color-mix(in_oklch,var(--vivid-violet)_10%,transparent)] lg:flex" data-testid="topbar-search">
+        <Search className="size-4 text-[var(--vivid-violet)]" /><span className="flex-1 truncate">{p.labels.search ?? "Search"}</span>
       </button>
       <button type="button" onClick={openPalette} aria-label={p.labels.search ?? "Search"} className="rounded-md p-2 hover:bg-accent lg:hidden"><Search className="size-5" /></button>
       {p.searchCountry && p.searchCountry.options.length > 1 && (

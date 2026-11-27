@@ -2,6 +2,7 @@
  * Pop-up forms must sit on top of the page (they used to open behind the role cards).
  * Checks the "New role" form on the admin, supplier and customer Roles pages, at desktop and phone width:
  * the point in the middle of the form must belong to the form, and a role can be saved and deleted.
+ * Permissions are shown in plain words (no codes such as buyer.orders.place) and no "Ctrl K" label is on screen.
  * Run: node tests/e2e/role-dialog.mjs http://localhost:3100
  */
 import { createRequire } from "node:module";
@@ -25,6 +26,11 @@ for (const [email, path, width] of CASES) {
   await page.goto(BASE + "/login"); await page.fill("#email", email); await page.fill("#password", PASSWORD); await page.click("button[type=submit]");
   await page.waitForURL((u) => u.pathname !== "/login");
   await page.goto(BASE + path); await page.waitForLoadState("networkidle").catch(() => {});
+  const shown = await page.evaluate(() => document.body.innerText);
+  const codes = shown.match(/\b(admin|vendor|buyer|company|driver|team)\.[a-z_]+\.[a-z_]+\b/g) ?? [];
+  ok(codes.length === 0, `${path} @${width}: permissions in plain words, no codes${codes.length ? " — " + codes.slice(0, 3).join(", ") : ""}`);
+  ok(!/Ctrl\s*K/.test(shown), `${path} @${width}: no "Ctrl K" label on screen`);
+  ok(await page.getByTestId("role-permissions").first().isVisible(), `${path} @${width}: each role lists what it can do`);
   await page.locator("main button").filter({ has: page.locator("svg.lucide-plus") }).first().click();
   const dlg = page.locator("[role=dialog] form").first(); await dlg.waitFor();
   const onTop = await dlg.evaluate((f) => {
@@ -33,6 +39,8 @@ for (const [email, path, width] of CASES) {
     return pts.every(([x, y]) => f.contains(document.elementFromPoint(r.left + r.width * x, r.top + r.height * y)));
   });
   ok(onTop, `${path} @${width}: New role form is on top of the page`);
+  const formText = await dlg.innerText();
+  ok(!/\b(admin|vendor|buyer|company|driver|team)\.[a-z_]+\.[a-z_]+\b/.test(formText), `${path} @${width}: New role form shows no codes`);
   const name = `E2E role ${Date.now()}`;
   await dlg.locator("#rname").fill(name);
   await dlg.locator("input[type=checkbox]").first().check();

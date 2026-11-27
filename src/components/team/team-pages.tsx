@@ -19,6 +19,22 @@ import { PageHeader } from "@/components/layout/page-header";
 import { AddMemberForm, MemberActions } from "./member-forms";
 import { RoleEditor, type PermGroup } from "./role-editor";
 
+/** Plain-language names for permissions, their areas and FIRINGI's built-in roles (translated for supplier and customer
+ *  pages; FIRINGI back-office permissions stay in English). Codes such as "buyer.orders.place" are never shown. */
+async function permTexts() {
+  const t = await getTranslations("perm");
+  const key = (m: string) => m.replace(/[^A-Za-z0-9]/g, "");
+  const tr = (k: string, fallback: string) => (t.has(k) ? t(k) : fallback);
+  const def = (code: string) => PERMISSIONS[code as keyof typeof PERMISSIONS];
+  return {
+    title: t("title"),
+    perm: (code: string) => { const d = def(code); if (!d) return code; return d.audience === "ADMIN" ? d.description : tr(`p.${code.replace(/\./g, "_")}`, d.description); },
+    module: (code: string) => { const d = def(code); if (!d) return ""; return d.audience === "ADMIN" ? d.module : tr(`module.${key(d.module)}`, d.module); },
+    role: <R extends { key: string; name: string; description?: string | null; isSystem: boolean }>(r: R) =>
+      r.isSystem && t.has(`role.${r.key}.name`) ? { ...r, name: t(`role.${r.key}.name`), description: t(`role.${r.key}.desc`) } : r,
+  };
+}
+
 async function memberLabels() {
   const [t, c] = await Promise.all([getTranslations("team"), getTranslations("common")]);
   return {
@@ -31,14 +47,16 @@ async function memberLabels() {
 export async function TeamUsersPage({ ctx, title, roleKey, description }: { ctx: Ctx; title: string; roleKey?: string; description?: string }) {
   const isAdmin = ctx.company.type === "ADMIN";
   const canManage = can(ctx, isAdmin ? "admin.users.manage" : "team.users.manage");
-  const [members, roles, labels, t, c, locale] = await Promise.all([
+  const [members, rawRoles, labels, t, c, locale, pt] = await Promise.all([
     listMembers(ctx, { roleKey }),
     listRoles(ctx),
     memberLabels(),
     getTranslations("team"),
     getTranslations("common"),
     getLocale(),
+    permTexts(),
   ]);
+  const roles = rawRoles.map(pt.role);
   const regions = isAdmin && canManage ? await listRegionOptions(ctx) : [];
   const roleOptions = roles.map((r) => ({ id: r.id, name: r.name, isSystem: r.isSystem, description: r.description }));
 
@@ -79,7 +97,7 @@ export async function TeamUsersPage({ ctx, title, roleKey, description }: { ctx:
               <TD>
                 <div className="flex flex-wrap gap-1">
                   {m.isOwner && <Badge>{c("owner")}</Badge>}
-                  {m.roles.map((r) => <Badge key={r.roleId} variant="secondary">{r.role.name}</Badge>)}
+                  {m.roles.map((r) => <Badge key={r.roleId} variant="secondary">{pt.role({ ...r.role, description: null }).name}</Badge>)}
                   {!m.isOwner && m.roles.length === 0 && <span className="text-xs text-muted-foreground">{t("noRoles")}</span>}
                 </div>
               </TD>
@@ -115,16 +133,16 @@ export async function TeamUsersPage({ ctx, title, roleKey, description }: { ctx:
 export async function TeamRolesPage({ ctx, title }: { ctx: Ctx; title: string }) {
   const isAdmin = ctx.company.type === "ADMIN";
   const canManage = can(ctx, isAdmin ? "admin.roles.manage" : "team.roles.manage");
-  const [roles, t, c] = await Promise.all([listRoles(ctx), getTranslations("team"), getTranslations("common")]);
+  const [rawRoles, t, c, pt] = await Promise.all([listRoles(ctx), getTranslations("team"), getTranslations("common"), permTexts()]);
+  const roles = rawRoles.map(pt.role);
 
   // Permission picker: only what this company type may grant (and, unless owner, what the editor holds).
   const grantable = grantablePermissions(ctx.company.type).filter((p) => ctx.membership.isOwner || ctx.permissions.has(p));
   const byModule = new Map<string, PermGroup>();
   for (const code of grantable) {
-    const def = PERMISSIONS[code];
-    const title = `${def.audience} · ${def.module}`;
+    const title = pt.module(code);
     if (!byModule.has(title)) byModule.set(title, { title, perms: [] });
-    byModule.get(title)!.perms.push({ code, description: def.description });
+    byModule.get(title)!.perms.push({ code, description: pt.perm(code) });
   }
   const groups = [...byModule.values()];
   const labels = {
@@ -138,9 +156,9 @@ export async function TeamRolesPage({ ctx, title }: { ctx: Ctx; title: string })
       <div className="grid gap-4 lg:grid-cols-2">
         {roles.map((r) => (
           <Card key={r.id}>
-            <CardHeader className="flex-row items-start justify-between gap-2">
-              <div className="space-y-1">
-                <CardTitle className="flex items-center gap-2">
+            <CardHeader className="flex-row flex-wrap items-start justify-between gap-2">
+              <div className="min-w-0 flex-1 space-y-1">
+                <CardTitle className="flex flex-wrap items-center gap-2 break-words">
                   {r.name} <Badge variant={r.isSystem ? "secondary" : "default"}>{r.isSystem ? t("system") : t("custom")}</Badge>
                 </CardTitle>
                 <CardDescription>{r.description} · {t("members", { count: r.memberCount })}</CardDescription>
@@ -148,13 +166,40 @@ export async function TeamRolesPage({ ctx, title }: { ctx: Ctx; title: string })
               {canManage && !r.isSystem && <RoleEditor groups={groups} labels={labels} role={r} />}
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-1">
-                {r.permissions.map((p) => <code key={p} className="rounded bg-muted px-1.5 py-0.5 text-[11px]">{p}</code>)}
-              </div>
+              <PermissionList groups={groupPerms(r.permissions, pt)} title={pt.title} />
             </CardContent>
           </Card>
         ))}
       </div>
     </>
+  );
+}
+
+/** A role's permissions grouped by area, in plain words. */
+function groupPerms(codes: string[], pt: Awaited<ReturnType<typeof permTexts>>) {
+  const out = new Map<string, string[]>();
+  for (const code of codes) {
+    const m = pt.module(code);
+    if (!out.has(m)) out.set(m, []);
+    out.get(m)!.push(pt.perm(code));
+  }
+  return [...out.entries()].map(([module, perms]) => ({ module, perms }));
+}
+
+function PermissionList({ groups, title }: { groups: { module: string; perms: string[] }[]; title: string }) {
+  return (
+    <div className="space-y-2" data-testid="role-permissions">
+      <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{title}</div>
+      <dl className="grid gap-x-4 gap-y-2 text-sm sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)]">
+        {groups.map((g) => (
+          <div key={g.module} className="contents">
+            <dt className="font-medium text-foreground/90">{g.module}</dt>
+            <dd className="min-w-0 text-muted-foreground">
+              <ul className="space-y-0.5">{g.perms.map((p) => <li key={p} className="break-words">{p}</li>)}</ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }
