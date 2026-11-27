@@ -10,7 +10,6 @@ import { forgetPhoneData } from "@/components/app/runtime";
 import { setLocaleAction, switchCompanyAction } from "@/server/actions/session";
 import { cn } from "@/lib/utils";
 import { ThemeToggle, type ThemeChoice } from "@/components/theme/theme";
-import { BgPicker } from "@/components/theme/bg-picker";
 import { NotificationBell, type BellLabels } from "@/components/notifications/bell";
 
 export type TopbarProps = {
@@ -122,7 +121,6 @@ export function Topbar(p: TopbarProps) {
           {p.locales.map((l) => <option key={l.code} value={l.code}>{l.native}</option>)}
         </select>
 
-        <BgPicker />
         <ThemeToggle initial={p.theme.initial} labels={p.theme.labels} labelClassName="sm:hidden" />
         {p.securityHref ? (
           <Link href={p.securityHref} title={p.labels.security} data-testid="my-security" className="hidden rounded-md px-1 text-right leading-tight hover:bg-accent lg:block">

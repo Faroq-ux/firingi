@@ -1,0 +1,124 @@
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   Smooth screens for FIRINGI — motion and layout only. FIRINGI keeps its own colours, logo,
+   menu, background, language and texts. Adds:
+   - smooth motion: cards rise in one after another, lift with a soft glow and a light sweep on hover;
+   - no odd empty gaps: cards in a row share its height, lone or short rows fill the width.
+   Loaded after globals.css; delete the import in app/layout.tsx to go back.
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Smooth motion on cards (colours untouched) ──────────────────────────────────────── */
+@keyframes smooth-rise { from { opacity: 0.35; transform: translateY(14px) scale(0.985); } }
+@keyframes smooth-sheen { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+main .glass-panel:not(.motion-rise) { animation: smooth-rise 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+main :is(.grid, .flex, .space-y-4, .space-y-6) > .glass-panel:not(.motion-rise):nth-child(2) { animation-delay: 0.05s; }
+main :is(.grid, .flex, .space-y-4, .space-y-6) > .glass-panel:not(.motion-rise):nth-child(3) { animation-delay: 0.1s; }
+main :is(.grid, .flex, .space-y-4, .space-y-6) > .glass-panel:not(.motion-rise):nth-child(4) { animation-delay: 0.15s; }
+main :is(.grid, .flex, .space-y-4, .space-y-6) > .glass-panel:not(.motion-rise):nth-child(n+5) { animation-delay: 0.2s; }
+main .glass-panel { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+/* Light sweep: only on cards that have no shine of their own. */
+main .glass-panel:not(.tile):not(.gloss):not(.motion-sheen):not(.glow-border) { position: relative; }
+main .glass-panel:not(.tile):not(.gloss):not(.motion-sheen):not(.glow-border)::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3;
+  background: linear-gradient(100deg, transparent 40%, color-mix(in oklch, white 35%, transparent) 50%, transparent 60%) no-repeat; background-size: 250% 100%; background-position: 150% 0;
+}
+.dark main .glass-panel:not(.tile):not(.gloss):not(.motion-sheen):not(.glow-border)::after { background-image: linear-gradient(100deg, transparent 40%, color-mix(in oklch, white 8%, transparent) 50%, transparent 60%); }
+@media (hover: hover) {
+  main .glass-panel:not([class*="overflow-"]):hover { transform: translateY(-3px); box-shadow: var(--glass-shadow), 0 22px 40px -18px color-mix(in oklch, var(--primary) 45%, transparent); }
+  main .glass-panel:not([class*="overflow-"]):not(.tile):not(.gloss):not(.motion-sheen):not(.glow-border):hover::after { animation: smooth-sheen 0.9s ease; }
+}
+
+/* ── 2. No odd empty gaps ────────────────────────────────────────────────────────────────── */
+/* Cards in a row are as tall as their row, and their content spreads to fill the card. */
+main .grid > :is(.glass-panel, .tile, .stat-card) { align-self: stretch; }
+main :is(.glass-panel.h-full, .grid > .glass-panel, .grid > .tile):not(.flex):not(.grid):not(.inline-flex) { display: flex; flex-direction: column; }
+main :is(.glass-panel.h-full, .grid > .glass-panel, .grid > .tile):not(.flex):not(.grid):not(.inline-flex) > :last-child:not(:first-child):not(.flex):not(.grid):not(.inline-flex):not(table) { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; }
+main :is(.glass-panel.h-full, .grid > .glass-panel, .grid > .tile) > :last-child > :only-child:is(ul, ol, .space-y-1, .space-y-1\.5, .space-y-2, .space-y-3) { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-evenly; }
+main .grid.items-start:has(> .glass-panel) { align-items: stretch; }
+main .grid > .lg\:sticky { align-self: start; }
+/* A lone card at the end of a row stretches across the empty space instead of leaving a hole. */
+main .grid.grid-cols-2 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(2n+1):not(:first-child) { grid-column: 1 / -1; }
+main .grid.grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+1):not(:first-child) { grid-column: 1 / -1; }
+main .grid.grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+2) { grid-column: span 2; }
+@media (min-width: 40rem) {
+  main .grid:is(.sm\:grid-cols-2, .sm\:grid-cols-3, .sm\:grid-cols-4) > :is(.glass-panel, .tile, .stat-card):last-child { grid-column: auto; }
+  main .grid.sm\:grid-cols-2 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(2n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.sm\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.sm\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+2) { grid-column: span 2; }
+}
+@media (min-width: 48rem) {
+  main .grid:is(.md\:grid-cols-2, .md\:grid-cols-3, .md\:grid-cols-4) > :is(.glass-panel, .tile, .stat-card):last-child { grid-column: auto; }
+  main .grid.md\:grid-cols-2 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(2n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.md\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.md\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+2) { grid-column: span 2; }
+}
+@media (min-width: 64rem) {
+  main .grid:is(.lg\:grid-cols-2, .lg\:grid-cols-3, .lg\:grid-cols-4) > :is(.glass-panel, .tile, .stat-card):last-child { grid-column: auto; }
+  main .grid.lg\:grid-cols-2 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(2n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.lg\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.lg\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+2) { grid-column: span 2; }
+  main .grid.lg\:grid-cols-4 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(4n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.lg\:grid-cols-4 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(4n+3) { grid-column: span 2; }
+}
+@media (min-width: 80rem) {
+  main .grid:is(.xl\:grid-cols-2, .xl\:grid-cols-3, .xl\:grid-cols-4) > :is(.glass-panel, .tile, .stat-card) { grid-column: auto; }
+  main .grid.xl\:grid-cols-2 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(2n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.xl\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.xl\:grid-cols-3 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(3n+2) { grid-column: span 2; }
+  main .grid.xl\:grid-cols-4 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(4n+1):not(:first-child) { grid-column: 1 / -1; }
+  main .grid.xl\:grid-cols-4 > :is(.glass-panel, .tile, .stat-card):last-child:nth-child(4n+3) { grid-column: span 2; }
+}
+
+/* A row with fewer boxes than columns: the boxes share the whole width instead of leaving empty columns. */
+@media (min-width: 40rem) {
+  main .grid.sm\:grid-cols-3:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-4:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-4:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-5:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-5:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-5:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-6:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-6:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-6:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.sm\:grid-cols-6:has(> :last-child:nth-child(5)) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (min-width: 48rem) {
+  main .grid.md\:grid-cols-3:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-4:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-4:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-5:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-5:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-5:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-6:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-6:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-6:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.md\:grid-cols-6:has(> :last-child:nth-child(5)) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (min-width: 64rem) {
+  main .grid.lg\:grid-cols-3:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-4:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-4:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-5:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-5:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-5:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-6:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-6:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-6:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.lg\:grid-cols-6:has(> :last-child:nth-child(5)) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (min-width: 80rem) {
+  main .grid.xl\:grid-cols-3:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-4:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-4:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-5:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-5:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-5:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-6:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-6:has(> :last-child:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-6:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  main .grid.xl\:grid-cols-6:has(> :last-child:nth-child(5)) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+/* ── 3. Calm motion for people who ask for less ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  main .glass-panel { animation: none !important; transform: none !important; }
+}
