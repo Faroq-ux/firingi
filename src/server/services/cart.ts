@@ -24,7 +24,7 @@ function requireBuyer(ctx: Ctx) {
 /** The user's cart; an empty cart follows the country's ordering mode (FIRINGI-routed or one supplier). */
 async function cartRow(ctx: Ctx) {
   const routed = (await orderingMode(ctx)) === "FIRINGI";
-  const include = { items: true, seller: { select: { id: true, legalName: true, tradeName: true } } } as const;
+  const include = { items: { orderBy: { addedAt: "asc" } }, seller: { select: { id: true, legalName: true, tradeName: true } } } as const;
   const cart = await prisma.cart.upsert({
     where: { buyerCompanyId_userId: { buyerCompanyId: ctx.company.id, userId: ctx.user.id } },
     update: {},
