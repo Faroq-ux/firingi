@@ -164,7 +164,7 @@ await go(kb, "/buy/orders/cart");
 const cartText = await kb.textContent("main");
 check("cart: flash line at the deal price", (await kb.getByTestId("cart-deal").count()) >= 1 && cartText.includes(pt(MOZZ_DEAL)));
 check("cart: says why the volume price doesn't apply yet", (await kb.getByTestId("cart-deal-note").count()) === 1);
-await kb.locator("tr", { hasText: /Arroz/ }).getByRole("button", { name: /Remover|Remove/ }).click().catch(() => {});
+await kb.getByTestId("cart-line").filter({ hasText: /Arroz/ }).getByRole("button", { name: /Remover|Remove/ }).click().catch(() => {});
 await settle(kb);
 
 // ── 5. Supplier counters, customer takes it and orders ──

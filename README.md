@@ -228,6 +228,16 @@ Requirements and transitions are defined in one place: `src/server/onboarding/ru
   - **FIRINGI** dispatches and delivers its own deliveries, and handles exceptions and returns.
   - Stock is reserved at checkout, released on cancellation, and leaves the warehouse at dispatch. Every change goes into the append-only history.
 
+### The cart page
+
+- One card per supplier: each line shows the product, unit price, a **− / +** quantity stepper (or type
+  the number), the line total and a remove button. The supplier's delivery terms sit at the
+  bottom of its card, followed by top-up suggestions when it is below its minimum.
+- On phones the **total and "Place order"** stay at the bottom of the screen while scrolling; the
+  button scrolls to the checkout form, and the bar hides once the form is in view.
+- Motion: pages glide in on navigation, cart lines rise in and fold away when removed, anchors
+  scroll smoothly. Everything respects the device's "reduce motion" setting.
+
 ## Commercial & Finance (Phase 5)
 
 - **Commission:** set per vendor (no default) and frozen on every order line. It is always calculated on the price before any discount.

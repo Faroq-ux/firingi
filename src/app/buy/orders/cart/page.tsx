@@ -20,8 +20,7 @@ import { pickLocalized } from "@/i18n/config";
 import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TBody, TD, TH, THead, TR, Table } from "@/components/ui/table";
-import { CartQty, CheckoutForm, ClearCartButton, CouponBox } from "@/components/orders/cart-controls";
+import { CartBar, CartQty, CheckoutForm, ClearCartButton, CouponBox } from "@/components/orders/cart-controls";
 import { payLaterChoiceFor } from "@/components/pay-later/choice";
 import { CartCo2 } from "@/components/co2/panels";
 import { COUPON_ERRORS } from "@/lib/coupons";
@@ -110,39 +109,49 @@ export default async function CartPage() {
       <PageHeader title={t("cart")} description={cart.routed ? <span data-testid="routed-cart">{t("routedCart")}</span> : cart.groups.length > 1 ? <span data-testid="split-note">{t("splitNote", { count: cart.groups.length })}</span> : <span>{t("supplier")}: <Link className="font-medium text-primary hover:underline" href={`/buy/catalogue/suppliers/${cart.groups[0].supplier.id}`}>{cart.groups[0].supplier.name}</Link></span>} actions={<ClearCartButton />} />
       {small.limit != null && <p className={`mb-4 rounded-md p-3 text-sm ${small.left ? "bg-muted" : "bg-warning/10"}`} data-testid="small-orders" title={tw("small.hint")}>{small.left ? tw("small.left", { left: small.left, limit: small.limit }) : tw("small.none")}</p>}
       {cart.unavailable.length > 0 && <p className="mb-4 rounded-md bg-warning/10 p-3 text-sm">{t("unavailable", { count: cart.unavailable.length })}</p>}
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid items-start gap-5 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           {cart.groups.map((g) => (
-            <div key={g.supplier.id || "firingi"} className="space-y-2" data-testid="cart-group">
-              {cart.groups.length > 1 && <h2 className="text-sm font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]"><Link href={`/buy/catalogue/suppliers/${g.supplier.id}`} className="hover:underline">{g.supplier.name}</Link></h2>}
-              <Table>
-                <THead><TR><TH>{t("product")}</TH><TH className="text-right">{t("unitPrice")}</TH><TH className="text-right">{t("qty")}</TH><TH className="text-right">{t("lineTotal")}</TH></TR></THead>
-                <TBody>
-                  {g.lines.map((l) => (
-                    <TR key={l.offerId}>
-                      <TD>
-                        <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
-                        <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
-                        {cwm.get(l.offerId) && <div className="mt-1"><CwCartNote l={cl.l} locale={locale} cw={cwm.get(l.offerId)!} qty={l.qty} /></div>}
-                        {"freeGoods" in l && l.freeGoods && (() => {
-                          // Phase 48 bonus units and Phase 55 reward units ("rw:" grants) shown apart
-                          const reward = l.freeGoods.grants.filter((x) => x.id.startsWith("rw:")).reduce((a, x) => a + x.qty, 0), bonus = l.freeGoods.qty - reward;
-                          return <>
-                            {bonus > 0 && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--success,#16a34a)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-goods">{trb("freeInCart", { n: bonus })}</span>}
-                            {reward > 0 && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--vivid-violet)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-reward">{trw("cartFree", { qty: reward })}</span>}
-                          </>;
-                        })()}
-                        {"deal" in l && l.deal && <span className="mt-1 inline-block rounded-full bg-destructive px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-deal">{td("cart.applied")}</span>}
-                        {"dealNote" in l && !l.deal && l.dealNote && td.has(`cart.${l.dealNote.why}`) && <div className="mt-1 text-xs text-amber-700 dark:text-amber-400" data-testid="cart-deal-note">{td(`cart.${l.dealNote.why}`, { n: l.dealNote.left ?? 0 })}</div>}
-                      </TD>
-                      <TD className="text-right text-sm tabular-nums">{formatMoney(l.price!.local?.unitPriceGross ?? l.price!.unitPriceGross, locale, l.price!.local?.code ?? "EUR")}<div className="text-xs text-muted-foreground">{formatMoney(l.price!.local?.unitPriceNet ?? l.price!.unitPriceNet, locale, l.price!.local?.code ?? "EUR")} s/ {tax}</div></TD>
-                      <TD><CartQty offerId={l.offerId} qty={l.qty} min={l.minOrderQty} step={l.qtyStep} /></TD>
-                      <TD className="text-right tabular-nums">{lc?.lines[l.offerId] ? formatMoney(lc.lines[l.offerId].gross, locale, lc.code) : formatMoney(l.lineGross, locale, fx)}<div className="text-xs text-muted-foreground">{tax} {Number(l.vatRate)}%</div></TD>
-                    </TR>
+            <div key={g.supplier.id || "firingi"} className="space-y-3" data-testid="cart-group">
+              <section className="glass-panel overflow-hidden rounded-2xl border">
+              {cart.groups.length > 1 && (
+                <header className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-b border-[color:var(--glass-border)] px-4 py-3">
+                  <h2 className="font-semibold text-[color:color-mix(in_oklch,var(--vivid-violet)_75%,var(--foreground))]"><Link href={`/buy/catalogue/suppliers/${g.supplier.id}`} className="hover:underline">{g.supplier.name}</Link></h2>
+                  <span className="text-xs text-muted-foreground">{t("items")}: {g.lines.length}</span>
+                </header>
+              )}
+              <ul className="divide-y divide-[color:var(--glass-border)]">
+                  {g.lines.map((l, i) => (
+                    <li key={l.offerId} className="cart-line motion-rise grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_7.5rem_auto_7rem]" style={{ ["--i" as string]: Math.min(i, 8) }} data-testid="cart-line">
+                      <div className="col-span-2 min-w-0 sm:col-span-1">
+                          <Link href={`/buy/catalogue/offers/${l.offerId}`} className="font-medium hover:text-primary">{L(l.name)}</Link>
+                          <div className="text-xs text-muted-foreground">{L(l.packaging.name)} · SKU {l.sku}{l.gtin ? ` · ${l.gtin}` : ""}</div>
+                          {cwm.get(l.offerId) && <div className="mt-1"><CwCartNote l={cl.l} locale={locale} cw={cwm.get(l.offerId)!} qty={l.qty} /></div>}
+                          {"freeGoods" in l && l.freeGoods && (() => {
+                            // Phase 48 bonus units and Phase 55 reward units ("rw:" grants) shown apart
+                            const reward = l.freeGoods.grants.filter((x) => x.id.startsWith("rw:")).reduce((a, x) => a + x.qty, 0), bonus = l.freeGoods.qty - reward;
+                            return <>
+                              {bonus > 0 && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--success,#16a34a)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-goods">{trb("freeInCart", { n: bonus })}</span>}
+                              {reward > 0 && <span className="mt-1 mr-1 inline-block rounded-full bg-[color:var(--vivid-violet)] px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-free-reward">{trw("cartFree", { qty: reward })}</span>}
+                            </>;
+                          })()}
+                          {"deal" in l && l.deal && <span className="mt-1 inline-block rounded-full bg-destructive px-2 py-0.5 text-[11px] font-semibold text-white" data-testid="cart-deal">{td("cart.applied")}</span>}
+                          {"dealNote" in l && !l.deal && l.dealNote && td.has(`cart.${l.dealNote.why}`) && <div className="mt-1 text-xs text-amber-700 dark:text-amber-400" data-testid="cart-deal-note">{td(`cart.${l.dealNote.why}`, { n: l.dealNote.left ?? 0 })}</div>}
+                      </div>
+                      <div className="text-sm tabular-nums sm:text-right">
+                        <div className="font-medium">{formatMoney(l.price!.local?.unitPriceGross ?? l.price!.unitPriceGross, locale, l.price!.local?.code ?? "EUR")}</div>
+                        <div className="text-xs text-muted-foreground">{formatMoney(l.price!.local?.unitPriceNet ?? l.price!.unitPriceNet, locale, l.price!.local?.code ?? "EUR")} s/ {tax}</div>
+                      </div>
+                      <div className="row-span-2 justify-self-end sm:row-span-1"><CartQty offerId={l.offerId} qty={l.qty} min={l.minOrderQty} step={l.qtyStep} /></div>
+                      <div className="text-sm tabular-nums sm:text-right">
+                        <div className="text-base font-semibold" data-testid="cart-line-total">{lc?.lines[l.offerId] ? formatMoney(lc.lines[l.offerId].gross, locale, lc.code) : formatMoney(l.lineGross, locale, fx)}</div>
+                        <div className="text-xs text-muted-foreground">{tax} {Number(l.vatRate)}%</div>
+                      </div>
+                    </li>
                   ))}
-                </TBody>
-              </Table>
-              {cart.groups.length > 1 && deliveryNote(g)}
+                </ul>
+              {cart.groups.length > 1 && <footer className="border-t border-[color:var(--glass-border)] px-3 py-2.5 [&>p]:rounded-lg">{deliveryNote(g)}</footer>}
+              </section>
               {topUps.get(g.supplier.id) && <TopUp supplier={g.supplier.name} s={topUps.get(g.supplier.id)!.s} items={topUps.get(g.supplier.id)!.items} />}
             </div>
           ))}
@@ -163,6 +172,7 @@ export default async function CartPage() {
               <CardContent><CartReturnables l={rl.l} locale={locale} total={rtCart.depositTotal} lines={rtCart.lines.map((x) => ({ ...x, supplier: cart.groups.find((g) => g.supplier.id === x.supplierId)?.supplier.name ?? "" }))} /></CardContent>
             </Card>
           )}
+          {!cart.routed && <SponsoredProducts ctx={ctx} placement="CART" title="alsoNeed" cartOfferIds={cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))} />}
         </div>
         <Card>
           <CardHeader><CardTitle>{t("total")}</CardTitle></CardHeader>
@@ -199,7 +209,8 @@ export default async function CartPage() {
           </CardContent>
         </Card>
       </div>
-      {!cart.routed && <div className="mt-6"><SponsoredProducts ctx={ctx} placement="CART" title="alsoNeed" cartOfferIds={cart.groups.flatMap((g) => g.lines.map((l) => l.offerId))} /></div>}
+      <CartBar label={`${t("total")} (c/ ${tax})`} total={lc ? formatMoney(lc.gross, locale, lc.code) : formatMoney(cart.totalGross, locale, fx)} />
+      <div className="h-24 lg:hidden" aria-hidden />
     </>
   );
 }

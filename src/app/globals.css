@@ -185,7 +185,9 @@
 @keyframes shimmer { 0% { background-position: -400px 0 } 100% { background-position: 400px 0 } }
 @keyframes pop { 0% { transform: scale(0.6) } 70% { transform: scale(1.15) } 100% { transform: scale(1) } }
 
-@utility animate-page { animation: fade-in-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+/* Pages glide in on every navigation (soft ease-out, no bounce). */
+@keyframes page-in { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+@utility animate-page { animation: page-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @utility animate-fade { animation: fade-in 0.2s ease both; }
 @utility animate-pop { animation: pop 0.3s ease both; }
 @utility skeleton {
@@ -202,6 +204,14 @@
 [role="alert"], [role="status"] { animation: fade-in-up 0.25s ease both; }
 /* Table rows and list items of a freshly rendered page cascade in. */
 main tbody tr { animation: fade-in 0.3s ease both; }
+
+/* Smooth scrolling to anchors ("Place order" on phones jumps to the checkout form). */
+html { scroll-behavior: smooth; }
+/* A cart line folds away when removed, while the cart reloads. */
+@keyframes line-out { to { opacity: 0; transform: translateX(28px) } }
+.line-leaving { animation: line-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards; pointer-events: none; }
+.cart-line { transition: background-color 0.2s ease; }
+.cart-line:hover { background-color: color-mix(in oklch, var(--primary) 4%, transparent); }
 
 /* Collapsible sidebar sections animate their height. */
 .collapsible { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -277,6 +287,7 @@ main tbody tr { animation: fade-in 0.3s ease both; }
   .motion-ticker-track { animation: none !important; }
   .motion-ticker-track > [aria-hidden="true"] { display: none; }
   .motion-smil, .motion-sheen::after { display: none; }
+  html { scroll-behavior: auto; }
 }
 
 /* ── Gloss & glass ──────────────────────────────────────────────────────────── */
